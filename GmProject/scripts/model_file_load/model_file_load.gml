@@ -48,7 +48,7 @@ function model_file_load(fname, res = null)
 		// Name
 		name = map[?"name"]
 		
-		if (res = null && dev_mode_debug_names && !text_exists("model" + name))
+		if (res = null && debug_names && !text_exists("model" + name))
 			log("model/" + name + mc_unknown_asset_warning)
 		
 		// Description (optional)

@@ -18,7 +18,7 @@ function settings_load_legacy(fn)
 	if (load_format >= e_settings.FORMAT_100)
 	{
 		buffer_read_byte() // FPS
-		if (dev_mode)
+		if (debug_mode)
 			buffer_read_string_int()
 		else
 			setting_project_folder = buffer_read_string_int()

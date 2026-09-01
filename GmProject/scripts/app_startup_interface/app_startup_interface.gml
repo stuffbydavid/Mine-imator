@@ -24,35 +24,35 @@ function app_startup_interface()
 	background_ground_startup()
 	background_sky_startup()
 	
-	// Run benchmarks
-	if (benchmark_project != "")
+	// Run tests
+	if (test_project != "")
 	{
-		if (!project_load(benchmark_project)) {
-			error("errorbenchmark")
+		if (!project_load(test_project)) {
+			error("errortest")
 			game_end()
 		}
 		else
-			benchmarks_run()
+			tests_run()
 		return 0
 	}
 	
 	// Shortcut to a debugging project
-	else if (dev_mode)
+	else if (debug_mode)
 	{
 		popup_newproject_clear()
 		
-		if (dev_mode_project != "")
+		if (debug_project != "")
 		{
 			project_reset()
 			
-			if (!file_exists_lib(dev_mode_project))
+			if (!file_exists_lib(debug_project))
 			{
-				setting_project_folder = filename_dir(filename_dir(dev_mode_project)) + "/"
-				popup_newproject.folder = filename_name(filename_dir(dev_mode_project))
-				popup_newproject.tbx_name.text = string_replace(filename_name(dev_mode_project), filename_ext(dev_mode_project), "")
+				setting_project_folder = filename_dir(filename_dir(debug_project)) + "/"
+				popup_newproject.folder = filename_name(filename_dir(debug_project))
+				popup_newproject.tbx_name.text = string_replace(filename_name(debug_project), filename_ext(debug_project), "")
 				project_create()
 			}
-			project_load(dev_mode_project)
+			project_load(debug_project)
 		}
 		else
 		{

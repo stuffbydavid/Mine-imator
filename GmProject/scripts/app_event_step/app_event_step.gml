@@ -2,7 +2,7 @@
 
 function app_event_step()
 {
-	if (dev_mode && !is_cpp()) // Debug windows in GM
+	if (debug_mode && !is_cpp()) // Debug windows in GM
 	{
 		if (keyboard_check_pressed(vk_f1))
 			window_debug_current = e_window.MAIN
@@ -22,7 +22,7 @@ function app_event_step()
 	if (window_mouse_is_active(window_get_current()))
 		app_update_mouse()
 	
-	if (window_get_current() = e_window.MAIN || (window_get_current() != e_window.MAIN && dev_mode && !is_cpp()))
+	if (window_get_current() = e_window.MAIN || (window_get_current() != e_window.MAIN && debug_mode && !is_cpp()))
 	{
 		textbox_input = keyboard_string
 		keyboard_string = ""

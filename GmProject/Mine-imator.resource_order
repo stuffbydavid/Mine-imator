@@ -1,5 +1,7 @@
 {
-  "FolderOrderSettings":[],
+  "FolderOrderSettings":[
+    {"name":"Tests","order":52,"path":"folders/Scripts/App/Tests.yy",},
+  ],
   "ResourceOrderSettings":[
     {"name":"app","order":3,"path":"objects/app/app.yy",},
     {"name":"obj_bench_settings","order":1,"path":"objects/obj_bench_settings/obj_bench_settings.yy",},
@@ -901,7 +903,6 @@
     {"name":"bench_draw_settings","order":7,"path":"scripts/bench_draw_settings/bench_draw_settings.yy",},
     {"name":"bench_draw","order":5,"path":"scripts/bench_draw/bench_draw.yy",},
     {"name":"bench_update_particles_list","order":9,"path":"scripts/bench_update_particles_list/bench_update_particles_list.yy",},
-    {"name":"benchmarks_run","order":15,"path":"scripts/benchmarks_run/benchmarks_run.yy",},
     {"name":"bezier_curve_quad","order":3,"path":"scripts/bezier_curve_quad/bezier_curve_quad.yy",},
     {"name":"block_animate","order":13,"path":"scripts/block_animate/block_animate.yy",},
     {"name":"block_generate_liquid","order":1,"path":"scripts/block_generate_liquid/block_generate_liquid.yy",},
@@ -1837,6 +1838,7 @@
     {"name":"temp_update_rot_point","order":17,"path":"scripts/temp_update_rot_point/temp_update_rot_point.yy",},
     {"name":"temp_update_shape","order":19,"path":"scripts/temp_update_shape/temp_update_shape.yy",},
     {"name":"temp_update","order":1,"path":"scripts/temp_update/temp_update.yy",},
+    {"name":"tests_apply_settings","order":1,"path":"scripts/tests_apply_settings/tests_apply_settings.yy",},
     {"name":"text_caption_width","order":15,"path":"scripts/text_caption_width/text_caption_width.yy",},
     {"name":"text_control_name","order":7,"path":"scripts/text_control_name/text_control_name.yy",},
     {"name":"text_exists","order":9,"path":"scripts/text_exists/text_exists.yy",},

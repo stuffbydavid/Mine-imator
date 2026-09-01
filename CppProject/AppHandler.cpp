@@ -69,7 +69,7 @@ namespace CppProject
 					a++;
 					continue;
 				}
-				else if (arg == "--benchmark_project")
+				else if (arg == "--test" && !RELEASE_MODE)
 					headless = true;
 
 				args.append(arg);
@@ -88,8 +88,11 @@ namespace CppProject
 			// Set working directory
 		#if RELEASE_MODE
 			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
+			gmlGlobal::debug_mode = false;
 		#else
+			DEBUG("Debug mode enabled");
 			gmlGlobal::working_directory = QDir::currentPath() + "/";
+			gmlGlobal::debug_mode = true;
 		#endif
 
 			// Set paths
@@ -104,10 +107,6 @@ namespace CppProject
 				file_delete_lib(prevLogDest);
 				file_rename_lib(prevLog, prevLogDest);
 			}
-
-		#if DEBUG_MODE
-			DEBUG("Debug mode enabled");
-		#endif
 
 			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
 
@@ -337,7 +336,7 @@ namespace CppProject
 		stepTimer.stop();
 
 		// Debug
-		if (keyboard_check_pressed(vk_f6) && global::dev_mode)
+		if (keyboard_check_pressed(vk_f6) && !RELEASE_MODE)
 		{
 			move_all_to_texture_page();
 			TexturePage::Debug();

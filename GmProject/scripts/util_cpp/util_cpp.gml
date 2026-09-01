@@ -1,17 +1,17 @@
-/// CppSeparate BoolType is_debug()
-function is_debug()
-{
-	return debug_mode;
-}
-
-/// CppSeparate BoolType is_optimized()
-function is_optimized()
+/// CppSeparate BoolType is_cpp()
+function is_cpp()
 {
 	return false;
 }
 
-/// CppSeparate BoolType is_cpp()
-function is_cpp()
+/// CppSeparate BoolType is_release()
+function is_release()
+{
+	return false;
+}
+
+/// CppSeparate BoolType is_optimized()
+function is_optimized()
 {
 	return false;
 }

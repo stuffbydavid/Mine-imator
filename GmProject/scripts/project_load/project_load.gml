@@ -114,7 +114,7 @@ function project_load()
 	// Save into newest format
 	if (load_format < e_project.FORMAT_110_PRE_1)
 	{
-		if (!dev_mode)
+		if (!debug_mode)
 			file_rename_lib(fn, fn + ".old")
 		project_save()
 	}

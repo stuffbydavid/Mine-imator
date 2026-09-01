@@ -11,8 +11,8 @@ function app_event_create()
 	// Developent settings and arguments
 	debug_startup()
 	
-	// Ensure deterministic behavior for benchmarks
-	if (benchmark_project != "")
+	// Ensure deterministic behavior for tests
+	if (test_project != "")
 		random_set_seed(0)
 	else
 		randomize()

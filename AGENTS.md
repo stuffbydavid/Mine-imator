@@ -9,6 +9,7 @@
 * CppProject/External/ → Pre-built external libraries
 * GmProject/ → GameMaker project for non-engine development
 * BUILD.md → Build instructions
+* RENDER.md → Rendering settings for validation
 * Setup.ps1 → Build setup script (Windows PowerShell)
 * Setup.sh → Build setup script (Unix Bash)
 
@@ -45,15 +46,15 @@ General development practices:
     * Single line comments do not end with `.`
     * Local variables in GML code do not use `_`
 
-## Benchmarking/validation
-If asked for validation of changes, pass in the `--benchmark_project <.miproject>` flag into Mine-imator to start running a project, which should be assumed to be `<build_folder>/dev_project/dev_project.miproject`, where every frame in the timeline is treated as a separate "test". If asked to validate rendering effects, use `<repo_dir>/rendering/benchmark_project/benchmark_project.miproject`. The rendering output and timing data is found under a timestamped folder in the runs/ subdirectory and should be validated against the files in baselines/ for correctness, if available. Always check that the expected images are available/non-black/non-zero bytes and no runtime errors are printed/logged.
+## Validation/benchmarking
+If asked for validation of changes, pass in the `--test <.miproject>` flag into Mine-imator to start running a project in headless mode, which should be assumed to be `<build_folder>/dev_project/dev_project.miproject`, where every frame in the timeline is treated as a separate "test". If asked to validate rendering effects, use `<repo_dir>/rendering/test_project/test_project.miproject`. The rendering output and timing data is saved in a timestamped folder under the runs/ subdirectory and should be validated against the files in baselines/ for correctness, if available. Always check that the expected images are available/non-black/non-zero bytes and no runtime errors are printed/logged. Report deviations in image output or unexpected performance drops.
 
 On Windows, if tests succeed in the default DirectX mode, run Mine-imator again with `--gfx OpenGL` added to test OpenGL unless asked otherwise.
 
-If asked for a specific range of tests, use `--benchmark_start X` and `--benchmark_end Y` (Y exclusive), or `--benchmark_full` to run through all frames in the project. Use `--benchmark_render_mode <mode>` to limit the test to a specific mode, rather than all of them, with options `flat`, `shaded` or `high`. For typical validation, all modes should be tested.
+If asked for a specific range of tests, use `--start X` and `--end Y` (Y exclusive), or `--all` to run through all frames in the project. By default, the `flat`, `shaded` and `high` render modes will be tested, use `--mode <mode>` to limit the test to a specific mode. For typical, non-troubleshooting validation, all modes should be tested.
 
-For troubleshooting a rendering issue in the pipeline, use `--benchmark_debug_pass <pass>` to save a high-quality pass in a directory with the current frame/test name. Possible values are `diffuse`, `specular`, `ao`, `shadows`, `indirect`, `indirectshadows`, `reflections`, `depth`, `normal`, `material` and `all` to save every pass.
+For debugging a rendering issue in the pipeline, use `--pass <pass>` to save a high-quality pass in a new folder with the current frame/test name. Possible values are `diffuse`, `specular`, `ao`, `shadows`, `indirect`, `indirectshadows`, `reflections`, `depth`, `normal`, `material` and `all` to save every pass.
 
-To test render settings, use `--benchmark_render_settings "<settings>"` and pass in a comma-separated list of values, such as `"shadows=true,samples=64"`. Consult `benchmarks_apply_settings()` in GmProject/scripts/benchmarks_run/benchmarks_run.gml for the full list of settings.
+To test render settings, use `--set "<settings>"` and pass in a comma-separated list of values, such as `"shadows=true,samples=64"`. You are advised to combine settings using spaces to perform multiple tests if needed, rather than multiple runs, for example `"shadows=true,samples=8 samples=16 samples=32"`. Consult RENDER.md for the full list of render and camera settings. For each frame, the settings are restored to their defaults found in `test_base.mirender`, if available.
 
-Agents must include `--benchmark_agent <agent-name>` in benchmark invocations, such as `--benchmark_agent Codex` or `--benchmark_agent Gemini`, so the run directory identifies its producer.
+Agents must include `--agent <agent-name>` in benchmark invocations, such as `--agent Codex` or `--agent Gemini`, so the run directory identifies its producer.

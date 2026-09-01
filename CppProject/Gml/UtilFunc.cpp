@@ -377,27 +377,27 @@ namespace CppProject
 		return (msg.result() == QMessageBox::Yes);
 	}
 
-	BoolType is_debug()
+	BoolType is_cpp()
 	{
-#if !RELEASE_MODE
 		return true;
-#else
+	}
+
+	BoolType is_release()
+	{
+	#if RELEASE_MODE // Release target
+		return true;
+	#else
 		return false;
-#endif
+	#endif
 	}
 
 	BoolType is_optimized()
 	{
-#if OPTIMIZED // RelWithDebInfo, RunBenchmarks, Release modes
+	#if OPTIMIZED // RelWithDebInfo, RunBenchmarks, Release targets
 		return true;
-#else
+	#else
 		return false;
-#endif
-	}
-
-	BoolType is_cpp()
-	{
-		return true;
+	#endif
 	}
 
 	ArrType program_args_get()
@@ -406,6 +406,38 @@ namespace CppProject
 		for (QString str : App->args)
 			args.Append(StringType(str));
 		return args;
+	}
+
+	void log_message(StringType text)
+	{
+		Printer::Line(text);
+	}
+
+	StringType os_get()
+	{
+		return QSysInfo::prettyProductName();
+	}
+
+	IntType platform_get()
+	{
+	#if OS_WINDOWS
+		return e_platform_WINDOWS;
+	#elif OS_MAC
+		return e_platform_MAC_OS;
+	#else
+		return e_platform_LINUX;
+	#endif
+	}
+
+	StringType graphics_api_get()
+	{
+		if (IS_D3D11)
+			return "D3D";
+
+		if (IS_OPENGL)
+			return "GL";
+
+		return "";
 	}
 
 	RealType interface_scale_default_get()
@@ -428,42 +460,15 @@ namespace CppProject
 		App->scale = factor;
 	}
 
-	IntType platform_get()
-	{
-	#if OS_WINDOWS
-		return e_platform_WINDOWS;
-	#elif OS_MAC
-		return e_platform_MAC_OS;
-	#else
-		return e_platform_LINUX;
-	#endif
-	}
-
-StringType graphics_api_get()
-{
-	if (IS_D3D11)
-		return "D3D";
-
-	if (IS_OPENGL)
-		return "GL";
-	
-	return "";
-}
-
-	StringType os_get()
-	{
-		return QSysInfo::prettyProductName();
-	}
-
 	StringType file_directory_get()
 	{
-#if RELEASE_MODE
-#if OS_WINDOWS
+	#if RELEASE_MODE
+	#if OS_WINDOWS
 		return QStandardPaths::standardLocations(QStandardPaths::AppDataLocation)[0] + "_tmp/";
-#else
+	#else
 		return QDir::tempPath() + "/" + StringType(PROJECT_NAME) + "_tmp/";
-#endif
-#endif
+	#endif
+	#endif
 		return BUILD_FOLDER + "/";
 	}
 
@@ -523,10 +528,5 @@ StringType graphics_api_get()
 	void thread_task_end()
 	{
 		StringType::EndOmp();
-	}
-
-	void log_message(StringType text)
-	{
-		Printer::Line(text);
 	}
 }

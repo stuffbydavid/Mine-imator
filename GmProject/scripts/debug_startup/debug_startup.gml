@@ -3,65 +3,68 @@
 function debug_startup()
 {
 	// Developer options, overwritten by program arguments
-	globalvar dev_mode, dev_mode_project, dev_mode_full, dev_mode_advanced;
-	globalvar dev_mode_skip_blocks, dev_mode_skip_tangents, dev_mode_show_bones;
-	globalvar dev_mode_debug_schematics, dev_mode_debug_names, dev_mode_debug_saveid, dev_mode_debug_unused;
+	globalvar debug_project, debug_full, debug_advanced;
+	globalvar debug_skip_blocks, debug_skip_tangents, debug_show_bones;
+	globalvar debug_schematics, debug_names, debug_saveid, debug_unused;
+	globalvar debug_info, debug_info_corner, debug_indent, debug_timer;
 	
-	dev_mode = is_debug()
-	if (dev_mode)
+	if (debug_mode)
 	{
-		dev_mode_project				= file_directory_get() + "dev_project/dev_project.miproject"
-		dev_mode_full					= true
-		dev_mode_advanced				= true
-		dev_mode_skip_blocks			= true
-		dev_mode_skip_tangents			= false
-		dev_mode_show_bones				= false
-		dev_mode_debug_schematics		= false
-		dev_mode_debug_names			= false
-		dev_mode_debug_saveid			= false
-		dev_mode_debug_unused			= false
+		debug_project		= file_directory_get() + "dev_project/dev_project.miproject"
+		debug_full			= true
+		debug_advanced		= true
+		debug_skip_blocks	= true
+		debug_skip_tangents	= false
+		debug_show_bones	= false
+		debug_schematics	= false
+		debug_names			= false
+		debug_saveid		= false
+		debug_unused		= false
+		debug_info			= 1
 	}
 	else
 	{
-		dev_mode_project				= ""
-		dev_mode_full					= false
-		dev_mode_advanced				= false
-		dev_mode_skip_blocks			= false
-		dev_mode_skip_tangents			= false
-		dev_mode_show_bones				= false
-		dev_mode_debug_schematics		= false
-		dev_mode_debug_names			= false
-		dev_mode_debug_saveid			= false
-		dev_mode_debug_unused			= false
+		debug_project		= ""
+		debug_full			= false
+		debug_advanced		= false
+		debug_skip_blocks	= false
+		debug_skip_tangents	= false
+		debug_show_bones	= false
+		debug_schematics	= false
+		debug_names			= false
+		debug_saveid		= false
+		debug_unused		= false
+		debug_info			= 0
 	}
 	
-	// Debug info
-	globalvar debug_indent, debug_info, debug_info_corner, debug_timer;
-	debug_indent = 0
-	debug_info = dev_mode ? 1 : 0
 	debug_info_corner = 2
+	debug_indent = 0
 	
-	// Benchmark project, overwritten by program arguments
-	globalvar benchmark_project, benchmark_exportmovie, benchmark_mode,
-			  benchmark_start, benchmark_end, benchmark_full, benchmark_debug_pass, benchmark_render_mode, benchmark_render_settings, benchmark_agent,
+	// Benchmarking/testing settings, overwritten by program arguments
+	globalvar benchmark_mode, benchmark_exportmovie,
 			  benchmark_animate_total_time, benchmark_render_total_time, benchmark_surface_total_time, benchmark_export_total_time;
+	globalvar test_project, test_frame_start, test_frame_end, test_all_frames, test_render_mode, test_render_settings, test_debug_pass, test_agent;
 			  
-	benchmark_project = ""
-	benchmark_exportmovie = false
 	benchmark_mode = false
+	benchmark_exportmovie = false
 
-	benchmark_start = -1
-	benchmark_end = -1
-	benchmark_full = false
-	benchmark_render_mode = ""
-	benchmark_render_settings = ""
-	benchmark_debug_pass = ""
-	benchmark_agent = ""
-	
-	benchmark_animate_total_time = 0
-	benchmark_render_total_time = 0
-	benchmark_surface_total_time = 0
-	benchmark_export_total_time = 0
+    benchmark_animate_total_time = 0
+    benchmark_render_total_time = 0
+    benchmark_surface_total_time = 0
+    benchmark_export_total_time = 0
+
+    test_project = ""
+	test_frame_start = -1
+	test_frame_end = -1
+	test_all_frames = false
+	test_render_mode = ""
+	test_render_settings = ""
+	test_debug_pass = ""
+	test_agent = ""
+
+	// Program arguments not available in release build
+	if (is_release())
+		return;
 	
 	// Parse arguments
 	var args = program_args_get()
@@ -73,48 +76,47 @@ function debug_startup()
 		if (a < array_length(args) - 1)
 			nextarg = args[a + 1]
 			
-		// Benchmarking flags
+		// Benchmarking/testing flags
 		switch (arg) {
-			case "--benchmark_project":	
-				benchmark_project = nextarg
+			case "--benchmark_exportmovie": benchmark_exportmovie = true break
+			case "--test":
+				test_project = nextarg
 				benchmark_mode = true
 				a++
 				break
-			case "--benchmark_exportmovie": benchmark_exportmovie = true break
-			case "--benchmark_start": benchmark_start = eval(nextarg, -1) a++ break
-			case "--benchmark_end": benchmark_end = eval(nextarg, -1) a++ break
-			case "--benchmark_full": benchmark_full = true break
-			case "--benchmark_render_mode": benchmark_render_mode = nextarg a++ break
-			case "--benchmark_render_settings": benchmark_render_settings = nextarg a++ break
-			case "--benchmark_debug_pass": benchmark_debug_pass = nextarg a++ break
-			case "--benchmark_agent": benchmark_agent = nextarg a++ break
+			case "--start":		test_frame_start = eval(nextarg, -1) a++ break
+			case "--end":		test_frame_end = eval(nextarg, -1) a++ break
+			case "--all":		test_all_frames = true break
+			case "--mode":		test_render_mode = nextarg a++ break
+			case "--set":		test_render_settings = nextarg a++ break
+			case "--pass":		test_debug_pass = nextarg a++ break
+			case "--agent":		test_agent = nextarg a++ break
 		}
 		
-		if (!is_debug())
+		if (!debug_mode)
 			continue;
 			
 		// Developer flags
 		switch (arg) {
-			case "--no_dev_mode":					dev_mode = false break
-			case "--dev_mode_project":				dev_mode_project = nextarg a++ break
-			case "--dev_mode_full":					dev_mode_full = true break
-			case "--dev_mode_trial":				dev_mode_full = false break
-			case "--dev_mode_advanced":				dev_mode_advanced = true break
-			case "--dev_mode_simple":				dev_mode_advanced = false break
-			case "--dev_mode_skip_blocks":			dev_mode_skip_blocks = true break
-			case "--no_dev_mode_skip_blocks":		dev_mode_skip_blocks = false break
-			case "--dev_mode_skip_tangents":		dev_mode_skip_tangents = true break
-			case "--no_dev_mode_skip_tangents":		dev_mode_skip_tangents = false break
-			case "--dev_mode_show_bones":			dev_mode_show_bones = true break
-			case "--no_dev_mode_show_bones":		dev_mode_show_bones = false break
-			case "--dev_mode_debug_schematics":		dev_mode_debug_schematics = true break
-			case "--no_dev_mode_debug_schematics":	dev_mode_debug_schematics = false break
-			case "--dev_mode_debug_names":			dev_mode_debug_names = true break
-			case "--no_dev_mode_debug_names":		dev_mode_debug_names = false break
-			case "--dev_mode_debug_saveid":			dev_mode_debug_saveid = true break
-			case "--no_dev_mode_debug_saveid":		dev_mode_debug_saveid = false break
-			case "--dev_mode_debug_unused":			dev_mode_debug_unused = true break
-			case "--no_dev_mode_debug_unused":		dev_mode_debug_unused = false break
+			case "--project":			debug_project = nextarg a++ break
+			case "--full":				debug_full = true break
+			case "--trial":				debug_full = false break
+			case "--advanced":			debug_advanced = true break
+			case "--simple":			debug_advanced = false break
+			case "--skip_blocks":		debug_skip_blocks = true break
+			case "--no_skip_blocks":	debug_skip_blocks = false break
+			case "--skip_tangents":		debug_skip_tangents = true break
+			case "--no_skip_tangents":	debug_skip_tangents = false break
+			case "--show_bones":		debug_show_bones = true break
+			case "--no_show_bones":		debug_show_bones = false break
+			case "--schematics":		debug_schematics = true break
+			case "--no_schematics":		debug_schematics = false break
+			case "--names":				debug_names = true break
+			case "--no_names":			debug_names = false break
+			case "--saveid":			debug_saveid = true break
+			case "--no_saveid":			debug_saveid = false break
+			case "--unused":			debug_unused = true break
+			case "--no_unused":			debug_unused = false break
 		}
 	}
 }

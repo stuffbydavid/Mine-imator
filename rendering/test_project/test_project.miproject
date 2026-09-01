@@ -2,7 +2,7 @@
 	"format": 35,
 	"created_in": "2.1.0 (WIP)",
 	"project": {
-		"name": "benchmark_project",
+		"name": "test_project",
 		"author": "",
 		"description": "",
 		"video_width": 1280,
@@ -20,18 +20,18 @@
 			"intervals_show": false,
 			"interval_size": 24,
 			"interval_offset": 0,
-			"marker": 0,
+			"marker": 31,
 			"list_width": 434,
 			"hor_scroll": 0,
 			"zoom": 4,
-			"region_start": "null",
-			"region_end": "null",
+			"region_start": 0,
+			"region_end": 10,
 			"hide_color_tag": [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 		},
 		"work_camera": {
 			"focus": [ 163.25145, 71.85285, 252.64298 ],
-			"angle_xy": -38.18791,
-			"angle_z": 17.04744,
+			"angle_xy": -38.18794,
+			"angle_z": 17.04745,
 			"roll": 0,
 			"zoom": 31.60853
 		}
@@ -98,9 +98,9 @@
 		"sky_moon_phase": 0,
 		"sky_moon_angle": 0,
 		"sky_moon_scale": 1,
-		"sky_time": -45,
-		"sky_rotation": -25.82099,
-		"sunlight_strength": 1,
+		"sky_time": -32.75415,
+		"sky_rotation": 83.48025,
+		"sunlight_strength": 0.48,
 		"sunlight_angle": 0.526,
 		"twilight": true,
 		"sky_clouds_show": true,
@@ -111,8 +111,8 @@
 		"sky_clouds_size": 1536,
 		"sky_clouds_thickness": 64,
 		"sky_clouds_offset": 0,
-		"ground_show": false,
-		"ground_name": "block/purple_terracotta",
+		"ground_show": true,
+		"ground_name": "block/quartz_block_top",
 		"ground_tex": "default",
 		"ground_tex_material": "default",
 		"ground_tex_normal": "default",
@@ -133,7 +133,7 @@
 		"leaves_acacia_color": "#77AB2F",
 		"leaves_dark_oak_color": "#77AB2F",
 		"leaves_mangrove_color": "#77AB2F",
-		"fog_show": true,
+		"fog_show": false,
 		"fog_sky": true,
 		"fog_color_custom": false,
 		"fog_color": "#78A7FF",
@@ -141,7 +141,7 @@
 		"fog_object_color": "#78A7FF",
 		"fog_distance": 10000,
 		"fog_size": 2000,
-		"fog_height": 1250,
+		"fog_height": 1000,
 		"wind": true,
 		"wind_speed": 0.1,
 		"wind_strength": 0.5,
@@ -684,7 +684,7 @@
 		{
 			"id": "VV32I4M37B27OP1E",
 			"type": "camera",
-			"name": "Test 7 camera",
+			"name": "Tests 7 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -732,7 +732,7 @@
 		{
 			"id": "0MT19YA8V5QQQP5W",
 			"type": "folder",
-			"name": "Test 7 (Particles)",
+			"name": "Tests 7 (Particles)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -1490,7 +1490,7 @@
 		{
 			"id": "LZOWQ028B8752TRL",
 			"type": "camera",
-			"name": "Test 4 camera",
+			"name": "Tests 4 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -1538,7 +1538,7 @@
 		{
 			"id": "Q9RKF6939VK097PC",
 			"type": "folder",
-			"name": "Test 4 (Subsurface scattering)",
+			"name": "Tests 4 (Subsurface scattering)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -1699,7 +1699,7 @@
 		{
 			"id": "R97G7UE06518PFY2",
 			"type": "camera",
-			"name": "Test 3 camera",
+			"name": "Tests 3 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -12346,7 +12346,7 @@
 		{
 			"id": "94LL5QL991699HU6",
 			"type": "folder",
-			"name": "Test 5 (Render distance ,texture filtering, camera FX, tonemapping)",
+			"name": "Tests 5 (Render distance ,texture filtering, camera FX, tonemapping)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -12410,7 +12410,7 @@
 		{
 			"id": "2IJ1187194MXQ46R",
 			"type": "camera",
-			"name": "Test 5 camera",
+			"name": "Tests 5 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -13452,7 +13452,7 @@
 		{
 			"id": "80IT7973A9UL86E7",
 			"type": "folder",
-			"name": "Test 1 (Reflections, Transparency, Color modes, AA, Fog)",
+			"name": "Tests 1 (Reflections, Transparency, Color modes, AA, Fog)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -13463,7 +13463,6 @@
 			},
 			"keyframes": {
 				"0": {
-					"METALLIC": 0
 				},
 				"8": {
 					"VISIBLE": false
@@ -15416,7 +15415,7 @@
 		{
 			"id": "8HE9DI441BHV51VY",
 			"type": "camera",
-			"name": "Test 1 camera",
+			"name": "Tests 1 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -15572,7 +15571,7 @@
 		{
 			"id": "6V3QAG68C1YWSR57",
 			"type": "camera",
-			"name": "Test 2 camera",
+			"name": "Tests 2 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -15621,7 +15620,7 @@
 		{
 			"id": "LBE2EF72E9W6KSE7",
 			"type": "folder",
-			"name": "Test 2 (Point lights, Spot lights, Transparent shadows)",
+			"name": "Tests 2 (Point lights, Spot lights, Transparent shadows)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -15889,7 +15888,7 @@
 		{
 			"id": "Q236B249J232OH1S",
 			"type": "folder",
-			"name": "Test 3 (AO, Indirect lighting)",
+			"name": "Tests 3 (AO, Indirect lighting)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -21512,7 +21511,7 @@
 		{
 			"id": "U7G48Z2YQTSDK7E3",
 			"type": "folder",
-			"name": "Test 6 (Animation, bending, batching, frustum culling)",
+			"name": "Tests 6 (Animation, bending, batching, frustum culling)",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,
@@ -21576,7 +21575,7 @@
 		{
 			"id": "O9S47209X4GIQS9I",
 			"type": "camera",
-			"name": "Test 6 camera",
+			"name": "Tests 6 camera",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": false,

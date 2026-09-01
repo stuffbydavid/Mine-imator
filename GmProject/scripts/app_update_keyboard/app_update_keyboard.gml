@@ -3,7 +3,7 @@
 
 function app_update_keyboard()
 {
-	if (dev_mode)
+	if (debug_mode)
 	{
 		if (keyboard_check_pressed(vk_f7))
 			minecraft_assets_reload()
