@@ -5,7 +5,7 @@
 function render_high_reflections(surf)
 {
 	// Raytrace
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, true)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
 	surface_set_target(render_surface_specular)
 	{
 		gpu_set_texrepeat(false)
@@ -27,7 +27,7 @@ function render_high_reflections(surf)
 	surface_reset_target()
 	
 	// Resolve
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
 	surface_set_target(render_surface_hdr[0])
 	{
 		draw_clear_alpha(c_black, 0)
@@ -47,8 +47,7 @@ function render_high_reflections(surf)
 	surface_reset_target()
 	
 	// Add
-	render_surface_hdr[2] = surface_require(render_surface_hdr[2], render_width, render_height, true, true)
-	surface_set_target(render_surface_hdr[2])
+	surface_set_target(render_surface_specular)
 	{
 		draw_clear_alpha(c_black, 0)
 		
@@ -67,7 +66,7 @@ function render_high_reflections(surf)
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
-		draw_surface_exists(render_surface_hdr[2], 0, 0)
+		draw_surface_exists(render_surface_specular, 0, 0)
 	}
 	surface_reset_target()
 	

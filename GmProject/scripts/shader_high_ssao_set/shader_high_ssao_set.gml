@@ -14,7 +14,6 @@ function shader_high_ssao_set(mask)
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	gpu_set_texrepeat_ext(sampler_map[?"uMaskBuffer"], true)
 	
-	render_set_uniform("uNormalBufferScale", is_cpp() ? normal_buffer_scale : 1)
 	render_set_uniform("uNear", depth_near)
 	render_set_uniform("uFar", depth_far)
 	render_set_uniform("uProjMatrix", proj_matrix)

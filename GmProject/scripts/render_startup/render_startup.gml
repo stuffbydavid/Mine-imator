@@ -104,7 +104,6 @@ function render_startup()
 	
 	render_surface_hdr[0] = null
 	render_surface_hdr[1] = null
-	render_surface_hdr[2] = null
 	
 	render_surface_depth = null
 	render_surface_normal = null
@@ -211,7 +210,6 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.ALPHA_FIX] = shader_alpha_fix
 	render_mode_shader_map[?e_render_mode.ALPHA_TEST] = shader_alpha_test
 	render_mode_shader_map[?e_render_mode.DEPTH] = shader_depth
-	render_mode_shader_map[?e_render_mode.DEPTH_NO_SKY] = shader_depth
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_DEPTH] = shader_depth_ortho
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT_DEPTH] = shader_depth
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_DEPTH] = shader_depth_point

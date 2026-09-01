@@ -84,16 +84,16 @@ float unpackValue(vec4 c)
 #region NORMAL_BUFFER_LIB
 #pragma shady: macro_begin NORMAL_BUFFER_LIB
 
-uniform float uNormalBufferScale;
+#define NORMAL_BUFFER_SCALE 8.0
 
 vec4 packNormal(vec3 n)
 {
-	return vec4(((n + vec3(1.0)) * 0.5) * uNormalBufferScale, 1.0);
+	return vec4(((n + vec3(1.0)) * 0.5) * NORMAL_BUFFER_SCALE, 1.0);
 }
 
 vec3 unpackNormal(vec4 c)
 {
-	return (c.rgb / uNormalBufferScale) * 2.0 - 1.0;
+	return (c.rgb / NORMAL_BUFFER_SCALE) * 2.0 - 1.0;
 }
 
 #pragma shady: macro_end

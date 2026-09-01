@@ -14,8 +14,6 @@ function shader_high_raytrace_set(mode, surf = null)
 	
 	render_set_uniform_int("uRayType", mode)
 	
-	render_set_uniform("uNormalBufferScale", is_cpp() ? normal_buffer_scale : 1)
-	
 	if (mode = e_raytrace.INDIRECT)
 	{
 		render_set_uniform("uPrecision", app.project_render_indirect_precision)
