@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.08.30"
+		"lastchange": "2026.09.02"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -3325,6 +3325,7 @@
 			"rotation": "ROTATION",
 			"rotation/": {
 				"initial": "Initial rotation",
+				"spawnerangle": "Use spawner angle",
 				"extend": "Separate XYZ settings",
 				"xyz": "Initial XYZ",
 				"x": "Initial X",

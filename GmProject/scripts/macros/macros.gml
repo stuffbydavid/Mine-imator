@@ -24,7 +24,7 @@ function macros()
 	#macro mineimator_version_extra		"WIP"		// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
 	#macro mineimator_version_date		"2026.09.XX"
-	#macro minecraft_version			"26.3-snapshot-10"
+	#macro minecraft_version			"26.3-pre-1"
 	#macro gm_runtime					GM_runtime_version
 	
 	// File formats

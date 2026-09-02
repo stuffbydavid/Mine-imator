@@ -70,6 +70,7 @@ function ptype_event_create()
 	spd_mul_random_min = vec3(0.75)
 	spd_mul_random_max = vec3(0.9)
 	
+	rot_spawner_angle = false
 	rot = vec3(0)
 	rot_israndom = vec3(true)
 	rot_random_min = vec3(0)

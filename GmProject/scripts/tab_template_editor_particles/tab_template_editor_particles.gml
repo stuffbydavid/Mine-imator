@@ -645,6 +645,11 @@ function tab_template_editor_particles()
 				capwid = (ptype_edit.rot_extend ? text_caption_width("particleeditortyperotationx", "particleeditortyperotationy", "particleeditortyperotationz") :
 													 text_caption_width("particleeditortyperotationxyz"))
 				
+				// Use spawner angle
+				tab_control_switch()
+				draw_switch("particleeditortyperotationspawnerangle", dx, dy, ptype_edit.rot_spawner_angle, action_lib_pc_type_rot_spawner_angle)
+				tab_next()
+				
 				// Extend XYZ settings
 				tab_control_switch()
 				draw_switch("particleeditortyperotationextend", dx, dy, ptype_edit.rot_extend, action_lib_pc_type_rot_extend)

@@ -24,6 +24,12 @@ function interface_update()
 {
 	with (setting_theme)
 	{
+		c_level_top = color_ease(c_level_top, level_top)
+		c_level_middle = color_ease(c_level_middle, level_middle)
+		c_level_bottom = color_ease(c_level_bottom, level_bottom)
+		//c_viewport_top = color_ease(c_viewport_top, viewport_top)
+		//c_viewport_bottom = color_ease(c_viewport_bottom, viewport_bottom)
+		
 		c_text_main = color_ease(c_text_main, text_main)
 		c_text_secondary = color_ease(c_text_secondary, text_secondary)
 		c_text_tertiary = color_ease(c_text_tertiary, text_tertiary)
@@ -33,22 +39,18 @@ function interface_update()
 		a_button_text = alpha_ease(a_button_text, button_text_alpha)
 		a_dark_overlay = alpha_ease(a_dark_overlay, dark_overlay_alpha)
 		
-		c_level_top = color_ease(c_level_top, level_top)
-		c_level_middle = color_ease(c_level_middle, level_middle)
-		c_level_bottom = color_ease(c_level_bottom, level_bottom)
-		c_viewport_top = color_ease(c_viewport_top, viewport_top)
-		c_viewport_bottom = color_ease(c_viewport_bottom, viewport_bottom)
-		c_error = color_ease(c_error, red_error)
-		c_warning = color_ease(c_warning, yellow_warning)
-		c_success = color_ease(c_success, green_success)
 		c_axisred = color_ease(c_axisred, red)
 		c_axisgreen = color_ease(c_axisgreen, green)
 		c_axisblue = color_ease(c_axisblue, blue)
-		c_bend = color_ease(c_bend, pink)
-		
 		c_axiscyan = color_ease(c_axiscyan, cyan)
 		c_axisyellow = color_ease(c_axisyellow, yellow)
 		c_axismagenta = color_ease(c_axismagenta, magenta)
+		//c_bend = color_ease(c_bend, pink)
+	
+		//c_info = color_ease(c_info, toast_color[e_toast.INFO])
+		//c_success = color_ease(c_success, toast_color[e_toast.POSITIVE])
+		//c_warning = color_ease(c_warning, toast_color[e_toast.WARNING])
+		//c_error = color_ease(c_error, toast_color[e_toast.NEGATIVE])
 		
 		// Accent color(s)
 		if (app.setting_accent = 9)
@@ -59,4 +61,5 @@ function interface_update()
 	
 	interface_update_accent()
 }
+
 */
