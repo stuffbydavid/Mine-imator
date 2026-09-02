@@ -44,12 +44,6 @@ function render_high_shadows()
 	}
 	surface_reset_target()
 	
-	surface_set_target(render_surface_specular)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
-	
 	taa_matrix = taa_jitter_matrix
 	
 	#region Sun

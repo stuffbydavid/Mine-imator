@@ -1,21 +1,41 @@
-/// render_high_passes()
+/// render_high_create_gbuffers()
 /// @arg Creates render passes for use re-used data in more complex effects.
 
-function render_high_passes()
+/*
+	G-Buffers docs:
+	
+	render_surface_diffuse
+		- RGBA: Diffuse data
+	
+	render_surface_depth (r32float)
+		- R: Depth
+	
+	render_surface_normal (rgba32float)
+		- RGB: View-space normal
+		- A: Emissive
+	
+	render_surface_material
+		- R: Roughness
+		- G: Metallic
+		- B: Fresnel Term
+		- A: Unused
+	
+	render_surface_specular
+		- RGB: Glint
+		- A: Unused
+	
+	Specular is an additive effect, used for glint/specular/reflections.
+*/
+
+function render_high_create_gbuffers()
 {
 	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
-	
 	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
 	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
 	
-	// Clear specular
-	surface_set_target(render_surface_specular)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
+	render_high_clear_gbuffers()
 	
 	// Diffuse data
 	surface_set_target(render_surface_diffuse)
@@ -48,27 +68,10 @@ function render_high_passes()
 	surface_reset_target()
 	
 	// G-buffers
-	surface_set_target(render_surface_material)
-	{
-		draw_clear(c_black)
-	}
-	surface_reset_target()
-
-	surface_set_target(render_surface_depth)
-	{
-		draw_clear(c_white)
-	}
-	surface_reset_target()
-
-	surface_set_target(render_surface_normal)
-	{
-		draw_clear_alpha(c_black, 0)
-	}
-	surface_reset_target()
-
 	surface_set_target_ext(0, render_surface_depth)
 	surface_set_target_ext(1, render_surface_normal)
 	surface_set_target_ext(2, render_surface_material)
+	surface_set_target_ext(3, render_surface_specular)
 	{
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		render_world_start(depth_far)

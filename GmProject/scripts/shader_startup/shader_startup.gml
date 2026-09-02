@@ -76,7 +76,6 @@ function shader_startup()
 		new_shader("shader_high_indirect_blur")
 		new_shader("shader_tonemap")
 		new_shader("shader_clip")
-		new_shader("shader_high_glint")
 		
 		shader_texture_surface = false
 		shader_texture_filter_linear = false
@@ -431,6 +430,13 @@ function shader_startup()
 	{
 		shader_material_uniforms()
 		
+		new_shader_uniform("uGamma")
+		new_shader_sampler("uGlintTexture")
+		new_shader_uniform("uGlintOffset")
+		new_shader_uniform("uGlintSize")
+		new_shader_uniform("uGlintEnabled")
+		new_shader_uniform("uGlintStrength")
+
 		new_shader_uniform("uIsSky")
 		new_shader_uniform("uNear")
 		new_shader_uniform("uFar")
@@ -521,16 +527,6 @@ function shader_startup()
 	{
 		new_shader_uniform("uBox")
 		new_shader_uniform("uScreenSize")
-	}
-	
-	with (shader_map[?shader_high_glint])
-	{
-		new_shader_uniform("uGamma")
-		new_shader_sampler("uGlintTexture")
-		new_shader_uniform("uGlintOffset")
-		new_shader_uniform("uGlintSize")
-		new_shader_uniform("uGlintEnabled")
-		new_shader_uniform("uGlintStrength")
 	}
 	
 	return true

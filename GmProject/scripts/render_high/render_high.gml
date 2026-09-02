@@ -29,7 +29,7 @@ function render_high()
 		render_high_update_taa()
 		
 		// Create render passes
-		render_high_passes()
+		render_high_create_gbuffers()
 		
 		// Shadows
 		if (render_shadows)

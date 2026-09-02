@@ -221,7 +221,6 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.AO_MASK] = shader_replace
 	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
 	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
-	render_mode_shader_map[?e_render_mode.GLINT] = shader_high_glint
 	
 	// Init settings
 	project_reset_render()
