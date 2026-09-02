@@ -4,25 +4,6 @@ function render_high_ssao()
 {
 	render_ssao_kernel = render_generate_sample_kernel(12)
 	
-	// Render mask
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	surface_set_target(render_surface[2])
-	{
-		draw_clear(c_black)
-		render_world_start()
-		render_world(e_render_mode.AO_MASK)
-		render_world_done()
-		
-		// 2D mode
-		render_set_projection_ortho(0, 0, render_width, render_height, 0)
-		
-		// Alpha fix
-		gpu_set_blendmode_ext(bm_src_color, bm_one) 
-		draw_box(0, 0, render_width, render_height, false, c_black, 1)
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
-	
 	// Calculate SSAO
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surface_set_target(render_surface[0])
@@ -33,7 +14,7 @@ function render_high_ssao()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_ssao_set(render_surface[2])
+			shader_high_ssao_set()
 		}
 		draw_blank(0, 0, render_width, render_height) // Blank quad
 		with (render_shader_obj)

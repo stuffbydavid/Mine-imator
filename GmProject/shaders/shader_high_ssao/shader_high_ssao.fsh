@@ -4,8 +4,8 @@ varying vec2 vTexCoord;
 
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
+uniform sampler2D uMaterialBuffer;
 uniform sampler2D uNoiseBuffer;
-uniform sampler2D uMaskBuffer;
 
 uniform mat4 uProjMatrix;
 
@@ -25,7 +25,7 @@ uniform vec4 uColor;
 float getSSAOstrength(vec2 uv)
 {
 	float emissive = texture2D(uNormalBuffer, uv).a;
-	float mask = texture2D(uMaskBuffer, uv).r;
+	float mask = texture2D(uMaterialBuffer, uv).a;
 	return (1.0 - clamp(emissive, 0.0, 1.0)) * mask;
 }
 

@@ -58,6 +58,7 @@ function render_world_tl_reset()
 	// Fog
 	shader_uniform_fog = true
 	render_set_uniform_int("uFogShow", shader_uniform_fog)
+	render_set_uniform("uSSAO", 1)
 	
 	// SSS
 	shader_uniform_sss = 0

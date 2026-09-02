@@ -6,7 +6,7 @@ function render_world_ground()
 	if (!background_ground_show)
 		return 0
 	
-	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
+	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
 	
 	// Blend

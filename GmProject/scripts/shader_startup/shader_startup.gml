@@ -312,8 +312,8 @@ function shader_startup()
 	{
 		new_shader_sampler("uDepthBuffer")
 		new_shader_sampler("uNormalBuffer")
+		new_shader_sampler("uMaterialBuffer")
 		new_shader_sampler("uNoiseBuffer")
-		new_shader_sampler("uMaskBuffer")
 		new_shader_uniform("uNear")
 		new_shader_uniform("uFar")
 		new_shader_uniform("uProjMatrix")
@@ -438,6 +438,7 @@ function shader_startup()
 		new_shader_uniform("uGlintStrength")
 
 		new_shader_uniform("uIsSky")
+		new_shader_uniform("uSSAO")
 		new_shader_uniform("uNear")
 		new_shader_uniform("uFar")
 	}

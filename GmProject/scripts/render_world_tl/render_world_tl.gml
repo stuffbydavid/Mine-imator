@@ -80,8 +80,8 @@ function render_world_tl()
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
-	if (render_mode = e_render_mode.AO_MASK)
-		render_set_uniform_color("uReplaceColor", ssao ? merge_color(c_black, c_white, shader_blend_alpha) : c_black, 1)
+	if (render_mode = e_render_mode.G_BUFFERS)
+		render_set_uniform("uSSAO", ssao ? shader_blend_alpha : 0)
 	
 	if (colors_ext != shader_uniform_color_ext ||
 		value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||

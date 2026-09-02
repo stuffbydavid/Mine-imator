@@ -844,7 +844,6 @@ function enums()
 		COLOR_GLOW,
 		SCENE_TEST,
 		G_BUFFERS,
-		AO_MASK,
 		SUBSURFACE,
 		GLINT
 	}

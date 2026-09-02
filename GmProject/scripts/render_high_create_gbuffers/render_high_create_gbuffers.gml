@@ -18,7 +18,7 @@
 		- R: Roughness
 		- G: Metallic
 		- B: Fresnel Term
-		- A: Unused
+		- A: SSAO Mask
 	
 	render_surface_specular
 		- RGB: Glint
