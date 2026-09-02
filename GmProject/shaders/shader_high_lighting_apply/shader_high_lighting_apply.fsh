@@ -13,8 +13,6 @@ uniform float uGamma;
 
 varying vec2 vTexCoord;
 
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
-
 void main()
 {
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
@@ -40,7 +38,7 @@ void main()
 	
 	// Add emissive
 	if (uShadowsEnabled > 0)
-		diffuse += unpackValue(texture2D(uEmissive, vTexCoord) * 255.0);
+		diffuse += texture2D(uEmissive, vTexCoord).a;
 	
 	baseColor.rgb *= mix(vec3(1.0), diffuse, mask);
 	

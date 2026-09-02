@@ -313,7 +313,6 @@ function shader_startup()
 	{
 		new_shader_sampler("uDepthBuffer")
 		new_shader_sampler("uNormalBuffer")
-		new_shader_sampler("uEmissiveBuffer")
 		new_shader_sampler("uNoiseBuffer")
 		new_shader_sampler("uMaskBuffer")
 		new_shader_uniform("uNear")

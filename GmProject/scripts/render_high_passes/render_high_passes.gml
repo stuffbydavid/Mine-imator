@@ -4,7 +4,6 @@
 function render_high_passes()
 {
 	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
-	render_surface_emissive = surface_require(render_surface_emissive, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
 	
@@ -55,12 +54,6 @@ function render_high_passes()
 	}
 	surface_reset_target()
 
-	surface_set_target(render_surface_emissive)
-	{
-		draw_clear(c_black)
-	}
-	surface_reset_target()
-
 	surface_set_target(render_surface_depth)
 	{
 		draw_clear(c_white)
@@ -76,11 +69,12 @@ function render_high_passes()
 	surface_set_target_ext(0, render_surface_depth)
 	surface_set_target_ext(1, render_surface_normal)
 	surface_set_target_ext(2, render_surface_material)
-	surface_set_target_ext(3, render_surface_emissive)
 	{
+		gpu_set_blendmode_ext(bm_one, bm_zero)
 		render_world_start(depth_far)
 		render_world(e_render_mode.G_BUFFERS)
 		render_world_done()
+		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	

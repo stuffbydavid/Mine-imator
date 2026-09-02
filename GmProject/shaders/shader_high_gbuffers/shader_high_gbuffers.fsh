@@ -17,7 +17,6 @@ varying vec4 vCustom;
 #pragma shady: inline(common_material.NORMAL_MAP_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
-#pragma shady: inline(common_util.PACK_VALUE_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 
 void main()
@@ -36,7 +35,6 @@ void main()
 		F = 0.0;
 
 	gl_FragData[0] = vec4(vDepth, 0.0, 0.0, 1.0); // Depth
-	gl_FragData[1] = packNormal(getMappedNormal(tex, getTBN(vNormalView, vTangentView))); // Normal
+	gl_FragData[1] = vec4(packNormal(getMappedNormal(tex, getTBN(vNormalView, vTangentView))).rgb, emissive); // Normal, emissive
 	gl_FragData[2] = vec4(roughness, metallic, F, 1.0); // Material
-	gl_FragData[3] = vec4(packValue((emissive / 255.0) * baseColor.a), baseColor.a); // Emissive
 }

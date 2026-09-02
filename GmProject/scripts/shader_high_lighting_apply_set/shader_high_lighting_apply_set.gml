@@ -18,8 +18,8 @@ function shader_high_lighting_apply_set(shadows, mask, material)
 	else
 		render_set_uniform_int("uSpecularEnabled", false)
 	
-	if ((render_shadows || render_ssao) && surface_exists(render_surface_emissive))
-		texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_emissive))
+	if ((render_shadows || render_ssao) && surface_exists(render_surface_normal))
+		texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_normal))
 	
 	texture_set_stage(sampler_map[?"uMask"], surface_get_texture(mask))
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(material))

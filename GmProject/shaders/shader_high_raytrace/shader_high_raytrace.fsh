@@ -41,7 +41,6 @@ uniform float uIndirectStength;
 
 uniform float uSampleIndex;
 
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 #pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
@@ -269,7 +268,7 @@ void main()
 		if (rayCoord.x > 0.0)
 		{
 			// Get direct light and emissive
-			light = (texture2D(uDataBuffer, rayCoord.xy).rgb + (unpackValue(texture2D(uMaterialBuffer, rayCoord.xy)) * 255.0)) * uIndirectStength;
+			light = (texture2D(uDataBuffer, rayCoord.xy).rgb + texture2D(uNormalBuffer, rayCoord.xy).a) * uIndirectStength;
 			
 			// Diffuse tint
 			light *= texture2D(uDiffuseBuffer, rayCoord.xy).rgb;

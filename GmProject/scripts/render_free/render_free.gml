@@ -14,7 +14,6 @@ function render_free()
 	surface_free(render_surface_depth)
 	surface_free(render_surface_normal)
 	surface_free(render_surface_material)
-	surface_free(render_surface_emissive)
 	surface_free(render_surface_diffuse)
 	
 	// Rendering
