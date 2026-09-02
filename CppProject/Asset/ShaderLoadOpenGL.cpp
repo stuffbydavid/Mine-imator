@@ -24,6 +24,18 @@ namespace CppProject
 		{
 			QString header = "";
 
+			// Move preprocessor declarations to header
+			const QStringList preprocessorExceptions = { "#if", "#endif", "#ifndef" };
+			for (QString line : code.split("\n"))
+			{
+				QString declaration = line.section(" ", 0, 0);
+				if (line.startsWith("#") && !preprocessorExceptions.contains(declaration))
+				{
+					header += line + "\n";
+					code.replace(line + "\n", "");
+				}
+			}
+
 			if (!isVertex)
 			{
 				// Single rendertarget
