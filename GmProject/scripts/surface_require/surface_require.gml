@@ -5,13 +5,6 @@
 /// @arg [depth
 /// @arg [hdr]]
 
-enum e_surface_format
-{
-	rgba8unorm,
-	rgba32float,
-	r32float
-}
-
 function surface_require(surf, w, h, depth = true, surfformat = e_surface_format.rgba8unorm)
 {
 	var format, starttime;

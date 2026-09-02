@@ -100,11 +100,6 @@ function render_start()
 	depth_near = clip_near
 	depth_far = app.project_render_distance
 
-	// Depth buffer consumers
-	render_depth_normals = (render_ssao || render_indirect || render_reflections ||
-		project_render_subsurface_samples > 0 || render_camera_dof ||
-		render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL)
-	
 	// Argument overwrites size
 	if (argument_count > 2)
 	{

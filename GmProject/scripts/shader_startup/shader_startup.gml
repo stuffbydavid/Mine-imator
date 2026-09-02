@@ -68,8 +68,7 @@ function shader_startup()
 		new_shader("shader_distort")
 		new_shader("shader_high_lighting_apply")
 		new_shader("shader_high_samples_unpack")
-		new_shader("shader_high_depth_normal")
-		new_shader("shader_high_material")
+		new_shader("shader_high_gbuffers")
 		new_shader("shader_high_subsurface")
 		new_shader("shader_high_subsurface_scatter")
 		new_shader("shader_high_raytrace")
@@ -429,19 +428,13 @@ function shader_startup()
 		new_shader_uniform("uRenderBackground")
 	}
 	
-	with (shader_map[?shader_high_depth_normal])
-	{
-		shader_material_uniforms()
-		
-		new_shader_uniform("uNear")
-		new_shader_uniform("uFar")
-	}
-	
-	with (shader_map[?shader_high_material])
+	with (shader_map[?shader_high_gbuffers])
 	{
 		shader_material_uniforms()
 		
 		new_shader_uniform("uIsSky")
+		new_shader_uniform("uNear")
+		new_shader_uniform("uFar")
 	}
 	
 	with (shader_map[?shader_high_subsurface])

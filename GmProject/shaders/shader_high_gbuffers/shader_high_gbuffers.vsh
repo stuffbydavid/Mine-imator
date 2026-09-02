@@ -13,9 +13,12 @@ uniform vec4 uBlendColor;
 varying vec3 vPosition;
 varying vec2 vTexCoord;
 varying float vDepth;
-varying vec3 vNormal;
-varying vec3 vTangent;
+varying vec3 vNormalView;
+varying vec3 vTangentView;
+varying vec3 vNormalWorld;
+varying vec3 vTangentWorld;
 varying vec4 vColor;
+varying vec4 vCustom;
 
 // Texture
 uniform vec2 uTextureOffset;
@@ -37,10 +40,12 @@ void main()
 	
 	// Create vectors for TBN matrix
 	mat3 worldViewInv = inverse2(gm_Matrices[MATRIX_WORLD_VIEW]);
-	vNormal = normalize(worldViewInv * in_Normal);
-	vTangent = normalize(worldViewInv * in_Tangent);
+	vNormalView = normalize(worldViewInv * in_Normal);
+	vTangentView = normalize(worldViewInv * in_Tangent);
+	vNormalWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
+	vTangentWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
 	
 	// Color
 	vColor = uBlendColor * in_Colour;
-	
+	vCustom = in_Wave;
 }

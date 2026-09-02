@@ -843,9 +843,8 @@ function enums()
 		HIGH_FOG,
 		COLOR_GLOW,
 		SCENE_TEST,
-		HIGH_DEPTH_NORMAL,
+		G_BUFFERS,
 		AO_MASK,
-		MATERIAL,
 		SUBSURFACE,
 		GLINT
 	}
@@ -1083,6 +1082,13 @@ function enums()
 		NORMAL,
 		MATERIAL,
 		amount
+	}
+	
+	enum e_surface_format
+	{
+		rgba8unorm,
+		rgba32float,
+		r32float
 	}
 	
 	// Raytracing type

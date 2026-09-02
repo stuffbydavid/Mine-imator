@@ -1,13 +1,15 @@
 uniform sampler2D uTexture; // static
-
 uniform vec3 uCameraPosition; // static
 uniform int uIsSky;
 
 varying vec3 vPosition;
-varying vec3 vNormal;
-varying vec3 vTangent;
-varying vec4 vColor;
 varying vec2 vTexCoord;
+varying float vDepth;
+varying vec4 vColor;
+varying vec3 vNormalView;
+varying vec3 vTangentView;
+varying vec3 vNormalWorld;
+varying vec3 vTangentWorld;
 varying vec4 vCustom;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
@@ -16,6 +18,7 @@ varying vec4 vCustom;
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_util.PACK_VALUE_LIB)
+#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 
 void main()
 {
@@ -24,18 +27,16 @@ void main()
 	
 	handleAlphaDiscard(vPosition, baseColor);
 	
-	// Get material data
+	// Material
 	float roughness, metallic, emissive, F0, sss;
 	getMaterial(roughness, metallic, emissive, F0, sss);
-	
-	// Fresnel
-	float F = getFresnel(getMappedNormal(vTexCoord, getTBN(vNormal, vTangent)), F0, roughness, uCameraPosition, vPosition);
-	
+
+	float F = getFresnel(getMappedNormal(tex, getTBN(vNormalWorld, vTangentWorld)), F0, roughness, uCameraPosition, vPosition);
 	if (uIsSky > 0)
 		F = 0.0;
-	
-	gl_FragData[0] = vec4(roughness, metallic, F, 1.0);
-	
-	// Emissive
-	gl_FragData[1] = vec4(packValue((emissive / 255.0) * baseColor.a), baseColor.a);
+
+	gl_FragData[0] = vec4(vDepth, 0.0, 0.0, 1.0); // Depth
+	gl_FragData[1] = packNormal(getMappedNormal(tex, getTBN(vNormalView, vTangentView))); // Normal
+	gl_FragData[2] = vec4(roughness, metallic, F, 1.0); // Material
+	gl_FragData[3] = vec4(packValue((emissive / 255.0) * baseColor.a), baseColor.a); // Emissive
 }

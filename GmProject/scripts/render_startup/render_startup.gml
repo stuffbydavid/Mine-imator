@@ -17,7 +17,7 @@ function render_startup()
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_pass,
-			  render_tonemapper, render_exposure, render_gamma, render_depth_normals;
+			  render_tonemapper, render_exposure, render_gamma;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
 	
@@ -78,7 +78,6 @@ function render_startup()
 	render_ssao = false
 	render_shadows = false
 	render_indirect = false
-	render_depth_normals = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	render_list = ds_list_create()
@@ -221,8 +220,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
 	render_mode_shader_map[?e_render_mode.AO_MASK] = shader_replace
-	render_mode_shader_map[?e_render_mode.HIGH_DEPTH_NORMAL] = shader_high_depth_normal
-	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
+	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
 	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
 	render_mode_shader_map[?e_render_mode.GLINT] = shader_high_glint
 	

@@ -8,11 +8,8 @@ function render_high_passes()
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
 	
-	if (render_depth_normals)
-	{
-		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
-		render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
-	}
+	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
 	
 	// Clear specular
 	surface_set_target(render_surface_specular)
@@ -51,41 +48,38 @@ function render_high_passes()
 	}
 	surface_reset_target()
 	
-	// Depth, normals
-	if (render_depth_normals)
-	{
-		surface_set_target(render_surface_depth)
-		{
-			draw_clear(c_white)
-		}
-		surface_reset_target()
-
-		surface_set_target(render_surface_normal)
-		{
-			draw_clear_alpha(c_black, 0)
-		}
-		surface_reset_target()
-
-		surface_set_target_ext(0, render_surface_depth)
-		surface_set_target_ext(1, render_surface_normal)
-		{
-			gpu_set_blendmode_ext(bm_one, bm_zero)
-			render_world_start(depth_far)
-			render_world(e_render_mode.HIGH_DEPTH_NORMAL)
-			render_world_done()
-		
-			gpu_set_blendmode(bm_normal)
-		}
-		surface_reset_target()
-	}
-	
-	// Material passes
-	surface_set_target_ext(0, render_surface_material)
-	surface_set_target_ext(1, render_surface_emissive)
+	// G-buffers
+	surface_set_target(render_surface_material)
 	{
 		draw_clear(c_black)
-		render_world_start()
-		render_world(e_render_mode.MATERIAL)
+	}
+	surface_reset_target()
+
+	surface_set_target(render_surface_emissive)
+	{
+		draw_clear(c_black)
+	}
+	surface_reset_target()
+
+	surface_set_target(render_surface_depth)
+	{
+		draw_clear(c_white)
+	}
+	surface_reset_target()
+
+	surface_set_target(render_surface_normal)
+	{
+		draw_clear_alpha(c_black, 0)
+	}
+	surface_reset_target()
+
+	surface_set_target_ext(0, render_surface_depth)
+	surface_set_target_ext(1, render_surface_normal)
+	surface_set_target_ext(2, render_surface_material)
+	surface_set_target_ext(3, render_surface_emissive)
+	{
+		render_world_start(depth_far)
+		render_world(e_render_mode.G_BUFFERS)
 		render_world_done()
 	}
 	surface_reset_target()
