@@ -37,7 +37,7 @@ uniform vec4 uHSBSub;
 uniform vec4 uHSBMul;
 uniform vec4 uMixColor;
 
-void applyColorTransform(inout vec4 col, bool preserveAlpha, float mixColorAlpha)
+void applyColorTransformMixAlpha(inout vec4 col, bool preserveAlpha, float mixColorAlpha)
 {
 	float alpha = col.a;
 	col = clamp(col + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
@@ -49,7 +49,7 @@ void applyColorTransform(inout vec4 col, bool preserveAlpha, float mixColorAlpha
 
 void applyColorTransform(inout vec4 col, bool preserveAlpha)
 {
-	applyColorTransform(col, preserveAlpha, uMixColor.a);
+	applyColorTransformMixAlpha(col, preserveAlpha, uMixColor.a);
 }
 
 #pragma shady: macro_end

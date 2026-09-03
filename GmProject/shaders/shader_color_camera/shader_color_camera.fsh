@@ -10,7 +10,7 @@ void main()
 {
 	gl_FragColor = vec4(uBlendColor.rgb, 1.0) * texture2D(gm_BaseTexture, vTexCoord); // Get base
 	
-	applyColorTransform(gl_FragColor, false, 1.0);
+	applyColorTransformMixAlpha(gl_FragColor, false, 1.0);
 	gl_FragColor = mix(gl_FragColor, vec4(1.0), uBrightness); // Brightness
 	gl_FragColor = mix(gl_FragColor, vec4(0.0, 0.0, 0.0, 1.0), 1.0 - uBlendColor.a); // Alpha
 }
