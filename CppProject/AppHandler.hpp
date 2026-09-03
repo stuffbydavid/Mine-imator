@@ -80,6 +80,7 @@ namespace CppProject
 		QVector<AddedWindow> addedWindows;
 
 		QBasicTimer stepTimer;
+		std::chrono::steady_clock::time_point stepDeadline;
 		BoolType blocked = false;
 
 		Timer randomizeTimer;
