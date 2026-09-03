@@ -196,18 +196,60 @@ bool readGmlTimestamps(std::istream& stream, List<String>& modifiedFiles)
 	return true;
 }
 
-class CacheWriter
+struct ByteBuffer
 {
-	std::ostream& stream_;
+	std::string data;
 
-public:
-	std::unordered_map<const Variable*, std::uint32_t> variableIds;
+	explicit ByteBuffer(std::size_t capacity)
+	{
+		data.reserve(capacity);
+	}
 
-	CacheWriter(std::ostream& stream) : stream_(stream) {}
+	std::size_t size() const noexcept { return data.size(); }
+	bool good() const noexcept { return true; }
 
 	template<class T>
-	void value(const T& input) { writeValue(stream_, input); }
-	void bytes(const String& input) { stream_.write(input.data(), static_cast<std::streamsize>(input.size())); }
+	void value(const T& input)
+	{
+		const char* bytes = reinterpret_cast<const char*>(&input);
+		data.append(bytes, sizeof(T));
+	}
+
+	void bytes(const char* input, std::size_t size)
+	{
+		data.append(input, size);
+	}
+
+	void bytes(const String& input)
+	{
+		data.append(input.data(), input.size());
+	}
+
+	template<class T>
+	void patch(std::size_t offset, const T& input)
+	{
+		std::memcpy(&data[offset], &input, sizeof(T));
+	}
+};
+
+class CacheWriter
+{
+	ByteBuffer& buf_;
+
+public:
+	const std::unordered_map<const Variable*, std::uint32_t>* variableIds = nullptr;
+
+	explicit CacheWriter(ByteBuffer& buf) : buf_(buf) {}
+
+	std::size_t size() const noexcept { return buf_.size(); }
+
+	template<class T>
+	void value(const T& input) { buf_.value(input); }
+
+	void bytes(const String& input) { buf_.bytes(input); }
+
+	template<class T>
+	void patch(std::size_t offset, const T& input) { buf_.patch(offset, input); }
 
 	void boolean(bool input) { value(static_cast<std::uint8_t>(input)); }
 	void stringId(StringId input) { value(static_cast<std::int32_t>(input.id())); }
@@ -258,8 +300,8 @@ public:
 	{
 		dataType(*input->resolvedType);
 		value(static_cast<std::int32_t>(input->resolvedTypeCpp));
-		const auto found = variableIds.find(input->assignedTo);
-		value(found == variableIds.end() ? 0u : found->second + 1u);
+		const auto found = variableIds->find(input->assignedTo);
+		value(found == variableIds->end() ? 0u : found->second + 1u);
 
 		switch (input->type)
 		{
@@ -868,18 +910,18 @@ bool readVariableList(CacheReader& reader, List<Variable*>& variables, bool load
 	return reader.valid;
 }
 
-void collectVariableIds(CacheWriter& writer, const List<Function*>& functions)
+void collectVariableIds(std::unordered_map<const Variable*, std::uint32_t>& variableIds, const List<Function*>& functions)
 {
 	std::uint32_t nextId = 0;
 	auto addMap = [&](const OrderedMap<Variable*>& variables)
 	{
 		for (Variable* variable : variables.values)
-			writer.variableIds.emplace(variable, nextId++);
+			variableIds.emplace(variable, nextId++);
 	};
 	auto addList = [&](const List<Variable*>& variables)
 	{
 		for (Variable* variable : variables)
-			writer.variableIds.emplace(variable, nextId++);
+			variableIds.emplace(variable, nextId++);
 	};
 
 	addMap(Program::globalVars);
@@ -890,10 +932,11 @@ void collectVariableIds(CacheWriter& writer, const List<Function*>& functions)
 		addList(function->vars);
 }
 
-void saveResolverState(CacheWriter& writer)
+void saveResolverState(CacheWriter& writer, std::unordered_map<const Variable*, std::uint32_t>& variableIds)
 {
 	const List<Function*> functions = functionsForCache();
-	collectVariableIds(writer, functions);
+	collectVariableIds(variableIds, functions);
+	writer.variableIds = &variableIds;
 
 	writeVariableMap(writer, Program::globalVars);
 	writeVariableMap(writer, Program::unknownScopeVars);
@@ -912,13 +955,11 @@ void saveResolverState(CacheWriter& writer)
 
 	for (Function* function : functions)
 	{
-		std::ostringstream stream(std::ios::binary);
-		CacheWriter functionWriter(stream);
-		functionWriter.variableIds = writer.variableIds;
-		functionWriter.function(function);
-		const String payload = stream.str();
-		writer.value(static_cast<std::uint64_t>(payload.size()));
-		writer.bytes(payload);
+		const std::size_t sizePos = writer.size();
+		writer.value(std::uint64_t{ 0 });
+		const std::size_t start = writer.size();
+		writer.function(function);
+		writer.patch(sizePos, static_cast<std::uint64_t>(writer.size() - start));
 	}
 	for (MacroStatement* macro : Program::macros.values)
 		writer.expression(macro->expr);
@@ -1022,6 +1063,13 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 	
 	if (!readGmlTimestamps(stream, modifiedGmlFiles))
 		return false;
+
+	for (const String& file : modifiedGmlFiles)
+	{
+		const String filename = fsString(fsPath(file).filename());
+		if (filename == "macros.gml" || filename == "enums.gml")
+			return false;
+	}
 	
 	if (!readValue(stream, payloadSize) || !readValue(stream, payloadHash))
 		return false;
@@ -1046,11 +1094,13 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 
 bool Program::saveResolverCache(const String& cacheFile, const String& fingerprint)
 {
-	std::ostringstream payloadStream(std::ios::binary);
-	CacheWriter writer(payloadStream);
-	saveResolverState(writer);
-	const String payload = payloadStream.str();
-	if (!payloadStream || payload.empty() || static_cast<std::uint64_t>(payload.size()) > MaxCacheFileSize)
+	ByteBuffer payloadBuf(32ull * 1024 * 1024);
+	CacheWriter writer(payloadBuf);
+	std::unordered_map<const Variable*, std::uint32_t> variableIds;
+	saveResolverState(writer, variableIds);
+
+	const String& payload = payloadBuf.data;
+	if (payload.empty() || static_cast<std::uint64_t>(payload.size()) > MaxCacheFileSize)
 	{
 		Console::writeLine("WARNING: Resolver cache is too large to save");
 		return false;

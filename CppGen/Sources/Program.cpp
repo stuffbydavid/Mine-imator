@@ -226,7 +226,11 @@ int Program::main(int argc, char** argv)
 		Function::enableAssignScope =
 		Program::mergeUnknownVars = true;
 		const int reloadedFunctions = hotReloadFunctions(modifiedGmlFiles);
-		Console::writeLine("Hot reloaded {0} function(s) from {1} modified GML file(s)", reloadedFunctions, modifiedGmlFiles.size());
+		Console::writeLine(
+			"Hot reloaded {0} function" + String(reloadedFunctions != 1 ? "s" : "") + " from {1} modified GML file" + String(modifiedGmlFiles.size() != 1 ? "s" : ""),
+			reloadedFunctions,
+			modifiedGmlFiles.size()
+		);
 		hotReloaded = true;
 	}
 	timer.stop();
