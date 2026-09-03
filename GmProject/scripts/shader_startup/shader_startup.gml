@@ -69,7 +69,7 @@ function shader_startup()
 		new_shader("shader_high_lighting_apply")
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_gbuffers")
-		new_shader("shader_high_subsurface")
+		new_shader("shader_high_sss_fog")
 		new_shader("shader_high_subsurface_scatter")
 		new_shader("shader_high_raytrace")
 		new_shader("shader_high_raytrace_resolve")
@@ -443,7 +443,7 @@ function shader_startup()
 		new_shader_uniform("uFar")
 	}
 	
-	with (shader_map[?shader_high_subsurface])
+	with (shader_map[?shader_high_sss_fog])
 	{
 		shader_material_uniforms()
 	}

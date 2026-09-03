@@ -16,6 +16,10 @@ function surface_require(surf, w, h, depth = true, surfformat = e_surface_format
 		format = is_cpp() ? surface_rgba32float : surface_rgba16float
 	else if (surfformat == e_surface_format.r32float)
 		format = surface_r32float
+	else if (surfformat = e_surface_format.r8unorm)
+		format = surface_r8unorm
+	else if (surfformat = e_surface_format.r16float)
+		format = surface_r16float
 	else
 		format = surface_rgba8unorm
 	

@@ -844,7 +844,7 @@ function enums()
 		COLOR_GLOW,
 		SCENE_TEST,
 		G_BUFFERS,
-		SUBSURFACE,
+		SSS_FOG,
 		GLINT
 	}
 	
@@ -1087,7 +1087,9 @@ function enums()
 	{
 		rgba8unorm,
 		rgba32float,
-		r32float
+		r32float,
+		r8unorm,
+		r16float
 	}
 	
 	// Raytracing type

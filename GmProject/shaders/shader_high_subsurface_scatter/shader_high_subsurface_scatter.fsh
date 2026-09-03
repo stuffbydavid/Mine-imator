@@ -19,7 +19,6 @@ uniform vec2 uKernel[MAX_SAMPLES]; // x = weight, y = distance
 
 varying vec2 vTexCoord;
 
-#pragma shady: inline(common_util.UNPACK_VALUE_LIB)
 #pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_constants.MATH)
 
@@ -31,7 +30,7 @@ float getDepth(vec2 coord)
 void main()
 {
 	vec3 lightOrigin = texture2D(uDirect, vTexCoord).rgb;
-	float sss = (unpackValue(texture2D(uSSSBuffer, vTexCoord)) * 256.0);
+	float sss = texture2D(uSSSBuffer, vTexCoord).r;
 	
 	// Early exit
 	if (sss < 0.001)

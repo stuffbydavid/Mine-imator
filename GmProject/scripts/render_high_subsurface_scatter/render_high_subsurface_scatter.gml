@@ -2,24 +2,9 @@
 
 function render_high_subsurface_scatter()
 {
-	var ssssurf, sssrangesurf, sssblursurf;
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	var sssblursurf;
 	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
-	ssssurf = render_surface[0]
-	sssrangesurf = render_surface[1]
 	sssblursurf = render_surface_hdr[0]
-	
-	// Render subsurface properties
-	surface_set_target_ext(0, ssssurf)
-	surface_set_target_ext(1, sssrangesurf)
-	{
-		draw_clear_alpha(c_black, 1)
-		render_world_start()
-		render_world(e_render_mode.SUBSURFACE)
-		render_world_done()
-	}
-	surface_reset_target()
 	
 	if ((project_render_subsurface_samples * 2) + 1 != render_subsurface_size)
 	{
@@ -36,7 +21,7 @@ function render_high_subsurface_scatter()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_subsurface_scatter_set(ssssurf, sssrangesurf)
+			shader_high_subsurface_scatter_set(render_surface_sss, render_surface_sss_range)
 		}
 		draw_blank(0, 0, render_width, render_height)
 		with (render_shader_obj)

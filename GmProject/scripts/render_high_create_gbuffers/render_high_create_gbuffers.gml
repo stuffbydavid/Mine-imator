@@ -24,7 +24,17 @@
 		- RGB: Glint
 		- A: Unused
 	
-	Specular is an additive effect, used for glint/specular/reflections.
+	render_surface_fog (r8float)
+		- R: Fog strength
+	
+	render_surface_sss (r16float)
+		- R: Subsurface Amount
+	
+	render_surface_range
+		- RGB: Subsurface RGB radius
+		- A: Unused
+	
+	*Specular is an additive effect, used for glint/specular/reflections.
 */
 
 function render_high_create_gbuffers()
@@ -34,27 +44,34 @@ function render_high_create_gbuffers()
 	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
 	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
-	
+
+	if (render_fog_sss)
+	{
+		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, true, e_surface_format.r8unorm)
+		render_surface_sss = surface_require(render_surface_sss, render_width, render_height, false, e_surface_format.r16float)
+		render_surface_sss_range = surface_require(render_surface_sss_range, render_width, render_height, false)
+	}
+
 	render_high_clear_gbuffers()
-	
+
 	// Diffuse data
 	surface_set_target(render_surface_diffuse)
 	{
 		// Background
 		draw_clear_alpha(c_black, 0)
 		render_world_background()
-		
+
 		// World
 		render_world_start()
 		render_world_sky()
 		render_world(e_render_mode.COLOR)
 		render_world_done()
-		
+
 		// 2D mode
 		render_set_projection_ortho(0, 0, render_width, render_height, 0)
-		
+
 		// Alpha fix
-		gpu_set_blendmode_ext(bm_src_color, bm_one) 
+		gpu_set_blendmode_ext(bm_src_color, bm_one)
 		if (render_background)
 			draw_box(0, 0, render_width, render_height, false, c_black, 1)
 		else
@@ -66,7 +83,7 @@ function render_high_create_gbuffers()
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
-	
+
 	// G-buffers
 	surface_set_target_ext(0, render_surface_depth)
 	surface_set_target_ext(1, render_surface_normal)
@@ -80,19 +97,33 @@ function render_high_create_gbuffers()
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
-	
+
+	// SSS/fog buffers
+	if (render_fog_sss)
+	{
+		surface_set_target_ext(0, render_surface_fog)
+		surface_set_target_ext(1, render_surface_sss)
+		surface_set_target_ext(2, render_surface_sss_range)
+		{
+			render_world_start()
+			render_world(e_render_mode.SSS_FOG)
+			render_world_done()
+		}
+		surface_reset_target()
+	}
+
 	// Noise
 	render_sample_noise_texture = render_get_noise_texture(render_sample_current)
-	
+
 	if (render_pass = e_render_pass.DIFFUSE)
 		render_pass_surf = surface_duplicate(render_surface_diffuse)
-	
+
 	if (render_pass = e_render_pass.MATERIAL)
 		render_pass_surf = surface_duplicate(render_surface_material)
-	
+
 	if (render_pass = e_render_pass.DEPTH)
 		render_pass_surf = surface_duplicate(render_surface_depth)
-	
+
 	if (render_pass = e_render_pass.NORMAL)
 		render_pass_surf = surface_duplicate(render_surface_normal)
 }

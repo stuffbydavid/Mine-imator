@@ -17,7 +17,7 @@ function render_startup()
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_pass,
-			  render_tonemapper, render_exposure, render_gamma;
+			  render_tonemapper, render_exposure, render_gamma, render_fog_sss;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
 	
@@ -78,6 +78,7 @@ function render_startup()
 	render_ssao = false
 	render_shadows = false
 	render_indirect = false
+	render_fog_sss = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	render_list = ds_list_create()
@@ -94,6 +95,7 @@ function render_startup()
 	// Surfaces for rendering
 	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
+			  render_surface_fog, render_surface_sss, render_surface_sss_range,
 			  render_surface_samples, depth_near, depth_far, render_post_index;
 			
 	render_target = null
@@ -111,6 +113,9 @@ function render_startup()
 	
 	render_surface_shadows = null
 	render_surface_specular = null
+	render_surface_fog = null
+	render_surface_sss = null
+	render_surface_sss_range = null
 	
 	render_surface_lens = null
 	
@@ -219,7 +224,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
 	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
-	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
+	render_mode_shader_map[?e_render_mode.SSS_FOG] = shader_high_sss_fog
 	
 	// Init settings
 	project_reset_render()
