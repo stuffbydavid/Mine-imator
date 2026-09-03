@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.02"
+		"lastchange": "2026.09.03"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2064,6 +2064,13 @@
 		"settingstip": "Change world settings",
 		"reloadtip": "Reload world",
 		"gotoplayertip": "Jump to player or starting position",
+		"gotoposition": "Jump to position",
+		"gotopositionpos": "Position",
+		"gotopositionpos/": {
+			"x": "X",
+			"y": "Y",
+			"z": "Z"
+		},
 		"selection": "Selection",
 		"selectionsmall": "Small",
 		"selectionmedium": "Medium",
