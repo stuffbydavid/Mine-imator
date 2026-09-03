@@ -248,6 +248,9 @@ namespace CppProject
 		DEBUG("Resources loaded");
 
 		// Start application loop
+		fpsSampleStart = std::chrono::steady_clock::now();
+		fpsSampleFrames = 0;
+		gmlGlobal::fps = 0;
 		stepTimer.start(10, this);
 	}
 
@@ -393,6 +396,17 @@ namespace CppProject
 			addedWindows.clear();
 		}
 
+		// Measure completed frames
+		auto fpsNow = std::chrono::steady_clock::now();
+		fpsSampleFrames++;
+		double fpsElapsed = std::chrono::duration<double>(fpsNow - fpsSampleStart).count();
+		if (fpsElapsed >= 1.0)
+		{
+			gmlGlobal::fps = std::clamp(IntType(fpsSampleFrames / fpsElapsed + 0.5), IntType(0), targetFps);
+			fpsSampleFrames = 0;
+			fpsSampleStart = fpsNow;
+		}
+
 		// Update fps every second
 		if (fpsLastUpdate.msecsTo(QDateTime::currentDateTime()) > 1000)
 		{
@@ -404,7 +418,6 @@ namespace CppProject
 			if (elapsedMs > 0.0)
 				gmlGlobal::fps_real = 1.0 / (elapsedMs / 1000.0);
 
-			gmlGlobal::fps = std::clamp(gmlGlobal::fps_real, IntType(0), targetFps);
 			fpsLastUpdate = QDateTime::currentDateTime();
 
 			// Clean unused data
