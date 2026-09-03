@@ -248,7 +248,11 @@ namespace CppProject
 		DEBUG("Resources loaded");
 
 		// Start application loop
-		stepTimer.start(10, this);
+		fpsSampleStart = std::chrono::steady_clock::now();
+		fpsSampleFrames = 0;
+		gmlGlobal::fps = 0;
+		stepDeadline = fpsSampleStart + std::chrono::milliseconds(10);
+		stepTimer.start(10, Qt::PreciseTimer, this);
 	}
 
 	AppWindow* AppHandler::AddWindow(QRect rect, IntType id, AppWindow* from)
@@ -283,6 +287,7 @@ namespace CppProject
 	void AppHandler::timerEvent(QTimerEvent* event)
 	{
 		stepTimer.stop();
+		auto stepStart = std::chrono::steady_clock::now();
 
 		// Debug
 		if (keyboard_check_pressed(vk_f6) && dev_mode)
@@ -393,18 +398,28 @@ namespace CppProject
 			addedWindows.clear();
 		}
 
+		// Measure completed frames
+		auto fpsNow = std::chrono::steady_clock::now();
+		fpsSampleFrames++;
+		double fpsElapsed = std::chrono::duration<double>(fpsNow - fpsSampleStart).count();
+		if (fpsElapsed >= 1.0)
+		{
+			gmlGlobal::fps = std::clamp(IntType(fpsSampleFrames / fpsElapsed + 0.5), IntType(0), targetFps);
+			fpsSampleFrames = 0;
+			fpsSampleStart = fpsNow;
+		}
+
 		// Update fps every second
 		if (fpsLastUpdate.msecsTo(QDateTime::currentDateTime()) > 1000)
 		{
 			// Calculate delta_time as duration of previous step in microseconds
 			gmlGlobal::delta_time = fpsTimer.ElapsedMs() * 1000.0;
 
-			// Calculate fps using duration of previous step minus step timer delay
-			double elapsedMs = fpsTimer.ElapsedMs() - 1000.0 / targetFps;
+			// Measure processing time directly, excluding the variable timer delay
+			double elapsedMs = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - stepStart).count();
 			if (elapsedMs > 0.0)
 				gmlGlobal::fps_real = 1.0 / (elapsedMs / 1000.0);
 
-			gmlGlobal::fps = std::clamp(gmlGlobal::fps_real, IntType(0), targetFps);
 			fpsLastUpdate = QDateTime::currentDateTime();
 
 			// Clean unused data
@@ -420,9 +435,15 @@ namespace CppProject
 		// Delete finished sounds
 		SoundInstance::CleanSounds();
 
-		// Schedule next step
+		// Wait only for the remaining frame budget, preserving fractional milliseconds
+		auto stepNow = std::chrono::steady_clock::now();
+		auto stepBudget = std::chrono::duration<double>(1.0 / std::max(IntType(1), targetFps));
+		stepDeadline += std::chrono::duration_cast<std::chrono::steady_clock::duration>(stepBudget);
+		if (stepDeadline < stepNow)
+			stepDeadline = stepNow; // Do not accumulate catch-up frames after a slow frame or dialog
+		auto stepDelay = std::chrono::ceil<std::chrono::milliseconds>(stepDeadline - stepNow);
 		fpsTimer.Reset();
-		stepTimer.start(1000.0 / targetFps, this);
+		stepTimer.start(int(stepDelay.count()), Qt::PreciseTimer, this);
 	}
 
 	IntType AppHandler::GetMsec() const
