@@ -25,6 +25,36 @@ vec4 hsbtorgb(vec4 c)
 #pragma shady: macro_end
 #endregion
 
+#region COLOR_ADJUST_LIB
+#pragma shady: macro_begin COLOR_ADJUST_LIB
+
+#pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
+
+uniform vec4 uRGBAdd;
+uniform vec4 uRGBSub;
+uniform vec4 uHSBAdd;
+uniform vec4 uHSBSub;
+uniform vec4 uHSBMul;
+uniform vec4 uMixColor;
+
+void applyColorTransform(inout vec4 col, bool preserveAlpha, float mixColorAlpha)
+{
+	float alpha = col.a;
+	col = clamp(col + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
+	col = hsbtorgb(clamp(rgbtohsb(col) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
+	col = mix(col, vec4(uMixColor.rgb, mixColorAlpha), uMixColor.a); // Mix
+	if (preserveAlpha)
+		col.a = alpha;
+}
+
+void applyColorTransform(inout vec4 col, bool preserveAlpha)
+{
+	applyColorTransform(col, preserveAlpha, uMixColor.a);
+}
+
+#pragma shady: macro_end
+#endregion
+
 #region TONEMAP_LIB
 #pragma shady: macro_begin TONEMAP_LIB
 

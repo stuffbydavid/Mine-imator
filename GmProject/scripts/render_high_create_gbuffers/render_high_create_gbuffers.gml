@@ -109,12 +109,12 @@ function render_high_create_gbuffers()
 	// Auxiliary buffers
 	if (render_auxiliary)
 	{
-		if (render_glow)
-			surface_set_target_ext(3, render_surface_glow)
-
 		surface_set_target_ext(0, render_surface_fog)
 		surface_set_target_ext(1, render_surface_sss)
 		surface_set_target_ext(2, render_surface_sss_range)
+		if (render_glow)
+			surface_set_target_ext(3, render_surface_glow)
+
 		{
 			render_world_start()
 			render_world(e_render_mode.AUXILIARY)

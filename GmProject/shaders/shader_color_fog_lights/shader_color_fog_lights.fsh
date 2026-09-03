@@ -2,12 +2,6 @@ uniform sampler2D uTexture; // static
 uniform vec2 uTextureSize;
 
 uniform int uColorsExt;
-uniform vec4 uRGBAdd;
-uniform vec4 uRGBSub;
-uniform vec4 uHSBAdd;
-uniform vec4 uHSBSub;
-uniform vec4 uHSBMul;
-uniform vec4 uMixColor;
 
 uniform vec4 uFallbackColor;
 uniform vec4 uAmbientColor;
@@ -30,7 +24,7 @@ varying vec4 vCustom;
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_effect.EFFECT_GLINT_LIB)
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)
-#pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
+#pragma shady: inline(common_color.COLOR_ADJUST_LIB)
 #pragma shady: inline(common_color.TONEMAP_LIB)
 
 void main()
@@ -58,16 +52,10 @@ void main()
 		dif = max(vec3(0.0), dif);
 	}
 	
-	vec4 col;
+	vec4 col = baseColor;
 	
 	if (uColorsExt > 0)
-	{
-		col = clamp(baseColor + uRGBAdd - uRGBSub, 0.0, 1.0); // Transform RGB
-		col = hsbtorgb(clamp(rgbtohsb(col) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul); // Transform HSB
-		col = mix(col, uMixColor, uMixColor.a); // Mix
-	}
-	else
-		col = baseColor;
+		applyColorTransform(col, false);
 	
 	if (!isSky)
 		col.rgb = pow(col.rgb, vec3(uGamma));

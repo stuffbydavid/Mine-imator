@@ -3,12 +3,6 @@ uniform sampler2D uTexture; // static
 uniform vec3 uSSSRadius;
 uniform vec3 uCameraPosition; // static
 uniform int uColorsExt;
-uniform vec4 uRGBAdd;
-uniform vec4 uRGBSub;
-uniform vec4 uHSBAdd;
-uniform vec4 uHSBSub;
-uniform vec4 uHSBMul;
-uniform vec4 uMixColor;
 uniform int uGlow;
 uniform int uGlowTexture;
 uniform vec4 uGlowColor;
@@ -21,7 +15,7 @@ varying vec4 vCustom;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
-#pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
+#pragma shady: inline(common_color.COLOR_ADJUST_LIB)
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)
 
 void main()
@@ -39,13 +33,7 @@ void main()
 	if (uGlowTexture == 1)
 	{
 		if (uColorsExt == 1)
-		{
-			float baseAlpha = glowColor.a;
-			glowColor = clamp(glowColor + uRGBAdd - uRGBSub, 0.0, 1.0);
-			glowColor = hsbtorgb(clamp(rgbtohsb(glowColor) + uHSBAdd - uHSBSub, 0.0, 1.0) * uHSBMul);
-			glowColor = mix(glowColor, uMixColor, uMixColor.a);
-			glowColor.a = baseAlpha;
-		}
+			applyColorTransform(glowColor, true);
 
 		glowColor.rgb *= uGlowColor.rgb;
 	}

@@ -3,6 +3,9 @@
 
 function shader_material_uniforms()
 {
+	// Color
+	shader_color_uniforms()
+
 	// Render setting
 	new_shader_uniform("uDefaultEmissive")
 	new_shader_uniform("uDefaultSubsurface")

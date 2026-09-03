@@ -2129,6 +2129,7 @@
     {"id":{"name":"shader_color_camera_set","path":"scripts/shader_color_camera_set/shader_color_camera_set.yy",},},
     {"id":{"name":"shader_color_correction_set","path":"scripts/shader_color_correction_set/shader_color_correction_set.yy",},},
     {"id":{"name":"shader_color_fog_lights_set","path":"scripts/shader_color_fog_lights_set/shader_color_fog_lights_set.yy",},},
+    {"id":{"name":"shader_color_uniforms","path":"scripts/shader_color_uniforms/shader_color_uniforms.yy",},},
     {"id":{"name":"shader_depth_point_set","path":"scripts/shader_depth_point_set/shader_depth_point_set.yy",},},
     {"id":{"name":"shader_depth_set","path":"scripts/shader_depth_set/shader_depth_set.yy",},},
     {"id":{"name":"shader_distort_set","path":"scripts/shader_distort_set/shader_distort_set.yy",},},

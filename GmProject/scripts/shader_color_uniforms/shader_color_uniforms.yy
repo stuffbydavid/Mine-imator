@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"shader_color_uniforms",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_color_uniforms",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Scripts/Render/Shaders.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
