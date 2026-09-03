@@ -24,7 +24,7 @@ function render_high_clear_gbuffers()
 	}
 	surface_reset_target()
 
-	if (render_fog_sss)
+	if (render_auxiliary)
 	{
 		surface_set_target(render_surface_fog)
 		{
@@ -39,6 +39,12 @@ function render_high_clear_gbuffers()
 		surface_reset_target()
 
 		surface_set_target(render_surface_sss_range)
+		{
+			draw_clear_alpha(c_black, 1)
+		}
+		surface_reset_target()
+
+		surface_set_target(render_surface_glow)
 		{
 			draw_clear_alpha(c_black, 1)
 		}

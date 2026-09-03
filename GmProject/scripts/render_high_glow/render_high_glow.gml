@@ -6,26 +6,9 @@ function render_high_glow(prevsurf, glowfalloff = false)
 {
 	var glowcolorsurf, glowsurf, resultsurf;
 	
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	glowcolorsurf = render_surface[0]
+	glowcolorsurf = render_surface_glow
 	glowsurf = render_surface[1]
-	
-	surface_set_target(glowcolorsurf)
-	{
-		draw_clear_alpha(c_black, 1)
-		
-		render_world_start()
-		render_world(e_render_mode.COLOR_GLOW)
-		render_world_done()
-		
-		render_set_projection_ortho(0, 0, render_width, render_height, 0)
-		
-		gpu_set_blendmode_ext(bm_src_color, bm_one) 
-		draw_box(0, 0, render_width, render_height, false, c_black, 1)
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
 	
 	var glowsurftemp;
 	render_surface[2] = surface_require(render_surface[2], render_width, render_height)

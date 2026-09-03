@@ -79,6 +79,7 @@ function render_world_tl_reset()
 	shader_uniform_glow = false
 	shader_uniform_glow_texture = false
 	shader_uniform_glow_color = c_white
+	render_set_uniform_int("uOnlyRenderGlow", 0)
 	
 	// Glint
 	render_set_uniform_int("uGlintEnabled", 0)

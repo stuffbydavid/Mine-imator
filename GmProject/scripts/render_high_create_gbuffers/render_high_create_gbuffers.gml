@@ -2,37 +2,44 @@
 /// @arg Creates render passes for use re-used data in more complex effects.
 
 /*
-	G-Buffers docs:
+	Docs:
 	
 	render_surface_diffuse
 		- RGBA: Diffuse data
 	
-	render_surface_depth (r32float)
-		- R: Depth
+	shader_high_gbuffers:
 	
-	render_surface_normal (rgba32float)
-		- RGB: View-space normal
-		- A: Emissive
+		- render_surface_depth (r32float)
+			R: Depth
 	
-	render_surface_material
-		- R: Roughness
-		- G: Metallic
-		- B: Fresnel Term
-		- A: SSAO Mask
+		- render_surface_normal (rgba32float)
+			RGB: View-space normal
+			A: Emissive
 	
-	render_surface_specular
-		- RGB: Glint
-		- A: Unused
+		- render_surface_material
+			R: Roughness
+			G: Metallic
+			B: Fresnel Term
+			A: SSAO Mask
 	
-	render_surface_fog (r8float)
-		- R: Fog strength
+		- render_surface_specular
+			RGB: Glint
+			A: Unused
 	
-	render_surface_sss (r16float)
-		- R: Subsurface Amount
+	shader_high_auxiliary:
 	
-	render_surface_range
-		- RGB: Subsurface RGB radius
-		- A: Unused
+		- render_surface_fog (r8float)
+			R: Fog strength
+
+		- render_surface_sss (r16float)
+			R: Subsurface Amount
+
+		- render_surface_range
+			RGB: Subsurface RGB radius
+			A: Unused
+
+		- render_surface_glow
+			RGBA: Glow color
 	
 	*Specular is an additive effect, used for glint/specular/reflections.
 */
@@ -45,11 +52,12 @@ function render_high_create_gbuffers()
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
 	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
 
-	if (render_fog_sss)
+	if (render_auxiliary)
 	{
 		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, true, e_surface_format.r8unorm)
 		render_surface_sss = surface_require(render_surface_sss, render_width, render_height, false, e_surface_format.r16float)
 		render_surface_sss_range = surface_require(render_surface_sss_range, render_width, render_height, false)
+		render_surface_glow = surface_require(render_surface_glow, render_width, render_height, false)
 	}
 
 	render_high_clear_gbuffers()
@@ -98,18 +106,34 @@ function render_high_create_gbuffers()
 	}
 	surface_reset_target()
 
-	// SSS/fog buffers
-	if (render_fog_sss)
+	// Auxiliary buffers
+	if (render_auxiliary)
 	{
+		if (render_glow)
+			surface_set_target_ext(3, render_surface_glow)
+
 		surface_set_target_ext(0, render_surface_fog)
 		surface_set_target_ext(1, render_surface_sss)
 		surface_set_target_ext(2, render_surface_sss_range)
 		{
 			render_world_start()
-			render_world(e_render_mode.SSS_FOG)
+			render_world(e_render_mode.AUXILIARY)
 			render_world_done()
 		}
 		surface_reset_target()
+
+		// Glow alpha fix
+		if (render_glow)
+		{
+			surface_set_target(render_surface_glow)
+			{
+				render_set_projection_ortho(0, 0, render_width, render_height, 0)
+				gpu_set_blendmode_ext(bm_src_color, bm_one)
+				draw_box(0, 0, render_width, render_height, false, c_black, 1)
+				gpu_set_blendmode(bm_normal)
+			}
+			surface_reset_target()
+		}
 	}
 
 	// Noise

@@ -57,7 +57,6 @@ function shader_startup()
 		new_shader("shader_high_light_spot")
 		new_shader("shader_high_light_sun")
 		new_shader("shader_high_ssao")
-		new_shader("shader_color_glow")
 		new_shader("shader_high_bloom_threshold")
 		new_shader("shader_add")
 		new_shader("shader_blur")
@@ -69,7 +68,7 @@ function shader_startup()
 		new_shader("shader_high_lighting_apply")
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_gbuffers")
-		new_shader("shader_high_sss_fog")
+		new_shader("shader_high_auxiliary")
 		new_shader("shader_high_subsurface_scatter")
 		new_shader("shader_high_raytrace")
 		new_shader("shader_high_raytrace_resolve")
@@ -326,22 +325,6 @@ function shader_startup()
 		new_shader_uniform("uColor")
 	}
 	
-	with (shader_map[?shader_color_glow])
-	{
-		shader_material_uniforms()
-		
-		new_shader_uniform("uColorsExt")
-		new_shader_uniform("uRGBAdd")
-		new_shader_uniform("uRGBSub")
-		new_shader_uniform("uHSBAdd")
-		new_shader_uniform("uHSBSub")
-		new_shader_uniform("uHSBMul")
-		new_shader_uniform("uMixColor")
-		new_shader_uniform("uGlow")
-		new_shader_uniform("uGlowTexture")
-		new_shader_uniform("uGlowColor")
-	}
-	
 	with (shader_map[?shader_high_bloom_threshold])
 	{
 		new_shader_uniform("uThreshold")
@@ -443,9 +426,21 @@ function shader_startup()
 		new_shader_uniform("uFar")
 	}
 	
-	with (shader_map[?shader_high_sss_fog])
+	with (shader_map[?shader_high_auxiliary])
 	{
 		shader_material_uniforms()
+
+		new_shader_uniform("uColorsExt")
+		new_shader_uniform("uRGBAdd")
+		new_shader_uniform("uRGBSub")
+		new_shader_uniform("uHSBAdd")
+		new_shader_uniform("uHSBSub")
+		new_shader_uniform("uHSBMul")
+		new_shader_uniform("uMixColor")
+		new_shader_uniform("uGlow")
+		new_shader_uniform("uGlowTexture")
+		new_shader_uniform("uGlowColor")
+		new_shader_uniform("uOnlyRenderGlow")
 	}
 	
 	with (shader_map[?shader_high_subsurface_scatter])

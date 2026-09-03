@@ -23,7 +23,7 @@ function render_world_tl()
 		return 0
 	
 	// Only render glow effect?
-	if ((glow && only_render_glow) && render_mode != e_render_mode.COLOR_GLOW)
+	if ((glow && only_render_glow) && render_mode != e_render_mode.AUXILIARY)
 		return 0
 	
 	// Not registered on shadow depth testing?
@@ -194,6 +194,9 @@ function render_world_tl()
 	}
 	
 	// Glow
+	var glowonlycombined = glow && only_render_glow && render_mode = e_render_mode.AUXILIARY;
+	render_set_uniform_int("uOnlyRenderGlow", glowonlycombined)
+
 	if (glow != shader_uniform_glow ||
 		glow_texture != shader_uniform_glow_texture ||
 		value_inherit[e_value.GLOW_COLOR] != shader_uniform_glow_color)
@@ -207,12 +210,6 @@ function render_world_tl()
 			render_set_uniform_int("uGlow", 1)
 			render_set_uniform_int("uGlowTexture", glow_texture)
 			render_set_uniform_color("uGlowColor", shader_uniform_glow_color, 1)
-			
-			if (only_render_glow)
-			{
-				prevblend = gpu_get_blendmode()
-				gpu_set_blendmode(bm_add)
-			}
 		}
 		else
 		{
@@ -221,6 +218,15 @@ function render_world_tl()
 			render_set_uniform_color("uGlowColor", c_black, 0)
 		}
 	}
+
+	if (glow && only_render_glow)
+	{
+		prevblend = gpu_get_blendmode()
+		gpu_set_blendmode(bm_add)
+	}
+
+	if (glowonlycombined)
+		gpu_set_zwriteenable(false)
 	
 	// Glint mode
 	var tex, spd;
@@ -389,4 +395,7 @@ function render_world_tl()
 	
 	if (prevblend != null)
 		gpu_set_blendmode(prevblend)
+
+	if (glowonlycombined)
+		gpu_set_zwriteenable(true)
 }

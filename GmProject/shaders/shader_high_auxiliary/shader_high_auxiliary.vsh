@@ -1,4 +1,4 @@
-/// shader_high_sss_fog
+/// shader_high_auxiliary
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
