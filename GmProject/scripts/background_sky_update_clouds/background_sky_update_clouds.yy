@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "background_sky_update_clouds",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Background",
-    "path": "folders/Scripts/App/Background.yy",
+  "$GMScript":"v1",
+  "%Name":"background_sky_update_clouds",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"background_sky_update_clouds",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Background.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

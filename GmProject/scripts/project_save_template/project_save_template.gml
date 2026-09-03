@@ -23,7 +23,7 @@ function project_save_template()
 				
 				if (type = e_temp_type.BODYPART)
 					json_save_var("part_name", model_part_name)
-				else
+				else if (!is_undefined(mc_assets.model_name_map[?model_name]))
 					json_save_var("model_version", mc_assets.model_name_map[?model_name].version)
 				
 			json_save_object_done()
@@ -141,6 +141,7 @@ function project_save_template()
 				json_save_var_bool("tex_vmirror", shape_tex_vmirror)
 				json_save_var_bool("closed", shape_closed)
 				json_save_var_bool("invert", shape_invert)
+				json_save_var_bool("smooth", shape_smooth)
 				json_save_var("detail", shape_detail)
 				json_save_var_bool("face_camera", shape_face_camera)
 			json_save_object_done()

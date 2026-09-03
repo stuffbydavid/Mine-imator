@@ -79,6 +79,11 @@ namespace CppProject
 		World::preview->GoToPlayer();
 	}
 
+	void world_import_go_to_position(IntType x, IntType z)
+	{
+		World::preview->GoToPosition(x, z);
+	}
+
 	void world_import_set_selection(StringType size)
 	{
 		if (size == "small")

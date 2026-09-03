@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_block_state",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Block",
-    "path": "folders/Scripts/App/Actions/Bench/Block.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_block_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_block_state",
+  "parent":{
+    "name":"Block",
+    "path":"folders/Scripts/App/Actions/Bench/Block.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -16,7 +16,7 @@ function menu_snap_settings()
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("viewsnapscale", dx, dy, dragger_width, setting_snap_size_scale, 0.01, snap_min, no_limit, 1, snap_min, tbx_snap_scale, action_setting_snap_size_scale)
+	draw_dragger("viewsnapscale", dx, dy, dragger_width, setting_snap_size_scale, 0.01, snap_min, no_limit, 0.25, snap_min, tbx_snap_scale, action_setting_snap_size_scale)
 	tab_next()
 	
 	draw_divide(content_x, dy, content_width)

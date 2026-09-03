@@ -9,7 +9,7 @@
 
 function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 {
-	var rotmat, modelstate, colY, alphaY, colZ, alphaZ
+	var rotmat, modelstate, colY, alphaY, colZ, alphaZ;
 	
 	// Get 
 	if (res = null)
@@ -114,11 +114,14 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						faceuvrot[f] = 0
 					}
 					
+					light_emission = elem.light_emission
 					rotated = elem.rotated
 					if (rotated)
 						matrix = matrix_multiply(elem.matrix, rotmat)
 					else if (rot[X] > 0 || rot[Z] > 0)
 					{
+						var facerot = rot;
+						
 						// Rotate points
 						from = point3D_mul_matrix(elem.from, rotmat)
 						to = point3D_mul_matrix(elem.to, rotmat)
@@ -127,12 +130,31 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						{
 							var mi = min(from[a], to[a]);
 							var ma = max(from[a], to[a]);
-							from[a] = snap(mi, 0.01)
-							to[a] = snap(ma, 0.01)
+							from[a] = snap(mi, 0.002)
+							to[a] = snap(ma, 0.002)
 						}
 						
+						// Invert fixes
+						if (abs(elem.volume) > 0)
+						{
+							var swap;
+							for (var a = X; a <= Z; a++)
+							{
+								if (elem.size[a] > 0)
+									continue
+							
+								swap = from[a]
+								from[a] = to[a]
+								to[a] = swap
+							}
+						}
+						
+						// Invert rotation
+						if ((elem.size[X] < 0 || elem.size[Y] < 0) && elem.size[Z] > 0)
+							facerot[Z] = mod_fix(-facerot[Z], 360)
+						
 						// Shift face references (clockwise, Z -> X)
-						repeat (rot[Z] / 90)
+						repeat (facerot[Z] / 90)
 						{
 							var eastrotdir = facenewdir[e_dir.EAST];
 							facenewdir[e_dir.EAST] = facenewdir[e_dir.SOUTH]
@@ -141,7 +163,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							facenewdir[e_dir.NORTH] = eastrotdir
 						}
 						
-						repeat (rot[X] / 90)
+						repeat (facerot[X] / 90)
 						{
 							var uprotdir = facenewdir[e_dir.UP];
 							facenewdir[e_dir.UP] = facenewdir[e_dir.NORTH]
@@ -151,12 +173,12 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						}
 						
 						// Rotate UV by shape rotation
-						switch (rot[X])
+						switch (facerot[X])
 						{
 							case 0:
 							{
-								faceuvrot[e_dir.UP] = rot[Z]
-								faceuvrot[e_dir.DOWN] = -rot[Z]
+								faceuvrot[e_dir.UP] = facerot[Z]
+								faceuvrot[e_dir.DOWN] = -facerot[Z]
 								break
 							}
 							
@@ -165,8 +187,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								faceuvrot[facenewdir[e_dir.EAST]] = 90
 								faceuvrot[facenewdir[e_dir.WEST]] = -90
 								faceuvrot[facenewdir[e_dir.UP]] = 180
-								faceuvrot[e_dir.UP] = rot[Z]
-								faceuvrot[e_dir.DOWN] = 180 - rot[Z]
+								faceuvrot[e_dir.UP] = facerot[Z]
+								faceuvrot[e_dir.DOWN] = 180 - facerot[Z]
 								break
 							}
 							
@@ -176,8 +198,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								faceuvrot[e_dir.WEST] = 180
 								faceuvrot[e_dir.SOUTH] = 180
 								faceuvrot[e_dir.NORTH] = 180
-								faceuvrot[e_dir.UP] = rot[Z]
-								faceuvrot[e_dir.DOWN] = -rot[Z]
+								faceuvrot[e_dir.UP] = facerot[Z]
+								faceuvrot[e_dir.DOWN] = -facerot[Z]
 								break
 							}
 							
@@ -186,8 +208,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								faceuvrot[facenewdir[e_dir.EAST]] = -90
 								faceuvrot[facenewdir[e_dir.WEST]] = 90
 								faceuvrot[facenewdir[e_dir.DOWN]] = 180
-								faceuvrot[e_dir.UP] = 180 + rot[Z]
-								faceuvrot[e_dir.DOWN] = -rot[Z]
+								faceuvrot[e_dir.UP] = 180 + facerot[Z]
+								faceuvrot[e_dir.DOWN] = -facerot[Z]
 								break
 							}
 						}
@@ -332,6 +354,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							texname = texturemap[?texname]
 						}
 						
+						// All?
+						if (texname = "all")
+						{
+							if (is_undefined(texturemap[?texname]))
+							{
+								log("Could not find block texture", texname)
+								texname = ""
+								break
+							}
+							texname = texturemap[?texname]
+						}
+						
 						// Texture variable is not defined, skip face
 						if (texname = "")
 						{
@@ -370,6 +404,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							if (slot < 0)
 								slot = ds_list_find_index(mc_assets.block_texture_list, texname + " noalpha")
 							if (slot < 0)
+								slot = ds_list_find_index(mc_assets.block_texture_list, texname + " nocull")
+							if (slot < 0)
 								slot = ds_list_find_index(mc_assets.block_texture_list, texname)
 							
 							if (slot < 0) // Not in static sheet, is it animated?
@@ -383,6 +419,9 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								
 								if (slot < 0)
 									slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " opaque")
+								
+								if (slot < 0)
+									slot = ds_list_find_index(mc_assets.block_texture_ani_list, texname + " nocull")
 								
 								if (slot < 0) // Missing texture, skip face
 								{
@@ -398,15 +437,15 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								if (!is_undefined(col) && col = "water")
 									face_block_vbuffer[nd] = e_block_vbuffer.WATER
 								
-								sheetwidth = block_sheet_ani_width
-								sheetheight = block_sheet_ani_height
+								sheetwidth = minecraft_block_animated_sheet_size[0]
+								sheetheight = minecraft_block_animated_sheet_size[1]
 							}
 							else
 							{
 								face_depth[nd] = mc_res.block_sheet_depth_list[|slot]
 								face_block_vbuffer[nd] = e_block_vbuffer.NORMAL
-								sheetwidth = block_sheet_width
-								sheetheight = block_sheet_height
+								sheetwidth = minecraft_block_sheet_size[0]
+								sheetheight = minecraft_block_sheet_size[1]
 								
 								// Check color
 								var col = mc_assets.block_texture_color_map[?texname];
@@ -420,6 +459,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 										{
 											case "grass":			face_block_vbuffer[nd] = e_block_vbuffer.GRASS;				break;
 											case "foliage":			face_block_vbuffer[nd] = e_block_vbuffer.FOLIAGE;			break;
+											case "dry_foliage":		face_block_vbuffer[nd] = e_block_vbuffer.DRY_FOLIAGE;		break;
 											
 											case "oak_leaves":		face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_OAK;		break;
 											case "spruce_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_SPRUCE;		break;
@@ -451,7 +491,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									px = slot mod sheetwidth
 									py = slot div sheetwidth
 									
-									if ((nd = e_dir.UP && alphaZ = -1) || (nd = e_dir.SOUTH && alphaY = -1))
+									if (py < sheetheight && ((nd = e_dir.UP && alphaZ = -1) || (nd = e_dir.SOUTH && alphaY = -1)))
 										alpha = buffer_read_alpha(px, py, sheetwidth)
 									else
 										alpha = (nd = e_dir.UP ? alphaZ : alphaY)
@@ -475,13 +515,15 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 											{
 												case e_block_vbuffer.GRASS:				colstr = "grass";						break;
 												case e_block_vbuffer.FOLIAGE:			colstr = "foliage";						break;
+												case e_block_vbuffer.DRY_FOLIAGE:		colstr = "dry_foliage";					break;
 												case e_block_vbuffer.WATER:				colstr = "water";						break;
-												case e_block_vbuffer.LEAVES_OAK:		colstr = "foliage";						break;
+												
 												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_leaves_spruce;	break;
 												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_leaves_birch;		break;
-												case e_block_vbuffer.LEAVES_JUNGLE:		colstr = "foliage";						break;
-												case e_block_vbuffer.LEAVES_ACACIA:		colstr = "foliage";						break;
-												case e_block_vbuffer.LEAVES_DARK_OAK:	colstr = "foliage";						break;
+												case e_block_vbuffer.LEAVES_OAK:
+												case e_block_vbuffer.LEAVES_JUNGLE:
+												case e_block_vbuffer.LEAVES_ACACIA:
+												case e_block_vbuffer.LEAVES_DARK_OAK:
 												case e_block_vbuffer.LEAVES_MANGROVE:	colstr = "foliage";						break;
 											}
 											

@@ -10,7 +10,8 @@ function app_startup_themes()
 	globalvar c_text_main, a_text_main, c_text_secondary, a_text_secondary, c_text_tertiary, a_text_tertiary;
 	globalvar c_border, a_border, c_overlay, a_overlay, a_dark_overlay;
 	globalvar c_level_top, c_level_middle, c_level_bottom, c_button_text, a_button_text;
-	globalvar c_viewport_top, c_viewport_bottom, c_error, c_warning, c_success, c_axisred, c_axisgreen, c_axisblue, c_axiscyan, c_axisyellow, c_axismagenta, c_bend;
+	globalvar c_info, c_success, c_warning, c_error, c_axisred, c_axisgreen, c_axisblue, c_axiscyan, c_axisyellow, c_axismagenta;
+	//globalvar c_viewport_top, c_viewport_bottom, c_bend;
 	globalvar c_control_red, c_control_green, c_control_blue, c_control_cyan, c_control_yellow, c_control_magenta, c_control_white;
 	
 	update_interface_timeout = current_time
@@ -53,8 +54,8 @@ function app_startup_themes()
 		level_top = hex_to_color("F7FAFC")
 		level_middle = hex_to_color("ECEFF1")
 		level_bottom = hex_to_color("D7DFE2")
-		viewport_top = hex_to_color("F0FFFF")
-		viewport_bottom = hex_to_color("B5E8F2")
+		//viewport_top = hex_to_color("F0FFFF")
+		//viewport_bottom = hex_to_color("B5E8F2")
 		
 		text_main = hex_to_color("0D1214")
 		text_secondary = text_main
@@ -66,20 +67,17 @@ function app_startup_themes()
 		dark_overlay_alpha = .15
 		
 		// Other colors
-		red_error = hex_to_color("FF1D0F")
-		yellow_warning = hex_to_color("FFC01E")
-		green_success = hex_to_color("61C159")
 		red = hex_to_color("FF5656")
 		green = hex_to_color("4AB758")
 		blue = hex_to_color("1370FB")
-		pink = hex_to_color("FF5FFF")
 		cyan = hex_to_color("51C2FF")
 		yellow = hex_to_color("F4CC5D")
 		magenta = hex_to_color("FF37E8")
+		//pink = hex_to_color("FF5FFF")
 		
 		toast_color[e_toast.INFO] = hex_to_color("158AF5")
-		toast_color[e_toast.POSITIVE] = hex_to_color("64A56B")
-		toast_color[e_toast.WARNING] = hex_to_color("D09522")
+		toast_color[e_toast.POSITIVE] = hex_to_color("64A56B") //61C159
+		toast_color[e_toast.WARNING] = hex_to_color("D09522") //FFC01E
 		toast_color[e_toast.NEGATIVE] = hex_to_color("FF1D0F")
 	}
 	
@@ -107,8 +105,8 @@ function app_startup_themes()
 		level_top = hex_to_color("37444A")
 		level_middle = hex_to_color("2B373D")
 		level_bottom = hex_to_color("18242A")
-		viewport_top = hex_to_color("2B373D")
-		viewport_bottom = hex_to_color("839096")
+		//viewport_top = hex_to_color("2B373D")
+		//viewport_bottom = hex_to_color("839096")
 		
 		text_main = hex_to_color("FFFFFF")
 		text_secondary = text_main
@@ -120,16 +118,13 @@ function app_startup_themes()
 		dark_overlay_alpha = .25
 		
 		// Other colors
-		red_error = hex_to_color("FF7A72")
-		yellow_warning = hex_to_color("FFEB36")
-		green_success = hex_to_color("64E879")
 		red = hex_to_color("FF5656")
 		green = hex_to_color("23FF88")
 		blue = hex_to_color("1370FB")
-		pink = hex_to_color("FF5FFF")
 		cyan = hex_to_color("51C2FF")
 		yellow = hex_to_color("FFD969")
 		magenta = hex_to_color("FF37E8")
+		//pink = hex_to_color("FF5FFF")
 		
 		toast_color[e_toast.INFO] = hex_to_color("7EC1FF")
 		toast_color[e_toast.POSITIVE] = hex_to_color("64E879")
@@ -161,8 +156,8 @@ function app_startup_themes()
 		level_top = hex_to_color("1C1C1C")
 		level_middle = hex_to_color("101010")
 		level_bottom = hex_to_color("050505")
-		viewport_top = hex_to_color("484848")
-		viewport_bottom = hex_to_color("2B2B2B")
+		//viewport_top = hex_to_color("484848")
+		//viewport_bottom = hex_to_color("2B2B2B")
 		
 		text_main = hex_to_color("FFFFFF")
 		text_secondary = text_main
@@ -174,16 +169,13 @@ function app_startup_themes()
 		dark_overlay_alpha = .65
 		
 		// Other colors
-		red_error = hex_to_color("FF7A72")
-		yellow_warning = hex_to_color("FFEB36")
-		green_success = hex_to_color("64E879")
 		red = hex_to_color("FF5656")
 		green = hex_to_color("23FF88")
 		blue = hex_to_color("1370FB")
-		pink = hex_to_color("FF5FFF")
 		cyan = hex_to_color("51C2FF")
 		yellow = hex_to_color("FFD969")
 		magenta = hex_to_color("FF37E8")
+		//pink = hex_to_color("FF5FFF")
 		
 		toast_color[e_toast.INFO] = hex_to_color("7EC1FF")
 		toast_color[e_toast.POSITIVE] = hex_to_color("64E879")

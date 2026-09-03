@@ -26,7 +26,7 @@ function render_world_sky()
 		if (background_image_type = "sphere") // Sphere
 		{
 			if (!background_image_sphere_vbuffer)
-				background_image_sphere_vbuffer = vbuffer_create_sphere(1, point2D(1, 0), point2D(0, 1), 32, true)
+				background_image_sphere_vbuffer = vbuffer_create_sphere(1, point2D(1, 0), point2D(0, 1), 32, true, true)
 			 vbuf = background_image_sphere_vbuffer
 		}
 		else if (background_image_type = "box") // Box
@@ -34,13 +34,13 @@ function render_world_sky()
 			if (background_image_box_mapped)
 			{
 				if (!background_image_cube_mapped_vbuffer)
-					background_image_cube_mapped_vbuffer = vbuffer_create_cube(1, point2D(0, 0), point2D(1, 1), -1, 1, true, true)
+					background_image_cube_mapped_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(1, 1), -1, 1, true, true)
 				vbuf = background_image_cube_mapped_vbuffer
 			}
 			else
 			{
 				if (!background_image_cube_vbuffer)
-					background_image_cube_vbuffer = vbuffer_create_cube(1, point2D(1, 0), point2D(0, 1), 1, 1, true, false)
+					background_image_cube_vbuffer = vbuffer_create_cube(0.75, point2D(1, 0), point2D(0, 1), 1, 1, true, false)
 				vbuf = background_image_cube_vbuffer
 			}
 		}
@@ -54,14 +54,20 @@ function render_world_sky()
 	if (background_fog_show && background_fog_sky)
 	{
 		if (background_fog_vbuffer = null)
-			background_fog_vbuffer = vbuffer_create_sphere(1, point2D(0, 0), point2D(1, 1), 16, true)
+			background_fog_vbuffer = vbuffer_create_sphere(1, point2D(0, 0), point2D(1, 1), 16, true, true)
 		
 		gpu_set_texrepeat(false)
 		
 		shader_texture_filter_linear = false
 		render_set_uniform_color("uBlendColor", background_fog_color_final, 1)
 		render_set_texture(background_fog_texture)
-		vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(dis, dis, dis * ((background_fog_height / 1000) + ((background_fog_height / 1000) * max(background_sunrise_alpha, background_sunset_alpha)))))
+		
+		// Fog sphere radius cannot exceed render distance
+		var fogscalemath = ((background_fog_height / 1000) + ((background_fog_height / 1000) * max(background_sunrise_alpha, background_sunset_alpha)))
+		var fogscalexy = fogscalemath < 1 ? dis : dis / fogscalemath
+		var fogscalez = fogscalemath > 1 ? dis : dis * fogscalemath
+		vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(fogscalexy, fogscalexy, fogscalez))
+		
 		//shader_texture_filter_linear = false
 		
 		gpu_set_texrepeat(true)
@@ -71,23 +77,22 @@ function render_world_sky()
 	if (!background_image_show)
 	{
 		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], -background_sky_time, 0, background_sky_rotation, 1, 1, 1);
-		var vis;
+		
+		gpu_set_blendmode(bm_add)
 		
 		// Stars
 		if (background_night_alpha > 0)
 		{
 			if (background_sky_stars_vbuffer = null)
-				background_sky_stars_vbuffer = vbuffer_create_cube(0.8, point2D(0, 0), point2D(2, 2), false, false, true, false)
+				background_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
 			
-			render_set_uniform_color("uBlendColor", c_white, 0.4 * background_night_alpha)
+			render_set_uniform_color("uBlendColor", background_night_sky_stars_color, background_night_alpha)
 			render_set_texture(background_sky_stars_texture)
 			vbuffer_render_matrix(background_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
 		}
 		
-		gpu_set_blendmode(bm_add)
-		
 		// Sun
-		vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, 1)), -0.15, 0)
+		var vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, 1)), -0.15, 0);
 		
 		if (background_sky_sun_moon_vbuffer = null)
 			background_sky_sun_moon_vbuffer = vbuffer_create_surface(1, point2D(0, 0), point2D(1, 1), false)
@@ -108,7 +113,7 @@ function render_world_sky()
 		if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
 		{
 			var phase = background_sky_moon_phase;
-			render_set_texture(background_sky_moon_tex.moon_texture[phase])
+			render_set_texture(background_sky_moon_tex.moon_textures[phase])
 		}
 		else
 			render_set_texture(background_sky_moon_tex.texture)

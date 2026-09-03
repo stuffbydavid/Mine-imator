@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "project_save_template",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Save",
-    "path": "folders/Scripts/Project/Save.yy",
+  "$GMScript":"v1",
+  "%Name":"project_save_template",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_save_template",
+  "parent":{
+    "name":"Save",
+    "path":"folders/Scripts/Project/Save.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

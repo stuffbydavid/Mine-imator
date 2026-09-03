@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "interface_update",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Interface",
-    "path": "folders/Scripts/App/Interface.yy",
+  "$GMScript":"v1",
+  "%Name":"interface_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"interface_update",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Interface.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

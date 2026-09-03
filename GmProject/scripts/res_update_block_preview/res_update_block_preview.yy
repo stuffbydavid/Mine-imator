@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "res_update_block_preview",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Project/Resources/Update.yy",
+  "$GMScript":"v1",
+  "%Name":"res_update_block_preview",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_update_block_preview",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Resources/Update.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "particles_save",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Save",
-    "path": "folders/Scripts/Project/Save.yy",
+  "$GMScript":"v1",
+  "%Name":"particles_save",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"particles_save",
+  "parent":{
+    "name":"Save",
+    "path":"folders/Scripts/Project/Save.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

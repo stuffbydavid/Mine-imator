@@ -141,12 +141,12 @@ function tab_properties_background()
 			
 			// Sun scale
 			tab_control_dragger()
-			draw_dragger("backgroundskysunscale", dx, dy, dragger_width, round(background_sky_sun_scale * 100), 0.1, 0, 10000, 100, 1, tab.background.tbx_sky_sun_scale, action_background_sky_sun_scale)
+			draw_dragger("backgroundskysunscale", dx, dy, dragger_width, round(background_sky_sun_scale * 100), max(0.1, ceil(background_sky_sun_scale / 5) / 10), 0, 10000, 100, 1, tab.background.tbx_sky_sun_scale, action_background_sky_sun_scale)
 			tab_next()
 			
 			// Moon
 			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
-				tex = background_sky_moon_tex.moon_texture[background_sky_moon_phase]
+				tex = background_sky_moon_tex.moon_textures[background_sky_moon_phase]
 			else
 				tex = background_sky_moon_tex.texture
 			
@@ -158,7 +158,7 @@ function tab_properties_background()
 			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
 			{
 				tab_control_menu(ui_large_height)
-				draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, background_sky_moon_tex.moon_texture[background_sky_moon_phase])
+				draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, background_sky_moon_tex.moon_textures[background_sky_moon_phase])
 				tab_next()
 			}
 			
@@ -169,7 +169,7 @@ function tab_properties_background()
 			
 			// Moon scale
 			tab_control_dragger()
-			draw_dragger("backgroundskymoonscale", dx, dy, dragger_width, round(background_sky_moon_scale * 100), 0.1, 0, 10000, 100, 1, tab.background.tbx_sky_moon_scale, action_background_sky_moon_scale)
+			draw_dragger("backgroundskymoonscale", dx, dy, dragger_width, round(background_sky_moon_scale * 100), max(0.1, ceil(background_sky_moon_scale / 5) / 10), 0, 10000, 100, 1, tab.background.tbx_sky_moon_scale, action_background_sky_moon_scale)
 			tab_next()
 		}
 		
@@ -258,9 +258,9 @@ function tab_properties_background()
 		draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 		
 		if (background_ground_ani)
-			draw_texture_slot(res.block_sheet_ani_texture[block_texture_get_frame(true)], background_ground_slot - ds_list_size(mc_assets.block_texture_list), dx + wid + 18, dy + 6, 16, 16, block_sheet_ani_width, block_sheet_ani_height, block_texture_get_blend(background_ground_name, res))
+			draw_texture_slot(res.block_sheet_ani_texture[block_texture_get_frame(true)], background_ground_slot - ds_list_size(mc_assets.block_texture_list), dx + wid + 18, dy + 6, 16, 16, minecraft_block_animated_sheet_size[0], minecraft_block_animated_sheet_size[1], block_texture_get_blend(background_ground_name, res))
 		else
-			draw_texture_slot(res.block_sheet_texture, background_ground_slot, dx + wid + 18, dy + 6, 16, 16, block_sheet_width, block_sheet_height, block_texture_get_blend(background_ground_name, res))
+			draw_texture_slot(res.block_sheet_texture, background_ground_slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[0], minecraft_block_sheet_size[1], block_texture_get_blend(background_ground_name, res))
 		
 		if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 24, 24, ground_editor.show, icons.PENCIL, null, false, "tooltipchangeground"))
 			tab_toggle(ground_editor)
@@ -310,6 +310,11 @@ function tab_properties_background()
 		// Foliage
 		tab_control_color()
 		draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
+		tab_next()
+		
+		// Dry foliage
+		tab_control_color()
+		draw_button_color("backgrounddryfoliagecolor", dx, dy, dw, background_dry_foliage_color, c_plains_biome_dry_foliage, false, action_background_dry_foliage_color)
 		tab_next()
 		
 		// Water
@@ -363,8 +368,9 @@ function tab_properties_background()
 		tab_set_collumns(false)
 	}
 	
+	// Day colors
 	dy += 20
-	draw_label(text_get("backgroundscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
+	draw_label(text_get("backgrounddayscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8
 	
 	tab_set_collumns(true, floor(content_width/150))
@@ -389,7 +395,31 @@ function tab_properties_background()
 	draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color)
 	tab_next()
 	
-	// Night
+	tab_set_collumns(false)
+	
+	// Night colors
+	dy += 20
+	draw_label(text_get("backgroundnightscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
+	dy += 8
+	
+	tab_set_collumns(true, floor(content_width/150))
+	
+	// Sky
+	tab_control_color()
+	draw_button_color("backgroundnightskycolor", dx, dy, dw, background_night_sky_color, c_night_sky, false, action_background_night_sky_color)
+	tab_next()
+
+	// Clouds
+	tab_control_color()
+	draw_button_color("backgroundnightskycloudscolor", dx, dy, dw, background_night_sky_clouds_color, c_night_clouds, false, action_background_night_sky_clouds_color)
+	tab_next()
+	
+	// Stars
+	tab_control_color()
+	draw_button_color("backgroundnightskystarscolor", dx, dy, dw, background_night_sky_stars_color, c_stars, false, action_background_night_sky_stars_color)
+	tab_next()
+	
+	// Ambient
 	tab_control_color()
 	draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
 	tab_next()
@@ -507,7 +537,7 @@ function tab_properties_background()
 	if (setting_advanced_mode)
 	{
 		tab_control_dragger()
-		draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, background_texture_animation_speed, 1 / 100, 0, no_limit, 0.25, 0, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
+		draw_dragger("backgroundtextureanimationspeed", dx, dy, dragger_width, round(background_texture_animation_speed * 100), .5, -no_limit, no_limit, 100, 1, tab.background.tbx_texture_animation_speed, action_background_texture_animation_speed)
 		tab_next()
 	}
 }

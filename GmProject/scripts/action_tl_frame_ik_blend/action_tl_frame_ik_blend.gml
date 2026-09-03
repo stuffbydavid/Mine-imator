@@ -1,5 +1,5 @@
-/// action_tl_frame_ik_blend(val, add)
-/// @arg val
+/// action_tl_frame_ik_blend(value, add)
+/// @arg value
 /// @arg add
 
 function action_tl_frame_ik_blend(val, add)

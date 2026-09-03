@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "window_maximize",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Window",
-    "path": "folders/Scripts/App/Libraries/Window.yy",
+  "$GMScript":"v1",
+  "%Name":"window_maximize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_maximize",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Libraries/Window.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

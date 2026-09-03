@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "util_cpp",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Utility",
-    "path": "folders/Scripts/Utility.yy",
+  "$GMScript":"v1",
+  "%Name":"util_cpp",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"util_cpp",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/Scripts/Utility.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

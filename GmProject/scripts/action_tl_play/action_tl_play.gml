@@ -1,6 +1,7 @@
-/// action_tl_play()
+/// action_tl_play(stop)
+/// @arg stop
 
-function action_tl_play()
+function action_tl_play(stop = false)
 {
 	if (!timeline_playing)
 	{
@@ -13,7 +14,7 @@ function action_tl_play()
 	}
 	else
 	{
-		timeline_marker = round(timeline_marker)
+		timeline_marker = stop ? timeline_playing_start_marker : round(timeline_marker)
 		action_tl_play_break()
 	}
 }

@@ -14,7 +14,7 @@ function shortcut_draw(shortcut)
 	// Keyboard shortcut ("0")
 	if (shortcut[0] != null)
 	{
-		var keyboardarray = string_split(text_control_name(shortcut[0]), " + ");
+		var keyboardarray = string_split_escaped(text_control_name(shortcut[0]), " + ");
 		
 		for (var i = 0; i < array_length(keyboardarray); i++)
 		{

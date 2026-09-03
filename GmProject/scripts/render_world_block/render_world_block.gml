@@ -65,10 +65,27 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL])
 	
+	// Grass
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_grass), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
+		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+	}
+	
+	// Foliage
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE]))
+	{
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_foliage), shader_blend_alpha)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE])
+		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+	}
+	
+	// Dry foliage
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE]))
+	{
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_dry_foliage), shader_blend_alpha)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	}
 	
@@ -165,6 +182,13 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	{
 		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_foliage), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.FOLIAGE])
+	}
+	
+	// Dry foliage
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.DRY_FOLIAGE]))
+	{
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_dry_foliage), shader_blend_alpha)
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.DRY_FOLIAGE])
 	}
 	
 	// Oak leaves 

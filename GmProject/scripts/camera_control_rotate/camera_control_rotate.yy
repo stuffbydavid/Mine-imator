@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "camera_control_rotate",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Camera",
-    "path": "folders/Scripts/App/Camera.yy",
+  "$GMScript":"v1",
+  "%Name":"camera_control_rotate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"camera_control_rotate",
+  "parent":{
+    "name":"Camera",
+    "path":"folders/Scripts/App/Camera.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

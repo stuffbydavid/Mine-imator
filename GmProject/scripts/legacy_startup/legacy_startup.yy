@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "legacy_startup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Project",
-    "path": "folders/Scripts/Project.yy",
+  "$GMScript":"v1",
+  "%Name":"legacy_startup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"legacy_startup",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

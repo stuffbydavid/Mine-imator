@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "smoothstep",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/Utility/Math.yy",
+  "$GMScript":"v1",
+  "%Name":"smoothstep",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"smoothstep",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

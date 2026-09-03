@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "lib_startup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Libraries",
-    "path": "folders/Scripts/App/Libraries.yy",
+  "$GMScript":"v1",
+  "%Name":"lib_startup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"lib_startup",
+  "parent":{
+    "name":"Libraries",
+    "path":"folders/Scripts/App/Libraries.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

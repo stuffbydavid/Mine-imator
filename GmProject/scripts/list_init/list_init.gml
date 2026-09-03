@@ -7,14 +7,14 @@ function list_init(name)
 	list_init_start()
 	
 	// Model state
-	if (menu_model_current != null)
+	if (menu_model_current != null && !is_undefined(menu_model_state) && menu_model_state != null)
 	{
 		for (var i = 0; i < menu_model_state.value_amount; i++)
 			menu_add_item(menu_model_state.value_name[i], minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]))
 	}
 	
 	// Block state
-	if (menu_block_current != null)
+	if (menu_block_current != null && !is_undefined(menu_block_state) && menu_block_state != null)
 	{
 		for (var i = 0; i < menu_block_state.value_amount; i++)
 			menu_add_item(menu_block_state.value_name[i], minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]))
@@ -170,10 +170,6 @@ function list_init(name)
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
-			// Download from user
-			if (temp.model_file != null && temp.model_file.player_skin)
-				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
-			
 			// Default
 			var texobj = temp.model;
 			if (texobj != null)
@@ -230,10 +226,6 @@ function list_init(name)
 			
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
-			
-			// Download from user
-			if (temp.model_file != null && temp.model_file.player_skin)
-				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
 			
 			// Default
 			var texobj = temp.model
@@ -641,7 +633,7 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.moon_texture[background_sky_moon_phase])
+			menu_add_item(mc_res, mc_res.display_name, mc_res.moon_textures[background_sky_moon_phase])
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -649,8 +641,8 @@ function list_init(name)
 				var res = res_list.display_list[|i];
 				if (res = mc_res)
 					continue
-				if (res.moon_texture[0])
-					menu_add_item(res, res.display_name, res.moon_texture[background_sky_moon_phase])
+				if (res.moon_textures[0])
+					menu_add_item(res, res.display_name, res.moon_textures[background_sky_moon_phase])
 				else if (res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}
@@ -662,7 +654,7 @@ function list_init(name)
 		case "backgroundskymoonphase":
 		{
 			for (var p = 0; p < 8; p++)
-				menu_add_item(p, text_get("backgroundskymoonphase" + string(p + 1)), background_sky_moon_tex.moon_texture[p])
+				menu_add_item(p, text_get("backgroundskymoonphase" + string(p + 1)), background_sky_moon_tex.moon_textures[p])
 			
 			break
 		}
@@ -767,6 +759,15 @@ function list_init(name)
 		{
 			for (var p = 0; p < res_edit.scenery_palette_size; p++)
 				menu_add_item(p, text_get("resourcesscenerystructurepalettenumber", p + 1))
+			
+			break
+		}
+		
+		// Resource pack moon phase
+		case "resourcespackmoonphase":
+		{
+			for (var p = 0; p < 8; p++)
+				menu_add_item(p, text_get("resourcespackmoonphase" + string(p + 1)))
 			
 			break
 		}
@@ -1062,7 +1063,7 @@ function list_init(name)
 				texobj = tl_edit.temp.item_tex
 			
 			if (texobj.type = e_res_type.TEXTURE)
-				menu_add_item(texobj,text_get("listdefault", texobj.display_name), texobj.texture)
+				menu_add_item(texobj, text_get("listdefault", texobj.display_name), texobj.texture)
 			else if (texobj.item_sheet_texture != null)
 				menu_add_item(texobj, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
 			
@@ -1129,7 +1130,7 @@ function list_init(name)
 			menu_add_item(null, text_get("listdefault", text_get("listnone")))
 			
 			// Import from file
-			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, null, action_tl_frame_cam_lens_dirt_tex_browse)
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER, action_tl_frame_cam_lens_dirt_tex_browse)
 			
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
@@ -1441,7 +1442,7 @@ function list_init(name)
 			var itemglint = (tl_edit.glint_mode = e_glint.ITEM);
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, itemglint ? mc_res.glint_item_texture : mc_res.glint_entity_texture)
+			menu_add_item(mc_res, mc_res.display_name, itemglint ? mc_res.glint_item_texture : mc_res.glint_armor_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -1450,8 +1451,8 @@ function list_init(name)
 				if (res = mc_res)
 					continue
 				
-				if (res.glint_entity_texture || res.glint_item_texture)
-					menu_add_item(res, res.display_name, itemglint ? res.glint_item_texture : res.glint_entity_texture)
+				if (res.glint_armor_texture || res.glint_item_texture)
+					menu_add_item(res, res.display_name, itemglint ? res.glint_item_texture : res.glint_armor_texture)
 				else if (res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}

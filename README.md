@@ -13,4 +13,15 @@ Website and download: https://www.mineimator.com
 
 The software is written using GameMaker Language and converted to a separate C++ environment using a custom built GML parser (CppGen). The final executable is built for Windows, Mac OS and Linux using the Qt framework, DirectX/OpenGL rendering and various other libraries.
 
-You can open `GmProject/Mine-imator.yyp` directly in GameMaker on Windows (it may need to be converted), but to support all features you must build and run the C++ project. For full build instructions, see `BUILD.md`.
+## GameMaker project
+You can open `GmProject/Mine-imator.yyp` directly in GameMaker-LTS2026 for development and debugging, but with the following restrictions:
+* Windows-only due to `.dll` dependencies for file operations, window handling, audio importing and movie exporting
+* Limitations with `sprite_add` and grayscale/tRNS chunks in transparent PNGs, affecting certain blocks, item and cloud textures found in Minecraft resource packs
+* Slower overall performance
+* No Minecraft world importer
+* No cached scenery loading
+* No drag-n-drop support for files into Mine-imator
+* No multi-window support for secondary views
+* No "Cancel" option when closing the application
+
+To support all features you must prepare and compile the C++ project. For full build instructions, see `BUILD.md`.

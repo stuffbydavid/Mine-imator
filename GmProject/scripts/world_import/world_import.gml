@@ -24,6 +24,11 @@ function app_startup_interface_world_import()
 	for (var i = 0; i < ds_list_size(setting_world_import_filter_list); i++) // Add indices from filter list
 		sortlist_add(world_import_settings_filter_list, setting_world_import_filter_list[|i])
 	
+	tbx_worldimport_gotoposition_x = new_textbox_ninteger()
+	tbx_worldimport_gotoposition_z = new_textbox_ninteger()
+	world_import_settings_gotoposition_x = 0
+	world_import_settings_gotoposition_z = 0
+	
 	world_import_startup()
 }
 
@@ -94,6 +99,44 @@ function world_import_go_to_player()
 	show_debug_message("Go to player")
 }
 
+/// CppSeparate void world_import_go_to_position(IntType, IntType)
+/// Jumps to a specified X/Z position.
+function world_import_go_to_position(xx, zz)
+{
+	show_debug_message("Go to coordinates: [" + string(xx) + ", " + string(zz) + "]")
+}
+
+function world_import_go_to_position_posx(val, add)
+{
+	world_import_settings_gotoposition_x = val + (add ? world_import_settings_gotoposition_x : 0)
+}
+
+function world_import_go_to_position_posz(val, add)
+{
+	world_import_settings_gotoposition_z = val + (add ? world_import_settings_gotoposition_z : 0)
+}
+
+function world_import_go_to_position_draw()
+{
+	draw_set_font(font_label)
+	
+	axis_edit = X
+	textfield_group_add("worldimportgotopositionposx", world_import_settings_gotoposition_x, 0, world_import_go_to_position_posx, axis_edit, tbx_worldimport_gotoposition_x, null, 0.25)
+	axis_edit = Y //(setting_z_is_up ? Z : Y)
+	textfield_group_add("worldimportgotopositionposz", world_import_settings_gotoposition_z, 0, world_import_go_to_position_posz, axis_edit, tbx_worldimport_gotoposition_z, null, 0.25)
+	
+	tab_control_textfield_group(true)
+	draw_textfield_group("worldimportgotopositionpos", dx, dy, dw, null, -30000000, 30000000, 1, true, true, 1)
+	tab_next()
+	
+	tab_control_button_label()
+	if (draw_button_label("worldimportgotoposition", dx, dy, dw, icons.PATH_POINT, e_button.PRIMARY, null, e_anchor.LEFT))
+		world_import_go_to_position(world_import_settings_gotoposition_x, world_import_settings_gotoposition_z)
+	tab_next()
+	
+	settings_menu_w = 216 //(text_max_width("timelineintervalssize", "timelineintervalsoffset") + 16 + dragger_width) + 24
+}
+
 /// CppSeparate void world_import_set_selection(StringType size)
 function world_import_set_selection(size)
 {
@@ -131,7 +174,7 @@ function world_import_cancel()
 function world_import_update_surface(xx, yy, width, height, confirmx, confirmy, confirmwidth, confirmheight)
 {
 	surface_set_target(world_import_surface)
-	draw_clear(0)
+	draw_clear(c_level_middle)
 	surface_reset_target()
 }
 
@@ -149,10 +192,10 @@ function world_import_world_menu_init()
 function world_import_dimension_menu_init()
 {
 	menu_add_item("overworld", text_get("worldimportoverworld"))
-	if (world_import_has_dimension("nether"))
-		menu_add_item("nether", text_get("worldimportnether"))
-	if (world_import_has_dimension("end"))
-		menu_add_item("end", text_get("worldimportend"))
+	if (world_import_has_dimension("the_nether"))
+		menu_add_item("the_nether", text_get("worldimportthenether"))
+	if (world_import_has_dimension("the_end"))
+		menu_add_item("the_end", text_get("worldimporttheend"))
 }
 
 /// Draw the world import interface.
@@ -227,13 +270,9 @@ function window_draw_world_import()
 	dx += dw + spacing
 	dw = 208
 	capwid = 80
-	draw_button_menu("worldimportdimension", e_menu.LIST, dx, dy, dw, 24, world_import_dimension, text_get("worldimport" + world_import_dimension), world_import_select_dimension, false, null, null, "", null, null, capwid)
+	draw_button_menu("worldimportdimension", e_menu.LIST, dx, dy, dw, 24, world_import_dimension, text_get("worldimport" + string_replace_all(world_import_dimension, "_", "")), world_import_select_dimension, false, null, null, "", null, null, capwid)
 	
-	dx += dw
-	
-	dx += 12
-	draw_divide_vertical(dx, content_y + 6, content_height - 12)
-	dx += 12
+	dx += dw + 12
 	
 	// Buttons
 	dw = 24
@@ -247,18 +286,29 @@ function window_draw_world_import()
 	}
 	
 	dx += dw + spacing
-	if (draw_button_icon("worldimportsettings", dx, dy, dw, dw, false, icons.SETTINGS, null, false, "worldimportsettingstip"))
-		popup_show(world_import_settings_popup)
-	
-	dx += dw + spacing
-	
 	var worldpicked = world_import_world_root != "";
 	if (draw_button_icon("worldimportreload", dx, dy, dw, dw, false, icons.REFRESH, null, !worldpicked, "worldimportreloadtip"))
 		world_import_select_world(world_import_world_root, world_import_dimension)
 	
-	dx += dw + spacing
+	dx += dw + 12
+	draw_divide_vertical(dx, content_y + 6, content_height - 12)
+	
+	dx += 12
 	if (draw_button_icon("worldimportgotoplayer", dx, dy, dw, dw, false, icons.PATH_POINT, null, !worldpicked, "worldimportgotoplayertip"))
 		world_import_go_to_player()
+	dx += 24
+	
+	if (draw_button_icon("worldimportposition", dx, dy, 16, 24, settings_menu_name = "worldimportposition", icons.CHEVRON_DOWN_TINY, null, !worldpicked))
+	{
+		menu_settings_set(dx, dy, "worldimportposition", 24)
+		settings_menu_script = world_import_go_to_position_draw
+	}
+	if (settings_menu_name = "worldimportposition" && settings_menu_ani_type != "hide")
+		current_microani.active.value = true
+	
+	dx += 16 + spacing
+	if (draw_button_icon("worldimportsettings", dx, dy, dw, dw, false, icons.SETTINGS, null, false, "worldimportsettingstip"))
+		popup_show(world_import_settings_popup)
 	
 	dx += dw
 	
@@ -293,7 +343,8 @@ function window_draw_world_import()
 	{
 		dx += dw + 20
 		var size = world_import_get_selection_size();
-		draw_label(text_get("worldimportblocks", size[X], size[Y], size[Z]), dx, content_y + content_height / 2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		draw_label(text_get("worldimportblockstotal", size[X] * size[Y] * size[Z]), dx, (content_y + content_height / 2) - 8, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		draw_label(text_get("worldimportblockssizes", size[X], size[Y], size[Z]), dx, (content_y + content_height / 2) + 8, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	}
 	
 	// Draw confirm button
@@ -310,7 +361,7 @@ function window_draw_world_import()
 	{
 		var filtertext = text_get("worldimportfilteractive");
 		draw_label(filtertext, confirmx + confirmw / 2 + 1, confirmy + 80 + 1, fa_center, fa_top, c_black, 1, font_heading_big)
-		draw_label(filtertext, confirmx + confirmw / 2, confirmy + 80, fa_center, fa_top, c_yellow, 1, font_heading_big)
+		draw_label(filtertext, confirmx + confirmw / 2, confirmy + 80, fa_center, fa_top, c_warning, 1, font_heading_big)
 	}
 }
 

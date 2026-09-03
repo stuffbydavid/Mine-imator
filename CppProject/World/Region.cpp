@@ -18,10 +18,10 @@ namespace CppProject
 		anvilFormat = filename.endsWith(".mca");
 
 		// Find dimension
-		if (filename.contains("DIM-1/"))
-			dimName = "nether";
-		else if (filename.contains("DIM1/"))
-			dimName = "end";
+		if (filename.contains("DIM-1/") || filename.contains("the_nether/"))
+			dimName = "the_nether";
+		else if (filename.contains("DIM1/") || filename.contains("the_end/"))
+			dimName = "the_end";
 		else
 			dimName = "overworld";
 

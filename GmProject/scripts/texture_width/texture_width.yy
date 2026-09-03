@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "texture_width",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Texture",
-    "path": "folders/Scripts/Utility/Texture.yy",
+  "$GMScript":"v1",
+  "%Name":"texture_width",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"texture_width",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Utility/Texture.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

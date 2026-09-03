@@ -367,7 +367,12 @@ function model_shape_generate_block(bend)
 				bendvec = vec3_mul(bend, segp)
 			}
 			
-			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef)))
+			var matsca = vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef));
+			// Don't scale shapes outside bend deformation
+			//if (segpos > size[segaxis] - 0.0001)
+			//	matsca = vec3_add(vec3(1), bendscale)
+			
+			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), matsca)
 		}
 		else // Apply rotation only
 			mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)

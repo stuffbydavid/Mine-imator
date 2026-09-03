@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_save",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/Project/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_save",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_save",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

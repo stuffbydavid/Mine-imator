@@ -40,21 +40,19 @@ function app_startup_interface()
 			
 			if (!file_exists_lib(dev_mode_project))
 			{
-				setting_project_folder = filename_dir(filename_dir(dev_mode_project))
+				setting_project_folder = filename_dir(filename_dir(dev_mode_project)) + "/"
 				popup_newproject.folder = filename_name(filename_dir(dev_mode_project))
 				popup_newproject.tbx_name.text = string_replace(filename_name(dev_mode_project), filename_ext(dev_mode_project), "")
 				project_create()
 			}
-			else
-				project_load(dev_mode_project)
+			project_load(dev_mode_project)
 		}
 		else
 		{
 			var projfile = setting_project_folder + popup_newproject.folder + "/New Project.miproject";
-			if (file_exists_lib(projfile))
-				project_load(projfile)
-			else
+			if (!file_exists_lib(projfile))
 				project_create()
+			project_load(projfile)
 		}
 		
 		window_state = ""

@@ -268,7 +268,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
 			value_inherit[e_value.WIND_INFLUENCE] = value[e_value.WIND_INFLUENCE] // Multiplied
 			value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE]
-			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend)// Added
+			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend) // Added
 			value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] * (1 - ikblend) // Added
 			value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] * (1 - ikblend) // Added
 			value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten

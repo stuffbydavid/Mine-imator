@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_taskbar_progress_value_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_taskbar_progress_value_set",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Libraries/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

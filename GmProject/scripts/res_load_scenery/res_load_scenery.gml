@@ -127,13 +127,13 @@ function res_load_scenery()
 					popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
 				else
 					popup_loading.caption = text_get("loadscenerycaption", other.filename)
-				popup_loading.progress = 2 / 10
+				popup_loading.progress = 0.2
 			}
 		
 			// A null value will peform a check if block timelines should be added
 			if (scenery_tl_add = null)
 			{
-				if (mc_builder.sch_timeline_amount > 500) // More than 500 timelines, always skip
+				if (mc_builder.sch_timeline_amount > 512) // More than 512 timelines, always skip
 					scenery_tl_add = false
 				else if (mc_builder.sch_timeline_amount > 20) // More than 20 possible timelines, ask the user
 					scenery_tl_add = question(text_get("loadsceneryaddtimelines", mc_builder.sch_timeline_amount))
@@ -193,7 +193,7 @@ function res_load_scenery()
 			}
 		
 			with (app)
-				popup_loading.progress = 2 / 10 + (2 / 10) * (mc_builder.build_pos / mc_builder.build_size_total)
+				popup_loading.progress = 0.2 + (0.2) * (mc_builder.build_pos / mc_builder.build_size_total)
 					
 			if (mc_builder.build_pos = mc_builder.build_size_total)
 			{
@@ -245,7 +245,7 @@ function res_load_scenery()
 			}
 		
 			with (app)
-				popup_loading.progress = 4 / 10 + (6 / 10) * (mc_builder.build_pos / mc_builder.build_size_total)
+				popup_loading.progress = 0.4 + 0.6 * (mc_builder.build_pos / mc_builder.build_size_total)
 					
 			// All done
 			if (mc_builder.build_pos = mc_builder.build_size_total)

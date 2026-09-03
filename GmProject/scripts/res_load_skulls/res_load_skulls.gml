@@ -6,7 +6,7 @@ function res_load_skulls()
 		with (app)
 		{
 			popup_loading.text = text_get("loadsceneryblocks")
-			popup_loading.progress = 2 / 10
+			popup_loading.progress = 0.2
 		}
 				
 		load_stage = "blocks"

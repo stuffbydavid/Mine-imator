@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "type_is_timeline",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/Project/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"type_is_timeline",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"type_is_timeline",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

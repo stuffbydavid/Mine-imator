@@ -3,17 +3,16 @@
 /// @desc Parses a string of comma-separated variables and their values, eg. "foo=true,bar=10".
 /// Returns null if invalid.
 
-function string_get_state_vars(argument0)
+function string_get_state_vars(str)
 {
-	var str, vars, varslen, arr;
-	str = argument0
-	vars = string_split(str, ",")
+	var vars, varslen, arr;
+	vars = string_split_escaped(str, ",")
 	varslen = array_length(vars)
 	arr = array_create(varslen * 2)
 	
 	for (var i = 0; i < varslen; i++)
 	{
-		var nameval = string_split(vars[i], "=");
+		var nameval = string_split_escaped(vars[i], "=");
 		arr[i * 2] = nameval[0]
 		
 		if (array_length(nameval) > 1)

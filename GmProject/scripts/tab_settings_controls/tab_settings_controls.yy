@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_settings_controls",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Settings",
-    "path": "folders/Scripts/App/Interface/Tabs/Settings.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_settings_controls",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_settings_controls",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Scripts/App/Interface/Tabs/Settings.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

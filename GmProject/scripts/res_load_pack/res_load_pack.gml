@@ -32,7 +32,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackmodeltextures")
-				popup_loading.progress = 1 / 4
+				popup_loading.progress = 0.25
 			}
 			break
 		}
@@ -47,7 +47,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackblocktextures")
-				popup_loading.progress = 2 / 4
+				popup_loading.progress = 0.5
 			}
 			break
 		}
@@ -66,7 +66,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackitemtextures")
-				popup_loading.progress = 3 / 4
+				popup_loading.progress = 0.75
 			}
 			break
 		}

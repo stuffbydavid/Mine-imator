@@ -11,6 +11,7 @@ function tab_frame_editor_bend()
 	dy += 26
 	
 	var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
+	var def = tl_edit.model_part.bend_default_angle;
 	
 	// Sliders
 	var axis, axislen, axisname, wheelx, wheel, color;
@@ -45,7 +46,7 @@ function tab_frame_editor_bend()
 					continue
 				
 				tab_control_meter()
-				draw_meter("frameeditorbend" + axisname[i], dx, dy, dw, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], 0, snapval, tab.transform.tbx_bend[i], action_tl_frame_bend_angle)
+				draw_meter("frameeditorbend" + axisname[i], dx, dy, dw, tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], def[X + axis_edit], snapval, tab.transform.tbx_bend[i], action_tl_frame_bend_angle)
 				tab_next()
 			}
 		}
@@ -61,7 +62,7 @@ function tab_frame_editor_bend()
 					if (!tl_edit.model_part.bend_axis[axis_edit])
 						continue
 				
-					draw_wheel("frameeditorbendwheel" + axisname[i], wheelx[wheel], dy + 24, color[axis_edit], tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], 0, snapval, tab.transform.tbx_bend[i], action_tl_frame_bend_angle)
+					draw_wheel("frameeditorbendwheel" + axisname[i], wheelx[wheel], dy + 24, color[axis_edit], tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit], def[X + axis_edit], snapval, tab.transform.tbx_bend[i], action_tl_frame_bend_angle)
 					wheel++
 				}
 			
@@ -74,10 +75,10 @@ function tab_frame_editor_bend()
 				if (!tl_edit.model_part.bend_axis[axis_edit])
 					continue
 				
-				textfield_group_add("frameeditorbend" + axisname[i], tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], 0, action_tl_frame_bend_angle, axis_edit, tab.transform.tbx_bend[axis_edit], null, 0.1, tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit])
+				textfield_group_add("frameeditorbend" + axisname[i], tl_edit.value[e_value.BEND_ANGLE_X + axis_edit], def[X + axis_edit], action_tl_frame_bend_angle, axis_edit, tab.transform.tbx_bend[axis_edit], null, 0.1, tl_edit.model_part.bend_direction_min[axis_edit], tl_edit.model_part.bend_direction_max[axis_edit])
 			}
 			
-			tab_control_textfield_group(false)
+			tab_control_textfield_group()
 			draw_textfield_group("frameeditorbend", (axislen = 1) ? floor(dx + dw/2 - dragger_width/2) : dx, dy, (axislen = 1) ? dragger_width : dw, 0.1, 0, 0, snapval, false, true, 2)
 			tab_next()
 		}

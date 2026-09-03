@@ -60,7 +60,7 @@ function render_high()
 		if (background_fog_show)
 			render_high_fog(finalsurf)
 		
-		// Apply post scene effects (DoF, etc.)
+		// Apply post scene effects (Glow, DoF, etc.)
 		render_refresh_effects(true, false)
 		finalsurf = render_post(finalsurf, true, false)
 		
@@ -86,7 +86,7 @@ function render_high()
 	
 	render_high_samples_unpack()
 	
-	// Apply post effects (Bloom, glow, color correction, etc.)
+	// Apply post effects (Bloom, color correction, etc.)
 	if (!render_pass)
 	{
 		var prevsurf;

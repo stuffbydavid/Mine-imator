@@ -55,9 +55,9 @@ function render_world_ground()
 	
 	// Submit ground mesh at an offset from the camera
 	var xo, yo;
-	xo = (cam_from[X] div 16) * 16
-	yo = (cam_from[Y] div 16) * 16
-	vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0))
+	xo = (cam_from[X] div block_size) * block_size
+	yo = (cam_from[Y] div block_size) * block_size
+	vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16, block_size / 16, 1))
 	
 	// Reset
 	render_set_uniform_int("uIsGround", 0)

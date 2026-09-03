@@ -29,7 +29,7 @@ function frustum() constructor {
 	static build = function(matVP, ortho = false)
 	{
 		var matVPt = matrix_transpose(matVP);
-		var matVPi = matrix_inverse(matVP);
+		var matVPi = matrix_inverse_ext(matVP);
 		self.reset()
 		
 		for (var i = 0; i < 6; i++)

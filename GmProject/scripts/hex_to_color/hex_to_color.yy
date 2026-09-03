@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "hex_to_color",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Color",
-    "path": "folders/Scripts/Utility/Color.yy",
+  "$GMScript":"v1",
+  "%Name":"hex_to_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"hex_to_color",
+  "parent":{
+    "name":"Color",
+    "path":"folders/Scripts/Utility/Color.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

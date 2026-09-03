@@ -43,7 +43,7 @@ function tab_frame_editor_rotation()
 	axis_edit = (setting_z_is_up ? Z : Y)
 	textfield_group_add("frameeditorrotationz", tl_edit.value[e_value.ROT_X + axis_edit], def[X + axis_edit], action_tl_frame_rot, axis_edit, tab.transform.tbx_rot_z)
 	
-	tab_control_textfield_group(false)
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorrotation", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, 1)
 	tab_next()
 	

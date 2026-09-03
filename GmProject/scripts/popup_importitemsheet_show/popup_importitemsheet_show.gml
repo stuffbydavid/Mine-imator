@@ -14,7 +14,7 @@ function popup_importitemsheet_show(fn, script)
 		
 		texture = texture_create(filename)
 		is_sheet = true
-		sheet_size = vec2(item_sheet_width, item_sheet_height)
+		sheet_size = vec2(minecraft_item_sheet_size[0], minecraft_item_sheet_size[1])
 		if (texture_width(texture) < item_size * 8 || texture_height(texture) < item_size * 8) // Probably too small to be a sheet
 			is_sheet = false
 		else if (texture_width(texture) = texture_height(texture)) // Square, probably old sheet

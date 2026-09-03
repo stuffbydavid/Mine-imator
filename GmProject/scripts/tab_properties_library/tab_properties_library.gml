@@ -261,9 +261,13 @@ function tab_properties_library()
 		
 		case e_temp_type.BLOCK:
 		{
+			var text = "";
+			if (!is_undefined(mc_assets.block_name_map[?temp_edit.block_name]))
+				text = minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name)
+			
 			// Block
 			tab_control(24)
-			draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
+			draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), text)
 			
 			// Change
 			if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeblock"))
@@ -295,7 +299,6 @@ function tab_properties_library()
 		case e_temp_type.BODYPART:
 		{
 			var text;
-			
 			if (temp_edit.model_file != null)
 				text = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
 			else
@@ -510,16 +513,16 @@ function tab_properties_library()
 					textfield_group_add("libraryshapetexhoffset", temp_edit.shape_tex_hoffset, 0, action_lib_shape_tex_hoffset, axis_edit, tab.library.tbx_shape_tex_hoffset)
 					textfield_group_add("libraryshapetexvoffset", temp_edit.shape_tex_voffset, 0, action_lib_shape_tex_voffset, axis_edit, tab.library.tbx_shape_tex_voffset)
 					
-					tab_control_textfield_group()
-					draw_textfield_group("libraryshapetexoffset", dx, dy, dw, 1 / 100, -no_limit, no_limit, 0, true, false, 3)
+					tab_control_textfield_group(true, false)
+					draw_textfield_group("libraryshapetexoffset", dx, dy, dw, 0.01, -no_limit, no_limit, 0, true, false, 3)
 					tab_next()
 					
 					// Repeat
 					textfield_group_add("libraryshapetexhrepeat", temp_edit.shape_tex_hrepeat, 1, action_lib_shape_tex_hrepeat, axis_edit, tab.library.tbx_shape_tex_hrepeat)
 					textfield_group_add("libraryshapetexvrepeat", temp_edit.shape_tex_vrepeat, 1, action_lib_shape_tex_vrepeat, axis_edit, tab.library.tbx_shape_tex_vrepeat)
 					
-					tab_control_textfield_group()
-					draw_textfield_group("libraryshapetexrepeat", dx, dy, dw, 1 / 100, 0, no_limit, 0, true, false, 3)
+					tab_control_textfield_group(true, false)
+					draw_textfield_group("libraryshapetexrepeat", dx, dy, dw, 0.01, 0, no_limit, 0, true, false, 3)
 					tab_next()
 				}
 				
@@ -546,11 +549,16 @@ function tab_properties_library()
 			draw_checkbox("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert)
 			tab_next()
 			
-			if (temp_edit.type = e_temp_type.SPHERE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
+			if (temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER || temp_edit.type = e_temp_type.SPHERE)
 			{
+				// Smooth
+				tab_control_checkbox()
+				draw_checkbox("libraryshapesmooth", dx, dy, temp_edit.shape_smooth, action_lib_shape_smooth)
+				tab_next()
+				
 				// Detail
 				tab_control_dragger()
-				draw_dragger("libraryshapedetail", dx, dy, dragger_width, temp_edit.shape_detail, 1 / 4, 3, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
+				draw_dragger("libraryshapedetail", dx, dy, dragger_width, temp_edit.shape_detail, 0.25, temp_edit.type = e_temp_type.SPHERE ? 4 : 3, 256, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
 				tab_next()
 			}
 			else if (temp_edit.type = e_temp_type.SURFACE)
@@ -640,6 +648,14 @@ function tab_properties_library()
 				tab_next()
 			}
 			
+			// Model blend color
+			if (temp_edit.model_use_blend_color)
+			{
+				tab_control_color()
+				draw_button_color("librarymodelcolor", dx, dy, dw, temp_edit.model_blend_color, temp_edit.model_blend_color_default, false, action_lib_model_blend_color)
+				tab_next()
+			}
+			
 			break	
 		}
 	}
@@ -670,8 +686,8 @@ function tab_properties_library()
 			axis_edit = (setting_z_is_up ? Z : Y)
 			textfield_group_add("libraryrepeatz", temp_edit.block_repeat[axis_edit], 1, action_lib_block_repeat, axis_edit, tab.library.tbx_repeat_z)
 			
-			tab_control_textfield_group(false)
-			draw_textfield_group("libraryrepeat", dx, dy, dw, 1 / 10, 1, 1000, 1, false, true, 1)
+			tab_control_textfield_group()
+			draw_textfield_group("libraryrepeat", dx, dy, dw, 0.1, 1, 1000, 1, false, true, 1)
 			tab_next()
 		}
 	}

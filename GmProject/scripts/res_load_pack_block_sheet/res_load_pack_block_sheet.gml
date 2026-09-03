@@ -26,6 +26,7 @@ function res_load_pack_block_sheet(type, suffix)
 	{
 		var name, fname;
 		name = string_replace(mc_assets.block_texture_list[|t], " opaque", "")
+		name = string_replace(name, " nocull", "")
 		name = string_replace(name, " noalpha", "")
 		fname = load_assets_dir + mc_textures_directory + name + suffix + ".png"
 		
@@ -35,7 +36,11 @@ function res_load_pack_block_sheet(type, suffix)
 		
 		if (file_exists_lib(fname))
 		{
-			var tex = texture_create(fname);
+			var tex;
+			if (id = mc_res) // Patch textures
+				tex = texture_create_patched(fname)
+			else
+				tex = texture_create(fname)
 			blocksize = max(blocksize, texture_width(tex))
 			ds_list_add(texlist, tex)
 			
@@ -82,7 +87,7 @@ function res_load_pack_block_sheet(type, suffix)
 	if (fileslist != null)
 	{
 		ds_list_sort(fileslist, true)
-		if (ds_list_size(fileslist) > 0)
+		if (ds_list_size(fileslist) > 0 && !dev_mode_skip_blocks)
 		{
 			var str = "The following block textures were unused:\n";
 			for (var i = 0; i < ds_list_size(fileslist); i++)
@@ -99,7 +104,7 @@ function res_load_pack_block_sheet(type, suffix)
 	
 	// Create surface of static blocks
 	draw_texture_start()
-	surf = surface_create(block_sheet_width * blocksize, block_sheet_height * blocksize)
+	surf = surface_create(minecraft_block_sheet_size[0] * blocksize, minecraft_block_sheet_size[1] * blocksize)
 	
 	log("Block textures", "static block surface")
 	surface_set_target(surf)
@@ -111,8 +116,8 @@ function res_load_pack_block_sheet(type, suffix)
 		{
 			var tex, dx, dy;
 			tex = texlist[|t]
-			dx = (t mod block_sheet_width) * blocksize
-			dy = (t div block_sheet_width) * blocksize
+			dx = (t mod minecraft_block_sheet_size[0]) * blocksize
+			dy = (t div minecraft_block_sheet_size[0]) * blocksize
 			
 			if (tex != null)
 			{
@@ -139,7 +144,7 @@ function res_load_pack_block_sheet(type, suffix)
 					if (id != mc_res)
 					{
 						draw_texture_part(mc_res.block_sheet_texture, dx, dy,
-										  (t mod block_sheet_width) * block_size, (t div block_sheet_width) * block_size,
+										  (t mod minecraft_block_sheet_size[0]) * block_size, (t div minecraft_block_sheet_size[0]) * block_size,
 										  block_size, block_size, blocksize / block_size, blocksize / block_size)
 					}
 					else
@@ -159,7 +164,7 @@ function res_load_pack_block_sheet(type, suffix)
 	
 	if (id = mc_res)
 	{
-		var previewsurf = surface_create(block_sheet_width, block_sheet_height);
+		var previewsurf = surface_create(minecraft_block_sheet_size[0], minecraft_block_sheet_size[1]);
 		log("Block textures", "static block preview")
 		surface_set_target(previewsurf)
 		{
@@ -172,7 +177,7 @@ function res_load_pack_block_sheet(type, suffix)
 		}
 		surface_reset_target()
 		
-		load_assets_block_preview_buffer = buffer_create(block_sheet_width * block_sheet_height * 4, buffer_fixed, 4)
+		load_assets_block_preview_buffer = buffer_create(minecraft_block_sheet_size[0] * minecraft_block_sheet_size[1] * 4, buffer_fixed, 4)
 		buffer_get_surface(load_assets_block_preview_buffer, previewsurf, 0)
 		//surface_save(previewsurf, "previewsurf.png")
 		//surface_free(previewsurf)
@@ -189,8 +194,8 @@ function res_load_pack_block_sheet(type, suffix)
 	
 	// Create surfaces for animated blocks
 	log("Block textures", type, "animated block surfaces")
-	for (var f = 0; f < block_sheet_ani_frames; f++)
-		anisurf[f] = surface_create(block_sheet_ani_width * blocksize, block_sheet_ani_height * blocksize)
+	for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
+		anisurf[f] = surface_create(minecraft_block_animated_sheet_size[0] * blocksize, minecraft_block_animated_sheet_size[1] * blocksize)
 	
 	draw_texture_start()
 	gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
@@ -199,8 +204,8 @@ function res_load_pack_block_sheet(type, suffix)
 	{
 		var tex, dx, dy;
 		tex = texanilist[|t]
-		dx = (t mod block_sheet_ani_width) * blocksize
-		dy = (t div block_sheet_ani_width) * blocksize
+		dx = (t mod minecraft_block_animated_sheet_size[0]) * blocksize
+		dy = (t div minecraft_block_animated_sheet_size[0]) * blocksize
 		
 		// Read animation data if available
 		var framefade, frametime, framelist, opaque;
@@ -218,7 +223,7 @@ function res_load_pack_block_sheet(type, suffix)
 			if (ds_map_valid(map))
 			{
 				var animation = map[?"animation"];
-				if (!is_undefined(animation))
+				if (ds_map_valid(animation))
 				{
 					// Interpolate
 					if (!is_undefined(animation[?"interpolate"]))
@@ -255,18 +260,18 @@ function res_load_pack_block_sheet(type, suffix)
 		anilength = aniframes * frametime
 		
 		// More than 150% of max frames, no animation
-		if (anilength > block_sheet_ani_frames * 1.5)
+		if (anilength > minecraft_block_animated_sheet_size[2] * 1.5)
 		{
 			aniframes = 1
 			anilength = 1
 		}
 		
 		// Number of loops
-		aniloops = max(1, round(block_sheet_ani_frames / anilength))
+		aniloops = max(1, round(minecraft_block_animated_sheet_size[2] / anilength))
 		
-		for (var f = 0; f < block_sheet_ani_frames; f++)
+		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
 		{
-			var aniprogress = snap(frac(f / (block_sheet_ani_frames / aniloops)), 1 / block_sheet_ani_frames);
+			var aniprogress = snap(frac(f / (minecraft_block_animated_sheet_size[2] / aniloops)), 1 / minecraft_block_animated_sheet_size[2]);
 			
 			surface_set_target(anisurf[f])
 			{
@@ -319,7 +324,7 @@ function res_load_pack_block_sheet(type, suffix)
 						if (id != mc_res)
 						{
 							draw_texture_part(mc_res.block_sheet_ani_texture[f], dx, dy,
-												(t mod block_sheet_ani_width) * block_size, (t div block_sheet_ani_width) * block_size,
+												(t mod minecraft_block_animated_sheet_size[0]) * block_size, (t div minecraft_block_animated_sheet_size[0]) * block_size,
 												block_size, block_size, blocksize / block_size, blocksize / block_size)
 						}
 						else
@@ -337,14 +342,14 @@ function res_load_pack_block_sheet(type, suffix)
 	gpu_set_blendmode(bm_normal)
 	draw_texture_done()
 	
-	//for (var f = 0; f < block_sheet_ani_frames; f++)
+	//for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
 	//	surface_save(anisurf[f], "aniframe" + string(f) + ".png")
 	
 	// Create preview surface and get buffer
 	if (id = mc_res)
 	{
 		log("Block textures", "animated block preview")
-		var previewanisurf = surface_create(block_sheet_ani_width, block_sheet_ani_height);
+		var previewanisurf = surface_create(minecraft_block_animated_sheet_size[0], minecraft_block_animated_sheet_size[1]);
 		surface_set_target(previewanisurf)
 		{
 			draw_clear_alpha(c_black, 0)
@@ -352,7 +357,7 @@ function res_load_pack_block_sheet(type, suffix)
 		}
 		surface_reset_target()
 		
-		load_assets_block_preview_ani_buffer = buffer_create(block_sheet_ani_width * block_sheet_ani_height * 4, buffer_fixed, 4)
+		load_assets_block_preview_ani_buffer = buffer_create(minecraft_block_animated_sheet_size[0] * minecraft_block_animated_sheet_size[1] * 4, buffer_fixed, 4)
 		buffer_get_surface(load_assets_block_preview_ani_buffer, previewanisurf, 0)
 		//surface_save(previewanisurf, "previewanisurf.png")
 		//surface_free(previewanisurf)
@@ -395,10 +400,18 @@ function res_load_pack_block_sheet(type, suffix)
 				ds_list_add(block_sheet_depth_list, e_block_depth.DEPTH1)
 				continue
 			}
+			
+			// 'nocull' tag to prevent culling of blocks in case alpha sampling fails for transparent textures
+			var nocull = string_contains(mc_assets.block_texture_list[|t], " nocull");
+			if (nocull)
+			{
+				ds_list_add(block_sheet_depth_list, e_block_depth.DEPTH1)
+				continue
+			}
 		
 			var bx, by, dep;
-			bx = (t mod block_sheet_width) * blocksize
-			by = (t div block_sheet_width) * blocksize
+			bx = (t mod minecraft_block_sheet_size[0]) * blocksize
+			by = (t div minecraft_block_sheet_size[0]) * blocksize
 			dep = e_block_depth.DEPTH0
 		
 			// Sample pixels
@@ -438,8 +451,8 @@ function res_load_pack_block_sheet(type, suffix)
 			}
 		
 			var bx, by, dep;
-			bx = (t mod block_sheet_ani_width) * blocksize
-			by = (t div block_sheet_ani_width) * blocksize
+			bx = (t mod minecraft_block_animated_sheet_size[0]) * blocksize
+			by = (t div minecraft_block_animated_sheet_size[0]) * blocksize
 			dep = e_block_depth.DEPTH0
 		
 			// Sample
@@ -465,7 +478,7 @@ function res_load_pack_block_sheet(type, suffix)
 	}
 	
 	// Clean up
-	for (var f = 0; f < block_sheet_ani_frames; f++)
+	for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
 	{
 		if (type = "diffuse")
 			block_sheet_ani_texture[f] = texture_surface(anisurf[f])

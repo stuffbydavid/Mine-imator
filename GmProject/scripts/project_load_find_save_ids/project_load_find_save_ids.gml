@@ -1,7 +1,7 @@
 /// project_load_find_save_ids()
 /// @desc Updates the references to objects within the project.
 
-function project_load_find_save_ids()
+function project_load_find_save_ids(isproject = false)
 {
 	// Look for legacy (numeric) or duplicate save IDs and create new if necessary
 	var key = ds_map_find_first(save_id_map);
@@ -272,17 +272,20 @@ function project_load_find_save_ids()
 	}
 	
 	// Set marker IDs
+	var markersort = false;
 	with (obj_marker)
 	{
-		if (!loaded)
+		if (!loaded || !isproject)
 			continue
 		
+		markersort = true
 		if (!is_undefined(save_id_map[?load_id]))
 			save_id = save_id_map[?load_id]
 		
 		ds_list_add(app.timeline_marker_list, id)
 	}
-	marker_list_sort()
+	if (markersort)
+		marker_list_sort()
 	
 	// Add to root tree
 	for (var i = 0; i < array_length(tree_array); i++)

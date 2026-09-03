@@ -182,12 +182,29 @@ function project_load_template(map)
 				else
 				{
 					block_name = value_get_string(blockmap[?"name"], block_name)
+					block_state = value_get_state_vars(blockmap[?"state"])
 					
 					// Update legacy block name
 					if (legacy_block_names_map[?block_name] != undefined)
 						block_name = legacy_block_names_map[?block_name]
 					
-					block_state = value_get_state_vars(blockmap[?"state"])
+					// Update legacy block states
+					if (legacy_block_states_map[?block_name] != undefined)
+					{
+						var legacyblockmap, statename;
+						legacyblockmap = legacy_block_states_map[?block_name]
+					
+						for (var i = 0; i < array_length(block_state); i += 2)
+						{
+							statename = block_state[i]
+					
+							// Replace state name
+							if (legacyblockmap[?statename] != undefined)
+								block_state[i] = legacyblockmap[?statename]
+						}
+					}
+					
+					project_load_template_update_block()
 				}
 				
 				block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
@@ -272,6 +289,7 @@ function project_load_template(map)
 				shape_tex_vmirror = value_get_real(shapemap[?"tex_vmirror"], shape_tex_vmirror)
 				shape_closed = value_get_real(shapemap[?"closed"], shape_closed)
 				shape_invert = value_get_real(shapemap[?"invert"], shape_invert)
+				shape_smooth = value_get_real(shapemap[?"smooth"], shape_smooth)
 				shape_detail = value_get_real(shapemap[?"detail"], shape_detail)
 				shape_face_camera = value_get_real(shapemap[?"face_camera"], shape_face_camera)
 				

@@ -35,10 +35,11 @@ function nbt_read_tag_list(listtype, listlen)
 				break
 			
 			case e_nbt.TAG_BYTE_ARRAY:
+			{
 				var len = buffer_read_int_be();
 				buffer_skip(len)
 				break
-			
+			}
 			case e_nbt.TAG_STRING:
 				ds_list_add(list, buffer_read_string_short_be())
 				break
@@ -79,14 +80,17 @@ function nbt_read_tag_list(listtype, listlen)
 			}
 			
 			case e_nbt.TAG_INT_ARRAY:
+			{
 				var len = buffer_read_int_be();
 				buffer_skip(len * 4)
 				break
-			
+			}
 			case e_nbt.TAG_LONG_ARRAY:
+			{
 				var len = buffer_read_int_be();
 				buffer_skip(len * 8)
 				break
+			}
 		}
 	}
 	

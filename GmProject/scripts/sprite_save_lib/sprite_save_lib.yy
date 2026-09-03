@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "sprite_save_lib",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "File",
-    "path": "folders/Scripts/App/Libraries/File.yy",
+  "$GMScript":"v1",
+  "%Name":"sprite_save_lib",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sprite_save_lib",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/App/Libraries/File.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

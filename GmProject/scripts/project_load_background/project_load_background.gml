@@ -105,18 +105,27 @@ function project_load_background(map)
 	background_biome = value_get_string(map[?"biome"], background_biome)
 	
 	// Empty biome name bugfix (revert to plains)
-	if (background_biome = "")
-		background_biome = biome_list[|2].name
+	if (background_biome = "" || !find_biome(background_biome))
+	{
+		if (find_biome(default_biome))
+			background_biome = default_biome
+		else
+			background_biome = biome_list[|1].name
+	}
 	
 	background_sky_color = value_get_color(map[?"sky_color"], background_sky_color)
 	background_sky_clouds_color = value_get_color(map[?"sky_clouds_color"], background_sky_clouds_color)
 	background_sunlight_color = value_get_color(map[?"sunlight_color"], background_sunlight_color)
 	background_ambient_color = value_get_color(map[?"ambient_color"], background_ambient_color)
+	background_night_sky_color = value_get_color(map[?"night_sky_color"], background_night_sky_color)
+	background_night_sky_clouds_color = value_get_color(map[?"night_sky_clouds_color"], background_night_sky_clouds_color)
+	background_night_sky_stars_color = value_get_color(map[?"night_sky_stars_color"], background_night_sky_stars_color)
 	background_night_color = value_get_color(map[?"night_color"], background_night_color)
 	
 	background_water_color = value_get_color(map[?"water_color"], background_water_color)
 	background_grass_color = value_get_color(map[?"grass_color"], background_grass_color)
 	background_foliage_color = value_get_color(map[?"foliage_color"], background_foliage_color)
+	background_dry_foliage_color = value_get_color(map[?"dry_foliage_color"], background_dry_foliage_color)
 	background_leaves_oak_color = value_get_color(map[?"leaves_oak_color"], background_leaves_oak_color)
 	background_leaves_spruce_color = value_get_color(map[?"leaves_spruce_color"], background_leaves_spruce_color)
 	background_leaves_birch_color = value_get_color(map[?"leaves_birch_color"], background_leaves_birch_color)
@@ -143,4 +152,6 @@ function project_load_background(map)
 	background_wind_directional_strength = value_get_real(map[?"wind_directional_strength"], background_wind_directional_strength)
 	
 	background_texture_animation_speed = value_get_real(map[?"texture_animation_speed"], background_texture_animation_speed)
+	if (load_format < e_project.FORMAT_210)
+		background_texture_animation_speed *= 3 // 75% for older projects
 }

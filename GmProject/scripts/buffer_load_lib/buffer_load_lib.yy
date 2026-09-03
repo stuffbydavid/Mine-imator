@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "buffer_load_lib",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "File",
-    "path": "folders/Scripts/App/Libraries/File.yy",
+  "$GMScript":"v1",
+  "%Name":"buffer_load_lib",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"buffer_load_lib",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/App/Libraries/File.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

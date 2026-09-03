@@ -66,7 +66,7 @@ function tab_settings_interface()
 	
 		if (!setting_interface_scale_auto)
 		{
-			tab_control_meter()
+			tab_control_menu()
 			draw_button_menu("settingsinterfacescale", e_menu.LIST, dx, dy, dw, 24, setting_interface_scale, string(setting_interface_scale * 100) + "%", action_setting_interface_scale)
 			tab_next()
 		}

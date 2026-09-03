@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "popup_upgrade_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Upgrade",
-    "path": "folders/Scripts/App/Interface/Popups/Upgrade.yy",
+  "$GMScript":"v1",
+  "%Name":"popup_upgrade_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"popup_upgrade_draw",
+  "parent":{
+    "name":"Upgrade",
+    "path":"folders/Scripts/App/Interface/Popups/Upgrade.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_toolbar_new",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Toolbar",
-    "path": "folders/Scripts/App/Actions/Toolbar.yy",
+  "$GMScript":"v1",
+  "%Name":"action_toolbar_new",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_toolbar_new",
+  "parent":{
+    "name":"Toolbar",
+    "path":"folders/Scripts/App/Actions/Toolbar.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

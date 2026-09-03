@@ -106,7 +106,8 @@ function view_update(view, cam)
 		// Rotate camera
 		if (window_busy = "viewrotatecamera")
 		{
-			render_samples = -1
+			if (cam != null)
+				render_samples = -1
 			
 			if (setting_camera_lock_mouse)
 				mouse_cursor = cr_none
@@ -123,12 +124,13 @@ function view_update(view, cam)
 		// Move camera
 		if (window_busy = "viewmovecamera")
 		{
-			render_samples = -1
-			
 			if (cam = null)
 				shortcut_bar_state = "cameramove"
 			else
+			{
 				shortcut_bar_state = "tlcameramove"
+				render_samples = -1
+			}
 			
 			if (setting_camera_lock_mouse)
 				mouse_cursor = cr_none

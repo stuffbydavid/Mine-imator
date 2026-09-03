@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_add",
-  "type": 1,
-  "parent": {
-    "name": "Add",
-    "path": "folders/Shaders/Effects/Add.yy",
+  "$GMShader":"",
+  "%Name":"shader_add",
+  "name":"shader_add",
+  "parent":{
+    "name":"Add",
+    "path":"folders/Shaders/Effects/Add.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

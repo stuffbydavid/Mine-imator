@@ -119,6 +119,16 @@ namespace CppProject
 		throw AppEndRequest();
 	}
 
+	IntType game_get_speed(IntType)
+	{
+		return App->targetFps;
+	}
+
+	void game_set_speed(IntType, IntType fps)
+	{
+		App->targetFps = fps;
+	}
+
 	void gc_collect()
 	{
 		// Do nothing

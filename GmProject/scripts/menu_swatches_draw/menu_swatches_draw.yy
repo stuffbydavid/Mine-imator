@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "menu_swatches_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Menu",
-    "path": "folders/Scripts/App/Interface/Components/Menu.yy",
+  "$GMScript":"v1",
+  "%Name":"menu_swatches_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"menu_swatches_draw",
+  "parent":{
+    "name":"Menu",
+    "path":"folders/Scripts/App/Interface/Components/Menu.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_next",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_next",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Actions/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

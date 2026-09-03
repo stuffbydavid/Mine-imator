@@ -20,7 +20,7 @@ function minecraft_assets_load_startup()
 	load_assets_map = null
 	load_assets_type_map = null
 	load_assets_block_index = 0
-	window_set_size(740, 450)
+	window_set_size(load_assets_width, load_assets_height)
 	alarm[0] = 1
 	
 	pattern_update = array()
@@ -54,16 +54,22 @@ function minecraft_assets_load_startup()
 	
 	if (file_exists_lib(splash_directory + "splashes.json"))
 	{
-		var map, splashlist, splash, splashfile;
-		map = json_load(splash_directory + "splashes.json")
-		splashlist = map[?"splashes"]
-		splash = splashlist[|irandom(ds_list_size(splashlist) - 1)]
-		splashfile = splash_directory + splash[?"file"]
-		
-		if (file_exists_lib(splashfile))
+		var map = json_load(splash_directory + "splashes.json");
+		if (ds_map_valid(map))
 		{
-			load_assets_splash = sprite_add(splashfile, 0, 0, 0, 0, 0)
-			load_assets_credits = splash[?"credits"]
+			var splashlist = map[?"splashes"];
+			if (ds_list_valid(splashlist) && ds_list_size(splashlist) > 0)
+			{
+				var splash, splashfile;
+				splash = splashlist[|irandom(ds_list_size(splashlist) - 1)]
+				splashfile = splash_directory + splash[?"file"]
+				
+				if (file_exists_lib(splashfile))
+				{
+					load_assets_splash = sprite_add(splashfile, 0, 0, 0, 0, 0)
+					load_assets_credits = splash[?"credits"]
+				}
+			}
 		}
 	}
 	

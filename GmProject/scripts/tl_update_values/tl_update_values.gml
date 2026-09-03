@@ -47,9 +47,19 @@ function tl_update_values()
 	// Position
 	if (value_type[e_value_type.TRANSFORM_POS])
 	{
-		tl_update_values_ease(e_value.POS_X)
-		tl_update_values_ease(e_value.POS_Y)
-		tl_update_values_ease(e_value.POS_Z)
+		// Parented objects with no keyframes get position reset (if not part of something)
+		if (ds_list_size(keyframe_list) = 0 && parent != app && part_of = null)
+		{
+			value[e_value.POS_X] = 0
+			value[e_value.POS_Y] = 0
+			value[e_value.POS_Z] = 0
+		}
+		else
+		{
+			tl_update_values_ease(e_value.POS_X)
+			tl_update_values_ease(e_value.POS_Y)
+			tl_update_values_ease(e_value.POS_Z)
+		}
 		
 		if (type != e_tl_type.PATH && type != e_tl_type.PATH_POINT)
 		{
@@ -272,9 +282,13 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_SKY_CLOUDS_COLOR)
 		tl_update_values_ease(e_value.BG_SUNLIGHT_COLOR)
 		tl_update_values_ease(e_value.BG_AMBIENT_COLOR)
+		tl_update_values_ease(e_value.BG_NIGHT_SKY_COLOR)
+		tl_update_values_ease(e_value.BG_NIGHT_SKY_CLOUDS_COLOR)
+		tl_update_values_ease(e_value.BG_NIGHT_SKY_STARS_COLOR)
 		tl_update_values_ease(e_value.BG_NIGHT_COLOR)
 		tl_update_values_ease(e_value.BG_GRASS_COLOR)
 		tl_update_values_ease(e_value.BG_FOLIAGE_COLOR)
+		tl_update_values_ease(e_value.BG_DRY_FOLIAGE_COLOR)
 		tl_update_values_ease(e_value.BG_WATER_COLOR)
 		tl_update_values_ease(e_value.BG_LEAVES_OAK_COLOR)
 		tl_update_values_ease(e_value.BG_LEAVES_SPRUCE_COLOR)
@@ -302,7 +316,7 @@ function tl_update_values()
 	}
 	
 	// Texture
-	if (value_type[e_value_type.MATERIAL_TEXTURE])
+	if (value_type[e_value_type.MATERIAL_TEXTURE] || value_type[e_value_type.ITEM])
 	{
 		tl_update_values_ease(e_value.TEXTURE_OBJ)
 		tl_update_values_ease(e_value.TEXTURE_MATERIAL_OBJ)
@@ -336,9 +350,6 @@ function tl_update_values()
 	{
 		tl_update_values_ease(e_value.CUSTOM_ITEM_SLOT)
 		tl_update_values_ease(e_value.ITEM_SLOT)
-		tl_update_values_ease(e_value.TEXTURE_OBJ)
-		tl_update_values_ease(e_value.TEXTURE_MATERIAL_OBJ)
-		tl_update_values_ease(e_value.TEXTURE_NORMAL_OBJ)
 	}
 	
 	// Visible

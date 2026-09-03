@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_pos_xyz",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Position",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Position.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_pos_xyz",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_pos_xyz",
+  "parent":{
+    "name":"Position",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Position.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -27,7 +27,8 @@ function temp_copy(to)
 	to.pattern_base_color = pattern_base_color
 	to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
 	to.pattern_color_list = array_copy_1d(pattern_color_list)
-	to.pattern_skin = sprite_duplicate(pattern_skin)
+	if (pattern_skin != null)
+		to.pattern_skin = sprite_duplicate(pattern_skin)
 	
 	to.armor_array = array_copy_1d(armor_array)
 	
@@ -73,6 +74,7 @@ function temp_copy(to)
 	to.shape_tex_vmirror = shape_tex_vmirror
 	to.shape_closed = shape_closed
 	to.shape_invert = shape_invert
+	to.shape_smooth = shape_smooth
 	to.shape_detail = shape_detail
 	to.shape_face_camera = shape_face_camera
 	

@@ -27,7 +27,7 @@ function draw_recent()
 		for (var i = 0; i < recent_list_amount; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
-			var mouseon = hover;
+			mouseon = hover
 			var item = recent_list[|i];
 			
 			// Icons
@@ -46,7 +46,7 @@ function draw_recent()
 			// Name
 			draw_label(string_limit(filename_name(item.name), (iconx - xx) - 12), xx + 12, recenty + 22, fa_left, fa_middle, c_text_main, a_text_main)
 			
-			// Seperator
+			// Separator
 			draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 			// Animation
@@ -111,7 +111,7 @@ function draw_recent()
 		timex = xx + 12 + namewidth + 12
 		
 		// File name
-		draw_label(text_get("recentfilename"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		draw_label(text_get("recentname"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
 		// Last opened
 		draw_label(text_get("recentlastopened"), timex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
@@ -134,27 +134,27 @@ function draw_recent()
 			draw_label(string_limit(recent_time_string(item.last_opened), timewidth), timex, recenty + 22, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 			
 			// Icons
-			var iconx = xx + wid - 8;
+			var iconx = xx + wid - 10;
 			iconx -= 24
 			
 			// Remove
 			if (hover)
 			{
-				if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
+				if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 10, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
 					action_recent_remove(item)
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
-			iconx -= 24
+			iconx -= 28
 			
 			// Oh yeah. Pin it
 			if (hover || item.pinned)
 			{
-				if (draw_button_icon("recentpin" + string(item), iconx, recenty + 8, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
+				if (draw_button_icon("recentpin" + string(item), iconx, recenty + 10, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
 					action_recent_pin(item)
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
 			
-			// Seperator
+			// Separator
 			draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 			// Animation
@@ -207,7 +207,7 @@ function draw_recent()
 		}
 	
 		// Draw grid cards
-		var cardx, cardy, item, areamouseon, hover, mouseon;
+		var cardx, cardy, item, areamouseon, hover;
 		cardx = dx
 		cardy = dy - liststart
 		areamouseon = app_mouse_box(xx, yy, wid, hei)

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "shader_color_camera_set",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Set",
-    "path": "folders/Scripts/Render/Shaders/Set.yy",
+  "$GMScript":"v1",
+  "%Name":"shader_color_camera_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_color_camera_set",
+  "parent":{
+    "name":"Set",
+    "path":"folders/Scripts/Render/Shaders/Set.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

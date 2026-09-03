@@ -32,4 +32,5 @@ function project_create()
 	
 	toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))
 	toast_add_action("alertprojectcreatedview", popup_open_url, project_folder)
+	toast_last.dismiss_time = 10
 }

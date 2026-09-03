@@ -55,10 +55,15 @@ function project_reset_background()
 	background_ground_update_texture_material()
 	background_ground_update_texture_normal()
 	
-	background_biome = biome_list[|2].name
+	if (find_biome(default_biome))
+		background_biome = default_biome
+	else
+		background_biome = biome_list[|1].name
+	
 	background_biome_prev = background_biome
 	background_grass_color = c_plains_biome_grass
 	background_foliage_color = c_plains_biome_foliage
+	background_dry_foliage_color = c_plains_biome_dry_foliage
 	background_water_color = c_plains_biome_water
 	background_leaves_oak_color = c_plains_biome_foliage
 	background_leaves_spruce_color = c_plains_biome_foliage_2
@@ -75,6 +80,9 @@ function project_reset_background()
 	background_sky_clouds_color = c_clouds
 	background_sunlight_color = c_sunlight
 	background_ambient_color = c_ambient
+	background_night_sky_color = c_night_sky
+	background_night_sky_clouds_color = c_night_clouds
+	background_night_sky_stars_color = c_stars
 	background_night_color = c_night
 	
 	background_fog_show = true
@@ -94,7 +102,7 @@ function project_reset_background()
 	background_wind_directional_speed = 0.2
 	background_wind_directional_strength = 1.5
 	
-	background_texture_animation_speed = 0.25
+	background_texture_animation_speed = 1
 	
 	background_sunlight_color_final = c_black
 	background_ambient_color_final = c_black

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_bloom_threshold",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Bloom",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Bloom.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_bloom_threshold",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_bloom_threshold",
+  "parent":{
+    "name":"Bloom",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Bloom.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

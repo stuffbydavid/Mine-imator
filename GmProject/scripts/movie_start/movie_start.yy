@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "movie_start",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Movie",
-    "path": "folders/Scripts/App/Libraries/Movie.yy",
+  "$GMScript":"v1",
+  "%Name":"movie_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"movie_start",
+  "parent":{
+    "name":"Movie",
+    "path":"folders/Scripts/App/Libraries/Movie.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

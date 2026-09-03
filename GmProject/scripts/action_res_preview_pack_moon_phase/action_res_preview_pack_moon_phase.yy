@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_res_preview_pack_moon_phase",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_res_preview_pack_moon_phase",
+  "parent":{
+    "name":"Resources",
+    "path":"folders/Scripts/App/Actions/Resources.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

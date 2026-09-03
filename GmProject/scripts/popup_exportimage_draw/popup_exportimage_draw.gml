@@ -18,8 +18,8 @@ function popup_exportimage_draw()
 		textfield_group_add("exportimageimagesizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup.tbx_image_size_custom_width, null, 1, 1, surface_get_max_size())
 		textfield_group_add("exportimageimagesizecustomheight", project_video_height, 720, action_project_video_height, X, popup.tbx_image_size_custom_height, null, 1, 1, surface_get_max_size())
 		
-		tab_control_textfield_group(false)
-		draw_textfield_group("exportimageimagesizecustom", dx, dy, dw, 1, 1, no_limit, 1, false)
+		tab_control_textfield_group()
+		draw_textfield_group("exportimageimagesizecustom", dx, dy, dw, 1, 1, no_limit, 1)
 		tab_next()
 		
 		tab_control_switch()

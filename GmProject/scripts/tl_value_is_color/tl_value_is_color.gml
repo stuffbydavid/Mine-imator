@@ -20,9 +20,13 @@ function tl_value_is_color(vid)
 			vid = e_value.BG_SKY_CLOUDS_COLOR ||
 			vid = e_value.BG_SUNLIGHT_COLOR ||
 			vid = e_value.BG_AMBIENT_COLOR ||
+			vid = e_value.BG_NIGHT_SKY_COLOR ||
+			vid = e_value.BG_NIGHT_SKY_CLOUDS_COLOR ||
+			vid = e_value.BG_NIGHT_SKY_STARS_COLOR ||
 			vid = e_value.BG_NIGHT_COLOR ||
 			vid = e_value.BG_GRASS_COLOR ||
 			vid = e_value.BG_FOLIAGE_COLOR ||
+			vid = e_value.BG_DRY_FOLIAGE_COLOR ||
 			vid = e_value.BG_WATER_COLOR ||
 			vid = e_value.BG_LEAVES_OAK_COLOR ||
 			vid = e_value.BG_LEAVES_SPRUCE_COLOR ||

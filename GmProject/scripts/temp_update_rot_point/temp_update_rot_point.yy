@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "temp_update_rot_point",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Project/Templates/Update.yy",
+  "$GMScript":"v1",
+  "%Name":"temp_update_rot_point",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"temp_update_rot_point",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Templates/Update.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -3,9 +3,9 @@
 function tab_frame_editor_texture_material()
 {
 	var texobj, name, tex, sliders;
+	name = ""
 	tex = null
 	sliders = false
-	name = ""
 	
 	// Get material texture
 	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && tl_edit.temp != null)
@@ -96,44 +96,43 @@ function tab_frame_editor_texture_material()
 				break
 			}
 		}
-		
+	}
+	else if (tl_edit.type = e_tl_type.PATH)
+	{
 		// Paths don't use templates
-		if (tl_edit.type = e_tl_type.PATH)
-		{
-			name = "frameeditorshapetexmaterial"
-			texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
+		name = "frameeditorshapetexmaterial"
+		texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
 			
-			if (texobj = null)
-				tex = spr_default_material
-			else
-				tex = texobj.texture
+		if (texobj = null)
+			tex = spr_default_material
+		else
+			tex = texobj.texture
 			
-			if (texobj = null)
-				sliders = true
-		}
-		
-		if (name != "")
-		{
-			// Text to display
-			var text;
-			if (texobj != null)
-				text = texobj.display_name
-			else
-				text = text_get("listnone")
-			
-			if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
-				text = text_get("listdefault", text)
-			
-			if (project_render_material_maps)
-			{
-				tab_control_menu(ui_large_height)
-				draw_button_menu(name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
-				tab_next()
-			}
-		}
+		if (texobj = null)
+			sliders = true
 	}
 	else
 		sliders = true
+		
+	if (name != "")
+	{
+		// Text to display
+		var text;
+		if (texobj != null)
+			text = texobj.display_name
+		else
+			text = text_get("listnone")
+			
+		if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
+			text = text_get("listdefault", text)
+			
+		if (project_render_material_maps)
+		{
+			tab_control_menu(ui_large_height)
+			draw_button_menu(name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
+			tab_next()
+		}
+	}
 	
 	// Sliders for manual edit
 	if (sliders)

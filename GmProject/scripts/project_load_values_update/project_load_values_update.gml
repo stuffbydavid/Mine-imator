@@ -19,6 +19,7 @@ function project_load_values_update()
 			
 			value[e_value.BG_GRASS_COLOR] = app.background_grass_color
 			value[e_value.BG_FOLIAGE_COLOR] = app.background_foliage_color
+			value[e_value.BG_DRY_FOLIAGE_COLOR] = app.background_dry_foliage_color
 			value[e_value.BG_WATER_COLOR] = app.background_water_color
 			
 			value[e_value.BG_FOG_SHOW] = app.background_fog_show

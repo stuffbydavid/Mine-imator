@@ -160,9 +160,9 @@ namespace CppProject
 		shader_set(shaderChecker->id);
 		GFX->shader->SubmitVec2(GFX->shader->GetUniformIndex("uSize"), rect.width(), rect.height());
 		IntType dim = 0;
-		if (dimension == "nether")
+		if (dimension == "the_nether")
 			dim = 1;
-		else if (dimension == "end")
+		else if (dimension == "the_end")
 			dim = -1;
 		GFX->shader->SubmitInt(GFX->shader->GetUniformIndex("uDim"), dim);
 		PR->Begin(pr_trianglestrip);
@@ -896,6 +896,26 @@ namespace CppProject
 			camAnim.angleXYEnd = playerRot.y - 90;
 			camAnim.targetDisEnd = 30.0;
 		}
+
+		// Adjust angles
+		RealType diff = camAnim.angleXYStart - camAnim.angleXYEnd;
+		if (diff > 180)
+			camAnim.angleXYStart -= 360;
+		else if (diff < -180)
+			camAnim.angleXYEnd -= 360;
+	}
+
+	void Preview::GoToPosition(IntType x, IntType z)
+	{
+		camTarget = VecType(x, camTarget.y, z);
+		camAnim = {
+			0, 2000,
+			{}, {},
+			camTargetDis, 100.0,
+			mod_fix(camAngleXY, 360), camAngleXY,
+			camAngleZ, 25.0,
+			true
+		};
 
 		// Adjust angles
 		RealType diff = camAnim.angleXYStart - camAnim.angleXYEnd;

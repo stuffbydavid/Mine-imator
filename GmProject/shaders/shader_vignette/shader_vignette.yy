@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_vignette",
-  "type": 1,
-  "parent": {
-    "name": "Vignette",
-    "path": "folders/Shaders/Effects/Vignette.yy",
+  "$GMShader":"",
+  "%Name":"shader_vignette",
+  "name":"shader_vignette",
+  "parent":{
+    "name":"Vignette",
+    "path":"folders/Shaders/Effects/Vignette.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

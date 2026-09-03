@@ -57,7 +57,13 @@ function res_load_pack_model_textures()
 			if (name = "entity/steve")
 				tex = res_load_player_skin(fname)
 			else
-				tex = texture_create_square(fname)
+			{
+				if (id = mc_res) // Patch textures
+					tex = texture_create_patched(fname)
+				else
+					tex = texture_create(fname)
+				tex = texture_convert_square(tex)
+			}
 		}
 		else if (id != mc_res)
 			tex = texture_duplicate(mc_res.model_texture_map[?name])

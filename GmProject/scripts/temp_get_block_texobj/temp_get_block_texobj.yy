@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "temp_get_block_texobj",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Texture",
-    "path": "folders/Scripts/Project/Templates/Texture.yy",
+  "$GMScript":"v1",
+  "%Name":"temp_get_block_texobj",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"temp_get_block_texobj",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Project/Templates/Texture.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

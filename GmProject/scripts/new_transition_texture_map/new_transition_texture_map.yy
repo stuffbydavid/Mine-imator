@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_transition_texture_map",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "App",
-    "path": "folders/Scripts/App.yy",
+  "$GMScript":"v1",
+  "%Name":"new_transition_texture_map",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_transition_texture_map",
+  "parent":{
+    "name":"App",
+    "path":"folders/Scripts/App.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

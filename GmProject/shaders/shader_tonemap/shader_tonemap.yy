@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_tonemap",
-  "type": 1,
-  "parent": {
-    "name": "Color correction",
-    "path": "folders/Shaders/Effects/Color correction.yy",
+  "$GMShader":"",
+  "%Name":"shader_tonemap",
+  "name":"shader_tonemap",
+  "parent":{
+    "name":"Color correction",
+    "path":"folders/Shaders/Effects/Color correction.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }
