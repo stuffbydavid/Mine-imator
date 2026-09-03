@@ -9,6 +9,10 @@ function render_high_post_start(prevsurf)
 	render_effects_progress = -1
 	render_update_effects()
 	
+	// No effects left, return
+	if (render_effects_done)
+		return prevsurf
+
 	basesurf = render_high_get_apply_surf()
 	
 	surface_set_target(basesurf)
