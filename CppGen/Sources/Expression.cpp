@@ -57,17 +57,16 @@ String Expression::toExpressionArrayCpp(ResolveScope* scope, List<Expression*> e
 
 bool Expression::isIntValue()
 {
-	return (type == Type::Value && static_cast<ExpressionValue*>(this)->valueType == Token::Type::Number && !static_cast<ExpressionValue*>(this)->value.contains("."));
+	if (type != Type::Value)
+		return false;
+
+	ExpressionValue* exprValue = static_cast<ExpressionValue*>(this);
+	return (exprValue->valueType == Token::Type::Number && !String(exprValue->value).contains("."));
 }
 
-bool Expression::isRealValue()
+StringId Expression::getAccessorName()
 {
-	return (type == Type::Value && static_cast<ExpressionValue*>(this)->valueType == Token::Type::Number && static_cast<ExpressionValue*>(this)->value.contains("."));
-}
-
-String Expression::getAccessorName()
-{
-	return "";
+	return Strings::Empty;
 }
 
 DataType::CppType Expression::getResolvedCppType()
@@ -205,14 +204,19 @@ String BinaryOperation::toCpp(ResolveScope* scope)
 
 	if (this->left->type == Type::Accessor && this->right->type == Type::Accessor) // App pointer to app asset id
 	{
-		if (static_cast<Accessor*>(this->left)->name == "object_index")
-			static_cast<Accessor*>(this->right)->appToId = false;
-		if (static_cast<Accessor*>(this->right)->name == "object_index")
-			static_cast<Accessor*>(this->left)->appToId = false;
+		if (((Accessor*)this->left)->name == STR(object_index))
+			((Accessor*)this->right)->appToId = false;
+		if (((Accessor*)this->right)->name == STR(object_index))
+			((Accessor*)this->left)->appToId = false;
 	}
 
 	String cpp = "";
-	bool opNeedInts = (this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight || this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr);
+	bool opNeedInts = (
+		this->op == Token::Type::ShiftLeft ||
+		this->op == Token::Type::ShiftRight ||
+		this->op == Token::Type::BitwiseAnd ||
+		this->op == Token::Type::BitwiseOr
+	);
 	if (opNeedInts) // Cast left to int
 		cpp += "(IntType)";
 	else if (this->op == Token::Type::Mul && this->left->resolvedType->cppType == DataType::CppType::BoolType) // Cast left bool to int when multiplying
@@ -304,7 +308,7 @@ String ExpressionArray::toCpp(ResolveScope* scope)
 	return "ArrType::From(" + toExpressionArrayCpp(scope, this->expressions) + ")";
 }
 
-ExpressionValue::ExpressionValue(Token::Type valueType, String value, int line) : Expression(line)
+ExpressionValue::ExpressionValue(Token::Type valueType, StringId value, int line) : Expression(line)
 {
 	this->valueType = valueType;
 	this->value = value;
@@ -315,7 +319,12 @@ void ExpressionValue::resolve(ResolveScope*)
 {
 	if (this->valueType == Token::Type::Number)
 	{
-		if (this->value.contains("."))
+		if (!knowValueHasDecimal)
+		{
+			valueHasDecimal = String(this->value).contains(".");
+			knowValueHasDecimal = true;
+		}
+		if (valueHasDecimal)
 			this->resolvedType->reset(DataType::Type::Real);
 		else
 			this->resolvedType->reset(DataType::Type::IntOrReal);
@@ -332,13 +341,13 @@ bool ExpressionValue::applyType(ResolveScope*, const DataType& inputType)
 String ExpressionValue::toCpp(ResolveScope*)
 {
 	if (this->valueType == Token::Type::String) // String
-		return "/*\"" + this->value + "\"*/ STR(" + Program::strings.indexOf(this->value) + ")";
+		return "/*\"" + String(this->value) + "\"*/ STR(" + Program::strings.indexOf(this->value) + ")";
 	else if (this->resolvedType->getAssignments(DataType::Type::Real).size() == 0) // Integer
-		return "IntType(" + this->value + ")";
-	else if (!this->value.contains(".")) // Convert to Real
-		return this->value + ".0";
+		return "IntType(" + String(this->value) + ")";
+	else if (!String(this->value).contains(".")) // Convert to Real
+		return String(this->value) + ".0";
 	else // Already real
-		return this->value;
+		return String(this->value);
 }
 
 NewExpression::NewExpression(Accessor* accessor, int line) : Expression(line)

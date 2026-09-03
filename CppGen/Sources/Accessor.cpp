@@ -2,7 +2,13 @@
 
 namespace CppGen
 {
-Accessor::Accessor(String name, List<Accessor::ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line) : Expression(line)
+Accessor::Accessor(
+	StringId name,
+	List<Accessor::ArrayAccessor*> arrayAccessors,
+	NullableList<Expression*> callParameters,
+	Accessor* member,
+	Token::Type addSubOp,
+	int line) : Expression(line)
 {
 	this->name = name;
 	this->arrayAccessors = arrayAccessors;
@@ -51,6 +57,7 @@ void Accessor::resolve(ResolveScope* scope)
 			expr->resolve(scope->outsideChain()); // use outside scope for instance methods
 			inputTypeStorage.add(DataType(*expr->resolvedType));
 		}
+
 		NullableList<DataType*> inputTypes;
 		inputTypes.reserve(inputTypeStorage.size());
 		for (DataType& inputType : inputTypeStorage)
@@ -58,35 +65,41 @@ void Accessor::resolve(ResolveScope* scope)
 
 		if (userFunction != nullptr) // User function
 		{
-			if (scope->location->level == 0 && !userFunction->sameScopeFunctions.contains(this->func) && userFunction != this->func) // Make this function dependent if outside with()
+			// Make this function dependent if outside with()
+			if (scope->location->level == 0 &&
+				!userFunction->sameScopeFunctions.contains(this->func) &&
+				userFunction != this->func)
 				userFunction->sameScopeFunctions.add(this->func);
-			userFunction->resolve(ResolveScope(*scope, this->func->name, this->line), inputTypes, this->func, this->line);
+
+			if (!Program::hotReloading || Program::hotReloadTargets.contains(userFunction))
+				userFunction->resolve(ResolveScope(*scope, this->func->name, this->line), inputTypes, this->func, this->line);
+
 			if (scope->location->level == 0 && userFunction->hasInstanceVars)
 				this->func->assignFunctionScope(userFunction, this->func, this->line);
 
-			if (this->name == "new_obj") // new_obj(objName) returns reference<objName>
+			if (this->name == STR(new_obj)) // new_obj(objName) returns reference<objName>
 			{
 				if (this->callParameters.size() != 1 || this->callParameters[0]->type != Type::Accessor)
 				{
 					Console::writeLine("FATAL ERROR: Invalid input to new_obj() in {0}:{1}", this->func->name, this->line);
-					Environment::exit(1);
+					std::exit(1);
 				}
 
-				String objName = static_cast<Accessor*>(this->callParameters[0])->name;
+				StringId objName = static_cast<Accessor*>(this->callParameters[0])->name;
 				if (!Program::objects.containsKey(objName))
 				{
 					Console::writeLine("FATAL ERROR: Unknown object in new_obj() in {0}:{1}: {2}", this->func->name, this->line, objName);
-					Environment::exit(1);
+					std::exit(1);
 				}
 				this->resolvedType->reset(DataType::Type::Reference, objName);
 			}
 
-			else if (this->name == "array_add") // array_add(array<typeof arg>, arg/array>
+			else if (this->name == STR(array_add)) // array_add(array<typeof arg>, arg/array>
 			{
 				if (this->callParameters.size() < 2 || this->callParameters.size() > 3)
 				{
 					Console::writeLine("FATAL ERROR: Invalid input to array_add() in {0}:{1}", this->func->name, this->line);
-					Environment::exit(1);
+					std::exit(1);
 				}
 
 				DataType arrTypeStorage;
@@ -102,23 +115,22 @@ void Accessor::resolve(ResolveScope* scope)
 					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
 				this->resolvedType->reset(*userFunction->getReturnType());
 			}
-
-			else if (this->name == "array") // array(arg0, arg1...) returns array<typeof args>
+			else if (this->name == STR(array)) // array(arg0, arg1...) returns array<typeof args>
 			{
 				this->resolvedType->reset(DataType::Type::Array, DataType());
 				for (DataType* inputType : inputTypes)
 					this->resolvedType->assign(DataType(DataType::Type::Array, inputType), this->func, this->line);
 			}
-			else if (this->name == "save_id_find") // save_id_find returns unknown object
+			else if (this->name == STR(save_id_find)) // save_id_find returns unknown object
 				this->resolvedType->reset(DataType::Type::Reference, "");
 
-			else if (this->name == "ds_int_map_create") // ds_int_map_create returns IntMap
+			else if (this->name == STR(ds_int_map_create)) // ds_int_map_create returns IntMap
 				this->resolvedType->reset(DataType::Type::IntMap, DataType());
 
-			else if (this->name == "ds_string_map_create" || this->name == "json_load") // ds_string_map_create/json_load returns StringMap
+			else if (this->name == STR(ds_string_map_create) || this->name == STR(json_load)) // ds_string_map_create/json_load returns StringMap
 				this->resolvedType->reset(DataType::Type::StringMap, DataType());
 
-			else if (this->name == "test") // test(bool, arg1, arg2) returns typeof arg1
+			else if (this->name == STR(test)) // test(bool, arg1, arg2) returns typeof arg1
 				this->resolvedType->reset(*inputTypes[1]);
 
 			else
@@ -132,33 +144,33 @@ void Accessor::resolve(ResolveScope* scope)
 			if (!funcSign->varArgs && inputTypes.size() != funcSign->argTypes.size()) // Check argument match
 			{
 				Console::writeLine("FATAL ERROR: Argument count mismatch in {0}:{1}: {2}", this->func->name, this->line, this->name);
-				Environment::exit(1);
+				std::exit(1);
 			}
 
-			if (funcSign->needScope && scope->location->level == 0 && this->func->getScope() == "global") // GML* function needs scope, mark global function as any
-				this->func->assignScope("any", this->func, this->line);
+			if (funcSign->needScope && scope->location->level == 0 && this->func->getScope() == STR(global)) // GML* function needs scope, mark global function as any
+				this->func->assignScope(STR(any), this->func, this->line);
 
-			if (this->name == "array_create") // array_create(real, [arg]) returns array<typeof arg>
+			if (this->name == STR(array_create)) // array_create(real, [arg]) returns array<typeof arg>
 				if (inputTypes.size() > 1)
 					this->resolvedType->reset(DataType::Type::Array, inputTypes[1]);
 				else
 					this->resolvedType->reset(DataType::Type::Array, DataType());
 
-			else if (this->name == "array_length") // array_length returns int, don't apply arguments (since sub-arrays are the same type as array for ArrType)
+			else if (this->name == STR(array_length)) // array_length returns int, don't apply arguments (since sub-arrays are the same type as array for ArrType)
 			{
 				this->resolvedType->reset(DataType::Type::Integer);
 				if (this->callParameters[0]->type == Type::Accessor)
 					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
 			}
 
-			else if (this->name == "choose" || this->name == "max" || this->name == "min") // choose/min/max(arg0, arg1...) returns typeof args
+			else if (this->name == STR(choose) || this->name == STR(max) || this->name == STR(min)) // choose/min/max(arg0, arg1...) returns typeof args
 			{
-				if (this->name != "choose")
+				if (this->name != STR(choose))
 					this->resolvedTypeCpp = DataType::CppType::RealType;
 				for (DataType* inputType : inputTypes)
 					this->resolvedType->assign(*inputType, this->func, this->line);
 			}
-			else if (this->name == "ds_list_add") // ds_list_add(list<typeof args>, arg0, arg1...)
+			else if (this->name == STR(ds_list_add)) // ds_list_add(list<typeof args>, arg0, arg1...)
 			{
 				DataType listType;
 				int i = 0;
@@ -167,13 +179,13 @@ void Accessor::resolve(ResolveScope* scope)
 						listType.assign(*inputType, this->func, this->line);
 				this->callParameters[0]->applyType(scope, DataType(DataType::Type::List, &listType));
 			}
-			else if (this->name == "ds_map_find_first" || this->name == "ds_map_find_next" || this->name == "ds_map_find_value") // ds_map_find_x(map<type>, [ key ]) returns type
+			else if (this->name == STR(ds_map_find_first) || this->name == STR(ds_map_find_next) || this->name == STR(ds_map_find_value)) // ds_map_find_x(map<type>, [ key ]) returns type
 			{
 				DataType::Assignment* mapAss = inputTypes[0]->getFirstAssignment(DataType::Type::AnyMap);
 				if (mapAss != nullptr)
 					this->resolvedType->assign(*mapAss->containerStorage, this->func, this->line);
 			}
-			else if (this->name == "ds_map_add") // ds_map_add(map<typeof arg>, key, arg)
+			else if (this->name == STR(ds_map_add)) // ds_map_add(map<typeof arg>, key, arg)
 			{
 				DataType mapType;
 				int i = 0;
@@ -182,7 +194,7 @@ void Accessor::resolve(ResolveScope* scope)
 						mapType.assign(*inputType, this->func, this->line);
 				this->callParameters[0]->applyType(scope, DataType(DataType::Type::AnyMap, &mapType));
 			}
-			else if (this->name == "ds_stack_push") // ds_stack_push(stack<typeof args>, arg0, arg1...)
+			else if (this->name == STR(ds_stack_push)) // ds_stack_push(stack<typeof args>, arg0, arg1...)
 			{
 				DataType stackType;
 				int i = 0;
@@ -191,19 +203,19 @@ void Accessor::resolve(ResolveScope* scope)
 						stackType.assign(*inputType, this->func, this->line);
 				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Stack, &stackType));
 			}
-			else if (this->name == "ds_grid_set") // ds_grid_set(grid<typeof arg>, real, real, arg)
+			else if (this->name == STR(ds_grid_set)) // ds_grid_set(grid<typeof arg>, real, real, arg)
 				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Grid, inputTypes[3]));
 
-			else if (this->name == "ds_grid_get") // ds_grid_get(grid<type>, x, y) returns type
+			else if (this->name == STR(ds_grid_get)) // ds_grid_get(grid<type>, x, y) returns type
 			{
 				DataType::Assignment* mapAss = inputTypes[0]->getFirstAssignment(DataType::Type::Grid);
 				if (mapAss != nullptr)
 					this->resolvedType->assign(*mapAss->containerStorage, this->func, this->line);
 			}
-			else if (this->name == "ds_list_copy" || this->name == "ds_map_copy") // ds_x_copy(ds1, typeof ds1)
+			else if (this->name == STR(ds_list_copy) || this->name == STR(ds_map_copy)) // ds_x_copy(ds1, typeof ds1)
 				this->callParameters[0]->applyType(scope, *inputTypes[1]);
 
-			else if (this->name == "shader_set_uniform_f" || this->name == "shader_set_uniform_i") // shader_set_uniform_f(real, real0, real1...)
+			else if (this->name == STR(shader_set_uniform_f) || this->name == STR(shader_set_uniform_i)) // shader_set_uniform_f(real, real0, real1...)
 			{
 				for (Expression* expr : this->callParameters)
 					expr->applyType(scope, DataType::scalar(DataType::Type::Real));
@@ -219,15 +231,15 @@ void Accessor::resolve(ResolveScope* scope)
 		else if (this->previousInChain == nullptr) // Missing function
 		{
 			Console::writeLine("FATAL ERROR: Missing function {2} in {0}:{1}", this->func->name, this->line, this->name);
-			Environment::exit(1);
+			std::exit(1);
 			return;
 		}
 	}
 
 	else if (Program::objects.containsKey(this->name))
 	{
-		if (this->name == "app") // Pointer to app instance (_app in C++)
-			this->resolvedType->reset(DataType::Type::Reference, "app");
+		if (this->name == STR(app)) // Pointer to app instance (_app in C++)
+			this->resolvedType->reset(DataType::Type::Reference, STR(app));
 
 		else // Object* reference as integer id
 			this->resolvedType->reset(DataType::Type::Integer);
@@ -235,10 +247,10 @@ void Accessor::resolve(ResolveScope* scope)
 
 	else if (userFunction != nullptr) // Function* reference
 	{
-		if (Accessor::resolveFunctionReferences) // Resolve after first pass in any scope
+		if (Accessor::resolveFunctionReferences && (!Program::hotReloading || Program::hotReloadTargets.contains(userFunction))) // Resolve after first pass in any scope
 		{
-			userFunction->assignScope("any", this->func, this->line);
-			userFunction->resolve(ResolveScope(ResolveScope("any"), this->func->name, this->line), nullptr, this->func, this->line);
+			userFunction->assignScope(STR(any), this->func, this->line);
+			userFunction->resolve(ResolveScope(ResolveScope(STR(any)), this->func->name, this->line), nullptr, this->func, this->line);
 		}
 		this->resolvedType->reset(DataType::Type::Integer);
 	}
@@ -247,20 +259,20 @@ void Accessor::resolve(ResolveScope* scope)
 			 Program::sprites.containsKey(this->name)) // Resource reference, treat as integer
 		this->resolvedType->reset(DataType::Type::Integer);
 
-	else if (this->name == "id" || this->name == "self") // Scope reference
+	else if (this->name == STR(id) || this->name == STR(self)) // Scope reference
 	{
 		if (scope->location->level == 0 && this->previousInChain == nullptr) // Update function scope if outside with()
 			this->func->assignScope(scope->current, this->func, this->line, true);
 		if (Program::objects.containsKey(scope->currentInChain))
 			this->resolvedType->reset(DataType::Type::Reference, scope->currentInChain);
 	}
-	else if (this->name == "other") // Previous scope reference
+	else if (this->name == STR(other)) // Previous scope reference
 	{
 		this->resolvedType->reset(DataType::Type::Reference, scope->previous);
 		if (scope->location->level == 1)
 			this->func->hasInstanceVars = true;
 	}
-	else if (this->name == "object_index") // Type name
+	else if (this->name == STR(object_index)) // Type name
 		this->resolvedType->reset(DataType::Type::Integer);
 
 	else // Variable* reference
@@ -302,20 +314,20 @@ void Accessor::resolve(ResolveScope* scope)
 				else if (this->arrayAccessors[0]->expr->type == Type::Accessor) // Get vector/matrix
 				{
 					Accessor* expr1 = static_cast<Accessor*>(this->arrayAccessors[0]->expr);
-					if (expr1->name.startsWith("PATH_"))
-					{
-						accessorType = DataType::Type::Array;
-						this->resolvedType->reset(DataType::Type::Variant);
-					}
-					else if (expr1->name == "X" || expr1->name == "Y" || expr1->name == "Z" || expr1->name == "W") // Vector
+					if (expr1->name == STR(X) || expr1->name == STR(Y) || expr1->name == STR(Z) || expr1->name == STR(W)) // Vector
 					{
 						accessorType = DataType::Type::Vector;
 						this->resolvedType->reset(DataType::Type::Vector, DataType(DataType::Type::Real));
 					}
-					else if (expr1->name == "MAT_X" || expr1->name == "MAT_Y" || expr1->name == "MAT_Z") // Matrix
+					else if (expr1->name == STR(MAT_X) || expr1->name == STR(MAT_Y) || expr1->name == STR(MAT_Z)) // Matrix
 					{
 						accessorType = DataType::Type::Matrix;
 						this->resolvedType->reset(DataType::Type::Matrix, DataType(DataType::Type::Real));
+					}
+					else if (String(expr1->name).startsWith("PATH_"))
+					{
+						accessorType = DataType::Type::Array;
+						this->resolvedType->reset(DataType::Type::Variant);
 					}
 				}
 			}
@@ -375,14 +387,14 @@ void Accessor::resolve(ResolveScope* scope)
 
 			}
 			else
-				Program::addSyntaxError("Used [] on non-container type " + this->name + " in " + this->func->name + ":" + this->line);
+				Program::addSyntaxError("Used [] on non-container type " + String(this->name) + " in " + String(this->func->name) + ":" + this->line);
 		}
 	}
 
 	if (this->nextInChain != nullptr) // Resolve next in chain recursively
 	{
-		String nextInChainScope = getNextInChainScope(scope);
-		if (nextInChainScope == "any")
+		StringId nextInChainScope = getNextInChainScope(scope);
+		if (nextInChainScope == STR(any))
 		{
 			CodeObject::unknownScopes++;
 			this->resolvedType->reset();
@@ -407,8 +419,8 @@ bool Accessor::applyType(ResolveScope* scope, const DataType& inputType)
 	bool changed = false;
 	if (this->nextInChain != nullptr)  // Apply to next in chain only
 	{
-		String nextInChainScope = getNextInChainScope(scope);
-		if (nextInChainScope == "any")
+		StringId nextInChainScope = getNextInChainScope(scope);
+		if (nextInChainScope == STR(any))
 		{
 			CodeObject::unknownScopes++;
 			if (!Accessor::resolveUnknownScope)
@@ -459,16 +471,16 @@ String Accessor::toCpp(ResolveScope* scope)
 		return nameToCpp(this->name) + "_" + nameToCpp(this->nextInChain->name);
 
 	// external_call(name, [args...])
-	if (this->name == "external_call" && this->callParameters != nullptr && this->callParameters.size() > 0)
+	if (this->name == STR(external_call) && this->callParameters != nullptr && this->callParameters.size() > 0)
 	{
 		Accessor* callAcc = static_cast<Accessor*>(this->callParameters[0]);
 		if (!Program::externalFunctions.containsKey(callAcc->name))
 		{
-			Program::syntaxErrors.add("external_call on unknown function " + callAcc->name + " in " + this->func->name + ":" + this->line);
+			Program::syntaxErrors.add("external_call on unknown function " + String(callAcc->name) + " in " + this->func->name + ":" + this->line);
 			return "";
 		}
 
-		String callCpp = callAcc->name + "(";
+		String callCpp = String(callAcc->name) + "(";
 		for (int i = 1; i < static_cast<int>(this->callParameters.size()); i++)
 			callCpp += (i > 1 ? ", " : "") + this->callParameters[i]->toCpp(scope);
 		callCpp += ")";
@@ -476,43 +488,43 @@ String Accessor::toCpp(ResolveScope* scope)
 	}
 
 	// ord("X") -> (int)'X'
-	if (this->name == "ord" && this->callParameters.size() > 0 && this->callParameters[0]->type == Type::Value)
+	if (this->name == STR(ord) && this->callParameters.size() > 0 && this->callParameters[0]->type == Type::Value)
 	{
 		ExpressionValue* value = static_cast<ExpressionValue*>(this->callParameters[0]);
 		if (value->valueType == Token::Type::String)
-			return "(IntType)'" + value->value + "'";
+			return "(IntType)'" + String(value->value) + "'";
 	}
 
 	// current_time -> current_time()
-	if (this->name == "current_time")
+	if (this->name == STR(current_time))
 		return "current_time()";
 
 	// new_obj(objName) -> (new objName)->id
-	if (this->name == "new_obj")
-		return "(new " + static_cast<Accessor*>(this->callParameters[0])->name + ")->id";
+	if (this->name == STR(new_obj))
+		return "(new " + String(((Accessor*)this->callParameters[0])->name) + ")->id";
 
 	// test(bool, val1, val2) -> ((bool) ? val1 : val2)
-	if (this->name == "test")
+	if (this->name == STR(test))
 		return "(" + toTernaryCpp(scope, this->callParameters[0], this->callParameters[1], this->callParameters[2]) + ")";
 
 	if (Program::sprites.containsKey(this->name) ||
 		Program::shaders.containsKey(this->name)) // Convert resource names to integer id
-		return "ID_" + this->name;
+		return "ID_" + String(this->name);
 
 	bool funcInstance = false;
-	if (this->name != "app" && Program::objects.containsKey(this->name)) // Objects to integer id (except app and new expresisons)
+	if (this->name != STR(app) && Program::objects.containsKey(this->name)) // Objects to integer id (except app and new expresisons)
 	{
 		if (Program::objects[this->name]->isStruct)
 			funcInstance = true;
 		else
-			return "ID_" + this->name;
+			return "ID_" + String(this->name);
 	}
 
 	if (!this->lastToCppScopeSet && this->nextInChain != nullptr) // Generate C++ in chain from last to first on first call
 	{
 		this->lastToCppScope = *scope; // Save scope
 		this->lastToCppScopeSet = true;
-		String nextInChainScope = getNextInChainScope(scope);
+		StringId nextInChainScope = getNextInChainScope(scope);
 		cpp = this->nextInChain->toCpp(scope->nextInChain(nextInChainScope));
 		this->needLtZero = this->nextInChain->needLtZero;
 		this->writtenType = this->nextInChain->writtenType;
@@ -524,27 +536,27 @@ String Accessor::toCpp(ResolveScope* scope)
 
 	bool thisPtrValid = (scope->location->level == 0 && this->func->structObject != nullptr); // In struct method outside any with()
 
-	if (this->name == "app") // app instance id
+	if (this->name == STR(app)) // app instance id
 		return this->appToId ? "global::_app->id" : "ID_app";
 
-	if (this->name == "other") // other instance id
+	if (this->name == STR(other)) // other instance id
 		return "self.otherId";
 
-	if (this->name == "id" || this->name == "self" || this->name == "object_index") // id/object_index
+	if (this->name == STR(id) || this->name == STR(self) || this->name == STR(object_index)) // id/object_index
 	{
 		if (this->previousInChain != nullptr)
 		{
-			if (this->name == "object_index") // Get assetId from chain
+			if (this->name == STR(object_index)) // Get assetId from chain
 				return "Obj(" + this->previousInChain->toCpp(scope) + ")->subAssetId";
 			else
 				return this->previousInChain->toCpp(scope); // Previous chain should give an int for the id
 		}
 		else
 		{
-			String mem = (this->name == "object_index" ? "subAssetId" : "id");
+			String mem = (this->name == STR(object_index) ? "subAssetId" : "id");
 			if (thisPtrValid)
 				return mem;
-			else if (scope->current == "app")
+			else if (scope->current == STR(app))
 				return "global::_app->" + mem;
 			else
 				return "self->" + mem;
@@ -559,7 +571,7 @@ String Accessor::toCpp(ResolveScope* scope)
 	bool parenthesis = true;
 	String accessorFunc = "";
 
-	if (GML::constants.containsKey(this->name) || GML::keywords.contains(this->name) || this->name == "argument" || this->name == "argument_count") // GML* Keyword
+	if (GML::constants.containsKey(this->name) || GML::keywords.contains(this->name) || this->name == STR(argument) || this->name == STR(argument_count)) // GML* Keyword
 		cpp += nameToCpp(this->name);
 
 	else if (GML::variables.containsKey(this->name)) // Global GML* variable
@@ -569,17 +581,17 @@ String Accessor::toCpp(ResolveScope* scope)
 			cpp = "DsMap(" + cpp + ")";
 	}
 
-	else if (this->name != "argument" && this->name != "argument_count" && this->name.startsWith("argument")) // argument0..15
+	else if (this->name.id() >= STR(argument0) && this->name.id() <= STR(argument15))
 	{
-		int argNum = Convert::toInt32(this->name.replace("argument", ""));
+		int argNum = this->name.id() - STR(argument0);
 		if (argNum >= 0 && static_cast<int>(this->func->vars.size()) > argNum && this->func->vars[argNum]->line == 0)
 			cpp += this->func->vars[argNum]->name;
 		else
-			Program::addSyntaxError("Invalid " + this->name + " in " + this->func->name + ":" + this->line);
+			Program::addSyntaxError("Invalid " + String(this->name) + " in " + this->func->name + ":" + this->line);
 	}
 	else if (GML::functions.containsKey(this->name)) // GML* function
 	{
-		if (this->name == "ds_map_create" && this->assignedTo != nullptr) // Convert map creation to specific map type
+		if (this->name == STR(ds_map_create) && this->assignedTo != nullptr) // Convert map creation to specific map type
 		{
 			DataType::Type varMapType = this->assignedTo->type->getMapType();
 			if (varMapType == DataType::Type::IntMap)
@@ -599,12 +611,12 @@ String Accessor::toCpp(ResolveScope* scope)
 	else if (Program::functions.containsKey(this->name)) // User script
 	{
 		if (this->callParameters == nullptr) // Script name, convert to integer id
-			return "ID_" + this->name;
+			return "ID_" + String(this->name);
 
 		targetFunc = Program::functions[this->name];
 		varArgs = targetFunc->varArgs;
 
-		if (this->name == "array") // array(args) -> ArrType::From({ args })
+		if (this->name == STR(array)) // array(args) -> ArrType::From({ args })
 		{
 			if (this->callParameters.size() == 0) // array() -> ArrType()
 				return "ArrType()";
@@ -617,8 +629,8 @@ String Accessor::toCpp(ResolveScope* scope)
 	else if (scopeObj != nullptr && scopeObj->instanceFunctions.containsKey(this->name)) // Instance function
 	{
 		targetFunc = scopeObj->instanceFunctions[this->name];
-		if (this->previousInChain != nullptr && this->previousInChain->name != "self") // Ptr from chain
-			cpp += "ObjType(" + scopeObj->name + ", " + this->previousInChain->toCpp(scope) + ")->";
+		if (this->previousInChain != nullptr && this->previousInChain->name != STR(self)) // Ptr from chain
+			cpp += "ObjType(" + String(scopeObj->name) + ", " + this->previousInChain->toCpp(scope) + ")->";
 		cpp += nameToCpp(this->name);
 		funcInstance = true;
 	}
@@ -656,13 +668,13 @@ String Accessor::toCpp(ResolveScope* scope)
 		if (var != nullptr)
 		{
 			this->writtenType = var->type;
-			if (var->scope == "app") // App
+			if (var->scope == STR(app)) // App
 				cpp += "global::_app->" + nameToCpp(this->name);
 
-			else if (scopeObj != nullptr && this->previousInChain != nullptr && this->previousInChain->name != "app" && this->previousInChain->name != "self") // Ptr from chain
-				cpp += "ObjType(" + scopeObj->name + ", " + this->previousInChain->toCpp(scope) + ")->" + nameToCpp(this->name);
+			else if (scopeObj != nullptr && this->previousInChain != nullptr && this->previousInChain->name != STR(app) && this->previousInChain->name != STR(self)) // Ptr from chain
+				cpp += "ObjType(" + String(scopeObj->name) + ", " + this->previousInChain->toCpp(scope) + ")->" + nameToCpp(this->name);
 
-			else if (var->scope == "global") // Global/Macro
+			else if (var->scope == STR(global)) // Global/Macro
 			{
 				if (!Program::macros.containsKey(this->name))
 					cpp += "global::";
@@ -755,28 +767,28 @@ String Accessor::toCpp(ResolveScope* scope)
 		if (parenthesis)
 			parCpp += "(";
 
-		String funcScope = "global";
+		StringId funcScope = STR(global);
 		if (targetFunc != nullptr)
 			funcScope = targetFunc->getScope();
 		else if (funcSign != nullptr && funcSign->needScope)
-			funcScope = "any";
+			funcScope = STR(any);
 
-		if (funcScope != "global" && funcScope != "app" && !funcInstance) // Send in scope for non-global/non-instance
+		if (funcScope != STR(global) && funcScope != STR(app) && !funcInstance) // Send in scope for non-global/non-instance
 		{
 			if (thisPtrValid || scope->current != funcScope) // Make new scope
 			{
 				String scopeType, scopeArgs = "self";
 
-				if (funcScope != "any") // Scope<T> struct
+				if (funcScope != STR(any)) // Scope<T> struct
 				{
-					scopeType = "<" + funcScope + ">";
+					scopeType = "<" + String(funcScope) + ">";
 					if (thisPtrValid && this->func->structObject->name == funcScope) // Get this pointer (if it matches T)
 						scopeArgs = "this";
 				}
 				else // ScopeAny struct
 				{
 					scopeType = "Any"; ;
-					if (scope->current == "app" && funcSign != nullptr && funcSign->needScope) // Send global app into GM function
+					if (scope->current == STR(app) && funcSign != nullptr && funcSign->needScope) // Send global app into GM function
 						scopeArgs = "global::_app->id";
 					else if (thisPtrValid)
 						scopeArgs = "this->id";
@@ -808,7 +820,7 @@ String Accessor::toCpp(ResolveScope* scope)
 				if (this->callParameters.size() > args.size() && targetFunc->cppSeparateHeader == "")
 				{
 					Console::writeLine("FATAL ERROR: Invalid argument count for {2} in {0}:{1}", this->func->name, this->line, targetFunc->name);
-					Environment::exit(1);
+					std::exit(1);
 				}
 			}
 
@@ -880,15 +892,15 @@ String Accessor::toConditionCpp(ResolveScope* scope, bool parenthesis)
 		return cpp;
 }
 
-String Accessor::getNextInChainScope(ResolveScope* scope)
+StringId Accessor::getNextInChainScope(ResolveScope* scope)
 {
 	if (Program::objects.containsKey(this->name)) // Object* reference
 		return this->name;
 
-	if (this->name == "id" || this->name == "self") // Scope reference
+	if (this->name == STR(id) || this->name == STR(self)) // Scope reference
 		return scope->currentInChain;
 
-	else if (this->name == "other") // Previous scope reference
+	else if (this->name == STR(other)) // Previous scope reference
 		return scope->previous;
 
 	else // Variable* reference
@@ -897,7 +909,7 @@ String Accessor::getNextInChainScope(ResolveScope* scope)
 		Function* funcUpdateScope = (this->previousInChain != nullptr ? nullptr : scope->funcUpdateScope);
 		Variable* var = Program::findVariable(scope->currentInChain, this->name, findVarFunc, *scope->location, this->line, funcUpdateScope);
 
-		String varRefId = "";
+		StringId varRefId = 0;
 		if (var != nullptr)
 		{
 			if (this->arrayAccessors.size() > 0)
@@ -906,8 +918,8 @@ String Accessor::getNextInChainScope(ResolveScope* scope)
 				{
 					if (ass->rawType >= DataType::Type::Array)
 					{
-						if (varRefId != "") // Multiple containers found containing references, exit with "any"
-							return "any";
+						if (varRefId != 0) // Multiple containers found containing references, exit with STR(any)
+							return STR(any);
 
 						varRefId = ass->containerStorage->getUniqueReferenceId();
 					}
@@ -917,7 +929,7 @@ String Accessor::getNextInChainScope(ResolveScope* scope)
 				varRefId = var->type->getUniqueReferenceId();
 		}
 
-		return (varRefId == "" ? "any" : varRefId);
+		return (varRefId == 0 ? STR(any) : varRefId);
 	}
 }
 
@@ -933,9 +945,9 @@ Function* Accessor::getUserFunction(ResolveScope* scope)
 	return nullptr;
 }
 
-String Accessor::getAccessorName()
+StringId Accessor::getAccessorName()
 {
-	return this->nextInChain == nullptr ? this->name : "";
+	return this->nextInChain == nullptr ? this->name : 0;
 }
 
 Accessor::ArrayAccessor::ArrayAccessor(DataType::Type type, Expression* expression, bool isRef)

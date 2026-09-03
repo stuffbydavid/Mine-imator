@@ -2,7 +2,7 @@
 
 namespace CppGen
 {
-Object::Object(String name, bool isStruct)
+Object::Object(StringId name, bool isStruct)
 {
 	this->name = name;
 	this->isStruct = isStruct;
@@ -32,28 +32,15 @@ Object::Object(String dir)
 		else if (dirInfo.name == "app")
 		{
 			if (eventFileInfo.name == "Draw_0.gml")
-			{
 				Program::appDrawFunction = func;
-			}
 			else if (eventFileInfo.name == "Other_3.gml")
-			{
 				Program::appGameEndFunction = func;
-			}
 			else if (eventFileInfo.name == "Other_62.gml")
-			{
 				Program::appHttpFunction = func;
-			}
 			else if (eventFileInfo.name == "Step_0.gml")
-			{
 				Program::appStepFunction = func;
-			}
 			else
-			{
-				{
-					Console::writeLine("WARNING: Unsupported event {0} in {1}, it will be ignored.", eventFileInfo.name, "app");
-
-				}
-			}
+				Console::writeLine("WARNING: Unsupported event {0} in {1}, it will be ignored.", eventFileInfo.name, "app");
 		}
 		else
 			Console::writeLine("WARNING: Unsupported event {0} in {1}, it will be ignored." + eventFileInfo.name, dirInfo.name);
@@ -77,12 +64,12 @@ void Object::setDestructor(Function* func)
 
 void Object::writeCppHeader()
 {
-	CodeWriter::writeLine("struct " + this->name + ": Object");
+	CodeWriter::writeLine("struct " + String(this->name) + ": Object");
 	CodeWriter::writeLine("{", 1);
 
 	// Variables
 	for (Variable* var : this->instanceVars.values)
-		if (var->name != "id" && var->name != "subAssetId")
+		if (var->name != STR(id) && var->name != STR(subAssetId))
 			CodeWriter::writeLine(var->type->toCpp() + " " + CodeObject::nameToCpp(var->name) + ";");
 
 	if (this->constructor != nullptr || this->destructor != nullptr || this->instanceFunctions.values.size() > 0)
@@ -91,15 +78,15 @@ void Object::writeCppHeader()
 	// Constructor header
 	if (this->constructor != nullptr)
 	{
-		CodeWriter::write(this->name + "(");
+		CodeWriter::write(String(this->name) + "(");
 		if (this->constructor->args != nullptr)
-			this->constructor->args->writeCpp(ResolveScope("global"), DeclarationList::WriteFormat::ArgsHeader);
+			this->constructor->args->writeCpp(ResolveScope(STR(global)), DeclarationList::WriteFormat::ArgsHeader);
 		CodeWriter::writeLine(");");
 	}
 
 	// Destructor header
 	if (this->destructor != nullptr)
-		CodeWriter::writeLine("~" + this->name + "();");
+		CodeWriter::writeLine("~" + String(this->name) + "();");
 
 	CodeWriter::writeLine("void InitMembers() override;");
 
@@ -131,45 +118,27 @@ bool Object::writeCppImplementation()
 
 void Object::writeInitMembers()
 {
-	CodeWriter::writeLine("void " + this->name + "::InitMembers()");
+	CodeWriter::writeLine("void " + String(this->name) + "::InitMembers()");
 	CodeWriter::writeLine("{", 1);
 
 	// Define instance functions for use with the idFunc macro
 	if (this->instanceFunctions.size() > 0)
 	{
 		for (Function* func : this->instanceFunctions.values)
-			CodeWriter::writeLine("DefineObjectFunction(ID_" + this->name + ", M_" + func->name + ", " + func->toExecuteCpp() + ")");
+			CodeWriter::writeLine("DefineObjectFunction(ID_" + String(this->name) + ", M_" + String(func->name) + ", " + String(func->toExecuteCpp()) + ")");
 		CodeWriter::writeLine();
 	}
 
-	CodeWriter::writeLine("if (memberMap.contains(ID_" + this->name + "))", 1);
+	CodeWriter::writeLine("if (memberMap.contains(ID_" + String(this->name) + "))", 1);
 	CodeWriter::writeLine("return;");
 	CodeWriter::writeLine("", -1);
 
 	// Define members
 	for (Variable* var : this->instanceVars.values)
-		CodeWriter::writeLine("DefineObjectMember(ID_" + this->name + ", M_" + CodeObject::nameToCpp(var->name) + ", " + CodeObject::nameToCpp(var->name) + ", " + var->type->toCppEnum() + ");");
+		CodeWriter::writeLine("DefineObjectMember(ID_" + String(this->name) + ", M_" + CodeObject::nameToCpp(var->name) + ", " + CodeObject::nameToCpp(var->name) + ", " + var->type->toCppEnum() + ");");
 
 	CodeWriter::writeLine("}", -1);
 	CodeWriter::writeLine();
-}
-
-String Object::toDebugString(String tabs)
-{
-	String str = tabs + this->name + ":\n";
-	tabs += "\t";
-	if (this->constructor != nullptr)
-		str += tabs + "Constructor: " + this->constructor->name + "\n";
-	if (this->destructor != nullptr)
-		str += tabs + "Destructor: " + this->destructor->name + "\n";
-	str += tabs + "LocalFunctions:\n";
-	for (Function* func : this->instanceFunctions.values)
-		str += func->toDebugString(tabs + "\t");
-	str += tabs + "Variables:\n";
-	tabs += "\t";
-	for (Variable* var : this->instanceVars.values)
-		str += tabs + var->type->toCpp() + " " + var->name + "\n" + var->type->getAssignmentsString(tabs + "\t");
-	return str;
 }
 
 }

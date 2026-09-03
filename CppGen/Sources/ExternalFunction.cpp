@@ -2,7 +2,7 @@
 
 namespace CppGen
 {
-ExternalFunction::ExternalFunction(String name, DataType* returnType, List<DataType*> argTypes)
+ExternalFunction::ExternalFunction(StringId name, DataType* returnType, List<DataType*> argTypes)
 {
 	this->name = name;
 	this->returnType = returnType;
