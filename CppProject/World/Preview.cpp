@@ -905,6 +905,26 @@ namespace CppProject
 			camAnim.angleXYEnd -= 360;
 	}
 
+	void Preview::GoToPosition(IntType x, IntType z)
+	{
+		camTarget = VecType(x, camTarget.y, z);
+		camAnim = {
+			0, 2000,
+			{}, {},
+			camTargetDis, 100.0,
+			mod_fix(camAngleXY, 360), camAngleXY,
+			camAngleZ, 25.0,
+			true
+		};
+
+		// Adjust angles
+		RealType diff = camAnim.angleXYStart - camAnim.angleXYEnd;
+		if (diff > 180)
+			camAnim.angleXYStart -= 360;
+		else if (diff < -180)
+			camAnim.angleXYEnd -= 360;
+	}
+
 	void Preview::SetSelectionSize(VecType size)
 	{
 		WorldVec mid = worldOriginPos;
