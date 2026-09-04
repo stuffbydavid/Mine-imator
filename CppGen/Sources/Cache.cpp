@@ -492,43 +492,73 @@ public:
 	}
 };
 
+struct ByteReader
+{
+	const char* data = nullptr;
+	std::size_t size = 0;
+	std::size_t pos = 0;
+	bool valid = true;
+
+	template<class T>
+	T value()
+	{
+		T output{};
+		if (!valid || pos + sizeof(T) > size)
+		{
+			valid = false;
+			return output;
+		}
+		std::memcpy(&output, data + pos, sizeof(T));
+		pos += sizeof(T);
+		return output;
+	}
+
+	const char* bytes(std::size_t count)
+	{
+		if (!valid || pos + count > size)
+		{
+			valid = false;
+			return nullptr;
+		}
+		const char* start = data + pos;
+		pos += count;
+		return start;
+	}
+
+	ByteReader slice(std::size_t count)
+	{
+		const char* start = bytes(count);
+		if (start == nullptr)
+			return {};
+		return ByteReader{ start, count, 0, true };
+	}
+};
+
 class CacheReader
 {
-	std::istream& stream_;
+	ByteReader& src_;
 	const List<StringId>& stringIds_;
 
 public:
 	bool valid = true;
 	List<Variable*> variables;
 
-	CacheReader(std::istream& stream, const List<StringId>& stringIds) : stream_(stream), stringIds_(stringIds) {}
+	CacheReader(ByteReader& src, const List<StringId>& stringIds) : src_(src), stringIds_(stringIds)
+	{
+		valid = src_.valid;
+	}
 
 	template<class T>
 	T value()
 	{
-		T output{};
-		if (valid && !readValue(stream_, output))
-			valid = false;
-		return output;
-	}
-
-	String bytes(std::uint64_t size)
-	{
-		String output;
-		if (size > MaxCacheFileSize)
-		{
-			valid = false;
-			return output;
-		}
-		output.resize(static_cast<std::size_t>(size));
-		if (valid)
-			stream_.read(output.data(), static_cast<std::streamsize>(size));
-		if (!stream_)
+		T output = src_.value<T>();
+		if (!src_.valid)
 			valid = false;
 		return output;
 	}
 
 	bool boolean() { return value<std::uint8_t>() != 0; }
+
 	StringId stringId()
 	{
 		const std::int32_t id = value<std::int32_t>();
@@ -655,51 +685,51 @@ public:
 
 		switch (input->type)
 		{
-			case Expression::Type::Parenthesis:
-				return expression(static_cast<ExpressionParenthesis*>(input)->expr);
-			case Expression::Type::UnaryOperation:
-				return expression(static_cast<UnaryOperation*>(input)->expr);
-			case Expression::Type::BinaryOperation:
-			{
-				BinaryOperation* operation = static_cast<BinaryOperation*>(input);
-				return expression(operation->left) && expression(operation->right);
-			}
-			case Expression::Type::TernaryCondition:
-			{
-				TernaryCondition* condition = static_cast<TernaryCondition*>(input);
-				return expression(condition->expr1) && expression(condition->expr2) && expression(condition->expr3);
-			}
-			case Expression::Type::Array:
-				for (Expression* expressionValue : static_cast<ExpressionArray*>(input)->expressions)
-					if (!expression(expressionValue))
+		case Expression::Type::Parenthesis:
+			return expression(static_cast<ExpressionParenthesis*>(input)->expr);
+		case Expression::Type::UnaryOperation:
+			return expression(static_cast<UnaryOperation*>(input)->expr);
+		case Expression::Type::BinaryOperation:
+		{
+			BinaryOperation* operation = static_cast<BinaryOperation*>(input);
+			return expression(operation->left) && expression(operation->right);
+		}
+		case Expression::Type::TernaryCondition:
+		{
+			TernaryCondition* condition = static_cast<TernaryCondition*>(input);
+			return expression(condition->expr1) && expression(condition->expr2) && expression(condition->expr3);
+		}
+		case Expression::Type::Array:
+			for (Expression* expressionValue : static_cast<ExpressionArray*>(input)->expressions)
+				if (!expression(expressionValue))
+					return false;
+			break;
+		case Expression::Type::Value:
+		{
+			ExpressionValue* valueExpression = static_cast<ExpressionValue*>(input);
+			valueExpression->valueHasDecimal = boolean();
+			valueExpression->knowValueHasDecimal = boolean();
+			break;
+		}
+		case Expression::Type::Accessor:
+		{
+			Accessor* accessor = static_cast<Accessor*>(input);
+			accessor->assignExpr = boolean() ? accessor : nullptr;
+			accessor->needLtZero = boolean();
+			accessor->appToId = boolean();
+			for (Accessor::ArrayAccessor* arrayAccessor : accessor->arrayAccessors)
+				if (!expression(arrayAccessor->expr))
+					return false;
+			if (accessor->callParameters != nullptr)
+				for (Expression* parameter : accessor->callParameters)
+					if (!expression(parameter))
 						return false;
-				break;
-			case Expression::Type::Value:
-			{
-				ExpressionValue* valueExpression = static_cast<ExpressionValue*>(input);
-				valueExpression->valueHasDecimal = boolean();
-				valueExpression->knowValueHasDecimal = boolean();
-				break;
-			}
-			case Expression::Type::Accessor:
-			{
-				Accessor* accessor = static_cast<Accessor*>(input);
-				accessor->assignExpr = boolean() ? accessor : nullptr;
-				accessor->needLtZero = boolean();
-				accessor->appToId = boolean();
-				for (Accessor::ArrayAccessor* arrayAccessor : accessor->arrayAccessors)
-					if (!expression(arrayAccessor->expr))
-						return false;
-				if (accessor->callParameters != nullptr)
-					for (Expression* parameter : accessor->callParameters)
-						if (!expression(parameter))
-							return false;
-				if (accessor->nextInChain != nullptr)
-					return expression(accessor->nextInChain);
-				break;
-			}
-			case Expression::Type::New:
-				return expression(static_cast<NewExpression*>(input)->acc);
+			if (accessor->nextInChain != nullptr)
+				return expression(accessor->nextInChain);
+			break;
+		}
+		case Expression::Type::New:
+			return expression(static_cast<NewExpression*>(input)->acc);
 		}
 		return valid;
 	}
@@ -708,90 +738,90 @@ public:
 	{
 		switch (input->type)
 		{
-			case Statement::Type::DeclarationList:
-				return declarationList(static_cast<DeclarationList*>(input));
-			case Statement::Type::StatementList:
-				for (Statement* statementValue : static_cast<StatementList*>(input)->statements)
-					if (!statement(statementValue))
-						return false;
-				break;
-			case Statement::Type::Declare:
-				return declarationList(static_cast<DeclareStatement*>(input)->declarations);
-			case Statement::Type::Macro:
-				return expression(static_cast<MacroStatement*>(input)->expr);
-			case Statement::Type::Enum:
-				return declarationList(static_cast<EnumStatement*>(input)->declarations);
-			case Statement::Type::Call:
-				return expression(static_cast<CallStatement*>(input)->acc);
-			case Statement::Type::Assign:
-			{
-				AssignStatement* assignment = static_cast<AssignStatement*>(input);
-				return expression(assignment->target) && (assignment->expr == nullptr || expression(assignment->expr));
-			}
-			case Statement::Type::If:
-			{
-				IfStatement* statementValue = static_cast<IfStatement*>(input);
-				return expression(statementValue->condition) && statement(statementValue->statement) &&
-					(statementValue->elseStatement == nullptr || statement(statementValue->elseStatement));
-			}
-			case Statement::Type::While:
-			{
-				WhileStatement* statementValue = static_cast<WhileStatement*>(input);
-				return expression(statementValue->loopCondition) && statement(statementValue->statement);
-			}
-			case Statement::Type::DoUntil:
-			{
-				DoUntilStatement* statementValue = static_cast<DoUntilStatement*>(input);
-				return statement(statementValue->statement) && expression(statementValue->breakCondition);
-			}
-			case Statement::Type::For:
-			{
-				ForStatement* statementValue = static_cast<ForStatement*>(input);
-				return (statementValue->initStatement == nullptr || statement(statementValue->initStatement)) &&
-					(statementValue->loopCondition == nullptr || expression(statementValue->loopCondition)) &&
-					(statementValue->incStatement == nullptr || statement(statementValue->incStatement)) &&
-					statement(statementValue->statement);
-			}
-			case Statement::Type::Repeat:
-			{
-				RepeatStatement* statementValue = static_cast<RepeatStatement*>(input);
-				return expression(statementValue->expr) && statement(statementValue->statement);
-			}
-			case Statement::Type::With:
-			{
-				WithStatement* statementValue = static_cast<WithStatement*>(input);
-				std::uint32_t scopeCount{};
-				if (!count(scopeCount))
+		case Statement::Type::DeclarationList:
+			return declarationList(static_cast<DeclarationList*>(input));
+		case Statement::Type::StatementList:
+			for (Statement* statementValue : static_cast<StatementList*>(input)->statements)
+				if (!statement(statementValue))
 					return false;
-				statementValue->otherScopes.clear();
-				for (std::uint32_t i = 0; i < scopeCount; i++)
-					statementValue->otherScopes.add(stringId());
-				statementValue->otherScope = stringId();
-				return expression(statementValue->expr) && statement(statementValue->statement);
-			}
-			case Statement::Type::Switch:
-			{
-				SwitchStatement* statementValue = static_cast<SwitchStatement*>(input);
-				statementValue->caseResolvedTypeStorage.reset(dataType());
-				statementValue->caseResolvedType = &statementValue->caseResolvedTypeStorage;
-				if (!expression(statementValue->expr))
+			break;
+		case Statement::Type::Declare:
+			return declarationList(static_cast<DeclareStatement*>(input)->declarations);
+		case Statement::Type::Macro:
+			return expression(static_cast<MacroStatement*>(input)->expr);
+		case Statement::Type::Enum:
+			return declarationList(static_cast<EnumStatement*>(input)->declarations);
+		case Statement::Type::Call:
+			return expression(static_cast<CallStatement*>(input)->acc);
+		case Statement::Type::Assign:
+		{
+			AssignStatement* assignment = static_cast<AssignStatement*>(input);
+			return expression(assignment->target) && (assignment->expr == nullptr || expression(assignment->expr));
+		}
+		case Statement::Type::If:
+		{
+			IfStatement* statementValue = static_cast<IfStatement*>(input);
+			return expression(statementValue->condition) && statement(statementValue->statement) &&
+				(statementValue->elseStatement == nullptr || statement(statementValue->elseStatement));
+		}
+		case Statement::Type::While:
+		{
+			WhileStatement* statementValue = static_cast<WhileStatement*>(input);
+			return expression(statementValue->loopCondition) && statement(statementValue->statement);
+		}
+		case Statement::Type::DoUntil:
+		{
+			DoUntilStatement* statementValue = static_cast<DoUntilStatement*>(input);
+			return statement(statementValue->statement) && expression(statementValue->breakCondition);
+		}
+		case Statement::Type::For:
+		{
+			ForStatement* statementValue = static_cast<ForStatement*>(input);
+			return (statementValue->initStatement == nullptr || statement(statementValue->initStatement)) &&
+				(statementValue->loopCondition == nullptr || expression(statementValue->loopCondition)) &&
+				(statementValue->incStatement == nullptr || statement(statementValue->incStatement)) &&
+				statement(statementValue->statement);
+		}
+		case Statement::Type::Repeat:
+		{
+			RepeatStatement* statementValue = static_cast<RepeatStatement*>(input);
+			return expression(statementValue->expr) && statement(statementValue->statement);
+		}
+		case Statement::Type::With:
+		{
+			WithStatement* statementValue = static_cast<WithStatement*>(input);
+			std::uint32_t scopeCount{};
+			if (!count(scopeCount))
+				return false;
+			statementValue->otherScopes.clear();
+			for (std::uint32_t i = 0; i < scopeCount; i++)
+				statementValue->otherScopes.add(stringId());
+			statementValue->otherScope = stringId();
+			return expression(statementValue->expr) && statement(statementValue->statement);
+		}
+		case Statement::Type::Switch:
+		{
+			SwitchStatement* statementValue = static_cast<SwitchStatement*>(input);
+			statementValue->caseResolvedTypeStorage.reset(dataType());
+			statementValue->caseResolvedType = &statementValue->caseResolvedTypeStorage;
+			if (!expression(statementValue->expr))
+				return false;
+			for (SwitchStatement::Case* caseValue : statementValue->cases)
+				if (!expression(caseValue->expr) || !statement(caseValue->statements))
 					return false;
-				for (SwitchStatement::Case* caseValue : statementValue->cases)
-					if (!expression(caseValue->expr) || !statement(caseValue->statements))
-						return false;
-				return statementValue->defaultStatements == nullptr || statement(statementValue->defaultStatements);
-			}
-			case Statement::Type::Return:
-			{
-				ReturnStatement* statementValue = static_cast<ReturnStatement*>(input);
-				return statementValue->expr == nullptr || expression(statementValue->expr);
-			}
-			case Statement::Type::Delete:
-				return expression(static_cast<DeleteStatement*>(input)->expr);
-			case Statement::Type::Break:
-			case Statement::Type::Continue:
-			case Statement::Type::CustomCpp:
-				break;
+			return statementValue->defaultStatements == nullptr || statement(statementValue->defaultStatements);
+		}
+		case Statement::Type::Return:
+		{
+			ReturnStatement* statementValue = static_cast<ReturnStatement*>(input);
+			return statementValue->expr == nullptr || expression(statementValue->expr);
+		}
+		case Statement::Type::Delete:
+			return expression(static_cast<DeleteStatement*>(input)->expr);
+		case Statement::Type::Break:
+		case Statement::Type::Continue:
+		case Statement::Type::CustomCpp:
+			break;
 		}
 		return valid;
 	}
@@ -823,33 +853,38 @@ public:
 		return (input->args == nullptr || declarationList(input->args)) && statement(input->statements);
 	}
 
+	bool readFunctionHeader(Function* input)
+	{
+		(void)stringId();
+		input->returnTypeStorage.reset(dataType());
+		input->returnType = &input->returnTypeStorage;
+		input->endsWithReturnStatement = boolean();
+		input->hasInstanceVars = boolean();
+		input->isUnused = boolean();
+		std::uint32_t assignmentCount{};
+		if (!count(assignmentCount))
+			return valid = false;
+		for (std::uint32_t i = 0; i < assignmentCount; i++)
+			input->scopeAssignments.add(makeObject<Function::ScopeAssignment>(stringId(), nullptr, 0));
+		return valid;
+	}
+
 	bool functionState(Function* input, bool apply)
 	{
-		const String payload = bytes(value<std::uint64_t>());
-		if (!valid || !apply)
-		{
-			if (!valid)
-				return false;
-			std::istringstream stream(payload, std::ios::binary);
-			CacheReader reader(stream, stringIds_);
-			(void)reader.stringId();
-			input->returnTypeStorage.reset(reader.dataType());
-			input->returnType = &input->returnTypeStorage;
-			input->endsWithReturnStatement = reader.boolean();
-			input->hasInstanceVars = reader.boolean();
-			input->isUnused = reader.boolean();
-			std::uint32_t assignmentCount{};
-			if (!reader.count(assignmentCount))
-				return valid = false;
-			for (std::uint32_t i = 0; i < assignmentCount; i++)
-				input->scopeAssignments.add(makeObject<Function::ScopeAssignment>(reader.stringId(), nullptr, 0));
-			return valid = reader.valid;
-		}
+		const std::uint64_t size = value<std::uint64_t>();
+		if (!valid || size > MaxCacheFileSize)
+			return valid = false;
 
-		std::istringstream stream(payload, std::ios::binary);
-		CacheReader reader(stream, stringIds_);
+		ByteReader slice = src_.slice(static_cast<std::size_t>(size));
+		if (!src_.valid)
+			return valid = false;
+
+		CacheReader reader(slice, stringIds_);
+		if (!apply)
+			return valid = reader.readFunctionHeader(input);
+
 		reader.variables = variables;
-		if (!reader.function(input) || stream.peek() != std::char_traits<char>::eof())
+		if (!reader.function(input) || slice.pos != slice.size || !reader.valid)
 			valid = false;
 		return valid;
 	}
@@ -1051,7 +1086,7 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 	if (!readValue(stream, magic) || !readValue(stream, version) || !readString(stream, cachedFingerprint) ||
 		magic != CacheMagic || version != CacheVersion)
 		return false;
-	
+
 	if (cachedFingerprint != fingerprint)
 		return false;
 
@@ -1060,17 +1095,10 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 
 	if (!readGmlStrings(stream, cachedGmlStrings))
 		return false;
-	
+
 	if (!readGmlTimestamps(stream, modifiedGmlFiles))
 		return false;
 
-	for (const String& file : modifiedGmlFiles)
-	{
-		const String filename = fsString(fsPath(file).filename());
-		if (filename == "macros.gml" || filename == "enums.gml")
-			return false;
-	}
-	
 	if (!readValue(stream, payloadSize) || !readValue(stream, payloadHash))
 		return false;
 
@@ -1083,9 +1111,10 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 		return false;
 
 	mergeGmlStrings(cachedGmlStrings);
-	std::istringstream payloadStream(payload, std::ios::binary);
-	CacheReader reader(payloadStream, cachedStringIds);
-	if (!loadResolverState(reader, modifiedGmlFiles) || payloadStream.peek() != std::char_traits<char>::eof())
+
+	ByteReader payloadSrc{ payload.data(), static_cast<std::size_t>(payload.size()), 0, true };
+	CacheReader reader(payloadSrc, cachedStringIds);
+	if (!loadResolverState(reader, modifiedGmlFiles) || payloadSrc.pos != payloadSrc.size)
 		return false;
 
 	Console::writeLine("Loaded resolved classes and types from cache");
