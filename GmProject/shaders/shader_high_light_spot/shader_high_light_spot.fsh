@@ -17,6 +17,7 @@ uniform sampler2D uDepthBuffer; // static
 uniform vec3 uSSSRadius;
 
 uniform vec3 uCameraPosition; // static
+uniform float uGamma;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -118,8 +119,7 @@ void main()
 		if (uLightSpecular * dif * shadow > 0.0)
 		{
 			float specular = getSpecular(normal, lightDir, uCameraPosition, vPosition, F0, roughness, metallic);
-		
-			spec = uLightColor.rgb * shadow * difMask * uLightSpecular * dif * (specular * mix(vec3(1.0), baseColor.rgb, metallic));
+			spec = uLightColor.rgb * shadow * difMask * uLightSpecular * dif * (specular * mix(vec3(1.0), pow(baseColor.rgb, vec3(uGamma)), metallic));
 		}
 	}
 	

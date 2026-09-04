@@ -240,6 +240,7 @@ function shader_startup()
 		new_shader_uniform("uShadowPosition")
 		new_shader_uniform("uLightSpecular")
 		new_shader_uniform("uLightSize")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_light_point_shadowless])
@@ -250,6 +251,7 @@ function shader_startup()
 		new_shader_uniform("uLightAmount")
 		new_shader_uniform("uLightData")
 		new_shader_uniform("uLightSpecular")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_light_spot])
@@ -269,6 +271,7 @@ function shader_startup()
 		new_shader_sampler("uDepthBuffer")
 		new_shader_uniform("uLightSpecular")
 		new_shader_uniform("uLightSize")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_light_sun])
@@ -287,6 +290,7 @@ function shader_startup()
 		new_shader_uniform("uLightSpecular")
 		new_shader_uniform("uLightMatBiasMVP")
 		new_shader_uniform("uCascadeEndClipSpace")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_ssao])

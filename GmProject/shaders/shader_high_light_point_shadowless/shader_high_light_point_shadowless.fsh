@@ -6,6 +6,7 @@ uniform vec4 uLightData[128]; // static
 uniform int uIsWater;
 uniform vec3 uCameraPosition; // static
 uniform float uLightSpecular;
+uniform float uGamma;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -70,8 +71,7 @@ void main()
 			
 			// Calculate specular
 			float specular = getSpecular(normal, normalize(lightPosition - vPosition), uCameraPosition, vPosition, F0, roughness, metallic);
-			
-			spec = data2.rgb * specular * mix(vec3(1.0), baseColor.rgb * vColor.rgb, metallic) * data3.g * uLightSpecular * dif;
+			spec = data2.rgb * specular * mix(vec3(1.0), pow(baseColor.rgb, vec3(uGamma)), metallic) * data3.g * uLightSpecular * dif;
 			specResult.rgb += spec;
 		}
 	}

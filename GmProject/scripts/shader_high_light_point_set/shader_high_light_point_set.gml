@@ -14,6 +14,7 @@ function shader_high_light_point_set()
 	render_set_uniform_vec3("uShadowPosition", render_shadow_from[X], render_shadow_from[Y], render_shadow_from[Z])
 	render_set_uniform("uLightSpecular", render_light_specular_strength)
 	render_set_uniform("uLightSize", render_light_size)
+	render_set_uniform("uGamma", render_gamma)
 	
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_point_atlas_buffer))
 	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], false)
