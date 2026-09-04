@@ -9,29 +9,40 @@ CodeObject::CodeObject(int line)
 	CodeObject::totalObjects++;
 }
 
-String CodeObject::nameToCpp(String name)
+String CodeObject::nameToCpp(StringId name)
 {
-	if (name == "app")
+	switch (name.id())
 	{
-		return "_app";
+		case STR(app): return "_app";
+		case STR(self): return "this";
+		case STR(object_index): return "subAssetId";
+		case STR(undefined): return "VarType()";
+		case STR(block_size):
+		case STR(char):
+		case STR(double):
+		case STR(export):
+		case STR(far):
+		case STR(float):
+		case STR(inline):
+		case STR(int):
+		case STR(interface):
+		case STR(near):
+		case STR(NULL):
+		case STR(null):
+		case STR(pi):
+		case STR(sample_rate):
+		case STR(slots):
+		case STR(small):
+		case STR(template):
+		case STR(typename):
+		case STR(W):
+		case STR(X):
+		case STR(Y):
+		case STR(Z):
+			return String(name) + "_";
+		default:
+			return String(name);
 	}
-	else if (name == "self")
-	{
-		return "this";
-	}
-	else if (name == "object_index")
-	{
-		return "subAssetId";
-	}
-	else if (name == "undefined")
-	{
-		return "VarType()";
-	}
-	else if (name == "block_size" || name == "char" || name == "double" || name == "export" || name == "far" || name == "float" || name == "inline" || name == "int" || name == "interface" || name == "near" || name == "NULL" || name == "null" || name == "pi" || name == "sample_rate" || name == "slots" || name == "small" || name == "template" || name == "typename" || name == "W" || name == "X" || name == "Y" || name == "Z")
-	{
-		return name + "_";
-	}
-	return name;
 }
 
 void CodeObject::resolve(ResolveScope*)

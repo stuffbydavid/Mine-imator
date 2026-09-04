@@ -3,3 +3,4 @@
 *.resource_order text eol=lf
 *.yy text eol=lf
 *.yyp text eol=lf
+*.sh text eol=lf

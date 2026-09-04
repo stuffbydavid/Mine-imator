@@ -39,7 +39,7 @@ DataType::DataType(Type rawType)
 	updateCppType();
 }
 
-DataType::DataType(Type rawType, String refId)
+DataType::DataType(Type rawType, StringId refId)
 {
 	if (rawType != Type::Unknown)
 		this->assignments.emplace_back(rawType, refId, nullptr);
@@ -53,111 +53,105 @@ DataType::DataType(Type rawType, const DataType* containerType)
 	updateCppType();
 }
 
-DataType::DataType(String name)
+DataType::DataType(StringId name)
 {
-	List<String> split = name.replace(">", "").split('<');
+	String nameStr = String(name);
+	List<String> split;
 	Type rawType = Type::Unknown;
 
-	if (split[0] == "unknown")
+	if (nameStr.contains("<"))
 	{
-		rawType = Type::Unknown;
+		split = nameStr.replace(">", "").split('<');
+		name = split[0];
 	}
-	else if (split[0] == "VarType" || split[0] == "VarType&" || split[0] == "const VarType&" || split[0] == "variant")
+
+	switch (name.id())
 	{
-		rawType = Type::Variant;
-	}
-	else if (split[0] == "null")
-	{
-		rawType = Type::Null;
-	}
-	else if (split[0] == "void")
-	{
-		rawType = Type::Void;
-	}
-	else if (split[0] == "BoolType" || split[0] == "bool")
-	{
-		rawType = Type::Bool;
-	}
-	else if (split[0] == "intorreal")
-	{
-		rawType = Type::IntOrReal;
-	}
-	else if (split[0] == "IntType" || split[0] == "int")
-	{
-		rawType = Type::Integer;
-	}
-	else if (split[0] == "RealType" || split[0] == "real")
-	{
-		rawType = Type::Real;
-	}
-	else if (split[0] == "StringType" || split[0] == "string")
-	{
-		rawType = Type::String;
-	}
-	else if (split[0] == "reference")
-	{
-		{
+		case STR(unknown):
+			break;
+		case STR(VarType):
+		case STR(variant):
+			rawType = Type::Variant;
+			break;
+		case STR(null):
+			rawType = Type::Null;
+			break;
+		case STR(void):
+			rawType = Type::Void;
+			break;
+		case STR(BoolType):
+		case STR(bool):
+			rawType = Type::Bool;
+			break;
+		case STR(intorreal):
+			rawType = Type::IntOrReal;
+			break;
+		case STR(IntType):
+		case STR(int):
+			rawType = Type::Integer;
+			break;
+		case STR(RealType):
+		case STR(real):
+			rawType = Type::Real;
+			break;
+		case STR(StringType):
+		case STR(string):
+			rawType = Type::String;
+			break;
+		case STR(reference):
 			if (split.size() != 2)
 			{
 				Console::writeLine("FATAL ERROR: Missing ID for reference.");
-				Environment::exit(1);
+				std::exit(1);
 			}
 			this->assignments.emplace_back(Type::Reference, split[1], nullptr);
 			updateCppType();
 			return;
-		}
-	}
-	else if (split[0] == "VecType" || split[0] == "vec")
-	{
-		rawType = Type::Vector;
-	}
-	else if (split[0] == "MatrixType" || split[0] == "matrix")
-	{
-		rawType = Type::Matrix;
-	}
-	else if (split[0] == "ArrType" || split[0] == "array")
-	{
-		rawType = Type::Array;
-	}
-	else if (split[0] == "list")
-	{
-		rawType = Type::List;
-	}
-	else if (split[0] == "anymap")
-	{
-		rawType = Type::AnyMap;
-	}
-	else if (split[0] == "intmap")
-	{
-		rawType = Type::IntMap;
-	}
-	else if (split[0] == "stringmap")
-	{
-		rawType = Type::StringMap;
-	}
-	else if (split[0] == "map")
-	{
-		rawType = Type::Map;
-	}
-	else if (split[0] == "grid")
-	{
-		rawType = Type::Grid;
-	}
-	else if (split[0] == "stack")
-	{
-		rawType = Type::Stack;
-	}
-	else if (split[0] == "priority")
-	{
-		rawType = Type::Priority;
-	}
-	else
-	{
-		{
-			Console::writeLine("FATAL ERROR: Unknown data type: {0}", split[0]);
-			Environment::exit(1);
-
-		}
+		case STR(VecType):
+		case STR(vec):
+			rawType = Type::Vector;
+			break;
+		case STR(MatrixType):
+		case STR(matrix):
+			rawType = Type::Matrix;
+			break;
+		case STR(ArrType):
+		case STR(array):
+			rawType = Type::Array;
+			break;
+		case STR(list):
+			rawType = Type::List;
+			break;
+		case STR(anymap):
+			rawType = Type::AnyMap;
+			break;
+		case STR(intmap):
+			rawType = Type::IntMap;
+			break;
+		case STR(stringmap):
+			rawType = Type::StringMap;
+			break;
+		case STR(map):
+			rawType = Type::Map;
+			break;
+		case STR(grid):
+			rawType = Type::Grid;
+			break;
+		case STR(stack):
+			rawType = Type::Stack;
+			break;
+		case STR(priority):
+			rawType = Type::Priority;
+			break;
+		default:
+			if (nameStr == "const VarType&" || nameStr == "VarType&")
+			{
+				rawType = Type::Variant;
+				break;
+			}
+			Console::writeLine("FATAL ERROR: Unknown data type: {0}", nameStr);
+			std::exit(1);
+			break;
 	}
 
 	if (rawType >= Type::Array) // Container
@@ -288,7 +282,7 @@ String DataType::getAssignmentsString(String tabs)
 	{
 		varStr += tabs + ass.toString();
 		if (ass.func != nullptr)
-			varStr += " in " + ass.func->name + ":" + ass.line;
+			varStr += " in " + String(ass.func->name) + ":" + String(ass.line);
 		varStr += "\n";
 	}
 	return varStr;
@@ -311,57 +305,34 @@ bool DataType::isUnknown()
 	return (this->assignments.size() == 0);
 }
 
-bool DataType::isRawTypeReal(Type type)
-{
-	return (type == Type::IntOrReal ||
-			type == Type::Real ||
-			type == Type::Integer ||
-			type == Type::Bool);
-}
-
-bool DataType::isRawTypeArray(Type type)
-{
-	return (type == Type::Array ||
-			type == Type::Vector ||
-			type == Type::Matrix);
-}
-
-bool DataType::isRawTypeMap(Type type)
-{
-	return (type == Type::AnyMap ||
-			type == Type::Map ||
-			type == Type::IntMap ||
-			type == Type::StringMap);
-}
-
 String DataType::typeName(Type rawType)
 {
 	switch (rawType)
 	{
-		case Type::Unknown: return "Unknown";
-		case Type::Variant: return "Variant";
-		case Type::Null: return "Null";
-		case Type::Void: return "Void";
-		case Type::Bool: return "Bool";
-		case Type::IntOrReal: return "IntOrReal";
-		case Type::Integer: return "Integer";
-		case Type::Real: return "Real";
-		case Type::String: return "String";
-		case Type::Reference: return "Reference";
-		case Type::Array: return "Array";
-		case Type::Vector: return "Vector";
-		case Type::Matrix: return "Matrix";
-		case Type::List: return "List";
-		case Type::AnyMap: return "AnyMap";
-		case Type::IntMap: return "IntMap";
-		case Type::StringMap: return "StringMap";
-		case Type::Map: return "Map";
-		case Type::Grid: return "Grid";
-		case Type::Stack: return "Stack";
-		case Type::Priority: return "Priority";
+		case Type::Unknown: return STR(Unknown);
+		case Type::Variant: return STR(Variant);
+		case Type::Null: return STR(Null);
+		case Type::Void: return STR(Void);
+		case Type::Bool: return STR(Bool);
+		case Type::IntOrReal: return STR(IntOrReal);
+		case Type::Integer: return STR(Integer);
+		case Type::Real: return STR(Real);
+		case Type::String: return STR(String);
+		case Type::Reference: return STR(Reference);
+		case Type::Array: return STR(Array);
+		case Type::Vector: return STR(Vector);
+		case Type::Matrix: return STR(Matrix);
+		case Type::List: return STR(List);
+		case Type::AnyMap: return STR(AnyMap);
+		case Type::IntMap: return STR(IntMap);
+		case Type::StringMap: return STR(StringMap);
+		case Type::Map: return STR(Map);
+		case Type::Grid: return STR(Grid);
+		case Type::Stack: return STR(Stack);
+		case Type::Priority: return STR(Priority);
 	}
 
-	return "Unknown";
+	return STR(Unknown);
 }
 
 const DataType& DataType::scalar(Type rawType)
@@ -419,16 +390,16 @@ List<DataType::Assignment*> DataType::getAssignments(Type rawType)
 	return result;
 }
 
-String DataType::getUniqueReferenceId()
+StringId DataType::getUniqueReferenceId()
 {
-	String refId = "";
+	StringId refId;
 	bool isSet = false;
 	for (Assignment& ass : this->assignments)
 	{
 		if (ass.rawType == Type::Reference)
 		{
 			if (isSet) // Multiple assignments found containing references, exit "any"
-				return "any";
+				return STR(any);
 
 			refId = ass.refId;
 			isSet = true;
@@ -461,13 +432,16 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 		for (Assignment& ass : this->assignments) // Combine/Add assignments
 		{
 			Type inputRawType = inputAss.rawType;
-			if ((isRawTypeReal(ass.rawType) && isRawTypeReal(inputRawType)) || // Both real
-				(isRawTypeArray(ass.rawType) && isRawTypeArray(inputRawType))) // Both array
+			if ((ass.rawTypeReal && inputAss.rawTypeReal) || // Both real
+				(ass.rawTypeArray && inputAss.rawTypeArray)) // Both array
 			{
 				addNew = false;
 				if (inputRawType > ass.rawType) // Overwrite if larger
 				{
 					ass.rawType = inputRawType;
+					ass.rawTypeReal = inputAss.rawTypeReal;
+					ass.rawTypeArray = inputAss.rawTypeArray;
+					ass.rawTypeMap = inputAss.rawTypeMap;
 					changed = true;
 					ass.func = func;
 					ass.line = line;
@@ -475,7 +449,7 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 			}
 			else if (inputRawType == Type::Reference && ass.rawType == Type::Reference) // Both reference
 			{
-				if (ass.refId == "" && inputAss.refId != "") // Unknown reference
+				if (ass.refId == 0 && inputAss.refId != 0) // Unknown reference
 				{
 					ass.refId = inputAss.refId;
 					changed = true;
@@ -486,15 +460,25 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 				else if (inputAss.refId == ass.refId) // Empty input/Same object
 					addNew = false;
 			}
-			else if (isRawTypeMap(ass.rawType) && isRawTypeMap(inputRawType) && inputRawType != ass.rawType) // Both map
+			else if (ass.rawTypeMap && inputAss.rawTypeMap && inputRawType != ass.rawType) // Both map
 			{
 				addNew = false;
 				if (inputRawType > ass.rawType) // Overwrite if larger
 				{
 					if (ass.rawType == Type::IntMap) // StringMap + IntMap -> Map
+					{
 						ass.rawType = Type::Map;
+						ass.rawTypeReal = false;
+						ass.rawTypeArray = false;
+						ass.rawTypeMap = true;
+					}
 					else
+					{
 						ass.rawType = inputRawType;
+						ass.rawTypeReal = inputAss.rawTypeReal;
+						ass.rawTypeArray = inputAss.rawTypeArray;
+						ass.rawTypeMap = inputAss.rawTypeMap;
+					}
 					changed = true;
 					ass.func = func;
 					ass.line = line;
@@ -559,6 +543,9 @@ void DataType::reset(Type rawType)
 		this->assignments.resize(1);
 		Assignment& assignment = this->assignments.front();
 		assignment.rawType = rawType;
+		assignment.rawTypeReal = DataType::isRawTypeReal(assignment.rawType);
+		assignment.rawTypeArray = DataType::isRawTypeArray(assignment.rawType);
+		assignment.rawTypeMap = DataType::isRawTypeMap(assignment.rawType);
 		assignment.refId.clear();
 		assignment.containerStorage.reset();
 		assignment.func = nullptr;
@@ -566,7 +553,7 @@ void DataType::reset(Type rawType)
 	}
 }
 
-void DataType::reset(Type rawType, const String& refId)
+void DataType::reset(Type rawType, const StringId& refId)
 {
 	this->cppType = cppTypeFor(rawType);
 	if (rawType == Type::Unknown)
@@ -582,6 +569,9 @@ void DataType::reset(Type rawType, const String& refId)
 		this->assignments.resize(1);
 		Assignment& assignment = this->assignments.front();
 		assignment.rawType = rawType;
+		assignment.rawTypeReal = DataType::isRawTypeReal(assignment.rawType);
+		assignment.rawTypeArray = DataType::isRawTypeArray(assignment.rawType);
+		assignment.rawTypeMap = DataType::isRawTypeMap(assignment.rawType);
 		assignment.refId = refId;
 		assignment.containerStorage.reset();
 		assignment.func = nullptr;
@@ -605,6 +595,9 @@ void DataType::reset(Type rawType, const DataType& containerType)
 		this->assignments.resize(1);
 		Assignment& assignment = this->assignments.front();
 		assignment.rawType = rawType;
+		assignment.rawTypeReal = DataType::isRawTypeReal(assignment.rawType);
+		assignment.rawTypeArray = DataType::isRawTypeArray(assignment.rawType);
+		assignment.rawTypeMap = DataType::isRawTypeMap(assignment.rawType);
 		assignment.refId.clear();
 		if (assignment.containerStorage != nullptr && assignment.containerStorage.use_count() == 1)
 			assignment.containerStorage->reset(containerType);
@@ -631,17 +624,23 @@ DataType::Assignment::Assignment(const DataType::Assignment& other, Function* fu
 	refId(other.refId),
 	containerStorage(other.containerStorage),
 	func(func),
-	line(line)
+	line(line),
+	rawTypeReal(other.rawTypeReal),
+	rawTypeArray(other.rawTypeArray),
+	rawTypeMap(other.rawTypeMap)
 {
 }
 
-DataType::Assignment::Assignment(Type type, String refId, const DataType* containerType, Function* func, int line)
+DataType::Assignment::Assignment(Type type, StringId refId, const DataType* containerType, Function* func, int line)
 	: rawType(type),
 	refId(refId),
 	containerStorage(containerType ? std::make_shared<DataType>(*containerType) : nullptr),
 	func(func),
 	line(line)
 {
+	this->rawTypeReal = DataType::isRawTypeReal(this->rawType);
+	this->rawTypeArray = DataType::isRawTypeArray(this->rawType);
+	this->rawTypeMap = DataType::isRawTypeMap(this->rawType);
 }
 
 String DataType::Assignment::toString()
@@ -649,7 +648,7 @@ String DataType::Assignment::toString()
 	if (this->rawType >= Type::Array) // Container
 		return DataType::typeName(this->rawType) + "<" + this->containerStorage->toString() + ">";
 	else if (this->rawType == Type::Reference) // Reference
-		return DataType::typeName(this->rawType) + "<" + this->refId + ">";
+		return DataType::typeName(this->rawType) + "<" + String(this->refId) + ">";
 	else
 		return DataType::typeName(this->rawType);
 }

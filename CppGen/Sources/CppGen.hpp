@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Runtime.hpp"
+#include "Strings.hpp"
 
 namespace CppGen
 {
@@ -102,7 +103,7 @@ public:
 	};
 
 	Type type{};
-	String value{};
+	StringId value{};
 	int fileOffset{};
 	int line{};
 	int lineOffset{};
@@ -159,10 +160,13 @@ public:
 	{
 	public:
 		Type rawType{};
-		InternedString refId{}; // Object name
+		StringId refId{}; // Object name
 		std::shared_ptr<DataType> containerStorage{};
 		Function* func{};
 		int line{};
+		bool rawTypeReal = false;
+		bool rawTypeArray = false;
+		bool rawTypeMap = false;
 
 		Assignment() = default;
 		Assignment(const Assignment& other) = default;
@@ -171,7 +175,7 @@ public:
 		Assignment& operator=(Assignment&& other) noexcept = default;
 		~Assignment() = default;
 		Assignment(const Assignment& other, Function* func, int line);
-		Assignment(Type type, String refId, const DataType* containerType, Function* func = nullptr, int line = 0);
+		Assignment(Type type, StringId refId, const DataType* containerType, Function* func = nullptr, int line = 0);
 
 		// Returns the assignment in string form with <> for containers/references.
 		String toString();
@@ -197,13 +201,13 @@ public:
 	DataType(Type rawType = Type::Unknown);
 
 	// Create a reference type
-	DataType(Type rawType, String refId);
+	DataType(Type rawType, StringId refId);
 
 	// Create a container type
 	DataType(Type rawType, const DataType* containerType);
 
 	// Create a DataType from a text string
-	DataType(String name);
+	DataType(StringId name);
 
 	// Update the C++ type.
 	void updateCppType();
@@ -233,13 +237,22 @@ public:
 	bool isUnknown();
 
 	// Returns whether the given raw type is a real number.
-	static bool isRawTypeReal(Type type);
+	static inline bool isRawTypeReal(Type type)
+	{
+		return (type == Type::IntOrReal || type == Type::Real || type == Type::Integer || type == Type::Bool);
+	}
 
 	// Returns whether the given raw type is accessed using [i] or [@i].
-	static bool isRawTypeArray(Type type);
+	static inline bool isRawTypeArray(Type type)
+	{
+		return (type == Type::Array || type == Type::Vector || type == Type::Matrix);
+	}
 
 	// Returns whether the given raw type is a map.
-	static bool isRawTypeMap(Type type);
+	static inline bool isRawTypeMap(Type type)
+	{
+		return (type == Type::AnyMap || type == Type::Map || type == Type::IntMap || type == Type::StringMap);
+	}
 
 	// Returns the enum name used in diagnostics and generated log files.
 	static String typeName(Type rawType);
@@ -261,7 +274,7 @@ public:
 	List<Assignment*> getAssignments(Type rawType = Type::Unknown);
 
 	// Returns an unique object reference id assigned to the type, or empty string if not found.
-	String getUniqueReferenceId();
+	StringId getUniqueReferenceId();
 
 	// Returns the map type of the datatype.
 	Type getMapType();
@@ -271,7 +284,7 @@ public:
 
 	// Reinitializes solver-owned storage without changing its stable address.
 	void reset(Type rawType = Type::Unknown);
-	void reset(Type rawType, const String& refId);
+	void reset(Type rawType, const StringId& refId);
 	void reset(Type rawType, const DataType* containerType) { reset(rawType, *containerType); }
 	void reset(Type rawType, const DataType& containerType);
 	void reset(const DataType& other);
@@ -290,7 +303,7 @@ public:
 	virtual ~CodeObject() = default;
 
 	// Writes a variable name in a C++ safe format.
-	static String nameToCpp(String name);
+	static String nameToCpp(StringId name);
 
 	// Adds object/function/global variables from within the CodeObject and saves the evaulated GML type.
 	virtual void resolve(ResolveScope* scope);
@@ -364,32 +377,32 @@ public:
 	class Call
 	{
 	public:
-		String funcName{};
+		StringId funcName{};
 		int line{};
 
-		Call(const String& funcName, int line);
+		Call(const StringId& funcName, int line);
 	};
 
-	InternedString current = "";
-	InternedString currentInChain = ""; // For tracking the scope in accessor chains
-	InternedString previous = "";
+	StringId current = 0;
+	StringId currentInChain = 0; // For tracking the scope in accessor chains
+	StringId previous = 0;
 	Function* funcUpdateScope = nullptr;
 	std::shared_ptr<const List<Call>> calls{};
 	std::shared_ptr<Statement::Location> location{};
 
-	ResolveScope(const String& current = "", const String& previous = "", const std::shared_ptr<const List<Call>>& updatedCalls = nullptr, const String& currentInChain = "", const std::shared_ptr<Statement::Location>& location = nullptr, Function* funcUpdateScope = nullptr);
+	ResolveScope(const StringId& current = 0, const StringId& previous = 0, const std::shared_ptr<const List<Call>>& updatedCalls = nullptr, const StringId& currentInChain = 0, const std::shared_ptr<Statement::Location>& location = nullptr, Function* funcUpdateScope = nullptr);
 
 	// Adds a new function call to a copy of the scope
-	ResolveScope(const ResolveScope& scope, const String& callFunc, int callLine);
+	ResolveScope(const ResolveScope& scope, const StringId& callFunc, int callLine);
 
 	// Enters a new statement.
 	ResolveScope nextStatement(bool addLevel = false);
 
 	// Enters a new with() statement.
-	ResolveScope enterWithStatement(const String& newScope, const String& otherScope);
+	ResolveScope enterWithStatement(const StringId& newScope, const StringId& otherScope);
 
 	// Moves to the next in the Accessor chain
-	ResolveScope nextInChain(const String& nextInChain);
+	ResolveScope nextInChain(const StringId& nextInChain);
 
 	// Returns the ResolveScope outside of the current chain (if any)
 	ResolveScope outsideChain();
@@ -399,7 +412,7 @@ public:
 	operator ResolveScope*() { return this; }
 
 	// Returns whether a function has been called.
-	bool isCalled(const String& funcName);
+	bool isCalled(const StringId& funcName);
 
 	// Prints the list of calls to the log
 	void debugCalls();
@@ -409,8 +422,8 @@ public:
 class Variable
 {
 public:
-	String scope{}; // Can be an object name, function name, "global" or "" for unknown
-	String name{};
+	StringId scope{}; // Can be an object name, function name, "global" or "" for unknown
+	StringId name{};
 	DataType typeStorage{};
 	DataType* type = &typeStorage;
 	int line{};
@@ -419,7 +432,7 @@ public:
 	inline static int totalVariables = 0;
 	inline static int variantVariables = 0;
 
-	Variable(String scope, String name, const DataType& type, int line = 0, const Statement::Location& location = Statement::Location());
+	Variable(StringId scope, StringId name, const DataType& type, int line = 0, const Statement::Location& location = Statement::Location());
 	bool assignType(const DataType& inputType, Function* sourceFunc, int sourceLine);
 
 	// Marks a function argument as a reference.
@@ -470,11 +483,8 @@ public:
 	// Returns whether the expression is a integer value.
 	bool isIntValue();
 
-	// Returns whether the expression is a real value.
-	bool isRealValue();
-
 	// If the expression is an accessor without a chain, returns the name of it.
-	virtual String getAccessorName();
+	virtual StringId getAccessorName();
 
 	// Returns the resolved type as a C++ type
 	DataType::CppType getResolvedCppType();
@@ -550,9 +560,11 @@ class ExpressionValue : public Expression
 {
 public:
 	Token::Type valueType{};
-	String value{};
+	StringId value{};
+	bool valueHasDecimal = false;
+	bool knowValueHasDecimal = false;
 
-	ExpressionValue(Token::Type valueType, String value, int line);
+	ExpressionValue(Token::Type valueType, StringId value, int line);
 	virtual void resolve(ResolveScope* scope) override;
 	virtual bool applyType(ResolveScope* scope, const DataType& inputType) override;
 	virtual String toCpp(ResolveScope* scope) override;
@@ -579,7 +591,7 @@ public:
 		ArrayAccessor(DataType::Type type, Expression* expression, bool isRef);
 	};
 
-	String name{};
+	StringId name{};
 	List<ArrayAccessor*> arrayAccessors{};
 	NullableList<Expression*> callParameters{};
 	Accessor* nextInChain = nullptr;
@@ -594,7 +606,7 @@ public:
 	ResolveScope lastToCppScope{};
 	bool lastToCppScopeSet = false;
 
-	Accessor(String name, List<ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line);
+	Accessor(StringId name, List<ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line);
 
 	// Marks the accessor as an assignment.
 	void markAsAssign(Expression* expr);
@@ -612,11 +624,11 @@ public:
 	virtual String toConditionCpp(ResolveScope* scope, bool parenthesis) override;
 
 	// Find the scope of the accessor next in the chain.
-	String getNextInChainScope(ResolveScope* scope);
+	StringId getNextInChainScope(ResolveScope* scope);
 
 	// Finds an user function with the given name in a scope, or null if none exists.
 	Function* getUserFunction(ResolveScope* scope);
-	virtual String getAccessorName() override;
+	virtual StringId getAccessorName() override;
 };
 
 // New expression
@@ -634,11 +646,11 @@ public:
 class Declaration
 {
 public:
-	String name{};
+	StringId name{};
 	Expression* expr{};
 	bool isReference = false;
 
-	Declaration(String name, Expression* expr);
+	Declaration(StringId name, Expression* expr);
 };
 
 // List of local or global declarations
@@ -664,7 +676,7 @@ public:
 	DeclarationList(List<Declaration*> declarations, bool isArgs, int line);
 
 	// Resolve declaration types, returns if they have changed since last time from the given input.
-	bool resolve(ResolveScope* scope, const String& declScope, const NullableList<DataType*>& inputPars = nullptr);
+	bool resolve(ResolveScope* scope, const StringId& declScope, const NullableList<DataType*>& inputPars = nullptr);
 	void writeCpp(ResolveScope* scope, WriteFormat format, String enumPrefix = "");
 };
 
@@ -698,10 +710,10 @@ public:
 class MacroStatement : public Statement
 {
 public:
-	String name{};
+	StringId name{};
 	Expression* expr{};
 
-	MacroStatement(String name, Expression* expr, int line);
+	MacroStatement(StringId name, Expression* expr, int line);
 	virtual void resolve(ResolveScope* scope) override;
 	virtual void writeCpp(ResolveScope* scope) override;
 };
@@ -710,10 +722,10 @@ public:
 class EnumStatement : public Statement
 {
 public:
-	String name{};
+	StringId name{};
 	DeclarationList* declarations{};
 
-	EnumStatement(String name, DeclarationList* declarations, int line);
+	EnumStatement(StringId name, DeclarationList* declarations, int line);
 	virtual void resolve(ResolveScope* scope) override;
 	virtual void writeCpp(ResolveScope* scope) override;
 };
@@ -812,8 +824,8 @@ public:
 	Expression* expr{};
 	CppGen::Statement* statement{};
 	inline static bool resolveUnknownScope = false;
-	List<String> otherScopes = List<String>();
-	String otherScope = "";
+	List<StringId> otherScopes = List<StringId>();
+	StringId otherScope = 0;
 
 	WithStatement(Expression* expression, CppGen::Statement* statement, int line);
 	virtual void resolve(ResolveScope* scope) override;
@@ -904,20 +916,21 @@ public:
 	class ScopeAssignment
 	{
 	public:
-		String scope{};
+		StringId scope{};
 		Function* func{};
 		int line{};
 
-		ScopeAssignment(String scope, Function* func, int line);
+		ScopeAssignment(StringId scope, Function* func, int line);
 	};
 
-	String name = "";
+	StringId name = 0;
 	String gml{};
+	String sourceFile{};
 	List<Token> tokens = List<Token>();
 	DeclarationList* args{};
 	bool varArgs = false;
 	List<Variable*> vars = List<Variable*>();
-	List<String> varArgsRequiredNames = List<String>();
+	List<StringId> varArgsRequiredNames = List<StringId>();
 	StatementList* statements{};
 	Object* structObject = nullptr;
 	List<String> cppLinesBegin = List<String>();
@@ -928,7 +941,7 @@ public:
 	DataType* cppSeparateReturnType = nullptr;
 	List<Variable*> instanceVarDecls = List<Variable*>();
 	List<ScopeAssignment*> scopeAssignments = List<ScopeAssignment*>();
-	List<String> scopesTraversed = List<String>();
+	List<StringId> scopesTraversed = List<StringId>();
 	List<Function*> sameScopeFunctions = List<Function*>();
 	DataType returnTypeStorage{};
 	DataType* returnType = &returnTypeStorage;
@@ -947,13 +960,13 @@ public:
 	Token* currentToken = nullptr;
 	bool implWritten = false;
 
-	Function(String name, String gml = "", bool isCppSeparate = false, String cppSeparateHeader = "");
+	Function(StringId name, String gml = "", bool isCppSeparate = false, String cppSeparateHeader = "");
 
 	// Returns the scope of the function, or "any" when executed in multiple scopes.
-	String getScope();
+	StringId getScope();
 
 	// Assigns a scope to the function when an instance variable is found.
-	bool assignScope(String scope, Function* func, int line, bool foundInstanceVar = false);
+	bool assignScope(StringId scope, Function* func, int line, bool foundInstanceVar = false);
 
 	// Assigns the scope of another function.
 	void assignFunctionScope(Function* otherFunc, Function* func, int line);
@@ -969,9 +982,6 @@ public:
 
 	// Returns a C++ lambda for executing the function using script_execute or the idFunc macro.
 	String toExecuteCpp();
-
-	// Returns a debug string of the function and its variables
-	String toDebugString(String tabs = "");
 
 	// Resolves the variables in the function, recursively calling other functions as they appear.
 	void resolve(ResolveScope* scope, const NullableList<DataType*>& inputPars = nullptr, Function* func = nullptr, int line = 0);
@@ -989,7 +999,7 @@ public:
 	Token::Type peekToken();
 
 	// Advances to the next token.
-	Token* nextToken(Token::Type expectedType, String expectedValue = "");
+	Token* nextToken(Token::Type expectedType, StringId expectedValue = 0);
 	StatementList* parseStatementList();
 	Statement* parseStatement();
 	DeclarationList* parseDeclarations(bool isArgs = false);
@@ -1009,11 +1019,11 @@ public:
 class ExternalFunction
 {
 public:
-	String name{};
+	StringId name{};
 	DataType* returnType{};
 	List<DataType*> argTypes{};
 
-	ExternalFunction(String name, DataType* returnType, List<DataType*> argTypes);
+	ExternalFunction(StringId name, DataType* returnType, List<DataType*> argTypes);
 
 	// Writes the C++ header of the external function.
 	void writeCppHeader();
@@ -1025,7 +1035,7 @@ public:
 class Object
 {
 public:
-	String name{};
+	StringId name{};
 	Function* createFunction = nullptr;
 	Function* destroyFunction = nullptr;
 	Function* constructor = nullptr;
@@ -1035,7 +1045,7 @@ public:
 	bool isStruct = false;
 	bool implWritten = false;
 
-	Object(String name, bool isStruct);
+	Object(StringId name, bool isStruct);
 	Object(String dir);
 
 	// Sets the constructor of the object.
@@ -1053,14 +1063,12 @@ public:
 	// Writes the commands for storing the memory locations of each object member and functions.
 	void writeInitMembers();
 
-	// Returns a string containing the functions and variables of the object.
-	String toDebugString(String tabs = "");
 };
 
 class Sprite
 {
 public:
-	String name{};
+	StringId name{};
 	String gmPath{};
 	List<String> frameNames{};
 	int numFrames = 0;
@@ -1073,7 +1081,7 @@ public:
 class Shader
 {
 public:
-	String name{};
+	StringId name{};
 	String gmPath{};
 	bool isValid = false;
 
@@ -1083,7 +1091,7 @@ public:
 class Script
 {
 public:
-	String name{};
+	StringId name{};
 	String filename{};
 	String gmPath{};
 
@@ -1097,17 +1105,17 @@ public:
 	class FunctionSignature
 	{
 	public:
-		String name{};
+		StringId name{};
 		DataType* returnType{};
 		List<DataType*> argTypes = List<DataType*>();
 		bool varArgs = false;
 		bool needScope = false;
 		bool varCreateRef = false;
 
-		FunctionSignature(String name, DataType* returnType, List<DataType*> argTypes, bool varArgs, bool needScope, bool varCreateRef);
+		FunctionSignature(StringId name, DataType* returnType, List<DataType*> argTypes, bool varArgs, bool needScope, bool varCreateRef);
 	};
 
-	inline static List<String> keywords = List<String>();
+	inline static List<StringId> keywords = List<StringId>();
 	inline static OrderedMap<double> constants = OrderedMap<double>();
 	inline static OrderedMap<DataType*> variables = OrderedMap<DataType*>();
 	inline static OrderedMap<FunctionSignature*> functions = OrderedMap<FunctionSignature*>();
@@ -1159,29 +1167,33 @@ public:
 	inline static OrderedMap<Variable*> unknownScopeVars = OrderedMap<Variable*>();
 	inline static OrderedMap<MacroStatement*> macros = OrderedMap<MacroStatement*>();
 	inline static OrderedMap<EnumStatement*> enums = OrderedMap<EnumStatement*>();
-	inline static List<String> strings = List<String>();
+	inline static List<StringId> strings = List<StringId>();
 	inline static Function* appStepFunction = nullptr;
 	inline static Function* appDrawFunction = nullptr;
 	inline static Function* appHttpFunction = nullptr;
 	inline static Function* appGameEndFunction = nullptr;
 	inline static List<String> syntaxErrors = List<String>();
 	inline static bool mergeUnknownVars = false;
-	inline static OrderedMap<DataType*> varTypeOverride = OrderedMap<DataType*>{{"build_pos", makeObject<DataType>(DataType::Type::Integer)}, {"build_pos_x", makeObject<DataType>(DataType::Type::Integer)}, {"build_pos_y", makeObject<DataType>(DataType::Type::Integer)}, {"build_pos_z", makeObject<DataType>(DataType::Type::Integer)}, {"build_size_x", makeObject<DataType>(DataType::Type::Integer)}, {"build_size_y", makeObject<DataType>(DataType::Type::Integer)}, {"build_size_z", makeObject<DataType>(DataType::Type::Integer)}, {"build_size_xy", makeObject<DataType>(DataType::Type::Integer)}, {"build_size_total", makeObject<DataType>(DataType::Type::Integer)}, {"build_single_stateid", makeObject<DataType>(DataType::Type::Integer)}, {"block_pos_x", makeObject<DataType>(DataType::Type::Integer)}, {"block_pos_y", makeObject<DataType>(DataType::Type::Integer)}, {"block_pos_z", makeObject<DataType>(DataType::Type::Integer)}, {"blockstartpos", makeObject<DataType>(DataType::Type::Integer)}, {"blockendpos", makeObject<DataType>(DataType::Type::Integer)}};
+	inline static bool hotReloading = false;
+	inline static List<Function*> hotReloadTargets = List<Function*>();
+	static OrderedMap<DataType*> varTypeOverride;
 
 	// Main script entry.
-	// Arg 0 = Mine-imator project folder (default: DEV_DIR/Mine-imator)
-	// Arg 1 = gml.json file (default: ./gml.json)
-	static void main(List<String> args);
+	static int main(int argc, char** argv);
 	static void resolveProject();
+	static int hotReloadFunctions(const List<String>& modifiedGmlFiles);
 
 	// Finds a variable with the given name in the current scope and line, or null if it can't be found.
-	static Variable* findVariable(String scope, String name, Function* func, const Statement::Location& location, int line, Function* funcAssignScope = nullptr, bool includeUnknown = true);
+	static Variable* findVariable(StringId scope, StringId name, Function* func, const Statement::Location& location, int line, Function* funcAssignScope = nullptr, bool includeUnknown = true);
 
 	// Declares a new variable with its scope and optional type and returns it.
-	static Variable* declareVariable(String scope, String name, const DataType& type, Function* func, const Statement::Location& location, int line = 0, Function* funcAssignScope = nullptr);
+	static Variable* declareVariable(StringId scope, StringId name, const DataType& type, Function* func, const Statement::Location& location, int line = 0, Function* funcAssignScope = nullptr);
 	static void addSyntaxError(String text);
 
-	// Print debug files.
-	static void printDebugFiles();
+	// Cache
+	static String getCacheFingerprint(const String& repoRootDir, const String& gmDir, const String& gmlSpecFile);
+	static bool loadResolverCache(const String& cacheFile, const String& fingerprint, List<String>& modifiedGmlFiles);
+	static bool saveResolverCache(const String& cacheFile, const String& fingerprint);
 };
+
 }

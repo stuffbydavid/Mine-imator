@@ -2,7 +2,7 @@
 
 namespace CppGen
 {
-Function::Function(String name, String gml, bool isCppSeparate, String cppSeparateHeader)
+Function::Function(StringId name, String gml, bool isCppSeparate, String cppSeparateHeader)
 {
 	this->name = name;
 	this->gml = gml;
@@ -29,22 +29,22 @@ Function::Function(String name, String gml, bool isCppSeparate, String cppSepara
 	}
 }
 
-String Function::getScope()
+StringId Function::getScope()
 {
 	if (this->structObject != nullptr)
 		return this->structObject->name;
 
 
 	if (this->scopeAssignments.size() == 0)
-		return this->hasInstanceVars ? "any" : "global";
+		return this->hasInstanceVars ? STR(any) : STR(global);
 
 	if (this->scopeAssignments.size() > 1 || DataType::allVarType)
-		return "any";
+		return STR(any);
 
 	return this->scopeAssignments[0]->scope;
 }
 
-bool Function::assignScope(String scope, Function* func, int line, bool foundInstanceVar)
+bool Function::assignScope(StringId scope, Function* func, int line, bool foundInstanceVar)
 {
 	if (!Function::enableAssignScope || this->structObject != nullptr)
 		return false;
@@ -79,13 +79,13 @@ void Function::assignFunctionScope(Function* otherFunc, Function* func, int line
 
 void Function::writeCppArguments(DeclarationList::WriteFormat format)
 {
-	String scope = getScope();
-	if (scope != "global" && scope != "app" && this->structObject == nullptr) // Include scope variable in non-global functions
+	StringId scope = getScope();
+	if (scope != STR(global) && scope != STR(app) && this->structObject == nullptr) // Include scope variable in non-global functions
 	{
-		if (scope == "any")
+		if (scope == STR(any))
 			CodeWriter::write("ScopeAny self");
 		else
-			CodeWriter::write("Scope<" + scope + "> self");
+			CodeWriter::write("Scope<" + String(scope) + "> self");
 		if (this->varArgs || this->args->declarations.size() > 0)
 			CodeWriter::write(", ");
 	}
@@ -93,7 +93,7 @@ void Function::writeCppArguments(DeclarationList::WriteFormat format)
 	if (this->varArgs) // VarArgs type
 		CodeWriter::write(String("VarArgs argument") + (format == DeclarationList::WriteFormat::ArgsHeader ? " = VarArgs()": ""));
 	else if (this->args != nullptr && this->args->declarations.size() > 0) // Declarations
-		this->args->writeCpp(ResolveScope("global"), format);
+		this->args->writeCpp(ResolveScope(STR(global)), format);
 }
 
 void Function::writeCppHeader()
@@ -104,7 +104,7 @@ void Function::writeCppHeader()
 		if (this->isConstructor)
 			CodeWriter::write(this->structObject->name);
 		else if (this->isDestructor)
-			CodeWriter::write("~" + this->structObject->name);
+			CodeWriter::write("~" + String(this->structObject->name));
 		else
 			CodeWriter::write(getReturnType()->toCpp() + " " + CodeObject::nameToCpp(this->name));
 
@@ -124,14 +124,14 @@ bool Function::writeCppImplementation()
 
 	// Name
 	if (this->isConstructor)
-		CodeWriter::write(this->structObject->name + "::" + this->structObject->name);
+		CodeWriter::write(String(this->structObject->name) + "::" + String(this->structObject->name));
 	else if (this->isDestructor)
-		CodeWriter::write(this->structObject->name + "::~" + this->structObject->name);
+		CodeWriter::write(String(this->structObject->name) + "::~" + String(this->structObject->name));
 	else
 	{
 		CodeWriter::write(this->returnType->toCpp() + " ");
 		if (this->structObject != nullptr)
-			CodeWriter::write(this->structObject->name + "::");
+			CodeWriter::write(String(this->structObject->name) + "::");
 		CodeWriter::write(CodeObject::nameToCpp(this->name));
 	}
 
@@ -139,7 +139,7 @@ bool Function::writeCppImplementation()
 	writeCppArguments(DeclarationList::WriteFormat::ArgsImpl);
 	CodeWriter::writeLine(")", 1);
 	if (this->isConstructor)
-		CodeWriter::writeLine(": Object(\"" + this->structObject->name + "\", ID_" + this->structObject->name + ")");
+		CodeWriter::writeLine(": Object(\"" + String(this->structObject->name) + "\", ID_" + String(this->structObject->name) + ")");
 
 	if (this->varArgs) // Variable* arguments
 	{
@@ -175,17 +175,17 @@ String Function::toExecuteCpp()
 	if (!isVoid)
 		cpp += "return ";
 
-	cpp += this->name + "(";
+	cpp += String(this->name) + "(";
 
 	// Create scope with ids
-	String scope = getScope();
-	if (this->structObject == nullptr && scope != "global" && scope != "app")
+	StringId scope = getScope();
+	if (this->structObject == nullptr && scope != STR(global) && scope != STR(app))
 	{
 		cpp += "Scope";
-		if (scope == "any")
+		if (scope == STR(any))
 			cpp += "Any";
 		else
-			cpp += "<" + scope + ">";
+			cpp += "<" + String(scope) + ">";
 		cpp += "(s, o)";
 		a++;
 	}
@@ -200,7 +200,7 @@ String Function::toExecuteCpp()
 		{
 			cpp += (a > 0 ? ", " : "");
 			if (decl->expr != nullptr) // Optional
-				cpp += String("a.Size() > ") + p + " ? a[" + p + "] : VarType(" + decl->expr->toCpp(ResolveScope("global")) + ")";
+				cpp += String("a.Size() > ") + p + " ? a[" + p + "] : VarType(" + decl->expr->toCpp(ResolveScope(STR(global))) + ")";
 			else // Required
 				cpp += String("a[") + p + "]";
 			a++;
@@ -215,47 +215,6 @@ String Function::toExecuteCpp()
 
 	cpp += "}";
 	return cpp;
-}
-
-String Function::toDebugString(String tabs)
-{
-	String str = tabs + "[" + getScope() + "] " + this->name;
-	if (this->args != nullptr)
-		str += String(" - ") + this->args->requiredArgs + " required arguments";
-
-	str += "\n";
-	tabs += "\t";
-	str += tabs + "Scope assignments:\n";
-	tabs += "\t";
-	for (ScopeAssignment* ass : this->scopeAssignments)
-	{
-		str += tabs + ass->scope;
-		if (ass->func != nullptr)
-			str += " in " + ass->func->name + ":" + ass->line;
-		str += "\n";
-	}
-	tabs = tabs.remove(1, 1);
-	if (this->hasInstanceVars)
-		str += tabs + "Contains instance variables\n";
-	str += tabs + "Returns " + getReturnType()->toCpp() + "\n";
-	if (this->returnType->assignments.size() > 0)
-		str += this->returnType->getAssignmentsString(tabs + "    ");
-	int i = 0;
-	if (this->varArgs)
-		str += tabs + "VarArgs\n";
-	for (Variable* var : this->vars)
-	{
-		if (var->line == 0)
-			str += tabs + "Argument " + (i++) + ": ";
-		else
-			str += tabs + "Line " + var->line + ": ";
-		str += var->type->toCpp() + " " + var->name ;
-		if (var->location.path.size() > 0)
-			str += " " + var->location.toString();
-		str += "\n";
-		str += var->type->getAssignmentsString(tabs + "\t");
-	}
-	return str;
 }
 
 void Function::resolve(ResolveScope* scope, const NullableList<DataType*>& inputPars, Function* func, int line)
@@ -310,6 +269,29 @@ void Function::parseTokens()
 	if (this->gml == "")
 		return;
 
+	// A hot-reloaded script has already been tokenized again. Discard only the
+	// resolver/parser state so the same Function instance can build a fresh AST.
+	DeclareStatement::globalDeclarations.removeAll([this](DeclareStatement* declaration) { return declaration->func == this; });
+	this->args = nullptr;
+	this->vars.clear();
+	this->varArgsRequiredNames.clear();
+	this->statements = nullptr;
+	this->instanceVarDecls.clear();
+	this->scopeAssignments.clear();
+	this->scopesTraversed.clear();
+	this->sameScopeFunctions.clear();
+	this->returnTypeStorage.reset();
+	this->returnType = &this->returnTypeStorage;
+	this->returnStatement = nullptr;
+	this->endsWithReturnStatement = false;
+	this->hasInstanceVars = false;
+	this->isUnused = true;
+	this->isTraversed = false;
+	this->implWritten = false;
+	this->tokenIndex = 0;
+	this->lastPeeked = Token::Type::Unknown;
+	this->currentToken = nullptr;
+
 	Function::currentParseFunction = this;
 	Function::currentParseLine = 0;
 
@@ -321,7 +303,7 @@ void Function::parseTokens()
 	nextToken(Token::Type::RightPar);
 
 	// Check if struct, make this constructor of a new object
-	if (peekToken() == Token::Type::ID && this->currentToken->value == "constructor")
+	if (peekToken() == Token::Type::ID && this->currentToken->value == STR(constructor))
 	{
 		this->structObject = makeObject<Object>(this->name, true);
 		this->structObject->setConstructor(this);
@@ -348,17 +330,17 @@ Token::Type Function::peekToken()
 	{
 		Console::writeLine("FATAL ERROR in {0}:", this->name);
 		Console::writeLine("  Unexpected end of function.");
-		Environment::exit(1);
+		std::exit(1);
 	}
 
 	this->lastPeeked = this->currentToken->type;
 	return this->lastPeeked;
 }
 
-Token* Function::nextToken(Token::Type expectedType, String expectedValue)
+Token* Function::nextToken(Token::Type expectedType, StringId expectedValue)
 {
 	Token* token = &this->tokens[this->tokenIndex];
-	if (token->type != expectedType || (expectedValue != "" && token->value != expectedValue))
+	if (token->type != expectedType || (expectedValue != 0 && token->value != expectedValue))
 	{
 		Console::writeLine("FATAL ERROR in {0}:", this->name);
 		if (token->type == Token::Type::ID)
@@ -368,7 +350,7 @@ Token* Function::nextToken(Token::Type expectedType, String expectedValue)
 
 		if (expectedType != Token::Type::Error)
 			Console::writeLine("  Expected token was {0}", expectedType);
-		Environment::exit(1);
+		std::exit(1);
 	}
 	this->tokenIndex++;
 	if (this->tokenIndex < static_cast<int>(this->tokens.size()))
@@ -386,8 +368,8 @@ StatementList* Function::parseStatementList()
 	StatementList* sl = makeObject<StatementList>(Function::currentParseLine);
 	while (true)
 	{
-		if (this->currentToken->value == "case" || this->currentToken->value == "default" ||
-			this->currentToken->value == "else" || this->currentToken->value == "until") // End of list
+		if (this->currentToken->value == STR(case) || this->currentToken->value == STR(default) ||
+			this->currentToken->value == STR(else) || this->currentToken->value == STR(until)) // End of list
 			return sl;
 
 		int line = Function::currentParseLine;
@@ -402,15 +384,15 @@ StatementList* Function::parseStatementList()
 			case Token::Type::HashTag: // #macro
 			{
 				nextToken(Token::Type::HashTag);
-				nextToken(Token::Type::ID, "macro");
-				String macroName = nextToken(Token::Type::ID)->value;
+				nextToken(Token::Type::ID, STR(macro));
+				StringId macroName = nextToken(Token::Type::ID)->value;
 				sl->addStatement(makeObject<MacroStatement>(macroName, parseExpr(), line));
 				break;
 			}
 
 			case Token::Type::CppOnly: // Custom C++
 			{
-				String cpp = this->currentToken->value;
+				String cpp = String(this->currentToken->value);
 				nextToken(Token::Type::CppOnly);
 				sl->addStatement(makeObject<CustomCppStatement>(cpp, line));
 				break;
@@ -439,269 +421,242 @@ Statement* Function::parseStatement()
 	{
 		case Token::Type::ID:
 		{
-			if (this->currentToken->value == "enums")
+			if (this->currentToken->value == STR(enums))
 			{
 				// Skip enums() call
-				{
-					parseAccessor();
-					return nullptr;
-				}
+				parseAccessor();
+				return nullptr;
 			}
-			else if (this->currentToken->value == "var" || this->currentToken->value == "globalvar")
+			else if (this->currentToken->value == STR(var) || this->currentToken->value == STR(globalvar))
 			{
 				// var/globalvar name [ = expr], ...
-				{
-					Token* declToken = nextToken(Token::Type::ID);
-					return makeObject<DeclareStatement>((declToken->value == "globalvar"), parseDeclarations(), line);
-				}
+				Token* declToken = nextToken(Token::Type::ID);
+				return makeObject<DeclareStatement>((declToken->value == STR(globalvar)), parseDeclarations(), line);
 			}
-			else if (this->currentToken->value == "if")
+			else if (this->currentToken->value == STR(if))
 			{
 				// if (expr) stmt [else stmt]
+				nextToken(Token::Type::ID);
+				nextToken(Token::Type::LeftPar);
+				Expression* cond = parseExpr();
+				nextToken(Token::Type::RightPar);
+				Statement* stmt = parseStatement();
+				if (peekToken() == Token::Type::Terminator) // Optional semicolon
+					nextToken(Token::Type::Terminator);
+				Statement* elseStmt = nullptr;
+				if (peekToken() == Token::Type::ID && this->currentToken->value == STR(else))
 				{
 					nextToken(Token::Type::ID);
-					nextToken(Token::Type::LeftPar);
-					Expression* cond = parseExpr();
-					nextToken(Token::Type::RightPar);
-					Statement* stmt = parseStatement();
-					if (peekToken() == Token::Type::Terminator) // Optional semicolon
-						nextToken(Token::Type::Terminator);
-					Statement* elseStmt = nullptr;
-					if (peekToken() == Token::Type::ID && this->currentToken->value == "else")
-					{
-						nextToken(Token::Type::ID);
-						elseStmt = parseStatement();
-					}
-					return makeObject<IfStatement>(cond, stmt, elseStmt, line);
+					elseStmt = parseStatement();
 				}
+				return makeObject<IfStatement>(cond, stmt, elseStmt, line);
 			}
-			else if (this->currentToken->value == "while")
+			else if (this->currentToken->value == STR(while))
 			{
 				// while (expr) stmt
-				{
-					nextToken(Token::Type::ID);
-					nextToken(Token::Type::LeftPar);
-					Expression* cond = parseExpr();
-					nextToken(Token::Type::RightPar);
-					Statement* stmt = parseStatement();
-					return makeObject<WhileStatement>(cond, stmt, line);
-				}
+				nextToken(Token::Type::ID);
+				nextToken(Token::Type::LeftPar);
+				Expression* cond = parseExpr();
+				nextToken(Token::Type::RightPar);
+				Statement* stmt = parseStatement();
+				return makeObject<WhileStatement>(cond, stmt, line);
 			}
-			else if (this->currentToken->value == "do")
+			else if (this->currentToken->value == STR(do))
 			{
 				// do stmt until expr
-				{
-					nextToken(Token::Type::ID);
-					Statement* stmt = parseStatement();
-					nextToken(Token::Type::ID, "until");
-					nextToken(Token::Type::LeftPar);
-					Expression* cond = parseExpr();
-					nextToken(Token::Type::RightPar);
-					return makeObject<DoUntilStatement>(stmt, cond, line);
-				}
+				nextToken(Token::Type::ID);
+				Statement* stmt = parseStatement();
+				nextToken(Token::Type::ID, STR(until));
+				nextToken(Token::Type::LeftPar);
+				Expression* cond = parseExpr();
+				nextToken(Token::Type::RightPar);
+				return makeObject<DoUntilStatement>(stmt, cond, line);
 			}
-			else if (this->currentToken->value == "for")
+			else if (this->currentToken->value == STR(for))
 			{
 				// for ([stmt]; [expr]; [stmt]) stmt
-				{
-					nextToken(Token::Type::ID);
-					nextToken(Token::Type::LeftPar);
-					Statement* initStmt = nullptr;
-					Expression* loopCond = nullptr;
-					Statement* incStmt = nullptr;
+				nextToken(Token::Type::ID);
+				nextToken(Token::Type::LeftPar);
+				Statement* initStmt = nullptr;
+				Expression* loopCond = nullptr;
+				Statement* incStmt = nullptr;
 
-					// Init
-					if (peekToken() != Token::Type::Terminator)
-						initStmt = parseStatement();
-					nextToken(Token::Type::Terminator);
+				// Init
+				if (peekToken() != Token::Type::Terminator)
+					initStmt = parseStatement();
+				nextToken(Token::Type::Terminator);
 
-					// Loop
-					if (peekToken() != Token::Type::Terminator)
-						loopCond = parseExpr();
-					nextToken(Token::Type::Terminator);
+				// Loop
+				if (peekToken() != Token::Type::Terminator)
+					loopCond = parseExpr();
+				nextToken(Token::Type::Terminator);
 
-					// Increment
-					if (peekToken() != Token::Type::RightBrace)
-						incStmt = parseStatement();
+				// Increment
+				if (peekToken() != Token::Type::RightBrace)
+					incStmt = parseStatement();
 
-					nextToken(Token::Type::RightPar);
-					return makeObject<ForStatement>(initStmt, loopCond, incStmt, parseStatement(), line);
-				}
+				nextToken(Token::Type::RightPar);
+				return makeObject<ForStatement>(initStmt, loopCond, incStmt, parseStatement(), line);
 			}
-			else if (this->currentToken->value == "repeat")
+			else if (this->currentToken->value == STR(repeat))
 			{
 				// repeat (expr) stmt
-				{
-					nextToken(Token::Type::ID);
-					nextToken(Token::Type::LeftPar);
-					Expression* cond = parseExpr();
-					nextToken(Token::Type::RightPar);
-					Statement* stmt = parseStatement();
-					return makeObject<RepeatStatement>(cond, stmt, line);
-				}
+				nextToken(Token::Type::ID);
+				nextToken(Token::Type::LeftPar);
+				Expression* cond = parseExpr();
+				nextToken(Token::Type::RightPar);
+				Statement* stmt = parseStatement();
+				return makeObject<RepeatStatement>(cond, stmt, line);
 			}
-			else if (this->currentToken->value == "with")
+			else if (this->currentToken->value == STR(with))
 			{
 				// with (expr) stmt
-				{
-					nextToken(Token::Type::ID);
-					nextToken(Token::Type::LeftPar);
-					Expression* cond = parseExpr();
-					nextToken(Token::Type::RightPar);
-					Statement* stmt = parseStatement();
-					return makeObject<WithStatement>(cond, stmt, line);
-				}
+				nextToken(Token::Type::ID);
+				nextToken(Token::Type::LeftPar);
+				Expression* cond = parseExpr();
+				nextToken(Token::Type::RightPar);
+				Statement* stmt = parseStatement();
+				return makeObject<WithStatement>(cond, stmt, line);
 			}
-			else if (this->currentToken->value == "switch")
+			else if (this->currentToken->value == STR(switch))
 			{
 				// switch (expr) { case expr1: stmtList ... [ default: stmtList ] }
+				nextToken(Token::Type::ID);
+
+				nextToken(Token::Type::LeftPar);
+				Expression* expr = parseExpr();
+				nextToken(Token::Type::RightPar);
+				List<SwitchStatement::Case*> cases = List<SwitchStatement::Case*>();
+				StatementList* defaultStmts = nullptr;
+
+				nextToken(Token::Type::LeftBrace);
+				while (peekToken() != Token::Type::RightBrace)
 				{
-					nextToken(Token::Type::ID);
-
-					nextToken(Token::Type::LeftPar);
-					Expression* expr = parseExpr();
-					nextToken(Token::Type::RightPar);
-					List<SwitchStatement::Case*> cases = List<SwitchStatement::Case*>();
-					StatementList* defaultStmts = nullptr;
-
-					nextToken(Token::Type::LeftBrace);
-					while (peekToken() != Token::Type::RightBrace)
+					Token* caseToken = nextToken(Token::Type::ID);
+					if (caseToken->value == STR(case))
 					{
-						Token* caseToken = nextToken(Token::Type::ID);
-						if (caseToken->value == "case")
-						{
-							Expression* caseExpr = parseExpr();
-							nextToken(Token::Type::Colon);
-							cases.add(makeObject<SwitchStatement::Case>(caseExpr, parseStatementList()));
-						}
-						else if (caseToken->value == "default") // default
-						{
-							nextToken(Token::Type::Colon);
-							defaultStmts = parseStatementList();
-						}
-						else
-							nextToken(Token::Type::Error);
+						Expression* caseExpr = parseExpr();
+						nextToken(Token::Type::Colon);
+						cases.add(makeObject<SwitchStatement::Case>(caseExpr, parseStatementList()));
 					}
-					nextToken(Token::Type::RightBrace);
-
-					return makeObject<SwitchStatement>(expr, cases, defaultStmts, line);
-				}
-			}
-			else if (this->currentToken->value == "return")
-			{
-				// return expr/;
-				{
-					nextToken(Token::Type::ID);
-					if (peekToken() == Token::Type::Terminator)
+					else if (caseToken->value == STR(default)) // default
 					{
-						nextToken(Token::Type::Terminator);
-						this->returnStatement = makeObject<ReturnStatement>(nullptr, line);
+						nextToken(Token::Type::Colon);
+						defaultStmts = parseStatementList();
 					}
 					else
-						this->returnStatement = makeObject<ReturnStatement>(parseExpr(), line);
-					return this->returnStatement;
+						nextToken(Token::Type::Error);
 				}
+				nextToken(Token::Type::RightBrace);
+
+				return makeObject<SwitchStatement>(expr, cases, defaultStmts, line);
 			}
-			else if (this->currentToken->value == "break")
+			else if (this->currentToken->value == STR(return))
+			{
+				// return expr/;
+				nextToken(Token::Type::ID);
+				if (peekToken() == Token::Type::Terminator)
+				{
+					nextToken(Token::Type::Terminator);
+					this->returnStatement = makeObject<ReturnStatement>(nullptr, line);
+				}
+				else
+					this->returnStatement = makeObject<ReturnStatement>(parseExpr(), line);
+				return this->returnStatement;
+			}
+			else if (this->currentToken->value == STR(break))
 			{
 				// break
-				{
-					nextToken(Token::Type::ID);
-					return makeObject<BreakStatement>(line);
-				}
+				nextToken(Token::Type::ID);
+				return makeObject<BreakStatement>(line);
 			}
-			else if (this->currentToken->value == "continue")
+			else if (this->currentToken->value == STR(continue))
 			{
 				// continue
-				{
-					nextToken(Token::Type::ID);
-					return makeObject<ContinueStatement>(line);
-				}
+				nextToken(Token::Type::ID);
+				return makeObject<ContinueStatement>(line);
 			}
-			else if (this->currentToken->value == "enum")
+			else if (this->currentToken->value == STR(enum))
 			{
 				// enum name { name [ = expr ], ... }
-				{
-					nextToken(Token::Type::ID);
-					String enumName = nextToken(Token::Type::ID)->value;
-					nextToken(Token::Type::LeftBrace);
-					DeclarationList* decls = parseDeclarations();
-					nextToken(Token::Type::RightBrace);
-					return makeObject<EnumStatement>(enumName, decls, line);
-				}
+				nextToken(Token::Type::ID);
+				StringId enumName = nextToken(Token::Type::ID)->value;
+				nextToken(Token::Type::LeftBrace);
+				DeclarationList* decls = parseDeclarations();
+				nextToken(Token::Type::RightBrace);
+				return makeObject<EnumStatement>(enumName, decls, line);
 			}
-			else if (this->currentToken->value == "delete")
+			else if (this->currentToken->value == STR(delete))
 			{
 				// delete expr
-				{
-					nextToken(Token::Type::ID);
-					return makeObject<DeleteStatement>(parseExpr(), line);
-				}
+				nextToken(Token::Type::ID);
+				return makeObject<DeleteStatement>(parseExpr(), line);
 			}
-			else if (this->currentToken->value == "static")
+			else if (this->currentToken->value == STR(static))
 			{
+				if (this->structObject == nullptr)
 				{
-					if (this->structObject == nullptr)
-					{
-						Console::writeLine("FATAL ERROR: Unexpected static in {0}:{1}.", this->name, line);
-						Environment::exit(1);
-					}
-					Function* func = makeObject<Function>("", this->gml);
-					Function::currentParseFunction = func;
-
-					nextToken(Token::Type::ID);
-					func->name = nextToken(Token::Type::ID)->value;
-					nextToken(Token::Type::Assign);
-					nextToken(Token::Type::ID, "function");
-					nextToken(Token::Type::LeftPar);
-					func->args = parseDeclarations(true);
-					nextToken(Token::Type::RightPar);
-					nextToken(Token::Type::LeftBrace);
-					func->statements = parseStatementList();
-					nextToken(Token::Type::RightBrace);
-
-					// Add new function to object
-					func->structObject = this->structObject;
-					func->returnStatement = this->returnStatement;
-					if (func->returnStatement == nullptr)
-						func->returnType->reset(DataType::Type::Void);
-					this->structObject->instanceFunctions.add(func->name, func);
-
-					Function::currentParseFunction = this;
-					this->returnStatement = nullptr;
-
-					return nullptr; // Skip in constructor statement list
+					Console::writeLine("FATAL ERROR: Unexpected static in {0}:{1}.", this->name, line);
+					std::exit(1);
 				}
+				Function* func = makeObject<Function>("", this->gml);
+				Function::currentParseFunction = func;
+
+				nextToken(Token::Type::ID);
+				func->name = nextToken(Token::Type::ID)->value;
+				nextToken(Token::Type::Assign);
+				nextToken(Token::Type::ID, STR(function));
+				nextToken(Token::Type::LeftPar);
+				func->args = parseDeclarations(true);
+				nextToken(Token::Type::RightPar);
+				nextToken(Token::Type::LeftBrace);
+				func->statements = parseStatementList();
+				nextToken(Token::Type::RightBrace);
+
+				// Add new function to object
+				func->structObject = this->structObject;
+				func->returnStatement = this->returnStatement;
+				if (func->returnStatement == nullptr)
+					func->returnType->reset(DataType::Type::Void);
+				this->structObject->instanceFunctions.add(func->name, func);
+
+				Function::currentParseFunction = this;
+				this->returnStatement = nullptr;
+
+				return nullptr; // Skip in constructor statement list
 			}
 			else
 			{
 				// Call/Assign
+				Accessor* accessor = parseAccessor();
+				switch (peekToken())
 				{
-					Accessor* accessor = parseAccessor();
-					switch (peekToken())
+					case Token::Type::AddShort: // accessor++
+					case Token::Type::SubShort: // accessor--
 					{
-						case Token::Type::AddShort: // accessor++
-						case Token::Type::SubShort: // accessor--
-						{
-							nextToken(this->lastPeeked);
-							accessor->addSubOp = this->lastPeeked;
-							return makeObject<AssignStatement>(accessor, this->lastPeeked, nullptr, line);
-						}
-						case Token::Type::Assign: // accessor = expr
-						case Token::Type::AddLong: // accessor += expr
-						case Token::Type::SubLong: // accessor -= expr
-						case Token::Type::MulLong: // accessor *= expr
-						case Token::Type::DivLong: // accessor /= expr
-						{
-							Token::Type parsedOperation = this->lastPeeked;
-							nextToken(parsedOperation);
-							Expression* parsedRight = parseExpr();
-							return makeObject<AssignStatement>(accessor, parsedOperation, parsedRight, line);
-						}
-
-						default: // accessor
-							return makeObject<CallStatement>(accessor, line);
+						nextToken(this->lastPeeked);
+						accessor->addSubOp = this->lastPeeked;
+						return makeObject<AssignStatement>(accessor, this->lastPeeked, nullptr, line);
 					}
+					case Token::Type::Assign: // accessor = expr
+					case Token::Type::AddLong: // accessor += expr
+					case Token::Type::SubLong: // accessor -= expr
+					case Token::Type::MulLong: // accessor *= expr
+					case Token::Type::DivLong: // accessor /= expr
+					{
+						Token::Type parsedOperation = this->lastPeeked;
+						nextToken(parsedOperation);
+						Expression* parsedRight = parseExpr();
+						if (!parsedRight)
+						{
+							Console::writeLine("FATAL ERROR: Expected an expression at {0}:{1}.", this->name, line);
+							std::exit(1);
+						}
+						return makeObject<AssignStatement>(accessor, parsedOperation, parsedRight, line);
+					}
+
+					default: // accessor
+						return makeObject<CallStatement>(accessor, line);
 				}
 			}
 		}
@@ -729,7 +684,7 @@ DeclarationList* Function::parseDeclarations(bool isArgs)
 		if (GML::keywords.contains(this->currentToken->value)) // GML* keywords will break the declaration (var/globalvar)
 			break;
 
-		String declarationName = nextToken(Token::Type::ID)->value;
+		StringId declarationName = nextToken(Token::Type::ID)->value;
 		Expression* expr = nullptr;
 		if (peekToken() == Token::Type::Assign) // Found expression
 		{
@@ -755,7 +710,7 @@ Accessor* Function::parseAccessor()
 	NullableList<Expression*> parameterList = nullptr;
 	Token::Type addSubOp = Token::Type::Unknown;
 
-	if ((token->value == "argument" || token->value == "argument_count") && this->cppSeparateHeader == "") // Set VarArgs
+	if ((token->value == STR(argument) || token->value == STR(argument_count)) && this->cppSeparateHeader == "") // Set VarArgs
 		this->varArgs = true;
 
 	if (peekToken() == Token::Type::LeftPar) // Parameter list
@@ -922,7 +877,7 @@ Expression* Function::parseExprValue()
 
 		case Token::Type::ID: // ID [ arrayAccessors... ] [ . ]/[( parameterList )]
 		{
-			if (this->currentToken->value == "new") // new accessor
+			if (this->currentToken->value == STR(new)) // new accessor
 			{
 				nextToken(Token::Type::ID);
 				return makeObject<NewExpression>(parseAccessor(), Function::currentParseLine);
@@ -977,7 +932,7 @@ NullableList<Expression*> Function::parseParameterList()
 	return pars;
 }
 
-Function::ScopeAssignment::ScopeAssignment(String scope, Function* func, int line)
+Function::ScopeAssignment::ScopeAssignment(StringId scope, Function* func, int line)
 {
 	this->scope = scope;
 	this->func = func;

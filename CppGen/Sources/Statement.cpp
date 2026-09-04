@@ -59,7 +59,7 @@ String Statement::Location::toString()
 	return "[" + str + "]";
 }
 
-Declaration::Declaration(String name, Expression* expr)
+Declaration::Declaration(StringId name, Expression* expr)
 {
 	this->name = name;
 	this->expr = expr;
@@ -73,7 +73,7 @@ DeclarationList::DeclarationList(List<Declaration*> declarations, bool isArgs, i
 	type = Type::DeclarationList;
 }
 
-bool DeclarationList::resolve(ResolveScope* scope, const String& declScope, const NullableList<DataType*>& inputPars)
+bool DeclarationList::resolve(ResolveScope* scope, const StringId& declScope, const NullableList<DataType*>& inputPars)
 {
 	location = *scope->location;
 
@@ -87,7 +87,7 @@ bool DeclarationList::resolve(ResolveScope* scope, const String& declScope, cons
 		// Check if name is a duplicate
 		for (int j = 0; j < i; j++)
 			if (this->declarations[j]->name == decl->name)
-				Program::addSyntaxError("Duplicate declaration of " + decl->name + " in " + this->func->name + ":" + this->line);
+				Program::addSyntaxError("Duplicate declaration of " + String(decl->name) + " in " + String(this->func->name) + ":" + this->line);
 
 		DataType exprType;
 		if (decl->expr != nullptr) // Attempt getting type from expression
@@ -274,7 +274,7 @@ void DeclareStatement::resolve(ResolveScope* scope)
 {
 	location = Location(*scope->location);
 
-	this->declarations->resolve(scope, this->globalScope ? "global" : this->func->name);
+	this->declarations->resolve(scope, this->globalScope ? STR(global) : this->func->name);
 }
 
 void DeclareStatement::writeCpp(ResolveScope* scope)
@@ -288,7 +288,7 @@ void DeclareStatement::writeCpp(ResolveScope* scope)
 	this->declarations->writeCpp(scope, DeclarationList::WriteFormat::Var);
 }
 
-MacroStatement::MacroStatement(String name, Expression* expr, int line) : Statement(line)
+MacroStatement::MacroStatement(StringId name, Expression* expr, int line) : Statement(line)
 {
 	this->name = name;
 	this->expr = expr;
@@ -300,8 +300,8 @@ MacroStatement::MacroStatement(String name, Expression* expr, int line) : Statem
 void MacroStatement::resolve(ResolveScope* scope)
 {
 	location = Location(*scope->location);
-	this->expr->resolve(ResolveScope("global", "", scope->calls));
-	Program::declareVariable("global", this->name, *this->expr->resolvedType, this->func, *scope->location);
+	this->expr->resolve(ResolveScope(STR(global), 0, scope->calls));
+	Program::declareVariable(STR(global), this->name, *this->expr->resolvedType, this->func, *scope->location);
 }
 
 void MacroStatement::writeCpp(ResolveScope* scope)
@@ -311,7 +311,7 @@ void MacroStatement::writeCpp(ResolveScope* scope)
 	CodeWriter::writeLine();
 }
 
-EnumStatement::EnumStatement(String name, DeclarationList* declarations, int line) : Statement(line)
+EnumStatement::EnumStatement(StringId name, DeclarationList* declarations, int line) : Statement(line)
 {
 	this->name = name;
 	this->declarations = declarations;
@@ -348,7 +348,7 @@ void CallStatement::resolve(ResolveScope* scope)
 
 void CallStatement::writeCpp(ResolveScope* scope)
 {
-	if (this->acc->name == "gml_pragma")
+	if (this->acc->name == STR(gml_pragma))
 	{
 		this->hasCpp = false;
 		return;
@@ -368,14 +368,14 @@ AssignStatement::AssignStatement(Accessor* target, Token::Type op, Expression* e
 	if (this->expr->type == Expression::Type::Accessor)
 	{
 		Accessor* acc = static_cast<Accessor*>(this->expr);
-		if (acc->name == "external_define" && acc->callParameters != nullptr && acc->callParameters.size() >= 5)
+		if (acc->name == STR(external_define) && acc->callParameters != nullptr && acc->callParameters.size() >= 5)
 		{
 			// Get return type from arg[3], argument types from arg[5...]
-			DataType* retType = makeObject<DataType>(static_cast<Accessor*>(acc->callParameters[3])->name == "ty_real" ? DataType::Type::Real : DataType::Type::String);
+			DataType* retType = makeObject<DataType>(static_cast<Accessor*>(acc->callParameters[3])->name == STR(ty_real) ? DataType::Type::Real : DataType::Type::String);
 
 			List<DataType*> argTypes = List<DataType*>();
 			for (int a = 5; a < static_cast<int>(acc->callParameters.size()); a++)
-				argTypes.add(makeObject<DataType>(static_cast<Accessor*>(acc->callParameters[a])->name == "ty_real" ? DataType::Type::Real : DataType::Type::String));
+				argTypes.add(makeObject<DataType>(static_cast<Accessor*>(acc->callParameters[a])->name == STR(ty_real) ? DataType::Type::Real : DataType::Type::String));
 
 			Program::externalFunctions.add(this->target->name, makeObject<ExternalFunction>(this->target->name, retType, argTypes));
 		}
@@ -619,18 +619,18 @@ void WithStatement::resolve(ResolveScope* scope)
 	// Update scope of "other" keyword
 	if (!this->otherScopes.contains(scope->current))
 		this->otherScopes.add(scope->current);
-	this->otherScope = (this->otherScopes.size() == 1) ? this->otherScopes[0] : "any";
+	this->otherScope = (this->otherScopes.size() == 1) ? this->otherScopes[0] : STR(any);
 
 	this->expr->resolve(withScope);
-	String newScope = this->expr->resolvedType->getUniqueReferenceId();
-	String exprAccName = this->expr->getAccessorName();
+	StringId newScope = this->expr->resolvedType->getUniqueReferenceId();
+	StringId exprAccName = this->expr->getAccessorName();
 	if (Program::objects.containsKey(exprAccName)) // with (objName)
 		newScope = exprAccName;
 
-	if (newScope == "")
-		newScope = "any";
+	if (newScope == 0)
+		newScope = STR(any);
 
-	if (newScope == "any")
+	if (newScope == STR(any))
 	{
 		CodeObject::unknownScopes++;
 		if (!WithStatement::resolveUnknownScope)
@@ -645,29 +645,29 @@ void WithStatement::writeCpp(ResolveScope* scope)
 {
 	ResolveScope withScope = scope->nextStatement(true);
 	bool exprIsTypeId = false;
-	String newScope = DataType::allVarType ? "any" : this->expr->resolvedType->getUniqueReferenceId();
-	String previousScope = DataType::allVarType ? "any" : this->otherScope;
+	StringId newScope = DataType::allVarType ? STR(any) : this->expr->resolvedType->getUniqueReferenceId();
+	StringId previousScope = DataType::allVarType ? STR(any) : this->otherScope;
 
-	String exprAccName = this->expr->getAccessorName();
+	StringId exprAccName = this->expr->getAccessorName();
 	if (Program::objects.containsKey(exprAccName)) // with (objName)
 	{
 		newScope = exprAccName;
-		exprIsTypeId = (newScope != "app");
+		exprIsTypeId = (newScope != STR(app));
 	}
-	if (newScope == "")
-		newScope = "any";
+	if (newScope == 0)
+		newScope = STR(any);
 
 	String withType, otherId;
-	if (newScope == "any")
+	if (newScope == STR(any))
 		withType = "Object";
 	else
 		withType = newScope;
 
-	if (withScope->current != "global") // "other" will only work in non-global scopes, otherwise will be "noone"
+	if (withScope->current != STR(global)) // "other" will only work in non-global scopes, otherwise will be "noone"
 	{
 		if (this->func->structObject != nullptr) // Use "id" member directly
 			otherId = "id";
-		else if (this->otherScope == "app") // Get global app id
+		else if (this->otherScope == STR(app)) // Get global app id
 			otherId = "global::_app->id";
 		else
 			otherId = "self->id";
@@ -727,8 +727,8 @@ void SwitchStatement::writeCpp(ResolveScope* scope)
 		CodeWriter::writeLine("{", 1);
 		for (Case* switchCase : this->cases)
 		{
-			String val = static_cast<ExpressionValue*>(switchCase->expr)->value;
-			CodeWriter::writeLine(String("case ") + Program::strings.indexOf(val) + ": // " + val);
+			StringId val = static_cast<ExpressionValue*>(switchCase->expr)->value;
+			CodeWriter::writeLine("case " + String(Program::strings.indexOf(val)) + ": // " + String(val));
 			if (switchCase->statements->statements.size() > 0) // Has statements
 			{
 				bool indent = (switchCase->statements->statements[0]->type != Type::StatementList);

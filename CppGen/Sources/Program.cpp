@@ -1,33 +1,44 @@
 #include "CppGen.hpp"
 
+int main(int argc, char** argv)
+{
+	return CppGen::Program::main(argc, argv);
+}
+
 namespace CppGen
 {
-void Program::main(List<String> args)
+
+OrderedMap<DataType*> Program::varTypeOverride;
+
+int Program::main(int argc, char** argv)
 {
-	String repoRootDir = args.size() > 0
-		? args[0].toPath()
+	// Parse arguments
+	String repoRootDir = argc > 1
+		? argv[1]
 		: fsString(fs::current_path().parent_path().parent_path());
 
-	String gmlSpecFile = args.size() > 1
-		? args[1].toPath()
+	String gmlSpecFile = argc > 2
+		? argv[2]
 		: fsString(fs::current_path().parent_path()) + "/gml.json";
 
-	bool assetsManifest = (args.size() > 2 && args[2] == "--assets-manifest");
+	bool assetsManifest = (argc > 3 && String(argv[3]) == "--assets-manifest");
+	bool clean = (argc > 3 && String(argv[3]) == "--clean");
 
 	String gmDir = repoRootDir + "/GmProject";
 	if (DirectoryInfo(gmDir).getFiles("*.yyp").size() == 0)
 	{
 		Console::writeLine("FATAL ERROR: No GameMaker project found in {0}", gmDir);
-		Environment::exit(1);
+		std::exit(1);
 	}
 
 	if (!File::exists(gmlSpecFile))
 	{
 		Console::writeLine("FATAL ERROR: Could not find GML spec at {0}", gmlSpecFile);
-		Environment::exit(1);
+		std::exit(1);
 	}
 
 	String outputDir = repoRootDir + "/CppProject/Generated";
+	StringId::initialize();
 
 	// Parse sprites
 	List<String> spriteDirs = Directory::getDirectories(gmDir + "/sprites");
@@ -64,8 +75,8 @@ void Program::main(List<String> args)
 		{
 			for (int frameIndex = 0; frameIndex < sprite->numFrames; frameIndex++)
 			{
-				text.appendLine("\t\"GmProject/sprites/" + sprite->name + "/" + sprite->frameNames[frameIndex]
-					+ ".png|Sprites/" + sprite->name + "_frame_" + frameIndex + ".png|" + sprite->gmPath + "\"");
+				text.appendLine("\t\"GmProject/sprites/" + String(sprite->name) + "/" + sprite->frameNames[frameIndex]
+					+ ".png|Sprites/" + String(sprite->name) + "_frame_" + frameIndex + ".png|" + sprite->gmPath + "\"");
 			}
 		}
 		text.appendLine(")");
@@ -73,9 +84,9 @@ void Program::main(List<String> args)
 		text.appendLine("set(CPPGEN_SHADER_RESOURCE_ENTRIES");
 		for (Shader* shader : Program::shaders.values)
 		{
-			text.appendLine("\t\"GmProject/shaders/" + shader->name + "/" + shader->name
+			text.appendLine("\t\"GmProject/shaders/" + String(shader->name) + "/" + shader->name
 				+ ".vsh|Shaders/" + shader->name + ".vsh|" + shader->gmPath + "\"");
-			text.appendLine("\t\"GmProject/shaders/" + shader->name + "/" + shader->name
+			text.appendLine("\t\"GmProject/shaders/" + String(shader->name) + "/" + shader->name
 				+ ".fsh|Shaders/" + shader->name + ".fsh|" + shader->gmPath + "\"");
 		}
 		text.appendLine(")");
@@ -83,7 +94,7 @@ void Program::main(List<String> args)
 		text.appendLine("set(CPPGEN_SCRIPT_ENTRIES");
 		for (Script* script : Program::scripts.values)
 		{
-			text.appendLine("\t\"GmProject/scripts/" + script->name + "/" + script->name
+			text.appendLine("\t\"GmProject/scripts/" + String(script->name) + "/" + script->name
 				+ ".gml|" + script->gmPath + "\"");
 		}
 		text.appendLine(")");
@@ -94,12 +105,14 @@ void Program::main(List<String> args)
 			File::writeAllText(outputFile, textStr);
 			Console::writeLine("CppGen: Created assets manifest file");
 		}
-		return;
+		return 0;
 	}
 
 	Console::writeLine("Mine-imator GML -> C++ conversion begin");
 	Console::writeLine("Input project: " + gmDir);
 	Console::writeLine("Scripts output folder: " + outputDir);
+	const String cacheFile = outputDir + "/CppGen.cache";
+	const String cacheFingerprint = getCacheFingerprint(repoRootDir, gmDir, gmlSpecFile);
 
 	GML::parseGMLSpec(gmlSpecFile);
 	Program::strings.add("");
@@ -125,7 +138,7 @@ void Program::main(List<String> args)
 	if (!Program::objects.containsKey("app"))
 	{
 		Console::writeLine("FATAL ERROR: app object not found");
-		Environment::exit(1);
+		std::exit(1);
 	}
 
 	// Create constructors/destructors for GM objects that call their event/destroy event functions
@@ -133,7 +146,7 @@ void Program::main(List<String> args)
 	{
 		obj->setConstructor(makeObject<Function>(obj->name));
 		Program::functions.add(obj->name, obj->constructor);
-		if (obj->createFunction != nullptr && obj->name != "app")
+		if (obj->createFunction != nullptr && obj->name != STR(app))
 		{
 			Function::currentParseFunction = obj->constructor;
 			obj->constructor->statements->addStatement(makeObject<CallStatement>(makeObject<Accessor>(obj->createFunction->name, List<Accessor::ArrayAccessor*>(), List<Expression*>(), nullptr, Token::Type::Unknown, 1), 1));
@@ -142,7 +155,7 @@ void Program::main(List<String> args)
 		if (obj->destroyFunction != nullptr)
 		{
 			obj->setDestructor(makeObject<Function>(obj->name));
-			Program::functions.add("~" + obj->name, obj->destructor);
+			Program::functions.add("~" + String(obj->name), obj->destructor);
 			Function::currentParseFunction = obj->destructor;
 			obj->destructor->statements->addStatement(makeObject<CallStatement>(makeObject<Accessor>(obj->destroyFunction->name, List<Accessor::ArrayAccessor*>(), List<Expression*>(), nullptr, Token::Type::Unknown, 1), 1));
 		}
@@ -163,27 +176,73 @@ void Program::main(List<String> args)
 
 	// Resolve macros
 	for (MacroStatement* macro : Program::macros.values)
-		macro->resolve(ResolveScope("global"));
+		macro->resolve(ResolveScope(STR(global)));
 
 	// Declare all globals found (empty type)
 	for (DeclareStatement* declStmt : DeclareStatement::globalDeclarations)
 		for (Declaration* decl : declStmt->declarations->declarations)
-			declareVariable("global", decl->name, DataType(), declStmt->func, Statement::Location(), declStmt->line);
+			declareVariable(STR(global), decl->name, DataType(), declStmt->func, Statement::Location(), declStmt->line);
+
+	// Forced types
+	varTypeOverride = {
+		{ "build_pos", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_pos_x", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_pos_y", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_pos_z", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_size_x", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_size_y", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_size_z", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_size_xy", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_size_total", makeObject<DataType>(DataType::Type::Integer) },
+		{ "build_single_stateid", makeObject<DataType>(DataType::Type::Integer) },
+		{ "block_pos_x", makeObject<DataType>(DataType::Type::Integer) },
+		{ "block_pos_y", makeObject<DataType>(DataType::Type::Integer) },
+		{ "block_pos_z", makeObject<DataType>(DataType::Type::Integer) },
+		{ "blockstartpos", makeObject<DataType>(DataType::Type::Integer) },
+		{ "blockendpos", makeObject<DataType>(DataType::Type::Integer )}
+	};
 
 	timer.restart();
-	resolveProject();
-	WithStatement::resolveUnknownScope = true;
-	Accessor::resolveFunctionReferences = true;
-	Accessor::resolveUnknownScope = true;
-	Accessor::resolveUnknownMapTypes = true;
-	Function::enableAssignScope = true;
-	Program::mergeUnknownVars = true;
-	resolveProject();
+	List<String> modifiedGmlFiles;
+	const bool loadedCache = !clean && loadResolverCache(cacheFile, cacheFingerprint, modifiedGmlFiles);
+	bool hotReloaded = false;
+	if (!loadedCache)
+	{
+		Console::writeLine("Resolving project");
+		resolveProject();
+		WithStatement::resolveUnknownScope =
+		Accessor::resolveFunctionReferences =
+		Accessor::resolveUnknownScope =
+		Accessor::resolveUnknownMapTypes =
+		Function::enableAssignScope =
+		Program::mergeUnknownVars = true;
+		resolveProject();
+	}
+	else if (modifiedGmlFiles.size() > 0)
+	{
+		WithStatement::resolveUnknownScope =
+		Accessor::resolveFunctionReferences =
+		Accessor::resolveUnknownScope =
+		Accessor::resolveUnknownMapTypes =
+		Function::enableAssignScope =
+		Program::mergeUnknownVars = true;
+		const int reloadedFunctions = hotReloadFunctions(modifiedGmlFiles);
+		Console::writeLine(
+			"Hot reloaded {0} function" + String(reloadedFunctions != 1 ? "s" : "") + " from {1} modified GML file" + String(modifiedGmlFiles.size() != 1 ? "s" : ""),
+			reloadedFunctions,
+			modifiedGmlFiles.size()
+		);
+		hotReloaded = true;
+	}
 	timer.stop();
 
-
-	int percResolved = (int)((1.0f - Variable::variantVariables / (float)Variable::totalVariables) * 100.0f);
-	Console::writeLine("Solved {0} out of {1} variable types ({2}%) in {3}ms", Variable::totalVariables - Variable::variantVariables, Variable::totalVariables, percResolved,(int)timer.elapsed.totalMilliseconds);
+	if (loadedCache)
+		Console::writeLine("Loaded cache in {0}ms", (int)timer.elapsed.totalMilliseconds);
+	else
+	{
+		int percResolved = (int)((1.0f - Variable::variantVariables / (float)Variable::totalVariables) * 100.0f);
+		Console::writeLine("Solved {0} out of {1} variable types ({2}%) in {3}ms", Variable::totalVariables - Variable::variantVariables, Variable::totalVariables, percResolved,(int)timer.elapsed.totalMilliseconds);
+	}
 
 	timer.restart();
 
@@ -199,12 +258,12 @@ void Program::main(List<String> args)
 	CodeWriter::writeLine("{", 1);
 
 	for (MacroStatement* macroStmt : Program::macros.values)
-		macroStmt->writeCpp(ResolveScope("global"));
+		macroStmt->writeCpp(ResolveScope(STR(global)));
 	CodeWriter::writeLine();
 
 	for (EnumStatement* enumStmt : Program::enums.values)
 	{
-		enumStmt->writeCpp(ResolveScope("global"));
+		enumStmt->writeCpp(ResolveScope(STR(global)));
 		CodeWriter::writeLine();
 	}
 
@@ -238,31 +297,31 @@ void Program::main(List<String> args)
 	int assetId = 20;
 	CodeWriter::writeLine();
 	for (Object* obj : Program::objects.values)
-		CodeWriter::writeLine("#define ID_" + obj->name + " IntType(" + (assetId++) + ")");
+		CodeWriter::writeLine("#define ID_" + String(obj->name) + " IntType(" + (assetId++) + ")");
 
 	CodeWriter::writeLine();
 	for (Sprite* sprite : Program::sprites.values)
-		CodeWriter::writeLine("#define ID_" + sprite->name + " IntType(" + (assetId++) + ")");
+		CodeWriter::writeLine("#define ID_" + String(sprite->name) + " IntType(" + (assetId++) + ")");
 
 	CodeWriter::writeLine();
 	for (Shader* shader : Program::shaders.values)
-		CodeWriter::writeLine("#define ID_" + shader->name + " IntType(" + (assetId++) + ")");
+		CodeWriter::writeLine("#define ID_" + String(shader->name) + " IntType(" + (assetId++) + ")");
 
 	CodeWriter::writeLine();
 	for (Function* func : Program::functions.values)
 		if (func->structObject == nullptr)
-			CodeWriter::writeLine("#define ID_" + func->name + " IntType(" + (assetId++) + ")");
+			CodeWriter::writeLine("#define ID_" + String(func->name) + " IntType(" + (assetId++) + ")");
 
 	List<String> members = List<String>();
 	for (Object* obj : Program::objects.values)
 	{
-		for (String varName : obj->instanceVars.keys)
+		for (StringId varName : obj->instanceVars.keys)
 		{
 			String cppName = CodeObject::nameToCpp(varName);
 			if (!members.contains(cppName))
 				members.add(cppName);
 		}
-		for (String funcName : obj->instanceFunctions.keys)
+		for (StringId funcName : obj->instanceFunctions.keys)
 		{
 			String cppName = CodeObject::nameToCpp(funcName);
 			if (!members.contains(cppName))
@@ -270,7 +329,7 @@ void Program::main(List<String> args)
 		}
 	}
 
-	for (String varName : Program::unknownScopeVars.keys)
+	for (StringId varName : Program::unknownScopeVars.keys)
 	{
 		String cppName = CodeObject::nameToCpp(varName);
 		if (!members.contains(cppName))
@@ -297,8 +356,8 @@ void Program::main(List<String> args)
 	CodeWriter::writeLine("{", 1);
 
 	DataType::ignoreAllVarType = true;
-	for (String var : GML::variables.keys)
-		if (!GML::keywords.contains(var) && var != "argument" && var != "argument_count")
+	for (StringId var : GML::variables.keys)
+		if (!GML::keywords.contains(var) && var != STR(argument) && var != STR(argument_count))
 			CodeWriter::writeLine(GML::variables[var]->toCpp() + " gmlGlobal::" + var + " = " + GML::variables[var]->toCppDefaultValue() + ";");
 	CodeWriter::writeLine();
 	DataType::ignoreAllVarType = false;
@@ -314,9 +373,17 @@ void Program::main(List<String> args)
 
 	// Generate Scripts1...n.cpp
 	const int maxLinePerFile = 1000;
-	int f = 1;
-	while (true)
+	int existingScriptFiles = 0;
+	if (hotReloaded)
 	{
+		while (FileInfo(outputDir + "/Scripts" + (existingScriptFiles + 1) + ".cpp").exists)
+			existingScriptFiles++;
+	}
+
+	int f = 1;
+	while (!hotReloaded || f <= existingScriptFiles)
+	{
+		const bool finalScriptFile = hotReloaded && f == existingScriptFiles;
 		CodeWriter::begin();
 		CodeWriter::writeLine("#include \"Scripts.hpp\"");
 		CodeWriter::writeLine();
@@ -326,12 +393,12 @@ void Program::main(List<String> args)
 		for (Object* obj : Program::objects.values)
 		{
 			obj->writeCppImplementation();
-			if (CodeWriter::lines > maxLinePerFile)
+			if (!finalScriptFile && CodeWriter::lines > maxLinePerFile)
 				break;
 		}
 
 		int funcWritten = 0;
-		if (CodeWriter::lines <= maxLinePerFile)
+		if (finalScriptFile || CodeWriter::lines <= maxLinePerFile)
 		{
 			for (Function* func : Program::functions.values)
 			{
@@ -341,11 +408,11 @@ void Program::main(List<String> args)
 				if (func->writeCppImplementation())
 					funcWritten++;
 
-				if (CodeWriter::lines > maxLinePerFile)
+				if (!finalScriptFile && CodeWriter::lines > maxLinePerFile)
 					break;
 			}
 
-			if (funcWritten == 0)
+			if (!hotReloaded && funcWritten == 0)
 				break; // Don't generate final file
 		}
 
@@ -390,11 +457,11 @@ void Program::main(List<String> args)
 	CodeWriter::writeLine("{", 1);
 
 	for (Sprite* spr : Program::sprites.values)
-		CodeWriter::writeLine("AddSprite(" + spr->name + ", " + spr->numFrames + ", " + spr->originX + ", " + spr->originY + ");");
+		CodeWriter::writeLine("AddSprite(" + String(spr->name) + ", " + String(spr->numFrames) + ", " + String(spr->originX) + ", " + String(spr->originY) + ");");
 
 	CodeWriter::writeLine();
 	for (Shader* shader : Program::shaders.values)
-		CodeWriter::writeLine("AddShader(" + shader->name + ");");
+		CodeWriter::writeLine("AddShader(" + String(shader->name) + ");");
 
 	CodeWriter::writeLine();
 	CodeWriter::writeLine("struct ScriptDefinition");
@@ -407,8 +474,8 @@ void Program::main(List<String> args)
 	CodeWriter::writeLine("static const ScriptDefinition scripts[] =");
 	CodeWriter::writeLine("{", 1);
 	for (Function* func : Program::functions.values)
-		if (func->structObject == nullptr && !func->name.startsWith("builder_add_"))
-			CodeWriter::writeLine("AddScript(" + func->name + ", " + func->toExecuteCpp() + ")");
+		if (func->structObject == nullptr && !String(func->name).startsWith("builder_add_"))
+			CodeWriter::writeLine("AddScript(" + String(func->name) + ", " + func->toExecuteCpp() + ")");
 	CodeWriter::writeLine("};", -1);
 	CodeWriter::writeLine();
 	CodeWriter::writeLine("for (const ScriptDefinition& script : scripts)", 1);
@@ -478,8 +545,15 @@ void Program::main(List<String> args)
 	// Finished
 	timer.stop();
 	Console::writeLine("Generated code ({0} lines) in {1}ms", CodeWriter::totalLines, (int)timer.elapsed.totalMilliseconds);
-	Console::writeLine("{0} files were updated", CodeWriter::totalFilesUpdated);
-	printDebugFiles();
+	Console::writeLine("{0} file" + String(CodeWriter::totalFilesUpdated == 1 ? " was" : "s were") + " updated", CodeWriter::totalFilesUpdated);
+	if (Program::syntaxErrors.empty() && (!loadedCache || hotReloaded))
+	{
+		timer.restart();
+		bool cacheSaved = saveResolverCache(cacheFile, cacheFingerprint);
+		timer.stop();
+		if (cacheSaved)
+			Console::writeLine("Saved resolved classes and types to cache in {0}ms", (int)timer.elapsed.totalMilliseconds);
+	}
 
 	if (Program::syntaxErrors.size() > 0)
 	{
@@ -489,6 +563,8 @@ void Program::main(List<String> args)
 	}
 	else
 		Console::writeLine("Success!");
+
+	return Program::syntaxErrors.empty() ? 0 : 1;
 }
 
 Shader::Shader(String dir)
@@ -578,7 +654,7 @@ void Program::resolveProject()
 		// Resolve object constructors/destructors
 		for (Object* obj : Program::objects.values)
 		{
-			if (obj->name == "app")
+			if (obj->name == STR(app))
 				continue;
 
 			if (obj->constructor != nullptr)
@@ -588,17 +664,17 @@ void Program::resolveProject()
 				obj->destructor->resolve(ResolveScope(obj->name));
 		}
 
-		Program::objects["app"]->constructor->resolve(ResolveScope("app"));
+		Program::objects[STR(app)]->constructor->resolve(ResolveScope(STR(app)));
 
 		// Resolve app functions
 		if (Program::appDrawFunction != nullptr)
-			Program::appDrawFunction->resolve(ResolveScope("app"));
+			Program::appDrawFunction->resolve(ResolveScope(STR(app)));
 		if (Program::appStepFunction != nullptr)
-			Program::appStepFunction->resolve(ResolveScope("app"));
+			Program::appStepFunction->resolve(ResolveScope(STR(app)));
 		if (Program::appHttpFunction != nullptr)
-			Program::appHttpFunction->resolve(ResolveScope("app"));
+			Program::appHttpFunction->resolve(ResolveScope(STR(app)));
 		if (Program::appGameEndFunction != nullptr)
-			Program::appGameEndFunction->resolve(ResolveScope("app"));
+			Program::appGameEndFunction->resolve(ResolveScope(STR(app)));
 
 		// Resolve instance functions
 		for (Object* obj : Program::objects.values)
@@ -655,16 +731,49 @@ void Program::resolveProject()
 			if (func->isUnused)
 			{
 				// Ensure scope is correct for block scripts
-				if (func->name.startsWith("block_set_") || func->name.startsWith("block_tile_entity_"))
-					func->resolve(ResolveScope("obj_builder_thread"));
+				if (String(func->name).startsWith("block_set_") || String(func->name).startsWith("block_tile_entity_"))
+					func->resolve(ResolveScope(STR(obj_builder_thread)));
 				else
-					func->resolve(ResolveScope("any"));
+					func->resolve(ResolveScope(STR(any)));
 			}
 		}
 	}
 }
 
-Variable* Program::findVariable(String scope, String name, Function* func, const Statement::Location& location, int line, Function* funcAssignScope, bool includeUnknown)
+int Program::hotReloadFunctions(const List<String>& modifiedGmlFiles)
+{
+	Program::hotReloading = true;
+	Program::hotReloadTargets.clear();
+	for (Function* function : Program::functions.values)
+		if (function->sourceFile != "" && modifiedGmlFiles.contains(function->sourceFile))
+			Program::hotReloadTargets.add(function);
+
+	int reloaded = 0;
+	for (Function* function : Program::hotReloadTargets)
+	{
+		List<StringId> previousScopes;
+		for (Function::ScopeAssignment* assignment : function->scopeAssignments)
+			previousScopes.add(assignment->scope);
+		const StringId previousScope = function->getScope();
+
+		if (function->args != nullptr)
+			for (Declaration* declaration : function->args->declarations)
+				for (Variable* variable : function->vars)
+					if (variable->line == 0 && variable->name == declaration->name)
+						declaration->isReference = variable->isReference;
+		if (previousScopes.size() == 0)
+			function->resolve(ResolveScope(previousScope));
+		else
+			for (StringId scope : previousScopes)
+				function->resolve(ResolveScope(scope));
+		reloaded++;
+	}
+	Program::hotReloadTargets.clear();
+	Program::hotReloading = false;
+	return reloaded;
+}
+
+Variable* Program::findVariable(StringId scope, StringId name, Function* func, const Statement::Location& location, int line, Function* funcAssignScope, bool includeUnknown)
 {
 	// Local or argument
 	if (func != nullptr)
@@ -681,16 +790,16 @@ Variable* Program::findVariable(String scope, String name, Function* func, const
 		}
 
 		// argument0..15
-		if (name != "argument" && name != "argument_count" && name.startsWith("argument"))
+		if (name.id() >= STR(argument0) && name.id() <= STR(argument15))
 		{
-			int argNum = Convert::toInt32(name.replace("argument", ""));
+			int argNum = name.id() - STR(argument0);
 			if (argNum >= 0 && static_cast<int>(func->vars.size()) > argNum && func->vars[argNum]->line == 0)
 				return func->vars[argNum];
 		}
 	}
 
 	// Unknown scope
-	if (scope == "any" && includeUnknown && Program::unknownScopeVars.containsKey(name))
+	if (scope == STR(any) && includeUnknown && Program::unknownScopeVars.containsKey(name))
 	{
 		if (funcAssignScope != nullptr)
 			funcAssignScope->assignScope(scope, func, line, true);
@@ -720,10 +829,10 @@ Variable* Program::findVariable(String scope, String name, Function* func, const
 	return nullptr;
 }
 
-Variable* Program::declareVariable(String scope, String name, const DataType& type, Function* func, const Statement::Location& location, int line, Function* funcAssignScope)
+Variable* Program::declareVariable(StringId scope, StringId name, const DataType& type, Function* func, const Statement::Location& location, int line, Function* funcAssignScope)
 {
 	// Unknown scope
-	if (scope == "any")
+	if (scope == STR(any))
 	{
 		if (!Program::unknownScopeVars.containsKey(name))
 			Program::unknownScopeVars.add(name, makeObject<Variable>(scope, name, type, line, location));
@@ -735,7 +844,7 @@ Variable* Program::declareVariable(String scope, String name, const DataType& ty
 	}
 
 	// Global
-	if (scope == "global")
+	if (scope == STR(global))
 	{
 		if (!Program::globalVars.containsKey(name))
 			Program::globalVars.add(name, makeObject<Variable>(scope, name, type, line, location));
@@ -778,7 +887,7 @@ Variable* Program::declareVariable(String scope, String name, const DataType& ty
 			}
 			else if (var->location.equals(location)) // Redeclared in the same scope
 			{
-				addSyntaxError("Variable " + name + " redeclared, previous on line " + var->line + " in " + func->name + ":" + line);
+				addSyntaxError("Variable " + String(name) + " redeclared, previous on line " + var->line + " in " + String(func->name) + ":" + line);
 				return var;
 			}
 		}
@@ -795,54 +904,6 @@ void Program::addSyntaxError(String text)
 {
 	if (!Program::syntaxErrors.contains(text))
 		Program::syntaxErrors.add(text);
-}
-
-void Program::printDebugFiles()
-{
-	// Debug global variables
-	List<String> globalVarsStrings = List<String>();
-	for (Variable* var : Program::globalVars.values)
-		globalVarsStrings.add(var->type->toCpp() + " " + var->name + "\n" + var->type->getAssignmentsString("\t"));
-
-	// Debug unknown variables
-	List<String> unknownVarsStrings = List<String>();
-	for (Variable* var : Program::unknownScopeVars.values)
-		unknownVarsStrings.add(var->type->toCpp() + " " + var->name + "\n" + var->type->getAssignmentsString("\t"));
-
-	// Debug functions
-	List<String> funcsStrings = List<String>();
-	for (Function* func : Program::functions.values)
-		funcsStrings.add(func->toDebugString());
-
-	// Debug objects
-	List<String> objsStrings = List<String>();
-	for (Object* obj : Program::objects.values)
-		objsStrings.add(obj->toDebugString());
-
-	globalVarsStrings.sort();
-	unknownVarsStrings.sort();
-	funcsStrings.sort();
-	objsStrings.sort();
-	String globalVarsText = "";
-	String unknownVarsText = "";
-	String funcsText = "";
-	String objsText = "";
-	for (String var : globalVarsStrings)
-		globalVarsText += var;
-	for (String var : unknownVarsStrings)
-		unknownVarsText += var;
-	for (String func : funcsStrings)
-		funcsText += func + "\n";
-	for (String obj : objsStrings)
-		objsText += obj + "\n";
-
-	String logDir = Directory::getCurrentDirectory() + "/Logs";
-	Directory::createDirectory(logDir);
-	Console::writeLine("Writing logs to {0}", logDir);
-	File::writeAllText(logDir + "/globalVars.log", globalVarsText);
-	File::writeAllText(logDir + "/unknownVars.log", unknownVarsText);
-	File::writeAllText(logDir + "/funcs.log", funcsText);
-	File::writeAllText(logDir + "/objs.log", objsText);
 }
 
 }

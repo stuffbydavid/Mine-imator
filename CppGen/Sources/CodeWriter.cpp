@@ -56,7 +56,7 @@ void CodeWriter::end(String outputFile)
 {
 	try
 	{
-		String code = toStringValue(CodeWriter::builder);
+		String code = CodeWriter::builder.toString();
 		if (File::exists(outputFile)) // Check for difference (except timestamp)
 		{
 			String codeNoTimestamp = Regex::replace(code, "\\[ Generated on .*? \\]", "");
@@ -71,7 +71,7 @@ void CodeWriter::end(String outputFile)
 	catch (const std::exception& ex)
 	{
 		Console::writeLine("FATAL ERROR: " + String(ex.what()));
-		Environment::exit(1);
+		std::exit(1);
 	}
 }
 
