@@ -252,9 +252,9 @@ void main()
 		// Get color
 		rayColor = mix(pow(uSkyColor.rgb, vec3(uGamma)), rayColor, vis);
 		
-		// Specular tint from mettalic
+		// Specular tint from metallic
 		if (materialData.g > 0.0)
-			rayColor *= mix(vec3(1.0), texture2D(uDiffuseBuffer, vTexCoord).rgb, materialData.g);
+			rayColor *= mix(vec3(1.0), pow(texture2D(uDiffuseBuffer, vTexCoord).rgb, vec3(uGamma)), materialData.g);
 		
 		// Multiply by fresnel
 		rayColor *= materialData.b;
