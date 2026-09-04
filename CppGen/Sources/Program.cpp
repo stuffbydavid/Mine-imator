@@ -22,6 +22,7 @@ int Program::main(int argc, char** argv)
 		: fsString(fs::current_path().parent_path()) + "/gml.json";
 
 	bool assetsManifest = (argc > 3 && String(argv[3]) == "--assets-manifest");
+	bool clean = (argc > 3 && String(argv[3]) == "--clean");
 
 	String gmDir = repoRootDir + "/GmProject";
 	if (DirectoryInfo(gmDir).getFiles("*.yyp").size() == 0)
@@ -203,7 +204,7 @@ int Program::main(int argc, char** argv)
 
 	timer.restart();
 	List<String> modifiedGmlFiles;
-	const bool loadedCache = loadResolverCache(cacheFile, cacheFingerprint, modifiedGmlFiles);
+	const bool loadedCache = !clean && loadResolverCache(cacheFile, cacheFingerprint, modifiedGmlFiles);
 	bool hotReloaded = false;
 	if (!loadedCache)
 	{
