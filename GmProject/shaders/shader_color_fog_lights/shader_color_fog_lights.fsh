@@ -71,8 +71,11 @@ void main()
 	if (!isSky)
 		col.rgb = applyToneMapper(col.rgb, uTonemapper, uExposure, uGamma);
 	
-	col = mix(col, uFogColor, getFog(vPosition, uCameraPosition)); // Mix fog
+	float fog = getFog(vPosition, uCameraPosition);
+	
+	col = mix(col, uFogColor, fog); // Mix fog
 	col.a = mix(baseColor.a, 1.0, F); // Correct alpha
+	col.a = mix(col.a, 1.0, fog);
 	
 	handleAlphaDiscard(vPosition, col);
 	

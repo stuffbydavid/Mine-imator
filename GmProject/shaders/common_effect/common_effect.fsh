@@ -228,6 +228,7 @@ float getFog(vec3 pos, vec3 camPos)
 
 		fog = clamp(1.0 - (uFogDistance - fogDepth) / uFogSize, 0.0, 1.0);
 		fog *= clamp(1.0 - (pos.z - uFogHeight) / uFogSize, 0.0, 1.0);
+		fog = 1.0 - pow(1.0 - fog, 2.0); // Quadratic transition
 	}
 	else
 		fog = 0.0;

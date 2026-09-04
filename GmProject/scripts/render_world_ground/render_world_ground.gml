@@ -18,7 +18,7 @@ function render_world_ground()
 	render_set_uniform_color("uBlendColor", blend, 1)
 	render_set_uniform_color("uGlowColor", c_black, 1)
 	render_set_uniform_int("uGlowTexture", 0)
-	render_set_uniform_int("uFogShow", app.background_fog_show)
+	render_set_uniform_int("uFogShow", app.background_fog_show && render_mode != e_render_mode.COLOR)
 	render_set_uniform_int("uIsWater", iswater)
 	render_set_uniform_int("uMaterialFormat", background_ground_tex_material.material_format)
 	
