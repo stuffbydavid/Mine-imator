@@ -13,7 +13,7 @@ uniform float uGlintStrength;
 vec3 getGlint(vec4 col, vec2 texCoord, vec2 texSize, float gamma)
 {
 	if (uGlintEnabled > 0 && col.a > 0.0)
-		return pow(texture2D(uGlintTexture, (texCoord * ((texSize / uGlintSize))) + uGlintOffset).rgb * col.a * uGlintStrength, vec3(gamma));
+		return pow(texture2D(uGlintTexture, (texCoord * ((texSize / uGlintSize))) + uGlintOffset).rgb, vec3(gamma)) * col.a * uGlintStrength;
 	else
 		return vec3(0.0);
 }

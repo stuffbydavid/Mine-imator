@@ -98,7 +98,7 @@ vec3 applyToneMapper(vec3 col, int tonemapperId, float exposure, float gamma)
 		col = mapACES(col);
 
 	// Gamma
-	return pow(col.rgb, vec3(1.0/gamma));
+	return pow(max(col.rgb, vec3(0.0)), vec3(1.0/gamma));
 }
 
 #pragma shady: macro_end

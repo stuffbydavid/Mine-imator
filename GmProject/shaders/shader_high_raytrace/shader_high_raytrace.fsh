@@ -271,7 +271,7 @@ void main()
 			light = (texture2D(uDataBuffer, rayCoord.xy).rgb + texture2D(uNormalBuffer, rayCoord.xy).a) * uIndirectStength;
 			
 			// Diffuse tint
-			light *= texture2D(uDiffuseBuffer, rayCoord.xy).rgb;
+			light *= pow(texture2D(uDiffuseBuffer, rayCoord.xy).rgb, vec3(uGamma));
 			
 			// Multiply by diffuse & strength
 			light *= max(0.0, dot(-hitNormal, rayDir));
