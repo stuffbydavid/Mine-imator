@@ -10,8 +10,10 @@ uniform vec4 uAmbientColor;
 
 uniform sampler2D uMask;
 uniform sampler2D uMaterialBuffer;
+uniform sampler2D uDiffuseBuffer;
 uniform int uReflectionsEnabled;
 uniform vec4 uFallbackColor;
+uniform int uFallbackOnly;
 
 uniform float uGamma;
 
@@ -20,12 +22,21 @@ varying vec2 vTexCoord;
 void main()
 {
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
+	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord);
+
+	if (uFallbackOnly > 0)
+	{
+		vec3 diffuseColor = pow(texture2D(uDiffuseBuffer, vTexCoord).rgb, vec3(uGamma));
+		baseColor.rgb += mix(vec3(1.0), diffuseColor, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
+		gl_FragColor = baseColor;
+		return;
+	}
+
 	float mask = texture2D(uMask, vTexCoord).r;
 	
 	// Apply gamma to base
 	baseColor.rgb = pow(baseColor.rgb, mix(vec3(1.0), vec3(uGamma), mask));
 	
-	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord); // G = metallic, B = fresnel
 	vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
 	
 	// Sum up lighting

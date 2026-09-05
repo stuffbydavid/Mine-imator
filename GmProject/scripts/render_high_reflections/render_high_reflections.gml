@@ -15,7 +15,7 @@ function render_high_reflections(surf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_raytrace_set(e_raytrace.REFLECTIONS, surf)
+			shader_high_raytrace_set(e_raytrace.REFLECTIONS, render_surface_shadows)
 		}
 		
 		draw_blank(0, 0, render_width, render_height)
