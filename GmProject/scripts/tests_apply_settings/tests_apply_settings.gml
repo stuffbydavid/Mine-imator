@@ -28,6 +28,7 @@ function tests_apply_settings(settings)
 			case "ssao_radius": project_render_ssao_radius = val break
 			case "ssao_power": project_render_ssao_power = val break
 			case "ssao_color": project_render_ssao_color = val break
+			case "ssao_always_visible": project_render_ssao_always_visible = val break
 			case "shadows": project_render_shadows = val break
 			case "shadows_sun_size": project_render_shadows_sun_buffer_size = val break
 			case "shadows_spot_size": project_render_shadows_spot_buffer_size = val break

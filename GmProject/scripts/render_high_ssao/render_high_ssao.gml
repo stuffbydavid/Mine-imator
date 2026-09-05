@@ -25,22 +25,4 @@ function render_high_ssao()
 	
 	if (render_pass = e_render_pass.AO)
 		render_pass_surf = surface_duplicate(render_surface[0])
-	
-	// Apply to shadows
-	if (!render_shadows)
-		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
-	
-	surface_set_target(render_surface_shadows)
-	{
-		if (!render_shadows)
-			draw_clear(c_white)
-		else
-			gpu_set_blendmode_ext(bm_zero, bm_src_color)
-		
-		draw_surface(render_surface[0], 0, 0)
-		
-		if (render_shadows)
-			gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
 }

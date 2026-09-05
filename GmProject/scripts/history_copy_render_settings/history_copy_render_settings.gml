@@ -9,6 +9,7 @@ function history_copy_render_settings(obj)
 	project_render_ssao_radius = obj.project_render_ssao_radius
 	project_render_ssao_power = obj.project_render_ssao_power
 	project_render_ssao_color = obj.project_render_ssao_color
+	project_render_ssao_always_visible = obj.project_render_ssao_always_visible
 	
 	project_render_shadows = obj.project_render_shadows
 	project_render_shadows_sun_buffer_size = obj.project_render_shadows_sun_buffer_size

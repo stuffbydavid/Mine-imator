@@ -40,7 +40,7 @@ function render_high_scene()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_lighting_apply_set(render_surface_shadows, masksurf, render_surface_material)
+			shader_high_lighting_apply_set(render_surface_shadows, render_surface[0], masksurf, render_surface_material)
 		}
 		draw_surface_exists(render_surface_diffuse, 0, 0)
 		

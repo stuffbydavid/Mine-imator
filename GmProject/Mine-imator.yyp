@@ -842,6 +842,7 @@
     {"id":{"name":"action_project_render_shadows_sun_buffer_size","path":"scripts/action_project_render_shadows_sun_buffer_size/action_project_render_shadows_sun_buffer_size.yy",},},
     {"id":{"name":"action_project_render_shadows_transparent","path":"scripts/action_project_render_shadows_transparent/action_project_render_shadows_transparent.yy",},},
     {"id":{"name":"action_project_render_shadows","path":"scripts/action_project_render_shadows/action_project_render_shadows.yy",},},
+    {"id":{"name":"action_project_render_ssao_always_visible","path":"scripts/action_project_render_ssao_always_visible/action_project_render_ssao_always_visible.yy",},},
     {"id":{"name":"action_project_render_ssao_color","path":"scripts/action_project_render_ssao_color/action_project_render_ssao_color.yy",},},
     {"id":{"name":"action_project_render_ssao_power","path":"scripts/action_project_render_ssao_power/action_project_render_ssao_power.yy",},},
     {"id":{"name":"action_project_render_ssao_radius","path":"scripts/action_project_render_ssao_radius/action_project_render_ssao_radius.yy",},},

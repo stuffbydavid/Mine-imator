@@ -9,6 +9,7 @@ function project_reset_render()
 	project_render_ssao_radius = 12
 	project_render_ssao_power = 1
 	project_render_ssao_color = c_black
+	project_render_ssao_always_visible = false
 	
 	project_render_shadows = true
 	project_render_shadows_sun_buffer_size = 2048

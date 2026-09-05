@@ -40,7 +40,7 @@ function render_high_shadows()
 	
 	surface_set_target(render_surface_shadows)
 	{
-		draw_clear_alpha(background_ambient_color_final, 1)
+		draw_clear_alpha(c_black, 1)
 	}
 	surface_reset_target()
 	

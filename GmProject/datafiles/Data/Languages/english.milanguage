@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.08.26"
+		"lastchange": "2026.09.05"
 	},
 	"particle/": {
 		"default": "Default spawner",
@@ -2976,7 +2976,9 @@
 			"radius": "Radius",
 			"power": "Strength",
 			"blurpasses": "Blur passes",
-			"color": "Color"
+			"color": "Color",
+			"alwaysvisible": "Always visible",
+			"alwaysvisibletip": "Evenly apply occlusion, even in lit areas."
 		},
 		"shadows": "Shadows",
 		"shadows/": {

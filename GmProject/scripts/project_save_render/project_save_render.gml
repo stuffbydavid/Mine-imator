@@ -11,6 +11,7 @@ function project_save_render()
 		json_save_var("render_ssao_radius", project_render_ssao_radius)
 		json_save_var("render_ssao_power", project_render_ssao_power)
 		json_save_var_color("render_ssao_color", project_render_ssao_color)
+		json_save_var_bool("render_ssao_always_visible", project_render_ssao_always_visible)
 		
 		json_save_var_bool("render_shadows", project_render_shadows)
 		json_save_var("render_shadows_sun_buffer_size", project_render_shadows_sun_buffer_size)

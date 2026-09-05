@@ -28,6 +28,7 @@ The ranges below are the ranges supported by the corresponding interface control
 | `ssao_radius` | 0-256 | SSAO sampling radius |
 | `ssao_power` | 0-no limit | SSAO strength |
 | `ssao_color` | Color integer | SSAO tint color |
+| `ssao_always_visible` | Boolean | Apply SSAO to all diffuse lighting instead of ambient lighting only |
 | `shadows` | Boolean | Enable shadows |
 | `shadows_sun_size` | 256, 512, 1024, 2048, 4096, or 8192 | Sun shadow-map resolution; 8192 is offered only when supported by the GPU |
 | `shadows_spot_size` | 256, 512, 1024, 2048, 4096, or 8192 | Spot-light shadow-map resolution; 8192 is offered only when supported by the GPU |

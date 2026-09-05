@@ -12,6 +12,7 @@ function project_load_render(map)
 	project_render_ssao_radius = value_get_real(map[?"render_ssao_radius"], project_render_ssao_radius)
 	project_render_ssao_power = value_get_real(map[?"render_ssao_power"], project_render_ssao_power)
 	project_render_ssao_color = value_get_color(map[?"render_ssao_color"], project_render_ssao_color)
+	project_render_ssao_always_visible = value_get_real(map[?"render_ssao_always_visible"], project_render_ssao_always_visible)
 	
 	project_render_shadows = value_get_real(map[?"render_shadows"], project_render_shadows)
 	project_render_shadows_sun_buffer_size = value_get_real(map[?"render_shadows_sun_buffer_size"], project_render_shadows_sun_buffer_size)

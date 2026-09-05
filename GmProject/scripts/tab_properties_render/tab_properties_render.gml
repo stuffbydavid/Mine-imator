@@ -52,6 +52,10 @@ function tab_properties_render()
 		draw_button_color("renderssaocolor", dx, dy, dw, project_render_ssao_color, c_black, false, action_project_render_ssao_color)
 		tab_next()
 		
+		tab_control_switch()
+		draw_switch("renderssaoalwaysvisible", dx, dy, project_render_ssao_always_visible, action_project_render_ssao_always_visible, "renderssaoalwaysvisibletip")
+		tab_next()
+		
 		tab_collapse_end()
 	}
 	
