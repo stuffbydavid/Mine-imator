@@ -36,7 +36,7 @@ function window_draw_load_assets()
 	var wid, hei, panelwid;
 	wid = load_assets_width
 	hei = load_assets_height
-	panelwid = 250
+	panelwid = wid - 550 //250
 	
 	var xoff, yoff;
 	xoff = floor((window_width/2) - (wid/2))

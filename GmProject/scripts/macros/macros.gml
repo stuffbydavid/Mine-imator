@@ -5,7 +5,7 @@ function macros()
 {
 	// Debug
 	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && true
+	#macro dev_mode_skip_blocks			dev_mode && false
 	#macro dev_mode_debug_schematics	dev_mode && true
 	#macro dev_mode_debug_names			dev_mode && true
 	#macro dev_mode_debug_saveid		dev_mode && false
@@ -154,7 +154,7 @@ function macros()
 	#macro snap_min						0.000001
 	#macro dragger_width				74
 	#macro label_height					9
-	#macro load_assets_width			800
+	#macro load_assets_width			780
 	#macro load_assets_height			450
 	
 	// Values

@@ -55,7 +55,7 @@ function popup_saveas_draw()
 	
 	// Save
 	tab_control_button_label()
-	if (draw_button_label("saveassave", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("saveassave", dx + dw, dy, null, icons.SAVE, e_button.PRIMARY, null, e_anchor.RIGHT))
 		project_save_as()
 	tab_next()
 }

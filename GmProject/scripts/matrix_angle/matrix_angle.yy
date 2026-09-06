@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"matrix_rotation",
+  "%Name":"matrix_angle",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"matrix_rotation",
+  "name":"matrix_angle",
   "parent":{
     "name":"Matrix",
     "path":"folders/Scripts/Utility/Math/Matrix.yy",

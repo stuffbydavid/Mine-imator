@@ -1,7 +1,7 @@
-/// matrix_rotation(matrix)
+/// matrix_angle(matrix)
 /// @arg matrix
 
-function matrix_rotation(mat)
+function matrix_angle(mat)
 {
     var rx, ry, rz;
     

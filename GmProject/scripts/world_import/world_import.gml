@@ -116,27 +116,6 @@ function world_import_go_to_position_posz(val, add)
 	world_import_settings_gotoposition_z = val + (add ? world_import_settings_gotoposition_z : 0)
 }
 
-function world_import_go_to_position_draw()
-{
-	draw_set_font(font_label)
-	
-	axis_edit = X
-	textfield_group_add("worldimportgotopositionposx", world_import_settings_gotoposition_x, 0, world_import_go_to_position_posx, axis_edit, tbx_worldimport_gotoposition_x, null, 0.25)
-	axis_edit = Y //(setting_z_is_up ? Z : Y)
-	textfield_group_add("worldimportgotopositionposz", world_import_settings_gotoposition_z, 0, world_import_go_to_position_posz, axis_edit, tbx_worldimport_gotoposition_z, null, 0.25)
-	
-	tab_control_textfield_group(true)
-	draw_textfield_group("worldimportgotopositionpos", dx, dy, dw, null, -30000000, 30000000, 1, true, true, 1)
-	tab_next()
-	
-	tab_control_button_label()
-	if (draw_button_label("worldimportgotoposition", dx, dy, dw, icons.PATH_POINT, e_button.PRIMARY, null, e_anchor.LEFT))
-		world_import_go_to_position(world_import_settings_gotoposition_x, world_import_settings_gotoposition_z)
-	tab_next()
-	
-	settings_menu_w = 216 //(text_max_width("timelineintervalssize", "timelineintervalsoffset") + 16 + dragger_width) + 24
-}
-
 /// CppSeparate void world_import_set_selection(StringType size)
 function world_import_set_selection(size)
 {
@@ -363,6 +342,27 @@ function window_draw_world_import()
 		draw_label(filtertext, confirmx + confirmw / 2 + 1, confirmy + 80 + 1, fa_center, fa_top, c_black, 1, font_heading_big)
 		draw_label(filtertext, confirmx + confirmw / 2, confirmy + 80, fa_center, fa_top, c_warning, 1, font_heading_big)
 	}
+}
+
+function world_import_go_to_position_draw()
+{
+	draw_set_font(font_label)
+	
+	axis_edit = X
+	textfield_group_add("worldimportgotopositionposx", world_import_settings_gotoposition_x, 0, world_import_go_to_position_posx, axis_edit, tbx_worldimport_gotoposition_x, null, 0.25)
+	axis_edit = Y
+	textfield_group_add(setting_z_is_up ? "worldimportgotopositionposy" : "worldimportgotopositionposz", world_import_settings_gotoposition_z, 0, world_import_go_to_position_posz, axis_edit, tbx_worldimport_gotoposition_z, null, 0.25)
+	
+	tab_control_textfield_group(true)
+	draw_textfield_group("worldimportgotopositionpos", dx, dy, dw, null, -30000000, 30000000, 1, true, true, 1)
+	tab_next()
+	
+	tab_control_button_label()
+	if (draw_button_label("worldimportgotoposition", dx, dy, dw, icons.PATH_POINT, e_button.PRIMARY, null, e_anchor.LEFT))
+		world_import_go_to_position(world_import_settings_gotoposition_x, world_import_settings_gotoposition_z)
+	tab_next()
+	
+	settings_menu_w = 216
 }
 
 function action_world_import_settings_filter_enabled(value)

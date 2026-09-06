@@ -133,7 +133,7 @@ function particle_spawner_spawn(type)
 		
 		// Apply spawner's global rotation on top of existing particle rotation
 		if (is_timeline && type.rot_spawner_angle)
-			pt.rot[a] += radtodeg(matrix_rotation(pt.creator.matrix_render)[a])
+			pt.rot[a] += radtodeg(matrix_angle(pt.creator.matrix_render)[a])
 	}
 	
 	// Convert angle to vector
