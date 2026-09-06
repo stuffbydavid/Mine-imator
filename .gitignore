@@ -1,4 +1,5 @@
 build*/
+!building*/
 /install*/
 /CppGen/Logs/
 /CppGen/*/Logs/
