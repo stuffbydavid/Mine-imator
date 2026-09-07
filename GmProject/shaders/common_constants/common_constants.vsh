@@ -9,6 +9,8 @@ void main() {}
 
 #define PI 3.14159265359
 #define TWO_PI 6.28318530718
+#define MIN_PERCEPTUAL_ROUGHNESS 0.045
+#define DIELECTRIC_F0 0.04
 
 #endif
 

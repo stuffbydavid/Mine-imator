@@ -26,6 +26,8 @@ vec3 getMappedNormal(vec2 uv, mat3 tbn)
 #region MATERIAL_LIB
 #pragma shady: macro_begin MATERIAL_LIB
 
+#pragma shady: inline(common_constants.MATH)
+
 uniform sampler2D uTextureMaterial; // static
 uniform int uMaterialFormat;
 uniform float uDefaultEmissive;
@@ -51,7 +53,7 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 			sss = (matColor.b > 0.255 ? (((matColor.b - 0.255) / 0.745) * uDefaultSubsurface) : 0.0);
 		}
 		
-		roughness = pow(1.0 - matColor.r, 2.0);
+		roughness = (1.0 - matColor.r);
 		emissive = (matColor.a < 1.0 ? matColor.a /= 0.9961 : 0.0) * uDefaultEmissive;
 		
 		return;
@@ -70,7 +72,7 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 		emissive = max(uEmissive, vCustom.z * uDefaultEmissive);
 	}
 	
-	F0 = mix(0.0, 1.0, metallic);
+	F0 = DIELECTRIC_F0;
 	sss = max(uSSS, vCustom.w * uDefaultSubsurface);
 }
 
@@ -85,6 +87,22 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 float fresnelSchlickRoughness(float cosTheta, float F0, float roughness)
 {
 	return F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+
+vec3 fresnelSchlick(float cosTheta, vec3 F0)
+{
+	return F0 + (vec3(1.0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+
+vec3 getDirectFresnel(vec3 N, vec3 L, vec3 camPos, vec3 pos, vec3 F0)
+{
+	vec3 V = normalize(camPos - pos);
+	vec3 halfway = V + L;
+	if (dot(N, L) <= 0.0 || dot(halfway, halfway) < 0.000001)
+		return F0;
+	
+	vec3 H = normalize(halfway);
+	return fresnelSchlick(max(dot(H, V), 0.0), F0);
 }
 
 float getFresnel(vec3 N, float f0, float roughness, vec3 camPos, vec3 pos)
@@ -132,9 +150,11 @@ void handleAlphaDiscard(vec3 pos, inout vec4 col)
 #pragma shady: inline(common_constants.MATH)
 
 // GGX specular (https://learnopengl.com/PBR/Lighting)
-float distributionGGX(vec3 N, vec3 H, float roughness)
+float distributionGGX(vec3 N, vec3 H, float perceptualRoughness)
 {
-	float a2 = roughness * roughness * roughness * roughness;
+	perceptualRoughness = clamp(perceptualRoughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float alpha = perceptualRoughness * perceptualRoughness;
+	float a2 = alpha * alpha;
 	float NdotH = max(dot(N, H), 0.0);
 	float denom = ((NdotH * NdotH) * (a2 - 1.0) + 1.0);
 	return a2 / (PI * denom * denom);
@@ -142,6 +162,7 @@ float distributionGGX(vec3 N, vec3 H, float roughness)
 
 float geometrySchlickGGX(float NdotV, float roughness)
 {
+	roughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
 	float r = (roughness + 1.0);
 	float k = (r * r) / 8.0;
 	
@@ -150,22 +171,28 @@ float geometrySchlickGGX(float NdotV, float roughness)
 
 float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 {
-	return	geometrySchlickGGX(max(dot(N, V), 0.0), roughness) *
+	return	geometrySchlickGGX(abs(dot(N, V)), roughness) *
 			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
 }
 
-float getSpecular(vec3 N, vec3 L, vec3 camPos, vec3 pos, float f0, float roughness, float metallic)
+vec3 getSpecular(vec3 N, vec3 L, vec3 camPos, vec3 pos, vec3 F0, float roughness)
 {
 	vec3 V = normalize(camPos - pos);
-	vec3 R = reflect(V, N);
-	vec3 H = normalize(V + L);
+	float NdotL = dot(N, L);
+	vec3 halfway = V + L;
+
+	if (NdotL <= 0.0 || dot(halfway, halfway) < 0.000001)
+		return vec3(0.0);
+
+	float NdotV = abs(dot(N, V)) + 0.00001;
+	vec3 H = normalize(halfway);
 	
 	float NDF = distributionGGX(N, H, roughness);
 	float G = geometrySmith(N, V, L, roughness);
-	float F = fresnelSchlickRoughness(max(dot(H, V), 0.0), f0, roughness);
+	vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 	
-	float numerator = NDF * G * F;
-	float denominator  = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
+	vec3 numerator = NDF * G * F;
+	float denominator = 4.0 * NdotV * NdotL + 0.0001;
 	return numerator / denominator;
 }
 
@@ -212,6 +239,7 @@ void handleSubsurfaceHighlight(inout vec3 light, inout vec3 subsurf, vec3 N, vec
 
 vec3 sampleGGX(vec2 Xi, float roughness)
 {
+	roughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
 	float a = roughness * roughness;
 	float phi = TWO_PI * Xi.x;
 	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));

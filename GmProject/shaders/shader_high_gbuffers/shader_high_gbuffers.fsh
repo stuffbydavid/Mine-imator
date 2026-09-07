@@ -34,7 +34,7 @@ void main()
 	float roughness, metallic, emissive, F0, sss;
 	getMaterial(roughness, metallic, emissive, F0, sss);
 
-	float F = getFresnel(getMappedNormal(tex, getTBN(vNormalWorld, vTangentWorld)), F0, roughness, uCameraPosition, vPosition);
+	float F = getFresnel(getMappedNormal(tex, getTBN(vNormalWorld, vTangentWorld)), mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
 	if (uIsSky > 0)
 		F = 0.0;
 

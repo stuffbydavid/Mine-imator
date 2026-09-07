@@ -24,56 +24,52 @@ void main()
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
 	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord);
 
-	if (uFallbackOnly > 0)
+	if (uFallbackOnly == 0)
+	{
+		float mask = texture2D(uMask, vTexCoord).r;
+		
+		// Apply gamma to base
+		baseColor.rgb = pow(baseColor.rgb, mix(vec3(1.0), vec3(uGamma), mask));
+		
+		vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
+		
+		// Sum up lighting
+		vec3 ssao = vec3(1.0);
+		if (uSSAOEnabled > 0)
+			ssao = texture2D(uSSAO, vTexCoord).rgb;
+		
+		vec3 ambient = uAmbientColor.rgb;
+		if (uSSAOAlwaysVisible == 0)
+			ambient *= ssao;
+			
+		ambient *= (1.0 - matColor.g) * (1.0 - matColor.b);
+		
+		vec3 diffuse = ambient;
+		
+		if (uShadowsEnabled > 0)
+			diffuse += texture2D(uShadows, vTexCoord).rgb;
+		
+		if (uSSAOAlwaysVisible > 0)
+			diffuse *= ssao;
+		
+		// Add emissive
+		if (uShadowsEnabled > 0)
+			diffuse += texture2D(uEmissive, vTexCoord).a;
+		
+		baseColor.rgb *= mix(vec3(1.0), diffuse, mask);
+		
+		// If reflections are disabled, add fallback color for fresnel
+		if (uReflectionsEnabled == 0)
+			baseColor.rgb += spec;
+		
+		if (uSpecularEnabled > 0)
+			baseColor.rgb += texture2D(uSpecular, vTexCoord).rgb;
+	}
+	else
 	{
 		vec3 diffuseColor = pow(texture2D(uDiffuseBuffer, vTexCoord).rgb, vec3(uGamma));
 		baseColor.rgb += mix(vec3(1.0), diffuseColor, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
-		gl_FragColor = baseColor;
-		return;
 	}
-
-	float mask = texture2D(uMask, vTexCoord).r;
-	
-	// Apply gamma to base
-	baseColor.rgb = pow(baseColor.rgb, mix(vec3(1.0), vec3(uGamma), mask));
-	
-	vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
-	
-	// Sum up lighting
-	vec3 ssao = vec3(1.0);
-	if (uSSAOEnabled > 0)
-		ssao = texture2D(uSSAO, vTexCoord).rgb;
-	
-	vec3 ambient = uAmbientColor.rgb;
-	if (uSSAOAlwaysVisible == 0)
-		ambient *= ssao;
-	
-	vec3 diffuse = ambient;
-	
-	if (uShadowsEnabled > 0)
-		diffuse += texture2D(uShadows, vTexCoord).rgb;
-	
-	if (uSSAOAlwaysVisible > 0)
-		diffuse *= ssao;
-	
-	// Reduce diffuse based on Metallic
-	diffuse *= (1.0 - matColor.g);
-	
-	// "Energy conservation", remove diffuse based on fresnel
-	diffuse *= (1.0 - matColor.b);
-	
-	// Add emissive
-	if (uShadowsEnabled > 0)
-		diffuse += texture2D(uEmissive, vTexCoord).a;
-	
-	baseColor.rgb *= mix(vec3(1.0), diffuse, mask);
-	
-	// If reflections are disabled, add fallback color for fresnel
-	if (uReflectionsEnabled == 0)
-		baseColor.rgb += spec;
-	
-	if (uSpecularEnabled > 0)
-		baseColor.rgb += texture2D(uSpecular, vTexCoord).rgb;
 	
 	gl_FragColor = baseColor;
 }

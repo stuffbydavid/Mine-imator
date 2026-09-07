@@ -130,6 +130,9 @@ void main()
 		getMaterial(roughness, metallic, emissive, F0, sss);
 		vec3 normal = getMappedNormal(vTexCoord, getTBN(vNormal, vTangent));
 		vec3 lightDir = normalize(uLightPosition - vPosition);
+		vec3 baseColorLinear = pow(baseColor.rgb, vec3(uGamma));
+		vec3 specularF0 = mix(vec3(F0), baseColorLinear, metallic);
+		vec3 F = getDirectFresnel(normal, lightDir, uCameraPosition, vPosition, specularF0);
 		
 		float shadow = 1.0;
 		float att = 0.0;
@@ -241,12 +244,14 @@ void main()
 		// Subsurface highlight
 		if (sss > 0.0)
 			handleSubsurfaceHighlight(light, subsurf, normal, lightDir, lightCol, uCameraPosition, vPosition, sss, 1.0);
+
+		light *= (vec3(1.0) - F) * (1.0 - metallic);
 		
 		// Calculate specular
 		if (uLightSpecular * dif * shadow > 0.0)
 		{
-			float specular = getSpecular(normal, lightDir, uCameraPosition, vPosition, F0, roughness, metallic);
-			spec = uLightColor.rgb * shadow * uLightSpecular * dif * (specular * mix(vec3(1.0), pow(baseColor.rgb, vec3(uGamma)), metallic));
+			vec3 specular = getSpecular(normal, lightDir, uCameraPosition, vPosition, specularF0, roughness);
+			spec = uLightColor.rgb * shadow * uLightSpecular * dif * specular;
 		}
 	}
 	

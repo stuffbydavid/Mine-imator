@@ -54,8 +54,13 @@ void main()
 			if (distance(vPosition, lightPosition) > lightRange)
 				continue;
 			
+			vec3 lightDir = normalize(lightPosition - vPosition);
+			vec3 baseColorLinear = pow(baseColor.rgb, vec3(uGamma));
+			vec3 specularF0 = mix(vec3(F0), baseColorLinear, metallic);
+			vec3 F = getDirectFresnel(normal, lightDir, uCameraPosition, vPosition, specularF0);
+
 			// Diffuse factor
-			float dif = max(0.0, dot(normal, normalize(lightPosition - vPosition)));
+			float dif = max(0.0, dot(normal, lightDir));
 			
 			// Attenuation factor
 			float att = 1.0 - clamp((distance(vPosition, lightPosition) - lightRange * (1.0 - lightFadeSize)) / (lightRange * lightFadeSize), 0.0, 1.0);
@@ -65,13 +70,13 @@ void main()
 			vec3 spec = vec3(0.0);
 			
 			// Diffuse light
-			light = data2.rgb * data3.r * dif;
+			light = data2.rgb * data3.r * dif * (vec3(1.0) - F) * (1.0 - metallic);
 			
 			lightResult.rgb += light;
 			
 			// Calculate specular
-			float specular = getSpecular(normal, normalize(lightPosition - vPosition), uCameraPosition, vPosition, F0, roughness, metallic);
-			spec = data2.rgb * specular * mix(vec3(1.0), pow(baseColor.rgb, vec3(uGamma)), metallic) * data3.g * uLightSpecular * dif;
+			vec3 specular = getSpecular(normal, lightDir, uCameraPosition, vPosition, specularF0, roughness);
+			spec = data2.rgb * specular * data3.g * uLightSpecular * dif;
 			specResult.rgb += spec;
 		}
 	}

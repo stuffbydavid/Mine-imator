@@ -46,7 +46,7 @@ void main()
 	if (!isSky)
 	{
 		dif = vDiffuse + uAmbientColor.rgb;
-		F = getFresnel(vNormal, F0, roughness, uCameraPosition, vPosition);
+		F = getFresnel(vNormal, mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
 	
 		dif *= (1.0 - F);
 		dif = max(vec3(0.0), dif);

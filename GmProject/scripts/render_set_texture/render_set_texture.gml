@@ -20,7 +20,7 @@ function render_set_texture(tex, type = "")
 	}
 	
 	// Set filter
-	var mipactive = (shader_texture_filter_mipmap && type = "") ? mip_on : mip_off;
+	var mipactive = shader_texture_filter_mipmap ? mip_on : mip_off;
 	
 	if (gpu_get_texfilter_ext(sampler) != shader_texture_filter_linear)
 		gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)

@@ -169,10 +169,8 @@ void main()
 	// Depth quick exit
 	float depth = readDepth(vTexCoord);
 	
-	// Sample material (Specular only)
-	vec3 materialData = vec3(0.0);
-	if (uRayType == RAY_SPECULAR)
-		materialData = texture2D(uMaterialBuffer, vTexCoord).rgb;
+	// Sample receiver material
+	vec3 materialData = texture2D(uMaterialBuffer, vTexCoord).rgb;
 	
 	vec3 normal = vec3(0.0);
 	vec3 rayDir = vec3(0.0);
@@ -183,7 +181,7 @@ void main()
 	bool halfResCast = (mod(pixel, 2.0) == 0.0);
 	
 	// Don't calculate ray if depth isn't valid
-	if (!(isDepthBackground(depth) || materialData.r > 0.95 || !halfResCast))
+	if (!(isDepthBackground(depth) || (uRayType == RAY_SPECULAR && materialData.r > 0.95) || !halfResCast))
 	{
 		// Sample buffers
 		normal	= unpackNormal(texture2D(uNormalBuffer, vTexCoord));
@@ -275,6 +273,7 @@ void main()
 			
 			// Multiply by diffuse & strength
 			light *= max(0.0, dot(-hitNormal, rayDir));
+			light *= (1.0 - materialData.g) * (1.0 - materialData.b);
 		}
 		
 		gl_FragColor = vec4(light, 1.0);
