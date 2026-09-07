@@ -17,7 +17,7 @@ function shader_high_light_point_set()
 	render_set_uniform("uGamma", render_gamma)
 	
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_point_atlas_buffer))
-	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], false)
+	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], true)
 	gpu_set_texrepeat_ext(sampler_map[?"uDepthBuffer"], false)
 	render_set_uniform("uDepthBufferSize", app.project_render_shadows_point_buffer_size)
 }

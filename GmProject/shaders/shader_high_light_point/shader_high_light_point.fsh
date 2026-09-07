@@ -62,54 +62,11 @@ vec2 getShadowMapCoord(vec3 look)
 	return coord;
 }
 
-// Linear filtering, done in-shader as we use a texture atlas
 float getFilteredDepth(vec2 uv, vec2 uvMin)
 {
-	float samples = 0.0;
-	vec2 sampleuv, uvMax, texelOffset;
-	float depth = 0.0;
-	texelOffset = vec2((1.0/vec2(uDepthBufferSize * 3.0, uDepthBufferSize * 2.0)) * 0.5);
-	uvMax = uvMin + vec2(1.0/3.0, 0.5);
-	
-	// Top left
-	sampleuv = uv - texelOffset.x;
-	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
-		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
-	{
-		depth += texture2D(uDepthBuffer, sampleuv).r;
-		samples += 1.0;
-	}
-	
-	// Top right
-	sampleuv.y = uv.y - texelOffset.x;
-	sampleuv.x = uv.x + texelOffset.y;
-	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
-		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
-	{
-		depth += texture2D(uDepthBuffer, sampleuv).r;
-		samples += 1.0;
-	}
-	
-	// Bottom left
-	sampleuv.y = uv.y + texelOffset.x;
-	sampleuv.x = uv.x - texelOffset.y;
-	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
-		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
-	{
-		depth += texture2D(uDepthBuffer, sampleuv).r;
-		samples += 1.0;
-	}
-	
-	// Bottom right
-	sampleuv = uv + texelOffset;
-	if (sampleuv.x > uvMin.x && sampleuv.x < uvMax.x &&
-		sampleuv.y > uvMin.y && sampleuv.y < uvMax.y)
-	{
-		depth += texture2D(uDepthBuffer, sampleuv).r;
-		samples += 1.0;
-	}
-	
-	return depth / samples;
+	vec2 halfTexel = 0.5 / vec2(uDepthBufferSize * 3.0, uDepthBufferSize * 2.0);
+	vec2 uvMax = uvMin + vec2(1.0/3.0, 0.5);
+	return texture2D(uDepthBuffer, clamp(uv, uvMin + halfTexel, uvMax - halfTexel)).r;
 }
 
 void main()
