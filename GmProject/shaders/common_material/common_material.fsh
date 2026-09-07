@@ -15,6 +15,7 @@ vec3 getMappedNormal(vec2 uv, mat3 tbn)
 	vec4 n = texture2D(uTextureNormal, uv).rgba;
 	n.rgba = (n.a < 0.01 ? vec4(.5, .5, 0.0, 1.0) : n.rgba); // No normal?
 	n.xy = n.xy * 2.0 - 1.0; // Decode
+	n.xy = sign(n.xy) * max(abs(n.xy) - 1.0 / 255.0, 0.0) * (255.0 / 254.0); // 127/128 rg fix, 8bit tex can't represent perfect 0
 	n.z = sqrt(max(0.0, 1.0 - dot(n.xy, n.xy))); // Get Z
 	n.y *= -1.0; // Convert Y- to Y+
 	return normalize(tbn * n.xyz);

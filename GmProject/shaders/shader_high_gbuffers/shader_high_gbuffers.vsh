@@ -38,11 +38,11 @@ void main()
 	vec4 depthPos = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 	vDepth = ((depthPos.z - uNear) / (uFar - uNear));
 	
-	// Create vectors for TBN matrix
+	// Transform normals by inverse transpose and tangents by the forward matrix
 	mat3 worldViewInv = inverse2(gm_Matrices[MATRIX_WORLD_VIEW]);
 	vNormalView = normalize(worldViewInv * in_Normal);
-	vTangentView = normalize(worldViewInv * in_Tangent);
-	vNormalWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
+	vTangentView = normalize((gm_Matrices[MATRIX_WORLD_VIEW] * vec4(in_Tangent, 0.0)).xyz);
+	vNormalWorld = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
 	vTangentWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
 	
 	// Color

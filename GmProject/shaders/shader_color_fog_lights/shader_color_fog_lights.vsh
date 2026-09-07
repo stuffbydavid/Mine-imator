@@ -28,11 +28,12 @@ uniform vec2 uTextureOffset;
 
 #pragma shady: inline(common_position.WORLD_POSITION_LIB)
 #pragma shady: inline(common_position.CLIP_POSITION_LIB)
+#pragma shady: inline(common_util.MATRIX_LIB)
 
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
-	vNormal = normalize((gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz);
+	vNormal = normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal);
 	vCustom = in_Wave;
 	
 	if (uIsSky > 0)

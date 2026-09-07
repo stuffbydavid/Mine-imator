@@ -23,11 +23,12 @@ uniform vec2 uTextureOffset;
 
 #pragma shady: inline(common_position.WORLD_POSITION_LIB)
 #pragma shady: inline(common_position.CLIP_POSITION_LIB)
+#pragma shady: inline(common_util.MATRIX_LIB)
 
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
-	vNormal = (gm_Matrices[MATRIX_WORLD] * vec4(in_Normal, 0.0)).xyz;
+	vNormal = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
 	vTangent = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
 	
 	vColor = in_Colour;
