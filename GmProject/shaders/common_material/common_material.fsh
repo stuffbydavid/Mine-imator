@@ -130,6 +130,9 @@ float hash(vec2 c)
 
 void handleAlphaDiscard(vec3 pos, inout vec4 col)
 {
+	if (col.a > .99)
+		col.a = 1.0;
+	
 	if (col.a < 0.001)
 		discard;
 	

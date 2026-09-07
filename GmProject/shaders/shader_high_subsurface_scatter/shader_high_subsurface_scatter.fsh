@@ -8,7 +8,6 @@ uniform sampler2D uNoiseBuffer;
 
 // Camera data
 uniform mat4 uProjMatrix;
-uniform mat4 uProjMatrixInv;
 uniform float uNear;
 uniform float uFar;
 uniform vec2 uScreenSize;
@@ -51,20 +50,33 @@ void main()
 		// Get random direction to blur in
 		vec3 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rgb;
 		vec2 randDir = vec2(cos(noise.r * TWO_PI), sin(noise.r * TWO_PI));
-		rad *= noise.g * randDir;
+		rad *= randDir;
 		
 		// Sample pixels in positive and negative blur direction
 		for (int i = 1; i < MAX_SAMPLES; i++)
 		{
-			if (i >= uSamples || (abs(rad.x + rad.y) < 0.001))
+			if (i >= uSamples || length(rad) < 0.001)
 				break;
 			
 			vec2 sampleCoord = vTexCoord + (uKernel[i].y * rad);
-			vec4 sampleRange = texture2D(uSSSRangeBuffer, sampleCoord);
 			
-			if (((sampleRange.r + sampleRange.g + sampleRange.b) < 0.001) ||
-				((sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0)) ||
-				isDepthBackground(readDepth(sampleCoord)))
+			// Out of bounds?
+			if (sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0)
+			{
+				lightNew += uKernel[i].x * lightOrigin;
+				continue;
+			}
+			
+			// No neighbouring SSS?
+			vec4 sampleRange = texture2D(uSSSRangeBuffer, sampleCoord);
+			if ((sampleRange.r + sampleRange.g + sampleRange.b) < 0.001)
+			{
+				lightNew += uKernel[i].x * lightOrigin;
+				continue;
+			}
+			
+			// Background?
+			if (isDepthBackground(readDepth(sampleCoord)))
 			{
 				lightNew += uKernel[i].x * lightOrigin;
 				continue;
@@ -76,7 +88,7 @@ void main()
 			lightNew += uKernel[i].x * mix(lightOrigin, texture2D(uDirect, sampleCoord).rgb, depthDelta * sssRange);
 		}
 		
-		if (abs(rad.x + rad.y) < 0.001)
+		if (length(rad) < 0.001)
 			gl_FragColor = vec4(lightOrigin, 1.0);
 		else
 			gl_FragColor = vec4(lightNew, 1.0);		

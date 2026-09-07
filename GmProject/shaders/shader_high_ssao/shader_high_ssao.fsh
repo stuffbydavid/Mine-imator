@@ -17,10 +17,10 @@ uniform float uRadius;
 uniform float uPower;
 uniform vec4 uColor;
 
+#pragma shady: inline(common_constants.MATH)
 #pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
-#pragma shady: inline(common_util.BLUE_NOISE_KERNEL_SEED_LIB)
 
 float getSSAOstrength(vec2 uv)
 {
@@ -43,16 +43,17 @@ void main()
 	float sampleRadius = uRadius * (1.0 - originDepth);
 	
 	// Get normal
-	vec3 normal = unpackNormal(texture2D(uNormalBuffer, vTexCoord));
+	vec3 normal = normalize(unpackNormal(texture2D(uNormalBuffer, vTexCoord)));
 	
-	// Random vector from noise
+	// Random angle from noise
 	vec2 noiseScale = uScreenSize / uNoiseSize;
-	vec3 randVec	= unpackBlueNoiseKernelSeed(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
-
+	float theta = texture2D(uNoiseBuffer, vTexCoord * noiseScale).r * TWO_PI;
+	
 	// Construct kernel basis matrix
-	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
-	vec3 bitangent = cross(normal, tangent);
-	mat3 kernelBasis = mat3(tangent, bitangent, normal);
+	vec3 reference = (abs(normal.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0));
+	mat3 kernelBasis = getTBN(normal, cross(reference, normal));
+	vec3 tangent = kernelBasis[0] * cos(theta) + kernelBasis[1] * sin(theta);
+	kernelBasis = mat3(tangent, cross(tangent, kernelBasis[2]), kernelBasis[2]);
 	
 	// Calculate occlusion factor
 	float occlusion = 0.0;

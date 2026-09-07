@@ -56,20 +56,14 @@ vec3 posFromBuffer(vec2 coord, float depth)
 #region BLUE_NOISE_DIRECTION_LIB
 #pragma shady: macro_begin BLUE_NOISE_DIRECTION_LIB
 
+#pragma shady: inline(common_constants.MATH)
+
+// Creates a cosine-weighted hemisphere from noise
 vec3 unpackBlueNoiseDirection(vec4 c)
 {
-	return normalize(vec3(cos(c.r * 2.0 * 3.14159265), sin(c.r * 2.0 * 3.14159265), c.g));
-}
-
-#pragma shady: macro_end
-#endregion
-
-#region BLUE_NOISE_KERNEL_SEED_LIB
-#pragma shady: macro_begin BLUE_NOISE_KERNEL_SEED_LIB
-
-vec3 unpackBlueNoiseKernelSeed(vec4 c)
-{
-	return normalize(vec3(c.r, c.g, c.b * 0.5));
+	float phi = c.r * TWO_PI;
+	float rad = sqrt(c.g);
+	return vec3(rad * cos(phi), rad * sin(phi), sqrt(1.0 - c.g));
 }
 
 #pragma shady: macro_end

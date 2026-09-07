@@ -10,6 +10,7 @@ function shader_high_ssao_set()
 	gpu_set_texrepeat_ext(sampler_map[?"uNormalBuffer"], false)
 	gpu_set_texrepeat_ext(sampler_map[?"uMaterialBuffer"], false)
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
+	gpu_set_texfilter_ext(sampler_map[?"uNoiseBuffer"], false)
 	
 	render_set_uniform("uNear", depth_near)
 	render_set_uniform("uFar", depth_far)

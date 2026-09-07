@@ -11,6 +11,7 @@ function shader_high_raytrace_set(mode, surf = null)
 	
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(render_surface_diffuse))
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
+	gpu_set_texfilter_ext(sampler_map[?"uNoiseBuffer"], false)
 	
 	render_set_uniform_int("uRayType", mode)
 	

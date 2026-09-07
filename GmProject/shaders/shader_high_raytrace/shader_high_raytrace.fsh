@@ -45,7 +45,6 @@ uniform float uSampleIndex;
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 #pragma shady: inline(common_util.BLUE_NOISE_DIRECTION_LIB)
-#pragma shady: inline(common_util.SAMPLING_LIB)
 #pragma shady: inline(common_constants.MATH)
 #pragma shady: inline(common_material.SAMPLE_GGX_LIB)
 
@@ -64,7 +63,7 @@ float percent(float xx, float start, float end)
 	return clamp((xx - start) / (end - start), 0.0, 1.0);
 }
 
-vec3 rayTrace(vec3 rayStart, vec3 rayDir, float rayThickness, vec3 noise)
+vec3 rayTrace(vec3 rayStart, vec3 rayDir, float rayThickness, vec2 noise)
 {
 	// Ray data
 	vec3 rayEnd			= rayStart.xyz + rayDir * uRayDistance;
@@ -186,7 +185,7 @@ void main()
 		// Sample buffers
 		normal	= unpackNormal(texture2D(uNormalBuffer, vTexCoord));
 		vec4 noise	= texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize));
-	
+		
 		// Calculate ray direction
 		vec3 rayPos	 = posFromBuffer(vTexCoord, depth);
 		vec3 tangent = normalize(up - normal * dot(up, normal));
@@ -195,27 +194,22 @@ void main()
 		// Specular (GGX)
 		if (uRayType == RAY_SPECULAR)
 		{
-			for (int i = 0; i < 3; i++)
-			{
-				vec2 Xi = hammersley(int(256.0 + ((noise.r - .5) * 256.0)), 512);
-				vec3 H  = normalize(mat * sampleGGX(Xi, materialData.r));
-				rayDir = reflect(normalize(rayPos), H);
-			
-				if (dot(normal, rayDir) > 0.0)
-					break;
-			}
+			vec2 Xi = (noise.rg * 255.0 + vec2(0.5)) / 256.0;
+			vec3 H = normalize(mat * sampleGGX(Xi, materialData.r));
+			rayDir = reflect(normalize(rayPos), H);
 		}
 		else // Diffuse
 			rayDir = normalize(mat * unpackBlueNoiseDirection(noise));
-	
+		
 		// Ray thickness (Increase based on steepness of ray)
 		float rayThickness = uThickness * max(1.0, pow(1.0 - abs(max(0.0, dot(rayDir, normal))), 6.0) * 100.0);
 		
 		if (rayDir.z < 0.2)
 			rayThickness *= 5.0;
 		
-		// Ray trace
-		rayCoord = rayTrace(rayPos, rayDir, rayThickness, noise.rgb);
+		// Allow any rayDir for diffuse, for specular, only allow rays that don't re-intersect with surface
+		if (uRayType != RAY_SPECULAR || dot(normal, rayDir) > 0.0)
+			rayCoord = rayTrace(rayPos, rayDir, rayThickness, vec2(noise.b, 1.0));
 	}
 	
 	vec3 rayColor = uSkyColor.rgb;
