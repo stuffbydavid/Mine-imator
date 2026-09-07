@@ -18,6 +18,7 @@ uniform float uPower;
 uniform vec4 uColor;
 
 #pragma shady: inline(common_constants.MATH)
+#pragma shady: inline(common_util.TBN_LIB)
 #pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
 #pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
