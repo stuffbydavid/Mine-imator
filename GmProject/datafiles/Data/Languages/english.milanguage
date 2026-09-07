@@ -635,6 +635,8 @@
 		"movie/": {
 			"title": "Exporting your movie...",
 			"caption": "Export movie",
+			"renderer": "Renderer",
+			"performancewarning": "The current render settings may cause long export times.",
 			"videosize": "Video size",
 			"videosizecustomwidth": "W",
 			"videosizecustomheight": "H",
@@ -647,16 +649,6 @@
 				"wmv": "WMV",
 				"png": "PNG sequence"
 			},
-			"videoquality": "Video quality",
-			"videoquality/": {
-				"verylow": "Very low",
-				"low": "Low",
-				"medium": "Medium",
-				"high": "High",
-				"best": "Best",
-				"custom": "Custom"
-			},
-			"bitrate": "Bit rate",
 			"framerate": "Framerate",
 			"framerate/": {
 				"custom": "Custom"
@@ -666,13 +658,13 @@
 			"removebackground": "Remove background",
 			"blendmodewarning": "Custom blend modes on objects may not render correctly.",
 			"includehidden": "Include hidden objects",
-			"highquality": "High quality rendering",
 			"watermark": "Show watermark",
 			"save": "Save"
 		},
 		"image/": {
 			"title": "Exporting your image...",
 			"caption": "Export image",
+			"renderer": "Renderer",
 			"imagesize": "Image size",
 			"imagesizecustomwidth": "W",
 			"imagesizecustomheight": "H",
@@ -680,7 +672,6 @@
 			"includehidden": "Include hidden objects",
 			"removebackground": "Remove background",
 			"blendmodewarning": "Custom blend modes on objects may not render correctly.",
-			"highquality": "High quality rendering",
 			"watermark": "Show watermark",
 			"save": "Save",
 			"cancel": "Cancel"
@@ -2966,6 +2957,7 @@
 		"specialeffects": "SPECIAL EFFECTS",
 		"renderer": "Renderer",
 		"renderer/": {
+			"quick": "Quick",
 			"standard": "Standard",
 			"standardwarning": "These settings may cause framerate drops.",
 			"realistic": "Realistic",

@@ -19,7 +19,7 @@ function action_toolbar_exportmovie_save()
 	exportmovie_marker_previous = timeline_marker
 	exportmovie_format = popup_exportmovie.format
 	exportmovie_framespersecond = popup_exportmovie.framespersecond
-	exportmovie_high_quality = popup_exportmovie.high_quality
+	exportmovie_renderer = popup_exportmovie.renderer
 	exportmovie_current_sound = null
 	
 	if (timeline_region_start != null)
@@ -41,13 +41,12 @@ function action_toolbar_exportmovie_save()
 		
 		log("Export movie", fn)
 		log("Format", exportmovie_format)
-		log("Bitrate", popup_exportmovie.bit_rate)
 		log("Framerate", exportmovie_framespersecond)
 		log("Audio", yesno(popup_exportmovie.include_audio))
-		log("High Quality", yesno(exportmovie_high_quality))
+		log("Renderer", renderer_name_list[exportmovie_renderer])
 		log("Size", project_video_width, project_video_height)
 		
-		movie_set(project_video_width, project_video_height, popup_exportmovie.bit_rate, exportmovie_framespersecond, popup_exportmovie.include_audio)
+		movie_set(project_video_width, project_video_height, movie_bit_rate, exportmovie_framespersecond, popup_exportmovie.include_audio)
 		var err = movie_start(fn, fmt);
 		if (err < 0)
 		{
@@ -123,7 +122,7 @@ function action_toolbar_exportmovie_save()
 	{
 		log("Export image sequence", fn)
 		log("Framerate", exportmovie_frame_rate)
-		log("High Quality", yesno(exportmovie_high_quality))
+		log("Renderer", renderer_name_list[exportmovie_renderer])
 		log("Size", project_video_width, project_video_height)
 		
 		render_background = !popup_exportmovie.remove_background

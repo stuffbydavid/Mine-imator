@@ -123,11 +123,12 @@ function macros()
 	#macro c_sunset_end					hex_to_color("C04E37")
 	#macro c_normal						make_color_rgb(127, 127, 255)
 	
-	// Audio
+	// Encoding
 	#macro sample_rate					44100
 	#macro sample_size					4
 	#macro sample_max					32767
 	#macro sample_avg_per_sec			100
+	#macro movie_bit_rate			    2500000
 	
 	// Interface
 	#macro glow_alpha					0.5
@@ -179,6 +180,5 @@ function macros()
 	#macro PATH_NORMAL_X				8
 	#macro PATH_NORMAL_Y				9
 	#macro PATH_NORMAL_Z				10
-	
 	#macro MAT_IDENTITY					matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
 }

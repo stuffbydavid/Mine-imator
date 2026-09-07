@@ -31,6 +31,8 @@ function action_project_render_preset_edit_locked()
 		with (hobj)
 		{
 			// Save previous custom values
+			has_standard = false
+			has_realistic = false
 			has_fx = false
 			has_graphics = false
 			has_materials = false

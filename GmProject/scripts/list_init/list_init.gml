@@ -1253,14 +1253,13 @@ function list_init(name)
 			break
 		}
 		
-		// Video quality
-		case "exportmovievideoquality":
+		// Renderer
+		case "exportmovierenderer":
+		case "exportimagerenderer":
 		{
-			for (var i = 0; i < ds_list_size(videoquality_list); i++)
-				with (videoquality_list[|i])
-					menu_add_item(id, text_get("exportmovievideoquality" + id.name))
-			
-			menu_add_item(0, text_get("exportmovievideoqualitycustom"))
+			menu_add_item(e_renderer.QUICK, text_get("renderrendererquick"))
+			menu_add_item(e_renderer.STANDARD, text_get("renderrendererstandard"))
+			menu_add_item(e_renderer.REALISTIC, text_get("renderrendererrealistic"))
 			
 			break
 		}

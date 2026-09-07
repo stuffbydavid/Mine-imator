@@ -20,7 +20,7 @@ function action_toolbar_exportimage_save()
 	log("Hidden", yesno(render_hidden))
 	log("Render background", yesno(render_background))
 	log("Watermark", yesno(render_watermark))
-	log("High Quality", yesno(popup_exportimage.high_quality))
+	log("Renderer", renderer_name_list[popup_exportimage.renderer])
 	log("Size", project_video_width, project_video_height)
 	
 	export_start("export_image")
@@ -31,5 +31,5 @@ function action_toolbar_exportimage_save()
 	if (view_second.renderer = e_renderer.REALISTIC)
 		view_second.renderer = e_renderer.STANDARD
 		
-	app_update_cameras(popup_exportimage.high_quality, false)
+	app_update_cameras(popup_exportimage.renderer = e_renderer.REALISTIC, false)
 }

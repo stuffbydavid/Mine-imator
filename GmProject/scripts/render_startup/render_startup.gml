@@ -239,7 +239,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
 	render_mode_shader_map[?e_render_mode.AUXILIARY] = shader_high_auxiliary
 	
-	// Load default common render settings
+	// Load default render settings
 	globalvar render_default_settings;
 	render_default_settings = new_obj(obj_render_preset);
 	
@@ -338,25 +338,4 @@ function render_startup()
 	render_preset_map[?"custom"] = custompreset
 	ds_list_add(render_preset_list[e_renderer.STANDARD], "custom")
 	ds_list_add(render_preset_list[e_renderer.REALISTIC], "custom")
-	
-	// Apply settings for startup
-	//render_apply_settings(render_preset_map[?render_standard_default], e_renderer.STANDARD)
-	
-	//project_reset_render()
-	//render_generate_dof_samples(0, 0, 0)
-	//render_samples = -1
-	//render_samples_clear = true
-	
-	/* Check for default render settings file
-	if (false && !file_exists_lib(render_default_file))
-	{
-		if (!directory_exists_lib(render_directory))
-			directory_create_lib(render_directory)
-		
-		project_save_start(render_default_file, false)
-		project_save_render()
-		project_save_done()
-	
-		log("Saved default render settings", render_default_file)
-	}*/
 }

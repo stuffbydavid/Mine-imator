@@ -216,7 +216,7 @@ function tests_run()
 				export_filename = exportbasename + ".png"
 			
 				render_lights = (renderer != e_renderer.QUICK)
-				popup_exportimage.high_quality = (renderer = e_renderer.REALISTIC)
+				popup_exportimage.renderer = renderer
 			
 				benchmark_render_total_time = 0
 				benchmark_surface_total_time = 0

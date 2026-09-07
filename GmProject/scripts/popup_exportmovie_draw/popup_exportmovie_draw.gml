@@ -4,6 +4,19 @@ function popup_exportmovie_draw()
 {
 	var text;
 	
+	// Renderer
+	tab_control_menu()
+	draw_button_menu("exportmovierenderer", e_menu.LIST, dx, dy, dw, 24, popup.renderer, text_get("renderrenderer" + renderer_name_list[popup.renderer]), action_toolbar_export_renderer)
+	tab_next()
+
+	// Performance warning
+	if (popup.renderer = e_renderer.REALISTIC)
+	{
+		var preset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]];
+		if (render_performance_warning(preset, e_renderer.REALISTIC))
+			draw_tooltip_label("exportmovieperformancewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
+	}
+
 	// Video size
 	if (project_video_template = 0)
 		text = text_get("projectvideosizecustom")
@@ -40,27 +53,6 @@ function popup_exportmovie_draw()
 	tab_control_menu()
 	draw_button_menu("exportmovieformat", e_menu.LIST, dx, dy, dw, 24, popup.format, text_get("exportmovieformat" + popup.format), action_toolbar_exportmovie_format)
 	tab_next()
-	
-	if (popup.format != "png")
-	{
-		// Quality
-		if (popup.video_quality = 0)
-			text = text_get("exportmovievideoqualitycustom")
-		else
-			text = text_get("exportmovievideoquality" + popup.video_quality.name)
-		
-		tab_control_menu()
-		draw_button_menu("exportmovievideoquality", e_menu.LIST, dx, dy, dw, 24, popup.video_quality, text, action_toolbar_exportmovie_video_quality)
-		tab_next()
-		
-		// Custom quality
-		if (popup.video_quality = 0)
-		{
-			tab_control_dragger()
-			draw_dragger("exportmoviebitrate", dx, dy, dragger_width, popup.bit_rate, 500, 1, no_limit, 2500000, 1, popup.tbx_bit_rate, action_toolbar_exportmovie_bit_rate)
-			tab_next()
-		}
-	}
 	
 	// Frame rate
 	if (popup.frame_rate = 0)
@@ -100,11 +92,6 @@ function popup_exportmovie_draw()
 	// Include hidden
 	tab_control_checkbox()
 	draw_checkbox("exportmovieincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportmovie_include_hidden)
-	tab_next()
-	
-	// High quality
-	tab_control_checkbox()
-	draw_checkbox("exportmoviehighquality", dx, dy, popup.high_quality, action_toolbar_exportmovie_high_quality)
 	tab_next()
 	
 	// Watermark

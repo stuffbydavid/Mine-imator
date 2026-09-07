@@ -1,53 +1,62 @@
-/// action_project_render_import([fn])
+/// action_project_render_preset_import([fn])
 /// @arg [fn]
-/// TO REWRITE
 
 function action_project_render_preset_import(fn = "")
 {
-	/*if (history_undo)
-		history_copy_render_settings(history_data.save_obj_old)
-	else if (history_redo)
-		history_copy_render_settings(history_data.save_obj_new)
-	else
+	if (history_undo)
 	{
-		if (fn = "")
-			fn = file_dialog_open_render()
+		// Restore old settings of project
+		history_copy_render_settings(history_data)
 		
-		if (fn = "")
-			return 0
+		// Restore old settings of preset
+		with (render_preset_edit)
+		{
+			render_preset_copy_settings(history_data, e_renderer.STANDARD)
+			render_preset_copy_settings(history_data, e_renderer.REALISTIC)
+			render_preset_copy_settings(history_data, e_renderer.COMMON)
+		}
+
+		render_apply_settings(render_preset_edit, e_renderer.COMMON)
+		render_samples = -1
+		return 0
+	}
+	else if (history_redo)
+		fn = history_data.filename
+
+	if (fn = "")
+		fn = file_dialog_open_render()
+
+	if (!file_exists_lib(fn) || fn = "")
+		return false
 		
-		var map = project_load_start(fn);
-		if (map = null)
-			return 0
+	if (!history_redo)
+	{
+		var hobj = history_set(action_project_render_preset_import);
+		hobj.filename = fn
 		
-		// Save current settings
-		var hobj;
-		
-		// Combine with "Render settings" action?
-		if (history[0] != null && history[0].script = action_project_render_settings)
-			hobj = history[0]
-		else
-			hobj = history_set(action_project_render_import)
-		
-		hobj.save_obj_old = new_obj(obj_history_save)
-		hobj.save_obj_old.hobj = hobj
-		
-		hobj.save_obj_new = new_obj(obj_history_save)
-		hobj.save_obj_new.hobj = hobj
-		
-		hobj.fn = fn
-		
-		// Save old settings
-		with (hobj.save_obj_old)
+		// Save both project and preset settings
+		with (hobj)
+		{
 			history_copy_render_settings(app)
-		
-		project_load_render(map[?"render"])
-		ds_map_destroy(map)
-		
-		// Save new settings
-		with (hobj.save_obj_new)
-			history_copy_render_settings(app)
-		
-		log("Loaded render settings", fn)
-	}*/
+			
+			has_standard = false
+			has_realistic = false
+			has_fx = false
+			has_graphics = false
+			has_materials = false
+			render_preset_copy_settings(render_preset_edit, e_renderer.STANDARD)
+			render_preset_copy_settings(render_preset_edit, e_renderer.REALISTIC)
+			render_preset_copy_settings(render_preset_edit, e_renderer.COMMON)
+		}
+	}
+
+	with (render_preset_edit)
+		render_preset_load(fn, false)
+
+	// Apply common settings in preset
+	render_apply_settings(render_preset_edit, e_renderer.COMMON)
+	render_samples = -1
+	
+	log("Imported render settings", fn)
+	return true
 }

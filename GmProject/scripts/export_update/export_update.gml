@@ -33,12 +33,12 @@ function export_update()
 	if (window_state = "export_movie")
 	{
 		render_active = "movie"
-		renderer_current = (exportmovie_high_quality ? e_renderer.REALISTIC : e_renderer.STANDARD)
+		renderer_current = exportmovie_renderer
 	}
 	else
 	{
 		render_active = "image"
-		renderer_current = (popup_exportimage.high_quality ? e_renderer.REALISTIC : e_renderer.STANDARD)
+		renderer_current = popup_exportimage.renderer
 	}
 	
 	// Process a number frames until a step has elapsed (1/fps seconds)

@@ -106,16 +106,15 @@ function settings_startup()
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30
 	setting_export_movie_framespersecond = 30
-	setting_export_movie_bit_rate = 2500000
+	setting_export_movie_renderer = trial_version ? e_renderer.STANDARD : e_renderer.REALISTIC
 	setting_export_movie_include_audio = true
 	setting_export_movie_remove_background = false
 	setting_export_movie_include_hidden = false
-	setting_export_movie_high_quality = true
 	setting_export_movie_watermark = trial_version
 	
 	setting_export_image_remove_background = false
 	setting_export_image_include_hidden = false
-	setting_export_image_high_quality = true
+	setting_export_image_renderer = trial_version ? e_renderer.STANDARD : e_renderer.REALISTIC
 	setting_export_image_watermark = trial_version
 	
 	project_render_pass = e_render_pass.COMBINED

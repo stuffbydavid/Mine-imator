@@ -4,7 +4,7 @@ function app_startup_lists()
 {
 	globalvar value_name_list, transition_list, transition_list_order;
 	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
-	globalvar videotemplate_list, videoquality_list;
+	globalvar videotemplate_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 	globalvar minecraft_block_sheet_size, minecraft_block_animated_sheet_size, minecraft_item_sheet_size;
@@ -396,16 +396,6 @@ function app_startup_lists()
 		new_videotemplate("fhd_1080p_cinematic", 2560, 1080),
 		new_videotemplate("qhd_1440p_cinematic", 3440, 1440),
 		new_videotemplate("uhd_4k_cinematic", 5120, 2160)
-	)
-	
-	// Video qualities
-	videoquality_list = ds_list_create()
-	ds_list_add(videoquality_list,
-		new_videoquality("best", 5000000),
-		new_videoquality("high", 2500000),
-		new_videoquality("medium", 1200000),
-		new_videoquality("low", 700000),
-		new_videoquality("verylow", 350000)
 	)
 	
 	// Language

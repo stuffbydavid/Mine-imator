@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"new_videoquality",
+  "%Name":"render_performance_warning",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"new_videoquality",
+  "name":"render_performance_warning",
   "parent":{
-    "name":"Project",
-    "path":"folders/Scripts/Project.yy",
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

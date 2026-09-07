@@ -246,7 +246,7 @@ function app_update_animate()
 	// Cameras
 	var isrendermode = (view_second.renderer = e_renderer.REALISTIC || view_main.renderer = e_renderer.REALISTIC);
 	if (window_state = "export_movie")
-		app_update_cameras(exportmovie_high_quality, true)
+		app_update_cameras(exportmovie_renderer = e_renderer.REALISTIC, true)
 	else if (!isrendermode || (isrendermode && render_samples = -1))
 		app_update_cameras(isrendermode, false)
 			

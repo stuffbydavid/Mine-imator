@@ -110,9 +110,11 @@ function tab_properties_render()
 			render_preset_edit.locked = !render_preset_edit.locked
 	}
 	tab_next()
+	dy += 2
 	
 	// Performance warning
-	draw_tooltip_label("renderrenderer" + renderer_name_list[renderer_edit] + "warning", icons.WARNING_TRIANGLE, e_toast.WARNING)
+	if (render_performance_warning(render_preset_edit, renderer_edit))
+		draw_tooltip_label("renderrenderer" + renderer_name_list[renderer_edit] + "warning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	
 	if (renderer_edit_realistic)
 	{
