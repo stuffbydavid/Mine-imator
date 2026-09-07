@@ -3,9 +3,11 @@
 
 function action_project_render_indirect(enable)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_indirect, project_render_indirect, enable, true)
+	action_project_render_preset_edit_locked()
 	
-	project_render_indirect = enable
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_indirect, render_preset_edit.realistic_indirect, enable, true)
+	
+	render_preset_edit.realistic_indirect = enable
 	render_samples = -1
 }

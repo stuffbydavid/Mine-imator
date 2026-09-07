@@ -3,8 +3,15 @@
 
 function action_project_render_ssao(enable)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_ssao, project_render_ssao, enable, 1)
+	action_project_render_preset_edit_locked()
 	
-	project_render_ssao = enable
+	var ssao = renderer_edit_standard ? render_preset_edit.standard_ssao : render_preset_edit.realistic_ssao;
+	
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_ssao, ssao, enable, true)
+	
+	if (renderer_edit_standard)
+		render_preset_edit.standard_ssao = enable
+	else
+		render_preset_edit.realistic_ssao = enable
 }

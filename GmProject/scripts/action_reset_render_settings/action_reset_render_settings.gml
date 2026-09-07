@@ -3,10 +3,10 @@
 
 function action_load_render_settings(fn)
 {
-	var map = project_load_start(fn);
+	/*var map = project_load_start(fn);
 	if (map = null)
 		return 0
 	
 	project_load_render(map[?"render"])
-	ds_map_destroy(map)
+	ds_map_destroy(map)*/
 }

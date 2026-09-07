@@ -15,6 +15,7 @@ function macros()
 	// File formats
 	#macro project_format				e_project.FORMAT_210
 	#macro settings_format				e_settings.FORMAT_200
+	#macro render_settings_format		e_render_settings.FORMAT_210
 	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_201
 	
 	// Directories
@@ -39,8 +40,10 @@ function macros()
 	#macro temp_image					file_directory_get() + "tmp.png"
 	#macro download_image_file			file_directory_get() + "download.png"
 	#macro unzip_directory				file_directory_get() + "unzip/"
-	#macro render_default				"performance"
-	#macro render_default_file			render_directory + render_default + ".mirender"
+	#macro render_default_file			render_directory + "default.mirender"
+	#macro render_presets				array("performance.mirender", "balanced.mirender", "extreme.mirender")
+	#macro render_preset_default		"balanced.mirender"
+	#macro render_preset_default_name	"balanced"
 	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
@@ -158,6 +161,7 @@ function macros()
 	// World
 	#macro block_size					16
 	#macro item_size					16
+	#macro clip_far						30000
 	#macro clip_near					1
 	
 	// Vectors and matrices

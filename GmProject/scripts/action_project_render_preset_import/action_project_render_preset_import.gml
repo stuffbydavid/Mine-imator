@@ -1,9 +1,10 @@
 /// action_project_render_import([fn])
 /// @arg [fn]
+/// TO REWRITE
 
-function action_project_render_import(fn = "")
+function action_project_render_preset_import(fn = "")
 {
-	if (history_undo)
+	/*if (history_undo)
 		history_copy_render_settings(history_data.save_obj_old)
 	else if (history_redo)
 		history_copy_render_settings(history_data.save_obj_new)
@@ -48,5 +49,5 @@ function action_project_render_import(fn = "")
 			history_copy_render_settings(app)
 		
 		log("Loaded render settings", fn)
-	}
+	}*/
 }

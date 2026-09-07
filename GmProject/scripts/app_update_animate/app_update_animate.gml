@@ -244,7 +244,7 @@ function app_update_animate()
 		benchmark_animate_total_time += get_timer() - starttime
 	
 	// Cameras
-	var isrendermode = (view_second.quality = e_view_mode.RENDER || view_main.quality = e_view_mode.RENDER);
+	var isrendermode = (view_second.renderer = e_renderer.REALISTIC || view_main.renderer = e_renderer.REALISTIC);
 	if (window_state = "export_movie")
 		app_update_cameras(exportmovie_high_quality, true)
 	else if (!isrendermode || (isrendermode && render_samples = -1))

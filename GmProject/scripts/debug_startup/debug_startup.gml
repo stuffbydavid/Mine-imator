@@ -10,7 +10,7 @@ function debug_startup()
 	
 	if (debug_mode)
 	{
-		debug_project		= file_directory_get() + "dev_project/dev_project.miproject"
+		debug_project		= ""//file_directory_get() + "dev_project/dev_project.miproject"
 		debug_full			= true
 		debug_advanced		= true
 		debug_skip_blocks	= true

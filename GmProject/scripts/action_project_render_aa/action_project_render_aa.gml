@@ -3,8 +3,15 @@
 
 function action_project_render_aa(enable)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_aa, project_render_aa, enable, true)
+	action_project_render_preset_edit_locked()
 	
-	project_render_aa = enable
+	var aa = renderer_edit_standard ? render_preset_edit.standard_aa : render_preset_edit.realistic_aa;
+	
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_aa, aa, enable, true)
+	
+	if (renderer_edit_standard)
+		render_preset_edit.standard_aa = enable
+	else
+		render_preset_edit.realistic_aa = enable
 }

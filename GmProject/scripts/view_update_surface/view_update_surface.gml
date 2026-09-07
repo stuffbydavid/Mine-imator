@@ -7,14 +7,14 @@ function view_update_surface(view, cam)
 	render_view_current = view
 	
 	// Render
-	render_lights = (view.quality != e_view_mode.FLAT)
+	renderer_current = view.renderer
+	render_lights = (view.renderer != e_renderer.QUICK)
 	render_particles = view.particles
 	render_effects = view.effects
-	render_quality = view.quality
 	render_watermark = (settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"])
 	render_start(view.surface, cam, content_width, content_height)
 	
-	if (view.quality = e_view_mode.RENDER)
+	if (view.renderer = e_renderer.REALISTIC)
 		render_high()
 	else
 		render_low()

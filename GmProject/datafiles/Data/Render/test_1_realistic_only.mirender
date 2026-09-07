@@ -1,0 +1,47 @@
+{
+	"format": 35,
+	"created_in": "2.1",
+	"name": "Max reflections",
+	"render": {
+		"realistic": {
+			"samples": 48,
+			"ssao": true,
+			"shadows": true,
+			"shadows_sun_buffer_size": 4096,
+			"shadows_spot_buffer_size": 1024,
+			"shadows_point_buffer_size": 512,
+			"shadows_transparent": 0,
+			"subsurface_samples": 7,
+			"indirect": false,
+			"indirect_precision": 0.3,
+			"reflections": true,
+			"reflections_precision": 1,
+			"glow": true,
+			"glow_falloff": false,
+			"aa": true,
+			"aa_power": 1
+		},
+		"specialeffects": {
+			"ssao_radius": 12,
+			"ssao_power": 1,
+			"ssao_color": "#000000",
+			"ssao_always_visible": false,
+			"shadows_blur_size": 1,
+			"subsurface_highlight": 0.5,
+			"subsurface_highlight_strength": 1,
+			"indirect_blur_radius": 1,
+			"indirect_strength": 1,
+			"reflections_fade_amount": 1,
+			"reflections_thickness": 1,
+			"glow_radius": 1,
+			"glow_intensity": 1,
+			"glow_falloff_radius": 2,
+			"glow_falloff_intensity": 1,
+			"glint_speed": 1,
+			"glint_strength": 1,
+			"tonemapper": 0,
+			"exposure": 1,
+			"gamma": 2.2
+		}
+	}
+}

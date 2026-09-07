@@ -25,11 +25,11 @@ function action_toolbar_exportimage_save()
 	
 	export_start("export_image")
 	
-	if (view_main.quality = e_view_mode.RENDER)
-		view_main.quality = e_view_mode.SHADED
+	if (view_main.renderer = e_renderer.REALISTIC)
+		view_main.renderer = e_renderer.STANDARD
 	
-	if (view_second.quality = e_view_mode.RENDER)
-		view_second.quality = e_view_mode.SHADED
+	if (view_second.renderer = e_renderer.REALISTIC)
+		view_second.renderer = e_renderer.STANDARD
 		
 	app_update_cameras(popup_exportimage.high_quality, false)
 }

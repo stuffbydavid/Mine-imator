@@ -50,6 +50,7 @@ function app_update_cameras(highquality, movie)
 		// Render
 		with (app)
 		{
+			renderer_current = highquality ? e_renderer.REALISTIC : e_renderer.STANDARD
 			render_start(other.cam_surf_tmp, other.id)
 			if (highquality)
 				render_high()

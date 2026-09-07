@@ -1,8 +1,9 @@
 /// action_project_render_reset()
+/// TO REWRITE
 
 function action_project_render_reset()
 {
-	if (history_undo)
+	/*if (history_undo)
 		history_copy_render_settings(history_data.save_obj_old)
 	else
 	{
@@ -20,5 +21,5 @@ function action_project_render_reset()
 		}
 		
 		project_reset_render()
-	}
+	}*/
 }

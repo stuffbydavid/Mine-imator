@@ -22,4 +22,5 @@ function project_startup()
 	save_id_map = ds_map_create()
 	
 	shape_texture = texture_sprite(spr_shape)
+	project_bend_style = "blocky"
 }

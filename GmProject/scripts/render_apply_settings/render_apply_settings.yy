@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_project_render_export",
+  "%Name":"render_apply_settings",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_project_render_export",
+  "name":"render_apply_settings",
   "parent":{
     "name":"Render",
-    "path":"folders/Scripts/App/Actions/Project/Render.yy",
+    "path":"folders/Scripts/Render.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

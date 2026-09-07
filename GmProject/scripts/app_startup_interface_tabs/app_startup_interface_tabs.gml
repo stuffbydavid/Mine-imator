@@ -35,8 +35,14 @@ function app_startup_interface_tabs()
 		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
 		with (render)
 		{
+			renderer = e_renderer.STANDARD
+			
 			tbx_render_distance = new_textbox_integer()
 			tbx_samples = new_textbox_integer()
+			
+			tbx_shadows_blur_quality = new_textbox_integer()
+			tbx_shadows_blur_size = new_textbox_decimals()
+			tbx_shadows_blur_size.suffix = "%"
 			
 			tbx_ssao_radius = new_textbox_decimals()
 			tbx_ssao_power = new_textbox_integer()

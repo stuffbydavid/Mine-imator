@@ -14,7 +14,7 @@ function action_background_sky_clouds_offset(val, add)
 			return 0
 		}
 		
-		history_set_var(action_background_sky_clouds_offset, background_sky_clouds_offset, background_sky_clouds_offset * add + val, 1)
+		history_set_var(action_background_sky_clouds_offset, background_sky_clouds_offset, background_sky_clouds_offset * add + val, true)
 	}
 	
 	background_sky_clouds_offset = background_sky_clouds_offset * add + val

@@ -1276,24 +1276,11 @@ function list_init(name)
 			break
 		}
 		
-		// Render settings
-		case "projectrendersettings":
+		// Renderer
+		case "renderrenderer":
 		{
-			menu_add_item("", text_get("projectrendersettingscustom"))
-			menu_add_item("performance", text_get("projectrendersettingsperformance"), null)
-			menu_add_item("balanced", text_get("projectrendersettingsbalanced"), null)
-			menu_add_item("extreme", text_get("projectrendersettingsextreme"), null)
-			
-			var file = file_find_first(render_directory + "*.mirender", 0);
-			
-			while (file != "")
-			{
-				// Add all files but defaults
-				if (file != "performance.mirender" && file != "balanced.mirender" && file != "extreme.mirender")
-					menu_add_item(filename_change_ext(file, ""), filename_change_ext(file, ""), null)
-				
-				file = file_find_next()
-			}
+			menu_add_item(e_renderer.STANDARD, text_get("renderrendererstandard"), null)
+			menu_add_item(e_renderer.REALISTIC, text_get("renderrendererrealistic"), null)
 			
 			break
 		}

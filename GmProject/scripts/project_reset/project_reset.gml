@@ -14,6 +14,7 @@ function project_reset()
 	
 	render_free()
 	render_samples = -1
+	render_preset_edit = null
 	
 	lib_preview.update = true
 	res_preview.update = true
@@ -29,7 +30,6 @@ function project_reset()
 	project_video_height = 720
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = true
-	project_render_settings = render_default
 	project_tempo = 24
 	project_grid_columns = 3
 	project_grid_rows = 3
@@ -71,8 +71,15 @@ function project_reset()
 	
 	with (mc_res)
 		count = 0
+
+	render_apply_settings(render_default_settings, e_renderer.STANDARD)
+	render_apply_settings(render_default_settings, e_renderer.REALISTIC)
+	render_apply_settings(render_default_settings, e_renderer.COMMON)
 	
-	project_reset_render()
+	project_render_preset[e_renderer.QUICK] = render_preset_default
+	project_render_preset[e_renderer.STANDARD] = render_preset_default
+	project_render_preset[e_renderer.REALISTIC] = render_preset_default
+	
 	project_reset_background()
 	
 	timeline.hor_scroll.value = 0

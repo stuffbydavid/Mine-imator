@@ -69,8 +69,8 @@ function tests_run()
 	var mirenderfile, mirenderobj;
 	mirenderfile = project_folder + "/test_base.mirender"
 	mirenderobj = new_obj(obj_history_save)
-	if (file_exists_lib(mirenderfile))
-		action_project_render_import(mirenderfile)
+	//if (file_exists_lib(mirenderfile))
+	//	action_project_render_import(mirenderfile)
 	
 	// Argument settings are applied at the start of each frame after the current camera is resolved
 	if (test_render_settings != "")
@@ -136,16 +136,16 @@ function tests_run()
 			tests_apply_settings(argssettingsqueue[0])
 		}
 		
-		for (var quality = e_view_mode.FLAT; quality <= e_view_mode.RENDER; quality++)
+		for (var renderer = e_renderer.QUICK; renderer <= e_renderer.REALISTIC; renderer++)
 		{
 			var mode, settingsqueue;
 			settingsqueue = array()
 
-			switch (quality)
+			switch (renderer)
 			{
-				case e_view_mode.FLAT:   mode = "flat" break
-				case e_view_mode.SHADED: mode = "shaded" break
-				case e_view_mode.RENDER: mode = "high" break
+				case e_renderer.QUICK:   mode = "quick" break
+				case e_renderer.STANDARD: mode = "standard" break
+				case e_renderer.REALISTIC: mode = "realistic" break
 			}
 
 			// Only test a specific mode
@@ -215,8 +215,8 @@ function tests_run()
 					exportbasename += "_" + filename_get_valid(cursetting)
 				export_filename = exportbasename + ".png"
 			
-				render_lights = (quality != e_view_mode.FLAT)
-				popup_exportimage.high_quality = (quality = e_view_mode.RENDER)
+				render_lights = (renderer != e_renderer.QUICK)
+				popup_exportimage.high_quality = (renderer = e_renderer.REALISTIC)
 			
 				benchmark_render_total_time = 0
 				benchmark_surface_total_time = 0
@@ -236,7 +236,7 @@ function tests_run()
 				csv += string(timeline_marker) + ","
 				csv += mode + ","
 				csv += string_replace_all(cursetting, ",", " ") + ","
-				if (quality == e_view_mode.RENDER)
+				if (renderer == e_renderer.REALISTIC)
 					csv += string(project_render_samples) + ",,"
 				else
 					csv += "1,,"
@@ -250,7 +250,7 @@ function tests_run()
 				csv += string(get_vertex_buffer_render_calls()) + "\n"
 			
 				log("Test image", export_filename, string_format(exporttime / 1000, 0, 3) + " msec")
-				if (quality = e_view_mode.RENDER)
+				if (renderer = e_renderer.REALISTIC)
 				{
 					if (debugpassall)
 					{

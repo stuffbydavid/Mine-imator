@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_preset_save_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_preset_save_start",
+  "parent":{
+    "name":"Presets",
+    "path":"folders/Scripts/Render/Presets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

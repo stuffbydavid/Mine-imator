@@ -30,9 +30,9 @@ The ranges below are the ranges supported by the corresponding interface control
 | `ssao_color` | Color integer | SSAO tint color |
 | `ssao_always_visible` | Boolean | Apply SSAO to all diffuse lighting instead of ambient lighting only |
 | `shadows` | Boolean | Enable shadows |
-| `shadows_sun_size` | 256, 512, 1024, 2048, 4096, or 8192 | Sun shadow-map resolution; 8192 is offered only when supported by the GPU |
-| `shadows_spot_size` | 256, 512, 1024, 2048, 4096, or 8192 | Spot-light shadow-map resolution; 8192 is offered only when supported by the GPU |
-| `shadows_point_size` | 256, 512, 1024, 2048, 4096, or 8192 | Point-light shadow-map resolution; 8192 is offered only when supported by the GPU |
+| `shadows_sun_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Sun shadow-map resolution; 8192 is offered only when supported by the GPU |
+| `shadows_spot_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Spot-light shadow-map resolution; 8192 is offered only when supported by the GPU |
+| `shadows_point_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Point-light shadow-map resolution; 8192 is offered only when supported by the GPU |
 | `shadows_transparent` | Boolean | Let transparent textures affect shadow maps |
 | `subsurface_samples` | Integer, 0-32 | Subsurface-scattering quality/sample count |
 | `subsurface_highlight` | 0-1 | Subsurface highlight amount |

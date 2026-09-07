@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_project_render_reset",
+  "%Name":"action_project_renderer",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_project_render_reset",
+  "name":"action_project_renderer",
   "parent":{
     "name":"Render",
     "path":"folders/Scripts/App/Actions/Project/Render.yy",

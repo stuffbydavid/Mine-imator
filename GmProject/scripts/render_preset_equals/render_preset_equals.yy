@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"project_reset_render",
+  "%Name":"render_preset_equals",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"project_reset_render",
+  "name":"render_preset_equals",
   "parent":{
-    "name":"Project",
-    "path":"folders/Scripts/Project.yy",
+    "name":"Presets",
+    "path":"folders/Scripts/Render/Presets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

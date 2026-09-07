@@ -1,0 +1,44 @@
+{
+	"format": 35,
+	"created_in": "2.1",
+	"render": {
+		"specialeffects": {
+			"ssao_radius": 12,
+			"ssao_power": 1,
+			"ssao_color": "#000000",
+			"ssao_always_visible": false,
+			"shadows_blur_size": 1,
+			"subsurface_highlight": 0.5,
+			"subsurface_highlight_strength": 1,
+			"indirect_blur_radius": 1,
+			"indirect_strength": 1,
+			"reflections_thickness": 1,
+			"reflections_fade_amount": 1,
+			"glow_radius": 1,
+			"glow_intensity": 1,
+			"glow_falloff_radius": 2,
+			"glow_falloff_intensity": 1,
+			"glint_speed": 1,
+			"glint_strength": 1,
+			"tonemapper": 0,
+			"exposure": 1,
+			"gamma": 2.2
+		},
+		"graphics": {
+			"render_distance": 30000,
+			"texture_filtering": true,
+			"transparent_block_texture_filtering": false,
+			"texture_filtering_level": 1,
+			"bend_style": "blocky",
+			"opaque_leaves": false,
+			"liquid_animation": true,
+			"render_alpha_mode": 0
+		},
+		"materials": {
+			"block_emissive": 1,
+			"block_subsurface": 8,
+			"water_reflections": true,
+			"material_maps": false
+		}
+    }
+}

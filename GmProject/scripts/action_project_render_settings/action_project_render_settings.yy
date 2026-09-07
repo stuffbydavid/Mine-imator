@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_project_render_settings",
   "parent":{
-    "name":"Project",
-    "path":"folders/Scripts/App/Actions/Project.yy",
+    "name":"Render",
+    "path":"folders/Scripts/App/Actions/Project/Render.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

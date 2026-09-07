@@ -7,7 +7,15 @@
 ///			106 = wave animation, exportmovie/image settings
 ///			106_2 = block emissive
 ///			106_3 = remove camera buffer size
-///			110 = remade in JSON, texture filtering level
+///			Community Build 100 = Community Build format
+///			Community Build 102 = custom interface and bloom settings
+///			Community Edition 110 = Community Edition format
+///			110 PRE 1 = remade in JSON, texture filtering level
+///			110 = finalized 1.1 JSON format
+///			113 = 1.1.3 settings format
+///			114 = bend pinch setting
+///			120 = camera effects, glow and revised depth of field settings
+///			200 = 2.0 settings format
 
 function settings_load()
 {

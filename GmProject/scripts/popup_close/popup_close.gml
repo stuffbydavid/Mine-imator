@@ -8,7 +8,6 @@ function popup_close()
 	if (popup = popup_upgrade)
 	{
 		popup_upgrade.open_advanced = false
-		popup_upgrade.custom_rendering = "default"
 	}
 	
 	if (popup = popup_importimage)

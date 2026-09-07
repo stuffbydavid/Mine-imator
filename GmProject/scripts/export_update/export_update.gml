@@ -33,12 +33,12 @@ function export_update()
 	if (window_state = "export_movie")
 	{
 		render_active = "movie"
-		render_quality = (exportmovie_high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
+		renderer_current = (exportmovie_high_quality ? e_renderer.REALISTIC : e_renderer.STANDARD)
 	}
 	else
 	{
 		render_active = "image"
-		render_quality = (popup_exportimage.high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
+		renderer_current = (popup_exportimage.high_quality ? e_renderer.REALISTIC : e_renderer.STANDARD)
 	}
 	
 	// Process a number frames until a step has elapsed (1/fps seconds)
@@ -50,7 +50,7 @@ function export_update()
 		else
 			render_start(export_surface, timeline_camera, project_video_width, project_video_height)
 	
-		if (render_quality = e_view_mode.RENDER)
+		if (renderer_current = e_renderer.REALISTIC)
 			render_high()
 		else
 		{
@@ -62,7 +62,7 @@ function export_update()
 		
 		export_sample++
 	
-		if (render_quality = e_view_mode.RENDER && render_samples = app.project_render_samples)
+		if (renderer_current = e_renderer.REALISTIC && render_samples = app.project_render_samples)
 			render_samples_done = true
 	
 		if (!render_samples_done)

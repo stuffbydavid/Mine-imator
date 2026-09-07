@@ -26,10 +26,10 @@ function tl_get_visible()
 	}
 	else if (render_view_current != null)
 	{
-		if (render_view_current.quality = e_view_mode.RENDER && hq_hiding)
+		if (render_view_current.renderer = e_renderer.REALISTIC && hq_hiding)
 			return false
 		
-		if (render_view_current.quality != e_view_mode.RENDER && lq_hiding)
+		if (render_view_current.renderer != e_renderer.REALISTIC && lq_hiding)
 			return false
 	}
 	
