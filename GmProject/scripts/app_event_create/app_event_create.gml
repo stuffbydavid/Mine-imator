@@ -11,6 +11,8 @@ function app_event_create()
 	enums()
 	randomize()
 	gml_release_mode(true)
+	objects_indexed()
+
 	
 	if (!app_startup())
 		game_end()
