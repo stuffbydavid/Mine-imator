@@ -1074,6 +1074,7 @@ public:
 	int numFrames = 0;
 	int originX = 0;
 	int originY = 0;
+	bool isValid = false;
 
 	Sprite(String dir);
 };
@@ -1094,6 +1095,7 @@ public:
 	StringId name{};
 	String filename{};
 	String gmPath{};
+	bool isValid = false;
 
 	Script(String dir);
 };

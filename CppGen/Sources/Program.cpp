@@ -45,7 +45,8 @@ int Program::main(int argc, char** argv)
 	for (String dir : spriteDirs)
 	{
 		Sprite* spr = makeObject<Sprite>(dir);
-		Program::sprites.add(spr->name, spr);
+		if (spr->isValid)
+			Program::sprites.add(spr->name, spr);
 	}
 
 	// Parse shaders
@@ -62,7 +63,8 @@ int Program::main(int argc, char** argv)
 	for (String dir : scriptDirs)
 	{
 		Script* script = makeObject<Script>(dir);
-		Program::scripts.add(script->name, script);
+		if (script->isValid)
+			Program::scripts.add(script->name, script);
 	}
 
 	// Assets manifest file for CMake
@@ -577,9 +579,11 @@ Shader::Shader(String dir)
 	if (!srcVs.exists || !srcFs.exists)
 		return;
 
-	this->isValid = true;
+	FileInfo yyFile = FileInfo(dir + "/" + this->name + ".yy");
+	if (!yyFile.exists)
+		return;
 
-	String json = File::readAllText(dir + "/" + dirInfo.name + ".yy");
+	String json = File::readAllText(yyFile.fullName);
 	Json root = JsonConvert::deserializeObject(json);
 
 	this->gmPath = root["parent"]["path"];
@@ -587,6 +591,8 @@ Shader::Shader(String dir)
 		.replace("folders/Shaders.yy", "")
 		.replace("folders/Shaders/", "")
 		.replace(".yy", "");
+
+	this->isValid = true;
 }
 
 Sprite::Sprite(String dir)
@@ -594,7 +600,11 @@ Sprite::Sprite(String dir)
 	DirectoryInfo dirInfo = DirectoryInfo(dir);
 	this->name = dirInfo.name;
 
-	String json = File::readAllText(dir + "/" + dirInfo.name + ".yy");
+	FileInfo yyFile = FileInfo(dir + "/" + this->name + ".yy");
+	if (!yyFile.exists)
+		return;
+
+	String json = File::readAllText(yyFile.fullName);
 	Json root = JsonConvert::deserializeObject(json);
 
 	this->originX = root["sequence"]["xorigin"];
@@ -611,6 +621,8 @@ Sprite::Sprite(String dir)
 		this->frameNames.add(frameName);
 		this->numFrames++;
 	}
+
+	this->isValid = true;
 }
 
 Script::Script(String dir)
@@ -619,7 +631,11 @@ Script::Script(String dir)
 	this->name = dirInfo.name;
 	this->filename = dir + "/" + dirInfo.name + ".gml";
 
-	String json = File::readAllText(dir + "/" + dirInfo.name + ".yy");
+	FileInfo yyFile = FileInfo(dir + "/" + dirInfo.name + ".yy");
+	if (!yyFile.exists)
+		return;
+
+	String json = File::readAllText(yyFile.fullName);
 	Json root = JsonConvert::deserializeObject(json);
 
 	this->gmPath = root["parent"]["path"];
@@ -627,6 +643,8 @@ Script::Script(String dir)
 		.replace("folders/Scripts.yy", "")
 		.replace("folders/Scripts/", "")
 		.replace(".yy", "");
+
+	this->isValid = true;
 }
 
 void Program::resolveProject()
