@@ -4,6 +4,7 @@
 * build/ → Build folder (Unix)
 * rendering/ → Rendering files (2.1-rendering branch only)
 * CppGen/ → GML to C++ converter
+* CppGen/gml.json → GML specification
 * CppProject/ → Final executable project and DirectX/OpenGL graphics engine (this is the CMake `-S` input)
 * CppProject/Generated/ → CppGen output folder
 * CppProject/External/ → Pre-built external libraries
@@ -29,7 +30,7 @@ Common build commands:
 Use `Debug` for debugging unless optimized behavior or benchmark-representative performance is required, then use `RelWithDebInfo`. Don't use the developer-facing `DebugBenchmarks` or `RunBenchmarks` configs.
 
 ## Development
-The project has a GameMaker/GML "front-end" which is converted to C++ code using the CppGen application, launched using `.\Setup.ps1 CppGen` (Windows) or `./Setup.sh CppGen` (Unix). Add missing GML features to CppGen/gml.json, then inform the developer about new additions:
+The project has a GameMaker/GML "front-end" which is converted to C++ code using the CppGen tool, automatically invoked when building CppProject. Add missing GML features to CppGen/gml.json, then inform the developer about new additions:
 * If a new constant is used, add it to `"constants"`.
 * If a new built-in variable is used, add it to `"variables"` and implement its functionality it in CppProject/.
 * If a new built-in function is used, add it to `"functions"` and implement it in CppProject/Gml/.
@@ -41,7 +42,6 @@ General development practices:
 * Do not build or run the project during development unless asked.
 * CppProject is used for the final product, not GameMaker, and should be preferred for validation.
 * When running, use the build folder as the working directory, not the repository root.
-* Do not run CppGen after GML changes unless asked.
 * Aim to follow the existing formatting/comment style in the GML/C++ codebases:
     * Single line comments do not end with `.`
     * Local variables in GML code do not use `_`
