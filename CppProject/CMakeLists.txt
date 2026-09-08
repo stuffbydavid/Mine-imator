@@ -144,6 +144,22 @@ set(CMAKE_AUTOUIC OFF)
 # Find OpenMP
 find_package(OpenMP REQUIRED COMPONENTS CXX)
 
+# Track GameMaker inventory changes so an existing build tree reconfigures
+# before consuming a refreshed asset manifest
+set(CPPGEN_INVENTORY_GLOBS
+	"${REPO_DIR}/GmProject/*.gml"
+	"${REPO_DIR}/GmProject/*.yy"
+	"${REPO_DIR}/GmProject/*.png"
+	"${REPO_DIR}/GmProject/*.vsh"
+	"${REPO_DIR}/GmProject/*.fsh"
+)
+# Xcode cannot safely reload its project while a build is active
+if(CMAKE_GENERATOR STREQUAL "Xcode") 
+	file(GLOB_RECURSE CPPGEN_CONFIGURE_INVENTORY LIST_DIRECTORIES FALSE ${CPPGEN_INVENTORY_GLOBS})
+else()
+	file(GLOB_RECURSE CPPGEN_CONFIGURE_INVENTORY CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE ${CPPGEN_INVENTORY_GLOBS})
+endif()
+
 # Refresh Assets.cmake manifest using CppGen
 set(CPPGEN_ASSET_MANIFEST "${CMAKE_CURRENT_SOURCE_DIR}/Generated/Assets.cmake")
 execute_process(
@@ -158,8 +174,37 @@ if(NOT CPPGEN_ASSET_MANIFEST_RESULT EQUAL 0)
 		"CppGen did not create ${CPPGEN_ASSET_MANIFEST} (exit ${CPPGEN_ASSET_MANIFEST_RESULT}).\n"
 		"${CPPGEN_ASSET_MANIFEST_OUTPUT}${CPPGEN_ASSET_MANIFEST_ERROR}")
 endif()
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CPPGEN_ASSET_MANIFEST}")
+if(NOT CMAKE_GENERATOR STREQUAL "Xcode")
+	set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CPPGEN_ASSET_MANIFEST}")
+endif()
 include("${CPPGEN_ASSET_MANIFEST}")
+
+# Perform conversion of modified scripts
+execute_process(
+	COMMAND "${CPPGEN_EXE}" "${REPO_DIR}" "${CPPGEN_DIR}/gml.json"
+	WORKING_DIRECTORY "${CPPGEN_DIR}"
+	RESULT_VARIABLE CPPGEN_BUILD_RESULT
+	OUTPUT_VARIABLE CPPGEN_BUILD_OUTPUT
+	ERROR_VARIABLE CPPGEN_BUILD_ERROR
+)
+if(NOT CPPGEN_BUILD_RESULT EQUAL 0)
+	message(FATAL_ERROR
+		"CppGen failed while refreshing generated sources (exit ${CPPGEN_BUILD_RESULT}).\n"
+		"${CPPGEN_BUILD_OUTPUT}${CPPGEN_BUILD_ERROR}")
+endif()
+
+# Updating a GameMaker file runs CppGen without reconfiguring CMake
+set(CPPGEN_BUILD_STAMP "${CMAKE_CURRENT_BINARY_DIR}/CppGen.stamp")
+add_custom_command(
+	OUTPUT "${CPPGEN_BUILD_STAMP}"
+	COMMAND "${CPPGEN_EXE}" "${REPO_DIR}" "${CPPGEN_DIR}/gml.json"
+		"$<$<CONFIG:Release>:--clean>"
+	COMMAND "${CMAKE_COMMAND}" -E touch "${CPPGEN_BUILD_STAMP}"
+	DEPENDS ${CPPGEN_CONFIGURE_INVENTORY} "${CPPGEN_EXE}" "${CPPGEN_DIR}/gml.json"
+	WORKING_DIRECTORY "${CPPGEN_DIR}"
+	COMMENT "Running CppGen"
+	VERBATIM
+)
 
 # Reconstruct GameMaker folder hierarchy
 function(add_gm_manifest_entries CATEGORY ENTRIES_VARIABLE FILES_VARIABLE RESOURCE_ENTRIES_VARIABLE ALIASES_VARIABLE)
@@ -298,6 +343,9 @@ add_executable(${PROJECT_NAME}
 	${RESOURCE_SOURCES}
 	${APP_ICON_RESOURCE}
 )
+
+set_source_files_properties("${CPPGEN_BUILD_STAMP}" PROPERTIES GENERATED TRUE HEADER_FILE_ONLY TRUE)
+target_sources(${PROJECT_NAME} PRIVATE "${CPPGEN_BUILD_STAMP}")
 
 if(MSVC)
 	target_compile_options(${PROJECT_NAME} PRIVATE "/FI${CMAKE_CURRENT_SOURCE_DIR}/Common.hpp")
@@ -497,26 +545,5 @@ elseif(APPLE)
 else()
 	install(DIRECTORY "${EXTERNAL_PLATFORM_DIR}/" DESTINATION "Data/Libraries"
 		FILES_MATCHING PATTERN "*.so*"
-	)
-endif()
-
-# Create CppGen shortcut in IDE
-if(CMAKE_GENERATOR STREQUAL "Xcode")
-	add_custom_target(CppGen)
-
-	set_target_properties(CppGen PROPERTIES
-		XCODE_GENERATE_SCHEME TRUE
-		XCODE_SCHEME_EXECUTABLE "${CPPGEN_EXE}"
-		XCODE_SCHEME_ARGUMENTS
-			"${REPO_DIR};${CPPGEN_DIR}/gml.json"
-		XCODE_SCHEME_WORKING_DIRECTORY "${CPPGEN_DIR}"
-	)
-else()
-	add_custom_target(CppGen
-		COMMAND "${CPPGEN_EXE}" "${REPO_DIR}" "${CPPGEN_DIR}/gml.json"
-		WORKING_DIRECTORY "${CPPGEN_DIR}"
-		COMMENT "Running CppGen"
-		VERBATIM
-		USES_TERMINAL
 	)
 endif()

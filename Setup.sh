@@ -118,7 +118,7 @@ invoke_cppgen() {
     echo "Running CppGen"
     if ! (
         cd "$cppgen_directory"
-        "$cppgen_executable" "$script_root" "$cppgen_directory/gml.json" "$@"
+        "$cppgen_executable" "$script_root" "$cppgen_directory/gml.json" --clean "$@"
     ); then
         echo "CppGen failed." >&2
         exit 1

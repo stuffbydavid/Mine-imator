@@ -71,7 +71,7 @@ void GML::exportHeader(String file)
 	CodeWriter::writeLine("{", 1);
 
 	// Constants
-	for (String constant : GML::constants.keys)
+	for (StringId constant : GML::constants.keys)
 	{
 		String val = toStringValue(GML::constants[constant]).replace(",", ".");
 		if (!val.contains("."))
@@ -83,8 +83,8 @@ void GML::exportHeader(String file)
 	CodeWriter::writeLine();
 	CodeWriter::writeLine("struct gmlGlobal");
 	CodeWriter::writeLine("{", 1);
-	for (String var : GML::variables.keys)
-		if (!GML::keywords.contains(var) && var != "argument" && var != "argument_count")
+	for (StringId var : GML::variables.keys)
+		if (!GML::keywords.contains(var) && var != STR(argument) && var != STR(argument_count))
 			CodeWriter::writeLine("static " + GML::variables[var]->toCpp() + " " + CodeObject::nameToCpp(var) + ";");
 	CodeWriter::writeLine("};", -1);
 
@@ -195,7 +195,7 @@ void GML::parseGMLScript(String file)
 					cppOnlyToken.fileOffset = pos;
 					cppOnlyToken.line = line;
 					cppOnlyToken.lineOffset = linePos;
-					pos += cppOnlyToken.value.size();
+					pos += String(cppOnlyToken.value).size();
 					currentFunction->tokens.add(std::move(cppOnlyToken));
 					continue;
 				}
@@ -226,7 +226,7 @@ void GML::parseGMLScript(String file)
 		}
 
 		Token::Type tokenType = Token::Type::Unknown;
-		String tokenValue = "";
+		StringId tokenValue = 0;
 		int tokenLength = 1;
 		bool isIdentifierStart = currentChar == '_' ||
 			(currentChar >= 'a' && currentChar <= 'z') ||
@@ -311,7 +311,7 @@ void GML::parseGMLScript(String file)
 			{
 				Console::writeLine("FATAL ERROR in {0}:", file);
 				Console::writeLine("  Invalid string at line {0}, {1}", line, pos - linePos);
-				Environment::exit(1);
+				std::exit(1);
 			}
 
 			tokenType = Token::Type::String;
@@ -349,7 +349,7 @@ void GML::parseGMLScript(String file)
 				default:
 					Console::writeLine("FATAL ERROR in {0}:", file);
 					Console::writeLine("  Unexpected {0} token at line {1}, {2}", currentChar, line, pos - linePos);
-					Environment::exit(1);
+					std::exit(1);
 					break;
 			}
 		}
@@ -386,25 +386,26 @@ void GML::parseGMLScript(String file)
 			if (token.type == Token::Type::ID)
 			{
 				// Start new function
-				if (token.value == "function" && (currentFunction == nullptr || currentFunction->tokens[currentFunction->tokens.size() - 1].type != Token::Type::Assign))
+				if (token.value == STR(function) && (currentFunction == nullptr || currentFunction->tokens[currentFunction->tokens.size() - 1].type != Token::Type::Assign))
 				{
 					currentFunction = makeObject<Function>("", gml, isCppSeparate, cppSeparateHeader);
+					currentFunction->sourceFile = file;
 					isCppSeparate = false;
 				}
 
 				// Get name of function
-				else if (currentFunction->name == "")
+				else if (currentFunction && currentFunction->name == 0)
 				{
 					currentFunction->name = token.value;
 					Program::functions.add(token.value, currentFunction);
 				}
 
 				// Integer division
-				else if (token.value == "div")
+				else if (token.value == STR(div))
 					token.type = Token::Type::DivInt;
 
 				// Modulus
-				else if (token.value == "mod")
+				else if (token.value == STR(mod))
 					token.type = Token::Type::Modulus;
 			}
 
@@ -413,18 +414,18 @@ void GML::parseGMLScript(String file)
 			{
 				Token& lastToken = currentFunction->tokens[currentFunction->tokens.size() - 1];
 				lastToken.type = Token::Type::Number;
-				lastToken.value = "." + token.value;
+				lastToken.value = "." + String(token.value);
 				lastToken.length += token.length;
 			}
 
 			// Remove regions
-			else if (token.type == Token::Type::ID && (token.value == "region" || token.value == "endregion") &&
+			else if (token.type == Token::Type::ID && (token.value == STR(region) || token.value == STR(endregion)) &&
 					(currentFunction != nullptr && currentFunction->tokens[currentFunction->tokens.size() - 1].type == Token::Type::HashTag))
 			{
 				currentFunction->tokens.removeAt(currentFunction->tokens.size() - 1);
 				isLineComment = true;
 			}
-			else
+			else if (currentFunction)
 				currentFunction->tokens.add(std::move(token));
 		}
 
@@ -432,7 +433,13 @@ void GML::parseGMLScript(String file)
 	}
 }
 
-GML::FunctionSignature::FunctionSignature(String name, DataType* returnType, List<DataType*> argTypes, bool varArgs, bool needScope, bool varCreateRef)
+GML::FunctionSignature::FunctionSignature(
+	StringId name,
+	DataType* returnType,
+	List<DataType*> argTypes,
+	bool varArgs,
+	bool needScope,
+	bool varCreateRef)
 {
 	this->name = name;
 	this->returnType = returnType;
