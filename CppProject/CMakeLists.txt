@@ -145,14 +145,20 @@ set(CMAKE_AUTOUIC OFF)
 find_package(OpenMP REQUIRED COMPONENTS CXX)
 
 # Track GameMaker inventory changes so an existing build tree reconfigures
-# before consuming a refreshed asset manifest.
-file(GLOB_RECURSE CPPGEN_CONFIGURE_INVENTORY CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
+# before consuming a refreshed asset manifest
+set(CPPGEN_INVENTORY_GLOBS
 	"${REPO_DIR}/GmProject/*.gml"
 	"${REPO_DIR}/GmProject/*.yy"
 	"${REPO_DIR}/GmProject/*.png"
 	"${REPO_DIR}/GmProject/*.vsh"
 	"${REPO_DIR}/GmProject/*.fsh"
 )
+# Xcode cannot safely reload its project while a build is active
+if(CMAKE_GENERATOR STREQUAL "Xcode") 
+	file(GLOB_RECURSE CPPGEN_CONFIGURE_INVENTORY LIST_DIRECTORIES FALSE ${CPPGEN_INVENTORY_GLOBS})
+else()
+	file(GLOB_RECURSE CPPGEN_CONFIGURE_INVENTORY CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE ${CPPGEN_INVENTORY_GLOBS})
+endif()
 
 # Refresh Assets.cmake manifest using CppGen
 set(CPPGEN_ASSET_MANIFEST "${CMAKE_CURRENT_SOURCE_DIR}/Generated/Assets.cmake")
@@ -168,7 +174,9 @@ if(NOT CPPGEN_ASSET_MANIFEST_RESULT EQUAL 0)
 		"CppGen did not create ${CPPGEN_ASSET_MANIFEST} (exit ${CPPGEN_ASSET_MANIFEST_RESULT}).\n"
 		"${CPPGEN_ASSET_MANIFEST_OUTPUT}${CPPGEN_ASSET_MANIFEST_ERROR}")
 endif()
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CPPGEN_ASSET_MANIFEST}")
+if(NOT CMAKE_GENERATOR STREQUAL "Xcode")
+	set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CPPGEN_ASSET_MANIFEST}")
+endif()
 include("${CPPGEN_ASSET_MANIFEST}")
 
 # Perform conversion of modified scripts
@@ -491,6 +499,8 @@ add_custom_command(
 		"$<IF:$<CONFIG:Release>,echo,copy_directory>"
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_SOURCE_DIR}>"
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_OUTPUT_DIR}>"
+	COMMAND "${CMAKE_COMMAND}" -E remove_directory
+		"${DATAFILES_OUTPUT_DIR}/Data/Minecraft/Patched"
 	VERBATIM
 )
 
@@ -509,6 +519,7 @@ install(DIRECTORY
 	"${DATAFILES_SOURCE_DIR}/Schematics"
 	DESTINATION "."
 	PATTERN "Libraries" EXCLUDE
+	PATTERN "Patched" EXCLUDE
 )
 install(DIRECTORY DESTINATION "Skins")
 

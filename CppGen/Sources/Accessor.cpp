@@ -44,7 +44,9 @@ void Accessor::resolve(ResolveScope* scope)
 
 	this->resolvedType->reset();
 	Function* userFunction = getUserFunction(scope);
-	DataType::Type accessorType = DataType::Type::Array;
+	DataType::Type accessorType = this->arrayAccessors.size() > 0
+		? this->arrayAccessors[0]->type
+		: DataType::Type::Array;
 	Variable* var = nullptr;
 
 	// Function* call
@@ -297,8 +299,7 @@ void Accessor::resolve(ResolveScope* scope)
 			// Try to find container type
 			if (this->arrayAccessors.size() > 0)
 			{
-				accessorType = this->arrayAccessors[0]->type;
-				this->resolvedType->reset(accessorType, DataType()); // Get type from accessor value
+				DataType inferredContainerType;
 
 				if (accessorType == DataType::Type::AnyMap) // Get map type
 				{
@@ -330,6 +331,14 @@ void Accessor::resolve(ResolveScope* scope)
 						this->resolvedType->reset(DataType::Type::Variant);
 					}
 				}
+
+				// Preserve every level in mixed accessors, such as array[i][|j]
+				for (int i = static_cast<int>(this->arrayAccessors.size()) - 1; i >= 0; i--)
+				{
+					DataType::Type containerRawType = i == 0 ? accessorType : this->arrayAccessors[i]->type;
+					inferredContainerType = DataType(containerRawType, &inferredContainerType);
+				}
+				this->resolvedType->reset(inferredContainerType);
 			}
 
 			if (this->arrayAccessors.size() > 0) // Convert to array/ds if not container
@@ -355,39 +364,52 @@ void Accessor::resolve(ResolveScope* scope)
 		// Has accessors
 		if (this->arrayAccessors.size() > 0)
 		{
-			for (ArrayAccessor* acc : this->arrayAccessors) // Resolve accessors
+			bool returnsRealReference = this->arrayAccessors.size() == 1 &&
+				(this->resolvedType->cppType == DataType::CppType::VecType ||
+				 this->resolvedType->cppType == DataType::CppType::MatrixType);
+
+			for (int i = 0; i < static_cast<int>(this->arrayAccessors.size()); i++) // Resolve accessors
 			{
+				ArrayAccessor* acc = this->arrayAccessors[i];
+				DataType::Type currentAccessorType = i == 0 ? accessorType : acc->type;
 				acc->expr->resolve(scope->outsideChain());
-				if (accessorType != DataType::Type::AnyMap) // Array accessors should be integers
+				if (!DataType::isRawTypeMap(currentAccessorType)) // Array/list/grid accessors should be integers
 					acc->expr->applyType(scope->outsideChain(), DataType::scalar(DataType::Type::Integer));
+
+				if (this->resolvedType->isContainer()) // Get type from the current container
+				{
+					List<DataType::Assignment> assignments = this->resolvedType->assignments;
+					this->resolvedType->reset();
+
+					for (DataType::Assignment& ass : assignments)
+					{
+						if (currentAccessorType == ass.rawType ||
+							(DataType::isRawTypeMap(currentAccessorType) && DataType::isRawTypeMap(ass.rawType)) ||
+							(currentAccessorType == DataType::Type::Array && DataType::isRawTypeArray(ass.rawType)))
+							this->resolvedType->assign(*ass.containerStorage, this->func, this->line);
+					}
+
+					if (this->resolvedType->isUnknown())
+						this->resolvedType->reset(DataType::Type::Variant);
+				}
+				else if (this->resolvedType->assignments.size() == 1 &&
+						 this->resolvedType->assignments[0].rawType == DataType::Type::Variant)
+				{
+					this->resolvedType->reset(DataType::Type::Variant);
+				}
+				else
+				{
+					Program::addSyntaxError("Used [] on non-container type " + String(this->name) + " in " + String(this->func->name) + ":" + this->line);
+					this->resolvedType->reset(DataType::Type::Variant);
+				}
 			}
 
 			if (var != nullptr && this->arrayAccessors[0]->isReference && this->assignExpr != nullptr)
 				var->markReference();
 
-			// Check if Value() is used
-			if (this->resolvedType->cppType != DataType::CppType::VecType && this->resolvedType->cppType != DataType::CppType::MatrixType)
+			// Multiple Value() calls and all non-vector/matrix lookups return VarType.
+			if (!returnsRealReference)
 				this->resolvedTypeCpp = DataType::CppType::VarType;
-
-			if (this->resolvedType->isContainer()) // Get type from array/ds container
-			{
-				List<DataType::Assignment> assignments = this->resolvedType->assignments;
-				this->resolvedType->reset(); // Reset type
-
-				for (DataType::Assignment& ass : assignments) // Assign all container types that match the accessors
-				{
-					if (accessorType == ass.rawType ||
-						(accessorType == DataType::Type::AnyMap && DataType::isRawTypeMap(ass.rawType)) ||
-						(accessorType == DataType::Type::Array && DataType::isRawTypeArray(ass.rawType)))
-						this->resolvedType->assign(*ass.containerStorage, this->func, this->line);
-				}
-
-				if (this->resolvedType->isUnknown()) // ds[unknown] -> variant
-					this->resolvedType->reset(DataType::Type::Variant);
-
-			}
-			else
-				Program::addSyntaxError("Used [] on non-container type " + String(this->name) + " in " + String(this->func->name) + ":" + this->line);
 		}
 	}
 
@@ -434,7 +456,10 @@ bool Accessor::applyType(ResolveScope* scope, const DataType& inputType)
 	std::optional<DataType> containerType;
 	if (this->arrayAccessors.size() > 0) // Convert to container type
 	{
-		containerType.emplace(this->arrayAccessors[0]->type, &inputType);
+		DataType nestedType(inputType);
+		for (int i = static_cast<int>(this->arrayAccessors.size()) - 1; i >= 0; i--)
+			nestedType = DataType(this->arrayAccessors[i]->type, &nestedType);
+		containerType.emplace(std::move(nestedType));
 		appliedType = &*containerType;
 	}
 
@@ -859,19 +884,41 @@ String Accessor::toCpp(ResolveScope* scope)
 
 	cpp += parCpp;
 
-	if (accessorFunc != "")
-		cpp += "." + accessorFunc +"(";
-
-	for (ArrayAccessor* acc : this->arrayAccessors) // Accessors
+	if (this->arrayAccessors.size() > 1)
 	{
-		if (accessorFunc == "")
-			cpp += "[";
-		cpp += acc->expr->toCpp(scope);
-		if (accessorFunc == "")
-			cpp += "]";
+		// Apply every accessor independently
+		for (ArrayAccessor* acc : this->arrayAccessors)
+		{
+			if (acc->type == DataType::Type::List)
+				cpp = "DsList(" + cpp + ")";
+			else if (acc->type == DataType::Type::AnyMap)
+				cpp = "DsMap(" + cpp + ")";
+			else if (acc->type == DataType::Type::Grid)
+				cpp = "DsGrid(" + cpp + ")";
+
+			String indexCpp = acc->expr->toCpp(scope);
+			if (this->assignExpr == nullptr)
+				cpp += ".Value(" + indexCpp + ")";
+			else
+				cpp += "[" + indexCpp + "]";
+		}
 	}
-	if (accessorFunc != "")
-		cpp += ")";
+	else
+	{
+		if (accessorFunc != "")
+			cpp += "." + accessorFunc + "(";
+
+		for (ArrayAccessor* acc : this->arrayAccessors)
+		{
+			if (accessorFunc == "")
+				cpp += "[";
+			cpp += acc->expr->toCpp(scope);
+			if (accessorFunc == "")
+				cpp += "]";
+		}
+		if (accessorFunc != "")
+			cpp += ")";
+	}
 
 	if (this->nextInChain == nullptr && this->addSubOp != Token::Type::Unknown) // ++ or --
 		cpp += Token::toCpp(this->addSubOp);
