@@ -262,7 +262,7 @@ function Invoke-CppGen {
 
     Require-File -Path $cppGenExecutable -Description "CppGen executable"
     Write-Host "Running CppGen"
-    $cppGenArguments = @($PSScriptRoot, (Join-Path $cppGenDirectory "gml.json"))
+    $cppGenArguments = @($PSScriptRoot, (Join-Path $cppGenDirectory "gml.json"), "--clean")
     Push-Location $cppGenDirectory
     try {
         & $cppGenExecutable @cppGenArguments

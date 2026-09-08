@@ -33,11 +33,12 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     3. To debug Qt types, install Qt Visual Studio Tools from Extensions > Manage Extensions **(recommended)**
         * Add `C:\Dev\Qt\5.15.19\install\bin\qmake.exe` to Tools > Options > Qt > Versions
     4. Run in Debug or RelWithDebInfo mode
-8. After GML changes
-    1. Right-click and build the `CppGen` target in Visual Studio
-    2. Alternatively, run `.\Setup.ps1 CppGen` or `CppGen.exe` in the `CppGen\Win64\` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject\Generated\`
-    4. **Note**: These resulting `.cpp` files should not be manually edited!
+8. GameMaker integration
+    1. Scripts, shaders and sprites from the GameMaker project can be accessed in Visual Studio under Mine-imator > GmProject
+    2. Changes to shader files are automatically detected during runtime and reloads them 
+    3. Changes to GML script files are automatically detected and converted to C++ during compilation
+    4. **Note**: The converted `.cpp` files under `CppProject/Generated/` should not be manually edited!
+    5. **Note**: Assets must still be added, removed, reorganized or renamed via the GameMaker IDE
 9. Generate Release build in `install\`
     * Run `.\Setup.ps1 Release`
 
@@ -63,12 +64,12 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     5. Run `./Setup.sh Xcode`
     6. The generated Mine-imator project file will open in Xcode
     7. Build project (⌘+B) or run (⌘+R)
-6. After GML changes
-    1. In Xcode, select the `CppGen` Scheme next to "My Mac"
-    2. Run (⌘+R)
-    3. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Mac/` folder
-    4. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/`
-    5. **Note**: These resulting `.cpp` files should not be manually edited!
+6. GameMaker integration
+    1. Scripts, shaders and sprites from the GameMaker project can be accessed in Xcode under Mine-imator > GmProject
+    2. Changes to shader files are automatically detected during runtime and reloads them
+    3. Changes to GML script files are automatically detected and converted to C++ during compilation
+    4. **Note**: The converted `.cpp` files under `CppProject/Generated/` should not be manually edited!
+    5. **Note**: Assets must still be added, removed, reorganized or renamed via the GameMaker IDE
 7. Generate release build in `install/`
     * Run `./Setup.sh Release`
 
@@ -106,11 +107,10 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     5. Run command `CMake: Select a Kit` (Ctrl+Shift+P) and choose `Clang <version>`
     6. Run command `CMake: Set Launch/Debug Target` and choose `Mine-imator`
     7. Debug with Shift+F5 or command `CMake: Debug`
-7. After GML changes
-    1. Run command `CMake: Run Task` and choose `Run CppGen`.
-    2. Alternatively, run `./Setup.sh CppGen` or `./CppGen` in the `CppGen/Linux/` folder
-    3. The `.gml` files in `GmProject` are converted to C++ in `CppProject/Generated/`
-    4. **Note**: These resulting `.cpp` files should not be manually edited!
+7. GameMaker integration
+    1. Changes to shader files under `GmProject/shaders/` are automatically detected during runtime and reloads them
+    2. Changes to GML script files under `GmProject/scripts/` are automatically detected and converted to C++ during compilation
+    3. **Note**: The converted `.cpp` files under `CppProject/Generated/` should not be manually edited!
 8. Generate Release build in `install/`
     * Run `./Setup.sh Release`
 

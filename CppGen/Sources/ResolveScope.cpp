@@ -2,7 +2,13 @@
 
 namespace CppGen
 {
-ResolveScope::ResolveScope(const String& current, const String& previous, const std::shared_ptr<const List<ResolveScope::Call>>& updatedCalls, const String& currentInChain, const std::shared_ptr<Statement::Location>& location, Function* funcUpdateScope)
+ResolveScope::ResolveScope(
+	const StringId& current,
+	const StringId& previous,
+	const std::shared_ptr<const List<ResolveScope::Call>>& updatedCalls,
+	const StringId& currentInChain,
+	const std::shared_ptr<Statement::Location>& location,
+	Function* funcUpdateScope)
 {
 	this->current = current;
 	this->previous = previous;
@@ -12,7 +18,7 @@ ResolveScope::ResolveScope(const String& current, const String& previous, const 
 	else
 		this->calls = std::make_shared<List<Call>>();
 
-	if (currentInChain != "")
+	if (currentInChain != 0)
 		this->currentInChain = currentInChain;
 	else
 		this->currentInChain = this->current;
@@ -24,12 +30,16 @@ ResolveScope::ResolveScope(const String& current, const String& previous, const 
 	this->funcUpdateScope = funcUpdateScope;
 }
 
-ResolveScope::ResolveScope(const ResolveScope& scope, const String& callFunc, int callLine)
+ResolveScope::ResolveScope(
+	const ResolveScope& scope,
+	const StringId& callFunc,
+	int callLine)
 {
 	this->current = scope.current;
 	this->currentInChain = scope.currentInChain;
 	this->previous = scope.previous;
 	this->location = scope.location;
+
 	auto updatedCalls = std::make_shared<List<Call>>(*scope.calls);
 	updatedCalls->add(Call(callFunc, callLine));
 	this->calls = std::move(updatedCalls);
@@ -41,12 +51,12 @@ ResolveScope ResolveScope::nextStatement(bool addLevel)
 	return ResolveScope(this->current, this->previous, this->calls, this->currentInChain, nextLocation, this->funcUpdateScope);
 }
 
-ResolveScope ResolveScope::enterWithStatement(const String& newScope, const String& otherScope)
+ResolveScope ResolveScope::enterWithStatement(const StringId& newScope, const StringId& otherScope)
 {
 	return ResolveScope(newScope, otherScope, this->calls, newScope, this->location);
 }
 
-ResolveScope ResolveScope::nextInChain(const String& nextInChain)
+ResolveScope ResolveScope::nextInChain(const StringId& nextInChain)
 {
 	return ResolveScope(this->current, this->previous, this->calls, nextInChain, this->location, this->funcUpdateScope);
 }
@@ -56,7 +66,7 @@ ResolveScope ResolveScope::outsideChain()
 	return ResolveScope(this->current, this->previous, this->calls, this->current, this->location, this->funcUpdateScope);
 }
 
-bool ResolveScope::isCalled(const String& funcName)
+bool ResolveScope::isCalled(const StringId& funcName)
 {
 	for (const Call& call : *this->calls)
 		if (call.funcName == funcName)
@@ -73,11 +83,11 @@ void ResolveScope::debugCalls()
 	String callStr = "    Calls: ";
 	int i = 0;
 	for (const Call& call : *this->calls)
-		callStr += (i++ > 0 ? " -> " : "") + call.funcName + ":" + call.line;
+		callStr += (i++ > 0 ? " -> " : "") + String(call.funcName) + ":" + call.line;
 	Console::writeLine(callStr);
 }
 
-ResolveScope::Call::Call(const String& funcName, int line)
+ResolveScope::Call::Call(const StringId& funcName, int line)
 {
 	this->funcName = funcName;
 	this->line = line;
