@@ -9,11 +9,7 @@ function action_project_render_preset_edit_locked()
 	{
 		// Restore old custom settings
 		with (custom)
-		{
-			render_preset_copy_settings(history_data, e_renderer.STANDARD)
-			render_preset_copy_settings(history_data, e_renderer.REALISTIC)
-			render_preset_copy_settings(history_data, e_renderer.COMMON)
-		}
+			render_preset_copy_settings(history_data)
 		action_project_render_preset(render_preset_edit.file)
 		return 0
 	}
@@ -31,24 +27,14 @@ function action_project_render_preset_edit_locked()
 		with (hobj)
 		{
 			// Save previous custom values
-			has_standard = false
-			has_realistic = false
-			has_fx = false
-			has_graphics = false
-			has_materials = false
-			render_preset_copy_settings(custom, e_renderer.STANDARD)
-			render_preset_copy_settings(custom, e_renderer.REALISTIC)
-			render_preset_copy_settings(custom, e_renderer.COMMON)
+			render_preset_clear()
+			render_preset_copy_settings(custom)
 		}
 	}
 	
 	// Copy values
 	with (custom)
-	{
-		render_preset_copy_settings(render_preset_edit, e_renderer.STANDARD)
-		render_preset_copy_settings(render_preset_edit, e_renderer.REALISTIC)
-		render_preset_copy_settings(render_preset_edit, e_renderer.COMMON)
-	}
+		render_preset_copy_settings(render_preset_edit)
 	
 	project_render_preset[renderer_edit] = "custom"
 	render_preset_edit = custom

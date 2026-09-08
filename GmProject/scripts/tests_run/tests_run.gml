@@ -1,16 +1,15 @@
 /// tests_run()
 /// @desc Performs a sequence of tests and saves the rendered results in the project folder under runs/, along with CSV tables of benchmark timing data.
-///		  Render settings are overwritten during playback by text keyframes. A render mode is skipped entirely if the keyframe is invisible.
+///		  Render settings are overwritten during playback by text keyframes. A renderer is skipped entirely if the keyframe is invisible.
 
 function tests_run()
 {
-	var framestart, frameend, singlemode, debugpass, debugpassall, showdragons, argssettingsqueue;
+	var framestart, frameend, singlerenderer, debugpass, debugpassall, argssettingsqueue;
 	framestart = 0
 	frameend = timeline_length
-	singlemode = ""
+	singlerenderer = ""
 	debugpass = -1
 	debugpassall = false
-	showdragons = true
 	argssettingsqueue = array()
 	
 	// Use region, if available
@@ -25,13 +24,13 @@ function tests_run()
 		framestart = test_frame_start
 	if (test_frame_end > -1)
 		frameend = test_frame_end
-	if (test_render_mode != "")
+	if (test_renderer != "")
 	{
-		singlemode = test_render_mode
-		if (singlemode != "flat" && singlemode != "shaded" && singlemode != "high")
+		singlerenderer = test_renderer
+		if (!array_contains(renderer_name_list, singlerenderer))
 		{
-			log("Unknown test render mode", test_render_mode)
-			singlemode = ""
+			log("Unknown test renderer", test_renderer)
+			singlerenderer = ""
 		}
 	}
 	if (test_debug_pass = "all")
@@ -49,8 +48,8 @@ function tests_run()
 	log("Test project file", project_file)
 	log("Test project start", framestart)
 	log("Test project end", frameend)
-	if (singlemode != "")
-		log("Test project render mode", singlemode)
+	if (singlerenderer != "")
+		log("Test project renderer", singlerenderer)
 	if (test_render_settings != "")
 		log("Test project render settings", test_render_settings)
 	if (test_agent != "")
@@ -65,24 +64,27 @@ function tests_run()
 	startup_error = false
 	log("Test project resources loaded")
 	
-	// Load base render preset, to be overwritten by text keyframes or program arguments
-	var mirenderfile, mirenderobj;
+	// Load base render preset, to be modified by text keyframes or program arguments
+	var mirenderfile, renderpreset;
 	mirenderfile = project_folder + "/test_base.mirender"
-	mirenderobj = new_obj(obj_history_save)
-	//if (file_exists_lib(mirenderfile))
-	//	action_project_render_import(mirenderfile)
+	renderpreset = new_obj(obj_render_preset)
+	render_preset_map[?"test"] = renderpreset
+
+	with (render_default_settings)
+		if (file_exists_lib(mirenderfile))
+			render_preset_load(mirenderfile, false)
 	
 	// Argument settings are applied at the start of each frame after the current camera is resolved
 	if (test_render_settings != "")
 		argssettingsqueue = string_split_escaped(test_render_settings, " ")
+
+	with (renderpreset)
+		render_preset_copy_settings(render_default_settings)
 	
-	with (mirenderobj)  // Save base settings
-		history_copy_render_settings(app)
-	
-	// Optionally test a large number of (hopefully batched) models
+	// Show objects under "TestEnabled" folder
 	with (obj_timeline)
-		if (parent != app && string_contains(parent.name, "Dragons"))
-			hide = !showdragons
+		if (parent != app && string_contains(parent.name, "TestEnabled"))
+			hide = false
 	
 	render_view_current = view_main
 	render_particles = view_main.particles
@@ -111,7 +113,7 @@ function tests_run()
 	log("Test output folder", testdir)
 	 
 	var csv, csvfilename;
-	csv = "Frame,Mode,Setting,Samples,Animate_ms,Total_ms,Render_ms,Surface_ms,Export_ms,Other_ms,render_world_calls,vertex_buffer_tris,vertex_buffer_submits\n"
+	csv = "Frame,Renderer,Setting,Samples,Animate_ms,Total_ms,Render_ms,Surface_ms,Export_ms,Other_ms,render_world_calls,vertex_buffer_tris,vertex_buffer_submits\n"
 	csvfilename = testdir + "/benchmark_" + testname + ".csv"
 	
 	for (timeline_marker = framestart; timeline_marker < min(timeline_length, frameend); timeline_marker++)
@@ -124,58 +126,44 @@ function tests_run()
 		
 		// Save camera values
 		if (timeline_camera)
-			mirenderobj.cam_value = timeline_camera.value
+			renderpreset.cam_value = timeline_camera.value
 			
-		// Apply optional render settings from program arguments, these override all text objects
-		if (array_length(argssettingsqueue) == 1)
+		for (renderer_current = e_renderer.QUICK; renderer_current <= e_renderer.REALISTIC; renderer_current++)
 		{
-			history_copy_render_settings(mirenderobj)
-			if (timeline_camera && timeline_marker > framestart)
-				timeline_camera.value = mirenderobj.cam_value
-			
-			tests_apply_settings(argssettingsqueue[0])
-		}
-		
-		for (var renderer = e_renderer.QUICK; renderer <= e_renderer.REALISTIC; renderer++)
-		{
-			var mode, settingsqueue;
-			settingsqueue = array()
+			var renderername, settingsqueue;
+			renderername = renderer_name_list[renderer_current]
+			settingsqueue = array();
+			project_render_preset[renderer_current] = "test"
 
-			switch (renderer)
-			{
-				case e_renderer.QUICK:   mode = "quick" break
-				case e_renderer.STANDARD: mode = "standard" break
-				case e_renderer.REALISTIC: mode = "realistic" break
-			}
-
-			// Only test a specific mode
-			if (singlemode != "" && singlemode != mode)
+			// Only test a specific renderer
+			if (singlerenderer != "" && singlerenderer != renderername)
 				continue
 				
-			// Restore settings to base
-			if (array_length(argssettingsqueue) != 1) {
-				history_copy_render_settings(mirenderobj)
-				if (timeline_camera)
-					timeline_camera.value = mirenderobj.cam_value
-			}
+			// Restore settings and camera to the base state for each renderer
+			with (renderpreset)
+				render_preset_copy_settings(render_default_settings)
+			render_apply_settings(renderpreset, e_renderer.COMMON)
 
-			if (array_length(argssettingsqueue) > 1)
+			if (timeline_camera)
+				timeline_camera.value = renderpreset.cam_value
+
+			if (array_length(argssettingsqueue) > 0)
 			{
 				// Apply custom render settings one-by-one from program arguments
 				settingsqueue = argssettingsqueue
 			}
 			else if (array_length(argssettingsqueue) = 0)
 			{
-				// Apply custom render settings one-by-one from text objects on the marker with a name matching the mode
-				var skipmode = false;
+				// Apply custom render settings one-by-one from text objects on the marker with a name matching the renderer
+				var skiprenderer = false;
 				with (obj_timeline) {
-					if (name != mode ||
+					if (name != renderername ||
 						type != e_tl_type.TEXT)
 						continue
 					
 					if (!value[e_value.VISIBLE])
 					{
-						skipmode = true
+						skiprenderer = true
 						continue
 					}
 					
@@ -188,8 +176,8 @@ function tests_run()
 					break
 				}
 
-				// Skip mode for hidden keyframes
-				if (skipmode)
+				// Skip renderer for hidden keyframes
+				if (skiprenderer)
 					continue
 			}
 			
@@ -200,23 +188,25 @@ function tests_run()
 				{
 					// Apply next settings in the queue
 					cursetting = array_shift(settingsqueue)
-					log("Test frame", timeline_marker, mode, cursetting)
-					tests_apply_settings(cursetting)
+					log("Test frame", timeline_marker, renderername, cursetting)
+					with (renderpreset)
+						render_preset_apply_settings(cursetting, renderer_current)
+					render_apply_settings(renderpreset, e_renderer.COMMON)
 				}
 				else
 				{
 					cursetting = test_render_settings
-					log("Test frame", timeline_marker, mode)
+					log("Test frame", timeline_marker, renderername)
 				}
 
-				// Create filename from frame, mode and current settings
-				var exportbasename = testdir + "/" + string(timeline_marker) + "_" + mode;
+				// Create filename from frame, renderer and current settings
+				var exportbasename = testdir + "/" + string(timeline_marker) + "_" + renderername;
 				if (cursetting != "")
 					exportbasename += "_" + filename_get_valid(cursetting)
 				export_filename = exportbasename + ".png"
 			
-				render_lights = (renderer != e_renderer.QUICK)
-				popup_exportimage.renderer = renderer
+				render_lights = (renderer_current != e_renderer.QUICK)
+				popup_exportimage.renderer = renderer_current
 			
 				benchmark_render_total_time = 0
 				benchmark_surface_total_time = 0
@@ -230,13 +220,13 @@ function tests_run()
 				while (export_update()) {}
 
 				exporttime = get_timer() - renderstarttime
-				othertime = exporttime - benchmark_render_total_time - benchmark_export_total_time
+				othertime = exporttime - benchmark_render_total_time - benchmark_surface_total_time - benchmark_export_total_time
 			
 				// Create CSV row with data
 				csv += string(timeline_marker) + ","
-				csv += mode + ","
+				csv += renderername + ","
 				csv += string_replace_all(cursetting, ",", " ") + ","
-				if (renderer == e_renderer.REALISTIC)
+				if (renderer_current == e_renderer.REALISTIC)
 					csv += string(project_render_samples) + ",,"
 				else
 					csv += "1,,"
@@ -250,7 +240,7 @@ function tests_run()
 				csv += string(get_vertex_buffer_render_calls()) + "\n"
 			
 				log("Test image", export_filename, string_format(exporttime / 1000, 0, 3) + " msec")
-				if (renderer = e_renderer.REALISTIC)
+				if (renderer_current = e_renderer.REALISTIC) // != e_renderer.QUICK later on
 				{
 					if (debugpassall)
 					{

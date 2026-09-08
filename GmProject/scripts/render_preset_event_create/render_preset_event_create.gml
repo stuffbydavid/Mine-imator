@@ -6,11 +6,7 @@ function render_preset_event_create()
 	name = ""
 	locked = true
 	
-	has_standard = false
-	has_realistic = false
-	has_fx = false
-	has_graphics = false
-	has_materials = false
+	render_preset_clear()
 	
 	// Standard performance settings
 	standard_ssao = true

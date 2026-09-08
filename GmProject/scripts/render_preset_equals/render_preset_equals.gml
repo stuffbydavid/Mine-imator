@@ -1,10 +1,12 @@
-/// render_preset_equals(obj, renderer)
+/// render_preset_equals(obj, renderer, all)
 
-function render_preset_equals(obj, renderer)
+function render_preset_equals(obj, renderer, all)
 {
-	//var effectsmatch, effectscommonmatch, graphicsmatch, materialsmatch;
+	var renderermatch, effectsmatch, graphicsmatch, materialsmatch;
+	renderermatch = false
+	
 	if (renderer == e_renderer.STANDARD && has_standard)
-		return (
+		renderermatch = (
 			obj.has_standard &&
 			standard_ssao = obj.standard_ssao &&
 			standard_shadows = obj.standard_shadows &&
@@ -18,7 +20,7 @@ function render_preset_equals(obj, renderer)
 		)
 	
 	if (renderer == e_renderer.REALISTIC && has_realistic)
-		return (
+		renderermatch = (
 			obj.has_realistic &&
 			realistic_samples = obj.realistic_samples &&
 			realistic_ssao = obj.realistic_ssao &&
@@ -38,16 +40,26 @@ function render_preset_equals(obj, renderer)
 			realistic_aa_power = obj.realistic_aa_power
 		)
 	
-	return false;
-	
-	/*
-	effectscommonmatch = (
+	if (!all)
+		return renderermatch
+		
+	effectsmatch = (
+		has_fx = obj.has_fx &&
 		ssao_radius = obj.ssao_radius &&
 		ssao_power = obj.ssao_power &&
 		ssao_color = obj.ssao_color &&
 		ssao_always_visible = obj.ssao_always_visible &&
+		standard_shadows_blur_size = obj.standard_shadows_blur_size &&
+		realistic_subsurface_highlight = obj.realistic_subsurface_highlight &&
+		realistic_subsurface_highlight_strength = obj.realistic_subsurface_highlight_strength &&
+		realistic_indirect_blur_radius = obj.realistic_indirect_blur_radius &&
+		realistic_indirect_strength = obj.realistic_indirect_strength &&
+		realistic_reflections_fade_amount = obj.realistic_reflections_fade_amount &&
+		realistic_reflections_thickness = obj.realistic_reflections_thickness &&
 		glow_radius = obj.glow_radius &&
 		glow_intensity = obj.glow_intensity &&
+		realistic_glow_falloff_radius = obj.realistic_glow_falloff_radius &&
+		realistic_glow_falloff_intensity = obj.realistic_glow_falloff_intensity &&
 		glint_speed = obj.glint_speed &&
 		glint_strength = obj.glint_strength &&
 		tonemapper = obj.tonemapper &&
@@ -56,6 +68,7 @@ function render_preset_equals(obj, renderer)
 	)
 
 	graphicsmatch = (
+		has_graphics = obj.has_graphics &&
 		render_distance = obj.render_distance &&
 		texture_filtering = obj.texture_filtering &&
 		transparent_block_texture_filtering = obj.transparent_block_texture_filtering &&
@@ -67,11 +80,12 @@ function render_preset_equals(obj, renderer)
 	)
 	
 	materialsmatch = (
+		has_materials = obj.has_materials &&
 		block_emissive = obj.block_emissive &&
 		block_subsurface = obj.block_subsurface &&
 		water_reflections = obj.water_reflections &&
 		material_maps = obj.material_maps
 	)
 	
-	return effectsmatch && effectscommonmatch && graphicsmatch && materialsmatch*/
+	return (renderermatch && effectsmatch && graphicsmatch && materialsmatch)
 }

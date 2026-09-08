@@ -30,6 +30,8 @@ The ranges below are the ranges supported by the corresponding interface control
 | `ssao_color` | Color integer | SSAO tint color |
 | `ssao_always_visible` | Boolean | Apply SSAO to all diffuse lighting instead of ambient lighting only |
 | `shadows` | Boolean | Enable shadows |
+| `shadows_blur_quality` | Integer, 0-64 | Standard renderer shadow-blur quality |
+| `shadows_blur_size` | 0-4 | Shared shadow blur radius |
 | `shadows_sun_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Sun shadow-map resolution; 8192 is offered only when supported by the GPU |
 | `shadows_spot_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Spot-light shadow-map resolution; 8192 is offered only when supported by the GPU |
 | `shadows_point_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Point-light shadow-map resolution; 8192 is offered only when supported by the GPU |
@@ -53,6 +55,7 @@ The ranges below are the ranges supported by the corresponding interface control
 | `glow_falloff_intensity` | 0-no limit | Secondary glow intensity |
 | `aa` | Boolean | Enable anti-aliasing |
 | `aa_power` | 0-3 | Anti-aliasing strength |
+| `bend_style` | `"blocky"` or `"realistic"` | Block/character bend deformation style |
 | `opaque_leaves` | Boolean | Render leaves as opaque geometry |
 | `liquid_animation` | Boolean | Enable animated liquid waves |
 | `water_reflections` | Boolean | Enable water reflections |

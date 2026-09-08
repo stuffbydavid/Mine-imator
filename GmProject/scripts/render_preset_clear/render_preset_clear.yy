@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"tests_apply_settings",
+  "%Name":"render_preset_clear",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tests_apply_settings",
+  "name":"render_preset_clear",
   "parent":{
-    "name":"Tests",
-    "path":"folders/Scripts/App/Tests.yy",
+    "name":"Presets",
+    "path":"folders/Scripts/Render/Presets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

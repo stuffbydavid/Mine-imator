@@ -10,11 +10,7 @@ function action_project_render_preset_import(fn = "")
 		
 		// Restore old settings of preset
 		with (render_preset_edit)
-		{
-			render_preset_copy_settings(history_data, e_renderer.STANDARD)
-			render_preset_copy_settings(history_data, e_renderer.REALISTIC)
-			render_preset_copy_settings(history_data, e_renderer.COMMON)
-		}
+			render_preset_copy_settings(history_data, true)
 
 		render_apply_settings(render_preset_edit, e_renderer.COMMON)
 		render_samples = -1
@@ -39,14 +35,8 @@ function action_project_render_preset_import(fn = "")
 		{
 			history_copy_render_settings(app)
 			
-			has_standard = false
-			has_realistic = false
-			has_fx = false
-			has_graphics = false
-			has_materials = false
-			render_preset_copy_settings(render_preset_edit, e_renderer.STANDARD)
-			render_preset_copy_settings(render_preset_edit, e_renderer.REALISTIC)
-			render_preset_copy_settings(render_preset_edit, e_renderer.COMMON)
+			render_preset_clear()
+			render_preset_copy_settings(render_preset_edit, true)
 		}
 	}
 

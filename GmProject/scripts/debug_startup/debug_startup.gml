@@ -43,7 +43,7 @@ function debug_startup()
 	// Benchmarking/testing settings, overwritten by program arguments
 	globalvar benchmark_mode, benchmark_exportmovie,
 			  benchmark_animate_total_time, benchmark_render_total_time, benchmark_surface_total_time, benchmark_export_total_time;
-	globalvar test_project, test_frame_start, test_frame_end, test_all_frames, test_render_mode, test_render_settings, test_debug_pass, test_agent;
+	globalvar test_project, test_frame_start, test_frame_end, test_all_frames, test_renderer, test_render_settings, test_debug_pass, test_agent;
 			  
 	benchmark_mode = false
 	benchmark_exportmovie = false
@@ -57,7 +57,7 @@ function debug_startup()
 	test_frame_start = -1
 	test_frame_end = -1
 	test_all_frames = false
-	test_render_mode = ""
+	test_renderer = ""
 	test_render_settings = ""
 	test_debug_pass = ""
 	test_agent = ""
@@ -87,7 +87,7 @@ function debug_startup()
 			case "--start":		test_frame_start = eval(nextarg, -1) a++ break
 			case "--end":		test_frame_end = eval(nextarg, -1) a++ break
 			case "--all":		test_all_frames = true break
-			case "--mode":		test_render_mode = nextarg a++ break
+			case "--renderer":	test_renderer = nextarg a++ break
 			case "--set":		test_render_settings = nextarg a++ break
 			case "--pass":		test_debug_pass = nextarg a++ break
 			case "--agent":		test_agent = nextarg a++ break
