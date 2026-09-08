@@ -142,7 +142,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							{
 								if (elem.size[a] > 0)
 									continue
-							
+
 								swap = from[a]
 								from[a] = to[a]
 								to[a] = swap
@@ -336,7 +336,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						}
 						
 						// Texture
-						var texname, texpos, texsize;
+						var texname, texpos, texsize, uvscale;
 						if (uvlock && elem.face_render[nd]) // Keep texture on UV lock
 							texname = elem.face_texture[nd]
 						else
@@ -390,11 +390,12 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							
 							texpos = vec2(0, 0)
 							texsize = vec2(block_size, block_size)
+							uvscale = 1
 						}
 						else
 						{
 							// Apply UVs to block sheet/texture
-							var slot, slotcode, sheetwidth, sheetheight;
+							var slot, slotcode, texturepage, sheetwidth, sheetheight, sheetblocksize;
 
 							face_vbuffer[nd] = null
 							
@@ -409,10 +410,11 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								continue
 							}
 
-							if (slotcode < 0) // Animated sheet
+							texturepage = slotcode mod e_block_sheet.amount
+							slot = slotcode div e_block_sheet.amount
+
+							if (texturepage = e_block_sheet.ANIMATED)
 							{
-								slot = -slotcode - 2
-								
 								face_depth[nd] = mc_res.block_sheet_ani_depth_list[|slot]
 								face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED
 								
@@ -421,16 +423,17 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								if (!is_undefined(col) && col = "water")
 									face_block_vbuffer[nd] = e_block_vbuffer.WATER
 								
-								sheetwidth = minecraft_block_animated_sheet_size[0]
-								sheetheight = minecraft_block_animated_sheet_size[1]
+								sheetwidth = minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
+								sheetheight = minecraft_block_sheet_size[e_block_sheet.ANIMATED][Y]
+								sheetblocksize = block_size
 							}
-							else
+							else if (texturepage = e_block_sheet.STATIC16)
 							{
-								slot = slotcode
 								face_depth[nd] = mc_res.block_sheet_depth_list[|slot]
-								face_block_vbuffer[nd] = e_block_vbuffer.NORMAL
-								sheetwidth = minecraft_block_sheet_size[0]
-								sheetheight = minecraft_block_sheet_size[1]
+								face_block_vbuffer[nd] = e_block_vbuffer.STATIC16
+								sheetwidth = minecraft_block_sheet_size[e_block_sheet.STATIC16][X]
+								sheetheight = minecraft_block_sheet_size[e_block_sheet.STATIC16][Y]
+								sheetblocksize = block_size
 								
 								// Check color
 								var col = mc_assets.block_texture_color_map[?texname];
@@ -457,9 +460,26 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									}
 								}
 							}
+							else if (texturepage = e_block_sheet.STATIC32 || texturepage = e_block_sheet.STATIC64)
+							{
+								// High-resolution sheets are always opaque static faces
+								face_depth[nd] = e_block_depth.DEPTH0
+								face_block_vbuffer[nd] = (texturepage = e_block_sheet.STATIC32
+									? e_block_vbuffer.STATIC32
+									: e_block_vbuffer.STATIC64)
+								sheetwidth = minecraft_block_sheet_size[texturepage][X]
+								sheetheight = minecraft_block_sheet_size[texturepage][Y]
+								sheetblocksize = block_size_list[texturepage]
+							}
+							else
+							{
+								face_render[nd] = false
+								continue
+							}
 							
-							texpos = point2D((slot mod sheetwidth) * block_size, (slot div sheetwidth) * block_size)
-							texsize = vec2(sheetwidth * block_size, sheetheight * block_size)
+							texpos = point2D((slot mod sheetwidth) * sheetblocksize, (slot div sheetwidth) * sheetblocksize)
+							texsize = vec2(sheetwidth * sheetblocksize, sheetheight * sheetblocksize)
+							uvscale = sheetblocksize / block_size
 							
 							// Get preview color for world importer
 							if (res = null)
@@ -467,16 +487,22 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								if ((nd = e_dir.UP && other.preview_color_zp = null && alphaZ != 0) ||
 									(nd = e_dir.SOUTH && other.preview_color_yp = null && alphaY != 0))
 								{
-									if (face_block_vbuffer[nd] = e_block_vbuffer.ANIMATED || face_block_vbuffer[nd] = e_block_vbuffer.WATER)
+									if (texturepage = e_block_sheet.ANIMATED)
 										buffer_current = load_assets_block_preview_ani_buffer
 									else
-										buffer_current = load_assets_block_preview_buffer
+										buffer_current = load_assets_block_preview_buffer[texturepage]
 									
 									var px, py, alpha, col;
 									px = slot mod sheetwidth
 									py = slot div sheetwidth
 									
-									if (py < sheetheight && ((nd = e_dir.UP && alphaZ = -1) || (nd = e_dir.SOUTH && alphaY = -1)))
+									if (texturepage != e_block_sheet.STATIC16 && texturepage != e_block_sheet.ANIMATED)
+									{
+										alpha = (nd = e_dir.UP ? alphaZ : alphaY)
+										if (alpha = -1)
+											alpha = 1
+									}
+									else if (py < sheetheight && ((nd = e_dir.UP && alphaZ = -1) || (nd = e_dir.SOUTH && alphaY = -1)))
 										alpha = buffer_read_alpha(px, py, sheetwidth)
 									else
 										alpha = (nd = e_dir.UP ? alphaZ : alphaY)
@@ -535,7 +561,12 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						
 						// Apply to UV
 						for (var t = 0; t < 4; t++)
-							face_uv[nd, t] = vec2_div(point2D_add(face_uv[nd, t], texpos), texsize)
+						{
+							var uv = face_uv[nd, t]
+							uv[X] *= uvscale
+							uv[Y] *= uvscale
+							face_uv[nd, t] = vec2_div(point2D_add(uv, texpos), texsize)
+						}
 						
 						// For culling
 						face_edge[nd] = false

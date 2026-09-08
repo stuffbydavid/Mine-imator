@@ -59,26 +59,27 @@ function res_event_destroy()
 		ds_map_destroy(model_shape_alpha_map)
 	
 	// Free block textures
-	if (block_sheet_texture != null)
-		texture_free(block_sheet_texture)
+	for (var size = 0; size < e_block_sheet.static_amount; size++)
+	{
+		if (block_sheet_texture[size] != null)
+			texture_free(block_sheet_texture[size])
+		if (block_sheet_texture_material[size] != null)
+			texture_free(block_sheet_texture_material[size])
+		if (block_sheet_texture_normal[size] != null)
+			texture_free(block_sheet_texture_normal[size])
+	}
 	
-	if (block_sheet_texture_material != null)
-		texture_free(block_sheet_texture_material)
+	if (block_sheet_texture[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_tex_normal != null)
-		texture_free(block_sheet_tex_normal)
+	if (block_sheet_texture_material[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_ani_texture != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_texture[f])
-	
-	if (block_sheet_ani_texture_material != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_texture_material[f])
-	
-	if (block_sheet_ani_tex_normal != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_tex_normal[f])
+	if (block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)

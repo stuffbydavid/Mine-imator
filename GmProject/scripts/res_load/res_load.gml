@@ -51,22 +51,33 @@ function res_load(reload = false)
 		case e_res_type.LEGACY_BLOCK_SHEET:
 		case e_res_type.BLOCK_SHEET:
 		{
-			if (block_sheet_texture != null)
-				texture_free(block_sheet_texture)
+			for (var size = 0; size < e_block_sheet.static_amount; size++)
+			{
+				if (block_sheet_texture[size] != null)
+					texture_free(block_sheet_texture[size])
+				if (block_sheet_texture_material[size] != null)
+					texture_free(block_sheet_texture_material[size])
+				if (block_sheet_texture_normal[size] != null)
+					texture_free(block_sheet_texture_normal[size])
+
+				block_sheet_texture[size] = null
+				block_sheet_texture_material[size] = null
+				block_sheet_texture_normal[size] = null
+			}
 			
 			if (type = e_res_type.LEGACY_BLOCK_SHEET)
 			{
-				block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
+				block_sheet_texture[e_block_sheet.STATIC16] = res_load_legacy_block_sheet(fn, load_format)
 				if (load_folder = save_folder)
 					filename = filename_new_ext(filename_name(fn), "_converted" + filename_ext(fn))
-				texture_export(block_sheet_texture, save_folder + "/" + filename)
+				texture_export(block_sheet_texture[e_block_sheet.STATIC16], save_folder + "/" + filename)
 				type = e_res_type.BLOCK_SHEET
 			}
 			else
-				block_sheet_texture = texture_create(fn)
+				block_sheet_texture[e_block_sheet.STATIC16] = texture_create(fn)
 			
-			block_sheet_texture_material = texture_duplicate(block_sheet_texture)
-			block_sheet_tex_normal = texture_duplicate(block_sheet_texture)
+			block_sheet_texture_material[e_block_sheet.STATIC16] = texture_duplicate(block_sheet_texture[e_block_sheet.STATIC16])
+			block_sheet_texture_normal[e_block_sheet.STATIC16] = texture_duplicate(block_sheet_texture[e_block_sheet.STATIC16])
 			
 			colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
 			colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)

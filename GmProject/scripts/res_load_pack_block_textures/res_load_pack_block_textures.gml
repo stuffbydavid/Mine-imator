@@ -4,26 +4,35 @@
 function res_load_pack_block_textures()
 {
 	// Free old
-	if (block_sheet_texture != null)
-		texture_free(block_sheet_texture)
+	for (var size = 0; size < e_block_sheet.static_amount; size++)
+	{
+		if (block_sheet_texture[size] != null)
+			texture_free(block_sheet_texture[size])
+		if (block_sheet_texture_material[size] != null)
+			texture_free(block_sheet_texture_material[size])
+		if (block_sheet_texture_normal[size] != null)
+			texture_free(block_sheet_texture_normal[size])
 	
-	if (block_sheet_texture_material != null)
-		texture_free(block_sheet_texture_material)
+		block_sheet_texture[size] = null
+		block_sheet_texture_material[size] = null
+		block_sheet_texture_normal[size] = null
+	}
 	
-	if (block_sheet_tex_normal != null)
-		texture_free(block_sheet_tex_normal)
+	if (block_sheet_texture[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_ani_texture != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_texture[f])
+	if (block_sheet_texture_material[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_ani_texture_material != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_texture_material[f])
-	
-	if (block_sheet_ani_tex_normal != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_tex_normal[f])
+	if (block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
+
+	block_sheet_texture[e_block_sheet.ANIMATED] = null
+	block_sheet_texture_material[e_block_sheet.ANIMATED] = null
+	block_sheet_texture_normal[e_block_sheet.ANIMATED] = null
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)
@@ -41,15 +50,21 @@ function res_load_pack_block_textures()
 	}
 	else
 	{
-		block_sheet_texture_material = texture_duplicate(spr_default_material)
+		for (var size = 0; size < e_block_sheet.static_amount; size++)
+			if (block_sheet_texture[size] != null)
+				block_sheet_texture_material[size] = texture_duplicate(spr_default_material)
 		
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			block_sheet_ani_texture_material[f] = texture_duplicate(spr_default_material)
+		block_sheet_texture_material[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			block_sheet_texture_material[e_block_sheet.ANIMATED][f] = texture_duplicate(spr_default_material)
 		
-		block_sheet_tex_normal = texture_duplicate(spr_default_normal)
+		for (var size = 0; size < e_block_sheet.static_amount; size++)
+			if (block_sheet_texture[size] != null)
+				block_sheet_texture_normal[size] = texture_duplicate(spr_default_normal)
 		
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			block_sheet_ani_tex_normal[f] = texture_duplicate(spr_default_normal)
+		block_sheet_texture_normal[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			block_sheet_texture_normal[e_block_sheet.ANIMATED][f] = texture_duplicate(spr_default_normal)
 	}
 	
 	log("Block textures all", "done")

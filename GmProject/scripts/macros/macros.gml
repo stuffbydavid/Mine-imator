@@ -173,6 +173,7 @@ function macros()
 	
 	// World
 	#macro block_size					16
+	#macro block_size_list				array(16, 32, 64)
 	#macro item_size					16
 	#macro clip_near					1
 	

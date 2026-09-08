@@ -23,14 +23,14 @@ function res_load_legacy_block_sheet(fn, format)
 	
 	// Create new surface
 	var newsurf, newtex;
-	newsurf = surface_create(minecraft_block_sheet_size[0] * blocksize, minecraft_block_sheet_size[1] * blocksize)
+	newsurf = surface_create(minecraft_block_sheet_size[e_block_sheet.STATIC16][X] * blocksize, minecraft_block_sheet_size[e_block_sheet.STATIC16][Y] * blocksize)
 	
 	surface_set_target(newsurf)
 	draw_clear_alpha(c_black, 0)
 	
 	// Draw default sheet
 	gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
-	draw_texture(mc_res.block_sheet_texture, 0, 0, blocksize / 16, blocksize / 16)
+	draw_texture(mc_res.block_sheet_texture[e_block_sheet.STATIC16], 0, 0, blocksize / 16, blocksize / 16)
 	
 	draw_texture_start()
 	for (var i = 0; i < ds_list_size(list); i++)
@@ -39,7 +39,7 @@ function res_load_legacy_block_sheet(fn, format)
 		if (name = "")
 			continue
 		
-		var newindex = ds_list_find_index(mc_assets.block_texture_list, name);
+	var newindex = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], name);
 		if (newindex < 0)
 		{
 			// Look for legacy name
@@ -50,7 +50,7 @@ function res_load_legacy_block_sheet(fn, format)
 				continue
 			}
 			
-			newindex = ds_list_find_index(mc_assets.block_texture_list, key)
+			newindex = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], key)
 			if (newindex < 0)
 			{
 				debug("Could not convert block texture", key)
@@ -61,8 +61,8 @@ function res_load_legacy_block_sheet(fn, format)
 		var oldx, oldy, newx, newy;
 		oldx = (i mod sheetwid) * blocksize
 		oldy = (i div sheetwid) * blocksize
-		newx = (newindex mod minecraft_block_sheet_size[0]) * blocksize
-		newy = (newindex div minecraft_block_sheet_size[0]) * blocksize
+		newx = (newindex mod minecraft_block_sheet_size[e_block_sheet.STATIC16][X]) * blocksize
+		newy = (newindex div minecraft_block_sheet_size[e_block_sheet.STATIC16][X]) * blocksize
 		
 		// Overwrite default texture
 		gpu_set_blendmode(bm_subtract)

@@ -3594,11 +3594,15 @@
 	"resources/": {
 		"pack/": {
 			"image": "Resource pack asset",
+			"material": "Material",
 			"image/": {
 				"modeltexture": "Texture to view",
 				"blocksheet": "Block sheet",
 				"blocksheetstatic": "Static",
 				"blocksheetanimated": "Animated",
+				"blocksheetsize16": "16x16",
+				"blocksheetsize32": "32x32",
+				"blocksheetsize64": "64x64",
 				"colormap": "Color map",
 				"colormapgrass": "Grass",
 				"colormapfoliage": "Foliage",
@@ -3607,7 +3611,6 @@
 				"particlesimage1": "Sheet 1",
 				"particlesimage2": "Sheet 2"
 			},
-			"material": "Material",
 			"material/": {
 				"diffuse": "Diffuse",
 				"material": "Material",

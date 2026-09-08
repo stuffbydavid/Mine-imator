@@ -13,7 +13,7 @@ function background_ground_update_texture_normal()
 	if (background_ground_normal_ani)
 	{
 		if (background_ground_ani_tex_normal[0] != null)
-			for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
+			for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
 				texture_free(background_ground_ani_texture_normal[f])
 	}
 	else if (background_ground_texture_normal != null)
@@ -22,30 +22,30 @@ function background_ground_update_texture_normal()
 	var size, bx, by, surf, tex;
 	
 	// In static block list
-	if (background_ground_slot < ds_list_size(mc_assets.block_texture_list))
+	if (background_ground_slot < ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]))
 	{
 		background_ground_normal_ani = false
-		size = ceil(texture_width(background_ground_tex_normal.block_sheet_tex_normal) / minecraft_block_sheet_size[0])
-		bx = (background_ground_slot mod minecraft_block_sheet_size[0]) * size
-		by = (background_ground_slot div minecraft_block_sheet_size[0]) * size
+		size = ceil(texture_width(background_ground_tex_normal.block_sheet_texture_normal[e_block_sheet.STATIC16]) / minecraft_block_sheet_size[e_block_sheet.STATIC16][X])
+		bx = (background_ground_slot mod minecraft_block_sheet_size[e_block_sheet.STATIC16][X]) * size
+		by = (background_ground_slot div minecraft_block_sheet_size[e_block_sheet.STATIC16][X]) * size
 	}
 	
 	// In animated block list
 	else
 	{
 		// Static block sheet only
-		if (background_ground_tex_normal.block_sheet_ani_tex_normal = null)
+		if (background_ground_tex_normal.block_sheet_texture_normal[e_block_sheet.ANIMATED] = null)
 		{
 			background_ground_normal_ani = false
 			background_ground_texture_normal = sprite_duplicate(spr_default_normal)
 			return 0
 		}
 		
-		var slot = background_ground_slot - ds_list_size(mc_assets.block_texture_list);
+		var slot = background_ground_slot - ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]);
 		background_ground_normal_ani = true
-		size = ceil(texture_width(background_ground_tex_normal.block_sheet_ani_tex_normal[0]) / minecraft_block_animated_sheet_size[0])
-		bx = (slot mod minecraft_block_animated_sheet_size[0]) * size
-		by = (slot div minecraft_block_animated_sheet_size[0]) * size
+		size = ceil(texture_width(background_ground_tex_normal.block_sheet_texture_normal[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X])
+		bx = (slot mod minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
+		by = (slot div minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 	}
 	
 	draw_texture_start()
@@ -55,10 +55,10 @@ function background_ground_update_texture_normal()
 		// Animated
 		if (background_ground_normal_ani)
 		{
-			for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
+			for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
 			{
 				draw_clear_alpha(c_black, 0)
-				draw_texture_part(background_ground_tex_normal.block_sheet_ani_tex_normal[f], 0, 0, bx, by, size, size)
+				draw_texture_part(background_ground_tex_normal.block_sheet_texture_normal[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
 				background_ground_ani_texture_normal[f] = texture_surface(surf)
 			}
 		}
@@ -67,7 +67,7 @@ function background_ground_update_texture_normal()
 		else
 		{
 			draw_clear_alpha(c_black, 0)
-			draw_texture_part(background_ground_tex_normal.block_sheet_tex_normal, 0, 0, bx, by, size, size)
+			draw_texture_part(background_ground_tex_normal.block_sheet_texture_normal[e_block_sheet.STATIC16], 0, 0, bx, by, size, size)
 			background_ground_texture_normal = texture_surface(surf)
 		}
 	}

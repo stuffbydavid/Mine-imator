@@ -10,7 +10,7 @@ function action_toolbar_importimage_type(type)
 		with (popup_importimage)
 		{
 			is_sheet = true
-			sheet_size = vec2(minecraft_item_sheet_size[0], minecraft_item_sheet_size[1])
+			sheet_size = vec2(minecraft_item_sheet_size[X], minecraft_item_sheet_size[Y])
 			
 			if (texture_width(texture) < item_size * 8 || texture_height(texture) < item_size * 8) // Probably too small to be a sheet
 				is_sheet = false

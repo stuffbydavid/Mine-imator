@@ -92,7 +92,7 @@ function res_load_pack_item_textures(type, suffix)
 	// Create surface of items
 	log("Item textures", "surface")
 	draw_texture_start()
-	surf = surface_create(minecraft_item_sheet_size[0] * itemsize, minecraft_item_sheet_size[1] * itemsize)
+	surf = surface_create(minecraft_item_sheet_size[X] * itemsize, minecraft_item_sheet_size[Y] * itemsize)
 	surface_set_target(surf)
 	{
 		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
@@ -102,8 +102,8 @@ function res_load_pack_item_textures(type, suffix)
 		{
 			var tex, dx, dy;
 			tex = texlist[|t]
-			dx = (t mod minecraft_item_sheet_size[0]) * itemsize
-			dy = (t div minecraft_item_sheet_size[0]) * itemsize
+			dx = (t mod minecraft_item_sheet_size[X]) * itemsize
+			dy = (t div minecraft_item_sheet_size[X]) * itemsize
 			
 			if (tex != null)
 			{
@@ -117,7 +117,7 @@ function res_load_pack_item_textures(type, suffix)
 			{
 				if (type = "diffuse" && id != mc_res)
 					draw_texture_part(mc_res.item_sheet_texture, dx, dy,
-									  (t mod minecraft_item_sheet_size[0]) * item_size, (t div minecraft_item_sheet_size[0]) * item_size,
+									  (t mod minecraft_item_sheet_size[X]) * item_size, (t div minecraft_item_sheet_size[X]) * item_size,
 									  item_size, item_size, itemsize / item_size, itemsize / item_size)
 				
 				if (type = "material")

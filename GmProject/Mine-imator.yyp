@@ -946,6 +946,7 @@
     {"id":{"name":"action_res_model_load","path":"scripts/action_res_model_load/action_res_model_load.yy",},},
     {"id":{"name":"action_res_pack_load","path":"scripts/action_res_pack_load/action_res_pack_load.yy",},},
     {"id":{"name":"action_res_preview_pack_block_sheet_ani","path":"scripts/action_res_preview_pack_block_sheet_ani/action_res_preview_pack_block_sheet_ani.yy",},},
+    {"id":{"name":"action_res_preview_pack_block_sheet_size","path":"scripts/action_res_preview_pack_block_sheet_size/action_res_preview_pack_block_sheet_size.yy",},},
     {"id":{"name":"action_res_preview_pack_colormap","path":"scripts/action_res_preview_pack_colormap/action_res_preview_pack_colormap.yy",},},
     {"id":{"name":"action_res_preview_pack_image_material","path":"scripts/action_res_preview_pack_image_material/action_res_preview_pack_image_material.yy",},},
     {"id":{"name":"action_res_preview_pack_image","path":"scripts/action_res_preview_pack_image/action_res_preview_pack_image.yy",},},

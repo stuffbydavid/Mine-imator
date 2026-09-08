@@ -25,9 +25,9 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	var tex, texprev, texani;
 	var texmat, texmatprev, texanimat, texanimatsheet;
 	var texnormal, texnormalprev, texaninormal;
-	tex = res[0].block_sheet_texture
-	texmat = res[1].block_sheet_texture_material
-	texnormal = res[2].block_sheet_tex_normal
+	tex = res[0].block_sheet_texture[e_block_sheet.STATIC16]
+	texmat = res[1].block_sheet_texture_material[e_block_sheet.STATIC16]
+	texnormal = res[2].block_sheet_texture_normal[e_block_sheet.STATIC16]
 	
 	render_set_uniform_int("uMaterialFormat", res[1].material_format)
 	
@@ -35,22 +35,22 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	texmatprev = texmat
 	texnormalprev = texnormal
 	
-	if (res[0].block_sheet_ani_texture != null)
-		texani = res[0].block_sheet_ani_texture[block_texture_get_frame()]
+	if (res[0].block_sheet_texture[e_block_sheet.ANIMATED] != null)
+		texani = res[0].block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	else
-		texani = mc_res.block_sheet_ani_texture[block_texture_get_frame()]
+		texani = mc_res.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	
-	texanimatsheet = (res[1].block_sheet_ani_texture_material = null)
+	texanimatsheet = (res[1].block_sheet_texture_material[e_block_sheet.ANIMATED] = null)
 	
 	if (!texanimatsheet)
-		texanimat = res[1].block_sheet_ani_texture_material[block_texture_get_frame()]
+		texanimat = res[1].block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	else
-		texanimat = mc_res.block_sheet_ani_texture_material[block_texture_get_frame()]
+		texanimat = mc_res.block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	
-	if (res[2].block_sheet_ani_tex_normal != null)
-		texaninormal = res[2].block_sheet_ani_tex_normal[block_texture_get_frame()]
+	if (res[2].block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
+		texaninormal = res[2].block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	else
-		texaninormal = mc_res.block_sheet_ani_tex_normal[block_texture_get_frame()]
+		texaninormal = mc_res.block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	
 	var blend = shader_blend_color;
 	render_set_texture(tex)
@@ -62,8 +62,60 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 	
 	#region Depth 0
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL])
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16]))
+		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16])
+
+	// High-resolution sheets
+	var materialformatprev = res[1].material_format
+	for (var s = e_block_sheet.STATIC32; s < e_block_sheet.static_amount; s++)
+	{
+		var staticvbuffer = e_block_vbuffer.STATIC32 + s - e_block_sheet.STATIC32
+		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, staticvbuffer]))
+		{
+			var statictex = res[0].block_sheet_texture[s]
+			var statictexmat = res[1].block_sheet_texture_material[s]
+			var statictexnormal = res[2].block_sheet_texture_normal[s]
+			var staticmaterialformat = res[1].material_format
+
+			if (statictex = null)
+				statictex = mc_res.block_sheet_texture[s]
+			if (statictexmat = null)
+			{
+				statictexmat = mc_res.block_sheet_texture_material[s]
+				staticmaterialformat = mc_res.material_format
+			}
+			if (statictexnormal = null)
+				statictexnormal = mc_res.block_sheet_texture_normal[s]
+
+			if (staticmaterialformat != materialformatprev)
+			{
+				render_set_uniform_int("uMaterialFormat", staticmaterialformat)
+				materialformatprev = staticmaterialformat
+			}
+
+			if (statictex != texprev)
+			{
+				render_set_texture(statictex)
+				texprev = statictex
+			}
+
+			if (statictexmat != texmatprev)
+			{
+				render_set_texture(statictexmat, "Material")
+				texmatprev = statictexmat
+			}
+
+			if (statictexnormal != texnormalprev)
+			{
+				render_set_texture(statictexnormal, "Normal")
+				texnormalprev = statictexnormal
+			}
+
+			vbuffer_render(vbuffer[e_block_depth.DEPTH0, staticvbuffer])
+		}
+	}
+	if (materialformatprev != res[1].material_format)
+		render_set_uniform_int("uMaterialFormat", res[1].material_format)
 	
 	// Grass
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
@@ -167,8 +219,8 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		texnormalprev = texnormal
 	}
 	
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.NORMAL])
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16]))
+		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16])
 	
 	// Grass 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS]))
@@ -305,8 +357,8 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	#endregion
 	
 	#region Depth 2
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL])
+	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16]))
+		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16])
 	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
 	{

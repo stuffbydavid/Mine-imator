@@ -119,7 +119,7 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
+					if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
 						texobj = mc_res
 				}
 				else
@@ -176,7 +176,7 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_texture_material_map = null && texobj.block_sheet_texture_material = null) // Model has no texture, use Minecraft
+					if (texobj.model_texture_material_map = null && texobj.block_sheet_texture_material[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
 						texobj = mc_res
 				}
 			}
@@ -233,7 +233,7 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_tex_normal_map = null && texobj.block_sheet_tex_normal = null) // Model has no texture, use Minecraft
+					if (texobj.model_tex_normal_map = null && texobj.block_sheet_texture_normal[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
 						texobj = mc_res
 				}
 			}
@@ -315,7 +315,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != mc_res && res.block_sheet_texture != null)
+				if (res != mc_res && res.block_sheet_texture[e_block_sheet.STATIC16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			
@@ -701,17 +701,17 @@ function list_init(name)
 				
 				if (name = "backgroundgroundtexmaterial") // Material
 				{
-					if (res != mc_res && res.block_sheet_texture_material != null)
+					if (res != mc_res && res.block_sheet_texture_material[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 				else if (name = "backgroundgroundtexnormal") // Normal
 				{
-					if (res != mc_res && res.block_sheet_tex_normal != null)
+					if (res != mc_res && res.block_sheet_texture_normal[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 				else // Diffuse
 				{
-					if (res != mc_res && res.block_sheet_texture != null)
+					if (res != mc_res && res.block_sheet_texture[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 			}
@@ -742,6 +742,14 @@ function list_init(name)
 			menu_add_item("material", text_get("resourcespackmaterialmaterial"))
 			menu_add_item("normal", text_get("resourcespackmaterialnormal"))
 			
+			break
+		}
+
+		case "resourcespackimageblocksheetsize":
+		{
+			for (var size = 0; size < e_block_sheet.static_amount; size++)
+				menu_add_item(size, text_get("resourcespackimageblocksheetsize" + string(block_size_list[size])))
+
 			break
 		}
 		
@@ -819,7 +827,7 @@ function list_init(name)
 				{
 					if (texobj.model_format = e_model_format.BLOCK)
 					{
-						if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
+						if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
 							texobj = mc_res
 					}
 					else
@@ -1040,7 +1048,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != texobj && res.block_sheet_texture != null)
+				if (res != texobj && res.block_sheet_texture[e_block_sheet.STATIC16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			

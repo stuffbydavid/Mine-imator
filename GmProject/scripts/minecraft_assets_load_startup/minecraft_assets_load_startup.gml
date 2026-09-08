@@ -20,6 +20,7 @@ function minecraft_assets_load_startup()
 	load_assets_map = null
 	load_assets_type_map = null
 	load_assets_block_index = 0
+	load_assets_block_preview_buffer = array_create(e_block_sheet.static_amount, null)
 	window_set_size(load_assets_width, load_assets_height)
 	alarm[0] = 1
 	

@@ -352,7 +352,7 @@ function preview_draw(preview, xx, yy, width, height)
 								if (select.model.model_format = e_model_format.BLOCK)
 								{
 									var res;
-									if (select.model_tex != null && select.model_tex.block_sheet_texture != null)
+									if (select.model_tex != null && select.model_tex.block_sheet_texture[e_block_sheet.STATIC16] != null)
 										res = select.model_tex
 									else
 										res = mc_res
@@ -566,11 +566,11 @@ function preview_draw(preview, xx, yy, width, height)
 								case "blocksheet":
 								{
 									if (pack_image_material = "diffuse")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame(true)] : select.block_sheet_texture)
+										tex = (pack_block_sheet_ani ? select.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture[pack_block_sheet_size])
 									else if (pack_image_material = "material")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture_material[block_texture_get_frame(true)] : select.block_sheet_texture_material)
+										tex = (pack_block_sheet_ani ? select.block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture_material[pack_block_sheet_size])
 									else if (pack_image_material = "normal")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_tex_normal[block_texture_get_frame(true)] : select.block_sheet_tex_normal)
+										tex = (pack_block_sheet_ani ? select.block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture_normal[pack_block_sheet_size])
 									
 									break
 								}
@@ -634,7 +634,7 @@ function preview_draw(preview, xx, yy, width, height)
 							break
 						
 						case e_res_type.BLOCK_SHEET:
-							tex = select.block_sheet_texture
+							tex = select.block_sheet_texture[e_block_sheet.STATIC16]
 							break
 						
 						case e_res_type.TEXTURE:

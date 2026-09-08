@@ -12,6 +12,7 @@ function preview_event_create()
 	pack_image_material = "diffuse"
 	pack_model_texture = "entity/player/wide/steve"
 	pack_block_sheet_ani = false
+	pack_block_sheet_size = e_block_sheet.STATIC16
 	pack_colormap = 0
 	pack_particles = 0
 	pack_moon_phase = 0

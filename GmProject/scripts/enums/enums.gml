@@ -952,6 +952,17 @@ function enums()
 		VERTICAL,
 		HORIZONTAL
 	}
+
+	// Block sheet
+	enum e_block_sheet
+	{
+		STATIC16,
+		STATIC32,
+		STATIC64,
+		ANIMATED,
+		amount,
+		static_amount = 3
+	}
 	
 	// Buffer Depth
 	enum e_block_depth
@@ -965,7 +976,9 @@ function enums()
 	// Buffers
 	enum e_block_vbuffer
 	{
-		NORMAL,
+		STATIC16,
+		STATIC32,
+		STATIC64,
 		ANIMATED,
 		GRASS,
 		FOLIAGE,

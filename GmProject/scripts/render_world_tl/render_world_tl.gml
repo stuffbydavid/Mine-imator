@@ -298,7 +298,7 @@ function render_world_tl()
 					var res = value_inherit[e_value.TEXTURE_OBJ];
 					if (res = null)
 						res = temp.model_tex
-					if (res = null || res.block_sheet_texture = null)
+					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					render_world_block(temp.model.block_vbuffer, res)
 					

@@ -58,7 +58,7 @@ function draw_texture_picker(select, tex, xx, yy, wid, hei, slots, slotsx, slots
 			curslotsx = slotsx
 			curslotsy = slotsy
 			if (res)
-				col = block_texture_get_blend(mc_assets.block_texture_list[|curslot], res)
+				col = block_texture_get_blend(mc_assets.block_texture_list[e_block_sheet.STATIC16][|curslot], res)
 		}
 		else
 		{

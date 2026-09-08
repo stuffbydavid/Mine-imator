@@ -27,7 +27,7 @@ function minecraft_assets_reload()
 		
 		// Characters
 		var characterslist = map[?"characters"];
-		if (is_undefined(characterslist))
+		if (!ds_list_valid(characterslist))
 		{
 			log("No character list found")
 			break
@@ -49,7 +49,7 @@ function minecraft_assets_reload()
 		
 		// Special blocks
 		var specialblockslist = map[?"special_blocks"];
-		if (is_undefined(specialblockslist))
+		if (!ds_list_valid(specialblockslist))
 		{
 			log("No special block list found")
 			break

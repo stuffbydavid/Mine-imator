@@ -75,7 +75,7 @@ function app_startup_interface_popups()
 		value_script = null
 		texture = null
 		is_sheet = true
-		sheet_size = vec2(minecraft_item_sheet_size[0], minecraft_item_sheet_size[1])
+		sheet_size = vec2(minecraft_item_sheet_size[X], minecraft_item_sheet_size[Y])
 		sheet_size_def = sheet_size
 		tbx_sheet_width = new_textbox_integer()
 		tbx_sheet_height = new_textbox_integer()

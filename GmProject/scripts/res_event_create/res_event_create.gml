@@ -44,13 +44,9 @@ function res_event_create()
 	player_skin = false
 	pack_format = e_minecraft_pack.LATEST
 	
-	block_sheet_texture = null
-	block_sheet_texture_material = null
-	block_sheet_tex_normal = null
-	
-	block_sheet_ani_texture = null
-	block_sheet_ani_texture_material = null
-	block_sheet_ani_tex_normal = null
+	block_sheet_texture = array_create(e_block_sheet.amount, null)
+	block_sheet_texture_material = array_create(e_block_sheet.amount, null)
+	block_sheet_texture_normal = array_create(e_block_sheet.amount, null)
 	
 	block_sheet_depth_list = null
 	block_sheet_ani_depth_list = null

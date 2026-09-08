@@ -44,7 +44,7 @@ function project_reset_background()
 	background_ground_tex_normal = mc_res
 	background_ground_tex_normal.count++
 	background_ground_name = default_ground
-	background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
+	background_ground_slot = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], background_ground_name)
 	background_ground_slot_prev = null
 	background_ground_slot_normal = null
 	background_ground_slot_material = null

@@ -80,7 +80,7 @@ function render_world_particle()
 				if (temp.model.model_format = e_model_format.BLOCK)
 				{
 					var res;
-					if (temp.model_tex != null && temp.model_tex.block_sheet_texture != null)
+					if (temp.model_tex != null && temp.model_tex.block_sheet_texture[e_block_sheet.STATIC16] != null)
 						res = temp.model_tex
 					else
 						res = mc_res

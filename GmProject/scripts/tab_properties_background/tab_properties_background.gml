@@ -258,9 +258,9 @@ function tab_properties_background()
 		draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 		
 		if (background_ground_ani)
-			draw_texture_slot(res.block_sheet_ani_texture[block_texture_get_frame(true)], background_ground_slot - ds_list_size(mc_assets.block_texture_list), dx + wid + 18, dy + 6, 16, 16, minecraft_block_animated_sheet_size[0], minecraft_block_animated_sheet_size[1], block_texture_get_blend(background_ground_name, res))
+			draw_texture_slot(res.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame(true)], background_ground_slot - ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]), dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[e_block_sheet.ANIMATED][X], minecraft_block_sheet_size[e_block_sheet.ANIMATED][Y], block_texture_get_blend(background_ground_name, res))
 		else
-			draw_texture_slot(res.block_sheet_texture, background_ground_slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[0], minecraft_block_sheet_size[1], block_texture_get_blend(background_ground_name, res))
+			draw_texture_slot(res.block_sheet_texture[e_block_sheet.STATIC16], background_ground_slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[e_block_sheet.STATIC16][X], minecraft_block_sheet_size[e_block_sheet.STATIC16][Y], block_texture_get_blend(background_ground_name, res))
 		
 		if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 24, 24, ground_editor.show, icons.PENCIL, null, false, "tooltipchangeground"))
 			tab_toggle(ground_editor)
