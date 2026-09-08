@@ -247,6 +247,8 @@ public:
 	}
 };
 
+class StringId;
+
 class String : public std::string
 {
 public:
@@ -254,6 +256,9 @@ public:
 	String() = default;
 	String(const std::string& value) : std::string(value) {}
 	String(std::string&& value) : std::string(std::move(value)) {}
+	String(const int& value) : std::string(std::to_string(value)) {}
+	String(const double& value) : std::string(std::to_string(value)) {}
+
 	int size() const noexcept
 	{
 		return static_cast<int>(std::string::size());
@@ -415,6 +420,8 @@ inline List<String> String::split(const String& delimiter) const
 	return result;
 }
 
+String toStringValue(const StringId& value);
+
 // Compile-time detection keeps toStringValue compatible with translated
 // classes that expose a translated toString method.
 template<class T, class = void>
@@ -431,36 +438,23 @@ String toStringValue(const T& value)
 	using ValueType = std::decay_t<T>;
 
 	if constexpr (std::is_same_v<ValueType, String>)
-	{
 		return value;
-	}
 	else if constexpr (std::is_same_v<ValueType, std::string>)
-	{
 		return String(value);
-	}
-	else if constexpr (std::is_same_v<ValueType, const char*> ||
-					  std::is_same_v<ValueType, char*>)
-	{
+	else if constexpr (std::is_same_v<ValueType, const char*> || std::is_same_v<ValueType, char*>)
 		return String(value);
-	}
 	else if constexpr (std::is_same_v<ValueType, char>)
-	{
 		return String(1, value);
-	}
 	else if constexpr (std::is_same_v<ValueType, bool>)
-	{
 		return value ? "True" : "False";
-	}
-	else if constexpr (std::is_floating_point_v<std::decay_t<T>>)
+	else if constexpr (std::is_floating_point_v<ValueType>)
 	{
 		std::ostringstream stream;
 		stream << std::setprecision(15) << value;
 		return stream.str();
 	}
-	else if constexpr (std::is_enum_v<T>)
-	{
-		return toStringValue(static_cast<std::underlying_type_t<T>>(value));
-	}
+	else if constexpr (std::is_enum_v<ValueType>)
+		return toStringValue(static_cast<std::underlying_type_t<ValueType>>(value));
 	else if constexpr (std::is_integral_v<ValueType>)
 	{
 		char buffer[std::numeric_limits<ValueType>::digits10 + 3];
@@ -468,15 +462,9 @@ String toStringValue(const T& value)
 		return String(buffer, result.ptr);
 	}
 	else if constexpr (HasToString<T>::value)
-	{
 		return value.toString();
-	}
 	else
-	{
-		std::ostringstream stream;
-		stream << value;
-		return stream.str();
-	}
+		return String(value);
 }
 
 inline String operator+(const String& left, const String& right)
@@ -495,140 +483,106 @@ inline String operator+(String&& left, const String& right)
 	return std::move(left);
 }
 
+inline String operator+(const char* left, const String& right)
+{
+	return String(left) + right;
+}
+
+inline String operator+(const String& left, const char* right)
+{
+	return left + String(right);
+}
+
 template<class T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, String>, int> = 0>
 String operator+(const String& left, const T& right)
 {
-	if constexpr (std::is_convertible_v<const T&, std::string_view>)
-	{
-		const std::string_view converted(right);
-		String result;
-		result.reserve(left.size() + converted.size());
-		result.append(left);
-		result.append(converted.data(), converted.size());
-		return result;
-	}
-	else
-	{
-		const String converted = toStringValue(right);
-		String result;
-		result.reserve(left.size() + converted.size());
-		result.append(left);
-		result.append(converted);
-		return result;
-	}
+	const String converted = toStringValue(right);
+	String result;
+	result.reserve(left.size() + converted.size());
+	result.append(left);
+	result.append(converted);
+	return result;
 }
 
 template<class T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, String>, int> = 0>
 String operator+(String&& left, const T& right)
 {
-	if constexpr (std::is_convertible_v<const T&, std::string_view>)
-	{
-		const std::string_view converted(right);
-		left.reserve(left.size() + converted.size());
-		left.append(converted.data(), converted.size());
-	}
-	else
-	{
-		const String converted = toStringValue(right);
-		left.reserve(left.size() + converted.size());
-		left.append(converted);
-	}
+	const String converted = toStringValue(right);
+	left.reserve(left.size() + converted.size());
+	left.append(converted);
 	return std::move(left);
 }
 
 template<class T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, String>, int> = 0>
 String operator+(const T& left, const String& right)
 {
+	const String converted = toStringValue(left);
 	String result;
-	if constexpr (std::is_convertible_v<const T&, std::string_view>)
-	{
-		const std::string_view converted(left);
-		result.assign(converted.data(), converted.size());
-	}
-	else
-	{
-		result = toStringValue(left);
-	}
-	result.reserve(result.size() + right.size());
+	result.reserve(converted.size() + right.size());
+	result.append(converted);
 	result.append(right);
 	return result;
 }
 
-// Small immutable handle for frequently copied scope names. Unique strings are
-// retained once, while ResolveScope copies only a pointer-sized handle.
-class InternedString
+// Optimized string identifier used during resolve stage, using a lookup table in Strings.hpp.
+class StringId
 {
-	const String* value_{};
+	int id_{0};
 
-	static const String& empty()
-	{
-		static const String value;
-		return value;
-	}
-
-	static const String& intern(const String& value)
-	{
-		if (value.empty())
-			return empty();
-
-		static std::unordered_map<std::string, std::unique_ptr<String>> values;
-		auto found = values.find(value);
-		if (found != values.end())
-			return *found->second;
-
-		auto stored = std::make_unique<String>(value);
-		const String& result = *stored;
-		values.emplace(value, std::move(stored));
-		return result;
-	}
+	void set(const String& value);
 
 public:
-	InternedString() : value_(&empty()) {}
-	InternedString(const String& value) : value_(&intern(value)) {}
-	InternedString(const char* value) : value_(&intern(value)) {}
+	StringId() { clear(); }
+	StringId(const StringId& other) { id_ = other.id_; }
+	StringId(const String& value) { set(value); }
+	StringId(const char* value) { set(value); }
+	StringId(const int& id) { id_ = id; }
 
-	InternedString& operator=(const String& value)
+	StringId& operator=(const StringId& other) { id_ = other.id_; return *this; }
+	StringId& operator=(const String& value) { set(value); return *this; }
+	StringId& operator=(const char* value) { set(value); return *this; }
+	StringId& operator=(int id) { id_ = id; return *this; }
+
+	void clear() noexcept { id_ = 0; }
+
+	operator const String& () const;
+	const int& id() const { return id_; };
+
+	bool operator==(const StringId& other) const { return id_ == other.id_; }
+	bool operator!=(const StringId& other) const { return id_ != other.id_; }
+	bool operator==(const int& other) const { return id_ == other; }
+	bool operator!=(const int& other) const { return id_ != other; }
+
+	static void initialize();
+	static List<String> allValues();
+};
+
+inline String toStringValue(const StringId& value)
+{
+	return static_cast<const String&>(value);
+}
+
+struct StringIdHash
+{
+	std::size_t operator()(const StringId& value) const noexcept
 	{
-		value_ = &intern(value);
-		return *this;
+		return std::hash<int>{}(value.id());
 	}
-
-	InternedString& operator=(const char* value)
-	{
-		value_ = &intern(value);
-		return *this;
-	}
-
-	void clear() noexcept
-	{
-		value_ = &empty();
-	}
-
-	const String& get() const { return *value_; }
-	operator const String&() const { return *value_; }
-	String toString() const { return *value_; }
-
-	bool operator==(const InternedString& other) const { return value_ == other.value_; }
-	bool operator!=(const InternedString& other) const { return !(*this == other); }
-	bool operator==(const String& other) const { return *value_ == other; }
-	bool operator!=(const String& other) const { return !(*this == other); }
-	bool operator==(const char* other) const { return *value_ == other; }
-	bool operator!=(const char* other) const { return !(*this == other); }
 };
 
 // Dictionary that preserves previous insertion order and average O(1) lookup.
 template<class V>
 class OrderedMap
 {
-	std::unordered_map<std::string, std::size_t> indices_;
+	std::unordered_map<StringId, std::size_t, StringIdHash> indices_;
 
 public:
-	List<String> keys;
+	List<StringId> keys;
 	List<V> values;
 
 	OrderedMap() = default;
 
-	OrderedMap(std::initializer_list<std::pair<String, V>> values)
+	OrderedMap(std::initializer_list<std::pair<StringId, V>> values)
 	{
 		indices_.reserve(values.size());
 		keys.reserve(values.size());
@@ -637,12 +591,12 @@ public:
 			add(value.first, value.second);
 	}
 
-	bool containsKey(const String& key) const
+	bool containsKey(const StringId& key) const
 	{
 		return indices_.find(key) != indices_.end();
 	}
 
-	void add(const String& key, const V& value)
+	void add(const StringId& key, const V& value)
 	{
 		const std::size_t index = values.size();
 		const bool inserted = indices_.emplace(key, index).second;
@@ -653,7 +607,7 @@ public:
 		values.emplace_back(value);
 	}
 
-	V& operator[](const String& key)
+	V& operator[](const StringId& key)
 	{
 		const std::size_t index = values.size();
 		auto [found, inserted] = indices_.try_emplace(key, index);
@@ -665,12 +619,12 @@ public:
 		return values[found->second];
 	}
 
-	const V& operator[](const String& key) const
+	const V& operator[](const StringId& key) const
 	{
 		return values.at(indices_.at(key));
 	}
 
-	bool remove(const String& key)
+	bool remove(const StringId& key)
 	{
 		auto found = indices_.find(key);
 		if (found == indices_.end())
@@ -745,53 +699,14 @@ struct Console
 	template<class... Args>
 	static void writeLine(String format, Args&&... args)
 	{
-		List<String> values{toStringValue(std::forward<Args>(args))...};
+		List<String> values{ toStringValue(std::forward<Args>(args))...};
 		for (std::size_t i = 0; i < static_cast<std::size_t>(values.size()); ++i)
 			format = format.replace("{" + toStringValue(i) + "}", values[i]);
 
 		std::cout << format << std::endl;
 	}
-
-	static String readLine()
-	{
-		std::string result;
-		std::getline(std::cin, result);
-		return result;
-	}
 };
 
-struct Environment
-{
-	static void exit(int code)
-	{
-		std::exit(code);
-	}
-
-	static String getEnvironmentVariable(const String& name)
-	{
-#ifdef _MSC_VER
-		char* value = nullptr;
-		std::size_t length = 0;
-		if (_dupenv_s(&value, &length, name.c_str()) != 0 || value == nullptr)
-			return {};
-
-		String result(value);
-		std::free(value);
-		return result;
-#else
-		const char* value = std::getenv(name.c_str());
-		return value ? String(value) : String();
-#endif
-	}
-};
-
-struct Convert
-{
-	static int toInt32(const String& value)
-	{
-		return std::stoi(value);
-	}
-};
 
 struct File
 {
@@ -1113,7 +1028,7 @@ public:
 		if (kind == Text)
 			return text;
 		if (kind == Number)
-			return toStringValue(number);
+			return String(number);
 		if (kind == Bool)
 			return boolean ? "true" : "false";
 
@@ -1126,3 +1041,16 @@ struct JsonConvert
 	static Json deserializeObject(const String& source);
 };
 } // namespace CppGen
+
+namespace std
+{
+template<>
+struct hash<CppGen::String>
+{
+	std::size_t operator()(const CppGen::String& value) const noexcept
+	{
+		return hash<std::string_view>{}(std::string_view(value.data(), value.size()));
+	}
+};
+
+}
