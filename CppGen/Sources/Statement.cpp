@@ -648,6 +648,16 @@ void WithStatement::writeCpp(ResolveScope* scope)
 	StringId newScope = DataType::allVarType ? STR(any) : this->expr->resolvedType->getUniqueReferenceId();
 	StringId previousScope = DataType::allVarType ? STR(any) : this->otherScope;
 
+	// Fix stale resolved type from unchained accessor
+	if (!DataType::allVarType && this->expr->type == Expression::Type::Accessor &&
+		static_cast<Accessor*>(this->expr)->nextInChain == nullptr)
+	{
+		Accessor* exprAccessor = static_cast<Accessor*>(this->expr);
+		StringId accessorScope = exprAccessor->getNextInChainScope(withScope);
+		if (Program::objects.containsKey(accessorScope))
+			newScope = accessorScope;
+	}
+
 	StringId exprAccName = this->expr->getAccessorName();
 	if (Program::objects.containsKey(exprAccName)) // with (objName)
 	{
