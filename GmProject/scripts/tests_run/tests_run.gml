@@ -78,8 +78,8 @@ function tests_run()
 	if (test_render_settings != "")
 		argssettingsqueue = string_split_escaped(test_render_settings, " ")
 
-	with (renderpreset)
-		render_preset_copy_settings(render_default_settings)
+	with (render_default_settings)
+		render_preset_copy(renderpreset)
 	
 	// Show objects under "TestEnabled" folder
 	with (obj_timeline)
@@ -140,8 +140,8 @@ function tests_run()
 				continue
 				
 			// Restore settings and camera to the base state for each renderer
-			with (renderpreset)
-				render_preset_copy_settings(render_default_settings)
+			with (render_default_settings)
+				render_preset_copy(renderpreset)
 			render_apply_settings(renderpreset, e_renderer.COMMON)
 
 			if (timeline_camera)

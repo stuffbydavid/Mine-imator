@@ -75,7 +75,7 @@ function popup_exportmovie_draw()
 	{
 		// Remove background
 		tab_control_checkbox()
-		draw_checkbox("exportmovieremovebackground", dx, dy, popup.remove_background, action_toolbar_exportmovie_remove_background)
+		draw_checkbox("exportmovieremovebackground", dx, dy, popup.remove_background, action_toolbar_export_remove_background)
 		tab_next()
 		
 		if (popup.remove_background)
@@ -91,12 +91,12 @@ function popup_exportmovie_draw()
 	
 	// Include hidden
 	tab_control_checkbox()
-	draw_checkbox("exportmovieincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportmovie_include_hidden)
+	draw_checkbox("exportmovieincludehidden", dx, dy, popup.include_hidden, action_toolbar_export_include_hidden)
 	tab_next()
 	
 	// Watermark
 	tab_control_checkbox()
-	draw_checkbox("exportmoviewatermark", dx, dy, popup.watermark, action_toolbar_exportmovie_watermark)
+	draw_checkbox("exportmoviewatermark", dx, dy, popup.watermark, action_toolbar_export_watermark)
 	tab_next()
 	
 	// Save

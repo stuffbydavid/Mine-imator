@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_toolbar_export_renderer",
+  "%Name":"action_toolbar_export_watermark",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_toolbar_export_renderer",
+  "name":"action_toolbar_export_watermark",
   "parent":{
     "name":"Toolbar",
     "path":"folders/Scripts/App/Actions/Toolbar.yy",

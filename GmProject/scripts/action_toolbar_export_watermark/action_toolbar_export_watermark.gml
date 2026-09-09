@@ -1,6 +1,6 @@
-/// action_toolbar_exportmovie_watermark()
+/// action_toolbar_export_watermark()
 
-function action_toolbar_exportmovie_watermark()
+function action_toolbar_export_watermark()
 {
 	if (trial_version)
 	{

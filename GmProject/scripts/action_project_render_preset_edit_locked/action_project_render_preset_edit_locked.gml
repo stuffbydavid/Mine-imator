@@ -8,8 +8,8 @@ function action_project_render_preset_edit_locked()
 	if (history_undo && history_data.save_render_preset_locked)
 	{
 		// Restore old custom settings
-		with (custom)
-			render_preset_copy_settings(history_data)
+		with (history_data)
+			render_preset_copy(custom)
 		action_project_render_preset(render_preset_edit.file)
 		return 0
 	}
@@ -24,17 +24,17 @@ function action_project_render_preset_edit_locked()
 	{
 		var hobj = history_set(action_project_render_preset_edit_locked);
 		hobj.save_render_preset_locked = true
+		
+		// Save previous custom values
 		with (hobj)
-		{
-			// Save previous custom values
 			render_preset_clear()
-			render_preset_copy_settings(custom)
-		}
+		with (custom)
+			render_preset_copy(hobj)
 	}
 	
 	// Copy values
-	with (custom)
-		render_preset_copy_settings(render_preset_edit)
+	with (render_preset_edit)
+		render_preset_copy(custom)
 	
 	project_render_preset[renderer_edit] = "custom"
 	render_preset_edit = custom

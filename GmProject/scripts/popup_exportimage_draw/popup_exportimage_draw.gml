@@ -38,7 +38,7 @@ function popup_exportimage_draw()
 	
 	// Remove background
 	tab_control_checkbox()
-	draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_exportimage_remove_background)
+	draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_export_remove_background)
 	tab_next()
 	
 	if (popup.remove_background)
@@ -46,12 +46,12 @@ function popup_exportimage_draw()
 	
 	// Include hidden
 	tab_control_checkbox()
-	draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportimage_include_hidden)
+	draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_export_include_hidden)
 	tab_next()
 	
 	// Watermark
 	tab_control_checkbox()
-	draw_checkbox("exportimagewatermark", dx, dy, popup.watermark, action_toolbar_exportimage_watermark)
+	draw_checkbox("exportimagewatermark", dx, dy, popup.watermark, action_toolbar_export_watermark)
 	tab_next()
 	
 	// Save

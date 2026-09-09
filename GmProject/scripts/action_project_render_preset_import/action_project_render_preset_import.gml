@@ -9,8 +9,8 @@ function action_project_render_preset_import(fn = "")
 		history_copy_render_settings(history_data)
 		
 		// Restore old settings of preset
-		with (render_preset_edit)
-			render_preset_copy_settings(history_data, true)
+		with (history_data)
+			render_preset_copy(render_preset_edit, true)
 
 		render_apply_settings(render_preset_edit, e_renderer.COMMON)
 		render_samples = -1
@@ -36,8 +36,9 @@ function action_project_render_preset_import(fn = "")
 			history_copy_render_settings(app)
 			
 			render_preset_clear()
-			render_preset_copy_settings(render_preset_edit, true)
 		}
+		with (render_preset_edit)
+			render_preset_copy(hobj, true)
 	}
 
 	with (render_preset_edit)

@@ -2,5 +2,11 @@
 
 function action_project_render_preset_reset()
 {
-	return action_project_render_preset_import(render_directory + render_preset_edit.file)
+	var fn;
+	if (render_preset_edit.file = "custom")
+		fn = render_default_file
+	else
+		fn = render_directory + render_preset_edit.file
+	
+	return action_project_render_preset_import(fn)
 }

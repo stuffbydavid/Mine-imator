@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_preset_copy_settings",
+  "%Name":"render_preset_copy",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_preset_copy_settings",
+  "name":"render_preset_copy",
   "parent":{
     "name":"Presets",
     "path":"folders/Scripts/Render/Presets.yy",
