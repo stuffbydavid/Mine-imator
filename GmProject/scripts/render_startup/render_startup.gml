@@ -95,7 +95,7 @@ function render_startup()
 	// Surfaces for rendering
 	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
-			  render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow,
+			  render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow, render_surface_raydata,
 			  render_surface_samples, depth_near, depth_far, render_post_index;
 			
 	render_target = null
@@ -110,6 +110,7 @@ function render_startup()
 	render_surface_normal = null
 	render_surface_material = null
 	render_surface_diffuse = null
+	render_surface_raydata = null
 	
 	render_surface_shadows = null
 	render_surface_specular = null
@@ -158,6 +159,11 @@ function render_startup()
 	globalvar render_ssao_kernel;
 	render_ssao_kernel = render_generate_sample_kernel(12)
 	
+	// Raytracing
+	globalvar render_raytrace_kernel, render_raytrace_res_ratio;
+	render_raytrace_kernel = render_generate_resolve_kernel(1)
+	render_raytrace_res_ratio = 1
+	
 	// DOF
 	globalvar render_dof_samples, render_dof_weight_samples, render_dof_sample_amount;
 	
@@ -173,8 +179,6 @@ function render_startup()
 	
 	globalvar render_samples_clear;
 	render_samples_clear = false
-	
-	
 	
 	// Render samples
 	render_samples = 0

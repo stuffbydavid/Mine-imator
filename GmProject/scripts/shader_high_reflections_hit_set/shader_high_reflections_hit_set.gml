@@ -1,22 +1,23 @@
-/// shader_high_indirect_blur_set()
+/// shader_high_reflections_hit_set()
 
-function shader_high_indirect_blur_set()
+function shader_high_reflections_hit_set()
 {
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_depth))
-	gpu_set_texrepeat_ext(sampler_map[?"uDepthBuffer"], false)
-	
 	texture_set_stage(sampler_map[?"uNormalBuffer"], surface_get_texture(render_surface_normal))
-	gpu_set_texrepeat_ext(sampler_map[?"uNormalBuffer"], false)
-	
 	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
+	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(render_surface_material))
+	
 	gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
 	gpu_set_texfilter_ext(sampler_map[?"uNoiseBuffer"], false)
+	
+	render_set_uniform("uPrecision", app.project_render_reflections_precision)
+	render_set_uniform("uThickness", app.project_render_reflections_thickness)
+	render_set_uniform("uRayDistance", min(3000, depth_far))
 	
 	render_set_uniform("uNoiseSize", render_sample_noise_size)
 	render_set_uniform("uNear", depth_near)
 	render_set_uniform("uFar", depth_far)
+	render_set_uniform("uProjMatrix", proj_matrix)
 	render_set_uniform("uProjMatrixInv", matrix_inverse_ext(proj_matrix))
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
-	render_set_uniform("uSamples", render_samples)
-	render_set_uniform("uBlurSize", app.project_render_indirect_blur_radius)
 }

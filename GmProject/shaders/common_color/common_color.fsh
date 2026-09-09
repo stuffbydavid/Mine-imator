@@ -103,3 +103,21 @@ vec3 applyToneMapper(vec3 col, int tonemapperId, float exposure, float gamma)
 
 #pragma shady: macro_end
 #endregion
+
+#region RADIANCE_LIB
+#pragma shady: macro_begin RADIANCE_LIB
+
+vec3 compressRadiance(vec3 col)
+{
+	float lum = dot(max(col, vec3(0.0)), vec3(0.2126, 0.7152, 0.0722));
+	return col / (1.0 + lum);
+}
+
+vec3 expandRadiance(vec3 col)
+{
+	float lum = dot(max(col, vec3(0.0)), vec3(0.2126, 0.7152, 0.0722));
+	return col / max(1.0 - lum, 0.001);
+}
+
+#pragma shady: macro_end
+#endregion

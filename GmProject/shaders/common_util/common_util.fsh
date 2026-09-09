@@ -53,6 +53,31 @@ vec3 posFromBuffer(vec2 coord, float depth)
 #pragma shady: macro_end
 #endregion
 
+#region NEIGHBOR_FILTER_LIB
+#pragma shady: macro_begin NEIGHBOR_FILTER_LIB
+
+// Assuming uNormalBuffer is defined in the shader, but we take centerNormal, should be fine.
+float getNeighborSurfaceWeight(vec2 sampleCoord, vec3 centerPos, vec3 centerNormal)
+{
+	if (sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0)
+		return 0.0;
+	
+	float sampleDepth = readDepth(sampleCoord);
+	if (isDepthBackground(sampleDepth))
+		return 0.0;
+	
+	vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, sampleCoord));
+	vec3 samplePos = posFromBuffer(sampleCoord, sampleDepth);
+	float normalWeight = smoothstep(0.8, 0.98, max(dot(centerNormal, sampleNormal), 0.0));
+	float planeDistance = abs(dot(samplePos - centerPos, centerNormal));
+	float depthTolerance = max(0.5, abs(centerPos.z) * 0.005);
+	float depthWeight = 1.0 - smoothstep(depthTolerance * 0.25, depthTolerance, planeDistance);
+	return normalWeight * depthWeight;
+}
+
+#pragma shady: macro_end
+#endregion
+
 #region BLUE_NOISE_DIRECTION_LIB
 #pragma shady: macro_begin BLUE_NOISE_DIRECTION_LIB
 
@@ -135,6 +160,17 @@ float radicalInverseBase2(int n)
 vec2 hammersley(int i, int sampleCount)
 {
     return vec2(float(i) / float(sampleCount), radicalInverseBase2(i));
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region MATH_FUNC_LIB
+#pragma shady: macro_begin MATH_FUNC_LIB
+
+float percent(float xx, float start, float end)
+{
+	return clamp((xx - start) / (end - start), 0.0, 1.0);
 }
 
 #pragma shady: macro_end

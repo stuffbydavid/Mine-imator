@@ -1,7 +1,7 @@
 {
   "$GMShader":"",
-  "%Name":"shader_high_raytrace_resolve",
-  "name":"shader_high_raytrace_resolve",
+  "%Name":"shader_high_reflections_resolve",
+  "name":"shader_high_reflections_resolve",
   "parent":{
     "name":"Raytracing",
     "path":"folders/Shaders/High quality/Raytracing.yy",
