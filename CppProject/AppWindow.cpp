@@ -220,7 +220,7 @@ namespace CppProject
 		else
 		{
 			if (id)
-				window_event_closed(id);
+				window_event_closed(ScopeAny(global::_app->id), id);
 
 			if (App->mouseWindow == this)
 				App->mouseWindow = App->mainWindow;

@@ -97,6 +97,8 @@ function context_menu_draw_level(argument0)
 		if (script_execute(level.level_script, dx, dy, dw, dh))
 		{
 			draw_set_alpha(1)
+			if (level.ani < 1)
+				clip_end()
 			return 0
 		}
 		

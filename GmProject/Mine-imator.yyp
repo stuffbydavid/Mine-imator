@@ -2415,6 +2415,7 @@
     {"id":{"name":"texture_width","path":"scripts/texture_width/texture_width.yy",},},
     {"id":{"name":"time_get_rotation","path":"scripts/time_get_rotation/time_get_rotation.yy",},},
     {"id":{"name":"tip_draw","path":"scripts/tip_draw/tip_draw.yy",},},
+    {"id":{"name":"tip_reset","path":"scripts/tip_reset/tip_reset.yy",},},
     {"id":{"name":"tip_set_keybind","path":"scripts/tip_set_keybind/tip_set_keybind.yy",},},
     {"id":{"name":"tip_set","path":"scripts/tip_set/tip_set.yy",},},
     {"id":{"name":"tl_animate_scenery","path":"scripts/tl_animate_scenery/tl_animate_scenery.yy",},},

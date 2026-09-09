@@ -286,6 +286,7 @@ function draw_recent()
 						{
 							project_load(item.filename)
 							window_state = ""
+							clip_end()
 					
 							return 0
 						}

@@ -91,14 +91,15 @@ function window_get_current()
 	return window_debug_current;
 }
 
-/// CppSeparate void window_create(IntType, IntType, IntType, IntType, IntType)
+/// CppSeparate void window_create(Scope<app>, IntType, IntType, IntType, IntType, IntType)
 /// Creates a new window from a rectangle relative to the current window.
 function window_create(window, xx, yy, width, height)
 {
+	tip_reset()
 	ds_list_add(window_list, window)
 }
 
-/// CppSeparate void window_close(IntType)
+/// CppSeparate void window_close(Scope<app>, IntType)
 /// Closes a window with the given e_window value.
 function window_close(window)
 {
@@ -111,6 +112,9 @@ function window_event_closed(window)
 	if (window_debug_current = window)
 		window_debug_current = e_window.MAIN
 	
+	if (tip_window = window)
+		tip_reset()
+
 	if (window = e_window.VIEW_SECOND)
 		app.view_second.show = false
 	if (window = e_window.TIMELINE)
