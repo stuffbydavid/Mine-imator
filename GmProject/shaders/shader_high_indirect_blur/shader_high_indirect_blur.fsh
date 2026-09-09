@@ -26,10 +26,7 @@ void main()
 	
 	float centerDepth = readDepth(vTexCoord);
 	if (isDepthBackground(centerDepth))
-	{
-		gl_FragColor = vec4(0.0);
-		return;
-	}
+		discard;
 	
 	vec3 centerNormal = unpackNormal(texture2D(uNormalBuffer, vTexCoord));
 	vec3 centerPos = posFromBuffer(vTexCoord, centerDepth);
@@ -76,7 +73,7 @@ void main()
 	{
 		vec2 tap = taps[i];
 		vec2 samplePos = vec2(tap.x * cosTheta - tap.y * sinTheta,
-							  tap.x * sinTheta + tap.y * cosTheta);
+								tap.x * sinTheta + tap.y * cosTheta);
 		
 		samplePos = vTexCoord + samplePos * blurScale;
 		
