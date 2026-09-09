@@ -70,9 +70,12 @@ function shader_startup()
 		new_shader("shader_high_gbuffers")
 		new_shader("shader_high_auxiliary")
 		new_shader("shader_high_subsurface_scatter")
-		new_shader("shader_high_raytrace")
-		new_shader("shader_high_raytrace_resolve")
 		new_shader("shader_high_indirect_blur")
+		new_shader("shader_high_reflections_hit")
+		new_shader("shader_high_reflections_resolve")
+		new_shader("shader_high_indirect_hit")
+		new_shader("shader_high_indirect_source")
+		new_shader("shader_high_indirect_resolve")
 		new_shader("shader_tonemap")
 		new_shader("shader_clip")
 		
@@ -444,14 +447,12 @@ function shader_startup()
 		new_shader_uniform("uNoiseSize")
 	}
 	
-	with (shader_map[?shader_high_raytrace])
+	with (shader_map[?shader_high_indirect_hit])
 	{
 		new_shader_sampler("uDepthBuffer")
 		new_shader_sampler("uNormalBuffer")
 		new_shader_sampler("uNoiseBuffer")
 		new_shader_sampler("uMaterialBuffer")
-		new_shader_sampler("uDiffuseBuffer")
-		new_shader_sampler("uDataBuffer")
 		
 		new_shader_uniform("uNoiseSize")
 		new_shader_uniform("uNear")
@@ -462,17 +463,71 @@ function shader_startup()
 		new_shader_uniform("uPrecision")
 		new_shader_uniform("uThickness")
 		
-		new_shader_uniform("uRayType")
 		new_shader_uniform("uRayDirection")
 		new_shader_uniform("uRayDistance")
+	}
+	
+	with (shader_map[?shader_high_reflections_hit])
+	{
+		new_shader_sampler("uDepthBuffer")
+		new_shader_sampler("uNormalBuffer")
+		new_shader_sampler("uNoiseBuffer")
+		new_shader_sampler("uMaterialBuffer")
 		
-		// Specular
+		new_shader_uniform("uNoiseSize")
+		new_shader_uniform("uNear")
+		new_shader_uniform("uFar")
+		new_shader_uniform("uProjMatrix")
+		new_shader_uniform("uProjMatrixInv")
+		new_shader_uniform("uScreenSize")
+		new_shader_uniform("uPrecision")
+		new_shader_uniform("uThickness")
+		
+		new_shader_uniform("uRayDirection")
+		new_shader_uniform("uRayDistance")
+	}
+	
+	with (shader_map[?shader_high_reflections_resolve])
+	{
+		new_shader_sampler("uDepthBuffer")
+		new_shader_sampler("uNormalBuffer")
+		new_shader_sampler("uMaterialBuffer")
+		new_shader_sampler("uSceneBuffer")
+		new_shader_sampler("uMetallicBuffer")
+		
+		new_shader_uniform("uNear")
+		new_shader_uniform("uFar")
+		new_shader_uniform("uProjMatrixInv")
+		new_shader_uniform("uScreenSize")
+		new_shader_uniform("uRayDataSize")
+		new_shader_uniform("uSkyColor")
 		new_shader_uniform("uFadeAmount")
 		new_shader_uniform("uGamma")
-		new_shader_uniform("uSkyColor")
+		new_shader_uniform("uSampleAmount")
+		new_shader_uniform("uSamples")
+	}
+	
+	with (shader_map[?shader_high_indirect_resolve])
+	{
+		new_shader_sampler("uDepthBuffer")
+		new_shader_sampler("uNormalBuffer")
+		new_shader_sampler("uMaterialBuffer")
+		new_shader_sampler("uSourceBuffer")
 		
-		// Diffuse
-		new_shader_uniform("uIndirectStength")
+		new_shader_uniform("uRayDataSize")
+		new_shader_uniform("uNear")
+		new_shader_uniform("uFar")
+		new_shader_uniform("uProjMatrixInv")
+		new_shader_uniform("uStrength")
+		new_shader_uniform("uSampleAmount")
+		new_shader_uniform("uSamples")
+	}
+	
+	with (shader_map[?shader_high_indirect_source])
+	{
+		new_shader_sampler("uNormalBuffer")
+		new_shader_sampler("uLightBuffer")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_indirect_blur])
@@ -480,19 +535,14 @@ function shader_startup()
 		new_shader_sampler("uDepthBuffer")
 		new_shader_sampler("uNormalBuffer")
 		new_shader_sampler("uNoiseBuffer")
-		new_shader_uniform("uScreenSize")
-		new_shader_uniform("uNoiseSize")
-		new_shader_uniform("uSamples")
-		new_shader_uniform("uBlurSize")
-	}
-	
-	with (shader_map[?shader_high_raytrace_resolve])
-	{
-		new_shader_sampler("uDataBuffer")
-		new_shader_sampler("uDepthBuffer")
-		new_shader_sampler("uNormalBuffer")
 		new_shader_sampler("uMaterialBuffer")
 		new_shader_uniform("uScreenSize")
+		new_shader_uniform("uNoiseSize")
+		new_shader_uniform("uNear")
+		new_shader_uniform("uFar")
+		new_shader_uniform("uProjMatrixInv")
+		new_shader_uniform("uSamples")
+		new_shader_uniform("uBlurSize")
 	}
 	
 	with (shader_map[?shader_tonemap])

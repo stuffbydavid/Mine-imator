@@ -1,4 +1,3 @@
-#define DEPTH_SENSITIVITY 120.0
 #define SAMPLES 27
 #define KERNEL_RADIUS 4.5
 
@@ -15,23 +14,32 @@ uniform float uSamples;
 uniform float uBlurSize;
 
 #pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
+#pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
+#pragma shady: inline(common_util.NEIGHBOR_FILTER_LIB)
 #pragma shady: inline(common_constants.MATH)
 
 void main()
 {
 	vec2 texelSize = 1.0 / uScreenSize;
-	vec2 blurScale = texelSize * (12.0 / (1.0 + min(uSamples / 8.0, 12.0))) * (uBlurSize / KERNEL_RADIUS);
+	vec2 blurScale = texelSize * KERNEL_RADIUS * (uBlurSize / KERNEL_RADIUS);
 	
 	float centerDepth = readDepth(vTexCoord);
+	if (isDepthBackground(centerDepth))
+	{
+		gl_FragColor = vec4(0.0);
+		return;
+	}
+	
 	vec3 centerNormal = unpackNormal(texture2D(uNormalBuffer, vTexCoord));
+	vec3 centerPos = posFromBuffer(vTexCoord, centerDepth);
 	
 	// Generate random direction
 	float theta, cosTheta, sinTheta;
 	theta = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * TWO_PI;
 	cosTheta = cos(theta);
 	sinTheta = sin(theta);
-
+	
 	vec2 taps[SAMPLES];
 	taps[0] = vec2(-0.8835609, 2.523391);
 	taps[1] = vec2(-1.387375, 1.056318);
@@ -72,13 +80,10 @@ void main()
 		
 		samplePos = vTexCoord + samplePos * blurScale;
 		
-		if (samplePos.x < 0.0 || samplePos.x > 1.0 || samplePos.y < 0.0 || samplePos.y > 1.0)
+		float sampleWeight = getNeighborSurfaceWeight(samplePos, centerPos, centerNormal);
+		if (sampleWeight < 0.001)
 			continue;
 		
-		vec3 sampleNormal = unpackNormal(texture2D(uNormalBuffer, samplePos));
-		float sampleDepth = readDepth(samplePos);
-		
-		float sampleWeight = max(0.0, dot(centerNormal, sampleNormal) - abs(sampleDepth - centerDepth) * DEPTH_SENSITIVITY);
 		color += texture2D(gm_BaseTexture, samplePos).rgb * sampleWeight;
 		weight += sampleWeight;
 	}

@@ -252,5 +252,31 @@ vec3 sampleGGX(vec2 Xi, float roughness)
 	return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
 }
 
+// Sample a GGX reflection normal optimized for the camera view (VNDF)
+// https://jcgt.org/published/0007/04/01/
+vec3 sampleGGXVNDF(vec2 Xi, vec3 viewDir, float roughness)
+{
+	roughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float a = roughness * roughness;
+	
+	// Reshape the view so roughness is easier to sample evenly
+	vec3 viewH = normalize(vec3(a * viewDir.xy, max(viewDir.z, 0.0001)));
+	float lensq = dot(viewH.xy, viewH.xy);
+	vec3 tangent1 = (lensq > 0.0 ? vec3(-viewH.y, viewH.x, 0.0) / sqrt(lensq) : vec3(1.0, 0.0, 0.0));
+	vec3 tangent2 = cross(viewH, tangent1);
+
+	// Pick a random point
+	float r = sqrt(Xi.x);
+	float phi = TWO_PI * Xi.y;
+	float t1 = r * cos(phi);
+	float t2 = r * sin(phi);
+	float s = 0.5 * (1.0 + viewH.z);
+	t2 = mix(sqrt(max(0.0, 1.0 - t1 * t1)), t2, s);
+	vec3 normalH = tangent1 * t1 + tangent2 * t2 + viewH * sqrt(max(0.0, 1.0 - t1 * t1 - t2 * t2));
+
+	// Undo reshape to get normal
+	return normalize(vec3(a * normalH.xy, max(normalH.z, 0.0)));
+}
+
 #pragma shady: macro_end
 #endregion

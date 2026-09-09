@@ -4,21 +4,27 @@
 
 function render_high_reflections(surf)
 {
+	var ww, hh;
+	ww = ceil(render_width/render_raytrace_res_ratio)
+	hh = ceil(render_height/render_raytrace_res_ratio)
+	
 	// Raytrace
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
-	surface_set_target(render_surface_specular)
+	render_surface_raydata = surface_require(render_surface_raydata, ww, hh, false, e_surface_format.rgba32float)
+	surface_set_target(render_surface_raydata)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear_alpha(c_black, 1)
 		
-		render_shader_obj = shader_map[?shader_high_raytrace]
+		render_shader_obj = shader_map[?shader_high_reflections_hit]
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_raytrace_set(e_raytrace.REFLECTIONS, render_surface_shadows)
+			shader_high_reflections_hit_set()
 		}
 		
-		draw_blank(0, 0, render_width, render_height)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
+		draw_blank(0, 0, ww, hh)
+		gpu_set_blendmode(bm_normal)
 		
 		with (render_shader_obj)
 			shader_clear()
@@ -32,14 +38,15 @@ function render_high_reflections(surf)
 	{
 		draw_clear_alpha(c_black, 0)
 		
-		render_shader_obj = shader_map[?shader_high_raytrace_resolve]
+		render_shader_obj = shader_map[?shader_high_reflections_resolve]
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_raytrace_resolve_set()
+			shader_high_reflections_resolve_set(render_surface_shadows)
 		}
 		
-		draw_surface_exists(render_surface_specular, 0, 0)
+		gpu_set_texfilter(false)
+		draw_surface_ext(render_surface_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
 		
 		with (render_shader_obj)
 			shader_clear()
