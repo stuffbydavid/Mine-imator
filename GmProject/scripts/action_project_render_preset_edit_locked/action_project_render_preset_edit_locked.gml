@@ -27,7 +27,7 @@ function action_project_render_preset_edit_locked()
 		
 		// Save previous custom values
 		with (hobj)
-			render_preset_clear()
+			render_preset_event_create()
 		with (custom)
 			render_preset_copy(hobj)
 	}

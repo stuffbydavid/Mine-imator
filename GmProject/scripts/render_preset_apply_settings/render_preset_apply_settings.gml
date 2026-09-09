@@ -23,40 +23,44 @@ function render_preset_apply_settings(settings, renderer)
 		else
 			val = eval(setting[1], 0)
 		
-		var standard = (renderer = e_renderer.STANDARD);
-		switch (name) {
-			case "samples": realistic_samples = val break
-			case "ssao": if (standard) standard_ssao = val else realistic_ssao = val break
+		var set, standardset, realisticset;
+		set = self.renderer[renderer]
+		standardset = self.renderer[e_renderer.STANDARD]
+		realisticset = self.renderer[e_renderer.REALISTIC]
+		switch (name)
+		{
+			case "samples": set.samples = val break
+			case "ssao": set.ssao = val break
 			case "ssao_radius": ssao_radius = val break
 			case "ssao_power": ssao_power = val break
 			case "ssao_color": ssao_color = val break
 			case "ssao_always_visible": ssao_always_visible = val break
-			case "shadows": if (standard) standard_shadows = val else realistic_shadows = val break
-			case "shadows_blur_quality": standard_shadows_blur_quality = val break
-			case "shadows_blur_size": standard_shadows_blur_size = val break
-			case "shadows_sun_buffer_size": if (standard) standard_shadows_sun_buffer_size = val else realistic_shadows_sun_buffer_size = val break
-			case "shadows_spot_buffer_size": if (standard) standard_shadows_spot_buffer_size = val else realistic_shadows_spot_buffer_size = val break
-			case "shadows_point_buffer_size": if (standard) standard_shadows_point_buffer_size = val else realistic_shadows_point_buffer_size = val break
-			case "shadows_transparent": realistic_shadows_transparent = val break
-			case "subsurface_samples": realistic_subsurface_samples = val break
-			case "subsurface_highlight": realistic_subsurface_highlight = val break
-			case "subsurface_highlight_strength": realistic_subsurface_highlight_strength = val break
-			case "indirect": realistic_indirect = val break
-			case "indirect_precision": realistic_indirect_precision = val break
-			case "indirect_blur_radius": realistic_indirect_blur_radius = val break
-			case "indirect_strength": realistic_indirect_strength = val break
-			case "reflections": realistic_reflections = val break
-			case "reflections_precision": realistic_reflections_precision = val break
-			case "reflections_thickness": realistic_reflections_thickness = val break
-			case "reflections_fade_amount": realistic_reflections_fade_amount = val break
-			case "glow": if (standard) standard_glow = val else realistic_glow = val break
+			case "shadows": set.shadows = val break
+			case "shadows_blur_quality": set.shadows_blur_quality = val break
+			case "shadows_blur_size": standardset.shadows_blur_size = val break
+			case "shadows_sun_buffer_size": set.shadows_sun_buffer_size = val break
+			case "shadows_spot_buffer_size": set.shadows_spot_buffer_size = val break
+			case "shadows_point_buffer_size": set.shadows_point_buffer_size = val break
+			case "shadows_transparent": set.shadows_transparent = val break
+			case "subsurface_samples": set.subsurface_samples = val break
+			case "subsurface_highlight": realisticset.subsurface_highlight = val break
+			case "subsurface_highlight_strength": realisticset.subsurface_highlight_strength = val break
+			case "indirect": set.indirect = val break
+			case "indirect_precision": set.indirect_precision = val break
+			case "indirect_blur_radius": realisticset.indirect_blur_radius = val break
+			case "indirect_strength": realisticset.indirect_strength = val break
+			case "reflections": set.reflections = val break
+			case "reflections_precision": set.reflections_precision = val break
+			case "reflections_thickness": realisticset.reflections_thickness = val break
+			case "reflections_fade_amount": realisticset.reflections_fade_amount = val break
+			case "glow": set.glow = val break
 			case "glow_radius": glow_radius = val break
 			case "glow_intensity": glow_intensity = val break
-			case "glow_falloff": realistic_glow_falloff = val break
-			case "glow_falloff_radius": realistic_glow_falloff_radius = val break
-			case "glow_falloff_intensity": realistic_glow_falloff_intensity = val break
-			case "aa": if (standard) standard_aa = val else realistic_aa = val break
-			case "aa_power": if (standard) standard_aa_power = val else realistic_aa_power = val break
+			case "glow_falloff": set.glow_falloff = val break
+			case "glow_falloff_radius": realisticset.glow_falloff_radius = val break
+			case "glow_falloff_intensity": realisticset.glow_falloff_intensity = val break
+			case "aa": set.aa = val break
+			case "aa_power": set.aa_power = val break
 			case "distance": render_distance = val break
 			case "bend_style": bend_style = val break
 			case "opaque_leaves": opaque_leaves = val break

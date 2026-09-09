@@ -4,35 +4,37 @@ function render_apply_settings(preset, renderer)
 {
 	if (renderer == e_renderer.STANDARD && preset.has_standard)
 	{
-		project_render_ssao = preset.standard_ssao
-		project_render_shadows = preset.standard_shadows
-		project_render_shadows_blur_quality = preset.standard_shadows_blur_quality
-		project_render_shadows_sun_buffer_size = preset.standard_shadows_sun_buffer_size
-		project_render_shadows_spot_buffer_size = preset.standard_shadows_spot_buffer_size
-		project_render_shadows_point_buffer_size = preset.standard_shadows_point_buffer_size
-		project_render_glow = preset.standard_glow
-		project_render_aa = preset.standard_aa
-		project_render_aa_power = preset.standard_aa_power
+		var settings = preset.renderer[e_renderer.STANDARD];
+		project_render_ssao = settings.ssao
+		project_render_shadows = settings.shadows
+		project_render_shadows_blur_quality = settings.shadows_blur_quality
+		project_render_shadows_sun_buffer_size = settings.shadows_sun_buffer_size
+		project_render_shadows_spot_buffer_size = settings.shadows_spot_buffer_size
+		project_render_shadows_point_buffer_size = settings.shadows_point_buffer_size
+		project_render_glow = settings.glow
+		project_render_aa = settings.aa
+		project_render_aa_power = settings.aa_power
 	}
 	
 	if (renderer == e_renderer.REALISTIC && preset.has_realistic)
 	{
-		project_render_samples = preset.realistic_samples
-		project_render_ssao = preset.realistic_ssao
-		project_render_shadows = preset.realistic_shadows
-		project_render_shadows_sun_buffer_size = preset.realistic_shadows_sun_buffer_size
-		project_render_shadows_spot_buffer_size = preset.realistic_shadows_spot_buffer_size
-		project_render_shadows_point_buffer_size = preset.realistic_shadows_point_buffer_size
-		project_render_shadows_transparent = preset.realistic_shadows_transparent
-		project_render_subsurface_samples = preset.realistic_subsurface_samples
-		project_render_indirect = preset.realistic_indirect
-		project_render_indirect_precision = preset.realistic_indirect_precision
-		project_render_reflections = preset.realistic_reflections
-		project_render_reflections_precision = preset.realistic_reflections_precision
-		project_render_glow = preset.realistic_glow
-		project_render_glow_falloff = preset.realistic_glow_falloff
-		project_render_aa = preset.realistic_aa
-		project_render_aa_power = preset.realistic_aa_power
+		var settings = preset.renderer[e_renderer.REALISTIC];
+		project_render_samples = settings.samples
+		project_render_ssao = settings.ssao
+		project_render_shadows = settings.shadows
+		project_render_shadows_sun_buffer_size = settings.shadows_sun_buffer_size
+		project_render_shadows_spot_buffer_size = settings.shadows_spot_buffer_size
+		project_render_shadows_point_buffer_size = settings.shadows_point_buffer_size
+		project_render_shadows_transparent = settings.shadows_transparent
+		project_render_subsurface_samples = settings.subsurface_samples
+		project_render_indirect = settings.indirect
+		project_render_indirect_precision = settings.indirect_precision
+		project_render_reflections = settings.reflections
+		project_render_reflections_precision = settings.reflections_precision
+		project_render_glow = settings.glow
+		project_render_glow_falloff = settings.glow_falloff
+		project_render_aa = settings.aa
+		project_render_aa_power = settings.aa_power
 	}
 	
 	if (renderer == e_renderer.COMMON)
@@ -43,17 +45,17 @@ function render_apply_settings(preset, renderer)
 			project_render_ssao_power = preset.ssao_power
 			project_render_ssao_color = preset.ssao_color
 			project_render_ssao_always_visible = preset.ssao_always_visible
-			project_render_shadows_blur_size = preset.standard_shadows_blur_size
-			project_render_subsurface_highlight = preset.realistic_subsurface_highlight
-			project_render_subsurface_highlight_strength = preset.realistic_subsurface_highlight_strength
-			project_render_indirect_blur_radius = preset.realistic_indirect_blur_radius
-			project_render_indirect_strength = preset.realistic_indirect_strength
-			project_render_reflections_thickness = preset.realistic_reflections_thickness
-			project_render_reflections_fade_amount = preset.realistic_reflections_fade_amount
+			project_render_shadows_blur_size = preset.renderer[e_renderer.STANDARD].shadows_blur_size
+			project_render_subsurface_highlight = preset.renderer[e_renderer.REALISTIC].subsurface_highlight
+			project_render_subsurface_highlight_strength = preset.renderer[e_renderer.REALISTIC].subsurface_highlight_strength
+			project_render_indirect_blur_radius = preset.renderer[e_renderer.REALISTIC].indirect_blur_radius
+			project_render_indirect_strength = preset.renderer[e_renderer.REALISTIC].indirect_strength
+			project_render_reflections_thickness = preset.renderer[e_renderer.REALISTIC].reflections_thickness
+			project_render_reflections_fade_amount = preset.renderer[e_renderer.REALISTIC].reflections_fade_amount
 			project_render_glow_radius = preset.glow_radius
 			project_render_glow_intensity = preset.glow_intensity
-			project_render_glow_falloff_radius = preset.realistic_glow_falloff_radius
-			project_render_glow_falloff_intensity = preset.realistic_glow_falloff_intensity
+			project_render_glow_falloff_radius = preset.renderer[e_renderer.REALISTIC].glow_falloff_radius
+			project_render_glow_falloff_intensity = preset.renderer[e_renderer.REALISTIC].glow_falloff_intensity
 			project_render_glint_speed = preset.glint_speed
 			project_render_glint_strength = preset.glint_strength
 			project_render_tonemapper = preset.tonemapper

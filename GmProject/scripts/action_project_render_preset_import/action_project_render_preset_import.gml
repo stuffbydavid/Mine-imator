@@ -29,13 +29,12 @@ function action_project_render_preset_import(fn = "")
 	{
 		var hobj = history_set(action_project_render_preset_import);
 		hobj.filename = fn
-		
+
 		// Save both project and preset settings
 		with (hobj)
 		{
+			render_preset_event_create()
 			history_copy_render_settings(app)
-			
-			render_preset_clear()
 		}
 		with (render_preset_edit)
 			render_preset_copy(hobj, true)

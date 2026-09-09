@@ -45,39 +45,10 @@ function tab_properties_render()
 	draw_togglebutton("renderpreset", dx, dy)
 	tab_next()
 	
-	var presetid, ssao, shadows, shadowssunsize, shadowsspotsize, shadowspointsize, glow, aa, aapower;
+	var presetid, rendererset;
 	presetid = project_render_preset[renderer_edit]
 	render_preset_edit = render_preset_map[?presetid]
-	
-	// Pick shared settings based on renderer
-	if (renderer_edit = e_renderer.STANDARD)
-	{
-		ssao = render_preset_edit.standard_ssao
-		shadows = render_preset_edit.standard_shadows
-		shadowssunsize = render_preset_edit.standard_shadows_sun_buffer_size
-		shadowsspotsize = render_preset_edit.standard_shadows_spot_buffer_size
-		shadowspointsize = render_preset_edit.standard_shadows_point_buffer_size
-		glow = render_preset_edit.standard_glow
-		aa = render_preset_edit.standard_aa
-		aapower = render_preset_edit.standard_aa_power
-		
-		renderer_edit_standard = true
-		renderer_edit_realistic = false
-	}
-	else if (renderer_edit = e_renderer.REALISTIC)
-	{
-		ssao = render_preset_edit.realistic_ssao
-		shadows = render_preset_edit.realistic_shadows
-		shadowssunsize = render_preset_edit.realistic_shadows_sun_buffer_size
-		shadowsspotsize = render_preset_edit.realistic_shadows_spot_buffer_size
-		shadowspointsize = render_preset_edit.realistic_shadows_point_buffer_size
-		glow = render_preset_edit.realistic_glow
-		aa = render_preset_edit.realistic_aa
-		aapower = render_preset_edit.realistic_aa_power
-		
-		renderer_edit_standard = false
-		renderer_edit_realistic = true
-	}
+	rendererset = render_preset_edit.renderer[renderer_edit]
 	
 	var setx = dx;
 	tab_control(24)
@@ -116,20 +87,20 @@ function tab_properties_render()
 	if (render_performance_warning(render_preset_edit, renderer_edit))
 		draw_tooltip_label("renderrenderer" + renderer_name_list[renderer_edit] + "warning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	
-	if (renderer_edit_realistic)
+	if (renderer_edit = e_renderer.REALISTIC)
 	{
 		// Render samples
 		tab_control_dragger()
-		draw_dragger("rendersamples", dx, dy, dragger_width, render_preset_edit.realistic_samples, .5, 1, 256, 24, 1, tab.render.tbx_samples, action_project_render_samples)
+		draw_dragger("rendersamples", dx, dy, dragger_width, rendererset.samples, .5, 1, 256, 24, 1, tab.render.tbx_samples, action_project_render_samples)
 		tab_next()
 	}
 	
 	// SSAO
 	tab_control_switch()
-	draw_button_collapse("ssao", collapse_map[?"ssao"], action_project_render_ssao, ssao, "renderssao", "renderssaotip")
+	draw_button_collapse("ssao", collapse_map[?"ssao"], action_project_render_ssao, rendererset.ssao, "renderssao", "renderssaotip")
 	tab_next()
 	
-	if (ssao && collapse_map[?"ssao"])
+	if (rendererset.ssao && collapse_map[?"ssao"])
 	{
 		tab_collapse_start()
 		
@@ -154,46 +125,46 @@ function tab_properties_render()
 	
 	// Shadows
 	tab_control_switch()
-	draw_button_collapse("shadows", collapse_map[?"shadows"], action_project_render_shadows, shadows, "rendershadows")
+	draw_button_collapse("shadows", collapse_map[?"shadows"], action_project_render_shadows, rendererset.shadows, "rendershadows")
 	tab_next()
 	
-	if (shadows && collapse_map[?"shadows"])
+	if (rendererset.shadows && collapse_map[?"shadows"])
 	{
 		tab_collapse_start()
 		
 		tab_control_menu()
-		draw_button_menu("rendershadowssunbuffersize", e_menu.LIST, dx, dy, dw, 24, shadowssunsize, text_get("rendershadowsbuffersize" + string(shadowssunsize)) + " (" + string(shadowssunsize) + "x" + string(shadowssunsize) + ")", action_project_render_shadows_sun_buffer_size)
+		draw_button_menu("rendershadowssunbuffersize", e_menu.LIST, dx, dy, dw, 24, rendererset.shadows_sun_buffer_size, text_get("rendershadowsbuffersize" + string(rendererset.shadows_sun_buffer_size)) + " (" + string(rendererset.shadows_sun_buffer_size) + "x" + string(rendererset.shadows_sun_buffer_size) + ")", action_project_render_shadows_sun_buffer_size)
 		tab_next()
 		
 		tab_control_menu()
-		draw_button_menu("rendershadowsspotbuffersize", e_menu.LIST, dx, dy, dw, 24, shadowsspotsize, text_get("rendershadowsbuffersize" + string(shadowsspotsize)) + " (" + string(shadowsspotsize) + "x" + string(shadowsspotsize) + ")", action_project_render_shadows_spot_buffer_size)
+		draw_button_menu("rendershadowsspotbuffersize", e_menu.LIST, dx, dy, dw, 24, rendererset.shadows_spot_buffer_size, text_get("rendershadowsbuffersize" + string(rendererset.shadows_spot_buffer_size)) + " (" + string(rendererset.shadows_spot_buffer_size) + "x" + string(rendererset.shadows_spot_buffer_size) + ")", action_project_render_shadows_spot_buffer_size)
 		tab_next()
 		
 		tab_control_menu()
-		draw_button_menu("rendershadowspointbuffersize", e_menu.LIST, dx, dy, dw, 24, shadowspointsize, text_get("rendershadowsbuffersize" + string(shadowspointsize)) + " (" + string(shadowspointsize) + "x" + string(shadowspointsize) + ")", action_project_render_shadows_point_buffer_size)
+		draw_button_menu("rendershadowspointbuffersize", e_menu.LIST, dx, dy, dw, 24, rendererset.shadows_point_buffer_size, text_get("rendershadowsbuffersize" + string(rendererset.shadows_point_buffer_size)) + " (" + string(rendererset.shadows_point_buffer_size) + "x" + string(rendererset.shadows_point_buffer_size) + ")", action_project_render_shadows_point_buffer_size)
 		tab_next()
 		
-		if (renderer_edit_standard)
+		if (renderer_edit = e_renderer.STANDARD)
 		{
 			tab_control_meter()
-			draw_meter("rendershadowsblurquality", dx, dy, dw, render_preset_edit.standard_shadows_blur_quality, 0, 64, 20, 1, tab.render.tbx_shadows_blur_quality, action_project_render_shadows_blur_quality)
+			draw_meter("rendershadowsblurquality", dx, dy, dw, rendererset.shadows_blur_quality, 0, 64, 20, 1, tab.render.tbx_shadows_blur_quality, action_project_render_shadows_blur_quality)
 			tab_next()
 			
 			tab_control_meter()
 			draw_meter("rendershadowsblursize", dx, dy, dw, round(project_render_shadows_blur_size * 100), 0, 400, 100, 1, tab.render.tbx_shadows_blur_size, action_project_render_shadows_blur_size)
 			tab_next()
 		}
-		if (renderer_edit_realistic)
+		if (renderer_edit = e_renderer.REALISTIC)
 		{
 			tab_control_switch()
-			draw_switch("rendershadowstransparent", dx, dy, render_preset_edit.realistic_shadows_transparent, action_project_render_shadows_transparent)
+			draw_switch("rendershadowstransparent", dx, dy, rendererset.shadows_transparent, action_project_render_shadows_transparent)
 			tab_next()
 		}
 		
 		tab_collapse_end()
 	}
 	
-	if (renderer_edit_realistic)
+	if (renderer_edit = e_renderer.REALISTIC)
 	{
 		// Subsurface scattering
 		tab_control_switch()
@@ -205,7 +176,7 @@ function tab_properties_render()
 			tab_collapse_start()
 		
 			tab_control_meter()
-			draw_meter("rendersubsurfacescatterquality", dx, dy, dw, render_preset_edit.realistic_subsurface_samples, 0, 32, 7, 1, tab.render.tbx_subsurface_samples, action_project_render_subsurface_samples)
+			draw_meter("rendersubsurfacescatterquality", dx, dy, dw, rendererset.subsurface_samples, 0, 32, 7, 1, tab.render.tbx_subsurface_samples, action_project_render_subsurface_samples)
 			tab_next()
 		
 			tab_control_meter()
@@ -221,15 +192,15 @@ function tab_properties_render()
 	
 		// Indirect lighting
 		tab_control_switch()
-		draw_button_collapse("indirect", collapse_map[?"indirect"], action_project_render_indirect, render_preset_edit.realistic_indirect, "renderindirect", "renderindirecttip")
+		draw_button_collapse("indirect", collapse_map[?"indirect"], action_project_render_indirect, rendererset.indirect, "renderindirect", "renderindirecttip")
 		tab_next()
 	
-		if (render_preset_edit.realistic_indirect && collapse_map[?"indirect"])
+		if (rendererset.indirect && collapse_map[?"indirect"])
 		{
 			tab_collapse_start()
 		
 			tab_control_meter()
-			draw_meter("renderindirectprecision", dx, dy, dw, round(render_preset_edit.realistic_indirect_precision * 100), 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision, "renderindirectprecisiontip")
+			draw_meter("renderindirectprecision", dx, dy, dw, round(rendererset.indirect_precision * 100), 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision, "renderindirectprecisiontip")
 			tab_next()
 		
 			tab_control_meter()
@@ -245,15 +216,15 @@ function tab_properties_render()
 	
 		// Reflections
 		tab_control_switch()
-		draw_button_collapse("reflections", collapse_map[?"reflections"], action_project_render_reflections, render_preset_edit.realistic_reflections, "renderreflections")
+		draw_button_collapse("reflections", collapse_map[?"reflections"], action_project_render_reflections, rendererset.reflections, "renderreflections")
 		tab_next()
 	
-		if (render_preset_edit.realistic_reflections && collapse_map[?"reflections"])
+		if (rendererset.reflections && collapse_map[?"reflections"])
 		{
 			tab_collapse_start()
 		
 			tab_control_meter()
-			draw_meter("renderreflectionsprecision", dx, dy, dw, round(render_preset_edit.realistic_reflections_precision * 100), 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision, "renderreflectionsprecisiontip") 
+			draw_meter("renderreflectionsprecision", dx, dy, dw, round(rendererset.reflections_precision * 100), 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision, "renderreflectionsprecisiontip")
 			tab_next()
 		
 			tab_control_meter()
@@ -270,10 +241,10 @@ function tab_properties_render()
 	
 	// Glow
 	tab_control_switch()
-	draw_button_collapse("glow", collapse_map[?"glow"], action_project_render_glow, glow, "renderglow")
+	draw_button_collapse("glow", collapse_map[?"glow"], action_project_render_glow, rendererset.glow, "renderglow")
 	tab_next()
 	
-	if (glow && collapse_map[?"glow"])
+	if (rendererset.glow && collapse_map[?"glow"])
 	{
 		tab_collapse_start()
 		
@@ -285,14 +256,14 @@ function tab_properties_render()
 		draw_dragger("renderglowintensity", dx, dy, dragger_width, round(project_render_glow_intensity * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_intensity, action_project_render_glow_intensity)
 		tab_next()
 		
-		if (renderer_edit_realistic)
+		if (renderer_edit = e_renderer.REALISTIC)
 		{
 			tab_control_switch()
-			draw_button_collapse("glow_falloff", collapse_map[?"glow_falloff"], action_project_render_glow_falloff, render_preset_edit.realistic_glow_falloff, "renderglowfalloff")
+			draw_button_collapse("glow_falloff", collapse_map[?"glow_falloff"], action_project_render_glow_falloff, rendererset.glow_falloff, "renderglowfalloff")
 			tab_next()
 		
 			// Secondary glow
-			if (render_preset_edit.realistic_glow_falloff && collapse_map[?"glow_falloff"])
+			if (rendererset.glow_falloff && collapse_map[?"glow_falloff"])
 			{
 				tab_collapse_start()
 			
@@ -373,15 +344,15 @@ function tab_properties_render()
 	
 	// AA
 	tab_control_switch()
-	draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, aa, "renderaa", "renderaatip")
+	draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, rendererset.aa, "renderaa", "renderaatip")
 	tab_next()
 	
-	if (aa && collapse_map[?"aa"])
+	if (rendererset.aa && collapse_map[?"aa"])
 	{
 		tab_collapse_start()
 		
 		tab_control_meter()
-		draw_meter("renderaapower", dx, dy, dw, round(aapower * 100), 0, 300, 100, 1, tab.render.tbx_aa_power, action_project_render_aa_power)
+		draw_meter("renderaapower", dx, dy, dw, round(rendererset.aa_power * 100), 0, 300, 100, 1, tab.render.tbx_aa_power, action_project_render_aa_power)
 		tab_next()
 		
 		tab_collapse_end()
@@ -456,7 +427,7 @@ function tab_properties_render()
 	dy += 4
 	
 	// Alpha mode
-	if (renderer_edit_realistic)
+	if (renderer_edit = e_renderer.REALISTIC)
 	{
 		text = (project_render_alpha_mode = e_alpha_mode.BLEND ? text_get("renderalphamodeblend") : text_get("renderalphamodehashed"));
 		tab_control_menu()
@@ -467,7 +438,7 @@ function tab_properties_render()
 	#endregion
 	#region MATERIALS
 		
-	if (renderer_edit_realistic)
+	if (renderer_edit = e_renderer.REALISTIC)
 	{
 		draw_divide(content_x, dy, dividew)
 		dy += 12

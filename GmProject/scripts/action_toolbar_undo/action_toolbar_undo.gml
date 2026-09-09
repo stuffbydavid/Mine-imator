@@ -33,6 +33,4 @@ function action_toolbar_undo()
 	history_resource_update = true
 	
 	render_samples = -1
-	renderer_edit_standard = (renderer_edit = e_renderer.STANDARD)
-	renderer_edit_realistic = (renderer_edit = e_renderer.REALISTIC)
 }

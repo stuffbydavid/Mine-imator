@@ -2,7 +2,7 @@
 
 function render_startup()
 {
-	globalvar renderer_current, renderer_name_list, renderer_edit, renderer_edit_standard, renderer_edit_realistic;
+	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
 	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_start_time, render_start_surface_time,
 			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
@@ -53,8 +53,6 @@ function render_startup()
 	renderer_current = e_renderer.QUICK
 	renderer_name_list = array("quick", "standard", "realistic")
 	renderer_edit = -1
-	renderer_edit_standard = false
-	renderer_edit_realistic = false
 	
 	render_view_current = null
 	render_width = 1

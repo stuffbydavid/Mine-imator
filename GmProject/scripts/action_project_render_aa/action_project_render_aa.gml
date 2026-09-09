@@ -5,13 +5,10 @@ function action_project_render_aa(enable)
 {
 	action_project_render_preset_edit_locked()
 	
-	var aa = renderer_edit_standard ? render_preset_edit.standard_aa : render_preset_edit.realistic_aa;
+	var settings = render_preset_edit.renderer[renderer_edit]
 	
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_aa, aa, enable, true)
+		history_set_var(action_project_render_aa, settings.aa, enable, true)
 	
-	if (renderer_edit_standard)
-		render_preset_edit.standard_aa = enable
-	else
-		render_preset_edit.realistic_aa = enable
+	settings.aa = enable
 }

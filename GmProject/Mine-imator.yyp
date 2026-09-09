@@ -496,6 +496,7 @@
     {"id":{"name":"obj_popup","path":"objects/obj_popup/obj_popup.yy",},},
     {"id":{"name":"obj_preview","path":"objects/obj_preview/obj_preview.yy",},},
     {"id":{"name":"obj_recent","path":"objects/obj_recent/obj_recent.yy",},},
+    {"id":{"name":"obj_render_preset_renderer","path":"objects/obj_render_preset_renderer/obj_render_preset_renderer.yy",},},
     {"id":{"name":"obj_render_preset","path":"objects/obj_render_preset/obj_render_preset.yy",},},
     {"id":{"name":"obj_resource","path":"objects/obj_resource/obj_resource.yy",},},
     {"id":{"name":"obj_scrollbar","path":"objects/obj_scrollbar/obj_scrollbar.yy",},},
