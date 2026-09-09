@@ -83,8 +83,14 @@ function project_save_template()
 				json_save_var_save_id("tex_material", item_tex_material)
 				json_save_var_save_id("tex_normal", item_tex_normal)
 				
-				if (item_tex.type = e_res_type.PACK && item_slot < ds_list_size(mc_assets.item_texture_list))
-					json_save_var("name", mc_assets.item_texture_list[|item_slot])
+				if (item_tex.type = e_res_type.PACK)
+				{
+					var decodedslot = minecraft_assets_texture_picker_slot_decode(item_slot, mc_assets.item_texture_list)
+					if (decodedslot[0] >= 0)
+						json_save_var("name", mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]])
+					else
+						json_save_var("slot", item_slot)
+				}
 				else
 					json_save_var("slot", item_slot)
 				

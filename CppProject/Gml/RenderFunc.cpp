@@ -434,6 +434,11 @@ namespace CppProject
 		return GFX->GetMaxSize();
 	}
 
+	IntType surface_get_target()
+	{
+		return (GFX->surface == AppWin->GetSurface() ? -1 : GFX->surface->id);
+	}
+
 	void surface_reset_target()
 	{
 		if (GFX->surface == AppWin->GetSurface())
@@ -447,6 +452,7 @@ namespace CppProject
 		GFX->surface->EndUse();
 		GFX->surface = AppWin->GetSurface();
 		GFX->surface->BeginUse();
+		GFX->ClipResume();
 	}
 
 	void surface_resize(IntType id, IntType width, IntType height)
@@ -483,7 +489,7 @@ namespace CppProject
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
-			GFX->ClipEnd();
+			GFX->ClipSuspend();
 			GFX->ResetMRT();
 			GFX->surface->EndUse();
 			GFX->surface = surf;

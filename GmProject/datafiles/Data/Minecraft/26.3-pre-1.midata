@@ -10811,6 +10811,16 @@
 		"item/recovery_compass_30",
 		"item/recovery_compass_31"
 	],
+	"item_32_sheet_size": [ 4, 4 ],
+	"item_32_textures": [
+		"item/copper_spear_in_hand",
+		"item/diamond_spear_in_hand",
+		"item/golden_spear_in_hand",
+		"item/iron_spear_in_hand",
+		"item/netherite_spear_in_hand",
+		"item/stone_spear_in_hand",
+		"item/wooden_spear_in_hand"
+	],
 	"particle_textures": [
 		"particle/angry",
 		"particle/big_smoke_0",

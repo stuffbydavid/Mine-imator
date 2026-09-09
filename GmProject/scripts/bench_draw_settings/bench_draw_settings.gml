@@ -314,8 +314,23 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 				draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 				
-				if (res.item_sheet_texture != null)
-					draw_texture_slot(res.item_sheet_texture, bench_settings.item_slot, dx + capwid, dy + 4, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+				if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
+				{
+					var sheet, slot;
+					if (res.type = e_res_type.PACK)
+					{
+						var decodedslot = minecraft_assets_texture_picker_slot_decode(bench_settings.item_slot, mc_assets.item_texture_list)
+						sheet = decodedslot[0]
+						slot = decodedslot[1]
+					}
+					else
+					{
+						sheet = e_item_sheet.SIZE16
+						slot = bench_settings.item_slot
+					}
+					if (sheet >= 0)
+						draw_texture_slot(res.item_sheet_texture[sheet], slot, dx + capwid, dy + 4, 16, 16, res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][X] : res.item_sheet_size[X], res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][Y] : res.item_sheet_size[Y])
+				}
 				else
 				{
 					var scale = min(16 / texture_width(res.texture), 16 / texture_height(res.texture));
@@ -324,11 +339,25 @@ function bench_draw_settings(bx, by, bw, bh)
 				dy += 32
 				
 				// Item select
-				if (res.item_sheet_texture != null)
+				if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 				{
-					var slots = ((res.type = e_res_type.PACK) ? ds_list_size(mc_assets.item_texture_list) : (res.item_sheet_size[X] * res.item_sheet_size[Y]));
+					var textures, slots, sheetsizes;
+					if (res.type = e_res_type.PACK)
+					{
+						textures = res.item_sheet_texture
+						sheetsizes = minecraft_item_sheet_size
+						slots = array_create(e_item_sheet.amount)
+						for (var sheet = 0; sheet < e_item_sheet.amount; sheet++)
+							slots[sheet] = ds_list_size(mc_assets.item_texture_list[sheet])
+					}
+					else
+					{
+						textures = [res.item_sheet_texture[e_item_sheet.SIZE16]]
+						sheetsizes = [res.item_sheet_size]
+						slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
+					}
 					listh = 162
-					draw_texture_picker(bench_settings.item_slot, res.item_sheet_texture, dx, dy, dw, listh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], bench_settings.item_scroll, action_bench_item_slot)
+					draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot)
 					dy += listh + 8
 				}
 				

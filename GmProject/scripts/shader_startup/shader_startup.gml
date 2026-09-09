@@ -194,7 +194,12 @@ function shader_startup()
 	}
 	
 	with (shader_map[?shader_draw_texture])
+	{
 		new_shader_uniform("uMask")
+		new_shader_uniform("uClipEnabled")
+		new_shader_uniform("uClipBox")
+		new_shader_uniform("uScreenSize")
+	}
 	
 	with (shader_map[?shader_replace])
 		new_shader_uniform("uReplaceColor")

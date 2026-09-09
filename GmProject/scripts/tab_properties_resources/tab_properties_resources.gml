@@ -71,6 +71,10 @@ function tab_properties_resources()
 				tab_control_menu()
 				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material)
 				tab_next()
+
+				tab_control_menu()
+				draw_button_menu("resourcespackimageitemsheetsize", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_item_sheet_size, text_get("resourcespackimageitemsheetsize" + string(item_size * (res_preview.pack_item_sheet_size + 1))), action_res_preview_pack_item_sheet_size)
+				tab_next()
 				break
 			}
 			
@@ -129,9 +133,9 @@ function tab_properties_resources()
 	{
 		// Size
 		axis_edit = X
-		textfield_group_add("resourcesitemsheetsizecolumns", res_edit.item_sheet_size[X], minecraft_item_sheet_size[X], action_res_item_sheet_size, axis_edit, tab.resources.tbx_item_sheet_width, null, 1, 1, no_limit)
+		textfield_group_add("resourcesitemsheetsizecolumns", res_edit.item_sheet_size[X], minecraft_item_sheet_size[e_item_sheet.SIZE16][X], action_res_item_sheet_size, axis_edit, tab.resources.tbx_item_sheet_width, null, 1, 1, no_limit)
 		axis_edit = Y
-		textfield_group_add("resourcesitemsheetsizerows", res_edit.item_sheet_size[Y], minecraft_item_sheet_size[Y], action_res_item_sheet_size, axis_edit, tab.resources.tbx_item_sheet_height, null, 1, 1, no_limit)
+		textfield_group_add("resourcesitemsheetsizerows", res_edit.item_sheet_size[Y], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y], action_res_item_sheet_size, axis_edit, tab.resources.tbx_item_sheet_height, null, 1, 1, no_limit)
 		
 		tab_control_textfield_group(true)
 		draw_textfield_group("resourcesitemsheetsizegrid", dx, dy, dw, 0.1, 1, no_limit, 1, true)

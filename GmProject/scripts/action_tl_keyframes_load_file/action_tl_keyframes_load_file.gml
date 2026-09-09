@@ -131,17 +131,17 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 					for (legacyaxis = X; legacyaxis <= Z; legacyaxis++)
 						if (tladd.model_part.bend_axis[legacyaxis])
 							break
-					
+
 					value[e_value.BEND_ANGLE_X + legacyaxis] = value[e_value.BEND_ANGLE_LEGACY]
 					value[e_value.BEND_ANGLE_LEGACY] = 0
 				}
 			
 				// Set item slot if item name is set
 				if (value[e_value.ITEM_NAME] != "")
-					value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, value[e_value.ITEM_NAME])
-				
+					value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(value[e_value.ITEM_NAME], mc_assets.item_texture_list)
+
 				if (value[e_value.ITEM_SLOT] < 0)
-					value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, default_item)
+					value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 			}
 			
 			with (tladd)

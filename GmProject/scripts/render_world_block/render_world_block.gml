@@ -13,42 +13,42 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	if (!is_array(res))
 		res = [res, mc_res, mc_res]
 	
-	if (!res_is_ready(res[0]))
-		res[0] = mc_res
+	if (!res_is_ready(res[e_texture_channel.DIFFUSE]))
+		res[e_texture_channel.DIFFUSE] = mc_res
 	
-	if (!res_is_ready(res[1]))
-		res[1] = mc_res
+	if (!res_is_ready(res[e_texture_channel.NORMAL]))
+		res[e_texture_channel.NORMAL] = mc_res
 	
-	if (!res_is_ready(res[2]))
-		res[2] = mc_res
+	if (!res_is_ready(res[e_texture_channel.MATERIAL]))
+		res[e_texture_channel.MATERIAL] = mc_res
 	
 	var tex, texprev, texani;
 	var texmat, texmatprev, texanimat, texanimatsheet;
 	var texnormal, texnormalprev, texaninormal;
-	tex = res[0].block_sheet_texture[e_block_sheet.STATIC16]
-	texmat = res[1].block_sheet_texture_material[e_block_sheet.STATIC16]
-	texnormal = res[2].block_sheet_texture_normal[e_block_sheet.STATIC16]
+	tex = res[e_texture_channel.DIFFUSE].block_sheet_texture[e_block_sheet.STATIC16]
+	texmat = res[e_texture_channel.MATERIAL].block_sheet_texture_material[e_block_sheet.STATIC16]
+	texnormal = res[e_texture_channel.NORMAL].block_sheet_texture_normal[e_block_sheet.STATIC16]
 	
-	render_set_uniform_int("uMaterialFormat", res[1].material_format)
+	render_set_uniform_int("uMaterialFormat", res[e_texture_channel.MATERIAL].material_format)
 	
 	texprev = tex
 	texmatprev = texmat
 	texnormalprev = texnormal
 	
-	if (res[0].block_sheet_texture[e_block_sheet.ANIMATED] != null)
-		texani = res[0].block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
+	if (res[e_texture_channel.DIFFUSE].block_sheet_texture[e_block_sheet.ANIMATED] != null)
+		texani = res[e_texture_channel.DIFFUSE].block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	else
 		texani = mc_res.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	
-	texanimatsheet = (res[1].block_sheet_texture_material[e_block_sheet.ANIMATED] = null)
+	texanimatsheet = (res[e_texture_channel.MATERIAL].block_sheet_texture_material[e_block_sheet.ANIMATED] = null)
 	
 	if (!texanimatsheet)
-		texanimat = res[1].block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame()]
+		texanimat = res[e_texture_channel.MATERIAL].block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	else
 		texanimat = mc_res.block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	
-	if (res[2].block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
-		texaninormal = res[2].block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame()]
+	if (res[e_texture_channel.NORMAL].block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
+		texaninormal = res[e_texture_channel.NORMAL].block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	else
 		texaninormal = mc_res.block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame()]
 	
@@ -66,16 +66,16 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16])
 
 	// High-resolution sheets
-	var materialformatprev = res[1].material_format
+	var materialformatprev = res[e_texture_channel.MATERIAL].material_format
 	for (var s = e_block_sheet.STATIC32; s < e_block_sheet.static_amount; s++)
 	{
 		var staticvbuffer = e_block_vbuffer.STATIC32 + s - e_block_sheet.STATIC32
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, staticvbuffer]))
 		{
-			var statictex = res[0].block_sheet_texture[s]
-			var statictexmat = res[1].block_sheet_texture_material[s]
-			var statictexnormal = res[2].block_sheet_texture_normal[s]
-			var staticmaterialformat = res[1].material_format
+			var statictex = res[e_texture_channel.DIFFUSE].block_sheet_texture[s]
+			var statictexmat = res[e_texture_channel.MATERIAL].block_sheet_texture_material[s]
+			var statictexnormal = res[e_texture_channel.NORMAL].block_sheet_texture_normal[s]
+			var staticmaterialformat = res[e_texture_channel.MATERIAL].material_format
 
 			if (statictex = null)
 				statictex = mc_res.block_sheet_texture[s]
@@ -114,13 +114,13 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, staticvbuffer])
 		}
 	}
-	if (materialformatprev != res[1].material_format)
-		render_set_uniform_int("uMaterialFormat", res[1].material_format)
+	if (materialformatprev != res[e_texture_channel.MATERIAL].material_format)
+		render_set_uniform_int("uMaterialFormat", res[e_texture_channel.MATERIAL].material_format)
 	
 	// Grass
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_grass), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_grass), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	}
@@ -128,7 +128,7 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	// Foliage
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_foliage), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_foliage), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	}
@@ -136,7 +136,7 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	// Dry foliage
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_dry_foliage), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_dry_foliage), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE])
 		render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
 	}
@@ -170,7 +170,7 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])	
 		
-		if (res[1] != mc_res && texanimatsheet)
+		if (res[e_texture_channel.MATERIAL] != mc_res && texanimatsheet)
 		{
 			render_set_uniform("uMetallic", 0)
 			render_set_uniform("uRoughness", 1)
@@ -225,70 +225,70 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	// Grass 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_grass), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_grass), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.GRASS])
 	}
 	
 	// Foliage 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.FOLIAGE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_foliage), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_foliage), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.FOLIAGE])
 	}
 	
 	// Dry foliage
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.DRY_FOLIAGE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_dry_foliage), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_dry_foliage), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.DRY_FOLIAGE])
 	}
 	
 	// Oak leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_OAK]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_oak), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_oak), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_OAK])
 	}
 	
 	// Spruce leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_SPRUCE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_spruce), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_spruce), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_SPRUCE])
 	}
 	
 	// Birch leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_BIRCH]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_birch), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_birch), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_BIRCH])
 	}
 	
 	// Jungle leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_JUNGLE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_jungle), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_jungle), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_JUNGLE])
 	}
 	
 	// Acacia leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_ACACIA]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_acacia), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_acacia), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_ACACIA])
 	}
 	
 	// Dark oak leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_DARK_OAK]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_dark_oak), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_dark_oak), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_DARK_OAK])
 	}
 	
 	// Mangrove leaves 
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_MANGROVE]))
 	{
-		render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_leaves_mangrove), shader_blend_alpha)
+		render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_leaves_mangrove), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.LEAVES_MANGROVE])
 	}
 	
@@ -326,7 +326,7 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
 		
-		if (res[1] != mc_res && texanimatsheet)
+		if (res[e_texture_channel.MATERIAL] != mc_res && texanimatsheet)
 		{
 			render_set_uniform("uMetallic", 0)
 			render_set_uniform("uRoughness", 1)
@@ -375,7 +375,7 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
 		
-		if (res[1] != mc_res && texanimatsheet)
+		if (res[e_texture_channel.MATERIAL] != mc_res && texanimatsheet)
 		{
 			render_set_uniform("uMetallic", 0)
 			render_set_uniform("uRoughness", 1)
@@ -390,7 +390,7 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 			render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 		{
 			render_set_texture(texani)
-			render_set_uniform_color("uBlendColor", color_multiply(blend, res[0].color_water), shader_blend_alpha)
+			render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_water), shader_blend_alpha)
 			render_set_uniform_int("uIsWater", 1)
 			
 			if (app.project_render_water_reflections) // Default water reflections provided by MI

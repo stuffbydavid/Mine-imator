@@ -953,6 +953,14 @@ function enums()
 		HORIZONTAL
 	}
 
+	// Item sheet
+	enum e_item_sheet
+	{
+		SIZE16,
+		SIZE32,
+		amount
+	}
+
 	// Block sheet
 	enum e_block_sheet
 	{
@@ -1100,6 +1108,14 @@ function enums()
 		NORMAL,
 		MATERIAL,
 		amount
+	}
+
+	// Texture resource channels
+	enum e_texture_channel
+	{
+		DIFFUSE,
+		NORMAL,
+		MATERIAL
 	}
 	
 	// Raytracing type

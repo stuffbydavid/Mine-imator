@@ -147,9 +147,9 @@ function project_load_template(map)
 						if (!is_undefined(newname))
 							itemname = newname
 					}
-					item_slot = ds_list_find_index(mc_assets.item_texture_list, itemname)
+					item_slot = minecraft_assets_texture_picker_slot_find(itemname, mc_assets.item_texture_list)
 					if (item_slot < 0)
-						item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
+						item_slot = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 				}
 				else
 					item_slot = value_get_real(itemmap[?"slot"], item_slot)

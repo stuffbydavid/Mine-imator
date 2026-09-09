@@ -177,9 +177,22 @@ function tab_properties_library()
 			
 			draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 			
-			if (res.item_sheet_texture != null)
+			if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 			{
-				draw_texture_slot(res.item_sheet_texture, temp_edit.item_slot, dx + wid + 18, dy + 6, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+				var sheet, slot;
+				if (res.type = e_res_type.PACK)
+				{
+					var decodedslot = minecraft_assets_texture_picker_slot_decode(temp_edit.item_slot, mc_assets.item_texture_list)
+					sheet = decodedslot[0]
+					slot = decodedslot[1]
+				}
+				else
+				{
+					sheet = e_item_sheet.SIZE16
+					slot = temp_edit.item_slot
+				}
+				if (sheet >= 0)
+					draw_texture_slot(res.item_sheet_texture[sheet], slot, dx + wid + 18, dy + 6, 16, 16, res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][X] : res.item_sheet_size[X], res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][Y] : res.item_sheet_size[Y])
 				
 				if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeitem"))
 					tab_toggle(template_editor)

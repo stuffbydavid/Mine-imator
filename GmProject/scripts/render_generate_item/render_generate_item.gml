@@ -19,19 +19,19 @@ function render_generate_item()
 		res = argument[1]
 		is3d = argument[2]
 		
-		if (item_slot = slot && item_res = res[0] && item_material_res = res[1] && item_normal_res = res[2] && item_3d = is3d && item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
+		if (item_slot = slot && item_res = res[e_texture_channel.DIFFUSE] && item_material_res = res[e_texture_channel.MATERIAL] && item_normal_res = res[e_texture_channel.NORMAL] && item_3d = is3d && item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
 			return 0
 		
 		item_slot = slot
-		item_res = res[0]
-		item_material_res = res[1]
-		item_normal_res = res[2]
+		item_res = res[e_texture_channel.DIFFUSE]
+		item_material_res = res[e_texture_channel.MATERIAL]
+		item_normal_res = res[e_texture_channel.NORMAL]
 		item_3d = is3d
 		item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT]
 		
-		res = res[0]
+		res = res[e_texture_channel.DIFFUSE]
 	}
-	
+
 	if (!res_is_ready(res))
 		res = mc_res
 	
@@ -41,16 +41,30 @@ function render_generate_item()
 	item_vbuffer = vbuffer_start()
 	
 	// Calculate texture position and size
-	var texsize, texpos, slotpos, slotsize, slottexsize, slottex;
-	
-	if (res.item_sheet_texture != null)
+	var texsize, texpos, slotpos, slotsize, slottexsize, slottex, sheet, sheetsize, sheettex;
+	sheet = e_item_sheet.SIZE16
+	if (res.type = e_res_type.PACK)
 	{
-		texsize = vec2(texture_width(res.item_sheet_texture), texture_height(res.item_sheet_texture))
-		slotpos = point2D(slot mod res.item_sheet_size[X], slot div res.item_sheet_size[X])
-		slotsize = vec2_div(texsize, res.item_sheet_size)
+		var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list)
+		if (decodedslot[0] >= 0)
+		{
+			sheet = decodedslot[0]
+			slot = decodedslot[1]
+		}
+	}
+
+	item_sheet = sheet
+	sheetsize = (res.type = e_res_type.PACK) ? minecraft_item_sheet_size[sheet] : res.item_sheet_size
+	sheettex = res.item_sheet_texture[sheet]
+	
+	if (sheettex != null)
+	{
+		texsize = vec2(texture_width(sheettex), texture_height(sheettex))
+		slotpos = point2D(slot mod sheetsize[X], slot div sheetsize[X])
+		slotsize = vec2_div(texsize, sheetsize)
 		slotsize[X] = max(1, slotsize[X])
 		slotsize[Y] = max(1, slotsize[Y])
-		slottexsize = vec2_div(vec2(1), res.item_sheet_size)
+		slottexsize = vec2_div(vec2(1), sheetsize)
 		slottex = point2D_mul(slotpos, slottexsize)
 		texpos = point2D_mul(slotpos, slotsize)
 	}
@@ -115,8 +129,8 @@ function render_generate_item()
 		slotsizeceil = point2D(ceil(slotsize[X]), ceil(slotsize[Y]))
 		
 		surf = surface_create(slotsizeceil[X], slotsizeceil[Y])
-		if (res.item_sheet_texture != null)
-			tex = res.item_sheet_texture
+		if (sheettex != null)
+			tex = sheettex
 		else
 			tex = res.texture
 		

@@ -7,9 +7,27 @@ function tab_ground_editor()
 	// Texture picker
 	if (background_ground_tex.ready)
 	{
-		draw_texture_picker(background_ground_slot, background_ground_tex.block_sheet_texture[e_block_sheet.STATIC16],
-							dx, dy, dw, dh, ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]), minecraft_block_sheet_size[e_block_sheet.STATIC16][X], minecraft_block_sheet_size[e_block_sheet.STATIC16][Y], tab.ground_scroll, action_background_ground_slot,
-							background_ground_tex.block_sheet_texture[e_block_sheet.ANIMATED], ds_list_size(mc_assets.block_texture_ani_list), minecraft_block_sheet_size[e_block_sheet.ANIMATED][X], minecraft_block_sheet_size[e_block_sheet.ANIMATED][Y], background_ground_tex)
+		var textures = array_create(e_block_sheet.amount)
+		for (var sheet = 0; sheet < e_block_sheet.static_amount; sheet++)
+		{
+			textures[sheet] = background_ground_tex.block_sheet_texture[sheet]
+			if (textures[sheet] = null)
+				textures[sheet] = mc_res.block_sheet_texture[sheet]
+		}
+		var anitextures = background_ground_tex.block_sheet_texture[e_block_sheet.ANIMATED]
+		if (anitextures = null)
+			anitextures = mc_res.block_sheet_texture[e_block_sheet.ANIMATED]
+		if (anitextures != null)
+			textures[e_block_sheet.ANIMATED] = anitextures[block_texture_get_frame(true)]
+		var slotlists = array_create(e_block_sheet.amount)
+		for (var sheet = 0; sheet < e_block_sheet.static_amount; sheet++)
+			slotlists[sheet] = mc_assets.block_texture_list[sheet]
+		slotlists[e_block_sheet.ANIMATED] = mc_assets.block_texture_ani_list
+		var slots = array_create(e_block_sheet.amount)
+		for (var sheet = 0; sheet < e_block_sheet.amount; sheet++)
+			slots[sheet] = ds_list_size(slotlists[sheet])
+
+		draw_texture_picker(background_ground_slot, textures, slots, minecraft_block_sheet_size, dx, dy, dw, dh, tab.ground_scroll, action_background_ground_slot, slotlists, background_ground_tex)
 		
 		if (content_mouseon)
 			window_scroll_focus = string(tab.ground_scroll)

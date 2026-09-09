@@ -345,7 +345,7 @@ function list_init(name)
 				
 				if (res.type = e_res_type.TEXTURE)
 					menu_add_item(res, res.display_name, res.texture)
-				else if (res.item_sheet_texture != null)
+				else if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			
@@ -752,6 +752,14 @@ function list_init(name)
 
 			break
 		}
+
+		case "resourcespackimageitemsheetsize":
+		{
+			for (var size = 0; size < e_item_sheet.amount; size++)
+				menu_add_item(size, text_get("resourcespackimageitemsheetsize" + string(item_size * (size + 1))))
+
+			break
+		}
 		
 		// Resource pack preview skin
 		case "resourcespackimagemodeltexture":
@@ -1072,7 +1080,7 @@ function list_init(name)
 			
 			if (texobj.type = e_res_type.TEXTURE)
 				menu_add_item(texobj, text_get("listdefault", texobj.display_name), texobj.texture)
-			else if (texobj.item_sheet_texture != null)
+			else if (texobj.item_sheet_texture[e_item_sheet.SIZE16] != null)
 				menu_add_item(texobj, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
 			
 			// Add existing resources
@@ -1082,7 +1090,7 @@ function list_init(name)
 				
 				if (res.type = e_res_type.TEXTURE)
 					menu_add_item(res, res.display_name, res.texture)
-				else if (res.item_sheet_texture != null)
+				else if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			break

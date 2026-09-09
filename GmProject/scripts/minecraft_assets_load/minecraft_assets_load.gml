@@ -163,25 +163,37 @@ function minecraft_assets_load()
 					ds_map_copy(block_texture_preview_map, blocktexturepreviewmap)
 				
 				// Item textures
-				var itemsheetsize = load_assets_map[?"item_sheet_size"];
-				if (!ds_list_valid(itemsheetsize) || ds_list_size(itemsheetsize) < 2)
+				var itemsheetsizekeylist = array("item_sheet_size", "item_32_sheet_size")
+				var itemtexturekeylist = array("item_textures", "item_32_textures")
+				for (var size = 0; size < e_item_sheet.amount; size++)
 				{
-					log("No item sheet size found, defaulting to [32,32]")
-					minecraft_item_sheet_size = vec2(32, 32)
+					var itemsheetsize = load_assets_map[?itemsheetsizekeylist[size]];
+					if (!ds_list_valid(itemsheetsize) || ds_list_size(itemsheetsize) < 2)
+					{
+						if (size = e_item_sheet.SIZE16)
+						{
+							log("No item sheet size found, defaulting to [32,32]")
+							minecraft_item_sheet_size[size] = vec2(32, 32)
+						}
+					}
+					else
+						minecraft_item_sheet_size[size] = vec2(itemsheetsize[|0], itemsheetsize[|1])
+
+					var itemtextureslist = load_assets_map[?itemtexturekeylist[size]];
+					if (!ds_list_valid(itemtextureslist))
+					{
+						if (size = e_item_sheet.SIZE16)
+						{
+							log("No item textures found")
+							return false
+						}
+						ds_list_clear(item_texture_list[size])
+					}
+					else
+						ds_list_copy(item_texture_list[size], itemtextureslist)
 				}
-				else
-					minecraft_item_sheet_size = vec2(itemsheetsize[|0], itemsheetsize[|1])
 				with (mc_res)
-					item_sheet_size = vec2(minecraft_item_sheet_size[X], minecraft_item_sheet_size[Y])
-				
-				var itemtextureslist = load_assets_map[?"item_textures"];
-				if (!ds_list_valid(itemtextureslist))
-				{
-					log("No item textures found")
-					return false
-				}
-				
-				ds_list_copy(item_texture_list, itemtextureslist)
+					item_sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
 				
 				// Particle textures
 				var particletextureslist = load_assets_map[?"particle_textures"];
@@ -207,8 +219,18 @@ function minecraft_assets_load()
 					res_load_pack_block_textures()
 					
 					res_load_pack_item_textures("diffuse", "")
-					item_sheet_texture_material = sprite_duplicate(spr_default_material)
-					item_sheet_tex_normal = sprite_duplicate(spr_default_normal)
+					for (var size = 0; size < e_item_sheet.amount; size++)
+					{
+						if (item_sheet_texture[size] != null)
+						{
+							if (item_sheet_texture_material[size] != null)
+								texture_free(item_sheet_texture_material[size])
+							if (item_sheet_texture_normal[size] != null)
+								texture_free(item_sheet_texture_normal[size])
+							item_sheet_texture_material[size] = sprite_duplicate(spr_default_material)
+							item_sheet_texture_normal[size] = sprite_duplicate(spr_default_normal)
+						}
+					}
 					
 					minecraft_assets_load_particles(particleslist)
 					res_load_pack_particle_textures()
@@ -672,6 +694,71 @@ function minecraft_assets_build_block_texture_slot_maps()
 function minecraft_assets_block_texture_slot_encode(texturepage, slot)
 {
 	return slot * e_block_sheet.amount + texturepage
+}
+
+/// minecraft_assets_texture_picker_slot_decode(Real, Array)
+/// @desc Returns the sheet index and sheet-local slot for a contiguous picker slot.
+function minecraft_assets_texture_picker_slot_decode(slot, slotlists)
+{
+	for (var sheet = 0; sheet < array_length(slotlists); sheet++)
+	{
+		var slotcount = ds_list_size(slotlists[sheet])
+		if (slot < slotcount)
+			return array(sheet, slot)
+		slot -= slotcount
+	}
+
+	return array(-1, -1)
+}
+
+/// minecraft_assets_texture_picker_slot_find(StringType, Array)
+/// @desc Returns a contiguous picker slot for a texture name, or -1 when absent.
+function minecraft_assets_texture_picker_slot_find(texturename, slotlists)
+{
+	var slotoffset = 0
+	for (var sheet = 0; sheet < array_length(slotlists); sheet++)
+	{
+		var slot = ds_list_find_index(slotlists[sheet], texturename)
+		if (slot >= 0)
+			return slotoffset + slot
+		slotoffset += ds_list_size(slotlists[sheet])
+	}
+
+	return -1
+}
+
+/// minecraft_assets_block_texture_picker_slot_decode(Real)
+/// @desc Decodes a contiguous block picker slot, including the animated page.
+function minecraft_assets_block_texture_picker_slot_decode(slot)
+{
+	for (var sheet = 0; sheet < e_block_sheet.static_amount; sheet++)
+	{
+		var slotcount = ds_list_size(mc_assets.block_texture_list[sheet])
+		if (slot < slotcount)
+			return array(sheet, slot)
+		slot -= slotcount
+	}
+
+	if (slot < ds_list_size(mc_assets.block_texture_ani_list))
+		return [e_block_sheet.ANIMATED, slot]
+	return array(-1, -1)
+}
+
+/// minecraft_assets_block_texture_picker_slot_find(StringType)
+/// @desc Returns the contiguous block picker slot for a texture name, or -1 when absent.
+function minecraft_assets_block_texture_picker_slot_find(texturename)
+{
+	var slotoffset = 0
+	for (var sheet = 0; sheet < e_block_sheet.static_amount; sheet++)
+	{
+		var slot = ds_list_find_index(mc_assets.block_texture_list[sheet], texturename)
+		if (slot >= 0)
+			return slotoffset + slot
+		slotoffset += ds_list_size(mc_assets.block_texture_list[sheet])
+	}
+
+	var slot = ds_list_find_index(mc_assets.block_texture_ani_list, texturename)
+	return slot >= 0 ? slotoffset + slot : -1
 }
 
 /// minecraft_assets_block_texture_tag_base(StringType, StringType)

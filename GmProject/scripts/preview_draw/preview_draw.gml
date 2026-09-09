@@ -133,7 +133,7 @@ function preview_draw(preview, xx, yy, width, height)
 			update = true
 		
 		// Item animation
-		if (select.object_index = obj_template && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
+		if ((select.object_index = obj_template || select.object_index = obj_bench_settings) && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
 			update = true
 		
 		// Playing audio
@@ -387,7 +387,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							
 							case e_temp_type.ITEM:
-								render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, [select.item_tex, null, null])
+								render_world_item(select.item_vbuffer, [select.item_tex, null, null], select.item_sheet, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, true)
 								break
 							
 							case e_temp_type.BLOCK:
@@ -430,7 +430,7 @@ function preview_draw(preview, xx, yy, width, height)
 								var tex;
 								with (select)
 									tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-								render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [tex, spr_default_material, spr_default_normal])
+								render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [tex, spr_default_normal, spr_default_material])
 								break
 							}
 						}
@@ -595,11 +595,11 @@ function preview_draw(preview, xx, yy, width, height)
 								case "itemsheet":
 								{
 									if (pack_image_material = "diffuse")
-										tex = select.item_sheet_texture
+										tex = select.item_sheet_texture[pack_item_sheet_size]
 									else if (pack_image_material = "material")
-										tex = select.item_sheet_texture_material
+										tex = select.item_sheet_texture_material[pack_item_sheet_size]
 									else if (pack_image_material = "normal")
-										tex = select.item_sheet_tex_normal
+										tex = select.item_sheet_texture_normal[pack_item_sheet_size]
 									
 									break
 								}
@@ -630,7 +630,7 @@ function preview_draw(preview, xx, yy, width, height)
 							break
 						
 						case e_res_type.ITEM_SHEET:
-							tex = select.item_sheet_texture
+							tex = select.item_sheet_texture[e_item_sheet.SIZE16]
 							break
 						
 						case e_res_type.BLOCK_SHEET:

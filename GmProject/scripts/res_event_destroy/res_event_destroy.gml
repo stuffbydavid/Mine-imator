@@ -93,14 +93,17 @@ function res_event_destroy()
 	block_vbuffer_destroy()
 	
 	// Free items
-	if (item_sheet_texture != null)
-		texture_free(item_sheet_texture)
-	
-	if (item_sheet_texture_material != null)
-		texture_free(item_sheet_texture_material)
-	
-	if (item_sheet_tex_normal != null)
-		texture_free(item_sheet_tex_normal)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+	{
+		if (item_sheet_texture[size] != null)
+			texture_free(item_sheet_texture[size])
+
+		if (item_sheet_texture_material[size] != null)
+			texture_free(item_sheet_texture_material[size])
+
+		if (item_sheet_texture_normal[size] != null)
+			texture_free(item_sheet_texture_normal[size])
+	}
 	
 	// Free misc
 	if (colormap_grass_texture != null)

@@ -20,22 +20,35 @@ function background_ground_update_texture()
 		texture_free(background_ground_texture)
 	
 	var size, bx, by, surf, tex;
-	
-	// In static block list
-	if (background_ground_slot < ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]))
+	var decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
+	var sheet = decodedslot[0]
+	var slot = decodedslot[1]
+	var texres = background_ground_tex
+	if (sheet < 0)
 	{
 		background_ground_ani = false
-		background_ground_name = mc_assets.block_texture_list[e_block_sheet.STATIC16][|background_ground_slot]
-		size = texture_width(background_ground_tex.block_sheet_texture[e_block_sheet.STATIC16]) / minecraft_block_sheet_size[e_block_sheet.STATIC16][X]
-		bx = (background_ground_slot mod minecraft_block_sheet_size[e_block_sheet.STATIC16][X]) * size
-		by = (background_ground_slot div minecraft_block_sheet_size[e_block_sheet.STATIC16][X]) * size
+		background_ground_texture = texture_create_missing()
+		background_ground_name = ""
+		return 0
+	}
+	if (texres.block_sheet_texture[sheet] = null)
+		texres = mc_res
+	
+	// In static block list
+	if (sheet != e_block_sheet.ANIMATED)
+	{
+		background_ground_ani = false
+		background_ground_name = mc_assets.block_texture_list[sheet][|slot]
+		size = texture_width(texres.block_sheet_texture[sheet]) / minecraft_block_sheet_size[sheet][X]
+		bx = (slot mod minecraft_block_sheet_size[sheet][X]) * size
+		by = (slot div minecraft_block_sheet_size[sheet][X]) * size
 	}
 	
 	// In animated block list
 	else
 	{
 		// Static block sheet only
-		if (background_ground_tex.block_sheet_texture[e_block_sheet.ANIMATED] = null)
+		if (texres.block_sheet_texture[e_block_sheet.ANIMATED] = null)
 		{
 			background_ground_ani = false
 			background_ground_texture = texture_create_missing()
@@ -43,10 +56,9 @@ function background_ground_update_texture()
 			return 0
 		}
 		
-		var slot = background_ground_slot - ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]);
 		background_ground_ani = true
 		background_ground_name = mc_assets.block_texture_ani_list[|slot]
-		size = texture_width(background_ground_tex.block_sheet_texture[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
+		size = texture_width(texres.block_sheet_texture[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
 		bx = (slot mod minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 		by = (slot div minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 	}
@@ -61,7 +73,7 @@ function background_ground_update_texture()
 			for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
 			{
 				draw_clear_alpha(c_black, 0)
-				draw_texture_part(background_ground_tex.block_sheet_texture[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
+				draw_texture_part(texres.block_sheet_texture[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
 				background_ground_ani_texture[f] = texture_surface(surf)
 				sprite_set_texture_page(background_ground_ani_texture[f], false)
 			}
@@ -71,7 +83,7 @@ function background_ground_update_texture()
 		else
 		{
 			draw_clear_alpha(c_black, 0)
-			draw_texture_part(background_ground_tex.block_sheet_texture[e_block_sheet.STATIC16], 0, 0, bx, by, size, size)
+			draw_texture_part(texres.block_sheet_texture[sheet], 0, 0, bx, by, size, size)
 			background_ground_texture = texture_surface(surf)
 			sprite_set_texture_page(background_ground_texture, false)
 		}

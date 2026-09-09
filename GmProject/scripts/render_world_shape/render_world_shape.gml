@@ -15,8 +15,8 @@ function render_world_shape(type, vbuf, facecamera, tex)
 		matrix_world_multiply_pre(matrix_build(0, 0, 0, rotx, 0, rotz, 1, 1, 1))
 	}
 	
-	render_set_texture(tex[0])
-	render_set_texture(tex[1], "Material")
-	render_set_texture(tex[2], "Normal")
+	render_set_texture(tex[e_texture_channel.DIFFUSE])
+	render_set_texture(tex[e_texture_channel.MATERIAL], "Material")
+	render_set_texture(tex[e_texture_channel.NORMAL], "Normal")
 	vbuffer_render(vbuf)
 }

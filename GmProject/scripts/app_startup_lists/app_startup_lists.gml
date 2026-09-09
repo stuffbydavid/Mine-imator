@@ -432,7 +432,9 @@ function app_startup_lists()
 	for (var size = 0; size < e_block_sheet.amount; size++)
 		minecraft_block_sheet_size[size] = vec2(0, 0)
 	minecraft_block_animated_sheet_frame_count = 0
-	minecraft_item_sheet_size = vec2(0, 0)
+	minecraft_item_sheet_size = array_create(e_item_sheet.amount)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+		minecraft_item_sheet_size[size] = vec2(0, 0)
 	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()

@@ -76,9 +76,9 @@ function res_event_create()
 	glint_armor_texture = null
 	glint_item_texture = null
 	
-	item_sheet_texture = null
-	item_sheet_texture_material = null
-	item_sheet_tex_normal = null
+	item_sheet_texture = array_create(e_item_sheet.amount, null)
+	item_sheet_texture_material = array_create(e_item_sheet.amount, null)
+	item_sheet_texture_normal = array_create(e_item_sheet.amount, null)
 	item_sheet_size = vec2(32, 32)
 	
 	particles_texture[0] = null

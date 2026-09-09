@@ -25,15 +25,9 @@ function project_load_legacy_background()
 	
 	background_ground_show = buffer_read_byte()
 	background_ground_legacy_name = legacy_block_100_texture_list[|buffer_read_int()]
-	var newslot = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], background_ground_legacy_name)
+	var newslot = minecraft_assets_block_texture_picker_slot_find(background_ground_legacy_name)
 	if (newslot >= 0)
 		background_ground_slot = newslot
-	else // Animated?
-	{
-		newslot = ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_legacy_name)
-		if (newslot >= 0)
-			background_ground_slot = ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]) + newslot
-	}
 	background_ground_tex.count--
 	background_ground_tex = project_load_legacy_save_id()
 	background_ground_tex_material = "default"

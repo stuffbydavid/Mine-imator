@@ -61,7 +61,8 @@ function temp_event_create()
 	item_tex = null
 	item_tex_material = null
 	item_tex_normal = null
-	item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
+	item_slot = ds_list_find_index(mc_assets.item_texture_list[e_item_sheet.SIZE16], default_item)
+	item_sheet = e_item_sheet.SIZE16
 	item_vbuffer = null
 	item_3d = true
 	item_face_camera = false

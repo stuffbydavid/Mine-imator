@@ -617,15 +617,9 @@ function project_load_legacy_beta(loadbackground)
 		else
 			legacyname = legacy_block_05_texture_list[|oldslot]
 		
-		newslot = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], legacyname)
+		newslot = minecraft_assets_block_texture_picker_slot_find(legacyname)
 		if (newslot >= 0)
 			background_ground_slot = newslot
-		else // Animated?
-		{
-			newslot = ds_list_find_index(mc_assets.block_texture_ani_list, legacyname)
-			if (newslot >= 0)
-				background_ground_slot = ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]) + newslot
-		}
 		
 		// Sky
 		background_sky_color = load.sky_color

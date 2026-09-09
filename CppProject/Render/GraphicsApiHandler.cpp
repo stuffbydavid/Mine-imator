@@ -348,6 +348,12 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClipBegin(QRect rect)
 	{
+		if (clipEnabled)
+		{
+			clipStack.append(clipRect);
+			rect = rect.intersected(clipRect);
+		}
+
 		SubmitBatch();
 
 		D3DContext->ClearDepthStencilView(surface->frameBuffer->d3dDSV, D3D11_CLEAR_STENCIL, 1.0, 0);
@@ -365,6 +371,14 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClipEnd()
 	{
+		if (!clipStack.isEmpty())
+		{
+			QRect previousRect = clipStack.takeLast();
+			clipEnabled = false;
+			ClipBegin(previousRect);
+			return;
+		}
+
 		SubmitBatch();
 
 		clipEnabled = false;
@@ -619,6 +633,12 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClipBegin(QRect rect)
 	{
+		if (clipEnabled)
+		{
+			clipStack.append(clipRect);
+			rect = rect.intersected(clipRect);
+		}
+
 		SubmitBatch();
 
 		// Render to stencil mask
@@ -649,6 +669,14 @@ namespace CppProject
 		if (!clipEnabled)
 			return;
 
+		if (!clipStack.isEmpty())
+		{
+			QRect previousRect = clipStack.takeLast();
+			clipEnabled = false;
+			ClipBegin(previousRect);
+			return;
+		}
+
 		SubmitBatch();
 
 		// Disable stencil mask
@@ -661,6 +689,30 @@ namespace CppProject
 		return 16384;
 	}
 #endif
+
+	void GraphicsApiHandler::ClipSuspend()
+	{
+		ClipState state;
+		state.enabled = clipEnabled;
+		state.rect = clipRect;
+		state.stack = clipStack;
+		clipSuspendStack.append(state);
+
+		clipStack.clear();
+		if (clipEnabled)
+			ClipEnd();
+	}
+
+	void GraphicsApiHandler::ClipResume()
+	{
+		if (clipSuspendStack.isEmpty())
+			return;
+
+		ClipState state = clipSuspendStack.takeLast();
+		clipStack = state.stack;
+		if (state.enabled)
+			ClipBegin(state.rect);
+	}
 
 	void GraphicsApiHandler::SetMatrix(IntType type, Matrix matrix)
 	{

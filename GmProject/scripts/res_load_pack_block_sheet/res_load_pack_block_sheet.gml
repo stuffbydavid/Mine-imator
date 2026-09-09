@@ -57,7 +57,7 @@ function res_load_pack_block_sheet(type, suffix)
 				else 
 					tex = texture_create(fname)
 				
-				// Pack size is determined by the maximum width of the first 10 block textures.
+				// Pack size is determined by the maximum width of the first 10 block textures
 				if (size = e_block_sheet.STATIC16 && t < 10)
 					blocksize = max(blocksize, texture_width(tex))
 			
@@ -306,8 +306,14 @@ function res_load_pack_block_sheet(type, suffix)
 					nextimage = floor(image) + 1
 					if (framelist != null)
 					{
-						nextimage = framelist[|(floor(image) + 1) mod ds_list_size(framelist)]
-						image = framelist[|floor(image) mod ds_list_size(framelist)] + frac(image)
+						var frame, framenext;
+						frame = framelist[|floor(image) mod ds_list_size(framelist)]
+						framenext = framelist[|(floor(image) + 1) mod ds_list_size(framelist)]
+						if (is_real(frame) && is_real(framenext))
+						{
+							image = frame + frac(image)
+							nextimage = framenext 
+						}
 					}
 					image = image mod images
 					nextimage = nextimage mod images

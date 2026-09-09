@@ -98,10 +98,10 @@ function project_load_update()
 				with (keyframe_list[|i])
 				{
 					if (value[e_value.ITEM_NAME] != "")
-						value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, value[e_value.ITEM_NAME])
+						value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(value[e_value.ITEM_NAME], mc_assets.item_texture_list)
 					
 					if (value[e_value.ITEM_SLOT] < 0)
-						value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, default_item)
+						value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 				}
 			}
 		}

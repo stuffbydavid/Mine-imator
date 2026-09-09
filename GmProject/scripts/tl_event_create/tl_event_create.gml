@@ -154,6 +154,7 @@ function tl_event_create()
 	
 	item_vbuffer = null
 	item_slot = 0
+	item_sheet = e_item_sheet.SIZE16
 	item_res = null
 	item_material_res = null
 	item_normal_res = null

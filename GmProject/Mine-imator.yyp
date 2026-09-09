@@ -950,6 +950,7 @@
     {"id":{"name":"action_res_preview_pack_colormap","path":"scripts/action_res_preview_pack_colormap/action_res_preview_pack_colormap.yy",},},
     {"id":{"name":"action_res_preview_pack_image_material","path":"scripts/action_res_preview_pack_image_material/action_res_preview_pack_image_material.yy",},},
     {"id":{"name":"action_res_preview_pack_image","path":"scripts/action_res_preview_pack_image/action_res_preview_pack_image.yy",},},
+    {"id":{"name":"action_res_preview_pack_item_sheet_size","path":"scripts/action_res_preview_pack_item_sheet_size/action_res_preview_pack_item_sheet_size.yy",},},
     {"id":{"name":"action_res_preview_pack_model_texture","path":"scripts/action_res_preview_pack_model_texture/action_res_preview_pack_model_texture.yy",},},
     {"id":{"name":"action_res_preview_pack_moon_phase","path":"scripts/action_res_preview_pack_moon_phase/action_res_preview_pack_moon_phase.yy",},},
     {"id":{"name":"action_res_preview_pack_particles","path":"scripts/action_res_preview_pack_particles/action_res_preview_pack_particles.yy",},},

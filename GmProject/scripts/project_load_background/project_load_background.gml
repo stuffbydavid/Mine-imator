@@ -89,9 +89,7 @@ function project_load_background(map)
 			background_ground_name = newname
 	}
 	
-	background_ground_slot = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], background_ground_name)
-	if (background_ground_slot < 0) // Animated
-		background_ground_slot = ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16]) + ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_name)
+	background_ground_slot = minecraft_assets_block_texture_picker_slot_find(background_ground_name)
 		
 	background_ground_tex.count--
 	background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)

@@ -558,6 +558,7 @@
         "surface_exists": { "return": "bool", "args": [ "int" ] },
         "surface_free": { "return": "void", "args": [ "int" ] },
         "surface_get_height": { "return": "int", "args": [ "int" ] },
+        "surface_get_target": { "return": "int", "args": [] },
         "surface_get_texture": { "return": "int", "args": [ "int" ] },
         "surface_get_width": { "return": "int", "args": [ "int" ] },
         "surface_getpixel": { "return": "int", "args": [ "int", "int", "int" ] },

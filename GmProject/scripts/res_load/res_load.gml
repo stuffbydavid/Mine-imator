@@ -40,10 +40,14 @@ function res_load(reload = false)
 		
 		case e_res_type.ITEM_SHEET:
 		{
-			if (item_sheet_texture)
-				texture_free(item_sheet_texture)
+			for (var size = 0; size < e_item_sheet.amount; size++)
+			{
+				if (item_sheet_texture[size] != null)
+					texture_free(item_sheet_texture[size])
+				item_sheet_texture[size] = null
+			}
 			
-			item_sheet_texture = texture_create(fn)
+			item_sheet_texture[e_item_sheet.SIZE16] = texture_create(fn)
 			
 			break
 		}

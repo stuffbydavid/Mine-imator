@@ -267,18 +267,18 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp.block_vbuffer, [render_res_diffuse, render_res_material, render_res_normal], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp.block_vbuffer, [render_res_diffuse, render_res_normal, render_res_material], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
-					render_world_scenery(temp.scenery, [render_res_diffuse, render_res_material, render_res_normal], temp.block_repeat_enable, temp.block_repeat)
+					render_world_scenery(temp.scenery, [render_res_diffuse, render_res_normal, render_res_material], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
 			case e_tl_type.ITEM:
 			{
 				if (item_vbuffer = null)
-					render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [item_res, item_material_res, item_normal_res])
+					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
 				else
-					render_world_item(item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [item_res, item_material_res, item_normal_res])
+					render_world_item(item_vbuffer, [item_res, item_normal_res, item_material_res], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
 				break
 			}
 			
@@ -372,7 +372,7 @@ function render_world_tl()
 						render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
 				}
 				
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, texmat, normtex])
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, normtex, texmat])
 				break
 			}
 		}
