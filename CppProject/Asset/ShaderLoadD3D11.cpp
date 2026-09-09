@@ -345,9 +345,22 @@ namespace CppProject
 
         Heap<char> vsData, fsData;
         QString vsCacheName, fsCacheName;
-    #if DEBUG_MODE
+    #if !RELEASE_MODE
         vsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".fsh.d3d";
+
+        if (useCache && QFile::exists(vsCacheName) && QFile::exists(fsCacheName))
+        {
+            QDateTime cacheModified = std::min(QFileInfo(vsCacheName).lastModified(), QFileInfo(fsCacheName).lastModified());
+            for (const QString& sourceName : sourceDependencies)
+            {
+                if (QFileInfo(sourceName).lastModified() >= cacheModified)
+                {
+                    useCache = false;
+                    break;
+                }
+            }
+        }
     #else
         vsCacheName = ":/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ":/Shaders/Compiled/" + name + ".fsh.d3d";
@@ -355,7 +368,7 @@ namespace CppProject
 
         if (!useCache || !QFile::exists(vsCacheName) || !QFile::exists(fsCacheName))
         {
-        #if DEBUG_MODE
+        #if !RELEASE_MODE
             // Compile code and store in assets
             auto compileCode = [&](QString code, BoolType isVertex, Heap<char>& dst)
             {

@@ -116,7 +116,7 @@ namespace CppProject
 		vsName = "/Shaders/" + name + ".vsh";
 		fsName = "/Shaders/" + name + ".fsh";
 
-	#if DEBUG_MODE
+	#if !RELEASE_MODE // Load from filesystem
 		QString gmVsName = GM_SHADERS_DIR "/" + name + "/" + name + ".vsh";
 		QString gmFsName = GM_SHADERS_DIR "/" + name + "/" + name + ".fsh";
 		if (QFile::exists(gmVsName) && QFile::exists(gmFsName))
@@ -254,7 +254,7 @@ namespace CppProject
 		includeStack.append(includeId);
 
 		QString filename;
-	#if DEBUG_MODE
+	#if !RELEASE_MODE
 		QString gmFilename = GM_SHADERS_DIR "/" + shaderName + "/" + shaderName + extension;
 		if (QFile::exists(gmFilename))
 			filename = gmFilename;
@@ -1122,7 +1122,7 @@ namespace CppProject
 
 	void Shader::CheckReload()
 	{
-	#ifdef ASSETS_DIR
+	#if !RELEASE_MODE
 		for (Shader* shader : allShaders)
 		{
 			BoolType reload = false;

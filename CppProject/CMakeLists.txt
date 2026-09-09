@@ -434,7 +434,7 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>>:d3dcompiler>"
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>,$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>>:d3dcompiler>"
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
 		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>,$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>>:/IGNORE:4099>"
