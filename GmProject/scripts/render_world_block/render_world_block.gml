@@ -117,6 +117,24 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	if (materialformatprev != res[e_texture_channel.MATERIAL].material_format)
 		render_set_uniform_int("uMaterialFormat", res[e_texture_channel.MATERIAL].material_format)
 	
+	if (tex != texprev)
+	{
+		render_set_texture(tex)
+		texprev = tex
+	}
+
+	if (texmat != texmatprev)
+	{
+		render_set_texture(texmat, "Material")
+		texmatprev = texmat
+	}
+
+	if (texnormal != texnormalprev)
+	{
+		render_set_texture(texnormal, "Normal")
+		texnormalprev = texnormal
+	}
+
 	// Grass
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 	{

@@ -19,6 +19,9 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 {
 	var off, contenthei, slotoffset, scrollsnap;
 	
+	// Background
+	draw_box(xx + 1, yy + 1, wid - 2, hei - 2, false, c_input_background, draw_get_alpha())
+	
 	// Outline
 	draw_outline(xx, yy, wid, hei, 1, c_border, a_border)
 	

@@ -512,7 +512,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_temp_type.PARTICLE_SPAWNER:
 			{
 				// Particles
-				tab_control_sortlist(6)
+				tab_control_sortlist(9)
 				sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
 				tab_next()
 				

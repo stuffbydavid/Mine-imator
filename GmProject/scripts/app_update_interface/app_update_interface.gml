@@ -21,8 +21,6 @@ function app_update_interface()
 		window_compact = false
 	}
 	
-	/*
 	if (current_time < update_interface_timeout)
 		interface_update()
-	*/
 }

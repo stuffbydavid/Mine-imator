@@ -1,8 +1,6 @@
 /// interface_update()
 /// @desc Updates interface colors based on selected theme
 
-/*
-
 function color_ease(color, colorgoal)
 {
 	var rgb_old, rgb_new;
@@ -27,6 +25,7 @@ function interface_update()
 		c_level_top = color_ease(c_level_top, level_top)
 		c_level_middle = color_ease(c_level_middle, level_middle)
 		c_level_bottom = color_ease(c_level_bottom, level_bottom)
+		c_input_background = color_ease(c_input_background, input_background)
 		//c_viewport_top = color_ease(c_viewport_top, viewport_top)
 		//c_viewport_bottom = color_ease(c_viewport_bottom, viewport_bottom)
 		
@@ -47,10 +46,10 @@ function interface_update()
 		c_axismagenta = color_ease(c_axismagenta, magenta)
 		//c_bend = color_ease(c_bend, pink)
 	
-		//c_info = color_ease(c_info, toast_color[e_toast.INFO])
-		//c_success = color_ease(c_success, toast_color[e_toast.POSITIVE])
-		//c_warning = color_ease(c_warning, toast_color[e_toast.WARNING])
-		//c_error = color_ease(c_error, toast_color[e_toast.NEGATIVE])
+		c_info = color_ease(c_info, toast_color[e_toast.INFO])
+		c_success = color_ease(c_success, toast_color[e_toast.POSITIVE])
+		c_warning = color_ease(c_warning, toast_color[e_toast.WARNING])
+		c_error = color_ease(c_error, toast_color[e_toast.NEGATIVE])
 		
 		// Accent color(s)
 		if (app.setting_accent = 9)
@@ -61,5 +60,3 @@ function interface_update()
 	
 	interface_update_accent()
 }
-
-*/

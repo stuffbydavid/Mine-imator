@@ -12,7 +12,7 @@ function app_startup_interface_bench()
 	bench_show_ani_type = ""
 	bench_show_ani = 0
 	bench_settings_ani = 0
-	bench_height = 325
+	bench_height = 345
 	
 	// Bench types
 	bench_type_list = list_new()

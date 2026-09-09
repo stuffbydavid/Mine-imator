@@ -10,7 +10,7 @@ function tab_properties_resources()
 	tab_next()
 	
 	// List
-	tab_control_sortlist(6)
+	tab_control_sortlist(7)
 	sortlist_draw(tab.resources.list, dx, dy, dw, tab_control_h, res_edit)
 	tab_next()
 	

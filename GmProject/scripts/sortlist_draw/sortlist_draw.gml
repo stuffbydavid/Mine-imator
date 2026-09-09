@@ -152,6 +152,9 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	// Items
 	dy = (yy + colsh) + 10
 	
+	// Background
+	draw_box(xx, yy + colsh + 7, w, h - colsh - 7, false, c_input_background, 1)
+
 	draw_divide(xx + 1, dy - 3, w - 2)
 	
 	// Outline

@@ -172,7 +172,7 @@ function draw_button_menu()
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.PRESS])
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
-	draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, hei, false, c_input_background, draw_get_alpha())
 	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha * fadealpha, true)
 	
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])

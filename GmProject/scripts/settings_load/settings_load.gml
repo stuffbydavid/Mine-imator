@@ -99,7 +99,7 @@ function settings_load()
 			if (setting_language_filename != language_file)
 				language_load(setting_language_filename, language_map)
 			
-			var themename = theme_light.name;
+			var themename = theme_classic.name;
 			themename = value_get_string(interfacemap[?"theme"], themename)
 			
 			with (obj_theme)

@@ -53,7 +53,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 	fieldy = yy
 	dragw = 16
 	
-	draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_input_background, draw_get_alpha())
 	
 	// Draw field backgrounds
 	if (vertical)

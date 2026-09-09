@@ -62,13 +62,13 @@ function menu_draw()
 		menu_wid_draw = lerp(m.menu_w_start, content_width, aniease)
 		
 		// Draw
-		draw_box(menu_x_draw, yy, menu_wid_draw, menuh, false, c_level_top, 1)
+		draw_box(menu_x_draw, yy, menu_wid_draw, menuh, false, c_input_background, 1)
 		
 		if (menuh > 2)
 			draw_outline(menu_x_draw, yy, menu_wid_draw, menuh, 1, c_border, a_border, true)
 		
 		// Hide outline touching button
-		draw_box(menu_x_draw + 1, yy + (m.menu_flip), menu_wid_draw - 2, menuh - 1, false, c_level_top, 1)
+		draw_box(menu_x_draw + 1, yy + (m.menu_flip), menu_wid_draw - 2, menuh - 1, false, c_input_background, 1)
 		
 		// Drop shadow
 		var shadowy, shadowh;

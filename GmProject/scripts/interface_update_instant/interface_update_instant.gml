@@ -8,6 +8,7 @@ function interface_update_instant()
 	c_level_top = theme.level_top
 	c_level_middle = theme.level_middle
 	c_level_bottom = theme.level_bottom
+	c_input_background = theme.input_background
 	//c_viewport_top = theme.viewport_top
 	//c_viewport_bottom = theme.viewport_bottom
 	

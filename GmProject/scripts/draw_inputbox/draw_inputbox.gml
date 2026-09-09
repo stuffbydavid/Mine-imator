@@ -78,7 +78,7 @@ function draw_inputbox()
 		borderalpha = 1 * alpha
 	}
 	
-	draw_box(xx, yy, w, h, false, c_level_top, alpha * draw_get_alpha())
+	draw_box(xx, yy, w, h, false, c_input_background, alpha * draw_get_alpha())
 	draw_outline(xx, yy, w, h, 1, bordercolor, borderalpha, true)
 	draw_box_hover(xx, yy, w, h, microani_arr[e_microani.PRESS])
 	
