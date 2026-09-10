@@ -40,6 +40,7 @@ function app_startup_interface_tabs()
 			tbx_render_distance = new_textbox_integer()
 			tbx_samples = new_textbox_integer()
 			
+			tbx_shadows_sun_cascades = new_textbox_integer()
 			tbx_shadows_blur_quality = new_textbox_integer()
 			tbx_shadows_blur_size = new_textbox_decimals()
 			tbx_shadows_blur_size.suffix = "%"

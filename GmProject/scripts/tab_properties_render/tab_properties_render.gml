@@ -132,6 +132,10 @@ function tab_properties_render()
 	{
 		tab_collapse_start()
 		
+		tab_control_meter()
+		draw_meter("rendershadowssuncascades", dx, dy, dw, rendererset.shadows_sun_cascades, 1, 5, 2, 1, tab.render.tbx_shadows_sun_cascades, action_project_render_shadows_sun_cascades, "rendershadowssuncascadestip")
+		tab_next()
+
 		tab_control_menu()
 		draw_button_menu("rendershadowssunbuffersize", e_menu.LIST, dx, dy, dw, 24, rendererset.shadows_sun_buffer_size, text_get("rendershadowsbuffersize" + string(rendererset.shadows_sun_buffer_size)) + " (" + string(rendererset.shadows_sun_buffer_size) + "x" + string(rendererset.shadows_sun_buffer_size) + ")", action_project_render_shadows_sun_buffer_size)
 		tab_next()

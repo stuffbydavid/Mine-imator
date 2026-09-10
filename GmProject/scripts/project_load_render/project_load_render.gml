@@ -6,11 +6,19 @@ function project_load_render(map)
 		return 0
 
 	var custom = render_preset_map[?"custom"];
-	with (custom)
+	with (render_default_settings)
+		render_preset_copy(custom, true)
+	
+	if (load_format >= e_project.FORMAT_210)
 	{
-		render_preset_clear()
-		render_preset_load_settings(map)
+		with (custom)
+		{
+			render_preset_clear()
+			render_preset_load_settings(map)
+		}
 	}
+	else
+		project_load_legacy_render(map)
 	
 	// Match saved performance settings to a loaded preset for each renderer
 	for (var renderer = e_renderer.STANDARD; renderer <= e_renderer.REALISTIC; renderer++)

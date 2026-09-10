@@ -18,10 +18,12 @@ function render_preset_event_create()
 		ssao = true
 		shadows = true
 		shadows_blur_quality = 20
+		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512
 		shadows_point_buffer_size = 256
 		glow = true
+		// Standard should support glow_falloff if it's fast enough
 		aa = true
 		aa_power = 1
 
@@ -34,6 +36,7 @@ function render_preset_event_create()
 		samples = 24
 		ssao = true
 		shadows = true
+		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512
 		shadows_point_buffer_size = 256
@@ -54,7 +57,7 @@ function render_preset_event_create()
 		indirect_strength = 1
 		reflections_fade_amount = 1
 		reflections_thickness = 1
-		glow_falloff_radius = 2
+		glow_falloff_radius = 2 // Move to common if Standard gets glow falloff
 		glow_falloff_intensity = 1
 	}
 

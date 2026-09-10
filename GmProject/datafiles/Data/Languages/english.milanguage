@@ -2983,6 +2983,8 @@
 		},
 		"shadows": "Shadows",
 		"shadows/": {
+			"suncascades": "Sunlight cascades",
+			"suncascadestip": "The number of separate shadow maps for sunlight, used to improve shadow detail over close and large distances.",
 			"sunbuffersize": "Sun light buffer size",
 			"spotbuffersize": "Spot light buffer size",
 			"pointbuffersize": "Point light buffer size",

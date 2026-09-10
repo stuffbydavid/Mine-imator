@@ -7,6 +7,7 @@
 			"ssao": false,
 			"shadows": false,
 			"shadows_blur_quality": 10,
+			"shadows_sun_cascades": 2,
 			"shadows_sun_buffer_size": 2048,
 			"shadows_spot_buffer_size": 512,
 			"shadows_point_buffer_size": 256,
