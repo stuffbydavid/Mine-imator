@@ -73,7 +73,8 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 		emissive = max(uEmissive, vCustom.z * uDefaultEmissive);
 	}
 	
-	F0 = DIELECTRIC_F0;
+	/* F0 = DIELECTRIC_F0; */
+	F0 = mix(0.0, 1.0, metallic);
 	sss = max(uSSS, vCustom.w * uDefaultSubsurface);
 }
 
