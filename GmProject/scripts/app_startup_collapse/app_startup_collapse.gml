@@ -20,6 +20,10 @@ function app_startup_collapse()
 	
 	collapse_register("texfilter")
 	
+	collapse_register("preset_special_effects")
+	collapse_register("preset_graphics")
+	collapse_register("preset_materials")
+	
 	collapse_register("ssao")
 	collapse_register("shadows")
 	collapse_register("subsurface")

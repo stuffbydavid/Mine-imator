@@ -1284,6 +1284,29 @@ function list_init(name)
 			break
 		}
 		
+		// Presets
+		case "renderpresetstandard":
+		case "renderpresetrealistic":
+		{
+			var presetlist = render_preset_list[renderer_edit];
+			
+			for (var i = 0; i < ds_list_size(presetlist); i++)
+			{
+				var file, presetname, text;
+				file = presetlist[|i]
+				presetname = render_preset_map[?file].name
+				
+				if (text_exists("renderpreset" + presetname))
+					text = text_get("renderpreset" + presetname)
+				else
+					text = presetname
+				
+				menu_add_item(file, text)
+			}
+			
+			break;
+		}
+		
 		// Blend mode
 		case "timelineeditorblendmode":
 		{

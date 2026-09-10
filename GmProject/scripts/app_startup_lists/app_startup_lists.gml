@@ -523,6 +523,9 @@ function app_startup_lists()
 	render_pass_list = ds_list_create()
 	ds_list_add(render_pass_list,
 		"combined",
+		"depth",
+		"normal",
+		"material",
 		"diffuse",
 		"specular",
 		"ao",
@@ -530,8 +533,5 @@ function app_startup_lists()
 		"indirect",
 		"indirectshadows",
 		"reflections",
-		"depth",
-		"normal",
-		"material"
 	)
 }

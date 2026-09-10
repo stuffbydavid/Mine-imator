@@ -2954,7 +2954,7 @@
 	},
 	"render": "RENDER SETTINGS",
 	"render/": {
-		"specialeffects": "SPECIAL EFFECTS",
+		"specialeffects": "Special effects",
 		"renderer": "Renderer",
 		"renderer/": {
 			"quick": "Quick",
@@ -2963,7 +2963,8 @@
 			"realistic": "Realistic",
 			"realisticwarning": "These settings may cause framerate drops and long export times for movies."
 		},
-		"preset": "Preset",
+		"presetstandard": "Standard preset",
+		"presetrealistic": "Realistic preset",
 		"preset/": {
 			"performance": "Performance",
 			"balanced": "Balanced",
@@ -3046,7 +3047,7 @@
 		"aa": "Anti-aliasing",
 		"aatip": "Smoothen the edges of objects in the final render.",
 		"aapower": "Strength",
-		"graphics": "GRAPHICS",
+		"graphics": "Graphics",
 		"distance": "Render distance",
 		"distancetip": "The distance where rendered objects are cut off. Also determines the maximum fog distance.",
 		"texturefiltering": "Texture filtering",
@@ -3067,7 +3068,7 @@
 			"hashed": "Hashed",
 			"default": "Default"
 		},
-		"materials": "MATERIALS",
+		"materials": "Materials",
 		"defaultemissive": "Default emissive",
 		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
 		"defaultsubsurfaceradius": "Default subsurface",
