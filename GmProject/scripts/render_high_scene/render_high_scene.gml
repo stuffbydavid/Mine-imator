@@ -50,7 +50,7 @@ function render_high_scene()
 	surface_reset_target()
 	
 	// Add specular fallback to metallic surface in a composite copy used for reflections. (metallic is black in resultsurf due to no diffuse, but reflections need a color to hit)
-	// re-use render_surface_shadows to save mem instead of a new hdr surf
+	// re-use render_surface_shadows to save mem instead of a new hdr surf. we do this step here for masksurf access
 	if (render_reflections)
 	{
 		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)

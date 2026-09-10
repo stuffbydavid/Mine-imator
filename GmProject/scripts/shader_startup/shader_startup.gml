@@ -527,6 +527,8 @@ function shader_startup()
 	{
 		new_shader_sampler("uNormalBuffer")
 		new_shader_sampler("uLightBuffer")
+		new_shader_sampler("uPreviousBuffer")
+		new_shader_uniform("uPreviousAmount")
 		new_shader_uniform("uGamma")
 	}
 	
