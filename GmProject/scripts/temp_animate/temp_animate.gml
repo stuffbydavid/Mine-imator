@@ -9,12 +9,15 @@ function temp_animate()
 	{
 		type = other.type
 		temp = other.id
+		if (type = e_tl_type.ARMOR)
+			inherit_pose = true
 		
 		tl_set_parent_root()
 		
 		switch (type)
 		{
 			case e_temp_type.CHARACTER:
+			case e_temp_type.ARMOR:
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.MODEL:
 			{

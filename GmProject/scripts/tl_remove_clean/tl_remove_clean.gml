@@ -150,7 +150,7 @@ function tl_remove_clean()
 		
 		if (temp = id)
 		{
-			if (type = e_tl_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				if (model_texture_name_map != null)	
 					ds_map_destroy(model_texture_name_map)

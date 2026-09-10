@@ -33,12 +33,13 @@ function bench_click(type)
 			temp_update_model_shape()
 		}
 		
-		// Switch to special block
-		if (id.type = e_tl_type.SPECIAL_BLOCK)
+		// Switch to special block or armor
+		if (id.type = e_tl_type.SPECIAL_BLOCK || id.type = e_tl_type.ARMOR)
 		{
-			if (ds_list_find_index(special_block_list.list, model_name) < 0)
+			var list = id.type = e_tl_type.ARMOR ? armor_list : special_block_list
+			if (ds_list_find_index(list.list, model_name) < 0)
 			{
-				model_name = default_special_block
+				model_name = id.type = e_tl_type.ARMOR ? list.list[|0] : default_special_block
 				model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 			}
 			
@@ -53,6 +54,8 @@ function bench_click(type)
 		// Switch to bodypart
 		if (id.type = e_tl_type.BODYPART)
 		{
+			model_name = default_model_part_model
+			model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 			model_tex = mc_res
 			model_tex_material = mc_res
 			model_tex_normal = mc_res

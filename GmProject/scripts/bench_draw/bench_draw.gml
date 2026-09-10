@@ -95,7 +95,7 @@ function bench_draw()
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (i = 2 || i = 6 || i = 9)
+		if (i = 3 || i = 7 || i = 10)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9

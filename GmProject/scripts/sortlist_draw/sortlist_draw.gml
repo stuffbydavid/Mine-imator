@@ -70,7 +70,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		{
 			if (slist = bench_settings.block_list)
 				action_bench_block_name(bench_settings.block_name)
-			else if (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.bodypart_model_list)
+			else if (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.armor_list || slist = bench_settings.bodypart_model_list)
 				action_bench_model_name(bench_settings.model_name)
 		}
 	}

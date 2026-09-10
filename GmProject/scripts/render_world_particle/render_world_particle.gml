@@ -37,6 +37,7 @@ function render_world_particle()
 			}
 			
 			case e_temp_type.CHARACTER:
+			case e_temp_type.ARMOR:
 			case e_temp_type.SPECIAL_BLOCK:
 			{
 				if (temp.model_file != null)
@@ -94,6 +95,7 @@ function render_world_particle()
 			}
 			
 			case e_temp_type.CHARACTER:
+			case e_temp_type.ARMOR:
 			case e_temp_type.SPECIAL_BLOCK:
 			{
 				if (temp.model_file = null)

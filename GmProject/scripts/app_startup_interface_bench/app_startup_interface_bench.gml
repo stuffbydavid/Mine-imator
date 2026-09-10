@@ -21,8 +21,10 @@ function app_startup_interface_bench()
 	list_edit.show_ticks = false
 	
 	list_item_add("typechar", e_tl_type.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
-	list_item_add("typebodypart", e_tl_type.BODYPART, "", null, icons.PART, null, bench_click)
+	list_item_add("typearmor", e_tl_type.ARMOR, "", null, icons.CHARACTER_PARTS, null, bench_click)
+	list_item_last.disabled = ds_list_size(mc_assets.armor_list) = 0
 	list_item_add("typemodel", e_tl_type.MODEL, "", null, icons.MODEL, null, bench_click)
+	list_item_add("typebodypart", e_tl_type.BODYPART, "", null, icons.PART, null, bench_click)
 	
 	list_item_add("typeitem", e_tl_type.ITEM, "", null, icons.ITEM, null, bench_click)
 	list_item_add("typescenery", e_tl_type.SCENERY, "", null, icons.SCENERY, null, bench_click)
@@ -104,11 +106,20 @@ function app_startup_interface_bench()
 		sortlist_column_add(special_block_list, "spblockname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|c].name)
+
+		// Armor list
+		armor_list = new_obj(obj_sortlist)
+		armor_list.script = action_bench_model_name
+		sortlist_column_add(armor_list, "spblockname", 0)
+		for (var c = 0; c < ds_list_size(mc_assets.armor_list); c++)
+			sortlist_add(armor_list, mc_assets.armor_list[|c].name)
 		
 		// Bodypart list
 		bodypart_model_list = new_obj(obj_sortlist)
 		bodypart_model_list.script = action_bench_model_name
 		sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
+		for (var m = 0; m < ds_list_size(mc_assets.armor_list); m++)
+			sortlist_add(bodypart_model_list, mc_assets.armor_list[|m].name)
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
 			sortlist_add(bodypart_model_list, mc_assets.char_list[|m].name)
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)

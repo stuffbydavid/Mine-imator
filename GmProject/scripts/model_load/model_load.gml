@@ -43,6 +43,7 @@ function model_load(map, dir)
 		
 		// Pattern type
 		pattern_type = value_get_string(map[?"pattern_type"], "")
+		equip_toast = value_get_real(map[?"equip_toast"], false)
 		
 		// Read states and their possible values
 		states_map = null

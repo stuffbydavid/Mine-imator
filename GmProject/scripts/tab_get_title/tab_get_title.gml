@@ -16,6 +16,9 @@ function tab_get_title(tab)
 		{
 			case e_temp_type.CHARACTER:
 				return text_get("tabcharmodel", string_remove_newline(temp_edit.display_name))
+
+			case e_temp_type.ARMOR:
+				return text_get("tabarmor", string_remove_newline(temp_edit.display_name))
 			
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.BLOCK:

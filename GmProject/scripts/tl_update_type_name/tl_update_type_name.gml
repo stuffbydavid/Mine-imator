@@ -14,7 +14,7 @@ function tl_update_type_name()
 			else
 				type_name = text_get("timelineunusedbodypart")
 		}
-		else if (type = e_tl_type.SPECIAL_BLOCK)
+		else if (type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
 		{
 			if (model_file != null)
 				type_name = minecraft_asset_get_name("model", model_file.name)

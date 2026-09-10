@@ -31,7 +31,7 @@ function project_load_timeline(map)
 		part_of = value_get_save_id(map[?"part_of"], part_of)
 		if (part_of != null)
 		{
-			if (type = e_temp_type.SPECIAL_BLOCK)
+			if (type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
 			{
 				var modelmap = map[?"model"];
 				if (ds_map_valid(modelmap))

@@ -166,6 +166,10 @@ function project_load_find_save_ids(isproject = false)
 			continue
 		
 		temp = save_id_find(save_id_map[?temp])
+
+		// Armor was formerly saved as a special block
+		if (type = e_tl_type.SPECIAL_BLOCK && temp != null && temp.type = e_temp_type.ARMOR)
+			type = e_tl_type.ARMOR
 		
 		// Bodypart
 		part_of = save_id_find(save_id_map[?part_of])

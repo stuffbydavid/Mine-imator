@@ -220,6 +220,7 @@ function preview_draw(preview, xx, yy, width, height)
 							}
 							
 							case e_temp_type.CHARACTER:
+							case e_temp_type.ARMOR:
 							case e_temp_type.SPECIAL_BLOCK:
 							{
 								if (select.model_file = null)
@@ -366,6 +367,7 @@ function preview_draw(preview, xx, yy, width, height)
 							}
 							
 							case e_temp_type.CHARACTER:
+							case e_temp_type.ARMOR:
 							case e_temp_type.SPECIAL_BLOCK:
 							{
 								if (select.model_file = null)

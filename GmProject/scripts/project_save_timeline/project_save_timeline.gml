@@ -23,7 +23,7 @@ function project_save_timeline()
 		
 		if (part_of != null)
 		{
-			if (type = e_temp_type.SPECIAL_BLOCK)
+			if (type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
 			{
 				json_save_object_start("model")
 					json_save_var("name", model_name)

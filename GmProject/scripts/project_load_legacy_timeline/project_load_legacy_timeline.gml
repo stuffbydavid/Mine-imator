@@ -69,7 +69,7 @@ function project_load_legacy_timeline()
 		
 		part_of = project_load_legacy_save_id()
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
 			part_list = ds_list_create()
 		
 		part_amount = buffer_read_short()

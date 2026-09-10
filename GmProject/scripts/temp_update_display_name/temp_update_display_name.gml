@@ -10,6 +10,7 @@ function temp_update_display_name()
 		switch (type)
 		{
 			case e_temp_type.CHARACTER:
+			case e_temp_type.ARMOR:
 			case e_temp_type.SPECIAL_BLOCK:
 				if (model_file != null)
 					display_name = minecraft_asset_get_name("model", model_file.name)

@@ -162,6 +162,7 @@ function macros()
 	#macro no_limit						100000000
 	#macro default_model				"human"
 	#macro default_model_part			"head"
+	#macro default_model_part_model		"armor"
 	#macro default_special_block		"chest"
 	#macro default_block				"grass_block"
 	#macro default_item					"item/diamond_sword"

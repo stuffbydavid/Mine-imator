@@ -14,6 +14,7 @@ function tab_frame_editor_texture()
 		switch (tl_edit.type)
 		{
 			case e_tl_type.CHARACTER:
+			case e_tl_type.ARMOR:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
 			case e_tl_type.BODYPART:

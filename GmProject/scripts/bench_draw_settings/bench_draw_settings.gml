@@ -94,6 +94,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		switch (bench_settings.type)
 		{
 			case e_temp_type.CHARACTER:
+			case e_temp_type.ARMOR:
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.BODYPART:
 			{
@@ -105,6 +106,16 @@ function bench_draw_settings(bx, by, bw, bh)
 					texcap = "benchskin"
 					texmatcap = "benchskinmaterial"
 					texnormcap = "benchskinnormal"
+					capwid = text_caption_width(texcap, texmatcap, texnormcap)
+					part = bench_settings.model_file
+				}
+				else if (bench_settings.type = e_temp_type.ARMOR)
+				{
+					labeltext = text_get("bencharmor")
+					list = bench_settings.armor_list
+					texcap = "bencharmortex"
+					texmatcap = "bencharmortexmaterial"
+					texnormcap = "bencharmortexnormal"
 					capwid = text_caption_width(texcap, texmatcap, texnormcap)
 					part = bench_settings.model_file
 				}

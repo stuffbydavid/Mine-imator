@@ -27,7 +27,7 @@ function action_bench_create(edit = false)
 		if (history_redo)
 		{
 			history_restore_bench(history_data.bench_save_obj)
-			
+
 			if (history_data.open_editor)
 			{
 				tab_template_editor_update_ptype_list()
@@ -84,7 +84,7 @@ function action_bench_create(edit = false)
 						model = null
 					}
 					
-					if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
+					if (type != e_temp_type.CHARACTER && type != e_temp_type.ARMOR && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
 					{
 						if (model_tex != null)
 							model_tex.count--
@@ -274,6 +274,14 @@ function action_bench_create(edit = false)
 				app_start_place(tl, true)
 			
 			log("Created", tl_type_name_list[|bench_settings.type])
+
+			// Encourage parenting equipment-capable armor to a character
+			var equipmodel = mc_assets.model_name_map[?bench_settings.model_name]
+			if (!setting_advanced_mode && bench_settings.type = e_temp_type.ARMOR && equipmodel.equip_toast)
+			{
+				toast_new(e_toast.INFO, text_get("alertequiparmor"))
+				toast_last.dismiss_time = 15
+			}
 		}
 	}
 	

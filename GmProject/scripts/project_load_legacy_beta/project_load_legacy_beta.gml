@@ -330,6 +330,11 @@ function project_load_legacy_beta(loadbackground)
 					model_name = load.lib_char_model_name[a]
 					model_state = array_copy_1d(load.lib_char_model_state[a])
 					temp_update_model()
+					// Armor was formerly saved as a special block
+					if (type = e_temp_type.SPECIAL_BLOCK &&
+						!is_undefined(mc_assets.model_name_map[?model_name]) &&
+						ds_list_find_index(mc_assets.armor_list, mc_assets.model_name_map[?model_name]) >= 0)
+						type = e_temp_type.ARMOR
 					
 					if (load.lib_char_skin[a] > -1)
 						model_tex = load.skin_res[load.lib_char_skin[a]].load_id
@@ -451,7 +456,7 @@ function project_load_legacy_beta(loadbackground)
 			parent_tree_index = null
 			
 			// Create parts
-			if (type = e_tl_type.CHARACTER || type = e_tl_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.CHARACTER || type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				part_list = ds_list_create()
 				if (temp.model_file != null)

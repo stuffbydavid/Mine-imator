@@ -273,7 +273,9 @@ function minecraft_assets_load()
 					ds_map_copy(minecraft_sherd_map, sherdsmap)
 				
 				// Armor trims
-				var armormap = load_assets_map[?"armor"];
+				var armormap = load_assets_map[?"armor_trims"];
+				if (!ds_map_valid(armormap))
+					armormap = load_assets_map[?"armor"];
 				if (!ds_map_valid(armormap))
 				{
 					log("No armor data found")
@@ -407,6 +409,26 @@ function minecraft_assets_load()
 					ds_list_add(special_block_list, model)
 				}
 				debug_timer_stop("Load special blocks")
+
+				// Armor
+				var armorlist = load_assets_map[?"armor"];
+				if (ds_list_valid(armorlist))
+				{
+					debug_timer_start()
+					for (var i = 0; i < ds_list_size(armorlist); i++)
+					{
+						var model = model_load(armorlist[|i], load_assets_dir + mc_special_block_directory);
+						if (!model) // Something went wrong!
+						{
+							log("Could not load armor model")
+							continue
+						}
+
+						model_name_map[?model.name] = model
+						ds_list_add(armor_list, model)
+					}
+					debug_timer_stop("Load armor")
+				}
 				
 				debug_timer_start()
 				load_assets_stage = "blocks"

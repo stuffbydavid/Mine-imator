@@ -24,6 +24,7 @@ function minecraft_assets_reload()
 		ds_map_clear(model_name_map)
 		ds_list_clear(char_list)
 		ds_list_clear(special_block_list)
+		ds_list_clear(armor_list)
 		
 		// Characters
 		var characterslist = map[?"characters"];
@@ -68,6 +69,24 @@ function minecraft_assets_reload()
 			
 			ds_list_add(special_block_list, model)
 		}
+
+		// Armor
+		var armorlist = map[?"armor"];
+		if (ds_list_valid(armorlist))
+		{
+			for (var i = 0; i < ds_list_size(armorlist); i++)
+			{
+				var model = model_load(armorlist[|i], load_assets_dir + mc_special_block_directory);
+				if (!model) // Something went wrong!
+				{
+					log("Could not load armor model")
+					continue
+				}
+
+				model_name_map[?model.name] = model
+				ds_list_add(armor_list, model)
+			}
+		}
 		
 		// Clear up loaded models
 		var key = ds_map_find_first(load_assets_model_file_map);
@@ -84,7 +103,7 @@ function minecraft_assets_reload()
 	ds_map_destroy(typemap)
 	
 	with (obj_template)
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
 			temp_update_model()
 	
 	with (obj_timeline)
