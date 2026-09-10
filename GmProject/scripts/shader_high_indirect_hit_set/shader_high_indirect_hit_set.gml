@@ -11,7 +11,7 @@ function shader_high_indirect_hit_set()
 	gpu_set_texfilter_ext(sampler_map[?"uNoiseBuffer"], false)
 	
 	render_set_uniform("uPrecision", app.project_render_indirect_precision)
-	render_set_uniform("uThickness", 12)
+	render_set_uniform("uThickness", 1)
 	render_set_uniform("uRayDistance", min(1000, depth_far))
 	
 	render_set_uniform("uNoiseSize", render_sample_noise_size)

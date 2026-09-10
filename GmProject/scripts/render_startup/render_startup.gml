@@ -160,9 +160,11 @@ function render_startup()
 	render_ssao_kernel = render_generate_sample_kernel(12)
 	
 	// Raytracing
-	globalvar render_raytrace_kernel, render_raytrace_res_ratio;
+	globalvar render_raytrace_kernel, render_raytrace_res_ratio, render_reflections_bounces, render_indirect_bounces;
 	render_raytrace_kernel = render_generate_resolve_kernel(1)
 	render_raytrace_res_ratio = 1
+	render_reflections_bounces = 1
+	render_indirect_bounces = 1
 	
 	// DOF
 	globalvar render_dof_samples, render_dof_weight_samples, render_dof_sample_amount;
