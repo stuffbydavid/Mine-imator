@@ -61,8 +61,8 @@ function app_startup_themes()
 		var lightbot = make_color_hsv(139, 12, 226);
 		
 		var mi1top = make_color_rgb(200, 200, 200);
-		var mi1mid = make_color_rgb(195, 195, 195);
-		var mi1bot = make_color_rgb(180, 180, 180);
+		var mi1mid = make_color_rgb(180, 180, 180);
+		var mi1bot = make_color_rgb(153, 153, 153);
 		
 		var perc = 0.25;
 		level_top = merge_color(mi1top, lighttop, perc)

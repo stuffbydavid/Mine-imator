@@ -79,7 +79,9 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 			if (shader_clip_active)
 				clip_begin()
 
-			if (select = combinedslot)
+			 // Modulo on first sheet size to allow selection box to wrap around at high values.
+			 // May not appear correct if first sheet doesn't have enough empty spaces, oh well.
+			if (select mod (sheetsizes[0][X] * sheetsizes[0][Y]) = combinedslot)
 				draw_box(tx - off, ty - off, slotwid + off * 4, slothei + off * 4, false, c_accent_hover, a_accent_hover)
 
 			draw_texture_slot(tex, slot, tx + off, ty + off, slotwid, slothei, sheetsize[X], sheetsize[Y], col)

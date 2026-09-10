@@ -1,5 +1,5 @@
 {
-	"version": "26.3-pre-1",
+	"version": "26.3-pre-3",
 	"patch": 0,
 	"format": 9,
 	"characters": [
@@ -9593,7 +9593,7 @@
 		"block/yellow_poplar_leaves opaque",
 		"block/red_shrub"
 	],
-	"block_32_sheet_size": [ 6, 6 ],
+	"block_32_sheet_size": [ 16, 2 ],
 	"block_32_textures": [
 		"block/dried_ghast_hydration_0_tentacles",
 		"block/dried_ghast_hydration_1_tentacles",
@@ -9608,14 +9608,14 @@
 		"block/mangrove_shelf",
 		"block/cherry_shelf",
 		"block/pale_oak_shelf",
+		"block/poplar_shelf",
 		"block/bamboo_shelf",
 		"block/crimson_shelf",
 		"block/warped_shelf",
-		"block/poplar_shelf",
 		"block/shelf_mushroom_stage0",
 		"block/shelf_mushroom_stage1"
 	],
-	"block_64_sheet_size": [ 1, 1 ],
+	"block_64_sheet_size": [ 8, 1 ],
 	"block_64_textures": [
 		"block/straw_bed"
 	],
@@ -9794,6 +9794,7 @@
 		"mangrove_button.json": { "colorY": null },
 		"cherry_button.json": { "colorY": null },
 		"pale_oak_button.json": { "colorY": null },
+		"poplar_button.json": { "colorY": null },
 		"bamboo_button.json": { "colorY": null },
 		"crimson_button.json": { "colorY": null },
 		"warped_button.json": { "colorY": null },
@@ -10811,15 +10812,15 @@
 		"item/recovery_compass_30",
 		"item/recovery_compass_31"
 	],
-	"item_32_sheet_size": [ 4, 4 ],
+	"item_32_sheet_size": [ 16, 1 ],
 	"item_32_textures": [
-		"item/copper_spear_in_hand",
-		"item/diamond_spear_in_hand",
-		"item/golden_spear_in_hand",
-		"item/iron_spear_in_hand",
-		"item/netherite_spear_in_hand",
+		"item/wooden_spear_in_hand",
 		"item/stone_spear_in_hand",
-		"item/wooden_spear_in_hand"
+		"item/copper_spear_in_hand",
+		"item/iron_spear_in_hand",
+		"item/golden_spear_in_hand",
+		"item/diamond_spear_in_hand",
+		"item/netherite_spear_in_hand"
 	],
 	"particle_textures": [
 		"particle/angry",

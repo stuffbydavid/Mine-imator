@@ -36,7 +36,7 @@ function settings_startup()
 	
 	setting_theme = theme_classic
 	setting_accent = 3
-	setting_accent_custom = hex_to_color("03A9F4")
+	setting_accent_custom = hex_to_color("03A9F4") //4367A3
 	
 	setting_language_filename = language_file
 	

@@ -2,7 +2,7 @@
 
 function app_update_interface()
 {
-	if (update_interface_wait)
+	if (setting_reduced_motion || update_interface_wait)
 	{
 		interface_update_instant()
 		update_interface_wait = false
