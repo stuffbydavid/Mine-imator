@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_high_tonemap",
+  "%Name":"shader_high_reflections_resolve_set",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_high_tonemap",
+  "name":"shader_high_reflections_resolve_set",
   "parent":{
     "name":"High quality",
-    "path":"folders/Scripts/Render/High quality.yy",
+    "path":"folders/Scripts/Render/Shaders/Set/High quality.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

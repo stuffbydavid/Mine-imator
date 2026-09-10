@@ -1091,14 +1091,6 @@ function enums()
 		r16float
 	}
 	
-	// Raytracing type
-	enum e_raytrace
-	{
-		REFLECTIONS,
-		INDIRECT,
-		SHADOWS_DIRECTIONAL
-	}
-	
 	// Material map format
 	enum e_material
 	{
