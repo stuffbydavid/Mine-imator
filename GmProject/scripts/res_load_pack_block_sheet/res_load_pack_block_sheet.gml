@@ -2,9 +2,10 @@
 
 function res_load_pack_block_sheet(type, suffix)
 {
-	var blocksize, texlist, texanilist, surf, anisurf, fileslist;
+	var blocksize, texlist, texanilist, surf, anisurf, fileslist, datamap;
 	blocksize = null
 	fileslist = null
+	datamap = (type != "diffuse")
 	
 	debug_timer_start()
 	
@@ -109,7 +110,11 @@ function res_load_pack_block_sheet(type, suffix)
 	log("Block textures", "static block surface")
 	surface_set_target(surf)
 	{
-		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+		if (type = "diffuse")
+			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+		else
+			gpu_set_blendmode_ext(bm_one, bm_zero)
+		
 		draw_clear_alpha(c_black, 0)
 		
 		for (var t = 0; t < ds_list_size(texlist); t++)
@@ -130,7 +135,7 @@ function res_load_pack_block_sheet(type, suffix)
 				
 				draw_texture_part(tex, dx, dy, 0, 0, texwid, texwid, scale, scale)
 				
-				if (type = "normal" || string_contains(mc_assets.block_texture_list[|t], " noalpha"))
+				if (type = "diffuse" && string_contains(mc_assets.block_texture_list[|t], " noalpha"))
 				{
 					gpu_set_blendmode_ext_sepalpha(bm_src_color, bm_one, bm_one, bm_one)
 					draw_texture_part(tex, dx, dy, 0, 0, texwid, texwid, scale, scale, c_black, 1)
@@ -194,11 +199,16 @@ function res_load_pack_block_sheet(type, suffix)
 	
 	// Create surfaces for animated blocks
 	log("Block textures", type, "animated block surfaces")
+	
 	for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
 		anisurf[f] = surface_create(minecraft_block_animated_sheet_size[0] * blocksize, minecraft_block_animated_sheet_size[1] * blocksize)
 	
 	draw_texture_start()
-	gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+	if (datamap)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
+	else
+		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+	
 	log("Block textures", type, "animated frames")
 	for (var t = 0; t < ds_list_size(texanilist); t++)
 	{
@@ -293,14 +303,24 @@ function res_load_pack_block_sheet(type, suffix)
 					nextimage = nextimage mod images
 					
 					// Draw part
-					if (opaque)
+					if (opaque && !datamap)
 						draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
-					//else if (type = "normal")
-					//	draw_box(dx, dy, blocksize, blocksize, false, c_normal, 1)
 					
-					draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, blocksize, blocksize)
+					if (datamap && framefade)
+					{
+						var fade = frac(image);
+						draw_box(dx, dy, blocksize, blocksize, false, c_black, 0)
+						
+						// Fade material values instead of opacity layering
+						gpu_set_blendmode_ext(bm_one, bm_one)
+						draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, blocksize, blocksize, 1, 1, c_white, 1 - fade)
+						draw_texture_part(tex, dx, dy, 0, nextimage * texwid, blocksize, blocksize, 1, 1, c_white, fade)
+						gpu_set_blendmode_ext(bm_one, bm_zero)
+					}
+					else
+						draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, blocksize, blocksize)
 					
-					if (opaque)
+					if (opaque && !datamap)
 					{
 						gpu_set_blendmode_ext_sepalpha(bm_src_color, bm_one, bm_one, bm_one)
 						draw_texture_part(tex, dx, dy, 0, floor(image) * texwid, blocksize, blocksize, 1, 1, c_black, 1)
@@ -308,7 +328,7 @@ function res_load_pack_block_sheet(type, suffix)
 					}
 					
 					// Interpolate with next
-					if (framefade)
+					if (framefade && !datamap)
 					{
 						gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha) // Windows only
 						draw_texture_part(tex, dx, dy, 0, nextimage * texwid, blocksize, blocksize, 1, 1, c_white, frac(image))
@@ -332,8 +352,8 @@ function res_load_pack_block_sheet(type, suffix)
 					}
 					else if (type = "material")
 						draw_box(dx, dy, blocksize, blocksize, false, c_black, 1)
-					//else if (type = "normal")
-					//	draw_box(dx, dy, blocksize, blocksize, false, c_normal, 1)
+					else if (type = "normal")
+						draw_box(dx, dy, blocksize, blocksize, false, c_normal, 1)
 				}
 			}
 			surface_reset_target()
