@@ -405,6 +405,7 @@ function draw_button_menu()
 		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent" &&
 								  m.menu_name != "frameeditoriktarget" &&
 								  m.menu_name != "frameeditorikangletarget")
+		m.menu_model_armor_variant = menu_model_armor_variant
 		m.menu_margin = 0//8
 		m.menu_transition = null
 		m.menu_steps = 0

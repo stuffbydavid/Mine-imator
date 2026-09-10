@@ -569,6 +569,7 @@
 		"itemspin": "Spin",
 		"block": "Block",
 		"armor": "Armor",
+		"armorvariant": "Variant",
 		"armortex": "Texture",
 		"armortexmaterial": "Material map",
 		"armortexnormal": "Normal map",
@@ -767,6 +768,7 @@
 	},
 	"armoreditor/": {
 		"caption": "Armor editor",
+		"ok": "OK",
 		"helmet": "Helmet",
 		"chestplate": "Chestplate",
 		"leggings": "Leggings",
@@ -976,6 +978,7 @@
 	"list/": {
 		"search": "Search...",
 		"browse": "Browse...",
+		"multiple": "Multiple",
 		"none": "None",
 		"default": "Default (%1)"
 	},
@@ -1271,7 +1274,6 @@
 		"wall_banner": "Wall Banner",
 		"piglin_head": "Piglin Head",
 		"dragon_head": "Dragon Head",
-		"armor": "Armor",
 		"horse_armor": "Horse Armor",
 		"wolf_armor": "Wolf Armor",
 		"nautilus_armor": "Nautilus Armor",
@@ -1280,6 +1282,7 @@
 		"llama_spit": "Llama Spit",
 		"wither_skull": "Wither Skull",
 		"wind_charge": "Wind Charge",
+		"armor": "Armor",
 		"armor_baby": "Baby Armor",
 		"cushion": "Cushion",
 		"part/": {
@@ -2709,8 +2712,6 @@
 				"outer_right": "Outer right",
 				"legacy": "Legacy",
 				"single": "Single",
-				"right": "Right",
-				"left": "Left",
 				"none": "None",
 				"side": "Side",
 				"diamond_ore": "Diamond Ore",

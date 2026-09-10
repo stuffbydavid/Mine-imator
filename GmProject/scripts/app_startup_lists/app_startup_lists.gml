@@ -492,7 +492,7 @@ function app_startup_lists()
 	timeline_icon_list = ds_list_create()
 	ds_list_add(timeline_icon_list,
 		icons.CHARACTER,
-		icons.MODEL,
+		icons.CHARACTER_PARTS,
 		icons.BLOCK_SPECIAL,
 		icons.SCENERY,
 		icons.ITEM,
@@ -519,7 +519,7 @@ function app_startup_lists()
 	timeline_icon_list_dark = ds_list_create()
 	ds_list_add(timeline_icon_list_dark,
 		icons.CHARACTER,
-		icons.MODEL,
+		icons.CHARACTER_PARTS,
 		icons.BLOCK_SPECIAL,
 		icons.SCENERY,
 		icons.ITEM,

@@ -31,6 +31,15 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 				}
 				
 				tl_set_parent(newparent, newindex)
+				
+				// Lock armor
+				if (type = e_tl_type.ARMOR && temp != null && newparent != app && (newparent.type = e_tl_type.CHARACTER || newparent.type = e_tl_type.SPECIAL_BLOCK))
+				{
+					var model = mc_assets.model_name_map[?temp.model_name];
+					if (!is_undefined(model) && model.parent_lock)
+						action_tl_lock_tree(id, true, hobj)
+				}
+						
 				moved = true
 				
 				// Parented objects with no keyframes get position reset

@@ -275,9 +275,8 @@ function action_bench_create(edit = false)
 			
 			log("Created", tl_type_name_list[|bench_settings.type])
 
-			// Encourage parenting equipment-capable armor to a character
-			var equipmodel = mc_assets.model_name_map[?bench_settings.model_name]
-			if (!setting_advanced_mode && bench_settings.type = e_temp_type.ARMOR && equipmodel.equip_toast)
+			// Encourage parenting armor to a character
+			if (!setting_advanced_mode && bench_settings.type = e_temp_type.ARMOR)
 			{
 				toast_new(e_toast.INFO, text_get("alertequiparmor"))
 				toast_last.dismiss_time = 15

@@ -1087,12 +1087,8 @@
 		{
 			"name": "armor",
 			"file": "armor.mimodel",
-			"equip_toast": true,
+			"parent_lock": true,
 			"states": {
-				"variant": [
-					{ "value": "armor" },
-					{ "value": "armor_baby", "file": "armor_baby.mimodel" }
-				],
 				"helmet": [
 					{ "value": "none", "shape_hide": [ "helmet", "helmet_baby" ] },
 					{ "value": "leather", "shape_texture": { "helmet": "entity/equipment/humanoid/leather", "helmet_baby": "entity/equipment/humanoid_baby/leather" } },
@@ -1133,14 +1129,18 @@
 					{ "value": "gold", "shape_texture": { "boots": "entity/equipment/humanoid/gold", "boots_baby": "entity/equipment/humanoid_baby/gold" } },
 					{ "value": "diamond", "shape_texture": { "boots": "entity/equipment/humanoid/diamond", "boots_baby": "entity/equipment/humanoid_baby/diamond" } },
 					{ "value": "netherite", "shape_texture": { "boots": "entity/equipment/humanoid/netherite", "boots_baby": "entity/equipment/humanoid_baby/netherite" } }
+				],
+				"type": [
+					{ "value": "armor" },
+					{ "value": "armor_baby", "file": "armor_baby.mimodel" }
 				]
 			},
-			"default_state": "variant=armor,helmet=iron,chestplate=iron,leggings=iron,boots=iron"
+			"default_state": "helmet=iron,chestplate=iron,leggings=iron,boots=iron,type=armor"
 		},
 		{
 			"name": "horse_armor",
 			"file": "horse_armor.mimodel",
-			"equip_toast": true,
+			"parent_lock": true,
 			"states": {
 				"variant": [
 					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
@@ -1156,7 +1156,7 @@
 		{
 			"name": "wolf_armor",
 			"file": "wolf_armor.mimodel",
-			"equip_toast": true,
+			"parent_lock": true,
 			"states": {
 				"dyed": [
 					{ "value": "false", "shape_hide": [ "overlay" ] },
@@ -1174,7 +1174,7 @@
 		{
 			"name": "nautilus_armor",
 			"file": "nautilus_armor.mimodel",
-			"equip_toast": true,
+			"parent_lock": true,
 			"states": {
 				"variant": [
 					{ "value": "copper", "texture": "entity/equipment/nautilus_body/copper" },

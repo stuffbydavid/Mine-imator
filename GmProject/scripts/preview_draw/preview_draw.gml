@@ -650,15 +650,20 @@ function preview_draw(preview, xx, yy, width, height)
 					
 					if (tex != null)
 					{
-						var padding, tw, th, dx, dy;
+						var padding, tw, th, tratio, ratio, dx, dy;
 						padding = 16
 						tw = texture_width(tex)
 						th = texture_height(tex)
+						tratio = tw / th
+						ratio = width / height
 						if (reset_view)
 						{
 							preview_reset_view()
 							
-							zoom = (min(width, height) - padding * 2) / min(tw, th)
+							if (tratio > ratio)
+								zoom = (max(width, height) - padding * 2) / max(tw, th)
+							else
+								zoom = (min(width, height) - padding * 2) / max(tw, th)
 							goalzoom = zoom
 							reset_view = false
 						}

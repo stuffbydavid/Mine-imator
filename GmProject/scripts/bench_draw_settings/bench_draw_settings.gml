@@ -151,10 +151,14 @@ function bench_draw_settings(bx, by, bw, bh)
 				var model, statelen;
 				model = mc_assets.model_name_map[?bench_settings.model_name];
 				statelen = array_length(bench_settings.model_state)
+				if (bench_settings.model_name = "armor")
+					capwid = max(capwid, text_caption_width("bencharmorvariant"))
 				
 				for (var i = 0; i < statelen; i += 2)
 				{
 					var state = bench_settings.model_state[i];
+					if (bench_settings.model_name = "armor" && array_contains(armor_parts, state))
+						continue
 					capwid = max(capwid, text_caption_width(minecraft_asset_get_name("modelstate", state)))
 				}
 				
@@ -194,6 +198,24 @@ function bench_draw_settings(bx, by, bw, bh)
 						continue
 					
 					var state = bench_settings.model_state[i];
+					if (bench_settings.model_name = "armor" && array_contains(armor_parts, state))
+					{
+						if (state != "helmet")
+							continue
+						var variant = state_vars_get_value(bench_settings.model_state, "helmet")
+						if (state_vars_get_value(bench_settings.model_state, "chestplate") != variant ||
+							state_vars_get_value(bench_settings.model_state, "leggings") != variant ||
+							state_vars_get_value(bench_settings.model_state, "boots") != variant)
+							variant = "multiple"
+						menu_model_current = null
+						menu_model_state_current = model.states_map[?"helmet"]
+						menu_model_armor_variant = true
+						draw_button_menu("bencharmorvariant", e_menu.LIST, dx, dy, dw, 24, variant, variant = "multiple" ? text_get("listmultiple") : minecraft_asset_get_name("modelstatevalue", variant), action_bench_model_state, false, null, null, "", null, null, capwid)
+						if (!keyboard_check(vk_control) || mouse_wheel = 0)
+							menu_model_armor_variant = false
+						dy += 32
+						continue
+					}
 					menu_model_current = model
 					menu_model_state_current = model.states_map[?state]
 					

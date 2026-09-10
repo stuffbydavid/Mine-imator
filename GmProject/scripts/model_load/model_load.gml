@@ -41,9 +41,11 @@ function model_load(map, dir)
 		// Version
 		version = value_get_real(map[?"version"], 0)
 		
+		// Lock when parented
+		parent_lock = value_get_real(map[?"parent_lock"], false)
+		
 		// Pattern type
 		pattern_type = value_get_string(map[?"pattern_type"], "")
-		equip_toast = value_get_real(map[?"equip_toast"], false)
 		
 		// Read states and their possible values
 		states_map = null

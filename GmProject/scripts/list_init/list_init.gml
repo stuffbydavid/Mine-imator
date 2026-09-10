@@ -5,7 +5,22 @@
 function list_init(name)
 {
 	list_init_start()
-	
+	if (name = "bencharmorvariant")
+	{
+		var armor = mc_assets.model_name_map[?"armor"]
+		var variant = state_vars_get_value(bench_settings.model_state, "helmet")
+		if (state_vars_get_value(bench_settings.model_state, "chestplate") != variant ||
+			state_vars_get_value(bench_settings.model_state, "leggings") != variant ||
+			state_vars_get_value(bench_settings.model_state, "boots") != variant)
+		{
+			menu_add_item("multiple", text_get("listmultiple"))
+			list_item_last.disabled = true
+		}
+		var statelist = armor.states_map[?"chestplate"]
+		for (var i = 0; i < statelist.value_amount; i++)
+			menu_add_item(statelist.value_name[i], minecraft_asset_get_name("modelstatevalue", statelist.value_name[i]))
+		return list_init_end()
+	}
 	// Model state
 	if (menu_model_current != null && !is_undefined(menu_model_state) && menu_model_state != null)
 	{

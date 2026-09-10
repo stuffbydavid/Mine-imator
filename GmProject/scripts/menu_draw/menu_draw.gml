@@ -338,6 +338,7 @@ function menu_draw()
 					m.menu_ani = 2
 					m.menu_value = mouseitem.value
 					
+					menu_model_armor_variant = m.menu_model_armor_variant
 					list_item_script = (mouseitem.script = null ? m.menu_script : mouseitem.script)
 					list_item_script_value = m.menu_value
 					
