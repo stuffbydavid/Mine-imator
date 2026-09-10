@@ -26,7 +26,7 @@ vec3 getMappedNormal(vec2 uv, mat3 tbn)
 #region MATERIAL_LIB
 #pragma shady: macro_begin MATERIAL_LIB
 
-#pragma shady: inline(common_constants.MATH)
+//#pragma shady: inline(common_constants.MATH)
 
 uniform sampler2D uTextureMaterial; // static
 uniform int uMaterialFormat;
@@ -74,7 +74,7 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 	}
 	
 	/* F0 = DIELECTRIC_F0; */
-	F0 = mix(0.0, 1.0, metallic);
+	F0 = 0.0; // Ignore DIELECTRIC_F0 for artistic reasons (MI/SEUS)
 	sss = max(uSSS, vCustom.w * uDefaultSubsurface);
 }
 
