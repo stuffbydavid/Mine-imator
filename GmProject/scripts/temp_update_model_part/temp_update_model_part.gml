@@ -45,7 +45,7 @@ function temp_update_model_part()
 	// Update timelines
 	with (obj_timeline)
 	{
-		if (type != e_tl_type.BODYPART || temp != other.id)
+		if (type != e_tl_type.MODEL_PART || temp != other.id)
 			continue
 		
 		model_part = other.model_part

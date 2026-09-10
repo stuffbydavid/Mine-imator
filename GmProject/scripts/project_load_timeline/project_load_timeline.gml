@@ -12,7 +12,10 @@ function project_load_timeline(map)
 		load_id = value_get_string(map[?"id"], save_id)
 		save_id_map[?load_id] = load_id
 		
-		type = ds_list_find_index(tl_type_name_list, value_get_string(map[?"type"]))
+		var typename = value_get_string(map[?"type"]);
+		if (typename = "bodypart")
+			typename = "modelpart"
+		type = ds_list_find_index(tl_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
 		
 		temp = value_get_save_id(map[?"temp"], temp)
@@ -22,16 +25,16 @@ function project_load_timeline(map)
 		ghost = value_get_real(map[?"ghost"], ghost)
 		depth = value_get_real(map[?"depth"], depth)
 		
-		if (type = e_temp_type.BODYPART)
+		if (type = e_tl_type.MODEL_PART)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
 		
-		if (type = e_temp_type.TEXT)
+		if (type = e_tl_type.TEXT)
 			text = value_get_string(map[?"text"], text)
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
 		if (part_of != null)
 		{
-			if (type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				var modelmap = map[?"model"];
 				if (ds_map_valid(modelmap))
@@ -88,7 +91,7 @@ function project_load_timeline(map)
 					}
 				}
 			}
-			else if (type = e_temp_type.BLOCK)
+			else if (type = e_tl_type.BLOCK)
 			{
 				var blockmap = map[?"block"];
 				if (ds_map_valid(blockmap))
@@ -209,7 +212,7 @@ function project_load_timeline(map)
 		
 		fog = value_get_real(map[?"fog"], fog)
 		
-		if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type = e_tl_type.PATH || type_is_shape(type))
+		if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK || type = e_tl_type.PARTICLE_SPAWNER || type = e_tl_type.TEXT || type = e_tl_type.PATH || type_is_shape(type))
 		{
 			wind = value_get_real(map[?"wind"], wind)
 			wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)

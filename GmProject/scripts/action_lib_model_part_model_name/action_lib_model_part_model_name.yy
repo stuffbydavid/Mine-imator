@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_lib_bodypart_model_name",
+  "%Name":"action_lib_model_part_model_name",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_lib_bodypart_model_name",
+  "name":"action_lib_model_part_model_name",
   "parent":{
     "name":"Model",
     "path":"folders/Scripts/App/Actions/Library/Model.yy",

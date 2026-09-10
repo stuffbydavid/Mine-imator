@@ -26,11 +26,11 @@ function temp_update_display_name()
 					display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 				break
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 				if (model_part != null)
-					display_name = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", model_part.name), minecraft_asset_get_name("model", model_file.name))
+					display_name = text_get("librarymodelpartof", minecraft_asset_get_name("modelpart", model_part.name), minecraft_asset_get_name("model", model_file.name))
 				else
-					display_name = text_get("librarybodypartunknown")
+					display_name = text_get("librarymodelpartunknown")
 				break
 			
 			case e_temp_type.MODEL:

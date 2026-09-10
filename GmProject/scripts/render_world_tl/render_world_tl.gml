@@ -255,7 +255,7 @@ function render_world_tl()
 		
 		switch (type)
 		{
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				if (model_part = null || render_res_diffuse = null)
 					break

@@ -51,12 +51,12 @@ function view_update_surface(view, cam)
 							view_shape_pointlight(tl)
 						else if (tl.type = e_tl_type.CAMERA && tl != cam)
 							view_shape_camera(tl)
-						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
+						else if (tl.type = e_tl_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
 						else if (tl.type = e_tl_type.PATH)
 							view_shape_path(view, tl)
 						
-						if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.BODYPART && array_length(tl.part_joints_pos) > 0)
+						if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
 						{
 							// Draw bones
 							for (var i = 0; i < 2; i++)

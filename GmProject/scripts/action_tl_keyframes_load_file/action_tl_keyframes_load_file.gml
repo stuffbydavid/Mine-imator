@@ -90,7 +90,7 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 			// Add to a body part?
 			if (bp != null)
 			{
-				// Convert legacy bodypart ID to name and find part's timeline
+				// Convert legacy model part ID to name and find part's timeline
 				var modelpartlist = legacy_model_part_map[?tl.temp.model_name];
 				if (!is_undefined(modelpartlist) && bp < ds_list_size(modelpartlist))
 					partname = modelpartlist[|bp]

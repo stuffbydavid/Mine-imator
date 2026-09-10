@@ -84,7 +84,7 @@ function action_bench_create(edit = false)
 						model = null
 					}
 					
-					if (type != e_temp_type.CHARACTER && type != e_temp_type.ARMOR && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
+					if (type != e_temp_type.CHARACTER && type != e_temp_type.ARMOR && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
 					{
 						if (model_tex != null)
 							model_tex.count--

@@ -81,12 +81,12 @@ function tl_copy(to)
 	
 	if (part_of != null && part_of != "")
 	{
-		if (type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
 		{
 			to.model_name = model_name
 			to.model_state = array_copy_1d(model_state)
 		}
-		else if (type = e_temp_type.BLOCK)
+		else if (type = e_tl_type.BLOCK)
 		{
 			to.block_name = block_name
 			to.block_state = array_copy_1d(block_state)

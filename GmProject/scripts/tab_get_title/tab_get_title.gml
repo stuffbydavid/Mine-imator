@@ -27,8 +27,8 @@ function tab_get_title(tab)
 			case e_temp_type.ITEM:
 				return text_get("tabitem", string_remove_newline(temp_edit.display_name))
 			
-			case e_temp_type.BODYPART:
-				return text_get("tabbodypart", string_remove_newline(temp_edit.display_name))
+			case e_temp_type.MODEL_PART:
+				return text_get("tabmodelpart", string_remove_newline(temp_edit.display_name))
 			
 			case e_temp_type.PARTICLE_SPAWNER:
 				return text_get("tabparticles", string_remove_newline(temp_edit.display_name))

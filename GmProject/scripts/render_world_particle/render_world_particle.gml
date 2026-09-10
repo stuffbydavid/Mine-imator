@@ -127,7 +127,7 @@ function render_world_particle()
 				break
 			}
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				if (temp.model_part = null || temp.model_file = null)
 					break

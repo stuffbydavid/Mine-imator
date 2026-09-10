@@ -16,12 +16,12 @@ function tab_frame_editor_texture_material()
 			case e_tl_type.ARMOR:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
 				
 				var modelfile = tl_edit.temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_temp_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				with (tl_edit.temp)

@@ -171,7 +171,7 @@ function project_load_find_save_ids(isproject = false)
 		if (type = e_tl_type.SPECIAL_BLOCK && temp != null && temp.type = e_temp_type.ARMOR)
 			type = e_tl_type.ARMOR
 		
-		// Bodypart
+		// Model part
 		part_of = save_id_find(save_id_map[?part_of])
 		if (part_of = null && temp != null)
 			temp.count++

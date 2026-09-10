@@ -1,14 +1,14 @@
-/// action_lib_bodypart_model_name(name)
+/// action_lib_model_part_model_name(name)
 /// @arg name
 /// @desc Changes the character body part model.
 
-function action_lib_bodypart_model_name(name)
+function action_lib_model_part_model_name(name)
 {
 	var state;
 	
 	if (!history_undo && !history_redo)
 	{
-		with (history_set_var(action_lib_bodypart_model_name, temp_edit.model_name, name, false))
+		with (history_set_var(action_lib_model_part_model_name, temp_edit.model_name, name, false))
 			id.state = array_copy_1d(temp_edit.model_state)
 		
 		state = mc_assets.model_name_map[?name].default_state

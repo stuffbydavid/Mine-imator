@@ -47,18 +47,18 @@ function list_init(name)
 		case "benchspblocktex":
 		case "benchspblocktexmaterial":
 		case "benchspblocktexnormal":
-		case "benchbodypartskin":
-		case "benchbodypartskinmaterial":
-		case "benchbodypartskinnormal":
+		case "benchmodelpartskin":
+		case "benchmodelpartskinmaterial":
+		case "benchmodelpartskinnormal":
 		case "libraryskin":
 		case "libraryskinmaterial":
 		case "libraryskinnormal":
 		case "libraryspblocktex":
 		case "libraryspblocktexmaterial":
 		case "libraryspblocktexnormal":
-		case "librarybodypartskin":
-		case "librarybodypartskinmaterial":
-		case "librarybodypartskinnormal":
+		case "librarymodelpartskin":
+		case "librarymodelpartskinmaterial":
+		case "librarymodelpartskinnormal":
 		{
 			var temp;
 			if (string_contains(menu_current.menu_name, "bench"))
@@ -368,7 +368,7 @@ function list_init(name)
 		}
 		
 		// Body part
-		case "benchbodypart":
+		case "benchmodelpart":
 		{
 			for (var p = 0; p < ds_list_size(bench_settings.model_file.file_part_list); p++)
 			{
@@ -380,7 +380,7 @@ function list_init(name)
 		}
 		
 		// Body part
-		case "templateeditorbodypart":
+		case "templateeditormodelpart":
 		{
 			for (var p = 0; p < ds_list_size(temp_edit.model_file.file_part_list); p++)
 			{
@@ -820,7 +820,7 @@ function list_init(name)
 		// Timeline frame skin
 		case "frameeditorchartex":
 		case "frameeditorspblocktex":
-		case "frameeditorbodyparttex":
+		case "frameeditormodelparttex":
 		case "frameeditormodeltex":
 		{
 			var temp = tl_edit.temp;
@@ -829,7 +829,7 @@ function list_init(name)
 			var texobj = temp.model_tex;
 			
 			// Animatable special block in scenery
-			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL_PART) && tl_edit.part_root != null)
 			{
 				if (tl_edit.part_root.type = e_tl_type.SCENERY)
 				{
@@ -864,7 +864,7 @@ function list_init(name)
 			if (texobj != null)
 			{
 				var modelfile = temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_temp_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				var tex;
@@ -895,7 +895,7 @@ function list_init(name)
 		// Timeline frame skin (Material map)
 		case "frameeditorchartexmaterial":
 		case "frameeditorspblocktexmaterial":
-		case "frameeditorbodyparttexmaterial":
+		case "frameeditormodelparttexmaterial":
 		case "frameeditormodeltexmaterial":
 		{
 			var temp = tl_edit.temp;
@@ -904,7 +904,7 @@ function list_init(name)
 			var texobj = temp.model_tex_material;
 			
 			// Animatable special block in scenery
-			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL_PART) && tl_edit.part_root != null)
 			{
 				if (tl_edit.part_root.type = e_tl_type.SCENERY)
 				{
@@ -928,7 +928,7 @@ function list_init(name)
 				else
 				{
 					var modelfile = temp.model_file;
-					if (tl_edit.type = e_temp_type.BODYPART)
+					if (tl_edit.type = e_temp_type.MODEL_PART)
 						modelfile = tl_edit.model_part
 				
 					var tex;
@@ -960,7 +960,7 @@ function list_init(name)
 		// Timeline frame skin (Normal map)
 		case "frameeditorchartexnormal":
 		case "frameeditorspblocktexnormal":
-		case "frameeditorbodyparttexnormal":
+		case "frameeditormodelparttexnormal":
 		case "frameeditormodeltexnormal":
 		{
 			var temp = tl_edit.temp;
@@ -969,7 +969,7 @@ function list_init(name)
 			var texobj = temp.model_tex_normal;
 			
 			// Animatable special block in scenery
-			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL_PART) && tl_edit.part_root != null)
 			{
 				if (tl_edit.part_root.type = e_tl_type.SCENERY)
 				{
@@ -993,7 +993,7 @@ function list_init(name)
 				else
 				{
 					var modelfile = temp.model_file;
-					if (tl_edit.type = e_temp_type.BODYPART)
+					if (tl_edit.type = e_temp_type.MODEL_PART)
 						modelfile = tl_edit.model_part
 				
 					var tex;

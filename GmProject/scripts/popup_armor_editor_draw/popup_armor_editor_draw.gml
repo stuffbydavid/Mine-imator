@@ -33,7 +33,7 @@ function popup_armor_editor_draw_piece_type(piece, pieceid, capwid)
 		if (popup.armor_edit = bench_settings)
 			draw_button_menu(state, e_menu.LIST, dx, dy, w, 24, type, minecraft_asset_get_name("modelstatevalue", type), action_bench_model_state, false, null, null, "", c_white, 1, capwid)
 		else
-			draw_button_menu(state, e_menu.LIST, dx, dy, w, 24, type, minecraft_asset_get_name("modelstatevalue", type), (popup.armor_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
+			draw_button_menu(state, e_menu.LIST, dx, dy, w, 24, type, minecraft_asset_get_name("modelstatevalue", type), (popup.armor_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
 	}
 	menu_model_current = null
 	

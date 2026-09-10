@@ -24,7 +24,7 @@ function tab_timeline_editor_hierarchy()
 			return 0
 		
 		// Lock to bended half
-		if (par != app && par.type = e_temp_type.BODYPART && par.model_part != null && par.model_part.bend_part != null)
+		if (par != app && par.type = e_tl_type.MODEL_PART && par.model_part != null && par.model_part.bend_part != null)
 		{
 			var partname = array("right", "left", "front", "back", "upper", "lower");
 			tab_control_switch()

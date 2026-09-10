@@ -56,7 +56,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 					matrix_parent = array_copy_1d(parent.matrix)
 				
 				// Parent is a body part and we're locked to bended half
-				if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
+				if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
 				{
 					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z]);
 					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0, 0, 0)), matrix_parent)
@@ -104,7 +104,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Add body part position and rotation
-			if (type = e_tl_type.BODYPART && model_part != null)
+			if (type = e_tl_type.MODEL_PART && model_part != null)
 			{
 				if (part_of != null)
 					matrix_parent = matrix_multiply(matrix_create(model_part.position, model_part.rotation, vec3(1)), matrix_parent)

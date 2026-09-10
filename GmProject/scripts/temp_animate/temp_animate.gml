@@ -54,7 +54,7 @@ function temp_animate()
 				break
 			}
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				model_part = temp.model_part 
 				if (model_part != null)

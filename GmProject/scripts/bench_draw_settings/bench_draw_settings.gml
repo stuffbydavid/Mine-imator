@@ -96,7 +96,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_temp_type.CHARACTER:
 			case e_temp_type.ARMOR:
 			case e_temp_type.SPECIAL_BLOCK:
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				var labeltext, list, texcap, texmatcap, texnormcap, capwid, part;
 				if (bench_settings.type = e_temp_type.CHARACTER)
@@ -129,14 +129,14 @@ function bench_draw_settings(bx, by, bw, bh)
 					capwid = text_caption_width(texcap, texmatcap, texnormcap)
 					part = bench_settings.model_file
 				}
-				else if (bench_settings.type = e_temp_type.BODYPART)
+				else if (bench_settings.type = e_temp_type.MODEL_PART)
 				{
 					labeltext = text_get("benchmodel")
-					list = bench_settings.bodypart_model_list
-					texcap = "benchbodypartskin"
-					texmatcap = "benchbodypartskinmaterial"
-					texnormcap = "benchbodypartskinnormal"
-					capwid = text_caption_width("benchbodypart", texcap, texmatcap, texnormcap)
+					list = bench_settings.model_part_model_list
+					texcap = "benchmodelpartskin"
+					texmatcap = "benchmodelpartskinmaterial"
+					texnormcap = "benchmodelpartskinnormal"
+					capwid = text_caption_width("benchmodelpart", texcap, texmatcap, texnormcap)
 					part = bench_settings.model_part
 				}
 				
@@ -227,10 +227,10 @@ function bench_draw_settings(bx, by, bw, bh)
 				menu_filter = ""
 				menu_filter_normal = ""
 				
-				// Bodypart
-				if (bench_settings.type = e_temp_type.BODYPART && bench_settings.model_file != null)
+				// Model part
+				if (bench_settings.type = e_temp_type.MODEL_PART && bench_settings.model_file != null)
 				{
-					draw_button_menu("benchbodypart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, false, null, null, "", null, null, capwid)
+					draw_button_menu("benchmodelpart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, false, null, null, "", null, null, capwid)
 					dy += 32
 				}
 				

@@ -222,16 +222,16 @@ function app_startup_interface_tabs()
 		for (var b = 0; b < ds_list_size(mc_assets.armor_list); b++)
 			sortlist_add(armor_list, mc_assets.armor_list[|b].name)
 		
-		// Bodypart list
-		bodypart_model_list = new_obj(obj_sortlist)
-		bodypart_model_list.script = action_lib_bodypart_model_name
-		sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
+		// Model part list
+		model_part_model_list = new_obj(obj_sortlist)
+		model_part_model_list.script = action_lib_model_part_model_name
+		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.armor_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.armor_list[|m].name)
+			sortlist_add(model_part_model_list, mc_assets.armor_list[|m].name)
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.char_list[|m].name)
+			sortlist_add(model_part_model_list, mc_assets.char_list[|m].name)
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.special_block_list[|m].name)
+			sortlist_add(model_part_model_list, mc_assets.special_block_list[|m].name)
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()

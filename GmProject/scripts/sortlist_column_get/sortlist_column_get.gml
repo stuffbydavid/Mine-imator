@@ -21,7 +21,7 @@ function sortlist_column_get(slist, value, col)
 		
 		case "charname":
 		case "spblockname":
-		case "bodypartmodelname":
+		case "modelpartmodelname":
 			if (is_undefined(mc_assets.model_name_map[?value]))
 				return 0
 			return minecraft_asset_get_name("model", mc_assets.model_name_map[?value].name)

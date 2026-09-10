@@ -6,11 +6,11 @@ function temp_update(copy = false)
 	if (type = e_temp_type.CHARACTER ||
 		type = e_temp_type.ARMOR ||
 		type = e_temp_type.SPECIAL_BLOCK ||
-		type = e_temp_type.BODYPART ||
+		type = e_temp_type.MODEL_PART ||
 		type = e_temp_type.MODEL)
 	{
 		temp_update_model(copy)
-		if (type = e_temp_type.BODYPART)
+		if (type = e_temp_type.MODEL_PART)
 			temp_update_model_part()
 		temp_update_model_shape()
 	}

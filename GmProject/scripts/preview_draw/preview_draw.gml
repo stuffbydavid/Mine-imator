@@ -255,7 +255,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							}
 							
-							case e_temp_type.BODYPART:
+							case e_temp_type.MODEL_PART:
 							{
 								if (select.model_part = null)
 									break
@@ -396,7 +396,7 @@ function preview_draw(preview, xx, yy, width, height)
 								render_world_block(select.block_vbuffer, select.block_tex, true, rep)
 								break
 							
-							case e_temp_type.BODYPART:
+							case e_temp_type.MODEL_PART:
 							{
 								if (select.model_part = null)
 									break

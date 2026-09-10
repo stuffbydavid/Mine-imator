@@ -13,8 +13,8 @@ function action_bench_model_name(name)
 			s = string_lower(armor_list.search_tbx.text)
 		else if (type = e_temp_type.SPECIAL_BLOCK)
 			s = string_lower(special_block_list.search_tbx.text)
-		else if (type = e_temp_type.BODYPART)
-			s = string_lower(bodypart_model_list.search_tbx.text)
+		else if (type = e_temp_type.MODEL_PART)
+			s = string_lower(model_part_model_list.search_tbx.text)
 		
 		if (model_name = name && s = "")
 			return 0
@@ -48,7 +48,7 @@ function action_bench_model_name(name)
 		
 		temp_update_model()
 		
-		if (type = e_temp_type.BODYPART)
+		if (type = e_temp_type.MODEL_PART)
 			temp_update_model_part()
 		
 		temp_update_model_shape()

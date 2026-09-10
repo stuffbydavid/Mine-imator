@@ -9,6 +9,8 @@ function project_load_legacy_timeline()
 		save_id_map[?load_id] = load_id
 		
 		var typename = buffer_read_string_int();
+		if (typename = "bodypart")
+			typename = "modelpart"
 		type = ds_list_find_index(tl_type_name_list, typename)
 		
 		name = buffer_read_string_int()
@@ -27,8 +29,8 @@ function project_load_legacy_timeline()
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			depth = buffer_read_int()
 		
-		legacy_bodypart_id = buffer_read_short()
-		if (type = e_temp_type.BODYPART)
+		legacy_model_part_id = buffer_read_short()
+		if (type = e_tl_type.MODEL_PART)
 		{
 			// Find part model
 			var findtemp;
@@ -44,9 +46,9 @@ function project_load_legacy_timeline()
 			
 			// Find name from ID
 			var modelpartlist = legacy_model_part_map[?findtemp.model_name];
-			if (!is_undefined(modelpartlist) && legacy_bodypart_id < ds_list_size(modelpartlist))
+			if (!is_undefined(modelpartlist) && legacy_model_part_id < ds_list_size(modelpartlist))
 			{
-				model_part_name = modelpartlist[|legacy_bodypart_id]
+				model_part_name = modelpartlist[|legacy_model_part_id]
 				
 				// Find part model by looking through model file for the name
 				if (findtemp.model_file != null)
@@ -64,12 +66,12 @@ function project_load_legacy_timeline()
 				}
 			}
 			else
-				log("Could not find model part for", findtemp.model_name, findtemp.legacy_model_name, legacy_bodypart_id)
+				log("Could not find model part for", findtemp.model_name, findtemp.legacy_model_name, legacy_model_part_id)
 		}
 		
 		part_of = project_load_legacy_save_id()
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_tl_type.CHARACTER || type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
 			part_list = ds_list_create()
 		
 		part_amount = buffer_read_short()
@@ -129,7 +131,7 @@ function project_load_legacy_timeline()
 		inherit_color = buffer_read_byte()
 		inherit_texture = buffer_read_byte()
 		inherit_visibility = buffer_read_byte()
-		inherit_rot_point = (type = e_tl_type.BODYPART)
+		inherit_rot_point = (type = e_tl_type.MODEL_PART)
 		scale_resize = buffer_read_byte()
 		rot_point_custom = buffer_read_byte()
 		
@@ -140,7 +142,7 @@ function project_load_legacy_timeline()
 		{
 			rot_point[X] -= 8
 			rot_point[Y] -= 8
-			if (type != e_temp_type.SURFACE)
+			if (type != e_tl_type.SURFACE)
 				rot_point[Z] -= 8
 		}
 		
@@ -152,7 +154,7 @@ function project_load_legacy_timeline()
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			texture_filtering = buffer_read_byte()
 		else
-			texture_filtering = (type = e_temp_type.SCENERY || type=e_temp_type.BLOCK)
+			texture_filtering = (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK)
 		/*round_bending = */buffer_read_byte()
 		shadows = buffer_read_byte()
 		if (load_format >= e_project.FORMAT_100_DEBUG)

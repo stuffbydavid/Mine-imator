@@ -388,7 +388,7 @@ function tl_update_values()
 	}
 	
 	// Update particle spawners
-	if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && keyframe_prev != keyframe_current)
+	if (type = e_tl_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && keyframe_prev != keyframe_current)
 	{
 		// Fire particles
 		if (!temp.pc_spawn_constant && value[e_value.SPAWN] && !value[e_value.FREEZE])

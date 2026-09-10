@@ -17,7 +17,7 @@ function tab_template_editor()
 		case e_temp_type.CHARACTER:
 		case e_temp_type.ARMOR:
 		case e_temp_type.SPECIAL_BLOCK:
-		case e_temp_type.BODYPART:
+		case e_temp_type.MODEL_PART:
 		{
 			var labeltext, list, capwid;
 			if (temp_edit.type = e_temp_type.CHARACTER)
@@ -38,17 +38,17 @@ function tab_template_editor()
 				list = tab.special_block_list
 				capwid = 0
 			}
-			else if (temp_edit.type = e_temp_type.BODYPART)
+			else if (temp_edit.type = e_temp_type.MODEL_PART)
 			{
 				labeltext = text_get("templateeditormodel")
-				list = tab.bodypart_model_list
-				capwid = text_caption_width("templateeditorbodypart")
+				list = tab.model_part_model_list
+				capwid = text_caption_width("templateeditormodelpart")
 			}
 			
 			// Model
 			var statelen, statesh, menus, checkboxes;
 			statelen = array_length(temp_edit.model_state)
-			statesh = ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0)
+			statesh = ((temp_edit.type = e_temp_type.MODEL_PART) ? 32 : 0)
 			menus = 0
 			checkboxes = 0
 			
@@ -67,7 +67,7 @@ function tab_template_editor()
 			
 			// Update states in case model was updated
 			statelen = array_length(temp_edit.model_state)
-			statesh = ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0)
+			statesh = ((temp_edit.type = e_temp_type.MODEL_PART) ? 32 : 0)
 			menus = 0
 			checkboxes = 0
 			
@@ -112,7 +112,7 @@ function tab_template_editor()
 				{
 					menu_model_state = menu_model_state_current
 					
-					var script = (temp_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state;
+					var script = (temp_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state;
 					
 					if (temp_edit.model_state[i + 1] = "true")
 						script_execute(script, "false")
@@ -135,16 +135,16 @@ function tab_template_editor()
 				var state = temp_edit.model_state[i];
 				menu_model_current = model
 				menu_model_state_current = model ? model.states_map[?state] : null
-				draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), (temp_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
+				draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), (temp_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
 				dyy += 32
 			}
 			menu_model_current = null
 			menu_filter = ""
 			menu_filter_normal = ""
 			
-			// Bodypart
-			if (temp_edit.type = e_temp_type.BODYPART)
-				draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, capwid)
+			// Model part
+			if (temp_edit.type = e_temp_type.MODEL_PART)
+				draw_button_menu("templateeditormodelpart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, capwid)
 			
 			if (content_mouseon)
 				window_scroll_focus = string(list.scroll)

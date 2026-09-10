@@ -565,7 +565,7 @@ function project_load_legacy_beta(loadbackground)
 		// Find parent
 		var par = load.tl_tl[load.tl_lock_parent[a]];
 		
-		// Find bodypart from ID
+		// Find model part from ID
 		var partid = load.tl_lock_part[a] - 1;
 		if (par.part_list != null && partid > -1)
 		{

@@ -1,6 +1,6 @@
-/// action_lib_bodypart_model_state(value)
+/// action_lib_model_part_model_state(value)
 /// @arg value
-function action_lib_bodypart_model_state(val)
+function action_lib_model_part_model_state(val)
 {
 	var state;
 	
@@ -8,7 +8,7 @@ function action_lib_bodypart_model_state(val)
 	{
 		state = menu_model_state.name
 		
-		with (history_set_var(action_lib_bodypart_model_state, state_vars_get_value(temp_edit.model_state, state), val, false))
+		with (history_set_var(action_lib_model_part_model_state, state_vars_get_value(temp_edit.model_state, state), val, false))
 			id.state = state
 	}
 	else

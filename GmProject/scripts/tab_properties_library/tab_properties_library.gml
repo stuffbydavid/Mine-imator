@@ -310,19 +310,19 @@ function tab_properties_library()
 			break
 		}
 		
-		case e_temp_type.BODYPART:
+		case e_temp_type.MODEL_PART:
 		{
 			var text;
 			if (temp_edit.model_file != null)
-				text = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
+				text = text_get("librarymodelpartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
 			else
-				text = text_get("librarybodypartunknown")
+				text = text_get("librarymodelpartunknown")
 			
 			tab_control(24)
-			draw_label_value(dx, dy, dw, 24, text_get("typebodypart"), text)
+			draw_label_value(dx, dy, dw, 24, text_get("typemodelpart"), text)
 			
 			// Change
-			if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
+			if (draw_button_icon("librarymodelpartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
 				tab_toggle(template_editor)
 			
 			tab_next()
@@ -361,7 +361,7 @@ function tab_properties_library()
 				tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
+			draw_button_menu("librarymodelpartskin", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
 			tab_next()
 			
 			if (project_render_material_maps)
@@ -372,7 +372,7 @@ function tab_properties_library()
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu("librarybodypartskinmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				draw_button_menu("librarymodelpartskinmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
 				tab_next()
 			
 				// Skin (Normal map)
@@ -381,7 +381,7 @@ function tab_properties_library()
 					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu("librarybodypartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				draw_button_menu("librarymodelpartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
 				tab_next()
 			}
 			
