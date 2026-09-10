@@ -16,7 +16,7 @@ function app_startup_interface_export()
 	exportmovie_frame = 0
 	exportmovie_frame_rate = 0
 	exportmovie_framespersecond = 0
-	exportmovie_high_quality = true
+	exportmovie_renderer = e_renderer.REALISTIC
 	exportmovie_start = null
 	exportmovie_buffer = null
 	exportmovie_benchmark_csv = ""

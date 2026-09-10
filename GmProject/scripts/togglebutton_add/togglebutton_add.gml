@@ -1,10 +1,11 @@
-/// togglebutton_add(name, icon, value, active, script, [axisedit])
+/// togglebutton_add(name, icon, value, active, script, [axisedit, [text]])
 /// @arg name
 /// @arg icon
 /// @arg value
 /// @arg active
 /// @arg script
-/// @arg [axisedit]
+/// @arg [axisedit
+/// @arg [text]]
 
 function togglebutton_add()
 {
@@ -19,4 +20,9 @@ function togglebutton_add()
 		togglebutton_axis = array_add(togglebutton_axis, argument[5])
 	else
 		togglebutton_axis = array_add(togglebutton_axis, X)
+		
+	if (argument_count > 6)
+		togglebutton_text = array_add(togglebutton_text, argument[6])
+	else
+		togglebutton_text = array_add(togglebutton_text, text_get(argument[0]))
 }

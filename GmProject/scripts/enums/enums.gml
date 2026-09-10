@@ -66,6 +66,11 @@ function enums()
 		FORMAT_200			= 29
 	}
 	
+	enum e_render_settings
+	{
+		FORMAT_210			= 35
+	}
+	
 	enum e_minecraft_assets
 	{
 		FORMAT_110_PRE_1	= 1,
@@ -847,12 +852,13 @@ function enums()
 		GLINT
 	}
 	
-	// Viewport render mode
-	enum e_view_mode
+	// Renderer
+	enum e_renderer
 	{
-		FLAT,
-		SHADED,
-		RENDER
+		QUICK,
+		STANDARD,
+		REALISTIC,
+		COMMON
 	}
 	
 	// Menus

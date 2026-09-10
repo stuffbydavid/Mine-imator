@@ -867,7 +867,7 @@
 		{
 			"id": "R247YG6UWRA39UXX",
 			"type": "text",
-			"name": "high",
+			"name": "realistic",
 			"temp": "6AX64W9H4A57F50B",
 			"color_tag": 2,
 			"hide": false,
@@ -1026,7 +1026,7 @@
 		{
 			"id": "G4FJ96FRE98LCJVB",
 			"type": "text",
-			"name": "shaded",
+			"name": "standard",
 			"temp": "6AX64W9H4A57F50B",
 			"color_tag": 2,
 			"hide": false,
@@ -1200,7 +1200,7 @@
 		{
 			"id": "8W3PST8GBU3G956Z",
 			"type": "text",
-			"name": "flat",
+			"name": "quick",
 			"temp": "6AX64W9H4A57F50B",
 			"color_tag": 2,
 			"hide": false,
@@ -8910,7 +8910,7 @@
 		{
 			"id": "Q6X82428FR6RG275",
 			"type": "folder",
-			"name": "Dragons (SLOW!)",
+			"name": "TestEnabled",
 			"temp": "null",
 			"color_tag": "null",
 			"hide": true,

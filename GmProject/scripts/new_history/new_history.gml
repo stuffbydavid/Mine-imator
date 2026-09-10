@@ -14,6 +14,9 @@ function new_history(script)
 		save_tl_edit = save_id_get(tl_edit)
 		save_res_edit = save_id_get(res_edit)
 		save_axis_edit = axis_edit
+		save_renderer_edit = renderer_edit
+		save_render_preset_edit = render_preset_edit
+		save_render_preset_locked = false
 		save_save_id_seed = save_id_seed
 		
 		scale_link_drag = false

@@ -8,11 +8,11 @@ function export_start(state)
 	
 	render_samples = -1
 	
-	if (view_main.quality = e_view_mode.RENDER)
-		view_main.quality = e_view_mode.SHADED
+	if (view_main.renderer = e_renderer.REALISTIC)
+		view_main.renderer = e_renderer.STANDARD
 	
-	if (view_second.quality = e_view_mode.RENDER)
-		view_second.quality = e_view_mode.SHADED
+	if (view_second.renderer = e_renderer.REALISTIC)
+		view_second.renderer = e_renderer.STANDARD
 	
 	benchmark_animate_total_time = 0
 	benchmark_render_total_time = 0

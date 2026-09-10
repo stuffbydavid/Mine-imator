@@ -17,7 +17,7 @@ function render_generate_dof_samples(blades, rotation, ratio)
 	
 	var disnoise, rotnoise;
 	
-	if (render_sample_current = 0 || render_quality != e_view_mode.RENDER)
+	if (render_sample_current = 0 || renderer_current != e_renderer.REALISTIC)
 	{
 		disnoise = 0
 		rotnoise = 0

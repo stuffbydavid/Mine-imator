@@ -15,6 +15,8 @@ function action_toolbar_redo()
 	tl_edit = save_id_find(history_data.save_tl_edit)
 	res_edit = save_id_find(history_data.save_res_edit)
 	axis_edit = history_data.save_axis_edit
+	renderer_edit = history_data.save_renderer_edit
+	render_preset_edit = history_data.save_render_preset_edit
 	save_id_seed = history_data.save_save_id_seed
 	
 	log("Redo", script_get_name(history_data.script))
@@ -29,5 +31,6 @@ function action_toolbar_redo()
 	history_redo = false
 	
 	history_resource_update = true
+	
 	render_samples = -1
 }

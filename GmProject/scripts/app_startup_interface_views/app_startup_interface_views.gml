@@ -32,7 +32,7 @@ function app_startup_interface_views()
 	view_main.effects = setting_view_main_effects
 	view_main.particles = setting_view_main_particles
 	view_main.location = setting_view_main_location
-	view_main.quality = e_view_mode.SHADED
+	view_main.renderer = e_renderer.STANDARD
 	view_main.camera = -4
 	view_main.title = ""
 	
@@ -48,7 +48,7 @@ function app_startup_interface_views()
 	view_second.location_last = view_second.location
 	view_second.width = setting_view_second_width
 	view_second.height = setting_view_second_height
-	view_second.quality = e_view_mode.SHADED
+	view_second.renderer = e_renderer.STANDARD
 	view_second.camera = -5
 	view_second.title = ""
 	

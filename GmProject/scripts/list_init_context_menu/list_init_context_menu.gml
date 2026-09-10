@@ -301,7 +301,7 @@ function list_init_context_menu(name)
 		case "toolbarrender":
 		{
 			list_item_add(text_get("toolbarrenderimage"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
-			list_item_add(text_get("toolbarrenderanimation"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
+			list_item_add(text_get("toolbarrendermovie"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
 			
 			break
 		}

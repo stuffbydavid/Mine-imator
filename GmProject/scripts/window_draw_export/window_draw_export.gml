@@ -13,7 +13,7 @@ function window_draw_export()
 	// Set dimensions
 	if (window_state = "export_movie")
 	{
-		usesamples = popup_exportmovie.high_quality
+		usesamples = (exportmovie_renderer = e_renderer.REALISTIC)
 		totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.framespersecond)
 		if (usesamples)
 			totalsamples = totalframes * project_render_samples
@@ -22,7 +22,7 @@ function window_draw_export()
 	}
 	else
 	{
-		usesamples = popup_exportimage.high_quality
+		usesamples = popup_exportimage.renderer = e_renderer.REALISTIC
 		if (usesamples)
 			totalframes = project_render_samples
 		else

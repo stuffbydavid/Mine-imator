@@ -2,6 +2,8 @@
 
 function render_startup()
 {
+	globalvar renderer_current, renderer_name_list, renderer_edit;
+	
 	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_start_time, render_start_surface_time,
 			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
 			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
@@ -16,7 +18,7 @@ function render_startup()
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
-			  render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_pass,
+			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
 			  render_tonemapper, render_exposure, render_gamma, render_auxiliary;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
@@ -48,6 +50,10 @@ function render_startup()
 	gpu_set_tex_max_mip(4)
 	shader_reset_uniforms()
 	
+	renderer_current = e_renderer.QUICK
+	renderer_name_list = array("quick", "standard", "realistic")
+	renderer_edit = -1
+	
 	render_view_current = null
 	render_width = 1
 	render_height = 1
@@ -60,7 +66,6 @@ function render_startup()
 	render_effects_done = false
 	render_effects_list = ds_list_create()
 	render_effects_progress = 0
-	render_quality = e_view_mode.FLAT
 	
 	render_camera_bloom = false
 	render_camera_dof = false
@@ -232,19 +237,103 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
 	render_mode_shader_map[?e_render_mode.AUXILIARY] = shader_high_auxiliary
 	
-	// Init settings
-	project_reset_render()
+	// Load default render settings
+	globalvar render_default_settings;
+	render_default_settings = new_obj(obj_render_preset);
 	
-	// Check for default render settings file
-	if (!file_exists_lib(render_default_file))
+	with (render_default_settings)
 	{
-		if (!directory_exists_lib(render_directory))
-			directory_create_lib(render_directory)
-		
-		project_save_start(render_default_file, false)
-		project_save_render()
-		project_save_done()
-	
-		log("Saved default render settings", render_default_file)
+		has_standard = true
+		has_realistic = true
+		has_fx = true
+		has_graphics = true
+		has_materials = true
+		if (file_exists(render_default_file))
+			render_preset_load(render_default_file, false)
 	}
+			
+	// Load default render presets
+	globalvar render_preset_list, render_preset_map, render_preset_edit;
+	render_preset_list[e_renderer.STANDARD] = ds_list_create()
+	render_preset_list[e_renderer.REALISTIC] = ds_list_create()
+	render_preset_map = ds_map_create()
+	render_preset_edit = null
+	
+	for (var i = 0; i < array_length(render_presets); i++)
+	{
+		var file = render_presets[i];
+		if (!file_exists(render_directory + file))
+			continue
+		
+		var preset, loaded;
+		preset = new_obj(obj_render_preset)
+		preset.file = file
+		with (preset)
+			loaded = render_preset_load(render_directory + file)
+			
+		if (loaded)
+		{
+			render_preset_map[?file] = preset
+			if (preset.has_standard)
+				ds_list_add(render_preset_list[e_renderer.STANDARD], file)
+			if (preset.has_realistic)
+				ds_list_add(render_preset_list[e_renderer.REALISTIC], file)
+		}
+		else
+			instance_destroy(preset)
+	}
+	
+	// Load additional render presets from folder
+	var file = file_find_first(render_directory + "*.mirender", 0);
+	while (file != "")
+	{
+		if (!array_contains(render_presets, file))
+		{
+			var preset, loaded;
+			preset = new_obj(obj_render_preset)
+			preset.file = file
+			
+			with (preset)
+				loaded = render_preset_load(render_directory + file)
+			
+			if (loaded)
+			{
+				render_preset_map[?file] = preset
+				if (preset.has_standard)
+					ds_list_add(render_preset_list[e_renderer.STANDARD], file)
+				if (preset.has_realistic)
+					ds_list_add(render_preset_list[e_renderer.REALISTIC], file)
+			}
+			else
+				instance_destroy(preset)
+		}
+		
+		file = file_find_next()
+	}
+	
+	// Check for missing default preset
+	if (!ds_map_exists(render_preset_map, render_preset_default))
+	{
+		var defaultpreset = new_obj(obj_render_preset);
+		defaultpreset.file = render_preset_default
+		defaultpreset.name = render_preset_default_name
+		defaultpreset.has_standard = true
+		defaultpreset.has_realistic = true
+		
+		render_preset_map[?render_preset_default] = defaultpreset
+		ds_list_add(render_preset_list[e_renderer.STANDARD], render_preset_default)
+		ds_list_add(render_preset_list[e_renderer.REALISTIC], render_preset_default)
+	}
+	
+	// Add custom preset
+	var custompreset = new_obj(obj_render_preset);
+	custompreset.file = "custom"
+	custompreset.name = "custom"
+	custompreset.locked = false
+	custompreset.has_standard = true
+	custompreset.has_realistic = true
+	
+	render_preset_map[?"custom"] = custompreset
+	ds_list_add(render_preset_list[e_renderer.STANDARD], "custom")
+	ds_list_add(render_preset_list[e_renderer.REALISTIC], "custom")
 }

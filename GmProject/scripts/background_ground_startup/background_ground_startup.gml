@@ -7,7 +7,7 @@ function background_ground_startup()
 	
 	log("Ground vbuffer init")
 	
-	totalsize = (project_render_distance div 256) * 256
+	totalsize = (clip_far div 256) * 256
 	size = totalsize / 16
 	rep = size / 16
 	

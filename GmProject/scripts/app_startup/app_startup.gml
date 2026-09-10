@@ -32,14 +32,14 @@ function app_startup()
 	app_startup_fonts()
 	app_startup_interface_lists()
 	app_startup_keybinds()
-	
 	app_startup_recent()
+	
 	toasts_startup()
 	json_startup()
 	settings_startup()
 	project_startup()
-	render_startup()
 	camera_startup()
+	render_startup()
 	
 	if (!minecraft_assets_startup())
 		return false

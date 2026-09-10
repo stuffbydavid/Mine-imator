@@ -122,10 +122,12 @@
 		"viewgrid": "Grid view",
 		"experimental": "This setting is experimental and is not fully supported.",
 		"settings/": {
+			"reset": "Reset settings",
 			"import": "Import settings",
 			"export": "Export settings",
 			"setdefault": "Set as default settings",
-			"reset": "Reset settings"
+			"unlock": "Unlock preset for editing",
+			"lock": "Lock preset from editing"
 		},
 		"linkeaseinout": "Link ease in/out",
 		"importwatermarkimage": "Import watermark image",
@@ -370,7 +372,8 @@
 		"upgradecaption": "Upgrade error",
 		"downloadskinuser": "The user \"%1\" does not exist.",
 		"downloadskininternet": "Could not download skin, check your internet connection.",
-		"test": "The supplied project could not be loaded for testing."
+		"test": "The supplied project could not be loaded for testing.",
+		"testcaption": "Test error."
 	},
 	"question/": {
 		"confirmexit": "Save the changes made in %1 before quitting?",
@@ -386,8 +389,8 @@
 		"assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
 		"unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
 		"restorecontrols": "Are you sure you want to restore all controls?",
-		"setasdefault": "Are you sure you want to set these settings as the default? This cannot be undone.",
-		"resetrender": "Are you sure you want to reset all render settings?"
+		"resetrender": "Are you sure you want to reset all render settings?",
+		"setasdefault": "Are you sure you want to set these settings as the default for new projects?"
 	},
 	"filedialog/": {
 		"open/": {
@@ -484,7 +487,7 @@
 		"render": "Render",
 		"render/": {
 			"image": "Render image...",
-			"animation": "Render animation..."
+			"movie": "Render movie..."
 		},
 		"view": "View",
 		"view/": {
@@ -632,6 +635,8 @@
 		"movie/": {
 			"title": "Exporting your movie...",
 			"caption": "Export movie",
+			"renderer": "Renderer",
+			"performancewarning": "The current render settings may cause long export times.",
 			"videosize": "Video size",
 			"videosizecustomwidth": "W",
 			"videosizecustomheight": "H",
@@ -644,16 +649,6 @@
 				"wmv": "WMV",
 				"png": "PNG sequence"
 			},
-			"videoquality": "Video quality",
-			"videoquality/": {
-				"verylow": "Very low",
-				"low": "Low",
-				"medium": "Medium",
-				"high": "High",
-				"best": "Best",
-				"custom": "Custom"
-			},
-			"bitrate": "Bit rate",
 			"framerate": "Framerate",
 			"framerate/": {
 				"custom": "Custom"
@@ -663,13 +658,13 @@
 			"removebackground": "Remove background",
 			"blendmodewarning": "Custom blend modes on objects may not render correctly.",
 			"includehidden": "Include hidden objects",
-			"highquality": "High quality rendering",
 			"watermark": "Show watermark",
 			"save": "Save"
 		},
 		"image/": {
 			"title": "Exporting your image...",
 			"caption": "Export image",
+			"renderer": "Renderer",
 			"imagesize": "Image size",
 			"imagesizecustomwidth": "W",
 			"imagesizecustomheight": "H",
@@ -677,7 +672,6 @@
 			"includehidden": "Include hidden objects",
 			"removebackground": "Remove background",
 			"blendmodewarning": "Custom blend modes on objects may not render correctly.",
-			"highquality": "High quality rendering",
 			"watermark": "Show watermark",
 			"save": "Save",
 			"cancel": "Cancel"
@@ -686,9 +680,9 @@
 	"upgrade/": {
 		"caption": "Upgrade",
 		"info": "You are currently using the trial version of Mine-imator. To unlock more advanced features, get an upgrade key from the link below, and enter it here.",
-		"page0": "Watermark can be customized.",
-		"page1": "Unlock \"Advanced mode\" and get access to all available features.",
-		"page2": "Customize your own render settings in projects.",
+		"page0": "Watermark can be customized or removed.",
+		"page1": "Unlock \"Advanced mode\" and get access to all animation features.",
+		"page2": "Unlock the \"Realistic\" renderer in projects.",
 		"continue": "Upgrade"
 	},
 	"advanced/": {
@@ -825,10 +819,10 @@
 			"bendtip": "Bend tool",
 			"transformtip": "Transform tool"
 		},
-		"mode/": {
-			"flat": "Flat mode",
-			"shaded": "Shaded mode",
-			"render": "Render mode",
+		"renderer/": {
+			"quick": "Quick mode",
+			"standard": "Standard mode",
+			"realistic": "Realistic mode",
 			"pass": "Render pass",
 			"pass/": {
 				"combined": "Combined",
@@ -2955,21 +2949,28 @@
 		"videosizecustomwidth": "W",
 		"videosizecustomheight": "H",
 		"videosizecustomkeepaspectratio": "Keep aspect ratio",
-		"rendersettings": "Preset",
-		"rendersettings/": {
-			"performance": "Performance",
-			"balanced": "Balanced",
-			"extreme": "Extreme",
-			"custom": "Custom"
-		},
 		"tempo": "Tempo",
 		"tempotip": "The amount of frames that make a second in the animation."
 	},
 	"render": "RENDER SETTINGS",
 	"render/": {
+		"specialeffects": "SPECIAL EFFECTS",
+		"renderer": "Renderer",
+		"renderer/": {
+			"quick": "Quick",
+			"standard": "Standard",
+			"standardwarning": "These settings may cause framerate drops.",
+			"realistic": "Realistic",
+			"realisticwarning": "These settings may cause framerate drops and long export times for movies."
+		},
+		"preset": "Preset",
+		"preset/": {
+			"performance": "Performance",
+			"balanced": "Balanced",
+			"extreme": "Extreme",
+			"custom": "Custom"
+		},
 		"samples": "Samples",
-		"distance": "Render distance",
-		"distancetip": "The distance where rendered objects are cut off. Also determines the maximum fog distance.",
 		"ssao": "Ambient occlusion",
 		"ssaotip": "Darkens areas that are less exposed to light.",
 		"ssao/": {
@@ -2982,9 +2983,13 @@
 		},
 		"shadows": "Shadows",
 		"shadows/": {
+			"suncascades": "Sunlight cascades",
+			"suncascadestip": "The number of separate shadow maps for sunlight, used to improve shadow detail over close and large distances.",
 			"sunbuffersize": "Sun light buffer size",
 			"spotbuffersize": "Spot light buffer size",
 			"pointbuffersize": "Point light buffer size",
+			"blurquality": "Blur quality",
+			"blursize": "Blur size",
 			"transparent": "Transparent shadows",
 			"buffersize256": "Very small",
 			"buffersize512": "Small",
@@ -3013,10 +3018,10 @@
 		"reflections/": {
 			"precision": "Precision",
 			"precisiontip": "The accuracy of raytracing reflections, higher precision is slower.",
-			"thickness": "Thickness",
-			"thicknesstip": "Object thickness threshold to detect raytracing collision.",
 			"fadeamount": "Edge fade amount",
-			"fadeamounttip": "Fades edges of the reflections on the edge of the render to reduce artifacts."
+			"fadeamounttip": "Fades edges of the reflections on the edge of the render to reduce artifacts.",
+			"thickness": "Thickness",
+			"thicknesstip": "Object thickness threshold to detect raytracing collision."
 		},
 		"glow": "Glow",
 		"glow/": {
@@ -3026,36 +3031,9 @@
 			"falloffradius": "Radius",
 			"falloffintensity": "Intensity"
 		},
-		"texturefiltering": "Texture filtering",
-		"texturefilteringtip": "Smoothen textures on objects from a distance.",
-		"texturefiltering/": {
-			"level": "Texture filtering level",
-			"transparentblocks": "Transparent block texture filtering"
-		},
-		"aa": "Anti-aliasing",
-		"aatip": "Smoothen the edges of objects in the final render.",
-		"aapower": "Strength",
-		"modelsscenery": "Models and scenery",
-		"bendstyle": "Limb bending style",
-		"bendstylerealistic": "Realistic",
-		"bendstyleblocky": "Blocky",
-		"opaqueleaves": "Opaque leaves",
-		"liquidanimation": "Liquid waves",
-		"waterreflections": "Default water reflections",
-		"waterreflectionshelp": "Override water blocks with a default reflective water material.",
-		"defaultemissive": "Default emissive",
-		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
-		"defaultsubsurfaceradius": "Default subsurface",
-		"defaultsubsurfaceradiustip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
 		"glint": "Enchantment glint",
 		"glintspeed": "Speed",
 		"glintstrength": "Strength",
-		"alphamode": "Default alpha mode",
-		"alphamode/": {
-			"blend": "Blended",
-			"hashed": "Hashed",
-			"default": "Default"
-		},
 		"lightmanagement": "Light management",
 		"tonemapper": "Tonemapper",
 		"tonemapper/": {
@@ -3065,6 +3043,37 @@
 		},
 		"exposure": "Exposure",
 		"gamma": "Gamma",
+		"aa": "Anti-aliasing",
+		"aatip": "Smoothen the edges of objects in the final render.",
+		"aapower": "Strength",
+		"graphics": "GRAPHICS",
+		"distance": "Render distance",
+		"distancetip": "The distance where rendered objects are cut off. Also determines the maximum fog distance.",
+		"texturefiltering": "Texture filtering",
+		"texturefilteringtip": "Smoothen textures on objects from a distance.",
+		"texturefiltering/": {
+			"level": "Texture filtering level",
+			"transparentblocks": "Transparent block texture filtering"
+		},
+		"modelsscenery": "Models and scenery",
+		"bendstyle": "Limb bending style",
+		"bendstylerealistic": "Realistic",
+		"bendstyleblocky": "Blocky",
+		"opaqueleaves": "Opaque leaves",
+		"liquidanimation": "Liquid waves",
+		"alphamode": "Default alpha mode",
+		"alphamode/": {
+			"blend": "Blended",
+			"hashed": "Hashed",
+			"default": "Default"
+		},
+		"materials": "MATERIALS",
+		"defaultemissive": "Default emissive",
+		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
+		"defaultsubsurfaceradius": "Default subsurface",
+		"defaultsubsurfaceradiustip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
+		"waterreflections": "Default water reflections",
+		"waterreflectionshelp": "Override water blocks with a default reflective water material.",
 		"materialmaps": "Object material maps",
 		"materialmapstip": "Enable material and normal map texture settings for objects."
 	},

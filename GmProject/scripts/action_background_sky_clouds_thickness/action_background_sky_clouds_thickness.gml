@@ -5,7 +5,7 @@
 function action_background_sky_clouds_thickness(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_background_sky_clouds_thickness, background_sky_clouds_thickness, background_sky_clouds_thickness * add + val, 1)
+		history_set_var(action_background_sky_clouds_thickness, background_sky_clouds_thickness, background_sky_clouds_thickness * add + val, true)
 	
 	background_sky_clouds_thickness = background_sky_clouds_thickness * add + val
 	background_sky_update_clouds()
