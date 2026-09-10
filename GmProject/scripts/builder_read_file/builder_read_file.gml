@@ -65,6 +65,7 @@ function builder_read_schematic(map)
 			sch_palette_waterlogged[i] = false
 		}
 		
+		var palettemax = 0;
 		var key = ds_map_find_first(palettemap);
 		while (!is_undefined(key))
 		{
@@ -73,6 +74,9 @@ function builder_read_schematic(map)
 				var index, bracketindex;
 				index = palettemap[?key]
 				bracketindex = string_pos("[", key)
+				
+				if (index + 1 > palettemax)
+					palettemax = index + 1
 					
 				// Has properties
 				if (bracketindex > 0)
@@ -130,6 +134,59 @@ function builder_read_schematic(map)
 		
 		sch_blockdata_ints = (map[?"BlockData_NBT_type"] = e_nbt.TAG_INT_ARRAY)
 		debug("blockdataints", sch_blockdata_ints)
+		
+		// BlockData is an array of varints (Sponge Schematic specification). An index below 128
+		// encodes as a single byte and can be read from the file buffer directly, anything above
+		// spans several bytes. The block loop needs random access into the array, so decode the
+		// indices once into big endian integers appended to the file buffer.
+		if (!sch_blockdata_ints && palettemax > 128)
+		{
+			var blockamount, basepos, readpos, endpos, writepos;
+			blockamount = build_size_x * build_size_y * build_size_z
+			basepos = buffer_get_size(buffer_current)
+			readpos = sch_blockdata_array
+			endpos = sch_blockdata_array + map[?"BlockData_NBT_length"]
+			writepos = basepos
+			
+			// Missing entries are left at zero, so a truncated array still loads
+			buffer_resize(buffer_current, basepos + blockamount * 4)
+			
+			for (var i = 0; i < blockamount; i++)
+			{
+				var value, mul, byte;
+				value = 0
+				mul = 1
+				byte = 128
+				
+				while (byte >= 128)
+				{
+					if (readpos >= endpos)
+					{
+						log("Schematic warning", "BlockData ends before the last block")
+						break
+					}
+					
+					byte = buffer_peek(buffer_current, readpos, buffer_u8)
+					readpos++
+					value += (byte mod 128) * mul
+					mul *= 128
+				}
+				
+				if (readpos >= endpos && byte >= 128)
+					break
+				
+				// Store as a big endian integer, matching the TAG_Int_Array layout
+				buffer_poke(buffer_current, writepos, buffer_u8, (value div 16777216) mod 256)
+				buffer_poke(buffer_current, writepos + 1, buffer_u8, (value div 65536) mod 256)
+				buffer_poke(buffer_current, writepos + 2, buffer_u8, (value div 256) mod 256)
+				buffer_poke(buffer_current, writepos + 3, buffer_u8, value mod 256)
+				writepos += 4
+			}
+			
+			log("Decoded varint BlockData", blockamount)
+			sch_blockdata_array = basepos
+			sch_blockdata_ints = true
+		}
 		
 		// Get map
 		var metadata = map[?"Metadata"]
