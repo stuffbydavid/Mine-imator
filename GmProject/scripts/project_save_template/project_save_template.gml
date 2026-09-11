@@ -8,7 +8,7 @@ function project_save_template()
 		json_save_var("type", temp_type_name_list[|type])
 		json_save_var("name", json_string_encode(name))
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
 		{
 			json_save_var_save_id("model_tex", model_tex)
 			json_save_var_save_id("model_tex_material", model_tex_material)

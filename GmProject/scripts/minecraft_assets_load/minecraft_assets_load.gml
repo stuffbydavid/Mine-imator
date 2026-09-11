@@ -410,24 +410,24 @@ function minecraft_assets_load()
 				}
 				debug_timer_stop("Load special blocks")
 
-				// Armor
-				var armorlist = load_assets_map[?"armor"];
-				if (ds_list_valid(armorlist))
+				// Equipment
+				var equiplist = load_assets_map[?"equipment"];
+				if (ds_list_valid(equiplist))
 				{
 					debug_timer_start()
-					for (var i = 0; i < ds_list_size(armorlist); i++)
+					for (var i = 0; i < ds_list_size(equiplist); i++)
 					{
-						var model = model_load(armorlist[|i], load_assets_dir + mc_special_block_directory);
+						var model = model_load(equiplist[|i], load_assets_dir + mc_special_block_directory);
 						if (!model) // Something went wrong!
 						{
-							log("Could not load armor model")
+							log("Could not load model")
 							continue
 						}
 
 						model_name_map[?model.name] = model
-						ds_list_add(armor_list, model)
+						ds_list_add(equipment_list, model)
 					}
-					debug_timer_stop("Load armor")
+					debug_timer_stop("Load equipment")
 				}
 				
 				debug_timer_start()

@@ -19,7 +19,7 @@ function project_load_template(map)
 		type = ds_list_find_index(temp_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
 		{
 			if (load_format = e_project.FORMAT_110_PRE_1)
 				model_tex = value_get_save_id(map[?"skin"], model_tex)
@@ -70,11 +70,11 @@ function project_load_template(map)
 				model_version = value_get_real(modelmap[?"model_version"], 0)
 				project_load_template_update_model()
 
-				// Armor was formerly saved as a special block
+				// Equipment was formerly saved as a special block
 				if (type = e_temp_type.SPECIAL_BLOCK &&
 					!is_undefined(mc_assets.model_name_map[?model_name]) &&
-					ds_list_find_index(mc_assets.armor_list, mc_assets.model_name_map[?model_name]) >= 0)
-					type = e_temp_type.ARMOR
+					ds_list_find_index(mc_assets.equipment_list, mc_assets.model_name_map[?model_name]) >= 0)
+					type = e_temp_type.EQUIPMENT
 				
 				if (type = e_temp_type.MODEL_PART)
 					model_part_name = value_get_string(modelmap[?"part_name"], model_part_name)

@@ -5,7 +5,7 @@ function render_world_tl()
 {
 	// No 3D representation?
 	if (type = e_tl_type.CHARACTER ||
-		type = e_tl_type.ARMOR ||
+		type = e_tl_type.EQUIPMENT ||
 		type = e_tl_type.SPECIAL_BLOCK ||
 		type = e_tl_type.FOLDER ||
 		type = e_tl_type.BACKGROUND ||

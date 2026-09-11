@@ -15,7 +15,7 @@ function tab_template_editor()
 	switch (temp_edit.type)
 	{
 		case e_temp_type.CHARACTER:
-		case e_temp_type.ARMOR:
+		case e_temp_type.EQUIPMENT:
 		case e_temp_type.SPECIAL_BLOCK:
 		case e_temp_type.MODEL_PART:
 		{
@@ -26,10 +26,10 @@ function tab_template_editor()
 				list = tab.char_list
 				capwid = 0
 			}
-			else if (temp_edit.type = e_temp_type.ARMOR)
+			else if (temp_edit.type = e_temp_type.EQUIPMENT)
 			{
-				labeltext = text_get("templateeditorarmor")
-				list = tab.armor_list
+				labeltext = text_get("templateeditorequipment")
+				list = tab.equipment_list
 				capwid = 0
 			}
 			else if (temp_edit.type = e_temp_type.SPECIAL_BLOCK)

@@ -25,7 +25,7 @@ function project_load_legacy_template()
 		legacy_model_part_id = buffer_read_int()
 		
 		// Find new model name and state
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.ARMOR || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
 		{
 			var modelmap = legacy_model_name_map[?legacy_model_name];
 			if (ds_map_valid(modelmap))
@@ -39,11 +39,11 @@ function project_load_legacy_template()
 				model_version = 0
 				project_load_template_update_model()
 
-				// Armor was formerly saved as a special block
+				// Equipment was formerly saved as a special block
 				if (type = e_temp_type.SPECIAL_BLOCK &&
 					!is_undefined(mc_assets.model_name_map[?model_name]) &&
-					ds_list_find_index(mc_assets.armor_list, mc_assets.model_name_map[?model_name]) >= 0)
-					type = e_temp_type.ARMOR
+					ds_list_find_index(mc_assets.equipment_list, mc_assets.model_name_map[?model_name]) >= 0)
+					type = e_temp_type.EQUIPMENT
 			}
 			else
 				log("Could not convert model ", legacy_model_name)

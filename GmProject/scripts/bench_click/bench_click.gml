@@ -33,13 +33,13 @@ function bench_click(type)
 			temp_update_model_shape()
 		}
 		
-		// Switch to special block or armor
-		if (id.type = e_tl_type.SPECIAL_BLOCK || id.type = e_tl_type.ARMOR)
+		// Switch to special block or equipment
+		if (id.type = e_tl_type.SPECIAL_BLOCK || id.type = e_tl_type.EQUIPMENT)
 		{
-			var list = id.type = e_tl_type.ARMOR ? armor_list : special_block_list
+			var list = id.type = e_tl_type.EQUIPMENT ? equipment_list : special_block_list
 			if (ds_list_find_index(list.list, model_name) < 0)
 			{
-				model_name = id.type = e_tl_type.ARMOR ? list.list[|0] : default_special_block
+				model_name = id.type = e_tl_type.EQUIPMENT ? list.list[|0] : default_special_block
 				model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 			}
 			

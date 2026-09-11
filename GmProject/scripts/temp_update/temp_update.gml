@@ -4,7 +4,7 @@
 function temp_update(copy = false)
 {
 	if (type = e_temp_type.CHARACTER ||
-		type = e_temp_type.ARMOR ||
+		type = e_temp_type.EQUIPMENT ||
 		type = e_temp_type.SPECIAL_BLOCK ||
 		type = e_temp_type.MODEL_PART ||
 		type = e_temp_type.MODEL)

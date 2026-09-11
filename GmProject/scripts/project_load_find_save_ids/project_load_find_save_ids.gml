@@ -167,9 +167,9 @@ function project_load_find_save_ids(isproject = false)
 		
 		temp = save_id_find(save_id_map[?temp])
 
-		// Armor was formerly saved as a special block
-		if (type = e_tl_type.SPECIAL_BLOCK && temp != null && temp.type = e_temp_type.ARMOR)
-			type = e_tl_type.ARMOR
+		// Equipment was formerly saved as a special block
+		if (type = e_tl_type.SPECIAL_BLOCK && temp != null && temp.type = e_temp_type.EQUIPMENT)
+			type = e_tl_type.EQUIPMENT
 		
 		// Model part
 		part_of = save_id_find(save_id_map[?part_of])

@@ -24,7 +24,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		curtl = app.project_timeline_list[|i]
 		
 		// Update children
-		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.ARMOR || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
+		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.EQUIPMENT || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
 			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
 				if (curtl.tree_list[|t].inherit_pose)
 					array_add(app.project_inherit_pose_array, curtl.tree_list[|t])

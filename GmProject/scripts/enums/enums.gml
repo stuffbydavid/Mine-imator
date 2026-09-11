@@ -344,7 +344,7 @@ function enums()
 	enum e_temp_type
 	{
 		CHARACTER,
-		ARMOR,
+		EQUIPMENT,
 		SPECIAL_BLOCK,
 		SCENERY,
 		ITEM,
@@ -364,7 +364,7 @@ function enums()
 	enum e_tl_type
 	{
 		CHARACTER,
-		ARMOR,
+		EQUIPMENT,
 		SPECIAL_BLOCK,
 		SCENERY,
 		ITEM,

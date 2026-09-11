@@ -94,7 +94,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		switch (bench_settings.type)
 		{
 			case e_temp_type.CHARACTER:
-			case e_temp_type.ARMOR:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.MODEL_PART:
 			{
@@ -109,13 +109,13 @@ function bench_draw_settings(bx, by, bw, bh)
 					capwid = text_caption_width(texcap, texmatcap, texnormcap)
 					part = bench_settings.model_file
 				}
-				else if (bench_settings.type = e_temp_type.ARMOR)
+				else if (bench_settings.type = e_temp_type.EQUIPMENT)
 				{
-					labeltext = text_get("bencharmor")
-					list = bench_settings.armor_list
-					texcap = "bencharmortex"
-					texmatcap = "bencharmortexmaterial"
-					texnormcap = "bencharmortexnormal"
+					labeltext = text_get("benchequipment")
+					list = bench_settings.equipment_list
+					texcap = "benchequipmenttex"
+					texmatcap = "benchequipmenttexmaterial"
+					texnormcap = "benchequipmenttexnormal"
 					capwid = text_caption_width(texcap, texmatcap, texnormcap)
 					part = bench_settings.model_file
 				}
@@ -205,7 +205,8 @@ function bench_draw_settings(bx, by, bw, bh)
 						var variant = state_vars_get_value(bench_settings.model_state, "helmet")
 						if (state_vars_get_value(bench_settings.model_state, "chestplate") != variant ||
 							state_vars_get_value(bench_settings.model_state, "leggings") != variant ||
-							state_vars_get_value(bench_settings.model_state, "boots") != variant)
+							state_vars_get_value(bench_settings.model_state, "boots") != variant
+						)
 							variant = "multiple"
 						menu_model_current = null
 						menu_model_state_current = model.states_map[?"helmet"]
@@ -545,7 +546,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_temp_type.PARTICLE_SPAWNER:
 			{
 				// Particles
-				tab_control_sortlist(9)
+				tab_control_sortlist(8)
 				sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
 				tab_next()
 				

@@ -44,8 +44,8 @@ function sortlist_update(slist)
 	
 	// Remove non-matched items from list
 	var check = string_lower(slist.search_tbx.text);
-	var modellist = (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.armor_list || slist = bench_settings.model_part_model_list ||
-					slist = template_editor.char_list || slist = template_editor.armor_list || slist = template_editor.special_block_list || slist = template_editor.model_part_model_list);
+	var modellist = (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.equipment_list || slist = bench_settings.model_part_model_list ||
+					slist = template_editor.char_list || slist = template_editor.equipment_list || slist = template_editor.special_block_list || slist = template_editor.model_part_model_list);
 	var blocklist = (slist = bench_settings.block_list || slist = template_editor.block_list);
 	if (slist.search && check != "" && !blocklist && !modellist)
 	{

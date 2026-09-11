@@ -16,7 +16,7 @@ function tl_update_display_name()
 				else
 					display_name = text_get("timelineunusedmodelpart")
 			}
-			else if (type = e_tl_type.ARMOR || type = e_tl_type.SPECIAL_BLOCK)
+			else if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				if (model_file != null)
 					display_name = minecraft_asset_get_name("model", model_file.name)

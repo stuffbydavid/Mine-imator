@@ -261,7 +261,7 @@ function app_startup_lists()
 	temp_type_name_list = ds_list_create()
 	ds_list_add(temp_type_name_list,
 		"char",
-		"armor",
+		"equipment",
 		"spblock",
 		"scenery",
 		"item",
@@ -281,7 +281,7 @@ function app_startup_lists()
 	tl_type_name_list = ds_list_create()
 	ds_list_add(tl_type_name_list,
 		"char",
-		"armor",
+		"equipment",
 		"spblock",
 		"scenery",
 		"item",
@@ -467,7 +467,7 @@ function app_startup_lists()
 	// List of icons in sync with e_tl_type
 	/*
 		CHARACTER,
-		ARMOR,
+		EQUIPMENT,
 		SPECIAL_BLOCK,
 		SCENERY,
 		ITEM,
@@ -492,7 +492,7 @@ function app_startup_lists()
 	timeline_icon_list = ds_list_create()
 	ds_list_add(timeline_icon_list,
 		icons.CHARACTER,
-		icons.CHARACTER_PARTS,
+		icons.SHIELD,
 		icons.BLOCK_SPECIAL,
 		icons.SCENERY,
 		icons.ITEM,
@@ -519,7 +519,7 @@ function app_startup_lists()
 	timeline_icon_list_dark = ds_list_create()
 	ds_list_add(timeline_icon_list_dark,
 		icons.CHARACTER,
-		icons.CHARACTER_PARTS,
+		icons.SHIELD,
 		icons.BLOCK_SPECIAL,
 		icons.SCENERY,
 		icons.ITEM,

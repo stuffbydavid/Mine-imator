@@ -84,7 +84,7 @@ function action_bench_create(edit = false)
 						model = null
 					}
 					
-					if (type != e_temp_type.CHARACTER && type != e_temp_type.ARMOR && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
+					if (type != e_temp_type.CHARACTER && type != e_temp_type.EQUIPMENT && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
 					{
 						if (model_tex != null)
 							model_tex.count--
@@ -276,7 +276,7 @@ function action_bench_create(edit = false)
 			log("Created", tl_type_name_list[|bench_settings.type])
 
 			// Encourage parenting armor to a character
-			if (!setting_advanced_mode && bench_settings.type = e_temp_type.ARMOR)
+			if (!setting_advanced_mode && bench_settings.type = e_temp_type.EQUIPMENT)
 			{
 				toast_new(e_toast.INFO, text_get("alertequiparmor"))
 				toast_last.dismiss_time = 15

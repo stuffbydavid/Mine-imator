@@ -8,7 +8,7 @@ function minecraft_assets_event_create()
 	
 	char_list = ds_list_create()
 	special_block_list = ds_list_create()
-	armor_list = ds_list_create()
+	equipment_list = ds_list_create()
 	
 	block_list = ds_list_create()
 	block_name_map = ds_map_create()

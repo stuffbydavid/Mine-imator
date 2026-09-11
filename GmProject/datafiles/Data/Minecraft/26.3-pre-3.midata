@@ -1083,7 +1083,7 @@
 			"file": "ender_dragon.mimodel"
 		}
 	],
-	"armor": [
+	"equipment": [
 		{
 			"name": "armor",
 			"file": "armor.mimodel",
