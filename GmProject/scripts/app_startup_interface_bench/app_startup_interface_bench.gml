@@ -22,8 +22,8 @@ function app_startup_interface_bench()
 	list_edit.show_ticks = false
 	
 	list_item_add("typechar", e_tl_type.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
-	list_item_add("typeequipment", e_tl_type.EQUIPMENT, "", null, icons.SHIELD, null, bench_click)
-	list_item_last.disabled = ds_list_size(mc_assets.equipment_list) = 0
+	if (ds_list_size(mc_assets.equipment_list) > 0)
+		list_item_add("typeequipment", e_tl_type.EQUIPMENT, "", null, icons.SHIELD, null, bench_click)
 	list_item_add("typemodel", e_tl_type.MODEL, "", null, icons.MODEL, null, bench_click)
 	list_item_add("typemodelpart", e_tl_type.MODEL_PART, "", null, icons.PART, null, bench_click)
 	

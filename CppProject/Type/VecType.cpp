@@ -4,10 +4,12 @@
 #include "Render/Matrix.hpp"
 
 #include <QtMath>
+#include <mutex>
 
 namespace CppProject
 {
 	FastVector<VecType*> VecType::refList;
+	std::mutex vecRefListMutex;
 
 	VecType::~VecType()
 	{
@@ -169,6 +171,7 @@ namespace CppProject
 
 	void VecType::CreateRef()
 	{
+		std::lock_guard<std::mutex> lock(vecRefListMutex);
 		if (ref)
 			return;
 
@@ -183,18 +186,21 @@ namespace CppProject
 
 	void VecType::FreeData()
 	{
+		std::lock_guard<std::mutex> lock(vecRefListMutex);
 		if (!ref)
 			return;
 
 		deleteArrayAndReset(ref);
-		refList.Remove(refHeapIndex);
+		if (refHeapIndex >= 0 && refHeapIndex < refList.Size() && refList[refHeapIndex] == this)
+			refList.Remove(refHeapIndex);
 	}
 
 	void VecType::CleanHeapData()
 	{
+		std::lock_guard<std::mutex> lock(vecRefListMutex);
 		for (IntType i = 0; i < refList.Size(); i++)
 			if (VecType* hVec = refList[i])
-				hVec->FreeData();
+				deleteArrayAndReset(hVec->ref);
 		
 		refList.Clear();
 	}

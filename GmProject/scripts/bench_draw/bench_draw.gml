@@ -43,7 +43,7 @@ function bench_draw()
 	ani = ease(func, bench_show_ani)
 	content_x = bench_settings.posx - (8 - (8 * ani))
 	content_y = bench_settings.posy
-	content_width = 526
+	content_width = 534
 	content_height = bench_settings.height
 	content_mouseon = !popup_mouseon
 	
@@ -95,7 +95,7 @@ function bench_draw()
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (i = 3 || i = 7 || i = 10)
+		if (bench_type_list.item[|i].name = "typemodelpart" || bench_type_list.item[|i].name = "typespblock" || bench_type_list.item[|i].name = "typepath")
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9

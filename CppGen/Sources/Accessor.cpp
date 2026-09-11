@@ -889,6 +889,12 @@ String Accessor::toCpp(ResolveScope* scope)
 		// Apply every accessor independently
 		for (ArrayAccessor* acc : this->arrayAccessors)
 		{
+			if (acc->type == DataType::Type::Array)
+			{
+				cpp += "[" + acc->expr->toCpp(scope) + "]";
+				continue;
+			}
+
 			if (acc->type == DataType::Type::List)
 				cpp = "DsList(" + cpp + ")";
 			else if (acc->type == DataType::Type::AnyMap)

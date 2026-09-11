@@ -34,21 +34,21 @@ function bench_draw_settings(bx, by, bw, bh)
 		{
 			case e_tl_type.PATH:
 				draw_sprite(spr_bench_example, 3, dx, dy)
-				dy += 144 + 8
+				dy += 144 + 16
 			
 				draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
 				break
 				
 			case e_tl_type.CAMERA:
 				draw_sprite(spr_bench_example, 5, dx, dy)
-				dy += 144 + 8
+				dy += 144 + 16
 			
 				draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
 				break
 				
 			case e_tl_type.LIGHT_SOURCE: // Light type
 				draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
-				dy += 144 + 8
+				dy += 144 + 16
 			
 				tab_control_togglebutton()
 				togglebutton_add("typepointlight", null, e_tl_type.POINT_LIGHT, bench_settings.light_type = e_tl_type.POINT_LIGHT, action_bench_light_type)
@@ -64,14 +64,14 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 			case e_tl_type.AUDIO:
 				draw_sprite(spr_bench_example, 2, dx, dy)
-				dy += 144 + 8
+				dy += 144 + 16
 			
 				draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
 				break
 			
 			case e_tl_type.BACKGROUND:
 				draw_sprite(spr_bench_example, 4, dx, dy)
-				dy += 144 + 8
+				dy += 144 + 16
 			
 				draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
 				break
