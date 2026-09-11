@@ -34,6 +34,10 @@ function sortlist_column_get(slist, value, col)
 		case "blockfilter":
 			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
 		
+		case "sceneryname":
+			return is_string(value) ? value : value.display_name
+		case "shapename":
+			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
 		case "particleeditortypename":
 			if (dev_mode_debug_saveid)
 				return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"

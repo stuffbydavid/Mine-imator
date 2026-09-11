@@ -107,5 +107,9 @@ function bench_click(type)
 	}
 	
 	bench_clear()
+	
+	if (type = e_tl_type.SCENERY)
+		action_bench_scenery_folder(bench_scenery_folder)
+		
 	bench_settings_ani = 0
 }

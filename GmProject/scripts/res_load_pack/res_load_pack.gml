@@ -120,6 +120,10 @@ function res_load_pack()
 				if (background_sky_clouds_tex = other.id)
 					background_sky_update_clouds()
 				
+				lib_preview.update = true
+				res_preview.update = true
+				bench_settings.preview.update = true
+
 				load_next()
 			}
 			

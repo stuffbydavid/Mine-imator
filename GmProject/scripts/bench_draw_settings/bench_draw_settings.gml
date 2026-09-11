@@ -32,6 +32,20 @@ function bench_draw_settings(bx, by, bw, bh)
 	{
 		switch (bench_settings.type)
 		{
+			case e_tl_type.PATH:
+				draw_sprite(spr_bench_example, 3, dx, dy)
+				dy += 144 + 8
+			
+				draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
+				break
+				
+			case e_tl_type.CAMERA:
+				draw_sprite(spr_bench_example, 5, dx, dy)
+				dy += 144 + 8
+			
+				draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
+				break
+				
 			case e_tl_type.LIGHT_SOURCE: // Light type
 				draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
 				dy += 144 + 8
@@ -48,11 +62,11 @@ function bench_draw_settings(bx, by, bw, bh)
 					draw_tooltip_label("benchspotlighttip", icons.LIGHT_SPOT, e_toast.INFO)
 				break
 			
-			case e_tl_type.CAMERA:
-				draw_sprite(spr_bench_example, 5, dx, dy)
+			case e_tl_type.AUDIO:
+				draw_sprite(spr_bench_example, 2, dx, dy)
 				dy += 144 + 8
 			
-				draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
+				draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
 				break
 			
 			case e_tl_type.BACKGROUND:
@@ -61,25 +75,6 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 				draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
 				break
-			
-			case e_tl_type.AUDIO:
-				draw_sprite(spr_bench_example, 2, dx, dy)
-				dy += 144 + 8
-			
-				draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
-				break
-			
-			case e_tl_type.PATH:
-				draw_sprite(spr_bench_example, 3, dx, dy)
-				dy += 144 + 8
-			
-				draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
-				break
-			/*
-			case e_tl_type.PATH_POINT:
-				draw_tooltip_label("benchpathpointtip", icons.INFO, e_toast.INFO)
-				break
-			*/
 		}
 	}
 	else
@@ -308,33 +303,84 @@ function bench_draw_settings(bx, by, bw, bh)
 				break
 			}
 			
-			case e_temp_type.SCENERY:
+			case e_temp_type.MODEL:
 			{
-				var capwid, text, tex;
-				capwid = text_caption_width("benchscenery", "benchblocktex", "benchblocktexmaterial", "benchblocktexnormal")
+				var capwid = text_caption_width("benchmodel", "benchmodeltex", "benchmodeltexmaterial", "benchmodeltexnormal");
 				
-				// Scenery
-				text = text_get("listnone")
-				if (bench_settings.scenery != null)
-					text = bench_settings.scenery.display_name
+				// Model
+				var text;
+				if (bench_settings.model != null)
+					text = bench_settings.model.display_name
+				else
+					text = text_get("listnone")
 				
-				draw_button_menu("benchscenery", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.scenery, text, action_bench_scenery, false, null, null, "", null, null, capwid)
+				draw_button_menu("benchmodel", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model, text, action_bench_model, false, null, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 				
 				// Texture
-				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
+				var texobj, tex;
+				with (bench_settings)
+				{
+					if (model_file != null && !instance_exists(model_file))
+						model_file = null
+					
+					texobj = temp_get_model_texobj(null)
+					tex = temp_get_model_tex_preview(texobj, model_file)
+				}
+				
+				if (texobj != null)
+					text = texobj.display_name
+				else
+					text = text_get("listnone")
+				
+				// Default
+				if (bench_settings.model_tex = null)
+					text = text_get("listdefault", text)
+				
+				draw_button_menu("benchmodeltex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex, text, action_bench_model_tex, false, tex, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 				
 				if (project_render_material_maps)
 				{
-					// Material texture
-					draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
+					// Texture (Material map)
+					with (bench_settings)
+					{
+						texobj = temp_get_model_tex_material_obj(null)
+						tex = temp_get_model_tex_material_preview(texobj, model_file)
+					}
+					
+					if (texobj != null)
+						text = texobj.display_name
+					else
+						text = text_get("listnone")
+					
+					// Default
+					if (bench_settings.model_tex_material = null)
+						text = text_get("listdefault", text)
+					
+					draw_button_menu("benchmodeltexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_material, text, action_bench_model_tex_material, false, tex, null, "", null, null, capwid)
 					dy += (ui_large_height + 8)
 					
-					// Normal texture
-					draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
+					// Texture (Normal map)
+					with (bench_settings)
+					{
+						texobj = temp_get_model_tex_normal_obj(null)
+						tex = temp_get_model_tex_normal_preview(texobj, model_file)
+					}
+					
+					if (texobj != null)
+						text = texobj.display_name
+					else
+						text = text_get("listnone")
+					
+					// Default
+					if (bench_settings.model_tex_normal = null)
+						text = text_get("listdefault", text)
+					
+					draw_button_menu("benchmodeltexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
 					dy += (ui_large_height + 8)
 				}
+				
 				break
 			}
 			
@@ -453,6 +499,87 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 				break
 			}
+
+			case e_temp_type.SCENERY:
+			{
+				// Scenery
+				tab_control_sortlist(6)
+				sortlist_draw(bench_settings.scenery_list, dx, dy, dw, tab_control_h, bench_settings.scenery_selected, false, text_get("benchscenery"))
+				tab_next()
+				dy -= 4
+				
+				// Scenery folder
+				tab_control_togglebutton(2, 3)
+				for (var i = 0; i < array_length(scenery_folders); i++)
+				{
+					var sceneryfolder = scenery_folders[i];
+					togglebutton_add("benchscenery" + string_replace_all(string_lower(sceneryfolder), " ", "_"), null, sceneryfolder, bench_scenery_folder = sceneryfolder, action_bench_scenery_folder)
+				}
+				togglebutton_add("benchsceneryproject", null, "project", bench_scenery_folder = "project", action_bench_scenery_folder)
+				draw_togglebutton("benchscenery", dx, dy, true, false)
+				dy += ui_large_height * 2 + 6
+				
+				// Import scenery
+				tab_control(24)
+				if (draw_button_icon("benchsceneryimport", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltipsceneryimport"))
+					action_bench_scenery_import()
+					
+				// Export scenery
+				var sceneryselected, exportdisabled;
+				sceneryselected = bench_settings.scenery_selected
+				exportdisabled = (sceneryselected = null)
+				if (!exportdisabled && !is_string(sceneryselected))
+					exportdisabled = (sceneryselected.type = e_res_type.FROM_WORLD)
+				if (draw_button_icon("benchsceneryexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, exportdisabled, "tooltipsceneryexport"))
+					action_bench_scenery_export()
+					
+				// Open folder
+				if (draw_button_icon("benchsceneryopenfolder", dx + 56, dy, 24, 24, false, icons.FOLDER, null, false, "tooltipsceneryopenfolder"))
+					action_bench_scenery_open_folder()
+					
+				// Reload folder
+				if (draw_button_icon("benchsceneryreload", dx + 84, dy, 24, 24, false, icons.REFRESH, null, false, "tooltipsceneryreloadfolder"))
+					action_bench_scenery_folder(bench_scenery_folder)
+				tab_next()
+				
+				// Texture
+				var capwid = text_caption_width("benchblocktex", "benchblocktexmaterial", "benchblocktexnormal")
+				draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
+				dy += (ui_large_height + 8)
+				
+				if (project_render_material_maps)
+				{
+					// Material texture
+					draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
+					dy += (ui_large_height + 8)
+					
+					// Normal texture
+					draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
+					dy += (ui_large_height + 8)
+				}
+				
+				// Create
+				tab_control_button_label()
+				if (draw_button_label("benchcreate", dx, dy, dw, icons.ASSET_ADD, e_button.PRIMARY, null, e_anchor.LEFT, bench_settings.scenery = null || !bench_settings.scenery.ready))
+				{
+					action_bench_create()
+					bench_show_ani_type = "hide"
+				}
+				tab_next()
+				dy += 16
+				
+				// Import from world
+				tab_control(52)
+				if (draw_button_label("benchsceneryimportfromworld", dx + dw / 2, dy, 200, icons.SCENERY, e_button.MEDIUM, null, e_anchor.CENTER))
+					action_bench_scenery(e_option.IMPORT_WORLD)
+				tab_next()
+				
+				if (content_mouseon)
+					window_scroll_focus = string(bench_settings.scenery_list.scroll)
+					
+				draw_set_alpha(prevalpha)
+				return 0
+			}
 			
 			case e_temp_type.BLOCK:
 			{
@@ -543,60 +670,13 @@ function bench_draw_settings(bx, by, bw, bh)
 				break
 			}
 			
-			case e_temp_type.PARTICLE_SPAWNER:
-			{
-				// Particles
-				tab_control_sortlist(8)
-				sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
-				tab_next()
-				
-				window_scroll_focus = string(bench_settings.particles_list.scroll)
-				break
-			}
-			
-			case e_temp_type.TEXT:
-			{
-				var capwid;
-				capwid = text_caption_width("benchtextfont")
-				
-				// Font (Advanced mode only)
-				if (setting_advanced_mode)
-				{
-					draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
-					dy += (ui_large_height + 8)
-				}
-				
-				// 3D / Face camera
-				var sx;
-				sx = dx_start
-				
-				dx_start = dx
-				
-				tab_set_collumns(true, 2)
-				
-				tab_control_checkbox()
-				draw_checkbox("benchtext3d", dx, dy, bench_settings.text_3d, action_bench_text_3d)
-				tab_next()
-				
-				tab_control_checkbox()
-				draw_checkbox("benchtextfacecamera", dx, dy, bench_settings.text_face_camera, action_bench_text_face_camera)
-				tab_next()
-				
-				tab_set_collumns(false)
-				dx_start = sx
-				
-				break
-			}
-			
 			case e_tl_type.SHAPE: // Shapes
 			{
 				var capwid, text;
-				capwid = text_caption_width("benchshapetype", "benchshapetex", "benchshapetexmaterial", "benchshapetexnormal")
-				
-				// Shape
-				text = text_get("type" + tl_type_name_list[|e_tl_type.CUBE + bench_settings.shape_type])
-				draw_button_menu("benchshapetype", e_menu.LIST, dx, dy, dw, 24, bench_settings.shape_type, text, action_bench_shape_type, false, null, null, "", null, null, capwid)
-				dy += 32
+				capwid = text_caption_width("benchshapetex", "benchshapetexmaterial", "benchshapetexnormal")
+				tab_control_sortlist(e_shape_type.amount)
+				sortlist_draw(bench_settings.shape_list, dx, dy, dw, tab_control_h, bench_settings.shape_type, false, text_get("benchshapetype"))
+				tab_next()
 				
 				// Texture
 				var tex;
@@ -659,84 +739,48 @@ function bench_draw_settings(bx, by, bw, bh)
 				break
 			}
 			
-			case e_temp_type.MODEL:
+			case e_temp_type.TEXT:
 			{
-				var capwid = text_caption_width("benchmodel", "benchmodeltex", "benchmodeltexmaterial", "benchmodeltexnormal");
+				var capwid;
+				capwid = text_caption_width("benchtextfont")
 				
-				// Model
-				var text;
-				if (bench_settings.model != null)
-					text = bench_settings.model.display_name
-				else
-					text = text_get("listnone")
-				
-				draw_button_menu("benchmodel", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model, text, action_bench_model, false, null, null, "", null, null, capwid)
-				dy += (ui_large_height + 8)
-				
-				// Texture
-				var texobj, tex;
-				with (bench_settings)
+				// Font (Advanced mode only)
+				if (setting_advanced_mode)
 				{
-					if (model_file != null && !instance_exists(model_file))
-						model_file = null
-					
-					texobj = temp_get_model_texobj(null)
-					tex = temp_get_model_tex_preview(texobj, model_file)
-				}
-				
-				if (texobj != null)
-					text = texobj.display_name
-				else
-					text = text_get("listnone")
-				
-				// Default
-				if (bench_settings.model_tex = null)
-					text = text_get("listdefault", text)
-				
-				draw_button_menu("benchmodeltex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex, text, action_bench_model_tex, false, tex, null, "", null, null, capwid)
-				dy += (ui_large_height + 8)
-				
-				if (project_render_material_maps)
-				{
-					// Texture (Material map)
-					with (bench_settings)
-					{
-						texobj = temp_get_model_tex_material_obj(null)
-						tex = temp_get_model_tex_material_preview(texobj, model_file)
-					}
-					
-					if (texobj != null)
-						text = texobj.display_name
-					else
-						text = text_get("listnone")
-					
-					// Default
-					if (bench_settings.model_tex_material = null)
-						text = text_get("listdefault", text)
-					
-					draw_button_menu("benchmodeltexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_material, text, action_bench_model_tex_material, false, tex, null, "", null, null, capwid)
-					dy += (ui_large_height + 8)
-					
-					// Texture (Normal map)
-					with (bench_settings)
-					{
-						texobj = temp_get_model_tex_normal_obj(null)
-						tex = temp_get_model_tex_normal_preview(texobj, model_file)
-					}
-					
-					if (texobj != null)
-						text = texobj.display_name
-					else
-						text = text_get("listnone")
-					
-					// Default
-					if (bench_settings.model_tex_normal = null)
-						text = text_get("listdefault", text)
-					
-					draw_button_menu("benchmodeltexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
+					draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
 					dy += (ui_large_height + 8)
 				}
 				
+				// 3D / Face camera
+				var sx;
+				sx = dx_start
+				
+				dx_start = dx
+				
+				tab_set_collumns(true, 2)
+				
+				tab_control_checkbox()
+				draw_checkbox("benchtext3d", dx, dy, bench_settings.text_3d, action_bench_text_3d)
+				tab_next()
+				
+				tab_control_checkbox()
+				draw_checkbox("benchtextfacecamera", dx, dy, bench_settings.text_face_camera, action_bench_text_face_camera)
+				tab_next()
+				
+				tab_set_collumns(false)
+				dx_start = sx
+				
+				break
+			}
+			
+			case e_temp_type.PARTICLE_SPAWNER:
+			{
+				// Particles
+				tab_control_sortlist(8)
+				sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
+				tab_next()
+				
+				window_scroll_focus = string(bench_settings.particles_list.scroll)
 				break
 			}
 		}

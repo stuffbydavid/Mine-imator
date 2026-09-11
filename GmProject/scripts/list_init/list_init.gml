@@ -44,6 +44,9 @@ function list_init(name)
 		case "benchskin":
 		case "benchskinmaterial":
 		case "benchskinnormal":
+		case "benchequipmenttex":
+		case "benchequipmenttexmaterial":
+		case "benchequipmenttexnormal":
 		case "benchspblocktex":
 		case "benchspblocktexmaterial":
 		case "benchspblocktexnormal":
@@ -53,6 +56,9 @@ function list_init(name)
 		case "libraryskin":
 		case "libraryskinmaterial":
 		case "libraryskinnormal":
+		case "libraryarmortex":
+		case "libraryarmortexmaterial":
+		case "libraryarmortexnormal":
 		case "libraryspblocktex":
 		case "libraryspblocktexmaterial":
 		case "libraryspblocktexnormal":

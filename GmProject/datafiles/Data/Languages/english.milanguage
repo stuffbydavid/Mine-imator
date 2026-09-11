@@ -57,6 +57,12 @@
 			"duplicate": "Duplicate template",
 			"remove": "Remove template"
 		},
+		"scenery/": {
+			"import": "Import scenery",
+			"export": "Export scenery",
+			"openfolder": "Open scenery folder",
+			"reloadfolder": "Reload scenery folder"
+		},
 		"resource/": {
 			"new": "Add resource",
 			"remove": "Remove resource",
@@ -581,6 +587,15 @@
 		"modelpartskin": "Skin",
 		"modelpartskinmaterial": "Material map",
 		"modelpartskinnormal": "Normal map",
+		"scenery/": {
+			"trees": "Trees",
+			"biomes": "Biomes",
+			"structures": "Structures",
+			"buildings": "Buildings",
+			"other": "Other",
+			"project": "Project",
+			"importfromworld": "Import from world"
+		},
 		"particlespreset": "Preset",
 		"textfont": "Font",
 		"text3d": "3D",
@@ -966,6 +981,7 @@
 		"blockname": "Name",
 		"spblockname": "Name",
 		"modelpartmodelname": "Name",
+		"sceneryname": "Name",
 		"particleeditortypename": "Name",
 		"particleeditortypekind": "Kind",
 		"particleeditortyperate": "Spawn rate",

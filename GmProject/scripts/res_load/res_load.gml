@@ -96,18 +96,28 @@ function res_load(reload = false)
 		case e_res_type.SCENERY:
 		case e_res_type.FROM_WORLD:
 		{
+			scenery_instant = false
+			if (type = e_res_type.SCENERY && file_exists_lib(fn))
+				scenery_instant = file_get_size(fn) < scenery_instant_threshold
+			
 			// Load from cached mesh
 			var cachefn = fn + ".meshcache";
 			if (!reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
 				break
 				
 			ready = false
-			
-			with (app)
+			if (scenery_instant)
 			{
-				ds_priority_add(load_queue, other.id, 1)
-				load_start(other.id, res_load_start)
+				load_stage = "open"
+				while (!ready && load_stage != "")
+					res_load_scenery()
 			}
+			else
+				with (app)
+				{
+					ds_priority_add(load_queue, other.id, 1)
+					load_start(other.id, res_load_start)
+				}
 			
 			break
 		}

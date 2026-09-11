@@ -10,4 +10,5 @@ function togglebutton_reset()
 	togglebutton_axis = null
 	togglebutton_text = null
 	togglebutton_amount = 0
+	togglebutton_columns = null
 }

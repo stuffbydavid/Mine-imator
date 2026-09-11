@@ -15,14 +15,14 @@ function action_bench_scenery(res)
 		if (res = e_option.IMPORT_WORLD)
 		{
 			world_import_begin(false)
-			return 0
+			return false
 		}
 		else if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_scenery()
 			
 			if (!file_exists_lib(fn))
-				return 0
+				return false
 			
 			res = new_res(fn, e_res_type.SCENERY)
 			if (res.replaced)
@@ -39,4 +39,6 @@ function action_bench_scenery(res)
 	
 	bench_settings.scenery = res
 	bench_settings.preview.update = true
+	
+	return true
 }

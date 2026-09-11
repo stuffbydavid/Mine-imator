@@ -334,7 +334,7 @@ namespace CppProject
 	IntType builder_get_render_model(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z)
 	{
 		IntType index = builder_get_render_model_index(self, x, y, z);
-		if (index <= 0)
+		if (index <= 0 || index >= Builder::renderModels.Size() || !Builder::renderModels[index])
 			return null_;
 
 		return Builder::renderModels[index]->id;

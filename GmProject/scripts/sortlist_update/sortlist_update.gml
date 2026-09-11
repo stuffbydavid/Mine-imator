@@ -8,14 +8,29 @@ function sortlist_update(slist)
 	
 	if (slist.column_sort != null)
 	{
-		var sortedlist, valuelist;
+		var sortedlist, valuelist, naturaldigits;
 		sortedlist = ds_list_create()
 		valuelist = ds_list_create()
 		ds_list_copy(valuelist, slist.list)
-		
-		// Store values in column and sort
+		naturaldigits = 0
+
+		// Find the longest number
 		for (var p = 0; p < ds_list_size(valuelist); p++)
-			ds_list_add(sortedlist, string_lower(sortlist_column_get(slist, valuelist[|p], slist.column_sort)))
+		{
+			var value, valuedigits;
+			value = sortlist_column_get(slist, valuelist[|p], slist.column_sort)
+			valuedigits = string_natural_digits(string_lower(string(value)))
+			naturaldigits = max(naturaldigits, valuedigits)
+		}
+		
+		// Create sortable values
+		for (var p = 0; p < ds_list_size(valuelist); p++)
+		{
+			var value, naturalvalue;
+			value = sortlist_column_get(slist, valuelist[|p], slist.column_sort)
+			naturalvalue = string_natural_value(string_lower(string(value)), naturaldigits)
+			ds_list_add(sortedlist, naturalvalue)
+		}
 		ds_list_sort(sortedlist, !slist.sort_asc)
 		
 		// Find which values belong to what items
@@ -23,9 +38,10 @@ function sortlist_update(slist)
 		{
 			for (var p = 0; p < ds_list_size(valuelist); p++)
 			{
-				var val, colval;
+				var val, value, colval;
 				val = valuelist[|p]
-				colval = string_lower(sortlist_column_get(slist, val, slist.column_sort))
+				value = sortlist_column_get(slist, val, slist.column_sort)
+				colval = string_natural_value(string_lower(string(value)), naturaldigits)
 				if (sortedlist[|0] = colval)
 				{
 					ds_list_add(slist.display_list, val)
@@ -44,9 +60,16 @@ function sortlist_update(slist)
 	
 	// Remove non-matched items from list
 	var check = string_lower(slist.search_tbx.text);
-	var modellist = (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.equipment_list || slist = bench_settings.model_part_model_list ||
-					slist = template_editor.char_list || slist = template_editor.equipment_list || slist = template_editor.special_block_list || slist = template_editor.model_part_model_list);
-	var blocklist = (slist = bench_settings.block_list || slist = template_editor.block_list);
+	var modellist, blocklist;
+	modellist = false
+	blocklist = false
+	if (slist.search && check != "")
+	{
+		modellist = (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.equipment_list ||
+					 slist = bench_settings.model_part_model_list || slist = template_editor.char_list || slist = template_editor.equipment_list ||
+					 slist = template_editor.special_block_list || slist = template_editor.model_part_model_list)
+		blocklist = (slist = bench_settings.block_list || slist = template_editor.block_list)
+	}
 	if (slist.search && check != "" && !blocklist && !modellist)
 	{
 		for (var p = 0; p < ds_list_size(slist.display_list); p++)

@@ -41,6 +41,9 @@ function world_import_startup()
 function world_import_begin(addtl = true, temp = null)
 {
 	window_state = "world_import"
+	window_busy = ""
+	window_focus = ""
+	window_scroll_focus = ""
 	popup_ani_type = ""
 	world_import_world_root = ""
 	world_import_world_name = text_get("worldimportnoworld")
@@ -180,6 +183,13 @@ function world_import_dimension_menu_init()
 /// Draw the world import interface.
 function window_draw_world_import()
 {
+	if (keyboard_check_pressed(vk_escape))
+	{
+		window_state = ""
+		world_import_cancel()
+		return
+	}
+
 	var spacing, capwid, hasselection, surfacey, surfaceh;
 	spacing = 12
 	content_x = 0
@@ -232,7 +242,10 @@ function window_draw_world_import()
 	draw_set_font(font_button)
 	dw = string_width(text_get("worldimportcancel")) + 24
 	if (draw_button_label("worldimportcancel", dx, content_y + 4, null, null, e_button.SECONDARY, null, e_anchor.LEFT))
+	{
+		window_state = ""
 		world_import_cancel()
+	}
 	
 	dx += dw
 	

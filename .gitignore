@@ -1,4 +1,4 @@
-build*/
-!building*/
+/build*/
 /install*/
+/CppGen/build*/
 /CppProject/Generated/

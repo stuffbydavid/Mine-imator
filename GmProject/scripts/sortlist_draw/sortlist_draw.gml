@@ -28,7 +28,8 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	itemh = ui_small_height
 	
 	// Columns
-	colsh = ui_small_height
+	var hidesinglecolumn = (h < 400 && slist.columns = 1);
+	colsh = !hidesinglecolumn ? (ui_small_height + 8) : 0
 	
 	// Draw filter
 	if (filter && name = "")
@@ -82,80 +83,95 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		return 0
 	
 	colmouseon = app_mouse_box(xx, yy, w, colsh) && content_mouseon
-	
-	// Dragging
-	if (window_busy = "sortlist_resize" && sortlist_resize = slist)
+	if (hidesinglecolumn)
 	{
-		slist.column_x[sortlist_resize_column] = sortlist_resize_column_x + (mouse_x - mouse_click_x) / w
-		slist.column_x[sortlist_resize_column] = clamp(0, slist.column_x[sortlist_resize_column], 0.9)
-		if (sortlist_resize_column > 0)
-			slist.column_x[sortlist_resize_column] = max(slist.column_x[sortlist_resize_column], slist.column_x[sortlist_resize_column - 1] + 0.1)
-		if (sortlist_resize_column < slist.columns - 1)
-			slist.column_x[sortlist_resize_column] = min(slist.column_x[sortlist_resize_column], slist.column_x[sortlist_resize_column + 1] - 0.1)
-		
-		mouse_cursor = cr_size_we
-		if (!mouse_left)
-		{
-			window_busy = ""
-			app_mouse_clear()
-		}
+		slist.column_x[0] = 0
+		slist.column_w[0] = w
+		h -= 4
 	}
-	
-	for (var c = 0; c < slist.columns; c++)
+	else
 	{
-		var dx, icon;
-		dx = floor(slist.column_x[c] * w)
-		
-		// Set width
-		if (c = slist.columns - 1)
-			slist.column_w[c] = ceil(w - dx)
-		else
-			slist.column_w[c] = ceil(slist.column_x[c + 1] * w) - dx
-		
-		// Resize?
-		if (c > 0 && app_mouse_box(xx + dx - 5, yy, 10, colsh) && content_mouseon)
+		// Dragging
+		if (window_busy = "sortlist_resize" && sortlist_resize = slist)
 		{
+			slist.column_x[sortlist_resize_column] = sortlist_resize_column_x + (mouse_x - mouse_click_x) / w
+			slist.column_x[sortlist_resize_column] = clamp(0, slist.column_x[sortlist_resize_column], 0.9)
+			
+			if (sortlist_resize_column > 0)
+				slist.column_x[sortlist_resize_column] = max(slist.column_x[sortlist_resize_column], slist.column_x[sortlist_resize_column - 1] + 0.1)
+				
+			if (sortlist_resize_column < slist.columns - 1)
+				slist.column_x[sortlist_resize_column] = min(slist.column_x[sortlist_resize_column], slist.column_x[sortlist_resize_column + 1] - 0.1)
+				
 			mouse_cursor = cr_size_we
-			if (mouse_left_pressed)
+			if (!mouse_left)
 			{
-				sortlist_resize = slist
-				sortlist_resize_column = c
-				sortlist_resize_column_x = slist.column_x[c]
-				window_busy = "sortlist_resize"
+				window_busy = ""
+				app_mouse_clear()
 			}
 		}
-		
-		// Button
-		icon = null
-		if (slist.column_sort = c)
-			icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
-		
-		if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], colsh, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), colmouseon))
+		for (var c = 0; c < slist.columns; c++)
 		{
-			if (slist.column_sort = c)
-			{
-				if (slist.sort_asc)
-				{
-					slist.column_sort = null
-					slist.sort_asc = false
-				}
-				else
-					slist.sort_asc = true
-			}
+			var dx, icon;
+			dx = floor(slist.column_x[c] * w)
+			
+			// Set width
+			if (c = slist.columns - 1)
+				slist.column_w[c] = ceil(w - dx)
 			else
-				slist.column_sort = c
-		
-			sortlist_update(slist)
+				slist.column_w[c] = ceil(slist.column_x[c + 1] * w) - dx
+				
+			// Resize?
+			if (c > 0 && app_mouse_box(xx + dx - 5, yy, 10, colsh) && content_mouseon)
+			{
+				mouse_cursor = cr_size_we
+				if (mouse_left_pressed)
+				{
+					sortlist_resize = slist
+					sortlist_resize_column = c
+					sortlist_resize_column_x = slist.column_x[c]
+					window_busy = "sortlist_resize"
+				}
+			}
+			
+			// Button
+			icon = null
+			if (slist.column_sort = c)
+				icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
+			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], colsh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), colmouseon))
+			{
+				if (slist.column_sort = c)
+				{
+					if (slist.sort_asc)
+					{
+						slist.column_sort = null
+						slist.sort_asc = false
+					}
+					else
+						slist.sort_asc = true
+					}
+				else
+					slist.column_sort = c
+				
+				sortlist_update(slist)
+			}
 		}
 	}
 	
 	// Items
-	dy = (yy + colsh) + 10
+	dy = yy + colsh
 	
 	// Background
-	draw_box(xx, yy + colsh + 7, w, h - colsh - 7, false, c_input_background, 1)
-
-	draw_divide(xx + 1, dy - 3, w - 2)
+	draw_box(xx, yy + colsh, w, h - colsh, false, c_input_background, 1)
+	
+	if (!hidesinglecolumn)
+	{
+		draw_divide(xx + 1, dy, w - 2)
+		dy += 3
+	}
+	else
+		dy += 5
+		
 	
 	// Outline
 	if (window_focus = string(slist.scroll))
@@ -215,7 +231,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			draw_label(text, dx + ((wid - 8) * islast), dy + itemh / 2, islast ? fa_right : fa_left, fa_middle, selected ? c_accent : c_text_main, selected ? 1 : a_text_main)
 		}
 		
-		if (mouseon)
+		if (mouseon && slist.script != null)
 		{
 			mouse_cursor = cr_handpoint
 			if (mouse_left_released)
@@ -236,5 +252,5 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	
 	// Scrollbar
 	slist.scroll.snap_value = itemh
-	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (colsh + 10), floor((h - (colsh + 10)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
+	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (colsh + 3), floor((h - (colsh + 3)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
 }

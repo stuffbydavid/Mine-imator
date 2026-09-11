@@ -91,6 +91,7 @@ function res_event_create()
 	block_vbuffer = null
 	
 	scenery_tl_add = null
+	scenery_tl_prompt_amount = 0
 	scenery_tl_list = null
 	scenery_size = vec3(0)
 	world_regions_dir = ""
@@ -105,6 +106,8 @@ function res_event_create()
 	scenery_palette = 0
 	scenery_palette_size = 0
 	scenery_randomize = true
+	scenery_instant = false
+	scenery_source = ""
 	
 	texture = null
 	

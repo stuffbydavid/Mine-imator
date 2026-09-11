@@ -61,6 +61,9 @@ function action_bench_create(edit = false)
 		{
 			with (bench_settings)
 			{
+				if (type = e_temp_type.SCENERY && scenery != null && scenery.creator = id)
+					action_bench_scenery_create_resource(id)
+				
 				var temp = temp_duplicate();
 				
 				// Don't copy into template 

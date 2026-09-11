@@ -13,6 +13,7 @@ function app_startup_interface_bench()
 	bench_show_ani = 0
 	bench_settings_ani = 0
 	bench_height = 345
+	bench_scenery_folder = scenery_folders[0]
 	
 	// Bench types
 	bench_type_list = list_new()
@@ -91,6 +92,19 @@ function app_startup_interface_bench()
 		
 		// Item list
 		item_scroll = new_obj(obj_scrollbar)
+		// Shape list
+		shape_list = new_obj(obj_sortlist)
+		shape_list.script = action_bench_shape_type
+		sortlist_column_add(shape_list, "shapename", 0)
+		for (var i = 0; i < e_shape_type.amount; i++)
+			sortlist_add(shape_list, i)
+		// Scenery list
+		scenery_list = new_obj(obj_sortlist)
+		scenery_list.script = action_bench_scenery_select
+		sortlist_column_add(scenery_list, "sceneryname", 0)
+		scenery_list.column_sort = 0
+		scenery_list.sort_asc = false
+		scenery_selected = null
 	
 		// Block list
 		block_list = new_obj(obj_sortlist)

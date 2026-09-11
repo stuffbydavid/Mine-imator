@@ -4,8 +4,8 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						false
-	#macro dev_mode_skip_blocks			dev_mode && true
+	#macro dev_mode						true
+	#macro dev_mode_skip_blocks			dev_mode && false
 	#macro dev_mode_debug_schematics	dev_mode && true
 	#macro dev_mode_debug_names			dev_mode && false
 	#macro dev_mode_debug_saveid		dev_mode && false
@@ -35,7 +35,7 @@ function macros()
 	// Directories
 	#macro file_directory				game_save_id
 	#macro data_directory				working_directory + "Data/"
-	#macro schematics_directory			working_directory + "Schematics/"
+	#macro scenery_directory			working_directory + "Scenery/"
 	#macro particles_directory			working_directory + "Particles/"
 	#macro fonts_directory				data_directory + "Fonts/"
 	#macro languages_directory			data_directory + "Languages/"
@@ -172,6 +172,11 @@ function macros()
 	#macro particle_template			-6
 	#macro normal_buffer_scale			8
 	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
+	#macro scenery_folders				array("Trees", "Biomes", "Structures", "Buildings", "Other")
+	#macro scenery_default				array("Oak tree 1", "Forest", "Dungeon", "House 1", "Creek")
+	#macro scenery_instant_threshold	20 * 1024 // 20kb
+	#macro scenery_timeline_prompt		20
+	#macro scenery_timeline_limit		500
 	
 	// World
 	#macro block_size					16

@@ -92,6 +92,11 @@ namespace CppProject
 		return true;
 	}
 
+	IntType file_get_size(StringType filename)
+	{
+		return QFileInfo(filename).size();
+	}
+
 	StringType base64_decode(StringType str)
 	{
 		return QByteArray::fromBase64(str.ToUtf8(), QByteArray::Base64Encoding);

@@ -120,6 +120,6 @@ function bench_draw()
 	clip_end()
 	draw_set_alpha(1)
 	
-	if (window_busy = "" && bench_show_ani_type != "hide")
+	if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")
 		window_busy = "bench"
 }
