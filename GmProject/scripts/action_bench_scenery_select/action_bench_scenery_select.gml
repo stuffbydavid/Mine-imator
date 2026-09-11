@@ -31,6 +31,10 @@ function action_bench_scenery_select(scenery)
 		bench_settings.scenery = scenery
 		
 	bench_settings.scenery_selected = scenery
-	bench_settings.preview.reset_view = true
-	bench_settings.preview.update = true
+	with (bench_settings.preview)
+	{
+		preview_reset_view()
+		reset_view = true
+		update = true
+	}
 }

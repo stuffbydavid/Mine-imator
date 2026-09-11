@@ -19,6 +19,7 @@ String CodeObject::nameToCpp(StringId name)
 		case STR(undefined): return "VarType()";
 		case STR(block_size):
 		case STR(char):
+		case STR(class):
 		case STR(double):
 		case STR(export):
 		case STR(far):
@@ -34,6 +35,7 @@ String CodeObject::nameToCpp(StringId name)
 		case STR(slots):
 		case STR(small):
 		case STR(template):
+		case STR(this):
 		case STR(typename):
 		case STR(W):
 		case STR(X):

@@ -295,11 +295,35 @@ function preview_draw(preview, xx, yy, width, height)
 					render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 					with (render_shader_obj)
 						shader_use()
-					
-					// No fog in preview
+						
+					// Preview uniforms
+					render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+					render_set_uniform_vec2("uTextureOffset", 0, 0)
+					render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+					render_set_uniform("uEmissive", 0)
+					render_set_uniform("uMetallic", 0)
+					render_set_uniform("uRoughness", 1)
+					render_set_uniform("uSSS", 0)
+					render_set_uniform_vec3("uSSSRadius", 1, 1, 1)
+					render_set_uniform_color("uSSSColor", c_white, 1)
+					render_set_uniform_int("uGlintEnabled", 0)
+
+					render_set_uniform_vec3("uSunDirection", 0.408, 0.408, 0.816)
+					render_set_uniform_int("uLightAmount", 1)
+					render_set_uniform("uLightData", array(0, 0, 0, 0, 1, 1, 1, 0))
+					render_set_uniform_color("uAmbientColor", c_ambient, 1)
+					render_set_uniform_color("uFallbackColor", c_white, 1)
+						
 					render_set_uniform_int("uFogShow", 0)
-					
-					// Set defaults
+					render_set_uniform_int("uIsSky", 0)
+					render_set_uniform_int("uIsGround", 0)
+					render_set_uniform("uWindEnable", 0)
+					render_set_uniform("uWindTerrain", 0)
+
+					render_set_uniform_int("uTonemapper", 0)
+					render_set_uniform("uExposure", 1)
+					render_set_uniform("uGamma", 2.2)
+
 					render_set_uniform_int("uColorsExt", 1)
 					render_set_uniform_color("uRGBAdd", tl_value_default(e_value.RGB_ADD), 1)
 					render_set_uniform_color("uRGBSub", tl_value_default(e_value.RGB_SUB), 1)

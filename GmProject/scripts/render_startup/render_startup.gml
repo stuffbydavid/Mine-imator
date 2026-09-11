@@ -207,7 +207,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
 	render_mode_shader_map[?e_render_mode.SELECT] = shader_blend
 	render_mode_shader_map[?e_render_mode.PLACE] = shader_blend
-	render_mode_shader_map[?e_render_mode.PREVIEW] = shader_color_fog
+	render_mode_shader_map[?e_render_mode.PREVIEW] = shader_color_fog_lights
 	render_mode_shader_map[?e_render_mode.COLOR] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG_LIGHTS] = shader_color_fog_lights

@@ -144,6 +144,7 @@ namespace CppGen
 	ADD(MAT_Z) \
 	ADD(block_size) \
 	ADD(char) \
+	ADD(class) \
 	ADD(double) \
 	ADD(export) \
 	ADD(far) \
@@ -157,6 +158,7 @@ namespace CppGen
 	ADD(slots) \
 	ADD(small) \
 	ADD(template) \
+	ADD(this) \
 	ADD(typename) \
 	ADD(subAssetId) \
 	ADD(W) \

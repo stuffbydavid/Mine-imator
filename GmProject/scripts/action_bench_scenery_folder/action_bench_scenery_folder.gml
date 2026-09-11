@@ -16,6 +16,14 @@ function action_bench_scenery_folder(folder, update = true)
 	
 	if (folder = "project")
 	{
+		bench_clear()
+		bench_settings.scenery = null
+		with (bench_settings.preview)
+		{
+			preview_reset_view()
+			self.update = true
+		}
+
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
 			var res = res_list.list[|i]
@@ -51,10 +59,13 @@ function action_bench_scenery_folder(folder, update = true)
 				continue
 			
 			var scenery = scenery_default[i]
-			for (var s = 0; s < ds_list_size(list.list); s++)
+			for (var s = 0; s < ds_list_size(list.display_list); s++)
 			{
-				if (list.list[|s] = scenery)
+				if (list.display_list[|s] = scenery)
 				{
+					var scrollindex = max(0, s - 3)
+					list.scroll.value = scrollindex * ui_small_height
+					list.scroll.value_goal = list.scroll.value
 					action_bench_scenery_select(scenery)
 					break
 				}

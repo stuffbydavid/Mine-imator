@@ -918,7 +918,7 @@ Expression* Function::parseExprValue()
 NullableList<Expression*> Function::parseParameterList()
 {
 	NullableList<Expression*> pars;
-	nextToken(Token::Type::LeftPar);
+	Token* openToken = nextToken(Token::Type::LeftPar);
 	while (true)
 	{
 		if (peekToken() == Token::Type::Separator)
@@ -926,7 +926,17 @@ NullableList<Expression*> Function::parseParameterList()
 		else if (peekToken() == Token::Type::RightPar)
 			break;
 		else
-			pars.add(parseExpr());
+		{
+			int prevIndex = this->tokenIndex;
+			Expression* expr = parseExpr();
+			if (expr == nullptr || this->tokenIndex == prevIndex)
+			{
+				Console::writeLine("FATAL ERROR in {0}:", this->name);
+				Console::writeLine("  Unterminated parameter list opened at line {0}, {1}", openToken->line, openToken->fileOffset - openToken->lineOffset);
+				std::exit(1);
+			}
+			pars.add(expr);
+		}
 	}
 	nextToken(Token::Type::RightPar);
 	return pars;
