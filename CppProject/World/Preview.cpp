@@ -129,8 +129,11 @@ namespace CppProject
 			global::temp_edit = global::_app->world_import_temp;
 			action_lib_scenery(ScopeAny(global::_app->id), resId);
 		}
-		else // Bench scenery
-			action_bench_scenery(ScopeAny(global::_app->id), resId);
+		else // Workbench world
+		{
+			action_res_scenery_animate(ScopeAny(global::_app->id), resId);
+			global::_app->bench_show_ani_type = "hide";
+		}
 
 		World::Close();
 		selection.active = false;

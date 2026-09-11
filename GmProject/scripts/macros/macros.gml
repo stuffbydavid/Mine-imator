@@ -35,7 +35,7 @@ function macros()
 	// Directories
 	#macro file_directory				game_save_id
 	#macro data_directory				working_directory + "Data/"
-	#macro scenery_directory			working_directory + "Scenery/"
+	#macro schematic_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
 	#macro fonts_directory				data_directory + "Fonts/"
 	#macro languages_directory			data_directory + "Languages/"
@@ -163,6 +163,7 @@ function macros()
 	#macro default_model				"human"
 	#macro default_model_part			"head"
 	#macro default_model_part_model		"armor"
+	#macro default_equipment			"armor"
 	#macro default_special_block		"chest"
 	#macro default_block				"grass_block"
 	#macro default_item					"item/diamond_sword"
@@ -172,8 +173,8 @@ function macros()
 	#macro particle_template			-6
 	#macro normal_buffer_scale			8
 	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
-	#macro scenery_folders				array("Trees", "Biomes", "Structures", "Buildings", "Other")
-	#macro scenery_default				array("Oak tree 1", "Forest", "Dungeon", "House 1", "Creek")
+	#macro schematic_folders			array("Buildings", "Biomes", "Trees", "Structures", "Other")
+	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		500

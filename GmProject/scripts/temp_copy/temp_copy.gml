@@ -4,10 +4,7 @@
 
 function temp_copy(to)
 {
-	if (id = app.bench_settings && type = e_tl_type.SHAPE)
-		to.type = e_temp_type.CUBE + shape_type
-	else
-		to.type = type
+	to.type = type
 	
 	to.name = name
 	

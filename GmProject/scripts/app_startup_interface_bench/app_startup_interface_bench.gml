@@ -13,41 +13,59 @@ function app_startup_interface_bench()
 	bench_show_ani = 0
 	bench_settings_ani = 0
 	bench_height = 345
-	bench_scenery_folder = scenery_folders[0]
+	bench_schematic_folder = schematic_folders[0]
 	
-	// Bench types
-	bench_type_list = list_new()
-	list_edit = bench_type_list
+	// Workbench tabs
+	bench_tab = e_workbench.CHARACTER
+	bench_tab_list = list_new()
+	list_edit = bench_tab_list
 	list_edit.get_name = true
 	list_edit.show_ticks = false
 	
-	list_item_add("typechar", e_tl_type.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
+	list_item_add("typechar", e_workbench.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
 	if (ds_list_size(mc_assets.equipment_list) > 0)
-		list_item_add("typeequipment", e_tl_type.EQUIPMENT, "", null, icons.SHIELD, null, bench_click)
-	list_item_add("typemodel", e_tl_type.MODEL, "", null, icons.MODEL, null, bench_click)
-	list_item_add("typemodelpart", e_tl_type.MODEL_PART, "", null, icons.PART, null, bench_click)
+		list_item_add("typeequipment", e_workbench.EQUIPMENT, "", null, icons.SHIELD, null, bench_click)
+	list_item_add("typemodel", e_workbench.MODEL, "", null, icons.MODEL, null, bench_click)
+	list_item_add("typemodelpart", e_workbench.MODEL_PART, "", null, icons.PART, null, bench_click)
 	
-	list_item_add("typeitem", e_tl_type.ITEM, "", null, icons.ITEM, null, bench_click)
-	list_item_add("typescenery", e_tl_type.SCENERY, "", null, icons.SCENERY, null, bench_click)
-	list_item_add("typeblock", e_tl_type.BLOCK, "", null, icons.BLOCK, null, bench_click)
-	list_item_add("typespblock", e_tl_type.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_click)
+	list_item_add("typeitem", e_workbench.ITEM, "", null, icons.ITEM, null, bench_click)
+	list_item_add("typeworld", e_workbench.WORLD, "", null, icons.SCENERY, null, bench_click)
+	list_item_add("typeschematic", e_workbench.SCHEMATIC, "", null, icons.HOUSE, null, bench_click)
+	list_item_add("typeblock", e_workbench.BLOCK, "", null, icons.BLOCK, null, bench_click)
+	list_item_add("typespblock", e_workbench.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_click)
 	
-	list_item_add("typeshape", e_tl_type.SHAPE, "", null, icons.SHAPES, null, bench_click)
-	list_item_add("typetext", e_tl_type.TEXT, "", null, icons.TEXT, null, bench_click)
-	list_item_add("typepath", e_tl_type.PATH, "", null, icons.PATH, null, bench_click)
+	list_item_add("typeshape", e_workbench.SHAPE, "", null, icons.SHAPES, null, bench_click)
+	list_item_add("typetext", e_workbench.TEXT, "", null, icons.TEXT, null, bench_click)
+	list_item_add("typepath", e_workbench.PATH, "", null, icons.PATH, null, bench_click)
 	
-	list_item_add("typecamera", e_tl_type.CAMERA, "", null, icons.CAMERA, null, bench_click)
-	list_item_add("typeparticles", e_tl_type.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
-	list_item_add("typelightsource", e_tl_type.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
-	list_item_add("typeaudio", e_tl_type.AUDIO, "", null, icons.NOTE, null, bench_click)
-	list_item_add("typebackground", e_tl_type.BACKGROUND, "", null, icons.CLOUD, null, bench_click)
+	list_item_add("typecamera", e_workbench.CAMERA, "", null, icons.CAMERA, null, bench_click)
+	list_item_add("typeparticles", e_workbench.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
+	list_item_add("typelightsource", e_workbench.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
+	list_item_add("typeaudio", e_workbench.AUDIO, "", null, icons.NOTE, null, bench_click)
+	list_item_add("typebackground", e_workbench.ENVIRONMENT, "", null, icons.CLOUD, null, bench_click)
 	
 	list_edit = null
 	
+	// Preview
+	bench_tab_preview = array(
+		e_workbench.CHARACTER,
+		e_workbench.EQUIPMENT,
+		e_workbench.MODEL,
+		e_workbench.MODEL_PART,
+		e_workbench.ITEM,
+		e_workbench.SCHEMATIC,
+		e_workbench.BLOCK,
+		e_workbench.SPECIAL_BLOCK,
+		e_workbench.SHAPE,
+		e_workbench.TEXT,
+		e_workbench.PARTICLE_SPAWNER
+	)
+
 	// Workbench settings
 	bench_settings = new_obj(obj_bench_settings)
 	with (bench_settings)
 	{
+		type = null
 		posx = 0
 		posy = 0
 		
@@ -98,13 +116,13 @@ function app_startup_interface_bench()
 		sortlist_column_add(shape_list, "shapename", 0)
 		for (var i = 0; i < e_shape_type.amount; i++)
 			sortlist_add(shape_list, i)
-		// Scenery list
-		scenery_list = new_obj(obj_sortlist)
-		scenery_list.script = action_bench_scenery_select
-		sortlist_column_add(scenery_list, "sceneryname", 0)
-		scenery_list.column_sort = 0
-		scenery_list.sort_asc = false
-		scenery_selected = null
+		// Schematic list
+		schematic_list = new_obj(obj_sortlist)
+		schematic_list.script = action_bench_schematic_select
+		sortlist_column_add(schematic_list, "schematicname", 0)
+		schematic_list.column_sort = 0
+		schematic_list.sort_asc = false
+		schematic_selected = null
 	
 		// Block list
 		block_list = new_obj(obj_sortlist)

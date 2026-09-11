@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_bench_scenery_export",
+  "%Name":"action_bench_schematic_import",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_bench_scenery_export",
+  "name":"action_bench_schematic_import",
   "parent":{
     "name":"Bench",
     "path":"folders/Scripts/App/Actions/Bench.yy",

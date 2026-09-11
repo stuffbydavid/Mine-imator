@@ -340,6 +340,29 @@ function enums()
 		amount
 	} // Update app_startup_lists() when adding values
 	
+	// Workbench options
+	enum e_workbench
+	{
+		CHARACTER,
+		EQUIPMENT,
+		MODEL,
+		MODEL_PART,
+		ITEM,
+		WORLD,
+		SCHEMATIC,
+		BLOCK,
+		SPECIAL_BLOCK,
+		SHAPE,
+		TEXT,
+		PATH,
+		CAMERA,
+		PARTICLE_SPAWNER,
+		LIGHT_SOURCE,
+		AUDIO,
+		ENVIRONMENT,
+		amount
+	}
+	
 	// Template types
 	enum e_temp_type
 	{
@@ -595,7 +618,7 @@ function enums()
 		HIERARCHY_SMALL,
 		HIGHLIGHTER,
 		HISTORIAN,
-		HOME,
+		HOUSE,
 		IGNORE,
 		IMAGE,
 		IMAGE_EXPORT,

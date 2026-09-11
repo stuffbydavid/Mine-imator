@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_bench_scenery_create_resource",
+  "%Name":"action_bench_schematic_export",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_bench_scenery_create_resource",
+  "name":"action_bench_schematic_export",
   "parent":{
     "name":"Bench",
     "path":"folders/Scripts/App/Actions/Bench.yy",

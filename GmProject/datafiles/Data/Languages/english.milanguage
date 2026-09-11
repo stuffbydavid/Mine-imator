@@ -57,11 +57,11 @@
 			"duplicate": "Duplicate template",
 			"remove": "Remove template"
 		},
-		"scenery/": {
-			"import": "Import scenery",
-			"export": "Export scenery",
-			"openfolder": "Open scenery folder",
-			"reloadfolder": "Reload scenery folder"
+		"schematic/": {
+			"import": "Import schematic",
+			"export": "Export schematic",
+			"openfolder": "Open schematic folder",
+			"reloadfolder": "Reload schematic folder"
 		},
 		"resource/": {
 			"new": "Add resource",
@@ -524,8 +524,10 @@
 		"equipment": "Equipment",
 		"model": "Custom model",
 		"modelpart": "Model part",
-		"scenery": "Scenery",
 		"item": "Item",
+		"world": "World",
+		"schematic": "Schematic",
+		"scenery": "Scenery",
 		"block": "Block",
 		"spblock": "Special block",
 		"particles": "Particle spawner",
@@ -587,14 +589,15 @@
 		"modelpartskin": "Skin",
 		"modelpartskinmaterial": "Material map",
 		"modelpartskinnormal": "Normal map",
-		"scenery/": {
+		"importfromworld": "Import from world",
+		"schematic": "Schematic",
+		"schematic/": {
 			"trees": "Trees",
 			"biomes": "Biomes",
 			"structures": "Structures",
 			"buildings": "Buildings",
 			"other": "Other",
-			"project": "Project",
-			"importfromworld": "Import from world"
+			"project": "Project"
 		},
 		"particlespreset": "Preset",
 		"textfont": "Font",
@@ -616,6 +619,8 @@
 		"lighttype": "Light type",
 		"create": "Create",
 		"createedit": "Create & edit",
+		"worldtip1": "Select a region of your Minecraft world to use in the project.",
+		"worldtip2": "When the region is modified in-game, press \"Reload resource\" under Resources to apply the changes.",
 		"pointlighttip": "Point lights shine in all directions, like a lightbulb.",
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
 		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
@@ -982,6 +987,7 @@
 		"spblockname": "Name",
 		"modelpartmodelname": "Name",
 		"sceneryname": "Name",
+		"schematicname": "Name",
 		"particleeditortypename": "Name",
 		"particleeditortypekind": "Kind",
 		"particleeditortyperate": "Spawn rate",

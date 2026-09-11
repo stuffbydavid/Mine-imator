@@ -440,5 +440,6 @@ function res_event_destroy()
 	}
 	
 	// Remove from resource browser
-	res_edit = sortlist_remove(app.res_list, id)
+	if (ds_list_find_index(app.res_list.list, id) >= 0)
+		res_edit = sortlist_remove(app.res_list, id)
 }

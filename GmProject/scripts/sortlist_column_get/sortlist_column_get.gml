@@ -35,6 +35,7 @@ function sortlist_column_get(slist, value, col)
 			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
 		
 		case "sceneryname":
+		case "schematicname":
 			return is_string(value) ? value : value.display_name
 		case "shapename":
 			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])

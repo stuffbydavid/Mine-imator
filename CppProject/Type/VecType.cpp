@@ -6,6 +6,8 @@
 #include <QtMath>
 #include <mutex>
 
+#define MUTEX 1
+
 namespace CppProject
 {
 	FastVector<VecType*> VecType::refList;
@@ -171,7 +173,9 @@ namespace CppProject
 
 	void VecType::CreateRef()
 	{
+#if MUTEX
 		std::lock_guard<std::mutex> lock(vecRefListMutex);
+#endif
 		if (ref)
 			return;
 
@@ -186,7 +190,9 @@ namespace CppProject
 
 	void VecType::FreeData()
 	{
+#if MUTEX
 		std::lock_guard<std::mutex> lock(vecRefListMutex);
+#endif
 		if (!ref)
 			return;
 
@@ -197,7 +203,9 @@ namespace CppProject
 
 	void VecType::CleanHeapData()
 	{
+#if MUTEX
 		std::lock_guard<std::mutex> lock(vecRefListMutex);
+#endif
 		for (IntType i = 0; i < refList.Size(); i++)
 			if (VecType* hVec = refList[i])
 				deleteArrayAndReset(hVec->ref);

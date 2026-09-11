@@ -1,14 +1,14 @@
-/// action_bench_scenery_select(scenery)
-/// @arg scenery
+/// action_bench_schematic_select(schematic)
+/// @arg schematic
 
-function action_bench_scenery_select(scenery)
+function action_bench_schematic_select(schematic)
 {
 	bench_clear()
 	
-	if (is_string(scenery))
+	if (is_string(schematic))
 	{
 		var folder, res;
-		folder = scenery_directory + bench_scenery_folder
+		folder = schematic_directory + bench_schematic_folder
 		res_creator = bench_settings
 		res = new_obj(obj_resource)
 		res_creator = app
@@ -16,7 +16,7 @@ function action_bench_scenery_select(scenery)
 		with (res)
 		{
 			type = e_res_type.SCENERY
-			filename = scenery + ".schematic"
+			filename = schematic + ".schematic"
 			scenery_source = folder + "/" + filename
 		}
 		
@@ -28,9 +28,9 @@ function action_bench_scenery_select(scenery)
 		bench_settings.scenery = res
 	}
 	else
-		bench_settings.scenery = scenery
+		bench_settings.scenery = schematic
 		
-	bench_settings.scenery_selected = scenery
+	bench_settings.schematic_selected = schematic
 	with (bench_settings.preview)
 	{
 		preview_reset_view()

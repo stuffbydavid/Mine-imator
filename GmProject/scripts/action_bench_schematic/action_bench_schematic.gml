@@ -1,8 +1,8 @@
-/// action_bench_scenery(resource)
+/// action_bench_schematic(resource)
 /// @arg resource
-/// @desc Sets the scenery of the workbench.
+/// @desc Sets the schematic of the workbench.
 
-function action_bench_scenery(res)
+function action_bench_schematic(res)
 {
 	if (history_undo)
 		res = history_undo_res()
@@ -12,12 +12,7 @@ function action_bench_scenery(res)
 	{
 		var fn = "";
 		
-		if (res = e_option.IMPORT_WORLD)
-		{
-			world_import_begin(false)
-			return false
-		}
-		else if (res = e_option.BROWSE)
+		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_scenery()
 			
@@ -34,7 +29,7 @@ function action_bench_scenery(res)
 				with (res)
 					res_load()
 		}
-		history_set_res(action_bench_scenery, fn, bench_settings.scenery, res)
+		history_set_res(action_bench_schematic, fn, bench_settings.scenery, res)
 	}
 	
 	bench_settings.scenery = res
