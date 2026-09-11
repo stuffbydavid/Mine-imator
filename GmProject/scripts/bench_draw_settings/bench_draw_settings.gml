@@ -636,7 +636,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		{
 			var capwid, text;
 			capwid = text_caption_width("benchshapetex", "benchshapetexmaterial", "benchshapetexnormal")
-			tab_control_sortlist(e_shape_type.amount)
+			tab_control_sortlist(e_shape_type.amount - 1)
 			sortlist_draw(bench_settings.shape_list, dx, dy, dw, tab_control_h, bench_settings.shape_type, false, text_get("benchshapetype"))
 			tab_next()
 				

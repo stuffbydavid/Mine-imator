@@ -554,7 +554,9 @@ namespace CppProject
 
 		if (mb > 50)
 		{
-			if (!question(text_get({ "loadscenerysavecache", string(mb) + StringType("MB") })))
+			if (res->scenery_cache_save == null_)
+				res->scenery_cache_save = question(text_get({ "loadscenerysavecache", string(mb) + StringType("MB") }));
+			if (!res->scenery_cache_save)
 			{
 				// CPU data of meshes won't be needed
 				for (IntType d = 0; d < e_block_depth_amount; d++)

@@ -317,7 +317,7 @@ function app_startup_lists()
 		"itemsheet",
 		"legacyblocksheet",
 		"blocksheet",
-		"scenery",
+		"schematic",
 		"fromworld",
 		"particlesheet",
 		"texture",

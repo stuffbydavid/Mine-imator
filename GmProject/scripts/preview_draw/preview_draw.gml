@@ -30,7 +30,7 @@ function preview_draw(preview, xx, yy, width, height)
 	{
 		playbutton = (preview.select.type = e_res_type.SOUND)
 		isplaying = (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index))
-		is3d = (preview.select.type = e_res_type.SCENERY || preview.select.type = e_res_type.FROM_WORLD ||preview.select.type = e_res_type.MODEL)
+		is3d = (preview.select.type = e_res_type.SCHEMATIC || preview.select.type = e_res_type.FROM_WORLD ||preview.select.type = e_res_type.MODEL)
 	}
 	else
 	{
@@ -191,7 +191,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							}
 							
-							case e_res_type.SCENERY:
+							case e_res_type.SCHEMATIC:
 							case e_res_type.FROM_WORLD:
 							{
 								var displaysize = vec3_mul(vec3_mul(select.scenery_size, rep), vec3(block_size));
@@ -338,7 +338,7 @@ function preview_draw(preview, xx, yy, width, height)
 					{
 						switch (select.type)
 						{
-							case e_res_type.SCENERY:
+							case e_res_type.SCHEMATIC:
 							case e_res_type.FROM_WORLD:
 								if (select.ready)
 									render_world_block(select.block_vbuffer, mc_res, true, select.scenery_size)

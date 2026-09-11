@@ -112,39 +112,6 @@ function bench_click(tab)
 				temp_update_shape()
 				break
 			}
-
-			case e_workbench.WORLD:
-			case e_workbench.SCHEMATIC:
-				type = e_temp_type.SCENERY
-				break
-
-			case e_workbench.TEXT:
-				type = e_temp_type.TEXT
-				break
-
-			case e_workbench.PATH:
-				type = e_tl_type.PATH
-				break
-
-			case e_workbench.CAMERA:
-				type = e_tl_type.CAMERA
-				break
-
-			case e_workbench.PARTICLE_SPAWNER:
-				type = e_temp_type.PARTICLE_SPAWNER
-				break
-
-			case e_workbench.LIGHT_SOURCE:
-				type = e_tl_type.LIGHT_SOURCE
-				break
-
-			case e_workbench.AUDIO:
-				type = e_tl_type.AUDIO
-				break
-
-			case e_workbench.ENVIRONMENT:
-				type = e_tl_type.BACKGROUND
-				break
 			
 			case e_workbench.MODEL:
 			{
@@ -163,6 +130,16 @@ function bench_click(tab)
 							popup_show(popup_modelbench)
 				break
 			}
+
+			case e_workbench.WORLD:
+			case e_workbench.SCHEMATIC:			type = e_temp_type.SCENERY break
+			case e_workbench.TEXT:				type = e_temp_type.TEXT break
+			case e_workbench.PATH:				type = e_tl_type.PATH break
+			case e_workbench.CAMERA:			type = e_tl_type.CAMERA break
+			case e_workbench.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER break
+			case e_workbench.LIGHT_SOURCE:		type = e_tl_type.LIGHT_SOURCE break
+			case e_workbench.AUDIO:				type = e_tl_type.AUDIO break
+			case e_workbench.ENVIRONMENT:		type = e_tl_type.BACKGROUND break
 		}
 	}
 	

@@ -13,6 +13,7 @@ namespace CppProject
 
 		QThread* thread = new QThread;
 		StringType::AddQThread(thread);
+		VecType::AddQThread(thread);
 		QObject::moveToThread(thread);
 		thread->start();
 	}
@@ -38,6 +39,7 @@ namespace CppProject
 				region->UpdateMesh();
 		}
 
+		VecType::CleanHeapData();
 		emit UpdateDone();
 	}
 }

@@ -37,7 +37,7 @@ function tab_properties_resources()
 	if (res_edit = null)
 		return 0
 	
-	if (res_edit.type = e_res_type.SCENERY)
+	if (res_edit.type = e_res_type.SCHEMATIC)
 	{
 		tab_control_checkbox()
 		draw_checkbox("resourcessceneryrandomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resourcessceneryrandomizehelp")
@@ -199,7 +199,7 @@ function tab_properties_resources()
 		draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 		
 		// Open in external program
-		if (draw_button_icon("resourcesfilenameopen", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCENERY || res_edit.type = e_res_type.FROM_WORLD, "tooltipresourceopen"))
+		if (draw_button_icon("resourcesfilenameopen", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD, "tooltipresourceopen"))
 			open_url(project_folder + "/" + res_edit.filename)
 		
 		tab_next()

@@ -93,11 +93,11 @@ function res_load(reload = false)
 			break
 		}
 		
-		case e_res_type.SCENERY:
+		case e_res_type.SCHEMATIC:
 		case e_res_type.FROM_WORLD:
 		{
 			scenery_instant = false
-			if (type = e_res_type.SCENERY && file_exists_lib(fn))
+			if (type = e_res_type.SCHEMATIC && file_exists_lib(fn))
 				scenery_instant = file_get_size(fn) < scenery_instant_threshold
 			
 			// Load from cached mesh

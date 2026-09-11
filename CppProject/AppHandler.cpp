@@ -57,6 +57,7 @@ namespace CppProject
 
 			// Initialize string table
 			StringType::AddQThread(QThread::currentThread());
+			VecType::AddQThread(QThread::currentThread());
 			StringType::AddGMLStrings();
 
 			// Set paths

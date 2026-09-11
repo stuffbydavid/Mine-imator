@@ -18,8 +18,8 @@ function tl_update_display_name()
 			}
 			else if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
-				if (model_file != null)
-					display_name = minecraft_asset_get_name("model", model_file.name)
+				if (model_name != "")
+					display_name = minecraft_asset_get_name("model", model_name)
 			}
 			else if (type = e_tl_type.BLOCK)
 			{

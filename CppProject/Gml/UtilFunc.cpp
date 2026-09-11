@@ -462,10 +462,12 @@ namespace CppProject
 	void thread_task_begin()
 	{
 		StringType::BeginOmp();
+		VecType::BeginOmp();
 	}
 
 	void thread_task_end()
 	{
+		VecType::EndOmp();
 		StringType::EndOmp();
 	}
 

@@ -15,7 +15,7 @@ function action_bench_schematic_select(schematic)
 		
 		with (res)
 		{
-			type = e_res_type.SCENERY
+			type = e_res_type.SCHEMATIC
 			filename = schematic + ".schematic"
 			scenery_source = folder + "/" + filename
 		}

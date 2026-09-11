@@ -19,7 +19,7 @@ function action_bench_schematic(res)
 			if (!file_exists_lib(fn))
 				return false
 			
-			res = new_res(fn, e_res_type.SCENERY)
+			res = new_res(fn, e_res_type.SCHEMATIC)
 			if (res.replaced)
 			{
 				res_edit = res

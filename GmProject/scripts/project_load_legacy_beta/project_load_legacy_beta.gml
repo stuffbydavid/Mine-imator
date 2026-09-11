@@ -394,7 +394,7 @@ function project_load_legacy_beta(loadbackground)
 							load_id = loadid++
 							save_id_map[?load_id] = load_id
 							
-							type = e_res_type.SCENERY
+							type = e_res_type.SCHEMATIC
 							filename = filename_name(load.lib_scenery_source[a])
 							scenery_tl_add = false
 							

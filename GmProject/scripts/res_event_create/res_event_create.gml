@@ -93,6 +93,7 @@ function res_event_create()
 	scenery_tl_add = null
 	scenery_tl_prompt_amount = 0
 	scenery_tl_list = null
+	scenery_cache_save = null
 	scenery_size = vec3(0)
 	world_regions_dir = ""
 	world_box_start = null

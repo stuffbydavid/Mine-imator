@@ -311,7 +311,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res.type = e_res_type.SCENERY || res.type = e_res_type.FROM_WORLD)
+				if (res.type = e_res_type.SCHEMATIC || res.type = e_res_type.FROM_WORLD)
 					menu_add_item(res, res.display_name)
 			}
 			
