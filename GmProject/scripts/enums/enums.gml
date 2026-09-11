@@ -1075,6 +1075,9 @@ function enums()
 	enum e_render_pass
 	{
 		COMBINED,
+		DEPTH,
+		NORMAL,
+		MATERIAL,
 		DIFFUSE,
 		SPECULAR,
 		AO,
@@ -1082,9 +1085,6 @@ function enums()
 		INDIRECT,
 		INDIRECT_SHADOWS,
 		REFLECTIONS,
-		DEPTH,
-		NORMAL,
-		MATERIAL,
 		amount
 	}
 	

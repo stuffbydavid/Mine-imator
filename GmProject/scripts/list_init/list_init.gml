@@ -1349,10 +1349,10 @@ function list_init(name)
 		}
 		
 		// Render pass
-		case "viewmodepass":
+		case "viewrendererpass":
 		{
 			for (var i = 0; i < e_render_pass.amount; i++)
-				list_item_add(text_get("viewmodepass" + render_pass_list[|i]), i)
+				list_item_add(text_get("viewrendererpass" + render_pass_list[|i]), i)
 			
 			break
 		}
