@@ -570,7 +570,7 @@ function view_draw(view)
 				bench_click_ani_goal = 1
 			
 			tip_force_right = true
-			tip_set(text_get("viewworkbenchtip"), benchx, benchy, 86, 86, false)
+			tip_set(text_get("viewbenchtip"), benchx, benchy, 86, 86, false)
 			tip_force_right = false
 			
 			if (mouse_left_pressed)

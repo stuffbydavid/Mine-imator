@@ -68,6 +68,10 @@ function block_load_model_file(fname, res = null)
 						texname = ds_map_find_value(texmap, key)
 					texname = string_replace(texname, "minecraft:", "")
 					
+					// Fix snowy grass block top
+					if (res = null && name = "grass_block_snow" && key = "top")
+						texname = "block/snow"
+					
 					texture_map[?key] = block_load_model_file_texture(texname, res)
 					key = ds_map_find_next(texmap, key)
 				}

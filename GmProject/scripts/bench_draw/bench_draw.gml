@@ -86,7 +86,7 @@ function bench_draw()
 		
 		if (!setting_advanced_mode)
 		{
-			if (item.value = e_workbench.MODEL || item.value = e_workbench.ENVIRONMENT)
+			if (item.value = e_bench.MODEL || item.value = e_bench.ENVIRONMENT)
 				skipasset = true
 		}
 		
@@ -96,7 +96,7 @@ function bench_draw()
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (item.value = e_workbench.MODEL_PART || item.value = e_workbench.SPECIAL_BLOCK || item.value = e_workbench.PATH)
+		if (item.value = e_bench.MODEL_PART || item.value = e_bench.SPECIAL_BLOCK || item.value = e_bench.PATH)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9

@@ -1934,10 +1934,9 @@
 					{ "value": "cherry", "file": "cherry_sapling.json" },
 					{ "value": "pale_oak", "file": "pale_oak_sapling.json" },
 					{ "value": "poplar", "file": "poplar_sapling.json" }
-				],
-				"stage": [ "0", "1" ]
+				]
 			},
-			"default_state": "variant=oak,stage=0",
+			"default_state": "variant=oak",
 			"subsurface": 1,
 			"wind": {
 				"axis": "all",

@@ -3,7 +3,7 @@
 
 function minecraft_assets_reload()
 {
-	var fname = minecraft_directory + minecraft_version + ".midata";
+	var fname = minecraft_directory + minecraft_assets_version + ".midata";
 	
 	log("Reloading models")
 	

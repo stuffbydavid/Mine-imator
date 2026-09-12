@@ -10,6 +10,7 @@ function settings_save()
 	
 	json_save_object_start("assets")
 		
+		json_save_var("lastknown", minecraft_assets_version)
 		json_save_var("version", setting_minecraft_assets_version)
 		
 		if (setting_minecraft_assets_new_version != "")

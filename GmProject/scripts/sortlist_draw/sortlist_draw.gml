@@ -19,7 +19,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		return 0
 	}
 	
-	var colmouseon, searchx, searchw, itemh, colsh, dy;
+	var searchx, searchw, itemh, headerh, headermouseon, dy;
 	
 	searchx = xx
 	searchw = w
@@ -27,9 +27,8 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	// Item height
 	itemh = ui_small_height
 	
-	// Columns
-	var hidesinglecolumn = (h < 400 && slist.columns = 1 && ds_list_size(slist.display_list) <= 20);
-	colsh = !hidesinglecolumn ? (ui_small_height + 8) : 0
+	// Column height
+	headerh = slist.header_show ? (ui_small_height + 8) : 0
 	
 	// Draw filter
 	if (filter && name = "")
@@ -79,11 +78,11 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	h -= 32
 	yy += 32
 	
-	if (h < colsh)
+	if (h < headerh)
 		return 0
 	
-	colmouseon = app_mouse_box(xx, yy, w, colsh) && content_mouseon
-	if (hidesinglecolumn)
+	headermouseon = app_mouse_box(xx, yy, w, headerh) && content_mouseon
+	if (!slist.header_show)
 	{
 		slist.column_x[0] = 0
 		slist.column_w[0] = w
@@ -122,7 +121,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 				slist.column_w[c] = ceil(slist.column_x[c + 1] * w) - dx
 				
 			// Resize?
-			if (c > 0 && app_mouse_box(xx + dx - 5, yy, 10, colsh) && content_mouseon)
+			if (c > 0 && app_mouse_box(xx + dx - 5, yy, 10, headerh) && content_mouseon)
 			{
 				mouse_cursor = cr_size_we
 				if (mouse_left_pressed)
@@ -138,7 +137,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			icon = null
 			if (slist.column_sort = c)
 				icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
-			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], colsh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), colmouseon))
+			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], headerh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), headermouseon))
 			{
 				if (slist.column_sort = c)
 				{
@@ -159,12 +158,12 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	}
 	
 	// Items
-	dy = yy + colsh
+	dy = yy + headerh
 	
 	// Background
-	draw_box(xx, yy + colsh, w, h - colsh, false, c_input_background, 1)
+	draw_box(xx, yy + headerh, w, h - headerh, false, c_input_background, 1)
 	
-	if (!hidesinglecolumn)
+	if (slist.header_show)
 	{
 		draw_divide(xx + 1, dy, w - 2)
 		dy += 3
@@ -252,5 +251,5 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	
 	// Scrollbar
 	slist.scroll.snap_value = itemh
-	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (colsh + 3), floor((h - (colsh + 3)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
+	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (headerh + 3), floor((h - (headerh + 3)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
 }

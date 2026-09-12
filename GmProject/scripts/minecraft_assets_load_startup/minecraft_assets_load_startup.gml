@@ -43,8 +43,8 @@ function minecraft_assets_load_startup()
 	// Load assets from version in settings, if it fails, reset to default
 	if (!minecraft_assets_load_startup_version())
 	{
-		log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_version)
-		app.setting_minecraft_assets_version = minecraft_version
+		log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_assets_version)
+		app.setting_minecraft_assets_version = minecraft_assets_version
 		if (!minecraft_assets_load_startup_version())
 			return false
 	}

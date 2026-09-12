@@ -342,7 +342,7 @@ function enums()
 	} // Update app_startup_lists() when adding values
 	
 	// Workbench options
-	enum e_workbench
+	enum e_bench
 	{
 		CHARACTER,
 		EQUIPMENT,

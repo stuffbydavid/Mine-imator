@@ -554,7 +554,7 @@
 		"sound": "Sound",
 		"shape": "Shape",
 		"lightsource": "Light source",
-		"fromworld": "Imported scenery",
+		"fromworld": "From world",
 		"path": "Path",
 		"pathpoint": "Path point"
 	},
@@ -843,7 +843,7 @@
 		"percent": "(%1% Done)"
 	},
 	"view/": {
-		"workbenchtip": "Open workbench",
+		"benchtip": "Open workbench",
 		"tool/": {
 			"selecttip": "Select tool",
 			"movetip": "Move tool",

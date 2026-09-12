@@ -38,13 +38,13 @@ function bench_draw_settings(bx, by, bw, bh)
 	menu_bench = true
 	switch (bench_tab)
 	{
-		case e_workbench.CHARACTER:
-		case e_workbench.EQUIPMENT:
-		case e_workbench.SPECIAL_BLOCK:
-		case e_workbench.MODEL_PART:
+		case e_bench.CHARACTER:
+		case e_bench.EQUIPMENT:
+		case e_bench.SPECIAL_BLOCK:
+		case e_bench.MODEL_PART:
 		{
 			var labeltext, list, texcap, texmatcap, texnormcap, capwid, part;
-			if (bench_tab = e_workbench.CHARACTER)
+			if (bench_tab = e_bench.CHARACTER)
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.char_list
@@ -54,7 +54,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				capwid = text_caption_width(texcap, texmatcap, texnormcap)
 				part = bench_settings.model_file
 			}
-			else if (bench_tab = e_workbench.EQUIPMENT)
+			else if (bench_tab = e_bench.EQUIPMENT)
 			{
 				labeltext = text_get("benchequipment")
 				list = bench_settings.equipment_list
@@ -64,7 +64,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				capwid = text_caption_width(texcap, texmatcap, texnormcap)
 				part = bench_settings.model_file
 			}
-			else if (bench_tab = e_workbench.SPECIAL_BLOCK)
+			else if (bench_tab = e_bench.SPECIAL_BLOCK)
 			{
 				labeltext = text_get("benchblock")
 				list = bench_settings.special_block_list
@@ -74,7 +74,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				capwid = text_caption_width(texcap, texmatcap, texnormcap)
 				part = bench_settings.model_file
 			}
-			else if (bench_tab = e_workbench.MODEL_PART)
+			else if (bench_tab = e_bench.MODEL_PART)
 			{
 				labeltext = text_get("benchmodel")
 				list = bench_settings.model_part_model_list
@@ -174,7 +174,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			menu_filter_normal = ""
 				
 			// Model part
-			if (bench_tab = e_workbench.MODEL_PART && bench_settings.model_file != null)
+			if (bench_tab = e_bench.MODEL_PART && bench_settings.model_file != null)
 			{
 				draw_button_menu("benchmodelpart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, false, null, null, "", null, null, capwid)
 				dy += 32
@@ -253,7 +253,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 		
-		case e_workbench.MODEL:
+		case e_bench.MODEL:
 		{
 			var capwid = text_caption_width("benchmodel", "benchmodeltex", "benchmodeltexmaterial", "benchmodeltexnormal");
 				
@@ -334,7 +334,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 		
-		case e_workbench.ITEM:
+		case e_bench.ITEM:
 		{
 			var capwid, res, text, sprite;
 			capwid = text_caption_width("typeitem")
@@ -386,7 +386,7 @@ function bench_draw_settings(bx, by, bw, bh)
 					sheetsizes = [res.item_sheet_size]
 					slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
 				}
-				listh = 162
+				listh = 180
 				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8
 			}
@@ -450,7 +450,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 		
-		case e_workbench.WORLD:
+		case e_bench.WORLD:
 		{
 			draw_sprite(spr_bench_example, 4, dx, dy)
 			dy += 144 + 16
@@ -470,7 +470,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			return 0
 		}
 
-		case e_workbench.SCHEMATIC:
+		case e_bench.SCHEMATIC:
 		{
 			// Schematic
 			tab_control_sortlist(6)
@@ -536,7 +536,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 			
-		case e_workbench.BLOCK:
+		case e_bench.BLOCK:
 		{
 			draw_set_font(font_label)
 				
@@ -625,7 +625,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 			
-		case e_workbench.SHAPE:
+		case e_bench.SHAPE:
 		{
 			var capwid, text;
 			capwid = text_caption_width("benchshapetex", "benchshapetexmaterial", "benchshapetexnormal")
@@ -694,7 +694,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 			
-		case e_workbench.TEXT:
+		case e_bench.TEXT:
 		{
 			var capwid;
 			capwid = text_caption_width("benchtextfont")
@@ -728,7 +728,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 		
-		case e_workbench.PATH:
+		case e_bench.PATH:
 		{
 			draw_sprite(spr_bench_example, 3, dx, dy)
 			dy += 144 + 15
@@ -737,7 +737,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 				
-		case e_workbench.CAMERA:
+		case e_bench.CAMERA:
 		{
 			draw_sprite(spr_bench_example, 5, dx, dy)
 			dy += 144 + 15
@@ -746,7 +746,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 			
-		case e_workbench.PARTICLE_SPAWNER:
+		case e_bench.PARTICLE_SPAWNER:
 		{
 			// Particles
 			tab_control_sortlist(8)
@@ -757,7 +757,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 				
-		case e_workbench.LIGHT_SOURCE:
+		case e_bench.LIGHT_SOURCE:
 		{
 			draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
 			dy += 144 + 15
@@ -776,7 +776,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 			
-		case e_workbench.AUDIO:
+		case e_bench.AUDIO:
 		{
 			draw_sprite(spr_bench_example, 2, dx, dy)
 			dy += 144 + 15
@@ -785,7 +785,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			break
 		}
 			
-		case e_workbench.ENVIRONMENT:
+		case e_bench.ENVIRONMENT:
 		{
 			draw_sprite(spr_bench_example, 4, dx, dy)
 			dy += 144 + 15
@@ -804,7 +804,7 @@ function bench_draw_settings(bx, by, bw, bh)
 	tab_next()
 	dy += 4
 	
-	var edit = (bench_tab = e_workbench.PARTICLE_SPAWNER && setting_advanced_mode);
+	var edit = (bench_tab = e_bench.PARTICLE_SPAWNER && setting_advanced_mode);
 	var wid = (edit ? dw/2 - 4 : dw);
 	
 	if (draw_button_label("benchcreate", edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, icons.ASSET_ADD, e_button.PRIMARY, null, e_anchor.LEFT, createdisabled))

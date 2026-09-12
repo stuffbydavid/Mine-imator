@@ -4,7 +4,7 @@
 function bench_click(tab)
 {
 	// Double clicked, create asset
-	if (bench_tab = tab && tab != e_workbench.WORLD && bench_show_ani_type = "")
+	if (bench_tab = tab && tab != e_bench.WORLD && bench_show_ani_type = "")
 	{
 		action_bench_create()
 		bench_show_ani_type = "hide"
@@ -18,7 +18,7 @@ function bench_click(tab)
 	{
 		switch (tab)
 		{
-			case e_workbench.CHARACTER:
+			case e_bench.CHARACTER:
 			{
 				type = e_temp_type.CHARACTER
 				
@@ -37,7 +37,7 @@ function bench_click(tab)
 				break
 			}
 			
-			case e_workbench.EQUIPMENT:
+			case e_bench.EQUIPMENT:
 			{
 				type = e_temp_type.EQUIPMENT
 				
@@ -56,7 +56,7 @@ function bench_click(tab)
 				break
 			}
 			
-			case e_workbench.SPECIAL_BLOCK:
+			case e_bench.SPECIAL_BLOCK:
 			{
 				type = e_temp_type.SPECIAL_BLOCK
 				
@@ -76,7 +76,7 @@ function bench_click(tab)
 				break
 			}
 			
-			case e_workbench.MODEL_PART:
+			case e_bench.MODEL_PART:
 			{
 				type = e_temp_type.MODEL_PART
 				
@@ -92,28 +92,28 @@ function bench_click(tab)
 				break
 			}
 			
-			case e_workbench.BLOCK:
+			case e_bench.BLOCK:
 			{
 				type = e_temp_type.BLOCK
 				temp_update_block()
 				break
 			}
 			
-			case e_workbench.ITEM:
+			case e_bench.ITEM:
 			{
 				type = e_temp_type.ITEM
 				render_generate_item()
 				break
 			}
 			
-			case e_workbench.SHAPE:
+			case e_bench.SHAPE:
 			{
 				type = e_tl_type.SHAPE
 				temp_update_shape()
 				break
 			}
 			
-			case e_workbench.MODEL:
+			case e_bench.MODEL:
 			{
 				type = e_temp_type.MODEL
 				model_tex = null
@@ -131,20 +131,20 @@ function bench_click(tab)
 				break
 			}
 
-			case e_workbench.WORLD:
-			case e_workbench.SCHEMATIC:			type = e_temp_type.SCENERY break
-			case e_workbench.TEXT:				type = e_temp_type.TEXT break
-			case e_workbench.PATH:				type = e_tl_type.PATH break
-			case e_workbench.CAMERA:			type = e_tl_type.CAMERA break
-			case e_workbench.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER break
-			case e_workbench.LIGHT_SOURCE:		type = e_tl_type.LIGHT_SOURCE break
-			case e_workbench.AUDIO:				type = e_tl_type.AUDIO break
-			case e_workbench.ENVIRONMENT:		type = e_tl_type.BACKGROUND break
+			case e_bench.WORLD:
+			case e_bench.SCHEMATIC:			type = e_temp_type.SCENERY break
+			case e_bench.TEXT:				type = e_temp_type.TEXT break
+			case e_bench.PATH:				type = e_tl_type.PATH break
+			case e_bench.CAMERA:			type = e_tl_type.CAMERA break
+			case e_bench.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER break
+			case e_bench.LIGHT_SOURCE:		type = e_tl_type.LIGHT_SOURCE break
+			case e_bench.AUDIO:				type = e_tl_type.AUDIO break
+			case e_bench.ENVIRONMENT:		type = e_tl_type.BACKGROUND break
 		}
 	}
 	
 	// Switch to particles
-	if (bench_tab = e_workbench.PARTICLE_SPAWNER)
+	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 		bench_update_particles_list()
 	
 	with (bench_settings.preview)
@@ -156,7 +156,7 @@ function bench_click(tab)
 	
 	bench_clear()
 	
-	if (tab = e_workbench.SCHEMATIC)
+	if (tab = e_bench.SCHEMATIC)
 		action_bench_schematic_folder(bench_schematic_folder)
 		
 	bench_settings_ani = 0

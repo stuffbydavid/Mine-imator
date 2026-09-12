@@ -51,25 +51,25 @@ function action_bench_create(edit = false)
 
 		switch (bench_tab)
 		{
-			case e_workbench.CHARACTER:			temptype = e_temp_type.CHARACTER break
-			case e_workbench.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT break
-			case e_workbench.MODEL:				temptype = e_temp_type.MODEL break
-			case e_workbench.MODEL_PART:		temptype = e_temp_type.MODEL_PART break
-			case e_workbench.ITEM:				temptype = e_temp_type.ITEM break
-			case e_workbench.SCHEMATIC:			temptype = e_temp_type.SCENERY break
-			case e_workbench.BLOCK:				temptype = e_temp_type.BLOCK break
-			case e_workbench.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK break
-			case e_workbench.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type break
-			case e_workbench.TEXT:				temptype = e_temp_type.TEXT break
-			case e_workbench.PATH:				tltype = e_tl_type.PATH break
-			case e_workbench.CAMERA:			tltype = e_tl_type.CAMERA break
-			case e_workbench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
-			case e_workbench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
-			case e_workbench.AUDIO:				tltype = e_tl_type.AUDIO break
-			case e_workbench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
+			case e_bench.CHARACTER:			temptype = e_temp_type.CHARACTER break
+			case e_bench.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT break
+			case e_bench.MODEL:				temptype = e_temp_type.MODEL break
+			case e_bench.MODEL_PART:		temptype = e_temp_type.MODEL_PART break
+			case e_bench.ITEM:				temptype = e_temp_type.ITEM break
+			case e_bench.SCHEMATIC:			temptype = e_temp_type.SCENERY break
+			case e_bench.BLOCK:				temptype = e_temp_type.BLOCK break
+			case e_bench.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK break
+			case e_bench.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type break
+			case e_bench.TEXT:				temptype = e_temp_type.TEXT break
+			case e_bench.PATH:				tltype = e_tl_type.PATH break
+			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
+			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
+			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
+			case e_bench.AUDIO:				tltype = e_tl_type.AUDIO break
+			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
 		}
 
-		if (bench_tab = e_workbench.SCHEMATIC)
+		if (bench_tab = e_bench.SCHEMATIC)
 			action_bench_schematic_create_resource()
 
 		if (tltype != null) // Timeline
@@ -81,7 +81,7 @@ function action_bench_create(edit = false)
 				spawn_amount++
 			}
 			
-			if (bench_tab = e_workbench.CAMERA)
+			if (bench_tab = e_bench.CAMERA)
 				view_second.show = true
 		}
 		else if (temptype != null)
@@ -305,7 +305,7 @@ function action_bench_create(edit = false)
 			log("Created", tl_type_name_list[|tl.type])
 
 			// Encourage parenting armor to a character
-			if (!setting_advanced_mode && bench_tab = e_workbench.EQUIPMENT)
+			if (!setting_advanced_mode && bench_tab = e_bench.EQUIPMENT)
 			{
 				toast_new(e_toast.INFO, text_get("alertequiparmor"))
 				toast_last.dismiss_time = 15
@@ -316,7 +316,7 @@ function action_bench_create(edit = false)
 	if (!history_redo && edit)
 		tab_template_editor_update_ptype_list()
 	
-	if (bench_tab = e_workbench.PARTICLE_SPAWNER)
+	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 	{
 		if (!history_undo && !history_redo)
 			bench_update_particles_list()

@@ -6,7 +6,7 @@ function settings_startup()
 	
 	setting_advanced_mode = dev_mode_advanced
 	
-	setting_minecraft_assets_version = minecraft_version
+	setting_minecraft_assets_version = minecraft_assets_version
 	setting_minecraft_assets_new_version = ""
 	setting_minecraft_assets_new_format = 0
 	setting_minecraft_assets_new_changes = ""
