@@ -12,6 +12,9 @@ function history_save_bench()
 	{
 		temp_get_save_ids()
 		
+		// Save text
+		bench_text = app.bench_settings.text
+		
 		// Save particle types
 		if (type = e_temp_type.PARTICLE_SPAWNER)
 		{

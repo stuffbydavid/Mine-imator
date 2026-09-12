@@ -21,6 +21,8 @@ function preview_event_create()
 	last_select = null
 	texture = null
 	reset_view = false
+	view_width = 0
+	view_height = 0
 	sound_play_index = null
 	sound_playing = false
 	

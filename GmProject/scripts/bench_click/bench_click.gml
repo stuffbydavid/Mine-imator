@@ -194,6 +194,11 @@ function bench_click(tab)
 	
 	if (tab = e_bench.SCHEMATIC)
 		action_bench_schematic_folder(bench_schematic_folder)
+	else if (tab = e_bench.TEXT)
+	{
+		preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font.font)
+		window_focus = string(bench_settings.tbx_text)
+	}
 		
 	bench_settings_ani = 0
 }

@@ -11,9 +11,9 @@ function tab_timeline_editor_info()
 	if (tl_edit.type = e_temp_type.TEXT)
 	{
 		// Text
-		tab_control_textfield(true, 76)
+		tab_control_textfield(true, 126)
 		tab.info.tbx_text.text = tl_edit.text
-		draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.info.tbx_text, action_tl_text, "", "top")
+		draw_textfield("timelineeditortext", dx, dy, dw, 126, tab.info.tbx_text, action_tl_text, "", "top")
 		tab_next()
 	}
 	

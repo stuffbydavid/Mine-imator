@@ -29,6 +29,9 @@ function history_restore_bench(save)
 		}
 		temp_creator = app
 		
+		// Restore text
+		text = save.bench_text
+		
 		// Restore particle types
 		if (type = e_temp_type.PARTICLE_SPAWNER) 
 		{

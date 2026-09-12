@@ -718,6 +718,13 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 		case e_bench.TEXT:
 		{
+			// Text
+			var labelhei = 32;
+			tab_control(126 + labelhei)
+			bench_settings.tbx_text.text = bench_settings.text
+			draw_textfield("benchtexttext", dx, dy, dw, 126, bench_settings.tbx_text, action_bench_text, default_text, "benchtop")
+			tab_next()
+
 			var capwid;
 			capwid = text_caption_width("benchtextfont")
 				

@@ -193,6 +193,10 @@ function action_bench_create(edit = false)
 					}
 					
 					tl = temp_animate()
+					
+					if (type = e_temp_type.TEXT && other.text != "")
+						tl.text = other.text
+					
 					sortlist_add(app.lib_list, id)
 				}
 				
@@ -326,6 +330,9 @@ function action_bench_create(edit = false)
 		update = true
 	}
 	
+	if (!history_undo && bench_tab = e_bench.TEXT)
+		bench_settings.text = ""
+
 	tl_update_list()
 	tl_update_matrix()
 	lib_preview.update = true

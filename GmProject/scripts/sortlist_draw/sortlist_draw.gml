@@ -30,7 +30,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	// Item height
 	itemh = ui_small_height
 	
-	// Column height
+	// Column header height
 	headerh = slist.header_show ? (ui_small_height + 8) : 0
 	
 	// Draw filter

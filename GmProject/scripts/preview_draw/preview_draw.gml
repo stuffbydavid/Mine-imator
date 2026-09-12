@@ -15,6 +15,8 @@ function preview_draw(preview, xx, yy, width, height)
 	
 	mouseon = app_mouse_box(xx, yy, width, height)
 	setplaytime = null
+	preview.view_width = width
+	preview.view_height = height
 	
 	// Background
 	draw_box(xx, yy, width, height, false, c_level_bottom, 1)
@@ -493,7 +495,7 @@ function preview_draw(preview, xx, yy, width, height)
 							draw_set_alpha(alpha * a_text_main)
 							draw_set_halign(fa_center)
 							draw_set_valign(fa_middle)
-							draw_text_transformed(dx, dy, "AaBbCc", zoom, zoom, 0)
+							draw_text_transformed(dx, dy, default_text, zoom, zoom, 0)
 							draw_set_valign(fa_top)
 							draw_set_halign(fa_left)
 							draw_set_color(color)

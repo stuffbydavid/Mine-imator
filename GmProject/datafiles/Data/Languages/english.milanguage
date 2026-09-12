@@ -614,6 +614,7 @@
 		"shapetexmaptip": "Whether the faces of the shape should use parts of a texture image.",
 		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
+		"texttext": "Text",
 		"textfont": "Font",
 		"text3d": "3D",
 		"textfacecamera": "Face camera",

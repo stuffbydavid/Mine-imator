@@ -544,6 +544,11 @@ function view_draw(view)
 			window_busy = "bench"
 			bench_settings_ani = 1
 			bench_open = false
+			if (bench_tab = e_bench.TEXT)
+			{
+				preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font.font)
+				bench_settings.preview.update = true
+			}
 		}
 		
 		if (bench_rotate_ani = 0 && benchempty && bench_show_ani = 0 && bench_show_ani_type = "")

@@ -93,6 +93,8 @@ function app_startup_interface_bench()
 		block_tex_material = mc_res
 		block_tex_normal = mc_res
 		text_font = mc_res
+		text = ""
+		tbx_text = new_textbox(false, 0, "")
 		particle_preset = ""
 		type = e_temp_type.CHARACTER
 		shape_type = e_shape_type.CUBE
