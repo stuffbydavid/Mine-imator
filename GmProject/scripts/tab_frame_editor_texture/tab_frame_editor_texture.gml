@@ -14,14 +14,15 @@ function tab_frame_editor_texture()
 		switch (tl_edit.type)
 		{
 			case e_tl_type.CHARACTER:
+			case e_tl_type.EQUIPMENT:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 				
 				var modelfile = tl_edit.temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_tl_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				with (tl_edit.temp)

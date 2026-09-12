@@ -2,7 +2,7 @@
 /// @arg value
 /// @arg add
 
-function action_tl_path_detail(value, add)
+function action_tl_path_detail(val, add)
 {
 	if (history_undo)
 	{
@@ -42,9 +42,9 @@ function action_tl_path_detail(value, add)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.path_detail, other.path_detail * add + value)
+				history_save_var(other.id, other.path_detail, other.path_detail * add + val)
 			
-			id.path_detail = id.path_detail * add + value
+			id.path_detail = id.path_detail * add + val
 			path_update = true
 		}
 	}

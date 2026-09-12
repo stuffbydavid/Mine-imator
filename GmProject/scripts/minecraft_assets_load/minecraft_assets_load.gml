@@ -47,8 +47,13 @@ function minecraft_assets_load()
 				with (mc_res)
 					minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 				
-				app.background_biome = biome_list[|2].name
+				if (find_biome(default_biome))
+					app.background_biome = default_biome
+				else
+					app.background_biome = biome_list[|1].name
+				
 				app.background_foliage_color = c_plains_biome_foliage
+				app.background_dry_foliage_color = c_plains_biome_dry_foliage
 				app.background_grass_color = c_plains_biome_grass
 				app.background_water_color = c_plains_biome_water
 				
@@ -70,7 +75,7 @@ function minecraft_assets_load()
 			{
 				// Model textures
 				var modeltextureslist = load_assets_map[?"model_textures"];
-				if (is_undefined(modeltextureslist))
+				if (!ds_list_valid(modeltextureslist))
 				{
 					log("No model textures found")
 					return false
@@ -79,34 +84,69 @@ function minecraft_assets_load()
 				ds_list_copy(model_texture_list, modeltextureslist)
 				
 				// Block textures
-				var blocktextureslist = load_assets_map[?"block_textures"];
-				if (is_undefined(blocktextureslist))
+				var blocksheetsizekeylist = array("block_sheet_size", "block_32_sheet_size", "block_64_sheet_size")
+				var blocktexturekeylist = array("block_textures", "block_32_textures", "block_64_textures")
+				for (var size = 0; size < e_block_sheet.static_amount; size++)
 				{
-					log("No block textures found")
-					return false
+					var sheetsize = load_assets_map[?blocksheetsizekeylist[size]];
+					if (!ds_list_valid(sheetsize) || ds_list_size(sheetsize) < 2)
+					{
+						if (size = e_block_sheet.STATIC16)
+						{
+							log("No block sheet size found, defaulting to [32,32]")
+							minecraft_block_sheet_size[size] = vec2(32, 32)
+						}
+					}
+					else
+						minecraft_block_sheet_size[size] = vec2(sheetsize[|0], sheetsize[|1])
+
+					var textureslist = load_assets_map[?blocktexturekeylist[size]];
+					if (!ds_list_valid(textureslist))
+					{
+						if (size = e_block_sheet.STATIC16)
+						{
+							log("No block textures found")
+							return false
+						}
+						ds_list_clear(block_texture_list[size])
+					}
+					else
+						ds_list_copy(block_texture_list[size], textureslist)
 				}
 				
-				ds_list_copy(block_texture_list, blocktextureslist)
-				
 				// Animated block textures
+				var blockanimatedsheetsize = load_assets_map[?"block_animated_sheet_size"];
+				if (!ds_list_valid(blockanimatedsheetsize) || ds_list_size(blockanimatedsheetsize) < 3)
+				{
+					log("No animated block sheet size found, defaulting to [32,2,64]")
+					minecraft_block_sheet_size[e_block_sheet.ANIMATED] = vec2(32, 2)
+					minecraft_block_animated_sheet_frame_count = 64
+				}
+				else
+				{
+					minecraft_block_sheet_size[e_block_sheet.ANIMATED] = vec2(blockanimatedsheetsize[|0], blockanimatedsheetsize[|1])
+					minecraft_block_animated_sheet_frame_count = blockanimatedsheetsize[|2]
+				}
+				
 				var blocktexturesanimatedlist = load_assets_map[?"block_textures_animated"];
-				if (is_undefined(blocktexturesanimatedlist))
+				if (!ds_list_valid(blocktexturesanimatedlist))
 				{
 					log("No animated block textures found")
 					return false
 				}
 				
 				ds_list_copy(block_texture_ani_list, blocktexturesanimatedlist)
+				minecraft_assets_build_block_texture_slot_maps()
 				
 				// Block texture colors
-				var blocktexturescolorlist = load_assets_map[?"block_textures_color"];
-				if (is_undefined(blocktexturescolorlist))
+				var blocktexturescolormap = load_assets_map[?"block_textures_color"];
+				if (!ds_map_valid(blocktexturescolormap))
 				{
 					log("No block texture colors found")
 					return false
 				}
 				
-				ds_map_copy(block_texture_color_map, blocktexturescolorlist)
+				ds_map_copy(block_texture_color_map, blocktexturescolormap)
 				
 				// Convert from hex
 				var key = ds_map_find_first(block_texture_color_map);
@@ -118,31 +158,55 @@ function minecraft_assets_load()
 				}
 				
 				// Block texture preview settings
-				var blocktexturepreview = load_assets_map[?"block_textures_preview"];
-				if (!is_undefined(blocktexturepreview))
-					ds_map_copy(block_texture_preview_map, blocktexturepreview)
+				var blocktexturepreviewmap = load_assets_map[?"block_textures_preview"];
+				if (ds_map_valid(blocktexturepreviewmap))
+					ds_map_copy(block_texture_preview_map, blocktexturepreviewmap)
 				
 				// Item textures
-				var itemtextureslist = load_assets_map[?"item_textures"];
-				if (is_undefined(itemtextureslist))
+				var itemsheetsizekeylist = array("item_sheet_size", "item_32_sheet_size")
+				var itemtexturekeylist = array("item_textures", "item_32_textures")
+				for (var size = 0; size < e_item_sheet.amount; size++)
 				{
-					log("No item textures found")
-					return false
+					var itemsheetsize = load_assets_map[?itemsheetsizekeylist[size]];
+					if (!ds_list_valid(itemsheetsize) || ds_list_size(itemsheetsize) < 2)
+					{
+						if (size = e_item_sheet.SIZE16)
+						{
+							log("No item sheet size found, defaulting to [32,32]")
+							minecraft_item_sheet_size[size] = vec2(32, 32)
+						}
+					}
+					else
+						minecraft_item_sheet_size[size] = vec2(itemsheetsize[|0], itemsheetsize[|1])
+
+					var itemtextureslist = load_assets_map[?itemtexturekeylist[size]];
+					if (!ds_list_valid(itemtextureslist))
+					{
+						if (size = e_item_sheet.SIZE16)
+						{
+							log("No item textures found")
+							return false
+						}
+						ds_list_clear(item_texture_list[size])
+					}
+					else
+						ds_list_copy(item_texture_list[size], itemtextureslist)
 				}
-				
-				ds_list_copy(item_texture_list, itemtextureslist)
+				with (mc_res)
+					item_sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
 				
 				// Particle textures
 				var particletextureslist = load_assets_map[?"particle_textures"];
-				if (is_undefined(particletextureslist))
+				if (!ds_list_valid(particletextureslist))
 				{
 					log("No particle textures found")
 					return false
 				}
 				
-				if (is_undefined(load_assets_map[?"particles"]))
+				var particleslist = load_assets_map[?"particles"];
+				if (!ds_list_valid(particleslist))
 				{
-					log("No particle list found")
+					log("No particles found")
 					return false
 				}
 				
@@ -155,14 +219,24 @@ function minecraft_assets_load()
 					res_load_pack_block_textures()
 					
 					res_load_pack_item_textures("diffuse", "")
-					item_sheet_texture_material = sprite_duplicate(spr_default_material)
-					item_sheet_tex_normal = sprite_duplicate(spr_default_normal)
+					for (var size = 0; size < e_item_sheet.amount; size++)
+					{
+						if (item_sheet_texture[size] != null)
+						{
+							if (item_sheet_texture_material[size] != null)
+								texture_free(item_sheet_texture_material[size])
+							if (item_sheet_texture_normal[size] != null)
+								texture_free(item_sheet_texture_normal[size])
+							item_sheet_texture_material[size] = sprite_duplicate(spr_default_material)
+							item_sheet_texture_normal[size] = sprite_duplicate(spr_default_normal)
+						}
+					}
 					
-					minecraft_assets_load_particles(load_assets_map[?"particles"])
+					minecraft_assets_load_particles(particleslist)
 					res_load_pack_particle_textures()
 					
 					res_load_pack_misc()
-					res_update_colors(biome_list[|2].name)
+					res_update_colors(biome_list[|1].name)
 				}
 				
 				load_assets_stage = "misc"
@@ -174,13 +248,12 @@ function minecraft_assets_load()
 			case "misc":
 			{	
 				// Pattern designs
-				if (is_undefined(load_assets_map[?"patterns"]))
+				var patternlist = load_assets_map[?"patterns"];
+				if (!ds_list_valid(patternlist))
 				{
 					log("No pattern designs list found")
 					return false
 				}
-				
-				var patternlist = load_assets_map[?"patterns"];
 				
 				for (var i = 0; i < ds_list_size(patternlist); i++)
 				{
@@ -190,36 +263,37 @@ function minecraft_assets_load()
 				}
 				
 				// Sherds
-				if (is_undefined(load_assets_map[?"sherds"]))
+				var sherdsmap = load_assets_map[?"sherds"];
+				if (!ds_map_valid(sherdsmap))
 				{
 					log("No sherd keys found")
 					return false
 				}
 				else
-					ds_map_copy(minecraft_sherd_map, load_assets_map[?"sherds"])
+					ds_map_copy(minecraft_sherd_map, sherdsmap)
 				
 				// Armor trims
-				if (is_undefined(load_assets_map[?"armor"]))
+				var armormap = load_assets_map[?"armor_trims"];
+				if (!ds_map_valid(armormap))
+					armormap = load_assets_map[?"armor"];
+				if (!ds_map_valid(armormap))
 				{
 					log("No armor data found")
 					return false
 				}
 				else
 				{
-					var armormap = load_assets_map[?"armor"];
-					
 					ds_list_copy(minecraft_armor_trim_pattern_list, armormap[?"pattern"])
 					ds_list_copy(minecraft_armor_trim_material_list, armormap[?"material"])
 				}
 				
 				// Map colors
-				if (is_undefined(load_assets_map[?"map_colors"]))
+				var colors = load_assets_map[?"map_colors"];
+				if (!ds_list_valid(colors))
 				{
 					log("No map colors found")
 					return false
 				}
-				
-				var colors = load_assets_map[?"map_colors"];
 				
 				var size, col, s1, s2, s3;
 				size = ds_list_size(colors)
@@ -243,7 +317,7 @@ function minecraft_assets_load()
 				// Swatches
 				var swatches = load_assets_map[?"swatches"];
 				
-				if (is_undefined(swatches))
+				if (!ds_list_valid(swatches))
 				{
 					log("No swatches found")
 					return false
@@ -259,7 +333,7 @@ function minecraft_assets_load()
 					s.color_names = []
 					s.map = ds_map_create()
 					
-					var colors = swatch[?"colors"];
+					colors = swatch[?"colors"];
 					
 					for (var j = 0; j < ds_list_size(colors); j++)
 					{
@@ -290,7 +364,7 @@ function minecraft_assets_load()
 			{
 				// Characters
 				var characterslist = load_assets_map[?"characters"];
-				if (is_undefined(characterslist))
+				if (!ds_list_valid(characterslist))
 				{
 					log("No character list found")
 					return false
@@ -314,7 +388,7 @@ function minecraft_assets_load()
 				
 				// Special blocks
 				var specialblockslist = load_assets_map[?"special_blocks"];
-				if (is_undefined(specialblockslist))
+				if (!ds_list_valid(specialblockslist))
 				{
 					log("No special block list found")
 					return false
@@ -335,6 +409,26 @@ function minecraft_assets_load()
 					ds_list_add(special_block_list, model)
 				}
 				debug_timer_stop("Load special blocks")
+
+				// Equipment
+				var equiplist = load_assets_map[?"equipment"];
+				if (ds_list_valid(equiplist))
+				{
+					debug_timer_start()
+					for (var i = 0; i < ds_list_size(equiplist); i++)
+					{
+						var model = model_load(equiplist[|i], load_assets_dir + mc_special_block_directory);
+						if (!model) // Something went wrong!
+						{
+							log("Could not load model")
+							continue
+						}
+
+						model_name_map[?model.name] = model
+						ds_list_add(equipment_list, model)
+					}
+					debug_timer_stop("Load equipment")
+				}
 				
 				debug_timer_start()
 				load_assets_stage = "blocks"
@@ -347,7 +441,7 @@ function minecraft_assets_load()
 			{
 				// Blocks
 				var blockslist = load_assets_map[?"blocks"];
-				if (is_undefined(blockslist))
+				if (!ds_list_valid(blockslist))
 				{
 					log("No block list found")
 					return false
@@ -380,8 +474,13 @@ function minecraft_assets_load()
 				
 				load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blockslist))
 				
-				if (dev_mode_skip_blocks)
+				if (dev_mode_skip_blocks && load_assets_block_index >= 20)
 					load_assets_stage = "done"
+				
+				// Skip to the last 10 blocks to debug newer blocks
+				//if (dev_mode_skip_blocks && load_assets_stage != "done")
+				//	load_assets_block_index = (ds_list_size(blockslist) - 10)
+				
 				if (load_assets_stage = "done")
 				{
 					// Flowing Water/Lava
@@ -414,10 +513,10 @@ function minecraft_assets_load()
 							newidnomc = ""
 						block = null
 						statevars = null
-						if (is_string(newid) && !is_undefined(block_id_map[?newid]))
+						if (is_string(newid) && ds_map_exists(block_id_map, newid))
 						{
 							block = block_id_map[?newid]
-							if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+							if (ds_map_valid(block.id_state_vars_map) && ds_map_exists(block.id_state_vars_map, newid))
 								statevars = block.id_state_vars_map[?newid]
 						}
 						
@@ -433,7 +532,7 @@ function minecraft_assets_load()
 						}
 						
 						// Look for block states
-						if (!is_undefined(curmap[?"data"]))
+						if (ds_map_valid(curmap[?"data"]))
 							minecraft_assets_load_legacy_block_data(curid, curmap[?"data"], 0, 1)
 						
 						// Get block-specific state IDs
@@ -463,7 +562,7 @@ function minecraft_assets_load()
 						var unusedlist = ds_list_create()
 						
 						for (var f = 0; f < array_length(filesarr); f++)
-							if (is_undefined(load_assets_state_file_map[?filename_name(filesarr[f])]))
+							if (!ds_map_exists(load_assets_state_file_map, filename_name(filesarr[f])))
 								ds_list_add(unusedlist, filesarr[f])
 						
 						if (ds_list_size(unusedlist) > 0)
@@ -480,7 +579,7 @@ function minecraft_assets_load()
 						ds_list_clear(unusedlist)
 						
 						for (var f = 0; f < array_length(filesarr); f++)
-							if (is_undefined(load_assets_model_file_map[?filename_name(filesarr[f])]))
+							if (!ds_map_exists(load_assets_model_file_map, filename_name(filesarr[f])))
 								ds_list_add(unusedlist, filesarr[f])
 						
 						if (ds_list_size(unusedlist) > 0)
@@ -501,7 +600,9 @@ function minecraft_assets_load()
 					ds_map_destroy(load_assets_model_file_map)
 					ds_map_destroy(load_assets_map)
 					ds_map_destroy(load_assets_type_map)
-					buffer_delete(load_assets_block_preview_buffer)
+					for (var size = 0; size < e_block_sheet.static_amount; size++)
+						if (load_assets_block_preview_buffer[size] != null)
+							buffer_delete(load_assets_block_preview_buffer[size])
 					buffer_delete(load_assets_block_preview_ani_buffer)
 					
 					log("Loaded assets successfully")
@@ -512,6 +613,188 @@ function minecraft_assets_load()
 			}
 		}
 		
+		window_taskbar_progress_value_set(load_assets_progress)
 		return true
 	}
+}
+
+/// minecraft_assets_build_block_texture_slot_maps()
+/// @desc Builds face texture lookups while preserving the render-model fallback order.
+function minecraft_assets_build_block_texture_slot_maps()
+{
+	ds_map_clear(mc_assets.block_texture_slot_map)
+	ds_map_clear(mc_assets.block_texture_opaque_slot_map)
+
+	var staticcount = ds_list_size(mc_assets.block_texture_list[e_block_sheet.STATIC16])
+	var animatedcount = ds_list_size(mc_assets.block_texture_ani_list)
+	var texturename, basename
+
+	// Each value encodes its texture-sheet page and slot. Add fallbacks from lowest
+	// to highest priority. Traversing backwards preserves
+	// ds_list_find_index's first-match behavior when a list has duplicate names.
+	for (var t = animatedcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_ani_list[|t]
+		basename = minecraft_assets_block_texture_tag_base(texturename, " nocull")
+		if (!is_undefined(basename))
+		{
+			mc_assets.block_texture_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.ANIMATED, t)
+			mc_assets.block_texture_opaque_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.ANIMATED, t)
+		}
+	}
+
+	for (var t = animatedcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_ani_list[|t]
+		basename = minecraft_assets_block_texture_tag_base(texturename, " opaque")
+		if (!is_undefined(basename))
+		{
+			mc_assets.block_texture_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.ANIMATED, t)
+			mc_assets.block_texture_opaque_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.ANIMATED, t)
+		}
+	}
+
+	for (var t = animatedcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_ani_list[|t]
+		mc_assets.block_texture_slot_map[?texturename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.ANIMATED, t)
+		mc_assets.block_texture_opaque_slot_map[?texturename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.ANIMATED, t)
+	}
+
+	for (var t = staticcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_list[e_block_sheet.STATIC16][|t]
+		mc_assets.block_texture_slot_map[?texturename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+		mc_assets.block_texture_opaque_slot_map[?texturename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+	}
+
+	for (var t = staticcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_list[e_block_sheet.STATIC16][|t]
+		basename = minecraft_assets_block_texture_tag_base(texturename, " nocull")
+		if (!is_undefined(basename))
+		{
+			mc_assets.block_texture_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+			mc_assets.block_texture_opaque_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+		}
+	}
+
+	for (var t = staticcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_list[e_block_sheet.STATIC16][|t]
+		basename = minecraft_assets_block_texture_tag_base(texturename, " noalpha")
+		if (!is_undefined(basename))
+		{
+			mc_assets.block_texture_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+			mc_assets.block_texture_opaque_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+		}
+	}
+
+	for (var t = staticcount - 1; t >= 0; t--)
+	{
+		texturename = mc_assets.block_texture_list[e_block_sheet.STATIC16][|t]
+		basename = minecraft_assets_block_texture_tag_base(texturename, " opaque")
+		if (!is_undefined(basename))
+			mc_assets.block_texture_opaque_slot_map[?basename] = minecraft_assets_block_texture_slot_encode(e_block_sheet.STATIC16, t)
+	}
+
+	// High-resolution pages
+	for (var size = e_block_sheet.STATIC32; size < e_block_sheet.static_amount; size++)
+	{
+		var texturecount = ds_list_size(mc_assets.block_texture_list[size])
+		for (var t = texturecount - 1; t >= 0; t--)
+		{
+			texturename = mc_assets.block_texture_list[size][|t]
+			mc_assets.block_texture_slot_map[?texturename] = minecraft_assets_block_texture_slot_encode(size, t)
+			mc_assets.block_texture_opaque_slot_map[?texturename] = minecraft_assets_block_texture_slot_encode(size, t)
+		}
+	}
+}
+
+/// minecraft_assets_block_texture_slot_encode(e_block_sheet, Real)
+/// @desc Encodes a texture-sheet page and its cell slot for the texture lookup maps.
+function minecraft_assets_block_texture_slot_encode(texturepage, slot)
+{
+	return slot * e_block_sheet.amount + texturepage
+}
+
+/// minecraft_assets_texture_picker_slot_decode(Real, Array)
+/// @desc Returns the sheet index and sheet-local slot for a contiguous picker slot.
+function minecraft_assets_texture_picker_slot_decode(slot, slotlists)
+{
+	for (var sheet = 0; sheet < array_length(slotlists); sheet++)
+	{
+		var slotcount = ds_list_size(slotlists[sheet])
+		if (slot < slotcount)
+			return array(sheet, slot)
+		slot -= slotcount
+	}
+
+	return array(-1, -1)
+}
+
+/// minecraft_assets_texture_picker_slot_find(StringType, Array)
+/// @desc Returns a contiguous picker slot for a texture name, or -1 when absent.
+function minecraft_assets_texture_picker_slot_find(texturename, slotlists)
+{
+	var slotoffset = 0
+	for (var sheet = 0; sheet < array_length(slotlists); sheet++)
+	{
+		var slot = ds_list_find_index(slotlists[sheet], texturename)
+		if (slot >= 0)
+			return slotoffset + slot
+		slotoffset += ds_list_size(slotlists[sheet])
+	}
+
+	return -1
+}
+
+/// minecraft_assets_block_texture_picker_slot_decode(Real)
+/// @desc Decodes a contiguous block picker slot, including the animated page.
+function minecraft_assets_block_texture_picker_slot_decode(slot)
+{
+	for (var sheet = 0; sheet < e_block_sheet.static_amount; sheet++)
+	{
+		var slotcount = ds_list_size(mc_assets.block_texture_list[sheet])
+		if (slot < slotcount)
+			return array(sheet, slot)
+		slot -= slotcount
+	}
+
+	if (slot < ds_list_size(mc_assets.block_texture_ani_list))
+		return [e_block_sheet.ANIMATED, slot]
+	return array(-1, -1)
+}
+
+/// minecraft_assets_block_texture_picker_slot_find(StringType)
+/// @desc Returns the contiguous block picker slot for a texture name, or -1 when absent.
+function minecraft_assets_block_texture_picker_slot_find(texturename)
+{
+	var slotoffset = 0
+	for (var sheet = 0; sheet < e_block_sheet.static_amount; sheet++)
+	{
+		var slot = ds_list_find_index(mc_assets.block_texture_list[sheet], texturename)
+		if (slot >= 0)
+			return slotoffset + slot
+		slotoffset += ds_list_size(mc_assets.block_texture_list[sheet])
+	}
+
+	var slot = ds_list_find_index(mc_assets.block_texture_ani_list, texturename)
+	return slot >= 0 ? slotoffset + slot : -1
+}
+
+/// minecraft_assets_block_texture_tag_base(StringType, StringType)
+/// @desc Returns a texture name without a trailing render tag, if it has one.
+function minecraft_assets_block_texture_tag_base(texturename, tag)
+{
+	var taglength = string_length(tag)
+	var namelength = string_length(texturename)
+	if (namelength <= taglength)
+		return undefined
+
+	var tagstart = namelength - taglength + 1
+	if (string_copy(texturename, tagstart, taglength) != tag)
+		return undefined
+
+	return string_delete(texturename, tagstart, taglength)
 }

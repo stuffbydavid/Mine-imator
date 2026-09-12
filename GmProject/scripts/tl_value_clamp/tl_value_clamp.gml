@@ -53,9 +53,13 @@ function tl_value_clamp(vid, val)
 		case e_value.BG_SKY_CLOUDS_COLOR:
 		case e_value.BG_SUNLIGHT_COLOR:
 		case e_value.BG_AMBIENT_COLOR:
+		case e_value.BG_NIGHT_SKY_COLOR:
+		case e_value.BG_NIGHT_SKY_CLOUDS_COLOR:
+		case e_value.BG_NIGHT_SKY_STARS_COLOR:
 		case e_value.BG_NIGHT_COLOR:
 		case e_value.BG_GRASS_COLOR:
 		case e_value.BG_FOLIAGE_COLOR:
+		case e_value.BG_DRY_FOLIAGE_COLOR:
 		case e_value.BG_WATER_COLOR:
 		case e_value.BG_LEAVES_OAK_COLOR:
 		case e_value.BG_LEAVES_SPRUCE_COLOR:
@@ -71,7 +75,6 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_FOV: return clamp(val, 1, 170)
 		case e_value.CAM_BLADE_AMOUNT: return clamp(val, 0, 32)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
-		case e_value.CAM_ROTATE_ANGLE_Z: return clamp(val, -89.9, 89.9)
 		case e_value.CAM_EXPOSURE:
 		case e_value.CAM_GAMMA:
 		case e_value.BG_SUNLIGHT_STRENGTH:

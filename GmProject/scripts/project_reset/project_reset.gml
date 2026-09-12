@@ -24,14 +24,15 @@ function project_reset()
 	project_name = ""
 	project_author = ""
 	project_description = ""
+	
 	project_video_width = 1280
 	project_video_height = 720
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = true
 	project_render_settings = render_default
 	project_tempo = 24
-	project_grid_rows = 3
 	project_grid_columns = 3
+	project_grid_rows = 3
 	view_main.camera = -4
 	view_second.camera = -5
 	

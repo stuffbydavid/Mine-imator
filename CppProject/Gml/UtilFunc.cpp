@@ -92,6 +92,11 @@ namespace CppProject
 		return true;
 	}
 
+	IntType file_get_size(StringType filename)
+	{
+		return QFileInfo(filename).size();
+	}
+
 	StringType base64_decode(StringType str)
 	{
 		return QByteArray::fromBase64(str.ToUtf8(), QByteArray::Base64Encoding);
@@ -117,6 +122,16 @@ namespace CppProject
 	void game_end()
 	{
 		throw AppEndRequest();
+	}
+
+	IntType game_get_speed(IntType)
+	{
+		return App->targetFps;
+	}
+
+	void game_set_speed(IntType, IntType fps)
+	{
+		App->targetFps = fps;
 	}
 
 	void gc_collect()
@@ -447,10 +462,12 @@ namespace CppProject
 	void thread_task_begin()
 	{
 		StringType::BeginOmp();
+		VecType::BeginOmp();
 	}
 
 	void thread_task_end()
 	{
+		VecType::EndOmp();
 		StringType::EndOmp();
 	}
 

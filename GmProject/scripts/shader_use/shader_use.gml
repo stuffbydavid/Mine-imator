@@ -69,7 +69,7 @@ function shader_use()
 	// Glint
 	if (!is_undefined(uniform_map[?"uGlintEnabled"]) && uniform_map[?"uGlintEnabled"] > -1)
 	{
-		var tex = mc_res.glint_entity_texture;
+		var tex = mc_res.glint_armor_texture;
 		texture_set_stage(sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 		gpu_set_texrepeat_ext(sampler_map[?"uGlintTexture"], true)
 		if (platform_get() == e_platform.WINDOWS) // OpenGL bug workaround
@@ -84,6 +84,9 @@ function shader_use()
 	
 	// Texture drawing
 	render_set_uniform("uMask", bool_to_float(shader_mask))
+	
+	if (!is_undefined(uniform_map[?"uTextureOffset"]) && uniform_map[?"uTextureOffset"] > -1)
+		render_set_uniform_vec2("uTextureOffset", 0, 0)
 	
 	// Init script
 	if (script > -1)

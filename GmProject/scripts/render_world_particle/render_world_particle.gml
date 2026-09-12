@@ -37,6 +37,7 @@ function render_world_particle()
 			}
 			
 			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			{
 				if (temp.model_file != null)
@@ -80,7 +81,7 @@ function render_world_particle()
 				if (temp.model.model_format = e_model_format.BLOCK)
 				{
 					var res;
-					if (temp.model_tex != null && temp.model_tex.block_sheet_texture != null)
+					if (temp.model_tex != null && temp.model_tex.block_sheet_texture[e_block_sheet.STATIC16] != null)
 						res = temp.model_tex
 					else
 						res = mc_res
@@ -94,6 +95,7 @@ function render_world_particle()
 			}
 			
 			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			{
 				if (temp.model_file = null)
@@ -109,13 +111,13 @@ function render_world_particle()
 			case e_temp_type.SCENERY:
 			{
 				if (scenery != null)
-					render_world_scenery(scenery, [temp.block_tex, temp.block_tex_material, temp.block_tex_normal], temp.block_repeat_enable, temp.block_repeat)
+				render_world_scenery(scenery, [temp.block_tex, temp.block_tex_normal, temp.block_tex_material], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
 			case e_temp_type.ITEM:
 			{
-				render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [temp.item_tex, null, null])
+				render_world_item(temp.item_vbuffer, [temp.item_tex, null, null], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
 				break
 			}
 			
@@ -125,7 +127,7 @@ function render_world_particle()
 				break
 			}
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				if (temp.model_part = null || temp.model_file = null)
 					break
@@ -149,7 +151,7 @@ function render_world_particle()
 				var tex;
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_material, spr_default_normal])
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_normal, spr_default_material])
 				break
 			}
 		}

@@ -4,6 +4,15 @@ function is_cpp()
 	return false;
 }
 
+/// CppSeparate IntType file_get_size(StringType)
+function file_get_size(filename)
+{
+	var data = buffer_load_lib(filename)
+	var size = buffer_get_size(data)
+	buffer_delete(data)
+	return size
+}
+
 /// CppSeparate void log_message(StringType text)
 function log_message(text)
 {
@@ -63,7 +72,7 @@ function skins_directory_get()
 /// Returns an URL to an article showing how to update graphics drivers.
 function drivers_url_get()
 {
-	return link_article_drivers
+	return "https://www.thewindowsclub.com/how-to-update-graphics-drivers-windows"
 }
 
 /// Returns whether an array of filenames are accepted to be dropped on the window.
@@ -91,14 +100,15 @@ function window_get_current()
 	return window_debug_current;
 }
 
-/// CppSeparate void window_create(IntType, IntType, IntType, IntType, IntType)
+/// CppSeparate void window_create(Scope<app>, IntType, IntType, IntType, IntType, IntType)
 /// Creates a new window from a rectangle relative to the current window.
 function window_create(window, xx, yy, width, height)
 {
+	tip_reset()
 	ds_list_add(window_list, window)
 }
 
-/// CppSeparate void window_close(IntType)
+/// CppSeparate void window_close(Scope<app>, IntType)
 /// Closes a window with the given e_window value.
 function window_close(window)
 {
@@ -111,6 +121,9 @@ function window_event_closed(window)
 	if (window_debug_current = window)
 		window_debug_current = e_window.MAIN
 	
+	if (tip_window = window)
+		tip_reset()
+
 	if (window = e_window.VIEW_SECOND)
 		app.view_second.show = false
 	if (window = e_window.TIMELINE)
@@ -164,6 +177,12 @@ function window_main_restore(rect, maximize)
 	window_maximize()
 }
 
+/// CppSeparate StringType get_open_filenames_ext(StringType, StringType, StringType, StringType)
+function get_open_filenames_ext(filter, filename, directory, title)
+{
+	return string(get_open_filename_ext(filter, filename, directory, title))
+}
+
 /// CppSeparate void surface_clear_depth_cache(IntType)
 /// Clears the previously cached depth from surface_get_depth calls.
 function surface_clear_depth_cache(surf)
@@ -190,7 +209,7 @@ function surface_get_max_size()
 function res_load_scenery_world()
 {
 	show_debug_message("Import from " + world_regions_dir)
-	return true
+	return false
 }
 
 /// CppSeparate void res_save_block_cache(Scope<obj_resource>, StringType)
@@ -273,7 +292,6 @@ function surface_create_ext2(width, height, depth = true, hdr = false)
 /// Sets whether a specific sprite will use texture pages, default is enabled.
 function sprite_set_texture_page(sprite, enabled)
 {
-	
 }
 
 /// CppSeparate void move_all_to_texture_page()
@@ -403,7 +421,8 @@ function builder_add_triangle()
 }
 
 /// CppSeparate BoolType clip_is_active()
-function clip_is_active() {
+function clip_is_active()
+{
 	return shader_clip_active
 }
 

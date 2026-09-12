@@ -5,7 +5,7 @@
 
 function temp_get_block_texobj(val)
 {
-	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_texture = null)
+	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_texture[e_block_sheet.STATIC16] = null)
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
 		if (object_index = obj_timeline && type = e_tl_type.BLOCK)

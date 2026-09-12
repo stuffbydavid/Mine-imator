@@ -23,7 +23,8 @@ function minecraft_update_armor()
 				with (obj)
 					res = temp_get_model_texobj(null)
 				
-				armor_skin_array = minecraft_update_armor_generate(armor_array, res)
+				if (res != null)
+					armor_skin_array = minecraft_update_armor_generate(obj.model_file.name, armor_array, res)
 				
 				if (obj = temp_edit)
 					app.lib_preview.update = true

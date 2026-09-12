@@ -4,7 +4,7 @@
 
 function action_tl_frame_item_slot(slot, add)
 {
-	if (add = undefined)
+	if (is_undefined(add))
 		add = false
 	
 	tl_value_set_start(action_tl_frame_item_slot, true)

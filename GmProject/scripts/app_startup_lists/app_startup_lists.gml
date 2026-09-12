@@ -7,6 +7,8 @@ function app_startup_lists()
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
+	globalvar minecraft_block_sheet_size;
+	globalvar minecraft_block_animated_sheet_frame_count, minecraft_item_sheet_size;
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
 	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
@@ -166,9 +168,13 @@ function app_startup_lists()
 		"BG_SKY_CLOUDS_COLOR",
 		"BG_SUNLIGHT_COLOR",
 		"BG_AMBIENT_COLOR",
+		"BG_NIGHT_SKY_COLOR",
+		"BG_NIGHT_SKY_CLOUDS_COLOR",
+		"BG_NIGHT_SKY_STARS_COLOR",
 		"BG_NIGHT_COLOR",
 		"BG_GRASS_COLOR",
 		"BG_FOLIAGE_COLOR",
+		"BG_DRY_FOLIAGE_COLOR",
 		"BG_WATER_COLOR",
 		"BG_LEAVES_OAK_COLOR",
 		"BG_LEAVES_SPRUCE_COLOR",
@@ -255,11 +261,12 @@ function app_startup_lists()
 	temp_type_name_list = ds_list_create()
 	ds_list_add(temp_type_name_list,
 		"char",
+		"equipment",
 		"spblock",
 		"scenery",
 		"item",
 		"block",
-		"bodypart",
+		"modelpart",
 		"particles",
 		"text",
 		"cube",
@@ -274,11 +281,12 @@ function app_startup_lists()
 	tl_type_name_list = ds_list_create()
 	ds_list_add(tl_type_name_list,
 		"char",
+		"equipment",
 		"spblock",
 		"scenery",
 		"item",
 		"block",
-		"bodypart",
+		"modelpart",
 		"particles",
 		"text",
 		"cube",
@@ -309,7 +317,7 @@ function app_startup_lists()
 		"itemsheet",
 		"legacyblocksheet",
 		"blocksheet",
-		"scenery",
+		"schematic",
 		"fromworld",
 		"particlesheet",
 		"texture",
@@ -385,6 +393,7 @@ function app_startup_lists()
 	videotemplate_list = ds_list_create()
 	ds_list_add(videotemplate_list,
 		new_videotemplate("avatar", 512, 512),
+		new_videotemplate("vga", 640, 480),
 		new_videotemplate("hd_720p", 1280, 720),
 		new_videotemplate("fhd_1080p", 1920, 1080),
 		new_videotemplate("qhd_1440p", 2560, 1440),
@@ -415,11 +424,19 @@ function app_startup_lists()
 	
 	// Biomes
 	biome_list = ds_list_create()
-	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))
+	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_dry_foliage, c_plains_biome_water, null))
 	
 	// Particles
 	particle_template_list = ds_list_create()
 	particle_template_map = ds_map_create()
+	
+	minecraft_block_sheet_size = array_create(e_block_sheet.amount)
+	for (var size = 0; size < e_block_sheet.amount; size++)
+		minecraft_block_sheet_size[size] = vec2(0, 0)
+	minecraft_block_animated_sheet_frame_count = 0
+	minecraft_item_sheet_size = array_create(e_item_sheet.amount)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+		minecraft_item_sheet_size[size] = vec2(0, 0)
 	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()
@@ -450,11 +467,12 @@ function app_startup_lists()
 	// List of icons in sync with e_tl_type
 	/*
 		CHARACTER,
+		EQUIPMENT,
 		SPECIAL_BLOCK,
 		SCENERY,
 		ITEM,
 		BLOCK,
-		BODYPART,
+		MODEL_PART,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -474,6 +492,7 @@ function app_startup_lists()
 	timeline_icon_list = ds_list_create()
 	ds_list_add(timeline_icon_list,
 		icons.CHARACTER,
+		icons.SHIELD,
 		icons.BLOCK_SPECIAL,
 		icons.SCENERY,
 		icons.ITEM,
@@ -500,6 +519,7 @@ function app_startup_lists()
 	timeline_icon_list_dark = ds_list_create()
 	ds_list_add(timeline_icon_list_dark,
 		icons.CHARACTER,
+		icons.SHIELD,
 		icons.BLOCK_SPECIAL,
 		icons.SCENERY,
 		icons.ITEM,

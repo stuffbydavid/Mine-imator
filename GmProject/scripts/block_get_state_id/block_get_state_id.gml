@@ -6,7 +6,7 @@
 function block_get_state_id(block, vars)
 {
 	var varslen = array_length(vars);
-	if (varslen = 0 || block.states_map = null)
+	if (varslen = 0 || is_undefined(block) || block.states_map = null)
 		return 0
 	
 	var sid = 0;

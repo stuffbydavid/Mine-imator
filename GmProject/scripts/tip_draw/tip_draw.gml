@@ -12,12 +12,7 @@ function tip_draw()
 	
 	if (tip_alpha = 0)
 	{
-		tip_box_x = null
-		tip_box_y = null
-		tip_final_x = -1
-		tip_final_y = -1
-		tip_arrow_final_x = -1
-		tip_arrow_final_y = -1
+		tip_reset()
 		return 0
 	}
 	
@@ -45,12 +40,12 @@ function tip_draw()
 	
 	// Box
 	draw_set_alpha(tip_alpha)
-	draw_box(tip_final_x, tip_final_y, tip_w, tip_h, false, c_level_top, 1)
+	draw_box(tip_final_x, tip_final_y, tip_w, tip_h, false, c_input_background, 1)
 	draw_outline(tip_final_x, tip_final_y, tip_w, tip_h, 1, c_border, a_border, true)
 	
 	// Arrow
 	render_set_culling(false)
-	draw_image(spr_tooltip_arrow, tip_arrow * 2, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_level_top, 1, tip_right * 90)
+	draw_image(spr_tooltip_arrow, tip_arrow * 2, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_input_background, 1, tip_right * 90)
 	draw_image(spr_tooltip_arrow, (tip_arrow * 2) + 1, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_border, a_border, tip_right * 90)
 	render_set_culling(true)
 	

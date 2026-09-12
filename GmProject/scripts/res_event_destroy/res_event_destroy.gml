@@ -59,26 +59,27 @@ function res_event_destroy()
 		ds_map_destroy(model_shape_alpha_map)
 	
 	// Free block textures
-	if (block_sheet_texture != null)
-		texture_free(block_sheet_texture)
+	for (var size = 0; size < e_block_sheet.static_amount; size++)
+	{
+		if (block_sheet_texture[size] != null)
+			texture_free(block_sheet_texture[size])
+		if (block_sheet_texture_material[size] != null)
+			texture_free(block_sheet_texture_material[size])
+		if (block_sheet_texture_normal[size] != null)
+			texture_free(block_sheet_texture_normal[size])
+	}
 	
-	if (block_sheet_texture_material != null)
-		texture_free(block_sheet_texture_material)
+	if (block_sheet_texture[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_tex_normal != null)
-		texture_free(block_sheet_tex_normal)
+	if (block_sheet_texture_material[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_ani_texture != null)
-		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_texture[f])
-	
-	if (block_sheet_ani_texture_material != null)
-		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_texture_material[f])
-	
-	if (block_sheet_ani_tex_normal != null)
-		for (var f = 0; f < block_sheet_ani_frames; f++)
-			texture_free(block_sheet_ani_tex_normal[f])
+	if (block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)
@@ -92,14 +93,17 @@ function res_event_destroy()
 	block_vbuffer_destroy()
 	
 	// Free items
-	if (item_sheet_texture != null)
-		texture_free(item_sheet_texture)
-	
-	if (item_sheet_texture_material != null)
-		texture_free(item_sheet_texture_material)
-	
-	if (item_sheet_tex_normal != null)
-		texture_free(item_sheet_tex_normal)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+	{
+		if (item_sheet_texture[size] != null)
+			texture_free(item_sheet_texture[size])
+
+		if (item_sheet_texture_material[size] != null)
+			texture_free(item_sheet_texture_material[size])
+
+		if (item_sheet_texture_normal[size] != null)
+			texture_free(item_sheet_texture_normal[size])
+	}
 	
 	// Free misc
 	if (colormap_grass_texture != null)
@@ -107,6 +111,9 @@ function res_event_destroy()
 	
 	if (colormap_foliage_texture != null)
 		texture_free(colormap_foliage_texture)
+	
+	if (colormap_dry_foliage_texture != null)
+		texture_free(colormap_dry_foliage_texture)
 	
 	if (particles_texture[0] != null)
 		texture_free(particles_texture[0])
@@ -117,18 +124,22 @@ function res_event_destroy()
 	if (sun_texture != null)
 		texture_free(sun_texture)
 	
-	if (moonphases_texture != null)
-	{
-		texture_free(moonphases_texture)
-		for (var t = 0; t < 8; t++)
-			texture_free(moon_texture[t])
-	}
+	for (var i = 0; i < 8; i++)
+		if (moon_textures[i] != null)
+			texture_free(moon_textures[i])
+	
+	//if (moonphases_texture != null)
+	//{
+	//	texture_free(moonphases_texture)
+	//	for (var t = 0; t < 8; t++)
+	//		texture_free(moon_texture[t])
+	//}
 	
 	if (clouds_texture != null)
 		texture_free(clouds_texture)
 	
-	if (glint_entity_texture != null)
-		texture_free(glint_entity_texture)
+	if (glint_armor_texture != null)
+		texture_free(glint_armor_texture)
 	
 	if (glint_item_texture != null)
 		texture_free(glint_item_texture)
@@ -429,5 +440,6 @@ function res_event_destroy()
 	}
 	
 	// Remove from resource browser
-	res_edit = sortlist_remove(app.res_list, id)
+	if (ds_list_find_index(app.res_list.list, id) >= 0)
+		res_edit = sortlist_remove(app.res_list, id)
 }

@@ -245,6 +245,7 @@ namespace CppProject
             code.replace(QRegularExpression("\\bmix\\b"), "lerp");
             code.replace(QRegularExpression("\\bfract\\b"), "frac");
             code.replace(QRegularExpression("\\bpow\\b"), "power");
+            code.replace(QRegularExpression("\\batan\\b"), "atan2");
 
             // Replace for with while
             code.replace(QRegularExpression("for \\((.*?); ?([a-zA-Z]+)(.*?); ?.*?\\)"), "\\1-1; [loop] while (++\\2\\3)");
@@ -336,6 +337,8 @@ namespace CppProject
         funcsDecl += "float4 float4_(float x, float y, float z, float w) { return float4(x, y, z, w); };\n";
         funcsDecl += "float4 float4_(float4 x) { return x; };\n";
         funcsDecl += "float3x3 float3x3_(float3 x, float3 y, float3 z) { return transpose(float3x3(x, y, z)); };\n";
+        funcsDecl += "float3x3 float3x3_(float x, float y, float z, float w, float v, float u, float t, float s, float r) { return transpose(float3x3(x, y, z, w, v, u, t, s, r)); };\n";
+        funcsDecl += "float3x3 float3x3_(float3x3 x) { return x; };\n";
 
         vsCode = staticBufferDecl + bufferDecl + samplersDecl + funcsDecl + vsCode;
         fsCode = staticBufferDecl + bufferDecl + samplersDecl + funcsDecl + fsCode;

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "list_item_add",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Item",
-    "path": "folders/Scripts/App/Interface/Components/Lists/Item.yy",
+  "$GMScript":"v1",
+  "%Name":"list_item_add",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"list_item_add",
+  "parent":{
+    "name":"Item",
+    "path":"folders/Scripts/App/Interface/Components/Lists/Item.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_shape_face_camera",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shape",
-    "path": "folders/Scripts/App/Actions/Bench/Shape.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_shape_face_camera",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_shape_face_camera",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/Scripts/App/Actions/Bench/Shape.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

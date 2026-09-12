@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_set_collumns",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Collumns",
-    "path": "folders/Scripts/App/Interface/Components/Tab/Collumns.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_set_collumns",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_set_collumns",
+  "parent":{
+    "name":"Collumns",
+    "path":"folders/Scripts/App/Interface/Components/Tab/Collumns.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -47,12 +47,13 @@ function nbt_read_tag_compound()
 				break
 			
 			case e_nbt.TAG_BYTE_ARRAY:
+			{
 				var len = buffer_read_int_be();
 				map[?name] = buffer_tell(buffer_current)
 				map[?name + "_NBT_length"] = len
 				buffer_skip(len)
 				break
-			
+			}
 			case e_nbt.TAG_STRING:
 				map[?name] = buffer_read_string_short_be()
 				break

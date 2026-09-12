@@ -23,15 +23,13 @@ function action_toolbar_exportimage_save()
 	log("High Quality", yesno(popup_exportimage.high_quality))
 	log("Size", project_video_width, project_video_height)
 	
-	window_state = "export_image"
-	exportmovie_frame = 0
-	export_sample = 0
-	exportmovie_start = current_time
-	render_samples = -1
+	export_start("export_image")
 	
 	if (view_main.quality = e_view_mode.RENDER)
 		view_main.quality = e_view_mode.SHADED
 	
 	if (view_second.quality = e_view_mode.RENDER)
 		view_second.quality = e_view_mode.SHADED
+		
+	app_update_cameras(popup_exportimage.high_quality, false)
 }

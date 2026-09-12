@@ -24,6 +24,8 @@ function draw_button_label(name, xx, yy, w = null, icon = null, type = e_button.
 		h = 64
 		font = font_heading_big
 	}
+	else if (type = e_button.MEDIUM)
+		h = 48
 	
 	// Calculate width/position
 	draw_set_font(font)
@@ -57,7 +59,7 @@ function draw_button_label(name, xx, yy, w = null, icon = null, type = e_button.
 	var focus, backcolor, backalpha, linecolor, linealpha, contentcolor, contentalpha, contentx;
 	focus = max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS])
 	
-	if (type = e_button.PRIMARY || type = e_button.BIG)
+	if (type = e_button.PRIMARY || type = e_button.MEDIUM || type = e_button.BIG)
 	{
 		backcolor = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
 		backcolor = merge_color(backcolor, c_accent_pressed, focus)
@@ -89,7 +91,7 @@ function draw_button_label(name, xx, yy, w = null, icon = null, type = e_button.
 	draw_box(xx, yy, w, h, false, backcolor, backalpha)
 	
 	// Bevel
-	if (type = e_button.PRIMARY || type = e_button.BIG)
+	if (type = e_button.PRIMARY || type = e_button.MEDIUM || type = e_button.BIG)
 		draw_box_bevel(xx, yy, w, h, 1)
 	
 	// Background

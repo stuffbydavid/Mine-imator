@@ -5,7 +5,7 @@ function tl_new_part(part)
 {
 	with (new_obj(obj_timeline))
 	{
-		type = e_tl_type.BODYPART
+		type = e_tl_type.MODEL_PART
 		temp = other.temp
 		
 		model_part = part
@@ -23,6 +23,7 @@ function tl_new_part(part)
 		part_mixing_shapes = part.part_mixing_shapes
 		colors_ext = part_mixing_shapes
 		backfaces = part.backfaces
+		shadows = part.shadows
 		
 		part_parent_save_id = ""
 		

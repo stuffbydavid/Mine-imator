@@ -66,6 +66,7 @@ function ptype_copy(to)
 	to.spd_mul_random_min = array_copy_1d(spd_mul_random_min)
 	to.spd_mul_random_max = array_copy_1d(spd_mul_random_max)
 	
+	to.rot_spawner_angle = rot_spawner_angle
 	to.rot = array_copy_1d(rot)
 	to.rot_israndom = array_copy_1d(rot_israndom)
 	to.rot_random_min = array_copy_1d(rot_random_min)

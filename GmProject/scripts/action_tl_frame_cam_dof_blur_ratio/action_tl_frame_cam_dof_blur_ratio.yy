@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_dof_blur_ratio",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "DoF",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/DoF.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_dof_blur_ratio",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_dof_blur_ratio",
+  "parent":{
+    "name":"DoF",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/DoF.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

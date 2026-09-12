@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "minecraft_get_swatch",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Minecraft",
-    "path": "folders/Scripts/Minecraft.yy",
+  "$GMScript":"v1",
+  "%Name":"minecraft_get_swatch",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_get_swatch",
+  "parent":{
+    "name":"Minecraft",
+    "path":"folders/Scripts/Minecraft.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

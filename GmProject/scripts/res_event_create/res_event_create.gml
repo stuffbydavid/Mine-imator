@@ -44,13 +44,9 @@ function res_event_create()
 	player_skin = false
 	pack_format = e_minecraft_pack.LATEST
 	
-	block_sheet_texture = null
-	block_sheet_texture_material = null
-	block_sheet_tex_normal = null
-	
-	block_sheet_ani_texture = null
-	block_sheet_ani_texture_material = null
-	block_sheet_ani_tex_normal = null
+	block_sheet_texture = array_create(e_block_sheet.amount, null)
+	block_sheet_texture_material = array_create(e_block_sheet.amount, null)
+	block_sheet_texture_normal = array_create(e_block_sheet.amount, null)
 	
 	block_sheet_depth_list = null
 	block_sheet_ani_depth_list = null
@@ -58,8 +54,12 @@ function res_event_create()
 	
 	colormap_grass_texture = null
 	colormap_foliage_texture = null
+	colormap_dry_foliage_texture = null
 	
 	color_grass = null
+	color_foliage = null
+	color_dry_foliage = null
+	color_water = null
 	color_leaves_oak = null
 	color_leaves_spruce = null
 	color_leaves_birch = null
@@ -67,20 +67,19 @@ function res_event_create()
 	color_leaves_acacia = null
 	color_leaves_dark_oak = null
 	color_leaves_mangrove = null
-	color_foliage = null
-	color_water = null
 	
 	sun_texture = null
-	moonphases_texture = null
-	moon_texture[0] = null
+	moon_textures = [null, null, null, null, null, null, null, null]
+	//moonphases_texture = null
+	//moon_texture[0] = null
 	clouds_texture = null
-	glint_entity_texture = null
+	glint_armor_texture = null
 	glint_item_texture = null
 	
-	item_sheet_texture = null
-	item_sheet_texture_material = null
-	item_sheet_tex_normal = null
-	item_sheet_size = vec2(item_sheet_width, item_sheet_height)
+	item_sheet_texture = array_create(e_item_sheet.amount, null)
+	item_sheet_texture_material = array_create(e_item_sheet.amount, null)
+	item_sheet_texture_normal = array_create(e_item_sheet.amount, null)
+	item_sheet_size = vec2(32, 32)
 	
 	particles_texture[0] = null
 	particles_texture[1] = null
@@ -92,7 +91,9 @@ function res_event_create()
 	block_vbuffer = null
 	
 	scenery_tl_add = null
+	scenery_tl_prompt_amount = 0
 	scenery_tl_list = null
+	scenery_cache_save = null
 	scenery_size = vec3(0)
 	world_regions_dir = ""
 	world_box_start = null
@@ -106,6 +107,8 @@ function res_event_create()
 	scenery_palette = 0
 	scenery_palette_size = 0
 	scenery_randomize = true
+	scenery_instant = false
+	scenery_source = ""
 	
 	texture = null
 	

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "background_sky_rise_set_alpha",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Background",
-    "path": "folders/Scripts/App/Background.yy",
+  "$GMScript":"v1",
+  "%Name":"background_sky_rise_set_alpha",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"background_sky_rise_set_alpha",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Background.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

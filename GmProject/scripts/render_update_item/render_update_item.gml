@@ -35,6 +35,6 @@ function render_update_item()
 		if (norres = null)
 			norres = temp.item_tex_normal
 		
-		render_generate_item(slot, [res, matres, norres], temp.item_3d)
+		render_generate_item(slot, [res, norres, matres], temp.item_3d)
 	}
 }

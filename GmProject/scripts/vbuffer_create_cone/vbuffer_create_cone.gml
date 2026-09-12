@@ -1,15 +1,16 @@
-/// vbuffer_create_cone(radius, texcoord1, texcoord2, texhorflip, texverflip, detail, closed, invert, mapped)
+/// vbuffer_create_cone(radius, texcoord1, texcoord2, texhorflip, texverflip, detail, smooth, closed, invert, mapped)
 /// @arg radius
 /// @arg texcoord1
 /// @arg texcoord2
 /// @arg texhorflip
 /// @arg texverflip
 /// @arg detail
+/// @arg smooth
 /// @arg closed
 /// @arg invert
 /// @arg mapped
 
-function vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, detail, closed, invert, mapped)
+function vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, detail, smooth, closed, invert, mapped)
 {
 	vbuffer_start()
 	
@@ -86,17 +87,33 @@ function vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, detail, closed, in
 			}
 		}
 		
-		if (invert)
+		var normx, normy;
+		if (!smooth)
 		{
-			vertex_add(x2, y2, -rad, n2x, n2y, 0, tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
-			vertex_add(0, 0, rad, 0, 0, 1, tex1[X] + texsize[X] * i, tex1[Y])
-			vertex_add(x1, y1, -rad, n1x, n1y, 0, tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
+			normx = (n1x + n2x) / 2
+			normy = (n1y + n2y) / 2
+			n1x = normx
+			n2x = normx
+			n1y = normy
+			n2y = normy
 		}
 		else
 		{
-			vertex_add(0, 0, rad, 0, 0, 1, tex1[X] + texsize[X] * i, tex1[Y])
-			vertex_add(x2, y2, -rad, n2x, n2y, 0, tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
-			vertex_add(x1, y1, -rad, n1x, n1y, 0, tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
+			normx = 0
+			normy = 0
+		}
+		
+		if (invert)
+		{
+			vertex_add(x2, y2, -rad, n2x, n2y, smooth ? 0 : 1, tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
+			vertex_add(0, 0, rad, normx, normy, 1, tex1[X] + texsize[X] * i, tex1[Y])
+			vertex_add(x1, y1, -rad, n1x, n1y, smooth ? 0 : 1, tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
+		}
+		else
+		{
+			vertex_add(0, 0, rad, normx, normy, 1, tex1[X] + texsize[X] * i, tex1[Y])
+			vertex_add(x2, y2, -rad, n2x, n2y, smooth ? 0 : 1, tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
+			vertex_add(x1, y1, -rad, n1x, n1y, smooth ? 0 : 1, tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
 		}
 	}
 	

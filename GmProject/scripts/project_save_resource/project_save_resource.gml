@@ -14,13 +14,15 @@ function project_save_resource()
 		if (type = e_res_type.ITEM_SHEET)
 			json_save_var_point2D("item_sheet_size", item_sheet_size)
 		
-		if (type = e_res_type.SCENERY || type = e_res_type.FROM_WORLD)
+		if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
 		{
 			json_save_var_bool("scenery_tl_add", scenery_tl_add)
 			json_save_var_bool("scenery_download_skins", scenery_download_skins)
+			if (scenery_cache_save != null)
+				json_save_var_bool("scenery_cache_save", scenery_cache_save)
 		}
 		
-		if (type = e_res_type.SCENERY)
+		if (type = e_res_type.SCHEMATIC)
 		{
 			json_save_var("scenery_palette", scenery_palette)
 			json_save_var("scenery_integrity", scenery_integrity)

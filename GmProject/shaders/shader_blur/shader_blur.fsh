@@ -14,16 +14,16 @@ vec4 getColor(vec2 txcoord)
 	float xcoord = txcoord.x;
 	float ycoord = txcoord.y;
 
-	if(xcoord > 1.0)
+	if (xcoord > 1.0)
 		xcoord = 1.0 - (xcoord - 1.0);
 		
-	if(xcoord < 0.0)
+	if (xcoord < 0.0)
 		xcoord = xcoord * -1.0;
 		
-	if(ycoord > 1.0)
+	if (ycoord > 1.0)
 		ycoord = 1.0 - (ycoord - 1.0);
 		
-	if(ycoord < 0.0)
+	if (ycoord < 0.0)
 		ycoord = ycoord * -1.0;
 
 	return texture2D(gm_BaseTexture, vec2(xcoord, ycoord));

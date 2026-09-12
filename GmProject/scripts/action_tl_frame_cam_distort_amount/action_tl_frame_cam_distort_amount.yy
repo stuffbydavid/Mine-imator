@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_distort_amount",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Distort",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Distort.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_distort_amount",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_distort_amount",
+  "parent":{
+    "name":"Distort",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Distort.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

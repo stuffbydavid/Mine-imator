@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_grain_size",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Grain",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Grain.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_grain_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_grain_size",
+  "parent":{
+    "name":"Grain",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Grain.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

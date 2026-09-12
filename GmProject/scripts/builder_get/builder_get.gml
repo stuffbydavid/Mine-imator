@@ -32,10 +32,10 @@ function builder_get_render_model_index(xx, yy, zz)
 function builder_get_render_model(xx, yy, zz)
 {
 	var index = builder_get_render_model_index(xx, yy, zz);
-	if (index <= 0)
+	if (is_undefined(index) || index <= 0 || index >= array_length(block_rendermodels))
 		return null
-	
-	return block_rendermodels[index];
+	var model = block_rendermodels[index]
+	return is_undefined(model) ? null : model
 }
 
 /// CppSeparate ArrType builder_get_render_model_multipart(IntType, IntType, IntType, IntType)

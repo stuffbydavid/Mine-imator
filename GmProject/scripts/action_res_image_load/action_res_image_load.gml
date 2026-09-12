@@ -26,8 +26,8 @@ function action_res_image_load(fn, type)
 			
 			if (type = e_res_type.ITEM_SHEET)
 			{
-				if (popup_importitemsheet.is_sheet)
-					itemsheetsize = popup_importitemsheet.sheet_size
+				if (popup_importimage.is_sheet)
+					itemsheetsize = popup_importimage.sheet_size
 				else
 					type = e_res_type.TEXTURE
 			}

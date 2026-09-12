@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_wheel",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Components",
-    "path": "folders/Scripts/App/Interface/Components.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_wheel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_wheel",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/App/Interface/Components.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

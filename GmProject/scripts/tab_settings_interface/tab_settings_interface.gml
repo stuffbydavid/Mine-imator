@@ -7,7 +7,8 @@ function tab_settings_interface()
 	dy += 8
 	
 	// Color theme
-	tab_control_togglebutton()
+	tab_control_togglebutton(2)
+	togglebutton_add("settingsthemeclassic", null, theme_classic, setting_theme = theme_classic, action_setting_theme)
 	togglebutton_add("settingsthemelight", null, theme_light, setting_theme = theme_light, action_setting_theme)
 	togglebutton_add("settingsthemedark", null, theme_dark, setting_theme = theme_dark, action_setting_theme)
 	togglebutton_add("settingsthemedarker", null, theme_darker, setting_theme = theme_darker, action_setting_theme)
@@ -66,7 +67,7 @@ function tab_settings_interface()
 	
 		if (!setting_interface_scale_auto)
 		{
-			tab_control_meter()
+			tab_control_menu()
 			draw_button_menu("settingsinterfacescale", e_menu.LIST, dx, dy, dw, 24, setting_interface_scale, string(setting_interface_scale * 100) + "%", action_setting_interface_scale)
 			tab_next()
 		}

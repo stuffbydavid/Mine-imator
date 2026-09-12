@@ -2,7 +2,7 @@
 
 function tab_frame_editor_ik()
 {
-	if (tl_edit.type != e_tl_type.BODYPART || !tl_edit.value_type[e_value_type.TRANSFORM_BEND] || tl_edit.model_part = null || tl_edit.model_part.ik_supported = false)
+	if (tl_edit.type != e_tl_type.MODEL_PART || !tl_edit.value_type[e_value_type.TRANSFORM_BEND] || tl_edit.model_part = null || tl_edit.model_part.ik_supported = false)
 		return 0
 	
 	tab_control_switch()

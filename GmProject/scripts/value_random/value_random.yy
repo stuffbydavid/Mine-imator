@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "value_random",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/Utility/Math.yy",
+  "$GMScript":"v1",
+  "%Name":"value_random",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"value_random",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

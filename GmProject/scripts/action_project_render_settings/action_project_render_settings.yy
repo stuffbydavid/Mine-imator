@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_project_render_settings",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Project",
-    "path": "folders/Scripts/App/Actions/Project.yy",
+  "$GMScript":"v1",
+  "%Name":"action_project_render_settings",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_settings",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/App/Actions/Project.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

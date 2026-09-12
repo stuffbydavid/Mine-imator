@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_sky_clouds_size",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Clouds",
-    "path": "folders/Scripts/App/Actions/Background/Sky/Clouds.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_sky_clouds_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_sky_clouds_size",
+  "parent":{
+    "name":"Clouds",
+    "path":"folders/Scripts/App/Actions/Background/Sky/Clouds.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

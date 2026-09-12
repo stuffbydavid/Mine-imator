@@ -27,7 +27,7 @@ function action_bench_create(edit = false)
 		if (history_redo)
 		{
 			history_restore_bench(history_data.bench_save_obj)
-			
+
 			if (history_data.open_editor)
 			{
 				tab_template_editor_update_ptype_list()
@@ -45,22 +45,51 @@ function action_bench_create(edit = false)
 				tab_show(template_editor)
 		}
 		
-		if (type_is_timeline(bench_settings.type)) // Timeline
+		var temptype, tltype;
+		temptype = null
+		tltype = null
+
+		switch (bench_tab)
 		{
-			tl = new_tl(bench_settings.type = e_tl_type.LIGHT_SOURCE ? bench_settings.light_type : bench_settings.type)
+			case e_bench.CHARACTER:			temptype = e_temp_type.CHARACTER break
+			case e_bench.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT break
+			case e_bench.MODEL:				temptype = e_temp_type.MODEL break
+			case e_bench.MODEL_PART:		temptype = e_temp_type.MODEL_PART break
+			case e_bench.ITEM:				temptype = e_temp_type.ITEM break
+			case e_bench.SCHEMATIC:			temptype = e_temp_type.SCENERY break
+			case e_bench.BLOCK:				temptype = e_temp_type.BLOCK break
+			case e_bench.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK break
+			case e_bench.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type break
+			case e_bench.TEXT:				temptype = e_temp_type.TEXT break
+			case e_bench.PATH:				tltype = e_tl_type.PATH break
+			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
+			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
+			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
+			case e_bench.AUDIO:				tltype = e_tl_type.AUDIO break
+			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
+		}
+
+		if (bench_tab = e_bench.SCHEMATIC)
+			action_bench_schematic_create_resource()
+
+		if (tltype != null) // Timeline
+		{
+			tl = new_tl(tltype)
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
 				spawn_amount++
 			}
 			
-			if (bench_settings.type = e_tl_type.CAMERA)
+			if (bench_tab = e_bench.CAMERA)
 				view_second.show = true
 		}
-		else
+		else if (temptype != null)
 		{
 			with (bench_settings)
 			{
+				type = temptype
+				
 				var temp = temp_duplicate();
 				
 				// Don't copy into template 
@@ -84,7 +113,7 @@ function action_bench_create(edit = false)
 						model = null
 					}
 					
-					if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
+					if (type != e_temp_type.CHARACTER && type != e_temp_type.EQUIPMENT && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
 					{
 						if (model_tex != null)
 							model_tex.count--
@@ -273,14 +302,21 @@ function action_bench_create(edit = false)
 				tl.value_type[e_value_type.TRANSFORM_POS])
 				app_start_place(tl, true)
 			
-			log("Created", tl_type_name_list[|bench_settings.type])
+			log("Created", tl_type_name_list[|tl.type])
+
+			// Encourage parenting armor to a character
+			if (!setting_advanced_mode && bench_tab = e_bench.EQUIPMENT)
+			{
+				toast_new(e_toast.INFO, text_get("alertequiparmor"))
+				toast_last.dismiss_time = 15
+			}
 		}
 	}
 	
 	if (!history_redo && edit)
 		tab_template_editor_update_ptype_list()
 	
-	if (bench_settings.type = e_temp_type.PARTICLE_SPAWNER)
+	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 	{
 		if (!history_undo && !history_redo)
 			bench_update_particles_list()

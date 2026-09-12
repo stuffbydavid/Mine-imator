@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_image_box_cover",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Draw",
-    "path": "folders/Scripts/Utility/Draw.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_image_box_cover",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_image_box_cover",
+  "parent":{
+    "name":"Draw",
+    "path":"folders/Scripts/Utility/Draw.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

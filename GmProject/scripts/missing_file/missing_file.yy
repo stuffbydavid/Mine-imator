@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "missing_file",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Dialogues",
-    "path": "folders/Scripts/App/Dialogues.yy",
+  "$GMScript":"v1",
+  "%Name":"missing_file",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"missing_file",
+  "parent":{
+    "name":"Dialogues",
+    "path":"folders/Scripts/App/Dialogues.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -18,10 +18,10 @@ namespace CppProject
 		anvilFormat = filename.endsWith(".mca");
 
 		// Find dimension
-		if (filename.contains("DIM-1/"))
-			dimName = "nether";
-		else if (filename.contains("DIM1/"))
-			dimName = "end";
+		if (filename.contains("DIM-1/") || filename.contains("the_nether/"))
+			dimName = "the_nether";
+		else if (filename.contains("DIM1/") || filename.contains("the_end/"))
+			dimName = "the_end";
 		else
 			dimName = "overworld";
 
@@ -115,7 +115,7 @@ namespace CppProject
 		// Load chunks
 		IntType numTimelines = 0;
 		Timer tmr;
-		StringType::BeginOmp();
+		thread_task_begin();
 
 		#pragma OPENMP_FOR reduction(+:numTimelines)
 		for (IntType i = 0; i < numChunks; i++)
@@ -141,7 +141,7 @@ namespace CppProject
 			numTimelines += chunk->numTimelines;
 		}
 
-		StringType::EndOmp();
+		thread_task_end();
 
 		// Create block entity maps on main thread
 		for (Chunk* chunk : chunks)
@@ -217,7 +217,7 @@ namespace CppProject
 			return;
 
 		// Generate chunk triangles
-		StringType::BeginOmp();
+		thread_task_begin();
 
 		#pragma OPENMP_FOR
 		for (IntType i = 0; i < REGION_CHUNKS; i++)
@@ -228,7 +228,7 @@ namespace CppProject
 				chunkStatus[i] = ChunkStatus::CHUNK_MESH_READY;
 			}
 		}
-		StringType::EndOmp();
+		thread_task_end();
 
 		meshStatus = UPDATE_MESH;
 		generated[mode] = true;

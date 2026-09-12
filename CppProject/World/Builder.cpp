@@ -6,7 +6,7 @@
 #include "GZIP.hpp"
 
 #define BLOCK_MESH_CACHE_ENABLED 1
-#define BLOCK_MESH_CACHE_FORMAT 2
+#define BLOCK_MESH_CACHE_FORMAT 3
 
 namespace CppProject
 {
@@ -65,7 +65,7 @@ namespace CppProject
 
 			// Check if single block
 			BuilderState singleEntry;
-			if (self->build_single_block != null_)
+			if (self->build_single_block != null_ && !is_undefined(self->build_single_block))
 				singleEntry = {
 					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,
@@ -334,7 +334,7 @@ namespace CppProject
 	IntType builder_get_render_model(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z)
 	{
 		IntType index = builder_get_render_model_index(self, x, y, z);
-		if (index <= 0)
+		if (index <= 0 || index >= Builder::renderModels.Size() || !Builder::renderModels[index])
 			return null_;
 
 		return Builder::renderModels[index]->id;
@@ -554,7 +554,9 @@ namespace CppProject
 
 		if (mb > 50)
 		{
-			if (!question(text_get({ "loadscenerysavecache", string(mb) + StringType("MB") })))
+			if (res->scenery_cache_save == null_)
+				res->scenery_cache_save = question(text_get({ "loadscenerysavecache", string(mb) + StringType("MB") }));
+			if (!res->scenery_cache_save)
 			{
 				// CPU data of meshes won't be needed
 				for (IntType d = 0; d < e_block_depth_amount; d++)
@@ -576,6 +578,11 @@ namespace CppProject
 		// Save format
 		uchar format = BLOCK_MESH_CACHE_FORMAT;
 		out << format;
+
+		// Save Minecraft assets version
+		QByteArray assetsVersion = global::_app->setting_minecraft_assets_version.QStr().toUtf8();
+		out << (quint16)assetsVersion.size();
+		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
 		// Save size
 		out << (qint64)res->scenery_size.x;
@@ -616,22 +623,40 @@ namespace CppProject
 	#endif
 		Timer tmr;
 		QByteArray data;
-		Gzip::Decompress(filename, data);
+
 		tmr.Print("Unzip block mesh cache");
+		BoolType decompressed = Gzip::Decompress(filename, data);
+		if (!decompressed)
+			return false;
+
 		tmr.Reset();
 		QDataStream in(&data, QIODevice::ReadOnly);
 
 		// Check format
-		uchar format;
+		uchar format = 0;
 		in >> format;
-		if (format != BLOCK_MESH_CACHE_FORMAT)
+		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
+			return false;
+
+		// Check Minecraft assets version
+		quint16 assetsVersionSize = 0;
+		in >> assetsVersionSize;
+		if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
+			return false;
+
+		QByteArray assetsVersion(assetsVersionSize, '\0');
+		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
+			|| assetsVersion != global::_app->setting_minecraft_assets_version.QStr().toUtf8())
 			return false;
 
 		// Load size
-		qint64 sizeX, sizeY, sizeZ;
+		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
 		in >> sizeX;
 		in >> sizeY;
 		in >> sizeZ;
+		if (in.status() != QDataStream::Ok)
+			return false;
+
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
 
 		// Load vertex buffers

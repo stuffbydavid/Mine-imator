@@ -114,25 +114,28 @@ function tab_timeline()
 	
 	// Current time
 	draw_set_font(font_heading)
-	timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo)
+	timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo, false)
 	draw_label(timelabel, timex, headery + headerh - 6, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
 	timex += string_width(timelabel)
 	
 	// Time length
 	draw_set_font(font_subheading)
-	timelabel = timeline_show_frames ? " / " + string(timeline_length) : " / " + string_time_seconds(timeline_length / project_tempo)
+	timelabel = timeline_show_frames ? " / " + string(timeline_length) : " / " + string_time_seconds(timeline_length / project_tempo, false)
 	draw_label(timelabel, timex, headery + headerh - 7, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
 	timex += string_width(timelabel)
 	
 	// Time selected
 	if (timeline_region_start != null && (timeline_region_start != timeline_region_end))
 	{
-		timelabel = " (" + (timeline_show_frames ? string(timeline_region_end - timeline_region_start) : string_time_seconds((timeline_region_end - timeline_region_start) / project_tempo)) + ")"
+		timelabel = " (" + (timeline_show_frames ? string(timeline_region_end - timeline_region_start) : string_time_seconds((timeline_region_end - timeline_region_start) / project_tempo, false)) + ")"
 		draw_label(timelabel, timex, headery + headerh - 7, fa_left, fa_bottom, c_accent, a_accent)
 		timex += string_width(timelabel)
 	}
 	
 	timex += 8
+	
+	// Right click timeline timer
+	context_menu_area(headerx, headery, timex, headerh, "toolbarviewtimelineplayback", null, null, null, null)
 	
 	var buttonsxstart, buttonsx, buttonsy;
 	buttonsxstart = (timeline_settings_w = null ? 0 : floor((headerx + headerw/2) - timeline_settings_w/2))
@@ -144,9 +147,8 @@ function tab_timeline()
 	buttonsx += 24 + 6
 	
 	// Previous frame
-	if (draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_PREVIOUS, null, timeline_playing, "tooltiptlpreviousframe"))
-		timeline_marker = max(((floor(timeline_marker) != timeline_marker) ? floor(timeline_marker) : timeline_marker - 1), 0)
-	
+	tip_set_keybind(e_keybind.FRAME_PREVIOUS)
+	draw_button_icon("timelinepreviousframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_PREVIOUS, action_tl_frame_previous, timeline_playing, "tooltiptlpreviousframe")
 	buttonsx += 24 + 6
 	
 	draw_divide_vertical(buttonsx, buttonsy + 2, 20)
@@ -158,7 +160,8 @@ function tab_timeline()
 	
 	// Play
 	tip_set_keybind(e_keybind.PLAY)
-	draw_button_icon("timelineplay", buttonsx, buttonsy, 24, 24, false, timeline_playing ? icons.PAUSE : icons.PLAY, action_tl_play, false, timeline_playing ? "tooltiptlpause" : "tooltiptlplay")
+	if (draw_button_icon("timelineplay", buttonsx, buttonsy, 24, 24, false, timeline_playing ? icons.PAUSE : icons.PLAY, null, false, timeline_playing ? "tooltiptlpause" : "tooltiptlplay"))
+		action_tl_play()
 	buttonsx += 24 + 6
 	
 	// Skip to region start and play
@@ -178,17 +181,34 @@ function tab_timeline()
 	buttonsx += 6
 	
 	// Next frame
-	if (draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_NEXT, null, timeline_playing, "tooltiptlnextframe"))
-		timeline_marker = ((ceil(timeline_marker) != timeline_marker) ? ceil(timeline_marker) : timeline_marker + 1)
+	tip_set_keybind(e_keybind.FRAME_NEXT)
+	draw_button_icon("timelinenextframe", buttonsx, buttonsy, 24, 24, false, icons.FRAME_NEXT, action_tl_frame_next, timeline_playing, "tooltiptlnextframe")
 	buttonsx += 24 + 6
 	
 	// Next keyframe
 	draw_button_icon("timelinenextkeyframe", buttonsx, buttonsy, 24, 24, false, icons.KEYFRAME_NEXT, action_tl_keyframe_next, timeline_playing, "tooltiptlnextkeyframe")
-	buttonsx += 16 + 6
+	buttonsx += 24 + 6
+	
+	draw_divide_vertical(buttonsx, buttonsy + 2, 20)
+	buttonsx += 6
+	
+	// Loop
+	var tooltip;
+	
+	if (!timeline_repeat && !timeline_seamless_repeat)
+		tooltip = "tooltiptlenableloop"
+	else if (timeline_repeat && !timeline_seamless_repeat)
+		tooltip = "tooltiptlenableseamlessloop"
+	else
+		tooltip = "tooltiptldisableloop"
+	
+	draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
+	
+ 	buttonsx += 16 + 6
 	
 	timeline_settings_w = (buttonsx - buttonsxstart)
 	
-	buttonsxstart = (timeline_settings_right_w = null ? 0 : real(headerx + headerw - timeline_settings_right_w - 8))
+	buttonsxstart = (timeline_settings_right_w = null ? 0 : real(headerx + headerw - timeline_settings_right_w - 4))
 	buttonsx = max(buttonsx, buttonsxstart)
 	buttonsxstart = buttonsx
 	
@@ -204,9 +224,7 @@ function tab_timeline()
 			action_tl_load_loop(timeline_settings_run_fn)
 		
 		buttonsx += 24 + 4
-		
 		draw_divide_vertical(buttonsx, buttonsy, 24)
-		
 		buttonsx += 4
 	}
 	
@@ -223,19 +241,19 @@ function tab_timeline()
 	if (settings_menu_name = "timelineintervalsettings" && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	
-	buttonsx += 16 + 6
+	buttonsx += 16 + 4
+	draw_divide_vertical(buttonsx, buttonsy, 24)
+	buttonsx += 4
 	
-	// Loop
-	var tooltip;
+	var zoombutton = 0;
+	// Zoom out
+ 	if (draw_button_icon("timelinezoomout", buttonsx, buttonsy, 24, 24, false, icons.ZOOM_OUT, null, timeline_zoom_goal <= 0.25, "tooltiptlzoomout"))
+		zoombutton = 1
+	buttonsx += 24 + 6
 	
-	if (!timeline_repeat && !timeline_seamless_repeat)
-		tooltip = "tooltiptlenableloop"
-	else if (timeline_repeat && !timeline_seamless_repeat)
-		tooltip = "tooltiptlenableseamlessloop"
-	else
-		tooltip = "tooltiptldisableloop"
-	
-	draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
+	// Zoom in
+ 	if (draw_button_icon("timelinezoomin", buttonsx, buttonsy, 24, 24, false, icons.ZOOM_IN, null, timeline_zoom_goal >= 32, "tooltiptlzoomin"))
+		zoombutton = -1
 	
 	buttonsx += 24 + 4
 	draw_divide_vertical(buttonsx, buttonsy, 24)
@@ -324,7 +342,7 @@ function tab_timeline()
 		// Start/end markers
 		if (x1 >= -32 && x1 <= (barw + 32))
 		{
-			draw_image(spr_marker_region, 0, barx + x1, bary, 1, 1, c_accent, 1)
+			draw_image(spr_marker_region, timeline_region_start <= 0 ? 1 : 0, barx + x1 + (timeline_region_start <= 0 ? 10 : 0), bary, 1, 1, c_accent, 1)
 			draw_box(barx + x1, bary, 1, markerh + barh, false, c_accent, 1)
 		}
 			
@@ -339,28 +357,25 @@ function tab_timeline()
 	framestep = 1
 	framehighlight = 5
 	
-	if (timeline_zoom < 5)
-	{
-		framestep = 5
-		framehighlight = 10
-	}
-	
-	if (timeline_zoom < 3)
-	{
-		framestep = 10
-		framehighlight = 50
-	}
-	
-	if (timeline_zoom < 1)
-	{
-		framestep = 20
-		framehighlight = 100
-	}
-	
 	if (timeline_zoom < 0.5)
 	{
 		framestep = 50
 		framehighlight = 200
+	}
+	else if (timeline_zoom < 1)
+	{
+		framestep = 20
+		framehighlight = 100
+	}
+	else if (timeline_zoom < 3)
+	{
+		framestep = 10
+		framehighlight = 50
+	}
+	else if (timeline_zoom < 5)
+	{
+		framestep = 5
+		framehighlight = 10
 	}
 	
 	f = floor(timeline.hor_scroll.value / (timeline_zoom * framestep)) * framestep
@@ -587,14 +602,16 @@ function tab_timeline()
 		dy += itemh
 	}
 	
-	// Selecting keyframes
+	// Drag select keyframes
+	if (window_busy != "timelineclickkeyframes" && window_busy != "timelineselectkeyframes")
+		timeline_zoom_current = timeline_zoom
 	if (window_busy = "timelineselectkeyframes")
 	{
 		mouse_cursor = cr_handpoint
 		
 		var x1, y1, x2, y2;
-		x1 = clamp(mouse_click_x + (timeline_select_starth - timeline.hor_scroll.value), tlx, tlx + tlw)
-		y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), tly, tly + tlh)
+		x1 = clamp(((((((mouse_click_x - tlx) + timeline_select_starth) / timeline_zoom_current) - (timeline.hor_scroll.value / timeline_zoom)) * timeline_zoom) + tlx), tlx, tlx + tlw) // makes selection box not go wonky during zooming animation
+		y1 = clamp(mouse_click_y - (timeline.ver_scroll.value - timeline_select_startv), tly, tly + tlh)
 		x2 = clamp(mouse_x, tlx, tlx + tlw)
 		y2 = clamp(mouse_y, tly, tly + tlh)
 		
@@ -624,7 +641,7 @@ function tab_timeline()
 				
 				stl = (mouse_click_y - tly + timeline_select_startv) / itemh
 				etl = (mouse_y - tly + timeline.ver_scroll.value) / itemh
-				spos = (mouse_click_x - tlx + timeline_select_starth) / timeline_zoom
+				spos = ((mouse_click_x - tlx) + timeline_select_starth) / timeline_zoom_current
 				epos = (mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom
 				
 				if (stl > etl)
@@ -890,7 +907,7 @@ function tab_timeline()
 			place_tl.value[e_value.POS_Y] = 0
 			place_tl.value[e_value.POS_Z] = 0
 			
-			with(place_tl)
+			with (place_tl)
 				tl_set_parent(tl)
 				
 			tl_update_list()
@@ -1416,13 +1433,12 @@ function tab_timeline()
 			action_tl_move_done(mousemovetl, mousemoveindex)
 	}
 	
-	// Select timelines
+	// Drag select timelines
 	if (window_busy = "timelineselect")
 	{
-		var x1, y1, x2, y2;
-		
 		mouse_cursor = cr_handpoint
 		
+		var x1, y1, x2, y2;
 		x1 = clamp(mouse_click_x, content_x, tlx)
 		y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), listy, listy + tlh)
 		x2 = clamp(mouse_x, content_x, tlx)
@@ -1550,7 +1566,7 @@ function tab_timeline()
 		// Change region
 		if (timeline_region_start != null)
 		{
-			if (app_mouse_box(barx + regionx1 - 8, bary, 8, barh, "place"))
+			if (app_mouse_box(barx + regionx1 + (timeline_region_start <= 0 ? 0 : -8), bary, 8, barh, "place"))
 			{
 				mouse_cursor = cr_size_we
 				if (mouse_left_pressed)
@@ -1579,7 +1595,7 @@ function tab_timeline()
 			window_busy = "timelinemarker"
 		}
 		
-		// Create tegion
+		// Create region
 		if (mouse_right_pressed)
 		{
 			window_focus = "timeline"
@@ -1664,22 +1680,6 @@ function tab_timeline()
 		}
 	}
 	
-	// Zoom
-	if (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0)
-	{
-		var m = (mouse_wheel = 1 ? .5 : 2);
-		timeline_zoom_goal = clamp(timeline_zoom_goal * m, 0.25, 32)
-		if (timeline_zoom_goal > 1)
-			timeline_zoom_goal = round(timeline_zoom_goal)
-		
-		timeline.hor_scroll.value_goal = min(
-			// Prevent zooming into timeline past end of animation or playback marker, whichever is furthest
-			max((timeline_length * timeline_zoom_goal), (timeline_marker * timeline_zoom_goal)),
-			// Convert current and new mouse position to frames, then get difference and add it
-			round(timeline.hor_scroll.value + ((mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom - (mouse_x - barx + timeline.hor_scroll.value) / timeline_zoom_goal) * timeline_zoom_goal)
-		)
-	}
-	
 	// Move view
 	if (window_busy = "timelinedrag")
 	{
@@ -1694,24 +1694,27 @@ function tab_timeline()
 			window_busy = ""
 		}
 		
-		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
+		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 	}
 	
 	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
+	
+	var ver_scroll_speed = 8;
 	
 	// Move view when selecting
 	if (window_busy = "timelinemove" || window_busy = "timelineselect" || (window_busy = "place" && mouseinnames))
 	{
 		if (mouse_y < tly + 6)
-			timeline.ver_scroll.value -= 8
-		
+			timeline.ver_scroll.value -= ver_scroll_speed
 		if (mouse_y > tly + tlh - 6)
-			timeline.ver_scroll.value += 8
+			timeline.ver_scroll.value += ver_scroll_speed
 		
 		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
 		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 	}
+	
+	var hor_scroll_speed = 15;
 	
 	// Move view when selecting/moving keyframes
 	if (window_busy = "timelineselectkeyframes" || 
@@ -1721,21 +1724,24 @@ function tab_timeline()
 		window_busy = "timelinesetregionend" || 
 		window_busy = "timelineresizesounds" || 
 		window_busy = "timelinesetsoundend" ||
-		window_busy = "timelinemovemarker")
+		window_busy = "timelinemovemarker"
+	)
 	{
-		if (mouse_x < tlx)
-			timeline.hor_scroll.value -= 15
+		if (mouse_x < tlx) // no padding needed here
+			timeline.hor_scroll.value -= hor_scroll_speed
+		if (mouse_x > tlx + tlw - 6)
+			timeline.hor_scroll.value += hor_scroll_speed
 		
-		if (mouse_x > tlx + tlw)
-			timeline.hor_scroll.value += 15
-		
-		if (window_busy != "timelinemovemarker")
+		if (window_busy != "timelinemovemarker" &&
+			window_busy != "timelinecreateregion" && 
+			window_busy != "timelinesetregionstart" &&
+			window_busy != "timelinesetregionend"
+		)
 		{
 			if (mouse_y < tly + 6)
-				timeline.ver_scroll.value -= 8
-			
+				timeline.ver_scroll.value -= ver_scroll_speed
 			if (mouse_y > tly + tlh - 6)
-				timeline.ver_scroll.value += 8
+				timeline.ver_scroll.value += ver_scroll_speed
 		}
 		
 		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
@@ -1743,6 +1749,39 @@ function tab_timeline()
 		
 		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
+	}
+	
+	// Zoom
+	if (zoombutton <> 0 || (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0))
+	{
+		var m;
+		if (zoombutton <> 0)
+			m = (zoombutton = 1 ? .5 : 2)
+		else
+			m = (mouse_wheel = 1 ? .5 : 2)
+		timeline_zoom_goal = clamp(timeline_zoom_goal * m, 0.25, 32)
+		if (timeline_zoom_goal > 1)
+			timeline_zoom_goal = round(timeline_zoom_goal)
+		if (zoombutton <> 0)
+			timeline_zoom_target =  (barw * .5) + barx
+		else
+		 	timeline_zoom_target = mouse_x
+	}
+	var zoompoint = (timeline_zoom_target - barx + timeline.hor_scroll.value);
+	if (timeline_zoom != timeline_zoom_goal)
+	{
+		if (setting_timeline_autoscroll && timeline_playing)
+			zoompoint = (timeline_marker * timeline_zoom)
+		
+		timeline.hor_scroll.value_goal = min(
+			max( // Prevent zooming into timeline past the furthest of these points
+				(timeline_length * timeline_zoom_goal), // End of animation
+				(timeline_marker * timeline_zoom_goal), // Playhead
+				(ds_list_size(timeline_marker_list) > 0 ? (timeline_marker_list[|ds_list_size(timeline_marker_list) - 1].pos * timeline_zoom_goal) : null) // Last timeline marker if any exist
+			),
+			// Convert current and new mouse position to frames, then get difference and add it
+			round(timeline.hor_scroll.value + ((zoompoint / timeline_zoom) - (zoompoint / timeline_zoom_goal)) * timeline_zoom_goal)
+		)
 	}
 	
 	// Vertical scrollbar

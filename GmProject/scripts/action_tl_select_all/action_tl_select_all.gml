@@ -17,6 +17,9 @@ function action_tl_select_all()
 		{
 			with (tree_list[|t])
 			{
+				if (!tl_update_list_filter(id))
+					continue
+				
 				tl_update_recursive_select()
 				tl_select()
 			}

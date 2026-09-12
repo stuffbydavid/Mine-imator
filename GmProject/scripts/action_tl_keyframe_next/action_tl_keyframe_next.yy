@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_keyframe_next",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/App/Actions/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_keyframe_next",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_keyframe_next",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Actions/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

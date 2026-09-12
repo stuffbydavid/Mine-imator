@@ -29,6 +29,8 @@ function project_load_background(map)
 	
 	background_sky_time = value_get_real(map[?"sky_time"], background_sky_time)
 	background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
+	if (load_format < e_project.FORMAT_210)
+		background_sky_rotation += 180
 	background_sunlight_strength = value_get_real(map[?"sunlight_strength"], background_sunlight_strength)
 	
 	if (load_format < e_project.FORMAT_200_PRE_5)
@@ -70,7 +72,12 @@ function project_load_background(map)
 	background_sky_clouds_size = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size)
 	background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 	background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
-	
+	if (load_format < e_project.FORMAT_210)
+	{
+		background_sky_clouds_speed *= -1
+		background_sky_clouds_offset *= -1
+	}
+		
 	// Update cloud size
 	if (load_format < e_project.FORMAT_200_PRE_5)
 	{
@@ -89,9 +96,7 @@ function project_load_background(map)
 			background_ground_name = newname
 	}
 	
-	background_ground_slot = ds_list_find_index(mc_assets.block_texture_list, background_ground_name)
-	if (background_ground_slot < 0) // Animated
-		background_ground_slot = ds_list_size(mc_assets.block_texture_list) + ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_name)
+	background_ground_slot = minecraft_assets_block_texture_picker_slot_find(background_ground_name)
 		
 	background_ground_tex.count--
 	background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
@@ -105,18 +110,27 @@ function project_load_background(map)
 	background_biome = value_get_string(map[?"biome"], background_biome)
 	
 	// Empty biome name bugfix (revert to plains)
-	if (background_biome = "")
-		background_biome = biome_list[|2].name
+	if (background_biome = "" || !find_biome(background_biome))
+	{
+		if (find_biome(default_biome))
+			background_biome = default_biome
+		else
+			background_biome = biome_list[|1].name
+	}
 	
 	background_sky_color = value_get_color(map[?"sky_color"], background_sky_color)
 	background_sky_clouds_color = value_get_color(map[?"sky_clouds_color"], background_sky_clouds_color)
 	background_sunlight_color = value_get_color(map[?"sunlight_color"], background_sunlight_color)
 	background_ambient_color = value_get_color(map[?"ambient_color"], background_ambient_color)
+	background_night_sky_color = value_get_color(map[?"night_sky_color"], background_night_sky_color)
+	background_night_sky_clouds_color = value_get_color(map[?"night_sky_clouds_color"], background_night_sky_clouds_color)
+	background_night_sky_stars_color = value_get_color(map[?"night_sky_stars_color"], background_night_sky_stars_color)
 	background_night_color = value_get_color(map[?"night_color"], background_night_color)
 	
 	background_water_color = value_get_color(map[?"water_color"], background_water_color)
 	background_grass_color = value_get_color(map[?"grass_color"], background_grass_color)
 	background_foliage_color = value_get_color(map[?"foliage_color"], background_foliage_color)
+	background_dry_foliage_color = value_get_color(map[?"dry_foliage_color"], background_dry_foliage_color)
 	background_leaves_oak_color = value_get_color(map[?"leaves_oak_color"], background_leaves_oak_color)
 	background_leaves_spruce_color = value_get_color(map[?"leaves_spruce_color"], background_leaves_spruce_color)
 	background_leaves_birch_color = value_get_color(map[?"leaves_birch_color"], background_leaves_birch_color)
@@ -143,4 +157,8 @@ function project_load_background(map)
 	background_wind_directional_strength = value_get_real(map[?"wind_directional_strength"], background_wind_directional_strength)
 	
 	background_texture_animation_speed = value_get_real(map[?"texture_animation_speed"], background_texture_animation_speed)
+	if (load_format < e_project.FORMAT_CTB_106)
+		background_texture_animation_speed *= 3 // 75% for older projects
+	else if (load_format < e_project.FORMAT_210)
+		background_texture_animation_speed /= 20
 }

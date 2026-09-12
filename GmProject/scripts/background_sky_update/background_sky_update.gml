@@ -4,7 +4,7 @@ function background_sky_update()
 {
 	if (!background_fog_color_custom) // Fog color
 	{
-		background_fog_color_final = background_sky_color
+		background_fog_color_final = background_sky_color_final
 		if (!background_image_show)
 		{
 			background_fog_color_final = merge_color(background_fog_color_final, merge_color(background_fog_color_final, 0, 0.95), background_night_alpha)
@@ -14,7 +14,7 @@ function background_sky_update()
 			if (background_twilight)
 			{
 				var cam_xyangle, p;
-				cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
+				cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - (background_sky_rotation + 180)
 				
 				// Sunset
 				p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 180, 1)
@@ -39,15 +39,15 @@ function background_sky_update()
 	else
 		alphay = 1
 	
-	background_clouds_alpha = (background_sky_clouds_mode = "faded" ? 1 - min(background_night_alpha, 0.95) : .8 - min(background_night_alpha, 0.75)) * alphay
-	background_sky_clouds_final = merge_color(background_sky_clouds_color, make_color_rgb(120, 120, 255), background_night_alpha)
+	background_clouds_alpha = background_sky_clouds_mode = "faded" ? (1 - min(background_night_alpha, 0.95)) * alphay : 0.8 //(.8 - min(background_night_alpha, 0.75) * alphay)
+	background_sky_clouds_final = merge_color(background_sky_clouds_color, background_night_sky_clouds_color, background_night_alpha)
 	background_sky_clouds_vbuffer_pos = []
 	
 	var size, offset, xo, yo, num, xx, i;
 	size = background_sky_clouds_size * 32
 	offset = ((background_sky_clouds_speed * (background_time * 0.25 + background_sky_time * 100) + background_sky_clouds_offset) mod size)
 	xo = (cam_from[X] div size) * size
-	yo = (cam_from[Y] div size) * size - offset
+	yo = (cam_from[Y] div size) * size + offset
 	num = (ceil(background_fog_distance / size) + 1) * size
 	xx = -num
 	i = 0

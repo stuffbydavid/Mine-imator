@@ -31,9 +31,11 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	// Combo textfield, border visibility depends on mouse position
 	microani_set(name, null, false, false, false)
 	
+	var draggerwid = 128;
+	
 	textfield_group_add(name + "mininput", minval, mindef, minscript, X, mintbx, null, 0.1, minrange, min(maxval, maxrange))
 	textfield_group_add(name + "maxinput", maxval, maxdef, maxscript, X, maxtbx, null, 0.1, max(minval, minrange), maxrange)
-	draw_textfield_group(name, (xx + wid - 128) + 8, yy, 128, 0, null, null, snapval, false, false, 0, true)
+	draw_textfield_group(name, (xx + wid - draggerwid) + 8, yy, draggerwid, 0, null, null, snapval, false, false, 0, true)
 	
 	textfocus = microani_arr[e_microani.CUSTOM]
 	
@@ -48,7 +50,7 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	labelalpha = lerp(labelalpha, a_accent, max(textfocus, microani_arr[e_microani.ACTIVE]))
 	
 	draw_set_font(font_label)
-	draw_label(string_limit(text_get(name), wid - 128), xx, yy + (ui_small_height/2), fa_left, fa_middle, labelcolor, labelalpha)
+	draw_label(string_limit(text_get(name), wid - draggerwid), xx, yy + (ui_small_height/2), fa_left, fa_middle, labelcolor, labelalpha)
 	
 	if (window_compact || app.panel_compact)
 		return 0

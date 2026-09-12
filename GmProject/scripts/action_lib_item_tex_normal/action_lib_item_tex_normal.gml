@@ -3,9 +3,6 @@
 
 function action_lib_item_tex_normal(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)

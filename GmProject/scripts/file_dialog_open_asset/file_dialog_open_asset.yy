@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "file_dialog_open_asset",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "File",
-    "path": "folders/Scripts/App/Dialogues/File.yy",
+  "$GMScript":"v1",
+  "%Name":"file_dialog_open_asset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"file_dialog_open_asset",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/App/Dialogues/File.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

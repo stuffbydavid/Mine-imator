@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "app_startup_keybinds",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Keybinds",
-    "path": "folders/Scripts/App/Keybinds.yy",
+  "$GMScript":"v1",
+  "%Name":"app_startup_keybinds",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_startup_keybinds",
+  "parent":{
+    "name":"Keybinds",
+    "path":"folders/Scripts/App/Keybinds.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

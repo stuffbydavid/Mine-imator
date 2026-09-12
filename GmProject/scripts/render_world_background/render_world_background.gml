@@ -25,7 +25,7 @@ function render_world_background()
 	{
 		var cam_xyangle, p, backgroundcolor;
 		backgroundcolor = c_black
-		cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
+		cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - (background_sky_rotation + 180)
 		
 		// Sunset
 		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 180, 1) * .25

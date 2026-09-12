@@ -1,15 +1,16 @@
-/// vbuffer_create_cylinder(radius, texcoord1, texcoord2, texhorflip, texverflip, detail, closed, invert, mapped)
+/// vbuffer_create_cylinder(radius, texcoord1, texcoord2, texhorflip, texverflip, detail, smooth, closed, invert, mapped)
 /// @arg radius
 /// @arg texcoord1
 /// @arg texcoord2
 /// @arg texhorflip
 /// @arg texverflip
 /// @arg detail
+/// @arg smooth
 /// @arg closed
 /// @arg invert
 /// @arg mapped
 
-function vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, detail, closed, invert, mapped)
+function vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, detail, smooth, closed, invert, mapped)
 {
 	vbuffer_start()
 	
@@ -90,6 +91,18 @@ function vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, detail, closed
 				tex1[Y] = tex2[Y]
 				tex2[Y] = tmp
 			}
+		}
+
+		if (!smooth)
+		{
+			var normx, normy;
+			normx = (n1x + n2x) / 2
+			normy = (n1y + n2y) / 2
+			
+			n1x = normx
+			n2x = normx
+			n1y = normy
+			n2y = normy
 		}
 		
 		if (invert)

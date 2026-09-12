@@ -181,7 +181,7 @@ function res_load_pack_particle_textures()
 		surf = null
 	}
 	
-	// Particle sheet 2(Explosion)
+	// Particle sheet 2 (Explosion)
 	if (particles_texture[1] = null)
 	{
 		draw_texture_start()

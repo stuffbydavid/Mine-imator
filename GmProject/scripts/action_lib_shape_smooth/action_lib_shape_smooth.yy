@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_lib_shape_smooth",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_shape_smooth",
+  "parent":{
+    "name":"Shapes",
+    "path":"folders/Scripts/App/Actions/Library/Shapes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

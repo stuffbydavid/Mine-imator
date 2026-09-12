@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_exposure",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Light management",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Light management.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_exposure",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_exposure",
+  "parent":{
+    "name":"Light management",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Light management.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

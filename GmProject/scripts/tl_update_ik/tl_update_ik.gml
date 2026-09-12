@@ -163,7 +163,7 @@ function do_ik(tl)
 		{
 			var dir = vec3_direction(jointpos[0], endpos);
 			
-			for (i = 1; i < array_length(jointpos); i++)
+			for (var i = 1; i < array_length(jointpos); i++)
 				jointpos[i] = point3D_add(jointpos[i - 1], vec3_mul(dir, jointlength[i - 1]))
 		}
 		else // Calculate inverse kinematics (FABRIK)
@@ -212,7 +212,7 @@ function do_ik(tl)
 	
 	if (tl.value[e_value.IK_TARGET] != null)
 	{
-		var matinv = matrix_inverse(mat);
+		var matinv = matrix_inverse_ext(mat);
 		p0 = point3D_mul_matrix(jointpos[0], matinv)
 		p1 = point3D_mul_matrix(jointpos[1], matinv)
 		p2 = point3D_mul_matrix(jointpos[2], matinv)

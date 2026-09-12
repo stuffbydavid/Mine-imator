@@ -17,7 +17,7 @@ function tl_value_spawn()
 	}
 	
 	// Model part values
-	else if (type = e_tl_type.BODYPART && model_part != null)
+	else if (type = e_tl_type.MODEL_PART && model_part != null)
 	{
 		// Bending
 		if (model_part.bend_part != null)

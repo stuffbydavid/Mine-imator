@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_frame_editor_text",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Frame editor",
-    "path": "folders/Scripts/App/Interface/Tabs/Frame editor.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_frame_editor_text",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_frame_editor_text",
+  "parent":{
+    "name":"Frame editor",
+    "path":"folders/Scripts/App/Interface/Tabs/Frame editor.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

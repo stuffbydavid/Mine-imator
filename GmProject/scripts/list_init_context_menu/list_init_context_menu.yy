@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "list_init_context_menu",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Init",
-    "path": "folders/Scripts/App/Interface/Components/Lists/Init.yy",
+  "$GMScript":"v1",
+  "%Name":"list_init_context_menu",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"list_init_context_menu",
+  "parent":{
+    "name":"Init",
+    "path":"folders/Scripts/App/Interface/Components/Lists/Init.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

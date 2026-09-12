@@ -16,6 +16,7 @@ function app_startup_interface_menus()
 	menu_model_current = null
 	menu_model_state = null
 	menu_model_state_current = null
+	menu_model_armor_variant = false
 	menu_block_current = null
 	menu_block_state = null
 	menu_block_state_current = null

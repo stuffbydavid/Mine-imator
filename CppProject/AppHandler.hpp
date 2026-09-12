@@ -80,13 +80,17 @@ namespace CppProject
 		QVector<AddedWindow> addedWindows;
 
 		QBasicTimer stepTimer;
+		std::chrono::steady_clock::time_point stepDeadline;
 		BoolType blocked = false;
 
 		Timer randomizeTimer;
 		IntType startTime = 0;
 		RealType scale = 1.0;
+		IntType targetFps = 60;
 		Timer fpsTimer;
 		QDateTime fpsLastUpdate;
+		std::chrono::steady_clock::time_point fpsSampleStart;
+		IntType fpsSampleFrames = 0;
 
 		QNetworkAccessManager httpManager;
 		IntType httpNextId = 1;

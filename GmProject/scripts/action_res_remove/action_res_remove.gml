@@ -45,7 +45,7 @@ function action_res_remove()
 			temp_update()
 		
 		// Update pattern
-		if (type = e_temp_type.SPECIAL_BLOCK && pattern_type != "")
+		if ((type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK) && pattern_type != "")
 			array_add(pattern_update, id)
 		
 		temp_update_armor(id)

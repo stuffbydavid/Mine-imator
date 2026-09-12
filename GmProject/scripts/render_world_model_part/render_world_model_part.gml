@@ -62,6 +62,10 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			
 			render_set_texture(model_part_shape_tex[s])
 			
+			render_set_uniform_vec2("uTextureOffset",
+									(app.background_time / 60) * shape.texture_scroll_speed * sin(degtorad(shape.texture_scroll_direction)),
+									(app.background_time / 60) * shape.texture_scroll_speed * cos(degtorad(shape.texture_scroll_direction)))
+			
 			render_set_uniform_int("uMaterialFormat", model_part_shape_material_res[s])
 			
 			if (model_part_shape_tex_material[s] = null)
@@ -181,25 +185,25 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Preview
 		if (object_index = obj_preview && select.object_index != obj_resource && select.model_name = "armor")
 		{
-			if (shape.description = "helmet")
+			if (shape.description = "helmet" || shape.description = "helmet_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[0]))
 					render_set_texture(select.armor_skin_array[0])
 			}
 			
-			if (shape.description = "chestplate")
+			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[1]))
 					render_set_texture(select.armor_skin_array[1])
 			}
 			
-			if (shape.description = "leggings")
+			if (shape.description = "leggings" || shape.description = "leggings_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[2]))
 					render_set_texture(select.armor_skin_array[2])
 			}
 			
-			if (shape.description = "boots")
+			if (shape.description = "boots" || shape.description = "boots_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[3]))
 					render_set_texture(select.armor_skin_array[3])
@@ -208,25 +212,25 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		
 		if (tlobject != null && tlobject.temp.model_name = "armor")
 		{
-			if (shape.description = "helmet")
+			if (shape.description = "helmet" || shape.description = "helmet_baby")
 			{
 				if (sprite_exists(tlobject.temp.armor_skin_array[0]))
 					render_set_texture(tlobject.temp.armor_skin_array[0])
 			}
 			
-			if (shape.description = "chestplate")
+			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
 			{
 				if (sprite_exists(tlobject.temp.armor_skin_array[1]))
 					render_set_texture(tlobject.temp.armor_skin_array[1])
 			}
 			
-			if (shape.description = "leggings")
+			if (shape.description = "leggings" || shape.description = "leggings_baby")
 			{
 				if (sprite_exists(tlobject.temp.armor_skin_array[2]))
 					render_set_texture(tlobject.temp.armor_skin_array[2])
 			}
 			
-			if (shape.description = "boots")
+			if (shape.description = "boots" || shape.description = "boots_baby")
 			{
 				if (sprite_exists(tlobject.temp.armor_skin_array[3]))
 					render_set_texture(tlobject.temp.armor_skin_array[3])

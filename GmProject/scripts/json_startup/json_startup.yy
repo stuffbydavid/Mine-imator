@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "json_startup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "JSON",
-    "path": "folders/Scripts/Utility/File/JSON.yy",
+  "$GMScript":"v1",
+  "%Name":"json_startup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"json_startup",
+  "parent":{
+    "name":"JSON",
+    "path":"folders/Scripts/Utility/File/JSON.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

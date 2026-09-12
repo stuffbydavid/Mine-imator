@@ -107,7 +107,7 @@ function tl_update_path()
 	// Generate tangent/normal values in points
 	spline_make_frames(path_table, path_closed, path_smooth)
 	
-	if (path_shape_generate)
+	if (path_shape != "none")
 		path_vbuffer = vbuffer_create_path(id)
 	else
 		path_select_vbuffer = vbuffer_create_path(id, true)

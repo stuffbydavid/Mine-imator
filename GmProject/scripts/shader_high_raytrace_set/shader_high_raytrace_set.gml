@@ -39,9 +39,9 @@ function shader_high_raytrace_set(mode, surf = null)
 	render_set_uniform("uNear", depth_near)
 	render_set_uniform("uFar", depth_far)
 	render_set_uniform("uProjMatrix", proj_matrix)
-	render_set_uniform("uProjMatrixInv", matrix_inverse(proj_matrix))
+	render_set_uniform("uProjMatrixInv", matrix_inverse_ext(proj_matrix))
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
-	render_set_uniform("uViewMatrixInv", matrix_inverse(view_matrix))
+	render_set_uniform("uViewMatrixInv", matrix_inverse_ext(view_matrix))
 	
 	// Reflections
 	render_set_uniform_color("uSkyColor", app.background_sky_color_final, 1)

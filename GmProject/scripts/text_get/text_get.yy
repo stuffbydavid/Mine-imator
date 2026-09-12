@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "text_get",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Text",
-    "path": "folders/Scripts/App/Interface/Text.yy",
+  "$GMScript":"v1",
+  "%Name":"text_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"text_get",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/App/Interface/Text.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

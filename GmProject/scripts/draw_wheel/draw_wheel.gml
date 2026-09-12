@@ -43,9 +43,7 @@ function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tb
 	draw_image(sprite, 0, xx, yy, 1, 1, c_border, a_border)
 	
 	// Bar
-	gpu_set_tex_filter(true)
 	draw_image(spr_dial_dash, 0, xx, yy, .5, .5, color, 1, value + 45)
-	gpu_set_tex_filter(false)
 	
 	// Dragging
 	if (window_busy = name)

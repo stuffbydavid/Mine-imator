@@ -14,15 +14,20 @@ function popup_exportmovie_draw()
 	draw_button_menu("exportmovievideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
 	tab_next()
 	
+	var badvideosize = (popup.format = "mp4" || popup.format = "mov") && (project_video_width mod 2 = 1 || project_video_height mod 2 = 1)
+	
 	// Custom
 	if (project_video_template = 0)
 	{
-		textfield_group_add("exportmovievideosizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup.tbx_video_size_custom_width, null, 1, 1, surface_get_max_size())
-		textfield_group_add("exportmovievideosizecustomheight", project_video_height, 720, action_project_video_height, X, popup.tbx_video_size_custom_height, null, 1, 1, surface_get_max_size())
+		textfield_group_add("exportmovievideosizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup.tbx_video_size_custom_width, null, 1, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1, surface_get_max_size())
+		textfield_group_add("exportmovievideosizecustomheight", project_video_height, 720, action_project_video_height, X, popup.tbx_video_size_custom_height, null, 1, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1, surface_get_max_size())
 		
-		tab_control_textfield_group(false)
-		draw_textfield_group("exportmovievideosizecustom", dx, dy, dw, 1, 1, no_limit, 1, false)
+		tab_control_textfield_group()
+		draw_textfield_group("exportmovievideosizecustom", dx, dy, dw, 1, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1, no_limit, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1)
 		tab_next()
+		
+		if (badvideosize)
+			draw_tooltip_label("exportmovievideosizecustomerror", icons.WARNING_TRIANGLE, e_toast.NEGATIVE)
 		
 		tab_control_switch()
 		draw_switch("exportmovievideosizecustomkeepaspectratio", dx, dy, project_video_keep_aspect_ratio, action_project_video_keep_aspect_ratio)
@@ -109,6 +114,6 @@ function popup_exportmovie_draw()
 	
 	// Save
 	tab_control_button_label()
-	draw_button_label("exportmoviesave", dx + dw, dy, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT)
+	draw_button_label("exportmoviesave", dx + dw, dy, null, icons.SAVE, e_button.PRIMARY, action_toolbar_exportmovie_save, e_anchor.RIGHT, badvideosize)
 	tab_next()
 }

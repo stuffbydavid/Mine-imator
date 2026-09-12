@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "simplex_lib",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/App/Libraries/Math.yy",
+  "$GMScript":"v1",
+  "%Name":"simplex_lib",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"simplex_lib",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/App/Libraries/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

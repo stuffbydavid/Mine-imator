@@ -1,5 +1,5 @@
-/// action_project_render_block_subsurface(val, add)
-/// @arg val
+/// action_project_render_block_subsurface(value, add)
+/// @arg value
 /// @arg add
 
 function action_project_render_block_subsurface(val, add)

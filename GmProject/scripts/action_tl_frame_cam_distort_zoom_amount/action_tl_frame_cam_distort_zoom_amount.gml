@@ -1,5 +1,5 @@
-/// action_tl_frame_cam_distort_zoom_amount(val, add)
-/// @arg val
+/// action_tl_frame_cam_distort_zoom_amount(value, add)
+/// @arg value
 /// @arg add
 
 function action_tl_frame_cam_distort_zoom_amount(val, add)

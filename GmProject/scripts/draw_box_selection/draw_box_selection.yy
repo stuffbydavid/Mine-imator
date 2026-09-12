@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_box_selection",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Draw",
-    "path": "folders/Scripts/Utility/Draw.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_box_selection",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_box_selection",
+  "parent":{
+    "name":"Draw",
+    "path":"folders/Scripts/Utility/Draw.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

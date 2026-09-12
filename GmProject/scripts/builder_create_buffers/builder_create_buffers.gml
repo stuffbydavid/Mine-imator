@@ -14,7 +14,7 @@ function builder_create_buffers()
 	ds_grid_clear(block_render_model, 0)
 	
 	// Fill with single block
-	if (build_single_block != null)
+	if (!is_undefined(build_single_block) && build_single_block != null)
 	{
 		buffer_fill(block_obj, 0, buffer_u16, build_single_block.block_id, build_size_total * 2)
 		buffer_fill(block_state_id, 0, buffer_u16, build_single_stateid, build_size_total * 2)

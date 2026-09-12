@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_watermark_image",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Render",
-    "path": "folders/Scripts/Render.yy",
+  "$GMScript":"v1",
+  "%Name":"render_watermark_image",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_watermark_image",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

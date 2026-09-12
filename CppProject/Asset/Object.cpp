@@ -1,4 +1,5 @@
 #include "Object.hpp"
+#include "Generated/Scripts.hpp"
 
 #define GetRefImpl(rawType, enumType, varTypeFunc) \
 	if (!memMap) \
@@ -27,15 +28,22 @@ namespace CppProject
 	QHash<IntType, QVector<IntType>> Object::objectIdsMap;
 	QHash<IntType, QHash<IntType, Object::Member>> Object::memberMap;
 
+	BoolType Object::IsIndexed(IntType subAssetId)
+	{
+		return global::objects_indexed_array.Find(subAssetId) >= 0;
+	}
+
 	Object::Object(QString name, IntType subAssetId) :
 		Asset(ID_Object, subAssetId, name)
 	{
-		objectIdsMap[subAssetId].insert(0, id);
+		if (IsIndexed(subAssetId))
+			objectIdsMap[subAssetId].append(id);
 	};
 
 	Object::~Object()
 	{
-		objectIdsMap[subAssetId].removeOne(id);
+		if (IsIndexed(subAssetId))
+			objectIdsMap[subAssetId].removeOne(id);
 	}
 
 	RealType& Object::GetRealRef(IntType memberId)

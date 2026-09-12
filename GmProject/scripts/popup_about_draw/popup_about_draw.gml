@@ -32,9 +32,6 @@ function popup_about_draw()
 	mctextx += string_width(text_get("aboutminecraftpre"))
 	draw_button_text(text_get("aboutminecraft"), mctextx, dy + 98 + 19, popup_open_url, link_minecraft, link_minecraft)
 	
-	dy += 128 + 48
-	dx = content_x + 64
-	
 	// Button links
 	var buttonx, buttony;
 	buttonx = content_x + 12
@@ -66,6 +63,9 @@ function popup_about_draw()
 			open_url(link_donate)
 	}
 	
+	dx = content_x + 64
+	dy += 128 + 48
+	
 	// Created by
 	dy += 12
 	draw_label(text_get("aboutcreatedby"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
@@ -94,6 +94,10 @@ function popup_about_draw()
 	dy = content_y + 176
 	
 	// Beta testing
+	dy += 12
+	draw_label(text_get("aboutbetatesting"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+	dy += 26
+	
 	var list = [
 		"9redwoods",
 		"Alpha Toostrr",
@@ -111,10 +115,6 @@ function popup_about_draw()
 		"Vash",
 		"__Mine__"
 	]
-	
-	dy += 12
-	draw_label(text_get("aboutbetatesting"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	dy += 26
 	
 	for (var i = 0; i < array_length(list); i++)
 	{

@@ -54,18 +54,21 @@ function view_shape_path(view, tl)
 	prevcoord2d = view_shape_project(prevcoord)
 	prevcoord2derror = point3D_project_error
 	
-	for (var i = 1; i < array_length(tl.path_table_matrix); i++)
+	if (showpoints || tl.path_shape = "none")
 	{
-		nextcoord = tl.path_table_matrix[i]
-		nextcoord2d = view_shape_project(nextcoord)
-		nextcoord2derror = point3D_project_error
+		for (var i = 1; i < array_length(tl.path_table_matrix); i++)
+		{
+			nextcoord = tl.path_table_matrix[i]
+			nextcoord2d = view_shape_project(nextcoord)
+			nextcoord2derror = point3D_project_error
 		
-		if (!prevcoord2derror && !nextcoord2derror)
-			view_shape_line_draw(prevcoord2d, nextcoord2d)
+			if (!prevcoord2derror && !nextcoord2derror)
+				view_shape_line_draw(prevcoord2d, nextcoord2d)
 		
-		prevcoord = nextcoord
-		prevcoord2d = nextcoord2d
-		prevcoord2derror = nextcoord2derror
+			prevcoord = nextcoord
+			prevcoord2d = nextcoord2d
+			prevcoord2derror = nextcoord2derror
+		}
 	}
 	
 	if (showpoints)

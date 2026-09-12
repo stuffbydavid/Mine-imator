@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "background_ground_update_texture_material",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Background",
-    "path": "folders/Scripts/App/Background.yy",
+  "$GMScript":"v1",
+  "%Name":"background_ground_update_texture_material",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"background_ground_update_texture_material",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Background.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

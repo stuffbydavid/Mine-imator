@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "mod_fix",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/Utility/Math.yy",
+  "$GMScript":"v1",
+  "%Name":"mod_fix",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"mod_fix",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

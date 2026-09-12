@@ -20,7 +20,20 @@ function view_shape_circle()
 	if (point3D_project_error)
 		return 0
 	
-	rad2D = ((rad / point3D_distance(pos, cam_from)) * render_height) / (cam_fov / 60)
+	// Use perpendicular distance to get correct scale at edges of screen
+	var camdir, cdist;
+	camdir = vec3_direction(cam_from, cam_to)
+	cdist = abs(
+				(camdir[X] * (pos[X] - cam_from[X])) +
+				(camdir[Y] * (pos[Y] - cam_from[Y])) +
+				(camdir[Z] * (pos[Z] - cam_from[Z]))
+			) / sqrt(
+				power(camdir[X], 2) +
+				power(camdir[Y], 2) +
+				power(camdir[Z], 2)
+			)
+	rad2D = ((rad / cdist) * render_height) / (cam_fov / 58.72) //point3D_distance(pos, cam_from)
+	
 	detail = 32
 	
 	for (var i = 0; i < 1; i += 1 / detail)

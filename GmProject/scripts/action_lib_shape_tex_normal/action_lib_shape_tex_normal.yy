@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_shape_tex_normal",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shapes",
-    "path": "folders/Scripts/App/Actions/Library/Shapes.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_shape_tex_normal",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_shape_tex_normal",
+  "parent":{
+    "name":"Shapes",
+    "path":"folders/Scripts/App/Actions/Library/Shapes.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

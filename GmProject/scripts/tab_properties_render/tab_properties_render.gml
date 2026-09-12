@@ -2,6 +2,8 @@
 
 function tab_properties_render()
 {
+	var text;
+	
 	// Render setings
 	if (project_render_settings = "")
 		text = text_get("projectrendersettingscustom")
@@ -99,7 +101,7 @@ function tab_properties_render()
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("rendersubsurfacescatterhighlightstrength", dx, dy, dragger_width, round(project_render_subsurface_highlight_strength * 100), 0.1, 0, no_limit, 100, 1, tab.render.tbx_subsurface_highlight_strength, action_project_render_subsurface_highlight_strength)
+		draw_dragger("rendersubsurfacescatterhighlightstrength", dx, dy, dragger_width, round(project_render_subsurface_highlight_strength * 100), .5, 0, no_limit, 100, 1, tab.render.tbx_subsurface_highlight_strength, action_project_render_subsurface_highlight_strength)
 		tab_next()
 		
 		tab_collapse_end()
@@ -241,12 +243,18 @@ function tab_properties_render()
 		tab_collapse_start()
 		
 		// Tonemapper
-		if (project_render_tonemapper = e_tonemapper.REINHARD)
-			text = text_get("rendertonemapperreinhard")
-		else if (project_render_tonemapper = e_tonemapper.ACES)
-			text = text_get("rendertonemapperaces")
-		else
-			text = text_get("rendertonemappernone")
+		switch (project_render_tonemapper)
+		{
+			case e_tonemapper.REINHARD:
+				text = text_get("rendertonemapperreinhard")
+				break;
+			case e_tonemapper.ACES:
+				text = text_get("rendertonemapperaces")
+				break;
+			default:
+				text = text_get("rendertonemappernone")
+				break;
+		}
 		
 		tab_control_menu()
 		draw_button_menu("rendertonemapper", e_menu.LIST, dx, dy, dw, 24, project_render_tonemapper, text, action_project_render_tonemapper)

@@ -43,7 +43,7 @@ namespace CppProject
 
 		QDataStream ds;
 		QHash<NbtType, QVector<StringType>> filter;
-		BoolType stringSkipMc = false, filterEnabled = true, debug = false;
+		BoolType filterEnabled = true, debug = false;
 
 		static QHash<NbtType, IntType> nbtTypeSize;
 	};

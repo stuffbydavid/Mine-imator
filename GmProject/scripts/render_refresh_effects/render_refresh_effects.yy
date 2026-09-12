@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_refresh_effects",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Render",
-    "path": "folders/Scripts/Render.yy",
+  "$GMScript":"v1",
+  "%Name":"render_refresh_effects",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_refresh_effects",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

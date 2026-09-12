@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_texture_animation_speed",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Background",
-    "path": "folders/Scripts/App/Actions/Background.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_texture_animation_speed",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_texture_animation_speed",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Actions/Background.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

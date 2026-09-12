@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "gzunzip",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "File",
-    "path": "folders/Scripts/App/Libraries/File.yy",
+  "$GMScript":"v1",
+  "%Name":"gzunzip",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gzunzip",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/App/Libraries/File.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

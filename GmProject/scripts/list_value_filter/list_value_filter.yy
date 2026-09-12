@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "list_value_filter",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Init",
-    "path": "folders/Scripts/App/Interface/Components/Lists/Init.yy",
+  "$GMScript":"v1",
+  "%Name":"list_value_filter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"list_value_filter",
+  "parent":{
+    "name":"Init",
+    "path":"folders/Scripts/App/Interface/Components/Lists/Init.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

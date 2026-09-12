@@ -10,7 +10,7 @@ function tab_properties_resources()
 	tab_next()
 	
 	// List
-	tab_control_sortlist(6)
+	tab_control_sortlist(tab.resources.list)
 	sortlist_draw(tab.resources.list, dx, dy, dw, tab_control_h, res_edit)
 	tab_next()
 	
@@ -23,10 +23,10 @@ function tab_properties_resources()
 	if (draw_button_icon("previewexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, (!res_edit || res_edit.type = e_res_type.FROM_WORLD), "tooltipresourcesave"))
 		action_res_export()
 	
-	if (draw_button_icon("resourcesreload", dx + (28 * 2), dy, 24, 24, false, icons.RELOAD, null, (!res_edit || res_edit = mc_res), "tooltipresourcereload"))
+	if (draw_button_icon("resourcesreload", dx + (28 * 2), dy, 24, 24, false, icons.REFRESH, null, (!res_edit || res_edit = mc_res), "tooltipresourcereload"))
 		action_res_reload()
 	
-	if (draw_button_icon("resourcesreplace", dx + (28 * 3), dy, 24, 24, false, icons.FOLDER, null, (!res_edit || res_edit = mc_res || res_edit.type = e_res_type.FROM_WORLD), "tooltipresourcereplace"))
+	if (draw_button_icon("resourcesreplace", dx + (28 * 3), dy, 24, 24, false, icons.REPLACE, null, (!res_edit || res_edit = mc_res || res_edit.type = e_res_type.FROM_WORLD), "tooltipresourcereplace"))
 		action_res_replace()
 	
 	if (draw_button_icon("resourcesremove", dx + (28 * 4), dy, 24, 24, false, icons.DELETE, null, (!res_edit || res_edit = mc_res), "tooltipresourceremove"))
@@ -37,7 +37,7 @@ function tab_properties_resources()
 	if (res_edit = null)
 		return 0
 	
-	if (res_edit.type = e_res_type.SCENERY)
+	if (res_edit.type = e_res_type.SCHEMATIC)
 	{
 		tab_control_checkbox()
 		draw_checkbox("resourcessceneryrandomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resourcessceneryrandomizehelp")
@@ -49,19 +49,19 @@ function tab_properties_resources()
 		capwid = text_caption_width("resourcespackimage", "resourcespackimagecharacter", "resourcespackimagecolormap", "resourcespackimageparticles")
 		
 		tab_control_menu()
-		draw_button_menu("resourcespackimage", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image, text_get("resourcespack" + res_preview.pack_image), action_res_preview_pack_image, false)
+		draw_button_menu("resourcespackimage", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image, text_get("resourcespack" + res_preview.pack_image), action_res_preview_pack_image)
 		tab_next()
-		
+
 		switch (res_preview.pack_image)
 		{
 			case "modeltextures":
 			{
 				tab_control_menu()
-				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material, false)
+				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material)
 				tab_next()
 				
 				tab_control_menu()
-				draw_button_menu("resourcespackimagemodeltexture", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_model_texture, res_preview.pack_model_texture, action_res_preview_pack_model_texture, false)
+				draw_button_menu("resourcespackimagemodeltexture", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_model_texture, res_preview.pack_model_texture, action_res_preview_pack_model_texture)
 				tab_next()
 				break
 			}
@@ -69,7 +69,11 @@ function tab_properties_resources()
 			case "itemsheet":
 			{
 				tab_control_menu()
-				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material, false)
+				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material)
+				tab_next()
+
+				tab_control_menu()
+				draw_button_menu("resourcespackimageitemsheetsize", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_item_sheet_size, text_get("resourcespackimageitemsheetsize" + string(item_size * (res_preview.pack_item_sheet_size + 1))), action_res_preview_pack_item_sheet_size)
 				tab_next()
 				break
 			}
@@ -77,7 +81,7 @@ function tab_properties_resources()
 			case "blocksheet":
 			{
 				tab_control_menu()
-				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material, false)
+				draw_button_menu("resourcespackmaterial", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_image_material, text_get("resourcespackmaterial" + res_preview.pack_image_material), action_res_preview_pack_image_material)
 				tab_next()
 				
 				tab_control_togglebutton()
@@ -85,6 +89,13 @@ function tab_properties_resources()
 				togglebutton_add("resourcespackimageblocksheetanimated", null, 1, res_preview.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)
 				draw_togglebutton("resourcespackimageblocksheet", dx, dy)
 				tab_next()
+
+				if (!res_preview.pack_block_sheet_ani)
+				{
+					tab_control_menu()
+					draw_button_menu("resourcespackimageblocksheetsize", e_menu.LIST_SEAMLESS, dx, dy, dw, 24, res_preview.pack_block_sheet_size, text_get("resourcespackimageblocksheetsize" + string(block_size_list[res_preview.pack_block_sheet_size])), action_res_preview_pack_block_sheet_size)
+					tab_next()
+				}
 				break
 			}
 			
@@ -93,6 +104,7 @@ function tab_properties_resources()
 				tab_control_togglebutton()
 				togglebutton_add("resourcespackimagecolormapgrass", null, 0, res_preview.pack_colormap = 0, action_res_preview_pack_colormap)
 				togglebutton_add("resourcespackimagecolormapfoliage", null, 1, res_preview.pack_colormap = 1, action_res_preview_pack_colormap)
+				togglebutton_add("resourcespackimagecolormapdryfoliage", null, 2, res_preview.pack_colormap = 2, action_res_preview_pack_colormap)
 				draw_togglebutton("resourcespackimagecolormap", dx, dy)
 				tab_next()
 				break
@@ -107,19 +119,26 @@ function tab_properties_resources()
 				tab_next()
 				break
 			}
+			
+			case "moontexture":
+			{
+				tab_control_menu()
+				draw_button_menu("resourcespackmoonphase", e_menu.LIST, dx, dy, dw, 24, res_preview.pack_moon_phase, text_get("resourcespackmoonphase" + string(res_preview.pack_moon_phase + 1)), action_res_preview_pack_moon_phase)
+				tab_next()
+				break
+			}
 		}
 	}
 	else if (res_edit.type = e_res_type.ITEM_SHEET)
 	{
 		// Size
 		axis_edit = X
-		tab_control_dragger()
-		draw_dragger("resourcesitemsheetsizerows", dx, dy, dragger_width, res_edit.item_sheet_size[X], 1 / 10, 1, no_limit, item_sheet_width, 1, tab.resources.tbx_item_sheet_width, action_res_item_sheet_size)
-		tab_next()
-		
+		textfield_group_add("resourcesitemsheetsizecolumns", res_edit.item_sheet_size[X], minecraft_item_sheet_size[e_item_sheet.SIZE16][X], action_res_item_sheet_size, axis_edit, tab.resources.tbx_item_sheet_width, null, 1, 1, no_limit)
 		axis_edit = Y
-		tab_control_dragger()
-		draw_dragger("resourcesitemsheetsizecolumns", dx, dy, dragger_width, res_edit.item_sheet_size[Y], 1 / 10, 1, no_limit, item_sheet_height, 1, tab.resources.tbx_item_sheet_height, action_res_item_sheet_size)
+		textfield_group_add("resourcesitemsheetsizerows", res_edit.item_sheet_size[Y], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y], action_res_item_sheet_size, axis_edit, tab.resources.tbx_item_sheet_height, null, 1, 1, no_limit)
+		
+		tab_control_textfield_group(true)
+		draw_textfield_group("resourcesitemsheetsizegrid", dx, dy, dw, 0.1, 1, no_limit, 1, true)
 		tab_next()
 	}
 	else if (res_edit.scenery_structure)
@@ -180,7 +199,7 @@ function tab_properties_resources()
 		draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 		
 		// Open in external program
-		if (draw_button_icon("resourcesfilenameopen", dx + dw - 24, dy, 24, 24, false, icons.FOLDER, null, res_edit.type = e_res_type.SCENERY, "tooltipresourceopen"))
+		if (draw_button_icon("resourcesfilenameopen", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD, "tooltipresourceopen"))
 			open_url(project_folder + "/" + res_edit.filename)
 		
 		tab_next()

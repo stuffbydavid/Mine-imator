@@ -36,6 +36,7 @@ function panel_area_draw()
 	// Set max size
 	panel_map[?"left"].size_real = min(panel_map[?"left"].size_real, panel_area_width)
 	panel_map[?"right"].size_real = min(panel_map[?"right"].size_real, panel_area_width)
+	panel_map[?"right_secondary"].size_real = min(panel_map[?"right_secondary"].size_real, panel_area_width - panel_map[?"right"].size_real)
 	panel_map[?"top"].size_real = min(panel_map[?"top"].size_real, panel_area_height)
 	panel_map[?"bottom"].size_real = min(panel_map[?"bottom"].size_real, panel_area_height)
 	

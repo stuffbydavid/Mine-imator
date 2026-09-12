@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "shader_material_uniforms",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shaders",
-    "path": "folders/Scripts/Render/Shaders.yy",
+  "$GMScript":"v1",
+  "%Name":"shader_material_uniforms",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_material_uniforms",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Scripts/Render/Shaders.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

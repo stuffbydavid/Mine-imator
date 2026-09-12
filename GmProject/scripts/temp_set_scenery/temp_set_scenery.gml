@@ -141,7 +141,10 @@ function temp_set_scenery(res, animate, hobj)
 			temp_update_display_name()
 			temp_update_rot_point()
 			with (app)
+			{
+				tl_update_list()
 				tl_update_matrix()
+			}
 		}
 	}
 }

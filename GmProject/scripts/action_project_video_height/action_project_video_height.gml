@@ -4,7 +4,7 @@
 
 function action_project_video_height(val, add)
 {
-	var ratio, 
+	var ratio;
 	
 	if (history_undo)
 	{

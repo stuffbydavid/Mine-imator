@@ -12,10 +12,9 @@ function tab_frame_editor_path()
 	
 	if (collapse_map[?"follow_path"])
 	{
-		var text;
-		
 		tab_collapse_start()
 		
+		var text;
 		if (tl_edit.value[e_value.PATH_OBJ] != null)
 			text = tl_edit.value[e_value.PATH_OBJ].display_name
 		else

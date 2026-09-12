@@ -7,6 +7,8 @@ namespace CppProject
 	{
 		if (IsUndefined() || other.IsUndefined())
 			return (IsUndefined() == other.IsUndefined());
+		if ((IsAnyReal() && other.IsString()) || (IsString() && other.IsAnyReal()))
+			return false;
 
 		switch (type)
 		{

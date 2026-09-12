@@ -27,7 +27,7 @@ function new_res(fn, type)
 	var copied = false;
 	if (res != null) // Existing resource found
 	{
-		if (question(text_get("questionreplace")))
+		if (question(text_get("questionreplace", filename_name(fn))))
 			replaced = true
 		else
 		{

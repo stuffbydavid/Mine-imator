@@ -24,7 +24,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		curtl = app.project_timeline_list[|i]
 		
 		// Update children
-		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
+		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.EQUIPMENT || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
 			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
 				if (curtl.tree_list[|t].inherit_pose)
 					array_add(app.project_inherit_pose_array, curtl.tree_list[|t])
@@ -56,7 +56,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 					matrix_parent = array_copy_1d(parent.matrix)
 				
 				// Parent is a body part and we're locked to bended half
-				if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
+				if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
 				{
 					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z]);
 					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0, 0, 0)), matrix_parent)
@@ -104,7 +104,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Add body part position and rotation
-			if (type = e_tl_type.BODYPART && model_part != null)
+			if (type = e_tl_type.MODEL_PART && model_part != null)
 			{
 				if (part_of != null)
 					matrix_parent = matrix_multiply(matrix_create(model_part.position, model_part.rotation, vec3(1)), matrix_parent)
@@ -268,7 +268,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
 			value_inherit[e_value.WIND_INFLUENCE] = value[e_value.WIND_INFLUENCE] // Multiplied
 			value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE]
-			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend)// Added
+			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend) // Added
 			value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] * (1 - ikblend) // Added
 			value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] * (1 - ikblend) // Added
 			value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten

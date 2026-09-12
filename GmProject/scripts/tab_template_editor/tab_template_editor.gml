@@ -15,8 +15,9 @@ function tab_template_editor()
 	switch (temp_edit.type)
 	{
 		case e_temp_type.CHARACTER:
+		case e_temp_type.EQUIPMENT:
 		case e_temp_type.SPECIAL_BLOCK:
-		case e_temp_type.BODYPART:
+		case e_temp_type.MODEL_PART:
 		{
 			var labeltext, list, capwid;
 			if (temp_edit.type = e_temp_type.CHARACTER)
@@ -25,23 +26,29 @@ function tab_template_editor()
 				list = tab.char_list
 				capwid = 0
 			}
+			else if (temp_edit.type = e_temp_type.EQUIPMENT)
+			{
+				labeltext = text_get("templateeditorequipment")
+				list = tab.equipment_list
+				capwid = 0
+			}
 			else if (temp_edit.type = e_temp_type.SPECIAL_BLOCK)
 			{
 				labeltext = text_get("templateeditorblock")
 				list = tab.special_block_list
 				capwid = 0
 			}
-			else if (temp_edit.type = e_temp_type.BODYPART)
+			else if (temp_edit.type = e_temp_type.MODEL_PART)
 			{
 				labeltext = text_get("templateeditormodel")
-				list = tab.bodypart_model_list
-				capwid = text_caption_width("templateeditorbodypart")
+				list = tab.model_part_model_list
+				capwid = text_caption_width("templateeditormodelpart")
 			}
 			
 			// Model
 			var statelen, statesh, menus, checkboxes;
 			statelen = array_length(temp_edit.model_state)
-			statesh = ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0)
+			statesh = ((temp_edit.type = e_temp_type.MODEL_PART) ? 32 : 0)
 			menus = 0
 			checkboxes = 0
 			
@@ -60,7 +67,7 @@ function tab_template_editor()
 			
 			// Update states in case model was updated
 			statelen = array_length(temp_edit.model_state)
-			statesh = ((temp_edit.type = e_temp_type.BODYPART) ? 32 : 0)
+			statesh = ((temp_edit.type = e_temp_type.MODEL_PART) ? 32 : 0)
 			menus = 0
 			checkboxes = 0
 			
@@ -97,7 +104,7 @@ function tab_template_editor()
 				
 				var state = temp_edit.model_state[i];
 				menu_model_current = model
-				menu_model_state_current = model.states_map[?state]
+				menu_model_state_current = model ? model.states_map[?state] : null
 				
 				tab_control(ui_small_height)
 				
@@ -105,7 +112,7 @@ function tab_template_editor()
 				{
 					menu_model_state = menu_model_state_current
 					
-					var script = (temp_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state;
+					var script = (temp_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state;
 					
 					if (temp_edit.model_state[i + 1] = "true")
 						script_execute(script, "false")
@@ -127,17 +134,17 @@ function tab_template_editor()
 				
 				var state = temp_edit.model_state[i];
 				menu_model_current = model
-				menu_model_state_current = model.states_map[?state]
-				draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), (temp_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
+				menu_model_state_current = model ? model.states_map[?state] : null
+				draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", temp_edit.model_state[i + 1]), (temp_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
 				dyy += 32
 			}
 			menu_model_current = null
 			menu_filter = ""
 			menu_filter_normal = ""
 			
-			// Bodypart
-			if (temp_edit.type = e_temp_type.BODYPART)
-				draw_button_menu("templateeditorbodypart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, capwid)
+			// Model part
+			if (temp_edit.type = e_temp_type.MODEL_PART)
+				draw_button_menu("templateeditormodelpart", e_menu.LIST, dx, dyy, dw, 24, temp_edit.model_part_name, minecraft_asset_get_name("modelpart", temp_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, capwid)
 			
 			if (content_mouseon)
 				window_scroll_focus = string(list.scroll)
@@ -148,7 +155,7 @@ function tab_template_editor()
 		case e_temp_type.BLOCK:
 		{
 			// Block
-			var statelen, statesh, menus, checkboxes;
+			var statelen, statesh, menus, checkboxes, capwid;
 			statelen = array_length(temp_edit.block_state)
 			menus = 0
 			checkboxes = 0
@@ -205,7 +212,7 @@ function tab_template_editor()
 				
 				var state = temp_edit.block_state[i];
 				menu_block_current = block
-				menu_block_state_current = block.states_map[?state]
+				menu_block_state_current = block ? block.states_map[?state] : null
 				
 				tab_control(ui_small_height)
 				
@@ -233,7 +240,7 @@ function tab_template_editor()
 				
 				var state = temp_edit.block_state[i];
 				menu_block_current = block
-				menu_block_state_current = block.states_map[?state]
+				menu_block_state_current = block ? block.states_map[?state] : null
 				draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, temp_edit.block_state[i + 1], minecraft_asset_get_name("blockstatevalue", temp_edit.block_state[i + 1]), action_lib_block_state, false, null, null, "", c_white, 1, capwid)
 				dyy += 32
 			}
@@ -253,14 +260,28 @@ function tab_template_editor()
 			if (!res_is_ready(res))
 				res = mc_res
 			
-			if (res.item_sheet_texture = null)
+			if (res.item_sheet_texture[e_item_sheet.SIZE16] = null)
 			{
 				tab_close(tab)
 				return 0
 			}
 			
-			var slots = ((res.type = e_res_type.PACK) ? ds_list_size(mc_assets.item_texture_list) : (res.item_sheet_size[X] * res.item_sheet_size[Y]));
-			draw_texture_picker(temp_edit.item_slot, res.item_sheet_texture, dx, dy, dw, dh, slots, res.item_sheet_size[X], res.item_sheet_size[Y], tab.item_scroll, action_lib_item_slot)
+			var textures, slots, sheetsizes;
+			if (res.type = e_res_type.PACK)
+			{
+				textures = res.item_sheet_texture
+				sheetsizes = minecraft_item_sheet_size
+				slots = array_create(e_item_sheet.amount)
+				for (var sheet = 0; sheet < e_item_sheet.amount; sheet++)
+					slots[sheet] = ds_list_size(mc_assets.item_texture_list[sheet])
+			}
+			else
+			{
+				textures = [res.item_sheet_texture[e_item_sheet.SIZE16]]
+				sheetsizes = [res.item_sheet_size]
+				slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
+			}
+			draw_texture_picker(temp_edit.item_slot, textures, slots, sheetsizes, dx, dy, dw, dh, tab.item_scroll, action_lib_item_slot)
 			
 			if (content_mouseon)
 				window_scroll_focus = string(tab.item_scroll)

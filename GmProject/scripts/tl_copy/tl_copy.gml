@@ -67,26 +67,26 @@ function tl_copy(to)
 	to.alpha_mode = alpha_mode
 	
 	to.path_update = true
-	to.path_smooth = path_smooth
 	to.path_closed = path_closed
+	to.path_smooth = path_smooth
 	to.path_detail = path_detail
-	to.path_shape_generate = path_shape_generate
+	to.path_shape = path_shape
 	to.path_shape_radius = path_shape_radius
-	to.path_shape_tex_length = path_shape_tex_length
 	to.path_shape_invert = path_shape_invert
-	to.path_shape_tube = path_shape_tube
-	to.path_shape_detail = path_shape_detail
 	to.path_shape_smooth_segments = path_shape_smooth_segments
 	to.path_shape_smooth_ring = path_shape_smooth_ring
+	to.path_shape_detail = path_shape_detail
+	to.path_shape_tex_mapped = path_shape_tex_mapped
+	to.path_shape_tex_length = path_shape_tex_length
 	
 	if (part_of != null && part_of != "")
 	{
-		if (type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 		{
 			to.model_name = model_name
 			to.model_state = array_copy_1d(model_state)
 		}
-		else if (type = e_temp_type.BLOCK)
+		else if (type = e_tl_type.BLOCK)
 		{
 			to.block_name = block_name
 			to.block_state = array_copy_1d(block_state)

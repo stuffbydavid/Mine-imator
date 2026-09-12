@@ -132,18 +132,13 @@ function action_toolbar_exportmovie_save()
 	render_hidden = popup_exportmovie.include_hidden
 	render_watermark = popup_exportmovie.watermark
 	
-	window_state = "export_movie"
-	exportmovie_frame = 0
-	export_sample = 0
 	exportmovie_start = current_time
-	render_samples = -1
-	
-	if (view_main.quality = e_view_mode.RENDER)
-		view_main.quality = e_view_mode.SHADED
-	
-	if (view_second.quality = e_view_mode.RENDER)
-		view_second.quality = e_view_mode.SHADED
+	exportmovie_frame = 0
+	export_start("export_movie")
 	
 	timeline_marker = exportmovie_marker_start
+	
+	// Trigger/update animations
 	action_tl_play_start()
+	app_update_animate()
 }

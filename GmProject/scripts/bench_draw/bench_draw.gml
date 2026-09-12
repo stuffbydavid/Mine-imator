@@ -79,23 +79,24 @@ function bench_draw()
 	types = 13
 	divides = 4
 	lefth = (types * 32) + (divides * 9)
-	for (var i = 0; i < ds_list_size(bench_type_list.item); i++)
+	for (var i = 0; i < ds_list_size(bench_tab_list.item); i++)
 	{
+		var item = bench_tab_list.item[|i]
 		skipasset = false
 		
 		if (!setting_advanced_mode)
 		{
-			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground")
+			if (item.value = e_bench.MODEL || item.value = e_bench.ENVIRONMENT)
 				skipasset = true
 		}
 		
 		if (!skipasset)
 		{
-			list_item_draw(bench_type_list.item[|i], dx, dy, 192, window_compact ? 28 : 32, (bench_settings.type = bench_type_list.item[|i].value), 0, 5)
+			list_item_draw(item, dx, dy, 192, window_compact ? 28 : 32, bench_tab = item.value, 0, 5)
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (i = 2 || i = 6 || i = 9)
+		if (item.value = e_bench.MODEL_PART || item.value = e_bench.SPECIAL_BLOCK || item.value = e_bench.PATH)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9
@@ -120,6 +121,6 @@ function bench_draw()
 	clip_end()
 	draw_set_alpha(1)
 	
-	if (window_busy = "" && bench_show_ani_type != "hide")
+	if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")
 		window_busy = "bench"
 }

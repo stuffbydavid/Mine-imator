@@ -19,6 +19,12 @@ function new_history(script)
 		scale_link_drag = false
 		scale_link_drag_val = 0
 		save_set_var = false
+		usage_tl_attractor_amount = 0
+		usage_tl_ik_target_amount = 0
+		usage_tl_ik_target_angle_amount = 0
+		usage_kf_attractor_amount = 0
+		usage_kf_ik_target_amount = 0
+		usage_kf_ik_target_angle_amount = 0
 		
 		return id
 	}

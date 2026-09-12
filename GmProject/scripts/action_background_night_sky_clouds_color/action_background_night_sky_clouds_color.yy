@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_background_night_sky_clouds_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_night_sky_clouds_color",
+  "parent":{
+    "name":"Clouds",
+    "path":"folders/Scripts/App/Actions/Background/Sky/Clouds.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "menu_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Menu",
-    "path": "folders/Scripts/App/Interface/Components/Menu.yy",
+  "$GMScript":"v1",
+  "%Name":"menu_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"menu_event_create",
+  "parent":{
+    "name":"Menu",
+    "path":"folders/Scripts/App/Interface/Components/Menu.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

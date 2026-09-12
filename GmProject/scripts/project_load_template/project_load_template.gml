@@ -13,10 +13,13 @@ function project_load_template(map)
 		load_id = value_get_string(map[?"id"], save_id)
 		save_id_map[?load_id] = load_id
 		
-		type = ds_list_find_index(temp_type_name_list, value_get_string(map[?"type"]))
+		var typename = value_get_string(map[?"type"]);
+		if (typename = "bodypart")
+			typename = "modelpart"
+		type = ds_list_find_index(temp_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
 		{
 			if (load_format = e_project.FORMAT_110_PRE_1)
 				model_tex = value_get_save_id(map[?"skin"], model_tex)
@@ -66,8 +69,14 @@ function project_load_template(map)
 				// Model version
 				model_version = value_get_real(modelmap[?"model_version"], 0)
 				project_load_template_update_model()
+
+				// Equipment was formerly saved as a special block
+				if (type = e_temp_type.SPECIAL_BLOCK &&
+					!is_undefined(mc_assets.model_name_map[?model_name]) &&
+					ds_list_find_index(mc_assets.equipment_list, mc_assets.model_name_map[?model_name]) >= 0)
+					type = e_temp_type.EQUIPMENT
 				
-				if (type = e_temp_type.BODYPART)
+				if (type = e_temp_type.MODEL_PART)
 					model_part_name = value_get_string(modelmap[?"part_name"], model_part_name)
 				
 				// Pattern values
@@ -147,9 +156,9 @@ function project_load_template(map)
 						if (!is_undefined(newname))
 							itemname = newname
 					}
-					item_slot = ds_list_find_index(mc_assets.item_texture_list, itemname)
+					item_slot = minecraft_assets_texture_picker_slot_find(itemname, mc_assets.item_texture_list)
 					if (item_slot < 0)
-						item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
+						item_slot = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 				}
 				else
 					item_slot = value_get_real(itemmap[?"slot"], item_slot)
@@ -182,12 +191,29 @@ function project_load_template(map)
 				else
 				{
 					block_name = value_get_string(blockmap[?"name"], block_name)
+					block_state = value_get_state_vars(blockmap[?"state"])
 					
 					// Update legacy block name
 					if (legacy_block_names_map[?block_name] != undefined)
 						block_name = legacy_block_names_map[?block_name]
 					
-					block_state = value_get_state_vars(blockmap[?"state"])
+					// Update legacy block states
+					if (legacy_block_states_map[?block_name] != undefined)
+					{
+						var legacyblockmap, statename;
+						legacyblockmap = legacy_block_states_map[?block_name]
+					
+						for (var i = 0; i < array_length(block_state); i += 2)
+						{
+							statename = block_state[i]
+					
+							// Replace state name
+							if (legacyblockmap[?statename] != undefined)
+								block_state[i] = legacyblockmap[?statename]
+						}
+					}
+					
+					project_load_template_update_block()
 				}
 				
 				block_tex = value_get_save_id(blockmap[?"tex"], block_tex)
@@ -272,6 +298,7 @@ function project_load_template(map)
 				shape_tex_vmirror = value_get_real(shapemap[?"tex_vmirror"], shape_tex_vmirror)
 				shape_closed = value_get_real(shapemap[?"closed"], shape_closed)
 				shape_invert = value_get_real(shapemap[?"invert"], shape_invert)
+				shape_smooth = value_get_real(shapemap[?"smooth"], shape_smooth)
 				shape_detail = value_get_real(shapemap[?"detail"], shape_detail)
 				shape_face_camera = value_get_real(shapemap[?"face_camera"], shape_face_camera)
 				

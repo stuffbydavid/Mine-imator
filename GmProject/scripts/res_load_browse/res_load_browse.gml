@@ -11,7 +11,7 @@ function res_load_browse()
 			fn = file_dialog_open_pack()
 			break
 		
-		case e_res_type.SCENERY:
+		case e_res_type.SCHEMATIC:
 			fn = file_dialog_open_scenery()
 			break
 		

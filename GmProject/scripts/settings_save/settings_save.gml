@@ -10,6 +10,7 @@ function settings_save()
 	
 	json_save_object_start("assets")
 		
+		json_save_var("lastknown", minecraft_assets_version)
 		json_save_var("version", setting_minecraft_assets_version)
 		
 		if (setting_minecraft_assets_new_version != "")
@@ -55,7 +56,7 @@ function settings_save()
 		if (setting_advanced_mode)
 			json_save_var("advanced_mode", setting_advanced_mode)
 		
-		json_save_var("fps", room_speed)
+		json_save_var("fps", game_get_speed(gamespeed_fps))
 		json_save_var("project_folder", json_string_encode(setting_project_folder))
 		json_save_var_bool("backup", setting_backup)
 		json_save_var("backup_time", setting_backup_time)

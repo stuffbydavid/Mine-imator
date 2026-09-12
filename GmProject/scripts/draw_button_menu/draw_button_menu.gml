@@ -172,7 +172,7 @@ function draw_button_menu()
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.PRESS])
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
-	draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, hei, false, c_input_background, draw_get_alpha())
 	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha * fadealpha, true)
 	
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
@@ -290,7 +290,9 @@ function draw_button_menu()
 		m.menu_ani = 0
 		m.menu_value = value
 		m.menu_name = nameid
-		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent" &&
+								  m.menu_name != "frameeditoriktarget" &&
+								  m.menu_name != "frameeditorikangletarget")
 		menu_current = m
 		menu_expose = true
 		
@@ -310,7 +312,7 @@ function draw_button_menu()
 		
 		// Find index of chosen value
 		var index = 0;
-		var item = null;
+		item = null
 		
 		list_value_filter(list)
 		
@@ -400,7 +402,10 @@ function draw_button_menu()
 		m.menu_button_h = hei
 		m.menu_item_w = wid
 		m.menu_item_h = m.menu_button_h
-		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent" &&
+								  m.menu_name != "frameeditoriktarget" &&
+								  m.menu_name != "frameeditorikangletarget")
+		m.menu_model_armor_variant = menu_model_armor_variant
 		m.menu_margin = 0//8
 		m.menu_transition = null
 		m.menu_steps = 0

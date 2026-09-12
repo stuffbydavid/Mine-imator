@@ -58,7 +58,7 @@ function tl_update_value_types()
 		value_type[e_value_type.TRANSFORM_SCA] = true
 	
 	// Bend
-	if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != null)
+	if (type = e_tl_type.MODEL_PART && model_part != null && model_part.bend_part != null)
 		value_type[e_value_type.TRANSFORM_BEND] = true
 	
 	// Color

@@ -32,7 +32,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackmodeltextures")
-				popup_loading.progress = 1 / 4
+				popup_loading.progress = 0.25
 			}
 			break
 		}
@@ -47,7 +47,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackblocktextures")
-				popup_loading.progress = 2 / 4
+				popup_loading.progress = 0.5
 			}
 			break
 		}
@@ -66,7 +66,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackitemtextures")
-				popup_loading.progress = 3 / 4
+				popup_loading.progress = 0.75
 			}
 			break
 		}
@@ -120,6 +120,10 @@ function res_load_pack()
 				if (background_sky_clouds_tex = other.id)
 					background_sky_update_clouds()
 				
+				lib_preview.update = true
+				res_preview.update = true
+				bench_settings.preview.update = true
+
 				load_next()
 			}
 			

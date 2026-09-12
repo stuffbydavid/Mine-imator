@@ -40,15 +40,15 @@ function temp_update_shape()
 			break
 		
 		case e_shape_type.CONE:
-			shape_vbuffer = vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_closed, shape_invert, shape_tex_mapped)
+			shape_vbuffer = vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_smooth, shape_closed, shape_invert, shape_tex_mapped)
 			break
 		
 		case e_shape_type.CYLINDER:
-			shape_vbuffer = vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_closed, shape_invert, shape_tex_mapped)
+			shape_vbuffer = vbuffer_create_cylinder(rad, tex1, tex2, thflip, tvflip, shape_detail, shape_smooth, shape_closed, shape_invert, shape_tex_mapped)
 			break
 		
 		case e_shape_type.SPHERE:
-			shape_vbuffer = vbuffer_create_sphere(rad, tex1, tex2, shape_detail, shape_invert)
+			shape_vbuffer = vbuffer_create_sphere(rad, tex1, tex2, shape_detail, shape_smooth, shape_invert)
 			break
 	}
 }

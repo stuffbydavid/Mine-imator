@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "app_update_tl_edit_tabs",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/App/Update.yy",
+  "$GMScript":"v1",
+  "%Name":"app_update_tl_edit_tabs",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_update_tl_edit_tabs",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/App/Update.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

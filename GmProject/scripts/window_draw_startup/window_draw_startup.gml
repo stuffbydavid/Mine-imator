@@ -79,23 +79,26 @@ function window_draw_startup()
 		}
 	}
 	
-	// Show recent models
+	// Show recent projects
 	if (recent_list_amount > 0)
 	{
-		// Recent model grid/list button
+		// Recent project grid/list button
 		dx -= (12 + 28)
 		
 		dx = (window_width / 2) - (dw / 2)
 		
 		draw_set_font(font_heading)
 		
-		// Recent models label
+		// Recent projects label
 		draw_label(text_get("startuprecentprojects"), dx, dy + 16, fa_left, fa_middle, c_accent, 1)
 		
 		var labelwid = string_width(text_get("startuprecentprojects"));
 		
 		if (draw_button_label("startupsortby", dx + labelwid + 16, dy, null, icons.SORT_DOWN, e_button.TERTIARY))
+		{
 			menu_settings_set(dx + labelwid + 16, dy, "startupsortby", 32)
+			settings_menu_script = null
+		}
 		
 		if (settings_menu_name = "startupsortby" && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
@@ -118,10 +121,10 @@ function window_draw_startup()
 		// Jonathan splash
 		var midx, midy;
 		midx = snap(window_width / 2, 2)
-		midy = snap(headersize + ((window_height - headersize) / 1.75), 2)
+		midy = snap((2 * headersize) + ((window_height - (2 * headersize)) / 2), 2)
 		
 		// Only draw splash if it fits well on screen
-		if ((midy + (sprite_get_height(spr_jonathan_splash) / 1.75)) < (window_height - 50))
+		if ((midy + (sprite_get_height(spr_jonathan_splash) / 2)) <= window_height)
 			draw_image(spr_jonathan_splash, 0, midx, midy)
 	}
 }

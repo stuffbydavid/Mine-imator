@@ -12,10 +12,10 @@ function action_tl_frame_set_camera(valueslist, reset = false)
 		
 		if (reset)
 		{
-			if (valueslist[i] = null)
+			if (valueslist[|i] = null)
 				tl_value_set(vid, null, false)
 			
-			if (valueslist[i])
+			if (valueslist[|i])
 				tl_value_set(vid, tl_value_default(vid), false)
 		}
 		else

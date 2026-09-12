@@ -38,7 +38,9 @@ function settings_load()
 		var assetsmap = map[?"assets"];
 		if (ds_map_valid(assetsmap))
 		{
-			setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
+			var lastknown = value_get_string(assetsmap[?"lastknown"], "");
+			if (lastknown = minecraft_assets_version) // No Mine-imator update
+				setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
 			
 			var newmap = assetsmap[?"new"];
 			if (ds_map_valid(newmap))
@@ -62,7 +64,8 @@ function settings_load()
 			setting_advanced_mode = value_get_real(programmap[?"advanced_mode"], setting_advanced_mode)
 			
 			// No interface setting, but custom fps can be loaded from file
-			room_speed = value_get_real(programmap[?"fps"], room_speed)
+			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
+			game_set_speed(gamespeed_fps, targetfps)
 			
 			if (!dev_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
@@ -98,7 +101,7 @@ function settings_load()
 			if (setting_language_filename != language_file)
 				language_load(setting_language_filename, language_map)
 			
-			var themename = theme_light.name;
+			var themename = theme_classic.name;
 			themename = value_get_string(interfacemap[?"theme"], themename)
 			
 			with (obj_theme)

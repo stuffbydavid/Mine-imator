@@ -112,7 +112,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		if (window_scroll_focus_prev = string(sb))
 		{
 			if (sb.snap_value = 0)
-				sb.value_goal += mouse_wheel * 120
+				sb.value_goal += mouse_wheel * sb.wheel_speed
 			else
 				sb.value_goal += (mouse_wheel * sb.snap_value) * 4
 		}
@@ -148,7 +148,11 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 		}
 	}
 	
-	sb.value = round(clamp(sb.value, 0, maxsize - size))
+	sb.value = clamp(sb.value, 0, maxsize - size)
+	if (sb.value < 10)
+		sb.value = floor(sb.value)
+	else
+		sb.value = ceil(sb.value)
 	
 	if (!sb.zoomable || (sb = timeline.hor_scroll && timeline_zoom = timeline_zoom_goal))
 		sb.value_goal = round(clamp(sb.value_goal, 0, maxsize - size))

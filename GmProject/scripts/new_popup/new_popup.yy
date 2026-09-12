@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_popup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Popup",
-    "path": "folders/Scripts/App/Interface/Components/Popup.yy",
+  "$GMScript":"v1",
+  "%Name":"new_popup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_popup",
+  "parent":{
+    "name":"Popup",
+    "path":"folders/Scripts/App/Interface/Components/Popup.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -80,6 +80,12 @@ namespace CppProject
 		// Stops using a clipping rectangle.
 		void ClipEnd();
 
+		// Temporarily disables clipping while preserving the full nested clip state.
+		void ClipSuspend();
+
+		// Restores the most recently suspended nested clip state.
+		void ClipResume();
+
 		// Sets a framebuffer as render target at an index.
 		void SetMRTIndex(IntType index, FrameBuffer* frameBuffer);
 
@@ -121,6 +127,14 @@ namespace CppProject
 		Surface* surface = nullptr;
 		BoolType clipEnabled = false;
 		QRect clipRect;
+		QVector<QRect> clipStack;
+		struct ClipState
+		{
+			BoolType enabled;
+			QRect rect;
+			QVector<QRect> stack;
+		};
+		QVector<ClipState> clipSuspendStack;
 
 		// Matrix
 		Matrix matrixM, matrixV, matrixP, matrixVP;

@@ -106,7 +106,7 @@ function project_load()
 	}
 	
 	// Update project
-	project_load_find_save_ids()
+	project_load_find_save_ids(true)
 	project_load_update()
 	project_reset_loaded()
 	log("Project loaded")

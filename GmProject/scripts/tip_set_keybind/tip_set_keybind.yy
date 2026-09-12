@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tip_set_keybind",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Tips",
-    "path": "folders/Scripts/App/Interface/Components/Tips.yy",
+  "$GMScript":"v1",
+  "%Name":"tip_set_keybind",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tip_set_keybind",
+  "parent":{
+    "name":"Tips",
+    "path":"folders/Scripts/App/Interface/Components/Tips.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

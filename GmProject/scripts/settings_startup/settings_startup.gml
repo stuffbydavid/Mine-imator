@@ -6,7 +6,7 @@ function settings_startup()
 	
 	setting_advanced_mode = dev_mode_advanced
 	
-	setting_minecraft_assets_version = minecraft_version
+	setting_minecraft_assets_version = minecraft_assets_version
 	setting_minecraft_assets_new_version = ""
 	setting_minecraft_assets_new_format = 0
 	setting_minecraft_assets_new_changes = ""
@@ -34,9 +34,9 @@ function settings_startup()
 	setting_watermark_scale = .33
 	setting_watermark_opacity = 1
 	
-	setting_theme = theme_light
+	setting_theme = theme_classic
 	setting_accent = 3
-	setting_accent_custom = hex_to_color("03A9F4")
+	setting_accent_custom = hex_to_color("03A9F4") //4367A3
 	
 	setting_language_filename = language_file
 	
@@ -131,7 +131,7 @@ function settings_startup()
 	setting_snap_absolute = true
 	setting_snap_size_position = 1
 	setting_snap_size_rotation = 15
-	setting_snap_size_scale = 1
+	setting_snap_size_scale = 0.25
 	
 	setting_tool_select = false
 	setting_tool_move = true

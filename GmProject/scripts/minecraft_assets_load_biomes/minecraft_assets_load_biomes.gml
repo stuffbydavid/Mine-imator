@@ -25,12 +25,14 @@ function minecraft_assets_load_biomes(list, map)
 			if (is_string(biome[?"foliage"]))
 			{
 				color_foliage = hex_to_color(biome[?"foliage"])
+				color_dry_foliage = color_foliage
 				color_grass = color_foliage
 				hardcoded = true
 			}
 			else
 			{
 				color_foliage = c_white
+				color_dry_foliage = c_white
 				color_grass = c_white
 				txy = value_get_point2D(biome[?"foliage"], vec2(0, 0))
 				hardcoded = false
@@ -39,6 +41,10 @@ function minecraft_assets_load_biomes(list, map)
 			// Grass
 			if (is_string(biome[?"grass"]))
 				color_grass = hex_to_color(biome[?"grass"])
+			
+			// Dry foliage
+			if (is_string(biome[?"dry_foliage"]))
+				color_dry_foliage = hex_to_color(biome[?"dry_foliage"])
 			
 			// Water
 			if (is_string(biome[?"water"]))
@@ -84,6 +90,12 @@ function minecraft_assets_load_biomes(list, map)
 							color_grass = hex_to_color(variant[?"grass"])
 						else
 							color_grass = other.color_grass
+						
+						// Dry foliage
+						if (is_string(variant[?"dry_foliage"]))
+							color_dry_foliage = hex_to_color(variant[?"dry_foliage"])
+						else
+							color_dry_foliage = other.color_dry_foliage
 						
 						// Water
 						if (is_string(variant[?"water"]))

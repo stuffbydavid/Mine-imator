@@ -22,7 +22,7 @@ function string_wrap(str, wid)
 		{
 			if (insertpos = -1)
 			{
-				str = string_insert("\n", str,pos)
+				str = string_insert("\n", str, pos)
 				linewid = 0
 			}
 			else

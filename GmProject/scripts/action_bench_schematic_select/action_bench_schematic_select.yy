@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_bench_schematic_select",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_schematic_select",
+  "parent":{
+    "name":"Bench",
+    "path":"folders/Scripts/App/Actions/Bench.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

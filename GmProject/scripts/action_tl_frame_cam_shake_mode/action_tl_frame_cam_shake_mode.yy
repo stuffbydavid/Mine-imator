@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_shake_mode",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Camera shake",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Camera shake.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_shake_mode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_shake_mode",
+  "parent":{
+    "name":"Camera shake",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Camera shake.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

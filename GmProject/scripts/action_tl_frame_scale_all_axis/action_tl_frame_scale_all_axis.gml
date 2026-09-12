@@ -5,6 +5,7 @@
 function action_tl_frame_scale_all_axis(val, add)
 {
 	var oldval, historyobj, mul, stopdrag;
+	axis_edit = X
 	oldval = tl_edit.value[e_value.SCA_X + axis_edit]
 	historyobj = (history_pos > 0 || history_amount = 0 ? null : history[0])
 	stopdrag = false

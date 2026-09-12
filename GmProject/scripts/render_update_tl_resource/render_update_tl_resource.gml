@@ -10,7 +10,7 @@ function render_update_tl_resource()
 	
 	switch (type)
 	{
-		case e_tl_type.BODYPART:
+		case e_tl_type.MODEL_PART:
 		{
 			if (model_part = null)
 				return 0

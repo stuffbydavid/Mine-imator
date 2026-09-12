@@ -39,12 +39,13 @@ uniform sampler2D uTextureMaterial; // static
 uniform sampler2D uTextureNormal; // static
 
 varying vec3 vPosition;
-varying float vDepth;
 varying vec3 vNormal;
 varying vec3 vTangent;
 varying mat3 vTBN;
 varying vec2 vTexCoord;
-varying vec4 vScreenCoord[NUM_CASCADES];
+varying vec4 vScreenCoord0;
+varying vec4 vScreenCoord1;
+varying vec4 vScreenCoord2;
 varying vec4 vCustom;
 varying float vClipSpaceDepth;
 varying vec4 vColor;
@@ -201,8 +202,19 @@ void main()
 				if (vClipSpaceDepth < uCascadeEndClipSpace[i])
 					break;
 			
-			float fragDepth = vScreenCoord[i].z;
-			vec2 fragCoord = vScreenCoord[i].xy;
+			vec4 screenCoord;
+			if (i == 0)
+				screenCoord = vScreenCoord0;
+			else if (i == 1)
+				screenCoord = vScreenCoord1;
+			else
+			{
+				i = 2;
+				screenCoord = vScreenCoord2;
+			}
+			
+			float fragDepth = screenCoord.z;
+			vec2 fragCoord = screenCoord.xy;
 			
 			// Texture position must be valid
 			if (fragCoord.x >= 0.0 && fragCoord.y >= 0.0 && fragCoord.x <= 1.0 && fragCoord.y <= 1.0)

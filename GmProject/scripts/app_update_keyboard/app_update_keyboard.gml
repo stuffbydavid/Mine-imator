@@ -19,7 +19,12 @@ function app_update_keyboard()
 		open_url(log_file)
 	
 	if (keyboard_check_pressed(vk_f12))
-		debug_info = !debug_info
+	{
+		if (keyboard_check(vk_shift))
+			debug_info_corner = (debug_info_corner + 1) mod 4
+		else
+			debug_info = (debug_info + 1) mod 3
+	}
 	
 	if (window_state = "" && (window_busy = "" || settings_menu_name = "colorpicker") && !textbox_isediting)
 	{
@@ -47,6 +52,9 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.PLAY].pressed)
 			action_tl_play()
 		
+		if (keybinds[e_keybind.PLAY_STOP].pressed)
+			action_tl_play(true)
+		
 		if (keybinds[e_keybind.PLAY_BEGINNING].pressed)
 			action_tl_play_beginning()
 		
@@ -63,6 +71,12 @@ function app_update_keyboard()
 			
 			if (keybinds[e_keybind.MARKER_LEFT].active)
 				action_tl_left()
+			
+			if (keybinds[e_keybind.FRAME_PREVIOUS].pressed)
+				action_tl_frame_previous()
+			
+			if (keybinds[e_keybind.FRAME_NEXT].pressed)
+				action_tl_frame_next()
 		}
 		
 		if (keybinds[e_keybind.RENDER_MODE].pressed)
@@ -115,7 +129,7 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.PARTICLES_CLEAR].pressed)
 			action_lib_pc_clear()
 		
-		// Only available for seperated tool modes
+		// Only available for separate tool modes
 		if (keybinds[e_keybind.TOOL_SELECT].pressed)
 		{
 			action_tools_disable_all()

@@ -15,22 +15,22 @@ function project_save_timeline()
 		json_save_var_bool("ghost", ghost)
 		json_save_var("depth", depth)
 		
-		if (type = e_temp_type.BODYPART)
+		if (type = e_tl_type.MODEL_PART)
 			json_save_var("model_part_name", json_string_encode(model_part_name))
 		
-		if (type = e_temp_type.TEXT)
+		if (type = e_tl_type.TEXT)
 			json_save_var("text", json_string_encode(text))
 		
 		if (part_of != null)
 		{
-			if (type = e_temp_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				json_save_object_start("model")
 					json_save_var("name", model_name)
 					json_save_var_state_vars("state", model_state)
 				json_save_object_done()
 			}
-			else if (type = e_temp_type.BLOCK)
+			else if (type = e_tl_type.BLOCK)
 			{
 				json_save_object_start("block")
 					json_save_var("name", block_name)
@@ -156,7 +156,7 @@ function project_save_timeline()
 			json_save_var_save_id("glint_tex", glint_tex)
 			json_save_var_bool("fog", fog)
 			
-			if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
+			if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK || type = e_tl_type.PARTICLE_SPAWNER || type = e_tl_type.TEXT || type = e_tl_type.PATH || type_is_shape(type))
 			{
 				json_save_var_bool("wind", wind)
 				json_save_var_bool("wind_terrain", wind_terrain)
@@ -171,17 +171,17 @@ function project_save_timeline()
 		if (value_type[e_value_type.PATH])
 		{
 			json_save_object_start("path")
-				json_save_var_bool("smooth", path_smooth)
 				json_save_var_bool("closed", path_closed)
+				json_save_var_bool("smooth", path_smooth)
 				json_save_var("detail", path_detail)
-				json_save_var_bool("shape_generate", path_shape_generate)
+				json_save_var("shape", path_shape)
 				json_save_var("shape_radius", path_shape_radius)
-				json_save_var("shape_tex_length", path_shape_tex_length)
 				json_save_var_bool("shape_invert", path_shape_invert)
-				json_save_var_bool("shape_tube", path_shape_tube)
-				json_save_var("shape_detail", path_shape_detail)
 				json_save_var_bool("shape_smooth_segments", path_shape_smooth_segments)
 				json_save_var_bool("shape_smooth_ring", path_shape_smooth_ring)
+				json_save_var("shape_detail", path_shape_detail)
+				json_save_var_bool("shape_tex_mapped", path_shape_tex_mapped)
+				json_save_var("shape_tex_length", path_shape_tex_length)
 			json_save_object_done()
 		}
 		

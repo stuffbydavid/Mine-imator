@@ -1,5 +1,5 @@
-/// action_project_render_exposure(val)
-/// @arg val
+/// action_project_render_exposure(value)
+/// @arg value
 
 function action_project_render_exposure(val, add)
 {

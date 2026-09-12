@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_button_transition",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Components",
-    "path": "folders/Scripts/App/Interface/Components.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_button_transition",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_button_transition",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/App/Interface/Components.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

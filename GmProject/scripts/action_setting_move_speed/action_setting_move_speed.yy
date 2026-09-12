@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_move_speed",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Controls",
-    "path": "folders/Scripts/App/Actions/Settings/Controls.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_move_speed",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_move_speed",
+  "parent":{
+    "name":"Controls",
+    "path":"folders/Scripts/App/Actions/Settings/Controls.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -55,7 +55,7 @@ function app_update_mouse()
 	
 	if (mouse_click_count = 1)
 	{
-		mouse_click_timer += (1/fps) * 1000
+		mouse_click_timer += (1/max(1, fps)) * 1000
 		
 		if (mouse_click_timer < 500 && mouse_left_pressed)
 			mouse_click_count++

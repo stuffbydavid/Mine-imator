@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "world_import",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Minecraft",
-    "path": "folders/Scripts/Minecraft.yy",
+  "$GMScript":"v1",
+  "%Name":"world_import",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"world_import",
+  "parent":{
+    "name":"Minecraft",
+    "path":"folders/Scripts/Minecraft.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

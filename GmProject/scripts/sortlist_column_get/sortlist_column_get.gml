@@ -21,14 +21,24 @@ function sortlist_column_get(slist, value, col)
 		
 		case "charname":
 		case "spblockname":
-		case "bodypartmodelname":
+		case "modelpartmodelname":
+			if (is_undefined(mc_assets.model_name_map[?value]))
+				return 0
 			return minecraft_asset_get_name("model", mc_assets.model_name_map[?value].name)
 		
 		case "blockname":
+			if (is_undefined(mc_assets.block_name_map[?value]))
+				return 0
 			return minecraft_asset_get_name("block", mc_assets.block_name_map[?value].name)
+		
 		case "blockfilter":
 			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
 		
+		case "sceneryname":
+		case "schematicname":
+			return is_string(value) ? value : value.display_name
+		case "shapename":
+			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
 		case "particleeditortypename":
 			if (dev_mode_debug_saveid)
 				return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"
@@ -60,9 +70,7 @@ function sortlist_column_get(slist, value, col)
 			return value.count
 		
 		case "particlepresetname":
-		{
 			var fn = filename_new_ext(filename_name(value), "");
 			return text_exists("particle" + fn) ? text_get("particle" + fn) : fn;
-		}
 	}
 }

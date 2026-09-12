@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"project_load_template_update_block",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_load_template_update_block",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Load.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

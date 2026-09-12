@@ -1,9 +1,10 @@
-/// minecraft_update_armor_generate(data, [res])
+/// minecraft_update_armor_generate(model, data, [res])
+/// @arg model
 /// @arg data
 /// @arg [res]
 /// @desc Generates and returns 4 armor skins
 
-function minecraft_update_armor_generate(data, res = null)
+function minecraft_update_armor_generate(model, data, res = null)
 {
 	var skins = [null, null, null, null];
 	if (res = null || !res_is_ready(res) || (res.type != e_res_type.PACK && res.type != e_res_type.PACK_UNZIPPED))
@@ -12,7 +13,7 @@ function minecraft_update_armor_generate(data, res = null)
 	for (var i = 0; i < 4; i++)
 	{
 		var piece = i * 4;
-		var basemat, dye, trimpat, trimmat, layernum, basetex, basesprite;
+		var basemat, dye, trimpat, trimmat, layername, basetex, basesprite;
 		basemat = data[piece]
 		
 		if (basemat = "none")
@@ -21,9 +22,14 @@ function minecraft_update_armor_generate(data, res = null)
 		dye = data[piece + 1]
 		trimpat = data[piece + 2]
 		trimmat = data[piece + 3]
-		layernum = ((i = 2) ? "2" : "1")
+		//layernum = ((i = 2) ? "2" : "1")
 		
-		basetex = "models/armor/" + basemat + "_layer_" + layernum
+		if (model == "armor_baby")
+			layername = "humanoid_baby"
+		else
+			layername = (i = 2) ? "humanoid_leggings" : "humanoid"
+		
+		basetex = "entity/equipment/" + layername + "/" + basemat
 		basesprite = res.model_texture_map[?basetex]
 		
 		var armorsurf = surface_create(sprite_get_width(basesprite), sprite_get_height(basesprite)); 
@@ -45,9 +51,9 @@ function minecraft_update_armor_generate(data, res = null)
 		surface_reset_target()
 		
 		// Trim
-		if (trimpat != "none" && trimmat != "none")
+		if (model != "armor_baby" && (trimpat != "none" && trimmat != "none"))
 		{
-			var palette = res.model_texture_map[?"trims/color_palettes/" + trimmat + (trimmat = basemat ? "_darker" : "")];
+			var palette = res.model_texture_map[?"palettes/trim/" + trimmat + (trimmat = basemat ? "_darker" : "")];
 			
 			surface_set_target(armorsurf)
 			{
@@ -56,13 +62,10 @@ function minecraft_update_armor_generate(data, res = null)
 				with (render_shader_obj)
 				{
 					shader_set(shader)
-					shader_palette_set(palette, res.model_texture_map[?"trims/color_palettes/trim_palette"])
+					shader_palette_set(palette, res.model_texture_map[?"palettes/trim_base"])
 				}
 				
-				if (i = 2)
-					draw_sprite(res.model_texture_map[?"trims/models/armor/" + trimpat + "_leggings"], 0, 0, 0)
-				else
-					draw_sprite(res.model_texture_map[?"trims/models/armor/" + trimpat], 0, 0, 0)
+				draw_sprite(res.model_texture_map[?"trims/entity/" + layername + "/" + trimpat], 0, 0, 0)
 				
 				with (render_shader_obj)
 					shader_reset()
