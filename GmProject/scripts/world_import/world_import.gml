@@ -337,8 +337,7 @@ function window_draw_world_import()
 	{
 		dx += dw + 20
 		var size = world_import_get_selection_size();
-		draw_label(text_get("worldimportblockstotal", size[X] * size[Y] * size[Z]), dx, (content_y + content_height / 2) - 8, fa_left, fa_middle, c_text_main, a_text_main, font_value)
-		draw_label(text_get("worldimportblockssizes", size[X], size[Y], size[Z]), dx, (content_y + content_height / 2) + 8, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		draw_label(text_get("worldimportselectionsize", size[X], size[Y], size[Z]), dx, content_y + content_height / 2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	}
 	
 	// Draw confirm button

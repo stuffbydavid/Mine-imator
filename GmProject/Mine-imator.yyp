@@ -879,6 +879,7 @@
     {"id":{"name":"action_lib_shape_tex_voffset","path":"scripts/action_lib_shape_tex_voffset/action_lib_shape_tex_voffset.yy",},},
     {"id":{"name":"action_lib_shape_tex_vrepeat","path":"scripts/action_lib_shape_tex_vrepeat/action_lib_shape_tex_vrepeat.yy",},},
     {"id":{"name":"action_lib_shape_tex","path":"scripts/action_lib_shape_tex/action_lib_shape_tex.yy",},},
+    {"id":{"name":"action_lib_shape_type","path":"scripts/action_lib_shape_type/action_lib_shape_type.yy",},},
     {"id":{"name":"action_lib_text_3d","path":"scripts/action_lib_text_3d/action_lib_text_3d.yy",},},
     {"id":{"name":"action_lib_text_face_camera","path":"scripts/action_lib_text_face_camera/action_lib_text_face_camera.yy",},},
     {"id":{"name":"action_lib_text_font","path":"scripts/action_lib_text_font/action_lib_text_font.yy",},},

@@ -49,6 +49,9 @@ bool Function::assignScope(StringId scope, Function* func, int line, bool foundI
 	if (!Function::enableAssignScope || this->structObject != nullptr)
 		return false;
 
+	if (this->isCppSeparate && !this->cppSeparateHeader.contains("(Scope"))
+		return false;
+
 	if (foundInstanceVar)
 		this->hasInstanceVars = true;
 

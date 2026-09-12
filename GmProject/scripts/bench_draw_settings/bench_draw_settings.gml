@@ -66,7 +66,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			}
 			else if (bench_tab = e_bench.SPECIAL_BLOCK)
 			{
-				labeltext = text_get("benchblock")
+				labeltext = text_get("benchspblock")
 				list = bench_settings.special_block_list
 				texcap = "benchspblocktex"
 				texmatcap = "benchspblocktexmaterial"
@@ -679,9 +679,31 @@ function bench_draw_settings(bx, by, bw, bh)
 				// Advanced mode only
 				if (setting_advanced_mode)
 				{
-					tab_control_checkbox()
-					draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map, "benchshapetexmaptip")
-					tab_next()
+					var mappedwid, exportwid;
+					draw_set_font(font_label)
+					mappedwid = 48 + string_width(text_get("benchshapetexmap"))
+					draw_set_font(font_button)
+					exportwid = 52 + string_width(text_get("benchshapetexsavemap"))
+
+					if (dw >= mappedwid + exportwid + 8)
+					{
+						tab_control_button_label()
+						draw_checkbox("benchshapetexmap", dx, dy + 4, bench_settings.shape_tex_mapped, action_bench_shape_tex_map, "benchshapetexmaptip")
+						if (draw_button_label("benchshapetexsavemap", dx + dw, dy, exportwid, icons.TEXTURE_EXPORT, e_button.SECONDARY, null, e_anchor.RIGHT))
+							action_lib_shape_save_map(e_temp_type.CUBE + bench_settings.shape_type)
+						tab_next()
+					}
+					else
+					{
+						tab_control_checkbox()
+						draw_checkbox("benchshapetexmap", dx, dy, bench_settings.shape_tex_mapped, action_bench_shape_tex_map, "benchshapetexmaptip")
+						tab_next()
+
+						tab_control_button_label()
+						if (draw_button_label("benchshapetexsavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
+							action_lib_shape_save_map(e_temp_type.CUBE + bench_settings.shape_type)
+						tab_next()
+					}
 				}
 			}
 			else if (bench_settings.shape_type = e_shape_type.SURFACE)

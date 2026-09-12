@@ -295,7 +295,6 @@ function list_init(name)
 		}
 		
 		// Terrain
-		case "benchscenery":
 		case "libraryscenery":
 		{
 			// None
@@ -427,6 +426,14 @@ function list_init(name)
 			break
 		}
 		
+		case "libraryshapetype":
+		{
+			for (var i = 0; i < e_shape_type.amount; i++)
+				menu_add_item(e_temp_type.CUBE + i, text_get("type" + temp_type_name_list[|e_temp_type.CUBE + i]))
+
+			break
+		}
+
 		// Shape texture
 		case "benchshapetex":
 		case "benchshapetexmaterial":

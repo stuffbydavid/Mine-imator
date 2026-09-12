@@ -6,7 +6,7 @@
 #include "GZIP.hpp"
 
 #define BLOCK_MESH_CACHE_ENABLED 1
-#define BLOCK_MESH_CACHE_FORMAT 2
+#define BLOCK_MESH_CACHE_FORMAT 3
 
 namespace CppProject
 {
@@ -575,6 +575,11 @@ namespace CppProject
 		QByteArray data;
 		QDataStream out(&data, QIODevice::WriteOnly);
 
+		// Save Minecraft assets version
+		QByteArray assetsVersion = global::_app->setting_minecraft_assets_version.QStr().toUtf8();
+		out << (quint16)assetsVersion.size();
+		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
+
 		// Save format
 		uchar format = BLOCK_MESH_CACHE_FORMAT;
 		out << format;
@@ -622,6 +627,16 @@ namespace CppProject
 		tmr.Print("Unzip block mesh cache");
 		tmr.Reset();
 		QDataStream in(&data, QIODevice::ReadOnly);
+
+		// Check Minecraft assets version
+		quint16 assetsVersionSize;
+		in >> assetsVersionSize;
+		if (!assetsVersionSize || assetsVersionSize > 64)
+			return false;
+		QByteArray assetsVersion(assetsVersionSize, '\0');
+		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
+			|| assetsVersion != global::_app->setting_minecraft_assets_version.QStr().toUtf8())
+			return false;
 
 		// Check format
 		uchar format;

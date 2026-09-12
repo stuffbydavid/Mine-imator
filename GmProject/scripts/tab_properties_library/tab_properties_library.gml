@@ -38,6 +38,13 @@ function tab_properties_library()
 	draw_textfield("libraryname", dx, dy, dw, 24, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
 	tab_next()
 	
+	if (type_is_shape(temp_edit.type))
+	{
+		tab_control_menu()
+		draw_button_menu("libraryshapetype", e_menu.LIST, dx, dy, dw, 24, temp_edit.type, text_get("type" + temp_type_name_list[|temp_edit.type]), action_lib_shape_type)
+		tab_next()
+	}
+
 	switch (temp_edit.type)
 	{
 		case e_temp_type.CHARACTER:
@@ -503,17 +510,29 @@ function tab_properties_library()
 				// Advanced mode only
 				if (setting_advanced_mode)
 				{
-					tab_control_checkbox()
-					draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
-					tab_next()
+					var mappedwid, exportwid;
+					draw_set_font(font_label)
+					mappedwid = 48 + string_width(text_get("libraryshapetexmapped"))
+					draw_set_font(font_button)
+					exportwid = 52 + string_width(text_get("libraryshapetexsavemap"))
 					
-					if (temp_edit.shape_tex_mapped)
+					if (dw >= mappedwid + exportwid + 8)
 					{
 						tab_control_button_label()
+						draw_checkbox("libraryshapetexmapped", dx, dy + 4, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
+						if (draw_button_label("libraryshapetexsavemap", dx + dw, dy, exportwid, icons.TEXTURE_EXPORT, e_button.SECONDARY, null, e_anchor.RIGHT))
+							action_lib_shape_save_map(temp_edit.type)
+						tab_next()
+					}
+					else
+					{
+						tab_control_checkbox()
+						draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
+						tab_next()
 						
+						tab_control_button_label()
 						if (draw_button_label("libraryshapetexsavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
-							action_lib_shape_save_map()
-						
+							action_lib_shape_save_map(temp_edit.type)
 						tab_next()
 					}
 				}

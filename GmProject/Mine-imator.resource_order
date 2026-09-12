@@ -361,6 +361,7 @@
     {"name":"action_lib_shape_tex_voffset","order":23,"path":"scripts/action_lib_shape_tex_voffset/action_lib_shape_tex_voffset.yy",},
     {"name":"action_lib_shape_tex_vrepeat","order":25,"path":"scripts/action_lib_shape_tex_vrepeat/action_lib_shape_tex_vrepeat.yy",},
     {"name":"action_lib_shape_tex","order":11,"path":"scripts/action_lib_shape_tex/action_lib_shape_tex.yy",},
+    {"name":"action_lib_shape_type","order":29,"path":"scripts/action_lib_shape_type/action_lib_shape_type.yy",},
     {"name":"action_lib_text_3d","order":1,"path":"scripts/action_lib_text_3d/action_lib_text_3d.yy",},
     {"name":"action_lib_text_face_camera","order":3,"path":"scripts/action_lib_text_face_camera/action_lib_text_face_camera.yy",},
     {"name":"action_lib_text_font","order":5,"path":"scripts/action_lib_text_font/action_lib_text_font.yy",},
