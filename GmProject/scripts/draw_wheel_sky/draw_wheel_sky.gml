@@ -29,6 +29,8 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 	var active, color, alpha;
 	active = min(1, microani_arr[e_microani.PRESS] + microani_arr[e_microani.ACTIVE] + microani_arr[e_microani.DISABLED])
 	
+	var woffset = time ? 0 : -90;
+	
 	// Outline
 	color = merge_color(c_text_tertiary, c_text_secondary, min(1, microani_arr[e_microani.HOVER] + active))
 	alpha = lerp(a_text_tertiary, a_text_secondary, min(1, microani_arr[e_microani.HOVER] + active))
@@ -46,8 +48,8 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 	color = merge_color(color, c_accent, microani_arr[e_microani.PRESS])
 	alpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.PRESS])
 	alpha = lerp(alpha, 1, microani_arr[e_microani.PRESS])
-	sunx = floor(xx + lengthdir_x(rad, value + 90))
-	suny = floor(yy + lengthdir_y(rad, value + 90))
+	sunx = floor(xx + lengthdir_x(rad, value + 90 + woffset))
+	suny = floor(yy + lengthdir_y(rad, value + 90 + woffset))
 	sunmouseon = (app_mouse_box(sunx - 10, suny - 10, 20, 20) && content_mouseon)
 	draw_circle_ext(sunx, suny, 14, false, 16, c_level_middle, 1)
 	draw_image(spr_icons, icons.SUN, sunx, suny, 1, 1, color, alpha)
@@ -57,8 +59,8 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 	color = merge_color(color, c_accent, microani_arr[e_microani.DISABLED])
 	alpha = lerp(a_text_secondary, a_text_main, microani_arr[e_microani.DISABLED])
 	alpha = lerp(alpha, 1, microani_arr[e_microani.DISABLED])
-	moonx = floor(xx + lengthdir_x(rad, value - 90))
-	moony = floor(yy + lengthdir_y(rad, value - 90))
+	moonx = floor(xx + lengthdir_x(rad, value - 90 + woffset))
+	moony = floor(yy + lengthdir_y(rad, value - 90 + woffset))
 	moonmouseon = (app_mouse_box(moonx - 10, moony - 10, 20, 20) && content_mouseon)
 	draw_circle_ext(moonx, moony, 14, false, 16, c_level_middle, 1)
 	draw_image(spr_icons, icons.MOON, moonx, moony, 1, 1, color, alpha)
@@ -78,7 +80,7 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 			
 			if (!wheel_drag_moon)
 			{
-				var add = angle_difference_fix(point_direction(xx, yy, mouse_x, mouse_y) - 90, value);
+				var add = angle_difference_fix(point_direction(xx, yy, mouse_x, mouse_y) - 90, value + woffset);
 				script_execute(script, add, true)
 			}
 		}

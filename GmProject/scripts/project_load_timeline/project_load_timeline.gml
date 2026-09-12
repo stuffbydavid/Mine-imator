@@ -243,7 +243,7 @@ function project_load_timeline(map)
 			path_shape_tex_mapped = value_get_real(pathmap[?"shape_tex_mapped"], path_shape_tex_mapped)
 			path_shape_tex_length = value_get_real(pathmap[?"shape_tex_length"], path_shape_tex_length)
 			
-			if (load_format < e_project.FORMAT_210)
+			if (load_format < e_project.FORMAT_CTB_106)
 			{
 				path_shape_tex_mapped = true
 				

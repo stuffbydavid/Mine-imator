@@ -80,4 +80,27 @@ function project_load_values_update()
 			value[e_value.CAM_SHAKE_SPEED_Y] *= 10
 		}
 	}
+	
+	// Display texture animation speed as a percentage (2.1.0)
+	if (load_format < e_project.FORMAT_CTB_106) // Convert from pre-2.1 arbitrary decimal number
+	{
+		if (timeline.type = e_tl_type.BACKGROUND)
+			value[e_value.BG_TEXTURE_ANI_SPEED] *= 3 // 75% for older projects
+	}
+	else if (load_format < e_project.FORMAT_210) // Convert from Continuation Build 'fps' display
+	{
+		if (timeline.type = e_tl_type.BACKGROUND)
+			value[e_value.BG_TEXTURE_ANI_SPEED] /= 20
+	}
+	
+	// Fixed sunrise direction + cloud direction (2.1.0)
+	if (load_format < e_project.FORMAT_210)
+	{
+		if (timeline.type = e_tl_type.BACKGROUND)
+		{
+			value[e_value.BG_SKY_ROTATION] += 180
+			value[e_value.BG_SKY_CLOUDS_SPEED] *= -1
+			value[e_value.BG_SKY_CLOUDS_OFFSET] *= -1
+		}
+	}
 }

@@ -8,7 +8,7 @@ function tab_properties_background()
 	if (window_compact || panel_compact)
 	{
 		tab_control_dragger()
-		draw_dragger_sky("backgroundskytime", dx, dy, background_sky_time, -45, action_background_sky_time, tab.background.tbx_sky_time, true)
+		draw_dragger_sky("backgroundskytime", dx, dy, background_sky_time, 45, action_background_sky_time, tab.background.tbx_sky_time, true)
 		tab_next()
 		
 		tab_control_dragger()
@@ -18,7 +18,7 @@ function tab_properties_background()
 	else
 	{
 		tab_control(120)
-		draw_wheel_sky("backgroundskytime", dx + floor(dw * 0.25), dy + 60, background_sky_time, -45, action_background_sky_time, tab.background.tbx_sky_time, true)
+		draw_wheel_sky("backgroundskytime", dx + floor(dw * 0.25), dy + 60, background_sky_time, 45, action_background_sky_time, tab.background.tbx_sky_time, true)
 		draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 		tab_next()
 	}

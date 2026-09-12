@@ -76,7 +76,7 @@ function render_world_sky()
 	// Sky
 	if (!background_image_show)
 	{
-		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], -background_sky_time, 0, background_sky_rotation, 1, 1, 1);
+		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], -background_sky_time, 0, background_sky_rotation + 180, 1, 1, 1);
 		
 		gpu_set_blendmode(bm_add)
 		

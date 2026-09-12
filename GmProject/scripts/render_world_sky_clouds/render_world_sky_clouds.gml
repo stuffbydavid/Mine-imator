@@ -37,7 +37,7 @@ function render_world_sky_clouds()
 		render_set_uniform("uFogShow", 0)
 	
 	for (var i = 0; i < array_length(background_sky_clouds_vbuffer_pos); i++)
-		vbuffer_render(background_sky_clouds_vbuffer, background_sky_clouds_vbuffer_pos[i])
+		vbuffer_render(background_sky_clouds_vbuffer, background_sky_clouds_vbuffer_pos[i], point3D(0, 0, 90))
 	
 	// Reset
 	render_set_uniform_int("uIsSky", 0)

@@ -29,6 +29,8 @@ function project_load_background(map)
 	
 	background_sky_time = value_get_real(map[?"sky_time"], background_sky_time)
 	background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
+	if (load_format < e_project.FORMAT_210)
+		background_sky_rotation += 180
 	background_sunlight_strength = value_get_real(map[?"sunlight_strength"], background_sunlight_strength)
 	
 	if (load_format < e_project.FORMAT_200_PRE_5)
@@ -70,7 +72,12 @@ function project_load_background(map)
 	background_sky_clouds_size = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size)
 	background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 	background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
-	
+	if (load_format < e_project.FORMAT_210)
+	{
+		background_sky_clouds_speed *= -1
+		background_sky_clouds_offset *= -1
+	}
+		
 	// Update cloud size
 	if (load_format < e_project.FORMAT_200_PRE_5)
 	{
@@ -150,6 +157,8 @@ function project_load_background(map)
 	background_wind_directional_strength = value_get_real(map[?"wind_directional_strength"], background_wind_directional_strength)
 	
 	background_texture_animation_speed = value_get_real(map[?"texture_animation_speed"], background_texture_animation_speed)
-	if (load_format < e_project.FORMAT_210)
+	if (load_format < e_project.FORMAT_CTB_106)
 		background_texture_animation_speed *= 3 // 75% for older projects
+	else if (load_format < e_project.FORMAT_210)
+		background_texture_animation_speed /= 20
 }
