@@ -575,14 +575,14 @@ namespace CppProject
 		QByteArray data;
 		QDataStream out(&data, QIODevice::WriteOnly);
 
+		// Save format
+		uchar format = BLOCK_MESH_CACHE_FORMAT;
+		out << format;
+
 		// Save Minecraft assets version
 		QByteArray assetsVersion = global::_app->setting_minecraft_assets_version.QStr().toUtf8();
 		out << (quint16)assetsVersion.size();
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
-
-		// Save format
-		uchar format = BLOCK_MESH_CACHE_FORMAT;
-		out << format;
 
 		// Save size
 		out << (qint64)res->scenery_size.x;
@@ -623,32 +623,40 @@ namespace CppProject
 	#endif
 		Timer tmr;
 		QByteArray data;
-		Gzip::Decompress(filename, data);
+
 		tmr.Print("Unzip block mesh cache");
+		BoolType decompressed = Gzip::Decompress(filename, data);
+		if (!decompressed)
+			return false;
+
 		tmr.Reset();
 		QDataStream in(&data, QIODevice::ReadOnly);
 
-		// Check Minecraft assets version
-		quint16 assetsVersionSize;
-		in >> assetsVersionSize;
-		if (!assetsVersionSize || assetsVersionSize > 64)
+		// Check format
+		uchar format = 0;
+		in >> format;
+		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
 			return false;
+
+		// Check Minecraft assets version
+		quint16 assetsVersionSize = 0;
+		in >> assetsVersionSize;
+		if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
+			return false;
+
 		QByteArray assetsVersion(assetsVersionSize, '\0');
 		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
 			|| assetsVersion != global::_app->setting_minecraft_assets_version.QStr().toUtf8())
 			return false;
 
-		// Check format
-		uchar format;
-		in >> format;
-		if (format != BLOCK_MESH_CACHE_FORMAT)
-			return false;
-
 		// Load size
-		qint64 sizeX, sizeY, sizeZ;
+		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
 		in >> sizeX;
 		in >> sizeY;
 		in >> sizeZ;
+		if (in.status() != QDataStream::Ok)
+			return false;
+
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
 
 		// Load vertex buffers
