@@ -266,7 +266,7 @@ function tab_template_editor_particles()
 	draw_label(text_get("particleeditoremitters"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 	tab_next()
 	
-	tab_control_sortlist(6)
+	tab_control_sortlist(tab.type_list)
 	sortlist_draw(tab.type_list, dx, dy, dw, tab_control_h, ptype_edit, false)
 	tab_next()
 	

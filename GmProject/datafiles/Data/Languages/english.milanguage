@@ -51,6 +51,7 @@
 		"downloadskin": "Download skin",
 		"pastekey": "Paste key",
 		"filterlist": "Filter list",
+		"clearsearch": "Clear search",
 		"template/": {
 			"new": "New template",
 			"animate": "Create timeline from template",

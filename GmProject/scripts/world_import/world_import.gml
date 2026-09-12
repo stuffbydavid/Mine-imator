@@ -9,6 +9,7 @@ function app_startup_interface_world_import()
 	
 	world_import_settings_block_select = null
 	world_import_settings_block_list = new_obj(obj_sortlist)
+	world_import_settings_block_list.visible_items = 10
 	world_import_settings_block_list.can_deselect = true
 	world_import_settings_block_list.script = action_world_import_settings_block_select
 	sortlist_column_add(world_import_settings_block_list, "blockfilter", 0)
@@ -18,6 +19,7 @@ function app_startup_interface_world_import()
 		
 	world_import_settings_filter_select = null
 	world_import_settings_filter_list = new_obj(obj_sortlist)
+	world_import_settings_filter_list.visible_items = 10
 	world_import_settings_filter_list.can_deselect = true
 	world_import_settings_filter_list.script = action_world_import_settings_filter_select
 	sortlist_column_add(world_import_settings_filter_list, "blockfilter", 0)
@@ -430,7 +432,7 @@ function popup_worldsettings_draw()
 		
 		dy += 8
 		
-		tab_control_sortlist(10)
+		tab_control_sortlist(world_import_settings_block_list)
 		sortlist_draw(world_import_settings_block_list, dx, dy, listdw / 2 - 20, tab_control_h, world_import_settings_block_select, false, text_get("worldsettingsfilterblocks"))
 		sortlist_draw(world_import_settings_filter_list, dx + listdw / 2 + 20, dy, listdw / 2 - 20, tab_control_h, world_import_settings_filter_select, false, text_get("worldsettingsfilterfiltered"))
 		

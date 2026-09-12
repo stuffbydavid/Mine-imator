@@ -65,7 +65,7 @@ namespace CppProject
 
 			// Check if single block
 			BuilderState singleEntry;
-			if (self->build_single_block != null_)
+			if (self->build_single_block != null_ && !is_undefined(self->build_single_block))
 				singleEntry = {
 					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,

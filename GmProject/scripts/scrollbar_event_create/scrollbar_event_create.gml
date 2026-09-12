@@ -4,6 +4,7 @@
 function scrollbar_event_create()
 {
 	snap_value = 0 // Amount of pixels to snap to
+	wheel_speed = 120
 	value = 0
 	value_goal = 0
 	press = 0

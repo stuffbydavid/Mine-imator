@@ -61,9 +61,7 @@ function action_bench_schematic_folder(folder, update = true)
 	
 	if (folder != "project" && is_string(selected) && ds_list_find_index(list.display_list, selected) >= 0)
 	{
-		var scrollindex = max(0, ds_list_find_index(list.display_list, selected) - 3)
-		list.scroll.value = scrollindex * ui_small_height
-		list.scroll.value_goal = list.scroll.value
+		sortlist_center(list, selected)
 		action_bench_schematic_select(selected)
 		return 0
 	}
@@ -80,9 +78,7 @@ function action_bench_schematic_folder(folder, update = true)
 			{
 				if (list.display_list[|s] = schematic)
 				{
-					var scrollindex = max(0, s - 3)
-					list.scroll.value = scrollindex * ui_small_height
-					list.scroll.value_goal = list.scroll.value
+					sortlist_center(list, schematic)
 					action_bench_schematic_select(schematic)
 					break
 				}

@@ -8,7 +8,7 @@ function tab_properties_library()
 	tab_next()
 	
 	// List
-	tab_control_sortlist(7)
+	tab_control_sortlist(tab.library.list)
 	sortlist_draw(tab.library.list, dx, dy, dw, tab_control_h, temp_edit)
 	tab_next()
 	

@@ -103,6 +103,7 @@ function app_startup_interface_bench()
 		
 		// Character list
 		char_list = new_obj(obj_sortlist)
+		char_list.visible_items = 7
 		char_list.script = action_bench_model_name
 		sortlist_column_add(char_list, "charname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
@@ -110,6 +111,7 @@ function app_startup_interface_bench()
 
 		// Equipment list
 		equipment_list = new_obj(obj_sortlist)
+		equipment_list.visible_items = 6
 		equipment_list.script = action_bench_model_name
 		equipment_list.header_show = false
 		sortlist_column_add(equipment_list, "spblockname", 0)
@@ -118,6 +120,7 @@ function app_startup_interface_bench()
 		
 		// Model part list
 		model_part_model_list = new_obj(obj_sortlist)
+		model_part_model_list.visible_items = 6
 		model_part_model_list.script = action_bench_model_name
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
@@ -132,6 +135,7 @@ function app_startup_interface_bench()
 			
 		// Schematic list
 		schematic_list = new_obj(obj_sortlist)
+		schematic_list.visible_items = 6
 		schematic_list.script = action_bench_schematic_select
 		schematic_list.header_show = false
 		sortlist_column_add(schematic_list, "schematicname", 0)
@@ -141,6 +145,7 @@ function app_startup_interface_bench()
 	
 		// Block list
 		block_list = new_obj(obj_sortlist)
+		block_list.visible_items = 7
 		block_list.script = action_bench_block_name
 		sortlist_column_add(block_list, "blockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
@@ -149,6 +154,7 @@ function app_startup_interface_bench()
 		
 		// Special block list
 		special_block_list = new_obj(obj_sortlist)
+		special_block_list.visible_items = 6
 		special_block_list.script = action_bench_model_name
 		sortlist_column_add(special_block_list, "spblockname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
@@ -156,6 +162,7 @@ function app_startup_interface_bench()
 		
 		// Shape list
 		shape_list = new_obj(obj_sortlist)
+		shape_list.visible_items = e_shape_type.amount - 1
 		shape_list.script = action_bench_shape_type
 		shape_list.header_show = false
 		sortlist_column_add(shape_list, "shapename", 0)
@@ -164,6 +171,7 @@ function app_startup_interface_bench()
 		
 		// Particles list
 		particles_list = new_obj(obj_sortlist)
+		particles_list.visible_items = 8
 		particles_list.script = action_bench_particles
 		particles_list.header_show = false
 		sortlist_column_add(particles_list, "particlepresetname", 0)

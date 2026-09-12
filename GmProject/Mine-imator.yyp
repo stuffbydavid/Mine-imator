@@ -2250,6 +2250,7 @@
     {"id":{"name":"smoothstep","path":"scripts/smoothstep/smoothstep.yy",},},
     {"id":{"name":"snap","path":"scripts/snap/snap.yy",},},
     {"id":{"name":"sortlist_add","path":"scripts/sortlist_add/sortlist_add.yy",},},
+    {"id":{"name":"sortlist_center","path":"scripts/sortlist_center/sortlist_center.yy",},},
     {"id":{"name":"sortlist_clear","path":"scripts/sortlist_clear/sortlist_clear.yy",},},
     {"id":{"name":"sortlist_column_add","path":"scripts/sortlist_column_add/sortlist_column_add.yy",},},
     {"id":{"name":"sortlist_column_get","path":"scripts/sortlist_column_get/sortlist_column_get.yy",},},

@@ -1696,6 +1696,7 @@
     {"name":"smoothstep","order":39,"path":"scripts/smoothstep/smoothstep.yy",},
     {"name":"snap","order":29,"path":"scripts/snap/snap.yy",},
     {"name":"sortlist_add","order":1,"path":"scripts/sortlist_add/sortlist_add.yy",},
+    {"name":"sortlist_center","order":5,"path":"scripts/sortlist_center/sortlist_center.yy",},
     {"name":"sortlist_clear","order":3,"path":"scripts/sortlist_clear/sortlist_clear.yy",},
     {"name":"sortlist_column_add","order":5,"path":"scripts/sortlist_column_add/sortlist_column_add.yy",},
     {"name":"sortlist_column_get","order":7,"path":"scripts/sortlist_column_get/sortlist_column_get.yy",},

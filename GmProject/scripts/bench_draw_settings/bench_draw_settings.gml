@@ -86,7 +86,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			}
 				
 			// List
-			tab_control_sortlist(6)
+			tab_control_sortlist(list)
 			sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.model_name, false, labeltext)
 			tab_next()
 			menu_filter = list.search_tbx.text
@@ -386,7 +386,7 @@ function bench_draw_settings(bx, by, bw, bh)
 					sheetsizes = [res.item_sheet_size]
 					slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
 				}
-				listh = 180
+				listh = 200
 				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8
 			}
@@ -473,7 +473,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench.SCHEMATIC:
 		{
 			// Schematic
-			tab_control_sortlist(6)
+			tab_control_sortlist(bench_settings.schematic_list)
 			sortlist_draw(bench_settings.schematic_list, dx, dy, dw, tab_control_h, bench_settings.schematic_selected, false, text_get("benchschematic"))
 			tab_next()
 			dy -= 4
@@ -543,7 +543,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			var capwid, text, sprite;
 			capwid = text_caption_width("benchblocktex", "benchblocktexmaterial", "benchblocktexnormal")
 				
-			tab_control_sortlist(6)
+			tab_control_sortlist(bench_settings.block_list)
 			sortlist_draw(bench_settings.block_list, dx, dy, dw, tab_control_h, bench_settings.block_name, false, text_get("benchblock"))
 			tab_next()
 			menu_filter = bench_settings.block_list.search_tbx.text
@@ -629,7 +629,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		{
 			var capwid, text;
 			capwid = text_caption_width("benchshapetex", "benchshapetexmaterial", "benchshapetexnormal")
-			tab_control_sortlist(e_shape_type.amount - 1)
+			tab_control_sortlist(bench_settings.shape_list)
 			sortlist_draw(bench_settings.shape_list, dx, dy, dw, tab_control_h, bench_settings.shape_type, false, text_get("benchshapetype"))
 			tab_next()
 				
@@ -749,7 +749,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench.PARTICLE_SPAWNER:
 		{
 			// Particles
-			tab_control_sortlist(8)
+			tab_control_sortlist(bench_settings.particles_list)
 			sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
 			tab_next()
 			

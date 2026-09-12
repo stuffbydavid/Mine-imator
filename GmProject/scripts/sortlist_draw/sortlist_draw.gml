@@ -19,10 +19,13 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		return 0
 	}
 	
-	var searchx, searchw, itemh, headerh, headermouseon, dy;
+	var searchx, searchw, itemh, headerh, headermouseon, dy, listy, listhei, scrolloffset;
+	var searchfocused, searchunfocused, searchcleared, sortchanged;
 	
 	searchx = xx
 	searchw = w
+	searchcleared = false
+	sortchanged = false
 	
 	// Item height
 	itemh = ui_small_height
@@ -57,9 +60,32 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		searchx += (w - 144)
 		searchw -= (w - 144)
 	}
+
+	if (slist.search_tbx.text != "")
+	{
+		var clearx;
+		if (name != "")
+			clearx = searchx - 28
+		else
+		{
+			clearx = searchx + searchw - 24
+			searchw -= 28
+		}
+
+		if (draw_button_icon("listsearchclear" + string(slist), clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltipclearsearch"))
+		{
+			slist.search_tbx.text = ""
+			slist.search = false
+			slist.scroll.value = 0
+			slist.scroll.value_goal = 0
+			sortlist_update(slist)
+			searchcleared = true
+		}
+	}
 	
 	if (draw_textfield("listsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
 	{
+		searchcleared = slist.search && (slist.search_tbx.text = "")
 		slist.scroll.value = 0
 		slist.scroll.value_goal = 0
 		
@@ -75,6 +101,10 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		}
 	}
 	
+	searchfocused = (window_focus = string(slist.search_tbx))
+	searchunfocused = slist.search_focused && !searchfocused
+	slist.search_focused = searchfocused
+
 	h -= 32
 	yy += 32
 	
@@ -137,7 +167,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			icon = null
 			if (slist.column_sort = c)
 				icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
-			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 4, slist.column_w[c], headerh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), headermouseon))
+			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 3, slist.column_w[c], headerh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), headermouseon))
 			{
 				if (slist.column_sort = c)
 				{
@@ -152,6 +182,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 				else
 					slist.column_sort = c
 				
+				sortchanged = true
 				sortlist_update(slist)
 			}
 		}
@@ -164,13 +195,22 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	draw_box(xx, yy + headerh, w, h - headerh, false, c_input_background, 1)
 	
 	if (slist.header_show)
-	{
 		draw_divide(xx + 1, dy, w - 2)
-		dy += 3
+
+	listy = dy
+	listhei = yy + h - listy
+	if (listhei <= 0)
+		return 0
+
+	if ((searchunfocused && slist.search || searchcleared || sortchanged) && select != null)
+	{
+		var scrollvalue = slist.scroll.value;
+		if (sortlist_center(slist, select, max(1, floor(listhei / itemh))))
+			slist.scroll.value = scrollvalue
 	}
-	else
-		dy += 5
-		
+
+	scrolloffset = slist.scroll.value mod itemh
+	dy -= scrolloffset
 	
 	// Outline
 	if (window_focus = string(slist.scroll))
@@ -183,20 +223,38 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	}
 	else
 		draw_outline(xx, yy, w, h, 1, c_border, a_border, true)
-	
+
 	// List
 	draw_set_font(font_value)
 	
-	for (var i = round(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
+	var clipactive, clipx, clipy, clipwid, cliphei;
+	clipactive = shader_clip_active
+	if (clipactive)
 	{
-		if (dy + itemh > yy + h)
+		clipx = shader_clip_x
+		clipy = shader_clip_y
+		clipwid = shader_clip_width
+		cliphei = shader_clip_height
+	}
+	clip_begin(xx, listy, w - 12 * slist.scroll.needed, listhei)
+
+	if (slist.header_show)
+		dy += 3
+	else
+		dy += 5
+	
+	for (var i = floor(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
+	{
+		if (dy >= yy + h)
 			break
 		
-		var value, dw, selected, mouseon;
+		var value, dw, selected, mouseon, visibley, visiblehei;
 		value = slist.display_list[|i]
 		dw = w - 12 * slist.scroll.needed
 		selected = (select = value)
-		mouseon = (app_mouse_box(xx, dy, dw, itemh) && content_mouseon)
+		visibley = max(dy, listy)
+		visiblehei = min(dy + itemh, yy + h) - visibley
+		mouseon = (visiblehei > 0 && app_mouse_box(xx, visibley, dw, visiblehei) && content_mouseon)
 		
 		if (selected || mouseon && mouse_left)
 		{
@@ -227,7 +285,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			*/
 			
 			text = string_limit(string(sortlist_column_get(slist, value, c)), wid)
-			draw_label(text, dx + ((wid - 8) * islast), dy + itemh / 2, islast ? fa_right : fa_left, fa_middle, selected ? c_accent : c_text_main, selected ? 1 : a_text_main)
+			draw_label(text, dx + ((wid - 8) * islast), floor(dy + itemh / 2), islast ? fa_right : fa_left, fa_middle, selected ? c_accent : c_text_main, selected ? 1 : a_text_main)
 		}
 		
 		if (mouseon && slist.script != null)
@@ -249,7 +307,12 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		dy += itemh
 	}
 	
+	clip_end()
+	if (clipactive)
+		clip_begin(clipx, clipy, clipwid, cliphei)
+	
 	// Scrollbar
-	slist.scroll.snap_value = itemh
-	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, yy + (headerh + 3), floor((h - (headerh + 3)) / itemh) * itemh, ds_list_size(slist.display_list) * itemh)
+	slist.scroll.snap_value = 0
+	slist.scroll.wheel_speed = itemh * 4
+	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, listy, listhei, ds_list_size(slist.display_list) * itemh + 8)
 }

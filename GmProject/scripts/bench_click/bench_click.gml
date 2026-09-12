@@ -8,7 +8,7 @@ function bench_click(tab)
 	{
 		action_bench_create()
 		bench_show_ani_type = "hide"
-		
+
 		return 0
 	}
 
@@ -146,6 +146,42 @@ function bench_click(tab)
 	// Switch to particles
 	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 		bench_update_particles_list()
+
+	var sortlist, sortvalue;
+	sortlist = null
+	sortvalue = null
+	switch (tab)
+	{
+		case e_bench.CHARACTER: 		sortlist = bench_settings.char_list break
+		case e_bench.EQUIPMENT: 		sortlist = bench_settings.equipment_list break
+		case e_bench.SPECIAL_BLOCK: 	sortlist = bench_settings.special_block_list break
+		case e_bench.MODEL_PART: 		sortlist = bench_settings.model_part_model_list break
+		case e_bench.BLOCK:
+		{
+			sortlist = bench_settings.block_list
+			sortvalue = bench_settings.block_name
+			break
+		}
+		case e_bench.SHAPE:
+		{
+			sortlist = bench_settings.shape_list
+			sortvalue = bench_settings.shape_type
+			break
+		}
+		case e_bench.PARTICLE_SPAWNER:
+		{
+			sortlist = bench_settings.particles_list
+			sortvalue = bench_settings.particle_preset
+			break
+		}
+	}
+	if (sortlist != null)
+	{
+		if (sortvalue = null)
+			sortvalue = bench_settings.model_name
+
+		sortlist_center(sortlist, sortvalue)
+	}
 	
 	with (bench_settings.preview)
 	{
