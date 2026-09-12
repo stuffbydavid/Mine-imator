@@ -26,6 +26,7 @@ function bench_draw_settings(bx, by, bw, bh)
 	dx += -16 + (16 * aniease)
 	
 	var sy = dy;
+	var createdisabled = false;
 	
 	// Preview
 	if (array_contains(bench_tab_preview, bench_tab))
@@ -526,21 +527,13 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
-				
-			// Create
-			tab_control_button_label()
-			if (draw_button_label("benchcreate", dx, dy, dw, icons.ASSET_ADD, e_button.PRIMARY, null, e_anchor.LEFT, bench_settings.scenery = null || !bench_settings.scenery.ready))
-			{
-				action_bench_create()
-				bench_show_ani_type = "hide"
-			}
-			tab_next()
+			
+			createdisabled = bench_settings.scenery = null || !bench_settings.scenery.ready
 				
 			if (content_mouseon)
 				window_scroll_focus = string(bench_settings.schematic_list.scroll)
-					
-			draw_set_alpha(prevalpha)
-			return 0
+			
+			break
 		}
 			
 		case e_workbench.BLOCK:
@@ -738,7 +731,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_workbench.PATH:
 		{
 			draw_sprite(spr_bench_example, 3, dx, dy)
-			dy += 144 + 16
+			dy += 144 + 15
 			
 			draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
 			break
@@ -747,7 +740,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_workbench.CAMERA:
 		{
 			draw_sprite(spr_bench_example, 5, dx, dy)
-			dy += 144 + 16
+			dy += 144 + 15
 			
 			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
 			break
@@ -759,7 +752,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			tab_control_sortlist(8)
 			sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
 			tab_next()
-				
+			
 			window_scroll_focus = string(bench_settings.particles_list.scroll)
 			break
 		}
@@ -767,13 +760,14 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_workbench.LIGHT_SOURCE:
 		{
 			draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
-			dy += 144 + 16
+			dy += 144 + 15
 			
 			tab_control_togglebutton()
 			togglebutton_add("typepointlight", null, e_tl_type.POINT_LIGHT, bench_settings.light_type = e_tl_type.POINT_LIGHT, action_bench_light_type)
 			togglebutton_add("typespotlight", null, e_tl_type.SPOT_LIGHT, bench_settings.light_type = e_tl_type.SPOT_LIGHT, action_bench_light_type)
 			draw_togglebutton("benchlighttype", dx, dy)
 			tab_next()
+			dy += 4
 			
 			if (bench_settings.light_type = e_tl_type.POINT_LIGHT)
 				draw_tooltip_label("benchpointlighttip", icons.LIGHT_POINT, e_toast.INFO)
@@ -785,7 +779,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_workbench.AUDIO:
 		{
 			draw_sprite(spr_bench_example, 2, dx, dy)
-			dy += 144 + 16
+			dy += 144 + 15
 			
 			draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
 			break
@@ -794,7 +788,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_workbench.ENVIRONMENT:
 		{
 			draw_sprite(spr_bench_example, 4, dx, dy)
-			dy += 144 + 16
+			dy += 144 + 15
 			
 			draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
 			break
@@ -813,7 +807,7 @@ function bench_draw_settings(bx, by, bw, bh)
 	var edit = (bench_tab = e_workbench.PARTICLE_SPAWNER && setting_advanced_mode);
 	var wid = (edit ? dw/2 - 4 : dw);
 	
-	if (draw_button_label("benchcreate", edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, icons.ASSET_ADD))
+	if (draw_button_label("benchcreate", edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, icons.ASSET_ADD, e_button.PRIMARY, null, e_anchor.LEFT, createdisabled))
 	{
 		action_bench_create()
 		bench_show_ani_type = "hide"

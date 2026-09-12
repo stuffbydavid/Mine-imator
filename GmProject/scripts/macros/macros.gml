@@ -4,7 +4,7 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						true
+	#macro dev_mode						false
 	#macro dev_mode_skip_blocks			dev_mode && false
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && false
@@ -177,7 +177,7 @@ function macros()
 	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
-	#macro scenery_timeline_limit		500
+	#macro scenery_timeline_limit		512
 	
 	// World
 	#macro block_size					16

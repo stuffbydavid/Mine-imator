@@ -28,7 +28,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	itemh = ui_small_height
 	
 	// Columns
-	var hidesinglecolumn = (h < 400 && slist.columns = 1);
+	var hidesinglecolumn = (h < 400 && slist.columns = 1 && ds_list_size(slist.display_list) <= 20);
 	colsh = !hidesinglecolumn ? (ui_small_height + 8) : 0
 	
 	// Draw filter
