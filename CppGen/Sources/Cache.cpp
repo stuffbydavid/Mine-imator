@@ -1099,6 +1099,13 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 	if (!readGmlTimestamps(stream, modifiedGmlFiles))
 		return false;
 
+	for (const String& file : modifiedGmlFiles)
+	{
+		const String filename = fsString(fsPath(file).filename());
+		if (filename == "macros.gml" || filename == "enums.gml")
+			return false;
+	}
+
 	if (!readValue(stream, payloadSize) || !readValue(stream, payloadHash))
 		return false;
 
