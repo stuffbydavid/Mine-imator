@@ -16,6 +16,8 @@ function bench_click(tab)
 	
 	with (bench_settings)
 	{
+		name = ""
+
 		switch (tab)
 		{
 			case e_bench.CHARACTER:
