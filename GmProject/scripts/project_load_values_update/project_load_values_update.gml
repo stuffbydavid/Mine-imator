@@ -98,7 +98,7 @@ function project_load_values_update()
 	{
 		if (timeline.type = e_tl_type.BACKGROUND)
 		{
-			value[e_value.BG_SKY_ROTATION] += 180
+			value[e_value.BG_SKY_TIME] *= -1
 			value[e_value.BG_SKY_CLOUDS_SPEED] *= -1
 			value[e_value.BG_SKY_CLOUDS_OFFSET] *= -1
 		}
