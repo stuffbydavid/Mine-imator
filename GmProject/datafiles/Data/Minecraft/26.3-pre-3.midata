@@ -1138,55 +1138,6 @@
 			"default_state": "helmet=iron,chestplate=iron,leggings=iron,boots=iron,type=armor"
 		},
 		{
-			"name": "horse_armor",
-			"file": "horse_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"variant": [
-					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
-					{ "value": "copper", "texture": "entity/equipment/horse_body/copper" },
-					{ "value": "iron", "texture": "entity/equipment/horse_body/iron" },
-					{ "value": "gold", "texture": "entity/equipment/horse_body/gold" },
-					{ "value": "diamond", "texture": "entity/equipment/horse_body/diamond" },
-					{ "value": "netherite", "texture": "entity/equipment/horse_body/netherite" }
-				]
-			},
-			"default_state": "variant=iron"
-		},
-		{
-			"name": "wolf_armor",
-			"file": "wolf_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"dyed": [
-					{ "value": "false", "shape_hide": [ "overlay" ] },
-					{ "value": "true" }
-				],
-				"crack_amount": [
-					{ "value": "none", "shape_hide": [ "crack" ] },
-					{ "value": "low", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_low" } },
-					{ "value": "medium", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_medium" } },
-					{ "value": "high", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_high" } }
-				]
-			},
-			"default_state": "dyed=false,crack_amount=none"
-		},
-		{
-			"name": "nautilus_armor",
-			"file": "nautilus_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"variant": [
-					{ "value": "copper", "texture": "entity/equipment/nautilus_body/copper" },
-					{ "value": "iron", "texture": "entity/equipment/nautilus_body/iron" },
-					{ "value": "gold", "texture": "entity/equipment/nautilus_body/gold" },
-					{ "value": "diamond", "texture": "entity/equipment/nautilus_body/diamond" },
-					{ "value": "netherite", "texture": "entity/equipment/nautilus_body/netherite" }
-				]
-			},
-			"default_state": "variant=iron"
-		},
-		{
 			"name": "shield",
 			"file": "shield.mimodel",
 			"states": {
@@ -1301,6 +1252,55 @@
 				]
 			},
 			"default_state": "variant=normal"
+		},
+		{
+			"name": "horse_armor",
+			"file": "horse_armor.mimodel",
+			"parent_lock": true,
+			"states": {
+				"variant": [
+					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
+					{ "value": "copper", "texture": "entity/equipment/horse_body/copper" },
+					{ "value": "iron", "texture": "entity/equipment/horse_body/iron" },
+					{ "value": "gold", "texture": "entity/equipment/horse_body/gold" },
+					{ "value": "diamond", "texture": "entity/equipment/horse_body/diamond" },
+					{ "value": "netherite", "texture": "entity/equipment/horse_body/netherite" }
+				]
+			},
+			"default_state": "variant=iron"
+		},
+		{
+			"name": "wolf_armor",
+			"file": "wolf_armor.mimodel",
+			"parent_lock": true,
+			"states": {
+				"dyed": [
+					{ "value": "false", "shape_hide": [ "overlay" ] },
+					{ "value": "true" }
+				],
+				"crack_amount": [
+					{ "value": "none", "shape_hide": [ "crack" ] },
+					{ "value": "low", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_low" } },
+					{ "value": "medium", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_medium" } },
+					{ "value": "high", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_high" } }
+				]
+			},
+			"default_state": "dyed=false,crack_amount=none"
+		},
+		{
+			"name": "nautilus_armor",
+			"file": "nautilus_armor.mimodel",
+			"parent_lock": true,
+			"states": {
+				"variant": [
+					{ "value": "copper", "texture": "entity/equipment/nautilus_body/copper" },
+					{ "value": "iron", "texture": "entity/equipment/nautilus_body/iron" },
+					{ "value": "gold", "texture": "entity/equipment/nautilus_body/gold" },
+					{ "value": "diamond", "texture": "entity/equipment/nautilus_body/diamond" },
+					{ "value": "netherite", "texture": "entity/equipment/nautilus_body/netherite" }
+				]
+			},
+			"default_state": "variant=iron"
 		}
 	],
 	"armor_trims": {

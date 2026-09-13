@@ -14,6 +14,7 @@ function app_startup_interface_bench()
 	bench_settings_ani = 0
 	bench_height = 345
 	bench_schematic_folder = schematic_folders[0]
+	bench_particle_preset_folder = particle_folders[0]
 	
 	// Workbench tabs
 	bench_tab = e_bench.CHARACTER
@@ -172,10 +173,13 @@ function app_startup_interface_bench()
 			sortlist_add(shape_list, i)
 		
 		// Particles list
-		particles_list = new_obj(obj_sortlist)
-		particles_list.visible_items = 8
-		particles_list.script = action_bench_particles
-		particles_list.header_show = false
-		sortlist_column_add(particles_list, "particlepresetname", 0)
+		particle_preset_list = new_obj(obj_sortlist)
+		particle_preset_list.visible_items = 8
+		particle_preset_list.script = action_bench_particles_select
+		particle_preset_list.header_show = false
+		sortlist_column_add(particle_preset_list, "particlepresetname", 0)
+		particle_preset_list.column_sort = 0
+		particle_preset_list.sort_asc = false
+		particle_preset_temp = null
 	}
 }

@@ -8,7 +8,7 @@
 
 function preview_draw(preview, xx, yy, width, height)
 {
-	var is3d, mouseon, playbutton, isplaying, setplaytime;
+	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton;
 	
 	if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 		return 0
@@ -27,6 +27,10 @@ function preview_draw(preview, xx, yy, width, height)
 		return 0
 	}
 	
+	particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
+	if (preview.select.object_index = obj_bench_settings)
+		particlebutton = preview.select.particle_preset != null
+
 	// Show 3D view?
 	if (preview.select.object_index = obj_resource)
 	{
@@ -41,7 +45,7 @@ function preview_draw(preview, xx, yy, width, height)
 		is3d = true
 	}
 	
-	if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)) ||
+	if ((particlebutton && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)) ||
 		(playbutton && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)))
 		mouseon = false
 	
@@ -709,14 +713,14 @@ function preview_draw(preview, xx, yy, width, height)
 	}
 	
 	// Button background
-	if ((preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER) || playbutton)
+	if (particlebutton || playbutton)
 	{
 		draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_level_middle, 1)
 		draw_outline(xx + width - 40, yy + height - 40, 32, 32, 1, c_border, a_border, true)
 	}
 	
 	// Particle button
-	if (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
+	if (particlebutton)
 	{
 		if (preview.select.pc_spawn_constant)
 		{

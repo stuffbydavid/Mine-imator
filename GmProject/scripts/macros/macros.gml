@@ -170,6 +170,8 @@ function macros()
 	#macro default_ground				"block/grass_block_top"
 	#macro default_biome				"plains"
 	#macro default_text					"AaBbCc"
+	#macro particle_folders				array("Effects", "Weather")
+	#macro particle_default				array("Default", "Snow")
 	#macro particle_sheet				-5
 	#macro particle_template			-6
 	#macro normal_buffer_scale			8

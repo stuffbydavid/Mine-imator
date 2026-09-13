@@ -31,6 +31,11 @@ function action_bench_schematic_select(schematic)
 		bench_settings.scenery = schematic
 		
 	bench_settings.schematic_selected = schematic
+	with (bench_settings)
+	{
+		name = ""
+		temp_update_display_name()
+	}
 	with (bench_settings.preview)
 	{
 		preview_reset_view()

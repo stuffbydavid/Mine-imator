@@ -143,10 +143,6 @@ function bench_click(tab)
 		}
 	}
 	
-	// Switch to particles
-	if (bench_tab = e_bench.PARTICLE_SPAWNER)
-		bench_update_particles_list()
-
 	var sortlist, sortvalue;
 	sortlist = null
 	sortvalue = null
@@ -170,7 +166,7 @@ function bench_click(tab)
 		}
 		case e_bench.PARTICLE_SPAWNER:
 		{
-			sortlist = bench_settings.particles_list
+			sortlist = bench_settings.particle_preset_list
 			sortvalue = bench_settings.particle_preset
 			break
 		}
@@ -194,6 +190,8 @@ function bench_click(tab)
 	
 	if (tab = e_bench.SCHEMATIC)
 		action_bench_schematic_folder(bench_schematic_folder)
+	else if (tab = e_bench.PARTICLE_SPAWNER)
+		action_bench_particles_folder(bench_particle_preset_folder)
 	else if (tab = e_bench.TEXT)
 	{
 		preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font.font)

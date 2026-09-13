@@ -205,7 +205,7 @@ function draw_button_menu()
 	if (current_microani.goal_ease != 0.5)
 		clip_begin(xx, yy, wid, hei)
 	
-	list_item_draw(item, xx, yy + ((current_microani.goal_ease * 2) - 1) * 12, wid, hei, false, null, null, false)
+	list_item_draw(item, xx, yy + floor(((current_microani.goal_ease * 2) - 1) * 12), wid, hei, false, null, null, false)
 	instance_destroy(item)
 	
 	if (current_microani.goal_ease != 0.5)

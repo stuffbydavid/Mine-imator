@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"bench_update_particles_list",
+  "%Name":"bench_show",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"bench_update_particles_list",
+  "name":"bench_show",
   "parent":{
     "name":"Bench",
     "path":"folders/Scripts/App/Interface/Bench.yy",

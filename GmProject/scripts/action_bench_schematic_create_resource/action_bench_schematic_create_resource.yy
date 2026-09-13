@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_bench_schematic_create_resource",
   "parent":{
-    "name":"Bench",
-    "path":"folders/Scripts/App/Actions/Bench.yy",
+    "name":"Schematic",
+    "path":"folders/Scripts/App/Actions/Bench/Schematic.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

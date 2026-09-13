@@ -15,6 +15,7 @@ function new_history(script)
 		save_res_edit = save_id_get(res_edit)
 		save_axis_edit = axis_edit
 		save_save_id_seed = save_id_seed
+		particle_temp_save_id = ""
 		
 		scale_link_drag = false
 		scale_link_drag_val = 0

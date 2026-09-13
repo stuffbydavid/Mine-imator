@@ -8,20 +8,6 @@
 		"lastchange": "2026.09.07"
 	},
 	"particle/": {
-		"default": "Default spawner",
-		"electric_spark": "Electric spark",
-		"explosion": "Explosion",
-		"firework_blast": "Firework blast",
-		"fountain_of_cakes": "Fountain of cakes",
-		"grass_explosion": "Grass explosion",
-		"high_fire": "High fire",
-		"huge_smoke": "Huge smoke",
-		"low_fire": "Low fire",
-		"potion_effect": "Potion effect",
-		"rain": "Rain",
-		"smoke": "Smoke",
-		"snow": "Snow",
-		"teleport": "Teleport",
 		"type/": {
 			"particle_1": "Particle 1",
 			"spark": "Spark",
@@ -84,6 +70,8 @@
 			"clear": "Clear particles",
 			"import": "Import particles",
 			"export": "Export particles",
+			"openfolder": "Open particle folder",
+			"reloadfolder": "Reload particle folder",
 			"add": "Add emitter",
 			"duplicate": "Duplicate emitter",
 			"delete": "Delete emitter",
@@ -590,6 +578,7 @@
 		"importfromworld": "Import from world",
 		"schematic": "Schematic",
 		"schematic/": {
+			"House 1": "House 1",
 			"trees": "Trees",
 			"biomes": "Biomes",
 			"structures": "Structures",
@@ -618,7 +607,13 @@
 		"textfont": "Font",
 		"text3d": "3D",
 		"textfacecamera": "Face camera",
-		"particlespreset": "Preset",
+		"particlepreset": "Particles",
+		"particles/": {
+			"Default": "Default spawner",
+			"effects": "Effects",
+			"weather": "Weather",
+			"project": "Project"
+		},
 		"lighttype": "Light type",
 		"create": "Create",
 		"createedit": "Create & edit",

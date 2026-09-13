@@ -36,7 +36,11 @@ function sortlist_column_get(slist, value, col)
 		
 		case "sceneryname":
 		case "schematicname":
-			return is_string(value) ? value : value.display_name
+			if (!is_string(value))
+				return value.display_name
+
+			var schematicfn = filename_new_ext(filename_name(value), "")
+			return text_exists("benchschematic" + schematicfn) ? text_get("benchschematic" + schematicfn) : schematicfn
 		case "shapename":
 			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
 		case "particleeditortypename":
@@ -70,7 +74,10 @@ function sortlist_column_get(slist, value, col)
 			return value.count
 		
 		case "particlepresetname":
-			var fn = filename_new_ext(filename_name(value), "");
-			return text_exists("particle" + fn) ? text_get("particle" + fn) : fn;
+			if (!is_string(value))
+				return string_remove_newline(value.display_name)
+
+			var particlefn = filename_new_ext(filename_name(value), "")
+			return text_exists("benchparticles" + particlefn) ? text_get("benchparticles" + particlefn) : particlefn
 	}
 }

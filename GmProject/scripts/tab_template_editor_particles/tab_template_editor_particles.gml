@@ -14,7 +14,7 @@ function tab_template_editor_particles()
 	tab_control(24)
 	
 	if (draw_button_icon("particleeditorexport", setx, dy, 24, 24, false, icons.ASSET_EXPORT, null, false, "tooltipparticlesexport"))
-		particles_save()
+		particles_save(temp_edit)
 	setx -= 28
 	
 	if (draw_button_icon("particleeditorimport", setx, dy, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltipparticlesimport"))

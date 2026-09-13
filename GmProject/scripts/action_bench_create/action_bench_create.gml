@@ -21,12 +21,22 @@ function action_bench_create(edit = false)
 	}
 	else
 	{
-		var hobj, tl;
+		var hobj, tl, particletemp, sceneryres;
 		hobj = null
+		particletemp = null
+		sceneryres = null
 		
 		if (history_redo)
 		{
+			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
+			if (bench_tab = e_bench.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
+			{
+				particletemp = save_id_find(history_data.particle_temp_save_id)
+				bench_settings.particle_preset = particletemp
+				bench_settings.particle_preset_temp = particletemp
+				temp_edit = particletemp
+			}
 
 			if (history_data.open_editor)
 			{
@@ -38,6 +48,7 @@ function action_bench_create(edit = false)
 		{
 			hobj = history_set(action_bench_create)
 			hobj.bench_save_obj = history_save_bench()
+			hobj.bench_tab = bench_tab
 			hobj.spawn_amount = 0
 			hobj.open_editor = edit
 			
@@ -70,7 +81,21 @@ function action_bench_create(edit = false)
 		}
 
 		if (bench_tab = e_bench.SCHEMATIC)
-			action_bench_schematic_create_resource()
+		{
+			if (history_redo)
+			{
+				sceneryres = history_restore_res(history_data.scenery_res_save_obj)
+				sceneryres.display_name = history_data.scenery_res_save_obj.display_name
+				bench_settings.scenery = sceneryres
+			}
+			else
+			{
+				sceneryres = action_bench_schematic_create_resource()
+				hobj.scenery_res_save_obj = history_save_res(sceneryres)
+			}
+		}
+		else if (bench_tab = e_bench.PARTICLE_SPAWNER && !history_redo)
+			particletemp = bench_settings.particle_preset_temp
 
 		if (tltype != null) // Timeline
 		{
@@ -83,6 +108,23 @@ function action_bench_create(edit = false)
 			
 			if (bench_tab = e_bench.CAMERA)
 				view_second.show = true
+		}
+		else if (particletemp != null)
+		{
+			with (particletemp)
+				tl = temp_animate()
+
+			temp_edit = particletemp
+
+			if (!history_redo)
+			{
+				with (hobj)
+				{
+					spawn_save_id[spawn_amount] = tl.save_id
+					spawn_amount++
+					particle_temp_save_id = particletemp.save_id
+				}
+			}
 		}
 		else if (temptype != null)
 		{
@@ -261,6 +303,14 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
+		if (sceneryres != null && !history_redo)
+		{
+			with (hobj)
+			{
+				spawn_save_id[spawn_amount] = sceneryres.save_id
+				spawn_amount++
+			}
+		}
 		
 		if (history_redo)
 		{
@@ -323,7 +373,7 @@ function action_bench_create(edit = false)
 	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 	{
 		if (!history_undo && !history_redo)
-			bench_update_particles_list()
+			action_bench_particles_folder(bench_particle_preset_folder)
 		
 		particle_spawner_clear()
 		preview_reset_view()

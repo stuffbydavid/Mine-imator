@@ -778,11 +778,43 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench.PARTICLE_SPAWNER:
 		{
 			// Particles
-			tab_control_sortlist(bench_settings.particles_list)
-			sortlist_draw(bench_settings.particles_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlespreset"))
+			tab_control_sortlist(bench_settings.particle_preset_list)
+			sortlist_draw(bench_settings.particle_preset_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlepreset"))
 			tab_next()
-			
-			window_scroll_focus = string(bench_settings.particles_list.scroll)
+			dy -= 4
+
+			// Particles folder
+			tab_control_togglebutton()
+			for (var i = 0; i < array_length(particle_folders); i++)
+			{
+				var particlefolder = particle_folders[i];
+				togglebutton_add("benchparticles" + string_replace_all(string_lower(particlefolder), " ", "_"), null, particlefolder, bench_particle_preset_folder = particlefolder, action_bench_particles_folder)
+			}
+			togglebutton_add("benchparticlesproject", null, "project", bench_particle_preset_folder = "project", action_bench_particles_folder)
+			draw_togglebutton("benchparticlepreset", dx, dy, true, false)
+			dy += ui_large_height + 6
+
+			// Import particles
+			tab_control(24)
+			if (draw_button_icon("benchparticlesimport", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltipparticlesimport"))
+				action_bench_particles_import()
+
+			// Export particles
+			var particleselected = bench_settings.particle_preset
+			if (draw_button_icon("benchparticlesexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, particleselected = null, "tooltipparticlesexport"))
+				action_bench_particles_export()
+
+			// Open folder
+			if (draw_button_icon("benchparticlesopenfolder", dx + 56, dy, 24, 24, false, icons.FOLDER, null, false, "tooltipparticlesopenfolder"))
+				action_bench_particles_open_folder()
+
+			// Reload folder
+			if (draw_button_icon("benchparticlesreload", dx + 84, dy, 24, 24, false, icons.REFRESH, null, false, "tooltipparticlesreloadfolder"))
+				action_bench_particles_folder(bench_particle_preset_folder)
+			tab_next()
+
+			createdisabled = bench_settings.particle_preset = null
+			window_scroll_focus = string(bench_settings.particle_preset_list.scroll)
 			break
 		}
 				
@@ -845,7 +877,7 @@ function bench_draw_settings(bx, by, bw, bh)
 	// Create & edit
 	if (edit)
 	{
-		if (draw_button_label("benchcreateedit", dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY))
+		if (draw_button_label("benchcreateedit", dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY, null, e_anchor.LEFT, createdisabled))
 		{
 			action_bench_create(true)
 			bench_show_ani_type = "hide"

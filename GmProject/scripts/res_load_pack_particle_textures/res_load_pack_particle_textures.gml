@@ -59,7 +59,11 @@ function res_load_pack_particle_textures()
 		
 		if (file_exists_lib(fname))
 		{
-			tex = texture_create_square(fname)
+			if (id = mc_res) // Patch textures
+				tex = texture_create_patched(fname)
+			else
+				tex = texture_create(fname)
+			tex = texture_convert_square(tex)
 		}
 		else if (id != mc_res)
 			tex = texture_duplicate(mc_res.particle_texture_map[?name])

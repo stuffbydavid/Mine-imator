@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_bench_particles",
   "parent":{
-    "name":"Bench",
-    "path":"folders/Scripts/App/Actions/Bench.yy",
+    "name":"Particles",
+    "path":"folders/Scripts/App/Actions/Bench/Particles.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
