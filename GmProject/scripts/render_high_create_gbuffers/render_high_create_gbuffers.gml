@@ -136,9 +136,6 @@ function render_high_create_gbuffers()
 		}
 	}
 
-	// Noise
-	render_sample_noise_texture = render_get_noise_texture(render_sample_current)
-
 	if (render_pass = e_render_pass.DIFFUSE)
 		render_pass_surf = surface_duplicate(render_surface_diffuse)
 

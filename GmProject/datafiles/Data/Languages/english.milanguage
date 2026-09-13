@@ -2991,6 +2991,7 @@
 			"pointbuffersize": "Point light buffer size",
 			"blurquality": "Blur quality",
 			"blursize": "Blur size",
+			"jittered": "Jittered shadows",
 			"transparent": "Transparent shadows",
 			"buffersize256": "Very small",
 			"buffersize512": "Small",

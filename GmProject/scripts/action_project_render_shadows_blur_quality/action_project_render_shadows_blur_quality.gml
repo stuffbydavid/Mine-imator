@@ -11,5 +11,7 @@ function action_project_render_shadows_blur_quality(val, add)
 	if (!history_undo && !history_redo)
 		history_set_var(action_project_render_shadows_blur_quality, blurquality, blurquality * add + val, true)
 	
-	render_preset_edit.renderer[renderer_edit].shadows_blur_quality = blurquality * add + val
+	blurquality = blurquality * add + val
+	render_preset_edit.renderer[renderer_edit].shadows_blur_quality = blurquality
+	project_render_shadows_blur_quality = blurquality
 }

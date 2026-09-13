@@ -12,7 +12,7 @@ function render_startup()
 	
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
-			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_light_offset, render_shadow_from,
+			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_sun_shadow_scale, render_light_offset, render_shadow_from,
 			  render_spot_matrix, render_light_specular_strength, render_light_size;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
@@ -22,6 +22,7 @@ function render_startup()
 			  render_tonemapper, render_exposure, render_gamma, render_auxiliary;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
+	render_sun_shadow_scale = 0
 	
 	globalvar render_blend_prev, render_alpha_prev;
 	
@@ -145,15 +146,21 @@ function render_startup()
 	render_alpha_hash_force = false // If enabled, forces scene objects to use hashing based on render_alpha_hash
 	
 	// Noise sampling
-	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array;
+	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array,
+			  render_pcss_kernel, render_pcss_kernel_rotated, render_pcss_quality_prev;
 	render_sample_noise_texture = null
 	render_sample_noise_size = 128
 	render_sample_noise_texture_array = []
+	render_pcss_kernel = render_generate_progressive_disk_samples(4, 0)
+	render_pcss_kernel_rotated = render_pcss_kernel
+	render_pcss_quality_prev = -1
 	
 	// Shadows
 	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_spot_buffer, 
 	render_surface_point_buffer, render_surface_point_atlas_buffer;
 	
+	project_render_shadows_jittered = false
+	project_render_shadows_sun_cascades = 3
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
 	render_surface_spot_buffer = null

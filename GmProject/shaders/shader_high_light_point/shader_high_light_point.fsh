@@ -1,5 +1,3 @@
-#define SQRT05 0.707106781
-
 uniform sampler2D uTexture; // static
 uniform int uIsSky;
 uniform int uIsWater;
@@ -12,10 +10,13 @@ uniform float uLightFar; // static
 uniform float uLightFadeSize; // static
 uniform vec3 uShadowPosition; // static
 uniform float uLightSpecular;
-uniform float uLightSize;
+uniform float uShadowRadius; // static
 
 uniform sampler2D uDepthBuffer; // static
 uniform float uDepthBufferSize; // static
+uniform int uShadowBlurQuality; // static
+uniform vec2 uPCSSKernel[64]; // static
+uniform vec2 uScreenSize; // static
 
 uniform vec3 uCameraPosition; // static
 uniform float uGamma;
@@ -28,6 +29,7 @@ varying vec3 vTangent;
 varying vec2 vTexCoord;
 varying vec4 vCustom;
 varying vec4 vColor;
+varying vec4 vClipPosition;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_util.TBN_LIB)
@@ -37,11 +39,12 @@ varying vec4 vColor;
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
 #pragma shady: inline(common_constants.MATH)
+#pragma shady: inline(common_shadows.PCSS_LIB)
 
-vec2 getShadowMapCoord(vec3 look)
+vec2 getShadowMapCoord(vec3 look, vec3 toPoint)
 {
 	float tFOV = tan(PI / 4.0);
-	vec3 u, v, toPoint = vPosition - uShadowPosition;
+	vec3 u, v;
 	vec2 coord;
 	
 	// Prepare 3D to 2D conversion
@@ -62,11 +65,167 @@ vec2 getShadowMapCoord(vec3 look)
 	return coord;
 }
 
+vec2 getPointShadowMapCoord(vec3 direction, out vec2 bufferMin)
+{
+	vec3 directionAbs = abs(direction);
+	vec3 look;
+	
+	// Z faces
+	if (directionAbs.z >= directionAbs.x && directionAbs.z >= directionAbs.y)
+	{
+		// Z+
+		// ooo
+		// oxo
+		if (direction.z >= 0.0)
+		{
+			look = vec3(0.0, -0.0001, 1.0);
+			bufferMin = vec2(1.0/3.0, 0.5);
+		}
+		else
+		{
+			// Z-
+			// ooo
+			// oox
+			look = vec3(0.0, -0.0001, -1.0);
+			bufferMin = vec2(2.0/3.0, 0.5);
+		}
+	}
+	// X faces
+	else if (directionAbs.x >= directionAbs.y)
+	{
+		// X+
+		// xoo
+		// ooo
+		if (direction.x >= 0.0)
+		{
+			look = vec3(1.0, 0.0, 0.0);
+			bufferMin = vec2(0.0);
+		}
+		else
+		{
+			// X-
+			// oxo
+			// ooo
+			look = vec3(-1.0, 0.0, 0.0);
+			bufferMin = vec2(1.0/3.0, 0.0);
+		}
+	}
+	// Y faces
+	else
+	{
+		// Y+
+		// oox
+		// ooo
+		if (direction.y >= 0.0)
+		{
+			look = vec3(0.0, 1.0, 0.0);
+			bufferMin = vec2(2.0/3.0, 0.0);
+		}
+		else
+		{
+			// Y-
+			// ooo
+			// xoo
+			look = vec3(0.0, -1.0, 0.0);
+			bufferMin = vec2(0.0, 0.5);
+		}
+	}
+	
+	return getShadowMapCoord(look, direction) + bufferMin;
+}
+
 float getFilteredDepth(vec2 uv, vec2 uvMin)
 {
 	vec2 halfTexel = 0.5 / vec2(uDepthBufferSize * 3.0, uDepthBufferSize * 2.0);
 	vec2 uvMax = uvMin + vec2(1.0/3.0, 0.5);
 	return texture2D(uDepthBuffer, clamp(uv, uvMin + halfTexel, uvMax - halfTexel)).r;
+}
+
+float getPointDepth(vec3 direction)
+{
+	vec2 bufferMin;
+	vec2 coord = getPointShadowMapCoord(direction, bufferMin);
+	return uLightNear + (uLightFar - uLightNear) * getFilteredDepth(coord, bufferMin);
+}
+
+vec3 getPointSampleDirection(vec3 direction, vec3 tangent, vec3 bitangent, vec2 offset, float radius)
+{
+	return normalize(direction + (tangent * offset.x + bitangent * offset.y) * radius);
+}
+
+float getPointReceiverDepth(vec3 direction, vec3 receiverPosition, vec3 receiverNormal, float fallbackDepth)
+{
+	float denominator = dot(direction, receiverNormal);
+	if (abs(denominator) < 0.0001)
+		return fallbackDepth;
+	
+	float depth = dot(receiverPosition, receiverNormal) / denominator;
+	return depth > 0.0 ? depth : fallbackDepth;
+}
+
+float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, float bias, out float centerDepth)
+{
+	vec3 direction = toReceiver / max(fragDepth, 0.0001);
+	centerDepth = getPointDepth(direction);
+	
+	int quality = uShadowBlurQuality;
+	if (quality > PCSS_MAX_SAMPLES)
+		quality = PCSS_MAX_SAMPLES;
+	
+	if (quality <= 0 || uShadowRadius <= 0.0)
+		return getPCSSVisibility(fragDepth, centerDepth, bias);
+	
+	vec3 reference = abs(direction.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0);
+	vec3 tangent = normalize(cross(reference, direction));
+	vec3 bitangent = cross(direction, tangent);
+	vec3 receiverPosition = toReceiver;
+	vec2 rotation = getPCSSPixelRotation(vClipPosition, uScreenSize);
+	int blockerSamples = getPCSSBlockerSamples(quality);
+	float searchRadius = min(uShadowRadius / max(fragDepth, uLightNear), 128.0 / PCSS_REFERENCE_SHADOW_SIZE);
+	float blockerDepth = 0.0;
+	float blockers = 0.0;
+	
+	// Blocker search
+	for (int blockerIndex = 0; blockerIndex < PCSS_MAX_BLOCKER_SAMPLES; blockerIndex++)
+	{
+		if (blockerIndex >= blockerSamples)
+			break;
+		
+		vec2 offset = getPCSSSampleOffset(blockerIndex, rotation);
+		vec3 sampleDirection = getPointSampleDirection(direction, tangent, bitangent, offset, searchRadius);
+		float sampleDepth = getPointDepth(sampleDirection);
+		float receiverDepth = getPointReceiverDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
+		if (isPCSSBlocker(receiverDepth, sampleDepth, bias))
+		{
+			blockerDepth += sampleDepth;
+			blockers += 1.0;
+		}
+	}
+	
+	if (blockers == 0.0)
+		return 1.0;
+	
+	blockerDepth /= blockers;
+	
+	// Get penumbra for filter
+	float penumbraRadius = uShadowRadius * max(fragDepth - blockerDepth - bias, 0.0) / max(blockerDepth, uLightNear); // Ignore the bias gap
+	float filterRadius = min(penumbraRadius / max(fragDepth, uLightNear), 128.0 / PCSS_REFERENCE_SHADOW_SIZE);
+	float visibility = 0.0;
+	
+	// Filter shadow
+	for (int filterIndex = 0; filterIndex < PCSS_MAX_SAMPLES; filterIndex++)
+	{
+		if (filterIndex >= quality)
+			break;
+		
+		vec2 offset = getPCSSSampleOffset(filterIndex, rotation);
+		vec3 sampleDirection = getPointSampleDirection(direction, tangent, bitangent, offset, filterRadius);
+		float sampleDepth = getPointDepth(sampleDirection);
+		float receiverDepth = getPointReceiverDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
+		visibility += getPCSSVisibility(receiverDepth, sampleDepth, bias);
+	}
+	
+	return visibility / float(quality);
 }
 
 void main()
@@ -77,6 +236,11 @@ void main()
 	vec2 tex = vTexCoord;
 	vec4 baseColor = texture2D(uTexture, tex) * vColor;
 	vec3 lightCol = uLightColor.rgb * uLightStrength;
+	vec3 receiverNormal = cross(dFdx(vPosition), dFdy(vPosition));
+	float receiverNormalLength = length(receiverNormal);
+	receiverNormal = receiverNormalLength > 0.000001 ? receiverNormal / receiverNormalLength : normalize(vNormal);
+	if (dot(receiverNormal, vNormal) < 0.0)
+		receiverNormal *= -1.0;
 	
 	handleAlphaDiscard(vPosition, baseColor);
 	
@@ -104,91 +268,15 @@ void main()
 		
 		if (dif > 0.0 || sss > 0.0)
 		{
-			vec2 fragCoord, bufferMin, bufferMax;
 			vec3 toLight = vPosition - uShadowPosition;
-			vec4 lookDir = vec4( // Get the direction from the pixel to the light
-				toLight.x / distance(vPosition.xy, uShadowPosition.xy),
-				toLight.y / distance(vPosition.xy, uShadowPosition.xy),
-				toLight.z / distance(vPosition.xz, uShadowPosition.xz),
-				toLight.z / distance(vPosition.yz, uShadowPosition.yz)
-			);
-		
-			// Get shadow map and texture coordinate
-		
-			// Z+
-			// ooo
-			// oxo
-			if (lookDir.z > SQRT05 && lookDir.w > SQRT05)
-			{ 
-				fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, 1.0));
-				fragCoord.x += 1.0/3.0;
-				fragCoord.y += 0.5;
-				
-				bufferMin = vec2(1.0/3.0, 0.5);
-			}
-			
-			// Z-
-			// ooo
-			// oox
-			else if (lookDir.z < -SQRT05 && lookDir.w < -SQRT05)
-			{
-				fragCoord = getShadowMapCoord(vec3(0.0, -0.0001, -1.0));
-				fragCoord.x += 2.0/3.0;
-				fragCoord.y += 0.5;
-				
-				bufferMin = vec2(2.0/3.0, 0.5);
-			}
-		
-			// X+
-			// xoo
-			// ooo
-			else if (lookDir.x > SQRT05)
-			{ 
-				fragCoord = getShadowMapCoord(vec3(1.0, 0.0, 0.0));
-				
-				bufferMin = vec2(0.0);
-			}
-		
-			// X-
-			// oxo
-			// ooo
-			else if (lookDir.x < -SQRT05)
-			{
-				fragCoord = getShadowMapCoord(vec3(-1.0, 0.0, 0.0));
-				fragCoord.x += 1.0/3.0;
-				
-				bufferMin = vec2(1.0/3.0, 0.0);
-			}
-		
-			// Y+
-			// oox
-			// ooo
-			else if (lookDir.y > SQRT05)
-			{ 
-				fragCoord = getShadowMapCoord(vec3(0.0, 1.0, 0.0));
-				fragCoord.x += 2.0/3.0;
-				
-				bufferMin = vec2(2.0/3.0, 0.0);
-			}
-		
-			// Y-
-			// ooo
-			// xoo
-			else
-			{ 
-				fragCoord = getShadowMapCoord(vec3(0.0, -1.0, 0.0));
-				fragCoord.y += 0.5;
-				
-				bufferMin = vec2(0.0, 0.5);
-			}
 			
 			// Calculate bias
 			float bias = 1.0;
 			
 			// Shadow
 			float fragDepth = distance(vPosition, uShadowPosition);
-			float sampleDepth = uLightNear + (uLightFar - uLightNear) * getFilteredDepth(fragCoord, bufferMin);
-			shadow = ((fragDepth - bias) > sampleDepth) ? 0.0 : 1.0;
+			float sampleDepth;
+			shadow = getPointShadow(toLight, fragDepth, receiverNormal, bias, sampleDepth);
 			
 			// Subsurface translucency
 			if (sss > 0.0 && dif == 0.0)
@@ -201,7 +289,7 @@ void main()
 		// Subsurface highlight
 		if (sss > 0.0)
 			handleSubsurfaceHighlight(light, subsurf, normal, lightDir, lightCol, uCameraPosition, vPosition, sss, 1.0);
-
+		
 		light *= (vec3(1.0) - F) * (1.0 - metallic);
 		
 		// Calculate specular

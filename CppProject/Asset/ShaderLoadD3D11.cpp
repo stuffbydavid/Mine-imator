@@ -246,6 +246,8 @@ namespace CppProject
             code.replace(QRegularExpression("\\bfract\\b"), "frac");
             code.replace(QRegularExpression("\\bpow\\b"), "power");
             code.replace(QRegularExpression("\\batan\\b"), "atan2");
+            code.replace(QRegularExpression("\\bdFdx\\b"), "ddx");
+            code.replace(QRegularExpression("\\bdFdy\\b"), "ddy");
 
             // Replace for with while
             code.replace(QRegularExpression("for \\((.*?); ?([a-zA-Z]+)(.*?); ?.*?\\)"), "\\1-1; [loop] while (++\\2\\3)");

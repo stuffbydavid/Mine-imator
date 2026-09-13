@@ -33,10 +33,12 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.samples = objset.samples &&
 			set.ssao = objset.ssao &&
 			set.shadows = objset.shadows &&
+			set.shadows_blur_quality = objset.shadows_blur_quality &&
 			set.shadows_sun_cascades = objset.shadows_sun_cascades &&
 			set.shadows_sun_buffer_size = objset.shadows_sun_buffer_size &&
 			set.shadows_spot_buffer_size = objset.shadows_spot_buffer_size &&
 			set.shadows_point_buffer_size = objset.shadows_point_buffer_size &&
+			set.shadows_jittered = objset.shadows_jittered &&
 			set.shadows_transparent = objset.shadows_transparent &&
 			set.subsurface_samples = objset.subsurface_samples &&
 			set.indirect = objset.indirect &&

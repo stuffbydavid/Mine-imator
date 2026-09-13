@@ -24,6 +24,7 @@ function render_start()
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
+	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects
 	render_ssao = project_render_ssao && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)

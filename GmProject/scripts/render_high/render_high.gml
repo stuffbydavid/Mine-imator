@@ -4,7 +4,6 @@
 function render_high()
 {
 	render_update_samples()
-	
 	render_alpha_hash = project_render_alpha_mode
 	
 	var samplestart, sampleend;
@@ -25,8 +24,8 @@ function render_high()
 		render_sample_current = s
 		random_set_seed(render_sample_current)
 		
-		// Update TAA jitter
-		render_high_update_taa()
+		// Update random jitter
+		render_high_update_jitter()
 		
 		// Create render passes
 		render_high_create_gbuffers()

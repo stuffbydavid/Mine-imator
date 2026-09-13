@@ -124,7 +124,7 @@ function tab_properties_render()
 			tab_collapse_start()
 		
 			tab_control_meter()
-			draw_meter("rendershadowssuncascades", dx, dy, dw, rendererset.shadows_sun_cascades, 1, 5, 2, 1, tab.render.tbx_shadows_sun_cascades, action_project_render_shadows_sun_cascades, "rendershadowssuncascadestip")
+			draw_meter("rendershadowssuncascades", dx, dy, dw, rendererset.shadows_sun_cascades, 1, 3, 2, 1, tab.render.tbx_shadows_sun_cascades, action_project_render_shadows_sun_cascades, "rendershadowssuncascadestip")
 			tab_next()
 
 			tab_control_menu()
@@ -144,17 +144,29 @@ function tab_properties_render()
 				tab_control_meter()
 				draw_meter("rendershadowsblurquality", dx, dy, dw, rendererset.shadows_blur_quality, 0, 64, 20, 1, tab.render.tbx_shadows_blur_quality, action_project_render_shadows_blur_quality)
 				tab_next()
-			
-				tab_control_meter()
-				draw_meter("rendershadowsblursize", dx, dy, dw, round(project_render_shadows_blur_size * 100), 0, 400, 100, 1, tab.render.tbx_shadows_blur_size, action_project_render_shadows_blur_size)
-				tab_next()
 			}
+
 			if (renderer_edit = e_renderer.REALISTIC)
 			{
 				tab_control_switch()
 				draw_switch("rendershadowstransparent", dx, dy, rendererset.shadows_transparent, action_project_render_shadows_transparent)
 				tab_next()
+
+				tab_control_switch()
+				draw_switch("rendershadowsjittered", dx, dy, rendererset.shadows_jittered, action_project_render_shadows_jittered)
+				tab_next()
+
+				if (!rendererset.shadows_jittered)
+				{
+					tab_control_meter()
+					draw_meter("rendershadowsblurquality", dx, dy, dw, rendererset.shadows_blur_quality, 0, 64, 20, 1, tab.render.tbx_shadows_blur_quality, action_project_render_shadows_blur_quality)
+					tab_next()
+				}
 			}
+
+			tab_control_meter()
+			draw_meter("rendershadowsblursize", dx, dy, dw, round(project_render_shadows_blur_size * 100), 0, 400, 100, 1, tab.render.tbx_shadows_blur_size, action_project_render_shadows_blur_size)
+			tab_next()
 		
 			tab_collapse_end()
 		}

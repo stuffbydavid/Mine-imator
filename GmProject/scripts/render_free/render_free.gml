@@ -33,7 +33,7 @@ function render_free()
 	surface_free(render_surface_samples)
 	
 	// Light depth buffers
-	for (var i = 0; i < render_cascades_count; i++)
+	for (var i = 0; i < 3; i++)
 		surface_free(render_surface_sun_buffer[i])
 	
 	surface_free(render_surface_spot_buffer)

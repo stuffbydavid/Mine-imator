@@ -11,12 +11,14 @@ function history_copy_render_settings(obj)
 	project_render_ssao_always_visible = obj.project_render_ssao_always_visible
 	
 	project_render_shadows = obj.project_render_shadows
+	project_render_shadows_sun_cascades = obj.project_render_shadows_sun_cascades
 	project_render_shadows_sun_buffer_size = obj.project_render_shadows_sun_buffer_size
 	project_render_shadows_spot_buffer_size = obj.project_render_shadows_spot_buffer_size
 	project_render_shadows_point_buffer_size = obj.project_render_shadows_point_buffer_size
 	project_render_shadows_transparent = obj.project_render_shadows_transparent
 	project_render_shadows_blur_quality = obj.project_render_shadows_blur_quality
 	project_render_shadows_blur_size = obj.project_render_shadows_blur_size
+	project_render_shadows_jittered = obj.project_render_shadows_jittered
 	
 	project_render_subsurface_samples = obj.project_render_subsurface_samples
 	project_render_subsurface_highlight = obj.project_render_subsurface_highlight

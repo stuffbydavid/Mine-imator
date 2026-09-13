@@ -50,20 +50,22 @@ function render_high_shadows()
 	
 	if (sunout)
 	{
-		// Scatter position
-		if (render_sample_current > 1)
+		var angle = vec3_normalize(app.background_sun_direction)
+		var sunangularradius = tan(degtorad(min(background_sunlight_angle, 179)) * .5) * project_render_shadows_blur_size
+		var referenceangularradius = tan(degtorad(.526) * .5)
+		render_sun_shadow_scale = (sunangularradius / referenceangularradius) * .5
+
+		// Jitter sun direction
+		if (project_render_shadows_jittered && render_sample_current > 1)
 		{
-			var xyang, zang, dis;
-			xyang = random(360)
-			zang = random_range(-180, 180)
-			dis = ((background_sunlight_angle * (project_render_distance / 2)) / 57.2958) / 2
-			sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
-			sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
-			sampleoffset[Z] = lengthdir_z(dis, zang)
+			var reference = abs(angle[Z]) < .999 ? vec3(0, 0, 1) : vec3(0, 1, 0)
+			var tangent = vec3_normalize(vec3_cross(reference, angle))
+			var bitangent = vec3_cross(angle, tangent)
+			var diskangle = random(pi * 2)
+			var diskradius = sunangularradius * sqrt(random(1))
+			var diskoffset = vec3_add(vec3_mul(tangent, cos(diskangle) * diskradius), vec3_mul(bitangent, sin(diskangle) * diskradius))
+			angle = vec3_normalize(vec3_add(angle, diskoffset))
 		}
-		
-		var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
-		angle = vec3_normalize(vec3_mul(angle, -1))
 		
 		// Depth
 		cam_far = cam_far_prev
@@ -133,12 +135,12 @@ function render_high_shadows()
 			if (!value_inherit[e_value.VISIBLE] || hide || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
 				continue
 			
-			if (render_sample_current > 1)
+			if (app.project_render_shadows_jittered && render_sample_current > 1)
 			{
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
-				dis = value[e_value.LIGHT_SIZE]/2
+				dis = value[e_value.LIGHT_SIZE] * app.project_render_shadows_blur_size / 2
 				sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)

@@ -36,10 +36,12 @@ function render_preset_event_create()
 		samples = 24
 		ssao = true
 		shadows = true
+		shadows_blur_quality = 20
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512
 		shadows_point_buffer_size = 256
+		shadows_jittered = false
 		shadows_transparent = false
 		subsurface_samples = 7
 		indirect = true

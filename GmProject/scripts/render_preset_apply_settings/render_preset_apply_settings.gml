@@ -38,10 +38,11 @@ function render_preset_apply_settings(settings, renderer)
 			case "shadows": set.shadows = val break
 			case "shadows_blur_quality": set.shadows_blur_quality = val break
 			case "shadows_blur_size": standardset.shadows_blur_size = val break
-			case "shadows_sun_cascades": set.shadows_sun_cascades = val break
+			case "shadows_sun_cascades": set.shadows_sun_cascades = clamp(round(val), 1, 3) break
 			case "shadows_sun_buffer_size": set.shadows_sun_buffer_size = val break
 			case "shadows_spot_buffer_size": set.shadows_spot_buffer_size = val break
 			case "shadows_point_buffer_size": set.shadows_point_buffer_size = val break
+			case "shadows_jittered": realisticset.shadows_jittered = val break
 			case "shadows_transparent": set.shadows_transparent = val break
 			case "subsurface_samples": set.subsurface_samples = val break
 			case "subsurface_highlight": realisticset.subsurface_highlight = val break
