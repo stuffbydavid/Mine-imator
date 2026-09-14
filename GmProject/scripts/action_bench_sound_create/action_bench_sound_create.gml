@@ -79,12 +79,13 @@ function action_bench_sound_create()
 			else if (!instance_exists(sound[2]) || sound[2].type != e_res_type.SOUND)
 				return 0
 
-			if (!bench_music_mode)
+			if (bench_settings.sound_list_current.source = "music")
 			{
-				if (bench_settings.sound_list_current.source = "music")
+				if (!bench_music_mode)
 					bench_music_stop()
-				bench_sound_stop()
 			}
+			else
+				bench_sound_stop()
 
 			hobj = history_set(action_bench_create)
 			hobj.bench_save_obj = history_save_bench()

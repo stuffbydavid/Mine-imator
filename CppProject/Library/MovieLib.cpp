@@ -4,6 +4,8 @@
 #include "Asset/Surface.hpp"
 #include "AppHandler.hpp"
 
+#include <limits>
+
 extern "C"
 {
 	#include <libavutil/channel_layout.h>
@@ -78,10 +80,6 @@ namespace CppProject
 		uint8_t* convertedData = nullptr;
 		AVPacket* inPacket = nullptr;
 
-		// Decode file into buffer
-		buffer.open(QIODevice::WriteOnly);
-		QDataStream outStream(&buffer);
-
 		try
 		{
 			Timer tmr;
@@ -96,6 +94,7 @@ namespace CppProject
 				throw "avformat_find_stream_info failed";
 
 			codecContext = avcodec_alloc_context3(nullptr);
+			IntType streamIndex = -1;
 			for (IntType i = 0; i < formatContext->nb_streams; i++)
 			{
 				AVCodecParameters* par = formatContext->streams[i]->codecpar;
@@ -106,12 +105,37 @@ namespace CppProject
 						throw "avcodec_find_decoder failed";
 					if (avcodec_parameters_to_context(codecContext, par) < 0)
 						throw "avcodec_parameters_to_context failed";
+					streamIndex = i;
 					break;
 				}
 			}
 
 			if (!codec)
 				throw "No codec found";
+
+			// Reserve decoded PCM from the input duration
+			AVStream* inputStream = formatContext->streams[streamIndex];
+			AVRational outputTimeBase = { 1, STREAM_AUDIO_SAMPLE_RATE };
+			AVRational timeBase = { 1, AV_TIME_BASE };
+			IntType duration = 0;
+			if (inputStream->duration != AV_NOPTS_VALUE)
+				duration = av_rescale_q(inputStream->duration, inputStream->time_base, outputTimeBase);
+			else if (formatContext->duration != AV_NOPTS_VALUE)
+				duration = av_rescale_q(formatContext->duration, timeBase, outputTimeBase);
+
+			IntType bytesPerSample = STREAM_AUDIO_CHANNELS * sizeof(int16_t);
+			if (duration > 0 && duration <= std::numeric_limits<int>::max() / bytesPerSample)
+				pcm.reserve((int)(duration * bytesPerSample));
+
+			IntType peakSize = STREAM_AUDIO_SAMPLE_RATE / sample_avg_per_sec;
+			if (duration > 0)
+			{
+				IntType peakCapacity = duration / peakSize + 1;
+				waveform_max.vec.Alloc(peakCapacity);
+				waveform_min.vec.Alloc(peakCapacity);
+			}
+			IntType peakSamples = 0;
+			int16_t peakMax = 0, peakMin = 0;
 
 			// Open codec of the audio file
 			if (avcodec_open2(codecContext, codec, nullptr) < 0)
@@ -144,46 +168,148 @@ namespace CppProject
 			if (!decodedFrame)
 				throw "av_packet_alloc failed";
 
-			// Read frames and store the decoded buffer in the resample context
-			IntType inSamples = 0;
+			IntType convertedCapacity = 0;
+			auto allocateConverted = [&](IntType capacity)
+			{
+				if (capacity <= convertedCapacity)
+					return;
+
+				av_freep(&convertedData);
+				if (av_samples_alloc(&convertedData, nullptr, STREAM_AUDIO_CHANNELS, capacity, STREAM_AUDIO_SAMPLE_FORMAT, 1) < 0)
+					throw "av_samples_alloc failed";
+				convertedCapacity = capacity;
+			};
+
+			auto writeConverted = [&](IntType outSamples)
+			{
+				if (outSamples <= 0)
+					return;
+
+				IntType bufferSize = av_samples_get_buffer_size(nullptr, STREAM_AUDIO_CHANNELS, outSamples, STREAM_AUDIO_SAMPLE_FORMAT, 1);
+				if (bufferSize < 0)
+					throw "av_samples_get_buffer_size failed";
+
+				const int16_t* data = (const int16_t*)convertedData;
+				for (IntType sample = 0; sample < outSamples; sample++)
+				{
+					int16_t channel1 = data[sample * STREAM_AUDIO_CHANNELS];
+					int16_t channel2 = data[sample * STREAM_AUDIO_CHANNELS + 1];
+					peakMax = std::max(peakMax, std::max(channel1, channel2));
+					peakMin = std::min(peakMin, std::min(channel1, channel2));
+					if (++peakSamples == peakSize)
+					{
+						waveform_max.Append((RealType)peakMax / sample_max);
+						waveform_min.Append((RealType)peakMin / sample_max);
+						peakSamples = 0;
+						peakMax = 0;
+						peakMin = 0;
+					}
+				}
+
+				pcm.append((const char*)convertedData, (int)bufferSize);
+				samples += outSamples;
+			};
+
+			auto convertFrame = [&]()
+			{
+				IntType outCapacity = av_rescale_rnd(
+					swr_get_delay(swrContext, codecContext->sample_rate) + decodedFrame->nb_samples,
+					STREAM_AUDIO_SAMPLE_RATE,
+					codecContext->sample_rate,
+					AV_ROUND_UP
+				);
+				if (outCapacity <= 0)
+					return;
+
+				allocateConverted(outCapacity);
+
+				IntType outSamples = swr_convert(swrContext, &convertedData, outCapacity, (const uint8_t**)decodedFrame->extended_data, decodedFrame->nb_samples);
+				if (outSamples < 0)
+					throw "swr_convert failed";
+				writeConverted(outSamples);
+			};
+
+			auto receiveFrames = [&]()
+			{
+				while (true)
+				{
+					IntType result = avcodec_receive_frame(codecContext, decodedFrame);
+					if (result == AVERROR(EAGAIN) || result == AVERROR_EOF)
+						break;
+					if (result < 0)
+						throw "avcodec_receive_frame failed";
+
+					try
+					{
+						convertFrame();
+					}
+					catch (...)
+					{
+						av_frame_unref(decodedFrame);
+						throw;
+					}
+					av_frame_unref(decodedFrame);
+				}
+			};
+
+			// Read and decode audio packets
 			while (av_read_frame(formatContext, inPacket) >= 0)
 			{
-				if (avcodec_send_packet(codecContext, inPacket) < 0 ||
-					avcodec_receive_frame(codecContext, decodedFrame) < 0)
+				if (inPacket->stream_index != streamIndex)
 				{
-					av_frame_unref(decodedFrame);
 					av_packet_unref(inPacket);
 					continue;
 				}
 
-				swr_convert(swrContext, nullptr, 0, (const uint8_t**)decodedFrame->data, decodedFrame->nb_samples);
-				inSamples += decodedFrame->nb_samples;
+				IntType result = avcodec_send_packet(codecContext, inPacket);
+				if (result == AVERROR(EAGAIN))
+				{
+					receiveFrames();
+					result = avcodec_send_packet(codecContext, inPacket);
+				}
+				av_packet_unref(inPacket);
+				if (result < 0)
+					throw "avcodec_send_packet failed";
+
+				receiveFrames();
 			}
 
-			// Allocate data
-			if (av_samples_alloc(&convertedData, nullptr, STREAM_AUDIO_CHANNELS, STREAM_AUDIO_FRAME_SIZE, STREAM_AUDIO_SAMPLE_FORMAT, 0) < 0)
-				throw "av_samples_alloc failed";
-
-			// Read from the resample context buffer and convert
-			RealType rateDiv = codecContext->sample_rate / (RealType)STREAM_AUDIO_SAMPLE_RATE;
-			IntType totalSamples = (IntType)(inSamples / rateDiv);
-			while (samples < totalSamples)
+			// Flush decoder
+			IntType result = avcodec_send_packet(codecContext, nullptr);
+			if (result == AVERROR(EAGAIN))
 			{
-				// Convert
-				IntType outSamples = swr_convert(swrContext, &convertedData, STREAM_AUDIO_FRAME_SIZE, nullptr, 0);
+				receiveFrames();
+				result = avcodec_send_packet(codecContext, nullptr);
+			}
+			if (result < 0 && result != AVERROR_EOF)
+				throw "avcodec_send_packet flush failed";
+			receiveFrames();
+
+			// Drain delayed resampler samples
+			while (true)
+			{
+				IntType outCapacity = av_rescale_rnd(
+					swr_get_delay(swrContext, codecContext->sample_rate),
+					STREAM_AUDIO_SAMPLE_RATE,
+					codecContext->sample_rate,
+					AV_ROUND_UP
+				);
+				if (outCapacity <= 0)
+					break;
+
+				allocateConverted(outCapacity);
+
+				IntType outSamples = swr_convert(swrContext, &convertedData, outCapacity, nullptr, 0);
 				if (outSamples == 0)
 					break;
-				else if (outSamples < 0)
+				if (outSamples < 0)
 					throw "swr_convert failed";
-				samples += outSamples;
-
-				// Calculate buffer size
-				IntType bufferSize = av_samples_get_buffer_size(nullptr, STREAM_AUDIO_CHANNELS, outSamples, STREAM_AUDIO_SAMPLE_FORMAT, 0);
-				if (bufferSize < 0)
-					throw "av_samples_get_buffer_size failed";
-
-				outStream.writeRawData((const char*)convertedData, bufferSize);
+				writeConverted(outSamples);
 			}
+
+			// Add the partial final waveform peak
+			waveform_max.Append(peakSamples ? (RealType)peakMax / sample_max : 0);
+			waveform_min.Append(peakSamples ? (RealType)peakMin / sample_max : 0);
 
 			tmr.Print("Decoded " + (QString)filename + " into " + NumStr(samples) + " samples");
 
@@ -191,18 +317,17 @@ namespace CppProject
 			if (App->audioSupported)
 			{
 				alGenBuffers(1, &alBuffer);
-				alBufferData(alBuffer, AL_FORMAT_STEREO16, buffer.data().constData(), buffer.size(), sample_rate_);
+				alBufferData(alBuffer, AL_FORMAT_STEREO16, pcm.constData(), pcm.size(), sample_rate_);
 			}
-
-			buffer.close();
 		}
 		catch (const char* err)
 		{
 			log({ err });
 			WARNING(err);
 			samples = 0;
-			buffer.close();
-			buffer.buffer().clear();
+			pcm.clear();
+			waveform_max = ArrType();
+			waveform_min = ArrType();
 		}
 
 		// Cleanup
@@ -211,12 +336,9 @@ namespace CppProject
 		if (swrContext)
 			swr_free(&swrContext);
 		if (codecContext)
-			avcodec_close(codecContext);
+			avcodec_free_context(&codecContext);
 		if (formatContext)
-		{
 			avformat_close_input(&formatContext);
-			avformat_free_context(formatContext);
-		}
 		if (convertedData)
 			av_freep(&convertedData);
 		if (inPacket)
@@ -487,7 +609,7 @@ namespace CppProject
 
 						for (MovieSound* sound : frameSounds)
 						{
-							const int16_t* srcData = (int16_t*)sound->sound->buffer.data().constData();
+							const int16_t* srcData = (const int16_t*)sound->sound->pcm.constData();
 							IntType srcSample = ((((audioFrameNum - sound->frame + sound->start) * audioCodecContext->frame_size) % (uint64_t)(sound->sound->samples / sound->pitch)) + s) * sound->pitch;
 
 							// Add and clamp audio if in buffer range

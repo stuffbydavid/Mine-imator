@@ -90,7 +90,7 @@ function bench_draw()
 		
 		if (!setting_advanced_mode)
 		{
-			if (item.value = e_bench.MODEL || item.value = e_bench.ENVIRONMENT)
+			if (item.value = e_bench.MODEL || item.value = e_bench.AUDIO_TRACK || item.value = e_bench.CAMERA_EFFECTS || item.value = e_bench.ENVIRONMENT)
 				skipasset = true
 		}
 		

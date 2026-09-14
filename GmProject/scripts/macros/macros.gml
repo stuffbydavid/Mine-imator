@@ -156,6 +156,7 @@ function macros()
 	#macro label_height					9
 	#macro load_assets_width			780
 	#macro load_assets_height			450
+	#macro list_center_max				500
 	
 	// Values
 	#macro null							noone

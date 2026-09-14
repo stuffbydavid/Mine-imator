@@ -39,9 +39,11 @@ function app_startup_interface_bench()
 	
 	list_item_add("typecamera", e_bench.CAMERA, "", null, icons.CAMERA, null, bench_click)
 	list_item_add("typesound", e_bench.SOUND, "", null, icons.NOTE, null, bench_click)
+	list_item_add("typeaudio", e_bench.AUDIO_TRACK, "", null, icons.NOTE, null, bench_click)
 	list_item_add("typeparticles", e_bench.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
 	list_item_add("typetext", e_bench.TEXT, "", null, icons.TEXT, null, bench_click)
 	
+	list_item_add("typecameraeffects", e_bench.CAMERA_EFFECTS, "", null, icons.CAMERA, null, bench_click)
 	list_item_add("typelightsource", e_bench.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
 	list_item_add("typepath", e_bench.PATH, "", null, icons.PATH, null, bench_click)
 	list_item_add("typebackground", e_bench.ENVIRONMENT, "", null, icons.CLOUD, null, bench_click)
@@ -180,7 +182,7 @@ function app_startup_interface_bench()
 		
 		project_list = new_obj(obj_soundlist)
 		project_list.source = "project"
-		project_list.visible_items = visiblesounds
+		project_list.visible_items = minecraft_game_found ? visiblesounds : 8
 		project_list.script = action_bench_sound
 		
 		sound = null

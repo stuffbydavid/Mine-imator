@@ -2,6 +2,7 @@
 
 function bench_music_update()
 {
+	// Note animation
 	with (obj_note)
 	{
 		note_age += delta
@@ -20,6 +21,7 @@ function bench_music_update()
 	var slist = bench_settings.music_list;
 	if (audio_exists(bench_settings.music_play_index) && audio_is_playing(bench_settings.music_play_index))
 	{
+		// Spawn notes while playing
 		if (bench_music_mode)
 		{
 			if (bench_settings.music_note_next = 0)
@@ -59,6 +61,7 @@ function bench_music_update()
 		return 0
 	}
 
+	// Shuffle filtered music list
 	var history, candidates, row, selected, musicmode, playlist;
 	history = bench_settings.music_history
 	playlist = slist.display_list
@@ -92,11 +95,17 @@ function bench_music_update()
 	row = candidates[|irandom(ds_list_size(candidates) - 1)]
 	ds_list_destroy(candidates)
 	musicmode = bench_music_mode
+	
 	if (action_bench_sound(row) = 0)
 	{
 		bench_settings.music_autoplay = false
 		bench_music_mode = false
 	}
 	else
+	{
+		var scrollvalue = slist.scroll.value;
+		if (sortlist_center(slist, row))
+			slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 		bench_music_mode = musicmode
+	}
 }

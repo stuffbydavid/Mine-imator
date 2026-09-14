@@ -7,8 +7,11 @@ function bench_audio_track_update()
 	{
 		audio_track = null
 		
+		// Pick selection
 		if (instance_exists(tl_edit) && tl_edit.type = e_tl_type.AUDIO_TRACK)
 			audio_track = tl_edit
+			
+		// Pick last added
 		else
 		{
 			for (var i = ds_list_size(app.project_timeline_list) - 1; i >= 0; i--)

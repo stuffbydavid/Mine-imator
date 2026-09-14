@@ -32,6 +32,8 @@ function action_bench_create(edit = false)
 		
 		if (history_redo)
 		{
+			hobj = history_data
+			hobj.spawn_amount = 0
 			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
 			if (bench_tab = e_bench.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
@@ -79,6 +81,7 @@ function action_bench_create(edit = false)
 			case e_bench.PATH:				tltype = e_tl_type.PATH break
 			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
 			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
+			case e_bench.AUDIO_TRACK:		tltype = e_tl_type.AUDIO_TRACK break
 			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
 			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
 		}
@@ -119,14 +122,12 @@ function action_bench_create(edit = false)
 
 			temp_edit = particletemp
 
-			if (!history_redo)
+			with (hobj)
 			{
-				with (hobj)
-				{
-					spawn_save_id[spawn_amount] = tl.save_id
-					spawn_amount++
+				spawn_save_id[spawn_amount] = tl.save_id
+				spawn_amount++
+				if (!history_redo)
 					particle_temp_save_id = particletemp.save_id
-				}
 			}
 		}
 		else if (temptype != null)

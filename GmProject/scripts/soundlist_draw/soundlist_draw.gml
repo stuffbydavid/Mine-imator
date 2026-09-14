@@ -39,20 +39,27 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 			searchw -= 28
 		if (draw_button_icon("soundsearchclear" + string(slist), clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltipclearsearch"))
 		{
+			var scrollvalue = slist.scroll.value;
 			slist.search_tbx.text = ""
 			slist.search = false
-			slist.scroll.value = 0
-			slist.scroll.value_goal = 0
 			soundlist_update(slist)
+			if (sortlist_center(slist, slist.select))
+				slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 		}
 	}
 
 	if (draw_textfield("soundsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
 	{
+		var searchactive, scrollvalue;
+		searchactive = slist.search
+		scrollvalue = slist.scroll.value
 		slist.search = slist.search_tbx.text != ""
 		slist.scroll.value = 0
 		slist.scroll.value_goal = 0
 		soundlist_update(slist)
+		if (searchactive && !slist.search)
+			if (sortlist_center(slist, slist.select))
+				slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
 
 	yy += 32

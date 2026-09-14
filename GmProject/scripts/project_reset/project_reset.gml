@@ -46,6 +46,18 @@ function project_reset()
 	ds_list_clear(project_model_list)
 	
 	camera_work_reset()
+
+	// Keep active background music outside the project
+	var musicres = null;
+	if (bench_music_mode && instance_exists(bench_settings.music_res))
+	{
+		musicres = bench_settings.music_res
+		if (musicres.creator = app)
+		{
+			sortlist_remove(res_list, musicres)
+			musicres.creator = bench_settings
+		}
+	}
 	
 	log("Destroying instances")
 	
@@ -60,7 +72,7 @@ function project_reset()
 		instance_destroy()
 	
 	with (obj_resource)
-		if (id != mc_res)
+		if (id != mc_res && id != musicres)
 			instance_destroy()
 	
 	with (obj_keyframe)

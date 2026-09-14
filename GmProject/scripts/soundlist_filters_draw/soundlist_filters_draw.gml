@@ -28,11 +28,15 @@ function soundlist_filters_draw()
 		tab_control_checkbox()
 		if (draw_checkbox(prefix + filter, dx, dy + floor(scroll), active, null))
 		{
+			var scrollvalue = slist.scroll.value;
 			if (active)
 				ds_list_delete_value(slist.filter_list, i)
 			else
 				ds_list_add(slist.filter_list, i)
 			soundlist_update(slist)
+			if (ds_list_empty(slist.filter_list))
+				if (sortlist_center(slist, slist.select))
+					slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 		}
 		tab_next()
 	}

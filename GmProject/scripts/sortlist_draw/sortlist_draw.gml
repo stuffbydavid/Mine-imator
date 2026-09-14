@@ -22,8 +22,16 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	var searchx, searchw, itemh, headerh, headermouseon, dy, listy, listhei, scrolloffset;
 	var searchfocused, searchunfocused, searchcleared, sortchanged;
 	
-	searchx = xx
-	searchw = w
+	if (filter || name != "")
+	{
+		searchx = xx + w - 144
+		searchw = 144
+	}
+	else
+	{
+		searchx = xx
+		searchw = w
+	}
 	searchcleared = false
 	sortchanged = false
 	
@@ -47,8 +55,6 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
 		
-		searchx += 32
-		searchw -= 32
 	}
 	
 	// Name
@@ -57,21 +63,16 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		draw_set_font(font_label)
 		draw_label(string_limit(name, w - 144 - (filter ? 32 : 0)), xx + (filter ? 32 : 0), yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
-		searchx = xx + w - 144
-		searchw = 144
 	}
 
 	if (slist.search_tbx.text != "")
 	{
-		var clearx;
-		if (name != "")
-			clearx = searchx - 28
-		else
+		var clearx = searchx - 28;
+		if (!filter && name = "")
 		{
 			clearx = searchx + searchw - 24
 			searchw -= 28
 		}
-
 		if (draw_button_icon("listsearchclear" + string(slist), clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltipclearsearch"))
 		{
 			slist.search_tbx.text = ""
@@ -206,7 +207,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	{
 		var scrollvalue = slist.scroll.value;
 		if (sortlist_center(slist, select, max(1, floor(listhei / itemh))))
-			slist.scroll.value = scrollvalue
+			slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
 
 	scrolloffset = slist.scroll.value mod itemh

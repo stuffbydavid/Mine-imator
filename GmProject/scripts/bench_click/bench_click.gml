@@ -145,14 +145,22 @@ function bench_click(tab)
 			{
 				type = e_tl_type.AUDIO_TRACK
 				
-				if (ds_list_empty(sounds_list.list))
+				if (!minecraft_game_found)
+				{
+					with (app)
+						action_bench_sound_source("project")
+				}
+				else if (ds_list_empty(sounds_list.list))
 					soundlist_load(sounds_list, music_list)
 					
-				soundlist_select_default(sound_list_current)
+				if (minecraft_game_found)
+					soundlist_select_default(sound_list_current)
 				bench_audio_track_update()
 				
 				break
 			}
+
+			case e_bench.AUDIO_TRACK:	type = e_tl_type.AUDIO_TRACK break
 
 			case e_bench.WORLD:
 			case e_bench.SCHEMATIC:			type = e_temp_type.SCENERY break

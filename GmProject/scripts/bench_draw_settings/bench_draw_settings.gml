@@ -641,12 +641,15 @@ function bench_draw_settings(bx, by, bw, bh)
 			tab_next()
 			dy -= 4
 
-			tab_control_togglebutton()
-			togglebutton_add("benchsoundsounds", null, "sounds", bench_settings.sound_list_current.source = "sounds", action_bench_sound_source)
-			togglebutton_add("benchsoundmusic", null, "music", bench_settings.sound_list_current.source = "music", action_bench_sound_source)
-			togglebutton_add("benchsoundproject", null, "project", bench_settings.sound_list_current.source = "project", action_bench_sound_source)
-			draw_togglebutton("benchsound", dx, dy, true, false)
-			dy += ui_large_height + 6
+			if (minecraft_game_found)
+			{
+				tab_control_togglebutton()
+				togglebutton_add("benchsoundsounds", null, "sounds", bench_settings.sound_list_current.source = "sounds", action_bench_sound_source)
+				togglebutton_add("benchsoundmusic", null, "music", bench_settings.sound_list_current.source = "music", action_bench_sound_source)
+				togglebutton_add("benchsoundproject", null, "project", bench_settings.sound_list_current.source = "project", action_bench_sound_source)
+				draw_togglebutton("benchsound", dx, dy, true, false)
+				dy += ui_large_height + 6
+			}
 
 			tab_control(24)
 			
@@ -660,17 +663,34 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 			tab_next()
 			
-			dy += 8
-			if (bench_settings.audio_track != null && (!instance_exists(bench_settings.audio_track) || bench_settings.audio_track.type != e_tl_type.AUDIO_TRACK))
-				bench_settings.audio_track = null
+			if (minecraft_game_found)
+			{
+				dy += 8
+				if (bench_settings.audio_track != null && (!instance_exists(bench_settings.audio_track) || bench_settings.audio_track.type != e_tl_type.AUDIO_TRACK))
+					bench_settings.audio_track = null
 
-			tab_control_menu()
-			draw_button_menu("benchaudiotrack", e_menu.LIST, dx, dy, dw, 24, bench_settings.audio_track, bench_settings.audio_track != null ? bench_settings.audio_track.display_name : text_get("benchaudiotracknew"), action_bench_audio_track)
-			tab_next()
-			dy += ui_small_height
+				tab_control_menu()
+				draw_button_menu("benchaudiotrack", e_menu.LIST, dx, dy, dw, 24, bench_settings.audio_track, bench_settings.audio_track != null ? bench_settings.audio_track.display_name : text_get("benchaudiotracknew"), action_bench_audio_track)
+				tab_next()
+				dy += ui_small_height
+			}
+			else
+			{
+				dy += 8
+				draw_tooltip_label("benchsoundtip", icons.INFO, e_toast.INFO)
+			}
 
 			window_scroll_focus = string(bench_settings.sound_list_current.scroll)
-			createdisabled = bench_settings.sound_list_current.select = null
+			createdisabled = !is_array(bench_settings.sound_list_current.select)
+			break
+		}
+			
+		case e_bench.AUDIO_TRACK:
+		{
+			draw_sprite(spr_bench_example, 2, dx, dy)
+			dy += 144 + 15
+			
+			draw_tooltip_label("benchaudiotracktip", icons.INFO, e_toast.INFO)
 			break
 		}
 		
@@ -757,6 +777,15 @@ function bench_draw_settings(bx, by, bw, bh)
 			tab_set_collumns(false)
 			dx_start = sx
 				
+			break
+		}
+		
+		case e_bench.CAMERA_EFFECTS:
+		{
+			draw_sprite(spr_bench_example, 5, dx, dy)
+			dy += 144 + 15
+			
+			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
 			break
 		}
 		

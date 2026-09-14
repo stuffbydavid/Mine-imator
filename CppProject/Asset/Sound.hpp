@@ -1,8 +1,8 @@
 #pragma once
 #include "Asset.hpp"
+#include "Type/ArrType.hpp"
 
-#include <QBuffer>
-#include <QIODevice>
+#include <QByteArray>
 
 struct AVFrame;
 
@@ -13,7 +13,9 @@ namespace CppProject
 		Sound(StringType filename);
 		~Sound();
 
-		QBuffer buffer;
+		QByteArray pcm;
+		ArrType waveform_max;
+		ArrType waveform_min;
 		ALuint alBuffer = 0;
 		IntType samples = 0;
 	};

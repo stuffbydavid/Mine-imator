@@ -51,8 +51,8 @@ function preview_draw(preview, xx, yy, width, height)
 		is3d = true
 	}
 	
-	if ((particlebutton && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)) ||
-		(playbutton && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)))
+	if ((particlebutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)) ||
+		(playbutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)))
 		mouseon = false
 	
 	// Update audio hover
@@ -726,8 +726,8 @@ function preview_draw(preview, xx, yy, width, height)
 	// Button background
 	if (particlebutton || playbutton)
 	{
-		draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_level_middle, 1)
-		draw_outline(xx + width - 40, yy + height - 40, 32, 32, 1, c_border, a_border, true)
+		draw_box(xx + 8, yy + height - 40, 32, 32, false, c_level_middle, 1)
+		draw_outline(xx + 8, yy + height - 40, 32, 32, 1, c_border, a_border, true)
 	}
 	
 	// Particle button
@@ -735,12 +735,12 @@ function preview_draw(preview, xx, yy, width, height)
 	{
 		if (preview.select.pc_spawn_constant)
 		{
-			if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 				preview.spawn_active = !preview.spawn_active
 		}
 		else
 		{
-			if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 				preview.fire = true
 		}
 	}
@@ -748,7 +748,7 @@ function preview_draw(preview, xx, yy, width, height)
 	// Play button
 	if (playbutton)
 	{
-		if (draw_button_icon("previewplay", xx + width - 36, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
+		if (draw_button_icon("previewplay", xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
 		{
 			if (isplaying)
 			{
