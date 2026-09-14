@@ -10,7 +10,9 @@ function render_high_tonemap(surf)
 	surface_set_target(prevsurf)
 	{
 		draw_clear_alpha(c_black, 0)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_surface_exists(surf, 0, 0)
+		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	
@@ -23,10 +25,12 @@ function render_high_tonemap(surf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_tonemap_set(render_surface[1])
+			shader_tonemap_set()
 		}
 		
+		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_surface_exists(prevsurf, 0, 0)
+		gpu_set_blendmode(bm_normal)
 		with (render_shader_obj)
 			shader_clear()
 	}

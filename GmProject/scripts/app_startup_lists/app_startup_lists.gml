@@ -533,5 +533,6 @@ function app_startup_lists()
 		"indirect",
 		"indirectshadows",
 		"reflections",
+		"fog",
 	)
 }

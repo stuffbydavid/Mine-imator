@@ -50,11 +50,11 @@ function render_high()
 		if (render_reflections)
 			render_high_reflections(finalsurf)
 		
-		finalsurf = render_high_tonemap(finalsurf)
-		
-		// Minecraft fog
+		// Fog
 		if (background_fog_show)
 			render_high_fog(finalsurf)
+
+		finalsurf = render_high_tonemap(finalsurf)
 		
 		// Apply post scene effects (Glow, DoF, etc.)
 		render_refresh_effects(true, false)

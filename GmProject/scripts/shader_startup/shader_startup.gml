@@ -225,6 +225,7 @@ function shader_startup()
 	{
 		new_shader_sampler("uFogBuffer")
 		new_shader_uniform("uFogColor")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_light_point])
@@ -561,7 +562,6 @@ function shader_startup()
 	
 	with (shader_map[?shader_tonemap])
 	{
-		new_shader_sampler("uMask")
 		new_shader_uniform("uTonemapper")
 		new_shader_uniform("uExposure")
 		new_shader_uniform("uGamma")

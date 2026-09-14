@@ -33,7 +33,7 @@ function render_start()
 	render_reflections = project_render_reflections && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.REFLECTIONS)
 	render_glow = project_render_glow && renderer_current = e_renderer.REALISTIC
 	render_glow_falloff = project_render_glow && renderer_current = e_renderer.REALISTIC && project_render_glow_falloff
-	render_auxiliary = background_fog_show || project_render_subsurface_samples > 0 || render_glow
+	render_auxiliary = background_fog_show || render_pass = e_render_pass.FOG || project_render_subsurface_samples > 0 || render_glow
 	
 	// Use camera settings
 	if (render_camera != null)

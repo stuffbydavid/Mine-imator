@@ -147,4 +147,7 @@ function render_high_create_gbuffers()
 
 	if (render_pass = e_render_pass.NORMAL)
 		render_pass_surf = surface_duplicate(render_surface_normal)
+
+	if (render_pass = e_render_pass.FOG)
+		render_pass_surf = surface_duplicate(render_surface_fog)
 }

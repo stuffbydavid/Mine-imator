@@ -29,7 +29,7 @@ void main()
 		float mask = texture2D(uMask, vTexCoord).r;
 		
 		// Apply gamma to base
-		baseColor.rgb = pow(baseColor.rgb, mix(vec3(1.0), vec3(uGamma), mask));
+		baseColor.rgb = pow(baseColor.rgb, vec3(uGamma));
 		
 		vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
 		

@@ -135,6 +135,8 @@ function render_startup()
 	
 	render_world_count = 0
 	
+	render_gamma = 1
+	
 	// "Temporal" anti-aliasing
 	globalvar taa_matrix, taa_jitter_matrix;
 	taa_matrix = MAT_IDENTITY

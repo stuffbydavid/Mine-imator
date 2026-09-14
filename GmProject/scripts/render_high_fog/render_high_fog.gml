@@ -4,14 +4,15 @@
 function render_high_fog(basesurf)
 {
 	var prevsurf;
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	prevsurf = render_surface[2]
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
+	prevsurf = render_surface_hdr[0]
 	
-	// Copy into separate surface
 	surface_set_target(prevsurf)
 	{
 		draw_clear_alpha(c_black, 0)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_surface_exists(basesurf, 0, 0)
+		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
 	
@@ -19,7 +20,6 @@ function render_high_fog(basesurf)
 	surface_set_target(basesurf)
 	{
 		draw_clear_alpha(c_black, 0)
-		draw_surface_exists(prevsurf, 0, 0)
 		
 		// Draw fog
 		if (background_fog_show)
@@ -30,7 +30,9 @@ function render_high_fog(basesurf)
 				shader_set(shader)
 				shader_high_fog_apply_set(render_surface_fog)
 			}
-			draw_blank(0, 0, render_width, render_height)
+			gpu_set_blendmode_ext(bm_one, bm_zero)
+			draw_surface_exists(prevsurf, 0, 0)
+			gpu_set_blendmode(bm_normal)
 			with (render_shader_obj)
 				shader_clear()
 		}

@@ -20,6 +20,8 @@ function shader_use()
 	
 	render_set_uniform_int("uUseNormalMap", debug_skip_tangents ? 0 : 1)
 	
+	render_set_uniform("uGamma", render_gamma)
+	
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	{
@@ -78,7 +80,6 @@ function shader_use()
 		render_set_uniform_vec2("uGlintOffset", app.background_time * (0.000625) * app.project_render_glint_speed, app.background_time * (0.00125) * app.project_render_glint_speed)
 		render_set_uniform_int("uGlintEnabled", 1)
 		render_set_uniform("uGlintStrength", app.project_render_glint_strength)
-		render_set_uniform("uGamma", render_gamma)
 	}
 	
 	// Texture drawing

@@ -1085,6 +1085,7 @@ function enums()
 		INDIRECT,
 		INDIRECT_SHADOWS,
 		REFLECTIONS,
+		FOG,
 		amount
 	}
 	
