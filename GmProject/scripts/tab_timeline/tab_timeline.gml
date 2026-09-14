@@ -513,7 +513,7 @@ function tab_timeline()
 			sound = kf.value[e_value.SOUND_OBJ]
 			pitch = kf.value[e_value.SOUND_PITCH]
 			
-			if (tl.type = e_tl_type.AUDIO_TRACK && sound && sound.ready)
+			if (tl.type = e_tl_type.AUDIO_TRACK && sound && sound.ready && audio_is_ready(sound.sound_index))
 			{
 				var soundlen, boxx, boxw, startsample, samplesshow, prec, wavehei, alpha;
 				

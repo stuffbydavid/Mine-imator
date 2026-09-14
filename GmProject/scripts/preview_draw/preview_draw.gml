@@ -30,17 +30,20 @@ function preview_draw(preview, xx, yy, width, height)
 	if (!instance_exists(preview.select))
 	{
 		preview.texture = null
+		preview.sound_play_button = false
 		return 0
 	}
 	
-	particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
+	// Particle button
 	if (preview.select.object_index = obj_bench_settings)
-		particlebutton = bench_tab = e_bench.PARTICLE_SPAWNER && preview.select.particle_preset != null
+		particlebutton = (bench_tab = e_bench.PARTICLE_SPAWNER && preview.select.particle_preset != null)
+	else
+		particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
 
-	// Show 3D view?
+	// Determine 3D/2D view
 	if (preview.select.object_index = obj_resource)
 	{
-		playbutton = (preview.select.type = e_res_type.SOUND)
+		playbutton = (preview.select.type = e_res_type.SOUND && preview.sound_play_button)
 		isplaying = (audio_exists(preview.sound_play_index) && (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index)))
 		is3d = (preview.select.type = e_res_type.SCHEMATIC || preview.select.type = e_res_type.FROM_WORLD ||preview.select.type = e_res_type.MODEL)
 	}
@@ -158,8 +161,12 @@ function preview_draw(preview, xx, yy, width, height)
 		
 		surface = surface_require(surface, width, height)
 		
-		if (update)
+		var soundready = (preview.select.type != e_res_type.SOUND || (preview.select.ready && audio_is_ready(preview.select.sound_index)));
+		if (update && soundready)
 		{
+			if (select.object_index != obj_resource || select.type != e_res_type.SOUND)
+				sound_play_button = false
+
 			if (is3d)
 				render_update_text()
 			update = false
@@ -519,7 +526,8 @@ function preview_draw(preview, xx, yy, width, height)
 						
 						case e_res_type.SOUND:
 						{
-							if (!select.ready)
+							sound_play_button = false
+							if (!select.ready || !audio_is_ready(select.sound_index))
 								break
 							
 							var wavex, wid, wavehei, prec, alpha, mouseperc;
@@ -577,6 +585,7 @@ function preview_draw(preview, xx, yy, width, height)
 								draw_vertex_color(wavex + dx, floor(height / 2 - minv * wavehei + 1), wavecolor, wavealpha)
 							}
 							draw_primitive_end()
+							sound_play_button = true
 							
 							break
 						}

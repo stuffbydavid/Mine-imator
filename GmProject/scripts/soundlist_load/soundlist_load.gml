@@ -66,11 +66,9 @@ function soundlist_load(sounds, music)
 	}
 	ds_map_destroy(map)
 
-	if (is_cpp())
-	{
-		soundlist_sort(sounds.list)
-		soundlist_sort(music.list)
-	}
+	soundlist_sort(sounds.list)
+	soundlist_sort(music.list)
+	
 	soundlist_update(sounds)
 	soundlist_update(music)
 }

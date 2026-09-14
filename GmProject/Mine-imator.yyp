@@ -1462,6 +1462,7 @@
     {"id":{"name":"array_copy_2d","path":"scripts/array_copy_2d/array_copy_2d.yy",},},
     {"id":{"name":"array","path":"scripts/array/array.yy",},},
     {"id":{"name":"asset_load","path":"scripts/asset_load/asset_load.yy",},},
+    {"id":{"name":"audio_is_ready","path":"scripts/audio_is_ready/audio_is_ready.yy",},},
     {"id":{"name":"background_ground_startup","path":"scripts/background_ground_startup/background_ground_startup.yy",},},
     {"id":{"name":"background_ground_update_texture_material","path":"scripts/background_ground_update_texture_material/background_ground_update_texture_material.yy",},},
     {"id":{"name":"background_ground_update_texture_normal","path":"scripts/background_ground_update_texture_normal/background_ground_update_texture_normal.yy",},},

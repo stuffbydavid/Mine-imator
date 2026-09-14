@@ -293,6 +293,7 @@ namespace CppProject
 	{
 		stepTimer.stop();
 		auto stepStart = std::chrono::steady_clock::now();
+		Sound::UpdateLoads();
 
 		// Debug
 		if (keyboard_check_pressed(vk_f6) && dev_mode)

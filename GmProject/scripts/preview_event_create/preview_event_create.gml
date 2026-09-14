@@ -24,6 +24,7 @@ function preview_event_create()
 	view_width = 0
 	view_height = 0
 	sound_play_index = null
+	sound_play_button = false
 	sound_playing = false
 	
 	fov = 45
