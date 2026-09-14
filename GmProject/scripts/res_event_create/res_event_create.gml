@@ -14,6 +14,7 @@ function res_event_create()
 	type = null
 	filename = ""
 	display_name = ""
+	minecraft_hash = ""
 	count = 0
 	copied = false
 	pattern_type = ""

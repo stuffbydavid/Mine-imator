@@ -106,7 +106,11 @@ namespace CppProject
 			else
 				FATAL("Could not create temporary folder " + gmlGlobal::game_save_id);
 
-			DEBUG("Minecraft saves: " + world_import_get_saves_dir());
+			QString mcDir = minecraft_java_directory_get();
+			if (QDir(mcDir).exists())
+				DEBUG("Minecraft Java location: " + mcDir);
+			else
+				DEBUG("Minecraft Java not found");
 
 			// Set globals
 			gmlGlobal::delta_time = 1.0;

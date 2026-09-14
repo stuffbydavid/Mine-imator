@@ -5,6 +5,8 @@
 function list_init(name)
 {
 	list_init_start()
+	
+	// Armor variant
 	if (name = "bencharmorvariant")
 	{
 		var armor = mc_assets.model_name_map[?"armor"]
@@ -16,11 +18,14 @@ function list_init(name)
 			menu_add_item("multiple", text_get("listmultiple"))
 			list_item_last.disabled = true
 		}
+		
 		var statelist = armor.states_map[?"chestplate"]
 		for (var i = 0; i < statelist.value_amount; i++)
 			menu_add_item(statelist.value_name[i], minecraft_asset_get_name("modelstatevalue", statelist.value_name[i]))
+		
 		return list_init_end()
 	}
+	
 	// Model state
 	if (menu_model_current != null && !is_undefined(menu_model_state) && menu_model_state != null)
 	{
@@ -1186,7 +1191,21 @@ function list_init(name)
 			break
 		}
 		
-		// Sound
+		// Audio track
+		case "benchaudiotrack":
+		{
+			menu_add_item(null, text_get("benchaudiotracknew"))
+
+			for (var i = 0; i < ds_list_size(project_timeline_list); i++)
+			{
+				var track = project_timeline_list[|i]
+				if (track.type = e_tl_type.AUDIO_TRACK)
+					menu_add_item(track, track.display_name)
+			}
+
+			break
+		}
+
 		case "frameeditorsoundfile":
 		{
 			// Default
@@ -1202,7 +1221,7 @@ function list_init(name)
 			
 			break
 		}
-		
+
 		// Font
 		case "frameeditortextfont":
 		{

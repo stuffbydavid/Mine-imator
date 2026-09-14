@@ -116,7 +116,17 @@ function tab_timeline()
 	draw_set_font(font_heading)
 	timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo, false)
 	draw_label(timelabel, timex, headery + headerh - 6, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
-	timex += string_width(timelabel)
+	
+	// Advance X
+	var maxpos, hrs;
+	maxpos = max(timeline_length, timeline_marker)
+	hrs = floor((maxpos / project_tempo) / 3600);
+	if (timeline_show_frames)
+		timex += string_width(text_get("timelineframe", string_repeat("0", string_length(string(floor(maxpos))))))
+	else if (hrs > 0)
+		timex += string_width(string(hrs) + ":00:00.000")
+	else
+		timex += string_width("00:00.000")
 	
 	// Time length
 	draw_set_font(font_subheading)
@@ -465,7 +475,7 @@ function tab_timeline()
 				if (dx > tlx + (tlw + 32))
 					break
 				
-				if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
+				if (tl.type = e_tl_type.AUDIO_TRACK && sound && sound.ready)
 				{
 					var boxw = tl_keyframe_length(kf) * timeline_zoom;
 					if (dx + boxw < tlx)
@@ -503,7 +513,7 @@ function tab_timeline()
 			sound = kf.value[e_value.SOUND_OBJ]
 			pitch = kf.value[e_value.SOUND_PITCH]
 			
-			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
+			if (tl.type = e_tl_type.AUDIO_TRACK && sound && sound.ready)
 			{
 				var soundlen, boxx, boxw, startsample, samplesshow, prec, wavehei, alpha;
 				
@@ -567,7 +577,7 @@ function tab_timeline()
 			else
 			{
 				// Invisible
-				if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO)
+				if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO_TRACK)
 				{
 					var curdx, nextdx;
 					curdx = ((k = 0) ? tlx : max(tlx, dx))
@@ -926,7 +936,7 @@ function tab_timeline()
 		// Hide/mute
 		if (itemhover || tl.hide)
 		{
-			if (tl.type != e_tl_type.AUDIO)
+			if (tl.type != e_tl_type.AUDIO_TRACK)
 			{
 				// Hide
 				if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.HIDDEN_SMALL : icons.VISIBLE_SMALL, null, false, tl.hide ? "tooltiptlshow" : "tooltiptlhide"))
@@ -1369,7 +1379,7 @@ function tab_timeline()
 				else
 					action_tl_select(mousekf.timeline)
 				
-				if (mousekf.timeline.type = e_tl_type.AUDIO && mousekf.value[e_value.SOUND_OBJ])
+				if (mousekf.timeline.type = e_tl_type.AUDIO_TRACK && mousekf.value[e_value.SOUND_OBJ])
 					timeline_marker = timeline_mouse_pos
 				else
 					timeline_marker = mousekf.position

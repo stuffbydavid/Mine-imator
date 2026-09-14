@@ -353,14 +353,14 @@ function enums()
 		SCHEMATIC,
 		BLOCK,
 		SPECIAL_BLOCK,
-		SHAPE,
-		TEXT,
-		PATH,
 		CAMERA,
+		SOUND,
 		PARTICLE_SPAWNER,
+		TEXT,
 		LIGHT_SOURCE,
-		AUDIO,
+		PATH,
 		ENVIRONMENT,
+		SHAPE,
 		amount
 	}
 	
@@ -407,7 +407,7 @@ function enums()
 		POINT_LIGHT,
 		FOLDER,
 		BACKGROUND,
-		AUDIO,
+		AUDIO_TRACK,
 		PATH,
 		PATH_POINT,
 		

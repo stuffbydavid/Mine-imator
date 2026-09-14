@@ -3,7 +3,9 @@
 
 function res_load(reload = false)
 {
-	var fn = load_folder + "/" + filename;
+	var fn, res;
+	fn = load_folder + "/" + filename
+	res = id
 	
 	debug("Loading " + res_type_name_list[|type], fn)
 	
@@ -189,14 +191,19 @@ function res_load(reload = false)
 		
 		case e_res_type.SOUND:
 		{
-			audio_stop_all()
-			ready = false
+			tl_audio_stop()
+			if (app.bench_settings.music_res = res)
+				bench_music_stop(false)
 			
-			with (app)
-			{
-				ds_priority_add(load_queue, other.id, 0)
-				load_start(other.id, res_load_start)
-			}
+			with (obj_preview)
+				if (select = res)
+					preview_sound_stop()
+			
+			ready = false
+			load_stage = "open"
+			
+			while (!ready && load_stage != "")
+				res_load_audio()
 			
 			break
 		}

@@ -9,12 +9,12 @@ function string_natural_value(value, digits)
 	number = ""
 	for (var i = 1; i <= string_length(value); i++)
 	{
-		var char = string_char_at(value, i)
-		if (string_pos(char, "0123456789") > 0)
-			number += char
+		var c = string_char_at(value, i)
+		if (ord(c) >= ord("0") && ord(c) <= ord("9"))
+			number += c
 		else
 		{
-			result += string_repeat("0", max(0, digits - string_length(number))) + number + char
+			result += string_repeat("0", max(0, digits - string_length(number))) + number + c
 			number = ""
 		}
 	}

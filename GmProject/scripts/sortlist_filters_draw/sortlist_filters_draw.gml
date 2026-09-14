@@ -2,8 +2,9 @@
 
 function sortlist_filters_draw()
 {
-	var typelist, scroll, itemname, capwid;
+	var typelist, textprefix, scroll, capwid;
 	typelist = null
+	textprefix = "type"
 	scroll = 0
 	capwid = 0
 	
@@ -13,7 +14,7 @@ function sortlist_filters_draw()
 	
 	if (settings_menu_sortlist = app.properties.resources.list)
 		typelist = res_type_name_list
-	
+
 	if (typelist = null)
 		return 0
 	
@@ -28,7 +29,7 @@ function sortlist_filters_draw()
 	
 	for (var i = 0; i < ds_list_size(typelist); i++)
 	{
-		itemname = typelist[|i]
+		var itemname = typelist[|i];
 		
 		// Skip items (Resources sortlist)
 		if (typelist = res_type_name_list)
@@ -37,17 +38,17 @@ function sortlist_filters_draw()
 				continue
 		}
 		
-		capwid = max(capwid, string_width(text_get("type" + itemname)))
+		capwid = max(capwid, string_width(text_get(textprefix + itemname)))
 		
-		var active = ds_list_find_index(settings_menu_sortlist.filter_list, typelist[|i]) != -1;
+		var active = ds_list_find_index(settings_menu_sortlist.filter_list, itemname) != -1
 		
 		tab_control_checkbox()
-		if (draw_checkbox("type" + itemname, dx, dy + scroll, active, null))
+		if (draw_checkbox(textprefix + itemname, dx, dy + floor(scroll), active, null))
 		{
 			if (active)
-				ds_list_delete_value(settings_menu_sortlist.filter_list, typelist[|i])
+				ds_list_delete_value(settings_menu_sortlist.filter_list, itemname)
 			else
-				ds_list_add(settings_menu_sortlist.filter_list, typelist[|i])
+				ds_list_add(settings_menu_sortlist.filter_list, itemname)
 		
 			sortlist_update(settings_menu_sortlist)
 		}

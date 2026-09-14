@@ -23,13 +23,13 @@ function string_split_escaped(str, sep)
 		if (escapepos > 0 && escapepos < pos)
 		{
 			escapestr += string_copy(str, 1, escapepos - 1) + sep
-			str = string_delete(str, 1, escapepos + 1)
+			str = string_delete(str, 1, escapepos + string_length(sep))
 			continue
 		}
 		
 		// Add to array
 		arr[arrlen++] = escapestr + string_copy(str, 1, pos - 1)
-		str = string_delete(str, 1, pos)
+		str = string_delete(str, 1, pos + string_length(sep) - 1)
 		escapestr = ""
 	}
 	

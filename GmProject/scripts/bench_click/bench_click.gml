@@ -8,8 +8,16 @@ function bench_click(tab)
 	{
 		action_bench_create()
 		bench_show_ani_type = "hide"
-
 		return 0
+	}
+
+	if (bench_tab = e_bench.SOUND && tab != e_bench.SOUND)
+	{
+		if (bench_settings.sound_list_current.source = "music" && !bench_music_mode)
+			bench_music_stop()
+		else if (bench_settings.sound_list_current.source != "music")
+			with (bench_settings.preview)
+				preview_sound_stop()
 	}
 
 	bench_tab = tab
@@ -132,6 +140,19 @@ function bench_click(tab)
 							popup_show(popup_modelbench)
 				break
 			}
+			
+			case e_bench.SOUND:
+			{
+				type = e_tl_type.AUDIO_TRACK
+				
+				if (ds_list_empty(sounds_list.list))
+					soundlist_load(sounds_list, music_list)
+					
+				soundlist_select_default(sound_list_current)
+				bench_audio_track_update()
+				
+				break
+			}
 
 			case e_bench.WORLD:
 			case e_bench.SCHEMATIC:			type = e_temp_type.SCENERY break
@@ -140,7 +161,6 @@ function bench_click(tab)
 			case e_bench.CAMERA:			type = e_tl_type.CAMERA break
 			case e_bench.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER break
 			case e_bench.LIGHT_SOURCE:		type = e_tl_type.LIGHT_SOURCE break
-			case e_bench.AUDIO:				type = e_tl_type.AUDIO break
 			case e_bench.ENVIRONMENT:		type = e_tl_type.BACKGROUND break
 		}
 	}

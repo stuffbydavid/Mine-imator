@@ -8,7 +8,8 @@ function string_natural_digits(value)
 	maxdigits = 0
 	for (var i = 1; i <= string_length(value); i++)
 	{
-		if (string_pos(string_char_at(value, i), "0123456789") > 0)
+		var c = string_char_at(value, i);
+		if (ord(c) >= ord("0") && ord(c) <= ord("9"))
 			digits++
 		else
 		{

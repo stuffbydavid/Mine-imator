@@ -4,7 +4,7 @@
 function macros()
 {
 	// Debug
-	#macro dev_mode						false
+	#macro dev_mode						true
 	#macro dev_mode_skip_blocks			dev_mode && true
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && false
@@ -12,7 +12,7 @@ function macros()
 	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
 	#macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
 	#macro dev_mode_full				dev_mode && true
-	#macro dev_mode_advanced			dev_mode && false
+	#macro dev_mode_advanced			dev_mode && true
 	#macro dev_mode_show_bones			dev_mode && false
 	#macro dev_mode_skip_tangents		dev_mode && false
 	#macro dev_mode_check_assets		dev_mode && true
@@ -160,6 +160,7 @@ function macros()
 	// Values
 	#macro null							noone
 	#macro no_limit						100000000
+	#macro normal_buffer_scale			8
 	#macro default_model				"human"
 	#macro default_model_part			"head"
 	#macro default_model_part_model		"armor"
@@ -169,18 +170,21 @@ function macros()
 	#macro default_item					"item/diamond_sword"
 	#macro default_ground				"block/grass_block_top"
 	#macro default_biome				"plains"
-	#macro default_text					"AaBbCc"
-	#macro particle_folders				array("Effects", "Weather")
-	#macro particle_default				array("Default", "Snow")
-	#macro particle_sheet				-5
-	#macro particle_template			-6
-	#macro normal_buffer_scale			8
 	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
 	#macro schematic_folders			array("Buildings", "Biomes", "Trees", "Structures", "Other")
 	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		512
+	#macro sound_filters				array("ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other")
+	#macro sound_default				"Step / Grass 1"
+	#macro music_filters				array("game", "menu", "records", "other")
+	#macro music_default				"Records / Cat"
+	#macro particle_folders				array("Effects", "Weather")
+	#macro particle_default				array("Default", "Snow")
+	#macro particle_sheet				-5
+	#macro particle_template			-6
+	#macro default_text					"AaBbCc"
 	
 	// World
 	#macro block_size					16

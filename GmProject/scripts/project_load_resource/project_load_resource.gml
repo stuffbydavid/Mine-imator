@@ -57,6 +57,9 @@ function project_load_resource(argument0)
 					array_add(world_filter_array, filterlist[|i])
 		}
 		
+		if (type = e_res_type.SOUND)
+			minecraft_hash = value_get_string(map[?"minecraft_hash"], minecraft_hash)
+		
 		material_format = value_get_real(map[?"material_format"], material_format)
 		
 		sortlist_add(app.res_list, id)

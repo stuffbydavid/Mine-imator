@@ -68,6 +68,13 @@ function skins_directory_get()
 	return working_directory + "Skins/"
 }
 
+/// CppSeparate StringType minecraft_java_directory_get()
+/// Returns the location of Minecraft Java, used to find sound, music and world files.
+function minecraft_java_directory_get()
+{
+	return environment_get_variable("APPDATA") + "/.minecraft";
+}
+
 /// CppSeparate StringType drivers_url_get()
 /// Returns an URL to an article showing how to update graphics drivers.
 function drivers_url_get()

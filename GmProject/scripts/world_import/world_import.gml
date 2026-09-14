@@ -127,12 +127,6 @@ function world_import_set_selection(size)
 	show_debug_message("Set selection to " + size)
 }
 
-/// CppSeparate StringType world_import_get_saves_dir()
-function world_import_get_saves_dir()
-{
-	return "";
-}
-
 /// CppSeparate void world_import_confirm()
 /// Confirms the selection in the world.
 function world_import_confirm()
@@ -274,7 +268,7 @@ function window_draw_world_import()
 	
 	if (draw_button_icon("worldimportbrowse", dx, dy, dw, dw, false, icons.FOLDER, null, false, "worldimportbrowsetip"))
 	{
-		var leveldat = file_dialog_open(text_get("worldimportbrowseworlds") + " (level.dat)|level.dat;", "", world_import_get_saves_dir(), text_get("worldimportbrowsecaption"))
+		var leveldat = file_dialog_open(text_get("worldimportbrowseworlds") + " (level.dat)|level.dat;", "", minecraft_java_directory_get() + "/saves", text_get("worldimportbrowsecaption"))
 		if (file_exists_lib(leveldat))
 			world_import_select_world(filename_dir(leveldat))
 	}

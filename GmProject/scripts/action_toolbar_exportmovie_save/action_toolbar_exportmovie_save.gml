@@ -85,7 +85,7 @@ function action_toolbar_exportmovie_save()
 			
 			with (obj_timeline)
 			{
-				if (type != e_tl_type.AUDIO || (hide && !render_hidden))
+				if (type != e_tl_type.AUDIO_TRACK || (hide && !render_hidden))
 					continue
 				
 				for (var k = 0; k < ds_list_size(keyframe_list); k++)

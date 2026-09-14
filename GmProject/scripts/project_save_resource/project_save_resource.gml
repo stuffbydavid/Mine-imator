@@ -43,6 +43,9 @@ function project_save_resource()
 			json_save_array_done()
 		}
 		
+		if (type = e_res_type.SOUND && minecraft_hash != "")
+			json_save_var("minecraft_hash", minecraft_hash)
+		
 		json_save_var("material_format", material_format)
 		
 		if (load_folder != save_folder)

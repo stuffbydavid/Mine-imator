@@ -535,7 +535,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 			break
 		}
-			
+		
 		case e_bench.BLOCK:
 		{
 			draw_set_font(font_label)
@@ -624,7 +624,179 @@ function bench_draw_settings(bx, by, bw, bh)
 			window_scroll_focus = string(bench_settings.block_list.scroll)
 			break
 		}
+		
+		case e_bench.CAMERA:
+		{
+			draw_sprite(spr_bench_example, 5, dx, dy)
+			dy += 144 + 15
 			
+			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
+			break
+		}
+		
+		case e_bench.SOUND:
+		{
+			tab_control_soundlist(bench_settings.sound_list_current)
+			soundlist_draw(bench_settings.sound_list_current, dx, dy, dw, tab_control_h, text_get("bench" + (bench_settings.sound_list_current.source = "music" ? "music" : "sound")))
+			tab_next()
+			dy -= 4
+
+			tab_control_togglebutton()
+			togglebutton_add("benchsoundsounds", null, "sounds", bench_settings.sound_list_current.source = "sounds", action_bench_sound_source)
+			togglebutton_add("benchsoundmusic", null, "music", bench_settings.sound_list_current.source = "music", action_bench_sound_source)
+			togglebutton_add("benchsoundproject", null, "project", bench_settings.sound_list_current.source = "project", action_bench_sound_source)
+			draw_togglebutton("benchsound", dx, dy, true, false)
+			dy += ui_large_height + 6
+
+			tab_control(24)
+			
+			// Import sound
+			if (draw_button_icon("benchsoundimport", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltipsoundimport"))
+				action_bench_sound_import()
+				
+			// Export sound
+			if (draw_button_icon("benchsoundexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, bench_settings.sound_list_current.selected = null, "tooltipsoundexport"))
+				action_bench_sound_export()
+			
+			tab_next()
+			
+			dy += 8
+			if (bench_settings.audio_track != null && (!instance_exists(bench_settings.audio_track) || bench_settings.audio_track.type != e_tl_type.AUDIO_TRACK))
+				bench_settings.audio_track = null
+
+			tab_control_menu()
+			draw_button_menu("benchaudiotrack", e_menu.LIST, dx, dy, dw, 24, bench_settings.audio_track, bench_settings.audio_track != null ? bench_settings.audio_track.display_name : text_get("benchaudiotracknew"), action_bench_audio_track)
+			tab_next()
+			dy += ui_small_height
+
+			window_scroll_focus = string(bench_settings.sound_list_current.scroll)
+			createdisabled = bench_settings.sound_list_current.select = null
+			break
+		}
+		
+		case e_bench.PARTICLE_SPAWNER:
+		{
+			// Particles
+			tab_control_sortlist(bench_settings.particle_preset_list)
+			sortlist_draw(bench_settings.particle_preset_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlepreset"))
+			tab_next()
+			dy -= 4
+
+			// Particles folder
+			tab_control_togglebutton()
+			for (var i = 0; i < array_length(particle_folders); i++)
+			{
+				var particlefolder = particle_folders[i];
+				togglebutton_add("benchparticles" + string_replace_all(string_lower(particlefolder), " ", "_"), null, particlefolder, bench_particle_preset_folder = particlefolder, action_bench_particles_folder)
+			}
+			togglebutton_add("benchparticlesproject", null, "project", bench_particle_preset_folder = "project", action_bench_particles_folder)
+			draw_togglebutton("benchparticlepreset", dx, dy, true, false)
+			dy += ui_large_height + 6
+
+			tab_control(24)
+			
+			// Import particles
+			if (draw_button_icon("benchparticlesimport", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltipparticlesimport"))
+				action_bench_particles_import()
+
+			// Export particles
+			var particleselected = bench_settings.particle_preset
+			if (draw_button_icon("benchparticlesexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, particleselected = null, "tooltipparticlesexport"))
+				action_bench_particles_export()
+
+			// Open folder
+			if (draw_button_icon("benchparticlesopenfolder", dx + 56, dy, 24, 24, false, icons.FOLDER, null, false, "tooltipparticlesopenfolder"))
+				action_bench_particles_open_folder()
+
+			// Reload folder
+			if (draw_button_icon("benchparticlesreload", dx + 84, dy, 24, 24, false, icons.REFRESH, null, false, "tooltipparticlesreloadfolder"))
+				action_bench_particles_folder(bench_particle_preset_folder)
+			
+			tab_next()
+
+			createdisabled = bench_settings.particle_preset = null
+			window_scroll_focus = string(bench_settings.particle_preset_list.scroll)
+			break
+		}
+		
+		case e_bench.TEXT:
+		{
+			// Text
+			var labelhei = 32;
+			tab_control(126 + labelhei)
+			bench_settings.tbx_text.text = bench_settings.text
+			draw_textfield("benchtexttext", dx, dy, dw, 126, bench_settings.tbx_text, action_bench_text, default_text, "benchtop")
+			tab_next()
+
+			var capwid;
+			capwid = text_caption_width("benchtextfont")
+				
+			// Font (Advanced mode only)
+			if (setting_advanced_mode)
+			{
+				draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
+				dy += (ui_large_height + 8)
+			}
+				
+			// 3D / Face camera
+			var sx;
+			sx = dx_start
+				
+			dx_start = dx
+				
+			tab_set_collumns(true, 2)
+				
+			tab_control_checkbox()
+			draw_checkbox("benchtext3d", dx, dy, bench_settings.text_3d, action_bench_text_3d)
+			tab_next()
+				
+			tab_control_checkbox()
+			draw_checkbox("benchtextfacecamera", dx, dy, bench_settings.text_face_camera, action_bench_text_face_camera)
+			tab_next()
+				
+			tab_set_collumns(false)
+			dx_start = sx
+				
+			break
+		}
+		
+		case e_bench.LIGHT_SOURCE:
+		{
+			draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
+			dy += 144 + 15
+			
+			tab_control_togglebutton()
+			togglebutton_add("typepointlight", null, e_tl_type.POINT_LIGHT, bench_settings.light_type = e_tl_type.POINT_LIGHT, action_bench_light_type)
+			togglebutton_add("typespotlight", null, e_tl_type.SPOT_LIGHT, bench_settings.light_type = e_tl_type.SPOT_LIGHT, action_bench_light_type)
+			draw_togglebutton("benchlighttype", dx, dy)
+			tab_next()
+			dy += 4
+			
+			if (bench_settings.light_type = e_tl_type.POINT_LIGHT)
+				draw_tooltip_label("benchpointlighttip", icons.LIGHT_POINT, e_toast.INFO)
+			else
+				draw_tooltip_label("benchspotlighttip", icons.LIGHT_SPOT, e_toast.INFO)
+			break
+		}
+		
+		case e_bench.PATH:
+		{
+			draw_sprite(spr_bench_example, 3, dx, dy)
+			dy += 144 + 15
+			
+			draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
+			break
+		}
+		
+		case e_bench.ENVIRONMENT:
+		{
+			draw_sprite(spr_bench_example, 4, dx, dy)
+			dy += 144 + 15
+			
+			draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
+			break
+		}
+		
 		case e_bench.SHAPE:
 		{
 			var capwid, text;
@@ -713,145 +885,6 @@ function bench_draw_settings(bx, by, bw, bh)
 				tab_next()
 			}
 				
-			break
-		}
-			
-		case e_bench.TEXT:
-		{
-			// Text
-			var labelhei = 32;
-			tab_control(126 + labelhei)
-			bench_settings.tbx_text.text = bench_settings.text
-			draw_textfield("benchtexttext", dx, dy, dw, 126, bench_settings.tbx_text, action_bench_text, default_text, "benchtop")
-			tab_next()
-
-			var capwid;
-			capwid = text_caption_width("benchtextfont")
-				
-			// Font (Advanced mode only)
-			if (setting_advanced_mode)
-			{
-				draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
-				dy += (ui_large_height + 8)
-			}
-				
-			// 3D / Face camera
-			var sx;
-			sx = dx_start
-				
-			dx_start = dx
-				
-			tab_set_collumns(true, 2)
-				
-			tab_control_checkbox()
-			draw_checkbox("benchtext3d", dx, dy, bench_settings.text_3d, action_bench_text_3d)
-			tab_next()
-				
-			tab_control_checkbox()
-			draw_checkbox("benchtextfacecamera", dx, dy, bench_settings.text_face_camera, action_bench_text_face_camera)
-			tab_next()
-				
-			tab_set_collumns(false)
-			dx_start = sx
-				
-			break
-		}
-		
-		case e_bench.PATH:
-		{
-			draw_sprite(spr_bench_example, 3, dx, dy)
-			dy += 144 + 15
-			
-			draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
-			break
-		}
-				
-		case e_bench.CAMERA:
-		{
-			draw_sprite(spr_bench_example, 5, dx, dy)
-			dy += 144 + 15
-			
-			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
-			break
-		}
-			
-		case e_bench.PARTICLE_SPAWNER:
-		{
-			// Particles
-			tab_control_sortlist(bench_settings.particle_preset_list)
-			sortlist_draw(bench_settings.particle_preset_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlepreset"))
-			tab_next()
-			dy -= 4
-
-			// Particles folder
-			tab_control_togglebutton()
-			for (var i = 0; i < array_length(particle_folders); i++)
-			{
-				var particlefolder = particle_folders[i];
-				togglebutton_add("benchparticles" + string_replace_all(string_lower(particlefolder), " ", "_"), null, particlefolder, bench_particle_preset_folder = particlefolder, action_bench_particles_folder)
-			}
-			togglebutton_add("benchparticlesproject", null, "project", bench_particle_preset_folder = "project", action_bench_particles_folder)
-			draw_togglebutton("benchparticlepreset", dx, dy, true, false)
-			dy += ui_large_height + 6
-
-			// Import particles
-			tab_control(24)
-			if (draw_button_icon("benchparticlesimport", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltipparticlesimport"))
-				action_bench_particles_import()
-
-			// Export particles
-			var particleselected = bench_settings.particle_preset
-			if (draw_button_icon("benchparticlesexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, particleselected = null, "tooltipparticlesexport"))
-				action_bench_particles_export()
-
-			// Open folder
-			if (draw_button_icon("benchparticlesopenfolder", dx + 56, dy, 24, 24, false, icons.FOLDER, null, false, "tooltipparticlesopenfolder"))
-				action_bench_particles_open_folder()
-
-			// Reload folder
-			if (draw_button_icon("benchparticlesreload", dx + 84, dy, 24, 24, false, icons.REFRESH, null, false, "tooltipparticlesreloadfolder"))
-				action_bench_particles_folder(bench_particle_preset_folder)
-			tab_next()
-
-			createdisabled = bench_settings.particle_preset = null
-			window_scroll_focus = string(bench_settings.particle_preset_list.scroll)
-			break
-		}
-				
-		case e_bench.LIGHT_SOURCE:
-		{
-			draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
-			dy += 144 + 15
-			
-			tab_control_togglebutton()
-			togglebutton_add("typepointlight", null, e_tl_type.POINT_LIGHT, bench_settings.light_type = e_tl_type.POINT_LIGHT, action_bench_light_type)
-			togglebutton_add("typespotlight", null, e_tl_type.SPOT_LIGHT, bench_settings.light_type = e_tl_type.SPOT_LIGHT, action_bench_light_type)
-			draw_togglebutton("benchlighttype", dx, dy)
-			tab_next()
-			dy += 4
-			
-			if (bench_settings.light_type = e_tl_type.POINT_LIGHT)
-				draw_tooltip_label("benchpointlighttip", icons.LIGHT_POINT, e_toast.INFO)
-			else
-				draw_tooltip_label("benchspotlighttip", icons.LIGHT_SPOT, e_toast.INFO)
-			break
-		}
-			
-		case e_bench.AUDIO:
-		{
-			draw_sprite(spr_bench_example, 2, dx, dy)
-			dy += 144 + 15
-			
-			draw_tooltip_label("benchaudiotip", icons.INFO, e_toast.INFO)
-			break
-		}
-			
-		case e_bench.ENVIRONMENT:
-		{
-			draw_sprite(spr_bench_example, 4, dx, dy)
-			dy += 144 + 15
-			
-			draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
 			break
 		}
 	}

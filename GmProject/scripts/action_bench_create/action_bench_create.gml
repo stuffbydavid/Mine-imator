@@ -3,6 +3,10 @@
 
 function action_bench_create(edit = false)
 {
+	var tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
+	if (tab = e_bench.SOUND)
+		return action_bench_sound_create()
+
 	if (history_undo)
 	{
 		with (history_data)
@@ -76,7 +80,6 @@ function action_bench_create(edit = false)
 			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
 			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
 			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
-			case e_bench.AUDIO:				tltype = e_tl_type.AUDIO break
 			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
 		}
 

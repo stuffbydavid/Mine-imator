@@ -534,6 +534,9 @@ function view_draw(view)
 			gpu_set_tex_filter(true)
 		
 		draw_image(spr_bench, 0, benchx + 43, benchy + 43, benchscale, benchscale, null, bench_hover_ani, benchrot)
+
+		with (obj_note)
+			draw_image(spr_note, 2, x, y, note_scale, note_scale, note_color, note_alpha, note_angle)
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(false)

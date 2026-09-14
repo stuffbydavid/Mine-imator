@@ -19,6 +19,7 @@ function objects_indexed()
 		obj_list_item,
 		obj_marker,
 		obj_menu,
+		obj_note,
 		obj_panel,
 		obj_particle,
 		obj_particle_type,

@@ -36,7 +36,9 @@ namespace CppProject
 		if (wildCardIndex >= 0)
 			dir = dir.Left(wildCardIndex);
 
-		fileFindIt = new QDirIterator(dir, QDir::Files | QDir::NoDotAndDotDot);
+		QDir::Filters filters = QDir::NoDotAndDotDot;
+		filters |= (attr & 16) ? QDir::Dirs : QDir::Files;
+		fileFindIt = new QDirIterator(dir, filters);
 		if (fileFindIt->hasNext())
 			return filename_name(fileFindIt->next());
 

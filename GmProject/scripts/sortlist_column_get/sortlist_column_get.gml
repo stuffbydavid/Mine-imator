@@ -41,8 +41,10 @@ function sortlist_column_get(slist, value, col)
 
 			var schematicfn = filename_new_ext(filename_name(value), "")
 			return text_exists("benchschematic" + schematicfn) ? text_get("benchschematic" + schematicfn) : schematicfn
+		
 		case "shapename":
 			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
+		
 		case "particleeditortypename":
 			if (dev_mode_debug_saveid)
 				return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"

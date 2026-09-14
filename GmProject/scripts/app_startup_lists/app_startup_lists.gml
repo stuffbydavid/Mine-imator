@@ -486,7 +486,7 @@ function app_startup_lists()
 		POINT_LIGHT,
 		FOLDER,
 		BACKGROUND,
-		AUDIO
+		AUDIO_TRACK
 	*/
 	
 	timeline_icon_list = ds_list_create()

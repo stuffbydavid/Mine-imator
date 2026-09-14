@@ -34,7 +34,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	headerh = slist.header_show ? (ui_small_height + 8) : 0
 	
 	// Draw filter
-	if (filter && name = "")
+	if (filter)
 	{
 		if (draw_button_icon("listfilter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
 		{
@@ -55,10 +55,10 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	if (name != "")
 	{
 		draw_set_font(font_label)
-		draw_label(string_limit(name, w - 144), xx, yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		draw_label(string_limit(name, w - 144 - (filter ? 32 : 0)), xx + (filter ? 32 : 0), yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
-		searchx += (w - 144)
-		searchw -= (w - 144)
+		searchx = xx + w - 144
+		searchw = 144
 	}
 
 	if (slist.search_tbx.text != "")

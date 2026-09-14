@@ -13,7 +13,9 @@ function app_startup_interface_bench()
 	bench_show_ani = 0
 	bench_settings_ani = 0
 	bench_height = 345
+	
 	bench_schematic_folder = schematic_folders[0]
+	bench_music_mode = false
 	bench_particle_preset_folder = particle_folders[0]
 	
 	// Workbench tabs
@@ -35,15 +37,15 @@ function app_startup_interface_bench()
 	list_item_add("typeblock", e_bench.BLOCK, "", null, icons.BLOCK, null, bench_click)
 	list_item_add("typespblock", e_bench.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_click)
 	
-	list_item_add("typeshape", e_bench.SHAPE, "", null, icons.SHAPES, null, bench_click)
-	list_item_add("typetext", e_bench.TEXT, "", null, icons.TEXT, null, bench_click)
-	list_item_add("typepath", e_bench.PATH, "", null, icons.PATH, null, bench_click)
-	
 	list_item_add("typecamera", e_bench.CAMERA, "", null, icons.CAMERA, null, bench_click)
+	list_item_add("typesound", e_bench.SOUND, "", null, icons.NOTE, null, bench_click)
 	list_item_add("typeparticles", e_bench.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
+	list_item_add("typetext", e_bench.TEXT, "", null, icons.TEXT, null, bench_click)
+	
 	list_item_add("typelightsource", e_bench.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
-	list_item_add("typeaudio", e_bench.AUDIO, "", null, icons.NOTE, null, bench_click)
+	list_item_add("typepath", e_bench.PATH, "", null, icons.PATH, null, bench_click)
 	list_item_add("typebackground", e_bench.ENVIRONMENT, "", null, icons.CLOUD, null, bench_click)
+	list_item_add("typeshape", e_bench.SHAPE, "", null, icons.SHAPES, null, bench_click)
 	
 	list_edit = null
 	
@@ -59,6 +61,7 @@ function app_startup_interface_bench()
 		e_bench.SPECIAL_BLOCK,
 		e_bench.SHAPE,
 		e_bench.TEXT,
+		e_bench.SOUND,
 		e_bench.PARTICLE_SPAWNER
 	)
 
@@ -162,15 +165,32 @@ function app_startup_interface_bench()
 		sortlist_column_add(special_block_list, "spblockname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|c].name)
+			
+		// Sound lists
+		var visiblesounds = 10;
+		sounds_list = new_obj(obj_soundlist)
+		sounds_list.source = "sounds"
+		sounds_list.visible_items = visiblesounds
+		sounds_list.script = action_bench_sound
 		
-		// Shape list
-		shape_list = new_obj(obj_sortlist)
-		shape_list.visible_items = e_shape_type.amount - 1
-		shape_list.script = action_bench_shape_type
-		shape_list.header_show = false
-		sortlist_column_add(shape_list, "shapename", 0)
-		for (var i = 0; i < e_shape_type.amount; i++)
-			sortlist_add(shape_list, i)
+		music_list = new_obj(obj_soundlist)
+		music_list.source = "music"
+		music_list.visible_items = visiblesounds
+		music_list.script = action_bench_sound
+		
+		project_list = new_obj(obj_soundlist)
+		project_list.source = "project"
+		project_list.visible_items = visiblesounds
+		project_list.script = action_bench_sound
+		
+		sound = null
+		sound_list_current = sounds_list
+		audio_track = null
+		music_res = null
+		music_play_index = null
+		music_note_next = 0
+		music_history = ds_list_create()
+		music_autoplay = false
 		
 		// Particles list
 		particle_preset_list = new_obj(obj_sortlist)
@@ -181,5 +201,14 @@ function app_startup_interface_bench()
 		particle_preset_list.column_sort = 0
 		particle_preset_list.sort_asc = false
 		particle_preset_temp = null
+		
+		// Shape list
+		shape_list = new_obj(obj_sortlist)
+		shape_list.visible_items = e_shape_type.amount - 1
+		shape_list.script = action_bench_shape_type
+		shape_list.header_show = false
+		sortlist_column_add(shape_list, "shapename", 0)
+		for (var i = 0; i < e_shape_type.amount; i++)
+			sortlist_add(shape_list, i)
 	}
 }

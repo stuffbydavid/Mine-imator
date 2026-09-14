@@ -356,12 +356,12 @@ function tl_update_values()
 	tl_update_values_ease(e_value.VISIBLE)
 	
 	// Play sounds
-	if (type = e_tl_type.AUDIO && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
+	if (type = e_tl_type.AUDIO_TRACK && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
 	{
 		// Play new sound
 		if (keyframe_current)
 		{
-			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && keyframe_prev != keyframe_current)
+			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && keyframe_prev != keyframe_current && keyframe_current.sound_play_index = null)
 			{
 				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, (value[e_value.SOUND_END] > 0 ? true : false));
 				audio_sound_pitch(keyframe_current.sound_play_index, value[e_value.SOUND_PITCH])

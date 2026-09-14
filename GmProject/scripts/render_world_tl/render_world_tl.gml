@@ -9,7 +9,7 @@ function render_world_tl()
 		type = e_tl_type.SPECIAL_BLOCK ||
 		type = e_tl_type.FOLDER ||
 		type = e_tl_type.BACKGROUND ||
-		type = e_tl_type.AUDIO ||
+		type = e_tl_type.AUDIO_TRACK ||
 		type = e_tl_type.PATH_POINT)
 		return 0
 	

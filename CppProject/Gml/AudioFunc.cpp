@@ -11,6 +11,11 @@ namespace CppProject
 		return 0;
 	}
 
+	BoolType audio_exists(IntType index)
+	{
+		return (FindSoundInstance(index));
+	}
+
 	void audio_free_buffer_sound(IntType index)
 	{
 		if (Sound* sound = FindSound(index))
@@ -118,7 +123,7 @@ namespace CppProject
 
 		if (!file_exists_lib(fname))
 		{
-			load_next(ScopeAny(global::_app->id));
+			res->load_stage = "";
 			return;
 		}
 
@@ -127,7 +132,7 @@ namespace CppProject
 		if (!snd->buffer.size())
 		{
 			error("errorloadaudio");
-			load_next(ScopeAny(global::_app->id));
+			res->load_stage = "";
 			delete snd;
 			return;
 		}
@@ -160,7 +165,7 @@ namespace CppProject
 		}
 
 		res->ready = true;
+		res->load_stage = "";
 		tl_update_length();
-		load_next(ScopeAny(global::_app->id));
 	}
 }

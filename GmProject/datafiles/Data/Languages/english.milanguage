@@ -50,6 +50,10 @@
 			"openfolder": "Open schematic folder",
 			"reloadfolder": "Reload schematic folder"
 		},
+		"sound/": {
+			"import": "Import sound",
+			"export": "Export sound"
+		},
 		"resource/": {
 			"new": "Add resource",
 			"remove": "Remove resource",
@@ -547,7 +551,35 @@
 		"path": "Path",
 		"pathpoint": "Path point"
 	},
-	"workbenchcaption": "Workbench",
+	"soundfilter/": {
+		"other": "Other",
+		"ambient": "Ambient",
+		"block": "Block",
+		"damage": "Damage",
+		"dig": "Dig",
+		"enchant": "Enchant",
+		"entity": "Entity",
+		"event": "Event",
+		"fire": "Fire",
+		"fireworks": "Fireworks",
+		"item": "Item",
+		"liquid": "Liquid",
+		"minecart": "Minecart",
+		"mob": "Mob",
+		"music": "Music",
+		"note": "Note",
+		"portal": "Portal",
+		"random": "Random",
+		"step": "Step",
+		"tile": "Tile",
+		"ui": "UI"
+	},
+	"musicfilter/": {
+		"game": "Game",
+		"menu": "Menu",
+		"records": "Records",
+		"other": "Other"
+	},
 	"bench/": {
 		"model": "Model",
 		"skin": "Skin",
@@ -595,6 +627,27 @@
 		"spblocktex": "Texture",
 		"spblocktexmaterial": "Material map",
 		"spblocktexnormal": "Normal map",
+		"sound": "Sound",
+		"audiotrack": "Audio track",
+		"audiotracknew": "Create new",
+		"music": "Music",
+		"sound/": {
+			"sounds": "Sounds",
+			"music": "Music",
+			"project": "Project"
+		},
+		"particlepreset": "Particles",
+		"particles/": {
+			"Default": "Default spawner",
+			"effects": "Effects",
+			"weather": "Weather",
+			"project": "Project"
+		},
+		"texttext": "Text",
+		"textfont": "Font",
+		"text3d": "3D",
+		"textfacecamera": "Face camera",
+		"lighttype": "Light type",
 		"shapetype": "Shape",
 		"shapetex": "Texture",
 		"shapetexmaterial": "Material map",
@@ -603,18 +656,6 @@
 		"shapetexmaptip": "Whether the faces of the shape should use parts of a texture image.",
 		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
-		"texttext": "Text",
-		"textfont": "Font",
-		"text3d": "3D",
-		"textfacecamera": "Face camera",
-		"particlepreset": "Particles",
-		"particles/": {
-			"Default": "Default spawner",
-			"effects": "Effects",
-			"weather": "Weather",
-			"project": "Project"
-		},
-		"lighttype": "Light type",
 		"create": "Create",
 		"createedit": "Create & edit",
 		"worldtip1": "Select a region of your Minecraft world to use in the project.",
@@ -623,7 +664,6 @@
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
 		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
 		"backgroundtip": "A timeline that can change the environment during the animation.",
-		"audiotip": "An audio track that can play sound files such as .mp3 and .wav in the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
 	"downloadskin/": {
@@ -986,6 +1026,7 @@
 		"modelpartmodelname": "Name",
 		"sceneryname": "Name",
 		"schematicname": "Name",
+		"soundname": "Name",
 		"particleeditortypename": "Name",
 		"particleeditortypekind": "Kind",
 		"particleeditortyperate": "Spawn rate",
@@ -3848,7 +3889,7 @@
 			"strength": "Strength"
 		},
 		"audio": "AUDIO",
-		"audioadd": "Add sound",
+		"addsound": "Add sound",
 		"path": "PATH",
 		"path/": {
 			"pointadd": "Add point",

@@ -55,6 +55,10 @@ function bench_draw()
 	// Hide bench
 	if (!app_mouse_box(content_x, content_y, content_width, content_height) && mouse_left_pressed && window_busy = "") 
 	{
+		if (bench_tab = e_bench.SOUND && bench_settings.sound_list_current.source = "music" && audio_exists(bench_settings.music_play_index) && audio_is_playing(bench_settings.music_play_index))
+			bench_music_mode = true
+
+		bench_sound_stop()
 		bench_show_ani_type = "hide"
 		window_focus = ""
 		
@@ -66,7 +70,7 @@ function bench_draw()
 	draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 	
-	clip_begin(content_x - 4, content_y - 4, content_width + 8, content_height + 8)
+	//clip_begin(content_x - 4, content_y - 4, content_width + 8, content_height + 8)
 	
 	// Draw workbench
 	sdx = dx
@@ -96,7 +100,7 @@ function bench_draw()
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (item.value = e_bench.MODEL_PART || item.value = e_bench.SPECIAL_BLOCK || item.value = e_bench.PATH)
+		if (item.value = e_bench.MODEL_PART || item.value = e_bench.SPECIAL_BLOCK || item.value = e_bench.TEXT)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9
@@ -118,7 +122,7 @@ function bench_draw()
 	draw_divide_vertical(sdx + 193, sdy, bench_settings.height)
 	bench_settings.height_goal = dy - sdy
 	
-	clip_end()
+	//clip_end()
 	draw_set_alpha(1)
 	
 	if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")

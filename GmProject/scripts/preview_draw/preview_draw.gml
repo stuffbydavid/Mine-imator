@@ -9,12 +9,18 @@
 function preview_draw(preview, xx, yy, width, height)
 {
 	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton;
+	//var clipactive, clipx, clipy, clipwid, cliphei;
 	
 	if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 		return 0
 	
 	mouseon = app_mouse_box(xx, yy, width, height)
 	setplaytime = null
+	//clipactive = shader_clip_active
+	//clipx = shader_clip_x
+	//clipy = shader_clip_y
+	//clipwid = shader_clip_width
+	//cliphei = shader_clip_height
 	preview.view_width = width
 	preview.view_height = height
 	
@@ -29,13 +35,13 @@ function preview_draw(preview, xx, yy, width, height)
 	
 	particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
 	if (preview.select.object_index = obj_bench_settings)
-		particlebutton = preview.select.particle_preset != null
+		particlebutton = bench_tab = e_bench.PARTICLE_SPAWNER && preview.select.particle_preset != null
 
 	// Show 3D view?
 	if (preview.select.object_index = obj_resource)
 	{
 		playbutton = (preview.select.type = e_res_type.SOUND)
-		isplaying = (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index))
+		isplaying = (audio_exists(preview.sound_play_index) && (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index)))
 		is3d = (preview.select.type = e_res_type.SCHEMATIC || preview.select.type = e_res_type.FROM_WORLD ||preview.select.type = e_res_type.MODEL)
 	}
 	else
@@ -158,6 +164,8 @@ function preview_draw(preview, xx, yy, width, height)
 				render_update_text()
 			update = false
 			
+			//if (clipactive)
+			//	clip_end()
 			surface_set_target(surface)
 			{
 				draw_clear_alpha(c_black, 0)
@@ -514,12 +522,13 @@ function preview_draw(preview, xx, yy, width, height)
 							if (!select.ready)
 								break
 							
-							var wid, wavehei, prec, alpha, mouseperc;
-							wid = width - 32
+							var wavex, wid, wavehei, prec, alpha, mouseperc;
+							wavex = 32
+							wid = width - 64
 							wavehei = 32
 							prec = sample_rate / sample_avg_per_sec
 							alpha = draw_get_alpha()
-							mouseperc = percent((mouse_x - xx), 16, 16 + wid);
+							mouseperc = percent((mouse_x - xx), 32, 32 + wid);
 							
 							if (mouseon)
 							{
@@ -564,8 +573,8 @@ function preview_draw(preview, xx, yy, width, height)
 								if (mouseon && app.mouse_left)
 									setplaytime = (mouseperc * length)
 								
-								draw_vertex_color(16 + dx, height / 2-maxv * wavehei, wavecolor, wavealpha)
-								draw_vertex_color(16 + dx, height / 2-minv * wavehei + 1, wavecolor, wavealpha)
+								draw_vertex_color(wavex + dx, floor(height / 2 - maxv * wavehei), wavecolor, wavealpha)
+								draw_vertex_color(wavex + dx, floor(height / 2 - minv * wavehei + 1), wavecolor, wavealpha)
 							}
 							draw_primitive_end()
 							
@@ -707,6 +716,8 @@ function preview_draw(preview, xx, yy, width, height)
 				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
+			//if (clipactive)
+			//	clip_begin(clipx, clipy, clipwid, cliphei)
 		}
 		
 		draw_surface_exists(surface, xx, yy)
@@ -741,11 +752,26 @@ function preview_draw(preview, xx, yy, width, height)
 		{
 			if (isplaying)
 			{
-				audio_stop_sound(preview.sound_play_index)
-				preview.update = true
+				if (preview = app.bench_settings.preview && preview.select = app.bench_settings.music_res)
+				{
+					bench_music_stop(false)
+					isplaying = false
+				}
+				else
+				{
+					audio_stop_sound(preview.sound_play_index)
+					preview.update = true
+				}
 			}
 			else
-				preview.sound_play_index = audio_play_sound(res_edit.sound_index, 0, false)
+			{
+				preview.sound_play_index = audio_play_sound(preview.select.sound_index, 0, false)
+				if (preview = app.bench_settings.preview && preview.select = app.bench_settings.music_res)
+				{
+					app.bench_settings.music_play_index = preview.sound_play_index
+					app.bench_settings.music_autoplay = true
+				}
+			}
 		}
 	}
 	
@@ -754,7 +780,14 @@ function preview_draw(preview, xx, yy, width, height)
 	{
 		// Audio isn't already playing, start it
 		if (!isplaying)
-			preview.sound_play_index = audio_play_sound(res_edit.sound_index, 0, false)
+		{
+			preview.sound_play_index = audio_play_sound(preview.select.sound_index, 0, false)
+			if (preview = app.bench_settings.preview && preview.select = app.bench_settings.music_res)
+			{
+				app.bench_settings.music_play_index = preview.sound_play_index
+				app.bench_settings.music_autoplay = true
+			}
+		}
 			
 		audio_sound_set_track_position(preview.sound_play_index, setplaytime)
 	}

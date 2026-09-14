@@ -8,6 +8,7 @@
 #include <QDesktopWidget>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QTime>
 
 namespace CppProject
@@ -436,6 +437,17 @@ namespace CppProject
 	#else
 		return QDir::homePath() + "/Mine-imator/Skins/";
 	#endif
+	}
+
+	StringType minecraft_java_directory_get()
+	{
+#if OS_WINDOWS
+		return QFileInfo(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).path() + "/.minecraft";
+#elif OS_MAC
+		return QDir::homePath() + "/Library/Application Support/minecraft";
+#else
+		return QDir::homePath() + "/.minecraft";
+#endif
 	}
 
 	StringType drivers_url_get()

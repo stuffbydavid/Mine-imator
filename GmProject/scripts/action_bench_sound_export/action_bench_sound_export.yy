@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_bench_sound_export",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_sound_export",
+  "parent":{
+    "name":"Sound",
+    "path":"folders/Scripts/App/Actions/Bench/Sound.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -441,5 +441,10 @@ function res_event_destroy()
 	
 	// Remove from resource browser
 	if (ds_list_find_index(app.res_list.list, id) >= 0)
+	{
 		res_edit = sortlist_remove(app.res_list, id)
+		if (type = e_res_type.SOUND && app.bench_settings.sound_list_current = app.bench_settings.project_list)
+			with (app)
+				action_bench_sound_source("project")
+	}
 }
