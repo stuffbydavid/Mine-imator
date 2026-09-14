@@ -6,6 +6,9 @@
 	
 	render_surface_diffuse
 		- RGBA: Diffuse data
+
+	render_surface_mask
+		- R: Scene lighting mask
 	
 	shader_high_gbuffers:
 	
@@ -47,6 +50,7 @@
 function render_high_create_gbuffers()
 {
 	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
+	render_surface_mask = surface_require(render_surface_mask, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
 	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
@@ -88,6 +92,24 @@ function render_high_create_gbuffers()
 			render_world(e_render_mode.ALPHA_FIX)
 			render_world_done()
 		}
+		gpu_set_blendmode(bm_normal)
+	}
+	surface_reset_target()
+
+	// Scene lighting mask
+	surface_set_target(render_surface_mask)
+	{
+		draw_clear(c_black)
+		render_world_start()
+		render_world(e_render_mode.SCENE_TEST)
+		render_world_done()
+
+		// 2D mode
+		render_set_projection_ortho(0, 0, render_width, render_height, 0)
+
+		// Alpha fix
+		gpu_set_blendmode_ext(bm_src_color, bm_one)
+		draw_box(0, 0, render_width, render_height, false, c_black, 1)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
@@ -136,18 +158,27 @@ function render_high_create_gbuffers()
 		}
 	}
 
-	if (render_pass = e_render_pass.DIFFUSE)
-		render_pass_surf = surface_duplicate(render_surface_diffuse)
+	render_pass_capture(e_render_pass.DIFFUSE, render_surface_diffuse)
 
-	if (render_pass = e_render_pass.MATERIAL)
-		render_pass_surf = surface_duplicate(render_surface_material)
+	render_pass_capture(e_render_pass.MATERIAL, render_surface_material)
 
-	if (render_pass = e_render_pass.DEPTH)
-		render_pass_surf = surface_duplicate(render_surface_depth)
+	render_pass_capture(e_render_pass.DEPTH, render_surface_depth)
 
-	if (render_pass = e_render_pass.NORMAL)
-		render_pass_surf = surface_duplicate(render_surface_normal)
+	render_pass_capture(e_render_pass.NORMAL, render_surface_normal)
 
-	if (render_pass = e_render_pass.FOG)
-		render_pass_surf = surface_duplicate(render_surface_fog)
+	render_pass_capture(e_render_pass.FOG, render_surface_fog)
+
+	render_pass_capture(e_render_pass.MASK, render_surface_mask)
+
+	render_pass_capture(e_render_pass.GLOW, render_surface_glow)
+
+	render_pass_capture(e_render_pass.SUBSURFACE, render_surface_sss)
+
+	render_pass_capture(e_render_pass.SUBSURFACE_RANGE, render_surface_sss_range)
+
+	render_pass_capture(e_render_pass.EMISSIVE, render_surface_normal)
+	render_pass_capture(e_render_pass.ROUGHNESS, render_surface_material)
+	render_pass_capture(e_render_pass.METALLIC, render_surface_material)
+	render_pass_capture(e_render_pass.FRESNEL, render_surface_material)
+	render_pass_capture(e_render_pass.SSAO_MASK, render_surface_material)
 }

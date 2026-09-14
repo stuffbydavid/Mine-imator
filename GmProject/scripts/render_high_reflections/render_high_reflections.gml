@@ -84,6 +84,5 @@ function render_high_reflections(surf)
 		surface_reset_target()
 	}
 	
-	if (render_pass = e_render_pass.REFLECTIONS)
-		render_pass_surf = surface_duplicate(render_surface_hdr[0])
+	render_pass_capture(e_render_pass.REFLECTIONS, render_surface_hdr[0])
 }

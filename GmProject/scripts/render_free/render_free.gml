@@ -15,6 +15,7 @@ function render_free()
 	surface_free(render_surface_normal)
 	surface_free(render_surface_material)
 	surface_free(render_surface_diffuse)
+	surface_free(render_surface_mask)
 	
 	// Rendering
 	surface_free(render_surface_shadows)
@@ -31,6 +32,9 @@ function render_free()
 	
 	// Sampling
 	surface_free(render_surface_samples)
+
+	for (var pass = 0; pass < array_length(render_pass_surfs); pass++)
+		surface_free(render_pass_surfs[pass])
 	
 	// Light depth buffers
 	for (var i = 0; i < 3; i++)

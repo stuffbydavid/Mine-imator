@@ -59,15 +59,27 @@ function render_high()
 		// Apply post scene effects (Glow, DoF, etc.)
 		render_refresh_effects(true, false)
 		finalsurf = render_post(finalsurf, true, false)
+
+		// Finish the combined tile before assembling the all-passes grid
+		if (render_pass = e_render_pass.ALL)
+		{
+			render_refresh_effects(false, true)
+			finalsurf = render_post(finalsurf, false, true)
+		}
 		
 		// Set target
 		render_target = surface_require(render_target, render_width, render_height)
 		surface_set_target(render_target)
 		{
-			if (render_pass)
+			if (render_pass = e_render_pass.ALL)
 			{
 				draw_clear_alpha(c_black, 1)
-				draw_surface_exists(render_pass_surf, 0, 0)
+				render_pass_grid_draw(finalsurf)
+			}
+			else if (render_pass)
+			{
+				draw_clear_alpha(c_black, 1)
+				render_pass_draw(render_pass, render_pass_surf, 0, 0, render_width, render_height)
 			}
 			else
 			{

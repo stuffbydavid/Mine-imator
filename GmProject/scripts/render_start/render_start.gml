@@ -17,7 +17,12 @@ function render_start()
 	if (surface_exists(render_pass_surf))
 		surface_free(render_pass_surf)
 	
+	for (var pass = 0; pass < array_length(render_pass_surfs); pass++)
+		if (surface_exists(render_pass_surfs[pass]))
+			surface_free(render_pass_surfs[pass])
+	
 	render_pass_surf = null
+	render_pass_surfs = array_create(e_render_pass.amount, null)
 	render_world_count = 0
 	
 	render_pass = project_render_pass
@@ -27,13 +32,17 @@ function render_start()
 	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects
-	render_ssao = project_render_ssao && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)
-	render_shadows = project_render_shadows && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
-	render_indirect = render_shadows && project_render_indirect && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
-	render_reflections = project_render_reflections && (render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.REFLECTIONS)
+	var renderall = (render_pass = e_render_pass.ALL)
+	var rendercombined = (render_pass = e_render_pass.COMBINED || renderall)
+	render_ssao = project_render_ssao && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)
+	render_shadows = project_render_shadows && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
+	render_indirect = render_shadows && project_render_indirect && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
+	render_reflections = project_render_reflections && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.REFLECTIONS)
 	render_glow = project_render_glow && renderer_current = e_renderer.REALISTIC
 	render_glow_falloff = project_render_glow && renderer_current = e_renderer.REALISTIC && project_render_glow_falloff
-	render_auxiliary = background_fog_show || render_pass = e_render_pass.FOG || project_render_subsurface_samples > 0 || render_glow
+	render_auxiliary = renderall || background_fog_show || render_pass = e_render_pass.FOG || render_pass = e_render_pass.GLOW ||
+					   render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE ||
+					   project_render_subsurface_samples > 0 || render_glow
 	
 	// Use camera settings
 	if (render_camera != null)
@@ -57,18 +66,18 @@ function render_start()
 			render_gamma = project_render_gamma
 		}
 		
-		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM]) && !render_pass
-		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null) && !render_pass
-		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF]) && !render_pass
-		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION]) && !render_pass
-		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN]) && !render_pass
-		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE]) && !render_pass
-		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA]) && !render_pass
-		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT]) && !render_pass
+		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM]) && rendercombined
+		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null) && rendercombined
+		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF]) && rendercombined
+		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION]) && rendercombined
+		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN]) && rendercombined
+		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE]) && rendercombined
+		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA]) && rendercombined
+		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT]) && rendercombined
 		
-		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW])) && !render_pass
-		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM] && !render_pass
-		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && !render_pass
+		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW])) && rendercombined
+		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM] && rendercombined
+		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && rendercombined
 		
 		render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
 								render_camera.value[e_value.EMISSIVE] > 0 || 

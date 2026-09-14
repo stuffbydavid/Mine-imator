@@ -306,8 +306,7 @@ function render_high_shadows()
 	if (project_render_subsurface_samples > 0)
 		render_high_subsurface_scatter()
 	
-	if (render_pass = e_render_pass.SHADOWS) 
-		render_pass_surf = surface_duplicate(render_surface_shadows)
+	render_pass_capture(e_render_pass.SHADOWS, render_surface_shadows)
 }
 
 function render_high_shadows_shadowless()

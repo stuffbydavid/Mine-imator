@@ -111,9 +111,7 @@ function render_high_indirect()
 	}
 	surface_reset_target()
 	
-	if (render_pass = e_render_pass.INDIRECT)
-		render_pass_surf = surface_duplicate(indirectsurf)
+	render_pass_capture(e_render_pass.INDIRECT, indirectsurf)
 	
-	if (render_pass = e_render_pass.INDIRECT_SHADOWS)
-		render_pass_surf = surface_duplicate(render_surface_shadows)
+	render_pass_capture(e_render_pass.INDIRECT_SHADOWS, render_surface_shadows)
 }

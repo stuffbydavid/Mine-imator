@@ -836,7 +836,17 @@
 				"indirect": "Indirect",
 				"indirectshadows": "Indirect & shadows",
 				"reflections": "Reflections",
-				"fog": "Fog"
+				"fog": "Fog",
+				"mask": "Scene mask",
+				"glow": "Glow",
+				"subsurface": "Subsurface scattering",
+				"subsurfacerange": "Subsurface range",
+				"emissive": "Emissive",
+				"roughness": "Roughness",
+				"metallic": "Metallic",
+				"fresnel": "Fresnel",
+				"ssaomask": "SSAO mask",
+				"all": "All passes"
 			}
 		},
 		"camera/": {

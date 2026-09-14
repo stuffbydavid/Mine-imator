@@ -45,6 +45,7 @@ function shader_startup()
 		new_shader("shader_depth_ortho")
 		new_shader("shader_depth_point")
 		new_shader("shader_draw_texture")
+		new_shader("shader_render_pass")
 		new_shader("shader_replace")
 		new_shader("shader_replace_alpha")
 		new_shader("shader_high_dof")
@@ -177,6 +178,9 @@ function shader_startup()
 	
 	with (shader_map[?shader_draw_texture])
 		new_shader_uniform("uMask")
+
+	with (shader_map[?shader_render_pass])
+		new_shader_uniform("uChannel")
 	
 	with (shader_map[?shader_replace])
 		new_shader_uniform("uReplaceColor")

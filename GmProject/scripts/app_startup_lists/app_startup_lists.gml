@@ -534,5 +534,15 @@ function app_startup_lists()
 		"indirectshadows",
 		"reflections",
 		"fog",
+		"mask",
+		"glow",
+		"subsurface",
+		"subsurfacerange",
+		"emissive",
+		"roughness",
+		"metallic",
+		"fresnel",
+		"ssaomask",
+		"all",
 	)
 }

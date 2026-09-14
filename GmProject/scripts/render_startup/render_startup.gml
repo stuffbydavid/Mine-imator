@@ -34,7 +34,7 @@ function render_startup()
 			  shader_uniform_sss_green, shader_uniform_sss_blue, shader_uniform_sss_color, shader_uniform_glow, shader_uniform_glow_texture,
 			  shader_uniform_glow_color, shader_uniform_wind_strength;
 	
-	globalvar render_pass_surf;
+	globalvar render_pass_surf, render_pass_surfs;
 	
 	log("Render init")
 	
@@ -101,7 +101,7 @@ function render_startup()
 	// Surfaces for rendering
 	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
-			  render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow, render_surface_raydata,
+			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow, render_surface_raydata,
 			  render_surface_samples, depth_near, depth_far, render_post_index;
 			
 	render_target = null
@@ -116,6 +116,7 @@ function render_startup()
 	render_surface_normal = null
 	render_surface_material = null
 	render_surface_diffuse = null
+	render_surface_mask = null
 	render_surface_raydata = null
 	
 	render_surface_shadows = null
@@ -134,6 +135,8 @@ function render_startup()
 	render_post_index = 0
 	
 	render_world_count = 0
+
+	render_gamma = 1
 	
 	render_gamma = 1
 	
@@ -204,6 +207,7 @@ function render_startup()
 	
 	// Render pass surf
 	render_pass_surf = null
+	render_pass_surfs = array_create(e_render_pass.amount, null)
 	
 	render_blend_prev = null
 	render_alpha_prev = null
