@@ -34,7 +34,10 @@ function settings_startup()
 	setting_watermark_scale = .33
 	setting_watermark_opacity = 1
 	
-	setting_theme = theme_light
+	setting_theme = theme_light // TODO: Community/Discord poll to restore theme_classic for 2.1
+	if (dev_mode_dark_theme)
+		setting_theme = theme_dark
+	
 	setting_accent = 3
 	setting_accent_custom = hex_to_color("03A9F4") //4367A3
 	
@@ -102,6 +105,7 @@ function settings_startup()
 	setting_slow_modifier = 0.25
 	
 	setting_scenery_remove_edges = true
+	setting_scenery_replace_ground = true
 	
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30

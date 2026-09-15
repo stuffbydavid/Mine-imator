@@ -16,6 +16,7 @@ function project_save_resource()
 		
 		if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
 		{
+			json_save_var_point3D("scenery_size", scenery_size)
 			json_save_var_bool("scenery_tl_add", scenery_tl_add)
 			json_save_var_bool("scenery_download_skins", scenery_download_skins)
 			if (scenery_cache_save != null)

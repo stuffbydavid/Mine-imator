@@ -12,6 +12,10 @@ function bench_show()
 	if (bench_tab = e_bench.SOUND)
 		bench_audio_track_update()
 	
+	// Refresh schematic project folder
+	else if (bench_tab = e_bench.SCHEMATIC && bench_schematic_folder = "project")
+		action_bench_schematic_folder(bench_schematic_folder)
+
 	// Load particle folder
 	else if (bench_tab = e_bench.PARTICLE_SPAWNER)
 		action_bench_particles_folder(bench_particle_preset_folder)

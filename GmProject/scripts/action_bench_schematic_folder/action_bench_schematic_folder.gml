@@ -8,13 +8,14 @@ function action_bench_schematic_folder(folder, update = true)
 	
 	var list, selected;
 	list = bench_settings.schematic_list
-	selected = bench_settings.schematic_selected
-	bench_settings.schematic_selected = null
 	list.search = false
 	list.search_tbx.text = ""
 	list.scroll.value = 0
 	list.scroll.value_goal = 0
 	ds_list_clear(list.list)
+	
+	selected = bench_settings.schematic_selected
+	bench_settings.schematic_selected = null
 	
 	if (folder = "project")
 	{

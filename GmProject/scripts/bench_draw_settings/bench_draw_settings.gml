@@ -460,12 +460,13 @@ function bench_draw_settings(bx, by, bw, bh)
 			draw_tooltip_label("benchworldtip2", null, e_toast.INFO)
 			dy += ui_large_height
 			
-			draw_set_alpha(prevalpha)
-			dx = bx
-			
 			// Import from world
-			if (draw_button_label("benchimportfromworld", dx, sy + dh - 56, dw, icons.SCENERY))
+			tab_control(64)
+			if (draw_button_label("benchimportfromworld", dx + dw / 2, dy, 200, icons.SCENERY, e_button.MEDIUM, null, e_anchor.CENTER))
 				world_import_begin(false)
+			tab_next()
+			
+			draw_set_alpha(prevalpha)
 			return 0
 		}
 

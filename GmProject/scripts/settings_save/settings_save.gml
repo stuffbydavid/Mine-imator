@@ -64,6 +64,7 @@ function settings_save()
 		json_save_var_bool("spawn_cameras", setting_spawn_cameras)
 		json_save_var_bool("unlimited_values", setting_unlimited_values)
 		json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)
+		json_save_var_bool("scenery_replace_ground", setting_scenery_replace_ground)
 		
 		json_save_var_bool("watermark_custom", setting_watermark_custom)
 		json_save_var("watermark_fn", setting_watermark_fn)

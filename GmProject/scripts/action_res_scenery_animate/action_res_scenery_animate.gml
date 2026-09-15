@@ -6,15 +6,33 @@ function action_res_scenery_animate(res)
 	{
 		with (history_data)
 			history_destroy_loaded()
+
+		if (history_data.scenery_replace_ground)
+			background_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
-		var hobj = null;
+		var hobj, sceneryreplaceground;
+		hobj = null
+		sceneryreplaceground = false
 	
 		if (history_redo)
+		{
 			res = save_id_find(history_data.res)
+			sceneryreplaceground = history_data.scenery_replace_ground
+		}
 		else
+		{
 			hobj = history_set(action_res_scenery_animate)
+			
+			if (res.type = e_res_type.FROM_WORLD && setting_scenery_replace_ground &&
+				res.scenery_size[X] > scenery_large_threshold && res.scenery_size[Y] > scenery_large_threshold)
+			{
+				sceneryreplaceground = true
+				hobj.scenery_replace_ground = true
+				hobj.scenery_ground_show = background_ground_show
+			}
+		}
 	
 		with (new_obj(obj_template))
 		{
@@ -30,9 +48,16 @@ function action_res_scenery_animate(res)
 			temp_update_display_name()
 			loaded = true
 			with (temp_animate())
+			{
 				loaded = true
+				if (sceneryreplaceground)
+					tl_replace_ground()
+			}
 			sortlist_add(app.lib_list, id)
 		}
+
+		if (sceneryreplaceground)
+			background_ground_show = false
 	
 		with (hobj)
 		{

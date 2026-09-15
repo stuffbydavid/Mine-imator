@@ -6,6 +6,11 @@ function bench_click(tab)
 	// Double clicked, create asset
 	if (bench_tab = tab && tab != e_bench.WORLD && bench_show_ani_type = "")
 	{
+		if (tab = e_bench.SCHEMATIC && bench_settings.scenery = null)
+			return 0
+		if (tab = e_bench.SOUND && !is_array(bench_settings.sound_list_current.select))
+			return 0
+
 		action_bench_create()
 		bench_show_ani_type = "hide"
 		return 0

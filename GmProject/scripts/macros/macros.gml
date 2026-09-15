@@ -16,6 +16,7 @@ function macros()
 	#macro dev_mode_show_bones			dev_mode && false
 	#macro dev_mode_skip_tangents		dev_mode && false
 	#macro dev_mode_check_assets		dev_mode && true
+	#macro dev_mode_dark_theme			dev_mode && true
 	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
 	
 	// Versions
@@ -174,6 +175,7 @@ function macros()
 	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
 	#macro schematic_folders			array("Buildings", "Biomes", "Trees", "Structures", "Other")
 	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")
+	#macro scenery_large_threshold		300
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		512
