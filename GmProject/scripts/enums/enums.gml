@@ -1137,7 +1137,11 @@ function enums()
 	{
 		NONE,
 		REINHARD,
-		ACES
+		ACES,
+		UCHIMURA,
+		LOTTES,
+		HABLE,
+		GT7_CURVE
 	}
 	
 	// Window

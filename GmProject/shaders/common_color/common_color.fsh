@@ -58,7 +58,8 @@ void applyColorTransform(inout vec4 col, bool preserveAlpha)
 #region TONEMAP_LIB
 #pragma shady: macro_begin TONEMAP_LIB
 
-/// ACES (implementation by Stephen Hill, @self_shadow)
+/// ACES fit by Stephen Hill, via TheRealMJP/BakingLab (MIT)
+/// https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl
 vec3 RRTAndODTFit(vec3 v)
 {
 	vec3 a = v * (v + 0.0245786) - 0.000090537;
@@ -68,7 +69,7 @@ vec3 RRTAndODTFit(vec3 v)
 
 vec3 mapACES(vec3 color)
 {
-	// sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
+	// Linear sRGB primaries => XYZ => D65_2_D60 => AP1 => RRT_SAT
 	color = vec3(
 		color.r * 0.59719 + color.g * 0.35458 + color.b * 0.04823,
 		color.r * 0.07600 + color.g * 0.90834 + color.b * 0.01566,
@@ -87,15 +88,126 @@ vec3 mapACES(vec3 color)
 	return color;
 }
 
+vec3 mapReinhard(vec3 color)
+{
+	color = max(color, vec3(0.0));
+	float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
+	float mappedLuminance = luminance / (1.0 + luminance);
+	return luminance > 0.0 ? color * mappedLuminance / luminance : vec3(0.0);
+}
+
+// Uchimura / Gran Turismo curve with the commonly published SDR parameters
+// GLSL adaptation based on https://github.com/yaoling1997/GT-ToneMapping (MIT)
+vec3 mapUchimura(vec3 color)
+{
+	color = max(color, vec3(0.0));
+	float maximum = 1.0;
+	float contrast = 1.0;
+	float linearStart = 0.22;
+	float linearLength = 0.4;
+	float blackTightness = 1.33;
+	float blackOffset = 0.0;
+	float linearLength0 = (maximum - linearStart) * linearLength / contrast;
+	float linearStart1 = linearStart + linearLength0;
+	float shoulderStart = linearStart + contrast * linearLength0;
+	float shoulderStrength = contrast * maximum / (maximum - shoulderStart);
+	float shoulderExponent = -shoulderStrength / maximum;
+
+	vec3 toe = linearStart * pow(color / linearStart, vec3(blackTightness)) + blackOffset;
+	vec3 linear = linearStart + contrast * (color - linearStart);
+	vec3 shoulder = maximum - (maximum - shoulderStart) * exp(shoulderExponent * (color - linearStart1));
+	vec3 toeWeight = vec3(1.0) - smoothstep(vec3(0.0), vec3(linearStart), color);
+	vec3 shoulderWeight = step(vec3(linearStart1), color);
+	vec3 linearWeight = vec3(1.0) - toeWeight - shoulderWeight;
+	return toe * toeWeight + linear * linearWeight + shoulder * shoulderWeight;
+}
+
+// Timothy Lottes' published SDR curve, independently expressed from its equation
+// https://gpuopen.com/wp-content/uploads/2016/03/GdcVdrLottes.pdf
+vec3 mapLottes(vec3 color)
+{
+	color = max(color, vec3(0.0));
+	float contrast = 1.6;
+	float shoulder = 0.977;
+	float hdrMaximum = 8.0;
+	float middleIn = 0.18;
+	float middleOut = 0.267;
+	float hdrPow = pow(hdrMaximum, contrast);
+	float middlePow = pow(middleIn, contrast);
+	float hdrShoulderPow = pow(hdrMaximum, contrast * shoulder);
+	float middleShoulderPow = pow(middleIn, contrast * shoulder);
+	float b = (-middlePow + hdrPow * middleOut) / ((hdrShoulderPow - middleShoulderPow) * middleOut);
+	float c = (hdrShoulderPow * middlePow - hdrPow * middleShoulderPow * middleOut) / ((hdrShoulderPow - middleShoulderPow) * middleOut);
+	return pow(color, vec3(contrast)) / (pow(color, vec3(contrast * shoulder)) * b + c);
+}
+
+// John Hable's Uncharted 2 curve, via tizian/tonemapper (MIT)
+// https://github.com/tizian/tonemapper
+vec3 hablePartial(vec3 color)
+{
+	float shoulderStrength = 0.15;
+	float linearStrength = 0.5;
+	float linearAngle = 0.1;
+	float toeStrength = 0.2;
+	float toeNumerator = 0.02;
+	float toeDenominator = 0.3;
+	return ((color * (shoulderStrength * color + linearAngle * linearStrength) + toeStrength * toeNumerator) /
+		(color * (shoulderStrength * color + linearStrength) + toeStrength * toeDenominator)) - toeNumerator / toeDenominator;
+}
+
+vec3 mapHable(vec3 color)
+{
+	color = max(color, vec3(0.0));
+	float exposureBias = 2.0;
+	float whitePoint = 11.2;
+	return hablePartial(color * exposureBias) / hablePartial(vec3(whitePoint));
+}
+
+// Polyphony Digital's GT7 SDR curve parameters (MIT)
+// This is the analytical curve only, without the full ICtCp color-volume stage
+// https://github.com/google/filament/blob/main/filament/src/ToneMapper.cpp
+float gt7Curve(float value)
+{
+	value = max(value, 0.0);
+	float peakIntensity = 2.5;
+	float alpha = 0.25;
+	float middlePoint = 0.538;
+	float linearSection = 0.444;
+	float toeStrength = 1.280;
+	float k = (linearSection - 1.0) / (alpha - 1.0);
+	float shoulderA = peakIntensity * linearSection + peakIntensity * k;
+	float shoulderB = -peakIntensity * k * exp(linearSection / k);
+	float shoulderC = -1.0 / (k * peakIntensity);
+	float linearWeight = smoothstep(0.0, middlePoint, value);
+	float toe = middlePoint * pow(value / middlePoint, toeStrength);
+	float linearToe = mix(toe, value, linearWeight);
+	float shoulder = shoulderA + shoulderB * exp(value * shoulderC);
+	return value < linearSection * peakIntensity ? linearToe : shoulder;
+}
+
+vec3 mapGT7Curve(vec3 color)
+{
+	vec3 mapped = vec3(gt7Curve(color.r), gt7Curve(color.g), gt7Curve(color.b));
+	return 0.4 * min(mapped, vec3(2.5));
+}
+
 vec3 applyToneMapper(vec3 col, int tonemapperId, float exposure, float gamma)
 {
 	// Exposure
 	col *= exposure;
 
 	if (tonemapperId == 1) // Reinhard
-		col /= (1.0 + col);
+		col = mapReinhard(col);
 	else if (tonemapperId == 2) // ACES
 		col = mapACES(col);
+	else if (tonemapperId == 3) // Uchimura
+		col = mapUchimura(col);
+	else if (tonemapperId == 4) // Lottes
+		col = mapLottes(col);
+	else if (tonemapperId == 5) // Hable
+		col = mapHable(col);
+	else if (tonemapperId == 6) // Gran Turismo 7 curve
+		col = mapGT7Curve(col);
 
 	// Gamma
 	return pow(max(col.rgb, vec3(0.0)), vec3(1.0/gamma));

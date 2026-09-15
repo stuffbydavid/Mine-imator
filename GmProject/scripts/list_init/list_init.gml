@@ -1417,6 +1417,10 @@ function list_init(name)
 			menu_add_item(e_tonemapper.NONE, text_get("rendertonemappernone"))
 			menu_add_item(e_tonemapper.REINHARD, text_get("rendertonemapperreinhard"))
 			menu_add_item(e_tonemapper.ACES, text_get("rendertonemapperaces"))
+			menu_add_item(e_tonemapper.UCHIMURA, text_get("rendertonemapperuchimura"))
+			menu_add_item(e_tonemapper.LOTTES, text_get("rendertonemapperlottes"))
+			menu_add_item(e_tonemapper.HABLE, text_get("rendertonemapperhable"))
+			menu_add_item(e_tonemapper.GT7_CURVE, text_get("rendertonemappergt7curve"))
 			
 			break
 		}

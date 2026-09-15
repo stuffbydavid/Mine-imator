@@ -307,6 +307,18 @@ function tab_properties_render()
 				case e_tonemapper.ACES:
 					text = text_get("rendertonemapperaces")
 					break;
+				case e_tonemapper.UCHIMURA:
+					text = text_get("rendertonemapperuchimura")
+					break;
+				case e_tonemapper.LOTTES:
+					text = text_get("rendertonemapperlottes")
+					break;
+				case e_tonemapper.HABLE:
+					text = text_get("rendertonemapperhable")
+					break;
+				case e_tonemapper.GT7_CURVE:
+					text = text_get("rendertonemappergt7curve")
+					break;
 				default:
 					text = text_get("rendertonemappernone")
 					break;

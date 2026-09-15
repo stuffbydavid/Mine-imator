@@ -3052,7 +3052,11 @@
 		"tonemapper/": {
 			"none": "None",
 			"reinhard": "Reinhard",
-			"aces": "Academy (ACES)"
+			"aces": "ACES",
+			"uchimura": "Uchimura",
+			"lottes": "Lottes",
+			"hable": "Hable",
+			"gt7curve": "GT7 Curve"
 		},
 		"exposure": "Exposure",
 		"gamma": "Gamma",
@@ -3975,7 +3979,11 @@
 			"tonemapper/": {
 				"none": "None",
 				"reinhard": "Reinhard",
-				"aces": "Academy (ACES)"
+				"aces": "ACES",
+				"uchimura": "Uchimura",
+				"lottes": "Lottes",
+				"hable": "Hable",
+				"gt7curve": "GT7 Curve"
 			},
 			"exposure": "Exposure",
 			"gamma": "Gamma",

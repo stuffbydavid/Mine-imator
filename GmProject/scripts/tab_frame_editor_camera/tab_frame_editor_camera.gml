@@ -96,6 +96,18 @@ function tab_frame_editor_camera()
 			case e_tonemapper.ACES:
 				text = text_get("frameeditorcameratonemapperaces")
 				break;
+			case e_tonemapper.UCHIMURA:
+				text = text_get("frameeditorcameratonemapperuchimura")
+				break;
+			case e_tonemapper.LOTTES:
+				text = text_get("frameeditorcameratonemapperlottes")
+				break;
+			case e_tonemapper.HABLE:
+				text = text_get("frameeditorcameratonemapperhable")
+				break;
+			case e_tonemapper.GT7_CURVE:
+				text = text_get("frameeditorcameratonemappergt7curve")
+				break;
 			default:
 				text = text_get("frameeditorcameratonemappernone")
 				break;

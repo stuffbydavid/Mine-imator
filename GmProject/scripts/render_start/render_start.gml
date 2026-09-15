@@ -110,6 +110,8 @@ function render_start()
 		render_gamma = project_render_gamma
 	}
 	
+	render_gamma = max(render_gamma, 0.01)
+	
 	depth_near = clip_near
 	depth_far = app.project_render_distance
 
