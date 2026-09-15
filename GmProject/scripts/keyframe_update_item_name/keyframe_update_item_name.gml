@@ -13,14 +13,18 @@ function keyframe_update_item_name()
 	{
 		var tex = value[e_value.TEXTURE_OBJ];
 				
-		if (tex.type = e_res_type.PACK && slot < ds_list_size(mc_assets.item_texture_list))
-			value[e_value.ITEM_NAME] = mc_assets.item_texture_list[|slot]
+		if (tex.type = e_res_type.PACK)
+		{
+			var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list)
+			value[e_value.ITEM_NAME] = decodedslot[0] >= 0 ? mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]] : ""
+		}
 		else
 			value[e_value.ITEM_NAME] = ""
 	}
-	else if (timeline.temp.item_tex.type = e_res_type.PACK && slot < ds_list_size(mc_assets.item_texture_list))
+	else if (timeline.temp.item_tex.type = e_res_type.PACK)
 	{
-		value[e_value.ITEM_NAME] = mc_assets.item_texture_list[|slot]
+		var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list)
+		value[e_value.ITEM_NAME] = decodedslot[0] >= 0 ? mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]] : ""
 	}
 	else
 		value[e_value.ITEM_NAME] = ""

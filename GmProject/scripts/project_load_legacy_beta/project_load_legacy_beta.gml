@@ -331,6 +331,12 @@ function project_load_legacy_beta(loadbackground)
 					model_state = array_copy_1d(load.lib_char_model_state[a])
 					temp_update_model()
 					
+					// Equipment was formerly saved as a special block
+					if (type = e_temp_type.SPECIAL_BLOCK &&
+						!is_undefined(mc_assets.model_name_map[?model_name]) &&
+						ds_list_find_index(mc_assets.equipment_list, mc_assets.model_name_map[?model_name]) >= 0)
+						type = e_temp_type.EQUIPMENT
+					
 					if (load.lib_char_skin[a] > -1)
 						model_tex = load.skin_res[load.lib_char_skin[a]].load_id
 					else
@@ -388,7 +394,7 @@ function project_load_legacy_beta(loadbackground)
 							load_id = loadid++
 							save_id_map[?load_id] = load_id
 							
-							type = e_res_type.SCENERY
+							type = e_res_type.SCHEMATIC
 							filename = filename_name(load.lib_scenery_source[a])
 							scenery_tl_add = false
 							
@@ -415,7 +421,7 @@ function project_load_legacy_beta(loadbackground)
 	// Parse timelines
 	for (var a = 0; a < load.tl_amount; a++)
 	{
-		var tl, lib, modelpartlist;
+		var tl, lib;
 		if (a = 0)
 		{
 			if (load.tl_keyframes[a] = 0)
@@ -451,7 +457,7 @@ function project_load_legacy_beta(loadbackground)
 			parent_tree_index = null
 			
 			// Create parts
-			if (type = e_tl_type.CHARACTER || type = e_tl_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.CHARACTER || type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				part_list = ds_list_create()
 				if (temp.model_file != null)
@@ -472,7 +478,7 @@ function project_load_legacy_beta(loadbackground)
 			// Go through parts
 			for (var b = 0; b < load.tl_parts[a]; b++)
 			{
-				var tl = id;
+				tl = id;
 				
 				// Choose target timeline
 				if (b > 0)
@@ -560,7 +566,7 @@ function project_load_legacy_beta(loadbackground)
 		// Find parent
 		var par = load.tl_tl[load.tl_lock_parent[a]];
 		
-		// Find bodypart from ID
+		// Find model part from ID
 		var partid = load.tl_lock_part[a] - 1;
 		if (par.part_list != null && partid > -1)
 		{
@@ -617,15 +623,9 @@ function project_load_legacy_beta(loadbackground)
 		else
 			legacyname = legacy_block_05_texture_list[|oldslot]
 		
-		newslot = ds_list_find_index(mc_assets.block_texture_list, legacyname)
+		newslot = minecraft_assets_block_texture_picker_slot_find(legacyname)
 		if (newslot >= 0)
 			background_ground_slot = newslot
-		else // Animated?
-		{
-			newslot = ds_list_find_index(mc_assets.block_texture_ani_list, legacyname)
-			if (newslot >= 0)
-				background_ground_slot = ds_list_size(mc_assets.block_texture_list) + newslot
-		}
 		
 		// Sky
 		background_sky_color = load.sky_color

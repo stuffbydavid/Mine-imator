@@ -2,7 +2,7 @@
 /// @arg value
 /// @arg add
 
-function action_tl_path_shape_radius(value, add)
+function action_tl_path_shape_radius(val, add)
 {
 	if (history_undo)
 	{
@@ -42,9 +42,9 @@ function action_tl_path_shape_radius(value, add)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.path_shape_radius, other.path_shape_radius * add + value)
+				history_save_var(other.id, other.path_shape_radius, other.path_shape_radius * add + val)
 			
-			id.path_shape_radius = id.path_shape_radius * add + value
+			id.path_shape_radius = id.path_shape_radius * add + val
 			path_update = true
 		}
 	}

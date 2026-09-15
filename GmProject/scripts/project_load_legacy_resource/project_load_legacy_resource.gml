@@ -19,8 +19,8 @@ function project_load_legacy_resource()
 		if (typename = "particles")
 			typename = "particlesheet"
 		
-		if (typename = "schematic")
-			typename = "scenery"
+		if (typename = "scenery")
+			typename = "schematic"
 		
 		type = ds_list_find_index(res_type_name_list, typename)
 		

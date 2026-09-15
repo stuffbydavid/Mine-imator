@@ -35,6 +35,13 @@ function asset_load()
 	var ext = string_lower(filename_ext(fn));
 	if (ext = ".zip")
 	{
+		// Query resource packs without extracting them first
+		if (zip_is_resource_pack(fn))
+		{
+			action_res_pack_load(fn, false)
+			return true
+		}
+
 		// Unzip and look for valid files
 		var validfile = unzip_asset(fn);
 		
@@ -110,8 +117,8 @@ function asset_load()
 		case ".jpeg":
 		case ".dat":
 			log("Opening image", fn)
-			popup_importimage.filename = fn
-			popup_show(popup_importimage)
+			ds_list_add(popup_importimage.filenames, fn);
+			popup_importimage_show(popup_importimage.filenames[|0])
 			return true
 	}
 	

@@ -11,7 +11,11 @@ function view_update_surface(view, cam)
 	render_particles = view.particles
 	render_effects = view.effects
 	render_quality = view.quality
-	render_watermark = (settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"])
+	render_watermark = (
+		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||
+		(popup && popup.name = "exportmovie" && popup_exportmovie.watermark) ||
+		(popup && popup.name = "exportimage" && popup_exportimage.watermark)
+	)
 	render_start(view.surface, cam, content_width, content_height)
 	
 	if (view.quality = e_view_mode.RENDER)
@@ -47,12 +51,12 @@ function view_update_surface(view, cam)
 							view_shape_pointlight(tl)
 						else if (tl.type = e_tl_type.CAMERA && tl != cam)
 							view_shape_camera(tl)
-						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
+						else if (tl.type = e_tl_type.PARTICLE_SPAWNER)
 							view_shape_particles(tl)
 						else if (tl.type = e_tl_type.PATH)
 							view_shape_path(view, tl)
 						
-						if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.BODYPART && array_length(tl.part_joints_pos) > 0)
+						if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
 						{
 							// Draw bones
 							for (var i = 0; i < 2; i++)
@@ -70,7 +74,7 @@ function view_update_surface(view, cam)
 					tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
 					tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= content_width || tl_edit.world_pos_2d[Y] >= content_height)
 					
-					if (vis)
+					if (vis || view_control_edit)
 					{
 						view_control_ratio = 1//max(1, (100 / content_height) * 1.25)
 						

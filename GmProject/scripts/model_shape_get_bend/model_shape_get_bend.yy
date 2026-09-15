@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "model_shape_get_bend",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Models",
-    "path": "folders/Scripts/Minecraft/Models.yy",
+  "$GMScript":"v1",
+  "%Name":"model_shape_get_bend",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_shape_get_bend",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

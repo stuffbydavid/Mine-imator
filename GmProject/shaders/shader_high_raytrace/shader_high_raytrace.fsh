@@ -105,9 +105,9 @@ float VanDerCorput(int n, int base)
 	float denom   = 1.0;
 	float result  = 0.0;
 	
-	for(int i = 0; i < 16; i++)
+	for (int i = 0; i < 16; i++)
 	{
-		if(n > 0)
+		if (n > 0)
 		{
 			denom = mod(float(n), 2.0);
 			result += denom * invBase;

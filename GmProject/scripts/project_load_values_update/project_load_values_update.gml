@@ -13,12 +13,13 @@ function project_load_values_update()
 			value[e_value.BG_SUNLIGHT_STRENGTH] = app.background_sunlight_strength
 			
 			value[e_value.BG_SKY_CLOUDS_SHOW] = app.background_sky_clouds_show
-			value[e_value.BG_SKY_CLOUDS_HEIGHT] = app.background_sky_clouds_height
+			value[e_value.BG_SKY_CLOUDS_OFFSET_Z] = app.background_sky_clouds_offset_z
 			
 			value[e_value.BG_GROUND_SHOW] = app.background_ground_show
 			
 			value[e_value.BG_GRASS_COLOR] = app.background_grass_color
 			value[e_value.BG_FOLIAGE_COLOR] = app.background_foliage_color
+			value[e_value.BG_DRY_FOLIAGE_COLOR] = app.background_dry_foliage_color
 			value[e_value.BG_WATER_COLOR] = app.background_water_color
 			
 			value[e_value.BG_FOG_SHOW] = app.background_fog_show
@@ -77,6 +78,29 @@ function project_load_values_update()
 			value[e_value.CAM_SHAKE_MODE] = 1
 			value[e_value.CAM_SHAKE_SPEED_X] *= 10
 			value[e_value.CAM_SHAKE_SPEED_Y] *= 10
+		}
+	}
+	
+	// Display texture animation speed as a percentage (2.1.0)
+	if (load_format < e_project.FORMAT_CTB_106) // Convert from pre-2.1 arbitrary decimal number
+	{
+		if (timeline.type = e_tl_type.BACKGROUND)
+			value[e_value.BG_TEXTURE_ANI_SPEED] *= 3 // 75% for older projects
+	}
+	else if (load_format < e_project.FORMAT_210) // Convert from Continuation Build 'fps' display
+	{
+		if (timeline.type = e_tl_type.BACKGROUND)
+			value[e_value.BG_TEXTURE_ANI_SPEED] /= 20
+	}
+	
+	// Fixed sunrise direction + cloud direction (2.1.0)
+	if (load_format < e_project.FORMAT_210)
+	{
+		if (timeline.type = e_tl_type.BACKGROUND)
+		{
+			value[e_value.BG_SKY_TIME] *= -1
+			value[e_value.BG_SKY_CLOUDS_SPEED] *= -1
+			value[e_value.BG_SKY_CLOUDS_OFFSET_Y] *= -1
 		}
 	}
 }

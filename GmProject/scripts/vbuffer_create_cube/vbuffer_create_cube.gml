@@ -11,7 +11,7 @@ function vbuffer_create_cube(rad, tex1, tex2, thflip, tvflip, invert, mapped)
 {
 	vbuffer_start()
 	
-	var texsize = point2D(1 / 3, 1 / 2);
+	var texsize = point2D(1 / 3, 0.5);
 	
 	// X+
 	if (mapped)

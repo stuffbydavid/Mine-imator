@@ -96,6 +96,9 @@ function model_file_load_part(map, root, res, model)
 			texture_size = value_get_point2D(map[?"texture_size"])
 			var size = max(texture_size[X], texture_size[Y]);
 			texture_size = vec2(size, size) // Make square
+			
+			texture_scroll_speed = value_get_real(map[?"texture_scroll_speed"], 0)
+			texture_scroll_direction = value_get_real(map[?"texture_scroll_direction"], 0)
 		}
 		else
 		{
@@ -107,6 +110,8 @@ function model_file_load_part(map, root, res, model)
 			texture_material_inherit = other.texture_material_inherit
 			texture_normal_inherit = other.texture_normal_inherit
 			texture_size = texture_inherit.texture_size
+			texture_scroll_speed = texture_inherit.texture_scroll_speed
+			texture_scroll_direction = texture_inherit.texture_scroll_direction
 		}
 		
 		// Color (optional)
@@ -190,6 +195,9 @@ function model_file_load_part(map, root, res, model)
 		
 		// Show backfaces
 		backfaces = value_get_real(map[?"backfaces"], false)
+		
+		// Cast shadows
+		shadows = value_get_real(map[?"shadows"], true)
 		
 		// Bend (optional)
 		if (!is_undefined(map[?"bend"]))

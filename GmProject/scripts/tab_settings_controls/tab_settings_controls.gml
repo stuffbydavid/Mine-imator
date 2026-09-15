@@ -83,9 +83,9 @@ function tab_settings_controls()
 		tab_collapse_start()
 		
 		draw_keybind(e_keybind.RENDER_MODE, dx, dy)
+		draw_keybind(e_keybind.SECONDARY_VIEW, dx, dy)
 		draw_keybind(e_keybind.PARTICLES_SPAWN, dx, dy)
 		draw_keybind(e_keybind.PARTICLES_CLEAR, dx, dy)
-		draw_keybind(e_keybind.SECONDARY_VIEW, dx, dy)
 		dy += 8
 		
 		tab_collapse_end()
@@ -101,9 +101,12 @@ function tab_settings_controls()
 		tab_collapse_start()
 		
 		draw_keybind(e_keybind.PLAY, dx, dy)
+		draw_keybind(e_keybind.PLAY_STOP, dx, dy)
 		draw_keybind(e_keybind.PLAY_BEGINNING, dx, dy)
 		draw_keybind(e_keybind.MARKER_LEFT, dx, dy)
 		draw_keybind(e_keybind.MARKER_RIGHT, dx, dy)
+		draw_keybind(e_keybind.FRAME_PREVIOUS, dx, dy)
+		draw_keybind(e_keybind.FRAME_NEXT, dx, dy)
 		dy += 8
 		
 		tab_collapse_end()

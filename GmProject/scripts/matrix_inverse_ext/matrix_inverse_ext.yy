@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"matrix_inverse_ext",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"matrix_inverse_ext",
+  "parent":{
+    "name":"Matrix",
+    "path":"folders/Scripts/Utility/Math/Matrix.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

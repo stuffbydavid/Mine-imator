@@ -18,6 +18,9 @@ function action_tl_parent(par, index)
 					value[e_value.POS_Z] = other.tl_old_z[t]
 				}
 			}
+			for (var t = 0; t < save_var_amount; t++)
+				with (save_id_find(save_var_save_id[t]))
+					lock = other.save_var_old_value[t]
 		}
 	}
 	else
@@ -41,6 +44,8 @@ function action_tl_parent(par, index)
 				new_parent = save_id_get(par)
 				new_index = index
 				tl_amount = 0
+				save_var_amount = 0
+				first = true
 			}
 		}
 		

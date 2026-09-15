@@ -150,7 +150,7 @@ function tl_remove_clean()
 		
 		if (temp = id)
 		{
-			if (type = e_tl_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				if (model_texture_name_map != null)	
 					ds_map_destroy(model_texture_name_map)
@@ -158,8 +158,8 @@ function tl_remove_clean()
 				if (model_texture_material_name_map != null)	
 					ds_map_destroy(model_texture_material_name_map)
 				
-				if (model_tex_normal_name_map != null)	
-					ds_map_destroy(model_tex_normal_name_map)
+				if (model_texture_normal_name_map != null)	
+					ds_map_destroy(model_texture_normal_name_map)
 				
 				if (model_hide_list != null)
 					ds_list_destroy(model_hide_list)

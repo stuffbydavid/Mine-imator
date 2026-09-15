@@ -27,7 +27,7 @@ function action_tl_select_keyframes_region()
 		
 		with (obj_keyframe)
 		{
-			if (timeline.lock)
+			if (timeline.lock || !tl_update_list_filter(timeline))
 				continue
 			
 			if (position >= app.timeline_region_start && position <= app.timeline_region_end)

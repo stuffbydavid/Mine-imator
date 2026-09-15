@@ -17,7 +17,7 @@ function action_lib_scenery_load(fn)
 		else
 			hobj = history_set(action_lib_scenery_load)
 		
-		var res = new_res(fn, e_res_type.SCENERY);
+		var res = new_res(fn, e_res_type.SCHEMATIC);
 		res.loaded = !res.replaced
 		if (res.replaced)
 		{

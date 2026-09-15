@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_item_tex",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Item",
-    "path": "folders/Scripts/App/Actions/Bench/Item.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_item_tex",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_item_tex",
+  "parent":{
+    "name":"Item",
+    "path":"folders/Scripts/App/Actions/Bench/Item.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

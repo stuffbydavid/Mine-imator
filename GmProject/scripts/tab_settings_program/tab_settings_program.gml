@@ -57,7 +57,7 @@ function tab_settings_program()
 		draw_label_value(dx, dy, dw - 56, 40, text_get("settingswatermarkimagelocation"), directory, true)
 		if (draw_button_icon("settingswatermarkimport", dx + dw - (24 + 4 + 24), dy + 8, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltipimportwatermarkimage"))
 			action_setting_watermark_import()
-		if (draw_button_icon("settingswatermarkreset", dx + dw - 24, dy + 8, 24, 24, false, icons.RESET, null, false, "tooltipresetwatermarkimage"))
+		if (draw_button_icon("settingswatermarkreset", dx + dw - 24, dy + 8, 24, 24, false, icons.RESET, null, setting_watermark_fn = "", "tooltipresetwatermarkimage"))
 			action_setting_watermark_reset()
 		tab_next()
 		
@@ -124,6 +124,11 @@ function tab_settings_program()
 	
 	// Remove edges on large scenery
 	tab_control_switch()
-	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges)
+	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges, "settingssceneryremoveedgestip")
+	tab_next()
+
+	// Replace ground with large scenery
+	tab_control_switch()
+	draw_switch("settingssceneryreplaceground", dx, dy, setting_scenery_replace_ground, action_setting_scenery_replace_ground, "settingssceneryreplacegroundtip")
 	tab_next()
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "block_animate",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Blocks",
-    "path": "folders/Scripts/Minecraft/Blocks.yy",
+  "$GMScript":"v1",
+  "%Name":"block_animate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_animate",
+  "parent":{
+    "name":"Blocks",
+    "path":"folders/Scripts/Minecraft/Blocks.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

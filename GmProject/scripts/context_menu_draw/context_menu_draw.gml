@@ -44,9 +44,9 @@ function context_menu_draw()
 			continue
 		
 		if (id = other.context_menu_mouseon_item)
-			hovertime += test_reduced_motion(6, (60 / room_speed))
+			hovertime += test_reduced_motion(6, (60 / game_get_speed(gamespeed_fps)))
 		else
-			hovertime -= test_reduced_motion(6, (60 / room_speed))
+			hovertime -= test_reduced_motion(6, (60 / game_get_speed(gamespeed_fps)))
 		
 		hovertime = clamp(hovertime, 0, 6)
 		

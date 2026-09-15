@@ -24,6 +24,13 @@ function render_update_text()
 			render_generate_text(id.text, temp.text_font, temp.text_3d)
 	
 	with (obj_preview)
+	{
 		if (instance_exists(select) && select.object_index != obj_resource && select.type = e_temp_type.TEXT)
-			render_generate_text("AaBbCc", select.text_font, select.text_3d)
+		{
+			var text = default_text;
+			if (select.object_index = obj_bench_settings && select.text != "")
+				text = select.text
+			render_generate_text(text, select.text_font, select.text_3d)
+		}
+	}
 }

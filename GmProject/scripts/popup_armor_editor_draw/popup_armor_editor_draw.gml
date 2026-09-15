@@ -33,7 +33,7 @@ function popup_armor_editor_draw_piece_type(piece, pieceid, capwid)
 		if (popup.armor_edit = bench_settings)
 			draw_button_menu(state, e_menu.LIST, dx, dy, w, 24, type, minecraft_asset_get_name("modelstatevalue", type), action_bench_model_state, false, null, null, "", c_white, 1, capwid)
 		else
-			draw_button_menu(state, e_menu.LIST, dx, dy, w, 24, type, minecraft_asset_get_name("modelstatevalue", type), (popup.armor_edit.type = e_temp_type.BODYPART) ? action_lib_bodypart_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
+			draw_button_menu(state, e_menu.LIST, dx, dy, w, 24, type, minecraft_asset_get_name("modelstatevalue", type), (popup.armor_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
 	}
 	menu_model_current = null
 	
@@ -77,7 +77,7 @@ function popup_armor_editor_draw()
 	popup.preview.select = popup.armor_edit
 	popup.preview.last_select = popup.armor_edit
 	popup.preview.update = true
-	preview_draw(popup.preview, dx, dy, 200, dh - (dy - content_y))
+	preview_draw(popup.preview, dx, dy, 200, dh - (dy - content_y + 44))
 	
 	// Settings
 	dx += 216
@@ -101,4 +101,10 @@ function popup_armor_editor_draw()
 	dy += 8
 	
 	popup_armor_editor_draw_piece("boots", 12, capwid)
+	
+	dy += 12
+	tab_control_button_label()
+	if (draw_button_label("armoreditorok", content_x + content_width / 2, dy, 100, null, e_button.PRIMARY, null, e_anchor.CENTER))
+		popup_close()
+	tab_next()
 }

@@ -41,6 +41,7 @@ function app_startup()
 	render_startup()
 	camera_startup()
 	
+	minecraft_game_startup()
 	if (!minecraft_assets_startup())
 		return false
 	

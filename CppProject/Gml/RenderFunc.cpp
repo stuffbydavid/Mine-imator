@@ -62,7 +62,12 @@ namespace CppProject
 
 	void gpu_set_blendenable(BoolType enabled)
 	{
-		// Blending always enabled
+		GFX->SetBlending(enabled);
+	}
+
+	void gpu_set_colorwriteenable(BoolType red, BoolType green, BoolType blue, BoolType alpha)
+	{
+		GFX->SetColorWrite(red, green, blue, alpha);
 	}
 
 	void gpu_set_blendmode_ext_sepalpha(IntType src, IntType dest, IntType alphasrc, IntType alphadest)
@@ -197,6 +202,11 @@ namespace CppProject
 	void gpu_set_ztestenable(BoolType enabled)
 	{
 		GFX->SetDepthTest(enabled);
+	}
+
+	void gpu_set_zfunc(IntType func)
+	{
+		GFX->SetDepthFunc(func);
 	}
 
 	void gpu_set_zwriteenable(BoolType enabled)
@@ -434,6 +444,11 @@ namespace CppProject
 		return GFX->GetMaxSize();
 	}
 
+	IntType surface_get_target()
+	{
+		return (GFX->surface == AppWin->GetSurface() ? -1 : GFX->surface->id);
+	}
+
 	void surface_reset_target()
 	{
 		if (GFX->surface == AppWin->GetSurface())
@@ -447,6 +462,7 @@ namespace CppProject
 		GFX->surface->EndUse();
 		GFX->surface = AppWin->GetSurface();
 		GFX->surface->BeginUse();
+		GFX->ClipResume();
 	}
 
 	void surface_resize(IntType id, IntType width, IntType height)
@@ -483,7 +499,7 @@ namespace CppProject
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
-			GFX->ClipEnd();
+			GFX->ClipSuspend();
 			GFX->ResetMRT();
 			GFX->surface->EndUse();
 			GFX->surface = surf;

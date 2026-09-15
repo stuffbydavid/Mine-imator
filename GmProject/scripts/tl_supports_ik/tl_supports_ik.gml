@@ -8,7 +8,7 @@ function tl_supports_ik(typeinit = true)
 				bend_part = e_part.LOWER &&
 				bend_axis[X] && !bend_axis[Y] && !bend_axis[Z])
 	
-	return (type = e_tl_type.BODYPART &&
+	return (type = e_tl_type.MODEL_PART &&
 		model_part != null &&
 		model_part.bend_part != null &&
 		model_part.bend_end_offset > 0 &&

@@ -11,8 +11,8 @@ function app_update_micro_animations()
 		if (timeline_zoom != timeline_zoom_goal)
 		{
 			timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 4 / delta)
-			timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
 			timeline.hor_scroll.value_goal = max(0, timeline.hor_scroll.value_goal)
+			timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
 		}
 		
 		if (abs(timeline_zoom_goal - timeline_zoom) < 0.0001)

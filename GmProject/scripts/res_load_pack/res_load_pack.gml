@@ -1,5 +1,5 @@
 /// res_load_pack()
-/// @desc Unzips an archive and stores the textures in the resource.
+/// @desc Unzips an archive or loads a .packcache file and stores the textures in the resource.
 
 function res_load_pack()
 {
@@ -12,6 +12,7 @@ function res_load_pack()
 		{
 			debug("res_load_pack", "unzip")
 			
+			// Extract source textures
 			if (type != e_res_type.PACK_UNZIPPED)
 			{
 				if (!unzip(fname))
@@ -32,7 +33,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackmodeltextures")
-				popup_loading.progress = 1 / 4
+				popup_loading.progress = 0.25
 			}
 			break
 		}
@@ -47,7 +48,7 @@ function res_load_pack()
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackblocktextures")
-				popup_loading.progress = 2 / 4
+				popup_loading.progress = 0.5
 			}
 			break
 		}
@@ -59,41 +60,48 @@ function res_load_pack()
 			
 			// Legacy pack support
 			file_rename_lib(load_assets_dir + mc_textures_directory + "blocks", load_assets_dir + mc_textures_directory + "block")
-			
 			res_load_pack_block_textures()
 			
 			load_stage = "itemtextures"
 			with (app)
 			{
 				popup_loading.text = text_get("loadpackitemtextures")
-				popup_loading.progress = 3 / 4
+				popup_loading.progress = 0.75
 			}
 			break
 		}
 		
-		// Load item textures and finish
+		// Load remaining texture sheets
 		case "itemtextures":
 		{
 			debug("res_load_pack", "itemtextures")
 			
 			// Legacy pack support
 			file_rename_lib(load_assets_dir + mc_textures_directory + "items", load_assets_dir + mc_textures_directory + "item")
-			
 			res_load_pack_item_textures("diffuse", "")
 			res_load_pack_item_textures("material", "_s")
 			res_load_pack_item_textures("normal", "_n")
-			
 			res_load_pack_particle_textures()
 			res_load_pack_misc()
-			res_update_colors()
+			res_save_pack_cache(save_folder + "/" + filename + ".packcache")
 			
+			load_stage = "done"
+			with (app)
+				popup_loading.progress = 0.9
+			break
+		}
+
+		// Finish cached or extracted pack
+		case "done":
+		{
+			res_update_colors()
 			ready = true
 			app.history_resource_update = true
 			
 			log("Pack loaded")
 			move_all_to_texture_page()
 			
-			// Update project and load next in the queue
+			// Update dependent resources
 			with (obj_template)
 				if (item_tex = other.id)
 					render_generate_item()
@@ -120,9 +128,21 @@ function res_load_pack()
 				if (background_sky_clouds_tex = other.id)
 					background_sky_update_clouds()
 				
-				load_next()
+				lib_preview.update = true
+				res_preview.update = true
+				bench_settings.preview.update = true
+				popup_loading.progress = 1
 			}
 			
+			load_stage = "next"
+			break
+		}
+		
+		// Next resource
+		case "next":
+		{
+			with (app)
+				load_next()
 			break
 		}
 	}

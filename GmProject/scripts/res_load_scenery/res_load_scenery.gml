@@ -31,8 +31,12 @@ function res_load_scenery()
 			{
 				if (!file_exists_lib(fname))
 				{
-					with (app)
-						load_next()
+					if (scenery_instant)
+						load_stage = ""
+					else
+						with (app)
+							load_next()
+					ready = true
 					return 0
 				}
 		
@@ -50,7 +54,14 @@ function res_load_scenery()
 					if (!file_exists_lib(temp_file))
 					{
 						log("GZunzip error", "gzunzip")
-						break
+						error("errorloadschematic")
+						if (scenery_instant)
+							load_stage = ""
+						else
+							with (app)
+								load_next()
+						ready = true
+						return 0
 					}
 			
 					buffer_current = buffer_load(temp_file)
@@ -120,22 +131,29 @@ function res_load_scenery()
 				ds_list_clear(scenery_tl_list)
 			}
 		
-			with (app)
-			{
-				popup_loading.text = text_get("loadsceneryblocks")
-				if (mc_builder.file_map != "")
-					popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
-				else
-					popup_loading.caption = text_get("loadscenerycaption", other.filename)
-				popup_loading.progress = 2 / 10
-			}
+			if (!scenery_instant)
+				with (app)
+				{
+					popup_loading.text = text_get("loadsceneryblocks")
+					if (mc_builder.file_map != "")
+						popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
+					else
+						popup_loading.caption = text_get("loadscenerycaption", other.filename)
+					popup_loading.progress = 0.2
+				}
 		
 			// A null value will peform a check if block timelines should be added
 			if (scenery_tl_add = null)
 			{
-				if (mc_builder.sch_timeline_amount > 500) // More than 500 timelines, always skip
+				if (mc_builder.sch_timeline_amount > scenery_timeline_limit) // More than limit of timelines, always skip
 					scenery_tl_add = false
-				else if (mc_builder.sch_timeline_amount > 20) // More than 20 possible timelines, ask the user
+				else if (creator = app.bench_settings)
+				{
+					scenery_tl_add = true
+					if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
+						scenery_tl_prompt_amount = mc_builder.sch_timeline_amount
+				}
+				else if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
 					scenery_tl_add = question(text_get("loadsceneryaddtimelines", mc_builder.sch_timeline_amount))
 				else // Less, always add
 					scenery_tl_add = true
@@ -192,8 +210,9 @@ function res_load_scenery()
 				builder_scenery = false
 			}
 		
-			with (app)
-				popup_loading.progress = 2 / 10 + (2 / 10) * (mc_builder.build_pos / mc_builder.build_size_total)
+			if (!scenery_instant)
+				with (app)
+					popup_loading.progress = 0.2 + (0.2) * (mc_builder.build_pos / mc_builder.build_size_total)
 					
 			if (mc_builder.build_pos = mc_builder.build_size_total)
 			{
@@ -207,8 +226,9 @@ function res_load_scenery()
 				mc_builder.build_pos_z = 0
 				mc_builder.build_pos = 0
 			
-				with (app)
-					popup_loading.text = text_get("loadscenerymodel")
+				if (!scenery_instant)
+					with (app)
+						popup_loading.text = text_get("loadscenerymodel")
 			}
 		
 			break
@@ -244,75 +264,95 @@ function res_load_scenery()
 				builder_scenery = false
 			}
 		
-			with (app)
-				popup_loading.progress = 4 / 10 + (6 / 10) * (mc_builder.build_pos / mc_builder.build_size_total)
+			if (!scenery_instant)
+				with (app)
+					popup_loading.progress = 0.4 + 0.5 * (mc_builder.build_pos / mc_builder.build_size_total)
 					
 			// All done
 			if (mc_builder.build_pos = mc_builder.build_size_total)
+				load_stage = "done"
+			
+			break
+		}
+		
+		// Finish schematic and update project
+		case "done":
+		{
+			// Non multi-threaded blocks
+			with (mc_builder)
 			{
-				// Non multi-threaded blocks
-				with (mc_builder)
-				{
-					if (!block_multithreaded_skip)
-						break;
+				if (!block_multithreaded_skip)
+					break;
 						
-					build_multithreaded = false
-					builder_spawn_threads(1)
-					with (thread_list[|0])
-					{
-						for (var p = 0; p < build_size_total; p++)
-						{
-							builder_thread_set_pos(p)
-							builder_generate()
-						}
-					}
-					builder_combine_threads()
-				}
-				
-				debug_timer_stop("res_load_scenery, Generate models")
-				block_vbuffer_done()
-			
-				with (mc_builder)
+				build_multithreaded = false
+				builder_spawn_threads(1)
+				with (thread_list[|0])
 				{
-					builder_done()
-					block_tl_list = null
-					build_randomize = false
+					for (var p = 0; p < build_size_total; p++)
+					{
+						builder_thread_set_pos(p)
+						builder_generate()
+					}
 				}
-			
-				scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
-				ready = true
-
-				// Put map name in resource name
-				if (mc_builder.file_map != "")
-					display_name = text_get("loadscenerypieceof", mc_builder.file_map)
+				builder_combine_threads()
+			}
 				
-				// Save cached mesh
+			debug_timer_stop("res_load_scenery, Generate models")
+			block_vbuffer_done()
+			
+			with (mc_builder)
+			{
+				builder_done()
+				block_tl_list = null
+				build_randomize = false
+			}
+			
+			scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
+			ready = true
+
+			// Put map name in resource name
+			if (mc_builder.file_map != "")
+				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
+				
+			// Save cached mesh
+			if (creator != app.bench_settings)
 				res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
 			
-				// Update templates
-				with (obj_template)
+			// Update templates
+			with (obj_template)
+			{
+				if (scenery = other.id)
 				{
-					if (scenery = other.id)
-					{
-						temp_update_display_name()
-						temp_update_rot_point()
-					}
-				}
-			
-				// Update timelines
-				with (obj_timeline)
-					if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
-						tl_animate_scenery()
-			
-				// Next
-				with (app)
-				{
-					tl_update_list()
-					tl_update_matrix()
-					load_next()
+					temp_update_display_name()
+					temp_update_rot_point()
 				}
 			}
+			
+			// Update timelines
+			with (obj_timeline)
+				if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
+					tl_animate_scenery()
+			
+			
+			with (app)
+			{
+				tl_update_list()
+				tl_update_matrix()
+				lib_preview.update = true
+				res_preview.update = true
+				bench_settings.preview.update = true
+				popup_loading.progress = 1
+			}
+			
+			load_stage = scenery_instant ? "" : "next"
+			break
+		}
 		
+		// Next resource
+		case "next":
+		{
+			with (app)
+				load_next()
 			break
 		}
 	}
@@ -325,8 +365,12 @@ function res_load_scenery()
 	{
 		error("errorloadschematic")
 		buffer_delete(buffer_current)
-		with (app)
-			load_next()
+		if (scenery_instant)
+			load_stage = ""
+		else
+			with (app)
+				load_next()
+		ready = true
 	}
 
 

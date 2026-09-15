@@ -1,21 +1,38 @@
 #include "VertexBuffer.hpp"
 #include "Shader.hpp"
 
+#include <QIODevice>
+#include <limits>
+
 namespace CppProject
 {
 	VertexBuffer::VertexBuffer(QDataStream& stream) : VertexBuffer()
 	{
-		qint64 numMeshes;
+		valid = false;
+
+		qint64 numMeshes = 0;
 		stream >> numMeshes;
+		QIODevice* device = stream.device();
+		if (stream.status() != QDataStream::Ok || device == nullptr || numMeshes < 0 ||
+			numMeshes > device->bytesAvailable() / (sizeof(qint64) * 2))
+			return;
 
 		for (IntType m = 0; m < numMeshes; m++)
 		{
-			qint64 numVert, numInd;
+			qint64 numVert = 0, numInd = 0;
 			stream >> numVert;
 			stream >> numInd;
 
-			if (!numInd)
-				break;
+			// Validate mesh header
+			if (stream.status() != QDataStream::Ok || numVert <= 0 || numInd <= 0 ||
+				numVert > MAX_MESH_INDICES || numInd > MAX_MESH_INDICES || numInd % 3 != 0)
+				return;
+
+			qint64 vertexBytes = numVert * sizeof(Vertex);
+			qint64 indexBytes = numInd * sizeof(uint32_t);
+			if (vertexBytes > std::numeric_limits<int>::max() || indexBytes > std::numeric_limits<int>::max() ||
+				vertexBytes + indexBytes > device->bytesAvailable())
+				return;
 
 			Mesh<>* mesh = new Mesh;
 			mesh->numVertices = numVert;
@@ -23,13 +40,31 @@ namespace CppProject
 
 			// Read vertices
 			mesh->vertexData.Alloc(mesh->numVertices);
-			if (stream.readRawData((char*)mesh->vertexData.data, (int)mesh->numVertices * sizeof(Vertex)) <= 0)
+			if (stream.readRawData((char*)mesh->vertexData.data, (int)vertexBytes) != vertexBytes)
+			{
 				WARNING("readRawData error");
+				delete mesh;
+				return;
+			}
 
 			// Read indices
 			mesh->indexData.Alloc(mesh->numIndices);
-			if (stream.readRawData((char*)mesh->indexData.data, (int)mesh->numIndices * sizeof(uint32_t)) <= 0)
+			if (stream.readRawData((char*)mesh->indexData.data, (int)indexBytes) != indexBytes)
+			{
 				WARNING("readRawData error");
+				delete mesh;
+				return;
+			}
+
+			// Validate mesh indices
+			for (IntType i = 0; i < mesh->numIndices; i++)
+			{
+				if (mesh->indexData[i] >= mesh->numVertices)
+				{
+					delete mesh;
+					return;
+				}
+			}
 
 			// Create mesh buffers
 			mesh->bounds = Bounds(mesh->vertexData);
@@ -37,10 +72,15 @@ namespace CppProject
 			meshes.append(mesh);
 			numIndices += numInd;
 		}
+
+		valid = true;
 	}
 
 	IntType VertexBuffer::Submit(Shader* shader, Matrix boundsTransform)
 	{
+		if (!valid)
+			return 0;
+
 		IntType calls = 0;
 		for (Mesh<>* mesh : meshes)
 		{
@@ -323,6 +363,12 @@ namespace CppProject
 
 	void VertexBuffer::Write(QDataStream& stream)
 	{
+		if (!valid)
+		{
+			stream << (qint64)0;
+			return;
+		}
+
 		stream << (qint64)meshes.size();
 
 		for (Mesh<>* mesh : meshes)
@@ -346,6 +392,9 @@ namespace CppProject
 
 	IntType VertexBuffer::GetWriteBytes() const
 	{
+		if (!valid)
+			return sizeof(qint64);
+
 		IntType bytes = 8; // 64 bits numMeshes
 		for (Mesh<>* mesh : meshes)
 			bytes +=

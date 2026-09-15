@@ -34,6 +34,12 @@ StringId Function::getScope()
 	if (this->structObject != nullptr)
 		return this->structObject->name;
 
+	if (this->isCppSeparate && this->cppSeparateHeader.contains("(Scope<"))
+	{
+		int start = this->cppSeparateHeader.indexOf("(Scope<") + 7;
+		int end = this->cppSeparateHeader.indexOf(">", start);
+		return StringId(this->cppSeparateHeader.substring(start, end - start));
+	}
 
 	if (this->scopeAssignments.size() == 0)
 		return this->hasInstanceVars ? STR(any) : STR(global);
@@ -182,7 +188,7 @@ String Function::toExecuteCpp()
 
 	// Create scope with ids
 	StringId scope = getScope();
-	if (this->structObject == nullptr && scope != STR(global) && scope != STR(app))
+	if (this->structObject == nullptr && scope != STR(global) && (scope != STR(app) || this->isCppSeparate))
 	{
 		cpp += "Scope";
 		if (scope == STR(any))

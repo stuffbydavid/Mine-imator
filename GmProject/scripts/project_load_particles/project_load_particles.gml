@@ -129,6 +129,7 @@ function project_load_particles(map)
 			spd_mul_random_min = value_get_point3D(ptypemap[?"spd_mul_random_min"], spd_mul_random_min)
 			spd_mul_random_max = value_get_point3D(ptypemap[?"spd_mul_random_max"], spd_mul_random_max)
 			
+			rot_spawner_angle = value_get_real(ptypemap[?"rot_spawner_angle"], rot_spawner_angle)
 			rot_extend = value_get_real(ptypemap[?"rot_extend"], rot_extend)
 			rot = value_get_point3D(ptypemap[?"rot"], rot)
 			rot_israndom = value_get_point3D(ptypemap[?"rot_israndom"], rot_israndom)

@@ -8,7 +8,7 @@ function tab_properties_library()
 	tab_next()
 	
 	// List
-	tab_control_sortlist(6)
+	tab_control_sortlist(tab.library.list)
 	sortlist_draw(tab.library.list, dx, dy, dw, tab_control_h, temp_edit)
 	tab_next()
 	
@@ -38,13 +38,21 @@ function tab_properties_library()
 	draw_textfield("libraryname", dx, dy, dw, 24, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
 	tab_next()
 	
+	if (type_is_shape(temp_edit.type))
+	{
+		tab_control_menu()
+		draw_button_menu("libraryshapetype", e_menu.LIST, dx, dy, dw, 24, temp_edit.type, text_get("type" + temp_type_name_list[|temp_edit.type]), action_lib_shape_type)
+		tab_next()
+	}
+
 	switch (temp_edit.type)
 	{
 		case e_temp_type.CHARACTER:
+		case e_temp_type.EQUIPMENT:
 		case e_temp_type.SPECIAL_BLOCK:
 		{
 			var text, wid;
-			text = ((temp_edit.type = e_temp_type.CHARACTER) ? "librarycharmodel" : "libraryspblockmodel")
+			text = ((temp_edit.type = e_temp_type.CHARACTER) ? "librarycharmodel" : (temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmentmodel" : "libraryspblockmodel"))
 			wid = text_max_width("librarycharmodelchange") + 20
 			
 			// Model
@@ -91,7 +99,7 @@ function tab_properties_library()
 				tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktex" : "libraryskin"), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
+			draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttex" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktex" : "libraryskin")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
 			tab_next()
 			
 			if (project_render_material_maps)
@@ -102,7 +110,7 @@ function tab_properties_library()
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexmaterial" : "libraryskinmaterial"), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexmaterial" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexmaterial" : "libraryskinmaterial")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
 				tab_next()
 			
 				// Skin (Normal map)
@@ -111,7 +119,7 @@ function tab_properties_library()
 					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu(((temp_edit.type = e_temp_type.SPECIAL_BLOCK) ? "libraryspblocktexnormal" : "libraryskinnormal"), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexnormal" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexnormal" : "libraryskinnormal")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
 				tab_next()
 			}
 			
@@ -177,9 +185,22 @@ function tab_properties_library()
 			
 			draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 			
-			if (res.item_sheet_texture != null)
+			if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 			{
-				draw_texture_slot(res.item_sheet_texture, temp_edit.item_slot, dx + wid + 18, dy + 6, 16, 16, res.item_sheet_size[X], res.item_sheet_size[Y])
+				var sheet, slot;
+				if (res.type = e_res_type.PACK)
+				{
+					var decodedslot = minecraft_assets_texture_picker_slot_decode(temp_edit.item_slot, mc_assets.item_texture_list)
+					sheet = decodedslot[0]
+					slot = decodedslot[1]
+				}
+				else
+				{
+					sheet = e_item_sheet.SIZE16
+					slot = temp_edit.item_slot
+				}
+				if (sheet >= 0)
+					draw_texture_slot(res.item_sheet_texture[sheet], slot, dx + wid + 18, dy + 6, 16, 16, res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][X] : res.item_sheet_size[X], res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][Y] : res.item_sheet_size[Y])
 				
 				if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeitem"))
 					tab_toggle(template_editor)
@@ -261,9 +282,13 @@ function tab_properties_library()
 		
 		case e_temp_type.BLOCK:
 		{
+			var text = "";
+			if (!is_undefined(mc_assets.block_name_map[?temp_edit.block_name]))
+				text = minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name)
+			
 			// Block
 			tab_control(24)
-			draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name))
+			draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), text)
 			
 			// Change
 			if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeblock"))
@@ -292,20 +317,19 @@ function tab_properties_library()
 			break
 		}
 		
-		case e_temp_type.BODYPART:
+		case e_temp_type.MODEL_PART:
 		{
 			var text;
-			
 			if (temp_edit.model_file != null)
-				text = text_get("librarybodypartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
+				text = text_get("librarymodelpartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
 			else
-				text = text_get("librarybodypartunknown")
+				text = text_get("librarymodelpartunknown")
 			
 			tab_control(24)
-			draw_label_value(dx, dy, dw, 24, text_get("typebodypart"), text)
+			draw_label_value(dx, dy, dw, 24, text_get("typemodelpart"), text)
 			
 			// Change
-			if (draw_button_icon("librarybodypartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
+			if (draw_button_icon("librarymodelpartchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL))
 				tab_toggle(template_editor)
 			
 			tab_next()
@@ -344,7 +368,7 @@ function tab_properties_library()
 				tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("librarybodypartskin", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
+			draw_button_menu("librarymodelpartskin", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
 			tab_next()
 			
 			if (project_render_material_maps)
@@ -355,7 +379,7 @@ function tab_properties_library()
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu("librarybodypartskinmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				draw_button_menu("librarymodelpartskinmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
 				tab_next()
 			
 				// Skin (Normal map)
@@ -364,7 +388,7 @@ function tab_properties_library()
 					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu("librarybodypartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				draw_button_menu("librarymodelpartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
 				tab_next()
 			}
 			
@@ -486,17 +510,29 @@ function tab_properties_library()
 				// Advanced mode only
 				if (setting_advanced_mode)
 				{
-					tab_control_checkbox()
-					draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
-					tab_next()
+					var mappedwid, exportwid;
+					draw_set_font(font_label)
+					mappedwid = 48 + string_width(text_get("libraryshapetexmapped"))
+					draw_set_font(font_button)
+					exportwid = 52 + string_width(text_get("libraryshapetexsavemap"))
 					
-					if (temp_edit.shape_tex_mapped)
+					if (dw >= mappedwid + exportwid + 8)
 					{
 						tab_control_button_label()
+						draw_checkbox("libraryshapetexmapped", dx, dy + 4, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
+						if (draw_button_label("libraryshapetexsavemap", dx + dw, dy, exportwid, icons.TEXTURE_EXPORT, e_button.SECONDARY, null, e_anchor.RIGHT))
+							action_lib_shape_save_map(temp_edit.type)
+						tab_next()
+					}
+					else
+					{
+						tab_control_checkbox()
+						draw_checkbox("libraryshapetexmapped", dx, dy, temp_edit.shape_tex_mapped, action_lib_shape_tex_mapped, "libraryshapetexmappedtip")
+						tab_next()
 						
+						tab_control_button_label()
 						if (draw_button_label("libraryshapetexsavemap", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
-							action_lib_shape_save_map()
-						
+							action_lib_shape_save_map(temp_edit.type)
 						tab_next()
 					}
 				}
@@ -510,16 +546,16 @@ function tab_properties_library()
 					textfield_group_add("libraryshapetexhoffset", temp_edit.shape_tex_hoffset, 0, action_lib_shape_tex_hoffset, axis_edit, tab.library.tbx_shape_tex_hoffset)
 					textfield_group_add("libraryshapetexvoffset", temp_edit.shape_tex_voffset, 0, action_lib_shape_tex_voffset, axis_edit, tab.library.tbx_shape_tex_voffset)
 					
-					tab_control_textfield_group()
-					draw_textfield_group("libraryshapetexoffset", dx, dy, dw, 1 / 100, -no_limit, no_limit, 0, true, false, 3)
+					tab_control_textfield_group(true, false)
+					draw_textfield_group("libraryshapetexoffset", dx, dy, dw, 0.01, -no_limit, no_limit, 0, true, false, 3)
 					tab_next()
 					
 					// Repeat
 					textfield_group_add("libraryshapetexhrepeat", temp_edit.shape_tex_hrepeat, 1, action_lib_shape_tex_hrepeat, axis_edit, tab.library.tbx_shape_tex_hrepeat)
 					textfield_group_add("libraryshapetexvrepeat", temp_edit.shape_tex_vrepeat, 1, action_lib_shape_tex_vrepeat, axis_edit, tab.library.tbx_shape_tex_vrepeat)
 					
-					tab_control_textfield_group()
-					draw_textfield_group("libraryshapetexrepeat", dx, dy, dw, 1 / 100, 0, no_limit, 0, true, false, 3)
+					tab_control_textfield_group(true, false)
+					draw_textfield_group("libraryshapetexrepeat", dx, dy, dw, 0.01, 0, no_limit, 0, true, false, 3)
 					tab_next()
 				}
 				
@@ -546,11 +582,16 @@ function tab_properties_library()
 			draw_checkbox("libraryshapeinvert", dx, dy, temp_edit.shape_invert, action_lib_shape_invert)
 			tab_next()
 			
-			if (temp_edit.type = e_temp_type.SPHERE || temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER)
+			if (temp_edit.type = e_temp_type.CONE || temp_edit.type = e_temp_type.CYLINDER || temp_edit.type = e_temp_type.SPHERE)
 			{
+				// Smooth
+				tab_control_checkbox()
+				draw_checkbox("libraryshapesmooth", dx, dy, temp_edit.shape_smooth, action_lib_shape_smooth)
+				tab_next()
+				
 				// Detail
 				tab_control_dragger()
-				draw_dragger("libraryshapedetail", dx, dy, dragger_width, temp_edit.shape_detail, 1 / 4, 3, no_limit, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
+				draw_dragger("libraryshapedetail", dx, dy, dragger_width, temp_edit.shape_detail, 0.25, temp_edit.type = e_temp_type.SPHERE ? 4 : 3, 256, 32, 1, tab.library.tbx_shape_detail, action_lib_shape_detail)
 				tab_next()
 			}
 			else if (temp_edit.type = e_temp_type.SURFACE)
@@ -640,6 +681,14 @@ function tab_properties_library()
 				tab_next()
 			}
 			
+			// Model blend color
+			if (temp_edit.model_use_blend_color)
+			{
+				tab_control_color()
+				draw_button_color("librarymodelcolor", dx, dy, dw, temp_edit.model_blend_color, temp_edit.model_blend_color_default, false, action_lib_model_blend_color)
+				tab_next()
+			}
+			
 			break	
 		}
 	}
@@ -670,8 +719,8 @@ function tab_properties_library()
 			axis_edit = (setting_z_is_up ? Z : Y)
 			textfield_group_add("libraryrepeatz", temp_edit.block_repeat[axis_edit], 1, action_lib_block_repeat, axis_edit, tab.library.tbx_repeat_z)
 			
-			tab_control_textfield_group(false)
-			draw_textfield_group("libraryrepeat", dx, dy, dw, 1 / 10, 1, 1000, 1, false, true, 1)
+			tab_control_textfield_group()
+			draw_textfield_group("libraryrepeat", dx, dy, dw, 0.1, 1, 1000, 1, false, true, 1)
 			tab_next()
 		}
 	}

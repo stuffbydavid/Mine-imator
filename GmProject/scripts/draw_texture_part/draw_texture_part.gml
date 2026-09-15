@@ -48,6 +48,20 @@ function draw_texture_part()
 	tw = texture_width(tex)
 	th = texture_height(tex)
 	
+	// Do not apply UI clipping while compositing into an off-screen texture or surface
+	if (shader_clip_active && !is_cpp())
+	{
+		var target = surface_get_target()
+		if (target = -1 || target = application_surface)
+		{
+			render_set_uniform_int("uClipEnabled", 1)
+			render_set_uniform("uClipBox", [shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height])
+			render_set_uniform("uScreenSize", [1, 1])
+		}
+		else
+			render_set_uniform_int("uClipEnabled", 0)
+	}
+
 	render_set_texture(tex)
 	
 	draw_primitive_begin(pr_trianglestrip)

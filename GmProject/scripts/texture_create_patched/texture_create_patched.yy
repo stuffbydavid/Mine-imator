@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"texture_create_patched",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"texture_create_patched",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Utility/Texture.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

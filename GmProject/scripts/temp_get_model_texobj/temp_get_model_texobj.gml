@@ -33,7 +33,7 @@ function temp_get_model_texobj(texobj)
 		{
 			if (texobj.model_format = e_model_format.BLOCK)
 			{
-				if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
+				if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
 					texobj = mc_res
 			}
 			else

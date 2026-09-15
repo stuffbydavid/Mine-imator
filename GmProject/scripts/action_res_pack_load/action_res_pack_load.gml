@@ -1,7 +1,7 @@
-/// action_res_pack_load(filename)
+/// action_res_pack_load(filename, [unpacked])
 /// @arg filename
 
-function action_res_pack_load(fn)
+function action_res_pack_load(fn, unpacked = true)
 {
 	if (history_undo)
 	{
@@ -16,8 +16,10 @@ function action_res_pack_load(fn)
 			fn = history_data.filename
 			res = new_res(fn, e_res_type.PACK)
 		}
-		else
+		else if (unpacked)
 			res = new_res(fn, e_res_type.PACK_UNZIPPED)
+		else
+			res = new_res(fn, e_res_type.PACK)
 		
 		res.loaded = true
 		with (res)

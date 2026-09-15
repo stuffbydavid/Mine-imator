@@ -1,30 +1,26 @@
-/// tab_frame_editor_tex_normal()
+/// tab_frame_editor_texture_normal()
 
-function tab_frame_editor_tex_normal()
+function tab_frame_editor_texture_normal()
 {
-	if (!tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
-		return 0
-	
 	var texobj, name, tex;
-	tex = null
 	name = ""
+	tex = null
 	
-	if (tl_edit.temp = null)
-		return 0
-	
-	if (tl_edit.temp != null)
+	// Get material texture
+	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && tl_edit.temp != null)
 	{
 		switch (tl_edit.type)
 		{
 			case e_tl_type.CHARACTER:
+			case e_tl_type.EQUIPMENT:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texnormal"
 				
 				var modelfile = tl_edit.temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_temp_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				with (tl_edit.temp)
@@ -83,10 +79,9 @@ function tab_frame_editor_tex_normal()
 			}
 		}
 	}
-	
-	// Paths don't use templates
-	if (tl_edit.type = e_tl_type.PATH)
+	else if (tl_edit.type = e_tl_type.PATH)
 	{
+		// Paths don't use templates
 		name = "frameeditorshapetexnormal"
 		texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 		
@@ -95,6 +90,8 @@ function tab_frame_editor_tex_normal()
 		else
 			tex = texobj.texture
 	}
+	else
+		return 0
 	
 	if (name = "")
 		return 0

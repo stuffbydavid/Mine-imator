@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "matrix_transpose",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Matrix",
-    "path": "folders/Scripts/Utility/Math/Matrix.yy",
+  "$GMScript":"v1",
+  "%Name":"matrix_transpose",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"matrix_transpose",
+  "parent":{
+    "name":"Matrix",
+    "path":"folders/Scripts/Utility/Math/Matrix.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -27,7 +27,7 @@ function action_tl_select_keyframes_last()
 		
 		with (obj_timeline)
 		{
-			if (lock || ds_list_size(keyframe_list) = 0)
+			if (lock || ds_list_size(keyframe_list) = 0 || !tl_update_list_filter(id))
 				continue
 			
 			tl_keyframe_select(keyframe_list[|ds_list_size(keyframe_list) - 1])

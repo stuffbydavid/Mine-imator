@@ -48,7 +48,7 @@ function view_control_move(view)
 			var move, pos, snapval;
 			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
 			move = point3D_sub(move, view_control_plane_origin)
-			move = vec3_mul_matrix(move, matrix_inverse(mat))
+			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
 			pos = point3D(0, 0, 0)
 			snapval = (dragger_snap ? setting_snap_size_position : snap_min)
 			

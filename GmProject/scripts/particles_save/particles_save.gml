@@ -1,9 +1,12 @@
-/// particles_save()
-/// @desc Export the selected library's particle creator.
+/// particles_save(template, [filename])
+/// @desc Export the given particle creator.
 
-function particles_save()
+function particles_save(temp, name = "")
 {
-	var fn = file_dialog_save_particles(temp_edit.display_name);
+	if (name = "")
+		name = temp.display_name
+
+	var fn = file_dialog_save_particles(name);
 	
 	if (fn = "")
 		return 0
@@ -19,13 +22,13 @@ function particles_save()
 	
 	project_save_start(fn, false)
 	
-	with (temp_edit)
+	with (temp)
 		project_save_particles()
 	
 	// Save path points
-	if (temp_edit.pc_spawn_region_type = "path" && temp_edit.pc_spawn_region_path != null)
+	if (temp.pc_spawn_region_type = "path" && temp.pc_spawn_region_path != null)
 	{
-		var tl = temp_edit.pc_spawn_region_path;
+		var tl = temp.pc_spawn_region_path;
 		for (var i = 0; i < ds_list_size(tl.tree_list); i++)
 		{
 			if (tl.tree_list[|i].type = e_tl_type.PATH_POINT)

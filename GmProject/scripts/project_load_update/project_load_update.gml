@@ -53,7 +53,7 @@ function project_load_update()
 		
 		temp_update()
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL || type = e_temp_type.BODYPART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL || type = e_temp_type.MODEL_PART)
 		{
 			if (load_format >= e_project.FORMAT_110_PRE_1 && !load_update_tree)
 				temp_update_model_timeline_parts()
@@ -98,10 +98,10 @@ function project_load_update()
 				with (keyframe_list[|i])
 				{
 					if (value[e_value.ITEM_NAME] != "")
-						value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, value[e_value.ITEM_NAME])
+						value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(value[e_value.ITEM_NAME], mc_assets.item_texture_list)
 					
 					if (value[e_value.ITEM_SLOT] < 0)
-						value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, default_item)
+						value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 				}
 			}
 		}

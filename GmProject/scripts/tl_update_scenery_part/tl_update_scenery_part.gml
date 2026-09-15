@@ -13,12 +13,12 @@ function tl_update_scenery_part()
 		model_file = null
 		model_texture_name_map = null
 		model_texture_material_name_map = null
-		model_tex_normal_name_map = null
+		model_texture_normal_name_map = null
 		model_texture_material_name_map = null
-		model_tex_normal_name_map = null
+		model_texture_normal_name_map = null
 		model_shape_texture_name_map = null
 		model_shape_texture_material_name_map = null
-		model_shape_tex_normal_name_map = null
+		model_shape_texture_normal_name_map = null
 		model_hide_list = null
 		model_shape_hide_list = null
 		model_color_name_map = null

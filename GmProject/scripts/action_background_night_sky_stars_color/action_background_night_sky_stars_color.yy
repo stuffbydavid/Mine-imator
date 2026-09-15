@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_background_night_sky_stars_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_night_sky_stars_color",
+  "parent":{
+    "name":"Sky",
+    "path":"folders/Scripts/App/Actions/Background/Sky.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

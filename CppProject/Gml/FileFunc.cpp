@@ -36,7 +36,9 @@ namespace CppProject
 		if (wildCardIndex >= 0)
 			dir = dir.Left(wildCardIndex);
 
-		fileFindIt = new QDirIterator(dir, QDir::Files | QDir::NoDotAndDotDot);
+		QDir::Filters filters = QDir::NoDotAndDotDot;
+		filters |= (attr & 16) ? QDir::Dirs : QDir::Files;
+		fileFindIt = new QDirIterator(dir, filters);
 		if (fileFindIt->hasNext())
 			return filename_name(fileFindIt->next());
 
@@ -225,6 +227,31 @@ namespace CppProject
 		QStringList files = fd.selectedFiles();
 		if (files.size() > 0)
 			return files[0];
+		return "";
+	}
+
+	StringType get_open_filenames_ext(StringType filter, StringType file, StringType dir, StringType caption)
+	{
+		QFileDialog fd;
+		fd.setModal(true);
+		fd.setAcceptMode(QFileDialog::AcceptOpen);
+		fd.setFileMode(QFileDialog::ExistingFiles);
+		fd.setNameFilters(GetFilenameFilterList(filter));
+		if (file != "")
+		{
+			if (!file.Contains("/") && !dir.IsEmpty())
+				file = dir + "/" + file;
+			fd.selectFile(file);
+		}
+		else if (!dir.IsEmpty())
+			fd.setDirectory(dir);
+		fd.setWindowTitle(caption);
+		if (!App->ExecDialog(&fd))
+			return "";
+
+		QStringList files = fd.selectedFiles();
+		if (files.size() > 0)
+			return files.join("\n");
 		return "";
 	}
 

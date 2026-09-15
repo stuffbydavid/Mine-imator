@@ -53,6 +53,6 @@ function app_event_step()
 		app_update_lists()
 		app_update_minecraft_resources()
 		
-		current_step += 60 / room_speed
+		current_step += 60 / game_get_speed(gamespeed_fps)
 	}
 }

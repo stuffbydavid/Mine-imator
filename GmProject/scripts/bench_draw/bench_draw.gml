@@ -55,6 +55,10 @@ function bench_draw()
 	// Hide bench
 	if (!app_mouse_box(content_x, content_y, content_width, content_height) && mouse_left_pressed && window_busy = "") 
 	{
+		if (bench_tab = e_bench.SOUND && bench_settings.sound_list_current.source = "music" && audio_exists(bench_settings.music_play_index) && audio_is_playing(bench_settings.music_play_index))
+			bench_music_mode = true
+
+		bench_sound_stop()
 		bench_show_ani_type = "hide"
 		window_focus = ""
 		
@@ -66,7 +70,7 @@ function bench_draw()
 	draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 	
-	clip_begin(content_x - 4, content_y - 4, content_width + 8, content_height + 8)
+	//clip_begin(content_x - 4, content_y - 4, content_width + 8, content_height + 8)
 	
 	// Draw workbench
 	sdx = dx
@@ -79,23 +83,24 @@ function bench_draw()
 	types = 13
 	divides = 4
 	lefth = (types * 32) + (divides * 9)
-	for (var i = 0; i < ds_list_size(bench_type_list.item); i++)
+	for (var i = 0; i < ds_list_size(bench_tab_list.item); i++)
 	{
+		var item = bench_tab_list.item[|i]
 		skipasset = false
 		
 		if (!setting_advanced_mode)
 		{
-			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground")
+			if (item.value = e_bench.MODEL || item.value = e_bench.AUDIO_TRACK || item.value = e_bench.CAMERA_EFFECTS || item.value = e_bench.ENVIRONMENT)
 				skipasset = true
 		}
 		
 		if (!skipasset)
 		{
-			list_item_draw(bench_type_list.item[|i], dx, dy, 192, window_compact ? 28 : 32, (bench_settings.type = bench_type_list.item[|i].value), 0, 5)
+			list_item_draw(item, dx, dy, 192, window_compact ? 28 : 32, bench_tab = item.value, 0, 5)
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (i = 2 || i = 6 || i = 9)
+		if (item.value = e_bench.MODEL_PART || item.value = e_bench.SPECIAL_BLOCK || item.value = e_bench.TEXT)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9
@@ -117,9 +122,9 @@ function bench_draw()
 	draw_divide_vertical(sdx + 193, sdy, bench_settings.height)
 	bench_settings.height_goal = dy - sdy
 	
-	clip_end()
+	//clip_end()
 	draw_set_alpha(1)
 	
-	if (window_busy = "" && bench_show_ani_type != "hide")
+	if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")
 		window_busy = "bench"
 }

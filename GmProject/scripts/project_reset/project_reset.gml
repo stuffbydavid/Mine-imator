@@ -24,14 +24,15 @@ function project_reset()
 	project_name = ""
 	project_author = ""
 	project_description = ""
+	
 	project_video_width = 1280
 	project_video_height = 720
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = true
 	project_render_settings = render_default
 	project_tempo = 24
-	project_grid_rows = 3
 	project_grid_columns = 3
+	project_grid_rows = 3
 	view_main.camera = -4
 	view_second.camera = -5
 	
@@ -45,6 +46,18 @@ function project_reset()
 	ds_list_clear(project_model_list)
 	
 	camera_work_reset()
+
+	// Keep active background music outside the project
+	var musicres = null;
+	if (bench_music_mode && instance_exists(bench_settings.music_res))
+	{
+		musicres = bench_settings.music_res
+		if (musicres.creator = app)
+		{
+			sortlist_remove(res_list, musicres)
+			musicres.creator = bench_settings
+		}
+	}
 	
 	log("Destroying instances")
 	
@@ -59,7 +72,7 @@ function project_reset()
 		instance_destroy()
 	
 	with (obj_resource)
-		if (id != mc_res)
+		if (id != mc_res && id != musicres)
 			instance_destroy()
 	
 	with (obj_keyframe)
@@ -92,6 +105,9 @@ function project_reset()
 	timeline_interval_size = 24
 	timeline_interval_offset = 0
 	timeline_hide_color_tag = array_create(9, false)
+	
+	properties.library.list.column_sort = null
+	properties.resources.list.column_sort = null
 	
 	ds_list_clear(tree_list)
 	ds_list_clear(tree_visible_list)

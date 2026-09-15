@@ -97,7 +97,7 @@ namespace CppProject
 		return Matrix::Ortho(left, right, bottom, top, zNear, zFar);
 	}
 
-	MatrixType matrix_inverse(MatrixType mat)
+	MatrixType matrix_inverse_ext(MatrixType mat)
 	{
 		return mat.matrix.GetInversed();
 	}

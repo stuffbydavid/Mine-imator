@@ -3,6 +3,10 @@
 
 function action_bench_create(edit = false)
 {
+	var tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
+	if (tab = e_bench.SOUND)
+		return action_bench_sound_create()
+
 	if (history_undo)
 	{
 		with (history_data)
@@ -18,16 +22,32 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
+
+		if (history_data.scenery_replace_ground)
+			background_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
-		var hobj, tl;
+		var hobj, tl, particletemp, sceneryres, sceneryreplaceground;
 		hobj = null
+		particletemp = null
+		sceneryres = null
+		sceneryreplaceground = false
 		
 		if (history_redo)
 		{
+			hobj = history_data
+			hobj.spawn_amount = 0
+			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
-			
+			if (bench_tab = e_bench.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
+			{
+				particletemp = save_id_find(history_data.particle_temp_save_id)
+				bench_settings.particle_preset = particletemp
+				bench_settings.particle_preset_temp = particletemp
+				temp_edit = particletemp
+			}
+
 			if (history_data.open_editor)
 			{
 				tab_template_editor_update_ptype_list()
@@ -38,6 +58,7 @@ function action_bench_create(edit = false)
 		{
 			hobj = history_set(action_bench_create)
 			hobj.bench_save_obj = history_save_bench()
+			hobj.bench_tab = bench_tab
 			hobj.spawn_amount = 0
 			hobj.open_editor = edit
 			
@@ -45,22 +66,85 @@ function action_bench_create(edit = false)
 				tab_show(template_editor)
 		}
 		
-		if (type_is_timeline(bench_settings.type)) // Timeline
+		var temptype, tltype;
+		temptype = null
+		tltype = null
+
+		switch (bench_tab)
 		{
-			tl = new_tl(bench_settings.type = e_tl_type.LIGHT_SOURCE ? bench_settings.light_type : bench_settings.type)
+			case e_bench.CHARACTER:			temptype = e_temp_type.CHARACTER break
+			case e_bench.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT break
+			case e_bench.MODEL:				temptype = e_temp_type.MODEL break
+			case e_bench.MODEL_PART:		temptype = e_temp_type.MODEL_PART break
+			case e_bench.ITEM:				temptype = e_temp_type.ITEM break
+			case e_bench.SCHEMATIC:			temptype = e_temp_type.SCENERY break
+			case e_bench.BLOCK:				temptype = e_temp_type.BLOCK break
+			case e_bench.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK break
+			case e_bench.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type break
+			case e_bench.TEXT:				temptype = e_temp_type.TEXT break
+			case e_bench.PATH:				tltype = e_tl_type.PATH break
+			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
+			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
+			case e_bench.AUDIO_TRACK:		tltype = e_tl_type.AUDIO_TRACK break
+			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
+			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
+		}
+
+		if (bench_tab = e_bench.SCHEMATIC)
+		{
+			if (history_redo)
+			{
+				if (history_data.scenery_res_save_obj != null)
+				{
+					sceneryres = history_restore_res(history_data.scenery_res_save_obj)
+					sceneryres.display_name = history_data.scenery_res_save_obj.display_name
+					bench_settings.scenery = sceneryres
+				}
+			}
+			else
+			{
+				hobj.scenery_res_save_obj = null
+				sceneryres = action_bench_schematic_create_resource()
+				if (sceneryres != null)
+					hobj.scenery_res_save_obj = history_save_res(sceneryres)
+			}
+		}
+		else if (bench_tab = e_bench.PARTICLE_SPAWNER && !history_redo)
+			particletemp = bench_settings.particle_preset_temp
+
+		if (tltype != null) // Timeline
+		{
+			tl = new_tl(tltype)
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
 				spawn_amount++
 			}
 			
-			if (bench_settings.type = e_tl_type.CAMERA)
+			if (bench_tab = e_bench.CAMERA)
 				view_second.show = true
 		}
-		else
+		else if (particletemp != null)
+		{
+			with (particletemp)
+				tl = temp_animate()
+
+			temp_edit = particletemp
+
+			with (hobj)
+			{
+				spawn_save_id[spawn_amount] = tl.save_id
+				spawn_amount++
+				if (!history_redo)
+					particle_temp_save_id = particletemp.save_id
+			}
+		}
+		else if (temptype != null)
 		{
 			with (bench_settings)
 			{
+				type = temptype
+				
 				var temp = temp_duplicate();
 				
 				// Don't copy into template 
@@ -84,7 +168,7 @@ function action_bench_create(edit = false)
 						model = null
 					}
 					
-					if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
+					if (type != e_temp_type.CHARACTER && type != e_temp_type.EQUIPMENT && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
 					{
 						if (model_tex != null)
 							model_tex.count--
@@ -164,6 +248,10 @@ function action_bench_create(edit = false)
 					}
 					
 					tl = temp_animate()
+					
+					if (type = e_temp_type.TEXT && other.text != "")
+						tl.text = other.text
+					
 					sortlist_add(app.lib_list, id)
 				}
 				
@@ -228,6 +316,31 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
+		if (sceneryres != null)
+		{
+			with (hobj)
+			{
+				spawn_save_id[spawn_amount] = sceneryres.save_id
+				spawn_amount++
+			}
+		}
+
+		if (bench_tab = e_bench.SCHEMATIC)
+		{
+			if (history_redo)
+				sceneryreplaceground = history_data.scenery_replace_ground
+			else if (setting_scenery_replace_ground && tl.temp.scenery != null &&
+				tl.temp.scenery.scenery_size[X] > scenery_large_threshold && tl.temp.scenery.scenery_size[Y] > scenery_large_threshold)
+			{
+				sceneryreplaceground = true
+				hobj.scenery_replace_ground = true
+				hobj.scenery_ground_show = background_ground_show
+			}
+
+			if (sceneryreplaceground)
+				with (tl)
+					tl_replace_ground()
+		}
 		
 		if (history_redo)
 		{
@@ -270,26 +383,37 @@ function action_bench_create(edit = false)
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
 				(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
+				!sceneryreplaceground &&
 				tl.value_type[e_value_type.TRANSFORM_POS])
 				app_start_place(tl, true)
 			
-			log("Created", tl_type_name_list[|bench_settings.type])
+			log("Created", tl_type_name_list[|tl.type])
+
+			// Encourage parenting armor to a character
+			if (!setting_advanced_mode && bench_tab = e_bench.EQUIPMENT)
+			{
+				toast_new(e_toast.INFO, text_get("alertequiparmor"))
+				toast_last.dismiss_time = 15
+			}
 		}
 	}
 	
 	if (!history_redo && edit)
 		tab_template_editor_update_ptype_list()
 	
-	if (bench_settings.type = e_temp_type.PARTICLE_SPAWNER)
+	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 	{
 		if (!history_undo && !history_redo)
-			bench_update_particles_list()
+			action_bench_particles_folder(bench_particle_preset_folder)
 		
 		particle_spawner_clear()
 		preview_reset_view()
 		update = true
 	}
 	
+	if (!history_undo && bench_tab = e_bench.TEXT)
+		bench_settings.text = ""
+
 	tl_update_list()
 	tl_update_matrix()
 	lib_preview.update = true

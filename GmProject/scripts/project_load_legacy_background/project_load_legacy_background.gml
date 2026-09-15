@@ -25,15 +25,9 @@ function project_load_legacy_background()
 	
 	background_ground_show = buffer_read_byte()
 	background_ground_legacy_name = legacy_block_100_texture_list[|buffer_read_int()]
-	var newslot = ds_list_find_index(mc_assets.block_texture_list, background_ground_legacy_name)
+	var newslot = minecraft_assets_block_texture_picker_slot_find(background_ground_legacy_name)
 	if (newslot >= 0)
 		background_ground_slot = newslot
-	else // Animated?
-	{
-		newslot = ds_list_find_index(mc_assets.block_texture_ani_list, background_ground_legacy_name)
-		if (newslot >= 0)
-			background_ground_slot = ds_list_size(mc_assets.block_texture_list) + newslot
-	}
 	background_ground_tex.count--
 	background_ground_tex = project_load_legacy_save_id()
 	background_ground_tex_material = "default"
@@ -82,12 +76,12 @@ function project_load_legacy_background()
 		
 		background_sky_clouds_tex.count--
 		background_sky_clouds_tex = project_load_legacy_save_id()
-		background_sky_clouds_height = buffer_read_double()
-		background_sky_clouds_size = buffer_read_double()
-		background_sky_clouds_thickness = buffer_read_double()
+		background_sky_clouds_offset_z = buffer_read_double()
+		background_sky_clouds_size_xy = buffer_read_double()
+		background_sky_clouds_size_z = buffer_read_double()
 		
-		if (app.background_sky_clouds_tex = "default")
-			app.background_sky_clouds_size *= 8
+		//if (app.background_sky_clouds_tex = "default")
+		//	app.background_sky_clouds_size_xy *= 8
 	}
 	
 	if (load_format >= e_project.FORMAT_CB_100)

@@ -8,7 +8,7 @@ function project_save_template()
 		json_save_var("type", temp_type_name_list[|type])
 		json_save_var("name", json_string_encode(name))
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
 		{
 			json_save_var_save_id("model_tex", model_tex)
 			json_save_var_save_id("model_tex_material", model_tex_material)
@@ -21,9 +21,9 @@ function project_save_template()
 				json_save_var("name", model_name)
 				json_save_var_state_vars("state", model_state)
 				
-				if (type = e_temp_type.BODYPART)
+				if (type = e_temp_type.MODEL_PART)
 					json_save_var("part_name", model_part_name)
-				else
+				else if (!is_undefined(mc_assets.model_name_map[?model_name]))
 					json_save_var("model_version", mc_assets.model_name_map[?model_name].version)
 				
 			json_save_object_done()
@@ -83,8 +83,14 @@ function project_save_template()
 				json_save_var_save_id("tex_material", item_tex_material)
 				json_save_var_save_id("tex_normal", item_tex_normal)
 				
-				if (item_tex.type = e_res_type.PACK && item_slot < ds_list_size(mc_assets.item_texture_list))
-					json_save_var("name", mc_assets.item_texture_list[|item_slot])
+				if (item_tex.type = e_res_type.PACK)
+				{
+					var decodedslot = minecraft_assets_texture_picker_slot_decode(item_slot, mc_assets.item_texture_list)
+					if (decodedslot[0] >= 0)
+						json_save_var("name", mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]])
+					else
+						json_save_var("slot", item_slot)
+				}
 				else
 					json_save_var("slot", item_slot)
 				
@@ -141,6 +147,7 @@ function project_save_template()
 				json_save_var_bool("tex_vmirror", shape_tex_vmirror)
 				json_save_var_bool("closed", shape_closed)
 				json_save_var_bool("invert", shape_invert)
+				json_save_var_bool("smooth", shape_smooth)
 				json_save_var("detail", shape_detail)
 				json_save_var_bool("face_camera", shape_face_camera)
 			json_save_object_done()

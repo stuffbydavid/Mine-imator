@@ -31,7 +31,7 @@ function tab_frame_editor_position()
 	axis_edit = (setting_z_is_up ? Z : Y)
 	textfield_group_add("frameeditorpositionz", tl_edit.value[e_value.POS_X + axis_edit], def[X + axis_edit], action_tl_frame_pos, axis_edit, tab.transform.tbx_pos_z, null, mul / tl_edit.value_inherit[e_value.SCA_X + axis_edit])
 	
-	tab_control_textfield_group(false)
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorposition", dx, dy, dw, null, -no_limit, no_limit, snapval, false, true, 1)
 	tab_next()
 	

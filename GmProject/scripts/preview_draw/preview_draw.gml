@@ -8,13 +8,21 @@
 
 function preview_draw(preview, xx, yy, width, height)
 {
-	var is3d, mouseon, playbutton, isplaying, setplaytime;
+	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton;
+	//var clipactive, clipx, clipy, clipwid, cliphei;
 	
 	if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 		return 0
 	
 	mouseon = app_mouse_box(xx, yy, width, height)
 	setplaytime = null
+	//clipactive = shader_clip_active
+	//clipx = shader_clip_x
+	//clipy = shader_clip_y
+	//clipwid = shader_clip_width
+	//cliphei = shader_clip_height
+	preview.view_width = width
+	preview.view_height = height
 	
 	// Background
 	draw_box(xx, yy, width, height, false, c_level_bottom, 1)
@@ -22,15 +30,22 @@ function preview_draw(preview, xx, yy, width, height)
 	if (!instance_exists(preview.select))
 	{
 		preview.texture = null
+		preview.sound_play_button = false
 		return 0
 	}
 	
-	// Show 3D view?
+	// Particle button
+	if (preview.select.object_index = obj_bench_settings)
+		particlebutton = (bench_tab = e_bench.PARTICLE_SPAWNER && preview.select.particle_preset != null)
+	else
+		particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
+
+	// Determine 3D/2D view
 	if (preview.select.object_index = obj_resource)
 	{
-		playbutton = (preview.select.type = e_res_type.SOUND)
-		isplaying = (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index))
-		is3d = (preview.select.type = e_res_type.SCENERY || preview.select.type = e_res_type.FROM_WORLD ||preview.select.type = e_res_type.MODEL)
+		playbutton = (preview.select.type = e_res_type.SOUND && preview.sound_play_button)
+		isplaying = (audio_exists(preview.sound_play_index) && (audio_is_playing(preview.sound_play_index) || audio_is_paused(preview.sound_play_index)))
+		is3d = (preview.select.type = e_res_type.SCHEMATIC || preview.select.type = e_res_type.FROM_WORLD ||preview.select.type = e_res_type.MODEL)
 	}
 	else
 	{
@@ -39,8 +54,8 @@ function preview_draw(preview, xx, yy, width, height)
 		is3d = true
 	}
 	
-	if ((preview.select.type = e_temp_type.PARTICLE_SPAWNER && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)) ||
-		(playbutton && app_mouse_box(xx + width - 44, yy + height - 44, 36, 36)))
+	if ((particlebutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)) ||
+		(playbutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)))
 		mouseon = false
 	
 	// Update audio hover
@@ -133,7 +148,7 @@ function preview_draw(preview, xx, yy, width, height)
 			update = true
 		
 		// Item animation
-		if (select.object_index = obj_template && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
+		if ((select.object_index = obj_template || select.object_index = obj_bench_settings) && select.type = e_temp_type.ITEM && (select.item_bounce || select.item_spin))
 			update = true
 		
 		// Playing audio
@@ -146,16 +161,22 @@ function preview_draw(preview, xx, yy, width, height)
 		
 		surface = surface_require(surface, width, height)
 		
-		if (update)
+		var soundready = (preview.select.type != e_res_type.SOUND || (preview.select.ready && audio_is_ready(preview.select.sound_index)));
+		if (update && soundready)
 		{
+			if (select.object_index != obj_resource || select.type != e_res_type.SOUND)
+				sound_play_button = false
+
 			if (is3d)
 				render_update_text()
 			update = false
 			
+			//if (clipactive)
+			//	clip_end()
 			surface_set_target(surface)
 			{
 				draw_clear_alpha(c_black, 0)
-				gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+				gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
 				
 				if (is3d) // 3D view
 				{
@@ -191,7 +212,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							}
 							
-							case e_res_type.SCENERY:
+							case e_res_type.SCHEMATIC:
 							case e_res_type.FROM_WORLD:
 							{
 								var displaysize = vec3_mul(vec3_mul(select.scenery_size, rep), vec3(block_size));
@@ -220,6 +241,7 @@ function preview_draw(preview, xx, yy, width, height)
 							}
 							
 							case e_temp_type.CHARACTER:
+							case e_temp_type.EQUIPMENT:
 							case e_temp_type.SPECIAL_BLOCK:
 							{
 								if (select.model_file = null)
@@ -254,7 +276,7 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							}
 							
-							case e_temp_type.BODYPART:
+							case e_temp_type.MODEL_PART:
 							{
 								if (select.model_part = null)
 									break
@@ -284,7 +306,7 @@ function preview_draw(preview, xx, yy, width, height)
 						lengthdir_y(prevcam_zoom, xyangle) * lengthdir_x(1, zangle),
 						lengthdir_z(prevcam_zoom, zangle)
 					)
-					render_ratio = width/height
+					render_ratio = width / height
 					
 					gpu_set_ztestenable(true)
 					camera_apply(cam_render)
@@ -294,11 +316,36 @@ function preview_draw(preview, xx, yy, width, height)
 					render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 					with (render_shader_obj)
 						shader_use()
-					
-					// No fog in preview
+						
+					// Preview uniforms
+					render_set_uniform_int("uAlphaHash", 0)
+					render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+					render_set_uniform_vec2("uTextureOffset", 0, 0)
+					render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+					render_set_uniform("uEmissive", 0)
+					render_set_uniform("uMetallic", 0)
+					render_set_uniform("uRoughness", 1)
+					render_set_uniform("uSSS", 0)
+					render_set_uniform_vec3("uSSSRadius", 1, 1, 1)
+					render_set_uniform_color("uSSSColor", c_white, 1)
+					render_set_uniform_int("uGlintEnabled", 0)
+
+					render_set_uniform_vec3("uSunDirection", 0.408, 0.408, 0.816)
+					render_set_uniform_int("uLightAmount", 1)
+					render_set_uniform("uLightData", array(0, 0, 0, 0, 1, 1, 1, 0))
+					render_set_uniform_color("uAmbientColor", c_ambient, 1)
+					render_set_uniform_color("uFallbackColor", c_white, 1)
+						
 					render_set_uniform_int("uFogShow", 0)
-					
-					// Set defaults
+					render_set_uniform_int("uIsSky", 0)
+					render_set_uniform_int("uIsGround", 0)
+					render_set_uniform("uWindEnable", 0)
+					render_set_uniform("uWindTerrain", 0)
+
+					render_set_uniform_int("uTonemapper", 0)
+					render_set_uniform("uExposure", 1)
+					render_set_uniform("uGamma", 2.2)
+
 					render_set_uniform_int("uColorsExt", 1)
 					render_set_uniform_color("uRGBAdd", tl_value_default(e_value.RGB_ADD), 1)
 					render_set_uniform_color("uRGBSub", tl_value_default(e_value.RGB_SUB), 1)
@@ -313,7 +360,7 @@ function preview_draw(preview, xx, yy, width, height)
 					{
 						switch (select.type)
 						{
-							case e_res_type.SCENERY:
+							case e_res_type.SCHEMATIC:
 							case e_res_type.FROM_WORLD:
 								if (select.ready)
 									render_world_block(select.block_vbuffer, mc_res, true, select.scenery_size)
@@ -352,7 +399,7 @@ function preview_draw(preview, xx, yy, width, height)
 								if (select.model.model_format = e_model_format.BLOCK)
 								{
 									var res;
-									if (select.model_tex != null && select.model_tex.block_sheet_texture != null)
+									if (select.model_tex != null && select.model_tex.block_sheet_texture[e_block_sheet.STATIC16] != null)
 										res = select.model_tex
 									else
 										res = mc_res
@@ -366,6 +413,7 @@ function preview_draw(preview, xx, yy, width, height)
 							}
 							
 							case e_temp_type.CHARACTER:
+							case e_temp_type.EQUIPMENT:
 							case e_temp_type.SPECIAL_BLOCK:
 							{
 								if (select.model_file = null)
@@ -387,14 +435,14 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							
 							case e_temp_type.ITEM:
-								render_world_item(select.item_vbuffer, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, [select.item_tex, null, null])
+								render_world_item(select.item_vbuffer, [select.item_tex, null, null], select.item_sheet, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, true)
 								break
 							
 							case e_temp_type.BLOCK:
 								render_world_block(select.block_vbuffer, select.block_tex, true, rep)
 								break
 							
-							case e_temp_type.BODYPART:
+							case e_temp_type.MODEL_PART:
 							{
 								if (select.model_part = null)
 									break
@@ -430,7 +478,7 @@ function preview_draw(preview, xx, yy, width, height)
 								var tex;
 								with (select)
 									tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-								render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [tex, spr_default_material, spr_default_normal])
+								render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [tex, spr_default_normal, spr_default_material])
 								break
 							}
 						}
@@ -467,7 +515,7 @@ function preview_draw(preview, xx, yy, width, height)
 							draw_set_alpha(alpha * a_text_main)
 							draw_set_halign(fa_center)
 							draw_set_valign(fa_middle)
-							draw_text_transformed(dx, dy, "AaBbCc", zoom, zoom, 0)
+							draw_text_transformed(dx, dy, default_text, zoom, zoom, 0)
 							draw_set_valign(fa_top)
 							draw_set_halign(fa_left)
 							draw_set_color(color)
@@ -479,15 +527,17 @@ function preview_draw(preview, xx, yy, width, height)
 						
 						case e_res_type.SOUND:
 						{
-							if (!select.ready)
+							sound_play_button = false
+							if (!select.ready || !audio_is_ready(select.sound_index))
 								break
 							
-							var wid, wavehei, prec, alpha, mouseperc;
-							wid = width - 32
+							var wavex, wid, wavehei, prec, alpha, mouseperc;
+							wavex = 32
+							wid = width - 64
 							wavehei = 32
 							prec = sample_rate / sample_avg_per_sec
 							alpha = draw_get_alpha()
-							mouseperc = percent((mouse_x - xx), 16, 16 + wid);
+							mouseperc = percent((mouse_x - xx), 32, 32 + wid);
 							
 							if (mouseon)
 							{
@@ -532,10 +582,11 @@ function preview_draw(preview, xx, yy, width, height)
 								if (mouseon && app.mouse_left)
 									setplaytime = (mouseperc * length)
 								
-								draw_vertex_color(16 + dx, height / 2-maxv * wavehei, wavecolor, wavealpha)
-								draw_vertex_color(16 + dx, height / 2-minv * wavehei + 1, wavecolor, wavealpha)
+								draw_vertex_color(wavex + dx, floor(height / 2 - maxv * wavehei), wavecolor, wavealpha)
+								draw_vertex_color(wavex + dx, floor(height / 2 - minv * wavehei + 1), wavecolor, wavealpha)
 							}
 							draw_primitive_end()
+							sound_play_button = true
 							
 							break
 						}
@@ -558,7 +609,7 @@ function preview_draw(preview, xx, yy, width, height)
 									else if (pack_image_material = "material")
 										tex = select.model_texture_material_map[?pack_model_texture]
 									else if (pack_image_material = "normal")
-										tex = select.model_tex_normal_map[?pack_model_texture]
+										tex = select.model_texture_normal_map[?pack_model_texture]
 									
 									break
 								}
@@ -566,27 +617,40 @@ function preview_draw(preview, xx, yy, width, height)
 								case "blocksheet":
 								{
 									if (pack_image_material = "diffuse")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture[block_texture_get_frame(true)] : select.block_sheet_texture)
+										tex = (pack_block_sheet_ani ? select.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture[pack_block_sheet_size])
 									else if (pack_image_material = "material")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_texture_material[block_texture_get_frame(true)] : select.block_sheet_texture_material)
+										tex = (pack_block_sheet_ani ? select.block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture_material[pack_block_sheet_size])
 									else if (pack_image_material = "normal")
-										tex = (pack_block_sheet_ani ? select.block_sheet_ani_tex_normal[block_texture_get_frame(true)] : select.block_sheet_tex_normal)
+										tex = (pack_block_sheet_ani ? select.block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture_normal[pack_block_sheet_size])
 									
 									break
 								}
 								
 								case "colormap":
-									tex = (pack_colormap ? select.colormap_foliage_texture : select.colormap_grass_texture)
+								{
+									switch (pack_colormap)
+									{
+										case 0:
+											tex = select.colormap_grass_texture
+											break
+										case 1:
+											tex = select.colormap_foliage_texture
+											break
+										case 2:
+											tex = select.colormap_dry_foliage_texture
+											break
+									}
 									break
+								}
 								
 								case "itemsheet":
 								{
 									if (pack_image_material = "diffuse")
-										tex = select.item_sheet_texture
+										tex = select.item_sheet_texture[pack_item_sheet_size]
 									else if (pack_image_material = "material")
-										tex = select.item_sheet_texture_material
+										tex = select.item_sheet_texture_material[pack_item_sheet_size]
 									else if (pack_image_material = "normal")
-										tex = select.item_sheet_tex_normal
+										tex = select.item_sheet_texture_normal[pack_item_sheet_size]
 									
 									break
 								}
@@ -600,7 +664,8 @@ function preview_draw(preview, xx, yy, width, height)
 									break
 								
 								case "moontexture":
-									tex = select.moonphases_texture
+									//tex = select.moonphases_texture
+									tex = select.moon_textures[pack_moon_phase]
 									break
 								
 								case "cloudtexture":
@@ -616,11 +681,11 @@ function preview_draw(preview, xx, yy, width, height)
 							break
 						
 						case e_res_type.ITEM_SHEET:
-							tex = select.item_sheet_texture
+							tex = select.item_sheet_texture[e_item_sheet.SIZE16]
 							break
 						
 						case e_res_type.BLOCK_SHEET:
-							tex = select.block_sheet_texture
+							tex = select.block_sheet_texture[e_block_sheet.STATIC16]
 							break
 						
 						case e_res_type.TEXTURE:
@@ -634,15 +699,20 @@ function preview_draw(preview, xx, yy, width, height)
 					
 					if (tex != null)
 					{
-						var padding, tw, th, dx, dy;
+						var padding, tw, th, tratio, ratio, dx, dy;
 						padding = 16
 						tw = texture_width(tex)
 						th = texture_height(tex)
+						tratio = tw / th
+						ratio = width / height
 						if (reset_view)
 						{
 							preview_reset_view()
 							
-							zoom = (min(width, height) - padding * 2) / min(tw, th)
+							if (tratio > ratio)
+								zoom = (max(width, height) - padding * 2) / max(tw, th)
+							else
+								zoom = (min(width, height) - padding * 2) / max(tw, th)
 							goalzoom = zoom
 							reset_view = false
 						}
@@ -656,29 +726,33 @@ function preview_draw(preview, xx, yy, width, height)
 				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
+			//if (clipactive)
+			//	clip_begin(clipx, clipy, clipwid, cliphei)
 		}
 		
+		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 		draw_surface_exists(surface, xx, yy)
+		gpu_set_blendmode(bm_normal)
 	}
 	
 	// Button background
-	if ((preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER) || playbutton)
+	if (particlebutton || playbutton)
 	{
-		draw_box(xx + width - 40, yy + height - 40, 32, 32, false, c_level_middle, 1)
-		draw_outline(xx + width - 40, yy + height - 40, 32, 32, 1, c_border, a_border, true)
+		draw_box(xx + 8, yy + height - 40, 32, 32, false, c_level_middle, 1)
+		draw_outline(xx + 8, yy + height - 40, 32, 32, 1, c_border, a_border, true)
 	}
 	
 	// Particle button
-	if (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
+	if (particlebutton)
 	{
 		if (preview.select.pc_spawn_constant)
 		{
-			if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 				preview.spawn_active = !preview.spawn_active
 		}
 		else
 		{
-			if (draw_button_icon("previewspawn", xx + width - 36, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
 				preview.fire = true
 		}
 	}
@@ -686,15 +760,30 @@ function preview_draw(preview, xx, yy, width, height)
 	// Play button
 	if (playbutton)
 	{
-		if (draw_button_icon("previewplay", xx + width - 36, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
+		if (draw_button_icon("previewplay", xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
 		{
 			if (isplaying)
 			{
-				audio_stop_sound(preview.sound_play_index)
-				preview.update = true
+				if (preview = app.bench_settings.preview && preview.select = app.bench_settings.music_res)
+				{
+					bench_music_stop(false)
+					isplaying = false
+				}
+				else
+				{
+					audio_stop_sound(preview.sound_play_index)
+					preview.update = true
+				}
 			}
 			else
-				preview.sound_play_index = audio_play_sound(res_edit.sound_index, 0, false)
+			{
+				preview.sound_play_index = audio_play_sound(preview.select.sound_index, 0, false)
+				if (preview = app.bench_settings.preview && preview.select = app.bench_settings.music_res)
+				{
+					app.bench_settings.music_play_index = preview.sound_play_index
+					app.bench_settings.music_autoplay = true
+				}
+			}
 		}
 	}
 	
@@ -703,7 +792,14 @@ function preview_draw(preview, xx, yy, width, height)
 	{
 		// Audio isn't already playing, start it
 		if (!isplaying)
-			preview.sound_play_index = audio_play_sound(res_edit.sound_index, 0, false)
+		{
+			preview.sound_play_index = audio_play_sound(preview.select.sound_index, 0, false)
+			if (preview = app.bench_settings.preview && preview.select = app.bench_settings.music_res)
+			{
+				app.bench_settings.music_play_index = preview.sound_play_index
+				app.bench_settings.music_autoplay = true
+			}
+		}
 			
 		audio_sound_set_track_position(preview.sound_play_index, setplaytime)
 	}

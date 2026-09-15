@@ -16,9 +16,19 @@ function new_history(script)
 		save_axis_edit = axis_edit
 		save_save_id_seed = save_id_seed
 		
+		particle_temp_save_id = ""
+		scenery_replace_ground = false
+		scenery_ground_show = true
+
 		scale_link_drag = false
 		scale_link_drag_val = 0
 		save_set_var = false
+		usage_tl_attractor_amount = 0
+		usage_tl_ik_target_amount = 0
+		usage_tl_ik_target_angle_amount = 0
+		usage_kf_attractor_amount = 0
+		usage_kf_ik_target_amount = 0
+		usage_kf_ik_target_angle_amount = 0
 		
 		return id
 	}

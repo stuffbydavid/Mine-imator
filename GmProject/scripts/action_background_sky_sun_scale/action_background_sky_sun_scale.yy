@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_sky_sun_scale",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Sky",
-    "path": "folders/Scripts/App/Actions/Background/Sky.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_sky_sun_scale",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_sky_sun_scale",
+  "parent":{
+    "name":"Sky",
+    "path":"folders/Scripts/App/Actions/Background/Sky.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

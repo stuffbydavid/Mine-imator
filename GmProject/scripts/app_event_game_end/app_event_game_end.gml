@@ -5,8 +5,6 @@ function app_event_game_end()
 	if (startup_error)
 		return true
 	
-	audio_stop_all()
-	
 	// Interface ready
 	if (window_state != "new_assets" && window_state != "load_assets")
 	{
@@ -21,6 +19,8 @@ function app_event_game_end()
 		
 		settings_save()
 	}
+
+	audio_stop_all()
 	
 	log("Closing...")
 	

@@ -18,8 +18,7 @@ function action_lib_remove()
 	}
 	else
 	{
-		var hobj, index;
-		hobj = null
+		var hobj = null;
 		
 		if (!history_redo)
 		{

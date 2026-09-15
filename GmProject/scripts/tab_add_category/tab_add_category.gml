@@ -13,10 +13,10 @@ function tab_add_category(name, icon, script, show)
 	
 	with (cat)
 	{
-		id.name = argument0
-		id.icon = argument1
-		id.script = argument2
-		id.show = argument3
+		id.name = name
+		id.icon = icon
+		id.script = script
+		id.show = show
 		
 		enabled = true
 		

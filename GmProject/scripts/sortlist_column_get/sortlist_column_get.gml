@@ -21,13 +21,29 @@ function sortlist_column_get(slist, value, col)
 		
 		case "charname":
 		case "spblockname":
-		case "bodypartmodelname":
+		case "modelpartmodelname":
+			if (is_undefined(mc_assets.model_name_map[?value]))
+				return 0
 			return minecraft_asset_get_name("model", mc_assets.model_name_map[?value].name)
 		
 		case "blockname":
+			if (is_undefined(mc_assets.block_name_map[?value]))
+				return 0
 			return minecraft_asset_get_name("block", mc_assets.block_name_map[?value].name)
+		
 		case "blockfilter":
 			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
+		
+		case "sceneryname":
+		case "schematicname":
+			if (!is_string(value))
+				return value.display_name
+
+			var schematicfn = filename_new_ext(filename_name(value), "")
+			return text_exists("benchschematic" + schematicfn) ? text_get("benchschematic" + schematicfn) : schematicfn
+		
+		case "shapename":
+			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
 		
 		case "particleeditortypename":
 			if (dev_mode_debug_saveid)
@@ -60,9 +76,10 @@ function sortlist_column_get(slist, value, col)
 			return value.count
 		
 		case "particlepresetname":
-		{
-			var fn = filename_new_ext(filename_name(value), "");
-			return text_exists("particle" + fn) ? text_get("particle" + fn) : fn;
-		}
+			if (!is_string(value))
+				return string_remove_newline(value.display_name)
+
+			var particlefn = filename_new_ext(filename_name(value), "")
+			return text_exists("benchparticles" + particlefn) ? text_get("benchparticles" + particlefn) : particlefn
 	}
 }
