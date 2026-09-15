@@ -3,13 +3,12 @@ uniform float uPower;
 
 varying vec2 vTexCoord;
 
-vec2 texelSize = 1.0 / uScreenSize;
-
 void main()
 {
 	float reducemul = 1.0 / 8.0;
 	float reducemin = 1.0 / 128.0;
 	float def = 4.0;
+	vec2 texelSize = 1.0 / uScreenSize;
 	
 	vec4 basecol = texture2D(gm_BaseTexture, vTexCoord);
 	vec4 baseNW = texture2D(gm_BaseTexture, vTexCoord - texelSize);

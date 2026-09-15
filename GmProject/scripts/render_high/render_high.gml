@@ -1,21 +1,30 @@
-/// render_high()
+/// render_high([singlesample])
+/// @arg [singlesample]
 /// @desc Renders the scene in high quality.
 
-function render_high()
+function render_high(singlesample = false)
 {
-	render_update_samples()
 	render_alpha_hash = project_render_alpha_mode
 	
 	var samplestart, sampleend;
-	if (render_samples_done)
+	if (singlesample || renderer_current = e_renderer.STANDARD)
 	{
 		samplestart = 0
-		sampleend = 0
+		sampleend = 1
 	}
 	else
 	{
-		samplestart = render_samples - 1
-		sampleend = render_samples
+		render_update_samples()
+		if (render_samples_done)
+		{
+			samplestart = 0
+			sampleend = 0
+		}
+		else
+		{
+			samplestart = render_samples - 1
+			sampleend = render_samples
+		}
 	}
 	
 	// Render
@@ -89,10 +98,12 @@ function render_high()
 		}
 		surface_reset_target()
 		
-		render_high_samples_add()
+		if (!singlesample && renderer_current != e_renderer.STANDARD)
+			render_high_samples_add()
 	}
 	
-	render_high_samples_unpack()
+	if (!singlesample && renderer_current != e_renderer.STANDARD)
+		render_high_samples_unpack()
 	
 	// Apply post effects (Bloom, color correction, etc.)
 	if (!render_pass)
@@ -133,6 +144,7 @@ function render_high()
 	// Reset progressive AA matrix
 	aa_matrix = MAT_IDENTITY
 	
-	render_samples_clear = false
+	if (!singlesample && renderer_current != e_renderer.STANDARD)
+		render_samples_clear = false
 	render_alpha_hash = false
 }

@@ -130,12 +130,12 @@ vec3 mapUchimura(vec3 color)
 	float shoulderExponent = -shoulderStrength / maximum;
 
 	vec3 toe = linearStart * pow(color / linearStart, vec3(blackTightness)) + blackOffset;
-	vec3 linear = linearStart + contrast * (color - linearStart);
+	vec3 linearColor = linearStart + contrast * (color - linearStart);
 	vec3 shoulder = maximum - (maximum - shoulderStart) * exp(shoulderExponent * (color - linearStart1));
 	vec3 toeWeight = vec3(1.0) - smoothstep(vec3(0.0), vec3(linearStart), color);
 	vec3 shoulderWeight = step(vec3(linearStart1), color);
 	vec3 linearWeight = vec3(1.0) - toeWeight - shoulderWeight;
-	return toe * toeWeight + linear * linearWeight + shoulder * shoulderWeight;
+	return toe * toeWeight + linearColor * linearWeight + shoulder * shoulderWeight;
 }
 
 // Timothy Lottes' published SDR curve, independently expressed from its equation

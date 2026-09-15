@@ -16,7 +16,6 @@ function render_preset_save_settings(renderer)
 			json_save_var("shadows_point_buffer_size", set.shadows_point_buffer_size)
 			json_save_var_bool("glow", set.glow)
 			json_save_var_bool("aa", set.aa)
-			json_save_var("aa_mode", set.aa_mode)
 			json_save_var("aa_power", set.aa_power)
 		json_save_object_done()
 	}

@@ -25,7 +25,6 @@ function render_preset_event_create()
 		glow = true
 		// Standard should support glow_falloff if it's fast enough
 		aa = true
-		aa_mode = e_aa_mode.PROGRESSIVE
 		aa_power = 1
 
 		shadows_blur_size = 1

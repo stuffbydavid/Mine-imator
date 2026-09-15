@@ -15,7 +15,7 @@ function render_apply_settings(preset, renderer)
 		project_render_shadows_point_buffer_size = settings.shadows_point_buffer_size
 		project_render_glow = settings.glow
 		project_render_aa = settings.aa
-		project_render_aa_mode = settings.aa_mode
+		project_render_aa = e_aa_mode.FXAA
 		project_render_aa_power = settings.aa_power
 	}
 	

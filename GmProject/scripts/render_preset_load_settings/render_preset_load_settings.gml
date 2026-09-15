@@ -20,7 +20,6 @@ function render_preset_load_settings(map)
 		set.shadows_point_buffer_size = value_get_real(standardmap[?"shadows_point_buffer_size"], set.shadows_point_buffer_size)
 		set.glow = value_get_real(standardmap[?"glow"], set.glow)
 		set.aa = value_get_real(standardmap[?"aa"], set.aa)
-		set.aa_mode = value_get_real(standardmap[?"aa_mode"], set.aa_mode)
 		set.aa_power = value_get_real(standardmap[?"aa_power"], set.aa_power)
 	}
 

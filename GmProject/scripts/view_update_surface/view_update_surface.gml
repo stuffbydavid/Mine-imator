@@ -14,7 +14,7 @@ function view_update_surface(view, cam)
 	render_watermark = (settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"])
 	render_start(view.surface, cam, content_width, content_height)
 	
-	if (view.renderer = e_renderer.REALISTIC)
+	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
 		render_high()
 	else
 		render_low()

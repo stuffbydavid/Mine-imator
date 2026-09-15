@@ -40,6 +40,7 @@ function export_update()
 		render_active = "image"
 		renderer_current = popup_exportimage.renderer
 	}
+	render_lights = (renderer_current != e_renderer.QUICK)
 	
 	// Process a number frames until a step has elapsed (1/fps seconds)
 	var starttime = current_time;
@@ -50,7 +51,7 @@ function export_update()
 		else
 			render_start(export_surface, timeline_camera, project_video_width, project_video_height)
 	
-		if (renderer_current = e_renderer.REALISTIC)
+		if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)
 			render_high()
 		else
 		{
@@ -62,7 +63,7 @@ function export_update()
 		
 		export_sample++
 	
-		if (renderer_current = e_renderer.REALISTIC && render_samples = app.project_render_samples)
+		if (renderer_current = e_renderer.STANDARD || (renderer_current = e_renderer.REALISTIC && render_samples = app.project_render_samples))
 			render_samples_done = true
 	
 		if (!render_samples_done)

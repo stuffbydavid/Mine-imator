@@ -29,6 +29,12 @@ function render_start()
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
+	if (renderer_current = e_renderer.STANDARD)
+	{
+		project_render_indirect = false
+		project_render_reflections = false
+		project_render_aa_mode = e_aa_mode.FXAA
+	}
 	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects
