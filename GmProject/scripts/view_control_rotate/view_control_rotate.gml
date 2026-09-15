@@ -128,8 +128,6 @@ function view_control_rotate(view)
 	}
 }
 
-// Rotation spaces adapted from Mine-imator Vexel Build (MI VB), PR #111:
-// https://github.com/Vexel-Studios/vexel-mine-imator/pull/111
 function action_view_rotation_space(value)
 {
 	if (window_busy = "rendercontrol")
