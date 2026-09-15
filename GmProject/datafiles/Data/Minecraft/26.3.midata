@@ -1,5 +1,5 @@
 {
-	"version": "26.3-pre-3",
+	"version": "26.3",
 	"patch": 0,
 	"format": 9,
 	"characters": [
@@ -1083,261 +1083,6 @@
 			"file": "ender_dragon.mimodel"
 		}
 	],
-	"equipment": [
-		{
-			"name": "armor",
-			"file": "armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"helmet": [
-					{ "value": "none", "shape_hide": [ "helmet", "helmet_baby" ] },
-					{ "value": "leather", "shape_texture": { "helmet": "entity/equipment/humanoid/leather", "helmet_baby": "entity/equipment/humanoid_baby/leather" } },
-					{ "value": "chainmail", "shape_texture": { "helmet": "entity/equipment/humanoid/chainmail", "helmet_baby": "entity/equipment/humanoid_baby/chainmail" } },
-					{ "value": "copper", "shape_texture": { "helmet": "entity/equipment/humanoid/copper", "helmet_baby": "entity/equipment/humanoid_baby/copper" } },
-					{ "value": "iron", "shape_texture": { "helmet": "entity/equipment/humanoid/iron", "helmet_baby": "entity/equipment/humanoid_baby/iron" } },
-					{ "value": "gold", "shape_texture": { "helmet": "entity/equipment/humanoid/gold", "helmet_baby": "entity/equipment/humanoid_baby/gold" } },
-					{ "value": "diamond", "shape_texture": { "helmet": "entity/equipment/humanoid/diamond", "helmet_baby": "entity/equipment/humanoid_baby/diamond" } },
-					{ "value": "netherite", "shape_texture": { "helmet": "entity/equipment/humanoid/netherite", "helmet_baby": "entity/equipment/humanoid_baby/netherite" } },
-					{ "value": "turtle_scute", "shape_texture": { "helmet": "entity/equipment/humanoid/turtle_scute", "helmet_baby": "entity/equipment/humanoid_baby/turtle_scute" } }
-				],
-				"chestplate": [
-					{ "value": "none", "shape_hide": [ "chestplate", "chestplate_baby" ] },
-					{ "value": "leather", "shape_texture": { "chestplate": "entity/equipment/humanoid/leather", "chestplate_baby": "entity/equipment/humanoid_baby/leather" } },
-					{ "value": "chainmail", "shape_texture": { "chestplate": "entity/equipment/humanoid/chainmail", "chestplate_baby": "entity/equipment/humanoid_baby/chainmail" } },
-					{ "value": "copper", "shape_texture": { "chestplate": "entity/equipment/humanoid/copper", "chestplate_baby": "entity/equipment/humanoid_baby/copper" } },
-					{ "value": "iron", "shape_texture": { "chestplate": "entity/equipment/humanoid/iron", "chestplate_baby": "entity/equipment/humanoid_baby/iron" } },
-					{ "value": "gold", "shape_texture": { "chestplate": "entity/equipment/humanoid/gold", "chestplate_baby": "entity/equipment/humanoid_baby/gold" } },
-					{ "value": "diamond", "shape_texture": { "chestplate": "entity/equipment/humanoid/diamond", "chestplate_baby": "entity/equipment/humanoid_baby/diamond" } },
-					{ "value": "netherite", "shape_texture": { "chestplate": "entity/equipment/humanoid/netherite", "chestplate_baby": "entity/equipment/humanoid_baby/netherite" } }
-				],
-				"leggings": [
-					{ "value": "none", "shape_hide": [ "leggings", "leggings_baby" ] },
-					{ "value": "leather", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/leather", "leggings_baby": "entity/equipment/humanoid_baby/leather" } },
-					{ "value": "chainmail", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/chainmail", "leggings_baby": "entity/equipment/humanoid_baby/chainmail" } },
-					{ "value": "copper", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/copper", "leggings_baby": "entity/equipment/humanoid_baby/copper" } },
-					{ "value": "iron", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/iron", "leggings_baby": "entity/equipment/humanoid_baby/iron" } },
-					{ "value": "gold", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/gold", "leggings_baby": "entity/equipment/humanoid_baby/gold" } },
-					{ "value": "diamond", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/diamond", "leggings_baby": "entity/equipment/humanoid_baby/diamond" } },
-					{ "value": "netherite", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/netherite", "leggings_baby": "entity/equipment/humanoid_baby/netherite" } }
-				],
-				"boots": [
-					{ "value": "none", "shape_hide": [ "boots", "boots_baby" ] },
-					{ "value": "leather", "shape_texture": { "boots": "entity/equipment/humanoid/leather", "boots_baby": "entity/equipment/humanoid_baby/leather" } },
-					{ "value": "chainmail", "shape_texture": { "boots": "entity/equipment/humanoid/chainmail", "boots_baby": "entity/equipment/humanoid_baby/chainmail" } },
-					{ "value": "copper", "shape_texture": { "boots": "entity/equipment/humanoid/copper", "boots_baby": "entity/equipment/humanoid_baby/copper" } },
-					{ "value": "iron", "shape_texture": { "boots": "entity/equipment/humanoid/iron", "boots_baby": "entity/equipment/humanoid_baby/iron" } },
-					{ "value": "gold", "shape_texture": { "boots": "entity/equipment/humanoid/gold", "boots_baby": "entity/equipment/humanoid_baby/gold" } },
-					{ "value": "diamond", "shape_texture": { "boots": "entity/equipment/humanoid/diamond", "boots_baby": "entity/equipment/humanoid_baby/diamond" } },
-					{ "value": "netherite", "shape_texture": { "boots": "entity/equipment/humanoid/netherite", "boots_baby": "entity/equipment/humanoid_baby/netherite" } }
-				],
-				"type": [
-					{ "value": "armor" },
-					{ "value": "armor_baby", "file": "armor_baby.mimodel" }
-				]
-			},
-			"default_state": "helmet=iron,chestplate=iron,leggings=iron,boots=iron,type=armor"
-		},
-		{
-			"name": "shield",
-			"file": "shield.mimodel",
-			"states": {
-				"has_pattern": [
-					{ "value": "false", "pattern_type": "" },
-					{ "value": "true", "pattern_type": "shield" }
-				]
-			},
-			"default_state": "has_pattern=false"
-		},
-		{
-			"name": "cape",
-			"file": "cape.mimodel",
-			"states": {
-				"variant": [
-					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
-					{ "value": "mojang", "texture": "entity/mineimator/cape_mojang" },
-					{ "value": "mojang_old", "texture": "entity/mineimator/cape_mojang_old" },
-					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" },
-					{ "value": "vanilla", "texture": "entity/mineimator/cape_vanilla" },
-					{ "value": "common", "texture": "entity/mineimator/cape_common" },
-					{ "value": "founders", "texture": "entity/mineimator/cape_founders" },
-					{ "value": "pan", "texture": "entity/mineimator/cape_pan" },
-					{ "value": "cherryblossom", "texture": "entity/mineimator/cape_cherryblossom" },
-					{ "value": "15thanniversary", "texture": "entity/mineimator/cape_15thanniversary" },
-					{ "value": "purpleheart", "texture": "entity/mineimator/cape_purple_heart" },
-					{ "value": "followers", "texture": "entity/mineimator/cape_followers" },
-					{ "value": "mcc15thyear", "texture": "entity/mineimator/cape_mcc_15th_year" },
-					{ "value": "minecraftexperience", "texture": "entity/mineimator/cape_minecraft_experience" },
-					{ "value": "mojangoffice", "texture": "entity/mineimator/cape_mojang_office" },
-					{ "value": "menace", "texture": "entity/mineimator/cape_menace" },
-					{ "value": "home", "texture": "entity/mineimator/cape_home" },
-					{ "value": "yearn", "texture": "entity/mineimator/cape_yearn" },
-					{ "value": "copper", "texture": "entity/mineimator/cape_copper" },
-					{ "value": "zombie_horse", "texture": "entity/mineimator/cape_zombie_horse" },
-					{ "value": "moonlighttrail", "texture": "entity/mineimator/cape_moonlighttrail" },
-					{ "value": "crafter", "texture": "entity/mineimator/cape_crafter" },
-					{ "value": "builder", "texture": "entity/mineimator/cape_builder" },
-					{ "value": "minecon_2011", "texture": "entity/mineimator/cape_minecon2011" },
-					{ "value": "minecon_2012", "texture": "entity/mineimator/cape_minecon2012" },
-					{ "value": "minecon_2013", "texture": "entity/mineimator/cape_minecon2013" },
-					{ "value": "minecon_2015", "texture": "entity/mineimator/cape_minecon2015" },
-					{ "value": "minecon_2016", "texture": "entity/mineimator/cape_minecon2016" },
-					{ "value": "translator", "texture": "entity/mineimator/cape_translator" },
-					{ "value": "translator_chinese", "texture": "entity/mineimator/cape_translator_chinese" },
-					{ "value": "scrolls_champion", "texture": "entity/mineimator/cape_scrollschamp" },
-					{ "value": "cobalt", "texture": "entity/mineimator/cape_cobalt" },
-					{ "value": "moderator", "texture": "entity/mineimator/cape_moderator" },
-					{ "value": "mapmaker", "texture": "entity/mineimator/cape_mapmaker" },
-					{ "value": "millionthsale", "texture": "entity/mineimator/cape_millionthsale" },
-					{ "value": "dannybstyle", "texture": "entity/mineimator/cape_dannybstyle" },
-					{ "value": "julianclark", "texture": "entity/mineimator/cape_julianclark" },
-					{ "value": "cheapsh0t", "texture": "entity/mineimator/cape_cheapsh0t" },
-					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
-					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
-					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
-					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
-					{ "value": "valentine", "texture": "entity/mineimator/cape_valentine" }
-				]
-			},
-			"default_state": "variant=mojang_new"
-		},
-		{
-			"name": "elytra",
-			"file": "elytra.mimodel",
-			"states": {
-				"variant": [
-					{ "value": "normal", "texture": "entity/equipment/wings/elytra" },
-					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
-					{ "value": "mojang", "texture": "entity/mineimator/cape_mojang" },
-					{ "value": "mojang_old", "texture": "entity/mineimator/cape_mojang_old" },
-					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" },
-					{ "value": "vanilla", "texture": "entity/mineimator/cape_vanilla" },
-					{ "value": "common", "texture": "entity/mineimator/cape_common" },
-					{ "value": "founders", "texture": "entity/mineimator/cape_founders" },
-					{ "value": "pan", "texture": "entity/mineimator/cape_pan" },
-					{ "value": "cherryblossom", "texture": "entity/mineimator/cape_cherryblossom" },
-					{ "value": "15thanniversary", "texture": "entity/mineimator/cape_15thanniversary" },
-					{ "value": "purpleheart", "texture": "entity/mineimator/cape_purple_heart" },
-					{ "value": "followers", "texture": "entity/mineimator/cape_followers" },
-					{ "value": "mcc15thyear", "texture": "entity/mineimator/cape_mcc_15th_year" },
-					{ "value": "minecraftexperience", "texture": "entity/mineimator/cape_minecraft_experience" },
-					{ "value": "mojangoffice", "texture": "entity/mineimator/cape_mojang_office" },
-					{ "value": "menace", "texture": "entity/mineimator/cape_menace" },
-					{ "value": "home", "texture": "entity/mineimator/cape_home" },
-					{ "value": "yearn", "texture": "entity/mineimator/cape_yearn" },
-					{ "value": "copper", "texture": "entity/mineimator/cape_copper" },
-					{ "value": "zombie_horse", "texture": "entity/mineimator/cape_zombie_horse" },
-					{ "value": "moonlighttrail", "texture": "entity/mineimator/cape_moonlighttrail" },
-					{ "value": "crafter", "texture": "entity/mineimator/cape_crafter" },
-					{ "value": "builder", "texture": "entity/mineimator/cape_builder" },
-					{ "value": "minecon_2011", "texture": "entity/mineimator/cape_minecon2011" },
-					{ "value": "minecon_2012", "texture": "entity/mineimator/cape_minecon2012" },
-					{ "value": "minecon_2013", "texture": "entity/mineimator/cape_minecon2013" },
-					{ "value": "minecon_2015", "texture": "entity/mineimator/cape_minecon2015" },
-					{ "value": "minecon_2016", "texture": "entity/mineimator/cape_minecon2016" },
-					{ "value": "translator", "texture": "entity/mineimator/cape_translator" },
-					{ "value": "translator_chinese", "texture": "entity/mineimator/cape_translator_chinese" },
-					{ "value": "scrolls_champion", "texture": "entity/mineimator/cape_scrollschamp" },
-					{ "value": "cobalt", "texture": "entity/mineimator/cape_cobalt" },
-					{ "value": "moderator", "texture": "entity/mineimator/cape_moderator" },
-					{ "value": "mapmaker", "texture": "entity/mineimator/cape_mapmaker" },
-					{ "value": "millionthsale", "texture": "entity/mineimator/cape_millionthsale" },
-					{ "value": "dannybstyle", "texture": "entity/mineimator/cape_dannybstyle" },
-					{ "value": "julianclark", "texture": "entity/mineimator/cape_julianclark" },
-					{ "value": "cheapsh0t", "texture": "entity/mineimator/cape_cheapsh0t" },
-					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
-					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
-					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
-					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
-					{ "value": "valentine", "texture": "entity/mineimator/cape_valentine" }
-				]
-			},
-			"default_state": "variant=normal"
-		},
-		{
-			"name": "horse_armor",
-			"file": "horse_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"variant": [
-					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
-					{ "value": "copper", "texture": "entity/equipment/horse_body/copper" },
-					{ "value": "iron", "texture": "entity/equipment/horse_body/iron" },
-					{ "value": "gold", "texture": "entity/equipment/horse_body/gold" },
-					{ "value": "diamond", "texture": "entity/equipment/horse_body/diamond" },
-					{ "value": "netherite", "texture": "entity/equipment/horse_body/netherite" }
-				]
-			},
-			"default_state": "variant=iron"
-		},
-		{
-			"name": "wolf_armor",
-			"file": "wolf_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"dyed": [
-					{ "value": "false", "shape_hide": [ "overlay" ] },
-					{ "value": "true" }
-				],
-				"crack_amount": [
-					{ "value": "none", "shape_hide": [ "crack" ] },
-					{ "value": "low", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_low" } },
-					{ "value": "medium", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_medium" } },
-					{ "value": "high", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_high" } }
-				]
-			},
-			"default_state": "dyed=false,crack_amount=none"
-		},
-		{
-			"name": "nautilus_armor",
-			"file": "nautilus_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"variant": [
-					{ "value": "copper", "texture": "entity/equipment/nautilus_body/copper" },
-					{ "value": "iron", "texture": "entity/equipment/nautilus_body/iron" },
-					{ "value": "gold", "texture": "entity/equipment/nautilus_body/gold" },
-					{ "value": "diamond", "texture": "entity/equipment/nautilus_body/diamond" },
-					{ "value": "netherite", "texture": "entity/equipment/nautilus_body/netherite" }
-				]
-			},
-			"default_state": "variant=iron"
-		}
-	],
-	"armor_trims": {
-		"pattern": [
-			"bolt",
-			"coast",
-			"dune",
-			"eye",
-			"flow",
-			"host",
-			"raiser",
-			"rib",
-			"sentry",
-			"shaper",
-			"silence",
-			"snout",
-			"spire",
-			"tide",
-			"vex",
-			"ward",
-			"wayfinder",
-			"wild"
-		],
-		"material": [
-			"amethyst",
-			"copper",
-			"diamond",
-			"emerald",
-			"gold",
-			"iron",
-			"lapis",
-			"netherite",
-			"quartz",
-			"redstone",
-			"resin"
-		]
-	},
 	"special_blocks": [
 		{
 			"name": "chest",
@@ -1464,8 +1209,222 @@
 			"default_state": "variant=normal"
 		},
 		{
+			"name": "armor",
+			"file": "armor.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "armor" },
+					{ "value": "armor_baby", "file": "armor_baby.mimodel" }
+				],
+				"helmet": [
+					{ "value": "none", "shape_hide": [ "helmet", "helmet_baby" ] },
+					{ "value": "leather", "shape_texture": { "helmet": "entity/equipment/humanoid/leather", "helmet_baby": "entity/equipment/humanoid_baby/leather" } },
+					{ "value": "chainmail", "shape_texture": { "helmet": "entity/equipment/humanoid/chainmail", "helmet_baby": "entity/equipment/humanoid_baby/chainmail" } },
+					{ "value": "copper", "shape_texture": { "helmet": "entity/equipment/humanoid/copper", "helmet_baby": "entity/equipment/humanoid_baby/copper" } },
+					{ "value": "iron", "shape_texture": { "helmet": "entity/equipment/humanoid/iron", "helmet_baby": "entity/equipment/humanoid_baby/iron" } },
+					{ "value": "gold", "shape_texture": { "helmet": "entity/equipment/humanoid/gold", "helmet_baby": "entity/equipment/humanoid_baby/gold" } },
+					{ "value": "diamond", "shape_texture": { "helmet": "entity/equipment/humanoid/diamond", "helmet_baby": "entity/equipment/humanoid_baby/diamond" } },
+					{ "value": "netherite", "shape_texture": { "helmet": "entity/equipment/humanoid/netherite", "helmet_baby": "entity/equipment/humanoid_baby/netherite" } },
+					{ "value": "turtle_scute", "shape_texture": { "helmet": "entity/equipment/humanoid/turtle_scute", "helmet_baby": "entity/equipment/humanoid_baby/turtle_scute" } }
+				],
+				"chestplate": [
+					{ "value": "none", "shape_hide": [ "chestplate", "chestplate_baby" ] },
+					{ "value": "leather", "shape_texture": { "chestplate": "entity/equipment/humanoid/leather", "chestplate_baby": "entity/equipment/humanoid_baby/leather" } },
+					{ "value": "chainmail", "shape_texture": { "chestplate": "entity/equipment/humanoid/chainmail", "chestplate_baby": "entity/equipment/humanoid_baby/chainmail" } },
+					{ "value": "copper", "shape_texture": { "chestplate": "entity/equipment/humanoid/copper", "chestplate_baby": "entity/equipment/humanoid_baby/copper" } },
+					{ "value": "iron", "shape_texture": { "chestplate": "entity/equipment/humanoid/iron", "chestplate_baby": "entity/equipment/humanoid_baby/iron" } },
+					{ "value": "gold", "shape_texture": { "chestplate": "entity/equipment/humanoid/gold", "chestplate_baby": "entity/equipment/humanoid_baby/gold" } },
+					{ "value": "diamond", "shape_texture": { "chestplate": "entity/equipment/humanoid/diamond", "chestplate_baby": "entity/equipment/humanoid_baby/diamond" } },
+					{ "value": "netherite", "shape_texture": { "chestplate": "entity/equipment/humanoid/netherite", "chestplate_baby": "entity/equipment/humanoid_baby/netherite" } }
+				],
+				"leggings": [
+					{ "value": "none", "shape_hide": [ "leggings", "leggings_baby" ] },
+					{ "value": "leather", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/leather", "leggings_baby": "entity/equipment/humanoid_baby/leather" } },
+					{ "value": "chainmail", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/chainmail", "leggings_baby": "entity/equipment/humanoid_baby/chainmail" } },
+					{ "value": "copper", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/copper", "leggings_baby": "entity/equipment/humanoid_baby/copper" } },
+					{ "value": "iron", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/iron", "leggings_baby": "entity/equipment/humanoid_baby/iron" } },
+					{ "value": "gold", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/gold", "leggings_baby": "entity/equipment/humanoid_baby/gold" } },
+					{ "value": "diamond", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/diamond", "leggings_baby": "entity/equipment/humanoid_baby/diamond" } },
+					{ "value": "netherite", "shape_texture": { "leggings": "entity/equipment/humanoid_leggings/netherite", "leggings_baby": "entity/equipment/humanoid_baby/netherite" } }
+				],
+				"boots": [
+					{ "value": "none", "shape_hide": [ "boots", "boots_baby" ] },
+					{ "value": "leather", "shape_texture": { "boots": "entity/equipment/humanoid/leather", "boots_baby": "entity/equipment/humanoid_baby/leather" } },
+					{ "value": "chainmail", "shape_texture": { "boots": "entity/equipment/humanoid/chainmail", "boots_baby": "entity/equipment/humanoid_baby/chainmail" } },
+					{ "value": "copper", "shape_texture": { "boots": "entity/equipment/humanoid/copper", "boots_baby": "entity/equipment/humanoid_baby/copper" } },
+					{ "value": "iron", "shape_texture": { "boots": "entity/equipment/humanoid/iron", "boots_baby": "entity/equipment/humanoid_baby/iron" } },
+					{ "value": "gold", "shape_texture": { "boots": "entity/equipment/humanoid/gold", "boots_baby": "entity/equipment/humanoid_baby/gold" } },
+					{ "value": "diamond", "shape_texture": { "boots": "entity/equipment/humanoid/diamond", "boots_baby": "entity/equipment/humanoid_baby/diamond" } },
+					{ "value": "netherite", "shape_texture": { "boots": "entity/equipment/humanoid/netherite", "boots_baby": "entity/equipment/humanoid_baby/netherite" } }
+				]
+			},
+			"default_state": "variant=armor,helmet=iron,chestplate=iron,leggings=iron,boots=iron"
+		},
+		{
+			"name": "horse_armor",
+			"file": "horse_armor.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
+					{ "value": "copper", "texture": "entity/equipment/horse_body/copper" },
+					{ "value": "iron", "texture": "entity/equipment/horse_body/iron" },
+					{ "value": "gold", "texture": "entity/equipment/horse_body/gold" },
+					{ "value": "diamond", "texture": "entity/equipment/horse_body/diamond" },
+					{ "value": "netherite", "texture": "entity/equipment/horse_body/netherite" }
+				]
+			},
+			"default_state": "variant=iron"
+		},
+		{
+			"name": "wolf_armor",
+			"file": "wolf_armor.mimodel",
+			"states": {
+				"dyed": [
+					{ "value": "false", "shape_hide": [ "overlay" ] },
+					{ "value": "true" }
+				],
+				"crack_amount": [
+					{ "value": "none", "shape_hide": [ "crack" ] },
+					{ "value": "low", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_low" } },
+					{ "value": "medium", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_medium" } },
+					{ "value": "high", "shape_texture": { "crack": "entity/wolf/wolf_armor_crackiness_high" } }
+				]
+			},
+			"default_state": "dyed=false,crack_amount=none"
+		},
+		{
+			"name": "nautilus_armor",
+			"file": "nautilus_armor.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "copper", "texture": "entity/equipment/nautilus_body/copper" },
+					{ "value": "iron", "texture": "entity/equipment/nautilus_body/iron" },
+					{ "value": "gold", "texture": "entity/equipment/nautilus_body/gold" },
+					{ "value": "diamond", "texture": "entity/equipment/nautilus_body/diamond" },
+					{ "value": "netherite", "texture": "entity/equipment/nautilus_body/netherite" }
+				]
+			},
+			"default_state": "variant=iron"
+		},
+		{
+			"name": "shield",
+			"file": "shield.mimodel",
+			"states": {
+				"has_pattern": [
+					{ "value": "false", "pattern_type": "" },
+					{ "value": "true", "pattern_type": "shield" }
+				]
+			},
+			"default_state": "has_pattern=false"
+		},
+		{
 			"name": "spyglass",
 			"file": "spyglass.mimodel"
+		},
+		{
+			"name": "cape",
+			"file": "cape.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
+					{ "value": "mojang", "texture": "entity/mineimator/cape_mojang" },
+					{ "value": "mojang_old", "texture": "entity/mineimator/cape_mojang_old" },
+					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" },
+					{ "value": "vanilla", "texture": "entity/mineimator/cape_vanilla" },
+					{ "value": "common", "texture": "entity/mineimator/cape_common" },
+					{ "value": "founders", "texture": "entity/mineimator/cape_founders" },
+					{ "value": "pan", "texture": "entity/mineimator/cape_pan" },
+					{ "value": "cherryblossom", "texture": "entity/mineimator/cape_cherryblossom" },
+					{ "value": "15thanniversary", "texture": "entity/mineimator/cape_15thanniversary" },
+					{ "value": "purpleheart", "texture": "entity/mineimator/cape_purple_heart" },
+					{ "value": "followers", "texture": "entity/mineimator/cape_followers" },
+					{ "value": "mcc15thyear", "texture": "entity/mineimator/cape_mcc_15th_year" },
+					{ "value": "minecraftexperience", "texture": "entity/mineimator/cape_minecraft_experience" },
+					{ "value": "mojangoffice", "texture": "entity/mineimator/cape_mojang_office" },
+					{ "value": "menace", "texture": "entity/mineimator/cape_menace" },
+					{ "value": "home", "texture": "entity/mineimator/cape_home" },
+					{ "value": "yearn", "texture": "entity/mineimator/cape_yearn" },
+					{ "value": "copper", "texture": "entity/mineimator/cape_copper" },
+					{ "value": "zombie_horse", "texture": "entity/mineimator/cape_zombie_horse" },
+					{ "value": "moonlighttrail", "texture": "entity/mineimator/cape_moonlighttrail" },
+					{ "value": "crafter", "texture": "entity/mineimator/cape_crafter" },
+					{ "value": "builder", "texture": "entity/mineimator/cape_builder" },
+					{ "value": "minecon_2011", "texture": "entity/mineimator/cape_minecon2011" },
+					{ "value": "minecon_2012", "texture": "entity/mineimator/cape_minecon2012" },
+					{ "value": "minecon_2013", "texture": "entity/mineimator/cape_minecon2013" },
+					{ "value": "minecon_2015", "texture": "entity/mineimator/cape_minecon2015" },
+					{ "value": "minecon_2016", "texture": "entity/mineimator/cape_minecon2016" },
+					{ "value": "translator", "texture": "entity/mineimator/cape_translator" },
+					{ "value": "translator_chinese", "texture": "entity/mineimator/cape_translator_chinese" },
+					{ "value": "scrolls_champion", "texture": "entity/mineimator/cape_scrollschamp" },
+					{ "value": "cobalt", "texture": "entity/mineimator/cape_cobalt" },
+					{ "value": "moderator", "texture": "entity/mineimator/cape_moderator" },
+					{ "value": "mapmaker", "texture": "entity/mineimator/cape_mapmaker" },
+					{ "value": "millionthsale", "texture": "entity/mineimator/cape_millionthsale" },
+					{ "value": "dannybstyle", "texture": "entity/mineimator/cape_dannybstyle" },
+					{ "value": "julianclark", "texture": "entity/mineimator/cape_julianclark" },
+					{ "value": "cheapsh0t", "texture": "entity/mineimator/cape_cheapsh0t" },
+					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
+					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
+					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
+					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
+					{ "value": "valentine", "texture": "entity/mineimator/cape_valentine" }
+				]
+			},
+			"default_state": "variant=mojang_new"
+		},
+		{
+			"name": "elytra",
+			"file": "elytra.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "normal", "texture": "entity/equipment/wings/elytra" },
+					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
+					{ "value": "mojang", "texture": "entity/mineimator/cape_mojang" },
+					{ "value": "mojang_old", "texture": "entity/mineimator/cape_mojang_old" },
+					{ "value": "migrator", "texture": "entity/mineimator/cape_migrator" },
+					{ "value": "vanilla", "texture": "entity/mineimator/cape_vanilla" },
+					{ "value": "common", "texture": "entity/mineimator/cape_common" },
+					{ "value": "founders", "texture": "entity/mineimator/cape_founders" },
+					{ "value": "pan", "texture": "entity/mineimator/cape_pan" },
+					{ "value": "cherryblossom", "texture": "entity/mineimator/cape_cherryblossom" },
+					{ "value": "15thanniversary", "texture": "entity/mineimator/cape_15thanniversary" },
+					{ "value": "purpleheart", "texture": "entity/mineimator/cape_purple_heart" },
+					{ "value": "followers", "texture": "entity/mineimator/cape_followers" },
+					{ "value": "mcc15thyear", "texture": "entity/mineimator/cape_mcc_15th_year" },
+					{ "value": "minecraftexperience", "texture": "entity/mineimator/cape_minecraft_experience" },
+					{ "value": "mojangoffice", "texture": "entity/mineimator/cape_mojang_office" },
+					{ "value": "menace", "texture": "entity/mineimator/cape_menace" },
+					{ "value": "home", "texture": "entity/mineimator/cape_home" },
+					{ "value": "yearn", "texture": "entity/mineimator/cape_yearn" },
+					{ "value": "copper", "texture": "entity/mineimator/cape_copper" },
+					{ "value": "zombie_horse", "texture": "entity/mineimator/cape_zombie_horse" },
+					{ "value": "moonlighttrail", "texture": "entity/mineimator/cape_moonlighttrail" },
+					{ "value": "crafter", "texture": "entity/mineimator/cape_crafter" },
+					{ "value": "builder", "texture": "entity/mineimator/cape_builder" },
+					{ "value": "minecon_2011", "texture": "entity/mineimator/cape_minecon2011" },
+					{ "value": "minecon_2012", "texture": "entity/mineimator/cape_minecon2012" },
+					{ "value": "minecon_2013", "texture": "entity/mineimator/cape_minecon2013" },
+					{ "value": "minecon_2015", "texture": "entity/mineimator/cape_minecon2015" },
+					{ "value": "minecon_2016", "texture": "entity/mineimator/cape_minecon2016" },
+					{ "value": "translator", "texture": "entity/mineimator/cape_translator" },
+					{ "value": "translator_chinese", "texture": "entity/mineimator/cape_translator_chinese" },
+					{ "value": "scrolls_champion", "texture": "entity/mineimator/cape_scrollschamp" },
+					{ "value": "cobalt", "texture": "entity/mineimator/cape_cobalt" },
+					{ "value": "moderator", "texture": "entity/mineimator/cape_moderator" },
+					{ "value": "mapmaker", "texture": "entity/mineimator/cape_mapmaker" },
+					{ "value": "millionthsale", "texture": "entity/mineimator/cape_millionthsale" },
+					{ "value": "dannybstyle", "texture": "entity/mineimator/cape_dannybstyle" },
+					{ "value": "julianclark", "texture": "entity/mineimator/cape_julianclark" },
+					{ "value": "cheapsh0t", "texture": "entity/mineimator/cape_cheapsh0t" },
+					{ "value": "mrmessiah", "texture": "entity/mineimator/cape_mrmessiah" },
+					{ "value": "prismarine", "texture": "entity/mineimator/cape_prismarine" },
+					{ "value": "turtle", "texture": "entity/mineimator/cape_turtle" },
+					{ "value": "birthday", "texture": "entity/mineimator/cape_birthday" },
+					{ "value": "valentine", "texture": "entity/mineimator/cape_valentine" }
+				]
+			},
+			"default_state": "variant=normal"
 		},
 		{
 			"name": "boat",
@@ -1934,9 +1893,10 @@
 					{ "value": "cherry", "file": "cherry_sapling.json" },
 					{ "value": "pale_oak", "file": "pale_oak_sapling.json" },
 					{ "value": "poplar", "file": "poplar_sapling.json" }
-				]
+				],
+				"stage": [ "0", "1" ]
 			},
-			"default_state": "variant=oak",
+			"default_state": "variant=oak,stage=0",
 			"subsurface": 1,
 			"wind": {
 				"axis": "all",
@@ -9633,7 +9593,7 @@
 		"block/yellow_poplar_leaves opaque",
 		"block/red_shrub"
 	],
-	"block_32_sheet_size": [ 16, 2 ],
+	"block_32_sheet_size": [ 6, 6 ],
 	"block_32_textures": [
 		"block/dried_ghast_hydration_0_tentacles",
 		"block/dried_ghast_hydration_1_tentacles",
@@ -9648,14 +9608,14 @@
 		"block/mangrove_shelf",
 		"block/cherry_shelf",
 		"block/pale_oak_shelf",
-		"block/poplar_shelf",
 		"block/bamboo_shelf",
 		"block/crimson_shelf",
 		"block/warped_shelf",
+		"block/poplar_shelf",
 		"block/shelf_mushroom_stage0",
 		"block/shelf_mushroom_stage1"
 	],
-	"block_64_sheet_size": [ 8, 1 ],
+	"block_64_sheet_size": [ 1, 1 ],
 	"block_64_textures": [
 		"block/straw_bed"
 	],
@@ -9834,7 +9794,6 @@
 		"mangrove_button.json": { "colorY": null },
 		"cherry_button.json": { "colorY": null },
 		"pale_oak_button.json": { "colorY": null },
-		"poplar_button.json": { "colorY": null },
 		"bamboo_button.json": { "colorY": null },
 		"crimson_button.json": { "colorY": null },
 		"warped_button.json": { "colorY": null },
@@ -10851,16 +10810,6 @@
 		"item/recovery_compass_29",
 		"item/recovery_compass_30",
 		"item/recovery_compass_31"
-	],
-	"item_32_sheet_size": [ 16, 1 ],
-	"item_32_textures": [
-		"item/wooden_spear_in_hand",
-		"item/stone_spear_in_hand",
-		"item/copper_spear_in_hand",
-		"item/iron_spear_in_hand",
-		"item/golden_spear_in_hand",
-		"item/diamond_spear_in_hand",
-		"item/netherite_spear_in_hand"
 	],
 	"particle_textures": [
 		"particle/angry",
@@ -12088,5 +12037,40 @@
 		"minecraft:shelter_pottery_sherd": "shelter",
 		"minecraft:skull_pottery_sherd": "skull",
 		"minecraft:snort_pottery_sherd": "snort"
+	},
+	"armor": {
+		"pattern": [
+			"bolt",
+			"coast",
+			"dune",
+			"eye",
+			"flow",
+			"host",
+			"raiser",
+			"rib",
+			"sentry",
+			"shaper",
+			"silence",
+			"snout",
+			"spire",
+			"tide",
+			"vex",
+			"ward",
+			"wayfinder",
+			"wild"
+		],
+		"material": [
+			"amethyst",
+			"copper",
+			"diamond",
+			"emerald",
+			"gold",
+			"iron",
+			"lapis",
+			"netherite",
+			"quartz",
+			"redstone",
+			"resin"
+		]
 	}
 }
