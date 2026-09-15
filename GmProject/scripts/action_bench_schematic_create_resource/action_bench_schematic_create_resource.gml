@@ -4,7 +4,7 @@ function action_bench_schematic_create_resource()
 {
 	var res = bench_settings.scenery;
 	if (res = null || res.creator != bench_settings)
-		return 0
+		return null
 
 	var tladd = res.scenery_tl_add
 	if (res.scenery_tl_prompt_amount > 0)

@@ -22,13 +22,17 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
+
+		if (history_data.scenery_replace_ground)
+			background_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
-		var hobj, tl, particletemp, sceneryres;
+		var hobj, tl, particletemp, sceneryres, sceneryreplaceground;
 		hobj = null
 		particletemp = null
 		sceneryres = null
+		sceneryreplaceground = false
 		
 		if (history_redo)
 		{
@@ -90,14 +94,19 @@ function action_bench_create(edit = false)
 		{
 			if (history_redo)
 			{
-				sceneryres = history_restore_res(history_data.scenery_res_save_obj)
-				sceneryres.display_name = history_data.scenery_res_save_obj.display_name
-				bench_settings.scenery = sceneryres
+				if (history_data.scenery_res_save_obj != null)
+				{
+					sceneryres = history_restore_res(history_data.scenery_res_save_obj)
+					sceneryres.display_name = history_data.scenery_res_save_obj.display_name
+					bench_settings.scenery = sceneryres
+				}
 			}
 			else
 			{
+				hobj.scenery_res_save_obj = null
 				sceneryres = action_bench_schematic_create_resource()
-				hobj.scenery_res_save_obj = history_save_res(sceneryres)
+				if (sceneryres != null)
+					hobj.scenery_res_save_obj = history_save_res(sceneryres)
 			}
 		}
 		else if (bench_tab = e_bench.PARTICLE_SPAWNER && !history_redo)
@@ -307,13 +316,30 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
-		if (sceneryres != null && !history_redo)
+		if (sceneryres != null)
 		{
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = sceneryres.save_id
 				spawn_amount++
 			}
+		}
+
+		if (bench_tab = e_bench.SCHEMATIC)
+		{
+			if (history_redo)
+				sceneryreplaceground = history_data.scenery_replace_ground
+			else if (setting_scenery_replace_ground && tl.temp.scenery != null &&
+				tl.temp.scenery.scenery_size[X] > scenery_large_threshold && tl.temp.scenery.scenery_size[Y] > scenery_large_threshold)
+			{
+				sceneryreplaceground = true
+				hobj.scenery_replace_ground = true
+				hobj.scenery_ground_show = background_ground_show
+			}
+
+			if (sceneryreplaceground)
+				with (tl)
+					tl_replace_ground()
 		}
 		
 		if (history_redo)
@@ -357,6 +383,7 @@ function action_bench_create(edit = false)
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
 				(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
+				!sceneryreplaceground &&
 				tl.value_type[e_value_type.TRANSFORM_POS])
 				app_start_place(tl, true)
 			

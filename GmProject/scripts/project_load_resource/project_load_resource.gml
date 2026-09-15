@@ -31,6 +31,7 @@ function project_load_resource(argument0)
 		
 		if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
 		{
+			scenery_size = value_get_point3D(map[?"scenery_size"], vec3(0, 0, 0))
 			scenery_tl_add = value_get_real(map[?"scenery_tl_add"], true)
 			scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
 			scenery_cache_save = value_get_real(map[?"scenery_cache_save"], scenery_cache_save)

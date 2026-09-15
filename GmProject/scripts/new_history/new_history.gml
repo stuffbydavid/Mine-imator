@@ -15,8 +15,11 @@ function new_history(script)
 		save_res_edit = save_id_get(res_edit)
 		save_axis_edit = axis_edit
 		save_save_id_seed = save_id_seed
-		particle_temp_save_id = ""
 		
+		particle_temp_save_id = ""
+		scenery_replace_ground = false
+		scenery_ground_show = true
+
 		scale_link_drag = false
 		scale_link_drag_val = 0
 		save_set_var = false

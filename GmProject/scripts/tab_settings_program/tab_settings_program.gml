@@ -124,6 +124,11 @@ function tab_settings_program()
 	
 	// Remove edges on large scenery
 	tab_control_switch()
-	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges)
+	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges, "settingssceneryremoveedgestip")
+	tab_next()
+
+	// Replace ground with large scenery
+	tab_control_switch()
+	draw_switch("settingssceneryreplaceground", dx, dy, setting_scenery_replace_ground, action_setting_scenery_replace_ground, "settingssceneryreplacegroundtip")
 	tab_next()
 }

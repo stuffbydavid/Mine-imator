@@ -585,9 +585,9 @@ namespace CppProject
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
 		// Save size
-		out << (qint64)res->scenery_size.x;
-		out << (qint64)res->scenery_size.y;
-		out << (qint64)res->scenery_size.z;
+		out << (qint64)res->scenery_size[X_];
+		out << (qint64)res->scenery_size[Y_];
+		out << (qint64)res->scenery_size[Z_];
 
 		// Write vertex buffers
 		for (IntType d = 0; d < e_block_depth_amount; d++)
@@ -657,14 +657,45 @@ namespace CppProject
 		if (in.status() != QDataStream::Ok)
 			return false;
 
+		// Load vertex buffers
+		QVector<VertexBuffer*> vbuffers;
+		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
+		BoolType valid = true;
+
+		for (IntType d = 0; d < e_block_depth_amount; d++)
+		{
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				auto vbuffer = new VertexBuffer(in);
+				vbuffers.append(vbuffer);
+				
+				if (!vbuffer->valid)
+				{
+					valid = false;
+					break;
+				}
+			}
+			if (!valid)
+				break;
+		}
+
+		if (!valid)
+		{
+			for (auto vbuffer : vbuffers)
+				delete vbuffer;
+			return false;
+		}
+
+		// Set size
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
 
-		// Load vertex buffers
+		// Assign vertex buffers
+		IntType i = 0;
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 		{
 			vertex_delete_buffer(self->block_vbuffer[d][vb]);
-			self->block_vbuffer[d][vb] = (new VertexBuffer(in))->id;
+			self->block_vbuffer[d][vb] = vbuffers.at(i++)->id;
 		}
 
 		tmr.Print("Read block mesh cache");
