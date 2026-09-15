@@ -16,6 +16,7 @@ uniform vec4 uFallbackColor;
 uniform int uFallbackOnly;
 
 uniform float uGamma;
+uniform float uBackgroundBrightness;
 
 varying vec2 vTexCoord;
 
@@ -30,6 +31,7 @@ void main()
 		
 		// Apply gamma to base
 		baseColor.rgb = pow(baseColor.rgb, vec3(uGamma));
+		baseColor.rgb *= mix(uBackgroundBrightness, 1.0, mask);
 		
 		vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.g) * pow(uFallbackColor.rgb, vec3(uGamma)) * matColor.b;
 		

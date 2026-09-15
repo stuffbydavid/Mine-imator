@@ -310,6 +310,7 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_WIND_DIRECTIONAL_SPEED)
 		tl_update_values_ease(e_value.BG_WIND_DIRECTIONAL_STRENGTH)
 		tl_update_values_ease(e_value.BG_TEXTURE_ANI_SPEED)
+		tl_update_values_ease(e_value.BG_BRIGHTNESS)
 	}
 	
 	// Texture

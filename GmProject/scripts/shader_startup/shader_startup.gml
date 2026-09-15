@@ -229,6 +229,7 @@ function shader_startup()
 	{
 		new_shader_sampler("uFogBuffer")
 		new_shader_uniform("uFogColor")
+		new_shader_uniform("uBackgroundBrightness")
 		new_shader_uniform("uGamma")
 	}
 	
@@ -412,6 +413,7 @@ function shader_startup()
 		new_shader_uniform("uFallbackColor")
 		new_shader_uniform("uFallbackOnly")
 		new_shader_uniform("uGamma")
+		new_shader_uniform("uBackgroundBrightness")
 	}
 	
 	with (shader_map[?shader_high_samples_unpack])

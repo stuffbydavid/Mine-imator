@@ -10,6 +10,7 @@ function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbacko
 	render_set_uniform_int("uFallbackOnly", fallbackonly)
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(material))
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(render_surface_diffuse))
+	render_set_uniform("uBackgroundBrightness", app.background_brightness)
 	render_set_uniform_color("uFallbackColor", app.background_sky_color_final, 1)
 	render_set_uniform("uGamma", render_gamma)
 	

@@ -25,6 +25,22 @@ vec4 hsbtorgb(vec4 c)
 #pragma shady: macro_end
 #endregion
 
+#region VIBRANCE_LIB
+#pragma shady: macro_begin VIBRANCE_LIB
+
+#pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
+
+vec3 applyVibrance(vec3 color, float amount)
+{
+	vec3 intensity = vec3(dot(color, vec3(0.2125, 0.7154, 0.0721)));
+	float saturation = rgbtohsb(vec4(color, 1.0)).g;
+	float vibrance = 1.0 - pow(pow(saturation, 8.0), 0.15);
+	return max(mix(intensity, color, 1.0 + vibrance * amount), vec3(0.0));
+}
+
+#pragma shady: macro_end
+#endregion
+
 #region COLOR_ADJUST_LIB
 #pragma shady: macro_begin COLOR_ADJUST_LIB
 

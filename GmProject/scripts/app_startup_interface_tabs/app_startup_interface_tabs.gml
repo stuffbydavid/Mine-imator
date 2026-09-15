@@ -158,6 +158,8 @@ function app_startup_interface_tabs()
 			tbx_wind_directional_strength = new_textbox_decimals()
 			tbx_texture_animation_speed = new_textbox_ninteger()
 			tbx_texture_animation_speed.suffix = "%"
+			tbx_brightness = new_textbox_ninteger()
+			tbx_brightness.suffix = "%"
 		}
 		
 		// Resources

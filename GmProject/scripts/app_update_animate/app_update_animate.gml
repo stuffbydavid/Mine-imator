@@ -209,6 +209,7 @@ function app_update_animate()
 		background_wind_directional_speed		= bgobject.value[e_value.BG_WIND_DIRECTIONAL_SPEED]
 		background_wind_directional_strength	= bgobject.value[e_value.BG_WIND_DIRECTIONAL_STRENGTH]
 		background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
+		background_brightness					= bgobject.value[e_value.BG_BRIGHTNESS]
 		
 		if (background_biome = "custom" || background_biome_prev != background_biome)
 		{

@@ -91,7 +91,7 @@ vec4 applyChromaticAberration(vec2 texCoord)
 #region EFFECT_COLOR_CORRECTION_LIB
 #pragma shady: macro_begin EFFECT_COLOR_CORRECTION_LIB
 
-#pragma shady: inline(common_color.COLOR_TRANSFORM_LIB)
+#pragma shady: inline(common_color.VIBRANCE_LIB)
 
 uniform float uContrast;
 uniform float uBrightness;
@@ -112,10 +112,7 @@ vec4 applyColorCorrection(vec4 color)
 	color.rgb = clamp(color.rgb, vec3(0.0), vec3(1.0));
 
 	// Vibrance(Saturates desaturated colors)
-	satIntensity = vec3(dot(color.rgb, W));
-	float sat = rgbtohsb(color).g;
-	float vibrance = 1.0 - pow(pow(sat, 8.0), .15);
-	color.rgb = mix(satIntensity, color.rgb, 1.0 + (vibrance * uVibrance));
+	color.rgb = applyVibrance(color.rgb, uVibrance);
 	color.rgb = clamp(color.rgb, vec3(0.0), vec3(1.0));
 
 	// Color burn

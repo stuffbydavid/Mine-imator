@@ -517,6 +517,7 @@
     {"id":{"name":"action_armor_editor","path":"scripts/action_armor_editor/action_armor_editor.yy",},},
     {"id":{"name":"action_background_ambient_color","path":"scripts/action_background_ambient_color/action_background_ambient_color.yy",},},
     {"id":{"name":"action_background_biome","path":"scripts/action_background_biome/action_background_biome.yy",},},
+    {"id":{"name":"action_background_brightness","path":"scripts/action_background_brightness/action_background_brightness.yy",},},
     {"id":{"name":"action_background_dry_foliage_color","path":"scripts/action_background_dry_foliage_color/action_background_dry_foliage_color.yy",},},
     {"id":{"name":"action_background_fog_color_custom","path":"scripts/action_background_fog_color_custom/action_background_fog_color_custom.yy",},},
     {"id":{"name":"action_background_fog_color","path":"scripts/action_background_fog_color/action_background_fog_color.yy",},},

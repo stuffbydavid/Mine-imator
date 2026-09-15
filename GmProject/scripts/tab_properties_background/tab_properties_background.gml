@@ -401,6 +401,11 @@ function tab_properties_background()
 	
 	tab_set_collumns(false)
 	
+	// Brightness
+	tab_control_dragger()
+	draw_dragger("backgroundbrightness", dx, dy, dragger_width, round(background_brightness * 100), .5, 0, no_limit, 100, 1, tab.background.tbx_brightness, action_background_brightness)
+	tab_next()
+	
 	// Twilight
 	if (setting_advanced_mode)
 	{

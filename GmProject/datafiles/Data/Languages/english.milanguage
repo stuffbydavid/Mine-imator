@@ -3493,6 +3493,7 @@
 		"biome": "Biome",
 		"biomevariant": "Variant",
 		"scenecolors": "Scene colors",
+		"brightness": "Brightness",
 		"biomecolors": "Biome colors",
 		"leafcolors": "Leaf colors",
 		"skycolor": "Sky",
