@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_background_sky_clouds_offset",
+  "%Name":"action_background_sky_clouds_size_xy",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_background_sky_clouds_offset",
+  "name":"action_background_sky_clouds_size_xy",
   "parent":{
     "name":"Clouds",
     "path":"folders/Scripts/App/Actions/Background/Sky/Clouds.yy",

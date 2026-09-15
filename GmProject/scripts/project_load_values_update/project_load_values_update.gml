@@ -13,7 +13,7 @@ function project_load_values_update()
 			value[e_value.BG_SUNLIGHT_STRENGTH] = app.background_sunlight_strength
 			
 			value[e_value.BG_SKY_CLOUDS_SHOW] = app.background_sky_clouds_show
-			value[e_value.BG_SKY_CLOUDS_HEIGHT] = app.background_sky_clouds_height
+			value[e_value.BG_SKY_CLOUDS_OFFSET_Z] = app.background_sky_clouds_offset_z
 			
 			value[e_value.BG_GROUND_SHOW] = app.background_ground_show
 			
@@ -100,7 +100,7 @@ function project_load_values_update()
 		{
 			value[e_value.BG_SKY_TIME] *= -1
 			value[e_value.BG_SKY_CLOUDS_SPEED] *= -1
-			value[e_value.BG_SKY_CLOUDS_OFFSET] *= -1
+			value[e_value.BG_SKY_CLOUDS_OFFSET_Y] *= -1
 		}
 	}
 }

@@ -460,13 +460,12 @@ function bench_draw_settings(bx, by, bw, bh)
 			draw_tooltip_label("benchworldtip2", null, e_toast.INFO)
 			dy += ui_large_height
 			
-			// Import from world
-			tab_control(64)
-			if (draw_button_label("benchimportfromworld", dx + dw / 2, dy, 200, icons.SCENERY, e_button.MEDIUM, null, e_anchor.CENTER))
-				world_import_begin(false)
-			tab_next()
-			
 			draw_set_alpha(prevalpha)
+			dx = bx
+			
+			// Import from world
+			if (draw_button_label("benchimportfromworld", dx, sy + dh - 56, dw, icons.SCENERY))
+				world_import_begin(false)
 			return 0
 		}
 
@@ -663,20 +662,19 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 			tab_next()
 			
+			//dy += 8
 			if (minecraft_game_found)
 			{
-				dy += 8
 				if (bench_settings.audio_track != null && (!instance_exists(bench_settings.audio_track) || bench_settings.audio_track.type != e_tl_type.AUDIO_TRACK))
 					bench_settings.audio_track = null
 
 				tab_control_menu()
 				draw_button_menu("benchaudiotrack", e_menu.LIST, dx, dy, dw, 24, bench_settings.audio_track, bench_settings.audio_track != null ? bench_settings.audio_track.display_name : text_get("benchaudiotracknew"), action_bench_audio_track)
 				tab_next()
-				dy += ui_small_height
+				//dy += ui_small_height
 			}
 			else
 			{
-				dy += 8
 				draw_tooltip_label("benchsoundtip", icons.INFO, e_toast.INFO)
 			}
 

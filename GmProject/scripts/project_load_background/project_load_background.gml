@@ -56,34 +56,54 @@ function project_load_background(map)
 			background_sky_clouds_mode = "faded"
 		else if (flat)
 			background_sky_clouds_mode = "flat"
-		
-		background_sky_clouds_height = value_get_real(map[?"sky_clouds_z"], background_sky_clouds_height)
-		background_sky_clouds_thickness = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_thickness)
+	}
+	else
+		background_sky_clouds_mode = value_get_string(map[?"sky_clouds_mode"], background_sky_clouds_mode)
+	
+	if (load_format < e_project.FORMAT_200_PRE_5)
+	{
+		background_sky_clouds_offset_z = value_get_real(map[?"sky_clouds_z"], background_sky_clouds_offset_z)
+		background_sky_clouds_size_z = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_size_z)
+	}
+	else if (load_format < e_project.FORMAT_210)
+	{
+		background_sky_clouds_offset_z = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_offset_z)
+		background_sky_clouds_size_z = value_get_real(map[?"sky_clouds_thickness"], background_sky_clouds_size_z)
 	}
 	else
 	{
-		background_sky_clouds_mode = value_get_string(map[?"sky_clouds_mode"], background_sky_clouds_mode)
-		background_sky_clouds_height = value_get_real(map[?"sky_clouds_height"], background_sky_clouds_height)
-		background_sky_clouds_thickness = value_get_real(map[?"sky_clouds_thickness"], background_sky_clouds_thickness)
+		background_sky_clouds_offset_z = value_get_real(map[?"sky_clouds_offset_z"], background_sky_clouds_offset_z)
+		background_sky_clouds_size_z = value_get_real(map[?"sky_clouds_size_z"], background_sky_clouds_size_z)
+	}
+	
+	if (load_format < e_project.FORMAT_210)
+	{
+		background_sky_clouds_size_xy = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size_xy)
+		if (load_format >= e_project.FORMAT_200_PRE_5)
+			background_sky_clouds_size_xy /= 8
+		background_sky_clouds_offset_y = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset_y)
+		background_sky_clouds_offset_y *= -1
+	}
+	else
+	{
+		background_sky_clouds_size_xy = value_get_real(map[?"sky_clouds_size_xy"], background_sky_clouds_size_xy)
+		background_sky_clouds_offset_y = value_get_real(map[?"sky_clouds_offset_y"], background_sky_clouds_offset_y)
 	}
 	
 	background_sky_clouds_tex.count--
 	background_sky_clouds_tex = value_get_save_id(map[?"sky_clouds_tex"], background_sky_clouds_tex)
-	background_sky_clouds_size = value_get_real(map[?"sky_clouds_size"], background_sky_clouds_size)
 	background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
-	background_sky_clouds_offset = value_get_real(map[?"sky_clouds_offset"], background_sky_clouds_offset)
 	if (load_format < e_project.FORMAT_210)
-	{
 		background_sky_clouds_speed *= -1
-		background_sky_clouds_offset *= -1
-	}
-		
+	
+	/*
 	// Update cloud size
 	if (load_format < e_project.FORMAT_200_PRE_5)
 	{
 		if (app.background_sky_clouds_tex = "default")
-			app.background_sky_clouds_size *= 8
+			app.background_sky_clouds_size_xy *= 8
 	}
+	*/
 	
 	background_ground_show = value_get_real(map[?"ground_show"], background_ground_show)
 	background_ground_name = value_get_string(map[?"ground_name"], background_ground_name)

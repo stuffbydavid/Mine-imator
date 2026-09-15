@@ -133,12 +133,12 @@ function app_startup_interface_tabs()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
 			tbx_sunlight_angle.suffix = "°"
-			tbx_sky_clouds_height = new_textbox_ndecimals()
-			tbx_sky_clouds_size = new_textbox_decimals()
-			tbx_sky_clouds_thickness = new_textbox_decimals()
+			tbx_sky_clouds_offset_y = new_textbox_ndecimals()
+			tbx_sky_clouds_offset_z = new_textbox_ndecimals()
+			tbx_sky_clouds_size_xy = new_textbox_decimals()
+			tbx_sky_clouds_size_z = new_textbox_decimals()
 			tbx_sky_clouds_speed = new_textbox_ndecimals()
 			tbx_sky_clouds_speed.suffix = "%"
-			tbx_sky_clouds_offset = new_textbox_ndecimals()
 			tbx_fog_distance = new_textbox_integer()
 			tbx_fog_size = new_textbox_integer()
 			tbx_fog_height = new_textbox_integer()

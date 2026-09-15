@@ -8,8 +8,8 @@ function tab_settings_interface()
 	
 	// Color theme
 	tab_control_togglebutton(2)
-	togglebutton_add("settingsthemeclassic", null, theme_classic, setting_theme = theme_classic, action_setting_theme)
 	togglebutton_add("settingsthemelight", null, theme_light, setting_theme = theme_light, action_setting_theme)
+	togglebutton_add("settingsthemeclassic", null, theme_classic, setting_theme = theme_classic, action_setting_theme)
 	togglebutton_add("settingsthemedark", null, theme_dark, setting_theme = theme_dark, action_setting_theme)
 	togglebutton_add("settingsthemedarker", null, theme_darker, setting_theme = theme_darker, action_setting_theme)
 	draw_togglebutton("settingstheme", dx, dy, true, true)

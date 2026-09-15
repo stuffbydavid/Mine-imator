@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.07"
+		"lastchange": "2026.09.14"
 	},
 	"particle/": {
 		"type/": {
@@ -3528,9 +3528,14 @@
 				"tex": "Texture",
 				"speed": "Speed",
 				"offset": "Offset",
-				"height": "Height",
+				"offsetx": "X",
+				"offsety": "Y",
+				"offsetz": "Z",
 				"size": "Size",
-				"thickness": "Thickness"
+				"sizexz": "XZ",
+				"sizey": "Y",
+				"sizexy": "XY",
+				"sizez": "Z"
 			},
 			"time": "Time",
 			"rotation": "Rotation"

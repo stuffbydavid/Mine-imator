@@ -30,10 +30,10 @@ function project_reset_background()
 	background_sky_clouds_tex.count++
 	background_sky_clouds_mode = "normal"
 	background_sky_clouds_speed = 1
-	background_sky_clouds_height = 1024
-	background_sky_clouds_size = 1536
-	background_sky_clouds_thickness = 64
-	background_sky_clouds_offset = 0
+	background_sky_clouds_offset_y = 0
+	background_sky_clouds_offset_z = 1024
+	background_sky_clouds_size_xy = 192
+	background_sky_clouds_size_z = 64
 	background_sky_update_clouds()
 	
 	background_ground_show = true

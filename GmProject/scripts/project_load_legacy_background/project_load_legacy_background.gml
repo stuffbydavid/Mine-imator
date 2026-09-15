@@ -76,12 +76,12 @@ function project_load_legacy_background()
 		
 		background_sky_clouds_tex.count--
 		background_sky_clouds_tex = project_load_legacy_save_id()
-		background_sky_clouds_height = buffer_read_double()
-		background_sky_clouds_size = buffer_read_double()
-		background_sky_clouds_thickness = buffer_read_double()
+		background_sky_clouds_offset_z = buffer_read_double()
+		background_sky_clouds_size_xy = buffer_read_double()
+		background_sky_clouds_size_z = buffer_read_double()
 		
-		if (app.background_sky_clouds_tex = "default")
-			app.background_sky_clouds_size *= 8
+		//if (app.background_sky_clouds_tex = "default")
+		//	app.background_sky_clouds_size_xy *= 8
 	}
 	
 	if (load_format >= e_project.FORMAT_CB_100)

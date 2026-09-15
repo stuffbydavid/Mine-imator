@@ -208,23 +208,48 @@ function tab_properties_background()
 			tab_next()
 			
 			// Cloud offset
-			tab_control_dragger()
-			draw_dragger("backgroundskycloudsoffset", dx, dy, dragger_width, background_sky_clouds_offset, 10, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_clouds_offset, action_background_sky_clouds_offset)
+			//axis_edit = X
+			//textfield_group_add("backgroundskycloudsoffsetx", background_sky_clouds_offset_x, 0, action_background_sky_clouds_offset_x, axis_edit, tab.transform.tbx_sky_clouds_offset_x, null, 10)
+			if (setting_z_is_up)
+			{
+				axis_edit = Y
+				textfield_group_add("backgroundskycloudsoffsety", background_sky_clouds_offset_y, 0, action_background_sky_clouds_offset_y, axis_edit, tab.background.tbx_sky_clouds_offset_y, null, 10)
+			}
+			axis_edit = Z
+			textfield_group_add("backgroundskycloudsoffset" + (setting_z_is_up ? "z" : "y"), background_sky_clouds_offset_z, 1024, action_background_sky_clouds_offset_z, axis_edit, tab.background.tbx_sky_clouds_offset_z, null, 10)
+			if (!setting_z_is_up)
+			{
+				axis_edit = Y
+				textfield_group_add("backgroundskycloudsoffsetz", background_sky_clouds_offset_y, 0, action_background_sky_clouds_offset_y, axis_edit, tab.background.tbx_sky_clouds_offset_y, null, 10)
+			}
+			
+			tab_control_textfield_group(true)
+			draw_textfield_group("backgroundskycloudsoffset", dx, dy, dw, null, -no_limit, no_limit, 1, true, true, 1)
 			tab_next()
 			
-			// Cloud height
-			tab_control_dragger()
-			draw_dragger("backgroundskycloudsheight", dx, dy, dragger_width, background_sky_clouds_height, 10, -no_limit, no_limit, 1024, 0, tab.background.tbx_sky_clouds_height, action_background_sky_clouds_height)
-			tab_next()
+			draw_divide(dx, dy, dw)
+			dy += 12
 			
 			// Cloud size
-			tab_control_dragger()
-			draw_dragger("backgroundskycloudssize", dx, dy, dragger_width, background_sky_clouds_size, 5, 16, no_limit, 1536, 0, tab.background.tbx_sky_clouds_size, action_background_sky_clouds_size)
-			tab_next()
+			//axis_edit = X
+			//textfield_group_add("backgroundskycloudssizex", background_sky_clouds_size_x, 0, action_background_sky_clouds_size_x, axis_edit, tab.transform.tbx_sky_clouds_size_x, null, 10)
+			//axis_edit = (setting_z_is_up ? Y : Z)
+			//textfield_group_add("backgroundskycloudssize" + (setting_z_is_up ? "y" : "z")), background_sky_clouds_size_y, 192, action_background_sky_clouds_size_y, axis_edit, tab.background.tbx_sky_clouds_size_y, null, 2, 1, no_limit)
+			if (setting_z_is_up)
+			{
+				axis_edit = Y
+				textfield_group_add("backgroundskycloudssizexy", background_sky_clouds_size_xy, 192, action_background_sky_clouds_size_xy, axis_edit, tab.background.tbx_sky_clouds_size_xy, null, 2, 1, no_limit)
+			}
+			axis_edit = Z
+			textfield_group_add("backgroundskycloudssize" + (setting_z_is_up ? "z" : "y"), background_sky_clouds_size_z, 64, action_background_sky_clouds_size_z, axis_edit, tab.background.tbx_sky_clouds_size_z, null, 2, 0, no_limit)
+			if (!setting_z_is_up)
+			{
+				axis_edit = Y
+				textfield_group_add("backgroundskycloudssizexz", background_sky_clouds_size_xy, 192, action_background_sky_clouds_size_xy, axis_edit, tab.background.tbx_sky_clouds_size_xy, null, 2, 1, no_limit)
+			}
 			
-			// Cloud thickness
-			tab_control_dragger()
-			draw_dragger("backgroundskycloudsthickness", dx, dy, dragger_width, background_sky_clouds_thickness, 2, 0, no_limit, 64, 0, tab.background.tbx_sky_clouds_thickness, action_background_sky_clouds_thickness)
+			tab_control_textfield_group(true)
+			draw_textfield_group("backgroundskycloudssize", dx, dy, dw, null, -no_limit, no_limit, 1, true, true, 1)
 			tab_next()
 		}
 		
