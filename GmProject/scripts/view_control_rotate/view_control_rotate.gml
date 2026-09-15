@@ -128,6 +128,8 @@ function view_control_rotate(view)
 	}
 }
 
+// Rotation spaces adapted from Mine-imator Vexel Build (MI VB), PR #111:
+// https://github.com/Vexel-Studios/vexel-mine-imator/pull/111
 function action_view_rotation_space(value)
 {
 	if (window_busy = "rendercontrol")
@@ -206,6 +208,7 @@ function view_rotation_matrix_orthonormal(matrix)
 		return matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
 
 	x_axis = vec3_normalize(x_axis)
+	// Gram-Schmidt removes scale and keeps the gizmo axes perpendicular.
 	y_axis = vec3_sub(y_axis, vec3_mul(x_axis, vec3_dot(y_axis, x_axis)))
 	if (vec3_length(y_axis) <= snap_min)
 		return matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
@@ -327,6 +330,7 @@ function view_rotation_space_begin(axis_world)
 
 function view_rotation_axis_matrix_degrees(axis, angle)
 {
+	// Rodrigues' formula turns the dragged world axis and angle into a rotation.
 	axis = vec3_normalize(axis)
 	var radians = degtorad(angle);
 	var cosine = cos(radians);
@@ -349,6 +353,8 @@ function view_rotation_axis_matrix_degrees(axis, angle)
 
 function view_rotation_euler_near(matrix, reference)
 {
+	// The same orientation has two Euler branches; either can be nearer to the
+	// current animation values, especially when crossing a 90-degree rotation.
 	var t1 = arctan2(matrix[9], matrix[10]);
 	var c2 = sqrt(matrix[0] * matrix[0] + matrix[4] * matrix[4]);
 	var t2 = arctan2(-matrix[8], c2);
@@ -383,6 +389,7 @@ function view_rotation_euler_near(matrix, reference)
 
 	var distance_a = 0;
 	var distance_b = 0;
+	// Unwrap both branches around the previous update so full turns survive.
 	for (var i = 0; i < 3; i++)
 	{
 		candidate_a[i] = reference[i] + angle_difference_fix(candidate_a[i], reference[i])
@@ -409,6 +416,8 @@ function view_rotation_space_apply(angle)
 	{
 		var target_world = matrix_multiply(view_control_rotation_start_world[i], delta_world);
 		var target_parent = view_control_rotation_parent[i];
+		// A selected ancestor receives this delta too. Remove its updated basis
+		// when converting back to local angles to avoid rotating the child twice.
 		if (view_control_rotation_parent_selected[i])
 			target_parent = matrix_multiply(target_parent, delta_world)
 		var target_local = matrix_multiply(target_world, matrix_inverse_ext(target_parent));
