@@ -50,7 +50,7 @@ function res_load_start()
 					{
 						app.popup_loading.text = text_get("loadpackcache")
 						type = e_res_type.PACK
-						load_stage = "finish"
+						load_stage = "done"
 						break
 					}
 				}

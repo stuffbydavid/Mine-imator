@@ -36,6 +36,7 @@ function res_load_scenery()
 					else
 						with (app)
 							load_next()
+					ready = true
 					return 0
 				}
 		
@@ -59,6 +60,7 @@ function res_load_scenery()
 						else
 							with (app)
 								load_next()
+						ready = true
 						return 0
 					}
 			
@@ -264,88 +266,93 @@ function res_load_scenery()
 		
 			if (!scenery_instant)
 				with (app)
-					popup_loading.progress = 0.4 + 0.6 * (mc_builder.build_pos / mc_builder.build_size_total)
+					popup_loading.progress = 0.4 + 0.5 * (mc_builder.build_pos / mc_builder.build_size_total)
 					
 			// All done
 			if (mc_builder.build_pos = mc_builder.build_size_total)
+				load_stage = "done"
+			
+			break
+		}
+		
+		// Finish schematic and update project
+		case "done":
+		{
+			// Non multi-threaded blocks
+			with (mc_builder)
 			{
-				// Non multi-threaded blocks
-				with (mc_builder)
-				{
-					if (!block_multithreaded_skip)
-						break;
+				if (!block_multithreaded_skip)
+					break;
 						
-					build_multithreaded = false
-					builder_spawn_threads(1)
-					with (thread_list[|0])
-					{
-						for (var p = 0; p < build_size_total; p++)
-						{
-							builder_thread_set_pos(p)
-							builder_generate()
-						}
-					}
-					builder_combine_threads()
-				}
-				
-				debug_timer_stop("res_load_scenery, Generate models")
-				block_vbuffer_done()
-			
-				with (mc_builder)
+				build_multithreaded = false
+				builder_spawn_threads(1)
+				with (thread_list[|0])
 				{
-					builder_done()
-					block_tl_list = null
-					build_randomize = false
+					for (var p = 0; p < build_size_total; p++)
+					{
+						builder_thread_set_pos(p)
+						builder_generate()
+					}
 				}
+				builder_combine_threads()
+			}
+				
+			debug_timer_stop("res_load_scenery, Generate models")
+			block_vbuffer_done()
 			
-				scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
-				ready = true
+			with (mc_builder)
+			{
+				builder_done()
+				block_tl_list = null
+				build_randomize = false
+			}
+			
+			scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
+			ready = true
 
-				// Put map name in resource name
-				if (mc_builder.file_map != "")
-					display_name = text_get("loadscenerypieceof", mc_builder.file_map)
+			// Put map name in resource name
+			if (mc_builder.file_map != "")
+				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
 				
-				// Save cached mesh
-				if (creator != app.bench_settings)
-					res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
+			// Save cached mesh
+			if (creator != app.bench_settings)
+				res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
 			
-				// Update templates
-				with (obj_template)
+			// Update templates
+			with (obj_template)
+			{
+				if (scenery = other.id)
 				{
-					if (scenery = other.id)
-					{
-						temp_update_display_name()
-						temp_update_rot_point()
-					}
-				}
-			
-				// Update timelines
-				with (obj_timeline)
-					if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
-						tl_animate_scenery()
-			
-				// Next
-				if (scenery_instant)
-				{
-					load_stage = ""
-					with (app)
-					{
-						tl_update_list()
-						tl_update_matrix()
-						lib_preview.update = true
-						res_preview.update = true
-						bench_settings.preview.update = true
-					}
-				}
-				else
-					with (app)
-				{
-					tl_update_list()
-					tl_update_matrix()
-					load_next()
+					temp_update_display_name()
+					temp_update_rot_point()
 				}
 			}
+			
+			// Update timelines
+			with (obj_timeline)
+				if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
+					tl_animate_scenery()
+			
+			
+			with (app)
+			{
+				tl_update_list()
+				tl_update_matrix()
+				lib_preview.update = true
+				res_preview.update = true
+				bench_settings.preview.update = true
+				popup_loading.progress = 1
+			}
+			
+			load_stage = scenery_instant ? "" : "next"
+			break
+		}
 		
+		// Next resource
+		case "next":
+		{
+			with (app)
+				load_next()
 			break
 		}
 	}
@@ -363,6 +370,7 @@ function res_load_scenery()
 		else
 			with (app)
 				load_next()
+		ready = true
 	}
 
 
