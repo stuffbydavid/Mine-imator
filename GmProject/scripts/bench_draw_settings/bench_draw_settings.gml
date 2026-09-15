@@ -528,7 +528,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				dy += (ui_large_height + 8)
 			}
 			
-			createdisabled = bench_settings.scenery = null || !bench_settings.scenery.ready
+			createdisabled = bench_settings.scenery = null
 				
 			if (content_mouseon)
 				window_scroll_focus = string(bench_settings.schematic_list.scroll)

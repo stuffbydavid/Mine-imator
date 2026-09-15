@@ -92,7 +92,7 @@ function tab_properties_resources()
 
 				if (!res_preview.pack_block_sheet_ani)
 				{
-					tab_control_menu()
+					tab_control(24)
 					draw_button_menu("resourcespackimageblocksheetsize", e_menu.LIST_SEAMLESS, dx, dy, dw, 24, res_preview.pack_block_sheet_size, text_get("resourcespackimageblocksheetsize" + string(block_size_list[res_preview.pack_block_sheet_size])), action_res_preview_pack_block_sheet_size)
 					tab_next()
 				}

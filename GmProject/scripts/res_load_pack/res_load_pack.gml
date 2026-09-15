@@ -84,12 +84,15 @@ function res_load_pack()
 			res_load_pack_particle_textures()
 			res_load_pack_misc()
 			res_save_pack_cache(save_folder + "/" + filename + ".packcache")
-			load_stage = "finish"
+			
+			load_stage = "done"
+			with (app)
+				popup_loading.progress = 0.9
 			break
 		}
 
 		// Finish cached or extracted pack
-		case "finish":
+		case "done":
 		{
 			res_update_colors()
 			ready = true
@@ -129,10 +132,17 @@ function res_load_pack()
 				res_preview.update = true
 				bench_settings.preview.update = true
 				popup_loading.progress = 1
-
-				load_next()
 			}
 			
+			load_stage = "next"
+			break
+		}
+		
+		// Next resource
+		case "next":
+		{
+			with (app)
+				load_next()
 			break
 		}
 	}

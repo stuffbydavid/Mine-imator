@@ -35,6 +35,13 @@ function asset_load()
 	var ext = string_lower(filename_ext(fn));
 	if (ext = ".zip")
 	{
+		// Query resource packs without extracting them first
+		if (zip_is_resource_pack(fn))
+		{
+			action_res_pack_load(fn, false)
+			return true
+		}
+
 		// Unzip and look for valid files
 		var validfile = unzip_asset(fn);
 		

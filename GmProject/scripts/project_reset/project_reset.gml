@@ -106,6 +106,9 @@ function project_reset()
 	timeline_interval_offset = 0
 	timeline_hide_color_tag = array_create(9, false)
 	
+	properties.library.list.column_sort = null
+	properties.resources.list.column_sort = null
+	
 	ds_list_clear(tree_list)
 	ds_list_clear(tree_visible_list)
 	ds_list_clear(project_timeline_list)

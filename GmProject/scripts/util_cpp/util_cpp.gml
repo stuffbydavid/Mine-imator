@@ -241,6 +241,12 @@ function res_load_pack_cache(filename)
 	return false
 }
 
+/// CppSeparate BoolType zip_is_resource_pack(StringType)
+function zip_is_resource_pack(filename)
+{
+	return false
+}
+
 /// CppSeparate IntType thread_get_number()
 /// Returns the amount of total concurrent threads available (cores)
 function thread_get_number()
