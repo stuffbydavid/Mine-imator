@@ -175,8 +175,8 @@ function preview_draw(preview, xx, yy, width, height)
 			//	clip_end()
 			surface_set_target(surface)
 			{
-				draw_clear_alpha(c_black, 0)
-				gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+				draw_clear_alpha(c_level_bottom, 1)
+				gpu_set_blendmode(bm_normal)
 				
 				if (is3d) // 3D view
 				{
@@ -318,6 +318,7 @@ function preview_draw(preview, xx, yy, width, height)
 						shader_use()
 						
 					// Preview uniforms
+					render_set_uniform_int("uAlphaHash", 0)
 					render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 					render_set_uniform_vec2("uTextureOffset", 0, 0)
 					render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
