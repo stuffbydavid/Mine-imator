@@ -2,6 +2,8 @@
 
 function app_update_tl_edit_select()
 {
+	view_rotation_space_update_selection()
+
 	with (frame_editor)
 	{
 		transform.show = false

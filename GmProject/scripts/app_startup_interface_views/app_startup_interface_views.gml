@@ -77,4 +77,18 @@ function app_startup_interface_views()
 	view_control_plane_origin = vec3(0)
 	view_control_plane = false
 	view_control_move_flip_axis = [false, false, false]
+	view_control_rotation_mode = e_rotation_space.GIMBAL
+	view_control_rotation_axis_world = vec3(0, 0, 1)
+	view_control_rotation_target_ids = []
+	view_control_rotation_target_map = ds_map_create()
+	view_control_rotation_history_started = false
+	view_control_rotation_start_eulers = []
+	view_control_rotation_previous_eulers = []
+	view_control_rotation_start_world = []
+	view_control_rotation_parent = []
+	view_control_rotation_parent_selected = []
+	view_control_rotation_constrained = false
+	view_control_rotation_selection_ids = []
+	view_control_rotation_selected_keyframe_marker = noone
+	view_control_rotation_selected_keyframe_mixed = false
 }

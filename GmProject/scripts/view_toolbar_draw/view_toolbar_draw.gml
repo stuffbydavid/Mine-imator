@@ -78,7 +78,6 @@ function view_toolbar_draw(view, xx, yy)
 	
 	// Rotation tool
 	tip_set_keybind(e_keybind.TOOL_ROTATE)
-	
 	if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool_rotate, icons.ROTATE, null, false, "viewtoolrotatetip"))
 	{
 		if (setting_separate_tool_modes)
@@ -179,9 +178,51 @@ function view_toolbar_draw(view, xx, yy)
 		yy += 24 + padding
 	}
 	
-	tip_force_right = false
-	
 	view.toolbar_height = yy - starty
+
+	// Rotation space is detached below the regular tools. Keep one empty
+	// button row between both surfaces so it reads as a separate mode control.
+	var rotation_space_y = yy + 24 + padding;
+	var rotation_space_panel_y = rotation_space_y - 4;
+	if (rotation_space_panel_y + 32 <= content_y + content_height)
+	{
+		var rotation_space_mouseon = app_mouse_box(xx - 4, rotation_space_panel_y, 32, 32) &&
+			!popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon);
+		if (rotation_space_mouseon)
+		{
+			view.toolbar_mouseon = true
+			content_mouseon = true
+			view.toolbar_alpha_goal = 1
+		}
+
+		draw_dropshadow(xx - 4, rotation_space_panel_y, 32, 32, c_black, 1)
+		draw_box(xx - 4, rotation_space_panel_y, 32, 32, false, c_level_top, 1)
+		draw_outline(xx - 4, rotation_space_panel_y, 32, 32, 1, c_border, a_border, true)
+
+		tip_set_keybind(e_keybind.ROTATION_SPACE_CYCLE)
+		view_rotation_space_refresh_constraints()
+		var displayed_rotation_space = setting_rotation_space;
+		var rotation_space_constrained = tl_edit != null && setting_rotation_space != e_rotation_space.GIMBAL && view_control_rotation_constrained;
+		var rotation_space_icon = icons.TRANSFORMATION_GIMBAL;
+		var rotation_space_tip = "viewtoolrotationspacegimbal";
+		if (displayed_rotation_space = e_rotation_space.GLOBAL)
+		{
+			rotation_space_icon = icons.TRANSFORMATION_GLOBAL
+			rotation_space_tip = "viewtoolrotationspaceglobal"
+		}
+		else if (displayed_rotation_space = e_rotation_space.LOCAL)
+		{
+			rotation_space_icon = icons.TRANSFORMATION_LOCAL
+			rotation_space_tip = "viewtoolrotationspacelocal"
+		}
+		if (rotation_space_constrained)
+			rotation_space_tip = "viewtoolrotationspaceconstraintgimbal"
+
+		if (draw_button_icon("viewtoolrotationspace", xx, rotation_space_y, 24, 24, false, rotation_space_icon, null, false, rotation_space_tip))
+			action_view_rotation_space_cycle()
+	}
+
+	tip_force_right = false
 	microani_prefix = ""
 	
 	draw_set_alpha(1)
