@@ -115,6 +115,9 @@ function render_high()
 		render_refresh_effects(false, true)
 		prevsurf = render_post(prevsurf, false, true)
 		
+		if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.FXAA)
+			prevsurf = render_high_aa(prevsurf)
+		
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		
 		surface_set_target(render_target)
@@ -127,8 +130,8 @@ function render_high()
 		gpu_set_blendmode(bm_normal)
 	}
 	
-	// Reset TAA matrix
-	taa_matrix = MAT_IDENTITY
+	// Reset progressive AA matrix
+	aa_matrix = MAT_IDENTITY
 	
 	render_samples_clear = false
 	render_alpha_hash = false

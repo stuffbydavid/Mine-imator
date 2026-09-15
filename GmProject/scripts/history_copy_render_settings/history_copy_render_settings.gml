@@ -49,6 +49,7 @@ function history_copy_render_settings(obj)
 	project_render_gamma = obj.project_render_gamma
 	
 	project_render_aa = obj.project_render_aa
+	project_render_aa_mode = obj.project_render_aa_mode
 	project_render_aa_power = obj.project_render_aa_power
 	
 	project_render_distance = obj.project_render_distance

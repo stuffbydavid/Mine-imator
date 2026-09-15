@@ -1,23 +1,23 @@
-/// render_high_update_taa()
+/// render_high_update_aa_jitter()
 
-function render_high_update_taa()
+function render_high_update_aa_jitter()
 {
-	if (app.project_render_aa)
+	if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.PROGRESSIVE)
 	{
 		var haltonx, haltony, jitterx, jittery;
 		haltonx = 2 * halton(render_sample_current + 1, 2) - 1
 		haltony = 2 * halton(render_sample_current + 1, 3) - 1
 		jitterx = haltonx * (1 / render_width) * app.project_render_aa_power
 		jittery = haltony * (1 / render_height) * app.project_render_aa_power
-		taa_jitter_matrix = [1, 0, 0, 0,
+		aa_jitter_matrix = [1, 0, 0, 0,
 							 0, 1, 0, 0,
 							 0, 0, 1, 0,
 							 jitterx, jittery, 0, 1]
-		taa_matrix = taa_jitter_matrix
+		aa_matrix = aa_jitter_matrix
 	}
 	else
 	{
-		taa_jitter_matrix = MAT_IDENTITY
-		taa_matrix = MAT_IDENTITY
+		aa_jitter_matrix = MAT_IDENTITY
+		aa_matrix = MAT_IDENTITY
 	}
 }

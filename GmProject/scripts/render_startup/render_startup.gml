@@ -140,10 +140,10 @@ function render_startup()
 	
 	render_gamma = 1
 	
-	// "Temporal" anti-aliasing
-	globalvar taa_matrix, taa_jitter_matrix;
-	taa_matrix = MAT_IDENTITY
-	taa_jitter_matrix = MAT_IDENTITY
+	// Progressive anti-aliasing
+	globalvar aa_matrix, aa_jitter_matrix;
+	aa_matrix = MAT_IDENTITY
+	aa_jitter_matrix = MAT_IDENTITY
 	
 	// Alpha hashsing
 	globalvar render_alpha_hash, render_alpha_hash_force;

@@ -55,6 +55,7 @@ The ranges below are the ranges supported by the corresponding interface control
 | `glow_falloff_radius` | 0-no limit | Secondary glow radius |
 | `glow_falloff_intensity` | 0-no limit | Secondary glow intensity |
 | `aa` | Boolean | Enable anti-aliasing |
+| `aa_mode` | 0-1 | Anti-aliasing method (`0` = progressive AA, `1` = FXAA) |
 | `aa_power` | 0-3 | Anti-aliasing strength |
 | `bend_style` | `"blocky"` or `"realistic"` | Block/character bend deformation style |
 | `opaque_leaves` | Boolean | Render leaves as opaque geometry |

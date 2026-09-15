@@ -1411,6 +1411,13 @@ function list_init(name)
 			break
 		}
 		
+		case "renderaamode":
+		{
+			menu_add_item(e_aa_mode.PROGRESSIVE, text_get("renderaamodeprogressive"))
+			menu_add_item(e_aa_mode.FXAA, text_get("renderaamodefxaa"))
+			break
+		}
+		
 		case "rendertonemapper":
 		case "frameeditorcameratonemapper":
 		{

@@ -13,7 +13,7 @@ function shader_use()
 	render_set_uniform("uMetallic", 0)
 	render_set_uniform("uRoughness", 1)
 	
-	render_set_uniform("uTAAMatrix", taa_matrix)
+	render_set_uniform("uAAMatrix", aa_matrix)
 	
 	render_set_uniform("uSampleIndex", render_sample_current)
 	render_set_uniform_int("uAlphaHash", render_alpha_hash)

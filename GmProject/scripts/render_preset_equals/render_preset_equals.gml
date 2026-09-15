@@ -20,6 +20,7 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.shadows_point_buffer_size = objset.shadows_point_buffer_size &&
 			set.glow = objset.glow &&
 			set.aa = objset.aa &&
+			set.aa_mode = objset.aa_mode &&
 			set.aa_power = objset.aa_power
 		)
 	}
@@ -48,6 +49,7 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.glow = objset.glow &&
 			set.glow_falloff = objset.glow_falloff &&
 			set.aa = objset.aa &&
+			set.aa_mode = objset.aa_mode &&
 			set.aa_power = objset.aa_power
 		)
 	}

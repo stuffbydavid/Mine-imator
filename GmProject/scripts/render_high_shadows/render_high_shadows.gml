@@ -44,7 +44,7 @@ function render_high_shadows()
 	}
 	surface_reset_target()
 	
-	taa_matrix = taa_jitter_matrix
+	aa_matrix = aa_jitter_matrix
 	
 	#region Sun
 	
@@ -69,7 +69,7 @@ function render_high_shadows()
 		
 		// Depth
 		cam_far = cam_far_prev
-		taa_matrix = MAT_IDENTITY
+		aa_matrix = MAT_IDENTITY
 		render_alpha_hash = app.project_render_shadows_transparent
 		render_alpha_hash_force = true
 		
@@ -92,7 +92,7 @@ function render_high_shadows()
 			surface_reset_target()
 		}
 		
-		taa_matrix = taa_jitter_matrix
+		aa_matrix = aa_jitter_matrix
 		render_alpha_hash = app.project_render_alpha_mode
 		render_alpha_hash_force = false
 		
@@ -164,7 +164,7 @@ function render_high_shadows()
 				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, e_surface_format.r32float)
 				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, e_surface_format.r32float)
 				
-				taa_matrix = MAT_IDENTITY
+				aa_matrix = MAT_IDENTITY
 				render_alpha_hash = app.project_render_shadows_transparent
 				render_alpha_hash_force = true
 				
@@ -204,7 +204,7 @@ function render_high_shadows()
 					}
 				}
 				
-				taa_matrix = taa_jitter_matrix
+				aa_matrix = aa_jitter_matrix
 				render_alpha_hash = app.project_render_alpha_mode
 				render_alpha_hash_force = false
 				
@@ -230,7 +230,7 @@ function render_high_shadows()
 			{
 				var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 				
-				taa_matrix = MAT_IDENTITY
+				aa_matrix = MAT_IDENTITY
 				render_alpha_hash = app.project_render_shadows_transparent
 				render_alpha_hash_force = true
 				
@@ -254,7 +254,7 @@ function render_high_shadows()
 				}
 				surface_reset_target()
 				
-				taa_matrix = taa_jitter_matrix
+				aa_matrix = aa_jitter_matrix
 				render_alpha_hash = app.project_render_alpha_mode
 				render_alpha_hash_force = false
 				

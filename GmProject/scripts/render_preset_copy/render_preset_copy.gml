@@ -21,6 +21,7 @@ function render_preset_copy(to, allsettings = false)
 		toset.shadows_point_buffer_size = fromset.shadows_point_buffer_size
 		toset.glow = fromset.glow
 		toset.aa = fromset.aa
+		toset.aa_mode = fromset.aa_mode
 		toset.aa_power = fromset.aa_power
 	}
 	
@@ -47,6 +48,7 @@ function render_preset_copy(to, allsettings = false)
 		toset.glow = fromset.glow
 		toset.glow_falloff = fromset.glow_falloff
 		toset.aa = fromset.aa
+		toset.aa_mode = fromset.aa_mode
 		toset.aa_power = fromset.aa_power
 	}
 	

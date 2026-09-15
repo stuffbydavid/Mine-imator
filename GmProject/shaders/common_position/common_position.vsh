@@ -52,11 +52,11 @@ vec3 getWorldPosition(vec3 pos, vec4 inWave)
 #region CLIP_POSITION_LIB
 #pragma shady: macro_begin CLIP_POSITION_LIB
 
-uniform mat4 uTAAMatrix; // static
+uniform mat4 uAAMatrix; // static
 
 vec4 getClipPosition(vec3 worldPos)
 {
-	return uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(worldPos, 1.0));
+	return uAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(worldPos, 1.0));
 }
 
 #pragma shady: macro_end

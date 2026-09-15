@@ -66,6 +66,7 @@ function shader_startup()
 		new_shader("shader_noise")
 		new_shader("shader_ca")
 		new_shader("shader_distort")
+		new_shader("shader_high_aa")
 		new_shader("shader_high_lighting_apply")
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_gbuffers")
@@ -386,6 +387,12 @@ function shader_startup()
 		new_shader_uniform("uBlurAmount")
 		new_shader_uniform("uColorOffset")
 		new_shader_uniform("uDistortChannels")
+	}
+	
+	with (shader_map[?shader_high_aa])
+	{
+		new_shader_uniform("uScreenSize")
+		new_shader_uniform("uPower")
 	}
 	
 	with (shader_map[?shader_distort])

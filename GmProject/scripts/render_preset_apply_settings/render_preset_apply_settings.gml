@@ -62,6 +62,7 @@ function render_preset_apply_settings(settings, renderer)
 			case "glow_falloff_radius": realisticset.glow_falloff_radius = val break
 			case "glow_falloff_intensity": realisticset.glow_falloff_intensity = val break
 			case "aa": set.aa = val break
+			case "aa_mode": set.aa_mode = val break
 			case "aa_power": set.aa_power = val break
 			case "distance": render_distance = val break
 			case "bend_style": bend_style = val break

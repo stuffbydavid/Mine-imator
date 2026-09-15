@@ -6,8 +6,8 @@ function render_high_update_jitter()
 	// Randomize blue noise
 	render_sample_noise_texture = render_get_noise_texture(render_sample_current)
 	
-	// TAA
-	render_high_update_taa()
+	// Progressive AA
+	render_high_update_aa_jitter()
 	
 	// Jitter effects using progressive sampling
 	var diskangle = frac(render_sample_current * .61803399) * pi * 2

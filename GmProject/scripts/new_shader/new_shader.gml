@@ -37,7 +37,7 @@ function new_shader(name)
 		new_shader_uniform("uCameraPosition")
 		
 		// Rendering effects
-		new_shader_uniform("uTAAMatrix")
+		new_shader_uniform("uAAMatrix")
 		new_shader_uniform("uSampleIndex")
 		new_shader_uniform("uAlphaHash")
 		

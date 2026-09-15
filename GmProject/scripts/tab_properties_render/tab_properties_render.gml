@@ -345,15 +345,20 @@ function tab_properties_render()
 		tab_control_switch()
 		draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, rendererset.aa, "renderaa", "renderaatip")
 		tab_next()
-	
+		
 		if (rendererset.aa && collapse_map[?"aa"])
 		{
 			tab_collapse_start()
-		
+			
+			var aatext = rendererset.aa_mode = e_aa_mode.FXAA ? text_get("renderaamodefxaa") : text_get("renderaamodeprogressive");
+			tab_control_menu()
+			draw_button_menu("renderaamode", e_menu.LIST, dx, dy, dw, 24, rendererset.aa_mode, aatext, action_project_render_aa_mode)
+			tab_next()
+			
 			tab_control_meter()
 			draw_meter("renderaapower", dx, dy, dw, round(rendererset.aa_power * 100), 0, 300, 100, 1, tab.render.tbx_aa_power, action_project_render_aa_power)
 			tab_next()
-		
+			
 			tab_collapse_end()
 		}
 		

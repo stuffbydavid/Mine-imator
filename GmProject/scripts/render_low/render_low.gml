@@ -59,6 +59,9 @@ function render_low()
 
 	finalsurf = render_post(surf)
 	
+	if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.FXAA)
+		finalsurf = render_high_aa(finalsurf)
+	
 	render_target = surface_require(render_target, render_width, render_height)
 	surface_set_target(render_target)
 	{

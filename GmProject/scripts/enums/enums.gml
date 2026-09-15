@@ -861,6 +861,13 @@ function enums()
 		REALISTIC,
 		COMMON
 	}
+
+	// Anti-aliasing
+	enum e_aa_mode
+	{
+		PROGRESSIVE,
+		FXAA
+	}
 	
 	// Menus
 	enum e_menu
