@@ -62,7 +62,12 @@ namespace CppProject
 
 	void gpu_set_blendenable(BoolType enabled)
 	{
-		// Blending always enabled
+		GFX->SetBlending(enabled);
+	}
+
+	void gpu_set_colorwriteenable(BoolType red, BoolType green, BoolType blue, BoolType alpha)
+	{
+		GFX->SetColorWrite(red, green, blue, alpha);
 	}
 
 	void gpu_set_blendmode_ext_sepalpha(IntType src, IntType dest, IntType alphasrc, IntType alphadest)
@@ -197,6 +202,11 @@ namespace CppProject
 	void gpu_set_ztestenable(BoolType enabled)
 	{
 		GFX->SetDepthTest(enabled);
+	}
+
+	void gpu_set_zfunc(IntType func)
+	{
+		GFX->SetDepthFunc(func);
 	}
 
 	void gpu_set_zwriteenable(BoolType enabled)

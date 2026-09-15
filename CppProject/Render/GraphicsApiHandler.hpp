@@ -110,6 +110,15 @@ namespace CppProject
 		// Sets whether depth writing is enabled.
 		void SetDepthWrite(BoolType enabled);
 
+		// Sets the depth comparison function.
+		void SetDepthFunc(IntType func);
+
+		// Sets which color channels can be written.
+		void SetColorWrite(BoolType red, BoolType green, BoolType blue, BoolType alpha);
+
+		// Sets whether color blending is enabled.
+		void SetBlending(BoolType enabled);
+
 		// Sets the blending functions.
 		void SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest);
 
@@ -145,13 +154,15 @@ namespace CppProject
 		// Current GPU settings
 		BoolType depthMask = false;
 		BoolType depthTest = false;
+		IntType depthFunc = 4; // cmpfunc_lessequal
 		BoolType culling = false;
 		BoolType cullFront = false;
 		BoolType blend = false;
-		IntType blendSrcFactor = 0;
-		IntType blendDstFactor = 0;
-		IntType blendAlphaSrcFactor = 0;
-		IntType blendAlphaDstFactor = 0;
+		IntType colorWriteMask = 15;
+		IntType blendSrcFactor = 5; // bm_src_alpha
+		IntType blendDstFactor = 6; // bm_inv_src_alpha
+		IntType blendAlphaSrcFactor = 5;
+		IntType blendAlphaDstFactor = 6;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
@@ -166,6 +177,8 @@ namespace CppProject
 		{
 			DEPTH_TEST_WRITE,
 			DEPTH_TEST_NO_WRITE,
+			DEPTH_TEST_EQUAL_WRITE,
+			DEPTH_TEST_EQUAL_NO_WRITE,
 			DEPTH_NO_TEST_NO_WRITE,
 			STENCIL_WRITE,
 			STENCIL_TEST
@@ -174,7 +187,8 @@ namespace CppProject
 
 		struct BlendState
 		{
-			IntType src, dst, srcAlpha, dstAlpha;
+			IntType src, dst, srcAlpha, dstAlpha, writeMask;
+			BoolType enabled;
 			ID3D11BlendState* state = nullptr;
 		};
 		QVector<BlendState> d3dBlendStates;
@@ -183,6 +197,8 @@ namespace CppProject
 		ID3D11BlendState* d3dNoColorState = nullptr;
 		QHash<IntType, D3D11_BLEND> d3dBlendColorMap;
 		QHash<IntType, D3D11_BLEND> d3dBlendAlphaMap;
+		void ApplyBlendState();
+		void ApplyDepthState();
 		IDXGIFactory* dxgiFactory = nullptr;
 		QVector<ID3D11RenderTargetView*> d3dMrtRTVs;
 		ID3D11DepthStencilView* d3dMrtDSV = nullptr;
