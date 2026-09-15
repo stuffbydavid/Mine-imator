@@ -4,6 +4,22 @@
 
 function tl_value_set_start(script, combine)
 {
+	return tl_value_set_start_filtered(script, combine, 0, false)
+}
+
+/// tl_value_set_start_targets(script, combine, target_index_map)
+/// @arg script
+/// @arg combine
+/// @arg target_index_map
+/// @desc Starts a value edit for only the timelines captured by a viewport
+/// transform. Mixed selections must not create unrelated keyframes/history.
+function tl_value_set_start_targets(script, combine, target_index_map)
+{
+	return tl_value_set_start_filtered(script, combine, target_index_map, true)
+}
+
+function tl_value_set_start_filtered(script, combine, target_index_map, filter_targets)
+{
 	with (app)
 	{
 		action_tl_play_break()
@@ -13,7 +29,7 @@ function tl_value_set_start(script, combine)
 	// Used only in here
 	with (obj_keyframe)
 	{
-		edit = selected
+		edit = selected && (!filter_targets || ds_map_exists(target_index_map, save_id_get(timeline)))
 		created = false
 	}
 	
@@ -21,6 +37,8 @@ function tl_value_set_start(script, combine)
 	with (obj_timeline)
 	{
 		if (!selected || keyframe_select != null)
+			continue
+		if (filter_targets && !ds_map_exists(target_index_map, save_id_get(id)))
 			continue
 		
 		// If marker is on a keyframe, edit that, if not, add new keyframe
@@ -79,4 +97,5 @@ function tl_value_set_start(script, combine)
 	history_data.par_set_n = 0
 	render_samples = -1
 	history_resource_update = true
+	return 0
 }

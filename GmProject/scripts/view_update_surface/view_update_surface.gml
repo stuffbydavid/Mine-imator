@@ -87,11 +87,13 @@ function view_update_surface(view, cam)
 						if (tl_edit.value_type[e_value_type.TRANSFORM_POS] && (setting_tool_move || setting_tool_transform))
 							view_control_move(view)
 						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && (setting_tool_rotate || setting_tool_transform))
-							view_control_rotate(view)
-						
 						if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_tool_bend)
 							view_control_bend(view)
+
+						// Draw rotation last so it wins hit-testing where rotation and bend
+						// rings overlap. Both tools may remain enabled independently.
+						if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && (setting_tool_rotate || setting_tool_transform))
+							view_control_rotate(view)
 						
 						view.control_mouseon_last = view.control_mouseon
 						view.control_mouseon = null

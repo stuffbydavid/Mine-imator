@@ -889,6 +889,10 @@
 			"selecttip": "Select tool",
 			"movetip": "Move tool",
 			"rotatetip": "Rotate tool",
+			"rotationspacegimbal": "Gimbal rotation space (click to cycle)",
+			"rotationspaceglobal": "Global rotation space (click to cycle)",
+			"rotationspacelocal": "Local rotation space (click to cycle)",
+			"rotationspaceconstraintgimbal": "Chosen rotation space is unavailable for this selection; using Gimbal (click to cycle)",
 			"scaletip": "Scale tool",
 			"bendtip": "Bend tool",
 			"transformtip": "Transform tool"
@@ -4339,6 +4343,7 @@
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",
+				"rotationspacecycle": "Cycle rotation space",
 				"scale": "Scale tool",
 				"bend": "Bend tool",
 				"transform": "Multi-transform tool"
