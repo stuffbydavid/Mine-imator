@@ -2,13 +2,6 @@
 
 function popup_loading_draw()
 {	
-	if (popup_ani = 1)
-	{
-		if (popup.load_object && popup.load_script)
-			with (popup.load_object)
-				script_execute(app.popup.load_script)
-	}
-	
 	dx += 8
 	dy += 8
 	dw -= 16
@@ -27,4 +20,17 @@ function popup_loading_draw()
 	tab_control_loading()
 	draw_loading_bar(dx, dy, dw, 8, popup.progress, popup.caption, popup.text)
 	tab_next()
+
+	// Draw progress before loading a stage
+	if (popup_ani = 1 && popup.load_object && popup.load_script)
+	{
+		if (popup.load_drawn)
+		{
+			popup.load_drawn = false
+			with (popup.load_object)
+				script_execute(app.popup.load_script)
+		}
+		else
+			popup.load_drawn = true
+	}
 }

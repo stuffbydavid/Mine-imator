@@ -215,27 +215,40 @@ function minecraft_assets_load()
 				// Create sheets and texture depth
 				with (mc_res)
 				{
-					res_load_pack_model_textures()
-					res_load_pack_block_textures()
-					
-					res_load_pack_item_textures("diffuse", "")
-					for (var size = 0; size < e_item_sheet.amount; size++)
+					var cachefile = file_directory + app.setting_minecraft_assets_version + ".zip.packcache"
+					pack_cache_loaded = file_exists_lib(cachefile) && res_load_pack_cache(cachefile)
+					if (pack_cache_loaded)
 					{
-						if (item_sheet_texture[size] != null)
+						// Restore preview buffers from cached sheets
+						res_load_pack_block_preview_buffers()
+					}
+					else
+					{
+						// Build sheets from extracted textures
+						res_load_pack_model_textures()
+						res_load_pack_block_textures()
+						res_load_pack_item_textures("diffuse", "")
+						for (var size = 0; size < e_item_sheet.amount; size++)
 						{
-							if (item_sheet_texture_material[size] != null)
-								texture_free(item_sheet_texture_material[size])
-							if (item_sheet_texture_normal[size] != null)
-								texture_free(item_sheet_texture_normal[size])
-							item_sheet_texture_material[size] = sprite_duplicate(spr_default_material)
-							item_sheet_texture_normal[size] = sprite_duplicate(spr_default_normal)
+							if (item_sheet_texture[size] != null)
+							{
+								if (item_sheet_texture_material[size] != null)
+									texture_free(item_sheet_texture_material[size])
+								if (item_sheet_texture_normal[size] != null)
+									texture_free(item_sheet_texture_normal[size])
+								item_sheet_texture_material[size] = sprite_duplicate(spr_default_material)
+								item_sheet_texture_normal[size] = sprite_duplicate(spr_default_normal)
+							}
 						}
 					}
 					
 					minecraft_assets_load_particles(particleslist)
-					res_load_pack_particle_textures()
-					
-					res_load_pack_misc()
+					if (!pack_cache_loaded)
+					{
+						res_load_pack_particle_textures()
+						res_load_pack_misc()
+						res_save_pack_cache(cachefile)
+					}
 					res_update_colors(biome_list[|1].name)
 				}
 				

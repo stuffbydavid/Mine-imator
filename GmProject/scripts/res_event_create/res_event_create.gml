@@ -25,25 +25,29 @@ function res_event_create()
 	
 	model_texture_map = null
 	model_texture_material_map = null
-	model_tex_normal_map = null
+	model_texture_normal_map = null
 	
 	model_block_map = null
 	
 	model_texture_name_map = null
 	model_texture_material_name_map = null
-	model_tex_normal_name_map = null
+	model_texture_normal_name_map = null
 	
 	model_shape_texture_name_map = null
 	model_shape_texture_material_name_map = null
-	model_shape_tex_normal_name_map = null
+	model_shape_texture_normal_name_map = null
 	
 	model_color_name_map = null
 	model_color_map = null
+	
 	model_shape_hide_list = null
 	model_shape_vbuffer_map = null
 	model_shape_alpha_map = null
+	
 	player_skin = false
 	pack_format = e_minecraft_pack.LATEST
+	pack_cache_loaded = false
+	load_reload = false
 	
 	block_sheet_texture = array_create(e_block_sheet.amount, null)
 	block_sheet_texture_material = array_create(e_block_sheet.amount, null)
@@ -85,6 +89,7 @@ function res_event_create()
 	particles_texture[0] = null
 	particles_texture[1] = null
 	
+	particle_texture_map = null
 	particle_texture_atlas_map = null
 	particle_texture_uvs_map = null
 	particle_texture_pixeluvs_map = null

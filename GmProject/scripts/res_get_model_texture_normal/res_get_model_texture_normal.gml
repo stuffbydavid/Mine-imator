@@ -7,10 +7,10 @@ function res_get_model_tex_normal(name)
 	if (!ready)
 		return null
 	
-	if (model_tex_normal_map != null)
+	if (model_texture_normal_map != null)
 	{
-		if (ds_map_exists(model_tex_normal_map, name))
-			return model_tex_normal_map[?name]
+		if (ds_map_exists(model_texture_normal_map, name))
+			return model_texture_normal_map[?name]
 		else
 			return null
 	}

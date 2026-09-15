@@ -609,7 +609,7 @@ function preview_draw(preview, xx, yy, width, height)
 									else if (pack_image_material = "material")
 										tex = select.model_texture_material_map[?pack_model_texture]
 									else if (pack_image_material = "normal")
-										tex = select.model_tex_normal_map[?pack_model_texture]
+										tex = select.model_texture_normal_map[?pack_model_texture]
 									
 									break
 								}

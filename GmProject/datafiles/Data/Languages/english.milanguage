@@ -3751,6 +3751,7 @@
 		"read": "Reading audio..."
 	},
 	"loadpack/": {
+		"cache": "Loading textures...",
 		"unzip": "Extracting resources...",
 		"modeltextures": "Loading model textures...",
 		"blocktextures": "Loading block textures...",

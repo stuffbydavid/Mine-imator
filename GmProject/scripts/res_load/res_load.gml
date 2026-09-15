@@ -16,6 +16,8 @@ function res_load(reload = false)
 		case e_res_type.PACK_UNZIPPED:
 		{
 			ready = false
+			load_reload = reload
+			pack_cache_loaded = false
 			
 			with (app)
 			{
@@ -252,16 +254,16 @@ function res_load(reload = false)
 				model_texture_material_map = null
 			}
 			
-			if (model_tex_normal_map != null)
+			if (model_texture_normal_map != null)
 			{
-				var key = ds_map_find_first(model_tex_normal_map);
+				var key = ds_map_find_first(model_texture_normal_map);
 				while (!is_undefined(key))
 				{
-					texture_free(model_tex_normal_map[?key])
-					key = ds_map_find_next(model_tex_normal_map, key)
+					texture_free(model_texture_normal_map[?key])
+					key = ds_map_find_next(model_texture_normal_map, key)
 				}
-				ds_map_destroy(model_tex_normal_map)
-				model_tex_normal_map = null
+				ds_map_destroy(model_texture_normal_map)
+				model_texture_normal_map = null
 			}
 			
 			// Load model from .mimodel or block .json
@@ -290,13 +292,13 @@ function res_load(reload = false)
 				if (model_file != null)
 					model_texture_material_name_map[?""] = model_file.texture_material_name
 				
-				if (model_tex_normal_name_map != null)
-					ds_map_clear(model_tex_normal_name_map)
+				if (model_texture_normal_name_map != null)
+					ds_map_clear(model_texture_normal_name_map)
 				else
-					model_tex_normal_name_map = ds_map_create()
+					model_texture_normal_name_map = ds_map_create()
 				
 				if (model_file != null)
-					model_tex_normal_name_map[?""] = model_file.texture_normal_name
+					model_texture_normal_name_map[?""] = model_file.texture_normal_name
 				
 				// Create color name map
 				if (model_color_name_map != null)

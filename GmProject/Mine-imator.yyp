@@ -2211,6 +2211,7 @@
     {"id":{"name":"res_load_audio","path":"scripts/res_load_audio/res_load_audio.yy",},},
     {"id":{"name":"res_load_browse","path":"scripts/res_load_browse/res_load_browse.yy",},},
     {"id":{"name":"res_load_legacy_block_sheet","path":"scripts/res_load_legacy_block_sheet/res_load_legacy_block_sheet.yy",},},
+    {"id":{"name":"res_load_pack_block_preview_buffers","path":"scripts/res_load_pack_block_preview_buffers/res_load_pack_block_preview_buffers.yy",},},
     {"id":{"name":"res_load_pack_block_sheet","path":"scripts/res_load_pack_block_sheet/res_load_pack_block_sheet.yy",},},
     {"id":{"name":"res_load_pack_block_textures","path":"scripts/res_load_pack_block_textures/res_load_pack_block_textures.yy",},},
     {"id":{"name":"res_load_pack_item_textures","path":"scripts/res_load_pack_item_textures/res_load_pack_item_textures.yy",},},

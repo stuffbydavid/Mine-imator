@@ -91,7 +91,7 @@ function list_init(name)
 				if (string_contains(name, "material"))
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 				else if (string_contains(name, "normal"))
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_tex_normal_name_map))
+					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_texture_normal_name_map))
 				else
 					tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 			}
@@ -110,7 +110,7 @@ function list_init(name)
 					if (string_contains(name, "material"))
 						tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 					else if (string_contains(name, "normal"))
-						tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_tex_normal_name_map))
+						tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_texture_normal_name_map))
 					else
 						tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 				}
@@ -259,14 +259,14 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_tex_normal_map = null && texobj.block_sheet_texture_normal[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
+					if (texobj.model_texture_normal_map = null && texobj.block_sheet_texture_normal[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
 						texobj = mc_res
 				}
 			}
 			
 			if (texobj != null)
 			{
-				if (texobj.model_tex_normal_map = null && texobj.model_texture = null)
+				if (texobj.model_texture_normal_map = null && texobj.model_texture = null)
 				{
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				}
@@ -1006,7 +1006,7 @@ function list_init(name)
 			
 			if (texobj != null)
 			{
-				if (texobj.model_tex_normal_map = null && texobj.model_texture = null)
+				if (texobj.model_texture_normal_map = null && texobj.model_texture = null)
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				else
 				{

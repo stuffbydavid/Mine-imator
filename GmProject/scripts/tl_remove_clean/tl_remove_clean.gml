@@ -158,8 +158,8 @@ function tl_remove_clean()
 				if (model_texture_material_name_map != null)	
 					ds_map_destroy(model_texture_material_name_map)
 				
-				if (model_tex_normal_name_map != null)	
-					ds_map_destroy(model_tex_normal_name_map)
+				if (model_texture_normal_name_map != null)	
+					ds_map_destroy(model_texture_normal_name_map)
 				
 				if (model_hide_list != null)
 					ds_list_destroy(model_hide_list)

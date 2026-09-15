@@ -202,7 +202,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				// Skin (Normal map)
 				text = bench_settings.model_tex_normal.display_name
 				with (bench_settings.model_tex_normal)
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_tex_normal_name_map))
+					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_texture_normal_name_map))
 				
 				draw_button_menu(texnormcap, e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)

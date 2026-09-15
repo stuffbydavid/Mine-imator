@@ -12,7 +12,6 @@ function res_load_pack_block_textures()
 			texture_free(block_sheet_texture_material[size])
 		if (block_sheet_texture_normal[size] != null)
 			texture_free(block_sheet_texture_normal[size])
-	
 		block_sheet_texture[size] = null
 		block_sheet_texture_material[size] = null
 		block_sheet_texture_normal[size] = null

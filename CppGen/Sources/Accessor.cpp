@@ -798,7 +798,7 @@ String Accessor::toCpp(ResolveScope* scope)
 		else if (funcSign != nullptr && funcSign->needScope)
 			funcScope = STR(any);
 
-		if (funcScope != STR(global) && funcScope != STR(app) && !funcInstance) // Send in scope for non-global/non-instance
+		if (funcScope != STR(global) && (funcScope != STR(app) || (targetFunc != nullptr && targetFunc->isCppSeparate)) && !funcInstance) // Send in scope for non-global/non-instance
 		{
 			if (thisPtrValid || scope->current != funcScope) // Make new scope
 			{

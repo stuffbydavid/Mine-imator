@@ -34,6 +34,7 @@ function app_startup_interface_popups()
 	{
 		load_object = null
 		load_script = null
+		load_drawn = false
 		progress = 0
 		text = ""
 	}

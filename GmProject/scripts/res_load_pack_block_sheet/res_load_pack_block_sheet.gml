@@ -72,7 +72,7 @@ function res_load_pack_block_sheet(type, suffix)
 				ds_list_add(texlist[size], null)
 			}
 		}
-	}
+		}
 	
 	// Animated textures
 	log("Block textures", type, "load animated")
@@ -209,7 +209,7 @@ function res_load_pack_block_sheet(type, suffix)
 			block_sheet_texture_material[size] = texture_surface(surf[size])
 		else if (type = "normal")
 			block_sheet_texture_normal[size] = texture_surface(surf[size])
-	}
+		}
 	
 	// Create surfaces for animated blocks
 	log("Block textures", type, "animated block surfaces")
@@ -525,13 +525,15 @@ function res_load_pack_block_sheet(type, suffix)
 	
 	for (var size = 0; size < e_block_sheet.static_amount; size++)
 	{
-		if (texlist[size] = null)
-			continue
-		for (var t = 0; t < ds_list_size(texlist[size]); t++)
-			if (texlist[size][|t] != null)
-				texture_free(texlist[size][|t])
-		surface_free(surf[size])
-		ds_list_destroy(texlist[size])
+		if (texlist[size] != null)
+		{
+			for (var t = 0; t < ds_list_size(texlist[size]); t++)
+				if (texlist[size][|t] != null)
+					texture_free(texlist[size][|t])
+			ds_list_destroy(texlist[size])
+		}
+		if (surf[size] != null)
+			surface_free(surf[size])
 	}
 	
 	for (var t = 0; t < ds_list_size(texanilist); t++)

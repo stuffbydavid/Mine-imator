@@ -30,15 +30,15 @@ function res_event_destroy()
 		ds_map_destroy(model_texture_material_map)
 	}
 	
-	if (model_tex_normal_map != null)
+	if (model_texture_normal_map != null)
 	{
-		var key = ds_map_find_first(model_tex_normal_map);
+		var key = ds_map_find_first(model_texture_normal_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_tex_normal_map[?key])
-			key = ds_map_find_next(model_tex_normal_map, key)
+			texture_free(model_texture_normal_map[?key])
+			key = ds_map_find_next(model_texture_normal_map, key)
 		}
-		ds_map_destroy(model_tex_normal_map)
+		ds_map_destroy(model_texture_normal_map)
 	}
 	
 	// Free shape vbuffers

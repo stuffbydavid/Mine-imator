@@ -222,13 +222,22 @@ function res_load_scenery_world()
 /// CppSeparate void res_save_block_cache(Scope<obj_resource>, StringType)
 function res_save_block_cache(filename)
 {
-	ready = true
 }
 
 /// CppSeparate BoolType res_load_block_cache(Scope<obj_resource>, StringType)
 function res_load_block_cache(filename)
 {
-	ready = true
+	return false
+}
+
+/// CppSeparate void res_save_pack_cache(Scope<obj_resource>, StringType)
+function res_save_pack_cache(filename)
+{
+}
+
+/// CppSeparate BoolType res_load_pack_cache(Scope<obj_resource>, StringType)
+function res_load_pack_cache(filename)
+{
 	return false
 }
 
