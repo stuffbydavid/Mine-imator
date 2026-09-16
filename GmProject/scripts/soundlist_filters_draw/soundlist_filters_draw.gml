@@ -15,6 +15,7 @@ function soundlist_filters_draw()
 		prefix = "soundfilter"
 	}
 	scroll = settings_menu_scroll.needed ? -settings_menu_scroll.value : 0
+	slist.filter_scroll = settings_menu_scroll.value
 	capwid = 0
 
 	clip_begin(content_x, content_y, settings_menu_w, settings_menu_h)

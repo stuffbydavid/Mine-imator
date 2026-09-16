@@ -24,6 +24,7 @@ function sortlist_filters_draw()
 		scroll = -settings_menu_scroll.value
 	else
 		scroll = 0
+	settings_menu_sortlist.filter_scroll = settings_menu_scroll.value
 	
 	draw_set_font(font_label)
 	

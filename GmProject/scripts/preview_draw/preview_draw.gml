@@ -8,7 +8,7 @@
 
 function preview_draw(preview, xx, yy, width, height)
 {
-	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton;
+	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton, triggerkey;
 	//var clipactive, clipx, clipy, clipwid, cliphei;
 	
 	if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
@@ -16,6 +16,8 @@ function preview_draw(preview, xx, yy, width, height)
 	
 	mouseon = app_mouse_box(xx, yy, width, height)
 	setplaytime = null
+	triggerkey = (preview.space_trigger && !app.textbox_isediting && keyboard_check_pressed(vk_space))
+	
 	//clipactive = shader_clip_active
 	//clipx = shader_clip_x
 	//clipy = shader_clip_y
@@ -745,12 +747,12 @@ function preview_draw(preview, xx, yy, width, height)
 	{
 		if (preview.select.pc_spawn_constant)
 		{
-			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn") || triggerkey)
 				preview.spawn_active = !preview.spawn_active
 		}
 		else
 		{
-			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn"))
+			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn") || triggerkey)
 				preview.fire = true
 		}
 	}
@@ -758,7 +760,7 @@ function preview_draw(preview, xx, yy, width, height)
 	// Play button
 	if (playbutton)
 	{
-		if (draw_button_icon("previewplay", xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay"))
+		if (draw_button_icon("previewplay", xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay") || triggerkey)
 		{
 			if (isplaying)
 			{

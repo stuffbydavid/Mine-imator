@@ -68,10 +68,10 @@ function action_res_remove()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+	project_update_counts()
 	
 	bench_settings.preview.update = true
 	lib_preview.update = true
 	res_preview.update = true
 	res_preview.reset_view = true
-	project_update_counts()
 }
