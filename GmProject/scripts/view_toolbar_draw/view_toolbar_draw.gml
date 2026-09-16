@@ -180,7 +180,7 @@ function view_toolbar_draw(view, xx, yy)
 	
 	view.toolbar_height = yy - starty
 
-	// Rotation space is detached below the regular tools. Keep one empty
+	// Transform orientation is detached below the regular tools. Keep one empty
 	// button row between both surfaces so it reads as a separate mode control.
 	var rotation_space_y = yy + 24 + padding;
 	var rotation_space_panel_y = rotation_space_y - 4;
@@ -203,6 +203,12 @@ function view_toolbar_draw(view, xx, yy)
 		view_rotation_space_refresh_constraints()
 		var displayed_rotation_space = setting_rotation_space;
 		var rotation_space_constrained = tl_edit != null && setting_rotation_space != e_rotation_space.GIMBAL && view_control_rotation_constrained;
+		if (tl_edit != null && setting_rotation_space != e_rotation_space.GIMBAL)
+		{
+			rotation_space_constrained = ((setting_tool_rotate || setting_tool_transform) && view_control_rotation_constrained) ||
+				((setting_tool_move || setting_tool_transform) && view_transform_space_effective(e_value_type.TRANSFORM_POS) = e_rotation_space.GIMBAL) ||
+				((setting_tool_scale || setting_tool_transform) && view_transform_space_effective(e_value_type.TRANSFORM_SCA) = e_rotation_space.GIMBAL)
+		}
 		var rotation_space_icon = icons.TRANSFORMATION_GIMBAL;
 		var rotation_space_tip = "viewtoolrotationspacegimbal";
 		if (displayed_rotation_space = e_rotation_space.GLOBAL)

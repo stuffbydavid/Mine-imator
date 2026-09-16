@@ -175,6 +175,7 @@ function view_rotation_space_refresh_constraints()
 
 function view_rotation_space_update_selection()
 {
+	view_transform_space_update_selection()
 	view_control_rotation_selection_ids = []
 	view_control_rotation_selected_keyframe_marker = noone
 	view_control_rotation_selected_keyframe_mixed = false
