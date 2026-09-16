@@ -163,7 +163,8 @@ function preview_draw(preview, xx, yy, width, height)
 		
 		surface = surface_require(surface, width, height)
 		
-		var soundready = (preview.select.type != e_res_type.SOUND || (preview.select.ready && audio_is_ready(preview.select.sound_index)));
+		var soundready = (preview.select.type != e_res_type.SOUND ||
+			(preview.select.object_index = obj_resource && preview.select.ready && audio_is_ready(preview.select.sound_index)));
 		if (update && soundready)
 		{
 			if (select.object_index != obj_resource || select.type != e_res_type.SOUND)
@@ -466,7 +467,6 @@ function preview_draw(preview, xx, yy, width, height)
 								break
 							}
 							
-							case e_tl_type.SHAPE:
 							case e_temp_type.CUBE: 
 							case e_temp_type.CONE: 
 							case e_temp_type.CYLINDER: 

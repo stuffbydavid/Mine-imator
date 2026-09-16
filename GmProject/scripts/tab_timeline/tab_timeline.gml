@@ -1192,7 +1192,7 @@ function tab_timeline()
 			draw_set_font(font_caption)
 			
 			// Check contents array and display the icon/amount
-			for (var i = 0; i < e_tl_type.amount - 1; i++)
+			for (var i = 0; i < e_tl_type.amount; i++)
 			{
 				if (tl.tree_contents[i] = 0)
 					continue

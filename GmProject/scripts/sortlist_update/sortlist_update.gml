@@ -194,26 +194,18 @@ function sortlist_update(slist)
 	{
 		for (var p = 0; p < ds_list_size(slist.display_list); p++)
 		{
-			var item = slist.display_list[|p];
-			
-			// Library filter (type)
-			if (settings_menu_sortlist = app.properties.library.list)
+			var item, typename;
+			item = slist.display_list[|p]
+			typename = null
+			if (item.object_index = obj_template)
+				typename = temp_type_name_list[|item.type]
+			else if (item.object_index = obj_resource)
+				typename = res_type_name_list[|item.type]
+
+			if (typename != null && ds_list_find_index(slist.filter_list, typename) = -1)
 			{
-				if (ds_list_find_index(slist.filter_list, temp_type_name_list[|item.type]) = -1)
-				{
-					ds_list_delete(slist.display_list, p)
-					p--
-				}
-			}
-			
-			// Resource filter (type)
-			if (settings_menu_sortlist = app.properties.resources.list)
-			{
-				if (ds_list_find_index(slist.filter_list, res_type_name_list[|item.type]) = -1)
-				{
-					ds_list_delete(slist.display_list, p)
-					p--
-				}
+				ds_list_delete(slist.display_list, p)
+				p--
 			}
 		}
 	}

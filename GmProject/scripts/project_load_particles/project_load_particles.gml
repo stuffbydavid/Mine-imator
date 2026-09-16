@@ -74,8 +74,12 @@ function project_load_particles(map)
 			spawn_rate = value_get_real(ptypemap[?"spawn_rate"], spawn_rate)
 			
 			sprite_tex = value_get_save_id(ptypemap[?"sprite_tex"], sprite_tex)
+			if (sprite_tex = "default")
+				sprite_tex = project_pack_res
 			sprite_tex_image = value_get_real(ptypemap[?"sprite_tex_image"], sprite_tex_image)
 			sprite_template_tex = value_get_save_id(ptypemap[?"sprite_template_tex"], sprite_template_tex)
+			if (sprite_template_tex = "default")
+				sprite_template_tex = project_pack_res
 			sprite_template = value_get_string(ptypemap[?"sprite_template"], sprite_template)
 			sprite_template_still_frame = value_get_real(ptypemap[?"sprite_template_still_frame"], sprite_template_still_frame)
 			sprite_template_random_frame = value_get_real(ptypemap[?"sprite_template_random_frame"], sprite_template_random_frame)

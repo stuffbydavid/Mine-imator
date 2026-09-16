@@ -38,6 +38,38 @@ function bench_draw_settings(bx, by, bw, bh)
 	menu_bench = true
 	switch (bench_tab)
 	{
+		case e_bench.PROJECT:
+		{
+			var list, selected;
+			list = bench_settings.project_list
+			selected = bench_settings.project_selected
+			createdisabled = (selected = null)
+
+			tab_control_sortlist(list)
+			sortlist_draw(list, dx, dy, dw, tab_control_h, selected, true, text_get("typeproject"))
+			tab_next()
+
+			tab_control(ui_large_height)
+			togglebutton_add("benchprojectLibrary", null, bench_settings.project_lib_list, list = bench_settings.project_lib_list, action_bench_project_list)
+			togglebutton_add("benchprojectResources", null, bench_settings.project_res_list, list = bench_settings.project_res_list, action_bench_project_list)
+			togglebutton_add("benchprojectAll", null, bench_settings.project_all_list, list = bench_settings.project_all_list, action_bench_project_list)
+			draw_togglebutton("benchproject", dx, dy, true, false)
+			tab_next()
+
+			if (selected != null && selected.object_index = obj_resource)
+			{
+				var edit;
+				edit = res_edit
+				res_edit = selected
+				preview_edit = bench_settings.preview
+				tab_properties_resources_edit()
+				res_edit = edit
+				createdisabled = true
+			}
+
+			break
+		}
+
 		case e_bench.CHARACTER:
 		case e_bench.EQUIPMENT:
 		case e_bench.SPECIAL_BLOCK:
@@ -923,22 +955,63 @@ function bench_draw_settings(bx, by, bw, bh)
 	tab_next()
 	dy += 4
 	
-	var edit = (bench_tab = e_bench.PARTICLE_SPAWNER && setting_advanced_mode);
-	var wid = (edit ? dw/2 - 4 : dw);
+	// Edit
+	var edit, wid, editdisabled, tempedittab;
+	edit = (bench_tab = e_bench.PROJECT || (bench_tab = e_bench.PARTICLE_SPAWNER && setting_advanced_mode))
+	wid = (edit ? dw/2 - 4 : dw)
+	editdisabled = createdisabled
+	tempedittab = false
 	
+	if (bench_tab = e_bench.PROJECT &&
+		bench_settings.project_selected != null && 
+		instance_exists(bench_settings.project_selected) &&
+		bench_settings.project_selected.object_index = obj_template)
+	{
+		editdisabled = false
+		
+		switch (bench_settings.project_selected.type)
+		{
+			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
+			case e_temp_type.SPECIAL_BLOCK:
+			case e_temp_type.BLOCK:
+			case e_temp_type.ITEM:
+			case e_temp_type.PARTICLE_SPAWNER:
+				tempedittab = true
+		}
+	}
+	
+	if (edit)
+	{
+		var editname = (bench_tab = e_bench.PROJECT) ? "benchedit" : "benchcreateedit"
+		if (draw_button_label(editname, dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY, null, e_anchor.LEFT, editdisabled))
+		{
+			if (bench_tab = e_bench.PROJECT)
+			{
+				// Show template in library
+				tab_show(properties, true)
+				properties.library.show = true
+				action_lib_list(bench_settings.project_selected)
+				sortlist_center(lib_list, bench_settings.project_selected)
+				
+				// Open template editor, if available for type
+				if (tempedittab)
+					tab_show(template_editor, true)
+					
+				bench_show_ani_type = "hide"
+			}
+			else
+			{
+				action_bench_create(true)
+				bench_show_ani_type = "hide"
+			}
+		}
+	}
+	
+	// Create
 	if (draw_button_label("benchcreate", edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, icons.ASSET_ADD, e_button.PRIMARY, null, e_anchor.LEFT, createdisabled))
 	{
 		action_bench_create()
 		bench_show_ani_type = "hide"
-	}
-	
-	// Create & edit
-	if (edit)
-	{
-		if (draw_button_label("benchcreateedit", dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY, null, e_anchor.LEFT, createdisabled))
-		{
-			action_bench_create(true)
-			bench_show_ani_type = "hide"
-		}
 	}
 }

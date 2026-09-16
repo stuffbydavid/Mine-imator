@@ -53,7 +53,8 @@ function new_res(fn, type)
 		res = new_obj(obj_resource)
 		res.type = type
 		res.copied = copied
-		sortlist_add(res_list, res)
+		with (res)
+			res_add_lists()
 	}
 	
 	res.filename = filename_name(newfn)

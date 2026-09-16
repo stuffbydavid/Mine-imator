@@ -36,9 +36,9 @@ function history_restore_temp(save)
 		// Restore timelines
 		for (var t = 0; t < save.usage_tl_amount; t++)
 			history_restore_tl(save.usage_tl_save_obj[t])
+			
+		temp_add_lists()
 	}
-	
-	sortlist_add(app.lib_list, temp)
 	
 	return temp
 }

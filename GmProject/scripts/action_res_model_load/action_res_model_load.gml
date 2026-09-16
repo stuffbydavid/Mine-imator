@@ -39,6 +39,7 @@ function action_res_model_load(fn)
 			model_tex_material = null
 			model_tex_normal = null
 			model = res
+			
 			temp_update()
 			with (temp_animate())
 			{
@@ -46,7 +47,8 @@ function action_res_model_load(fn)
 				for (var p = 0; p < ds_list_size(part_list); p++)
 					part_list[|p].loaded = true
 			}
-			sortlist_add(other.lib_list, id)
+			
+			temp_add_lists()
 		}
 		
 		if (!history_redo)

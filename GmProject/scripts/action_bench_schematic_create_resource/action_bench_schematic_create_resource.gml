@@ -40,7 +40,8 @@ function action_bench_schematic_create_resource()
 		res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
 	}
 	
-	sortlist_add(app.res_list, rescopy)
+	with (rescopy)
+		res_add_lists()
 	bench_settings.scenery = rescopy
 	
 	with (res)

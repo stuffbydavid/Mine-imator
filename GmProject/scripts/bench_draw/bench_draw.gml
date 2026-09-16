@@ -88,11 +88,9 @@ function bench_draw()
 		var item = bench_tab_list.item[|i]
 		skipasset = false
 		
-		if (!setting_advanced_mode)
-		{
-			if (item.value = e_bench.MODEL || item.value = e_bench.AUDIO_TRACK || item.value = e_bench.CAMERA_EFFECTS || item.value = e_bench.ENVIRONMENT)
-				skipasset = true
-		}
+		// Advanced mode check
+		if (!setting_advanced_mode && array_contains(bench_advanced_tabs, item.value))
+			skipasset = true
 		
 		if (!skipasset)
 		{
@@ -100,6 +98,7 @@ function bench_draw()
 			dy += (window_compact ? 28 : 32)
 		}
 		
+		// Separator check
 		if (item.value = e_bench.MODEL_PART || item.value = e_bench.SPECIAL_BLOCK || item.value = e_bench.TEXT)
 		{
 			draw_divide(dx + 5, dy + 4, 184)

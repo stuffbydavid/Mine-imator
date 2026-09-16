@@ -2,6 +2,8 @@
 
 function app_startup_interface_tabs()
 {
+	globalvar preview_edit;
+
 	tab_move = null
 	tab_move_name = ""
 	tab_move_x = 0
@@ -98,9 +100,12 @@ function app_startup_interface_tabs()
 			list.visible_items = 7
 			list.can_deselect = true
 			list.script = action_lib_list
+			list.filter_type_list = temp_type_name_list
+			
 			sortlist_column_add(list, "libname", 0)
 			sortlist_column_add(list, "libtype", 0.35)
 			sortlist_column_add(list, "libinstances", 0.65)
+			
 			tbx_name = new_textbox(1, 0, "")
 			tbx_repeat_x = new_textbox_integer()
 			tbx_repeat_y = new_textbox_integer()
@@ -163,6 +168,7 @@ function app_startup_interface_tabs()
 			list.visible_items = 7
 			list.can_deselect = true
 			list.script = action_res_list
+			list.filter_type_list = res_type_name_list
 			sortlist_column_add(list, "resname", 0)
 			sortlist_column_add(list, "restype", 0.35)
 			sortlist_column_add(list, "rescount", 0.65)
@@ -180,6 +186,7 @@ function app_startup_interface_tabs()
 	lib_list = properties.library.list
 	res_preview = properties.resources.preview
 	res_list = properties.resources.list
+	preview_edit = res_preview
 	
 	// Ground editor
 	ground_editor = new_tab(setting_ground_editor_location, false)

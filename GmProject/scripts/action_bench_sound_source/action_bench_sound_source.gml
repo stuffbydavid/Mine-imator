@@ -7,7 +7,7 @@ function action_bench_sound_source(source)
 	switch (source)
 	{
 		case "music":	slist = bench_settings.music_list break
-		case "project":	slist = bench_settings.project_list break
+		case "project":	slist = bench_settings.project_sounds_list break
 		default:		slist = bench_settings.sounds_list break
 	}
 

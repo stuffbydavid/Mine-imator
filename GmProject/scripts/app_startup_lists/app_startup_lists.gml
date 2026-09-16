@@ -262,19 +262,19 @@ function app_startup_lists()
 	ds_list_add(temp_type_name_list,
 		"char",
 		"equipment",
-		"spblock",
-		"scenery",
-		"item",
-		"block",
+		"model",
 		"modelpart",
+		"item",
+		"scenery",
+		"block",
+		"spblock",
 		"particles",
 		"text",
 		"cube",
 		"cone",
 		"cylinder",
 		"sphere",
-		"surface",
-		"model"
+		"surface"
 	)
 	
 	// Timeline types
@@ -282,11 +282,12 @@ function app_startup_lists()
 	ds_list_add(tl_type_name_list,
 		"char",
 		"equipment",
-		"spblock",
-		"scenery",
-		"item",
-		"block",
+		"model",
 		"modelpart",
+		"item",
+		"scenery",
+		"block",
+		"spblock",
 		"particles",
 		"text",
 		"cube",
@@ -294,17 +295,14 @@ function app_startup_lists()
 		"cylinder",
 		"sphere",
 		"surface",
-		"model",
 		"camera",
-		"spotlight",
-		"pointlight",
-		"folder",
-		"background",
 		"audio",
+		"pointlight",
+		"spotlight",
 		"path",
 		"pathpoint",
-		"shape",
-		"lightsource"
+		"background",
+		"folder"
 	)
 	
 	// Resource types
@@ -314,16 +312,16 @@ function app_startup_lists()
 		"packunzipped",
 		"skin",
 		"downloadskin",
+		"model",
 		"itemsheet",
-		"legacyblocksheet",
-		"blocksheet",
-		"schematic",
 		"fromworld",
-		"particlesheet",
-		"texture",
-		"font",
+		"schematic",
+		"blocksheet",
+		"legacyblocksheet",
 		"sound",
-		"model"
+		"particlesheet",
+		"font",
+		"texture"
 	)
 	
 	// Transitions
@@ -468,11 +466,12 @@ function app_startup_lists()
 	/*
 		CHARACTER,
 		EQUIPMENT,
-		SPECIAL_BLOCK,
-		SCENERY,
-		ITEM,
-		BLOCK,
+		MODEL,
 		MODEL_PART,
+		ITEM,
+		SCENERY,
+		BLOCK,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -480,24 +479,26 @@ function app_startup_lists()
 		CYLINDER,
 		SPHERE,
 		SURFACE,
-		MODEL,
 		CAMERA,
-		SPOT_LIGHT,
+		AUDIO_TRACK,
 		POINT_LIGHT,
-		FOLDER,
+		SPOT_LIGHT,
+		PATH,
+		PATH_POINT,
 		BACKGROUND,
-		AUDIO_TRACK
+		FOLDER
 	*/
 	
 	timeline_icon_list = ds_list_create()
 	ds_list_add(timeline_icon_list,
 		icons.CHARACTER,
 		icons.SHIELD,
-		icons.BLOCK_SPECIAL,
-		icons.SCENERY,
-		icons.ITEM,
-		icons.BLOCK,
+		icons.MODEL,
 		icons.PART,
+		icons.ITEM,
+		icons.SCENERY,
+		icons.BLOCK,
+		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
 		icons.CUBE,
@@ -505,26 +506,26 @@ function app_startup_lists()
 		icons.CYLINDER,
 		icons.SPHERE,
 		icons.PLANE,
-		icons.MODEL,
 		icons.CAMERA,
-		icons.LIGHT_SPOT,
-		icons.LIGHT_POINT,
-		icons.FOLDER,
-		icons.CLOUD,
 		icons.NOTE,
+		icons.LIGHT_POINT,
+		icons.LIGHT_SPOT,
 		icons.PATH,
-		icons.PATH_POINT
+		icons.PATH_POINT,
+		icons.CLOUD,
+		icons.FOLDER
 	)
 	
 	timeline_icon_list_dark = ds_list_create()
 	ds_list_add(timeline_icon_list_dark,
 		icons.CHARACTER,
 		icons.SHIELD,
-		icons.BLOCK_SPECIAL,
-		icons.SCENERY,
-		icons.ITEM,
-		icons.BLOCK,
+		icons.MODEL,
 		icons.PART,
+		icons.ITEM,
+		icons.SCENERY,
+		icons.BLOCK,
+		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
 		icons.CUBE__DARK,
@@ -532,15 +533,14 @@ function app_startup_lists()
 		icons.CYLINDER__DARK,
 		icons.SPHERE__DARK,
 		icons.PLANE,
-		icons.MODEL,
 		icons.CAMERA,
-		icons.LIGHT_SPOT,
-		icons.LIGHT_POINT,
-		icons.FOLDER,
-		icons.CLOUD,
 		icons.NOTE,
+		icons.LIGHT_POINT,
+		icons.LIGHT_SPOT,
 		icons.PATH,
-		icons.PATH_POINT
+		icons.PATH_POINT,
+		icons.CLOUD,
+		icons.FOLDER
 	)
 	
 	render_pass_list = ds_list_create()

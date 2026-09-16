@@ -8,7 +8,7 @@ function action_bench_sound_import()
 		return 0
 
 	res = new_res(fn, e_res_type.SOUND)
-	if (bench_settings.sound_list_current = bench_settings.project_list)
+	if (bench_settings.sound_list_current = bench_settings.project_sounds_list)
 		with (bench_settings.preview)
 			if (sound_play_index != app.bench_settings.music_play_index)
 				preview_sound_stop()

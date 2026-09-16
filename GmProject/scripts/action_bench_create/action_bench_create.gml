@@ -6,6 +6,17 @@ function action_bench_create(edit = false)
 	var tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
 	if (tab = e_bench.SOUND)
 		return action_bench_sound_create()
+	if (tab = e_bench.PROJECT)
+	{
+		var temp;
+		temp = bench_settings.project_selected
+		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
+		{
+			temp_edit = temp
+			action_lib_animate(true)
+		}
+		return 0
+	}
 
 	if (history_undo)
 	{
@@ -191,39 +202,29 @@ function action_bench_create(edit = false)
 					}
 					
 					if (type != e_temp_type.SCENERY && scenery != null)
-					{
 						scenery = null
-					}
 					
 					if (!type_is_shape(type))
 					{
 						if (shape_tex != null)
-						{
 							shape_tex = null
-						}
 						
 						if (shape_tex_material != null)
-						{
 							shape_tex_material = null
-						}
 						
 						if (shape_tex_normal != null)
-						{
 							shape_tex_normal = null
-						}
 					}
 					
 					if (type != e_temp_type.TEXT)
-					{
 						text_font = null
-					}
 					
 					tl = temp_animate()
 					
 					if (type = e_temp_type.TEXT && other.text != "")
 						tl.text = other.text
 					
-					sortlist_add(app.lib_list, id)
+					temp_add_lists()
 				}
 				
 				temp_edit = temp
@@ -235,7 +236,7 @@ function action_bench_create(edit = false)
 				if (creator != app.bench_settings)
 					continue
 				
-				sortlist_add(app.lib_list, id)
+				temp_add_lists()
 				creator = app
 				
 				with (hobj)

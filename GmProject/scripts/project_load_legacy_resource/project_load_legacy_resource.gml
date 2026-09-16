@@ -50,6 +50,6 @@ function project_load_legacy_resource()
 		
 		scenery_tl_add = false
 		
-		sortlist_add(app.res_list, id)
+		res_add_lists()
 	}
 }

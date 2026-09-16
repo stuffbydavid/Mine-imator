@@ -516,6 +516,7 @@
 		"simplemode": "Simple mode enabled"
 	},
 	"type/": {
+		"project": "Project",
 		"char": "Character",
 		"equipment": "Equipment",
 		"model": "Custom model",
@@ -585,6 +586,11 @@
 		"other": "Other"
 	},
 	"bench/": {
+		"project/": {
+			"Library": "Library",
+			"Resources": "Resources",
+			"All": "All"
+		},
 		"model": "Model",
 		"skin": "Skin",
 		"skinmaterial": "Material map",
@@ -660,6 +666,7 @@
 		"shapetexmaptip": "Whether the faces of the shape should use parts of a texture image.",
 		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
+		"edit": "Edit",
 		"create": "Create",
 		"createedit": "Create & edit",
 		"worldtip1": "Select a region of your Minecraft world to use in the project.",
@@ -1023,6 +1030,9 @@
 		"playmedia": "Play media"
 	},
 	"column/": {
+		"projectname": "Name",
+		"projecttype": "Type",
+		"projectcount": "Use count",
 		"libname": "Name",
 		"libtype": "Type",
 		"libinstances": "Instances",

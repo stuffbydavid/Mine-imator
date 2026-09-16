@@ -67,5 +67,5 @@ function temp_event_destroy()
 	for (var i = 0; i < 4; i++)
 		texture_free(armor_skin_array[i])
 	
-	temp_edit = sortlist_remove(app.lib_list, id)
+	temp_remove_lists()
 }

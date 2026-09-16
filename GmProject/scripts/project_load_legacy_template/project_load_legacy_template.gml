@@ -127,6 +127,6 @@ function project_load_legacy_template()
 			project_load_legacy_particles()
 		
 		if (temp_creator = app)
-			sortlist_add(app.lib_list, id)
+			temp_add_lists()
 	}
 }

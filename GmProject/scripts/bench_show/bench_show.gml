@@ -3,10 +3,13 @@
 function bench_show()
 {
 	action_tl_play_break()
-	bench_show_ani_type = "show"
+	
 	window_busy = "bench"
-	bench_settings_ani = 1
+	bench_show_ani_type = "show"
 	bench_open = false
+	
+	bench_settings_ani = 1
+	bench_settings.preview.update = true
 	
 	// Select audio track
 	if (bench_tab = e_bench.SOUND)

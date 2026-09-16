@@ -321,6 +321,6 @@ function project_load_template(map)
 			project_load_particles(map[?"particles"])
 		
 		if (temp_creator = app)
-			sortlist_add(app.lib_list, id)
+			temp_add_lists()
 	}
 }

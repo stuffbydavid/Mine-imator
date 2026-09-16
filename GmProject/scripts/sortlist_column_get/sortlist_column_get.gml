@@ -61,17 +61,24 @@ function sortlist_column_get(slist, value, col)
 		case "particleeditortyperate":
 			return string(floor(value.spawn_rate * 100)) + "%"
 		
+		case "projectname":
 		case "resname":
 			if (dev_mode_debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.display_name)
 		
+		case "projecttype":
+			if (value.object_index = obj_resource)
+				return text_get("type" + res_type_name_list[|value.type])
+			return text_get("type" + temp_type_name_list[|value.type])
+
 		case "resfilename":
 			return string_remove_newline(value.filename)
 		
 		case "restype":
 			return text_get("type" + res_type_name_list[|value.type])
 		
+		case "projectcount":
 		case "rescount":
 			return value.count = -1 ? "-" : value.count
 		

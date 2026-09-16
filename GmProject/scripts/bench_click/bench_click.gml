@@ -123,7 +123,7 @@ function bench_click(tab)
 			
 			case e_bench.SHAPE:
 			{
-				type = e_tl_type.SHAPE
+				type = e_temp_type.CUBE + shape_type
 				temp_update_shape()
 				break
 			}
@@ -173,7 +173,7 @@ function bench_click(tab)
 			case e_bench.PATH:				type = e_tl_type.PATH break
 			case e_bench.CAMERA:			type = e_tl_type.CAMERA break
 			case e_bench.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER break
-			case e_bench.LIGHT_SOURCE:		type = e_tl_type.LIGHT_SOURCE break
+			case e_bench.LIGHT_SOURCE:		type = light_type break
 			case e_bench.ENVIRONMENT:		type = e_tl_type.BACKGROUND break
 		}
 	}
@@ -223,7 +223,9 @@ function bench_click(tab)
 	
 	bench_clear()
 	
-	if (tab = e_bench.SCHEMATIC)
+	if (tab = e_bench.PROJECT)
+		action_bench_project_select(bench_settings.project_selected)
+	else if (tab = e_bench.SCHEMATIC)
 		action_bench_schematic_folder(bench_schematic_folder)
 	else if (tab = e_bench.PARTICLE_SPAWNER)
 		action_bench_particles_folder(bench_particle_preset_folder)

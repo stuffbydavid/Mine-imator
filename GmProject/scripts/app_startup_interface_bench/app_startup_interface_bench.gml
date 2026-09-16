@@ -25,6 +25,7 @@ function app_startup_interface_bench()
 	list_edit.get_name = true
 	list_edit.show_ticks = false
 	
+	list_item_add("typeproject", e_bench.PROJECT, "", null, icons.LIBRARY, null, bench_click)
 	list_item_add("typechar", e_bench.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
 	if (ds_list_size(mc_assets.equipment_list) > 0)
 		list_item_add("typeequipment", e_bench.EQUIPMENT, "", null, icons.SHIELD, null, bench_click)
@@ -49,10 +50,19 @@ function app_startup_interface_bench()
 	list_item_add("typebackground", e_bench.ENVIRONMENT, "", null, icons.CLOUD, null, bench_click)
 	list_item_add("typeshape", e_bench.SHAPE, "", null, icons.SHAPES, null, bench_click)
 	
+	bench_advanced_tabs = array(
+		e_bench.PROJECT,
+		e_bench.MODEL,
+		e_bench.AUDIO_TRACK,
+		e_bench.CAMERA_EFFECTS,
+		e_bench.ENVIRONMENT
+	)
+	
 	list_edit = null
 	
 	// Preview
 	bench_tab_preview = array(
+		e_bench.PROJECT,
 		e_bench.CHARACTER,
 		e_bench.EQUIPMENT,
 		e_bench.MODEL,
@@ -109,6 +119,44 @@ function app_startup_interface_bench()
 		// Preview window
 		preview = new_obj(obj_preview)
 		preview.space_trigger = true
+		
+		// Project lists
+		project_lib_list = new_obj(obj_sortlist)
+		project_lib_list.visible_items = 10
+		project_res_list = new_obj(obj_sortlist)
+		project_res_list.visible_items = 10
+		project_all_list = new_obj(obj_sortlist)
+		project_all_list.visible_items = 10
+		project_list = project_lib_list
+		project_selected = null
+		project_lib_list.filter_type_list = temp_type_name_list
+		project_res_list.filter_type_list = res_type_name_list
+		project_all_list.filter_type_list = ds_list_create()
+
+		for (var i = 0; i < ds_list_size(temp_type_name_list); i++)
+			ds_list_add(project_all_list.filter_type_list, temp_type_name_list[|i])
+
+		for (var i = 0; i < ds_list_size(res_type_name_list); i++)
+		{
+			var typename;
+			typename = res_type_name_list[|i]
+			if (typename != "packunzipped" && typename != "legacyblocksheet" &&
+				ds_list_find_index(project_all_list.filter_type_list, typename) < 0)
+				ds_list_add(project_all_list.filter_type_list, typename)
+		}
+
+		sortlist_column_add(project_lib_list, "libname", 0)
+		sortlist_column_add(project_lib_list, "libtype", 0.35)
+		sortlist_column_add(project_lib_list, "libinstances", 0.65)
+		project_lib_list.script = action_bench_project_select
+		sortlist_column_add(project_res_list, "projectname", 0)
+		sortlist_column_add(project_res_list, "projecttype", 0.35)
+		sortlist_column_add(project_res_list, "projectcount", 0.65)
+		project_res_list.script = action_bench_project_select
+		sortlist_column_add(project_all_list, "projectname", 0)
+		sortlist_column_add(project_all_list, "projecttype", 0.35)
+		sortlist_column_add(project_all_list, "projectcount", 0.65)
+		project_all_list.script = action_bench_project_select
 		
 		// Character list
 		char_list = new_obj(obj_sortlist)
@@ -181,10 +229,10 @@ function app_startup_interface_bench()
 		music_list.visible_items = visiblesounds
 		music_list.script = action_bench_sound
 		
-		project_list = new_obj(obj_soundlist)
-		project_list.source = "project"
-		project_list.visible_items = minecraft_game_found ? visiblesounds : 8
-		project_list.script = action_bench_sound
+		project_sounds_list = new_obj(obj_soundlist)
+		project_sounds_list.source = "project"
+		project_sounds_list.visible_items = minecraft_game_found ? visiblesounds : 8
+		project_sounds_list.script = action_bench_sound
 		
 		sound = null
 		sound_list_current = sounds_list
