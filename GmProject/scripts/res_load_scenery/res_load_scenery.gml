@@ -338,6 +338,7 @@ function res_load_scenery()
 			{
 				tl_update_list()
 				tl_update_matrix()
+				project_update_counts()
 				lib_preview.update = true
 				res_preview.update = true
 				bench_settings.preview.update = true

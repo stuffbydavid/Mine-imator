@@ -9,19 +9,15 @@ function project_load_background(map)
 	background_loaded = true
 	
 	background_image_show = value_get_real(map[?"image_show"], background_image_show)
-	if (background_image != null)
-		background_image.count--
 	background_image = value_get_save_id(map[?"image"], background_image)
 	background_image_type = value_get_string(map[?"image_type"], background_image_type)
 	background_image_stretch = value_get_real(map[?"image_stretch"], background_image_stretch)
 	background_image_box_mapped = value_get_real(map[?"image_box_mapped"], background_image_box_mapped)
 	background_image_rotation = value_get_real(map[?"image_rotation"], background_image_rotation)
 	
-	background_sky_sun_tex.count--
 	background_sky_sun_tex = value_get_save_id(map[?"sky_sun_tex"], background_sky_sun_tex)
 	background_sky_sun_angle = value_get_real(map[?"sky_sun_angle"], background_sky_sun_angle)
 	background_sky_sun_scale = value_get_real(map[?"sky_sun_scale"], background_sky_sun_scale)
-	background_sky_moon_tex.count--
 	background_sky_moon_tex = value_get_save_id(map[?"sky_moon_tex"], background_sky_moon_tex)
 	background_sky_moon_phase = value_get_real(map[?"sky_moon_phase"], background_sky_moon_phase)
 	background_sky_moon_angle = value_get_real(map[?"sky_moon_angle"], background_sky_moon_angle)
@@ -90,7 +86,6 @@ function project_load_background(map)
 		background_sky_clouds_offset_y = value_get_real(map[?"sky_clouds_offset_y"], background_sky_clouds_offset_y)
 	}
 	
-	background_sky_clouds_tex.count--
 	background_sky_clouds_tex = value_get_save_id(map[?"sky_clouds_tex"], background_sky_clouds_tex)
 	background_sky_clouds_speed = value_get_real(map[?"sky_clouds_speed"], background_sky_clouds_speed)
 	if (load_format < e_project.FORMAT_210)
@@ -118,13 +113,10 @@ function project_load_background(map)
 	
 	background_ground_slot = minecraft_assets_block_texture_picker_slot_find(background_ground_name)
 		
-	background_ground_tex.count--
 	background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
 	
-	background_ground_tex_material.count--
 	background_ground_tex_material = value_get_save_id(map[?"ground_tex_material"], background_ground_tex_material)
 	
-	background_ground_tex_normal.count--
 	background_ground_tex_normal = value_get_save_id(map[?"ground_tex_normal"], background_ground_tex_normal)
 	
 	background_biome = value_get_string(map[?"biome"], background_biome)

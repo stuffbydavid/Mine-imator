@@ -22,8 +22,6 @@ function history_restore_ptype(save, creator)
 		id.creator = creator
 		ds_list_insert(id.creator.pc_type_list, creator_index, id)
 	
-		sprite_tex.count++
-		sprite_template_tex.count++
 		ptype_update_sprite_vbuffers()
 	}
 

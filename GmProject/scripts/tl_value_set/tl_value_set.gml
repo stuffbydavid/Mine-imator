@@ -67,9 +67,6 @@ function tl_value_set()
 				value[vid] = history_data.tl_set_old_value[tlcount, history_data.par_set_n]
 			}
 			
-			if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
-				value[e_value.SOUND_OBJ].count--
-			
 			var nval;
 			if (tl_value_is_string(vid) || tl_value_is_texture(vid) || tl_value_is_obj(vid))
 				nval = val
@@ -82,9 +79,6 @@ function tl_value_set()
 				update_matrix = true
 			
 			value[vid] = tl_value_clamp(vid, nval)
-			
-			if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
-				value[e_value.SOUND_OBJ].count++
 			
 			tlcount++
 		}
@@ -118,6 +112,8 @@ function tl_value_set()
 		history_data.par_set_n++
 		history_data.par_set_amount = max(history_data.par_set_amount, history_data.par_set_n)
 		
+		if (tl_value_is_texture(vid) || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
+			project_update_counts()
 		return 0
 	}
 	

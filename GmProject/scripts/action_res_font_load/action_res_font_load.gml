@@ -35,4 +35,5 @@ function action_res_font_load(fn)
 	}
 	
 	project_reset_loaded()
+	project_update_counts()
 }

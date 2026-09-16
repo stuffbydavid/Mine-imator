@@ -55,11 +55,10 @@ function action_lib_item_tex_material(res)
 	
 	with (temp_edit)
 	{
-		item_tex_material.count--
 		item_tex_material = res
-		item_tex_material.count++
 		render_generate_item()
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

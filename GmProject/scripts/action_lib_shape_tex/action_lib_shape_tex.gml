@@ -28,14 +28,9 @@ function action_lib_shape_tex(res)
 	
 	with (temp_edit)
 	{
-		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
-			shape_tex.count--
-		
 		shape_tex = res
-		
-		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
-			shape_tex.count++
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

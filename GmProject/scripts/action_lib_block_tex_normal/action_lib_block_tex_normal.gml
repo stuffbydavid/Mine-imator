@@ -28,9 +28,7 @@ function action_lib_block_tex_normal(res)
 	
 	with (temp_edit)
 	{
-		block_tex_normal.count--
 		block_tex_normal = res
-		block_tex_normal.count++
 		
 		// Update patterns
 		with (obj_timeline)
@@ -43,5 +41,6 @@ function action_lib_block_tex_normal(res)
 		}
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

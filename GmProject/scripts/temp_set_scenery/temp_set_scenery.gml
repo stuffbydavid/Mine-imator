@@ -5,9 +5,6 @@
 
 function temp_set_scenery(res, animate, hobj)
 {
-	if (scenery != null)
-		scenery.count--
-	
 	// Save and remove old timelines
 	with (obj_timeline)
 	{
@@ -119,8 +116,6 @@ function temp_set_scenery(res, animate, hobj)
 	
 	if (scenery != null)
 	{
-		scenery.count++
-		
 		if (animate)
 		{
 			// Create new timelines

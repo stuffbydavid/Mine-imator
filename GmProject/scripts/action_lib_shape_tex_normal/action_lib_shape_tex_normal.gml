@@ -28,14 +28,9 @@ function action_lib_shape_tex_normal(res)
 	
 	with (temp_edit)
 	{
-		if (shape_tex_normal != null)
-			shape_tex_normal.count--
-		
 		shape_tex_normal = res
-		
-		if (shape_tex_normal != null && shape_tex_normal.type != e_tl_type.CAMERA)
-			shape_tex_normal.count++
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

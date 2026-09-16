@@ -207,7 +207,6 @@ function project_load_timeline(map)
 		glint_speed = value_get_real(map[?"glint_speed"], glint_speed)
 		glint_strength = value_get_real(map[?"glint_strength"], glint_strength)
 		
-		glint_tex.count--
 		glint_tex = value_get_save_id(map[?"glint_tex"], mc_res.save_id)
 		
 		fog = value_get_real(map[?"fog"], fog)

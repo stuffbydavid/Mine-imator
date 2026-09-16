@@ -138,4 +138,5 @@ function project_load_update()
 	
 	app.update_matrix = true
 	tl_update_matrix()
+	project_update_counts()
 }

@@ -27,5 +27,6 @@ function action_lib_duplicate()
 	}
 	
 	tab_template_editor_update_ptype_list()
+	project_update_counts()
 	lib_preview.update = true
 }

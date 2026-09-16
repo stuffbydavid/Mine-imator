@@ -62,5 +62,6 @@ function action_lib_scenery(res)
 	
 	app_update_tl_edit()
 	
+	project_update_counts()
 	lib_preview.update = true
 }

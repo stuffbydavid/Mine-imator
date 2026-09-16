@@ -5,8 +5,6 @@ function project_load_legacy_background()
 	background_loaded = true
 	
 	background_image_show = buffer_read_byte()
-	if (background_image != null)
-		background_image.count--
 	background_image = buffer_read_int()
 	if (background_image = 0)
 		background_image = null
@@ -28,7 +26,6 @@ function project_load_legacy_background()
 	var newslot = minecraft_assets_block_texture_picker_slot_find(background_ground_legacy_name)
 	if (newslot >= 0)
 		background_ground_slot = newslot
-	background_ground_tex.count--
 	background_ground_tex = project_load_legacy_save_id()
 	background_ground_tex_material = "default"
 	background_ground_tex_normal = "default"
@@ -65,16 +62,13 @@ function project_load_legacy_background()
 	
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
 	{
-		background_sky_sun_tex.count--
 		background_sky_sun_tex = project_load_legacy_save_id()
 		
-		background_sky_moon_tex.count--
 		background_sky_moon_tex = project_load_legacy_save_id()
 		background_sky_moon_phase = buffer_read_int()
 		
 		background_sky_rotation = buffer_read_double()
 		
-		background_sky_clouds_tex.count--
 		background_sky_clouds_tex = project_load_legacy_save_id()
 		background_sky_clouds_offset_z = buffer_read_double()
 		background_sky_clouds_size_xy = buffer_read_double()

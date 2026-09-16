@@ -31,4 +31,6 @@ function action_lib_pc_type_remove()
 	
 	with (temp_edit)
 		temp_particles_restart()
+	
+	project_update_counts()
 }

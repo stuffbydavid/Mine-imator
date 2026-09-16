@@ -39,7 +39,6 @@ function action_res_model_load(fn)
 			model_tex_material = null
 			model_tex_normal = null
 			model = res
-			model.count++
 			temp_update()
 			with (temp_animate())
 			{
@@ -65,4 +64,5 @@ function action_res_model_load(fn)
 	tl_update_length()
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

@@ -108,6 +108,7 @@ function app_startup_interface_bench()
 		
 		// Preview window
 		preview = new_obj(obj_preview)
+		preview.space_trigger = true
 		
 		// Character list
 		char_list = new_obj(obj_sortlist)

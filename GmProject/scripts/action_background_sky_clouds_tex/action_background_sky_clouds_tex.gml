@@ -26,8 +26,7 @@ function action_background_sky_clouds_tex(res)
 		history_set_res(action_background_sky_clouds_tex, fn, background_sky_clouds_tex, res)
 	}
 	
-	background_sky_clouds_tex.count--
 	background_sky_clouds_tex = res
-	background_sky_clouds_tex.count++
 	background_sky_update_clouds()
+	project_update_counts()
 }

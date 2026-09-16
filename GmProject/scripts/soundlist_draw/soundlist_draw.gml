@@ -19,6 +19,8 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		settings_menu_script = soundlist_filters_draw
 		settings_menu_soundlist = slist
 		settings_menu_h_max = 256
+		settings_menu_scroll.value = slist.filter_scroll
+		settings_menu_scroll.value_goal = slist.filter_scroll
 	}
 	
 	if (filtershow && settings_menu_name = "soundfilter" + string(slist) && settings_menu_ani_type != "hide")

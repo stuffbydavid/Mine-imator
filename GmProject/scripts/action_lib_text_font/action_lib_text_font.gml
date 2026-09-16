@@ -28,11 +28,9 @@ function action_lib_text_font(res)
 	
 	with (temp_edit)
 	{
-		if (text_font != null)
-			text_font.count--
 		text_font = res
-		text_font.count++
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

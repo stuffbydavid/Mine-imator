@@ -38,4 +38,6 @@ function preview_event_create()
 	text_string = ""
 	text_res = null
 	text_3d = false
+	
+	space_trigger = false
 }

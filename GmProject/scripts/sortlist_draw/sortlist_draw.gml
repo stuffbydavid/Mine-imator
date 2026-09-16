@@ -50,6 +50,8 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			settings_menu_script = sortlist_filters_draw
 			settings_menu_sortlist = slist
 			settings_menu_h_max = 256
+			settings_menu_scroll.value = slist.filter_scroll
+			settings_menu_scroll.value_goal = slist.filter_scroll
 		}
 		
 		if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")

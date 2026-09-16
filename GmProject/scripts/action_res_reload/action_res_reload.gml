@@ -52,6 +52,7 @@ function action_res_reload()
 	
 	app_update_tl_edit()
 	
+	project_update_counts()
 	lib_preview.update = true
 	res_preview.update = true
 	res_preview.reset_view = true

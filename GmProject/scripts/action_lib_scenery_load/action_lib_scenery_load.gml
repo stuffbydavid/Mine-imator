@@ -32,12 +32,10 @@ function action_lib_scenery_load(fn)
 		{
 			type = e_temp_type.SCENERY
 			scenery = res
-			scenery.count++
 			
 			block_tex = mc_res
 			block_tex_material = mc_res
 			block_tex_normal = mc_res
-			mc_res.count += 3
 			
 			temp_update_display_name()
 			loaded = true
@@ -57,4 +55,5 @@ function action_lib_scenery_load(fn)
 	
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

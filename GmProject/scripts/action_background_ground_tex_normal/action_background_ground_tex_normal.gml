@@ -26,8 +26,7 @@ function action_background_ground_tex_normal(res)
 		history_set_res(action_background_ground_tex_normal, fn, background_ground_tex_normal, res)
 	}
 	
-	background_ground_tex_normal.count--
 	background_ground_tex_normal = res
-	background_ground_tex_normal.count++
 	background_ground_update_texture_normal()
+	project_update_counts()
 }

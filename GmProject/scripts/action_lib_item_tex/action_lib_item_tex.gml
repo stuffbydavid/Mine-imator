@@ -55,11 +55,10 @@ function action_lib_item_tex(res)
 	
 	with (temp_edit)
 	{
-		item_tex.count--
 		item_tex = res
-		item_tex.count++
 		render_generate_item()
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

@@ -23,4 +23,5 @@ function sortlist_event_create()
 	
 	can_deselect = false
 	filter_list = ds_list_create()
+	filter_scroll = 0
 }

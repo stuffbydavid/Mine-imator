@@ -13,6 +13,7 @@ function temp_event_create()
 	display_name = ""
 	count = 0
 	rot_point = point3D(0, 0, 0)
+	part_of = null
 	
 	model = null
 	model_name = default_model

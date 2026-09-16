@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.14"
+		"lastchange": "2026.09.15"
 	},
 	"particle/": {
 		"type/": {
@@ -22,7 +22,8 @@
 			"effect": "Effect",
 			"rain": "Rain",
 			"snow": "Snow",
-			"portal": "Portal"
+			"portal": "Portal",
+			"firefly": "Firefly"
 		}
 	},
 	"tooltip/": {

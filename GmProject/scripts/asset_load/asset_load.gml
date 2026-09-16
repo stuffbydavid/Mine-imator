@@ -145,6 +145,7 @@ function asset_load()
 	}
 	
 	project_reset_loaded()
+	project_update_counts()
 	
 	save_folder = project_folder
 	load_folder = filename_dir(fn)
