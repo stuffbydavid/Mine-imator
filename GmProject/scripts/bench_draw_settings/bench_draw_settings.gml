@@ -956,55 +956,17 @@ function bench_draw_settings(bx, by, bw, bh)
 	dy += 4
 	
 	// Edit
-	var edit, wid, editdisabled, tempedittab;
+	var edit, wid;
 	edit = (bench_tab = e_bench.PROJECT || (bench_tab = e_bench.PARTICLE_SPAWNER && setting_advanced_mode))
 	wid = (edit ? dw/2 - 4 : dw)
-	editdisabled = createdisabled
-	tempedittab = false
-	
-	if (bench_tab = e_bench.PROJECT &&
-		bench_settings.project_selected != null && 
-		instance_exists(bench_settings.project_selected) &&
-		bench_settings.project_selected.object_index = obj_template)
-	{
-		editdisabled = false
-		
-		switch (bench_settings.project_selected.type)
-		{
-			case e_temp_type.CHARACTER:
-			case e_temp_type.EQUIPMENT:
-			case e_temp_type.SPECIAL_BLOCK:
-			case e_temp_type.BLOCK:
-			case e_temp_type.ITEM:
-			case e_temp_type.PARTICLE_SPAWNER:
-				tempedittab = true
-		}
-	}
 	
 	if (edit)
 	{
 		var editname = (bench_tab = e_bench.PROJECT) ? "benchedit" : "benchcreateedit"
-		if (draw_button_label(editname, dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY, null, e_anchor.LEFT, editdisabled))
+		if (draw_button_label(editname, dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY, null, e_anchor.LEFT, createdisabled))
 		{
-			if (bench_tab = e_bench.PROJECT)
-			{
-				// Show template in library
-				tab_show(properties, true)
-				properties.library.show = true
-				action_lib_list(bench_settings.project_selected)
-				sortlist_center(lib_list, bench_settings.project_selected)
-				
-				// Open template editor, if available for type
-				if (tempedittab)
-					tab_show(template_editor, true)
-					
-				bench_show_ani_type = "hide"
-			}
-			else
-			{
-				action_bench_create(true)
-				bench_show_ani_type = "hide"
-			}
+			action_bench_create(true)
+			bench_show_ani_type = "hide"
 		}
 	}
 	

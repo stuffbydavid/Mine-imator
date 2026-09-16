@@ -4,16 +4,42 @@
 function action_bench_create(edit = false)
 {
 	var tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
+	
 	if (tab = e_bench.SOUND)
 		return action_bench_sound_create()
+	
 	if (tab = e_bench.PROJECT)
 	{
-		var temp;
+		var temp, editortab;
 		temp = bench_settings.project_selected
+		editortab = false
 		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
 		{
-			temp_edit = temp
-			action_lib_animate(true)
+			if (edit)
+			{
+				tab_show(properties, true)
+				properties.library.show = true
+				action_lib_list(temp)
+				sortlist_center(lib_list, temp)
+
+				switch (temp.type)
+				{
+					case e_temp_type.CHARACTER:
+					case e_temp_type.EQUIPMENT:
+					case e_temp_type.SPECIAL_BLOCK:
+					case e_temp_type.BLOCK:
+					case e_temp_type.ITEM:
+					case e_temp_type.PARTICLE_SPAWNER:
+						editortab = true
+				}
+				if (editortab)
+					tab_show(template_editor, true)
+			}
+			else
+			{
+				temp_edit = temp
+				action_lib_animate(true)
+			}
 		}
 		return 0
 	}

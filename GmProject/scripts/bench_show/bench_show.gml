@@ -23,10 +23,11 @@ function bench_show()
 	else if (bench_tab = e_bench.PARTICLE_SPAWNER)
 		action_bench_particles_folder(bench_particle_preset_folder)
 	
-	// Highlight text and adjust zoom
+	// Adjust zoom and highlight text on tab click
 	else if (bench_tab = e_bench.TEXT)
 	{
-		window_focus = string(bench_settings.tbx_text)
 		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
+		if (!keybinds[e_keybind.WORKBENCH].pressed)
+			window_focus = string(bench_settings.tbx_text)
 	}
 }

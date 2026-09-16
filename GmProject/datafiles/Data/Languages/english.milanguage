@@ -4351,6 +4351,7 @@
 				"delete": "Delete keyframes"
 			},
 			"tool/": {
+				"workbench": "Open workbench",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

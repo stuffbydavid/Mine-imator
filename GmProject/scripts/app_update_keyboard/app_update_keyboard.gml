@@ -25,6 +25,8 @@ function app_update_keyboard()
 		else
 			debug_info = (debug_info + 1) mod 3
 	}
+
+	bench_update_keyboard()
 	
 	if (window_state = "" && (window_busy = "" || settings_menu_name = "colorpicker") && !textbox_isediting)
 	{

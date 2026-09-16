@@ -1,7 +1,7 @@
 {
   "FolderOrderSettings":[
-    {"name":"Project","order":20,"path":"folders/Scripts/App/Actions/Bench/Project.yy",},
     {"name":"Particles","order":17,"path":"folders/Scripts/App/Actions/Bench/Particles.yy",},
+    {"name":"Project","order":20,"path":"folders/Scripts/App/Actions/Bench/Project.yy",},
     {"name":"Schematic","order":18,"path":"folders/Scripts/App/Actions/Bench/Schematic.yy",},
     {"name":"Sound","order":19,"path":"folders/Scripts/App/Actions/Bench/Sound.yy",},
     {"name":"Collapse","order":1,"path":"folders/Scripts/App/Interface/Collapse.yy",},

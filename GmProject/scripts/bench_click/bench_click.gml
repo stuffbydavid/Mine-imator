@@ -1,7 +1,7 @@
 /// bench_click(tab)
 /// @arg tab
 
-function bench_click(tab)
+function bench_click(tab, key = false)
 {
 	// Double clicked, create asset
 	if (bench_tab = tab && tab != e_bench.WORLD && bench_show_ani_type = "")
@@ -232,7 +232,8 @@ function bench_click(tab)
 	else if (tab = e_bench.TEXT)
 	{
 		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
-		window_focus = string(bench_settings.tbx_text)
+		if (!key)
+			window_focus = string(bench_settings.tbx_text)
 	}
 		
 	bench_settings_ani = 0
