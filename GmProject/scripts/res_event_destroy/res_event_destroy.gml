@@ -194,56 +194,47 @@ function res_event_destroy()
 		if (model_tex = other.id)
 		{
 			model_tex = mc_res
-			model_tex.count++
 		}
 		
 		if (model_tex_material = other.id)
 		{
 			model_tex_material = mc_res
-			model_tex_material.count++
 		}
 		
 		if (model_tex_normal = other.id)
 		{
 			model_tex_normal = mc_res
-			model_tex_normal.count++
 		}
 		
 		if (item_tex = other.id)
 		{
 			item_tex = mc_res
-			item_tex.count++
 			render_generate_item()
 		}
 		
 		if (item_tex_material = other.id)
 		{
 			item_tex_material = mc_res
-			item_tex_material.count++
 		}
 		
 		if (item_tex_normal = other.id)
 		{
 			item_tex_normal = mc_res
-			item_tex_normal.count++
 		}
 		
 		if (block_tex = other.id)
 		{
 			block_tex = mc_res
-			block_tex.count++
 		}
 		
 		if (block_tex_material = other.id)
 		{
 			block_tex_material = mc_res
-			block_tex_material.count++
 		}
 		
 		if (block_tex_normal = other.id)
 		{
 			block_tex_normal = mc_res
-			block_tex_normal.count++
 		}
 		
 		if (scenery = other.id) 
@@ -261,7 +252,6 @@ function res_event_destroy()
 		if (text_font = other.id)
 		{
 			text_font = mc_res
-			text_font.count++
 		}
 	}
 	
@@ -327,13 +317,11 @@ function res_event_destroy()
 		if (sprite_tex = other.id)
 		{
 			sprite_tex = mc_res
-			sprite_tex.count++
 		}
 		
 		if (sprite_template_tex = other.id)
 		{
 			sprite_template_tex = mc_res
-			sprite_template_tex.count++
 		}	
 	}
 	
@@ -390,7 +378,6 @@ function res_event_destroy()
 		if (glint_tex = other.id)
 		{
 			glint_tex = mc_res
-			glint_tex.count++
 		}
 	}
 	
@@ -402,39 +389,33 @@ function res_event_destroy()
 		if (background_sky_sun_tex = other.id)
 		{
 			background_sky_sun_tex = mc_res
-			background_sky_sun_tex.count++
 		}
 		
 		if (background_sky_moon_tex = other.id)
 		{
 			background_sky_moon_tex = mc_res
-			background_sky_moon_tex.count++
 		}
 		
 		if (background_sky_clouds_tex = other.id)
 		{
 			background_sky_clouds_tex = mc_res
-			background_sky_clouds_tex.count++
 		}
 		
 		if (background_ground_tex = other.id)
 		{
 			background_ground_tex = mc_res
-			background_ground_tex.count++
 			background_ground_update_texture()
 		}
 		
 		if (background_ground_tex_material = other.id)
 		{
 			background_ground_tex_material = mc_res
-			background_ground_tex_material.count++
 			background_ground_update_texture()
 		}
 		
 		if (background_ground_tex_normal = other.id)
 		{
 			background_ground_tex_normal = mc_res
-			background_ground_tex_normal.count++
 			background_ground_update_texture_normal()
 		}
 	}

@@ -81,11 +81,9 @@ function project_reset()
 	with (obj_marker)
 		instance_destroy()
 	
-	with (mc_res)
-		count = 0
-	
 	project_reset_render()
 	project_reset_background()
+	project_update_counts()
 	
 	timeline.hor_scroll.value = 0
 	timeline.ver_scroll.value = 0

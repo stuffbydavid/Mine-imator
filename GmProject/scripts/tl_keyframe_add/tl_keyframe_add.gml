@@ -37,8 +37,6 @@ function tl_keyframe_add(pos, kf = null)
 		for (var v = 0; v < e_value.amount; v++)
 			kf.value[v] = value[v] 
 		
-		if (kf.value[e_value.SOUND_OBJ] != null)
-			kf.value[e_value.SOUND_OBJ].count++
 	}
 	
 	kf.position = pos

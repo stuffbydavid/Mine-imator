@@ -31,4 +31,5 @@ function action_tl_keyframes_cut()
 	tl_update_length()
 	
 	app_update_tl_edit()
+	project_update_counts()
 }

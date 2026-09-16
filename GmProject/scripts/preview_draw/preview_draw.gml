@@ -176,7 +176,7 @@ function preview_draw(preview, xx, yy, width, height)
 			surface_set_target(surface)
 			{
 				draw_clear_alpha(c_black, 0)
-				gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
+				gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 				
 				if (is3d) // 3D view
 				{
@@ -730,9 +730,7 @@ function preview_draw(preview, xx, yy, width, height)
 			//	clip_begin(clipx, clipy, clipwid, cliphei)
 		}
 		
-		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 		draw_surface_exists(surface, xx, yy)
-		gpu_set_blendmode(bm_normal)
 	}
 	
 	// Button background

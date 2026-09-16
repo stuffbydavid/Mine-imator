@@ -35,26 +35,18 @@ function project_load_find_save_ids(isproject = false)
 	if (background_loaded)
 	{
 		background_image = save_id_find(save_id_map[?background_image])
-		if (background_image)
-			background_image.count++
 		
 		background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
-		background_ground_tex.count++
 		
 		background_ground_tex_material = save_id_find(save_id_map[?background_ground_tex_material])
-		background_ground_tex_material.count++
 		
 		background_ground_tex_normal = save_id_find(save_id_map[?background_ground_tex_normal])
-		background_ground_tex_normal.count++
 		
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
 		{
 			background_sky_sun_tex = save_id_find(save_id_map[?background_sky_sun_tex])
-			background_sky_sun_tex.count++
 			background_sky_moon_tex = save_id_find(save_id_map[?background_sky_moon_tex])
-			background_sky_moon_tex.count++
 			background_sky_clouds_tex = save_id_find(save_id_map[?background_sky_clouds_tex])
-			background_sky_clouds_tex.count++
 		}
 	}
 	
@@ -101,55 +93,6 @@ function project_load_find_save_ids(isproject = false)
 		if (type = e_temp_type.SCENERY && instance_exists(scenery) && scenery.object_index != obj_resource)
 			scenery = null
 		
-		// Update counters if not loaded via the workbench particle preview
-		if (temp_creator != app.bench_settings)
-		{
-			if (model != null)
-				model.count++
-			
-			if (model_tex != null)
-				model_tex.count++
-			
-			if (model_tex_material != null)
-				model_tex_material.count++
-			
-			if (model_tex_normal != null)
-				model_tex_normal.count++
-			
-			if (item_tex != null)
-				item_tex.count++
-			
-			if (item_tex_material != null)
-				item_tex_material.count++
-			
-			if (item_tex_normal != null)
-				item_tex_normal.count++
-			
-			if (block_tex != null)
-				block_tex.count++
-			
-			if (block_tex_material != null)
-				block_tex_material.count++
-			
-			if (block_tex_normal != null)
-				block_tex_normal.count++
-			
-			if (scenery != null)
-				scenery.count++
-			
-			if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
-				shape_tex.count++
-			
-			if (shape_tex_material != null)
-				shape_tex_material.count++
-			
-			if (shape_tex_normal != null)
-				shape_tex_normal.count++
-			
-			if (text_font != null)
-				text_font.count++
-		}
-		
 		// Legacy "use a sheet" option conversion
 		if (load_format < e_project.FORMAT_110_PRE_1 && type = e_temp_type.ITEM && item_tex != mc_res && !legacy_item_sheet)
 			item_tex.type = e_res_type.TEXTURE
@@ -173,8 +116,6 @@ function project_load_find_save_ids(isproject = false)
 		
 		// Model part
 		part_of = save_id_find(save_id_map[?part_of])
-		if (part_of = null && temp != null)
-			temp.count++
 		
 		// Part root(Update special blocks in old projects)
 		if (load_format < e_project.FORMAT_122)
@@ -200,7 +141,6 @@ function project_load_find_save_ids(isproject = false)
 		
 		// Glint
 		glint_tex = save_id_find(save_id_map[?glint_tex])
-		glint_tex.count++
 		
 		// Set part list
 		if (part_list != null)
@@ -250,8 +190,6 @@ function project_load_find_save_ids(isproject = false)
 			value[e_value.TEXTURE_NORMAL_OBJ] = save_id_find(save_id_map[?value[e_value.TEXTURE_NORMAL_OBJ]])
 		
 		value[e_value.SOUND_OBJ] = save_id_find(save_id_map[?value[e_value.SOUND_OBJ]])
-		if (value[e_value.SOUND_OBJ] != null)
-			value[e_value.SOUND_OBJ].count++
 		value[e_value.TEXT_FONT] = save_id_find(save_id_map[?value[e_value.TEXT_FONT]])
 	}
 	
@@ -270,9 +208,6 @@ function project_load_find_save_ids(isproject = false)
 		sprite_tex = save_id_find(save_id_map[?sprite_tex])
 		sprite_template_tex = save_id_find(save_id_map[?sprite_template_tex])
 		
-		// Update counters if not loaded via the workbench particle preview
-		if (temp_creator != app.bench_settings)
-			sprite_tex.count++
 	}
 	
 	// Set marker IDs

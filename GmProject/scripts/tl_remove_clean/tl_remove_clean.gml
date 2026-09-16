@@ -30,9 +30,6 @@ function tl_remove_clean()
 			ds_list_destroy(part_list)
 		
 		// Clear references
-		if (part_of = null && temp != null)
-			temp.count--
-		
 		if (type = e_tl_type.PATH_POINT)
 			parent.path_update = true
 		
@@ -195,8 +192,6 @@ function tl_remove_clean()
 		
 		if (surface_exists(cam_surf_tmp))
 			surface_free(cam_surf_tmp)
-		
-		glint_tex.count--
 		
 		delete_ready = true
 	}

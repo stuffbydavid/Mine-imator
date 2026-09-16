@@ -47,4 +47,5 @@ function action_lib_animate()
 	
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

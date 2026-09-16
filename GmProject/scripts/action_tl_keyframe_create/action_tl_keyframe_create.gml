@@ -56,4 +56,5 @@ function action_tl_keyframe_create(timeline, position)
 	
 	app_update_tl_edit()
 	tl_update_length()
+	project_update_counts()
 }

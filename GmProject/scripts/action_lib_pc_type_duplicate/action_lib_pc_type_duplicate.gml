@@ -25,5 +25,6 @@ function action_lib_pc_type_duplicate()
 		ptype_edit = copy
 	}
 	
+	project_update_counts()
 	tab_template_editor_particles_preview_restart()
 }

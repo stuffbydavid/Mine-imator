@@ -68,10 +68,7 @@ function block_animate(root)
 		
 		// Texture
 		if (other.texture != null)
-		{
 			value_default[e_value.TEXTURE_OBJ] = other.texture
-			value_default[e_value.TEXTURE_OBJ].count++
-		}
 		
 		tl_update()
 		tl_update_values()

@@ -3,8 +3,6 @@
 
 function temp_animate()
 {
-	count++
-	
 	with (new_obj(obj_timeline))
 	{
 		type = other.type

@@ -607,7 +607,6 @@ function project_load_legacy_beta(loadbackground)
 		background_ground_show = load.bg_ground_show
 		if (load.bg_ground_tex > -1)
 		{
-			background_ground_tex.count--
 			background_ground_tex = load.ter_res[load.bg_ground_tex].load_id
 		}
 		else

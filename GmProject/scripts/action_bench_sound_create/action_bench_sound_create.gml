@@ -26,11 +26,7 @@ function action_bench_sound_create()
 						instance_destroy()
 				else
 				{
-					if (kf.value[e_value.SOUND_OBJ] != null)
-						kf.value[e_value.SOUND_OBJ].count--
 					kf.value[e_value.SOUND_OBJ] = save_id_find(hobj.sound_keyframe_old_res_save_id)
-					if (kf.value[e_value.SOUND_OBJ] != null)
-						kf.value[e_value.SOUND_OBJ].count++
 				}
 			}
 			if (!hobj.sound_track_created)
@@ -252,10 +248,7 @@ function action_bench_sound_create()
 			return 0
 
 		// Assign sound to keyframe
-		if (kf.value[e_value.SOUND_OBJ] != null)
-			kf.value[e_value.SOUND_OBJ].count--
 		kf.value[e_value.SOUND_OBJ] = res
-		res.count++
 		
 		with (tl)
 			tl_update_values()
@@ -264,6 +257,7 @@ function action_bench_sound_create()
 	tl_update_length()
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 	lib_preview.update = true
 	project_reset_loaded()
 }

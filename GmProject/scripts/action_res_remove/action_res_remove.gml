@@ -73,4 +73,5 @@ function action_res_remove()
 	lib_preview.update = true
 	res_preview.update = true
 	res_preview.reset_view = true
+	project_update_counts()
 }

@@ -135,7 +135,7 @@ function action_bench_create(edit = false)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
 				spawn_amount++
-				if (!history_redo)
+				if (!app.history_redo)
 					particle_temp_save_id = particletemp.save_id
 			}
 		}
@@ -163,22 +163,10 @@ function action_bench_create(edit = false)
 				with (temp)
 				{
 					if (type != e_temp_type.MODEL && model != null)
-					{
-						model.count--
 						model = null
-					}
 					
 					if (type != e_temp_type.CHARACTER && type != e_temp_type.EQUIPMENT && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
 					{
-						if (model_tex != null)
-							model_tex.count--
-						
-						if (model_tex_material != null)
-							model_tex_material.count--
-						
-						if (model_tex_normal != null)
-							model_tex_normal.count--
-						
 						model_tex = null
 						model_tex_material = null
 						model_tex_normal = null
@@ -189,14 +177,6 @@ function action_bench_create(edit = false)
 					
 					if (type != e_temp_type.ITEM)
 					{
-						item_tex.count--
-						
-						if (item_tex_material != null)
-							item_tex_material.count--
-						
-						if (item_tex_normal != null)
-							item_tex_normal.count--
-						
 						item_tex = null
 						item_tex_material = null
 						item_tex_normal = null
@@ -204,18 +184,14 @@ function action_bench_create(edit = false)
 					
 					if (type != e_temp_type.BLOCK && type != e_temp_type.SCENERY)
 					{
-						block_tex.count--
 						block_tex = null
-						block_tex_material.count--
 						block_tex_material = null
-						block_tex_normal.count--
 						block_tex_normal = null
 						block_state = array()
 					}
 					
 					if (type != e_temp_type.SCENERY && scenery != null)
 					{
-						scenery.count--
 						scenery = null
 					}
 					
@@ -223,27 +199,22 @@ function action_bench_create(edit = false)
 					{
 						if (shape_tex != null)
 						{
-							if (shape_tex.type != e_tl_type.CAMERA)
-								shape_tex.count--
 							shape_tex = null
 						}
 						
 						if (shape_tex_material != null)
 						{
-							shape_tex_material.count--
 							shape_tex_material = null
 						}
 						
 						if (shape_tex_normal != null)
 						{
-							shape_tex_normal.count--
 							shape_tex_normal = null
 						}
 					}
 					
 					if (type != e_temp_type.TEXT)
 					{
-						text_font.count--
 						text_font = null
 					}
 					
@@ -266,48 +237,6 @@ function action_bench_create(edit = false)
 				
 				sortlist_add(app.lib_list, id)
 				creator = app
-				
-				if (model_tex != null)
-					model_tex.count++
-				
-				if (model_tex_material != null)
-					model_tex_material.count++
-				
-				if (model_tex_normal != null)
-					model_tex_normal.count++
-				
-				if (item_tex != null)
-					item_tex.count++
-				
-				if (item_tex_material != null)
-					item_tex_material.count++
-				
-				if (item_tex_normal != null)
-					item_tex_normal.count++
-				
-				if (block_tex != null)
-					block_tex.count++
-				
-				if (block_tex_material != null)
-					block_tex_material.count++
-				
-				if (block_tex_normal != null)
-					block_tex_normal.count++
-				
-				if (scenery > 0)
-					scenery.count++
-				
-				if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
-					shape_tex.count++
-				
-				if (shape_tex_material != null)
-					shape_tex_material.count++
-				
-				if (shape_tex_normal != null)
-					shape_tex_normal.count++
-				
-				if (text_font != null)
-					text_font.count++
 				
 				with (hobj)
 				{
@@ -416,5 +345,6 @@ function action_bench_create(edit = false)
 
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 	lib_preview.update = true
 }
