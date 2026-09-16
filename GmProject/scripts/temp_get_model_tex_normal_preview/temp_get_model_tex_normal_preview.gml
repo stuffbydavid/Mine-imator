@@ -11,5 +11,5 @@ function temp_get_model_tex_normal_preview(texobj, part)
 		return texobj.block_preview_texture
 	
 	with (texobj)
-		return res_get_model_tex_normal(model_part_get_tex_normal_name(part, other.model_texture_normal_name_map))
+		return res_get_model_texture_normal(model_part_get_tex_normal_name(part, other.model_texture_normal_name_map))
 }

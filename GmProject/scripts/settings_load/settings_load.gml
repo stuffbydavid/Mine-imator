@@ -72,6 +72,8 @@ function settings_load()
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()
 			
+			setting_project_pack = value_get_string(programmap[?"project_pack"], setting_project_pack)
+			
 			setting_backup = value_get_real(programmap[?"backup"], setting_backup)
 			setting_backup_time = value_get_real(programmap[?"backup_time"], setting_backup_time)
 			setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)

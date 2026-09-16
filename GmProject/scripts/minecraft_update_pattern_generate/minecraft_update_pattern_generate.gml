@@ -9,6 +9,7 @@
 function minecraft_update_pattern_generate(type, color, patternlist, colorlist, res = null)
 {
 	var skinratio, maskarray, patternskin;
+	res = res_eval(res)
 	if (res = null || !res_is_ready(res))
 		res = mc_res
 	

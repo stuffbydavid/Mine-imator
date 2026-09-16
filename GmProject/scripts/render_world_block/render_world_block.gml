@@ -11,17 +11,10 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		return 0
 	
 	if (!is_array(res))
-		res = [res, mc_res, mc_res]
-	
-	if (!res_is_ready(res[e_texture_channel.DIFFUSE]))
-		res[e_texture_channel.DIFFUSE] = mc_res
-	
-	if (!res_is_ready(res[e_texture_channel.NORMAL]))
-		res[e_texture_channel.NORMAL] = mc_res
-	
-	if (!res_is_ready(res[e_texture_channel.MATERIAL]))
-		res[e_texture_channel.MATERIAL] = mc_res
-	
+		res = [res, project_pack_res, project_pack_res]
+
+	for (var channel = e_texture_channel.DIFFUSE; channel <= e_texture_channel.MATERIAL; channel++)
+		res[channel] = res_eval(res[channel])
 	var tex, texprev, texani;
 	var texmat, texmatprev, texanimat, texanimatsheet;
 	var texnormal, texnormalprev, texaninormal;

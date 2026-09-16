@@ -7,9 +7,9 @@ function tl_update_scenery_part()
 	
 	if (type = e_tl_type.SPECIAL_BLOCK)
 	{
-		model_tex = mc_res
-		model_tex_material = mc_res
-		model_tex_normal = mc_res
+		model_tex = project_pack_res
+		model_tex_material = project_pack_res
+		model_tex_normal = project_pack_res
 		model_file = null
 		model_texture_name_map = null
 		model_texture_material_name_map = null
@@ -29,9 +29,9 @@ function tl_update_scenery_part()
 	}
 	else if (type = e_tl_type.BLOCK)
 	{
-		block_tex = mc_res
-		block_tex_material = mc_res
-		block_tex_normal = mc_res
+		block_tex = project_pack_res
+		block_tex_material = project_pack_res
+		block_tex_normal = project_pack_res
 		block_repeat_enable = false
 		block_repeat = vec3(1)
 		block_vbuffer = null
@@ -40,7 +40,7 @@ function tl_update_scenery_part()
 	}
 	else if (type = e_tl_type.TEXT)
 	{
-		text_font = mc_res
+		text_font = project_pack_res
 		text_3d = false
 		text_face_camera = false
 	}

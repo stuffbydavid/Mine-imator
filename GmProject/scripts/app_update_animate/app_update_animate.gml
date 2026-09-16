@@ -33,14 +33,23 @@ function app_update_animate()
 			tl_update_values()
 		
 		tex_obj = value_inherit[e_value.TEXTURE_OBJ]
+		tex_obj_material = value_inherit[e_value.TEXTURE_MATERIAL_OBJ]
+		tex_obj_normal = value_inherit[e_value.TEXTURE_NORMAL_OBJ]
 		
 		// Update render resource
-		if ((tex_obj != tex_obj_prev) || app.history_resource_update)
+		if (tex_obj != tex_obj_prev ||
+			tex_obj_material != tex_obj_material_prev ||
+			tex_obj_normal != tex_obj_normal_prev ||
+			app.history_resource_update)
 		{
 			if (render_visible)
 			{
 				if (render_update_tl_resource())
+				{
 					tex_obj_prev = tex_obj
+					tex_obj_material_prev = tex_obj_material
+					tex_obj_normal_prev = tex_obj_normal
+				}
 			}
 		}
 		

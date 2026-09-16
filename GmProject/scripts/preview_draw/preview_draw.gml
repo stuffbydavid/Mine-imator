@@ -401,9 +401,8 @@ function preview_draw(preview, xx, yy, width, height)
 								if (select.model.model_format = e_model_format.BLOCK)
 								{
 									var res;
-									if (select.model_tex != null && select.model_tex.block_sheet_texture[e_block_sheet.STATIC16] != null)
-										res = select.model_tex
-									else
+									res = res_eval(select.model_tex)
+									if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 										res = mc_res
 									render_world_block(select.model.block_vbuffer, res)
 									
@@ -449,10 +448,7 @@ function preview_draw(preview, xx, yy, width, height)
 								if (select.model_part = null)
 									break
 								
-								var res = select.model_tex;
-								if (!res_is_ready(res))
-									res = mc_res
-								
+								var res = res_eval(select.model_tex);
 								matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), select.model_part.matrix))
 								render_world_model_part(select.model_part, res, select.model_texture_name_map, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map, null)
 								break
@@ -504,7 +500,7 @@ function preview_draw(preview, xx, yy, width, height)
 						case e_res_type.FONT:
 						{
 							if (select.type = e_temp_type.TEXT)
-								draw_set_font(select.text_font.font_preview)
+								draw_set_font(res_eval(select.text_font).font_preview)
 							else
 								draw_set_font(select.font_preview)
 							

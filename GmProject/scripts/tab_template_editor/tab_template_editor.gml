@@ -256,10 +256,7 @@ function tab_template_editor()
 		
 		case e_temp_type.ITEM:
 		{
-			var res = temp_edit.item_tex;
-			if (!res_is_ready(res))
-				res = mc_res
-			
+			var res = res_eval(temp_edit.item_tex);
 			if (res.item_sheet_texture[e_item_sheet.SIZE16] = null)
 			{
 				tab_close(tab)

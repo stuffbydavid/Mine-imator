@@ -9,10 +9,7 @@ function render_world_sky_clouds()
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
 		render_set_uniform_color("uReplaceColor", c_black, 1)
 	
-	var res = background_sky_clouds_tex;
-	if (!res_is_ready(res))
-		res = mc_res
-	
+	var res = res_eval(background_sky_clouds_tex);
 	// Shading
 	render_set_uniform_int("uIsSky", 1)
 	render_set_uniform_color("uBlendColor", background_sky_clouds_final, background_clouds_alpha)

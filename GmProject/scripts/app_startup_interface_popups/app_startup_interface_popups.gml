@@ -160,7 +160,7 @@ function app_startup_interface_popups()
 		pattern_sprites = array()
 		
 		res_ratio = 1
-		pattern_resource = mc_res
+		pattern_resource = project_pack_res
 		
 		update = false
 		layer_move = null

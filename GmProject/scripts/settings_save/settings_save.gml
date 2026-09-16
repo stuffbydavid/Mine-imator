@@ -58,9 +58,12 @@ function settings_save()
 		
 		json_save_var("fps", game_get_speed(gamespeed_fps))
 		json_save_var("project_folder", json_string_encode(setting_project_folder))
+		json_save_var("project_pack", json_string_encode(setting_project_pack))
+		
 		json_save_var_bool("backup", setting_backup)
 		json_save_var("backup_time", setting_backup_time)
 		json_save_var("backup_amount", setting_backup_amount)
+		
 		json_save_var_bool("spawn_cameras", setting_spawn_cameras)
 		json_save_var_bool("unlimited_values", setting_unlimited_values)
 		json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)

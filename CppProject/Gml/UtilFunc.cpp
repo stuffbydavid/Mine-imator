@@ -439,6 +439,15 @@ namespace CppProject
 	#endif
 	}
 
+	StringType packs_directory_get()
+	{
+	#if OS_WINDOWS
+		return gmlGlobal::working_directory + "Packs/";
+	#else
+		return QDir::homePath() + "/Mine-imator/Packs/";
+	#endif
+	}
+
 	StringType minecraft_java_directory_get()
 	{
 #if OS_WINDOWS

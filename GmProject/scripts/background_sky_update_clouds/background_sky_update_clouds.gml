@@ -4,11 +4,13 @@
 function background_sky_update_clouds()
 {
 	var tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col, colsidesdark, colsideslight, coltop, colbottom;
+	var res;
+	res = res_eval(background_sky_clouds_tex)
 	
-	if (!background_sky_clouds_tex.ready)
+	if (!res.ready)
 		return 0
 	
-	tex = ((background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture)
+	tex = ((res.type = e_res_type.PACK) ? res.clouds_texture : res.texture)
 	texwid = texture_width(tex)
 	texhei = texture_height(tex)
 	texsize = max(texwid, texhei)

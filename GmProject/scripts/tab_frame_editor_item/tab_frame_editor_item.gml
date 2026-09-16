@@ -9,10 +9,7 @@ function tab_frame_editor_item()
 	
 	if (res = null)
 		res = tl_edit.temp.item_tex
-	
-	if (!res_is_ready(res))
-		res = mc_res
-	
+	res = res_eval(res)
 	tab_control_switch()
 	draw_button_collapse("itemslot", collapse_map[?"itemslot"], action_tl_frame_custom_item_slot, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], "frameeditoritemcustomitemslot")
 	tab_next()

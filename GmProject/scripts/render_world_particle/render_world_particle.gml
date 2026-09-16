@@ -80,11 +80,10 @@ function render_world_particle()
 				
 				if (temp.model.model_format = e_model_format.BLOCK)
 				{
-					var res;
-					if (temp.model_tex != null && temp.model_tex.block_sheet_texture[e_block_sheet.STATIC16] != null)
-						res = temp.model_tex
-					else
+					var res = res_eval(temp.model_tex);
+					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
+					
 					render_world_block(temp.model.block_vbuffer, res)
 					
 					with (temp)
@@ -132,10 +131,7 @@ function render_world_particle()
 				if (temp.model_part = null || temp.model_file = null)
 					break
 				
-				var res = temp.model_tex;
-				if (!res_is_ready(res))
-					res = mc_res
-					
+				var res = res_eval(temp.model_tex);
 				render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, null)
 				break
 			}
@@ -160,19 +156,13 @@ function render_world_particle()
 	{
 		if (type.temp = particle_sheet)
 		{
-			var res = type.sprite_tex;
-			if (!res_is_ready(res))
-				res = mc_res
-			
+			var res = res_eval(type.sprite_tex);
 			render_set_texture(res.particles_texture[type.sprite_tex_image])
 		}
 		else
 		{
 			var template = particle_template_map[?type.sprite_template];
-			var res = type.sprite_template_tex;
-			if (!res_is_ready(res))
-				res = mc_res
-			
+			var res = res_eval(type.sprite_template_tex);
 			var tex = res.particle_texture_atlas_map[?template.name];
 			
 			if (tex = undefined)

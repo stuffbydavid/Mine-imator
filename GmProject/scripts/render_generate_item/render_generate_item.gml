@@ -32,9 +32,7 @@ function render_generate_item()
 		res = res[e_texture_channel.DIFFUSE]
 	}
 
-	if (!res_is_ready(res))
-		res = mc_res
-	
+	res = res_eval(res)
 	// Create vbuffer
 	if (item_vbuffer)
 		vbuffer_destroy(item_vbuffer)

@@ -10,7 +10,7 @@ function project_load_find_save_ids(isproject = false)
 		if (save_id_map[?key] != "root" && save_id_map[?key] != "default") // Skip removed objects
 		{
 			// Avoid duplicates in existing objects or previously generated save ids
-			if (is_real(save_id_map[?key]) || save_id_find(save_id_map[?key]) != null)
+			if (save_id_map[?key] != project_pack_res && (is_real(save_id_map[?key]) || save_id_find(save_id_map[?key]) != null))
 			{
 				var sid;
 				do
@@ -25,12 +25,20 @@ function project_load_find_save_ids(isproject = false)
 	save_id_map[? null] = null
 	save_id_map[?"root"] = "root"
 	save_id_map[?"default"] = "default"
+	save_id_map[?project_pack_res] = project_pack_res
 	
 	// Set resource IDs
 	with (obj_resource)
 		if (loaded && !is_undefined(save_id_map[?load_id]))
 			save_id = save_id_map[?load_id]
 	
+	// Set project pack
+	if (is_string(project_pack))
+	{
+		var pack = save_id_find(save_id_map[?project_pack])
+		project_pack = pack != null ? pack : mc_res
+	}
+
 	// Set background references
 	if (background_loaded)
 	{
@@ -82,19 +90,19 @@ function project_load_find_save_ids(isproject = false)
 		
 		// Fix broken references
 		if (type = e_temp_type.ITEM && (!instance_exists(item_tex) || item_tex.object_index != obj_resource))
-			item_tex = mc_res
+			item_tex = project_pack_res
 		
 		if (type = e_temp_type.ITEM && (!instance_exists(item_tex_material) || item_tex_material.object_index != obj_resource))
-			item_tex_material = mc_res
+			item_tex_material = project_pack_res
 		
 		if (type = e_temp_type.ITEM && (!instance_exists(item_tex_normal) || item_tex_normal.object_index != obj_resource))
-			item_tex_normal = mc_res
+			item_tex_normal = project_pack_res
 		
 		if (type = e_temp_type.SCENERY && instance_exists(scenery) && scenery.object_index != obj_resource)
 			scenery = null
 		
 		// Legacy "use a sheet" option conversion
-		if (load_format < e_project.FORMAT_110_PRE_1 && type = e_temp_type.ITEM && item_tex != mc_res && !legacy_item_sheet)
+		if (load_format < e_project.FORMAT_110_PRE_1 && type = e_temp_type.ITEM && item_tex != project_pack_res && !legacy_item_sheet)
 			item_tex.type = e_res_type.TEXTURE
 		
 		// Find paths for particle regions

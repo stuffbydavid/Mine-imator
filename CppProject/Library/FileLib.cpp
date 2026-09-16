@@ -121,6 +121,38 @@ namespace CppProject
 		return found;
 	}
 
+	BoolType zip_extract_file(StringType source, StringType entry, StringType destination)
+	{
+		int err;
+		std::string sourceStd = source.ToStdString();
+		struct zip* archive = zip_open(sourceStd.c_str(), 0, &err);
+		if (!archive)
+			return false;
+
+		std::string entryStd = entry.ToStdString();
+		struct zip_file* fileIn = zip_fopen(archive, entryStd.c_str(), 0);
+		QFile fileOut(destination);
+		BoolType success = fileIn && fileOut.open(QFile::WriteOnly);
+		if (success)
+		{
+			char buffer[4096];
+			qint64 read;
+			while ((read = zip_fread(fileIn, buffer, sizeof(buffer))) > 0)
+				if (fileOut.write(buffer, read) != read)
+				{
+					success = false;
+					break;
+				}
+			if (read < 0)
+				success = false;
+		}
+
+		if (fileIn)
+			zip_fclose(fileIn);
+		zip_close(archive);
+		return success;
+	}
+
 	RealType lib_gzunzip(StringType src, StringType dst)
 	{
 		Gzip::Decompress(src, dst);

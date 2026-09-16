@@ -525,6 +525,7 @@ install(DIRECTORY
 	PATTERN "Patched" EXCLUDE
 )
 install(DIRECTORY DESTINATION "Skins")
+install(DIRECTORY DESTINATION "Packs")
 
 if(WIN32)
 	install(FILES "${EXTERNAL_PLATFORM_DIR}/vcomp140.dll" DESTINATION ".")

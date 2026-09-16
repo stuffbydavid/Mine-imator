@@ -50,9 +50,7 @@ function tab_frame_editor_texture_normal()
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_normal
-				
-				if (!res_is_ready(texobj))
-					texobj = mc_res
+				texobj = res_eval(texobj)
 				
 				tex = texobj.block_preview_texture
 				
@@ -103,7 +101,7 @@ function tab_frame_editor_texture_normal()
 	else
 		text = text_get("listnone")
 	
-	if (tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = null)
+	if (tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = project_pack_res)
 		text = text_get("listdefault", text)
 	
 	tab_control_menu(ui_large_height)

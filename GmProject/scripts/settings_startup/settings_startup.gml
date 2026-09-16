@@ -14,6 +14,7 @@ function settings_startup()
 	
 	setting_project_folder = projects_directory_get()
 	directory_create_lib(setting_project_folder)
+	setting_project_pack = ""
 	
 	closed_toast_list = ds_list_create()
 	

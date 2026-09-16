@@ -5,6 +5,9 @@
 
 function temp_get_model_texobj(texobj)
 {
+	if (texobj != null)
+		texobj = res_eval(texobj)
+
 	if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA || // Check if empty or a camera
 		(texobj.model_texture = null && texobj.model_texture_map = null)) // Not a valid model texture, use the library setting
 	{
@@ -15,10 +18,10 @@ function temp_get_model_texobj(texobj)
 			{
 				with (part_of)
 				{
-					if (temp.block_tex && temp.block_tex.type = e_res_type.PACK)
-						texobj = temp.block_tex
+					if (temp.block_tex && res_eval(temp.block_tex).type = e_res_type.PACK)
+						texobj = res_eval(temp.block_tex)
 					else
-						texobj = mc_res
+						texobj = project_pack_res
 				}
 			}
 		}
@@ -34,15 +37,18 @@ function temp_get_model_texobj(texobj)
 			if (texobj.model_format = e_model_format.BLOCK)
 			{
 				if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
-					texobj = mc_res
+					texobj = project_pack_res
 			}
 			else
 			{
 				if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
-					texobj = mc_res
+					texobj = project_pack_res
 			}
 		}
 	}
 	
-	return texobj
+	if (texobj = null)
+		return null
+
+	return res_eval(texobj)
 }

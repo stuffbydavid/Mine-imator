@@ -9,6 +9,7 @@ function minecraft_assets_load_startup()
 	globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 	globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
 	globalvar pattern_update, armor_update;
+	globalvar pack_image_map;
 	
 	mc_assets = new_obj(obj_minecraft_assets)
 	mc_builder = new_obj(obj_builder)
@@ -73,6 +74,10 @@ function minecraft_assets_load_startup()
 			}
 		}
 	}
+	
+	// Packs
+	pack_image_map = ds_map_create()
+	project_pack = mc_res
 	
 	return true
 }

@@ -85,7 +85,7 @@ function res_load_pack_model_textures()
 				tex = texture_create_square(matfname)
 		}
 		else
-			tex = texture_duplicate(spr_default_material)
+			tex = null
 		
 		model_texture_material_map[?name] = tex
 		

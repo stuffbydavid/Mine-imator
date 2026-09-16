@@ -164,6 +164,9 @@ function res_event_destroy()
 	
 	if (sound_buffer != null)
 		buffer_delete(sound_buffer)
+
+	if (!is_cpp() && type = e_res_type.SOUND && minecraft_hash != "" && creator = app.bench_settings)
+		file_delete_lib(file_directory + filename)
 	
 	// Free blocks
 	if (scenery_tl_list != null)
@@ -192,50 +195,34 @@ function res_event_destroy()
 			model = null
 		
 		if (model_tex = other.id)
-		{
-			model_tex = mc_res
-		}
+			model_tex = project_pack_res
 		
 		if (model_tex_material = other.id)
-		{
-			model_tex_material = mc_res
-		}
+			model_tex_material = project_pack_res
 		
 		if (model_tex_normal = other.id)
-		{
-			model_tex_normal = mc_res
-		}
+			model_tex_normal = project_pack_res
 		
 		if (item_tex = other.id)
 		{
-			item_tex = mc_res
+			item_tex = project_pack_res
 			render_generate_item()
 		}
 		
 		if (item_tex_material = other.id)
-		{
-			item_tex_material = mc_res
-		}
+			item_tex_material = project_pack_res
 		
 		if (item_tex_normal = other.id)
-		{
-			item_tex_normal = mc_res
-		}
+			item_tex_normal = project_pack_res
 		
 		if (block_tex = other.id)
-		{
-			block_tex = mc_res
-		}
+			block_tex = project_pack_res
 		
 		if (block_tex_material = other.id)
-		{
-			block_tex_material = mc_res
-		}
+			block_tex_material = project_pack_res
 		
 		if (block_tex_normal = other.id)
-		{
-			block_tex_normal = mc_res
-		}
+			block_tex_normal = project_pack_res
 		
 		if (scenery = other.id) 
 			scenery = null
@@ -250,9 +237,7 @@ function res_event_destroy()
 			shape_tex_normal = null
 		
 		if (text_font = other.id)
-		{
-			text_font = mc_res
-		}
+			text_font = project_pack_res
 	}
 	
 	with (app.bench_settings)
@@ -261,40 +246,40 @@ function res_event_destroy()
 			model = null
 		
 		if (model_tex = other.id)
-			model_tex = mc_res
+			model_tex = project_pack_res
 			
 		if (model_tex_material = other.id)
-			model_tex_material = mc_res
+			model_tex_material = project_pack_res
 			
 		if (model_tex_normal = other.id)
-			model_tex_normal = mc_res
+			model_tex_normal = project_pack_res
 		
 		if (item_tex = other.id)
 		{
-			item_tex = mc_res
+			item_tex = project_pack_res
 			render_generate_item()
 		}
 		
 		if (item_tex_material = other.id)
 		{
-			item_tex_material = mc_res
+			item_tex_material = project_pack_res
 			render_generate_item()
 		}
 		
 		if (item_tex_normal = other.id)
 		{
-			item_tex_normal = mc_res
+			item_tex_normal = project_pack_res
 			render_generate_item()
 		}
 		
 		if (block_tex = other.id)
-			block_tex = mc_res
+			block_tex = project_pack_res
 		
 		if (block_tex_material = other.id)
-			block_tex_material = mc_res
+			block_tex_material = project_pack_res
 		
 		if (block_tex_normal = other.id)
-			block_tex_normal = mc_res
+			block_tex_normal = project_pack_res
 		
 		if (shape_tex = other.id)
 			shape_tex = null
@@ -306,7 +291,7 @@ function res_event_destroy()
 			shape_tex_normal = null
 		
 		if (text_font = other.id)
-			text_font = mc_res
+			text_font = project_pack_res
 		
 		if (scenery = other.id)
 			scenery = null
@@ -315,14 +300,10 @@ function res_event_destroy()
 	with (obj_particle_type)
 	{
 		if (sprite_tex = other.id)
-		{
-			sprite_tex = mc_res
-		}
+			sprite_tex = project_pack_res
 		
 		if (sprite_template_tex = other.id)
-		{
-			sprite_template_tex = mc_res
-		}	
+			sprite_template_tex = project_pack_res
 	}
 	
 	with (obj_keyframe)
@@ -376,9 +357,7 @@ function res_event_destroy()
 			update_matrix = true
 		
 		if (glint_tex = other.id)
-		{
-			glint_tex = mc_res
-		}
+			glint_tex = project_pack_res
 	}
 	
 	with (app)
@@ -387,39 +366,34 @@ function res_event_destroy()
 			background_image = null
 		
 		if (background_sky_sun_tex = other.id)
-		{
-			background_sky_sun_tex = mc_res
-		}
+			background_sky_sun_tex = project_pack_res
 		
 		if (background_sky_moon_tex = other.id)
-		{
-			background_sky_moon_tex = mc_res
-		}
+			background_sky_moon_tex = project_pack_res
 		
 		if (background_sky_clouds_tex = other.id)
-		{
-			background_sky_clouds_tex = mc_res
-		}
+			background_sky_clouds_tex = project_pack_res
 		
 		if (background_ground_tex = other.id)
 		{
-			background_ground_tex = mc_res
+			background_ground_tex = project_pack_res
 			background_ground_update_texture()
 		}
 		
 		if (background_ground_tex_material = other.id)
 		{
-			background_ground_tex_material = mc_res
-			background_ground_update_texture()
+			background_ground_tex_material = project_pack_res
+			background_ground_update_texture_material()
 		}
 		
 		if (background_ground_tex_normal = other.id)
 		{
-			background_ground_tex_normal = mc_res
+			background_ground_tex_normal = project_pack_res
 			background_ground_update_texture_normal()
 		}
+
 	}
-	
+
 	// Remove from resource browser
 	if (ds_list_find_index(app.res_list.list, id) >= 0)
 	{

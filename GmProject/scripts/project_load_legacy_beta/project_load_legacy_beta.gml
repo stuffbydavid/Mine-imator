@@ -340,7 +340,7 @@ function project_load_legacy_beta(loadbackground)
 					if (load.lib_char_skin[a] > -1)
 						model_tex = load.skin_res[load.lib_char_skin[a]].load_id
 					else
-						model_tex = save_id_get(mc_res)
+						model_tex = project_pack_res
 					
 					break
 				}
@@ -355,7 +355,7 @@ function project_load_legacy_beta(loadbackground)
 					if (load.lib_item_tex[a] > -1)
 						item_tex = load.item_res[load.lib_item_tex[a]].load_id
 					else
-						item_tex = save_id_get(mc_res)
+						item_tex = project_pack_res
 					
 					load.lib_rotpoint[a] = point3D(load.lib_rotx[a, 0], load.lib_roty[a, 0], load.lib_rotz[a, 0])
 					break
@@ -378,7 +378,7 @@ function project_load_legacy_beta(loadbackground)
 					if (load.lib_block_tex[a] > -1)
 						block_tex = load.ter_res[load.lib_block_tex[a]].load_id
 					else
-						block_tex = save_id_get(mc_res)
+						block_tex = project_pack_res
 					
 					load.lib_rotpoint[a] = point3D(load.lib_rotx[a, 1], load.lib_roty[a, 1], load.lib_rotz[a, 1])
 					break
@@ -406,7 +406,7 @@ function project_load_legacy_beta(loadbackground)
 					if (load.lib_scenery_tex[a] > -1)
 						block_tex = load.ter_res[load.lib_scenery_tex[a]].load_id
 					else
-						block_tex = save_id_get(mc_res)
+						block_tex = project_pack_res
 					
 					load.lib_rotpoint[a] = point3D(load.lib_rotx[a, 2], load.lib_roty[a, 2], load.lib_rotz[a, 2])
 					break

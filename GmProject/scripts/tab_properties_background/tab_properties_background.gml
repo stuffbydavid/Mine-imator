@@ -128,10 +128,11 @@ function tab_properties_background()
 			capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
 			
 			// Sun
-			tex = ((background_sky_sun_tex.type = e_res_type.PACK) ? background_sky_sun_tex.sun_texture : background_sky_sun_tex.texture)
+			var sunres = res_eval(background_sky_sun_tex);
+			tex = ((sunres.type = e_res_type.PACK) ? sunres.sun_texture : sunres.texture)
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_sun_tex, background_sky_sun_tex.display_name, action_background_sky_sun_tex, false, tex)
+			draw_button_menu("backgroundskysuntex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_sun_tex, sunres.display_name, action_background_sky_sun_tex, false, tex)
 			tab_next()
 			
 			// Sun angle
@@ -145,20 +146,21 @@ function tab_properties_background()
 			tab_next()
 			
 			// Moon
-			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
-				tex = background_sky_moon_tex.moon_textures[background_sky_moon_phase]
+			var moonres = res_eval(background_sky_moon_tex);
+			if (moonres.type = e_res_type.PACK && moonres.ready)
+				tex = moonres.moon_textures[background_sky_moon_phase]
 			else
-				tex = background_sky_moon_tex.texture
+				tex = moonres.texture
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_tex, background_sky_moon_tex.display_name, action_background_sky_moon_tex, false, tex)
+			draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_tex, moonres.display_name, action_background_sky_moon_tex, false, tex)
 			tab_next()
 			
 			// Moon phase
-			if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
+			if (moonres.type = e_res_type.PACK && moonres.ready)
 			{
 				tab_control_menu(ui_large_height)
-				draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, background_sky_moon_tex.moon_textures[background_sky_moon_phase])
+				draw_button_menu("backgroundskymoonphase", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_phase, text_get("backgroundskymoonphase" + string(background_sky_moon_phase + 1)), action_background_sky_moon_phase, false, moonres.moon_textures[background_sky_moon_phase])
 				tab_next()
 			}
 			
@@ -197,9 +199,10 @@ function tab_properties_background()
 		if (setting_advanced_mode)
 		{
 			// Cloud texture
-			var tex = ((background_sky_clouds_tex.type = e_res_type.PACK) ? background_sky_clouds_tex.clouds_texture : background_sky_clouds_tex.texture);
+			var cloudres = res_eval(background_sky_clouds_tex);
+			var tex = ((cloudres.type = e_res_type.PACK) ? cloudres.clouds_texture : cloudres.texture);
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_clouds_tex, background_sky_clouds_tex.display_name, action_background_sky_clouds_tex, false, tex)
+			draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_clouds_tex, cloudres.display_name, action_background_sky_clouds_tex, false, tex)
 			tab_next()
 			
 			// Cloud speed
@@ -268,10 +271,7 @@ function tab_properties_background()
 		tab_collapse_start()
 		
 		var wid, res;
-		res = background_ground_tex
-		if (!res_is_ready(res))
-			res = mc_res
-		
+		res = res_eval(background_ground_tex)
 		// Change ground
 		tab_control(24)
 		
@@ -298,20 +298,23 @@ function tab_properties_background()
 		tab_next()
 		
 		// Ground texture
+		var groundname = res_eval(background_ground_tex).display_name;
 		tab_control_menu(ui_large_height)
-		draw_button_menu("backgroundgroundtex", e_menu.LIST, dx, dy, dw, ui_large_height, background_ground_tex, background_ground_tex.display_name, action_background_ground_tex, false, background_ground_tex.block_preview_texture)
+		draw_button_menu("backgroundgroundtex", e_menu.LIST, dx, dy, dw, ui_large_height, background_ground_tex, groundname, action_background_ground_tex, false, res_eval(background_ground_tex).block_preview_texture)
 		tab_next()
 		
 		if (project_render_material_maps)
 		{
 			// Ground texture (material)
+			var groundmaterialname = res_eval(background_ground_tex_material).display_name;
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundgroundtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, background_ground_tex_material, background_ground_tex_material.display_name, action_background_ground_tex_material, false, background_ground_tex_material.block_preview_texture)
+			draw_button_menu("backgroundgroundtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, background_ground_tex_material, groundmaterialname, action_background_ground_tex_material, false, res_eval(background_ground_tex_material).block_preview_texture)
 			tab_next()
 			
 			// Ground texture (normal)
+			var groundnormalname = res_eval(background_ground_tex_normal).display_name;
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundgroundtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, background_ground_tex_normal, background_ground_tex_normal.display_name, action_background_ground_tex_normal, false, background_ground_tex_normal.block_preview_texture)
+			draw_button_menu("backgroundgroundtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, background_ground_tex_normal, groundnormalname, action_background_ground_tex_normal, false, res_eval(background_ground_tex_normal).block_preview_texture)
 			tab_next()
 		}
 		

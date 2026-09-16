@@ -95,31 +95,31 @@ function tab_properties_library()
 			
 			// Skin
 			var tex = null;
-			with (temp_edit.model_tex)
+			with (res_eval(temp_edit.model_tex))
 				tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttex" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktex" : "libraryskin")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex, null)
+			draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttex" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktex" : "libraryskin")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, res_eval(temp_edit.model_tex).display_name, action_lib_model_tex, false, tex, null)
 			tab_next()
 			
 			if (project_render_material_maps)
 			{
 				// Skin (Material map)
 				tex = null
-				with (temp_edit.model_tex_material)
+				with (res_eval(temp_edit.model_tex_material))
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexmaterial" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexmaterial" : "libraryskinmaterial")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexmaterial" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexmaterial" : "libraryskinmaterial")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, res_eval(temp_edit.model_tex_material).display_name, action_lib_model_tex_material, false, tex, null)
 				tab_next()
 			
 				// Skin (Normal map)
 				tex = null
-				with (temp_edit.model_tex_normal)
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+				with (res_eval(temp_edit.model_tex_normal))
+					tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexnormal" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexnormal" : "libraryskinnormal")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexnormal" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexnormal" : "libraryskinnormal")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, res_eval(temp_edit.model_tex_normal).display_name, action_lib_model_tex_normal, false, tex, null)
 				tab_next()
 			}
 			
@@ -149,19 +149,19 @@ function tab_properties_library()
 			
 			// Texture
 			tab_control_menu(ui_large_height)
-			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture, null)
+			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex, res_eval(temp_edit.block_tex).display_name, action_lib_block_tex, false, res_eval(temp_edit.block_tex).block_preview_texture, null)
 			tab_next()
 			
 			if (project_render_material_maps)
 			{
 				// Material texture
 				tab_control_menu(ui_large_height)
-				draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_material, temp_edit.block_tex_material.display_name, action_lib_block_tex_material, false, temp_edit.block_tex_material.block_preview_texture, null)
+				draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_material, res_eval(temp_edit.block_tex_material).display_name, action_lib_block_tex_material, false, res_eval(temp_edit.block_tex_material).block_preview_texture, null)
 				tab_next()
 			
 				// Normal texture
 				tab_control_menu(ui_large_height)
-				draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_normal, temp_edit.block_tex_normal.display_name, action_lib_block_tex_normal, false, temp_edit.block_tex_normal.block_preview_texture, null)
+				draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_normal, res_eval(temp_edit.block_tex_normal).display_name, action_lib_block_tex_normal, false, res_eval(temp_edit.block_tex_normal).block_preview_texture, null)
 				tab_next()
 			}
 			
@@ -171,10 +171,7 @@ function tab_properties_library()
 		case e_temp_type.ITEM:
 		{
 			var wid, res;
-			res = temp_edit.item_tex
-			if (!res_is_ready(res))
-				res = mc_res
-			
+			res = res_eval(temp_edit.item_tex)
 			// Item image
 			tab_control(24)
 			
@@ -219,35 +216,29 @@ function tab_properties_library()
 				tex = res.texture
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex, temp_edit.item_tex.display_name, action_lib_item_tex, false, tex)
+			draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex, res_eval(temp_edit.item_tex).display_name, action_lib_item_tex, false, tex)
 			tab_next()
 			
 			if (project_render_material_maps)
 			{
 				// Image (Material map)
-				res = temp_edit.item_tex_material
-				if (!res_is_ready(res))
-					res = mc_res
-				
+				res = res_eval(temp_edit.item_tex_material)
 				tex = res.block_preview_texture
 				if (tex = null)
 					tex = res.texture
 				
 				tab_control_menu(ui_large_height)
-				draw_button_menu("libraryitemtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_material, temp_edit.item_tex_material.display_name, action_lib_item_tex_material, false, tex)
+				draw_button_menu("libraryitemtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_material, res_eval(temp_edit.item_tex_material).display_name, action_lib_item_tex_material, false, tex)
 				tab_next()
 				
 				// Image (Normal map)
-				res = temp_edit.item_tex_normal
-				if (!res_is_ready(res))
-					res = mc_res
-				
+				res = res_eval(temp_edit.item_tex_normal)
 				tex = res.block_preview_texture
 				if (tex = null)
 					tex = res.texture
 				
 				tab_control_menu(ui_large_height)
-				draw_button_menu("libraryitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_normal, temp_edit.item_tex_normal.display_name, action_lib_item_tex_normal, false, tex)
+				draw_button_menu("libraryitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_normal, res_eval(temp_edit.item_tex_normal).display_name, action_lib_item_tex_normal, false, tex)
 				tab_next()
 			}
 			
@@ -298,19 +289,19 @@ function tab_properties_library()
 			
 			// Texture
 			tab_control_menu(ui_large_height)
-			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex, temp_edit.block_tex.display_name, action_lib_block_tex, false, temp_edit.block_tex.block_preview_texture)
+			draw_button_menu("libraryblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex, res_eval(temp_edit.block_tex).display_name, action_lib_block_tex, false, res_eval(temp_edit.block_tex).block_preview_texture)
 			tab_next()
 			
 			if (project_render_material_maps)
 			{
 				// Material texture
 				tab_control_menu(ui_large_height)
-				draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_material, temp_edit.block_tex_material.display_name, action_lib_block_tex_material, false, temp_edit.block_tex_material.block_preview_texture, null)
+				draw_button_menu("libraryblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_material, res_eval(temp_edit.block_tex_material).display_name, action_lib_block_tex_material, false, res_eval(temp_edit.block_tex_material).block_preview_texture, null)
 				tab_next()
 				
 				// Normal texture
 				tab_control_menu(ui_large_height)
-				draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_normal, temp_edit.block_tex_normal.display_name, action_lib_block_tex_normal, false, temp_edit.block_tex_normal.block_preview_texture, null)
+				draw_button_menu("libraryblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_normal, res_eval(temp_edit.block_tex_normal).display_name, action_lib_block_tex_normal, false, res_eval(temp_edit.block_tex_normal).block_preview_texture, null)
 				tab_next()
 			}
 			
@@ -364,31 +355,31 @@ function tab_properties_library()
 			
 			// Skin
 			var tex = null;
-			with (temp_edit.model_tex)
+			with (res_eval(temp_edit.model_tex))
 				tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("librarymodelpartskin", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, temp_edit.model_tex.display_name, action_lib_model_tex, false, tex)
+			draw_button_menu("librarymodelpartskin", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, res_eval(temp_edit.model_tex).display_name, action_lib_model_tex, false, tex)
 			tab_next()
 			
 			if (project_render_material_maps)
 			{
 				// Skin (Material map)
 				tex = null
-				with (temp_edit.model_tex_material)
+				with (res_eval(temp_edit.model_tex_material))
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu("librarymodelpartskinmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, temp_edit.model_tex_material.display_name, action_lib_model_tex_material, false, tex, null)
+				draw_button_menu("librarymodelpartskinmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, res_eval(temp_edit.model_tex_material).display_name, action_lib_model_tex_material, false, tex, null)
 				tab_next()
 			
 				// Skin (Normal map)
 				tex = null
-				with (temp_edit.model_tex_normal)
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+				with (res_eval(temp_edit.model_tex_normal))
+					tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 				tab_control_menu(ui_large_height)
-				draw_button_menu("librarymodelpartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, temp_edit.model_tex_normal.display_name, action_lib_model_tex_normal, false, tex, null)
+				draw_button_menu("librarymodelpartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, res_eval(temp_edit.model_tex_normal).display_name, action_lib_model_tex_normal, false, tex, null)
 				tab_next()
 			}
 			
@@ -431,7 +422,7 @@ function tab_properties_library()
 			if (setting_advanced_mode)
 			{
 				tab_control_menu()
-				draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 24, temp_edit.text_font, temp_edit.text_font.display_name, action_lib_text_font)
+				draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, 24, temp_edit.text_font, res_eval(temp_edit.text_font).display_name, action_lib_text_font)
 				tab_next()
 			}
 			

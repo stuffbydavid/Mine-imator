@@ -224,11 +224,12 @@ function render_world_tl()
 	}
 	
 	// Glint mode
-	var tex, spd;
-	if (glint_tex.texture)
-		tex = glint_tex.texture
+	var tex, spd, glintres;
+	glintres = res_eval(glint_tex)
+	if (glintres.texture)
+		tex = glintres.texture
 	else
-		tex = (glint_mode = e_glint.ITEM ? glint_tex.glint_item_texture : glint_tex.glint_armor_texture)
+		tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
 	
 	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
@@ -296,9 +297,9 @@ function render_world_tl()
 			{
 				if (temp.model != null)
 				{
-					var res = value_inherit[e_value.TEXTURE_OBJ];
+					var res = res_eval(value_inherit[e_value.TEXTURE_OBJ]);
 					if (res = null)
-						res = temp.model_tex
+						res = res_eval(temp.model_tex)
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					render_world_block(temp.model.block_vbuffer, res)
