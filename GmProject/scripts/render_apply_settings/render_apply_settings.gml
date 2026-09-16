@@ -23,6 +23,7 @@ function render_apply_settings(preset, renderer)
 	{
 		var settings = preset.renderer[e_renderer.REALISTIC];
 		project_render_samples = settings.samples
+		project_render_alpha_hashing = settings.alpha_hashing
 		project_render_ssao = settings.ssao
 		project_render_shadows = settings.shadows
 		project_render_shadows_blur_quality = settings.shadows_blur_quality

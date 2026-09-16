@@ -4,7 +4,7 @@
 
 function render_high(singlesample = false)
 {
-	render_alpha_hash = project_render_alpha_mode
+	render_alpha_hash = render_alpha_hash_allowed && project_render_alpha_mode
 	
 	var samplestart, sampleend;
 	if (singlesample || renderer_current = e_renderer.STANDARD)

@@ -30,6 +30,7 @@ function render_preset_copy(to, allsettings = false)
 		toset = to.renderer[e_renderer.REALISTIC]
 		to.has_realistic = has_realistic
 		toset.samples = fromset.samples
+		toset.alpha_hashing = fromset.alpha_hashing
 		toset.ssao = fromset.ssao
 		toset.shadows = fromset.shadows
 		toset.shadows_blur_quality = fromset.shadows_blur_quality

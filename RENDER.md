@@ -68,6 +68,7 @@ The ranges below are the ranges supported by the corresponding interface control
 | `texture_filtering` | Boolean | Enable mipmapped texture filtering |
 | `transparent_block_texture_filtering` | Boolean | Apply texture filtering to transparent blocks |
 | `texture_filtering_level` | Integer, 0-5 | Mipmap/texture-filtering level |
+| `alpha_hashing` | Boolean | Allow hashed transparency in Realistic renders |
 | `alpha_mode` | `0` = blend, `1` = hashed | Project transparency mode |
 | `tonemapper` | `0` = none, `1` = Reinhard, `2` = ACES | Project tonemapper |
 | `exposure` | 0-no limit | Project exposure |

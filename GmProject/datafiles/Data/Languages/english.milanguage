@@ -2983,6 +2983,9 @@
 			"custom": "Custom"
 		},
 		"samples": "Samples",
+		"alphahashing": "Allow alpha hashing",
+		"alphahashingtip": "Allow objects to use alpha hashing. Disabling this may speed up renders.",
+		"alphahashingwarning": "The Realistic renderer has hashing off. Enable it to see the effect.",
 		"ssao": "Ambient occlusion",
 		"ssaotip": "Darkens areas that are less exposed to light.",
 		"ssao/": {

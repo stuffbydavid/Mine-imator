@@ -31,6 +31,7 @@ function render_preset_equals(obj, renderer, allsettings)
 		match = (
 			obj.has_realistic &&
 			set.samples = objset.samples &&
+			set.alpha_hashing = objset.alpha_hashing &&
 			set.ssao = objset.ssao &&
 			set.shadows = objset.shadows &&
 			set.shadows_blur_quality = objset.shadows_blur_quality &&

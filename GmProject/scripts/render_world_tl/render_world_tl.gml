@@ -112,7 +112,7 @@ function render_world_tl()
 	
 	if (!render_alpha_hash_force)
 	{
-		render_alpha_hash = (alpha_mode = e_alpha_mode.DEFAULT ? app.project_render_alpha_mode : alpha_mode)
+		render_alpha_hash = render_alpha_hash_allowed && (alpha_mode = e_alpha_mode.DEFAULT ? app.project_render_alpha_mode : alpha_mode)
 		render_set_uniform_int("uAlphaHash", render_alpha_hash)
 	}
 	

@@ -436,15 +436,18 @@ function tab_properties_render()
 			tab_collapse_end()
 		}
 	
-		dy += 4
-	
 		// Alpha mode
 		if (renderer_edit = e_renderer.REALISTIC)
 		{
+			tab_control_switch()
+			draw_switch("renderalphahashing", dx, dy, rendererset.alpha_hashing, action_project_render_alpha_hashing, "renderalphahashingtip")
+			tab_next()
+
 			text = (project_render_alpha_mode = e_alpha_mode.BLEND ? text_get("renderalphamodeblend") : text_get("renderalphamodehashed"));
 			tab_control_menu()
 			draw_button_menu("renderalphamode", e_menu.LIST, dx, dy, dw, 24, project_render_alpha_mode, text, action_project_render_alpha_mode)
 			tab_next()
+			render_alpha_hashing_warning(project_render_alpha_mode)
 		}
 	
 		tab_collapse_end()

@@ -34,6 +34,7 @@ function render_preset_event_create()
 	with (renderer[e_renderer.REALISTIC])
 	{
 		samples = 24
+		alpha_hashing = false
 		ssao = true
 		shadows = true
 		shadows_blur_quality = 20

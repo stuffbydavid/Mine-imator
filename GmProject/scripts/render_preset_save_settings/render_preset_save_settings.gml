@@ -25,6 +25,7 @@ function render_preset_save_settings(renderer)
 		set = self.renderer[renderer]
 		json_save_object_start("realistic")
 			json_save_var("samples", set.samples)
+			json_save_var_bool("alpha_hashing", set.alpha_hashing)
 			json_save_var_bool("ssao", set.ssao)
 			json_save_var_bool("shadows", set.shadows)
 			json_save_var("shadows_blur_quality", set.shadows_blur_quality)

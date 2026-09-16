@@ -70,7 +70,7 @@ function render_high_shadows()
 		// Depth
 		cam_far = cam_far_prev
 		aa_matrix = MAT_IDENTITY
-		render_alpha_hash = app.project_render_shadows_transparent
+		render_alpha_hash = render_alpha_hash_shadows
 		render_alpha_hash_force = true
 		
 		render_update_cascades(angle)
@@ -93,7 +93,7 @@ function render_high_shadows()
 		}
 		
 		aa_matrix = aa_jitter_matrix
-		render_alpha_hash = app.project_render_alpha_mode
+		render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
 		render_alpha_hash_force = false
 		
 		surface_set_target_ext(0, resultsurftemp)
@@ -165,7 +165,7 @@ function render_high_shadows()
 				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, e_surface_format.r32float)
 				
 				aa_matrix = MAT_IDENTITY
-				render_alpha_hash = app.project_render_shadows_transparent
+				render_alpha_hash = render_alpha_hash_shadows
 				render_alpha_hash_force = true
 				
 				// Depth
@@ -205,7 +205,7 @@ function render_high_shadows()
 				}
 				
 				aa_matrix = aa_jitter_matrix
-				render_alpha_hash = app.project_render_alpha_mode
+				render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
 				render_alpha_hash_force = false
 				
 				// Shadows
@@ -231,7 +231,7 @@ function render_high_shadows()
 				var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 				
 				aa_matrix = MAT_IDENTITY
-				render_alpha_hash = app.project_render_shadows_transparent
+				render_alpha_hash = render_alpha_hash_shadows
 				render_alpha_hash_force = true
 				
 				// Depth
@@ -255,7 +255,7 @@ function render_high_shadows()
 				surface_reset_target()
 				
 				aa_matrix = aa_jitter_matrix
-				render_alpha_hash = app.project_render_alpha_mode
+				render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
 				render_alpha_hash_force = false
 				
 				// Shadows

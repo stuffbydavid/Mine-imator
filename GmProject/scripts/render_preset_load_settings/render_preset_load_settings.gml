@@ -29,6 +29,7 @@ function render_preset_load_settings(map)
 		has_realistic = true
 		set = renderer[e_renderer.REALISTIC]
 		set.samples = value_get_real(realisticmap[?"samples"], set.samples)
+		set.alpha_hashing = value_get_real(realisticmap[?"alpha_hashing"], set.alpha_hashing)
 		set.ssao = value_get_real(realisticmap[?"ssao"], set.ssao)
 		set.shadows = value_get_real(realisticmap[?"shadows"], set.shadows)
 		set.shadows_blur_quality = value_get_real(realisticmap[?"shadows_blur_quality"], set.shadows_blur_quality)

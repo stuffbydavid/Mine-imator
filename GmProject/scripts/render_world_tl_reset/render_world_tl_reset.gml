@@ -16,6 +16,12 @@ function render_world_tl_reset()
 	
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
+	if (!render_alpha_hash_force)
+	{
+		render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
+		render_set_uniform_int("uAlphaHash", render_alpha_hash)
+	}
+	
 	// Mix color
 	shader_uniform_color_ext = 0
 	shader_uniform_rgb_add = c_black

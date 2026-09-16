@@ -145,10 +145,12 @@ function render_startup()
 	aa_matrix = MAT_IDENTITY
 	aa_jitter_matrix = MAT_IDENTITY
 	
-	// Alpha hashsing
-	globalvar render_alpha_hash, render_alpha_hash_force;
+	// Alpha hashing
+	globalvar render_alpha_hash, render_alpha_hash_force, render_alpha_hash_allowed, render_alpha_hash_shadows;
 	render_alpha_hash = false
 	render_alpha_hash_force = false // If enabled, forces scene objects to use hashing based on render_alpha_hash
+	render_alpha_hash_allowed = false
+	render_alpha_hash_shadows = false
 	
 	// Noise sampling
 	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array,
