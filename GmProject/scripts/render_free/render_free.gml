@@ -37,6 +37,7 @@ function render_free()
 		surface_free(render_pass_surfs[pass])
 	
 	// Light depth buffers
+	render_shadow_cache_free()
 	for (var i = 0; i < 3; i++)
 		surface_free(render_surface_sun_buffer[i])
 	

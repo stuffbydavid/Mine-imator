@@ -35,8 +35,10 @@ function render_start()
 		project_render_reflections = false
 		project_render_aa_mode = e_aa_mode.FXAA
 	}
+	
 	render_alpha_hash_allowed = (renderer_current = e_renderer.REALISTIC && project_render_alpha_hashing)
 	render_alpha_hash_shadows = (renderer_current = e_renderer.REALISTIC && project_render_shadows_transparent)
+	render_shadow_cache_enabled = (renderer_current = e_renderer.REALISTIC && project_render_shadows_blur_quality > 0 && !project_render_shadows_jittered && !project_render_shadows_transparent)
 	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects

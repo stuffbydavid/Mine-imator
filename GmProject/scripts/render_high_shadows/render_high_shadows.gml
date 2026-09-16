@@ -30,6 +30,8 @@ function render_high_shadows()
 		lightlist = array_add(lightlist, id)
 	}
 	
+	render_shadow_cache_update(lightlist, sunout)
+
 	// Initialize targets
 	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
@@ -77,7 +79,18 @@ function render_high_shadows()
 		
 		for (var i = 0; i < render_cascades_count; i++)
 		{
-			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, true, e_surface_format.r32float)
+			var sunkey = "sun" + string(i)
+			if (render_shadow_cache_enabled)
+				render_surface_sun_buffer[i] = render_shadow_cache_surface(sunkey, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+			else
+				render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, true, e_surface_format.r32float)
+
+			if (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, sunkey))
+			{
+				render_world_start_sun(i)
+				render_world_done()
+				continue
+			}
 			surface_set_target(render_surface_sun_buffer[i])
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -90,6 +103,8 @@ function render_high_shadows()
 				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
+			if (render_shadow_cache_enabled)
+				render_shadow_cache_ready[?sunkey] = true
 		}
 		
 		aa_matrix = aa_jitter_matrix
@@ -161,14 +176,21 @@ function render_high_shadows()
 				atlasx = 0
 				atlasy = 0
 				atlassize = app.project_render_shadows_point_buffer_size
-				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, e_surface_format.r32float)
-				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, e_surface_format.r32float)
+				var pointkey = "point:" + save_id
+				if (render_shadow_cache_enabled)
+					render_surface_point_atlas_buffer = render_shadow_cache_surface(pointkey, atlassize * 3, atlassize * 2)
+				else
+					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, e_surface_format.r32float)
+				var pointcached = render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, pointkey)
+				if (!pointcached)
+					render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, e_surface_format.r32float)
 				
 				aa_matrix = MAT_IDENTITY
 				render_alpha_hash = render_alpha_hash_shadows
 				render_alpha_hash_force = true
 				
 				// Depth
+				if (!pointcached)
 				for (var d = e_dir.EAST; d < e_dir.amount; d++)
 				{
 					var look = dir_get_vec3(d);
@@ -203,6 +225,14 @@ function render_high_shadows()
 						atlasy += atlassize
 					}
 				}
+				if (render_shadow_cache_enabled && !pointcached)
+					render_shadow_cache_ready[?pointkey] = true
+				// Restore light uniforms when the atlas was reused
+				if (pointcached)
+				{
+					render_world_start_light(world_pos, point3D_add(world_pos, dir_get_vec3(e_dir.amount - 1)), sampleoffset, id)
+					render_world_done()
+				}
 				
 				aa_matrix = aa_jitter_matrix
 				render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
@@ -235,7 +265,13 @@ function render_high_shadows()
 				render_alpha_hash_force = true
 				
 				// Depth
-				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size, true, e_surface_format.r32float)
+				var spotkey = "spot:" + save_id
+				if (render_shadow_cache_enabled)
+					render_surface_spot_buffer = render_shadow_cache_surface(spotkey, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
+				else
+					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size, true, e_surface_format.r32float)
+				if (!render_shadow_cache_enabled || !ds_map_exists(render_shadow_cache_ready, spotkey))
+				{
 				surface_set_target(render_surface_spot_buffer)
 				{
 					gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -253,6 +289,14 @@ function render_high_shadows()
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
+					if (render_shadow_cache_enabled)
+						render_shadow_cache_ready[?spotkey] = true
+				}
+				else
+				{
+					render_world_start_light(world_pos, lookat, sampleoffset, id)
+					render_world_done()
+				}
 				
 				aa_matrix = aa_jitter_matrix
 				render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode

@@ -29,6 +29,7 @@ function render_update_samples()
 	
 	if (refresh)
 	{
+		ds_map_clear(render_shadow_cache_ready)
 		render_matrix = array_copy_1d(view_proj_matrix)
 		render_target_size = point2D(render_width, render_height)
 		render_samples = 0
