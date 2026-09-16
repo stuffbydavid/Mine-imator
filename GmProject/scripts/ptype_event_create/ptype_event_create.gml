@@ -16,7 +16,7 @@ function ptype_event_create()
 	sprite_tex = null
 	sprite_tex_image = 0
 	sprite_template = "generic"
-	sprite_template_tex = mc_res
+	sprite_template_tex = project_pack_res
 	sprite_template_still_frame = false
 	sprite_template_random_frame = false
 	sprite_template_reverse = true

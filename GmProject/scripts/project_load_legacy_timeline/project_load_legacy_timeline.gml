@@ -185,6 +185,6 @@ function project_load_legacy_timeline()
 			/*foliage_tint =*/ buffer_read_byte() // biome
 		}
 		
-		glint_tex = mc_res.save_id
+		glint_tex = project_pack_res
 	}
 }

@@ -387,7 +387,8 @@
 		"unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
 		"restorecontrols": "Are you sure you want to restore all controls?",
 		"setasdefault": "Are you sure you want to set these settings as the default? This cannot be undone.",
-		"resetrender": "Are you sure you want to reset all render settings?"
+		"resetrender": "Are you sure you want to reset all render settings?",
+		"projectpack": "Set this resource pack as the project pack?"
 	},
 	"filedialog/": {
 		"open/": {
@@ -454,6 +455,7 @@
 		"name": "Project name",
 		"author": "Project author",
 		"description": "Project description",
+		"pack": "Project resource pack",
 		"location": "Project location",
 		"namedefault": "New project",
 		"create": "Create project"
@@ -3045,7 +3047,8 @@
 			"custom": "Custom"
 		},
 		"tempo": "Tempo",
-		"tempotip": "The amount of frames that make a second in the animation."
+		"tempotip": "The amount of frames that make a second in the animation.",
+		"pack": "Resource pack"
 	},
 	"render": "RENDER SETTINGS",
 	"render/": {
@@ -3680,6 +3683,7 @@
 	"resources": "RESOURCES",
 	"resources/": {
 		"pack/": {
+			"project": "Project resource pack",
 			"image": "Resource pack asset",
 			"material": "Material",
 			"image/": {

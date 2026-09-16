@@ -17,7 +17,7 @@ function sortlist_column_get(slist, value, col)
 			return text_get("type" + temp_type_name_list[|value.type])
 		
 		case "libinstances":
-			return value.count
+			return value.count = -1 ? "-" : value.count
 		
 		case "charname":
 		case "spblockname":
@@ -73,7 +73,7 @@ function sortlist_column_get(slist, value, col)
 			return text_get("type" + res_type_name_list[|value.type])
 		
 		case "rescount":
-			return value.count
+			return value.count = -1 ? "-" : value.count
 		
 		case "particlepresetname":
 			if (!is_string(value))

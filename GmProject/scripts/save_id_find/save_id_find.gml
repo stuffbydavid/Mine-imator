@@ -4,7 +4,7 @@
 
 function save_id_find(saveid)
 {
-	if (saveid = particle_sheet || saveid = particle_template)
+	if (saveid = particle_sheet || saveid = particle_template || saveid = project_pack_res)
 		return saveid
 	
 	if (!is_string(saveid) || saveid = "")

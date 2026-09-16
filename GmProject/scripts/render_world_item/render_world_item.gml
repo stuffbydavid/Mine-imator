@@ -10,14 +10,8 @@
 
 function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
-	if (!res_is_ready(res[e_texture_channel.DIFFUSE]))
-		res[e_texture_channel.DIFFUSE] = mc_res
-	
-	if (!res_is_ready(res[e_texture_channel.NORMAL]))
-		res[e_texture_channel.NORMAL] = mc_res
-	
-	if (!res_is_ready(res[e_texture_channel.MATERIAL]))
-		res[e_texture_channel.MATERIAL] = mc_res
+	for (var c = e_texture_channel.DIFFUSE; c <= e_texture_channel.MATERIAL; c++)
+		res[c] = res_eval(res[c])
 	
 	if (facecamera)
 	{

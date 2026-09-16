@@ -163,6 +163,9 @@ function macros()
 	
 	// Values
 	#macro null							noone
+	#macro project_pack_res				-3
+	#macro particle_sheet				-5
+	#macro particle_template			-6
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
 	#macro default_model				"human"
@@ -187,8 +190,6 @@ function macros()
 	#macro music_default				"Records / Cat"
 	#macro particle_folders				array("Effects", "Weather")
 	#macro particle_default				array("Default", "Snow")
-	#macro particle_sheet				-5
-	#macro particle_template			-6
 	#macro default_text					"AaBbCc"
 	
 	// World

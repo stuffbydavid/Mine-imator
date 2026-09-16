@@ -33,9 +33,9 @@ function action_lib_scenery_load(fn)
 			type = e_temp_type.SCENERY
 			scenery = res
 			
-			block_tex = mc_res
-			block_tex_material = mc_res
-			block_tex_normal = mc_res
+			block_tex = project_pack_res
+			block_tex_material = project_pack_res
+			block_tex_normal = project_pack_res
 			
 			temp_update_display_name()
 			loaded = true

@@ -116,6 +116,9 @@ function res_load_pack()
 			
 			with (app)
 			{
+				if (project_pack = other.id)
+					action_project_pack(other.id)
+
 				if (background_ground_tex = other.id)
 					background_ground_update_texture()
 				

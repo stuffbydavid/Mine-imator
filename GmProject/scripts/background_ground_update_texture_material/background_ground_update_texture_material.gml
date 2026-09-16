@@ -3,11 +3,13 @@
 
 function background_ground_update_texture_material()
 {
-	if (!background_ground_tex_material.ready || (background_ground_slot = background_ground_slot_material && background_ground_tex_material.save_id = background_ground_tex_material_prev))
+	var texres;
+	texres = res_eval(background_ground_tex_material)
+	if (!texres.ready || (background_ground_slot = background_ground_slot_material && texres.save_id = background_ground_tex_material_prev))
 		return 0
 	
 	background_ground_slot_material = background_ground_slot
-	background_ground_tex_material_prev = background_ground_tex_material.save_id
+	background_ground_tex_material_prev = texres.save_id
 	
 	// Clear old
 	if (background_ground_material_ani)
@@ -23,7 +25,6 @@ function background_ground_update_texture_material()
 	var decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
 	var sheet = decodedslot[0]
 	var slot = decodedslot[1]
-	var texres = background_ground_tex_material
 	if (sheet < 0)
 	{
 		background_ground_material_ani = false

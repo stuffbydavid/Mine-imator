@@ -13,20 +13,20 @@ function tab_timeline_editor_appearance()
 			tab_collapse_start()
 			
 			// Enchantment glint
-			var tex;
-		
-			if (tl_edit.glint_tex.type = e_res_type.PACK)
+			var tex, glintres;
+			glintres = res_eval(tl_edit.glint_tex)
+			if (glintres.type = e_res_type.PACK)
 			{
 				if (tl_edit.glint_mode = e_glint.ARMOR)
-					tex = tl_edit.glint_tex.glint_armor_texture
+					tex = glintres.glint_armor_texture
 				else
-					tex = tl_edit.glint_tex.glint_item_texture
+					tex = glintres.glint_item_texture
 			}
 			else
-				tex = tl_edit.glint_tex.texture
+				tex = glintres.texture
 		
 			tab_control_menu(ui_large_height)
-			draw_button_menu("timelineeditorglinttex", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.glint_tex, tl_edit.glint_tex.display_name, action_tl_glint_tex, false, tex)
+			draw_button_menu("timelineeditorglinttex", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.glint_tex, glintres.display_name, action_tl_glint_tex, false, tex)
 			tab_next()
 		
 			tab_control_togglebutton()

@@ -13,7 +13,7 @@
 
 namespace CppProject
 {
-	static constexpr uchar PACK_CACHE_FORMAT = 3;
+	static constexpr uchar PACK_CACHE_FORMAT = 4;
 	static constexpr qint64 PACK_CACHE_MAX_IMAGE_BYTES = 512LL * 1024 * 1024;
 	static constexpr qint32 PACK_CACHE_MAX_RECORDS = 100000;
 

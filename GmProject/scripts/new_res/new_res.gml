@@ -5,11 +5,20 @@
 
 function new_res(fn, type)
 {
-	var res, newfn, replaced;
+	var res, newfn, replaced, packfn;
 	
 	if (filename_ext(fn) = ".zip" && type != e_res_type.PACK_UNZIPPED)
 		type = e_res_type.PACK
 	
+	if (filename_ext(fn) = ".zip")
+	{
+		directory_create_lib(packs_directory_get())
+		packfn = packs_directory_get() + filename_name(fn)
+		if (fn != packfn)
+			if (file_copy_lib(fn, packfn))
+				fn = packfn
+	}
+
 	res = null
 	replaced = false
 	newfn = project_folder + "/" + filename_name(fn)

@@ -21,12 +21,13 @@ function action_bench_item_tex_material(res)
 				
 				if (filename_ext(fn) = ".zip")
 				{
-					res = new_res(fn, e_res_type.PACK)
+					res = new_res(fn, e_res_type.ITEM_SHEET)
 					with (res)
 						res_load()
+					break
 				}
-				else
-					popup_importitemsheet_show(fn, action_bench_item_tex_material)
+
+				popup_importitemsheet_show(fn, action_bench_item_tex_material)
 				
 				return 0
 			}

@@ -40,8 +40,14 @@ function project_update_counts()
 		}
 		
 		for (var i = 0; i < array_length(refs); i++)
-			if (refs[i] != null && instance_exists(refs[i]) && refs[i].object_index = obj_resource)
-				refs[i].count++
+		{
+			if (refs[i] = null)
+				continue
+				
+			var res = res_eval(refs[i])
+			if (instance_exists(res) && res.object_index = obj_resource)
+				res.count++
+		}
 	}
 	
 	// Count resources used by particle types
@@ -56,8 +62,14 @@ function project_update_counts()
 		);
 		
 		for (var i = 0; i < array_length(refs); i++)
-			if (refs[i] != null && instance_exists(refs[i]) && refs[i].object_index = obj_resource)
-				refs[i].count++
+		{
+			if (refs[i] = null)
+				continue
+				
+			var res = res_eval(refs[i])
+			if (instance_exists(res) && res.object_index = obj_resource)
+				res.count++
+		}
 	}
 	
 	// Count template and resource references held by timelines
@@ -71,8 +83,14 @@ function project_update_counts()
 		);
 		
 		for (var i = 0; i < array_length(refs); i++)
-			if (refs[i] != null && instance_exists(refs[i]) && refs[i].object_index = obj_resource)
-				refs[i].count++
+		{
+			if (refs[i] = null)
+				continue
+				
+			var res = res_eval(refs[i])
+			if (instance_exists(res) && res.object_index = obj_resource)
+				res.count++
+		}
 	}
 	
 	// Count resources used by keyframes
@@ -91,8 +109,14 @@ function project_update_counts()
 		}
 		
 		for (var i = 0; i < array_length(refs); i++)
-			if (refs[i] != null && instance_exists(refs[i]) && refs[i].object_index = obj_resource)
-				refs[i].count++
+		{
+			if (refs[i] = null)
+				continue
+				
+			var res = res_eval(refs[i])
+			if (instance_exists(res) && res.object_index = obj_resource)
+				res.count++
+		}
 	}
 
 	// Count background resources
@@ -113,9 +137,18 @@ function project_update_counts()
 		}
 		
 		for (var i = 0; i < array_length(refs); i++)
-			if (refs[i] != null && instance_exists(refs[i]) && refs[i].object_index = obj_resource)
-				refs[i].count++
+		{
+			if (refs[i] = null)
+				continue
+			
+			var res = res_eval(refs[i])
+			if (instance_exists(res) && res.object_index = obj_resource)
+				res.count++
+		}
 	}
+	
+	// Project pack
+	res_eval(project_pack_res).count = -1
 	
 	debug_timer_stop("update counts")
 }

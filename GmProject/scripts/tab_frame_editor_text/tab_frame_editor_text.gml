@@ -8,9 +8,9 @@ function tab_frame_editor_text()
 	// Font
 	var text;
 	if (tl_edit.value[e_value.TEXT_FONT] = null)
-		text = text_get("listdefault", tl_edit.temp.text_font.display_name)
+		text = text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name)
 	else
-		text = tl_edit.value[e_value.TEXT_FONT].display_name
+		text = res_eval(tl_edit.value[e_value.TEXT_FONT]).display_name
 	
 	tab_control_menu()
 	draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)

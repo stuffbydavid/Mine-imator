@@ -26,7 +26,8 @@ function json_save_var_save_id(name, obj)
 	else
 	{
 		json_save_value(save_id_get(obj))
-		obj.save = true
+		if (instance_exists(obj))
+			obj.save = true
 	}
 	
 	json_add_comma = true

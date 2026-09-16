@@ -118,7 +118,7 @@ function tl_event_create()
 	glint_scale = 1
 	glint_speed = 1
 	glint_strength = 1
-	glint_tex = mc_res
+	glint_tex = project_pack_res
 	
 	particle_list = null
 	
@@ -168,6 +168,10 @@ function tl_event_create()
 	
 	tex_obj = null
 	tex_obj_prev = -5
+	tex_obj_material = null
+	tex_obj_material_prev = -5
+	tex_obj_normal = null
+	tex_obj_normal_prev = -5
 	
 	model_tex = null
 	model_tex_material = null

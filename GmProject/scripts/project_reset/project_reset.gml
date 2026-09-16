@@ -24,6 +24,7 @@ function project_reset()
 	project_name = ""
 	project_author = ""
 	project_description = ""
+	project_pack = mc_res
 	
 	project_video_width = 1280
 	project_video_height = 720

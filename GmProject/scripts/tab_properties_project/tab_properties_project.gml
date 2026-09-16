@@ -72,4 +72,14 @@ function tab_properties_project()
 	tab_control_meter()
 	draw_meter("projecttempo", dx, dy, dw, project_tempo, 1, 120, 24, 1, tab.project.tbx_tempo, action_project_tempo, "projecttempotip")
 	tab_next()
+
+	// Resource pack
+	var packfilename;
+	packfilename = ""
+	if (project_pack != mc_res)
+		packfilename = project_pack.filename
+
+	tab_control_menu(ui_large_height)
+	draw_button_menu("projectpack", e_menu.LIST, dx, dy, dw, ui_large_height, packfilename, project_pack.display_name, action_project_pack, false, project_pack.block_preview_texture)
+	tab_next()
 }

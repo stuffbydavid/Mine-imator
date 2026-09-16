@@ -182,8 +182,8 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 			// Skin
 			var text, tex;
-			text = bench_settings.model_tex.display_name
-			with (bench_settings.model_tex)
+			text = res_eval(bench_settings.model_tex).display_name
+			with (res_eval(bench_settings.model_tex))
 				tex = res_get_model_texture(model_part_get_texture_name(part, app.bench_settings.model_texture_name_map))
 				
 			draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex, text, action_bench_model_tex, false, tex, null, "", null, null, capwid)
@@ -192,17 +192,17 @@ function bench_draw_settings(bx, by, bw, bh)
 			if (project_render_material_maps)
 			{
 				// Skin (Material map)
-				text = bench_settings.model_tex_material.display_name
-				with (bench_settings.model_tex_material)
+				text = res_eval(bench_settings.model_tex_material).display_name
+				with (res_eval(bench_settings.model_tex_material))
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(part, app.bench_settings.model_texture_material_name_map))
 				
 				draw_button_menu(texmatcap, e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_material, text, action_bench_model_tex_material, false, tex, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 				
 				// Skin (Normal map)
-				text = bench_settings.model_tex_normal.display_name
-				with (bench_settings.model_tex_normal)
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_texture_normal_name_map))
+				text = res_eval(bench_settings.model_tex_normal).display_name
+				with (res_eval(bench_settings.model_tex_normal))
+					tex = res_get_model_texture_normal(model_part_get_tex_normal_name(part, app.bench_settings.model_texture_normal_name_map))
 				
 				draw_button_menu(texnormcap, e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.model_tex_normal, text, action_bench_model_tex_normal, false, tex, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
@@ -338,10 +338,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		{
 			var capwid, res, text, sprite;
 			capwid = text_caption_width("typeitem")
-			res = bench_settings.item_tex
-			if (!res_is_ready(res))
-				res = mc_res
-				
+			res = res_eval(bench_settings.item_tex)
 			draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 				
 			if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
@@ -423,7 +420,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			if (tex = null)
 				tex = res.texture
 				
-			draw_button_menu("benchitemtex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex, bench_settings.item_tex.display_name, action_bench_item_tex, false, bench_settings.item_tex.block_preview_texture, null, "", null, null, capwid)
+			draw_button_menu("benchitemtex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex, res_eval(bench_settings.item_tex).display_name, action_bench_item_tex, false, res_eval(bench_settings.item_tex).block_preview_texture, null, "", null, null, capwid)
 			dy += (ui_large_height + 8)
 				
 			if (project_render_material_maps)
@@ -433,7 +430,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				if (tex = null)
 					tex = res.texture
 					
-				draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_material, bench_settings.item_tex_material.display_name, action_bench_item_tex_material, false, bench_settings.item_tex_material.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_material, res_eval(bench_settings.item_tex_material).display_name, action_bench_item_tex_material, false, res_eval(bench_settings.item_tex_material).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 					
 				// Image (Normal map)
@@ -441,7 +438,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				if (tex = null)
 					tex = res.texture
 					
-				draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_normal, bench_settings.item_tex_normal.display_name, action_bench_item_tex_normal, false, bench_settings.item_tex_normal.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_normal, res_eval(bench_settings.item_tex_normal).display_name, action_bench_item_tex_normal, false, res_eval(bench_settings.item_tex_normal).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
 				
@@ -514,17 +511,17 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 			// Texture
 			var capwid = text_caption_width("benchblocktex", "benchblocktexmaterial", "benchblocktexnormal")
-			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
+			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, res_eval(bench_settings.block_tex).display_name, action_bench_block_tex, false, res_eval(bench_settings.block_tex).block_preview_texture, null, "", null, null, capwid)
 			dy += (ui_large_height + 8)
 				
 			if (project_render_material_maps)
 			{
 				// Material texture
-				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_material, res_eval(bench_settings.block_tex_material).display_name, action_bench_block_tex_material, false, res_eval(bench_settings.block_tex_material).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 					
 				// Normal texture
-				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, res_eval(bench_settings.block_tex_normal).display_name, action_bench_block_tex_normal, false, res_eval(bench_settings.block_tex_normal).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
 			
@@ -607,17 +604,17 @@ function bench_draw_settings(bx, by, bw, bh)
 			menu_filter_normal = ""
 				
 			// Texture
-			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, bench_settings.block_tex.display_name, action_bench_block_tex, false, bench_settings.block_tex.block_preview_texture, null, "", null, null, capwid)
+			draw_button_menu("benchblocktex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex, res_eval(bench_settings.block_tex).display_name, action_bench_block_tex, false, res_eval(bench_settings.block_tex).block_preview_texture, null, "", null, null, capwid)
 			dy += (ui_large_height + 8)
 				
 			if (project_render_material_maps)
 			{
 				// Material texture
-				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_material, bench_settings.block_tex_material.display_name, action_bench_block_tex_material, false, bench_settings.block_tex_material.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_material, res_eval(bench_settings.block_tex_material).display_name, action_bench_block_tex_material, false, res_eval(bench_settings.block_tex_material).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 					
 				// Normal texture
-				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, bench_settings.block_tex_normal.display_name, action_bench_block_tex_normal, false, bench_settings.block_tex_normal.block_preview_texture, null, "", null, null, capwid)
+				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, res_eval(bench_settings.block_tex_normal).display_name, action_bench_block_tex_normal, false, res_eval(bench_settings.block_tex_normal).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
 			
@@ -753,7 +750,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			// Font (Advanced mode only)
 			if (setting_advanced_mode)
 			{
-				draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.text_font, bench_settings.text_font.display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
+				draw_button_menu("benchtextfont", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.text_font, res_eval(bench_settings.text_font).display_name, action_bench_text_font, false, null, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
 				

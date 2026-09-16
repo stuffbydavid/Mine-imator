@@ -36,7 +36,7 @@ function popup_newproject_draw()
 		popup.description = popup.tbx_description.text
 	}
 	tab_next()
-	
+
 	// Project location
 	var directory = "../" + directory_name(setting_project_folder) + string_remove_newline(popup.folder);
 	
@@ -51,6 +51,21 @@ function popup_newproject_draw()
 			action_setting_project_folder(filename_path(fn))
 		}
 	}
+	tab_next()
+
+	// Project pack
+	var projectpack, packpreview;
+	projectpack = mc_res.display_name
+	packpreview = mc_res.block_preview_texture
+	
+	if (setting_project_pack != "")
+	{
+		projectpack = setting_project_pack
+		packpreview = minecraft_get_pack_image(setting_project_pack)
+	}
+
+	tab_control_menu(ui_large_height)
+	draw_button_menu("newprojectpack", e_menu.LIST, dx, dy, dw, ui_large_height, setting_project_pack, projectpack, action_setting_project_pack, false, packpreview)
 	tab_next()
 	
 	// Create

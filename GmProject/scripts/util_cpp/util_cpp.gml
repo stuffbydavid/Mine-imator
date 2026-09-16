@@ -68,6 +68,14 @@ function skins_directory_get()
 	return working_directory + "Skins/"
 }
 
+/// CppSeparate StringType packs_directory_get()
+/// Returns the location where imported resource packs are copied.
+/// On Windows this is the Packs folder in the installation, on Unix this is ~/Mine-imator/Packs
+function packs_directory_get()
+{
+	return working_directory + "Packs/"
+}
+
 /// CppSeparate StringType minecraft_java_directory_get()
 /// Returns the location of Minecraft Java, used to find sound, music and world files.
 function minecraft_java_directory_get()
@@ -243,6 +251,12 @@ function res_load_pack_cache(filename)
 
 /// CppSeparate BoolType zip_is_resource_pack(StringType)
 function zip_is_resource_pack(filename)
+{
+	return false
+}
+
+/// CppSeparate BoolType zip_extract_file(StringType, StringType, StringType)
+function zip_extract_file(source, entry, destination)
 {
 	return false
 }

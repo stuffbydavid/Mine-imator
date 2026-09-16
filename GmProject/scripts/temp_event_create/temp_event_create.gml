@@ -17,9 +17,9 @@ function temp_event_create()
 	
 	model = null
 	model_name = default_model
-	model_tex = null
-	model_tex_material = null
-	model_tex_normal = null
+	model_tex = project_pack_res
+	model_tex_material = project_pack_res
+	model_tex_normal = project_pack_res
 	
 	model_texture_name_map = null
 	model_texture_material_name_map = null
@@ -59,9 +59,9 @@ function temp_event_create()
 	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
 	armor_skin_array = [null, null, null, null]
 	
-	item_tex = null
-	item_tex_material = null
-	item_tex_normal = null
+	item_tex = project_pack_res
+	item_tex_material = project_pack_res
+	item_tex_normal = project_pack_res
 	item_slot = ds_list_find_index(mc_assets.item_texture_list[e_item_sheet.SIZE16], default_item)
 	item_sheet = e_item_sheet.SIZE16
 	item_vbuffer = null
@@ -74,9 +74,9 @@ function temp_event_create()
 	block_name = default_block
 	block_state = array()
 	
-	block_tex = null
-	block_tex_material = null
-	block_tex_normal = null
+	block_tex = project_pack_res
+	block_tex_material = project_pack_res
+	block_tex_normal = project_pack_res
 	
 	block_vbuffer = null
 	block_repeat_enable = false
@@ -102,7 +102,7 @@ function temp_event_create()
 	shape_detail = 32
 	shape_face_camera = false
 	
-	text_font = null
+	text_font = project_pack_res
 	text_3d = false
 	text_face_camera = false
 }

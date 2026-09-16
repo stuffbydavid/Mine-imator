@@ -19,6 +19,7 @@ function new_history(script)
 		particle_temp_save_id = ""
 		scenery_replace_ground = false
 		scenery_ground_show = true
+		project_pack_default = false
 
 		scale_link_drag = false
 		scale_link_drag_val = 0

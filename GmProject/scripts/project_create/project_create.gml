@@ -28,6 +28,20 @@ function project_create()
 	
 	popup_close()
 	
+	// Add the selected resource pack to the new project
+	if (popup = popup_newproject && setting_project_pack != "")
+	{
+		var packfn = packs_directory_get() + setting_project_pack;
+		if (file_exists_lib(packfn))
+		{
+			var packres = new_res(packfn, e_res_type.PACK)
+			packres.loaded = true
+			with (packres)
+				res_load()
+		
+			action_project_pack(packres)
+		}
+	}
 	project_save()
 	
 	toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))

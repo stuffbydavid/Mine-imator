@@ -12,6 +12,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 {
 	if (part.shape_list = null)
 		return 0
+
+	res = res_eval(res)
 	
 	var parttexname, mat;
 	parttexname = (tlobject ? "" : string(model_part_get_texture_name(part, texnamemap)))

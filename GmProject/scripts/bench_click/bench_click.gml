@@ -43,9 +43,9 @@ function bench_click(tab)
 					model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 				}
 			
-				model_tex = mc_res
-				model_tex_material = mc_res
-				model_tex_normal = mc_res
+				model_tex = project_pack_res
+				model_tex_material = project_pack_res
+				model_tex_normal = project_pack_res
 			
 				temp_update_model()
 				temp_update_model_shape()
@@ -62,9 +62,9 @@ function bench_click(tab)
 					model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 				}
 				
-				model_tex = mc_res
-				model_tex_material = mc_res
-				model_tex_normal = mc_res
+				model_tex = project_pack_res
+				model_tex_material = project_pack_res
+				model_tex_normal = project_pack_res
 			
 				temp_update_model()
 				temp_update_model_shape()
@@ -81,9 +81,9 @@ function bench_click(tab)
 					model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 				}
 			
-				model_tex = mc_res
-				model_tex_material = mc_res
-				model_tex_normal = mc_res
+			model_tex = project_pack_res
+			model_tex_material = project_pack_res
+			model_tex_normal = project_pack_res
 			
 				temp_update_model()
 				temp_update_model_shape()
@@ -97,9 +97,9 @@ function bench_click(tab)
 				
 				model_name = default_model_part_model
 				model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
-				model_tex = mc_res
-				model_tex_material = mc_res
-				model_tex_normal = mc_res
+				model_tex = project_pack_res
+				model_tex_material = project_pack_res
+				model_tex_normal = project_pack_res
 			
 				temp_update_model()
 				temp_update_model_part()
@@ -229,7 +229,7 @@ function bench_click(tab)
 		action_bench_particles_folder(bench_particle_preset_folder)
 	else if (tab = e_bench.TEXT)
 	{
-		preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font.font)
+		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
 		window_focus = string(bench_settings.tbx_text)
 	}
 		

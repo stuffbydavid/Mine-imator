@@ -24,6 +24,6 @@ function bench_show()
 	else if (bench_tab = e_bench.TEXT)
 	{
 		window_focus = string(bench_settings.tbx_text)
-		preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font.font)
+		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
 	}
 }

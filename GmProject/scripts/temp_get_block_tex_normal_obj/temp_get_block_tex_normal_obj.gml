@@ -5,6 +5,9 @@
 
 function temp_get_block_tex_normal_obj(val)
 {
+	if (val != null)
+		val = res_eval(val)
+
 	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_texture_normal[e_block_sheet.STATIC16] = null)
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
@@ -15,13 +18,14 @@ function temp_get_block_tex_normal_obj(val)
 				with (part_of)
 				{
 					if (temp.block_tex_normal)
-						if (temp.block_tex_normal.type = e_res_type.PACK || temp.block_tex_normal.type = e_res_type.BLOCK_SHEET)
-							return temp.block_tex_normal
+						if (res_eval(temp.block_tex_normal).type = e_res_type.PACK || res_eval(temp.block_tex_normal).type = e_res_type.BLOCK_SHEET)
+							return res_eval(temp.block_tex_normal)
 				}
 			}
 		}
-		else
-			return block_tex_normal
+		if (block_tex_normal = null)
+			return res_eval(project_pack_res)
+		return res_eval(block_tex_normal)
 	}
 	
 	return val;

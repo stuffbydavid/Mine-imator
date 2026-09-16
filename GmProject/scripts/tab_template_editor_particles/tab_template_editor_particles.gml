@@ -331,11 +331,11 @@ function tab_template_editor_particles()
 		{
 			// Texture
 			tab_control_menu(ui_large_height)
-			draw_button_menu("particleeditortypespritetex", e_menu.LIST, dx, dy, dw, ui_large_height, ptype_edit.sprite_tex, ptype_edit.sprite_tex.display_name, action_lib_pc_type_sprite_tex, false, ptype_edit.sprite_tex.particles_texture[ptype_edit.sprite_tex_image])
+			draw_button_menu("particleeditortypespritetex", e_menu.LIST, dx, dy, dw, ui_large_height, ptype_edit.sprite_tex, res_eval(ptype_edit.sprite_tex).display_name, action_lib_pc_type_sprite_tex, false, res_eval(ptype_edit.sprite_tex).particles_texture[ptype_edit.sprite_tex_image])
 			tab_next()
 			
 			// Image
-			if (ptype_edit.sprite_tex.type = e_res_type.PACK)
+			if (res_eval(ptype_edit.sprite_tex).type = e_res_type.PACK)
 			{
 				tab_control_togglebutton()
 				togglebutton_add("particleeditortypespriteteximage1", null, 0, ptype_edit.sprite_tex_image = 0, action_lib_pc_type_sprite_tex_image)
@@ -365,7 +365,7 @@ function tab_template_editor_particles()
 		{
 			// Texture
 			tab_control_menu(ui_large_height)
-			draw_button_menu("particleeditortypespritetemplatepack", e_menu.LIST, dx, dy, dw, ui_large_height, ptype_edit.sprite_template_tex, ptype_edit.sprite_template_tex.display_name, action_lib_pc_type_sprite_template_tex, false, ptype_edit.sprite_template_tex.block_preview_texture)
+			draw_button_menu("particleeditortypespritetemplatepack", e_menu.LIST, dx, dy, dw, ui_large_height, ptype_edit.sprite_template_tex, res_eval(ptype_edit.sprite_template_tex).display_name, action_lib_pc_type_sprite_template_tex, false, res_eval(ptype_edit.sprite_template_tex).block_preview_texture)
 			tab_next()
 			
 			// Template

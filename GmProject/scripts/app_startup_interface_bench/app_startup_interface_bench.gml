@@ -89,16 +89,16 @@ function app_startup_interface_bench()
 		temp_update_model_shape()
 		block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 		temp_particles_init()
-		model_tex = mc_res
-		model_tex_material = mc_res
-		model_tex_normal = mc_res
-		item_tex = mc_res
-		item_tex_material = mc_res
-		item_tex_normal = mc_res
-		block_tex = mc_res
-		block_tex_material = mc_res
-		block_tex_normal = mc_res
-		text_font = mc_res
+		model_tex = project_pack_res
+		model_tex_material = project_pack_res
+		model_tex_normal = project_pack_res
+		item_tex = project_pack_res
+		item_tex_material = project_pack_res
+		item_tex_normal = project_pack_res
+		block_tex = project_pack_res
+		block_tex_material = project_pack_res
+		block_tex_normal = project_pack_res
+		text_font = project_pack_res
 		text = ""
 		tbx_text = new_textbox(false, 0, "")
 		particle_preset = ""

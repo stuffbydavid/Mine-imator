@@ -11,10 +11,7 @@ function ptype_update_sprite_vbuffers()
 	
 	if (temp = particle_sheet)
 	{
-		res = sprite_tex
-		if (!res_is_ready(res))
-			res = mc_res
-		
+		res = res_eval(sprite_tex)
 		tex = res.particles_texture[sprite_tex_image]
 		
 		var swid, shei, fwid, fhei, framesx;
@@ -46,10 +43,7 @@ function ptype_update_sprite_vbuffers()
 	}
 	else if (temp = particle_template)
 	{
-		res = sprite_template_tex
-		if (!res_is_ready(res))
-			res = mc_res
-		
+		res = res_eval(sprite_template_tex)
 		var template, size;
 		template = particle_template_map[?sprite_template]
 		size = template.size

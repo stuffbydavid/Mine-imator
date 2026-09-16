@@ -46,6 +46,25 @@ function tab_properties_resources()
 	
 	if (res_edit.type = e_res_type.PACK)
 	{
+		var showprojectpack, res;
+		showprojectpack = (res_edit != mc_res)
+		for (var i = 0; !showprojectpack && i < ds_list_size(res_list.display_list); i++)
+		{
+			res = res_list.display_list[|i]
+			if (res != mc_res && res.type = e_res_type.PACK)
+			{
+				showprojectpack = true
+				break
+			}
+		}
+
+		if (showprojectpack)
+		{
+			tab_control_switch()
+			draw_switch("resourcespackproject", dx, dy, project_pack = res_edit, action_res_project_pack)
+			tab_next()
+		}
+
 		capwid = text_caption_width("resourcespackimage", "resourcespackimagecharacter", "resourcespackimagecolormap", "resourcespackimageparticles")
 		
 		tab_control_menu()

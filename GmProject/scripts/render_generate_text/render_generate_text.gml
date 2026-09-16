@@ -53,7 +53,7 @@ function render_generate_text()
 	var str, res, is3d, valign, halign, aa;
 	var alignmatch, aamatch;
 	str = argument[0]
-	res = argument[1]
+	res = res_eval(argument[1])
 	is3d = argument[2]
 	halign = "center"
 	valign = "center"

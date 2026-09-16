@@ -9,10 +9,10 @@ function project_reset_background()
 	background_image_box_mapped = false
 	background_image_rotation = 0
 	
-	background_sky_sun_tex = mc_res
+	background_sky_sun_tex = project_pack_res
 	background_sky_sun_angle = 0
 	background_sky_sun_scale = 1
-	background_sky_moon_tex = mc_res
+	background_sky_moon_tex = project_pack_res
 	background_sky_moon_phase = 0
 	background_sky_moon_angle = 0
 	background_sky_moon_scale = 1
@@ -24,7 +24,7 @@ function project_reset_background()
 	background_twilight = true
 	
 	background_sky_clouds_show = true
-	background_sky_clouds_tex = mc_res
+	background_sky_clouds_tex = project_pack_res
 	background_sky_clouds_mode = "normal"
 	background_sky_clouds_speed = 1
 	background_sky_clouds_offset_y = 0
@@ -34,9 +34,9 @@ function project_reset_background()
 	background_sky_update_clouds()
 	
 	background_ground_show = true
-	background_ground_tex = mc_res
-	background_ground_tex_material = mc_res
-	background_ground_tex_normal = mc_res
+	background_ground_tex = project_pack_res
+	background_ground_tex_material = project_pack_res
+	background_ground_tex_normal = project_pack_res
 	background_ground_name = default_ground
 	background_ground_slot = minecraft_assets_block_texture_picker_slot_find(background_ground_name)
 	background_ground_slot_prev = null

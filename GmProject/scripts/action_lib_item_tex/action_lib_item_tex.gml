@@ -21,12 +21,13 @@ function action_lib_item_tex(res)
 				
 				if (filename_ext(fn) = ".zip")
 				{
-					res = new_res(fn, e_res_type.PACK)
+					res = new_res(fn, e_res_type.ITEM_SHEET)
 					with (res)
 						res_load()
+					break
 				}
-				else
-					popup_importitemsheet_show(fn, action_lib_item_tex)
+
+				popup_importitemsheet_show(fn, action_lib_item_tex)
 				
 				return 0
 			}
