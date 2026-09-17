@@ -4,7 +4,7 @@
 function bench_update_keyboard()
 {
 	if (window_state != "" || textbox_isediting)
-		return
+		return 0
 
 	var shortcut = keybinds[e_keybind.WORKBENCH]
 
@@ -13,11 +13,11 @@ function bench_update_keyboard()
 	{
 		if (bench_show_ani = 0 && bench_show_ani_type = "" && shortcut.pressed)
 			bench_open = true
-		return
+		return 0
 	}
 
 	if (window_busy != "bench" || bench_show_ani_type != "")
-		return
+		return 0
 
 	// Close workbench
 	if (keyboard_check_pressed(vk_escape))
@@ -63,7 +63,7 @@ function bench_update_keyboard()
 	}
 
 	if (!keyboard_check_pressed(vk_up) && !keyboard_check_pressed(vk_down))
-		return
+		return 0
 
 	// Move to the next available tab
 	var count, current, dir, next, tab;
@@ -72,14 +72,16 @@ function bench_update_keyboard()
 	dir = keyboard_check_pressed(vk_down) ? 1 : -1
 
 	for (var i = 0; i < count; i++)
+	{
 		if (bench_tab_list.item[|i].value = bench_tab)
 		{
 			current = i
 			break
 		}
+	}
 
 	if (current < 0)
-		return
+		return 0
 
 	for (var i = 1; i < count; i++)
 	{

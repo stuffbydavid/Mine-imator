@@ -6,14 +6,7 @@ function texture_create_square(fn)
 	var tex = texture_create(fn);
 	if (!tex)
 		return null
-		
-	return texture_convert_square(tex)
-}
-
-/// texture_convert_square(texture)
-/// @arg texture
-function texture_convert_square(tex)
-{
+	
 	var ww, hh;
 	ww = texture_width(tex)
 	hh = texture_height(tex)

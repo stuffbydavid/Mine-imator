@@ -51,11 +51,7 @@ function res_load_pack_block_sheet(type, suffix)
 			{
 				var tex;
 				
-				// Patch texture
-				if (id = mc_res)
-					tex = texture_create_patched(fname)
-				else 
-					tex = texture_create(fname)
+				tex = texture_create(fname)
 				
 				// Pack size is determined by the maximum width of the first 10 block textures
 				if (size = e_block_sheet.STATIC16 && t < 10)

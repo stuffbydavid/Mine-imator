@@ -58,13 +58,7 @@ function res_load_pack_particle_textures()
 		fname = load_assets_dir + mc_textures_directory + name + ".png"
 		
 		if (file_exists_lib(fname))
-		{
-			if (id = mc_res) // Patch textures
-				tex = texture_create_patched(fname)
-			else
-				tex = texture_create(fname)
-			tex = texture_convert_square(tex)
-		}
+			tex = texture_create_square(fname)
 		else if (id != mc_res)
 			tex = texture_duplicate(mc_res.particle_texture_map[?name])
 		else
