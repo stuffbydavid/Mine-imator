@@ -157,6 +157,13 @@ function macros()
 	#macro label_height					9
 	#macro load_assets_width			780
 	#macro load_assets_height			450
+	#macro bench_min_width				534
+	#macro bench_max_width				800
+	#macro bench_height					345
+	#macro bench_list_percent			0.8
+	#macro bench_soundlist_percent		1
+	#macro list_minimum_items			7
+	#macro soundlist_minimum_items		9
 	#macro list_center_max				500
 	
 	// Values

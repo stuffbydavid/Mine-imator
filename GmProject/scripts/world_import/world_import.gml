@@ -9,7 +9,7 @@ function app_startup_interface_world_import()
 	
 	world_import_settings_block_select = null
 	world_import_settings_block_list = new_obj(obj_sortlist)
-	world_import_settings_block_list.visible_items = 10
+	world_import_settings_block_list.height_items = 10
 	world_import_settings_block_list.can_deselect = true
 	world_import_settings_block_list.script = action_world_import_settings_block_select
 	sortlist_column_add(world_import_settings_block_list, "blockfilter", 0)
@@ -19,7 +19,7 @@ function app_startup_interface_world_import()
 		
 	world_import_settings_filter_select = null
 	world_import_settings_filter_list = new_obj(obj_sortlist)
-	world_import_settings_filter_list.visible_items = 10
+	world_import_settings_filter_list.height_items = 10
 	world_import_settings_filter_list.can_deselect = true
 	world_import_settings_filter_list.script = action_world_import_settings_filter_select
 	sortlist_column_add(world_import_settings_filter_list, "blockfilter", 0)

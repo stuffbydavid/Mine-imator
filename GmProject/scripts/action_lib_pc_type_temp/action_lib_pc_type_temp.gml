@@ -11,6 +11,7 @@ function action_lib_pc_type_temp(temp)
 		history_set_var(action_lib_pc_type_temp, save_id_get(ptype_edit.temp), save_id_get(temp), false)
 	
 	ptype_edit.temp = temp
+	project_update_counts()
 	
 	if (temp = particle_sheet || temp = particle_template)
 	{

@@ -9,7 +9,7 @@ function save_id_get(obj)
 		if (obj = "")
 			return ""
 		
-		if (obj = mc_res.save_id) // Default asset
+		if (obj = "default" || obj = mc_res.save_id) // Pack IDs
 			return obj
 	}
 	else

@@ -6,7 +6,7 @@
 function sortlist_center(slist, value, items = null)
 {
 	if (items = null)
-		items = slist.visible_items
+		items = slist.items_visible
 	items = max(1, items)
 
 	var index = ds_list_find_index(slist.display_list, value);

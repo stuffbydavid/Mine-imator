@@ -56,6 +56,9 @@ function project_update_counts()
 		if (creator != null && instance_exists(creator) && creator.creator = app.bench_settings)
 			continue
 
+		if (temp > 0 && instance_exists(temp) && temp.object_index = obj_template)
+			temp.count++
+
 		var refs = array(
 			sprite_tex,
 			sprite_template_tex

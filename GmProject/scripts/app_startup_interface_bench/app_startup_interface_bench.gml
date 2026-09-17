@@ -12,7 +12,10 @@ function app_startup_interface_bench()
 	bench_show_ani_type = ""
 	bench_show_ani = 0
 	bench_settings_ani = 0
-	bench_height = 345
+	bench_width = bench_min_width
+	bench_height_add = 0
+	bench_resize_width = bench_width
+	bench_resize_height = bench_height
 	
 	bench_schematic_folder = schematic_folders[0]
 	bench_music_mode = false
@@ -87,7 +90,12 @@ function app_startup_interface_bench()
 		
 		// Size
 		height = 0
-		height_goal = app.bench_height
+		height_goal = bench_height
+		height_min = bench_height
+		height_fixed = array_create(e_bench.amount, 0)
+		height_fixed_base = array_create(e_bench.amount, 0)
+		list_height = 0
+		list_minimum_height = 0
 		
 		// Default settings
 		temp_event_create()
@@ -122,24 +130,29 @@ function app_startup_interface_bench()
 		
 		// Project lists
 		project_lib_list = new_obj(obj_sortlist)
-		project_lib_list.visible_items = 10
-		project_res_list = new_obj(obj_sortlist)
-		project_res_list.visible_items = 10
-		project_all_list = new_obj(obj_sortlist)
-		project_all_list.visible_items = 10
-		project_list = project_lib_list
-		project_selected = null
+		project_lib_list.script = action_bench_project_select
+		project_lib_list.height_percent = bench_list_percent
 		project_lib_list.filter_type_list = temp_type_name_list
+		
+		project_res_list = new_obj(obj_sortlist)
+		project_res_list.script = action_bench_project_select
+		project_res_list.height_percent = bench_list_percent
 		project_res_list.filter_type_list = res_type_name_list
+		
+		project_all_list = new_obj(obj_sortlist)
+		project_all_list.script = action_bench_project_select
+		project_all_list.height_percent = bench_list_percent
 		project_all_list.filter_type_list = ds_list_create()
 
 		for (var i = 0; i < ds_list_size(temp_type_name_list); i++)
 			ds_list_add(project_all_list.filter_type_list, temp_type_name_list[|i])
+		
+		project_list = project_lib_list
+		project_selected = null
 
 		for (var i = 0; i < ds_list_size(res_type_name_list); i++)
 		{
-			var typename;
-			typename = res_type_name_list[|i]
+			var typename = res_type_name_list[|i];
 			if (typename != "packunzipped" && typename != "legacyblocksheet" &&
 				ds_list_find_index(project_all_list.filter_type_list, typename) < 0)
 				ds_list_add(project_all_list.filter_type_list, typename)
@@ -148,37 +161,37 @@ function app_startup_interface_bench()
 		sortlist_column_add(project_lib_list, "libname", 0)
 		sortlist_column_add(project_lib_list, "libtype", 0.35)
 		sortlist_column_add(project_lib_list, "libinstances", 0.65)
-		project_lib_list.script = action_bench_project_select
 		sortlist_column_add(project_res_list, "projectname", 0)
 		sortlist_column_add(project_res_list, "projecttype", 0.35)
 		sortlist_column_add(project_res_list, "projectcount", 0.65)
-		project_res_list.script = action_bench_project_select
 		sortlist_column_add(project_all_list, "projectname", 0)
 		sortlist_column_add(project_all_list, "projecttype", 0.35)
 		sortlist_column_add(project_all_list, "projectcount", 0.65)
-		project_all_list.script = action_bench_project_select
 		
 		// Character list
 		char_list = new_obj(obj_sortlist)
-		char_list.visible_items = 7
 		char_list.script = action_bench_model_name
+		char_list.height_percent = bench_list_percent
+		
 		sortlist_column_add(char_list, "charname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
 
 		// Equipment list
 		equipment_list = new_obj(obj_sortlist)
-		equipment_list.visible_items = 6
 		equipment_list.script = action_bench_model_name
 		equipment_list.header_show = false
+		equipment_list.height_items = ds_list_size(mc_assets.equipment_list)
+		
 		sortlist_column_add(equipment_list, "spblockname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.equipment_list); c++)
 			sortlist_add(equipment_list, mc_assets.equipment_list[|c].name)
 		
 		// Model part list
 		model_part_model_list = new_obj(obj_sortlist)
-		model_part_model_list.visible_items = 6
 		model_part_model_list.script = action_bench_model_name
+		model_part_model_list.height_percent = bench_list_percent
+		
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 			sortlist_add(model_part_model_list, mc_assets.equipment_list[|m].name)
@@ -192,18 +205,21 @@ function app_startup_interface_bench()
 			
 		// Schematic list
 		schematic_list = new_obj(obj_sortlist)
-		schematic_list.visible_items = 6
 		schematic_list.script = action_bench_schematic_select
 		schematic_list.header_show = false
+		schematic_list.height_percent = 0.9
+		
 		sortlist_column_add(schematic_list, "schematicname", 0)
+		
 		schematic_list.column_sort = 0
 		schematic_list.sort_asc = false
 		schematic_selected = null
 	
 		// Block list
 		block_list = new_obj(obj_sortlist)
-		block_list.visible_items = 7
 		block_list.script = action_bench_block_name
+		block_list.height_percent = bench_list_percent
+		
 		sortlist_column_add(block_list, "blockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
@@ -211,27 +227,25 @@ function app_startup_interface_bench()
 		
 		// Special block list
 		special_block_list = new_obj(obj_sortlist)
-		special_block_list.visible_items = 6
 		special_block_list.script = action_bench_model_name
+		special_block_list.height_percent = bench_list_percent
+		
 		sortlist_column_add(special_block_list, "spblockname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|c].name)
 			
 		// Sound lists
-		var visiblesounds = 10;
 		sounds_list = new_obj(obj_soundlist)
 		sounds_list.source = "sounds"
-		sounds_list.visible_items = visiblesounds
 		sounds_list.script = action_bench_sound
+		sounds_list.height_percent = bench_soundlist_percent
 		
 		music_list = new_obj(obj_soundlist)
 		music_list.source = "music"
-		music_list.visible_items = visiblesounds
 		music_list.script = action_bench_sound
 		
 		project_sounds_list = new_obj(obj_soundlist)
 		project_sounds_list.source = "project"
-		project_sounds_list.visible_items = minecraft_game_found ? visiblesounds : 8
 		project_sounds_list.script = action_bench_sound
 		
 		sound = null
@@ -245,19 +259,22 @@ function app_startup_interface_bench()
 		
 		// Particles list
 		particle_preset_list = new_obj(obj_sortlist)
-		particle_preset_list.visible_items = 8
 		particle_preset_list.script = action_bench_particles_select
 		particle_preset_list.header_show = false
+		particle_preset_list.height_percent = bench_list_percent
+		
 		sortlist_column_add(particle_preset_list, "particlepresetname", 0)
+		
 		particle_preset_list.column_sort = 0
 		particle_preset_list.sort_asc = false
 		particle_preset_temp = null
 		
 		// Shape list
 		shape_list = new_obj(obj_sortlist)
-		shape_list.visible_items = e_shape_type.amount - 1
 		shape_list.script = action_bench_shape_type
 		shape_list.header_show = false
+		shape_list.height_items = e_shape_type.amount
+		
 		sortlist_column_add(shape_list, "shapename", 0)
 		for (var i = 0; i < e_shape_type.amount; i++)
 			sortlist_add(shape_list, i)

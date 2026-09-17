@@ -70,6 +70,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 	listhei = h - 4
 	if (listhei <= 0)
 		return 0
+	slist.items_visible = max(1, floor(listhei / itemh))
 
 	draw_box(xx, yy, w, listhei, false, c_input_background, 1)
 	if (content_mouseon && mouse_left && app_mouse_box(xx, yy, w - 12 * slist.scroll.needed, listhei))
@@ -125,8 +126,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 				slist.select = row
 				script_execute(slist.script, row)
 				app_mouse_clear()
-				if (slist.scroll.needed)
-					window_focus = string(slist.scroll)
+				window_focus = string(slist.scroll)
 			}
 		}
 		dy += itemh

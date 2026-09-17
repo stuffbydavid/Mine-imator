@@ -6,7 +6,10 @@ function sortlist_event_create()
 	list = ds_list_create()
 	
 	header_show = true
-	visible_items = 6
+	height_items = list_minimum_items
+	height_percent = 0
+	items_visible = list_minimum_items
+	
 	columns = 0
 	column_name[0] = ""
 	column_text[0] = ""

@@ -6,6 +6,8 @@
 
 function bench_draw_settings(bx, by, bw, bh)
 {
+	var prevalpha, sy, createhidden, createdisabled;
+	
 	dx = bx
 	dy = by
 	dw = bw
@@ -15,18 +17,20 @@ function bench_draw_settings(bx, by, bw, bh)
 	content_width = dw
 	content_height = dh
 	
-	var prevalpha;
 	prevalpha = draw_get_alpha()
 	
 	bench_settings_ani += test_reduced_motion(1, (0.09 * delta))
 	bench_settings_ani = clamp(bench_settings_ani, 0, 1)
 	
-	var aniease = ease("easeoutcirc", bench_settings_ani);
+	var aniease, examplex;
+	aniease = ease("easeoutcirc", bench_settings_ani)
 	draw_set_alpha(aniease * prevalpha)
 	dx += -16 + (16 * aniease)
+	examplex = floor(dx + (dw - sprite_get_width(spr_bench_example)) / 2)
 	
-	var sy = dy;
-	var createdisabled = false;
+	sy = dy
+	createhidden = false
+	createdisabled = false
 	
 	// Preview
 	if (array_contains(bench_tab_preview, bench_tab))
@@ -45,7 +49,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			selected = bench_settings.project_selected
 			createdisabled = (selected = null)
 
-			tab_control_sortlist(list)
+			tab_control(bench_list_height(list))
 			sortlist_draw(list, dx, dy, dw, tab_control_h, selected, true, text_get("typeproject"))
 			tab_next()
 			window_scroll_focus = string(list.scroll)
@@ -133,8 +137,14 @@ function bench_draw_settings(bx, by, bw, bh)
 			{
 				preview_edit = bench_settings.preview
 				tab_properties_resources_edit()
-				createdisabled = true
 			}
+			
+			
+			// Hide edit/create options for resources
+			if (list = bench_settings.project_res_list)
+				createhidden = true
+			else if (list = bench_settings.project_all_list)
+				createhidden = (selected != null && selected.object_index = obj_resource)
 
 			break
 		}
@@ -187,7 +197,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			}
 				
 			// List
-			tab_control_sortlist(list)
+			tab_control(bench_list_height(list))
 			sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.model_name, false, labeltext)
 			tab_next()
 			menu_filter = list.search_tbx.text
@@ -353,7 +363,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 			break
 		}
-		
+
 		case e_bench.MODEL:
 		{
 			var capwid = text_caption_width("benchmodel", "benchmodeltex", "benchmodeltexmaterial", "benchmodeltexnormal");
@@ -434,7 +444,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				
 			break
 		}
-		
+
 		case e_bench.ITEM:
 		{
 			var capwid, res, text, sprite;
@@ -484,7 +494,14 @@ function bench_draw_settings(bx, by, bw, bh)
 					sheetsizes = [res.item_sheet_size]
 					slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
 				}
-				listh = 200
+				var listh, minimum, fixed, availableheight, referenceheight;
+				minimum = list_minimum_items * ui_small_height
+				fixed = bench_settings.height_fixed[bench_tab]
+				availableheight = max(0, bench_settings.height - fixed)
+				referenceheight = max(0, bench_settings.height - bench_settings.height_fixed_base[bench_tab])
+				listh = fixed > 0 ? min(availableheight, max(minimum, floor(referenceheight * bench_list_percent))) : minimum
+				bench_settings.list_height = listh
+				bench_settings.list_minimum_height = minimum
 				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot)
 				dy += listh + 8
 			}
@@ -550,7 +567,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.WORLD:
 		{
-			draw_sprite(spr_bench_example, 4, dx, dy)
+			draw_sprite(spr_bench_example, 4, examplex, dy)
 			dy += 144 + 16
 			
 			draw_tooltip_label("benchworldtip1", icons.INFO, e_toast.INFO)
@@ -571,7 +588,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench.SCHEMATIC:
 		{
 			// Schematic
-			tab_control_sortlist(bench_settings.schematic_list)
+			tab_control(bench_list_height(bench_settings.schematic_list))
 			sortlist_draw(bench_settings.schematic_list, dx, dy, dw, tab_control_h, bench_settings.schematic_selected, false, text_get("benchschematic"))
 			tab_next()
 			dy -= 4
@@ -641,7 +658,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			var capwid, text, sprite;
 			capwid = text_caption_width("benchblocktex", "benchblocktexmaterial", "benchblocktexnormal")
 				
-			tab_control_sortlist(bench_settings.block_list)
+			tab_control(bench_list_height(bench_settings.block_list))
 			sortlist_draw(bench_settings.block_list, dx, dy, dw, tab_control_h, bench_settings.block_name, false, text_get("benchblock"))
 			tab_next()
 			menu_filter = bench_settings.block_list.search_tbx.text
@@ -725,7 +742,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.CAMERA:
 		{
-			draw_sprite(spr_bench_example, 5, dx, dy)
+			draw_sprite(spr_bench_example, 5, examplex, dy)
 			dy += 144 + 15
 			
 			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
@@ -734,7 +751,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.SOUND:
 		{
-			tab_control_soundlist(bench_settings.sound_list_current)
+			tab_control(bench_list_height(bench_settings.sound_list_current))
 			soundlist_draw(bench_settings.sound_list_current, dx, dy, dw, tab_control_h, text_get("bench" + (bench_settings.sound_list_current.source = "music" ? "music" : "sound")))
 			tab_next()
 			dy -= 4
@@ -761,21 +778,20 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 			tab_next()
 			
-			//dy += 8
-			if (minecraft_game_found)
-			{
-				if (bench_settings.audio_track != null && (!instance_exists(bench_settings.audio_track) || bench_settings.audio_track.type != e_tl_type.AUDIO_TRACK))
-					bench_settings.audio_track = null
-
-				tab_control_menu()
-				draw_button_menu("benchaudiotrack", e_menu.LIST, dx, dy, dw, 24, bench_settings.audio_track, bench_settings.audio_track != null ? bench_settings.audio_track.display_name : text_get("benchaudiotracknew"), action_bench_audio_track)
-				tab_next()
-				//dy += ui_small_height
-			}
-			else
-			{
+			// Missing Minecraft
+			if (!minecraft_game_found)
 				draw_tooltip_label("benchsoundtip", icons.INFO, e_toast.INFO)
-			}
+			
+			// Audio track
+			dy += 8
+			if (bench_settings.audio_track != null && (!instance_exists(bench_settings.audio_track) || bench_settings.audio_track.type != e_tl_type.AUDIO_TRACK))
+				bench_settings.audio_track = null
+
+			tab_control_menu()
+			draw_button_menu("benchaudiotrack", e_menu.LIST, dx, dy, dw, 24, bench_settings.audio_track, bench_settings.audio_track != null ? bench_settings.audio_track.display_name : text_get("benchaudiotracknew"), action_bench_audio_track)
+			tab_next()
+			
+			dy += ui_small_height
 
 			window_scroll_focus = string(bench_settings.sound_list_current.scroll)
 			createdisabled = !is_array(bench_settings.sound_list_current.select)
@@ -784,7 +800,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			
 		case e_bench.AUDIO_TRACK:
 		{
-			draw_sprite(spr_bench_example, 2, dx, dy)
+			draw_sprite(spr_bench_example, 2, examplex, dy)
 			dy += 144 + 15
 			
 			draw_tooltip_label("benchaudiotracktip", icons.INFO, e_toast.INFO)
@@ -794,7 +810,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench.PARTICLE_SPAWNER:
 		{
 			// Particles
-			tab_control_sortlist(bench_settings.particle_preset_list)
+			tab_control(bench_list_height(bench_settings.particle_preset_list))
 			sortlist_draw(bench_settings.particle_preset_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("benchparticlepreset"))
 			tab_next()
 			dy -= 4
@@ -879,7 +895,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.CAMERA_EFFECTS:
 		{
-			draw_sprite(spr_bench_example, 5, dx, dy)
+			draw_sprite(spr_bench_example, 5, examplex, dy)
 			dy += 144 + 15
 			
 			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
@@ -888,7 +904,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.LIGHT_SOURCE:
 		{
-			draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, dx, dy)
+			draw_sprite(spr_bench_example, (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 0 : 1, examplex, dy)
 			dy += 144 + 15
 			
 			tab_control_togglebutton()
@@ -907,7 +923,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.PATH:
 		{
-			draw_sprite(spr_bench_example, 3, dx, dy)
+			draw_sprite(spr_bench_example, 3, examplex, dy)
 			dy += 144 + 15
 			
 			draw_tooltip_label("benchpathtip", icons.INFO, e_toast.INFO)
@@ -916,7 +932,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.ENVIRONMENT:
 		{
-			draw_sprite(spr_bench_example, 4, dx, dy)
+			draw_sprite(spr_bench_example, 4, examplex, dy)
 			dy += 144 + 15
 			
 			draw_tooltip_label("benchbackgroundtip", icons.INFO, e_toast.INFO)
@@ -927,7 +943,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		{
 			var capwid, text;
 			capwid = text_caption_width("benchshapetex", "benchshapetexmaterial", "benchshapetexnormal")
-			tab_control_sortlist(bench_settings.shape_list)
+			tab_control(bench_list_height(bench_settings.shape_list))
 			sortlist_draw(bench_settings.shape_list, dx, dy, dw, tab_control_h, bench_settings.shape_type, false, text_get("benchshapetype"))
 			tab_next()
 				
@@ -1023,6 +1039,9 @@ function bench_draw_settings(bx, by, bw, bh)
 	tab_control_button_label()
 	tab_next()
 	dy += 4
+	
+	if (createhidden)
+		return 0
 	
 	// Edit
 	var edit, wid;

@@ -956,6 +956,7 @@
     {"name":"bench_clear","order":1,"path":"scripts/bench_clear/bench_clear.yy",},
     {"name":"bench_draw_settings","order":3,"path":"scripts/bench_draw_settings/bench_draw_settings.yy",},
     {"name":"bench_draw","order":2,"path":"scripts/bench_draw/bench_draw.yy",},
+    {"name":"bench_list_height","order":8,"path":"scripts/bench_list_height/bench_list_height.yy",},
     {"name":"bench_music_stop","order":5,"path":"scripts/bench_music_stop/bench_music_stop.yy",},
     {"name":"bench_music_update","order":6,"path":"scripts/bench_music_update/bench_music_update.yy",},
     {"name":"bench_show","order":4,"path":"scripts/bench_show/bench_show.yy",},

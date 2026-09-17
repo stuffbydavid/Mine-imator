@@ -204,6 +204,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	listhei = yy + h - listy
 	if (listhei <= 0)
 		return 0
+	slist.items_visible = max(1, floor(listhei / itemh))
 
 	if ((searchunfocused && slist.search || searchcleared || sortchanged) && select != null)
 	{
@@ -302,8 +303,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 					script_execute(slist.script, value)
 				app_mouse_clear()
 				
-				if (slist.scroll.needed)
-					window_focus = string(slist.scroll)
+				window_focus = string(slist.scroll)
 			}
 		}
 		
