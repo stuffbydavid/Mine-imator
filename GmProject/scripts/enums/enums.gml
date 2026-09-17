@@ -344,6 +344,7 @@ function enums()
 	// Workbench options
 	enum e_bench
 	{
+		PROJECT,
 		CHARACTER,
 		EQUIPMENT,
 		MODEL,
@@ -371,19 +372,19 @@ function enums()
 	{
 		CHARACTER,
 		EQUIPMENT,
-		SPECIAL_BLOCK,
-		SCENERY,
-		ITEM,
-		BLOCK,
+		MODEL,
 		MODEL_PART,
+		ITEM,
+		SCENERY,
+		BLOCK,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
 		CONE,
 		CYLINDER,
 		SPHERE,
-		SURFACE,
-		MODEL
+		SURFACE
 	} // Update app_startup_lists() when adding types
 	
 	// Timeline types
@@ -391,11 +392,12 @@ function enums()
 	{
 		CHARACTER,
 		EQUIPMENT,
-		SPECIAL_BLOCK,
-		SCENERY,
-		ITEM,
-		BLOCK,
+		MODEL,
 		MODEL_PART,
+		ITEM,
+		SCENERY,
+		BLOCK,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -403,18 +405,14 @@ function enums()
 		CYLINDER,
 		SPHERE,
 		SURFACE,
-		MODEL,
 		CAMERA,
-		SPOT_LIGHT,
-		POINT_LIGHT,
-		FOLDER,
-		BACKGROUND,
 		AUDIO_TRACK,
+		POINT_LIGHT,
+		SPOT_LIGHT,
 		PATH,
 		PATH_POINT,
-		
-		LIGHT_SOURCE,
-		SHAPE,
+		BACKGROUND,
+		FOLDER,
 		amount
 	} // Update app_startup_lists() when adding types
 	
@@ -425,16 +423,16 @@ function enums()
 		PACK_UNZIPPED,
 		SKIN,
 		DOWNLOADED_SKIN,
+		MODEL,
 		ITEM_SHEET,
-		LEGACY_BLOCK_SHEET,
-		BLOCK_SHEET,
-		SCHEMATIC,
 		FROM_WORLD,
-		PARTICLE_SHEET,
-		TEXTURE,
-		FONT,
+		SCHEMATIC,
+		BLOCK_SHEET,
+		LEGACY_BLOCK_SHEET,
 		SOUND,
-		MODEL
+		PARTICLE_SHEET,
+		FONT,
+		TEXTURE
 	} // Update app_startup_lists() when adding types
 	
 	// Shape types

@@ -1,6 +1,6 @@
-/// action_lib_animate()
+/// action_lib_animate([place])
 
-function action_lib_animate()
+function action_lib_animate(place = false)
 {
 	if (history_undo)
 	{
@@ -21,7 +21,10 @@ function action_lib_animate()
 		sceneryreplaceground = false
 		
 		if (history_redo)
+		{
+			hobj = history_data
 			sceneryreplaceground = history_data.scenery_replace_ground
+		}
 		else
 		{
 			hobj = history_set(action_lib_animate)
@@ -43,6 +46,46 @@ function action_lib_animate()
 
 		with (hobj)
 			tl_save_id = save_id_get(tl)
+
+		if (history_redo)
+		{
+			with (tl)
+			{
+				value_default[e_value.POS_X] = history_data.value_default[e_value.POS_X]
+				value_default[e_value.POS_Y] = history_data.value_default[e_value.POS_Y]
+				value_default[e_value.POS_Z] = history_data.value_default[e_value.POS_Z]
+				value_default[e_value.ROT_X] = history_data.value_default[e_value.ROT_X]
+				value_default[e_value.ROT_Y] = history_data.value_default[e_value.ROT_Y]
+				value_default[e_value.ROT_Z] = history_data.value_default[e_value.ROT_Z]
+				value[e_value.POS_X] = value_default[e_value.POS_X]
+				value[e_value.POS_Y] = value_default[e_value.POS_Y]
+				value[e_value.POS_Z] = value_default[e_value.POS_Z]
+				value[e_value.ROT_X] = value_default[e_value.ROT_X]
+				value[e_value.ROT_Y] = value_default[e_value.ROT_Y]
+				value[e_value.ROT_Z] = value_default[e_value.ROT_Z]
+				tl_set_parent(history_data.parent)
+			}
+		}
+		else
+		{
+			with (hobj)
+			{
+				value_default[e_value.POS_X] = tl.value_default[e_value.POS_X]
+				value_default[e_value.POS_Y] = tl.value_default[e_value.POS_Y]
+				value_default[e_value.POS_Z] = tl.value_default[e_value.POS_Z]
+				value_default[e_value.ROT_X] = tl.value_default[e_value.ROT_X]
+				value_default[e_value.ROT_Y] = tl.value_default[e_value.ROT_Y]
+				value_default[e_value.ROT_Z] = tl.value_default[e_value.ROT_Z]
+				parent = app
+			}
+		}
+
+		if (place && !history_redo && setting_place_new && !keyboard_check(vk_shift) &&
+			(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
+			(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
+			!sceneryreplaceground &&
+			tl.value_type[e_value_type.TRANSFORM_POS])
+			app_start_place(tl, true)
 	}
 	
 	tl_update_list()

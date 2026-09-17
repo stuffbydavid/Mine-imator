@@ -250,7 +250,7 @@ function project_load_legacy_beta(loadbackground)
 			}
 			
 			load.skin_res[a] = id
-			sortlist_add(app.res_list, id)
+		res_add_lists()
 		}
 	}
 	
@@ -268,7 +268,7 @@ function project_load_legacy_beta(loadbackground)
 			item_sheet_size = vec2(16, 16)
 			
 			load.item_res[a] = id
-			sortlist_add(app.res_list, id)
+			res_add_lists()
 		}
 	}
 	
@@ -285,7 +285,7 @@ function project_load_legacy_beta(loadbackground)
 			filename = load.ter_name[a]
 			
 			load.ter_res[a] = id
-			sortlist_add(app.res_list, id)
+			res_add_lists()
 		}
 	}
 	
@@ -302,7 +302,7 @@ function project_load_legacy_beta(loadbackground)
 			filename = load.bg_name[a]
 			
 			load.bg_res[a] = id
-			sortlist_add(app.res_list, id)
+			res_add_lists()
 		}
 	}
 	
@@ -399,7 +399,7 @@ function project_load_legacy_beta(loadbackground)
 							scenery_tl_add = false
 							
 							other.scenery = load_id
-							sortlist_add(app.res_list, id)
+							res_add_lists()
 						}
 					}
 					
@@ -414,7 +414,7 @@ function project_load_legacy_beta(loadbackground)
 			}
 			
 			load.lib_temp[a] = id
-			sortlist_add(app.lib_list, id)
+			temp_add_lists()
 		}
 	}
 	

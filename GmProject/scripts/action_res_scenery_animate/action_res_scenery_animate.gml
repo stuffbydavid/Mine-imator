@@ -51,7 +51,8 @@ function action_res_scenery_animate(res)
 				if (sceneryreplaceground)
 					tl_replace_ground()
 			}
-			sortlist_add(app.lib_list, id)
+			
+			temp_add_lists()
 		}
 
 		if (sceneryreplaceground)

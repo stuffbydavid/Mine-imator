@@ -63,6 +63,6 @@ function project_load_resource(argument0)
 		
 		material_format = value_get_real(map[?"material_format"], material_format)
 		
-		sortlist_add(app.res_list, id)
+		res_add_lists()
 	}
 }

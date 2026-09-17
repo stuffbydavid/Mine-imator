@@ -22,7 +22,8 @@ function action_lib_duplicate()
 		with (hobj)
 			temp_save_id = save_id_get(temp)
 		
-		sortlist_add(lib_list, temp)
+		with (temp)
+			temp_add_lists()
 		temp_edit = temp
 	}
 	

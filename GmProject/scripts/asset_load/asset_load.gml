@@ -182,9 +182,11 @@ function asset_load()
 				load_id = save_id
 				save_id_map[?load_id] = load_id
 				type = e_temp_type.PARTICLE_SPAWNER
+				
 				project_load_particles(rootmap[?"particles"])
-				sortlist_add(other.lib_list, id)
+				temp_add_lists()
 			}
+			
 			project_load_objects(rootmap)
 			project_load_find_save_ids()
 			
@@ -204,9 +206,11 @@ function asset_load()
 				load_id = save_id
 				save_id_map[?load_id] = load_id
 				type = e_temp_type.PARTICLE_SPAWNER
+				
 				project_load_legacy_particles()
-				sortlist_add(other.lib_list, id)
+				temp_add_lists()
 			}
+			
 			project_load_legacy_objects()
 			project_load_find_save_ids()
 			
@@ -227,6 +231,7 @@ function asset_load()
 				project_load_legacy_project()
 				instance_destroy()
 			}
+			
 			project_load_legacy_objects()
 			project_load_find_save_ids()
 			project_load_update()

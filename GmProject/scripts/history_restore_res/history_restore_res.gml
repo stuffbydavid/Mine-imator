@@ -246,7 +246,8 @@ function history_restore_res(save)
 		
 	}
 	
-	sortlist_add(app.res_list, res)
+	with (res)
+		res_add_lists()
 	
 	return res
 }

@@ -8,12 +8,8 @@ function sortlist_filters_draw()
 	scroll = 0
 	capwid = 0
 	
-	// Filter "type" collumn
-	if (settings_menu_sortlist = app.properties.library.list)
-		typelist = temp_type_name_list
-	
-	if (settings_menu_sortlist = app.properties.resources.list)
-		typelist = res_type_name_list
+	// Filter "type" column
+	typelist = settings_menu_sortlist.filter_type_list
 
 	if (typelist = null)
 		return 0
@@ -32,10 +28,10 @@ function sortlist_filters_draw()
 	{
 		var itemname = typelist[|i];
 		
-		// Skip items (Resources sortlist)
+		// Skip internal resource types
 		if (typelist = res_type_name_list)
 		{
-			if (itemname = "packunzipped" || itemname = "legacyblocksheet" || itemname = "fromworld")
+			if (itemname = "packunzipped" || itemname = "legacyblocksheet")
 				continue
 		}
 		

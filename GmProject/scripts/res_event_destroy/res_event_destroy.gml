@@ -395,10 +395,15 @@ function res_event_destroy()
 	}
 
 	// Remove from resource browser
-	if (ds_list_find_index(app.res_list.list, id) >= 0)
+	var listed;
+	listed = (ds_list_find_index(app.res_list.list, id) >= 0 ||
+		ds_list_find_index(app.bench_settings.project_res_list.list, id) >= 0 ||
+		ds_list_find_index(app.bench_settings.project_all_list.list, id) >= 0)
+	if (listed)
 	{
-		res_edit = sortlist_remove(app.res_list, id)
-		if (type = e_res_type.SOUND && app.bench_settings.sound_list_current = app.bench_settings.project_list)
+		res_remove_lists()
+
+		if (type = e_res_type.SOUND && app.bench_settings.sound_list_current = app.bench_settings.project_sounds_list)
 			with (app)
 				action_bench_sound_source("project")
 	}

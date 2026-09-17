@@ -32,6 +32,7 @@ function preview_event_create()
 	world_pos = point3D(0, 0, 0)
 	preview_reset_view()
 	particle_spawner_init()
+	particle_spawn_active = true
 	
 	text_vbuffer = [null, null]
 	text_texture = [null, null]

@@ -25,7 +25,8 @@ function action_bench_particles_import()
 	
 	particles_load(fn, temp, true)
 
-	sortlist_add(lib_list, temp)
+	with (temp)
+		temp_add_lists()
 	bench_settings.particle_preset = temp
 	action_bench_particles_folder("project")
 }

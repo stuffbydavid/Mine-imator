@@ -158,7 +158,8 @@ function action_bench_sound_create()
 					res_load()
 				
 				res.display_name = hobj.sound_display_name
-				sortlist_add(res_list, res)
+				with (res)
+					res_add_lists()
 				
 				hobj.sound_res_save_id = res.save_id
 				if (!history_redo)

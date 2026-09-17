@@ -1,7 +1,7 @@
 /// bench_click(tab)
 /// @arg tab
 
-function bench_click(tab)
+function bench_click(tab, key = false)
 {
 	// Double clicked, create asset
 	if (bench_tab = tab && tab != e_bench.WORLD && bench_show_ani_type = "")
@@ -123,7 +123,7 @@ function bench_click(tab)
 			
 			case e_bench.SHAPE:
 			{
-				type = e_tl_type.SHAPE
+				type = e_temp_type.CUBE + shape_type
 				temp_update_shape()
 				break
 			}
@@ -173,7 +173,7 @@ function bench_click(tab)
 			case e_bench.PATH:				type = e_tl_type.PATH break
 			case e_bench.CAMERA:			type = e_tl_type.CAMERA break
 			case e_bench.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER break
-			case e_bench.LIGHT_SOURCE:		type = e_tl_type.LIGHT_SOURCE break
+			case e_bench.LIGHT_SOURCE:		type = light_type break
 			case e_bench.ENVIRONMENT:		type = e_tl_type.BACKGROUND break
 		}
 	}
@@ -212,6 +212,7 @@ function bench_click(tab)
 			sortvalue = bench_settings.model_name
 
 		sortlist_center(sortlist, sortvalue)
+		window_scroll_focus = string(sortlist.scroll)
 	}
 	
 	with (bench_settings.preview)
@@ -223,14 +224,26 @@ function bench_click(tab)
 	
 	bench_clear()
 	
-	if (tab = e_bench.SCHEMATIC)
+	if (tab = e_bench.PROJECT)
+	{
+		action_bench_project_select(bench_settings.project_selected)
+		window_scroll_focus = string(bench_settings.project_list.scroll)
+	}
+	else if (tab = e_bench.SCHEMATIC)
+	{
 		action_bench_schematic_folder(bench_schematic_folder)
+		window_scroll_focus = string(bench_settings.schematic_list.scroll)
+	}
 	else if (tab = e_bench.PARTICLE_SPAWNER)
+	{
 		action_bench_particles_folder(bench_particle_preset_folder)
+		window_scroll_focus = string(bench_settings.particle_preset_list.scroll)
+	}
 	else if (tab = e_bench.TEXT)
 	{
 		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
-		window_focus = string(bench_settings.tbx_text)
+		if (!key)
+			window_focus = string(bench_settings.tbx_text)
 	}
 		
 	bench_settings_ani = 0

@@ -55,7 +55,8 @@ function project_reset()
 		musicres = bench_settings.music_res
 		if (musicres.creator = app)
 		{
-			sortlist_remove(res_list, musicres)
+			with (musicres)
+				res_remove_lists()
 			musicres.creator = bench_settings
 		}
 	}

@@ -41,7 +41,8 @@ function action_lib_scenery_load(fn)
 			loaded = true
 			with (temp_animate())
 				loaded = true
-			sortlist_add(app.lib_list, id)
+				
+			temp_add_lists()
 		}
 		
 		with (hobj)
