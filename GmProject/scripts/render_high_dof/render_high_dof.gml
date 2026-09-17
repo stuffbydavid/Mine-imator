@@ -1,7 +1,7 @@
 /// render_high_dof(basesurf)
 /// @arg basesurf
 
-function render_high_dof(prevsurf)
+function render_high_dof(prevsurf, hdr = false)
 {
 	var cocsurf, resultsurf;
 
@@ -60,7 +60,7 @@ function render_high_dof(prevsurf)
 	gpu_set_texrepeat(true)
 	
 	// Render directly to target?
-	resultsurf = render_high_get_apply_surf()
+	resultsurf = render_high_get_apply_surf(hdr)
 	
 	// Apply DOF
 	surface_set_target(resultsurf)

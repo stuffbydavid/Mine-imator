@@ -1,16 +1,25 @@
 /// render_high_bloom(basesurf)
 /// @arg basesurf
 
-function render_high_bloom(prevsurf)
+function render_high_bloom(prevsurf, hdr = false)
 {
 	var thresholdsurf, bloomsurf, bloomsurftemp, resultsurf, baseradius, bloomstrength;
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	thresholdsurf = render_surface[0]
-	bloomsurf = render_surface[1]
-	bloomsurftemp = render_surface[2]
-	resultsurf = render_high_get_apply_surf()
+	if (hdr)
+	{
+		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba32float)
+		render_surface_hdr_post[1] = surface_require(render_surface_hdr_post[1], render_width, render_height, false, e_surface_format.rgba32float)
+		render_surface_hdr_post[2] = surface_require(render_surface_hdr_post[2], render_width, render_height, false, e_surface_format.rgba32float)
+	}
+	else
+	{
+		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+		render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	}
+	thresholdsurf = hdr ? render_surface_hdr_post[0] : render_surface[0]
+	bloomsurf = hdr ? render_surface_hdr_post[1] : render_surface[1]
+	bloomsurftemp = hdr ? render_surface_hdr_post[2] : render_surface[2]
+	resultsurf = render_high_get_apply_surf(hdr)
 	baseradius = ((render_camera.value[e_value.CAM_BLOOM_RADIUS] * 10) * render_height / 500)
 	bloomstrength = 1
 	

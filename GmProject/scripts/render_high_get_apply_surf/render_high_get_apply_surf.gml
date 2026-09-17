@@ -1,9 +1,16 @@
-/// render_high_get_apply_surf()
+/// render_high_get_apply_surf([hdr])
 /// @desc Updates which target the final surface should be on
 
-function render_high_get_apply_surf()
+function render_high_get_apply_surf(hdr = false)
 {
 	render_post_index = !render_post_index
+
+	if (hdr)
+	{
+		var index = render_post_index ? 0 : 1;
+		render_surface_hdr[index] = surface_require(render_surface_hdr[index], render_width, render_height, true, e_surface_format.rgba32float)
+		return render_surface_hdr[index]
+	}
 	
 	// Keep cached G-buffers intact while post effects use separate targets
 	if (render_post_index)

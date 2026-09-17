@@ -2,17 +2,23 @@
 /// @arg basesurf
 /// @arg [falloff]
 
-function render_high_glow(prevsurf, glowfalloff = false)
+function render_high_glow(prevsurf, glowfalloff = false, hdr = false)
 {
 	var glowcolorsurf, glowsurf, resultsurf;
 	
-	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+	if (hdr)
+		render_surface_hdr_post[1] = surface_require(render_surface_hdr_post[1], render_width, render_height, false, e_surface_format.rgba32float)
+	else
+		render_surface[1] = surface_require(render_surface[1], render_width, render_height)
 	glowcolorsurf = render_surface_glow
-	glowsurf = render_surface[1]
+	glowsurf = hdr ? render_surface_hdr_post[1] : render_surface[1]
 	
 	var glowsurftemp;
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	glowsurftemp = render_surface[2]
+	if (hdr)
+		render_surface_hdr_post[2] = surface_require(render_surface_hdr_post[2], render_width, render_height, false, e_surface_format.rgba32float)
+	else
+		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
+	glowsurftemp = hdr ? render_surface_hdr_post[2] : render_surface[2]
 	
 	render_shader_obj = shader_map[?shader_blur]
 	with (render_shader_obj)
@@ -63,7 +69,7 @@ function render_high_glow(prevsurf, glowfalloff = false)
 	gpu_set_texfilter(false)
 	
 	// Apply Glow
-	resultsurf = render_high_get_apply_surf()
+	resultsurf = render_high_get_apply_surf(hdr)
 	
 	surface_set_target(resultsurf)
 	{
@@ -84,8 +90,11 @@ function render_high_glow(prevsurf, glowfalloff = false)
 	// Add to lens
 	if (render_camera_lens_dirt_glow)
 	{
-		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-		prevsurf = render_surface[0]
+		if (hdr)
+			render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba32float)
+		else
+			render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+		prevsurf = hdr ? render_surface_hdr_post[0] : render_surface[0]
 		
 		surface_set_target(prevsurf)
 		{

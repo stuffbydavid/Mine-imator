@@ -68,11 +68,10 @@ function render_high()
 		if (background_fog_show)
 			render_high_fog(finalsurf)
 
+		// Apply HDR effects before tonemapping (DoF, Bloom, Glow, Lens Dirt)
+		render_refresh_effects(true, true, true)
+		finalsurf = render_post(finalsurf, true, true, true)
 		finalsurf = render_high_tonemap(finalsurf)
-		
-		// Apply post scene effects (Glow, DoF, etc.)
-		render_refresh_effects(true, false)
-		finalsurf = render_post(finalsurf, true, false)
 
 		// Finish the combined tile before assembling the all-passes grid
 		if (render_pass = e_render_pass.ALL)
@@ -110,7 +109,7 @@ function render_high()
 	if (render_use_samples)
 		render_high_samples_unpack()
 	
-	// Apply post effects (Bloom, color correction, etc.)
+	// Apply basic post-process effects
 	if (!render_pass)
 	{
 		var prevsurf;
