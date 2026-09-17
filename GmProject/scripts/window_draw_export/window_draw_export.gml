@@ -56,20 +56,26 @@ function window_draw_export()
 	content_height = window_height
 	
 	// Time left
-	timeleftsecs = max(0, ceil((exportmovie_start + (get_timer() - exportmovie_start) / perc - get_timer()) / 1000000))
-	timeleftmins = timeleftsecs div 60
-	timelefthours = timeleftmins div 60
-	timeleftsecs = timeleftsecs mod 60
-	timeleftmins = timeleftmins mod 60
-	
-	timeleftstr = ""
-	if (timelefthours > 0)
-		timeleftstr += text_get(((timelefthours = 1) ? "exporttimelefthour" : "exporttimelefthours"), string(timelefthours)) + ", "
-	if (timeleftmins > 0)
-		timeleftstr += text_get(((timeleftmins = 1) ? "exporttimeleftminute" : "exporttimeleftminutes"), string(timeleftmins)) + " " + text_get("exporttimeleftand") + " "
-	timeleftstr += text_get(((timeleftsecs = 1) ? "exporttimeleftsecond" : "exporttimeleftseconds"), string(timeleftsecs))
-	
-	draw_label(text_get("exporttimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_heading_big)
+	if (window_state != "export_movie" || exportmovie_frame > 0)
+	{
+		if (window_state = "export_movie")
+			timeleftsecs = max(0, ceil(((exportmovie_frame_last_time - exportmovie_start) / exportmovie_frame) * (totalframes - exportmovie_frame) / 1000000))
+		else
+			timeleftsecs = max(0, ceil((exportmovie_start + (get_timer() - exportmovie_start) / perc - get_timer()) / 1000000))
+		timeleftmins = timeleftsecs div 60
+		timelefthours = timeleftmins div 60
+		timeleftsecs = timeleftsecs mod 60
+		timeleftmins = timeleftmins mod 60
+
+		timeleftstr = ""
+		if (timelefthours > 0)
+			timeleftstr += text_get(((timelefthours = 1) ? "exporttimelefthour" : "exporttimelefthours"), string(timelefthours)) + ", "
+		if (timeleftmins > 0)
+			timeleftstr += text_get(((timeleftmins = 1) ? "exporttimeleftminute" : "exporttimeleftminutes"), string(timeleftmins)) + " " + text_get("exporttimeleftand") + " "
+		timeleftstr += text_get(((timeleftsecs = 1) ? "exporttimeleftsecond" : "exporttimeleftseconds"), string(timeleftsecs))
+
+		draw_label(text_get("exporttimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_heading_big)
+	}
 	
 	// Bar
 	var loadtext, loadw, sw, sh;

@@ -123,6 +123,7 @@ function export_update()
 	
 			// Advance
 			exportmovie_frame++
+			exportmovie_frame_last_time = get_timer()
 			current_step += round(60 / popup_exportmovie.framespersecond)
 			
 			// Update marker

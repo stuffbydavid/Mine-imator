@@ -132,6 +132,7 @@ function action_toolbar_exportmovie_save()
 	render_watermark = popup_exportmovie.watermark
 	
 	exportmovie_start = get_timer()
+	exportmovie_frame_last_time = exportmovie_start
 	exportmovie_frame = 0
 	export_start("export_movie")
 	
