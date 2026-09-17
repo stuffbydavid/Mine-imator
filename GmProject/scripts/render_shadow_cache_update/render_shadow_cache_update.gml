@@ -6,7 +6,7 @@ function render_shadow_cache_update(lightlist, sunout)
 	{
 		if (ds_map_size(render_shadow_cache) > 0)
 			render_shadow_cache_free()
-		return
+		return;
 	}
 	
 	if (ds_map_size(render_shadow_cache) = 0)
@@ -36,15 +36,16 @@ function render_shadow_cache_update(lightlist, sunout)
 		activekeys[?lightkey] = true
 	}
 	
+	var removekeys = []
 	var cachekey = ds_map_find_first(render_shadow_cache)
 	while (!is_undefined(cachekey))
 	{
-		var nextkey = ds_map_find_next(render_shadow_cache, cachekey)
-		
 		if (!ds_map_exists(activekeys, cachekey))
-			render_shadow_cache_remove(cachekey)
+			removekeys = array_add(removekeys, cachekey)
 		
-		cachekey = nextkey
+		cachekey = ds_map_find_next(render_shadow_cache, cachekey)
 	}
+	for (var i = 0; i < array_length(removekeys); i++)
+		render_shadow_cache_remove(removekeys[i])
 	ds_map_destroy(activekeys)
 }

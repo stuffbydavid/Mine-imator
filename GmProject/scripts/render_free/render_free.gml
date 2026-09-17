@@ -9,6 +9,10 @@ function render_free()
 	
 	surface_free(render_surface_hdr[0])
 	surface_free(render_surface_hdr[1])
+	surface_free(render_surface_post[0])
+	surface_free(render_surface_post[1])
+	surface_free(render_surface_specular_base)
+	render_gbuffers_cache_ready = false
 	
 	// G-Buffers
 	surface_free(render_surface_depth)

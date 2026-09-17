@@ -5,7 +5,7 @@ function render_alpha_hashing_warning(alpha_mode)
 {
 	var realisticpreset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]];
 	if (realisticpreset.renderer[e_renderer.REALISTIC].alpha_hashing)
-		return
+		return;
 
 	if (alpha_mode = e_alpha_mode.DEFAULT)
 		alpha_mode = project_render_alpha_mode

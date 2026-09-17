@@ -6,7 +6,10 @@ function render_high(singlesample = false)
 {
 	render_alpha_hash = render_alpha_hash_allowed && project_render_alpha_mode
 	if (singlesample && renderer_current = e_renderer.REALISTIC)
+	{
 		ds_map_clear(render_shadow_cache_ready)
+		render_gbuffers_cache_ready = false
+	}
 	
 	var samplestart, sampleend;
 	if (singlesample || renderer_current = e_renderer.STANDARD)

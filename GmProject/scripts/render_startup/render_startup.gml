@@ -102,7 +102,7 @@ function render_startup()
 	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow, render_surface_raydata,
-			  render_surface_samples, depth_near, depth_far, render_post_index;
+			  render_surface_samples, render_surface_post, render_surface_specular_base, depth_near, depth_far, render_post_index;
 			
 	render_target = null
 	render_surface[0] = null
@@ -129,6 +129,9 @@ function render_startup()
 	render_surface_lens = null
 	
 	render_surface_samples = null
+	render_surface_post[0] = null
+	render_surface_post[1] = null
+	render_surface_specular_base = null
 	
 	depth_near = clip_near
 	depth_far = 5000
@@ -176,6 +179,9 @@ function render_startup()
 	render_shadow_cache = ds_map_create()
 	render_shadow_cache_ready = ds_map_create()
 	render_shadow_cache_enabled = false
+	globalvar render_gbuffers_cache_enabled, render_gbuffers_cache_ready;
+	render_gbuffers_cache_enabled = false
+	render_gbuffers_cache_ready = false
 	
 	// SSAO
 	globalvar render_ssao_kernel;
