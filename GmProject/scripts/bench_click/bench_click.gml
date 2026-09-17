@@ -212,6 +212,7 @@ function bench_click(tab, key = false)
 			sortvalue = bench_settings.model_name
 
 		sortlist_center(sortlist, sortvalue)
+		window_scroll_focus = string(sortlist.scroll)
 	}
 	
 	with (bench_settings.preview)
@@ -224,11 +225,20 @@ function bench_click(tab, key = false)
 	bench_clear()
 	
 	if (tab = e_bench.PROJECT)
+	{
 		action_bench_project_select(bench_settings.project_selected)
+		window_scroll_focus = string(bench_settings.project_list.scroll)
+	}
 	else if (tab = e_bench.SCHEMATIC)
+	{
 		action_bench_schematic_folder(bench_schematic_folder)
+		window_scroll_focus = string(bench_settings.schematic_list.scroll)
+	}
 	else if (tab = e_bench.PARTICLE_SPAWNER)
+	{
 		action_bench_particles_folder(bench_particle_preset_folder)
+		window_scroll_focus = string(bench_settings.particle_preset_list.scroll)
+	}
 	else if (tab = e_bench.TEXT)
 	{
 		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)

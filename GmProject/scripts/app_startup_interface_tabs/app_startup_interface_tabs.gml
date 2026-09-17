@@ -95,7 +95,6 @@ function app_startup_interface_tabs()
 		with (library)
 		{
 			preview = new_obj(obj_preview)
-			preview.spawn_active = true
 			list = new_obj(obj_sortlist)
 			list.visible_items = 7
 			list.can_deselect = true

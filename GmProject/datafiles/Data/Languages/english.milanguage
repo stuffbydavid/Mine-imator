@@ -32,6 +32,8 @@
 		"showoptions": "Show options",
 		"hideoptions": "Hide options",
 		"remove": "Remove",
+		"assetimport": "Import asset",
+		"assetremove": "Remove asset",
 		"pin": "Pin",
 		"changefolder": "Change folder",
 		"openfolder": "Open folder",

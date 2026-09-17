@@ -743,12 +743,19 @@ function preview_draw(preview, xx, yy, width, height)
 	{
 		if (preview.select.pc_spawn_constant)
 		{
-			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, preview.spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn") || triggerkey)
-				preview.spawn_active = !preview.spawn_active
+			if (draw_button_icon("previewspawn" + string(preview), xx + 12, yy + height - 36, 24, 24, preview.particle_spawn_active, icons.PARTICLES, null, false, "tooltipparticlesspawn") || triggerkey)
+			{
+				preview.particle_spawn_active = !preview.particle_spawn_active
+				with (preview)
+				{
+					particle_spawner_clear()
+					update = true
+				}
+			}
 		}
 		else
 		{
-			if (draw_button_icon("previewspawn", xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn") || triggerkey)
+			if (draw_button_icon("previewspawn" + string(preview), xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltipparticlesspawn") || triggerkey)
 				preview.fire = true
 		}
 	}
@@ -756,7 +763,7 @@ function preview_draw(preview, xx, yy, width, height)
 	// Play button
 	if (playbutton)
 	{
-		if (draw_button_icon("previewplay", xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay") || triggerkey)
+		if (draw_button_icon("previewplay" + string(preview), xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltipstop" : "tooltipplay") || triggerkey)
 		{
 			if (isplaying)
 			{

@@ -72,10 +72,16 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		return 0
 
 	draw_box(xx, yy, w, listhei, false, c_input_background, 1)
+	if (content_mouseon && mouse_left && app_mouse_box(xx, yy, w - 12 * slist.scroll.needed, listhei))
+		window_focus = string(slist.scroll)
+
 	if (window_focus = string(slist.scroll))
 	{
 		draw_outline(xx, yy, w, listhei, 1, c_accent, 1, true)
 		window_scroll_focus = string(slist.scroll)
+
+		if (!app_mouse_box(xx, yy, w, listhei) && content_mouseon && mouse_left && window_busy != "scrollbar")
+			window_focus = ""
 	}
 	else
 		draw_outline(xx, yy, w, listhei, 1, c_border, a_border, true)
@@ -101,8 +107,12 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		mouseon = visiblehei > 0 && app_mouse_box(xx, visibley, dw, visiblehei) && content_mouseon
 		row = slist.display_list[|i]
 		selected = (slist.select != null && row[2] = slist.select[2])
-		if (selected)
+		if (selected || mouseon && mouse_left)
+		{
 			draw_box(xx, dy, dw, itemh, false, c_accent_overlay, a_accent_overlay)
+			if (mouseon && mouse_left)
+				draw_box_hover(xx, dy, dw, itemh, 1)
+		}
 		else if (mouseon)
 			draw_box(xx, dy, dw, itemh, false, c_overlay, a_overlay)
 
@@ -115,6 +125,8 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 				slist.select = row
 				script_execute(slist.script, row)
 				app_mouse_clear()
+				if (slist.scroll.needed)
+					window_focus = string(slist.scroll)
 			}
 		}
 		dy += itemh

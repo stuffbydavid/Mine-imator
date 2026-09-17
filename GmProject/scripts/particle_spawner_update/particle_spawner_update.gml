@@ -40,7 +40,7 @@ function particle_spawner_update(spawner)
 				if (is_timeline)
 					spawn = value[e_value.SPAWN]
 				else
-					spawn = spawn_active
+					spawn = particle_spawn_active
 				
 				if (spawn)
 				{

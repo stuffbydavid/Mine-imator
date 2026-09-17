@@ -26,7 +26,6 @@ function macros()
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
 	#macro mineimator_version_date		"2026.09.XX"
 	#macro minecraft_assets_version		"26.3"
-	#macro gm_runtime					GM_runtime_version
 	
 	// File formats
 	#macro project_format				e_project.FORMAT_210
