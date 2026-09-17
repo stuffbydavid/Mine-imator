@@ -30,6 +30,23 @@ function render_start()
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
+	var optimizations = [false, false, false]
+	if (renderer_current = e_renderer.REALISTIC)
+	{
+		var realisticset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]].renderer[e_renderer.REALISTIC]
+		optimizations = render_optimizations_state(realisticset)
+		if (optimizations[0] || optimizations[2])
+		{
+			project_render_shadows_transparent = false
+			project_render_shadows_jittered = false
+		}
+		if (optimizations[1])
+		{
+			project_render_shadows_transparent = false
+			project_render_aa = true
+			project_render_aa_mode = e_aa_mode.FXAA
+		}
+	}
 	if (renderer_current = e_renderer.STANDARD)
 	{
 		project_render_indirect = false
@@ -37,11 +54,11 @@ function render_start()
 		project_render_aa_mode = e_aa_mode.FXAA
 	}
 	
-	render_alpha_hash_allowed = (renderer_current = e_renderer.REALISTIC && project_render_alpha_hashing)
+	render_alpha_hash_allowed = (renderer_current = e_renderer.REALISTIC && !optimizations[1])
 	render_alpha_hash_shadows = (renderer_current = e_renderer.REALISTIC && project_render_shadows_transparent)
-	render_shadow_cache_enabled = (renderer_current = e_renderer.REALISTIC && project_render_shadows_blur_quality > 0 && !project_render_shadows_jittered && !project_render_shadows_transparent)
-	render_gbuffers_cache_enabled = (renderer_current = e_renderer.REALISTIC && project_render_aa && project_render_aa_mode = e_aa_mode.FXAA && !project_render_alpha_hashing)
-	render_shadow_pass_cache_enabled = render_shadow_cache_enabled && render_gbuffers_cache_enabled && project_render_shadows_single_sample
+	render_shadow_cache_enabled = optimizations[0]
+	render_gbuffers_cache_enabled = optimizations[1]
+	render_shadow_pass_cache_enabled = optimizations[2]
 	render_shadow_cache_enabled = render_shadow_cache_enabled && !render_shadow_pass_cache_enabled
 	if (!render_shadow_pass_cache_enabled)
 		render_shadow_pass_cache_ready = false

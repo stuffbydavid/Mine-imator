@@ -1,0 +1,10 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_cache_data_buffers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_cache_data_buffers",
+  "parent":{"name":"Render","path":"folders/Scripts/App/Actions/Project/Render.yy",},
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

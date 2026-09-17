@@ -3,7 +3,6 @@
 function history_copy_render_settings(obj)
 {
 	project_render_samples = obj.project_render_samples
-	project_render_alpha_hashing = obj.project_render_alpha_hashing
 	
 	project_render_ssao = obj.project_render_ssao
 	project_render_ssao_radius = obj.project_render_ssao_radius

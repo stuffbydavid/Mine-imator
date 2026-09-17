@@ -30,7 +30,8 @@ function render_preset_apply_settings(settings, renderer)
 		switch (name)
 		{
 			case "samples": set.samples = val break
-			case "alpha_hashing": realisticset.alpha_hashing = val break
+			case "cache_light_buffers": realisticset.cache_light_buffers = val break
+			case "cache_data_buffers": realisticset.cache_data_buffers = val break
 			case "ssao": set.ssao = val break
 			case "ssao_radius": ssao_radius = val break
 			case "ssao_power": ssao_power = val break
