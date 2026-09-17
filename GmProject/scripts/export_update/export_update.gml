@@ -62,6 +62,17 @@ function export_update()
 		export_surface = render_done()
 		
 		export_sample++
+		if (renderer_current = e_renderer.REALISTIC)
+		{
+			export_sample_rate_count++
+			var sampleelapsed = get_timer() - export_sample_rate_start
+			if (sampleelapsed >= 1000000)
+			{
+				export_samples_per_second = export_sample_rate_count * 1000000 / sampleelapsed
+				export_sample_rate_start = get_timer()
+				export_sample_rate_count = 0
+			}
+		}
 	
 		if (renderer_current = e_renderer.STANDARD || (renderer_current = e_renderer.REALISTIC && render_samples = app.project_render_samples))
 			render_samples_done = true

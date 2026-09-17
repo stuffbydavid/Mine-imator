@@ -5,6 +5,9 @@ function export_start(state)
 	
 	export_surface = null
 	export_sample = 0
+	export_sample_rate_start = get_timer()
+	export_sample_rate_count = 0
+	export_samples_per_second = 0
 	
 	render_samples = -1
 	

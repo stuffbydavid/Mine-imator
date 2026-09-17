@@ -619,6 +619,7 @@
 	},
 	"export/": {
 		"samples": "Sample %1 of %2",
+		"samplespersecond": "%1 samples per second",
 		"frame": "Frame %1 of %2",
 		"timeleft": "%1 remaining",
 		"timeleft/": {

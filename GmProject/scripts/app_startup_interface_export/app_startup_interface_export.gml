@@ -4,6 +4,9 @@ function app_startup_interface_export()
 {
 	export_surface = null
 	export_sample = 0
+	export_sample_rate_start = 0
+	export_sample_rate_count = 0
+	export_samples_per_second = 0
 	export_filename = ""
 	export_escape_time = 0
 	
