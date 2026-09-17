@@ -159,6 +159,7 @@ function settings_save()
 		json_save_var_bool("snap_absolute", setting_snap_absolute)
 		json_save_var("snap_size_position", setting_snap_size_position)
 		json_save_var("snap_size_rotation", setting_snap_size_rotation)
+		json_save_var("rotation_space", setting_rotation_space)
 		json_save_var("snap_size_scale", setting_snap_size_scale)
 		
 		json_save_var_bool("modelbench_popup_hidden", popup_modelbench.hidden)

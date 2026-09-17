@@ -97,6 +97,7 @@ function view_control_scale_plane(view, control, axes, color, mat, normal, corne
 			view_control_edit_view = view
 			
 			view_control_plane_start(tl_edit.world_pos, normal)
+			view_transform_space_begin(e_value_type.TRANSFORM_SCA)
 			
 			view_control_value = point3D(tl_edit.value[e_value.SCA_X], tl_edit.value[e_value.SCA_Y], tl_edit.value[e_value.SCA_Z])
 			view_control_plane = true

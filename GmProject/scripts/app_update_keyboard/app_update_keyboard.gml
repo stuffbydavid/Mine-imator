@@ -168,6 +168,9 @@ function app_update_keyboard()
 				setting_tool_scale = false
 			}
 		}
+
+		if (keybinds[e_keybind.ROTATION_SPACE_CYCLE].pressed)
+			action_view_rotation_space_cycle()
 		
 		if (keybinds[e_keybind.TOOL_SCALE].pressed)
 		{
