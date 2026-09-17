@@ -40,6 +40,7 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.shadows_spot_buffer_size = objset.shadows_spot_buffer_size &&
 			set.shadows_point_buffer_size = objset.shadows_point_buffer_size &&
 			set.shadows_jittered = objset.shadows_jittered &&
+			set.shadows_single_sample = objset.shadows_single_sample &&
 			set.shadows_transparent = objset.shadows_transparent &&
 			set.subsurface_samples = objset.subsurface_samples &&
 			set.indirect = objset.indirect &&

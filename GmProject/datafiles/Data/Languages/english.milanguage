@@ -3006,6 +3006,7 @@
 			"blurquality": "Blur quality",
 			"blursize": "Blur size",
 			"jittered": "Jittered shadows",
+			"singlesample": "Single sample shadows",
 			"transparent": "Transparent shadows",
 			"buffersize256": "Very small",
 			"buffersize512": "Small",

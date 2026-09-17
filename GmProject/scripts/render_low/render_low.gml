@@ -3,7 +3,7 @@
 
 function render_low()
 {
-	var surf, finalsurf;
+	var surf, finalsurf, cacheddepth;
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surf = render_surface[0]
 	
@@ -44,7 +44,10 @@ function render_low()
 	// Camera depth for depth-aware post effects
 	if (render_camera_dof)
 	{
+		cacheddepth = render_surface_depth
+		render_surface_depth = render_surface_depth_low
 		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+		render_surface_depth_low = render_surface_depth
 		surface_set_target(render_surface_depth)
 		{
 			draw_clear(c_white)
@@ -58,6 +61,8 @@ function render_low()
 	}
 
 	finalsurf = render_post(surf)
+	if (render_camera_dof)
+		render_surface_depth = cacheddepth
 	
 	if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.FXAA)
 		finalsurf = render_high_aa(finalsurf)

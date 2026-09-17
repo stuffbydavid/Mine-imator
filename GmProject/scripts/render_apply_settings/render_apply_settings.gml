@@ -9,6 +9,7 @@ function render_apply_settings(preset, renderer)
 		project_render_shadows = settings.shadows
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
 		project_render_shadows_jittered = false
+		project_render_shadows_single_sample = false
 		project_render_shadows_sun_cascades = clamp(round(settings.shadows_sun_cascades), 1, 3)
 		project_render_shadows_sun_buffer_size = settings.shadows_sun_buffer_size
 		project_render_shadows_spot_buffer_size = settings.shadows_spot_buffer_size
@@ -32,6 +33,7 @@ function render_apply_settings(preset, renderer)
 		project_render_shadows_spot_buffer_size = settings.shadows_spot_buffer_size
 		project_render_shadows_point_buffer_size = settings.shadows_point_buffer_size
 		project_render_shadows_jittered = settings.shadows_jittered
+		project_render_shadows_single_sample = settings.shadows_single_sample
 		project_render_shadows_transparent = settings.shadows_transparent
 		project_render_subsurface_samples = settings.subsurface_samples
 		project_render_indirect = settings.indirect

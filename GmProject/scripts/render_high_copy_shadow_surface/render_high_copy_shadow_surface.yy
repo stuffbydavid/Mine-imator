@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_high_copy_shadow_surface",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_high_copy_shadow_surface",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

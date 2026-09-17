@@ -58,10 +58,16 @@ function render_high_create_gbuffers()
 			surface_get_width(render_surface_diffuse) != render_width || surface_get_height(render_surface_diffuse) != render_height ||
 			(render_auxiliary && (!surface_exists(render_surface_fog) || !surface_exists(render_surface_sss) ||
 				!surface_exists(render_surface_sss_range) || !surface_exists(render_surface_glow))))
+		{
 			render_gbuffers_cache_ready = false
+			render_shadow_pass_cache_ready = false
+		}
 	}
 	if (!render_gbuffers_cache_enabled)
+	{
 		render_gbuffers_cache_ready = false
+		render_shadow_pass_cache_ready = false
+	}
 
 	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
 	render_surface_mask = surface_require(render_surface_mask, render_width, render_height)

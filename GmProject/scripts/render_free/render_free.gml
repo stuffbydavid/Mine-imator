@@ -12,10 +12,14 @@ function render_free()
 	surface_free(render_surface_post[0])
 	surface_free(render_surface_post[1])
 	surface_free(render_surface_specular_base)
+	surface_free(render_surface_shadows_cache)
+	surface_free(render_surface_specular_shadows)
 	render_gbuffers_cache_ready = false
+	render_shadow_pass_cache_ready = false
 	
 	// G-Buffers
 	surface_free(render_surface_depth)
+	surface_free(render_surface_depth_low)
 	surface_free(render_surface_normal)
 	surface_free(render_surface_material)
 	surface_free(render_surface_diffuse)

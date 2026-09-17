@@ -26,6 +26,7 @@ function render_start()
 	render_world_count = 0
 	
 	render_pass = project_render_pass
+	render_use_samples = (renderer_current = e_renderer.REALISTIC)
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
@@ -40,6 +41,10 @@ function render_start()
 	render_alpha_hash_shadows = (renderer_current = e_renderer.REALISTIC && project_render_shadows_transparent)
 	render_shadow_cache_enabled = (renderer_current = e_renderer.REALISTIC && project_render_shadows_blur_quality > 0 && !project_render_shadows_jittered && !project_render_shadows_transparent)
 	render_gbuffers_cache_enabled = (renderer_current = e_renderer.REALISTIC && project_render_aa && project_render_aa_mode = e_aa_mode.FXAA && !project_render_alpha_hashing)
+	render_shadow_pass_cache_enabled = render_shadow_cache_enabled && render_gbuffers_cache_enabled && project_render_shadows_single_sample
+	render_shadow_cache_enabled = render_shadow_cache_enabled && !render_shadow_pass_cache_enabled
+	if (!render_shadow_pass_cache_enabled)
+		render_shadow_pass_cache_ready = false
 	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects
@@ -132,7 +137,7 @@ function render_start()
 		render_width = argument[2]
 		render_height = argument[3]
 	}
-	
+
 	render_ratio = render_width / render_height
 	render_overlay = (render_camera_colors || render_watermark)
 	

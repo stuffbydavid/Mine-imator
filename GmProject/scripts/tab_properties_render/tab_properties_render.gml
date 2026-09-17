@@ -156,6 +156,10 @@ function tab_properties_render()
 				draw_switch("rendershadowsjittered", dx, dy, rendererset.shadows_jittered, action_project_render_shadows_jittered)
 				tab_next()
 
+				tab_control_switch()
+				draw_switch("rendershadowssinglesample", dx, dy, rendererset.shadows_single_sample, action_project_render_shadows_single_sample)
+				tab_next()
+
 				if (!rendererset.shadows_jittered)
 				{
 					tab_control_meter()

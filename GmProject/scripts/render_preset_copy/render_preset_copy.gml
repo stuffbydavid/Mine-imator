@@ -39,6 +39,7 @@ function render_preset_copy(to, allsettings = false)
 		toset.shadows_spot_buffer_size = fromset.shadows_spot_buffer_size
 		toset.shadows_point_buffer_size = fromset.shadows_point_buffer_size
 		toset.shadows_jittered = fromset.shadows_jittered
+		toset.shadows_single_sample = fromset.shadows_single_sample
 		toset.shadows_transparent = fromset.shadows_transparent
 		toset.subsurface_samples = fromset.subsurface_samples
 		toset.indirect = fromset.indirect

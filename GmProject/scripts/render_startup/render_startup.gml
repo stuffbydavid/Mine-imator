@@ -21,7 +21,8 @@ function render_startup()
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
 			  render_tonemapper, render_exposure, render_gamma, render_auxiliary;
 	
-	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
+	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
+	render_use_samples = false
 	render_sun_shadow_scale = 0
 	
 	globalvar render_blend_prev, render_alpha_prev;
@@ -99,10 +100,10 @@ function render_startup()
 	render_repeat = vec3(0)
 	
 	// Surfaces for rendering
-	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal,
+	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_depth_low, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow, render_surface_raydata,
-			  render_surface_samples, render_surface_post, render_surface_specular_base, depth_near, depth_far, render_post_index;
+			  render_surface_samples, render_surface_post, render_surface_specular_base, render_surface_shadows_cache, render_surface_specular_shadows, depth_near, depth_far, render_post_index;
 			
 	render_target = null
 	render_surface[0] = null
@@ -113,6 +114,7 @@ function render_startup()
 	render_surface_hdr[1] = null
 	
 	render_surface_depth = null
+	render_surface_depth_low = null
 	render_surface_normal = null
 	render_surface_material = null
 	render_surface_diffuse = null
@@ -132,6 +134,8 @@ function render_startup()
 	render_surface_post[0] = null
 	render_surface_post[1] = null
 	render_surface_specular_base = null
+	render_surface_shadows_cache = null
+	render_surface_specular_shadows = null
 	
 	depth_near = clip_near
 	depth_far = 5000
@@ -170,6 +174,7 @@ function render_startup()
 	render_surface_point_buffer, render_surface_point_atlas_buffer, render_shadow_cache, render_shadow_cache_ready, render_shadow_cache_enabled;
 	
 	project_render_shadows_jittered = false
+	project_render_shadows_single_sample = false
 	project_render_shadows_sun_cascades = 3
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
@@ -182,6 +187,9 @@ function render_startup()
 	globalvar render_gbuffers_cache_enabled, render_gbuffers_cache_ready;
 	render_gbuffers_cache_enabled = false
 	render_gbuffers_cache_ready = false
+	globalvar render_shadow_pass_cache_enabled, render_shadow_pass_cache_ready;
+	render_shadow_pass_cache_enabled = false
+	render_shadow_pass_cache_ready = false
 	
 	// SSAO
 	globalvar render_ssao_kernel;

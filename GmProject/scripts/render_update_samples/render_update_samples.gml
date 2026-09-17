@@ -30,6 +30,7 @@ function render_update_samples()
 	if (refresh)
 	{
 		render_gbuffers_cache_ready = false
+		render_shadow_pass_cache_ready = false
 		ds_map_clear(render_shadow_cache_ready)
 		render_matrix = array_copy_1d(view_proj_matrix)
 		render_target_size = point2D(render_width, render_height)

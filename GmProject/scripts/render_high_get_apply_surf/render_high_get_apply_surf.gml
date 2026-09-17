@@ -8,7 +8,7 @@ function render_high_get_apply_surf()
 	// Keep cached G-buffers intact while post effects use separate targets
 	if (render_post_index)
 	{
-		if (render_gbuffers_cache_enabled)
+		if (render_gbuffers_cache_enabled || renderer_current = e_renderer.QUICK)
 		{
 			render_surface_post[0] = surface_require(render_surface_post[0], render_width, render_height)
 			return render_surface_post[0]
@@ -18,7 +18,7 @@ function render_high_get_apply_surf()
 	}
 	else
 	{
-		if (render_gbuffers_cache_enabled)
+		if (render_gbuffers_cache_enabled || renderer_current = e_renderer.QUICK)
 		{
 			render_surface_post[1] = surface_require(render_surface_post[1], render_width, render_height)
 			return render_surface_post[1]
