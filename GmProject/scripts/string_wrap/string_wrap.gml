@@ -5,6 +5,7 @@
 function string_wrap(str, wid)
 {
 	var pos, insertpos, linewid;
+	wid = max(8, wid)
 	pos = 1
 	insertpos = -1
 	linewid = 0

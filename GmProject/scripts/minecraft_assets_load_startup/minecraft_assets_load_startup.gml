@@ -31,7 +31,7 @@ function minecraft_assets_load_startup()
 	// Create default resource
 	with (mc_res)
 	{
-		save_id = "default"
+		save_id = "minecraft"
 		type = e_res_type.PACK
 		display_name = "Minecraft"
 		font_minecraft = true

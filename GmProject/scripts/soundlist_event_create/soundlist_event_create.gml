@@ -8,7 +8,12 @@ function soundlist_event_create()
 	filter_scroll = 0
 	search_tbx = new_textbox(true, 0, "")
 	scroll = new_obj(obj_scrollbar)
-	visible_items = 8
+	
+	header_show = false
+	height_items = soundlist_minimum_items
+	height_percent = 1
+	items_visible = height_items
+	
 	search = false
 	source = ""
 	select = null

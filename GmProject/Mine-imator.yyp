@@ -1470,6 +1470,7 @@
     {"id":{"name":"bench_click","path":"scripts/bench_click/bench_click.yy",},},
     {"id":{"name":"bench_draw_settings","path":"scripts/bench_draw_settings/bench_draw_settings.yy",},},
     {"id":{"name":"bench_draw","path":"scripts/bench_draw/bench_draw.yy",},},
+    {"id":{"name":"bench_list_height","path":"scripts/bench_list_height/bench_list_height.yy",},},
     {"id":{"name":"bench_music_stop","path":"scripts/bench_music_stop/bench_music_stop.yy",},},
     {"id":{"name":"bench_music_update","path":"scripts/bench_music_update/bench_music_update.yy",},},
     {"id":{"name":"bench_show","path":"scripts/bench_show/bench_show.yy",},},

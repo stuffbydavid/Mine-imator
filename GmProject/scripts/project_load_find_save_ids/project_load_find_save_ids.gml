@@ -24,7 +24,8 @@ function project_load_find_save_ids(isproject = false)
 	
 	save_id_map[? null] = null
 	save_id_map[?"root"] = "root"
-	save_id_map[?"default"] = "default"
+	save_id_map[?"default"] = project_pack_res
+	save_id_map[?"minecraft"] = "minecraft"
 	save_id_map[?project_pack_res] = project_pack_res
 	
 	// Set resource IDs

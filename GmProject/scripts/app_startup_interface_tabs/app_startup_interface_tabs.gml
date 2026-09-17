@@ -96,7 +96,7 @@ function app_startup_interface_tabs()
 		{
 			preview = new_obj(obj_preview)
 			list = new_obj(obj_sortlist)
-			list.visible_items = 7
+			list.height_items = 7
 			list.can_deselect = true
 			list.script = action_lib_list
 			list.filter_type_list = temp_type_name_list
@@ -164,7 +164,7 @@ function app_startup_interface_tabs()
 		{
 			preview = new_obj(obj_preview)
 			list = new_obj(obj_sortlist)
-			list.visible_items = 7
+			list.height_items = 7
 			list.can_deselect = true
 			list.script = action_res_list
 			list.filter_type_list = res_type_name_list
@@ -265,7 +265,7 @@ function app_startup_interface_tabs()
 		tbx_destroy_at_time_random = new_textbox_ndecimals()
 		
 		type_list = new_obj(obj_sortlist)
-		type_list.visible_items = 6
+		type_list.height_items = 6
 		type_list.script = action_lib_pc_type_list
 		type_list.can_deselect = true
 		sortlist_column_add(type_list, "particleeditortypename", 0)

@@ -7,6 +7,9 @@ function save_id_find(saveid)
 	if (saveid = particle_sheet || saveid = particle_template || saveid = project_pack_res)
 		return saveid
 	
+	if (saveid = "default")
+		return project_pack_res
+	
 	if (!is_string(saveid) || saveid = "")
 		return null
 	
