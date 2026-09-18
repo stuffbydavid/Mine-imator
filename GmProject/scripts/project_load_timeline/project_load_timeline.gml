@@ -127,6 +127,7 @@ function project_load_timeline(map)
 		
 		// Default values
 		project_load_values(map[?"default_values"], value_default)
+		project_load_values_update_default()
 		
 		// Keyframes
 		var kfmap = map[?"keyframes"];
@@ -148,7 +149,7 @@ function project_load_timeline(map)
 						value[v] = other.value_default[v]
 					
 					project_load_values(kfmap[?key], value)
-					project_load_values_update()
+					project_load_values_update(kfmap[?key])
 					
 					other.keyframe_array[position] = id
 				}

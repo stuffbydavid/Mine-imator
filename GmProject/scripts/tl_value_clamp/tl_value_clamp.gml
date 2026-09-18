@@ -71,6 +71,9 @@ function tl_value_clamp(vid, val)
 		case e_value.BEND_ANGLE_Z: return clamp(val, -180, 180)
 		case e_value.CAM_FOV: return clamp(val, 1, 170)
 		case e_value.CAM_BLADE_AMOUNT: return clamp(val, 0, 32)
+		case e_value.CAM_DOF_BLADE_CURVATURE: return clamp(val, 0, 1)
+		case e_value.CAM_DOF_BLUR_RATIO:
+		case e_value.CAM_BLADE_STRETCH: return clamp(val, -1, 1)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 		case e_value.CAM_EXPOSURE:
 		case e_value.CAM_GAMMA:

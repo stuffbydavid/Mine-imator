@@ -71,6 +71,7 @@ function app_startup_lists()
 		"CAM_FOV",
 		"CAM_BLADE_AMOUNT",
 		"CAM_BLADE_ANGLE",
+		"CAM_BLADE_STRETCH",
 		"CAM_LIGHT_MANAGEMENT",
 		"CAM_TONEMAPPER",
 		"CAM_EXPOSURE",
@@ -93,6 +94,7 @@ function app_startup_lists()
 		"CAM_DOF_FADE_SIZE",
 		"CAM_DOF_BLUR_SIZE",
 		"CAM_DOF_BLUR_RATIO",
+		"CAM_DOF_BLADE_CURVATURE",
 		"CAM_DOF_BIAS",
 		"CAM_DOF_THRESHOLD",
 		"CAM_DOF_GAIN",
@@ -244,7 +246,7 @@ function app_startup_lists()
 	
 	for (var i = 0; i < ds_list_size(camera_values_list); i++)
 	{
-		var valueid = e_value.CAM_FOV + i;
+		var valueid = camera_values_list[|i];
 		
 		if (tl_value_is_bool(valueid))
 			camera_use_default_list[|i] = false

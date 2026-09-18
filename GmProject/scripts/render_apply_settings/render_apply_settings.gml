@@ -7,6 +7,8 @@ function render_apply_settings(preset, renderer)
 		var settings = preset.renderer[e_renderer.STANDARD];
 		project_render_ssao = settings.ssao
 		project_render_shadows = settings.shadows
+		project_render_dof_quality = settings.dof_quality
+		project_render_dof_realistic_blur = settings.dof_realistic_blur
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
 		project_render_shadows_jittered = false
 		project_render_shadows_single_sample = false
@@ -26,6 +28,8 @@ function render_apply_settings(preset, renderer)
 		project_render_samples = settings.samples
 		project_render_ssao = settings.ssao
 		project_render_shadows = settings.shadows
+		project_render_dof_quality = settings.dof_quality
+		project_render_dof_realistic_blur = true
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
 		project_render_shadows_sun_cascades = clamp(round(settings.shadows_sun_cascades), 1, 3)
 		project_render_shadows_sun_buffer_size = settings.shadows_sun_buffer_size

@@ -3000,6 +3000,12 @@
 			"custom": "Custom"
 		},
 		"samples": "Samples",
+		"dof": "Depth of field",
+		"dof/": {
+			"quality": "Quality",
+			"realisticblur": "Realistic Blur",
+			"realisticblurtip": "Handles blurring objects better, but adds noise."
+		},
 		"ssao": "Ambient occlusion",
 		"ssaotip": "Darkens areas that are less exposed to light.",
 		"ssao/": {
@@ -4013,6 +4019,8 @@
 			"aperturetip": "Control aperture settings of the camera to change how certain effects behave.",
 			"bladeamount": "Blades",
 			"bladeangle": "Blade angle",
+			"bladestretch": "Blade stretch",
+			"bladecurvature": "Blade curvature",
 			"videosize": "Camera size",
 			"videosize/": {
 				"useproject": "Use project settings",
@@ -4053,8 +4061,8 @@
 				"blursize": "Blur size",
 				"blurratio": "Anamorphic ratio",
 				"bias": "Edge highlight",
-				"gain": "Highlight boost",
-				"threshold": "Boost threshold",
+				"gain": "Highlights strength",
+				"threshold": "Highlights threshold",
 				"fringe": "Color fringe",
 				"fringe/": {
 					"anglered": "R",

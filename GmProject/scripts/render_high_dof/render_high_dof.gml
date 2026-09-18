@@ -24,19 +24,17 @@ function render_high_dof(prevsurf, hdr = false)
 	}
 	surface_reset_target()
 	
-	// Blur CoC buffer to bleed edges
+	// Blur near CoC to bleed foreground edges
 	gpu_set_texrepeat(false)
-	repeat (16)
+	gpu_set_texfilter(true)
 	{
-		var cocsurftemp;
 		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		cocsurftemp = render_surface[2]
+		var cocsurftemp = render_surface[2]
 		
 		render_shader_obj = shader_map[?shader_high_dof_coc_blur]
 		with (render_shader_obj)
 			shader_set(shader)
 		
-		// Horizontal
 		surface_set_target(cocsurftemp)
 		{
 			with (render_shader_obj)
@@ -44,8 +42,6 @@ function render_high_dof(prevsurf, hdr = false)
 			draw_surface_exists(cocsurf, 0, 0)
 		}
 		surface_reset_target()
-		
-		// Vertical
 		surface_set_target(cocsurf)
 		{
 			with (render_shader_obj)
@@ -57,8 +53,9 @@ function render_high_dof(prevsurf, hdr = false)
 		with (render_shader_obj)
 			shader_clear()
 	}
+	gpu_set_texfilter(false)
 	gpu_set_texrepeat(true)
-	
+
 	// Render directly to target?
 	resultsurf = render_high_get_apply_surf(hdr)
 	

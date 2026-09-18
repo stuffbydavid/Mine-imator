@@ -40,7 +40,8 @@ function tl_value_default(valueid)
 		case e_value.CAM_EXPOSURE: return 1
 		case e_value.CAM_GAMMA: return 2.2
 		case e_value.CAM_BLADE_AMOUNT:
-		case e_value.CAM_BLADE_ANGLE: return 0
+		case e_value.CAM_BLADE_ANGLE:
+		case e_value.CAM_BLADE_STRETCH: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
 		case e_value.CAM_SHAKE_MODE:
 		case e_value.CAM_SHAKE_STRENGTH_X:
@@ -52,6 +53,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_DOF_RANGE: return 200
 		case e_value.CAM_DOF_FADE_SIZE: return 100
 		case e_value.CAM_DOF_BLUR_SIZE: return .01
+		case e_value.CAM_DOF_BLADE_CURVATURE: return .25
 		case e_value.CAM_DOF_BLUR_RATIO:
 		case e_value.CAM_DOF_BIAS:
 		case e_value.CAM_DOF_THRESHOLD:

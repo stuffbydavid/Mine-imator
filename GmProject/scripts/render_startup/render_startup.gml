@@ -163,6 +163,8 @@ function render_startup()
 	render_alpha_hash_shadows = false
 	
 	// Noise sampling
+	project_render_dof_quality = 16
+	project_render_dof_realistic_blur = false
 	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array,
 			  render_pcss_kernel, render_pcss_kernel_rotated, render_pcss_quality_prev;
 	render_sample_noise_texture = null
@@ -206,7 +208,7 @@ function render_startup()
 	render_indirect_bounces = 1
 	
 	// DOF
-	globalvar render_dof_samples, render_dof_weight_samples, render_dof_sample_amount;
+	globalvar render_dof_samples, render_dof_weight_samples, render_dof_area_samples, render_dof_sample_amount;
 	
 	// Grain
 	globalvar render_grain_noise;

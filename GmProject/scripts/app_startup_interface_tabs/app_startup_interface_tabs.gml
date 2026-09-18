@@ -39,6 +39,7 @@ function app_startup_interface_tabs()
 			
 			tbx_render_distance = new_textbox_integer()
 			tbx_samples = new_textbox_integer()
+			tbx_dof_quality = new_textbox_integer()
 			
 			tbx_shadows_sun_cascades = new_textbox_integer()
 			tbx_shadows_blur_quality = new_textbox_integer()
@@ -590,6 +591,8 @@ function app_startup_interface_tabs()
 			tbx_blade_amount = new_textbox_integer()
 			tbx_blade_angle = new_textbox_ndecimals()
 			tbx_blade_angle.suffix = "°"
+			tbx_blade_stretch = new_textbox_integer()
+			tbx_blade_stretch.suffix = "%"
 			
 			tbx_exposure = new_textbox_decimals()
 			tbx_gamma = new_textbox_decimals()
@@ -621,11 +624,13 @@ function app_startup_interface_tabs()
 			tbx_dof_blur_size.suffix = "%"
 			tbx_dof_blur_ratio = new_textbox_integer()
 			tbx_dof_blur_ratio.suffix = "%"
+			tbx_dof_blade_curvature = new_textbox_integer()
+			tbx_dof_blade_curvature.suffix = "%"
 			tbx_dof_bias = new_textbox_integer()
 			tbx_dof_bias.suffix = "%"
-			tbx_dof_threshold = new_textbox_integer()
+			tbx_dof_threshold = new_textbox_decimals()
 			tbx_dof_threshold.suffix = "%"
-			tbx_dof_gain = new_textbox_integer()
+			tbx_dof_gain = new_textbox_decimals()
 			tbx_dof_gain.suffix = "%"
 			tbx_dof_fringe_angle_red = new_textbox_ndecimals()
 			tbx_dof_fringe_angle_red.suffix = "°"

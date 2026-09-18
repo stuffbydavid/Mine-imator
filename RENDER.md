@@ -23,6 +23,8 @@ The ranges below are the ranges supported by the corresponding interface control
 | Setting | Values | Description |
 | --- | --- | --- |
 | `samples` | Integer, 1-256 | Number of render samples |
+| `dof_quality` | Integer, 8-64 | Depth of field taps per pixel (default 16 in both renderers) |
+| `dof_realistic_blur` | Boolean | Standard only: use per-pixel blur sampling (off by default) |
 | `distance` | 1,000-100,000 | Far render distance |
 | `ssao` | Boolean | Enable screen-space ambient occlusion |
 | `ssao_radius` | 0-256 | SSAO sampling radius |
@@ -86,6 +88,7 @@ Camera settings modify the camera active at the current test frame, if present.
 | `fov` | 1-170 degrees | Vertical field of view |
 | `blade_amount` | Integer, 0-16 | Aperture blade count; timeline clamping permits up to 32 |
 | `blade_angle` | -no limit to no limit, in degrees | Aperture blade rotation |
+| `blade_stretch` | -1-1 | Blade-relative blur stretch; positive stretches up/down before blade rotation, negative stretches left/right |
 | `light_management` | Boolean | Override project light-management settings for this camera |
 | `cam_tonemapper` | `0` = none, `1` = Reinhard, `2` = ACES | Camera tonemapper override |
 | `cam_exposure` | 0-no limit | Camera exposure override |
@@ -117,10 +120,11 @@ Camera settings modify the camera active at the current test frame, if present.
 | `dof_range` | 0-no limit | In-focus range around the focus depth |
 | `dof_fade_size` | 0-no limit | Transition size into the blurred region |
 | `dof_blur_size` | 0-0.1 | Blur size |
-| `dof_blur_ratio` | 0-1 | Anamorphic blur ratio |
+| `dof_blur_ratio` | -1-1 | Screen-aligned anamorphic blur ratio; positive stretches up/down, negative stretches left/right |
+| `dof_blade_curvature` | 0-1 | Blade edge curvature; 0 is straight and 1 is circular |
 | `dof_bias` | 0-10 | Depth-of-field bokeh bias |
-| `dof_threshold` | 0-1 | Bokeh highlight threshold |
-| `dof_gain` | 0-2 | Bokeh highlight gain |
+| `dof_threshold` | 0-no limit | HDR highlights threshold |
+| `dof_gain` | 0-no limit | Highlights strength |
 | `dof_fringe` | Boolean | Enable depth-of-field color fringing |
 | `dof_fringe_angle_red` | -no limit to no limit, in degrees | Red fringe direction |
 | `dof_fringe_angle_green` | -no limit to no limit, in degrees | Green fringe direction |

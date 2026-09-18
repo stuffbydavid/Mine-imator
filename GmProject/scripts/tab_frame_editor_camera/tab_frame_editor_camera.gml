@@ -73,6 +73,16 @@ function tab_frame_editor_camera()
 			tab_control_dragger()
 			draw_dragger("frameeditorcamerabladeangle", dx, dy, dragger_width, tl_edit.value[e_value.CAM_BLADE_ANGLE], 1, -no_limit, no_limit, 0, 0.1, tab.camera.tbx_blade_angle, action_tl_frame_cam_blade_angle)
 			tab_next()
+
+			// Blade stretch
+			tab_control_meter()
+			draw_meter("frameeditorcamerabladestretch", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLADE_STRETCH] * 100), -100, 100, 0, 1, tab.camera.tbx_blade_stretch, action_tl_frame_cam_blade_stretch)
+			tab_next()
+
+			// Blade curvature
+			tab_control_meter()
+			draw_meter("frameeditorcamerabladecurvature", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BLADE_CURVATURE] * 100), 0, 100, 25, 1, tab.camera.tbx_dof_blade_curvature, action_tl_frame_cam_dof_blade_curvature)
+			tab_next()
 			
 			tab_collapse_end()
 		}
@@ -242,19 +252,19 @@ function tab_frame_editor_camera()
 		if (setting_advanced_mode)
 		{
 			tab_control_meter()
-			draw_meter("frameeditorcameradofblurratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100), 0, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
+			draw_meter("frameeditorcameradofblurratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100), -100, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
 			tab_next()
 			
 			tab_control_meter()
 			draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 10), 0, 100, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
 			tab_next()
-			
-			tab_control_meter()
-			draw_meter("frameeditorcameradofgain", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_GAIN] * 100), 0, 200, 0, 1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
+
+			tab_control_dragger()
+			draw_dragger("frameeditorcameradofthreshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_THRESHOLD] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera.tbx_dof_threshold, action_tl_frame_cam_dof_threshold)
 			tab_next()
 			
-			tab_control_meter()
-			draw_meter("frameeditorcameradofthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_THRESHOLD] * 100), 0, 100, 0, 1, tab.camera.tbx_dof_threshold, action_tl_frame_cam_dof_threshold)
+			tab_control_dragger()
+			draw_dragger("frameeditorcameradofgain", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_GAIN] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
 			tab_next()
 			
 			tab_control_switch()

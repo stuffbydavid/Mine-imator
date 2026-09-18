@@ -86,7 +86,7 @@ function tab_properties_render()
 	if (collapse_map[?"preset_special_effects"])
 	{
 		tab_collapse_start()
-	
+
 		// SSAO
 		tab_control_switch()
 		draw_button_collapse("ssao", collapse_map[?"ssao"], action_project_render_ssao, rendererset.ssao, "renderssao", "renderssaotip")
@@ -371,6 +371,26 @@ function tab_properties_render()
 			draw_meter("renderaapower", dx, dy, dw, round(rendererset.aa_power * 100), 0, 300, 100, 1, tab.render.tbx_aa_power, action_project_render_aa_power)
 			tab_next()
 			
+			tab_collapse_end()
+		}
+
+		// Depth of field
+		tab_control_switch()
+		draw_button_collapse("render_dof", collapse_map[?"render_dof"], null, true, "renderdof")
+		tab_next()
+
+		if (collapse_map[?"render_dof"])
+		{
+			tab_collapse_start()
+			tab_control_meter()
+			draw_meter("renderdofquality", dx, dy, dw, rendererset.dof_quality, 8, 64, 16, 1, tab.render.tbx_dof_quality, action_project_render_dof_quality)
+			tab_next()
+			if (renderer_edit = e_renderer.STANDARD)
+			{
+				tab_control_switch()
+				draw_switch("renderdofrealisticblur", dx, dy, rendererset.dof_realistic_blur, action_project_render_dof_realistic_blur, "renderdofrealisticblurtip")
+				tab_next()
+			}
 			tab_collapse_end()
 		}
 		

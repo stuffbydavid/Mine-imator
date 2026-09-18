@@ -17,6 +17,8 @@ function render_preset_event_create()
 	{
 		ssao = true
 		shadows = true
+		dof_quality = 16
+		dof_realistic_blur = false
 		shadows_blur_quality = 20
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
@@ -38,6 +40,7 @@ function render_preset_event_create()
 		cache_data_buffers = false
 		ssao = true
 		shadows = true
+		dof_quality = 16
 		shadows_blur_quality = 20
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
