@@ -582,24 +582,24 @@ namespace CppProject
 
 						// Get speed modifier
 						RealType mod = flyMoveSpeed;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_SLOW], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_SLOW))->active)
 							mod *= flySlowMod;
-						else if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_FAST], active)))
+						else if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_FAST))->active)
 							mod *= flyFastMod;
 
 						// Apply keys to vector
 						VecType moveVec = { 0, 0, 0 };
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_FORWARD], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_FORWARD))->active)
 							moveVec += forward;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_BACK], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_BACK))->active)
 							moveVec -= forward;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_RIGHT], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_RIGHT))->active)
 							moveVec += right;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_LEFT], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_LEFT))->active)
 							moveVec -= right;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_ASCEND], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_ASCEND))->active)
 							camPos.y += mod, camTarget.y += mod;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_DESCEND], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_DESCEND))->active)
 							camPos.y -= mod, camTarget.y -= mod;
 
 						moveVec *= mod;

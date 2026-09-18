@@ -65,7 +65,7 @@ function action_bench_create(edit = false)
 	}
 	else
 	{
-		var hobj, tl, particletemp, sceneryres, sceneryreplaceground;
+		var hobj, tl, particletemp, sceneryres, sceneryreplaceground, par;
 		hobj = null
 		particletemp = null
 		sceneryres = null
@@ -74,6 +74,9 @@ function action_bench_create(edit = false)
 		if (history_redo)
 		{
 			hobj = history_data
+			par = save_id_find(history_data.parent_save_id)
+			if (par = null)
+				par = app
 			hobj.spawn_amount = 0
 			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
@@ -98,6 +101,8 @@ function action_bench_create(edit = false)
 			hobj.bench_tab = bench_tab
 			hobj.spawn_amount = 0
 			hobj.open_editor = edit
+			hobj.value_default = array()
+			hobj.parent_save_id = save_id_get(app)
 			
 			if (edit)
 				tab_show(template_editor)
@@ -305,31 +310,22 @@ function action_bench_create(edit = false)
 			
 			with (tl)
 			{
-				value_default[e_value.POS_X] = history_data.value_default[e_value.POS_X]
-				value_default[e_value.POS_Y] = history_data.value_default[e_value.POS_Y]
-				value_default[e_value.POS_Z] = history_data.value_default[e_value.POS_Z]
-				value_default[e_value.ROT_X] = history_data.value_default[e_value.ROT_X]
-				value_default[e_value.ROT_Y] = history_data.value_default[e_value.ROT_Y]
-				value_default[e_value.ROT_Z] = history_data.value_default[e_value.ROT_Z]
-				value[e_value.POS_X] = value_default[e_value.POS_X]
-				value[e_value.POS_Y] = value_default[e_value.POS_Y]
-				value[e_value.POS_Z] = value_default[e_value.POS_Z]
-				value[e_value.ROT_X] = value_default[e_value.ROT_X]
-				value[e_value.ROT_Y] = value_default[e_value.ROT_Y]
-				value[e_value.ROT_Z] = value_default[e_value.ROT_Z]
-				tl_set_parent(history_data.parent)
+				tl_value_copy_vec3(e_value.POS_X, value_default, history_data.value_default)
+				tl_value_copy_vec3(e_value.ROT_X, value_default, history_data.value_default)
+				tl_value_copy_vec3(e_value.SCA_X, value_default, history_data.value_default)
+				tl_value_copy_vec3(e_value.POS_X, value, value_default)
+				tl_value_copy_vec3(e_value.ROT_X, value, value_default)
+				tl_value_copy_vec3(e_value.SCA_X, value, value_default)
+				tl_set_parent(par, -1, true)
 			}
 		}
 		else
 		{
 			with (hobj)
 			{
-				value_default[e_value.POS_X] = tl.value_default[e_value.POS_X]
-				value_default[e_value.POS_Y] = tl.value_default[e_value.POS_Y]
-				value_default[e_value.POS_Z] = tl.value_default[e_value.POS_Z]
-				value_default[e_value.ROT_X] = tl.value_default[e_value.ROT_X]
-				value_default[e_value.ROT_Y] = tl.value_default[e_value.ROT_Y]
-				value_default[e_value.ROT_Z] = tl.value_default[e_value.ROT_Z]
+				tl_value_copy_vec3(e_value.POS_X, value_default, tl.value_default)
+				tl_value_copy_vec3(e_value.ROT_X, value_default, tl.value_default)
+				tl_value_copy_vec3(e_value.SCA_X, value_default, tl.value_default)
 				parent = app
 			}
 			

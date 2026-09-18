@@ -15,6 +15,7 @@ function render_world_tl_reset()
 	shader_blend_alpha = 1
 	
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+	render_set_uniform_color("uReplaceColor", c_black, 1)
 	
 	// Mix color
 	shader_uniform_color_ext = 0

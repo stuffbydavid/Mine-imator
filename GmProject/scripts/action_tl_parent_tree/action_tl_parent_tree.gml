@@ -27,10 +27,25 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 					tl_old_x[tl_amount] = other.value[e_value.POS_X]
 					tl_old_y[tl_amount] = other.value[e_value.POS_Y]
 					tl_old_z[tl_amount] = other.value[e_value.POS_Z]
+					tl_old_rot_x[tl_amount] = other.value[e_value.ROT_X]
+					tl_old_rot_y[tl_amount] = other.value[e_value.ROT_Y]
+					tl_old_rot_z[tl_amount] = other.value[e_value.ROT_Z]
+					tl_old_sca_x[tl_amount] = other.value[e_value.SCA_X]
+					tl_old_sca_y[tl_amount] = other.value[e_value.SCA_Y]
+					tl_old_sca_z[tl_amount] = other.value[e_value.SCA_Z]
+					tl_old_default_x[tl_amount] = other.value_default[e_value.POS_X]
+					tl_old_default_y[tl_amount] = other.value_default[e_value.POS_Y]
+					tl_old_default_z[tl_amount] = other.value_default[e_value.POS_Z]
+					tl_old_default_rot_x[tl_amount] = other.value_default[e_value.ROT_X]
+					tl_old_default_rot_y[tl_amount] = other.value_default[e_value.ROT_Y]
+					tl_old_default_rot_z[tl_amount] = other.value_default[e_value.ROT_Z]
+					tl_old_default_sca_x[tl_amount] = other.value_default[e_value.SCA_X]
+					tl_old_default_sca_y[tl_amount] = other.value_default[e_value.SCA_Y]
+					tl_old_default_sca_z[tl_amount] = other.value_default[e_value.SCA_Z]
 					tl_amount++
 				}
 				
-				tl_set_parent(newparent, newindex)
+				tl_set_parent(newparent, newindex, true)
 				
 				// Lock armor
 				if (type = e_tl_type.EQUIPMENT && temp != null && newparent != app && (newparent.type = e_tl_type.CHARACTER || newparent.type = e_tl_type.SPECIAL_BLOCK || newparent.type = e_tl_type.MODEL))
@@ -42,22 +57,6 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 				
 				moved = true
 				
-				// Parented objects with no keyframes get position reset
-				if (ds_list_size(keyframe_list) = 0)
-				{
-					if (parent = app)
-					{
-						value[e_value.POS_X] = value_default[e_value.POS_X]
-						value[e_value.POS_Y] = value_default[e_value.POS_Y]
-						value[e_value.POS_Z] = value_default[e_value.POS_Z]
-					}
-					else
-					{
-						value[e_value.POS_X] = 0
-						value[e_value.POS_Y] = 0
-						value[e_value.POS_Z] = 0
-					}
-				}
 				t--
 			}
 			

@@ -59,6 +59,7 @@ function temp_copy(to)
 	
 	to.block_repeat_enable = block_repeat_enable
 	to.block_repeat = array_copy_1d(block_repeat)
+	to.block_center = block_center
 	
 	to.block_randomize = block_randomize
 	

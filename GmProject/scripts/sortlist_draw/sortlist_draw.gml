@@ -297,7 +297,13 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			mouse_cursor = cr_handpoint
 			if (mouse_left_released)
 			{
-				if (slist.can_deselect && selected)
+				if (selected && window_focus = string(slist.scroll) && slist.script_select_click != null)
+				{
+					script_execute(slist.script_select_click)
+					if (slist.script_select_click = action_bench_create)
+						bench_show_ani_type = "hide"
+				}
+				else if (slist.can_deselect && selected)
 					script_execute(slist.script, null)
 				else
 					script_execute(slist.script, value)

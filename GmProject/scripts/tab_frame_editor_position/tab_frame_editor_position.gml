@@ -15,7 +15,7 @@ function tab_frame_editor_position()
 	
 	// Parts default to their spawn position, other objects to (0, 0, 0)
 	if (tl_edit.part_of = null || tl_edit.type = e_tl_type.CAMERA)
-		def = point3D(0, 0, 0)
+		def = point3D(0)
 	else
 		def = point3D(tl_edit.value_default[e_value.POS_X], tl_edit.value_default[e_value.POS_Y], tl_edit.value_default[e_value.POS_Z])
 	

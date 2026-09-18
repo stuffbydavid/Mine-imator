@@ -67,7 +67,7 @@ function view_control_scale(view)
 			for (var i = 0; i <= Z; i++)
 				move[i] *= (!view_control_move_flip_axis[i] ? 1 : -1)
 			
-			scale = point3D(0, 0, 0)
+			scale = vec3(0)
 			snapval = (dragger_snap ? setting_snap_size_scale : snap_min)
 			
 			for (var i = X; i <= Z; i++)

@@ -116,7 +116,7 @@ function do_ik(tl)
 		jointpos[0] = matrix_position(mat)
 		
 		// Middle joint
-		bendmat = matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0, 0, 0)), mat)
+		bendmat = matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0)), mat)
 		jointpos[1] = matrix_position(bendmat)
 		
 		// End effector
@@ -130,7 +130,7 @@ function do_ik(tl)
 			case e_part.BACK: offsetpos = [0, -offset, 0]; break;
 		}
 		
-		bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0, 0, 0)), mat))
+		bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0)), mat))
 		jointpos[2] = matrix_position(bendmat)
 	}
 	

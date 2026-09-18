@@ -96,6 +96,7 @@ function app_startup_interface_bench()
 		height_fixed_base = array_create(e_bench.amount, 0)
 		list_height = 0
 		list_minimum_height = 0
+		list_focus = ""
 		
 		// Default settings
 		temp_event_create()
@@ -171,6 +172,7 @@ function app_startup_interface_bench()
 		// Character list
 		char_list = new_obj(obj_sortlist)
 		char_list.script = action_bench_model_name
+		char_list.script_select_click = action_bench_create
 		char_list.height_percent = bench_list_percent
 		
 		sortlist_column_add(char_list, "charname", 0)
@@ -180,6 +182,7 @@ function app_startup_interface_bench()
 		// Equipment list
 		equipment_list = new_obj(obj_sortlist)
 		equipment_list.script = action_bench_model_name
+		equipment_list.script_select_click = action_bench_create
 		equipment_list.header_show = false
 		equipment_list.height_items = ds_list_size(mc_assets.equipment_list)
 		
@@ -190,6 +193,7 @@ function app_startup_interface_bench()
 		// Model part list
 		model_part_model_list = new_obj(obj_sortlist)
 		model_part_model_list.script = action_bench_model_name
+		model_part_model_list.script_select_click = action_bench_create
 		model_part_model_list.height_percent = bench_list_percent
 		
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
@@ -206,6 +210,7 @@ function app_startup_interface_bench()
 		// Schematic list
 		schematic_list = new_obj(obj_sortlist)
 		schematic_list.script = action_bench_schematic_select
+		schematic_list.script_select_click = action_bench_create
 		schematic_list.header_show = false
 		schematic_list.height_percent = 0.9
 		
@@ -218,6 +223,7 @@ function app_startup_interface_bench()
 		// Block list
 		block_list = new_obj(obj_sortlist)
 		block_list.script = action_bench_block_name
+		block_list.script_select_click = action_bench_create
 		block_list.height_percent = bench_list_percent
 		
 		sortlist_column_add(block_list, "blockname", 0)
@@ -228,6 +234,7 @@ function app_startup_interface_bench()
 		// Special block list
 		special_block_list = new_obj(obj_sortlist)
 		special_block_list.script = action_bench_model_name
+		special_block_list.script_select_click = action_bench_create
 		special_block_list.height_percent = bench_list_percent
 		
 		sortlist_column_add(special_block_list, "spblockname", 0)

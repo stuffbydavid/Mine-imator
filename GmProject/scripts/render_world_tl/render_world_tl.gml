@@ -43,6 +43,10 @@ function render_world_tl()
 		render_set_uniform_color("uReplaceColor", id, 1)
 	}
 	
+	// Placement data
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform_color("uReplaceColor", id, 1)
+	
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
 	
@@ -50,7 +54,7 @@ function render_world_tl()
 	else if (render_mode = e_render_mode.SELECT && !parent_is_selected && !selected)
 		return 0
 		
-	else if (render_mode = e_render_mode.PLACE && !parent_is_placed && !placed)
+	else if (render_mode = e_render_mode.PLACE_SELECT && !parent_is_placed && !placed)
 		return 0
 	
 	// Box for clicking

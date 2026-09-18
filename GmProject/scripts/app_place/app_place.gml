@@ -1,3 +1,4 @@
+/// app_start_place(tl, spawn)
 function app_start_place(tl, spawn)
 {
 	window_busy = "place"
@@ -5,15 +6,16 @@ function app_start_place(tl, spawn)
 	place_tl_render = false
 	place_spawn = spawn
 	
-	view_main.update_depth = true
-	view_main.surface_depth_value = 0.995
-	view_second.update_depth = true
-	view_second.surface_depth_value = 0.995
+	view_main.update_place_surfaces = true
+	view_main.place_depth_value = 0.995
+	view_second.update_place_surfaces = true
+	view_second.place_depth_value = 0.995
 	
 	with (place_tl)
 		tl_mark_placed(true)
 }
 
+/// app_stop_place()
 function app_stop_place()
 {
 	with (place_tl)
@@ -24,6 +26,7 @@ function app_stop_place()
 	mouse_clear(mb_left)
 }
 
+/// app_update_place()
 function app_update_place()
 {
 	if (window_busy != "place")
@@ -36,8 +39,8 @@ function app_update_place()
 		place_cam_work_angle_look_xy != cam_work_angle_look_xy ||
 		place_cam_work_angle_look_z != cam_work_angle_look_z)
 	{
-		view_main.update_depth = true
-		view_second.update_depth = true
+		view_main.update_place_surfaces = true
+		view_second.update_place_surfaces = true
 		place_cam_work_from = cam_work_from
 		place_cam_work_angle_look_xy = cam_work_angle_look_xy
 		place_cam_work_angle_look_z = cam_work_angle_look_z
@@ -46,7 +49,7 @@ function app_update_place()
 	// Update object with position from last step
 	if (place_view_pos != null)
 	{
-		var snappos = setting_snap;
+		/*var snappos = setting_snap;
 		if (keyboard_check(vk_shift))
 			snappos = !snappos
 		
@@ -55,31 +58,33 @@ function app_update_place()
 			place_view_pos[X] = snap(place_view_pos[X], setting_snap_size_position)
 			place_view_pos[Y] = snap(place_view_pos[Y], setting_snap_size_position)
 			place_view_pos[Z] = snap(place_view_pos[Z], setting_snap_size_position)
-		}
+		}*/
 	
 		// Update timeline
 		with (place_tl)
 		{
-			value[e_value.POS_X] = app.place_view_pos[X]
-			value[e_value.POS_Y] = app.place_view_pos[Y]
-			value[e_value.POS_Z] = app.place_view_pos[Z]
+			tl_value_set_vec3(e_value.POS_X, app.place_view_pos)
+			tl_value_set_vec3(e_value.ROT_X, app.place_view_rot)
+			tl_value_set_vec3(e_value.SCA_X, app.place_view_sca)
+				
+			// Defaults
 			if (app.place_spawn)
 			{
-				value_default[e_value.POS_X] = value[e_value.POS_X]
-				value_default[e_value.POS_Y] = value[e_value.POS_Y]
-				value_default[e_value.POS_Z] = value[e_value.POS_Z]
+				tl_value_set_vec3(e_value.POS_X, app.place_view_pos, true)
+				tl_value_set_vec3(e_value.ROT_X, app.place_view_rot, true)
+				tl_value_set_vec3(e_value.SCA_X, app.place_view_sca, true)
 			}
 			
 			update_matrix = true
 		}
 		tl_update_matrix()
 		
-		// Update history
+		// Update history defaults
 		with (history[0])
 		{
-			value_default[e_value.POS_X] = app.place_view_pos[X]
-			value_default[e_value.POS_Y] = app.place_view_pos[Y]
-			value_default[e_value.POS_Z] = app.place_view_pos[Z]
+			tl_value_set_vec3(e_value.POS_X, app.place_view_pos, true)
+			tl_value_set_vec3(e_value.ROT_X, app.place_view_rot, true)
+			tl_value_set_vec3(e_value.SCA_X, app.place_view_sca, true)
 		}
 			
 		place_view_pos = null
@@ -90,19 +95,19 @@ function app_update_place()
 	{
 		with (history[0])
 		{
-			value_default[e_value.POS_X] = 0
-			value_default[e_value.POS_Y] = 0
-			value_default[e_value.POS_Z] = 0
+			tl_value_set_vec3(e_value.POS_X, vec3(0), true)
+			tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
+			tl_value_set_vec3(e_value.SCA_X, vec3(1), true)
 		}
 		
 		with (place_tl)
 		{
-			value_default[e_value.POS_X] = 0
-			value_default[e_value.POS_Y] = 0
-			value_default[e_value.POS_Z] = 0
-			value[e_value.POS_X] = 0
-			value[e_value.POS_Y] = 0
-			value[e_value.POS_Z] = 0
+			tl_value_set_vec3(e_value.POS_X, vec3(0))
+			tl_value_set_vec3(e_value.POS_X, vec3(0), true)
+			tl_value_set_vec3(e_value.ROT_X, vec3(0))
+			tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
+			tl_value_set_vec3(e_value.SCA_X, vec3(1))
+			tl_value_set_vec3(e_value.SCA_X, vec3(1), true)
 			update_matrix = true
 		}
 		

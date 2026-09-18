@@ -3207,6 +3207,7 @@
 		"randomizeblocks": "Randomize blocks",
 		"randomizeblockshelp": "Use random models and rotations for the block.",
 		"repeat": "Repeat",
+		"center": "Center",
 		"repeatx": "X",
 		"repeaty": "Y",
 		"repeatz": "Z",

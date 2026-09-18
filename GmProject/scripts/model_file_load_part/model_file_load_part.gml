@@ -410,12 +410,12 @@ function model_file_load_part(map, root, res, model)
 			ik_supported = false
 		}
 		
-		matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
+		matrix = matrix_create(point3D(0), rotation, vec3(1))
 		
 		// Matrix used when rendering preview/particle
 		default_matrix = matrix_create(position, rotation, vec3(1))
 		if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
-			default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_inherit_angle, point3D(0, 0, 0)))
+			default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_inherit_angle, point3D(0)))
 		
 		// Default bounds
 		bounds_start = point3D(no_limit, no_limit, no_limit)

@@ -5,6 +5,8 @@ function project_load_legacy_template()
 	with (new_obj(obj_template))
 	{
 		loaded = true
+		block_center = true
+		block_center_legacy = true
 		load_id = buffer_read_int()
 		save_id_map[?load_id] = load_id
 		

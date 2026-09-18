@@ -59,7 +59,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
 				{
 					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z]);
-					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0, 0, 0)), matrix_parent)
+					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0)), matrix_parent)
 				}
 			}
 			else
@@ -109,7 +109,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (part_of != null)
 					matrix_parent = matrix_multiply(matrix_create(model_part.position, model_part.rotation, vec3(1)), matrix_parent)
 				else
-					matrix_parent = matrix_multiply(matrix_create(point3D(0, 0, 0), model_part.rotation, vec3(1)), matrix_parent)
+					matrix_parent = matrix_multiply(matrix_create(point3D(0), model_part.rotation, vec3(1)), matrix_parent)
 			}
 			
 			// Create main matrix
@@ -126,7 +126,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (!inherit_rotation)
 			{
 				matrix_remove_rotation(matrix)
-				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
+				matrix = matrix_multiply(matrix_create(point3D(0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
 			}
 			
 			// Get current matrix for IK
@@ -195,9 +195,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				// Re-add calculated or own scale
 				if (inherit_scale)
-					matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), sca), matrix)
+					matrix = matrix_multiply(matrix_create(point3D(0), vec3(0), sca), matrix)
 				else
-					matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
+					matrix = matrix_multiply(matrix_create(point3D(0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
 			}
 			
 			// Replace position

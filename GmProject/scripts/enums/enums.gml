@@ -854,7 +854,7 @@ function enums()
 	{
 		CLICK,
 		SELECT,
-		PLACE,
+		PLACE_SELECT,
 		PREVIEW,
 		COLOR,
 		COLOR_FOG,
@@ -874,6 +874,7 @@ function enums()
 		COLOR_GLOW,
 		SCENE_TEST,
 		HIGH_DEPTH_NORMAL,
+		PLACE,
 		AO_MASK,
 		MATERIAL,
 		SUBSURFACE,

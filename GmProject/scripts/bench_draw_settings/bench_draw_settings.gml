@@ -502,7 +502,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				listh = fixed > 0 ? min(availableheight, max(minimum, floor(referenceheight * bench_list_percent))) : minimum
 				bench_settings.list_height = listh
 				bench_settings.list_minimum_height = minimum
-				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot)
+				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot, null, null, action_bench_create)
 				dy += listh + 8
 			}
 				

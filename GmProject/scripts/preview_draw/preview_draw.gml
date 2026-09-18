@@ -185,7 +185,7 @@ function preview_draw(preview, xx, yy, width, height)
 				{
 					var prevcam_zoom, rep, off;
 					prevcam_zoom = 32
-					off = point3D(0, 0, 0)
+					off = point3D(0)
 					
 					// Repeat
 					if (select.object_index = obj_template && select.block_repeat_enable)

@@ -1,4 +1,4 @@
-/// draw_texture_picker(select, textures, slots, sheet_sizes, x, y, width, height, scrollbar, script, [namelists, resource])
+/// draw_texture_picker(select, textures, slots, sheet_sizes, x, y, width, height, scrollbar, script, [namelists, resource, selectclick])
 /// @arg select
 /// @arg textures
 /// @arg slots
@@ -10,14 +10,15 @@
 /// @arg scrollbar
 /// @arg script
 /// @arg [namelists
-/// @arg resource]
+/// @arg resource
+/// @arg selectclick]
 /// @desc Draws a box for selecting between images from several texture sheets.
 ///		  The sheets are stacked as separate grids. The script receives a combined slot
 ///		  number, whose offsets are the preceding sheet list sizes.
 
-function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, hei, scroll, script, namelists = null, res = null)
+function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, hei, scroll, script, namelists = null, res = null, scriptselectclick = null)
 {
-	var off, contenthei, slotoffset, scrollsnap;
+	var off, contenthei, slotoffset, scrollsnap, pickermouseon;
 	
 	// Background
 	draw_box(xx + 1, yy + 1, wid - 2, hei - 2, false, c_input_background, draw_get_alpha())
@@ -29,6 +30,7 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 	contenthei = 0
 	slotoffset = 0
 	scrollsnap = 0
+	pickermouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
 
 	var clipactive, clipx, clipy, clipwid, cliphei;
 	clipactive = shader_clip_active
@@ -85,12 +87,19 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 				draw_box(tx - off, ty - off, slotwid + off * 4, slothei + off * 4, false, c_accent_hover, a_accent_hover)
 
 			draw_texture_slot(tex, slot, tx + off, ty + off, slotwid, slothei, sheetsize[X], sheetsize[Y], col)
-			if (app_mouse_box(tx, ty, itemwid, itemhei) && content_mouseon)
+			if (pickermouseon && app_mouse_box(tx, ty, itemwid, itemhei))
 			{
 				mouse_cursor = cr_handpoint
 				if (mouse_left_pressed)
 				{
-					script_execute(script, combinedslot)
+					if (combinedslot = select && window_focus = string(scroll) && scriptselectclick != null)
+					{
+						script_execute(scriptselectclick)
+						if (scriptselectclick = action_bench_create)
+							bench_show_ani_type = "hide"
+					}
+					else
+						script_execute(script, combinedslot)
 					window_focus = string(scroll)
 					select = combinedslot
 				}

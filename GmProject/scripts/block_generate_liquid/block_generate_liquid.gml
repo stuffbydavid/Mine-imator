@@ -395,7 +395,7 @@ function block_generate_liquid(waterlogged = false)
 		toptex3x = 0; toptex3y = block_size
 	}
 	
-	topmidtexx = block_size / 2; topmidtexy = block_size / 2
+	topmidtexx = block_half_size; topmidtexy = block_half_size
 	
 	// Transform to sheet
 	sidetex0x = (sidetex0x + slotflowposx) * slotflowsizex; sidetex0y = (sidetex0y + slotflowposy) * slotflowsizey
@@ -437,8 +437,8 @@ function block_generate_liquid(waterlogged = false)
 	x1 = block_pos_x;	  y1 = block_pos_y;		z1 = floor(block_pos_z);
 	x2 = x1 + block_size; y2 = y1 + block_size; z2 = z1 + minz;
 	
-	midx = x1 + block_size / 2
-	midy = y1 + block_size / 2
+	midx = x1 + block_half_size
+	midy = y1 + block_half_size
 	midz = z1 + averagez
 	
 	// Move waterlogged sides in to prevent Z fighting a little

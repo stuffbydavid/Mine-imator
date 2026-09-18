@@ -42,7 +42,7 @@ namespace CppProject
 	{
 		if (self->id == global::mc_res)
 			return global::load_assets_zip_file;
-		return global::save_folder + "/" + self->filename.ToStr();
+		return VarGetStr(global::save_folder) + "/" + self->filename.ToStr();
 	}
 
 	// Hash the current asset definitions
@@ -290,7 +290,7 @@ namespace CppProject
 			return;
 
 		QDataStream out(&file);
-		QByteArray assetsVersion = global::_app->setting_minecraft_assets_version.QStr().toUtf8();
+		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
 		PackCacheSource sourceInfo = PackCacheSourceInfo(PackCacheSourceFilename(self));
 
 		// Write cache identity
@@ -406,7 +406,7 @@ namespace CppProject
 
 		QByteArray assetsVersion(assetsVersionSize, '\0');
 		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
-			|| assetsVersion != global::_app->setting_minecraft_assets_version.QStr().toUtf8())
+			|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
 			return PackCacheReject("version");
 
 		in >> digestSize;

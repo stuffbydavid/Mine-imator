@@ -5,7 +5,7 @@ function macros()
 {
 	// Debug
 	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && true
+	#macro dev_mode_skip_blocks			dev_mode && false
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && false
 	#macro dev_mode_debug_saveid		dev_mode && false
@@ -199,6 +199,7 @@ function macros()
 	
 	// World
 	#macro block_size					16
+	#macro block_half_size				8
 	#macro block_size_list				array(16, 32, 64)
 	#macro item_size					16
 	#macro clip_near					1

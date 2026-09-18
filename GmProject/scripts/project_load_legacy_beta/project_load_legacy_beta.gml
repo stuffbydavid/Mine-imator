@@ -90,7 +90,7 @@ function project_load_legacy_beta(loadbackground)
 				lib_rotz[a, b] = buffer_read_double()
 			}
 			
-			lib_rotpoint[a] = point3D(0, 0, 0)
+			lib_rotpoint[a] = point3D(0)
 		}
 		
 		tl_amount = buffer_read_short()
@@ -315,6 +315,8 @@ function project_load_legacy_beta(loadbackground)
 		with (new_obj(obj_template))
 		{
 			loaded = true
+			block_center = true
+			block_center_legacy = true
 			load_id = loadid++
 			save_id_map[?load_id] = load_id
 			

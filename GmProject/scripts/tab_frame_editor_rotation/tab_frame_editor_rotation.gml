@@ -14,7 +14,7 @@ function tab_frame_editor_rotation()
 	var def;
 	
 	if (tl_edit.type = e_tl_type.CAMERA)
-		def = point3D(0, 0, 0)
+		def = point3D(0)
 	else
 		def = point3D(tl_edit.value_default[e_value.ROT_X], tl_edit.value_default[e_value.ROT_Y], tl_edit.value_default[e_value.ROT_Z])
 	

@@ -147,7 +147,7 @@ function project_load_legacy_timeline()
 		}
 		
 		if (part_of != null)
-			rot_point = point3D(0, 0, 0)
+			rot_point = point3D(0)
 		
 		backfaces = buffer_read_byte()
 		texture_blur = buffer_read_byte()

@@ -421,7 +421,7 @@ namespace CppProject
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
-			return GFX->QColorToInt(surf->GetColor(QPoint(x, y), false));
+			return GFX->QColorToInt(surf->GetColor(QPoint(x, y)));
 		}
 		return -1;
 	}
@@ -487,6 +487,7 @@ namespace CppProject
 		
 		if (Surface* surf = FindSurface(id))
 		{
+			surf->ClearColorCache();
 			GFX->SetMRTIndex(index, surf->frameBuffer);
 			return 1;
 		}

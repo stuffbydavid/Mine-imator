@@ -15,7 +15,7 @@ function render_world_particle()
 	if (temp != particle_sheet && temp != particle_template)
 	{
 		var scenery, rep, off;
-		off = point3D(0, 0, 0)
+		off = point3D(0)
 		
 		if (temp.block_repeat_enable)
 			rep = temp.block_repeat
@@ -31,7 +31,7 @@ function render_world_particle()
 				
 				if (temp.model.model_format = e_model_format.BLOCK)
 				{
-					off = point3D_mul(rep, -block_size / 2)
+					off = point3D_mul(rep, -block_half_size)
 					break
 				}
 			}
@@ -58,7 +58,7 @@ function render_world_particle()
 			
 			case e_temp_type.BLOCK:
 			{
-				off = point3D_mul(rep, -block_size / 2)
+				off = point3D_mul(rep, -block_half_size)
 				break
 			}
 			

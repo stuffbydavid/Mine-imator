@@ -70,6 +70,7 @@ function shader_startup()
 		new_shader("shader_high_samples_add")
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_depth_normal")
+		new_shader("shader_place")
 		new_shader("shader_high_material")
 		new_shader("shader_high_subsurface")
 		new_shader("shader_high_subsurface_scatter")
@@ -206,6 +207,12 @@ function shader_startup()
 	
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform("uReplaceColor")
+
+	with (shader_map[?shader_place])
+	{
+		new_shader_uniform("uReplaceColor")
+		new_shader_uniform("uGmDepth")
+	}
 	
 	with (shader_map[?shader_high_dof])
 	{

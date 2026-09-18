@@ -99,7 +99,27 @@ function view_update(view, cam)
 					window_busy = ""
 				}
 				else // Stop placing
+				{
+					var target = view.place_target_tl;
+					if (target != null &&
+						(place_tl.type = e_tl_type.BLOCK || place_tl.type = e_tl_type.SPECIAL_BLOCK ||
+						 (place_tl.type = e_tl_type.SCENERY && target.type = e_tl_type.BLOCK)) &&
+						(target.type = e_tl_type.BLOCK || target.type = e_tl_type.SCENERY))
+					{
+						with (history[0])
+						{
+							parent = target
+							parent_save_id = save_id_get(target)
+						}
+
+						with (place_tl)
+							tl_set_parent(target, -1, true)
+
+						tl_update_list()
+						tl_update_matrix()
+					}
 					app_stop_place()
+				}
 			}
 		}
 		
