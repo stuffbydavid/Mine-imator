@@ -12,7 +12,7 @@ function keybind_check(keybindobj, checkscript)
 		case "keyboard_check_pressed": scriptres = keyboard_check_pressed(keybind[e_keybind_key.CHAR]) break
 		case "keyboard_check_released": scriptres = keyboard_check_released(keybind[e_keybind_key.CHAR]) break
 	}
-	charcheck = (keybind[e_keybind_key.CHAR] = null || scriptres)
+	charcheck = (keybind[e_keybind_key.CHAR] != vk_nokey && (keybind[e_keybind_key.CHAR] = null || scriptres))
 	
 	if (checkscript = "keyboard_check")
 	{

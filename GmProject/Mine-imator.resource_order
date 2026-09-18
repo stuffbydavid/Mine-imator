@@ -1293,6 +1293,7 @@
     {"name":"json_string_encode","order":7,"path":"scripts/json_string_encode/json_string_encode.yy",},
     {"name":"key_valid","order":1,"path":"scripts/key_valid/key_valid.yy",},
     {"name":"keybind_check","order":3,"path":"scripts/keybind_check/keybind_check.yy",},
+    {"name":"keybind_clear","order":18,"path":"scripts/keybind_clear/keybind_clear.yy",},
     {"name":"keybind_event_create","order":5,"path":"scripts/keybind_event_create/keybind_event_create.yy",},
     {"name":"keybind_new","order":7,"path":"scripts/keybind_new/keybind_new.yy",},
     {"name":"keybind_register","order":11,"path":"scripts/keybind_register/keybind_register.yy",},

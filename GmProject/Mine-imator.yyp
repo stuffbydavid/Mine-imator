@@ -1811,6 +1811,7 @@
     {"id":{"name":"json_string_encode","path":"scripts/json_string_encode/json_string_encode.yy",},},
     {"id":{"name":"key_valid","path":"scripts/key_valid/key_valid.yy",},},
     {"id":{"name":"keybind_check","path":"scripts/keybind_check/keybind_check.yy",},},
+    {"id":{"name":"keybind_clear","path":"scripts/keybind_clear/keybind_clear.yy",},},
     {"id":{"name":"keybind_event_create","path":"scripts/keybind_event_create/keybind_event_create.yy",},},
     {"id":{"name":"keybind_new","path":"scripts/keybind_new/keybind_new.yy",},},
     {"id":{"name":"keybind_register","path":"scripts/keybind_register/keybind_register.yy",},},

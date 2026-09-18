@@ -204,6 +204,7 @@
 		"scalecombine": "Combine scale",
 		"bendsliders": "Display as sliders",
 		"bendwheels": "Display as wheels",
+		"clearkeybind": "Clear keybind",
 		"restorekeybind": "Restore keybind",
 		"pathsetlength": "Set path length",
 		"setcolor": "Set color...",
@@ -982,6 +983,8 @@
 		"settings": "Preferences"
 	},
 	"key/": {
+		"nokey": "Not bound",
+		"anykey": "Any",
 		"left": "Left",
 		"right": "Right",
 		"up": "Up",
