@@ -14,7 +14,7 @@ namespace CppProject
 	QVector<Font*> Font::fonts;
 	BoolType Font::fontAA = true;
 
-	Font::Font(StringType filename, IntType size, BoolType bold, BoolType italic, IntType first, IntType last) : Asset(ID_Font)
+	Font::Font(StringType filename, RealType size, BoolType bold, BoolType italic, IntType first, IntType last) : Asset(ID_Font)
 	{
 		fonts.append(this);
 
@@ -36,7 +36,7 @@ namespace CppProject
 			if (err != 0) 
 				throw "FT_New_Memory_Face error: " + NumStr(err);
 
-			err = FT_Set_Char_Size(face, 0, size << 6, 96, 96);
+			err = FT_Set_Char_Size(face, 0, qRound64(size * 64.0), 96, 96);
 			if (err != 0)
 				throw "FT_Set_Char_Size error: " + NumStr(err);
 

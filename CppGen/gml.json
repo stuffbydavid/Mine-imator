@@ -403,7 +403,7 @@
         "floor": { "return": "real", "args": [ "real" ] },
         "font_add_enable_aa": { "return": "void", "args": [ "bool" ] },
         "font_add_sprite_ext": { "return": "int", "args": [ "int", "string", "bool", "int" ] },
-        "font_add": { "return": "int", "args": [ "string", "int", "bool", "bool", "int", "int" ] },
+        "font_add": { "return": "int", "args": [ "string", "real", "bool", "bool", "int", "int" ] },
         "font_delete": { "return": "void", "args": [ "int" ] },
         "font_exists": { "return": "bool", "args": [ "int" ] },
         "frac": { "return": "real", "args": [ "real" ] },
