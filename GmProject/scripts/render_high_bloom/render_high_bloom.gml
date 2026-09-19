@@ -56,81 +56,18 @@ function render_high_bloom(prevsurf, hdr = false)
 	
 	#region Bloom streaks
 	
-	var blades, bladerot, bladeangle;
-	blades = max(1, render_camera.value[e_value.CAM_BLADE_AMOUNT] / 2)
-	blades = frac(blades) > 0 ? render_camera.value[e_value.CAM_BLADE_AMOUNT] : blades
+	var bladeamount = max(1, render_camera.value[e_value.CAM_BLADE_AMOUNT]);
+	var streaks = (bladeamount mod 2 = 0) ? bladeamount / 2 : bladeamount;
 	
-	if (render_camera.value[e_value.CAM_BLOOM_RATIO] > 0 && blades)
+	if (render_camera.value[e_value.CAM_BLOOM_RATIO] > 0)
 	{
-		bladeangle = ((pi * 2) / (360 / render_camera.value[e_value.CAM_BLADE_ANGLE]))
+		var bladeangle = degtorad(render_camera.value[e_value.CAM_BLADE_ANGLE]);
 		
-		for (var b = 0; b < blades; b++)
+		for (var b = 0; b < streaks; b++)
 		{
-			bladerot = degtorad((180 / blades) * b) + bladeangle
-			
-			// Downsample and blur along this blade at several scales
-			var downsource = thresholdsurf;
-			for (var i = 0; i < 5; i++)
-			{
-				var scale = power(2, i + 1);
-				var levelwidth = max(1, ceil(render_width / scale));
-				var levelheight = max(1, ceil(render_height / scale));
-				var format = hdr ? e_surface_format.rgba32float : e_surface_format.rgba8unorm;
-				render_surface_blur[i] = surface_require(render_surface_blur[i], levelwidth, levelheight, false, format)
-				render_surface_blur_temp[i] = surface_require(render_surface_blur_temp[i], levelwidth, levelheight, false, format)
-
-				gpu_set_texfilter(true)
-				surface_set_target(render_surface_blur[i])
-				{
-					draw_clear_alpha(c_black, 0)
-					draw_surface_size(downsource, 0, 0, levelwidth, levelheight)
-				}
-				surface_reset_target()
-				gpu_set_texfilter(false)
-
-				surface_set_target(render_surface_blur_temp[i])
-				{
-					render_shader_obj = shader_map[?shader_blur]
-					with (render_shader_obj)
-					{
-						shader_set(shader)
-						shader_blur_set(render_blur_kernel, baseradius * scale / 4, cos(bladerot), sin(bladerot), true)
-					}
-					draw_surface_exists(render_surface_blur[i], 0, 0)
-					with (render_shader_obj)
-						shader_clear()
-				}
-				surface_reset_target()
-
-				downsource = render_surface_blur_temp[i]
-			}
-			surface_set_target(render_surface_blur[4])
-			{
-				draw_surface_exists(render_surface_blur_temp[4], 0, 0)
-			}
-			surface_reset_target()
-
-			for (var i = 3; i >= 0; i--)
-			{
-				surface_set_target(render_surface_blur[i])
-				{
-					render_shader_obj = shader_map[?shader_add]
-					with (render_shader_obj)
-					{
-						shader_set(shader)
-						shader_add_set(render_surface_blur[i + 1], levelweight, c_white, 1, true)
-					}
-					draw_surface_exists(render_surface_blur_temp[i], 0, 0)
-					with (render_shader_obj)
-						shader_clear()
-				}
-				surface_reset_target()
-			}
-
-			var totalweight = 0;
-			for (var i = 0; i < 5; i++)
-				totalweight += power(levelweight, i)
-			bloomstrength = (1/blades * render_camera.value[e_value.CAM_BLOOM_RATIO] * render_camera.value[e_value.CAM_BLOOM_INTENSITY]) / totalweight
+			var bladerot = degtorad((180 / streaks) * b) + bladeangle;
+			var totalweight = render_blur_pyramid(thresholdsurf, baseradius, levelweight, hdr, 5, cos(bladerot), sin(bladerot), 4);
+			bloomstrength = (1 / streaks * render_camera.value[e_value.CAM_BLOOM_RATIO] * render_camera.value[e_value.CAM_BLOOM_INTENSITY]) / totalweight
 			
 			surface_set_target(bloomsurftemp)
 			{
@@ -148,7 +85,7 @@ function render_high_bloom(prevsurf, hdr = false)
 				with (render_shader_obj)
 				{
 					shader_set(shader)
-					shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, true)
+					shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0)
 				}
 				draw_surface_exists(bloomsurftemp, 0, 0)
 				with (render_shader_obj)
@@ -172,7 +109,7 @@ function render_high_bloom(prevsurf, hdr = false)
 					with (render_shader_obj)
 					{
 						shader_set(shader)
-						shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, true)
+						shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0)
 					}
 					draw_surface_exists(bloomsurftemp, 0, 0)
 					with (render_shader_obj)
@@ -189,85 +126,7 @@ function render_high_bloom(prevsurf, hdr = false)
 	
 	if (render_camera.value[e_value.CAM_BLOOM_RATIO] < 1)
 	{
-		// Each level keeps a similar blur radius in its own pixels
-		var downsource = thresholdsurf;
-		for (var i = 0; i < 6; i++)
-		{
-			var scale = power(2, i + 1);
-			var levelwidth = max(1, ceil(render_width / scale));
-			var levelheight = max(1, ceil(render_height / scale));
-			var format = hdr ? e_surface_format.rgba32float : e_surface_format.rgba8unorm;
-			render_surface_blur[i] = surface_require(render_surface_blur[i], levelwidth, levelheight, false, format)
-			render_surface_blur_temp[i] = surface_require(render_surface_blur_temp[i], levelwidth, levelheight, false, format)
-
-			gpu_set_texfilter(true)
-			surface_set_target(render_surface_blur[i])
-			{
-				draw_clear_alpha(c_black, 0)
-				draw_surface_size(downsource, 0, 0, levelwidth, levelheight)
-			}
-			surface_reset_target()
-			gpu_set_texfilter(false)
-
-			var radius = baseradius * scale / 8;
-			surface_set_target(render_surface_blur_temp[i])
-			{
-				render_shader_obj = shader_map[?shader_blur]
-				with (render_shader_obj)
-				{
-					shader_set(shader)
-					shader_blur_set(render_blur_kernel, radius, 1, 0, true)
-				}
-				draw_surface_exists(render_surface_blur[i], 0, 0)
-				with (render_shader_obj)
-					shader_clear()
-			}
-			surface_reset_target()
-
-			surface_set_target(render_surface_blur[i])
-			{
-				render_shader_obj = shader_map[?shader_blur]
-				with (render_shader_obj)
-				{
-					shader_set(shader)
-					shader_blur_set(render_blur_kernel, radius, 0, 1, true)
-				}
-				draw_surface_exists(render_surface_blur_temp[i], 0, 0)
-				with (render_shader_obj)
-					shader_clear()
-			}
-			surface_reset_target()
-
-			downsource = render_surface_blur[i]
-		}
-
-		// Give the wider halo enough weight to remain visible around small highlights
-		for (var i = 4; i >= 0; i--)
-		{
-			surface_set_target(render_surface_blur_temp[i])
-			{
-				render_shader_obj = shader_map[?shader_add]
-				with (render_shader_obj)
-				{
-					shader_set(shader)
-					shader_add_set(render_surface_blur[i + 1], levelweight, c_white, 1, true)
-				}
-				draw_surface_exists(render_surface_blur[i], 0, 0)
-				with (render_shader_obj)
-					shader_clear()
-			}
-			surface_reset_target()
-
-			surface_set_target(render_surface_blur[i])
-			{
-				draw_surface_exists(render_surface_blur_temp[i], 0, 0)
-			}
-			surface_reset_target()
-		}
-		
-		var totalweight = 0;
-		for (var i = 0; i < 6; i++)
-			totalweight += power(levelweight, i)
+		var totalweight = render_blur_pyramid(thresholdsurf, baseradius, levelweight, hdr);
 		bloomstrength = ((1.0 - render_camera.value[e_value.CAM_BLOOM_RATIO]) * render_camera.value[e_value.CAM_BLOOM_INTENSITY]) / totalweight
 		
 		surface_set_target(bloomsurftemp)
@@ -286,7 +145,7 @@ function render_high_bloom(prevsurf, hdr = false)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, true)
+				shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0)
 			}
 			draw_surface_exists(bloomsurftemp, 0, 0)
 			with (render_shader_obj)
@@ -310,7 +169,7 @@ function render_high_bloom(prevsurf, hdr = false)
 				with (render_shader_obj)
 				{
 					shader_set(shader)
-					shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, true)
+					shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0)
 				}
 				draw_surface_exists(bloomsurftemp, 0, 0)
 				with (render_shader_obj)

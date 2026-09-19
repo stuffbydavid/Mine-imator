@@ -3066,7 +3066,6 @@
 		"glow/": {
 			"radius": "Radius",
 			"intensity": "Intensity",
-			"falloff": "Secondary glow",
 			"falloffradius": "Radius",
 			"falloffintensity": "Intensity"
 		},

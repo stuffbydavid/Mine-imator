@@ -40,9 +40,6 @@ function history_copy_render_settings(obj)
 	project_render_glow = obj.project_render_glow
 	project_render_glow_radius = obj.project_render_glow_radius
 	project_render_glow_intensity = obj.project_render_glow_intensity
-	project_render_glow_falloff = obj.project_render_glow_falloff
-	project_render_glow_falloff_radius = obj.project_render_glow_falloff_radius
-	project_render_glow_falloff_intensity = obj.project_render_glow_falloff_intensity
 	
 	project_render_glint_speed = obj.project_render_glint_speed
 	project_render_glint_strength = obj.project_render_glint_strength

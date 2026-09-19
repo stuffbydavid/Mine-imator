@@ -30,7 +30,6 @@
 			"reflections": true,
 			"reflections_precision": 0.3,
 			"glow": true,
-			"glow_falloff": false,
 			"aa": true,
 			"aa_power": 1
 		}

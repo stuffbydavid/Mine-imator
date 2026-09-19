@@ -73,10 +73,6 @@ function app_startup_interface_tabs()
 			tbx_glow_radius.suffix = "%"
 			tbx_glow_intensity = new_textbox_integer()
 			tbx_glow_intensity.suffix = "%"
-			tbx_glow_falloff_radius = new_textbox_integer()
-			tbx_glow_falloff_radius.suffix = "%"
-			tbx_glow_falloff_intensity = new_textbox_integer()
-			tbx_glow_falloff_intensity.suffix = "%"
 			
 			tbx_aa_power = new_textbox_integer()
 			tbx_aa_power.suffix = "%"

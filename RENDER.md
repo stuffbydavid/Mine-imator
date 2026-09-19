@@ -53,9 +53,6 @@ The ranges below are the ranges supported by the corresponding interface control
 | `glow` | Boolean | Enable material glow |
 | `glow_radius` | 0-no limit | Glow blur radius |
 | `glow_intensity` | 0-no limit | Glow intensity |
-| `glow_falloff` | Boolean | Enable the secondary glow falloff layer |
-| `glow_falloff_radius` | 0-no limit | Secondary glow radius |
-| `glow_falloff_intensity` | 0-no limit | Secondary glow intensity |
 | `aa` | Boolean | Enable anti-aliasing |
 | `aa_mode` | 0-1 | Anti-aliasing method (`0` = progressive AA, `1` = FXAA) |
 | `aa_power` | 0-3 | Anti-aliasing strength |
@@ -140,18 +137,18 @@ Bloom is calculated from scene-linear HDR color before tone mapping. Use `--pass
 | Setting | Values | Description |
 | --- | --- | --- |
 | `bloom` | Boolean | Enable camera bloom |
-| `bloom_threshold` | 0-no limit | Scene-linear luminance where highlights begin contributing to bloom |
+| `bloom_threshold` | 0-no limit | Bloom brightness threshold |
 | `bloom_transition` | 0-no limit | Distance around the threshold over which bloom fades in; 0 produces a hard cutoff |
-| `bloom_intensity` | 0-no limit | Strength of the final bloom contribution |
-| `bloom_radius` | 0-no limit | Bloom spread and the balance between a tight glow and broad halo |
-| `bloom_ratio` | 0-1 | Blend between round bloom and aperture-blade streaks |
-| `bloom_blend` | Color integer | Tint applied to bloom |
-| `lens_dirt` | Boolean | Enable the lens-dirt texture overlay |
-| `lens_dirt_bloom` | Boolean | Let bloom illuminate the lens-dirt texture |
-| `lens_dirt_glow` | Boolean | Let material glow illuminate the lens-dirt texture |
-| `lens_dirt_radius` | 0-3 | Spread of the light illuminating the lens dirt |
-| `lens_dirt_intensity` | 0-2 | Strength of the lens-dirt effect |
-| `lens_dirt_power` | 1-5 | Contrast of the lens-dirt response |
+| `bloom_intensity` | 0-no limit | Bloom intensity |
+| `bloom_radius` | 0-no limit | Bloom radius |
+| `bloom_ratio` | 0-1 | Bloom anamorphic ratio |
+| `bloom_blend` | Color integer | Bloom tint color |
+| `lens_dirt` | Boolean | Enable the lens-dirt overlay |
+| `lens_dirt_bloom` | Boolean | Include bloom in lens dirt |
+| `lens_dirt_glow` | Boolean | Include material glow in lens dirt |
+| `lens_dirt_radius` | 0-3 | Lens-dirt blur radius |
+| `lens_dirt_intensity` | 0-2 | Lens-dirt intensity |
+| `lens_dirt_power` | 1-5 | Lens-dirt response power |
 
 ### Color correction and grain
 

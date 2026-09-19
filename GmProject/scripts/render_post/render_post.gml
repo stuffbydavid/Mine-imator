@@ -20,12 +20,7 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true, hdr = f
 	
 	// Glow
 	if (render_glow && sceneeffects && earlyeffects)
-		finalsurf = render_high_glow(finalsurf, false, hdr)
-	render_update_effects()
-	
-	// Glow (Falloff)
-	if (render_glow_falloff && sceneeffects && earlyeffects)
-		finalsurf = render_high_glow(finalsurf, true, hdr)
+		finalsurf = render_high_glow(finalsurf, hdr)
 	render_update_effects()
 	
 	// Bloom

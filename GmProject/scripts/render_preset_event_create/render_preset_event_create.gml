@@ -25,7 +25,6 @@ function render_preset_event_create()
 		shadows_spot_buffer_size = 512
 		shadows_point_buffer_size = 256
 		glow = true
-		// Standard should support glow_falloff if it's fast enough
 		aa = true
 		aa_power = 1
 
@@ -55,7 +54,6 @@ function render_preset_event_create()
 		reflections = true
 		reflections_precision = .3
 		glow = true
-		glow_falloff = false
 		aa = true
 		aa_mode = e_aa_mode.PROGRESSIVE
 		aa_power = 1
@@ -66,8 +64,6 @@ function render_preset_event_create()
 		indirect_strength = 1
 		reflections_fade_amount = 1
 		reflections_thickness = 1
-		glow_falloff_radius = 2 // Move to common if Standard gets glow falloff
-		glow_falloff_intensity = 1
 	}
 
 	// Common special effects settings

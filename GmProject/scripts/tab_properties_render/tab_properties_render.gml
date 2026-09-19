@@ -261,35 +261,12 @@ function tab_properties_render()
 			tab_collapse_start()
 			
 			tab_control_dragger()
-			draw_dragger("renderglowradius", dx, dy, dragger_width, round(project_render_glow_radius * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_radius, action_project_render_glow_radius)
+			draw_dragger("renderglowradius", dx, dy, dragger_width, round(project_render_glow_radius * 100), 1, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_radius, action_project_render_glow_radius)
 			tab_next()
 			
 			tab_control_dragger()
-			draw_dragger("renderglowintensity", dx, dy, dragger_width, round(project_render_glow_intensity * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_intensity, action_project_render_glow_intensity)
+			draw_dragger("renderglowintensity", dx, dy, dragger_width, round(project_render_glow_intensity * 100), 1, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_intensity, action_project_render_glow_intensity)
 			tab_next()
-			
-			if (renderer_edit = e_renderer.REALISTIC)
-			{
-				tab_control_switch()
-				draw_button_collapse("glow_falloff", collapse_map[?"glow_falloff"], action_project_render_glow_falloff, rendererset.glow_falloff, "renderglowfalloff")
-				tab_next()
-				
-				// Secondary glow
-				if (rendererset.glow_falloff && collapse_map[?"glow_falloff"])
-				{
-					tab_collapse_start()
-					
-					tab_control_dragger()
-					draw_dragger("renderglowfalloffradius", dx, dy, dragger_width, round(project_render_glow_falloff_radius * 100), .5, 0, no_limit * 100, 200, 1, tab.render.tbx_glow_falloff_radius, action_project_render_glow_falloff_radius)
-					tab_next()
-					
-					tab_control_dragger()
-					draw_dragger("renderglowfalloffintensity", dx, dy, dragger_width, round(project_render_glow_falloff_intensity * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_glow_falloff_intensity, action_project_render_glow_falloff_intensity)
-					tab_next()
-					
-					tab_collapse_end(false)
-				}
-			}
 			
 			tab_collapse_end()
 		}

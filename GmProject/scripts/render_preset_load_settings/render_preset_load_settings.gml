@@ -50,7 +50,6 @@ function render_preset_load_settings(map)
 		set.reflections = value_get_real(realisticmap[?"reflections"], set.reflections)
 		set.reflections_precision = value_get_real(realisticmap[?"reflections_precision"], set.reflections_precision)
 		set.glow = value_get_real(realisticmap[?"glow"], set.glow)
-		set.glow_falloff = value_get_real(realisticmap[?"glow_falloff"], set.glow_falloff)
 		set.aa = value_get_real(realisticmap[?"aa"], set.aa)
 		set.aa_mode = value_get_real(realisticmap[?"aa_mode"], set.aa_mode)
 		set.aa_power = value_get_real(realisticmap[?"aa_power"], set.aa_power)
@@ -82,8 +81,6 @@ function render_preset_load_settings(map)
 		set.indirect_strength = value_get_real(fxmap[?"indirect_strength"], set.indirect_strength)
 		set.reflections_fade_amount = value_get_real(fxmap[?"reflections_fade_amount"], set.reflections_fade_amount)
 		set.reflections_thickness = value_get_real(fxmap[?"reflections_thickness"], set.reflections_thickness)
-		set.glow_falloff_radius = value_get_real(fxmap[?"glow_falloff_radius"], set.glow_falloff_radius)
-		set.glow_falloff_intensity = value_get_real(fxmap[?"glow_falloff_intensity"], set.glow_falloff_intensity)
 	}
 
 	var graphicsmap = map[?"graphics"];

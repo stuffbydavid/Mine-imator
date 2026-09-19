@@ -16,8 +16,6 @@
 			"reflections_fade_amount": 1,
 			"glow_radius": 1,
 			"glow_intensity": 1,
-			"glow_falloff_radius": 2,
-			"glow_falloff_intensity": 1,
 			"glint_speed": 1,
 			"glint_strength": 1,
 			"tonemapper": 0,

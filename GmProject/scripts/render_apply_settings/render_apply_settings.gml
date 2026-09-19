@@ -44,7 +44,6 @@ function render_apply_settings(preset, renderer)
 		project_render_reflections = settings.reflections
 		project_render_reflections_precision = settings.reflections_precision
 		project_render_glow = settings.glow
-		project_render_glow_falloff = settings.glow_falloff
 		project_render_aa = settings.aa
 		project_render_aa_mode = settings.aa_mode
 		project_render_aa_power = settings.aa_power
@@ -67,8 +66,6 @@ function render_apply_settings(preset, renderer)
 			project_render_reflections_fade_amount = preset.renderer[e_renderer.REALISTIC].reflections_fade_amount
 			project_render_glow_radius = preset.glow_radius
 			project_render_glow_intensity = preset.glow_intensity
-			project_render_glow_falloff_radius = preset.renderer[e_renderer.REALISTIC].glow_falloff_radius
-			project_render_glow_falloff_intensity = preset.renderer[e_renderer.REALISTIC].glow_falloff_intensity
 			project_render_glint_speed = preset.glint_speed
 			project_render_glint_strength = preset.glint_strength
 			project_render_tonemapper = preset.tonemapper

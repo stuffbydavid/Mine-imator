@@ -10,7 +10,6 @@ function render_refresh_effects(sceneeffects = true, posteffects = true, hdr = f
 	ds_list_add(render_effects_list,
 		render_camera_dof && sceneeffects && earlyeffects,
 		render_glow && sceneeffects && earlyeffects,
-		render_glow_falloff && sceneeffects && earlyeffects,
 		render_camera_bloom && posteffects && earlyeffects,
 		render_camera_lens_dirt && (sceneeffects || posteffects) && earlyeffects,
 		render_camera_ca && posteffects && !hdr,

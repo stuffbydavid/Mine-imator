@@ -469,6 +469,7 @@ function shader_startup()
 		new_shader_uniform("uGlowTexture")
 		new_shader_uniform("uGlowColor")
 		new_shader_uniform("uOnlyRenderGlow")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_high_subsurface_scatter])

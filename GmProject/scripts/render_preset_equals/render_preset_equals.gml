@@ -52,7 +52,6 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.reflections = objset.reflections &&
 			set.reflections_precision = objset.reflections_precision &&
 			set.glow = objset.glow &&
-			set.glow_falloff = objset.glow_falloff &&
 			set.aa = objset.aa &&
 			set.aa_mode = objset.aa_mode &&
 			set.aa_power = objset.aa_power
@@ -94,9 +93,7 @@ function render_preset_equals(obj, renderer, allsettings)
 		set.indirect_blur_radius = objset.indirect_blur_radius &&
 		set.indirect_strength = objset.indirect_strength &&
 		set.reflections_fade_amount = objset.reflections_fade_amount &&
-		set.reflections_thickness = objset.reflections_thickness &&
-		set.glow_falloff_radius = objset.glow_falloff_radius &&
-		set.glow_falloff_intensity = objset.glow_falloff_intensity
+		set.reflections_thickness = objset.reflections_thickness
 	)
 
 	match = (

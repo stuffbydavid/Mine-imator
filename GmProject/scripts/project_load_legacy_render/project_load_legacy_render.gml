@@ -48,9 +48,6 @@ function project_load_legacy_render(map)
 			reflections_thickness = value_get_real(map[?"render_reflections_thickness"], reflections_thickness)
 			reflections_fade_amount = value_get_real(map[?"render_reflections_fade_amount"], reflections_fade_amount)
 			glow = standardset.glow
-			glow_falloff = value_get_real(map[?"render_glow_falloff"], glow_falloff)
-			glow_falloff_radius = value_get_real(map[?"render_glow_falloff_radius"], glow_falloff_radius)
-			glow_falloff_intensity = value_get_real(map[?"render_glow_falloff_intensity"], glow_falloff_intensity)
 			aa = standardset.aa
 			aa_power = standardset.aa_power
 		}

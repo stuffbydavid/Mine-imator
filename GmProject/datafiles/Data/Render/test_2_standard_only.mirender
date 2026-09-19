@@ -29,8 +29,6 @@
 			"reflections_thickness": 1,
 			"glow_radius": 10,
 			"glow_intensity": 10,
-			"glow_falloff_radius": 20,
-			"glow_falloff_intensity": 10,
 			"glint_speed": 1,
 			"glint_strength": 1,
 			"tonemapper": 0,

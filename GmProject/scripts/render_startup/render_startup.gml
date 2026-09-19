@@ -16,7 +16,7 @@ function render_startup()
 			  render_spot_matrix, render_light_specular_strength, render_light_size;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
-			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
+			  render_glow, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
 			  render_tonemapper, render_exposure, render_gamma, render_auxiliary;
@@ -72,7 +72,6 @@ function render_startup()
 	render_camera_bloom = false
 	render_camera_dof = false
 	render_glow = false
-	render_glow_falloff = false
 	render_camera_ca = false
 	render_camera_distort = false
 	render_camera_color_correction = false

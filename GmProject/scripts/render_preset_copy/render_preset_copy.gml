@@ -51,7 +51,6 @@ function render_preset_copy(to, allsettings = false)
 		toset.reflections = fromset.reflections
 		toset.reflections_precision = fromset.reflections_precision
 		toset.glow = fromset.glow
-		toset.glow_falloff = fromset.glow_falloff
 		toset.aa = fromset.aa
 		toset.aa_mode = fromset.aa_mode
 		toset.aa_power = fromset.aa_power
@@ -84,8 +83,6 @@ function render_preset_copy(to, allsettings = false)
 		toset.indirect_strength = fromset.indirect_strength
 		toset.reflections_thickness = fromset.reflections_thickness
 		toset.reflections_fade_amount = fromset.reflections_fade_amount
-		toset.glow_falloff_radius = fromset.glow_falloff_radius
-		toset.glow_falloff_intensity = fromset.glow_falloff_intensity
 	}
 
 	if (has_graphics || allsettings)

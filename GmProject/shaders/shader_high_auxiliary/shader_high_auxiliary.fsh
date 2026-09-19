@@ -7,6 +7,7 @@ uniform int uGlow;
 uniform int uGlowTexture;
 uniform vec4 uGlowColor;
 uniform int uOnlyRenderGlow;
+uniform float uGamma;
 
 varying vec3 vPosition;
 varying vec4 vColor;
@@ -40,6 +41,7 @@ void main()
 	else
 		glowColor.rgb = uGlowColor.rgb;
 
+	glowColor.rgb = pow(max(glowColor.rgb, vec3(0.0)), vec3(uGamma));
 	glowColor.rgb *= vec3(1.0 - getFog(vPosition, uCameraPosition));
 	
 	if (uOnlyRenderGlow == 1)

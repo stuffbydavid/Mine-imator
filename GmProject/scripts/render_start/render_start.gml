@@ -71,8 +71,7 @@ function render_start()
 	render_shadows = project_render_shadows && (rendercombined || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
 	render_indirect = render_shadows && project_render_indirect && (rendercombined || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
 	render_reflections = project_render_reflections && (rendercombined || render_pass = e_render_pass.REFLECTIONS)
-	render_glow = project_render_glow && renderer_current = e_renderer.REALISTIC
-	render_glow_falloff = project_render_glow && renderer_current = e_renderer.REALISTIC && project_render_glow_falloff
+	render_glow = project_render_glow && renderer_current != e_renderer.QUICK
 	render_auxiliary = renderall || background_fog_show || render_pass = e_render_pass.FOG || render_pass = e_render_pass.GLOW ||
 					   render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE ||
 					   project_render_subsurface_samples > 0 || render_glow

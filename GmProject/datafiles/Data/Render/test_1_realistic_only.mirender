@@ -18,7 +18,6 @@
 			"reflections": true,
 			"reflections_precision": 1,
 			"glow": true,
-			"glow_falloff": false,
 			"aa": true,
 			"aa_power": 1
 		},
@@ -36,8 +35,6 @@
 			"reflections_thickness": 1,
 			"glow_radius": 1,
 			"glow_intensity": 1,
-			"glow_falloff_radius": 2,
-			"glow_falloff_intensity": 1,
 			"glint_speed": 1,
 			"glint_strength": 1,
 			"tonemapper": 0,
