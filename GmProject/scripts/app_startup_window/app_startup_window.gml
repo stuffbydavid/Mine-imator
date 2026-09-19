@@ -128,11 +128,13 @@ function app_startup_window()
 
 	// Place
 	place_tl = null
+	place_tl_parent = app
+	place_tl_parent_index = -1
 	place_tl_render = true
 	place_spawn = false
-	place_view_pos = null
-	place_view_rot = null
-	place_view_sca = null
+	place_pos = null
+	place_rot = vec3(0)
+	place_sca = vec3(1)
 	place_view_mouse = null
 	place_cam_work_from = vec3(0)
 	place_cam_work_angle_look_xy = 0

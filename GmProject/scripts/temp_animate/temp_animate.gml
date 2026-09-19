@@ -7,8 +7,16 @@ function temp_animate()
 	{
 		type = other.type
 		temp = other.id
+		
 		if (type = e_tl_type.EQUIPMENT)
 			inherit_pose = true
+		
+		if (type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK || type = e_tl_type.SCENERY)
+		{
+			inherit_alpha = true
+			inherit_color = true
+			inherit_texture = true
+		}
 		
 		tl_set_parent_root()
 		

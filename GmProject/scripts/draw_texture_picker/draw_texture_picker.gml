@@ -67,6 +67,8 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 		var firstslot, lastslot;
 		firstslot = clamp(floor((scroll.value - contenthei) / itemhei) * itemsx, 0, slotcount)
 		lastslot = clamp(ceil((scroll.value + hei - contenthei) / itemhei) * itemsx, 0, slotcount)
+
+		draw_texture_start()
 		for (var slot = firstslot; slot < lastslot; slot++)
 		{
 			var tx, ty, col, combinedslot;
@@ -78,15 +80,15 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 			if (res != null && namelists != null && ds_list_valid(namelists[sheet]))
 				col = block_texture_get_blend(namelists[sheet][|slot], res)
 
-			if (shader_clip_active)
-				clip_begin()
-
-			 // Modulo on first sheet size to allow selection box to wrap around at high values.
-			 // May not appear correct if first sheet doesn't have enough empty spaces, oh well.
+			// Keep the selection behind the cell texture
 			if (select mod (sheetsizes[0][X] * sheetsizes[0][Y]) = combinedslot)
+			{
+				draw_texture_done()
 				draw_box(tx - off, ty - off, slotwid + off * 4, slothei + off * 4, false, c_accent_hover, a_accent_hover)
+				draw_texture_start()
+			}
 
-			draw_texture_slot(tex, slot, tx + off, ty + off, slotwid, slothei, sheetsize[X], sheetsize[Y], col)
+			draw_texture_slot(tex, slot, tx + off, ty + off, slotwid, slothei, sheetsize[X], sheetsize[Y], col, true)
 			if (pickermouseon && app_mouse_box(tx, ty, itemwid, itemhei))
 			{
 				mouse_cursor = cr_handpoint
@@ -100,11 +102,15 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 					}
 					else
 						script_execute(script, combinedslot)
+
+					// Restore drawing after the selection callback updates a preview
+					draw_texture_start()
 					window_focus = string(scroll)
 					select = combinedslot
 				}
 			}
 		}
+		draw_texture_done()
 		
 		contenthei += itemsy * itemhei
 		slotoffset += slotcount

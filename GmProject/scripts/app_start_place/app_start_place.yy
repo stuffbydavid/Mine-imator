@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"app_start_place",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_start_place",
+  "parent":{
+    "name":"Place",
+    "path":"folders/Scripts/App/Interface/Place.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

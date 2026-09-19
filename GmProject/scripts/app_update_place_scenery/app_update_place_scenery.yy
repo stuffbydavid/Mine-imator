@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"app_update_place_scenery",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_update_place_scenery",
+  "parent":{
+    "name":"Place",
+    "path":"folders/Scripts/App/Interface/Place.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
