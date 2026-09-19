@@ -20,7 +20,7 @@ vec4 packDepth(float depth)
 void main()
 {
 	// Ignore transparent texels on non-block objects
-	if (uIsBlock == 0.0 && (vColor * texture2D(uTexture, vTexCoord)).a < 0.5)
+	if (uIsBlock == 0.0 && (vColor * texture2D(uTexture, vTexCoord)).a < 0.05)
 		discard;
 
 	gl_FragData[0] = uReplaceColor;

@@ -23,7 +23,7 @@ function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate
 		matrix_world_multiply_pre(rotmat)
 	}
 	
-	if (rotate)
+	else if (rotate)
 	{
 		var d, t, offz, mat, rotz, rotmat;
 		d = 60 * 6

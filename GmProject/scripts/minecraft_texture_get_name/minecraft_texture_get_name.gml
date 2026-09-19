@@ -12,6 +12,13 @@ function minecraft_texture_get_name(name)
 	type = parts[0]
 	assetname = parts[array_length(parts) - 1]
 	
+	if (type = "block")
+	{
+		assetname = string_replace(assetname, " opaque", "")
+		assetname = string_replace(assetname, " nocull", "")
+		assetname = string_replace(assetname, " noalpha", "")
+	}
+	
 	if (text_exists(type + assetname))
 		return minecraft_asset_get_name(type, assetname)
 
