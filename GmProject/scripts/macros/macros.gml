@@ -200,6 +200,17 @@ function macros()
 	#macro particle_default				array("Default", "Snow")
 	#macro default_text					"AaBbCc"
 	
+	// Placing targets
+	#macro item_parent_action			array(null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5))
+	#macro bow_parent_action_right		array(null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9))
+	#macro bow_parent_action_left		array(null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9))
+	#macro tool_parent_action			array(null, true, vec3(0, 2, 0), vec3(0, 145, 90), vec3(0.85))
+	#macro rod_parent_action			array(null, true, vec3(0, 2, -9), vec3(180, 145, 90), vec3(0.85))
+	#macro crossbow_parent_action_right	array(null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9))
+	#macro crossbow_parent_action_left	array(null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9))
+	#macro spear_parent_action			array(null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25))
+	#macro block_parent_action			array()
+	
 	// World
 	#macro block_size					16
 	#macro block_half_size				8

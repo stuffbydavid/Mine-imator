@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"type_is_shape",
+  "%Name":"type_is_block",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"type_is_shape",
+  "name":"type_is_block",
   "parent":{
     "name":"Timeline",
     "path":"folders/Scripts/Project/Timeline.yy",

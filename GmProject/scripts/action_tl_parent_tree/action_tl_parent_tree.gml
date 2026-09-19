@@ -19,6 +19,7 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 					hobj.tl_old_default_pos[hobj.tl_amount] = tl_value_get_vec3(e_value.POS_X, true)
 					hobj.tl_old_default_rot[hobj.tl_amount] = tl_value_get_vec3(e_value.ROT_X, true)
 					hobj.tl_old_default_sca[hobj.tl_amount] = tl_value_get_vec3(e_value.SCA_X, true)
+					hobj.tl_old_lock_bend[hobj.tl_amount] = lock_bend
 					
 					with (hobj)
 					{
@@ -37,29 +38,7 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 					}
 				}
 				
-				var reset = false;
-				
-				// Reset and lock armor
-				if (type = e_tl_type.EQUIPMENT && temp != null && newparent != app &&
-				    (newparent.type = e_tl_type.CHARACTER || newparent.type = e_tl_type.SPECIAL_BLOCK || newparent.type = e_tl_type.MODEL))
-				{
-					reset = true
-					
-					var model = mc_assets.model_name_map[?temp.model_name];
-					if (!is_undefined(model) && model.parent_lock)
-						action_tl_lock_tree(id, true, hobj)
-				}
-
-				tl_set_parent(newparent, newindex, !reset)
-				if (reset)
-				{
-					tl_value_set_vec3(e_value.POS_X, vec3(0))
-					tl_value_set_vec3(e_value.ROT_X, vec3(0))
-					tl_value_set_vec3(e_value.SCA_X, vec3(1))
-					tl_value_set_vec3(e_value.POS_X, vec3(0), true)
-					tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
-					tl_value_set_vec3(e_value.SCA_X, vec3(1), true)
-				}
+				tl_set_parent(newparent, newindex, true, hobj)
 				
 				moved = true
 				

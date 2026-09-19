@@ -28,7 +28,6 @@ function app_update_place()
 
 		place_target_tl = null
 		place_target_tl_part_of = null
-		place_parent_reset = false
 		place_pos = place_view_pos
 		place_rot = vec3(0)
 		place_sca = vec3(1)
@@ -63,39 +62,52 @@ function app_update_place()
 			}
 		}
 			
-		// Parent to compatible objects
-		app_update_place_parent()
+		// Update timeline and parent to compatible objects
+		tl_value_set_matrix(place_tl, matrix_create(place_pos, place_rot, place_sca), place_spawn)
+		place_tl.update_matrix = true
 		
-		if (place_parent_reset)
+		var newparent = null;
+		if (place_target_tl != null)
 		{
-			place_pos = vec3(0)
-			place_rot = vec3(0)
-			place_sca = vec3(1)
 			with (place_tl)
 			{
-				tl_value_set_vec3(e_value.POS_X, app.place_pos)
-				tl_value_set_vec3(e_value.ROT_X, app.place_rot)
-				tl_value_set_vec3(e_value.SCA_X, app.place_sca)
-				tl_value_set_vec3(e_value.POS_X, app.place_pos, true)
-				tl_value_set_vec3(e_value.ROT_X, app.place_rot, true)
-				tl_value_set_vec3(e_value.SCA_X, app.place_sca, true)
-				update_matrix = true
+				var action = tl_get_parent_action(app.place_target_tl);
+				if (is_array(action) && array_length(action) > e_parent_action.TARGET)
+				{
+					newparent = action[e_parent_action.TARGET]
+					app.place_target_tl_part_of = newparent
+					with (newparent)
+						tl_mark_place_target(true)
+				}
 			}
 		}
-		else
+		
+		// Restore original parent/index
+		var newparentindex = -1;
+		if (newparent = null)
 		{
-			// Update timeline
-			tl_value_set_matrix(place_tl, matrix_create(place_pos, place_rot, place_sca), place_spawn)
-			place_tl.update_matrix = true
+			newparent = place_tl_parent
+			newparentindex = place_tl_parent_index
 		}
+	
+		// Parent to new or restore original parent
+		var parentchanged = place_tl.parent != newparent;
+		if (!parentchanged && newparentindex < 0)
+			newparentindex = ds_list_find_index(newparent.tree_list, place_tl)
+		
+		with (place_tl)
+			tl_set_parent(newparent, newparentindex, true)
+
+		if (parentchanged)
+			tl_update_list()
 		tl_update_matrix()
 		
 		// Update history defaults
 		with (history[0])
 		{
-			tl_value_set_vec3(e_value.POS_X, app.place_pos, true)
-			tl_value_set_vec3(e_value.ROT_X, app.place_rot, true)
-			tl_value_set_vec3(e_value.SCA_X, app.place_sca, true)
+			tl_value_copy_vec3(e_value.POS_X, value_default, app.place_tl.value_default)
+			tl_value_copy_vec3(e_value.ROT_X, value_default, app.place_tl.value_default)
+			tl_value_copy_vec3(e_value.SCA_X, value_default, app.place_tl.value_default)
 		}
 			
 		place_view_pos = null

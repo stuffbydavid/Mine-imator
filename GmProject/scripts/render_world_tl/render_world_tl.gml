@@ -45,7 +45,10 @@ function render_world_tl()
 	
 	// Placement data
 	if (render_mode = e_render_mode.PLACE)
+	{
 		render_set_uniform_color("uReplaceColor", id, 1)
+		render_set_uniform("uIsBlock", bool_to_float(type_is_block(type)))
+	}
 	
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_white, 1)

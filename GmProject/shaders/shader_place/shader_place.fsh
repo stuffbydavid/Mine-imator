@@ -3,6 +3,7 @@ uniform float uSampleIndex;
 uniform int uAlphaHash;
 uniform vec4 uReplaceColor;
 uniform float uGmDepth;
+uniform float uIsBlock;
 
 varying vec3 vPosition;
 varying vec2 vTexCoord;
@@ -18,6 +19,10 @@ vec4 packDepth(float depth)
 
 void main()
 {
+	// Ignore transparent texels on non-block objects
+	if (uIsBlock == 0.0 && (vColor * texture2D(uTexture, vTexCoord)).a == 0.0)
+		discard;
+
 	gl_FragData[0] = uReplaceColor;
 	gl_FragData[1] = vec4((normalize(vNormal) + vec3(1.0)) * 0.5, 1.0);
 	

@@ -88,6 +88,9 @@ function minecraft_assets_reload()
 			}
 		}
 		
+		// Item place targets
+		minecraft_assets_load_item_place_target(map[?"item_place_target"])
+		
 		// Clear up loaded models
 		var key = ds_map_find_first(load_assets_model_file_map);
 		while (!is_undefined(key))

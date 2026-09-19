@@ -41,8 +41,18 @@ function model_load(map, dir)
 		// Version
 		version = value_get_real(map[?"version"], 0)
 		
-		// Lock when parented
-		parent_lock = value_get_real(map[?"parent_lock"], false)
+		// Valid equipment
+		equipment_list = null
+		if (ds_list_valid(map[?"equipment"]))
+		{
+			equipment_list = ds_list_create()
+			ds_list_copy(equipment_list, map[?"equipment"])
+		}
+		
+		// Place target
+		place_target_map = null
+		if (ds_map_valid(map[?"place_target"]))
+			place_target_map = minecraft_assets_load_place_target(map[?"place_target"])
 		
 		// Pattern type
 		pattern_type = value_get_string(map[?"pattern_type"], "")

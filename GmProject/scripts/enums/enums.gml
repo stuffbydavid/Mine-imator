@@ -453,6 +453,18 @@ function enums()
 		BLOCK
 	}
 	
+	// Timeline parent action
+	enum e_parent_action
+	{
+		TARGET,
+		BEND,
+		POS,
+		ROT,
+		SCA,
+		LOCK
+	}
+
+	// Icons
 	enum icons
 	{
 		ALIGN_BOTTOM,

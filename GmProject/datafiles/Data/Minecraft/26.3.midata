@@ -6,6 +6,7 @@
 		{
 			"name": "human",
 			"version": 1,
+			"equipment": [ "armor" ],
 			"states": {
 				"type": [
 					{ "value": "wide", "file": "steve.mimodel" },
@@ -27,6 +28,7 @@
 		},
 		{
 			"name": "zombie",
+			"equipment": [ "armor" ],
 			"states": {
 				"variant": [
 					{ "value": "zombie", "file": "zombie.mimodel" },
@@ -42,6 +44,7 @@
 		{
 			"name": "skeleton",
 			"version": 1,
+			"equipment": [ "armor" ],
 			"states": {
 				"variant": [
 					{ "value": "skeleton", "file": "skeleton.mimodel" },
@@ -259,6 +262,7 @@
 			"name": "wolf",
 			"file": "wolf.mimodel",
 			"version": 2,
+			"equipment": [ "wolf_armor" ],
 			"states": {
 				"variant": [
 					{ "value": "wolf_pale", "texture": "entity/wolf/wolf" },
@@ -368,6 +372,7 @@
 			"name": "horse",
 			"file": "horse.mimodel",
 			"version": 1,
+			"equipment": [ "horse_armor" ],
 			"states": {
 				"variant": [
 					{ "value": "horse_black", "texture": "entity/horse/horse_black" },
@@ -1042,6 +1047,7 @@
 		{
 			"name": "nautilus",
 			"file": "nautilus.mimodel",
+			"equipment": [ "nautilus_armor" ],
 			"states": {
 				"variant": [
 					{ "value": "nautilus" },
@@ -1087,7 +1093,6 @@
 		{
 			"name": "armor",
 			"file": "armor.mimodel",
-			"parent_lock": true,
 			"states": {
 				"helmet": [
 					{ "value": "none", "shape_hide": [ "helmet", "helmet_baby" ] },
@@ -1140,6 +1145,16 @@
 		{
 			"name": "shield",
 			"file": "shield.mimodel",
+			"place_target": {
+				"right_arm": {
+					"position": [ -3, -2, -11 ],
+					"rotation": [ 0, -90, -90 ]
+				},
+				"left_arm": {
+					"position": [ 3, -2, -11 ],
+					"rotation": [ 0, 90, 90 ]
+				}
+			},
 			"states": {
 				"has_pattern": [
 					{ "value": "false", "pattern_type": "" },
@@ -1151,6 +1166,14 @@
 		{
 			"name": "cape",
 			"file": "cape.mimodel",
+			"place_target": {
+				"body": {
+					"bend": true,
+					"position": [ 0, 0, 0 ],
+					"rotation": [ 0, 0, 0 ],
+					"scale": [ 1, 1, 1 ]
+				}
+			},
 			"states": {
 				"variant": [
 					{ "value": "mojang_new", "texture": "entity/mineimator/cape_mojang_new" },
@@ -1203,6 +1226,14 @@
 		{
 			"name": "elytra",
 			"file": "elytra.mimodel",
+			"place_target": {
+				"body": {
+					"bend": true,
+					"position": [ 0, 0, 0 ],
+					"rotation": [ 0, 0, 0 ],
+					"scale": [ 1, 1, 1 ]
+				}
+			},
 			"states": {
 				"variant": [
 					{ "value": "normal", "texture": "entity/equipment/wings/elytra" },
@@ -1254,25 +1285,8 @@
 			"default_state": "variant=normal"
 		},
 		{
-			"name": "horse_armor",
-			"file": "horse_armor.mimodel",
-			"parent_lock": true,
-			"states": {
-				"variant": [
-					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
-					{ "value": "copper", "texture": "entity/equipment/horse_body/copper" },
-					{ "value": "iron", "texture": "entity/equipment/horse_body/iron" },
-					{ "value": "gold", "texture": "entity/equipment/horse_body/gold" },
-					{ "value": "diamond", "texture": "entity/equipment/horse_body/diamond" },
-					{ "value": "netherite", "texture": "entity/equipment/horse_body/netherite" }
-				]
-			},
-			"default_state": "variant=iron"
-		},
-		{
 			"name": "wolf_armor",
 			"file": "wolf_armor.mimodel",
-			"parent_lock": true,
 			"states": {
 				"dyed": [
 					{ "value": "false", "shape_hide": [ "overlay" ] },
@@ -1288,9 +1302,23 @@
 			"default_state": "dyed=false,crack_amount=none"
 		},
 		{
+			"name": "horse_armor",
+			"file": "horse_armor.mimodel",
+			"states": {
+				"variant": [
+					{ "value": "leather", "file": "horse_armor_leather.mimodel"},
+					{ "value": "copper", "texture": "entity/equipment/horse_body/copper" },
+					{ "value": "iron", "texture": "entity/equipment/horse_body/iron" },
+					{ "value": "gold", "texture": "entity/equipment/horse_body/gold" },
+					{ "value": "diamond", "texture": "entity/equipment/horse_body/diamond" },
+					{ "value": "netherite", "texture": "entity/equipment/horse_body/netherite" }
+				]
+			},
+			"default_state": "variant=iron"
+		},
+		{
 			"name": "nautilus_armor",
 			"file": "nautilus_armor.mimodel",
-			"parent_lock": true,
 			"states": {
 				"variant": [
 					{ "value": "copper", "texture": "entity/equipment/nautilus_body/copper" },
@@ -10862,6 +10890,64 @@
 		"item/diamond_spear_in_hand",
 		"item/netherite_spear_in_hand"
 	],
+	"item_place_target": {
+		"item/bow": "bow",
+		"item/bow_pulling_0": "bow",
+		"item/bow_pulling_1": "bow",
+		"item/bow_pulling_2": "bow",
+		"item/stick": "tool",
+		"item/wooden_sword": "tool",
+		"item/stone_sword": "tool",
+		"item/copper_sword": "tool",
+		"item/iron_sword": "tool",
+		"item/golden_sword": "tool",
+		"item/diamond_sword": "tool",
+		"item/netherite_sword": "tool",
+		"item/wooden_shovel": "tool",
+		"item/stone_shovel": "tool",
+		"item/copper_shovel": "tool",
+		"item/iron_shovel": "tool",
+		"item/golden_shovel": "tool",
+		"item/diamond_shovel": "tool",
+		"item/netherite_shovel": "tool",
+		"item/wooden_pickaxe": "tool",
+		"item/stone_pickaxe": "tool",
+		"item/copper_pickaxe": "tool",
+		"item/iron_pickaxe": "tool",
+		"item/golden_pickaxe": "tool",
+		"item/diamond_pickaxe": "tool",
+		"item/netherite_pickaxe": "tool",
+		"item/wooden_axe": "tool",
+		"item/stone_axe": "tool",
+		"item/copper_axe": "tool",
+		"item/iron_axe": "tool",
+		"item/golden_axe": "tool",
+		"item/diamond_axe": "tool",
+		"item/netherite_axe": "tool",
+		"item/wooden_hoe": "tool",
+		"item/stone_hoe": "tool",
+		"item/copper_hoe": "tool",
+		"item/iron_hoe": "tool",
+		"item/golden_hoe": "tool",
+		"item/diamond_hoe": "tool",
+		"item/netherite_hoe": "tool",
+		"item/fishing_rod": "rod",
+		"item/fishing_rod_cast": "rod",
+		"item/carrot_on_a_stick": "rod",
+		"item/crossbow_arrow": "crossbow",
+		"item/crossbow_firework": "crossbow",
+		"item/crossbow_pulling_0": "crossbow",
+		"item/crossbow_pulling_1": "crossbow",
+		"item/crossbow_pulling_2": "crossbow",
+		"item/crossbow_standby": "crossbow",
+		"item/wooden_spear_in_hand": "spear",
+		"item/stone_spear_in_hand": "spear",
+		"item/copper_spear_in_hand": "spear",
+		"item/iron_spear_in_hand": "spear",
+		"item/golden_spear_in_hand": "spear",
+		"item/diamond_spear_in_hand": "spear",
+		"item/netherite_spear_in_hand": "spear"
+	},
 	"particle_textures": [
 		"particle/angry",
 		"particle/big_smoke_0",

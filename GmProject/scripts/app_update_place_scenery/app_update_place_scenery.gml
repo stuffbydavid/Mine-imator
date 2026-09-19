@@ -4,9 +4,7 @@
 function app_update_place_scenery()
 {
 	// Check for valid scenery
-	if (place_target_tl.type != e_tl_type.SCENERY &&
-		place_target_tl.type != e_tl_type.BLOCK &&
-		place_target_tl_part_of.type != e_tl_type.SPECIAL_BLOCK)
+	if (!type_is_block(place_target_tl_part_of.type))
 		return 0
 		
 	var gridsize, worldtransform, localpos, localnormal;

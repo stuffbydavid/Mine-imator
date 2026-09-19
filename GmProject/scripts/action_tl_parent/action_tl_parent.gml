@@ -19,6 +19,7 @@ function action_tl_parent(par, index)
 					tl_value_set_vec3(e_value.POS_X, other.tl_old_default_pos[t], true)
 					tl_value_set_vec3(e_value.ROT_X, other.tl_old_default_rot[t], true)
 					tl_value_set_vec3(e_value.SCA_X, other.tl_old_default_sca[t], true)
+					lock_bend = other.tl_old_lock_bend[t]
 				}
 			}
 			for (var t = 0; t < save_var_amount; t++)

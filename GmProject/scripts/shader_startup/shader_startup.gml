@@ -212,6 +212,7 @@ function shader_startup()
 	{
 		new_shader_uniform("uReplaceColor")
 		new_shader_uniform("uGmDepth")
+		new_shader_uniform("uIsBlock")
 	}
 	
 	with (shader_map[?shader_high_dof])

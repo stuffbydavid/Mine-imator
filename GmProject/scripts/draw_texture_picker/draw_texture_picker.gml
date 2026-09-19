@@ -98,7 +98,10 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 					{
 						script_execute(scriptselectclick)
 						if (scriptselectclick = action_bench_create)
+						{
 							bench_show_ani_type = "hide"
+							app_mouse_clear()
+						}
 					}
 					else
 						script_execute(script, combinedslot)

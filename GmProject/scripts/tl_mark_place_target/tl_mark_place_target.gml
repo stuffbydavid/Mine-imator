@@ -17,8 +17,8 @@ function tl_mark_place_target(active)
 		}
 	}
 	
-	// Mark same-typed parent
-	if (parent != app && parent.type = type)
+	// Mark block parent
+	if (parent != app && type_is_block(parent.type))
 		with (parent)
 			tl_mark_place_target(active)
 }

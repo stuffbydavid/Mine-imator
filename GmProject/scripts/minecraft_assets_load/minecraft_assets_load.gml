@@ -194,6 +194,9 @@ function minecraft_assets_load()
 				}
 				with (mc_res)
 					item_sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
+					
+				// Item place targets
+				minecraft_assets_load_item_place_target(load_assets_map[?"item_place_target"])
 				
 				// Particle textures
 				var particletextureslist = load_assets_map[?"particle_textures"];
