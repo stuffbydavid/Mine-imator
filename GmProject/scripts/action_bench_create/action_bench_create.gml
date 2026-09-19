@@ -103,6 +103,8 @@ function action_bench_create(edit = false)
 			hobj.open_editor = edit
 			hobj.value_default = array()
 			hobj.parent_save_id = save_id_get(app)
+			hobj.place_parent_reset = false
+			hobj.place_lock = false
 			
 			if (edit)
 				tab_show(template_editor)
@@ -316,7 +318,8 @@ function action_bench_create(edit = false)
 				tl_value_copy_vec3(e_value.POS_X, value, value_default)
 				tl_value_copy_vec3(e_value.ROT_X, value, value_default)
 				tl_value_copy_vec3(e_value.SCA_X, value, value_default)
-				tl_set_parent(par, -1, true)
+				tl_set_parent(par, -1, !history_data.place_parent_reset)
+				action_tl_lock_tree(id, history_data.place_lock, null)
 			}
 		}
 		else

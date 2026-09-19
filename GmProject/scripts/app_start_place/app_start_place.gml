@@ -18,6 +18,7 @@ function app_start_place(tl, spawn)
 	
 	place_target_tl = null
 	place_target_tl_part_of = null
+	place_parent_reset = false
 	
 	view_main.update_place_surfaces = true
 	view_main.place_depth_value = 0.995

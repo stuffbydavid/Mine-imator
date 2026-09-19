@@ -128,9 +128,12 @@ function app_startup_window()
 
 	// Place
 	place_tl = null
+	place_tl_render = true
 	place_tl_parent = app
 	place_tl_parent_index = -1
-	place_tl_render = true
+	place_target_tl = null
+	place_target_tl_part_of = null
+	place_parent_reset = false
 	place_spawn = false
 	place_pos = null
 	place_rot = vec3(0)

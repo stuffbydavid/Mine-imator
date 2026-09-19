@@ -22,10 +22,36 @@ function view_click(view, cam)
 	
 	if (tl > 0)
 	{
-		// Find timeline to select
-		if (!tl_edit && !keyboard_check(vk_control))
-			while (tl.parent != app && !tl.parent.lock && tl_update_list_filter(tl.parent))
-				tl = tl.parent
+		// Prefer a model root until it or one of its parts is selected
+		if (!keyboard_check(vk_control))
+		{
+			if (tl.type = e_tl_type.MODEL_PART && tl.part_of != null)
+			{
+				var root, partselected;
+				root = tl.part_of
+				partselected = root.selected
+
+				if (!partselected)
+				{
+					for (var p = 0; p < ds_list_size(root.part_list); p++)
+					{
+						if (root.part_list[|p].selected)
+						{
+							partselected = true
+							break
+						}
+					}
+				}
+
+				if (!partselected)
+					tl = root
+			}
+			else if (!tl_edit)
+			{
+				while (tl.parent != app && !tl.parent.lock && tl_update_list_filter(tl.parent))
+					tl = tl.parent
+			}
+		}
 		
 		// Select
 		action_tl_select(tl)

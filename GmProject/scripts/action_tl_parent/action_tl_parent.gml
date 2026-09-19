@@ -13,12 +13,12 @@ function action_tl_parent(par, index)
 				with (save_id_find(tl_save_id[t]))
 				{
 					tl_set_parent(save_id_find(other.tl_old_parent_save_id[t]), other.tl_old_parent_tree_index[t])
-					tl_value_set_vec3(e_value.POS_X, vec3(other.tl_old_x[t], other.tl_old_y[t], other.tl_old_z[t]))
-					tl_value_set_vec3(e_value.ROT_X, vec3(other.tl_old_rot_x[t], other.tl_old_rot_y[t], other.tl_old_rot_z[t]))
-					tl_value_set_vec3(e_value.SCA_X, vec3(other.tl_old_sca_x[t], other.tl_old_sca_y[t], other.tl_old_sca_z[t]))
-					tl_value_set_vec3(e_value.POS_X, vec3(other.tl_old_default_x[t], other.tl_old_default_y[t], other.tl_old_default_z[t]), true)
-					tl_value_set_vec3(e_value.ROT_X, vec3(other.tl_old_default_rot_x[t], other.tl_old_default_rot_y[t], other.tl_old_default_rot_z[t]), true)
-					tl_value_set_vec3(e_value.SCA_X, vec3(other.tl_old_default_sca_x[t], other.tl_old_default_sca_y[t], other.tl_old_default_sca_z[t]), true)
+					tl_value_set_vec3(e_value.POS_X, other.tl_old_pos[t])
+					tl_value_set_vec3(e_value.ROT_X, other.tl_old_rot[t])
+					tl_value_set_vec3(e_value.SCA_X, other.tl_old_sca[t])
+					tl_value_set_vec3(e_value.POS_X, other.tl_old_default_pos[t], true)
+					tl_value_set_vec3(e_value.ROT_X, other.tl_old_default_rot[t], true)
+					tl_value_set_vec3(e_value.SCA_X, other.tl_old_default_sca[t], true)
 				}
 			}
 			for (var t = 0; t < save_var_amount; t++)

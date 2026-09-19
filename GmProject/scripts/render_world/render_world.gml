@@ -34,6 +34,7 @@ function render_world(mode)
 	if (render_mode != e_render_mode.CLICK &&
 		render_mode != e_render_mode.SELECT &&
 		render_mode != e_render_mode.PLACE_SELECT &&
+		render_mode != e_render_mode.PLACE_PARENT &&
 		render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH &&
 		render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH &&
 		render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)

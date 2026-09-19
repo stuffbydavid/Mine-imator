@@ -22,10 +22,17 @@ function app_update_place()
 	// Update object with position from last step
 	if (place_view_pos != null)
 	{
+		if (place_target_tl_part_of != null)
+			with (place_target_tl_part_of)
+				tl_mark_place_target(false)
+
 		place_target_tl = null
+		place_target_tl_part_of = null
+		place_parent_reset = false
 		place_pos = place_view_pos
 		place_rot = vec3(0)
 		place_sca = vec3(1)
+		action_tl_lock_tree(place_tl, false, null)
 		
 		if (!place_view_air)
 		{
@@ -58,10 +65,29 @@ function app_update_place()
 			
 		// Parent to compatible objects
 		app_update_place_parent()
-	
-		// Update timeline
-		tl_value_set_matrix(place_tl, matrix_create(place_pos, place_rot, place_sca), place_spawn)
-		place_tl.update_matrix = true
+		
+		if (place_parent_reset)
+		{
+			place_pos = vec3(0)
+			place_rot = vec3(0)
+			place_sca = vec3(1)
+			with (place_tl)
+			{
+				tl_value_set_vec3(e_value.POS_X, app.place_pos)
+				tl_value_set_vec3(e_value.ROT_X, app.place_rot)
+				tl_value_set_vec3(e_value.SCA_X, app.place_sca)
+				tl_value_set_vec3(e_value.POS_X, app.place_pos, true)
+				tl_value_set_vec3(e_value.ROT_X, app.place_rot, true)
+				tl_value_set_vec3(e_value.SCA_X, app.place_sca, true)
+				update_matrix = true
+			}
+		}
+		else
+		{
+			// Update timeline
+			tl_value_set_matrix(place_tl, matrix_create(place_pos, place_rot, place_sca), place_spawn)
+			place_tl.update_matrix = true
+		}
 		tl_update_matrix()
 		
 		// Update history defaults

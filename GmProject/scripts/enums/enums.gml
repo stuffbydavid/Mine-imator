@@ -855,6 +855,7 @@ function enums()
 		CLICK,
 		SELECT,
 		PLACE_SELECT,
+		PLACE_PARENT,
 		PREVIEW,
 		COLOR,
 		COLOR_FOG,

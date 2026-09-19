@@ -1,17 +1,17 @@
-/// tl_parent_set(parent, [index], [preserve])
-/// @desc Sets the parent
+/// tl_parent_set(parent, [index, [preserve]])
+/// @desc Sets the parent of the timeline and optionally preserves the current world transform.
 /// @arg parent
-/// @arg [index]
-/// @arg [preserve]
+/// @arg [index
+/// @arg [preserve]]
 
-function tl_set_parent()
+function tl_set_parent(newparent, index = -1, preserve = false)
 {
-	var oldmatrix, preserve;
-	preserve = argument_count > 2 && argument[2]
+	var oldmatrix;
 	if (preserve)
 	{
 		if (parent = app.timeline_move_obj)
 			oldmatrix = array_copy_1d(matrix)
+		
 		else if (ds_list_find_index(app.project_timeline_list, id) = -1)
 		{
 			oldmatrix = matrix_create(
@@ -30,14 +30,11 @@ function tl_set_parent()
 	if (parent != null)
 		ds_list_delete_value(parent.tree_list, id)
 	
-	parent = argument[0]
-	var index;
-	if (argument_count > 1 && argument[1] >= 0)
-		index = argument[1]
-	else
-		index = ds_list_size(parent.tree_list)
+	parent = newparent
+	if (index < 0)
+		index = ds_list_size(newparent.tree_list)
 	
-	ds_list_insert(parent.tree_list, index, id)
+	ds_list_insert(newparent.tree_list, index, id)
 	
 	// Keep unanimated transforms unchanged in world space
 	if (preserve && ds_list_size(keyframe_list) = 0)

@@ -115,7 +115,10 @@ function view_update_surface(view, cam)
 
 	// Placed objects
 	if (place_tl != null)
+	{
 		view.surface_select = render_select(e_render_mode.PLACE_SELECT, view.surface_select)
+		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
+	}
 	
 	view.surface = render_done()
 	render_lights = true

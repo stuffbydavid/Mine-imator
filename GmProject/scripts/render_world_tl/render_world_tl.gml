@@ -56,6 +56,9 @@ function render_world_tl()
 		
 	else if (render_mode = e_render_mode.PLACE_SELECT && !parent_is_placed && !placed)
 		return 0
+		
+	else if (render_mode = e_render_mode.PLACE_PARENT && !parent_is_place_target && !place_target)
+		return 0
 	
 	// Box for clicking
 	if (type = e_tl_type.PARTICLE_SPAWNER ||

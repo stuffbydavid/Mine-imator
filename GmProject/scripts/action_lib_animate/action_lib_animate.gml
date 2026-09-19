@@ -33,6 +33,8 @@ function action_lib_animate(place = false)
 			hobj = history_set(action_lib_animate)
 			hobj.value_default = array()
 			hobj.parent_save_id = save_id_get(app)
+			hobj.place_parent_reset = false
+			hobj.place_lock = false
 			if (temp_edit.type = e_temp_type.SCENERY && temp_edit.scenery != null && setting_scenery_replace_ground &&
 				temp_edit.scenery.scenery_size[X] > scenery_large_threshold && temp_edit.scenery.scenery_size[Y] > scenery_large_threshold)
 			{
@@ -62,7 +64,8 @@ function action_lib_animate(place = false)
 				tl_value_copy_vec3(e_value.POS_X, value, value_default)
 				tl_value_copy_vec3(e_value.ROT_X, value, value_default)
 				tl_value_copy_vec3(e_value.SCA_X, value, value_default)
-				tl_set_parent(par, -1, true)
+				tl_set_parent(par, -1, !history_data.place_parent_reset)
+				action_tl_lock_tree(id, history_data.place_lock, null)
 			}
 		}
 		else

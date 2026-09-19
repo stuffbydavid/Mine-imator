@@ -181,6 +181,8 @@ function tl_event_create()
 
 	placed = false
 	parent_is_placed = false
+	place_target = false
+	parent_is_place_target = false
 	
 	// Path
 	path_update = false
