@@ -47,6 +47,24 @@ function minecraft_assets_reload()
 			
 			ds_list_add(char_list, model)
 		}
+
+		// Equipment
+		var equiplist = map[?"equipment"];
+		if (ds_list_valid(equiplist))
+		{
+			for (var i = 0; i < ds_list_size(equiplist); i++)
+			{
+				var model = model_load(equiplist[|i], load_assets_dir + mc_equipment_directory);
+				if (!model) // Something went wrong!
+				{
+					log("Could not load model")
+					continue
+				}
+
+				model_name_map[?model.name] = model
+				ds_list_add(equipment_list, model)
+			}
+		}
 		
 		// Special blocks
 		var specialblockslist = map[?"special_blocks"];
@@ -68,24 +86,6 @@ function minecraft_assets_reload()
 			model_name_map[?model.name] = model
 			
 			ds_list_add(special_block_list, model)
-		}
-
-		// Equipment
-		var equiplist = map[?"equipment"];
-		if (ds_list_valid(equiplist))
-		{
-			for (var i = 0; i < ds_list_size(equiplist); i++)
-			{
-				var model = model_load(equiplist[|i], load_assets_dir + mc_special_block_directory);
-				if (!model) // Something went wrong!
-				{
-					log("Could not load model")
-					continue
-				}
-
-				model_name_map[?model.name] = model
-				ds_list_add(equipment_list, model)
-			}
 		}
 		
 		// Item place targets

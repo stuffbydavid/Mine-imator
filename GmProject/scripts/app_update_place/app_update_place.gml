@@ -30,7 +30,7 @@ function app_update_place()
 		place_target_tl_part_of = null
 		place_pos = place_view_pos
 		place_rot = vec3(0)
-		place_sca = vec3(1)
+		
 		action_tl_lock_tree(place_tl, false, null)
 		
 		if (!place_view_air)

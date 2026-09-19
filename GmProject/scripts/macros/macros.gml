@@ -66,6 +66,7 @@ function macros()
 	#macro mc_blockstates_directory		mc_assets_directory + "blockstates/"
 	#macro mc_textures_directory		mc_assets_directory + "textures/"
 	#macro mc_character_directory		mc_models_directory + "character/"
+	#macro mc_equipment_directory		mc_models_directory + "equipment/"
 	#macro mc_special_block_directory	mc_models_directory + "special_block/"
 	#macro mc_block_directory			mc_models_directory + "block/"
 	#macro mc_loops_directory			mc_character_directory + "loops/"
@@ -160,9 +161,10 @@ function macros()
 	#macro panel_width					320
 	#macro panel_bottom_height			300
 	#macro panel_top_height				205
-	#macro bench_min_width				534
+	#macro bench_min_width				500
 	#macro bench_max_width				800
-	#macro bench_height					345
+	#macro bench_initial_width			604
+	#macro bench_initial_height			345
 	#macro bench_list_percent			0.8
 	#macro bench_soundlist_percent		1
 	#macro list_minimum_items			7
@@ -209,7 +211,8 @@ function macros()
 	#macro crossbow_parent_action_right	array(null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9))
 	#macro crossbow_parent_action_left	array(null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9))
 	#macro spear_parent_action			array(null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25))
-	#macro block_parent_action			array()
+	#macro block_parent_action_right	array(null, true, vec3(0, 3.5, -9.5), vec3(-15, 15, 135), vec3(0.4))
+	#macro block_parent_action_left		array(null, true, vec3(0, 3.5, -9.5), vec3(15, 15, 45), vec3(0.4))
 	
 	// World
 	#macro block_size					16

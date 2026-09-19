@@ -199,7 +199,11 @@ function tab_properties_library()
 				}
 				
 				if (sheet >= 0)
+				{
 					draw_texture_slot(res.item_sheet_texture[sheet], slot, dx + wid + 18, dy + 6, 16, 16, res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][X] : res.item_sheet_size[X], res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][Y] : res.item_sheet_size[Y])
+					if (slot >= 0 && slot < ds_list_size(mc_assets.item_texture_list[sheet]))
+						tip_set(minecraft_texture_get_name(mc_assets.item_texture_list[sheet][|slot]), dx + wid + 16, dy + 4, 20, 20)
+				}
 				
 				if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeitem"))
 					tab_toggle(template_editor)

@@ -12,10 +12,10 @@ function app_startup_interface_bench()
 	bench_show_ani_type = ""
 	bench_show_ani = 0
 	bench_settings_ani = 0
-	bench_width = bench_min_width
+	bench_width = bench_initial_width
 	bench_height_add = 0
 	bench_resize_width = bench_width
-	bench_resize_height = bench_height
+	bench_resize_height = bench_initial_height
 	
 	bench_schematic_folder = schematic_folders[0]
 	bench_music_mode = false
@@ -90,8 +90,8 @@ function app_startup_interface_bench()
 		
 		// Size
 		height = 0
-		height_goal = bench_height
-		height_min = bench_height
+		height_goal = bench_initial_height
+		height_min = bench_initial_height
 		height_fixed = array_create(e_bench.amount, 0)
 		height_fixed_base = array_create(e_bench.amount, 0)
 		list_height = 0

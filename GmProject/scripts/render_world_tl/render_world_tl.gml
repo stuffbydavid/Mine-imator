@@ -287,10 +287,12 @@ function render_world_tl()
 			
 			case e_tl_type.ITEM:
 			{
+				var itemanimate;
+				itemanimate = (parent = app || parent.type != e_tl_type.MODEL_PART)
 				if (item_vbuffer = null)
-					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
+					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else
-					render_world_item(item_vbuffer, [item_res, item_normal_res, item_material_res], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
+					render_world_item(item_vbuffer, [item_res, item_normal_res, item_material_res], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				break
 			}
 			

@@ -65,6 +65,12 @@ function tl_get_parent_action(newparent)
 				return array(root, true, vec3(0), vec3(0), vec3(1), true)
 		}
 	}
+	
+	// Equipment model parts attach to matching model parts
+	if (type = e_tl_type.MODEL_PART && model_part_name != "" &&
+		newparent.type = e_tl_type.MODEL_PART && newparent.model_part != null &&
+		newparent.model_part_name = model_part_name)
+		return array(newparent, true, vec3(0), vec3(0), vec3(1), true)
 
 	// Unmapped objects attach to lower arm halves of characters/models
 	if (newparent.type = e_tl_type.MODEL_PART && newparent.part_of != null && newparent.model_part != null &&
@@ -78,28 +84,36 @@ function tl_get_parent_action(newparent)
 			return action
 		}
 		
-		var targetscale, targetsize, targetrepeat;
-		targetscale = 0.25
-		targetsize = vec3(1)
-		targetrepeat = vec3(1)
+		if (!type_is_block(type))
+			return null
 		
+		// Block
+		var action, targetscale, targetsize;
+		if (newparent.model_part_name = "right_arm")
+			action = array_copy_1d(block_parent_action_right)
+		else
+			action = array_copy_1d(block_parent_action_left)
+		targetscale = action[e_parent_action.SCA][X]
+		targetsize = vec3(1)
+		
+		// Scale down by number of blocks in longest direction
 		if (type = e_tl_type.SCENERY && temp != null && temp.scenery != null)
 		{
+			var targetrepeat = vec3(1);
 			if (temp.block_repeat_enable)
 				targetrepeat = temp.block_repeat
 			targetsize = vec3_mul(temp.scenery.scenery_size, targetrepeat)
-			targetscale /= max(1, targetsize[X], targetsize[Y], targetsize[Z])
 		}
 		else if (type = e_tl_type.BLOCK && temp != null)
 		{
 			if (temp.block_repeat_enable)
-				targetrepeat = temp.block_repeat
-			targetscale /= max(1, targetrepeat[X], targetrepeat[Y], targetrepeat[Z])
+				targetsize = temp.block_repeat
 		}
-		else if (type != e_tl_type.SPECIAL_BLOCK)
-			return null
 
-		return array(newparent, true, point3D(0, 2, -4), vec3(0, 0, -90), vec3(targetscale))
+		targetscale /= max(1, targetsize[X], targetsize[Y])
+		action[e_parent_action.TARGET] = newparent
+		action[e_parent_action.SCA] = vec3(targetscale)
+		return action
 	}
 
 	return null

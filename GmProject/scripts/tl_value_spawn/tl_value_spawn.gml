@@ -40,6 +40,10 @@ function tl_value_spawn()
 	// Disable SSAO on particles by default
 	if (type = e_tl_type.PARTICLE_SPAWNER)
 		ssao = false
+
+	// Root items use a smaller default scale
+	if (type = e_tl_type.ITEM && parent = app)
+		tl_value_set_vec3(e_value.SCA_X, vec3(0.5))
 	
 	// Set rotation point to template's by default
 	if (temp != null)

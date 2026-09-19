@@ -31,7 +31,7 @@ function bench_draw()
 			window_busy = ""
 		
 		bench_settings.height = 0
-		bench_settings.height_goal = bench_height + bench_height_add
+		bench_settings.height_goal = bench_initial_height + bench_height_add
 		return 0
 	}
 	else

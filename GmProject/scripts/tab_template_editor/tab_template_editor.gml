@@ -278,7 +278,7 @@ function tab_template_editor()
 				sheetsizes = [res.item_sheet_size]
 				slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
 			}
-			draw_texture_picker(temp_edit.item_slot, textures, slots, sheetsizes, dx, dy, dw, dh, tab.item_scroll, action_lib_item_slot)
+			draw_texture_picker(temp_edit.item_slot, textures, slots, sheetsizes, dx, dy, dw, dh, tab.item_scroll, action_lib_item_slot, mc_assets.item_texture_list, null, null, true)
 			
 			if (content_mouseon)
 				window_scroll_focus = string(tab.item_scroll)

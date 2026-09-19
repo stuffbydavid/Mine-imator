@@ -467,15 +467,17 @@ function bench_draw_settings(bx, by, bw, bh)
 					slot = bench_settings.item_slot
 				}
 				if (sheet >= 0)
+				{
 					draw_texture_slot(res.item_sheet_texture[sheet], slot, dx + capwid, dy + 4, 16, 16, res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][X] : res.item_sheet_size[X], res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][Y] : res.item_sheet_size[Y])
+					if (slot >= 0 && slot < ds_list_size(mc_assets.item_texture_list[sheet]))
+						tip_set(minecraft_texture_get_name(mc_assets.item_texture_list[sheet][|slot]), dx + capwid, dy + 4, 16, 16)
+				}
 			}
 			else
 			{
 				var scale = min(16 / texture_width(res.texture), 16 / texture_height(res.texture));
 				draw_texture(res.texture, dx + capwid, dy + 4, scale, scale)
 			}
-			dy += 32
-				
 			// Item select
 			if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 			{
@@ -502,9 +504,11 @@ function bench_draw_settings(bx, by, bw, bh)
 				listh = fixed > 0 ? min(availableheight, max(minimum, floor(referenceheight * bench_list_percent))) : minimum
 				bench_settings.list_height = listh
 				bench_settings.list_minimum_height = minimum
-				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot, null, null, action_bench_create)
+				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot, mc_assets.item_texture_list, null, action_bench_create)
 				dy += listh + 8
 			}
+			else
+				dy += 32
 				
 			// Settings
 			var sx;

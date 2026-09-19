@@ -67,26 +67,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		
 	}
 
-	if (slist.search_tbx.text != "")
-	{
-		var clearx = searchx - 28;
-		if (!filter && name = "")
-		{
-			clearx = searchx + searchw - 24
-			searchw -= 28
-		}
-		if (draw_button_icon("listsearchclear" + string(slist), clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltipclearsearch"))
-		{
-			slist.search_tbx.text = ""
-			slist.search = false
-			slist.scroll.value = 0
-			slist.scroll.value_goal = 0
-			sortlist_update(slist)
-			searchcleared = true
-		}
-	}
-	
-	if (draw_textfield("listsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
+	if (draw_searchbox("listsearch" + string(slist), searchx, yy, searchw, slist.search_tbx, !filter && name = ""))
 	{
 		searchcleared = slist.search && (slist.search_tbx.text = "")
 		slist.scroll.value = 0

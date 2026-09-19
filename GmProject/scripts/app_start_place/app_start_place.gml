@@ -15,6 +15,7 @@ function app_start_place(tl, spawn)
 	place_tl_render = false
 	place_tl_parent = tl.parent
 	place_tl_parent_index = ds_list_find_index(tl.parent.tree_list, tl)
+	place_sca = vec3(tl.value_default[e_value.SCA_X], tl.value_default[e_value.SCA_Y], tl.value_default[e_value.SCA_Z])
 	
 	place_target_tl = null
 	place_target_tl_part_of = null
