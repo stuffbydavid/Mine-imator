@@ -15,9 +15,6 @@ function view_event_create()
 	surface_place_depth_gm = null
 	surface_place_width = 0
 	surface_place_height = 0
-	place_depth_value = 0
-	place_depth_face = null
-	place_tl = null
 	update_place_surfaces = false
 	
 	mouseon = false

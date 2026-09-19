@@ -4,8 +4,10 @@
 function bench_click(tab, key = false)
 {
 	// Double clicked, create asset
-	if (bench_tab = tab && tab != e_bench.PROJECT && tab != e_bench.WORLD && bench_show_ani_type = "")
+	if (bench_tab = tab && tab != e_bench.WORLD && bench_show_ani_type = "")
 	{
+		if (tab = e_bench.PROJECT && (bench_settings.project_selected = null || bench_settings.project_selected.object_index != obj_template))
+			return 0
 		if (tab = e_bench.SCHEMATIC && bench_settings.scenery = null)
 			return 0
 		if (tab = e_bench.SOUND && !is_array(bench_settings.sound_list_current.select))

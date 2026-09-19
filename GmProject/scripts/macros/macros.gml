@@ -157,6 +157,9 @@ function macros()
 	#macro label_height					9
 	#macro load_assets_width			780
 	#macro load_assets_height			450
+	#macro panel_width					320
+	#macro panel_bottom_height			300
+	#macro panel_top_height				205
 	#macro bench_min_width				534
 	#macro bench_max_width				800
 	#macro bench_height					345

@@ -41,32 +41,7 @@ function tl_set_parent()
 	
 	// Keep unanimated transforms unchanged in world space
 	if (preserve && ds_list_size(keyframe_list) = 0)
-	{
-		var parentmatrix, localmatrix, localposition, localscale, localangle, localrotation;
-		if (parent = app)
-			parentmatrix = MAT_IDENTITY
-		else if (inherit_rot_point)
-			parentmatrix = parent.matrix_render
-		else
-			parentmatrix = parent.matrix
-
-		localmatrix = matrix_multiply(oldmatrix, matrix_inverse_ext(parentmatrix))
-		localposition = matrix_position(localmatrix)
-		localscale = vec3(
-			sqrt(sqr(localmatrix[0]) + sqr(localmatrix[1]) + sqr(localmatrix[2])),
-			sqrt(sqr(localmatrix[4]) + sqr(localmatrix[5]) + sqr(localmatrix[6])),
-			sqrt(sqr(localmatrix[8]) + sqr(localmatrix[9]) + sqr(localmatrix[10])))
-		matrix_remove_scale(localmatrix)
-		localangle = matrix_angle(localmatrix)
-		localrotation = vec3(radtodeg(localangle[X]), radtodeg(localangle[Y]), radtodeg(localangle[Z]))
-
-		tl_value_set_vec3(e_value.POS_X, localposition)
-		tl_value_set_vec3(e_value.ROT_X, localrotation)
-		tl_value_set_vec3(e_value.SCA_X, localscale)
-		tl_value_set_vec3(e_value.POS_X, localposition, true)
-		tl_value_set_vec3(e_value.ROT_X, localrotation, true)
-		tl_value_set_vec3(e_value.SCA_X, localscale, true)
-	}
+		tl_value_set_matrix(id, oldmatrix)
 
 	update_matrix = true
 }

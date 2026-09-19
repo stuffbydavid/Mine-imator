@@ -12,7 +12,7 @@ varying vec4 vColor;
 
 vec4 packDepth(float depth)
 {
-	depth = 1.0 - depth;
+	depth = sqrt(max(0.0, 1.0 - depth));
 	return vec4(floor(depth * 255.0) / 255.0, fract(depth * 255.0), fract(depth * 255.0 * 255.0), 1.0);
 }
 

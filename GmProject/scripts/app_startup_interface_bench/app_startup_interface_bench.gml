@@ -279,6 +279,7 @@ function app_startup_interface_bench()
 		// Shape list
 		shape_list = new_obj(obj_sortlist)
 		shape_list.script = action_bench_shape_type
+		shape_list.script_select_click = action_bench_create
 		shape_list.header_show = false
 		shape_list.height_items = e_shape_type.amount
 		

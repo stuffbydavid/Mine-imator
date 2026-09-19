@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"app_place",
+  "%Name":"app_update_place",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"app_place",
+  "name":"app_update_place",
   "parent":{
-    "name":"Interface",
-    "path":"folders/Scripts/App/Interface.yy",
+    "name":"Place",
+    "path":"folders/Scripts/App/Interface/Place.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
