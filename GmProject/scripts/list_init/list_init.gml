@@ -1141,7 +1141,26 @@ function list_init(name)
 			
 			break
 		}
-		
+            
+		// Light gobo texture
+		case "frameeditorlightgobotexture":
+		{
+			menu_add_item(null, text_get("listdefault", text_get("listnone")))
+			
+			// Import from file
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER, action_tl_frame_light_gobo_tex_browse)
+			
+			// Add existing resources
+			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+			{
+				var res = res_list.display_list[|i];
+				if (res.texture)
+					menu_add_item(res, res.display_name, (res.texture ? res.texture : null))
+			}
+			
+			break
+		}
+            
 		// Sound
 		case "frameeditorsoundfile":
 		{

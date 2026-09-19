@@ -13,6 +13,12 @@ uniform float uShadowRadius; // static
 uniform vec3 uShadowPosition; // static
 uniform float uLightSpecular;
 
+uniform vec2 uGoboOffset; // static
+uniform vec2 uGoboRepeat; // static
+uniform vec2 uGoboScale; // static
+
+uniform sampler2D uLightGobo; // static
+
 uniform sampler2D uDepthBuffer; // static
 uniform int uShadowBlurQuality; // static
 uniform vec2 uPCSSKernel[64]; // static
@@ -151,7 +157,14 @@ void main()
 				// Spotlight circle
 				float fragDepth = min(vScreenCoord.z, uLightFar);
 				vec2 fragCoord = (vec2(vScreenCoord.x, -vScreenCoord.y) / vScreenCoord.z + 1.0) * 0.5;
-				
+				vec2 fragCoordOffset = (vec2(vShadowCoord.x, -vShadowCoord.y) / vShadowCoord.z + 1.0 + uGoboOffset) * 0.5;
+
+                vec2 goboCoord = (fragCoordOffset - 0.5) * uGoboScale + 0.5;
+
+                vec2 inBounds = step(vec2(0.0), goboCoord) * step(goboCoord, vec2(1.0));
+                float goboMask = inBounds.x * inBounds.y;
+
+                vec2 repeatCoord = fract(goboCoord * uGoboRepeat);
 				// Texture position must be valid
 				if (fragCoord.x > 0.0 && fragCoord.y > 0.0 && fragCoord.x < 1.0 && fragCoord.y < 1.0)
 				{
@@ -178,13 +191,22 @@ void main()
 					
 					// Subsurface translucency
 					if (sss > 0.0 && dif == 0.0)
-						subsurf = getSubsurfaceTranslucency(fragDepth, sampleDepth, bias, lightCol, uSSSRadius * sss) * att;
+						subsurf = getSubsurfaceTranslucency(fragDepth, sampleDepth, bias, lightCol, uSSSRadius * sss) * att * texture2D(uLightGobo, repeatCoord).rgb * goboMask;
 				}
 			}
 		}
 		
+        vec2 fragCoord = (vec2(vShadowCoord.x, -vShadowCoord.y) / vShadowCoord.z + 1.0 + uGoboOffset) * 0.5;
+
+        vec2 goboCoord = (fragCoord - 0.5) * uGoboScale + 0.5;
+
+        vec2 inBounds = step(vec2(0.0), goboCoord) * step(goboCoord, vec2(1.0));
+        float goboMask = inBounds.x * inBounds.y;
+
+        vec2 repeatCoord = fract(goboCoord * uGoboRepeat);
+        
 		// Diffuse light
-		light = lightCol * dif * shadow;
+		light = lightCol * dif * shadow * texture2D(uLightGobo, repeatCoord).rgb * goboMask;
 		
 		// Subsurface highlight
 		if (sss > 0.0)

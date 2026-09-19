@@ -36,6 +36,12 @@ function tl_value_default(valueid)
 		case e_value.LIGHT_FADE_SIZE: return 0.5
 		case e_value.LIGHT_SPOT_RADIUS: return 50
 		case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
+        case e_value.LIGHT_SPOT_GOBO_H_REPEAT: return 1
+		case e_value.LIGHT_SPOT_GOBO_V_REPEAT: return 1
+		case e_value.LIGHT_SPOT_GOBO_H_OFFSET: return 0
+		case e_value.LIGHT_SPOT_GOBO_V_OFFSET: return 0
+		case e_value.LIGHT_GOBO_SCALE_X: return 1
+		case e_value.LIGHT_GOBO_SCALE_Y: return 1
 		case e_value.CAM_FOV: return 45
 		case e_value.CAM_EXPOSURE: return 1
 		case e_value.CAM_GAMMA: return 2.2

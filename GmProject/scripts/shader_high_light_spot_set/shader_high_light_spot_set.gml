@@ -25,6 +25,14 @@ function shader_high_light_spot_set()
 	render_set_uniform("uLightFadeSize", render_light_fade_size)
 	render_set_uniform("uLightSpotSharpness", render_light_spot_sharpness)
 	
+    // Gobo uniforms
+    texture_set_stage(sampler_map[?"uLightGobo"], render_gobo_texture)
+	gpu_set_texfilter_ext(sampler_map[?"uLightGobo"], false)
+	gpu_set_texrepeat_ext(sampler_map[?"uLightGobo"], true)
+	render_set_uniform_vec2("uGoboOffset", render_gobo_offset[X], render_gobo_offset[Y])
+	render_set_uniform_vec2("uGoboRepeat", render_gobo_repeat[X], render_gobo_repeat[Y])
+	render_set_uniform_vec2("uGoboScale", render_gobo_scale[X], render_gobo_scale[Y])
+    
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_spot_buffer))
 	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], true)
 }

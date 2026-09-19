@@ -298,6 +298,10 @@ function shader_startup()
 		new_shader_uniform("uPCSSKernel")
 		new_shader_uniform("uScreenSize")
 		new_shader_uniform("uGamma")
+        new_shader_uniform("uGoboOffset")
+		new_shader_sampler("uLightGobo")
+		new_shader_uniform("uGoboRepeat")
+		new_shader_uniform("uGoboScale")
 	}
 	
 	with (shader_map[?shader_high_light_sun])

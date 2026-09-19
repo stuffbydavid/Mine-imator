@@ -572,6 +572,12 @@ function app_startup_interface_tabs()
 			tbx_spot_radius = new_textbox_decimals()
 			tbx_spot_sharpness = new_textbox_integer()
 			tbx_spot_sharpness.suffix = "%"
+            tbx_spot_gobo_offset_x = new_textbox_decimals()
+			tbx_spot_gobo_offset_y = new_textbox_decimals()
+			tbx_spot_gobo_repeat_x = new_textbox_decimals()
+			tbx_spot_gobo_repeat_y = new_textbox_decimals()
+			tbx_spot_gobo_scale_x = new_textbox_decimals()
+			tbx_spot_gobo_scale_y = new_textbox_decimals()
 		}
 		
 		// Camera

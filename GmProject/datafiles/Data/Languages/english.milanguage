@@ -3998,7 +3998,17 @@
 			"range": "Range",
 			"fadesize": "Fade size",
 			"spotsharpness": "Spot sharpness",
-			"spotradius": "Spot radius"
+			"spotradius": "Spot radius",
+			"gobotexture": "Gobo",
+            "gobooffset": "Offset",
+            "gobohoffset": "H",
+            "gobovoffset": "V",
+            "goborepeat": "Repeat",
+            "gobohrepeat": "H",
+            "gobovrepeat": "V",
+            "goboscale": "Scale",
+            "goboscalex": "X",
+            "goboscaley": "Y" 
 		},
 		"camera": "CAMERA",
 		"camera/": {

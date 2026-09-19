@@ -13,7 +13,7 @@ function render_startup()
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
 			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_sun_shadow_scale, render_light_offset, render_shadow_from,
-			  render_spot_matrix, render_light_specular_strength, render_light_size;
+			  render_spot_matrix, render_light_specular_strength, render_light_size, render_gobo_offset, render_gobo_repeat, render_gobo_scale, render_gobo_texture;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
@@ -85,6 +85,11 @@ function render_startup()
 	render_shadows = false
 	render_indirect = false
 	render_auxiliary = false
+    
+    render_gobo_offset = [0,0];
+	render_gobo_repeat = [1,1];
+	render_gobo_scale = [1,1];
+	render_gobo_texture = null;
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	render_list = ds_list_create()
