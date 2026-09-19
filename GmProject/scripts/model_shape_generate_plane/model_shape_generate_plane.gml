@@ -190,8 +190,8 @@ function model_shape_generate_plane(bend)
 			
 			// Blocky bending
 			var bendscale = vec3(0);
-			if (sharpbend)
-				startscale = model_shape_get_bend_scale(bendstart, bendend, segp, true, segpos, bend)
+			//if (sharpbend)
+			//	startscale = model_shape_get_bend_scale(bendstart, bendend, segp, true, segpos, bend)
 			
 			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(bendscale, vec3(1)))
 		}

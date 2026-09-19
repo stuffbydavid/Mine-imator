@@ -15,7 +15,7 @@ function render_world_particle()
 	if (temp != particle_sheet && temp != particle_template)
 	{
 		var scenery, rep, off;
-		off = point3D(0, 0, 0)
+		off = point3D(0)
 		
 		if (temp.block_repeat_enable)
 			rep = temp.block_repeat
@@ -31,12 +31,13 @@ function render_world_particle()
 				
 				if (temp.model.model_format = e_model_format.BLOCK)
 				{
-					off = point3D_mul(rep, -block_size / 2)
+					off = point3D_mul(rep, -block_half_size)
 					break
 				}
 			}
 			
 			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			{
 				if (temp.model_file != null)
@@ -57,7 +58,7 @@ function render_world_particle()
 			
 			case e_temp_type.BLOCK:
 			{
-				off = point3D_mul(rep, -block_size / 2)
+				off = point3D_mul(rep, -block_half_size)
 				break
 			}
 			
@@ -79,11 +80,10 @@ function render_world_particle()
 				
 				if (temp.model.model_format = e_model_format.BLOCK)
 				{
-					var res;
-					if (temp.model_tex != null && temp.model_tex.block_sheet_texture != null)
-						res = temp.model_tex
-					else
+					var res = res_eval(temp.model_tex);
+					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
+					
 					render_world_block(temp.model.block_vbuffer, res)
 					
 					with (temp)
@@ -94,6 +94,7 @@ function render_world_particle()
 			}
 			
 			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			{
 				if (temp.model_file = null)
@@ -109,13 +110,13 @@ function render_world_particle()
 			case e_temp_type.SCENERY:
 			{
 				if (scenery != null)
-					render_world_scenery(scenery, [temp.block_tex, temp.block_tex_material, temp.block_tex_normal], temp.block_repeat_enable, temp.block_repeat)
+				render_world_scenery(scenery, [temp.block_tex, temp.block_tex_normal, temp.block_tex_material], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
 			case e_temp_type.ITEM:
 			{
-				render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [temp.item_tex, null, null])
+				render_world_item(temp.item_vbuffer, [temp.item_tex, null, null], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
 				break
 			}
 			
@@ -125,15 +126,12 @@ function render_world_particle()
 				break
 			}
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				if (temp.model_part = null || temp.model_file = null)
 					break
 				
-				var res = temp.model_tex;
-				if (!res_is_ready(res))
-					res = mc_res
-					
+				var res = res_eval(temp.model_tex);
 				render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, null)
 				break
 			}
@@ -149,7 +147,7 @@ function render_world_particle()
 				var tex;
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_material, spr_default_normal])
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_normal, spr_default_material])
 				break
 			}
 		}
@@ -158,19 +156,13 @@ function render_world_particle()
 	{
 		if (type.temp = particle_sheet)
 		{
-			var res = type.sprite_tex;
-			if (!res_is_ready(res))
-				res = mc_res
-			
+			var res = res_eval(type.sprite_tex);
 			render_set_texture(res.particles_texture[type.sprite_tex_image])
 		}
 		else
 		{
 			var template = particle_template_map[?type.sprite_template];
-			var res = type.sprite_template_tex;
-			if (!res_is_ready(res))
-				res = mc_res
-			
+			var res = res_eval(type.sprite_template_tex);
 			var tex = res.particle_texture_atlas_map[?template.name];
 			
 			if (tex = undefined)

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"soundlist_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"soundlist_draw",
+  "parent":{
+    "name":"Soundlist",
+    "path":"folders/Scripts/App/Interface/Components/Soundlist.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

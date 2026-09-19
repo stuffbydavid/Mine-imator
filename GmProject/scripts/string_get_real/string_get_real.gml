@@ -36,7 +36,7 @@ function string_get_real(str, inv = undefined)
 			else
 				return inv
 		}
-		else if (ord(c) >= ord("0") && ord(c) <= ord("9")) // A digit is allowed at serveral places...
+		else if (ord(c) >= ord("0") && ord(c) <= ord("9")) // A digit is allowed at several places...
 		{
 			if (state <= 2) // At the beginning, after a sign or another digit
 				state = 2

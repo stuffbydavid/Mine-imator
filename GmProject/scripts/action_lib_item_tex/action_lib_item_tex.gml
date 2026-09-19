@@ -3,9 +3,6 @@
 
 function action_lib_item_tex(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
@@ -24,12 +21,13 @@ function action_lib_item_tex(res)
 				
 				if (filename_ext(fn) = ".zip")
 				{
-					res = new_res(fn, e_res_type.PACK)
+					res = new_res(fn, e_res_type.ITEM_SHEET)
 					with (res)
 						res_load()
+					break
 				}
-				else
-					popup_importitemsheet_show(fn, action_lib_item_tex)
+
+				popup_importitemsheet_show(fn, action_lib_item_tex)
 				
 				return 0
 			}
@@ -58,11 +56,10 @@ function action_lib_item_tex(res)
 	
 	with (temp_edit)
 	{
-		item_tex.count--
 		item_tex = res
-		item_tex.count++
 		render_generate_item()
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

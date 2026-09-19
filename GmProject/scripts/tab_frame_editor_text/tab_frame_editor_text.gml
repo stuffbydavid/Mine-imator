@@ -8,9 +8,9 @@ function tab_frame_editor_text()
 	// Font
 	var text;
 	if (tl_edit.value[e_value.TEXT_FONT] = null)
-		text = text_get("listdefault", tl_edit.temp.text_font.display_name)
+		text = text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name)
 	else
-		text = tl_edit.value[e_value.TEXT_FONT].display_name
+		text = res_eval(tl_edit.value[e_value.TEXT_FONT]).display_name
 	
 	tab_control_menu()
 	draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
@@ -31,7 +31,7 @@ function tab_frame_editor_text()
 		tab_collapse_start()
 		
 		tab_control_color()
-		draw_button_color("frameeditortextoutlinecolor", dx, dy, floor(dw/2), tl_edit.value[e_value.TEXT_OUTLINE_COLOR], tl_edit.value_default[e_value.TEXT_OUTLINE_COLOR], false, action_tl_frame_text_outline_color)
+		draw_button_color("frameeditortextoutlinecolor", dx, dy, dw, tl_edit.value[e_value.TEXT_OUTLINE_COLOR], tl_edit.value_default[e_value.TEXT_OUTLINE_COLOR], false, action_tl_frame_text_outline_color)
 		tab_next()
 		
 		tab_collapse_end()
@@ -68,8 +68,8 @@ function tab_frame_editor_text()
 	dx = dxold
 	
 	// Text
-	tab_control_textfield(true, 76)
+	tab_control_textfield(true, 126)
 	tab.text.tbx_text.text = tl_edit.value[e_value.TEXT]
-	draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.text.tbx_text, action_tl_frame_text, tl_edit.text, "top")
+	draw_textfield("frameeditortexttext", dx, dy, dw, 126, tab.text.tbx_text, action_tl_frame_text, tl_edit.text, "top")
 	tab_next()
 }

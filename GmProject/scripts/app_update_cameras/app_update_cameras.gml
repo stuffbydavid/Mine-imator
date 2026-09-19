@@ -38,14 +38,14 @@ function app_update_cameras(highquality, movie)
 		if (type != e_tl_type.CAMERA || !cam_surf_required)
 			continue
 		
+		/*
 		// Only update surface if needed
 		if (highquality && render_samples > -1 && surface_exists(cam_surf))
 		{
 			cam_surf_required = false
 			continue
 		}
-		
-		render_samples = -1
+		*/
 		
 		// Render
 		with (app)

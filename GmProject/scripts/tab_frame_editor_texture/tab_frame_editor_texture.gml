@@ -14,14 +14,15 @@ function tab_frame_editor_texture()
 		switch (tl_edit.type)
 		{
 			case e_tl_type.CHARACTER:
+			case e_tl_type.EQUIPMENT:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "tex"
 				
 				var modelfile = tl_edit.temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_tl_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				with (tl_edit.temp)
@@ -51,9 +52,7 @@ function tab_frame_editor_texture()
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex
-				
-				if (!res_is_ready(texobj))
-					texobj = mc_res
+				texobj = res_eval(texobj)
 				
 				tex = texobj.block_preview_texture
 				
@@ -103,7 +102,7 @@ function tab_frame_editor_texture()
 	else
 		text = text_get("listnone")
 	
-	if (tl_edit.value[e_value.TEXTURE_OBJ] = null)
+	if (tl_edit.value[e_value.TEXTURE_OBJ] = null || tl_edit.value[e_value.TEXTURE_OBJ] = project_pack_res)
 		text = text_get("listdefault", text)
 	
 	tab_control_menu(ui_large_height)

@@ -3,6 +3,47 @@
 
 function action_bench_create(edit = false)
 {
+	var tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
+	
+	if (tab = e_bench.SOUND)
+		return action_bench_sound_create()
+	
+	if (tab = e_bench.PROJECT)
+	{
+		var temp, editortab;
+		temp = bench_settings.project_selected
+		editortab = false
+		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
+		{
+			if (edit)
+			{
+				tab_show(properties, true)
+				properties.library.show = true
+				action_lib_list(temp)
+				sortlist_center(lib_list, temp)
+
+				switch (temp.type)
+				{
+					case e_temp_type.CHARACTER:
+					case e_temp_type.EQUIPMENT:
+					case e_temp_type.SPECIAL_BLOCK:
+					case e_temp_type.BLOCK:
+					case e_temp_type.ITEM:
+					case e_temp_type.PARTICLE_SPAWNER:
+						editortab = true
+				}
+				if (editortab)
+					tab_show(template_editor, true)
+			}
+			else
+			{
+				temp_edit = temp
+				action_lib_animate(true)
+			}
+		}
+		return 0
+	}
+
 	if (history_undo)
 	{
 		with (history_data)
@@ -18,16 +59,35 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
+
+		if (history_data.scenery_replace_ground)
+			background_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
-		var hobj, tl;
+		var hobj, tl, particletemp, sceneryres, sceneryreplaceground, par;
 		hobj = null
+		particletemp = null
+		sceneryres = null
+		sceneryreplaceground = false
 		
 		if (history_redo)
 		{
+			hobj = history_data
+			par = save_id_find(history_data.parent_save_id)
+			if (par = null)
+				par = app
+			hobj.spawn_amount = 0
+			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
-			
+			if (bench_tab = e_bench.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
+			{
+				particletemp = save_id_find(history_data.particle_temp_save_id)
+				bench_settings.particle_preset = particletemp
+				bench_settings.particle_preset_temp = particletemp
+				temp_edit = particletemp
+			}
+
 			if (history_data.open_editor)
 			{
 				tab_template_editor_update_ptype_list()
@@ -38,29 +98,97 @@ function action_bench_create(edit = false)
 		{
 			hobj = history_set(action_bench_create)
 			hobj.bench_save_obj = history_save_bench()
+			hobj.bench_tab = bench_tab
 			hobj.spawn_amount = 0
 			hobj.open_editor = edit
+			hobj.value_default = array()
+			hobj.parent_save_id = save_id_get(app)
+			hobj.place_parent_reset = false
+			hobj.place_lock = false
 			
 			if (edit)
 				tab_show(template_editor)
 		}
 		
-		if (type_is_timeline(bench_settings.type)) // Timeline
+		var temptype, tltype;
+		temptype = null
+		tltype = null
+
+		switch (bench_tab)
 		{
-			tl = new_tl(bench_settings.type = e_tl_type.LIGHT_SOURCE ? bench_settings.light_type : bench_settings.type)
+			case e_bench.CHARACTER:			temptype = e_temp_type.CHARACTER break
+			case e_bench.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT break
+			case e_bench.MODEL:				temptype = e_temp_type.MODEL break
+			case e_bench.MODEL_PART:		temptype = e_temp_type.MODEL_PART break
+			case e_bench.ITEM:				temptype = e_temp_type.ITEM break
+			case e_bench.SCHEMATIC:			temptype = e_temp_type.SCENERY break
+			case e_bench.BLOCK:				temptype = e_temp_type.BLOCK break
+			case e_bench.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK break
+			case e_bench.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type break
+			case e_bench.TEXT:				temptype = e_temp_type.TEXT break
+			case e_bench.PATH:				tltype = e_tl_type.PATH break
+			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
+			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
+			case e_bench.AUDIO_TRACK:		tltype = e_tl_type.AUDIO_TRACK break
+			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
+			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
+		}
+
+		if (bench_tab = e_bench.SCHEMATIC)
+		{
+			if (history_redo)
+			{
+				if (history_data.scenery_res_save_obj != null)
+				{
+					sceneryres = history_restore_res(history_data.scenery_res_save_obj)
+					sceneryres.display_name = history_data.scenery_res_save_obj.display_name
+					bench_settings.scenery = sceneryres
+				}
+			}
+			else
+			{
+				hobj.scenery_res_save_obj = null
+				sceneryres = action_bench_schematic_create_resource()
+				if (sceneryres != null)
+					hobj.scenery_res_save_obj = history_save_res(sceneryres)
+			}
+		}
+		else if (bench_tab = e_bench.PARTICLE_SPAWNER && !history_redo)
+			particletemp = bench_settings.particle_preset_temp
+
+		if (tltype != null) // Timeline
+		{
+			tl = new_tl(tltype)
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
 				spawn_amount++
 			}
 			
-			if (bench_settings.type = e_tl_type.CAMERA)
+			if (bench_tab = e_bench.CAMERA)
 				view_second.show = true
 		}
-		else
+		else if (particletemp != null)
+		{
+			with (particletemp)
+				tl = temp_animate()
+
+			temp_edit = particletemp
+
+			with (hobj)
+			{
+				spawn_save_id[spawn_amount] = tl.save_id
+				spawn_amount++
+				if (!app.history_redo)
+					particle_temp_save_id = particletemp.save_id
+			}
+		}
+		else if (temptype != null)
 		{
 			with (bench_settings)
 			{
+				type = temptype
+				
 				var temp = temp_duplicate();
 				
 				// Don't copy into template 
@@ -79,22 +207,10 @@ function action_bench_create(edit = false)
 				with (temp)
 				{
 					if (type != e_temp_type.MODEL && model != null)
-					{
-						model.count--
 						model = null
-					}
 					
-					if (type != e_temp_type.CHARACTER && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.BODYPART && type != e_temp_type.MODEL)
+					if (type != e_temp_type.CHARACTER && type != e_temp_type.EQUIPMENT && type != e_temp_type.SPECIAL_BLOCK && type != e_temp_type.MODEL_PART && type != e_temp_type.MODEL)
 					{
-						if (model_tex != null)
-							model_tex.count--
-						
-						if (model_tex_material != null)
-							model_tex_material.count--
-						
-						if (model_tex_normal != null)
-							model_tex_normal.count--
-						
 						model_tex = null
 						model_tex_material = null
 						model_tex_normal = null
@@ -105,14 +221,6 @@ function action_bench_create(edit = false)
 					
 					if (type != e_temp_type.ITEM)
 					{
-						item_tex.count--
-						
-						if (item_tex_material != null)
-							item_tex_material.count--
-						
-						if (item_tex_normal != null)
-							item_tex_normal.count--
-						
 						item_tex = null
 						item_tex_material = null
 						item_tex_normal = null
@@ -120,51 +228,36 @@ function action_bench_create(edit = false)
 					
 					if (type != e_temp_type.BLOCK && type != e_temp_type.SCENERY)
 					{
-						block_tex.count--
 						block_tex = null
-						block_tex_material.count--
 						block_tex_material = null
-						block_tex_normal.count--
 						block_tex_normal = null
 						block_state = array()
 					}
 					
 					if (type != e_temp_type.SCENERY && scenery != null)
-					{
-						scenery.count--
 						scenery = null
-					}
 					
 					if (!type_is_shape(type))
 					{
 						if (shape_tex != null)
-						{
-							if (shape_tex.type != e_tl_type.CAMERA)
-								shape_tex.count--
 							shape_tex = null
-						}
 						
 						if (shape_tex_material != null)
-						{
-							shape_tex_material.count--
 							shape_tex_material = null
-						}
 						
 						if (shape_tex_normal != null)
-						{
-							shape_tex_normal.count--
 							shape_tex_normal = null
-						}
 					}
 					
 					if (type != e_temp_type.TEXT)
-					{
-						text_font.count--
 						text_font = null
-					}
 					
 					tl = temp_animate()
-					sortlist_add(app.lib_list, id)
+					
+					if (type = e_temp_type.TEXT && other.text != "")
+						tl.text = other.text
+					
+					temp_add_lists()
 				}
 				
 				temp_edit = temp
@@ -176,50 +269,8 @@ function action_bench_create(edit = false)
 				if (creator != app.bench_settings)
 					continue
 				
-				sortlist_add(app.lib_list, id)
+				temp_add_lists()
 				creator = app
-				
-				if (model_tex != null)
-					model_tex.count++
-				
-				if (model_tex_material != null)
-					model_tex_material.count++
-				
-				if (model_tex_normal != null)
-					model_tex_normal.count++
-				
-				if (item_tex != null)
-					item_tex.count++
-				
-				if (item_tex_material != null)
-					item_tex_material.count++
-				
-				if (item_tex_normal != null)
-					item_tex_normal.count++
-				
-				if (block_tex != null)
-					block_tex.count++
-				
-				if (block_tex_material != null)
-					block_tex_material.count++
-				
-				if (block_tex_normal != null)
-					block_tex_normal.count++
-				
-				if (scenery > 0)
-					scenery.count++
-				
-				if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
-					shape_tex.count++
-				
-				if (shape_tex_material != null)
-					shape_tex_material.count++
-				
-				if (shape_tex_normal != null)
-					shape_tex_normal.count++
-				
-				if (text_font != null)
-					text_font.count++
 				
 				with (hobj)
 				{
@@ -227,6 +278,31 @@ function action_bench_create(edit = false)
 					spawn_amount++
 				}
 			}
+		}
+		if (sceneryres != null)
+		{
+			with (hobj)
+			{
+				spawn_save_id[spawn_amount] = sceneryres.save_id
+				spawn_amount++
+			}
+		}
+
+		if (bench_tab = e_bench.SCHEMATIC)
+		{
+			if (history_redo)
+				sceneryreplaceground = history_data.scenery_replace_ground
+			else if (setting_scenery_replace_ground && tl.temp.scenery != null &&
+				tl.temp.scenery.scenery_size[X] > scenery_large_threshold && tl.temp.scenery.scenery_size[Y] > scenery_large_threshold)
+			{
+				sceneryreplaceground = true
+				hobj.scenery_replace_ground = true
+				hobj.scenery_ground_show = background_ground_show
+			}
+
+			if (sceneryreplaceground)
+				with (tl)
+					tl_replace_ground()
 		}
 		
 		if (history_redo)
@@ -236,31 +312,23 @@ function action_bench_create(edit = false)
 			
 			with (tl)
 			{
-				value_default[e_value.POS_X] = history_data.value_default[e_value.POS_X]
-				value_default[e_value.POS_Y] = history_data.value_default[e_value.POS_Y]
-				value_default[e_value.POS_Z] = history_data.value_default[e_value.POS_Z]
-				value_default[e_value.ROT_X] = history_data.value_default[e_value.ROT_X]
-				value_default[e_value.ROT_Y] = history_data.value_default[e_value.ROT_Y]
-				value_default[e_value.ROT_Z] = history_data.value_default[e_value.ROT_Z]
-				value[e_value.POS_X] = value_default[e_value.POS_X]
-				value[e_value.POS_Y] = value_default[e_value.POS_Y]
-				value[e_value.POS_Z] = value_default[e_value.POS_Z]
-				value[e_value.ROT_X] = value_default[e_value.ROT_X]
-				value[e_value.ROT_Y] = value_default[e_value.ROT_Y]
-				value[e_value.ROT_Z] = value_default[e_value.ROT_Z]
-				tl_set_parent(history_data.parent)
+				tl_value_copy_vec3(e_value.POS_X, value_default, history_data.value_default)
+				tl_value_copy_vec3(e_value.ROT_X, value_default, history_data.value_default)
+				tl_value_copy_vec3(e_value.SCA_X, value_default, history_data.value_default)
+				tl_value_copy_vec3(e_value.POS_X, value, value_default)
+				tl_value_copy_vec3(e_value.ROT_X, value, value_default)
+				tl_value_copy_vec3(e_value.SCA_X, value, value_default)
+				tl_set_parent(par, -1, !history_data.place_parent_reset)
+				action_tl_lock_tree(id, history_data.place_lock, null)
 			}
 		}
 		else
 		{
 			with (hobj)
 			{
-				value_default[e_value.POS_X] = tl.value_default[e_value.POS_X]
-				value_default[e_value.POS_Y] = tl.value_default[e_value.POS_Y]
-				value_default[e_value.POS_Z] = tl.value_default[e_value.POS_Z]
-				value_default[e_value.ROT_X] = tl.value_default[e_value.ROT_X]
-				value_default[e_value.ROT_Y] = tl.value_default[e_value.ROT_Y]
-				value_default[e_value.ROT_Z] = tl.value_default[e_value.ROT_Z]
+				tl_value_copy_vec3(e_value.POS_X, value_default, tl.value_default)
+				tl_value_copy_vec3(e_value.ROT_X, value_default, tl.value_default)
+				tl_value_copy_vec3(e_value.SCA_X, value_default, tl.value_default)
 				parent = app
 			}
 			
@@ -270,27 +338,39 @@ function action_bench_create(edit = false)
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
 				(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
+				!sceneryreplaceground &&
 				tl.value_type[e_value_type.TRANSFORM_POS])
 				app_start_place(tl, true)
 			
-			log("Created", tl_type_name_list[|bench_settings.type])
+			log("Created", tl_type_name_list[|tl.type])
+
+			// Encourage parenting armor to a character
+			if (!setting_advanced_mode && bench_tab = e_bench.EQUIPMENT)
+			{
+				toast_new(e_toast.INFO, text_get("alertequiparmor"))
+				toast_last.dismiss_time = 15
+			}
 		}
 	}
 	
 	if (!history_redo && edit)
 		tab_template_editor_update_ptype_list()
 	
-	if (bench_settings.type = e_temp_type.PARTICLE_SPAWNER)
+	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 	{
 		if (!history_undo && !history_redo)
-			bench_update_particles_list()
+			action_bench_particles_folder(bench_particle_preset_folder)
 		
 		particle_spawner_clear()
 		preview_reset_view()
 		update = true
 	}
 	
+	if (!history_undo && bench_tab = e_bench.TEXT)
+		bench_settings.text = ""
+
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 	lib_preview.update = true
 }

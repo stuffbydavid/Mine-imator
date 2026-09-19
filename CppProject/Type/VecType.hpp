@@ -42,12 +42,27 @@ namespace CppProject
 		void CreateRef();
 		void FreeData();
 		static void CleanHeapData();
+		static void BeginOmp();
+		static void EndOmp();
+		static void AddQThread(QThread* thread);
 
 		RealType x, y, z, w;
 		VarType* ref = nullptr; // References to x, y, z, w
-		IntType refHeapIndex = 0;
+		IntType refHeapIndex = -1;
+		int8_t refOmpIndex = -1;
 		uint8_t size = 4;
 
-		static FastVector<VecType*> refList;
+		struct ThreadData
+		{
+			FastVector<VecType*> refList;
+			FastVector<VecType*> ompRefList[OPENMP_MAX_THREADS];
+			BoolType ompActive = false;
+		};
+
+		ThreadData* refThread = nullptr;
+		static ThreadData* GetCurrentThreadData();
+		static ThreadData* appThreadData;
+		static ThreadData* ompThreadData;
+		static QHash<QThread*, ThreadData*> qThreadData;
 	};
 }

@@ -67,7 +67,7 @@ namespace CppProject
 		return -1;
 	}
 
-	IntType font_add(StringType name, IntType size, BoolType bold, BoolType italic, IntType first, IntType last)
+	IntType font_add(StringType name, RealType size, BoolType bold, BoolType italic, IntType first, IntType last)
 	{
 		if (QFile::exists(name))
 			return (new Font(name, size, bold, italic, first, last))->id;

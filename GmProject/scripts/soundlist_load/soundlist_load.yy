@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"soundlist_load",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"soundlist_load",
+  "parent":{
+    "name":"Soundlist",
+    "path":"folders/Scripts/App/Interface/Components/Soundlist.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "model_file_matrix_map_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Models",
-    "path": "folders/Scripts/Minecraft/Models.yy",
+  "$GMScript":"v1",
+  "%Name":"model_file_matrix_map_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_file_matrix_map_create",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -70,6 +70,7 @@ function shader_startup()
 		new_shader("shader_high_samples_add")
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_depth_normal")
+		new_shader("shader_place")
 		new_shader("shader_high_material")
 		new_shader("shader_high_subsurface")
 		new_shader("shader_high_subsurface_scatter")
@@ -102,7 +103,7 @@ function shader_startup()
 	if (err)
 	{
 		log("Shader compilation failed")
-		log("Try updating your graphics drivers", link_article_drivers)
+		log("Try updating your graphics drivers", drivers_url_get())
 		if (show_question("Some shaders failed to compile.\nCheck that your graphics drivers are up-to-date and restart Mine-imator.\n\nOpen support article about updating graphics drivers?"))
 			open_url(drivers_url_get())
 		
@@ -194,13 +195,24 @@ function shader_startup()
 	}
 	
 	with (shader_map[?shader_draw_texture])
+	{
 		new_shader_uniform("uMask")
+		new_shader_uniform("uClipEnabled")
+		new_shader_uniform("uClipBox")
+		new_shader_uniform("uScreenSize")
+	}
 	
 	with (shader_map[?shader_replace])
 		new_shader_uniform("uReplaceColor")
 	
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform("uReplaceColor")
+
+	with (shader_map[?shader_place])
+	{
+		new_shader_uniform("uReplaceColor")
+		new_shader_uniform("uGmDepth")
+	}
 	
 	with (shader_map[?shader_high_dof])
 	{

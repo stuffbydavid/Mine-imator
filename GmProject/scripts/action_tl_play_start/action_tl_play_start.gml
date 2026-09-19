@@ -3,11 +3,11 @@
 
 function action_tl_play_start()
 {
-	audio_stop_all()
+	tl_audio_stop()
 	
 	with (obj_timeline)
 	{
-		if (type = e_tl_type.AUDIO && !hide && app.window_state != "export_movie")
+		if (type = e_tl_type.AUDIO_TRACK && !hide && app.window_state != "export_movie")
 		{
 			for (var k = 0; k < ds_list_size(keyframe_list); k++)
 			{

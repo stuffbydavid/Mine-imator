@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "view_shape_triangle_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Primitives",
-    "path": "folders/Scripts/App/Interface/Components/View/Shape/Primitives.yy",
+  "$GMScript":"v1",
+  "%Name":"view_shape_triangle_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_shape_triangle_draw",
+  "parent":{
+    "name":"Primitives",
+    "path":"folders/Scripts/App/Interface/Components/View/Shape/Primitives.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

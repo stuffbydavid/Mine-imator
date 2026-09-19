@@ -50,10 +50,10 @@ function popup_pattern_editor_show(obj)
 			ds_list_add(pattern_color_list_edit, obj.pattern_color_list[i])
 		
 		var res;
-		if (pattern_edit.model_tex.type = e_res_type.SKIN)
+		if (res_eval(pattern_edit.model_tex).type = e_res_type.SKIN)
 			res = mc_res
 		else
-			res = pattern_edit.model_tex
+			res = res_eval(pattern_edit.model_tex)
 		
 		pattern_edit_preview.model_tex = res
 		
@@ -67,7 +67,7 @@ function popup_pattern_editor_show(obj)
 			pattern_sprites = array()
 			
 			// Create new pattern sprites
-			res_ratio = ceil(sprite_get_width(res.model_texture_map[?"entity/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner_base"]))
+			res_ratio = ceil(sprite_get_width(res.model_texture_map[?"entity/banner/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner/banner_base"]))
 			
 			shader_mask = (res.pack_format < e_minecraft_pack.FORMAT_115)
 			for (var i = 0; i < ds_list_size(minecraft_pattern_list); i++)
@@ -78,7 +78,7 @@ function popup_pattern_editor_show(obj)
 			shader_mask = false
 			
 			// Crop texture
-			array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner_base"], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio))
+			array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner/banner_base"], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio))
 			
 			pattern_resource = res
 		}

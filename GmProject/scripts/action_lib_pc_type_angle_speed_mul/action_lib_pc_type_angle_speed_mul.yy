@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_pc_type_angle_speed_mul",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Angle",
-    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Angle.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_pc_type_angle_speed_mul",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_pc_type_angle_speed_mul",
+  "parent":{
+    "name":"Angle",
+    "path":"folders/Scripts/App/Actions/Library/Particle editor/Types/Angle.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

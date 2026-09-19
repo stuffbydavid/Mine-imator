@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_world_text",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "World",
-    "path": "folders/Scripts/Render/World.yy",
+  "$GMScript":"v1",
+  "%Name":"render_world_text",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_world_text",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Render/World.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

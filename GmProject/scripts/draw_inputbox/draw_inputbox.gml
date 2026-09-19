@@ -16,7 +16,6 @@
 function draw_inputbox()
 {
 	var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha, focused;
-	var update;
 	
 	inputname = argument[0]
 	xx = argument[1]
@@ -57,6 +56,8 @@ function draw_inputbox()
 	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 		return 0
 	
+	var update;
+	
 	var mouseon;
 	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "" || window_busy = string(tbx) + "click") && !disabled
 	
@@ -77,7 +78,7 @@ function draw_inputbox()
 		borderalpha = 1 * alpha
 	}
 	
-	draw_box(xx, yy, w, h, false, c_level_top, alpha * draw_get_alpha())
+	draw_box(xx, yy, w, h, false, c_input_background, alpha * draw_get_alpha())
 	draw_outline(xx, yy, w, h, 1, bordercolor, borderalpha, true)
 	draw_box_hover(xx, yy, w, h, microani_arr[e_microani.PRESS])
 	
@@ -91,7 +92,7 @@ function draw_inputbox()
 	// Search icon
 	if (string_contains(inputname, "search"))
 	{
-		draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + (h/2), 1, 1, bordercolor, borderalpha)
+		draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + (h/2), 1, 1, tbx.text = "" ? bordercolor : c_accent, tbx.text = "" ? borderalpha : a_accent)
 		w -= 28
 	}
 	

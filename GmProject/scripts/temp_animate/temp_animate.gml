@@ -3,18 +3,27 @@
 
 function temp_animate()
 {
-	count++
-	
 	with (new_obj(obj_timeline))
 	{
 		type = other.type
 		temp = other.id
+		
+		if (type = e_tl_type.EQUIPMENT)
+			inherit_pose = true
+		
+		if (type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK || type = e_tl_type.SCENERY)
+		{
+			inherit_alpha = true
+			inherit_color = true
+			inherit_texture = true
+		}
 		
 		tl_set_parent_root()
 		
 		switch (type)
 		{
 			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.MODEL:
 			{
@@ -51,7 +60,7 @@ function temp_animate()
 				break
 			}
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				model_part = temp.model_part 
 				if (model_part != null)

@@ -23,6 +23,8 @@ function tl_event_create()
 	
 	model_part = null
 	model_part_name = ""
+	model_name = ""
+	model_state = array()
 	model_shape_vbuffer_map = null
 	model_shape_alpha_map = null
 	part_of = null
@@ -58,8 +60,8 @@ function tl_event_create()
 	keyframe_current_values = null
 	keyframe_next_values = null
 	
-	world_pos = point3D(0, 0, 0)
-	world_pos_rotate = point3D(0, 0, 0)
+	world_pos = point3D(0)
+	world_pos_rotate = point3D(0)
 	world_pos_2d = point2D(0, 0)
 	world_pos_2d_error = false
 	colors_ext = false
@@ -75,7 +77,7 @@ function tl_event_create()
 	tree_list = ds_list_create()
 	tree_list_filter = ds_list_create()
 	tree_extend = false
-	tree_contents = array_create(e_tl_type.amount - 1)
+	tree_contents = array_create(e_tl_type.amount)
 	list_mouseon = false
 	
 	inherit_position = true
@@ -94,8 +96,8 @@ function tl_event_create()
 	inherit_pose = false
 	scale_resize = true
 	rot_point_custom = false
-	rot_point = point3D(0, 0, 0)
-	rot_point_render = point3D(0, 0, 0)
+	rot_point = point3D(0)
+	rot_point_render = point3D(0)
 	backfaces = false
 	texture_blur = false
 	texture_filtering = false
@@ -116,8 +118,7 @@ function tl_event_create()
 	glint_scale = 1
 	glint_speed = 1
 	glint_strength = 1
-	glint_tex = mc_res
-	glint_tex.count++
+	glint_tex = project_pack_res
 	
 	particle_list = null
 	
@@ -154,6 +155,7 @@ function tl_event_create()
 	
 	item_vbuffer = null
 	item_slot = 0
+	item_sheet = e_item_sheet.SIZE16
 	item_res = null
 	item_material_res = null
 	item_normal_res = null
@@ -166,6 +168,10 @@ function tl_event_create()
 	
 	tex_obj = null
 	tex_obj_prev = -5
+	tex_obj_material = null
+	tex_obj_material_prev = -5
+	tex_obj_normal = null
+	tex_obj_normal_prev = -5
 	
 	model_tex = null
 	model_tex_material = null
@@ -175,6 +181,8 @@ function tl_event_create()
 
 	placed = false
 	parent_is_placed = false
+	place_target = false
+	parent_is_place_target = false
 	
 	// Path
 	path_update = false
@@ -187,14 +195,14 @@ function tl_event_create()
 	path_table_matrix = []
 	path_length = 1
 	
-	path_shape_generate = false
+	path_shape = "none"
 	path_shape_radius = 8
-	path_shape_tex_length = 16
 	path_shape_invert = false
-	path_shape_tube = false
-	path_shape_detail = 6
 	path_shape_smooth_segments = true
 	path_shape_smooth_ring = false
+	path_shape_detail = 6
+	path_shape_tex_mapped = false
+	path_shape_tex_length = 16
 	
 	path_vbuffer = null
 	path_select_vbuffer = null

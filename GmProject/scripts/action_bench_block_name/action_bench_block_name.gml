@@ -17,7 +17,7 @@ function action_bench_block_name(block)
 		// Modify states for better search
 		if (s != "" && !string_contains(string_lower(minecraft_asset_get_name("block", mc_assets.block_name_map[?block].name)), s))
 		{
-			var b, state, val;
+			var b, val;
 			b = mc_assets.block_name_map[?block]
 			
 			for (var i = 0; i < array_length(block_state); i += 2)

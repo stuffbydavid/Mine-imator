@@ -2,6 +2,8 @@
 
 function app_startup_interface_tabs()
 {
+	globalvar preview_edit;
+
 	tab_move = null
 	tab_move_name = ""
 	tab_move_x = 0
@@ -35,27 +37,32 @@ function app_startup_interface_tabs()
 		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
 		with (render)
 		{
+			tbx_render_distance = new_textbox_integer()
+			tbx_samples = new_textbox_integer()
+			
 			tbx_ssao_radius = new_textbox_decimals()
 			tbx_ssao_power = new_textbox_integer()
 			tbx_ssao_power.suffix = "%"
-			tbx_samples = new_textbox_integer()
-			tbx_render_distance = new_textbox_integer()
+			
 			tbx_subsurface_samples = new_textbox_integer()
 			tbx_subsurface_highlight = new_textbox_integer()
 			tbx_subsurface_highlight.suffix = "%"
 			tbx_subsurface_highlight_strength = new_textbox_integer()
 			tbx_subsurface_highlight_strength.suffix = "%"
+			
 			tbx_indirect_precision = new_textbox_integer()
 			tbx_indirect_precision.suffix = "%"
 			tbx_indirect_blur_radius = new_textbox_decimals()
 			tbx_indirect_blur_radius.suffix = "%"
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"
+			
 			tbx_reflections_precision = new_textbox_integer()
 			tbx_reflections_precision.suffix = "%"
-			tbx_reflections_thickness = new_textbox_decimals()
 			tbx_reflections_fade_amount = new_textbox_integer()
 			tbx_reflections_fade_amount.suffix = "%"
+			tbx_reflections_thickness = new_textbox_decimals()
+			
 			tbx_glow_radius = new_textbox_integer()
 			tbx_glow_radius.suffix = "%"
 			tbx_glow_intensity = new_textbox_integer()
@@ -64,18 +71,23 @@ function app_startup_interface_tabs()
 			tbx_glow_falloff_radius.suffix = "%"
 			tbx_glow_falloff_intensity = new_textbox_integer()
 			tbx_glow_falloff_intensity.suffix = "%"
+			
 			tbx_aa_power = new_textbox_integer()
 			tbx_aa_power.suffix = "%"
-			tbx_block_emissive = new_textbox_decimals()
-			tbx_block_emissive.suffix = "%"
+			
+			tbx_texture_filtering_level = new_textbox_integer()
+			
+			tbx_exposure = new_textbox_decimals()
+			tbx_gamma = new_textbox_decimals()
+			
 			tbx_glint_speed = new_textbox_decimals()
 			tbx_glint_speed.suffix = "%"
 			tbx_glint_strength = new_textbox_decimals()
 			tbx_glint_strength.suffix = "%"
+			
+			tbx_block_emissive = new_textbox_decimals()
+			tbx_block_emissive.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
-			tbx_texture_filtering_level = new_textbox_integer()
-			tbx_exposure = new_textbox_decimals()
-			tbx_gamma = new_textbox_decimals()
 		}
 		
 		// Library
@@ -83,13 +95,16 @@ function app_startup_interface_tabs()
 		with (library)
 		{
 			preview = new_obj(obj_preview)
-			preview.spawn_active = true
 			list = new_obj(obj_sortlist)
+			list.height_items = 7
 			list.can_deselect = true
 			list.script = action_lib_list
+			list.filter_type_list = temp_type_name_list
+			
 			sortlist_column_add(list, "libname", 0)
 			sortlist_column_add(list, "libtype", 0.35)
 			sortlist_column_add(list, "libinstances", 0.65)
+			
 			tbx_name = new_textbox(1, 0, "")
 			tbx_repeat_x = new_textbox_integer()
 			tbx_repeat_y = new_textbox_integer()
@@ -122,12 +137,12 @@ function app_startup_interface_tabs()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
 			tbx_sunlight_angle.suffix = "°"
-			tbx_sky_clouds_height = new_textbox_ndecimals()
-			tbx_sky_clouds_size = new_textbox_decimals()
-			tbx_sky_clouds_thickness = new_textbox_decimals()
+			tbx_sky_clouds_offset_y = new_textbox_ndecimals()
+			tbx_sky_clouds_offset_z = new_textbox_ndecimals()
+			tbx_sky_clouds_size_xy = new_textbox_decimals()
+			tbx_sky_clouds_size_z = new_textbox_decimals()
 			tbx_sky_clouds_speed = new_textbox_ndecimals()
 			tbx_sky_clouds_speed.suffix = "%"
-			tbx_sky_clouds_offset = new_textbox_ndecimals()
 			tbx_fog_distance = new_textbox_integer()
 			tbx_fog_size = new_textbox_integer()
 			tbx_fog_height = new_textbox_integer()
@@ -139,7 +154,8 @@ function app_startup_interface_tabs()
 			tbx_wind_directional_speed = new_textbox_decimals()
 			tbx_wind_directional_speed.suffix = "%"
 			tbx_wind_directional_strength = new_textbox_decimals()
-			tbx_texture_animation_speed = new_textbox_ndecimals()
+			tbx_texture_animation_speed = new_textbox_ninteger()
+			tbx_texture_animation_speed.suffix = "%"
 		}
 		
 		// Resources
@@ -148,8 +164,10 @@ function app_startup_interface_tabs()
 		{
 			preview = new_obj(obj_preview)
 			list = new_obj(obj_sortlist)
+			list.height_items = 7
 			list.can_deselect = true
 			list.script = action_res_list
+			list.filter_type_list = res_type_name_list
 			sortlist_column_add(list, "resname", 0)
 			sortlist_column_add(list, "restype", 0.35)
 			sortlist_column_add(list, "rescount", 0.65)
@@ -167,6 +185,7 @@ function app_startup_interface_tabs()
 	lib_list = properties.library.list
 	res_preview = properties.resources.preview
 	res_list = properties.resources.list
+	preview_edit = res_preview
 	
 	// Ground editor
 	ground_editor = new_tab(setting_ground_editor_location, false)
@@ -205,14 +224,23 @@ function app_startup_interface_tabs()
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
 		
-		// Bodypart list
-		bodypart_model_list = new_obj(obj_sortlist)
-		bodypart_model_list.script = action_lib_bodypart_model_name
-		sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
+		// Equipment list
+		equipment_list = new_obj(obj_sortlist)
+		equipment_list.script = action_lib_model_name
+		sortlist_column_add(equipment_list, "spblockname", 0)
+		for (var b = 0; b < ds_list_size(mc_assets.equipment_list); b++)
+			sortlist_add(equipment_list, mc_assets.equipment_list[|b].name)
+		
+		// Model part list
+		model_part_model_list = new_obj(obj_sortlist)
+		model_part_model_list.script = action_lib_model_part_model_name
+		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
+		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
+			sortlist_add(model_part_model_list, mc_assets.equipment_list[|m].name)
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.char_list[|m].name)
+			sortlist_add(model_part_model_list, mc_assets.char_list[|m].name)
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.special_block_list[|m].name)
+			sortlist_add(model_part_model_list, mc_assets.special_block_list[|m].name)
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()
@@ -237,6 +265,7 @@ function app_startup_interface_tabs()
 		tbx_destroy_at_time_random = new_textbox_ndecimals()
 		
 		type_list = new_obj(obj_sortlist)
+		type_list.height_items = 6
 		type_list.script = action_lib_pc_type_list
 		type_list.can_deselect = true
 		sortlist_column_add(type_list, "particleeditortypename", 0)
@@ -250,7 +279,9 @@ function app_startup_interface_tabs()
 		tbx_type_spawn_rate.suffix = "%"
 		tbx_type_text = new_textbox(false, 0, "")
 		tbx_type_sprite_frame_width = new_textbox_integer()
+		tbx_type_sprite_frame_width.suffix = text_get("particleeditorpixels")
 		tbx_type_sprite_frame_height = new_textbox_integer()
+		tbx_type_sprite_frame_height.suffix = text_get("particleeditorpixels")
 		tbx_type_sprite_frame_start = new_textbox_integer()
 		tbx_type_sprite_frame_end = new_textbox_integer()
 		
@@ -442,8 +473,8 @@ function app_startup_interface_tabs()
 			tbx_detail = new_textbox_decimals()
 			
 			tbx_radius = new_textbox_decimals()
-			tbx_tex_length = new_textbox_decimals()
 			tbx_shape_detail = new_textbox_decimals()
+			tbx_tex_length = new_textbox_decimals()
 		}
 	}
 	
@@ -560,20 +591,24 @@ function app_startup_interface_tabs()
 		with (camera)
 		{
 			video_template = null
-			look_at_rotate = true
+			tbx_video_size_custom_width = new_textbox_integer()
+			tbx_video_size_custom_height = new_textbox_integer()
 			tbx_fov = new_textbox_decimals()
 			tbx_fov.suffix = "°"
+			
+			tbx_blade_amount = new_textbox_integer()
+			tbx_blade_angle = new_textbox_ndecimals()
+			tbx_blade_angle.suffix = "°"
+			
 			tbx_exposure = new_textbox_decimals()
 			tbx_gamma = new_textbox_decimals()
-			tbx_blade_amount = new_textbox_integer()
-			tbx_blade_angle = new_textbox_integer()
-			tbx_blade_angle.suffix = "°"
 			
 			tbx_rotate_distance = new_textbox_decimals()
 			tbx_rotate_angle_xy = new_textbox_ndecimals()
 			tbx_rotate_angle_xy.suffix = "°"
 			tbx_rotate_angle_z = new_textbox_ndecimals()
 			tbx_rotate_angle_z.suffix = "°"
+			look_at_rotate = true
 			
 			tbx_shake_strength_x = new_textbox_decimals()
 			tbx_shake_strength_x.suffix = "%"
@@ -613,9 +648,6 @@ function app_startup_interface_tabs()
 			tbx_dof_fringe_green.suffix = "%"
 			tbx_dof_fringe_blue = new_textbox_integer()
 			tbx_dof_fringe_blue.suffix = "%"
-			
-			tbx_video_size_custom_width = new_textbox_integer()
-			tbx_video_size_custom_height = new_textbox_integer()
 		
 			tbx_bloom_threshold = new_textbox_integer()
 			tbx_bloom_threshold.suffix = "%"

@@ -9,7 +9,7 @@ function app_update_tl_edit_tabs()
 	if (tl_edit_amount > 0)
 	{
 		showtl = true
-		if (tl_edit.type = e_tl_type.AUDIO)
+		if (tl_edit.type = e_tl_type.AUDIO_TRACK)
 			showkf = (tl_edit.keyframe_select != null)
 		else
 			showkf = true

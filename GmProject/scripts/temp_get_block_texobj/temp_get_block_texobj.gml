@@ -5,7 +5,10 @@
 
 function temp_get_block_texobj(val)
 {
-	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_texture = null)
+	if (val != null)
+		val = res_eval(val)
+
+	if (val = null || val.type = e_tl_type.CAMERA || val.block_sheet_texture[e_block_sheet.STATIC16] = null)
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
 		if (object_index = obj_timeline && type = e_tl_type.BLOCK)
@@ -14,13 +17,14 @@ function temp_get_block_texobj(val)
 			{
 				with (part_of)
 				{
-					if (temp.block_tex.type = e_res_type.PACK || temp.block_tex.type = e_res_type.BLOCK_SHEET)
-						return temp.block_tex
+					if (res_eval(temp.block_tex).type = e_res_type.PACK || res_eval(temp.block_tex).type = e_res_type.BLOCK_SHEET)
+						return res_eval(temp.block_tex)
 				}
 			}
 		}
-		else
-			return block_tex
+		if (block_tex = null)
+			return res_eval(project_pack_res)
+		return res_eval(block_tex)
 	}
 	
 	return val;

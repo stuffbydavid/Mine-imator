@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_background_ground_tex",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Ground",
-    "path": "folders/Scripts/App/Actions/Background/Ground.yy",
+  "$GMScript":"v1",
+  "%Name":"action_background_ground_tex",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_ground_tex",
+  "parent":{
+    "name":"Ground",
+    "path":"folders/Scripts/App/Actions/Background/Ground.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

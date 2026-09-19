@@ -26,7 +26,6 @@ function action_background_sky_sun_tex(res)
 		history_set_res(action_background_sky_sun_tex, fn, background_sky_sun_tex, res)
 	}
 	
-	background_sky_sun_tex.count--
 	background_sky_sun_tex = res
-	background_sky_sun_tex.count++
+	project_update_counts()
 }

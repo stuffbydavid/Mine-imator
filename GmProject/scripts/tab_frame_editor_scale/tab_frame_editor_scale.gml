@@ -30,7 +30,7 @@ function tab_frame_editor_scale()
 		axis_edit = (setting_z_is_up ? Z : Y)
 		textfield_group_add("frameeditorscalez", tl_edit.value[e_value.SCA_X + axis_edit], 1, script, axis_edit, tab.transform.tbx_sca_z, null, max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50))
 		
-		tab_control_textfield_group(false)
+		tab_control_textfield_group()
 		draw_textfield_group("frameeditorscale", dx, dy, dw, 0.1, snap_min, no_limit, snapval, false, true, 3)
 		tab_next()
 	}

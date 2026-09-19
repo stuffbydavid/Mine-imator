@@ -9,10 +9,12 @@ function action_bench_model_name(name)
 		
 		if (type = e_temp_type.CHARACTER)
 			s = string_lower(char_list.search_tbx.text)
+		else if (type = e_temp_type.EQUIPMENT)
+			s = string_lower(equipment_list.search_tbx.text)
 		else if (type = e_temp_type.SPECIAL_BLOCK)
 			s = string_lower(special_block_list.search_tbx.text)
-		else if (type = e_temp_type.BODYPART)
-			s = string_lower(bodypart_model_list.search_tbx.text)
+		else if (type = e_temp_type.MODEL_PART)
+			s = string_lower(model_part_model_list.search_tbx.text)
 		
 		if (model_name = name && s = "")
 			return 0
@@ -23,7 +25,7 @@ function action_bench_model_name(name)
 		// Modify states for better search
 		if (s != "" && !string_contains(string_lower(minecraft_asset_get_name("model", model_name)), s))
 		{
-			var m, state, val;
+			var m, val;
 			m = mc_assets.model_name_map[?name]
 			
 			for (var i = 0; i < array_length(model_state); i += 2)
@@ -46,7 +48,7 @@ function action_bench_model_name(name)
 		
 		temp_update_model()
 		
-		if (type = e_temp_type.BODYPART)
+		if (type = e_temp_type.MODEL_PART)
 			temp_update_model_part()
 		
 		temp_update_model_shape()

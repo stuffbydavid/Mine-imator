@@ -38,4 +38,5 @@ function action_tl_folder()
 	
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

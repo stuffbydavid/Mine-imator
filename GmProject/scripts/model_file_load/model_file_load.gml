@@ -84,6 +84,10 @@ function model_file_load(fname, res = null)
 		var size = max(texture_size[X], texture_size[Y]);
 		texture_size = vec2(size, size) // Make square
 		
+		// Default texture scroll
+		texture_scroll_speed = 0
+		texture_scroll_direction = 0
+		
 		// Color
 		part_mixing_shapes = false
 		color_inherit = false

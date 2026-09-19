@@ -16,9 +16,6 @@ function history_restore_tl(save, tl = null)
 		save_id = save.save_id
 		tl_find_save_ids()
 		
-		if (temp != null && part_of = null)
-			temp.count++
-		
 		// Restore default values
 		for (var v = 0; v < e_value.amount; v++)
 			value_default[v] = tl_value_find_save_id(v, null, save.value_default[v])

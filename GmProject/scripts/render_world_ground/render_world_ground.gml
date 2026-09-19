@@ -8,6 +8,8 @@ function render_world_ground()
 	
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
+
+	var materialres = res_eval(background_ground_tex_material);
 	
 	// Blend
 	var blend = block_texture_get_blend(background_ground_name, background_ground_tex);
@@ -20,9 +22,9 @@ function render_world_ground()
 	render_set_uniform_int("uGlowTexture", 0)
 	render_set_uniform_int("uFogShow", app.background_fog_show)
 	render_set_uniform_int("uIsWater", iswater)
-	render_set_uniform_int("uMaterialFormat", background_ground_tex_material.material_format)
+	render_set_uniform_int("uMaterialFormat", materialres.material_format)
 	
-	if (background_ground_tex_material = mc_res)
+	if (materialres = mc_res)
 	{
 		render_set_uniform("uMetallic", 0)
 		render_set_uniform("uRoughness", (iswater && app.project_render_water_reflections ? .07 : 1))
@@ -54,10 +56,13 @@ function render_world_ground()
 		render_set_texture(background_ground_texture_normal, "Normal")
 	
 	// Submit ground mesh at an offset from the camera
-	var xo, yo;
-	xo = (cam_from[X] div 16) * 16
-	yo = (cam_from[Y] div 16) * 16
-	vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0))
+	var sheet, groundscale, groundsquare, xo, yo;
+	sheet = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)[0]
+	groundscale = (sheet >= 0 && sheet < e_block_sheet.static_amount ? block_size_list[sheet] / block_size : 1)
+	groundsquare = block_size * groundscale
+	xo = (cam_from[X] div groundsquare) * groundsquare
+	yo = (cam_from[Y] div groundsquare) * groundsquare
+	vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16 * groundscale, block_size / 16 * groundscale, 1))
 	
 	// Reset
 	render_set_uniform_int("uIsGround", 0)

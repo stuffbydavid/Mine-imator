@@ -13,11 +13,17 @@ function action_tl_parent(par, index)
 				with (save_id_find(tl_save_id[t]))
 				{
 					tl_set_parent(save_id_find(other.tl_old_parent_save_id[t]), other.tl_old_parent_tree_index[t])
-					value[e_value.POS_X] = other.tl_old_x[t]
-					value[e_value.POS_Y] = other.tl_old_y[t]
-					value[e_value.POS_Z] = other.tl_old_z[t]
+					tl_value_set_vec3(e_value.POS_X, other.tl_old_pos[t])
+					tl_value_set_vec3(e_value.ROT_X, other.tl_old_rot[t])
+					tl_value_set_vec3(e_value.SCA_X, other.tl_old_sca[t])
+					tl_value_set_vec3(e_value.POS_X, other.tl_old_default_pos[t], true)
+					tl_value_set_vec3(e_value.ROT_X, other.tl_old_default_rot[t], true)
+					tl_value_set_vec3(e_value.SCA_X, other.tl_old_default_sca[t], true)
 				}
 			}
+			for (var t = 0; t < save_var_amount; t++)
+				with (save_id_find(save_var_save_id[t]))
+					lock = other.save_var_old_value[t]
 		}
 	}
 	else
@@ -41,6 +47,8 @@ function action_tl_parent(par, index)
 				new_parent = save_id_get(par)
 				new_index = index
 				tl_amount = 0
+				save_var_amount = 0
+				first = true
 			}
 		}
 		

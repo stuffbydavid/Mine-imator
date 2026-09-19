@@ -1,5 +1,5 @@
 /// action_res_import_world(name, regionsdir, boxstart, boxend, filtermode, filterarray)
-/// @descImports a piece of a Minecraft world and returns the new resource created.
+/// @desc Imports a piece of a Minecraft world and returns the new resource created.
 
 function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode, filterarray)
 {
@@ -37,6 +37,7 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode,
 		with (res)
 		{
 			loaded = true
+			scenery_size = point3D(boxend[Z] - boxstart[Z], boxend[X] - boxstart[X], boxend[Y] - boxstart[Y])
 			world_regions_dir = regionsdir
 			world_box_start = boxstart
 			world_box_end = boxend

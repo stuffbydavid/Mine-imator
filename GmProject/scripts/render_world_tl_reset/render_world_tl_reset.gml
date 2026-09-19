@@ -15,6 +15,7 @@ function render_world_tl_reset()
 	shader_blend_alpha = 1
 	
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+	render_set_uniform_color("uReplaceColor", c_black, 1)
 	
 	// Mix color
 	shader_uniform_color_ext = 0
@@ -34,6 +35,7 @@ function render_world_tl_reset()
 	render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
 	render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
 	
+	render_set_uniform_vec2("uTextureOffset", 0, 0)
 	render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
 	
 	// Emissive

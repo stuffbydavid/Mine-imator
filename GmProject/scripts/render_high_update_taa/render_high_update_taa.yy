@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_high_update_taa",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "High quality",
-    "path": "folders/Scripts/Render/High quality.yy",
+  "$GMScript":"v1",
+  "%Name":"render_high_update_taa",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_high_update_taa",
+  "parent":{
+    "name":"High quality",
+    "path":"folders/Scripts/Render/High quality.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

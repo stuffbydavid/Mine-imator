@@ -21,14 +21,14 @@ function tab_template_editor_particles_preview()
 	
 	if (ptype_edit.temp = particle_sheet)
 	{
-		res = ptype_edit.sprite_tex
-		if (!res_is_ready(res))
-			res = mc_res
+		res = res_eval(ptype_edit.sprite_tex)
 		tex = res.particles_texture[ptype_edit.sprite_tex_image]
 		swid = texture_width(tex)
 		fwid = min(swid, ptype_edit.sprite_frame_width)
 		fhei = ptype_edit.sprite_frame_height
-		ani = particle_get_animation_percent(current_step, particle_editor_preview_start, ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
+		ani = 0
+		if (ptype_edit.sprite_frame_start != ptype_edit.sprite_frame_end)
+			ani = particle_get_animation_percent(current_step, particle_editor_preview_start, ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
 		frame = round(ptype_edit.sprite_frame_start + (ptype_edit.sprite_frame_end - ptype_edit.sprite_frame_start) * ani)
 		framesx = swid div fwid
 		
@@ -51,10 +51,7 @@ function tab_template_editor_particles_preview()
 		
 		frame = round(startf + (endf - startf) * ani)
 		
-		var res = ptype_edit.sprite_template_tex;
-		if (!res_is_ready(res))
-			res = mc_res
-		
+		res = res_eval(ptype_edit.sprite_template_tex);
 		tex = res.particle_texture_atlas_map[?template.name];
 		uvs = res.particle_texture_pixeluvs_map[?template.texture_list[|frame]];
 		

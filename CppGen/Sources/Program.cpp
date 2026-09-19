@@ -683,6 +683,10 @@ void Program::resolveProject()
 		}
 
 		Program::objects[STR(app)]->constructor->resolve(ResolveScope(STR(app)));
+		
+		// App create is invoked directly by AppHandler
+		if (Program::objects[STR(app)]->createFunction != nullptr)
+			Program::objects[STR(app)]->createFunction->resolve(ResolveScope(STR(any)));
 
 		// Resolve app functions
 		if (Program::appDrawFunction != nullptr)

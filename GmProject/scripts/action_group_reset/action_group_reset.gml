@@ -11,7 +11,7 @@ function action_group_reset()
 			if (tl_edit.part_of = null && tl_edit.temp != null)
 				def = tl_edit.temp.rot_point
 			else
-				def = point3D(0, 0, 0)
+				def = point3D(0)
 			
 			action_tl_rotpoint_all(def)
 			return;
@@ -19,10 +19,7 @@ function action_group_reset()
 		
 		case e_context_group.POSITION:
 		{
-			if (tl_edit.part_of = null)
-				def = point3D(0, 0, 0)
-			else
-				def = point3D(tl_edit.value_default[e_value.POS_X], tl_edit.value_default[e_value.POS_Y], tl_edit.value_default[e_value.POS_Z])
+			def = point3D(tl_edit.value_default[e_value.POS_X], tl_edit.value_default[e_value.POS_Y], tl_edit.value_default[e_value.POS_Z])
 			
 			action_tl_frame_pos_xyz(def)
 			return;

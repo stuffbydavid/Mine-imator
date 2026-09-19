@@ -24,5 +24,6 @@ function action_lib_pc_type_add()
 		ptype_edit = ptype
 	}
 	
+	project_update_counts()
 	tab_template_editor_particles_preview_restart()
 }

@@ -9,6 +9,7 @@ function minecraft_assets_load_startup()
 	globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 	globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
 	globalvar pattern_update, armor_update;
+	globalvar pack_image_map;
 	
 	mc_assets = new_obj(obj_minecraft_assets)
 	mc_builder = new_obj(obj_builder)
@@ -20,7 +21,8 @@ function minecraft_assets_load_startup()
 	load_assets_map = null
 	load_assets_type_map = null
 	load_assets_block_index = 0
-	window_set_size(740, 450)
+	load_assets_block_preview_buffer = array_create(e_block_sheet.static_amount, null)
+	window_set_size(load_assets_width, load_assets_height)
 	alarm[0] = 1
 	
 	pattern_update = array()
@@ -29,7 +31,7 @@ function minecraft_assets_load_startup()
 	// Create default resource
 	with (mc_res)
 	{
-		save_id = "default"
+		save_id = "minecraft"
 		type = e_res_type.PACK
 		display_name = "Minecraft"
 		font_minecraft = true
@@ -42,8 +44,8 @@ function minecraft_assets_load_startup()
 	// Load assets from version in settings, if it fails, reset to default
 	if (!minecraft_assets_load_startup_version())
 	{
-		log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_version)
-		app.setting_minecraft_assets_version = minecraft_version
+		log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_assets_version)
+		app.setting_minecraft_assets_version = minecraft_assets_version
 		if (!minecraft_assets_load_startup_version())
 			return false
 	}
@@ -54,18 +56,28 @@ function minecraft_assets_load_startup()
 	
 	if (file_exists_lib(splash_directory + "splashes.json"))
 	{
-		var map, splashlist, splash, splashfile;
-		map = json_load(splash_directory + "splashes.json")
-		splashlist = map[?"splashes"]
-		splash = splashlist[|irandom(ds_list_size(splashlist) - 1)]
-		splashfile = splash_directory + splash[?"file"]
-		
-		if (file_exists_lib(splashfile))
+		var map = json_load(splash_directory + "splashes.json");
+		if (ds_map_valid(map))
 		{
-			load_assets_splash = sprite_add(splashfile, 0, 0, 0, 0, 0)
-			load_assets_credits = splash[?"credits"]
+			var splashlist = map[?"splashes"];
+			if (ds_list_valid(splashlist) && ds_list_size(splashlist) > 0)
+			{
+				var splash, splashfile;
+				splash = splashlist[|irandom(ds_list_size(splashlist) - 1)]
+				splashfile = splash_directory + splash[?"file"]
+				
+				if (file_exists_lib(splashfile))
+				{
+					load_assets_splash = sprite_add(splashfile, 0, 0, 0, 0, 0)
+					load_assets_credits = splash[?"credits"]
+				}
+			}
 		}
 	}
+	
+	// Packs
+	pack_image_map = ds_map_create()
+	project_pack = mc_res
 	
 	return true
 }

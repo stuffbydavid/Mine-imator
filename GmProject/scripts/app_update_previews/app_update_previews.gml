@@ -4,15 +4,27 @@ function app_update_previews()
 {
 	lib_preview.select = temp_edit
 	res_preview.select = res_edit
-	bench_settings.preview.select = bench_settings
 	
+	if (bench_tab = e_bench.PROJECT)
+		bench_settings.preview.select = bench_settings.project_selected
+	else if (bench_tab = e_bench.SOUND && instance_exists(bench_settings.sound))
+		bench_settings.preview.select = bench_settings.sound
+	else if (bench_tab = e_bench.PARTICLE_SPAWNER && bench_settings.particle_preset_temp != null)
+		bench_settings.preview.select = bench_settings.particle_preset_temp
+	else
+		bench_settings.preview.select = bench_settings
+		
+	bench_music_update()
+			
 	with (obj_preview)
 	{
+		
 		if (last_select != select)
 		{
 			preview_reset_view()
 			particle_spawner_clear()
 			reset_view = true
+			update = true
 		}
 		last_select = select
 		

@@ -116,7 +116,7 @@ function do_ik(tl)
 		jointpos[0] = matrix_position(mat)
 		
 		// Middle joint
-		bendmat = matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0, 0, 0)), mat)
+		bendmat = matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0)), mat)
 		jointpos[1] = matrix_position(bendmat)
 		
 		// End effector
@@ -130,7 +130,7 @@ function do_ik(tl)
 			case e_part.BACK: offsetpos = [0, -offset, 0]; break;
 		}
 		
-		bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0, 0, 0)), mat))
+		bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0)), mat))
 		jointpos[2] = matrix_position(bendmat)
 	}
 	
@@ -163,7 +163,7 @@ function do_ik(tl)
 		{
 			var dir = vec3_direction(jointpos[0], endpos);
 			
-			for (i = 1; i < array_length(jointpos); i++)
+			for (var i = 1; i < array_length(jointpos); i++)
 				jointpos[i] = point3D_add(jointpos[i - 1], vec3_mul(dir, jointlength[i - 1]))
 		}
 		else // Calculate inverse kinematics (FABRIK)
@@ -212,7 +212,7 @@ function do_ik(tl)
 	
 	if (tl.value[e_value.IK_TARGET] != null)
 	{
-		var matinv = matrix_inverse(mat);
+		var matinv = matrix_inverse_ext(mat);
 		p0 = point3D_mul_matrix(jointpos[0], matinv)
 		p1 = point3D_mul_matrix(jointpos[1], matinv)
 		p2 = point3D_mul_matrix(jointpos[2], matinv)

@@ -11,9 +11,9 @@ function tab_timeline_editor_info()
 	if (tl_edit.type = e_temp_type.TEXT)
 	{
 		// Text
-		tab_control_textfield(true, 76)
+		tab_control_textfield(true, 126)
 		tab.info.tbx_text.text = tl_edit.text
-		draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.info.tbx_text, action_tl_text, "", "top")
+		draw_textfield("timelineeditortext", dx, dy, dw, 126, tab.info.tbx_text, action_tl_text, "", "top")
 		tab_next()
 	}
 	
@@ -37,7 +37,7 @@ function tab_timeline_editor_info()
 			if (tl_edit.part_of = null && tl_edit.temp != null)
 				def = tl_edit.temp.rot_point
 			else
-				def = point3D(0, 0, 0)
+				def = point3D(0)
 			
 			axis_edit = X
 			textfield_group_add("timelineeditorrotpointx", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_x)
@@ -50,7 +50,7 @@ function tab_timeline_editor_info()
 			
 			context_menu_group_temp = e_context_group.ROT_POINT
 			
-			tab_control_textfield_group(false)
+			tab_control_textfield_group()
 			draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false, true, 1)
 			tab_next()
 			

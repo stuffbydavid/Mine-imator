@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "builder_set_model",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Builder",
-    "path": "folders/Scripts/Minecraft/Blocks/Builder.yy",
+  "$GMScript":"v1",
+  "%Name":"builder_set_model",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"builder_set_model",
+  "parent":{
+    "name":"Builder",
+    "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

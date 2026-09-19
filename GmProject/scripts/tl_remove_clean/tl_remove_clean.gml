@@ -30,9 +30,6 @@ function tl_remove_clean()
 			ds_list_destroy(part_list)
 		
 		// Clear references
-		if (part_of = null && temp != null)
-			temp.count--
-		
 		if (type = e_tl_type.PATH_POINT)
 			parent.path_update = true
 		
@@ -150,7 +147,7 @@ function tl_remove_clean()
 		
 		if (temp = id)
 		{
-			if (type = e_tl_type.SPECIAL_BLOCK)
+			if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
 				if (model_texture_name_map != null)	
 					ds_map_destroy(model_texture_name_map)
@@ -158,8 +155,8 @@ function tl_remove_clean()
 				if (model_texture_material_name_map != null)	
 					ds_map_destroy(model_texture_material_name_map)
 				
-				if (model_tex_normal_name_map != null)	
-					ds_map_destroy(model_tex_normal_name_map)
+				if (model_texture_normal_name_map != null)	
+					ds_map_destroy(model_texture_normal_name_map)
 				
 				if (model_hide_list != null)
 					ds_list_destroy(model_hide_list)
@@ -195,8 +192,6 @@ function tl_remove_clean()
 		
 		if (surface_exists(cam_surf_tmp))
 			surface_free(cam_surf_tmp)
-		
-		glint_tex.count--
 		
 		delete_ready = true
 	}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "popup_loading_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Loading",
-    "path": "folders/Scripts/App/Interface/Popups/Loading.yy",
+  "$GMScript":"v1",
+  "%Name":"popup_loading_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"popup_loading_draw",
+  "parent":{
+    "name":"Loading",
+    "path":"folders/Scripts/App/Interface/Popups/Loading.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

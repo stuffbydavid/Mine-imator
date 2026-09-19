@@ -18,8 +18,7 @@ function action_lib_remove()
 	}
 	else
 	{
-		var hobj, index;
-		hobj = null
+		var hobj = null;
 		
 		if (!history_redo)
 		{
@@ -106,5 +105,6 @@ function action_lib_remove()
 	
 	app_update_tl_edit()
 	
+	project_update_counts()
 	lib_preview.update = true
 }

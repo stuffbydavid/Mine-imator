@@ -37,7 +37,7 @@ function action_tl_keyframes_move()
 	
 	if (moved)
 	{
-		if (timeline_move_kf.timeline.type = e_tl_type.AUDIO && timeline_move_kf.value[e_value.SOUND_OBJ])
+		if (timeline_move_kf.timeline.type = e_tl_type.AUDIO_TRACK && timeline_move_kf.value[e_value.SOUND_OBJ])
 			timeline_marker = timeline_mouse_pos
 		else
 			timeline_marker = timeline_move_kf.position

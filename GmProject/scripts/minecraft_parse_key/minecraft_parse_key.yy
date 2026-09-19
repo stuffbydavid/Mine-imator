@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_parse_key",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_parse_key",
+  "parent":{
+    "name":"Minecraft",
+    "path":"folders/Scripts/Minecraft.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

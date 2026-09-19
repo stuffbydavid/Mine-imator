@@ -58,9 +58,7 @@ function res_load_pack_particle_textures()
 		fname = load_assets_dir + mc_textures_directory + name + ".png"
 		
 		if (file_exists_lib(fname))
-		{
 			tex = texture_create_square(fname)
-		}
 		else if (id != mc_res)
 			tex = texture_duplicate(mc_res.particle_texture_map[?name])
 		else
@@ -181,7 +179,7 @@ function res_load_pack_particle_textures()
 		surf = null
 	}
 	
-	// Particle sheet 2(Explosion)
+	// Particle sheet 2 (Explosion)
 	if (particles_texture[1] = null)
 	{
 		draw_texture_start()

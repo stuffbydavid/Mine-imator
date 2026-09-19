@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_block_randomize",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Repeat",
-    "path": "folders/Scripts/App/Actions/Library/Repeat.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_block_randomize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_block_randomize",
+  "parent":{
+    "name":"Repeat",
+    "path":"folders/Scripts/App/Actions/Library/Repeat.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

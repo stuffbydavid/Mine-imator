@@ -3,6 +3,9 @@
 
 function view_draw(view)
 {
+	if (!view.show)
+		return 0
+	
 	var cam, camname;
 	var captionx, captiony, captionw, captionh;
 	var boxx, boxy, boxw, boxh;
@@ -12,9 +15,6 @@ function view_draw(view)
 	mouseonresizesplit = false
 	mouseonresizehor = false
 	mouseonresizever = false
-	
-	if (!view.show)
-		return 0
 	
 	if (view = view_main && view_second.show && view_main.quality = e_view_mode.RENDER && view_second.quality = e_view_mode.RENDER)
 		view_main.quality = e_view_mode.SHADED
@@ -220,7 +220,7 @@ function view_draw(view)
 			action_setting_secondary_view()
 	}
 	
-	dx -= (padding + 1)
+	dx -= padding
 	draw_divide_vertical(dx, dy, dh)
 	
 	// Quality settings
@@ -259,7 +259,7 @@ function view_draw(view)
 	dx -= dw + padding
 	
 	// "Flat" quality
-	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.SPHERE_FLAT, null, false, "viewmodeflat"))
+	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.CIRCLE_OUTLINE, null, false, "viewmodeflat"))
 		view.quality = e_view_mode.FLAT
 	dx -= dw + padding
 	
@@ -280,7 +280,7 @@ function view_draw(view)
 	}
 	
 	// Divide
-	dx -= (padding + 1)
+	dx -= padding
 	draw_divide_vertical(dx, dy, dh)
 	dx -= 16 + padding
 	
@@ -312,7 +312,7 @@ function view_draw(view)
 	// Snap settings
 	if (view = view_main)
 	{
-		dx -= (padding + 1)
+		dx -= padding
 		draw_divide_vertical(dx, dy, dh)
 		dx -= 16 + padding
 		
@@ -453,61 +453,23 @@ function view_draw(view)
 		if (view.grid)
 		{
 			var cellwid, cellhei;
-			cellwid = content_width / project_grid_rows
-			cellhei = content_height / project_grid_columns
+			cellwid = content_width / project_grid_columns
+			cellhei = content_height / project_grid_rows
 			
-			for (var i = 1; i < project_grid_rows; i++)
+			for (var i = 1; i < project_grid_columns; i++)
 			{
 				draw_line_ext(content_x + cellwid * i - 1, content_y, content_x + cellwid * i - 1, content_y + content_height, c_white, 1)
 				draw_line_ext(content_x + cellwid * i + 1, content_y, content_x + cellwid * i + 1, content_y + content_height, c_white, 1)
 			}
 			
-			for (var i = 1; i < project_grid_columns; i++)
+			for (var i = 1; i < project_grid_rows; i++)
 			{
 				draw_line_ext(content_x, content_y + cellhei * i - 1, content_x + content_width, content_y + cellhei * i - 1, c_white, 1)
 				draw_line_ext(content_x, content_y + cellhei * i + 1, content_x + content_width, content_y + cellhei * i + 1, c_white, 1)
 			}
 		}
 				
-		// Place object
-		if (window_busy = "place" && mouse_x >= content_x && mouse_y >= content_y && mouse_x < content_x + content_width && mouse_y < content_y + content_height)
-		{
-			// Update depth surface with placed object hidden
-			if (view.update_depth)
-			{
-				surface_clear_depth_cache(view.surface_depth)
-				render_start(view.surface_depth, null, content_width, content_height) // No camera to disable effects
-				render_camera = cam
-				render_update_camera()
-				place_tl_render = false
-				render_target = surface_require(render_target, render_width, render_height)
-				surface_set_target(render_target)
-				{
-					draw_clear_alpha(c_black, 0)
-					render_world_background()
-					render_world_start()
-					render_world_sky()
-					render_world(e_render_mode.COLOR_FOG)
-					render_world_done()
-				}
-				surface_reset_target()
-				view.surface_depth = render_done()
-				view.update_depth = false
-			}
-			
-			var mx = mouse_x - content_x;
-			var my = mouse_y - content_y;
-			var tx = mx / content_width;
-			var ty = 1 - my / content_height;
-			var depthval = surface_get_depth(view.surface_depth, mx, my);
-			if (depthval < 1)
-				view.surface_depth_value = depthval
-			var clipspace = vec4(tx * 2 - 1, ty * 2 - 1, min(0.99975, view.surface_depth_value) * 2 - 1, 1);
-			var viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse(proj_matrix)));
-			place_view_pos = point3D_mul_matrix(viewspace, matrix_inverse(view_matrix))
-			place_tl_render = true
-			render_samples = -1
-		}
+		view_place(view, cam)
 	}
 	
 	// Revert content size for overlays
@@ -534,17 +496,15 @@ function view_draw(view)
 			gpu_set_tex_filter(true)
 		
 		draw_image(spr_bench, 0, benchx + 43, benchy + 43, benchscale, benchscale, null, bench_hover_ani, benchrot)
+
+		with (obj_note)
+			draw_image(spr_note, 2, x, y, note_scale, note_scale, note_color, note_alpha, note_angle)
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(false)
 		
 		if (bench_open)
-		{
-			bench_show_ani_type = "show"
-			window_busy = "bench"
-			bench_settings_ani = 1
-			bench_open = false
-		}
+			bench_show()
 		
 		if (bench_rotate_ani = 0 && benchempty && bench_show_ani = 0 && bench_show_ani_type = "")
 			bench_rotate_ani = 1
@@ -570,7 +530,7 @@ function view_draw(view)
 				bench_click_ani_goal = 1
 			
 			tip_force_right = true
-			tip_set(text_get("viewworkbenchtip"), benchx, benchy, 86, 86, false)
+			tip_set(text_get("viewbenchtip"), benchx, benchy, 86, 86, false)
 			tip_force_right = false
 			
 			if (mouse_left_pressed)
@@ -874,7 +834,7 @@ function view_draw(view)
 			infotext = ""
 		
 		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
-		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
+		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? c_error : c_white, 1, font_caption)
 		
 		if (project_render_pass != e_render_pass.COMBINED)
 		{

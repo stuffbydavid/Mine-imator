@@ -21,7 +21,7 @@ function action_bench_model_tex(res)
 					return 0
 				
 				var type = e_res_type.SKIN;
-				if (bench_settings.type = e_tl_type.MODEL && bench_settings.model != null &&
+				if (bench_tab = e_bench.MODEL && bench_settings.model != null &&
 					bench_settings.model.model_format = e_model_format.BLOCK) // Load as block sheet if the selected model is in .json format
 					type = e_res_type.BLOCK_SHEET
 				

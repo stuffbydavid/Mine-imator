@@ -1,7 +1,7 @@
-/// render_post(surface, sceneeffects, posteffects)
-/// @surface
-/// @sceneeffects
-/// @posteffects
+/// render_post(surface, [sceneeffects, posteffects])
+/// @arg surface
+/// @arg sceneeffects
+/// @arg posteffects
 
 function render_post(finalsurf, sceneeffects = true, posteffects = true)
 {
@@ -14,12 +14,12 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true)
 	render_update_effects()
 	
 	// Glow
-	if (render_glow && (sceneeffects || posteffects))
+	if (render_glow && sceneeffects)
 		finalsurf = render_high_glow(finalsurf)
 	render_update_effects()
 	
 	// Glow (Falloff)
-	if (render_glow_falloff && (sceneeffects || posteffects))
+	if (render_glow_falloff && sceneeffects)
 		finalsurf = render_high_glow(finalsurf, true)
 	render_update_effects()
 	
@@ -28,8 +28,8 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true)
 		finalsurf = render_high_bloom(finalsurf)
 	render_update_effects()
 	
-	// Lens dirt overlay
-	if (render_camera_lens_dirt)
+	// Lens dirt overlay (sceneeffects applies to glow, posteffects applies to bloom)
+	if (render_camera_lens_dirt && (sceneeffects || posteffects))
 		finalsurf = render_high_lens_dirt(finalsurf)
 	render_update_effects()
 	

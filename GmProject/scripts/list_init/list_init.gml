@@ -6,15 +6,35 @@ function list_init(name)
 {
 	list_init_start()
 	
+	// Armor variant
+	if (name = "bencharmorvariant")
+	{
+		var armor = mc_assets.model_name_map[?"armor"]
+		var variant = state_vars_get_value(bench_settings.model_state, "helmet")
+		if (state_vars_get_value(bench_settings.model_state, "chestplate") != variant ||
+			state_vars_get_value(bench_settings.model_state, "leggings") != variant ||
+			state_vars_get_value(bench_settings.model_state, "boots") != variant)
+		{
+			menu_add_item("multiple", text_get("listmultiple"))
+			list_item_last.disabled = true
+		}
+		
+		var statelist = armor.states_map[?"chestplate"]
+		for (var i = 0; i < statelist.value_amount; i++)
+			menu_add_item(statelist.value_name[i], minecraft_asset_get_name("modelstatevalue", statelist.value_name[i]))
+		
+		return list_init_end()
+	}
+	
 	// Model state
-	if (menu_model_current != null)
+	if (menu_model_current != null && !is_undefined(menu_model_state) && menu_model_state != null)
 	{
 		for (var i = 0; i < menu_model_state.value_amount; i++)
 			menu_add_item(menu_model_state.value_name[i], minecraft_asset_get_name("modelstatevalue", menu_model_state.value_name[i]))
 	}
 	
 	// Block state
-	if (menu_block_current != null)
+	if (menu_block_current != null && !is_undefined(menu_block_state) && menu_block_state != null)
 	{
 		for (var i = 0; i < menu_block_state.value_amount; i++)
 			menu_add_item(menu_block_state.value_name[i], minecraft_asset_get_name("blockstatevalue", menu_block_state.value_name[i]))
@@ -29,21 +49,27 @@ function list_init(name)
 		case "benchskin":
 		case "benchskinmaterial":
 		case "benchskinnormal":
+		case "benchequipmenttex":
+		case "benchequipmenttexmaterial":
+		case "benchequipmenttexnormal":
 		case "benchspblocktex":
 		case "benchspblocktexmaterial":
 		case "benchspblocktexnormal":
-		case "benchbodypartskin":
-		case "benchbodypartskinmaterial":
-		case "benchbodypartskinnormal":
+		case "benchmodelpartskin":
+		case "benchmodelpartskinmaterial":
+		case "benchmodelpartskinnormal":
 		case "libraryskin":
 		case "libraryskinmaterial":
 		case "libraryskinnormal":
+		case "libraryarmortex":
+		case "libraryarmortexmaterial":
+		case "libraryarmortexnormal":
 		case "libraryspblocktex":
 		case "libraryspblocktexmaterial":
 		case "libraryspblocktexnormal":
-		case "librarybodypartskin":
-		case "librarybodypartskinmaterial":
-		case "librarybodypartskinnormal":
+		case "librarymodelpartskin":
+		case "librarymodelpartskinmaterial":
+		case "librarymodelpartskinnormal":
 		{
 			var temp;
 			if (string_contains(menu_current.menu_name, "bench"))
@@ -60,23 +86,23 @@ function list_init(name)
 			
 			// Default
 			var tex;
-			with (mc_res)
+			with (res_eval(project_pack_res))
 			{
 				if (string_contains(name, "material"))
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 				else if (string_contains(name, "normal"))
-					tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_tex_normal_name_map))
+					tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_texture_normal_name_map))
 				else
 					tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 			}
 			
-			menu_add_item(mc_res, mc_res.display_name, tex)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), tex)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res = mc_res)
+				if (res = res_eval(project_pack_res))
 					continue
 				
 				with (res)
@@ -84,7 +110,7 @@ function list_init(name)
 					if (string_contains(name, "material"))
 						tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 					else if (string_contains(name, "normal"))
-						tex = res_get_model_tex_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_tex_normal_name_map))
+						tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_texture_normal_name_map))
 					else
 						tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 				}
@@ -119,13 +145,13 @@ function list_init(name)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
-						texobj = mc_res
+					if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
+						texobj = res_eval(project_pack_res)
 				}
 				else
 				{
 					if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
-						texobj = mc_res
+						texobj = res_eval(project_pack_res)
 				}
 			}
 			
@@ -170,18 +196,14 @@ function list_init(name)
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
-			// Download from user
-			if (temp.model_file != null && temp.model_file.player_skin)
-				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
-			
 			// Default
 			var texobj = temp.model;
 			if (texobj != null)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_texture_material_map = null && texobj.block_sheet_texture_material = null) // Model has no texture, use Minecraft
-						texobj = mc_res
+					if (texobj.model_texture_material_map = null && texobj.block_sheet_texture_material[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
+						texobj = res_eval(project_pack_res)
 				}
 			}
 			
@@ -231,24 +253,20 @@ function list_init(name)
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
-			// Download from user
-			if (temp.model_file != null && temp.model_file.player_skin)
-				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
-			
 			// Default
 			var texobj = temp.model
 			if (texobj != null)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
 				{
-					if (texobj.model_tex_normal_map = null && texobj.block_sheet_tex_normal = null) // Model has no texture, use Minecraft
-						texobj = mc_res
+					if (texobj.model_texture_normal_map = null && texobj.block_sheet_texture_normal[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
+						texobj = res_eval(project_pack_res)
 				}
 			}
 			
 			if (texobj != null)
 			{
-				if (texobj.model_tex_normal_map = null && texobj.model_texture = null)
+				if (texobj.model_texture_normal_map = null && texobj.model_texture = null)
 				{
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
 				}
@@ -282,7 +300,6 @@ function list_init(name)
 		}
 		
 		// Terrain
-		case "benchscenery":
 		case "libraryscenery":
 		{
 			// None
@@ -298,7 +315,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res.type = e_res_type.SCENERY || res.type = e_res_type.FROM_WORLD)
+				if (res.type = e_res_type.SCHEMATIC || res.type = e_res_type.FROM_WORLD)
 					menu_add_item(res, res.display_name)
 			}
 			
@@ -317,13 +334,13 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).block_preview_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != mc_res && res.block_sheet_texture != null)
+				if (res != res_eval(project_pack_res) && res.block_sheet_texture[e_block_sheet.STATIC16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			
@@ -342,18 +359,18 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).block_preview_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res = mc_res)
+				if (res = res_eval(project_pack_res))
 					continue
 				
 				if (res.type = e_res_type.TEXTURE)
 					menu_add_item(res, res.display_name, res.texture)
-				else if (res.item_sheet_texture != null)
+				else if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			
@@ -361,7 +378,7 @@ function list_init(name)
 		}
 		
 		// Body part
-		case "benchbodypart":
+		case "benchmodelpart":
 		{
 			for (var p = 0; p < ds_list_size(bench_settings.model_file.file_part_list); p++)
 			{
@@ -373,7 +390,7 @@ function list_init(name)
 		}
 		
 		// Body part
-		case "templateeditorbodypart":
+		case "templateeditormodelpart":
 		{
 			for (var p = 0; p < ds_list_size(temp_edit.model_file.file_part_list); p++)
 			{
@@ -392,13 +409,13 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name))
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != mc_res && font_exists(res.font))
+				if (res != res_eval(project_pack_res) && font_exists(res.font))
 					menu_add_item(res, res.display_name)
 			}
 			
@@ -414,6 +431,14 @@ function list_init(name)
 			break
 		}
 		
+		case "libraryshapetype":
+		{
+			for (var i = 0; i < e_shape_type.amount; i++)
+				menu_add_item(e_temp_type.CUBE + i, text_get("type" + temp_type_name_list[|e_temp_type.CUBE + i]))
+
+			break
+		}
+
 		// Shape texture
 		case "benchshapetex":
 		case "benchshapetexmaterial":
@@ -529,13 +554,13 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.particles_texture[img])
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).particles_texture[img])
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != mc_res && res.particles_texture[0])
+				if (res != res_eval(project_pack_res) && res.particles_texture[0])
 					menu_add_item(res, res.display_name, res.particles_texture[img])
 			}
 			
@@ -551,13 +576,13 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).block_preview_texture)
 			
 			// Add existing resources (Only packs allowed)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != mc_res && res.type = e_res_type.PACK)
+				if (res != res_eval(project_pack_res) && res.type = e_res_type.PACK)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			
@@ -617,13 +642,13 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.sun_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).sun_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res = mc_res)
+				if (res = res_eval(project_pack_res))
 					continue
 				if (res.sun_texture)
 					menu_add_item(res, res.display_name, res.sun_texture)
@@ -641,16 +666,16 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.moon_texture[background_sky_moon_phase])
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).moon_textures[background_sky_moon_phase])
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res = mc_res)
+				if (res = res_eval(project_pack_res))
 					continue
-				if (res.moon_texture[0])
-					menu_add_item(res, res.display_name, res.moon_texture[background_sky_moon_phase])
+				if (res.moon_textures[0])
+					menu_add_item(res, res.display_name, res.moon_textures[background_sky_moon_phase])
 				else if (res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}
@@ -662,7 +687,7 @@ function list_init(name)
 		case "backgroundskymoonphase":
 		{
 			for (var p = 0; p < 8; p++)
-				menu_add_item(p, text_get("backgroundskymoonphase" + string(p + 1)), background_sky_moon_tex.moon_texture[p])
+				menu_add_item(p, text_get("backgroundskymoonphase" + string(p + 1)), background_sky_moon_tex.moon_textures[p])
 			
 			break
 		}
@@ -674,13 +699,13 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.clouds_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).clouds_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res = mc_res)
+				if (res = res_eval(project_pack_res))
 					continue
 				if (res.clouds_texture)
 					menu_add_item(res, res.display_name, res.clouds_texture)
@@ -700,7 +725,7 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, mc_res.block_preview_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).block_preview_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -709,17 +734,17 @@ function list_init(name)
 				
 				if (name = "backgroundgroundtexmaterial") // Material
 				{
-					if (res != mc_res && res.block_sheet_texture_material != null)
+					if (res != res_eval(project_pack_res) && res.block_sheet_texture_material[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 				else if (name = "backgroundgroundtexnormal") // Normal
 				{
-					if (res != mc_res && res.block_sheet_tex_normal != null)
+					if (res != res_eval(project_pack_res) && res.block_sheet_texture_normal[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 				else // Diffuse
 				{
-					if (res != mc_res && res.block_sheet_texture != null)
+					if (res != res_eval(project_pack_res) && res.block_sheet_texture[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
 			}
@@ -752,6 +777,22 @@ function list_init(name)
 			
 			break
 		}
+
+		case "resourcespackimageblocksheetsize":
+		{
+			for (var size = 0; size < e_block_sheet.static_amount; size++)
+				menu_add_item(size, text_get("resourcespackimageblocksheetsize" + string(block_size_list[size])))
+
+			break
+		}
+
+		case "resourcespackimageitemsheetsize":
+		{
+			for (var size = 0; size < e_item_sheet.amount; size++)
+				menu_add_item(size, text_get("resourcespackimageitemsheetsize" + string(item_size * (size + 1))))
+
+			break
+		}
 		
 		// Resource pack preview skin
 		case "resourcespackimagemodeltexture":
@@ -767,6 +808,15 @@ function list_init(name)
 		{
 			for (var p = 0; p < res_edit.scenery_palette_size; p++)
 				menu_add_item(p, text_get("resourcesscenerystructurepalettenumber", p + 1))
+			
+			break
+		}
+		
+		// Resource pack moon phase
+		case "resourcespackmoonphase":
+		{
+			for (var p = 0; p < 8; p++)
+				menu_add_item(p, text_get("resourcespackmoonphase" + string(p + 1)))
 			
 			break
 		}
@@ -788,26 +838,29 @@ function list_init(name)
 		// Timeline frame skin
 		case "frameeditorchartex":
 		case "frameeditorspblocktex":
-		case "frameeditorbodyparttex":
+		case "frameeditormodelparttex":
 		case "frameeditormodeltex":
 		{
 			var temp = tl_edit.temp;
 			
 			// Default
-			var texobj = temp.model_tex;
+			var texsource, texobj;
+			texsource = temp.model_tex
+			texobj = res_eval(texsource)
 			
 			// Animatable special block in scenery
-			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL_PART) && tl_edit.part_root != null)
 			{
 				if (tl_edit.part_root.type = e_tl_type.SCENERY)
 				{
 					with (tl_edit.part_root.temp)
 					{
-						if (block_tex.type = e_res_type.PACK)
-							texobj = block_tex
+						if (res_eval(block_tex).type = e_res_type.PACK)
+							texsource = block_tex
 						else
-							texobj = model_tex
+							texsource = model_tex
 					}
+					texobj = res_eval(texsource)
 				}
 			}
 			
@@ -818,13 +871,19 @@ function list_init(name)
 				{
 					if (texobj.model_format = e_model_format.BLOCK)
 					{
-						if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
-							texobj = mc_res
+						if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
+						{
+							texsource = project_pack_res
+							texobj = res_eval(project_pack_res)
+						}
 					}
 					else
 					{
 						if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
-							texobj = mc_res
+						{
+							texsource = project_pack_res
+							texobj = res_eval(project_pack_res)
+						}
 					}
 				}
 			}
@@ -832,13 +891,13 @@ function list_init(name)
 			if (texobj != null)
 			{
 				var modelfile = temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_temp_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				var tex;
 				with (temp)
 					tex = temp_get_model_tex_preview(texobj, modelfile)
-				menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+				menu_add_item(texsource, text_get("listdefault", texobj.display_name), tex)
 			}
 			else
 				menu_add_item(null, text_get("listdefault", text_get("listnone")), null)
@@ -847,7 +906,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if ((temp.object_index != obj_timeline && res = temp.model) || res = texobj)
+				if (temp.object_index != obj_timeline && res = temp.model)
 					continue
 				
 				var tex;
@@ -863,26 +922,29 @@ function list_init(name)
 		// Timeline frame skin (Material map)
 		case "frameeditorchartexmaterial":
 		case "frameeditorspblocktexmaterial":
-		case "frameeditorbodyparttexmaterial":
+		case "frameeditormodelparttexmaterial":
 		case "frameeditormodeltexmaterial":
 		{
 			var temp = tl_edit.temp;
 			
 			// Default
-			var texobj = temp.model_tex_material;
+			var texsource, texobj;
+			texsource = temp.model_tex_material
+			texobj = res_eval(texsource)
 			
 			// Animatable special block in scenery
-			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL_PART) && tl_edit.part_root != null)
 			{
 				if (tl_edit.part_root.type = e_tl_type.SCENERY)
 				{
 					with (tl_edit.part_root.temp)
 					{
-						if (block_tex_material.type = e_res_type.PACK)
-							texobj = block_tex_material
+						if (res_eval(block_tex_material).type = e_res_type.PACK)
+							texsource = block_tex_material
 						else
-							texobj = model_tex_material
+							texsource = model_tex_material
 					}
+					texobj = res_eval(texsource)
 				}
 			}
 			
@@ -892,17 +954,17 @@ function list_init(name)
 			if (texobj != null)
 			{
 				if (texobj.model_texture_material_map = null && texobj.model_texture = null)
-					menu_add_item(null, text_get("listdefault", text_get("listnone")))
+					menu_add_item(texsource, text_get("listdefault", text_get("listnone")))
 				else
 				{
 					var modelfile = temp.model_file;
-					if (tl_edit.type = e_temp_type.BODYPART)
+					if (tl_edit.type = e_temp_type.MODEL_PART)
 						modelfile = tl_edit.model_part
 				
 					var tex;
 					with (temp)
 						tex = temp_get_model_tex_material_preview(texobj, modelfile)
-					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+					menu_add_item(texsource, text_get("listdefault", texobj.display_name), tex)
 				}
 			}
 			else
@@ -912,7 +974,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if ((temp.object_index != obj_timeline && res = temp.model) || res = texobj)
+				if (temp.object_index != obj_timeline && res = temp.model)
 					continue
 				
 				var tex;
@@ -928,26 +990,29 @@ function list_init(name)
 		// Timeline frame skin (Normal map)
 		case "frameeditorchartexnormal":
 		case "frameeditorspblocktexnormal":
-		case "frameeditorbodyparttexnormal":
+		case "frameeditormodelparttexnormal":
 		case "frameeditormodeltexnormal":
 		{
 			var temp = tl_edit.temp;
 			
 			// Default
-			var texobj = temp.model_tex_normal;
+			var texsource, texobj;
+			texsource = temp.model_tex_normal
+			texobj = res_eval(texsource)
 			
 			// Animatable special block in scenery
-			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.BODYPART) && tl_edit.part_root != null)
+			if ((tl_edit.type = e_tl_type.SPECIAL_BLOCK || tl_edit.type = e_tl_type.MODEL_PART) && tl_edit.part_root != null)
 			{
 				if (tl_edit.part_root.type = e_tl_type.SCENERY)
 				{
 					with (tl_edit.part_root.temp)
 					{
-						if (block_tex_normal.type = e_res_type.PACK)
-							texobj = block_tex_normal
+						if (res_eval(block_tex_normal).type = e_res_type.PACK)
+							texsource = block_tex_normal
 						else
-							texobj = model_tex_normal
+							texsource = model_tex_normal
 					}
+					texobj = res_eval(texsource)
 				}
 			}
 			
@@ -956,18 +1021,18 @@ function list_init(name)
 			
 			if (texobj != null)
 			{
-				if (texobj.model_tex_normal_map = null && texobj.model_texture = null)
-					menu_add_item(null, text_get("listdefault", text_get("listnone")))
+				if (texobj.model_texture_normal_map = null && texobj.model_texture = null)
+					menu_add_item(texsource, text_get("listdefault", text_get("listnone")))
 				else
 				{
 					var modelfile = temp.model_file;
-					if (tl_edit.type = e_temp_type.BODYPART)
+					if (tl_edit.type = e_temp_type.MODEL_PART)
 						modelfile = tl_edit.model_part
 				
 					var tex;
 					with (temp)
 						tex = temp_get_model_tex_normal_preview(texobj, modelfile)
-					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
+					menu_add_item(texsource, text_get("listdefault", texobj.display_name), tex)
 				}
 			}
 			else
@@ -977,7 +1042,7 @@ function list_init(name)
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if ((temp.object_index != obj_timeline && res = temp.model) || res = texobj)
+				if (temp.object_index != obj_timeline && res = temp.model)
 					continue
 				
 				var tex;
@@ -995,15 +1060,16 @@ function list_init(name)
 		case "frameeditorblocktexmaterial":
 		case "frameeditorblocktexnormal":
 		{	
-			var texobj = null;
+			var texsource, texobj;
 			
 			// Default
 			if (name = "frameeditorblocktexmaterial")
-				texobj = tl_edit.temp.block_tex_material
+				texsource = tl_edit.temp.block_tex_material
 			else if (name = "frameeditorblocktexnormal")
-				texobj = tl_edit.temp.block_tex_normal
+				texsource = tl_edit.temp.block_tex_normal
 			else if (name = "frameeditorblocktex")
-				texobj = tl_edit.temp.block_tex
+				texsource = tl_edit.temp.block_tex
+			texobj = res_eval(texsource)
 			
 			// Animatable block in scenery
 			if (tl_edit.type = e_tl_type.BLOCK && tl_edit.part_of != null)
@@ -1016,30 +1082,31 @@ function list_init(name)
 					{
 						if (name = "frameeditorblocktexmaterial")
 						{
-							if (block_tex_material.type = e_res_type.PACK || block_tex_material.type = e_res_type.BLOCK_SHEET)
-								texobj = block_tex_material
+							if (res_eval(block_tex_material).type = e_res_type.PACK || res_eval(block_tex_material).type = e_res_type.BLOCK_SHEET)
+								texsource = block_tex_material
 						}
 						else if (name = "frameeditorblocktexnormal")
 						{
-							if (block_tex_normal.type = e_res_type.PACK || block_tex_normal.type = e_res_type.BLOCK_SHEET)
-								texobj = block_tex_normal
+							if (res_eval(block_tex_normal).type = e_res_type.PACK || res_eval(block_tex_normal).type = e_res_type.BLOCK_SHEET)
+								texsource = block_tex_normal
 						}
 						else if (name = "frameeditorblocktex")
 						{
-							if (block_tex.type = e_res_type.PACK || block_tex.type = e_res_type.BLOCK_SHEET)
-								texobj = block_tex
+							if (res_eval(block_tex).type = e_res_type.PACK || res_eval(block_tex).type = e_res_type.BLOCK_SHEET)
+								texsource = block_tex
 						}
 					}
+					texobj = res_eval(texsource)
 				}
 			}
 			
-			menu_add_item(null, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
+			menu_add_item(texsource, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res != texobj && res.block_sheet_texture != null)
+				if (res.block_sheet_texture[e_block_sheet.STATIC16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			
@@ -1052,19 +1119,20 @@ function list_init(name)
 		case "frameeditoritemtexnormal":
 		{
 			// Default
-			var texobj;
+			var texobj, texsource;
 			
 			if (name = "frameeditoritemtexmaterial")
-				texobj = tl_edit.temp.item_tex_material
+				texsource = tl_edit.temp.item_tex_material
 			else if (name = "frameeditoritemtexnormal")
-				texobj = tl_edit.temp.item_tex_normal
+				texsource = tl_edit.temp.item_tex_normal
 			else
-				texobj = tl_edit.temp.item_tex
+				texsource = tl_edit.temp.item_tex
+			texobj = res_eval(texsource)
 			
 			if (texobj.type = e_res_type.TEXTURE)
-				menu_add_item(texobj,text_get("listdefault", texobj.display_name), texobj.texture)
-			else if (texobj.item_sheet_texture != null)
-				menu_add_item(texobj, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
+				menu_add_item(null, text_get("listdefault", texobj.display_name), texobj.texture)
+			else if (texobj.item_sheet_texture[e_item_sheet.SIZE16] != null)
+				menu_add_item(null, text_get("listdefault", texobj.display_name), texobj.block_preview_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -1073,7 +1141,7 @@ function list_init(name)
 				
 				if (res.type = e_res_type.TEXTURE)
 					menu_add_item(res, res.display_name, res.texture)
-				else if (res.item_sheet_texture != null)
+				else if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 					menu_add_item(res, res.display_name, res.block_preview_texture)
 			}
 			break
@@ -1129,7 +1197,7 @@ function list_init(name)
 			menu_add_item(null, text_get("listdefault", text_get("listnone")))
 			
 			// Import from file
-			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, null, action_tl_frame_cam_lens_dirt_tex_browse)
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER, action_tl_frame_cam_lens_dirt_tex_browse)
 			
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
@@ -1141,7 +1209,21 @@ function list_init(name)
 			break
 		}
 		
-		// Sound
+		// Audio track
+		case "benchaudiotrack":
+		{
+			menu_add_item(null, text_get("benchaudiotracknew"))
+
+			for (var i = 0; i < ds_list_size(project_timeline_list); i++)
+			{
+				var track = project_timeline_list[|i]
+				if (track.type = e_tl_type.AUDIO_TRACK)
+					menu_add_item(track, track.display_name)
+			}
+
+			break
+		}
+
 		case "frameeditorsoundfile":
 		{
 			// Default
@@ -1157,12 +1239,12 @@ function list_init(name)
 			
 			break
 		}
-		
+
 		// Font
 		case "frameeditortextfont":
 		{
 			// Default
-			menu_add_item(null, text_get("listdefault", tl_edit.temp.text_font.display_name))
+			menu_add_item(null, text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name))
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -1238,6 +1320,36 @@ function list_init(name)
 			
 			menu_add_item(0, text_get("projectvideosizecustom"))
 			
+			break
+		}
+
+		// Project resource pack
+		case "projectpack":
+		case "newprojectpack":
+		{
+			directory_create_lib(packs_directory_get())
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
+			menu_add_item("", mc_res.display_name, mc_res.block_preview_texture)
+
+			// List packs under /Packs
+			var packfiles = file_find(packs_directory_get(), ".zip")
+			for (var i = 0; i < array_length(packfiles); i++)
+			{
+				var pack = filename_name(packfiles[i])
+				menu_add_item(pack, pack, minecraft_get_pack_image(pack))
+			}
+
+			// List project resources packs not found under /Packs
+			if (name = "projectpack")
+			{
+				for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+				{
+					var res = res_list.display_list[|i]
+					if (res.type = e_res_type.PACK && !file_exists_lib(packs_directory_get() + res.filename))
+						menu_add_item(res.filename, res.filename, res.block_preview_texture)
+				}
+			}
+
 			break
 		}
 		
@@ -1441,17 +1553,17 @@ function list_init(name)
 			var itemglint = (tl_edit.glint_mode = e_glint.ITEM);
 			
 			// Default
-			menu_add_item(mc_res, mc_res.display_name, itemglint ? mc_res.glint_item_texture : mc_res.glint_entity_texture)
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), itemglint ? res_eval(project_pack_res).glint_item_texture : res_eval(project_pack_res).glint_armor_texture)
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
 				var res = res_list.display_list[|i];
-				if (res = mc_res)
+				if (res = res_eval(project_pack_res))
 					continue
 				
-				if (res.glint_entity_texture || res.glint_item_texture)
-					menu_add_item(res, res.display_name, itemglint ? res.glint_item_texture : res.glint_entity_texture)
+				if (res.glint_armor_texture || res.glint_item_texture)
+					menu_add_item(res, res.display_name, itemglint ? res.glint_item_texture : res.glint_armor_texture)
 				else if (res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}

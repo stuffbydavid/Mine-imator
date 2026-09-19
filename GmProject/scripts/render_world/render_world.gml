@@ -8,6 +8,8 @@ function render_world(mode)
 	render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 	with (render_shader_obj)
 		shader_use()
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uGmDepth", bool_to_float(!is_cpp()))
 	
 	shader_check_uniform = true
 	
@@ -31,14 +33,16 @@ function render_world(mode)
 	// Neutral depth (0)
 	if (render_mode != e_render_mode.CLICK &&
 		render_mode != e_render_mode.SELECT &&
-		render_mode != e_render_mode.PLACE &&
+		render_mode != e_render_mode.PLACE_SELECT &&
+		render_mode != e_render_mode.PLACE_PARENT &&
 		render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH &&
 		render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH &&
 		render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 	{
 		render_world_tl_reset()
 		render_world_ground()
-		render_world_sky_clouds()
+		if (render_mode != e_render_mode.PLACE)
+			render_world_sky_clouds()
 		render_world_tl_reset()
 	}
 	

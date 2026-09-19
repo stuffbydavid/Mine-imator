@@ -84,4 +84,5 @@ function action_tl_load_loop(fn)
 	}
 	
 	app_update_tl_edit()
+	project_update_counts()
 }

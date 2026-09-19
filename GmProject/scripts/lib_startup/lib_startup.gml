@@ -27,12 +27,19 @@ function lib_startup()
 	globalvar lib_open_url, lib_execute, lib_unzip, lib_gzunzip, lib_file_rename, lib_file_copy, lib_file_delete, lib_file_exists, lib_json_file_convert_unicode;
 	globalvar lib_directory_create, lib_directory_exists, lib_directory_delete;
 	globalvar lib_movie_init, lib_movie_set, lib_movie_start, lib_movie_audio_file_decode, lib_movie_audio_file_add, lib_movie_audio_sound_add, lib_movie_frame, lib_movie_done;
-	globalvar lib_window_maximize, lib_window_set_focus;
+	globalvar lib_window_maximize, lib_window_set_focus, lib_window_taskbar_progress_value_set, lib_window_taskbar_progress_state_set, lib_window_flash, lib_window_beep;
 	
 	// Window library
 	log("External library", pathwindow)
 	lib_window_maximize = external_define(pathwindow, "window_maximize", dll_cdecl, ty_real, 1, ty_string)
 	lib_window_set_focus = external_define(pathwindow, "window_set_focus", dll_cdecl, ty_real, 1, ty_string)
+	if (is_cpp()) // These functions don't exist in the GML library .dlls
+	{
+		lib_window_taskbar_progress_value_set = external_define(pathwindow, "window_taskbar_progress_value_set", dll_cdecl, ty_real, 1, ty_real)
+		lib_window_taskbar_progress_state_set = external_define(pathwindow, "window_taskbar_progress_state_set", dll_cdecl, ty_real, 1, ty_real)
+		lib_window_flash = external_define(pathwindow, "window_flash", dll_cdecl, ty_real, 0)
+		lib_window_beep = external_define(pathwindow, "window_beep", dll_cdecl, ty_real, 1, ty_real)
+	}
 	
 	// File library
 	log("External library", pathfile)

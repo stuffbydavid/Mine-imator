@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"temp_remove_lists",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"temp_remove_lists",
+  "parent":{
+    "name":"Templates",
+    "path":"folders/Scripts/Project/Templates.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

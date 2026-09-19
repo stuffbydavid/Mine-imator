@@ -7,6 +7,8 @@ function app_startup_lists()
 	globalvar videotemplate_list, videoquality_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
+	globalvar minecraft_block_sheet_size;
+	globalvar minecraft_block_animated_sheet_frame_count, minecraft_item_sheet_size;
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
 	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
@@ -157,8 +159,8 @@ function app_startup_lists()
 		"BG_TWILIGHT",
 		"BG_SKY_CLOUDS_SHOW",
 		"BG_SKY_CLOUDS_SPEED",
-		"BG_SKY_CLOUDS_HEIGHT",
-		"BG_SKY_CLOUDS_OFFSET",
+		"BG_SKY_CLOUDS_OFFSET_Y",
+		"BG_SKY_CLOUDS_OFFSET_Z",
 		"BG_GROUND_SHOW",
 		"BG_GROUND_SLOT",
 		"BG_BIOME",
@@ -166,9 +168,13 @@ function app_startup_lists()
 		"BG_SKY_CLOUDS_COLOR",
 		"BG_SUNLIGHT_COLOR",
 		"BG_AMBIENT_COLOR",
+		"BG_NIGHT_SKY_COLOR",
+		"BG_NIGHT_SKY_CLOUDS_COLOR",
+		"BG_NIGHT_SKY_STARS_COLOR",
 		"BG_NIGHT_COLOR",
 		"BG_GRASS_COLOR",
 		"BG_FOLIAGE_COLOR",
+		"BG_DRY_FOLIAGE_COLOR",
 		"BG_WATER_COLOR",
 		"BG_LEAVES_OAK_COLOR",
 		"BG_LEAVES_SPRUCE_COLOR",
@@ -255,30 +261,33 @@ function app_startup_lists()
 	temp_type_name_list = ds_list_create()
 	ds_list_add(temp_type_name_list,
 		"char",
-		"spblock",
-		"scenery",
+		"equipment",
+		"model",
+		"modelpart",
 		"item",
+		"scenery",
 		"block",
-		"bodypart",
+		"spblock",
 		"particles",
 		"text",
 		"cube",
 		"cone",
 		"cylinder",
 		"sphere",
-		"surface",
-		"model"
+		"surface"
 	)
 	
 	// Timeline types
 	tl_type_name_list = ds_list_create()
 	ds_list_add(tl_type_name_list,
 		"char",
-		"spblock",
-		"scenery",
+		"equipment",
+		"model",
+		"modelpart",
 		"item",
+		"scenery",
 		"block",
-		"bodypart",
+		"spblock",
 		"particles",
 		"text",
 		"cube",
@@ -286,17 +295,14 @@ function app_startup_lists()
 		"cylinder",
 		"sphere",
 		"surface",
-		"model",
 		"camera",
-		"spotlight",
-		"pointlight",
-		"folder",
-		"background",
 		"audio",
+		"pointlight",
+		"spotlight",
 		"path",
 		"pathpoint",
-		"shape",
-		"lightsource"
+		"background",
+		"folder"
 	)
 	
 	// Resource types
@@ -306,16 +312,16 @@ function app_startup_lists()
 		"packunzipped",
 		"skin",
 		"downloadskin",
+		"model",
 		"itemsheet",
-		"legacyblocksheet",
-		"blocksheet",
-		"scenery",
 		"fromworld",
-		"particlesheet",
-		"texture",
-		"font",
+		"schematic",
+		"blocksheet",
+		"legacyblocksheet",
 		"sound",
-		"model"
+		"particlesheet",
+		"font",
+		"texture"
 	)
 	
 	// Transitions
@@ -385,6 +391,7 @@ function app_startup_lists()
 	videotemplate_list = ds_list_create()
 	ds_list_add(videotemplate_list,
 		new_videotemplate("avatar", 512, 512),
+		new_videotemplate("vga", 640, 480),
 		new_videotemplate("hd_720p", 1280, 720),
 		new_videotemplate("fhd_1080p", 1920, 1080),
 		new_videotemplate("qhd_1440p", 2560, 1440),
@@ -415,11 +422,19 @@ function app_startup_lists()
 	
 	// Biomes
 	biome_list = ds_list_create()
-	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))
+	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_dry_foliage, c_plains_biome_water, null))
 	
 	// Particles
 	particle_template_list = ds_list_create()
 	particle_template_map = ds_map_create()
+	
+	minecraft_block_sheet_size = array_create(e_block_sheet.amount)
+	for (var size = 0; size < e_block_sheet.amount; size++)
+		minecraft_block_sheet_size[size] = vec2(0, 0)
+	minecraft_block_animated_sheet_frame_count = 0
+	minecraft_item_sheet_size = array_create(e_item_sheet.amount)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+		minecraft_item_sheet_size[size] = vec2(0, 0)
 	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()
@@ -450,11 +465,13 @@ function app_startup_lists()
 	// List of icons in sync with e_tl_type
 	/*
 		CHARACTER,
-		SPECIAL_BLOCK,
-		SCENERY,
+		EQUIPMENT,
+		MODEL,
+		MODEL_PART,
 		ITEM,
+		SCENERY,
 		BLOCK,
-		BODYPART,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -462,23 +479,26 @@ function app_startup_lists()
 		CYLINDER,
 		SPHERE,
 		SURFACE,
-		MODEL,
 		CAMERA,
-		SPOT_LIGHT,
+		AUDIO_TRACK,
 		POINT_LIGHT,
-		FOLDER,
+		SPOT_LIGHT,
+		PATH,
+		PATH_POINT,
 		BACKGROUND,
-		AUDIO
+		FOLDER
 	*/
 	
 	timeline_icon_list = ds_list_create()
 	ds_list_add(timeline_icon_list,
 		icons.CHARACTER,
-		icons.BLOCK_SPECIAL,
-		icons.SCENERY,
-		icons.ITEM,
-		icons.BLOCK,
+		icons.SHIELD,
+		icons.MODEL,
 		icons.PART,
+		icons.ITEM,
+		icons.SCENERY,
+		icons.BLOCK,
+		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
 		icons.CUBE,
@@ -486,25 +506,26 @@ function app_startup_lists()
 		icons.CYLINDER,
 		icons.SPHERE,
 		icons.PLANE,
-		icons.MODEL,
 		icons.CAMERA,
-		icons.LIGHT_SPOT,
-		icons.LIGHT_POINT,
-		icons.FOLDER,
-		icons.CLOUD,
 		icons.NOTE,
+		icons.LIGHT_POINT,
+		icons.LIGHT_SPOT,
 		icons.PATH,
-		icons.PATH_POINT
+		icons.PATH_POINT,
+		icons.CLOUD,
+		icons.FOLDER
 	)
 	
 	timeline_icon_list_dark = ds_list_create()
 	ds_list_add(timeline_icon_list_dark,
 		icons.CHARACTER,
-		icons.BLOCK_SPECIAL,
-		icons.SCENERY,
-		icons.ITEM,
-		icons.BLOCK,
+		icons.SHIELD,
+		icons.MODEL,
 		icons.PART,
+		icons.ITEM,
+		icons.SCENERY,
+		icons.BLOCK,
+		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
 		icons.CUBE__DARK,
@@ -512,15 +533,14 @@ function app_startup_lists()
 		icons.CYLINDER__DARK,
 		icons.SPHERE__DARK,
 		icons.PLANE,
-		icons.MODEL,
 		icons.CAMERA,
-		icons.LIGHT_SPOT,
-		icons.LIGHT_POINT,
-		icons.FOLDER,
-		icons.CLOUD,
 		icons.NOTE,
+		icons.LIGHT_POINT,
+		icons.LIGHT_SPOT,
 		icons.PATH,
-		icons.PATH_POINT
+		icons.PATH_POINT,
+		icons.CLOUD,
+		icons.FOLDER
 	)
 	
 	render_pass_list = ds_list_create()

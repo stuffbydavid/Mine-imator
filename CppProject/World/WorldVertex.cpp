@@ -6,7 +6,7 @@
 
 namespace CppProject
 {
-	WorldVertex::WorldVertex(const WorldVec& regionPos, uint16_t blockData)
+	WorldVertex::WorldVertex(const WorldVec& regionPos, uint32_t blockData)
 	{
 		pos = (regionPos.x << 20) | ((regionPos.y - CHUNK_HEIGHT_MIN) << 10) | regionPos.z;
 		data = blockData;

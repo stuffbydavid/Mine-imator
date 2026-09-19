@@ -31,7 +31,7 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 				if (newid != null)
 					newidnomc = string_replace(newid, "minecraft:", "")
 				block = null
-				if (is_string(newid) && !is_undefined(block_id_map[?newid]))
+				if (is_string(newid) && ds_map_exists(block_id_map, newid))
 					block = block_id_map[?newid]
 				
 				// Insert into array
@@ -49,7 +49,7 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 							if (block != null)
 							{
 								legacy_block_obj[curid, d] = block
-								if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+								if (ds_map_valid(block.id_state_vars_map) && ds_map_exists(block.id_state_vars_map, newid))
 									state_vars_add(legacy_block_state_vars[curid, d], block.id_state_vars_map[?newid]) // Add ID-specific vars
 							}
 							
@@ -72,7 +72,7 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 					if (block != null)
 					{
 						legacy_block_obj[curid, val] = block
-						if (block.id_state_vars_map != null && !is_undefined(block.id_state_vars_map[?newid]))
+						if (ds_map_valid(block.id_state_vars_map) && ds_map_exists(block.id_state_vars_map, newid))
 							state_vars_add(legacy_block_state_vars[curid, val], block.id_state_vars_map[?newid]) // Add ID-specific vars
 					}
 					

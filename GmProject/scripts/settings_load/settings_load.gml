@@ -38,7 +38,9 @@ function settings_load()
 		var assetsmap = map[?"assets"];
 		if (ds_map_valid(assetsmap))
 		{
-			setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
+			var lastknown = value_get_string(assetsmap[?"lastknown"], "");
+			if (lastknown = minecraft_assets_version) // No Mine-imator update
+				setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
 			
 			var newmap = assetsmap[?"new"];
 			if (ds_map_valid(newmap))
@@ -62,18 +64,23 @@ function settings_load()
 			setting_advanced_mode = value_get_real(programmap[?"advanced_mode"], setting_advanced_mode)
 			
 			// No interface setting, but custom fps can be loaded from file
-			room_speed = value_get_real(programmap[?"fps"], room_speed)
+			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
+			game_set_speed(gamespeed_fps, targetfps)
 			
 			if (!dev_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()
 			
+			setting_project_pack = value_get_string(programmap[?"project_pack"], setting_project_pack)
+			
 			setting_backup = value_get_real(programmap[?"backup"], setting_backup)
 			setting_backup_time = value_get_real(programmap[?"backup_time"], setting_backup_time)
 			setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)
 			setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
 			setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
+			setting_scenery_remove_edges = value_get_real(programmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
+			setting_scenery_replace_ground = value_get_real(programmap[?"scenery_replace_ground"], setting_scenery_replace_ground)
 			
 			setting_watermark_custom = value_get_real(programmap[?"watermark_custom"], setting_watermark_custom)
 			setting_watermark_fn = value_get_string(programmap[?"watermark_fn"], setting_watermark_fn)
@@ -98,7 +105,7 @@ function settings_load()
 			if (setting_language_filename != language_file)
 				language_load(setting_language_filename, language_map)
 			
-			var themename = theme_light.name;
+			var themename = theme_classic.name;
 			themename = value_get_string(interfacemap[?"theme"], themename)
 			
 			with (obj_theme)

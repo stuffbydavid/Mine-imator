@@ -1,21 +1,17 @@
-/// render_world_item(vbuffer, is3d, facecamera, bounce, rotate, resource)
+/// render_world_item(vbuffer, resource, sheet, is3d, facecamera, bounce, rotate, [realtime])
 /// @arg vbuffer
+/// @arg resource
+/// @arg sheet
 /// @arg is3d
 /// @arg facecamera
 /// @arg bounce
 /// @arg rotate
-/// @arg resource
+/// @arg [realtime]
 
-function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
+function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
-	if (!res_is_ready(res[0]))
-		res[0] = mc_res
-	
-	if (!res_is_ready(res[1]))
-		res[1] = mc_res
-	
-	if (!res_is_ready(res[2]))
-		res[2] = mc_res
+	for (var c = e_texture_channel.DIFFUSE; c <= e_texture_channel.MATERIAL; c++)
+		res[c] = res_eval(res[c])
 	
 	if (facecamera)
 	{
@@ -31,7 +27,7 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 	{
 		var d, t, offz, mat, rotz, rotmat;
 		d = 60 * 6
-		t = app.background_time mod d * 360
+		t = (realtime ? current_step : app.background_time) mod d * 360
 		offz = t/360
 		mat = matrix_get(matrix_world)
 		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
@@ -43,7 +39,7 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 	{
 		var d, t, offz;
 		d = 60 * 3
-		t = app.background_time mod d * 2
+		t = (realtime ? current_step : app.background_time) mod d * 2
 		if (t < d)
 			offz = ease("easeinoutquad", t / d) * 2 - 1
 		else
@@ -51,12 +47,12 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 		matrix_world_multiply_post(matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
 	}
 	
-	if (res[0].item_sheet_texture != null)
-		render_set_texture(res[0].item_sheet_texture)
+	if (res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet] != null)
+		render_set_texture(res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet])
 	else
-		render_set_texture(res[0].texture)
+		render_set_texture(res[e_texture_channel.DIFFUSE].texture)
 	
-	if (res[1] != null && res[1] != mc_res)
+	if (res[e_texture_channel.MATERIAL] != null && res[e_texture_channel.MATERIAL] != mc_res)
 	{
 		if (shader_uniform_metallic != 0)
 		{
@@ -76,12 +72,12 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 			render_set_uniform("uEmissive", shader_uniform_emissive)
 		}
 		
-		if (res[1].item_sheet_texture_material != null)
-			render_set_texture(res[1].item_sheet_texture_material, "Material")
+		if (res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet] != null)
+			render_set_texture(res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet], "Material")
 		else
-			render_set_texture(res[1].texture, "Material")
+			render_set_texture(res[e_texture_channel.MATERIAL].texture, "Material")
 		
-		render_set_uniform_int("uMaterialFormat", res[1].material_format)
+		render_set_uniform_int("uMaterialFormat", res[e_texture_channel.MATERIAL].material_format)
 	}
 	else
 	{
@@ -89,12 +85,12 @@ function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
 		render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
 	}
 	
-	if (res[2] != null && res[2] != mc_res)
+	if (res[e_texture_channel.NORMAL] != null && res[e_texture_channel.NORMAL] != mc_res)
 	{
-		if (res[2].item_sheet_tex_normal != null)
-			render_set_texture(res[2].item_sheet_tex_normal, "Normal")
+		if (res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet] != null)
+			render_set_texture(res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet], "Normal")
 		else
-			render_set_texture(res[2].texture, "Normal")
+			render_set_texture(res[e_texture_channel.NORMAL].texture, "Normal")
 	}
 	else
 		render_set_texture(spr_default_normal, "Normal")

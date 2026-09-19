@@ -16,9 +16,7 @@ function tab_template_editor_particles_framebox()
 		return 0
 	}
 	
-	res = ptype_edit.sprite_tex
-	if (!res_is_ready(res))
-		res = mc_res
+	res = res_eval(ptype_edit.sprite_tex)
 	tex = res.particles_texture[ptype_edit.sprite_tex_image]
 	swid = texture_width(tex)
 	
