@@ -346,6 +346,7 @@ function shader_startup()
 	with (shader_map[?shader_high_bloom_threshold])
 	{
 		new_shader_uniform("uThreshold")
+		new_shader_uniform("uTransition")
 	}
 	
 	with (shader_map[?shader_add])
@@ -353,6 +354,8 @@ function shader_startup()
 		new_shader_sampler("uAddTexture")
 		new_shader_uniform("uAmount")
 		new_shader_uniform("uPower")
+		new_shader_uniform("uAddTexelSize")
+		new_shader_uniform("uTentFilter")
 	}
 	
 	with (shader_map[?shader_blur])
@@ -360,6 +363,7 @@ function shader_startup()
 		new_shader_uniform("uScreenSize")
 		new_shader_uniform("uRadius")
 		new_shader_uniform("uDirection")
+		new_shader_uniform("uClampEdges")
 		new_shader_uniform("uKernel")
 		new_shader_uniform("uSamples")
 	}

@@ -10,6 +10,8 @@ function render_pass_channel(pass)
 		case e_render_pass.FRESNEL: return 3
 		case e_render_pass.EMISSIVE:
 		case e_render_pass.SSAO_MASK: return 4
+		case e_render_pass.BLOOM_THRESHOLD:
+		case e_render_pass.BLOOM_BLUR: return 5
 	}
 	
 	return 0

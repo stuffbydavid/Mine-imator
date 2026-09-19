@@ -65,6 +65,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_DOF_FRINGE_ANGLE_GREEN: return -135
 		case e_value.CAM_DOF_FRINGE_ANGLE_BLUE: return -45
 		case e_value.CAM_BLOOM_THRESHOLD: return .85
+		case e_value.CAM_BLOOM_TRANSITION: return .5
 		case e_value.CAM_BLOOM_INTENSITY: return .4
 		case e_value.CAM_BLOOM_RADIUS: return 1
 		case e_value.CAM_BLOOM_RATIO: return 0

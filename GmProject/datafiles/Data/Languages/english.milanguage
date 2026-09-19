@@ -847,6 +847,8 @@
 				"metallic": "Metallic",
 				"fresnel": "Fresnel",
 				"ssaomask": "SSAO mask",
+				"bloomthreshold": "Bloom threshold",
+				"bloomblur": "Bloom blur",
 				"all": "All passes"
 			}
 		},
@@ -4077,6 +4079,7 @@
 			"bloom": "Bloom",
 			"bloom/": {
 				"threshold": "Threshold",
+				"transition": "Transition",
 				"intensity": "Intensity",
 				"radius": "Radius",
 				"ratio": "Anamorphic ratio",

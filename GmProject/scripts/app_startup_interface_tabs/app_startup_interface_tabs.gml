@@ -645,8 +645,8 @@ function app_startup_interface_tabs()
 			tbx_dof_fringe_blue = new_textbox_integer()
 			tbx_dof_fringe_blue.suffix = "%"
 		
-			tbx_bloom_threshold = new_textbox_integer()
-			tbx_bloom_threshold.suffix = "%"
+			tbx_bloom_threshold = new_textbox_ndecimals()
+			tbx_bloom_transition = new_textbox_ndecimals()
 			tbx_bloom_intensity = new_textbox_integer()
 			tbx_bloom_intensity.suffix = "%"
 			tbx_bloom_radius = new_textbox_integer()

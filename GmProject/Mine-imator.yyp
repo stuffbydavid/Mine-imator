@@ -1002,6 +1002,7 @@
     {"id":{"name":"action_tl_frame_cam_bloom_radius","path":"scripts/action_tl_frame_cam_bloom_radius/action_tl_frame_cam_bloom_radius.yy",},},
     {"id":{"name":"action_tl_frame_cam_bloom_ratio","path":"scripts/action_tl_frame_cam_bloom_ratio/action_tl_frame_cam_bloom_ratio.yy",},},
     {"id":{"name":"action_tl_frame_cam_bloom_threshold","path":"scripts/action_tl_frame_cam_bloom_threshold/action_tl_frame_cam_bloom_threshold.yy",},},
+    {"id":{"name":"action_tl_frame_cam_bloom_transition","path":"scripts/action_tl_frame_cam_bloom_transition/action_tl_frame_cam_bloom_transition.yy",},},
     {"id":{"name":"action_tl_frame_cam_bloom","path":"scripts/action_tl_frame_cam_bloom/action_tl_frame_cam_bloom.yy",},},
     {"id":{"name":"action_tl_frame_cam_ca_blue_offset","path":"scripts/action_tl_frame_cam_ca_blue_offset/action_tl_frame_cam_ca_blue_offset.yy",},},
     {"id":{"name":"action_tl_frame_cam_ca_blur_amount","path":"scripts/action_tl_frame_cam_ca_blur_amount/action_tl_frame_cam_ca_blur_amount.yy",},},

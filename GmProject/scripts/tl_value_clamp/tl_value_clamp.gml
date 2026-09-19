@@ -32,7 +32,6 @@ function tl_value_clamp(vid, val)
 		case e_value.SUBSURFACE_RADIUS_GREEN:
 		case e_value.SUBSURFACE_RADIUS_BLUE:
 		case e_value.WIND_INFLUENCE:
-		case e_value.CAM_BLOOM_THRESHOLD:
 		case e_value.CAM_VIGNETTE_RADIUS:
 		case e_value.CAM_VIGNETTE_SOFTNESS:
 		case e_value.CAM_VIGNETTE_STRENGTH: return clamp(val, 0, 1)
@@ -76,6 +75,8 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_BLADE_STRETCH: return clamp(val, -1, 1)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
 		case e_value.CAM_EXPOSURE:
+		case e_value.CAM_BLOOM_THRESHOLD:
+		case e_value.CAM_BLOOM_TRANSITION:
 		case e_value.CAM_GAMMA:
 		case e_value.BG_SUNLIGHT_STRENGTH:
 		case e_value.LIGHT_STRENGTH:

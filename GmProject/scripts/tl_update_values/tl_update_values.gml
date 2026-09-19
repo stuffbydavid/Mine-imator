@@ -209,6 +209,7 @@ function tl_update_values()
 		
 		tl_update_values_ease(e_value.CAM_BLOOM)
 		tl_update_values_ease(e_value.CAM_BLOOM_THRESHOLD)
+		tl_update_values_ease(e_value.CAM_BLOOM_TRANSITION)
 		tl_update_values_ease(e_value.CAM_BLOOM_INTENSITY)
 		tl_update_values_ease(e_value.CAM_BLOOM_RADIUS)
 		tl_update_values_ease(e_value.CAM_BLOOM_RATIO)

@@ -12,6 +12,12 @@ function render_free()
 	surface_free(render_surface_hdr_post[0])
 	surface_free(render_surface_hdr_post[1])
 	surface_free(render_surface_hdr_post[2])
+	for (var i = 0; i < 6; i++)
+	{
+		surface_free(render_surface_blur[i])
+		surface_free(render_surface_blur_temp[i])
+	}
+
 	surface_free(render_surface_post[0])
 	surface_free(render_surface_post[1])
 	surface_free(render_surface_specular_base)

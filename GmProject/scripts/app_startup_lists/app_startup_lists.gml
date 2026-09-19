@@ -107,6 +107,7 @@ function app_startup_lists()
 		"CAM_DOF_FRINGE_BLUE",
 		"CAM_BLOOM",
 		"CAM_BLOOM_THRESHOLD",
+		"CAM_BLOOM_TRANSITION",
 		"CAM_BLOOM_INTENSITY",
 		"CAM_BLOOM_RADIUS",
 		"CAM_BLOOM_RATIO",
@@ -546,6 +547,8 @@ function app_startup_lists()
 		"metallic",
 		"fresnel",
 		"ssaomask",
+		"bloomthreshold",
+		"bloomblur",
 		"all",
 	)
 }

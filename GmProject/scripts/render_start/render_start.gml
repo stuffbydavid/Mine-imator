@@ -66,11 +66,11 @@ function render_start()
 	
 	// General rendering effects
 	var renderall = (render_pass = e_render_pass.ALL)
-	var rendercombined = (render_pass = e_render_pass.COMBINED || renderall)
-	render_ssao = project_render_ssao && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)
-	render_shadows = project_render_shadows && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
-	render_indirect = render_shadows && project_render_indirect && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
-	render_reflections = project_render_reflections && (renderall || render_pass = e_render_pass.COMBINED || render_pass = e_render_pass.REFLECTIONS)
+	var rendercombined = (render_pass = e_render_pass.COMBINED || renderall || render_pass = e_render_pass.BLOOM_THRESHOLD || render_pass = e_render_pass.BLOOM_BLUR)
+	render_ssao = project_render_ssao && (rendercombined || render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)
+	render_shadows = project_render_shadows && (rendercombined || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
+	render_indirect = render_shadows && project_render_indirect && (rendercombined || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
+	render_reflections = project_render_reflections && (rendercombined || render_pass = e_render_pass.REFLECTIONS)
 	render_glow = project_render_glow && renderer_current = e_renderer.REALISTIC
 	render_glow_falloff = project_render_glow && renderer_current = e_renderer.REALISTIC && project_render_glow_falloff
 	render_auxiliary = renderall || background_fog_show || render_pass = e_render_pass.FOG || render_pass = e_render_pass.GLOW ||

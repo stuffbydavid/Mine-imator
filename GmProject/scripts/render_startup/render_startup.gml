@@ -100,7 +100,7 @@ function render_startup()
 	render_repeat = vec3(0)
 	
 	// Surfaces for rendering
-	globalvar render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_depth, render_surface_depth_low, render_surface_normal,
+	globalvar render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_low, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow, render_surface_raydata,
 			  render_surface_samples, render_surface_post, render_surface_specular_base, render_surface_shadows_cache, render_surface_specular_shadows, depth_near, depth_far, render_post_index;
@@ -115,6 +115,11 @@ function render_startup()
 	render_surface_hdr_post[0] = null
 	render_surface_hdr_post[1] = null
 	render_surface_hdr_post[2] = null
+	for (var i = 0; i < 6; i++)
+	{
+		render_surface_blur[i] = null
+		render_surface_blur_temp[i] = null
+	}
 	
 	render_surface_depth = null
 	render_surface_depth_low = null
