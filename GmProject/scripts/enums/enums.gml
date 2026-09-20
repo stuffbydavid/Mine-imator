@@ -384,7 +384,8 @@ function enums()
 		CONE,
 		CYLINDER,
 		SPHERE,
-		SURFACE
+		SURFACE,
+		amount
 	} // Update app_startup_lists() when adding types
 	
 	// Timeline types

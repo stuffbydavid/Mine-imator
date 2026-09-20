@@ -2447,6 +2447,7 @@
     {"id":{"name":"temp_particles_type_remove","path":"scripts/temp_particles_type_remove/temp_particles_type_remove.yy",},},
     {"id":{"name":"temp_particles_update_spawn_rate","path":"scripts/temp_particles_update_spawn_rate/temp_particles_update_spawn_rate.yy",},},
     {"id":{"name":"temp_remove_lists","path":"scripts/temp_remove_lists/temp_remove_lists.yy",},},
+    {"id":{"name":"temp_select_edit","path":"scripts/temp_select_edit/temp_select_edit.yy",},},
     {"id":{"name":"temp_set_scenery","path":"scripts/temp_set_scenery/temp_set_scenery.yy",},},
     {"id":{"name":"temp_update_armor","path":"scripts/temp_update_armor/temp_update_armor.yy",},},
     {"id":{"name":"temp_update_block","path":"scripts/temp_update_block/temp_update_block.yy",},},

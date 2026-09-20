@@ -67,6 +67,8 @@ function settings_startup()
 	setting_panel_top_size = panel_top_height
 	setting_panel_left_top_size = panel_width
 	setting_panel_right_top_size = panel_width
+	setting_bench_width = bench_initial_width
+	setting_bench_height = bench_initial_height
 	
 	setting_properties_location = "right"
 	setting_ground_editor_location = "right_secondary"

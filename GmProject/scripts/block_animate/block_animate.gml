@@ -10,6 +10,9 @@ function block_animate(root)
 		
 		// Set to be a part of scenery
 		inherit_rot_point = true
+		inherit_alpha = true
+		inherit_color = true
+		inherit_texture = true
 		part_of = root
 		part_root = root
 		ds_list_add(root.part_list, id)

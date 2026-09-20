@@ -288,7 +288,7 @@ function render_world_tl()
 			case e_tl_type.ITEM:
 			{
 				var itemanimate;
-				itemanimate = (parent = app || parent.type != e_tl_type.MODEL_PART)
+				itemanimate = (parent = null || parent = app || parent.object_index != obj_timeline || parent.type != e_tl_type.MODEL_PART)
 				if (item_vbuffer = null)
 					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else

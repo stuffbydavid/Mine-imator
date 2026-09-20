@@ -3837,6 +3837,8 @@
 	},
 	"timelineeditor/": {
 		"info": "OBJECT INFO",
+		"edittemplate": "Edit template",
+		"createtemplate": "Create template",
 		"name": "Name",
 		"text": "Text",
 		"textsample": "Sample text",

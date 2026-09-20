@@ -236,11 +236,23 @@ function app_startup_interface_tabs()
 		model_part_model_list.script = action_lib_model_part_model_name
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.equipment_list[|m].name)
+		{
+			var model = mc_assets.equipment_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.char_list[|m].name)
+		{
+			var model = mc_assets.char_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.special_block_list[|m].name)
+		{
+			var model = mc_assets.special_block_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()

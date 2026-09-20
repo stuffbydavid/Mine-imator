@@ -9,7 +9,7 @@
 
 function draw_label_value(xx, yy, w, h, caption, value, vertical = false)
 {
-	var capwid, valuex;
+	var capwid, valuex, valuefull, valuewid, valuew;
 	
 	if (!vertical)
 		caption = caption + ": "
@@ -25,15 +25,23 @@ function draw_label_value(xx, yy, w, h, caption, value, vertical = false)
 		draw_label(caption, xx, yy + h/2, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	
 	draw_set_font(font_value)
+	valuefull = value
+	valuewid = string_width(value)
 	
 	if (vertical)
 	{
+		valuew = w
 		value = string_limit(value, w)
+		if (valuewid > valuew)
+			tip_set(valuefull, xx, yy + 18, valuew, 18)
 		draw_label(value, xx, yy + 36, fa_left, fa_bottom, c_text_main, a_text_main)
 	}
 	else
 	{
-		value = string_limit(value, (xx + w) - valuex)
+		valuew = max(0, (xx + w) - valuex)
+		value = string_limit(value, valuew)
+		if (valuewid > valuew)
+			tip_set(valuefull, valuex, yy, valuew, h)
 		draw_label(value, xx + capwid, yy + h/2, fa_left, fa_middle, c_text_main, a_text_main)
 	}
 }

@@ -10,30 +10,13 @@ function action_bench_create(edit = false)
 	
 	if (tab = e_bench.PROJECT)
 	{
-		var temp, editortab;
-		temp = bench_settings.project_selected
-		editortab = false
+		var temp = bench_settings.project_selected;
 		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
 		{
 			if (edit)
 			{
-				tab_show(properties, true)
-				properties.library.show = true
-				action_lib_list(temp)
-				sortlist_center(lib_list, temp)
-
-				switch (temp.type)
-				{
-					case e_temp_type.CHARACTER:
-					case e_temp_type.EQUIPMENT:
-					case e_temp_type.SPECIAL_BLOCK:
-					case e_temp_type.BLOCK:
-					case e_temp_type.ITEM:
-					case e_temp_type.PARTICLE_SPAWNER:
-						editortab = true
-				}
-				if (editortab)
-					tab_show(template_editor, true)
+				with (temp)
+					temp_select_edit()
 			}
 			else
 			{

@@ -5,7 +5,8 @@ function macros()
 {
 	// Debug
 	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && false
+	#macro dev_mode_skip_blocks			dev_mode && true
+	#macro dev_mode_max_blocks			50
 	#macro dev_mode_debug_schematics	dev_mode && false
 	#macro dev_mode_debug_names			dev_mode && false
 	#macro dev_mode_debug_saveid		dev_mode && false
@@ -202,7 +203,7 @@ function macros()
 	#macro particle_default				array("Default", "Snow")
 	#macro default_text					"AaBbCc"
 	
-	// Placing targets
+	// Parenting actions for right/left arm
 	#macro item_parent_action			array(null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5))
 	#macro bow_parent_action_right		array(null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9))
 	#macro bow_parent_action_left		array(null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9))

@@ -111,6 +111,8 @@ function settings_save()
 		json_save_var("panel_top_size", panel_map[?"top"].size)
 		json_save_var("panel_left_top_size", panel_map[?"left"].size)
 		json_save_var("panel_right_top_size", panel_map[?"right"].size)
+		json_save_var("bench_width", bench_width)
+		json_save_var("bench_height", bench_settings.height_goal)
 		
 		json_save_var("properties_location", properties.panel.location)
 		json_save_var("ground_editor_location", ground_editor.panel.location)

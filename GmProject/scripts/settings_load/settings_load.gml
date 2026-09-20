@@ -155,6 +155,8 @@ function settings_load()
 			setting_panel_top_size = value_get_real(interfacemap[?"panel_top_size"], setting_panel_top_size)
 			setting_panel_left_top_size = value_get_real(interfacemap[?"panel_left_top_size"], setting_panel_left_top_size)
 			setting_panel_right_top_size = value_get_real(interfacemap[?"panel_right_top_size"], setting_panel_right_top_size)
+			setting_bench_width = clamp(value_get_real(interfacemap[?"bench_width"], setting_bench_width), bench_min_width, bench_max_width)
+			setting_bench_height = max(bench_initial_height, value_get_real(interfacemap[?"bench_height"], setting_bench_height))
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)

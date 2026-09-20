@@ -12,8 +12,8 @@ function app_startup_interface_bench()
 	bench_show_ani_type = ""
 	bench_show_ani = 0
 	bench_settings_ani = 0
-	bench_width = bench_initial_width
-	bench_height_add = 0
+	bench_width = setting_bench_width
+	bench_height_add = setting_bench_height - bench_initial_height
 	bench_resize_width = bench_width
 	bench_resize_height = bench_initial_height
 	
@@ -198,11 +198,23 @@ function app_startup_interface_bench()
 		
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.equipment_list[|m].name)
+		{
+			var model = mc_assets.equipment_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.char_list[|m].name)
+		{
+			var model = mc_assets.char_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.special_block_list[|m].name)
+		{
+			var model = mc_assets.special_block_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		
 		// Item list
 		item_scroll = new_obj(obj_scrollbar)
