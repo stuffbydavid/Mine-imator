@@ -453,6 +453,18 @@ function enums()
 		BLOCK
 	}
 	
+	// Timeline parent action
+	enum e_parent_action
+	{
+		TARGET,
+		BEND,
+		POS,
+		ROT,
+		SCA,
+		LOCK
+	}
+
+	// Icons
 	enum icons
 	{
 		ALIGN_BOTTOM,
@@ -854,7 +866,8 @@ function enums()
 	{
 		CLICK,
 		SELECT,
-		PLACE,
+		PLACE_SELECT,
+		PLACE_PARENT,
 		PREVIEW,
 		COLOR,
 		COLOR_FOG,
@@ -874,6 +887,7 @@ function enums()
 		COLOR_GLOW,
 		SCENE_TEST,
 		HIGH_DEPTH_NORMAL,
+		PLACE,
 		AO_MASK,
 		MATERIAL,
 		SUBSURFACE,

@@ -76,7 +76,7 @@ function view_control_scale(view)
 			}
 			else
 			{
-				scale = point3D(0, 0, 0)
+				scale = vec3(0)
 				snapval = (dragger_snap ? setting_snap_size_scale : snap_min)
 				
 				for (var i = X; i <= Z; i++)

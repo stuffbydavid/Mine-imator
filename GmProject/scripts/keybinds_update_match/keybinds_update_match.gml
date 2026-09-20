@@ -12,6 +12,10 @@ function keybinds_update_match()
 			if (id = other.id)
 				continue
 			
+			// Don't show matching key error with unbound keys
+			if (keybind[e_keybind_key.CHAR] = vk_nokey)
+				continue
+			
 			if (array_equals(keybind, other.keybind) && (navigation = other.navigation))
 			{
 				other.match_error = true

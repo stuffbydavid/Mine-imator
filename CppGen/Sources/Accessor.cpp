@@ -38,6 +38,8 @@ void Accessor::resolve(ResolveScope* scope)
 {
 	if (Program::enums.containsKey(this->name)) // Enums are always integer
 	{
+		if (this->nextInChain == nullptr)
+			Program::addSyntaxError("Enum " + String(this->name) + " used without a member in " + this->func->name + ":" + this->line);
 		this->resolvedType->reset(DataType::Type::Integer);
 		return;
 	}
@@ -493,7 +495,14 @@ String Accessor::toCpp(ResolveScope* scope)
 {
 	String cpp = "";
 	if (Program::enums.containsKey(this->name)) // Enum (with prefix)
+	{
+		if (this->nextInChain == nullptr)
+		{
+			Program::addSyntaxError("Enum " + String(this->name) + " used without a member in " + this->func->name + ":" + this->line);
+			return "0";
+		}
 		return nameToCpp(this->name) + "_" + nameToCpp(this->nextInChain->name);
+	}
 
 	// external_call(name, [args...])
 	if (this->name == STR(external_call) && this->callParameters != nullptr && this->callParameters.size() > 0)

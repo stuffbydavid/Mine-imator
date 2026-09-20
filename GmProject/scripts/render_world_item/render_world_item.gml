@@ -23,7 +23,7 @@ function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate
 		matrix_world_multiply_pre(rotmat)
 	}
 	
-	if (rotate)
+	else if (rotate)
 	{
 		var d, t, offz, mat, rotz, rotmat;
 		d = 60 * 6
@@ -44,7 +44,7 @@ function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate
 			offz = ease("easeinoutquad", t / d) * 2 - 1
 		else
 			offz = 1 - ease("easeinoutquad", (t - d) / d) * 2
-		matrix_world_multiply_post(matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
+		matrix_world_multiply_post(matrix_build(0, 0, (realtime ? 0 : 2) + offz * 1.5, 0, 0, 0, 1, 1, 1))
 	}
 	
 	if (res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet] != null)

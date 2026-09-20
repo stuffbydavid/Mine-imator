@@ -43,6 +43,13 @@ function render_world_tl()
 		render_set_uniform_color("uReplaceColor", id, 1)
 	}
 	
+	// Placement data
+	if (render_mode = e_render_mode.PLACE)
+	{
+		render_set_uniform_color("uReplaceColor", id, 1)
+		render_set_uniform("uIsBlock", bool_to_float(type_is_block(type)))
+	}
+	
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
 	
@@ -50,7 +57,10 @@ function render_world_tl()
 	else if (render_mode = e_render_mode.SELECT && !parent_is_selected && !selected)
 		return 0
 		
-	else if (render_mode = e_render_mode.PLACE && !parent_is_placed && !placed)
+	else if (render_mode = e_render_mode.PLACE_SELECT && !parent_is_placed && !placed)
+		return 0
+		
+	else if (render_mode = e_render_mode.PLACE_PARENT && !parent_is_place_target && !place_target)
 		return 0
 	
 	// Box for clicking
@@ -277,10 +287,12 @@ function render_world_tl()
 			
 			case e_tl_type.ITEM:
 			{
+				var itemanimate;
+				itemanimate = (parent = app || parent.type != e_tl_type.MODEL_PART)
 				if (item_vbuffer = null)
-					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
+					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else
-					render_world_item(item_vbuffer, [item_res, item_normal_res, item_material_res], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
+					render_world_item(item_vbuffer, [item_res, item_normal_res, item_material_res], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				break
 			}
 			

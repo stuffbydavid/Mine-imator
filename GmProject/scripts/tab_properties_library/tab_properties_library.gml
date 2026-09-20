@@ -172,6 +172,7 @@ function tab_properties_library()
 		{
 			var wid, res;
 			res = res_eval(temp_edit.item_tex)
+			
 			// Item image
 			tab_control(24)
 			
@@ -196,8 +197,13 @@ function tab_properties_library()
 					sheet = e_item_sheet.SIZE16
 					slot = temp_edit.item_slot
 				}
+				
 				if (sheet >= 0)
+				{
 					draw_texture_slot(res.item_sheet_texture[sheet], slot, dx + wid + 18, dy + 6, 16, 16, res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][X] : res.item_sheet_size[X], res.type = e_res_type.PACK ? minecraft_item_sheet_size[sheet][Y] : res.item_sheet_size[Y])
+					if (slot >= 0 && slot < ds_list_size(mc_assets.item_texture_list[sheet]))
+						tip_set(minecraft_texture_get_name(mc_assets.item_texture_list[sheet][|slot]), dx + wid + 16, dy + 4, 20, 20)
+				}
 				
 				if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, template_editor.show, icons.PENCIL, null, false, "tooltipchangeitem"))
 					tab_toggle(template_editor)
@@ -695,9 +701,18 @@ function tab_properties_library()
 	// Repeat
 	if (temp_edit.type = e_temp_type.SCENERY || temp_edit.type = e_temp_type.BLOCK)
 	{
+		tab_set_collumns(true, 2)
 		tab_control_checkbox()
 		draw_checkbox("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)
 		tab_next()
+		
+		if (temp_edit.block_repeat_enable)
+		{
+			tab_control_checkbox()
+			draw_checkbox("librarycenter", dx, dy, temp_edit.block_center, action_lib_block_center)
+			tab_next()
+		}
+		tab_set_collumns(false)
 		
 		if (temp_edit.block_repeat_enable)
 		{

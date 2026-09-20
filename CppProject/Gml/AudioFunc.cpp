@@ -138,7 +138,7 @@ namespace CppProject
 	void res_load_audio(ScopeAny self)
 	{
 		obj_resource* res = ObjType(obj_resource, self->id);
-		StringType fname = global::load_folder + "/" + res->filename;
+		StringType fname = VarGetStr(global::load_folder) + "/" + res->filename;
 		if (res->sound_index)
 			delete FindSound(res->sound_index);
 

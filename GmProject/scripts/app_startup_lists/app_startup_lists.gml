@@ -8,7 +8,7 @@ function app_startup_lists()
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 	globalvar minecraft_block_sheet_size;
-	globalvar minecraft_block_animated_sheet_frame_count, minecraft_item_sheet_size;
+	globalvar minecraft_block_animated_sheet_frame_count, minecraft_item_sheet_size, minecraft_item_place_target_map;
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
 	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
@@ -435,6 +435,7 @@ function app_startup_lists()
 	minecraft_item_sheet_size = array_create(e_item_sheet.amount)
 	for (var size = 0; size < e_item_sheet.amount; size++)
 		minecraft_item_sheet_size[size] = vec2(0, 0)
+	minecraft_item_place_target_map = ds_map_create()
 	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()

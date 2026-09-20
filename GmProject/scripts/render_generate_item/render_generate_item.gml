@@ -111,7 +111,7 @@ function render_generate_item()
 	// Back face
 	p1 = point3D(size[X], 0, size[Z])
 	p2 = point3D(0, 0, size[Z])
-	p3 = point3D(0, 0, 0)
+	p3 = point3D(0)
 	p4 = point3D(size[X], 0, 0)
 	t1 = point2D(slottex[X] + slottexsizefix[X], slottex[Y])
 	t2 = slottex
@@ -142,7 +142,7 @@ function render_generate_item()
 		draw_texture_done()
 		
 		var slotpixel = vec2_div(slottexsizefix, slotsizefix);
-		vbuffer_add_pixels(surface_get_alpha_array(surf), point3D(0, 0, 0), size[Z], texpos, slotsizefix, slotpixel, scale)
+		vbuffer_add_pixels(surface_get_alpha_array(surf), point3D(0), size[Z], texpos, slotsizefix, slotpixel, scale)
 		
 		surface_free(surf)
 	}

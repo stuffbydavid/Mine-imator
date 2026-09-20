@@ -564,9 +564,15 @@ Statement* Function::parseStatement()
 			{
 				// return expr/;
 				nextToken(Token::Type::ID);
-				if (peekToken() == Token::Type::Terminator)
+				bool voidReturn = peekToken() == Token::Type::Terminator || peekToken() == Token::Type::RightBrace ||
+					(peekToken() == Token::Type::HashTag || peekToken() == Token::Type::CppOnly) ||
+					(peekToken() == Token::Type::ID && GML::keywords.contains(this->currentToken->value) &&
+					 !GML::variables.containsKey(this->currentToken->value) && this->currentToken->value != STR(new) &&
+					 this->currentToken->value != STR(id) && this->currentToken->value != STR(other));
+				if (voidReturn)
 				{
-					nextToken(Token::Type::Terminator);
+					if (peekToken() == Token::Type::Terminator)
+						nextToken(Token::Type::Terminator);
 					this->returnStatement = makeObject<ReturnStatement>(nullptr, line);
 				}
 				else

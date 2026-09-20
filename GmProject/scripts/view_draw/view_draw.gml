@@ -469,45 +469,7 @@ function view_draw(view)
 			}
 		}
 				
-		// Place object
-		if (window_busy = "place" && mouse_x >= content_x && mouse_y >= content_y && mouse_x < content_x + content_width && mouse_y < content_y + content_height)
-		{
-			// Update depth surface with placed object hidden
-			if (view.update_depth)
-			{
-				surface_clear_depth_cache(view.surface_depth)
-				render_start(view.surface_depth, null, content_width, content_height) // No camera to disable effects
-				render_camera = cam
-				render_update_camera()
-				place_tl_render = false
-				render_target = surface_require(render_target, render_width, render_height)
-				surface_set_target(render_target)
-				{
-					draw_clear_alpha(c_black, 0)
-					render_world_background()
-					render_world_start()
-					render_world_sky()
-					render_world(e_render_mode.COLOR_FOG)
-					render_world_done()
-				}
-				surface_reset_target()
-				view.surface_depth = render_done()
-				view.update_depth = false
-			}
-			
-			var mx = mouse_x - content_x;
-			var my = mouse_y - content_y;
-			var tx = mx / content_width;
-			var ty = 1 - my / content_height;
-			var depthval = surface_get_depth(view.surface_depth, mx, my);
-			if (depthval < 1)
-				view.surface_depth_value = depthval
-			var clipspace = vec4(tx * 2 - 1, ty * 2 - 1, min(0.99975, view.surface_depth_value) * 2 - 1, 1);
-			var viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse_ext(proj_matrix)));
-			place_view_pos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix))
-			place_tl_render = true
-			render_samples = -1
-		}
+		view_place(view, cam)
 	}
 	
 	// Revert content size for overlays

@@ -32,8 +32,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 	// Create matrix for rotation
 	if (rot[X] > 0 || rot[Z] > 0)
 	{
-		rotmat = matrix_create(point3D(-block_size / 2, -block_size / 2, -block_size / 2), vec3(0), vec3(1))
-		rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_size / 2, block_size / 2, block_size / 2), vec3(-rot[X], 0, -rot[Z]), vec3(1)))
+		rotmat = matrix_create(point3D(-block_half_size, -block_half_size, -block_half_size), vec3(0), vec3(1))
+		rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_half_size, block_half_size, block_half_size), vec3(-rot[X], 0, -rot[Z]), vec3(1)))
 	}
 	else
 		rotmat = MAT_IDENTITY
@@ -235,8 +235,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							if (uvlock && faceuvrot[nd] != 0)
 							{
 								// Rotate points by opposite angle
-								uvfrom = uv_rotate(elem.face_uv_from[f], -faceuvrot[nd], point2D(block_size / 2, block_size / 2))
-								uvto = uv_rotate(elem.face_uv_to[f], -faceuvrot[nd], point2D(block_size / 2, block_size / 2))
+								uvfrom = uv_rotate(elem.face_uv_from[f], -faceuvrot[nd], point2D(block_half_size, block_half_size))
+								uvto = uv_rotate(elem.face_uv_to[f], -faceuvrot[nd], point2D(block_half_size, block_half_size))
 								
 								for (var a = X; a <= Y; a++)
 								{
@@ -319,10 +319,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							// Shift UVs anti-clockwise by face rotation
 							if (facerot > 0)
 							{
-								face_uv[nd, 0] = uv_rotate(face_uv[nd, 0], facerot, point2D(block_size / 2, block_size / 2))
-								face_uv[nd, 1] = uv_rotate(face_uv[nd, 1], facerot, point2D(block_size / 2, block_size / 2))
-								face_uv[nd, 2] = uv_rotate(face_uv[nd, 2], facerot, point2D(block_size / 2, block_size / 2))
-								face_uv[nd, 3] = uv_rotate(face_uv[nd, 3], facerot, point2D(block_size / 2, block_size / 2))
+								face_uv[nd, 0] = uv_rotate(face_uv[nd, 0], facerot, point2D(block_half_size, block_half_size))
+								face_uv[nd, 1] = uv_rotate(face_uv[nd, 1], facerot, point2D(block_half_size, block_half_size))
+								face_uv[nd, 2] = uv_rotate(face_uv[nd, 2], facerot, point2D(block_half_size, block_half_size))
+								face_uv[nd, 3] = uv_rotate(face_uv[nd, 3], facerot, point2D(block_half_size, block_half_size))
 							}
 						}
 						

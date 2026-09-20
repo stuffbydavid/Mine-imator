@@ -31,7 +31,7 @@ function bench_draw()
 			window_busy = ""
 		
 		bench_settings.height = 0
-		bench_settings.height_goal = bench_height + bench_height_add
+		bench_settings.height_goal = bench_initial_height + bench_height_add
 		return 0
 	}
 	else
@@ -182,6 +182,8 @@ function bench_draw()
 	bench_settings.list_height = 0
 	bench_settings.list_minimum_height = 0
 	bench_draw_settings(dx, dy, dw, dh)
+	if (window_scroll_focus != "" && window_focus = window_scroll_focus && window_focus != string(bench_settings.item_scroll))
+		bench_settings.list_focus = window_focus
 	
 	var minimumheight, settingsheight, maximumheight;
 	settingsheight = dy - sdy

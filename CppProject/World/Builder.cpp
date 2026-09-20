@@ -580,7 +580,7 @@ namespace CppProject
 		out << format;
 
 		// Save Minecraft assets version
-		QByteArray assetsVersion = global::_app->setting_minecraft_assets_version.QStr().toUtf8();
+		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
 		out << (quint16)assetsVersion.size();
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
@@ -646,7 +646,7 @@ namespace CppProject
 
 		QByteArray assetsVersion(assetsVersionSize, '\0');
 		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
-			|| assetsVersion != global::_app->setting_minecraft_assets_version.QStr().toUtf8())
+			|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
 			return false;
 
 		// Load size

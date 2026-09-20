@@ -109,6 +109,7 @@ namespace CppProject
 		// Resize if needed
 		if (expectedSize.width() > 0 && expectedSize.height() > 0 && size != expectedSize)
 			Resize(expectedSize);
+		ClearColorCache();
 
 		if (!frameBuffer->BeginUse())
 			return false;

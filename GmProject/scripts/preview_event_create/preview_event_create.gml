@@ -29,7 +29,7 @@ function preview_event_create()
 	
 	fov = 45
 	xy_lock = false
-	world_pos = point3D(0, 0, 0)
+	world_pos = point3D(0)
 	preview_reset_view()
 	particle_spawner_init()
 	particle_spawn_active = true

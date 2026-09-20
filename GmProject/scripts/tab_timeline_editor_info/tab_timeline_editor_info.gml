@@ -37,7 +37,7 @@ function tab_timeline_editor_info()
 			if (tl_edit.part_of = null && tl_edit.temp != null)
 				def = tl_edit.temp.rot_point
 			else
-				def = point3D(0, 0, 0)
+				def = point3D(0)
 			
 			axis_edit = X
 			textfield_group_add("timelineeditorrotpointx", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_x)

@@ -8,6 +8,9 @@ function render_world_ground()
 	
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
+	
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uIsBlock", 1)
 
 	var materialres = res_eval(background_ground_tex_material);
 	
@@ -66,6 +69,8 @@ function render_world_ground()
 	
 	// Reset
 	render_set_uniform_int("uIsGround", 0)
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uIsBlock", 0)
 	
 	if (iswater)
 	{

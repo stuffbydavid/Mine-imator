@@ -58,7 +58,7 @@ function view_control_move(view)
 			}
 			else
 			{
-				pos = point3D(0, 0, 0)
+				pos = point3D(0)
 				snapval = (dragger_snap ? setting_snap_size_position : snap_min)
 				
 				for (var i = X; i <= Z; i++)

@@ -179,13 +179,13 @@ function preview_draw(preview, xx, yy, width, height)
 			surface_set_target(surface)
 			{
 				draw_clear_alpha(c_black, 0)
-				gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+				gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
 				
 				if (is3d) // 3D view
 				{
 					var prevcam_zoom, rep, off;
 					prevcam_zoom = 32
-					off = point3D(0, 0, 0)
+					off = point3D(0)
 					
 					// Repeat
 					if (select.object_index = obj_template && select.block_repeat_enable)
@@ -728,7 +728,11 @@ function preview_draw(preview, xx, yy, width, height)
 			//	clip_begin(clipx, clipy, clipwid, cliphei)
 		}
 		
-		draw_surface_exists(surface, xx, yy)
+		var surface_alpha = draw_get_alpha();
+		gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+		if (surface_exists(surface))
+			draw_surface_ext(surface, xx, yy, 1, 1, 0, merge_color(c_black, c_white, surface_alpha), surface_alpha)
+		gpu_set_blendmode(bm_normal)
 	}
 	
 	// Button background

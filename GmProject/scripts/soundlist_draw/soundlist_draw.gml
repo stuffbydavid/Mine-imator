@@ -2,7 +2,7 @@
 
 function soundlist_draw(slist, xx, yy, w, h, name = "")
 {
-	var filtershow, searchx, searchw, clearx, itemh, listhei, dy;
+	var filtershow, searchx, searchw, itemh, listhei, dy;
 	var clipactive, clipx, clipy, clipwid, cliphei;
 	var dw, visibley, visiblehei, mouseon, row, selected;
 
@@ -34,30 +34,17 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		searchw = 144
 	}
 
-	if (slist.search_tbx.text != "")
-	{
-		clearx = name != "" ? searchx - 24 : searchx + searchw - 24
-		if (name = "")
-			searchw -= 28
-		if (draw_button_icon("soundsearchclear" + string(slist), clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltipclearsearch"))
-		{
-			var scrollvalue = slist.scroll.value;
-			slist.search_tbx.text = ""
-			slist.search = false
-			soundlist_update(slist)
-			if (sortlist_center(slist, slist.select))
-				slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
-		}
-	}
-
-	if (draw_textfield("soundsearch" + string(slist), searchx, yy, searchw, 24, slist.search_tbx, null, text_get("listsearch"), "none"))
+	if (draw_searchbox("soundsearch" + string(slist), searchx, yy, searchw, slist.search_tbx, name = ""))
 	{
 		var searchactive, scrollvalue;
 		searchactive = slist.search
 		scrollvalue = slist.scroll.value
 		slist.search = slist.search_tbx.text != ""
-		slist.scroll.value = 0
-		slist.scroll.value_goal = 0
+		if (slist.search)
+		{
+			slist.scroll.value = 0
+			slist.scroll.value_goal = 0
+		}
 		soundlist_update(slist)
 		if (searchactive && !slist.search)
 			if (sortlist_center(slist, slist.select))

@@ -11,53 +11,37 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 		{
 			if (selected && part_of = null && id != newparent && !tl_has_child(newparent) && !moved)
 			{
-				with (hobj)
+				if (hobj != null)
 				{
-					tl_save_id[tl_amount] = save_id_get(other.id)
-					if (other.parent = app.timeline_move_obj)
+					hobj.tl_old_pos[hobj.tl_amount] = tl_value_get_vec3(e_value.POS_X)
+					hobj.tl_old_rot[hobj.tl_amount] = tl_value_get_vec3(e_value.ROT_X)
+					hobj.tl_old_sca[hobj.tl_amount] = tl_value_get_vec3(e_value.SCA_X)
+					hobj.tl_old_default_pos[hobj.tl_amount] = tl_value_get_vec3(e_value.POS_X, true)
+					hobj.tl_old_default_rot[hobj.tl_amount] = tl_value_get_vec3(e_value.ROT_X, true)
+					hobj.tl_old_default_sca[hobj.tl_amount] = tl_value_get_vec3(e_value.SCA_X, true)
+					hobj.tl_old_lock_bend[hobj.tl_amount] = lock_bend
+					
+					with (hobj)
 					{
-						tl_old_parent_save_id[tl_amount] = save_id_get(other.move_parent)
-						tl_old_parent_tree_index[tl_amount] = other.move_parent_tree_index
+						tl_save_id[tl_amount] = save_id_get(other.id)
+						if (other.parent = app.timeline_move_obj)
+						{
+							tl_old_parent_save_id[tl_amount] = save_id_get(other.move_parent)
+							tl_old_parent_tree_index[tl_amount] = other.move_parent_tree_index
+						}
+						else
+						{
+							tl_old_parent_save_id[tl_amount] = save_id_get(other.parent)
+							tl_old_parent_tree_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
+						}
+						tl_amount++
 					}
-					else
-					{
-						tl_old_parent_save_id[tl_amount] = save_id_get(other.parent)
-						tl_old_parent_tree_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
-					}
-					tl_old_x[tl_amount] = other.value[e_value.POS_X]
-					tl_old_y[tl_amount] = other.value[e_value.POS_Y]
-					tl_old_z[tl_amount] = other.value[e_value.POS_Z]
-					tl_amount++
 				}
 				
-				tl_set_parent(newparent, newindex)
-				
-				// Lock armor
-				if (type = e_tl_type.EQUIPMENT && temp != null && newparent != app && (newparent.type = e_tl_type.CHARACTER || newparent.type = e_tl_type.SPECIAL_BLOCK || newparent.type = e_tl_type.MODEL))
-				{
-					var model = mc_assets.model_name_map[?temp.model_name];
-					if (!is_undefined(model) && model.parent_lock)
-						action_tl_lock_tree(id, true, hobj)
-				}
+				tl_set_parent(newparent, newindex, true, hobj)
 				
 				moved = true
 				
-				// Parented objects with no keyframes get position reset
-				if (ds_list_size(keyframe_list) = 0)
-				{
-					if (parent = app)
-					{
-						value[e_value.POS_X] = value_default[e_value.POS_X]
-						value[e_value.POS_Y] = value_default[e_value.POS_Y]
-						value[e_value.POS_Z] = value_default[e_value.POS_Z]
-					}
-					else
-					{
-						value[e_value.POS_X] = 0
-						value[e_value.POS_Y] = 0
-						value[e_value.POS_Z] = 0
-					}
-				}
 				t--
 			}
 			

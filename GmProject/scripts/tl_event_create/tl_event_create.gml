@@ -60,8 +60,8 @@ function tl_event_create()
 	keyframe_current_values = null
 	keyframe_next_values = null
 	
-	world_pos = point3D(0, 0, 0)
-	world_pos_rotate = point3D(0, 0, 0)
+	world_pos = point3D(0)
+	world_pos_rotate = point3D(0)
 	world_pos_2d = point2D(0, 0)
 	world_pos_2d_error = false
 	colors_ext = false
@@ -96,8 +96,8 @@ function tl_event_create()
 	inherit_pose = false
 	scale_resize = true
 	rot_point_custom = false
-	rot_point = point3D(0, 0, 0)
-	rot_point_render = point3D(0, 0, 0)
+	rot_point = point3D(0)
+	rot_point_render = point3D(0)
 	backfaces = false
 	texture_blur = false
 	texture_filtering = false
@@ -181,6 +181,8 @@ function tl_event_create()
 
 	placed = false
 	parent_is_placed = false
+	place_target = false
+	parent_is_place_target = false
 	
 	// Path
 	path_update = false

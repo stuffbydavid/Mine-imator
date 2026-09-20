@@ -363,6 +363,7 @@ function list_init_context_menu(name)
 		// Keybind
 		case "keybind":
 		{
+			list_item_add(text_get("contextmenuclearkeybind"), context_menu_value, "", null, icons.DELETE, null, keybind_clear)
 			list_item_add(text_get("contextmenurestorekeybind"), context_menu_value, "", null, icons.RESET, null, keybind_restore)
 			break
 		}

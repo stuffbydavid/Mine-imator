@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"app_place",
+  "%Name":"type_is_block",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"app_place",
+  "name":"type_is_block",
   "parent":{
-    "name":"Interface",
-    "path":"folders/Scripts/App/Interface.yy",
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

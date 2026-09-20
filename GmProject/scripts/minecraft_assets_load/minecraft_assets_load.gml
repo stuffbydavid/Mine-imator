@@ -194,6 +194,9 @@ function minecraft_assets_load()
 				}
 				with (mc_res)
 					item_sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
+					
+				// Item place targets
+				minecraft_assets_load_item_place_target(load_assets_map[?"item_place_target"])
 				
 				// Particle textures
 				var particletextureslist = load_assets_map[?"particle_textures"];
@@ -398,6 +401,26 @@ function minecraft_assets_load()
 					ds_list_add(char_list, model)
 				}
 				debug_timer_stop("Load characters")
+
+				// Equipment
+				var equiplist = load_assets_map[?"equipment"];
+				if (ds_list_valid(equiplist))
+				{
+					debug_timer_start()
+					for (var i = 0; i < ds_list_size(equiplist); i++)
+					{
+						var model = model_load(equiplist[|i], load_assets_dir + mc_equipment_directory);
+						if (!model) // Something went wrong!
+						{
+							log("Could not load model")
+							continue
+						}
+
+						model_name_map[?model.name] = model
+						ds_list_add(equipment_list, model)
+					}
+					debug_timer_stop("Load equipment")
+				}
 				
 				// Special blocks
 				var specialblockslist = load_assets_map[?"special_blocks"];
@@ -422,26 +445,6 @@ function minecraft_assets_load()
 					ds_list_add(special_block_list, model)
 				}
 				debug_timer_stop("Load special blocks")
-
-				// Equipment
-				var equiplist = load_assets_map[?"equipment"];
-				if (ds_list_valid(equiplist))
-				{
-					debug_timer_start()
-					for (var i = 0; i < ds_list_size(equiplist); i++)
-					{
-						var model = model_load(equiplist[|i], load_assets_dir + mc_special_block_directory);
-						if (!model) // Something went wrong!
-						{
-							log("Could not load model")
-							continue
-						}
-
-						model_name_map[?model.name] = model
-						ds_list_add(equipment_list, model)
-					}
-					debug_timer_stop("Load equipment")
-				}
 				
 				debug_timer_start()
 				load_assets_stage = "blocks"

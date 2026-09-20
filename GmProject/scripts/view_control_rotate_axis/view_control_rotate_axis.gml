@@ -15,7 +15,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 		len = view_control_length
 	
 	// Get middle
-	pos3D = point3D_mul_matrix(point3D(0, 0, 0), mat)
+	pos3D = point3D_mul_matrix(point3D(0), mat)
 	pos2D = view_shape_project(pos3D)
 	if (point3D_project_error)
 		return 0

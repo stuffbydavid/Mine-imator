@@ -905,20 +905,15 @@ function tab_timeline()
 			with (history[0])
 			{
 				parent = tl
-				value_default[e_value.POS_X] = 0
-				value_default[e_value.POS_Y] = 0
-				value_default[e_value.POS_Z] = 0
+				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 			}
 			
-			place_tl.value_default[e_value.POS_X] = 0
-			place_tl.value_default[e_value.POS_Y] = 0
-			place_tl.value_default[e_value.POS_Z] = 0
-			place_tl.value[e_value.POS_X] = 0
-			place_tl.value[e_value.POS_Y] = 0
-			place_tl.value[e_value.POS_Z] = 0
-			
 			with (place_tl)
+			{
+				tl_value_set_vec3(e_value.POS_X, vec3(0))
+				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 				tl_set_parent(tl)
+			}
 				
 			tl_update_list()
 			tl_update_matrix()

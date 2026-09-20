@@ -191,7 +191,7 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Position (optional)
-		position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
+		position_noscale = value_get_point3D(map[?"position"], point3D(0))
 		position = point3D_mul(position_noscale, other.scale)
 		
 		// Rotation (optional)

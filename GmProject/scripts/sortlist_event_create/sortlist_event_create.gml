@@ -23,6 +23,7 @@ function sortlist_event_create()
 	display_list = ds_list_create()
 	scroll = new_obj(obj_scrollbar)
 	script = null
+	script_select_click = null
 	
 	can_deselect = false
 	filter_list = ds_list_create()

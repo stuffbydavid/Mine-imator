@@ -61,12 +61,12 @@ function settings_startup()
 	setting_interface_scale = interface_scale_default_get()
 	setting_interface_compact = false
 	
-	setting_panel_left_bottom_size = 300
-	setting_panel_right_bottom_size = 300
-	setting_panel_bottom_size = 300
-	setting_panel_top_size = 205
-	setting_panel_left_top_size = 300
-	setting_panel_right_top_size = 300
+	setting_panel_left_bottom_size = panel_width
+	setting_panel_right_bottom_size = panel_width
+	setting_panel_bottom_size = panel_bottom_height
+	setting_panel_top_size = panel_top_height
+	setting_panel_left_top_size = panel_width
+	setting_panel_right_top_size = panel_width
 	
 	setting_properties_location = "right"
 	setting_ground_editor_location = "right_secondary"

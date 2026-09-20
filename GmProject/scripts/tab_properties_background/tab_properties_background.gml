@@ -291,6 +291,8 @@ function tab_properties_background()
 			draw_texture_slot(res.block_sheet_texture[sheet][block_texture_get_frame(true)], slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[sheet][X], minecraft_block_sheet_size[sheet][Y], block_texture_get_blend(background_ground_name, res))
 		else if (sheet >= 0)
 			draw_texture_slot(res.block_sheet_texture[sheet], slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[sheet][X], minecraft_block_sheet_size[sheet][Y], block_texture_get_blend(background_ground_name, res))
+		if (sheet >= 0)
+			tip_set(minecraft_texture_get_name(background_ground_name), dx + wid + 16, dy + 4, 20, 20)
 		
 		if (draw_button_icon("backgroundgroundchange", dx + dw - 24, dy, 24, 24, ground_editor.show, icons.PENCIL, null, false, "tooltipchangeground"))
 			tab_toggle(ground_editor)

@@ -12,7 +12,7 @@ function temp_event_create()
 	name = ""
 	display_name = ""
 	count = 0
-	rot_point = point3D(0, 0, 0)
+	rot_point = point3D(0)
 	part_of = null
 	
 	model = null
@@ -67,8 +67,8 @@ function temp_event_create()
 	item_vbuffer = null
 	item_3d = true
 	item_face_camera = false
-	item_bounce = false
-	item_spin = false
+	item_bounce = true
+	item_spin = true
 	legacy_item_sheet = true
 	
 	block_name = default_block
@@ -81,6 +81,8 @@ function temp_event_create()
 	block_vbuffer = null
 	block_repeat_enable = false
 	block_repeat = vec3(1)
+	block_center_legacy = false
+	block_center = false
 	block_randomize = true
 	
 	scenery = null

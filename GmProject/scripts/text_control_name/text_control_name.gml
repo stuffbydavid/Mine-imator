@@ -7,6 +7,8 @@ function text_control_name(keybind)
 	
 	switch (keybind[e_keybind_key.CHAR])
 	{
+		case vk_nokey:			char = text_get("keynokey"); break;
+		case vk_anykey:			char = text_get("keyanykey"); break;
 		case vk_left:			char = text_get("keyleft"); break;
 		case vk_right:			char = text_get("keyright"); break;
 		case vk_up:				char = text_get("keyup"); break;
@@ -89,8 +91,6 @@ function text_control_name(keybind)
 		case 221:				char = "]"; break;
 		case 222:				char = "'"; break;
 		
-		case vk_nokey:
-		case vk_anykey:
 		case null:				char = ""; break;
 		default:				char = chr(keybind[e_keybind_key.CHAR]); break;
 	}
