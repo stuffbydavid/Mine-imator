@@ -5,7 +5,7 @@ function bench_draw()
 	if (bench_show_ani_type = "" && bench_show_ani = 0)
 		return 0
 	
-	var func, ani;
+	var func, ani, benchbusy, benchmouseon;
 	var sdx, sdy, ymax;
 	
 	// Animate
@@ -51,6 +51,16 @@ function bench_draw()
 	dy = content_y
 	dw = content_width
 	dh = content_height
+
+	benchbusy = window_busy
+	benchmouseon = place_build && benchbusy = "place" && app_mouse_box(content_x, content_y, content_width, content_height, "place")
+	if (benchmouseon)
+	{
+		place_content_mouseon = "bench"
+		window_busy = ""
+		if (mouse_left_pressed)
+			app_stop_place(false, false)
+	}
 	
 	// Resize bench corner
 	var mousecorner = content_mouseon && app_mouse_box(content_x + content_width - 8, content_y + content_height - 8, 8, 8);
@@ -206,6 +216,8 @@ function bench_draw()
 	//clip_end()
 	draw_set_alpha(1)
 	
-	if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")
+	if (place_build && benchmouseon)
+		window_busy = benchbusy
+	else if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")
 		window_busy = "bench"
 }

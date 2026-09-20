@@ -438,7 +438,7 @@ function view_draw(view)
 		content_y = floor(content_y)
 		content_width = ceil(content_width)
 		content_height = ceil(content_height)
-		content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, "place") && view.mouseon && !view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, "place") && view.mouseon && place_content_mouseon != "buildstop" && !view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		
 		if (content_mouseon)
 			shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
@@ -510,10 +510,12 @@ function view_draw(view)
 			bench_rotate_ani = 1
 		
 		// Set animation
-		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		{
 			mouse_cursor = cr_handpoint
 			bench_button_hover = true
+			if (place_build)
+				place_content_mouseon = "bench"
 			
 			bench_hover_ani_goal = 1
 			
@@ -534,7 +536,11 @@ function view_draw(view)
 			tip_force_right = false
 			
 			if (mouse_left_pressed)
+			{
+				if (place_build)
+					app_stop_place(false, false)
 				bench_open = true
+			}
 		}
 		else
 		{

@@ -196,6 +196,7 @@ function app_startup_interface_tabs()
 	// Object editor
 	object_editor = new_tab(setting_object_editor_location, false)
 	object_editor.script = tab_object_editor
+	object_editor.build_interact = true
 	
 	with (object_editor)
 	{

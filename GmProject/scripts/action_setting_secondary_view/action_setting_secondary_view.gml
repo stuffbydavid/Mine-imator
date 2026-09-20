@@ -2,6 +2,9 @@
 
 function action_setting_secondary_view()
 {
+	if (place_build && !window_exists(e_window.VIEW_SECOND))
+		return 0
+
 	view_second.show = !view_second.show
 	
 	if (!view_second.show)

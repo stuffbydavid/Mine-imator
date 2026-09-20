@@ -22,6 +22,15 @@ function render_world_tl()
 	// Invisible?
 	if (!render_visible)
 		return 0
+		
+	// Place mode
+	if (placed || parent_is_placed)
+	{
+		if (current_step < app.place_tl_render_step)
+			return 0
+		if (app.place_content_mouseon != null && !app.content_mouseon)
+			return 0
+	}
 	
 	// Only render glow effect?
 	if ((glow && only_render_glow) && render_mode != e_render_mode.COLOR_GLOW)
@@ -89,6 +98,9 @@ function render_world_tl()
 	
 	shader_blend_color = value_inherit[e_value.RGB_MUL]
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
+	if (app.place_build && !app.place_target_tl_model_part && (placed || parent_is_placed))
+		shader_blend_alpha *= 0.5 + 0.25 * sin(current_time / 250)
+		
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
 	if (render_mode = e_render_mode.AO_MASK)

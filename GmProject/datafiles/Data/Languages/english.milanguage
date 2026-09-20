@@ -945,6 +945,7 @@
 			"disable": "Disable snapping"
 		},
 		"close": "Close view",
+		"buildstop": "Stop build mode",
 		"popout": "Open in new window",
 		"popin": "Close view window",
 		"secondenable": "Enable secondary viewport",
@@ -969,6 +970,7 @@
 	"tab/": {
 		"projectproperties": "Project properties",
 		"timeline": "Timeline",
+		"build": "Build mode",
 		"charmodel": "Character model for %1",
 		"equipment": "Equipment for %1",
 		"block": "Block for %1",
@@ -4361,6 +4363,7 @@
 			},
 			"tool/": {
 				"workbench": "Open workbench",
+				"build": "Build mode",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

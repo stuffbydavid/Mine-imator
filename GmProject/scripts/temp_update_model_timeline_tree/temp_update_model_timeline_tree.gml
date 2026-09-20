@@ -148,6 +148,8 @@ function temp_update_model_timeline_tree(hobj = null)
 		
 		tl_update_type_name()
 		tl_update_display_name()
+		if (placed)
+			tl_mark_placed(true)
 		update_matrix = true
 	}
 }

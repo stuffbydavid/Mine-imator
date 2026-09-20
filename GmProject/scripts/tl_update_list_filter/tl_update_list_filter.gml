@@ -4,6 +4,10 @@
 
 function tl_update_list_filter(tl)
 {
+	// Currently placing
+	if (tl.placed || tl.parent_is_placed)
+		return false
+
 	// Hidden view
 	if (app.setting_timeline_hide_ghosts && tl.ghost)
 		return false

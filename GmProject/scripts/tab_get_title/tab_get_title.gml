@@ -10,6 +10,9 @@ function tab_get_title(tab)
 		return text_get("tabtimeline")
 	else if (tab = object_editor)
 	{
+		if (place_build)
+			return text_get("tabbuild")
+
 		if (obj_edit = null || !instance_exists(obj_edit))
 			return ""
 		switch (obj_edit.type)

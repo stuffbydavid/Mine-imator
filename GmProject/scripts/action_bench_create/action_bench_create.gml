@@ -1,7 +1,8 @@
-/// action_bench_create([edit])
+/// action_bench_create([edit, build])
 /// @arg [edit]
+/// @arg [build]
 
-function action_bench_create(edit = false)
+function action_bench_create(edit = false, build = false)
 {
 	var tab, editobj;
 	tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
@@ -398,14 +399,34 @@ function action_bench_create(edit = false)
 			}
 			
 			// Start placing
-			if (setting_place_new && !keyboard_check(vk_shift) &&
+			if ((build || (setting_place_new && !keyboard_check(vk_shift))) &&
 				tl.type != e_tl_type.FOLDER &&
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
 				(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
 				!sceneryreplaceground &&
 				tl.value_type[e_value_type.TRANSFORM_POS])
+			{
 				app_start_place(tl, true)
+				
+				// Start build mode
+				if (bench_tab = e_bench.BLOCK || bench_tab = e_bench.SPECIAL_BLOCK)
+				{
+					place_build = true
+					
+					place_view_second_show = view_second.show && !window_exists(e_window.VIEW_SECOND)
+					if (place_view_second_show)
+						view_second.show = false
+						
+					with (tl)
+						tl_mark_placed(true)
+					
+					tl_deselect_all()
+					
+					obj_edit = tl
+					tab_show(object_editor, true)
+				}
+			}
 			
 			log("Created", tl_type_name_list[|tl.type])
 

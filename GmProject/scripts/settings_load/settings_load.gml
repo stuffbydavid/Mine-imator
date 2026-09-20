@@ -215,6 +215,9 @@ function settings_load()
 				obj = keybinds[i]
 				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
 			}
+
+			if (is_undefined(controlsmap[?"toolbuild"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
+				keybinds[e_keybind.TOOL_BEND].keybind = keybind_new("B", false, true)
 			
 			setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 			setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)

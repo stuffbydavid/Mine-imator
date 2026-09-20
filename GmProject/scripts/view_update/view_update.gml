@@ -16,7 +16,7 @@ function view_update(view, cam)
 	// Click
 	if (content_mouseon && (window_busy = "" || window_busy = "place"))
 	{
-		place_view_mouse = view
+		place_content_mouseon = view
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
 		{
@@ -104,6 +104,14 @@ function view_update(view, cam)
 					view_click(view, cam, view_click_right)
 					window_busy = ""
 				}
+				else if (place_build)
+				{
+					var repeatbuild = !place_target_tl_model_part;
+					app_stop_place(true)
+					
+					if (repeatbuild)
+						action_bench_create()
+				}
 				else // Stop placing
 					app_stop_place()
 			}
@@ -157,7 +165,7 @@ function view_update(view, cam)
 			if (!mouse_left)
 			{
 				camera_work_set_focus()
-				window_busy = ""
+				window_busy = (place_tl != null ? "place" : "")
 			}
 		}
 	}

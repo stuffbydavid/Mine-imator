@@ -1959,6 +1959,7 @@
     {"name":"temp_update_rot_point","order":17,"path":"scripts/temp_update_rot_point/temp_update_rot_point.yy",},
     {"name":"temp_update_shape","order":19,"path":"scripts/temp_update_shape/temp_update_shape.yy",},
     {"name":"temp_update","order":1,"path":"scripts/temp_update/temp_update.yy",},
+    {"name":"test_reduced_motion","order":37,"path":"scripts/test_reduced_motion/test_reduced_motion.yy",},
     {"name":"text_caption_width","order":15,"path":"scripts/text_caption_width/text_caption_width.yy",},
     {"name":"text_control_name","order":7,"path":"scripts/text_control_name/text_control_name.yy",},
     {"name":"text_exists","order":9,"path":"scripts/text_exists/text_exists.yy",},
