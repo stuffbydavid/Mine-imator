@@ -103,27 +103,30 @@ function app_update_place()
 		tl_update_matrix()
 		
 		// Update history defaults
-		with (history[0])
+		with (place_history)
 		{
 			tl_value_copy_vec3(e_value.POS_X, value_default, app.place_tl.value_default)
 			tl_value_copy_vec3(e_value.ROT_X, value_default, app.place_tl.value_default)
 			tl_value_copy_vec3(e_value.SCA_X, value_default, app.place_tl.value_default)
 		}
+		
+		// Model part parent
+		place_target_tl_model_part = (newparent != null && newparent != app && newparent.type = e_tl_type.MODEL_PART)
 			
 		place_view_pos = null
 	}
 		
 	// Stop placing (no view clicked)
-	if (place_view_mouse = null && mouse_left_released)
+	if (place_content_mouseon = null && mouse_left_released)
 	{
 		if (place_tl.parent != place_tl_parent)
 		{
 			with (place_tl)
-				tl_set_parent(place_tl_parent, place_tl_parent_index, true)
+				tl_set_parent(app.place_tl_parent, app.place_tl_parent_index, true)
 			tl_update_list()
 		}
 
-		with (history[0])
+		with (place_history)
 		{
 			tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 			tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
@@ -146,5 +149,4 @@ function app_update_place()
 		app_stop_place()
 	}
 	
-	place_view_mouse = null
 }

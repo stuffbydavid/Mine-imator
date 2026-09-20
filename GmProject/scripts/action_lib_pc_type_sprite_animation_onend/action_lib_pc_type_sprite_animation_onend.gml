@@ -7,5 +7,5 @@ function action_lib_pc_type_sprite_animation_onend(onend)
 		history_set_var(action_lib_pc_type_sprite_animation_onend, ptype_edit.sprite_animation_onend, onend, false)
 	
 	ptype_edit.sprite_animation_onend = onend
-	tab_template_editor_particles_preview_restart()
+	tab_object_editor_particles_preview_restart()
 }

@@ -12,6 +12,7 @@ function tl_event_create()
 	name = ""
 	display_name = ""
 	temp = null
+	has_temp = false
 	text = text_get("timelineeditortextsample")
 	color_tag = null
 	color_tag_inherit = null
@@ -23,10 +24,28 @@ function tl_event_create()
 	
 	model_part = null
 	model_part_name = ""
+	model = null
+	model_file = null
 	model_name = ""
 	model_state = array()
+	model_tex = null
+	model_tex_material = null
+	model_tex_normal = null
+	model_texture_name_map = null
+	model_texture_material_name_map = null
+	model_texture_normal_name_map = null
+	model_shape_texture_name_map = null
+	model_shape_texture_material_name_map = null
+	model_shape_texture_normal_name_map = null
+	model_hide_list = null
+	model_shape_hide_list = null
+	model_color_name_map = null
+	model_color_map = null
 	model_shape_vbuffer_map = null
 	model_shape_alpha_map = null
+	model_use_blend_color = false
+	model_blend_color = c_white
+	model_blend_color_default = c_white
 	part_of = null
 	part_list = null
 	part_root = null
@@ -140,8 +159,8 @@ function tl_event_create()
 	// Only used if the timeline is a banner special block in scenery
 	pattern_type = ""
 	pattern_base_color = null
-	pattern_pattern_list = null
-	pattern_color_list = null
+	pattern_pattern_list = array()
+	pattern_color_list = array()
 	pattern_skin = null
 	
 	text_vbuffer = [null, null]
@@ -172,10 +191,6 @@ function tl_event_create()
 	tex_obj_material_prev = -5
 	tex_obj_normal = null
 	tex_obj_normal_prev = -5
-	
-	model_tex = null
-	model_tex_material = null
-	model_tex_normal = null
 	
 	render_visible = true
 

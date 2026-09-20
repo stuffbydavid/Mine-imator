@@ -14,6 +14,11 @@ function tab_timeline()
 	var markerx, markery;
 	var regionx1, regionx2;
 	var show_hor_scroll;
+
+	if (place_tl != null && app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	{
+		place_content_mouseon = "timeline"
+	}
 	
 	markerbarshow = (ds_list_size(timeline_marker_list) > 0) && setting_timeline_show_markers
 	
@@ -896,13 +901,10 @@ function tab_timeline()
 		if (itemhover)
 			mouse_cursor = cr_handpoint
 			
-		if (itemhover && (window_busy = "" || window_busy = "place"))
-			place_view_mouse = "timeline"
-		
 		// Parent hovering item to selected timeline
 		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
 		{
-			with (history[0])
+			with (place_history)
 			{
 				parent = tl
 				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
@@ -918,7 +920,7 @@ function tab_timeline()
 			tl_update_list()
 			tl_update_matrix()
 			render_samples = -1
-			app_stop_place()
+			app_stop_place(place_build)
 		}
 		
 		if ((itemhover && mouse_left) || tl.selected)

@@ -55,6 +55,7 @@ function app_startup_keybinds()
 		
 		// Tools
 		WORKBENCH,
+		BUILD_MODE,
 		TOOL_SELECT,
 		TOOL_MOVE,
 		TOOL_ROTATE,
@@ -121,12 +122,13 @@ function app_startup_keybinds()
 	
 	// Tools
 	keybind_register("toolworkbench", e_keybind.WORKBENCH, keybind_new(vk_tab))
+	keybind_register("toolbuild", e_keybind.BUILD_MODE, keybind_new("B"))
 	keybind_register("toolselect", e_keybind.TOOL_SELECT, keybind_new("W"))
 	keybind_register("toolmove", e_keybind.TOOL_MOVE, keybind_new("G"))
 	keybind_register("toolrotate", e_keybind.TOOL_ROTATE, keybind_new("R"))
 	keybind_register("toolrotationspacecycle", e_keybind.TRANSFORM_MODE_CYCLE, keybind_new("Q"))
 	keybind_register("toolscale", e_keybind.TOOL_SCALE, keybind_new("S"))
-	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("B"))
+	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("B", false, true))
 	keybind_register("tooltransform", e_keybind.TOOL_TRANSFORM, keybind_new("T"))
 	keybind_register("snap", e_keybind.SNAP, keybind_new("F"))
 	

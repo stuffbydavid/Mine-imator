@@ -125,6 +125,18 @@ function project_load_find_save_ids(isproject = false)
 		
 		// Model part
 		part_of = save_id_find(save_id_map[?part_of])
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp)
+		{
+			block_tex = save_id_find(save_id_map[?block_tex])
+			block_tex_material = save_id_find(save_id_map[?block_tex_material])
+			block_tex_normal = save_id_find(save_id_map[?block_tex_normal])
+		}
+		else if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp)
+		{
+			model_tex = save_id_find(save_id_map[?model_tex])
+			model_tex_material = save_id_find(save_id_map[?model_tex_material])
+			model_tex_normal = save_id_find(save_id_map[?model_tex_normal])
+		}
 		
 		// Part root(Update special blocks in old projects)
 		if (load_format < e_project.FORMAT_122)

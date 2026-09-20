@@ -1,14 +1,10 @@
-function test_reduced_motion(a, b)
-{
-	if (app.setting_reduced_motion)
-		return a
-	return b
-}
-
 /// panel_draw(panel)
 /// @arg panel
 function panel_draw(panel)
 {
+	for (var t = 0; t < panel.tab_list_amount; t++)
+		panel.tab_list[t].raised = false
+
 	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
 		return 0
 	
@@ -106,14 +102,41 @@ function panel_draw(panel)
 	// Content
 	tabsh = min(boxh, 24)
 	content_tab = panel.tab_list[panel.tab_selected]
+	content_tab.raised = true
+	
+	// Build mode
+	var buildinteract, contentbusy;
+	buildinteract = (window_busy = "place" && place_build && content_tab.build_interact)
+	contentbusy = window_busy;
+	if (buildinteract)
+		window_busy = ""
+
+	// Mouse detection
 	content_x = boxx
 	content_y = boxy + (tabsh * content_tab.movable)
 	content_width = boxw
 	content_height = boxh - (tabsh * content_tab.movable)
 	content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	
+	// Restore mouse cursor while building
+	if (buildinteract && content_mouseon)
+		mouse_cursor = cr_default
+		
+	// Draw tab content
 	panel_compact = (panel.size_real <= 225)
 	panel_draw_content()
 	content_y = boxy
+	
+	if (buildinteract)
+	{
+		if (content_mouseon)
+			place_content_mouseon = string(content_tab)
+		
+		if (window_busy = "menu")
+			menu_list[|ds_list_size(menu_list) - 1].menu_busy_prev = contentbusy
+		else if (window_busy = "")
+			window_busy = contentbusy
+	}
 	
 	// Tabs
 	tabsw = 0

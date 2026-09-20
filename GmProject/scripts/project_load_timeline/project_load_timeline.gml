@@ -19,6 +19,7 @@ function project_load_timeline(map)
 		name = value_get_string(map[?"name"], name)
 		
 		temp = value_get_save_id(map[?"temp"], temp)
+		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
 		color_tag = value_get_real(map[?"color_tag"], color_tag)
 		hide = value_get_real(map[?"hide"], hide)
 		lock = value_get_real(map[?"lock"], lock)
@@ -32,91 +33,118 @@ function project_load_timeline(map)
 			text = value_get_string(map[?"text"], text)
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
-		if (part_of != null)
+		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
+			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
 		{
-			if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
+			if (part_of = null && !has_temp)
 			{
-				var modelmap = map[?"model"];
-				if (ds_map_valid(modelmap))
-				{
-					model_name = value_get_string(modelmap[?"name"], "")
-					model_state = value_get_state_vars(modelmap[?"state"])
-				}
-				
+				model_tex = value_get_save_id(map[?"model_tex"], project_pack_res)
+				model_tex_material = value_get_save_id(map[?"model_tex_material"], project_pack_res)
+				model_tex_normal = value_get_save_id(map[?"model_tex_normal"], project_pack_res)
+				model_use_blend_color = value_get_real(map[?"model_use_blend_color"], false)
+				model_blend_color = value_get_color(map[?"model_blend_color"], c_white)
+				model_blend_color_default = model_blend_color
+			}
+
+			var modelmap = map[?"model"];
+			if (ds_map_valid(modelmap))
+			{
+				model_name = value_get_string(modelmap[?"name"], "")
+				model_state = value_get_state_vars(modelmap[?"state"])
+			}
+
+			if (part_of != null)
 				part_root = value_get_save_id(map[?"part_root"], part_root)
+
+			// Pattern values
+			pattern_type = value_get_string(map[?"pattern_type"], pattern_type)
+
+			// Legacy "is_banner" value
+			if (load_format < e_project.FORMAT_200_PRE_5)
+			{
+				var isbanner = value_get_real(map[?"is_banner"], false);
 				
-				// Pattern values
-				pattern_type = value_get_string(map[?"pattern_type"], pattern_type)
+				if (isbanner)
+					pattern_type = "banner"
+			}
+
+			if (pattern_type != "")
+			{
+				var base_color, pattern_list, color_list;
 				
-				// Legacy "is_banner" value
 				if (load_format < e_project.FORMAT_200_PRE_5)
 				{
-					var isbanner = value_get_real(map[?"is_banner"], false);
-					
-					if (isbanner)
-						pattern_type = "banner"
+					base_color = value_get_string(map[?"banner_base_color"], "white")
+					pattern_list = map[?"banner_pattern_list"]
+					color_list = map[?"banner_color_list"]
+				}
+				else
+				{
+					base_color = value_get_string(map[?"pattern_base_color"], "white")
+					pattern_list = map[?"pattern_pattern_list"]
+					color_list = map[?"pattern_color_list"]
+				}
+
+				pattern_base_color = minecraft_swatch_dyes.map[?base_color]
+
+				if (ds_list_valid(pattern_list))
+				{
+					pattern_pattern_list = array()
+					for (var p = 0; p < ds_list_size(pattern_list); p++)
+						array_add(pattern_pattern_list, pattern_list[|p])
 				}
 				
-				if (pattern_type != "")
+				if (ds_list_valid(color_list))
 				{
-					var base_color, pattern_list, color_list;
-					
-					if (load_format < e_project.FORMAT_200_PRE_5)
-					{
-						base_color = value_get_string(map[?"banner_base_color"], "white")
-						pattern_list = map[?"banner_pattern_list"]
-						color_list = map[?"banner_color_list"]
-					}
-					else
-					{
-						base_color = value_get_string(map[?"pattern_base_color"], "white")
-						pattern_list = map[?"pattern_pattern_list"]
-						color_list = map[?"pattern_color_list"]
-					}
-					
-					pattern_base_color = minecraft_swatch_dyes.map[?base_color]
-					
-					if (ds_list_valid(pattern_list))
-					{
-						pattern_pattern_list = array()
-						for (var p = 0; p < ds_list_size(pattern_list); p++)
-							array_add(pattern_pattern_list, pattern_list[|p])
-					}
-					
-					if (ds_list_valid(color_list))
-					{
-						pattern_color_list = array()
-						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
-					}
+					pattern_color_list = array()
+					for (var c = 0; c < ds_list_size(color_list); c++)
+						array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
 				}
 			}
-			else if (type = e_tl_type.BLOCK)
+		}
+		else if (part_of != null && type = e_tl_type.BLOCK)
+		{
+			var blockmap = map[?"block"];
+			if (ds_map_valid(blockmap))
 			{
-				var blockmap = map[?"block"];
-				if (ds_map_valid(blockmap))
+				if (load_format < e_project.FORMAT_120_PRE_1)
 				{
-					if (load_format < e_project.FORMAT_120_PRE_1)
+					// Read legacy block
+					var bid = value_get_real(blockmap[?"legacy_id"], 2);
+					var bdata = value_get_real(blockmap[?"legacy_data"], 0);
+					if (legacy_block_set[bid])
 					{
-						// Read legacy block
-						var bid = value_get_real(blockmap[?"legacy_id"], 2);
-						var bdata = value_get_real(blockmap[?"legacy_data"], 0);
-						if (legacy_block_set[bid])
+						var block = legacy_block_obj[bid, bdata];
+						if (block != null)
 						{
-							var block = legacy_block_obj[bid, bdata];
-							if (block != null)
-							{
-								block_name = block.name
-								block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
-							}
+							block_name = block.name
+							block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
 						}
 					}
-					else
-					{
-						block_name = value_get_string(blockmap[?"name"], "")
-						block_state = value_get_state_vars(blockmap[?"state"])
-					}
 				}
+				else
+				{
+					block_name = value_get_string(blockmap[?"name"], "")
+					block_state = value_get_state_vars(blockmap[?"state"])
+				}
+			}
+		}
+		else if (type = e_tl_type.BLOCK && !has_temp)
+		{
+			var directblockmap = map[?"block"];
+			if (ds_map_valid(directblockmap))
+			{
+				block_name = value_get_string(directblockmap[?"name"], "")
+				block_state = value_get_state_vars(directblockmap[?"state"])
+				block_tex = value_get_save_id(directblockmap[?"tex"], project_pack_res)
+				block_tex_material = value_get_save_id(directblockmap[?"tex_material"], project_pack_res)
+				block_tex_normal = value_get_save_id(directblockmap[?"tex_normal"], project_pack_res)
+				block_randomize = value_get_real(directblockmap[?"randomize"], true)
+				block_repeat_enable = value_get_real(directblockmap[?"repeat_enable"], false)
+				block_repeat = value_get_point3D(directblockmap[?"repeat"], vec3(1))
+				block_center_legacy = false
+				block_center = value_get_real(directblockmap[?"center"], false)
+				block_vbuffer = null
 			}
 		}
 		

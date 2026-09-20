@@ -1,39 +1,25 @@
-/// action_bench_create([edit])
+/// action_bench_create([edit, build])
 /// @arg [edit]
+/// @arg [build]
 
-function action_bench_create(edit = false)
+function action_bench_create(edit = false, build = false)
 {
-	var tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
+	var tab, editobj;
+	tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
+	editobj = null
 	
 	if (tab = e_bench.SOUND)
 		return action_bench_sound_create()
 	
 	if (tab = e_bench.PROJECT)
 	{
-		var temp, editortab;
-		temp = bench_settings.project_selected
-		editortab = false
+		var temp = bench_settings.project_selected;
 		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
 		{
 			if (edit)
 			{
-				tab_show(properties, true)
-				properties.library.show = true
-				action_lib_list(temp)
-				sortlist_center(lib_list, temp)
-
-				switch (temp.type)
-				{
-					case e_temp_type.CHARACTER:
-					case e_temp_type.EQUIPMENT:
-					case e_temp_type.SPECIAL_BLOCK:
-					case e_temp_type.BLOCK:
-					case e_temp_type.ITEM:
-					case e_temp_type.PARTICLE_SPAWNER:
-						editortab = true
-				}
-				if (editortab)
-					tab_show(template_editor, true)
+				with (temp)
+					temp_select_edit()
 			}
 			else
 			{
@@ -59,6 +45,10 @@ function action_bench_create(edit = false)
 				}
 			}
 		}
+
+		with (obj_timeline)
+			if (delete_ready)
+				instance_destroy()
 
 		if (history_data.scenery_replace_ground)
 			background_ground_show = history_data.scenery_ground_show
@@ -87,12 +77,6 @@ function action_bench_create(edit = false)
 				bench_settings.particle_preset_temp = particletemp
 				temp_edit = particletemp
 			}
-
-			if (history_data.open_editor)
-			{
-				tab_template_editor_update_ptype_list()
-				tab_show(template_editor)
-			}
 		}
 		else
 		{
@@ -103,9 +87,6 @@ function action_bench_create(edit = false)
 			hobj.open_editor = edit
 			hobj.value_default = array()
 			hobj.parent_save_id = save_id_get(app)
-			
-			if (edit)
-				tab_show(template_editor)
 		}
 		
 		var temptype, tltype;
@@ -157,6 +138,7 @@ function action_bench_create(edit = false)
 		if (tltype != null) // Timeline
 		{
 			tl = new_tl(tltype)
+			editobj = tl
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
@@ -172,6 +154,7 @@ function action_bench_create(edit = false)
 				tl = temp_animate()
 
 			temp_edit = particletemp
+			editobj = particletemp
 
 			with (hobj)
 			{
@@ -183,7 +166,92 @@ function action_bench_create(edit = false)
 		}
 		else if (temptype != null)
 		{
-			with (bench_settings)
+			if (bench_tab = e_bench.BLOCK)
+			{
+				tl = new_obj(obj_timeline)
+				with (tl)
+				{
+					type = e_tl_type.BLOCK
+					id.temp = id
+					has_temp = false
+					block_name = app.bench_settings.block_name
+					block_state = array_copy_1d(app.bench_settings.block_state)
+					block_tex = app.bench_settings.block_tex
+					block_tex_material = app.bench_settings.block_tex_material
+					block_tex_normal = app.bench_settings.block_tex_normal
+					block_repeat_enable = app.bench_settings.block_repeat_enable
+					block_repeat = array_copy_1d(app.bench_settings.block_repeat)
+					block_center_legacy = false
+					block_center = app.bench_settings.block_center
+					block_randomize = app.bench_settings.block_randomize
+					block_vbuffer = null
+					inherit_alpha = true
+					inherit_color = true
+					inherit_texture = true
+					texture_filtering = true
+					tl_update_scenery_part()
+					temp_update_rot_point()
+					tl_update()
+					tl_set_parent_root()
+					tl_value_spawn()
+				}
+
+				with (hobj)
+				{
+					spawn_save_id[spawn_amount] = tl.save_id
+					spawn_amount++
+				}
+				editobj = tl
+			}
+			else if (bench_tab = e_bench.SPECIAL_BLOCK)
+			{
+				tl = new_obj(obj_timeline)
+				with (tl)
+				{
+					type = e_tl_type.SPECIAL_BLOCK
+					id.temp = id
+					has_temp = false
+					model_name = app.bench_settings.model_name
+					model_state = array_copy_1d(app.bench_settings.model_state)
+					model_tex = app.bench_settings.model_tex
+					model_tex_material = app.bench_settings.model_tex_material
+					model_tex_normal = app.bench_settings.model_tex_normal
+					model_use_blend_color = app.bench_settings.model_use_blend_color
+					model_blend_color = app.bench_settings.model_blend_color
+					model_blend_color_default = app.bench_settings.model_blend_color_default
+					pattern_base_color = app.bench_settings.pattern_base_color
+					pattern_pattern_list = array_copy_1d(app.bench_settings.pattern_pattern_list)
+					pattern_color_list = array_copy_1d(app.bench_settings.pattern_color_list)
+					inherit_alpha = true
+					inherit_color = true
+					inherit_texture = true
+					tl_update_scenery_part()
+
+					part_list = ds_list_create()
+					if (model_file != null)
+					{
+						for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
+						{
+							var part = model_file.file_part_list[|p];
+							if (model_hide_list = null || ds_list_find_index(model_hide_list, part.name) = -1)
+								ds_list_add(part_list, tl_new_part(part))
+						}
+						tl_update_part_list(model_file, id)
+					}
+
+					tl_update()
+					tl_set_parent_root()
+					tl_value_spawn()
+				}
+
+				with (hobj)
+				{
+					spawn_save_id[spawn_amount] = tl.save_id
+					spawn_amount++
+				}
+				editobj = tl
+			}
+			else with (bench_settings)
 			{
 				type = temptype
 				
@@ -259,6 +327,7 @@ function action_bench_create(edit = false)
 				}
 				
 				temp_edit = temp
+				editobj = temp
 			}
 			
 			// Add templates connected to the bench
@@ -330,14 +399,34 @@ function action_bench_create(edit = false)
 			}
 			
 			// Start placing
-			if (setting_place_new && !keyboard_check(vk_shift) &&
+			if ((build || (setting_place_new && !keyboard_check(vk_shift))) &&
 				tl.type != e_tl_type.FOLDER &&
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
 				(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
 				!sceneryreplaceground &&
 				tl.value_type[e_value_type.TRANSFORM_POS])
+			{
 				app_start_place(tl, true)
+				
+				// Start build mode
+				if (bench_tab = e_bench.BLOCK || bench_tab = e_bench.SPECIAL_BLOCK)
+				{
+					place_build = true
+					
+					place_view_second_show = view_second.show && !window_exists(e_window.VIEW_SECOND)
+					if (place_view_second_show)
+						view_second.show = false
+						
+					with (tl)
+						tl_mark_placed(true)
+					
+					tl_deselect_all()
+					
+					obj_edit = tl
+					tab_show(object_editor, true)
+				}
+			}
 			
 			log("Created", tl_type_name_list[|tl.type])
 
@@ -350,8 +439,12 @@ function action_bench_create(edit = false)
 		}
 	}
 	
-	if (!history_redo && edit)
-		tab_template_editor_update_ptype_list()
+	if (!history_undo && (edit || (history_redo && history_data.open_editor)) && editobj != null)
+	{
+		obj_edit = editobj
+		tab_object_editor_update_ptype_list()
+		tab_show(object_editor)
+	}
 	
 	if (bench_tab = e_bench.PARTICLE_SPAWNER)
 	{

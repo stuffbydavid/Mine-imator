@@ -447,6 +447,7 @@ function project_load_legacy_beta(loadbackground)
 		
 		with (tl)
 		{
+			has_temp = (type < e_temp_type.amount)
 			loaded = true
 			load_id = loadid++
 			save_id_map[?load_id] = load_id

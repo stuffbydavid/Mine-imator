@@ -6,6 +6,7 @@ function view_place(view, cam)
 {
 	if (window_busy != "place" || mouse_x < content_x || mouse_y < content_y || mouse_x >= content_x + content_width || mouse_y >= content_y + content_height)
 		return
+	place_content_mouseon = null
 
 	var surfaceid, surfacenormal, surfacedepth;
 	surfaceid = view.surface_place_id
@@ -53,8 +54,8 @@ function view_place(view, cam)
 		
 		render_done()
 		view.update_place_surfaces = false
-		place_tl_render = true
 	}
+	place_tl_render = true
 
 	var mx, my, tx, ty, depthval, normalface, worldtransform, localpos;
 	mx = mouse_x - content_x

@@ -37,7 +37,7 @@ function particles_load(fn, temp, newtemp = false)
 			}
 		}
 	
-		tab_template_editor_update_ptype_list()
+		tab_object_editor_update_ptype_list()
 		project_update_counts()
 		return 0
 	}
@@ -154,7 +154,7 @@ function particles_load(fn, temp, newtemp = false)
 	
 	project_reset_loaded()
 	
-	tab_template_editor_update_ptype_list()
+	tab_object_editor_update_ptype_list()
 	project_update_counts()
 	
 	log("Particles loaded")

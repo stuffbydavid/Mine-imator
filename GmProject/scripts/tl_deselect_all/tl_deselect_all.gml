@@ -21,4 +21,7 @@ function tl_deselect_all()
 	
 	tl_edit_amount = 0
 	tl_edit = null
+	
+	if (instance_exists(obj_edit) && obj_edit.object_index = obj_timeline)
+		obj_edit = null
 }

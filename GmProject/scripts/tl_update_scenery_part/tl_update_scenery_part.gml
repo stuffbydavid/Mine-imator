@@ -2,40 +2,33 @@
 
 function tl_update_scenery_part()
 {
-	if (part_of = null)
+	if (part_of = null && !((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp))
 		return 0
 	
 	if (type = e_tl_type.SPECIAL_BLOCK)
 	{
-		model_tex = project_pack_res
-		model_tex_material = project_pack_res
-		model_tex_normal = project_pack_res
-		model_file = null
-		model_texture_name_map = null
-		model_texture_material_name_map = null
-		model_texture_normal_name_map = null
-		model_texture_material_name_map = null
-		model_texture_normal_name_map = null
-		model_shape_texture_name_map = null
-		model_shape_texture_material_name_map = null
-		model_shape_texture_normal_name_map = null
-		model_hide_list = null
-		model_shape_hide_list = null
-		model_color_name_map = null
-		model_color_map = null
-		model_shape_vbuffer_map = null
+		if (part_of != null || has_temp)
+		{
+			model_tex = project_pack_res
+			model_tex_material = project_pack_res
+			model_tex_normal = project_pack_res
+		}
 		temp_update_model()
 		temp_update_model_timeline_parts()
 	}
 	else if (type = e_tl_type.BLOCK)
 	{
-		block_tex = project_pack_res
-		block_tex_material = project_pack_res
-		block_tex_normal = project_pack_res
-		block_repeat_enable = false
-		block_repeat = vec3(1)
+		if (part_of != null || has_temp)
+		{
+			block_tex = project_pack_res
+			block_tex_material = project_pack_res
+			block_tex_normal = project_pack_res
+			block_repeat_enable = false
+			block_repeat = vec3(1)
+		}
 		block_vbuffer = null
-		block_randomize = true
+		if (part_of != null || has_temp)
+			block_randomize = true
 		temp_update_block()
 	}
 	else if (type = e_tl_type.TEXT)

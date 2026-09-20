@@ -252,7 +252,7 @@ function settings_load_legacy(fn)
 		var locarr = array("left_secondary", "right_secondary", "bottom", "top", "left", "right");
 		setting_properties_location = locarr[buffer_read_byte()]
 		setting_ground_editor_location = locarr[buffer_read_byte()]
-		setting_template_editor_location = locarr[buffer_read_byte()]
+		setting_object_editor_location = locarr[buffer_read_byte()]
 		/*setting_timeline_location = locarr[*/ buffer_read_byte()
 		setting_timeline_editor_location = locarr[buffer_read_byte()]
 		setting_frame_editor_location = locarr[buffer_read_byte()]

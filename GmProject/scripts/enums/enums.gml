@@ -116,6 +116,7 @@ function enums()
 		TEXT,
 		KEYFRAME,
 		ROT_POINT,
+		BLOCK,
 		HIERARCHY,
 		APPEARANCE,
 		AUDIO,
@@ -384,7 +385,8 @@ function enums()
 		CONE,
 		CYLINDER,
 		SPHERE,
-		SURFACE
+		SURFACE,
+		amount
 	} // Update app_startup_lists() when adding types
 	
 	// Timeline types

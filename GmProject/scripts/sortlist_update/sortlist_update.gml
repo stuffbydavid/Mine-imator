@@ -66,9 +66,9 @@ function sortlist_update(slist)
 	if (slist.search && check != "")
 	{
 		modellist = (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.equipment_list ||
-					 slist = bench_settings.model_part_model_list || slist = template_editor.char_list || slist = template_editor.equipment_list ||
-					 slist = template_editor.special_block_list || slist = template_editor.model_part_model_list)
-		blocklist = (slist = bench_settings.block_list || slist = template_editor.block_list)
+					 slist = bench_settings.model_part_model_list || slist = object_editor.char_list || slist = object_editor.equipment_list ||
+					 slist = object_editor.special_block_list || slist = object_editor.model_part_model_list)
+		blocklist = (slist = bench_settings.block_list || slist = object_editor.block_list)
 	}
 	if (slist.search && check != "" && !blocklist && !modellist)
 	{

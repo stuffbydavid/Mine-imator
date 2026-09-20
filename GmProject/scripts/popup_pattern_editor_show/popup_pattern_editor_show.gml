@@ -3,6 +3,9 @@
 
 function popup_pattern_editor_show(obj)
 {
+	if (obj.object_index != obj_bench_settings)
+		obj_edit = obj
+
 	with (popup_pattern_editor)
 	{
 		preview.zoom = .6

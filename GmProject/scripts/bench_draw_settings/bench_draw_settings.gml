@@ -501,7 +501,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				fixed = bench_settings.height_fixed[bench_tab]
 				availableheight = max(0, bench_settings.height - fixed)
 				referenceheight = max(0, bench_settings.height - bench_settings.height_fixed_base[bench_tab])
-				listh = fixed > 0 ? min(availableheight, max(minimum, floor(referenceheight * bench_list_percent))) : minimum
+				listh = fixed > 0 ? min(availableheight, max(minimum, referenceheight)) : minimum
 				bench_settings.list_height = listh
 				bench_settings.list_minimum_height = minimum
 				draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot, mc_assets.item_texture_list, null, action_bench_create)
@@ -563,6 +563,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_normal, res_eval(bench_settings.item_tex_normal).display_name, action_bench_item_tex_normal, false, res_eval(bench_settings.item_tex_normal).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
+			dy += 4
 				
 			window_scroll_focus = string(bench_settings.item_scroll)
 				
@@ -739,6 +740,7 @@ function bench_draw_settings(bx, by, bw, bh)
 				draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, res_eval(bench_settings.block_tex_normal).display_name, action_bench_block_tex_normal, false, res_eval(bench_settings.block_tex_normal).block_preview_texture, null, "", null, null, capwid)
 				dy += (ui_large_height + 8)
 			}
+			dy += 4
 			
 			window_scroll_focus = string(bench_settings.block_list.scroll)
 			break

@@ -949,6 +949,7 @@
 			"disable": "Disable snapping"
 		},
 		"close": "Close view",
+		"buildstop": "Stop build mode",
 		"popout": "Open in new window",
 		"popin": "Close view window",
 		"secondenable": "Enable secondary viewport",
@@ -973,6 +974,7 @@
 	"tab/": {
 		"projectproperties": "Project properties",
 		"timeline": "Timeline",
+		"build": "Build mode",
 		"charmodel": "Character model for %1",
 		"equipment": "Equipment for %1",
 		"block": "Block for %1",
@@ -3841,6 +3843,8 @@
 	},
 	"timelineeditor/": {
 		"info": "OBJECT INFO",
+		"edittemplate": "Edit template",
+		"createtemplate": "Create template",
 		"name": "Name",
 		"text": "Text",
 		"textsample": "Sample text",
@@ -3850,6 +3854,35 @@
 			"x": "X",
 			"y": "Y",
 			"z": "Z"
+		},
+		"block": "BLOCK",
+		"audio": "AUDIO",
+		"addsound": "Add sound",
+		"path": "PATH",
+		"path/": {
+			"pointadd": "Add point",
+			"closed": "Connect ends",
+			"smooth": "Smooth path",
+			"detail": "Detail",
+			"detailtip": "Higher values will result in better path accuracy, but are more performance intense.",
+			"shape": "Shape",
+			"shape/": {
+				"none": "None",
+				"flat": "Flat",
+				"tube": "Tube",
+				"radius": "Radius",
+				"invert": "Invert",
+				"smoothsegments": "Smooth segments",
+				"smoothsegmentstip": "Enable smooth lighting along the direction of the path.",
+				"smoothring": "Smooth ring",
+				"smoothringtip": "Enable smooth lighting on the ring shape around the path.",
+				"detail": "Shape detail",
+				"texmapped": "Mapped texture",
+				"texmappedtip": "Whether the faces of the shape should use parts of a texture image.",
+				"texlength": "Texture length",
+				"texlengthtip": "The length the path texture should stretch for before repeating.",
+				"savemap": "Export map"
+			}
 		},
 		"hierarchy": "HIERARCHY",
 		"parent": "Parent",
@@ -3921,34 +3954,6 @@
 			"scale": "Scale",
 			"speed": "Speed",
 			"strength": "Strength"
-		},
-		"audio": "AUDIO",
-		"addsound": "Add sound",
-		"path": "PATH",
-		"path/": {
-			"pointadd": "Add point",
-			"closed": "Connect ends",
-			"smooth": "Smooth path",
-			"detail": "Detail",
-			"detailtip": "Higher values will result in better path accuracy, but are more performance intense.",
-			"shape": "Shape",
-			"shape/": {
-				"none": "None",
-				"flat": "Flat",
-				"tube": "Tube",
-				"radius": "Radius",
-				"invert": "Invert",
-				"smoothsegments": "Smooth segments",
-				"smoothsegmentstip": "Enable smooth lighting along the direction of the path.",
-				"smoothring": "Smooth ring",
-				"smoothringtip": "Enable smooth lighting on the ring shape around the path.",
-				"detail": "Shape detail",
-				"texmapped": "Mapped texture",
-				"texmappedtip": "Whether the faces of the shape should use parts of a texture image.",
-				"texlength": "Texture length",
-				"texlengthtip": "The length the path texture should stretch for before repeating.",
-				"savemap": "Export map"
-			}
 		}
 	},
 	"frameeditor/": {
@@ -4362,6 +4367,7 @@
 			},
 			"tool/": {
 				"workbench": "Open workbench",
+				"build": "Build mode",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

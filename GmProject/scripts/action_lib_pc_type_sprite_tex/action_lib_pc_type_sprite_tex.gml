@@ -34,5 +34,5 @@ function action_lib_pc_type_sprite_tex(res)
 	}
 	
 	project_update_counts()
-	tab_template_editor_particles_preview_restart()
+	tab_object_editor_particles_preview_restart()
 }

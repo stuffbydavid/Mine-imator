@@ -193,11 +193,12 @@ function app_startup_interface_tabs()
 	with (ground_editor)
 		ground_scroll = new_obj(obj_scrollbar)
 	
-	// Template editor
-	template_editor = new_tab(setting_template_editor_location, false)
-	template_editor.script = tab_template_editor
+	// Object editor
+	object_editor = new_tab(setting_object_editor_location, false)
+	object_editor.script = tab_object_editor
+	object_editor.build_interact = true
 	
-	with (template_editor)
+	with (object_editor)
 	{
 		// Character list
 		char_list = new_obj(obj_sortlist)
@@ -236,11 +237,23 @@ function app_startup_interface_tabs()
 		model_part_model_list.script = action_lib_model_part_model_name
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.equipment_list[|m].name)
+		{
+			var model = mc_assets.equipment_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.char_list[|m].name)
+		{
+			var model = mc_assets.char_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
-			sortlist_add(model_part_model_list, mc_assets.special_block_list[|m].name)
+		{
+			var model = mc_assets.special_block_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()
@@ -410,7 +423,7 @@ function app_startup_interface_tabs()
 		tbx_type_bounce_factor = new_textbox_decimals()
 	}
 	
-	ptype_list = template_editor.type_list
+	ptype_list = object_editor.type_list
 	
 	// Timeline
 	timeline = new_tab("bottom", true, null, e_window.TIMELINE)
@@ -447,20 +460,13 @@ function app_startup_interface_tabs()
 			tbx_rot_point_z = new_textbox_ndecimals()
 		}
 		
-		// Hierarchy
-		hierarchy = tab_add_category("timelineeditorhierarchy", icons.HIERARCHY_SMALL, tab_timeline_editor_hierarchy, true)
-		
-		// Graphics
-		appearance = tab_add_category("timelineeditorappearance", [icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL__DARK], tab_timeline_editor_appearance, false)
-		with (appearance)
+		// Block
+		block = tab_add_category("timelineeditorblock", icons.BLOCK, tab_timeline_editor_block, true)
+		with (block)
 		{
-			tbx_glint_scale = new_textbox_integer()
-			tbx_glint_scale.suffix = "%"
-			tbx_glint_speed = new_textbox_integer()
-			tbx_glint_speed.suffix = "%"
-			tbx_glint_strength = new_textbox_integer()
-			tbx_glint_strength.suffix = "%"
-			tbx_depth = new_textbox_ninteger()
+			tbx_repeat_x = new_textbox_integer()
+			tbx_repeat_y = new_textbox_integer()
+			tbx_repeat_z = new_textbox_integer()
 		}
 		
 		// Audio
@@ -475,6 +481,22 @@ function app_startup_interface_tabs()
 			tbx_radius = new_textbox_decimals()
 			tbx_shape_detail = new_textbox_decimals()
 			tbx_tex_length = new_textbox_decimals()
+		}
+		
+		// Hierarchy
+		hierarchy = tab_add_category("timelineeditorhierarchy", icons.HIERARCHY_SMALL, tab_timeline_editor_hierarchy, true)
+		
+		// Graphics
+		appearance = tab_add_category("timelineeditorappearance", [icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL__DARK], tab_timeline_editor_appearance, false)
+		with (appearance)
+		{
+			tbx_glint_scale = new_textbox_integer()
+			tbx_glint_scale.suffix = "%"
+			tbx_glint_speed = new_textbox_integer()
+			tbx_glint_speed.suffix = "%"
+			tbx_glint_strength = new_textbox_integer()
+			tbx_glint_strength.suffix = "%"
+			tbx_depth = new_textbox_ninteger()
 		}
 	}
 	

@@ -6,5 +6,5 @@ function action_lib_pc_open()
 	if (fn = "")
 		return 0
 	
-	particles_load(fn, temp_edit)
+	particles_load(fn, obj_edit)
 }

@@ -4,6 +4,9 @@
 
 function particle_spawner_spawn(type)
 {
+	if (type = null || !instance_exists(type))
+		return
+
 	var pt, temp;
 	pt = new_obj(obj_particle)
 	pt.creator = id

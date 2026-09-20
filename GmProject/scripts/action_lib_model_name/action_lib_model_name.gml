@@ -22,8 +22,8 @@ function action_lib_model_name(name)
 			hobj = history_set(action_lib_model_name)
 			with (hobj)
 			{
-				old_name = temp_edit.model_name
-				old_state = array_copy_1d(temp_edit.model_state)
+				old_name = obj_edit.model_name
+				old_state = array_copy_1d(obj_edit.model_state)
 				new_name = name
 				tl_amount = 0
 				part_child_amount = 0
@@ -33,7 +33,7 @@ function action_lib_model_name(name)
 			// Find affected timelines (TODO: timeline info of unused parts is not saved and will be LOST)
 			with (obj_timeline)
 			{
-				if (temp != temp_edit || part_list = null)
+				if (temp != obj_edit || part_list = null)
 					continue
 				
 				with (hobj)
@@ -52,10 +52,11 @@ function action_lib_model_name(name)
 		state = mc_assets.model_name_map[?name].default_state
 	}
 	
-	tl_deselect_all()
-	
-	with (temp_edit)
+	with (obj_edit)
 	{
+		if (object_index != obj_timeline)
+			tl_deselect_all()
+			
 		model_name = name
 		model_state = array_copy_1d(state)
 		temp_update_model()
@@ -68,6 +69,9 @@ function action_lib_model_name(name)
 			array_add(pattern_update, id)
 		
 		temp_update_armor(id)
+		
+		if (object_index = obj_timeline)
+			tl_select_single()
 	}
 	
 	if (history_undo)

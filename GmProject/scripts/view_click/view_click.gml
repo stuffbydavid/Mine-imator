@@ -1,8 +1,9 @@
-/// view_click(view, camera)
+/// view_click(view, camera, [ctrl])
 /// @arg view
 /// @arg camera
+/// @arg [ctrl]
 
-function view_click(view, cam)
+function view_click(view, cam, ctrl = false)
 {
 	var surf = surface_create(content_width, content_height);
 	
@@ -23,7 +24,7 @@ function view_click(view, cam)
 	if (tl > 0)
 	{
 		// Prefer a model root until it or one of its parts is selected
-		if (!keyboard_check(vk_control))
+		if (!ctrl && !keyboard_check(vk_control))
 		{
 			if (tl.type = e_tl_type.MODEL_PART && tl.part_of != null)
 			{

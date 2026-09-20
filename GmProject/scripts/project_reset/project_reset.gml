@@ -8,6 +8,7 @@ function project_reset()
 	history_clear()
 	
 	temp_edit = null
+	obj_edit = null
 	res_edit = null
 	tl_edit = null
 	tl_edit_amount = 0

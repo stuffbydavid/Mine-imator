@@ -116,10 +116,11 @@ function view_update_surface(view, cam)
 	}
 
 	// Placed objects
-	if (place_tl != null)
+	if (place_tl != null && (place_content_mouseon = null || content_mouseon))
 	{
 		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
-		view.surface_select = render_select(e_render_mode.PLACE_SELECT, view.surface_select)
+		if (!place_build)
+			view.surface_select = render_select(e_render_mode.PLACE_SELECT, view.surface_select)
 	}
 	
 	view.surface = render_done()

@@ -21,12 +21,12 @@ function app_update_mouse()
 	mouse_middle = mouse_check_button(mb_middle)
 	mouse_wheel = mouse_wheel_down() - mouse_wheel_up()
 	
-	if (mouse_left_pressed)
+	if (mouse_left_pressed || mouse_right_pressed)
 	{
 		mouse_click_x = mouse_x
 		mouse_click_y = mouse_y
 	}
-	else if (mouse_left)
+	else if (mouse_left || mouse_right)
 		mouse_move = max(abs(mouse_x - mouse_click_x), abs(mouse_y - mouse_click_y))
 	else
 		mouse_move = 0

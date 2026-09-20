@@ -26,6 +26,12 @@ function app_update_keyboard()
 			debug_info = (debug_info + 1) mod 3
 	}
 
+	if (place_build && (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_MODE].pressed))
+	{
+		app_stop_place()
+		return 0
+	}
+
 	bench_update_keyboard()
 	
 	if (window_state = "" && (window_busy = "" || settings_menu_name = "colorpicker") && !textbox_isediting)
@@ -103,6 +109,14 @@ function app_update_keyboard()
 		
 		if (keybinds[e_keybind.SECONDARY_VIEW].pressed) 
 			action_setting_secondary_view()
+
+		if (keybinds[e_keybind.BUILD_MODE].pressed)
+		{
+			if (bench_tab != e_bench.BLOCK)
+				bench_click(e_bench.BLOCK, true)
+			action_bench_create(false, true)
+			return 0
+		}
 		
 		if (keybinds[e_keybind.TIMELINE_DUPLICATE].pressed && tl_edit != null)
 			action_tl_duplicate()

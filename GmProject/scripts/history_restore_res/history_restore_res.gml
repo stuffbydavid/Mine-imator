@@ -197,7 +197,25 @@ function history_restore_res(save)
 				glint_tex = res
 			}
 		}
-		
+
+		for (var s = 0; s < save.usage_tl_block_tex_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_block_tex_save_id[s]))
+				block_tex = res
+		}
+
+		for (var s = 0; s < save.usage_tl_block_tex_material_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_block_tex_material_save_id[s]))
+				block_tex_material = res
+		}
+
+		for (var s = 0; s < save.usage_tl_block_tex_normal_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_block_tex_normal_save_id[s]))
+				block_tex_normal = res
+		}
+
 		// Restore background usage
 		if (save.usage_background_image)
 			app.background_image = res

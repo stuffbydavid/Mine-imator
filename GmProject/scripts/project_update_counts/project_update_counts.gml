@@ -85,6 +85,25 @@ function project_update_counts()
 			glint_tex
 		);
 		
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp)
+		{
+			array_add(refs, block_tex)
+			if (app.project_render_material_maps)
+			{
+				array_add(refs, block_tex_material)
+				array_add(refs, block_tex_normal)
+			}
+		}
+		else if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp)
+		{
+			array_add(refs, model_tex)
+			if (app.project_render_material_maps)
+			{
+				array_add(refs, model_tex_material)
+				array_add(refs, model_tex_normal)
+			}
+		}
+
 		for (var i = 0; i < array_length(refs); i++)
 		{
 			if (refs[i] = null)

@@ -155,10 +155,13 @@ function settings_load()
 			setting_panel_top_size = value_get_real(interfacemap[?"panel_top_size"], setting_panel_top_size)
 			setting_panel_left_top_size = value_get_real(interfacemap[?"panel_left_top_size"], setting_panel_left_top_size)
 			setting_panel_right_top_size = value_get_real(interfacemap[?"panel_right_top_size"], setting_panel_right_top_size)
+			setting_bench_width = clamp(value_get_real(interfacemap[?"bench_width"], setting_bench_width), bench_min_width, bench_max_width)
+			setting_bench_height = max(bench_initial_height, value_get_real(interfacemap[?"bench_height"], setting_bench_height))
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
-			setting_template_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_template_editor_location)
+			setting_object_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_object_editor_location) // Legacy
+			setting_object_editor_location = value_get_string(interfacemap[?"object_editor_location"], setting_object_editor_location)
 			setting_timeline_editor_location = value_get_string(interfacemap[?"timeline_editor_location"], setting_timeline_editor_location)
 			setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
 			setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)
@@ -215,6 +218,9 @@ function settings_load()
 				obj = keybinds[i]
 				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
 			}
+
+			if (is_undefined(controlsmap[?"toolbuild"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
+				keybinds[e_keybind.TOOL_BEND].keybind = keybind_new("B", false, true)
 			
 			setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 			setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)

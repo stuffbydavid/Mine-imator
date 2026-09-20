@@ -16,22 +16,20 @@ function view_update(view, cam)
 	// Click
 	if (content_mouseon && (window_busy = "" || window_busy = "place"))
 	{
-		place_view_mouse = view
+		place_content_mouseon = view
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
 		{
 			window_busy = "viewclick"
 			window_focus = string(view)
+			view_click_right = false
 		}
 		
-		if ((!cam || editcamobj) && mouse_right_pressed)
+		if (mouse_right_pressed)
 		{
-			view_click_x = display_mouse_get_x()
-			view_click_y = display_mouse_get_y()
-			window_busy = "viewmovecamera"
+			window_busy = "viewclick"
 			window_focus = string(view)
-			if (cam)
-				action_tl_select_single(cam)
+			view_click_right = true
 		}
 	}
 	
@@ -71,7 +69,15 @@ function view_update(view, cam)
 		{
 			mouse_cursor = cr_handpoint
 			
-			if ((!cam || editcamobj) && mouse_move > 5)
+			if (view_click_right && (!cam || editcamobj) && mouse_move > 5)
+			{
+				view_click_x = display_mouse_get_x()
+				view_click_y = display_mouse_get_y()
+				window_busy = "viewmovecamera"
+				if (cam)
+					action_tl_select_single(cam)
+			}
+			else if ((!cam || editcamobj) && mouse_move > 5)
 			{
 				if (keyboard_check(vk_shift))
 				{
@@ -91,12 +97,20 @@ function view_update(view, cam)
 				}
 			}
 			
-			if (!mouse_left)
+			if ((view_click_right && !mouse_right) || (!view_click_right && !mouse_left))
 			{
 				if (place_tl = null)
 				{
-					view_click(view, cam)
+					view_click(view, cam, view_click_right)
 					window_busy = ""
+				}
+				else if (place_build)
+				{
+					var repeatbuild = !place_target_tl_model_part;
+					app_stop_place(true)
+					
+					if (repeatbuild)
+						action_bench_create()
 				}
 				else // Stop placing
 					app_stop_place()
@@ -151,7 +165,7 @@ function view_update(view, cam)
 			if (!mouse_left)
 			{
 				camera_work_set_focus()
-				window_busy = ""
+				window_busy = (place_tl != null ? "place" : "")
 			}
 		}
 	}

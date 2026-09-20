@@ -2,6 +2,37 @@
 
 function tab_timeline_editor_info()
 {
+	// Type and template
+	var typename, create, button, buttonwid;
+	typename = string_remove_newline(tl_edit.type_name)
+	create = false
+	button = ""
+	buttonwid = 0
+
+	if (tl_edit.type < e_temp_type.amount && (tl_edit.has_temp ||
+		(tl_edit.part_root = null && (tl_edit.type = e_tl_type.BLOCK || tl_edit.type = e_tl_type.SPECIAL_BLOCK))))
+	{
+		tab_control(40)
+		create = !tl_edit.has_temp
+		button = "timelineeditor" + (create ? "create" : "edit") + "template"
+
+		draw_set_font(font_button)
+		buttonwid = string_width(text_get(button)) + 24
+	}
+	else
+		tab_control(ui_small_height)
+
+	draw_label_value(dx, dy + 4, max(0, dw - buttonwid - (buttonwid > 0 ? 8 : 0)), ui_small_height, text_get("timelineeditortype"), typename)
+	if (button != "" && draw_button_label(button, dx + dw, dy, null, null, create ? e_button.SECONDARY : e_button.PRIMARY, null, e_anchor.RIGHT))
+	{
+		if (create)
+			action_tl_create_temp()
+		else
+			with (tl_edit.part_root = null ? tl_edit.temp : tl_edit.part_root.temp)
+				temp_select_edit(true)
+	}
+	tab_next()
+	
 	// Name
 	tab_control_textfield()
 	tab.info.tbx_name.text = tl_edit.name
@@ -16,11 +47,6 @@ function tab_timeline_editor_info()
 		draw_textfield("timelineeditortext", dx, dy, dw, 126, tab.info.tbx_text, action_tl_text, "", "top")
 		tab_next()
 	}
-	
-	// Type
-	tab_control(ui_small_height)
-	draw_label_value(dx, dy, dw, ui_small_height, text_get("timelineeditortype"), string_remove_newline(tl_edit.type_name))
-	tab_next()
 	
 	// Rotation point (Advanced mode only)
 	if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)

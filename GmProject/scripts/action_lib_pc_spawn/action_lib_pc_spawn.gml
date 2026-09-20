@@ -8,7 +8,7 @@ function action_lib_pc_spawn()
 		if (type != e_temp_type.PARTICLE_SPAWNER)
 			continue
 		
-		if (temp = temp_edit || selected)
+		if (temp = obj_edit || selected)
 		{
 			if (temp.pc_spawn_constant)
 				spawn_active = true
