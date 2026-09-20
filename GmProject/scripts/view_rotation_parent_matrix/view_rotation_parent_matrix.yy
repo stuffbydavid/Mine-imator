@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_rotation_parent_matrix",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_rotation_parent_matrix",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

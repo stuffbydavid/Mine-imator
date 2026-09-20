@@ -69,7 +69,7 @@ function view_control_scale(view)
 			for (var i = 0; i <= Z; i++)
 				move[i] *= (!view_control_move_flip_axis[i] ? 1 : -1)
 			
-			if (view_control_transform_mode != e_rotation_space.GIMBAL)
+			if (view_control_transform_mode != e_transform_mode.GIMBAL)
 			{
 				var axes = [view_control_edit != e_view_control.SCA_YZ, view_control_edit != e_view_control.SCA_XZ, view_control_edit != e_view_control.SCA_XY];
 				view_transform_scale_apply(view_transform_scale_factors(move, axes))
@@ -139,7 +139,7 @@ function view_control_scale(view)
 			vecdot = vec2_dot(vec2_normalize(view_control_vec), vec2_normalize(vecmouse))
 			view_control_move_distance += ((vec2_length(vecmouse) / veclen) * len * vecdot) * .05 * dragger_multiplier
 			
-			if (view_control_transform_mode != e_rotation_space.GIMBAL)
+			if (view_control_transform_mode != e_transform_mode.GIMBAL)
 			{
 				var scale_move = vec3(0);
 				var axes = vec3(0);
@@ -189,7 +189,7 @@ function view_control_scale(view)
 		// Move
 		if (!mouse_still)
 		{
-			if (view_control_transform_mode != e_rotation_space.GIMBAL)
+			if (view_control_transform_mode != e_transform_mode.GIMBAL)
 			{
 				view_transform_scale_apply(view_transform_scale_factors(vec3(view_control_scale_amount - 1), vec3(1)))
 			}
@@ -221,7 +221,7 @@ function view_control_scale(view)
 		{
 			// End dragging
 			axis_edit = X
-			if (view_control_transform_mode = e_rotation_space.GIMBAL)
+			if (view_control_transform_mode = e_transform_mode.GIMBAL)
 				action_tl_frame_scale_all_axis(0, false)
 			
 			window_busy = ""

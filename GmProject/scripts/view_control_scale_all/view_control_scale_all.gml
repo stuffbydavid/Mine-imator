@@ -40,7 +40,7 @@ function view_control_scale_all(view, mat, radius)
 			view_control_scale_coords[X] = coord[X]
 			view_control_scale_coords[Y] = coord[Y]
 			view_control_matrix = mat
-			view_transform_space_begin(e_value_type.TRANSFORM_SCA)
+			view_transform_begin(e_value_type.TRANSFORM_SCA)
 		}
 		
 		// Right click

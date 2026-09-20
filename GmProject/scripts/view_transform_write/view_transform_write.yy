@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_transform_write",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_transform_write",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

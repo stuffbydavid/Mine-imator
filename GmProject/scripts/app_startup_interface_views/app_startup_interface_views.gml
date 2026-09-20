@@ -77,7 +77,7 @@ function app_startup_interface_views()
 	view_control_plane_origin = vec3(0)
 	view_control_plane = false
 	view_control_move_flip_axis = [false, false, false]
-	view_control_transform_mode = e_rotation_space.GIMBAL
+	view_control_transform_mode = e_transform_mode.GIMBAL
 	view_control_transform_type = noone
 	view_control_transform_basis = MAT_IDENTITY
 	view_control_transform_origin = vec3(0)
@@ -87,20 +87,12 @@ function app_startup_interface_views()
 	view_control_transform_target_map = ds_map_create()
 	view_control_transform_history_started = false
 	view_control_transform_selection = []
-	view_control_transform_key_marker = noone
-	view_control_transform_key_mixed = false
-	view_control_rotation_mode = e_rotation_space.GIMBAL
+	view_control_transform_key_marker = array_create(3, noone)
+	view_control_transform_key_mixed = array_create(3, false)
 	view_control_rotation_axis_world = vec3(0, 0, 1)
-	view_control_rotation_target_ids = []
-	view_control_rotation_target_map = ds_map_create()
-	view_control_rotation_history_started = false
-	view_control_rotation_start_eulers = []
+
 	view_control_rotation_previous_eulers = []
 	view_control_rotation_start_world = []
 	view_control_rotation_parent = []
 	view_control_rotation_parent_selected = []
-	view_control_rotation_constrained = false
-	view_control_rotation_selection_ids = []
-	view_control_rotation_selected_keyframe_marker = noone
-	view_control_rotation_selected_keyframe_mixed = false
 }

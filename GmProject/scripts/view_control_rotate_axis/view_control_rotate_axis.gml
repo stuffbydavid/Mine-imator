@@ -66,7 +66,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 			view_control_length = len
 
 			if (control >= e_view_control.ROT_X && control <= e_view_control.ROT_Z)
-				view_rotation_space_begin(facevec)
+				view_rotation_begin(facevec)
 		}
 		
 		// Right click

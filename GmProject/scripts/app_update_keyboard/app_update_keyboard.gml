@@ -169,8 +169,8 @@ function app_update_keyboard()
 			}
 		}
 
-		if (keybinds[e_keybind.ROTATION_SPACE_CYCLE].pressed)
-			action_view_rotation_space_cycle()
+		if (keybinds[e_keybind.TRANSFORM_MODE_CYCLE].pressed)
+			action_view_transform_mode_cycle()
 		
 		if (keybinds[e_keybind.TOOL_SCALE].pressed)
 		{

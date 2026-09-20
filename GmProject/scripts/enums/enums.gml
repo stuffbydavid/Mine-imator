@@ -1122,7 +1122,7 @@ function enums()
 		ROT_DISTANCE
 	}
 
-	enum e_rotation_space
+	enum e_transform_mode
 	{
 		GIMBAL,
 		GLOBAL,

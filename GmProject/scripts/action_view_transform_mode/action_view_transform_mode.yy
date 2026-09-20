@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_view_transform_mode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_view_transform_mode",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Actions/Project/View.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

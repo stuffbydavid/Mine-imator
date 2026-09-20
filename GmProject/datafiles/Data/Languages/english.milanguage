@@ -902,10 +902,10 @@
 			"selecttip": "Select tool",
 			"movetip": "Move tool",
 			"rotatetip": "Rotate tool",
-			"rotationspacegimbal": "Gimbal transform orientation (click to cycle)",
-			"rotationspaceglobal": "Global transform orientation (click to cycle)",
-			"rotationspacelocal": "Local transform orientation (click to cycle)",
-			"rotationspaceconstraintgimbal": "One or more active tools use Gimbal for this selection (click to cycle)",
+			"rotationspacegimbal": "Gimbal mode (click to change)",
+			"rotationspaceglobal": "Global mode (click to change)",
+			"rotationspacelocal": "Local mode (click to change)",
+			"rotationspaceconstraintgimbal": "Some tools use Gimbal mode for this selection (click to change)",
 			"scaletip": "Scale tool",
 			"bendtip": "Bend tool",
 			"transformtip": "Transform tool"
@@ -4365,7 +4365,7 @@
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",
-				"rotationspacecycle": "Cycle transform orientation",
+				"rotationspacecycle": "Change transform mode",
 				"scale": "Scale tool",
 				"bend": "Bend tool",
 				"transform": "Multi-transform tool"

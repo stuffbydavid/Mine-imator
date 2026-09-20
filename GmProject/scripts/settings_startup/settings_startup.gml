@@ -136,7 +136,7 @@ function settings_startup()
 	setting_snap_absolute = true
 	setting_snap_size_position = 1
 	setting_snap_size_rotation = 15
-	setting_rotation_space = e_rotation_space.GIMBAL
+	setting_transform_mode = e_transform_mode.GIMBAL
 	setting_snap_size_scale = 0.25
 	
 	setting_tool_select = false
