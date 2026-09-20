@@ -219,9 +219,8 @@ function render_startup()
 	render_grain_noise = null
 	
 	// Subsurface
-	globalvar render_subsurface_size, render_subsurface_kernel, render_blur_kernel;
-	render_subsurface_size = (16 * 2) + 1
-	render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
+	globalvar render_subsurface_kernel, render_blur_kernel;
+	render_subsurface_kernel = render_generate_progressive_disk_kernel(32, 0)
 	render_blur_kernel = render_generate_gaussian_kernel(19)
 	
 	globalvar render_samples_clear;

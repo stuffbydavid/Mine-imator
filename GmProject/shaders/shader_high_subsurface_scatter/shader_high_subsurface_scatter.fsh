@@ -1,4 +1,4 @@
-#define MAX_SAMPLES 65
+#define MAX_SAMPLES 33
 
 uniform sampler2D uSSSBuffer;
 uniform sampler2D uSSSRangeBuffer;
@@ -14,7 +14,7 @@ uniform vec2 uScreenSize;
 
 uniform int uSamples;
 uniform float uNoiseSize;
-uniform vec2 uKernel[MAX_SAMPLES]; // x = weight, y = distance
+uniform vec3 uKernel[MAX_SAMPLES]; // xy = disk offset, z = weight
 
 varying vec2 vTexCoord;
 
@@ -40,30 +40,40 @@ void main()
 	{
 		vec3 sssRange = texture2D(uSSSRangeBuffer, vTexCoord).rgb;
 		float viewDepth = getDepth(vTexCoord);
-		vec3 lightNew = lightOrigin * uKernel[0].x;
 		
 		// Keep blur consistent with pixel depth
 		float sampleRadius = uProjMatrix[2][3] * viewDepth + uProjMatrix[3][3];
 		vec2 rad = vec2(uProjMatrix[0][0], uProjMatrix[1][1]) * sss / sampleRadius;
 		rad *= 0.5;
+
+		if (dot(rad, rad) < 0.000001)
+		{
+			gl_FragColor = vec4(lightOrigin, 1.0);
+			return;
+		}
+
+		// Rotate the progressive disk for each pixel
+		float angle = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * TWO_PI;
+		vec2 rotation = vec2(cos(angle), sin(angle));
+		vec3 lightNew = lightOrigin * uKernel[0].z;
+		float totalWeight = uKernel[0].z;
 		
-		// Get random direction to blur in
-		vec3 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rgb;
-		vec2 randDir = vec2(cos(noise.r * TWO_PI), sin(noise.r * TWO_PI));
-		rad *= randDir;
-		
-		// Sample pixels in positive and negative blur direction
 		for (int i = 1; i < MAX_SAMPLES; i++)
 		{
-			if (i >= uSamples || length(rad) < 0.001)
+			if (i >= uSamples)
 				break;
-			
-			vec2 sampleCoord = vTexCoord + (uKernel[i].y * rad);
+
+			vec2 offset = uKernel[i].xy;
+			offset = vec2(offset.x * rotation.x - offset.y * rotation.y,
+						  offset.x * rotation.y + offset.y * rotation.x);
+			vec2 sampleCoord = vTexCoord + offset * rad;
+			float sampleWeight = uKernel[i].z;
+			totalWeight += sampleWeight;
 			
 			// Out of bounds?
 			if (sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0)
 			{
-				lightNew += uKernel[i].x * lightOrigin;
+				lightNew += sampleWeight * lightOrigin;
 				continue;
 			}
 			
@@ -71,26 +81,24 @@ void main()
 			vec4 sampleRange = texture2D(uSSSRangeBuffer, sampleCoord);
 			if ((sampleRange.r + sampleRange.g + sampleRange.b) < 0.001)
 			{
-				lightNew += uKernel[i].x * lightOrigin;
+				lightNew += sampleWeight * lightOrigin;
 				continue;
 			}
 			
-			// Background?
-			if (isDepthBackground(readDepth(sampleCoord)))
+			float sampleDepth = readDepth(sampleCoord);
+			if (isDepthBackground(sampleDepth))
 			{
-				lightNew += uKernel[i].x * lightOrigin;
+				lightNew += sampleWeight * lightOrigin;
 				continue;
 			}
 			
-			float depthDelta = 1.0 - clamp(abs(viewDepth - getDepth(sampleCoord)) / sss, 0.0, 1.0);
+			float sampleViewDepth = uNear + sampleDepth * (uFar - uNear);
+			float depthDelta = 1.0 - clamp(abs(viewDepth - sampleViewDepth) / sss, 0.0, 1.0);
 			
 			// Add mixed light color * sample weight
-			lightNew += uKernel[i].x * mix(lightOrigin, texture2D(uDirect, sampleCoord).rgb, depthDelta * sssRange);
+			lightNew += sampleWeight * mix(lightOrigin, texture2D(uDirect, sampleCoord).rgb, depthDelta * sssRange);
 		}
-		
-		if (length(rad) < 0.001)
-			gl_FragColor = vec4(lightOrigin, 1.0);
-		else
-			gl_FragColor = vec4(lightNew, 1.0);		
+
+		gl_FragColor = vec4(lightNew / totalWeight, 1.0);
 	}
 }

@@ -25,6 +25,6 @@ function shader_high_subsurface_scatter_set(ssssurf, rangesurf)
 	render_set_uniform("uNear", depth_near)
 	render_set_uniform("uFar", depth_far)
 	
-	render_set_uniform_int("uSamples", render_subsurface_size)
+	render_set_uniform_int("uSamples", app.project_render_subsurface_samples + 1)
 	render_set_uniform("uKernel", render_subsurface_kernel)
 }

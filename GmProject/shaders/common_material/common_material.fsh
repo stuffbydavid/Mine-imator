@@ -208,30 +208,34 @@ vec3 getSpecular(vec3 N, vec3 L, vec3 camPos, vec3 pos, vec3 F0, float roughness
 #pragma shady: macro_begin SSS_TRANSLUCENCY_LIB
 
 uniform vec4 uSSSColor;
-uniform float uSSSHighlight;
-uniform float uSSSHighlightStrength;
+uniform float uSSSBacklightSpread;
+uniform float uSSSBacklightStrength;
+uniform int uSSSBrightBacklight;
 
-float CSPhase(float dotView, float scatter)
+float HGPhase(float cosTheta, float scatter)
 {
-	float result = (3.0 * (1.0 - (scatter * scatter))) * (1.0 + dotView);
-	result /= 2.0 * (2.0 + pow(scatter, 2.0)) * pow(1.0 + pow(scatter, 2.0) - 2.0 * scatter * dotView, 1.5);
-	return result;
+	float g = clamp(scatter, 0.0, 0.99);
+	float g2 = g * g;
+	return (1.0 - g2) / pow(max(1.0 + g2 - 2.0 * g * cosTheta, 0.001), 1.5);
 }
 
-vec3 getSubsurfaceTranslucency(float fragDepth, float sampleDepth, float bias, vec3 lightCol, vec3 rad)
+vec3 getSubsurfaceTranslucency(float fragDepth, float sampleDepth, vec3 rad)
 {
-	vec3 dis = vec3((fragDepth + bias) - sampleDepth) / (lightCol * rad);
-	
-	if ((fragDepth - (bias * 0.01)) <= sampleDepth)
-		dis = vec3(0.0);
-	
-	return pow(max(1.0 - pow(dis / rad, vec3(4.0)), 0.0), vec3(2.0)) / (pow(dis, vec3(2.0)) + 1.0);			
+	float thickness = max(fragDepth - sampleDepth, 0.0);
+	vec3 safeRadius = max(rad, vec3(0.001));
+	return exp(-thickness / safeRadius);
 }
 
 void handleSubsurfaceHighlight(inout vec3 light, inout vec3 subsurf, vec3 N, vec3 lightDir, vec3 lightCol, vec3 camPos, vec3 pos, float sss, float mask)
 {
 	float transDif = max(0.0, dot(normalize(-N), lightDir));
-	subsurf += (subsurf * uSSSHighlightStrength * CSPhase(dot(normalize(pos - camPos), lightDir), uSSSHighlight));
+	float phase = HGPhase(dot(normalize(pos - camPos), lightDir), uSSSBacklightSpread);
+	float phasePeak = HGPhase(1.0, uSSSBacklightSpread);
+	float phaseNormalized = phase / max(phasePeak, 0.001);
+	if (uSSSBrightBacklight == 1)
+		subsurf *= 1.0 + uSSSBacklightStrength * phaseNormalized;
+	else
+		subsurf *= phaseNormalized * clamp(uSSSBacklightStrength, 0.0, 1.0);
 	light += lightCol * uSSSColor.rgb * transDif * subsurf * mask;
 	light *= mix(vec3(1.0), uSSSColor.rgb, clamp(sss, 0.0, 1.0));
 }

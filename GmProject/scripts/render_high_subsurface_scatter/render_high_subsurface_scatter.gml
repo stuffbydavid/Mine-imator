@@ -6,12 +6,6 @@ function render_high_subsurface_scatter()
 	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
 	sssblursurf = render_surface_hdr[0]
 	
-	if ((project_render_subsurface_samples * 2) + 1 != render_subsurface_size)
-	{
-		render_subsurface_size = (project_render_subsurface_samples * 2) + 1
-		render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
-	}
-	
 	// Scatter blur
 	surface_set_target(sssblursurf)
 	{

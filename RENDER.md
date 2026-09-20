@@ -40,8 +40,9 @@ The ranges below are the ranges supported by the corresponding interface control
 | `shadows_point_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Point-light shadow-map resolution; 8192 is offered only when supported by the GPU |
 | `shadows_transparent` | Boolean | Let transparent textures affect shadow maps |
 | `subsurface_samples` | Integer, 0-32 | Subsurface-scattering quality/sample count |
-| `subsurface_highlight` | 0-1 | Subsurface highlight amount |
-| `subsurface_highlight_strength` | 0-no limit | Subsurface highlight strength |
+| `subsurface_backlight_spread` | 0-1 | Subsurface backlight spread |
+| `subsurface_backlight_strength` | 0-no limit | Subsurface backlight strength |
+| `subsurface_bright_backlight` | true/false | Allow brighter, less realistic subsurface backlighting |
 | `indirect` | Boolean | Enable indirect lighting |
 | `indirect_precision` | 0-1 | Indirect-lighting buffer precision/scale |
 | `indirect_blur_radius` | 0-5 | Indirect-lighting blur radius |

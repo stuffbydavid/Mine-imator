@@ -73,8 +73,9 @@ function render_preset_save_settings(renderer)
 				json_save_var("shadows_blur_size", set.shadows_blur_size)
 
 				set = self.renderer[e_renderer.REALISTIC]
-				json_save_var("subsurface_highlight", set.subsurface_highlight)
-				json_save_var("subsurface_highlight_strength", set.subsurface_highlight_strength)
+				json_save_var("subsurface_backlight_spread", set.subsurface_backlight_spread)
+				json_save_var("subsurface_backlight_strength", set.subsurface_backlight_strength)
+				json_save_var_bool("subsurface_bright_backlight", set.subsurface_bright_backlight)
 				json_save_var("indirect_blur_radius", set.indirect_blur_radius)
 				json_save_var("indirect_strength", set.indirect_strength)
 				json_save_var("reflections_fade_amount", set.reflections_fade_amount)

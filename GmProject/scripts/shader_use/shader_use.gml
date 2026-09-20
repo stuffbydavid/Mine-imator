@@ -61,12 +61,15 @@ function shader_use()
 	if (!is_undefined(uniform_map[?"uDefaultSubsurface"]) && uniform_map[?"uDefaultSubsurface"] > -1)
 		render_set_uniform("uDefaultSubsurface", app.project_render_block_subsurface)
 	
-	// Subsurface highlight
-	if (!is_undefined(uniform_map[?"uSSSHighlight"]) && uniform_map[?"uSSSHighlight"] > -1)
-		render_set_uniform("uSSSHighlight", 1 - app.project_render_subsurface_highlight)
+	// Subsurface backlight
+	if (!is_undefined(uniform_map[?"uSSSBacklightSpread"]) && uniform_map[?"uSSSBacklightSpread"] > -1)
+		render_set_uniform("uSSSBacklightSpread", 1 - app.project_render_subsurface_backlight_spread)
 	
-	if (!is_undefined(uniform_map[?"uSSSHighlightStrength"]) && uniform_map[?"uSSSHighlightStrength"] > -1)
-		render_set_uniform("uSSSHighlightStrength", app.project_render_subsurface_highlight_strength)
+	if (!is_undefined(uniform_map[?"uSSSBacklightStrength"]) && uniform_map[?"uSSSBacklightStrength"] > -1)
+		render_set_uniform("uSSSBacklightStrength", app.project_render_subsurface_backlight_strength)
+
+	if (!is_undefined(uniform_map[?"uSSSBrightBacklight"]) && uniform_map[?"uSSSBrightBacklight"] > -1)
+		render_set_uniform_int("uSSSBrightBacklight", app.project_render_subsurface_bright_backlight)
 	
 	// Glint
 	if (!is_undefined(uniform_map[?"uGlintEnabled"]) && uniform_map[?"uGlintEnabled"] > -1)

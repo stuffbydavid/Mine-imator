@@ -3041,9 +3041,11 @@
 		"subsurfacescatteringtip": "Simulates light passing through an object, such as leaves.",
 		"subsurfacescatter/": {
 			"quality": "Blur quality",
-			"highlight": "Highlight",
-			"highlighttip": "Distributes additional light in objects when a light source is directly behind it.",
-			"highlightstrength": "Highlight strength"
+			"backlightspread": "Backlight spread",
+			"backlightspreadtip": "Controls how far backlighting spreads around the sides of an object.",
+			"backlightstrength": "Backlight strength",
+			"brightbacklight": "Bright backlight",
+			"brightbacklighttip": "Amplifies light shining through an object for a brighter, stylized effect."
 		},
 		"indirect": "Indirect lighting",
 		"indirecttip": "Bounces light off of bright objects, lighting more of the scene.",

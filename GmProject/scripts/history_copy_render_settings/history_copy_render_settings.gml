@@ -24,8 +24,9 @@ function history_copy_render_settings(obj)
 	project_render_shadows_single_sample = obj.project_render_shadows_single_sample
 	
 	project_render_subsurface_samples = obj.project_render_subsurface_samples
-	project_render_subsurface_highlight = obj.project_render_subsurface_highlight
-	project_render_subsurface_highlight_strength = obj.project_render_subsurface_highlight_strength
+	project_render_subsurface_backlight_spread = obj.project_render_subsurface_backlight_spread
+	project_render_subsurface_backlight_strength = obj.project_render_subsurface_backlight_strength
+	project_render_subsurface_bright_backlight = obj.project_render_subsurface_bright_backlight
 	
 	project_render_indirect = obj.project_render_indirect
 	project_render_indirect_precision = obj.project_render_indirect_precision

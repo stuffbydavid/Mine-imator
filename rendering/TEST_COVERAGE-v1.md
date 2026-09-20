@@ -55,7 +55,7 @@ The effect inventory is based on these interface and render entry points:
 | Spot shadow resolution | Same selectable sizes | Spot shadow surface | 256/default/high with cone-edge geometry |
 | Point shadow resolution | Same selectable sizes | Six-face atlas path | 256/default/high with cubemap-seam geometry |
 | Transparent shadows | Off/on | Shadow caster alpha hashing via `project_render_shadows_transparent` | Opaque, cutout, blended, and hashed casters; on/off |
-| Subsurface scattering | Samples 0–32, highlight 0–1, highlight strength 0–unbounded | `render_high_subsurface_scatter` | Samples 0, 1, 7, 32; neutral and unequal RGB radii; highlight boundaries |
+| Subsurface scattering | Samples 0–32, backlight spread 0–1, backlight strength 0–unbounded, bright backlight off/on | `render_high_subsurface_scatter` | Samples 0, 1, 7, 32; neutral and unequal RGB radii; backlight boundaries |
 | Indirect lighting | Off/on, precision 0–1, blur radius 0–5, strength 0–unbounded | `render_high_indirect` ray trace/resolve/optional blur | Precision 0/default/high; blur 0 and nonzero; strength 0/default/high; shadows dependency |
 | Screen-space reflections | Off/on, precision 0–1, fade 0–1, thickness 0.1–unbounded | `render_high_reflections` | Rough/metal material grid, screen edges, off-screen fallback, thickness and fade boundaries |
 | Glow | Off/on, radius, intensity | `render_high_glow` | Zero/default/high radius and intensity; opaque and transparent sources |

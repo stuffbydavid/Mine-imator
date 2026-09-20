@@ -58,8 +58,9 @@ function render_apply_settings(preset, renderer)
 			project_render_ssao_color = preset.ssao_color
 			project_render_ssao_always_visible = preset.ssao_always_visible
 			project_render_shadows_blur_size = preset.renderer[e_renderer.STANDARD].shadows_blur_size
-			project_render_subsurface_highlight = preset.renderer[e_renderer.REALISTIC].subsurface_highlight
-			project_render_subsurface_highlight_strength = preset.renderer[e_renderer.REALISTIC].subsurface_highlight_strength
+			project_render_subsurface_backlight_spread = preset.renderer[e_renderer.REALISTIC].subsurface_backlight_spread
+			project_render_subsurface_backlight_strength = preset.renderer[e_renderer.REALISTIC].subsurface_backlight_strength
+			project_render_subsurface_bright_backlight = preset.renderer[e_renderer.REALISTIC].subsurface_bright_backlight
 			project_render_indirect_blur_radius = preset.renderer[e_renderer.REALISTIC].indirect_blur_radius
 			project_render_indirect_strength = preset.renderer[e_renderer.REALISTIC].indirect_strength
 			project_render_reflections_thickness = preset.renderer[e_renderer.REALISTIC].reflections_thickness

@@ -362,7 +362,7 @@ function render_high_shadows()
 	render_high_shadows_shadowless()
 	
 	// Apply subsurface scattering
-	if (project_render_subsurface_samples > 0)
+	if (renderer_current = e_renderer.REALISTIC && project_render_subsurface_samples > 0)
 		render_high_subsurface_scatter()
 	
 	render_pass_capture(e_render_pass.SHADOWS, render_surface_shadows)

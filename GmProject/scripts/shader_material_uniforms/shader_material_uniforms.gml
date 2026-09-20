@@ -24,8 +24,9 @@ function shader_material_uniforms()
 	new_shader_uniform("uSSS")
 	new_shader_uniform("uSSSRadius")
 	new_shader_uniform("uSSSColor")
-	new_shader_uniform("uSSSHighlight")
-	new_shader_uniform("uSSSHighlightStrength")
+	new_shader_uniform("uSSSBacklightSpread")
+	new_shader_uniform("uSSSBacklightStrength")
+	new_shader_uniform("uSSSBrightBacklight")
 	
 	// Other
 	new_shader_uniform("uIsWater")

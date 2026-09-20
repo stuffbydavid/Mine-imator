@@ -58,8 +58,9 @@ function render_preset_event_create()
 		aa_mode = e_aa_mode.PROGRESSIVE
 		aa_power = 1
 
-		subsurface_highlight = .5
-		subsurface_highlight_strength = 1
+		subsurface_backlight_spread = .5
+		subsurface_backlight_strength = 1
+		subsurface_bright_backlight = false
 		indirect_blur_radius = 1
 		indirect_strength = 1
 		reflections_fade_amount = 1

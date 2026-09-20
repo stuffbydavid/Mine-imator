@@ -200,7 +200,7 @@ void main()
 				
 				// Subsurface translucency
 				if (sss > 0.0 && dif == 0.0)
-					subsurf += getSubsurfaceTranslucency(fragDepth, sampleDepth, bias, lightCol, uSSSRadius * sss);
+					subsurf += getSubsurfaceTranslucency(fragDepth, sampleDepth, subsurfaceRadius);
 			}
 		}
 		

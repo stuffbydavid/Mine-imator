@@ -50,8 +50,9 @@ function render_preset_apply_settings(settings, renderer)
 			case "shadows_single_sample": realisticset.shadows_single_sample = val break
 			case "shadows_transparent": set.shadows_transparent = val break
 			case "subsurface_samples": set.subsurface_samples = val break
-			case "subsurface_highlight": realisticset.subsurface_highlight = val break
-			case "subsurface_highlight_strength": realisticset.subsurface_highlight_strength = val break
+			case "subsurface_backlight_spread": realisticset.subsurface_backlight_spread = val break
+			case "subsurface_backlight_strength": realisticset.subsurface_backlight_strength = val break
+			case "subsurface_bright_backlight": realisticset.subsurface_bright_backlight = val break
 			case "indirect": set.indirect = val break
 			case "indirect_precision": set.indirect_precision = val break
 			case "indirect_blur_radius": realisticset.indirect_blur_radius = val break

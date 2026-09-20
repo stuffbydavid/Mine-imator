@@ -176,7 +176,7 @@ function tab_properties_render()
 			tab_collapse_end()
 		}
 	
-		if (renderer_edit = e_renderer.REALISTIC)
+		if (renderer_edit = e_renderer.STANDARD || renderer_edit = e_renderer.REALISTIC)
 		{
 			// Subsurface scattering
 			tab_control_switch()
@@ -187,21 +187,31 @@ function tab_properties_render()
 			{
 				tab_collapse_start()
 		
-				tab_control_meter()
-				draw_meter("rendersubsurfacescatterquality", dx, dy, dw, rendererset.subsurface_samples, 0, 32, 7, 1, tab.render.tbx_subsurface_samples, action_project_render_subsurface_samples)
-				tab_next()
+				if (renderer_edit = e_renderer.REALISTIC)
+				{
+					tab_control_meter()
+					draw_meter("rendersubsurfacescatterquality", dx, dy, dw, rendererset.subsurface_samples, 0, 32, 7, 1, tab.render.tbx_subsurface_samples, action_project_render_subsurface_samples)
+					tab_next()
+				}
 		
 				tab_control_meter()
-				draw_meter("rendersubsurfacescatterhighlight", dx, dy, dw, round(project_render_subsurface_highlight * 100), 0, 100, 50, 1, tab.render.tbx_subsurface_highlight, action_project_render_subsurface_highlight, "rendersubsurfacescatterhighlighttip")
+				draw_meter("rendersubsurfacescatterbacklightspread", dx, dy, dw, round(project_render_subsurface_backlight_spread * 100), 0, 100, 50, 1, tab.render.tbx_subsurface_backlight_spread, action_project_render_subsurface_backlight_spread, "rendersubsurfacescatterbacklightspreadtip")
 				tab_next()
 		
 				tab_control_dragger()
-				draw_dragger("rendersubsurfacescatterhighlightstrength", dx, dy, dragger_width, round(project_render_subsurface_highlight_strength * 100), .5, 0, no_limit, 100, 1, tab.render.tbx_subsurface_highlight_strength, action_project_render_subsurface_highlight_strength)
+				draw_dragger("rendersubsurfacescatterbacklightstrength", dx, dy, dragger_width, round(project_render_subsurface_backlight_strength * 100), .5, 0, no_limit, 100, 1, tab.render.tbx_subsurface_backlight_strength, action_project_render_subsurface_backlight_strength)
+				tab_next()
+
+				tab_control_switch()
+				draw_switch("rendersubsurfacescatterbrightbacklight", dx, dy, project_render_subsurface_bright_backlight, action_project_render_subsurface_bright_backlight, "rendersubsurfacescatterbrightbacklighttip")
 				tab_next()
 		
 				tab_collapse_end()
 			}
-	
+		}
+
+		if (renderer_edit = e_renderer.REALISTIC)
+		{
 			// Indirect lighting
 			tab_control_switch()
 			draw_button_collapse("indirect", collapse_map[?"indirect"], action_project_render_indirect, rendererset.indirect, "renderindirect", "renderindirecttip")

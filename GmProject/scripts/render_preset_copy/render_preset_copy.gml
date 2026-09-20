@@ -77,8 +77,9 @@ function render_preset_copy(to, allsettings = false)
 
 		fromset = renderer[e_renderer.REALISTIC]
 		toset = to.renderer[e_renderer.REALISTIC]
-		toset.subsurface_highlight = fromset.subsurface_highlight
-		toset.subsurface_highlight_strength = fromset.subsurface_highlight_strength
+		toset.subsurface_backlight_spread = fromset.subsurface_backlight_spread
+		toset.subsurface_backlight_strength = fromset.subsurface_backlight_strength
+		toset.subsurface_bright_backlight = fromset.subsurface_bright_backlight
 		toset.indirect_blur_radius = fromset.indirect_blur_radius
 		toset.indirect_strength = fromset.indirect_strength
 		toset.reflections_thickness = fromset.reflections_thickness

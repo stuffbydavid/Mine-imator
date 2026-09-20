@@ -37,8 +37,9 @@ function project_load_legacy_render(map)
 			shadows_point_buffer_size = standardset.shadows_point_buffer_size
 			shadows_transparent = value_get_real(map[?"render_shadows_transparent"], shadows_transparent)
 			subsurface_samples = value_get_real(map[?"render_subsurface_samples"], subsurface_samples)
-			subsurface_highlight = value_get_real(map[?"render_subsurface_highlight"], subsurface_highlight)
-			subsurface_highlight_strength = value_get_real(map[?"render_subsurface_highlight_strength"], subsurface_highlight_strength)
+			subsurface_backlight_spread = value_get_real(map[?"render_subsurface_highlight"], subsurface_backlight_spread)
+			subsurface_backlight_strength = value_get_real(map[?"render_subsurface_highlight_strength"], subsurface_backlight_strength)
+			subsurface_bright_backlight = true
 			indirect = value_get_real(map[?"render_indirect"], indirect)
 			indirect_blur_radius = value_get_real(map[?"render_indirect_blur_radius"], indirect_blur_radius)
 			indirect_precision = value_get_real(map[?"render_indirect_precision"], indirect_precision)

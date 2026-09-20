@@ -75,8 +75,9 @@ function render_preset_load_settings(map)
 		set.shadows_blur_size = value_get_real(fxmap[?"shadows_blur_size"], set.shadows_blur_size)
 
 		set = renderer[e_renderer.REALISTIC]
-		set.subsurface_highlight = value_get_real(fxmap[?"subsurface_highlight"], set.subsurface_highlight)
-		set.subsurface_highlight_strength = value_get_real(fxmap[?"subsurface_highlight_strength"], set.subsurface_highlight_strength)
+		set.subsurface_backlight_spread = value_get_real(fxmap[?"subsurface_backlight_spread"], set.subsurface_backlight_spread)
+		set.subsurface_backlight_strength = value_get_real(fxmap[?"subsurface_backlight_strength"], set.subsurface_backlight_strength)
+		set.subsurface_bright_backlight = value_get_real(fxmap[?"subsurface_bright_backlight"], set.subsurface_bright_backlight)
 		set.indirect_blur_radius = value_get_real(fxmap[?"indirect_blur_radius"], set.indirect_blur_radius)
 		set.indirect_strength = value_get_real(fxmap[?"indirect_strength"], set.indirect_strength)
 		set.reflections_fade_amount = value_get_real(fxmap[?"reflections_fade_amount"], set.reflections_fade_amount)

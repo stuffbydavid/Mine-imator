@@ -88,8 +88,9 @@ function render_preset_equals(obj, renderer, allsettings)
 	objset = obj.renderer[e_renderer.REALISTIC];
 	match = (
 		match &&
-		set.subsurface_highlight = objset.subsurface_highlight &&
-		set.subsurface_highlight_strength = objset.subsurface_highlight_strength &&
+		set.subsurface_backlight_spread = objset.subsurface_backlight_spread &&
+		set.subsurface_backlight_strength = objset.subsurface_backlight_strength &&
+		set.subsurface_bright_backlight = objset.subsurface_bright_backlight &&
 		set.indirect_blur_radius = objset.indirect_blur_radius &&
 		set.indirect_strength = objset.indirect_strength &&
 		set.reflections_fade_amount = objset.reflections_fade_amount &&

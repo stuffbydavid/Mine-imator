@@ -51,10 +51,10 @@ function app_startup_interface_tabs()
 			tbx_ssao_power.suffix = "%"
 			
 			tbx_subsurface_samples = new_textbox_integer()
-			tbx_subsurface_highlight = new_textbox_integer()
-			tbx_subsurface_highlight.suffix = "%"
-			tbx_subsurface_highlight_strength = new_textbox_integer()
-			tbx_subsurface_highlight_strength.suffix = "%"
+			tbx_subsurface_backlight_spread = new_textbox_integer()
+			tbx_subsurface_backlight_spread.suffix = "%"
+			tbx_subsurface_backlight_strength = new_textbox_integer()
+			tbx_subsurface_backlight_strength.suffix = "%"
 			
 			tbx_indirect_precision = new_textbox_integer()
 			tbx_indirect_precision.suffix = "%"

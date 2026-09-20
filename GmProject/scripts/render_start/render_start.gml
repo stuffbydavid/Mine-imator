@@ -74,7 +74,7 @@ function render_start()
 	render_glow = project_render_glow && renderer_current != e_renderer.QUICK
 	render_auxiliary = renderall || background_fog_show || render_pass = e_render_pass.FOG || render_pass = e_render_pass.GLOW ||
 					   render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE ||
-					   project_render_subsurface_samples > 0 || render_glow
+					   (renderer_current = e_renderer.REALISTIC && project_render_subsurface_samples > 0) || render_glow
 	
 	// Use camera settings
 	if (render_camera != null)
