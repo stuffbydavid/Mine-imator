@@ -7,6 +7,7 @@ function temp_animate()
 	{
 		type = other.type
 		temp = other.id
+		has_temp = true
 		
 		if (type = e_tl_type.EQUIPMENT)
 			inherit_pose = true

@@ -8,13 +8,13 @@ function action_lib_model_part_model_state(val)
 	{
 		state = menu_model_state.name
 		
-		with (history_set_var(action_lib_model_part_model_state, state_vars_get_value(temp_edit.model_state, state), val, false))
+		with (history_set_var(action_lib_model_part_model_state, state_vars_get_value(obj_edit.model_state, state), val, false))
 			id.state = state
 	}
 	else
 		state = history_data.state
 	
-	with (temp_edit)
+	with (obj_edit)
 	{
 		if (state_vars_get_value(model_state, state) = val) 
 			return 0

@@ -6,6 +6,7 @@ function tab_event_create()
 	panel = null
 	panel_last = null
 	show = false
+	raised = false
 	closeable = true
 	scroll = null
 	glow = 0

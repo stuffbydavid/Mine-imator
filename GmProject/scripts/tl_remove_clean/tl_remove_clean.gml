@@ -145,7 +145,7 @@ function tl_remove_clean()
 		if (particle_list)
 			ds_list_destroy(particle_list)
 		
-		if (temp = id)
+		if (!has_temp)
 		{
 			if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
@@ -157,15 +157,30 @@ function tl_remove_clean()
 				
 				if (model_texture_normal_name_map != null)	
 					ds_map_destroy(model_texture_normal_name_map)
+
+				if (model_shape_texture_name_map != null)
+					ds_map_destroy(model_shape_texture_name_map)
+
+				if (model_shape_texture_material_name_map != null)
+					ds_map_destroy(model_shape_texture_material_name_map)
+
+				if (model_shape_texture_normal_name_map != null)
+					ds_map_destroy(model_shape_texture_normal_name_map)
 				
 				if (model_hide_list != null)
 					ds_list_destroy(model_hide_list)
+
+				if (model_shape_hide_list != null)
+					ds_list_destroy(model_shape_hide_list)
 				
 				if (model_color_name_map != null)	
 					ds_map_destroy(model_color_name_map)
 				
 				if (model_color_map != null)	
 					ds_map_destroy(model_color_map)
+
+				if (sprite_exists(pattern_skin))
+					sprite_delete(pattern_skin)
 			}
 			else if (type = e_tl_type.BLOCK)
 				block_vbuffer_destroy()

@@ -23,6 +23,10 @@ function temp_select_edit(showtab = true)
 		}
 		
 		if (editortab && showtab)
-			tab_show(template_editor, true)
+		{
+			obj_edit = other.id
+			tab_object_editor_update_ptype_list()
+			tab_show(object_editor, true)
+		}
 	}
 }

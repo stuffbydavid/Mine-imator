@@ -24,6 +24,8 @@ function tl_select_single()
 		selected = false
 	}
 	
+	obj_edit = has_temp ? temp : id
+	
 	tl_edit_amount = 1
 	tl_edit = id
 	

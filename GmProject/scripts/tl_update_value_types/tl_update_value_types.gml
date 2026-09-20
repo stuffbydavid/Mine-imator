@@ -6,6 +6,9 @@ function tl_update_value_types()
 	for (var v = 0; v < e_value_type.amount; v++)
 		value_type[v] = false
 	
+	if ((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp)
+		value_type[e_value_type.BLOCK] = true
+	
 	if (type = e_tl_type.AUDIO_TRACK)
 	{
 		value_type[e_value_type.SOUND] = true

@@ -27,6 +27,6 @@ function tl_update_type_name()
 		
 		type_name = text_get("timelinepartof", type_name, string_remove_newline(part_of.display_name))
 	}
-	else if (temp != null)
+	else if (has_temp && temp != null)
 		type_name = text_get("timelineinstanceof", temp.display_name)
 }

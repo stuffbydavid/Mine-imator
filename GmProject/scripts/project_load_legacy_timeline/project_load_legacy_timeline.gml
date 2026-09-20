@@ -12,6 +12,7 @@ function project_load_legacy_timeline()
 		if (typename = "bodypart")
 			typename = "modelpart"
 		type = ds_list_find_index(tl_type_name_list, typename)
+		has_temp = (type < e_temp_type.amount)
 		
 		name = buffer_read_string_int()
 		temp = project_load_legacy_save_id()

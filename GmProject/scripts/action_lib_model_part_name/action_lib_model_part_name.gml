@@ -5,9 +5,9 @@
 function action_lib_model_part_name(name)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_model_part_name, temp_edit.model_part_name, name, false)
+		history_set_var(action_lib_model_part_name, obj_edit.model_part_name, name, false)
 	
-	with (temp_edit)
+	with (obj_edit)
 	{
 		model_part_name = name
 		temp_update_model_part()

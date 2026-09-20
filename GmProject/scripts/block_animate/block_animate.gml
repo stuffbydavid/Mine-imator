@@ -7,6 +7,7 @@ function block_animate(root)
 	with (new_obj(obj_timeline))
 	{
 		temp = id
+		has_temp = false
 		
 		// Set to be a part of scenery
 		inherit_rot_point = true
@@ -96,6 +97,7 @@ function block_animate(root)
 			{
 				type = e_tl_type.TEXT
 				temp = id
+				has_temp = false
 				
 				// Set parent to other timeline
 				inherit_rot_point = true
@@ -135,6 +137,7 @@ function block_animate(root)
 			{
 				type = e_tl_type.TEXT
 				temp = id
+				has_temp = false
 				
 				// Set parent to other timeline
 				inherit_rot_point = true

@@ -13,7 +13,7 @@ function temp_get_block_texobj(val)
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
 		if (object_index = obj_timeline && type = e_tl_type.BLOCK)
 		{
-			if (part_of.type = e_tl_type.SCENERY)
+			if (part_of != null && part_of.type = e_tl_type.SCENERY)
 			{
 				with (part_of)
 				{

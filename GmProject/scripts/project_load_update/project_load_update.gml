@@ -42,9 +42,10 @@ function project_load_update()
 	
 	// Update scenery parts
 	with (obj_timeline)
-		if (loaded && part_of != null)
+		if (loaded && (part_of != null ||
+			(!has_temp && (type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK))))
 			tl_update_scenery_part()
-	
+
 	// Update templates and timelines
 	with (obj_template)
 	{

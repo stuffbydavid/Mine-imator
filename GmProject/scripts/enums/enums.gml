@@ -116,6 +116,7 @@ function enums()
 		TEXT,
 		KEYFRAME,
 		ROT_POINT,
+		BLOCK,
 		HIERARCHY,
 		APPEARANCE,
 		AUDIO,

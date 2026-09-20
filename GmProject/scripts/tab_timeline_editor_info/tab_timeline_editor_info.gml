@@ -9,10 +9,11 @@ function tab_timeline_editor_info()
 	button = ""
 	buttonwid = 0
 
-	if (tl_edit.type < e_temp_type.amount)
+	if (tl_edit.type < e_temp_type.amount && (tl_edit.has_temp ||
+		(tl_edit.part_root = null && (tl_edit.type = e_tl_type.BLOCK || tl_edit.type = e_tl_type.SPECIAL_BLOCK))))
 	{
 		tab_control(40)
-		create = (tl_edit.part_root = null && tl_edit.temp = tl_edit)
+		create = !tl_edit.has_temp
 		button = "timelineeditor" + (create ? "create" : "edit") + "template"
 
 		draw_set_font(font_button)
@@ -25,8 +26,7 @@ function tab_timeline_editor_info()
 	if (button != "" && draw_button_label(button, dx + dw, dy, null, null, create ? e_button.SECONDARY : e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		if (create)
-		{
-		}
+			action_tl_create_temp()
 		else
 			with (tl_edit.part_root = null ? tl_edit.temp : tl_edit.part_root.temp)
 				temp_select_edit(true)

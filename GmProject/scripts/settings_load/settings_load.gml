@@ -160,7 +160,8 @@ function settings_load()
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
-			setting_template_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_template_editor_location)
+			setting_object_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_object_editor_location) // Legacy
+			setting_object_editor_location = value_get_string(interfacemap[?"object_editor_location"], setting_object_editor_location)
 			setting_timeline_editor_location = value_get_string(interfacemap[?"timeline_editor_location"], setting_timeline_editor_location)
 			setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
 			setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)

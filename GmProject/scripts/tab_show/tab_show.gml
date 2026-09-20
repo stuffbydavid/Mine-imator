@@ -3,12 +3,11 @@
 
 function tab_show(tab, raise = false)
 {
-	var panel;
-	panel = tab.panel
+	var panel = tab.panel;
 	
 	if (!tab.show)
 	{
-		panel_tab_list_add(panel, panel.tab_list_amount, tab)
+		panel_tab_list_add(panel, 0, tab)
 		tab.show = true
 	}
 	

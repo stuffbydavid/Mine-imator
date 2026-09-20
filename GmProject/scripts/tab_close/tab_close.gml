@@ -14,5 +14,6 @@ function tab_close(tab)
 	
 	panel_tab_list_remove(panel, tab)
 	tab.show = false
+	tab.raised = false
 	tab_move = null
 }

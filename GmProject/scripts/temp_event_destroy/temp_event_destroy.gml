@@ -3,6 +3,13 @@
 
 function temp_event_destroy()
 {
+	if (obj_edit = id)
+	{
+		obj_edit = null
+		with (app)
+			tab_close(object_editor)
+	}
+
 	if (model_texture_name_map != null)	
 		ds_map_destroy(model_texture_name_map)
 	

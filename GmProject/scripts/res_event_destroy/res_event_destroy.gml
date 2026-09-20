@@ -358,6 +358,29 @@ function res_event_destroy()
 		
 		if (glint_tex = other.id)
 			glint_tex = project_pack_res
+
+		if (part_of = null && !has_temp && type = e_tl_type.SPECIAL_BLOCK)
+		{
+			if (model_tex = other.id)
+				model_tex = project_pack_res
+
+			if (model_tex_material = other.id)
+				model_tex_material = project_pack_res
+
+			if (model_tex_normal = other.id)
+				model_tex_normal = project_pack_res
+		}
+		else if (part_of = null && !has_temp && type = e_tl_type.BLOCK)
+		{
+			if (block_tex = other.id)
+				block_tex = project_pack_res
+
+			if (block_tex_material = other.id)
+				block_tex_material = project_pack_res
+
+			if (block_tex_normal = other.id)
+				block_tex_normal = project_pack_res
+		}
 	}
 	
 	with (app)

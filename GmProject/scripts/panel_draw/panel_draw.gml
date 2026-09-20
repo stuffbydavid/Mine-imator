@@ -9,6 +9,9 @@ function test_reduced_motion(a, b)
 /// @arg panel
 function panel_draw(panel)
 {
+	for (var t = 0; t < panel.tab_list_amount; t++)
+		panel.tab_list[t].raised = false
+
 	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
 		return 0
 	
@@ -106,6 +109,7 @@ function panel_draw(panel)
 	// Content
 	tabsh = min(boxh, 24)
 	content_tab = panel.tab_list[panel.tab_selected]
+	content_tab.raised = true
 	content_x = boxx
 	content_y = boxy + (tabsh * content_tab.movable)
 	content_width = boxw

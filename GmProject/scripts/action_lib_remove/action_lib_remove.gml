@@ -95,7 +95,7 @@ function action_lib_remove()
 			instance_destroy()
 	}
 	
-	tab_template_editor_update_ptype_list()
+	tab_object_editor_update_ptype_list()
 	
 	project_ik_part_array = null
 	

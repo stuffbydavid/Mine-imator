@@ -7,6 +7,7 @@ function tl_new_part(part)
 	{
 		type = e_tl_type.MODEL_PART
 		temp = other.temp
+		has_temp = other.has_temp
 		
 		model_part = part
 		model_part_name = part.name

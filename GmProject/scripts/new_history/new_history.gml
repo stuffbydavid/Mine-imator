@@ -10,6 +10,7 @@ function new_history(script)
 		id.script = script
 		par_script = null
 		save_temp_edit = save_id_get(temp_edit)
+		save_obj_edit = save_id_get(obj_edit)
 		save_ptype_edit = save_id_get(ptype_edit)
 		save_tl_edit = save_id_get(tl_edit)
 		save_res_edit = save_id_get(res_edit)

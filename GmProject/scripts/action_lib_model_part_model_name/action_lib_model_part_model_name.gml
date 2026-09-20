@@ -8,15 +8,15 @@ function action_lib_model_part_model_name(name)
 	
 	if (!history_undo && !history_redo)
 	{
-		with (history_set_var(action_lib_model_part_model_name, temp_edit.model_name, name, false))
-			id.state = array_copy_1d(temp_edit.model_state)
+		with (history_set_var(action_lib_model_part_model_name, obj_edit.model_name, name, false))
+			id.state = array_copy_1d(obj_edit.model_state)
 		
 		state = mc_assets.model_name_map[?name].default_state
 	}
 	else
 		state = history_data.state
 	
-	with (temp_edit)
+	with (obj_edit)
 	{
 		model_name = name
 		model_state = array_copy_1d(state)

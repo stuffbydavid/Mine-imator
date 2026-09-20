@@ -23,6 +23,7 @@ function app_update_tl_edit_select()
 	with (timeline_editor)
 	{
 		appearance.enabled = false
+		block.enabled = false
 		audio.enabled = false
 		path.enabled = false
 	}
@@ -132,6 +133,9 @@ function app_update_tl_edit_select()
 		
 		if (value_type[e_value_type.APPEARANCE])
 			app.timeline_editor.appearance.enabled = true
+		
+		if (value_type[e_value_type.BLOCK])
+			app.timeline_editor.block.enabled = true
 		
 		if (value_type[e_value_type.AUDIO])
 			app.timeline_editor.audio.enabled = true

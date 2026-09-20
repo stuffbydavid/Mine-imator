@@ -12,14 +12,20 @@ function tl_duplicate()
 		copy = null
 		glint_tex = other.glint_tex
 		
+		if (!has_temp && temp != null)
+		{
+			if (temp = other.id)
+				temp = id
+			else
+				temp = temp.copy
+		}
+
 		tl_update_scenery_part()
 		
 		// Set correct template
-		if (temp != null)
+		if (has_temp && temp != null)
 		{
-			if (temp = other.id) // Template is itself, update
-				temp = id
-			else if (temp.part_of != null) // Template is also a part, update to its copy
+			if (temp.part_of != null) // Template is also a part, update to its copy
 				temp = temp.copy
 		}
 		

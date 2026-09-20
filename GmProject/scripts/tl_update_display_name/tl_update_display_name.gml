@@ -27,6 +27,16 @@ function tl_update_display_name()
 					display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 			}
 		}
+		else if (type = e_tl_type.BLOCK && !has_temp)
+		{
+			if (!is_undefined(mc_assets.block_name_map[?block_name]))
+				display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+		}
+		else if (type = e_tl_type.SPECIAL_BLOCK && !has_temp)
+		{
+			if (!is_undefined(mc_assets.model_name_map[?model_name]))
+				display_name = minecraft_asset_get_name("model", mc_assets.model_name_map[?model_name].name)
+		}
 		else if (temp != null)
 			display_name = temp.display_name
 	}

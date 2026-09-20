@@ -22,16 +22,14 @@ function view_update(view, cam)
 		{
 			window_busy = "viewclick"
 			window_focus = string(view)
+			view_click_right = false
 		}
 		
-		if ((!cam || editcamobj) && mouse_right_pressed)
+		if (mouse_right_pressed)
 		{
-			view_click_x = display_mouse_get_x()
-			view_click_y = display_mouse_get_y()
-			window_busy = "viewmovecamera"
+			window_busy = "viewclick"
 			window_focus = string(view)
-			if (cam)
-				action_tl_select_single(cam)
+			view_click_right = true
 		}
 	}
 	
@@ -71,7 +69,15 @@ function view_update(view, cam)
 		{
 			mouse_cursor = cr_handpoint
 			
-			if ((!cam || editcamobj) && mouse_move > 5)
+			if (view_click_right && (!cam || editcamobj) && mouse_move > 5)
+			{
+				view_click_x = display_mouse_get_x()
+				view_click_y = display_mouse_get_y()
+				window_busy = "viewmovecamera"
+				if (cam)
+					action_tl_select_single(cam)
+			}
+			else if ((!cam || editcamobj) && mouse_move > 5)
 			{
 				if (keyboard_check(vk_shift))
 				{
@@ -91,11 +97,11 @@ function view_update(view, cam)
 				}
 			}
 			
-			if (!mouse_left)
+			if ((view_click_right && !mouse_right) || (!view_click_right && !mouse_left))
 			{
 				if (place_tl = null)
 				{
-					view_click(view, cam)
+					view_click(view, cam, view_click_right)
 					window_busy = ""
 				}
 				else // Stop placing

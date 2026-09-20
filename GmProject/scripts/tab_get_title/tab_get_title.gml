@@ -8,30 +8,30 @@ function tab_get_title(tab)
 		return text_get("tabprojectproperties")
 	else if (tab = timeline)
 		return text_get("tabtimeline")
-	else if (tab = template_editor)
+	else if (tab = object_editor)
 	{
-		if (!temp_edit)
+		if (obj_edit = null || !instance_exists(obj_edit))
 			return ""
-		switch (temp_edit.type)
+		switch (obj_edit.type)
 		{
 			case e_temp_type.CHARACTER:
-				return text_get("tabcharmodel", string_remove_newline(temp_edit.display_name))
+				return text_get("tabcharmodel", string_remove_newline(obj_edit.display_name))
 
 			case e_temp_type.EQUIPMENT:
-				return text_get("tabequipment", string_remove_newline(temp_edit.display_name))
+				return text_get("tabequipment", string_remove_newline(obj_edit.display_name))
 			
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.BLOCK:
-				return text_get("tabblock", string_remove_newline(temp_edit.display_name))
+				return text_get("tabblock", string_remove_newline(obj_edit.display_name))
 			
 			case e_temp_type.ITEM:
-				return text_get("tabitem", string_remove_newline(temp_edit.display_name))
+				return text_get("tabitem", string_remove_newline(obj_edit.display_name))
 			
 			case e_temp_type.MODEL_PART:
-				return text_get("tabmodelpart", string_remove_newline(temp_edit.display_name))
+				return text_get("tabmodelpart", string_remove_newline(obj_edit.display_name))
 			
 			case e_temp_type.PARTICLE_SPAWNER:
-				return text_get("tabparticles", string_remove_newline(temp_edit.display_name))
+				return text_get("tabparticles", string_remove_newline(obj_edit.display_name))
 		}
 	}
 	else if (tab = ground_editor)
