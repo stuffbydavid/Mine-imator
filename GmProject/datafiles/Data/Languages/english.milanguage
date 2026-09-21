@@ -934,8 +934,17 @@
 			"selected": "Selected camera (%1)"
 		},
 		"grid/": {
+			"alpha": "Alpha",
 			"columns": "Columns",
 			"rows": "Rows"
+		},
+		"compositionguide": "Composition Guides",
+		"compositionguidetype/": {
+			"none": "None",
+			"ruleofthirds": "Rule of thirds",
+			"radial": "Radial",
+			"triangle": "Triangle",
+			"circular": "Circular"
 		},
 		"snap/": {
 			"move": "Move",
@@ -4259,6 +4268,11 @@
 			"elastic": "Elastic",
 			"back": "Back",
 			"bounce": "Bounce"
+		},
+		"quickease/": {
+			"in": "Ease in",
+			"out": "Ease out",
+			"inout": "Ease in & out"
 		}
 	},
 	"settings/": {

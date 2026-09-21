@@ -1124,6 +1124,15 @@ function enums()
 		ROT_DISTANCE
 	}
 	
+	// Composition Guide
+	enum e_composition_guide
+	{
+		RULE_OF_THIRDS,
+		RADIAL,
+		TRIANGLE,
+		CIRCULAR
+	}	// Update app_startup_lists() when adding types
+	
 	// Mouse controls
 	enum e_mouse
 	{

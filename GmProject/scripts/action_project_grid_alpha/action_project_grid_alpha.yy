@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_grid_alpha",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_grid_alpha",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/App/Actions/Project.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

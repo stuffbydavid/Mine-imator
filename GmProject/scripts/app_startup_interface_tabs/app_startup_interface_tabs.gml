@@ -437,6 +437,10 @@ function app_startup_interface_tabs()
 		tbx_search = new_textbox(true, 0, "")
 		tbx_rename = new_textbox(true, 0, "")
 		
+		transition_easein = "easeinquad"
+		transition_easeout = "easeoutquad"
+		transition_easeinout = "easeinoutquad"
+	
 		list_width = 320
 		
 		hor_scroll = new_obj(obj_scrollbar)

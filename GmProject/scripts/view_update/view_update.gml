@@ -146,6 +146,17 @@ function view_update(view, cam)
 				render_samples = -1
 			}
 			
+			// Scroll to slow down movement
+			if (mouse_wheel <> 0)
+			{
+				if (mouse_wheel < 0)
+					setting_move_speed_scroll += (setting_move_speed_scroll / 5)
+				else
+					setting_move_speed_scroll -= (setting_move_speed_scroll / 5)
+					
+				setting_move_speed_scroll = clamp(setting_move_speed_scroll, 0.01, 10)
+			}
+			
 			if (setting_camera_lock_mouse)
 				mouse_cursor = cr_none
 			camera_control_move(cam, view_click_x, view_click_y)
@@ -154,7 +165,9 @@ function view_update(view, cam)
 			{
 				camera_work_set_focus()
 				window_busy = (place_tl != null ? "place" : "")
+				
 			}
+			
 		}
 		
 		// Pan camera
