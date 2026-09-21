@@ -31,6 +31,8 @@ function app_update_place()
 		place_pos = place_view_pos
 		place_rot = vec3(0)
 		
+		build_box_render = null
+		
 		if (!place_build)
 			action_tl_lock_tree(place_tl, false, null)
 		
@@ -49,11 +51,13 @@ function app_update_place()
 				// Adjust position/rotation by scenery
 				app_update_place_scenery()
 
+				// Find parent actions in build mode
 				if (place_build)
 				{
 					var action = null;
 					with (build_settings)
 						action = tl_get_parent_action(app.place_target_tl)
+					
 					if (is_array(action) && array_length(action) > e_parent_action.TARGET)
 						place_target_tl_part_of = action[e_parent_action.TARGET]
 					else
@@ -76,6 +80,11 @@ function app_update_place()
 				place_pos[X] = snap(place_pos[X] - rotpoint[X], block_size) + rotpoint[X]
 				place_pos[Y] = snap(place_pos[Y] - rotpoint[Y], block_size) + rotpoint[Y]
 				place_pos[Z] = 0
+				
+				var boxpos = array_copy_1d(place_pos);
+				boxpos[Z] -= block_half_size
+				build_box_matrix = matrix_create(boxpos, vec3(0), vec3(1))
+				build_box_render = build_box_top
 			}
 		}
 			
@@ -84,6 +93,7 @@ function app_update_place()
 			if (place_target_tl_part_of != null)
 				with (place_target_tl_part_of)
 					tl_mark_place_target(true)
+			
 			place_view_pos = null
 			return 0
 		}

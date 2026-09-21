@@ -137,8 +137,6 @@ function app_startup_window()
 	place_history = null
 	place_build = false
 	place_busy = "place"
-	build_type = e_tl_type.BLOCK
-	build_settings = new_obj(obj_build_settings)
 	place_view_second_show = false
 	place_pos = null
 	place_rot = vec3(0)

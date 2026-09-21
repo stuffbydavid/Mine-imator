@@ -18,12 +18,13 @@ function view_area_draw()
 		confirmw = string_width(text_get("viewbuildstop")) + 70
 		confirmx = view_area_x + view_area_width / 2 - confirmw / 2
 		confirmy = view_area_y + view_area_height - 40 - confirmh
-		stopmouseon = app_mouse_box(confirmx, confirmy, confirmw, confirmh, place_busy)
+		stopmouseon = app_mouse_box(confirmx, confirmy, confirmw, confirmh, window_busy)
 		
 		if (stopmouseon)
 		{
 			place_content_mouseon = "buildstop"
-			window_busy = ""
+			if (window_busy = place_busy)
+				window_busy = ""
 		}
 		else if (place_content_mouseon = "buildstop")
 			place_content_mouseon = null

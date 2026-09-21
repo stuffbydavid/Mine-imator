@@ -25,6 +25,21 @@ function app_update_place_scenery()
 	// Convert the world-space normal into the scenery grid
 	localnormal = vec3_normalize(vec3_mul_matrix(place_view_normal, matrix_transpose(worldtransform)))
 
+	if (place_build)
+	{
+		// Trace into the target before rounding to its local cell
+		var inside, boxcell, boxcenter;
+		inside = vec3_add(localpos, vec3_mul(localnormal, -block_size * 0.025))
+		boxcell = vec3(
+			round(inside[X] / block_size - 0.5),
+			round(inside[Y] / block_size - 0.5),
+			round(inside[Z] / block_size - 0.5)
+		)
+		boxcenter = vec3_mul(vec3_add(boxcell, 0.5), block_size)
+		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3(1)), worldtransform)
+		build_box_render = build_box
+	}
+	
 	// Find facenormal
 	var east, west, south, north, up, down, facenormal, normaldot;
 	east = vec3_dot(localnormal, vec3(1, 0, 0))

@@ -10,7 +10,7 @@ function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 	var trigger, font, click, disabled;
 	trigger = false
 	click = false
-	disabled = (place_build && name != "toolbaredit")
+	disabled = (place_build && name != "toolbaredit" && name != "toolbarfile")
 	
 	if (window_busy = "contextmenu")
 		window_busy = ""

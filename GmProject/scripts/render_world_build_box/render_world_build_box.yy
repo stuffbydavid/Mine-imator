@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_build_select",
+  "%Name":"render_world_build_box",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_build_select",
+  "name":"render_world_build_box",
   "parent":{
-    "name":"Build",
-    "path":"folders/Scripts/App/Actions/Build.yy",
+    "name":"World",
+    "path":"folders/Scripts/Render/World.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

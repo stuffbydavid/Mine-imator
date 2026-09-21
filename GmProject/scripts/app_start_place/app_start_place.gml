@@ -35,6 +35,7 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	if (build)
 	{
+		// Copy workbench settings into builder
 		with (build_settings)
 		{
 			type = (app.build_type = e_tl_type.SPECIAL_BLOCK) ? e_temp_type.SPECIAL_BLOCK : e_temp_type.BLOCK
@@ -58,9 +59,13 @@ function app_start_place(build, tl = null, spawn = false)
 				temp_update_model_shape()
 			}
 		}
+		
+		// Find block selection
+		var special, buildname;
+		special = (build_type = e_tl_type.SPECIAL_BLOCK)
+		buildname = special ? build_settings.model_name : build_settings.block_name
+		
 		build_mode.build_selected = null
-		var special = (build_type = e_tl_type.SPECIAL_BLOCK);
-		var buildname = special ? build_settings.model_name : build_settings.block_name;
 		for (var b = 0; b < ds_list_size(build_mode.build_list.list); b++)
 		{
 			var value = build_mode.build_list.list[|b];
@@ -70,6 +75,15 @@ function app_start_place(build, tl = null, spawn = false)
 				break
 			}
 		}
+		
+		if (build_mode.build_selected != null && ds_list_find_index(build_mode.build_list.display_list, build_mode.build_selected) < 0)
+		{
+			build_mode.build_list.search_tbx.text = ""
+			build_mode.build_list.search = false
+			sortlist_update(build_mode.build_list)
+		}
+		build_mode.build_list.center_on_draw = (build_mode.build_selected != null)
+		
 		place_tl_parent = app
 		place_tl_parent_index = -1
 		

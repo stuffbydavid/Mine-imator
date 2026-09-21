@@ -443,7 +443,7 @@ function view_draw(view)
 		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
 			var viewbusy = place_busy;
-			if (place_tl != null && window_focus = string(view) && string_pos("view", window_busy) == 1)
+			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
 				viewbusy = window_busy
 			
 			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon && place_content_mouseon != "buildstop")
@@ -866,7 +866,7 @@ function view_draw(view)
 	
 	// Mouse on
 	var viewbusy = place_busy;
-	if (place_tl != null && window_focus = string(view))
+	if ((place_tl != null || place_build) && window_focus = string(view))
 		viewbusy = window_busy
 	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, viewbusy)
 	if (view.mouseon && view = view_second)

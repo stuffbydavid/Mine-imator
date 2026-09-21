@@ -23,7 +23,22 @@ function toolbar_draw()
 	
 	// File
 	capwid = string_width(text_get("toolbarfile")) + 16
+	var buildfile = (place_build && window_busy = place_busy && app_mouse_box(dx, dy, capwid, toolbar_size, place_busy) && !context_menu_mouseon);
+	if (buildfile)
+	{
+		window_busy = ""
+		content_mouseon = true
+	}
 	toolbar_draw_button("toolbarfile", dx, dy, capwid)
+	
+	if (buildfile)
+	{
+		if (window_busy = "contextmenu")
+			context_menu_busy_prev = place_busy
+		else if (window_busy = "")
+			window_busy = place_busy
+	}
+	
 	dx += capwid + padding
 	
 	if (window_state = "")

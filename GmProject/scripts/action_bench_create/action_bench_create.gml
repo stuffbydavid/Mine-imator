@@ -4,11 +4,13 @@
 
 function action_bench_create(edit = false, build = false)
 {
-	var tab, editobj;
+	var tab, editobj, placetarget, placeparent;
 	tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
 	if (place_build && !history_undo && !history_redo)
 		tab = (build_type = e_tl_type.SPECIAL_BLOCK) ? e_bench.SPECIAL_BLOCK : e_bench.BLOCK
 	editobj = null
+	placetarget = null
+	placeparent = null
 	
 	if (tab = e_bench.SOUND)
 		return action_bench_sound_create()
@@ -34,6 +36,8 @@ function action_bench_create(edit = false, build = false)
 
 	if (place_build && (history_undo || history_redo))
 	{
+		placetarget = place_target_tl
+		placeparent = place_target_tl_part_of
 		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
 			with (place_target_tl_part_of)
 				tl_mark_place_target(false)
@@ -75,7 +79,7 @@ function action_bench_create(edit = false, build = false)
 		if (history_redo)
 			buildaction = history_data.build_action
 		else
-			buildaction = (tab = e_bench.BLOCK || tab = e_bench.SPECIAL_BLOCK) && (place_build || startplacing)
+			buildaction = place_build || (tab = e_bench.BLOCK && startplacing)
 		
 		if (!history_redo && buildaction && !place_build)
 		{
@@ -510,6 +514,13 @@ function action_bench_create(edit = false, build = false)
 	
 	if (place_build)
 	{
+		if (placetarget != null && placeparent != null && instance_exists(placetarget) && instance_exists(placeparent))
+		{
+			place_target_tl = placetarget
+			place_target_tl_part_of = placeparent
+			with (placeparent)
+				tl_mark_place_target(true)
+		}
 		place_pos = null
 		place_view_pos = null
 		view_main.update_place_surfaces = true

@@ -78,9 +78,9 @@ function sortlist_update(slist)
 			else if (slist.column_sort = null)
 			{
 				if (match >= 2)
-					array_add(namelist, value)
+					array_add(namelist, value, false)
 				else
-					array_add(variantlist, value)
+					array_add(variantlist, value, false)
 			}
 		}
 		
