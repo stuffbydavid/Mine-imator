@@ -2,10 +2,9 @@
 
 function action_toolbar_redo()
 {
-	if (history_pos = 0)
+	var buildtab = bench_tab;
+	if (history_pos = 0 || (place_build && !history[history_pos - 1].build_action))
 		return 0
-	if (place_build)
-		history_build_action(false)
 	
 	action_tl_play_break()
 	
@@ -34,7 +33,10 @@ function action_toolbar_redo()
 	
 	history_redo = false
 	if (place_build)
-		history_build_action(true)
+	{
+		bench_tab = buildtab
+		obj_edit = build_settings
+	}
 	
 	history_resource_update = true
 	render_samples = -1

@@ -73,6 +73,7 @@ function settings_startup()
 	setting_properties_location = "right"
 	setting_ground_editor_location = "right_secondary"
 	setting_object_editor_location = "right_secondary"
+	setting_build_mode_location = "right_secondary"
 	setting_timeline_editor_location = "right"
 	setting_frame_editor_location = "right_secondary"
 	setting_settings_location = "right_secondary"

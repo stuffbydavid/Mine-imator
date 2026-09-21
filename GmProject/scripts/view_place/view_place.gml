@@ -4,7 +4,7 @@
 
 function view_place(view, cam)
 {
-	if (window_busy != "place" || mouse_x < content_x || mouse_y < content_y || mouse_x >= content_x + content_width || mouse_y >= content_y + content_height)
+	if (window_busy != place_busy || mouse_x < content_x || mouse_y < content_y || mouse_x >= content_x + content_width || mouse_y >= content_y + content_height)
 		return
 	place_content_mouseon = null
 

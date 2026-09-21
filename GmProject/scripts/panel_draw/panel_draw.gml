@@ -105,9 +105,7 @@ function panel_draw(panel)
 	content_tab.raised = true
 	
 	// Build mode
-	var buildinteract, contentbusy;
-	buildinteract = (window_busy = "place" && place_build && content_tab.build_interact)
-	contentbusy = window_busy;
+	var buildinteract = (window_busy = place_busy && place_build && content_tab = build_mode);
 	if (buildinteract)
 		window_busy = ""
 
@@ -141,9 +139,7 @@ function panel_draw(panel)
 			place_content_mouseon = string(content_tab)
 		
 		if (window_busy = "menu")
-			menu_list[|ds_list_size(menu_list) - 1].menu_busy_prev = contentbusy
-		else if (window_busy = "")
-			window_busy = contentbusy
+			menu_list[|ds_list_size(menu_list) - 1].menu_busy_prev = place_busy
 	}
 	
 	// Tabs
@@ -241,7 +237,11 @@ function panel_draw(panel)
 						mouse_cursor = cr_handpoint
 					}
 					else
+					{
+						if (buildinteract)
+							mouse_cursor = cr_default
 						tabmouseon = true
+					}
 				}
 			}
 			
@@ -263,15 +263,16 @@ function panel_draw(panel)
 			// Close button
 			if (tab.closeable && (hover || sel))
 			{
-				if (hover && mouse_middle_pressed)
+				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL) || (hover && mouse_middle_pressed))
 				{
-					tab_close(tab)
-					return 0
-				}
-				
-				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL))
-				{
-					tab_close(tab)
+					if (tab = build_mode)
+						app_stop_place()
+					else
+						tab_close(tab)
+					
+					if (buildinteract && place_build && window_busy = "")
+						window_busy = place_busy
+						
 					return 0
 				}
 			}
@@ -434,4 +435,8 @@ function panel_draw(panel)
 		window_busy = "tabclick"
 		tab_move = panel.tab_list[tablistmouseon]
 	}
+	
+	// Restore build mode window busy state
+	if (buildinteract && place_build && window_busy = "")
+		window_busy = place_busy
 }

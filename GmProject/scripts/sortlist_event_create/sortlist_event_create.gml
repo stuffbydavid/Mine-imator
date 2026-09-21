@@ -24,6 +24,7 @@ function sortlist_event_create()
 	scroll = new_obj(obj_scrollbar)
 	script = null
 	script_select_click = null
+	script_search = sortlist_search_default
 	
 	can_deselect = false
 	filter_list = ds_list_create()

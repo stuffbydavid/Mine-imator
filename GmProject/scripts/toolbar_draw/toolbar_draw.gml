@@ -30,7 +30,7 @@ function toolbar_draw()
 	{
 		// Edit enabled in build mode
 		capwid = string_width(text_get("toolbaredit")) + 16
-		var buildedit = place_build && window_busy = "place" && app_mouse_box(dx, dy, capwid, toolbar_size, "place") && !context_menu_mouseon
+		var buildedit = place_build && window_busy = place_busy && app_mouse_box(dx, dy, capwid, toolbar_size, place_busy) && !context_menu_mouseon
 		if (buildedit)
 		{
 			window_busy = ""
@@ -41,9 +41,9 @@ function toolbar_draw()
 		if (buildedit)
 		{
 			if (window_busy = "contextmenu")
-				context_menu_busy_prev = "place"
+				context_menu_busy_prev = place_busy
 			else if (window_busy = "")
-				window_busy = "place"
+				window_busy = place_busy
 		}
 		dx += capwid + padding
 

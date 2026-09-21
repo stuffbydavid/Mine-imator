@@ -79,13 +79,23 @@ function app_update_place_scenery()
 	place_rot = vec3(radtodeg(worldangle[X]), radtodeg(worldangle[Y]), radtodeg(worldangle[Z]))
 
 	// Adjust final position by size/repeat setting of placed block or scenery
-	if (place_tl.type = e_tl_type.BLOCK || (place_tl.type = e_tl_type.SCENERY && place_tl.temp.scenery != null))
+	if ((place_build && build_type = e_tl_type.BLOCK) ||
+		(!place_build && (place_tl.type = e_tl_type.BLOCK || (place_tl.type = e_tl_type.SCENERY && place_tl.temp.scenery != null))))
 	{
-		var targetrepeat, targetmin, targetmax, targetface, legacywidth, targetmatrix;
-		targetrepeat = place_tl.temp.block_repeat_enable ? place_tl.temp.block_repeat : vec3(1)
+		var targetrepeat, targetmin, targetmax, targetface, legacywidth, targetmatrix, rotpoint;
+		if (place_build)
+		{
+			targetrepeat = build_settings.block_repeat_enable ? build_settings.block_repeat : vec3(1)
+			rotpoint = build_settings.rot_point
+		}
+		else
+		{
+			targetrepeat = place_tl.temp.block_repeat_enable ? place_tl.temp.block_repeat : vec3(1)
+			rotpoint = place_tl.rot_point_render
+		}
 		targetmin = vec3(0)
 		
-		if (place_tl.type = e_tl_type.BLOCK)
+		if (place_build || place_tl.type = e_tl_type.BLOCK)
 		{
 			targetmax = vec3(targetrepeat[Y], targetrepeat[X], targetrepeat[Z])
 			legacywidth = targetrepeat[Y]
@@ -110,8 +120,8 @@ function app_update_place_scenery()
 				targetface[axis] = (floor((targetmin[axis] + targetmax[axis]) * 0.5) + 0.5) * block_size
 		}
 		targetmatrix = matrix_multiply(
-			matrix_create(point3D_mul(place_tl.rot_point_render, -1), vec3(0), vec3(1)),
-			matrix_create(vec3(0), place_rot, vec3(place_tl.value[e_value.SCA_X], place_tl.value[e_value.SCA_Y], place_tl.value[e_value.SCA_Z]))
+			matrix_create(point3D_mul(rotpoint, -1), vec3(0), vec3(1)),
+			matrix_create(vec3(0), place_rot, place_sca)
 		)
 		targetmatrix = matrix_multiply(matrix_create(point3D(0, legacywidth * block_size, 0), vec3(0, 0, 90), vec3(1)), targetmatrix)
 

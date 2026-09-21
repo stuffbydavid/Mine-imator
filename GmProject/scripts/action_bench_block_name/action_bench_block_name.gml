@@ -4,18 +4,29 @@
 
 function action_bench_block_name(block)
 {
-	with (bench_settings)
+	var settings, list, search;
+	if (place_build)
 	{
-		var s = string_lower(block_list.search_tbx.text);
-		
-		if (block_name = block && s = "")
+		settings = build_settings
+		list = build_mode.build_list
+	}
+	else
+	{
+		settings = bench_settings
+		list = bench_settings.block_list
+	}
+	search = string_lower(list.search_tbx.text)
+	
+	with (settings)
+	{
+		if (block_name = block && search = "")
 			return 0
 		
 		block_name = block
 		block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 		
 		// Modify states for better search
-		if (s != "" && !string_contains(string_lower(minecraft_asset_get_name("block", mc_assets.block_name_map[?block].name)), s))
+		if (search != "" && !string_contains(string_lower(minecraft_asset_get_name("block", mc_assets.block_name_map[?block].name)), search))
 		{
 			var b, val;
 			b = mc_assets.block_name_map[?block]
@@ -40,6 +51,7 @@ function action_bench_block_name(block)
 		
 		temp_update_block()
 		
-		preview.update = true
+		if (preview != null)
+			preview.update = true
 	}
 }

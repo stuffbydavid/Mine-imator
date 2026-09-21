@@ -8,13 +8,13 @@ function view_update(view, cam)
 	
 	// Camera object disabled while placing or object locked
 	if (cam)
-		editcamobj = (place_tl = null && !cam.lock)
+		editcamobj = (place_tl = null && !place_build && !cam.lock)
 		
 	// Surface
 	view_update_surface(view, cam)
 	
 	// Click
-	if (content_mouseon && (window_busy = "" || window_busy = "place"))
+	if (content_mouseon && (window_busy = "" || window_busy = place_busy))
 	{
 		place_content_mouseon = view
 		mouse_cursor = cr_handpoint
@@ -49,7 +49,7 @@ function view_update(view, cam)
 	}
 	
 	// Mousewheel
-	if (((((window_busy = "" || window_busy = "place") && content_mouseon) || (window_busy = "viewrotatecamera" && window_focus = string(view)))) && mouse_wheel <> 0)
+	if (((((window_busy = "" || window_busy = place_busy) && content_mouseon) || (window_busy = "viewrotatecamera" && window_focus = string(view)))) && mouse_wheel <> 0)
 	{
 		if (!cam)
 			cam_work_zoom_goal = clamp(cam_work_zoom_goal * (1 + 0.25 * mouse_wheel), cam_near, cam_far)
@@ -99,18 +99,16 @@ function view_update(view, cam)
 			
 			if ((view_click_right && !mouse_right) || (!view_click_right && !mouse_left))
 			{
-				if (place_tl = null)
+				if (place_build)
+				{
+					window_busy = place_busy
+					if (place_pos != null)
+						action_bench_create(false, true)
+				}
+				else if (place_tl = null)
 				{
 					view_click(view, cam, view_click_right)
 					window_busy = ""
-				}
-				else if (place_build)
-				{
-					var repeatbuild = !place_target_tl_model_part;
-					app_stop_place(true, repeatbuild)
-					
-					if (repeatbuild)
-						action_bench_create(false, true)
 				}
 				else // Stop placing
 					app_stop_place()
@@ -132,7 +130,7 @@ function view_update(view, cam)
 				camera_control_move(cam, view_click_x, view_click_y)
 			
 			if (!mouse_left)
-				window_busy = (place_tl != null ? "place" : "")
+				window_busy = (place_build || place_tl != null) ? place_busy : ""
 		}
 		
 		// Move camera
@@ -153,7 +151,7 @@ function view_update(view, cam)
 			if (!mouse_right)
 			{
 				camera_work_set_focus()
-				window_busy = (place_tl != null ? "place" : "")
+				window_busy = (place_build || place_tl != null) ? place_busy : ""
 			}
 		}
 		
@@ -165,7 +163,7 @@ function view_update(view, cam)
 			if (!mouse_left)
 			{
 				camera_work_set_focus()
-				window_busy = (place_tl != null ? "place" : "")
+				window_busy = (place_build || place_tl != null) ? place_busy : ""
 			}
 		}
 	}

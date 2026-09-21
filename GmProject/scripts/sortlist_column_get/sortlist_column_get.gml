@@ -8,6 +8,11 @@ function sortlist_column_get(slist, value, col)
 {
 	switch (slist.column_name[col])
 	{
+		case "buildname":
+			if (value[0])
+				return minecraft_asset_get_name("model", value[1])
+			return minecraft_asset_get_name("block", value[1])
+
 		case "libname":
 			if (dev_mode_debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"

@@ -31,7 +31,7 @@ function bench_draw()
 			window_busy = ""
 		
 		bench_settings.height = 0
-		bench_settings.height_goal = bench_initial_height + bench_height_add
+		bench_settings.height_goal = bench_settings.height_min + bench_height_add
 		return 0
 	}
 	else
@@ -53,7 +53,7 @@ function bench_draw()
 	dh = content_height
 
 	benchbusy = window_busy
-	benchmouseon = place_build && benchbusy = "place" && app_mouse_box(content_x, content_y, content_width, content_height, "place")
+	benchmouseon = place_build && benchbusy = place_busy && app_mouse_box(content_x, content_y, content_width, content_height, place_busy)
 	if (benchmouseon)
 	{
 		place_content_mouseon = "bench"

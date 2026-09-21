@@ -114,7 +114,7 @@ function view_update_surface(view, cam)
 	}
 
 	// Placed objects
-	if (place_tl != null && (place_content_mouseon = null || content_mouseon))
+	if ((place_tl != null || place_build) && (place_content_mouseon = null || content_mouseon))
 	{
 		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
 		if (!place_build)

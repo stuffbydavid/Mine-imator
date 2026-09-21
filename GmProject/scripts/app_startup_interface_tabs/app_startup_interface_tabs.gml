@@ -196,13 +196,13 @@ function app_startup_interface_tabs()
 	// Object editor
 	object_editor = new_tab(setting_object_editor_location, false)
 	object_editor.script = tab_object_editor
-	object_editor.build_interact = true
 	
 	with (object_editor)
 	{
 		// Character list
 		char_list = new_obj(obj_sortlist)
 		char_list.script = action_lib_model_name
+		char_list.script_search = sortlist_search_model
 		sortlist_column_add(char_list, "charname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
@@ -213,6 +213,7 @@ function app_startup_interface_tabs()
 		// Block
 		block_list = new_obj(obj_sortlist)
 		block_list.script = action_lib_block_name
+		block_list.script_search = sortlist_search_block
 		sortlist_column_add(block_list, "blockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
@@ -221,6 +222,7 @@ function app_startup_interface_tabs()
 		// Special block list
 		special_block_list = new_obj(obj_sortlist)
 		special_block_list.script = action_lib_model_name
+		special_block_list.script_search = sortlist_search_model
 		sortlist_column_add(special_block_list, "spblockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
@@ -228,6 +230,7 @@ function app_startup_interface_tabs()
 		// Equipment list
 		equipment_list = new_obj(obj_sortlist)
 		equipment_list.script = action_lib_model_name
+		equipment_list.script_search = sortlist_search_model
 		sortlist_column_add(equipment_list, "spblockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.equipment_list); b++)
 			sortlist_add(equipment_list, mc_assets.equipment_list[|b].name)
@@ -235,6 +238,7 @@ function app_startup_interface_tabs()
 		// Model part list
 		model_part_model_list = new_obj(obj_sortlist)
 		model_part_model_list.script = action_lib_model_part_model_name
+		model_part_model_list.script_search = sortlist_search_model
 		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 		{
@@ -422,7 +426,29 @@ function app_startup_interface_tabs()
 		
 		tbx_type_bounce_factor = new_textbox_decimals()
 	}
+
+	// Build mode editor
+	build_mode = new_tab(setting_build_mode_location, false)
+	build_mode.script = tab_object_editor
 	
+	with (build_mode)
+	{
+		build_list = new_obj(obj_sortlist)
+		build_list.script = action_build_select
+		build_list.script_search = sortlist_search_build
+		build_list.header_show = true
+		sortlist_column_add(build_list, "buildname", 0)
+		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
+			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
+				sortlist_add(build_list, [false, mc_assets.block_list[|b].name])
+
+		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
+			sortlist_add(build_list, [true, mc_assets.special_block_list[|b].name])
+		build_list.column_sort = 0
+		sortlist_update(build_list)
+		build_selected = null
+	}
+
 	ptype_list = object_editor.type_list
 	
 	// Timeline

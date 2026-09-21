@@ -1047,6 +1047,7 @@
 		"libinstances": "Instances",
 		"charname": "Name",
 		"blockname": "Name",
+		"buildname": "Name",
 		"spblockname": "Name",
 		"modelpartmodelname": "Name",
 		"sceneryname": "Name",

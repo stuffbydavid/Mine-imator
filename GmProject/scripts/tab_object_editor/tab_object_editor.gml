@@ -2,6 +2,12 @@
 
 function tab_object_editor()
 {
+	if (tab = build_mode && (!place_build || obj_edit != build_settings))
+	{
+		tab_close(tab)
+		return 0
+	}
+
 	if (obj_edit = null || !instance_exists(obj_edit))
 	{
 		obj_edit = null

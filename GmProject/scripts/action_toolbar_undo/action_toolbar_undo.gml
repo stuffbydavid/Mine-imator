@@ -2,13 +2,8 @@
 
 function action_toolbar_undo()
 {
-	// The active build preview occupies one history slot
-	if (history_pos = history_amount ||
-		(place_build && (history_pos + 1 >= history_amount || !history[history_pos + 1].build_action)))
+	if (history_pos = history_amount || (place_build && !history[history_pos].build_action))
 		return 0
-
-	if (place_build)
-		history_build_action(false)
 	
 	action_tl_play_break()
 	
@@ -37,7 +32,7 @@ function action_toolbar_undo()
 	
 	history_pos++
 	if (place_build)
-		history_build_action(true)
+		obj_edit = build_settings
 	
 	history_resource_update = true
 	render_samples = -1
