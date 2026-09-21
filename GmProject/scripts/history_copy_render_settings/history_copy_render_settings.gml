@@ -66,5 +66,9 @@ function history_copy_render_settings(obj)
 	project_render_block_emissive = obj.project_render_block_emissive
 	project_render_block_subsurface = obj.project_render_block_subsurface
 	project_render_water_reflections = obj.project_render_water_reflections
+	project_render_water_roughness = obj.project_render_water_roughness
+	project_render_water_wave_strength = obj.project_render_water_wave_strength
+	project_render_water_wave_speed = obj.project_render_water_wave_speed
+	project_render_water_wave_detail = obj.project_render_water_wave_detail
 	project_render_material_maps = obj.project_render_material_maps
 }

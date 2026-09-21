@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_water_roughness",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_water_roughness",
+  "parent":{
+    "name":"Materials",
+    "path":"folders/Scripts/App/Actions/Project/Render/Materials.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

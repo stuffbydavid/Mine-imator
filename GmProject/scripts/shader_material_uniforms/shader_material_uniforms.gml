@@ -30,5 +30,8 @@ function shader_material_uniforms()
 	
 	// Other
 	new_shader_uniform("uIsWater")
+	new_shader_uniform("uWaterMaterialTime")
+	new_shader_uniform("uWaterMaterialStrength")
+	new_shader_uniform("uWaterMaterialOctaves")
 	new_shader_uniform("uUseNormalMap")
 }

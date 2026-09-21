@@ -529,6 +529,34 @@ function tab_properties_render()
 			
 			tab_collapse_end()
 		}
+
+		// Default water material
+		tab_control_switch()
+		draw_button_collapse("water_material", collapse_map[?"water_material"], action_project_render_water_reflections, project_render_water_reflections, "renderwaterreflections", "renderwaterreflectionshelp")
+		tab_next()
+
+		if (project_render_water_reflections && collapse_map[?"water_material"])
+		{
+			tab_collapse_start()
+
+			tab_control_dragger()
+			draw_dragger("renderwaterroughness", dx, dy, dragger_width, round(project_render_water_roughness * 100), 1, 0, 100, 0, 1, tab.render.tbx_water_roughness, action_project_render_water_roughness)
+			tab_next()
+
+			tab_control_dragger()
+			draw_dragger("renderwaterwavestrength", dx, dy, dragger_width, round(project_render_water_wave_strength * 100), 1, 0, 100, 100, 1, tab.render.tbx_water_wave_strength, action_project_render_water_wave_strength)
+			tab_next()
+
+			tab_control_dragger()
+			draw_dragger("renderwaterwavespeed", dx, dy, dragger_width, round(project_render_water_wave_speed * 100), 1, 0, no_limit, 100, 1, tab.render.tbx_water_wave_speed, action_project_render_water_wave_speed)
+			tab_next()
+
+			tab_control_dragger()
+			draw_dragger("renderwaterwavedetail", dx, dy, dragger_width, project_render_water_wave_detail, 1, 1, 8, 6, 1, tab.render.tbx_water_wave_detail, action_project_render_water_wave_detail)
+			tab_next()
+
+			tab_collapse_end()
+		}
 		
 		// Default emissive
 		tab_control_dragger()
@@ -538,11 +566,6 @@ function tab_properties_render()
 		// Default subsurface
 		tab_control_dragger()
 		draw_dragger("renderdefaultsubsurfaceradius", dx, dy, dragger_width, project_render_block_subsurface, .1, 0, no_limit, 8, 0.01, tab.render.tbx_block_subsurface_radius, action_project_render_block_subsurface, null, true, false, "renderdefaultsubsurfaceradiustip")
-		tab_next()
-		
-		// Water reflections
-		tab_control_switch()
-		draw_switch("renderwaterreflections", dx, dy, project_render_water_reflections, action_project_render_water_reflections, "renderwaterreflectionshelp")
 		tab_next()
 		
 		// Material maps

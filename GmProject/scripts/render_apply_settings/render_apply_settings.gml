@@ -100,6 +100,10 @@ function render_apply_settings(preset, renderer)
 			project_render_block_emissive = preset.block_emissive
 			project_render_block_subsurface = preset.block_subsurface
 			project_render_water_reflections = preset.water_reflections
+			project_render_water_roughness = preset.water_roughness
+			project_render_water_wave_strength = preset.water_wave_strength
+			project_render_water_wave_speed = preset.water_wave_speed
+			project_render_water_wave_detail = preset.water_wave_detail
 			project_render_material_maps = preset.material_maps
 		}
 	}

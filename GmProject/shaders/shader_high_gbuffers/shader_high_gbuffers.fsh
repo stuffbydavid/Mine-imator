@@ -34,12 +34,17 @@ void main()
 	float roughness, metallic, emissive, F0, sss;
 	getMaterial(roughness, metallic, emissive, F0, sss);
 
-	float F = getFresnel(getMappedNormal(tex, getTBN(vNormalWorld, vTangentWorld)), mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
+	mat3 tbnWorld = getTBN(vNormalWorld, vTangentWorld);
+	mat3 tbnView = getTBN(vNormalView, vTangentView);
+	vec3 normalWorld = getMaterialNormal(tex, vPosition, tbnWorld);
+	vec3 normalView = transformMaterialNormal(normalWorld, tbnWorld, tbnView);
+
+	float F = getFresnel(normalWorld, mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
 	if (uIsSky > 0)
 		F = 0.0;
 
 	gl_FragData[0] = vec4(vDepth, 0.0, 0.0, 1.0); // Depth
-	gl_FragData[1] = vec4(packNormal(getMappedNormal(tex, getTBN(vNormalView, vTangentView))).rgb, emissive); // Normal, emissive
+	gl_FragData[1] = vec4(packNormal(normalView).rgb, emissive); // Normal, emissive
 	gl_FragData[2] = vec4(roughness, metallic, F, uSSAO); // Material, SSAO
 	gl_FragData[3] = vec4(getGlint(baseColor, tex, uTextureSize, uGamma), 1.0); // Glint
 }

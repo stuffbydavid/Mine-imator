@@ -19,13 +19,13 @@ function render_world_ground()
 	render_set_uniform_color("uGlowColor", c_black, 1)
 	render_set_uniform_int("uGlowTexture", 0)
 	render_set_uniform_int("uFogShow", app.background_fog_show && render_mode != e_render_mode.COLOR)
-	render_set_uniform_int("uIsWater", iswater)
+	render_set_uniform_int("uIsWater", iswater && app.project_render_water_reflections)
 	render_set_uniform_int("uMaterialFormat", background_ground_tex_material.material_format)
 	
 	if (background_ground_tex_material = mc_res)
 	{
 		render_set_uniform("uMetallic", 0)
-		render_set_uniform("uRoughness", (iswater && app.project_render_water_reflections ? .07 : 1))
+		render_set_uniform("uRoughness", (iswater && app.project_render_water_reflections ? app.project_render_water_roughness : 1))
 		render_set_uniform("uEmissive", 0)
 	}
 	else

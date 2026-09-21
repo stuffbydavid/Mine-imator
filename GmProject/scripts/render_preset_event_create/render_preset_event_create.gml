@@ -94,5 +94,9 @@ function render_preset_event_create()
 	block_emissive = 1
 	block_subsurface = 8
 	water_reflections = true
+	water_roughness = 0
+	water_wave_strength = 1
+	water_wave_speed = 1
+	water_wave_detail = 6
 	material_maps = false
 }

@@ -116,6 +116,10 @@ function render_preset_equals(obj, renderer, allsettings)
 		block_emissive = obj.block_emissive &&
 		block_subsurface = obj.block_subsurface &&
 		water_reflections = obj.water_reflections &&
+		water_roughness = obj.water_roughness &&
+		water_wave_strength = obj.water_wave_strength &&
+		water_wave_speed = obj.water_wave_speed &&
+		water_wave_detail = obj.water_wave_detail &&
 		material_maps = obj.material_maps
 	)
 

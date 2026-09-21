@@ -3,7 +3,6 @@ uniform sampler2D uTexture; // static
 uniform int uIsSky;
 uniform int uLightAmount; // static
 uniform vec4 uLightData[128]; // static
-uniform int uIsWater;
 uniform vec3 uCameraPosition; // static
 uniform float uLightSpecular;
 uniform float uGamma;
@@ -39,7 +38,7 @@ void main()
 		// Get material data
 		float roughness, metallic, emissive, F0, sss;
 		getMaterial(roughness, metallic, emissive, F0, sss);
-		vec3 normal = getMappedNormal(vTexCoord, getTBN(vNormal, vTangent));
+		vec3 normal = getMaterialNormal(vTexCoord, vPosition, getTBN(vNormal, vTangent));
 		
 		for (int i = 0; i < uLightAmount; i++)
 		{

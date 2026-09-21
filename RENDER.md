@@ -60,7 +60,11 @@ The ranges below are the ranges supported by the corresponding interface control
 | `bend_style` | `"blocky"` or `"realistic"` | Block/character bend deformation style |
 | `opaque_leaves` | Boolean | Render leaves as opaque geometry |
 | `liquid_animation` | Boolean | Enable animated liquid waves |
-| `water_reflections` | Boolean | Enable water reflections |
+| `water_reflections` | Boolean | Enable the default reflective water material |
+| `water_roughness` | 0-1 | Default water material roughness |
+| `water_wave_strength` | 0-1 | Default water material wave strength |
+| `water_wave_speed` | 0-no limit | Default water material wave speed |
+| `water_wave_detail` | Integer, 1-8 | Default water material wave detail |
 | `block_emissive` | 0-no limit | Default block/material emissive strength |
 | `block_subsurface` | 0-no limit | Default block/material subsurface radius |
 | `glint_speed` | 0-no limit | Enchantment glint animation speed |

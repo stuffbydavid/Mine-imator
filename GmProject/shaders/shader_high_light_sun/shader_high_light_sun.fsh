@@ -2,7 +2,6 @@
 
 uniform sampler2D uTexture; // static
 uniform int uIsSky;
-uniform int uIsWater;
 
 uniform vec3 uLightDirection; // static
 uniform vec4 uLightColor; // static
@@ -138,7 +137,7 @@ void main()
 		float roughness, metallic, emissive, F0, sss;
 		getMaterial(roughness, metallic, emissive, F0, sss);
 		
-		vec3 normal = getMappedNormal(vTexCoord, getTBN(vNormal, vTangent));
+		vec3 normal = getMaterialNormal(vTexCoord, vPosition, getTBN(vNormal, vTangent));
 		vec3 subsurfaceRadius = uSSSRadius * sss;
 		vec3 baseColorLinear = pow(baseColor.rgb, vec3(uGamma));
 		vec3 specularF0 = mix(vec3(F0), baseColorLinear, metallic);

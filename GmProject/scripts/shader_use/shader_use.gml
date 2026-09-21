@@ -35,6 +35,13 @@ function shader_use()
 		render_set_uniform("uWindDirectionalSpeed", app.background_wind * app.background_wind_directional_speed * .1 * app.background_time)
 		render_set_uniform("uWindDirectionalStrength", app.background_wind * app.background_wind_directional_strength * app.setting_wind_enable)
 	}
+
+	if (!is_undefined(uniform_map[?"uWaterMaterialTime"]) && uniform_map[?"uWaterMaterialTime"] > -1)
+	{
+		render_set_uniform("uWaterMaterialTime", app.background_time * app.project_render_water_wave_speed)
+		render_set_uniform("uWaterMaterialStrength", app.project_render_water_wave_strength)
+		render_set_uniform_int("uWaterMaterialOctaves", app.project_render_water_wave_detail)
+	}
 	
 	// Set fog
 	if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)

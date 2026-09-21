@@ -6,6 +6,39 @@ void main() {}
 
 uniform sampler2D uTextureNormal; // static
 uniform int uUseNormalMap; // static
+uniform float uWaterMaterialTime; // static
+uniform float uWaterMaterialStrength; // static
+uniform int uWaterMaterialOctaves; // static
+
+// GPU Gems: Chapter 1
+// https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models
+vec3 getWaterNormal(vec3 position)
+{
+	vec2 gradient = vec2(0.0);
+	vec2 direction = vec2(1.0, 0.0);
+	float frequency = 0.16;
+	float speed = 0.03;
+	float strength = 0.012;
+
+	for (int octave = 0; octave < 8; octave++)
+	{
+		if (octave >= uWaterMaterialOctaves)
+			break;
+
+		float phase = dot(position.xy, direction) * frequency + uWaterMaterialTime * speed;
+		gradient += direction * cos(phase) * strength;
+
+		direction = vec2(
+			direction.x * 0.682 - direction.y * 0.731,
+			direction.x * 0.731 + direction.y * 0.682
+		);
+		frequency *= 1.45;
+		speed *= 1.35;
+		strength *= 0.76;
+	}
+
+	return normalize(vec3(-gradient, 1.0));
+}
 
 vec3 getMappedNormal(vec2 uv, mat3 tbn)
 {
@@ -18,6 +51,29 @@ vec3 getMappedNormal(vec2 uv, mat3 tbn)
 	n.z = sqrt(max(0.0, 1.0 - dot(n.xy, n.xy))); // Get Z
 	n.y *= -1.0; // Convert Y- to Y+
 	return normalize(tbn * n.xyz);
+}
+
+vec3 getMaterialNormal(vec2 uv, vec3 position, mat3 tbn)
+{
+	vec3 normal = getMappedNormal(uv, tbn);
+	if (uIsWater > 0)
+	{
+		float upward = smoothstep(0.8, 0.9, normalize(tbn[2]).z);
+		float strength = clamp(uWaterMaterialStrength, 0.0, 1.0) * upward;
+		return normalize(mix(normal, getWaterNormal(position), strength));
+	}
+
+	return normal;
+}
+
+vec3 transformMaterialNormal(vec3 normal, mat3 sourceTbn, mat3 targetTbn)
+{
+	vec3 normalTangent = vec3(
+		dot(normal, sourceTbn[0]),
+		dot(normal, sourceTbn[1]),
+		dot(normal, sourceTbn[2])
+	);
+	return normalize(targetTbn * normalTangent);
 }
 
 #pragma shady: macro_end
@@ -36,6 +92,7 @@ uniform float uRoughness;
 uniform float uMetallic;
 uniform float uEmissive;
 uniform float uSSS;
+uniform int uIsWater;
 
 void getMaterial(out float roughness, out float metallic, out float emissive, out float F0, out float sss)
 {
@@ -76,6 +133,9 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 	/* F0 = DIELECTRIC_F0; */
 	F0 = 0.0; // Ignore DIELECTRIC_F0 for artistic reasons (MI/SEUS)
 	sss = max(uSSS, vCustom.w * uDefaultSubsurface);
+
+	if (uIsWater > 0)
+		F0 = 0.02;
 }
 
 

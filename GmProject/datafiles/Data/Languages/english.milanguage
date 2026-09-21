@@ -3119,8 +3119,12 @@
 		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
 		"defaultsubsurfaceradius": "Default subsurface",
 		"defaultsubsurfaceradiustip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
-		"waterreflections": "Default water reflections",
+		"waterreflections": "Default water material",
 		"waterreflectionshelp": "Override water blocks with a default reflective water material.",
+		"waterroughness": "Roughness",
+		"waterwavestrength": "Wave strength",
+		"waterwavespeed": "Wave speed",
+		"waterwavedetail": "Wave detail",
 		"materialmaps": "Object material maps",
 		"materialmapstip": "Enable material and normal map texture settings for objects."
 	},

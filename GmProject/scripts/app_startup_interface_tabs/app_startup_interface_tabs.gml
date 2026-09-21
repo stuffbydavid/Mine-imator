@@ -90,6 +90,13 @@ function app_startup_interface_tabs()
 			tbx_block_emissive = new_textbox_decimals()
 			tbx_block_emissive.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
+			tbx_water_roughness = new_textbox_decimals()
+			tbx_water_roughness.suffix = "%"
+			tbx_water_wave_strength = new_textbox_decimals()
+			tbx_water_wave_strength.suffix = "%"
+			tbx_water_wave_speed = new_textbox_decimals()
+			tbx_water_wave_speed.suffix = "%"
+			tbx_water_wave_detail = new_textbox_integer()
 		}
 		
 		// Library

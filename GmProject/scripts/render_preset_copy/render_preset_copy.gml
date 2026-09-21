@@ -105,6 +105,10 @@ function render_preset_copy(to, allsettings = false)
 		to.block_emissive = block_emissive
 		to.block_subsurface = block_subsurface
 		to.water_reflections = water_reflections
+		to.water_roughness = water_roughness
+		to.water_wave_strength = water_wave_strength
+		to.water_wave_speed = water_wave_speed
+		to.water_wave_detail = water_wave_detail
 		to.material_maps = material_maps
 	}
 }

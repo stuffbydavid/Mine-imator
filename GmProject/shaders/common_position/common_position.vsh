@@ -17,6 +17,7 @@ uniform float uWindDirectionalSpeed; // static
 uniform float uWindDirectionalStrength;
 
 // GPU Gems 3: Chapter 6
+// https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-6-gpu-generated-procedural-wind-animations-trees
 float getNoise(float v)
 {
 	return cos(v * PI) * cos(v * 3.0 * PI) * cos(v * 5.0 * PI) * cos(v * 7.0 * PI) + sin(v * 5.0 * PI) * 0.1;
