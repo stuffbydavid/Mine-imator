@@ -336,7 +336,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			{
 				tab_control_button_label()
 					
-				if (draw_button_label("benchpatterneditor", dx, dy, dw, null, e_button.SECONDARY))
+				if (draw_button_label("benchpatterneditor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
 					popup_pattern_editor_show(bench_settings)
 					
 				tab_next()
@@ -350,7 +350,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			{
 				tab_control_button_label()
 					
-				if (draw_button_label("bencharmoreditor", dx, dy, dw, null, e_button.SECONDARY))
+				if (draw_button_label("bencharmoreditor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
 					popup_armor_editor_show(bench_settings)
 					
 				tab_next()
@@ -901,10 +901,10 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.CAMERA_EFFECTS:
 		{
-			draw_sprite(spr_bench_example, 5, examplex, dy)
-			dy += 144 + 15
+			//draw_sprite(spr_bench_example, 5, examplex, dy)
+			//dy += 144 + 15
 			
-			draw_tooltip_label("benchcameratip", icons.INFO, e_toast.INFO)
+			draw_tooltip_label("benchcameraeffectstip", icons.GOOSE, e_toast.NEGATIVE)
 			break
 		}
 		

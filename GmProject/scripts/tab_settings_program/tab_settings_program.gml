@@ -114,14 +114,6 @@ function tab_settings_program()
 	draw_switch("settingsspawncameras", dx, dy, setting_spawn_cameras, action_setting_spawn_cameras)
 	tab_next()
 	
-	// Unlimited values (Advanced mode only)
-	if (setting_advanced_mode)
-	{
-		tab_control_switch()
-		draw_switch("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
-		tab_next()
-	}
-	
 	// Remove edges on large scenery
 	tab_control_switch()
 	draw_switch("settingssceneryremoveedges", dx, dy, setting_scenery_remove_edges, action_setting_scenery_remove_edges, "settingssceneryremoveedgestip")
@@ -131,4 +123,12 @@ function tab_settings_program()
 	tab_control_switch()
 	draw_switch("settingssceneryreplaceground", dx, dy, setting_scenery_replace_ground, action_setting_scenery_replace_ground, "settingssceneryreplacegroundtip")
 	tab_next()
+	
+	// Unlimited values (Advanced mode only)
+	if (setting_advanced_mode)
+	{
+		tab_control_switch()
+		draw_switch("settingsunlimitedvalues", dx, dy, setting_unlimited_values, action_setting_unlimited_values)
+		tab_next()
+	}
 }

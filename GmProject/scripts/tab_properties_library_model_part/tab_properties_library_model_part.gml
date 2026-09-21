@@ -30,7 +30,7 @@ function tab_properties_library_model_part()
 	{
 		tab_control_button_label()
 				
-		if (draw_button_label("librarypatterneditor", dx, dy, dw, null, e_button.SECONDARY))
+		if (draw_button_label("librarypatterneditor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
 			popup_pattern_editor_show(temp_edit)
 				
 		tab_next()
@@ -44,7 +44,7 @@ function tab_properties_library_model_part()
 	{
 		tab_control_button_label()
 				
-		if (draw_button_label("libraryarmoreditor", dx, dy, dw, null, e_button.SECONDARY))
+		if (draw_button_label("libraryarmoreditor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
 			popup_armor_editor_show(temp_edit)
 				
 		tab_next()
