@@ -132,6 +132,8 @@ function app_update_animate()
 		with (app)
 			tl_update_matrix(true)
 	}
+
+	render_alpha_hashing_update()
 	
 	// Spawn particles
 	for (var i = 0; i < array_length(spawnerarr); i++)

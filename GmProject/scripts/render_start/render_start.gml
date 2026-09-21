@@ -30,22 +30,11 @@ function render_start()
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
-	var optimizations = [false, false, false]
+	var optimizations = [false, false]
 	if (renderer_current = e_renderer.REALISTIC)
 	{
 		var realisticset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]].renderer[e_renderer.REALISTIC]
 		optimizations = render_optimizations_state(realisticset)
-		if (optimizations[0] || optimizations[2])
-		{
-			project_render_shadows_transparent = false
-			project_render_shadows_jittered = false
-		}
-		if (optimizations[1])
-		{
-			project_render_shadows_transparent = false
-			project_render_aa = true
-			project_render_aa_mode = e_aa_mode.FXAA
-		}
 	}
 	if (renderer_current = e_renderer.STANDARD)
 	{
@@ -54,14 +43,6 @@ function render_start()
 		project_render_aa_mode = e_aa_mode.FXAA
 	}
 	
-	render_alpha_hash_allowed = (renderer_current = e_renderer.REALISTIC && !optimizations[1])
-	render_alpha_hash_shadows = (renderer_current = e_renderer.REALISTIC && project_render_shadows_transparent)
-	render_shadow_cache_enabled = optimizations[0]
-	render_gbuffers_cache_enabled = optimizations[1]
-	render_shadow_pass_cache_enabled = optimizations[2]
-	render_shadow_cache_enabled = render_shadow_cache_enabled && !render_shadow_pass_cache_enabled
-	if (!render_shadow_pass_cache_enabled)
-		render_shadow_pass_cache_ready = false
 	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects
@@ -160,9 +141,15 @@ function render_start()
 	// Effects must be in the order they're done in rendering
 	render_refresh_effects()
 	
-	// Update timeline visiblity
+	// Update timeline visibility
 	with (obj_timeline)
 		render_visible = tl_get_visible()
+
+	optimizations[1] = optimizations[1] && project_render_alpha_mode != e_alpha_mode.HASHED && render_alpha_hashed_count = 0
+	render_alpha_hash_allowed = (renderer_current = e_renderer.REALISTIC)
+	render_alpha_hash_shadows = (renderer_current = e_renderer.REALISTIC && project_render_shadows_transparent)
+	render_shadow_cache_enabled = optimizations[0]
+	render_gbuffers_cache_enabled = optimizations[1]
 	
 	render_prev_color = draw_get_color()
 	render_prev_alpha = draw_get_alpha()

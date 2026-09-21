@@ -8,7 +8,6 @@ function render_high()
 	{
 		ds_map_clear(render_shadow_cache_ready)
 		render_gbuffers_cache_ready = false
-		render_shadow_pass_cache_ready = false
 	}
 	
 	var samplestart, sampleend;

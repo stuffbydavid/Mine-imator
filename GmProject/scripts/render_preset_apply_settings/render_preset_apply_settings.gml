@@ -30,8 +30,6 @@ function render_preset_apply_settings(settings, renderer)
 		switch (name)
 		{
 			case "samples": set.samples = val break
-			case "cache_light_buffers": realisticset.cache_light_buffers = val break
-			case "cache_data_buffers": realisticset.cache_data_buffers = val break
 			case "ssao": set.ssao = val break
 			case "ssao_radius": ssao_radius = val break
 			case "ssao_power": ssao_power = val break
@@ -47,7 +45,6 @@ function render_preset_apply_settings(settings, renderer)
 			case "shadows_spot_buffer_size": set.shadows_spot_buffer_size = val break
 			case "shadows_point_buffer_size": set.shadows_point_buffer_size = val break
 			case "shadows_jittered": realisticset.shadows_jittered = val break
-			case "shadows_single_sample": realisticset.shadows_single_sample = val break
 			case "shadows_transparent": set.shadows_transparent = val break
 			case "subsurface_samples": set.subsurface_samples = val break
 			case "subsurface_backlight_spread": realisticset.subsurface_backlight_spread = val break

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_alpha_hashing_warning",
+  "%Name":"render_alpha_hashing_update",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_alpha_hashing_warning",
+  "name":"render_alpha_hashing_update",
   "parent":{
     "name":"Render",
     "path":"folders/Scripts/Render.yy",

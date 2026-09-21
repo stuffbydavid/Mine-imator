@@ -21,7 +21,6 @@ function app_startup_collapse()
 	collapse_register("texfilter")
 	
 	collapse_register("preset_special_effects")
-	collapse_register("preset_optimizations")
 	collapse_register("preset_graphics")
 	collapse_register("preset_materials")
 	

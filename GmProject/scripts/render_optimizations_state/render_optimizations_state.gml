@@ -1,11 +1,10 @@
 /// render_optimizations_state(settings)
 /// @arg settings
-/// @desc Returns the effective light buffer, data buffer, and single sample shadow optimizations.
+/// @desc Returns the available light and data buffer optimizations.
 
 function render_optimizations_state(settings)
 {
-	var single = settings.shadows_single_sample
-	var data = settings.cache_data_buffers || single
-	var light = settings.cache_light_buffers && !single
-	return [light, data, single]
+	var light = !settings.shadows_transparent && !settings.shadows_jittered
+	var data = (!settings.aa || settings.aa_mode = e_aa_mode.FXAA) && !settings.shadows_transparent
+	return [light, data]
 }

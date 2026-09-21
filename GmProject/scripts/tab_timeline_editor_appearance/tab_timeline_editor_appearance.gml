@@ -69,7 +69,6 @@ function tab_timeline_editor_appearance()
 		tab_control_menu()
 		draw_button_menu("timelineeditoralphamode", e_menu.LIST, dx, dy, dw, 24, tl_edit.alpha_mode, text, action_tl_alpha_mode)
 		tab_next()
-		render_alpha_hashing_warning(tl_edit.alpha_mode)
 		
 		// Render depth
 		tab_control_dragger()

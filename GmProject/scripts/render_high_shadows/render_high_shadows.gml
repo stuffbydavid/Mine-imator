@@ -2,21 +2,6 @@
 
 function render_high_shadows()
 {
-	// Reuse the completed pass when both the shadow maps and G-buffers are stable
-	if (render_shadow_pass_cache_enabled && render_shadow_pass_cache_ready &&
-		surface_exists(render_surface_shadows_cache) && surface_exists(render_surface_specular_shadows) &&
-		surface_get_width(render_surface_shadows_cache) = render_width && surface_get_height(render_surface_shadows_cache) = render_height &&
-		surface_get_width(render_surface_specular_shadows) = render_width && surface_get_height(render_surface_specular_shadows) = render_height)
-	{
-		aa_matrix = aa_jitter_matrix
-		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
-		render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
-		render_high_copy_shadow_surface(render_surface_shadows, render_surface_shadows_cache)
-		render_high_copy_shadow_surface(render_surface_specular, render_surface_specular_shadows)
-		render_pass_capture(e_render_pass.SHADOWS, render_surface_shadows)
-		return 0
-	}
-
 	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
 	sampleoffset = point3D(0, 0, 0)
 	sunout = (background_sunlight_color_final != c_black)
@@ -366,13 +351,4 @@ function render_high_shadows()
 		render_high_subsurface_scatter()
 	
 	render_pass_capture(e_render_pass.SHADOWS, render_surface_shadows)
-
-	if (render_shadow_pass_cache_enabled)
-	{
-		render_surface_shadows_cache = surface_require(render_surface_shadows_cache, render_width, render_height, false, e_surface_format.rgba32float)
-		render_surface_specular_shadows = surface_require(render_surface_specular_shadows, render_width, render_height, false, e_surface_format.rgba32float)
-		render_high_copy_shadow_surface(render_surface_shadows_cache, render_surface_shadows)
-		render_high_copy_shadow_surface(render_surface_specular_shadows, render_surface_specular)
-		render_shadow_pass_cache_ready = true
-	}
 }

@@ -44,6 +44,15 @@ function debug_info_draw()
 		str += "\n"
 		
 		str += "Graphics API: " + graphics_api_get() + " \n"
+		str += "\n"
+
+		str += "Optimizations: \n"
+		str += "======================================= \n"
+		str += "Light buffer caching: " + (render_shadow_cache_enabled ? "Enabled" : "Disabled") + " \n"
+		str += "G-buffer caching: " + (render_gbuffers_cache_enabled ? "Enabled" : "Disabled") + " \n"
+		str += "Hashed objects: " + string(app.render_alpha_hashed_count) + " \n"
+		str += "\n"
+
 		str += "instance_count: " + string(instance_count) + " \n"
 		str += "render_world() calls: " + string(render_world_count) + " \n"
 		str += "Vertex buffer triangles: " + string(get_vertex_buffer_triangles()) + " \n"

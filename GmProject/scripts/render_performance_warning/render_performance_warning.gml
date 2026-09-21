@@ -12,7 +12,7 @@ function render_performance_warning(preset, renderer)
 		var available = 0
 		if (optimizations[1] && settings.samples > 1)
 			available++
-		if (settings.shadows && settings.samples > 3 && (optimizations[0] || optimizations[2]))
+		if (settings.shadows && settings.samples > 3 && optimizations[0])
 			available++
 
 		// Warn sooner when fewer optimizations can reduce resolve time

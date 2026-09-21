@@ -35,8 +35,6 @@ function render_preset_event_create()
 	with (renderer[e_renderer.REALISTIC])
 	{
 		samples = 24
-		cache_light_buffers = false
-		cache_data_buffers = false
 		ssao = true
 		shadows = true
 		dof_quality = 16
@@ -46,7 +44,6 @@ function render_preset_event_create()
 		shadows_spot_buffer_size = 512
 		shadows_point_buffer_size = 256
 		shadows_jittered = false
-		shadows_single_sample = false
 		shadows_transparent = false
 		subsurface_samples = 7
 		indirect = true

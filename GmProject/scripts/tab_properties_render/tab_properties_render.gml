@@ -30,10 +30,6 @@ function tab_properties_render()
 	presetid = project_render_preset[renderer_edit]
 	render_preset_edit = render_preset_map[?presetid]
 	rendererset = render_preset_edit.renderer[renderer_edit]
-	var optimizations = [false, false, false]
-	if (renderer_edit = e_renderer.REALISTIC)
-		optimizations = render_optimizations_state(rendererset)
-	
 	var setx = dx;
 	tab_control(24)
 	
@@ -152,16 +148,12 @@ function tab_properties_render()
 				tab_control_switch()
 				draw_switch("rendershadowstransparent", dx, dy, rendererset.shadows_transparent, action_project_render_shadows_transparent)
 				tab_next()
-				if (optimizations[0] || optimizations[1] || optimizations[2])
-					draw_tooltip_label("renderoptimizationsoverridetransparentshadows", icons.WARNING_TRIANGLE, e_toast.WARNING)
 
 				tab_control_switch()
 				draw_switch("rendershadowsjittered", dx, dy, rendererset.shadows_jittered, action_project_render_shadows_jittered)
 				tab_next()
-				if (optimizations[0] || optimizations[2])
-					draw_tooltip_label("renderoptimizationsoverridejitteredshadows", icons.WARNING_TRIANGLE, e_toast.WARNING)
 
-				if (!rendererset.shadows_jittered || optimizations[0] || optimizations[2])
+				if (!rendererset.shadows_jittered)
 				{
 					tab_control_meter()
 					draw_meter("rendershadowsblurquality", dx, dy, dw, rendererset.shadows_blur_quality, 0, 64, 20, 1, tab.render.tbx_shadows_blur_quality, action_project_render_shadows_blur_quality)
@@ -337,8 +329,6 @@ function tab_properties_render()
 		tab_control_switch()
 		draw_button_collapse("aa", collapse_map[?"aa"], action_project_render_aa, rendererset.aa, "renderaa", "renderaatip")
 		tab_next()
-		if (renderer_edit = e_renderer.REALISTIC && !rendererset.aa && optimizations[1])
-			draw_tooltip_label("renderoptimizationsoverrideaaenabled", icons.WARNING_TRIANGLE, e_toast.WARNING)
 		
 		if (rendererset.aa && collapse_map[?"aa"])
 		{
@@ -350,8 +340,6 @@ function tab_properties_render()
 				tab_control_menu()
 				draw_button_menu("renderaamode", e_menu.LIST, dx, dy, dw, 24, rendererset.aa_mode, aatext, action_project_render_aa_mode)
 				tab_next()
-				if (optimizations[1] && rendererset.aa_mode != e_aa_mode.FXAA)
-					draw_tooltip_label("renderoptimizationsoverrideaa", icons.WARNING_TRIANGLE, e_toast.WARNING)
 			}
 			
 			tab_control_meter()
@@ -386,39 +374,6 @@ function tab_properties_render()
 	
 	#endregion
 
-	#region OPTIMIZATIONS
-
-	if (renderer_edit = e_renderer.REALISTIC)
-	{
-		tab_control_switch()
-		draw_button_collapse("preset_optimizations", collapse_map[?"preset_optimizations"], null, true, "renderoptimizations")
-		tab_next()
-
-		if (collapse_map[?"preset_optimizations"])
-		{
-			tab_collapse_start()
-
-			tab_control_switch()
-			draw_switch("renderoptimizationscachelight", dx, dy, rendererset.cache_light_buffers, action_project_render_cache_light_buffers, "renderoptimizationscachelighttip")
-			tab_next()
-			draw_tooltip_label(optimizations[2] ? "renderoptimizationslightsuperseded" : "renderoptimizationslightinfo", icons.INFO, e_toast.INFO)
-
-			tab_control_switch()
-			draw_switch("renderoptimizationscachedata", dx, dy, rendererset.cache_data_buffers, action_project_render_cache_data_buffers, "renderoptimizationscachedatatip")
-			tab_next()
-			draw_tooltip_label(!rendererset.cache_data_buffers && optimizations[2] ? "renderoptimizationsdataimplied" : "renderoptimizationsdatainfo", icons.INFO, e_toast.INFO)
-
-			tab_control_switch()
-			draw_switch("rendershadowssinglesample", dx, dy, rendererset.shadows_single_sample, action_project_render_shadows_single_sample, "renderoptimizationsinglesampletip")
-			tab_next()
-			draw_tooltip_label("renderoptimizationsingleinfo", icons.INFO, e_toast.INFO)
-
-			tab_collapse_end()
-		}
-	}
-
-	#endregion
-	
 	#region GRAPHICS
 	
 	tab_control_switch()
@@ -492,7 +447,6 @@ function tab_properties_render()
 			tab_control_menu()
 			draw_button_menu("renderalphamode", e_menu.LIST, dx, dy, dw, 24, project_render_alpha_mode, text, action_project_render_alpha_mode)
 			tab_next()
-			render_alpha_hashing_warning(project_render_alpha_mode)
 		}
 	
 		tab_collapse_end()

@@ -21,7 +21,6 @@ function history_copy_render_settings(obj)
 	project_render_dof_realistic_blur = obj.project_render_dof_realistic_blur
 	project_render_shadows_blur_size = obj.project_render_shadows_blur_size
 	project_render_shadows_jittered = obj.project_render_shadows_jittered
-	project_render_shadows_single_sample = obj.project_render_shadows_single_sample
 	
 	project_render_subsurface_samples = obj.project_render_subsurface_samples
 	project_render_subsurface_backlight_spread = obj.project_render_subsurface_backlight_spread
