@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"history_build_shift",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"history_build_shift",
+  "parent":{
+    "name":"Build",
+    "path":"folders/Scripts/App/History/Build.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

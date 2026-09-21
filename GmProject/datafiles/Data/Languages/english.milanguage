@@ -479,6 +479,7 @@
 		"edit/": {
 			"undo": "Undo",
 			"redo": "Redo",
+			"buildmode": "Build mode",
 			"selectall": "Select all",
 			"duplicate": "Duplicate timeline",
 			"delete": "Delete timeline",
@@ -679,6 +680,7 @@
 		"pointlighttip": "Point lights shine in all directions, like a lightbulb.",
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
 		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
+		"cameraeffectstip": "crashes the program lmao",
 		"backgroundtip": "A timeline that can change the environment during the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},

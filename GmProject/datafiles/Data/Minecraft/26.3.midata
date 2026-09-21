@@ -11881,6 +11881,7 @@
 				{
 					"name": "sulfur_caves",
 					"foliage": "#ABA64F",
+					"grass": "#ABA64F",
 					"water": "#34BF89"
 				},
 				{

@@ -59,7 +59,7 @@ function bench_draw()
 		place_content_mouseon = "bench"
 		window_busy = ""
 		if (mouse_left_pressed)
-			app_stop_place(false, false)
+			app_stop_place(false, false, false)
 	}
 	
 	// Resize bench corner
