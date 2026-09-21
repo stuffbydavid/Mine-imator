@@ -137,7 +137,6 @@ function app_startup_window()
 	place_history = null
 	place_build = false
 	place_busy = "place"
-	place_view_second_show = false
 	place_pos = null
 	place_rot = vec3(0)
 	place_sca = vec3(1)

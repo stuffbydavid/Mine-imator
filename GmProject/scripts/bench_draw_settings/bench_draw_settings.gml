@@ -1051,23 +1051,54 @@ function bench_draw_settings(bx, by, bw, bh)
 	
 	// Edit
 	var edit, wid;
-	edit = (bench_tab = e_bench.PROJECT || (bench_tab = e_bench.PARTICLE_SPAWNER && setting_advanced_mode))
+	edit = (bench_tab = e_bench.BLOCK || bench_tab = e_bench.PROJECT || (bench_tab = e_bench.PARTICLE_SPAWNER && setting_advanced_mode))
 	wid = (edit ? dw/2 - 4 : dw)
 	
 	if (edit)
 	{
-		var editname = (bench_tab = e_bench.PROJECT) ? "benchedit" : "benchcreateedit"
-		if (draw_button_label(editname, dx, sy + dh - 56, wid, icons.PENCIL, e_button.SECONDARY, null, e_anchor.LEFT, createdisabled))
+		var editname, editicon, editbutton;
+		if (bench_tab = e_bench.BLOCK)
 		{
-			action_bench_create(true)
+			editname = "benchcreate"
+			editicon = icons.ASSET_ADD
+			editbutton = e_bench_button.CREATE
+		}
+		else if (bench_tab = e_bench.PROJECT)
+		{
+			editname = "benchedit"
+			editicon = icons.PENCIL
+			editbutton = e_bench_button.EDIT
+		}
+		else
+		{
+			editname = "benchcreateedit"
+			editicon = icons.PENCIL
+			editbutton = e_bench_button.CREATE_AND_EDIT
+		}
+		if (draw_button_label(editname, dx, sy + dh - 56, wid, editicon, e_button.SECONDARY, null, e_anchor.LEFT, createdisabled))
+		{
+			action_bench_create(editbutton)
 			bench_show_ani_type = "hide"
 		}
 	}
 	
 	// Create
-	if (draw_button_label("benchcreate", edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, icons.ASSET_ADD, e_button.PRIMARY, null, e_anchor.LEFT, createdisabled))
+	var createname, createicon, createbutton;
+	if (bench_tab = e_bench.BLOCK)
 	{
-		action_bench_create()
+		createname = "benchbuild"
+		createicon = icons.BLOCK
+		createbutton = e_bench_button.START_BUILDING
+	}
+	else
+	{
+		createname = "benchcreate"
+		createicon = icons.ASSET_ADD
+		createbutton = e_bench_button.CREATE
+	}
+	if (draw_button_label(createname, edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, createicon, e_button.PRIMARY, null, e_anchor.LEFT, createdisabled))
+	{
+		action_bench_create(createbutton)
 		bench_show_ani_type = "hide"
 	}
 }

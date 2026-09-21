@@ -104,11 +104,6 @@ function panel_draw(panel)
 	content_tab = panel.tab_list[panel.tab_selected]
 	content_tab.raised = true
 	
-	// Build mode
-	var buildinteract = (window_busy = place_busy && place_build && content_tab = build_mode);
-	if (buildinteract)
-		window_busy = ""
-
 	// Mouse detection
 	content_x = boxx
 	content_y = boxy + (tabsh * content_tab.movable)
@@ -116,10 +111,6 @@ function panel_draw(panel)
 	content_height = boxh - (tabsh * content_tab.movable)
 	content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 	
-	// Restore mouse cursor while building
-	if (buildinteract && content_mouseon)
-		mouse_cursor = cr_default
-		
 	// Draw tab content
 	panel_compact = (panel.size_real <= 225)
 	panel_draw_content()
@@ -133,15 +124,6 @@ function panel_draw(panel)
 		app_mouse_clear()
 	}
 
-	if (buildinteract)
-	{
-		if (content_mouseon)
-			place_content_mouseon = string(content_tab)
-		
-		if (window_busy = "menu")
-			menu_list[|ds_list_size(menu_list) - 1].menu_busy_prev = place_busy
-	}
-	
 	// Tabs
 	tabsw = 0
 	tabswprev = 0
@@ -238,8 +220,6 @@ function panel_draw(panel)
 					}
 					else
 					{
-						if (buildinteract)
-							mouse_cursor = cr_default
 						tabmouseon = true
 					}
 				}
@@ -265,14 +245,11 @@ function panel_draw(panel)
 			{
 				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL) || (hover && mouse_middle_pressed))
 				{
-					if (tab = build_mode)
+					if (tab = build_tool)
 						app_stop_place()
 					else
 						tab_close(tab)
 					
-					if (buildinteract && place_build && window_busy = "")
-						window_busy = place_busy
-						
 					return 0
 				}
 			}
@@ -435,8 +412,4 @@ function panel_draw(panel)
 		window_busy = "tabclick"
 		tab_move = panel.tab_list[tablistmouseon]
 	}
-	
-	// Restore build mode window busy state
-	if (buildinteract && place_build && window_busy = "")
-		window_busy = place_busy
 }

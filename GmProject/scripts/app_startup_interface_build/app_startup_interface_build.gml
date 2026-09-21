@@ -3,7 +3,7 @@
 function app_startup_interface_build()
 {
 	build_type = e_tl_type.BLOCK
-	build_settings = new_obj(obj_build_settings)
+	build_structure = null
 	
 	build_box = null
 	build_box_top = null
@@ -66,6 +66,8 @@ function app_startup_interface_build()
 			build_box_top = vbuffer_current
 	}
 
+	// Build settings
+	build_settings = new_obj(obj_build_settings)
 	with (build_settings)
 	{
 		temp_event_create()

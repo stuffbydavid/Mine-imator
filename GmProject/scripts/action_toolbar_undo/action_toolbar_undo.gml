@@ -2,7 +2,7 @@
 
 function action_toolbar_undo()
 {
-	if (history_pos = history_amount || (place_build && !history[history_pos].build_action))
+	if (history_pos = history_amount)
 		return 0
 	
 	action_tl_play_break()
@@ -31,9 +31,6 @@ function action_toolbar_undo()
 	history_undo = false
 	
 	history_pos++
-	if (place_build)
-		obj_edit = build_settings
-	
 	history_resource_update = true
 	render_samples = -1
 	project_update_counts()

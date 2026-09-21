@@ -2,11 +2,14 @@
 
 function tab_object_editor()
 {
-	if (tab = build_mode && (!place_build || obj_edit != build_settings))
+	var previousedit = obj_edit;
+	if (tab = build_tool && !place_build)
 	{
 		tab_close(tab)
 		return 0
 	}
+	if (tab = build_tool)
+		obj_edit = build_settings
 
 	if (obj_edit = null || !instance_exists(obj_edit))
 	{
@@ -44,4 +47,6 @@ function tab_object_editor()
 			tab_close(tab)
 			break
 	}
+	if (tab = build_tool)
+		obj_edit = previousedit
 }

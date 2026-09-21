@@ -920,12 +920,12 @@ function tab_timeline()
 			tl_update_list()
 			tl_update_matrix()
 			render_samples = -1
-			app_stop_place(place_build)
+			app_stop_place(true)
 		}
 		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
-		else if (tl.selected || itemhover || tl = context_menu_value || ((window_busy = "timelineclick") && timeline_select = tl) || ((window_busy = "timelineclick" && window_busy = "place") && timeline_select = tl))
+		else if (itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 		
 		xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))

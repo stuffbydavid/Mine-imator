@@ -8,7 +8,7 @@ function action_bench_block_name(block)
 	if (place_build)
 	{
 		settings = build_settings
-		list = build_mode.build_list
+		list = build_tool.build_list
 	}
 	else
 	{

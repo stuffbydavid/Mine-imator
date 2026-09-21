@@ -7,7 +7,7 @@ function app_update_place_scenery()
 	if (!type_is_block(place_target_tl_part_of.type))
 		return 0
 		
-	var gridsize, worldtransform, localpos, localnormal;
+	var gridsize, worldtransform, inversetransform, localpos, localnormal;
 	gridsize = vec3(1);
 	if (place_target_tl.type = e_tl_type.SCENERY)
 		gridsize = place_target_tl.temp.scenery.scenery_size
@@ -20,16 +20,20 @@ function app_update_place_scenery()
 	else
 		worldtransform = matrix_multiply(matrix_create(point3D(0, gridsize[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)), place_target_tl.matrix_render)
 		
-	localpos = point3D_mul_matrix(place_pos, matrix_inverse_ext(worldtransform))
+	inversetransform = matrix_inverse_ext(worldtransform)
+	localpos = point3D_mul_matrix(place_pos, inversetransform)
 
 	// Convert the world-space normal into the scenery grid
 	localnormal = vec3_normalize(vec3_mul_matrix(place_view_normal, matrix_transpose(worldtransform)))
+	debug(localnormal)
 
 	if (place_build)
 	{
 		// Trace into the target before rounding to its local cell
-		var inside, boxcell, boxcenter;
-		inside = vec3_add(localpos, vec3_mul(localnormal, -block_size * 0.025))
+		var localray, tracenormal, inside, boxcell, boxcenter;
+		localray = vec3_normalize(vec3_mul_matrix(place_view_ray, inversetransform))
+		tracenormal = vec3_normalize(vec3_sub(localray, localnormal))
+		inside = vec3_add(localpos, vec3_mul(tracenormal, block_size * 0.025))
 		boxcell = vec3(
 			round(inside[X] / block_size - 0.5),
 			round(inside[Y] / block_size - 0.5),

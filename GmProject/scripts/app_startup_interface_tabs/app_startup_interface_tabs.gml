@@ -428,10 +428,10 @@ function app_startup_interface_tabs()
 	}
 
 	// Build mode editor
-	build_mode = new_tab(setting_build_mode_location, false)
-	build_mode.script = tab_object_editor
+	build_tool = new_tab(setting_build_mode_location, false)
+	build_tool.script = tab_object_editor
 	
-	with (build_mode)
+	with (build_tool)
 	{
 		build_list = new_obj(obj_sortlist)
 		build_list.script = action_build_select

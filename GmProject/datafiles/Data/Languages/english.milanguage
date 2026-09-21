@@ -479,7 +479,7 @@
 		"edit/": {
 			"undo": "Undo",
 			"redo": "Redo",
-			"buildmode": "Build mode",
+			"buildtool": "Build tool",
 			"selectall": "Select all",
 			"duplicate": "Duplicate timeline",
 			"delete": "Delete timeline",
@@ -671,6 +671,7 @@
 		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
 		"edit": "Edit",
+		"build": "Start building",
 		"create": "Create",
 		"createedit": "Create & edit",
 		"worldtip1": "Select a region of your Minecraft world to use in the project.",
@@ -947,7 +948,6 @@
 			"disable": "Disable snapping"
 		},
 		"close": "Close view",
-		"buildstop": "Stop build mode",
 		"popout": "Open in new window",
 		"popin": "Close view window",
 		"secondenable": "Enable secondary viewport",
@@ -972,7 +972,7 @@
 	"tab/": {
 		"projectproperties": "Project properties",
 		"timeline": "Timeline",
-		"build": "Build mode",
+		"buildtool": "Build tool",
 		"charmodel": "Character model for %1",
 		"equipment": "Equipment for %1",
 		"block": "Block for %1",

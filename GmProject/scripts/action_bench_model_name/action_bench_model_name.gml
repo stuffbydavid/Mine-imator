@@ -7,7 +7,7 @@ function action_bench_model_name(name)
 	if (place_build)
 	{
 		settings = build_settings
-		list = build_mode.build_list
+		list = build_tool.build_list
 	}
 	else
 	{

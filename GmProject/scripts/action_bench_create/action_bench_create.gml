@@ -1,8 +1,7 @@
-/// action_bench_create([edit, build])
-/// @arg [edit]
-/// @arg [build]
+/// action_bench_create([button])
+/// @arg [button]
 
-function action_bench_create(edit = false, build = false)
+function action_bench_create(button = e_bench_button.CREATE)
 {
 	var tab, editobj, placetarget, placeparent;
 	tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
@@ -20,7 +19,7 @@ function action_bench_create(edit = false, build = false)
 		var temp = bench_settings.project_selected;
 		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
 		{
-			if (edit)
+			if (button = e_bench_button.EDIT)
 			{
 				with (temp)
 					temp_select_edit()
@@ -75,11 +74,14 @@ function action_bench_create(edit = false, build = false)
 		particletemp = null
 		sceneryres = null
 		sceneryreplaceground = false
-		startplacing = build || (setting_place_new && !keyboard_check(vk_shift))
+		startplacing = (tab = e_bench.BLOCK && button = e_bench_button.CREATE) ||
+						button = e_bench_button.START_BUILDING ||
+						(setting_place_new && !keyboard_check(vk_shift))
+
 		if (history_redo)
 			buildaction = history_data.build_action
 		else
-			buildaction = place_build || (tab = e_bench.BLOCK && startplacing)
+			buildaction = (place_build || button = e_bench_button.START_BUILDING)
 		
 		if (!history_redo && buildaction && !place_build)
 		{
@@ -117,7 +119,7 @@ function action_bench_create(edit = false, build = false)
 			hobj.bench_save_obj = history_save_bench(buildaction ? build_settings : bench_settings)
 			hobj.bench_tab = tab
 			hobj.spawn_amount = 0
-			hobj.open_editor = edit
+			hobj.open_editor = (button = e_bench_button.EDIT || button = e_bench_button.CREATE_AND_EDIT)
 			hobj.value_default = array()
 			hobj.parent_save_id = save_id_get(app)
 		}
@@ -451,6 +453,8 @@ function action_bench_create(edit = false, build = false)
 							tl_set_parent(action[e_parent_action.TARGET], -1, true)
 					}
 				}
+				if (place_build)
+					tl_focus = tl
 			}
 			
 			with (hobj)
@@ -483,7 +487,7 @@ function action_bench_create(edit = false, build = false)
 		}
 	}
 	
-	if (!history_undo && (edit || (history_redo && history_data.open_editor)) && editobj != null)
+	if (!history_undo && (button = e_bench_button.EDIT || button = e_bench_button.CREATE_AND_EDIT || (history_redo && history_data.open_editor)) && editobj != null)
 	{
 		obj_edit = editobj
 		tab_object_editor_update_ptype_list()

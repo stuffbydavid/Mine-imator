@@ -36,6 +36,7 @@ function view_update(view, cam)
 	// Jump to object
 	if ((window_busy = "" && content_mouseon) && tl_edit != null && tl_edit != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
 	{
+		tl_focus = tl_edit
 		cam_work_focus = tl_edit.world_pos
 		cam_work_focus_last = point3D_copy(cam_work_focus)
 		
@@ -103,7 +104,7 @@ function view_update(view, cam)
 				{
 					window_busy = place_busy
 					if (place_pos != null)
-						action_bench_create(false, true)
+						action_bench_create(e_bench_button.START_BUILDING)
 				}
 				else if (place_tl = null)
 				{
@@ -111,7 +112,7 @@ function view_update(view, cam)
 					window_busy = ""
 				}
 				else // Stop placing
-					app_stop_place()
+					app_stop_place(true)
 			}
 		}
 		
@@ -130,7 +131,10 @@ function view_update(view, cam)
 				camera_control_move(cam, view_click_x, view_click_y)
 			
 			if (!mouse_left)
+			{
+				view.update_place_surfaces = true
 				window_busy = (place_build || place_tl != null) ? place_busy : ""
+			}
 		}
 		
 		// Move camera
@@ -151,6 +155,7 @@ function view_update(view, cam)
 			if (!mouse_right)
 			{
 				camera_work_set_focus()
+				view.update_place_surfaces = true
 				window_busy = (place_build || place_tl != null) ? place_busy : ""
 			}
 		}
@@ -163,6 +168,7 @@ function view_update(view, cam)
 			if (!mouse_left)
 			{
 				camera_work_set_focus()
+				view.update_place_surfaces = true
 				window_busy = (place_build || place_tl != null) ? place_busy : ""
 			}
 		}

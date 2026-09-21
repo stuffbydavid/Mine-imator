@@ -2,7 +2,7 @@
 
 function app_start_place(build, tl = null, spawn = false)
 {
-	place_busy = build ? "build" : "place"
+	place_busy = build ? "" : "place"
 	window_busy = place_busy
 	
 	place_build = build
@@ -18,16 +18,13 @@ function app_start_place(build, tl = null, spawn = false)
 	place_view_air = false
 	place_view_color = 0
 	place_view_normal = vec3(0)
+	place_view_ray = vec3(0)
 	
 	place_target_tl = null
 	place_target_tl_part_of = null
 	
 	place_content_mouseon = null
 	
-	place_view_second_show = build && view_second.show && !window_exists(e_window.VIEW_SECOND)
-	if (place_view_second_show)
-		view_second.show = false
-
 	view_main.update_place_surfaces = true
 	view_main.place_depth_value = 0.995
 	view_second.update_place_surfaces = true
@@ -65,37 +62,32 @@ function app_start_place(build, tl = null, spawn = false)
 		special = (build_type = e_tl_type.SPECIAL_BLOCK)
 		buildname = special ? build_settings.model_name : build_settings.block_name
 		
-		build_mode.build_selected = null
-		for (var b = 0; b < ds_list_size(build_mode.build_list.list); b++)
+		build_tool.build_selected = null
+		for (var b = 0; b < ds_list_size(build_tool.build_list.list); b++)
 		{
-			var value = build_mode.build_list.list[|b];
+			var value = build_tool.build_list.list[|b];
 			if (value[0] = special && value[1] = buildname)
 			{
-				build_mode.build_selected = value
+				build_tool.build_selected = value
 				break
 			}
 		}
 		
-		if (build_mode.build_selected != null && ds_list_find_index(build_mode.build_list.display_list, build_mode.build_selected) < 0)
+		if (build_tool.build_selected != null && ds_list_find_index(build_tool.build_list.display_list, build_tool.build_selected) < 0)
 		{
-			build_mode.build_list.search_tbx.text = ""
-			build_mode.build_list.search = false
-			sortlist_update(build_mode.build_list)
+			build_tool.build_list.search_tbx.text = ""
+			build_tool.build_list.search = false
+			sortlist_update(build_tool.build_list)
 		}
-		build_mode.build_list.center_on_draw = (build_mode.build_selected != null)
+		build_tool.build_list.center_on_draw = (build_tool.build_selected != null)
 		
 		place_tl_parent = app
 		place_tl_parent_index = -1
 		
-		if (tl_edit_amount > 0)
-			action_tl_deselect_all()
-		else
-			app_update_tl_edit_tabs()
-		
 		obj_edit = build_settings
 		
 		tab_close(object_editor)
-		tab_show(build_mode, true)
+		tab_show(build_tool, true)
 	}
 	else
 	{

@@ -6,7 +6,7 @@ function action_build_select(value)
 	if (!place_build)
 		return 0
 
-	build_mode.build_selected = value
+	build_tool.build_selected = value
 	
 	if (value[0]) // Special block
 	{

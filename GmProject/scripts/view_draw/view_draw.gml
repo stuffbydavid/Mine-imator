@@ -446,7 +446,7 @@ function view_draw(view)
 			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
 				viewbusy = window_busy
 			
-			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon && place_content_mouseon != "buildstop")
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
 		}
 		
 		if (content_mouseon)
@@ -547,7 +547,7 @@ function view_draw(view)
 			if (mouse_left_pressed)
 			{
 				if (place_build)
-					app_stop_place(false, false, false)
+					app_stop_place(false, false)
 				bench_open = true
 			}
 		}

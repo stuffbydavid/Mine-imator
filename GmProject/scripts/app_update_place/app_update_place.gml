@@ -5,7 +5,8 @@ function app_update_place()
 	if (window_busy != place_busy)
 		return 0
 	
-	mouse_cursor = cr_drag
+	if (!place_build)
+		mouse_cursor = cr_drag
 	
 	// Camera moved > 1 unit, update depth caches
 	if (vec3_length(vec3_sub(cam_work_from, place_cam_work_from)) > 1 ||
@@ -22,7 +23,7 @@ function app_update_place()
 	// Update object with position from last step
 	if (place_view_pos != null)
 	{
-		if (place_target_tl_part_of != null)
+		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
 			with (place_target_tl_part_of)
 				tl_mark_place_target(false)
 

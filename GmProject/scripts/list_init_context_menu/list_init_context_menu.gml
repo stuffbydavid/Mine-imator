@@ -235,15 +235,12 @@ function list_init_context_menu(name)
 		case "toolbarfile":
 		{
 			list_item_add(text_get("toolbarfilenew"), undefined, text_control_name(keybinds[e_keybind.PROJECT_NEW].keybind), null, icons.FILE, null, action_toolbar_new)
-			list_item_last.disabled = place_build
 			list_item_add(text_get("toolbarfileopen"), undefined, text_control_name(keybinds[e_keybind.PROJECT_OPEN].keybind), null, icons.FOLDER, null, action_toolbar_open)
-			list_item_last.disabled = place_build
 			list_item_add(text_get("toolbarfilerecent"), undefined, "", null, icons.FOLDER_RECENTS, icons.CHEVRON_RIGHT_TINY, null)
 			list_item_last.context_menu_name = "toolbarfilerecent"
-			list_item_last.disabled = place_build
 			
 			list_item_add(text_get("toolbarfilelastbackup"), undefined, "", null, icons.RECENTS, null, action_toolbar_open_last_backup)
-			list_item_last.disabled = place_build || !file_exists(project_folder + "/" + filename_name(project_folder) + ".backup1")
+			list_item_last.disabled = !file_exists(project_folder + "/" + filename_name(project_folder) + ".backup1")
 			
 			list_item_add(text_get("toolbarfilesave"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE].keybind), null, icons.SAVE, null, action_toolbar_save, true)
 			list_item_add(text_get("toolbarfilesaveas"), undefined, text_control_name(keybinds[e_keybind.PROJECT_SAVE_AS].keybind), null, icons.SAVE_AS, null, action_toolbar_save_as)
@@ -251,9 +248,7 @@ function list_init_context_menu(name)
 			if (window_state = "")
 			{
 				list_item_add(text_get("toolbarfileimport"), undefined, text_control_name(keybinds[e_keybind.IMPORT_ASSET].keybind), null, icons.ASSET_IMPORT, null, action_toolbar_import_asset, true)
-				list_item_last.disabled = place_build
 				list_item_add(text_get("toolbarfileworldimport"), undefined, "", null, icons.SCENERY, null, world_import_begin, false)
-				list_item_last.disabled = place_build
 			}
 			
 			break
@@ -276,31 +271,30 @@ function list_init_context_menu(name)
 		case "toolbaredit":
 		{
 			list_item_add(text_get("toolbareditundo"), null, text_control_name(keybinds[e_keybind.UNDO].keybind), null, icons.UNDO, null, action_toolbar_undo)
-			list_item_last.disabled = (history_pos = history_amount || (place_build && !history[history_pos].build_action))
+			list_item_last.disabled = (history_pos = history_amount)
 			
 			list_item_add(text_get("toolbareditredo"), null, text_control_name(keybinds[e_keybind.REDO].keybind), null, icons.REDO, null, action_toolbar_redo)
-			list_item_last.disabled = (history_pos = 0 || (place_build && !history[history_pos - 1].build_action))
-			
-			list_item_add(text_get("toolbareditbuildmode"), null, text_control_name(keybinds[e_keybind.BUILD_MODE].keybind), null, icons.BLOCK, null, action_toolbar_build_mode)
-			list_item_last.toggled = place_build
+			list_item_last.disabled = (history_pos = 0)
 
-			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds[e_keybind.TIMELINE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
-			list_item_last.disabled = (place_build || ds_list_size(tree_list) = 0)
+			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds[e_keybind.TIMELINE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all)
+			list_item_last.disabled = (ds_list_size(tree_list) = 0)
 			
 			list_item_add(text_get("toolbareditduplicate"), null, text_control_name(keybinds[e_keybind.TIMELINE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
-			list_item_last.disabled = (place_build || tl_edit = null)
+			list_item_last.disabled = (tl_edit = null)
 			
 			list_item_add(text_get("toolbareditdelete"), null, text_control_name(keybinds[e_keybind.TIMELINE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
-			list_item_last.disabled = (place_build || tl_edit = null)
+			list_item_last.disabled = (tl_edit = null)
 			
 			list_item_add(text_get("toolbaredithide"), true, text_control_name(keybinds[e_keybind.TIMELINE_HIDE].keybind), null, icons.HIDDEN, null, action_tl_hide_select, true)
-			list_item_last.disabled = (place_build || tl_edit = null)
+			list_item_last.disabled = (tl_edit = null)
 			
 			list_item_add(text_get("toolbareditshowhidden"), false, text_control_name(keybinds[e_keybind.TIMELINE_SHOW_HIDDEN].keybind), null, icons.VISIBLE, null, action_tl_hide_select)
-			list_item_last.disabled = (place_build || tl_edit = null)
+			list_item_last.disabled = (tl_edit = null)
+			
+			list_item_add(text_get("toolbareditbuildtool"), null, text_control_name(keybinds[e_keybind.BUILD_TOOL].keybind), null, icons.BLOCK, null, action_toolbar_build_mode, true)
+			list_item_last.toggled = place_build
 			
 			list_item_add(text_get("toolbareditpreferences"), settings, "", null, icons.SETTINGS, null, settings.show ? tab_close : tab_show, true)
-			list_item_last.disabled = place_build
 			list_item_last.toggled = settings.show
 			
 			break

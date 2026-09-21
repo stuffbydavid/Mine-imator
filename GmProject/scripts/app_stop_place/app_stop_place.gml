@@ -1,15 +1,12 @@
-/// app_stop_place(keep, continuebuild, [clearmouse])
+/// app_stop_place(keep, [clearmouse])
 
-function app_stop_place(keep = false, continuebuild = false, clearmouse = true)
+function app_stop_place(keep = false, clearmouse = true)
 {
 	if (place_build)
 	{
-		if (place_target_tl_part_of != null)
+		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
 			with (place_target_tl_part_of)
 				tl_mark_place_target(false)
-			
-		if (place_view_second_show)
-			view_second.show = true
 			
 		place_build = false
 		place_busy = "place"
@@ -17,11 +14,10 @@ function app_stop_place(keep = false, continuebuild = false, clearmouse = true)
 		place_history = null
 		place_target_tl = null
 		place_target_tl_part_of = null
-		place_view_second_show = false
 		place_content_mouseon = null
 		
 		window_busy = ""
-		tab_close(build_mode)
+		tab_close(build_tool)
 		if (obj_edit = build_settings)
 			obj_edit = null
 		
@@ -47,12 +43,13 @@ function app_stop_place(keep = false, continuebuild = false, clearmouse = true)
 		tl_mark_placed(false)
 
 	tl_update_list()
+	if (keep)
+		tl_focus = place_tl
 
-	// Clear placement state and restore the hidden secondary view
+	// Clear placement state
 	place_tl = null
 	place_history = null
 	
-	place_view_second_show = false
 	place_content_mouseon = null
 	
 	window_busy = ""

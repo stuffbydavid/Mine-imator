@@ -7,21 +7,20 @@
 
 function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 {
-	var trigger, font, click, disabled;
+	var trigger, font, click;
 	trigger = false
 	click = false
-	disabled = (place_build && name != "toolbaredit" && name != "toolbarfile")
 	
 	if (window_busy = "contextmenu")
 		window_busy = ""
 	
-	if (draw_button_label(name, xx, yy, wid, null, e_button.TOOLBAR, null, e_anchor.LEFT, disabled))
+	if (draw_button_label(name, xx, yy, wid, null, e_button.TOOLBAR, null, e_anchor.LEFT))
 	{
 		click = true
 		trigger = true
 	}
 	
-	if (!disabled && context_menu_name != "" && context_menu_name != name && app_mouse_box(xx, yy, wid, 28) && toolbar_menu_active)
+	if (context_menu_name != "" && context_menu_name != name && app_mouse_box(xx, yy, wid, 28) && toolbar_menu_active)
 		trigger = true
 	
 	if (trigger && hasmenu)

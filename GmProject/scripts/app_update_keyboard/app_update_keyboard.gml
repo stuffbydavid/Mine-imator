@@ -27,9 +27,9 @@ function app_update_keyboard()
 	}
 
 	// Build mode shortcuts
-	if (place_build && !textbox_isediting && window_busy = place_busy)
+	if (place_build && !textbox_isediting && window_busy = "")
 	{
-		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_MODE].pressed)
+		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_TOOL].pressed)
 		{
 			action_toolbar_build_mode()
 			return 0
@@ -37,23 +37,11 @@ function app_update_keyboard()
 		
 		if (keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) && !keyboard_check(vk_alt))
 		{
-			tab_show(build_mode, true)
+			tab_show(build_tool, true)
 			textbox_lastfocus = -1
-			window_focus = string(build_mode.build_list.search_tbx)
+			window_focus = string(build_tool.build_list.search_tbx)
 			textbox_input = ""
 		}
-
-		if (keybinds[e_keybind.UNDO].pressed)
-			action_toolbar_undo()
-		
-		if (keybinds[e_keybind.REDO].pressed)
-			action_toolbar_redo()
-
-		if (keybinds[e_keybind.PROJECT_SAVE_AS].pressed)
-			action_toolbar_save_as()
-		
-		if (keybinds[e_keybind.PROJECT_SAVE].pressed)
-			action_toolbar_save()
 	}
 
 	// Workbench shortcuts
@@ -82,7 +70,7 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.REDO].pressed)
 			action_toolbar_redo()
 
-		if (keybinds[e_keybind.BUILD_MODE].pressed)
+		if (keybinds[e_keybind.BUILD_TOOL].pressed)
 			action_toolbar_build_mode()
 		
 		if (keybinds[e_keybind.PLAY].pressed)

@@ -2,8 +2,7 @@
 
 function action_toolbar_redo()
 {
-	var buildtab = bench_tab;
-	if (history_pos = 0 || (place_build && !history[history_pos - 1].build_action))
+	if (history_pos = 0)
 		return 0
 	
 	action_tl_play_break()
@@ -32,12 +31,6 @@ function action_toolbar_redo()
 		obj_edit = save_id_find(history_data.save_obj_edit)
 	
 	history_redo = false
-	if (place_build)
-	{
-		bench_tab = buildtab
-		obj_edit = build_settings
-	}
-	
 	history_resource_update = true
 	render_samples = -1
 	project_update_counts()
