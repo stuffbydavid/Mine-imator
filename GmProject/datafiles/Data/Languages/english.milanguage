@@ -240,6 +240,8 @@
 				"selectgroup": "Group select keyframes",
 				"selectgroupadd": "Group select keyframes (Add)",
 				"stretch": "Stretch keyframes",
+				"scaleapply": "Apply scale",
+				"scalecancel": "Cancel scale",
 				"deselect": "Deselect keyframes",
 				"deselectgroup": "Group deselect keyframes"
 			},
@@ -4358,7 +4360,9 @@
 				"copy": "Copy keyframes",
 				"cut": "Cut keyframes",
 				"paste": "Paste keyframes",
-				"delete": "Delete keyframes"
+				"delete": "Delete keyframes",
+				"scale": "Scale keyframes",
+				"stretch": "Stretch keyframes"
 			},
 			"tool/": {
 				"workbench": "Open workbench",

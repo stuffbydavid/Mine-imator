@@ -27,8 +27,8 @@ function action_tl_keyframes_move_start(keyframe)
 	timeline_move_kf_stretch_handle = 0
 	timeline_move_kf_stretch_max = no_limit
 	
-	// Alt + dragging the first or last selected keyframe of a row stretches from the opposite edge
-	if (keyboard_check(vk_alt) && selamount > 1 && selmax > selmin)
+	// Dragging the first or last selected keyframe of a row stretches it from the opposite edge
+	if (keybinds[e_keybind.KEYFRAMES_STRETCH].active && selamount > 1 && selmax > selmin)
 	{
 		list = keyframe.timeline.keyframe_list
 		rowfirst = null

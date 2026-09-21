@@ -35,6 +35,8 @@ function app_startup_keybinds()
 		KEYFRAMES_CUT,
 		KEYFRAMES_PASTE,
 		KEYFRAMES_DELETE,
+		KEYFRAMES_STRETCH,
+		KEYFRAMES_SCALE,
 		TIMELINE_HIDE,
 		TIMELINE_SHOW_HIDDEN,
 		
@@ -102,6 +104,8 @@ function app_startup_keybinds()
 	keybind_register("keyframescut", e_keybind.KEYFRAMES_CUT, keybind_new("X", true))
 	keybind_register("keyframespaste", e_keybind.KEYFRAMES_PASTE, keybind_new("V", true))
 	keybind_register("keyframesdelete", e_keybind.KEYFRAMES_DELETE, keybind_new(vk_delete))
+	keybind_register("keyframesstretch", e_keybind.KEYFRAMES_STRETCH, keybind_new(null, false, false, true))
+	keybind_register("keyframesscale", e_keybind.KEYFRAMES_SCALE, keybind_new("S", false, false, true))
 	
 	// Timeline
 	keybind_register("play", e_keybind.PLAY, keybind_new(vk_space))

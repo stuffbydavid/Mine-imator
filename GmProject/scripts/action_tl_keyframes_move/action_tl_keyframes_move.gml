@@ -2,7 +2,7 @@
 
 function action_tl_keyframes_move()
 {
-	var movex, moved, stretchmode, stretch, pivot, handle, newhandle, prevpos, kf;
+	var movex, moved, stretchmode, stretch, pivot, handle, newhandle;
 	movex = timeline_mouse_pos - timeline_move_kf_mouse_pos
 	moved = false
 	stretchmode = timeline_move_kf_stretch
@@ -14,27 +14,7 @@ function action_tl_keyframes_move()
 	{
 		newhandle = max(0, handle + movex)
 		stretch = clamp((newhandle - pivot) / (handle - pivot), 0, timeline_move_kf_stretch_max)
-		
-		// Scale around the pivot, keeping each timeline's selected keyframes in order
-		with (obj_timeline)
-		{
-			prevpos = null
-			
-			for (var k = 0; k < ds_list_size(keyframe_list); k++)
-			{
-				kf = keyframe_list[|k]
-				
-				if (!kf.selected)
-					continue
-				
-				kf.new_position = max(0, round(pivot + (kf.move_pos - pivot) * stretch))
-				
-				if (prevpos != null)
-					kf.new_position = max(kf.new_position, prevpos + 1)
-				
-				prevpos = kf.new_position
-			}
-		}
+		tl_keyframes_stretch(pivot, stretch)
 	}
 	
 	with (obj_keyframe)

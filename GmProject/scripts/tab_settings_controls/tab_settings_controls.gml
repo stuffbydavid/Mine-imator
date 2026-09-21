@@ -47,6 +47,8 @@ function tab_settings_controls()
 		draw_keybind(e_keybind.KEYFRAMES_CUT, dx, dy)
 		draw_keybind(e_keybind.KEYFRAMES_PASTE, dx, dy)
 		draw_keybind(e_keybind.KEYFRAMES_DELETE, dx, dy)
+		draw_keybind(e_keybind.KEYFRAMES_STRETCH, dx, dy)
+		draw_keybind(e_keybind.KEYFRAMES_SCALE, dx, dy)
 		dy += 8
 		
 		tab_collapse_end()
