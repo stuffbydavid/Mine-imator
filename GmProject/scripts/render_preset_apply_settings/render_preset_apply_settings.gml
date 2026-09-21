@@ -33,6 +33,7 @@ function render_preset_apply_settings(settings, renderer)
 			case "ssao": set.ssao = val break
 			case "ssao_radius": ssao_radius = val break
 			case "ssao_power": ssao_power = val break
+			case "ssao_blur_passes": ssao_blur_passes = clamp(round(val), 0, 8) break
 			case "ssao_color": ssao_color = val break
 			case "ssao_always_visible": ssao_always_visible = val break
 			case "shadows": set.shadows = val break

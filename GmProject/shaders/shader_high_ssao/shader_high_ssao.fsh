@@ -53,8 +53,8 @@ void main()
 	// Construct kernel basis matrix
 	vec3 reference = (abs(normal.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0));
 	mat3 kernelBasis = getTBN(normal, cross(reference, normal));
-	vec3 tangent = kernelBasis[0] * cos(theta) + kernelBasis[1] * sin(theta);
-	kernelBasis = mat3(tangent, cross(tangent, kernelBasis[2]), kernelBasis[2]);
+	vec3 tangent = kernelBasis * vec3(cos(theta), sin(theta), 0.0);
+	kernelBasis = mat3(tangent, cross(tangent, normal), normal);
 	
 	// Calculate occlusion factor
 	float occlusion = 0.0;

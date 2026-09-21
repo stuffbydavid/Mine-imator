@@ -63,6 +63,7 @@ function render_preset_equals(obj, renderer, allsettings)
 		has_fx = obj.has_fx &&
 		ssao_radius = obj.ssao_radius &&
 		ssao_power = obj.ssao_power &&
+		ssao_blur_passes = obj.ssao_blur_passes &&
 		ssao_color = obj.ssao_color &&
 		ssao_always_visible = obj.ssao_always_visible &&
 		glow_radius = obj.glow_radius &&

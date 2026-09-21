@@ -7,6 +7,7 @@ function history_copy_render_settings(obj)
 	project_render_ssao = obj.project_render_ssao
 	project_render_ssao_radius = obj.project_render_ssao_radius
 	project_render_ssao_power = obj.project_render_ssao_power
+	project_render_ssao_blur_passes = obj.project_render_ssao_blur_passes
 	project_render_ssao_color = obj.project_render_ssao_color
 	project_render_ssao_always_visible = obj.project_render_ssao_always_visible
 	

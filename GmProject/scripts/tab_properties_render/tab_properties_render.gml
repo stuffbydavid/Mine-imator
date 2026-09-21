@@ -100,6 +100,10 @@ function tab_properties_render()
 			draw_dragger("renderssaopower", dx, dy, dragger_width, round(project_render_ssao_power * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_ssao_power, action_project_render_ssao_power)
 			tab_next()
 		
+			tab_control_meter()
+			draw_meter("renderssaoblurpasses", dx, dy, dw, project_render_ssao_blur_passes, 0, 8, 2, 1, tab.render.tbx_ssao_blur_passes, action_project_render_ssao_blur_passes)
+			tab_next()
+
 			tab_control_color()
 			draw_button_color("renderssaocolor", dx, dy, dw, project_render_ssao_color, c_black, false, action_project_render_ssao_color)
 			tab_next()

@@ -49,6 +49,7 @@ function app_startup_interface_tabs()
 			tbx_ssao_radius = new_textbox_decimals()
 			tbx_ssao_power = new_textbox_integer()
 			tbx_ssao_power.suffix = "%"
+			tbx_ssao_blur_passes = new_textbox_integer()
 			
 			tbx_subsurface_samples = new_textbox_integer()
 			tbx_subsurface_backlight_spread = new_textbox_integer()

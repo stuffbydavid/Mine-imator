@@ -58,6 +58,7 @@ function render_preset_load_settings(map)
 		has_fx = true
 		ssao_radius = value_get_real(fxmap[?"ssao_radius"], ssao_radius)
 		ssao_power = value_get_real(fxmap[?"ssao_power"], ssao_power)
+		ssao_blur_passes = clamp(round(value_get_real(fxmap[?"ssao_blur_passes"], ssao_blur_passes)), 0, 8)
 		ssao_color = value_get_color(fxmap[?"ssao_color"], ssao_color)
 		ssao_always_visible = value_get_real(fxmap[?"ssao_always_visible"], ssao_always_visible)
 		glow_radius = value_get_real(fxmap[?"glow_radius"], glow_radius)

@@ -53,6 +53,7 @@ function render_apply_settings(preset, renderer)
 		{
 			project_render_ssao_radius = preset.ssao_radius
 			project_render_ssao_power = preset.ssao_power
+			project_render_ssao_blur_passes = preset.ssao_blur_passes
 			project_render_ssao_color = preset.ssao_color
 			project_render_ssao_always_visible = preset.ssao_always_visible
 			project_render_shadows_blur_size = preset.renderer[e_renderer.STANDARD].shadows_blur_size

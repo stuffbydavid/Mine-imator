@@ -55,6 +55,7 @@ function project_load_legacy_render(map)
 
 		ssao_radius = value_get_real(map[?"render_ssao_radius"], ssao_radius)
 		ssao_power = value_get_real(map[?"render_ssao_power"], ssao_power)
+		ssao_blur_passes = clamp(round(value_get_real(map[?"render_ssao_blur_passes"], ssao_blur_passes)), 0, 8)
 		ssao_color = value_get_color(map[?"render_ssao_color"], ssao_color)
 		ssao_always_visible = value_get_real(map[?"render_ssao_always_visible"], ssao_always_visible)
 		glow_radius = value_get_real(map[?"render_glow_radius"], glow_radius)

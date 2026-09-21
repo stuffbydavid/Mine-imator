@@ -58,6 +58,7 @@ function render_preset_copy(to, allsettings = false)
 		to.has_fx = has_fx
 		to.ssao_radius = ssao_radius
 		to.ssao_power = ssao_power
+		to.ssao_blur_passes = ssao_blur_passes
 		to.ssao_color = ssao_color
 		to.ssao_always_visible = ssao_always_visible
 		to.glow_radius = glow_radius

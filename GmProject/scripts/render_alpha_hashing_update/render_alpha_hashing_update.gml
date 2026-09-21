@@ -10,7 +10,7 @@ function render_alpha_hashing_update()
 
 function render_alpha_hashing_used()
 {
-	if (!value_inherit[e_value.VISIBLE] || (hide && !app.render_hidden) || (value_inherit[e_value.ALPHA] * 1000) = 0 ||
+	if (!value_inherit[e_value.VISIBLE] || (hide && !render_hidden) || (value_inherit[e_value.ALPHA] * 1000) = 0 ||
 		(glow && only_render_glow) || (!app.place_tl_render && (placed || parent_is_placed)))
 		return false
 

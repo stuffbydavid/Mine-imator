@@ -67,6 +67,7 @@ function render_preset_event_create()
 	// Common special effects settings
 	ssao_radius = 12
 	ssao_power = 1
+	ssao_blur_passes = 2
 	ssao_color = c_black
 	ssao_always_visible = false
 	glow_radius = 1

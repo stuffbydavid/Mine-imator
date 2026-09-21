@@ -58,6 +58,7 @@ function shader_startup()
 		new_shader("shader_high_light_spot")
 		new_shader("shader_high_light_sun")
 		new_shader("shader_high_ssao")
+		new_shader("shader_high_ssao_blur")
 		new_shader("shader_high_bloom_threshold")
 		new_shader("shader_add")
 		new_shader("shader_blur")
@@ -343,6 +344,17 @@ function shader_startup()
 		new_shader_uniform("uColor")
 	}
 	
+	with (shader_map[?shader_high_ssao_blur])
+	{
+		new_shader_sampler("uDepthBuffer")
+		new_shader_sampler("uNormalBuffer")
+		new_shader_uniform("uNear")
+		new_shader_uniform("uFar")
+		new_shader_uniform("uProjMatrixInv")
+		new_shader_uniform("uScreenSize")
+		new_shader_uniform("uPixelCheck")
+	}
+
 	with (shader_map[?shader_high_bloom_threshold])
 	{
 		new_shader_uniform("uThreshold")
