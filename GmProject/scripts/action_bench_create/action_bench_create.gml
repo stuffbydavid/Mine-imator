@@ -55,11 +55,13 @@ function action_bench_create(edit = false, build = false)
 	}
 	else
 	{
-		var hobj, tl, particletemp, sceneryres, sceneryreplaceground, par;
+		var hobj, tl, particletemp, sceneryres, sceneryreplaceground, par, startplacing, buildaction;
 		hobj = null
 		particletemp = null
 		sceneryres = null
 		sceneryreplaceground = false
+		startplacing = build || (setting_place_new && !keyboard_check(vk_shift))
+		buildaction = startplacing && (bench_tab = e_bench.BLOCK || bench_tab = e_bench.SPECIAL_BLOCK)
 		
 		if (history_redo)
 		{
@@ -80,7 +82,7 @@ function action_bench_create(edit = false, build = false)
 		}
 		else
 		{
-			hobj = history_set(action_bench_create)
+			hobj = history_set(action_bench_create, buildaction)
 			hobj.bench_save_obj = history_save_bench()
 			hobj.bench_tab = bench_tab
 			hobj.spawn_amount = 0
@@ -399,7 +401,7 @@ function action_bench_create(edit = false, build = false)
 			}
 			
 			// Start placing
-			if ((build || (setting_place_new && !keyboard_check(vk_shift))) &&
+			if (startplacing &&
 				tl.type != e_tl_type.FOLDER &&
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
@@ -427,6 +429,8 @@ function action_bench_create(edit = false, build = false)
 					tab_show(object_editor, true)
 				}
 			}
+			if (buildaction && !place_build)
+				hobj.build_action = false
 			
 			log("Created", tl_type_name_list[|tl.type])
 

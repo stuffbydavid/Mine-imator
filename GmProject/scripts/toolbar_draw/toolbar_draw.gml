@@ -21,25 +21,44 @@ function toolbar_draw()
 	
 	draw_set_font(font_value)
 	
+	// File
 	capwid = string_width(text_get("toolbarfile")) + 16
 	toolbar_draw_button("toolbarfile", dx, dy, capwid)
 	dx += capwid + padding
 	
 	if (window_state = "")
 	{
+		// Edit enabled in build mode
 		capwid = string_width(text_get("toolbaredit")) + 16
+		var buildedit = place_build && window_busy = "place" && app_mouse_box(dx, dy, capwid, toolbar_size, "place") && !context_menu_mouseon
+		if (buildedit)
+		{
+			window_busy = ""
+			content_mouseon = true
+		}
 		toolbar_draw_button("toolbaredit", dx, dy, capwid)
-		dx += capwid + padding
 		
+		if (buildedit)
+		{
+			if (window_busy = "contextmenu")
+				context_menu_busy_prev = "place"
+			else if (window_busy = "")
+				window_busy = "place"
+		}
+		dx += capwid + padding
+
+		// Render
 		capwid = string_width(text_get("toolbarrender")) + 16
 		toolbar_draw_button("toolbarrender", dx, dy, capwid)
 		dx += capwid + padding
 	}
 	
+	// View
 	capwid = string_width(text_get("toolbarview")) + 16
 	toolbar_draw_button("toolbarview", dx, dy, capwid)
 	dx += capwid + padding
 	
+	// Help
 	capwid = string_width(text_get("toolbarhelp")) + 16
 	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
 	dx += capwid + padding
@@ -50,7 +69,7 @@ function toolbar_draw()
 	// "Simple mode" button label
 	if (!setting_advanced_mode)
 	{
-		if (draw_button_label("toolbarsimplemode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
+		if (draw_button_label("toolbarsimplemode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right, place_build))
 		{
 			if (trial_version)
 			{

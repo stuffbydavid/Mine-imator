@@ -127,6 +127,14 @@ function panel_draw(panel)
 	panel_draw_content()
 	content_y = boxy
 	
+	// Panel click stops placing
+	if (place_tl != null && !place_build && window_busy = "place" && mouse_left_released &&
+		app_mouse_box(boxx, boxy, boxw, boxh, "place") && !context_menu_mouseon)
+	{
+		app_cancel_place()
+		app_mouse_clear()
+	}
+
 	if (buildinteract)
 	{
 		if (content_mouseon)

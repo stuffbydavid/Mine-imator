@@ -4,6 +4,8 @@ function action_toolbar_redo()
 {
 	if (history_pos = 0)
 		return 0
+	if (place_build)
+		history_build_action(false)
 	
 	action_tl_play_break()
 	
@@ -31,6 +33,8 @@ function action_toolbar_redo()
 		obj_edit = save_id_find(history_data.save_obj_edit)
 	
 	history_redo = false
+	if (place_build)
+		history_build_action(true)
 	
 	history_resource_update = true
 	render_samples = -1

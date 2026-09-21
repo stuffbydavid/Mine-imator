@@ -1,11 +1,13 @@
-/// app_stop_place([keep, clearmouse])
+/// app_stop_place(keep, continuebuild, [clearmouse])
 
-function app_stop_place(keep = false, clearmouse = true)
+function app_stop_place(keep = false, continuebuild = false, clearmouse = true)
 {
-	var remove, historyindex;
-	remove = place_build && !keep
+	// In build mode, keep commits the preview
+	var removepreview, historyindex;
+	removepreview = place_build && !keep
 	historyindex = -1
 	
+	// Find the live preview in history before placing or removing it
 	if (place_build)
 	{
 		for (var h = 0; h < history_amount; h++)
@@ -20,6 +22,7 @@ function app_stop_place(keep = false, clearmouse = true)
 
 	if (place_build && keep)
 	{
+		// Keep edited object settings when the preview becomes a placed object
 		with (place_tl)
 		{
 			tl_create_temp_copy(app.bench_settings)
@@ -29,6 +32,7 @@ function app_stop_place(keep = false, clearmouse = true)
 		with (place_history.bench_save_obj)
 			temp_get_save_ids()
 
+		// Drop undone build placements before continuing
 		if (historyindex > 0)
 		{
 			history_pos = historyindex
@@ -40,6 +44,7 @@ function app_stop_place(keep = false, clearmouse = true)
 		with (place_target_tl_part_of)
 			tl_mark_place_target(false)
 
+	// Save the final parent so redo restores the placed object correctly
 	var par = place_tl.parent;
 	with (place_history)
 	{
@@ -50,8 +55,12 @@ function app_stop_place(keep = false, clearmouse = true)
 	with (place_tl)
 		tl_mark_placed(false)
 
-	if (remove)
+	if (removepreview)
 	{
+		// Discard the unplaced preview and its history entry
+		if (historyindex >= 0)
+			history_build_shift(false, historyindex)
+
 		with (place_tl)
 		{
 			tl_remove_clean()
@@ -64,12 +73,20 @@ function app_stop_place(keep = false, clearmouse = true)
 
 		if (historyindex >= 0)
 		{
-			history_pos = historyindex + 1
-			history_pop()
+			with (place_history)
+			{
+				with (obj_history_save)
+					if (hobj = other.id)
+						instance_destroy()
+				instance_destroy()
+			}
+			history_resource_update = true
+			render_samples = -1
 		}
 	}
 	tl_update_list()
 
+	// Clear placement state and restore the hidden secondary view
 	place_tl = null
 	place_tl_render_step = 0
 	place_target_tl_model_part = false

@@ -70,7 +70,7 @@ function action_lib_model_name(name)
 		
 		temp_update_armor(id)
 		
-		if (object_index = obj_timeline)
+		if (object_index = obj_timeline && id != app.place_tl)
 			tl_select_single()
 	}
 	

@@ -107,10 +107,10 @@ function view_update(view, cam)
 				else if (place_build)
 				{
 					var repeatbuild = !place_target_tl_model_part;
-					app_stop_place(true)
+					app_stop_place(true, repeatbuild)
 					
 					if (repeatbuild)
-						action_bench_create()
+						action_bench_create(false, true)
 				}
 				else // Stop placing
 					app_stop_place()

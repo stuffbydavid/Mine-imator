@@ -479,6 +479,7 @@
 		"edit/": {
 			"undo": "Undo",
 			"redo": "Redo",
+			"buildmode": "Build mode",
 			"selectall": "Select all",
 			"duplicate": "Duplicate timeline",
 			"delete": "Delete timeline",
