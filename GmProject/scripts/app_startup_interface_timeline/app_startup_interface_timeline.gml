@@ -39,6 +39,10 @@ function app_startup_interface_timeline()
 	timeline_move_off_y = 0
 	timeline_move_kf = null
 	timeline_move_kf_mouse_pos = null
+	timeline_move_kf_stretch = false
+	timeline_move_kf_stretch_pivot = 0
+	timeline_move_kf_stretch_handle = 0
+	timeline_move_kf_stretch_max = no_limit
 	timeline_sound_resize_mouse_pos = null
 	timeline_sound_end_mousex = 0
 	timeline_sound_end_value = 0

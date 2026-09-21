@@ -239,6 +239,7 @@
 				"selectadd": "Select keyframe (Add)",
 				"selectgroup": "Group select keyframes",
 				"selectgroupadd": "Group select keyframes (Add)",
+				"stretch": "Stretch keyframes",
 				"deselect": "Deselect keyframes",
 				"deselectgroup": "Group deselect keyframes"
 			},

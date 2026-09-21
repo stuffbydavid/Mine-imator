@@ -1421,7 +1421,11 @@ function tab_timeline()
 	// Moving keyframes
 	if (window_busy = "timelinemovekeyframes")
 	{
-		mouse_cursor = cr_size_all
+		if (timeline_move_kf_stretch)
+			mouse_cursor = cr_size_we
+		else
+			mouse_cursor = cr_size_all
+		
 		if (!mouse_left)
 			action_tl_keyframes_move_done()
 		else
