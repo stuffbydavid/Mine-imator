@@ -304,8 +304,21 @@ function view_draw(view)
 	if (draw_button_icon("viewaspectratio", dx, dy, dw, dh, view.aspect_ratio, icons.LETTERBOX, null, false, view.aspect_ratio ? "viewaspectratiodisable" : "viewaspectratioenable"))
 		view.aspect_ratio = !view.aspect_ratio
 	
+	// Overlay settings
+	dx -= 16 + padding
+	
+	if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), icons.CHEVRON_DOWN_TINY))
+	{
+		menu_settings_set(dx, dy, (string(view) + "viewoverlaysettings"), 24)
+		settings_menu_view = view
+		settings_menu_script = menu_overlay_settings
+	}
+	
+	if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu_ani_type != "hide")
+		current_microani.active.value = true
+	
 	// Overlays
-	dx -= dw + padding
+	dx -= dw
 	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
 		view.gizmos = !view.gizmos
 	

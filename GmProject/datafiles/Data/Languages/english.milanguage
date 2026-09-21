@@ -936,6 +936,12 @@
 			"columns": "Columns",
 			"rows": "Rows"
 		},
+		"overlay/": {
+            "controls": "View controls",
+            "shapes": "Timeline shapes",
+            "guides": "Timeline guides",
+            "guidestip": "Enable visual representations of camera frustums, spotlight cones, etc. when selected."
+		},
 		"snap/": {
 			"move": "Move",
 			"rotate": "Rotate",

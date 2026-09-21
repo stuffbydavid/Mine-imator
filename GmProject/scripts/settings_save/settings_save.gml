@@ -157,6 +157,10 @@ function settings_save()
 			json_save_object_done()
 		}
 		
+		json_save_var_bool("overlay_view_controls", setting_overlay_view_controls)
+		json_save_var_bool("overlay_view_shapes", setting_overlay_view_shapes)
+		json_save_var_bool("overlay_view_guides", setting_overlay_view_guides)
+		
 		json_save_var_bool("snap", setting_snap)
 		json_save_var_bool("snap_absolute", setting_snap_absolute)
 		json_save_var("snap_size_position", setting_snap_size_position)
