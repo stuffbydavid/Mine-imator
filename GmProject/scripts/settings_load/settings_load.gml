@@ -198,6 +198,10 @@ function settings_load()
 			if (ds_map_valid(interfacemap[?"view_second_window"]))
 				window_state_restore(e_window.VIEW_SECOND, interfacemap[?"view_second_window"])
 			
+			setting_overlay_view_controls = value_get_real(interfacemap[?"overlay_view_controls"], setting_overlay_view_controls)
+			setting_overlay_view_shapes = value_get_real(interfacemap[?"overlay_view_shapes"], setting_overlay_view_shapes)
+			setting_overlay_view_guides = value_get_real(interfacemap[?"overlay_view_guides"], setting_overlay_view_guides)
+			
 			setting_snap = value_get_real(interfacemap[?"snap"], setting_snap)
 			setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
 			setting_snap_size_position = value_get_real(interfacemap[?"snap_size_position"], setting_snap_size_position)

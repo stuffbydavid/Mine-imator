@@ -103,6 +103,10 @@ function settings_startup()
 	setting_view_second_width = 440
 	setting_view_second_height = 280
 	
+	setting_overlay_view_controls = true
+	setting_overlay_view_shapes = true
+	setting_overlay_view_guides = false
+	
 	setting_modelbench_popup_hidden = false
 	
 	setting_move_speed = 1
