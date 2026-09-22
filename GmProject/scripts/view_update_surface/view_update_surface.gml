@@ -22,8 +22,14 @@ function view_update_surface(view, cam)
 		render_high()
 	else
 		render_low()
+
+	if (tl_focus != null && instance_exists(tl_focus))
+	{
+		tl_focus.world_pos_2d = view_shape_project(tl_focus.world_pos)
+		tl_focus.world_pos_2d_error = (point3D_project_error || tl_focus.world_pos_2d[X] < 0 || tl_focus.world_pos_2d[Y] < 0 || tl_focus.world_pos_2d[X] >= content_width || tl_focus.world_pos_2d[Y] >= content_height)
+	}
 	
-	if (view.gizmos)
+	if (view.gizmos && !place_build)
 	{
 		// Selection
 		if (tl_edit_amount > 0)
@@ -141,7 +147,8 @@ function view_update_surface(view, cam)
 	}
 
 	// Placed objects
-	if (place_tl != null && (place_content_mouseon = null || content_mouseon))
+	var showplace = place_build ? content_mouseon : (place_tl != null && (content_mouseon || place_content_mouseon = null));
+	if (showplace)
 	{
 		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
 		if (!place_build)

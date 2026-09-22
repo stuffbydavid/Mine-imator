@@ -6,6 +6,15 @@ function tl_remove_clean()
 {
 	var tl = (argument_count > 0 ? argument[0] : id);
 	
+	with (app)
+	{
+		if (place_build || place_tl != null)
+		{
+			view_main.update_place_surfaces = true
+			view_second.update_place_surfaces = true
+		}
+	}
+	
 	with (tl)
 	{
 		// Deselect

@@ -8,11 +8,10 @@ function tab_get_title(tab)
 		return text_get("tabprojectproperties")
 	else if (tab = timeline)
 		return text_get("tabtimeline")
+	else if (tab = build_tool)
+		return text_get("tabbuildtool")
 	else if (tab = object_editor)
 	{
-		if (place_build)
-			return text_get("tabbuild")
-
 		if (obj_edit = null || !instance_exists(obj_edit))
 			return ""
 		switch (obj_edit.type)
@@ -58,6 +57,8 @@ function tab_get_title(tab)
 		if (tl_edit)
 		{
 			name = string_remove_newline(tl_edit.display_name)
+			if (!tl_edit.animated && tl_edit_amount = 1)
+				return name
 			
 			if (tl_edit_amount > 1)
 			{

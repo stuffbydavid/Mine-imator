@@ -65,7 +65,7 @@ function action_lib_model_state(val)
 		temp_update_display_name()
 		model_shape_update_color()
 		
-		if (object_index = obj_timeline)
+		if (object_index = obj_timeline && id != app.place_tl)
 			tl_select_single()
 	}
 	

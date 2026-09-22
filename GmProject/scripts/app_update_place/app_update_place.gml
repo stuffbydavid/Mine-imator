@@ -2,10 +2,11 @@
 
 function app_update_place()
 {
-	if (window_busy != "place")
+	if (window_busy != place_busy)
 		return 0
 	
-	mouse_cursor = cr_drag
+	if (!place_build)
+		mouse_cursor = cr_drag
 	
 	// Camera moved > 1 unit, update depth caches
 	if (vec3_length(vec3_sub(cam_work_from, place_cam_work_from)) > 1 ||
@@ -22,7 +23,7 @@ function app_update_place()
 	// Update object with position from last step
 	if (place_view_pos != null)
 	{
-		if (place_target_tl_part_of != null)
+		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
 			with (place_target_tl_part_of)
 				tl_mark_place_target(false)
 
@@ -31,7 +32,10 @@ function app_update_place()
 		place_pos = place_view_pos
 		place_rot = vec3(0)
 		
-		action_tl_lock_tree(place_tl, false, null)
+		build_box_render = null
+		
+		if (!place_build)
+			action_tl_lock_tree(place_tl, false, null)
 		
 		if (!place_view_air)
 		{
@@ -47,21 +51,54 @@ function app_update_place()
 					
 				// Adjust position/rotation by scenery
 				app_update_place_scenery()
+
+				// Find parent actions in build mode
+				if (place_build)
+				{
+					var action = null;
+					with (build_settings)
+						action = tl_get_parent_action(app.place_target_tl)
+					
+					if (is_array(action) && array_length(action) > e_parent_action.TARGET)
+						place_target_tl_part_of = action[e_parent_action.TARGET]
+					else
+						place_target_tl_part_of = null
+				}
 			}
 			
 			// Ground placement
 			else
 			{
 				var rotpoint = point3D(block_half_size, block_half_size, 0);
-				if (place_tl.type = e_tl_type.BLOCK || place_tl.type = e_tl_type.SCENERY)
+				if (place_build)
+				{
+					if (build_type = e_tl_type.BLOCK)
+						rotpoint = build_settings.rot_point
+				}
+				else if (place_tl.type = e_tl_type.BLOCK || place_tl.type = e_tl_type.SCENERY)
 					rotpoint = place_tl.rot_point_render
 
 				place_pos[X] = snap(place_pos[X] - rotpoint[X], block_size) + rotpoint[X]
 				place_pos[Y] = snap(place_pos[Y] - rotpoint[Y], block_size) + rotpoint[Y]
 				place_pos[Z] = 0
+				
+				var boxpos = array_copy_1d(place_pos);
+				boxpos[Z] -= block_half_size
+				build_box_matrix = matrix_create(boxpos, vec3(0), vec3(1))
+				build_box_render = build_box_top
 			}
 		}
 			
+		if (place_build)
+		{
+			if (place_target_tl_part_of != null)
+				with (place_target_tl_part_of)
+					tl_mark_place_target(true)
+			
+			place_view_pos = null
+			return 0
+		}
+
 		// Update timeline and parent to compatible objects
 		tl_value_set_matrix(place_tl, matrix_create(place_pos, place_rot, place_sca), place_spawn)
 		place_tl.update_matrix = true
@@ -110,43 +147,11 @@ function app_update_place()
 			tl_value_copy_vec3(e_value.SCA_X, value_default, app.place_tl.value_default)
 		}
 		
-		// Model part parent
-		place_target_tl_model_part = (newparent != null && newparent != app && newparent.type = e_tl_type.MODEL_PART)
-			
 		place_view_pos = null
 	}
 		
 	// Stop placing (no view clicked)
-	if (place_content_mouseon = null && mouse_left_released)
-	{
-		if (place_tl.parent != place_tl_parent)
-		{
-			with (place_tl)
-				tl_set_parent(app.place_tl_parent, app.place_tl_parent_index, true)
-			tl_update_list()
-		}
-
-		with (place_history)
-		{
-			tl_value_set_vec3(e_value.POS_X, vec3(0), true)
-			tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
-			tl_value_set_vec3(e_value.SCA_X, vec3(1), true)
-		}
-		
-		with (place_tl)
-		{
-			tl_value_set_vec3(e_value.POS_X, vec3(0))
-			tl_value_set_vec3(e_value.POS_X, vec3(0), true)
-			tl_value_set_vec3(e_value.ROT_X, vec3(0))
-			tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
-			tl_value_set_vec3(e_value.SCA_X, vec3(1))
-			tl_value_set_vec3(e_value.SCA_X, vec3(1), true)
-			update_matrix = true
-		}
-		
-		tl_update_matrix()
-		render_samples = -1
-		app_stop_place()
-	}
+	if (!place_build && place_content_mouseon = null && mouse_left_released)
+		app_cancel_place()
 	
 }

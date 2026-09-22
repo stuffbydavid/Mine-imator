@@ -62,7 +62,7 @@ function tab_settings_controls()
 		tab_collapse_start()
 		
 		draw_keybind(e_keybind.WORKBENCH, dx, dy)
-		draw_keybind(e_keybind.BUILD_MODE, dx, dy)
+		draw_keybind(e_keybind.BUILD_TOOL, dx, dy)
 		draw_keybind(e_keybind.TOOL_SELECT, dx, dy)
 		draw_keybind(e_keybind.TOOL_MOVE, dx, dy)
 		draw_keybind(e_keybind.TOOL_ROTATE, dx, dy)

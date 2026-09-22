@@ -8,6 +8,7 @@ function temp_animate()
 		type = other.type
 		temp = other.id
 		has_temp = true
+		animated = !type_is_block(type)
 		
 		if (type = e_tl_type.EQUIPMENT)
 			inherit_pose = true

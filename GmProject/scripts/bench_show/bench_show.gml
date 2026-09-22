@@ -2,6 +2,9 @@
 
 function bench_show()
 {
+	if (place_build)
+		app_stop_place(false, false)
+
 	action_tl_play_break()
 	
 	window_busy = "bench"

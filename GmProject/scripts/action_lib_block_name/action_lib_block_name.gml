@@ -23,6 +23,6 @@ function action_lib_block_name(name)
 		temp_update_block()
 		temp_update_display_name()
 	}
-	
+
 	lib_preview.update = true
 }

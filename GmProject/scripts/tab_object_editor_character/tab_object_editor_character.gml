@@ -20,7 +20,7 @@ function tab_object_editor_character()
 		case e_temp_type.SPECIAL_BLOCK:
 		{
 			labeltext = text_get("templateeditorblock")
-			list = tab.special_block_list
+			list = (tab = build_tool) ? tab.build_list : tab.special_block_list
 			capwid = 0
 			break
 		}
@@ -49,9 +49,10 @@ function tab_object_editor_character()
 	}
 			
 	statesh += (32 * menus) + ((ui_small_height + 8) * ceil(checkboxes/2))
-	sortlist_draw(list, dx, dy, dw, dh - statesh, obj_edit.model_name, false)
+	var selected = (tab = build_tool) ? tab.build_selected : obj_edit.model_name;
+	sortlist_draw(list, dx, dy, dw, dh - statesh, selected, false)
 	menu_filter = list.search_tbx.text
-	menu_filter_normal = sortlist_column_get(list, obj_edit.model_name, 0)
+	menu_filter_normal = (selected = null) ? "" : sortlist_column_get(list, selected, 0)
 			
 	// Update states in case model was updated
 	statelen = array_length(obj_edit.model_state)
@@ -100,7 +101,7 @@ function tab_object_editor_character()
 		{
 			menu_model_state = menu_model_state_current
 					
-			var script = (obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state;
+			var script = (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state);
 					
 			if (obj_edit.model_state[i + 1] = "true")
 				script_execute(script, "false")
@@ -123,7 +124,7 @@ function tab_object_editor_character()
 		var state = obj_edit.model_state[i];
 		menu_model_current = model
 		menu_model_state_current = model ? model.states_map[?state] : null
-		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", obj_edit.model_state[i + 1]), (obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state, false, null, null, "", c_white, 1, capwid)
+		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", obj_edit.model_state[i + 1]), (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state), false, null, null, "", c_white, 1, capwid)
 		dyy += 32
 	}
 	menu_model_current = null

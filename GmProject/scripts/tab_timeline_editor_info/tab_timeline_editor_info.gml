@@ -20,7 +20,7 @@ function tab_timeline_editor_info()
 		buttonwid = string_width(text_get(button)) + 24
 	}
 	else
-		tab_control(ui_small_height)
+		tab_control(28)
 
 	draw_label_value(dx, dy + 4, max(0, dw - buttonwid - (buttonwid > 0 ? 8 : 0)), ui_small_height, text_get("timelineeditortype"), typename)
 	if (button != "" && draw_button_label(button, dx + dw, dy, null, null, create ? e_button.SECONDARY : e_button.PRIMARY, null, e_anchor.RIGHT))
@@ -38,6 +38,14 @@ function tab_timeline_editor_info()
 	tab.info.tbx_name.text = tl_edit.name
 	draw_textfield("timelineeditorname", dx, dy, dw, 24, tab.info.tbx_name, action_tl_name, string_remove_newline(tl_edit.display_name), "top")
 	tab_next()
+	
+	// Animated
+	if (tl_edit.type != e_tl_type.AUDIO_TRACK && tl_edit.type != e_tl_type.BACKGROUND)
+	{
+		tab_control_checkbox()
+		draw_switch("timelineeditoranimated", dx, dy, tl_edit.animated, action_tl_animated)
+		tab_next()
+	}
 	
 	if (tl_edit.type = e_temp_type.TEXT)
 	{

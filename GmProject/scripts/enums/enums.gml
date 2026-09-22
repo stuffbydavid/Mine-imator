@@ -368,6 +368,15 @@ function enums()
 		amount
 	}
 	
+	// Workbench buttons
+	enum e_bench_button
+	{
+		CREATE,
+		EDIT,
+		CREATE_AND_EDIT,
+		START_BUILDING
+	}
+	
 	// Template types
 	enum e_temp_type
 	{

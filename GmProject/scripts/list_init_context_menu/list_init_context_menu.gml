@@ -275,8 +275,8 @@ function list_init_context_menu(name)
 			
 			list_item_add(text_get("toolbareditredo"), null, text_control_name(keybinds[e_keybind.REDO].keybind), null, icons.REDO, null, action_toolbar_redo)
 			list_item_last.disabled = (history_pos = 0)
-			
-			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds[e_keybind.TIMELINE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
+
+			list_item_add(text_get("toolbareditselectall"), null, text_control_name(keybinds[e_keybind.TIMELINE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all)
 			list_item_last.disabled = (ds_list_size(tree_list) = 0)
 			
 			list_item_add(text_get("toolbareditduplicate"), null, text_control_name(keybinds[e_keybind.TIMELINE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
@@ -290,6 +290,9 @@ function list_init_context_menu(name)
 			
 			list_item_add(text_get("toolbareditshowhidden"), false, text_control_name(keybinds[e_keybind.TIMELINE_SHOW_HIDDEN].keybind), null, icons.VISIBLE, null, action_tl_hide_select)
 			list_item_last.disabled = (tl_edit = null)
+			
+			list_item_add(text_get("toolbareditbuildtool"), null, text_control_name(keybinds[e_keybind.BUILD_TOOL].keybind), null, icons.BLOCK, null, action_toolbar_build_mode, true)
+			list_item_last.toggled = place_build
 			
 			list_item_add(text_get("toolbareditpreferences"), settings, "", null, icons.SETTINGS, null, settings.show ? tab_close : tab_show, true)
 			list_item_last.toggled = settings.show
