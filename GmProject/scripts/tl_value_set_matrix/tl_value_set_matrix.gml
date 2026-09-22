@@ -24,9 +24,9 @@ function tl_value_set_matrix(tl, worldmatrix, def = true)
 	angle = matrix_angle(localmatrix)
 	rot = vec3(radtodeg(angle[X]), radtodeg(angle[Y]), radtodeg(angle[Z]))
 
-	pos = vec3_snap(pos, 0.0001)
-	rot = vec3_snap(rot, 0.0001)
-	sca = vec3_snap(sca, 0.0001)
+	pos = vec3_snap(pos, transform_snap)
+	rot = vec3_snap(rot, transform_snap)
+	sca = vec3_snap(sca, transform_snap)
 	
 	with (tl)
 	{

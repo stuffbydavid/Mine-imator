@@ -3814,7 +3814,8 @@
 		"firstperson": "First-person mode",
 		"exit": "Exit build tool",
 		"selected": "Selected",
-		"structure": "Structure"
+		"structure": "Structure",
+		"createnew": "Create new"
 	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",
@@ -3832,7 +3833,7 @@
 		},
 		"filtertags": "Filter out tags",
 		"hidestructureblocks": "Hide structure blocks",
-		"hidestructureblockstip": "Hide blocks from the list with \"Animated\" turned off parented to structures or scenery.",
+		"hidestructureblockstip": "Hide blocks from the list with \"Animated\" turned off and parented to structures or scenery.",
 		"hidenonanimated": "Hide non-animated timelines",
 		"hidenonanimatedtip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hideghosts": "Hide ghost timelines",

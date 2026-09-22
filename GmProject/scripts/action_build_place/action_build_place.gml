@@ -31,7 +31,7 @@ function action_build_place()
 			if (structure != null)
 			{
 				if (build_structure = structure)
-					action_build_structure(null)
+					action_build_structure(null, false)
 				with (structure)
 					tl_remove_clean()
 			}
@@ -61,7 +61,7 @@ function action_build_place()
 				}
 					
 				if (place_build)
-					action_build_structure(structure)
+					action_build_structure(structure, false)
 			}
 			
 			tl = tl_new_block(hobj.build_type, hobj.build_save_obj, true)
@@ -70,6 +70,7 @@ function action_build_place()
 				var parent = save_id_find(hobj.parent_save_id);
 				if (parent = null)
 					parent = app
+				
 				tl_set_parent(parent)
 				tl_value_copy_vec3(e_value.POS_X, value_default, hobj.value_default)
 				tl_value_copy_vec3(e_value.ROT_X, value_default, hobj.value_default)
@@ -104,9 +105,11 @@ function action_build_place()
 			
 			if (targetparent = null)
 				targetparent = app
+			if (targetparent != app && type_is_structure(targetparent.type) && build_structure_custom)
+				targetparent = app
 
 			if (targetparent != app && type_is_structure(targetparent.type))
-				action_build_structure(targetparent)
+				action_build_structure(targetparent, false)
 			else if (targetparent = app)
 			{
 				if (build_structure != null && !instance_exists(build_structure))
@@ -139,6 +142,8 @@ function action_build_place()
 					structure.animated = false
 					structure.name = foldername
 					hobj.structure_pos = array_copy_1d(place_pos)
+					hobj.structure_pos = vec3_snap(hobj.structure_pos, transform_snap)
+					
 					with (structure)
 					{
 						tl_value_set_vec3(e_value.POS_X, hobj.structure_pos)
@@ -159,9 +164,15 @@ function action_build_place()
 			with (tl)
 			{
 				// Apply the same parent action as a dragged placement
-				tl_value_set_matrix(id, matrix_create(app.place_pos, app.place_rot, app.place_sca), true)
+				var pos, rot, sca;
+				pos = vec3_snap(app.place_pos, transform_snap)
+				rot = vec3_snap(app.place_rot, transform_snap)
+				sca = vec3_snap(app.place_sca, transform_snap)
+				
+				tl_value_set_matrix(id, matrix_create(pos, rot, sca), true)
 				update_matrix = true
 				tl_set_parent(targetparent, -1, true)
+				
 				if (hobj.structure_save_id != "")
 				{
 					tl_value_set_vec3(e_value.POS_X, vec3(0))
@@ -179,12 +190,14 @@ function action_build_place()
 			}
 			tl_focus = tl
 		}
+		
 		with (tl)
 		{
 			tl_update_parent_is_selected()
 			if (self.parent != app && type_is_structure(self.parent.type) && (self.parent.place_target || self.parent.parent_is_place_target))
 				tl_mark_place_target(true)
 		}
+		
 		log("Created", tl_type_name_list[|tl.type])
 	}
 
@@ -192,6 +205,7 @@ function action_build_place()
 	tl_update_matrix()
 	if (history_undo)
 		app_update_tl_edit()
+	
 	project_update_counts()
 	lib_preview.update = true
 
@@ -207,6 +221,7 @@ function action_build_place()
 		}
 		else if (place_target_tl_part_of = null && build_structure != null && instance_exists(build_structure))
 			action_build_structure(build_structure)
+		
 		place_pos = null
 		place_view_pos = null
 		view_main.update_place_surfaces = true

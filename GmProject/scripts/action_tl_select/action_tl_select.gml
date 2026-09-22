@@ -62,13 +62,15 @@ function action_tl_select(tl)
 		}
 	}
 
+	app_update_tl_edit()
+	
+	// Pick as structure for build tool
 	if (place_build && tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
 	{
-		action_build_structure(tl_edit)
+		action_build_structure(tl_edit, true)
 		place_target_tl = null
 		place_view_pos = null
 	}
-	
-	app_update_tl_edit()
+
 	tl_update_list()
 }

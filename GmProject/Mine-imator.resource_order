@@ -242,6 +242,7 @@
     {"name":"action_bench_text","order":7,"path":"scripts/action_bench_text/action_bench_text.yy",},
     {"name":"action_build_place","order":1,"path":"scripts/action_build_place/action_build_place.yy",},
     {"name":"action_build_remove","order":4,"path":"scripts/action_build_remove/action_build_remove.yy",},
+    {"name":"action_build_structure_select","order":5,"path":"scripts/action_build_structure_select/action_build_structure_select.yy",},
     {"name":"action_build_structure","order":3,"path":"scripts/action_build_structure/action_build_structure.yy",},
     {"name":"action_collapse","order":1,"path":"scripts/action_collapse/action_collapse.yy",},
     {"name":"action_group_bend_sliders","order":14,"path":"scripts/action_group_bend_sliders/action_group_bend_sliders.yy",},

@@ -104,8 +104,13 @@ function view_update(view, cam)
 				if (place_build)
 				{
 					window_busy = place_busy
-					if (place_pos != null)
-						action_build_place()
+					if (view_click_right)
+					{
+						if (place_pos != null)
+							action_build_place()
+					}
+					else
+						action_build_remove()
 				}
 				else if (place_tl = null)
 				{

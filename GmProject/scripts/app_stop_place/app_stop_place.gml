@@ -4,7 +4,7 @@ function app_stop_place(keep = false, clearmouse = true)
 {
 	if (place_build)
 	{
-		action_build_structure(null)
+		action_build_structure(null, false)
 			
 		place_build = false
 		place_busy = "place"
