@@ -32,6 +32,12 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	if (build)
 	{
+		var structure = null;
+		if (tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
+			structure = tl_edit
+
+		action_build_structure(structure, false)
+
 		// Copy workbench settings into builder
 		with (build_settings)
 		{

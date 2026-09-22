@@ -8,7 +8,6 @@ function new_history(script)
 	with (new_obj(obj_history))
 	{
 		id.script = script
-		build_action = false
 		par_script = null
 		save_temp_edit = save_id_get(temp_edit)
 		save_obj_edit = save_id_get(obj_edit)

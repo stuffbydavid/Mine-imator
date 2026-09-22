@@ -13,12 +13,12 @@ function tl_new_part(part)
 		model_part_name = part.name
 		
 		part_of = other.id
+		inherit_rot_point = true
 		inherit_alpha = true
 		inherit_color = true
 		inherit_texture = true
 		inherit_surface = true
 		inherit_subsurface = true
-		inherit_rot_point = true
 		scale_resize = false
 		lock_bend = part.lock_bend
 		part_mixing_shapes = part.part_mixing_shapes

@@ -19,6 +19,10 @@ function tl_update_list()
 	
 	if (root)
 	{
+		for (var t = 0; t < ds_list_size(tree_list); t++)
+			with (tree_list[|t])
+				tl_update_child_is_animated()
+
 		app.tree_update_parent_filter = app
 		app.tree_update_extend = true
 		app.tree_update_color = null

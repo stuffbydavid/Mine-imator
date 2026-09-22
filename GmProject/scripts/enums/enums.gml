@@ -423,6 +423,7 @@ function enums()
 		PATH,
 		PATH_POINT,
 		BACKGROUND,
+		STRUCTURE,
 		FOLDER,
 		amount
 	} // Update app_startup_lists() when adding types
