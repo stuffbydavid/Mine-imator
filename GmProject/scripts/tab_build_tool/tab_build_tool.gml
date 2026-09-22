@@ -22,7 +22,7 @@ function tab_build_tool()
 	dy += 40
 	dh -= 40
 
-	draw_label(text_get("buildtoolblock") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_label(text_get("buildtoolselected"), dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	dy += 32
 	dh -= 32
 	dh -= 4

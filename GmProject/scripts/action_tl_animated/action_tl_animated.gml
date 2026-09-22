@@ -66,6 +66,9 @@ function action_tl_animated(enable)
 		targets = array()
 		with (obj_timeline)
 		{
+			if (!selected && type != e_tl_type.MODEL_PART)
+				continue
+
 			var part = id;
 			while (part != null && !part.selected)
 				part = part.part_of
@@ -156,7 +159,7 @@ function action_tl_animated(enable)
 	{
 		tl_update_length()
 		tl_update_matrix()
-		if (setting_timeline_hide_nonanimated)
+		if (setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated)
 			tl_update_list()
 
 		app_update_tl_edit()

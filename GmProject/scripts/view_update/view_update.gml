@@ -18,6 +18,7 @@ function view_update(view, cam)
 	{
 		place_content_mouseon = view
 		mouse_cursor = cr_handpoint
+		
 		if (mouse_left_pressed)
 		{
 			window_busy = "viewclick"
@@ -104,7 +105,7 @@ function view_update(view, cam)
 				{
 					window_busy = place_busy
 					if (place_pos != null)
-						action_bench_create(e_bench_button.START_BUILDING)
+						action_build_place()
 				}
 				else if (place_tl = null)
 				{

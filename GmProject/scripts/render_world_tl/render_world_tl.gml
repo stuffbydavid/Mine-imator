@@ -7,10 +7,11 @@ function render_world_tl()
 	if (type = e_tl_type.CHARACTER ||
 		type = e_tl_type.EQUIPMENT ||
 		type = e_tl_type.SPECIAL_BLOCK ||
-		type = e_tl_type.FOLDER ||
-		type = e_tl_type.BACKGROUND ||
 		type = e_tl_type.AUDIO_TRACK ||
-		type = e_tl_type.PATH_POINT)
+		type = e_tl_type.PATH_POINT ||
+		type = e_tl_type.BACKGROUND ||
+		type = e_tl_type.STRUCTURE ||
+		type = e_tl_type.FOLDER)
 		return 0
 	
 	if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))

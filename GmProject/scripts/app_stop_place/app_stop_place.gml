@@ -4,9 +4,7 @@ function app_stop_place(keep = false, clearmouse = true)
 {
 	if (place_build)
 	{
-		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
-			with (place_target_tl_part_of)
-				tl_mark_place_target(false)
+		action_build_structure(null)
 			
 		place_build = false
 		place_busy = "place"

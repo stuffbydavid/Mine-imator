@@ -1,3 +1,5 @@
+/// tab_object_editor_character()
+
 function tab_object_editor_character()
 {
 	var labeltext, list, capwid;

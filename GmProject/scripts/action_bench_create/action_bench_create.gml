@@ -5,8 +5,6 @@ function action_bench_create(button = e_bench_button.CREATE)
 {
 	var tab, editobj, placetarget, placeparent;
 	tab = (history_undo || history_redo) ? history_data.bench_tab : bench_tab
-	if (place_build && !history_undo && !history_redo)
-		tab = (build_type = e_tl_type.SPECIAL_BLOCK) ? e_bench.SPECIAL_BLOCK : e_bench.BLOCK
 	editobj = null
 	placetarget = null
 	placeparent = null
@@ -30,6 +28,15 @@ function action_bench_create(button = e_bench_button.CREATE)
 				action_lib_animate(true)
 			}
 		}
+		return 0
+	}
+
+	if (button = e_bench_button.START_BUILDING && !history_undo && !history_redo)
+	{
+		build_type = e_tl_type.BLOCK
+		if (tab = e_bench.SPECIAL_BLOCK)
+			build_type = e_tl_type.SPECIAL_BLOCK
+		app_start_place(true)
 		return 0
 	}
 
@@ -69,28 +76,13 @@ function action_bench_create(button = e_bench_button.CREATE)
 	}
 	else
 	{
-		var hobj, tl, particletemp, sceneryres, sceneryreplaceground, par, startplacing, buildaction;
+		var hobj, tl, particletemp, sceneryres, sceneryreplaceground, par, startplacing;
 		hobj = null
 		particletemp = null
 		sceneryres = null
 		sceneryreplaceground = false
 		startplacing = (tab = e_bench.BLOCK && button = e_bench_button.CREATE) ||
-						button = e_bench_button.START_BUILDING ||
 						(setting_place_new && !keyboard_check(vk_shift))
-
-		if (history_redo)
-			buildaction = history_data.build_action
-		else
-			buildaction = (place_build || button = e_bench_button.START_BUILDING)
-		
-		if (!history_redo && buildaction && !place_build)
-		{
-			build_type = (tab = e_bench.SPECIAL_BLOCK) ? e_tl_type.SPECIAL_BLOCK : e_tl_type.BLOCK
-			app_start_place(true)
-			return 0
-		}
-		
-		startplacing = startplacing && !buildaction
 		
 		if (history_redo)
 		{
@@ -100,10 +92,8 @@ function action_bench_create(button = e_bench_button.CREATE)
 				par = app
 			hobj.spawn_amount = 0
 			
-			if (!history_data.build_action)
-				bench_tab = history_data.bench_tab
-			if (!history_data.build_action)
-				history_restore_bench(history_data.bench_save_obj)
+			bench_tab = history_data.bench_tab
+			history_restore_bench(history_data.bench_save_obj)
 			
 			if (tab = e_bench.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
 			{
@@ -115,8 +105,8 @@ function action_bench_create(button = e_bench_button.CREATE)
 		}
 		else
 		{
-			hobj = history_set(action_bench_create, buildaction)
-			hobj.bench_save_obj = history_save_bench(buildaction ? build_settings : bench_settings)
+			hobj = history_set(action_bench_create)
+			hobj.bench_save_obj = history_save_bench()
 			hobj.bench_tab = tab
 			hobj.spawn_amount = 0
 			hobj.open_editor = (button = e_bench_button.EDIT || button = e_bench_button.CREATE_AND_EDIT)
@@ -201,99 +191,12 @@ function action_bench_create(button = e_bench_button.CREATE)
 		}
 		else if (temptype != null)
 		{
-			if (tab = e_bench.BLOCK)
+			if (tab = e_bench.BLOCK || tab = e_bench.SPECIAL_BLOCK)
 			{
-				tl = new_obj(obj_timeline)
-				with (tl)
-				{
-					var buildsource = app.place_build ? app.build_settings : app.bench_settings;
-					if (app.history_redo && history_data.build_action)
-						buildsource = history_data.bench_save_obj
-					
-					type = e_tl_type.BLOCK
-					id.temp = id
-					has_temp = false
-					animated = false
-					
-					block_name = buildsource.block_name
-					block_state = array_copy_1d(buildsource.block_state)
-					block_tex = buildsource.block_tex
-					block_tex_material = buildsource.block_tex_material
-					block_tex_normal = buildsource.block_tex_normal
-					block_repeat_enable = buildsource.block_repeat_enable
-					block_repeat = array_copy_1d(buildsource.block_repeat)
-					block_center_legacy = false
-					block_center = buildsource.block_center
-					block_randomize = buildsource.block_randomize
-					block_vbuffer = null
-					inherit_alpha = true
-					inherit_color = true
-					inherit_texture = true
-					texture_filtering = true
-					
-					tl_update_scenery_part()
-					temp_update_rot_point()
-					tl_update()
-					tl_set_parent_root()
-					tl_value_spawn()
-				}
-
-				with (hobj)
-				{
-					spawn_save_id[spawn_amount] = tl.save_id
-					spawn_amount++
-				}
-				editobj = tl
-			}
-			else if (tab = e_bench.SPECIAL_BLOCK)
-			{
-				tl = new_obj(obj_timeline)
-				with (tl)
-				{
-					var buildsource = app.place_build ? app.build_settings : app.bench_settings;
-					if (app.history_redo && history_data.build_action)
-						buildsource = history_data.bench_save_obj
-					
-					type = e_tl_type.SPECIAL_BLOCK
-					id.temp = id
-					has_temp = false
-					animated = false
-					
-					model_name = buildsource.model_name
-					model_state = array_copy_1d(buildsource.model_state)
-					model_tex = buildsource.model_tex
-					model_tex_material = buildsource.model_tex_material
-					model_tex_normal = buildsource.model_tex_normal
-					model_use_blend_color = buildsource.model_use_blend_color
-					model_blend_color = buildsource.model_blend_color
-					model_blend_color_default = buildsource.model_blend_color_default
-					
-					pattern_base_color = buildsource.pattern_base_color
-					pattern_pattern_list = array_copy_1d(buildsource.pattern_pattern_list)
-					pattern_color_list = array_copy_1d(buildsource.pattern_color_list)
-					
-					inherit_alpha = true
-					inherit_color = true
-					inherit_texture = true
-					
-					tl_update_scenery_part()
-
-					part_list = ds_list_create()
-					if (model_file != null)
-					{
-						for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
-						{
-							var part = model_file.file_part_list[|p];
-							if (model_hide_list = null || ds_list_find_index(model_hide_list, part.name) = -1)
-								ds_list_add(part_list, tl_new_part(part))
-						}
-						tl_update_part_list(model_file, id)
-					}
-
-					tl_update()
-					tl_set_parent_root()
-					tl_value_spawn()
-				}
+				var blocktype = e_tl_type.BLOCK;
+				if (tab = e_bench.SPECIAL_BLOCK)
+					blocktype = e_tl_type.SPECIAL_BLOCK
+				tl = tl_new_block(blocktype, bench_settings)
 
 				with (hobj)
 				{
@@ -425,9 +328,8 @@ function action_bench_create(button = e_bench_button.CREATE)
 		
 		if (history_redo)
 		{
-			if (!history_data.build_action)
-				with (bench_settings)
-					temp_particles_type_clear()
+			with (bench_settings)
+				temp_particles_type_clear()
 			
 			with (tl)
 			{
@@ -442,23 +344,6 @@ function action_bench_create(button = e_bench_button.CREATE)
 		}
 		else
 		{
-			if (buildaction)
-			{
-				with (tl)
-				{
-					tl_value_set_matrix(id, matrix_create(app.place_pos, app.place_rot, app.place_sca), true)
-					update_matrix = true
-					if (app.place_target_tl != null && instance_exists(app.place_target_tl))
-					{
-						var action = tl_get_parent_action(app.place_target_tl);
-						if (is_array(action) && array_length(action) > e_parent_action.TARGET)
-							tl_set_parent(action[e_parent_action.TARGET], -1, true)
-					}
-				}
-				if (place_build)
-					tl_focus = tl
-			}
-			
 			with (hobj)
 			{
 				tl_value_copy_vec3(e_value.POS_X, value_default, tl.value_default)
@@ -470,6 +355,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 			
 			// Start placing
 			if (startplacing &&
+				tl.type != e_tl_type.STRUCTURE &&
 				tl.type != e_tl_type.FOLDER &&
 				tl.type != e_tl_type.CAMERA &&
 				(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&

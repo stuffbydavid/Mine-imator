@@ -61,6 +61,13 @@ function action_tl_select(tl)
 			tl_select()
 		}
 	}
+
+	if (place_build && tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
+	{
+		action_build_structure(tl_edit)
+		place_target_tl = null
+		place_view_pos = null
+	}
 	
 	app_update_tl_edit()
 	tl_update_list()
