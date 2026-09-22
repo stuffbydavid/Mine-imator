@@ -10,6 +10,7 @@ function project_save_timeline()
 		
 		json_save_var_save_id("temp", temp)
 		json_save_var_bool("has_temp", has_temp)
+		json_save_var_bool("animated", animated)
 		json_save_var_nullable("color_tag", color_tag)
 		json_save_var_bool("hide", hide)
 		json_save_var_bool("lock", lock)
@@ -109,7 +110,7 @@ function project_save_timeline()
 			json_save_array_done()
 		}
 		
-		project_save_values("default_values", value_default, app.value_default)
+		project_save_values("default_values", animated ? value_default : value, app.value_default)
 		
 		json_save_object_start("keyframes")
 			

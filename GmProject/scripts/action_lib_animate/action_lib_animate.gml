@@ -45,6 +45,9 @@ function action_lib_animate(place = false)
 		with (temp_edit)
 			tl = temp_animate()
 		
+		if (history_redo)
+			tl.animated = history_data.tl_animated
+		
 		if (sceneryreplaceground)
 			with (tl)
 				tl_replace_ground()
@@ -82,6 +85,9 @@ function action_lib_animate(place = false)
 			!sceneryreplaceground &&
 			tl.value_type[e_value_type.TRANSFORM_POS])
 			app_start_place(false, tl, true)
+		
+		if (!history_redo)
+			hobj.tl_animated = tl.animated
 	}
 	
 	tl_update_list()

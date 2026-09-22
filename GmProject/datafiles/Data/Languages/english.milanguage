@@ -326,6 +326,9 @@
 		"download": "Download",
 		"view": "View",
 		"rendersaved": "Render settings saved successfully!",
+		"animated": "The selected object has multiple keyframes.",
+		"animatedmultiple": "The selected objects have multiple keyframes.",
+		"animatedpart": "A model part has multiple keyframes.",
 		"equiparmor": "Parent the armor to a character to equip it.",
 		"close": "Close"
 	},
@@ -680,8 +683,8 @@
 		"audiotracktip": "An empty audio track that can play imported sounds from Minecraft or from files such as .mp3 and .wav.",
 		"pointlighttip": "Point lights shine in all directions, like a lightbulb.",
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
-		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
-		"cameraeffectstip": "crashes the program lmao",
+		"cameratip": "A virtual camera the animation is seen through.",
+		"cameraeffectstip": "A number of optional effects for the active camera. (coming soon)",
 		"backgroundtip": "A timeline that can change the environment during the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
@@ -3845,6 +3848,7 @@
 		"edittemplate": "Edit template",
 		"createtemplate": "Create template",
 		"name": "Name",
+		"animated": "Animated",
 		"text": "Text",
 		"textsample": "Sample text",
 		"type": "Type",

@@ -213,6 +213,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 					type = e_tl_type.BLOCK
 					id.temp = id
 					has_temp = false
+					animated = false
 					
 					block_name = buildsource.block_name
 					block_state = array_copy_1d(buildsource.block_state)
@@ -256,6 +257,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 					type = e_tl_type.SPECIAL_BLOCK
 					id.temp = id
 					has_temp = false
+					animated = false
 					
 					model_name = buildsource.model_name
 					model_state = array_copy_1d(buildsource.model_state)

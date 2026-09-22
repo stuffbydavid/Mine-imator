@@ -901,10 +901,11 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.CAMERA_EFFECTS:
 		{
-			//draw_sprite(spr_bench_example, 5, examplex, dy)
-			//dy += 144 + 15
+			draw_sprite(spr_bench_example, 5, examplex, dy)
+			dy += 144 + 15
 			
-			draw_tooltip_label("benchcameraeffectstip", icons.GOOSE, e_toast.NEGATIVE)
+			draw_tooltip_label("benchcameraeffectstip", icons.INFO, e_toast.INFO)
+			createdisabled = true
 			break
 		}
 		

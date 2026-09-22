@@ -1140,8 +1140,16 @@ function tab_timeline()
 			}
 			else
 			{
-				namecolor = c_text_main
-				namealpha = a_text_main
+				if (!tl.animated)
+				{
+					namecolor = c_text_secondary
+					namealpha = a_text_secondary	
+				}
+				else
+				{
+					namecolor = c_text_main
+					namealpha = a_text_main
+				}
 				backalpha = .25
 			}
 			

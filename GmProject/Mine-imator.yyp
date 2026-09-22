@@ -1055,6 +1055,7 @@
     {"id":{"name":"action_textbox_select_all","path":"scripts/action_textbox_select_all/action_textbox_select_all.yy",},},
     {"id":{"name":"action_tl_alpha_mode_tree","path":"scripts/action_tl_alpha_mode_tree/action_tl_alpha_mode_tree.yy",},},
     {"id":{"name":"action_tl_alpha_mode","path":"scripts/action_tl_alpha_mode/action_tl_alpha_mode.yy",},},
+    {"id":{"name":"action_tl_animated","path":"scripts/action_tl_animated/action_tl_animated.yy",},},
     {"id":{"name":"action_tl_backfaces_tree","path":"scripts/action_tl_backfaces_tree/action_tl_backfaces_tree.yy",},},
     {"id":{"name":"action_tl_backfaces","path":"scripts/action_tl_backfaces/action_tl_backfaces.yy",},},
     {"id":{"name":"action_tl_blend_mode_tree","path":"scripts/action_tl_blend_mode_tree/action_tl_blend_mode_tree.yy",},},

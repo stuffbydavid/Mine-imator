@@ -17,7 +17,11 @@ function history_save_tl(tl)
 		
 		// Save values
 		for (var v = 0; v < e_value.amount; v++)
+		{
 			value_default[v] = tl_value_get_save_id(v, tl.value_default[v])
+			if (!animated)
+				value[v] = tl_value_get_save_id(v, tl.value[v])
+		}
 		
 		// Save keyframes
 		kf_amount = ds_list_size(tl.keyframe_list)

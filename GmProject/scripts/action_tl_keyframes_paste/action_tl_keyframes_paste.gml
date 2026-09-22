@@ -9,6 +9,17 @@ function action_tl_keyframes_paste(position)
 		{
 			tl_keyframes_remove()
 			history_restore_tl_select()
+
+			for (var t = 0; t < paste_static_amount; t++)
+				with (save_id_find(paste_static_save_id[t]))
+				{
+					if (animated)
+					{
+						value = array_copy_1d(value_default)
+						update_matrix = true
+					}
+					animated = false
+				}
 		}
 	}
 	else
@@ -29,6 +40,16 @@ function action_tl_keyframes_paste(position)
 			pos = position
 			with (history_set(action_tl_keyframes_paste))
 			{
+				paste_static_amount = 0
+				with (obj_timeline)
+				{
+					if (!animated)
+					{
+						other.paste_static_save_id[other.paste_static_amount] = save_id
+						other.paste_static_amount++
+					}
+				}
+				
 				paste_pos = pos
 				copy_kf_amount = app.copy_kf_amount
 				copy_kf_tl_save_id = array_copy_1d(app.copy_kf_tl_save_id)

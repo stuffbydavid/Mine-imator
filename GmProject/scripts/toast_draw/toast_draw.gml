@@ -4,13 +4,22 @@
 
 function toast_draw(toast)
 {
-	var color, wid, hei;
+	var color, wid, hei, shakex;
 	color = setting_theme.toast_color[toast.variant]
 	wid = 0
 	hei = 0
+	shakex = 0
 	microani_prefix = string(toast)
 	
-	content_x = floor(window_width/2 - toast.toast_width/2) + (32 * ease("easeoutcirc", toast.remove_alpha))
+	// Shake animation
+	if (toast.shake_time != null && !setting_reduced_motion)
+	{
+		var elapsed = current_time - toast.shake_time;
+		if (elapsed < 500)
+			shakex = round(sin(elapsed * .06) * 8 * (1 - elapsed / 500))
+	}
+	
+	content_x = floor(window_width/2 - toast.toast_width/2) + (32 * ease("easeoutcirc", toast.remove_alpha)) + shakex
 	content_y = toast.toast_y
 	content_width = toast.toast_width
 	content_height = toast.toast_height
