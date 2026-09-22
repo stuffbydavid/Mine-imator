@@ -75,7 +75,7 @@ function view_update_surface(view, cam)
 				}
 				
 				// Controls
-				if (tl_edit != null && tl_edit != cam && view.gizmos && setting_overlay_view_controls)
+				if (setting_overlay_view_controls && tl_edit != null && tl_edit != cam)
 				{
 					var vis = tl_edit.render_visible;
 					
@@ -114,7 +114,7 @@ function view_update_surface(view, cam)
 				}
 				
 				// Guides
-				if (tl_edit != null && tl_edit != cam && view.gizmos && setting_overlay_view_guides)
+				if (setting_overlay_view_guides)
 				{
 					with (obj_timeline)
 					{
@@ -122,17 +122,20 @@ function view_update_surface(view, cam)
 						{
 							var tl = other.id;
 							
-							if (tl != tl_edit) // Only one selected timeline gets visible guides
-								continue
 							if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
 								continue
 							
-							if (tl.type = e_tl_type.SPOT_LIGHT)
+							if (tl.type = e_tl_type.SPOT_LIGHT && tl_edit = tl)
 								view_shape_spotlight_guide(tl)
-							else if (tl.type = e_tl_type.POINT_LIGHT)
+							else if (tl.type = e_tl_type.POINT_LIGHT && tl_edit = tl)
 								view_shape_pointlight_guide(tl)
-							else if (tl.type = e_tl_type.CAMERA && tl != cam)
-								view_shape_camera_frustum(tl)
+							
+							else if (tl.type = e_tl_type.CAMERA)
+							{
+								// Use selected camera OR active camera
+								if ((tl_edit = tl && tl != cam) || ((tl_edit = null || tl_edit.type != e_tl_type.CAMERA) && tl = timeline_camera))
+									view_shape_camera_frustum(tl)
+							}
 						}
 					}
 				}
