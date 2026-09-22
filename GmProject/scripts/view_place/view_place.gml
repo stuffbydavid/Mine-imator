@@ -4,7 +4,7 @@
 
 function view_place(view, cam)
 {
-	if (window_busy != "place" || mouse_x < content_x || mouse_y < content_y || mouse_x >= content_x + content_width || mouse_y >= content_y + content_height)
+	if (window_busy != place_busy || !content_mouseon)
 		return
 	place_content_mouseon = null
 
@@ -76,14 +76,16 @@ function view_place(view, cam)
 	}
 	
 	// Calculate world hit position
-	var maxdepth, clipspace, viewspace;
+	var maxdepth, clipspace, viewspace, inverseview;
 	maxdepth = 0.99975
 	clipspace = vec4(tx * 2 - 1, ty * 2 - 1, min(maxdepth, depthval) * 2 - 1, 1)
 	viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse_ext(proj_matrix)))
+	inverseview = matrix_inverse_ext(view_matrix)
 	
 	place_view_color = 0
 	place_view_normal = vec3(0, 1, 0)
-	place_view_pos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix))
+	place_view_pos = point3D_mul_matrix(viewspace, inverseview)
+	place_view_ray = vec3_normalize(vec3_mul_matrix(viewspace, inverseview))
 	
 	// Retrieve color and normal
 	if (depthval < maxdepth)

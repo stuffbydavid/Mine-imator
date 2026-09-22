@@ -151,14 +151,32 @@ function project_load_find_save_ids(isproject = false)
 			part_root = save_id_find(save_id_map[?part_root])
 		
 		// Default textures
-		if (value_default[e_value.TEXTURE_OBJ] != null)
+		if (value_default[e_value.TEXTURE_OBJ] = "none")
+			value_default[e_value.TEXTURE_OBJ] = 0
+		else if (value_default[e_value.TEXTURE_OBJ] != null)
 			value_default[e_value.TEXTURE_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_OBJ]])
 		
-		if (value_default[e_value.TEXTURE_MATERIAL_OBJ] != null)
+		if (value_default[e_value.TEXTURE_MATERIAL_OBJ] = "none")
+			value_default[e_value.TEXTURE_MATERIAL_OBJ] = 0
+		else if (value_default[e_value.TEXTURE_MATERIAL_OBJ] != null)
 			value_default[e_value.TEXTURE_MATERIAL_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_MATERIAL_OBJ]])
 		
-		if (value_default[e_value.TEXTURE_NORMAL_OBJ] != null)
+		if (value_default[e_value.TEXTURE_NORMAL_OBJ] = "none")
+			value_default[e_value.TEXTURE_NORMAL_OBJ] = 0
+		else if (value_default[e_value.TEXTURE_NORMAL_OBJ] != null)
 			value_default[e_value.TEXTURE_NORMAL_OBJ] = save_id_find(save_id_map[?value_default[e_value.TEXTURE_NORMAL_OBJ]])
+
+		if (!animated)
+		{
+			var references = [e_value.PATH_OBJ, e_value.ATTRACTOR, e_value.IK_TARGET, e_value.IK_TARGET_ANGLE, e_value.SOUND_OBJ, e_value.TEXT_FONT];
+			for (var v = 0; v < array_length(references); v++)
+			{
+				var index = references[v];
+				if (value_default[index] != null)
+					value_default[index] = save_id_find(save_id_map[?value_default[index]])
+			}
+			value = array_copy_1d(value_default)
+		}
 		
 		// Glint
 		glint_tex = save_id_find(save_id_map[?glint_tex])

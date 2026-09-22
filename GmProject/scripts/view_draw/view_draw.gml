@@ -451,7 +451,16 @@ function view_draw(view)
 		content_y = floor(content_y)
 		content_width = ceil(content_width)
 		content_height = ceil(content_height)
-		content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, "place") && view.mouseon && place_content_mouseon != "buildstop" && !view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		content_mouseon = false
+		
+		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		{
+			var viewbusy = place_busy;
+			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
+				viewbusy = window_busy
+			
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
+		}
 		
 		if (content_mouseon)
 			shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
@@ -523,7 +532,7 @@ function view_draw(view)
 			bench_rotate_ani = 1
 		
 		// Set animation
-		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, place_busy) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		{
 			mouse_cursor = cr_handpoint
 			bench_button_hover = true
@@ -869,7 +878,10 @@ function view_draw(view)
 		draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, .25)
 	
 	// Mouse on
-	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, "place")
+	var viewbusy = place_busy;
+	if ((place_tl != null || place_build) && window_focus = string(view))
+		viewbusy = window_busy
+	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, viewbusy)
 	if (view.mouseon && view = view_second)
 		view_main.mouseon = false
 	

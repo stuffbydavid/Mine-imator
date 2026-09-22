@@ -1,45 +1,37 @@
-/// app_stop_place([keep, clearmouse])
+/// app_stop_place(keep, [clearmouse])
 
 function app_stop_place(keep = false, clearmouse = true)
 {
-	var remove, historyindex;
-	remove = place_build && !keep
-	historyindex = -1
-	
 	if (place_build)
 	{
-		for (var h = 0; h < history_amount; h++)
-		{
-			if (history[h] = place_history)
-			{
-				historyindex = h
-				break
-			}
-		}
-	}
-
-	if (place_build && keep)
-	{
-		with (place_tl)
-		{
-			tl_create_temp_copy(app.bench_settings)
-			tl_create_temp_copy(app.place_history.bench_save_obj)
-		}
+		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
+			with (place_target_tl_part_of)
+				tl_mark_place_target(false)
+			
+		place_build = false
+		place_busy = "place"
+		place_tl = null
+		place_history = null
+		place_target_tl = null
+		place_target_tl_part_of = null
+		place_content_mouseon = null
 		
-		with (place_history.bench_save_obj)
-			temp_get_save_ids()
-
-		if (historyindex > 0)
-		{
-			history_pos = historyindex
-			history_pop()
-		}
+		window_busy = ""
+		tab_close(build_tool)
+		if (obj_edit = build_settings)
+			obj_edit = null
+		
+		if (clearmouse)
+			mouse_clear(mb_left)
+		
+		return 0
 	}
 
 	if (place_target_tl_part_of != null)
 		with (place_target_tl_part_of)
 			tl_mark_place_target(false)
 
+	// Save the final parent so redo restores the placed object correctly
 	var par = place_tl.parent;
 	with (place_history)
 	{
@@ -50,36 +42,14 @@ function app_stop_place(keep = false, clearmouse = true)
 	with (place_tl)
 		tl_mark_placed(false)
 
-	if (remove)
-	{
-		with (place_tl)
-		{
-			tl_remove_clean()
-			instance_destroy()
-		}
-
-		with (obj_timeline)
-			if (delete_ready)
-				instance_destroy()
-
-		if (historyindex >= 0)
-		{
-			history_pos = historyindex + 1
-			history_pop()
-		}
-	}
 	tl_update_list()
+	if (keep)
+		tl_focus = place_tl
 
+	// Clear placement state
 	place_tl = null
-	place_tl_render_step = 0
-	place_target_tl_model_part = false
 	place_history = null
 	
-	if (place_build && place_view_second_show)
-		view_second.show = true
-	place_build = false
-	
-	place_view_second_show = false
 	place_content_mouseon = null
 	
 	window_busy = ""

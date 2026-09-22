@@ -31,7 +31,6 @@ function action_toolbar_redo()
 		obj_edit = save_id_find(history_data.save_obj_edit)
 	
 	history_redo = false
-	
 	history_resource_update = true
 	render_samples = -1
 	project_update_counts()

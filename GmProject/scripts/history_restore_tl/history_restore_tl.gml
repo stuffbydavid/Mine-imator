@@ -18,7 +18,11 @@ function history_restore_tl(save, tl = null)
 		
 		// Restore default values
 		for (var v = 0; v < e_value.amount; v++)
+		{
 			value_default[v] = tl_value_find_save_id(v, null, save.value_default[v])
+			if (!animated)
+				value[v] = tl_value_find_save_id(v, null, save.value[v])
+		}
 		
 		// Restore keyframes
 		for (var k = 0; k < save.kf_amount; k++)

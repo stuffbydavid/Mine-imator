@@ -10,9 +10,12 @@ function app_update_work_camera()
 	
 	if (window_busy = "")
 	{
-		if (tl_edit != null) 
+		if (tl_focus != null && !instance_exists(tl_focus))
+			tl_focus = (tl_edit != null && instance_exists(tl_edit)) ? tl_edit : null
+
+		if (tl_focus != null)
 		{
-			cam_work_focus_tl = tl_edit
+			cam_work_focus_tl = tl_focus
 			
 			if (cam_work_focus_tl.world_pos_2d_error)
 				cam_work_focus_tl = null

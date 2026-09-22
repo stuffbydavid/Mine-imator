@@ -4,6 +4,9 @@ function project_reset()
 {
 	log("Resetting project")
 	
+	if (place_build)
+		app_stop_place()
+	
 	project_reset_backup()
 	history_clear()
 	

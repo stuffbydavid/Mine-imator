@@ -475,7 +475,7 @@ namespace CppProject
 							mode = Mode::DEFAULT;
 							global::_app->window_busy = "worldimportrelease";
 							updateBoxResizeSurface = true;
-							mouse_clear(mb_left);
+							app_mouse_clear(ScopeAny(global::_app->id));
 						}
 						else if (mouse_check_button(mb_right)) // Cancel
 						{

@@ -13,6 +13,8 @@ function tl_event_create()
 	display_name = ""
 	temp = null
 	has_temp = false
+	animated = true
+	
 	text = text_get("timelineeditortextsample")
 	color_tag = null
 	color_tag_inherit = null

@@ -3,27 +3,44 @@
 
 function action_bench_model_name(name)
 {
-	with (bench_settings)
+	var settings, list, search;
+	if (place_build)
 	{
-		var s;
-		
-		if (type = e_temp_type.CHARACTER)
-			s = string_lower(char_list.search_tbx.text)
-		else if (type = e_temp_type.EQUIPMENT)
-			s = string_lower(equipment_list.search_tbx.text)
-		else if (type = e_temp_type.SPECIAL_BLOCK)
-			s = string_lower(special_block_list.search_tbx.text)
-		else if (type = e_temp_type.MODEL_PART)
-			s = string_lower(model_part_model_list.search_tbx.text)
-		
-		if (model_name = name && s = "")
+		settings = build_settings
+		list = build_tool.build_list
+	}
+	else
+	{
+		settings = bench_settings
+		switch (settings.type)
+		{
+			case e_temp_type.CHARACTER:
+				list = settings.char_list
+				break
+			case e_temp_type.EQUIPMENT:
+				list = settings.equipment_list
+				break
+			case e_temp_type.SPECIAL_BLOCK:
+				list = settings.special_block_list
+				break
+			case e_temp_type.MODEL_PART:
+				list = settings.special_block_list
+				break
+		}
+	}
+	
+	search = string_lower(list.search_tbx.text)
+	
+	with (settings)
+	{
+		if (model_name = name && search = "")
 			return 0
 		
 		model_name = name
 		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		
 		// Modify states for better search
-		if (s != "" && !string_contains(string_lower(minecraft_asset_get_name("model", model_name)), s))
+		if (search != "" && !string_contains(string_lower(minecraft_asset_get_name("model", model_name)), search))
 		{
 			var m, val;
 			m = mc_assets.model_name_map[?name]
@@ -37,7 +54,7 @@ function action_bench_model_name(name)
 				{
 					val = statelist.value_name[j]
 					
-					if (string_contains(string_lower(minecraft_asset_get_name("modelstatevalue", val)), s))
+					if (string_contains(string_lower(minecraft_asset_get_name("modelstatevalue", val)), search))
 					{
 						state_vars_set_value(model_state, state, val)
 						break
@@ -59,10 +76,11 @@ function action_bench_model_name(name)
 		
 		temp_update_armor(id)
 		
-		with (preview)
-		{
-			preview_reset_view()
-			update = true
-		}
+		if (preview != null)
+			with (preview)
+			{
+				preview_reset_view()
+				update = true
+			}
 	}
 }

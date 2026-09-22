@@ -7,9 +7,10 @@
 function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
 	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend, posebend;
-	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
+	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf, placeupdate;
 	tlamount = ds_list_size(app.project_timeline_list)
 	posebend = [0, 0, 0]
+	placeupdate = false
 	
 	if (object_index = obj_timeline)
 		start = ds_list_find_index(app.project_timeline_list, id)
@@ -44,6 +45,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			curtl.update_matrix = false
 			continue
 		}
+		
+		if (!curtl.placed && !curtl.parent_is_placed)
+			placeupdate = true
 		
 		with (curtl)
 		{
@@ -438,8 +442,16 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		}
 	}
 	
+	// Update view buffers for accurate object placing
+	if (placeupdate && (app.place_build || app.place_tl != null))
+	{
+		app.view_main.update_place_surfaces = true
+		app.view_second.update_place_surfaces = true
+	}
+	
 	update_matrix = false
 	
+	// Inverse kinematics
 	if (updateik)
 	{
 		if (app.project_ik_part_array = null)
