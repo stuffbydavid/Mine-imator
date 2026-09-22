@@ -1038,6 +1038,7 @@
     {"id":{"name":"action_setting_timeline_display_time","path":"scripts/action_setting_timeline_display_time/action_setting_timeline_display_time.yy",},},
     {"id":{"name":"action_setting_timeline_frame_snap","path":"scripts/action_setting_timeline_frame_snap/action_setting_timeline_frame_snap.yy",},},
     {"id":{"name":"action_setting_timeline_hide_ghosts","path":"scripts/action_setting_timeline_hide_ghosts/action_setting_timeline_hide_ghosts.yy",},},
+    {"id":{"name":"action_setting_timeline_hide_nonanimated","path":"scripts/action_setting_timeline_hide_nonanimated/action_setting_timeline_hide_nonanimated.yy",},},
     {"id":{"name":"action_setting_timeline_select_jump","path":"scripts/action_setting_timeline_select_jump/action_setting_timeline_select_jump.yy",},},
     {"id":{"name":"action_setting_timeline_show_markers","path":"scripts/action_setting_timeline_show_markers/action_setting_timeline_show_markers.yy",},},
     {"id":{"name":"action_setting_unlimited_values","path":"scripts/action_setting_unlimited_values/action_setting_unlimited_values.yy",},},

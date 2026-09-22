@@ -60,7 +60,10 @@ function action_tl_keyframe_create(timeline, position)
 			hobj.kf_index = ds_list_find_index(tl.keyframe_list, kf)
 	}
 	
-	app_update_tl_edit()
 	tl_update_length()
+	if (setting_timeline_hide_nonanimated)
+		tl_update_list()
+
+	app_update_tl_edit()
 	project_update_counts()
 }

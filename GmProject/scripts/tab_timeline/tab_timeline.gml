@@ -856,7 +856,7 @@ function tab_timeline()
 	// Filter (advanced mode only)
 	if (setting_advanced_mode)
 	{
-		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
+		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || setting_timeline_hide_nonanimated || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
 		{
 			menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
 			settings_menu_script = tl_filter_draw

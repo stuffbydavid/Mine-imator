@@ -557,6 +557,7 @@
     {"name":"action_setting_timeline_display_time","order":10,"path":"scripts/action_setting_timeline_display_time/action_setting_timeline_display_time.yy",},
     {"name":"action_setting_timeline_frame_snap","order":9,"path":"scripts/action_setting_timeline_frame_snap/action_setting_timeline_frame_snap.yy",},
     {"name":"action_setting_timeline_hide_ghosts","order":5,"path":"scripts/action_setting_timeline_hide_ghosts/action_setting_timeline_hide_ghosts.yy",},
+    {"name":"action_setting_timeline_hide_nonanimated","order":6,"path":"scripts/action_setting_timeline_hide_nonanimated/action_setting_timeline_hide_nonanimated.yy",},
     {"name":"action_setting_timeline_select_jump","order":7,"path":"scripts/action_setting_timeline_select_jump/action_setting_timeline_select_jump.yy",},
     {"name":"action_setting_timeline_show_markers","order":8,"path":"scripts/action_setting_timeline_show_markers/action_setting_timeline_show_markers.yy",},
     {"name":"action_setting_unlimited_values","order":8,"path":"scripts/action_setting_unlimited_values/action_setting_unlimited_values.yy",},

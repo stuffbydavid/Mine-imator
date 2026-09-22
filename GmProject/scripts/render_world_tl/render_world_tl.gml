@@ -44,7 +44,7 @@ function render_world_tl()
 	// Click mode
 	if (render_mode = e_render_mode.CLICK)
 	{
-		if (selected || lock || !tl_update_list_filter(id)) // Already selected when clicking?
+		if (selected || lock || !tl_update_list_filter(id))
 			return 0
 		
 		render_set_uniform_color("uReplaceColor", id, 1)

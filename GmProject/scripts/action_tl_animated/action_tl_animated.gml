@@ -41,7 +41,7 @@ function action_tl_animated(enable)
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						value_default[v] = tl_value_find_save_id(v, null, hobj.old_default[t, v])
-						value[v] = tl_value_find_save_id(v, null, hobj.old_value[t, v])
+						value[v] = tl_value_find_save_id(v, null, hobj.tl_animated_old_value[t, v])
 					}
 				}
 				else
@@ -51,7 +51,7 @@ function action_tl_animated(enable)
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						value_default[v] = tl_value_find_save_id(v, null, hobj.new_default[t, v])
-						value[v] = tl_value_find_save_id(v, null, hobj.new_value[t, v])
+						value[v] = tl_value_find_save_id(v, null, hobj.tl_animated_new_value[t, v])
 					}
 				}
 				
@@ -103,7 +103,7 @@ function action_tl_animated(enable)
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						hobj.old_default[t, v] = tl_value_get_save_id(v, value_default[v])
-						hobj.old_value[t, v] = tl_value_get_save_id(v, value[v])
+						hobj.tl_animated_old_value[t, v] = tl_value_get_save_id(v, value[v])
 					}
 
 					if (!enable && ds_list_size(keyframe_list) = 1)
@@ -136,7 +136,7 @@ function action_tl_animated(enable)
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						hobj.new_default[t, v] = tl_value_get_save_id(v, value_default[v])
-						hobj.new_value[t, v] = tl_value_get_save_id(v, value[v])
+						hobj.tl_animated_new_value[t, v] = tl_value_get_save_id(v, value[v])
 					}
 					update_matrix = true
 					hobj.tl_amount++
@@ -156,6 +156,9 @@ function action_tl_animated(enable)
 	{
 		tl_update_length()
 		tl_update_matrix()
+		if (setting_timeline_hide_nonanimated)
+			tl_update_list()
+
 		app_update_tl_edit()
 		project_update_counts()
 	}

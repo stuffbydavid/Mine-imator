@@ -64,6 +64,8 @@ function action_tl_keyframes_create()
 	
 	tl_update_matrix()
 	tl_update_length()
+	if (setting_timeline_hide_nonanimated)
+		tl_update_list()
 	
 	app_update_tl_edit()
 	project_update_counts()
