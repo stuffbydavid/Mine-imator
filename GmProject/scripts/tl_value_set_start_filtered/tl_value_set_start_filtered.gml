@@ -23,7 +23,7 @@ function tl_value_set_start_filtered(script, combine, target_index_map, filter_t
 	// Add new keyframes
 	with (obj_timeline)
 	{
-		if (!selected || keyframe_select != null)
+		if (!selected || keyframe_select != null || !animated)
 			continue
 		if (filter_targets && !ds_map_exists(target_index_map, save_id_get(id)))
 			continue
@@ -54,8 +54,19 @@ function tl_value_set_start_filtered(script, combine, target_index_map, filter_t
 		history_data.par_script = script
 
 		history_data.par_set_amount = 0
+		history_data.tl_set_amount = 0
 		history_data.kf_add_amount = 0
 		history_data.kf_set_amount = 0
+
+		with (obj_timeline)
+		{
+			if (!selected || (filter_targets && !ds_map_exists(target_index_map, save_id_get(id))))
+				continue
+
+			history_data.tl_set_save_id[history_data.tl_set_amount] = save_id_get(id)
+			history_data.tl_set_animated[history_data.tl_set_amount] = animated
+			history_data.tl_set_amount++
+		}
 
 		with (obj_keyframe)
 		{

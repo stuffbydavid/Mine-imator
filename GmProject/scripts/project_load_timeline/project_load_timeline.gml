@@ -20,6 +20,9 @@ function project_load_timeline(map)
 		
 		temp = value_get_save_id(map[?"temp"], temp)
 		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
+		animated = value_get_real(map[?"animated"], animated)
+		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.BACKGROUND)
+			animated = true
 		color_tag = value_get_real(map[?"color_tag"], color_tag)
 		hide = value_get_real(map[?"hide"], hide)
 		lock = value_get_real(map[?"lock"], lock)

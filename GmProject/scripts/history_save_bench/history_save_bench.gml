@@ -1,17 +1,22 @@
 /// history_save_bench()
 
-function history_save_bench()
+function history_save_bench(source = null)
 {
+	if (source = null)
+		source = bench_settings
+
 	var save = new_obj(obj_history_save);
 	save.hobj = id
 	
-	with (bench_settings)
+	with (source)
 		temp_copy(save)
+	with (save)
+		temp_get_save_ids()
+	if (source != bench_settings)
+		return save
 	
 	with (save)
 	{
-		temp_get_save_ids()
-		
 		// Save text
 		bench_text = app.bench_settings.text
 		

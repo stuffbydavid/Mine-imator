@@ -14,6 +14,4 @@ function tab_event_create()
 	glow = 0
 	category_amount = 0
 	category[0] = null
-	
-	build_interact = false
 }

@@ -162,7 +162,7 @@ function macros()
 	#macro panel_width					360
 	#macro panel_bottom_height			300
 	#macro panel_top_height				205
-	#macro bench_min_width				500
+	#macro bench_min_width				530
 	#macro bench_max_width				800
 	#macro bench_initial_width			604
 	#macro bench_initial_height			345

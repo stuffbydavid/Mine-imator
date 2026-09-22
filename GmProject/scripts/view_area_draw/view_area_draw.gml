@@ -8,46 +8,9 @@ function view_area_draw()
 	view_area_width = panel_area_width - panel_map[?"left"].size_real_ani - panel_map[?"left_secondary"].size_real_ani - panel_map[?"right"].size_real_ani - panel_map[?"right_secondary"].size_real_ani
 	view_area_height = panel_area_height - panel_map[?"top"].size_real_ani - panel_map[?"bottom"].size_real_ani
 
-	// Build mode
-	var confirmx, confirmy, confirmw, confirmh, stopmouseon;
-	stopmouseon = false
-	if (place_build)
-	{
-		confirmh = 64
-		draw_set_font(font_heading_big)
-		confirmw = string_width(text_get("viewbuildstop")) + 70
-		confirmx = view_area_x + view_area_width / 2 - confirmw / 2
-		confirmy = view_area_y + view_area_height - 40 - confirmh
-		stopmouseon = app_mouse_box(confirmx, confirmy, confirmw, confirmh, "place")
-		
-		if (stopmouseon)
-		{
-			place_content_mouseon = "buildstop"
-			window_busy = ""
-		}
-		else if (place_content_mouseon = "buildstop")
-			place_content_mouseon = null
-	}
-
 	// Draw views
 	view_draw(view_main)
 	view_draw(view_second)
-	
-	// Stop build mode
-	if (place_build)
-	{
-		content_x = view_area_x
-		content_y = view_area_y
-		content_width = view_area_width
-		content_height = view_area_height
-		content_mouseon = true
-
-		if (draw_button_label("viewbuildstop", confirmx, confirmy, confirmw, null, e_button.BIG, null, e_anchor.LEFT))
-			app_stop_place()
-
-		if (place_build && window_busy = "")
-			window_busy = "place"
-	}
 
 	// Resizing
 	if (window_busy = "viewresizehor" || window_busy = "viewresizeboth") // Horizontal

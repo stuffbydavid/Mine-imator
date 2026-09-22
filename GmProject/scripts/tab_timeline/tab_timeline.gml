@@ -856,7 +856,7 @@ function tab_timeline()
 	// Filter (advanced mode only)
 	if (setting_advanced_mode)
 	{
-		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
+		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || setting_timeline_hide_nonanimated || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
 		{
 			menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
 			settings_menu_script = tl_filter_draw
@@ -920,12 +920,12 @@ function tab_timeline()
 			tl_update_list()
 			tl_update_matrix()
 			render_samples = -1
-			app_stop_place(place_build)
+			app_stop_place(true)
 		}
 		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
-		else if (tl.selected || itemhover || tl = context_menu_value || ((window_busy = "timelineclick") && timeline_select = tl) || ((window_busy = "timelineclick" && window_busy = "place") && timeline_select = tl))
+		else if (itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 		
 		xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))
@@ -1140,8 +1140,16 @@ function tab_timeline()
 			}
 			else
 			{
-				namecolor = c_text_main
-				namealpha = a_text_main
+				if (!tl.animated)
+				{
+					namecolor = c_text_secondary
+					namealpha = a_text_secondary	
+				}
+				else
+				{
+					namecolor = c_text_main
+					namealpha = a_text_main
+				}
 				backalpha = .25
 			}
 			

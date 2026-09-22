@@ -326,6 +326,9 @@
 		"download": "Download",
 		"view": "View",
 		"rendersaved": "Render settings saved successfully!",
+		"animated": "The selected object has multiple keyframes.",
+		"animatedmultiple": "The selected objects have multiple keyframes.",
+		"animatedpart": "A model part has multiple keyframes.",
 		"equiparmor": "Parent the armor to a character to equip it.",
 		"close": "Close"
 	},
@@ -479,7 +482,7 @@
 		"edit/": {
 			"undo": "Undo",
 			"redo": "Redo",
-			"buildmode": "Build mode",
+			"buildtool": "Build tool",
 			"selectall": "Select all",
 			"duplicate": "Duplicate timeline",
 			"delete": "Delete timeline",
@@ -671,6 +674,7 @@
 		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
 		"edit": "Edit",
+		"build": "Start building",
 		"create": "Create",
 		"createedit": "Create & edit",
 		"worldtip1": "Select a region of your Minecraft world to use in the project.",
@@ -679,8 +683,8 @@
 		"audiotracktip": "An empty audio track that can play imported sounds from Minecraft or from files such as .mp3 and .wav.",
 		"pointlighttip": "Point lights shine in all directions, like a lightbulb.",
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
-		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
-		"cameraeffectstip": "crashes the program lmao",
+		"cameratip": "A virtual camera the animation is seen through.",
+		"cameraeffectstip": "A number of optional effects for the active camera. (coming soon)",
 		"backgroundtip": "A timeline that can change the environment during the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
@@ -951,7 +955,6 @@
 			"disable": "Disable snapping"
 		},
 		"close": "Close view",
-		"buildstop": "Stop build mode",
 		"popout": "Open in new window",
 		"popin": "Close view window",
 		"secondenable": "Enable secondary viewport",
@@ -976,7 +979,7 @@
 	"tab/": {
 		"projectproperties": "Project properties",
 		"timeline": "Timeline",
-		"build": "Build mode",
+		"buildtool": "Build tool",
 		"charmodel": "Character model for %1",
 		"equipment": "Equipment for %1",
 		"block": "Block for %1",
@@ -1051,6 +1054,7 @@
 		"libinstances": "Instances",
 		"charname": "Name",
 		"blockname": "Name",
+		"buildname": "Name",
 		"spblockname": "Name",
 		"modelpartmodelname": "Name",
 		"sceneryname": "Name",
@@ -3809,6 +3813,11 @@
 		"rows": "Rows",
 		"ok": "OK"
 	},
+	"buildtool/": {
+		"firstperson": "First-person mode",
+		"exit": "Exit build tool",
+		"block": "Block"
+	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",
 		"search": "Search...",
@@ -3824,8 +3833,10 @@
 			"offset": "Interval offset"
 		},
 		"filtertags": "Filter out tags",
+		"hidenonanimated": "Hide non-animated timelines",
+		"hidenonanimatedtip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hideghosts": "Hide ghost timelines",
-		"hideghoststip": "When enabled, all timelines with the \"Ghost\" toggle will be hidden from the timeline list.",
+		"hideghoststip": "Hide timelines from the list with the \"Ghost\" toggle enabled.",
 		"marker/": {
 			"new": "New marker",
 			"label": "Label",
@@ -3848,6 +3859,7 @@
 		"edittemplate": "Edit template",
 		"createtemplate": "Create template",
 		"name": "Name",
+		"animated": "Animated",
 		"text": "Text",
 		"textsample": "Sample text",
 		"type": "Type",
@@ -4230,6 +4242,9 @@
 			"itemslot": "Item slot"
 		},
 		"keyframe": "KEYFRAME SETTINGS",
+		"notanimated": "The object is not animated.",
+		"notanimatedmultiple": "The selected objects are not animated.",
+		"animated": "Enable animation",
 		"transition": "Transition",
 		"easein": "Ease in",
 		"easeinx": "X",
@@ -4237,7 +4252,10 @@
 		"easeout": "Ease out",
 		"easeoutx": "X",
 		"easeouty": "Y",
-		"visible": "Visible"
+		"visible": "Visible",
+		"hidden": "The selected object is marked as hidden.",
+		"hiddenmultiple": "The selected objects are marked as hidden.",
+		"enabled": "Enabled"
 	},
 	"transition/": {
 		"menu/": {

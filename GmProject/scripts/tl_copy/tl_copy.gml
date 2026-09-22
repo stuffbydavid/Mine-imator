@@ -8,6 +8,7 @@ function tl_copy(to)
 	to.name = name
 	to.temp = temp
 	to.has_temp = has_temp
+	to.animated = animated
 	to.text = text
 	to.color_tag = color_tag
 	to.lock = lock

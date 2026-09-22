@@ -12,6 +12,10 @@ function tl_update_list_filter(tl)
 	if (app.setting_timeline_hide_ghosts && tl.ghost)
 		return false
 	
+	// Animated filter, can still be clicked in viewport
+	if (app.setting_timeline_hide_nonanimated && !tl.animated && !(render_mode = e_render_mode.CLICK && shader_check_uniform))
+		return false
+
 	// Doesn't match search
 	if (app.timeline_search != "" && !string_contains(string_upper(tl.display_name), string_upper(app.timeline_search)))
 		return false

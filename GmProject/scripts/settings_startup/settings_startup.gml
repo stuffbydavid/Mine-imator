@@ -49,6 +49,7 @@ function settings_startup()
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
 	setting_timeline_hide_ghosts = false
+	setting_timeline_hide_nonanimated = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
 	setting_separate_tool_modes = false
@@ -73,6 +74,7 @@ function settings_startup()
 	setting_properties_location = "right"
 	setting_ground_editor_location = "right_secondary"
 	setting_object_editor_location = "right_secondary"
+	setting_build_mode_location = "right_secondary"
 	setting_timeline_editor_location = "right"
 	setting_frame_editor_location = "right_secondary"
 	setting_settings_location = "right_secondary"

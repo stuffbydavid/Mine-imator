@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"history_build_shift",
+  "%Name":"render_world_build_box",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"history_build_shift",
+  "name":"render_world_build_box",
   "parent":{
-    "name":"Build",
-    "path":"folders/Scripts/App/History/Build.yy",
+    "name":"World",
+    "path":"folders/Scripts/Render/World.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

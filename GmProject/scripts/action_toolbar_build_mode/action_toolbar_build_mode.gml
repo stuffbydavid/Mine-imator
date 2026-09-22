@@ -6,18 +6,7 @@ function action_toolbar_build_mode()
 		app_stop_place()
 	else
 	{
-		if (tl_edit_amount > 0)
-		{
-			tl_deselect_all()
-			app_update_tl_edit()
-		}
-		
-		if (bench_tab != e_bench.BLOCK)
-			bench_click(e_bench.BLOCK, true)
-			
-		action_bench_create(false, true)
+		build_type = e_tl_type.BLOCK
+		app_start_place(true)
 	}
-	
-	if (context_menu_name != "")
-		context_menu_busy_prev = (place_build ? "place" : "")
 }
