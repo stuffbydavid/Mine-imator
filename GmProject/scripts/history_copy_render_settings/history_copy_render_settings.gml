@@ -30,11 +30,15 @@ function history_copy_render_settings(obj)
 	
 	project_render_indirect = obj.project_render_indirect
 	project_render_indirect_precision = obj.project_render_indirect_precision
+	project_render_indirect_resolution = obj.project_render_indirect_resolution
+	project_render_indirect_bounces = obj.project_render_indirect_bounces
 	project_render_indirect_blur_radius = obj.project_render_indirect_blur_radius
 	project_render_indirect_strength = obj.project_render_indirect_strength
 	
 	project_render_reflections = obj.project_render_reflections
 	project_render_reflections_precision = obj.project_render_reflections_precision
+	project_render_reflections_resolution = obj.project_render_reflections_resolution
+	project_render_reflections_bounces = obj.project_render_reflections_bounces
 	project_render_reflections_thickness = obj.project_render_reflections_thickness
 	project_render_reflections_fade_amount = obj.project_render_reflections_fade_amount
 	

@@ -59,6 +59,7 @@ function app_startup_interface_tabs()
 			
 			tbx_indirect_precision = new_textbox_integer()
 			tbx_indirect_precision.suffix = "%"
+			tbx_indirect_bounces = new_textbox_integer()
 			tbx_indirect_blur_radius = new_textbox_decimals()
 			tbx_indirect_blur_radius.suffix = "%"
 			tbx_indirect_strength = new_textbox_integer()
@@ -66,6 +67,7 @@ function app_startup_interface_tabs()
 			
 			tbx_reflections_precision = new_textbox_integer()
 			tbx_reflections_precision.suffix = "%"
+			tbx_reflections_bounces = new_textbox_integer()
 			tbx_reflections_fade_amount = new_textbox_integer()
 			tbx_reflections_fade_amount.suffix = "%"
 			tbx_reflections_thickness = new_textbox_decimals()

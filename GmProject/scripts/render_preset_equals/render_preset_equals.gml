@@ -46,8 +46,12 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.subsurface_samples = objset.subsurface_samples &&
 			set.indirect = objset.indirect &&
 			set.indirect_precision = objset.indirect_precision &&
+			set.indirect_resolution = objset.indirect_resolution &&
+			set.indirect_bounces = objset.indirect_bounces &&
 			set.reflections = objset.reflections &&
 			set.reflections_precision = objset.reflections_precision &&
+			set.reflections_resolution = objset.reflections_resolution &&
+			set.reflections_bounces = objset.reflections_bounces &&
 			set.glow = objset.glow &&
 			set.aa = objset.aa &&
 			set.aa_mode = objset.aa_mode &&

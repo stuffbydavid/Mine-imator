@@ -5,12 +5,12 @@
 function render_high_reflections(surf)
 {
 	var ww, hh, sourcesurf;
-	ww = ceil(render_width/render_raytrace_res_ratio)
-	hh = ceil(render_height/render_raytrace_res_ratio)
+	ww = ceil(render_width * app.project_render_reflections_resolution)
+	hh = ceil(render_height * app.project_render_reflections_resolution)
 	
 	// Raytrace
-	render_surface_raydata = surface_require(render_surface_raydata, ww, hh, false, e_surface_format.rgba32float)
-	surface_set_target(render_surface_raydata)
+	render_surface_reflections_raydata = surface_require(render_surface_reflections_raydata, ww, hh, false, e_surface_format.rgba32float)
+	surface_set_target(render_surface_reflections_raydata)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear_alpha(c_black, 1)
@@ -40,7 +40,7 @@ function render_high_reflections(surf)
 	}
 	surface_reset_target()
 	
-	for (var bounce = 0; bounce < render_reflections_bounces; bounce++)
+	for (var bounce = 0; bounce < app.project_render_reflections_bounces; bounce++)
 	{
 		// first bounce uses fallback colors (render_surface_shadows, set by render_high_scene), future bounces use current render with established reflections
 		sourcesurf = (bounce = 0 ? render_surface_shadows : surf)
@@ -59,7 +59,7 @@ function render_high_reflections(surf)
 			}
 			
 			gpu_set_texfilter(false)
-			draw_surface_ext(render_surface_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
+			draw_surface_ext(render_surface_reflections_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
 			
 			with (render_shader_obj)
 				shader_clear()

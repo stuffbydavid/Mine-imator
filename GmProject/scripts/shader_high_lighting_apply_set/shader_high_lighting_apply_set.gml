@@ -10,9 +10,13 @@ function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbacko
 	render_set_uniform_int("uFallbackOnly", fallbackonly)
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(material))
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(render_surface_diffuse))
+	texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_normal))
 	render_set_uniform("uBackgroundBrightness", app.background_brightness)
 	render_set_uniform_color("uFallbackColor", app.background_sky_color_final, 1)
+	render_set_uniform_color("uFogColor", app.background_fog_color_final, 1)
 	render_set_uniform("uGamma", render_gamma)
+	render_set_uniform("uProjMatrixInv", matrix_inverse_ext(proj_matrix))
+	shader_fog_fallback_set()
 	
 	if (fallbackonly)
 		return 0
@@ -35,9 +39,6 @@ function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbacko
 	}
 	else
 		render_set_uniform_int("uSpecularEnabled", false)
-	
-	if ((render_shadows || render_ssao) && surface_exists(render_surface_normal))
-		texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_normal))
 	
 	texture_set_stage(sampler_map[?"uMask"], surface_get_texture(mask))
 	render_set_uniform_color("uAmbientColor", render_shadows ? app.background_ambient_color_final : c_white, 1)

@@ -41,7 +41,7 @@ void main()
 		
 			if (dot(normal, rayDir) > 0.0)
 			{
-				rayTrace(rayData, rayPos, rayDir, normal, noise.b, 0.75); // 75% quality since GI is mostly diffused
+				rayTrace(rayData, rayPos, rayDir, normal, noise.b, 0.75, false); // 75% quality since GI is mostly diffused
 			
 				if (rayData.z > 0.0)
 				{

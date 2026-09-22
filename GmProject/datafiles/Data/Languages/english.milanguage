@@ -3035,6 +3035,8 @@
 		"indirect/": {
 			"precision": "Precision",
 			"precisiontip": "The accuracy of raytracing for light bounces, higher precision is slower.",
+			"resolution": "Resolution",
+			"bounces": "Bounces",
 			"blurradius": "Denoise radius",
 			"strength": "Strength"
 		},
@@ -3042,11 +3044,17 @@
 		"reflections/": {
 			"precision": "Precision",
 			"precisiontip": "The accuracy of raytracing reflections, higher precision is slower.",
+			"resolution": "Resolution",
+			"bounces": "Bounces",
 			"fadeamount": "Edge fade amount",
 			"fadeamounttip": "Fades edges of the reflections on the edge of the render to reduce artifacts.",
 			"thickness": "Thickness",
 			"thicknesstip": "Object thickness threshold to detect raytracing collision."
 		},
+		"resolutionfull": "Full",
+		"resolutionhalf": "Half",
+		"resolutionquarter": "Quarter",
+		"resolutioneighth": "Eighth",
 		"glow": "Glow",
 		"glow/": {
 			"radius": "Radius",

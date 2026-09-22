@@ -53,10 +53,14 @@ function render_preset_apply_settings(settings, renderer)
 			case "subsurface_bright_backlight": realisticset.subsurface_bright_backlight = val break
 			case "indirect": set.indirect = val break
 			case "indirect_precision": set.indirect_precision = val break
+			case "indirect_resolution": if (val = 1 || val = .5 || val = .25 || val = .125) set.indirect_resolution = val break
+			case "indirect_bounces": set.indirect_bounces = clamp(round(val), 1, 8) break
 			case "indirect_blur_radius": realisticset.indirect_blur_radius = val break
 			case "indirect_strength": realisticset.indirect_strength = val break
 			case "reflections": set.reflections = val break
 			case "reflections_precision": set.reflections_precision = val break
+			case "reflections_resolution": if (val = 1 || val = .5 || val = .25 || val = .125) set.reflections_resolution = val break
+			case "reflections_bounces": set.reflections_bounces = clamp(round(val), 1, 8) break
 			case "reflections_thickness": realisticset.reflections_thickness = val break
 			case "reflections_fade_amount": realisticset.reflections_fade_amount = val break
 			case "glow": set.glow = val break

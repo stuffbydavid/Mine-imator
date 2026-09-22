@@ -15,6 +15,7 @@ uniform float uNoiseSize;
 #pragma shady: inline(common_util.MATH_FUNC_LIB)
 #pragma shady: inline(common_constants.MATH)
 #pragma shady: inline(common_raytrace.RAYTRACE_LIB)
+#pragma shady: inline(common_raytrace.FOG_FALLBACK_LIB)
 #pragma shady: inline(common_material.SAMPLE_GGX_LIB)
 
 void main()
@@ -24,8 +25,8 @@ void main()
 	// Sample receiver material
 	vec3 materialData = texture2D(uMaterialBuffer, vTexCoord).rgb;
 	
-	// XY hit position, Z confidence
-	vec3 rayData = vec3(0.0); 
+	// XY hit position, Z confidence, W fog fallback opacity
+	vec4 rayData = vec4(0.0);
 	
 	if (!isDepthBackground(depth) && materialData.r < 0.95)
 	{
@@ -49,11 +50,13 @@ void main()
 		// Replacing them with the mirror direction creates a sharp reflection bias
 		if (dot(normal, rayDir) > 0.0)
 		{
+			rayData.a = getFogFallback(rayPos, rayDir);
+
 			// Drop raytrace precision with roughness
 			float roughnessScale = mix(1.0, 0.25, percent(materialData.r, 0.0, 0.95));
-			rayTrace(rayData, rayPos, rayDir, normal, noise.b, roughnessScale);
+			rayTrace(rayData.rgb, rayPos, rayDir, normal, noise.b, roughnessScale, true);
 		}
 	}
 	
-	gl_FragColor = vec4(rayData, 1.0);
+	gl_FragColor = rayData;
 }

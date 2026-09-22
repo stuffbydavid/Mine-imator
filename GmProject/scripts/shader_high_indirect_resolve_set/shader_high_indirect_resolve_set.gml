@@ -14,7 +14,7 @@ function shader_high_indirect_resolve_set()
 	texture_set_stage(sampler_map[?"uSourceBuffer"], surface_get_texture(render_surface_hdr[0]))
 	gpu_set_texrepeat_ext(sampler_map[?"uSourceBuffer"], false)
 	
-	render_set_uniform_vec2("uRayDataSize", surface_get_width(render_surface_raydata), surface_get_height(render_surface_raydata))
+	render_set_uniform_vec2("uRayDataSize", surface_get_width(render_surface_indirect_raydata), surface_get_height(render_surface_indirect_raydata))
 	render_set_uniform("uNear", depth_near)
 	render_set_uniform("uFar", depth_far)
 	render_set_uniform("uProjMatrixInv", matrix_inverse_ext(proj_matrix))

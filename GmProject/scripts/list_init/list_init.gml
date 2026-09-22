@@ -1187,6 +1187,17 @@ function list_init(name)
 			break
 		}
 		
+		// Raytrace resolution
+		case "renderindirectresolution":
+		case "renderreflectionsresolution":
+		{
+			menu_add_item(1, text_get("renderresolutionfull"))
+			menu_add_item(.5, text_get("renderresolutionhalf"))
+			menu_add_item(.25, text_get("renderresolutionquarter"))
+			menu_add_item(.125, text_get("renderresolutioneighth"))
+			break
+		}
+
 		// Shadow map detail
 		case "rendershadowssunbuffersize":
 		case "rendershadowsspotbuffersize":

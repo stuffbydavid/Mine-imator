@@ -13,9 +13,10 @@ uniform float uThickness;
 
 // Largely based on McGuire and Mara's SSRT https://jcgt.org/published/0003/04/04/paper.pdf
 // here be dragons!
-void rayTrace(out vec3 rayData, vec3 rayStart, vec3 rayDir, vec3 n, float jitter, float stepScale)
+void rayTrace(out vec3 rayData, vec3 rayStart, vec3 rayDir, vec3 n, float jitter, float stepScale, bool useEndFallback)
 {
 	vec3 rayEnd			= rayStart.xyz + rayDir * uRayDistance;
+	bool rayReachedMaxDistance = true;
 	
 	// Shallow-angle rays need a thicker target because one depth value can't describe a surface's full shape
 	float grazing		= 1.0 - max(0.0, dot(rayDir, n));
@@ -29,6 +30,7 @@ void rayTrace(out vec3 rayData, vec3 rayStart, vec3 rayDir, vec3 n, float jitter
 	{
 		float distanceToNear = (uNear - rayStart.z) / min(rayDir.z, -0.000001);
 		rayEnd.xyz = rayStart.xyz + rayDir * max(distanceToNear, 0.0);
+		rayReachedMaxDistance = false;
 	}
 	
 	vec2 rayPxStart, rayPxEnd, rayPxDis, rayUv, rayUvStart;
@@ -66,6 +68,7 @@ void rayTrace(out vec3 rayData, vec3 rayStart, vec3 rayDir, vec3 n, float jitter
 	
 	if (clipAmount > 0.0)
 	{
+		rayReachedMaxDistance = false;
 		float endWeight = 1.0 - clamp(clipAmount, 0.0, 1.0);
 		rayPxEnd = mix(rayPxStart, rayPxEnd, endWeight);
 		
@@ -179,11 +182,60 @@ void rayTrace(out vec3 rayData, vec3 rayStart, vec3 rayDir, vec3 n, float jitter
 	// Depth check
 	if (!rayHit || isDepthBackground(sampleDepth))
 	{
+		if (useEndFallback && rayReachedMaxDistance && projectedLength >= 1.0)
+		{
+			// Negative confidence marks an on-screen endpoint rather than a geometry hit
+			rayData = vec3(rayPxEnd / uScreenSize, -rayConfidence);
+			return;
+		}
+
 		rayData = vec3(0.0);
 		return;
 	}
 	
 	rayData = vec3(rayUv, rayConfidence);
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region FOG_FALLBACK_LIB
+#pragma shady: macro_begin FOG_FALLBACK_LIB
+
+uniform mat4 uViewMatrixInv;
+uniform vec2 uFog;
+uniform int uFogEnabled;
+
+// Approximates the background fog for invalid rays
+// Ideally in the future we use some sort of camera-generated IBL instead, but this works
+float getFogFallback(vec3 rayStart, vec3 rayDir)
+{
+	if (uFogEnabled == 0)
+		return 0.0;
+
+	float height = uFog.y;
+	vec3 scale = (height < 1.0 ? vec3(1.0, 1.0, height) : vec3(1.0 / height, 1.0 / height, 1.0));
+	scale *= uFog.x;
+	vec3 worldStart = (uViewMatrixInv * vec4(rayStart, 0.0)).xyz;
+	vec3 worldDir = (uViewMatrixInv * vec4(rayDir, 0.0)).xyz;
+	vec3 scaledStart = worldStart / scale;
+	vec3 scaledDir = worldDir / scale;
+	float dirLength = dot(scaledDir, scaledDir);
+	float alongRay = dot(scaledStart, scaledDir);
+	float hitValue = alongRay * alongRay - dirLength * (dot(scaledStart, scaledStart) - 1.0);
+	if (hitValue < 0.0 || dirLength <= 0.0)
+		return 0.0;
+
+	float hitRoot = sqrt(hitValue);
+	float hitDistance = (-alongRay - hitRoot) / dirLength;
+	if (hitDistance <= 0.0)
+		hitDistance = (-alongRay + hitRoot) / dirLength;
+
+	if (hitDistance <= 0.0)
+		return 0.0;
+
+	float sphereZ = (scaledStart + scaledDir * hitDistance).z;
+	return 1.0 - smoothstep(0.05, 0.2, sphereZ);
 }
 
 #pragma shady: macro_end

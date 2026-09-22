@@ -45,10 +45,14 @@ The ranges below are the ranges supported by the corresponding interface control
 | `subsurface_bright_backlight` | true/false | Allow brighter, less realistic subsurface backlighting |
 | `indirect` | Boolean | Enable indirect lighting |
 | `indirect_precision` | 0-1 | Indirect-lighting buffer precision/scale |
+| `indirect_resolution` | 1, 0.5, 0.25, or 0.125 | Indirect-lighting raytrace resolution (`Full`, `Half`, `Quarter`, or `Eighth`) |
+| `indirect_bounces` | Integer, 1-8 | Number of indirect-lighting bounces |
 | `indirect_blur_radius` | 0-5 | Indirect-lighting blur radius |
 | `indirect_strength` | 0-no limit | Indirect-lighting strength |
 | `reflections` | Boolean | Enable screen-space reflections |
 | `reflections_precision` | 0-1 | Reflection buffer precision/scale |
+| `reflections_resolution` | 1, 0.5, 0.25, or 0.125 | Reflection raytrace resolution (`Full`, `Half`, `Quarter`, or `Eighth`) |
+| `reflections_bounces` | Integer, 1-8 | Number of reflection bounces |
 | `reflections_thickness` | 0.1-no limit | Reflection ray thickness |
 | `reflections_fade_amount` | 0-1 | Reflection edge/distance fade amount |
 | `glow` | Boolean | Enable material glow |

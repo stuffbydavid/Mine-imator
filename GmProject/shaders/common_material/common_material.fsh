@@ -55,15 +55,15 @@ vec3 getMappedNormal(vec2 uv, mat3 tbn)
 
 vec3 getMaterialNormal(vec2 uv, vec3 position, mat3 tbn)
 {
-	vec3 normal = getMappedNormal(uv, tbn);
 	if (uIsWater > 0)
 	{
+		vec3 normal = normalize(tbn[2]);
 		float upward = smoothstep(0.8, 0.9, normalize(tbn[2]).z);
 		float strength = clamp(uWaterMaterialStrength, 0.0, 1.0) * upward;
 		return normalize(mix(normal, getWaterNormal(position), strength));
 	}
 
-	return normal;
+	return getMappedNormal(uv, tbn);
 }
 
 vec3 transformMaterialNormal(vec3 normal, mat3 sourceTbn, mat3 targetTbn)
@@ -96,8 +96,18 @@ uniform int uIsWater;
 
 void getMaterial(out float roughness, out float metallic, out float emissive, out float F0, out float sss)
 {
-	vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
+	if (uIsWater > 0)
+	{
+		roughness = uRoughness;
+		metallic = 0.0;
+		emissive = 0.0;
+		F0 = 0.02;
+		sss = 0.0;
+		return;
+	}
+
 	float baseEmissive = max(uEmissive, vCustom.z * uDefaultEmissive);
+	vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
 	
 	if (uMaterialFormat == 2) // LabPBR
 	{
@@ -134,8 +144,6 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 	F0 = 0.0; // Ignore DIELECTRIC_F0 for artistic reasons (MI/SEUS)
 	sss = max(uSSS, vCustom.w * uDefaultSubsurface);
 
-	if (uIsWater > 0)
-		F0 = 0.02;
 }
 
 

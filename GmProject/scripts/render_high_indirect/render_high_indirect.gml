@@ -4,12 +4,12 @@
 function render_high_indirect()
 {
 	var ww, hh, previoussurf, indirectsurf;
-	ww = ceil(render_width/render_raytrace_res_ratio)
-	hh = ceil(render_height/render_raytrace_res_ratio)
+	ww = ceil(render_width * app.project_render_indirect_resolution)
+	hh = ceil(render_height * app.project_render_indirect_resolution)
 	
 	// Raytrace
-	render_surface_raydata = surface_require(render_surface_raydata, ww, hh, false, e_surface_format.rgba32float)
-	surface_set_target(render_surface_raydata)
+	render_surface_indirect_raydata = surface_require(render_surface_indirect_raydata, ww, hh, false, e_surface_format.rgba32float)
+	surface_set_target(render_surface_indirect_raydata)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear_alpha(c_black, 1)
@@ -31,7 +31,7 @@ function render_high_indirect()
 	}
 	surface_reset_target()
 	
-	for (var bounce = 0; bounce < render_indirect_bounces; bounce++)
+	for (var bounce = 0; bounce < app.project_render_indirect_bounces; bounce++)
 	{
 		// first bounce uses direct shadows, future bounces use the accumulated bounced indirect pass
 		previoussurf = (bounce = 0 ? render_surface_shadows : render_surface_hdr[1])
@@ -70,7 +70,7 @@ function render_high_indirect()
 			}
 			
 			gpu_set_texfilter(false)
-			draw_surface_ext(render_surface_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
+			draw_surface_ext(render_surface_indirect_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
 			
 			with (render_shader_obj)
 				shader_clear()

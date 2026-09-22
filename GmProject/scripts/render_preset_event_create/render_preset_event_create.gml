@@ -48,8 +48,12 @@ function render_preset_event_create()
 		subsurface_samples = 7
 		indirect = true
 		indirect_precision = .3
+		indirect_resolution = 1
+		indirect_bounces = 1
 		reflections = true
 		reflections_precision = .3
+		reflections_resolution = 1
+		reflections_bounces = 1
 		glow = true
 		aa = true
 		aa_mode = e_aa_mode.PROGRESSIVE

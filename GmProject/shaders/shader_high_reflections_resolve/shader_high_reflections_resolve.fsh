@@ -2,17 +2,18 @@ varying vec2 vTexCoord;
 
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
-uniform sampler2D uNoiseBuffer;
 uniform sampler2D uMaterialBuffer;
 uniform sampler2D uSceneBuffer;
 uniform sampler2D uMetallicBuffer;
 
 uniform vec4 uSkyColor;
+uniform vec4 uFogColor;
 uniform vec2 uScreenSize;
 uniform vec2 uRayDataSize;
-uniform float uNoiseSize;
 uniform float uFadeAmount;
 uniform float uGamma;
+uniform float uRayDistance;
+uniform float uBackgroundBrightness;
 
 uniform int uSampleAmount;
 uniform vec2 uSamples[25]; // Either 3x3 (9) or 5x5 (25) neighbor kernel
@@ -38,21 +39,35 @@ vec4 sampleNeighbor(vec2 sampleCoord, vec3 originPos, vec3 originNormal, vec3 or
 	if (surfaceWeight < 0.001)
 		return vec4(0.0);
 	
-	vec3 sky = pow(uSkyColor.rgb, vec3(uGamma));
-	vec3 col = sky;
+	vec3 sky = pow(uSkyColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
 	vec4 rayData = texture2D(gm_BaseTexture, sampleCoord);
+	vec3 fog = pow(uFogColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
+	vec3 fallback = mix(sky, fog, rayData.a);
+	vec3 col = fallback;
 	
-	if (rayData.z > 0.0)
+	if (rayData.z != 0.0)
 	{
 		vec2 hitUv = rayData.xy;
 		float hitDepth = readDepth(hitUv);
+		bool endFallback = rayData.z < 0.0;
+		bool validEndFallback = false;
+
+		if (endFallback)
+		{
+			validEndFallback = isDepthBackground(hitDepth);
+			if (!validEndFallback)
+			{
+				vec3 fallbackPos = posFromBuffer(hitUv, hitDepth);
+				validEndFallback = length(fallbackPos - originPos) >= uRayDistance;
+			}
+		}
 		
-		if (!isDepthBackground(hitDepth))
+		if (validEndFallback || (!endFallback && !isDepthBackground(hitDepth)))
 		{
 			// Screen fade
 			vec2 fadeUv = smoothstep(0.2, 0.6, abs(vec2(0.5) - hitUv)) * uFadeAmount;
-			float hitVis = clamp(1.0 - fadeUv.x - fadeUv.y, 0.0, 1.0) * rayData.z;
-			col = mix(sky, texture2D(uSceneBuffer, hitUv).rgb, hitVis);
+			float hitVis = clamp(1.0 - fadeUv.x - fadeUv.y, 0.0, 1.0) * abs(rayData.z);
+			col = mix(fallback, texture2D(uSceneBuffer, hitUv).rgb, hitVis);
 		}
 	}
 	
@@ -66,7 +81,7 @@ void main()
 	vec2 rayPixelCenter = (floor(vTexCoord * uRayDataSize) + vec2(0.5)) * texelSize;
 	vec4 col = vec4(0.0);
 	float depth = readDepth(vTexCoord);
-	vec3 sky = pow(uSkyColor.rgb, vec3(uGamma));
+	vec3 sky = pow(uSkyColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
 	
 	if (!isDepthBackground(depth))
 	{

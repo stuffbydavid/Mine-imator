@@ -220,13 +220,29 @@ function tab_properties_render()
 				tab_control_meter()
 				draw_meter("renderindirectprecision", dx, dy, dw, round(rendererset.indirect_precision * 100), 0, 100, 30, 1, tab.render.tbx_indirect_precision, action_project_render_indirect_precision, "renderindirectprecisiontip")
 				tab_next()
-		
+
 				tab_control_meter()
 				draw_meter("renderindirectblurradius", dx, dy, dw, round(project_render_indirect_blur_radius * 100), 0, 500, 100, 1, tab.render.tbx_indirect_blur_radius, action_project_render_indirect_blur_radius)
 				tab_next()
 		
 				tab_control_dragger()
 				draw_dragger("renderindirectstrength", dx, dy, dragger_width, round(project_render_indirect_strength * 100), .5, 0, no_limit * 100, 100, 1, tab.render.tbx_indirect_strength, action_project_render_indirect_strength) 
+				tab_next()
+
+				tab_control_dragger()
+				draw_dragger("renderindirectbounces", dx, dy, dragger_width, rendererset.indirect_bounces, .5, 1, 8, 1, 1, tab.render.tbx_indirect_bounces, action_project_render_indirect_bounces, null, true, false, "renderindirectbouncestip")
+				tab_next()
+
+				var resolutiontext = text_get("renderresolutioneighth")
+				switch (rendererset.indirect_resolution)
+				{
+					case 1: resolutiontext = text_get("renderresolutionfull") break
+					case .5: resolutiontext = text_get("renderresolutionhalf") break
+					case .25: resolutiontext = text_get("renderresolutionquarter") break
+				}
+
+				tab_control_menu()
+				draw_button_menu("renderindirectresolution", e_menu.LIST, dx, dy, dw, 24, rendererset.indirect_resolution, resolutiontext, action_project_render_indirect_resolution)
 				tab_next()
 		
 				tab_collapse_end()
@@ -244,13 +260,29 @@ function tab_properties_render()
 				tab_control_meter()
 				draw_meter("renderreflectionsprecision", dx, dy, dw, round(rendererset.reflections_precision * 100), 0, 100, 30, 1, tab.render.tbx_reflections_precision, action_project_render_reflections_precision, "renderreflectionsprecisiontip")
 				tab_next()
-		
+
 				tab_control_meter()
 				draw_meter("renderreflectionsfadeamount", dx, dy, dw, round(project_render_reflections_fade_amount * 100), 0, 100, 50, 1, tab.render.tbx_reflections_fade_amount, action_project_render_reflections_fade_amount, "renderreflectionsfadeamounttip") 
 				tab_next()
 		
 				tab_control_dragger()
 				draw_dragger("renderreflectionsthickness", dx, dy, dragger_width, project_render_reflections_thickness, 1, .1, no_limit, 1, .1, tab.render.tbx_reflections_thickness, action_project_render_reflections_thickness, null, true, false, "renderreflectionsthicknesstip") 
+				tab_next()
+
+				tab_control_dragger()
+				draw_dragger("renderreflectionsbounces", dx, dy, dragger_width, rendererset.reflections_bounces, .5, 1, 8, 1, 1, tab.render.tbx_reflections_bounces, action_project_render_reflections_bounces, null, true, false, "renderreflectionsbouncestip")
+				tab_next()
+
+				var resolutiontext = text_get("renderresolutioneighth")
+				switch (rendererset.reflections_resolution)
+				{
+					case 1: resolutiontext = text_get("renderresolutionfull") break
+					case .5: resolutiontext = text_get("renderresolutionhalf") break
+					case .25: resolutiontext = text_get("renderresolutionquarter") break
+				}
+
+				tab_control_menu()
+				draw_button_menu("renderreflectionsresolution", e_menu.LIST, dx, dy, dw, 24, rendererset.reflections_resolution, resolutiontext, action_project_render_reflections_resolution)
 				tab_next()
 		
 				tab_collapse_end()

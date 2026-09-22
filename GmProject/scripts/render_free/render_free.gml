@@ -39,7 +39,8 @@ function render_free()
 	surface_free(render_surface_sss_range)
 	surface_free(render_surface_glow)
 	
-	surface_free(render_surface_raydata)
+	surface_free(render_surface_indirect_raydata)
+	surface_free(render_surface_reflections_raydata)
 	
 	// Camera effects
 	surface_free(render_surface_lens)

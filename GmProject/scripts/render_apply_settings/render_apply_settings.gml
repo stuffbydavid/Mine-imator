@@ -39,8 +39,12 @@ function render_apply_settings(preset, renderer)
 		project_render_subsurface_samples = settings.subsurface_samples
 		project_render_indirect = settings.indirect
 		project_render_indirect_precision = settings.indirect_precision
+		project_render_indirect_resolution = settings.indirect_resolution
+		project_render_indirect_bounces = settings.indirect_bounces
 		project_render_reflections = settings.reflections
 		project_render_reflections_precision = settings.reflections_precision
+		project_render_reflections_resolution = settings.reflections_resolution
+		project_render_reflections_bounces = settings.reflections_bounces
 		project_render_glow = settings.glow
 		project_render_aa = settings.aa
 		project_render_aa_mode = settings.aa_mode
