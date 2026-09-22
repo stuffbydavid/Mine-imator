@@ -48,6 +48,7 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "tlkeyframeselectadd")
 				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tlkeyframeselectgroup")
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tlkeyframeselectgroupadd")
+				shortcut_bar_add(keybinds[e_keybind.KEYFRAMES_STRETCH].keybind, e_mouse.DRAG_LEFT, "tlkeyframestretch")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.CLICK_LEFT, "tlkeyframedeselect")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tlkeyframedeselectgroup")
 			}
@@ -60,6 +61,14 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tltimelineselectgroupadd")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.CLICK_LEFT, "tltimelinedeselect")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tltimelinedeselectgroup")
+			}
+			
+			if (shortcut_bar_state = "timelinescale")
+			{
+				shortcut_bar_add(keybind_new(vk_enter), null, "tlkeyframescaleapply")
+				shortcut_bar_add(null, e_mouse.CLICK_LEFT, "tlkeyframescaleapply")
+				shortcut_bar_add(keybind_new(vk_escape), null, "tlkeyframescalecancel")
+				shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "tlkeyframescalecancel")
 			}
 			
 			if (shortcut_bar_state = "timelinebar")

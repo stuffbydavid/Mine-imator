@@ -1443,11 +1443,29 @@ function tab_timeline()
 	// Moving keyframes
 	if (window_busy = "timelinemovekeyframes")
 	{
-		mouse_cursor = cr_size_all
+		if (timeline_move_kf_stretch)
+			mouse_cursor = cr_size_we
+		else
+			mouse_cursor = cr_size_all
+		
 		if (!mouse_left)
 			action_tl_keyframes_move_done()
 		else
 			action_tl_keyframes_move()
+	}
+	
+	// Scaling keyframes
+	if (window_busy = "timelinescalekeyframes")
+	{
+		mouse_cursor = cr_size_we
+		shortcut_bar_state = "timelinescale"
+		
+		if (keyboard_check_pressed(vk_escape) || mouse_right_pressed)
+			action_tl_keyframes_scale_cancel()
+		else if (keyboard_check_pressed(vk_enter) || mouse_left_pressed)
+			action_tl_keyframes_move_done()
+		else
+			action_tl_keyframes_scale()
 	}
 	
 	// Move timelines
@@ -1847,6 +1865,9 @@ function tab_timeline()
 		
 		if (mouseinbar)
 			shortcut_bar_state = "timelinebar"
+		
+		if (window_busy = "timelinescalekeyframes")
+			shortcut_bar_state = "timelinescale"
 		
 		window_scroll_focus = string(timeline.ver_scroll)
 		

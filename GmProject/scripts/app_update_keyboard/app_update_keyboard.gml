@@ -156,6 +156,9 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.KEYFRAMES_DELETE].pressed)
 			action_tl_keyframes_remove()
 		
+		if (keybinds[e_keybind.KEYFRAMES_SCALE].pressed)
+			action_tl_keyframes_scale_start()
+		
 		if (keybinds[e_keybind.PARTICLES_SPAWN].pressed)
 			action_lib_pc_spawn()
 		
