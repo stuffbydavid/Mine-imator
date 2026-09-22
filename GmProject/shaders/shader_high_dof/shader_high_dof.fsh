@@ -20,7 +20,7 @@ uniform float uAreaSamples[128];
 uniform int uBladeAmount;
 uniform float uBladeRotation;
 uniform float uBlurRatio;
-uniform float uBladeCurvature;
+uniform float uBladeRounding;
 uniform float uBladeStretch;
 uniform int uPixelRotation;
 
@@ -34,7 +34,8 @@ vec3 apertureSample(vec2 polar, float pixelAngle, vec2 cameraRotation, vec2 blad
 	if (uBladeAmount > 2)
 	{
 		float localAngle = mod(angle - 4.71238898038 + 6.28318530718, bladeGeometry.x) - bladeGeometry.x * 0.5;
-		edge = mix(bladeGeometry.y / cos(localAngle), 1.0, uBladeCurvature);
+		// Keep polygonal aperture edges subtly rounded
+		edge = mix(bladeGeometry.y / cos(localAngle), 1.0, uBladeRounding);
 	}
 
 	vec2 point = vec2(cos(angle), sin(angle)) * (polar.x * edge);

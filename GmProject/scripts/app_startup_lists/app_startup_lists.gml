@@ -94,7 +94,6 @@ function app_startup_lists()
 		"CAM_DOF_FADE_SIZE",
 		"CAM_DOF_BLUR_SIZE",
 		"CAM_DOF_BLUR_RATIO",
-		"CAM_DOF_BLADE_CURVATURE",
 		"CAM_DOF_BIAS",
 		"CAM_DOF_THRESHOLD",
 		"CAM_DOF_GAIN",

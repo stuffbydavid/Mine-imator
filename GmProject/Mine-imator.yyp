@@ -1021,7 +1021,6 @@
     {"id":{"name":"action_tl_frame_cam_distort_zoom_amount","path":"scripts/action_tl_frame_cam_distort_zoom_amount/action_tl_frame_cam_distort_zoom_amount.yy",},},
     {"id":{"name":"action_tl_frame_cam_distort","path":"scripts/action_tl_frame_cam_distort/action_tl_frame_cam_distort.yy",},},
     {"id":{"name":"action_tl_frame_cam_dof_bias","path":"scripts/action_tl_frame_cam_dof_bias/action_tl_frame_cam_dof_bias.yy",},},
-    {"id":{"name":"action_tl_frame_cam_dof_blade_curvature","path":"scripts/action_tl_frame_cam_dof_blade_curvature/action_tl_frame_cam_dof_blade_curvature.yy",},},
     {"id":{"name":"action_tl_frame_cam_dof_blur_ratio","path":"scripts/action_tl_frame_cam_dof_blur_ratio/action_tl_frame_cam_dof_blur_ratio.yy",},},
     {"id":{"name":"action_tl_frame_cam_dof_blur_size","path":"scripts/action_tl_frame_cam_dof_blur_size/action_tl_frame_cam_dof_blur_size.yy",},},
     {"id":{"name":"action_tl_frame_cam_dof_depth","path":"scripts/action_tl_frame_cam_dof_depth/action_tl_frame_cam_dof_depth.yy",},},

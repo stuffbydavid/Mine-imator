@@ -53,7 +53,6 @@ function tl_value_default(valueid)
 		case e_value.CAM_DOF_RANGE: return 200
 		case e_value.CAM_DOF_FADE_SIZE: return 100
 		case e_value.CAM_DOF_BLUR_SIZE: return .01
-		case e_value.CAM_DOF_BLADE_CURVATURE: return .25
 		case e_value.CAM_DOF_BLUR_RATIO:
 		case e_value.CAM_DOF_BIAS:
 		case e_value.CAM_DOF_THRESHOLD:

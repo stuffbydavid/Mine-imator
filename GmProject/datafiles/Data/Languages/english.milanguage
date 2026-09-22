@@ -4010,7 +4010,6 @@
 			"bladeamount": "Blades",
 			"bladeangle": "Blade angle",
 			"bladestretch": "Blade stretch",
-			"bladecurvature": "Blade curvature",
 			"videosize": "Camera size",
 			"videosize/": {
 				"useproject": "Use project settings",
@@ -4050,6 +4049,7 @@
 				"fadesize": "Fade size",
 				"blursize": "Blur size",
 				"blurratio": "Anamorphic ratio",
+				"bokeh": "Bokeh",
 				"bias": "Edge highlight",
 				"gain": "Highlights strength",
 				"threshold": "Highlights threshold",

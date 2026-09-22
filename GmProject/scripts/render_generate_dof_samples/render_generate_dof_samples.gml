@@ -1,12 +1,11 @@
-/// render_generate_dof_samples(blades, rotation, ratio, curvature, stretch)
+/// render_generate_dof_samples(blades, rotation, ratio, stretch)
 /// @arg blades
 /// @arg rotation
 /// @arg ratio
-/// @arg curvature
 /// @arg stretch
 /// @desc Generates progressive disk samples
 
-function render_generate_dof_samples(blades, rotation, ratio, curvature, stretch)
+function render_generate_dof_samples(blades, rotation, ratio, stretch)
 {
 	var pixelvariation = (renderer_current = e_renderer.REALISTIC) || app.project_render_dof_realistic_blur
 	var samples = clamp(round(app.project_render_dof_quality), 8, 64)
@@ -57,7 +56,7 @@ function render_generate_dof_samples(blades, rotation, ratio, curvature, stretch
 				var polygonedge = cos(step * .5) / cos(localangle)
 				
 				// Bow each blade edge slightly toward a circular aperture
-				edge = lerp(polygonedge, 1, curvature)
+				edge = lerp(polygonedge, 1, render_dof_blade_rounding)
 			}
 			
 			var xx = cos(angle) * radius * edge

@@ -207,7 +207,8 @@ function render_startup()
 	render_indirect_bounces = 1
 	
 	// DOF
-	globalvar render_dof_samples, render_dof_weight_samples, render_dof_area_samples, render_dof_sample_amount;
+	globalvar render_dof_samples, render_dof_weight_samples, render_dof_area_samples, render_dof_sample_amount, render_dof_blade_rounding;
+	render_dof_blade_rounding = .25
 	
 	// Grain
 	globalvar render_grain_noise;

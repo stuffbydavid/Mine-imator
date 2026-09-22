@@ -628,8 +628,6 @@ function app_startup_interface_tabs()
 			tbx_dof_blur_size.suffix = "%"
 			tbx_dof_blur_ratio = new_textbox_integer()
 			tbx_dof_blur_ratio.suffix = "%"
-			tbx_dof_blade_curvature = new_textbox_integer()
-			tbx_dof_blade_curvature.suffix = "%"
 			tbx_dof_bias = new_textbox_integer()
 			tbx_dof_bias.suffix = "%"
 			tbx_dof_threshold = new_textbox_decimals()
