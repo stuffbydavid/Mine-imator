@@ -707,6 +707,7 @@
     {"id":{"name":"action_build_place","path":"scripts/action_build_place/action_build_place.yy",},},
     {"id":{"name":"action_build_remove","path":"scripts/action_build_remove/action_build_remove.yy",},},
     {"id":{"name":"action_build_select","path":"scripts/action_build_select/action_build_select.yy",},},
+    {"id":{"name":"action_build_structure_select","path":"scripts/action_build_structure_select/action_build_structure_select.yy",},},
     {"id":{"name":"action_build_structure","path":"scripts/action_build_structure/action_build_structure.yy",},},
     {"id":{"name":"action_collapse","path":"scripts/action_collapse/action_collapse.yy",},},
     {"id":{"name":"action_group_bend_sliders","path":"scripts/action_group_bend_sliders/action_group_bend_sliders.yy",},},

@@ -1,7 +1,8 @@
-/// action_build_structure(structure)
+/// action_build_structure(structure, [custom])
 /// @arg structure
+/// @arg [custom]
 
-function action_build_structure(structure)
+function action_build_structure(structure, custom = -1)
 {
 	if (structure != null && !instance_exists(structure))
 		structure = null
@@ -9,6 +10,9 @@ function action_build_structure(structure)
 	if (structure != null && !type_is_structure(structure.type))
 		return 0
 
+	if (custom != -1)
+		build_structure_custom = custom
+	
 	if (build_structure = structure && place_target_tl_part_of = structure)
 		return 0
 
@@ -18,6 +22,7 @@ function action_build_structure(structure)
 
 	build_structure = structure
 	place_target_tl_part_of = structure
+	
 	if (structure != null)
 		with (structure)
 			tl_mark_place_target(true)

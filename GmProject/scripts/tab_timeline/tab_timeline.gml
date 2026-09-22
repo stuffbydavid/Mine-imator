@@ -1546,7 +1546,8 @@ function tab_timeline()
 					else
 					{
 						if (place_build && type_is_structure(timeline_select.type))
-							action_build_structure(timeline_select)
+							action_build_structure(timeline_select, true)
+						
 						app_update_tl_edit()
 					}
 				}

@@ -72,8 +72,8 @@ function app_update_place()
 						var target = action[e_parent_action.TARGET];
 						if (target != null && target != app)
 						{
-							if (type_is_structure(target.type))
-								action_build_structure(target)
+							if (type_is_structure(target.type) && !build_structure_custom)
+								action_build_structure(target, false)
 							else if (target.type = e_tl_type.MODEL_PART)
 								place_target_tl_part_of = target
 						}

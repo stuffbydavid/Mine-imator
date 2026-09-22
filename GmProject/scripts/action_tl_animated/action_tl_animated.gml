@@ -17,11 +17,13 @@ function action_tl_animated(enable)
 			{
 				if (hobj.kf_pos[t] != null)
 				{
-					if (app.history_undo)
+					if (app.history_undo != hobj.kf_added[t])
 					{
 						var kf = tl_keyframe_add(hobj.kf_pos[t]);
+						
 						for (var v = 0; v < e_value.amount; v++)
 							kf.value[v] = tl_value_find_save_id(v, null, hobj.kf_value[t, v])
+						
 						if (hobj.kf_selected[t])
 							tl_keyframe_select(kf)
 					}
@@ -38,6 +40,7 @@ function action_tl_animated(enable)
 				{
 					animated = hobj.old_animated[t]
 					hide = hobj.old_hide[t]
+					
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						value_default[v] = tl_value_find_save_id(v, null, hobj.old_default[t, v])
@@ -48,6 +51,7 @@ function action_tl_animated(enable)
 				{
 					animated = hobj.new_animated[t]
 					hide = hobj.new_hide[t]
+					
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						value_default[v] = tl_value_find_save_id(v, null, hobj.new_default[t, v])
@@ -96,17 +100,22 @@ function action_tl_animated(enable)
 			{
 				with (targets[i])
 				{
-					var t = hobj.tl_amount;
+					var t, valuechanged;
+					t = hobj.tl_amount
 					hobj.tl_save_id[t] = save_id
 					hobj.old_animated[t] = animated
 					hobj.new_animated[t] = enable
 					hobj.old_hide[t] = hide
 					hobj.kf_pos[t] = null
-				
+					hobj.kf_added[t] = false
+
+					valuechanged = false
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						hobj.old_default[t, v] = tl_value_get_save_id(v, value_default[v])
 						hobj.tl_animated_old_value[t, v] = tl_value_get_save_id(v, value[v])
+						if (value[v] != value_default[v])
+							valuechanged = true
 					}
 
 					if (!enable && ds_list_size(keyframe_list) = 1)
@@ -114,8 +123,10 @@ function action_tl_animated(enable)
 						var kf = keyframe_list[|0];
 						hobj.kf_pos[t] = kf.position
 						hobj.kf_selected[t] = kf.selected
+						
 						if (!kf.value[e_value.VISIBLE])
 							hide = selected
+							
 						for (var v = 0; v < e_value.amount; v++)
 						{
 							hobj.kf_value[t, v] = tl_value_get_save_id(v, kf.value[v])
@@ -127,15 +138,24 @@ function action_tl_animated(enable)
 						with (kf)
 							instance_destroy()
 					}
-					else if (enable)
-						value_default = array_copy_1d(value)
-
+					else if (enable && valuechanged && ds_list_size(keyframe_list) = 0)
+					{
+						var kf = tl_keyframe_add(app.timeline_marker);
+						hobj.kf_pos[t] = kf.position
+						hobj.kf_selected[t] = kf.selected
+						hobj.kf_added[t] = true
+						
+						for (var v = 0; v < e_value.amount; v++)
+							hobj.kf_value[t, v] = tl_value_get_save_id(v, kf.value[v])
+					}
+					
 					if (!enable)
 						value[e_value.VISIBLE] = true
 
 					hobj.new_hide[t] = hide
 					animated = enable
 					tl_update_values()
+					
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						hobj.new_default[t, v] = tl_value_get_save_id(v, value_default[v])

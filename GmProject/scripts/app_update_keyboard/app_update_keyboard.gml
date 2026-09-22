@@ -39,7 +39,7 @@ function app_update_keyboard()
 		{
 			if (keyboard_check_pressed(ord("S")))
 			{
-				action_build_structure(null)
+				action_build_structure(null, true)
 				return 0
 			}
 		
