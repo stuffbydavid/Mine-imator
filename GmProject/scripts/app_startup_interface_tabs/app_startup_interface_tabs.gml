@@ -429,7 +429,7 @@ function app_startup_interface_tabs()
 
 	// Build mode editor
 	build_tool = new_tab(setting_build_mode_location, false)
-	build_tool.script = tab_object_editor
+	build_tool.script = tab_build_tool
 	
 	with (build_tool)
 	{

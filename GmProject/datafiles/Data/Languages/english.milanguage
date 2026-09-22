@@ -3809,6 +3809,11 @@
 		"rows": "Rows",
 		"ok": "OK"
 	},
+	"buildtool/": {
+		"firstperson": "First-person mode",
+		"exit": "Exit build tool",
+		"block": "Block"
+	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",
 		"search": "Search...",
@@ -4231,6 +4236,9 @@
 			"itemslot": "Item slot"
 		},
 		"keyframe": "KEYFRAME SETTINGS",
+		"notanimated": "The object is not animated.",
+		"notanimatedmultiple": "The selected objects are not animated.",
+		"animated": "Enable animation",
 		"transition": "Transition",
 		"easein": "Ease in",
 		"easeinx": "X",
@@ -4238,7 +4246,10 @@
 		"easeout": "Ease out",
 		"easeoutx": "X",
 		"easeouty": "Y",
-		"visible": "Visible"
+		"visible": "Visible",
+		"hidden": "The selected object is marked as hidden.",
+		"hiddenmultiple": "The selected objects are marked as hidden.",
+		"enabled": "Enabled"
 	},
 	"transition/": {
 		"menu/": {

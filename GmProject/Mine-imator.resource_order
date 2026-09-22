@@ -31,6 +31,7 @@
     {"name":"Shortcut bar","order":8,"path":"folders/Scripts/App/Interface/Shortcut bar.yy",},
     {"name":"Startup","order":9,"path":"folders/Scripts/App/Interface/Startup.yy",},
     {"name":"Tabs","order":10,"path":"folders/Scripts/App/Interface/Tabs.yy",},
+    {"name":"Build tool","order":17,"path":"folders/Scripts/App/Interface/Tabs/Build tool.yy",},
     {"name":"Text","order":11,"path":"folders/Scripts/App/Interface/Text.yy",},
     {"name":"Timeline","order":12,"path":"folders/Scripts/App/Interface/Timeline.yy",},
     {"name":"Toasts","order":13,"path":"folders/Scripts/App/Interface/Toasts.yy",},

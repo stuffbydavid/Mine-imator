@@ -37,6 +37,7 @@ function action_tl_animated(enable)
 				if (app.history_undo)
 				{
 					animated = hobj.old_animated[t]
+					hide = hobj.old_hide[t]
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						value_default[v] = tl_value_find_save_id(v, null, hobj.old_default[t, v])
@@ -46,6 +47,7 @@ function action_tl_animated(enable)
 				else
 				{
 					animated = hobj.new_animated[t]
+					hide = hobj.new_hide[t]
 					for (var v = 0; v < e_value.amount; v++)
 					{
 						value_default[v] = tl_value_find_save_id(v, null, hobj.new_default[t, v])
@@ -95,6 +97,7 @@ function action_tl_animated(enable)
 					hobj.tl_save_id[t] = save_id
 					hobj.old_animated[t] = animated
 					hobj.new_animated[t] = enable
+					hobj.old_hide[t] = hide
 					hobj.kf_pos[t] = null
 				
 					for (var v = 0; v < e_value.amount; v++)
@@ -108,6 +111,8 @@ function action_tl_animated(enable)
 						var kf = keyframe_list[|0];
 						hobj.kf_pos[t] = kf.position
 						hobj.kf_selected[t] = kf.selected
+						if (!kf.value[e_value.VISIBLE])
+							hide = selected
 						for (var v = 0; v < e_value.amount; v++)
 						{
 							hobj.kf_value[t, v] = tl_value_get_save_id(v, kf.value[v])
@@ -122,6 +127,10 @@ function action_tl_animated(enable)
 					else if (enable)
 						value_default = array_copy_1d(value)
 
+					if (!enable)
+						value[e_value.VISIBLE] = true
+
+					hobj.new_hide[t] = hide
 					animated = enable
 					tl_update_values()
 					for (var v = 0; v < e_value.amount; v++)
