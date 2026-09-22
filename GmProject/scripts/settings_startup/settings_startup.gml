@@ -48,8 +48,9 @@ function settings_startup()
 	setting_timeline_compact = false
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
-	setting_timeline_hide_ghosts = false
+	setting_timeline_hide_structure_blocks = true
 	setting_timeline_hide_nonanimated = false
+	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
 	setting_separate_tool_modes = false
@@ -101,6 +102,10 @@ function settings_startup()
 	setting_view_second_location = "right_bottom"
 	setting_view_second_width = 440
 	setting_view_second_height = 280
+	
+	setting_overlay_view_controls = true
+	setting_overlay_view_shapes = true
+	setting_overlay_view_guides = false
 	
 	setting_modelbench_popup_hidden = false
 	

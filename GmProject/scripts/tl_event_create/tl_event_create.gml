@@ -93,6 +93,7 @@ function tl_event_create()
 	parent = null
 	parent_filter = null
 	parent_is_selected = false
+	child_is_animated = false
 	lock_bend = true
 	tree_array = 0
 	tree_list = ds_list_create()

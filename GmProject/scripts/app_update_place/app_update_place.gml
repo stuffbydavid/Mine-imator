@@ -2,6 +2,13 @@
 
 function app_update_place()
 {
+	if (place_build && !view_main.mouseon && (!view_second.show || !view_second.mouseon))
+	{
+		action_build_structure(build_structure)
+		place_target_tl = null
+		place_view_pos = null
+	}
+
 	if (window_busy != place_busy)
 		return 0
 	
@@ -57,12 +64,20 @@ function app_update_place()
 				{
 					var action = null;
 					with (build_settings)
-						action = tl_get_parent_action(app.place_target_tl)
-					
+						action = tl_get_place_parent_action(app.place_target_tl)
+
+					place_target_tl_part_of = null
 					if (is_array(action) && array_length(action) > e_parent_action.TARGET)
-						place_target_tl_part_of = action[e_parent_action.TARGET]
-					else
-						place_target_tl_part_of = null
+					{
+						var target = action[e_parent_action.TARGET];
+						if (target != null && target != app)
+						{
+							if (type_is_structure(target.type) && !build_structure_custom)
+								action_build_structure(target, false)
+							else if (target.type = e_tl_type.MODEL_PART)
+								place_target_tl_part_of = target
+						}
+					}
 				}
 			}
 			
@@ -91,7 +106,9 @@ function app_update_place()
 			
 		if (place_build)
 		{
-			if (place_target_tl_part_of != null)
+			if (place_target_tl_part_of = null)
+				action_build_structure(build_structure)
+			else
 				with (place_target_tl_part_of)
 					tl_mark_place_target(true)
 			
@@ -108,13 +125,18 @@ function app_update_place()
 		{
 			with (place_tl)
 			{
-				var action = tl_get_parent_action(app.place_target_tl);
+				var action = tl_get_place_parent_action(app.place_target_tl);
 				if (is_array(action) && array_length(action) > e_parent_action.TARGET)
 				{
 					newparent = action[e_parent_action.TARGET]
-					app.place_target_tl_part_of = newparent
-					with (newparent)
-						tl_mark_place_target(true)
+					if (newparent != app)
+					{
+						app.place_target_tl_part_of = newparent
+						with (newparent)
+							tl_mark_place_target(true)
+					}
+					else
+						app.place_target_tl_part_of = null
 				}
 			}
 		}

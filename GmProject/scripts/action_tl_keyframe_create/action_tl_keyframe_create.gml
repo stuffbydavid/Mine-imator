@@ -61,7 +61,7 @@ function action_tl_keyframe_create(timeline, position)
 	}
 	
 	tl_update_length()
-	if (setting_timeline_hide_nonanimated)
+	if (setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated)
 		tl_update_list()
 
 	app_update_tl_edit()

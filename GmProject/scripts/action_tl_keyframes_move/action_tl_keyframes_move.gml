@@ -2,9 +2,20 @@
 
 function action_tl_keyframes_move()
 {
-	var movex, moved;
+	var movex, moved, stretchmode, stretch, pivot, handle, newhandle;
 	movex = timeline_mouse_pos - timeline_move_kf_mouse_pos
 	moved = false
+	stretchmode = timeline_move_kf_stretch
+	stretch = 1
+	pivot = timeline_move_kf_stretch_pivot
+	handle = timeline_move_kf_stretch_handle
+	
+	if (stretchmode)
+	{
+		newhandle = max(0, handle + movex)
+		stretch = clamp((newhandle - pivot) / (handle - pivot), 0, timeline_move_kf_stretch_max)
+		tl_keyframes_stretch(pivot, stretch)
+	}
 	
 	with (obj_keyframe)
 	{
@@ -12,7 +23,9 @@ function action_tl_keyframes_move()
 			continue
 		
 		// Calculate new position
-		new_position = max(0, move_pos + movex)
+		if (!stretchmode)
+			new_position = max(0, move_pos + movex)
+		
 		if (position = new_position)
 			continue
 		

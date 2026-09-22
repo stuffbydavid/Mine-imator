@@ -47,6 +47,34 @@ function view_click(view, cam, ctrl = false)
 				if (!partselected)
 					tl = root
 			}
+			else if (tl.type = e_tl_type.BLOCK && !tl.animated)
+			{
+				// Prefer the structure until one of its blocks is selected
+				var structure, blockselected;
+				structure = tl.parent
+				while (structure != null && structure != app && !type_is_structure(structure.type))
+					structure = structure.parent
+
+				if (structure != null && structure != app)
+				{
+					blockselected = structure.selected
+					if (!blockselected)
+					{
+						for (var s = 0; s < ds_list_size(structure.tree_list); s++)
+						{
+							var sibling = structure.tree_list[|s];
+							if (sibling.type = e_tl_type.BLOCK && sibling.selected)
+							{
+								blockselected = true
+								break
+							}
+						}
+					}
+
+					if (!blockselected)
+						tl = structure
+				}
+			}
 			else if (!tl_edit)
 			{
 				while (tl.parent != app && !tl.parent.lock && tl_update_list_filter(tl.parent))

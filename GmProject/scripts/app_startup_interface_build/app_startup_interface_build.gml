@@ -4,6 +4,7 @@ function app_startup_interface_build()
 {
 	build_type = e_tl_type.BLOCK
 	build_structure = null
+	build_structure_custom = false
 	
 	build_box = null
 	build_box_top = null

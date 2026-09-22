@@ -1,9 +1,8 @@
-/// history_set(script, [buildaction])
+/// history_set(script)
 /// @arg script
-/// @arg [buildaction]
 /// @desc Registering history for a generic action.
 
-function history_set(script, buildaction = false)
+function history_set(script)
 {
 	var hobj;
 	
@@ -13,7 +12,6 @@ function history_set(script, buildaction = false)
 	log("Action", script_get_name(script))
 	
 	hobj = new_history(script)
-	hobj.build_action = buildaction
 	
 	history[0] = hobj
 	

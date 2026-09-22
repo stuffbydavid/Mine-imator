@@ -155,6 +155,7 @@ function macros()
 	#macro button_padding				24
 	#macro button_icon_padding			52
 	#macro snap_min						0.000001
+	#macro transform_snap				0.0001
 	#macro dragger_width				74
 	#macro label_height					9
 	#macro load_assets_width			780

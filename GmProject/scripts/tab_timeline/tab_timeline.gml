@@ -856,7 +856,10 @@ function tab_timeline()
 	// Filter (advanced mode only)
 	if (setting_advanced_mode)
 	{
-		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || setting_timeline_hide_nonanimated || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
+		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24,
+			setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated ||setting_timeline_hide_ghosts || 
+			!array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)),
+			icons.FILTER, null, false, "tooltiptlfilter"))
 		{
 			menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
 			settings_menu_script = tl_filter_draw
@@ -1094,7 +1097,16 @@ function tab_timeline()
 			minw -= 24
 			itemmaxw += 24
 		}
+		
+		// Structure editing in build mode
 		xx += 1
+		if (place_build && tl = build_structure && minw >= 20)
+		{
+			draw_image(spr_icons, icons.PENCIL, xx + 8, itemy + (itemh/2), .75, .75, c_accent, 1)
+			xx += 22
+			minw -= 22
+			itemmaxw += 22
+		}
 		
 		tl.list_mouseon = itemhover && !buttonhover
 		
@@ -1431,11 +1443,29 @@ function tab_timeline()
 	// Moving keyframes
 	if (window_busy = "timelinemovekeyframes")
 	{
-		mouse_cursor = cr_size_all
+		if (timeline_move_kf_stretch)
+			mouse_cursor = cr_size_we
+		else
+			mouse_cursor = cr_size_all
+		
 		if (!mouse_left)
 			action_tl_keyframes_move_done()
 		else
 			action_tl_keyframes_move()
+	}
+	
+	// Scaling keyframes
+	if (window_busy = "timelinescalekeyframes")
+	{
+		mouse_cursor = cr_size_we
+		shortcut_bar_state = "timelinescale"
+		
+		if (keyboard_check_pressed(vk_escape) || mouse_right_pressed)
+			action_tl_keyframes_scale_cancel()
+		else if (keyboard_check_pressed(vk_enter) || mouse_left_pressed)
+			action_tl_keyframes_move_done()
+		else
+			action_tl_keyframes_scale()
 	}
 	
 	// Move timelines
@@ -1532,7 +1562,12 @@ function tab_timeline()
 					if (keyboard_check(vk_control))
 						action_tl_deselect(timeline_select)
 					else
+					{
+						if (place_build && type_is_structure(timeline_select.type))
+							action_build_structure(timeline_select, true)
+						
 						app_update_tl_edit()
+					}
 				}
 				else
 					action_tl_select(timeline_select)
@@ -1830,6 +1865,9 @@ function tab_timeline()
 		
 		if (mouseinbar)
 			shortcut_bar_state = "timelinebar"
+		
+		if (window_busy = "timelinescalekeyframes")
+			shortcut_bar_state = "timelinescale"
 		
 		window_scroll_focus = string(timeline.ver_scroll)
 		
