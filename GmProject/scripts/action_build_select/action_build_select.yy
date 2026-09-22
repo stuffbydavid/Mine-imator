@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"history_build_action",
+  "%Name":"action_build_select",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"history_build_action",
+  "name":"action_build_select",
   "parent":{
     "name":"Build",
-    "path":"folders/Scripts/App/History/Build.yy",
+    "path":"folders/Scripts/App/Actions/Build.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -172,6 +172,7 @@ function app_startup_interface_bench()
 		// Character list
 		char_list = new_obj(obj_sortlist)
 		char_list.script = action_bench_model_name
+		char_list.script_search = sortlist_search_model
 		char_list.script_select_click = action_bench_create
 		char_list.height_percent = bench_list_percent
 		
@@ -182,6 +183,7 @@ function app_startup_interface_bench()
 		// Equipment list
 		equipment_list = new_obj(obj_sortlist)
 		equipment_list.script = action_bench_model_name
+		equipment_list.script_search = sortlist_search_model
 		equipment_list.script_select_click = action_bench_create
 		equipment_list.header_show = false
 		equipment_list.height_items = ds_list_size(mc_assets.equipment_list)
@@ -193,6 +195,7 @@ function app_startup_interface_bench()
 		// Model part list
 		model_part_model_list = new_obj(obj_sortlist)
 		model_part_model_list.script = action_bench_model_name
+		model_part_model_list.script_search = sortlist_search_model
 		model_part_model_list.script_select_click = action_bench_create
 		model_part_model_list.height_percent = bench_list_percent
 		
@@ -235,6 +238,7 @@ function app_startup_interface_bench()
 		// Block list
 		block_list = new_obj(obj_sortlist)
 		block_list.script = action_bench_block_name
+		block_list.script_search = sortlist_search_block
 		block_list.script_select_click = action_bench_create
 		block_list.height_percent = bench_list_percent
 		
@@ -246,6 +250,7 @@ function app_startup_interface_bench()
 		// Special block list
 		special_block_list = new_obj(obj_sortlist)
 		special_block_list.script = action_bench_model_name
+		special_block_list.script_search = sortlist_search_model
 		special_block_list.script_select_click = action_bench_create
 		special_block_list.height_percent = bench_list_percent
 		

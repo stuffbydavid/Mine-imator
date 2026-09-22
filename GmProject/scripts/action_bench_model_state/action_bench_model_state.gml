@@ -5,7 +5,8 @@ function action_bench_model_state(val)
 {
 	var state = menu_model_state.name;
 	
-	with (bench_settings)
+	var settings = place_build ? build_settings : bench_settings;
+	with (settings)
 	{
 		if (app.menu_model_armor_variant)
 		{
@@ -26,7 +27,8 @@ function action_bench_model_state(val)
 		temp_update_model_shape()
 		model_shape_update_color()
 		
-		with (preview)
-			update = true
+		if (preview != null)
+			with (preview)
+				update = true
 	}
 }

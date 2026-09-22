@@ -41,6 +41,10 @@ function new_shader(name)
 		new_shader_uniform("uSampleIndex")
 		new_shader_uniform("uAlphaHash")
 		
+		// Build mode
+		new_shader_uniform("uViewportSize")
+		new_shader_uniform("uLineLength")
+		
 		shader_map[?shader] = id
 		return id
 	}

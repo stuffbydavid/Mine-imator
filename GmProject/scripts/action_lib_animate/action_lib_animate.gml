@@ -81,7 +81,7 @@ function action_lib_animate(place = false)
 			(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
 			!sceneryreplaceground &&
 			tl.value_type[e_value_type.TRANSFORM_POS])
-			app_start_place(tl, true)
+			app_start_place(false, tl, true)
 	}
 	
 	tl_update_list()

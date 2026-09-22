@@ -28,6 +28,7 @@ function tl_select_single()
 	
 	tl_edit_amount = 1
 	tl_edit = id
+	tl_focus = id
 	
 	selected = true
 	tl_update_parent_is_selected()

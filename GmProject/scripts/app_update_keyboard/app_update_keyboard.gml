@@ -27,20 +27,20 @@ function app_update_keyboard()
 	}
 
 	// Build mode shortcuts
-	if (place_build)
+	if (place_build && !textbox_isediting && window_busy = "")
 	{
-		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_MODE].pressed)
+		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_TOOL].pressed)
 		{
 			action_toolbar_build_mode()
 			return 0
 		}
 		
-		if (!textbox_isediting && (keybinds[e_keybind.UNDO].pressed || keybinds[e_keybind.REDO].pressed))
+		if (keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) && !keyboard_check(vk_alt))
 		{
-			if (keybinds[e_keybind.UNDO].pressed)
-				action_toolbar_undo()
-			else
-				action_toolbar_redo()
+			tab_show(build_tool, true)
+			textbox_lastfocus = -1
+			window_focus = string(build_tool.build_list.search_tbx)
+			textbox_input = ""
 		}
 	}
 
@@ -70,7 +70,7 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.REDO].pressed)
 			action_toolbar_redo()
 
-		if (keybinds[e_keybind.BUILD_MODE].pressed)
+		if (keybinds[e_keybind.BUILD_TOOL].pressed)
 			action_toolbar_build_mode()
 		
 		if (keybinds[e_keybind.PLAY].pressed)

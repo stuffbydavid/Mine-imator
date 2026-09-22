@@ -442,11 +442,11 @@ function view_draw(view)
 		
 		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
-			var viewbusy = "place";
-			if (place_tl != null && window_focus = string(view) && string_pos("view", window_busy) == 1)
+			var viewbusy = place_busy;
+			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
 				viewbusy = window_busy
 			
-			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon && place_content_mouseon != "buildstop")
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
 		}
 		
 		if (content_mouseon)
@@ -503,7 +503,7 @@ function view_draw(view)
 			bench_rotate_ani = 1
 		
 		// Set animation
-		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, place_busy) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		{
 			mouse_cursor = cr_handpoint
 			bench_button_hover = true
@@ -531,7 +531,7 @@ function view_draw(view)
 			if (mouse_left_pressed)
 			{
 				if (place_build)
-					app_stop_place(false, false, false)
+					app_stop_place(false, false)
 				bench_open = true
 			}
 		}
@@ -849,8 +849,8 @@ function view_draw(view)
 		draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, .25)
 	
 	// Mouse on
-	var viewbusy = "place";
-	if (place_tl != null && window_focus = string(view))
+	var viewbusy = place_busy;
+	if ((place_tl != null || place_build) && window_focus = string(view))
 		viewbusy = window_busy
 	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, viewbusy)
 	if (view.mouseon && view = view_second)

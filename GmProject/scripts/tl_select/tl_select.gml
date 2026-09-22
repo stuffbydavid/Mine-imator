@@ -10,6 +10,7 @@ function tl_select()
 	
 	tl_edit_amount++
 	tl_edit = id
+	tl_focus = id
 	
 	tl_update_parent_is_selected()
 }

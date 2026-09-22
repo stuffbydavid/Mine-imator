@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sortlist_search_block",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sortlist_search_block",
+  "parent":{
+    "name":"Search",
+    "path":"folders/Scripts/App/Interface/Components/Sortlist/Search.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
