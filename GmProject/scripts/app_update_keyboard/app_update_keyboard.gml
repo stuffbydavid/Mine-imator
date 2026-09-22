@@ -35,12 +35,21 @@ function app_update_keyboard()
 			return 0
 		}
 		
-		if (keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) && !keyboard_check(vk_alt))
+		if (!keyboard_check(vk_control) && !keyboard_check(vk_alt))
 		{
-			tab_show(build_tool, true)
-			textbox_lastfocus = -1
-			window_focus = string(build_tool.build_list.search_tbx)
-			textbox_input = ""
+			if (keyboard_check_pressed(ord("S")))
+			{
+				action_build_structure(null, true)
+				return 0
+			}
+		
+			if (keyboard_check_pressed(ord("E")))
+			{
+				tab_show(build_tool, true)
+				textbox_lastfocus = -1
+				window_focus = string(build_tool.build_list.search_tbx)
+				textbox_input = ""
+			}
 		}
 	}
 

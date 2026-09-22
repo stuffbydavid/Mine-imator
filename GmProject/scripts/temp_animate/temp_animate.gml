@@ -13,8 +13,9 @@ function temp_animate()
 		if (type = e_tl_type.EQUIPMENT)
 			inherit_pose = true
 		
-		if (type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK || type = e_tl_type.SCENERY)
+		if (type_is_block(type))
 		{
+			inherit_rot_point = true
 			inherit_alpha = true
 			inherit_color = true
 			inherit_texture = true

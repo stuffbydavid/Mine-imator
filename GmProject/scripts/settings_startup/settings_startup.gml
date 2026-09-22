@@ -48,8 +48,9 @@ function settings_startup()
 	setting_timeline_compact = false
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
-	setting_timeline_hide_ghosts = false
+	setting_timeline_hide_structure_blocks = true
 	setting_timeline_hide_nonanimated = false
+	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
 	setting_separate_tool_modes = false

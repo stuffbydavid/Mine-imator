@@ -2,7 +2,8 @@
 
 function render_world_build_box()
 {
-	if (window_state != "" || build_box_render = null || !content_mouseon || string_pos("view", window_busy) == 1 ||
+	var movingview = window_busy = "viewrotatecamera" || window_busy = "viewmovecamera" || window_busy = "viewpancamera"
+	if (window_state != "" || build_box_render = null || !content_mouseon || movingview ||
 		(render_mode != e_render_mode.COLOR &&
 		 render_mode != e_render_mode.COLOR_FOG &&
 		 render_mode != e_render_mode.COLOR_FOG_LIGHTS))

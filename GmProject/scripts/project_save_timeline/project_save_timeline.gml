@@ -180,7 +180,7 @@ function project_save_timeline()
 			json_save_var_save_id("glint_tex", glint_tex)
 			json_save_var_bool("fog", fog)
 			
-			if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK || type = e_tl_type.PARTICLE_SPAWNER || type = e_tl_type.TEXT || type = e_tl_type.PATH || type_is_shape(type))
+			if (type_has_wind(type))
 			{
 				json_save_var_bool("wind", wind)
 				json_save_var_bool("wind_terrain", wind_terrain)

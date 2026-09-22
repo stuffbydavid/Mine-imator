@@ -547,6 +547,7 @@
 		"cameraeffects": "Camera effects",
 		"background": "Environment",
 		"audio": "Audio track",
+		"structure": "Structure",
 		"folder": "Folder",
 		"pack": "Resource pack",
 		"skin": "Skin",
@@ -3818,7 +3819,9 @@
 	"buildtool/": {
 		"firstperson": "First-person mode",
 		"exit": "Exit build tool",
-		"block": "Block"
+		"selected": "Selected",
+		"structure": "Structure",
+		"createnew": "Create new"
 	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",
@@ -3835,6 +3838,8 @@
 			"offset": "Interval offset"
 		},
 		"filtertags": "Filter out tags",
+		"hidestructureblocks": "Hide structure blocks",
+		"hidestructureblockstip": "Hide blocks from the list with \"Animated\" turned off and parented to structures or scenery.",
 		"hidenonanimated": "Hide non-animated timelines",
 		"hidenonanimatedtip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hideghosts": "Hide ghost timelines",
