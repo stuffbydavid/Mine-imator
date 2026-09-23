@@ -974,6 +974,7 @@
     {"id":{"name":"action_project_video_width","path":"scripts/action_project_video_width/action_project_video_width.yy",},},
     {"id":{"name":"action_recent_pin","path":"scripts/action_recent_pin/action_recent_pin.yy",},},
     {"id":{"name":"action_recent_remove","path":"scripts/action_recent_remove/action_recent_remove.yy",},},
+    {"id":{"name":"action_recent_search","path":"scripts/action_recent_search/action_recent_search.yy",},},
     {"id":{"name":"action_recent_sort","path":"scripts/action_recent_sort/action_recent_sort.yy",},},
     {"id":{"name":"action_res_export","path":"scripts/action_res_export/action_res_export.yy",},},
     {"id":{"name":"action_res_font_load","path":"scripts/action_res_font_load/action_res_font_load.yy",},},

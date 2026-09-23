@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.15"
+		"lastchange": "2026.09.22"
 	},
 	"particle/": {
 		"type/": {
@@ -307,12 +307,14 @@
 			"future": "Last opened in the future"
 		},
 		"none": "The projects you've opened recently will appear here!",
+		"searchnone": "No projects were found with that name.",
 		"sortdatenewest": "Date (newest)",
 		"sortdateoldest": "Date (oldest)",
 		"sortnameaz": "Name (A-Z)",
 		"sortnameza": "Name (Z-A)",
 		"name": "Name",
-		"projects": "Recent projects"
+		"projects": "Recent projects",
+		"searchcaption": "Search..."
 	},
 	"alert/": {
 		"newassets": "Minecraft %1 assets are available! Restart to download them.",
@@ -946,10 +948,10 @@
 			"rows": "Rows"
 		},
 		"overlay/": {
-            "controls": "View controls",
-            "shapes": "Timeline shapes",
-            "guides": "Timeline guides",
-            "guidestip": "Enable visual representations of camera frustums, spotlight cones, etc. when selected."
+			"controls": "View controls",
+			"shapes": "Timeline shapes",
+			"guides": "Timeline guides",
+			"guidestip": "Enable visual representations of camera frustums, spotlight cones, etc. when selected."
 		},
 		"snap/": {
 			"move": "Move",

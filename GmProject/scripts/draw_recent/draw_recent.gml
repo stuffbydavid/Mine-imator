@@ -24,7 +24,7 @@ function draw_recent()
 	{
 		draw_set_font(font_value)
 		
-		for (var i = 0; i < recent_list_amount; i++)
+		for (var i = 0; i < recent_list_amount_display; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
 			mouseon = hover
@@ -92,11 +92,11 @@ function draw_recent()
 		// Set scrollbar
 		var liststart = 0;
 		
-		if ((recent_list_amount * 44) > hei - 28)
+		if ((recent_list_amount_display * 44) > hei - 28)
 		{
 			window_scroll_focus = string(recent_scrollbar)
 			
-			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid - 12, yy + 28, hei - 28, recent_list_amount * 44)
+			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid - 12, yy + 28, hei - 28, recent_list_amount_display * 44)
 			liststart = snap(recent_scrollbar.value / 44, 1)
 			wid -= 12
 		}
@@ -120,7 +120,7 @@ function draw_recent()
 		
 		// Draw list
 		draw_set_font(font_value)
-		for (var i = liststart; i < recent_list_amount; i++)
+		for (var i = liststart; i < recent_list_amount_display; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
 			mouseon = hover
@@ -198,11 +198,11 @@ function draw_recent()
 		// Set scrollbar
 		var liststart = 0;
 		
-		if ((recent_list_amount * 256) > hei)
+		if ((recent_list_amount_display * 256) > hei)
 		{
 			window_scroll_focus = string(recent_scrollbar)
 			
-			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 12, yy, hei, ceil(recent_list_amount/4) * 256)
+			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 12, yy, hei, ceil(recent_list_amount_display/4) * 256)
 			liststart = recent_scrollbar.value
 		}
 	
@@ -214,7 +214,7 @@ function draw_recent()
 		
 		clip_begin(xx - 2, yy - 1, wid + 4, hei + 2)
 		
-		for (var i = 0; i < recent_list_amount; i++)
+		for (var i = 0; i < recent_list_amount_display; i++)
 		{
 			// Only draw card if visible
 			if (cardy < yy + hei || cardy + 240 + 16 > yy)

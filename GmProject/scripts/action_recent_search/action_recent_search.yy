@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_recent_search",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_recent_search",
+  "parent":{
+    "name":"Recent",
+    "path":"folders/Scripts/App/Actions/Recent.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
