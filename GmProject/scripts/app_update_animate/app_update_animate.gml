@@ -163,8 +163,11 @@ function app_update_animate()
 	timeline_marker_previous = timeline_marker
 	
 	// Background
+	//background_tlactive = null
 	if (bgobject)
 	{
+		background_tlactive = bgobject
+		
 		background_image_show					= bgobject.value[e_value.BG_IMAGE_SHOW]
 		background_image_rotation				= bgobject.value[e_value.BG_IMAGE_ROTATION]
 		background_sky_sun_angle				= bgobject.value[e_value.BG_SKY_SUN_ANGLE]

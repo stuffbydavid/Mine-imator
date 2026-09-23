@@ -57,6 +57,8 @@ function tab_get_title(tab)
 		if (tl_edit)
 		{
 			name = string_remove_newline(tl_edit.display_name)
+			if (!tl_edit.animated && tl_edit_amount = 1)
+				return name
 			
 			if (tl_edit_amount > 1)
 			{

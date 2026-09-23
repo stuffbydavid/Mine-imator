@@ -145,7 +145,10 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 			}
 			
 			with (tladd)
+			{
 				tl_keyframe_add(insertpos + pos, newkf)
+				animated = true
+			}
 			
 			tl_keyframe_select(newkf)
 		}

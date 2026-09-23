@@ -6,7 +6,7 @@
 function tl_keyframe_add(pos, kf = null)
 {
 	var i;
-	
+
 	// Find index
 	for (i = 0; i < ds_list_size(keyframe_list); i++)
 	{

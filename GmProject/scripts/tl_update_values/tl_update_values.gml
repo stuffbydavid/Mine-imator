@@ -3,6 +3,17 @@
 
 function tl_update_values()
 {
+	if (!animated)
+	{
+		keyframe_prev = null
+		keyframe_current = null
+		keyframe_next = null
+		keyframe_current_values = null
+		keyframe_next_values = null
+		keyframe_animate = false
+		return 0
+	}
+
 	keyframe_prev = keyframe_current
 	keyframe_current = null
 	keyframe_next = null

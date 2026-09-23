@@ -901,10 +901,11 @@ function bench_draw_settings(bx, by, bw, bh)
 		
 		case e_bench.CAMERA_EFFECTS:
 		{
-			//draw_sprite(spr_bench_example, 5, examplex, dy)
-			//dy += 144 + 15
+			draw_sprite(spr_bench_example, 5, examplex, dy)
+			dy += 144 + 15
 			
-			draw_tooltip_label("benchcameraeffectstip", icons.GOOSE, e_toast.NEGATIVE)
+			draw_tooltip_label("benchcameraeffectstip", icons.INFO, e_toast.INFO)
+			createdisabled = true
 			break
 		}
 		
@@ -1075,6 +1076,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			editicon = icons.PENCIL
 			editbutton = e_bench_button.CREATE_AND_EDIT
 		}
+		
 		if (draw_button_label(editname, dx, sy + dh - 56, wid, editicon, e_button.SECONDARY, null, e_anchor.LEFT, createdisabled))
 		{
 			action_bench_create(editbutton)
@@ -1096,6 +1098,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		createicon = icons.ASSET_ADD
 		createbutton = e_bench_button.CREATE
 	}
+	
 	if (draw_button_label(createname, edit ? (dx + wid + 8) : dx, sy + dh - 56, wid, createicon, e_button.PRIMARY, null, e_anchor.LEFT, createdisabled))
 	{
 		action_bench_create(createbutton)

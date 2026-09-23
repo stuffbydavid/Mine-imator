@@ -303,6 +303,7 @@ function app_startup_lists()
 		"path",
 		"pathpoint",
 		"background",
+		"structure",
 		"folder"
 	)
 	
@@ -488,6 +489,7 @@ function app_startup_lists()
 		PATH,
 		PATH_POINT,
 		BACKGROUND,
+		STRUCTURE,
 		FOLDER
 	*/
 	
@@ -515,6 +517,7 @@ function app_startup_lists()
 		icons.PATH,
 		icons.PATH_POINT,
 		icons.CLOUD,
+		icons.SCENERY,
 		icons.FOLDER
 	)
 	
@@ -542,6 +545,7 @@ function app_startup_lists()
 		icons.PATH,
 		icons.PATH_POINT,
 		icons.CLOUD,
+		icons.SCENERY,
 		icons.FOLDER
 	)
 	

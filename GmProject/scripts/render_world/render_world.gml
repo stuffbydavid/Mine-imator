@@ -51,7 +51,7 @@ function render_world(mode)
 		with (render_list[|i])
 			render_world_tl()
 	
-	if (place_build)
+	if (app.place_build)
 		render_world_build_box()
 
 	render_world_tl_reset()

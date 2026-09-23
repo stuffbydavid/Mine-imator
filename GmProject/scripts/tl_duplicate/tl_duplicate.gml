@@ -31,7 +31,11 @@ function tl_duplicate()
 		
 		// Copy default values
 		for (var v = 0; v < e_value.amount; v++)
+		{
 			value_default[v] = tl_value_find_save_id(v, null, other.value_default[v])
+			if (!animated)
+				value[v] = other.value[v]
+		}
 		
 		// Copy keyframes
 		for (var k = 0; k < ds_list_size(other.keyframe_list); k++)

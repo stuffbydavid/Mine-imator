@@ -95,7 +95,10 @@ function tl_keyframes_paste(pos)
 		var newkf;
 		
 		with (tladd)
+		{
 			newkf = tl_keyframe_add(pos + app.copy_kf_pos[k])
+			animated = true
+		}
 		
 		for (var v = 0; v < e_value.amount; v++)
 			newkf.value[v] = tl_value_find_save_id(v, null, copy_kf_value[k, v])

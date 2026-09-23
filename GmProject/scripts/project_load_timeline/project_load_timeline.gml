@@ -20,6 +20,9 @@ function project_load_timeline(map)
 		
 		temp = value_get_save_id(map[?"temp"], temp)
 		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
+		animated = value_get_real(map[?"animated"], animated)
+		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.BACKGROUND)
+			animated = true
 		color_tag = value_get_real(map[?"color_tag"], color_tag)
 		hide = value_get_real(map[?"hide"], hide)
 		lock = value_get_real(map[?"lock"], lock)
@@ -239,7 +242,7 @@ function project_load_timeline(map)
 		
 		fog = value_get_real(map[?"fog"], fog)
 		
-		if (type = e_tl_type.SCENERY || type = e_tl_type.BLOCK || type = e_tl_type.PARTICLE_SPAWNER || type = e_tl_type.TEXT || type = e_tl_type.PATH || type_is_shape(type))
+		if (type_has_wind(type))
 		{
 			wind = value_get_real(map[?"wind"], wind)
 			wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)
