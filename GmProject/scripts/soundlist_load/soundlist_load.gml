@@ -2,16 +2,15 @@
 
 function soundlist_load(sounds, music)
 {
-	var filename, map, objects;
+	var map, objects;
 
 	soundlist_clear(sounds)
 	soundlist_clear(music)
 	
-	filename = minecraft_java_directory_get() + "/assets/indexes/" + minecraft_game_version_latest + ".json"
-	if (!file_exists_lib(filename))
+	if (!file_exists_lib(minecraft_game_assets_latest))
 		return 0
 
-	map = json_load(filename)
+	map = json_load(minecraft_game_assets_latest)
 	if (!ds_map_valid(map))
 		return 0
 
