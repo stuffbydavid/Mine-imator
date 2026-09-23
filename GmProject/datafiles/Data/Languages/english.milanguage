@@ -4259,6 +4259,11 @@
 			"elastic": "Elastic",
 			"back": "Back",
 			"bounce": "Bounce"
+		},
+		"quickease/": {
+			"in": "Ease in",
+			"out": "Ease out",
+			"inout": "Ease in & out"
 		}
 	},
 	"settings/": {
