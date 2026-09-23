@@ -112,6 +112,7 @@ function project_reset()
 	timeline_zoom = 16
 	timeline_zoom_goal = 16
 	timeline_camera = null
+	background_tlactive = null
 	copy_kf_amount = 0
 	timeline_marker_length = 0
 	

@@ -28,6 +28,7 @@ function app_startup_interface_timeline()
 	timeline_zoom_current = 16
 	timeline_zoom_target = 0
 	timeline_camera = null
+	background_tlactive = null
 	timeline_insert_pos = 0
 	timeline_show_frames = false
 	timeline_marker_length = 0

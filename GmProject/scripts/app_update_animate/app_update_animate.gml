@@ -167,7 +167,7 @@ function app_update_animate()
 	timeline_marker_previous = timeline_marker
 	
 	// Background
-	//background_tlactive = null
+	background_tlactive = null
 	if (bgobject)
 	{
 		background_tlactive = bgobject
