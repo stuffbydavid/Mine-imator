@@ -955,7 +955,7 @@
 			"radial": "Radial",
 			"triangle": "Triangle",
 			"circular": "Circular"
-    },
+        },
 		"overlay/": {
 			"controls": "View controls",
 			"shapes": "Timeline shapes",
