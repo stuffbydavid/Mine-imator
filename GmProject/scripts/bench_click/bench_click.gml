@@ -213,7 +213,7 @@ function bench_click(tab, key = false)
 		if (sortvalue = null)
 			sortvalue = bench_settings.model_name
 
-		sortlist_center(sortlist, sortvalue)
+		sortlist_view(sortlist, sortvalue)
 		window_scroll_focus = string(sortlist.scroll)
 	}
 	

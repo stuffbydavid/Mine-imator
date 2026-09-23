@@ -1064,6 +1064,7 @@ function tab_timeline()
 		if (!setting_timeline_compact)
 		{
 			var iconcolor, iconalpha;
+			var activetl = tl_active(tl);
 			
 			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
@@ -1078,13 +1079,13 @@ function tab_timeline()
 			{
 				if (tl.color_tag = null)
 				{
-					iconcolor = c_text_tertiary
-					iconalpha = a_text_tertiary
+					iconcolor = activetl ? c_accent : c_text_tertiary
+					iconalpha = activetl ? .75 : a_text_tertiary
 				}
 				else
 				{
 					iconcolor = setting_theme.accent_list[tl.color_tag]
-					iconalpha = .75
+					iconalpha = activetl ? 1 : .75
 				}
 			}
 			

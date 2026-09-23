@@ -28,7 +28,7 @@ function window_draw_startup()
 	dw = min(window_width - 48, 1008)
 	
 	// No recent projects text
-	if (ds_list_size(recent_list) = 0)
+	if (recent_list_amount = 0)
 	{
 		draw_label(text_get("recentnone"), window_width / 2, dy, fa_center, fa_middle, c_accent, 1, font_heading_big)
 		dy += 48
@@ -103,7 +103,18 @@ function window_draw_startup()
 		if (settings_menu_name = "startupsortby" && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
 		
-		dy += 72
+		dy += 40
+		tab_control(24)
+		draw_textfield("recentsearch", dx, dy, 240, 24, tbx_recent_search, action_recent_search, text_get("recentsearchcaption"), "none")
+		tab_next()
+		dy += 32
+		
+		// No searched projects text
+		if (recent_list_amount > 0 && recent_list_amount_display = 0)
+		{
+			draw_label(text_get("recentsearchnone"), window_width / 2, dy, fa_center, fa_middle, c_accent, 1, font_heading_big)
+			//dy += 48
+		}
 		
 		var listheight;
 		
