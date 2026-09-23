@@ -36,7 +36,7 @@ function settings_startup()
 	setting_watermark_opacity = 1
 	
 	setting_theme = theme_light // TODO: Community/Discord poll to restore theme_classic for 2.1
-	if (dev_mode_dark_theme)
+	if (debug_dark_theme)
 		setting_theme = theme_dark
 	
 	setting_accent = 3

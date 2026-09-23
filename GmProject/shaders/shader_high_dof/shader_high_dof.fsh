@@ -38,12 +38,12 @@ vec3 apertureSample(vec2 polar, float pixelAngle, vec2 cameraRotation, vec2 blad
 		edge = mix(bladeGeometry.y / cos(localAngle), 1.0, uBladeRounding);
 	}
 
-	vec2 point = vec2(cos(angle), sin(angle)) * (polar.x * edge);
-	point *= vec2(1.0 - max(uBladeStretch, 0.0), 1.0 + min(uBladeStretch, 0.0));
-	point = vec2(point.x * cameraRotation.x - point.y * cameraRotation.y,
-	             point.x * cameraRotation.y + point.y * cameraRotation.x);
-	point *= vec2(1.0 - max(uBlurRatio, 0.0), 1.0 + min(uBlurRatio, 0.0));
-	return vec3(point, edge * edge);
+	vec2 samplePoint = vec2(cos(angle), sin(angle)) * (polar.x * edge);
+	samplePoint *= vec2(1.0 - max(uBladeStretch, 0.0), 1.0 + min(uBladeStretch, 0.0));
+	samplePoint = vec2(samplePoint.x * cameraRotation.x - samplePoint.y * cameraRotation.y,
+	                   samplePoint.x * cameraRotation.y + samplePoint.y * cameraRotation.x);
+	samplePoint *= vec2(1.0 - max(uBlurRatio, 0.0), 1.0 + min(uBlurRatio, 0.0));
+	return vec3(samplePoint, edge * edge);
 }
 
 float getBlur(vec2 coord)
@@ -152,8 +152,9 @@ void main()
 				}
 				else
 				{
-					vec2 point = uSamples[i] * radiusScale;
-					aperture = vec3(circleTransform * point, 1.0);
+					vec2 samplePoint = uSamples[i] * radiusScale;
+					samplePoint = circleTransform * samplePoint;
+					aperture = vec3(samplePoint, 1.0);
 				}
 			}
 			

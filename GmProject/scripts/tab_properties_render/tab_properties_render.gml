@@ -234,11 +234,11 @@ function tab_properties_render()
 				tab_next()
 
 				var resolutiontext = text_get("renderresolutioneighth")
-				switch (rendererset.indirect_resolution)
+				switch (rendererset.indirect_resolution * 100)
 				{
-					case 1: resolutiontext = text_get("renderresolutionfull") break
-					case .5: resolutiontext = text_get("renderresolutionhalf") break
-					case .25: resolutiontext = text_get("renderresolutionquarter") break
+					case 100: resolutiontext = text_get("renderresolutionfull") break
+					case 50: resolutiontext = text_get("renderresolutionhalf") break
+					case 25: resolutiontext = text_get("renderresolutionquarter") break
 				}
 
 				tab_control_menu()
@@ -274,11 +274,11 @@ function tab_properties_render()
 				tab_next()
 
 				var resolutiontext = text_get("renderresolutioneighth")
-				switch (rendererset.reflections_resolution)
+				switch (rendererset.reflections_resolution * 100)
 				{
-					case 1: resolutiontext = text_get("renderresolutionfull") break
-					case .5: resolutiontext = text_get("renderresolutionhalf") break
-					case .25: resolutiontext = text_get("renderresolutionquarter") break
+					case 100: resolutiontext = text_get("renderresolutionfull") break
+					case 50: resolutiontext = text_get("renderresolutionhalf") break
+					case 25: resolutiontext = text_get("renderresolutionquarter") break
 				}
 
 				tab_control_menu()

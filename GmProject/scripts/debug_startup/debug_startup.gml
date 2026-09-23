@@ -4,22 +4,26 @@ function debug_startup()
 {
 	// Developer options, overwritten by program arguments
 	globalvar debug_project, debug_full, debug_advanced;
-	globalvar debug_skip_blocks, debug_skip_tangents, debug_show_bones;
+	globalvar debug_skip_blocks, debug_max_blocks, debug_skip_tangents, debug_show_bones;
 	globalvar debug_schematics, debug_names, debug_saveid, debug_unused;
+	globalvar debug_check_assets, debug_dark_theme;
 	globalvar debug_info, debug_info_corner, debug_indent, debug_timer;
-	
+
 	if (debug_mode)
 	{
 		debug_project		= ""//file_directory_get() + "dev_project/dev_project.miproject"
 		debug_full			= true
 		debug_advanced		= true
 		debug_skip_blocks	= true
+		debug_max_blocks	= 50
 		debug_skip_tangents	= false
 		debug_show_bones	= false
 		debug_schematics	= false
 		debug_names			= false
 		debug_saveid		= false
 		debug_unused		= false
+		debug_check_assets	= true
+		debug_dark_theme	= true
 		debug_info			= 1
 	}
 	else
@@ -28,12 +32,15 @@ function debug_startup()
 		debug_full			= false
 		debug_advanced		= false
 		debug_skip_blocks	= false
+		debug_max_blocks	= 0
 		debug_skip_tangents	= false
 		debug_show_bones	= false
 		debug_schematics	= false
 		debug_names			= false
 		debug_saveid		= false
 		debug_unused		= false
+		debug_check_assets	= false
+		debug_dark_theme	= false
 		debug_info			= 0
 	}
 	

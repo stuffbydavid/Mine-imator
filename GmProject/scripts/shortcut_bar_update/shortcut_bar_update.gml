@@ -9,6 +9,7 @@ function shortcut_bar_update()
 		if (shortcut_bar_state = "viewport" || shortcut_bar_state = "viewportcam")
 		{
 			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "viewselect")
+			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "viewselect")
 			
 			if (shortcut_bar_state = "viewport")
 				shortcut_bar_add(keybinds[e_keybind.CAM_VIEW_TIMELINE].keybind, null, "viewviewobject")

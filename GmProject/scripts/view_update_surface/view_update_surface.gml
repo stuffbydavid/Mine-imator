@@ -64,7 +64,7 @@ function view_update_surface(view, cam)
 							else if (tl.type = e_tl_type.PATH)
 								view_shape_path(view, tl)
 						
-							if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
+							if (debug_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
 							{
 								// Draw bones
 								for (var i = 0; i < 2; i++)

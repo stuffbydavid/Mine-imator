@@ -3,23 +3,6 @@
 
 function macros()
 {
-	// Debug
-	#macro dev_mode						true
-	#macro dev_mode_skip_blocks			dev_mode && true
-	#macro dev_mode_max_blocks			50
-	#macro dev_mode_debug_schematics	dev_mode && false
-	#macro dev_mode_debug_names			dev_mode && false
-	#macro dev_mode_debug_saveid		dev_mode && false
-	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
-	#macro dev_mode_project				file_directory_get() + "dev_project/dev_project.miproject"
-	#macro dev_mode_full				dev_mode && true
-	#macro dev_mode_advanced			dev_mode && true
-	#macro dev_mode_show_bones			dev_mode && false
-	#macro dev_mode_skip_tangents		dev_mode && false
-	#macro dev_mode_check_assets		dev_mode && true
-	#macro dev_mode_dark_theme			dev_mode && true
-	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
-	
 	// Versions
 	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
 	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
