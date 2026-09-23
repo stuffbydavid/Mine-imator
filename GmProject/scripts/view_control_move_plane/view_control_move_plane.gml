@@ -97,6 +97,7 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 			view_control_edit_view = view
 			
 			view_control_plane_start(tl_edit.world_pos, normal)
+			view_transform_begin(e_value_type.TRANSFORM_POS)
 			
 			view_control_value = point3D(tl_edit.value[e_value.POS_X], tl_edit.value[e_value.POS_Y], tl_edit.value[e_value.POS_Z])
 			view_control_plane = true

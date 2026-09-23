@@ -18,6 +18,9 @@ function tl_value_set()
 		// Restore keyframes
 		for (var k = 0; k < history_data.kf_set_amount; k++)
 		{
+			// Newly added keys were removed above; their old index may now point at the next key.
+			if (history_data.kf_set_created[k])
+				continue
 			var kflist = save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list;
 			var kfindex = history_data.kf_set_index[k];
 			if (kfindex < ds_list_size(kflist))

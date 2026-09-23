@@ -78,7 +78,6 @@ function view_toolbar_draw(view, xx, yy)
 	
 	// Rotation tool
 	tip_set_keybind(e_keybind.TOOL_ROTATE)
-	
 	if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool_rotate, icons.ROTATE, null, false, "viewtoolrotatetip"))
 	{
 		if (setting_separate_tool_modes)
@@ -179,9 +178,57 @@ function view_toolbar_draw(view, xx, yy)
 		yy += 24 + padding
 	}
 	
-	tip_force_right = false
-	
 	view.toolbar_height = yy - starty
+
+	// Transform mode is detached below the regular tools. Keep one empty
+	// button row between both surfaces so it reads as a separate mode control.
+	var transform_mode_y = yy + 24 + padding;
+	var transform_mode_panel_y = transform_mode_y - 4;
+	if (transform_mode_panel_y + 32 <= content_y + content_height)
+	{
+		var transform_mode_mouseon = app_mouse_box(xx - 4, transform_mode_panel_y, 32, 32) &&
+			!popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon);
+		if (transform_mode_mouseon)
+		{
+			view.toolbar_mouseon = true
+			content_mouseon = true
+			view.toolbar_alpha_goal = 1
+		}
+
+		draw_dropshadow(xx - 4, transform_mode_panel_y, 32, 32, c_black, 1)
+		draw_box(xx - 4, transform_mode_panel_y, 32, 32, false, c_level_top, 1)
+		draw_outline(xx - 4, transform_mode_panel_y, 32, 32, 1, c_border, a_border, true)
+
+		tip_set_keybind(e_keybind.TRANSFORM_MODE_CYCLE)
+
+		var displayed_transform_mode = setting_transform_mode;
+		var transform_mode_constrained = false;
+		if (tl_edit != null && setting_transform_mode != e_transform_mode.GIMBAL)
+		{
+			transform_mode_constrained = ((setting_tool_rotate || setting_tool_transform) && (view_transform_mode_effective(e_value_type.TRANSFORM_ROT) = e_transform_mode.GIMBAL)) ||
+				((setting_tool_move || setting_tool_transform) && view_transform_mode_effective(e_value_type.TRANSFORM_POS) = e_transform_mode.GIMBAL) ||
+				((setting_tool_scale || setting_tool_transform) && view_transform_mode_effective(e_value_type.TRANSFORM_SCA) = e_transform_mode.GIMBAL)
+		}
+		var transform_mode_icon = icons.TRANSFORMATION_GIMBAL;
+		var transform_mode_tip = "viewtoolrotationspacegimbal";
+		if (displayed_transform_mode = e_transform_mode.GLOBAL)
+		{
+			transform_mode_icon = icons.TRANSFORMATION_GLOBAL
+			transform_mode_tip = "viewtoolrotationspaceglobal"
+		}
+		else if (displayed_transform_mode = e_transform_mode.LOCAL)
+		{
+			transform_mode_icon = icons.TRANSFORMATION_LOCAL
+			transform_mode_tip = "viewtoolrotationspacelocal"
+		}
+		if (transform_mode_constrained)
+			transform_mode_tip = "viewtoolrotationspaceconstraintgimbal"
+
+		if (draw_button_icon("viewtoolrotationspace", xx, transform_mode_y, 24, 24, false, transform_mode_icon, null, false, transform_mode_tip))
+			action_view_transform_mode_cycle()
+	}
+
+	tip_force_right = false
 	microani_prefix = ""
 	
 	draw_set_alpha(1)

@@ -1133,6 +1133,14 @@ function enums()
 		ROT_ANGLE_Z,
 		ROT_DISTANCE
 	}
+
+	enum e_transform_mode
+	{
+		GIMBAL,
+		GLOBAL,
+		LOCAL,
+		amount
+	}
 	
 	// Mouse controls
 	enum e_mouse

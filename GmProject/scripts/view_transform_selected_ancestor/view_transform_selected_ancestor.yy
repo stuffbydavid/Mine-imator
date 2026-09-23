@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_transform_selected_ancestor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_transform_selected_ancestor",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
