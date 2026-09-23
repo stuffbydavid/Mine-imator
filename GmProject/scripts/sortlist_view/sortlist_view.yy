@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"sortlist_center",
+  "%Name":"sortlist_view",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sortlist_center",
+  "name":"sortlist_view",
   "parent":{
     "name":"Sortlist",
     "path":"folders/Scripts/App/Interface/Components/Sortlist.yy",

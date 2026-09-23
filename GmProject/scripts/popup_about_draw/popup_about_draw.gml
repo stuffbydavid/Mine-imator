@@ -67,22 +67,26 @@ function popup_about_draw()
 	dy += 128 + 48
 	
 	// Created by
+	var devlink = "https://www.stuffbydavid.com";
 	dy += 12
 	draw_label(text_get("aboutcreatedby"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 26
-	draw_button_text("David Andrei", dx, dy, popup_open_url, link_david, link_david, font_label)
+	draw_button_text("David Andrei", dx, dy, popup_open_url, devlink, devlink, font_label)
 	
 	// Development
 	dy += 34
 	draw_label(text_get("aboutdevelopment"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 26
-	draw_button_text("David", dx, dy, popup_open_url, link_david, link_david, font_label)
+	draw_button_text("David", dx, dy, popup_open_url, devlink, devlink, font_label)
 	dy += 19
-	draw_label("Nimi", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
+	devlink = "https://github.com/NimiSqrd"
+	draw_button_text("Nimi", dx, dy, popup_open_url, devlink, devlink, font_label)
 	dy += 19
-	draw_label("Marvin", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
+	devlink = "https://github.com/mbandersmc"
+	draw_button_text("mbanders", dx, dy, popup_open_url, devlink, devlink, font_label)
 	dy += 19
-	draw_label("mbanders", dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
+	devlink = "https://github.com/minetoblend"
+	draw_button_text("Marvin", dx, dy, popup_open_url, devlink, devlink, font_label)
 	
 	// UI/Branding
 	dy += 34

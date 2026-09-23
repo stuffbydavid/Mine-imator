@@ -5,6 +5,12 @@ function app_startup_interface_build()
 	build_type = e_tl_type.BLOCK
 	build_structure = null
 	build_structure_custom = false
+	build_first_person = false
+	build_first_person_second = false
+	build_first_person_mouse_x = 0
+	build_first_person_mouse_y = 0
+	build_first_person_mouse_previous_x = 0
+	build_first_person_mouse_previous_y = 0
 	
 	build_box = null
 	build_box_top = null

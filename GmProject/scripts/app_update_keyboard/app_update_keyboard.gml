@@ -26,9 +26,48 @@ function app_update_keyboard()
 			debug_info = (debug_info + 1) mod 3
 	}
 
+	// First-person build shortcuts
+	if (place_build && build_first_person)
+	{
+		if (keyboard_check_pressed(ord("E")) && !cam_work_moving)
+		{
+			action_build_search()
+			return 0
+		}
+		
+		if (keybinds[e_keybind.BUILD_TOOL].pressed)
+		{
+			action_toolbar_build_mode()
+			return 0
+		}
+		
+		if (keybinds[e_keybind.UNDO].pressed)
+			action_toolbar_undo()
+		
+		if (keybinds[e_keybind.REDO].pressed)
+			action_toolbar_redo()
+		
+		if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("F")))
+		{
+			action_build_first_person(false)
+			return 0
+		}
+		
+		return 0
+	}
+
 	// Build mode shortcuts
 	if (place_build && !textbox_isediting && window_busy = "")
 	{
+		if (keyboard_check(vk_control) && mouse_wheel <> 0)
+			action_build_scroll()
+		
+		if (keyboard_check_pressed(ord("F")))
+		{
+			action_build_first_person(true)
+			return 0
+		}
+
 		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_TOOL].pressed)
 		{
 			action_toolbar_build_mode()
@@ -45,10 +84,8 @@ function app_update_keyboard()
 		
 			if (keyboard_check_pressed(ord("E")))
 			{
-				tab_show(build_tool, true)
-				textbox_lastfocus = -1
-				window_focus = string(build_tool.build_list.search_tbx)
-				textbox_input = ""
+				action_build_search()
+				return 0
 			}
 		}
 	}
@@ -259,59 +296,9 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.SNAP].pressed)
 			setting_snap = !setting_snap
 	}
-	else if (textbox_jump || (textbox_isediting && keyboard_check_pressed(vk_tab)))
-	{
-		if (textbox_jump)
-		{
-			// Find textbox in list
-			var tbxpos, tbxdata, tab, tabstart, tbx, move;
-			tbxpos = 0
-			for (; tbxpos < ds_list_size(textbox_list); tbxpos++)
-			{
-				tbxdata = textbox_list[|tbxpos]
-				if (tbxdata[0] = textbox_lastfocus)
-					break;
-			}
-			
-			move = (keyboard_check(vk_shift) ? -1 : 1)
-			tabstart = tbxdata[1]
-			tab = -1
-			
-			// Only move to textbox within current tab
-			while (tabstart != tab)
-			{
-				tbxpos += move
-				tbxpos = mod_fix(tbxpos, ds_list_size(textbox_list))
-				
-				tbxdata = textbox_list[|tbxpos]
-				tab = tbxdata[1]
-			}
-			
-			// Update data
-			tab = tbxdata[1]
-			
-			if (tab != null && tab.scroll != null && tab.scroll.needed)
-				tab.scroll.value_goal = (tbxdata[2] - (tbxdata[3] - tab.scroll.value)) - (floor(tbxdata[4]/2))
-			
-			tbx = tbxdata[0]
-			
-			window_focus = string(tbx)
-			textbox_jumpto = tbx
-			ds_list_clear(textbox_list)
-			textbox_jump = false
-		}
-		else
-			textbox_jump = true
-	}
-	
-	if (textbox_jumpto = -1 && textbox_isediting && !textbox_isediting_respond)
-	{
-		textbox_isediting = false
-		if (window_busy = "")
-			window_focus = ""
-	}
-	
-	textbox_isediting_respond = false
+
+	if (textbox_update())
+		return 0
 	
 	// Dragger changes
 	if (!textbox_isediting)

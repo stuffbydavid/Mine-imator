@@ -603,6 +603,7 @@
         "window_get_x": { "return": "int", "args": [] },
         "window_get_y": { "return": "int", "args": [] },
         "window_handle": { "return": "string", "args": [] },
+        "window_has_focus": { "return": "bool", "args": [] },
         "window_mouse_set": { "return": "void", "args": [ "int", "int" ] },
         "window_set_caption": { "return": "void", "args": [ "string" ] },
         "window_set_cursor": { "return": "void", "args": [ "int" ] },

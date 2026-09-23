@@ -185,12 +185,19 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	listhei = yy + h - listy
 	if (listhei <= 0)
 		return 0
+	slist.view_height = listhei
 	slist.items_visible = max(1, floor(listhei / itemh))
+	if (slist.view_value != null)
+	{
+		var viewvalue = slist.view_value;
+		sortlist_view(slist, viewvalue, false)
+		slist.view_value = null
+	}
 
 	if ((searchunfocused && slist.search || searchcleared || sortchanged) && select != null)
 	{
 		var scrollvalue = slist.scroll.value;
-		if (sortlist_center(slist, select, max(1, floor(listhei / itemh))))
+		if (sortlist_view(slist, select, true, max(1, floor(listhei / itemh))))
 			slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
 	if (slist.center_on_draw)

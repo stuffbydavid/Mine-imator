@@ -211,26 +211,43 @@
 		"mixcolor": "Mix in color..."
 	},
 	"shortcut/": {
-		"select": "Select timeline",
-		"orbit": "Orbit view",
-		"pan": "Pan view",
-		"zoom": "Zoom",
-		"walk": "Walk navigation",
-		"forward": "Forward",
-		"left": "Left",
-		"back": "Back",
-		"right": "Right",
-		"ascend": "Ascend",
-		"descend": "Descend",
-		"faster": "Faster",
-		"slower": "Slower",
-		"rollforward": "Roll forward",
-		"rollback": "Roll back",
-		"rollreset": "Reset roll",
-		"reset": "Reset",
-		"scrollhorizontal": "Scroll horizontally",
-		"scrollvertical": "Scroll vertically",
-		"viewtimeline": "View timeline",
+		"list/": {
+			"scrollhorizontal": "Scroll horizontally",
+			"scrollvertical": "Scroll vertically"
+		},
+		"view/": {
+			"select": "Select object",
+			"viewobject": "View object",
+			"orbit": "Orbit view",
+			"pan": "Pan view",
+			"zoom": "Zoom",
+			"walk": "Walk navigation",
+			"forward": "Forward",
+			"left": "Left",
+			"back": "Back",
+			"right": "Right",
+			"ascend": "Ascend",
+			"descend": "Descend",
+			"faster": "Faster",
+			"slower": "Slower",
+			"rollforward": "Roll forward",
+			"rollback": "Roll back",
+			"rollreset": "Reset roll",
+			"reset": "Reset"
+		},
+		"build/": {
+			"select": "Select structure",
+			"viewstructure": "View structure",
+			"place": "Place",
+			"remove": "Remove",
+			"search": "Search",
+			"scroll": "Scroll list",
+			"resetstructure": "Reset structure",
+			"firstperson": "First-person mode"
+		},
+		"firstperson/": {
+			"cancel": "Cancel first-person mode"
+		},
 		"tl/": {
 			"settime": "Set playback time",
 			"setregion": "Select playback region",
@@ -3832,6 +3849,7 @@
 	},
 	"buildtool/": {
 		"firstperson": "First-person mode",
+		"firstpersontip": "Press Escape or F to cancel first-person mode.",
 		"exit": "Exit build tool",
 		"selected": "Selected",
 		"structure": "Structure",
@@ -4415,7 +4433,7 @@
 			},
 			"tool/": {
 				"workbench": "Open workbench",
-				"build": "Build mode",
+				"build": "Build tool",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

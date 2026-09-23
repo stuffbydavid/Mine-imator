@@ -15,7 +15,7 @@ function view_shape_camera_frustum(tl)
 		var shake = vec3(
 			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_X]) * tl.value[e_value.CAM_SHAKE_STRENGTH_X],
 			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Y], 1000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Y],
-			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Z],
+			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Z]
 		);
 	
 		// Create matrix
