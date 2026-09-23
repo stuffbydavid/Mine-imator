@@ -36,7 +36,7 @@ function action_bench_schematic_folder(folder, update = true)
 	}
 	else
 	{
-		var dir = schematic_directory + folder + "/"
+		var dir = schematics_directory + folder + "/"
 		if (directory_exists_lib(dir))
 		{
 			var files = file_find(dir, ".schematic")
