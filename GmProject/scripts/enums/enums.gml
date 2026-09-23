@@ -368,6 +368,15 @@ function enums()
 		amount
 	}
 	
+	// Workbench buttons
+	enum e_bench_button
+	{
+		CREATE,
+		EDIT,
+		CREATE_AND_EDIT,
+		START_BUILDING
+	}
+	
 	// Template types
 	enum e_temp_type
 	{
@@ -414,6 +423,7 @@ function enums()
 		PATH,
 		PATH_POINT,
 		BACKGROUND,
+		STRUCTURE,
 		FOLDER,
 		amount
 	} // Update app_startup_lists() when adding types
@@ -1123,6 +1133,15 @@ function enums()
 		ROT_ANGLE_Z,
 		ROT_DISTANCE
 	}
+	
+	// Composition Guide
+	enum e_composition_guide
+	{
+		RULE_OF_THIRDS,
+		RADIAL,
+		TRIANGLE,
+		CIRCULAR
+	}	// Update app_startup_lists() when adding types
 	
 	// Mouse controls
 	enum e_mouse

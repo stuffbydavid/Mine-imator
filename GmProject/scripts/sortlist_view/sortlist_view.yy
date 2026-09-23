@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sortlist_view",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sortlist_view",
+  "parent":{
+    "name":"Sortlist",
+    "path":"folders/Scripts/App/Interface/Components/Sortlist.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

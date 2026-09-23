@@ -304,8 +304,21 @@ function view_draw(view)
 	if (draw_button_icon("viewaspectratio", dx, dy, dw, dh, view.aspect_ratio, icons.LETTERBOX, null, false, view.aspect_ratio ? "viewaspectratiodisable" : "viewaspectratioenable"))
 		view.aspect_ratio = !view.aspect_ratio
 	
+	// Overlay settings
+	dx -= 16 + padding
+	
+	if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), icons.CHEVRON_DOWN_TINY))
+	{
+		menu_settings_set(dx, dy, (string(view) + "viewoverlaysettings"), 24)
+		settings_menu_view = view
+		settings_menu_script = menu_overlay_settings
+	}
+	
+	if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu_ani_type != "hide")
+		current_microani.active.value = true
+	
 	// Overlays
-	dx -= dw + padding
+	dx -= dw
 	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
 		view.gizmos = !view.gizmos
 	
@@ -442,15 +455,20 @@ function view_draw(view)
 		
 		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
-			var viewbusy = "place";
-			if (place_tl != null && window_focus = string(view) && string_pos("view", window_busy) == 1)
+			var viewbusy = place_busy;
+			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
 				viewbusy = window_busy
 			
-			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon && place_content_mouseon != "buildstop")
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
 		}
 		
 		if (content_mouseon)
-			shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
+		{
+			if (place_build && cam = null)
+				shortcut_bar_state = "buildviewport"
+			else
+				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
+		}
 		
 		if (view.quality != e_view_mode.RENDER || view_render_real_time)
 			view_update(view, cam)
@@ -460,23 +478,7 @@ function view_draw(view)
 		draw_surface_size(view.surface, content_x, content_y, content_width, content_height)
 		
 		if (view.grid)
-		{
-			var cellwid, cellhei;
-			cellwid = content_width / project_grid_columns
-			cellhei = content_height / project_grid_rows
-			
-			for (var i = 1; i < project_grid_columns; i++)
-			{
-				draw_line_ext(content_x + cellwid * i - 1, content_y, content_x + cellwid * i - 1, content_y + content_height, c_white, 1)
-				draw_line_ext(content_x + cellwid * i + 1, content_y, content_x + cellwid * i + 1, content_y + content_height, c_white, 1)
-			}
-			
-			for (var i = 1; i < project_grid_rows; i++)
-			{
-				draw_line_ext(content_x, content_y + cellhei * i - 1, content_x + content_width, content_y + cellhei * i - 1, c_white, 1)
-				draw_line_ext(content_x, content_y + cellhei * i + 1, content_x + content_width, content_y + cellhei * i + 1, c_white, 1)
-			}
-		}
+			draw_composition_guide(content_x, content_y, content_width, content_height, project_grid_alpha)
 				
 		view_place(view, cam)
 	}
@@ -519,7 +521,7 @@ function view_draw(view)
 			bench_rotate_ani = 1
 		
 		// Set animation
-		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, place_busy) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		{
 			mouse_cursor = cr_handpoint
 			bench_button_hover = true
@@ -547,7 +549,7 @@ function view_draw(view)
 			if (mouse_left_pressed)
 			{
 				if (place_build)
-					app_stop_place(false, false, false)
+					app_stop_place(false, false)
 				bench_open = true
 			}
 		}
@@ -865,8 +867,8 @@ function view_draw(view)
 		draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, .25)
 	
 	// Mouse on
-	var viewbusy = "place";
-	if (place_tl != null && window_focus = string(view))
+	var viewbusy = place_busy;
+	if ((place_tl != null || place_build) && window_focus = string(view))
 		viewbusy = window_busy
 	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, viewbusy)
 	if (view.mouseon && view = view_second)

@@ -7,7 +7,7 @@ function app_update_place_scenery()
 	if (!type_is_block(place_target_tl_part_of.type))
 		return 0
 		
-	var gridsize, worldtransform, localpos, localnormal;
+	var gridsize, worldtransform, inversetransform, localpos, localnormal;
 	gridsize = vec3(1);
 	if (place_target_tl.type = e_tl_type.SCENERY)
 		gridsize = place_target_tl.temp.scenery.scenery_size
@@ -20,11 +20,29 @@ function app_update_place_scenery()
 	else
 		worldtransform = matrix_multiply(matrix_create(point3D(0, gridsize[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)), place_target_tl.matrix_render)
 		
-	localpos = point3D_mul_matrix(place_pos, matrix_inverse_ext(worldtransform))
+	inversetransform = matrix_inverse_ext(worldtransform)
+	localpos = point3D_mul_matrix(place_pos, inversetransform)
 
 	// Convert the world-space normal into the scenery grid
 	localnormal = vec3_normalize(vec3_mul_matrix(place_view_normal, matrix_transpose(worldtransform)))
 
+	if (place_build)
+	{
+		// Trace into the target before rounding to its local cell
+		var localray, tracenormal, inside, boxcell, boxcenter;
+		localray = vec3_normalize(vec3_mul_matrix(place_view_ray, inversetransform))
+		tracenormal = vec3_normalize(vec3_sub(localray, localnormal))
+		inside = vec3_add(localpos, vec3_mul(tracenormal, block_size * 0.025))
+		boxcell = vec3(
+			round(inside[X] / block_size - 0.5),
+			round(inside[Y] / block_size - 0.5),
+			round(inside[Z] / block_size - 0.5)
+		)
+		boxcenter = vec3_mul(vec3_add(boxcell, 0.5), block_size)
+		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3(1)), worldtransform)
+		build_box_render = build_box
+	}
+	
 	// Find facenormal
 	var east, west, south, north, up, down, facenormal, normaldot;
 	east = vec3_dot(localnormal, vec3(1, 0, 0))
@@ -79,13 +97,23 @@ function app_update_place_scenery()
 	place_rot = vec3(radtodeg(worldangle[X]), radtodeg(worldangle[Y]), radtodeg(worldangle[Z]))
 
 	// Adjust final position by size/repeat setting of placed block or scenery
-	if (place_tl.type = e_tl_type.BLOCK || (place_tl.type = e_tl_type.SCENERY && place_tl.temp.scenery != null))
+	if ((place_build && build_type = e_tl_type.BLOCK) ||
+		(!place_build && (place_tl.type = e_tl_type.BLOCK || (place_tl.type = e_tl_type.SCENERY && place_tl.temp.scenery != null))))
 	{
-		var targetrepeat, targetmin, targetmax, targetface, legacywidth, targetmatrix;
-		targetrepeat = place_tl.temp.block_repeat_enable ? place_tl.temp.block_repeat : vec3(1)
+		var targetrepeat, targetmin, targetmax, targetface, legacywidth, targetmatrix, rotpoint;
+		if (place_build)
+		{
+			targetrepeat = build_settings.block_repeat_enable ? build_settings.block_repeat : vec3(1)
+			rotpoint = build_settings.rot_point
+		}
+		else
+		{
+			targetrepeat = place_tl.temp.block_repeat_enable ? place_tl.temp.block_repeat : vec3(1)
+			rotpoint = place_tl.rot_point_render
+		}
 		targetmin = vec3(0)
 		
-		if (place_tl.type = e_tl_type.BLOCK)
+		if (place_build || place_tl.type = e_tl_type.BLOCK)
 		{
 			targetmax = vec3(targetrepeat[Y], targetrepeat[X], targetrepeat[Z])
 			legacywidth = targetrepeat[Y]
@@ -110,8 +138,8 @@ function app_update_place_scenery()
 				targetface[axis] = (floor((targetmin[axis] + targetmax[axis]) * 0.5) + 0.5) * block_size
 		}
 		targetmatrix = matrix_multiply(
-			matrix_create(point3D_mul(place_tl.rot_point_render, -1), vec3(0), vec3(1)),
-			matrix_create(vec3(0), place_rot, vec3(place_tl.value[e_value.SCA_X], place_tl.value[e_value.SCA_Y], place_tl.value[e_value.SCA_Z]))
+			matrix_create(point3D_mul(rotpoint, -1), vec3(0), vec3(1)),
+			matrix_create(vec3(0), place_rot, place_sca)
 		)
 		targetmatrix = matrix_multiply(matrix_create(point3D(0, legacywidth * block_size, 0), vec3(0, 0, 90), vec3(1)), targetmatrix)
 

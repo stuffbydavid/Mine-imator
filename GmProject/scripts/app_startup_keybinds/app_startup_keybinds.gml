@@ -35,6 +35,8 @@ function app_startup_keybinds()
 		KEYFRAMES_CUT,
 		KEYFRAMES_PASTE,
 		KEYFRAMES_DELETE,
+		KEYFRAMES_STRETCH,
+		KEYFRAMES_SCALE,
 		TIMELINE_HIDE,
 		TIMELINE_SHOW_HIDDEN,
 		
@@ -55,7 +57,7 @@ function app_startup_keybinds()
 		
 		// Tools
 		WORKBENCH,
-		BUILD_MODE,
+		BUILD_TOOL,
 		TOOL_SELECT,
 		TOOL_MOVE,
 		TOOL_ROTATE,
@@ -103,6 +105,8 @@ function app_startup_keybinds()
 	keybind_register("keyframescut", e_keybind.KEYFRAMES_CUT, keybind_new("X", true))
 	keybind_register("keyframespaste", e_keybind.KEYFRAMES_PASTE, keybind_new("V", true))
 	keybind_register("keyframesdelete", e_keybind.KEYFRAMES_DELETE, keybind_new(vk_delete))
+	keybind_register("keyframesstretch", e_keybind.KEYFRAMES_STRETCH, keybind_new(null, false, false, true))
+	keybind_register("keyframesscale", e_keybind.KEYFRAMES_SCALE, keybind_new("S", false, false, true))
 	
 	// Timeline
 	keybind_register("play", e_keybind.PLAY, keybind_new(vk_space))
@@ -121,7 +125,7 @@ function app_startup_keybinds()
 	
 	// Tools
 	keybind_register("toolworkbench", e_keybind.WORKBENCH, keybind_new(vk_tab))
-	keybind_register("toolbuild", e_keybind.BUILD_MODE, keybind_new("B"))
+	keybind_register("toolbuild", e_keybind.BUILD_TOOL, keybind_new("B"))
 	keybind_register("toolselect", e_keybind.TOOL_SELECT, keybind_new("W"))
 	keybind_register("toolmove", e_keybind.TOOL_MOVE, keybind_new("G"))
 	keybind_register("toolrotate", e_keybind.TOOL_ROTATE, keybind_new("R"))

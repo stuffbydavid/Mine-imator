@@ -4,6 +4,9 @@ function project_reset()
 {
 	log("Resetting project")
 	
+	if (place_build)
+		app_stop_place()
+	
 	project_reset_backup()
 	history_clear()
 	
@@ -33,8 +36,10 @@ function project_reset()
 	project_video_keep_aspect_ratio = true
 	project_render_settings = render_default
 	project_tempo = 24
+	project_composition_guide = e_composition_guide.RULE_OF_THIRDS
 	project_grid_columns = 3
 	project_grid_rows = 3
+	project_grid_alpha = 0.8
 	view_main.camera = -4
 	view_second.camera = -5
 	

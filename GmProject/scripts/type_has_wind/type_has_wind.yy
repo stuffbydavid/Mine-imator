@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"type_has_wind",
   "parent":{
-    "name":"Timeline",
-    "path":"folders/Scripts/Project/Timeline.yy",
+    "name":"Type",
+    "path":"folders/Scripts/Project/Timeline/Type.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

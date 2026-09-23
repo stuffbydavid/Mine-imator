@@ -105,7 +105,6 @@ function macros()
 	#macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-issues-and-bugs/&do=add"
 	#macro link_forums_upload			"https://www.mineimatorforums.com/index.php?/topic/10-guide-how-to-post-a-mine-imator-project/"
 	#macro link_minecraft				"https://www.minecraft.net"
-	#macro link_david					"https://www.stuffbydavid.com"
 	#macro link_modelbench				"https://www.mineimator.com/modelbench"
 	#macro link_twitter					"https://www.mineimator.com/tweets"
 	#macro link_discord					"https://www.mineimator.com/discord"
@@ -155,6 +154,7 @@ function macros()
 	#macro button_padding				24
 	#macro button_icon_padding			52
 	#macro snap_min						0.000001
+	#macro transform_snap				0.0001
 	#macro dragger_width				74
 	#macro label_height					9
 	#macro load_assets_width			780
@@ -162,7 +162,7 @@ function macros()
 	#macro panel_width					360
 	#macro panel_bottom_height			300
 	#macro panel_top_height				205
-	#macro bench_min_width				500
+	#macro bench_min_width				530
 	#macro bench_max_width				800
 	#macro bench_initial_width			604
 	#macro bench_initial_height			345

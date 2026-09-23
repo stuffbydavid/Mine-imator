@@ -48,6 +48,8 @@ function settings_startup()
 	setting_timeline_compact = false
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
+	setting_timeline_hide_structure_blocks = true
+	setting_timeline_hide_nonanimated = false
 	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
@@ -73,6 +75,7 @@ function settings_startup()
 	setting_properties_location = "right"
 	setting_ground_editor_location = "right_secondary"
 	setting_object_editor_location = "right_secondary"
+	setting_build_mode_location = "right_secondary"
 	setting_timeline_editor_location = "right"
 	setting_frame_editor_location = "right_secondary"
 	setting_settings_location = "right_secondary"
@@ -99,6 +102,10 @@ function settings_startup()
 	setting_view_second_location = "right_bottom"
 	setting_view_second_width = 440
 	setting_view_second_height = 280
+	
+	setting_overlay_view_controls = true
+	setting_overlay_view_shapes = true
+	setting_overlay_view_guides = false
 	
 	setting_modelbench_popup_hidden = false
 	

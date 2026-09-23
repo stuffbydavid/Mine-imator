@@ -10,6 +10,10 @@ function action_tl_keyframes_load(fn)
 		{
 			history_destroy_loaded()
 			history_restore_tl_select()
+
+			for (var t = 0; t < load_static_amount; t++)
+				with (save_id_find(load_static_save_id[t]))
+					animated = false
 		}
 		
 		tl_update_list()
@@ -45,6 +49,16 @@ function action_tl_keyframes_load(fn)
 			hobj = history_set(action_tl_keyframes_load)
 			with (hobj)
 			{
+				load_static_amount = 0
+				with (obj_timeline)
+				{
+					if (!animated)
+					{
+						other.load_static_save_id[other.load_static_amount] = save_id
+						other.load_static_amount++
+					}
+				}
+				
 				filename = fn
 				id.insert_pos = insertpos
 				history_save_tl_select()

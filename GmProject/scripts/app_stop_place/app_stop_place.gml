@@ -1,43 +1,31 @@
-/// app_stop_place(keep, continuebuild, [clearmouse])
+/// app_stop_place(keep, [clearmouse])
 
-function app_stop_place(keep = false, continuebuild = false, clearmouse = true)
+function app_stop_place(keep = false, clearmouse = true)
 {
-	// In build mode, keep commits the preview
-	var removepreview, historyindex;
-	removepreview = place_build && !keep
-	historyindex = -1
-	
-	// Find the live preview in history before placing or removing it
+	if (build_first_person)
+		action_build_first_person(false)
+
 	if (place_build)
 	{
-		for (var h = 0; h < history_amount; h++)
-		{
-			if (history[h] = place_history)
-			{
-				historyindex = h
-				break
-			}
-		}
-	}
-
-	if (place_build && keep)
-	{
-		// Keep edited object settings when the preview becomes a placed object
-		with (place_tl)
-		{
-			tl_create_temp_copy(app.bench_settings)
-			tl_create_temp_copy(app.place_history.bench_save_obj)
-		}
+		action_build_structure(null, false)
+			
+		place_build = false
+		place_busy = "place"
+		place_tl = null
+		place_history = null
+		place_target_tl = null
+		place_target_tl_part_of = null
+		place_content_mouseon = null
 		
-		with (place_history.bench_save_obj)
-			temp_get_save_ids()
-
-		// Drop undone build placements before continuing
-		if (historyindex > 0)
-		{
-			history_pos = historyindex
-			history_pop()
-		}
+		window_busy = ""
+		tab_close(build_tool)
+		if (obj_edit = build_settings)
+			obj_edit = null
+		
+		if (clearmouse)
+			mouse_clear(mb_left)
+		
+		return 0
 	}
 
 	if (place_target_tl_part_of != null)
@@ -55,48 +43,14 @@ function app_stop_place(keep = false, continuebuild = false, clearmouse = true)
 	with (place_tl)
 		tl_mark_placed(false)
 
-	if (removepreview)
-	{
-		// Discard the unplaced preview and its history entry
-		if (historyindex >= 0)
-			history_build_shift(false, historyindex)
-
-		with (place_tl)
-		{
-			tl_remove_clean()
-			instance_destroy()
-		}
-
-		with (obj_timeline)
-			if (delete_ready)
-				instance_destroy()
-
-		if (historyindex >= 0)
-		{
-			with (place_history)
-			{
-				with (obj_history_save)
-					if (hobj = other.id)
-						instance_destroy()
-				instance_destroy()
-			}
-			history_resource_update = true
-			render_samples = -1
-		}
-	}
 	tl_update_list()
+	if (keep)
+		tl_focus = place_tl
 
-	// Clear placement state and restore the hidden secondary view
+	// Clear placement state
 	place_tl = null
-	place_tl_render_step = 0
-	place_target_tl_model_part = false
 	place_history = null
 	
-	if (place_build && place_view_second_show)
-		view_second.show = true
-	place_build = false
-	
-	place_view_second_show = false
 	place_content_mouseon = null
 	
 	window_busy = ""

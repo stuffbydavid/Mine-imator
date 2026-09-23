@@ -51,6 +51,9 @@ function render_world(mode)
 		with (render_list[|i])
 			render_world_tl()
 	
+	if (app.place_build)
+		render_world_build_box()
+
 	render_world_tl_reset()
 	
 	with (render_shader_obj)

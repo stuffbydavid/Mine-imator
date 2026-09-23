@@ -45,6 +45,21 @@ function list_init(name)
 	
 	switch (name)
 	{
+		// Build structure
+		case "buildtoolstructure":
+		{
+			menu_add_item(null, text_get("buildtoolcreatenew"))
+
+			for (var i = 0; i < ds_list_size(project_timeline_list); i++)
+			{
+				var tl = project_timeline_list[|i];
+				if (type_is_structure(tl.type))
+					menu_add_item(tl, tl.display_name, null, timeline_icon_list[|tl.type])
+			}
+
+			break
+		}
+
 		// Skin
 		case "benchskin":
 		case "benchskinmaterial":
@@ -1473,6 +1488,16 @@ function list_init(name)
 			with (obj_timeline)
 				if (type = e_tl_type.CAMERA)
 					list_item_add(display_name, id)
+			
+			break
+		}
+		
+		case "viewcompositionguide":
+		{
+			menu_add_item(e_composition_guide.RULE_OF_THIRDS, text_get("viewcompositionguidetyperuleofthirds"))
+			menu_add_item(e_composition_guide.RADIAL, text_get("viewcompositionguidetyperadial"))
+			menu_add_item(e_composition_guide.TRIANGLE, text_get("viewcompositionguidetypetriangle"))
+			menu_add_item(e_composition_guide.CIRCULAR, text_get("viewcompositionguidetypecircular"))
 			
 			break
 		}

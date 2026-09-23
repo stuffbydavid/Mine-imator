@@ -76,6 +76,7 @@ function block_animate(root)
 		
 		tl_update()
 		tl_update_values()
+		animated = false
 		
 		// Add text
 		if (other.has_text)

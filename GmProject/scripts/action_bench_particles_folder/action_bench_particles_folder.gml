@@ -62,7 +62,7 @@ function action_bench_particles_folder(folder, update = true)
 	{
 		if (selected != null && ds_list_find_index(list.display_list, selected) >= 0)
 		{
-			sortlist_center(list, selected)
+			sortlist_view(list, selected)
 			action_bench_particles_select(selected)
 			return 0
 		}
@@ -82,7 +82,7 @@ function action_bench_particles_folder(folder, update = true)
 		var particle = particle_default[i]
 		if (ds_list_find_index(list.display_list, particle) >= 0)
 		{
-			sortlist_center(list, particle)
+			sortlist_view(list, particle)
 			action_bench_particles_select(particle)
 		}
 		break

@@ -22,8 +22,14 @@ function view_update_surface(view, cam)
 		render_high()
 	else
 		render_low()
+
+	if (tl_focus != null && instance_exists(tl_focus))
+	{
+		tl_focus.world_pos_2d = view_shape_project(tl_focus.world_pos)
+		tl_focus.world_pos_2d_error = (point3D_project_error || tl_focus.world_pos_2d[X] < 0 || tl_focus.world_pos_2d[Y] < 0 || tl_focus.world_pos_2d[X] >= content_width || tl_focus.world_pos_2d[Y] >= content_height)
+	}
 	
-	if (view.gizmos)
+	if (view.gizmos && !place_build)
 	{
 		// Selection
 		if (tl_edit_amount > 0)
@@ -35,38 +41,41 @@ function view_update_surface(view, cam)
 			surface_set_target(render_target)
 			{
 				// Shapes
-				with (obj_timeline)
+				if (setting_overlay_view_shapes)
 				{
-					with (app)
+					with (obj_timeline)
 					{
-						var tl = other.id;
-						if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
-							continue
-						
-						draw_set_color((tl.selected || tl.parent_is_selected) ? c_white : c_controls)
-						
-						if (tl.type = e_tl_type.SPOT_LIGHT)
-							view_shape_spotlight(tl)
-						else if (tl.type = e_tl_type.POINT_LIGHT)
-							view_shape_pointlight(tl)
-						else if (tl.type = e_tl_type.CAMERA && tl != cam)
-							view_shape_camera(tl)
-						else if (tl.type = e_tl_type.PARTICLE_SPAWNER)
-							view_shape_particles(tl)
-						else if (tl.type = e_tl_type.PATH)
-							view_shape_path(view, tl)
-						
-						if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
+						with (app)
 						{
-							// Draw bones
-							for (var i = 0; i < 2; i++)
-								view_shape_bone(tl.part_joints_pos[i], point3D_distance(tl.part_joints_pos[i], tl.part_joints_pos[i + 1]), tl.part_joints_bone_matrix[i])
+							var tl = other.id;
+							if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
+								continue
+						
+							draw_set_color((tl.selected || tl.parent_is_selected) ? c_white : c_controls)
+						
+							if (tl.type = e_tl_type.SPOT_LIGHT)
+								view_shape_spotlight(tl)
+							else if (tl.type = e_tl_type.POINT_LIGHT)
+								view_shape_pointlight(tl)
+							else if (tl.type = e_tl_type.CAMERA && tl != cam)
+								view_shape_camera(tl)
+							else if (tl.type = e_tl_type.PARTICLE_SPAWNER)
+								view_shape_particles(tl)
+							else if (tl.type = e_tl_type.PATH)
+								view_shape_path(view, tl)
+						
+							if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
+							{
+								// Draw bones
+								for (var i = 0; i < 2; i++)
+									view_shape_bone(tl.part_joints_pos[i], point3D_distance(tl.part_joints_pos[i], tl.part_joints_pos[i + 1]), tl.part_joints_bone_matrix[i])
+							}
 						}
 					}
 				}
 				
 				// Controls
-				if (tl_edit != null && tl_edit != cam && view.gizmos)
+				if (setting_overlay_view_controls && tl_edit != null && tl_edit != cam)
 				{
 					var vis = tl_edit.render_visible;
 					
@@ -104,6 +113,33 @@ function view_update_surface(view, cam)
 					}
 				}
 				
+				// Guides
+				if (setting_overlay_view_guides)
+				{
+					with (obj_timeline)
+					{
+						with (app)
+						{
+							var tl = other.id;
+							
+							if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
+								continue
+							
+							if (tl.type = e_tl_type.SPOT_LIGHT && tl_edit = tl)
+								view_shape_spotlight_guide(tl)
+							else if (tl.type = e_tl_type.POINT_LIGHT && tl_edit = tl)
+								view_shape_pointlight_guide(tl)
+							
+							else if (tl.type = e_tl_type.CAMERA)
+							{
+								// Use selected camera OR active camera
+								if ((tl_edit = tl && tl != cam) || ((tl_edit = null || tl_edit.type != e_tl_type.CAMERA) && tl = timeline_camera))
+									view_shape_camera_frustum(tl)
+							}
+						}
+					}
+				}
+				
 				// Alpha fix
 				gpu_set_blendmode_ext(bm_src_color, bm_one)
 				draw_box(0, 0, render_width, render_height, false, c_black, 1)
@@ -114,7 +150,12 @@ function view_update_surface(view, cam)
 	}
 
 	// Placed objects
-	if (place_tl != null && (place_content_mouseon = null || content_mouseon))
+	var showplace;
+	if (place_build)
+		showplace = content_mouseon || (build_structure != null && instance_exists(build_structure))
+	else
+		showplace = place_tl != null && (content_mouseon || place_content_mouseon = null)
+	if (showplace)
 	{
 		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
 		if (!place_build)

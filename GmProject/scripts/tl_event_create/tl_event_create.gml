@@ -13,6 +13,8 @@ function tl_event_create()
 	display_name = ""
 	temp = null
 	has_temp = false
+	animated = true
+	
 	text = text_get("timelineeditortextsample")
 	color_tag = null
 	color_tag_inherit = null
@@ -91,6 +93,7 @@ function tl_event_create()
 	parent = null
 	parent_filter = null
 	parent_is_selected = false
+	child_is_animated = false
 	lock_bend = true
 	tree_array = 0
 	tree_list = ds_list_create()

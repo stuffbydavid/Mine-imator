@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.15"
+		"lastchange": "2026.09.22"
 	},
 	"particle/": {
 		"type/": {
@@ -211,26 +211,43 @@
 		"mixcolor": "Mix in color..."
 	},
 	"shortcut/": {
-		"select": "Select timeline",
-		"orbit": "Orbit view",
-		"pan": "Pan view",
-		"zoom": "Zoom",
-		"walk": "Walk navigation",
-		"forward": "Forward",
-		"left": "Left",
-		"back": "Back",
-		"right": "Right",
-		"ascend": "Ascend",
-		"descend": "Descend",
-		"faster": "Faster",
-		"slower": "Slower",
-		"rollforward": "Roll forward",
-		"rollback": "Roll back",
-		"rollreset": "Reset roll",
-		"reset": "Reset",
-		"scrollhorizontal": "Scroll horizontally",
-		"scrollvertical": "Scroll vertically",
-		"viewtimeline": "View timeline",
+		"list/": {
+			"scrollhorizontal": "Scroll horizontally",
+			"scrollvertical": "Scroll vertically"
+		},
+		"view/": {
+			"select": "Select object",
+			"viewobject": "View object",
+			"orbit": "Orbit view",
+			"pan": "Pan view",
+			"zoom": "Zoom",
+			"walk": "Walk navigation",
+			"forward": "Forward",
+			"left": "Left",
+			"back": "Back",
+			"right": "Right",
+			"ascend": "Ascend",
+			"descend": "Descend",
+			"faster": "Faster",
+			"slower": "Slower",
+			"rollforward": "Roll forward",
+			"rollback": "Roll back",
+			"rollreset": "Reset roll",
+			"reset": "Reset"
+		},
+		"build/": {
+			"select": "Select structure",
+			"viewstructure": "View structure",
+			"place": "Place",
+			"remove": "Remove",
+			"search": "Search",
+			"scroll": "Scroll list",
+			"resetstructure": "Reset structure",
+			"firstperson": "First-person mode"
+		},
+		"firstperson/": {
+			"cancel": "Cancel first-person mode"
+		},
 		"tl/": {
 			"settime": "Set playback time",
 			"setregion": "Select playback region",
@@ -239,6 +256,9 @@
 				"selectadd": "Select keyframe (Add)",
 				"selectgroup": "Group select keyframes",
 				"selectgroupadd": "Group select keyframes (Add)",
+				"stretch": "Stretch keyframes",
+				"scaleapply": "Apply scale",
+				"scalecancel": "Cancel scale",
 				"deselect": "Deselect keyframes",
 				"deselectgroup": "Group deselect keyframes"
 			},
@@ -304,12 +324,14 @@
 			"future": "Last opened in the future"
 		},
 		"none": "The projects you've opened recently will appear here!",
+		"searchnone": "No projects were found with that name.",
 		"sortdatenewest": "Date (newest)",
 		"sortdateoldest": "Date (oldest)",
 		"sortnameaz": "Name (A-Z)",
 		"sortnameza": "Name (Z-A)",
 		"name": "Name",
-		"projects": "Recent projects"
+		"projects": "Recent projects",
+		"searchcaption": "Search..."
 	},
 	"alert/": {
 		"newassets": "Minecraft %1 assets are available! Restart to download them.",
@@ -326,6 +348,9 @@
 		"download": "Download",
 		"view": "View",
 		"rendersaved": "Render settings saved successfully!",
+		"animated": "The selected object has multiple keyframes.",
+		"animatedmultiple": "The selected objects have multiple keyframes.",
+		"animatedpart": "A model part has multiple keyframes.",
 		"equiparmor": "Parent the armor to a character to equip it.",
 		"close": "Close"
 	},
@@ -479,7 +504,7 @@
 		"edit/": {
 			"undo": "Undo",
 			"redo": "Redo",
-			"buildmode": "Build mode",
+			"buildtool": "Build tool",
 			"selectall": "Select all",
 			"duplicate": "Duplicate timeline",
 			"delete": "Delete timeline",
@@ -544,6 +569,7 @@
 		"cameraeffects": "Camera effects",
 		"background": "Environment",
 		"audio": "Audio track",
+		"structure": "Structure",
 		"folder": "Folder",
 		"pack": "Resource pack",
 		"skin": "Skin",
@@ -671,6 +697,7 @@
 		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
 		"edit": "Edit",
+		"build": "Start building",
 		"create": "Create",
 		"createedit": "Create & edit",
 		"worldtip1": "Select a region of your Minecraft world to use in the project.",
@@ -679,8 +706,8 @@
 		"audiotracktip": "An empty audio track that can play imported sounds from Minecraft or from files such as .mp3 and .wav.",
 		"pointlighttip": "Point lights shine in all directions, like a lightbulb.",
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
-		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
-		"cameraeffectstip": "crashes the program lmao",
+		"cameratip": "A virtual camera the animation is seen through.",
+		"cameraeffectstip": "A number of optional effects for the active camera. (coming soon)",
 		"backgroundtip": "A timeline that can change the environment during the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
@@ -937,6 +964,12 @@
 			"columns": "Columns",
 			"rows": "Rows"
 		},
+		"overlay/": {
+			"controls": "View controls",
+			"shapes": "Timeline shapes",
+			"guides": "Timeline guides",
+			"guidestip": "Enable visual representations of camera frustums, spotlight cones, etc. when selected."
+		},
 		"snap/": {
 			"move": "Move",
 			"rotate": "Rotate",
@@ -947,7 +980,6 @@
 			"disable": "Disable snapping"
 		},
 		"close": "Close view",
-		"buildstop": "Stop build mode",
 		"popout": "Open in new window",
 		"popin": "Close view window",
 		"secondenable": "Enable secondary viewport",
@@ -972,7 +1004,7 @@
 	"tab/": {
 		"projectproperties": "Project properties",
 		"timeline": "Timeline",
-		"build": "Build mode",
+		"buildtool": "Build tool",
 		"charmodel": "Character model for %1",
 		"equipment": "Equipment for %1",
 		"block": "Block for %1",
@@ -1047,6 +1079,7 @@
 		"libinstances": "Instances",
 		"charname": "Name",
 		"blockname": "Name",
+		"buildname": "Name",
 		"spblockname": "Name",
 		"modelpartmodelname": "Name",
 		"sceneryname": "Name",
@@ -3805,6 +3838,14 @@
 		"rows": "Rows",
 		"ok": "OK"
 	},
+	"buildtool/": {
+		"firstperson": "First-person mode",
+		"firstpersontip": "Press Escape or F to cancel first-person mode.",
+		"exit": "Exit build tool",
+		"selected": "Selected",
+		"structure": "Structure",
+		"createnew": "Create new"
+	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",
 		"search": "Search...",
@@ -3820,8 +3861,12 @@
 			"offset": "Interval offset"
 		},
 		"filtertags": "Filter out tags",
+		"hidestructureblocks": "Hide structure blocks",
+		"hidestructureblockstip": "Hide blocks from the list with \"Animated\" turned off and parented to structures or scenery.",
+		"hidenonanimated": "Hide non-animated timelines",
+		"hidenonanimatedtip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hideghosts": "Hide ghost timelines",
-		"hideghoststip": "When enabled, all timelines with the \"Ghost\" toggle will be hidden from the timeline list.",
+		"hideghoststip": "Hide timelines from the list with the \"Ghost\" toggle enabled.",
 		"marker/": {
 			"new": "New marker",
 			"label": "Label",
@@ -3844,6 +3889,7 @@
 		"edittemplate": "Edit template",
 		"createtemplate": "Create template",
 		"name": "Name",
+		"animated": "Animated",
 		"text": "Text",
 		"textsample": "Sample text",
 		"type": "Type",
@@ -4226,6 +4272,9 @@
 			"itemslot": "Item slot"
 		},
 		"keyframe": "KEYFRAME SETTINGS",
+		"notanimated": "The object is not animated.",
+		"notanimatedmultiple": "The selected objects are not animated.",
+		"animated": "Enable animation",
 		"transition": "Transition",
 		"easein": "Ease in",
 		"easeinx": "X",
@@ -4233,7 +4282,10 @@
 		"easeout": "Ease out",
 		"easeoutx": "X",
 		"easeouty": "Y",
-		"visible": "Visible"
+		"visible": "Visible",
+		"hidden": "The selected object is marked as hidden.",
+		"hiddenmultiple": "The selected objects are marked as hidden.",
+		"enabled": "Enabled"
 	},
 	"transition/": {
 		"menu/": {
@@ -4366,11 +4418,13 @@
 				"copy": "Copy keyframes",
 				"cut": "Cut keyframes",
 				"paste": "Paste keyframes",
-				"delete": "Delete keyframes"
+				"delete": "Delete keyframes",
+				"scale": "Scale keyframes",
+				"stretch": "Stretch keyframes"
 			},
 			"tool/": {
 				"workbench": "Open workbench",
-				"build": "Build mode",
+				"build": "Build tool",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"draw_composition_guide",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_composition_guide",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/App/Interface/Components.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

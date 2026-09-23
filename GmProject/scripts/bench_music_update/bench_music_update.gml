@@ -104,7 +104,7 @@ function bench_music_update()
 	else
 	{
 		var scrollvalue = slist.scroll.value;
-		if (sortlist_center(slist, row))
+		if (sortlist_view(slist, row))
 			slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 		bench_music_mode = musicmode
 	}

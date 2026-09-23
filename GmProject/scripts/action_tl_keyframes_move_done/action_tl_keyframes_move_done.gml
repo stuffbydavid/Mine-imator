@@ -68,6 +68,7 @@ function action_tl_keyframes_move_done()
 		}
 		
 		window_busy = ""
+		timeline_move_kf_stretch = false
 	}
 	
 	if (history_undo || history_redo)
