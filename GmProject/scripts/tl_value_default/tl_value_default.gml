@@ -107,6 +107,7 @@ function tl_value_default(valueid)
 		case e_value.BG_SKY_TIME: return app.background_sky_time
 		case e_value.BG_SKY_ROTATION: return app.background_sky_rotation
 		case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
+		case e_value.BG_SUNLIGHT_SPECULAR_STRENGTH: return app.background_sunlight_specular_strength
 		case e_value.BG_SUNLIGHT_ANGLE: return app.background_sunlight_angle
 		case e_value.BG_TWILIGHT: return app.background_twilight
 		case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show

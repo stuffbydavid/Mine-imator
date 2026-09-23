@@ -3653,6 +3653,7 @@
 		},
 		"sunlight": "Sunlight",
 		"sunlightstrength": "Strength",
+		"sunlightspecularstrength": "Specular strength",
 		"sunlightangle": "Angle",
 		"sunlightangletip": "The angular diameter of the sun, changes the size of sun shadows.",
 		"twilight": "Twilight",

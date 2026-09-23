@@ -658,6 +658,7 @@
     {"id":{"name":"action_background_sky_time","path":"scripts/action_background_sky_time/action_background_sky_time.yy",},},
     {"id":{"name":"action_background_sunlight_angle","path":"scripts/action_background_sunlight_angle/action_background_sunlight_angle.yy",},},
     {"id":{"name":"action_background_sunlight_color","path":"scripts/action_background_sunlight_color/action_background_sunlight_color.yy",},},
+    {"id":{"name":"action_background_sunlight_specular_strength","path":"scripts/action_background_sunlight_specular_strength/action_background_sunlight_specular_strength.yy",},},
     {"id":{"name":"action_background_sunlight_strength","path":"scripts/action_background_sunlight_strength/action_background_sunlight_strength.yy",},},
     {"id":{"name":"action_background_texture_animation_speed","path":"scripts/action_background_texture_animation_speed/action_background_texture_animation_speed.yy",},},
     {"id":{"name":"action_background_twilight","path":"scripts/action_background_twilight/action_background_twilight.yy",},},

@@ -81,6 +81,7 @@ function tl_value_clamp(vid, val)
 		case e_value.CAM_BLOOM_TRANSITION:
 		case e_value.CAM_GAMMA:
 		case e_value.BG_SUNLIGHT_STRENGTH:
+		case e_value.BG_SUNLIGHT_SPECULAR_STRENGTH:
 		case e_value.LIGHT_STRENGTH:
 		case e_value.EMISSIVE:
 		case e_value.SUBSURFACE:

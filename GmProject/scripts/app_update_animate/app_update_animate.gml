@@ -182,6 +182,7 @@ function app_update_animate()
 		background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 		background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
 		background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
+		background_sunlight_specular_strength	= bgobject.value[e_value.BG_SUNLIGHT_SPECULAR_STRENGTH]
 		background_sunlight_angle				= bgobject.value[e_value.BG_SUNLIGHT_ANGLE]
 		background_twilight						= bgobject.value[e_value.BG_TWILIGHT]
 		background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]

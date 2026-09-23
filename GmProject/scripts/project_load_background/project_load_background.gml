@@ -28,6 +28,7 @@ function project_load_background(map)
 		background_sky_time *= -1
 	background_sky_rotation = value_get_real(map[?"sky_rotation"], background_sky_rotation)
 	background_sunlight_strength = value_get_real(map[?"sunlight_strength"], background_sunlight_strength)
+	background_sunlight_specular_strength = value_get_real(map[?"sunlight_specular_strength"], background_sunlight_specular_strength)
 	
 	if (load_format < e_project.FORMAT_200_PRE_5)
 		background_sunlight_strength += 1

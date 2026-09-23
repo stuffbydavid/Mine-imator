@@ -179,6 +179,7 @@
     {"name":"action_background_sky_time","order":29,"path":"scripts/action_background_sky_time/action_background_sky_time.yy",},
     {"name":"action_background_sunlight_angle","order":23,"path":"scripts/action_background_sunlight_angle/action_background_sunlight_angle.yy",},
     {"name":"action_background_sunlight_color","order":5,"path":"scripts/action_background_sunlight_color/action_background_sunlight_color.yy",},
+    {"name":"action_background_sunlight_specular_strength","order":22,"path":"scripts/action_background_sunlight_specular_strength/action_background_sunlight_specular_strength.yy",},
     {"name":"action_background_sunlight_strength","order":21,"path":"scripts/action_background_sunlight_strength/action_background_sunlight_strength.yy",},
     {"name":"action_background_texture_animation_speed","order":31,"path":"scripts/action_background_texture_animation_speed/action_background_texture_animation_speed.yy",},
     {"name":"action_background_twilight","order":29,"path":"scripts/action_background_twilight/action_background_twilight.yy",},

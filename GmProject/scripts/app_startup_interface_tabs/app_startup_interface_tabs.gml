@@ -149,6 +149,8 @@ function app_startup_interface_tabs()
 			tbx_sky_moon_scale.suffix = "%"
 			tbx_sunlight_strength = new_textbox_integer()
 			tbx_sunlight_strength.suffix = "%"
+			tbx_sunlight_specular_strength = new_textbox_integer()
+			tbx_sunlight_specular_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
 			tbx_sunlight_angle.suffix = "°"
 			tbx_sky_clouds_offset_y = new_textbox_ndecimals()
