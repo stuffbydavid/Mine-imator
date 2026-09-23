@@ -1565,6 +1565,9 @@ function list_init(name)
 			menu_add_item(e_tonemapper.LOTTES, text_get("rendertonemapperlottes"))
 			menu_add_item(e_tonemapper.HABLE, text_get("rendertonemapperhable"))
 			menu_add_item(e_tonemapper.GT7_CURVE, text_get("rendertonemappergt7curve"))
+			menu_add_item(e_tonemapper.PBR_NEUTRAL, text_get("rendertonemapperpbrneutral"))
+			menu_add_item(e_tonemapper.AGX, text_get("rendertonemapperagx"))
+			menu_add_item(e_tonemapper.AGX_PUNCHY, text_get("rendertonemapperagxpunchy"))
 			
 			break
 		}

@@ -113,6 +113,15 @@ function tab_frame_editor_camera()
 			case e_tonemapper.GT7_CURVE:
 				text = text_get("frameeditorcameratonemappergt7curve")
 				break;
+			case e_tonemapper.PBR_NEUTRAL:
+				text = text_get("frameeditorcameratonemapperpbrneutral")
+				break;
+			case e_tonemapper.AGX:
+				text = text_get("frameeditorcameratonemapperagx")
+				break;
+			case e_tonemapper.AGX_PUNCHY:
+				text = text_get("frameeditorcameratonemapperagxpunchy")
+				break;
 			default:
 				text = text_get("frameeditorcameratonemappernone")
 				break;

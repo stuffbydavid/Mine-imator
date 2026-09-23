@@ -3208,7 +3208,10 @@
 			"uchimura": "Uchimura",
 			"lottes": "Lottes",
 			"hable": "Hable",
-			"gt7curve": "GT7 Curve"
+			"gt7curve": "GT7 Curve",
+			"pbrneutral": "PBR Neutral",
+			"agx": "AgX",
+			"agxpunchy": "AgX Punchy"
 		},
 		"exposure": "Exposure",
 		"gamma": "Gamma",
@@ -4189,7 +4192,10 @@
 				"uchimura": "Uchimura",
 				"lottes": "Lottes",
 				"hable": "Hable",
-				"gt7curve": "GT7 Curve"
+				"gt7curve": "GT7 Curve",
+				"pbrneutral": "PBR Neutral",
+				"agx": "AgX",
+				"agxpunchy": "AgX Punchy"
 			},
 			"exposure": "Exposure",
 			"gamma": "Gamma",

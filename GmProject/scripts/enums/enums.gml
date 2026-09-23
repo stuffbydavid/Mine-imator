@@ -1238,7 +1238,10 @@ function enums()
 		UCHIMURA,
 		LOTTES,
 		HABLE,
-		GT7_CURVE
+		GT7_CURVE,
+		PBR_NEUTRAL,
+		AGX,
+		AGX_PUNCHY
 	}
 	
 	// Window

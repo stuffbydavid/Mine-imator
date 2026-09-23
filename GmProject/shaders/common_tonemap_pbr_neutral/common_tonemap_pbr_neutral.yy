@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"common_tonemap_pbr_neutral",
+  "name":"common_tonemap_pbr_neutral",
+  "parent":{
+    "name":"common",
+    "path":"folders/Shaders/common.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

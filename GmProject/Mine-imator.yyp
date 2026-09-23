@@ -2843,6 +2843,8 @@
     {"id":{"name":"common_raytrace","path":"shaders/common_raytrace/common_raytrace.yy",},},
     {"id":{"name":"common_screen","path":"shaders/common_screen/common_screen.yy",},},
     {"id":{"name":"common_shadows","path":"shaders/common_shadows/common_shadows.yy",},},
+    {"id":{"name":"common_tonemap_agx","path":"shaders/common_tonemap_agx/common_tonemap_agx.yy",},},
+    {"id":{"name":"common_tonemap_pbr_neutral","path":"shaders/common_tonemap_pbr_neutral/common_tonemap_pbr_neutral.yy",},},
     {"id":{"name":"common_util","path":"shaders/common_util/common_util.yy",},},
     {"id":{"name":"shader_add","path":"shaders/shader_add/shader_add.yy",},},
     {"id":{"name":"shader_alpha_fix","path":"shaders/shader_alpha_fix/shader_alpha_fix.yy",},},

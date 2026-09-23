@@ -74,6 +74,9 @@ void applyColorTransform(inout vec4 col, bool preserveAlpha)
 #region TONEMAP_LIB
 #pragma shady: macro_begin TONEMAP_LIB
 
+#pragma shady: inline(common_tonemap_agx.TONEMAP_AGX_LIB)
+#pragma shady: inline(common_tonemap_pbr_neutral.TONEMAP_PBR_NEUTRAL_LIB)
+
 /// ACES fit by Stephen Hill, via TheRealMJP/BakingLab (MIT)
 /// https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl
 vec3 RRTAndODTFit(vec3 v)
@@ -224,6 +227,12 @@ vec3 applyToneMapper(vec3 col, int tonemapperId, float exposure, float gamma)
 		col = mapHable(col);
 	else if (tonemapperId == 6) // Gran Turismo 7 curve
 		col = mapGT7Curve(col);
+	else if (tonemapperId == 7) // Khronos PBR Neutral
+		col = mapPBRNeutral(col);
+	else if (tonemapperId == 8) // AgX
+		col = mapAgX(col, 0);
+	else if (tonemapperId == 9) // AgX Punchy
+		col = mapAgX(col, 1);
 
 	// Gamma
 	return pow(max(col.rgb, vec3(0.0)), vec3(1.0/gamma));

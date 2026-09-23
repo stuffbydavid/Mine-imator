@@ -78,7 +78,7 @@ The ranges below are the ranges supported by the corresponding interface control
 | `texture_filtering_level` | Integer, 0-5 | Mipmap/texture-filtering level |
 | `alpha_hashing` | Boolean | Allow hashed transparency in Realistic renders |
 | `alpha_mode` | `0` = blend, `1` = hashed | Project transparency mode |
-| `tonemapper` | `0` = none, `1` = Reinhard, `2` = ACES | Project tonemapper |
+| `tonemapper` | `0` = none, `1` = Reinhard, `2` = ACES, `3` = Uchimura, `4` = Lottes, `5` = Hable, `6` = GT7 Curve, `7` = PBR Neutral, `8` = AgX, `9` = AgX Punchy | Project tonemapper |
 | `exposure` | 0-no limit | Project exposure |
 | `gamma` | 0-no limit | Project gamma |
 | `material_maps` | Boolean | Enable material maps |
@@ -96,7 +96,7 @@ Camera settings modify the camera active at the current test frame, if present.
 | `blade_angle` | -no limit to no limit, in degrees | Aperture blade rotation |
 | `blade_stretch` | -1-1 | Blade-relative blur stretch; positive stretches up/down before blade rotation, negative stretches left/right |
 | `light_management` | Boolean | Override project light-management settings for this camera |
-| `cam_tonemapper` | `0` = none, `1` = Reinhard, `2` = ACES | Camera tonemapper override |
+| `cam_tonemapper` | `0` = none, `1` = Reinhard, `2` = ACES, `3` = Uchimura, `4` = Lottes, `5` = Hable, `6` = GT7 Curve, `7` = PBR Neutral, `8` = AgX, `9` = AgX Punchy | Camera tonemapper override |
 | `cam_exposure` | 0-no limit | Camera exposure override |
 | `cam_gamma` | 0-no limit | Camera gamma override |
 
