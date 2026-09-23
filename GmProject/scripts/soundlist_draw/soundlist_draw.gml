@@ -47,7 +47,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		}
 		soundlist_update(slist)
 		if (searchactive && !slist.search)
-			if (sortlist_center(slist, slist.select))
+			if (sortlist_view(slist, slist.select))
 				slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
 

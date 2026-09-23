@@ -12,6 +12,30 @@ function view_update(view, cam)
 		
 	// Surface
 	view_update_surface(view, cam)
+
+	// First-person build controls
+	if (place_build && build_first_person && view = view_main)
+	{
+		place_content_mouseon = view
+		mouse_cursor = cr_none
+		shortcut_bar_state = "firstperson"
+		camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y)
+		view.update_place_surfaces = true
+
+		if (mouse_wheel <> 0)
+			action_build_scroll()
+
+		if (mouse_left_pressed)
+			action_build_remove()
+		
+		else if (mouse_right_pressed && place_pos != null)
+			action_build_place()
+
+		if (!window_has_focus())
+			action_build_first_person(false)
+
+		return 0
+	}
 	
 	// Click
 	if (content_mouseon && (window_busy = "" || window_busy = place_busy))
@@ -34,11 +58,12 @@ function view_update(view, cam)
 		}
 	}
 	
-	// Jump to object
-	if ((window_busy = "" && content_mouseon) && tl_edit != null && tl_edit != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
+	// Jump to object or build structure
+	var focustl = place_build ? build_structure : tl_edit;
+	if ((window_busy = "" && content_mouseon) && focustl != null && instance_exists(focustl) && focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
 	{
-		tl_focus = tl_edit
-		cam_work_focus = tl_edit.world_pos
+		tl_focus = focustl
+		cam_work_focus = focustl.world_pos
 		cam_work_focus_last = point3D_copy(cam_work_focus)
 		
 		camera_work_set_angle()
@@ -51,7 +76,10 @@ function view_update(view, cam)
 	}
 	
 	// Mousewheel
-	if (((((window_busy = "" || window_busy = place_busy) && content_mouseon) || (window_busy = "viewrotatecamera" && window_focus = string(view)))) && mouse_wheel <> 0)
+	if (mouse_wheel <> 0 &&
+		(!keyboard_check(vk_control) || !place_build) &&
+		(((window_busy = "" || window_busy = place_busy) && content_mouseon) ||
+		 (window_busy = "viewrotatecamera" && window_focus = string(view))))
 	{
 		if (!cam)
 			cam_work_zoom_goal = clamp(cam_work_zoom_goal * (1 + 0.25 * mouse_wheel), cam_near, cam_far)
@@ -70,6 +98,10 @@ function view_update(view, cam)
 		if (window_busy = "viewclick")
 		{
 			mouse_cursor = cr_handpoint
+			if (place_build && cam = null)
+				shortcut_bar_state = "buildviewport"
+			else
+				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
 			
 			if (view_click_right && (!cam || editcamobj) && mouse_move > 5)
 			{
@@ -125,6 +157,9 @@ function view_update(view, cam)
 		// Rotate camera
 		if (window_busy = "viewrotatecamera")
 		{
+			if (place_build && cam = null)
+				shortcut_bar_state = "buildviewport"
+
 			if (cam != null)
 				render_samples = -1
 			
@@ -169,6 +204,9 @@ function view_update(view, cam)
 		// Pan camera
 		if (window_busy = "viewpancamera")
 		{
+			if (place_build && cam = null)
+				shortcut_bar_state = "buildviewport"
+
 			camera_control_pan(cam)
 			
 			if (!mouse_left)

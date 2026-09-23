@@ -9,17 +9,26 @@ function tab_build_tool()
 	}
 
 	// Options
-	var buttonwidth = floor((dw - 8) / 2);
-	if (draw_button_label("buildtoolfirstperson", dx, dy, buttonwidth, null, e_button.PRIMARY))
-		toast_new(e_toast.INFO, "Coming soon")
-	
-	if (draw_button_label("buildtoolexit", dx + dw, dy, buttonwidth, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+	var optiony = dy
+	if (build_first_person)
 	{
-		app_stop_place()
-		return 0
+		dy += 10
+		draw_tooltip_label("buildtoolfirstpersontip", icons.INFO, e_toast.INFO)
+	}
+	else
+	{
+		var buttonwidth = floor((dw - 8) / 2)
+		if (draw_button_label("buildtoolfirstperson", dx, dy, buttonwidth, null, e_button.PRIMARY))
+			action_build_first_person(true)
+
+		if (draw_button_label("buildtoolexit", dx + dw, dy, buttonwidth, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+		{
+			app_stop_place()
+			return 0
+		}
 	}
 	
-	dy += 40
+	dy = optiony + 40
 	dh -= 40
 
 	draw_label(text_get("buildtoolselected"), dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)

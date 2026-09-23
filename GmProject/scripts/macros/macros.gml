@@ -107,7 +107,6 @@ function macros()
 	#macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-issues-and-bugs/&do=add"
 	#macro link_forums_upload			"https://www.mineimatorforums.com/index.php?/topic/10-guide-how-to-post-a-mine-imator-project/"
 	#macro link_minecraft				"https://www.minecraft.net"
-	#macro link_david					"https://www.stuffbydavid.com"
 	#macro link_modelbench				"https://www.mineimator.com/modelbench"
 	#macro link_twitter					"https://www.mineimator.com/tweets"
 	#macro link_discord					"https://www.mineimator.com/discord"

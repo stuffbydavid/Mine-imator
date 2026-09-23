@@ -36,7 +36,7 @@ function soundlist_filters_draw()
 				ds_list_add(slist.filter_list, i)
 			soundlist_update(slist)
 			if (ds_list_empty(slist.filter_list))
-				if (sortlist_center(slist, slist.select))
+				if (sortlist_view(slist, slist.select))
 					slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 		}
 		tab_next()

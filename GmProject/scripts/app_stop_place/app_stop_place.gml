@@ -2,6 +2,9 @@
 
 function app_stop_place(keep = false, clearmouse = true)
 {
+	if (build_first_person)
+		action_build_first_person(false)
+
 	if (place_build)
 	{
 		action_build_structure(null, false)

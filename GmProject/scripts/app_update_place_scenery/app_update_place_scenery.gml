@@ -25,7 +25,6 @@ function app_update_place_scenery()
 
 	// Convert the world-space normal into the scenery grid
 	localnormal = vec3_normalize(vec3_mul_matrix(place_view_normal, matrix_transpose(worldtransform)))
-	debug(localnormal)
 
 	if (place_build)
 	{

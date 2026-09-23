@@ -471,7 +471,12 @@ function view_draw(view)
 		}
 		
 		if (content_mouseon)
-			shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
+		{
+			if (place_build && cam = null)
+				shortcut_bar_state = "buildviewport"
+			else
+				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
+		}
 		
 		if (view.renderer != e_renderer.REALISTIC || view_render_real_time)
 			view_update(view, cam)

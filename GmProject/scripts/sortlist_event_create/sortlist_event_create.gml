@@ -9,6 +9,8 @@ function sortlist_event_create()
 	height_items = list_minimum_items
 	height_percent = 0
 	items_visible = list_minimum_items
+	view_height = 0
+	view_value = null
 	center_on_draw = false
 	
 	columns = 0

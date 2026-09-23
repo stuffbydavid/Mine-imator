@@ -62,7 +62,7 @@ function action_bench_schematic_folder(folder, update = true)
 	
 	if (folder != "project" && is_string(selected) && ds_list_find_index(list.display_list, selected) >= 0)
 	{
-		sortlist_center(list, selected)
+		sortlist_view(list, selected)
 		action_bench_schematic_select(selected)
 		return 0
 	}
@@ -79,7 +79,7 @@ function action_bench_schematic_folder(folder, update = true)
 			{
 				if (list.display_list[|s] = schematic)
 				{
-					sortlist_center(list, schematic)
+					sortlist_view(list, schematic)
 					action_bench_schematic_select(schematic)
 					break
 				}

@@ -8,7 +8,7 @@ function temp_select_edit(showtab = true)
 		tab_show(properties, true)
 		properties.library.show = true
 		action_lib_list(other.id)
-		sortlist_center(lib_list, other.id)
+		sortlist_view(lib_list, other.id)
 
 		var editortab = false;
 		switch (other.type)

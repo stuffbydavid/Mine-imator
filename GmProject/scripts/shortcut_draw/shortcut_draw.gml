@@ -47,12 +47,12 @@ function shortcut_draw(shortcut)
 			default: mouse = icons.HELP;
 		}
 		
-		draw_image(spr_icons, mouse, dx + 10, yy, 1, 1, c_text_tertiary, a_text_tertiary)
-		dx += 20 + padding
+		draw_image(spr_icons, mouse, dx + 8, yy, 1, 1, c_text_tertiary, a_text_tertiary)
+		dx += 16 + padding
 	}
 	
 	// Label ("2")
 	draw_set_font(font_value)
 	draw_label(shortcut[2], dx, yy, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-	dx += string_width(shortcut[2]) + 36
+	dx += string_width(shortcut[2]) + 24
 }

@@ -112,6 +112,11 @@ namespace CppProject
 		return "";
 	}
 
+	BoolType window_has_focus()
+	{
+		return AppWin->isActiveWindow();
+	}
+
 	void window_mouse_set(IntType x, IntType y)
 	{
 		if (App->headless)
