@@ -53,7 +53,8 @@ function window_draw()
 					menu_draw()
 				
 				window_draw_cover()
-				window_draw_timeline_move()
+				if (!window_exists(e_window.TIMELINE))
+					window_draw_timeline_move()
 			}
 			
 			window_draw_toasts()
@@ -75,6 +76,7 @@ function window_draw()
 			panel_window_obj.tab_list[0] = timeline
 			panel_window_obj.tab_list_amount = 1
 			panel_draw(panel_window_obj)
+			window_draw_timeline_move()
 			if (menu_popup = null && popup)
 				menu_draw()
 			window_set_caption(text_get("tabtimeline") + " - Mine-imator")

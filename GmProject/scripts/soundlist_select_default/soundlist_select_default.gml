@@ -24,7 +24,7 @@ function soundlist_select_default(slist)
 		slist.select = row
 		slist.selected = row[2]
 		slist.selected_name = row[1]
-		sortlist_center(slist, row)
+		sortlist_view(slist, row)
 		return true
 	}
 

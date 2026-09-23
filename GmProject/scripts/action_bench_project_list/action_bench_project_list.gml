@@ -10,7 +10,7 @@ function action_bench_project_list(list)
 	if (ds_list_find_index(list.list, selected) < 0)
 		selected = null
 	else
-		sortlist_center(list, selected)
+		sortlist_view(list, selected)
 	
 	action_bench_project_select(selected)
 }

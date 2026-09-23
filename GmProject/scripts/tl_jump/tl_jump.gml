@@ -3,11 +3,16 @@
 
 function tl_jump(tl)
 {
-	// Find pos
-	var pos;
-	for (pos = 0; pos < ds_list_size(tree_visible_list); pos++)
-		if (tree_visible_list[|pos] = tl)
-			break
+	// Use the nearest visible parent for filtered timelines
+	var pos = ds_list_find_index(tree_visible_list, tl);
+	while (pos < 0 && tl.parent_filter != app)
+	{
+		tl = tl.parent_filter
+		pos = ds_list_find_index(tree_visible_list, tl)
+	}
+
+	if (pos < 0)
+		return 0
 	
 	if (pos < timeline_list_first || pos >= timeline_list_first + timeline_list_visible)
 	{
