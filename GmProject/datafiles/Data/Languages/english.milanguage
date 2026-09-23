@@ -961,18 +961,9 @@
 			"selected": "Selected camera (%1)"
 		},
 		"grid/": {
-			"alpha": "Alpha",
 			"columns": "Columns",
 			"rows": "Rows"
 		},
-		"compositionguide": "Composition Guides",
-		"compositionguidetype/": {
-			"none": "None",
-			"ruleofthirds": "Rule of thirds",
-			"radial": "Radial",
-			"triangle": "Triangle",
-			"circular": "Circular"
-        },
 		"overlay/": {
 			"controls": "View controls",
 			"shapes": "Timeline shapes",
