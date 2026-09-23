@@ -218,7 +218,7 @@ function minecraft_assets_load()
 				// Create sheets and texture depth
 				with (mc_res)
 				{
-					var cachefile = file_directory + app.setting_minecraft_assets_version + ".zip.packcache"
+					var cachefile = file_directory_get() + app.setting_minecraft_assets_version + ".zip.packcache"
 					pack_cache_loaded = file_exists_lib(cachefile) && res_load_pack_cache(cachefile)
 					if (pack_cache_loaded)
 					{

@@ -906,12 +906,7 @@ function enums()
 		SCENE_TEST,
 		G_BUFFERS,
 		AUXILIARY,
-		HIGH_DEPTH_NORMAL,
-		PLACE,
-		AO_MASK,
-		MATERIAL,
-		SUBSURFACE,
-		GLINT
+		PLACE
 	}
 	
 	// Renderer

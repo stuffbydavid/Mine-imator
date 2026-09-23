@@ -11,7 +11,7 @@ function macros()
 	#macro dev_mode_debug_names			dev_mode && false
 	#macro dev_mode_debug_saveid		dev_mode && false
 	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
-	#macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
+	#macro dev_mode_project				file_directory_get() + "dev_project/dev_project.miproject"
 	#macro dev_mode_full				dev_mode && true
 	#macro dev_mode_advanced			dev_mode && true
 	#macro dev_mode_show_bones			dev_mode && false

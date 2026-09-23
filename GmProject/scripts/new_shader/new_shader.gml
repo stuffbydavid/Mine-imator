@@ -38,6 +38,7 @@ function new_shader(name)
 		
 		// Rendering effects
 		new_shader_uniform("uAAMatrix")
+		new_shader_uniform("uTAAMatrix")
 		new_shader_uniform("uSampleIndex")
 		new_shader_uniform("uAlphaHash")
 		

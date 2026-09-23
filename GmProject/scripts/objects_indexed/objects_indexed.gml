@@ -34,7 +34,6 @@ function objects_indexed()
 		obj_theme,
 		obj_timeline,
 		obj_toast,
-		obj_videoquality,
 		obj_videotemplate,
 		obj_view
 	);

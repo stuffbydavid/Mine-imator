@@ -9,6 +9,11 @@ function render_world_ground()
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
 	
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uIsBlock", 1)
+
+	var materialres = res_eval(background_ground_tex_material);
+
 	// Blend
 	var blend = block_texture_get_blend(background_ground_name, background_ground_tex);
 	var iswater = (background_ground_name = "block/water_flow" || background_ground_name = "block/water_still");
@@ -20,9 +25,9 @@ function render_world_ground()
 	render_set_uniform_int("uGlowTexture", 0)
 	render_set_uniform_int("uFogShow", app.background_fog_show && render_mode != e_render_mode.COLOR)
 	render_set_uniform_int("uIsWater", iswater && app.project_render_water_reflections)
-	render_set_uniform_int("uMaterialFormat", background_ground_tex_material.material_format)
+	render_set_uniform_int("uMaterialFormat", materialres.material_format)
 	
-	if (background_ground_tex_material = mc_res)
+	if (materialres = mc_res)
 	{
 		render_set_uniform("uMetallic", 0)
 		render_set_uniform("uRoughness", (iswater && app.project_render_water_reflections ? app.project_render_water_roughness : 1))
@@ -54,13 +59,18 @@ function render_world_ground()
 		render_set_texture(background_ground_texture_normal, "Normal")
 	
 	// Submit ground mesh at an offset from the camera
-	var xo, yo;
-	xo = (cam_from[X] div block_size) * block_size
-	yo = (cam_from[Y] div block_size) * block_size
-	vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16, block_size / 16, 1))
+	var sheet, groundscale, groundsquare, xo, yo;
+	sheet = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)[0]
+	groundscale = (sheet >= 0 && sheet < e_block_sheet.static_amount ? block_size_list[sheet] / block_size : 1)
+	groundsquare = block_size * groundscale
+	xo = (cam_from[X] div groundsquare) * groundsquare
+	yo = (cam_from[Y] div groundsquare) * groundsquare
+	vbuffer_render(background_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16 * groundscale, block_size / 16 * groundscale, 1))
 	
 	// Reset
 	render_set_uniform_int("uIsGround", 0)
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uIsBlock", 0)
 	
 	if (iswater)
 	{
