@@ -28,7 +28,7 @@ function camera_control_move(cam, lockx, locky)
 		}
 		
 		// Move
-		move = movespeed * setting_move_speed * delta
+		move = movespeed * setting_move_speed * setting_move_speed_scroll * delta
 		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
 		if (keybinds[e_keybind.CAM_FAST].active)
@@ -83,7 +83,7 @@ function camera_control_move(cam, lockx, locky)
 		var move, roll, spd, spdm, xd, yd, zd;
 		
 		// Move
-		move = movespeed * setting_move_speed * delta
+		move = movespeed * setting_move_speed * setting_move_speed_scroll * delta
 		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
 		if (keybinds[e_keybind.CAM_FAST].active)

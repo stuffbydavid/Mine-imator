@@ -450,6 +450,7 @@
     {"name":"action_lib_text_face_camera","order":3,"path":"scripts/action_lib_text_face_camera/action_lib_text_face_camera.yy",},
     {"name":"action_lib_text_font","order":5,"path":"scripts/action_lib_text_font/action_lib_text_font.yy",},
     {"name":"action_load_render_settings","order":19,"path":"scripts/action_load_render_settings/action_load_render_settings.yy",},
+    {"name":"action_project_composition_guide","order":11,"path":"scripts/action_project_composition_guide/action_project_composition_guide.yy",},
     {"name":"action_project_grid_rows","order":1,"path":"scripts/action_project_grid_rows/action_project_grid_rows.yy",},
     {"name":"action_project_pack","order":10,"path":"scripts/action_project_pack/action_project_pack.yy",},
     {"name":"action_project_render_aa_power","order":1,"path":"scripts/action_project_render_aa_power/action_project_render_aa_power.yy",},

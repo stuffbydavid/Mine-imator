@@ -916,6 +916,7 @@
     {"id":{"name":"action_lib_text_face_camera","path":"scripts/action_lib_text_face_camera/action_lib_text_face_camera.yy",},},
     {"id":{"name":"action_lib_text_font","path":"scripts/action_lib_text_font/action_lib_text_font.yy",},},
     {"id":{"name":"action_load_render_settings","path":"scripts/action_load_render_settings/action_load_render_settings.yy",},},
+    {"id":{"name":"action_project_composition_guide","path":"scripts/action_project_composition_guide/action_project_composition_guide.yy",},},
     {"id":{"name":"action_project_grid_columns","path":"scripts/action_project_grid_columns/action_project_grid_columns.yy",},},
     {"id":{"name":"action_project_grid_rows","path":"scripts/action_project_grid_rows/action_project_grid_rows.yy",},},
     {"id":{"name":"action_project_pack","path":"scripts/action_project_pack/action_project_pack.yy",},},
