@@ -15,7 +15,6 @@ function app_startup_lists()
 	globalvar biome_list, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
-	globalvar composition_guide_list;
 	globalvar render_pass_list;
 	
 	// Values
@@ -562,21 +561,5 @@ function app_startup_lists()
 		"depth",
 		"normal",
 		"material"
-	)
-	
-	composition_guide_list = ds_list_create()
-	ds_list_add(composition_guide_list,
-			"ruleofthirds",
-			//"goldensection",
-			//"goldentriangles",
-			//"goldenspiral",
-			//"goldenratio",
-			//"harmonioustriangles",
-			//"cross",
-			//"diagonal",
-			"radial",
-			//"pyramid",
-			"triangle",
-			"circular"
 	)
 }

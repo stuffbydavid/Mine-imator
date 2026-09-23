@@ -14,6 +14,7 @@ function app_startup_interface_settings_menus()
 	settings_menu_w = 0
 	settings_menu_h = 0
 	settings_menu_h_max = null
+	settings_menu_menu = "all"
 	
 	settings_menu_button_w = 0
 	settings_menu_button_h = 0
@@ -35,8 +36,6 @@ function app_startup_interface_settings_menus()
 	
 	tbx_grid_columns = new_textbox_integer()
 	tbx_grid_rows = new_textbox_integer()
-	tbx_grid_alpha = new_textbox_integer()
-	tbx_grid_alpha.suffix = "%"
 	
 	tbx_snap_position = new_textbox_decimals()
 	tbx_snap_rotation = new_textbox_decimals()

@@ -1492,16 +1492,6 @@ function list_init(name)
 			break
 		}
 		
-		case "viewcompositionguide":
-		{
-			menu_add_item(e_composition_guide.RULE_OF_THIRDS, text_get("viewcompositionguidetyperuleofthirds"))
-			menu_add_item(e_composition_guide.RADIAL, text_get("viewcompositionguidetyperadial"))
-			menu_add_item(e_composition_guide.TRIANGLE, text_get("viewcompositionguidetypetriangle"))
-			menu_add_item(e_composition_guide.CIRCULAR, text_get("viewcompositionguidetypecircular"))
-			
-			break
-		}
-		
 		// Select Minecraft world
 		case "worldimportworld":
 		{
