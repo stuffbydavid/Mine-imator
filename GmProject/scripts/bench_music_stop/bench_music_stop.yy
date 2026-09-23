@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"bench_music_stop",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"bench_music_stop",
+  "parent":{
+    "name":"Bench",
+    "path":"folders/Scripts/App/Interface/Bench.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

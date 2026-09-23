@@ -14,7 +14,7 @@ function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 	if (window_busy = "contextmenu")
 		window_busy = ""
 	
-	if (draw_button_label(name, xx, yy, wid, null, e_button.TOOLBAR, null))
+	if (draw_button_label(name, xx, yy, wid, null, e_button.TOOLBAR, null, e_anchor.LEFT))
 	{
 		click = true
 		trigger = true

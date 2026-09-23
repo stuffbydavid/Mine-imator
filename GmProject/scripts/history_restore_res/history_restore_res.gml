@@ -22,11 +22,7 @@ function history_restore_res(save)
 		for (var s = 0; s < save.usage_model_amount; s++)
 		{
 			with (save_id_find(save.usage_model_save_id[s]))
-			{
-				if (model != null)
-					model.count--
 				model = res
-			}
 		}
 		
 		#region Model textures
@@ -35,7 +31,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_model_tex_save_id[s]))
 			{
-				model_tex.count--
 				model_tex = res
 			}
 		}
@@ -44,7 +39,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_model_tex_material_save_id[s]))
 			{
-				model_tex_material.count--
 				model_tex_material = res
 			}
 		}
@@ -53,7 +47,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_model_tex_normal_save_id[s]))
 			{
-				model_tex_normal.count--
 				model_tex_normal = res
 			}
 		}
@@ -66,7 +59,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_item_tex_save_id[s]))
 			{
-				item_tex.count--
 				item_tex = res
 				render_generate_item()
 			}
@@ -76,7 +68,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_item_tex_material_save_id[s]))
 			{
-				item_tex_material.count--
 				item_tex_material = res
 				render_generate_item()
 			}
@@ -86,7 +77,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_item_tex_normal_save_id[s]))
 			{
-				item_tex_normal.count--
 				item_tex_normal = res
 				render_generate_item()
 			}
@@ -100,7 +90,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_block_tex_save_id[s]))
 			{
-				block_tex.count--
 				block_tex = res
 			}
 		}
@@ -109,7 +98,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_block_tex_material_save_id[s]))
 			{
-				block_tex_material.count--
 				block_tex_material = res
 			}
 		}
@@ -118,7 +106,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_block_tex_normal_save_id[s]))
 			{
-				block_tex_normal.count--
 				block_tex_normal = res
 			}
 		}
@@ -149,7 +136,6 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_text_font_save_id[s]))
 			{
-				text_font.count--
 				text_font = res
 			}
 		}
@@ -208,30 +194,44 @@ function history_restore_res(save)
 		{
 			with (save_id_find(save.usage_tl_glint_tex_save_id[s]))
 			{
-				glint_tex.count--
 				glint_tex = res
 			}
 		}
-		
+
+		for (var s = 0; s < save.usage_tl_block_tex_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_block_tex_save_id[s]))
+				block_tex = res
+		}
+
+		for (var s = 0; s < save.usage_tl_block_tex_material_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_block_tex_material_save_id[s]))
+				block_tex_material = res
+		}
+
+		for (var s = 0; s < save.usage_tl_block_tex_normal_amount; s++)
+		{
+			with (save_id_find(save.usage_tl_block_tex_normal_save_id[s]))
+				block_tex_normal = res
+		}
+
 		// Restore background usage
 		if (save.usage_background_image)
 			app.background_image = res
 		
 		if (save.usage_background_sky_sun_tex)
 		{
-			app.background_sky_sun_tex.count--
 			app.background_sky_sun_tex = res
 		}
 		
 		if (save.usage_background_sky_moon_tex)
 		{
-			app.background_sky_moon_tex.count--
 			app.background_sky_moon_tex = res
 		}
 		
 		if (save.usage_background_sky_clouds_tex)
 		{
-			app.background_sky_clouds_tex.count--
 			app.background_sky_clouds_tex = res
 		}
 		
@@ -239,7 +239,6 @@ function history_restore_res(save)
 		{
 			with (app)
 			{
-				background_ground_tex.count--
 				background_ground_tex = res
 				background_ground_update_texture()
 			}
@@ -249,7 +248,6 @@ function history_restore_res(save)
 		{
 			with (app)
 			{
-				background_ground_tex_material.count--
 				background_ground_tex_material = res
 				background_ground_update_texture_material()
 			}
@@ -259,34 +257,15 @@ function history_restore_res(save)
 		{
 			with (app)
 			{
-				background_ground_tex_normal.count--
 				background_ground_tex_normal = res
 				background_ground_update_texture_normal()
 			}
 		}
 		
-		count += save.usage_model_amount
-		count += save.usage_model_tex_amount
-		count += save.usage_model_tex_material_amount
-		count += save.usage_model_tex_normal_amount
-		count += save.usage_item_tex_amount
-		count += save.usage_block_tex_amount
-		count += save.usage_block_tex_material_amount
-		count += save.usage_block_tex_normal_amount
-		count += save.usage_scenery_amount
-		count += save.usage_shape_tex_amount
-		count += save.usage_text_font_amount
-		count += save.usage_sprite_tex_amount
-		count += save.usage_sprite_template_tex_amount
-		count += save.usage_kf_sound_amount
-		count += save.usage_background_image
-		count += save.usage_background_sky_sun_tex
-		count += save.usage_background_sky_moon_tex
-		count += save.usage_background_sky_clouds_tex
-		count += save.usage_background_ground_tex
 	}
 	
-	sortlist_add(app.res_list, res)
+	with (res)
+		res_add_lists()
 	
 	return res
 }

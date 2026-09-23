@@ -8,6 +8,7 @@ function menu_event_create()
 	menu_temp_edit = null
 	menu_script = null
 	menu_value = null
+	menu_model_armor_variant = false
 	menu_ani = 0
 	menu_ani_ease = 0
 	menu_ani_type = ""

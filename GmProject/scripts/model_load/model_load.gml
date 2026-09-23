@@ -24,6 +24,7 @@ function model_load(map, dir)
 		else
 			file = null
 		
+		
 		// Texture
 		if (is_string(map[?"texture"]))
 		{
@@ -40,6 +41,19 @@ function model_load(map, dir)
 		
 		// Version
 		version = value_get_real(map[?"version"], 0)
+		
+		// Valid equipment
+		equipment_list = null
+		if (ds_list_valid(map[?"equipment"]))
+		{
+			equipment_list = ds_list_create()
+			ds_list_copy(equipment_list, map[?"equipment"])
+		}
+		
+		// Place target
+		place_target_map = null
+		if (ds_map_valid(map[?"place_target"]))
+			place_target_map = minecraft_assets_load_place_target(map[?"place_target"])
 		
 		// Pattern type
 		pattern_type = value_get_string(map[?"pattern_type"], "")
@@ -183,6 +197,33 @@ function model_load(map, dir)
 			default_state = string_get_state_vars(map[?"default_state"])
 		else
 			default_state = array()
+
+		// Model part list eligibility
+		var modelfile, state;
+		modelfile = file
+		if (states_map != null)
+		{
+			state = ds_map_find_first(states_map)
+			while (!is_undefined(state))
+			{
+				var value = state_vars_get_value(default_state, state)
+				if (value != "")
+				{
+					var statelist = states_map[?state]
+					for (var v = 0; v < statelist.value_amount; v++)
+					{
+						if (value = statelist.value_name[v])
+						{
+							if (statelist.value_file[v] != null)
+								modelfile = statelist.value_file[v]
+							break
+						}
+					}
+				}
+				state = ds_map_find_next(states_map, state)
+			}
+		}
+		model_part_available = (modelfile != null && ds_list_size(modelfile.file_part_list) > 1)
 		
 		return id
 	}

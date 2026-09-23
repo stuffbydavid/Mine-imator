@@ -29,11 +29,10 @@ function action_lib_pc_type_sprite_template_tex(res)
 	
 	with (ptype_edit)
 	{
-		sprite_template_tex.count--
 		sprite_template_tex = res
-		sprite_template_tex.count++
 		ptype_update_sprite_vbuffers()
 	}
 	
-	tab_template_editor_particles_preview_restart()
+	project_update_counts()
+	tab_object_editor_particles_preview_restart()
 }

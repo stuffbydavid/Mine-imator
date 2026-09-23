@@ -107,6 +107,7 @@ function project_save_particles()
 					json_save_var_point3D("spd_mul_random_min", spd_mul_random_min)
 					json_save_var_point3D("spd_mul_random_max", spd_mul_random_max)
 				
+					json_save_var_bool("rot_spawner_angle", rot_spawner_angle)
 					json_save_var_bool("rot_extend", rot_extend)
 					json_save_var_point3D("rot", rot)
 					json_save_var_point3D("rot_israndom", rot_israndom)

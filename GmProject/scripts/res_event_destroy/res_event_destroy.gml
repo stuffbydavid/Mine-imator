@@ -30,15 +30,15 @@ function res_event_destroy()
 		ds_map_destroy(model_texture_material_map)
 	}
 	
-	if (model_tex_normal_map != null)
+	if (model_texture_normal_map != null)
 	{
-		var key = ds_map_find_first(model_tex_normal_map);
+		var key = ds_map_find_first(model_texture_normal_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_tex_normal_map[?key])
-			key = ds_map_find_next(model_tex_normal_map, key)
+			texture_free(model_texture_normal_map[?key])
+			key = ds_map_find_next(model_texture_normal_map, key)
 		}
-		ds_map_destroy(model_tex_normal_map)
+		ds_map_destroy(model_texture_normal_map)
 	}
 	
 	// Free shape vbuffers
@@ -59,26 +59,27 @@ function res_event_destroy()
 		ds_map_destroy(model_shape_alpha_map)
 	
 	// Free block textures
-	if (block_sheet_texture != null)
-		texture_free(block_sheet_texture)
+	for (var size = 0; size < e_block_sheet.static_amount; size++)
+	{
+		if (block_sheet_texture[size] != null)
+			texture_free(block_sheet_texture[size])
+		if (block_sheet_texture_material[size] != null)
+			texture_free(block_sheet_texture_material[size])
+		if (block_sheet_texture_normal[size] != null)
+			texture_free(block_sheet_texture_normal[size])
+	}
 	
-	if (block_sheet_texture_material != null)
-		texture_free(block_sheet_texture_material)
+	if (block_sheet_texture[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_tex_normal != null)
-		texture_free(block_sheet_tex_normal)
+	if (block_sheet_texture_material[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
 	
-	if (block_sheet_ani_texture != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_texture[f])
-	
-	if (block_sheet_ani_texture_material != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_texture_material[f])
-	
-	if (block_sheet_ani_tex_normal != null)
-		for (var f = 0; f < minecraft_block_animated_sheet_size[2]; f++)
-			texture_free(block_sheet_ani_tex_normal[f])
+	if (block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
+		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
+			texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)
@@ -92,14 +93,17 @@ function res_event_destroy()
 	block_vbuffer_destroy()
 	
 	// Free items
-	if (item_sheet_texture != null)
-		texture_free(item_sheet_texture)
-	
-	if (item_sheet_texture_material != null)
-		texture_free(item_sheet_texture_material)
-	
-	if (item_sheet_tex_normal != null)
-		texture_free(item_sheet_tex_normal)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+	{
+		if (item_sheet_texture[size] != null)
+			texture_free(item_sheet_texture[size])
+
+		if (item_sheet_texture_material[size] != null)
+			texture_free(item_sheet_texture_material[size])
+
+		if (item_sheet_texture_normal[size] != null)
+			texture_free(item_sheet_texture_normal[size])
+	}
 	
 	// Free misc
 	if (colormap_grass_texture != null)
@@ -160,6 +164,9 @@ function res_event_destroy()
 	
 	if (sound_buffer != null)
 		buffer_delete(sound_buffer)
+
+	if (!is_cpp() && type = e_res_type.SOUND && minecraft_hash != "" && creator = app.bench_settings)
+		file_delete_lib(file_directory + filename)
 	
 	// Free blocks
 	if (scenery_tl_list != null)
@@ -188,59 +195,34 @@ function res_event_destroy()
 			model = null
 		
 		if (model_tex = other.id)
-		{
-			model_tex = mc_res
-			model_tex.count++
-		}
+			model_tex = project_pack_res
 		
 		if (model_tex_material = other.id)
-		{
-			model_tex_material = mc_res
-			model_tex_material.count++
-		}
+			model_tex_material = project_pack_res
 		
 		if (model_tex_normal = other.id)
-		{
-			model_tex_normal = mc_res
-			model_tex_normal.count++
-		}
+			model_tex_normal = project_pack_res
 		
 		if (item_tex = other.id)
 		{
-			item_tex = mc_res
-			item_tex.count++
+			item_tex = project_pack_res
 			render_generate_item()
 		}
 		
 		if (item_tex_material = other.id)
-		{
-			item_tex_material = mc_res
-			item_tex_material.count++
-		}
+			item_tex_material = project_pack_res
 		
 		if (item_tex_normal = other.id)
-		{
-			item_tex_normal = mc_res
-			item_tex_normal.count++
-		}
+			item_tex_normal = project_pack_res
 		
 		if (block_tex = other.id)
-		{
-			block_tex = mc_res
-			block_tex.count++
-		}
+			block_tex = project_pack_res
 		
 		if (block_tex_material = other.id)
-		{
-			block_tex_material = mc_res
-			block_tex_material.count++
-		}
+			block_tex_material = project_pack_res
 		
 		if (block_tex_normal = other.id)
-		{
-			block_tex_normal = mc_res
-			block_tex_normal.count++
-		}
+			block_tex_normal = project_pack_res
 		
 		if (scenery = other.id) 
 			scenery = null
@@ -255,10 +237,7 @@ function res_event_destroy()
 			shape_tex_normal = null
 		
 		if (text_font = other.id)
-		{
-			text_font = mc_res
-			text_font.count++
-		}
+			text_font = project_pack_res
 	}
 	
 	with (app.bench_settings)
@@ -267,40 +246,40 @@ function res_event_destroy()
 			model = null
 		
 		if (model_tex = other.id)
-			model_tex = mc_res
+			model_tex = project_pack_res
 			
 		if (model_tex_material = other.id)
-			model_tex_material = mc_res
+			model_tex_material = project_pack_res
 			
 		if (model_tex_normal = other.id)
-			model_tex_normal = mc_res
+			model_tex_normal = project_pack_res
 		
 		if (item_tex = other.id)
 		{
-			item_tex = mc_res
+			item_tex = project_pack_res
 			render_generate_item()
 		}
 		
 		if (item_tex_material = other.id)
 		{
-			item_tex_material = mc_res
+			item_tex_material = project_pack_res
 			render_generate_item()
 		}
 		
 		if (item_tex_normal = other.id)
 		{
-			item_tex_normal = mc_res
+			item_tex_normal = project_pack_res
 			render_generate_item()
 		}
 		
 		if (block_tex = other.id)
-			block_tex = mc_res
+			block_tex = project_pack_res
 		
 		if (block_tex_material = other.id)
-			block_tex_material = mc_res
+			block_tex_material = project_pack_res
 		
 		if (block_tex_normal = other.id)
-			block_tex_normal = mc_res
+			block_tex_normal = project_pack_res
 		
 		if (shape_tex = other.id)
 			shape_tex = null
@@ -312,7 +291,7 @@ function res_event_destroy()
 			shape_tex_normal = null
 		
 		if (text_font = other.id)
-			text_font = mc_res
+			text_font = project_pack_res
 		
 		if (scenery = other.id)
 			scenery = null
@@ -321,16 +300,10 @@ function res_event_destroy()
 	with (obj_particle_type)
 	{
 		if (sprite_tex = other.id)
-		{
-			sprite_tex = mc_res
-			sprite_tex.count++
-		}
+			sprite_tex = project_pack_res
 		
 		if (sprite_template_tex = other.id)
-		{
-			sprite_template_tex = mc_res
-			sprite_template_tex.count++
-		}	
+			sprite_template_tex = project_pack_res
 	}
 	
 	with (obj_keyframe)
@@ -384,9 +357,29 @@ function res_event_destroy()
 			update_matrix = true
 		
 		if (glint_tex = other.id)
+			glint_tex = project_pack_res
+
+		if (part_of = null && !has_temp && type = e_tl_type.SPECIAL_BLOCK)
 		{
-			glint_tex = mc_res
-			glint_tex.count++
+			if (model_tex = other.id)
+				model_tex = project_pack_res
+
+			if (model_tex_material = other.id)
+				model_tex_material = project_pack_res
+
+			if (model_tex_normal = other.id)
+				model_tex_normal = project_pack_res
+		}
+		else if (part_of = null && !has_temp && type = e_tl_type.BLOCK)
+		{
+			if (block_tex = other.id)
+				block_tex = project_pack_res
+
+			if (block_tex_material = other.id)
+				block_tex_material = project_pack_res
+
+			if (block_tex_normal = other.id)
+				block_tex_normal = project_pack_res
 		}
 	}
 	
@@ -396,45 +389,45 @@ function res_event_destroy()
 			background_image = null
 		
 		if (background_sky_sun_tex = other.id)
-		{
-			background_sky_sun_tex = mc_res
-			background_sky_sun_tex.count++
-		}
+			background_sky_sun_tex = project_pack_res
 		
 		if (background_sky_moon_tex = other.id)
-		{
-			background_sky_moon_tex = mc_res
-			background_sky_moon_tex.count++
-		}
+			background_sky_moon_tex = project_pack_res
 		
 		if (background_sky_clouds_tex = other.id)
-		{
-			background_sky_clouds_tex = mc_res
-			background_sky_clouds_tex.count++
-		}
+			background_sky_clouds_tex = project_pack_res
 		
 		if (background_ground_tex = other.id)
 		{
-			background_ground_tex = mc_res
-			background_ground_tex.count++
+			background_ground_tex = project_pack_res
 			background_ground_update_texture()
 		}
 		
 		if (background_ground_tex_material = other.id)
 		{
-			background_ground_tex_material = mc_res
-			background_ground_tex_material.count++
-			background_ground_update_texture()
+			background_ground_tex_material = project_pack_res
+			background_ground_update_texture_material()
 		}
 		
 		if (background_ground_tex_normal = other.id)
 		{
-			background_ground_tex_normal = mc_res
-			background_ground_tex_normal.count++
+			background_ground_tex_normal = project_pack_res
 			background_ground_update_texture_normal()
 		}
+
 	}
-	
+
 	// Remove from resource browser
-	res_edit = sortlist_remove(app.res_list, id)
+	var listed;
+	listed = (ds_list_find_index(app.res_list.list, id) >= 0 ||
+		ds_list_find_index(app.bench_settings.project_res_list.list, id) >= 0 ||
+		ds_list_find_index(app.bench_settings.project_all_list.list, id) >= 0)
+	if (listed)
+	{
+		res_remove_lists()
+
+		if (type = e_res_type.SOUND && app.bench_settings.sound_list_current = app.bench_settings.project_sounds_list)
+			with (app)
+				action_bench_sound_source("project")
+	}
 }

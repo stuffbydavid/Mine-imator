@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"type_is_shape",
   "parent":{
-    "name":"Templates",
-    "path":"folders/Scripts/Project/Templates.yy",
+    "name":"Type",
+    "path":"folders/Scripts/Project/Timeline/Type.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

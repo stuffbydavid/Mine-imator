@@ -1,16 +1,16 @@
-/// res_get_model_tex_normal(name)
+/// res_get_model_texture_normal(name)
 /// @arg name
 /// @desc Returns the model normal texture with the given name from a skin or texture pack.
 
-function res_get_model_tex_normal(name)
+function res_get_model_texture_normal(name)
 {
 	if (!ready)
 		return null
 	
-	if (model_tex_normal_map != null)
+	if (model_texture_normal_map != null)
 	{
-		if (ds_map_exists(model_tex_normal_map, name))
-			return model_tex_normal_map[?name]
+		if (ds_map_exists(model_texture_normal_map, name))
+			return model_texture_normal_map[?name]
 		else
 			return null
 	}

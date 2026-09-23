@@ -42,7 +42,7 @@ function tl_update_model_shape(clear = true)
 	
 	// Get resource
 	var res = null;
-	if (temp.object_index = obj_template)
+	if (temp.object_index = obj_template || !temp.has_temp)
 		with (temp)
 			res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 	

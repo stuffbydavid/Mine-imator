@@ -28,9 +28,7 @@ function action_lib_block_tex(res)
 	
 	with (temp_edit)
 	{
-		block_tex.count--
 		block_tex = res
-		block_tex.count++
 		
 		// Update patterns
 		with (obj_timeline)
@@ -43,5 +41,6 @@ function action_lib_block_tex(res)
 		}
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

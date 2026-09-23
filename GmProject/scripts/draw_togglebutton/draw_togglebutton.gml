@@ -8,7 +8,7 @@
 
 function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 {
-	var h, w, buttonx, buttony, buttonh, buttoncount, buttonsperrow, buttonrows, buttonsize, mouseon, script, scriptvalue, axis;
+	var h, w, buttonx, buttony, buttonh, buttoncount, buttoncols, buttonrows, buttonsize, mouseon, script, scriptvalue, axis;
 	
 	h = ui_large_height + (label_height + 8)
 	w = dw
@@ -33,11 +33,11 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 	
 	buttoncount = array_length(togglebutton_name)
 	if (buttoncount > 3)
-		buttonsperrow = 2
+		buttoncols = togglebutton_columns > 0 ? togglebutton_columns : 2
 	else
-		buttonsperrow = buttoncount
-	buttonrows = ceil(buttoncount / buttonsperrow)
-	buttonsize = w / buttonsperrow
+		buttoncols = buttoncount
+	buttonrows = ceil(buttoncount / buttoncols)
+	buttonsize = w / buttoncols
 	mouseon = false
 	script = null
 	scriptvalue = null
@@ -54,7 +54,7 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 		if (i > 0)
 			draw_box(buttonx, buttony + 1, 1, buttonh - 2, false, c_border, a_border)
 		
-		if ((i + 1) % buttonsperrow = 0)
+		if ((i + 1) % buttoncols = 0)
 		{
 			buttonx = xx
 			buttony += buttonh
@@ -73,7 +73,7 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 		
 		if (i = buttoncount - 1 && buttonrows > 1 && buttoncount % 2 = 1)
 			boxwid = w
-		else if ((i % buttonsperrow) < (buttonsperrow - 1))
+		else if ((i % buttoncols) < (buttoncols - 1))
 			boxwid += 1
 		mouseon = false
 		
@@ -153,7 +153,7 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 			}
 		}
 		
-		if ((i + 1) % buttonsperrow = 0)
+		if ((i + 1) % buttoncols = 0)
 		{
 			buttonx = xx
 			buttony += buttonh

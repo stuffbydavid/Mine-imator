@@ -3,6 +3,17 @@
 
 function tl_update_values()
 {
+	if (!animated)
+	{
+		keyframe_prev = null
+		keyframe_current = null
+		keyframe_next = null
+		keyframe_current_values = null
+		keyframe_next_values = null
+		keyframe_animate = false
+		return 0
+	}
+
 	keyframe_prev = keyframe_current
 	keyframe_current = null
 	keyframe_next = null
@@ -47,19 +58,9 @@ function tl_update_values()
 	// Position
 	if (value_type[e_value_type.TRANSFORM_POS])
 	{
-		// Parented objects with no keyframes get position reset (if not part of something)
-		if (ds_list_size(keyframe_list) = 0 && parent != app && part_of = null)
-		{
-			value[e_value.POS_X] = 0
-			value[e_value.POS_Y] = 0
-			value[e_value.POS_Z] = 0
-		}
-		else
-		{
-			tl_update_values_ease(e_value.POS_X)
-			tl_update_values_ease(e_value.POS_Y)
-			tl_update_values_ease(e_value.POS_Z)
-		}
+		tl_update_values_ease(e_value.POS_X)
+		tl_update_values_ease(e_value.POS_Y)
+		tl_update_values_ease(e_value.POS_Z)
 		
 		if (type != e_tl_type.PATH && type != e_tl_type.PATH_POINT)
 		{
@@ -275,8 +276,8 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_TWILIGHT)
 		tl_update_values_ease(e_value.BG_SKY_CLOUDS_SHOW)
 		tl_update_values_ease(e_value.BG_SKY_CLOUDS_SPEED)
-		tl_update_values_ease(e_value.BG_SKY_CLOUDS_HEIGHT)
-		tl_update_values_ease(e_value.BG_SKY_CLOUDS_OFFSET)
+		tl_update_values_ease(e_value.BG_SKY_CLOUDS_OFFSET_Y)
+		tl_update_values_ease(e_value.BG_SKY_CLOUDS_OFFSET_Z)
 		tl_update_values_ease(e_value.BG_GROUND_SHOW)
 		tl_update_values_ease(e_value.BG_GROUND_SLOT)
 		tl_update_values_ease(e_value.BG_BIOME)
@@ -284,6 +285,9 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_SKY_CLOUDS_COLOR)
 		tl_update_values_ease(e_value.BG_SUNLIGHT_COLOR)
 		tl_update_values_ease(e_value.BG_AMBIENT_COLOR)
+		tl_update_values_ease(e_value.BG_NIGHT_SKY_COLOR)
+		tl_update_values_ease(e_value.BG_NIGHT_SKY_CLOUDS_COLOR)
+		tl_update_values_ease(e_value.BG_NIGHT_SKY_STARS_COLOR)
 		tl_update_values_ease(e_value.BG_NIGHT_COLOR)
 		tl_update_values_ease(e_value.BG_GRASS_COLOR)
 		tl_update_values_ease(e_value.BG_FOLIAGE_COLOR)
@@ -356,12 +360,12 @@ function tl_update_values()
 	tl_update_values_ease(e_value.VISIBLE)
 	
 	// Play sounds
-	if (type = e_tl_type.AUDIO && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
+	if (type = e_tl_type.AUDIO_TRACK && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
 	{
 		// Play new sound
 		if (keyframe_current)
 		{
-			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && keyframe_prev != keyframe_current)
+			if (value[e_value.SOUND_OBJ] && value[e_value.SOUND_OBJ].ready && keyframe_prev != keyframe_current && keyframe_current.sound_play_index = null)
 			{
 				keyframe_current.sound_play_index = audio_play_sound(value[e_value.SOUND_OBJ].sound_index, 0, (value[e_value.SOUND_END] > 0 ? true : false));
 				audio_sound_pitch(keyframe_current.sound_play_index, value[e_value.SOUND_PITCH])
@@ -388,7 +392,7 @@ function tl_update_values()
 	}
 	
 	// Update particle spawners
-	if (type = e_temp_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && keyframe_prev != keyframe_current)
+	if (type = e_tl_type.PARTICLE_SPAWNER && app.timeline_marker > app.timeline_marker_previous && keyframe_prev != keyframe_current)
 	{
 		// Fire particles
 		if (!temp.pc_spawn_constant && value[e_value.SPAWN] && !value[e_value.FREEZE])

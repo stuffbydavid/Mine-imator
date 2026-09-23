@@ -81,7 +81,10 @@ function shader_use()
 	// Glint
 	if (!is_undefined(uniform_map[?"uGlintEnabled"]) && uniform_map[?"uGlintEnabled"] > -1)
 	{
-		var tex = mc_res.glint_armor_texture;
+		var res = res_eval(project_pack_res)
+		if (res.glint_armor_texture = null)
+			res = mc_res
+		var tex = res.glint_armor_texture;
 		texture_set_stage(sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 		gpu_set_texrepeat_ext(sampler_map[?"uGlintTexture"], true)
 		gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)

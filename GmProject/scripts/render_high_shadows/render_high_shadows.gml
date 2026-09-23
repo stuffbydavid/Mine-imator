@@ -3,7 +3,7 @@
 function render_high_shadows()
 {
 	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
-	sampleoffset = point3D(0, 0, 0)
+	sampleoffset = point3D(0)
 	sunout = (background_sunlight_color_final != c_black)
 	samplestart = 0
 	sampleend = 0

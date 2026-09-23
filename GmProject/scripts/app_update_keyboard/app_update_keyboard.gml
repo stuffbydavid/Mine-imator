@@ -25,6 +25,36 @@ function app_update_keyboard()
 		else
 			debug_info = (debug_info + 1) mod 3
 	}
+
+	// Build mode shortcuts
+	if (place_build && !textbox_isediting && window_busy = "")
+	{
+		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_TOOL].pressed)
+		{
+			action_toolbar_build_mode()
+			return 0
+		}
+		
+		if (!keyboard_check(vk_control) && !keyboard_check(vk_alt))
+		{
+			if (keyboard_check_pressed(ord("S")))
+			{
+				action_build_structure(null, true)
+				return 0
+			}
+		
+			if (keyboard_check_pressed(ord("E")))
+			{
+				tab_show(build_tool, true)
+				textbox_lastfocus = -1
+				window_focus = string(build_tool.build_list.search_tbx)
+				textbox_input = ""
+			}
+		}
+	}
+
+	// Workbench shortcuts
+	bench_update_keyboard()
 	
 	if (window_state = "" && (window_busy = "" || settings_menu_name = "colorpicker") && !textbox_isediting)
 	{
@@ -48,6 +78,9 @@ function app_update_keyboard()
 		
 		if (keybinds[e_keybind.REDO].pressed)
 			action_toolbar_redo()
+
+		if (keybinds[e_keybind.BUILD_TOOL].pressed)
+			action_toolbar_build_mode()
 		
 		if (keybinds[e_keybind.PLAY].pressed)
 			action_tl_play()
@@ -122,6 +155,9 @@ function app_update_keyboard()
 		
 		if (keybinds[e_keybind.KEYFRAMES_DELETE].pressed)
 			action_tl_keyframes_remove()
+		
+		if (keybinds[e_keybind.KEYFRAMES_SCALE].pressed)
+			action_tl_keyframes_scale_start()
 		
 		if (keybinds[e_keybind.PARTICLES_SPAWN].pressed)
 			action_lib_pc_spawn()

@@ -25,15 +25,15 @@ function res_load_pack_model_textures()
 		ds_map_destroy(model_texture_material_map)
 	}
 	
-	if (model_tex_normal_map != null)
+	if (model_texture_normal_map != null)
 	{
-		var key = ds_map_find_first(model_tex_normal_map);
+		var key = ds_map_find_first(model_texture_normal_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_tex_normal_map[?key])
-			key = ds_map_find_next(model_tex_normal_map, key)
+			texture_free(model_texture_normal_map[?key])
+			key = ds_map_find_next(model_texture_normal_map, key)
 		}
-		ds_map_destroy(model_tex_normal_map)
+		ds_map_destroy(model_texture_normal_map)
 	}
 	
 	// Create new
@@ -42,7 +42,7 @@ function res_load_pack_model_textures()
 	log("Model textures", "load")
 	model_texture_map = ds_map_create()
 	model_texture_material_map = ds_map_create()
-	model_tex_normal_map = ds_map_create()
+	model_texture_normal_map = ds_map_create()
 	for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	{
 		var name, fname, matfname, norfname, tex;
@@ -57,13 +57,7 @@ function res_load_pack_model_textures()
 			if (name = "entity/steve")
 				tex = res_load_player_skin(fname)
 			else
-			{
-				if (id = mc_res) // Patch textures
-					tex = texture_create_patched(fname)
-				else
-					tex = texture_create(fname)
-				tex = texture_convert_square(tex)
-			}
+				tex = texture_create_square(fname)
 		}
 		else if (id != mc_res)
 			tex = texture_duplicate(mc_res.model_texture_map[?name])
@@ -85,7 +79,7 @@ function res_load_pack_model_textures()
 				tex = texture_create_square(matfname)
 		}
 		else
-			tex = texture_duplicate(spr_default_material)
+			tex = null
 		
 		model_texture_material_map[?name] = tex
 		
@@ -100,7 +94,7 @@ function res_load_pack_model_textures()
 		else 
 			tex = texture_duplicate(spr_default_normal)
 		
-		model_tex_normal_map[?name] = tex
+		model_texture_normal_map[?name] = tex
 	}
 	
 	log("Model textures", "done")

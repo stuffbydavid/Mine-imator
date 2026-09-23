@@ -5,6 +5,7 @@ runs/
 thumbnail.png
 *.backup*
 /install*/
+/CppGen/build*/
 /CppProject/Generated/
 *.fsh_mod
 *.vsh_mod

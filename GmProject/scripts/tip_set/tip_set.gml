@@ -26,7 +26,7 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 		{
 			tip_text = text
 			
-			if (tip_keybind != null)
+			if (tip_keybind != null && tip_keybind[e_keybind_key.CHAR] != vk_nokey)
 			{
 				tip_keybind_draw = true
 				tip_text_keybind = text_control_name(tip_keybind)

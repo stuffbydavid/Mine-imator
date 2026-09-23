@@ -28,14 +28,9 @@ function action_lib_shape_tex_material(res)
 	
 	with (temp_edit)
 	{
-		if (shape_tex_material != null)
-			shape_tex_material.count--
-		
 		shape_tex_material = res
-		
-		if (shape_tex_material != null && shape_tex_material.type != e_tl_type.CAMERA)
-			shape_tex_material.count++
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

@@ -7,6 +7,7 @@
 function minecraft_update_armor_generate(model, data, res = null)
 {
 	var skins = [null, null, null, null];
+	res = res_eval(res)
 	if (res = null || !res_is_ready(res) || (res.type != e_res_type.PACK && res.type != e_res_type.PACK_UNZIPPED))
 		res = mc_res
 	

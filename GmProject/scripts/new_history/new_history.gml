@@ -10,6 +10,7 @@ function new_history(script)
 		id.script = script
 		par_script = null
 		save_temp_edit = save_id_get(temp_edit)
+		save_obj_edit = save_id_get(obj_edit)
 		save_ptype_edit = save_id_get(ptype_edit)
 		save_tl_edit = save_id_get(tl_edit)
 		save_res_edit = save_id_get(res_edit)
@@ -19,9 +20,20 @@ function new_history(script)
 		save_render_preset_locked = false
 		save_save_id_seed = save_id_seed
 		
+		particle_temp_save_id = ""
+		scenery_replace_ground = false
+		scenery_ground_show = true
+		project_pack_default = false
+
 		scale_link_drag = false
 		scale_link_drag_val = 0
 		save_set_var = false
+		usage_tl_attractor_amount = 0
+		usage_tl_ik_target_amount = 0
+		usage_tl_ik_target_angle_amount = 0
+		usage_kf_attractor_amount = 0
+		usage_kf_ik_target_amount = 0
+		usage_kf_ik_target_angle_amount = 0
 		
 		return id
 	}

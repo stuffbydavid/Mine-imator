@@ -5,23 +5,9 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.05"
+		"lastchange": "2026.09.22"
 	},
 	"particle/": {
-		"default": "Default spawner",
-		"electric_spark": "Electric spark",
-		"explosion": "Explosion",
-		"firework_blast": "Firework blast",
-		"fountain_of_cakes": "Fountain of cakes",
-		"grass_explosion": "Grass explosion",
-		"high_fire": "High fire",
-		"huge_smoke": "Huge smoke",
-		"low_fire": "Low fire",
-		"potion_effect": "Potion effect",
-		"rain": "Rain",
-		"smoke": "Smoke",
-		"snow": "Snow",
-		"teleport": "Teleport",
 		"type/": {
 			"particle_1": "Particle 1",
 			"spark": "Spark",
@@ -36,7 +22,8 @@
 			"effect": "Effect",
 			"rain": "Rain",
 			"snow": "Snow",
-			"portal": "Portal"
+			"portal": "Portal",
+			"firefly": "Firefly"
 		}
 	},
 	"tooltip/": {
@@ -45,17 +32,30 @@
 		"showoptions": "Show options",
 		"hideoptions": "Hide options",
 		"remove": "Remove",
+		"assetimport": "Import asset",
+		"assetremove": "Remove asset",
 		"pin": "Pin",
 		"changefolder": "Change folder",
 		"openfolder": "Open folder",
 		"downloadskin": "Download skin",
 		"pastekey": "Paste key",
 		"filterlist": "Filter list",
+		"clearsearch": "Clear search",
 		"template/": {
 			"new": "New template",
 			"animate": "Create timeline from template",
 			"duplicate": "Duplicate template",
 			"remove": "Remove template"
+		},
+		"schematic/": {
+			"import": "Import schematic",
+			"export": "Export schematic",
+			"openfolder": "Open schematic folder",
+			"reloadfolder": "Reload schematic folder"
+		},
+		"sound/": {
+			"import": "Import sound",
+			"export": "Export sound"
 		},
 		"resource/": {
 			"new": "Add resource",
@@ -77,6 +77,8 @@
 			"clear": "Clear particles",
 			"import": "Import particles",
 			"export": "Export particles",
+			"openfolder": "Open particle folder",
+			"reloadfolder": "Reload particle folder",
 			"add": "Add emitter",
 			"duplicate": "Duplicate emitter",
 			"delete": "Delete emitter",
@@ -204,6 +206,7 @@
 		"scalecombine": "Combine scale",
 		"bendsliders": "Display as sliders",
 		"bendwheels": "Display as wheels",
+		"clearkeybind": "Clear keybind",
 		"restorekeybind": "Restore keybind",
 		"pathsetlength": "Set path length",
 		"setcolor": "Set color...",
@@ -238,6 +241,9 @@
 				"selectadd": "Select keyframe (Add)",
 				"selectgroup": "Group select keyframes",
 				"selectgroupadd": "Group select keyframes (Add)",
+				"stretch": "Stretch keyframes",
+				"scaleapply": "Apply scale",
+				"scalecancel": "Cancel scale",
 				"deselect": "Deselect keyframes",
 				"deselectgroup": "Group deselect keyframes"
 			},
@@ -303,12 +309,14 @@
 			"future": "Last opened in the future"
 		},
 		"none": "The projects you've opened recently will appear here!",
+		"searchnone": "No projects were found with that name.",
 		"sortdatenewest": "Date (newest)",
 		"sortdateoldest": "Date (oldest)",
 		"sortnameaz": "Name (A-Z)",
 		"sortnameza": "Name (Z-A)",
 		"name": "Name",
-		"projects": "Recent projects"
+		"projects": "Recent projects",
+		"searchcaption": "Search..."
 	},
 	"alert/": {
 		"newassets": "Minecraft %1 assets are available! Restart to download them.",
@@ -325,6 +333,10 @@
 		"download": "Download",
 		"view": "View",
 		"rendersaved": "Render settings saved successfully!",
+		"animated": "The selected object has multiple keyframes.",
+		"animatedmultiple": "The selected objects have multiple keyframes.",
+		"animatedpart": "A model part has multiple keyframes.",
+		"equiparmor": "Parent the armor to a character to equip it.",
 		"close": "Close"
 	},
 	"error/": {
@@ -389,8 +401,9 @@
 		"assetsnewer": "These assets require a newer version of Mine-imator to work. Go to the download page for Mine-imator?",
 		"unlimitedvalues": "WARNING: Values will be able to be set outside of their normal limits, which could crash the program, cause project corruption or other undefined behaviour depending on the value being changed.\nContinue?",
 		"restorecontrols": "Are you sure you want to restore all controls?",
+		"setasdefault": "Are you sure you want to set these settings as the default? This cannot be undone.",
 		"resetrender": "Are you sure you want to reset all render settings?",
-		"setasdefault": "Are you sure you want to set these settings as the default for new projects?"
+		"projectpack": "Set this resource pack as the project pack?"
 	},
 	"filedialog/": {
 		"open/": {
@@ -457,6 +470,7 @@
 		"name": "Project name",
 		"author": "Project author",
 		"description": "Project description",
+		"pack": "Project resource pack",
 		"location": "Project location",
 		"namedefault": "New project",
 		"create": "Create project"
@@ -477,6 +491,7 @@
 		"edit/": {
 			"undo": "Undo",
 			"redo": "Redo",
+			"buildtool": "Build tool",
 			"selectall": "Select all",
 			"duplicate": "Duplicate timeline",
 			"delete": "Delete timeline",
@@ -517,12 +532,17 @@
 		"simplemode": "Simple mode enabled"
 	},
 	"type/": {
+		"project": "Project",
 		"char": "Character",
-		"scenery": "Scenery",
+		"equipment": "Equipment",
+		"model": "Custom model",
+		"modelpart": "Model part",
 		"item": "Item",
+		"world": "World",
+		"schematic": "Schematic",
+		"scenery": "Scenery",
 		"block": "Block",
 		"spblock": "Special block",
-		"bodypart": "Character part",
 		"particles": "Particle spawner",
 		"text": "Text",
 		"cube": "Cube",
@@ -533,9 +553,10 @@
 		"pointlight": "Point light",
 		"spotlight": "Spot light",
 		"camera": "Camera",
+		"cameraeffects": "Camera effects",
 		"background": "Environment",
 		"audio": "Audio track",
-		"model": "Custom model",
+		"structure": "Structure",
 		"folder": "Folder",
 		"pack": "Resource pack",
 		"skin": "Skin",
@@ -548,20 +569,64 @@
 		"sound": "Sound",
 		"shape": "Shape",
 		"lightsource": "Light source",
-		"fromworld": "Imported scenery",
+		"fromworld": "From world",
 		"path": "Path",
 		"pathpoint": "Path point"
 	},
-	"workbenchcaption": "Workbench",
+	"soundfilter/": {
+		"other": "Other",
+		"ambient": "Ambient",
+		"block": "Block",
+		"damage": "Damage",
+		"dig": "Dig",
+		"enchant": "Enchant",
+		"entity": "Entity",
+		"event": "Event",
+		"fire": "Fire",
+		"fireworks": "Fireworks",
+		"item": "Item",
+		"liquid": "Liquid",
+		"minecart": "Minecart",
+		"mob": "Mob",
+		"music": "Music",
+		"note": "Note",
+		"portal": "Portal",
+		"random": "Random",
+		"step": "Step",
+		"tile": "Tile",
+		"ui": "UI"
+	},
+	"musicfilter/": {
+		"game": "Game",
+		"menu": "Menu",
+		"records": "Records",
+		"other": "Other"
+	},
 	"bench/": {
+		"project/": {
+			"Library": "Library",
+			"Resources": "Resources",
+			"All": "All"
+		},
 		"model": "Model",
 		"skin": "Skin",
 		"skinmaterial": "Material map",
 		"skinnormal": "Normal map",
-		"scenery": "Scenery",
-		"blocktex": "Texture",
-		"blocktexmaterial": "Material map",
-		"blocktexnormal": "Normal map",
+		"equipment": "Equipment",
+		"equipmenttex": "Texture",
+		"equipmenttexmaterial": "Material map",
+		"equipmenttexnormal": "Normal map",
+		"armorvariant": "Variant",
+		"armoreditor": "Open armor editor",
+		"patterneditor": "Open pattern editor",
+		"modeltex": "Texture",
+		"modeltexmaterial": "Material map",
+		"modeltexnormal": "Normal map",
+		"modelcolor": "Color",
+		"modelpart": "Model part",
+		"modelpartskin": "Skin",
+		"modelpartskinmaterial": "Material map",
+		"modelpartskinnormal": "Normal map",
 		"itemtex": "Image",
 		"itemtexmaterial": "Material map",
 		"itemtexnormal": "Normal map",
@@ -569,40 +634,68 @@
 		"itemfacecamera": "Face camera",
 		"itembounce": "Bounce",
 		"itemspin": "Spin",
+		"importfromworld": "Import from world",
+		"schematic": "Schematic",
+		"schematic/": {
+			"House 1": "House 1",
+			"trees": "Trees",
+			"biomes": "Biomes",
+			"structures": "Structures",
+			"buildings": "Buildings",
+			"other": "Other",
+			"project": "Project"
+		},
+		"blocktex": "Texture",
+		"blocktexmaterial": "Material map",
+		"blocktexnormal": "Normal map",
 		"block": "Block",
+		"spblock": "Special block",
 		"spblockmodel": "Block",
 		"spblocktex": "Texture",
 		"spblocktexmaterial": "Material map",
 		"spblocktexnormal": "Normal map",
-		"bodypart": "Body part",
-		"bodypartskin": "Skin",
-		"bodypartskinmaterial": "Material map",
-		"bodypartskinnormal": "Normal map",
-		"particlespreset": "Preset",
+		"sound": "Sound",
+		"audiotrack": "Audio track",
+		"audiotracknew": "Create new",
+		"music": "Music",
+		"sound/": {
+			"sounds": "Sounds",
+			"music": "Music",
+			"project": "Project"
+		},
+		"particlepreset": "Particles",
+		"particles/": {
+			"Default": "Default spawner",
+			"effects": "Effects",
+			"weather": "Weather",
+			"project": "Project"
+		},
+		"texttext": "Text",
 		"textfont": "Font",
 		"text3d": "3D",
 		"textfacecamera": "Face camera",
+		"lighttype": "Light type",
 		"shapetype": "Shape",
 		"shapetex": "Texture",
 		"shapetexmaterial": "Material map",
 		"shapetexnormal": "Normal map",
 		"shapetexmap": "Mapped texture",
 		"shapetexmaptip": "Whether the faces of the shape should use parts of a texture image.",
+		"shapetexsavemap": "Export map",
 		"shapefacecamera": "Face camera",
-		"modeltex": "Texture",
-		"modeltexmaterial": "Material map",
-		"modeltexnormal": "Normal map",
-		"modelcolor": "Color",
-		"patterneditor": "Open pattern editor",
-		"armoreditor": "Open armor editor",
-		"lighttype": "Light type",
+		"edit": "Edit",
+		"build": "Start building",
 		"create": "Create",
 		"createedit": "Create & edit",
+		"worldtip1": "Select a region of your Minecraft world to use in the project.",
+		"worldtip2": "When the region is modified in-game, press \"Reload resource\" under Resources to apply the changes.",
+		"soundtip": "Install Minecraft Java Edition to browse sounds and music from the game.",
+		"audiotracktip": "An empty audio track that can play imported sounds from Minecraft or from files such as .mp3 and .wav.",
 		"pointlighttip": "Point lights shine in all directions, like a lightbulb.",
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
-		"cameratip": "A virtual camera the animation is seen through, with optional effects.",
+		"cameratip": "A virtual camera the animation is seen through.",
+		"cameraeffectstip": "A number of optional effects for the active camera. (coming soon)",
 		"backgroundtip": "A timeline that can change the environment during the animation.",
-		"audiotip": "An audio track that can play sound files such as .mp3 and .wav in the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
 	"downloadskin/": {
@@ -757,6 +850,7 @@
 	},
 	"armoreditor/": {
 		"caption": "Armor editor",
+		"ok": "OK",
 		"helmet": "Helmet",
 		"chestplate": "Chestplate",
 		"leggings": "Leggings",
@@ -811,7 +905,7 @@
 		"percent": "(%1% Done)"
 	},
 	"view/": {
-		"workbenchtip": "Open workbench",
+		"benchtip": "Open workbench",
 		"tool/": {
 			"selecttip": "Select tool",
 			"movetip": "Move tool",
@@ -862,6 +956,12 @@
 			"columns": "Columns",
 			"rows": "Rows"
 		},
+		"overlay/": {
+			"controls": "View controls",
+			"shapes": "Timeline shapes",
+			"guides": "Timeline guides",
+			"guidestip": "Enable visual representations of camera frustums, spotlight cones, etc. when selected."
+		},
 		"snap/": {
 			"move": "Move",
 			"rotate": "Rotate",
@@ -896,10 +996,12 @@
 	"tab/": {
 		"projectproperties": "Project properties",
 		"timeline": "Timeline",
+		"buildtool": "Build tool",
 		"charmodel": "Character model for %1",
+		"equipment": "Equipment for %1",
 		"block": "Block for %1",
 		"item": "Item for %1",
-		"bodypart": "Body part for %1",
+		"modelpart": "Model part for %1",
 		"particles": "Particle editor for %1",
 		"ground": "Ground",
 		"timelineeditor": "%1 properties",
@@ -909,6 +1011,8 @@
 		"settings": "Preferences"
 	},
 	"key/": {
+		"nokey": "Not bound",
+		"anykey": "Any",
 		"left": "Left",
 		"right": "Right",
 		"up": "Up",
@@ -959,13 +1063,20 @@
 		"playmedia": "Play media"
 	},
 	"column/": {
+		"projectname": "Name",
+		"projecttype": "Type",
+		"projectcount": "Use count",
 		"libname": "Name",
 		"libtype": "Type",
 		"libinstances": "Instances",
 		"charname": "Name",
 		"blockname": "Name",
+		"buildname": "Name",
 		"spblockname": "Name",
-		"bodypartmodelname": "Name",
+		"modelpartmodelname": "Name",
+		"sceneryname": "Name",
+		"schematicname": "Name",
+		"soundname": "Name",
 		"particleeditortypename": "Name",
 		"particleeditortypekind": "Kind",
 		"particleeditortyperate": "Spawn rate",
@@ -978,6 +1089,7 @@
 	"list/": {
 		"search": "Search...",
 		"browse": "Browse...",
+		"multiple": "Multiple",
 		"none": "None",
 		"default": "Default (%1)"
 	},
@@ -1273,7 +1385,6 @@
 		"wall_banner": "Wall Banner",
 		"piglin_head": "Piglin Head",
 		"dragon_head": "Dragon Head",
-		"armor": "Armor",
 		"horse_armor": "Horse Armor",
 		"wolf_armor": "Wolf Armor",
 		"nautilus_armor": "Nautilus Armor",
@@ -1282,6 +1393,7 @@
 		"llama_spit": "Llama Spit",
 		"wither_skull": "Wither Skull",
 		"wind_charge": "Wind Charge",
+		"armor": "Armor",
 		"armor_baby": "Baby Armor",
 		"cushion": "Cushion",
 		"part/": {
@@ -2073,12 +2185,18 @@
 		"settingstip": "Change world settings",
 		"reloadtip": "Reload world",
 		"gotoplayertip": "Jump to player or starting position",
+		"gotoposition": "Jump to position",
+		"gotopositionpos": "Position",
+		"gotopositionpos/": {
+			"x": "X",
+			"y": "Y",
+			"z": "Z"
+		},
 		"selection": "Selection",
 		"selectionsmall": "Small",
 		"selectionmedium": "Medium",
 		"selectionlarge": "Large",
-		"blockstotal": "%1 blocks",
-		"blockssizes": "(%1 x %2 x %3)",
+		"selectionsize": "%1 x %2 x %3 selected",
 		"filteractive": "Blocks are filtered",
 		"confirm": "Import selection",
 		"cancel": "Cancel"
@@ -2704,8 +2822,6 @@
 				"outer_right": "Outer right",
 				"legacy": "Legacy",
 				"single": "Single",
-				"right": "Right",
-				"left": "Left",
 				"none": "None",
 				"side": "Side",
 				"diamond_ore": "Diamond Ore",
@@ -2964,7 +3080,8 @@
 		"videosizecustomheight": "H",
 		"videosizecustomkeepaspectratio": "Keep aspect ratio",
 		"tempo": "Tempo",
-		"tempotip": "The amount of frames that make a second in the animation."
+		"tempotip": "The amount of frames that make a second in the animation.",
+		"pack": "Resource pack"
 	},
 	"render": "RENDER SETTINGS",
 	"render/": {
@@ -3144,22 +3261,27 @@
 		"blocktexmaterial": "Material map",
 		"blocktexnormal": "Normal map",
 		"blockchange": "Change",
+		"equipmentmodel": "Equipment",
+		"equipmenttex": "Texture",
+		"equipmenttexmaterial": "Material map",
+		"equipmenttexnormal": "Normal map",
 		"spblockmodel": "Block",
 		"spblocktex": "Texture",
 		"spblocktexmaterial": "Material map",
 		"spblocktexnormal": "Normal map",
-		"bodypartof": "%1 of %2",
-		"bodypartchange": "Change",
-		"bodypartskin": "Texture",
-		"bodypartskinmaterial": "Material map",
-		"bodypartskinnormal": "Normal map",
+		"modelpartof": "%1 of %2",
+		"modelpartchange": "Change",
+		"modelpartskin": "Texture",
+		"modelpartskinmaterial": "Material map",
+		"modelpartskinnormal": "Normal map",
 		"modelcolor": "Color",
 		"patterneditor": "Open pattern editor",
 		"armoreditor": "Open armor editor",
-		"bodypartunknown": "Unknown body part",
+		"modelpartunknown": "Unknown model part",
 		"randomizeblocks": "Randomize blocks",
 		"randomizeblockshelp": "Use random models and rotations for the block.",
 		"repeat": "Repeat",
+		"center": "Center",
 		"repeatx": "X",
 		"repeaty": "Y",
 		"repeatz": "Z",
@@ -3168,6 +3290,7 @@
 		"text3d": "3D",
 		"textfacecamera": "Face camera",
 		"shape/": {
+			"type": "Shape",
 			"tex": "Texture",
 			"texmaterial": "Material map",
 			"texnormal": "Normal map",
@@ -3194,7 +3317,8 @@
 		"modeltexnormal": "Normal map"
 	},
 	"templateeditor/": {
-		"bodypart": "Body part"
+		"equipment": "Equipment",
+		"modelpart": "Model part"
 	},
 	"particleeditor/": {
 		"count": "Particles",
@@ -3379,6 +3503,7 @@
 			"rotation": "ROTATION",
 			"rotation/": {
 				"initial": "Initial rotation",
+				"spawnerangle": "Use spawner angle",
 				"extend": "Separate XYZ settings",
 				"xyz": "Initial XYZ",
 				"x": "Initial X",
@@ -3497,9 +3622,14 @@
 				"tex": "Texture",
 				"speed": "Speed",
 				"offset": "Offset",
-				"height": "Height",
+				"offsetx": "X",
+				"offsety": "Y",
+				"offsetz": "Z",
 				"size": "Size",
-				"thickness": "Thickness"
+				"sizexz": "XZ",
+				"sizey": "Y",
+				"sizexy": "XY",
+				"sizez": "Z"
 			},
 			"time": "Time",
 			"rotation": "Rotation"
@@ -3519,13 +3649,18 @@
 		"biomevariant": "Variant",
 		"scenecolors": "Scene colors",
 		"brightness": "Brightness",
+		"dayscenecolors": "Day scene colors",
+		"nightscenecolors": "Night scene colors",
 		"biomecolors": "Biome colors",
 		"leafcolors": "Leaf colors",
 		"skycolor": "Sky",
 		"skycloudscolor": "Clouds",
 		"sunlightcolor": "Sunlight",
 		"ambientcolor": "Ambient",
-		"nightcolor": "Night",
+		"nightskycolor": "Sky",
+		"nightskycloudscolor": "Clouds",
+		"nightskystarscolor": "Stars",
+		"nightcolor": "Ambient",
 		"grasscolor": "Grass",
 		"foliagecolor": "Foliage",
 		"dryfoliagecolor": "Dry foliage",
@@ -3636,12 +3771,20 @@
 	"resources": "RESOURCES",
 	"resources/": {
 		"pack/": {
+			"project": "Project resource pack",
 			"image": "Resource pack asset",
+			"material": "Material",
 			"image/": {
 				"modeltexture": "Texture to view",
 				"blocksheet": "Block sheet",
 				"blocksheetstatic": "Static",
 				"blocksheetanimated": "Animated",
+				"blocksheetsize16": "16x16",
+				"blocksheetsize32": "32x32",
+				"blocksheetsize64": "64x64",
+				"itemsheetsize": "Item sheet",
+				"itemsheetsize16": "16x16",
+				"itemsheetsize32": "32x32",
 				"colormap": "Color map",
 				"colormapgrass": "Grass",
 				"colormapfoliage": "Foliage",
@@ -3650,7 +3793,6 @@
 				"particlesimage1": "Sheet 1",
 				"particlesimage2": "Sheet 2"
 			},
-			"material": "Material",
 			"material/": {
 				"diffuse": "Diffuse",
 				"material": "Material",
@@ -3706,6 +3848,7 @@
 		"read": "Reading audio..."
 	},
 	"loadpack/": {
+		"cache": "Loading textures...",
 		"unzip": "Extracting resources...",
 		"modeltextures": "Loading model textures...",
 		"blocktextures": "Loading block textures...",
@@ -3734,13 +3877,20 @@
 		"rows": "Rows",
 		"ok": "OK"
 	},
+	"buildtool/": {
+		"firstperson": "First-person mode",
+		"exit": "Exit build tool",
+		"selected": "Selected",
+		"structure": "Structure",
+		"createnew": "Create new"
+	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",
 		"search": "Search...",
 		"none": "None",
 		"instanceof": "Instance of %1",
 		"partof": "%1 of %2",
-		"unusedbodypart": "Unused body part",
+		"unusedmodelpart": "Unused model part",
 		"frame": "Frame %1",
 		"intervals/": {
 			"show": "Show intervals",
@@ -3749,8 +3899,12 @@
 			"offset": "Interval offset"
 		},
 		"filtertags": "Filter out tags",
+		"hidestructureblocks": "Hide structure blocks",
+		"hidestructureblockstip": "Hide blocks from the list with \"Animated\" turned off and parented to structures or scenery.",
+		"hidenonanimated": "Hide non-animated timelines",
+		"hidenonanimatedtip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hideghosts": "Hide ghost timelines",
-		"hideghoststip": "When enabled, all timelines with the \"Ghost\" toggle will be hidden from the timeline list.",
+		"hideghoststip": "Hide timelines from the list with the \"Ghost\" toggle enabled.",
 		"marker/": {
 			"new": "New marker",
 			"label": "Label",
@@ -3770,7 +3924,10 @@
 	},
 	"timelineeditor/": {
 		"info": "OBJECT INFO",
+		"edittemplate": "Edit template",
+		"createtemplate": "Create template",
 		"name": "Name",
+		"animated": "Animated",
 		"text": "Text",
 		"textsample": "Sample text",
 		"type": "Type",
@@ -3779,6 +3936,35 @@
 			"x": "X",
 			"y": "Y",
 			"z": "Z"
+		},
+		"block": "BLOCK",
+		"audio": "AUDIO",
+		"addsound": "Add sound",
+		"path": "PATH",
+		"path/": {
+			"pointadd": "Add point",
+			"closed": "Connect ends",
+			"smooth": "Smooth path",
+			"detail": "Detail",
+			"detailtip": "Higher values will result in better path accuracy, but are more performance intense.",
+			"shape": "Shape",
+			"shape/": {
+				"none": "None",
+				"flat": "Flat",
+				"tube": "Tube",
+				"radius": "Radius",
+				"invert": "Invert",
+				"smoothsegments": "Smooth segments",
+				"smoothsegmentstip": "Enable smooth lighting along the direction of the path.",
+				"smoothring": "Smooth ring",
+				"smoothringtip": "Enable smooth lighting on the ring shape around the path.",
+				"detail": "Shape detail",
+				"texmapped": "Mapped texture",
+				"texmappedtip": "Whether the faces of the shape should use parts of a texture image.",
+				"texlength": "Texture length",
+				"texlengthtip": "The length the path texture should stretch for before repeating.",
+				"savemap": "Export map"
+			}
 		},
 		"hierarchy": "HIERARCHY",
 		"parent": "Parent",
@@ -3797,7 +3983,7 @@
 			"bend": "Bend",
 			"rotpoint": "Rotation point",
 			"pose": "Pose",
-			"posehelp": "Inherit the parent character or special block's pose.",
+			"posehelp": "Inherit the parent character or model's pose.",
 			"material": "MATERIAL",
 			"opacity": "Opacity",
 			"color": "Color",
@@ -3850,34 +4036,6 @@
 			"scale": "Scale",
 			"speed": "Speed",
 			"strength": "Strength"
-		},
-		"audio": "AUDIO",
-		"audioadd": "Add sound",
-		"path": "PATH",
-		"path/": {
-			"pointadd": "Add point",
-			"closed": "Connect ends",
-			"smooth": "Smooth path",
-			"detail": "Detail",
-			"detailtip": "Higher values will result in better path accuracy, but are more performance intense.",
-			"shape": "Shape",
-			"shape/": {
-				"none": "None",
-				"flat": "Flat",
-				"tube": "Tube",
-				"radius": "Radius",
-				"invert": "Invert",
-				"smoothsegments": "Smooth segments",
-				"smoothsegmentstip": "Enable smooth lighting along the direction of the path.",
-				"smoothring": "Smooth ring",
-				"smoothringtip": "Enable smooth lighting on the ring shape around the path.",
-				"detail": "Shape detail",
-				"texmapped": "Mapped texture",
-				"texmappedtip": "Whether the faces of the shape should use parts of a texture image.",
-				"texlength": "Texture length",
-				"texlengthtip": "The length the path texture should stretch for before repeating.",
-				"savemap": "Export map"
-			}
 		}
 	},
 	"frameeditor/": {
@@ -3956,12 +4114,15 @@
 		"chartex": "Skin",
 		"chartexmaterial": "Material map",
 		"chartexnormal": "Normal map",
+		"equipmenttex": "Texture",
+		"equipmenttexmaterial": "Material map",
+		"equipmenttexnormal": "Normal map",
 		"spblocktex": "Texture",
 		"spblocktexmaterial": "Material map",
 		"spblocktexnormal": "Normal map",
-		"bodyparttex": "Skin",
-		"bodyparttexmaterial": "Material map",
-		"bodyparttexnormal": "Normal map",
+		"modelparttex": "Skin",
+		"modelparttexmaterial": "Material map",
+		"modelparttexnormal": "Normal map",
 		"blocktex": "Texture",
 		"blocktexmaterial": "Material map",
 		"blocktexnormal": "Normal map",
@@ -4028,6 +4189,8 @@
 			"rotate": "Rotate around point",
 			"rotate/": {
 				"distance": "Distance",
+				"anglexz": "XZ",
+				"angley": "Y",
 				"anglexy": "XY",
 				"anglez": "Z",
 				"lookatpoint": "Look at rotation point"
@@ -4154,6 +4317,9 @@
 			"itemslot": "Item slot"
 		},
 		"keyframe": "KEYFRAME SETTINGS",
+		"notanimated": "The object is not animated.",
+		"notanimatedmultiple": "The selected objects are not animated.",
+		"animated": "Enable animation",
 		"transition": "Transition",
 		"easein": "Ease in",
 		"easeinx": "X",
@@ -4161,7 +4327,10 @@
 		"easeout": "Ease out",
 		"easeoutx": "X",
 		"easeouty": "Y",
-		"visible": "Visible"
+		"visible": "Visible",
+		"hidden": "The selected object is marked as hidden.",
+		"hiddenmultiple": "The selected objects are marked as hidden.",
+		"enabled": "Enabled"
 	},
 	"transition/": {
 		"menu/": {
@@ -4217,10 +4386,14 @@
 		"spawncameras": "Copy work camera into new cameras",
 		"unlimitedvalues": "Allow unlimited values",
 		"sceneryremoveedges": "Remove edges of large scenery",
+		"sceneryremoveedgestip": "The edges of large scenery will be removed to optimize memory usage.",
+		"sceneryreplaceground": "Large scenery replaces ground",
+		"sceneryreplacegroundtip": "Large scenery will replace the ground and become locked in the timeline.",
 		"interface": "INTERFACE",
 		"appearance": "Appearance",
 		"theme": "Theme",
 		"theme/": {
+			"classic": "Classic",
 			"light": "Light",
 			"dark": "Dark",
 			"darker": "Darker"
@@ -4285,9 +4458,13 @@
 				"copy": "Copy keyframes",
 				"cut": "Cut keyframes",
 				"paste": "Paste keyframes",
-				"delete": "Delete keyframes"
+				"delete": "Delete keyframes",
+				"scale": "Scale keyframes",
+				"stretch": "Stretch keyframes"
 			},
 			"tool/": {
+				"workbench": "Open workbench",
+				"build": "Build mode",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

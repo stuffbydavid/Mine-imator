@@ -68,6 +68,10 @@ function block_load_model_file(fname, res = null)
 						texname = ds_map_find_value(texmap, key)
 					texname = string_replace(texname, "minecraft:", "")
 					
+					// Fix snowy grass block top
+					if (res = null && name = "grass_block_snow" && key = "top")
+						texname = "block/snow"
+					
 					texture_map[?key] = block_load_model_file_texture(texname, res)
 					key = ds_map_find_next(texmap, key)
 				}
@@ -152,10 +156,10 @@ function block_load_model_file(fname, res = null)
 						}
 						
 						matrix = matrix_create(point3D_mul(origin, -1), vec3(0), vec3(1))
-						matrix = matrix_multiply(matrix, matrix_create(point3D(0, 0, 0), vec3(0), scale))
-						matrix = matrix_multiply(matrix, matrix_create(point3D(0, 0, 0), [rot[X], 0, 0], vec3(1)))
-						matrix = matrix_multiply(matrix, matrix_create(point3D(0, 0, 0), [0, 0, rot[Z]], vec3(1)))
-						matrix = matrix_multiply(matrix, matrix_create(point3D(0, 0, 0), [0, rot[Y], 0], vec3(1)))
+						matrix = matrix_multiply(matrix, matrix_create(point3D(0), vec3(0), scale))
+						matrix = matrix_multiply(matrix, matrix_create(point3D(0), [rot[X], 0, 0], vec3(1)))
+						matrix = matrix_multiply(matrix, matrix_create(point3D(0), [0, 0, rot[Z]], vec3(1)))
+						matrix = matrix_multiply(matrix, matrix_create(point3D(0), [0, rot[Y], 0], vec3(1)))
 						matrix = matrix_multiply(matrix, matrix_create(origin, vec3(0), vec3(1)))
 						rotated = true
 					}

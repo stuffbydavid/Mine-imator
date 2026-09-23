@@ -2,25 +2,59 @@
 
 function tab_timeline_editor_info()
 {
+	// Type and template
+	var typename, create, button, buttonwid;
+	typename = string_remove_newline(tl_edit.type_name)
+	create = false
+	button = ""
+	buttonwid = 0
+
+	if (tl_edit.type < e_temp_type.amount && (tl_edit.has_temp ||
+		(tl_edit.part_root = null && (tl_edit.type = e_tl_type.BLOCK || tl_edit.type = e_tl_type.SPECIAL_BLOCK))))
+	{
+		tab_control(40)
+		create = !tl_edit.has_temp
+		button = "timelineeditor" + (create ? "create" : "edit") + "template"
+
+		draw_set_font(font_button)
+		buttonwid = string_width(text_get(button)) + 24
+	}
+	else
+		tab_control(28)
+
+	draw_label_value(dx, dy + 4, max(0, dw - buttonwid - (buttonwid > 0 ? 8 : 0)), ui_small_height, text_get("timelineeditortype"), typename)
+	if (button != "" && draw_button_label(button, dx + dw, dy, null, null, create ? e_button.SECONDARY : e_button.PRIMARY, null, e_anchor.RIGHT))
+	{
+		if (create)
+			action_tl_create_temp()
+		else
+			with (tl_edit.part_root = null ? tl_edit.temp : tl_edit.part_root.temp)
+				temp_select_edit(true)
+	}
+	tab_next()
+	
 	// Name
 	tab_control_textfield()
 	tab.info.tbx_name.text = tl_edit.name
 	draw_textfield("timelineeditorname", dx, dy, dw, 24, tab.info.tbx_name, action_tl_name, string_remove_newline(tl_edit.display_name), "top")
 	tab_next()
 	
-	if (tl_edit.type = e_temp_type.TEXT)
+	// Animated
+	if (tl_edit.type != e_tl_type.AUDIO_TRACK && tl_edit.type != e_tl_type.BACKGROUND)
 	{
-		// Text
-		tab_control_textfield(true, 76)
-		tab.info.tbx_text.text = tl_edit.text
-		draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.info.tbx_text, action_tl_text, "", "top")
+		tab_control_checkbox()
+		draw_switch("timelineeditoranimated", dx, dy, tl_edit.animated, action_tl_animated)
 		tab_next()
 	}
 	
-	// Type
-	tab_control(ui_small_height)
-	draw_label_value(dx, dy, dw, ui_small_height, text_get("timelineeditortype"), string_remove_newline(tl_edit.type_name))
-	tab_next()
+	if (tl_edit.type = e_temp_type.TEXT)
+	{
+		// Text
+		tab_control_textfield(true, 126)
+		tab.info.tbx_text.text = tl_edit.text
+		draw_textfield("timelineeditortext", dx, dy, dw, 126, tab.info.tbx_text, action_tl_text, "", "top")
+		tab_next()
+	}
 	
 	// Rotation point (Advanced mode only)
 	if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)
@@ -37,7 +71,7 @@ function tab_timeline_editor_info()
 			if (tl_edit.part_of = null && tl_edit.temp != null)
 				def = tl_edit.temp.rot_point
 			else
-				def = point3D(0, 0, 0)
+				def = point3D(0)
 			
 			axis_edit = X
 			textfield_group_add("timelineeditorrotpointx", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_x)

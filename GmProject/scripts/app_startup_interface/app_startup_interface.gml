@@ -4,6 +4,7 @@ function app_startup_interface()
 {
 	app_startup_shortcut_bar()
 	app_startup_interface_bench()
+	app_startup_interface_build()
 	app_startup_interface_timeline()
 	app_startup_interface_export()
 	app_startup_interface_menus()

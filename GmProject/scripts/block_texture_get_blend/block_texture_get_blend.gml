@@ -8,12 +8,10 @@ function block_texture_get_blend(texname, res)
 	
 	if (!is_undefined(col))
 	{
-		if (!res_is_ready(res))
-			res = mc_res
-		
 		if (is_real(col))
 			return col
 		
+		res = res_eval(res)
 		switch (col)
 		{
 			case "grass": return res.color_grass;

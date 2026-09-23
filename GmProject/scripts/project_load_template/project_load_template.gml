@@ -13,10 +13,13 @@ function project_load_template(map)
 		load_id = value_get_string(map[?"id"], save_id)
 		save_id_map[?load_id] = load_id
 		
-		type = ds_list_find_index(temp_type_name_list, value_get_string(map[?"type"]))
+		var typename = value_get_string(map[?"type"]);
+		if (typename = "bodypart")
+			typename = "modelpart"
+		type = ds_list_find_index(temp_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.BODYPART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL_PART)
 		{
 			if (load_format = e_project.FORMAT_110_PRE_1)
 				model_tex = value_get_save_id(map[?"skin"], model_tex)
@@ -66,8 +69,14 @@ function project_load_template(map)
 				// Model version
 				model_version = value_get_real(modelmap[?"model_version"], 0)
 				project_load_template_update_model()
+
+				// Equipment was formerly saved as a special block
+				if (type = e_temp_type.SPECIAL_BLOCK &&
+					!is_undefined(mc_assets.model_name_map[?model_name]) &&
+					ds_list_find_index(mc_assets.equipment_list, mc_assets.model_name_map[?model_name]) >= 0)
+					type = e_temp_type.EQUIPMENT
 				
-				if (type = e_temp_type.BODYPART)
+				if (type = e_temp_type.MODEL_PART)
 					model_part_name = value_get_string(modelmap[?"part_name"], model_part_name)
 				
 				// Pattern values
@@ -147,9 +156,9 @@ function project_load_template(map)
 						if (!is_undefined(newname))
 							itemname = newname
 					}
-					item_slot = ds_list_find_index(mc_assets.item_texture_list, itemname)
+					item_slot = minecraft_assets_texture_picker_slot_find(itemname, mc_assets.item_texture_list)
 					if (item_slot < 0)
-						item_slot = ds_list_find_index(mc_assets.item_texture_list, default_item)
+						item_slot = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 				}
 				else
 					item_slot = value_get_real(itemmap[?"slot"], item_slot)
@@ -223,6 +232,8 @@ function project_load_template(map)
 				block_randomize = value_get_real(blockmap[?"randomize"], block_randomize)
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 				block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
+				block_center = value_get_real(blockmap[?"center"], load_format < e_project.FORMAT_210)
+				block_center_legacy = (load_format < e_project.FORMAT_210 && block_center)
 			}
 		}
 		else if (type = e_temp_type.SCENERY)
@@ -253,6 +264,8 @@ function project_load_template(map)
 				
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 				block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
+				block_center = value_get_real(blockmap[?"center"], load_format < e_project.FORMAT_210)
+				block_center_legacy = (load_format < e_project.FORMAT_210 && block_center)
 			}
 		}
 		else if (type = e_temp_type.MODEL)
@@ -312,6 +325,6 @@ function project_load_template(map)
 			project_load_particles(map[?"particles"])
 		
 		if (temp_creator = app)
-			sortlist_add(app.lib_list, id)
+			temp_add_lists()
 	}
 }

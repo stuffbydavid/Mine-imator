@@ -14,6 +14,11 @@ function tab_timeline()
 	var markerx, markery;
 	var regionx1, regionx2;
 	var show_hor_scroll;
+
+	if (place_tl != null && app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	{
+		place_content_mouseon = "timeline"
+	}
 	
 	markerbarshow = (ds_list_size(timeline_marker_list) > 0) && setting_timeline_show_markers
 	
@@ -116,7 +121,17 @@ function tab_timeline()
 	draw_set_font(font_heading)
 	timelabel = timeline_show_frames ? text_get("timelineframe", floor(timeline_marker)) : string_time_seconds(timeline_marker / project_tempo, false)
 	draw_label(timelabel, timex, headery + headerh - 6, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
-	timex += string_width(timelabel)
+	
+	// Advance X
+	var maxpos, hrs;
+	maxpos = max(timeline_length, timeline_marker)
+	hrs = floor((maxpos / project_tempo) / 3600);
+	if (timeline_show_frames)
+		timex += string_width(text_get("timelineframe", string_repeat("0", string_length(string(floor(maxpos))))))
+	else if (hrs > 0)
+		timex += string_width(string(hrs) + ":00:00.000")
+	else
+		timex += string_width("00:00.000")
 	
 	// Time length
 	draw_set_font(font_subheading)
@@ -462,7 +477,7 @@ function tab_timeline()
 				if (dx > tlx + (tlw + 32))
 					break
 				
-				if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
+				if (tl.type = e_tl_type.AUDIO_TRACK && sound && sound.ready)
 				{
 					var boxw = tl_keyframe_length(kf) * timeline_zoom;
 					if (dx + boxw < tlx)
@@ -500,7 +515,7 @@ function tab_timeline()
 			sound = kf.value[e_value.SOUND_OBJ]
 			pitch = kf.value[e_value.SOUND_PITCH]
 			
-			if (tl.type = e_tl_type.AUDIO && sound && sound.ready)
+			if (tl.type = e_tl_type.AUDIO_TRACK && sound && sound.ready && audio_is_ready(sound.sound_index))
 			{
 				var soundlen, boxx, boxw, startsample, samplesshow, prec, wavehei, alpha;
 				
@@ -564,7 +579,7 @@ function tab_timeline()
 			else
 			{
 				// Invisible
-				if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO)
+				if ((!kf.value[e_value.VISIBLE] || !kf.value[e_value.SPAWN]) && !tl.hide && tl.type != e_tl_type.AUDIO_TRACK)
 				{
 					var curdx, nextdx;
 					curdx = ((k = 0) ? tlx : max(tlx, dx))
@@ -838,7 +853,10 @@ function tab_timeline()
 	// Filter (advanced mode only)
 	if (setting_advanced_mode)
 	{
-		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24, setting_timeline_hide_ghosts || !array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)), icons.FILTER, null, false, "tooltiptlfilter"))
+		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24,
+			setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated ||setting_timeline_hide_ghosts || 
+			!array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)),
+			icons.FILTER, null, false, "tooltiptlfilter"))
 		{
 			menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
 			settings_menu_script = tl_filter_draw
@@ -883,39 +901,31 @@ function tab_timeline()
 		if (itemhover)
 			mouse_cursor = cr_handpoint
 			
-		if (itemhover && (window_busy = "" || window_busy = "place"))
-			place_view_mouse = "timeline"
-		
 		// Parent hovering item to selected timeline
 		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
 		{
-			with (history[0])
+			with (place_history)
 			{
 				parent = tl
-				value_default[e_value.POS_X] = 0
-				value_default[e_value.POS_Y] = 0
-				value_default[e_value.POS_Z] = 0
+				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 			}
 			
-			place_tl.value_default[e_value.POS_X] = 0
-			place_tl.value_default[e_value.POS_Y] = 0
-			place_tl.value_default[e_value.POS_Z] = 0
-			place_tl.value[e_value.POS_X] = 0
-			place_tl.value[e_value.POS_Y] = 0
-			place_tl.value[e_value.POS_Z] = 0
-			
 			with (place_tl)
+			{
+				tl_value_set_vec3(e_value.POS_X, vec3(0))
+				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 				tl_set_parent(tl)
+			}
 				
 			tl_update_list()
 			tl_update_matrix()
 			render_samples = -1
-			app_stop_place()
+			app_stop_place(true)
 		}
 		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
-		else if (tl.selected || itemhover || tl = context_menu_value || ((window_busy = "timelineclick") && timeline_select = tl) || ((window_busy = "timelineclick" && window_busy = "place") && timeline_select = tl))
+		else if (itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 		
 		xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))
@@ -923,7 +933,7 @@ function tab_timeline()
 		// Hide/mute
 		if (itemhover || tl.hide)
 		{
-			if (tl.type != e_tl_type.AUDIO)
+			if (tl.type != e_tl_type.AUDIO_TRACK)
 			{
 				// Hide
 				if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.HIDDEN_SMALL : icons.VISIBLE_SMALL, null, false, tl.hide ? "tooltiptlshow" : "tooltiptlhide"))
@@ -1051,6 +1061,7 @@ function tab_timeline()
 		if (!setting_timeline_compact)
 		{
 			var iconcolor, iconalpha;
+			var activetl = tl_active(tl);
 			
 			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
@@ -1065,13 +1076,13 @@ function tab_timeline()
 			{
 				if (tl.color_tag = null)
 				{
-					iconcolor = c_text_tertiary
-					iconalpha = a_text_tertiary
+					iconcolor = activetl ? c_accent : c_text_tertiary
+					iconalpha = activetl ? .75 : a_text_tertiary
 				}
 				else
 				{
 					iconcolor = setting_theme.accent_list[tl.color_tag]
-					iconalpha = .75
+					iconalpha = activetl ? 1 : .75
 				}
 			}
 			
@@ -1084,7 +1095,16 @@ function tab_timeline()
 			minw -= 24
 			itemmaxw += 24
 		}
+		
+		// Structure editing in build mode
 		xx += 1
+		if (place_build && tl = build_structure && minw >= 20)
+		{
+			draw_image(spr_icons, icons.PENCIL, xx + 8, itemy + (itemh/2), .75, .75, c_accent, 1)
+			xx += 22
+			minw -= 22
+			itemmaxw += 22
+		}
 		
 		tl.list_mouseon = itemhover && !buttonhover
 		
@@ -1130,8 +1150,16 @@ function tab_timeline()
 			}
 			else
 			{
-				namecolor = c_text_main
-				namealpha = a_text_main
+				if (!tl.animated)
+				{
+					namecolor = c_text_secondary
+					namealpha = a_text_secondary	
+				}
+				else
+				{
+					namecolor = c_text_main
+					namealpha = a_text_main
+				}
 				backalpha = .25
 			}
 			
@@ -1179,7 +1207,7 @@ function tab_timeline()
 			draw_set_font(font_caption)
 			
 			// Check contents array and display the icon/amount
-			for (var i = 0; i < e_tl_type.amount - 1; i++)
+			for (var i = 0; i < e_tl_type.amount; i++)
 			{
 				if (tl.tree_contents[i] = 0)
 					continue
@@ -1366,7 +1394,7 @@ function tab_timeline()
 				else
 					action_tl_select(mousekf.timeline)
 				
-				if (mousekf.timeline.type = e_tl_type.AUDIO && mousekf.value[e_value.SOUND_OBJ])
+				if (mousekf.timeline.type = e_tl_type.AUDIO_TRACK && mousekf.value[e_value.SOUND_OBJ])
 					timeline_marker = timeline_mouse_pos
 				else
 					timeline_marker = mousekf.position
@@ -1413,11 +1441,29 @@ function tab_timeline()
 	// Moving keyframes
 	if (window_busy = "timelinemovekeyframes")
 	{
-		mouse_cursor = cr_size_all
+		if (timeline_move_kf_stretch)
+			mouse_cursor = cr_size_we
+		else
+			mouse_cursor = cr_size_all
+		
 		if (!mouse_left)
 			action_tl_keyframes_move_done()
 		else
 			action_tl_keyframes_move()
+	}
+	
+	// Scaling keyframes
+	if (window_busy = "timelinescalekeyframes")
+	{
+		mouse_cursor = cr_size_we
+		shortcut_bar_state = "timelinescale"
+		
+		if (keyboard_check_pressed(vk_escape) || mouse_right_pressed)
+			action_tl_keyframes_scale_cancel()
+		else if (keyboard_check_pressed(vk_enter) || mouse_left_pressed)
+			action_tl_keyframes_move_done()
+		else
+			action_tl_keyframes_scale()
 	}
 	
 	// Move timelines
@@ -1514,7 +1560,12 @@ function tab_timeline()
 					if (keyboard_check(vk_control))
 						action_tl_deselect(timeline_select)
 					else
+					{
+						if (place_build && type_is_structure(timeline_select.type))
+							action_build_structure(timeline_select, true)
+						
 						app_update_tl_edit()
+					}
 				}
 				else
 					action_tl_select(timeline_select)
@@ -1812,6 +1863,9 @@ function tab_timeline()
 		
 		if (mouseinbar)
 			shortcut_bar_state = "timelinebar"
+		
+		if (window_busy = "timelinescalekeyframes")
+			shortcut_bar_state = "timelinescale"
 		
 		window_scroll_focus = string(timeline.ver_scroll)
 		

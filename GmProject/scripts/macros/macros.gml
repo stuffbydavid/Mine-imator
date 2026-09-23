@@ -3,14 +3,30 @@
 
 function macros()
 {
+	// Debug
+	#macro dev_mode						true
+	#macro dev_mode_skip_blocks			dev_mode && true
+	#macro dev_mode_max_blocks			50
+	#macro dev_mode_debug_schematics	dev_mode && false
+	#macro dev_mode_debug_names			dev_mode && false
+	#macro dev_mode_debug_saveid		dev_mode && false
+	#macro dev_mode_debug_unused		!dev_mode_skip_blocks && true
+	#macro dev_mode_project				file_directory + "dev_project/dev_project.miproject"
+	#macro dev_mode_full				dev_mode && true
+	#macro dev_mode_advanced			dev_mode && true
+	#macro dev_mode_show_bones			dev_mode && false
+	#macro dev_mode_skip_tangents		dev_mode && false
+	#macro dev_mode_check_assets		dev_mode && true
+	#macro dev_mode_dark_theme			dev_mode && true
+	#macro dev_mode_name_translation_message " is not defined in the translation, the key will be formatted"
+	
 	// Versions
 	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
 	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
 	#macro mineimator_version_extra		"WIP"		// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
 	#macro mineimator_version_date		"2026.09.XX"
-	#macro minecraft_version			"26.3-snapshot-9"
-	#macro gm_runtime					GM_runtime_version
+	#macro minecraft_assets_version		"26.3"
 	
 	// File formats
 	#macro project_format				e_project.FORMAT_210
@@ -20,12 +36,11 @@ function macros()
 	
 	// Directories
 	#macro data_directory				working_directory + "Data/"
-	#macro schematics_directory			working_directory + "Schematics/"
+	#macro schematic_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
 	#macro fonts_directory				data_directory + "Fonts/"
 	#macro languages_directory			data_directory + "Languages/"
 	#macro minecraft_directory			data_directory + "Minecraft/"
-	#macro patched_directory			minecraft_directory + "Patched/"
 	#macro render_directory				data_directory + "Render/"
 	#macro splash_directory				data_directory + "Splashes/"
 	
@@ -53,6 +68,7 @@ function macros()
 	#macro mc_blockstates_directory		mc_assets_directory + "blockstates/"
 	#macro mc_textures_directory		mc_assets_directory + "textures/"
 	#macro mc_character_directory		mc_models_directory + "character/"
+	#macro mc_equipment_directory		mc_models_directory + "equipment/"
 	#macro mc_special_block_directory	mc_models_directory + "special_block/"
 	#macro mc_block_directory			mc_models_directory + "block/"
 	#macro mc_loops_directory			mc_character_directory + "loops/"
@@ -102,11 +118,13 @@ function macros()
 	
 	// Colors
 	#macro c_controls					make_color_rgb(40, 40, 40)
-	#macro c_sky						make_color_rgb(120, 167, 255)
+	#macro c_sky						make_color_rgb(129, 172, 255)
+	#macro c_fog_bright					make_color_rgb(246, 253, 255)
 	#macro c_clouds						make_color_rgb(255, 255, 255)
 	#macro c_sunlight					make_color_rgb(255, 247, 228)
 	#macro c_ambient					make_color_rgb(102, 112, 140)
-	#macro c_night_sky					make_color_rgb(2, 2, 4)
+	#macro c_night_sky					make_color_rgb(2, 2, 3)
+	#macro c_fog_night					make_color_rgb(10, 11, 20)
 	#macro c_night_clouds				make_color_rgb(25, 25, 38)
 	#macro c_stars						make_color_rgb(63, 63, 63)
 	#macro c_night						make_color_rgb(14, 14, 24)
@@ -140,27 +158,71 @@ function macros()
 	#macro button_padding				24
 	#macro button_icon_padding			52
 	#macro snap_min						0.000001
+	#macro transform_snap				0.0001
 	#macro dragger_width				74
 	#macro label_height					9
-	#macro load_assets_width			800
+	#macro load_assets_width			780
 	#macro load_assets_height			450
+	#macro panel_width					360
+	#macro panel_bottom_height			300
+	#macro panel_top_height				205
+	#macro bench_min_width				530
+	#macro bench_max_width				800
+	#macro bench_initial_width			604
+	#macro bench_initial_height			345
+	#macro bench_list_percent			0.8
+	#macro bench_soundlist_percent		1
+	#macro list_minimum_items			7
+	#macro soundlist_minimum_items		9
+	#macro list_center_max				500
 	
 	// Values
 	#macro null							noone
+	#macro project_pack_res				-3
+	#macro particle_sheet				-5
+	#macro particle_template			-6
 	#macro no_limit						100000000
+	#macro normal_buffer_scale			8
 	#macro default_model				"human"
 	#macro default_model_part			"head"
+	#macro default_model_part_model		"armor"
+	#macro default_equipment			"armor"
 	#macro default_special_block		"chest"
 	#macro default_block				"grass_block"
 	#macro default_item					"item/diamond_sword"
 	#macro default_ground				"block/grass_block_top"
 	#macro default_biome				"plains"
-	#macro particle_sheet				-5
-	#macro particle_template			-6
-	#macro normal_buffer_scale			8
+	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
+	#macro schematic_folders			array("Buildings", "Biomes", "Trees", "Structures", "Other")
+	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")
+	#macro scenery_large_threshold		300
+	#macro scenery_instant_threshold	20 * 1024 // 20kb
+	#macro scenery_timeline_prompt		20
+	#macro scenery_timeline_limit		512
+	#macro sound_filters				array("ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other")
+	#macro sound_default				"Step / Grass 1"
+	#macro music_filters				array("game", "menu", "records", "other")
+	#macro music_default				"Records / Cat"
+	#macro particle_folders				array("Effects", "Weather")
+	#macro particle_default				array("Default", "Snow")
+	#macro default_text					"AaBbCc"
+	
+	// Parenting actions for right/left arm
+	#macro item_parent_action			array(null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5))
+	#macro bow_parent_action_right		array(null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9))
+	#macro bow_parent_action_left		array(null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9))
+	#macro tool_parent_action			array(null, true, vec3(0, 2, 0), vec3(0, 145, 90), vec3(0.85))
+	#macro rod_parent_action			array(null, true, vec3(0, 2, -9), vec3(180, 145, 90), vec3(0.85))
+	#macro crossbow_parent_action_right	array(null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9))
+	#macro crossbow_parent_action_left	array(null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9))
+	#macro spear_parent_action			array(null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25))
+	#macro block_parent_action_right	array(null, true, vec3(0, 3.5, -9.5), vec3(-15, 15, 135), vec3(0.4))
+	#macro block_parent_action_left		array(null, true, vec3(0, 3.5, -9.5), vec3(15, 15, 45), vec3(0.4))
 	
 	// World
 	#macro block_size					16
+	#macro block_half_size				8
+	#macro block_size_list				array(16, 32, 64)
 	#macro item_size					16
 	#macro clip_far						30000
 	#macro clip_near					1

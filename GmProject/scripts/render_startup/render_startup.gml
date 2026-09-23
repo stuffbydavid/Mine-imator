@@ -252,8 +252,9 @@ function render_startup()
 	render_mode_shader_map = ds_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
 	render_mode_shader_map[?e_render_mode.SELECT] = shader_blend
-	render_mode_shader_map[?e_render_mode.PLACE] = shader_blend
-	render_mode_shader_map[?e_render_mode.PREVIEW] = shader_color_fog
+	render_mode_shader_map[?e_render_mode.PLACE_SELECT] = shader_blend
+	render_mode_shader_map[?e_render_mode.PLACE_PARENT] = shader_blend
+	render_mode_shader_map[?e_render_mode.PREVIEW] = shader_color_fog_lights
 	render_mode_shader_map[?e_render_mode.COLOR] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG_LIGHTS] = shader_color_fog_lights
@@ -271,6 +272,12 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
 	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
 	render_mode_shader_map[?e_render_mode.AUXILIARY] = shader_high_auxiliary
+	render_mode_shader_map[?e_render_mode.AO_MASK] = shader_replace
+	render_mode_shader_map[?e_render_mode.HIGH_DEPTH_NORMAL] = shader_high_depth_normal
+	render_mode_shader_map[?e_render_mode.PLACE] = shader_place
+	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
+	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
+	render_mode_shader_map[?e_render_mode.GLINT] = shader_high_glint
 	
 	// Load default render settings
 	globalvar render_default_settings;

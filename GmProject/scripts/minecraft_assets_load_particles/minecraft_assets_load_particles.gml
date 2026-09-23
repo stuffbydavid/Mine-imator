@@ -14,7 +14,7 @@ function minecraft_assets_load_particles(particlelist)
 		ptemp.texture_list = ds_list_create()
 		ptemp.size = value_get_real(tempmap[?"size"], 8)
 		
-		if (!is_undefined(tempmap[?"textures"]))
+		if (ds_list_valid(tempmap[?"textures"]))
 		{
 			// "textures" list
 			var texturesmap = tempmap[?"textures"]

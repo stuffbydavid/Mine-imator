@@ -312,8 +312,21 @@ function view_draw(view)
 	if (draw_button_icon("viewaspectratio", dx, dy, dw, dh, view.aspect_ratio, icons.LETTERBOX, null, false, view.aspect_ratio ? "viewaspectratiodisable" : "viewaspectratioenable"))
 		view.aspect_ratio = !view.aspect_ratio
 	
+	// Overlay settings
+	dx -= 16 + padding
+	
+	if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), icons.CHEVRON_DOWN_TINY))
+	{
+		menu_settings_set(dx, dy, (string(view) + "viewoverlaysettings"), 24)
+		settings_menu_view = view
+		settings_menu_script = menu_overlay_settings
+	}
+	
+	if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu_ani_type != "hide")
+		current_microani.active.value = true
+	
 	// Overlays
-	dx -= dw + padding
+	dx -= dw
 	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
 		view.gizmos = !view.gizmos
 	
@@ -446,7 +459,16 @@ function view_draw(view)
 		content_y = floor(content_y)
 		content_width = ceil(content_width)
 		content_height = ceil(content_height)
-		content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, "place") && view.mouseon && !view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		content_mouseon = false
+		
+		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		{
+			var viewbusy = place_busy;
+			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
+				viewbusy = window_busy
+			
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
+		}
 		
 		if (content_mouseon)
 			shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
@@ -477,45 +499,7 @@ function view_draw(view)
 			}
 		}
 				
-		// Place object
-		if (window_busy = "place" && mouse_x >= content_x && mouse_y >= content_y && mouse_x < content_x + content_width && mouse_y < content_y + content_height)
-		{
-			// Update depth surface with placed object hidden
-			if (view.update_depth)
-			{
-				surface_clear_depth_cache(view.surface_depth)
-				render_start(view.surface_depth, null, content_width, content_height) // No camera to disable effects
-				render_camera = cam
-				render_update_camera()
-				place_tl_render = false
-				render_target = surface_require(render_target, render_width, render_height)
-				surface_set_target(render_target)
-				{
-					draw_clear_alpha(c_black, 0)
-					render_world_background()
-					render_world_start()
-					render_world_sky()
-					render_world(e_render_mode.COLOR_FOG)
-					render_world_done()
-				}
-				surface_reset_target()
-				view.surface_depth = render_done()
-				view.update_depth = false
-			}
-			
-			var mx = mouse_x - content_x;
-			var my = mouse_y - content_y;
-			var tx = mx / content_width;
-			var ty = 1 - my / content_height;
-			var depthval = surface_get_depth(view.surface_depth, mx, my);
-			if (depthval < 1)
-				view.surface_depth_value = depthval
-			var clipspace = vec4(tx * 2 - 1, ty * 2 - 1, min(0.99975, view.surface_depth_value) * 2 - 1, 1);
-			var viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse_ext(proj_matrix)));
-			place_view_pos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix))
-			place_tl_render = true
-			render_samples = -1
-		}
+		view_place(view, cam)
 	}
 	
 	// Revert content size for overlays
@@ -542,26 +526,26 @@ function view_draw(view)
 			gpu_set_tex_filter(true)
 		
 		draw_image(spr_bench, 0, benchx + 43, benchy + 43, benchscale, benchscale, null, bench_hover_ani, benchrot)
+
+		with (obj_note)
+			draw_image(spr_note, 2, x, y, note_scale, note_scale, note_color, note_alpha, note_angle)
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(false)
 		
 		if (bench_open)
-		{
-			bench_show_ani_type = "show"
-			window_busy = "bench"
-			bench_settings_ani = 1
-			bench_open = false
-		}
+			bench_show()
 		
 		if (bench_rotate_ani = 0 && benchempty && bench_show_ani = 0 && bench_show_ani_type = "")
 			bench_rotate_ani = 1
 		
 		// Set animation
-		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
+		if (view_main.mouseon && app_mouse_box(benchx, benchy, 86, 86, place_busy) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon && !(view_second.show && view_second.mouseon))
 		{
 			mouse_cursor = cr_handpoint
 			bench_button_hover = true
+			if (place_build)
+				place_content_mouseon = "bench"
 			
 			bench_hover_ani_goal = 1
 			
@@ -578,11 +562,15 @@ function view_draw(view)
 				bench_click_ani_goal = 1
 			
 			tip_force_right = true
-			tip_set(text_get("viewworkbenchtip"), benchx, benchy, 86, 86, false)
+			tip_set(text_get("viewbenchtip"), benchx, benchy, 86, 86, false)
 			tip_force_right = false
 			
 			if (mouse_left_pressed)
+			{
+				if (place_build)
+					app_stop_place(false, false)
 				bench_open = true
+			}
 		}
 		else
 		{
@@ -882,7 +870,7 @@ function view_draw(view)
 			infotext = ""
 		
 		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
-		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? setting_theme.toast_color[e_toast.NEGATIVE] : c_white, 1, font_caption)
+		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? c_error : c_white, 1, font_caption)
 		
 		if (project_render_pass != e_render_pass.COMBINED)
 		{
@@ -898,7 +886,10 @@ function view_draw(view)
 		draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, .25)
 	
 	// Mouse on
-	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, "place")
+	var viewbusy = place_busy;
+	if ((place_tl != null || place_build) && window_focus = string(view))
+		viewbusy = window_busy
+	view.mouseon = app_mouse_box(boxx, boxy, boxw, boxh, viewbusy)
 	if (view.mouseon && view = view_second)
 		view_main.mouseon = false
 	

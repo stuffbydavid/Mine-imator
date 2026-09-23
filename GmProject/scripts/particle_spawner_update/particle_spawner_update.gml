@@ -7,7 +7,7 @@ function particle_spawner_update(spawner)
 	{
 		var temp, realtime;
 		temp = (is_timeline ? id.temp : select)
-		realtime = (!is_timeline || (is_timeline && app.template_editor.show && temp_edit = temp)) && (app.window_state != "export_movie" && app.window_state != "export_image")
+		realtime = (!is_timeline || (is_timeline && app.object_editor.show && obj_edit = temp)) && (app.window_state != "export_movie" && app.window_state != "export_image")
 		spawn_currentstep = (realtime ? current_step : floor(app.background_time))
 		
 		// Reset, switch to realtime
@@ -40,7 +40,7 @@ function particle_spawner_update(spawner)
 				if (is_timeline)
 					spawn = value[e_value.SPAWN]
 				else
-					spawn = spawn_active
+					spawn = particle_spawn_active
 				
 				if (spawn)
 				{

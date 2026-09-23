@@ -6,7 +6,10 @@ function tl_update_value_types()
 	for (var v = 0; v < e_value_type.amount; v++)
 		value_type[v] = false
 	
-	if (type = e_tl_type.AUDIO)
+	if ((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp)
+		value_type[e_value_type.BLOCK] = true
+	
+	if (type = e_tl_type.AUDIO_TRACK)
 	{
 		value_type[e_value_type.SOUND] = true
 		value_type[e_value_type.AUDIO] = true
@@ -58,7 +61,7 @@ function tl_update_value_types()
 		value_type[e_value_type.TRANSFORM_SCA] = true
 	
 	// Bend
-	if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != null)
+	if (type = e_tl_type.MODEL_PART && model_part != null && model_part.bend_part != null)
 		value_type[e_value_type.TRANSFORM_BEND] = true
 	
 	// Color

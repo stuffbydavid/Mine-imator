@@ -13,14 +13,15 @@ function tab_frame_editor_texture_material()
 		switch (tl_edit.type)
 		{
 			case e_tl_type.CHARACTER:
+			case e_tl_type.EQUIPMENT:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
 				
 				var modelfile = tl_edit.temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_temp_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				with (tl_edit.temp)
@@ -29,7 +30,7 @@ function tab_frame_editor_texture_material()
 					tex = temp_get_model_tex_material_preview(texobj, modelfile)
 				}
 				
-				if (texobj = mc_res || texobj = null)
+				if (tex = null || texobj = mc_res || texobj = null)
 					sliders = true
 				
 				break
@@ -42,8 +43,6 @@ function tab_frame_editor_texture_material()
 				with (tl_edit.temp)
 					texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				
-				if (!res_is_ready(texobj))
-					texobj = mc_res
 				tex = texobj.block_preview_texture
 				
 				if (texobj = mc_res)
@@ -60,9 +59,7 @@ function tab_frame_editor_texture_material()
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_material
-				
-				if (!res_is_ready(texobj))
-					texobj = mc_res
+				texobj = res_eval(texobj)
 				
 				tex = texobj.block_preview_texture
 				
@@ -123,7 +120,7 @@ function tab_frame_editor_texture_material()
 		else
 			text = text_get("listnone")
 			
-		if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null)
+		if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = project_pack_res)
 			text = text_get("listdefault", text)
 			
 		if (project_render_material_maps)

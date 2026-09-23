@@ -17,6 +17,9 @@ function value_get_save_id()
 		
 		return val
 	}
+
+	if (is_real(val) && val < 0)
+		return val
 	
 	return def
 }

@@ -129,6 +129,7 @@ namespace CppProject
 
         // Create fragment shader output
         numOutputs = 1;
+        fsCode.replace("gl_FragCoord", "_vars.gl_Position");
         fsCode.replace("gl_FragColor", "_out.Color0");
         auto fragDataIt = QRegularExpression("gl_FragData\\[(\\d)\\]").globalMatch(fsCode);
         while (fragDataIt.hasNext())

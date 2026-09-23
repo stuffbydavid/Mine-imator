@@ -11,27 +11,31 @@ function tl_duplicate()
 		root_copy = null
 		copy = null
 		glint_tex = other.glint_tex
-		glint_tex.count++
 		
+		if (!has_temp && temp != null)
+		{
+			if (temp = other.id)
+				temp = id
+			else
+				temp = temp.copy
+		}
+
 		tl_update_scenery_part()
 		
 		// Set correct template
-		if (temp != null)
+		if (has_temp && temp != null)
 		{
-			if (temp.object_index = obj_template) // Template is in the library, 
-			{
-				if (part_of = null) // Add count for non-parts
-					temp.count++
-			}
-			else if (temp = other.id) // Template is itself, update
-				temp = id
-			else if (temp.part_of != null) // Template is also a part, update to its copy
+			if (temp.part_of != null) // Template is also a part, update to its copy
 				temp = temp.copy
 		}
 		
 		// Copy default values
 		for (var v = 0; v < e_value.amount; v++)
+		{
 			value_default[v] = tl_value_find_save_id(v, null, other.value_default[v])
+			if (!animated)
+				value[v] = other.value[v]
+		}
 		
 		// Copy keyframes
 		for (var k = 0; k < ds_list_size(other.keyframe_list); k++)

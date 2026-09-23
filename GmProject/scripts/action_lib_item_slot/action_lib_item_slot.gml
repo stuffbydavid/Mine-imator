@@ -4,9 +4,9 @@
 function action_lib_item_slot(slot)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_item_slot, temp_edit.item_slot, slot, false)
+		history_set_var(action_lib_item_slot, obj_edit.item_slot, slot, false)
 	
-	with (temp_edit)
+	with (obj_edit)
 	{
 		item_slot = slot
 		render_generate_item()

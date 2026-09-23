@@ -9,6 +9,8 @@ function app_startup_recent()
 		name_za
 	}
 	
+	tbx_recent_search = new_textbox(true, 0, "")
+	recent_search = ""
 	recent_display_mode = "grid"
 	recent_sort_mode = e_recent_sort.date_newest
 	
@@ -17,6 +19,7 @@ function app_startup_recent()
 	recent_thumbnail_width = 240
 	recent_thumbnail_height = 180
 	
+	recent_list_amount_display = 0
 	recent_list_amount = 0
 	recent_list_update = false
 	

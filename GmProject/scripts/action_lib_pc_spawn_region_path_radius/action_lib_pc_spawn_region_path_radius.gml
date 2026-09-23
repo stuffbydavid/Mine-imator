@@ -5,7 +5,7 @@
 function action_lib_pc_spawn_region_path_radius(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_pc_spawn_region_path_radius, temp_edit.pc_spawn_region_path_radius, temp_edit.pc_spawn_region_path_radius * add + val, true)
+		history_set_var(action_lib_pc_spawn_region_path_radius, obj_edit.pc_spawn_region_path_radius, obj_edit.pc_spawn_region_path_radius * add + val, true)
 	
-	temp_edit.pc_spawn_region_path_radius = temp_edit.pc_spawn_region_path_radius * add + val
+	obj_edit.pc_spawn_region_path_radius = obj_edit.pc_spawn_region_path_radius * add + val
 }

@@ -76,7 +76,7 @@ function render_world_sky()
 	// Sky
 	if (!background_image_show)
 	{
-		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], -background_sky_time, 0, background_sky_rotation, 1, 1, 1);
+		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], background_sky_time, 0, background_sky_rotation, 1, 1, 1);
 		
 		gpu_set_blendmode(bm_add)
 		
@@ -86,7 +86,7 @@ function render_world_sky()
 			if (background_sky_stars_vbuffer = null)
 				background_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
 			
-			render_set_uniform_color("uBlendColor", c_stars, background_night_alpha)
+			render_set_uniform_color("uBlendColor", background_night_sky_stars_color, background_night_alpha)
 			render_set_texture(background_sky_stars_texture)
 			vbuffer_render_matrix(background_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
 		}
@@ -98,10 +98,11 @@ function render_world_sky()
 			background_sky_sun_moon_vbuffer = vbuffer_create_surface(1, point2D(0, 0), point2D(1, 1), false)
 		
 		render_set_uniform_color("uBlendColor", c_white, vis)
-		if (background_sky_sun_tex.type = e_res_type.PACK)
-			render_set_texture(background_sky_sun_tex.sun_texture)
+		var sunres = res_eval(background_sky_sun_tex)
+		if (sunres.type = e_res_type.PACK)
+			render_set_texture(sunres.sun_texture)
 		else
-			render_set_texture(background_sky_sun_tex.texture)
+			render_set_texture(sunres.texture)
 			
 		var sca = (dis / 15000) * 1850;
 		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, min(dis * 0.7, max(0, (dis * 0.7) / background_sky_sun_scale)), 90, 0, 0 + background_sky_sun_angle, sca * min(1, background_sky_sun_scale), sca * min(1, background_sky_sun_scale), sca), skymat))
@@ -110,13 +111,14 @@ function render_world_sky()
 		vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, -1)), -0.15, 0)
 		
 		render_set_uniform_color("uBlendColor", c_white, vis)
-		if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
+		var moonres = res_eval(background_sky_moon_tex)
+		if (moonres.type = e_res_type.PACK && moonres.ready)
 		{
 			var phase = background_sky_moon_phase;
-			render_set_texture(background_sky_moon_tex.moon_textures[phase])
+			render_set_texture(moonres.moon_textures[phase])
 		}
 		else
-			render_set_texture(background_sky_moon_tex.texture)
+			render_set_texture(moonres.texture)
 			
 		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, max(-dis * 0.7, min(0, (-dis * 0.7) / background_sky_moon_scale)), -90, 0, 0 - background_sky_moon_angle, sca * min(1, background_sky_moon_scale), sca * min(1, background_sky_moon_scale), sca), skymat))
 		

@@ -5,21 +5,21 @@
 
 function temp_get_model_texobj(texobj)
 {
+	if (texobj != null)
+		texobj = res_eval(texobj)
+
 	if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA || // Check if empty or a camera
 		(texobj.model_texture = null && texobj.model_texture_map = null)) // Not a valid model texture, use the library setting
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
-		if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK)
+		if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK && part_of != null && part_of.type = e_tl_type.SCENERY)
 		{
-			if (part_of.type = e_tl_type.SCENERY)
+			with (part_of)
 			{
-				with (part_of)
-				{
-					if (temp.block_tex && temp.block_tex.type = e_res_type.PACK)
-						texobj = temp.block_tex
-					else
-						texobj = mc_res
-				}
+				if (temp.block_tex && res_eval(temp.block_tex).type = e_res_type.PACK)
+					texobj = res_eval(temp.block_tex)
+				else
+					texobj = project_pack_res
 			}
 		}
 		else
@@ -33,16 +33,19 @@ function temp_get_model_texobj(texobj)
 		{
 			if (texobj.model_format = e_model_format.BLOCK)
 			{
-				if (texobj.model_texture_map = null && texobj.block_sheet_texture = null) // Model has no texture, use Minecraft
-					texobj = mc_res
+				if (texobj.model_texture_map = null && texobj.block_sheet_texture[e_block_sheet.STATIC16] = null) // Model has no texture, use Minecraft
+					texobj = project_pack_res
 			}
 			else
 			{
 				if (texobj.model_texture_map = null && texobj.model_texture = null) // Model has no texture, use Minecraft
-					texobj = mc_res
+					texobj = project_pack_res
 			}
 		}
 	}
 	
-	return texobj
+	if (texobj = null)
+		return null
+
+	return res_eval(texobj)
 }

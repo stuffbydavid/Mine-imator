@@ -1,4 +1,4 @@
-/// draw_texture_part(texture, x, y, left, top, width, height, [xscale, yscale, [color, alpha]])
+/// draw_texture_part(texture, x, y, left, top, width, height, [xscale, yscale, [color, alpha, resettex]])
 /// @arg texture
 /// @arg x
 /// @arg y
@@ -9,11 +9,12 @@
 /// @arg [xscale
 /// @arg yscale
 /// @arg [color
-/// @arg alpha]]
+/// @arg alpha
+/// @arg resettex]]
 
 function draw_texture_part()
 {
-	var tex, xx, yy, left, top, w, h, xsca, ysca, color, alpha;
+	var tex, xx, yy, left, top, w, h, xsca, ysca, color, alpha, resettex;
 	tex = argument[0]
 	xx = argument[1]
 	yy = argument[2]
@@ -44,10 +45,28 @@ function draw_texture_part()
 		alpha = draw_get_alpha()
 	}
 	
+	resettex = true
+	if (argument_count > 11)
+		resettex = argument[11]
+
 	var tw, th;
 	tw = texture_width(tex)
 	th = texture_height(tex)
 	
+	// Do not apply UI clipping while compositing into an off-screen texture or surface
+	if (shader_clip_active && !is_cpp())
+	{
+		var target = surface_get_target()
+		if (target = -1 || target = application_surface)
+		{
+			render_set_uniform_int("uClipEnabled", 1)
+			render_set_uniform("uClipBox", [shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height])
+			render_set_uniform("uScreenSize", [1, 1])
+		}
+		else
+			render_set_uniform_int("uClipEnabled", 0)
+	}
+
 	render_set_texture(tex)
 	
 	draw_primitive_begin(pr_trianglestrip)
@@ -57,5 +76,6 @@ function draw_texture_part()
 	draw_vertex_texture_color(xx + w * xsca, yy + h * ysca, (left + w) / tw, (top + h) / th, color, alpha)
 	draw_primitive_end()
 	
-	render_set_texture(0)
+	if (resettex)
+		render_set_texture(0)
 }

@@ -172,7 +172,7 @@ function draw_button_menu()
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.PRESS])
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
-	draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, hei, false, c_input_background, draw_get_alpha())
 	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha * fadealpha, true)
 	
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
@@ -205,7 +205,7 @@ function draw_button_menu()
 	if (current_microani.goal_ease != 0.5)
 		clip_begin(xx, yy, wid, hei)
 	
-	list_item_draw(item, xx, yy + ((current_microani.goal_ease * 2) - 1) * 12, wid, hei, false, null, null, false)
+	list_item_draw(item, xx, yy + floor(((current_microani.goal_ease * 2) - 1) * 12), wid, hei, false, null, null, false)
 	instance_destroy(item)
 	
 	if (current_microani.goal_ease != 0.5)
@@ -405,6 +405,7 @@ function draw_button_menu()
 		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent" &&
 								  m.menu_name != "frameeditoriktarget" &&
 								  m.menu_name != "frameeditorikangletarget")
+		m.menu_model_armor_variant = menu_model_armor_variant
 		m.menu_margin = 0//8
 		m.menu_transition = null
 		m.menu_steps = 0

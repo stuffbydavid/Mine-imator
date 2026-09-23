@@ -3,14 +3,21 @@
 
 function temp_event_destroy()
 {
+	if (obj_edit = id)
+	{
+		obj_edit = null
+		with (app)
+			tab_close(object_editor)
+	}
+
 	if (model_texture_name_map != null)	
 		ds_map_destroy(model_texture_name_map)
 	
 	if (model_texture_material_name_map != null)	
 		ds_map_destroy(model_texture_material_name_map)
 	
-	if (model_tex_normal_name_map != null)	
-		ds_map_destroy(model_tex_normal_name_map)
+	if (model_texture_normal_name_map != null)	
+		ds_map_destroy(model_texture_normal_name_map)
 	
 	if (model_shape_texture_name_map != null)	
 		ds_map_destroy(model_shape_texture_name_map)
@@ -18,8 +25,8 @@ function temp_event_destroy()
 	if (model_shape_texture_material_name_map != null)	
 		ds_map_destroy(model_shape_texture_material_name_map)
 	
-	if (model_shape_tex_normal_name_map != null)	
-		ds_map_destroy(model_shape_tex_normal_name_map)
+	if (model_shape_texture_normal_name_map != null)	
+		ds_map_destroy(model_shape_texture_normal_name_map)
 	
 	if (model_hide_list != null)
 		ds_list_destroy(model_hide_list)
@@ -42,51 +49,6 @@ function temp_event_destroy()
 	
 	if (model_shape_alpha_map != null)
 		ds_map_destroy(model_shape_alpha_map)
-	
-	if (temp_creator != app.bench_settings)
-	{
-		if (model_tex != null)
-			model_tex.count--
-		
-		if (model_tex_material != null)
-			model_tex_material.count--
-		
-		if (model_tex_normal != null)
-			model_tex_normal.count--
-		
-		if (item_tex != null)
-			item_tex.count--
-		
-		if (item_tex_material != null)
-			item_tex_material.count--
-		
-		if (item_tex_normal != null)
-			item_tex_normal.count--
-		
-		if (block_tex != null)
-			block_tex.count--
-		
-		if (block_tex_material != null)
-			block_tex_material.count--
-		
-		if (block_tex_normal != null)
-			block_tex_normal.count--
-		
-		if (scenery > 0)
-			scenery.count--
-		
-		if (shape_tex != null && shape_tex.type != e_tl_type.CAMERA)
-			shape_tex.count--
-		
-		if (shape_tex_material != null)
-			shape_tex_material.count--
-		
-		if (shape_tex_normal != null)
-			shape_tex_normal.count--
-		
-		if (text_font != null)
-			text_font.count--
-	}
 	
 	if (item_vbuffer != null)
 		vbuffer_destroy(item_vbuffer)
@@ -112,5 +74,5 @@ function temp_event_destroy()
 	for (var i = 0; i < 4; i++)
 		texture_free(armor_skin_array[i])
 	
-	temp_edit = sortlist_remove(app.lib_list, id)
+	temp_remove_lists()
 }

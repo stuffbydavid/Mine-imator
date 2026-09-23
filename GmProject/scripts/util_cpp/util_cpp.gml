@@ -22,6 +22,15 @@ function program_args_get()
 	return array()
 }
 
+/// CppSeparate IntType file_get_size(StringType)
+function file_get_size(filename)
+{
+	var data = buffer_load_lib(filename)
+	var size = buffer_get_size(data)
+	buffer_delete(data)
+	return size
+}
+
 /// CppSeparate void log_message(StringType text)
 function log_message(text)
 {
@@ -98,6 +107,21 @@ function skins_directory_get()
 	return working_directory + "Skins/"
 }
 
+/// CppSeparate StringType packs_directory_get()
+/// Returns the location where imported resource packs are copied.
+/// On Windows this is the Packs folder in the installation, on Unix this is ~/Mine-imator/Packs
+function packs_directory_get()
+{
+	return working_directory + "Packs/"
+}
+
+/// CppSeparate StringType minecraft_java_directory_get()
+/// Returns the location of Minecraft Java, used to find sound, music and world files.
+function minecraft_java_directory_get()
+{
+	return environment_get_variable("APPDATA") + "/.minecraft";
+}
+
 /// CppSeparate StringType drivers_url_get()
 /// Returns an URL to an article showing how to update graphics drivers.
 function drivers_url_get()
@@ -130,14 +154,15 @@ function window_get_current()
 	return window_debug_current;
 }
 
-/// CppSeparate void window_create(IntType, IntType, IntType, IntType, IntType)
+/// CppSeparate void window_create(Scope<app>, IntType, IntType, IntType, IntType, IntType)
 /// Creates a new window from a rectangle relative to the current window.
 function window_create(window, xx, yy, width, height)
 {
+	tip_reset()
 	ds_list_add(window_list, window)
 }
 
-/// CppSeparate void window_close(IntType)
+/// CppSeparate void window_close(Scope<app>, IntType)
 /// Closes a window with the given e_window value.
 function window_close(window)
 {
@@ -150,6 +175,9 @@ function window_event_closed(window)
 	if (window_debug_current = window)
 		window_debug_current = e_window.MAIN
 	
+	if (tip_window = window)
+		tip_reset()
+
 	if (window = e_window.VIEW_SECOND)
 		app.view_second.show = false
 	if (window = e_window.TIMELINE)
@@ -241,13 +269,34 @@ function res_load_scenery_world()
 /// CppSeparate void res_save_block_cache(Scope<obj_resource>, StringType)
 function res_save_block_cache(filename)
 {
-	ready = true
 }
 
 /// CppSeparate BoolType res_load_block_cache(Scope<obj_resource>, StringType)
 function res_load_block_cache(filename)
 {
-	ready = true
+	return false
+}
+
+/// CppSeparate void res_save_pack_cache(Scope<obj_resource>, StringType)
+function res_save_pack_cache(filename)
+{
+}
+
+/// CppSeparate BoolType res_load_pack_cache(Scope<obj_resource>, StringType)
+function res_load_pack_cache(filename)
+{
+	return false
+}
+
+/// CppSeparate BoolType zip_is_resource_pack(StringType)
+function zip_is_resource_pack(filename)
+{
+	return false
+}
+
+/// CppSeparate BoolType zip_extract_file(StringType, StringType, StringType)
+function zip_extract_file(source, entry, destination)
+{
 	return false
 }
 

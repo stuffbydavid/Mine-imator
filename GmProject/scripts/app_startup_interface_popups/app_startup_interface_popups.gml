@@ -75,7 +75,7 @@ function app_startup_interface_popups()
 		value_script = null
 		texture = null
 		is_sheet = true
-		sheet_size = vec2(minecraft_item_sheet_size[0], minecraft_item_sheet_size[1])
+		sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
 		sheet_size_def = sheet_size
 		tbx_sheet_width = new_textbox_integer()
 		tbx_sheet_height = new_textbox_integer()
@@ -160,7 +160,7 @@ function app_startup_interface_popups()
 		pattern_sprites = array()
 		
 		res_ratio = 1
-		pattern_resource = mc_res
+		pattern_resource = project_pack_res
 		
 		update = false
 		layer_move = null

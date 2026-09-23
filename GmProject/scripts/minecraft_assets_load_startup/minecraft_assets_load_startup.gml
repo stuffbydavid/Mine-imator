@@ -6,9 +6,11 @@ function minecraft_assets_load_startup()
 {
 	globalvar mc_assets, mc_builder, mc_res;
 	globalvar load_assets_stage, load_assets_progress, load_assets_block_index, load_assets_splash, load_assets_credits;
-	globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file, load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
+	globalvar load_assets_startup_dir, load_assets_dir, load_assets_file, load_assets_zip_file;
+	globalvar load_assets_state_file_map, load_assets_model_file_map, load_assets_map, load_assets_type_map;
 	globalvar load_assets_block_preview_buffer, load_assets_block_preview_ani_buffer;
 	globalvar pattern_update, armor_update;
+	globalvar pack_image_map;
 	
 	mc_assets = new_obj(obj_minecraft_assets)
 	mc_builder = new_obj(obj_builder)
@@ -20,6 +22,7 @@ function minecraft_assets_load_startup()
 	load_assets_map = null
 	load_assets_type_map = null
 	load_assets_block_index = 0
+	load_assets_block_preview_buffer = array_create(e_block_sheet.static_amount, null)
 	window_set_size(load_assets_width, load_assets_height)
 	alarm[0] = 1
 	
@@ -29,7 +32,7 @@ function minecraft_assets_load_startup()
 	// Create default resource
 	with (mc_res)
 	{
-		save_id = "default"
+		save_id = "minecraft"
 		type = e_res_type.PACK
 		display_name = "Minecraft"
 		font_minecraft = true
@@ -42,8 +45,8 @@ function minecraft_assets_load_startup()
 	// Load assets from version in settings, if it fails, reset to default
 	if (!minecraft_assets_load_startup_version())
 	{
-		log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_version)
-		app.setting_minecraft_assets_version = minecraft_version
+		log("Could not load " + string(app.setting_minecraft_assets_version) + " assets. Resetting to default", minecraft_assets_version)
+		app.setting_minecraft_assets_version = minecraft_assets_version
 		if (!minecraft_assets_load_startup_version())
 			return false
 	}
@@ -72,6 +75,10 @@ function minecraft_assets_load_startup()
 			}
 		}
 	}
+	
+	// Packs
+	pack_image_map = ds_map_create()
+	project_pack = mc_res
 	
 	return true
 }

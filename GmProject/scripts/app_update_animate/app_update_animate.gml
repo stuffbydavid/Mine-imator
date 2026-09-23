@@ -35,14 +35,23 @@ function app_update_animate()
 			tl_update_values()
 		
 		tex_obj = value_inherit[e_value.TEXTURE_OBJ]
+		tex_obj_material = value_inherit[e_value.TEXTURE_MATERIAL_OBJ]
+		tex_obj_normal = value_inherit[e_value.TEXTURE_NORMAL_OBJ]
 		
 		// Update render resource
-		if ((tex_obj != tex_obj_prev) || app.history_resource_update)
+		if (tex_obj != tex_obj_prev ||
+			tex_obj_material != tex_obj_material_prev ||
+			tex_obj_normal != tex_obj_normal_prev ||
+			app.history_resource_update)
 		{
 			if (render_visible)
 			{
 				if (render_update_tl_resource())
+				{
 					tex_obj_prev = tex_obj
+					tex_obj_material_prev = tex_obj_material
+					tex_obj_normal_prev = tex_obj_normal
+				}
 			}
 		}
 		
@@ -158,8 +167,11 @@ function app_update_animate()
 	timeline_marker_previous = timeline_marker
 	
 	// Background
+	//background_tlactive = null
 	if (bgobject)
 	{
+		background_tlactive = bgobject
+		
 		background_image_show					= bgobject.value[e_value.BG_IMAGE_SHOW]
 		background_image_rotation				= bgobject.value[e_value.BG_IMAGE_ROTATION]
 		background_sky_sun_angle				= bgobject.value[e_value.BG_SKY_SUN_ANGLE]
@@ -174,8 +186,8 @@ function app_update_animate()
 		background_twilight						= bgobject.value[e_value.BG_TWILIGHT]
 		background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
 		background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
-		background_sky_clouds_height			= bgobject.value[e_value.BG_SKY_CLOUDS_HEIGHT]
-		background_sky_clouds_offset			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET]
+		background_sky_clouds_offset_y			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET_Y]
+		background_sky_clouds_offset_z			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET_Z]
 		background_ground_show					= bgobject.value[e_value.BG_GROUND_SHOW]
 		background_ground_slot					= bgobject.value[e_value.BG_GROUND_SLOT]
 		background_biome						= bgobject.value[e_value.BG_BIOME]
@@ -183,6 +195,9 @@ function app_update_animate()
 		background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
 		background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
 		background_ambient_color				= bgobject.value[e_value.BG_AMBIENT_COLOR]
+		background_night_sky_color				= bgobject.value[e_value.BG_NIGHT_SKY_COLOR]
+		background_night_sky_clouds_color		= bgobject.value[e_value.BG_NIGHT_SKY_CLOUDS_COLOR]
+		background_night_sky_stars_color		= bgobject.value[e_value.BG_NIGHT_SKY_STARS_COLOR]
 		background_night_color					= bgobject.value[e_value.BG_NIGHT_COLOR]
 		background_grass_color					= bgobject.value[e_value.BG_GRASS_COLOR]
 		background_foliage_color				= bgobject.value[e_value.BG_FOLIAGE_COLOR]
@@ -240,7 +255,7 @@ function app_update_animate()
 	background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 	background_fog_color_final = background_fog_color
 	
-	background_sky_color_final = merge_color(background_sky_color, c_night_sky, background_sky_night_alpha())
+	background_sky_color_final = merge_color(background_sky_color, background_night_sky_color, background_sky_night_alpha())
 	
 	// Benchmark
 	if (benchmark_mode)

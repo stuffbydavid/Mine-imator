@@ -104,6 +104,11 @@ namespace CppProject
 		return true;
 	}
 
+	IntType file_get_size(StringType filename)
+	{
+		return QFileInfo(filename).size();
+	}
+
 	StringType base64_decode(StringType str)
 	{
 		return QByteArray::fromBase64(str.ToUtf8(), QByteArray::Base64Encoding);
@@ -499,6 +504,26 @@ namespace CppProject
 	#endif
 	}
 
+	StringType packs_directory_get()
+	{
+	#if OS_WINDOWS
+		return gmlGlobal::working_directory + "Packs/";
+	#else
+		return QDir::homePath() + "/Mine-imator/Packs/";
+	#endif
+	}
+
+	StringType minecraft_java_directory_get()
+	{
+#if OS_WINDOWS
+		return QFileInfo(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).path() + "/.minecraft";
+#elif OS_MAC
+		return QDir::homePath() + "/Library/Application Support/minecraft";
+#else
+		return QDir::homePath() + "/.minecraft";
+#endif
+	}
+
 	StringType drivers_url_get()
 	{
 	#if OS_WINDOWS
@@ -523,10 +548,12 @@ namespace CppProject
 	void thread_task_begin()
 	{
 		StringType::BeginOmp();
+		VecType::BeginOmp();
 	}
 
 	void thread_task_end()
 	{
+		VecType::EndOmp();
 		StringType::EndOmp();
 	}
 }

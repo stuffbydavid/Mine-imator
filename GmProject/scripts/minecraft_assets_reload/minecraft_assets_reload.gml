@@ -3,7 +3,7 @@
 
 function minecraft_assets_reload()
 {
-	var fname = minecraft_directory + minecraft_version + ".midata";
+	var fname = minecraft_directory + minecraft_assets_version + ".midata";
 	
 	log("Reloading models")
 	
@@ -24,10 +24,11 @@ function minecraft_assets_reload()
 		ds_map_clear(model_name_map)
 		ds_list_clear(char_list)
 		ds_list_clear(special_block_list)
+		ds_list_clear(equipment_list)
 		
 		// Characters
 		var characterslist = map[?"characters"];
-		if (is_undefined(characterslist))
+		if (!ds_list_valid(characterslist))
 		{
 			log("No character list found")
 			break
@@ -46,10 +47,28 @@ function minecraft_assets_reload()
 			
 			ds_list_add(char_list, model)
 		}
+
+		// Equipment
+		var equiplist = map[?"equipment"];
+		if (ds_list_valid(equiplist))
+		{
+			for (var i = 0; i < ds_list_size(equiplist); i++)
+			{
+				var model = model_load(equiplist[|i], load_assets_dir + mc_equipment_directory);
+				if (!model) // Something went wrong!
+				{
+					log("Could not load model")
+					continue
+				}
+
+				model_name_map[?model.name] = model
+				ds_list_add(equipment_list, model)
+			}
+		}
 		
 		// Special blocks
 		var specialblockslist = map[?"special_blocks"];
-		if (is_undefined(specialblockslist))
+		if (!ds_list_valid(specialblockslist))
 		{
 			log("No special block list found")
 			break
@@ -69,6 +88,9 @@ function minecraft_assets_reload()
 			ds_list_add(special_block_list, model)
 		}
 		
+		// Item place targets
+		minecraft_assets_load_item_place_target(map[?"item_place_target"])
+		
 		// Clear up loaded models
 		var key = ds_map_find_first(load_assets_model_file_map);
 		while (!is_undefined(key))
@@ -84,7 +106,7 @@ function minecraft_assets_reload()
 	ds_map_destroy(typemap)
 	
 	with (obj_template)
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK)
 			temp_update_model()
 	
 	with (obj_timeline)

@@ -98,4 +98,5 @@ function action_tl_duplicate()
 	tl_update_list()
 	tl_update_matrix()
 	app_update_tl_edit()
+	project_update_counts()
 }

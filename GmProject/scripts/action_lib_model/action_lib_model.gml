@@ -72,11 +72,7 @@ function action_lib_model(res)
 	
 	with (temp_edit)
 	{
-		if (model != null)
-			model.count--
 		model = res
-		if (model != null)
-			model.count++
 		
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
@@ -126,6 +122,7 @@ function action_lib_model(res)
 	app_update_tl_edit()
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 	
 	lib_preview.update = true
 }

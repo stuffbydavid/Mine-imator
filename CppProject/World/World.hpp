@@ -249,6 +249,9 @@ namespace CppProject
 		// Go to the player or start position.
 		void GoToPlayer();
 
+		// Go to a specified X/Z position.
+		void GoToPosition(IntType x, IntType z);
+
 		// Set selection size.
 		void SetSelectionSize(VecType size);
 

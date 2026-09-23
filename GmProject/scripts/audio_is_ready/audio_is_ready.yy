@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"audio_is_ready",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"audio_is_ready",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Resources/Load.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

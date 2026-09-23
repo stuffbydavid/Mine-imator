@@ -14,7 +14,6 @@ function temp_particles_type_duplicate(type)
 	ds_list_add(pc_type_list, ptype)
 	
 	ptype.spawn_rate = 1 / ds_list_size(pc_type_list)
-	ptype.sprite_tex.count++
 	
 	// Update models
 	with (ptype)

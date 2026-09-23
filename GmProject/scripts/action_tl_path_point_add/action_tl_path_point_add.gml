@@ -57,4 +57,5 @@ function action_tl_path_point_add()
 	app_update_tl_edit()
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

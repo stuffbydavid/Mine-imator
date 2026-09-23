@@ -26,8 +26,7 @@ function action_background_ground_tex_material(res)
 		history_set_res(action_background_ground_tex_material, fn, background_ground_tex_material, res)
 	}
 	
-	background_ground_tex_material.count--
 	background_ground_tex_material = res
-	background_ground_tex_material.count++
 	background_ground_update_texture_material()
+	project_update_counts()
 }

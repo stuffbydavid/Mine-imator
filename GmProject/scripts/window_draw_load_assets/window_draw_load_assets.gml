@@ -36,7 +36,7 @@ function window_draw_load_assets()
 	var wid, hei, panelwid;
 	wid = load_assets_width
 	hei = load_assets_height
-	panelwid = 250
+	panelwid = wid - 550 //250
 	
 	var xoff, yoff;
 	xoff = floor((window_width/2) - (wid/2))
@@ -50,7 +50,7 @@ function window_draw_load_assets()
 	draw_box(xoff, yoff, wid, hei, false, c_level_middle, 1)
 	
 	// Pattern
-	var pattern = (setting_theme = theme_light ? 0 : 1);
+	var pattern = (setting_theme.dark ? 1 : 0);
 	draw_sprite_ext(spr_pattern_left, pattern, xoff, yoff, 138 / sprite_get_width(spr_pattern_left), hei / sprite_get_height(spr_pattern_left), 0, c_white, 1)
 	
 	draw_sprite(spr_load_assets, 0, xoff + panelwid / 2, yoff + 207)

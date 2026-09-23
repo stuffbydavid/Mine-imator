@@ -17,7 +17,7 @@ function action_lib_scenery_load(fn)
 		else
 			hobj = history_set(action_lib_scenery_load)
 		
-		var res = new_res(fn, e_res_type.SCENERY);
+		var res = new_res(fn, e_res_type.SCHEMATIC);
 		res.loaded = !res.replaced
 		if (res.replaced)
 		{
@@ -32,18 +32,17 @@ function action_lib_scenery_load(fn)
 		{
 			type = e_temp_type.SCENERY
 			scenery = res
-			scenery.count++
 			
-			block_tex = mc_res
-			block_tex_material = mc_res
-			block_tex_normal = mc_res
-			mc_res.count += 3
+			block_tex = project_pack_res
+			block_tex_material = project_pack_res
+			block_tex_normal = project_pack_res
 			
 			temp_update_display_name()
 			loaded = true
 			with (temp_animate())
 				loaded = true
-			sortlist_add(app.lib_list, id)
+				
+			temp_add_lists()
 		}
 		
 		with (hobj)
@@ -57,4 +56,5 @@ function action_lib_scenery_load(fn)
 	
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

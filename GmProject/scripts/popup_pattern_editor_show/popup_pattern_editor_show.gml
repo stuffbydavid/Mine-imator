@@ -3,6 +3,9 @@
 
 function popup_pattern_editor_show(obj)
 {
+	if (obj.object_index != obj_bench_settings)
+		obj_edit = obj
+
 	with (popup_pattern_editor)
 	{
 		preview.zoom = .6
@@ -50,10 +53,10 @@ function popup_pattern_editor_show(obj)
 			ds_list_add(pattern_color_list_edit, obj.pattern_color_list[i])
 		
 		var res;
-		if (pattern_edit.model_tex.type = e_res_type.SKIN)
+		if (res_eval(pattern_edit.model_tex).type = e_res_type.SKIN)
 			res = mc_res
 		else
-			res = pattern_edit.model_tex
+			res = res_eval(pattern_edit.model_tex)
 		
 		pattern_edit_preview.model_tex = res
 		

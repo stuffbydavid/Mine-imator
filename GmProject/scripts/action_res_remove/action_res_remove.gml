@@ -2,10 +2,13 @@
 
 function action_res_remove()
 {
-	var hobj = null;
+	var hobj, projectpack;
+	hobj = null
+	projectpack = false
 	
 	if (history_undo)
 	{
+		projectpack = history_data.project_pack_default
 		with (history_data)
 			res_edit = history_restore_res(save_res)
 	}
@@ -15,6 +18,7 @@ function action_res_remove()
 		with (hobj)
 		{
 			save_res = history_save_res(res_edit)
+			project_pack_default = (app.project_pack = res_edit)
 			part_amount = 0
 			part_child_amount = 0
 			history_save_tl_select()
@@ -45,7 +49,7 @@ function action_res_remove()
 			temp_update()
 		
 		// Update pattern
-		if (type = e_temp_type.SPECIAL_BLOCK && pattern_type != "")
+		if ((type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK) && pattern_type != "")
 			array_add(pattern_update, id)
 		
 		temp_update_armor(id)
@@ -58,8 +62,14 @@ function action_res_remove()
 			history_restore_parts()
 	}
 	else
+	{
+		projectpack = (app.project_pack = res_edit)
+		if (projectpack)
+			app.project_pack = mc_res
+
 		with (res_edit)
 			instance_destroy()
+	}
 	
 	project_ik_part_array = null
 	
@@ -68,6 +78,16 @@ function action_res_remove()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+
+	if (projectpack)
+	{
+		if (history_undo)
+			action_project_pack(res_edit, false)
+		else
+			action_project_pack(mc_res, false)
+	}
+
+	project_update_counts()
 	
 	bench_settings.preview.update = true
 	lib_preview.update = true

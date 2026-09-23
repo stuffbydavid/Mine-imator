@@ -5,21 +5,21 @@
 
 function temp_get_model_tex_material_obj(texobj)
 {
+	if (texobj != null)
+		texobj = res_eval(texobj)
+
 	if (texobj = null || texobj = 0 || texobj.type = e_tl_type.CAMERA || // Check if empty or a camera
 		(texobj.model_texture = null && texobj.model_texture_material_map = null)) // Not a valid model texture, use the library setting
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
-		if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK)
+		if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK && part_of != null && part_of.type = e_tl_type.SCENERY)
 		{
-			if (part_of.type = e_tl_type.SCENERY)
+			with (part_of)
 			{
-				with (part_of)
-				{
-					if (temp.block_tex_material && temp.block_tex_material.type = e_res_type.PACK)
-						texobj = temp.block_tex_material
-					else
-						texobj = mc_res
-				}
+				if (temp.block_tex_material && res_eval(temp.block_tex_material).type = e_res_type.PACK)
+					texobj = res_eval(temp.block_tex_material)
+				else
+					texobj = project_pack_res
 			}
 		}
 		else
@@ -34,5 +34,8 @@ function temp_get_model_tex_material_obj(texobj)
 			texobj = null
 	}
 	
-	return texobj
+	if (texobj = null)
+		return null
+
+	return res_eval(texobj)
 }

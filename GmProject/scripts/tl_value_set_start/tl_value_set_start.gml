@@ -20,7 +20,7 @@ function tl_value_set_start(script, combine)
 	// Add new keyframes
 	with (obj_timeline)
 	{
-		if (!selected || keyframe_select != null)
+		if (!selected || keyframe_select != null || !animated)
 			continue
 		
 		// If marker is on a keyframe, edit that, if not, add new keyframe
@@ -49,8 +49,18 @@ function tl_value_set_start(script, combine)
 		history_data.par_script = script
 		
 		history_data.par_set_amount = 0
+		history_data.tl_set_amount = 0
 		history_data.kf_add_amount = 0
 		history_data.kf_set_amount = 0
+
+		with (obj_timeline)
+		{
+			if (!selected)
+				continue
+			history_data.tl_set_save_id[history_data.tl_set_amount] = save_id
+			history_data.tl_set_animated[history_data.tl_set_amount] = animated
+			history_data.tl_set_amount++
+		}
 		
 		with (obj_keyframe)
 		{

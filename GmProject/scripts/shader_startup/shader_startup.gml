@@ -35,6 +35,7 @@ function shader_startup()
 		new_shader("shader_alpha_fix")
 		new_shader("shader_alpha_test")
 		new_shader("shader_blend")
+		new_shader("shader_build_box")
 		new_shader("shader_border")
 		new_shader("shader_outline")
 		new_shader("shader_palette")
@@ -72,6 +73,10 @@ function shader_startup()
 		new_shader("shader_high_samples_unpack")
 		new_shader("shader_high_gbuffers")
 		new_shader("shader_high_auxiliary")
+		new_shader("shader_high_depth_normal")
+		new_shader("shader_place")
+		new_shader("shader_high_material")
+		new_shader("shader_high_subsurface")
 		new_shader("shader_high_subsurface_scatter")
 		new_shader("shader_high_indirect_blur")
 		new_shader("shader_high_reflections_hit")
@@ -179,8 +184,13 @@ function shader_startup()
 	}
 	
 	with (shader_map[?shader_draw_texture])
+	{
 		new_shader_uniform("uMask")
-
+		new_shader_uniform("uClipEnabled")
+		new_shader_uniform("uClipBox")
+		new_shader_uniform("uScreenSize")
+	}
+	
 	with (shader_map[?shader_render_pass])
 		new_shader_uniform("uChannel")
 	
@@ -189,6 +199,13 @@ function shader_startup()
 	
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform("uReplaceColor")
+
+	with (shader_map[?shader_place])
+	{
+		new_shader_uniform("uReplaceColor")
+		new_shader_uniform("uGmDepth")
+		new_shader_uniform("uIsBlock")
+	}
 	
 	with (shader_map[?shader_high_dof])
 	{

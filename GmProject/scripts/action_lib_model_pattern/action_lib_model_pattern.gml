@@ -28,9 +28,9 @@ function action_lib_model_pattern(color, patterns, colors)
 		{
 			history_push()
 			hobj = new_history(action_lib_model_pattern)
-			hobj.old_pattern_color = color
-			hobj.old_pattern_patterns = array_copy_1d(temp_edit.pattern_pattern_list)
-			hobj.old_pattern_colors = array_copy_1d(temp_edit.pattern_color_list)
+			hobj.old_pattern_color = obj_edit.pattern_base_color
+			hobj.old_pattern_patterns = array_copy_1d(obj_edit.pattern_pattern_list)
+			hobj.old_pattern_colors = array_copy_1d(obj_edit.pattern_color_list)
 		}
 		
 		hobj.new_pattern_color = color
@@ -40,13 +40,13 @@ function action_lib_model_pattern(color, patterns, colors)
 		history[0] = hobj
 	}
 	
-	with (temp_edit)
+	with (obj_edit)
 	{
 		pattern_base_color = color
 		pattern_pattern_list = patterns
 		pattern_color_list = colors
 	}
 	
-	array_add(pattern_update, temp_edit)
+	array_add(pattern_update, obj_edit)
 	lib_preview.update = true
 }

@@ -21,8 +21,10 @@ function toolbar_draw()
 	
 	draw_set_font(font_value)
 	
+	// File
 	capwid = string_width(text_get("toolbarfile")) + 16
 	toolbar_draw_button("toolbarfile", dx, dy, capwid)
+	
 	dx += capwid + padding
 	
 	if (window_state = "")
@@ -30,16 +32,19 @@ function toolbar_draw()
 		capwid = string_width(text_get("toolbaredit")) + 16
 		toolbar_draw_button("toolbaredit", dx, dy, capwid)
 		dx += capwid + padding
-		
+
+		// Render
 		capwid = string_width(text_get("toolbarrender")) + 16
 		toolbar_draw_button("toolbarrender", dx, dy, capwid)
 		dx += capwid + padding
 	}
 	
+	// View
 	capwid = string_width(text_get("toolbarview")) + 16
 	toolbar_draw_button("toolbarview", dx, dy, capwid)
 	dx += capwid + padding
 	
+	// Help
 	capwid = string_width(text_get("toolbarhelp")) + 16
 	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
 	dx += capwid + padding

@@ -4,10 +4,14 @@ function project_reset()
 {
 	log("Resetting project")
 	
+	if (place_build)
+		app_stop_place()
+	
 	project_reset_backup()
 	history_clear()
 	
 	temp_edit = null
+	obj_edit = null
 	res_edit = null
 	tl_edit = null
 	tl_edit_amount = 0
@@ -25,6 +29,7 @@ function project_reset()
 	project_name = ""
 	project_author = ""
 	project_description = ""
+	project_pack = mc_res
 	
 	project_video_width = 1280
 	project_video_height = 720
@@ -46,6 +51,19 @@ function project_reset()
 	ds_list_clear(project_model_list)
 	
 	camera_work_reset()
+
+	// Keep active background music outside the project
+	var musicres = null;
+	if (bench_music_mode && instance_exists(bench_settings.music_res))
+	{
+		musicres = bench_settings.music_res
+		if (musicres.creator = app)
+		{
+			with (musicres)
+				res_remove_lists()
+			musicres.creator = bench_settings
+		}
+	}
 	
 	log("Destroying instances")
 	
@@ -60,7 +78,7 @@ function project_reset()
 		instance_destroy()
 	
 	with (obj_resource)
-		if (id != mc_res)
+		if (id != mc_res && id != musicres)
 			instance_destroy()
 	
 	with (obj_keyframe)
@@ -81,6 +99,7 @@ function project_reset()
 	project_render_preset[e_renderer.REALISTIC] = render_preset_default
 	
 	project_reset_background()
+	project_update_counts()
 	
 	timeline.hor_scroll.value = 0
 	timeline.ver_scroll.value = 0
@@ -100,6 +119,9 @@ function project_reset()
 	timeline_interval_size = 24
 	timeline_interval_offset = 0
 	timeline_hide_color_tag = array_create(9, false)
+	
+	properties.library.list.column_sort = null
+	properties.resources.list.column_sort = null
 	
 	ds_list_clear(tree_list)
 	ds_list_clear(tree_visible_list)

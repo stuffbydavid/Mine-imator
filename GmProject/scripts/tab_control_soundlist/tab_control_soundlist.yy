@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tab_control_soundlist",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_control_soundlist",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/Tab/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

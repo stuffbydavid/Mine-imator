@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_scenery_replace_ground",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_scenery_replace_ground",
+  "parent":{
+    "name":"Graphics",
+    "path":"folders/Scripts/App/Actions/Settings/Graphics.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

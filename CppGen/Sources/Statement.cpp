@@ -301,6 +301,18 @@ void MacroStatement::resolve(ResolveScope* scope)
 {
 	location = Location(*scope->location);
 	this->expr->resolve(ResolveScope(STR(global), 0, scope->calls));
+
+	if (this->expr->type == Expression::Type::Accessor)
+	{
+		Accessor* accessor = static_cast<Accessor*>(this->expr);
+		Variable* var = Program::findVariable(STR(global), accessor->name, nullptr, location.value(), line, nullptr, false);
+		if (var != nullptr && !Program::macros.containsKey(accessor->name))
+		{
+			Console::writeLine("FATAL ERROR: Macro {0} uses global variable {1} in {2}:{3}", name, accessor->name, func->name, line);
+			std::exit(1);
+		}
+	}
+
 	Program::declareVariable(STR(global), this->name, *this->expr->resolvedType, this->func, *scope->location);
 }
 

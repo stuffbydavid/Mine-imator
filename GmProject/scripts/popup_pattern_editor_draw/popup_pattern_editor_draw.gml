@@ -125,7 +125,7 @@ function popup_pattern_editor_draw()
 			
 			bench_settings.preview.update = true
 		}
-		else if (popup.pattern_edit = temp_edit)
+		else
 			action_lib_model_pattern(popup.pattern_edit_preview.pattern_base_color, ds_list_create_array(popup.pattern_list_edit), ds_list_create_array(popup.pattern_color_list_edit))
 		
 		instance_destroy(popup.pattern_edit_preview, false)

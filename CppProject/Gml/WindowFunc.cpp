@@ -162,7 +162,7 @@ namespace CppProject
 		return AppWin ? AppWin->id : 0;
 	}
 
-	void window_create(IntType window, IntType x, IntType y, IntType width, IntType height)
+	void window_create(Scope<app> self, IntType window, IntType x, IntType y, IntType width, IntType height)
 	{
 		if (App->headless)
 			return;
@@ -171,12 +171,15 @@ namespace CppProject
 		y *= App->scale;
 		width *= App->scale;
 		height *= App->scale;
+
+		tip_reset(self);
 		ds_list_add({ global::window_list, window });
+
 		GFX->SubmitBatch();
 		App->addedWindows.append({ window, QRect(x, y, width, height), AppWin });
 	}
 
-	void window_close(IntType window)
+	void window_close(Scope<app>, IntType window)
 	{
 		for (AppWindow* win : App->windows)
 		{

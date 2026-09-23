@@ -13,5 +13,5 @@ function action_lib_pc_type_sprite_frame_width(val, add)
 		ptype_update_sprite_vbuffers()
 	}
 	
-	tab_template_editor_particles_preview_restart()
+	tab_object_editor_particles_preview_restart()
 }

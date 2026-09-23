@@ -27,6 +27,19 @@ function tl_value_set()
 						value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], history_data.kf_set_new_value[k, v], history_data.kf_set_old_value[k, v])
 			}
 		}
+
+		// Restore values
+		for (var t = 0; t < history_data.tl_set_amount; t++)
+		{
+			if (history_data.tl_set_animated[t])
+				continue
+			with (save_id_find(history_data.tl_set_save_id[t]))
+			{
+				for (var v = 0; v < history_data.par_set_amount; v++)
+					value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], null, history_data.tl_set_old_value[t, v])
+				update_matrix = true
+			}
+		}
 	}
 	else if (history_redo)
 	{
@@ -40,6 +53,19 @@ function tl_value_set()
 			with (save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list[|history_data.kf_set_index[k]])
 				for (var v = 0; v < history_data.par_set_amount; v++) 
 					value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], history_data.kf_set_old_value[k, v], history_data.kf_set_new_value[k, v])
+
+		// Restore values
+		for (var t = 0; t < history_data.tl_set_amount; t++)
+		{
+			if (history_data.tl_set_animated[t])
+				continue
+			with (save_id_find(history_data.tl_set_save_id[t]))
+			{
+				for (var v = 0; v < history_data.par_set_amount; v++)
+					value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], null, history_data.tl_set_new_value[t, v])
+				update_matrix = true
+			}
+		}
 	}
 	else
 	{
@@ -56,16 +82,12 @@ function tl_value_set()
 			if (!selected)
 				continue
 			
+			if (history_data.par_set_n = history_data.par_set_amount)
+				history_data.tl_set_old_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			if (history_data.scale_link_drag)
 			{
-				if (history_data.par_set_n = history_data.par_set_amount)
-					history_data.tl_set_old_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
-				
 				value[vid] = history_data.tl_set_old_value[tlcount, history_data.par_set_n]
 			}
-			
-			if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
-				value[e_value.SOUND_OBJ].count--
 			
 			var nval;
 			if (tl_value_is_string(vid) || tl_value_is_texture(vid) || tl_value_is_obj(vid))
@@ -79,9 +101,7 @@ function tl_value_set()
 				update_matrix = true
 			
 			value[vid] = tl_value_clamp(vid, nval)
-			
-			if (vid = e_value.SOUND_OBJ && value[e_value.SOUND_OBJ] != null)
-				value[e_value.SOUND_OBJ].count++
+			history_data.tl_set_new_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			
 			tlcount++
 		}
@@ -115,6 +135,8 @@ function tl_value_set()
 		history_data.par_set_n++
 		history_data.par_set_amount = max(history_data.par_set_amount, history_data.par_set_n)
 		
+		if (tl_value_is_texture(vid) || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
+			project_update_counts()
 		return 0
 	}
 	

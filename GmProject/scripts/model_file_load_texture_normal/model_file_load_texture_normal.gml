@@ -8,10 +8,10 @@ function model_file_load_tex_normal(name, res)
 	if (ext != ".png" && ext != ".jpg" && ext != ".jpeg")
 		return 0
 	
-	if (res.model_tex_normal_map = null)
-		res.model_tex_normal_map = ds_map_create()
-	else if (!is_undefined(res.model_tex_normal_map[?name]))
+	if (res.model_texture_normal_map = null)
+		res.model_texture_normal_map = ds_map_create()
+	else if (!is_undefined(res.model_texture_normal_map[?name]))
 		return 0
 	
-	res.model_tex_normal_map[?name] = texture_create_square(load_folder + "/" + name)
+	res.model_texture_normal_map[?name] = texture_create_square(load_folder + "/" + name)
 }

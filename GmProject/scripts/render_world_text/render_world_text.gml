@@ -6,6 +6,7 @@
 
 function render_world_text(vbuffer, tex, facecamera, res, outline)
 {
+	res = res_eval(res)
 	if (facecamera)
 	{
 		var mat, rotx, rotz;
