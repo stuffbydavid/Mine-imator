@@ -1,8 +1,9 @@
-/// action_tl_parent(parent, index)
+/// action_tl_parent(parent, index, [historyobject])
 /// @arg parent
 /// @arg index
+/// @arg [historyobject]
 
-function action_tl_parent(par, index)
+function action_tl_parent(par, index, hobj = null)
 {
 	if (history_undo)
 	{
@@ -29,9 +30,6 @@ function action_tl_parent(par, index)
 	}
 	else
 	{
-		var hobj;
-		hobj = null
-		
 		if (history_redo)
 		{
 			par = save_id_find(history_data.new_parent)
@@ -42,7 +40,8 @@ function action_tl_parent(par, index)
 			if (par = null)
 				par = app
 			
-			hobj = history_set(action_tl_parent)
+			if (hobj = null)
+				hobj = history_set(action_tl_parent)
 			with (hobj)
 			{
 				new_parent = save_id_get(par)

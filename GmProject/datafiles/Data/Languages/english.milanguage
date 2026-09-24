@@ -86,18 +86,7 @@
 			"random": "Use random values"
 		},
 		"tl/": {
-			"previouskeyframe": "Previous keyframe",
-			"nextkeyframe": "Next keyframe",
-			"previousframe": "Back 1 frame",
-			"nextframe": "Forward 1 frame",
-			"stop": "Stop",
-			"play": "Play",
-			"playregion": "Play at region",
-			"pause": "Pause",
 			"settings": "Timeline settings",
-			"disableloop": "Disable looping",
-			"enableloop": "Enable looping",
-			"enableseamlessloop": "Enable seamless looping",
 			"expand": "Expand",
 			"collapse": "Collapse",
 			"hide": "Hide",
@@ -111,10 +100,31 @@
 			"filter": "Filter timelines",
 			"walk": "Create walk cycle",
 			"run": "Create run cycle",
-			"popout": "Open in new window",
-			"popin": "Close timeline window",
+			"transition/": {
+				"linear": "Set keyframe transition\nto Linear",
+				"easein": "Set keyframe transition\nto Ease in",
+				"easeout": "Set keyframe transition\nto Ease out",
+				"easeinout": "Set keyframe transition\nto Ease in & out",
+				"instant": "Set keyframe transition\nto Instant"
+			},
+			"previouskeyframe": "Previous keyframe",
+			"nextkeyframe": "Next keyframe",
+			"previousframe": "Back 1 frame",
+			"nextframe": "Forward 1 frame",
+			"stop": "Stop",
+			"play": "Play",
+			"pause": "Pause",
+			"playregion": "Play at region",
+			"enableloop": "Enable looping",
+			"disableloop": "Disable looping",
+			"enableseamlessloop": "Enable seamless looping",
+			"disableseamlessloop": "Disable seamless looping",
 			"zoomout": "Zoom out",
-			"zoomin": "Zoom in"
+			"zoomin": "Zoom in",
+			"intervalsshow": "Show intervals",
+			"intervalshide": "Hide intervals",
+			"popout": "Open in new window",
+			"popin": "Close timeline window"
 		},
 		"customaccentcolor": "Custom accent color",
 		"editkeybind": "Edit keybind",
@@ -164,6 +174,8 @@
 			"expandall": "Expand all",
 			"collapseall": "Collapse all",
 			"keyframes/": {
+				"transition": "Transition...",
+				"create": "Create keyframe",
 				"cut": "Cut keyframes",
 				"copy": "Copy keyframes",
 				"paste": "Paste keyframes",
@@ -178,8 +190,7 @@
 					"region": "In selected region"
 				},
 				"walk": "Create walk cycle",
-				"run": "Create run cycle",
-				"transition": "Transition..."
+				"run": "Create run cycle"
 			},
 			"marker/": {
 				"add": "Add marker",
@@ -3859,8 +3870,6 @@
 		"unusedmodelpart": "Unused model part",
 		"frame": "Frame %1",
 		"intervals/": {
-			"show": "Show intervals",
-			"hide": "Hide intervals",
 			"size": "Interval size",
 			"offset": "Interval offset"
 		},

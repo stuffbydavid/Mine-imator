@@ -20,6 +20,6 @@ function tl_jump(tl)
 		var newval = pos - floor(timeline_list_visible / 2);
 		newval = min(newval, ds_list_size(tree_visible_list) - timeline_list_visible)
 		newval = max(0, newval)
-		timeline.ver_scroll.value_goal = newval * timeline.ver_scroll.snap_value
+		timeline.ver_scroll.value_goal = newval * (setting_timeline_compact ? 20 : 24)
 	}
 }
