@@ -1,10 +1,11 @@
-/// menu_transitions(x, y, width, height)
+/// menu_transitions(x, y, width, height, menu)
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
+/// @arg menu
 
-function menu_transitions(xx, yy, wid, hei)
+function menu_transitions(xx, yy, wid, hei, menu = "all")
 {
 	var transition = null;
 	dx_start = xx + 12
@@ -12,102 +13,152 @@ function menu_transitions(xx, yy, wid, hei)
 	dy_start = yy
 	dy = dy_start + 12
 	
-	// Other
-	dy += 14
-	draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	dy += 12
-	
-	for (var i = 0; i < ds_list_size(transition_list); i++)
+	// Other (Also in menu "easeinout")
+	if (menu = "all")
 	{
-		if (!string_contains(transition_list[|i], "ease"))
+		dy += 14
+		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+		
+		for (var i = 0; i < ds_list_size(transition_list); i++)
 		{
-			if (dx + 46 > xx + wid)
+			if (!string_contains(transition_list[|i], "ease"))
 			{
-				dx = dx_start
-				dy += 46
+				if (dx + 46 > xx + wid)
+				{
+					dx = dx_start
+					dy += 46
+				}
+			
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					transition = transition_list[|i]
+			
+				dx += 46
 			}
-			
-			if (draw_button_transition(dx, dy, transition_list[|i]))
-				transition = transition_list[|i]
-			
-			dx += 46
 		}
+		dx = dx_start
+		dy += 46
 	}
-	dy += 36 + 10
-	dx = dx_start
 	
 	// Ease in
-	dy += 14
-	draw_label(text_get("transitionmenueasein"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	dy += 12
-	
-	for (var i = 0; i < ds_list_size(transition_list); i++)
+	if (menu = "easein" || menu = "all")
 	{
-		if (string_contains(transition_list[|i], "easein") &&
-			!string_contains(transition_list[|i], "easeinout"))
+		dy += 14
+		draw_label(text_get("transitionmenueasein"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+	
+		for (var i = 0; i < ds_list_size(transition_list); i++)
 		{
-			if (dx + 46 > xx + wid)
+			if (string_contains(transition_list[|i], "easein") &&
+				!string_contains(transition_list[|i], "easeinout"))
 			{
-				dx = dx_start
-				dy += 46
+				if (dx + 46 > xx + wid)
+				{
+					dx = dx_start
+					dy += 46
+				}
+			
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					transition = transition_list[|i]
+			
+				dx += 46
 			}
-			
-			if (draw_button_transition(dx, dy, transition_list[|i]))
-				transition = transition_list[|i]
-			
-			dx += 46
 		}
+		dx = dx_start
+		dy += 46
 	}
-	dx = dx_start
-	dy += 46
 	
 	// Ease out
-	dy += 14
-	draw_label(text_get("transitionmenueaseout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	dy += 12
-	
-	for (var i = 0; i < ds_list_size(transition_list); i++)
+	if (menu = "easeout" || menu = "all")
 	{
-		if (string_contains(transition_list[|i], "easeout"))
+		dy += 14
+		draw_label(text_get("transitionmenueaseout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+	
+		for (var i = 0; i < ds_list_size(transition_list); i++)
 		{
-			if (dx + 46 > xx + wid)
+			if (string_contains(transition_list[|i], "easeout"))
 			{
-				dx = dx_start
-				dy += 46
+				if (dx + 46 > xx + wid)
+				{
+					dx = dx_start
+					dy += 46
+				}
+			
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					transition = transition_list[|i]
+			
+				dx += 46
 			}
+		}
+		dx = dx_start
+		dy += 46
+	}
+	
+	if (menu = "easeinout" || menu = "all")
+	{
+		// Ease in & out
+		dy += 14
+		draw_label(text_get("transitionmenueaseinout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+	
+		for (var i = 0; i < ds_list_size(transition_list); i++)
+		{
+			if (string_contains(transition_list[|i], "easeinout"))
+			{
+				if (dx + 46 > xx + wid)
+				{
+					dx = dx_start
+					dy += 46
+				}
 			
-			if (draw_button_transition(dx, dy, transition_list[|i]))
-				transition = transition_list[|i]
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					transition = transition_list[|i]
 			
-			dx += 46
+				dx += 46
+			}
+		}
+		dx = dx_start
+		dy += 46
+	}
+	
+	// Other
+	if (menu = "easeinout")
+	{
+		dy += 14
+		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		dy += 12
+		
+		for (var i = 0; i < ds_list_size(transition_list); i++)
+		{
+			if (string_contains(transition_list[|i], "bezier"))
+			{
+				if (dx + 46 > xx + wid)
+				{
+					dx = dx_start
+					dy += 46
+				}
+			
+				if (draw_button_transition(dx, dy, transition_list[|i]))
+					transition = transition_list[|i]
+			
+				dx += 46
+			}
+		}
+		dx = dx_start
+		dy += 46
+	}
+	
+	// Save this transition as the new default for the quick button
+	if ((settings_menu_name != "" || context_menu_name != "") && transition != null)
+	{
+		switch (menu)
+		{
+			case "easein": timeline.transition_easein = transition break;
+			case "easeout": timeline.transition_easeout = transition break;
+			case "easeinout": timeline.transition_easeinout = transition break;
 		}
 	}
-	dx = dx_start
-	dy += 46
-	
-	// Ease in & out
-	dy += 14
-	draw_label(text_get("transitionmenueaseinout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	dy += 12
-	
-	for (var i = 0; i < ds_list_size(transition_list); i++)
-	{
-		if (string_contains(transition_list[|i], "easeinout"))
-		{
-			if (dx + 46 > xx + wid)
-			{
-				dx = dx_start
-				dy += 46
-			}
-			
-			if (draw_button_transition(dx, dy, transition_list[|i]))
-				transition = transition_list[|i]
-			
-			dx += 46
-		}
-	}
-	dx = dx_start
-	dy += 46
 	
 	if (settings_menu_name != "" && transition != null) // Settings menu
 	{

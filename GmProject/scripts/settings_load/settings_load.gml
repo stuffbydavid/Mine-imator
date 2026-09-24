@@ -206,6 +206,9 @@ function settings_load()
 			setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
 			setting_snap_size_position = value_get_real(interfacemap[?"snap_size_position"], setting_snap_size_position)
 			setting_snap_size_rotation = value_get_real(interfacemap[?"snap_size_rotation"], setting_snap_size_rotation)
+			// Read the earlier preview setting before applying the current key.
+			setting_transform_mode = value_get_real(interfacemap[?"rotation_space"], setting_transform_mode)
+			setting_transform_mode = clamp(round(value_get_real(interfacemap[?"transform_mode"], setting_transform_mode)), e_transform_mode.GIMBAL, e_transform_mode.amount - 1)
 			setting_snap_size_scale = value_get_real(interfacemap[?"snap_size_scale"], setting_snap_size_scale)
 			
 			setting_modelbench_popup_hidden = value_get_real(interfacemap[?"modelbench_popup_hidden"], setting_modelbench_popup_hidden)

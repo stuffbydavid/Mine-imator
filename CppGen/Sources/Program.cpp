@@ -635,6 +635,10 @@ Script::Script(String dir)
 	if (!yyFile.exists)
 		return;
 
+	FileInfo gmlFile = FileInfo(dir + "/" + dirInfo.name + ".gml");
+	if (!gmlFile.exists)
+		return;
+
 	String json = File::readAllText(yyFile.fullName);
 	Json root = JsonConvert::deserializeObject(json);
 

@@ -85,6 +85,7 @@ function asset_load()
 			return true
 		
 		case ".schematic":
+		case ".schem":
 		case ".nbt":
 		case ".blocks":
 			log("Opening scenery", fn)

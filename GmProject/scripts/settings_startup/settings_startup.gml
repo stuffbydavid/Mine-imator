@@ -110,6 +110,7 @@ function settings_startup()
 	setting_modelbench_popup_hidden = false
 	
 	setting_move_speed = 1
+	setting_move_speed_scroll = 1
 	setting_look_sensitivity = 1
 	setting_fast_modifier = 3
 	setting_slow_modifier = 0.25
@@ -144,6 +145,7 @@ function settings_startup()
 	setting_snap_absolute = true
 	setting_snap_size_position = 1
 	setting_snap_size_rotation = 15
+	setting_transform_mode = e_transform_mode.GIMBAL
 	setting_snap_size_scale = 0.25
 	
 	setting_tool_select = false

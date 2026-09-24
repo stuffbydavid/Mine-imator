@@ -19,7 +19,7 @@ function macros()
 	
 	// Directories
 	#macro data_directory				working_directory + "Data/"
-	#macro schematic_directory			working_directory + "Schematics/"
+	#macro schematics_directory			working_directory + "Schematics/"
 	#macro particles_directory			working_directory + "Particles/"
 	#macro fonts_directory				data_directory + "Fonts/"
 	#macro languages_directory			data_directory + "Languages/"
@@ -34,15 +34,17 @@ function macros()
 	#macro settings_file				user_directory_get() + "settings.midata"
 	#macro recent_file					user_directory_get() + "recent.midata"
 	#macro key_file						user_directory_get() + "key.midata"
+	#macro log_file						user_directory_get() + "log.txt"
 	#macro temp_file					file_directory_get() + "tmp.file"
 	#macro temp_image					file_directory_get() + "tmp.png"
 	#macro download_image_file			file_directory_get() + "download.png"
 	#macro unzip_directory				file_directory_get() + "unzip/"
-	#macro render_default_file			render_directory + "default.mirender"
+	#macro render_default				"performance"
+	#macro render_default_file			render_directory + render_default + ".mirender"
 	#macro render_presets				array("performance.mirender", "balanced.mirender", "extreme.mirender")
 	#macro render_preset_default		"balanced.mirender"
 	#macro render_preset_default_name	"balanced"
-	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
+	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
 	#macro mc_file_directory			file_directory_get() + "Minecraft_unzip/"

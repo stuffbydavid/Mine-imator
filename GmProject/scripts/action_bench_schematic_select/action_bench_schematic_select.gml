@@ -8,7 +8,7 @@ function action_bench_schematic_select(schematic)
 	if (is_string(schematic))
 	{
 		var folder, res;
-		folder = schematic_directory + bench_schematic_folder
+		folder = schematics_directory + bench_schematic_folder
 		res_creator = bench_settings
 		res = new_obj(obj_resource)
 		res_creator = app

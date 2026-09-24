@@ -2,11 +2,11 @@
 
 function minecraft_game_startup()
 {
-	globalvar minecraft_game_found, minecraft_game_version_latest, minecraft_sound_filter_list, minecraft_music_filter_list;
+	globalvar minecraft_game_found, minecraft_game_assets_latest, minecraft_sound_filter_list, minecraft_music_filter_list;
 	
-	// Find Java versions
+	// Find Java versions with valid assets JSON files
 	minecraft_game_found = false 
-	minecraft_game_version_latest = ""
+	minecraft_game_assets_latest = ""
 	
 	minecraft_sound_filter_list = ds_list_create()
 	for (var i = 0; i < array_length(sound_filters); i++)
@@ -42,9 +42,13 @@ function minecraft_game_startup()
 						var assetideval = eval(assetid, 0)
 						if (assetideval > latestid)
 						{
-							minecraft_game_version_latest = assetid
-							minecraft_game_found = true
-							latestid = assetideval
+							var assetsfile = minecraft_java_directory_get() + "/assets/indexes/" + assetid + ".json";
+							if (file_exists_lib(assetsfile))
+							{
+								minecraft_game_assets_latest = assetsfile
+								minecraft_game_found = true
+								latestid = assetideval
+							}
 						}
 					}
 				}

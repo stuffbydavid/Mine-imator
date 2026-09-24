@@ -219,7 +219,93 @@ function tab_timeline()
 	
 	draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || timeline_seamless_repeat, timeline_seamless_repeat ? icons.REPEAT_SEAMLESS : icons.REPEAT, action_tl_play_repeat, false, tooltip)
 	
- 	buttonsx += 16 + 6
+ 	buttonsx += 24 + 6
+	
+	// Transition quick buttons
+	if (setting_advanced_mode)
+	{
+		draw_divide_vertical(buttonsx, buttonsy + 2, 20)
+		buttonsx += 6
+	
+		var transition_disabled = !timeline_settings_keyframes && tl_edit == null;
+		var current_transition = (tl_edit != null ? tl_edit.value[e_value.TRANSITION] : "linear");
+		var button_mouseon;
+		
+		// Instant
+		if (draw_button_icon("timelinetransitioninstant", buttonsx, buttonsy, 24, 24, current_transition = "instant", icons.EASE_INSTANT, null, transition_disabled, "transitioninstant"))
+			action_tl_frame_transition("instant")
+		buttonsx += 24 + 4
+		
+		// Linear
+		if (draw_button_icon("timelinetransitionlinear", buttonsx, buttonsy, 24, 24, current_transition = "linear", icons.EASE_LINEAR, null, transition_disabled, "transitionlinear"))
+			action_tl_frame_transition("linear")
+		buttonsx += 24 + 4
+		
+		// Ease In - Left click applies, right click opens menu
+		button_mouseon = app_mouse_box(buttonsx, buttonsy, 24, 24) && !transition_disabled
+		if (draw_button_icon("timelinetransitioneasein", buttonsx, buttonsy, 24, 24, string_contains(current_transition, "easein") && !string_contains(current_transition, "easeinout"), icons.EASE_IN, null, transition_disabled, "transitionquickeasein"))
+		{
+			// Left click - apply current transition
+			action_tl_frame_transition(timeline.transition_easein)
+		}
+		if (button_mouseon && mouse_right_released)
+		{
+			// Right click - open menu to change transition
+			menu_settings_set(buttonsx, buttonsy + 24, "timelinetransitionquickeasein", 0)
+			settings_menu_menu = "easein"
+			settings_menu_script = menu_settings_transitions
+			settings_menu_w = 244
+			settings_menu_h = 150
+			settings_menu_quick = true
+			
+			if (settings_menu_y + settings_menu_h + 32 > window_height)
+				settings_menu_y = (window_height - (settings_menu_h + 32))
+		}
+		buttonsx += 24 + 4
+		
+		// Ease Out - Left click applies, right click opens menu
+		button_mouseon = app_mouse_box(buttonsx, buttonsy, 24, 24) && !transition_disabled
+		if (draw_button_icon("timelinetransitioneaseout", buttonsx, buttonsy, 24, 24, string_contains(current_transition, "easeout") && !string_contains(current_transition, "easeinout"), icons.EASE_OUT, null, transition_disabled, "transitionquickeaseout"))
+		{
+			// Left click - apply current transition
+			action_tl_frame_transition(timeline.transition_easeout)
+		}
+		if (button_mouseon && mouse_right_released)
+		{
+			// Right click - open menu to change transition
+			menu_settings_set(buttonsx, buttonsy + 24, "timelinetransitionquickeaseout", 0)
+			settings_menu_menu = "easeout"
+			settings_menu_script = menu_settings_transitions
+			settings_menu_w = 244
+			settings_menu_h = 150
+			settings_menu_quick = true
+			
+			if (settings_menu_y + settings_menu_h + 32 > window_height)
+				settings_menu_y = (window_height - (settings_menu_h + 32))
+		}
+		buttonsx += 24 + 4
+		
+		// Ease In/Out - Left click applies, right click opens menu
+		button_mouseon = app_mouse_box(buttonsx, buttonsy, 24, 24) && !transition_disabled
+		if (draw_button_icon("timelinetransitioneaseinout", buttonsx, buttonsy, 24, 24, string_contains(current_transition, "easeinout") || string_contains(current_transition, "bezier"), icons.EASE_IN_OUT, null, transition_disabled, "transitionquickeaseinout"))
+		{
+			// Left click - apply current transition
+			action_tl_frame_transition(timeline.transition_easeinout)
+		}
+		if (button_mouseon && mouse_right_released)
+		{
+			// Right click - open menu to change transition
+			menu_settings_set(buttonsx, buttonsy + 24, "timelinetransitionquickeaseinout", 0)
+			settings_menu_menu = "easeinout"
+			settings_menu_script = menu_settings_transitions
+			settings_menu_w = 244
+			settings_menu_h = 150
+			settings_menu_quick = true
+			
+			if (settings_menu_y + settings_menu_h + 32 > window_height)
+				settings_menu_y = (window_height - (settings_menu_h + 32))
+		}
+	}
 	
 	timeline_settings_w = (buttonsx - buttonsxstart)
 	
@@ -490,8 +576,19 @@ function tab_timeline()
 					if (dx < (tlx - 32))
 						continue
 					
-					draw_image(spr_icons, icons.KEYFRAME_FILLED_SMALL, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-					draw_image(spr_icons, icons.KEYFRAME_FILLED_SMALL, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
+					var kfspr;
+					switch (kf.value[e_value.TRANSITION])
+					{
+						case "instant":
+							kfspr = icons.KEYFRAME_INSTANT_FILLED_SMALL
+							break
+						default:
+							kfspr = icons.KEYFRAME_FILLED_SMALL
+							break
+					}
+					
+					draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+					draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
 				}
 			}
 		}
@@ -601,10 +698,20 @@ function tab_timeline()
 				mouse = (((mouse_x >= dx - 8 && mouse_x < dx + 8) || timeline_mouse_pos = kf.position) && tl = mousetl)
 				
 				// Sprite
-				var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
+				var kfspr, image;
+				image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected)
+				switch (kf.value[e_value.TRANSITION])
+				{
+					case "instant":
+						kfspr = image ? icons.KEYFRAME_INSTANT : icons.KEYFRAME_INSTANT_FILLED
+						break
+					default:
+						kfspr = image ? icons.KEYFRAME : icons.KEYFRAME_FILLED
+						break
+				}
 				
-				draw_image(spr_icons, image ? icons.KEYFRAME : icons.KEYFRAME_FILLED, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-				draw_image(spr_icons, image ? icons.KEYFRAME : icons.KEYFRAME_FILLED, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
+				draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+				draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
 			}
 			
 			if (mouse && mouseintl && !tl.lock)
@@ -1327,6 +1434,7 @@ function tab_timeline()
 			if (app_mouse_box(content_x, content_y, content_width, content_height) && mouse_right_released)
 			{
 				menu_settings_set(mouse_x, mouse_y, "timelinelkeyframetransitions", 0)
+				settings_menu_menu = "all"
 				settings_menu_script = menu_settings_transitions
 				settings_menu_w = 244
 				settings_menu_h = 438

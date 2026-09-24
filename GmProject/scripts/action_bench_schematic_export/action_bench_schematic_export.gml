@@ -10,7 +10,7 @@ function action_bench_schematic_export()
 	if (is_string(schematic))
 	{
 		filename = schematic + ".schematic"
-		source = schematic_directory + bench_schematic_folder + "/" + filename
+		source = schematics_directory + bench_schematic_folder + "/" + filename
 	}
 	else
 	{
