@@ -180,9 +180,9 @@ function view_toolbar_draw(view, xx, yy)
 	
 	view.toolbar_height = yy - starty
 
-	// Transform mode is detached below the regular tools. Keep one empty
-	// button row between both surfaces so it reads as a separate mode control.
-	var transform_mode_y = yy + 24 + padding;
+	// Transform mode is detached below the regular tools.
+	// (reduced separation cuz i didn't like that amount of space there)
+	var transform_mode_y = yy + 8 + padding;
 	var transform_mode_panel_y = transform_mode_y - 4;
 	if (transform_mode_panel_y + 32 <= content_y + content_height)
 	{
@@ -209,17 +209,22 @@ function view_toolbar_draw(view, xx, yy)
 				((setting_tool_move || setting_tool_transform) && view_transform_mode_effective(e_value_type.TRANSFORM_POS) = e_transform_mode.GIMBAL) ||
 				((setting_tool_scale || setting_tool_transform) && view_transform_mode_effective(e_value_type.TRANSFORM_SCA) = e_transform_mode.GIMBAL)
 		}
-		var transform_mode_icon = icons.TRANSFORMATION_GIMBAL;
-		var transform_mode_tip = "viewtoolrotationspacegimbal";
-		if (displayed_transform_mode = e_transform_mode.GLOBAL)
+		
+		var transform_mode_icon, transform_mode_tip;
+		switch (displayed_transform_mode)
 		{
-			transform_mode_icon = icons.TRANSFORMATION_GLOBAL
-			transform_mode_tip = "viewtoolrotationspaceglobal"
-		}
-		else if (displayed_transform_mode = e_transform_mode.LOCAL)
-		{
-			transform_mode_icon = icons.TRANSFORMATION_LOCAL
-			transform_mode_tip = "viewtoolrotationspacelocal"
+			case e_transform_mode.GLOBAL:
+				transform_mode_icon = icons.TRANSFORMATION_GLOBAL
+				transform_mode_tip = "viewtoolrotationspaceglobal"
+				break
+			case e_transform_mode.LOCAL:
+				transform_mode_icon = icons.TRANSFORMATION_LOCAL
+				transform_mode_tip = "viewtoolrotationspacelocal"
+				break
+			default:
+				transform_mode_icon = icons.TRANSFORMATION_GIMBAL
+				transform_mode_tip = "viewtoolrotationspacegimbal"
+				break
 		}
 		if (transform_mode_constrained)
 			transform_mode_tip = "viewtoolrotationspaceconstraintgimbal"

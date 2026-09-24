@@ -36,8 +36,8 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
-		dy += 36 + 10
 		dx = dx_start
+		dy += 46
 	}
 	
 	// Ease in
@@ -120,8 +120,11 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 		}
 		dx = dx_start
 		dy += 46
-		
-		// Other
+	}
+	
+	// Other
+	if (menu = "easeinout")
+	{
 		dy += 14
 		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
@@ -142,14 +145,14 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
-		dy += 36 + 10
 		dx = dx_start
+		dy += 46
 	}
 	
 	// Save this transition as the new default for the quick button
 	if ((settings_menu_name != "" || context_menu_name != "") && transition != null)
 	{
-		switch(menu)
+		switch (menu)
 		{
 			case "easein": timeline.transition_easein = transition break;
 			case "easeout": timeline.transition_easeout = transition break;

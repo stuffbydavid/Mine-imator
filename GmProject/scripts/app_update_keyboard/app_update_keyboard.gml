@@ -29,7 +29,7 @@ function app_update_keyboard()
 	// First-person build shortcuts
 	if (place_build && build_first_person)
 	{
-		if (keyboard_check_pressed(ord("E")) && !cam_work_moving)
+		if (keyboard_check_pressed(ord("T")) && !cam_work_moving)
 		{
 			action_build_search()
 			return 0
@@ -82,7 +82,7 @@ function app_update_keyboard()
 				return 0
 			}
 		
-			if (keyboard_check_pressed(ord("E")))
+			if (keyboard_check_pressed(ord("T")))
 			{
 				action_build_search()
 				return 0
@@ -240,9 +240,6 @@ function app_update_keyboard()
 			}
 		}
 
-		if (keybinds[e_keybind.TRANSFORM_MODE_CYCLE].pressed)
-			action_view_transform_mode_cycle()
-		
 		if (keybinds[e_keybind.TOOL_SCALE].pressed)
 		{
 			if (setting_separate_tool_modes)
@@ -295,6 +292,9 @@ function app_update_keyboard()
 					tl_edit.show_tool_position = setting_tool_move
 			}
 		}
+		
+		if (keybinds[e_keybind.TRANSFORM_MODE_CYCLE].pressed)
+			action_view_transform_mode_cycle()
 		
 		if (keybinds[e_keybind.SNAP].pressed)
 			setting_snap = !setting_snap

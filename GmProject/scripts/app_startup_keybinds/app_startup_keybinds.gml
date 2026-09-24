@@ -61,10 +61,10 @@ function app_startup_keybinds()
 		TOOL_SELECT,
 		TOOL_MOVE,
 		TOOL_ROTATE,
-		TRANSFORM_MODE_CYCLE,
 		TOOL_SCALE,
 		TOOL_BEND,
 		TOOL_TRANSFORM,
+		TRANSFORM_MODE_CYCLE,
 		SNAP,
 		
 		// Navigation
@@ -130,10 +130,10 @@ function app_startup_keybinds()
 	keybind_register("toolselect", e_keybind.TOOL_SELECT, keybind_new("W"))
 	keybind_register("toolmove", e_keybind.TOOL_MOVE, keybind_new("G"))
 	keybind_register("toolrotate", e_keybind.TOOL_ROTATE, keybind_new("R"))
-	keybind_register("toolrotationspacecycle", e_keybind.TRANSFORM_MODE_CYCLE, keybind_new("Q"))
 	keybind_register("toolscale", e_keybind.TOOL_SCALE, keybind_new("S"))
-	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("B", false, true))
+	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("N"))
 	keybind_register("tooltransform", e_keybind.TOOL_TRANSFORM, keybind_new("T"))
+	keybind_register("toolrotationspacecycle", e_keybind.TRANSFORM_MODE_CYCLE, keybind_new("Q"))
 	keybind_register("snap", e_keybind.SNAP, keybind_new("F"))
 	
 	// Navigation

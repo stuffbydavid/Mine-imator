@@ -480,16 +480,16 @@ function view_draw(view)
 		if (view.grid)
 		{
 			var cellwid, cellhei;
-			cellwid = content_width / project_grid_rows
-			cellhei = content_height / project_grid_columns
+			cellwid = content_width / project_grid_columns
+			cellhei = content_height / project_grid_rows
 			
-			for (var i = 1; i < project_grid_rows; i++)
+			for (var i = 1; i < project_grid_columns; i++)
 			{
 				draw_line_ext(content_x + cellwid * i - 1, content_y, content_x + cellwid * i - 1, content_y + content_height, c_white, 1)
 				draw_line_ext(content_x + cellwid * i + 1, content_y, content_x + cellwid * i + 1, content_y + content_height, c_white, 1)
 			}
 			
-			for (var i = 1; i < project_grid_columns; i++)
+			for (var i = 1; i < project_grid_rows; i++)
 			{
 				draw_line_ext(content_x, content_y + cellhei * i - 1, content_x + content_width, content_y + cellhei * i - 1, c_white, 1)
 				draw_line_ext(content_x, content_y + cellhei * i + 1, content_x + content_width, content_y + cellhei * i + 1, c_white, 1)

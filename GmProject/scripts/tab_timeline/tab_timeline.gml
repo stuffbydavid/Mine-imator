@@ -579,8 +579,19 @@ function tab_timeline()
 					if (dx < (tlx - 32))
 						continue
 					
-					draw_image(spr_icons, icons.KEYFRAME_FILLED_SMALL, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
-					draw_image(spr_icons, icons.KEYFRAME_FILLED_SMALL, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
+					var kfspr;
+					switch (kf.value[e_value.TRANSITION])
+					{
+						case "instant":
+							kfspr = icons.KEYFRAME_INSTANT_FILLED_SMALL
+							break
+						default:
+							kfspr = icons.KEYFRAME_FILLED_SMALL
+							break
+					}
+					
+					draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+					draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, c_text_tertiary, a_text_tertiary)
 				}
 			}
 		}
@@ -690,10 +701,20 @@ function tab_timeline()
 				mouse = (((mouse_x >= dx - 8 && mouse_x < dx + 8) || timeline_mouse_pos = kf.position) && tl = mousetl)
 				
 				// Sprite
-				var image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected);
+				var kfspr, image;
+				image = ((round(timeline_marker) = kf.position && tl.selected) || kf.selected)
+				switch (kf.value[e_value.TRANSITION])
+				{
+					case "instant":
+						kfspr = image ? icons.KEYFRAME_INSTANT : icons.KEYFRAME_INSTANT_FILLED
+						break
+					default:
+						kfspr = image ? icons.KEYFRAME : icons.KEYFRAME_FILLED
+						break
+				}
 				
-				draw_image(spr_icons, image ? icons.KEYFRAME : icons.KEYFRAME_FILLED, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1, (kf.value[e_value.TRANSITION] == "instant") ? 45 : 0)
-				draw_image(spr_icons, image ? icons.KEYFRAME : icons.KEYFRAME_FILLED, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha, (kf.value[e_value.TRANSITION] == "instant") ? 45 : 0)
+				draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, c_level_top, 1)
+				draw_image(spr_icons, kfspr, dx + 1, dy + itemhalf, 1, 1, kf.selected ? c_accent : framecolor, kf.selected ? 1 : framealpha)
 			}
 			
 			if (mouse && mouseintl && !tl.lock)
