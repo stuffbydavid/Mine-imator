@@ -98,11 +98,11 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 					tip_arrow_x -= 1
 				}
 				
-				// Move to top right
-				if (tip_y + tip_h > window_height)
+				// Show above controls in the lower quarter of the window
+				if (yy + h/2 > window_height * 0.9 || tip_y + tip_h > window_height)
 				{
-					tip_y = yy - (6 + tip_h)
-					tip_arrow_y = yy - 6
+					tip_y = yy - (4 + tip_h)
+					tip_arrow_y = yy - 4
 					tip_arrow_yscale = -1
 				}
 				
@@ -114,8 +114,8 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 				}
 				else
 				{
-					tip_y -= 8
-					tip_arrow_y -= 8
+					tip_y -= 6
+					tip_arrow_y -= 6
 				}
 			}
 			

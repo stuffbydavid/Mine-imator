@@ -22,11 +22,14 @@ function app_startup_interface_timeline()
 	timeline_region_start = null
 	timeline_region_end = null
 	timeline_region_pos = 0
+	timeline_region_x1 = 0
+	timeline_region_x2 = 0
 	timeline_length = 0
 	timeline_zoom = 16
 	timeline_zoom_goal = 16
 	timeline_zoom_current = 16
 	timeline_zoom_target = 0
+	timeline_zoom_button = 0
 	timeline_camera = null
 	background_tlactive = null
 	timeline_insert_pos = 0

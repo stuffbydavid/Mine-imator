@@ -1,23 +1,19 @@
-/// action_tl_play_repeat()
+/// action_tl_play_repeat(seamless)
+/// @arg seamless
 
-function action_tl_play_repeat()
+function action_tl_play_repeat(seamless)
 {
 	project_changed = true
 	
-	// Cycle 1
-	if (!timeline_repeat && !timeline_seamless_repeat)
+	if (seamless)
 	{
-		timeline_repeat = true
-	}
-	else if (timeline_repeat) // Cycle 2
-	{
-		timeline_seamless_repeat = true
+		timeline_seamless_repeat = !timeline_seamless_repeat
 		timeline_repeat = false
 	}
-	else // Cycle 3
+	else
 	{
+		timeline_repeat = !timeline_repeat
 		timeline_seamless_repeat = false
-		timeline_repeat = false
 	}
 	
 	if (timeline_playing && timeline_length > 0)

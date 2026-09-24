@@ -149,7 +149,10 @@ function list_init_context_menu(name)
 			list_item_last.context_menu_name = "timelinelkeyframetransitions"
 			
 			// Keyframes
-			list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAME, null, action_tl_keyframes_cut, true)
+			list_item_add(text_get("contextmenutlkeyframescreate"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_CREATE].keybind), null, icons.KEYFRAME, null, action_tl_keyframes_create, true)
+			list_item_last.disabled = (tl_edit_amount = 0)
+
+			list_item_add(text_get("contextmenutlkeyframescut"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_CUT].keybind), null, icons.CUT_KEYFRAME, null, action_tl_keyframes_cut)
 			list_item_last.disabled = !timeline_settings_keyframes
 			
 			list_item_add(text_get("contextmenutlkeyframescopy"), null, text_control_name(keybinds[e_keybind.KEYFRAMES_COPY].keybind), null, icons.COPY_KEYFRAME, null, tl_keyframes_copy)
