@@ -20,7 +20,10 @@ function temp_animate()
 		}
 		
 		if (type = e_tl_type.EQUIPMENT)
+		{
 			inherit_pose = true
+			glint_mode = e_glint.ARMOR
+		}
 		
 		if (type_is_block(type))
 		{

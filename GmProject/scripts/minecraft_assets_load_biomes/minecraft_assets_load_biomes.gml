@@ -16,6 +16,8 @@ function minecraft_assets_load_biomes(list, map)
 			
 			// Name
 			name = biome[?"name"]
+			if (name = "nether") // Legacy
+				name = "the_nether"
 			
 			// Is this a biome group?
 			group = value_get_real(biome[?"group"], false)
@@ -50,9 +52,28 @@ function minecraft_assets_load_biomes(list, map)
 			if (is_string(biome[?"water"]))
 				color_water = hex_to_color(biome[?"water"])
 			
+			// Optional ground setting
+			ground_name = value_get_string(biome[?"ground"])
+
+			// Sky and fog defaults for this dimension
+			sky_color = c_sky_overworld
+			sky_enabled = is_string(biome[?"sky"])
+			fog_color = c_sky_overworld
+			fog_enabled = is_string(biome[?"fog"])
+			
+			if (name = "the_nether" || name = "the_end")
+			{
+				sky_color = (name = "the_nether" ? c_sky_the_nether : c_sky_the_end)
+				fog_color = sky_color
+			}
+			if (fog_enabled)
+				fog_color = hex_to_color(biome[?"fog"])
+			if (sky_enabled)
+				sky_color = hex_to_color(biome[?"sky"])
+			
 			biome_base = null
 			biome_variants = null
-			variants_extend = false
+			variants_extend = (name = "the_end")
 			
 			// Read possible variants
 			if (ds_list_valid(biome[?"variant"]))
@@ -102,6 +123,26 @@ function minecraft_assets_load_biomes(list, map)
 							color_water = hex_to_color(variant[?"water"])
 						else
 							color_water = other.color_water
+							
+						// Optional ground setting
+						ground_name = value_get_string(variant[?"ground"])
+
+						// Use the dimension sky when no override is provided
+						fog_color = other.fog_color
+						fog_enabled = is_string(variant[?"fog"])
+						sky_enabled = is_string(variant[?"sky"])
+						
+						if (fog_enabled)
+							fog_color = hex_to_color(variant[?"fog"])
+						
+						sky_color = c_sky_overworld
+						if (other.name = "the_nether")
+							sky_color = c_sky_the_nether
+						else if (other.name = "the_end")
+							sky_color = c_sky_the_end
+						
+						if (sky_enabled)
+							sky_color = hex_to_color(variant[?"sky"])
 						
 						biome_base = biomeid
 						

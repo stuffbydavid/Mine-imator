@@ -23,6 +23,7 @@ function tl_new_part(part)
 		lock_bend = part.lock_bend
 		part_mixing_shapes = part.part_mixing_shapes
 		colors_ext = part_mixing_shapes
+		glint_mode = other.glint_mode
 		backfaces = part.backfaces
 		shadows = part.shadows
 		

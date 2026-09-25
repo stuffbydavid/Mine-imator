@@ -7,6 +7,7 @@ function project_load_background(map)
 		return 0
 	
 	background_loaded = true
+	background_dimension = value_get_string(map[?"dimension"], "overworld")
 	
 	background_image_show = value_get_real(map[?"image_show"], background_image_show)
 	background_image = value_get_save_id(map[?"image"], background_image)
@@ -121,11 +122,17 @@ function project_load_background(map)
 	
 	background_biome = value_get_string(map[?"biome"], background_biome)
 	
-	// Empty biome name bugfix (revert to plains)
+	// Empty biome name bugfix (revert to dimension default)
 	if (background_biome = "" || !find_biome(background_biome))
 	{
-		if (find_biome(default_biome))
-			background_biome = default_biome
+		var defbiome = overworld_biome;
+		if (background_dimension = "the_nether")
+			defbiome = the_nether_biome
+		else if (background_dimension = "the_end")
+			defbiome = the_end_biome
+		
+		if (find_biome(defbiome))
+			background_biome = defbiome
 		else
 			background_biome = biome_list[|1].name
 	}

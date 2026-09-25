@@ -4,6 +4,8 @@ function project_save_background()
 {
 	json_save_object_start("background")
 		
+		json_save_var("dimension", background_dimension)
+
 		json_save_var_bool("image_show", background_image_show)
 		json_save_var_save_id("image", background_image)
 		json_save_var("image_type", background_image_type)

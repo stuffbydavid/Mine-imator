@@ -135,7 +135,8 @@ function tl_event_create()
 	blend_mode = "normal"
 	alpha_mode = e_alpha_mode.DEFAULT
 	
-	glint_mode = e_glint.NONE
+	glint_enabled = false
+	glint_mode = e_glint.ITEM
 	glint_scale = 1
 	glint_speed = 1
 	glint_strength = 1

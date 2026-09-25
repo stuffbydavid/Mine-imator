@@ -152,6 +152,16 @@ function project_load_find_save_ids(isproject = false)
 		else
 			part_root = save_id_find(save_id_map[?part_root])
 		
+		// Enchantment glint
+		if (glint_mode = e_glint.NONE)
+		{
+			glint_mode = e_glint.ITEM
+			
+			if (type = e_tl_type.EQUIPMENT || (part_root != null && part_root.type = e_tl_type.EQUIPMENT) ||
+				(part_of != null && part_of.type = e_tl_type.EQUIPMENT))
+				glint_mode = e_glint.ARMOR
+		}
+		
 		// Text AA setting
 		if (type = e_tl_type.TEXT && has_temp && temp != null && text_aa)
 		{

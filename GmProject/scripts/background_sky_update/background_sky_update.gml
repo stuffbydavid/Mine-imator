@@ -4,7 +4,18 @@ function background_sky_update()
 {
 	if (!background_fog_color_custom) // Fog color
 	{
+		var biome, biomefog;
+		biome = find_biome(background_biome)
+		biomefog = false
+		
+		if (biome != null)
+			biomefog = biome.fog_enabled
+
 		background_fog_color_final = background_sky_color_final
+		
+		if (biomefog && background_dimension = "overworld")
+			background_fog_color_final = merge_color(biome.fog_color, background_night_sky_color, background_night_alpha)
+			
 		if (!background_image_show)
 		{
 			background_fog_color_final = merge_color(background_fog_color_final, merge_color(background_fog_color_final, 0, 0.95), background_night_alpha)
@@ -25,6 +36,9 @@ function background_sky_update()
 				background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_sunset_start, c_sunset_end, background_sunrise_alpha), background_sunrise_alpha * p)
 			}
 		}
+		
+		if (biomefog && background_dimension != "overworld")
+			background_fog_color_final = biome.fog_color
 	}
 	
 	if (background_fog_custom_object_color)

@@ -2,6 +2,8 @@
 
 function project_reset_background()
 {
+	background_dimension = "overworld"
+	
 	background_image_show = false
 	background_image = null
 	background_image_type = "image"
@@ -37,7 +39,7 @@ function project_reset_background()
 	background_ground_tex = project_pack_res
 	background_ground_tex_material = project_pack_res
 	background_ground_tex_normal = project_pack_res
-	background_ground_name = default_ground
+	background_ground_name = overworld_ground
 	background_ground_slot = minecraft_assets_block_texture_picker_slot_find(background_ground_name)
 	background_ground_slot_prev = null
 	background_ground_slot_normal = null
@@ -49,8 +51,8 @@ function project_reset_background()
 	background_ground_update_texture_material()
 	background_ground_update_texture_normal()
 	
-	if (find_biome(default_biome))
-		background_biome = default_biome
+	if (find_biome(overworld_biome))
+		background_biome = overworld_biome
 	else
 		background_biome = biome_list[|1].name
 	
@@ -70,7 +72,7 @@ function project_reset_background()
 	with (mc_res)
 		res_update_colors()
 	
-	background_sky_color = c_sky
+	background_sky_color = c_sky_overworld
 	background_sky_clouds_color = c_clouds
 	background_sunlight_color = c_sunlight
 	background_ambient_color = c_ambient
@@ -82,12 +84,12 @@ function project_reset_background()
 	background_fog_show = true
 	background_fog_sky = true
 	background_fog_color_custom = false
-	background_fog_color = c_sky
+	background_fog_color = c_sky_overworld
 	background_fog_custom_object_color = false
-	background_fog_object_color = c_sky
-	background_fog_distance = 10000
-	background_fog_size = 2000
-	background_fog_height = 1250
+	background_fog_object_color = c_sky_overworld
+	background_fog_distance = fog_far
+	background_fog_size = fog_size
+	background_fog_height = fog_height
 	
 	background_wind = true
 	background_wind_speed = 0.1

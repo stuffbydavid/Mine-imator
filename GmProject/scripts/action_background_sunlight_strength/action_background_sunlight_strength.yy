@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_background_sunlight_strength",
   "parent":{
-    "name":"Background",
-    "path":"folders/Scripts/App/Actions/Background.yy",
+    "name":"Sky",
+    "path":"folders/Scripts/App/Actions/Background/Sky.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

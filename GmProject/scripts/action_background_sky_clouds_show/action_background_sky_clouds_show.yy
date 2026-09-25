@@ -6,7 +6,7 @@
   "name":"action_background_sky_clouds_show",
   "parent":{
     "name":"Clouds",
-    "path":"folders/Scripts/App/Actions/Background/Sky/Clouds.yy",
+    "path":"folders/Scripts/App/Actions/Background/Clouds.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

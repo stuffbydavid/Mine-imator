@@ -28,6 +28,11 @@ function new_biome(name, tx, ty, hardcoded, grass, foliage, dryfoliage, water, b
 		color_foliage = foliage
 		color_dry_foliage = dryfoliage
 		color_water = water
+		ground_name = ""
+		fog_enabled = false
+		fog_color = c_sky_overworld
+		sky_enabled = false
+		sky_color = c_sky_overworld
 		
 		// Variants
 		biome_base = base

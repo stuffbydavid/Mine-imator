@@ -47,8 +47,8 @@ function minecraft_assets_load()
 				with (mc_res)
 					minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
 				
-				if (find_biome(default_biome))
-					app.background_biome = default_biome
+				if (find_biome(overworld_biome))
+					app.background_biome = overworld_biome
 				else
 					app.background_biome = biome_list[|1].name
 				
