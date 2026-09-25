@@ -43,7 +43,7 @@ vec3 getWaterNormal(vec3 position)
 vec3 getMappedNormal(vec2 uv, mat3 tbn)
 {
 	if (uUseNormalMap < 1)
-		return vec3(tbn[2][0], tbn[2][1], tbn[2][2]);
+		return normalize(tbn * vec3(0.0, 0.0, 1.0));
 	
 	vec4 n = texture2D(uTextureNormal, uv).rgba;
 	n.xy = n.xy * 2.0 - 1.0; // Decode
@@ -57,8 +57,8 @@ vec3 getMaterialNormal(vec2 uv, vec3 position, mat3 tbn)
 {
 	if (uIsWater > 0)
 	{
-		vec3 normal = normalize(tbn[2]);
-		float upward = smoothstep(0.8, 0.9, normalize(tbn[2]).z);
+		vec3 normal = normalize(tbn * vec3(0.0, 0.0, 1.0));
+		float upward = smoothstep(0.8, 0.9, normal.z);
 		float strength = clamp(uWaterMaterialStrength, 0.0, 1.0) * upward;
 		return normalize(mix(normal, getWaterNormal(position), strength));
 	}
@@ -68,10 +68,13 @@ vec3 getMaterialNormal(vec2 uv, vec3 position, mat3 tbn)
 
 vec3 transformMaterialNormal(vec3 normal, mat3 sourceTbn, mat3 targetTbn)
 {
+	vec3 sourceTangent = sourceTbn * vec3(1.0, 0.0, 0.0);
+	vec3 sourceBitangent = sourceTbn * vec3(0.0, 1.0, 0.0);
+	vec3 sourceNormal = sourceTbn * vec3(0.0, 0.0, 1.0);
 	vec3 normalTangent = vec3(
-		dot(normal, sourceTbn[0]),
-		dot(normal, sourceTbn[1]),
-		dot(normal, sourceTbn[2])
+		dot(normal, sourceTangent),
+		dot(normal, sourceBitangent),
+		dot(normal, sourceNormal)
 	);
 	return normalize(targetTbn * normalTangent);
 }
