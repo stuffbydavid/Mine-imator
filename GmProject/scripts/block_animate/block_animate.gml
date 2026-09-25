@@ -99,6 +99,7 @@ function block_animate(root)
 				type = e_tl_type.TEXT
 				temp = id
 				has_temp = false
+				animated = false
 				
 				// Set parent to other timeline
 				inherit_rot_point = true
@@ -106,7 +107,8 @@ function block_animate(root)
 				ds_list_add(other.part_list, id)
 				tl_set_parent(other.id)
 				
-				id.text = text
+				value_default[e_value.TEXT] = text
+				value[e_value.TEXT] = text
 				tl_update_scenery_part()
 				
 				tl_value_set_vec3(e_value.POS_X, textpos, true)
@@ -139,6 +141,7 @@ function block_animate(root)
 				type = e_tl_type.TEXT
 				temp = id
 				has_temp = false
+				animated = false
 				
 				// Set parent to other timeline
 				inherit_rot_point = true
@@ -146,7 +149,8 @@ function block_animate(root)
 				ds_list_add(other.part_list, id)
 				tl_set_parent(other.id)
 				
-				id.text = text
+				value_default[e_value.TEXT] = text
+				value[e_value.TEXT] = text
 				tl_update_scenery_part()
 				
 				value_default[e_value.POS_X] = textpos[X]

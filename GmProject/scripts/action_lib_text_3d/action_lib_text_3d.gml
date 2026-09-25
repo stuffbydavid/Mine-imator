@@ -12,5 +12,6 @@ function action_lib_text_3d(is3d)
 		temp_update_rot_point()
 	}
 	
+	tl_update_matrix()
 	lib_preview.update = true
 }

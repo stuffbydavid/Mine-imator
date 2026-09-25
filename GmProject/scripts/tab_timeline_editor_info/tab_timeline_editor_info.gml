@@ -10,9 +10,9 @@ function tab_timeline_editor_info()
 	buttonwid = 0
 
 	if (tl_edit.type < e_temp_type.amount && (tl_edit.has_temp ||
-		(tl_edit.part_root = null && (tl_edit.type = e_tl_type.BLOCK || tl_edit.type = e_tl_type.SPECIAL_BLOCK))))
+		(tl_edit.part_root = null && !type_is_templated(tl_edit.type))))
 	{
-		tab_control(40)
+		tab_control(36)
 		create = !tl_edit.has_temp
 		button = "timelineeditor" + (create ? "create" : "edit") + "template"
 
@@ -44,15 +44,6 @@ function tab_timeline_editor_info()
 	{
 		tab_control_checkbox()
 		draw_switch("timelineeditoranimated", dx, dy, tl_edit.animated, action_tl_animated)
-		tab_next()
-	}
-	
-	if (tl_edit.type = e_temp_type.TEXT)
-	{
-		// Text
-		tab_control_textfield(true, 126)
-		tab.info.tbx_text.text = tl_edit.text
-		draw_textfield("timelineeditortext", dx, dy, dw, 126, tab.info.tbx_text, action_tl_text, "", "top")
 		tab_next()
 	}
 	

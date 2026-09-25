@@ -140,4 +140,9 @@ function ptype_event_create()
 	text_string = ""
 	text_res = null
 	text_3d = false
+	text_3d_prev = false
+	text_halign_prev = "center"
+	text_valign_prev = "center"
+	text_aa_prev = true
+	text_outline_size_prev = 3
 }

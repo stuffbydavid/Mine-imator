@@ -39,7 +39,12 @@ function tl_value_set()
 			with (save_id_find(history_data.tl_set_save_id[t]))
 			{
 				for (var v = 0; v < history_data.par_set_amount; v++)
-					value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], null, history_data.tl_set_old_value[t, v])
+				{
+					var vid = history_data.value[v];
+					value[vid] = tl_value_find_save_id(vid, null, history_data.tl_set_old_value[t, v])
+					if (vid = e_value.TEXT && type = e_tl_type.TEXT)
+						value_default[vid] = value[vid]
+				}
 				update_matrix = true
 			}
 		}
@@ -65,7 +70,12 @@ function tl_value_set()
 			with (save_id_find(history_data.tl_set_save_id[t]))
 			{
 				for (var v = 0; v < history_data.par_set_amount; v++)
-					value[history_data.value[v]] = tl_value_find_save_id(history_data.value[v], null, history_data.tl_set_new_value[t, v])
+				{
+					var vid = history_data.value[v];
+					value[vid] = tl_value_find_save_id(vid, null, history_data.tl_set_new_value[t, v])
+					if (vid = e_value.TEXT && type = e_tl_type.TEXT)
+						value_default[vid] = value[vid]
+				}
 				update_matrix = true
 			}
 		}
@@ -104,6 +114,8 @@ function tl_value_set()
 				update_matrix = true
 			
 			value[vid] = tl_value_clamp(vid, nval)
+			if (vid = e_value.TEXT && type = e_tl_type.TEXT && !animated)
+				value_default[vid] = value[vid]
 			history_data.tl_set_new_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			
 			tlcount++

@@ -1,20 +1,24 @@
-/// preview_zoom_text(preview, text, font)
+/// preview_zoom_text(preview, text, resource)
 /// @arg preview
 /// @arg text
-/// @arg font
+/// @arg resource
 
-function preview_zoom_text(preview, text, font)
+function preview_zoom_text(preview, text, resource)
 {
 	if (preview.view_width <= 0 || preview.view_height <= 0)
 		return 0
 
-	var str, prevfont, width, height;
+	var str, res, prevfont, width, height, scale;
 	str = (text = "" ? default_text : text)
+	res = res_eval(resource)
 	prevfont = draw_get_font()
-	draw_set_font(font)
+	draw_set_font(res.font)
 	width = string_width(str) + 1
 	height = string_height_ext(str, string_height(" ") - 2, -1) + 4
 	draw_set_font(prevfont)
+	scale = res.font_minecraft ? 1 : 8 / 48
+	width *= scale
+	height *= scale
 
 	var halfwidth, halfheight, horizontal, vertical, d, fovtan;
 	halfwidth = width / 2

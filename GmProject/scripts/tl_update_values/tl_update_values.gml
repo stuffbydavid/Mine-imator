@@ -345,9 +345,11 @@ function tl_update_values()
 		tl_update_values_ease(e_value.TEXT_FONT)
 		tl_update_values_ease(e_value.TEXT_HALIGN)
 		tl_update_values_ease(e_value.TEXT_VALIGN)
-		tl_update_values_ease(e_value.TEXT_AA)
+		tl_update_values_ease(e_value.TEXT_CUSTOM_ALIGNMENT)
 		tl_update_values_ease(e_value.TEXT_OUTLINE)
 		tl_update_values_ease(e_value.TEXT_OUTLINE_COLOR)
+		tl_update_values_ease(e_value.TEXT_OUTLINE_SIZE)
+		tl_update_values_ease(e_value.TEXT_CUSTOM_OUTLINE)
 	}
 	
 	// Item

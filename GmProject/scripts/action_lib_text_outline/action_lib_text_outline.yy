@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_lib_text_outline",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_text_outline",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/App/Actions/Library/Text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

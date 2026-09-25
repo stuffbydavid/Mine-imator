@@ -8,7 +8,16 @@ function temp_animate()
 		type = other.type
 		temp = other.id
 		has_temp = true
-		animated = !type_is_block(type)
+		animated = !type_is_block(type) && type != e_tl_type.TEXT
+		if (type = e_tl_type.TEXT)
+		{
+			value[e_value.TEXT] = text_get("frameeditortextsample")
+			value[e_value.TEXT_OUTLINE] = temp.text_outline
+			value[e_value.TEXT_OUTLINE_COLOR] = temp.text_outline_color
+			value[e_value.TEXT_OUTLINE_SIZE] = temp.text_outline_size
+			value[e_value.TEXT_HALIGN] = temp.text_halign
+			value[e_value.TEXT_VALIGN] = temp.text_valign
+		}
 		
 		if (type = e_tl_type.EQUIPMENT)
 			inherit_pose = true

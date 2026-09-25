@@ -13,6 +13,8 @@ function action_build_first_person(enable)
 	
 	if (enable)
 	{
+		build_first_person_move_speed_scroll = setting_move_speed_scroll
+		setting_move_speed_scroll = 1
 		// Disable second view on main window
 		build_first_person_second = view_second.show && !window_exists(e_window.VIEW_SECOND)
 		if (build_first_person_second)
@@ -36,6 +38,7 @@ function action_build_first_person(enable)
 	}
 	else
 	{
+		setting_move_speed_scroll = build_first_person_move_speed_scroll
 		place_busy = ""
 		window_busy = place_busy
 		

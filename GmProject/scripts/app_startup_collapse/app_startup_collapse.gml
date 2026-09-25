@@ -72,6 +72,8 @@ function app_startup_collapse()
 	collapse_register("material_subsurface")
 	
 	collapse_register("textoutline")
+	collapse_register("textalignment")
+	collapse_register("librarytextoutline")
 	
 	collapse_register("tl_glint")
 }

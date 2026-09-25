@@ -381,6 +381,8 @@ function res_event_destroy()
 			if (block_tex_normal = other.id)
 				block_tex_normal = project_pack_res
 		}
+		else if (part_of = null && !has_temp && type = e_tl_type.TEXT && text_font = other.id)
+			text_font = project_pack_res
 	}
 	
 	with (app)

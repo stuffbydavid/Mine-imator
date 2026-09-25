@@ -15,7 +15,6 @@ function tl_event_create()
 	has_temp = false
 	animated = true
 	
-	text = text_get("timelineeditortextsample")
 	color_tag = null
 	color_tag_inherit = null
 	lock = false
@@ -170,10 +169,15 @@ function tl_event_create()
 	text_texture = [null, null]
 	text_string = ""
 	text_res = null
+	text_font = project_pack_res
 	text_3d = false
+	text_3d_prev = false
+	text_face_camera = false
+	text_aa = false
 	text_halign_prev = "center"
 	text_valign_prev = "center"
 	text_aa_prev = true
+	text_outline_size_prev = 3
 	
 	item_vbuffer = null
 	item_slot = 0

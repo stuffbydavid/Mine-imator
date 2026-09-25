@@ -196,8 +196,18 @@ function action_bench_create(button = e_bench_button.CREATE)
 				var blocktype = e_tl_type.BLOCK;
 				if (tab = e_bench.SPECIAL_BLOCK)
 					blocktype = e_tl_type.SPECIAL_BLOCK
+				
 				tl = tl_new_block(blocktype, bench_settings)
-
+				with (hobj)
+				{
+					spawn_save_id[spawn_amount] = tl.save_id
+					spawn_amount++
+				}
+				editobj = tl
+			}
+			else if (tab = e_bench.TEXT)
+			{
+				tl = tl_new_text(bench_settings)
 				with (hobj)
 				{
 					spawn_save_id[spawn_amount] = tl.save_id
@@ -275,7 +285,10 @@ function action_bench_create(button = e_bench_button.CREATE)
 					tl = temp_animate()
 					
 					if (type = e_temp_type.TEXT && other.text != "")
-						tl.text = other.text
+					{
+						tl.value_default[e_value.TEXT] = other.text
+						tl.value[e_value.TEXT] = other.text
+					}
 					
 					temp_add_lists()
 				}

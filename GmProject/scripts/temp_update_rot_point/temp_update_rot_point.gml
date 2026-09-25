@@ -5,8 +5,11 @@ function temp_update_rot_point()
 {
 	rot_point = point3D(0)
 
-	var rep, size, centerready;
-	rep = (block_repeat_enable && block_center ? block_repeat : vec3(1))
+	var rep, size, centerready, isblock;
+	isblock = (type = e_temp_type.BLOCK || type = e_temp_type.SCENERY)
+	rep = vec3(1)
+	if (isblock && block_repeat_enable && block_center)
+		rep = block_repeat
 	size = vec3(1)
 	centerready = true
 
@@ -67,7 +70,7 @@ function temp_update_rot_point()
 
 	// Block offset to keep Minecraft grid alignment
 	var offset = point3D(0);
-	if (block_center && centerready && (type = e_temp_type.BLOCK || type = e_temp_type.SCENERY))
+	if (isblock && block_center && centerready)
 	{
 		if (size[X] mod 2 = 0)
 		{
@@ -82,7 +85,7 @@ function temp_update_rot_point()
 	}
 
 	// Convert old rotation points
-	if (block_center_legacy && centerready)
+	if (isblock && block_center_legacy && centerready)
 	{
 		if (offset[X] != 0 || offset[Y] != 0)
 		{

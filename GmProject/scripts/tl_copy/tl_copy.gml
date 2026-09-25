@@ -9,7 +9,6 @@ function tl_copy(to)
 	to.temp = temp
 	to.has_temp = has_temp
 	to.animated = animated
-	to.text = text
 	to.color_tag = color_tag
 	to.lock = lock
 	to.hide = hide
@@ -111,5 +110,12 @@ function tl_copy(to)
 			to.model_blend_color = model_blend_color
 			to.model_blend_color_default = model_blend_color_default
 		}
+	}
+	else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
+	{
+		to.text_font = text_font
+		to.text_3d = text_3d
+		to.text_face_camera = text_face_camera
+		to.text_aa = text_aa
 	}
 }

@@ -9,7 +9,9 @@ function shortcut_bar_update()
 		if (shortcut_bar_state = "viewport" || shortcut_bar_state = "viewportcam")
 		{
 			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "viewselect")
-			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "viewselect")
+			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "viewselectpart")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "viewselectadd")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_RIGHT, "viewselectpartadd")
 			
 			if (shortcut_bar_state = "viewport")
 				shortcut_bar_add(keybinds[e_keybind.CAM_VIEW_TIMELINE].keybind, null, "viewviewobject")
@@ -53,6 +55,8 @@ function shortcut_bar_update()
 			shortcut_bar_add(keybinds[e_keybind.CAM_DESCEND].keybind, null, "viewdescend")
 			shortcut_bar_add(keybinds[e_keybind.CAM_FAST].keybind, null, "viewfaster")
 			shortcut_bar_add(keybinds[e_keybind.CAM_SLOW].keybind, null, "viewslower")
+			if (shortcut_bar_state = "cameramove")
+				shortcut_bar_add(null, e_mouse.SCROLL, "viewspeed")
 			
 			if (shortcut_bar_state = "tlcameramove")
 			{

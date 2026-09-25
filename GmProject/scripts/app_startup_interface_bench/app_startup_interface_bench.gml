@@ -118,8 +118,15 @@ function app_startup_interface_bench()
 		block_tex_material = project_pack_res
 		block_tex_normal = project_pack_res
 		text_font = project_pack_res
+		text_aa = false
+		text_outline = false
+		text_outline_color = c_red
+		text_outline_size = 3
+		text_halign = "center"
+		text_valign = "center"
 		text = ""
 		tbx_text = new_textbox(false, 0, "")
+		tbx_text_outline_size = new_textbox_integer()
 		particle_preset = ""
 		type = e_temp_type.CHARACTER
 		shape_type = e_shape_type.CUBE

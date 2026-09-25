@@ -243,7 +243,7 @@ function bench_click(tab, key = false)
 	}
 	else if (tab = e_bench.TEXT)
 	{
-		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
+		preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font)
 		if (!key)
 			window_focus = string(bench_settings.tbx_text)
 	}

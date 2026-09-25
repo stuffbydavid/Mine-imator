@@ -419,7 +419,21 @@ function list_init(name)
 		// Text font
 		case "benchtextfont":
 		case "librarytextfont":
+		case "frameeditortextfont":
 		{
+			if (name = "frameeditortextfont" && tl_edit.has_temp)
+			{
+				menu_add_item(null, text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name))
+
+				for (var i = 0; i < ds_list_size(res_list.display_list); i++)
+				{
+					var res = res_list.display_list[|i];
+					if (res != tl_edit.temp.text_font && font_exists(res.font))
+						menu_add_item(res, res.display_name)
+				}
+				break
+			}
+
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
@@ -1255,22 +1269,6 @@ function list_init(name)
 			break
 		}
 
-		// Font
-		case "frameeditortextfont":
-		{
-			// Default
-			menu_add_item(null, text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name))
-			
-			// Add existing resources
-			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
-			{
-				var res = res_list.display_list[|i];
-				if (res != tl_edit.temp.text_font && font_exists(res.font))
-					menu_add_item(res, res.display_name)
-			}
-			break
-		}
-		
 		// Minecraft version
 		case "settingsminecraftversion":
 		{

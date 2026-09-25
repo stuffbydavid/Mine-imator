@@ -19,4 +19,6 @@ function tl_find_save_ids()
 		model_tex_material = save_id_find(model_tex_material)
 		model_tex_normal = save_id_find(model_tex_normal)
 	}
+	else if (type = e_tl_type.TEXT && part_of = null && !has_temp)
+		text_font = save_id_find(text_font)
 }
