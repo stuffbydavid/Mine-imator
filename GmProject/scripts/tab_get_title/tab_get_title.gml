@@ -6,6 +6,8 @@ function tab_get_title(tab)
 {
 	if (tab = properties)
 		return text_get("tabprojectproperties")
+	else if (tab = renderer_settings)
+		return text_get("tabrenderer")
 	else if (tab = timeline)
 		return text_get("tabtimeline")
 	else if (tab = build_tool)

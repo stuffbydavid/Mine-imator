@@ -11,6 +11,6 @@ function action_project_renderer(renderer)
 		return 0
 	}
 		
-	tab.render.renderer = renderer
+	tab.renderer = renderer
 	renderer_edit = renderer
 }

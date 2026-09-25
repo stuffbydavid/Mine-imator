@@ -33,77 +33,82 @@ function app_startup_interface_tabs()
 			tbx_tempo = new_textbox_integer()
 		}
 		
-		// Render
-		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
-		with (render)
-		{
-			renderer = e_renderer.STANDARD
-			
-			tbx_render_distance = new_textbox_integer()
-			tbx_samples = new_textbox_integer()
-			tbx_dof_quality = new_textbox_integer()
-			
-			tbx_shadows_sun_cascades = new_textbox_integer()
-			tbx_shadows_blur_quality = new_textbox_integer()
-			tbx_shadows_blur_size = new_textbox_decimals()
-			tbx_shadows_blur_size.suffix = "%"
-			
-			tbx_ssao_radius = new_textbox_decimals()
-			tbx_ssao_power = new_textbox_integer()
-			tbx_ssao_power.suffix = "%"
-			tbx_ssao_blur_passes = new_textbox_integer()
-			
-			tbx_subsurface_samples = new_textbox_integer()
-			tbx_subsurface_backlight_spread = new_textbox_integer()
-			tbx_subsurface_backlight_spread.suffix = "%"
-			tbx_subsurface_backlight_strength = new_textbox_integer()
-			tbx_subsurface_backlight_strength.suffix = "%"
-			
-			tbx_indirect_precision = new_textbox_integer()
-			tbx_indirect_precision.suffix = "%"
-			tbx_indirect_bounces = new_textbox_integer()
-			tbx_indirect_blur_radius = new_textbox_decimals()
-			tbx_indirect_blur_radius.suffix = "%"
-			tbx_indirect_strength = new_textbox_integer()
-			tbx_indirect_strength.suffix = "%"
-			
-			tbx_reflections_precision = new_textbox_integer()
-			tbx_reflections_precision.suffix = "%"
-			tbx_reflections_bounces = new_textbox_integer()
-			tbx_reflections_fade_amount = new_textbox_integer()
-			tbx_reflections_fade_amount.suffix = "%"
-			tbx_reflections_thickness = new_textbox_decimals()
-			
-			tbx_glow_radius = new_textbox_integer()
-			tbx_glow_radius.suffix = "%"
-			tbx_glow_intensity = new_textbox_integer()
-			tbx_glow_intensity.suffix = "%"
-			
-			tbx_aa_power = new_textbox_integer()
-			tbx_aa_power.suffix = "%"
-			
-			tbx_texture_filtering_level = new_textbox_integer()
-			
-			tbx_exposure = new_textbox_decimals()
-			tbx_gamma = new_textbox_decimals()
-			
-			tbx_glint_speed = new_textbox_decimals()
-			tbx_glint_speed.suffix = "%"
-			tbx_glint_strength = new_textbox_decimals()
-			tbx_glint_strength.suffix = "%"
-			
-			tbx_block_emissive = new_textbox_decimals()
-			tbx_block_emissive.suffix = "%"
-			tbx_block_subsurface_radius = new_textbox_decimals()
-			tbx_water_roughness = new_textbox_decimals()
-			tbx_water_roughness.suffix = "%"
-			tbx_water_wave_strength = new_textbox_decimals()
-			tbx_water_wave_strength.suffix = "%"
-			tbx_water_wave_speed = new_textbox_decimals()
-			tbx_water_wave_speed.suffix = "%"
-			tbx_water_wave_detail = new_textbox_integer()
-		}
-		
+	}
+
+	// Renderer settings
+	renderer_settings = new_tab(setting_renderer_settings_location, false)
+	renderer_settings.script = tab_properties_render
+	with (renderer_settings)
+	{
+		renderer = e_renderer.STANDARD
+
+		tbx_render_distance = new_textbox_integer()
+		tbx_samples = new_textbox_integer()
+		tbx_dof_quality = new_textbox_integer()
+
+		tbx_shadows_sun_cascades = new_textbox_integer()
+		tbx_shadows_blur_quality = new_textbox_integer()
+		tbx_shadows_blur_size = new_textbox_decimals()
+		tbx_shadows_blur_size.suffix = "%"
+
+		tbx_ssao_radius = new_textbox_decimals()
+		tbx_ssao_power = new_textbox_integer()
+		tbx_ssao_power.suffix = "%"
+		tbx_ssao_blur_passes = new_textbox_integer()
+
+		tbx_subsurface_samples = new_textbox_integer()
+		tbx_subsurface_backlight_spread = new_textbox_integer()
+		tbx_subsurface_backlight_spread.suffix = "%"
+		tbx_subsurface_backlight_strength = new_textbox_integer()
+		tbx_subsurface_backlight_strength.suffix = "%"
+
+		tbx_indirect_precision = new_textbox_integer()
+		tbx_indirect_precision.suffix = "%"
+		tbx_indirect_bounces = new_textbox_integer()
+		tbx_indirect_blur_radius = new_textbox_decimals()
+		tbx_indirect_blur_radius.suffix = "%"
+		tbx_indirect_strength = new_textbox_integer()
+		tbx_indirect_strength.suffix = "%"
+
+		tbx_reflections_precision = new_textbox_integer()
+		tbx_reflections_precision.suffix = "%"
+		tbx_reflections_bounces = new_textbox_integer()
+		tbx_reflections_fade_amount = new_textbox_integer()
+		tbx_reflections_fade_amount.suffix = "%"
+		tbx_reflections_thickness = new_textbox_decimals()
+
+		tbx_glow_radius = new_textbox_integer()
+		tbx_glow_radius.suffix = "%"
+		tbx_glow_intensity = new_textbox_integer()
+		tbx_glow_intensity.suffix = "%"
+
+		tbx_aa_power = new_textbox_integer()
+		tbx_aa_power.suffix = "%"
+
+		tbx_texture_filtering_level = new_textbox_integer()
+
+		tbx_exposure = new_textbox_decimals()
+		tbx_gamma = new_textbox_decimals()
+
+		tbx_glint_speed = new_textbox_decimals()
+		tbx_glint_speed.suffix = "%"
+		tbx_glint_strength = new_textbox_decimals()
+		tbx_glint_strength.suffix = "%"
+
+		tbx_block_emissive = new_textbox_decimals()
+		tbx_block_emissive.suffix = "%"
+		tbx_block_subsurface_radius = new_textbox_decimals()
+		tbx_water_roughness = new_textbox_decimals()
+		tbx_water_roughness.suffix = "%"
+		tbx_water_wave_strength = new_textbox_decimals()
+		tbx_water_wave_strength.suffix = "%"
+		tbx_water_wave_speed = new_textbox_decimals()
+		tbx_water_wave_speed.suffix = "%"
+		tbx_water_wave_detail = new_textbox_integer()
+	}
+
+	with (properties)
+	{
 		// Library
 		library = tab_add_category("library", icons.LIBRARY_SMALL, tab_properties_library, false)
 		with (library)

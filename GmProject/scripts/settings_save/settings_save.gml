@@ -117,6 +117,7 @@ function settings_save()
 		json_save_var("bench_height", bench_initial_height + bench_height_add)
 		
 		json_save_var("properties_location", properties.panel.location)
+		json_save_var("renderer_settings_location", renderer_settings.panel.location)
 		json_save_var("ground_editor_location", ground_editor.panel.location)
 		json_save_var("object_editor_location", object_editor.panel.location)
 		json_save_var("build_mode_location", build_tool.panel.location)

@@ -1728,6 +1728,7 @@
     {"id":{"name":"draw_dragger_sky","path":"scripts/draw_dragger_sky/draw_dragger_sky.yy",},},
     {"id":{"name":"draw_dragger","path":"scripts/draw_dragger/draw_dragger.yy",},},
     {"id":{"name":"draw_dropshadow","path":"scripts/draw_dropshadow/draw_dropshadow.yy",},},
+    {"id":{"name":"draw_edit_button","path":"scripts/draw_edit_button/draw_edit_button.yy",},},
     {"id":{"name":"draw_gradient","path":"scripts/draw_gradient/draw_gradient.yy",},},
     {"id":{"name":"draw_help_circle","path":"scripts/draw_help_circle/draw_help_circle.yy",},},
     {"id":{"name":"draw_image_box_cover","path":"scripts/draw_image_box_cover/draw_image_box_cover.yy",},},
