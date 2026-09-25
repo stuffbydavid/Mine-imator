@@ -91,8 +91,9 @@ function draw_button_icon()
 	oniconcolor = merge_color(officoncolor, oniconcolor, microani_arr[e_microani.ACTIVE] * !animated)
 	oniconalpha = lerp(officonalpha, oniconalpha, microani_arr[e_microani.ACTIVE] * !animated)
 	
+	var disabledbuttonalpha = 0.5;
 	oniconcolor = merge_color(oniconcolor, c_text_tertiary, microani_arr[e_microani.DISABLED])
-	oniconalpha = lerp(oniconalpha, a_text_tertiary, microani_arr[e_microani.DISABLED])
+	oniconalpha = lerp(oniconalpha, a_text_tertiary * disabledbuttonalpha, microani_arr[e_microani.DISABLED])
 	
 	draw_box(xx, yy, wid, hei, false, onbackcolor, onbackalpha)
 	

@@ -54,7 +54,7 @@ function app_update_tl_edit_select()
 		if (!selected)
 			continue
 		
-		// Show duplicate & remove settings?
+		// Enable duplicate, remove and export settings?
 		if (part_of = null)
 			app.timeline_settings = true
 		
@@ -75,10 +75,11 @@ function app_update_tl_edit_select()
 				}
 			}
 			
-			// Show keyframe settings?
-			app.timeline_settings_keyframes = true
+			// Enable keyframe settings?
+			if (animated)
+				app.timeline_settings_keyframes = true
 			
-			// Show export button?
+			// Enable export button?
 			if (checkexport)
 			{
 				var obj = ((part_of != null) ? part_of : id);

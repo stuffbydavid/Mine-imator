@@ -2,7 +2,7 @@
 
 function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 {
-	var timex, timelabel, maxpos, hrs, buttonsxstart, buttonsx, buttonsy, tooltip;
+	var timex, timelabel, maxpos, hrs, buttonsxstart, buttonsx, buttonsy;
 	timex = headerx + 8
 	content_mouseon = app_mouse_box(headerx, headery, headerw, headerh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
@@ -91,7 +91,7 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	buttonsx += 6
 	
 	var transitiondisabled, curtransition, buttonmouseon;
-	transitiondisabled = !timeline_settings_keyframes && tl_edit == null
+	transitiondisabled = !timeline_settings_keyframes && (tl_edit == null || !tl_edit.animated)
 	curtransition = (tl_edit != null ? tl_edit.value[e_value.TRANSITION] : "linear")
 		
 	// Linear

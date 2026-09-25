@@ -179,6 +179,8 @@ function draw_button_menu()
 	
 	// Mouse
 	mouseon = (app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon) || (menuactive && app_mouse_box(xx, yy, wid, hei, "menu"))
+	if (mouseon)
+		menu_button_mouseon = true
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint

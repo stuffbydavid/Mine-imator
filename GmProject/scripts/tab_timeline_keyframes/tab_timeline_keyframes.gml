@@ -2,10 +2,11 @@
 
 function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl, mousetl)
 {
-	var itemhalf = itemh / 2;
-	var mousekf = null;
-	var mousekfstart = null;
-	var mousekfend = null;
+	var itemhalf, mousekf, mousekfstart, mousekfend;
+	itemhalf = itemh / 2
+	mousekf = null
+	mousekfstart = null
+	mousekfend = null
 
 	// Process moving keyframes to prevent marker lag
 	if (window_busy = "timelinemovekeyframes" && mouse_left)

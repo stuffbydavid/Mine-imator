@@ -2,7 +2,6 @@
 
 function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh, mouseinnames)
 {
-	var framestep, framehighlight, f;
 	timeline_region_x1 = 0
 	timeline_region_x2 = 0
 
@@ -46,6 +45,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 	}
 	
 	// Frames
+	var framestep, framehighlight, f;
 	framestep = 1
 	framehighlight = 5
 	

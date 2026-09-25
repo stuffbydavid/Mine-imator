@@ -98,8 +98,8 @@
 			"ghost": "Set ghost timeline",
 			"unghost": "Unset ghost timeline",
 			"filter": "Filter timelines",
-			"walk": "Create walk cycle",
-			"run": "Create run cycle",
+			"walk": "Create walk cycle to the next keyframe",
+			"run": "Create run cycle to the next keyframe",
 			"transition/": {
 				"linear": "Set keyframe transition\nto Linear",
 				"easein": "Set keyframe transition\nto Ease in",
