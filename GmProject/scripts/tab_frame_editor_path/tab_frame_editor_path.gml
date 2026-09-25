@@ -21,7 +21,7 @@ function tab_frame_editor_path()
 			text = text_get("listnone")
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], text, action_tl_frame_path)
+		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], text, action_tl_frame_path_obj)
 		tab_next()
 		
 		// Force

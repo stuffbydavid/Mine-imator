@@ -1217,6 +1217,22 @@ function enums()
 		MATERIAL
 	}
 	
+	enum e_biome_color
+	{
+		GRASS,
+		FOLIAGE,
+		DRY_FOLIAGE,
+		WATER,
+		LEAVES_OAK,
+		LEAVES_SPRUCE,
+		LEAVES_BIRCH,
+		LEAVES_JUNGLE,
+		LEAVES_ACACIA,
+		LEAVES_DARK_OAK,
+		LEAVES_MANGROVE,
+		amount
+	}
+
 	enum e_surface_format
 	{
 		rgba8unorm,

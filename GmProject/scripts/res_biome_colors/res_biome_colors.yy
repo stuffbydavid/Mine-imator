@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_biome_colors",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_biome_colors",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Resources/Update.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -14,7 +14,7 @@ function action_background_biome(biome)
 	else
 	{
 		if (history_redo)
-			biome = history_data.new_biome
+			biome = history_data.biome
 
 		// Group object, select first biome in list instead
 		biomeobj = find_biome(biome)
@@ -52,7 +52,7 @@ function action_background_biome(biome)
 			hobj.old_sky_color = background_sky_color
 			hobj.old_ground_name = background_ground_name
 			hobj.old_ground_slot = background_ground_slot
-			hobj.new_biome = biome
+			hobj.biome = biome
 		}
 
 		background_biome = biome

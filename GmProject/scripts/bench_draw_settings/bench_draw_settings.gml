@@ -910,7 +910,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			if (bench_settings.text_outline)
 			{
 				tab_control_color(true)
-				draw_button_color("benchtextoutlinecolor", dx, dy, dw, bench_settings.text_outline_color, c_red, false, action_bench_text_outline_color, true)
+				draw_button_color("benchtextoutlinecolor", dx, dy, dw, bench_settings.text_outline_color, c_text_outline, false, action_bench_text_outline_color, true)
 				tab_next()
 				if (res_eval(bench_settings.text_font).type = e_res_type.FONT)
 				{

@@ -40,7 +40,7 @@ function tab_properties_library_text()
 	{
 		tab_collapse_start()
 		tab_control_color(true)
-		draw_button_color("librarytextoutlinecolor", dx, dy, dw, temp_edit.text_outline_color, c_red, false, action_lib_text_outline_color, true)
+		draw_button_color("librarytextoutlinecolor", dx, dy, dw, temp_edit.text_outline_color, c_text_outline, false, action_lib_text_outline_color, true)
 		tab_next()
 		if (res_eval(temp_edit.text_font).type = e_res_type.FONT)
 		{

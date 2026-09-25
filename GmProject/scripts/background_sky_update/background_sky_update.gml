@@ -4,17 +4,27 @@ function background_sky_update()
 {
 	if (!background_fog_color_custom) // Fog color
 	{
-		var biome, biomefog;
+		var biome, nextbiome, biomefog, nextfog, fogstart, fogend;
 		biome = find_biome(background_biome)
+		nextbiome = biome
+		if (background_biome_mix > 0)
+			nextbiome = find_biome(background_biome_next)
 		biomefog = false
+		nextfog = false
 		
 		if (biome != null)
 			biomefog = biome.fog_enabled
+		if (nextbiome != null)
+			nextfog = nextbiome.fog_enabled
 
 		background_fog_color_final = background_sky_color_final
 		
-		if (biomefog && background_dimension = "overworld")
-			background_fog_color_final = merge_color(biome.fog_color, background_night_sky_color, background_night_alpha)
+		if (background_dimension = "overworld")
+		{
+			fogstart = biomefog ? merge_color(biome.fog_color, background_night_sky_color, background_night_alpha) : background_sky_color_final
+			fogend = nextfog ? merge_color(nextbiome.fog_color, background_night_sky_color, background_night_alpha) : background_sky_color_final
+			background_fog_color_final = merge_color(fogstart, fogend, background_biome_mix)
+		}
 			
 		if (!background_image_show)
 		{
@@ -37,8 +47,12 @@ function background_sky_update()
 			}
 		}
 		
-		if (biomefog && background_dimension != "overworld")
-			background_fog_color_final = biome.fog_color
+		if (background_dimension != "overworld")
+		{
+			fogstart = biomefog ? biome.fog_color : background_fog_color_final
+			fogend = nextfog ? nextbiome.fog_color : background_fog_color_final
+			background_fog_color_final = merge_color(fogstart, fogend, background_biome_mix)
+		}
 	}
 	
 	if (background_fog_custom_object_color)

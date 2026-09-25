@@ -130,6 +130,7 @@ function macros()
 	#macro c_sunset_start				hex_to_color("B2353B")
 	#macro c_sunset_end					hex_to_color("C04E37")
 	#macro c_normal						make_color_rgb(127, 127, 255)
+	#macro c_text_outline				make_color_rgb(92, 80, 255)
 	
 	// Encoding
 	#macro sample_rate					44100

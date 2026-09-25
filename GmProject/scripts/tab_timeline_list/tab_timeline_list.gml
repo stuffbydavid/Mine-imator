@@ -67,7 +67,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		itemx = (content_x + (indent * tl.indent_level)) - timeline.hor_scroll_tl.value
 		itemy = dy
 		itemw = listw - 8 - (indent * tl.indent_level) + timeline.hor_scroll_tl.value
-		itemhover = (tl = mousetl) && mouseinnames
+		itemhover = ((tl = mousetl) && mouseinnames) || (window_busy = "timelineclick" && timeline_select = tl)
 		buttonhover = false
 		
 		itemmaxw = (indent * tl.indent_level) + 32

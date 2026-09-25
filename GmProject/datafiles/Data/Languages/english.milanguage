@@ -4309,6 +4309,11 @@
 			"spotsharpness": "Spot sharpness",
 			"spotradius": "Spot radius"
 		},
+		"environment": "ENVIRONMENT",
+		"environment/": {
+			"tip": "Changes to Environment settings will be saved in keyframes and animated.",
+			"open": "Open settings"
+		},
 		"transform": "TRANSFORM",
 		"position": "Position",
 		"position/": {

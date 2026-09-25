@@ -15,6 +15,7 @@ function app_update_tl_edit_select()
 		text.enabled = false
 		light.enabled = false
 		light.has_spotlight = false
+		environment.enabled = false
 		transform.show = false
 		transform.enabled = false
 		constraints.enabled = false
@@ -121,6 +122,9 @@ function app_update_tl_edit_select()
 
 		if (value_type[e_value_type.SPOTLIGHT])
 			app.frame_editor.light.has_spotlight = true
+
+		if (value_type[e_value_type.BACKGROUND])
+			app.frame_editor.environment.enabled = true
 
 		if (value_type[e_value_type.TRANSFORM])
 			app.frame_editor.transform.enabled = true

@@ -58,6 +58,8 @@ function project_reset_background()
 		background_biome = biome_list[|1].name
 	
 	background_biome_prev = background_biome
+	background_biome_next = background_biome
+	background_biome_mix = 0
 	background_grass_color = c_plains_biome_grass
 	background_foliage_color = c_plains_biome_foliage
 	background_dry_foliage_color = c_plains_biome_dry_foliage

@@ -222,10 +222,13 @@ function tab_properties_background()
 			tab_next()
 		}
 
-		// Sunlight angle
-		tab_control_dragger()
-		draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .05, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
-		tab_next()
+		if (setting_advanced_mode)
+		{
+			// Sunlight angle
+			tab_control_dragger()
+			draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .05, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
+			tab_next()
+		}
 
 		// Sunlight strength
 		tab_control_dragger()

@@ -733,6 +733,9 @@ function app_startup_interface_tabs()
 			tbx_spot_sharpness.suffix = "%"
 		}
 
+		// Environment
+		environment = tab_add_category("frameeditorenvironment", icons.WORLD_SMALL, tab_frame_editor_environment, true)
+
 		// Transform
 		transform = tab_add_category("frameeditortransform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
 		with (transform)
