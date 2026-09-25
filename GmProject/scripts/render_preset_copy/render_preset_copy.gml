@@ -110,6 +110,7 @@ function render_preset_copy(to, allsettings = false)
 		to.water_roughness = water_roughness
 		to.water_wave_strength = water_wave_strength
 		to.water_wave_speed = water_wave_speed
+		to.water_wave_scale = water_wave_scale
 		to.water_wave_detail = water_wave_detail
 		to.material_maps = material_maps
 	}

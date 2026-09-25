@@ -41,6 +41,7 @@ function shader_use()
 	{
 		render_set_uniform("uWaterMaterialTime", app.background_time * app.project_render_water_wave_speed)
 		render_set_uniform("uWaterMaterialStrength", app.project_render_water_wave_strength)
+		render_set_uniform("uWaterMaterialScale", app.project_render_water_wave_scale)
 		render_set_uniform_int("uWaterMaterialOctaves", app.project_render_water_wave_detail)
 	}
 	

@@ -114,6 +114,7 @@ function render_preset_load_settings(map)
 		water_roughness = value_get_real(materialsmap[?"water_roughness"], water_roughness)
 		water_wave_strength = value_get_real(materialsmap[?"water_wave_strength"], water_wave_strength)
 		water_wave_speed = value_get_real(materialsmap[?"water_wave_speed"], water_wave_speed)
+		water_wave_scale = value_get_real(materialsmap[?"water_wave_scale"], water_wave_scale)
 		water_wave_detail = value_get_real(materialsmap[?"water_wave_detail"], water_wave_detail)
 		material_maps = value_get_real(materialsmap[?"material_maps"], material_maps)
 	}

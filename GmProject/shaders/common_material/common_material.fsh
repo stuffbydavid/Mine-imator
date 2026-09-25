@@ -8,12 +8,14 @@ uniform sampler2D uTextureNormal; // static
 uniform int uUseNormalMap; // static
 uniform float uWaterMaterialTime; // static
 uniform float uWaterMaterialStrength; // static
+uniform float uWaterMaterialScale; // static
 uniform int uWaterMaterialOctaves; // static
 
 // GPU Gems: Chapter 1
 // https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models
 vec3 getWaterNormal(vec3 position)
 {
+	position.xy /= max(uWaterMaterialScale * 0.75, 0.01);
 	vec2 gradient = vec2(0.0);
 	vec2 direction = vec2(1.0, 0.0);
 	float frequency = 0.16;
@@ -25,8 +27,14 @@ vec3 getWaterNormal(vec3 position)
 		if (octave >= uWaterMaterialOctaves)
 			break;
 
-		float phase = dot(position.xy, direction) * frequency + uWaterMaterialTime * speed;
-		gradient += direction * cos(phase) * strength;
+		float octavePhase = float(octave) * 2.39996;
+		vec2 perpendicular = vec2(-direction.y, direction.x);
+		float crossPhase = dot(position.xy, perpendicular) * frequency * 0.37;
+		float crossWave = crossPhase + octavePhase * 1.618;
+		float phaseWarp = sin(crossWave) * 0.55;
+		float phase = dot(position.xy, direction) * frequency + uWaterMaterialTime * speed + octavePhase + phaseWarp;
+		vec2 warpedDirection = direction + perpendicular * cos(crossWave) * 0.2035;
+		gradient += warpedDirection * cos(phase) * strength;
 
 		direction = vec2(
 			direction.x * 0.682 - direction.y * 0.731,

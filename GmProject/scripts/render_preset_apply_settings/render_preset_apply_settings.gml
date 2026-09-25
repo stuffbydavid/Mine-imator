@@ -77,6 +77,7 @@ function render_preset_apply_settings(settings, renderer)
 			case "water_roughness": water_roughness = val break
 			case "water_wave_strength": water_wave_strength = val break
 			case "water_wave_speed": water_wave_speed = val break
+			case "water_wave_scale": water_wave_scale = val break
 			case "water_wave_detail": water_wave_detail = val break
 			case "block_emissive": block_emissive = val break
 			case "block_subsurface": block_subsurface = val break

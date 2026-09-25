@@ -3285,10 +3285,13 @@
 		"waterreflections": "Default water material",
 		"waterreflectionshelp": "Override water blocks with a default reflective water material.",
 		"waterroughness": "Roughness",
-		"waterwavestrength": "Wave strength",
-		"waterwavespeed": "Wave speed",
-		"waterwavedetail": "Wave detail",
-		"materialmaps": "Object material maps",
+		"waterwave/": {
+			"strength": "Strength",
+			"speed": "Speed",
+			"scale": "Scale",
+			"detail": "Detail"
+		},
+		"materialmaps": "Display material maps",
 		"materialmapstip": "Enable material and normal map texture settings for objects."
 	},
 	"library": "LIBRARY",

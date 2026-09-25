@@ -121,6 +121,7 @@ function render_preset_equals(obj, renderer, allsettings)
 		water_roughness = obj.water_roughness &&
 		water_wave_strength = obj.water_wave_strength &&
 		water_wave_speed = obj.water_wave_speed &&
+		water_wave_scale = obj.water_wave_scale &&
 		water_wave_detail = obj.water_wave_detail &&
 		material_maps = obj.material_maps
 	)

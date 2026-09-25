@@ -99,6 +99,7 @@ function render_preset_event_create()
 	water_roughness = 0
 	water_wave_strength = 1
 	water_wave_speed = 1
+	water_wave_scale = 1
 	water_wave_detail = 6
 	material_maps = false
 }

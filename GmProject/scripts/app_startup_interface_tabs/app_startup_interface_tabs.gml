@@ -104,6 +104,8 @@ function app_startup_interface_tabs()
 		tbx_water_wave_strength.suffix = "%"
 		tbx_water_wave_speed = new_textbox_decimals()
 		tbx_water_wave_speed.suffix = "%"
+		tbx_water_wave_scale = new_textbox_decimals()
+		tbx_water_wave_scale.suffix = "%"
 		tbx_water_wave_detail = new_textbox_integer()
 	}
 

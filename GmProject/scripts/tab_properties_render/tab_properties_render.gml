@@ -540,6 +540,10 @@ function tab_properties_render()
 		tab_next()
 
 		tab_control_dragger()
+		draw_dragger("renderwaterwavescale", dx, dy, dragger_width, round(project_render_water_wave_scale * 100), 1, 1, no_limit, 100, 1, tab.tbx_water_wave_scale, action_project_render_water_wave_scale)
+		tab_next()
+
+		tab_control_dragger()
 		draw_dragger("renderwaterwavedetail", dx, dy, dragger_width, project_render_water_wave_detail, 1, 1, 8, 6, 1, tab.tbx_water_wave_detail, action_project_render_water_wave_detail)
 		tab_next()
 

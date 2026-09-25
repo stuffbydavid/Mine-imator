@@ -1014,6 +1014,7 @@
     {"id":{"name":"action_project_render_water_reflections","path":"scripts/action_project_render_water_reflections/action_project_render_water_reflections.yy",},},
     {"id":{"name":"action_project_render_water_roughness","path":"scripts/action_project_render_water_roughness/action_project_render_water_roughness.yy",},},
     {"id":{"name":"action_project_render_water_wave_detail","path":"scripts/action_project_render_water_wave_detail/action_project_render_water_wave_detail.yy",},},
+    {"id":{"name":"action_project_render_water_wave_scale","path":"scripts/action_project_render_water_wave_scale/action_project_render_water_wave_scale.yy",},},
     {"id":{"name":"action_project_render_water_wave_speed","path":"scripts/action_project_render_water_wave_speed/action_project_render_water_wave_speed.yy",},},
     {"id":{"name":"action_project_render_water_wave_strength","path":"scripts/action_project_render_water_wave_strength/action_project_render_water_wave_strength.yy",},},
     {"id":{"name":"action_project_renderer","path":"scripts/action_project_renderer/action_project_renderer.yy",},},
