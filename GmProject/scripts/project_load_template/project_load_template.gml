@@ -319,6 +319,12 @@ function project_load_template(map)
 				text_font = value_get_save_id(textmap[?"font"], text_font)
 				text_3d = value_get_real(textmap[?"3d"], text_3d)
 				text_face_camera = value_get_real(textmap[?"face_camera"], text_face_camera)
+				text_aa = value_get_real(textmap[?"aa"], text_aa)
+				text_outline = value_get_real(textmap[?"outline"], text_outline)
+				text_outline_color = value_get_color(textmap[?"outline_color"], text_outline_color)
+				text_outline_size = value_get_real(textmap[?"outline_size"], text_outline_size)
+				text_halign = value_get_string(textmap[?"halign"], text_halign)
+				text_valign = value_get_string(textmap[?"valign"], text_valign)
 			}
 		}
 		else if (type = e_temp_type.PARTICLE_SPAWNER)

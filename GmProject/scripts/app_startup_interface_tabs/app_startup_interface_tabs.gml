@@ -110,6 +110,7 @@ function app_startup_interface_tabs()
 			tbx_repeat_y = new_textbox_integer()
 			tbx_repeat_z = new_textbox_integer()
 			tbx_shape_detail = new_textbox_integer()
+			tbx_text_outline_size = new_textbox_integer()
 			tbx_shape_tex_hoffset = new_textbox_ndecimals()
 			tbx_shape_tex_voffset = new_textbox_ndecimals()
 			tbx_shape_tex_hrepeat = new_textbox_decimals()
@@ -484,7 +485,6 @@ function app_startup_interface_tabs()
 		with (info)
 		{
 			tbx_name = new_textbox(true, 0, "")
-			tbx_text = new_textbox(false, 0, "")
 			tbx_rot_point_x = new_textbox_ndecimals()
 			tbx_rot_point_y = new_textbox_ndecimals()
 			tbx_rot_point_z = new_textbox_ndecimals()
@@ -498,7 +498,7 @@ function app_startup_interface_tabs()
 			tbx_repeat_y = new_textbox_integer()
 			tbx_repeat_z = new_textbox_integer()
 		}
-		
+
 		// Audio
 		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
 		
@@ -534,108 +534,12 @@ function app_startup_interface_tabs()
 	frame_editor = new_tab(setting_frame_editor_location, false)
 	with (frame_editor)
 	{
-		// Transform
-		transform = tab_add_category("frameeditortransform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
-		with (transform)
+		// Item
+		item = tab_add_category("frameeditoritem", icons.ITEM_SMALL, tab_frame_editor_item, false)
+		with (item)
 		{
-			// Position
-			tbx_pos_x = new_textbox_ndecimals()
-			tbx_pos_y = new_textbox_ndecimals()
-			tbx_pos_z = new_textbox_ndecimals()
-			
-			// Rotation
-			tbx_rot_x = new_textbox_ndecimals()
-			tbx_rot_x.suffix = "°"
-			tbx_rot_y = new_textbox_ndecimals()
-			tbx_rot_y.suffix = "°"
-			tbx_rot_z = new_textbox_ndecimals()
-			tbx_rot_z.suffix = "°"
-			
-			// Scale
-			scale_all = false
-			tbx_sca_x = new_textbox_decimals()
-			tbx_sca_y = new_textbox_decimals()
-			tbx_sca_z = new_textbox_decimals()
-			
-			// Bend
-			bend_sliders = false
-			tbx_bend[0] = new_textbox_ndecimals()
-			tbx_bend[0].suffix = "°"
-			tbx_bend[1] = new_textbox_ndecimals()
-			tbx_bend[1].suffix = "°"
-			tbx_bend[2] = new_textbox_ndecimals()
-			tbx_bend[2].suffix = "°"
-			
-			tbx_path_point_angle = new_textbox_ndecimals()
-			tbx_path_point_angle.suffix = "°"
-			tbx_path_point_scale = new_textbox_decimals()
-		}
-		
-		// Constraints
-		constraints = tab_add_category("frameeditorconstraints", icons.JOINT_SMALL, tab_frame_editor_constraints, false)
-		with (constraints)
-		{
-			// Path
-			tbx_path_offset = new_textbox_ndecimals()
-			
-			// IK
-			tbx_ik_blend = new_textbox_integer()
-			tbx_ik_blend.suffix = "%"
-			tbx_ik_angle_offset = new_textbox_ndecimals()
-			tbx_ik_angle_offset.suffix = "°"
-		}
-		
-		// Material
-		material = tab_add_category("frameeditormaterial", [icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL__DARK], tab_frame_editor_material, false)
-		with (material)
-		{
-			tbx_alpha = new_textbox_integer()
-			tbx_alpha.suffix = "%"
-			tbx_mix_percent = new_textbox_integer()
-			tbx_mix_percent.suffix = "%"
-			tbx_emissive = new_textbox_integer()
-			tbx_emissive.suffix = "%"
-			tbx_metallic = new_textbox_integer()
-			tbx_metallic.suffix = "%"
-			tbx_roughness = new_textbox_integer()
-			tbx_roughness.suffix = "%"
-			tbx_subsurface = new_textbox_decimals()
-			tbx_subsurface_radius[X] = new_textbox_integer()
-			tbx_subsurface_radius[X].suffix = "%"
-			tbx_subsurface_radius[Y] = new_textbox_integer()
-			tbx_subsurface_radius[Y].suffix = "%"
-			tbx_subsurface_radius[Z] = new_textbox_integer()
-			tbx_subsurface_radius[Z].suffix = "%"
-			tbx_wind_influence = new_textbox_integer()
-			tbx_wind_influence.suffix = "%"
-		}
-		
-		// Particles
-		particles = tab_add_category("frameeditorparticles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
-		with (particles)
-		{
-			tbx_seed = new_textbox_ninteger()
-			tbx_force = new_textbox_ndecimals()
-			tbx_force_directional = new_textbox_ndecimals()
-			tbx_force_vortex = new_textbox_ndecimals()
-		}
-		
-		// Light
-		light = tab_add_category("frameeditorlight", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
-		with (light)
-		{
-			has_spotlight = false
-			tbx_size = new_textbox_decimals()
-			tbx_range = new_textbox_decimals()
-			tbx_strength = new_textbox_integer()
-			tbx_strength.suffix = "%"
-			tbx_specular_strength = new_textbox_integer()
-			tbx_specular_strength.suffix = "%"
-			tbx_fade_size = new_textbox_integer()
-			tbx_fade_size.suffix = "%"
-			tbx_spot_radius = new_textbox_decimals()
-			tbx_spot_sharpness = new_textbox_integer()
-			tbx_spot_sharpness.suffix = "%"
+			item_scroll = new_obj(obj_scrollbar)
+			item_slot = new_textbox_integer()
 		}
 		
 		// Camera
@@ -766,17 +670,116 @@ function app_startup_interface_tabs()
 			tbx_end = new_textbox_ndecimals()
 		}
 		
-		// Text
-		text = tab_add_category("frameeditortext", icons.TEXT_SMALL, tab_frame_editor_text, false)
-		with (text)
-			tbx_text = new_textbox(false, 0, "")
-		
-		// Item
-		item = tab_add_category("frameeditoritem", icons.ITEM_SMALL, tab_frame_editor_item, false)
-		with (item)
+		// Particles
+		particles = tab_add_category("frameeditorparticles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
+		with (particles)
 		{
-			item_scroll = new_obj(obj_scrollbar)
-			item_slot = new_textbox_integer()
+			tbx_seed = new_textbox_ninteger()
+			tbx_force = new_textbox_ndecimals()
+			tbx_force_directional = new_textbox_ndecimals()
+			tbx_force_vortex = new_textbox_ndecimals()
+		}
+		
+		// Text
+		text = tab_add_category("frameeditortext", icons.TEXT_SMALL, tab_frame_editor_text, true)
+		with (text)
+		{
+			tbx_text = new_textbox(false, 0, "")
+			tbx_outline_size = new_textbox_integer()
+		}
+		
+		// Light
+		light = tab_add_category("frameeditorlight", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
+		with (light)
+		{
+			has_spotlight = false
+			tbx_size = new_textbox_decimals()
+			tbx_range = new_textbox_decimals()
+			tbx_strength = new_textbox_integer()
+			tbx_strength.suffix = "%"
+			tbx_specular_strength = new_textbox_integer()
+			tbx_specular_strength.suffix = "%"
+			tbx_fade_size = new_textbox_integer()
+			tbx_fade_size.suffix = "%"
+			tbx_spot_radius = new_textbox_decimals()
+			tbx_spot_sharpness = new_textbox_integer()
+			tbx_spot_sharpness.suffix = "%"
+		}
+
+		// Transform
+		transform = tab_add_category("frameeditortransform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
+		with (transform)
+		{
+			// Position
+			tbx_pos_x = new_textbox_ndecimals()
+			tbx_pos_y = new_textbox_ndecimals()
+			tbx_pos_z = new_textbox_ndecimals()
+			
+			// Rotation
+			tbx_rot_x = new_textbox_ndecimals()
+			tbx_rot_x.suffix = "°"
+			tbx_rot_y = new_textbox_ndecimals()
+			tbx_rot_y.suffix = "°"
+			tbx_rot_z = new_textbox_ndecimals()
+			tbx_rot_z.suffix = "°"
+			
+			// Scale
+			scale_all = false
+			tbx_sca_x = new_textbox_decimals()
+			tbx_sca_y = new_textbox_decimals()
+			tbx_sca_z = new_textbox_decimals()
+			
+			// Bend
+			bend_sliders = false
+			tbx_bend[0] = new_textbox_ndecimals()
+			tbx_bend[0].suffix = "°"
+			tbx_bend[1] = new_textbox_ndecimals()
+			tbx_bend[1].suffix = "°"
+			tbx_bend[2] = new_textbox_ndecimals()
+			tbx_bend[2].suffix = "°"
+			
+			tbx_path_point_angle = new_textbox_ndecimals()
+			tbx_path_point_angle.suffix = "°"
+			tbx_path_point_scale = new_textbox_decimals()
+		}
+		
+		// Constraints
+		constraints = tab_add_category("frameeditorconstraints", icons.JOINT_SMALL, tab_frame_editor_constraints, false)
+		with (constraints)
+		{
+			// Path
+			tbx_path_offset = new_textbox_ndecimals()
+			
+			// IK
+			tbx_ik_blend = new_textbox_integer()
+			tbx_ik_blend.suffix = "%"
+			tbx_ik_angle_offset = new_textbox_ndecimals()
+			tbx_ik_angle_offset.suffix = "°"
+		}
+		
+		// Material
+		material = tab_add_category("frameeditormaterial", [icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL__DARK], tab_frame_editor_material, false)
+		with (material)
+		{
+			tbx_alpha = new_textbox_integer()
+			tbx_alpha.suffix = "%"
+			tbx_mix_percent = new_textbox_integer()
+			tbx_mix_percent.suffix = "%"
+			tbx_emissive = new_textbox_integer()
+			tbx_emissive.suffix = "%"
+			tbx_metallic = new_textbox_integer()
+			tbx_metallic.suffix = "%"
+			tbx_roughness = new_textbox_integer()
+			tbx_roughness.suffix = "%"
+			tbx_subsurface = new_textbox_decimals()
+			tbx_subsurface_radius[X] = new_textbox_integer()
+			tbx_subsurface_radius[X].suffix = "%"
+			tbx_subsurface_radius[Y] = new_textbox_integer()
+			tbx_subsurface_radius[Y].suffix = "%"
+			tbx_subsurface_radius[Z] = new_textbox_integer()
+			tbx_subsurface_radius[Z].suffix = "%"
+			tbx_wind_influence = new_textbox_integer()
+			tbx_wind_influence.suffix = "%"
 		}
 		
 		// Keyframe

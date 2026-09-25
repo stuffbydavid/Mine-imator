@@ -94,6 +94,9 @@ function view_update(view, cam)
 	
 	if (window_focus = string(view))
 	{
+		if (!cam && (window_busy = "viewrotatecamera" || window_busy = "viewmovecamera") && keybinds[e_keybind.CAM_RESET].pressed)
+			setting_move_speed_scroll = 1
+
 		// Select or move camera
 		if (window_busy = "viewclick")
 		{

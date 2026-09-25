@@ -31,7 +31,7 @@ function bench_show()
 	// Adjust zoom and highlight text on tab click
 	else if (bench_tab = e_bench.TEXT)
 	{
-		preview_zoom_text(bench_settings.preview, bench_settings.text, res_eval(bench_settings.text_font).font)
+		preview_zoom_text(bench_settings.preview, bench_settings.text, bench_settings.text_font)
 		if (!keybinds[e_keybind.WORKBENCH].pressed)
 			window_focus = string(bench_settings.tbx_text)
 	}

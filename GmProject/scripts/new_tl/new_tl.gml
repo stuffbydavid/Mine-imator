@@ -6,10 +6,10 @@ function new_tl(tlype)
 	with (new_obj(obj_timeline))
 	{
 		type = tlype
-		has_temp = (type < e_temp_type.amount)
-		animated = !type_is_block(type)
-		if (type = e_tl_type.BLOCK)
-			has_temp = false
+		has_temp = type_is_templated(type)
+		animated = !type_is_block(type) && type != e_tl_type.TEXT
+		if (type = e_tl_type.TEXT)
+			value[e_value.TEXT] = text_get("frameeditortextsample")
 		
 		tl_update()
 		

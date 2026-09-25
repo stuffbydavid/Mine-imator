@@ -189,6 +189,10 @@ function history_restore_res(save)
 				update_matrix = true
 			}
 		}
+
+		for (var s = 0; s < save.usage_tl_default_text_font_amount; s++)
+			with (save_id_find(save.usage_tl_default_text_font_save_id[s]))
+				text_font = res
 		
 		for (var s = 0; s < save.usage_tl_glint_tex_amount; s++)
 		{

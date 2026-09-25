@@ -21,7 +21,16 @@ function project_save_timeline()
 			json_save_var("model_part_name", json_string_encode(model_part_name))
 		
 		if (type = e_tl_type.TEXT)
-			json_save_var("text", json_string_encode(text))
+		{
+			json_save_var_bool("text_template_settings", true)
+			if (part_of = null && !has_temp)
+			{
+				json_save_var_save_id("text_font", text_font)
+				json_save_var_bool("text_3d", text_3d)
+				json_save_var_bool("text_face_camera", text_face_camera)
+				json_save_var_bool("text_aa", text_aa)
+			}
+		}
 		
 		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
 			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))

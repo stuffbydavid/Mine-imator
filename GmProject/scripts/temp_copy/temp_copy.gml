@@ -95,6 +95,12 @@ function temp_copy(to)
 			to.text_font = text_font
 			to.text_3d = text_3d
 			to.text_face_camera = text_face_camera
+			to.text_aa = text_aa
+			to.text_outline = text_outline
+			to.text_outline_color = text_outline_color
+			to.text_outline_size = text_outline_size
+			to.text_halign = text_halign
+			to.text_valign = text_valign
 			break
 		}
 	}

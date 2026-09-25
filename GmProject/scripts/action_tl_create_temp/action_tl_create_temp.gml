@@ -23,9 +23,10 @@ function action_tl_create_temp()
 			roottl.block_vbuffer = newtemp.block_vbuffer
 			newtemp.block_vbuffer = null
 		}
-		else
+		else if (roottl.type = e_tl_type.SPECIAL_BLOCK)
 			with (newtemp)
 				tl_create_temp_move_model(roottl)
+		
 		with (newtemp)
 			tl_create_temp_move_pattern_update(roottl)
 
@@ -56,7 +57,7 @@ function action_tl_create_temp()
 			roottl = tl_edit
 
 		if (roottl = null || roottl.has_temp || roottl.part_root != null ||
-			(roottl.type != e_tl_type.BLOCK && roottl.type != e_tl_type.SPECIAL_BLOCK))
+			roottl.type >= e_temp_type.amount || type_is_templated(roottl.type))
 			return 0
 
 		if (!history_redo)
@@ -76,9 +77,10 @@ function action_tl_create_temp()
 			newtemp.block_vbuffer = roottl.block_vbuffer
 			roottl.block_vbuffer = null
 		}
-		else
+		else if (roottl.type = e_tl_type.SPECIAL_BLOCK)
 			with (roottl)
 				tl_create_temp_move_model(newtemp)
+		
 		with (roottl)
 			tl_create_temp_move_pattern_update(newtemp)
 
@@ -133,6 +135,21 @@ function tl_create_temp_copy(to)
 		to.block_center_legacy = block_center_legacy
 		to.block_center = block_center
 		to.block_randomize = block_randomize
+	}
+	else if (type = e_tl_type.TEXT)
+	{
+		to.text_font = text_font
+		to.text_3d = text_3d
+		to.text_face_camera = text_face_camera
+		to.text_aa = text_aa
+		if (object_index = obj_timeline)
+		{
+			to.text_outline = value[e_value.TEXT_OUTLINE]
+			to.text_outline_color = value[e_value.TEXT_OUTLINE_COLOR]
+			to.text_outline_size = value[e_value.TEXT_OUTLINE_SIZE]
+			to.text_halign = value[e_value.TEXT_HALIGN]
+			to.text_valign = value[e_value.TEXT_VALIGN]
+		}
 	}
 	else
 	{

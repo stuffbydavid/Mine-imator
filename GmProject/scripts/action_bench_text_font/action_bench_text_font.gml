@@ -25,5 +25,6 @@ function action_bench_text_font(res)
 	}
 	
 	bench_settings.text_font = res
+	preview_zoom_text(bench_settings.preview, bench_settings.text, res)
 	bench_settings.preview.update = true
 }

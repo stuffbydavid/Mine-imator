@@ -103,6 +103,8 @@ function project_update_counts()
 				array_add(refs, model_tex_normal)
 			}
 		}
+		else if (type = e_tl_type.TEXT && part_of = null && !has_temp)
+			array_add(refs, text_font)
 
 		for (var i = 0; i < array_length(refs); i++)
 		{

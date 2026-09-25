@@ -122,6 +122,7 @@ function shader_startup()
 	with (shader_map[?shader_outline])
 	{
 		new_shader_uniform("uTexSize")
+		new_shader_uniform("uOutlineSize")
 	}
 	
 	with (shader_map[?shader_palette])

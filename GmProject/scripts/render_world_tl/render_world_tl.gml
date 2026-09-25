@@ -306,10 +306,16 @@ function render_world_tl()
 			
 			case e_tl_type.TEXT:
 			{
-				var font = value[e_value.TEXT_FONT];
-				if (font = null)
-					font = temp.text_font
-				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res, value[e_value.TEXT_OUTLINE] ? value[e_value.TEXT_OUTLINE_COLOR] : null)
+				var outline = null;
+				if (has_temp && !value[e_value.TEXT_CUSTOM_OUTLINE])
+				{
+					if (temp.text_outline)
+						outline = temp.text_outline_color
+				}
+				else if (value[e_value.TEXT_OUTLINE])
+					outline = value[e_value.TEXT_OUTLINE_COLOR]
+				
+				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res, outline)
 				break
 			}
 			

@@ -30,7 +30,8 @@ function tl_value_is_bool(vid)
 			vid = e_value.CAM_DISTORT_REPEAT ||
 			vid = e_value.CAM_SIZE_USE_PROJECT ||
 			vid = e_value.CAM_SIZE_KEEP_ASPECT_RATIO ||
-			vid = e_value.TEXT_AA ||
+			vid = e_value.TEXT_CUSTOM_ALIGNMENT ||
 			vid = e_value.TEXT_OUTLINE ||
+			vid = e_value.TEXT_CUSTOM_OUTLINE ||
 			vid = e_value.VISIBLE)
 }

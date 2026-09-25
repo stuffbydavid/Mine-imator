@@ -7,6 +7,7 @@ function app_startup_interface_build()
 	build_structure_custom = false
 	build_first_person = false
 	build_first_person_second = false
+	build_first_person_move_speed_scroll = 1
 	build_first_person_mouse_x = 0
 	build_first_person_mouse_y = 0
 	build_first_person_mouse_previous_x = 0

@@ -456,7 +456,7 @@ function preview_draw(preview, xx, yy, width, height)
 							}
 							
 							case e_temp_type.TEXT:
-								render_world_text(text_vbuffer, text_texture, select.text_face_camera, select.text_font, null)
+								render_world_text(text_vbuffer, text_texture, select.text_face_camera, select.text_font, select.text_outline ? select.text_outline_color : null)
 								break
 							
 							case e_temp_type.PARTICLE_SPAWNER:

@@ -33,9 +33,18 @@ function project_load_timeline(map)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
 		
 		if (type = e_tl_type.TEXT)
-			text = value_get_string(map[?"text"], text)
+		{
+			if (load_format < e_project.FORMAT_210)
+			{
+				value_default[e_value.TEXT_OUTLINE_COLOR] = c_white
+				value[e_value.TEXT_OUTLINE_COLOR] = c_white
+			}
+			value_default[e_value.TEXT] = value_get_string(map[?"text"], value_default[e_value.TEXT])
+			text_aa = value_get_real(map[?"text_aa"], text_aa)
+		}
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
+		
 		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
 			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
 		{
@@ -150,6 +159,12 @@ function project_load_timeline(map)
 				block_vbuffer = null
 			}
 		}
+		else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
+		{
+			text_font = value_get_save_id(map[?"text_font"], project_pack_res)
+			text_3d = value_get_real(map[?"text_3d"], false)
+			text_face_camera = value_get_real(map[?"text_face_camera"], false)
+		}
 		
 		var partslist = map[?"parts"];
 		if (ds_list_valid(partslist))
@@ -160,16 +175,29 @@ function project_load_timeline(map)
 		}
 		
 		// Default values
-		project_load_values(map[?"default_values"], value_default)
+		var defaultmap = map[?"default_values"];
+		project_load_values(defaultmap, value_default)
+		
+		// Preserve anti-aliasing from legacy frame values
+		if (type = e_tl_type.TEXT && ds_map_valid(defaultmap))
+			text_aa = text_aa || value_get_real(defaultmap[?"TEXT_AA"], false)
 		
 		// Keyframes
-		var kfmap = map[?"keyframes"];
+		var kfmap, texttemplatesettings;
+		kfmap = map[?"keyframes"]
+		texttemplatesettings = value_get_real(map[?"text_template_settings"], false)
+		
 		if (ds_map_valid(kfmap))
 		{
 			var key = ds_map_find_first(kfmap);
 			keyframe_array = 0
 			while (!is_undefined(key))
 			{
+				var framemap = kfmap[?key];
+				
+				if (type = e_tl_type.TEXT && ds_map_valid(framemap))
+					text_aa = text_aa || value_get_real(framemap[?"TEXT_AA"], false)
+					
 				with (new_obj(obj_keyframe))
 				{
 					position = string_get_real(key)
@@ -184,6 +212,12 @@ function project_load_timeline(map)
 					project_load_values(kfmap[?key], value)
 					project_load_values_update()
 					
+					if (other.type = e_tl_type.TEXT && other.has_temp && !texttemplatesettings)
+					{
+						value[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+						value[e_value.TEXT_CUSTOM_OUTLINE] = true
+					}
+					
 					other.keyframe_array[position] = id
 				}
 				key = ds_map_find_next(kfmap, key)
@@ -193,6 +227,12 @@ function project_load_timeline(map)
 			for (var i = 0; i < array_length(keyframe_array); i++)
 				if (keyframe_array[i] > 0)
 					ds_list_add(keyframe_list, keyframe_array[i])
+		}
+		
+		if (type = e_tl_type.TEXT && has_temp && !texttemplatesettings)
+		{
+			value_default[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+			value_default[e_value.TEXT_CUSTOM_OUTLINE] = true
 		}
 		
 		parent = value_get_save_id(map[?"parent"], parent)

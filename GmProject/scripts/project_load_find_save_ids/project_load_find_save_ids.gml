@@ -137,6 +137,8 @@ function project_load_find_save_ids(isproject = false)
 			model_tex_material = save_id_find(save_id_map[?model_tex_material])
 			model_tex_normal = save_id_find(save_id_map[?model_tex_normal])
 		}
+		else if (type = e_tl_type.TEXT && part_of = null && !has_temp)
+			text_font = save_id_find(save_id_map[?text_font])
 		
 		// Part root(Update special blocks in old projects)
 		if (load_format < e_project.FORMAT_122)
@@ -149,6 +151,13 @@ function project_load_find_save_ids(isproject = false)
 		}
 		else
 			part_root = save_id_find(save_id_map[?part_root])
+		
+		// Text AA setting
+		if (type = e_tl_type.TEXT && has_temp && temp != null && text_aa)
+		{
+			temp.text_aa = true
+			text_aa = false
+		}
 		
 		// Default textures
 		if (value_default[e_value.TEXTURE_OBJ] = "none")

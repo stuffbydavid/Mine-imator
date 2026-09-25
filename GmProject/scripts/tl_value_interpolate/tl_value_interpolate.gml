@@ -98,8 +98,9 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.TEXT_FONT:
 		case e_value.TEXT_HALIGN:
 		case e_value.TEXT_VALIGN:
-		case e_value.TEXT_AA:
+		case e_value.TEXT_CUSTOM_ALIGNMENT:
 		case e_value.TEXT_OUTLINE:
+		case e_value.TEXT_CUSTOM_OUTLINE:
 		case e_value.CUSTOM_ITEM_SLOT:
 		case e_value.TRANSITION:
 		case e_value.EASE_IN_X:

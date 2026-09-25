@@ -37,7 +37,7 @@ function tl_update_display_name()
 			if (!is_undefined(mc_assets.model_name_map[?model_name]))
 				display_name = minecraft_asset_get_name("model", mc_assets.model_name_map[?model_name].name)
 		}
-		else if (temp != null)
+		else if (has_temp && temp != null)
 			display_name = temp.display_name
 	}
 	else

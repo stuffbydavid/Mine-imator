@@ -102,6 +102,7 @@ function tl_value_clamp(vid, val)
 		case e_value.SOUND_VOLUME: return clamp(val, 0, 1)
 		case e_value.SOUND_PITCH: return clamp(val, 0.5, 2)
 		case e_value.SOUND_START: return max(val, 0)
+		case e_value.TEXT_OUTLINE_SIZE: return clamp(val, 0, 8)
 		case e_value.TEXT:
 		case e_value.TEXT_HALIGN:
 		case e_value.TEXT_VALIGN:

@@ -16,7 +16,17 @@ function project_load_legacy_timeline()
 		
 		name = buffer_read_string_int()
 		temp = project_load_legacy_save_id()
-		text = buffer_read_string_int()
+		var legacytext = buffer_read_string_int();
+		if (type = e_tl_type.TEXT)
+		{
+			if (load_format < e_project.FORMAT_210)
+			{
+				value_default[e_value.TEXT_OUTLINE_COLOR] = c_white
+				value[e_value.TEXT_OUTLINE_COLOR] = c_white
+			}
+			value_default[e_value.TEXT] = legacytext
+			value[e_value.TEXT] = legacytext
+		}
 		/*color = */buffer_read_int()
 	
 		/*
@@ -187,5 +197,20 @@ function project_load_legacy_timeline()
 		}
 		
 		glint_tex = project_pack_res
+		
+		if (type = e_tl_type.TEXT && has_temp)
+		{
+			value[e_value.TEXT_CUSTOM_OUTLINE] = true
+			value[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+			value_default[e_value.TEXT_CUSTOM_OUTLINE] = true
+			value_default[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+			
+			for (var k = 0; k < ds_list_size(keyframe_list); k++)
+			{
+				var frame = keyframe_list[|k];
+				frame.value[e_value.TEXT_CUSTOM_OUTLINE] = true
+				frame.value[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+			}
+		}
 	}
 }
