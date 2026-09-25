@@ -13,7 +13,7 @@ function render_blur_pyramid(surf, radius, weight, hdr = false, levels = 6, dirx
 	// Return original surf if no radius (prevents downsamples from showing)
 	if (radius <= 0)
 	{
-		var format = hdr ? e_surface_format.rgba32float : e_surface_format.rgba8unorm;
+		var format = hdr ? e_surface_format.rgba16float : e_surface_format.rgba8unorm;
 		render_surface_blur[0] = surface_require(render_surface_blur[0], render_width, render_height, false, format)
 		surface_set_target(render_surface_blur[0])
 		{
@@ -35,7 +35,7 @@ function render_blur_pyramid(surf, radius, weight, hdr = false, levels = 6, dirx
 		var scale = power(2, i + 1);
 		var levelwidth = max(1, ceil(render_width / scale));
 		var levelheight = max(1, ceil(render_height / scale));
-		var format = hdr ? e_surface_format.rgba32float : e_surface_format.rgba8unorm;
+		var format = hdr ? e_surface_format.rgba16float : e_surface_format.rgba8unorm;
 		render_surface_blur[i] = surface_require(render_surface_blur[i], levelwidth, levelheight, false, format)
 		render_surface_blur_temp[i] = surface_require(render_surface_blur_temp[i], levelwidth, levelheight, false, format)
 

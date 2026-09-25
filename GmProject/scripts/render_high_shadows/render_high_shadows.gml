@@ -33,10 +33,10 @@ function render_high_shadows()
 	render_shadow_cache_update(lightlist, sunout)
 
 	// Initialize targets
-	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba32float)
+	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba16float)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba16float)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba16float)
 	resultsurftemp = render_surface_hdr[0]
 	specresultsurftemp = render_surface_hdr[1]
 	

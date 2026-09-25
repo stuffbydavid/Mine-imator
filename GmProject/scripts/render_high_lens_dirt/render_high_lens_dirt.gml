@@ -6,7 +6,7 @@ function render_high_lens_dirt(prevsurf, hdr = false)
 	// Blur lens surface
 	var lenssurftemp, resultsurf;
 	if (hdr)
-		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba32float)
+		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba16float)
 	else
 		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	lenssurftemp = hdr ? render_surface_hdr_post[0] : render_surface[0]

@@ -34,7 +34,7 @@ function render_high_glow(prevsurf, hdr = false)
 	if (render_camera_lens_dirt_glow)
 	{
 		if (hdr)
-			render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba32float)
+			render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba16float)
 		else
 			render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 		prevsurf = hdr ? render_surface_hdr_post[0] : render_surface[0]

@@ -37,7 +37,7 @@ function render_high_indirect()
 		previoussurf = (bounce = 0 ? render_surface_shadows : render_surface_hdr[1])
 		
 		// Pre-calculate the light leaving each surface once instead of rebuilding it for every resolve sample
-		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
+		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
 		surface_set_target(render_surface_hdr[0])
 		{
 			draw_clear_alpha(c_black, 0)
@@ -57,7 +57,7 @@ function render_high_indirect()
 		surface_reset_target()
 		
 		// Resolve
-		render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba32float)
+		render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba16float)
 		surface_set_target(render_surface_hdr[1])
 		{
 			draw_clear_alpha(c_black, 0)

@@ -1223,7 +1223,8 @@ function enums()
 		rgba32float,
 		r32float,
 		r8unorm,
-		r16float
+		r16float,
+		rgba16float
 	}
 	
 	// Material map format

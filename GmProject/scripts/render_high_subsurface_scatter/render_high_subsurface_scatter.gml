@@ -3,7 +3,7 @@
 function render_high_subsurface_scatter()
 {
 	var sssblursurf;
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
 	sssblursurf = render_surface_hdr[0]
 	
 	// Scatter blur

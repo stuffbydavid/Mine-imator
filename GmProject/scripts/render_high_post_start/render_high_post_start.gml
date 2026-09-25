@@ -27,7 +27,7 @@ function render_high_post_start(prevsurf, hdr = false)
 	// Initialize lens surface if needed
 	if (render_camera_lens_dirt && !render_effects_done)
 	{
-		render_surface_lens = surface_require(render_surface_lens, render_width, render_height, false, e_surface_format.rgba32float)
+		render_surface_lens = surface_require(render_surface_lens, render_width, render_height, false, e_surface_format.rgba16float)
 		
 		surface_set_target(render_surface_lens)
 		{

@@ -4,7 +4,7 @@
 function render_high_scene()
 {
 	var resultsurf;
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba32float)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba16float)
 	resultsurf = render_surface_hdr[1] // Render directly to target?
 	
 	render_pass_capture(e_render_pass.SPECULAR, render_surface_specular)
@@ -32,7 +32,7 @@ function render_high_scene()
 	// re-use render_surface_shadows to save mem instead of a new hdr surf
 	if (render_reflections)
 	{
-		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba32float)
+		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba16float)
 		surface_set_target(render_surface_shadows)
 		{
 			draw_clear_alpha(c_black, 0)

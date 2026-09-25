@@ -46,7 +46,7 @@ function render_high_reflections(surf)
 		sourcesurf = (bounce = 0 ? render_surface_shadows : surf)
 		
 		// Resolve reflections pass
-		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba32float)
+		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
 		surface_set_target(render_surface_hdr[0])
 		{
 			draw_clear_alpha(c_black, 0)

@@ -15,7 +15,7 @@
 		- render_surface_depth (r32float)
 			R: Depth
 	
-		- render_surface_normal (rgba32float)
+		- render_surface_normal (rgba16float)
 			RGB: View-space normal
 			A: Emissive
 	
@@ -67,8 +67,8 @@ function render_high_create_gbuffers()
 	render_surface_mask = surface_require(render_surface_mask, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
 	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba32float)
-	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba32float)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba16float)
+	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba16float)
 
 	if (render_auxiliary)
 	{
@@ -175,7 +175,7 @@ function render_high_create_gbuffers()
 		}
 		if (render_gbuffers_cache_enabled)
 		{
-			render_surface_specular_base = surface_require(render_surface_specular_base, render_width, render_height, false, e_surface_format.rgba32float)
+			render_surface_specular_base = surface_require(render_surface_specular_base, render_width, render_height, false, e_surface_format.rgba16float)
 			surface_set_target(render_surface_specular_base)
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)

@@ -6,8 +6,8 @@ function render_high_bloom(prevsurf, hdr = false)
 	var thresholdsurf, bloomsurftemp, resultsurf, baseradius, bloomstrength;
 	if (hdr)
 	{
-		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba32float)
-		render_surface_hdr_post[2] = surface_require(render_surface_hdr_post[2], render_width, render_height, false, e_surface_format.rgba32float)
+		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba16float)
+		render_surface_hdr_post[2] = surface_require(render_surface_hdr_post[2], render_width, render_height, false, e_surface_format.rgba16float)
 	}
 	else
 	{

@@ -1,9 +1,9 @@
-/// surface_require(surface, width, height, [depth, [hdr]])
+/// surface_require(surface, width, height, [depth, [format]])
 /// @arg surface
 /// @arg width
 /// @arg height
 /// @arg [depth
-/// @arg [hdr]]
+/// @arg [format]]
 
 function surface_require(surf, w, h, depth = true, surfformat = e_surface_format.rgba8unorm)
 {
@@ -14,6 +14,8 @@ function surface_require(surf, w, h, depth = true, surfformat = e_surface_format
 	// surface_rgba32float support not guaranteed in GM
 	if (surfformat == e_surface_format.rgba32float)
 		format = is_cpp() ? surface_rgba32float : surface_rgba16float
+	else if (surfformat == e_surface_format.rgba16float)
+		format = surface_rgba16float
 	else if (surfformat == e_surface_format.r32float)
 		format = surface_r32float
 	else if (surfformat = e_surface_format.r8unorm)
