@@ -3,10 +3,11 @@
 function tab_timeline_editor_info()
 {
 	// Type and template
-	var typename, create, button, buttonwid;
+	var typename, create, labeloffset, button, buttonwid;
 	typename = string_remove_newline(tl_edit.type_name)
 	create = false
 	button = ""
+	labeloffset = 0
 	buttonwid = 0
 
 	if (tl_edit.type < e_temp_type.amount && (tl_edit.has_temp ||
@@ -18,11 +19,13 @@ function tab_timeline_editor_info()
 
 		draw_set_font(font_button)
 		buttonwid = string_width(text_get(button)) + 24
+		labeloffset = 4
 	}
 	else
 		tab_control(28)
 
-	draw_label_value(dx, dy + 4, max(0, dw - buttonwid - (buttonwid > 0 ? 8 : 0)), ui_small_height, text_get("timelineeditortype"), typename)
+	draw_label_value(dx, dy + labeloffset, max(0, dw - buttonwid - (buttonwid > 0 ? 8 : 0)), ui_small_height, text_get("timelineeditortype"), typename)
+	
 	if (button != "" && draw_button_label(button, dx + dw, dy, null, null, create ? e_button.SECONDARY : e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		if (create)

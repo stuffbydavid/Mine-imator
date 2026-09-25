@@ -6,6 +6,9 @@
 
 function draw_box_selection(xx, yy, ww, hh)
 {
+	if (ww <= 0 || hh <= 0)
+		return 0
+
 	clip_begin(xx, yy, ww, hh)
 	render_set_culling(false)
 		

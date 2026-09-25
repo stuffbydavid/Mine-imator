@@ -8,7 +8,8 @@ function temp_animate()
 		type = other.type
 		temp = other.id
 		has_temp = true
-		animated = !type_is_block(type) && type != e_tl_type.TEXT
+		animated = type_is_animated(type)
+		
 		if (type = e_tl_type.TEXT)
 		{
 			value[e_value.TEXT] = text_get("frameeditortextsample")

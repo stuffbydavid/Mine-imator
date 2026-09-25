@@ -120,7 +120,7 @@ function app_startup_interface_bench()
 		text_font = project_pack_res
 		text_aa = false
 		text_outline = false
-		text_outline_color = c_red
+		text_outline_color = c_text_outline
 		text_outline_size = 3
 		text_halign = "center"
 		text_valign = "center"

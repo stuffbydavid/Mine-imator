@@ -45,7 +45,23 @@ function minecraft_assets_load()
 			case "biomes":
 			{
 				with (mc_res)
-					minecraft_assets_load_biomes(biome_list, load_assets_map[?"biomes"]);
+				{
+					var biomemap, dimensionkey;
+					biomemap = load_assets_map[?"biomes"]
+					if (ds_map_valid(biomemap))
+					{
+						minecraft_assets_load_biomes(biome_list, biomemap[?"overworld"], "overworld")
+						dimensionkey = ds_map_find_first(biomemap)
+						while (!is_undefined(dimensionkey))
+						{
+							if (dimensionkey != "overworld")
+								minecraft_assets_load_biomes(biome_list, biomemap[?dimensionkey], dimensionkey)
+							dimensionkey = ds_map_find_next(biomemap, dimensionkey)
+						}
+					}
+					else if (ds_list_valid(biomemap))
+						minecraft_assets_load_biomes(biome_list, biomemap, "legacy")
+				}
 				
 				if (find_biome(overworld_biome))
 					app.background_biome = overworld_biome

@@ -7,7 +7,7 @@ function new_tl(tlype)
 	{
 		type = tlype
 		has_temp = type_is_templated(type)
-		animated = !type_is_block(type) && type != e_tl_type.TEXT
+		animated = type_is_animated(type)
 		
 		if (type = e_tl_type.EQUIPMENT)
 			glint_mode = e_glint.ARMOR

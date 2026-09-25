@@ -1,82 +1,70 @@
-/// res_update_colors([biome])
+/// res_update_colors([biome], [nextbiome], [mix])
 /// @arg [biome]
-/// @desc Update grass & foliage colors for a resource.
+/// @arg [nextbiome]
+/// @arg [mix]
+/// @desc Update grass & foliage colors for a resource
 
 function res_update_colors()
 {
 	if (colormap_grass_texture = null)
 		return 0
 	
-	var biome, foliagecolor, dryfoliagecolor;
-	if (argument_count > 0)
-		biome = find_biome(argument[0])
-	else
-		biome = find_biome(app.background_biome)
+	var biomename, colors;
+	biomename = argument_count > 0 ? argument[0] : app.background_biome
 	
-	if (biome.name = "custom")
+	if (argument_count > 2 && biomename != argument[1])
 	{
-		color_grass = app.background_grass_color
-		color_foliage = app.background_foliage_color
-		color_dry_foliage = app.background_dry_foliage_color
-		color_water = app.background_water_color
+		var nextname, startframe, endframe, mix;
+		nextname = argument[1]
+		startframe = app.background_tlactive.keyframe_current
+		endframe = app.background_tlactive.keyframe_next
+		mix = clamp(argument[2], 0, 1)
 		
-		color_leaves_oak = app.background_leaves_oak_color
-		color_leaves_spruce = app.background_leaves_spruce_color
-		color_leaves_birch = app.background_leaves_birch_color
-		color_leaves_jungle = app.background_leaves_jungle_color
-		color_leaves_acacia = app.background_leaves_acacia_color
-		color_leaves_dark_oak = app.background_leaves_dark_oak_color
-		color_leaves_mangrove = app.background_leaves_mangrove_color
-	}
-	else
-	{
-		if (biome.hardcoded)
+		// Resolve colormaps only when the keyframe pair changes
+		if (color_biome_start_colors = null || color_biome_end_colors = null ||
+			color_biome_start_name != biomename || color_biome_end_name != nextname ||
+			color_biome_start_frame != startframe || color_biome_end_frame != endframe)
 		{
-			color_grass = biome.color_grass
-			foliagecolor = biome.color_foliage
-			dryfoliagecolor = biome.color_dry_foliage
+			color_biome_start_colors = res_biome_colors(biomename, app.background_tlactive.keyframe_current_values)
+			color_biome_end_colors = res_biome_colors(nextname, app.background_tlactive.keyframe_next_values)
+			color_biome_start_name = biomename
+			color_biome_end_name = nextname
+			color_biome_start_frame = startframe
+			color_biome_end_frame = endframe
 		}
 		else
 		{
-			color_grass = texture_getpixel(colormap_grass_texture, biome.txy[0], biome.txy[1])
-			foliagecolor = texture_getpixel(colormap_foliage_texture, biome.txy[0], biome.txy[1])
-			dryfoliagecolor = texture_getpixel(colormap_dry_foliage_texture, biome.txy[0], biome.txy[1])
+			if (biomename = "custom")
+				color_biome_start_colors = res_biome_colors(biomename, app.background_tlactive.keyframe_current_values)
+			if (nextname = "custom")
+				color_biome_end_colors = res_biome_colors(nextname, app.background_tlactive.keyframe_next_values)
 		}
-			
-		color_water = biome.color_water
 		
-		/*
-		if (biome.biome_variants != null)
-		{
-			var variant = biome.biome_variants[|biome.selected_variant];
-			
-			if (variant.hardcoded)
-			{
-				color_grass = variant.color_grass
-				foliagecolor = variant.color_foliage
-				dryfoliagecolor = variant.color_dry_foliage
-			}
-			else
-			{
-				color_grass = texture_getpixel(colormap_grass_texture, variant.txy[0], variant.txy[1])
-				foliagecolor = texture_getpixel(colormap_foliage_texture, variant.txy[0], variant.txy[1])
-				dryfoliagecolor = texture_getpixel(colormap_dry_foliage_texture, variant.txy[0], variant.txy[1])
-			}
-			
-			color_water = variant.color_water
-		}
-		*/
+		if (color_biome_start_colors = null || color_biome_end_colors = null)
+			return 0
 		
-		color_foliage = foliagecolor
-		color_dry_foliage = dryfoliagecolor
-		
-		color_leaves_oak = foliagecolor
-		color_leaves_jungle = foliagecolor
-		color_leaves_acacia = foliagecolor
-		color_leaves_dark_oak = foliagecolor
-		color_leaves_mangrove = foliagecolor
-		
-		color_leaves_spruce = hex_to_color("62A857")
-		color_leaves_birch = color_leaves_spruce
+		colors = array_create(e_biome_color.amount)
+		for (var i = 0; i < e_biome_color.amount; i++)
+			colors[i] = merge_color(color_biome_start_colors[i], color_biome_end_colors[i], mix)
 	}
+	else
+	{
+		color_biome_start_colors = null
+		color_biome_end_colors = null
+		colors = res_biome_colors(biomename)
+		if (colors = null)
+			return 0
+	}
+
+	color_grass = colors[e_biome_color.GRASS]
+	color_foliage = colors[e_biome_color.FOLIAGE]
+	color_dry_foliage = colors[e_biome_color.DRY_FOLIAGE]
+	color_water = colors[e_biome_color.WATER]
+	color_leaves_oak = colors[e_biome_color.LEAVES_OAK]
+	color_leaves_spruce = colors[e_biome_color.LEAVES_SPRUCE]
+	color_leaves_birch = colors[e_biome_color.LEAVES_BIRCH]
+	color_leaves_jungle = colors[e_biome_color.LEAVES_JUNGLE]
+	color_leaves_acacia = colors[e_biome_color.LEAVES_ACACIA]
+	color_leaves_dark_oak = colors[e_biome_color.LEAVES_DARK_OAK]
+	color_leaves_mangrove = colors[e_biome_color.LEAVES_MANGROVE]
 }

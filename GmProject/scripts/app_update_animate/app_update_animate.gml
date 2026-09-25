@@ -4,8 +4,9 @@
 function app_update_animate()
 {
 	// Go through timelines
-	var bgobject, updatevalues, cameraarr, spawnerarr;
+	var bgobject, updatevalues, cameraarr, spawnerarr, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
+	biomeani = (background_biome_next != background_biome)
 	bgobject = null
 	cameraarr = []
 	spawnerarr = []
@@ -164,6 +165,8 @@ function app_update_animate()
 	
 	// Background
 	background_tlactive = null
+	background_biome_next = background_biome
+	background_biome_mix = 0
 	if (bgobject)
 	{
 		background_tlactive = bgobject
@@ -223,7 +226,17 @@ function app_update_animate()
 		background_wind_directional_strength	= bgobject.value[e_value.BG_WIND_DIRECTIONAL_STRENGTH]
 		background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
 		
-		if (background_biome = "custom" || background_biome_prev != background_biome)
+		background_biome_next = background_biome
+		if (bgobject.keyframe_animate && background_biome != bgobject.keyframe_next_values[e_value.BG_BIOME])
+		{
+			background_biome_next = bgobject.keyframe_next_values[e_value.BG_BIOME]
+			background_biome_mix = clamp(bgobject.keyframe_progress_ease, 0, 1)
+			with (obj_resource)
+				res_update_colors(app.background_biome, app.background_biome_next, app.background_biome_mix)
+			properties.library.preview.update = true
+			background_biome_prev = background_biome
+		}
+		else if (background_biome = "custom" || background_biome_prev != background_biome || biomeani)
 		{
 			with (obj_resource)
 				res_update_colors()
@@ -235,6 +248,13 @@ function app_update_animate()
 		background_ground_update_texture()
 		background_ground_update_texture_material()
 		background_ground_update_texture_normal()
+	}
+	else if (biomeani)
+	{
+		with (obj_resource)
+			res_update_colors()
+		properties.library.preview.update = true
+		background_biome_prev = background_biome
 	}
 	
 	// Update sun direction

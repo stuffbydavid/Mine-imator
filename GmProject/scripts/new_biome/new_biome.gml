@@ -15,6 +15,7 @@ function new_biome(name, tx, ty, hardcoded, grass, foliage, dryfoliage, water, b
 	{
 		// Name
 		id.name = name
+		dimension = "overworld"
 		group = false
 		display_name = minecraft_asset_get_name("biome", name)
 		

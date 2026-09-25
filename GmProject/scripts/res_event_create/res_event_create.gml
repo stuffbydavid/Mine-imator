@@ -72,6 +72,12 @@ function res_event_create()
 	color_leaves_acacia = null
 	color_leaves_dark_oak = null
 	color_leaves_mangrove = null
+	color_biome_start_name = ""
+	color_biome_end_name = ""
+	color_biome_start_frame = null
+	color_biome_end_frame = null
+	color_biome_start_colors = null
+	color_biome_end_colors = null
 	
 	sun_texture = null
 	moon_textures = [null, null, null, null, null, null, null, null]

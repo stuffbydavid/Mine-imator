@@ -164,6 +164,26 @@ function action_bench_create(button = e_bench_button.CREATE)
 		{
 			tl = new_tl(tltype)
 			editobj = tl
+
+			if (tab = e_bench.PATH)
+			{
+				// Create default path points
+				var pathpoint, pointpos, pathpositions;
+				pathpositions = [vec3(-32, -32, 0), vec3(32, -32, 0), vec3(32, 32, 0), vec3(-32, 32, 0)]
+				for (var i = 0; i < array_length(pathpositions); i++)
+				{
+					pointpos = pathpositions[i]
+					pathpoint = new_tl(e_tl_type.PATH_POINT)
+					with (pathpoint)
+					{
+						tl_set_parent(tl)
+						tl_value_set_vec3(e_value.POS_X, pointpos)
+						tl_value_set_vec3(e_value.POS_X, pointpos, true)
+					}
+				}
+				tl.path_update = true
+			}
+
 			with (hobj)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
