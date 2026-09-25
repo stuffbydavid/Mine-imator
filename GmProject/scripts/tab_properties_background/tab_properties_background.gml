@@ -23,33 +23,104 @@ function tab_properties_background()
 		tab_next()
 	}
 	
-	// Sunlight
-	tab_control_switch()
-	draw_button_collapse("sunlight", collapse_map[?"sunlight"], null, true, "backgroundsunlight")
+	// Dimension
+	tab_control_togglebutton()
+	togglebutton_add("backgrounddimensionoverworld", null, "overworld", background_dimension = "overworld", action_background_dimension)
+	togglebutton_add("backgrounddimensionthe_nether", null, "the_nether", background_dimension = "the_nether", action_background_dimension)
+	togglebutton_add("backgrounddimensionthe_end", null, "the_end", background_dimension = "the_end", action_background_dimension)
+	draw_togglebutton("backgrounddimension", dx, dy)
 	tab_next()
 	
-	if (collapse_map[?"sunlight"])
+	// Biome
+	tab_control_menu()
+	draw_button_menu("backgroundbiome", e_menu.BIOME, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome), action_background_biome)
+	tab_next()
+
+	if (background_biome = "custom")
 	{
-		tab_collapse_start()
-		
-		// Sunlight angle
-		tab_control_dragger()
-		draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .05, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
-		tab_next()
-		
-		// Sunlight strength
-		tab_control_dragger()
-		draw_dragger("backgroundsunlightstrength", dx, dy, dragger_width, round(background_sunlight_strength * 100), 0.1, 0, no_limit, 100, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
-		tab_next()
-		
-		// Sunlight specular strength
-		tab_control_dragger()
-		draw_dragger("backgroundsunlightspecularstrength", dx, dy, dragger_width, round(background_sunlight_specular_strength * 100), 0.1, 0, no_limit, 100, 1, tab.background.tbx_sunlight_specular_strength, action_background_sunlight_specular_strength)
+		tab_control_switch()
+		draw_button_collapse("biome", collapse_map[?"biome"], null, true, "backgroundcustombiome")
 		tab_next()
 
-		tab_collapse_end()
+		if (collapse_map[?"biome"])
+		{
+			tab_collapse_start()
+
+			// Biome colors
+			dy += 20
+			draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
+			dy += 8
+
+			tab_set_collumns(true, floor(content_width/150))
+
+			// Grass
+			tab_control_color()
+			draw_button_color("backgroundgrasscolor", dx, dy, dw, background_grass_color, c_plains_biome_grass, false, action_background_grass_color)
+			tab_next()
+
+			// Foliage
+			tab_control_color()
+			draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
+			tab_next()
+
+			// Dry foliage
+			tab_control_color()
+			draw_button_color("backgrounddryfoliagecolor", dx, dy, dw, background_dry_foliage_color, c_plains_biome_dry_foliage, false, action_background_dry_foliage_color)
+			tab_next()
+
+			// Water
+			tab_control_color()
+			draw_button_color("backgroundwatercolor", dx, dy, dw, background_water_color, c_plains_biome_water, false, action_background_water_color)
+			tab_next()
+
+			tab_set_collumns(false)
+
+			dy += 20
+			draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
+			dy += 8
+
+			tab_set_collumns(true, floor(content_width/150))
+
+			// Oak leaves
+			tab_control_color()
+			draw_button_color("backgroundleavesoakcolor", dx, dy, dw, background_leaves_oak_color, c_plains_biome_foliage, false, action_background_leaves_oak_color)
+			tab_next()
+
+			// Spruce leaves
+			tab_control_color()
+			draw_button_color("backgroundleavessprucecolor", dx, dy, dw, background_leaves_spruce_color, c_plains_biome_foliage_2, false, action_background_leaves_spruce_color)
+			tab_next()
+
+			// Birch
+			tab_control_color()
+			draw_button_color("backgroundleavesbirchcolor", dx, dy, dw, background_leaves_birch_color, c_plains_biome_foliage_2, false, action_background_leaves_birch_color)
+			tab_next()
+
+			// Jungle
+			tab_control_color()
+			draw_button_color("backgroundleavesjunglecolor", dx, dy, dw, background_leaves_jungle_color, c_plains_biome_foliage, false, action_background_leaves_jungle_color)
+			tab_next()
+
+			// Acacia
+			tab_control_color()
+			draw_button_color("backgroundleavesacaciacolor", dx, dy, dw, background_leaves_acacia_color, c_plains_biome_foliage, false, action_background_leaves_acacia_color)
+			tab_next()
+
+			// Dark oak
+			tab_control_color()
+			draw_button_color("backgroundleavesdarkoakcolor", dx, dy, dw, background_leaves_dark_oak_color, c_plains_biome_foliage, false, action_background_leaves_dark_oak_color)
+			tab_next()
+
+			// Mangrove
+			tab_control_color()
+			draw_button_color("backgroundleavesmangrovecolor", dx, dy, dw, background_leaves_mangrove_color, c_plains_biome_foliage, false, action_background_leaves_mangrove_color)
+			tab_next()
+
+			tab_set_collumns(false)
+			tab_collapse_end()
+		}
 	}
-	
+
 	// Sky properties
 	tab_control_switch()
 	draw_button_collapse("sky", collapse_map[?"sky"], null, true, "backgroundskybackground")
@@ -149,16 +220,38 @@ function tab_properties_background()
 			tab_control_dragger()
 			draw_dragger("backgroundskysunscale", dx, dy, dragger_width, round(background_sky_sun_scale * 100), max(0.1, ceil(background_sky_sun_scale / 5) / 10), 0, 10000, 100, 1, tab.background.tbx_sky_sun_scale, action_background_sky_sun_scale)
 			tab_next()
-			
+		}
+
+		// Sunlight angle
+		tab_control_dragger()
+		draw_dragger("backgroundsunlightangle", dx, dy, dragger_width, background_sunlight_angle, .05, 0, no_limit, .526, .001, tab.background.tbx_sunlight_angle, action_background_sunlight_angle, null, true, false, "backgroundsunlightangletip")
+		tab_next()
+
+		// Sunlight strength
+		tab_control_dragger()
+		draw_dragger("backgroundsunlightstrength", dx, dy, dragger_width, round(background_sunlight_strength * 100), 0.1, 0, no_limit, 100, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
+		tab_next()
+
+		// Sunlight specular strength
+		tab_control_dragger()
+		draw_dragger("backgroundsunlightspecularstrength", dx, dy, dragger_width, round(background_sunlight_specular_strength * 100), 0.1, 0, no_limit, 100, 1, tab.background.tbx_sunlight_specular_strength, action_background_sunlight_specular_strength)
+		tab_next()
+
+		dy += 8
+
+		if (!background_image_show)
+		{
+			var moonres, moontex;
+
 			// Moon
-			var moonres = res_eval(background_sky_moon_tex);
+			moonres = res_eval(background_sky_moon_tex)
 			if (moonres.type = e_res_type.PACK && moonres.ready)
-				tex = moonres.moon_textures[background_sky_moon_phase]
+				moontex = moonres.moon_textures[background_sky_moon_phase]
 			else
-				tex = moonres.texture
+				moontex = moonres.texture
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_tex, moonres.display_name, action_background_sky_moon_tex, false, tex)
+			draw_button_menu("backgroundskymoontex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_moon_tex, moonres.display_name, action_background_sky_moon_tex, false, moontex)
 			tab_next()
 			
 			// Moon phase
@@ -177,6 +270,86 @@ function tab_properties_background()
 			// Moon scale
 			tab_control_dragger()
 			draw_dragger("backgroundskymoonscale", dx, dy, dragger_width, round(background_sky_moon_scale * 100), max(0.1, ceil(background_sky_moon_scale / 5) / 10), 0, 10000, 100, 1, tab.background.tbx_sky_moon_scale, action_background_sky_moon_scale)
+			tab_next()
+		}
+
+		// Day colors
+		dy += 20
+		draw_label(text_get("backgrounddayscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
+		dy += 8
+
+		tab_set_collumns(true, floor(content_width/150))
+
+		// Sky
+		var skydefault, skybiome;
+		skydefault = c_sky_overworld
+		if (background_dimension = "the_nether")
+			skydefault = c_sky_the_nether
+		else if (background_dimension = "the_end")
+			skydefault = c_sky_the_end
+		skybiome = find_biome(background_biome)
+		if (skybiome != null && skybiome.sky_enabled)
+			skydefault = skybiome.sky_color
+		tab_control_color()
+		draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, skydefault, false, action_background_sky_color)
+		tab_next()
+
+		// Clouds
+		tab_control_color()
+		draw_button_color("backgroundskycloudscolor", dx, dy, dw, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color)
+		tab_next()
+
+		// Sun light
+		tab_control_color()
+		draw_button_color("backgroundsunlightcolor", dx, dy, dw, background_sunlight_color, c_sunlight, false, action_background_sunlight_color)
+		tab_next()
+
+		// Ambient
+		tab_control_color()
+		draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color)
+		tab_next()
+
+		tab_set_collumns(false)
+
+		// Night colors
+		dy += 20
+		draw_label(text_get("backgroundnightscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
+		dy += 8
+
+		tab_set_collumns(true, floor(content_width/150))
+
+		// Sky
+		tab_control_color()
+		draw_button_color("backgroundnightskycolor", dx, dy, dw, background_night_sky_color, c_night_sky, false, action_background_night_sky_color)
+		tab_next()
+
+		// Clouds
+		tab_control_color()
+		draw_button_color("backgroundnightskycloudscolor", dx, dy, dw, background_night_sky_clouds_color, c_night_clouds, false, action_background_night_sky_clouds_color)
+		tab_next()
+
+		// Stars
+		tab_control_color()
+		draw_button_color("backgroundnightskystarscolor", dx, dy, dw, background_night_sky_stars_color, c_stars, false, action_background_night_sky_stars_color)
+		tab_next()
+
+		// Ambient
+		tab_control_color()
+		draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
+		tab_next()
+
+		tab_set_collumns(false)
+
+		// Brightness
+		tab_control_dragger()
+		draw_dragger("backgroundbrightness", dx, dy, dragger_width, round(background_brightness * 100), .5, 0, no_limit, 100, 1, tab.background.tbx_brightness, action_background_brightness)
+		tab_next()
+
+		// Twilight
+		if (setting_advanced_mode)
+		{
+			tab_control_switch()
+			draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
 			tab_next()
 		}
 		
@@ -328,157 +501,6 @@ function tab_properties_background()
 		tab_collapse_end()
 	}
 	
-	// Biome
-	tab_control_menu()
-	draw_button_menu("backgroundbiome", e_menu.BIOME, dx, dy, dw, 24, background_biome, minecraft_asset_get_name("biome", background_biome), action_background_biome)
-	tab_next()
-	
-	// Biome colors
-	if (background_biome = "custom")
-	{
-		dy += 20 
-		draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-		dy += 8
-		
-		tab_set_collumns(true, floor(content_width/150))
-		
-		// Grass
-		tab_control_color()
-		draw_button_color("backgroundgrasscolor", dx, dy, dw, background_grass_color, c_plains_biome_grass, false, action_background_grass_color)
-		tab_next()
-		
-		// Foliage
-		tab_control_color()
-		draw_button_color("backgroundfoliagecolor", dx, dy, dw, background_foliage_color, c_plains_biome_foliage, false, action_background_foliage_color)
-		tab_next()
-		
-		// Dry foliage
-		tab_control_color()
-		draw_button_color("backgrounddryfoliagecolor", dx, dy, dw, background_dry_foliage_color, c_plains_biome_dry_foliage, false, action_background_dry_foliage_color)
-		tab_next()
-		
-		// Water
-		tab_control_color()
-		draw_button_color("backgroundwatercolor", dx, dy, dw, background_water_color, c_plains_biome_water, false, action_background_water_color)
-		tab_next()
-		
-		tab_set_collumns(false)
-		
-		dy += 20 
-		draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-		dy += 8
-		
-		tab_set_collumns(true, floor(content_width/150))
-		
-		// Oak leaves
-		tab_control_color()
-		draw_button_color("backgroundleavesoakcolor", dx, dy, dw, background_leaves_oak_color, c_plains_biome_foliage, false, action_background_leaves_oak_color)
-		tab_next()
-		
-		// Spruce leaves
-		tab_control_color()
-		draw_button_color("backgroundleavessprucecolor", dx, dy, dw, background_leaves_spruce_color, c_plains_biome_foliage_2, false, action_background_leaves_spruce_color)
-		tab_next()
-		
-		// Birch
-		tab_control_color()
-		draw_button_color("backgroundleavesbirchcolor", dx, dy, dw, background_leaves_birch_color, c_plains_biome_foliage_2, false, action_background_leaves_birch_color)
-		tab_next()
-		
-		// Jungle
-		tab_control_color()
-		draw_button_color("backgroundleavesjunglecolor", dx, dy, dw, background_leaves_jungle_color, c_plains_biome_foliage, false, action_background_leaves_jungle_color)
-		tab_next()
-		
-		// Acacia
-		tab_control_color()
-		draw_button_color("backgroundleavesacaciacolor", dx, dy, dw, background_leaves_acacia_color, c_plains_biome_foliage, false, action_background_leaves_acacia_color)
-		tab_next()
-		
-		// Dark oak
-		tab_control_color()
-		draw_button_color("backgroundleavesdarkoakcolor", dx, dy, dw, background_leaves_dark_oak_color, c_plains_biome_foliage, false, action_background_leaves_dark_oak_color)
-		tab_next()
-		
-		// Mangrove
-		tab_control_color()
-		draw_button_color("backgroundleavesmangrovecolor", dx, dy, dw, background_leaves_mangrove_color, c_plains_biome_foliage, false, action_background_leaves_mangrove_color)
-		tab_next()
-		
-		tab_set_collumns(false)
-	}
-	
-	// Day colors
-	dy += 20
-	draw_label(text_get("backgrounddayscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-	dy += 8
-	
-	tab_set_collumns(true, floor(content_width/150))
-	
-	// Sky
-	tab_control_color()
-	draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, c_sky, false, action_background_sky_color)
-	tab_next()
-	
-	// Clouds
-	tab_control_color()
-	draw_button_color("backgroundskycloudscolor", dx, dy, dw, background_sky_clouds_color, c_clouds, false, action_background_sky_clouds_color)
-	tab_next()
-	
-	// Sun light
-	tab_control_color()
-	draw_button_color("backgroundsunlightcolor", dx, dy, dw, background_sunlight_color, c_sunlight, false, action_background_sunlight_color)
-	tab_next()
-	
-	// Ambient
-	tab_control_color()
-	draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color)
-	tab_next()
-	
-	tab_set_collumns(false)
-	
-	// Night colors
-	dy += 20
-	draw_label(text_get("backgroundnightscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
-	dy += 8
-	
-	tab_set_collumns(true, floor(content_width/150))
-	
-	// Sky
-	tab_control_color()
-	draw_button_color("backgroundnightskycolor", dx, dy, dw, background_night_sky_color, c_night_sky, false, action_background_night_sky_color)
-	tab_next()
-
-	// Clouds
-	tab_control_color()
-	draw_button_color("backgroundnightskycloudscolor", dx, dy, dw, background_night_sky_clouds_color, c_night_clouds, false, action_background_night_sky_clouds_color)
-	tab_next()
-	
-	// Stars
-	tab_control_color()
-	draw_button_color("backgroundnightskystarscolor", dx, dy, dw, background_night_sky_stars_color, c_stars, false, action_background_night_sky_stars_color)
-	tab_next()
-	
-	// Ambient
-	tab_control_color()
-	draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
-	tab_next()
-	
-	tab_set_collumns(false)
-	
-	// Brightness
-	tab_control_dragger()
-	draw_dragger("backgroundbrightness", dx, dy, dragger_width, round(background_brightness * 100), .5, 0, no_limit, 100, 1, tab.background.tbx_brightness, action_background_brightness)
-	tab_next()
-	
-	// Twilight
-	if (setting_advanced_mode)
-	{
-		tab_control_switch()
-		draw_switch("backgroundtwilight", dx, dy, background_twilight, action_background_twilight, "backgroundtwilighttip")
-		tab_next()
-	}
-	
 	// Show fog
 	tab_control_switch()
 	draw_button_collapse("fog", collapse_map[?"fog"], action_background_fog_show, background_fog_show, "backgroundfog")
@@ -502,7 +524,7 @@ function tab_properties_background()
 		if (background_fog_color_custom)
 		{
 			tab_control_color()
-			draw_button_color("backgroundfogcolor", dx, dy, dw, background_fog_color, c_sky, false, action_background_fog_color)
+			draw_button_color("backgroundfogcolor", dx, dy, dw, background_fog_color, c_sky_overworld, false, action_background_fog_color)
 			tab_next()
 		}
 		
@@ -515,23 +537,24 @@ function tab_properties_background()
 		if (background_fog_custom_object_color)
 		{
 			tab_control_color()
-			draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky, false, action_background_fog_object_color)
+			draw_button_color("backgroundfogobjectcolor", dx, dy, dw, background_fog_object_color, c_sky_overworld, false, action_background_fog_object_color)
 			tab_next()
 		}
 		
 		// Fog distance
+		var fogdefault = background_dimension = "overworld" ? fog_far : fog_near;
 		tab_control_dragger()
-		draw_dragger("backgroundfogdistance", dx, dy, dragger_width, background_fog_distance, background_fog_distance / 100, 10, project_render_distance, 10000, 10, tab.background.tbx_fog_distance, action_background_fog_distance)
+		draw_dragger("backgroundfogdistance", dx, dy, dragger_width, background_fog_distance, background_fog_distance / 100, 10, project_render_distance, fogdefault, 10, tab.background.tbx_fog_distance, action_background_fog_distance)
 		tab_next()
 		
 		// Fog size
 		tab_control_dragger()
-		draw_dragger("backgroundfogsize", dx, dy, dragger_width, background_fog_size, background_fog_size / 100, 10, project_render_distance, 2000, 10, tab.background.tbx_fog_size, action_background_fog_size)
+		draw_dragger("backgroundfogsize", dx, dy, dragger_width, background_fog_size, background_fog_size / 100, 10, project_render_distance, fog_size, 10, tab.background.tbx_fog_size, action_background_fog_size)
 		tab_next()
 		
 		// Fog height
 		tab_control_dragger()
-		draw_dragger("backgroundfogheight", dx, dy, dragger_width, background_fog_height, background_fog_height / 100, 10, 2000, 1000, 10, tab.background.tbx_fog_height, action_background_fog_height)
+		draw_dragger("backgroundfogheight", dx, dy, dragger_width, background_fog_height, background_fog_height / 100, 10, 2000, fog_height, 10, tab.background.tbx_fog_height, action_background_fog_height)
 		tab_next()
 		
 		tab_collapse_end()

@@ -16,6 +16,18 @@ function menu_biome_init(menu)
 	for (var b = 0; b < ds_list_size(biome_list); b++)
 	{
 		biome = biome_list[|b]
+		if (background_dimension = "the_nether")
+		{
+			if (biome.name != "the_nether")
+				continue
+		}
+		else if (background_dimension = "the_end")
+		{
+			if (biome.name != "the_end")
+				continue
+		}
+		else if (biome.name = "the_nether" || biome.name = "the_end" || biome.name = "the_void")
+			continue
 		
 		if (!(menu_expose && biome.group))
 			menu_add_item(biome.name, minecraft_asset_get_name("biome", biome.name))

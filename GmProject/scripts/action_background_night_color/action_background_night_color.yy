@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_background_night_color",
   "parent":{
-    "name":"Light",
-    "path":"folders/Scripts/App/Actions/Background/Light.yy",
+    "name":"Sky",
+    "path":"folders/Scripts/App/Actions/Background/Sky.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

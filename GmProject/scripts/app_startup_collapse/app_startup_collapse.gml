@@ -34,7 +34,7 @@ function app_startup_collapse()
 	collapse_register("glint")
 	collapse_register("water_material")
 	
-	collapse_register("sunlight")
+	collapse_register("biome", true)
 	collapse_register("sky")
 	collapse_register("clouds")
 	collapse_register("ground")
@@ -72,5 +72,6 @@ function app_startup_collapse()
 	collapse_register("textalignment")
 	collapse_register("librarytextoutline")
 	
-	collapse_register("tl_glint")
+	collapse_register("tl_inherit")
+	collapse_register("tl_glint", true)
 }

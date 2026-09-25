@@ -12,23 +12,26 @@ function tab_frame_editor_text()
 	tab_next()
 
 	// Font
-	if (!tl_edit.has_temp)
+	if (setting_advanced_mode)
 	{
-		tab_control_menu(ui_large_height)
-		draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.text_font, res_eval(tl_edit.text_font).display_name, action_tl_text_font)
-		tab_next()
-	}
-	else
-	{
-		var text;
-		if (tl_edit.value[e_value.TEXT_FONT] = null)
-			text = text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name)
+		if (!tl_edit.has_temp)
+		{
+			tab_control_menu(ui_large_height)
+			draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.text_font, res_eval(tl_edit.text_font).display_name, action_tl_text_font)
+			tab_next()
+		}
 		else
-			text = res_eval(tl_edit.value[e_value.TEXT_FONT]).display_name
+		{
+			var text;
+			if (tl_edit.value[e_value.TEXT_FONT] = null)
+				text = text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name)
+			else
+				text = res_eval(tl_edit.value[e_value.TEXT_FONT]).display_name
 
-		tab_control_menu(ui_large_height)
-		draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
-		tab_next()
+			tab_control_menu(ui_large_height)
+			draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
+			tab_next()
+		}
 	}
 	
 	// Font Anti-aliasing

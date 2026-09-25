@@ -29,14 +29,19 @@ function tab_timeline_editor_hierarchy()
 		draw_switch("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend, "", tl_edit.part_of != null)
 		tab_next()
 	}
-	
+
 	// Inherit settings (Advanced)
 	if (par != app && setting_advanced_mode)
 	{
-		tab_control(16)
-		draw_label(text_get("timelineeditorinherit") + ":", dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label) 
+		tab_control_switch()
+		draw_button_collapse("tl_inherit", collapse_map[?"tl_inherit"], null, true, "timelineeditorinherit")
 		tab_next()
-		
+	}
+
+	if (par != app && setting_advanced_mode && collapse_map[?"tl_inherit"])
+	{
+		tab_collapse_start()
+
 		tab_control(16)
 		draw_label(text_get("timelineeditorinherittransform"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 		tab_next()
@@ -89,16 +94,6 @@ function tab_timeline_editor_hierarchy()
 		}
 			
 		tab_set_collumns(false)
-		
-		// Scale mode
-		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale)
-		{
-			tab_control_togglebutton()
-			togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)
-			togglebutton_add("timelineeditorscalemodestretch", null, 0, tl_edit.scale_resize = 0, action_tl_scale_resize)
-			draw_togglebutton("timelineeditorscalemode", dx, dy)
-			tab_next()
-		}
 		
 		tab_control(16)
 		draw_label(text_get("timelineeditorinheritmaterial"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
@@ -160,5 +155,19 @@ function tab_timeline_editor_hierarchy()
 		tab_next()
 			
 		tab_set_collumns(false)
+		
+		dy += 8
+
+		// Scale mode
+		if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && tl_edit.inherit_scale)
+		{
+			tab_control_togglebutton()
+			togglebutton_add("timelineeditorscalemoderesize", null, 1, tl_edit.scale_resize = 1, action_tl_scale_resize)
+			togglebutton_add("timelineeditorscalemodestretch", null, 0, tl_edit.scale_resize = 0, action_tl_scale_resize)
+			draw_togglebutton("timelineeditorscalemode", dx, dy)
+			tab_next()
+		}
+
+		tab_collapse_end()
 	}
 }

@@ -106,7 +106,9 @@ function macros()
 	
 	// Colors
 	#macro c_controls					make_color_rgb(40, 40, 40)
-	#macro c_sky						make_color_rgb(129, 172, 255)
+	#macro c_sky_overworld				make_color_rgb(129, 172, 255)
+	#macro c_sky_the_nether				make_color_rgb(48, 7, 8)
+	#macro c_sky_the_end				make_color_rgb(23, 18, 23)
 	#macro c_fog_bright					make_color_rgb(246, 253, 255)
 	#macro c_clouds						make_color_rgb(255, 255, 255)
 	#macro c_sunlight					make_color_rgb(255, 247, 228)
@@ -178,8 +180,16 @@ function macros()
 	#macro default_special_block		"chest"
 	#macro default_block				"grass_block"
 	#macro default_item					"item/diamond_sword"
-	#macro default_ground				"block/grass_block_top"
-	#macro default_biome				"plains"
+	#macro overworld_ground				"block/grass_block_top"
+	#macro overworld_biome				"plains"
+	#macro the_nether_biome				"nether_wastes"
+	#macro the_nether_ground			"block/netherrack"
+	#macro the_end_biome				"the_end"
+	#macro the_end_ground				"block/end_stone"
+	#macro fog_far						10000
+	#macro fog_near						2000
+	#macro fog_size						2000
+	#macro fog_height					1250
 	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
 	#macro schematic_folders			array("Buildings", "Biomes", "Trees", "Structures", "Other")
 	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")

@@ -11614,35 +11614,44 @@
 			"name": "plains",
 			"foliage": [ 50, 173 ],
 			"water": "#3F76E4",
+			"sky": "#78A7FF",
 			"variant": [
 				{
-					"name": "sunflower_plains"
+					"name": "sunflower_plains",
+					"sky": "#78A7FF"
 				},
 				{
 					"name": "snowy_plains",
-					"foliage": [ 255, 255 ]
+					"foliage": [ 255, 255 ],
+					"sky": "#7FA1FF"
 				},
 				{
 					"name": "ice_spikes",
-					"foliage": [ 255, 255 ]
+					"foliage": [ 255, 255 ],
+					"sky": "#7FA1FF"
 				}
 			]
 		},
 		{
 			"name": "desert",
+			"ground": "block/sand",
 			"foliage": [ 0, 255 ],
-			"water": "#3F76E4"
+			"water": "#3F76E4",
+			"sky": "#6EB1FF"
 		},
 		{
 			"name": "swamp",
 			"foliage": "#6A7039",
 			"dry_foliage": "#7B5334",
 			"water": "#617B64",
+			"sky": "#78A7FF",
 			"variant": [
 				{
 					"name": "mangrove_swamp",
 					"foliage": "#8DB127",
-					"water": "#3A7A6A"
+					"water": "#3A7A6A",
+					"fog": "#C0D8FF",
+					"sky": "#78A7FF"
 				}
 			]
 		},
@@ -11650,36 +11659,45 @@
 			"name": "forest",
 			"foliage": [ 76, 112 ],
 			"water": "#3F76E4",
+			"sky": "#79A6FF",
 			"variant": [
 				{
-					"name": "flower_forest"
+					"name": "flower_forest",
+					"sky": "#79A6FF"
 				},
 				{
 					"name": "birch_forest",
-					"foliage": [ 101, 163 ]
+					"foliage": [ 101, 163 ],
+					"sky": "#7AA5FF"
 				},
 				{
 					"name": "old_growth_birch_forest",
-					"foliage": [ 101, 163 ]
+					"foliage": [ 101, 163 ],
+					"sky": "#7AA5FF"
 				},
 				{
 					"name": "dark_forest",
 					"grass": "#507A32",
-					"dry_foliage": "#7B5334"
+					"dry_foliage": "#7B5334",
+					"sky": "#79A6FF"
 				},
 				{
 					"name": "pale_garden",
 					"foliage": "#878D76",
 					"grass": "#778272",
 					"dry_foliage": "#A0A69C",
-					"water": "#76889D"
+					"water": "#76889D",
+					"fog": "#817770",
+					"sky": "#B4B3B2"
 				},
 				{
 					"name": "dappled_forest",
 					"foliage": "#E68E30",
 					"grass": "#DF6827",
 					"dry_foliage": "#8C3A04",
-					"water": "#375154"
+					"water": "#375154",
+					"fog": "#CCD8E2",
+					"sky": "#7CA3FF"
 				}
 			]
 		},
@@ -11687,18 +11705,22 @@
 			"name": "taiga",
 			"foliage": [ 191, 203 ],
 			"water": "#3F76E4",
+			"sky": "#7DA3FF",
 			"variant": [
 				{
 					"name": "snowy_taiga",
 					"foliage": [ 255, 255 ],
-					"water": "#3D57D6"
+					"water": "#3D57D6",
+					"sky": "#839EFF"
 				},
 				{
 					"name": "old_growth_pine_taiga",
-					"foliage": [ 178, 193 ]
+					"foliage": [ 178, 193 ],
+					"sky": "#7CA3FF"
 				},
 				{
-					"name": "old_growth_spruce_taiga"
+					"name": "old_growth_spruce_taiga",
+					"sky": "#7DA3FF"
 				}
 			]
 		},
@@ -11706,12 +11728,15 @@
 			"name": "savanna",
 			"foliage": [ 0, 255 ],
 			"water": "#3F76E4",
+			"sky": "#6EB1FF",
 			"variant": [
 				{
-					"name": "savanna_plateau"
+					"name": "savanna_plateau",
+					"sky": "#6EB1FF"
 				},
 				{
-					"name": "windswept_savanna"
+					"name": "windswept_savanna",
+					"sky": "#6EB1FF"
 				}
 			]
 		},
@@ -11719,12 +11744,15 @@
 			"name": "windswept_hills",
 			"foliage": [ 203, 239 ],
 			"water": "#3F76E4",
+			"sky": "#7DA2FF",
 			"variant": [
 				{
-					"name": "windswept_gravelly_hills"
+					"name": "windswept_gravelly_hills",
+					"sky": "#7DA2FF"
 				},
 				{
-					"name": "windswept_forest"
+					"name": "windswept_forest",
+					"sky": "#7DA2FF"
 				}
 			]
 		},
@@ -11732,13 +11760,16 @@
 			"name": "jungle",
 			"foliage": [ 12, 36 ],
 			"water": "#3F76E4",
+			"sky": "#77A8FF",
 			"variant": [
 				{
 					"name": "sparse_jungle",
-					"foliage": [ 12, 61 ]
+					"foliage": [ 12, 61 ],
+					"sky": "#77A8FF"
 				},
 				{
-					"name": "bamboo_jungle"
+					"name": "bamboo_jungle",
+					"sky": "#77A8FF"
 				}
 			]
 		},
@@ -11748,12 +11779,15 @@
 			"grass": "#90814D",
 			"dry_foliage": "#A38046",
 			"water": "#3F76E4",
+			"sky": "#6EB1FF",
 			"variant": [
 				{
-					"name": "wooded_badlands"
+					"name": "wooded_badlands",
+					"sky": "#6EB1FF"
 				},
 				{
-					"name": "eroded_badlands"
+					"name": "eroded_badlands",
+					"sky": "#6EB1FF"
 				}
 			]
 		},
@@ -11762,34 +11796,42 @@
 			"group": true,
 			"foliage": [ 255, 255 ],
 			"water": "#3F76E4",
+			"sky": "#78A7FF",
 			"variant": [
 				{
 					"name": "meadow",
 					"foliage": [ 127, 152 ],
-					"water": "#0E4ECF"
+					"water": "#0E4ECF",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "cherry_grove",
 					"foliage": "#B6DB61",
 					"grass": "#B6DB61",
 					"dry_foliage": "#A17148",
-					"water": "#5DB7EF"
+					"water": "#5DB7EF",
+					"sky": "#7BA4FF"
 				},
 				{
-					"name": "grove"
+					"name": "grove",
+					"sky": "#81A0FF"
 				},
 				{
-					"name": "snowy_slopes"
+					"name": "snowy_slopes",
+					"sky": "#829FFF"
 				},
 				{
-					"name": "frozen_peaks"
+					"name": "frozen_peaks",
+					"sky": "#859DFF"
 				},
 				{
-					"name": "jagged_peaks"
+					"name": "jagged_peaks",
+					"sky": "#859DFF"
 				},
 				{
 					"name": "stony_peaks",
-					"foliage": [ 0, 178 ]
+					"foliage": [ 0, 178 ],
+					"sky": "#76A8FF"
 				}
 			]
 		},
@@ -11797,118 +11839,163 @@
 			"name": "river",
 			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
+			"sky": "#7BA4FF",
 			"variant": [
 				{
 					"name": "frozen_river",
 					"foliage": [ 255, 255 ],
-					"water": "#3938C9"
+					"water": "#3938C9",
+					"sky": "#7FA1FF"
 				}
 			]
 		},
 		{
 			"name": "beach",
+			"ground": "block/sand",
 			"foliage": [ 50, 173 ],
 			"water": "#3F76E4",
+			"sky": "#78A7FF",
 			"variant": [
 				{
 					"name": "snowy_beach",
 					"foliage": [ 242, 251 ],
-					"water": "#3D57D6"
+					"water": "#3D57D6",
+					"sky": "#7FA1FF"
 				},
 				{
 					"name": "stony_shore",
-					"foliage": [ 203, 239 ]
+					"foliage": [ 203, 239 ],
+					"sky": "#7DA2FF"
 				}
 			]
 		},
 		{
 			"name": "ocean",
+			"ground": "block/water_still",
 			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
+			"sky": "#7BA4FF",
 			"variant": [
 				{
-					"name": "deep_ocean"
+					"name": "deep_ocean",
+					"ground": "block/water_still",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "warm_ocean",
-					"water": "#43D5EE"
+					"ground": "block/water_still",
+					"water": "#43D5EE",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "lukewarm_ocean",
-					"water": "#45ADF2"
+					"ground": "block/water_still",
+					"water": "#45ADF2",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "deep_lukewarm_ocean",
-					"water": "#45ADF2"
+					"ground": "block/water_still",
+					"water": "#45ADF2",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "cold_ocean",
-					"water": "#3D57D6"
+					"ground": "block/water_still",
+					"water": "#3D57D6",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "deep_cold_ocean",
-					"water": "#3D57D6"
+					"ground": "block/water_still",
+					"water": "#3D57D6",
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "frozen_ocean",
+					"ground": "block/water_still",
 					"foliage": [ 255, 255 ],
-					"water": "#3938C9"
+					"water": "#3938C9",
+					"sky": "#7FA1FF"
 				},
 				{
 					"name": "deep_frozen_ocean",
-					"water": "#3938C9"
+					"ground": "block/water_still",
+					"water": "#3938C9",
+					"sky": "#7BA4FF"
 				}
 			]
 		},
 		{
 			"name": "mushroom_fields",
 			"foliage": [ 25, 25 ],
-			"water": "#3F76E4"
+			"water": "#3F76E4",
+			"sky": "#77A8FF"
 		},
 		{
 			"name": "caves",
 			"group": true,
 			"foliage": [ 50, 173 ],
 			"water": "#3F76E4",
+			"sky": "#78A7FF",
 			"variant": [
 				{
-					"name": "dripstone_caves"
+					"name": "dripstone_caves",
+					"ground": "block/stone",
+					"sky": "#78A7FF"
 				},
 				{
 					"name": "lush_caves",
-					"foliage": [ 127, 191 ]
+					"ground": "block/stone",
+					"foliage": [ 127, 191 ],
+					"sky": "#7BA4FF"
 				},
 				{
 					"name": "sulfur_caves",
+					"ground": "block/stone",
 					"foliage": "#ABA64F",
 					"grass": "#ABA64F",
-					"water": "#34BF89"
+					"water": "#34BF89",
+					"fog": "#8CB831",
+					"sky": "#78A7FF"
 				},
 				{
-					"name": "deep_dark"
+					"name": "deep_dark",
+					"ground": "block/deepslate_top",
+					"sky": "#78A7FF"
 				}
 			]
 		},
 		{
-			"name": "nether",
+			"name": "the_nether",
 			"group": true,
 			"foliage": [ 0, 255 ],
 			"water": "#3F76E4",
 			"variant": [
 				{
-					"name": "nether_wastes"
+					"name": "nether_wastes",
+					"fog": "#330808",
+					"sky": "#330808"
 				},
 				{
-					"name": "soul_sand_valley"
+					"name": "soul_sand_valley",
+					"fog": "#1B4745",
+					"sky": "#1B4745"
 				},
 				{
-					"name": "crimson_forest"
+					"name": "crimson_forest",
+					"fog": "#330303",
+					"sky": "#330303"
 				},
 				{
-					"name": "warped_forest"
+					"name": "warped_forest",
+					"fog": "#1A051A",
+					"sky": "#1A051A"
 				},
 				{
-					"name": "basalt_deltas"
+					"name": "basalt_deltas",
+					"fog": "#685F70",
+					"sky": "#685F70"
 				}
 			]
 		},
@@ -11916,25 +12003,36 @@
 			"name": "the_end",
 			"foliage": [ 127, 191 ],
 			"water": "#3F76E4",
+			"fog": "#181318",
+			"sky": "#181318",
 			"variant": [
 				{
-					"name": "small_end_islands"
+					"name": "small_end_islands",
+					"fog": "#181318",
+					"sky": "#181318"
 				},
 				{
-					"name": "end_midlands"
+					"name": "end_midlands",
+					"fog": "#181318",
+					"sky": "#181318"
 				},
 				{
-					"name": "end_highlands"
+					"name": "end_highlands",
+					"fog": "#181318",
+					"sky": "#181318"
 				},
 				{
-					"name": "end_barrens"
+					"name": "end_barrens",
+					"fog": "#181318",
+					"sky": "#181318"
 				}
 			]
 		},
 		{
 			"name": "the_void",
 			"foliage": [ 127, 191 ],
-			"water": "#3F76E4"
+			"water": "#3F76E4",
+			"sky": "#7BA4FF"
 		}
 	],
 	"swatches": [

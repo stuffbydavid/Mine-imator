@@ -54,8 +54,8 @@ function panel_draw_content()
 		{
 			if (tab.category[c].enabled)
 			{
-				// Advanced mode only tabs
-				if (!setting_advanced_mode && (tab.category[c] = frame_editor.item || tab.category[c] = timeline_editor.appearance))
+				// Advanced mode only
+				if (!setting_advanced_mode && tab.category[c] = frame_editor.item)
 					continue
 				
 				cat[catamount] = tab.category[c]

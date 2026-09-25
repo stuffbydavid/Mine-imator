@@ -1238,7 +1238,7 @@ function enums()
 	// Glint mode
 	enum e_glint
 	{
-		NONE,
+		NONE, // Legacy
 		ITEM,
 		ARMOR
 	}

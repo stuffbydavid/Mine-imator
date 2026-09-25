@@ -8,6 +8,10 @@ function new_tl(tlype)
 		type = tlype
 		has_temp = type_is_templated(type)
 		animated = !type_is_block(type) && type != e_tl_type.TEXT
+		
+		if (type = e_tl_type.EQUIPMENT)
+			glint_mode = e_glint.ARMOR
+		
 		if (type = e_tl_type.TEXT)
 			value[e_value.TEXT] = text_get("frameeditortextsample")
 		
