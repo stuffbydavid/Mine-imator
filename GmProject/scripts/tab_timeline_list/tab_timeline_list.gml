@@ -234,7 +234,6 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		if (!setting_timeline_compact)
 		{
 			var iconcolor, iconalpha;
-			var activetl = tl_active(tl);
 			
 			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
@@ -249,26 +248,40 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			{
 				if (tl.color_tag = null)
 				{
-					iconcolor = activetl ? c_accent : c_text_tertiary
-					iconalpha = activetl ? .75 : a_text_tertiary
+					iconcolor = c_text_tertiary
+					iconalpha = a_text_tertiary
 				}
 				else
 				{
 					iconcolor = setting_theme.accent_list[tl.color_tag]
-					iconalpha = activetl ? 1 : .75
+					iconalpha = .75
 				}
 			}
 			
 			var list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list;
+			var licon = list[|tl.type];
+			
+			// Icon overrides
+			if (tl.type = e_tl_type.CAMERA && tl = timeline_camera)
+				licon = icons.CAMERA_ACTIVE
+			else if (tl.type = e_tl_type.BACKGROUND && tl = background_tlactive)
+				licon = icons.CLOUD_ACTIVE
+			else if (place_build && tl = build_structure)
+			{
+				licon = icons.SCENERY_EDIT // Structure editing in build mode
+				iconcolor = c_accent
+				iconalpha = 1
+			}
 			
 			if (tl.type != null && (((xx + 24) - xright) < minw))
-				draw_image(spr_icons, list[|tl.type], xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
+				draw_image(spr_icons, licon, xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
 			
 			xx += 24
 			minw -= 24
 			itemmaxw += 24
 		}
 		
+		/*
 		// Structure editing in build mode
 		xx += 1
 		if (place_build && tl = build_structure && minw >= 20)
@@ -278,6 +291,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			minw -= 22
 			itemmaxw += 22
 		}
+		*/
 		
 		tl.list_mouseon = itemhover && !buttonhover
 		

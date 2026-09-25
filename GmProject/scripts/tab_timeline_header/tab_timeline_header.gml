@@ -220,16 +220,20 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	buttonsxstart = buttonsx
 	
 	// Loop
-	tooltip = timeline_repeat ? "tooltiptldisableloop" : "tooltiptlenableloop"
-	if (draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat, icons.REPEAT, null, false, tooltip))
-		action_tl_play_repeat(false)
-	buttonsx += 24 + 4
-
-	tooltip = timeline_seamless_repeat ? "tooltiptldisableseamlessloop" : "tooltiptlenableseamlessloop"
-	if (draw_button_icon("timelineseamlessloop", buttonsx, buttonsy, 24, 24, timeline_seamless_repeat, icons.REPEAT_SEAMLESS, null, false, tooltip))
-		action_tl_play_repeat(true)
-	buttonsx += 24 + 6
+	var simpleseam = (!setting_advanced_mode && timeline_seamless_repeat);
+	tooltip = timeline_repeat || simpleseam ? "tooltiptldisableloop" : "tooltiptlenableloop"
+	if (draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || simpleseam, simpleseam ? icons.REPEAT_SEAMLESS : icons.REPEAT, null, false, tooltip))
+		action_tl_play_repeat()
 	
+	if (setting_advanced_mode)
+	{
+		buttonsx += 24 + 4
+		tooltip = timeline_seamless_repeat ? "tooltiptldisableseamlessloop" : "tooltiptlenableseamlessloop"
+		if (draw_button_icon("timelineseamlessloop", buttonsx, buttonsy, 24, 24, timeline_seamless_repeat, icons.REPEAT_SEAMLESS, null, false, tooltip))
+			action_tl_play_repeat(true)
+	}
+		
+	buttonsx += 24 + 6
 	draw_divide_vertical(buttonsx, buttonsy, 24)
 	buttonsx += 4
 	

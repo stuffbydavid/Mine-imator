@@ -4441,10 +4441,10 @@
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",
-				"rotationspacecycle": "Change transform mode",
 				"scale": "Scale tool",
 				"bend": "Bend tool",
-				"transform": "Multi-transform tool"
+				"transform": "Multi-transform tool",
+				"rotationspacecycle": "Change transform mode"
 			},
 			"snap": "Toggle snapping",
 			"rendermode": "Render mode",
