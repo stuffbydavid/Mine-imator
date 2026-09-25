@@ -52,8 +52,9 @@ void main()
 			return;
 		}
 
-		// Rotate the progressive disk for each pixel
-		float angle = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).r * TWO_PI;
+		// Rotate and offset the progressive disk for each pixel
+		vec2 noise = texture2D(uNoiseBuffer, vTexCoord * (uScreenSize / uNoiseSize)).rg;
+		float angle = noise.r * TWO_PI;
 		vec2 rotation = vec2(cos(angle), sin(angle));
 		vec3 lightNew = lightOrigin * uKernel[0].z;
 		float totalWeight = uKernel[0].z;
@@ -64,10 +65,14 @@ void main()
 				break;
 
 			vec2 offset = uKernel[i].xy;
+			float radiusSquared = dot(offset, offset);
+			float shiftedRadiusSquared = fract(radiusSquared + noise.g);
+			offset *= sqrt(shiftedRadiusSquared / max(radiusSquared, 0.000001));
 			offset = vec2(offset.x * rotation.x - offset.y * rotation.y,
 						  offset.x * rotation.y + offset.y * rotation.x);
 			vec2 sampleCoord = vTexCoord + offset * rad;
-			float sampleWeight = uKernel[i].z;
+			float sampleWeight = max(1.0 - shiftedRadiusSquared, 0.05);
+			sampleWeight *= sampleWeight;
 			totalWeight += sampleWeight;
 			
 			// Out of bounds?

@@ -341,6 +341,15 @@ function tab_properties_render()
 			case e_tonemapper.GT7_CURVE:
 				text = text_get("rendertonemappergt7curve")
 				break;
+			case e_tonemapper.PBR_NEUTRAL:
+				text = text_get("rendertonemapperpbrneutral")
+				break;
+			case e_tonemapper.AGX:
+				text = text_get("rendertonemapperagx")
+				break;
+			case e_tonemapper.AGX_PUNCHY:
+				text = text_get("rendertonemapperagxpunchy")
+				break;
 			default:
 				text = text_get("rendertonemappernone")
 				break;
