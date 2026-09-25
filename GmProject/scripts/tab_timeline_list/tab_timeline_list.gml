@@ -2,15 +2,16 @@
 
 function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary, barh, headerh, itemh, mouseinnames, mousetl)
 {
-	var tl, buttonsize, buttonpad, itemx, itemy, itemw, itemhover, buttonhover, minw, xx, xright;
-	var searchx, searchwid, itemmaxw, tlmaxw;
-	var indent = 20;
-	var tlhierarchy = (timeline_search = "");
-	var mousetlname = null;
-	var mousemovetl = null;
-	var mousemoveindex = null;
-	var movehltl = null;
-	var movehlpos = null;
+	var buttonsize, buttonpad, searchx, searchwid, itemmaxw, tlmaxw, indent, tlhierarchy;
+	var mousetlname, mousemovetl, mousemoveindex, movehltl, movehlpos;
+	indent = 20
+	tlhierarchy = (timeline_search = "")
+	
+	mousetlname = null
+	mousemovetl = null
+	mousemoveindex = null
+	movehltl = null
+	movehlpos = null
 
 	// Timeline list
 	buttonsize = 16
@@ -61,6 +62,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		if (dy > listy + listh)
 			break
 		
+		var tl, itemx, itemy, itemw, itemhover, buttonhover, minw, xx, xright;
 		tl = tree_visible_list[|t]
 		itemx = (content_x + (indent * tl.indent_level)) - timeline.hor_scroll_tl.value
 		itemy = dy
@@ -171,8 +173,9 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		// Hierarchy connections (If hierarchy is possible)
 		if (tlhierarchy)
 		{
-			var connectx = content_x + 4 - timeline.hor_scroll_tl.value;
-			var index = null;
+			var connectx, index;
+			connectx = content_x + 4 - timeline.hor_scroll_tl.value
+			index = null
 			
 			for (var i = 0; i < array_length(tl.level_display); i++)
 			{
@@ -234,7 +237,6 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		if (!setting_timeline_compact)
 		{
 			var iconcolor, iconalpha;
-			var activetl = tl_active(tl);
 			
 			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
@@ -249,26 +251,40 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			{
 				if (tl.color_tag = null)
 				{
-					iconcolor = activetl ? c_accent : c_text_tertiary
-					iconalpha = activetl ? .75 : a_text_tertiary
+					iconcolor = c_text_tertiary
+					iconalpha = a_text_tertiary
 				}
 				else
 				{
 					iconcolor = setting_theme.accent_list[tl.color_tag]
-					iconalpha = activetl ? 1 : .75
+					iconalpha = .75
 				}
 			}
 			
 			var list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list;
+			var licon = list[|tl.type];
+			
+			// Icon overrides
+			if (tl.type = e_tl_type.CAMERA && tl = timeline_camera)
+				licon = icons.CAMERA_ACTIVE
+			else if (tl.type = e_tl_type.BACKGROUND && tl = background_tlactive)
+				licon = icons.CLOUD_ACTIVE
+			else if (place_build && tl = build_structure)
+			{
+				licon = icons.SCENERY_EDIT // Structure editing in build mode
+				iconcolor = c_accent
+				iconalpha = 1
+			}
 			
 			if (tl.type != null && (((xx + 24) - xright) < minw))
-				draw_image(spr_icons, list[|tl.type], xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
+				draw_image(spr_icons, licon, xx + (buttonsize/2), itemy + (itemh/2), 1, 1, iconcolor, iconalpha)
 			
 			xx += 24
 			minw -= 24
 			itemmaxw += 24
 		}
 		
+		/*
 		// Structure editing in build mode
 		xx += 1
 		if (place_build && tl = build_structure && minw >= 20)
@@ -278,6 +294,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			minw -= 22
 			itemmaxw += 22
 		}
+		*/
 		
 		tl.list_mouseon = itemhover && !buttonhover
 		
@@ -457,6 +474,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 
 	if (listw > 0 && listh > 0)
 		clip_end()
+	
 	content_mouseon = rowmouseon
 	
 	// Timeline list scrollbar
@@ -466,7 +484,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	scrollbar_draw(timeline.hor_scroll_tl, e_scroll.HORIZONTAL, listx, listy + listh, listw, tlmaxw)
 	
 	// Timeline actions
-	if (!setting_timeline_compact)
+	if (!setting_timeline_compact && listh > 0)
 	{
 		var buttony = content_y + content_height - 28;
 
@@ -541,8 +559,8 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	{
 		mouse_cursor = cr_handpoint
 		
-		var x1, y1, x2, y2;
-		var selecthei = setting_timeline_compact ? tlh : listh;
+		var selecthei, x1, y1, x2, y2;
+		selecthei = setting_timeline_compact ? tlh : listh
 		x1 = clamp(mouse_click_x, content_x, tlx)
 		y1 = clamp(mouse_click_y + (timeline_select_startv - timeline.ver_scroll.value), listy, listy + selecthei)
 		x2 = clamp(mouse_x, content_x, tlx)

@@ -13,7 +13,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	dy_start = yy
 	dy = dy_start + 12
 	
-	// Other (Also in menu "easeinout")
+	// Other (Keyframe transition menu only)
 	if (menu = "all")
 	{
 		dy += 14
@@ -95,9 +95,9 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 		dy += 46
 	}
 	
+	// Ease in & out
 	if (menu = "easeinout" || menu = "all")
 	{
-		// Ease in & out
 		dy += 14
 		draw_label(text_get("transitionmenueaseinout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
@@ -122,8 +122,8 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 		dy += 46
 	}
 	
-	// Other
-	if (menu = "easeinout")
+	// Quick transition menu Bezier
+	if (menu = "easeinout" && setting_advanced_mode)
 	{
 		dy += 14
 		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)

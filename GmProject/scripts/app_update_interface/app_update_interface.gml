@@ -2,6 +2,8 @@
 
 function app_update_interface()
 {
+	menu_button_mouseon = false
+	
 	if (setting_reduced_motion || update_interface_wait)
 	{
 		interface_update_instant()

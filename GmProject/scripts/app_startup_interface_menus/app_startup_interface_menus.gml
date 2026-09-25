@@ -5,6 +5,7 @@ function app_startup_interface_menus()
 	menu_list = ds_list_create()
 	menu_count = 0
 	menu_current = 0
+	menu_button_mouseon = false
 	menu_popup = null
 	menu_expose = false
 	menu_filter = ""

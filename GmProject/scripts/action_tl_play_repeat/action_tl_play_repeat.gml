@@ -1,11 +1,16 @@
-/// action_tl_play_repeat(seamless)
-/// @arg seamless
+/// action_tl_play_repeat([seamless])
+/// @arg [seamless]
 
-function action_tl_play_repeat(seamless)
+function action_tl_play_repeat(seamless = false)
 {
 	project_changed = true
 	
-	if (seamless)
+	if (timeline_seamless_repeat && !setting_advanced_mode) // Turn off seamless loop if its active in simple mode
+	{
+		timeline_repeat = false
+		timeline_seamless_repeat = false
+	}
+	else if (seamless)
 	{
 		timeline_seamless_repeat = !timeline_seamless_repeat
 		timeline_repeat = false

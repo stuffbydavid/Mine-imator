@@ -59,9 +59,9 @@ function app_update_keyboard()
 	// Build mode shortcuts
 	if (place_build && !textbox_isediting && window_busy = "")
 	{
-		if (keyboard_check(vk_control) && mouse_wheel <> 0)
+		if (keyboard_check(vk_control) && mouse_wheel <> 0 && !menu_button_mouseon)
 			action_build_scroll()
-		
+
 		if (keyboard_check_pressed(ord("F")))
 		{
 			action_build_first_person(true)

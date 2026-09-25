@@ -3,6 +3,10 @@
 
 function macros()
 {
+	// Debug
+	#macro dev_mode						true
+	#macro dev_mode_debug_names			dev_mode && false
+
 	// Versions
 	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
 	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
