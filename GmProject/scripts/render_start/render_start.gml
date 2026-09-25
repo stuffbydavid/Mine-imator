@@ -1,8 +1,9 @@
-/// render_start(target, camera, [width, height])
+/// render_start(target, camera, owner, [width, height])
 /// @arg target
 /// @arg camera
-/// @arg [width
-/// @arg height]
+/// @arg owner
+/// @arg [width]
+/// @arg [height]
 
 function render_start()
 {
@@ -129,11 +130,14 @@ function render_start()
 	depth_far = app.project_render_distance
 
 	// Argument overwrites size
-	if (argument_count > 2)
+	if (argument_count > 3)
 	{
-		render_width = argument[2]
-		render_height = argument[3]
+		render_width = argument[3]
+		render_height = argument[4]
 	}
+
+	// Re-use surfaces created for this render owner and output size
+	render_surface_pool_set(argument[2], render_width, render_height)
 
 	render_ratio = render_width / render_height
 	render_overlay = (render_camera_colors || render_watermark)

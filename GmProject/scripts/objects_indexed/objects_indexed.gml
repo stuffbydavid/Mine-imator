@@ -46,5 +46,5 @@ function objects_indexed()
 	//  obj_builder, obj_builder_thread, obj_category, obj_colorpicker, obj_data,
 	//  obj_deactivate, obj_list, obj_micro_animation, obj_minecraft_assets, obj_model,
 	//  obj_model_file, obj_model_part, obj_model_shape, obj_model_state,
-	//  obj_particle_template, obj_sortlist, obj_swatch, obj_textbox
+	//  obj_particle_template, obj_render_surface_pool, obj_sortlist, obj_swatch, obj_textbox
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_surface_pool_clear",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_surface_pool_clear",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

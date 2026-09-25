@@ -46,6 +46,25 @@ function debug_info_draw()
 		str += "Graphics API: " + graphics_api_get() + " \n"
 		str += "\n"
 
+		str += "Render surface pools: \n"
+		str += "======================================= \n"
+		if (ds_list_size(render_surface_pool_list) = 0)
+			str += "None \n"
+		else
+		{
+			for (var i = 0; i < ds_list_size(render_surface_pool_list); i++)
+			{
+				var pool = render_surface_pool_list[|i]
+				if (!instance_exists(pool))
+					continue
+
+				str += (pool = render_surface_pool_current ? "* " : "  ")
+				str += pool.owner_label + ": " + string(pool.width) + "x" + string(pool.height)
+				str += (pool.used ? " (used) \n" : " \n")
+			}
+		}
+		str += "\n"
+
 		str += "Optimizations: \n"
 		str += "======================================= \n"
 		str += "Light buffer caching: " + (render_shadow_cache_enabled ? "Enabled" : "Disabled") + " \n"

@@ -47,9 +47,9 @@ function export_update()
 	while (current_time - starttime < 1000 / game_get_speed(gamespeed_fps))
 	{
 		if (window_state = "export_movie" && exportmovie_format = "png")
-			render_start(export_surface, timeline_camera)
+			render_start(export_surface, timeline_camera, render_active)
 		else
-			render_start(export_surface, timeline_camera, project_video_width, project_video_height)
+			render_start(export_surface, timeline_camera, render_active, project_video_width, project_video_height)
 	
 		if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)
 			render_high()

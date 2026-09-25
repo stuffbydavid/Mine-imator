@@ -16,7 +16,7 @@ function view_update_surface(view, cam)
 		(popup && popup.name = "exportmovie" && popup_exportmovie.watermark) ||
 		(popup && popup.name = "exportimage" && popup_exportimage.watermark)
 	)
-	render_start(view.surface, cam, content_width, content_height)
+	render_start(view.surface, cam, view, content_width, content_height)
 	
 	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
 		render_high()

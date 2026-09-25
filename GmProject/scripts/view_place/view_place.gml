@@ -30,7 +30,7 @@ function view_place(view, cam)
 	// Update placement surfaces with placed object hidden
 	if (view.update_place_surfaces)
 	{
-		render_start(null, null, content_width, content_height) // No camera to disable effects
+		render_start(null, null, view, content_width, content_height) // No camera to disable effects
 		render_camera = cam
 		render_update_camera()
 		place_tl_render = false

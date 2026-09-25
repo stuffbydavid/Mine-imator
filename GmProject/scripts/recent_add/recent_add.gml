@@ -28,7 +28,7 @@ function recent_add()
 	var thumbnailfn, surf;
 	thumbnailfn = project_folder + "/thumbnail.png"
 	surf = null
-	render_start(surf, null, recent_thumbnail_width, recent_thumbnail_height)
+	render_start(surf, null, "recent", recent_thumbnail_width, recent_thumbnail_height)
 	render_low()
 	surf = render_done()
 	surface_save_lib(surf, thumbnailfn)

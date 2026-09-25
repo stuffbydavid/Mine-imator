@@ -99,12 +99,16 @@ function render_startup()
 	render_repeat = vec3(0)
 	
 	// Surfaces for rendering
-	globalvar render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_low, render_surface_normal,
+	globalvar render_surface_pool_list, render_surface_pool_current,
+			  render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_low, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow,
 			  render_surface_indirect_raydata, render_surface_reflections_raydata,
 			  render_surface_samples, render_surface_post, render_surface_specular_base, depth_near, depth_far, render_post_index;
-			
+
+	render_surface_pool_list = ds_list_create()
+	render_surface_pool_current = null
+
 	render_target = null
 	render_surface[0] = null
 	render_surface[1] = null
@@ -190,8 +194,8 @@ function render_startup()
 	render_surface_spot_buffer = null
 	render_surface_point_buffer = null
 	render_surface_point_atlas_buffer = null
-	render_shadow_cache = ds_map_create()
-	render_shadow_cache_ready = ds_map_create()
+	render_shadow_cache = null
+	render_shadow_cache_ready = null
 	render_shadow_cache_enabled = false
 	globalvar render_gbuffers_cache_enabled, render_gbuffers_cache_ready;
 	render_gbuffers_cache_enabled = false

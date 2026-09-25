@@ -8,4 +8,7 @@ function app_event_draw()
 	draw_set_color(c_text_main)
 	
 	window_draw()
+
+	if (window_get_current() = e_window.MAIN)
+		render_surface_pool_update()
 }
