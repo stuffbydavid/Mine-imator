@@ -2308,6 +2308,7 @@
     {"id":{"name":"render_update_cascades","path":"scripts/render_update_cascades/render_update_cascades.yy",},},
     {"id":{"name":"render_update_effects","path":"scripts/render_update_effects/render_update_effects.yy",},},
     {"id":{"name":"render_update_item","path":"scripts/render_update_item/render_update_item.yy",},},
+    {"id":{"name":"render_update_pcss_kernel","path":"scripts/render_update_pcss_kernel/render_update_pcss_kernel.yy",},},
     {"id":{"name":"render_update_samples","path":"scripts/render_update_samples/render_update_samples.yy",},},
     {"id":{"name":"render_update_text","path":"scripts/render_update_text/render_update_text.yy",},},
     {"id":{"name":"render_update_tl_resource","path":"scripts/render_update_tl_resource/render_update_tl_resource.yy",},},

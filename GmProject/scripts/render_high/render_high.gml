@@ -13,6 +13,7 @@ function render_high()
 	var samplestart, sampleend;
 	if (!render_use_samples)
 	{
+		render_update_pcss_kernel()
 		samplestart = 0
 		sampleend = 1
 	}

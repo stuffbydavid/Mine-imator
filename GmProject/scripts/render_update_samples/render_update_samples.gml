@@ -10,14 +10,7 @@ function render_update_samples()
 	render_world_done()
 	
 	// Update PCSS samples
-	var shadowquality = app.project_render_shadows_jittered ? 0 : clamp(floor(app.project_render_shadows_blur_quality), 0, 64)
-	var qualitychanged = shadowquality != render_pcss_quality_prev
-	if (qualitychanged)
-	{
-		var blockersamples = clamp(floor((shadowquality + 1) / 2), 4, 16)
-		render_pcss_kernel = render_generate_progressive_disk_samples(max(shadowquality, blockersamples), 0)
-		render_pcss_quality_prev = shadowquality
-	}
+	var qualitychanged = render_update_pcss_kernel()
 
 	// Check if sampling should reset
 	var refresh = (render_samples = -1 ||
