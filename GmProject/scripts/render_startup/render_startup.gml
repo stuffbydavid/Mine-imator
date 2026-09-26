@@ -13,7 +13,7 @@ function render_startup()
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
 			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_sun_shadow_scale, render_light_offset, render_shadow_from,
-			  render_spot_matrix, render_light_specular_strength, render_light_size;
+			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
@@ -63,6 +63,7 @@ function render_startup()
 	render_camera = null
 	
 	render_light_specular_strength = 0
+	render_light_realistic_falloff = false
 	
 	render_effects = false
 	render_effects_done = false

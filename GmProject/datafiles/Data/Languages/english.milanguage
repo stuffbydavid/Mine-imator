@@ -4077,6 +4077,8 @@
 		"texturefiltering": "Texture filtering",
 		"shadows": "Cast shadows",
 		"rendershadows": "Render shadows",
+		"realisticfalloff": "Realistic falloff",
+		"realisticfallofftip": "Uses realistic inverse-square falloff.",
 		"ssao": "Ambient occlusion",
 		"glow": "Glow",
 		"glowtexture": "Glow affected by texture",

@@ -232,7 +232,7 @@ function tab_properties_render()
 			tab_next()
 
 			tab_control_dragger()
-			draw_dragger("renderindirectbounces", dx, dy, dragger_width, rendererset.indirect_bounces, .5, 1, 8, 1, 1, tab.tbx_indirect_bounces, action_project_render_indirect_bounces, null, true, false, "renderindirectbouncestip")
+			draw_dragger("renderindirectbounces", dx, dy, dragger_width, rendererset.indirect_bounces, .5, 1, 8, 1, 1, tab.tbx_indirect_bounces, action_project_render_indirect_bounces)
 			tab_next()
 
 			var resolutiontext = text_get("renderresolutioneighth")
@@ -272,7 +272,7 @@ function tab_properties_render()
 			tab_next()
 
 			tab_control_dragger()
-			draw_dragger("renderreflectionsbounces", dx, dy, dragger_width, rendererset.reflections_bounces, .5, 1, 8, 1, 1, tab.tbx_reflections_bounces, action_project_render_reflections_bounces, null, true, false, "renderreflectionsbouncestip")
+			draw_dragger("renderreflectionsbounces", dx, dy, dragger_width, rendererset.reflections_bounces, .5, 1, 8, 1, 1, tab.tbx_reflections_bounces, action_project_render_reflections_bounces)
 			tab_next()
 
 			var resolutiontext = text_get("renderresolutioneighth")

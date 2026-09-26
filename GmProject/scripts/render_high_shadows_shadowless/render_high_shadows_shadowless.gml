@@ -29,8 +29,8 @@ function render_high_shadows_shadowless()
 					
 				render_shadowless_point_data[render_shadowless_point_amount * 12 + 8] = light.value[e_value.LIGHT_STRENGTH]
 				render_shadowless_point_data[render_shadowless_point_amount * 12 + 9] = light.value[e_value.LIGHT_SPECULAR_STRENGTH]
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 10] = 1
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 11] = 1
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 10] = light.value[e_value.LIGHT_SIZE]
+				render_shadowless_point_data[render_shadowless_point_amount * 12 + 11] = light.realistic_falloff
 				render_shadowless_point_amount++
 				lights--
 			}

@@ -1426,6 +1426,8 @@
     {"id":{"name":"action_tl_select","path":"scripts/action_tl_select/action_tl_select.yy",},},
     {"id":{"name":"action_tl_shadows_tree","path":"scripts/action_tl_shadows_tree/action_tl_shadows_tree.yy",},},
     {"id":{"name":"action_tl_shadows","path":"scripts/action_tl_shadows/action_tl_shadows.yy",},},
+    {"id":{"name":"action_tl_realistic_falloff","path":"scripts/action_tl_realistic_falloff/action_tl_realistic_falloff.yy",},},
+    {"id":{"name":"action_tl_realistic_falloff_tree","path":"scripts/action_tl_realistic_falloff_tree/action_tl_realistic_falloff_tree.yy",},},
     {"id":{"name":"action_tl_ssao_tree","path":"scripts/action_tl_ssao_tree/action_tl_ssao_tree.yy",},},
     {"id":{"name":"action_tl_ssao","path":"scripts/action_tl_ssao/action_tl_ssao.yy",},},
     {"id":{"name":"action_tl_text_3d","path":"scripts/action_tl_text_3d/action_tl_text_3d.yy",},},

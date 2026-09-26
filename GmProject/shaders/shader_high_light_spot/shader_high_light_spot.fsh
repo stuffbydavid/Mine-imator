@@ -7,10 +7,12 @@ uniform float uLightStrength; // static
 uniform float uLightNear; // static
 uniform float uLightFar; // static
 uniform float uLightFadeSize; // static
+uniform int uLightRealisticFalloff;
 uniform float uLightSpotSharpness; // static
 uniform float uShadowRadius; // static
 uniform vec3 uShadowPosition; // static
 uniform float uLightSpecular;
+uniform float uLightSize;
 
 uniform sampler2D uDepthBuffer; // static
 uniform int uShadowBlurQuality; // static
@@ -142,7 +144,7 @@ void main()
 			dif = max(0.0, dot(normal, lightDir));
 			
 			// Attenuation factor
-			att = 1.0 - clamp((distance(vPosition, uLightPosition) - uLightFar * (1.0 - uLightFadeSize)) / (uLightFar * uLightFadeSize), 0.0, 1.0);
+			att = getLightAttenuation(distance(vPosition, uLightPosition), uLightFar, uLightFadeSize, uLightRealisticFalloff);
 			dif *= att;
 			
 			if (dif > 0.0 || sss > 0.0)
@@ -194,8 +196,11 @@ void main()
 		// Calculate specular
 		if (uLightSpecular * dif * shadow > 0.0)
 		{
-			vec3 specular = getSpecular(normal, lightDir, uCameraPosition, vPosition, specularF0, roughness);
-			spec = uLightColor.rgb * shadow * uLightSpecular * dif * specular;
+			float sphereNormalization;
+			vec3 sphereLightDir = getSphereLightDirection(normal, uCameraPosition, vPosition, uLightPosition - vPosition, uLightSize * 0.5, roughness, sphereNormalization);
+			vec3 specular = getSpecular(normal, sphereLightDir, uCameraPosition, vPosition, specularF0, roughness) * sphereNormalization;
+			float specularStrength = uLightSpecular * (uLightRealisticFalloff > 0 ? uLightStrength : 1.0);
+			spec = uLightColor.rgb * shadow * specularStrength * dif * specular;
 		}
 	}
 	

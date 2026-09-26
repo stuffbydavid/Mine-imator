@@ -22,6 +22,7 @@ uniform vec2 uScreenSize; // static
 
 uniform vec3 uSSSRadius;
 uniform float uLightSpecular;
+uniform float uSunAngularRadius;
 
 uniform vec3 uCameraPosition; // static
 uniform float uGamma;
@@ -215,8 +216,10 @@ void main()
 		// Calculate specular
 		if (uLightSpecular * dif * shadow.r > 0.0)
 		{
-			vec3 specular = getSpecular(normal, uLightDirection, uCameraPosition, vPosition, specularF0, roughness);
-			spec = uLightColor.rgb * uLightSpecular * dif * shadow * specular;
+			float diskNormalization;
+			vec3 diskLightDir = getSphereLightDirection(normal, uCameraPosition, vPosition, uLightDirection, uSunAngularRadius, roughness, diskNormalization);
+			vec3 specular = getSpecular(normal, diskLightDir, uCameraPosition, vPosition, specularF0, roughness) * diskNormalization;
+			spec = lightCol * uLightSpecular * dif * shadow * specular;
 		}
 	}
 	

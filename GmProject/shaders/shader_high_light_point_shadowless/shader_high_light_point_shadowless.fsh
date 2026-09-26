@@ -48,6 +48,8 @@ void main()
 			vec3 lightPosition = data1.xyz;
 			float lightRange = data1.w;
 			float lightFadeSize = data2.w;
+			float lightSize = data3.z;
+			int realisticFalloff = data3.w > 0.5 ? 1 : 0;
 			
 			// No use in shading a pixel if it's not in range
 			if (distance(vPosition, lightPosition) > lightRange)
@@ -62,7 +64,7 @@ void main()
 			float dif = max(0.0, dot(normal, lightDir));
 			
 			// Attenuation factor
-			float att = 1.0 - clamp((distance(vPosition, lightPosition) - lightRange * (1.0 - lightFadeSize)) / (lightRange * lightFadeSize), 0.0, 1.0);
+			float att = getLightAttenuation(distance(vPosition, lightPosition), lightRange, lightFadeSize, realisticFalloff);
 			dif *= att;
 			
 			vec3 light = vec3(0.0);
@@ -74,8 +76,11 @@ void main()
 			lightResult.rgb += light;
 			
 			// Calculate specular
-			vec3 specular = getSpecular(normal, lightDir, uCameraPosition, vPosition, specularF0, roughness);
-			spec = data2.rgb * specular * data3.g * uLightSpecular * dif;
+			float sphereNormalization;
+			vec3 sphereLightDir = getSphereLightDirection(normal, uCameraPosition, vPosition, lightPosition - vPosition, lightSize * 0.5, roughness, sphereNormalization);
+			vec3 specular = getSpecular(normal, sphereLightDir, uCameraPosition, vPosition, specularF0, roughness) * sphereNormalization;
+			float specularStrength = data3.g * uLightSpecular * (realisticFalloff > 0 ? data3.r : 1.0);
+			spec = data2.rgb * specular * specularStrength * dif;
 			specResult.rgb += spec;
 		}
 	}

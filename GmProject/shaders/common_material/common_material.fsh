@@ -280,6 +280,42 @@ vec3 getSpecular(vec3 N, vec3 L, vec3 camPos, vec3 pos, vec3 F0, float roughness
 	return numerator / denominator;
 }
 
+// https://cdn2.unrealengine.com/Resources/files/2013SiggraphPresentationsNotes-26915738.pdf
+vec3 getSphereLightDirection(vec3 N, vec3 camPos, vec3 pos, vec3 lightVector, float lightRadius, float roughness, out float normalization)
+{
+	vec3 V = normalize(camPos - pos);
+	vec3 R = reflect(-V, N);
+	vec3 L = lightVector;
+	float lightDistance = max(length(L), 0.0001);
+	float sourceRadius = max(lightRadius, 0.0);
+	vec3 centerToRay = dot(L, R) * R - L;
+	float centerToRayLength = length(centerToRay);
+	vec3 closestPoint = L + centerToRay * clamp(sourceRadius / max(centerToRayLength, 0.0001), 0.0, 1.0);
+
+	// Conserve the energy added by widening the GGX distribution over the sphere
+	float perceptualRoughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float alpha = perceptualRoughness * perceptualRoughness;
+	float alphaPrime = clamp(alpha + sourceRadius / (3.0 * lightDistance), alpha, 1.0);
+	normalization = (alpha * alpha) / (alphaPrime * alphaPrime);
+
+	float closestPointLength = length(closestPoint);
+	return closestPointLength > 0.0001 ? closestPoint / closestPointLength : L / lightDistance;
+}
+
+float getLightAttenuation(float lightDistance, float lightRange, float fadeSize, int realisticFalloff)
+{
+	if (realisticFalloff > 0)
+	{
+		float distanceRatio = lightDistance / max(lightRange, 0.0001);
+		float distanceRatio2 = distanceRatio * distanceRatio;
+		float window = clamp(1.0 - distanceRatio2 * distanceRatio2, 0.0, 1.0);
+		const float referenceDistance2 = 256.0;
+		return window * window * referenceDistance2 / (lightDistance * lightDistance + referenceDistance2);
+	}
+
+	return 1.0 - clamp((lightDistance - lightRange * (1.0 - fadeSize)) / (lightRange * fadeSize), 0.0, 1.0);
+}
+
 #pragma shady: macro_end
 #endregion
 
