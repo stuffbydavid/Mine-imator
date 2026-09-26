@@ -12,14 +12,14 @@ function tab_properties_background()
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger_sky("backgroundskyrotation", dx, dy, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
+		draw_dragger_sky("backgroundskyrotation", dx, dy, background_sky_rotation, -45, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 		tab_next()
 	}
 	else
 	{
 		tab_control(120)
 		draw_wheel_sky("backgroundskytime", dx + floor(dw * 0.25), dy + 60, background_sky_time, 45, action_background_sky_time, tab.background.tbx_sky_time, true)
-		draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
+		draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, -45, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 		tab_next()
 	}
 	

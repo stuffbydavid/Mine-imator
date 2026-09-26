@@ -20,7 +20,7 @@ function project_reset_background()
 	background_sky_moon_scale = 1
 	
 	background_sky_time = 45
-	background_sky_rotation = 0
+	background_sky_rotation = -45
 	background_sunlight_strength = 1
 	background_sunlight_specular_strength = 1
 	background_sunlight_angle = .526
