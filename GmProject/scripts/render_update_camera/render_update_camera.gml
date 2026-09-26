@@ -19,7 +19,7 @@ function render_update_camera()
 		cam_up[Y] = cy * xx - cx * yy * zz
 		cam_up[Z] = cx * (xx * xx + yy * yy)
 		
-		cam_fov = 45
+		cam_fov = cam_work_fov
 	}
 	else
 	{
