@@ -213,7 +213,7 @@ function tab_properties_background()
 			
 			// Sun angle
 			tab_control_dragger()
-			draw_dragger("backgroundskysunangle", dx, dy, dragger_width, background_sky_sun_angle, 0.1, -no_limit, no_limit, 0, 1, tab.background.tbx_sky_sun_angle, action_background_sky_sun_angle)
+			draw_dragger("backgroundskysunangle", dx, dy, dragger_width, background_sky_sun_angle, 0.1, -no_limit, no_limit, -20, 1, tab.background.tbx_sky_sun_angle, action_background_sky_sun_angle)
 			tab_next()
 			
 			// Sun scale
