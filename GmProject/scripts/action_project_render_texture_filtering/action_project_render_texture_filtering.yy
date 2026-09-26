@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_project_render_texture_filtering",
   "parent":{
-    "name":"Texture filtering",
-    "path":"folders/Scripts/App/Actions/Project/Render/Texture filtering.yy",
+    "name":"Graphics",
+    "path":"folders/Scripts/App/Actions/Project/Render/Graphics.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

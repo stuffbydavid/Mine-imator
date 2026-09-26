@@ -4,7 +4,7 @@ function settings_startup()
 {
 	trial_startup()
 	
-	setting_advanced_mode = dev_mode_advanced
+	setting_advanced_mode = debug_advanced
 	
 	setting_minecraft_assets_version = minecraft_assets_version
 	setting_minecraft_assets_new_version = ""
@@ -36,7 +36,7 @@ function settings_startup()
 	setting_watermark_opacity = 1
 	
 	setting_theme = theme_light // TODO: Community/Discord poll to restore theme_classic for 2.1
-	if (dev_mode_dark_theme)
+	if (debug_dark_theme)
 		setting_theme = theme_dark
 	
 	setting_accent = 3
@@ -73,6 +73,7 @@ function settings_startup()
 	setting_bench_height = bench_initial_height
 	
 	setting_properties_location = "right"
+	setting_renderer_settings_location = "right_secondary"
 	setting_ground_editor_location = "right_secondary"
 	setting_object_editor_location = "right_secondary"
 	setting_build_mode_location = "right_secondary"
@@ -121,16 +122,15 @@ function settings_startup()
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30
 	setting_export_movie_framespersecond = 30
-	setting_export_movie_bit_rate = 2500000
+	setting_export_movie_renderer = trial_version ? e_renderer.STANDARD : e_renderer.REALISTIC
 	setting_export_movie_include_audio = true
 	setting_export_movie_remove_background = false
 	setting_export_movie_include_hidden = false
-	setting_export_movie_high_quality = true
 	setting_export_movie_watermark = trial_version
 	
 	setting_export_image_remove_background = false
 	setting_export_image_include_hidden = false
-	setting_export_image_high_quality = true
+	setting_export_image_renderer = trial_version ? e_renderer.STANDARD : e_renderer.REALISTIC
 	setting_export_image_watermark = trial_version
 	
 	project_render_pass = e_render_pass.COMBINED

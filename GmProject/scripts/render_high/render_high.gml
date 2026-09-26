@@ -3,23 +3,32 @@
 
 function render_high()
 {
-	var starttime, samplestart, sampleend;
+	render_alpha_hash = render_alpha_hash_allowed && project_render_alpha_mode
+	if (!render_use_samples && renderer_current = e_renderer.REALISTIC)
+	{
+		ds_map_clear(render_shadow_cache_ready)
+		render_gbuffers_cache_ready = false
+	}
 	
-	starttime = current_time
-	render_surface_time = 0
-	render_update_samples()
-	
-	render_alpha_hash = project_render_alpha_mode
-	
-	if (render_samples_done)
+	var samplestart, sampleend;
+	if (!render_use_samples)
 	{
 		samplestart = 0
-		sampleend = 0
+		sampleend = 1
 	}
 	else
 	{
-		samplestart = render_samples - 1
-		sampleend = render_samples
+		render_update_samples()
+		if (render_samples_done)
+		{
+			samplestart = 0
+			sampleend = 0
+		}
+		else
+		{
+			samplestart = render_samples - 1
+			sampleend = render_samples
+		}
 	}
 	
 	// Render
@@ -28,11 +37,11 @@ function render_high()
 		render_sample_current = s
 		random_set_seed(render_sample_current)
 		
-		// Update TAA jitter
-		render_high_update_taa()
+		// Update random jitter
+		render_high_update_jitter()
 		
 		// Create render passes
-		render_high_passes()
+		render_high_create_gbuffers()
 		
 		// Shadows
 		if (render_shadows)
@@ -54,24 +63,35 @@ function render_high()
 		if (render_reflections)
 			render_high_reflections(finalsurf)
 		
-		finalsurf = render_high_tonemap(finalsurf)
-		
-		// Minecraft fog
+		// Fog
 		if (background_fog_show)
 			render_high_fog(finalsurf)
-		
-		// Apply post scene effects (Glow, DoF, etc.)
-		render_refresh_effects(true, false)
-		finalsurf = render_post(finalsurf, true, false)
+
+		// Apply HDR effects before tonemapping (DoF, Bloom, Glow, Lens Dirt)
+		render_refresh_effects(true, true, true)
+		finalsurf = render_post(finalsurf, true, true, true)
+		finalsurf = render_high_tonemap(finalsurf)
+
+		// Finish the combined tile before assembling the all-passes grid
+		if (render_pass = e_render_pass.ALL)
+		{
+			render_refresh_effects(false, true)
+			finalsurf = render_post(finalsurf, false, true)
+		}
 		
 		// Set target
 		render_target = surface_require(render_target, render_width, render_height)
 		surface_set_target(render_target)
 		{
-			if (render_pass)
+			if (render_pass = e_render_pass.ALL)
 			{
 				draw_clear_alpha(c_black, 1)
-				draw_surface_exists(render_pass_surf, 0, 0)
+				render_pass_grid_draw(finalsurf)
+			}
+			else if (render_pass)
+			{
+				draw_clear_alpha(c_black, 1)
+				render_pass_draw(render_pass, render_pass_surf, 0, 0, render_width, render_height)
 			}
 			else
 			{
@@ -81,12 +101,14 @@ function render_high()
 		}
 		surface_reset_target()
 		
-		render_high_samples_add()
+		if (render_use_samples)
+			render_high_samples_add()
 	}
 	
-	render_high_samples_unpack()
+	if (render_use_samples)
+		render_high_samples_unpack()
 	
-	// Apply post effects (Bloom, color correction, etc.)
+	// Apply basic post-process effects
 	if (!render_pass)
 	{
 		var prevsurf;
@@ -107,6 +129,9 @@ function render_high()
 		render_refresh_effects(false, true)
 		prevsurf = render_post(prevsurf, false, true)
 		
+		if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.FXAA)
+			prevsurf = render_high_aa(prevsurf)
+		
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		
 		surface_set_target(render_target)
@@ -119,11 +144,10 @@ function render_high()
 		gpu_set_blendmode(bm_normal)
 	}
 	
-	// Reset TAA matrix
-	taa_matrix = MAT_IDENTITY
+	// Reset progressive AA matrix
+	aa_matrix = MAT_IDENTITY
 	
-	render_samples_clear = false
+	if (render_use_samples)
+		render_samples_clear = false
 	render_alpha_hash = false
-	
-	render_time = current_time - starttime - render_surface_time
 }

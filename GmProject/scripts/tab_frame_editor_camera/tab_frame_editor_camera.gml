@@ -73,6 +73,11 @@ function tab_frame_editor_camera()
 			tab_control_dragger()
 			draw_dragger("frameeditorcamerabladeangle", dx, dy, dragger_width, tl_edit.value[e_value.CAM_BLADE_ANGLE], 1, -no_limit, no_limit, 0, 0.1, tab.camera.tbx_blade_angle, action_tl_frame_cam_blade_angle)
 			tab_next()
+
+			// Blade stretch
+			tab_control_meter()
+			draw_meter("frameeditorcamerabladestretch", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLADE_STRETCH] * 100), -100, 100, 0, 1, tab.camera.tbx_blade_stretch, action_tl_frame_cam_blade_stretch)
+			tab_next()
 			
 			tab_collapse_end()
 		}
@@ -95,6 +100,27 @@ function tab_frame_editor_camera()
 				break;
 			case e_tonemapper.ACES:
 				text = text_get("frameeditorcameratonemapperaces")
+				break;
+			case e_tonemapper.UCHIMURA:
+				text = text_get("frameeditorcameratonemapperuchimura")
+				break;
+			case e_tonemapper.LOTTES:
+				text = text_get("frameeditorcameratonemapperlottes")
+				break;
+			case e_tonemapper.HABLE:
+				text = text_get("frameeditorcameratonemapperhable")
+				break;
+			case e_tonemapper.GT7_CURVE:
+				text = text_get("frameeditorcameratonemappergt7curve")
+				break;
+			case e_tonemapper.PBR_NEUTRAL:
+				text = text_get("frameeditorcameratonemapperpbrneutral")
+				break;
+			case e_tonemapper.AGX:
+				text = text_get("frameeditorcameratonemapperagx")
+				break;
+			case e_tonemapper.AGX_PUNCHY:
+				text = text_get("frameeditorcameratonemapperagxpunchy")
 				break;
 			default:
 				text = text_get("frameeditorcameratonemappernone")
@@ -233,21 +259,32 @@ function tab_frame_editor_camera()
 		
 		if (setting_advanced_mode)
 		{
-			tab_control_meter()
-			draw_meter("frameeditorcameradofblurratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100), 0, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
+			tab_control_switch()
+			draw_button_collapse("dof_bokeh", collapse_map[?"dof_bokeh"], null, true, "frameeditorcameradofbokeh")
 			tab_next()
-			
-			tab_control_meter()
-			draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 10), 0, 100, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
-			tab_next()
-			
-			tab_control_meter()
-			draw_meter("frameeditorcameradofgain", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_GAIN] * 100), 0, 200, 0, 1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
-			tab_next()
-			
-			tab_control_meter()
-			draw_meter("frameeditorcameradofthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_THRESHOLD] * 100), 0, 100, 0, 1, tab.camera.tbx_dof_threshold, action_tl_frame_cam_dof_threshold)
-			tab_next()
+
+			if (collapse_map[?"dof_bokeh"])
+			{
+				tab_collapse_start()
+
+				tab_control_meter()
+				draw_meter("frameeditorcameradofblurratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BLUR_RATIO] * 100), -100, 100, 0, 1, tab.camera.tbx_dof_blur_ratio, action_tl_frame_cam_dof_blur_ratio)
+				tab_next()
+
+				tab_control_meter()
+				draw_meter("frameeditorcameradofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_DOF_BIAS] * 10), 0, 100, 0, 1, tab.camera.tbx_dof_bias, action_tl_frame_cam_dof_bias)
+				tab_next()
+
+				tab_control_dragger()
+				draw_dragger("frameeditorcameradofthreshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_THRESHOLD] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera.tbx_dof_threshold, action_tl_frame_cam_dof_threshold)
+				tab_next()
+
+				tab_control_dragger()
+				draw_dragger("frameeditorcameradofgain", dx, dy, dragger_width, tl_edit.value[e_value.CAM_DOF_GAIN] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera.tbx_dof_gain, action_tl_frame_cam_dof_gain)
+				tab_next()
+
+				tab_collapse_end(false)
+			}
 			
 			tab_control_switch()
 			draw_button_collapse("dof_fringe", collapse_map[?"dof_fringe"], action_tl_frame_cam_dof_fringe, tl_edit.value[e_value.CAM_DOF_FRINGE], "frameeditorcameradoffringe")
@@ -313,15 +350,19 @@ function tab_frame_editor_camera()
 		tab_collapse_start()
 		
 		tab_control_dragger()
-		draw_dragger("frameeditorcamerabloomradius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_RADIUS] * 100), .1, 0, no_limit, 100, 1, tab.camera.tbx_bloom_radius, action_tl_frame_cam_bloom_radius)
+		draw_dragger("frameeditorcamerabloomradius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_RADIUS] * 100), 1, 0, no_limit, 100, 1, tab.camera.tbx_bloom_radius, action_tl_frame_cam_bloom_radius)
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger("frameeditorcamerabloomintensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_INTENSITY] * 100), .1, 0, no_limit, 40, 1, tab.camera.tbx_bloom_intensity, action_tl_frame_cam_bloom_intensity)
+		draw_dragger("frameeditorcamerabloomintensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_BLOOM_INTENSITY] * 100), 1, 0, no_limit, 40, 1, tab.camera.tbx_bloom_intensity, action_tl_frame_cam_bloom_intensity)
 		tab_next()
 		
-		tab_control_meter()
-		draw_meter("frameeditorcamerabloomthreshold", dx, dy, dw, round(tl_edit.value[e_value.CAM_BLOOM_THRESHOLD] * 100), 0, 100, 85, 1, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold)
+		tab_control_dragger()
+		draw_dragger("frameeditorcamerabloomthreshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_BLOOM_THRESHOLD], 0.01, 0, no_limit, 0.85, 0.01, tab.camera.tbx_bloom_threshold, action_tl_frame_cam_bloom_threshold)
+		tab_next()
+
+		tab_control_dragger()
+		draw_dragger("frameeditorcamerabloomtransition", dx, dy, dragger_width, tl_edit.value[e_value.CAM_BLOOM_TRANSITION], 0.01, 0, no_limit, 0.5, 0.01, tab.camera.tbx_bloom_transition, action_tl_frame_cam_bloom_transition)
 		tab_next()
 		
 		// Advanced mode only

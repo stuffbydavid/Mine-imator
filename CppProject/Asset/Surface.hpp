@@ -3,6 +3,8 @@
 #include "Render/Matrix.hpp"
 #include "Render/FrameBuffer.hpp"
 
+#define surface_rgba8unorm IntType(0)
+
 namespace CppProject
 {
 	struct AppWindow;
@@ -10,7 +12,7 @@ namespace CppProject
 	// Surface asset
 	struct Surface : Asset
 	{
-		Surface(QSize size = {}, BoolType depthBuffer = true, BoolType hdr = false);
+		Surface(QSize size = {}, IntType format = surface_rgba8unorm, BoolType depthBuffer = true);
 		~Surface();
 
 		// Returns the surface as a QImage.

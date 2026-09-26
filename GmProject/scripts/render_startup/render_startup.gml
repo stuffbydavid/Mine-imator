@@ -2,7 +2,9 @@
 
 function render_startup()
 {
-	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_time, render_surface_time,
+	globalvar renderer_current, renderer_name_list, renderer_edit;
+	
+	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_start_time, render_start_surface_time,
 			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
 			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
@@ -10,16 +12,18 @@ function render_startup()
 	
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
-			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_light_offset, render_shadow_from,
-			  render_spot_matrix, render_light_specular_strength, render_light_size;
+			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_sun_shadow_scale, render_light_offset, render_shadow_from,
+			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
-			  render_glow, render_glow_falloff, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
+			  render_glow, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
-			  render_ssao, render_shadows, render_indirect, render_reflections, render_quality, render_pass,
-			  render_tonemapper, render_exposure, render_gamma, render_depth_normals;
+			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
+			  render_tonemapper, render_exposure, render_gamma, render_auxiliary;
 	
-	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size;
+	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
+	render_use_samples = false
+	render_sun_shadow_scale = 0
 	
 	globalvar render_blend_prev, render_alpha_prev;
 	
@@ -31,7 +35,7 @@ function render_startup()
 			  shader_uniform_sss_green, shader_uniform_sss_blue, shader_uniform_sss_color, shader_uniform_glow, shader_uniform_glow_texture,
 			  shader_uniform_glow_color, shader_uniform_wind_strength;
 	
-	globalvar render_pass_surf;
+	globalvar render_pass_surf, render_pass_surfs;
 	
 	log("Render init")
 	
@@ -48,6 +52,10 @@ function render_startup()
 	gpu_set_tex_max_mip(4)
 	shader_reset_uniforms()
 	
+	renderer_current = e_renderer.QUICK
+	renderer_name_list = array("quick", "standard", "realistic")
+	renderer_edit = -1
+	
 	render_view_current = null
 	render_width = 1
 	render_height = 1
@@ -55,17 +63,16 @@ function render_startup()
 	render_camera = null
 	
 	render_light_specular_strength = 0
+	render_light_realistic_falloff = false
 	
 	render_effects = false
 	render_effects_done = false
 	render_effects_list = ds_list_create()
 	render_effects_progress = 0
-	render_quality = e_view_mode.FLAT
 	
 	render_camera_bloom = false
 	render_camera_dof = false
 	render_glow = false
-	render_glow_falloff = false
 	render_camera_ca = false
 	render_camera_distort = false
 	render_camera_color_correction = false
@@ -78,7 +85,7 @@ function render_startup()
 	render_ssao = false
 	render_shadows = false
 	render_indirect = false
-	render_depth_normals = false
+	render_auxiliary = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	render_list = ds_list_create()
@@ -88,16 +95,21 @@ function render_startup()
 	render_background = true
 	render_watermark = false
 	
-	render_time = 0
 	render_surface_time = 0
 	render_active = null
 	render_repeat = vec3(0)
 	
 	// Surfaces for rendering
-	globalvar render_target, render_surface, render_surface_hdr, render_surface_depth, render_surface_normal, render_surface_emissive, 
-			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens, 
-			  render_surface_sample_expo, render_surface_sample_dec, render_surface_sample_alpha, depth_near, depth_far, render_post_index;
-			
+	globalvar render_surface_pool_list, render_surface_pool_current,
+			  render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_low, render_surface_normal,
+			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
+			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow,
+			  render_surface_indirect_raydata, render_surface_reflections_raydata,
+			  render_surface_samples, render_surface_post, render_surface_specular_base, depth_near, depth_far, render_post_index;
+
+	render_surface_pool_list = ds_list_create()
+	render_surface_pool_current = null
+
 	render_target = null
 	render_surface[0] = null
 	render_surface[1] = null
@@ -105,76 +117,114 @@ function render_startup()
 	
 	render_surface_hdr[0] = null
 	render_surface_hdr[1] = null
-	render_surface_hdr[2] = null
+	render_surface_hdr_post[0] = null
+	render_surface_hdr_post[1] = null
+	render_surface_hdr_post[2] = null
+	for (var i = 0; i < 6; i++)
+	{
+		render_surface_blur[i] = null
+		render_surface_blur_temp[i] = null
+	}
 	
 	render_surface_depth = null
+	render_surface_depth_low = null
 	render_surface_normal = null
 	render_surface_material = null
-	render_surface_emissive = null
 	render_surface_diffuse = null
+	render_surface_mask = null
+	render_surface_indirect_raydata = null
+	render_surface_reflections_raydata = null
 	
 	render_surface_shadows = null
 	render_surface_specular = null
+	render_surface_fog = null
+	render_surface_sss = null
+	render_surface_sss_range = null
+	render_surface_glow = null
 	
 	render_surface_lens = null
 	
-	render_surface_sample_expo = null
-	render_surface_sample_dec = null
-	render_surface_sample_alpha = null 
+	render_surface_samples = null
+	render_surface_post[0] = null
+	render_surface_post[1] = null
+	render_surface_specular_base = null
 	
 	depth_near = clip_near
 	depth_far = 5000
 	render_post_index = 0
 	
 	render_world_count = 0
+
+	render_gamma = 1
 	
-	// "Temporal" anti-aliasing
-	globalvar taa_matrix, taa_jitter_matrix;
-	taa_matrix = MAT_IDENTITY
-	taa_jitter_matrix = MAT_IDENTITY
+	render_gamma = 1
 	
-	// Alpha hashsing
-	globalvar render_alpha_hash, render_alpha_hash_force;
+	// Progressive anti-aliasing
+	globalvar aa_matrix, aa_jitter_matrix;
+	aa_matrix = MAT_IDENTITY
+	aa_jitter_matrix = MAT_IDENTITY
+	
+	// Alpha hashing
+	globalvar render_alpha_hash, render_alpha_hash_force, render_alpha_hash_allowed, render_alpha_hash_shadows;
 	render_alpha_hash = false
 	render_alpha_hash_force = false // If enabled, forces scene objects to use hashing based on render_alpha_hash
+	render_alpha_hash_allowed = false
+	render_alpha_hash_shadows = false
+	render_alpha_hashed_count = 0
 	
 	// Noise sampling
-	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array;
+	project_render_dof_quality = 16
+	project_render_dof_realistic_blur = false
+	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array,
+			  render_pcss_kernel, render_pcss_kernel_rotated, render_pcss_quality_prev;
 	render_sample_noise_texture = null
 	render_sample_noise_size = 128
 	render_sample_noise_texture_array = []
+	render_pcss_kernel = render_generate_progressive_disk_samples(4, 0)
+	render_pcss_kernel_rotated = render_pcss_kernel
+	render_pcss_quality_prev = -1
 	
 	// Shadows
 	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_spot_buffer, 
-	render_surface_point_buffer, render_surface_point_atlas_buffer;
+	render_surface_point_buffer, render_surface_point_atlas_buffer, render_shadow_cache, render_shadow_cache_ready, render_shadow_cache_enabled;
 	
+	project_render_shadows_jittered = false
+	project_render_shadows_sun_cascades = 3
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
 	render_surface_spot_buffer = null
 	render_surface_point_buffer = null
 	render_surface_point_atlas_buffer = null
+	render_shadow_cache = null
+	render_shadow_cache_ready = null
+	render_shadow_cache_enabled = false
+	globalvar render_gbuffers_cache_enabled, render_gbuffers_cache_ready;
+	render_gbuffers_cache_enabled = false
+	render_gbuffers_cache_ready = false
 	
 	// SSAO
 	globalvar render_ssao_kernel;
 	render_ssao_kernel = render_generate_sample_kernel(12)
 	
+	// Raytracing
+	globalvar render_raytrace_kernel;
+	render_raytrace_kernel = render_generate_resolve_kernel(1)
+	
 	// DOF
-	globalvar render_dof_samples, render_dof_weight_samples, render_dof_sample_amount;
+	globalvar render_dof_samples, render_dof_weight_samples, render_dof_area_samples, render_dof_sample_amount, render_dof_blade_rounding;
+	render_dof_blade_rounding = .25
 	
 	// Grain
 	globalvar render_grain_noise;
 	render_grain_noise = null
 	
 	// Subsurface
-	globalvar render_subsurface_size, render_subsurface_kernel, render_blur_kernel;
-	render_subsurface_size = (16 * 2) + 1
-	render_subsurface_kernel = render_generate_gaussian_kernel(render_subsurface_size)
+	globalvar render_subsurface_kernel, render_blur_kernel;
+	render_subsurface_kernel = render_generate_progressive_disk_kernel(32, 0)
 	render_blur_kernel = render_generate_gaussian_kernel(19)
 	
 	globalvar render_samples_clear;
 	render_samples_clear = false
-	
-	
 	
 	// Render samples
 	render_samples = 0
@@ -184,6 +234,7 @@ function render_startup()
 	
 	// Render pass surf
 	render_pass_surf = null
+	render_pass_surfs = array_create(e_render_pass.amount, null)
 	
 	render_blend_prev = null
 	render_alpha_prev = null
@@ -215,7 +266,6 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.ALPHA_FIX] = shader_alpha_fix
 	render_mode_shader_map[?e_render_mode.ALPHA_TEST] = shader_alpha_test
 	render_mode_shader_map[?e_render_mode.DEPTH] = shader_depth
-	render_mode_shader_map[?e_render_mode.DEPTH_NO_SKY] = shader_depth
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_DEPTH] = shader_depth_ortho
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT_DEPTH] = shader_depth
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_DEPTH] = shader_depth_point
@@ -224,28 +274,108 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT] = shader_high_light_point
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS] = shader_high_light_point_shadowless
 	render_mode_shader_map[?e_render_mode.HIGH_FOG] = shader_high_fog
-	render_mode_shader_map[?e_render_mode.COLOR_GLOW] = shader_color_glow
 	render_mode_shader_map[?e_render_mode.SCENE_TEST] = shader_replace_alpha
-	render_mode_shader_map[?e_render_mode.AO_MASK] = shader_replace
-	render_mode_shader_map[?e_render_mode.HIGH_DEPTH_NORMAL] = shader_high_depth_normal
+	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
+	render_mode_shader_map[?e_render_mode.AUXILIARY] = shader_high_auxiliary
 	render_mode_shader_map[?e_render_mode.PLACE] = shader_place
-	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
-	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
-	render_mode_shader_map[?e_render_mode.GLINT] = shader_high_glint
 	
-	// Init settings
-	project_reset_render()
+	// Load default render settings
+	globalvar render_default_settings;
+	render_default_settings = new_obj(obj_render_preset);
 	
-	// Check for default render settings file
-	if (!file_exists_lib(render_default_file))
+	with (render_default_settings)
 	{
-		if (!directory_exists_lib(render_directory))
-			directory_create_lib(render_directory)
-		
-		project_save_start(render_default_file, false)
-		project_save_render()
-		project_save_done()
-	
-		log("Saved default render settings", render_default_file)
+		has_standard = true
+		has_realistic = true
+		has_fx = true
+		has_graphics = true
+		has_materials = true
+		if (file_exists(render_default_file))
+			render_preset_load(render_default_file, false)
 	}
+			
+	// Load default render presets
+	globalvar render_preset_list, render_preset_map, render_preset_edit;
+	render_preset_list[e_renderer.STANDARD] = ds_list_create()
+	render_preset_list[e_renderer.REALISTIC] = ds_list_create()
+	render_preset_map = ds_map_create()
+	render_preset_edit = null
+	
+	for (var i = 0; i < array_length(render_presets); i++)
+	{
+		var file = render_presets[i];
+		if (!file_exists(render_directory + file))
+			continue
+		
+		var preset, loaded;
+		preset = new_obj(obj_render_preset)
+		preset.file = file
+		with (preset)
+			loaded = render_preset_load(render_directory + file)
+			
+		if (loaded)
+		{
+			render_preset_map[?file] = preset
+			if (preset.has_standard)
+				ds_list_add(render_preset_list[e_renderer.STANDARD], file)
+			if (preset.has_realistic)
+				ds_list_add(render_preset_list[e_renderer.REALISTIC], file)
+		}
+		else
+			instance_destroy(preset)
+	}
+	
+	// Load additional render presets from folder
+	var file = file_find_first(render_directory + "*.mirender", 0);
+	while (file != "")
+	{
+		if (!array_contains(render_presets, file))
+		{
+			var preset, loaded;
+			preset = new_obj(obj_render_preset)
+			preset.file = file
+			
+			with (preset)
+				loaded = render_preset_load(render_directory + file)
+			
+			if (loaded)
+			{
+				render_preset_map[?file] = preset
+				if (preset.has_standard)
+					ds_list_add(render_preset_list[e_renderer.STANDARD], file)
+				if (preset.has_realistic)
+					ds_list_add(render_preset_list[e_renderer.REALISTIC], file)
+			}
+			else
+				instance_destroy(preset)
+		}
+		
+		file = file_find_next()
+	}
+	
+	// Check for missing default preset
+	if (!ds_map_exists(render_preset_map, render_preset_default))
+	{
+		var defaultpreset = new_obj(obj_render_preset);
+		defaultpreset.file = render_preset_default
+		defaultpreset.name = render_preset_default_name
+		defaultpreset.has_standard = true
+		defaultpreset.has_realistic = true
+		
+		render_preset_map[?render_preset_default] = defaultpreset
+		ds_list_add(render_preset_list[e_renderer.STANDARD], render_preset_default)
+		ds_list_add(render_preset_list[e_renderer.REALISTIC], render_preset_default)
+	}
+	
+	// Add custom preset
+	var custompreset = new_obj(obj_render_preset);
+	custompreset.file = "custom"
+	custompreset.name = "custom"
+	custompreset.locked = false
+	custompreset.has_standard = true
+	custompreset.has_realistic = true
+	
+	render_preset_map[?"custom"] = custompreset
+	ds_list_add(render_preset_list[e_renderer.STANDARD], "custom")
+	ds_list_add(render_preset_list[e_renderer.REALISTIC], "custom")
 }

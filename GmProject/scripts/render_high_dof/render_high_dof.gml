@@ -1,25 +1,9 @@
 /// render_high_dof(basesurf)
 /// @arg basesurf
 
-function render_high_dof(prevsurf)
+function render_high_dof(prevsurf, hdr = false)
 {
-	var depthsurf, cocsurf, resultsurf;
-	
-	// Get depth
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	depthsurf = render_surface[0]
-	surface_set_target(depthsurf)
-	{
-		gpu_set_blendmode_ext(bm_one, bm_zero)
-		
-		draw_clear(c_white)
-		render_world_start()
-		render_world(e_render_mode.DEPTH)
-		render_world_done()
-		
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
+	var cocsurf, resultsurf;
 
 	// Create CoC buffer from depth
 	render_surface[1] = surface_require(render_surface[1], render_width, render_height)
@@ -32,28 +16,25 @@ function render_high_dof(prevsurf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_dof_coc_set(depthsurf)
+			shader_high_dof_coc_set(render_surface_depth)
 		}
 		draw_blank(0, 0, render_width, render_height)
-		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
 			shader_clear()
 	}
 	surface_reset_target()
 	
-	// Blur CoC buffer to bleed edges
+	// Blur near CoC to bleed foreground edges
 	gpu_set_texrepeat(false)
-	repeat (16)
+	gpu_set_texfilter(true)
 	{
-		var cocsurftemp;
 		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		cocsurftemp = render_surface[2]
+		var cocsurftemp = render_surface[2]
 		
 		render_shader_obj = shader_map[?shader_high_dof_coc_blur]
 		with (render_shader_obj)
 			shader_set(shader)
 		
-		// Horizontal
 		surface_set_target(cocsurftemp)
 		{
 			with (render_shader_obj)
@@ -61,8 +42,6 @@ function render_high_dof(prevsurf)
 			draw_surface_exists(cocsurf, 0, 0)
 		}
 		surface_reset_target()
-		
-		// Vertical
 		surface_set_target(cocsurf)
 		{
 			with (render_shader_obj)
@@ -74,10 +53,11 @@ function render_high_dof(prevsurf)
 		with (render_shader_obj)
 			shader_clear()
 	}
+	gpu_set_texfilter(false)
 	gpu_set_texrepeat(true)
-	
+
 	// Render directly to target?
-	resultsurf = render_high_get_apply_surf()
+	resultsurf = render_high_get_apply_surf(hdr)
 	
 	// Apply DOF
 	surface_set_target(resultsurf)

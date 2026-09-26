@@ -1,0 +1,117 @@
+/// render_preset_copy(to, allsettings)
+/// @arg to
+/// @arg allsettings
+/// @desc Copies the selected settings into the given preset
+
+function render_preset_copy(to, allsettings = false)
+{
+	var fromset, toset;
+
+	if (has_standard || allsettings)
+	{
+		fromset = renderer[e_renderer.STANDARD]
+		toset = to.renderer[e_renderer.STANDARD]
+		to.has_standard = has_standard
+		toset.ssao = fromset.ssao
+		toset.shadows = fromset.shadows
+		toset.dof_quality = fromset.dof_quality
+		toset.dof_realistic_blur = fromset.dof_realistic_blur
+		toset.shadows_blur_quality = fromset.shadows_blur_quality
+		toset.shadows_sun_cascades = fromset.shadows_sun_cascades
+		toset.shadows_sun_buffer_size = fromset.shadows_sun_buffer_size
+		toset.shadows_spot_buffer_size = fromset.shadows_spot_buffer_size
+		toset.shadows_point_buffer_size = fromset.shadows_point_buffer_size
+		toset.glow = fromset.glow
+		toset.aa = fromset.aa
+		toset.aa_power = fromset.aa_power
+	}
+	
+	if (has_realistic || allsettings)
+	{
+		fromset = renderer[e_renderer.REALISTIC]
+		toset = to.renderer[e_renderer.REALISTIC]
+		to.has_realistic = has_realistic
+		toset.samples = fromset.samples
+		toset.ssao = fromset.ssao
+		toset.shadows = fromset.shadows
+		toset.dof_quality = fromset.dof_quality
+		toset.shadows_blur_quality = fromset.shadows_blur_quality
+		toset.shadows_sun_cascades = fromset.shadows_sun_cascades
+		toset.shadows_sun_buffer_size = fromset.shadows_sun_buffer_size
+		toset.shadows_spot_buffer_size = fromset.shadows_spot_buffer_size
+		toset.shadows_point_buffer_size = fromset.shadows_point_buffer_size
+		toset.shadows_jittered = fromset.shadows_jittered
+		toset.shadows_transparent = fromset.shadows_transparent
+		toset.subsurface_samples = fromset.subsurface_samples
+		toset.indirect = fromset.indirect
+		toset.indirect_precision = fromset.indirect_precision
+		toset.indirect_resolution = fromset.indirect_resolution
+		toset.indirect_bounces = fromset.indirect_bounces
+		toset.reflections = fromset.reflections
+		toset.reflections_precision = fromset.reflections_precision
+		toset.reflections_resolution = fromset.reflections_resolution
+		toset.reflections_bounces = fromset.reflections_bounces
+		toset.glow = fromset.glow
+		toset.aa = fromset.aa
+		toset.aa_mode = fromset.aa_mode
+		toset.aa_power = fromset.aa_power
+	}
+	
+	if (has_fx || allsettings)
+	{
+		to.has_fx = has_fx
+		to.ssao_radius = ssao_radius
+		to.ssao_power = ssao_power
+		to.ssao_blur_passes = ssao_blur_passes
+		to.ssao_color = ssao_color
+		to.ssao_always_visible = ssao_always_visible
+		to.glow_radius = glow_radius
+		to.glow_intensity = glow_intensity
+		to.glint_speed = glint_speed
+		to.glint_strength = glint_strength
+		to.tonemapper = tonemapper
+		to.exposure = exposure
+		to.gamma = gamma
+
+		fromset = renderer[e_renderer.STANDARD]
+		toset = to.renderer[e_renderer.STANDARD]
+		toset.shadows_blur_size = fromset.shadows_blur_size
+
+		fromset = renderer[e_renderer.REALISTIC]
+		toset = to.renderer[e_renderer.REALISTIC]
+		toset.subsurface_backlight_spread = fromset.subsurface_backlight_spread
+		toset.subsurface_backlight_strength = fromset.subsurface_backlight_strength
+		toset.subsurface_bright_backlight = fromset.subsurface_bright_backlight
+		toset.indirect_blur_radius = fromset.indirect_blur_radius
+		toset.indirect_strength = fromset.indirect_strength
+		toset.reflections_thickness = fromset.reflections_thickness
+		toset.reflections_fade_amount = fromset.reflections_fade_amount
+	}
+
+	if (has_graphics || allsettings)
+	{
+		to.has_graphics = has_graphics
+		to.render_distance = render_distance
+		to.texture_filtering = texture_filtering
+		to.transparent_block_texture_filtering = transparent_block_texture_filtering
+		to.texture_filtering_level = texture_filtering_level
+		to.bend_style = bend_style
+		to.opaque_leaves = opaque_leaves
+		to.liquid_animation = liquid_animation
+		to.alpha_mode = alpha_mode
+	}
+
+	if (has_materials || allsettings)
+	{
+		to.has_materials = has_materials
+		to.block_emissive = block_emissive
+		to.block_subsurface = block_subsurface
+		to.water_reflections = water_reflections
+		to.water_roughness = water_roughness
+		to.water_wave_strength = water_wave_strength
+		to.water_wave_speed = water_wave_speed
+		to.water_wave_scale = water_wave_scale
+		to.water_wave_detail = water_wave_detail
+		to.material_maps = material_maps
+	}
+}

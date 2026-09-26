@@ -32,7 +32,7 @@ function render_world_tl()
 	}
 	
 	// Only render glow effect?
-	if ((glow && only_render_glow) && render_mode != e_render_mode.COLOR_GLOW)
+	if ((glow && only_render_glow) && render_mode != e_render_mode.AUXILIARY)
 		return 0
 	
 	// Not registered on shadow depth testing?
@@ -99,8 +99,8 @@ function render_world_tl()
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
-	if (render_mode = e_render_mode.AO_MASK)
-		render_set_uniform_color("uReplaceColor", ssao ? merge_color(c_black, c_white, shader_blend_alpha) : c_black, 1)
+	if (render_mode = e_render_mode.G_BUFFERS)
+		render_set_uniform("uSSAO", ssao ? shader_blend_alpha : 0)
 	
 	if (colors_ext != shader_uniform_color_ext ||
 		value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
@@ -131,7 +131,7 @@ function render_world_tl()
 	
 	if (!render_alpha_hash_force)
 	{
-		render_alpha_hash = (alpha_mode = e_alpha_mode.DEFAULT ? app.project_render_alpha_mode : alpha_mode)
+		render_alpha_hash = render_alpha_hash_allowed && (alpha_mode = e_alpha_mode.DEFAULT ? app.project_render_alpha_mode : alpha_mode)
 		render_set_uniform_int("uAlphaHash", render_alpha_hash)
 	}
 	
@@ -165,9 +165,10 @@ function render_world_tl()
 		render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
 	}
 	
-	if ((app.background_fog_show && fog) != shader_uniform_fog)
+	var renderfog = app.background_fog_show && fog && render_mode != e_render_mode.COLOR;
+	if (renderfog != shader_uniform_fog)
 	{
-		shader_uniform_fog = (app.background_fog_show && fog)
+		shader_uniform_fog = renderfog
 		render_set_uniform_int("uFogShow", shader_uniform_fog)
 	}
 	
@@ -213,6 +214,9 @@ function render_world_tl()
 	}
 	
 	// Glow
+	var glowonlycombined = glow && only_render_glow && render_mode = e_render_mode.AUXILIARY;
+	render_set_uniform_int("uOnlyRenderGlow", glowonlycombined)
+
 	if (glow != shader_uniform_glow ||
 		glow_texture != shader_uniform_glow_texture ||
 		value_inherit[e_value.GLOW_COLOR] != shader_uniform_glow_color)
@@ -226,12 +230,6 @@ function render_world_tl()
 			render_set_uniform_int("uGlow", 1)
 			render_set_uniform_int("uGlowTexture", glow_texture)
 			render_set_uniform_color("uGlowColor", shader_uniform_glow_color, 1)
-			
-			if (only_render_glow)
-			{
-				prevblend = gpu_get_blendmode()
-				gpu_set_blendmode(bm_add)
-			}
 		}
 		else
 		{
@@ -240,6 +238,15 @@ function render_world_tl()
 			render_set_uniform_color("uGlowColor", c_black, 0)
 		}
 	}
+
+	if (glow && only_render_glow)
+	{
+		prevblend = gpu_get_blendmode()
+		gpu_set_blendmode(bm_add)
+	}
+
+	if (glowonlycombined)
+		gpu_set_zwriteenable(false)
 	
 	// Glint mode
 	var tex, spd, glintres;
@@ -417,4 +424,7 @@ function render_world_tl()
 	
 	if (prevblend != null)
 		gpu_set_blendmode(prevblend)
+
+	if (glowonlycombined)
+		gpu_set_zwriteenable(true)
 }

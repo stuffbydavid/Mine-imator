@@ -67,7 +67,7 @@ function settings_load()
 			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
 			game_set_speed(gamespeed_fps, targetfps)
 			
-			if (!dev_mode)
+			if (!debug_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()
@@ -161,6 +161,7 @@ function settings_load()
 			setting_bench_height = max(bench_initial_height, value_get_real(interfacemap[?"bench_height"], setting_bench_height))
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
+			setting_renderer_settings_location = value_get_string(interfacemap[?"renderer_settings_location"], setting_renderer_settings_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
 			setting_object_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_object_editor_location) // Legacy
 			setting_object_editor_location = value_get_string(interfacemap[?"object_editor_location"], setting_object_editor_location)
@@ -286,12 +287,5 @@ function settings_load()
 			ds_list_merge(setting_world_import_filter_list, worldimportmap[?"filter_list"])
 			setting_world_import_unload_regions = value_get_real(worldimportmap[?"unload_regions"], setting_world_import_unload_regions)
 		}
-	}
-	
-	// Legacy
-	else
-	{
-		settings_load_legacy(fn)
-		settings_load_legacy_recent(data_directory + "recent.file")
 	}
 }

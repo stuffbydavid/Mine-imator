@@ -5,7 +5,7 @@
 function action_project_render_glint_speed(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_glint_speed, project_render_glint_speed, project_render_glint_speed * add + val / 100, 1)
+		history_set_var(action_project_render_glint_speed, project_render_glint_speed, project_render_glint_speed * add + val / 100, true)
 	else
 		val *= 100
 	

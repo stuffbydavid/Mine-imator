@@ -76,7 +76,11 @@ function temp_update_model(copy = false)
 			curpatterntype = pattern_type
 			
 			if (texture_name_map != null)
+			{
 				ds_map_merge(temptexnamemap, texture_name_map)
+				ds_map_merge(temptexmatnamemap, texture_name_map)
+				ds_map_merge(temptexnormnamemap, texture_name_map)
+			}
 			
 			if (states_map != null)
 			{

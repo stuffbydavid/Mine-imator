@@ -12,7 +12,7 @@ function language_load(fn, map, reload = false)
 	if (filename_ext(fn) = ".milanguage")
 	{
 		// Convert unicode (external)
-		var convfn = file_directory + "conv.tmp";
+		var convfn = file_directory_get() + "conv.tmp";
 		json_file_convert_unicode(fn, convfn)
 		
 		if (!file_exists_lib(convfn))
@@ -67,7 +67,7 @@ function language_load(fn, map, reload = false)
 			log(msg)
 			
 			window_set_caption("Error")
-			show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file)
+			show_message("Some texts are missing in the translation and will display as English. See the log for details:\n" + log_file_get())
 			window_set_caption("Mine-imator")
 		}
 	}

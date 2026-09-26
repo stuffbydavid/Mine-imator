@@ -67,6 +67,11 @@ function enums()
 		FORMAT_200			= 29
 	}
 	
+	enum e_render_settings
+	{
+		FORMAT_210			= 35
+	}
+	
 	enum e_minecraft_assets
 	{
 		FORMAT_110_PRE_1	= 1,
@@ -180,6 +185,7 @@ function enums()
 		CAM_FOV,
 		CAM_BLADE_AMOUNT,
 		CAM_BLADE_ANGLE,
+		CAM_BLADE_STRETCH,
 		CAM_LIGHT_MANAGEMENT,
 		CAM_TONEMAPPER,
 		CAM_EXPOSURE,
@@ -214,6 +220,7 @@ function enums()
 		CAM_DOF_FRINGE_BLUE,
 		CAM_BLOOM,
 		CAM_BLOOM_THRESHOLD,
+		CAM_BLOOM_TRANSITION,
 		CAM_BLOOM_INTENSITY,
 		CAM_BLOOM_RADIUS,
 		CAM_BLOOM_RATIO,
@@ -259,6 +266,7 @@ function enums()
 		BG_SKY_TIME,
 		BG_SKY_ROTATION,
 		BG_SUNLIGHT_STRENGTH,
+		BG_SUNLIGHT_SPECULAR_STRENGTH,
 		BG_SUNLIGHT_ANGLE,
 		BG_SKY_SUN_ANGLE,
 		BG_SKY_SUN_SCALE,
@@ -307,6 +315,7 @@ function enums()
 		BG_WIND_DIRECTIONAL_SPEED,
 		BG_WIND_DIRECTIONAL_STRENGTH,
 		BG_TEXTURE_ANI_SPEED,
+		BG_BRIGHTNESS,
 		TEXTURE_OBJ,
 		TEXTURE_MATERIAL_OBJ,
 		TEXTURE_NORMAL_OBJ,
@@ -900,7 +909,6 @@ function enums()
 		ALPHA_FIX,
 		ALPHA_TEST,
 		DEPTH,
-		DEPTH_NO_SKY,
 		HIGH_LIGHT_SUN_DEPTH,
 		HIGH_LIGHT_SPOT_DEPTH,
 		HIGH_LIGHT_POINT_DEPTH,
@@ -909,22 +917,26 @@ function enums()
 		HIGH_LIGHT_POINT,
 		HIGH_LIGHT_POINT_SHADOWLESS,
 		HIGH_FOG,
-		COLOR_GLOW,
 		SCENE_TEST,
-		HIGH_DEPTH_NORMAL,
-		PLACE,
-		AO_MASK,
-		MATERIAL,
-		SUBSURFACE,
-		GLINT
+		G_BUFFERS,
+		AUXILIARY,
+		PLACE
 	}
 	
-	// Viewport render mode
-	enum e_view_mode
+	// Renderer
+	enum e_renderer
 	{
-		FLAT,
-		SHADED,
-		RENDER
+		QUICK,
+		STANDARD,
+		REALISTIC,
+		COMMON
+	}
+
+	// Anti-aliasing
+	enum e_aa_mode
+	{
+		PROGRESSIVE,
+		FXAA
 	}
 	
 	// Menus
@@ -1171,6 +1183,9 @@ function enums()
 	enum e_render_pass
 	{
 		COMBINED,
+		DEPTH,
+		NORMAL,
+		MATERIAL,
 		DIFFUSE,
 		SPECULAR,
 		AO,
@@ -1178,9 +1193,19 @@ function enums()
 		INDIRECT,
 		INDIRECT_SHADOWS,
 		REFLECTIONS,
-		DEPTH_U24,
-		NORMAL,
-		MATERIAL,
+		FOG,
+		MASK,
+		GLOW,
+		SUBSURFACE,
+		SUBSURFACE_RANGE,
+		EMISSIVE,
+		ROUGHNESS,
+		METALLIC,
+		FRESNEL,
+		SSAO_MASK,
+		BLOOM_THRESHOLD,
+		BLOOM_BLUR,
+		ALL,
 		amount
 	}
 
@@ -1208,12 +1233,14 @@ function enums()
 		amount
 	}
 
-	// Raytracing type
-	enum e_raytrace
+	enum e_surface_format
 	{
-		REFLECTIONS,
-		INDIRECT,
-		SHADOWS_DIRECTIONAL
+		rgba8unorm,
+		rgba32float,
+		r32float,
+		r8unorm,
+		r16float,
+		rgba16float
 	}
 	
 	// Material map format
@@ -1245,7 +1272,14 @@ function enums()
 	{
 		NONE,
 		REINHARD,
-		ACES
+		ACES,
+		UCHIMURA,
+		LOTTES,
+		HABLE,
+		GT7_CURVE,
+		PBR_NEUTRAL,
+		AGX,
+		AGX_PUNCHY
 	}
 	
 	// Window

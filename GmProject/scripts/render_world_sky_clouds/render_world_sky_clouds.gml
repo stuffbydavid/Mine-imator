@@ -3,11 +3,14 @@
 
 function render_world_sky_clouds()
 {
-	if (!background_sky_clouds_show || !render_background || render_mode = e_render_mode.DEPTH_NO_SKY)
+	if (!background_sky_clouds_show || !render_background)
 		return 0
 	
-	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
+	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_black, 1)
+
+	if (render_mode = e_render_mode.G_BUFFERS)
+		render_set_uniform("uSSAO", 0)
 	
 	var res = res_eval(background_sky_clouds_tex);
 	// Shading

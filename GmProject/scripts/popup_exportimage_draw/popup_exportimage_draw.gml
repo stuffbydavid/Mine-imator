@@ -2,6 +2,13 @@
 
 function popup_exportimage_draw()
 {
+	var text;
+	
+	// Renderer
+	tab_control_menu()
+	draw_button_menu("exportimagerenderer", e_menu.LIST, dx, dy, dw, 24, popup.renderer, text_get("renderrenderer" + renderer_name_list[popup.renderer]), action_toolbar_export_renderer)
+	tab_next()
+	
 	// Video size
 	if (project_video_template = 0)
 		text = text_get("projectvideosizecustom")
@@ -31,7 +38,7 @@ function popup_exportimage_draw()
 	
 	// Remove background
 	tab_control_checkbox()
-	draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_exportimage_remove_background)
+	draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_export_remove_background)
 	tab_next()
 	
 	if (popup.remove_background)
@@ -39,17 +46,12 @@ function popup_exportimage_draw()
 	
 	// Include hidden
 	tab_control_checkbox()
-	draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_exportimage_include_hidden)
-	tab_next()
-	
-	// High quality
-	tab_control_checkbox()
-	draw_checkbox("exportimagehighquality", dx, dy, popup.high_quality, action_toolbar_exportimage_high_quality)
+	draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_export_include_hidden)
 	tab_next()
 	
 	// Watermark
 	tab_control_checkbox()
-	draw_checkbox("exportimagewatermark", dx, dy, popup.watermark, action_toolbar_exportimage_watermark)
+	draw_checkbox("exportimagewatermark", dx, dy, popup.watermark, action_toolbar_export_watermark)
 	tab_next()
 	
 	// Save

@@ -353,7 +353,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 				backalpha = .25
 			}
 			
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				name += " [" + string(tl.save_id) + "]"
 			
 			if (name != "")

@@ -22,6 +22,8 @@ You can open `GmProject/Mine-imator.yyp` directly in GameMaker-LTS2026 for devel
 * No cached scenery loading
 * No drag-n-drop support for files into Mine-imator
 * No multi-window support for secondary views
-* No "Cancel" option when closing the application
+* No "Cancel" option when closing Mine-imator
+
+You will see "Project Directory Modified" warnings when running due to the "Shady.gml" shader plugin, disable this via File > Preferences > General Settings > Turn on "Automatically reload changed files"
 
 To support all features you must prepare and compile the C++ project. For full build instructions, see `BUILD.md`.

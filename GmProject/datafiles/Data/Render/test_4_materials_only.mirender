@@ -1,0 +1,12 @@
+{
+	"format": 35,
+	"created_in": "2.1",
+	"render": {
+		"materials": {
+			"block_emissive": 2,
+			"block_subsurface": 8,
+			"water_reflections": true,
+			"material_maps": true
+		}
+	}
+}

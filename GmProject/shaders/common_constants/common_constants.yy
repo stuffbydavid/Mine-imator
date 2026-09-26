@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"common_constants",
+  "name":"common_constants",
+  "parent":{
+    "name":"common",
+    "path":"folders/Shaders/common.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

@@ -5,7 +5,7 @@
 function action_project_render_reflections_thickness(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_reflections_thickness, project_render_reflections_thickness, project_render_reflections_thickness * add + val, 1)
+		history_set_var(action_project_render_reflections_thickness, project_render_reflections_thickness, project_render_reflections_thickness * add + val, true)
 	
 	project_render_reflections_thickness = project_render_reflections_thickness * add + val
 	render_samples = -1

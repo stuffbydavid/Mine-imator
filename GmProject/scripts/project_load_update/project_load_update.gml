@@ -3,19 +3,6 @@
 
 function project_load_update()
 {
-	// Doesn't use custom render settings
-	if (project_render_settings != "") 
-	{
-		// Load file
-		if (file_exists(render_directory + project_render_settings + ".mirender"))
-			action_load_render_settings(render_directory + project_render_settings + ".mirender")
-		else // Doesn't exist, set render settings to program default
-		{
-			project_render_settings = render_default
-			action_load_render_settings(render_default_file)
-		}
-	}
-	
 	// Load resources
 	with (obj_resource)
 		if (loaded)

@@ -402,16 +402,16 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		{
 			render_set_texture(texani)
 			render_set_uniform_color("uBlendColor", color_multiply(blend, res[e_texture_channel.DIFFUSE].color_water), shader_blend_alpha)
-			render_set_uniform_int("uIsWater", 1)
+			render_set_uniform_int("uIsWater", app.project_render_water_reflections)
 			
 			if (app.project_render_water_reflections) // Default water reflections provided by MI
 			{
 				render_set_texture(spr_default_material, "Material")
 				render_set_texture(spr_default_normal, "Normal")
 				
-				if (shader_uniform_roughness != .07)
+				if (shader_uniform_roughness != app.project_render_water_roughness)
 				{
-					shader_uniform_roughness = .07
+					shader_uniform_roughness = app.project_render_water_roughness
 					render_set_uniform("uRoughness", shader_uniform_roughness)
 				}
 				

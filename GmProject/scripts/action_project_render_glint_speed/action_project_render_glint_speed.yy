@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_project_render_glint_speed",
   "parent":{
-    "name":"Models & scenery",
-    "path":"folders/Scripts/App/Actions/Project/Render/Models & scenery.yy",
+    "name":"Glint",
+    "path":"folders/Scripts/App/Actions/Project/Render/Glint.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

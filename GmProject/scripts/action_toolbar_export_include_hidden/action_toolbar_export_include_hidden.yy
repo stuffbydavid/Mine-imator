@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_toolbar_export_include_hidden",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_toolbar_export_include_hidden",
+  "parent":{
+    "name":"Toolbar",
+    "path":"folders/Scripts/App/Actions/Toolbar.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

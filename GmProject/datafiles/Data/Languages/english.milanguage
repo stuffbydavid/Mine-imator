@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.23"
+		"lastchange": "2026.09.25"
 	},
 	"particle/": {
 		"type/": {
@@ -134,10 +134,12 @@
 		"viewgrid": "Grid view",
 		"experimental": "This setting is experimental and is not fully supported.",
 		"settings/": {
+			"reset": "Reset settings",
 			"import": "Import settings",
 			"export": "Export settings",
 			"setdefault": "Set as default settings",
-			"reset": "Reset settings"
+			"unlock": "Unlock preset for editing",
+			"lock": "Lock preset from editing"
 		},
 		"linkeaseinout": "Link ease in/out",
 		"importwatermarkimage": "Import watermark image",
@@ -414,7 +416,9 @@
 		"upgrade": "Invalid key!",
 		"upgradecaption": "Upgrade error",
 		"downloadskinuser": "The user \"%1\" does not exist.",
-		"downloadskininternet": "Could not download skin, check your internet connection."
+		"downloadskininternet": "Could not download skin, check your internet connection.",
+		"test": "The supplied project could not be loaded for testing.",
+		"testcaption": "Test error."
 	},
 	"question/": {
 		"confirmexit": "Save the changes made in %1 before quitting?",
@@ -531,7 +535,7 @@
 		"render": "Render",
 		"render/": {
 			"image": "Render image...",
-			"animation": "Render animation..."
+			"movie": "Render movie..."
 		},
 		"view": "View",
 		"view/": {
@@ -754,6 +758,7 @@
 	},
 	"export/": {
 		"samples": "Sample %1 of %2",
+		"samplespersecond": "%1 samples per second",
 		"frame": "Frame %1 of %2",
 		"timeleft": "%1 remaining",
 		"timeleft/": {
@@ -770,6 +775,8 @@
 		"movie/": {
 			"title": "Exporting your movie...",
 			"caption": "Export movie",
+			"renderer": "Renderer",
+			"performancewarning": "The current render settings may cause long export times.",
 			"videosize": "Video size",
 			"videosizecustomwidth": "W",
 			"videosizecustomheight": "H",
@@ -782,16 +789,6 @@
 				"wmv": "WMV",
 				"png": "PNG sequence"
 			},
-			"videoquality": "Video quality",
-			"videoquality/": {
-				"verylow": "Very low",
-				"low": "Low",
-				"medium": "Medium",
-				"high": "High",
-				"best": "Best",
-				"custom": "Custom"
-			},
-			"bitrate": "Bit rate",
 			"framerate": "Framerate",
 			"framerate/": {
 				"custom": "Custom"
@@ -801,13 +798,13 @@
 			"removebackground": "Remove background",
 			"blendmodewarning": "Custom blend modes on objects may not render correctly.",
 			"includehidden": "Include hidden objects",
-			"highquality": "High quality rendering",
 			"watermark": "Show watermark",
 			"save": "Save"
 		},
 		"image/": {
 			"title": "Exporting your image...",
 			"caption": "Export image",
+			"renderer": "Renderer",
 			"imagesize": "Image size",
 			"imagesizecustomwidth": "W",
 			"imagesizecustomheight": "H",
@@ -815,7 +812,6 @@
 			"includehidden": "Include hidden objects",
 			"removebackground": "Remove background",
 			"blendmodewarning": "Custom blend modes on objects may not render correctly.",
-			"highquality": "High quality rendering",
 			"watermark": "Show watermark",
 			"save": "Save",
 			"cancel": "Cancel"
@@ -824,9 +820,9 @@
 	"upgrade/": {
 		"caption": "Upgrade",
 		"info": "You are currently using the trial version of Mine-imator. To unlock more advanced features, get an upgrade key from the link below, and enter it here.",
-		"page0": "Watermark can be customized.",
-		"page1": "Unlock \"Advanced mode\" and get access to all available features.",
-		"page2": "Customize your own render settings in projects.",
+		"page0": "Watermark can be customized or removed.",
+		"page1": "Unlock \"Advanced mode\" and get access to all animation features.",
+		"page2": "Unlock the \"Realistic\" renderer in projects.",
 		"continue": "Upgrade"
 	},
 	"advanced/": {
@@ -968,14 +964,14 @@
 			"rotationspacelocal": "Transform mode: Local",
 			"rotationspaceconstraintgimbal": "Using Gimbal mode for this selection!"
 		},
-		"mode/": {
-			"flat": "Flat mode",
-			"shaded": "Shaded mode",
-			"render": "Render mode",
+		"renderer/": {
+			"quick": "Quick mode",
+			"standard": "Standard mode",
+			"realistic": "Realistic mode",
 			"pass": "Render pass",
 			"pass/": {
 				"combined": "Combined",
-				"depth": "Depth (24bit)",
+				"depth": "Depth",
 				"normal": "Normal",
 				"material": "Material",
 				"diffuse": "Diffuse",
@@ -984,7 +980,20 @@
 				"shadows": "Shadows",
 				"indirect": "Indirect",
 				"indirectshadows": "Indirect & shadows",
-				"reflections": "Reflections"
+				"reflections": "Reflections",
+				"fog": "Fog",
+				"mask": "Scene mask",
+				"glow": "Glow",
+				"subsurface": "Subsurface scattering",
+				"subsurfacerange": "Subsurface range",
+				"emissive": "Emissive",
+				"roughness": "Roughness",
+				"metallic": "Metallic",
+				"fresnel": "Fresnel",
+				"ssaomask": "SSAO mask",
+				"bloomthreshold": "Bloom threshold",
+				"bloomblur": "Bloom blur",
+				"all": "All passes"
 			}
 		},
 		"camera/": {
@@ -1036,6 +1045,7 @@
 	},
 	"tab/": {
 		"projectproperties": "Project properties",
+		"renderer": "Renderer",
 		"timeline": "Timeline",
 		"buildtool": "Build tool",
 		"charmodel": "Character model for %1",
@@ -3120,35 +3130,58 @@
 		"videosizecustomwidth": "W",
 		"videosizecustomheight": "H",
 		"videosizecustomkeepaspectratio": "Keep aspect ratio",
-		"rendersettings": "Preset",
-		"rendersettings/": {
+		"tempo": "Tempo",
+		"tempotip": "The amount of frames that make a second in the animation.",
+		"pack": "Resource pack",
+		"editrendersettings": "Edit render settings",
+		"editrendersettingstip": "Configure renderer quality, special effects, graphics, and material appearance."
+	},
+	"render": "RENDER SETTINGS",
+	"render/": {
+		"specialeffects": "SPECIAL EFFECTS",
+		"renderer": "Edit renderer...",
+		"renderer/": {
+			"quick": "Quick",
+			"standard": "Standard",
+			"realistic": "Realistic",
+			"realisticwarning": "These settings may cause framerate drops and long export times for movies.",
+			"tip": "Only quality settings are specific to the selected renderer. Special effect appearance, graphics, and materials are shared between renderers."
+		},
+		"presetstandard": "Standard preset",
+		"presetrealistic": "Realistic preset",
+		"preset/": {
 			"performance": "Performance",
 			"balanced": "Balanced",
 			"extreme": "Extreme",
 			"custom": "Custom"
 		},
-		"tempo": "Tempo",
-		"tempotip": "The amount of frames that make a second in the animation.",
-		"pack": "Resource pack"
-	},
-	"render": "RENDER SETTINGS",
-	"render/": {
 		"samples": "Samples",
-		"distance": "Render distance",
-		"distancetip": "The distance where rendered objects are cut off. Also determines the maximum fog distance.",
+		"dof": "Depth of field",
+		"dof/": {
+			"quality": "Quality",
+			"realisticblur": "Realistic Blur",
+			"realisticblurtip": "Handles blurring objects better, but adds noise."
+		},
 		"ssao": "Ambient occlusion",
 		"ssaotip": "Darkens areas that are less exposed to light.",
 		"ssao/": {
 			"radius": "Radius",
 			"power": "Strength",
 			"blurpasses": "Blur passes",
-			"color": "Color"
+			"color": "Color",
+			"alwaysvisible": "Always visible",
+			"alwaysvisibletip": "Evenly apply occlusion, even in lit areas."
 		},
 		"shadows": "Shadows",
 		"shadows/": {
+			"suncascades": "Sunlight cascades",
+			"suncascadestip": "The number of separate shadow maps for sunlight, used to improve shadow detail over close and large distances.",
 			"sunbuffersize": "Sun light buffer size",
 			"spotbuffersize": "Spot light buffer size",
 			"pointbuffersize": "Point light buffer size",
+			"blurquality": "Blur quality",
+			"blursize": "Blur size",
+			"jittered": "Jittered shadows",
 			"transparent": "Transparent shadows",
 			"buffersize256": "Very small",
 			"buffersize512": "Small",
@@ -3161,15 +3194,19 @@
 		"subsurfacescatteringtip": "Simulates light passing through an object, such as leaves.",
 		"subsurfacescatter/": {
 			"quality": "Blur quality",
-			"highlight": "Highlight",
-			"highlighttip": "Distributes additional light in objects when a light source is directly behind it.",
-			"highlightstrength": "Highlight strength"
+			"backlightspread": "Backlight spread",
+			"backlightspreadtip": "Controls how far backlighting spreads around the sides of an object.",
+			"backlightstrength": "Backlight strength",
+			"brightbacklight": "Bright backlight",
+			"brightbacklighttip": "Amplifies light shining through an object for a brighter, stylized effect."
 		},
 		"indirect": "Indirect lighting",
 		"indirecttip": "Bounces light off of bright objects, lighting more of the scene.",
 		"indirect/": {
 			"precision": "Precision",
 			"precisiontip": "The accuracy of raytracing for light bounces, higher precision is slower.",
+			"resolution": "Resolution",
+			"bounces": "Bounces",
 			"blurradius": "Denoise radius",
 			"strength": "Strength"
 		},
@@ -3177,59 +3214,85 @@
 		"reflections/": {
 			"precision": "Precision",
 			"precisiontip": "The accuracy of raytracing reflections, higher precision is slower.",
-			"thickness": "Thickness",
-			"thicknesstip": "Object thickness threshold to detect raytracing collision.",
+			"resolution": "Resolution",
+			"bounces": "Bounces",
 			"fadeamount": "Edge fade amount",
-			"fadeamounttip": "Fades edges of the reflections on the edge of the render to reduce artifacts."
+			"fadeamounttip": "Fades edges of the reflections on the edge of the render to reduce artifacts.",
+			"thickness": "Thickness",
+			"thicknesstip": "Object thickness threshold to detect raytracing collision."
 		},
+		"resolutionfull": "Full",
+		"resolutionhalf": "Half",
+		"resolutionquarter": "Quarter",
+		"resolutioneighth": "Eighth",
 		"glow": "Glow",
 		"glow/": {
 			"radius": "Radius",
 			"intensity": "Intensity",
-			"falloff": "Secondary glow",
 			"falloffradius": "Radius",
 			"falloffintensity": "Intensity"
 		},
+		"glint": "Enchantment glint",
+		"glintspeed": "Speed",
+		"glintstrength": "Strength",
+		"lightmanagement": "Light management",
+		"tonemapper": "Tonemapper",
+		"tonemapper/": {
+			"none": "None",
+			"reinhard": "Reinhard",
+			"aces": "ACES",
+			"uchimura": "Uchimura",
+			"lottes": "Lottes",
+			"hable": "Hable",
+			"gt7curve": "GT7 Curve",
+			"pbrneutral": "PBR Neutral",
+			"agx": "AgX",
+			"agxpunchy": "AgX Punchy"
+		},
+		"exposure": "Exposure",
+		"gamma": "Gamma",
+		"aa": "Anti-aliasing",
+		"aatip": "Smoothen the edges of objects in the final render.",
+		"aamode": "Method",
+		"aamodeprogressive": "Progressive AA",
+		"aamodefxaa": "FXAA",
+		"aapower": "Strength",
+		"graphics": "GRAPHICS",
+		"distance": "Render distance",
+		"distancetip": "The distance where rendered objects are cut off. Also determines the maximum fog distance.",
 		"texturefiltering": "Texture filtering",
 		"texturefilteringtip": "Smoothen textures on objects from a distance.",
 		"texturefiltering/": {
 			"level": "Texture filtering level",
 			"transparentblocks": "Transparent block texture filtering"
 		},
-		"aa": "Anti-aliasing",
-		"aatip": "Smoothen the edges of objects in the final render.",
-		"aapower": "Strength",
 		"modelsscenery": "Models and scenery",
 		"bendstyle": "Limb bending style",
 		"bendstylerealistic": "Realistic",
 		"bendstyleblocky": "Blocky",
 		"opaqueleaves": "Opaque leaves",
 		"liquidanimation": "Liquid waves",
-		"waterreflections": "Default water reflections",
-		"waterreflectionshelp": "Override water blocks with a default reflective water material.",
-		"defaultemissive": "Default emissive",
-		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
-		"defaultsubsurfaceradius": "Default subsurface",
-		"defaultsubsurfaceradiustip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
-		"glint": "Enchantment glint",
-		"glintspeed": "Speed",
-		"glintstrength": "Strength",
 		"alphamode": "Default alpha mode",
 		"alphamode/": {
 			"blend": "Blended",
 			"hashed": "Hashed",
 			"default": "Default"
 		},
-		"lightmanagement": "Light management",
-		"tonemapper": "Tonemapper",
-		"tonemapper/": {
-			"none": "None",
-			"reinhard": "Reinhard",
-			"aces": "Academy (ACES)"
+		"materials": "MATERIALS",
+		"defaultemissive": "Default emissive",
+		"defaultemissivetip": "The emissive value used for specific bright blocks, or objects with a material map set.",
+		"defaultsubsurfaceradius": "Default subsurface",
+		"defaultsubsurfaceradiustip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
+		"waterreflections": "Default water material",
+		"waterreflectionshelp": "Override water blocks with a default reflective water material.",
+		"waterroughness": "Roughness",
+		"waterwave/": {
+			"strength": "Strength",
+			"speed": "Speed",
+			"scale": "Scale",
+			"detail": "Detail"
 		},
-		"exposure": "Exposure",
-		"gamma": "Gamma",
-		"materialmaps": "Object material maps",
+		"materialmaps": "Display material maps",
 		"materialmapstip": "Enable material and normal map texture settings for objects."
 	},
 	"library": "LIBRARY",
@@ -3667,9 +3730,12 @@
 			"time": "Time",
 			"rotation": "Rotation"
 		},
-		"sunlightstrength": "Sunlight strength",
-		"sunlightangle": "Sunlight angle",
+		"sunlight": "Sunlight",
+		"sunlightstrength": "Strength",
+		"sunlightspecularstrength": "Specular strength",
+		"sunlightangle": "Angle",
 		"sunlightangletip": "The angular diameter of the sun, changes the size of sun shadows.",
+		"brightness": "Brightness",
 		"dayscenecolors": "Day scene colors",
 		"nightscenecolors": "Night scene colors",
 		"skycolor": "Sky",
@@ -4012,6 +4078,8 @@
 		"texturefiltering": "Texture filtering",
 		"shadows": "Cast shadows",
 		"rendershadows": "Render shadows",
+		"realisticfalloff": "Realistic falloff",
+		"realisticfallofftip": "Uses realistic inverse-square falloff.",
 		"ssao": "Ambient occlusion",
 		"glow": "Glow",
 		"glowtexture": "Glow affected by texture",
@@ -4062,7 +4130,14 @@
 			"tonemapper/": {
 				"none": "None",
 				"reinhard": "Reinhard",
-				"aces": "Academy (ACES)"
+				"aces": "ACES",
+				"uchimura": "Uchimura",
+				"lottes": "Lottes",
+				"hable": "Hable",
+				"gt7curve": "GT7 Curve",
+				"pbrneutral": "PBR Neutral",
+				"agx": "AgX",
+				"agxpunchy": "AgX Punchy"
 			},
 			"exposure": "Exposure",
 			"gamma": "Gamma",
@@ -4070,6 +4145,7 @@
 			"aperturetip": "Control aperture settings of the camera to change how certain effects behave.",
 			"bladeamount": "Blades",
 			"bladeangle": "Blade angle",
+			"bladestretch": "Blade stretch",
 			"videosize": "Camera size",
 			"videosize/": {
 				"useproject": "Use project settings",
@@ -4111,9 +4187,10 @@
 				"fadesize": "Fade size",
 				"blursize": "Blur size",
 				"blurratio": "Anamorphic ratio",
+				"bokeh": "Bokeh",
 				"bias": "Edge highlight",
-				"gain": "Highlight boost",
-				"threshold": "Boost threshold",
+				"gain": "Highlights strength",
+				"threshold": "Highlights threshold",
 				"fringe": "Color fringe",
 				"fringe/": {
 					"anglered": "R",
@@ -4128,6 +4205,7 @@
 			"bloom": "Bloom",
 			"bloom/": {
 				"threshold": "Threshold",
+				"transition": "Transition",
 				"intensity": "Intensity",
 				"radius": "Radius",
 				"ratio": "Anamorphic ratio",

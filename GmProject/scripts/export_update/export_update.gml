@@ -33,24 +33,25 @@ function export_update()
 	if (window_state = "export_movie")
 	{
 		render_active = "movie"
-		render_quality = (exportmovie_high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
+		renderer_current = exportmovie_renderer
 	}
 	else
 	{
 		render_active = "image"
-		render_quality = (popup_exportimage.high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
+		renderer_current = popup_exportimage.renderer
 	}
+	render_lights = (renderer_current != e_renderer.QUICK)
 	
 	// Process a number frames until a step has elapsed (1/fps seconds)
 	var starttime = current_time;
 	while (current_time - starttime < 1000 / game_get_speed(gamespeed_fps))
 	{
 		if (window_state = "export_movie" && exportmovie_format = "png")
-			render_start(export_surface, timeline_camera)
+			render_start(export_surface, timeline_camera, render_active)
 		else
-			render_start(export_surface, timeline_camera, project_video_width, project_video_height)
+			render_start(export_surface, timeline_camera, render_active, project_video_width, project_video_height)
 	
-		if (render_quality = e_view_mode.RENDER)
+		if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)
 			render_high()
 		else
 		{
@@ -61,8 +62,19 @@ function export_update()
 		export_surface = render_done()
 		
 		export_sample++
+		if (renderer_current = e_renderer.REALISTIC)
+		{
+			export_sample_rate_count++
+			var sampleelapsed = get_timer() - export_sample_rate_start
+			if (sampleelapsed >= 1000000)
+			{
+				export_samples_per_second = export_sample_rate_count * 1000000 / sampleelapsed
+				export_sample_rate_start = get_timer()
+				export_sample_rate_count = 0
+			}
+		}
 	
-		if (render_quality = e_view_mode.RENDER && render_samples = app.project_render_samples)
+		if (renderer_current = e_renderer.STANDARD || (renderer_current = e_renderer.REALISTIC && render_samples = app.project_render_samples))
 			render_samples_done = true
 	
 		if (!render_samples_done)
@@ -92,7 +104,23 @@ function export_update()
 					buffer_save(exportmovie_buffer, temp_file)
 				}
 		
+				var exportstart = get_timer()
 				var err = movie_frame(temp_file);
+				benchmark_export_total_time += get_timer() - exportstart
+				
+				if (benchmark_exportmovie)
+				{
+					exportmovie_benchmark_csv += string(exportmovie_frame) + ",";
+					exportmovie_benchmark_csv += string_format(benchmark_animate_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_render_total_time / 1000, 0, 3) + ",";
+					exportmovie_benchmark_csv += string_format(benchmark_surface_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_export_total_time / 1000, 0, 3) + "\n"
+					benchmark_animate_total_time = 0
+					benchmark_render_total_time = 0
+					benchmark_surface_total_time = 0
+					benchmark_export_total_time = 0
+				}
+				
 				if (err < 0)
 				{
 					export_done_movie()
@@ -106,6 +134,7 @@ function export_update()
 	
 			// Advance
 			exportmovie_frame++
+			exportmovie_frame_last_time = get_timer()
 			current_step += round(60 / popup_exportmovie.framespersecond)
 			
 			// Update marker
@@ -125,7 +154,10 @@ function export_update()
 		// Save image
 		else if (window_state = "export_image")
 		{
+			var exportstart = get_timer();
 			surface_save_lib(export_surface, export_filename)
+			if (benchmark_mode)
+				benchmark_export_total_time += get_timer() - exportstart
 			export_done_image()
 			window_flash()
 			window_beep()

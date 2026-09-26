@@ -1,19 +1,19 @@
-#include "Common.hpp"
+#include "Generated/Scripts.hpp"
 
 namespace CppProject
 {
+	StringType log_file_get()
+	{
+#if OS_WINDOWS
+		return data_directory + "/log.txt";
+#else
+		return QDir::homePath() + "/Mine-imator/log.txt";
+#endif
+	}
+
 	void Printer::Line(QString text)
 	{
-	#if OS_WINDOWS
-	#if RELEASE_MODE
-		QString logFile = QCoreApplication::applicationDirPath() + "/Data/log.txt";
-	#else
-		QString logFile = QDir::currentPath() + "/log.txt";
-	#endif
-	#else
-		QString logFile = QDir::homePath() + "/Mine-imator/log.txt";
-	#endif
-		QFile file(logFile);
+		QFile file(log_file_get());
 		AddPerms(file);
 		if (!file.open(QFile::Append))
 			return;
@@ -28,7 +28,7 @@ namespace CppProject
 		QTextStream stream(&file);
 		stream << text << "\n";
 
-	#if DEBUG_MODE
+	#if !RELEASE_MODE
 		std::cout << text.toStdString() << std::endl;
 	#endif
 	}

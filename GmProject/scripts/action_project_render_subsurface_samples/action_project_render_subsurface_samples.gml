@@ -4,9 +4,13 @@
 
 function action_project_render_subsurface_samples(val, add)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_subsurface_samples, project_render_subsurface_samples, project_render_subsurface_samples * add + val, 1)
+	action_project_render_preset_edit_locked()
 	
-	project_render_subsurface_samples = project_render_subsurface_samples * add + val
+	var samples = render_preset_edit.renderer[renderer_edit].subsurface_samples
+	
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_subsurface_samples, samples, samples * add + val, true)
+	
+	render_preset_edit.renderer[renderer_edit].subsurface_samples = samples * add + val
 	render_samples = -1
 }

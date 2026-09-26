@@ -3,21 +3,27 @@
 
 function render_high_indirect()
 {
+	var ww, hh, previoussurf, indirectsurf;
+	ww = ceil(render_width * app.project_render_indirect_resolution)
+	hh = ceil(render_height * app.project_render_indirect_resolution)
+	
 	// Raytrace
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
-	surface_set_target(render_surface_hdr[0])
+	render_surface_indirect_raydata = surface_require(render_surface_indirect_raydata, ww, hh, false, e_surface_format.rgba32float)
+	surface_set_target(render_surface_indirect_raydata)
 	{
 		gpu_set_texrepeat(false)
 		draw_clear_alpha(c_black, 1)
 		
-		render_shader_obj = shader_map[?shader_high_raytrace]
+		render_shader_obj = shader_map[?shader_high_indirect_hit]
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_raytrace_set(e_raytrace.INDIRECT)
+			shader_high_indirect_hit_set()
 		}
 		
-		draw_blank(0, 0, render_width, render_height)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
+		draw_blank(0, 0, ww, hh)
+		gpu_set_blendmode(bm_normal)
 		
 		with (render_shader_obj)
 			shader_clear()
@@ -25,27 +31,54 @@ function render_high_indirect()
 	}
 	surface_reset_target()
 	
-	// Resolve
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, true)
-	surface_set_target(render_surface_hdr[1])
+	for (var bounce = 0; bounce < app.project_render_indirect_bounces; bounce++)
 	{
-		draw_clear_alpha(c_black, 0)
-			
-		render_shader_obj = shader_map[?shader_high_raytrace_resolve]
-		with (render_shader_obj)
+		// first bounce uses direct shadows, future bounces use the accumulated bounced indirect pass
+		previoussurf = (bounce = 0 ? render_surface_shadows : render_surface_hdr[1])
+		
+		// Pre-calculate the light leaving each surface once instead of rebuilding it for every resolve sample
+		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
+		surface_set_target(render_surface_hdr[0])
 		{
-			shader_set(shader)
-			shader_high_raytrace_resolve_set(true)
+			draw_clear_alpha(c_black, 0)
+			
+			render_shader_obj = shader_map[?shader_high_indirect_source]
+			with (render_shader_obj)
+			{
+				shader_set(shader)
+				shader_high_indirect_source_set(previoussurf, bounce > 0)
+			}
+			
+			draw_surface_exists(render_surface_diffuse, 0, 0)
+			
+			with (render_shader_obj)
+				shader_clear()
 		}
+		surface_reset_target()
 		
-		draw_surface_exists(render_surface_hdr[0], 0, 0)
-		
-		with (render_shader_obj)
-			shader_clear()
+		// Resolve
+		render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba16float)
+		surface_set_target(render_surface_hdr[1])
+		{
+			draw_clear_alpha(c_black, 0)
+			
+			render_shader_obj = shader_map[?shader_high_indirect_resolve]
+			with (render_shader_obj)
+			{
+				shader_set(shader)
+				shader_high_indirect_resolve_set()
+			}
+			
+			gpu_set_texfilter(false)
+			draw_surface_ext(render_surface_indirect_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
+			
+			with (render_shader_obj)
+				shader_clear()
+		}
+		surface_reset_target()
 	}
-	surface_reset_target()
-		
-	// Blur result
+	
+	// Blur
 	if (app.project_render_indirect_blur_radius > 0)
 	{
 		surface_set_target(render_surface_hdr[0])
@@ -67,7 +100,7 @@ function render_high_indirect()
 		surface_reset_target()
 	}
 	
-	var indirectsurf = (app.project_render_indirect_blur_radius > 0 ? render_surface_hdr[0] : render_surface_hdr[1]);
+	indirectsurf = (app.project_render_indirect_blur_radius > 0 ? render_surface_hdr[0] : render_surface_hdr[1])
 	
 	// Add
 	surface_set_target(render_surface_shadows)
@@ -78,9 +111,7 @@ function render_high_indirect()
 	}
 	surface_reset_target()
 	
-	if (render_pass = e_render_pass.INDIRECT)
-		render_pass_surf = surface_duplicate(indirectsurf)
+	render_pass_capture(e_render_pass.INDIRECT, indirectsurf)
 	
-	if (render_pass = e_render_pass.INDIRECT_SHADOWS)
-		render_pass_surf = surface_duplicate(render_surface_shadows)
+	render_pass_capture(e_render_pass.INDIRECT_SHADOWS, render_surface_shadows)
 }

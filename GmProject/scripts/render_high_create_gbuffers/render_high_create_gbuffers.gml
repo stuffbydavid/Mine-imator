@@ -1,0 +1,229 @@
+/// render_high_create_gbuffers()
+/// @arg Creates render passes for use re-used data in more complex effects.
+
+/*
+	Docs:
+	
+	render_surface_diffuse
+		- RGBA: Diffuse data
+
+	render_surface_mask
+		- R: Scene lighting mask
+	
+	shader_high_gbuffers:
+	
+		- render_surface_depth (r32float)
+			R: Depth
+	
+		- render_surface_normal (rgba16float)
+			RGB: View-space normal
+			A: Emissive
+	
+		- render_surface_material
+			R: Roughness
+			G: Metallic
+			B: Fresnel Term
+			A: SSAO Mask
+	
+		- render_surface_specular
+			RGB: Glint
+			A: Unused
+	
+	shader_high_auxiliary:
+	
+		- render_surface_fog (r8float)
+			R: Fog strength
+
+		- render_surface_sss (r16float)
+			R: Subsurface Amount
+
+		- render_surface_range
+			RGB: Subsurface RGB radius
+			A: Unused
+
+		- render_surface_glow
+			RGBA: Glow color
+	
+	*Specular is an additive effect, used for glint/specular/reflections.
+*/
+
+function render_high_create_gbuffers()
+{
+	if (render_gbuffers_cache_enabled && render_gbuffers_cache_ready)
+	{
+		if (!surface_exists(render_surface_diffuse) || !surface_exists(render_surface_mask) ||
+			!surface_exists(render_surface_material) || !surface_exists(render_surface_depth) ||
+			!surface_exists(render_surface_normal) || !surface_exists(render_surface_specular) ||
+			!surface_exists(render_surface_specular_base) ||
+			surface_get_width(render_surface_diffuse) != render_width || surface_get_height(render_surface_diffuse) != render_height ||
+			(render_auxiliary && (!surface_exists(render_surface_fog) || !surface_exists(render_surface_sss) ||
+				!surface_exists(render_surface_sss_range) || !surface_exists(render_surface_glow))))
+			render_gbuffers_cache_ready = false
+	}
+	if (!render_gbuffers_cache_enabled)
+		render_gbuffers_cache_ready = false
+
+	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
+	render_surface_mask = surface_require(render_surface_mask, render_width, render_height)
+	render_surface_material = surface_require(render_surface_material, render_width, render_height)
+	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba16float)
+	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, e_surface_format.rgba16float)
+
+	if (render_auxiliary)
+	{
+		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, true, e_surface_format.r8unorm)
+		render_surface_sss = surface_require(render_surface_sss, render_width, render_height, false, e_surface_format.r16float)
+		render_surface_sss_range = surface_require(render_surface_sss_range, render_width, render_height, false)
+		render_surface_glow = surface_require(render_surface_glow, render_width, render_height, false)
+	}
+
+	if (!render_gbuffers_cache_ready)
+	{
+		render_high_clear_gbuffers()
+
+		// Diffuse data
+		surface_set_target(render_surface_diffuse)
+		{
+			// Background
+			draw_clear_alpha(c_black, 0)
+			render_world_background()
+
+			// World
+			render_world_start()
+			render_world_sky()
+			render_world(e_render_mode.COLOR)
+			render_world_done()
+
+			// 2D mode
+			render_set_projection_ortho(0, 0, render_width, render_height, 0)
+
+			// Alpha fix
+			gpu_set_blendmode_ext(bm_src_color, bm_one)
+			if (render_background)
+				draw_box(0, 0, render_width, render_height, false, c_black, 1)
+			else
+			{
+				render_world_start()
+				render_world(e_render_mode.ALPHA_FIX)
+				render_world_done()
+			}
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+
+		// Scene lighting mask
+		surface_set_target(render_surface_mask)
+		{
+			draw_clear(c_black)
+			render_world_start()
+			render_world(e_render_mode.SCENE_TEST)
+			render_world_done()
+
+			// 2D mode
+			render_set_projection_ortho(0, 0, render_width, render_height, 0)
+
+			// Alpha fix
+			gpu_set_blendmode_ext(bm_src_color, bm_one)
+			draw_box(0, 0, render_width, render_height, false, c_black, 1)
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+
+		// G-buffers
+		surface_set_target_ext(0, render_surface_depth)
+		surface_set_target_ext(1, render_surface_normal)
+		surface_set_target_ext(2, render_surface_material)
+		surface_set_target_ext(3, render_surface_specular)
+		{
+			gpu_set_blendmode_ext(bm_one, bm_zero)
+			render_world_start(depth_far)
+			render_world(e_render_mode.G_BUFFERS)
+			render_world_done()
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+
+		// Auxiliary buffers
+		if (render_auxiliary)
+		{
+			surface_set_target_ext(0, render_surface_fog)
+			surface_set_target_ext(1, render_surface_sss)
+			surface_set_target_ext(2, render_surface_sss_range)
+			if (render_glow)
+				surface_set_target_ext(3, render_surface_glow)
+
+			{
+				render_world_start()
+				render_world(e_render_mode.AUXILIARY)
+				render_world_done()
+			}
+			surface_reset_target()
+
+			// Glow alpha fix
+			if (render_glow)
+			{
+				surface_set_target(render_surface_glow)
+				{
+					render_set_projection_ortho(0, 0, render_width, render_height, 0)
+					gpu_set_blendmode_ext(bm_src_color, bm_one)
+					draw_box(0, 0, render_width, render_height, false, c_black, 1)
+					gpu_set_blendmode(bm_normal)
+				}
+				surface_reset_target()
+			}
+		}
+		if (render_gbuffers_cache_enabled)
+		{
+			render_surface_specular_base = surface_require(render_surface_specular_base, render_width, render_height, false, e_surface_format.rgba16float)
+			surface_set_target(render_surface_specular_base)
+			{
+				gpu_set_blendmode_ext(bm_one, bm_zero)
+				draw_surface(render_surface_specular, 0, 0)
+				gpu_set_blendmode(bm_normal)
+			}
+			surface_reset_target()
+			render_gbuffers_cache_ready = true
+		}
+	}
+	else
+	{
+		if (render_auxiliary)
+			render_world_start()
+		else
+			render_world_start(depth_far)
+		render_world_done()
+
+		surface_set_target(render_surface_specular)
+		{
+			gpu_set_blendmode_ext(bm_one, bm_zero)
+			draw_surface(render_surface_specular_base, 0, 0)
+			gpu_set_blendmode(bm_normal)
+		}
+		surface_reset_target()
+	}
+
+	render_pass_capture(e_render_pass.DIFFUSE, render_surface_diffuse)
+
+	render_pass_capture(e_render_pass.MATERIAL, render_surface_material)
+
+	render_pass_capture(e_render_pass.DEPTH, render_surface_depth)
+
+	render_pass_capture(e_render_pass.NORMAL, render_surface_normal)
+
+	render_pass_capture(e_render_pass.FOG, render_surface_fog)
+
+	render_pass_capture(e_render_pass.MASK, render_surface_mask)
+
+	render_pass_capture(e_render_pass.GLOW, render_surface_glow)
+
+	render_pass_capture(e_render_pass.SUBSURFACE, render_surface_sss)
+
+	render_pass_capture(e_render_pass.SUBSURFACE_RANGE, render_surface_sss_range)
+
+	render_pass_capture(e_render_pass.EMISSIVE, render_surface_normal)
+	render_pass_capture(e_render_pass.ROUGHNESS, render_surface_material)
+	render_pass_capture(e_render_pass.METALLIC, render_surface_material)
+	render_pass_capture(e_render_pass.FRESNEL, render_surface_material)
+	render_pass_capture(e_render_pass.SSAO_MASK, render_surface_material)
+}

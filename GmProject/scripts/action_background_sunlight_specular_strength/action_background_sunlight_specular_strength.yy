@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_background_sunlight_specular_strength",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_sunlight_specular_strength",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Actions/Background.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

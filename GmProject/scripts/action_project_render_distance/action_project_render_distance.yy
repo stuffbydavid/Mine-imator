@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_project_render_distance",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/App/Actions/Project/Render.yy",
+    "name":"Graphics",
+    "path":"folders/Scripts/App/Actions/Project/Render/Graphics.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

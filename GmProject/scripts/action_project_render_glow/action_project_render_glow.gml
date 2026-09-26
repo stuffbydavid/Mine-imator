@@ -3,8 +3,12 @@
 
 function action_project_render_glow(enable)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_glow, project_render_glow, enable, true)
+	action_project_render_preset_edit_locked()
 	
-	project_render_glow = enable
+	var settings = render_preset_edit.renderer[renderer_edit]
+	
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_glow, settings.glow, enable, true)
+	
+	settings.glow = enable
 }

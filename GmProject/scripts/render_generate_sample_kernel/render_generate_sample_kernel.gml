@@ -1,38 +1,24 @@
 /// render_generate_sample_kernel(samples)
 /// @arg samples
+/// @desc Generates a progressively distributed hemisphere sample kernel
 
 function render_generate_sample_kernel(samples)
 {
-	var arr;
+	var samples2d = render_generate_progressive_disk_samples(samples, 0)
+	var arr = array_create(samples * 3, 0)
 	
 	for (var i = 0; i < samples; i++)
 	{
-		var xx, yy, zz, mag, scale;
-		xx = random_range(-1, 1)
-		yy = random_range(-1, 1)
-		zz = random_range(0, 1)
-		
-		// Normalize
-		mag = sqrt(xx * xx + yy * yy + zz * zz)
-		xx /= mag
-		yy /= mag
-		zz /= mag
+		var xx = samples2d[i * 2]
+		var yy = samples2d[i * 2 + 1]
+		var zz = sqrt(max(1 - xx * xx - yy * yy, 0))
 		
 		// Exponentiate scale
-		scale = i / samples
+		var scale = i / samples
 		scale = lerp(0.1, 1.0, scale * scale)
 		xx *= scale
 		yy *= scale
 		zz *= scale
-		
-		if (abs(xx) < 0.01)
-			xx = 0.01
-		
-		if (abs(yy) < 0.01)
-			yy = 0.01
-		
-		if (abs(zz) < 0.01)
-			zz = 0.01
 		
 		// Store in array
 		arr[i * 3] = xx

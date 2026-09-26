@@ -13,12 +13,15 @@ function shader_use()
 	render_set_uniform("uMetallic", 0)
 	render_set_uniform("uRoughness", 1)
 	
-	render_set_uniform("uTAAMatrix", taa_matrix)
+	render_set_uniform("uAAMatrix", aa_matrix)
+	render_set_uniform("uTAAMatrix", aa_matrix)
 	
 	render_set_uniform("uSampleIndex", render_sample_current)
 	render_set_uniform_int("uAlphaHash", render_alpha_hash)
 	
-	render_set_uniform_int("uUseNormalMap", dev_mode_skip_tangents ? 0 : 1)
+	render_set_uniform_int("uUseNormalMap", debug_skip_tangents ? 0 : 1)
+	
+	render_set_uniform("uGamma", render_gamma)
 	
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
@@ -32,6 +35,14 @@ function shader_use()
 		render_set_uniform_vec2("uWindDirection", sin(degtorad(app.background_wind_direction)), cos(degtorad(app.background_wind_direction)))
 		render_set_uniform("uWindDirectionalSpeed", app.background_wind * app.background_wind_directional_speed * .1 * app.background_time)
 		render_set_uniform("uWindDirectionalStrength", app.background_wind * app.background_wind_directional_strength * app.setting_wind_enable)
+	}
+
+	if (!is_undefined(uniform_map[?"uWaterMaterialTime"]) && uniform_map[?"uWaterMaterialTime"] > -1)
+	{
+		render_set_uniform("uWaterMaterialTime", app.background_time * app.project_render_water_wave_speed)
+		render_set_uniform("uWaterMaterialStrength", app.project_render_water_wave_strength)
+		render_set_uniform("uWaterMaterialScale", app.project_render_water_wave_scale)
+		render_set_uniform_int("uWaterMaterialOctaves", app.project_render_water_wave_detail)
 	}
 	
 	// Set fog
@@ -59,12 +70,15 @@ function shader_use()
 	if (!is_undefined(uniform_map[?"uDefaultSubsurface"]) && uniform_map[?"uDefaultSubsurface"] > -1)
 		render_set_uniform("uDefaultSubsurface", app.project_render_block_subsurface)
 	
-	// Subsurface highlight
-	if (!is_undefined(uniform_map[?"uSSSHighlight"]) && uniform_map[?"uSSSHighlight"] > -1)
-		render_set_uniform("uSSSHighlight", 1 - app.project_render_subsurface_highlight)
+	// Subsurface backlight
+	if (!is_undefined(uniform_map[?"uSSSBacklightSpread"]) && uniform_map[?"uSSSBacklightSpread"] > -1)
+		render_set_uniform("uSSSBacklightSpread", 1 - app.project_render_subsurface_backlight_spread)
 	
-	if (!is_undefined(uniform_map[?"uSSSHighlightStrength"]) && uniform_map[?"uSSSHighlightStrength"] > -1)
-		render_set_uniform("uSSSHighlightStrength", app.project_render_subsurface_highlight_strength)
+	if (!is_undefined(uniform_map[?"uSSSBacklightStrength"]) && uniform_map[?"uSSSBacklightStrength"] > -1)
+		render_set_uniform("uSSSBacklightStrength", app.project_render_subsurface_backlight_strength)
+
+	if (!is_undefined(uniform_map[?"uSSSBrightBacklight"]) && uniform_map[?"uSSSBrightBacklight"] > -1)
+		render_set_uniform_int("uSSSBrightBacklight", app.project_render_subsurface_bright_backlight)
 	
 	// Glint
 	if (!is_undefined(uniform_map[?"uGlintEnabled"]) && uniform_map[?"uGlintEnabled"] > -1)
@@ -75,14 +89,12 @@ function shader_use()
 		var tex = res.glint_armor_texture;
 		texture_set_stage(sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 		gpu_set_texrepeat_ext(sampler_map[?"uGlintTexture"], true)
-		if (platform_get() == e_platform.WINDOWS) // OpenGL bug workaround
-			gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
+		gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
 		
 		render_set_uniform_vec2("uGlintSize", sprite_get_width(tex)*2, sprite_get_height(tex)*2)
 		render_set_uniform_vec2("uGlintOffset", app.background_time * (0.000625) * app.project_render_glint_speed, app.background_time * (0.00125) * app.project_render_glint_speed)
 		render_set_uniform_int("uGlintEnabled", 1)
 		render_set_uniform("uGlintStrength", app.project_render_glint_strength)
-		render_set_uniform("uGamma", render_gamma)
 	}
 	
 	// Texture drawing

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_shadows_blur_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_shadows_blur_size",
+  "parent":{
+    "name":"Shadows",
+    "path":"folders/Scripts/App/Actions/Project/Render/Shadows.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

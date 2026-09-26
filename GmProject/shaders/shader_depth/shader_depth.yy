@@ -3,8 +3,8 @@
   "%Name":"shader_depth",
   "name":"shader_depth",
   "parent":{
-    "name":"High quality",
-    "path":"folders/Shaders/High quality.yy",
+    "name":"Depth",
+    "path":"folders/Shaders/High quality/Depth.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

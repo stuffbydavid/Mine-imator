@@ -1,14 +1,14 @@
-/// action_project_render_subsurface_highlight_strength(value, add)
+/// action_project_render_subsurface_backlight_strength(value, add)
 /// @arg value
 /// @arg add
 
-function action_project_render_subsurface_highlight_strength(val, add)
+function action_project_render_subsurface_backlight_strength(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_subsurface_highlight_strength, project_render_subsurface_highlight_strength, project_render_subsurface_highlight_strength * add + val / 100, 1)
+		history_set_var(action_project_render_subsurface_backlight_strength, project_render_subsurface_backlight_strength, project_render_subsurface_backlight_strength * add + val / 100, true)
 	else
 		val *= 100
 	
-	project_render_subsurface_highlight_strength = project_render_subsurface_highlight_strength * add + val / 100
+	project_render_subsurface_backlight_strength = project_render_subsurface_backlight_strength * add + val / 100
 	render_samples = -1
 }

@@ -30,58 +30,67 @@ function render_high_shadows()
 		lightlist = array_add(lightlist, id)
 	}
 	
+	render_shadow_cache_update(lightlist, sunout)
+
 	// Initialize targets
-	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, true)
-	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, true)
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, true)
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, true)
+	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, e_surface_format.rgba16float)
+	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, e_surface_format.rgba16float)
+	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba16float)
 	resultsurftemp = render_surface_hdr[0]
 	specresultsurftemp = render_surface_hdr[1]
 	
 	surface_set_target(render_surface_shadows)
 	{
-		draw_clear_alpha(background_ambient_color_final, 1)
-	}
-	surface_reset_target()
-	
-	surface_set_target(render_surface_specular)
-	{
 		draw_clear_alpha(c_black, 1)
 	}
 	surface_reset_target()
 	
-	taa_matrix = taa_jitter_matrix
+	aa_matrix = aa_jitter_matrix
 	
 	#region Sun
 	
 	if (sunout)
 	{
-		// Scatter position
-		if (render_sample_current > 1)
+		var angle = vec3_normalize(app.background_sun_direction)
+		var sunangularradius = tan(degtorad(min(background_sunlight_angle, 179)) * .5) * project_render_shadows_blur_size
+		var referenceangularradius = tan(degtorad(.526) * .5)
+		render_sun_shadow_scale = (sunangularradius / referenceangularradius) * .5
+
+		// Jitter sun direction
+		if (project_render_shadows_jittered && render_sample_current > 1)
 		{
-			var xyang, zang, dis;
-			xyang = random(360)
-			zang = random_range(-180, 180)
-			dis = ((background_sunlight_angle * (project_render_distance / 2)) / 57.2958) / 2
-			sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
-			sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
-			sampleoffset[Z] = lengthdir_z(dis, zang)
+			var reference = abs(angle[Z]) < .999 ? vec3(0, 0, 1) : vec3(0, 1, 0)
+			var tangent = vec3_normalize(vec3_cross(reference, angle))
+			var bitangent = vec3_cross(angle, tangent)
+			var diskangle = random(pi * 2)
+			var diskradius = sunangularradius * sqrt(random(1))
+			var diskoffset = vec3_add(vec3_mul(tangent, cos(diskangle) * diskradius), vec3_mul(bitangent, sin(diskangle) * diskradius))
+			angle = vec3_normalize(vec3_add(angle, diskoffset))
 		}
-		
-		var angle = vec3_add(vec3_mul(app.background_sun_direction, -5000), sampleoffset);
-		angle = vec3_normalize(vec3_mul(angle, -1))
 		
 		// Depth
 		cam_far = cam_far_prev
-		taa_matrix = MAT_IDENTITY
-		render_alpha_hash = app.project_render_shadows_transparent
+		aa_matrix = MAT_IDENTITY
+		render_alpha_hash = render_alpha_hash_shadows
 		render_alpha_hash_force = true
 		
 		render_update_cascades(angle)
 		
 		for (var i = 0; i < render_cascades_count; i++)
 		{
-			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+			var sunkey = "sun" + string(i)
+			if (render_shadow_cache_enabled)
+				render_surface_sun_buffer[i] = render_shadow_cache_surface(sunkey, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+			else
+				render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, true, e_surface_format.r32float)
+
+			if (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, sunkey))
+			{
+				render_world_start_sun(i)
+				render_world_done()
+				continue
+			}
 			surface_set_target(render_surface_sun_buffer[i])
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -94,10 +103,12 @@ function render_high_shadows()
 				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
+			if (render_shadow_cache_enabled)
+				render_shadow_cache_ready[?sunkey] = true
 		}
 		
-		taa_matrix = taa_jitter_matrix
-		render_alpha_hash = app.project_render_alpha_mode
+		aa_matrix = aa_jitter_matrix
+		render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
 		render_alpha_hash_force = false
 		
 		surface_set_target_ext(0, resultsurftemp)
@@ -139,12 +150,12 @@ function render_high_shadows()
 			if (!value_inherit[e_value.VISIBLE] || hide || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
 				continue
 			
-			if (render_sample_current > 1)
+			if (app.project_render_shadows_jittered && render_sample_current > 1)
 			{
 				var xyang, zang, dis;
 				xyang = random(360)
 				zang = random_range(-180, 180)
-				dis = value[e_value.LIGHT_SIZE]/2
+				dis = value[e_value.LIGHT_SIZE] * app.project_render_shadows_blur_size / 2
 				sampleoffset[X] = lengthdir_x(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
@@ -165,14 +176,21 @@ function render_high_shadows()
 				atlasx = 0
 				atlasy = 0
 				atlassize = app.project_render_shadows_point_buffer_size
-				render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2)
-				render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize)
+				var pointkey = "point:" + save_id
+				if (render_shadow_cache_enabled)
+					render_surface_point_atlas_buffer = render_shadow_cache_surface(pointkey, atlassize * 3, atlassize * 2)
+				else
+					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, e_surface_format.r32float)
+				var pointcached = render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, pointkey)
+				if (!pointcached)
+					render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, e_surface_format.r32float)
 				
-				taa_matrix = MAT_IDENTITY
-				render_alpha_hash = app.project_render_shadows_transparent
+				aa_matrix = MAT_IDENTITY
+				render_alpha_hash = render_alpha_hash_shadows
 				render_alpha_hash_force = true
 				
 				// Depth
+				if (!pointcached)
 				for (var d = e_dir.EAST; d < e_dir.amount; d++)
 				{
 					var look = dir_get_vec3(d);
@@ -207,9 +225,17 @@ function render_high_shadows()
 						atlasy += atlassize
 					}
 				}
+				if (render_shadow_cache_enabled && !pointcached)
+					render_shadow_cache_ready[?pointkey] = true
+				// Restore light uniforms when the atlas was reused
+				if (pointcached)
+				{
+					render_world_start_light(world_pos, point3D_add(world_pos, dir_get_vec3(e_dir.amount - 1)), sampleoffset, id)
+					render_world_done()
+				}
 				
-				taa_matrix = taa_jitter_matrix
-				render_alpha_hash = app.project_render_alpha_mode
+				aa_matrix = aa_jitter_matrix
+				render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
 				render_alpha_hash_force = false
 				
 				// Shadows
@@ -234,12 +260,18 @@ function render_high_shadows()
 			{
 				var lookat = point3D_mul_matrix(point3D(0.0001, 1, 0), matrix);
 				
-				taa_matrix = MAT_IDENTITY
-				render_alpha_hash = app.project_render_shadows_transparent
+				aa_matrix = MAT_IDENTITY
+				render_alpha_hash = render_alpha_hash_shadows
 				render_alpha_hash_force = true
 				
 				// Depth
-				render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
+				var spotkey = "spot:" + save_id
+				if (render_shadow_cache_enabled)
+					render_surface_spot_buffer = render_shadow_cache_surface(spotkey, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size)
+				else
+					render_surface_spot_buffer = surface_require(render_surface_spot_buffer, app.project_render_shadows_spot_buffer_size, app.project_render_shadows_spot_buffer_size, true, e_surface_format.r32float)
+				if (!render_shadow_cache_enabled || !ds_map_exists(render_shadow_cache_ready, spotkey))
+				{
 				surface_set_target(render_surface_spot_buffer)
 				{
 					gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -257,9 +289,17 @@ function render_high_shadows()
 					gpu_set_blendmode(bm_normal)
 				}
 				surface_reset_target()
+					if (render_shadow_cache_enabled)
+						render_shadow_cache_ready[?spotkey] = true
+				}
+				else
+				{
+					render_world_start_light(world_pos, lookat, sampleoffset, id)
+					render_world_done()
+				}
 				
-				taa_matrix = taa_jitter_matrix
-				render_alpha_hash = app.project_render_alpha_mode
+				aa_matrix = aa_jitter_matrix
+				render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
 				render_alpha_hash_force = false
 				
 				// Shadows
@@ -307,83 +347,8 @@ function render_high_shadows()
 	render_high_shadows_shadowless()
 	
 	// Apply subsurface scattering
-	if (project_render_subsurface_samples > 0)
+	if (renderer_current = e_renderer.REALISTIC && project_render_subsurface_samples > 0)
 		render_high_subsurface_scatter()
 	
-	if (render_pass = e_render_pass.SHADOWS) 
-		render_pass_surf = surface_duplicate(render_surface_shadows)
-}
-
-function render_high_shadows_shadowless()
-{
-	if (ds_list_size(render_shadowless_point_list) > 0)
-	{
-		var resultsurftemp, lights, batches, specresultsurftemp;
-		lights = ds_list_size(render_shadowless_point_list)
-		batches = 0
-			
-		while (lights > 0)
-		{
-			for (var l = 0; l < 31; l++)
-			{
-				if (lights = 0)
-					continue
-					
-				var light = render_shadowless_point_list[| l + (batches * 31)];
-					
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 0] = light.world_pos[X]
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 1] = light.world_pos[Y]
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 2] = light.world_pos[Z]
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 3] = light.value[e_value.LIGHT_RANGE]
-					
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 4] = (color_get_red(light.value[e_value.LIGHT_COLOR]) / 255)
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 5] = (color_get_green(light.value[e_value.LIGHT_COLOR]) / 255)
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 6] = (color_get_blue(light.value[e_value.LIGHT_COLOR]) / 255)
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 7] = light.value[e_value.LIGHT_FADE_SIZE]
-					
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 8] = light.value[e_value.LIGHT_STRENGTH]
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 9] = light.value[e_value.LIGHT_SPECULAR_STRENGTH]
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 10] = 1
-				render_shadowless_point_data[render_shadowless_point_amount * 12 + 11] = 1
-				render_shadowless_point_amount++
-				lights--
-			}
-			
-			// Render lights
-			resultsurftemp = render_surface_hdr[0]
-			specresultsurftemp = render_surface_hdr[1]
-			
-			surface_set_target_ext(0, resultsurftemp)
-			surface_set_target_ext(1, specresultsurftemp)
-			{
-				draw_clear(c_black)
-				render_world_start()
-				render_world(e_render_mode.HIGH_LIGHT_POINT_SHADOWLESS)
-				render_world_done()
-			}
-			surface_reset_target()
-			
-			// Add to final shadow surface
-			surface_set_target(render_surface_shadows)
-			{
-				gpu_set_blendmode(bm_add)
-				draw_surface_exists(resultsurftemp, 0, 0)
-				gpu_set_blendmode(bm_normal)
-			}
-			surface_reset_target()
-				
-			surface_set_target(render_surface_specular)
-			{
-				gpu_set_blendmode(bm_add)
-				draw_surface_exists(specresultsurftemp, 0, 0)
-				gpu_set_blendmode(bm_normal)
-			}
-			surface_reset_target()
-				
-			batches++
-			render_shadowless_point_amount = 0
-		}
-			
-		ds_list_clear(render_shadowless_point_list)
-	}
+	render_pass_capture(e_render_pass.SHADOWS, render_surface_shadows)
 }

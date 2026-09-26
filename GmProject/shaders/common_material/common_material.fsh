@@ -1,0 +1,402 @@
+#pragma shady: skip_compilation
+void main() {}
+
+#region NORMAL_MAP_LIB
+#pragma shady: macro_begin NORMAL_MAP_LIB
+
+uniform sampler2D uTextureNormal; // static
+uniform int uUseNormalMap; // static
+uniform float uWaterMaterialTime; // static
+uniform float uWaterMaterialStrength; // static
+uniform float uWaterMaterialScale; // static
+uniform int uWaterMaterialOctaves; // static
+
+// GPU Gems: Chapter 1
+// https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models
+vec3 getWaterNormal(vec3 position)
+{
+	position.xy /= max(uWaterMaterialScale * 0.75, 0.01);
+	vec2 gradient = vec2(0.0);
+	vec2 direction = vec2(1.0, 0.0);
+	float frequency = 0.16;
+	float speed = 0.03;
+	float strength = 0.012;
+
+	for (int octave = 0; octave < 8; octave++)
+	{
+		if (octave >= uWaterMaterialOctaves)
+			break;
+
+		float octavePhase = float(octave) * 2.39996;
+		vec2 perpendicular = vec2(-direction.y, direction.x);
+		float crossPhase = dot(position.xy, perpendicular) * frequency * 0.37;
+		float crossWave = crossPhase + octavePhase * 1.618;
+		float phaseWarp = sin(crossWave) * 0.55;
+		float phase = dot(position.xy, direction) * frequency + uWaterMaterialTime * speed + octavePhase + phaseWarp;
+		vec2 warpedDirection = direction + perpendicular * cos(crossWave) * 0.2035;
+		gradient += warpedDirection * cos(phase) * strength;
+
+		direction = vec2(
+			direction.x * 0.682 - direction.y * 0.731,
+			direction.x * 0.731 + direction.y * 0.682
+		);
+		frequency *= 1.45;
+		speed *= 1.35;
+		strength *= 0.76;
+	}
+
+	return normalize(vec3(-gradient, 1.0));
+}
+
+vec3 getMappedNormal(vec2 uv, mat3 tbn)
+{
+	if (uUseNormalMap < 1)
+		return normalize(tbn * vec3(0.0, 0.0, 1.0));
+	
+	vec4 n = texture2D(uTextureNormal, uv).rgba;
+	n.xy = n.xy * 2.0 - 1.0; // Decode
+	n.xy = sign(n.xy) * max(abs(n.xy) - 1.0 / 255.0, 0.0) * (255.0 / 254.0); // 127/128 rg fix, 8bit tex can't represent perfect 0
+	n.z = sqrt(max(0.0, 1.0 - dot(n.xy, n.xy))); // Get Z
+	n.y *= -1.0; // Convert Y- to Y+
+	return normalize(tbn * n.xyz);
+}
+
+vec3 getMaterialNormal(vec2 uv, vec3 position, mat3 tbn)
+{
+	if (uIsWater > 0)
+	{
+		vec3 normal = normalize(tbn * vec3(0.0, 0.0, 1.0));
+		float upward = smoothstep(0.8, 0.9, normal.z);
+		float strength = clamp(uWaterMaterialStrength, 0.0, 1.0) * upward;
+		return normalize(mix(normal, getWaterNormal(position), strength));
+	}
+
+	return getMappedNormal(uv, tbn);
+}
+
+vec3 transformMaterialNormal(vec3 normal, mat3 sourceTbn, mat3 targetTbn)
+{
+	vec3 sourceTangent = sourceTbn * vec3(1.0, 0.0, 0.0);
+	vec3 sourceBitangent = sourceTbn * vec3(0.0, 1.0, 0.0);
+	vec3 sourceNormal = sourceTbn * vec3(0.0, 0.0, 1.0);
+	vec3 normalTangent = vec3(
+		dot(normal, sourceTangent),
+		dot(normal, sourceBitangent),
+		dot(normal, sourceNormal)
+	);
+	return normalize(targetTbn * normalTangent);
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region MATERIAL_LIB
+#pragma shady: macro_begin MATERIAL_LIB
+
+//#pragma shady: inline(common_constants.MATH)
+
+uniform sampler2D uTextureMaterial; // static
+uniform int uMaterialFormat;
+uniform float uDefaultEmissive;
+uniform float uDefaultSubsurface;
+uniform float uRoughness;
+uniform float uMetallic;
+uniform float uEmissive;
+uniform float uSSS;
+uniform int uIsWater;
+
+void getMaterial(out float roughness, out float metallic, out float emissive, out float F0, out float sss)
+{
+	if (uIsWater > 0)
+	{
+		roughness = uRoughness;
+		metallic = 0.0;
+		emissive = 0.0;
+		F0 = 0.02;
+		sss = 0.0;
+		return;
+	}
+
+	float baseEmissive = max(uEmissive, vCustom.z * uDefaultEmissive);
+	vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
+	
+	if (uMaterialFormat == 2) // LabPBR
+	{
+		if (matColor.g > 0.898) // Metallic
+		{
+			metallic = 1.0; F0 = 1.0; sss = 0.0;
+		}
+		else // Non-metallic
+		{
+			metallic = 0.0; F0 = matColor.g;
+			sss = (matColor.b > 0.255 ? (((matColor.b - 0.255) / 0.745) * uDefaultSubsurface) : 0.0);
+		}
+		
+		roughness = (1.0 - matColor.r);
+		emissive = max(baseEmissive, (matColor.a < 1.0 ? matColor.a / 0.9961 : 0.0) * uDefaultEmissive);
+		
+		return;
+	}
+	
+	if (uMaterialFormat == 1) // SEUS
+	{
+		roughness = (1.0 - matColor.r);
+		metallic = matColor.g;
+		emissive = max(baseEmissive, matColor.b * uDefaultEmissive);
+	}
+	else // No map
+	{
+		roughness = uRoughness;
+		metallic = uMetallic;
+		emissive = baseEmissive;
+	}
+	
+	/* F0 = DIELECTRIC_F0; */
+	F0 = 0.0; // Ignore DIELECTRIC_F0 for artistic reasons (MI/SEUS)
+	sss = max(uSSS, vCustom.w * uDefaultSubsurface);
+
+}
+
+
+#pragma shady: macro_end
+#endregion
+
+#region FRESNEL_LIB
+#pragma shady: macro_begin FRESNEL_LIB
+
+// Fresnel Schlick approximation
+float fresnelSchlickRoughness(float cosTheta, float F0, float roughness)
+{
+	return F0 + (max((1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+
+vec3 fresnelSchlick(float cosTheta, vec3 F0)
+{
+	return F0 + (vec3(1.0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+
+vec3 getDirectFresnel(vec3 N, vec3 L, vec3 camPos, vec3 pos, vec3 F0)
+{
+	vec3 V = normalize(camPos - pos);
+	vec3 halfway = V + L;
+	if (dot(N, L) <= 0.0 || dot(halfway, halfway) < 0.000001)
+		return F0;
+	
+	vec3 H = normalize(halfway);
+	return fresnelSchlick(max(dot(H, V), 0.0), F0);
+}
+
+float getFresnel(vec3 N, float f0, float roughness, vec3 camPos, vec3 pos)
+{
+	vec3 V  = normalize(camPos - pos);
+	vec3 H  = normalize(V + -reflect(V, N));
+	return fresnelSchlickRoughness(max(dot(H, V), 0.0), f0, roughness);
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region ALPHA_DISCARD_LIB
+#pragma shady: macro_begin ALPHA_DISCARD_LIB
+
+uniform float uSampleIndex;
+uniform int uAlphaHash;
+
+float hash(vec2 c)
+{
+	return fract(10000.0 * sin(17.0 * c.x + 0.1 * c.y) *
+	(0.1 + abs(sin(13.0 * c.y + c.x))));
+}
+
+void handleAlphaDiscard(vec3 pos, inout vec4 col)
+{
+	if (col.a > .99)
+		col.a = 1.0;
+	
+	if (col.a < 0.001)
+		discard;
+	
+	if (uAlphaHash > 0)
+	{
+		if (col.a < hash(vec2(hash(pos.xy + (uSampleIndex / 255.0)), pos.z + (uSampleIndex / 255.0))))
+			discard;
+		else
+			col.a = 1.0;
+	}
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region SPECULAR_LIB
+#pragma shady: macro_begin SPECULAR_LIB
+
+#pragma shady: inline(common_constants.MATH)
+
+// GGX specular (https://learnopengl.com/PBR/Lighting)
+float distributionGGX(vec3 N, vec3 H, float perceptualRoughness)
+{
+	perceptualRoughness = clamp(perceptualRoughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float alpha = perceptualRoughness * perceptualRoughness;
+	float a2 = alpha * alpha;
+	float NdotH = max(dot(N, H), 0.0);
+	float denom = ((NdotH * NdotH) * (a2 - 1.0) + 1.0);
+	return a2 / (PI * denom * denom);
+}
+
+float geometrySchlickGGX(float NdotV, float roughness)
+{
+	roughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float r = (roughness + 1.0);
+	float k = (r * r) / 8.0;
+	
+	return NdotV / (NdotV * (1.0 - k) + k);
+}
+
+float geometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+{
+	return	geometrySchlickGGX(abs(dot(N, V)), roughness) *
+			geometrySchlickGGX(max(dot(N, L), 0.0), roughness);
+}
+
+vec3 getSpecular(vec3 N, vec3 L, vec3 camPos, vec3 pos, vec3 F0, float roughness)
+{
+	vec3 V = normalize(camPos - pos);
+	float NdotL = dot(N, L);
+	vec3 halfway = V + L;
+
+	if (NdotL <= 0.0 || dot(halfway, halfway) < 0.000001)
+		return vec3(0.0);
+
+	float NdotV = abs(dot(N, V)) + 0.00001;
+	vec3 H = normalize(halfway);
+	
+	float NDF = distributionGGX(N, H, roughness);
+	float G = geometrySmith(N, V, L, roughness);
+	vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+	
+	vec3 numerator = NDF * G * F;
+	float denominator = 4.0 * NdotV * NdotL + 0.0001;
+	return numerator / denominator;
+}
+
+// https://cdn2.unrealengine.com/Resources/files/2013SiggraphPresentationsNotes-26915738.pdf
+vec3 getSphereLightDirection(vec3 N, vec3 camPos, vec3 pos, vec3 lightVector, float lightRadius, float roughness, out float normalization)
+{
+	vec3 V = normalize(camPos - pos);
+	vec3 R = reflect(-V, N);
+	vec3 L = lightVector;
+	float lightDistance = max(length(L), 0.0001);
+	float sourceRadius = max(lightRadius, 0.0);
+	vec3 centerToRay = dot(L, R) * R - L;
+	float centerToRayLength = length(centerToRay);
+	vec3 closestPoint = L + centerToRay * clamp(sourceRadius / max(centerToRayLength, 0.0001), 0.0, 1.0);
+
+	// Conserve the energy added by widening the GGX distribution over the sphere
+	float perceptualRoughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float alpha = perceptualRoughness * perceptualRoughness;
+	float alphaPrime = clamp(alpha + sourceRadius / (3.0 * lightDistance), alpha, 1.0);
+	normalization = (alpha * alpha) / (alphaPrime * alphaPrime);
+
+	float closestPointLength = length(closestPoint);
+	return closestPointLength > 0.0001 ? closestPoint / closestPointLength : L / lightDistance;
+}
+
+float getLightAttenuation(float lightDistance, float lightRange, float fadeSize, int realisticFalloff)
+{
+	if (realisticFalloff > 0)
+	{
+		float distanceRatio = lightDistance / max(lightRange, 0.0001);
+		float distanceRatio2 = distanceRatio * distanceRatio;
+		float window = clamp(1.0 - distanceRatio2 * distanceRatio2, 0.0, 1.0);
+		const float referenceDistance2 = 256.0;
+		return window * window * referenceDistance2 / (lightDistance * lightDistance + referenceDistance2);
+	}
+
+	return 1.0 - clamp((lightDistance - lightRange * (1.0 - fadeSize)) / (lightRange * fadeSize), 0.0, 1.0);
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region SSS_TRANSLUCENCY_LIB
+#pragma shady: macro_begin SSS_TRANSLUCENCY_LIB
+
+uniform vec4 uSSSColor;
+uniform float uSSSBacklightSpread;
+uniform float uSSSBacklightStrength;
+uniform int uSSSBrightBacklight;
+
+float HGPhase(float cosTheta, float scatter)
+{
+	float g = clamp(scatter, 0.0, 0.99);
+	float g2 = g * g;
+	return (1.0 - g2) / pow(max(1.0 + g2 - 2.0 * g * cosTheta, 0.001), 1.5);
+}
+
+vec3 getSubsurfaceTranslucency(float fragDepth, float sampleDepth, vec3 rad)
+{
+	float thickness = max(fragDepth - sampleDepth, 0.0);
+	vec3 safeRadius = max(rad, vec3(0.001));
+	return exp(-thickness / safeRadius);
+}
+
+void handleSubsurfaceHighlight(inout vec3 light, inout vec3 subsurf, vec3 N, vec3 lightDir, vec3 lightCol, vec3 camPos, vec3 pos, float sss, float mask)
+{
+	float transDif = max(0.0, dot(normalize(-N), lightDir));
+	float phase = HGPhase(dot(normalize(pos - camPos), lightDir), uSSSBacklightSpread);
+	float phasePeak = HGPhase(1.0, uSSSBacklightSpread);
+	float phaseNormalized = phase / max(phasePeak, 0.001);
+	if (uSSSBrightBacklight == 1)
+		subsurf *= 1.0 + uSSSBacklightStrength * phaseNormalized;
+	else
+		subsurf *= phaseNormalized * clamp(uSSSBacklightStrength, 0.0, 1.0);
+	light += lightCol * uSSSColor.rgb * transDif * subsurf * mask;
+	light *= mix(vec3(1.0), uSSSColor.rgb, clamp(sss, 0.0, 1.0));
+}
+
+#pragma shady: macro_end
+#endregion
+
+#region SAMPLE_GGX_LIB
+#pragma shady: macro_begin SAMPLE_GGX_LIB
+
+vec3 sampleGGX(vec2 Xi, float roughness)
+{
+	roughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float a = roughness * roughness;
+	float phi = TWO_PI * Xi.x;
+	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
+	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+	
+	return vec3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
+}
+
+// Sample a GGX reflection normal optimized for the camera view (VNDF)
+// https://jcgt.org/published/0007/04/01/
+vec3 sampleGGXVNDF(vec2 Xi, vec3 viewDir, float roughness)
+{
+	roughness = clamp(roughness, MIN_PERCEPTUAL_ROUGHNESS, 1.0);
+	float a = roughness * roughness;
+	
+	// Reshape the view so roughness is easier to sample evenly
+	vec3 viewH = normalize(vec3(a * viewDir.xy, max(viewDir.z, 0.0001)));
+	float lensq = dot(viewH.xy, viewH.xy);
+	vec3 tangent1 = (lensq > 0.0 ? vec3(-viewH.y, viewH.x, 0.0) / sqrt(lensq) : vec3(1.0, 0.0, 0.0));
+	vec3 tangent2 = cross(viewH, tangent1);
+
+	// Pick a random point
+	float r = sqrt(Xi.x);
+	float phi = TWO_PI * Xi.y;
+	float t1 = r * cos(phi);
+	float t2 = r * sin(phi);
+	float s = 0.5 * (1.0 + viewH.z);
+	t2 = mix(sqrt(max(0.0, 1.0 - t1 * t1)), t2, s);
+	vec3 normalH = tangent1 * t1 + tangent2 * t2 + viewH * sqrt(max(0.0, 1.0 - t1 * t1 - t2 * t2));
+
+	// Undo reshape to get normal
+	return normalize(vec3(a * normalH.xy, max(normalH.z, 0.0)));
+}
+
+#pragma shady: macro_end
+#endregion

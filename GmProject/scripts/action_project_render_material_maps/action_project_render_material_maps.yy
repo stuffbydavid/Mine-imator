@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_project_render_material_maps",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/App/Actions/Project/Render.yy",
+    "name":"Materials",
+    "path":"folders/Scripts/App/Actions/Project/Render/Materials.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

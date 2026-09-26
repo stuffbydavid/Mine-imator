@@ -16,9 +16,12 @@ function tab_frame_editor_light()
 	draw_dragger("frameeditorlightrange", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_RANGE] / 100, 0, no_limit, 250, 0, tab.light.tbx_range, action_tl_frame_light_range)
 	tab_next()
 	
-	tab_control_meter()
-	draw_meter("frameeditorlightfadesize", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_FADE_SIZE] * 100), 0, 100, 50, 1, tab.light.tbx_fade_size, action_tl_frame_light_fade_size)
-	tab_next()
+	if (!tl_edit.realistic_falloff)
+	{
+		tab_control_meter()
+		draw_meter("frameeditorlightfadesize", dx, dy, dw, floor(tl_edit.value[e_value.LIGHT_FADE_SIZE] * 100), 0, 100, 50, 1, tab.light.tbx_fade_size, action_tl_frame_light_fade_size)
+		tab_next()
+	}
 	
 	if (tab.light.has_spotlight)
 	{

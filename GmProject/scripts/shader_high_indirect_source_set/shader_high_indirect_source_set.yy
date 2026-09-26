@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"shader_high_indirect_source_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_high_indirect_source_set",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Scripts/Render/Shaders.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

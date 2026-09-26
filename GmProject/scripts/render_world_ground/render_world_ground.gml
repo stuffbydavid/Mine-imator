@@ -6,14 +6,14 @@ function render_world_ground()
 	if (!background_ground_show)
 		return 0
 	
-	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
+	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color("uReplaceColor", c_white, 1)
 	
 	if (render_mode = e_render_mode.PLACE)
 		render_set_uniform("uIsBlock", 1)
 
 	var materialres = res_eval(background_ground_tex_material);
-	
+
 	// Blend
 	var blend = block_texture_get_blend(background_ground_name, background_ground_tex);
 	var iswater = (background_ground_name = "block/water_flow" || background_ground_name = "block/water_still");
@@ -23,14 +23,14 @@ function render_world_ground()
 	render_set_uniform_color("uBlendColor", blend, 1)
 	render_set_uniform_color("uGlowColor", c_black, 1)
 	render_set_uniform_int("uGlowTexture", 0)
-	render_set_uniform_int("uFogShow", app.background_fog_show)
-	render_set_uniform_int("uIsWater", iswater)
+	render_set_uniform_int("uFogShow", app.background_fog_show && render_mode != e_render_mode.COLOR)
+	render_set_uniform_int("uIsWater", iswater && app.project_render_water_reflections)
 	render_set_uniform_int("uMaterialFormat", materialres.material_format)
 	
 	if (materialres = mc_res)
 	{
 		render_set_uniform("uMetallic", 0)
-		render_set_uniform("uRoughness", (iswater && app.project_render_water_reflections ? .07 : 1))
+		render_set_uniform("uRoughness", (iswater && app.project_render_water_reflections ? app.project_render_water_roughness : 1))
 		render_set_uniform("uEmissive", 0)
 	}
 	else
