@@ -12,7 +12,7 @@ function project_reset_background()
 	background_image_rotation = 0
 	
 	background_sky_sun_tex = project_pack_res
-	background_sky_sun_angle = -20
+	background_sky_sun_angle = 0
 	background_sky_sun_scale = 1
 	background_sky_moon_tex = project_pack_res
 	background_sky_moon_phase = 0
