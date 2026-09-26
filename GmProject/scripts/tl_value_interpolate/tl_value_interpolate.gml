@@ -25,9 +25,13 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.BG_SKY_CLOUDS_COLOR:
 		case e_value.BG_SUNLIGHT_COLOR:
 		case e_value.BG_AMBIENT_COLOR:
+		case e_value.BG_NIGHT_SKY_COLOR:
+		case e_value.BG_NIGHT_SKY_CLOUDS_COLOR:
+		case e_value.BG_NIGHT_SKY_STARS_COLOR:
 		case e_value.BG_NIGHT_COLOR:
 		case e_value.BG_GRASS_COLOR:
 		case e_value.BG_FOLIAGE_COLOR:
+		case e_value.BG_DRY_FOLIAGE_COLOR:
 		case e_value.BG_WATER_COLOR:
 		case e_value.BG_LEAVES_OAK_COLOR:
 		case e_value.BG_LEAVES_SPRUCE_COLOR:
@@ -94,8 +98,9 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.TEXT_FONT:
 		case e_value.TEXT_HALIGN:
 		case e_value.TEXT_VALIGN:
-		case e_value.TEXT_AA:
+		case e_value.TEXT_CUSTOM_ALIGNMENT:
 		case e_value.TEXT_OUTLINE:
+		case e_value.TEXT_CUSTOM_OUTLINE:
 		case e_value.CUSTOM_ITEM_SLOT:
 		case e_value.TRANSITION:
 		case e_value.EASE_IN_X:

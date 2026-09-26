@@ -1,20 +1,16 @@
-function test_reduced_motion(a, b)
-{
-	if (app.setting_reduced_motion)
-		return a
-	return b
-}
-
 /// panel_draw(panel)
 /// @arg panel
 function panel_draw(panel)
 {
+	for (var t = 0; t < panel.tab_list_amount; t++)
+		panel.tab_list[t].raised = false
+
+	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
+		return 0
+	
 	var boxx, boxy, boxw, boxh, resizemouseon, padding;
 	var tabtitle, tabx, tabw, tabmaxw, tabsw, tabswprev, tabsh, tablistmouseon, tabmouseon;
 	var dx, dy;
-	
-	if (panel.size_real < 1 && !panel.glow && panel != panel_window_obj)
-		return 0
 	
 	// Calculate box
 	if (panel = panel_map[?"bottom"])
@@ -106,15 +102,28 @@ function panel_draw(panel)
 	// Content
 	tabsh = min(boxh, 24)
 	content_tab = panel.tab_list[panel.tab_selected]
+	content_tab.raised = true
+	
+	// Mouse detection
 	content_x = boxx
 	content_y = boxy + (tabsh * content_tab.movable)
 	content_width = boxw
 	content_height = boxh - (tabsh * content_tab.movable)
 	content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	
+	// Draw tab content
 	panel_compact = (panel.size_real <= 225)
 	panel_draw_content()
 	content_y = boxy
 	
+	// Panel click stops placing
+	if (place_tl != null && !place_build && window_busy = "place" && mouse_left_released &&
+		app_mouse_box(boxx, boxy, boxw, boxh, "place") && !context_menu_mouseon)
+	{
+		app_cancel_place()
+		app_mouse_clear()
+	}
+
 	// Tabs
 	tabsw = 0
 	tabswprev = 0
@@ -148,12 +157,14 @@ function panel_draw(panel)
 			}
 			
 			// Adjust tab widths
-			var selnamew, unselnamew;
+			var minwid, maxwid, selnamew, unselnamew;
+			minwid = 45 // 28
+			maxwid = 192 // 144
 			selnamew = tabw[panel.tab_selected];
-			unselnamew = max(28, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Set new unactive tab save
-			selnamew = min(selnamew, 144, boxw - (unselnamew * (panel.tab_list_amount - 1))) // Update tab size based on new unactive tab save
-			unselnamew = max(28, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Update unactive tab size based on new active tab size
-			unselnamew = min(unselnamew, 144)
+			unselnamew = max(minwid, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Set new unactive tab save
+			selnamew = min(selnamew, maxwid, boxw - (unselnamew * (panel.tab_list_amount - 1))) // Update tab size based on new unactive tab save
+			unselnamew = max(minwid, (boxw - selnamew) / (panel.tab_list_amount - 1)) // Update unactive tab size based on new active tab size
+			unselnamew = min(unselnamew, maxwid)
 			
 			for (var t = 0; t < panel.tab_list_amount; t++)
 			{
@@ -163,12 +174,12 @@ function panel_draw(panel)
 				
 				if (sel)
 				{
-					tabw[t] = min(144, tabw[t], selnamew)
+					tabw[t] = min(maxwid, tabw[t], selnamew)
 					tabsw += tabw[t]
 				}
 				else
 				{
-					tabw[t] = min(144, tabw[t], unselnamew)
+					tabw[t] = min(maxwid, tabw[t], unselnamew)
 					tabsw += tabw[t]
 				}
 			}
@@ -208,7 +219,9 @@ function panel_draw(panel)
 						mouse_cursor = cr_handpoint
 					}
 					else
+					{
 						tabmouseon = true
+					}
 				}
 			}
 			
@@ -230,15 +243,13 @@ function panel_draw(panel)
 			// Close button
 			if (tab.closeable && (hover || sel))
 			{
-				if (hover && mouse_middle_pressed)
+				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL) || (hover && mouse_middle_pressed))
 				{
-					tab_close(tab)
-					return 0
-				}
-				
-				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL))
-				{
-					tab_close(tab)
+					if (tab = build_tool)
+						app_stop_place()
+					else
+						tab_close(tab)
+					
 					return 0
 				}
 			}

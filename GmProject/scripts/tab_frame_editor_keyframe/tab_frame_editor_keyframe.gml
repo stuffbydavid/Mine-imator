@@ -2,6 +2,35 @@
 
 function tab_frame_editor_keyframe()
 {
+	var animated, hidden;
+	animated = tl_edit.animated
+	hidden = tl_edit.hide
+	if ((!animated || hidden) && tl_edit_amount > 1)
+	{
+		with (obj_timeline)
+		{
+			if (!selected)
+				continue
+			if (self.animated)
+				animated = true
+			if (!hide)
+				hidden = false
+		}
+	}
+	
+	if (!animated)
+	{
+		draw_tooltip_label(tl_edit_amount > 1 ? "frameeditornotanimatedmultiple" : "frameeditornotanimated", icons.INFO, e_toast.INFO)
+		dy += 8
+		
+		tab_control_button_label()
+		if (draw_button_label("frameeditoranimated", dx + dw / 2, dy, null, null, e_button.PRIMARY, null, e_anchor.CENTER))
+			action_tl_animated(true)
+		tab_next()
+		
+		return 0
+	}
+
 	// Transition
 	var trans, text;
 	trans = tl_edit.value[e_value.TRANSITION]
@@ -45,13 +74,13 @@ function tab_frame_editor_keyframe()
 		// Ease in
 		textfield_group_add("frameeditoreaseinx", floor(tl_edit.value[e_value.EASE_IN_X] * 100), 100, action_tl_frame_ease_in_x, X, tab.keyframe.tbx_ease_in_x, null, 0.5, 0, 100)
 		textfield_group_add("frameeditoreaseiny", floor(tl_edit.value[e_value.EASE_IN_Y] * 100), 0, action_tl_frame_ease_in_y, Z, tab.keyframe.tbx_ease_in_y, null, 0.5, -no_limit, no_limit)
-		draw_textfield_group("frameeditoreasein", dx, yy, (dw/2) - 8, null, -no_limit, no_limit, 1, 3, false, true)
+		draw_textfield_group("frameeditoreasein", dx, yy, (dw/2) - 8, null, -no_limit, no_limit, 1, false, true, 3)
 		yy += (40 + label_height)
 		
 		// Ease out
 		textfield_group_add("frameeditoreaseoutx", floor(tl_edit.value[e_value.EASE_OUT_X] * 100), 0, action_tl_frame_ease_out_x, X, tab.keyframe.tbx_ease_out_x, null, 0.5, 0, 100)
 		textfield_group_add("frameeditoreaseouty", floor(tl_edit.value[e_value.EASE_OUT_Y] * 100), 100, action_tl_frame_ease_out_y, Z, tab.keyframe.tbx_ease_out_y, null, 0.5, -no_limit, no_limit)
-		draw_textfield_group("frameeditoreaseout", dx, yy, (dw/2) - 8, null, -no_limit, no_limit, 1, 3, false, true)
+		draw_textfield_group("frameeditoreaseout", dx, yy, (dw/2) - 8, null, -no_limit, no_limit, 1, false, true, 3)
 		yy += (40 + label_height)
 		
 		// Link ease in/out
@@ -78,4 +107,8 @@ function tab_frame_editor_keyframe()
 	tab_control_switch()
 	draw_switch("frameeditorvisible", dx, dy, tl_edit.value[e_value.VISIBLE], action_tl_frame_visible)
 	tab_next()
+	
+	// Hidden status
+	if (hidden)
+		draw_tooltip_label(tl_edit_amount > 1 ? "frameeditorhiddenmultiple" : "frameeditorhidden", icons.INFO, e_toast.INFO)
 }

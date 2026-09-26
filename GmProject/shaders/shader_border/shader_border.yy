@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_border",
-  "type": 1,
-  "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+  "$GMShader":"",
+  "%Name":"shader_border",
+  "name":"shader_border",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Shaders.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

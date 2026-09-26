@@ -35,28 +35,36 @@ function app_startup_keybinds()
 		KEYFRAMES_CUT,
 		KEYFRAMES_PASTE,
 		KEYFRAMES_DELETE,
+		KEYFRAMES_STRETCH,
+		KEYFRAMES_SCALE,
 		TIMELINE_HIDE,
 		TIMELINE_SHOW_HIDDEN,
 		
 		// Timeline
 		PLAY,
+		PLAY_STOP,
 		PLAY_BEGINNING,
 		MARKER_RIGHT,
 		MARKER_LEFT,
+		FRAME_PREVIOUS,
+		FRAME_NEXT,
 		
 		// Viewport
 		RENDER_MODE,
+		SECONDARY_VIEW,
 		PARTICLES_SPAWN,
 		PARTICLES_CLEAR,
-		SECONDARY_VIEW,
 		
 		// Tools
+		WORKBENCH,
+		BUILD_TOOL,
 		TOOL_SELECT,
 		TOOL_MOVE,
 		TOOL_ROTATE,
 		TOOL_SCALE,
 		TOOL_BEND,
 		TOOL_TRANSFORM,
+		TRANSFORM_MODE_CYCLE,
 		SNAP,
 		
 		// Navigation
@@ -98,26 +106,34 @@ function app_startup_keybinds()
 	keybind_register("keyframescut", e_keybind.KEYFRAMES_CUT, keybind_new("X", true))
 	keybind_register("keyframespaste", e_keybind.KEYFRAMES_PASTE, keybind_new("V", true))
 	keybind_register("keyframesdelete", e_keybind.KEYFRAMES_DELETE, keybind_new(vk_delete))
+	keybind_register("keyframesstretch", e_keybind.KEYFRAMES_STRETCH, keybind_new(null, false, false, true))
+	keybind_register("keyframesscale", e_keybind.KEYFRAMES_SCALE, keybind_new("S", false, false, true))
 	
 	// Timeline
 	keybind_register("play", e_keybind.PLAY, keybind_new(vk_space))
+	keybind_register("playstop", e_keybind.PLAY_STOP, keybind_new(vk_space, false, true))
 	keybind_register("playbeginning", e_keybind.PLAY_BEGINNING, keybind_new(vk_enter))
-	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left), true)
-	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right), true)
+	keybind_register("markerleft", e_keybind.MARKER_LEFT, keybind_new(vk_left))
+	keybind_register("markerright", e_keybind.MARKER_RIGHT, keybind_new(vk_right))
+	keybind_register("frameprevious", e_keybind.FRAME_PREVIOUS, keybind_new(vk_left, false, true))
+	keybind_register("framenext", e_keybind.FRAME_NEXT, keybind_new(vk_right, false, true))
 	
 	// Viewport
 	keybind_register("rendermode", e_keybind.RENDER_MODE, keybind_new(vk_f5))
+	keybind_register("secondaryview", e_keybind.SECONDARY_VIEW, keybind_new(vk_f6))
 	keybind_register("particlesspawn", e_keybind.PARTICLES_SPAWN, keybind_new("X"))
 	keybind_register("particlesclear", e_keybind.PARTICLES_CLEAR, keybind_new("C"))
-	keybind_register("secondaryview", e_keybind.SECONDARY_VIEW, keybind_new(vk_f6))
 	
 	// Tools
+	keybind_register("toolworkbench", e_keybind.WORKBENCH, keybind_new(vk_tab))
+	keybind_register("toolbuild", e_keybind.BUILD_TOOL, keybind_new("B"))
 	keybind_register("toolselect", e_keybind.TOOL_SELECT, keybind_new("W"))
 	keybind_register("toolmove", e_keybind.TOOL_MOVE, keybind_new("G"))
 	keybind_register("toolrotate", e_keybind.TOOL_ROTATE, keybind_new("R"))
 	keybind_register("toolscale", e_keybind.TOOL_SCALE, keybind_new("S"))
-	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("B"))
+	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("N"))
 	keybind_register("tooltransform", e_keybind.TOOL_TRANSFORM, keybind_new("T"))
+	keybind_register("toolrotationspacecycle", e_keybind.TRANSFORM_MODE_CYCLE, keybind_new("Q"))
 	keybind_register("snap", e_keybind.SNAP, keybind_new("F"))
 	
 	// Navigation
@@ -133,7 +149,7 @@ function app_startup_keybinds()
 	keybind_register("camreset", e_keybind.CAM_RESET, keybind_new("R"), true)
 	keybind_register("camfast", e_keybind.CAM_FAST, keybind_new(vk_space), true)
 	keybind_register("camslow", e_keybind.CAM_SLOW, keybind_new(null, false, true), true)
-	keybind_register("camviewtimeline", e_keybind.CAM_VIEW_TIMELINE, keybind_new("V"), false)
+	keybind_register("camviewtimeline", e_keybind.CAM_VIEW_TIMELINE, keybind_new("V"))
 	
 	keybinds_update_match()
 }

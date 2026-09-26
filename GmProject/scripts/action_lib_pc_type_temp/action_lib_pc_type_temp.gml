@@ -11,6 +11,7 @@ function action_lib_pc_type_temp(temp)
 		history_set_var(action_lib_pc_type_temp, save_id_get(ptype_edit.temp), save_id_get(temp), false)
 	
 	ptype_edit.temp = temp
+	project_update_counts()
 	
 	if (temp = particle_sheet || temp = particle_template)
 	{
@@ -18,5 +19,5 @@ function action_lib_pc_type_temp(temp)
 			ptype_update_sprite_vbuffers()
 	}
 	
-	tab_template_editor_particles_preview_restart()
+	tab_object_editor_particles_preview_restart()
 }

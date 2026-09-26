@@ -2,6 +2,8 @@
 
 function app_startup_interface_tabs()
 {
+	globalvar preview_edit;
+
 	tab_move = null
 	tab_move_name = ""
 	tab_move_x = 0
@@ -35,27 +37,32 @@ function app_startup_interface_tabs()
 		render = tab_add_category("render", icons.CAMERA_PHOTO_SMALL, tab_properties_render, false)
 		with (render)
 		{
+			tbx_render_distance = new_textbox_integer()
+			tbx_samples = new_textbox_integer()
+			
 			tbx_ssao_radius = new_textbox_decimals()
 			tbx_ssao_power = new_textbox_integer()
 			tbx_ssao_power.suffix = "%"
-			tbx_samples = new_textbox_integer()
-			tbx_render_distance = new_textbox_integer()
+			
 			tbx_subsurface_samples = new_textbox_integer()
 			tbx_subsurface_highlight = new_textbox_integer()
 			tbx_subsurface_highlight.suffix = "%"
 			tbx_subsurface_highlight_strength = new_textbox_integer()
 			tbx_subsurface_highlight_strength.suffix = "%"
+			
 			tbx_indirect_precision = new_textbox_integer()
 			tbx_indirect_precision.suffix = "%"
 			tbx_indirect_blur_radius = new_textbox_decimals()
 			tbx_indirect_blur_radius.suffix = "%"
 			tbx_indirect_strength = new_textbox_integer()
 			tbx_indirect_strength.suffix = "%"
+			
 			tbx_reflections_precision = new_textbox_integer()
 			tbx_reflections_precision.suffix = "%"
-			tbx_reflections_thickness = new_textbox_decimals()
 			tbx_reflections_fade_amount = new_textbox_integer()
 			tbx_reflections_fade_amount.suffix = "%"
+			tbx_reflections_thickness = new_textbox_decimals()
+			
 			tbx_glow_radius = new_textbox_integer()
 			tbx_glow_radius.suffix = "%"
 			tbx_glow_intensity = new_textbox_integer()
@@ -64,18 +71,23 @@ function app_startup_interface_tabs()
 			tbx_glow_falloff_radius.suffix = "%"
 			tbx_glow_falloff_intensity = new_textbox_integer()
 			tbx_glow_falloff_intensity.suffix = "%"
+			
 			tbx_aa_power = new_textbox_integer()
 			tbx_aa_power.suffix = "%"
-			tbx_block_emissive = new_textbox_decimals()
-			tbx_block_emissive.suffix = "%"
+			
+			tbx_texture_filtering_level = new_textbox_integer()
+			
+			tbx_exposure = new_textbox_decimals()
+			tbx_gamma = new_textbox_decimals()
+			
 			tbx_glint_speed = new_textbox_decimals()
 			tbx_glint_speed.suffix = "%"
 			tbx_glint_strength = new_textbox_decimals()
 			tbx_glint_strength.suffix = "%"
+			
+			tbx_block_emissive = new_textbox_decimals()
+			tbx_block_emissive.suffix = "%"
 			tbx_block_subsurface_radius = new_textbox_decimals()
-			tbx_texture_filtering_level = new_textbox_integer()
-			tbx_exposure = new_textbox_decimals()
-			tbx_gamma = new_textbox_decimals()
 		}
 		
 		// Library
@@ -83,18 +95,22 @@ function app_startup_interface_tabs()
 		with (library)
 		{
 			preview = new_obj(obj_preview)
-			preview.spawn_active = true
 			list = new_obj(obj_sortlist)
+			list.height_items = 7
 			list.can_deselect = true
 			list.script = action_lib_list
+			list.filter_type_list = temp_type_name_list
+			
 			sortlist_column_add(list, "libname", 0)
 			sortlist_column_add(list, "libtype", 0.35)
 			sortlist_column_add(list, "libinstances", 0.65)
+			
 			tbx_name = new_textbox(1, 0, "")
 			tbx_repeat_x = new_textbox_integer()
 			tbx_repeat_y = new_textbox_integer()
 			tbx_repeat_z = new_textbox_integer()
 			tbx_shape_detail = new_textbox_integer()
+			tbx_text_outline_size = new_textbox_integer()
 			tbx_shape_tex_hoffset = new_textbox_ndecimals()
 			tbx_shape_tex_voffset = new_textbox_ndecimals()
 			tbx_shape_tex_hrepeat = new_textbox_decimals()
@@ -122,12 +138,12 @@ function app_startup_interface_tabs()
 			tbx_sunlight_strength.suffix = "%"
 			tbx_sunlight_angle = new_textbox_decimals()
 			tbx_sunlight_angle.suffix = "°"
-			tbx_sky_clouds_height = new_textbox_ndecimals()
-			tbx_sky_clouds_size = new_textbox_decimals()
-			tbx_sky_clouds_thickness = new_textbox_decimals()
+			tbx_sky_clouds_offset_y = new_textbox_ndecimals()
+			tbx_sky_clouds_offset_z = new_textbox_ndecimals()
+			tbx_sky_clouds_size_xy = new_textbox_decimals()
+			tbx_sky_clouds_size_z = new_textbox_decimals()
 			tbx_sky_clouds_speed = new_textbox_ndecimals()
 			tbx_sky_clouds_speed.suffix = "%"
-			tbx_sky_clouds_offset = new_textbox_ndecimals()
 			tbx_fog_distance = new_textbox_integer()
 			tbx_fog_size = new_textbox_integer()
 			tbx_fog_height = new_textbox_integer()
@@ -139,7 +155,8 @@ function app_startup_interface_tabs()
 			tbx_wind_directional_speed = new_textbox_decimals()
 			tbx_wind_directional_speed.suffix = "%"
 			tbx_wind_directional_strength = new_textbox_decimals()
-			tbx_texture_animation_speed = new_textbox_ndecimals()
+			tbx_texture_animation_speed = new_textbox_ninteger()
+			tbx_texture_animation_speed.suffix = "%"
 		}
 		
 		// Resources
@@ -148,8 +165,10 @@ function app_startup_interface_tabs()
 		{
 			preview = new_obj(obj_preview)
 			list = new_obj(obj_sortlist)
+			list.height_items = 7
 			list.can_deselect = true
 			list.script = action_res_list
+			list.filter_type_list = res_type_name_list
 			sortlist_column_add(list, "resname", 0)
 			sortlist_column_add(list, "restype", 0.35)
 			sortlist_column_add(list, "rescount", 0.65)
@@ -167,6 +186,7 @@ function app_startup_interface_tabs()
 	lib_list = properties.library.list
 	res_preview = properties.resources.preview
 	res_list = properties.resources.list
+	preview_edit = res_preview
 	
 	// Ground editor
 	ground_editor = new_tab(setting_ground_editor_location, false)
@@ -174,15 +194,16 @@ function app_startup_interface_tabs()
 	with (ground_editor)
 		ground_scroll = new_obj(obj_scrollbar)
 	
-	// Template editor
-	template_editor = new_tab(setting_template_editor_location, false)
-	template_editor.script = tab_template_editor
+	// Object editor
+	object_editor = new_tab(setting_object_editor_location, false)
+	object_editor.script = tab_object_editor
 	
-	with (template_editor)
+	with (object_editor)
 	{
 		// Character list
 		char_list = new_obj(obj_sortlist)
 		char_list.script = action_lib_model_name
+		char_list.script_search = sortlist_search_model
 		sortlist_column_add(char_list, "charname", 0)
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
@@ -193,6 +214,7 @@ function app_startup_interface_tabs()
 		// Block
 		block_list = new_obj(obj_sortlist)
 		block_list.script = action_lib_block_name
+		block_list.script_search = sortlist_search_block
 		sortlist_column_add(block_list, "blockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
@@ -201,18 +223,42 @@ function app_startup_interface_tabs()
 		// Special block list
 		special_block_list = new_obj(obj_sortlist)
 		special_block_list.script = action_lib_model_name
+		special_block_list.script_search = sortlist_search_model
 		sortlist_column_add(special_block_list, "spblockname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
 		
-		// Bodypart list
-		bodypart_model_list = new_obj(obj_sortlist)
-		bodypart_model_list.script = action_lib_bodypart_model_name
-		sortlist_column_add(bodypart_model_list, "bodypartmodelname", 0)
+		// Equipment list
+		equipment_list = new_obj(obj_sortlist)
+		equipment_list.script = action_lib_model_name
+		equipment_list.script_search = sortlist_search_model
+		sortlist_column_add(equipment_list, "spblockname", 0)
+		for (var b = 0; b < ds_list_size(mc_assets.equipment_list); b++)
+			sortlist_add(equipment_list, mc_assets.equipment_list[|b].name)
+		
+		// Model part list
+		model_part_model_list = new_obj(obj_sortlist)
+		model_part_model_list.script = action_lib_model_part_model_name
+		model_part_model_list.script_search = sortlist_search_model
+		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
+		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
+		{
+			var model = mc_assets.equipment_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.char_list[|m].name)
+		{
+			var model = mc_assets.char_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
-			sortlist_add(bodypart_model_list, mc_assets.special_block_list[|m].name)
+		{
+			var model = mc_assets.special_block_list[|m];
+			if (model.model_part_available)
+				sortlist_add(model_part_model_list, model.name)
+		}
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()
@@ -237,6 +283,7 @@ function app_startup_interface_tabs()
 		tbx_destroy_at_time_random = new_textbox_ndecimals()
 		
 		type_list = new_obj(obj_sortlist)
+		type_list.height_items = 6
 		type_list.script = action_lib_pc_type_list
 		type_list.can_deselect = true
 		sortlist_column_add(type_list, "particleeditortypename", 0)
@@ -250,7 +297,9 @@ function app_startup_interface_tabs()
 		tbx_type_spawn_rate.suffix = "%"
 		tbx_type_text = new_textbox(false, 0, "")
 		tbx_type_sprite_frame_width = new_textbox_integer()
+		tbx_type_sprite_frame_width.suffix = text_get("particleeditorpixels")
 		tbx_type_sprite_frame_height = new_textbox_integer()
+		tbx_type_sprite_frame_height.suffix = text_get("particleeditorpixels")
 		tbx_type_sprite_frame_start = new_textbox_integer()
 		tbx_type_sprite_frame_end = new_textbox_integer()
 		
@@ -378,8 +427,30 @@ function app_startup_interface_tabs()
 		
 		tbx_type_bounce_factor = new_textbox_decimals()
 	}
+
+	// Build mode editor
+	build_tool = new_tab(setting_build_mode_location, false)
+	build_tool.script = tab_build_tool
 	
-	ptype_list = template_editor.type_list
+	with (build_tool)
+	{
+		build_list = new_obj(obj_sortlist)
+		build_list.script = action_build_select
+		build_list.script_search = sortlist_search_build
+		build_list.header_show = true
+		sortlist_column_add(build_list, "buildname", 0)
+		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
+			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
+				sortlist_add(build_list, [false, mc_assets.block_list[|b].name])
+
+		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
+			sortlist_add(build_list, [true, mc_assets.special_block_list[|b].name])
+		build_list.column_sort = 0
+		sortlist_update(build_list)
+		build_selected = null
+	}
+
+	ptype_list = object_editor.type_list
 	
 	// Timeline
 	timeline = new_tab("bottom", true, null, e_window.TIMELINE)
@@ -393,6 +464,10 @@ function app_startup_interface_tabs()
 		tbx_search = new_textbox(true, 0, "")
 		tbx_rename = new_textbox(true, 0, "")
 		
+		transition_easein = "easeinquad"
+		transition_easeout = "easeoutquad"
+		transition_easeinout = "easeinoutquad"
+	
 		list_width = 320
 		
 		hor_scroll = new_obj(obj_scrollbar)
@@ -410,10 +485,32 @@ function app_startup_interface_tabs()
 		with (info)
 		{
 			tbx_name = new_textbox(true, 0, "")
-			tbx_text = new_textbox(false, 0, "")
 			tbx_rot_point_x = new_textbox_ndecimals()
 			tbx_rot_point_y = new_textbox_ndecimals()
 			tbx_rot_point_z = new_textbox_ndecimals()
+		}
+		
+		// Block
+		block = tab_add_category("timelineeditorblock", icons.BLOCK, tab_timeline_editor_block, true)
+		with (block)
+		{
+			tbx_repeat_x = new_textbox_integer()
+			tbx_repeat_y = new_textbox_integer()
+			tbx_repeat_z = new_textbox_integer()
+		}
+
+		// Audio
+		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
+		
+		// Path
+		path = tab_add_category("timelineeditorpath", icons.PATH_SMALL, tab_timeline_editor_path, true)
+		with (path)
+		{
+			tbx_detail = new_textbox_decimals()
+			
+			tbx_radius = new_textbox_decimals()
+			tbx_shape_detail = new_textbox_decimals()
+			tbx_tex_length = new_textbox_decimals()
 		}
 		
 		// Hierarchy
@@ -431,26 +528,187 @@ function app_startup_interface_tabs()
 			tbx_glint_strength.suffix = "%"
 			tbx_depth = new_textbox_ninteger()
 		}
-		
-		// Audio
-		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
-		
-		// Path
-		path = tab_add_category("timelineeditorpath", icons.PATH_SMALL, tab_timeline_editor_path, true)
-		with (path)
-		{
-			tbx_detail = new_textbox_decimals()
-			
-			tbx_radius = new_textbox_decimals()
-			tbx_tex_length = new_textbox_decimals()
-			tbx_shape_detail = new_textbox_decimals()
-		}
 	}
 	
 	// Frame editor
 	frame_editor = new_tab(setting_frame_editor_location, false)
 	with (frame_editor)
 	{
+		// Item
+		item = tab_add_category("frameeditoritem", icons.ITEM_SMALL, tab_frame_editor_item, false)
+		with (item)
+		{
+			item_scroll = new_obj(obj_scrollbar)
+			item_slot = new_textbox_integer()
+		}
+		
+		// Camera
+		camera = tab_add_category("frameeditorcamera", icons.CAMERA_SMALL, tab_frame_editor_camera, false)
+		with (camera)
+		{
+			video_template = null
+			tbx_video_size_custom_width = new_textbox_integer()
+			tbx_video_size_custom_height = new_textbox_integer()
+			tbx_fov = new_textbox_decimals()
+			tbx_fov.suffix = "°"
+			
+			tbx_blade_amount = new_textbox_integer()
+			tbx_blade_angle = new_textbox_ndecimals()
+			tbx_blade_angle.suffix = "°"
+			
+			tbx_exposure = new_textbox_decimals()
+			tbx_gamma = new_textbox_decimals()
+			
+			tbx_rotate_distance = new_textbox_decimals()
+			tbx_rotate_angle_xy = new_textbox_ndecimals()
+			tbx_rotate_angle_xy.suffix = "°"
+			tbx_rotate_angle_z = new_textbox_ndecimals()
+			tbx_rotate_angle_z.suffix = "°"
+			look_at_rotate = true
+			
+			tbx_shake_strength_x = new_textbox_decimals()
+			tbx_shake_strength_x.suffix = "%"
+			tbx_shake_strength_y = new_textbox_decimals()
+			tbx_shake_strength_y.suffix = "%"
+			tbx_shake_strength_z = new_textbox_decimals()
+			tbx_shake_strength_z.suffix = "%"
+			tbx_shake_speed_x = new_textbox_decimals()
+			tbx_shake_speed_x.suffix = "%"
+			tbx_shake_speed_y = new_textbox_decimals()
+			tbx_shake_speed_y.suffix = "%"
+			tbx_shake_speed_z = new_textbox_decimals()
+			tbx_shake_speed_z.suffix = "%"
+			
+			tbx_dof_depth = new_textbox_decimals()
+			tbx_dof_range = new_textbox_decimals()
+			tbx_dof_fade_size = new_textbox_decimals()
+			tbx_dof_blur_size = new_textbox_decimals()
+			tbx_dof_blur_size.suffix = "%"
+			tbx_dof_blur_ratio = new_textbox_integer()
+			tbx_dof_blur_ratio.suffix = "%"
+			tbx_dof_bias = new_textbox_integer()
+			tbx_dof_bias.suffix = "%"
+			tbx_dof_threshold = new_textbox_integer()
+			tbx_dof_threshold.suffix = "%"
+			tbx_dof_gain = new_textbox_integer()
+			tbx_dof_gain.suffix = "%"
+			tbx_dof_fringe_angle_red = new_textbox_ndecimals()
+			tbx_dof_fringe_angle_red.suffix = "°"
+			tbx_dof_fringe_angle_green = new_textbox_ndecimals()
+			tbx_dof_fringe_angle_green.suffix = "°"
+			tbx_dof_fringe_angle_blue = new_textbox_ndecimals()
+			tbx_dof_fringe_angle_blue.suffix = "°"
+			tbx_dof_fringe_red = new_textbox_integer()
+			tbx_dof_fringe_red.suffix = "%"
+			tbx_dof_fringe_green = new_textbox_integer()
+			tbx_dof_fringe_green.suffix = "%"
+			tbx_dof_fringe_blue = new_textbox_integer()
+			tbx_dof_fringe_blue.suffix = "%"
+		
+			tbx_bloom_threshold = new_textbox_integer()
+			tbx_bloom_threshold.suffix = "%"
+			tbx_bloom_intensity = new_textbox_integer()
+			tbx_bloom_intensity.suffix = "%"
+			tbx_bloom_radius = new_textbox_integer()
+			tbx_bloom_radius.suffix = "%"
+			tbx_bloom_ratio = new_textbox_integer()
+			tbx_bloom_ratio.suffix = "%"
+			
+			tbx_lens_dirt_radius = new_textbox_integer()
+			tbx_lens_dirt_radius.suffix = "%"
+			tbx_lens_dirt_intensity = new_textbox_integer()
+			tbx_lens_dirt_intensity.suffix = "%"
+			tbx_lens_dirt_power = new_textbox_integer()
+			tbx_lens_dirt_power.suffix = "%"
+			
+			tbx_contrast = new_textbox_integer()
+			tbx_contrast.suffix = "%"
+			tbx_brightness = new_textbox_ninteger()
+			tbx_brightness.suffix = "%"
+			tbx_saturation = new_textbox_integer()
+			tbx_saturation.suffix = "%"
+			tbx_vibrance = new_textbox_integer()
+			tbx_vibrance.suffix = "%"
+			
+			tbx_grain_strength = new_textbox_ninteger()
+			tbx_grain_strength.suffix = "%"
+			tbx_grain_saturation = new_textbox_integer()
+			tbx_grain_saturation.suffix = "%"
+			tbx_grain_size = new_textbox_integer()
+			
+			tbx_vignette_radius = new_textbox_integer()
+			tbx_vignette_radius.suffix = "%"
+			tbx_vignette_softness = new_textbox_integer()
+			tbx_vignette_softness.suffix = "%"
+			tbx_vignette_strength = new_textbox_integer()
+			tbx_vignette_strength.suffix = "%"
+			
+			tbx_ca_blur_amount = new_textbox_integer()
+			tbx_ca_blur_amount.suffix = "%"
+			tbx_ca_red_offset = new_textbox_integer()
+			tbx_ca_red_offset.suffix = "%"
+			tbx_ca_green_offset = new_textbox_integer()
+			tbx_ca_green_offset.suffix = "%"
+			tbx_ca_blue_offset = new_textbox_integer()
+			tbx_ca_blue_offset.suffix = "%"
+			
+			tbx_distort_zoom_amount = new_textbox_decimals()
+			tbx_distort_zoom_amount.suffix = "%"
+			tbx_distort_amount = new_textbox_ninteger()
+			tbx_distort_amount.suffix = "%"
+		}
+		
+		// Sound
+		sound = tab_add_category("frameeditorsound", icons.VOLUME_SMALL, tab_frame_editor_sound, true)
+		with (sound)
+		{
+			tbx_volume = new_textbox_integer()
+			tbx_volume.suffix = "%"
+			tbx_pitch = new_textbox_integer()
+			tbx_pitch.suffix = "%"
+			tbx_start = new_textbox_decimals()
+			tbx_end = new_textbox_ndecimals()
+		}
+		
+		// Particles
+		particles = tab_add_category("frameeditorparticles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
+		with (particles)
+		{
+			tbx_seed = new_textbox_ninteger()
+			tbx_force = new_textbox_ndecimals()
+			tbx_force_directional = new_textbox_ndecimals()
+			tbx_force_vortex = new_textbox_ndecimals()
+		}
+		
+		// Text
+		text = tab_add_category("frameeditortext", icons.TEXT_SMALL, tab_frame_editor_text, true)
+		with (text)
+		{
+			tbx_text = new_textbox(false, 0, "")
+			tbx_outline_size = new_textbox_integer()
+		}
+		
+		// Light
+		light = tab_add_category("frameeditorlight", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
+		with (light)
+		{
+			has_spotlight = false
+			tbx_size = new_textbox_decimals()
+			tbx_range = new_textbox_decimals()
+			tbx_strength = new_textbox_integer()
+			tbx_strength.suffix = "%"
+			tbx_specular_strength = new_textbox_integer()
+			tbx_specular_strength.suffix = "%"
+			tbx_fade_size = new_textbox_integer()
+			tbx_fade_size.suffix = "%"
+			tbx_spot_radius = new_textbox_decimals()
+			tbx_spot_sharpness = new_textbox_integer()
+			tbx_spot_sharpness.suffix = "%"
+		}
+
+		// Environment
+		environment = tab_add_category("frameeditorenvironment", icons.WORLD_SMALL, tab_frame_editor_environment, true)
+
 		// Transform
 		transform = tab_add_category("frameeditortransform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
 		with (transform)
@@ -525,174 +783,6 @@ function app_startup_interface_tabs()
 			tbx_subsurface_radius[Z].suffix = "%"
 			tbx_wind_influence = new_textbox_integer()
 			tbx_wind_influence.suffix = "%"
-		}
-		
-		// Particles
-		particles = tab_add_category("frameeditorparticles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
-		with (particles)
-		{
-			tbx_seed = new_textbox_ninteger()
-			tbx_force = new_textbox_ndecimals()
-			tbx_force_directional = new_textbox_ndecimals()
-			tbx_force_vortex = new_textbox_ndecimals()
-		}
-		
-		// Light
-		light = tab_add_category("frameeditorlight", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
-		with (light)
-		{
-			has_spotlight = false
-			tbx_size = new_textbox_decimals()
-			tbx_range = new_textbox_decimals()
-			tbx_strength = new_textbox_integer()
-			tbx_strength.suffix = "%"
-			tbx_specular_strength = new_textbox_integer()
-			tbx_specular_strength.suffix = "%"
-			tbx_fade_size = new_textbox_integer()
-			tbx_fade_size.suffix = "%"
-			tbx_spot_radius = new_textbox_decimals()
-			tbx_spot_sharpness = new_textbox_integer()
-			tbx_spot_sharpness.suffix = "%"
-		}
-		
-		// Camera
-		camera = tab_add_category("frameeditorcamera", icons.CAMERA_SMALL, tab_frame_editor_camera, false)
-		with (camera)
-		{
-			video_template = null
-			look_at_rotate = true
-			tbx_fov = new_textbox_decimals()
-			tbx_fov.suffix = "°"
-			tbx_exposure = new_textbox_decimals()
-			tbx_gamma = new_textbox_decimals()
-			tbx_blade_amount = new_textbox_integer()
-			tbx_blade_angle = new_textbox_integer()
-			tbx_blade_angle.suffix = "°"
-			
-			tbx_rotate_distance = new_textbox_decimals()
-			tbx_rotate_angle_xy = new_textbox_ndecimals()
-			tbx_rotate_angle_xy.suffix = "°"
-			tbx_rotate_angle_z = new_textbox_ndecimals()
-			tbx_rotate_angle_z.suffix = "°"
-			
-			tbx_shake_strength_x = new_textbox_decimals()
-			tbx_shake_strength_x.suffix = "%"
-			tbx_shake_strength_y = new_textbox_decimals()
-			tbx_shake_strength_y.suffix = "%"
-			tbx_shake_strength_z = new_textbox_decimals()
-			tbx_shake_strength_z.suffix = "%"
-			tbx_shake_speed_x = new_textbox_decimals()
-			tbx_shake_speed_x.suffix = "%"
-			tbx_shake_speed_y = new_textbox_decimals()
-			tbx_shake_speed_y.suffix = "%"
-			tbx_shake_speed_z = new_textbox_decimals()
-			tbx_shake_speed_z.suffix = "%"
-			
-			tbx_dof_depth = new_textbox_decimals()
-			tbx_dof_range = new_textbox_decimals()
-			tbx_dof_fade_size = new_textbox_decimals()
-			tbx_dof_blur_size = new_textbox_decimals()
-			tbx_dof_blur_size.suffix = "%"
-			tbx_dof_blur_ratio = new_textbox_integer()
-			tbx_dof_blur_ratio.suffix = "%"
-			tbx_dof_bias = new_textbox_integer()
-			tbx_dof_bias.suffix = "%"
-			tbx_dof_threshold = new_textbox_integer()
-			tbx_dof_threshold.suffix = "%"
-			tbx_dof_gain = new_textbox_integer()
-			tbx_dof_gain.suffix = "%"
-			tbx_dof_fringe_angle_red = new_textbox_ndecimals()
-			tbx_dof_fringe_angle_red.suffix = "°"
-			tbx_dof_fringe_angle_green = new_textbox_ndecimals()
-			tbx_dof_fringe_angle_green.suffix = "°"
-			tbx_dof_fringe_angle_blue = new_textbox_ndecimals()
-			tbx_dof_fringe_angle_blue.suffix = "°"
-			tbx_dof_fringe_red = new_textbox_integer()
-			tbx_dof_fringe_red.suffix = "%"
-			tbx_dof_fringe_green = new_textbox_integer()
-			tbx_dof_fringe_green.suffix = "%"
-			tbx_dof_fringe_blue = new_textbox_integer()
-			tbx_dof_fringe_blue.suffix = "%"
-			
-			tbx_video_size_custom_width = new_textbox_integer()
-			tbx_video_size_custom_height = new_textbox_integer()
-		
-			tbx_bloom_threshold = new_textbox_integer()
-			tbx_bloom_threshold.suffix = "%"
-			tbx_bloom_intensity = new_textbox_integer()
-			tbx_bloom_intensity.suffix = "%"
-			tbx_bloom_radius = new_textbox_integer()
-			tbx_bloom_radius.suffix = "%"
-			tbx_bloom_ratio = new_textbox_integer()
-			tbx_bloom_ratio.suffix = "%"
-			
-			tbx_lens_dirt_radius = new_textbox_integer()
-			tbx_lens_dirt_radius.suffix = "%"
-			tbx_lens_dirt_intensity = new_textbox_integer()
-			tbx_lens_dirt_intensity.suffix = "%"
-			tbx_lens_dirt_power = new_textbox_integer()
-			tbx_lens_dirt_power.suffix = "%"
-			
-			tbx_contrast = new_textbox_integer()
-			tbx_contrast.suffix = "%"
-			tbx_brightness = new_textbox_ninteger()
-			tbx_brightness.suffix = "%"
-			tbx_saturation = new_textbox_integer()
-			tbx_saturation.suffix = "%"
-			tbx_vibrance = new_textbox_integer()
-			tbx_vibrance.suffix = "%"
-			
-			tbx_grain_strength = new_textbox_ninteger()
-			tbx_grain_strength.suffix = "%"
-			tbx_grain_saturation = new_textbox_integer()
-			tbx_grain_saturation.suffix = "%"
-			tbx_grain_size = new_textbox_integer()
-			
-			tbx_vignette_radius = new_textbox_integer()
-			tbx_vignette_radius.suffix = "%"
-			tbx_vignette_softness = new_textbox_integer()
-			tbx_vignette_softness.suffix = "%"
-			tbx_vignette_strength = new_textbox_integer()
-			tbx_vignette_strength.suffix = "%"
-			
-			tbx_ca_blur_amount = new_textbox_integer()
-			tbx_ca_blur_amount.suffix = "%"
-			tbx_ca_red_offset = new_textbox_integer()
-			tbx_ca_red_offset.suffix = "%"
-			tbx_ca_green_offset = new_textbox_integer()
-			tbx_ca_green_offset.suffix = "%"
-			tbx_ca_blue_offset = new_textbox_integer()
-			tbx_ca_blue_offset.suffix = "%"
-			
-			tbx_distort_zoom_amount = new_textbox_decimals()
-			tbx_distort_zoom_amount.suffix = "%"
-			tbx_distort_amount = new_textbox_ninteger()
-			tbx_distort_amount.suffix = "%"
-		}
-		
-		// Sound
-		sound = tab_add_category("frameeditorsound", icons.VOLUME_SMALL, tab_frame_editor_sound, true)
-		with (sound)
-		{
-			tbx_volume = new_textbox_integer()
-			tbx_volume.suffix = "%"
-			tbx_pitch = new_textbox_integer()
-			tbx_pitch.suffix = "%"
-			tbx_start = new_textbox_decimals()
-			tbx_end = new_textbox_ndecimals()
-		}
-		
-		// Text
-		text = tab_add_category("frameeditortext", icons.TEXT_SMALL, tab_frame_editor_text, false)
-		with (text)
-			tbx_text = new_textbox(false, 0, "")
-		
-		// Item
-		item = tab_add_category("frameeditoritem", icons.ITEM_SMALL, tab_frame_editor_item, false)
-		with (item)
-		{
-			item_scroll = new_obj(obj_scrollbar)
-			item_slot = new_textbox_integer()
 		}
 		
 		// Keyframe

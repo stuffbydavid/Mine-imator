@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "array_add",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Array",
-    "path": "folders/Scripts/Utility/Array.yy",
+  "$GMScript":"v1",
+  "%Name":"array_add",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"array_add",
+  "parent":{
+    "name":"Array",
+    "path":"folders/Scripts/Utility/Array.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

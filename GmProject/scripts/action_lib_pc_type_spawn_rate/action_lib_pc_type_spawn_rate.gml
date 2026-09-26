@@ -15,7 +15,7 @@ function action_lib_pc_type_spawn_rate(val, add)
 		addval = val / 100 - ptype_edit.spawn_rate
 	
 	ptype_edit.spawn_rate += addval
-	with (temp_edit)
+	with (obj_edit)
 	{
 		temp_particles_update_spawn_rate(ptype_edit, addval)
 		temp_particles_restart()

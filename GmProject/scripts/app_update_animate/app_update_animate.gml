@@ -4,10 +4,12 @@
 function app_update_animate()
 {
 	// Go through timelines
-	var bgobject, updatevalues, cameraarr;
+	var bgobject, updatevalues, cameraarr, spawnerarr, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
+	biomeani = (background_biome_next != background_biome)
 	bgobject = null
-	cameraarr = array()
+	cameraarr = []
+	spawnerarr = []
 	background_light_amount = 1
 	background_light_data[0] = 0
 	background_sun_direction = vec3(0)
@@ -32,14 +34,23 @@ function app_update_animate()
 			tl_update_values()
 		
 		tex_obj = value_inherit[e_value.TEXTURE_OBJ]
+		tex_obj_material = value_inherit[e_value.TEXTURE_MATERIAL_OBJ]
+		tex_obj_normal = value_inherit[e_value.TEXTURE_NORMAL_OBJ]
 		
 		// Update render resource
-		if ((tex_obj != tex_obj_prev) || app.history_resource_update)
+		if (tex_obj != tex_obj_prev ||
+			tex_obj_material != tex_obj_material_prev ||
+			tex_obj_normal != tex_obj_normal_prev ||
+			app.history_resource_update)
 		{
 			if (render_visible)
 			{
 				if (render_update_tl_resource())
+				{
 					tex_obj_prev = tex_obj
+					tex_obj_material_prev = tex_obj_material
+					tex_obj_normal_prev = tex_obj_normal
+				}
 			}
 		}
 		
@@ -79,7 +90,7 @@ function app_update_animate()
 		
 		// Update spawner
 		if (type = e_temp_type.PARTICLE_SPAWNER)
-			particle_spawner_update(id)
+			array_add(spawnerarr, id)
 		
 		// Find background changer
 		if (type = e_tl_type.BACKGROUND && value_inherit[e_value.VISIBLE] && !hide)
@@ -130,6 +141,11 @@ function app_update_animate()
 			tl_update_matrix(true)
 	}
 	
+	// Spawn particles
+	for (var i = 0; i < array_length(spawnerarr); i++)
+		with (spawnerarr[i])
+			particle_spawner_update(spawnerarr[i])
+	
 	// Clear cached IK tl IDs (In case of removal, etc. tl_update_matrix will re-generate)
 	project_ik_part_array = null
 	
@@ -148,8 +164,13 @@ function app_update_animate()
 	timeline_marker_previous = timeline_marker
 	
 	// Background
+	background_tlactive = null
+	background_biome_next = background_biome
+	background_biome_mix = 0
 	if (bgobject)
 	{
+		background_tlactive = bgobject
+		
 		background_image_show					= bgobject.value[e_value.BG_IMAGE_SHOW]
 		background_image_rotation				= bgobject.value[e_value.BG_IMAGE_ROTATION]
 		background_sky_sun_angle				= bgobject.value[e_value.BG_SKY_SUN_ANGLE]
@@ -164,8 +185,8 @@ function app_update_animate()
 		background_twilight						= bgobject.value[e_value.BG_TWILIGHT]
 		background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
 		background_sky_clouds_speed				= bgobject.value[e_value.BG_SKY_CLOUDS_SPEED]
-		background_sky_clouds_height			= bgobject.value[e_value.BG_SKY_CLOUDS_HEIGHT]
-		background_sky_clouds_offset			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET]
+		background_sky_clouds_offset_y			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET_Y]
+		background_sky_clouds_offset_z			= bgobject.value[e_value.BG_SKY_CLOUDS_OFFSET_Z]
 		background_ground_show					= bgobject.value[e_value.BG_GROUND_SHOW]
 		background_ground_slot					= bgobject.value[e_value.BG_GROUND_SLOT]
 		background_biome						= bgobject.value[e_value.BG_BIOME]
@@ -173,9 +194,13 @@ function app_update_animate()
 		background_sky_clouds_color				= bgobject.value[e_value.BG_SKY_CLOUDS_COLOR]
 		background_sunlight_color				= bgobject.value[e_value.BG_SUNLIGHT_COLOR]
 		background_ambient_color				= bgobject.value[e_value.BG_AMBIENT_COLOR]
+		background_night_sky_color				= bgobject.value[e_value.BG_NIGHT_SKY_COLOR]
+		background_night_sky_clouds_color		= bgobject.value[e_value.BG_NIGHT_SKY_CLOUDS_COLOR]
+		background_night_sky_stars_color		= bgobject.value[e_value.BG_NIGHT_SKY_STARS_COLOR]
 		background_night_color					= bgobject.value[e_value.BG_NIGHT_COLOR]
 		background_grass_color					= bgobject.value[e_value.BG_GRASS_COLOR]
 		background_foliage_color				= bgobject.value[e_value.BG_FOLIAGE_COLOR]
+		background_dry_foliage_color			= bgobject.value[e_value.BG_DRY_FOLIAGE_COLOR]
 		background_water_color					= bgobject.value[e_value.BG_WATER_COLOR]
 		background_leaves_oak_color				= bgobject.value[e_value.BG_LEAVES_OAK_COLOR]
 		background_leaves_spruce_color			= bgobject.value[e_value.BG_LEAVES_SPRUCE_COLOR]
@@ -201,7 +226,17 @@ function app_update_animate()
 		background_wind_directional_strength	= bgobject.value[e_value.BG_WIND_DIRECTIONAL_STRENGTH]
 		background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
 		
-		if (background_biome = "custom" || background_biome_prev != background_biome)
+		background_biome_next = background_biome
+		if (bgobject.keyframe_animate && background_biome != bgobject.keyframe_next_values[e_value.BG_BIOME])
+		{
+			background_biome_next = bgobject.keyframe_next_values[e_value.BG_BIOME]
+			background_biome_mix = clamp(bgobject.keyframe_progress_ease, 0, 1)
+			with (obj_resource)
+				res_update_colors(app.background_biome, app.background_biome_next, app.background_biome_mix)
+			properties.library.preview.update = true
+			background_biome_prev = background_biome
+		}
+		else if (background_biome = "custom" || background_biome_prev != background_biome || biomeani)
 		{
 			with (obj_resource)
 				res_update_colors()
@@ -213,6 +248,13 @@ function app_update_animate()
 		background_ground_update_texture()
 		background_ground_update_texture_material()
 		background_ground_update_texture_normal()
+	}
+	else if (biomeani)
+	{
+		with (obj_resource)
+			res_update_colors()
+		properties.library.preview.update = true
+		background_biome_prev = background_biome
 	}
 	
 	// Update sun direction
@@ -228,13 +270,14 @@ function app_update_animate()
 	background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 	background_fog_color_final = background_fog_color
 	
-	background_sky_color_final = merge_color(background_sky_color, hex_to_color("020204"), background_sky_night_alpha())
+	background_sky_color_final = merge_color(background_sky_color, background_night_sky_color, background_sky_night_alpha())
 	
 	// Cameras
+	var isrendermode = (view_second.quality = e_view_mode.RENDER || view_main.quality = e_view_mode.RENDER);
 	if (window_state = "export_movie")
 		app_update_cameras(exportmovie_high_quality, true)
-	else
-		app_update_cameras(view_render, false)
+	else if (!isrendermode || (isrendermode && render_samples = -1))
+		app_update_cameras(isrendermode, false)
 	
 	// Update current marker
 	timeline_marker_current = null

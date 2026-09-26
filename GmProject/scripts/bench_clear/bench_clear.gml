@@ -8,6 +8,6 @@ function bench_clear()
 			instance_destroy()
 	
 	with (obj_resource)
-		if (creator = app.bench_settings)
+		if (creator = app.bench_settings && id != app.bench_settings.music_res)
 			instance_destroy()
 }

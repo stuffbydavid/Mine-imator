@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_keyframes_sound_resize_start",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Keyframes",
-    "path": "folders/Scripts/App/Actions/Timeline/Keyframes.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_keyframes_sound_resize_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_keyframes_sound_resize_start",
+  "parent":{
+    "name":"Keyframes",
+    "path":"folders/Scripts/App/Actions/Timeline/Keyframes.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

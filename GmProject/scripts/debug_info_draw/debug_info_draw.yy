@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "debug_info_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Debug",
-    "path": "folders/Scripts/App/Debug.yy",
+  "$GMScript":"v1",
+  "%Name":"debug_info_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"debug_info_draw",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

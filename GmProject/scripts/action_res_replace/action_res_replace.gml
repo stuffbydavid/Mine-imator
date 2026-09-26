@@ -65,6 +65,7 @@ function action_res_replace()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+	project_update_counts()
 	
 	lib_preview.update = true
 	res_preview.update = true

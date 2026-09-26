@@ -2,7 +2,7 @@
 /// @arg value
 /// @arg add
 
-function action_tl_path_shape_tex_length(value, add)
+function action_tl_path_shape_tex_length(val, add)
 {
 	if (history_undo)
 	{
@@ -42,9 +42,9 @@ function action_tl_path_shape_tex_length(value, add)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.path_shape_tex_length, other.path_shape_tex_length * add + value)
+				history_save_var(other.id, other.path_shape_tex_length, other.path_shape_tex_length * add + val)
 			
-			id.path_shape_tex_length = id.path_shape_tex_length * add + value
+			id.path_shape_tex_length = id.path_shape_tex_length * add + val
 			path_update = true
 		}
 	}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "font_add_lib",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "File",
-    "path": "folders/Scripts/App/Libraries/File.yy",
+  "$GMScript":"v1",
+  "%Name":"font_add_lib",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"font_add_lib",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/App/Libraries/File.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

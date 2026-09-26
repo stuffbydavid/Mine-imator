@@ -26,8 +26,7 @@ function action_background_ground_tex(res)
 		history_set_res(action_background_ground_tex, fn, background_ground_tex, res)
 	}
 	
-	background_ground_tex.count--
 	background_ground_tex = res
-	background_ground_tex.count++
 	background_ground_update_texture()
+	project_update_counts()
 }

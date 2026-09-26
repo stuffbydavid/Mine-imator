@@ -74,6 +74,7 @@ function view_control_scale_axis(view, control, vid, color, start, length, mat, 
 			view_control_matrix = mat
 			view_control_length = length
 			view_control_move_distance = 0
+			view_transform_begin(e_value_type.TRANSFORM_SCA)
 		}
 		
 		// Right click

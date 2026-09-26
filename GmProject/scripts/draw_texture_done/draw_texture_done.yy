@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_texture_done",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Texture",
-    "path": "folders/Scripts/Utility/Texture.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_texture_done",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_texture_done",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Utility/Texture.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

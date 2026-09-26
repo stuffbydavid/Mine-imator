@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_history",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "History",
-    "path": "folders/Scripts/App/History.yy",
+  "$GMScript":"v1",
+  "%Name":"new_history",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_history",
+  "parent":{
+    "name":"History",
+    "path":"folders/Scripts/App/History.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

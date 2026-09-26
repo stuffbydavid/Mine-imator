@@ -3,7 +3,9 @@
 
 function res_load(reload = false)
 {
-	var fn = load_folder + "/" + filename;
+	var fn, res;
+	fn = load_folder + "/" + filename
+	res = id
 	
 	debug("Loading " + res_type_name_list[|type], fn)
 	
@@ -14,6 +16,8 @@ function res_load(reload = false)
 		case e_res_type.PACK_UNZIPPED:
 		{
 			ready = false
+			load_reload = reload
+			pack_cache_loaded = false
 			
 			with (app)
 			{
@@ -40,10 +44,14 @@ function res_load(reload = false)
 		
 		case e_res_type.ITEM_SHEET:
 		{
-			if (item_sheet_texture)
-				texture_free(item_sheet_texture)
+			for (var size = 0; size < e_item_sheet.amount; size++)
+			{
+				if (item_sheet_texture[size] != null)
+					texture_free(item_sheet_texture[size])
+				item_sheet_texture[size] = null
+			}
 			
-			item_sheet_texture = texture_create(fn)
+			item_sheet_texture[e_item_sheet.SIZE16] = texture_create(fn)
 			
 			break
 		}
@@ -51,25 +59,37 @@ function res_load(reload = false)
 		case e_res_type.LEGACY_BLOCK_SHEET:
 		case e_res_type.BLOCK_SHEET:
 		{
-			if (block_sheet_texture != null)
-				texture_free(block_sheet_texture)
+			for (var size = 0; size < e_block_sheet.static_amount; size++)
+			{
+				if (block_sheet_texture[size] != null)
+					texture_free(block_sheet_texture[size])
+				if (block_sheet_texture_material[size] != null)
+					texture_free(block_sheet_texture_material[size])
+				if (block_sheet_texture_normal[size] != null)
+					texture_free(block_sheet_texture_normal[size])
+
+				block_sheet_texture[size] = null
+				block_sheet_texture_material[size] = null
+				block_sheet_texture_normal[size] = null
+			}
 			
 			if (type = e_res_type.LEGACY_BLOCK_SHEET)
 			{
-				block_sheet_texture = res_load_legacy_block_sheet(fn, load_format)
+				block_sheet_texture[e_block_sheet.STATIC16] = res_load_legacy_block_sheet(fn, load_format)
 				if (load_folder = save_folder)
 					filename = filename_new_ext(filename_name(fn), "_converted" + filename_ext(fn))
-				texture_export(block_sheet_texture, save_folder + "/" + filename)
+				texture_export(block_sheet_texture[e_block_sheet.STATIC16], save_folder + "/" + filename)
 				type = e_res_type.BLOCK_SHEET
 			}
 			else
-				block_sheet_texture = texture_create(fn)
+				block_sheet_texture[e_block_sheet.STATIC16] = texture_create(fn)
 			
-			block_sheet_texture_material = texture_duplicate(block_sheet_texture)
-			block_sheet_tex_normal = texture_duplicate(block_sheet_texture)
+			block_sheet_texture_material[e_block_sheet.STATIC16] = texture_duplicate(block_sheet_texture[e_block_sheet.STATIC16])
+			block_sheet_texture_normal[e_block_sheet.STATIC16] = texture_duplicate(block_sheet_texture[e_block_sheet.STATIC16])
 			
 			colormap_grass_texture = texture_duplicate(mc_res.colormap_grass_texture)
 			colormap_foliage_texture = texture_duplicate(mc_res.colormap_foliage_texture)
+			colormap_dry_foliage_texture = texture_duplicate(mc_res.colormap_dry_foliage_texture)
 			
 			res_update_colors()
 			res_update_block_preview()
@@ -77,21 +97,31 @@ function res_load(reload = false)
 			break
 		}
 		
-		case e_res_type.SCENERY:
+		case e_res_type.SCHEMATIC:
 		case e_res_type.FROM_WORLD:
 		{
+			scenery_instant = false
+			if (type = e_res_type.SCHEMATIC && file_exists_lib(fn))
+				scenery_instant = file_get_size(fn) < scenery_instant_threshold
+			
 			// Load from cached mesh
 			var cachefn = fn + ".meshcache";
 			if (!reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
 				break
 				
 			ready = false
-			
-			with (app)
+			if (scenery_instant)
 			{
-				ds_priority_add(load_queue, other.id, 1)
-				load_start(other.id, res_load_start)
+				load_stage = "open"
+				while (!ready && load_stage != "")
+					res_load_scenery()
 			}
+			else
+				with (app)
+				{
+					ds_priority_add(load_queue, other.id, 1)
+					load_start(other.id, res_load_start)
+				}
 			
 			break
 		}
@@ -163,14 +193,19 @@ function res_load(reload = false)
 		
 		case e_res_type.SOUND:
 		{
-			audio_stop_all()
-			ready = false
+			tl_audio_stop()
+			if (app.bench_settings.music_res = res)
+				bench_music_stop(false)
 			
-			with (app)
-			{
-				ds_priority_add(load_queue, other.id, 0)
-				load_start(other.id, res_load_start)
-			}
+			with (obj_preview)
+				if (select = res)
+					preview_sound_stop()
+			
+			ready = false
+			load_stage = "open"
+			
+			while (!ready && load_stage != "")
+				res_load_audio()
 			
 			break
 		}
@@ -219,16 +254,16 @@ function res_load(reload = false)
 				model_texture_material_map = null
 			}
 			
-			if (model_tex_normal_map != null)
+			if (model_texture_normal_map != null)
 			{
-				var key = ds_map_find_first(model_tex_normal_map);
+				var key = ds_map_find_first(model_texture_normal_map);
 				while (!is_undefined(key))
 				{
-					texture_free(model_tex_normal_map[?key])
-					key = ds_map_find_next(model_tex_normal_map, key)
+					texture_free(model_texture_normal_map[?key])
+					key = ds_map_find_next(model_texture_normal_map, key)
 				}
-				ds_map_destroy(model_tex_normal_map)
-				model_tex_normal_map = null
+				ds_map_destroy(model_texture_normal_map)
+				model_texture_normal_map = null
 			}
 			
 			// Load model from .mimodel or block .json
@@ -257,13 +292,13 @@ function res_load(reload = false)
 				if (model_file != null)
 					model_texture_material_name_map[?""] = model_file.texture_material_name
 				
-				if (model_tex_normal_name_map != null)
-					ds_map_clear(model_tex_normal_name_map)
+				if (model_texture_normal_name_map != null)
+					ds_map_clear(model_texture_normal_name_map)
 				else
-					model_tex_normal_name_map = ds_map_create()
+					model_texture_normal_name_map = ds_map_create()
 				
 				if (model_file != null)
-					model_tex_normal_name_map[?""] = model_file.texture_normal_name
+					model_texture_normal_name_map[?""] = model_file.texture_normal_name
 				
 				// Create color name map
 				if (model_color_name_map != null)

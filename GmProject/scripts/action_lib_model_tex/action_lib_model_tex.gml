@@ -63,13 +63,7 @@ function action_lib_model_tex(res)
 	
 	with (temp_edit)
 	{
-		if (model_tex != null)
-			model_tex.count--
-		
 		model_tex = res
-		
-		if (model_tex != null)
-			model_tex.count++
 		
 		if (pattern_type != "")
 			array_add(pattern_update, id)
@@ -78,5 +72,6 @@ function action_lib_model_tex(res)
 		temp_update_armor(id)
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

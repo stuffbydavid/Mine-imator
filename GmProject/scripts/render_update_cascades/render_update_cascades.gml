@@ -76,7 +76,7 @@ function render_update_cascades(dir)
 		orthoMax[Y] = round(orthoMax[Y] / pixelsize) * pixelsize
 		orthoMin[Y] = round(orthoMin[Y] / pixelsize) * pixelsize
 		
-		var lightMatVinv = matrix_inverse(sunmatV);
+		var lightMatVinv = matrix_inverse_ext(sunmatV);
 		var lightPoints = [
 			[orthoMin[X], orthoMax[Y], orthoMax[Z]],
 			[orthoMin[X], orthoMin[Y], orthoMax[Z]],

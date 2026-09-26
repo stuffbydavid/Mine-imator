@@ -14,7 +14,7 @@ function tab_frame_editor_rotation()
 	var def;
 	
 	if (tl_edit.type = e_tl_type.CAMERA)
-		def = point3D(0, 0, 0)
+		def = point3D(0)
 	else
 		def = point3D(tl_edit.value_default[e_value.ROT_X], tl_edit.value_default[e_value.ROT_Y], tl_edit.value_default[e_value.ROT_Z])
 	
@@ -43,7 +43,7 @@ function tab_frame_editor_rotation()
 	axis_edit = (setting_z_is_up ? Z : Y)
 	textfield_group_add("frameeditorrotationz", tl_edit.value[e_value.ROT_X + axis_edit], def[X + axis_edit], action_tl_frame_rot, axis_edit, tab.transform.tbx_rot_z)
 	
-	tab_control_textfield_group(false)
+	tab_control_textfield_group()
 	draw_textfield_group("frameeditorrotation", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, 1)
 	tab_next()
 	

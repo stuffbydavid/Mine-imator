@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "shader_vignette_set",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Effects",
-    "path": "folders/Scripts/Render/Shaders/Set/Effects.yy",
+  "$GMScript":"v1",
+  "%Name":"shader_vignette_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_vignette_set",
+  "parent":{
+    "name":"Effects",
+    "path":"folders/Scripts/Render/Shaders/Set/Effects.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

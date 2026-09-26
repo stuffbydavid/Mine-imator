@@ -10,7 +10,7 @@ function tl_update_length()
 		if (ds_list_size(keyframe_list) = 0)
 			continue
 		
-		if (type = e_tl_type.AUDIO)
+		if (type = e_tl_type.AUDIO_TRACK)
 		{
 			for (var k = 0; k < ds_list_size(keyframe_list); k++)
 				len = max(len, keyframe_list[|k].position + tl_keyframe_length(keyframe_list[|k]))

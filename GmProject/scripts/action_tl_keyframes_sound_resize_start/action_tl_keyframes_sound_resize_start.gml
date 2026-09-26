@@ -8,7 +8,7 @@ function action_tl_keyframes_sound_resize_start()
 		if (!selected)
 			continue
 		
-		if (timeline.type != e_tl_type.AUDIO || value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready) // Only affects sounds
+		if (timeline.type != e_tl_type.AUDIO_TRACK || value[e_value.SOUND_OBJ] = null || !value[e_value.SOUND_OBJ].ready) // Only affects sounds
 		{
 			sound_resize_index = null
 			continue

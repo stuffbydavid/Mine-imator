@@ -3,7 +3,6 @@
 #include "Generated/Scripts.hpp"
 
 #include <QDirIterator>
-#include <QStandardPaths>
 
 namespace CppProject
 {
@@ -18,7 +17,7 @@ namespace CppProject
 		World::saves.clear();
 
 		// List all worlds
-		QDirIterator it(world_import_get_saves_dir(), QDir::Dirs | QDir::NoDotAndDotDot);
+		QDirIterator it(minecraft_java_directory_get() + "/saves", QDir::Dirs | QDir::NoDotAndDotDot);
 		while (it.hasNext())
 		{
 			QDir saveDir = it.next();
@@ -79,6 +78,11 @@ namespace CppProject
 		World::preview->GoToPlayer();
 	}
 
+	void world_import_go_to_position(IntType x, IntType z)
+	{
+		World::preview->GoToPosition(x, z);
+	}
+
 	void world_import_set_selection(StringType size)
 	{
 		if (size == "small")
@@ -87,17 +91,6 @@ namespace CppProject
 			World::preview->SetSelectionSize({ 200, 30, 200 });
 		else
 			World::preview->SetSelectionSize({ 400, 50, 400 });
-	}
-
-	StringType world_import_get_saves_dir()
-	{
-	#if OS_WINDOWS
-		return QFileInfo(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).path() + "/.minecraft/saves";
-	#elif OS_MAC
-		return QDir::homePath() + "/Library/Application Support/minecraft/saves";
-	#else
-		return QDir::homePath() + "/.minecraft/saves";
-	#endif
 	}
 
 	void world_import_confirm()

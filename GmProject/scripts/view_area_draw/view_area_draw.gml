@@ -7,11 +7,20 @@ function view_area_draw()
 	view_area_y = panel_area_y + panel_map[?"top"].size_real_ani
 	view_area_width = panel_area_width - panel_map[?"left"].size_real_ani - panel_map[?"left_secondary"].size_real_ani - panel_map[?"right"].size_real_ani - panel_map[?"right_secondary"].size_real_ani
 	view_area_height = panel_area_height - panel_map[?"top"].size_real_ani - panel_map[?"bottom"].size_real_ani
-	
+
 	// Draw views
 	view_draw(view_main)
 	view_draw(view_second)
-	
+
+	// First-person crosshair
+	if (place_build && build_first_person)
+	{
+		var index = view_area_height > 800 ? 1 : 0;
+		gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color)
+		draw_sprite(spr_crosshair, index, floor(view_area_x + view_area_width / 2), floor(view_area_y + view_area_height / 2))
+		gpu_set_blendmode(bm_normal)
+	}
+
 	// Resizing
 	if (window_busy = "viewresizehor" || window_busy = "viewresizeboth") // Horizontal
 	{

@@ -129,8 +129,11 @@ namespace CppProject
 			global::temp_edit = global::_app->world_import_temp;
 			action_lib_scenery(ScopeAny(global::_app->id), resId);
 		}
-		else // Bench scenery
-			action_bench_scenery(ScopeAny(global::_app->id), resId);
+		else // Workbench world
+		{
+			action_res_scenery_animate(ScopeAny(global::_app->id), resId);
+			global::_app->bench_show_ani_type = "hide";
+		}
 
 		World::Close();
 		selection.active = false;
@@ -160,9 +163,9 @@ namespace CppProject
 		shader_set(shaderChecker->id);
 		GFX->shader->SubmitVec2(GFX->shader->GetUniformIndex("uSize"), rect.width(), rect.height());
 		IntType dim = 0;
-		if (dimension == "nether")
+		if (dimension == "the_nether")
 			dim = 1;
-		else if (dimension == "end")
+		else if (dimension == "the_end")
 			dim = -1;
 		GFX->shader->SubmitInt(GFX->shader->GetUniformIndex("uDim"), dim);
 		PR->Begin(pr_trianglestrip);
@@ -472,7 +475,7 @@ namespace CppProject
 							mode = Mode::DEFAULT;
 							global::_app->window_busy = "worldimportrelease";
 							updateBoxResizeSurface = true;
-							mouse_clear(mb_left);
+							app_mouse_clear(ScopeAny(global::_app->id));
 						}
 						else if (mouse_check_button(mb_right)) // Cancel
 						{
@@ -579,24 +582,24 @@ namespace CppProject
 
 						// Get speed modifier
 						RealType mod = flyMoveSpeed;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_SLOW], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_SLOW))->active)
 							mod *= flySlowMod;
-						else if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_FAST], active)))
+						else if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_FAST))->active)
 							mod *= flyFastMod;
 
 						// Apply keys to vector
 						VecType moveVec = { 0, 0, 0 };
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_FORWARD], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_FORWARD))->active)
 							moveVec += forward;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_BACK], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_BACK))->active)
 							moveVec -= forward;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_RIGHT], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_RIGHT))->active)
 							moveVec += right;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_LEFT], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_LEFT))->active)
 							moveVec -= right;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_ASCEND], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_ASCEND))->active)
 							camPos.y += mod, camTarget.y += mod;
-						if (keyboard_check(idVar(global::keybinds[e_keybind_CAM_DESCEND], active)))
+						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_DESCEND))->active)
 							camPos.y -= mod, camTarget.y -= mod;
 
 						moveVec *= mod;
@@ -896,6 +899,26 @@ namespace CppProject
 			camAnim.angleXYEnd = playerRot.y - 90;
 			camAnim.targetDisEnd = 30.0;
 		}
+
+		// Adjust angles
+		RealType diff = camAnim.angleXYStart - camAnim.angleXYEnd;
+		if (diff > 180)
+			camAnim.angleXYStart -= 360;
+		else if (diff < -180)
+			camAnim.angleXYEnd -= 360;
+	}
+
+	void Preview::GoToPosition(IntType x, IntType z)
+	{
+		camTarget = VecType(x, camTarget.y, z);
+		camAnim = {
+			0, 2000,
+			{}, {},
+			camTargetDis, 100.0,
+			mod_fix(camAngleXY, 360), camAngleXY,
+			camAngleZ, 25.0,
+			true
+		};
 
 		// Adjust angles
 		RealType diff = camAnim.angleXYStart - camAnim.angleXYEnd;

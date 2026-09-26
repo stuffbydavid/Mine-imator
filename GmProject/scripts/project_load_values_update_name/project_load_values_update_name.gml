@@ -5,12 +5,9 @@ function project_load_values_update_name(name)
 {
 	if (load_format < e_project.FORMAT_200_PRE_5)
 	{
-		if (name = "BG_SKY_CLOUDS_HEIGHT")
-			return "BG_SKY_CLOUDS_Z"
-	}
-	
-	if (load_format < e_project.FORMAT_200_PRE_5)
-	{
+		if (name = "BG_SKY_CLOUDS_Z")
+			return "BG_SKY_CLOUDS_OFFSET_Z"
+		
 		if (name = "BRIGHTNESS")
 			return "EMISSIVE"
 		
@@ -25,6 +22,15 @@ function project_load_values_update_name(name)
 		
 		if (name = "CAM_SHAKE_VERTICAL_STRENGTH")
 			return "CAM_SHAKE_STRENGTH_Y"
+	}
+	
+	if (load_format < e_project.FORMAT_210)
+	{
+		if (name = "BG_SKY_CLOUDS_OFFSET")
+			return "BG_SKY_CLOUDS_OFFSET_Y"
+		
+		if (name = "BG_SKY_CLOUDS_HEIGHT")
+			return "BG_SKY_CLOUDS_OFFSET_Z"
 	}
 	
 	return name;

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_recent_pin",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Recent",
-    "path": "folders/Scripts/App/Actions/Recent.yy",
+  "$GMScript":"v1",
+  "%Name":"action_recent_pin",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_recent_pin",
+  "parent":{
+    "name":"Recent",
+    "path":"folders/Scripts/App/Actions/Recent.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

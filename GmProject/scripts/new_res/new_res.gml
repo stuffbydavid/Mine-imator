@@ -5,11 +5,20 @@
 
 function new_res(fn, type)
 {
-	var res, newfn, replaced;
+	var res, newfn, replaced, packfn;
 	
 	if (filename_ext(fn) = ".zip" && type != e_res_type.PACK_UNZIPPED)
 		type = e_res_type.PACK
 	
+	if (filename_ext(fn) = ".zip")
+	{
+		directory_create_lib(packs_directory_get())
+		packfn = packs_directory_get() + filename_name(fn)
+		if (fn != packfn)
+			if (file_copy_lib(fn, packfn))
+				fn = packfn
+	}
+
 	res = null
 	replaced = false
 	newfn = project_folder + "/" + filename_name(fn)
@@ -27,7 +36,7 @@ function new_res(fn, type)
 	var copied = false;
 	if (res != null) // Existing resource found
 	{
-		if (question(text_get("questionreplace")))
+		if (question(text_get("questionreplace", filename_name(fn))))
 			replaced = true
 		else
 		{
@@ -44,7 +53,8 @@ function new_res(fn, type)
 		res = new_obj(obj_resource)
 		res.type = type
 		res.copied = copied
-		sortlist_add(res_list, res)
+		with (res)
+			res_add_lists()
 	}
 	
 	res.filename = filename_name(newfn)

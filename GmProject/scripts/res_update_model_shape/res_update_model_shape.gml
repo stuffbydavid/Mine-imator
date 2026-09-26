@@ -38,7 +38,7 @@ function res_update_model_shape()
 	// Get texture (default)
 	var res = id;
 	if (res.model_texture_map = null)
-		res = mc_res
+		res = res_eval(project_pack_res)
 	
 	// Go through non-hidden parts
 	for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)

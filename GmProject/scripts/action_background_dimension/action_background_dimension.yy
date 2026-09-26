@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_background_dimension",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_dimension",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Actions/Background.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

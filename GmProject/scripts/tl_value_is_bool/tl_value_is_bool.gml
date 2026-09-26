@@ -14,10 +14,13 @@ function tl_value_is_bool(vid)
 			vid = e_value.BG_WIND ||
 			vid = e_value.CAM_LIGHT_MANAGEMENT ||
 			vid = e_value.CAM_ROTATE ||
+			vid = e_value.CAM_SHAKE ||
 			vid = e_value.CAM_DOF ||
 			vid = e_value.CAM_DOF_FRINGE ||
-			vid = e_value.CAM_SHAKE ||
 			vid = e_value.CAM_BLOOM ||
+			vid = e_value.CAM_LENS_DIRT ||
+			vid = e_value.CAM_LENS_DIRT_BLOOM ||
+			vid = e_value.CAM_LENS_DIRT_GLOW ||
 			vid = e_value.CAM_COLOR_CORRECTION ||
 			vid = e_value.CAM_GRAIN ||
 			vid = e_value.CAM_VIGNETTE ||
@@ -27,7 +30,8 @@ function tl_value_is_bool(vid)
 			vid = e_value.CAM_DISTORT_REPEAT ||
 			vid = e_value.CAM_SIZE_USE_PROJECT ||
 			vid = e_value.CAM_SIZE_KEEP_ASPECT_RATIO ||
-			vid = e_value.TEXT_AA ||
+			vid = e_value.TEXT_CUSTOM_ALIGNMENT ||
 			vid = e_value.TEXT_OUTLINE ||
+			vid = e_value.TEXT_CUSTOM_OUTLINE ||
 			vid = e_value.VISIBLE)
 }

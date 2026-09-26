@@ -2,13 +2,13 @@
 
 function window_draw_export()
 {
-	var totalframes, totalsamples, usesamples, perc;
-	var framex, framey, framew, frameh;
-	var timeleftsecs, timeleftmins, timelefthours, timeleftstr;
-	
 	// Update rendering
 	if (!export_update())
 		return 0
+	
+	var totalframes, totalsamples, usesamples, perc;
+	var framex, framey, framew, frameh;
+	var timeleftsecs, timeleftmins, timelefthours, timeleftstr;
 	
 	// Set dimensions
 	if (window_state = "export_movie")
@@ -31,6 +31,7 @@ function window_draw_export()
 	}
 	
 	perc = export_sample / totalsamples
+	window_taskbar_progress_value_set(perc)
 	
 	content_width = floor(window_width * 0.5)
 	content_height = min(500, floor(window_height * 0.5))

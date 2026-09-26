@@ -3,5 +3,5 @@
 
 function vbuffer_is_empty(vbuf)
 {
-	return (vertex_get_number(argument0) = (is_cpp() ? 0 : 3))
+	return (vertex_get_number(vbuf) = (is_cpp() ? 0 : 3))
 }

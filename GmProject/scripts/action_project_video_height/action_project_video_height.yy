@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_project_video_height",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Project",
-    "path": "folders/Scripts/App/Actions/Project.yy",
+  "$GMScript":"v1",
+  "%Name":"action_project_video_height",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_video_height",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/App/Actions/Project.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

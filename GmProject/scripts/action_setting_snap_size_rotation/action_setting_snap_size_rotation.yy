@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_snap_size_rotation",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Settings",
-    "path": "folders/Scripts/App/Actions/Settings.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_snap_size_rotation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_snap_size_rotation",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Scripts/App/Actions/Settings.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

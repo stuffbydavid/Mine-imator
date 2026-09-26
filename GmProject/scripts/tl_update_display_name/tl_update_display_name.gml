@@ -9,24 +9,35 @@ function tl_update_display_name()
 		
 		if (part_of != null)
 		{
-			if (type = e_tl_type.BODYPART)
+			if (type = e_tl_type.MODEL_PART)
 			{
 				if (model_part != null)
 					display_name = minecraft_asset_get_name("modelpart", model_part.name)
 				else
-					display_name = text_get("timelineunusedbodypart")
+					display_name = text_get("timelineunusedmodelpart")
 			}
-			else if (type = e_tl_type.SPECIAL_BLOCK)
+			else if (type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK)
 			{
-				if (model_file != null)
-					display_name = minecraft_asset_get_name("model", model_file.name)
+				if (model_name != "")
+					display_name = minecraft_asset_get_name("model", model_name)
 			}
 			else if (type = e_tl_type.BLOCK)
 			{
-				display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+				if (!is_undefined(mc_assets.block_name_map[?block_name]))
+					display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
 			}
 		}
-		else if (temp != null)
+		else if (type = e_tl_type.BLOCK && !has_temp)
+		{
+			if (!is_undefined(mc_assets.block_name_map[?block_name]))
+				display_name = minecraft_asset_get_name("block", mc_assets.block_name_map[?block_name].name)
+		}
+		else if (type = e_tl_type.SPECIAL_BLOCK && !has_temp)
+		{
+			if (!is_undefined(mc_assets.model_name_map[?model_name]))
+				display_name = minecraft_asset_get_name("model", mc_assets.model_name_map[?model_name].name)
+		}
+		else if (has_temp && temp != null)
 			display_name = temp.display_name
 	}
 	else

@@ -16,11 +16,8 @@ function project_load_resource(argument0)
 		
 		var typestr = value_get_string(map[?"type"]);
 		
-		if (load_format < e_project.FORMAT_200_PRE_5)
-		{
-			if (typestr = "schematic")
-				typestr = "scenery"
-		}
+		if (typestr = "scenery")
+			typestr = "schematic"
 		
 		type = ds_list_find_index(res_type_name_list, typestr)
 		
@@ -32,13 +29,15 @@ function project_load_resource(argument0)
 		if (type = e_res_type.ITEM_SHEET)
 			item_sheet_size = value_get_point2D(map[?"item_sheet_size"], item_sheet_size)
 		
-		if (type = e_res_type.SCENERY || type = e_res_type.FROM_WORLD)
+		if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
 		{
+			scenery_size = value_get_point3D(map[?"scenery_size"], vec3(0, 0, 0))
 			scenery_tl_add = value_get_real(map[?"scenery_tl_add"], true)
 			scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
+			scenery_cache_save = value_get_real(map[?"scenery_cache_save"], scenery_cache_save)
 		}
 		
-		if (type = e_res_type.SCENERY)
+		if (type = e_res_type.SCHEMATIC)
 		{
 			scenery_palette = value_get_real(map[?"scenery_palette"], scenery_palette)
 			scenery_integrity = value_get_real(map[?"scenery_integrity"], scenery_integrity)
@@ -59,8 +58,11 @@ function project_load_resource(argument0)
 					array_add(world_filter_array, filterlist[|i])
 		}
 		
+		if (type = e_res_type.SOUND)
+			minecraft_hash = value_get_string(map[?"minecraft_hash"], minecraft_hash)
+		
 		material_format = value_get_real(map[?"material_format"], material_format)
 		
-		sortlist_add(app.res_list, id)
+		res_add_lists()
 	}
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "find_videotemplate",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Project",
-    "path": "folders/Scripts/Project.yy",
+  "$GMScript":"v1",
+  "%Name":"find_videotemplate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"find_videotemplate",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

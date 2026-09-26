@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_rotation_axis_matrix_degrees",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_rotation_axis_matrix_degrees",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -38,7 +38,9 @@ function settings_load()
 		var assetsmap = map[?"assets"];
 		if (ds_map_valid(assetsmap))
 		{
-			setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
+			var lastknown = value_get_string(assetsmap[?"lastknown"], "");
+			if (lastknown = minecraft_assets_version) // No Mine-imator update
+				setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
 			
 			var newmap = assetsmap[?"new"];
 			if (ds_map_valid(newmap))
@@ -62,18 +64,23 @@ function settings_load()
 			setting_advanced_mode = value_get_real(programmap[?"advanced_mode"], setting_advanced_mode)
 			
 			// No interface setting, but custom fps can be loaded from file
-			room_speed = value_get_real(programmap[?"fps"], room_speed)
+			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
+			game_set_speed(gamespeed_fps, targetfps)
 			
 			if (!dev_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()
 			
+			setting_project_pack = value_get_string(programmap[?"project_pack"], setting_project_pack)
+			
 			setting_backup = value_get_real(programmap[?"backup"], setting_backup)
 			setting_backup_time = value_get_real(programmap[?"backup_time"], setting_backup_time)
 			setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)
 			setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
 			setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
+			setting_scenery_remove_edges = value_get_real(programmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
+			setting_scenery_replace_ground = value_get_real(programmap[?"scenery_replace_ground"], setting_scenery_replace_ground)
 			
 			setting_watermark_custom = value_get_real(programmap[?"watermark_custom"], setting_watermark_custom)
 			setting_watermark_fn = value_get_string(programmap[?"watermark_fn"], setting_watermark_fn)
@@ -98,7 +105,7 @@ function settings_load()
 			if (setting_language_filename != language_file)
 				language_load(setting_language_filename, language_map)
 			
-			var themename = theme_light.name;
+			var themename = theme_classic.name;
 			themename = value_get_string(interfacemap[?"theme"], themename)
 			
 			with (obj_theme)
@@ -119,6 +126,8 @@ function settings_load()
 			setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
 			setting_reduced_motion = value_get_real(interfacemap[?"reduced_motion"], setting_reduced_motion)
 			setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
+			setting_timeline_hide_structure_blocks = value_get_real(interfacemap[?"timeline_hide_structure_blocks"], setting_timeline_hide_structure_blocks)
+			setting_timeline_hide_nonanimated = value_get_real(interfacemap[?"timeline_hide_nonanimated"], setting_timeline_hide_nonanimated)
 			setting_timeline_hide_ghosts = value_get_real(interfacemap[?"timeline_hide_ghosts"], setting_timeline_hide_ghosts)
 			setting_timeline_frame_snap = value_get_real(interfacemap[?"timeline_frame_snap"], setting_timeline_frame_snap)
 			setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
@@ -148,10 +157,14 @@ function settings_load()
 			setting_panel_top_size = value_get_real(interfacemap[?"panel_top_size"], setting_panel_top_size)
 			setting_panel_left_top_size = value_get_real(interfacemap[?"panel_left_top_size"], setting_panel_left_top_size)
 			setting_panel_right_top_size = value_get_real(interfacemap[?"panel_right_top_size"], setting_panel_right_top_size)
+			setting_bench_width = clamp(value_get_real(interfacemap[?"bench_width"], setting_bench_width), bench_min_width, bench_max_width)
+			setting_bench_height = max(bench_initial_height, value_get_real(interfacemap[?"bench_height"], setting_bench_height))
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
-			setting_template_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_template_editor_location)
+			setting_object_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_object_editor_location) // Legacy
+			setting_object_editor_location = value_get_string(interfacemap[?"object_editor_location"], setting_object_editor_location)
+			setting_build_mode_location = value_get_string(interfacemap[?"build_mode_location"], setting_object_editor_location)
 			setting_timeline_editor_location = value_get_string(interfacemap[?"timeline_editor_location"], setting_timeline_editor_location)
 			setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
 			setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)
@@ -185,10 +198,17 @@ function settings_load()
 			if (ds_map_valid(interfacemap[?"view_second_window"]))
 				window_state_restore(e_window.VIEW_SECOND, interfacemap[?"view_second_window"])
 			
+			setting_overlay_view_controls = value_get_real(interfacemap[?"overlay_view_controls"], setting_overlay_view_controls)
+			setting_overlay_view_shapes = value_get_real(interfacemap[?"overlay_view_shapes"], setting_overlay_view_shapes)
+			setting_overlay_view_guides = value_get_real(interfacemap[?"overlay_view_guides"], setting_overlay_view_guides)
+			
 			setting_snap = value_get_real(interfacemap[?"snap"], setting_snap)
 			setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
 			setting_snap_size_position = value_get_real(interfacemap[?"snap_size_position"], setting_snap_size_position)
 			setting_snap_size_rotation = value_get_real(interfacemap[?"snap_size_rotation"], setting_snap_size_rotation)
+			// Read the earlier preview setting before applying the current key.
+			setting_transform_mode = value_get_real(interfacemap[?"rotation_space"], setting_transform_mode)
+			setting_transform_mode = clamp(round(value_get_real(interfacemap[?"transform_mode"], setting_transform_mode)), e_transform_mode.GIMBAL, e_transform_mode.amount - 1)
 			setting_snap_size_scale = value_get_real(interfacemap[?"snap_size_scale"], setting_snap_size_scale)
 			
 			setting_modelbench_popup_hidden = value_get_real(interfacemap[?"modelbench_popup_hidden"], setting_modelbench_popup_hidden)
@@ -205,6 +225,9 @@ function settings_load()
 				obj = keybinds[i]
 				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
 			}
+
+			if (is_undefined(controlsmap[?"toolbuild"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
+				keybinds[e_keybind.TOOL_BEND].keybind = keybind_new("B", false, true)
 			
 			setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 			setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)

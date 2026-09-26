@@ -10,6 +10,8 @@ function minecraft_update_armor()
 		for (var i = 0; i < array_length(armor_update); i++)
 		{
 			obj = armor_update[i]
+			if (obj = null || !instance_exists(obj))
+				continue
 			
 			with (obj)
 			{
@@ -23,7 +25,8 @@ function minecraft_update_armor()
 				with (obj)
 					res = temp_get_model_texobj(null)
 				
-				armor_skin_array = minecraft_update_armor_generate(armor_array, res)
+				if (res != null && obj.model_file != null && instance_exists(obj.model_file))
+					armor_skin_array = minecraft_update_armor_generate(obj.model_file.name, armor_array, res)
 				
 				if (obj = temp_edit)
 					app.lib_preview.update = true
@@ -33,4 +36,3 @@ function minecraft_update_armor()
 		armor_update = []
 	}
 }
-

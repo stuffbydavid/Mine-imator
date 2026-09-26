@@ -39,7 +39,7 @@ function view_shape_line(p1, p2)
 	}
 	
 	// Still have an error
-	if (p1error || p2error)
+	if (p1error && p2error)
 		return 0
 	
 	view_shape_line_draw(p1_2d, p2_2d)

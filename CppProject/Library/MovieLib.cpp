@@ -4,6 +4,10 @@
 #include "Asset/Surface.hpp"
 #include "AppHandler.hpp"
 
+#include <limits>
+#include <QRunnable>
+#include <QThreadPool>
+
 extern "C"
 {
 	#include <libavutil/channel_layout.h>
@@ -68,7 +72,8 @@ namespace CppProject
 		return 0;
 	}
 
-	Sound::Sound(StringType filename) : Asset(ID_Sound)
+	// Decode audio without accessing application state
+	static void DecodeSound(QString filename, SoundDecodeData& decoded)
 	{
 		AVFormatContext* formatContext = nullptr;
 		const AVCodec* codec = nullptr;
@@ -78,14 +83,10 @@ namespace CppProject
 		uint8_t* convertedData = nullptr;
 		AVPacket* inPacket = nullptr;
 
-		// Decode file into buffer
-		buffer.open(QIODevice::WriteOnly);
-		QDataStream outStream(&buffer);
-
+		BoolType success = false;
 		try
 		{
-			Timer tmr;
-			std::string filenameStd = filename.ToStdString();
+			std::string filenameStd = filename.toStdString();
 
 			// Get format from audio file
 			formatContext = avformat_alloc_context();
@@ -96,6 +97,7 @@ namespace CppProject
 				throw "avformat_find_stream_info failed";
 
 			codecContext = avcodec_alloc_context3(nullptr);
+			IntType streamIndex = -1;
 			for (IntType i = 0; i < formatContext->nb_streams; i++)
 			{
 				AVCodecParameters* par = formatContext->streams[i]->codecpar;
@@ -106,12 +108,37 @@ namespace CppProject
 						throw "avcodec_find_decoder failed";
 					if (avcodec_parameters_to_context(codecContext, par) < 0)
 						throw "avcodec_parameters_to_context failed";
+					streamIndex = i;
 					break;
 				}
 			}
 
 			if (!codec)
 				throw "No codec found";
+
+			// Reserve decoded PCM from the input duration
+			AVStream* inputStream = formatContext->streams[streamIndex];
+			AVRational outputTimeBase = { 1, STREAM_AUDIO_SAMPLE_RATE };
+			AVRational timeBase = { 1, AV_TIME_BASE };
+			IntType duration = 0;
+			if (inputStream->duration != AV_NOPTS_VALUE)
+				duration = av_rescale_q(inputStream->duration, inputStream->time_base, outputTimeBase);
+			else if (formatContext->duration != AV_NOPTS_VALUE)
+				duration = av_rescale_q(formatContext->duration, timeBase, outputTimeBase);
+
+			IntType bytesPerSample = STREAM_AUDIO_CHANNELS * sizeof(int16_t);
+			if (duration > 0 && duration <= std::numeric_limits<int>::max() / bytesPerSample)
+				decoded.pcm.reserve((int)(duration * bytesPerSample));
+
+			IntType peakSize = STREAM_AUDIO_SAMPLE_RATE / sample_avg_per_sec;
+			if (duration > 0)
+			{
+				IntType peakCapacity = duration / peakSize + 1;
+				decoded.waveformMax.reserve((int)peakCapacity);
+				decoded.waveformMin.reserve((int)peakCapacity);
+			}
+			IntType peakSamples = 0;
+			int16_t peakMax = 0, peakMin = 0;
 
 			// Open codec of the audio file
 			if (avcodec_open2(codecContext, codec, nullptr) < 0)
@@ -144,65 +171,157 @@ namespace CppProject
 			if (!decodedFrame)
 				throw "av_packet_alloc failed";
 
-			// Read frames and store the decoded buffer in the resample context
-			IntType inSamples = 0;
+			IntType convertedCapacity = 0;
+			auto allocateConverted = [&](IntType capacity)
+			{
+				if (capacity <= convertedCapacity)
+					return;
+
+				av_freep(&convertedData);
+				if (av_samples_alloc(&convertedData, nullptr, STREAM_AUDIO_CHANNELS, capacity, STREAM_AUDIO_SAMPLE_FORMAT, 1) < 0)
+					throw "av_samples_alloc failed";
+				convertedCapacity = capacity;
+			};
+
+			auto writeConverted = [&](IntType outSamples)
+			{
+				if (outSamples <= 0)
+					return;
+
+				IntType bufferSize = av_samples_get_buffer_size(nullptr, STREAM_AUDIO_CHANNELS, outSamples, STREAM_AUDIO_SAMPLE_FORMAT, 1);
+				if (bufferSize < 0)
+					throw "av_samples_get_buffer_size failed";
+
+				const int16_t* data = (const int16_t*)convertedData;
+				for (IntType sample = 0; sample < outSamples; sample++)
+				{
+					int16_t channel1 = data[sample * STREAM_AUDIO_CHANNELS];
+					int16_t channel2 = data[sample * STREAM_AUDIO_CHANNELS + 1];
+					peakMax = std::max(peakMax, std::max(channel1, channel2));
+					peakMin = std::min(peakMin, std::min(channel1, channel2));
+					if (++peakSamples == peakSize)
+					{
+						decoded.waveformMax.append((RealType)peakMax / sample_max);
+						decoded.waveformMin.append((RealType)peakMin / sample_max);
+						peakSamples = 0;
+						peakMax = 0;
+						peakMin = 0;
+					}
+				}
+
+				decoded.pcm.append((const char*)convertedData, (int)bufferSize);
+				decoded.samples += outSamples;
+			};
+
+			auto convertFrame = [&]()
+			{
+				IntType outCapacity = av_rescale_rnd(
+					swr_get_delay(swrContext, codecContext->sample_rate) + decodedFrame->nb_samples,
+					STREAM_AUDIO_SAMPLE_RATE,
+					codecContext->sample_rate,
+					AV_ROUND_UP
+				);
+				if (outCapacity <= 0)
+					return;
+
+				allocateConverted(outCapacity);
+
+				IntType outSamples = swr_convert(swrContext, &convertedData, outCapacity, (const uint8_t**)decodedFrame->extended_data, decodedFrame->nb_samples);
+				if (outSamples < 0)
+					throw "swr_convert failed";
+				writeConverted(outSamples);
+			};
+
+			auto receiveFrames = [&]()
+			{
+				while (true)
+				{
+					IntType result = avcodec_receive_frame(codecContext, decodedFrame);
+					if (result == AVERROR(EAGAIN) || result == AVERROR_EOF)
+						break;
+					if (result < 0)
+						throw "avcodec_receive_frame failed";
+
+					try
+					{
+						convertFrame();
+					}
+					catch (...)
+					{
+						av_frame_unref(decodedFrame);
+						throw;
+					}
+					av_frame_unref(decodedFrame);
+				}
+			};
+
+			// Read and decode audio packets
 			while (av_read_frame(formatContext, inPacket) >= 0)
 			{
-				if (avcodec_send_packet(codecContext, inPacket) < 0 ||
-					avcodec_receive_frame(codecContext, decodedFrame) < 0)
+				if (inPacket->stream_index != streamIndex)
 				{
-					av_frame_unref(decodedFrame);
 					av_packet_unref(inPacket);
 					continue;
 				}
 
-				swr_convert(swrContext, nullptr, 0, (const uint8_t**)decodedFrame->data, decodedFrame->nb_samples);
-				inSamples += decodedFrame->nb_samples;
+				IntType result = avcodec_send_packet(codecContext, inPacket);
+				if (result == AVERROR(EAGAIN))
+				{
+					receiveFrames();
+					result = avcodec_send_packet(codecContext, inPacket);
+				}
+				av_packet_unref(inPacket);
+				if (result < 0)
+					throw "avcodec_send_packet failed";
+
+				receiveFrames();
 			}
 
-			// Allocate data
-			if (av_samples_alloc(&convertedData, nullptr, STREAM_AUDIO_CHANNELS, STREAM_AUDIO_FRAME_SIZE, STREAM_AUDIO_SAMPLE_FORMAT, 0) < 0)
-				throw "av_samples_alloc failed";
-
-			// Read from the resample context buffer and convert
-			RealType rateDiv = codecContext->sample_rate / (RealType)STREAM_AUDIO_SAMPLE_RATE;
-			IntType totalSamples = (IntType)(inSamples / rateDiv);
-			while (samples < totalSamples)
+			// Flush decoder
+			IntType result = avcodec_send_packet(codecContext, nullptr);
+			if (result == AVERROR(EAGAIN))
 			{
-				// Convert
-				IntType outSamples = swr_convert(swrContext, &convertedData, STREAM_AUDIO_FRAME_SIZE, nullptr, 0);
+				receiveFrames();
+				result = avcodec_send_packet(codecContext, nullptr);
+			}
+			if (result < 0 && result != AVERROR_EOF)
+				throw "avcodec_send_packet flush failed";
+			receiveFrames();
+
+			// Drain delayed resampler samples
+			while (true)
+			{
+				IntType outCapacity = av_rescale_rnd(
+					swr_get_delay(swrContext, codecContext->sample_rate),
+					STREAM_AUDIO_SAMPLE_RATE,
+					codecContext->sample_rate,
+					AV_ROUND_UP
+				);
+				if (outCapacity <= 0)
+					break;
+
+				allocateConverted(outCapacity);
+
+				IntType outSamples = swr_convert(swrContext, &convertedData, outCapacity, nullptr, 0);
 				if (outSamples == 0)
 					break;
-				else if (outSamples < 0)
+				if (outSamples < 0)
 					throw "swr_convert failed";
-				samples += outSamples;
-
-				// Calculate buffer size
-				IntType bufferSize = av_samples_get_buffer_size(nullptr, STREAM_AUDIO_CHANNELS, outSamples, STREAM_AUDIO_SAMPLE_FORMAT, 0);
-				if (bufferSize < 0)
-					throw "av_samples_get_buffer_size failed";
-
-				outStream.writeRawData((const char*)convertedData, bufferSize);
+				writeConverted(outSamples);
 			}
 
-			tmr.Print("Decoded " + (QString)filename + " into " + NumStr(samples) + " samples");
-
-			// Create OpenAL buffer
-			if (App->audioSupported)
-			{
-				alGenBuffers(1, &alBuffer);
-				alBufferData(alBuffer, AL_FORMAT_STEREO16, buffer.data().constData(), buffer.size(), sample_rate_);
-			}
-
-			buffer.close();
+			// Add the partial final waveform peak
+			decoded.waveformMax.append(peakSamples ? (RealType)peakMax / sample_max : 0);
+			decoded.waveformMin.append(peakSamples ? (RealType)peakMin / sample_max : 0);
+			success = true;
 		}
 		catch (const char* err)
 		{
-			log({ err });
-			WARNING(err);
-			samples = 0;
-			buffer.close();
-			buffer.buffer().clear();
+			decoded.error = err;
+			decoded.samples = 0;
+			decoded.pcm.clear();
+			decoded.waveformMax.clear();
+			decoded.waveformMin.clear();
 		}
 
 		// Cleanup
@@ -211,20 +330,142 @@ namespace CppProject
 		if (swrContext)
 			swr_free(&swrContext);
 		if (codecContext)
-			avcodec_close(codecContext);
+			avcodec_free_context(&codecContext);
 		if (formatContext)
-		{
 			avformat_close_input(&formatContext);
-			avformat_free_context(formatContext);
-		}
 		if (convertedData)
 			av_freep(&convertedData);
 		if (inPacket)
 			av_packet_free(&inPacket);
+
+		decoded.success = success;
+	}
+
+	QVector<Sound*> Sound::loadingSounds;
+
+	// Limit concurrent audio decode jobs
+	static QThreadPool& SoundDecodePool()
+	{
+		static QThreadPool pool;
+		static BoolType initialized = false;
+		if (!initialized)
+		{
+			pool.setMaxThreadCount(2);
+			initialized = true;
+		}
+		return pool;
+	}
+
+	struct SoundDecodeTask : QRunnable
+	{
+		SoundDecodeTask(QString filename, QString tempFilename, std::shared_ptr<SoundDecodeData> data) : filename(filename), tempFilename(tempFilename), data(data)
+		{
+		}
+
+		void run() override
+		{
+			// Decode result outside the main thread
+			DecodeSound(filename, *data);
+
+			// Delete temporary source after decode
+			if (!tempFilename.isEmpty())
+				QFile::remove(tempFilename);
+
+			data->complete.store(true, std::memory_order_release);
+		}
+
+		QString filename;
+		QString tempFilename;
+		std::shared_ptr<SoundDecodeData> data;
+	};
+
+	Sound::Sound() : Asset(ID_Sound)
+	{
+	}
+
+	void Sound::LoadAsync(QString filename, IntType resourceId, QString tempFilename)
+	{
+		// Keep decoding data alive if the sound is destroyed
+		this->resourceId = resourceId;
+		decode = std::make_shared<SoundDecodeData>();
+		loadingSounds.append(this);
+
+		SoundDecodePool().start(new SoundDecodeTask(filename, tempFilename, decode));
+	}
+
+	BoolType Sound::IsReady() const
+	{
+		// Read state without accessing worker data
+		return ready.load(std::memory_order_acquire);
+	}
+
+	void Sound::UpdateLoads()
+	{
+		// Publish completed worker jobs on the main thread
+		for (IntType i = loadingSounds.size() - 1; i >= 0; i--)
+		{
+			Sound* sound = loadingSounds[i];
+			std::shared_ptr<SoundDecodeData> data = sound->decode;
+			if (!data || !data->complete.load(std::memory_order_acquire))
+				continue;
+
+			obj_resource* res = ObjTypeOpt(obj_resource, sound->resourceId);
+
+			// Drop cancelled or failed loads
+			if (!res || res->sound_index != sound->id || !data->success || data->pcm.isEmpty())
+			{
+				if (res && res->sound_index == sound->id)
+				{
+					res->sound_index = null_;
+					res->sound_samples = 0;
+					error("errorloadaudio");
+				}
+
+				auto sounds = SoundInstance::sounds;
+				for (SoundInstance* instance : sounds)
+					if (instance->sound == sound)
+						delete instance;
+
+				delete sound;
+				continue;
+			}
+
+			// Transfer decoded data to the main thread's sound
+			sound->pcm = std::move(data->pcm);
+			sound->samples = data->samples;
+			sound->waveform_max.vec.Alloc(data->waveformMax.size());
+			sound->waveform_min.vec.Alloc(data->waveformMin.size());
+			for (RealType sample : data->waveformMax)
+				sound->waveform_max.Append(sample);
+			for (RealType sample : data->waveformMin)
+				sound->waveform_min.Append(sample);
+
+			if (App->audioSupported)
+			{
+				// Upload PCM using the main thread OpenAL context
+				alGenBuffers(1, &sound->alBuffer);
+				alBufferData(sound->alBuffer, AL_FORMAT_STEREO16, sound->pcm.constData(), sound->pcm.size(), sample_rate_);
+			}
+
+			// Publish complete waveform data to the resource
+			res->sound_samples = sound->samples;
+			res->sound_max_sample = sound->waveform_max;
+			res->sound_min_sample = sound->waveform_min;
+			sound->ready.store(true, std::memory_order_release);
+			res->ready = true;
+			res->load_stage = "";
+			sound->decode.reset();
+			loadingSounds.removeAt(i);
+
+			// Start playback requested while decoding
+			SoundInstance::StartPending(sound);
+			tl_update_length();
+		}
 	}
 
 	Sound::~Sound()
 	{
+		loadingSounds.removeOne(this);
 		if (alBuffer)
 			alDeleteBuffers(1, &alBuffer);
 	}
@@ -487,7 +728,7 @@ namespace CppProject
 
 						for (MovieSound* sound : frameSounds)
 						{
-							const int16_t* srcData = (int16_t*)sound->sound->buffer.data().constData();
+							const int16_t* srcData = (const int16_t*)sound->sound->pcm.constData();
 							IntType srcSample = ((((audioFrameNum - sound->frame + sound->start) * audioCodecContext->frame_size) % (uint64_t)(sound->sound->samples / sound->pitch)) + s) * sound->pitch;
 
 							// Add and clamp audio if in buffer range

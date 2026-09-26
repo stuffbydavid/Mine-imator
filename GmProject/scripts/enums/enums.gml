@@ -42,7 +42,9 @@ function enums()
 		FORMAT_123_PRE_2	= 31,
 		FORMAT_125			= 32,
 		FORMAT_200_PRE_1	= 33,
-		FORMAT_200_PRE_5	= 34
+		FORMAT_200_PRE_5	= 34,
+		FORMAT_CTB_106		= 35,
+		FORMAT_210			= 36
 	}
 	
 	enum e_settings
@@ -114,6 +116,7 @@ function enums()
 		TEXT,
 		KEYFRAME,
 		ROT_POINT,
+		BLOCK,
 		HIERARCHY,
 		APPEARANCE,
 		AUDIO,
@@ -264,8 +267,8 @@ function enums()
 		BG_TWILIGHT,
 		BG_SKY_CLOUDS_SHOW,
 		BG_SKY_CLOUDS_SPEED,
-		BG_SKY_CLOUDS_HEIGHT,
-		BG_SKY_CLOUDS_OFFSET,
+		BG_SKY_CLOUDS_OFFSET_Y,
+		BG_SKY_CLOUDS_OFFSET_Z,
 		BG_GROUND_SHOW,
 		BG_GROUND_SLOT,
 		BG_BIOME,
@@ -273,9 +276,13 @@ function enums()
 		BG_SKY_CLOUDS_COLOR,
 		BG_SUNLIGHT_COLOR,
 		BG_AMBIENT_COLOR,
+		BG_NIGHT_SKY_COLOR,
+		BG_NIGHT_SKY_CLOUDS_COLOR,
+		BG_NIGHT_SKY_STARS_COLOR,
 		BG_NIGHT_COLOR,
 		BG_GRASS_COLOR,
 		BG_FOLIAGE_COLOR,
+		BG_DRY_FOLIAGE_COLOR,
 		BG_WATER_COLOR,
 		BG_LEAVES_OAK_COLOR,
 		BG_LEAVES_SPRUCE_COLOR,
@@ -312,9 +319,11 @@ function enums()
 		TEXT_FONT,
 		TEXT_HALIGN,
 		TEXT_VALIGN,
-		TEXT_AA,
+		TEXT_CUSTOM_ALIGNMENT,
 		TEXT_OUTLINE,
 		TEXT_OUTLINE_COLOR,
+		TEXT_OUTLINE_SIZE,
+		TEXT_CUSTOM_OUTLINE,
 		CUSTOM_ITEM_SLOT,
 		ITEM_SLOT,
 		ITEM_NAME,
@@ -335,15 +344,52 @@ function enums()
 		amount
 	} // Update app_startup_lists() when adding values
 	
+	// Workbench options
+	enum e_bench
+	{
+		PROJECT,
+		CHARACTER,
+		EQUIPMENT,
+		MODEL,
+		MODEL_PART,
+		ITEM,
+		WORLD,
+		SCHEMATIC,
+		BLOCK,
+		SPECIAL_BLOCK,
+		CAMERA,
+		SOUND,
+		AUDIO_TRACK,
+		PARTICLE_SPAWNER,
+		TEXT,
+		LIGHT_SOURCE,
+		CAMERA_EFFECTS,
+		PATH,
+		ENVIRONMENT,
+		SHAPE,
+		amount
+	}
+	
+	// Workbench buttons
+	enum e_bench_button
+	{
+		CREATE,
+		EDIT,
+		CREATE_AND_EDIT,
+		START_BUILDING
+	}
+	
 	// Template types
 	enum e_temp_type
 	{
 		CHARACTER,
-		SPECIAL_BLOCK,
-		SCENERY,
+		EQUIPMENT,
+		MODEL,
+		MODEL_PART,
 		ITEM,
+		SCENERY,
 		BLOCK,
-		BODYPART,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -351,18 +397,20 @@ function enums()
 		CYLINDER,
 		SPHERE,
 		SURFACE,
-		MODEL
+		amount
 	} // Update app_startup_lists() when adding types
 	
 	// Timeline types
 	enum e_tl_type
 	{
 		CHARACTER,
-		SPECIAL_BLOCK,
-		SCENERY,
+		EQUIPMENT,
+		MODEL,
+		MODEL_PART,
 		ITEM,
+		SCENERY,
 		BLOCK,
-		BODYPART,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -370,18 +418,15 @@ function enums()
 		CYLINDER,
 		SPHERE,
 		SURFACE,
-		MODEL,
 		CAMERA,
-		SPOT_LIGHT,
+		AUDIO_TRACK,
 		POINT_LIGHT,
-		FOLDER,
-		BACKGROUND,
-		AUDIO,
+		SPOT_LIGHT,
 		PATH,
 		PATH_POINT,
-		
-		LIGHT_SOURCE,
-		SHAPE,
+		BACKGROUND,
+		STRUCTURE,
+		FOLDER,
 		amount
 	} // Update app_startup_lists() when adding types
 	
@@ -392,16 +437,16 @@ function enums()
 		PACK_UNZIPPED,
 		SKIN,
 		DOWNLOADED_SKIN,
+		MODEL,
 		ITEM_SHEET,
-		LEGACY_BLOCK_SHEET,
-		BLOCK_SHEET,
-		SCENERY,
 		FROM_WORLD,
-		PARTICLE_SHEET,
-		TEXTURE,
-		FONT,
+		SCHEMATIC,
+		BLOCK_SHEET,
+		LEGACY_BLOCK_SHEET,
 		SOUND,
-		MODEL
+		PARTICLE_SHEET,
+		FONT,
+		TEXTURE
 	} // Update app_startup_lists() when adding types
 	
 	// Shape types
@@ -422,12 +467,24 @@ function enums()
 		BLOCK
 	}
 	
+	// Timeline parent action
+	enum e_parent_action
+	{
+		TARGET,
+		BEND,
+		POS,
+		ROT,
+		SCA,
+		LOCK
+	}
+
+	// Icons
 	enum icons
 	{
 		ALIGN_BOTTOM,
+		ALIGN_CENTER,
 		ALIGN_LEFT,
 		ALIGN_MIDDLE,
-		ALIGN_CENTER,
 		ALIGN_RIGHT,
 		ALIGN_TOP,
 		ANNOUNCEMENT,
@@ -448,6 +505,7 @@ function enums()
 		BELL_SLASH,
 		BEND,
 		BEND_SHARP,
+		BEND_SMALL,
 		BETA,
 		BIRTHDAY,
 		BLOCK,
@@ -463,6 +521,7 @@ function enums()
 		BUG,
 		CALENDAR,
 		CAMERA,
+		CAMERA_ACTIVE,
 		CAMERA_PHOTO,
 		CAMERA_PHOTO_SMALL,
 		CAMERA_SMALL,
@@ -491,6 +550,7 @@ function enums()
 		CLOSE,
 		CLOSE_SMALL,
 		CLOUD,
+		CLOUD_ACTIVE,
 		CODE,
 		COMMENT,
 		COMMENTS,
@@ -571,10 +631,14 @@ function enums()
 		FORWARD,
 		FRAME_NEXT,
 		FRAME_PREVIOUS,
+		GAME,
 		GHOST,
 		GHOST_SMALL,
+		GIMBAL,
+		GOOSE,
 		GRID,
 		GROUP,
+		HAMMER,
 		HEART,
 		HEART_BROKEN,
 		HELP,
@@ -585,10 +649,11 @@ function enums()
 		HIERARCHY_SMALL,
 		HIGHLIGHTER,
 		HISTORIAN,
-		HOME,
+		HOUSE,
 		IGNORE,
 		IMAGE,
 		IMAGE_EXPORT,
+		IMAGE_EXPORT_SMALL,
 		INFO,
 		INTERNAL,
 		ITALICS,
@@ -602,6 +667,10 @@ function enums()
 		KEYFRAME,
 		KEYFRAME_FILLED,
 		KEYFRAME_FILLED_SMALL,
+		KEYFRAME_INSTANT,
+		KEYFRAME_INSTANT_FILLED,
+		KEYFRAME_INSTANT_FILLED_SMALL,
+		KEYFRAME_INSTANT_SMALL,
 		KEYFRAME_NEXT,
 		KEYFRAME_PREVIOUS,
 		KEYFRAME_SMALL,
@@ -640,6 +709,7 @@ function enums()
 		MIRROR_VERTICALLY,
 		MOBILE,
 		MODEL,
+		MODEL_SMALL,
 		MOON,
 		MOVE,
 		MOVIE,
@@ -652,6 +722,7 @@ function enums()
 		NOTE_SMALL,
 		OVERLAYS,
 		PALETTE,
+		PAN,
 		PART,
 		PART_ADD,
 		PART_IMPORT,
@@ -695,8 +766,8 @@ function enums()
 		POSING,
 		POST_RECENTS,
 		PROGRAM_SETTINGS,
-		QUALITY,
 		PUPPETRY,
+		QUALITY,
 		QUOTE,
 		RANDOMIZE,
 		RECENTS,
@@ -723,6 +794,7 @@ function enums()
 		SAVE_KEYFRAME,
 		SCALE,
 		SCENERY,
+		SCENERY_EDIT,
 		SCROLL,
 		SEARCH,
 		SELECT,
@@ -742,7 +814,6 @@ function enums()
 		SORT_UP,
 		SPHERE,
 		SPHERE__DARK,
-		SPHERE_FLAT,
 		SPHERE_MATERIAL,
 		SPHERE_MATERIAL__DARK,
 		SPHERE_MATERIAL_SMALL,
@@ -771,8 +842,10 @@ function enums()
 		TEXT_SMALL,
 		TEXTURE,
 		TEXTURE_EXPORT,
+		TEXTURE_SMALL,
 		TICK,
-		TOPIC,
+		TORUS,
+		TORUS__DARK,
 		TRANSFORM,
 		TRANSFORM_SMALL,
 		TRANSFORMATION_GIMBAL,
@@ -804,10 +877,13 @@ function enums()
 		WAVE,
 		WEB,
 		WIND,
+		WIND_SMALL,
 		WORKBENCH,
 		WORLD,
 		WORLD_SMALL,
-		YOUTUBE
+		YOUTUBE,
+		ZOOM_IN,
+		ZOOM_OUT
 	}
 	
 	// Render modes
@@ -815,7 +891,8 @@ function enums()
 	{
 		CLICK,
 		SELECT,
-		PLACE,
+		PLACE_SELECT,
+		PLACE_PARENT,
 		PREVIEW,
 		COLOR,
 		COLOR_FOG,
@@ -835,6 +912,7 @@ function enums()
 		COLOR_GLOW,
 		SCENE_TEST,
 		HIGH_DEPTH_NORMAL,
+		PLACE,
 		AO_MASK,
 		MATERIAL,
 		SUBSURFACE,
@@ -867,6 +945,7 @@ function enums()
 		SECONDARY,
 		TERTIARY,
 		TOOLBAR,
+		MEDIUM,
 		BIG,
 		
 		NO_TEXT,
@@ -939,6 +1018,25 @@ function enums()
 		VERTICAL,
 		HORIZONTAL
 	}
+
+	// Item sheet
+	enum e_item_sheet
+	{
+		SIZE16,
+		SIZE32,
+		amount
+	}
+
+	// Block sheet
+	enum e_block_sheet
+	{
+		STATIC16,
+		STATIC32,
+		STATIC64,
+		ANIMATED,
+		amount,
+		static_amount = 3
+	}
 	
 	// Buffer Depth
 	enum e_block_depth
@@ -952,10 +1050,13 @@ function enums()
 	// Buffers
 	enum e_block_vbuffer
 	{
-		NORMAL,
+		STATIC16,
+		STATIC32,
+		STATIC64,
 		ANIMATED,
 		GRASS,
 		FOLIAGE,
+		DRY_FOLIAGE,
 		LEAVES_OAK,
 		LEAVES_SPRUCE,
 		LEAVES_BIRCH,
@@ -1045,6 +1146,14 @@ function enums()
 		ROT_ANGLE_Z,
 		ROT_DISTANCE
 	}
+
+	enum e_transform_mode
+	{
+		GIMBAL,
+		GLOBAL,
+		LOCAL,
+		amount
+	}
 	
 	// Mouse controls
 	enum e_mouse
@@ -1074,7 +1183,31 @@ function enums()
 		MATERIAL,
 		amount
 	}
+
+	// Texture resource channels
+	enum e_texture_channel
+	{
+		DIFFUSE,
+		NORMAL,
+		MATERIAL
+	}
 	
+	enum e_biome_color
+	{
+		GRASS,
+		FOLIAGE,
+		DRY_FOLIAGE,
+		WATER,
+		LEAVES_OAK,
+		LEAVES_SPRUCE,
+		LEAVES_BIRCH,
+		LEAVES_JUNGLE,
+		LEAVES_ACACIA,
+		LEAVES_DARK_OAK,
+		LEAVES_MANGROVE,
+		amount
+	}
+
 	// Raytracing type
 	enum e_raytrace
 	{
@@ -1094,9 +1227,9 @@ function enums()
 	// Glint mode
 	enum e_glint
 	{
-		NONE,
+		NONE, // Legacy
 		ITEM,
-		ENTITY
+		ARMOR
 	}
 	
 	// Alpha mode
@@ -1121,5 +1254,15 @@ function enums()
 		MAIN,
 		VIEW_SECOND,
 		TIMELINE
+	}
+	
+	// Taskbar progress state
+	enum e_window_taskbar_state
+	{
+		NOPROGRESS		= 0,
+		INDETERMINATE	= 1,
+		NORMAL			= 2,
+		ERROR			= 4,
+		PAUSED			= 8
 	}
 }

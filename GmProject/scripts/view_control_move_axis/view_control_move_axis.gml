@@ -73,6 +73,8 @@ function view_control_move_axis(view, control, vid, color, start3D, end3D, fade 
 			
 			view_control_vec = point2D_sub(end2D, center2D)
 			view_control_move_distance = 0
+			if (control != e_view_control.ROT_DISTANCE)
+				view_transform_begin(e_value_type.TRANSFORM_POS)
 		}
 		
 		// Right click

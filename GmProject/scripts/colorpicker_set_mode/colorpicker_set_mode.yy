@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "colorpicker_set_mode",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Colorpicker",
-    "path": "folders/Scripts/App/Interface/Colorpicker.yy",
+  "$GMScript":"v1",
+  "%Name":"colorpicker_set_mode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"colorpicker_set_mode",
+  "parent":{
+    "name":"Colorpicker",
+    "path":"folders/Scripts/App/Interface/Colorpicker.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

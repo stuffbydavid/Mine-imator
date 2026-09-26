@@ -23,8 +23,7 @@ function res_load_audio()
 			
 			if (!file_exists_lib(fname))
 			{
-				with (app)
-					load_next()
+				load_stage = ""
 				return 0
 			}
 			
@@ -34,8 +33,7 @@ function res_load_audio()
 			{
 				log("Error loading audio", ret)
 				error("errorloadaudio")
-				with (app)
-					load_next()
+				load_stage = ""
 				return 0
 			}
 			
@@ -62,8 +60,6 @@ function res_load_audio()
 			load_stage = "read"
 			load_audio_sample = 0
 			
-			with (app)
-				popup_loading.progress = 1 / 5
 			break
 		}
 		
@@ -82,17 +78,12 @@ function res_load_audio()
 				if (load_audio_sample >= sound_samples)
 				{
 					ready = true
+					load_stage = ""
 					with (app)
-					{
 						tl_update_length()
-						load_next()
-					}
 					break
 				}
 			}
-			
-			with (app)
-				popup_loading.progress = (1 / 5) + (4 / 5) * (other.load_audio_sample / other.sound_samples)
 			
 			break
 		}

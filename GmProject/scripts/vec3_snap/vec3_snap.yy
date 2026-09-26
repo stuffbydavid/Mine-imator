@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"vec3_snap",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vec3_snap",
+  "parent":{
+    "name":"Vector",
+    "path":"folders/Scripts/Utility/Math/Vector.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

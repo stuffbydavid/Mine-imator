@@ -58,10 +58,11 @@ function context_menu_draw_level(argument0)
 	draw_set_alpha(alphaease)
 	
 	draw_dropshadow(dx, dy, dw, dh, c_black, 1)
-	draw_box(dx, dy, dw, dh, false, c_level_top, 1)
+	draw_box(dx, dy, dw, dh, false, c_input_background, 1)
 	draw_outline(dx, dy, dw, dh, 1, c_border, a_border, true)
 	
-	if (level.ani < 1)
+	var clipped = level.ani < 1;
+	if (clipped)
 		clip_begin(dx, dy, dw, dh)
 	
 	// Adjust 
@@ -97,6 +98,8 @@ function context_menu_draw_level(argument0)
 		if (script_execute(level.level_script, dx, dy, dw, dh))
 		{
 			draw_set_alpha(1)
+			if (clipped)
+				clip_end()
 			return 0
 		}
 		
@@ -107,7 +110,7 @@ function context_menu_draw_level(argument0)
 		}
 	}
 	
-	if (level.ani < 1)
+	if (clipped)
 		clip_end()
 	
 	draw_set_alpha(1)

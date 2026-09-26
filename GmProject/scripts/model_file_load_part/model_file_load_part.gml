@@ -96,6 +96,9 @@ function model_file_load_part(map, root, res, model)
 			texture_size = value_get_point2D(map[?"texture_size"])
 			var size = max(texture_size[X], texture_size[Y]);
 			texture_size = vec2(size, size) // Make square
+			
+			texture_scroll_speed = value_get_real(map[?"texture_scroll_speed"], 0)
+			texture_scroll_direction = value_get_real(map[?"texture_scroll_direction"], 0)
 		}
 		else
 		{
@@ -107,6 +110,8 @@ function model_file_load_part(map, root, res, model)
 			texture_material_inherit = other.texture_material_inherit
 			texture_normal_inherit = other.texture_normal_inherit
 			texture_size = texture_inherit.texture_size
+			texture_scroll_speed = texture_inherit.texture_scroll_speed
+			texture_scroll_direction = texture_inherit.texture_scroll_direction
 		}
 		
 		// Color (optional)
@@ -190,6 +195,9 @@ function model_file_load_part(map, root, res, model)
 		
 		// Show backfaces
 		backfaces = value_get_real(map[?"backfaces"], false)
+		
+		// Cast shadows
+		shadows = value_get_real(map[?"shadows"], true)
 		
 		// Bend (optional)
 		if (!is_undefined(map[?"bend"]))
@@ -402,12 +410,12 @@ function model_file_load_part(map, root, res, model)
 			ik_supported = false
 		}
 		
-		matrix = matrix_create(point3D(0, 0, 0), rotation, vec3(1))
+		matrix = matrix_create(point3D(0), rotation, vec3(1))
 		
 		// Matrix used when rendering preview/particle
 		default_matrix = matrix_create(position, rotation, vec3(1))
 		if (other.object_index = obj_model_part && lock_bend && other.bend_part != null)
-			default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_inherit_angle, point3D(0, 0, 0)))
+			default_matrix = matrix_multiply(default_matrix, model_part_get_bend_matrix(other.id, other.bend_inherit_angle, point3D(0)))
 		
 		// Default bounds
 		bounds_start = point3D(no_limit, no_limit, no_limit)

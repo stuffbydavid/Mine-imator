@@ -110,6 +110,11 @@ namespace CppProject
 		D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_WRITE]));
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 		D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_NO_WRITE]));
+		depthStencilDesc.DepthFunc = D3D11_COMPARISON_EQUAL;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_EQUAL_WRITE]));
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+		D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_EQUAL_NO_WRITE]));
 		depthStencilDesc.DepthEnable = FALSE;
 		D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_NO_TEST_NO_WRITE]));
 		D3DContext->OMSetDepthStencilState(d3dDepthStencilStateMap[DEPTH_NO_TEST_NO_WRITE], 1);
@@ -257,9 +262,7 @@ namespace CppProject
 
 		SubmitBatch();
 		depthTest = enabled;
-		DepthStencilState dss = depthTest ? (depthMask ? DEPTH_TEST_WRITE : DEPTH_TEST_NO_WRITE) : DEPTH_NO_TEST_NO_WRITE;
-		D3DContext->OMSetDepthStencilState(d3dDepthStencilStateMap[dss], 1);
-
+		ApplyDepthState();
 	}
 
 	void GraphicsApiHandler::SetDepthWrite(BoolType enabled)
@@ -269,8 +272,53 @@ namespace CppProject
 
 		SubmitBatch();
 		depthMask = enabled;
-		DepthStencilState dss = depthTest ? (depthMask ? DEPTH_TEST_WRITE : DEPTH_TEST_NO_WRITE) : DEPTH_NO_TEST_NO_WRITE;
+		ApplyDepthState();
+	}
+
+	void GraphicsApiHandler::SetDepthFunc(IntType func)
+	{
+		if (depthFunc == func)
+			return;
+
+		SubmitBatch();
+		depthFunc = func;
+		ApplyDepthState();
+	}
+
+	void GraphicsApiHandler::ApplyDepthState()
+	{
+		DepthStencilState dss = DEPTH_NO_TEST_NO_WRITE;
+		if (depthTest)
+		{
+			BoolType equal = (depthFunc == cmpfunc_equal);
+			dss = equal ? (depthMask ? DEPTH_TEST_EQUAL_WRITE : DEPTH_TEST_EQUAL_NO_WRITE)
+				: (depthMask ? DEPTH_TEST_WRITE : DEPTH_TEST_NO_WRITE);
+		}
 		D3DContext->OMSetDepthStencilState(d3dDepthStencilStateMap[dss], 1);
+	}
+
+	void GraphicsApiHandler::SetColorWrite(BoolType red, BoolType green, BoolType blue, BoolType alpha)
+	{
+		IntType mask = (red ? D3D11_COLOR_WRITE_ENABLE_RED : 0) |
+			(green ? D3D11_COLOR_WRITE_ENABLE_GREEN : 0) |
+			(blue ? D3D11_COLOR_WRITE_ENABLE_BLUE : 0) |
+			(alpha ? D3D11_COLOR_WRITE_ENABLE_ALPHA : 0);
+		if (colorWriteMask == mask)
+			return;
+
+		SubmitBatch();
+		colorWriteMask = mask;
+		ApplyBlendState();
+	}
+
+	void GraphicsApiHandler::SetBlending(BoolType enabled)
+	{
+		if (blend == enabled)
+			return;
+
+		SubmitBatch();
+		blend = enabled;
+		ApplyBlendState();
 	}
 
 	void GraphicsApiHandler::SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest)
@@ -284,13 +332,20 @@ namespace CppProject
 		blendDstFactor = dest;
 		blendAlphaSrcFactor = alphasrc;
 		blendAlphaDstFactor = alphadest;
+		ApplyBlendState();
+	}
+
+	void GraphicsApiHandler::ApplyBlendState()
+	{
 
 		// Find previously created state
 		ID3D11BlendState* state = nullptr;
 		d3dBlendStateIndex = 0;
 		for (BlendState& prevState : d3dBlendStates)
 		{
-			if (prevState.src == src && prevState.dst == dest && prevState.srcAlpha == alphasrc && prevState.dstAlpha == alphadest)
+			if (prevState.src == blendSrcFactor && prevState.dst == blendDstFactor &&
+				prevState.srcAlpha == blendAlphaSrcFactor && prevState.dstAlpha == blendAlphaDstFactor &&
+				prevState.enabled == blend && prevState.writeMask == colorWriteMask)
 			{
 				state = prevState.state;
 				break;
@@ -303,18 +358,18 @@ namespace CppProject
 		{
 			D3D11_BLEND_DESC blendDesc = {};
 			D3D11_RENDER_TARGET_BLEND_DESC rtbd = {};
-			rtbd.BlendEnable = TRUE;
-			rtbd.SrcBlend = d3dBlendColorMap[src];
-			rtbd.DestBlend = d3dBlendColorMap[dest];
-			rtbd.SrcBlendAlpha = d3dBlendAlphaMap[alphasrc];
-			rtbd.DestBlendAlpha = d3dBlendAlphaMap[alphadest];
+			rtbd.BlendEnable = blend;
+			rtbd.SrcBlend = d3dBlendColorMap[blendSrcFactor];
+			rtbd.DestBlend = d3dBlendColorMap[blendDstFactor];
+			rtbd.SrcBlendAlpha = d3dBlendAlphaMap[blendAlphaSrcFactor];
+			rtbd.DestBlendAlpha = d3dBlendAlphaMap[blendAlphaDstFactor];
 			rtbd.BlendOp = rtbd.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-			rtbd.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+			rtbd.RenderTargetWriteMask = colorWriteMask;
 
 			blendDesc.AlphaToCoverageEnable = false;
 			blendDesc.RenderTarget[0] = rtbd;
 			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
-			d3dBlendStates.append({ src, dest, alphasrc, alphadest, state });
+			d3dBlendStates.append({ blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor, colorWriteMask, blend, state });
 		}
 
 		D3DContext->OMSetBlendState(state, nullptr, 0xFFFFFFFF);
@@ -348,6 +403,12 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClipBegin(QRect rect)
 	{
+		if (clipEnabled)
+		{
+			clipStack.append(clipRect);
+			rect = rect.intersected(clipRect);
+		}
+
 		SubmitBatch();
 
 		D3DContext->ClearDepthStencilView(surface->frameBuffer->d3dDSV, D3D11_CLEAR_STENCIL, 1.0, 0);
@@ -365,6 +426,14 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClipEnd()
 	{
+		if (!clipStack.isEmpty())
+		{
+			QRect previousRect = clipStack.takeLast();
+			clipEnabled = false;
+			ClipBegin(previousRect);
+			return;
+		}
+
 		SubmitBatch();
 
 		clipEnabled = false;
@@ -592,6 +661,43 @@ namespace CppProject
 		GL_CHECK_ERROR();
 	}
 
+	void GraphicsApiHandler::SetDepthFunc(IntType func)
+	{
+		if (depthFunc == func)
+			return;
+
+		SubmitBatch();
+		depthFunc = func;
+		glDepthFunc(func == cmpfunc_equal ? GL_EQUAL : GL_LEQUAL);
+		GL_CHECK_ERROR();
+	}
+
+	void GraphicsApiHandler::SetColorWrite(BoolType red, BoolType green, BoolType blue, BoolType alpha)
+	{
+		IntType mask = red | (green << 1) | (blue << 2) | (alpha << 3);
+		if (colorWriteMask == mask)
+			return;
+
+		SubmitBatch();
+		colorWriteMask = mask;
+		glColorMask(red, green, blue, alpha);
+		GL_CHECK_ERROR();
+	}
+
+	void GraphicsApiHandler::SetBlending(BoolType enabled)
+	{
+		if (blend == enabled)
+			return;
+
+		SubmitBatch();
+		blend = enabled;
+		if (enabled)
+			glEnable(GL_BLEND);
+		else
+			glDisable(GL_BLEND);
+		GL_CHECK_ERROR();
+	}
+
 	void GraphicsApiHandler::SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest)
 	{
 		if (blendSrcFactor == src && blendDstFactor == dest &&
@@ -619,6 +725,12 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClipBegin(QRect rect)
 	{
+		if (clipEnabled)
+		{
+			clipStack.append(clipRect);
+			rect = rect.intersected(clipRect);
+		}
+
 		SubmitBatch();
 
 		// Render to stencil mask
@@ -649,6 +761,14 @@ namespace CppProject
 		if (!clipEnabled)
 			return;
 
+		if (!clipStack.isEmpty())
+		{
+			QRect previousRect = clipStack.takeLast();
+			clipEnabled = false;
+			ClipBegin(previousRect);
+			return;
+		}
+
 		SubmitBatch();
 
 		// Disable stencil mask
@@ -661,6 +781,30 @@ namespace CppProject
 		return 16384;
 	}
 #endif
+
+	void GraphicsApiHandler::ClipSuspend()
+	{
+		ClipState state;
+		state.enabled = clipEnabled;
+		state.rect = clipRect;
+		state.stack = clipStack;
+		clipSuspendStack.append(state);
+
+		clipStack.clear();
+		if (clipEnabled)
+			ClipEnd();
+	}
+
+	void GraphicsApiHandler::ClipResume()
+	{
+		if (clipSuspendStack.isEmpty())
+			return;
+
+		ClipState state = clipSuspendStack.takeLast();
+		clipStack = state.stack;
+		if (state.enabled)
+			ClipBegin(state.rect);
+	}
 
 	void GraphicsApiHandler::SetMatrix(IntType type, Matrix matrix)
 	{

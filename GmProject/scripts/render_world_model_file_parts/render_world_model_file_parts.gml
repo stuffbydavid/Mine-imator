@@ -12,6 +12,8 @@
 
 function render_world_model_file_parts(modelfile, res, texnamemap, hidelist, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, matrixmap = null)
 {
+	res = res_eval(res)
+
 	var partlist, mat;
 	partlist = modelfile.part_list
 	

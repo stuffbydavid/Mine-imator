@@ -18,7 +18,7 @@ function vbuffer_render()
 		if (argument_count > 1)
 			pos = argument[1]
 		else
-			pos = point3D(0, 0, 0)
+			pos = point3D(0)
 		
 		if (argument_count > 2)
 			rot = argument[2]

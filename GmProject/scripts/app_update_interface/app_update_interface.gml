@@ -2,7 +2,9 @@
 
 function app_update_interface()
 {
-	if (update_interface_wait)
+	menu_button_mouseon = false
+	
+	if (setting_reduced_motion || update_interface_wait)
 	{
 		interface_update_instant()
 		update_interface_wait = false
@@ -21,8 +23,6 @@ function app_update_interface()
 		window_compact = false
 	}
 	
-	/*
 	if (current_time < update_interface_timeout)
 		interface_update()
-	*/
 }

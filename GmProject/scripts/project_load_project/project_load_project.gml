@@ -16,8 +16,9 @@ function project_load_project(map)
 	
 	project_render_settings = value_get_string(map[?"render_settings"], project_render_settings)
 	project_tempo = value_get_real(map[?"tempo"], project_tempo)
-	project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
 	project_grid_columns = value_get_real(map[?"grid_columns"], project_grid_columns)
+	project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
+	project_pack = value_get_save_id(map[?"pack"], mc_res)
 	view_main.camera = value_get_save_id(map[?"view_main_camera"], -4)
 	view_second.camera = value_get_save_id(map[?"view_second_camera"], -5)
 	
@@ -58,6 +59,7 @@ function project_load_project(map)
 		cam_work_roll = value_get_real(cammap[?"roll"], cam_work_roll)
 		cam_work_zoom = value_get_real(cammap[?"zoom"], cam_work_zoom)
 		cam_work_zoom_goal = cam_work_zoom
+		cam_work_fov = value_get_real(cammap[?"fov"], cam_work_fov)
 		
 		cam_work_angle_look_xy = cam_work_angle_xy
 		cam_work_angle_look_z = -cam_work_angle_z

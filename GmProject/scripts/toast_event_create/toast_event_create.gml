@@ -16,6 +16,7 @@ function toast_event_create()
 	remove_alpha = 1
 	
 	time_created = current_time
+	shake_time = null
 	dismiss_time = no_limit
 	iid = null
 }

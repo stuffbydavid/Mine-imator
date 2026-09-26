@@ -24,10 +24,10 @@ function draw_recent()
 	{
 		draw_set_font(font_value)
 		
-		for (var i = 0; i < recent_list_amount; i++)
+		for (var i = 0; i < recent_list_amount_display; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
-			var mouseon = hover;
+			mouseon = hover
 			var item = recent_list[|i];
 			
 			// Icons
@@ -46,7 +46,7 @@ function draw_recent()
 			// Name
 			draw_label(string_limit(filename_name(item.name), (iconx - xx) - 12), xx + 12, recenty + 22, fa_left, fa_middle, c_text_main, a_text_main)
 			
-			// Seperator
+			// Separator
 			draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 			// Animation
@@ -92,11 +92,11 @@ function draw_recent()
 		// Set scrollbar
 		var liststart = 0;
 		
-		if ((recent_list_amount * 44) > hei - 28)
+		if ((recent_list_amount_display * 44) > hei - 28)
 		{
 			window_scroll_focus = string(recent_scrollbar)
 			
-			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid - 12, yy + 28, hei - 28, recent_list_amount * 44)
+			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid - 12, yy + 28, hei - 28, recent_list_amount_display * 44)
 			liststart = snap(recent_scrollbar.value / 44, 1)
 			wid -= 12
 		}
@@ -111,7 +111,7 @@ function draw_recent()
 		timex = xx + 12 + namewidth + 12
 		
 		// File name
-		draw_label(text_get("recentfilename"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		draw_label(text_get("recentname"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
 		// Last opened
 		draw_label(text_get("recentlastopened"), timex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
@@ -120,7 +120,7 @@ function draw_recent()
 		
 		// Draw list
 		draw_set_font(font_value)
-		for (var i = liststart; i < recent_list_amount; i++)
+		for (var i = liststart; i < recent_list_amount_display; i++)
 		{
 			var hover = app_mouse_box(xx, recenty, wid, 44) && !popup_mouseon && !toast_mouseon && !context_menu_mouseon;
 			mouseon = hover
@@ -134,27 +134,27 @@ function draw_recent()
 			draw_label(string_limit(recent_time_string(item.last_opened), timewidth), timex, recenty + 22, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 			
 			// Icons
-			var iconx = xx + wid - 8;
+			var iconx = xx + wid - 10;
 			iconx -= 24
 			
 			// Remove
 			if (hover)
 			{
-				if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
+				if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 10, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
 					action_recent_remove(item)
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
-			iconx -= 24
+			iconx -= 28
 			
 			// Oh yeah. Pin it
 			if (hover || item.pinned)
 			{
-				if (draw_button_icon("recentpin" + string(item), iconx, recenty + 8, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
+				if (draw_button_icon("recentpin" + string(item), iconx, recenty + 10, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
 					action_recent_pin(item)
 				mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 			}
 			
-			// Seperator
+			// Separator
 			draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 			// Animation
@@ -198,23 +198,23 @@ function draw_recent()
 		// Set scrollbar
 		var liststart = 0;
 		
-		if ((recent_list_amount * 256) > hei)
+		if ((recent_list_amount_display * 256) > hei)
 		{
 			window_scroll_focus = string(recent_scrollbar)
 			
-			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 12, yy, hei, ceil(recent_list_amount/4) * 256)
+			scrollbar_draw(recent_scrollbar, e_scroll.VERTICAL, xx + wid + 12, yy, hei, ceil(recent_list_amount_display/4) * 256)
 			liststart = recent_scrollbar.value
 		}
 	
 		// Draw grid cards
-		var cardx, cardy, item, areamouseon, hover, mouseon;
+		var cardx, cardy, item, areamouseon, hover;
 		cardx = dx
 		cardy = dy - liststart
 		areamouseon = app_mouse_box(xx, yy, wid, hei)
 		
 		clip_begin(xx - 2, yy - 1, wid + 4, hei + 2)
 		
-		for (var i = 0; i < recent_list_amount; i++)
+		for (var i = 0; i < recent_list_amount_display; i++)
 		{
 			// Only draw card if visible
 			if (cardy < yy + hei || cardy + 240 + 16 > yy)
@@ -286,6 +286,7 @@ function draw_recent()
 						{
 							project_load(item.filename)
 							window_state = ""
+							clip_end()
 					
 							return 0
 						}

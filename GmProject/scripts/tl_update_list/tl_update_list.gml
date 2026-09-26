@@ -19,6 +19,10 @@ function tl_update_list()
 	
 	if (root)
 	{
+		for (var t = 0; t < ds_list_size(tree_list); t++)
+			with (tree_list[|t])
+				tl_update_child_is_animated()
+
 		app.tree_update_parent_filter = app
 		app.tree_update_extend = true
 		app.tree_update_color = null
@@ -34,7 +38,7 @@ function tl_update_list()
 		// Clear
 		level = tllevel
 		level_display = []
-		tree_contents = array_create(e_tl_type.amount - 1)
+		tree_contents = array_create(e_tl_type.amount)
 		
 		ds_list_clear(tree_list_filter)
 		

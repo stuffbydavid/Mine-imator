@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "find_videoquality",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Project",
-    "path": "folders/Scripts/Project.yy",
+  "$GMScript":"v1",
+  "%Name":"find_videoquality",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"find_videoquality",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

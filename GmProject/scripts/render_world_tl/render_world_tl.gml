@@ -5,11 +5,13 @@ function render_world_tl()
 {
 	// No 3D representation?
 	if (type = e_tl_type.CHARACTER ||
+		type = e_tl_type.EQUIPMENT ||
 		type = e_tl_type.SPECIAL_BLOCK ||
-		type = e_tl_type.FOLDER ||
+		type = e_tl_type.AUDIO_TRACK ||
+		type = e_tl_type.PATH_POINT ||
 		type = e_tl_type.BACKGROUND ||
-		type = e_tl_type.AUDIO ||
-		type = e_tl_type.PATH_POINT)
+		type = e_tl_type.STRUCTURE ||
+		type = e_tl_type.FOLDER)
 		return 0
 	
 	if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))
@@ -21,6 +23,13 @@ function render_world_tl()
 	// Invisible?
 	if (!render_visible)
 		return 0
+		
+	// Place mode
+	if (placed || parent_is_placed)
+	{
+		if (app.place_content_mouseon != null && !app.content_mouseon)
+			return 0
+	}
 	
 	// Only render glow effect?
 	if ((glow && only_render_glow) && render_mode != e_render_mode.COLOR_GLOW)
@@ -36,10 +45,17 @@ function render_world_tl()
 	// Click mode
 	if (render_mode = e_render_mode.CLICK)
 	{
-		if (selected || lock || !tl_update_list_filter(id)) // Already selected when clicking?
+		if (selected || lock || !tl_update_list_filter(id))
 			return 0
 		
 		render_set_uniform_color("uReplaceColor", id, 1)
+	}
+	
+	// Placement data
+	if (render_mode = e_render_mode.PLACE)
+	{
+		render_set_uniform_color("uReplaceColor", id, 1)
+		render_set_uniform("uIsBlock", bool_to_float(type_is_block(type)))
 	}
 	
 	if (render_mode = e_render_mode.SCENE_TEST)
@@ -49,7 +65,10 @@ function render_world_tl()
 	else if (render_mode = e_render_mode.SELECT && !parent_is_selected && !selected)
 		return 0
 		
-	else if (render_mode = e_render_mode.PLACE && !parent_is_placed && !placed)
+	else if (render_mode = e_render_mode.PLACE_SELECT && !parent_is_placed && !placed)
+		return 0
+		
+	else if (render_mode = e_render_mode.PLACE_PARENT && !parent_is_place_target && !place_target)
 		return 0
 	
 	// Box for clicking
@@ -223,17 +242,18 @@ function render_world_tl()
 	}
 	
 	// Glint mode
-	var tex, spd;
-	if (glint_tex.texture)
-		tex = glint_tex.texture
+	var tex, spd, glintres;
+	glintres = res_eval(glint_tex)
+	if (glintres.texture)
+		tex = glintres.texture
 	else
-		tex = (glint_mode = e_glint.ITEM ? glint_tex.glint_item_texture : glint_tex.glint_entity_texture)
+		tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
 	
 	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 	
 	spd = app.background_time * glint_speed * app.project_render_glint_speed
-	render_set_uniform_int("uGlintEnabled", glint_mode = e_glint.NONE ? 0 : 1)
+	render_set_uniform_int("uGlintEnabled", glint_enabled ? 1 : 0)
 	render_set_uniform_vec2("uGlintOffset", spd * (0.000625), spd * (0.00125))
 	render_set_uniform("uGlintStrength", app.project_render_glint_strength * glint_strength)
 	render_set_uniform_vec2("uGlintSize", sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
@@ -250,9 +270,11 @@ function render_world_tl()
 			render_set_texture(spr_default_normal, "Normal")
 		}
 		
+		render_set_uniform_vec2("uTextureOffset", 0, 0)
+		
 		switch (type)
 		{
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
 				if (model_part = null || render_res_diffuse = null)
 					break
@@ -265,27 +287,35 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp.block_vbuffer, [render_res_diffuse, render_res_material, render_res_normal], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp.block_vbuffer, [render_res_diffuse, render_res_normal, render_res_material], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
-					render_world_scenery(temp.scenery, [render_res_diffuse, render_res_material, render_res_normal], temp.block_repeat_enable, temp.block_repeat)
+					render_world_scenery(temp.scenery, [render_res_diffuse, render_res_normal, render_res_material], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
 			case e_tl_type.ITEM:
 			{
+				var itemanimate;
+				itemanimate = (parent = null || parent = app || parent.object_index != obj_timeline || parent.type != e_tl_type.MODEL_PART)
 				if (item_vbuffer = null)
-					render_world_item(temp.item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [item_res, item_material_res, item_normal_res])
+					render_world_item(temp.item_vbuffer, [item_res, item_normal_res, item_material_res], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else
-					render_world_item(item_vbuffer, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin, [item_res, item_material_res, item_normal_res])
+					render_world_item(item_vbuffer, [item_res, item_normal_res, item_material_res], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				break
 			}
 			
 			case e_tl_type.TEXT:
 			{
-				var font = value[e_value.TEXT_FONT];
-				if (font = null)
-					font = temp.text_font
-				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res, value[e_value.TEXT_OUTLINE] ? value[e_value.TEXT_OUTLINE_COLOR] : null)
+				var outline = null;
+				if (has_temp && !value[e_value.TEXT_CUSTOM_OUTLINE])
+				{
+					if (temp.text_outline)
+						outline = temp.text_outline_color
+				}
+				else if (value[e_value.TEXT_OUTLINE])
+					outline = value[e_value.TEXT_OUTLINE_COLOR]
+				
+				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res, outline)
 				break
 			}
 			
@@ -293,10 +323,10 @@ function render_world_tl()
 			{
 				if (temp.model != null)
 				{
-					var res = value_inherit[e_value.TEXTURE_OBJ];
+					var res = res_eval(value_inherit[e_value.TEXTURE_OBJ]);
 					if (res = null)
-						res = temp.model_tex
-					if (res = null || res.block_sheet_texture = null)
+						res = res_eval(temp.model_tex)
+					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					render_world_block(temp.model.block_vbuffer, res)
 					
@@ -311,7 +341,7 @@ function render_world_tl()
 			{
 				if (path_vbuffer != null)
 				{
-					var tex, texmat, texnorm;
+					var texmat, texnorm;
 					
 					if (value_inherit[e_value.TEXTURE_OBJ] = null)
 						tex = spr_shape
@@ -355,7 +385,7 @@ function render_world_tl()
 			
 			default: // Shapes
 			{
-				var tex, matres, texmat, normtex;
+				var matres, texmat, normtex;
 				with (temp)
 				{
 					tex = temp_get_shape_tex(temp_get_shape_texobj(other.value_inherit[e_value.TEXTURE_OBJ]))
@@ -370,7 +400,7 @@ function render_world_tl()
 						render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
 				}
 				
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, texmat, normtex])
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, normtex, texmat])
 				break
 			}
 		}

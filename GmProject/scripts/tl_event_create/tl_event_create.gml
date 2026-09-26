@@ -12,7 +12,9 @@ function tl_event_create()
 	name = ""
 	display_name = ""
 	temp = null
-	text = text_get("timelineeditortextsample")
+	has_temp = false
+	animated = true
+	
 	color_tag = null
 	color_tag_inherit = null
 	lock = false
@@ -23,8 +25,28 @@ function tl_event_create()
 	
 	model_part = null
 	model_part_name = ""
+	model = null
+	model_file = null
+	model_name = ""
+	model_state = array()
+	model_tex = null
+	model_tex_material = null
+	model_tex_normal = null
+	model_texture_name_map = null
+	model_texture_material_name_map = null
+	model_texture_normal_name_map = null
+	model_shape_texture_name_map = null
+	model_shape_texture_material_name_map = null
+	model_shape_texture_normal_name_map = null
+	model_hide_list = null
+	model_shape_hide_list = null
+	model_color_name_map = null
+	model_color_map = null
 	model_shape_vbuffer_map = null
 	model_shape_alpha_map = null
+	model_use_blend_color = false
+	model_blend_color = c_white
+	model_blend_color_default = c_white
 	part_of = null
 	part_list = null
 	part_root = null
@@ -58,8 +80,8 @@ function tl_event_create()
 	keyframe_current_values = null
 	keyframe_next_values = null
 	
-	world_pos = point3D(0, 0, 0)
-	world_pos_rotate = point3D(0, 0, 0)
+	world_pos = point3D(0)
+	world_pos_rotate = point3D(0)
 	world_pos_2d = point2D(0, 0)
 	world_pos_2d_error = false
 	colors_ext = false
@@ -70,12 +92,13 @@ function tl_event_create()
 	parent = null
 	parent_filter = null
 	parent_is_selected = false
+	child_is_animated = false
 	lock_bend = true
 	tree_array = 0
 	tree_list = ds_list_create()
 	tree_list_filter = ds_list_create()
 	tree_extend = false
-	tree_contents = array_create(e_tl_type.amount - 1)
+	tree_contents = array_create(e_tl_type.amount)
 	list_mouseon = false
 	
 	inherit_position = true
@@ -94,8 +117,8 @@ function tl_event_create()
 	inherit_pose = false
 	scale_resize = true
 	rot_point_custom = false
-	rot_point = point3D(0, 0, 0)
-	rot_point_render = point3D(0, 0, 0)
+	rot_point = point3D(0)
+	rot_point_render = point3D(0)
 	backfaces = false
 	texture_blur = false
 	texture_filtering = false
@@ -112,12 +135,12 @@ function tl_event_create()
 	blend_mode = "normal"
 	alpha_mode = e_alpha_mode.DEFAULT
 	
-	glint_mode = e_glint.NONE
+	glint_enabled = false
+	glint_mode = e_glint.ITEM
 	glint_scale = 1
 	glint_speed = 1
 	glint_strength = 1
-	glint_tex = mc_res
-	glint_tex.count++
+	glint_tex = project_pack_res
 	
 	particle_list = null
 	
@@ -139,21 +162,27 @@ function tl_event_create()
 	// Only used if the timeline is a banner special block in scenery
 	pattern_type = ""
 	pattern_base_color = null
-	pattern_pattern_list = null
-	pattern_color_list = null
+	pattern_pattern_list = array()
+	pattern_color_list = array()
 	pattern_skin = null
 	
 	text_vbuffer = [null, null]
 	text_texture = [null, null]
 	text_string = ""
 	text_res = null
+	text_font = project_pack_res
 	text_3d = false
+	text_3d_prev = false
+	text_face_camera = false
+	text_aa = false
 	text_halign_prev = "center"
 	text_valign_prev = "center"
 	text_aa_prev = true
+	text_outline_size_prev = 3
 	
 	item_vbuffer = null
 	item_slot = 0
+	item_sheet = e_item_sheet.SIZE16
 	item_res = null
 	item_material_res = null
 	item_normal_res = null
@@ -166,35 +195,37 @@ function tl_event_create()
 	
 	tex_obj = null
 	tex_obj_prev = -5
-	
-	model_tex = null
-	model_tex_material = null
-	model_tex_normal = null
+	tex_obj_material = null
+	tex_obj_material_prev = -5
+	tex_obj_normal = null
+	tex_obj_normal_prev = -5
 	
 	render_visible = true
 
 	placed = false
 	parent_is_placed = false
+	place_target = false
+	parent_is_place_target = false
 	
 	// Path
 	path_update = false
 	path_points_list = ds_list_create()
 	path_smooth = true
-	path_closed = false
+	path_closed = true
 	path_detail = 6
 	
 	path_table = []
 	path_table_matrix = []
 	path_length = 1
 	
-	path_shape_generate = false
+	path_shape = "none"
 	path_shape_radius = 8
-	path_shape_tex_length = 16
 	path_shape_invert = false
-	path_shape_tube = false
-	path_shape_detail = 6
 	path_shape_smooth_segments = true
 	path_shape_smooth_ring = false
+	path_shape_detail = 6
+	path_shape_tex_mapped = false
+	path_shape_tex_length = 16
 	
 	path_vbuffer = null
 	path_select_vbuffer = null

@@ -32,7 +32,7 @@ function app_startup_collapse()
 	collapse_register("models_scenery")
 	collapse_register("glint")
 	
-	collapse_register("sunlight")
+	collapse_register("biome", true)
 	collapse_register("sky")
 	collapse_register("clouds")
 	collapse_register("ground")
@@ -42,8 +42,9 @@ function app_startup_collapse()
 	collapse_register("follow_path")
 	collapse_register("rotatepoint")
 	collapse_register("ik")
-	collapse_register("path_shape")
-	collapse_register("path_shape_tube")
+	
+	//collapse_register("path_shape")
+	//collapse_register("path_shape_tube")
 	
 	collapse_register("light_management_cam")
 	collapse_register("aperture")
@@ -65,6 +66,9 @@ function app_startup_collapse()
 	collapse_register("material_subsurface")
 	
 	collapse_register("textoutline")
+	collapse_register("textalignment")
+	collapse_register("librarytextoutline")
 	
-	collapse_register("tl_glint")
+	collapse_register("tl_inherit")
+	collapse_register("tl_glint", true)
 }

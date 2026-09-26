@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_text_3d",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Text",
-    "path": "folders/Scripts/App/Actions/Bench/Text.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_text_3d",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_text_3d",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/App/Actions/Bench/Text.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

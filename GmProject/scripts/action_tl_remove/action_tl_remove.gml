@@ -68,4 +68,5 @@ function action_tl_remove()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+	project_update_counts()
 }

@@ -42,13 +42,7 @@ function action_lib_model_tex_material(res)
 	
 	with (temp_edit)
 	{
-		if (model_tex_material != null)
-			model_tex_material.count--
-		
 		model_tex_material = res
-		
-		if (model_tex_material != null)
-			model_tex_material.count++
 		
 		if (pattern_type != "")
 			array_add(pattern_update, temp_edit)
@@ -56,5 +50,6 @@ function action_lib_model_tex_material(res)
 		temp_update_armor(temp_edit)
 	}
 	
+	project_update_counts()
 	lib_preview.update = true
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_load_pack_block_preview_buffers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_load_pack_block_preview_buffers",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Resources/Load.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

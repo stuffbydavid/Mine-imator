@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scrollbar_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Scrollbar",
-    "path": "folders/Scripts/App/Interface/Components/Scrollbar.yy",
+  "$GMScript":"v1",
+  "%Name":"scrollbar_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrollbar_event_create",
+  "parent":{
+    "name":"Scrollbar",
+    "path":"folders/Scripts/App/Interface/Components/Scrollbar.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

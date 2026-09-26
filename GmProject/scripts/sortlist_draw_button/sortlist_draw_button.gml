@@ -33,14 +33,14 @@ function sortlist_draw_button(name, xx, yy, w, h, highlight, icon, isfirst, isla
 	draw_set_font(font_label)
 	
 	// Icon spacing
-	if (icon != null && mouseon)
+	if (icon != null)
 		wlimit -= 28
 	
 	wlimit = max(0, wlimit)
 	text = string_limit(text_get(name), wlimit)
 	
 	// Draw icon
-	if (icon != null && mouseon && wlimit > 28)
+	if (icon != null && (!islast || isfirst))
 		draw_image(spr_icons, icon, xx + 8 + string_width(text) + 4 + 12, yy + h / 2, 1, 1, c_text_secondary, a_text_secondary)
 	
 	// Draw label
@@ -52,12 +52,14 @@ function sortlist_draw_button(name, xx, yy, w, h, highlight, icon, isfirst, isla
 	{
 		var textoff;
 		
-		if (icon != null && mouseon)
+		if (icon != null)
 			textoff = 28
 		else
 			textoff = 0
 		
 		draw_label(text, xx + (w - 8) - textoff, yy + h / 2, fa_right, fa_middle, c_text_secondary, a_text_secondary)
+		if (icon != null)
+			draw_image(spr_icons, icon, xx + w - 20, yy + h / 2, 1, 1, c_text_secondary, a_text_secondary)
 	}
 	
 	// Check click

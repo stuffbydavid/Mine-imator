@@ -8,36 +8,68 @@ function shortcut_bar_update()
 		
 		if (shortcut_bar_state = "viewport" || shortcut_bar_state = "viewportcam")
 		{
-			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "select")
+			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "viewselect")
+			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "viewselectpart")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "viewselectadd")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_RIGHT, "viewselectpartadd")
 			
 			if (shortcut_bar_state = "viewport")
-				shortcut_bar_add(keybinds[e_keybind.CAM_VIEW_TIMELINE].keybind, null, "viewtimeline")
+				shortcut_bar_add(keybinds[e_keybind.CAM_VIEW_TIMELINE].keybind, null, "viewviewobject")
 			
-			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "orbit")
-			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "pan")
-			shortcut_bar_add(null, e_mouse.SCROLL, "zoom")
-			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "walk")
+			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "vieworbit")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "viewpan")
+			shortcut_bar_add(null, e_mouse.SCROLL, "viewzoom")
+			shortcut_bar_add(null, e_mouse.CLICK_MIDDLE, "viewfov")
+			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "viewwalk")
 		}
 		
-		if (shortcut_bar_state = "cameramove" || shortcut_bar_state = "tlcameramove")
+		if (shortcut_bar_state = "buildviewport")
 		{
-			shortcut_bar_add(keybinds[e_keybind.CAM_FORWARD].keybind, null, "forward")
-			shortcut_bar_add(keybinds[e_keybind.CAM_LEFT].keybind, null, "left")
-			shortcut_bar_add(keybinds[e_keybind.CAM_BACK].keybind, null, "back")
-			shortcut_bar_add(keybinds[e_keybind.CAM_RIGHT].keybind, null, "right")
-			shortcut_bar_add(keybinds[e_keybind.CAM_ASCEND].keybind, null, "ascend")
-			shortcut_bar_add(keybinds[e_keybind.CAM_DESCEND].keybind, null, "descend")
-			shortcut_bar_add(keybinds[e_keybind.CAM_FAST].keybind, null, "faster")
-			shortcut_bar_add(keybinds[e_keybind.CAM_SLOW].keybind, null, "slower")
+			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "buildremove")
+			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "buildplace")
+			shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.SCROLL, "buildscroll")
+			shortcut_bar_add(keybind_new("T"), null, "buildsearch")
+			shortcut_bar_add(keybinds[e_keybind.CAM_VIEW_TIMELINE].keybind, null, "buildviewstructure")
+			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "vieworbit")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "viewpan")
+			shortcut_bar_add(null, e_mouse.SCROLL, "viewzoom")
+			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "viewwalk")
+			shortcut_bar_add(keybind_new("S"), null, "buildresetstructure")
+			shortcut_bar_add(keybind_new("F"), null, "buildfirstperson")
+		}
+
+		if (shortcut_bar_state = "cameramove" || shortcut_bar_state = "tlcameramove" || shortcut_bar_state = "firstperson")
+		{
+			if (shortcut_bar_state = "firstperson")
+			{
+				shortcut_bar_add(null, e_mouse.CLICK_LEFT, "buildremove")
+				shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "buildplace")
+				shortcut_bar_add(null, e_mouse.SCROLL, "buildscroll")
+				shortcut_bar_add(keybind_new("T"), null, "buildsearch")
+			}
+			
+			shortcut_bar_add(keybinds[e_keybind.CAM_FORWARD].keybind, null, "viewforward")
+			shortcut_bar_add(keybinds[e_keybind.CAM_LEFT].keybind, null, "viewleft")
+			shortcut_bar_add(keybinds[e_keybind.CAM_BACK].keybind, null, "viewback")
+			shortcut_bar_add(keybinds[e_keybind.CAM_RIGHT].keybind, null, "viewright")
+			shortcut_bar_add(keybinds[e_keybind.CAM_ASCEND].keybind, null, "viewascend")
+			shortcut_bar_add(keybinds[e_keybind.CAM_DESCEND].keybind, null, "viewdescend")
+			shortcut_bar_add(keybinds[e_keybind.CAM_FAST].keybind, null, "viewfaster")
+			shortcut_bar_add(keybinds[e_keybind.CAM_SLOW].keybind, null, "viewslower")
+			if (shortcut_bar_state = "cameramove")
+				shortcut_bar_add(null, e_mouse.SCROLL, "viewspeed")
 			
 			if (shortcut_bar_state = "tlcameramove")
 			{
-				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_FORWARD].keybind, null, "rollforward")
-				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_BACK].keybind, null, "rollback")
-				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_RESET].keybind, null, "rollreset")
+				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_FORWARD].keybind, null, "viewrollforward")
+				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_BACK].keybind, null, "viewrollback")
+				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_RESET].keybind, null, "viewrollreset")
 			}
+			else if (shortcut_bar_state = "firstperson")
+				shortcut_bar_add(keybind_new(vk_escape), null, "firstpersoncancel")
+			
 			else if (window_state != "world_import")
-				shortcut_bar_add(keybinds[e_keybind.CAM_RESET].keybind, null, "reset")
+				shortcut_bar_add(keybinds[e_keybind.CAM_RESET].keybind, null, "viewreset")
 		}
 		
 		if (string_contains(shortcut_bar_state, "timeline"))
@@ -48,6 +80,7 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.CLICK_LEFT, "tlkeyframeselectadd")
 				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tlkeyframeselectgroup")
 				shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "tlkeyframeselectgroupadd")
+				shortcut_bar_add(keybinds[e_keybind.KEYFRAMES_STRETCH].keybind, e_mouse.DRAG_LEFT, "tlkeyframestretch")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.CLICK_LEFT, "tlkeyframedeselect")
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tlkeyframedeselectgroup")
 			}
@@ -62,25 +95,33 @@ function shortcut_bar_update()
 				shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.DRAG_LEFT, "tltimelinedeselectgroup")
 			}
 			
+			if (shortcut_bar_state = "timelinescale")
+			{
+				shortcut_bar_add(keybind_new(vk_enter), null, "tlkeyframescaleapply")
+				shortcut_bar_add(null, e_mouse.CLICK_LEFT, "tlkeyframescaleapply")
+				shortcut_bar_add(keybind_new(vk_escape), null, "tlkeyframescalecancel")
+				shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "tlkeyframescalecancel")
+			}
+			
 			if (shortcut_bar_state = "timelinebar")
 			{
 				shortcut_bar_add(null, e_mouse.DRAG_LEFT, "tlsettime")
 				shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "tlsetregion")
 			}
 			
-			shortcut_bar_add(null, e_mouse.SCROLL, "scrollvertical")
-			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.SCROLL, "scrollhorizontal")
-			shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.SCROLL, "zoom")
+			shortcut_bar_add(null, e_mouse.SCROLL, "listscrollvertical")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.SCROLL, "listscrollhorizontal")
+			shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.SCROLL, "viewzoom")
 		}
 		
 		if (shortcut_bar_state = "worldimport")
 		{
 			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "worldcreateselection")
-			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "orbit")
+			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "vieworbit")
 			shortcut_bar_add([ null, false, false, true ], null, "worldignoreselection")
-			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "pan")
-			shortcut_bar_add(null, e_mouse.SCROLL, "zoom")
-			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "walk")
+			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "viewpan")
+			shortcut_bar_add(null, e_mouse.SCROLL, "viewzoom")
+			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "viewwalk")
 		}
 		if (shortcut_bar_state = "worldimportselection")
 		{

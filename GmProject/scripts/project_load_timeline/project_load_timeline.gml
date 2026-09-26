@@ -12,109 +12,159 @@ function project_load_timeline(map)
 		load_id = value_get_string(map[?"id"], save_id)
 		save_id_map[?load_id] = load_id
 		
-		type = ds_list_find_index(tl_type_name_list, value_get_string(map[?"type"]))
+		var typename = value_get_string(map[?"type"]);
+		if (typename = "bodypart")
+			typename = "modelpart"
+		type = ds_list_find_index(tl_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
 		
 		temp = value_get_save_id(map[?"temp"], temp)
+		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
+		animated = value_get_real(map[?"animated"], animated)
+		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.BACKGROUND)
+			animated = true
+		
 		color_tag = value_get_real(map[?"color_tag"], color_tag)
 		hide = value_get_real(map[?"hide"], hide)
 		lock = value_get_real(map[?"lock"], lock)
 		ghost = value_get_real(map[?"ghost"], ghost)
 		depth = value_get_real(map[?"depth"], depth)
 		
-		if (type = e_temp_type.BODYPART)
+		if (type = e_tl_type.MODEL_PART)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
 		
-		if (type = e_temp_type.TEXT)
-			text = value_get_string(map[?"text"], text)
+		if (type = e_tl_type.TEXT)
+		{
+			if (load_format < e_project.FORMAT_210)
+			{
+				value_default[e_value.TEXT_OUTLINE_COLOR] = c_white
+				value[e_value.TEXT_OUTLINE_COLOR] = c_white
+			}
+			value_default[e_value.TEXT] = value_get_string(map[?"text"], value_default[e_value.TEXT])
+			text_aa = value_get_real(map[?"text_aa"], text_aa)
+		}
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
-		if (part_of != null)
+		
+		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
+			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
 		{
-			if (type = e_temp_type.SPECIAL_BLOCK)
+			if (part_of = null && !has_temp)
 			{
-				var modelmap = map[?"model"];
-				if (ds_map_valid(modelmap))
-				{
-					model_name = value_get_string(modelmap[?"name"], "")
-					model_state = value_get_state_vars(modelmap[?"state"])
-				}
-				
+				model_tex = value_get_save_id(map[?"model_tex"], project_pack_res)
+				model_tex_material = value_get_save_id(map[?"model_tex_material"], project_pack_res)
+				model_tex_normal = value_get_save_id(map[?"model_tex_normal"], project_pack_res)
+				model_use_blend_color = value_get_real(map[?"model_use_blend_color"], false)
+				model_blend_color = value_get_color(map[?"model_blend_color"], c_white)
+				model_blend_color_default = model_blend_color
+			}
+
+			var modelmap = map[?"model"];
+			if (ds_map_valid(modelmap))
+			{
+				model_name = value_get_string(modelmap[?"name"], "")
+				model_state = value_get_state_vars(modelmap[?"state"])
+			}
+
+			if (part_of != null)
 				part_root = value_get_save_id(map[?"part_root"], part_root)
+
+			// Pattern values
+			pattern_type = value_get_string(map[?"pattern_type"], pattern_type)
+
+			// Legacy "is_banner" value
+			if (load_format < e_project.FORMAT_200_PRE_5)
+			{
+				var isbanner = value_get_real(map[?"is_banner"], false);
 				
-				// Pattern values
-				pattern_type = value_get_string(map[?"pattern_type"], pattern_type)
+				if (isbanner)
+					pattern_type = "banner"
+			}
+
+			if (pattern_type != "")
+			{
+				var base_color, pattern_list, color_list;
 				
-				// Legacy "is_banner" value
 				if (load_format < e_project.FORMAT_200_PRE_5)
 				{
-					var isbanner = value_get_real(map[?"is_banner"], false);
-					
-					if (isbanner)
-						pattern_type = "banner"
+					base_color = value_get_string(map[?"banner_base_color"], "white")
+					pattern_list = map[?"banner_pattern_list"]
+					color_list = map[?"banner_color_list"]
+				}
+				else
+				{
+					base_color = value_get_string(map[?"pattern_base_color"], "white")
+					pattern_list = map[?"pattern_pattern_list"]
+					color_list = map[?"pattern_color_list"]
+				}
+
+				pattern_base_color = minecraft_swatch_dyes.map[?base_color]
+
+				if (ds_list_valid(pattern_list))
+				{
+					pattern_pattern_list = array()
+					for (var p = 0; p < ds_list_size(pattern_list); p++)
+						array_add(pattern_pattern_list, pattern_list[|p])
 				}
 				
-				if (pattern_type != "")
+				if (ds_list_valid(color_list))
 				{
-					var base_color, pattern_list, color_list;
-					
-					if (load_format < e_project.FORMAT_200_PRE_5)
-					{
-						base_color = value_get_string(map[?"banner_base_color"], "white")
-						pattern_list = map[?"banner_pattern_list"]
-						color_list = map[?"banner_color_list"]
-					}
-					else
-					{
-						base_color = value_get_string(map[?"pattern_base_color"], "white")
-						pattern_list = map[?"pattern_pattern_list"]
-						color_list = map[?"pattern_color_list"]
-					}
-					
-					pattern_base_color = minecraft_swatch_dyes.map[?base_color]
-					
-					if (ds_list_valid(pattern_list))
-					{
-						pattern_pattern_list = array()
-						for (var p = 0; p < ds_list_size(pattern_list); p++)
-							array_add(pattern_pattern_list, pattern_list[|p])
-					}
-					
-					if (ds_list_valid(color_list))
-					{
-						pattern_color_list = array()
-						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
-					}
+					pattern_color_list = array()
+					for (var c = 0; c < ds_list_size(color_list); c++)
+						array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
 				}
 			}
-			else if (type = e_temp_type.BLOCK)
+		}
+		else if (part_of != null && type = e_tl_type.BLOCK)
+		{
+			var blockmap = map[?"block"];
+			if (ds_map_valid(blockmap))
 			{
-				var blockmap = map[?"block"];
-				if (ds_map_valid(blockmap))
+				if (load_format < e_project.FORMAT_120_PRE_1)
 				{
-					if (load_format < e_project.FORMAT_120_PRE_1)
+					// Read legacy block
+					var bid = value_get_real(blockmap[?"legacy_id"], 2);
+					var bdata = value_get_real(blockmap[?"legacy_data"], 0);
+					if (legacy_block_set[bid])
 					{
-						// Read legacy block
-						var bid = value_get_real(blockmap[?"legacy_id"], 2);
-						var bdata = value_get_real(blockmap[?"legacy_data"], 0);
-						if (legacy_block_set[bid])
+						var block = legacy_block_obj[bid, bdata];
+						if (block != null)
 						{
-							var block = legacy_block_obj[bid, bdata];
-							if (block != null)
-							{
-								block_name = block.name
-								block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
-							}
+							block_name = block.name
+							block_state = block_get_state_id_state_vars(block, legacy_block_state_id[bid, bdata])
 						}
 					}
-					else
-					{
-						block_name = value_get_string(blockmap[?"name"], "")
-						block_state = value_get_state_vars(blockmap[?"state"])
-					}
+				}
+				else
+				{
+					block_name = value_get_string(blockmap[?"name"], "")
+					block_state = value_get_state_vars(blockmap[?"state"])
 				}
 			}
+		}
+		else if (type = e_tl_type.BLOCK && !has_temp)
+		{
+			var directblockmap = map[?"block"];
+			if (ds_map_valid(directblockmap))
+			{
+				block_name = value_get_string(directblockmap[?"name"], "")
+				block_state = value_get_state_vars(directblockmap[?"state"])
+				block_tex = value_get_save_id(directblockmap[?"tex"], project_pack_res)
+				block_tex_material = value_get_save_id(directblockmap[?"tex_material"], project_pack_res)
+				block_tex_normal = value_get_save_id(directblockmap[?"tex_normal"], project_pack_res)
+				block_randomize = value_get_real(directblockmap[?"randomize"], true)
+				block_repeat_enable = value_get_real(directblockmap[?"repeat_enable"], false)
+				block_repeat = value_get_point3D(directblockmap[?"repeat"], vec3(1))
+				block_center_legacy = false
+				block_center = value_get_real(directblockmap[?"center"], false)
+				block_vbuffer = null
+			}
+		}
+		else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
+		{
+			text_font = value_get_save_id(map[?"text_font"], project_pack_res)
+			text_3d = value_get_real(map[?"text_3d"], false)
+			text_face_camera = value_get_real(map[?"text_face_camera"], false)
 		}
 		
 		var partslist = map[?"parts"];
@@ -126,16 +176,29 @@ function project_load_timeline(map)
 		}
 		
 		// Default values
-		project_load_values(map[?"default_values"], value_default)
+		var defaultmap = map[?"default_values"];
+		project_load_values(defaultmap, value_default)
+		
+		// Preserve anti-aliasing from legacy frame values
+		if (type = e_tl_type.TEXT && ds_map_valid(defaultmap))
+			text_aa = text_aa || value_get_real(defaultmap[?"TEXT_AA"], false)
 		
 		// Keyframes
-		var kfmap = map[?"keyframes"];
+		var kfmap, texttemplatesettings;
+		kfmap = map[?"keyframes"]
+		texttemplatesettings = value_get_real(map[?"text_template_settings"], false)
+		
 		if (ds_map_valid(kfmap))
 		{
 			var key = ds_map_find_first(kfmap);
 			keyframe_array = 0
 			while (!is_undefined(key))
 			{
+				var framemap = kfmap[?key];
+				
+				if (type = e_tl_type.TEXT && ds_map_valid(framemap))
+					text_aa = text_aa || value_get_real(framemap[?"TEXT_AA"], false)
+					
 				with (new_obj(obj_keyframe))
 				{
 					position = string_get_real(key)
@@ -150,6 +213,12 @@ function project_load_timeline(map)
 					project_load_values(kfmap[?key], value)
 					project_load_values_update()
 					
+					if (other.type = e_tl_type.TEXT && other.has_temp && !texttemplatesettings)
+					{
+						value[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+						value[e_value.TEXT_CUSTOM_OUTLINE] = true
+					}
+					
 					other.keyframe_array[position] = id
 				}
 				key = ds_map_find_next(kfmap, key)
@@ -159,6 +228,12 @@ function project_load_timeline(map)
 			for (var i = 0; i < array_length(keyframe_array); i++)
 				if (keyframe_array[i] > 0)
 					ds_list_add(keyframe_list, keyframe_array[i])
+		}
+		
+		if (type = e_tl_type.TEXT && has_temp && !texttemplatesettings)
+		{
+			value_default[e_value.TEXT_CUSTOM_ALIGNMENT] = true
+			value_default[e_value.TEXT_CUSTOM_OUTLINE] = true
 		}
 		
 		parent = value_get_save_id(map[?"parent"], parent)
@@ -199,17 +274,17 @@ function project_load_timeline(map)
 		glow = value_get_real(map[?"glow"], glow)
 		glow_texture = value_get_real(map[?"glow_texture"], glow_texture)
 		only_render_glow = value_get_real(map[?"only_render_glow"], only_render_glow)
-		glint_mode = value_get_real(map[?"glint_mode"], glint_mode)
+		glint_mode = value_get_real(map[?"glint_mode"], e_glint.NONE)
+		glint_enabled = value_get_real(map[?"glint_enabled"], glint_mode != e_glint.NONE)
 		glint_scale = value_get_real(map[?"glint_scale"], glint_scale)
 		glint_speed = value_get_real(map[?"glint_speed"], glint_speed)
 		glint_strength = value_get_real(map[?"glint_strength"], glint_strength)
 		
-		glint_tex.count--
-		glint_tex = value_get_save_id(map[?"glint_tex"], mc_res.save_id)
+		glint_tex = value_get_save_id(map[?"glint_tex"], project_pack_res)
 		
 		fog = value_get_real(map[?"fog"], fog)
 		
-		if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
+		if (type_has_wind(type))
 		{
 			wind = value_get_real(map[?"wind"], wind)
 			wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)
@@ -228,17 +303,32 @@ function project_load_timeline(map)
 		var pathmap = map[?"path"];
 		if (ds_map_valid(pathmap))
 		{
-			path_smooth = value_get_real(pathmap[?"smooth"], path_smooth)
 			path_closed = value_get_real(pathmap[?"closed"], path_closed)
+			path_smooth = value_get_real(pathmap[?"smooth"], path_smooth)
 			path_detail = value_get_real(pathmap[?"detail"], path_detail)
-			path_shape_generate = value_get_real(pathmap[?"shape_generate"], path_shape_generate)
+			path_shape = value_get_string(pathmap[?"shape"], path_shape)
 			path_shape_radius = value_get_real(pathmap[?"shape_radius"], path_shape_radius)
-			path_shape_tex_length = value_get_real(pathmap[?"shape_tex_length"], path_shape_tex_length)
 			path_shape_invert = value_get_real(pathmap[?"shape_invert"], path_shape_invert)
-			path_shape_tube = value_get_real(pathmap[?"shape_tube"], path_shape_tube)
-			path_shape_detail = value_get_real(pathmap[?"shape_detail"], path_shape_detail)
 			path_shape_smooth_segments = value_get_real(pathmap[?"shape_smooth_segments"], path_shape_smooth_segments)
 			path_shape_smooth_ring = value_get_real(pathmap[?"shape_smooth_ring"], path_shape_smooth_ring)
+			path_shape_detail = value_get_real(pathmap[?"shape_detail"], path_shape_detail)
+			path_shape_tex_mapped = value_get_real(pathmap[?"shape_tex_mapped"], path_shape_tex_mapped)
+			path_shape_tex_length = value_get_real(pathmap[?"shape_tex_length"], path_shape_tex_length)
+			
+			if (load_format < e_project.FORMAT_CTB_106)
+			{
+				path_shape_tex_mapped = true
+				
+				if (!value_get_real(pathmap[?"shape_generate"], false))
+				{
+					path_shape = "none"
+					path_shape_tex_mapped = false
+				}
+				else if (value_get_real(pathmap[?"shape_tube"], false))
+					path_shape = "tube"
+				else
+					path_shape = "flat"
+			}
 		}
 	}
 }

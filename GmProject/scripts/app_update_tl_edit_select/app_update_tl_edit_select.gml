@@ -2,27 +2,31 @@
 
 function app_update_tl_edit_select()
 {
+	view_transform_update_selection()
+
 	with (frame_editor)
 	{
-		transform.show = false
-		transform.enabled = false
-		constraints.enabled = false
-		material.enabled = false
-		particles.enabled = false
-		light.enabled = false
-		light.has_spotlight = false
+		item.enabled = false
 		camera.show = false
 		camera.enabled = false
 		camera.video_template = null
 		sound.enabled = false
+		particles.enabled = false
 		text.enabled = false
-		item.enabled = false
+		light.enabled = false
+		light.has_spotlight = false
+		environment.enabled = false
+		transform.show = false
+		transform.enabled = false
+		constraints.enabled = false
+		material.enabled = false
 		keyframe.enabled = false
 	}
 	
 	with (timeline_editor)
 	{
 		appearance.enabled = false
+		block.enabled = false
 		audio.enabled = false
 		path.enabled = false
 	}
@@ -51,7 +55,7 @@ function app_update_tl_edit_select()
 		if (!selected)
 			continue
 		
-		// Show duplicate & remove settings?
+		// Enable duplicate, remove and export settings?
 		if (part_of = null)
 			app.timeline_settings = true
 		
@@ -72,10 +76,11 @@ function app_update_tl_edit_select()
 				}
 			}
 			
-			// Show keyframe settings?
-			app.timeline_settings_keyframes = true
+			// Enable keyframe settings?
+			if (animated)
+				app.timeline_settings_keyframes = true
 			
-			// Show export button?
+			// Enable export button?
 			if (checkexport)
 			{
 				var obj = ((part_of != null) ? part_of : id);
@@ -97,35 +102,38 @@ function app_update_tl_edit_select()
 			app.setting_tool_move = tl_edit.show_tool_position
 		
 		// Set enabled
-		if (value_type[e_value_type.TRANSFORM])
-			app.frame_editor.transform.enabled = true
-		
-		if (value_type[e_value_type.TRANSFORM_POS] && (type != e_tl_type.PATH && type != e_tl_type.PATH_POINT))
-			app.frame_editor.constraints.enabled = true
-		
-		if (value_type[e_value_type.MATERIAL])
-			app.frame_editor.material.enabled = true
-		
-		if (value_type[e_value_type.PARTICLES])
-			app.frame_editor.particles.enabled = true
-		
-		if (value_type[e_value_type.LIGHT])
-			app.frame_editor.light.enabled = true
-		
-		if (value_type[e_value_type.SPOTLIGHT])
-			app.frame_editor.light.has_spotlight = true
-		
+		if (value_type[e_value_type.ITEM])
+			app.frame_editor.item.enabled = true
+
 		if (value_type[e_value_type.CAMERA])
 			app.frame_editor.camera.enabled = true
 		
 		if (value_type[e_value_type.SOUND])
 			app.frame_editor.sound.enabled = true
+
+		if (value_type[e_value_type.PARTICLES])
+			app.frame_editor.particles.enabled = true
 		
 		if (value_type[e_value_type.TEXT])
 			app.frame_editor.text.enabled = true
-		
-		if (value_type[e_value_type.ITEM])
-			app.frame_editor.item.enabled = true
+
+		if (value_type[e_value_type.LIGHT])
+			app.frame_editor.light.enabled = true
+
+		if (value_type[e_value_type.SPOTLIGHT])
+			app.frame_editor.light.has_spotlight = true
+
+		if (value_type[e_value_type.BACKGROUND])
+			app.frame_editor.environment.enabled = true
+
+		if (value_type[e_value_type.TRANSFORM])
+			app.frame_editor.transform.enabled = true
+
+		if (value_type[e_value_type.TRANSFORM_POS] && (type != e_tl_type.PATH && type != e_tl_type.PATH_POINT))
+			app.frame_editor.constraints.enabled = true
+
+		if (value_type[e_value_type.MATERIAL])
+			app.frame_editor.material.enabled = true
 		
 		if (value_type[e_value_type.KEYFRAME])
 			app.frame_editor.keyframe.enabled = true
@@ -133,6 +141,9 @@ function app_update_tl_edit_select()
 		if (value_type[e_value_type.APPEARANCE])
 			app.timeline_editor.appearance.enabled = true
 		
+		if (value_type[e_value_type.BLOCK])
+			app.timeline_editor.block.enabled = true
+
 		if (value_type[e_value_type.AUDIO])
 			app.timeline_editor.audio.enabled = true
 		

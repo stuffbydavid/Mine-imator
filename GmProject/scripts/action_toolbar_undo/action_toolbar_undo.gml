@@ -9,6 +9,7 @@ function action_toolbar_undo()
 	
 	history_data = history[history_pos]
 	temp_edit = save_id_find(history_data.save_temp_edit)
+	obj_edit = save_id_find(history_data.save_obj_edit)
 	ptype_edit = save_id_find(history_data.save_ptype_edit)
 	tl_edit = save_id_find(history_data.save_tl_edit)
 	res_edit = save_id_find(history_data.save_res_edit)
@@ -23,11 +24,14 @@ function action_toolbar_undo()
 		script_execute(history_data.script, history_data.old_value, false)
 	else
 		script_execute(history_data.script)
+
+	if (obj_edit = null)
+		obj_edit = save_id_find(history_data.save_obj_edit)
 	
 	history_undo = false
 	
 	history_pos++
-	
 	history_resource_update = true
 	render_samples = -1
+	project_update_counts()
 }

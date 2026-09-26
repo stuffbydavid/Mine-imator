@@ -3,7 +3,7 @@
 
 function action_res_preview_pack_model_texture(texture)
 {
-	res_preview.pack_model_texture = texture
-	res_preview.update = true
-	res_preview.reset_view = true
+	preview_edit.pack_model_texture = texture
+	preview_edit.update = true
+	preview_edit.reset_view = true
 }

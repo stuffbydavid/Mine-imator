@@ -12,17 +12,16 @@ function tab_frame_editor_path()
 	
 	if (collapse_map[?"follow_path"])
 	{
-		var text;
-		
 		tab_collapse_start()
 		
+		var text;
 		if (tl_edit.value[e_value.PATH_OBJ] != null)
 			text = tl_edit.value[e_value.PATH_OBJ].display_name
 		else
 			text = text_get("listnone")
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], text, action_tl_frame_path)
+		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], text, action_tl_frame_path_obj)
 		tab_next()
 		
 		// Force

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_cam_lens_dirt_bloom",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Lens dirt",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Lens dirt.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_lens_dirt_bloom",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_lens_dirt_bloom",
+  "parent":{
+    "name":"Lens dirt",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera/Lens dirt.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

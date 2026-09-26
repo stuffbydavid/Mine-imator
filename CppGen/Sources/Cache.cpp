@@ -1102,7 +1102,7 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 	for (const String& file : modifiedGmlFiles)
 	{
 		const String filename = fsString(fsPath(file).filename());
-		if (filename == "macros.gml" || filename == "enums.gml")
+		if (filename == "macros.gml" || filename == "enums.gml" || File::readAllText(file).contains("globalvar "))
 			return false;
 	}
 

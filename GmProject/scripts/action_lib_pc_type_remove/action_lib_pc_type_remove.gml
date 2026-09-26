@@ -5,12 +5,12 @@ function action_lib_pc_type_remove()
 	if (history_undo)
 	{
 		with (history_data)
-			ptype_edit = history_restore_ptype(save_ptype, temp_edit) // Restore deleted type
+			ptype_edit = history_restore_ptype(save_ptype, obj_edit) // Restore deleted type
 		
-		with (temp_edit)
+		with (obj_edit)
 			temp_particles_update_spawn_rate(ptype_edit, ptype_edit.spawn_rate)
 		
-		tab_template_editor_update_ptype_list()
+		tab_object_editor_update_ptype_list()
 	}
 	else
 	{
@@ -25,10 +25,12 @@ function action_lib_pc_type_remove()
 				save_ptype = history_save_ptype(ptype) // Save data
 		}
 		
-		with (temp_edit)
+		with (obj_edit)
 			temp_particles_type_remove(ptype)
 	}
 	
-	with (temp_edit)
+	with (obj_edit)
 		temp_particles_restart()
+	
+	project_update_counts()
 }

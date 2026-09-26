@@ -5,9 +5,10 @@ function app_update_tl_edit()
 	app_update_tl_edit_tabs()
 	app_update_tl_edit_select()
 	
-	if (!instance_exists(temp_edit))
+	if (obj_edit = null || !instance_exists(obj_edit))
 	{
-		tab_close(template_editor)
+		obj_edit = null
+		tab_close(object_editor)
 		return 0
 	}
 }

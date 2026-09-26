@@ -4,7 +4,7 @@ function action_lib_pc_type_add()
 {
 	if (history_undo)
 	{
-		with (temp_edit)
+		with (obj_edit)
 			temp_particles_type_remove(save_id_find(history_data.ptype_save_id)) // Remove
 	}
 	else
@@ -14,7 +14,7 @@ function action_lib_pc_type_add()
 			hobj = history_set(action_lib_pc_type_add)
 		
 		var ptype;
-		with (temp_edit)
+		with (obj_edit)
 			ptype = temp_particles_type_add()
 		
 		with (hobj)
@@ -24,5 +24,6 @@ function action_lib_pc_type_add()
 		ptype_edit = ptype
 	}
 	
-	tab_template_editor_particles_preview_restart()
+	project_update_counts()
+	tab_object_editor_particles_preview_restart()
 }

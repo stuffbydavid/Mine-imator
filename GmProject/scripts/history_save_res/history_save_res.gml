@@ -36,7 +36,11 @@ function history_save_res(res)
 		usage_tl_sound_amount = 0
 		usage_kf_text_font_amount = 0
 		usage_tl_text_font_amount = 0
+		usage_tl_default_text_font_amount = 0
 		usage_tl_glint_tex_amount = 0
+		usage_tl_block_tex_amount = 0
+		usage_tl_block_tex_material_amount = 0
+		usage_tl_block_tex_normal_amount = 0
 		usage_background_image = false
 		usage_background_sky_sun_tex = false
 		usage_background_sky_moon_tex = false
@@ -198,11 +202,53 @@ function history_save_res(res)
 			save.usage_tl_text_font_save_id[save.usage_tl_text_font_amount] = save_id
 			save.usage_tl_text_font_amount++
 		}
+
+		if (type = e_tl_type.TEXT && part_of = null && !has_temp && text_font = res)
+		{
+			save.usage_tl_default_text_font_save_id[save.usage_tl_default_text_font_amount] = save_id
+			save.usage_tl_default_text_font_amount++
+		}
 		
 		if (glint_tex = res)
 		{
 			save.usage_tl_glint_tex_save_id[save.usage_tl_glint_tex_amount] = save_id
 			save.usage_tl_glint_tex_amount++
+		}
+
+		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex = res)
+		{
+			save.usage_model_tex_save_id[save.usage_model_tex_amount] = save_id
+			save.usage_model_tex_amount++
+		}
+
+		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex_material = res)
+		{
+			save.usage_model_tex_material_save_id[save.usage_model_tex_material_amount] = save_id
+			save.usage_model_tex_material_amount++
+		}
+
+		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex_normal = res)
+		{
+			save.usage_model_tex_normal_save_id[save.usage_model_tex_normal_amount] = save_id
+			save.usage_model_tex_normal_amount++
+		}
+
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex = res)
+		{
+			save.usage_tl_block_tex_save_id[save.usage_tl_block_tex_amount] = save_id
+			save.usage_tl_block_tex_amount++
+		}
+
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex_material = res)
+		{
+			save.usage_tl_block_tex_material_save_id[save.usage_tl_block_tex_material_amount] = save_id
+			save.usage_tl_block_tex_material_amount++
+		}
+
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex_normal = res)
+		{
+			save.usage_tl_block_tex_normal_save_id[save.usage_tl_block_tex_normal_amount] = save_id
+			save.usage_tl_block_tex_normal_amount++
 		}
 	}
 	

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "block_set_double_plant",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Types",
-    "path": "folders/Scripts/Minecraft/Blocks/Types.yy",
+  "$GMScript":"v1",
+  "%Name":"block_set_double_plant",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_set_double_plant",
+  "parent":{
+    "name":"Types",
+    "path":"folders/Scripts/Minecraft/Blocks/Types.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

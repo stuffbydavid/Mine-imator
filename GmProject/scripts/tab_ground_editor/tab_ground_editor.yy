@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_ground_editor",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Ground editor",
-    "path": "folders/Scripts/App/Interface/Tabs/Ground editor.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_ground_editor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_ground_editor",
+  "parent":{
+    "name":"Ground editor",
+    "path":"folders/Scripts/App/Interface/Tabs/Ground editor.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

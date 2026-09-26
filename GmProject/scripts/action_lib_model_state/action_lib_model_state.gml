@@ -20,8 +20,11 @@ function action_lib_model_state(val)
 		}
 		else
 		{
+			if (is_undefined(menu_model_state) || menu_model_state = null)
+				return null
+			
 			state = menu_model_state.name
-			hobj = history_set_var(action_lib_model_state, state_vars_get_value(temp_edit.model_state, state), val, false)
+			hobj = history_set_var(action_lib_model_state, state_vars_get_value(obj_edit.model_state, state), val, false)
 			with (hobj)
 			{
 				id.state = state
@@ -33,7 +36,7 @@ function action_lib_model_state(val)
 			// Find affected timelines
 			with (obj_timeline)
 			{
-				if (temp != temp_edit || part_list = null)
+				if (temp != obj_edit || part_list = null)
 					continue
 				
 				with (hobj)
@@ -50,16 +53,20 @@ function action_lib_model_state(val)
 		}
 	}
 	
-	tl_deselect_all()
-	
-	with (temp_edit)
+	with (obj_edit)
 	{
+		if (object_index != obj_timeline)
+			tl_deselect_all()
+			
 		state_vars_set_value(model_state, state, val)
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
 		temp_update_model_shape()
 		temp_update_display_name()
 		model_shape_update_color()
+		
+		if (object_index = obj_timeline && id != app.place_tl)
+			tl_select_single()
 	}
 	
 	if (history_undo)

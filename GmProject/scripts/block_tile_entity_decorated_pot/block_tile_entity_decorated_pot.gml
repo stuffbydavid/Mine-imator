@@ -5,13 +5,22 @@ function block_tile_entity_decorated_pot(map)
 {
 	var sherdsarr = map[?"sherds"];
 	
-	for (var i = 0; i < ds_list_size(sherdsarr); i++)
+	if (ds_list_valid(sherdsarr))
 	{
-		var sherd = sherdsarr[|i];
+		for (var i = 0; i < ds_list_size(sherdsarr); i++)
+		{
+			var sherd = sherdsarr[|i];
 		
-		if (minecraft_sherd_map[?sherd] != undefined)
-			sherdsarr[|i] = minecraft_sherd_map[?sherd]
-		else
+			if (minecraft_sherd_map[?sherd] != undefined)
+				sherdsarr[|i] = minecraft_sherd_map[?sherd]
+			else
+				sherdsarr[|i] = "none"
+		}
+	}
+	else
+	{
+		sherdsarr = ds_list_create()
+		for (var i = 0; i < 4; i++)
 			sherdsarr[|i] = "none"
 	}
 	

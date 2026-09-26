@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "time_get_rotation",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Time",
-    "path": "folders/Scripts/Utility/Time.yy",
+  "$GMScript":"v1",
+  "%Name":"time_get_rotation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"time_get_rotation",
+  "parent":{
+    "name":"Time",
+    "path":"folders/Scripts/Utility/Time.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

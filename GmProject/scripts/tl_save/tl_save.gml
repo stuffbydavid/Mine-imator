@@ -23,8 +23,13 @@ function tl_save()
 				if (temp)
 					temp.save = true
 				
-				sprite_tex.save = true
-				sprite_template_tex.save = true
+				var sprite;
+				sprite = res_eval(sprite_tex)
+				if (sprite != null && instance_exists(sprite))
+					sprite.save = true
+				sprite = res_eval(sprite_template_tex)
+				if (sprite != null && instance_exists(sprite))
+					sprite.save = true
 			}
 		}
 	}

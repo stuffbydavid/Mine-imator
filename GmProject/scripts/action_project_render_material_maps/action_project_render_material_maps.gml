@@ -8,4 +8,5 @@ function action_project_render_material_maps(enable)
 	
 	project_render_material_maps = enable
 	render_samples = -1
+	project_update_counts()
 }

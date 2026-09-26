@@ -14,7 +14,7 @@ function shortcut_draw(shortcut)
 	// Keyboard shortcut ("0")
 	if (shortcut[0] != null)
 	{
-		var keyboardarray = string_split(text_control_name(shortcut[0]), " + ");
+		var keyboardarray = string_split_escaped(text_control_name(shortcut[0]), " + ");
 		
 		for (var i = 0; i < array_length(keyboardarray); i++)
 		{
@@ -47,12 +47,12 @@ function shortcut_draw(shortcut)
 			default: mouse = icons.HELP;
 		}
 		
-		draw_image(spr_icons, mouse, dx + 10, yy, 1, 1, c_text_tertiary, a_text_tertiary)
-		dx += 20 + padding
+		draw_image(spr_icons, mouse, dx + 8, yy, 1, 1, c_text_tertiary, a_text_tertiary)
+		dx += 16 + padding
 	}
 	
 	// Label ("2")
 	draw_set_font(font_value)
 	draw_label(shortcut[2], dx, yy, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-	dx += string_width(shortcut[2]) + 36
+	dx += string_width(shortcut[2]) + 24
 }

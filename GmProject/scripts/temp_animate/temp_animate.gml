@@ -3,18 +3,43 @@
 
 function temp_animate()
 {
-	count++
-	
 	with (new_obj(obj_timeline))
 	{
 		type = other.type
 		temp = other.id
+		has_temp = true
+		animated = type_is_animated(type)
+		
+		if (type = e_tl_type.TEXT)
+		{
+			value[e_value.TEXT] = text_get("frameeditortextsample")
+			value[e_value.TEXT_OUTLINE] = temp.text_outline
+			value[e_value.TEXT_OUTLINE_COLOR] = temp.text_outline_color
+			value[e_value.TEXT_OUTLINE_SIZE] = temp.text_outline_size
+			value[e_value.TEXT_HALIGN] = temp.text_halign
+			value[e_value.TEXT_VALIGN] = temp.text_valign
+		}
+		
+		if (type = e_tl_type.EQUIPMENT)
+		{
+			inherit_pose = true
+			glint_mode = e_glint.ARMOR
+		}
+		
+		if (type_is_block(type))
+		{
+			inherit_rot_point = true
+			inherit_alpha = true
+			inherit_color = true
+			inherit_texture = true
+		}
 		
 		tl_set_parent_root()
 		
 		switch (type)
 		{
 			case e_temp_type.CHARACTER:
+			case e_temp_type.EQUIPMENT:
 			case e_temp_type.SPECIAL_BLOCK:
 			case e_temp_type.MODEL:
 			{
@@ -51,7 +76,7 @@ function temp_animate()
 				break
 			}
 			
-			case e_temp_type.BODYPART:
+			case e_temp_type.MODEL_PART:
 			{
 				model_part = temp.model_part 
 				if (model_part != null)

@@ -5,8 +5,9 @@
 
 function action_tl_lock_tree(tl, nval, hobj)
 {
-	with (hobj)
-		history_save_var(tl, tl.lock, nval)
+	if (hobj != null)
+		with (hobj)
+			history_save_var(tl, tl.lock, nval)
 	
 	tl.lock = nval
 	

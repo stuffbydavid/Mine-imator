@@ -15,7 +15,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 		len = view_control_length
 	
 	// Get middle
-	pos3D = point3D_mul_matrix(point3D(0, 0, 0), mat)
+	pos3D = point3D_mul_matrix(point3D(0), mat)
 	pos2D = view_shape_project(pos3D)
 	if (point3D_project_error)
 		return 0
@@ -64,6 +64,9 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 			view_control_pos = pos2D
 			view_control_matrix = mat
 			view_control_length = len
+
+			if (control >= e_view_control.ROT_X && control <= e_view_control.ROT_Z)
+				view_rotation_begin(facevec)
 		}
 		
 		// Right click

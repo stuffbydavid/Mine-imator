@@ -1,4 +1,4 @@
-/// CppSeparate void clip_begin(IntType, IntType, IntType, IntType)
+/// CppSeparate void clip_begin(IntType x = 0, IntType y = 0, IntType w = 0, IntType h = 0)
 /// clip_begin(x, y, width, height)
 /// @arg x
 /// @arg y

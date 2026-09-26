@@ -5,24 +5,27 @@ function tl_new_part(part)
 {
 	with (new_obj(obj_timeline))
 	{
-		type = e_tl_type.BODYPART
+		type = e_tl_type.MODEL_PART
 		temp = other.temp
+		has_temp = other.has_temp
 		
 		model_part = part
 		model_part_name = part.name
 		
 		part_of = other.id
+		inherit_rot_point = true
 		inherit_alpha = true
 		inherit_color = true
 		inherit_texture = true
 		inherit_surface = true
 		inherit_subsurface = true
-		inherit_rot_point = true
 		scale_resize = false
 		lock_bend = part.lock_bend
 		part_mixing_shapes = part.part_mixing_shapes
 		colors_ext = part_mixing_shapes
+		glint_mode = other.glint_mode
 		backfaces = part.backfaces
+		shadows = part.shadows
 		
 		part_parent_save_id = ""
 		
