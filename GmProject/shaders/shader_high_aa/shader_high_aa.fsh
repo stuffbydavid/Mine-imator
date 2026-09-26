@@ -16,7 +16,7 @@ void main()
 	vec4 baseSW = texture2D(gm_BaseTexture, vTexCoord + vec2(-texelSize.x, texelSize.y));
 	vec4 baseSE = texture2D(gm_BaseTexture, vTexCoord + texelSize);
 	
-	vec4 gray = vec4(0.299, 0.587, 0.114, 1.0);
+	vec4 gray = vec4(0.299, 0.587, 0.114, 0.0);
 	float monocol = dot(basecol, gray);
 	float monoNW = dot(baseNW, gray);
 	float monoNE = dot(baseNE, gray);

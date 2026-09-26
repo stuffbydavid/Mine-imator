@@ -19,7 +19,7 @@ function export_update()
 				export_done_movie()
 			else if (window_state = "export_image")
 			{
-				surface_save_lib(export_surface, export_filename)
+				surface_save_lib(export_surface, export_filename, !render_background)
 				export_done_image()
 			}
 			
@@ -93,7 +93,7 @@ function export_update()
 				var totallen = string_length(string(totalframes));
 				var numstr = string(exportmovie_frame + 1);
 				numstr = string_repeat("0", (totallen - string_length(numstr))) + numstr
-				surface_save_lib(export_surface, filename_new_ext(export_filename, "") + "_" + numstr + ".png")
+				surface_save_lib(export_surface, filename_new_ext(export_filename, "") + "_" + numstr + ".png", !render_background)
 			}
 			else
 			{
@@ -155,7 +155,7 @@ function export_update()
 		else if (window_state = "export_image")
 		{
 			var exportstart = get_timer();
-			surface_save_lib(export_surface, export_filename)
+			surface_save_lib(export_surface, export_filename, !render_background)
 			if (benchmark_mode)
 				benchmark_export_total_time += get_timer() - exportstart
 			export_done_image()

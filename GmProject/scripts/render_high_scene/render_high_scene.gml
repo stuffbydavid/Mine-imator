@@ -4,6 +4,7 @@
 function render_high_scene()
 {
 	var resultsurf;
+	gpu_set_blendmode_ext(bm_one, bm_zero)
 	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, e_surface_format.rgba16float)
 	resultsurf = render_surface_hdr[1] // Render directly to target?
 	
@@ -50,6 +51,7 @@ function render_high_scene()
 		}
 		surface_reset_target()
 	}
+	gpu_set_blendmode(bm_normal)
 	
 	return resultsurf
 }

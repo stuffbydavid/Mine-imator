@@ -97,7 +97,9 @@ function render_high()
 			else
 			{
 				draw_clear_alpha(c_black, 0)
+			gpu_set_blendmode_ext(bm_one, bm_zero)
 				draw_surface_exists(finalsurf, 0, 0)
+			gpu_set_blendmode(bm_normal)
 			}
 		}
 		surface_reset_target()
@@ -121,7 +123,9 @@ function render_high()
 		surface_set_target(prevsurf)
 		{
 			draw_clear_alpha(c_black, 0)
+			gpu_set_blendmode_ext(bm_one, bm_zero)
 			draw_surface_exists(render_target, 0, 0)
+			gpu_set_blendmode(bm_normal)
 		}
 		surface_reset_target()
 		

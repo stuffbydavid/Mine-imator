@@ -329,6 +329,14 @@ function view_draw(view)
 	dx -= dw
 	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
 		view.gizmos = !view.gizmos
+
+	// Transparent background
+	dx -= dw + padding
+	if (draw_button_icon("viewtransparentbackground", dx, dy, dw, dh, view.transparent_background, icons.TEXTURE, null, false, view.transparent_background ? "viewtransparentbackgrounddisable" : "viewtransparentbackgroundenable"))
+	{
+		view.transparent_background = !view.transparent_background
+		render_samples = -1
+	}
 	
 	// Snap settings
 	if (view = view_main)
@@ -482,8 +490,31 @@ function view_draw(view)
 			view_update(view, cam)
 		else if (window_focus = string(view) && !mouse_left && !mouse_right) // Freeze on slow renders bugfix
 			window_busy = ""
+
+		// Background checkboard
+		if (view.transparent_background)
+		{
+			var size = 16
+			draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
+			for (var yy = 0; yy < content_height; yy += size)
+			{
+				for (var xx = 0; xx < content_width; xx += size)
+				{
+					if (((xx / size) + (yy / size)) mod 2 = 0)
+						draw_box(content_x + xx, content_y + yy,
+							min(size, content_width - xx), min(size, content_height - yy),
+							false, c_level_top, 1)
+				}
+			}
+		}
+		
+		if (view.transparent_background)
+			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 		
 		draw_surface_size(view.surface, content_x, content_y, content_width, content_height)
+		
+		if (view.transparent_background)
+			gpu_set_blendmode(bm_normal)
 		
 		if (view.grid)
 		{

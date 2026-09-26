@@ -14,7 +14,9 @@ function render_high_aa(prevsurf)
 		render_shader_obj = shader_map[?shader_high_aa]
 		with (render_shader_obj)
 			shader_use()
+		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_surface_exists(prevsurf, 0, 0)
+		gpu_set_blendmode(bm_normal)
 		with (render_shader_obj)
 			shader_clear()
 	}

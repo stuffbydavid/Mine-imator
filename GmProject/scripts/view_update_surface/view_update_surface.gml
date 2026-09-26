@@ -13,6 +13,7 @@ function view_update_surface(view, cam)
 	render_lights = (view.renderer != e_renderer.QUICK)
 	render_particles = view.particles
 	render_effects = view.effects
+	render_background = !view.transparent_background
 	render_watermark = (
 		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||
 		(popup && popup.name = "exportmovie" && popup_exportmovie.watermark) ||
@@ -145,9 +146,12 @@ function view_update_surface(view, cam)
 				}
 				
 				// Alpha fix
-				gpu_set_blendmode_ext(bm_src_color, bm_one)
-				draw_box(0, 0, render_width, render_height, false, c_black, 1)
-				gpu_set_blendmode(bm_normal)
+				if (!view.transparent_background)
+				{
+					gpu_set_blendmode_ext(bm_src_color, bm_one)
+					draw_box(0, 0, render_width, render_height, false, c_black, 1)
+					gpu_set_blendmode(bm_normal)
+				}
 			}
 			surface_reset_target()
 		}
@@ -167,6 +171,7 @@ function view_update_surface(view, cam)
 	}
 	
 	view.surface = render_done()
+	render_background = true
 	render_lights = true
 	render_particles = true
 }

@@ -22,7 +22,10 @@ function render_high_overlay(prevsurf)
 			draw_surface_exists(prevsurf, 0, 0)
 		
 		if (render_watermark)
+		{
+			gpu_set_blendmode(bm_normal)
 			render_watermark_image()
+		}
 	}
 	surface_reset_target()
 	

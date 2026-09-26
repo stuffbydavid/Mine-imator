@@ -43,6 +43,8 @@ void main()
 	vec4 baseColor = texture2D(gm_BaseTexture, vTexCoord);
 	vec4 matColor = texture2D(uMaterialBuffer, vTexCoord);
 	vec3 reflectionFallback = getReflectionFallback(vTexCoord);
+	float coverage = baseColor.a;
+	baseColor.rgb = coverage > 0.0001 ? baseColor.rgb / coverage : vec3(0.0);
 
 	if (uFallbackOnly == 0)
 	{
@@ -88,9 +90,13 @@ void main()
 	}
 	else
 	{
-		vec3 diffuseColor = pow(texture2D(uDiffuseBuffer, vTexCoord).rgb, vec3(uGamma));
+		vec4 diffuseSample = texture2D(uDiffuseBuffer, vTexCoord);
+		vec3 diffuseColor = diffuseSample.a > 0.0001 ? diffuseSample.rgb / diffuseSample.a : vec3(0.0);
+		diffuseColor = pow(diffuseColor, vec3(uGamma));
 		baseColor.rgb += mix(vec3(1.0), diffuseColor, matColor.g) * reflectionFallback * matColor.b;
 	}
+
+	baseColor.rgb *= coverage;
 	
 	gl_FragColor = baseColor;
 }

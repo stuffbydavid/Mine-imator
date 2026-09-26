@@ -10,6 +10,8 @@
 
 function render_blur_pyramid(surf, radius, weight, hdr = false, levels = 6, dirx = undefined, diry = undefined, radiusdiv = 8)
 {
+	gpu_set_blendmode_ext(bm_one, bm_zero)
+
 	// Return original surf if no radius (prevents downsamples from showing)
 	if (radius <= 0)
 	{

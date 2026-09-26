@@ -7,8 +7,7 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true, hdr = f
 {
 	var earlyeffects = hdr || renderer_current = e_renderer.QUICK;
 
-	if (hdr)
-		gpu_set_blendmode_ext(bm_one, bm_zero)
+	gpu_set_blendmode_ext(bm_one, bm_zero)
 
 	// Start post processing
 	finalsurf = render_high_post_start(finalsurf, hdr)
@@ -63,8 +62,7 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true, hdr = f
 		finalsurf = render_high_overlay(finalsurf)
 	render_update_effects()
 	
-	if (hdr)
-		gpu_set_blendmode(bm_normal)
+	gpu_set_blendmode(bm_normal)
 
 	return finalsurf
 }

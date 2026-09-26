@@ -22,7 +22,7 @@ function render_high_glow(prevsurf, hdr = false)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_add_set(render_surface_blur[0], glowstrength, c_white, 1, baseradius > 0)
+			shader_add_set(render_surface_blur[0], glowstrength, c_white, 1, baseradius > 0, true)
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)
@@ -53,7 +53,7 @@ function render_high_glow(prevsurf, hdr = false)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_add_set(render_surface_blur[0], glowstrength, c_white, 1, baseradius > 0)
+				shader_add_set(render_surface_blur[0], glowstrength, c_white, 1, baseradius > 0, true)
 			}
 			draw_surface_exists(prevsurf, 0, 0)
 			with (render_shader_obj)

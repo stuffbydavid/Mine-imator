@@ -22,5 +22,5 @@ void main()
 	if (uColorsExt > 0)
 		applyColorTransform(gl_FragColor, true);
 
-	gl_FragColor = mix(gl_FragColor, vec4(uFogColor.rgb, 1.0), getFog(vPosition, uCameraPosition)); // Mix fog
+	gl_FragColor.rgb = mix(gl_FragColor.rgb, uFogColor.rgb, getFog(vPosition, uCameraPosition)); // Mix fog
 }

@@ -32,6 +32,7 @@ function app_startup_interface_views()
 	view_main.gizmos = setting_view_main_gizmos
 	view_main.effects = setting_view_main_effects
 	view_main.particles = setting_view_main_particles
+	view_main.transparent_background = setting_view_main_transparent_background
 	view_main.location = setting_view_main_location
 	view_main.renderer = e_renderer.STANDARD
 	view_main.camera = -4
@@ -45,6 +46,7 @@ function app_startup_interface_views()
 	view_second.gizmos = setting_view_second_gizmos
 	view_second.effects = setting_view_second_effects
 	view_second.particles = setting_view_second_particles
+	view_second.transparent_background = setting_view_second_transparent_background
 	view_second.location = setting_view_second_location
 	view_second.location_last = view_second.location
 	view_second.width = setting_view_second_width

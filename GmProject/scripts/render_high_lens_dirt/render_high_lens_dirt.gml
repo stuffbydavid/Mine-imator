@@ -72,7 +72,7 @@ function render_high_lens_dirt(prevsurf, hdr = false)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_add_set(render_surface_lens, render_camera.value[e_value.CAM_LENS_DIRT_INTENSITY] * 10, c_white, render_camera.value[e_value.CAM_LENS_DIRT_POWER])
+			shader_add_set(render_surface_lens, render_camera.value[e_value.CAM_LENS_DIRT_INTENSITY] * 10, c_white, render_camera.value[e_value.CAM_LENS_DIRT_POWER], false, true)
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)

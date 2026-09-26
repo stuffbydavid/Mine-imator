@@ -90,6 +90,7 @@ function settings_startup()
 	setting_view_main_fog = true
 	setting_view_main_effects = true
 	setting_view_main_particles = true
+	setting_view_main_transparent_background = false
 	setting_view_main_location = "full"
 	
 	setting_view_second_show = false
@@ -100,6 +101,7 @@ function settings_startup()
 	setting_view_second_fog = true
 	setting_view_second_effects = true
 	setting_view_second_particles = true
+	setting_view_second_transparent_background = false
 	setting_view_second_location = "right_bottom"
 	setting_view_second_width = 440
 	setting_view_second_height = 280

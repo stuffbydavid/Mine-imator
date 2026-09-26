@@ -423,7 +423,12 @@ function render_world_tl()
 	shader_texture_surface = false
 	
 	if (prevblend != null)
-		gpu_set_blendmode(prevblend)
+	{
+		if (prevblend = bm_normal && (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS))
+			gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
+		else
+			gpu_set_blendmode(prevblend)
+	}
 
 	if (glowonlycombined)
 		gpu_set_zwriteenable(true)

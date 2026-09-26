@@ -1,9 +1,10 @@
-/// shader_add_set(texture, amount, [color], [power], [tentfilter])
+/// shader_add_set(texture, amount, [color], [power], [tentfilter], [affectalpha])
 /// @arg texture
 /// @arg amount
 /// @arg [color]
 /// @arg [power]
 /// @arg [tentfilter]
+/// @arg [affectalpha]
 
 function shader_add_set()
 {
@@ -29,4 +30,7 @@ function shader_add_set()
 		render_set_uniform_vec2("uAddTexelSize", 1 / surface_get_width(argument[0]), 1 / surface_get_height(argument[0]))
 		gpu_set_texfilter_ext(sampler_map[?"uAddTexture"], true)
 	}
+
+	var affectalpha = argument_count > 5 && argument[5]
+	render_set_uniform_int("uAffectAlpha", affectalpha ? 1 : 0)
 }

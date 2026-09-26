@@ -4,6 +4,7 @@ uniform float uAmount;
 uniform float uPower;
 uniform vec2 uAddTexelSize;
 uniform int uTentFilter;
+uniform int uAffectAlpha;
 
 varying vec2 vTexCoord;
 
@@ -29,13 +30,16 @@ void main()
 		addColor = texture2D(uAddTexture, vTexCoord);
 	addColor.rgb = pow(addColor.rgb, vec3(uPower));
 	
-	float value = (addColor.r + addColor.g + addColor.b) / 3.0;
-	addColor.a = value;
-	
 	vec4 finalColor;
-	finalColor.rgb = baseColor.rgb + ((addColor.rgb * uBlendColor.rgb) * vec3(uAmount));
-	
-	finalColor.a = min(baseColor.a + addColor.a, 1.0);
+	vec3 contribution = (addColor.rgb * uBlendColor.rgb) * vec3(uAmount);
+	finalColor.rgb = baseColor.rgb + contribution;
+	finalColor.a = baseColor.a;
+	if (uAffectAlpha > 0)
+	{
+		vec3 effectColor = max(contribution, vec3(0.0));
+		float effectAlpha = clamp(max(effectColor.r, max(effectColor.g, effectColor.b)), 0.0, 1.0);
+		finalColor.a += effectAlpha * (1.0 - finalColor.a);
+	}
 	
 	gl_FragColor = vec4(finalColor);
 }

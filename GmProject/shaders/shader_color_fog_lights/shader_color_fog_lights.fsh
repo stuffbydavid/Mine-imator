@@ -73,9 +73,8 @@ void main()
 	
 	float fog = getFog(vPosition, uCameraPosition);
 	
-	col = mix(col, uFogColor, fog); // Mix fog
-	col.a = mix(baseColor.a, 1.0, F); // Correct alpha
-	col.a = mix(col.a, 1.0, fog);
+	col.rgb = mix(col.rgb, uFogColor.rgb, fog); // Mix fog
+	col.a = baseColor.a;
 	
 	handleAlphaDiscard(vPosition, col);
 	

@@ -10,6 +10,11 @@ void main()
 	float fog = texture2D(uFogBuffer, vTexCoord).r;
 	vec4 color = texture2D(gm_BaseTexture, vTexCoord);
 	vec3 fogColor = pow(uFogColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
-	color.rgb = mix(color.rgb, fogColor, fog);
+	if (color.a > 0.0001)
+	{
+		color.rgb /= color.a;
+		color.rgb = mix(color.rgb, fogColor, fog);
+		color.rgb *= color.a;
+	}
 	gl_FragColor = color;
 }

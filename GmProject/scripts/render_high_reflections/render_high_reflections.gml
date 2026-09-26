@@ -5,6 +5,7 @@
 function render_high_reflections(surf)
 {
 	var ww, hh, sourcesurf;
+	gpu_set_blendmode_ext(bm_one, bm_zero)
 	ww = ceil(render_width * app.project_render_reflections_resolution)
 	hh = ceil(render_height * app.project_render_reflections_resolution)
 	
@@ -24,7 +25,6 @@ function render_high_reflections(surf)
 		
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_blank(0, 0, ww, hh)
-		gpu_set_blendmode(bm_normal)
 		
 		with (render_shader_obj)
 			shader_clear()
@@ -85,4 +85,5 @@ function render_high_reflections(surf)
 	}
 	
 	render_pass_capture(e_render_pass.REFLECTIONS, render_surface_hdr[0])
+	gpu_set_blendmode(bm_normal)
 }

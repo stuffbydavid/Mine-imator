@@ -1035,6 +1035,8 @@
 		"aspectratiodisable": "Disable aspect ratio",
 		"overlaysenable": "Enable overlays",
 		"overlaysdisable": "Disable overlays",
+		"transparentbackgroundenable": "Enable transparent background",
+		"transparentbackgrounddisable": "Disable transparent background",
 		"renderpass": "Render pass: %1",
 		"renderfps": "%1 FPS (%2/%3 samples)",
 		"rendertime": "Rendered in %1 seconds",
