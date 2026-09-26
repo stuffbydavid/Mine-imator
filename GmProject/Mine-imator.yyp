@@ -1629,6 +1629,7 @@
     {"id":{"name":"builder_start","path":"scripts/builder_start/builder_start.yy",},},
     {"id":{"name":"builder_thread_event_create","path":"scripts/builder_thread_event_create/builder_thread_event_create.yy",},},
     {"id":{"name":"builder_thread_set_pos","path":"scripts/builder_thread_set_pos/builder_thread_set_pos.yy",},},
+    {"id":{"name":"camera_control_fov","path":"scripts/camera_control_fov/camera_control_fov.yy",},},
     {"id":{"name":"camera_control_move","path":"scripts/camera_control_move/camera_control_move.yy",},},
     {"id":{"name":"camera_control_pan","path":"scripts/camera_control_pan/camera_control_pan.yy",},},
     {"id":{"name":"camera_control_rotate","path":"scripts/camera_control_rotate/camera_control_rotate.yy",},},

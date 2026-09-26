@@ -9,7 +9,7 @@ function app_startup_interface_views()
 	
 	view_click_x = 0
 	view_click_y = 0
-	view_click_right = false
+	view_click_type = null
 	
 	view_resize_width = 0
 	view_resize_height = 0

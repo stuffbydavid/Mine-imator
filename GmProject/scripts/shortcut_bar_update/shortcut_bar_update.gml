@@ -19,6 +19,7 @@ function shortcut_bar_update()
 			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "vieworbit")
 			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "viewpan")
 			shortcut_bar_add(null, e_mouse.SCROLL, "viewzoom")
+			shortcut_bar_add(null, e_mouse.CLICK_MIDDLE, "viewfov")
 			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "viewwalk")
 		}
 		

@@ -221,7 +221,7 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	
 	// Loop
 	var simpleseam = (!setting_advanced_mode && timeline_seamless_repeat);
-	tooltip = timeline_repeat || simpleseam ? "tooltiptldisableloop" : "tooltiptlenableloop"
+	var tooltip = timeline_repeat || simpleseam ? "tooltiptldisableloop" : "tooltiptlenableloop";
 	if (draw_button_icon("timelineloop", buttonsx, buttonsy, 24, 24, timeline_repeat || simpleseam, simpleseam ? icons.REPEAT_SEAMLESS : icons.REPEAT, null, false, tooltip))
 		action_tl_play_repeat()
 	

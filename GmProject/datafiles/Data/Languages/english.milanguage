@@ -235,6 +235,7 @@
 			"orbit": "Orbit view",
 			"pan": "Pan view",
 			"zoom": "Zoom",
+			"fov": "Adjust FOV",
 			"walk": "Walk navigation",
 			"forward": "Forward",
 			"left": "Left",

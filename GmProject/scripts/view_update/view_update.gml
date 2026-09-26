@@ -47,14 +47,21 @@ function view_update(view, cam)
 		{
 			window_busy = "viewclick"
 			window_focus = string(view)
-			view_click_right = false
+			view_click_type = e_mouse.CLICK_LEFT
 		}
 		
 		if (mouse_right_pressed)
 		{
 			window_busy = "viewclick"
 			window_focus = string(view)
-			view_click_right = true
+			view_click_type = e_mouse.CLICK_RIGHT
+		}
+		
+		if (mouse_middle_pressed)
+		{
+			window_busy = "viewclick"
+			window_focus = string(view)
+			view_click_type = e_mouse.CLICK_MIDDLE
 		}
 	}
 	
@@ -106,40 +113,55 @@ function view_update(view, cam)
 			else
 				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
 			
-			if (view_click_right && (!cam || editcamobj) && mouse_move > 5)
+			if ((!cam || editcamobj) && mouse_move > 5)
 			{
-				view_click_x = display_mouse_get_x()
-				view_click_y = display_mouse_get_y()
-				window_busy = "viewmovecamera"
-				if (cam)
-					action_tl_select_single(cam)
-			}
-			else if ((!cam || editcamobj) && mouse_move > 5)
-			{
-				if (keyboard_check(vk_shift))
-				{
-					window_busy = "viewpancamera"
-					window_focus = string(view)
-					
-					if (cam)
-						action_tl_select_single(cam)
-				}
-				else
+				if (view_click_type = e_mouse.CLICK_RIGHT)
 				{
 					view_click_x = display_mouse_get_x()
 					view_click_y = display_mouse_get_y()
-					window_busy = "viewrotatecamera"
+					window_busy = "viewmovecamera"
+					if (cam)
+						action_tl_select_single(cam)
+				}
+				else if (view_click_type = e_mouse.CLICK_LEFT)
+				{
+					if (keyboard_check(vk_shift))
+					{
+						window_busy = "viewpancamera"
+						window_focus = string(view)
+					
+						if (cam)
+							action_tl_select_single(cam)
+					}
+					else
+					{
+						view_click_x = display_mouse_get_x()
+						view_click_y = display_mouse_get_y()
+						window_busy = "viewrotatecamera"
+						if (cam)
+							action_tl_select_single(cam)
+					}
+				}
+				else if (view_click_type = e_mouse.CLICK_MIDDLE)
+				{
+					view_click_x = display_mouse_get_x()
+					view_click_y = display_mouse_get_y()
+					window_busy = "viewfovcamera"
 					if (cam)
 						action_tl_select_single(cam)
 				}
 			}
 			
-			if ((view_click_right && !mouse_right) || (!view_click_right && !mouse_left))
+			if (
+				(view_click_type = e_mouse.CLICK_RIGHT && !mouse_right) ||
+				(view_click_type = e_mouse.CLICK_LEFT && !mouse_left) ||
+				(view_click_type = e_mouse.CLICK_MIDDLE && !mouse_middle)
+			)
 			{
 				if (place_build)
 				{
 					window_busy = place_busy
-					if (view_click_right)
+					if (view_click_type = e_mouse.CLICK_RIGHT)
 					{
 						if (place_pos != null)
 							action_build_place()
@@ -149,7 +171,7 @@ function view_update(view, cam)
 				}
 				else if (place_tl = null)
 				{
-					view_click(view, cam, view_click_right)
+					view_click(view, cam, view_click_type = e_mouse.CLICK_RIGHT)
 					window_busy = ""
 				}
 				else // Stop placing
@@ -214,6 +236,23 @@ function view_update(view, cam)
 				window_busy = (place_build || place_tl != null) ? place_busy : ""
 			}
 			
+		}
+		
+		// Adjust camera FOV
+		if (window_busy = "viewfovcamera")
+		{
+			if (cam != null)
+				render_samples = -1
+						
+			if (setting_camera_lock_mouse)
+				mouse_cursor = cr_none
+			camera_control_fov(cam, view_click_x, view_click_y)
+			
+			if (!mouse_middle)
+			{
+				view.update_place_surfaces = true
+				window_busy = (place_build || place_tl != null) ? place_busy : ""
+			}
 		}
 		
 		// Pan camera

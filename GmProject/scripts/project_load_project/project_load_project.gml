@@ -59,6 +59,7 @@ function project_load_project(map)
 		cam_work_roll = value_get_real(cammap[?"roll"], cam_work_roll)
 		cam_work_zoom = value_get_real(cammap[?"zoom"], cam_work_zoom)
 		cam_work_zoom_goal = cam_work_zoom
+		cam_work_fov = value_get_real(cammap[?"fov"], cam_work_fov)
 		
 		cam_work_angle_look_xy = cam_work_angle_xy
 		cam_work_angle_look_z = -cam_work_angle_z

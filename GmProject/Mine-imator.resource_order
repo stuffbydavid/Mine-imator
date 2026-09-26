@@ -1120,6 +1120,7 @@
     {"name":"builder_start","order":15,"path":"scripts/builder_start/builder_start.yy",},
     {"name":"builder_thread_event_create","order":28,"path":"scripts/builder_thread_event_create/builder_thread_event_create.yy",},
     {"name":"builder_thread_set_pos","order":29,"path":"scripts/builder_thread_set_pos/builder_thread_set_pos.yy",},
+    {"name":"camera_control_fov","order":16,"path":"scripts/camera_control_fov/camera_control_fov.yy",},
     {"name":"camera_control_move","order":1,"path":"scripts/camera_control_move/camera_control_move.yy",},
     {"name":"camera_control_pan","order":15,"path":"scripts/camera_control_pan/camera_control_pan.yy",},
     {"name":"camera_control_rotate","order":3,"path":"scripts/camera_control_rotate/camera_control_rotate.yy",},
