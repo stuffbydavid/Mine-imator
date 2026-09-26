@@ -31,5 +31,5 @@ function action_toolbar_exportimage_save()
 	if (view_second.renderer = e_renderer.REALISTIC)
 		view_second.renderer = e_renderer.STANDARD
 		
-	app_update_cameras(popup_exportimage.renderer = e_renderer.REALISTIC, false)
+	app_update_cameras(popup_exportimage.renderer, false)
 }

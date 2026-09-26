@@ -1,9 +1,9 @@
-/// app_update_cameras(highquality, movie)
-/// @arg highquality
+/// app_update_cameras(renderer, movie)
+/// @arg renderer
 /// @arg movie
 /// @desc Updates surface of all required cameras.
 
-function app_update_cameras(highquality, movie)
+function app_update_cameras(renderer, movie)
 {
 	// Only main view is visible and not real time rendering, no need to update
 	if (!view_second.show && view_render && !view_render_real_time && window_state != "export_movie" && window_state != "export_image" && !movie)
@@ -40,7 +40,7 @@ function app_update_cameras(highquality, movie)
 		
 		/*
 		// Only update surface if needed
-		if (highquality && render_samples > -1 && surface_exists(cam_surf))
+		if (renderer = e_renderer.REALISTIC && render_samples > -1 && surface_exists(cam_surf))
 		{
 			cam_surf_required = false
 			continue
@@ -50,7 +50,7 @@ function app_update_cameras(highquality, movie)
 		// Render
 		with (app)
 		{
-			renderer_current = highquality ? e_renderer.REALISTIC : e_renderer.STANDARD
+			renderer_current = renderer
 			render_start(other.cam_surf_tmp, other.id, other.id)
 			render_use_samples = false
 			if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)

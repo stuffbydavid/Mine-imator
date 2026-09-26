@@ -283,11 +283,8 @@ function app_update_animate()
 		benchmark_animate_total_time += get_timer() - starttime
 	
 	// Cameras
-	var isrendermode = (view_second.renderer = e_renderer.REALISTIC || view_main.renderer = e_renderer.REALISTIC);
 	if (window_state = "export_movie")
-		app_update_cameras(exportmovie_renderer = e_renderer.REALISTIC, true)
-	else
-		app_update_cameras(isrendermode, false)
+		app_update_cameras(exportmovie_renderer, true)
 			
 	// Update current marker
 	timeline_marker_current = null

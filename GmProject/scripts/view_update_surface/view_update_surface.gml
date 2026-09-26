@@ -5,6 +5,8 @@
 function view_update_surface(view, cam)
 {
 	render_view_current = view
+
+	app_update_cameras(view.renderer, false)
 	
 	// Render
 	renderer_current = view.renderer
