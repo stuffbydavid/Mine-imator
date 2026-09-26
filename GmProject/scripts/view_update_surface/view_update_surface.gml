@@ -43,6 +43,9 @@ function view_update_surface(view, cam)
 		{
 			surface_set_target(render_target)
 			{
+				if (view.transparent_background)
+					gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
+
 				// Shapes
 				if (setting_overlay_view_shapes)
 				{
@@ -150,8 +153,8 @@ function view_update_surface(view, cam)
 				{
 					gpu_set_blendmode_ext(bm_src_color, bm_one)
 					draw_box(0, 0, render_width, render_height, false, c_black, 1)
-					gpu_set_blendmode(bm_normal)
 				}
+				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
 		}
