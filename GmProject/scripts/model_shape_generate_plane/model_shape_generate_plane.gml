@@ -87,6 +87,17 @@ function model_shape_generate_plane(bend)
 		texp1 = tex3[Y]
 	}
 	
+	if (segaxis = X)
+	{
+		p1 = vec3_add(p1, vertex_offsets[2])
+		p2 = vec3_add(p2, vertex_offsets[0])
+	}
+	else
+	{
+		p1 = vec3_add(p1, vertex_offsets[0])
+		p2 = vec3_add(p2, vertex_offsets[1])
+	}
+
 	// Apply transform
 	var mat;
 	if (isbent) // Apply start bend
@@ -170,6 +181,18 @@ function model_shape_generate_plane(bend)
 			ntexp1 = tex3[Y] - toff
 		}
 		
+		var offsetamount = segpos / size[segaxis];
+		if (segaxis = X)
+		{
+			np1 = vec3_add(np1, vec3_add(vertex_offsets[2], vec3_mul(vec3_sub(vertex_offsets[3], vertex_offsets[2]), offsetamount)))
+			np2 = vec3_add(np2, vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[1], vertex_offsets[0]), offsetamount)))
+		}
+		else
+		{
+			np1 = vec3_add(np1, vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[2], vertex_offsets[0]), offsetamount)))
+			np2 = vec3_add(np2, vec3_add(vertex_offsets[1], vec3_mul(vec3_sub(vertex_offsets[3], vertex_offsets[1]), offsetamount)))
+		}
+
 		// Apply transform
 		if (isbent) // Apply segment bend
 		{
@@ -201,6 +224,26 @@ function model_shape_generate_plane(bend)
 		nn1 = vec3_normalize(vec3_mul_matrix(vec3(0, 1, 0), mat))
 		nn2 = vec3_normalize(vec3_mul_matrix(vec3(0, -1, 0), mat))
 		
+		if (has_vertex_offsets)
+		{
+			var normal1, normal2;
+			if (segaxis = X)
+			{
+				normal1 = vec3_cross(vec3_sub(np1, p1), vec3_sub(np2, p1))
+				normal2 = vec3_cross(vec3_sub(p2, np2), vec3_sub(p1, np2))
+			}
+			else
+			{
+				normal1 = vec3_cross(vec3_sub(np2, np1), vec3_sub(p2, np1))
+				normal2 = vec3_cross(vec3_sub(p1, p2), vec3_sub(np1, p2))
+			}
+
+			nn1 = vec3_normalize(vec3_add(normal1, normal2))
+			nn2 = vec3_mul(nn1, -1)
+			n1 = nn1
+			n2 = nn2
+		}
+
 		// Sharp lighting
 		if (sharpbend)
 		{
