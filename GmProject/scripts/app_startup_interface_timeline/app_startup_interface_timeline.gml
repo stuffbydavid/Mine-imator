@@ -35,6 +35,11 @@ function app_startup_interface_timeline()
 	timeline_insert_pos = 0
 	timeline_show_frames = false
 	timeline_marker_length = 0
+	timeline_scrub_last_marker = null
+	timeline_scrub_last_burst_marker = null
+	timeline_scrub_burst_index = 0
+	timeline_scrub_sounds = [[], []]
+	timeline_scrub_burst_start_time = [null, null]
 	
 	timeline_move_obj = null
 	timeline_move_highlight_tl = null
