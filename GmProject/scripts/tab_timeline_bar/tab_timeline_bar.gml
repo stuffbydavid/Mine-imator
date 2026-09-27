@@ -175,6 +175,9 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 		{
 			window_focus = "timeline"
 			window_busy = "timeline/marker"
+			
+			if (timeline_playing)
+				tl_audio_stop()
 		}
 		
 		// Create region
@@ -251,9 +254,13 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 		
 		if (setting_timeline_frame_snap || keyboard_check(vk_control))
 			timeline_marker = round(timeline_marker)
+
+		if (setting_timeline_audio_scrub)
+			tl_audio_scrub(timeline_marker)
 		
 		if (!mouse_left)
 		{
+			tl_audio_scrub_end(timeline_playing)
 			window_busy = ""
 			timeline_marker = round(timeline_marker)
 			

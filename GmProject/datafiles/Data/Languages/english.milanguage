@@ -118,6 +118,8 @@
 			"disable_loop": "Disable looping",
 			"enable_seamless_loop": "Enable seamless looping",
 			"disable_seamless_loop": "Disable seamless looping",
+			"enable_audio_scrub": "Enable audio scrubbing",
+			"disable_audio_scrub": "Disable audio scrubbing",
 			"zoom_out": "Zoom out",
 			"zoom_in": "Zoom in",
 			"intervals_show": "Show intervals",

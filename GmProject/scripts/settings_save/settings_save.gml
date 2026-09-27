@@ -86,6 +86,7 @@ function settings_save()
 		json_save_var_color("accent_custom", setting_accent_custom)
 		
 		json_save_var_bool("timeline_autoscroll", setting_timeline_autoscroll)
+		json_save_var_bool("timeline_audio_scrub", setting_timeline_audio_scrub)
 		json_save_var_bool("timeline_show_markers", setting_timeline_show_markers)
 		json_save_var_bool("interface_compact", setting_interface_compact)
 		json_save_var_bool("timeline_compact", setting_timeline_compact)

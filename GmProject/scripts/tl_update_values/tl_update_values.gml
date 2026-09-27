@@ -164,7 +164,7 @@ function tl_update_values()
 	tl_update_values_ease(e_value.VISIBLE)
 	
 	// Play sounds
-	if (type = e_tl_type.AUDIO_TRACK && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing)
+	if (type = e_tl_type.AUDIO_TRACK && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing && app.window_busy != "timelinemarker")
 	{
 		// Play new sound
 		if (keyframe_current)

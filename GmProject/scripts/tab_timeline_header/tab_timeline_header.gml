@@ -241,6 +241,13 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	draw_divide_vertical(buttonsx, buttonsy, 24)
 	buttonsx += 4
 	
+	// Audio scrubbing
+	draw_button_icon("timelineaudioscrub", buttonsx, buttonsy, 24, 24, setting_timeline_audio_scrub, icons.WAVE, action_setting_timeline_audio_scrub, false, setting_timeline_audio_scrub ? "tooltiptldisableaudioscrub" : "tooltiptlenableaudioscrub")
+
+	buttonsx += 24 + 6
+	draw_divide_vertical(buttonsx, buttonsy, 24)
+	buttonsx += 4
+
 	// Zoom out
 	if (draw_button_icon("timeline/zoomout", buttonsx, buttonsy, 24, 24, false, icons.ZOOM_OUT, null, timeline_zoom_goal <= 0.25, "tooltip/tl/zoom_out"))
 		timeline_zoom_button = 1
