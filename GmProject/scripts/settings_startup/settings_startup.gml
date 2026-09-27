@@ -45,6 +45,7 @@ function settings_startup()
 	setting_language_filename = language_file
 	
 	setting_timeline_autoscroll = true
+	setting_timeline_audio_scrub = true
 	setting_timeline_compact = false
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true

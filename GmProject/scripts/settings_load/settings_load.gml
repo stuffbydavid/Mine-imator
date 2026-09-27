@@ -121,6 +121,7 @@ function settings_load()
 			setting_accent_custom = value_get_color(interfacemap[?"accent_custom"], setting_accent_custom)
 			
 			setting_timeline_autoscroll = value_get_real(interfacemap[?"timeline_autoscroll"], setting_timeline_autoscroll)
+			setting_timeline_audio_scrub = value_get_real(interfacemap[?"timeline_audio_scrub"], setting_timeline_audio_scrub)
 			setting_timeline_show_markers = value_get_real(interfacemap[?"timeline_show_markers"], setting_timeline_show_markers)
 			setting_interface_compact = value_get_real(interfacemap[?"interface_compact"], setting_interface_compact)
 			setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
