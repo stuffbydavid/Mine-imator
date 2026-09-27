@@ -40,7 +40,7 @@ function res_load_pack_item_textures(type, suffix)
 	debug_timer_start()
 	
 	// Used to figure out what new files have been added
-	if (dev_mode_debug_unused && type = "diffuse")
+	if (debug_unused && type = "diffuse")
 	{
 		var filesarr = file_find(load_assets_dir + mc_textures_directory + "item/", ".png");
 		fileslist = ds_list_create()
@@ -90,7 +90,7 @@ function res_load_pack_item_textures(type, suffix)
 			}
 			else
 			{
-				if (dev_mode)
+				if (debug_mode)
 					log("Item texture not found", itemtexlist[|t] + suffix)
 				ds_list_add(texlist[size], null)
 			}

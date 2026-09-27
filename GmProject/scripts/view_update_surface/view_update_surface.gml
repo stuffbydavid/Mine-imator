@@ -5,20 +5,23 @@
 function view_update_surface(view, cam)
 {
 	render_view_current = view
+
+	app_update_cameras(view.renderer, false)
 	
 	// Render
-	render_lights = (view.quality != e_view_mode.FLAT)
+	renderer_current = view.renderer
+	render_lights = (view.renderer != e_renderer.QUICK)
 	render_particles = view.particles
 	render_effects = view.effects
-	render_quality = view.quality
+	render_background = !view.transparent_background
 	render_watermark = (
 		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||
 		(popup && popup.name = "exportmovie" && popup_exportmovie.watermark) ||
 		(popup && popup.name = "exportimage" && popup_exportimage.watermark)
 	)
-	render_start(view.surface, cam, content_width, content_height)
+	render_start(view.surface, cam, view, content_width, content_height)
 	
-	if (view.quality = e_view_mode.RENDER)
+	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
 		render_high()
 	else
 		render_low()
@@ -40,6 +43,9 @@ function view_update_surface(view, cam)
 		{
 			surface_set_target(render_target)
 			{
+				if (view.transparent_background)
+					gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
+
 				// Shapes
 				if (setting_overlay_view_shapes)
 				{
@@ -64,7 +70,7 @@ function view_update_surface(view, cam)
 							else if (tl.type = e_tl_type.PATH)
 								view_shape_path(view, tl)
 						
-							if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
+							if (debug_show_bones && tl.selected && tl.type = e_tl_type.MODEL_PART && array_length(tl.part_joints_pos) > 0)
 							{
 								// Draw bones
 								for (var i = 0; i < 2; i++)
@@ -143,8 +149,11 @@ function view_update_surface(view, cam)
 				}
 				
 				// Alpha fix
-				gpu_set_blendmode_ext(bm_src_color, bm_one)
-				draw_box(0, 0, render_width, render_height, false, c_black, 1)
+				if (!view.transparent_background)
+				{
+					gpu_set_blendmode_ext(bm_src_color, bm_one)
+					draw_box(0, 0, render_width, render_height, false, c_black, 1)
+				}
 				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
@@ -165,6 +174,7 @@ function view_update_surface(view, cam)
 	}
 	
 	view.surface = render_done()
+	render_background = true
 	render_lights = true
 	render_particles = true
 }

@@ -5,7 +5,7 @@
 function action_project_render_reflections_fade_amount(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_reflections_fade_amount, project_render_reflections_fade_amount, project_render_reflections_fade_amount * add + val / 100, 1)
+		history_set_var(action_project_render_reflections_fade_amount, project_render_reflections_fade_amount, project_render_reflections_fade_amount * add + val / 100, true)
 	else
 		val *= 100
 	

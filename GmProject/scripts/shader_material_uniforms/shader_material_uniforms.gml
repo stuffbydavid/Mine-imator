@@ -3,6 +3,9 @@
 
 function shader_material_uniforms()
 {
+	// Color
+	shader_color_uniforms()
+
 	// Render setting
 	new_shader_uniform("uDefaultEmissive")
 	new_shader_uniform("uDefaultSubsurface")
@@ -21,10 +24,15 @@ function shader_material_uniforms()
 	new_shader_uniform("uSSS")
 	new_shader_uniform("uSSSRadius")
 	new_shader_uniform("uSSSColor")
-	new_shader_uniform("uSSSHighlight")
-	new_shader_uniform("uSSSHighlightStrength")
+	new_shader_uniform("uSSSBacklightSpread")
+	new_shader_uniform("uSSSBacklightStrength")
+	new_shader_uniform("uSSSBrightBacklight")
 	
 	// Other
 	new_shader_uniform("uIsWater")
+	new_shader_uniform("uWaterMaterialTime")
+	new_shader_uniform("uWaterMaterialStrength")
+	new_shader_uniform("uWaterMaterialScale")
+	new_shader_uniform("uWaterMaterialOctaves")
 	new_shader_uniform("uUseNormalMap")
 }

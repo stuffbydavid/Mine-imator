@@ -178,6 +178,7 @@ function project_load_timeline(map)
 		// Default values
 		var defaultmap = map[?"default_values"];
 		project_load_values(defaultmap, value_default)
+		project_load_values_update_default()
 		
 		// Preserve anti-aliasing from legacy frame values
 		if (type = e_tl_type.TEXT && ds_map_valid(defaultmap))
@@ -211,7 +212,7 @@ function project_load_timeline(map)
 						value[v] = other.value_default[v]
 					
 					project_load_values(kfmap[?key], value)
-					project_load_values_update()
+					project_load_values_update(kfmap[?key])
 					
 					if (other.type = e_tl_type.TEXT && other.has_temp && !texttemplatesettings)
 					{
@@ -270,6 +271,7 @@ function project_load_timeline(map)
 		texture_blur = value_get_real(map[?"texture_blur"], texture_blur)
 		texture_filtering = value_get_real(map[?"texture_filtering"], texture_filtering)
 		shadows = value_get_real(map[?"shadows"], shadows)
+		realistic_falloff = value_get_real(map[?"realistic_falloff"], realistic_falloff)
 		ssao = value_get_real(map[?"ssao"], ssao)
 		glow = value_get_real(map[?"glow"], glow)
 		glow_texture = value_get_real(map[?"glow_texture"], glow_texture)

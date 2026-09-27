@@ -17,7 +17,7 @@ function action_bench_sound(sound)
 		var hash, source, destination;
 		hash = sound[2]
 		source = minecraft_java_directory_get() + "/assets/objects/" + string_copy(hash, 1, 2) + "/" + hash
-		destination = file_directory + hash + "_" + string(current_time) + ".ogg"
+		destination = file_directory_get() + hash + "_" + string(current_time) + ".ogg"
 		if (!file_exists_lib(source))
 			return 0
 
@@ -44,8 +44,8 @@ function action_bench_sound(sound)
 		res.minecraft_hash = hash
 		res.display_name = sound[1]
 
-		load_folder = file_directory
-		save_folder = file_directory
+		load_folder = file_directory_get()
+		save_folder = file_directory_get()
 		with (res)
 			res_load()
 	}

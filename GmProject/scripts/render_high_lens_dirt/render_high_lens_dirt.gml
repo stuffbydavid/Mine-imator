@@ -1,12 +1,15 @@
 /// render_high_lens_dirt(basesurf)
 /// @arg basesurf
 
-function render_high_lens_dirt(prevsurf)
+function render_high_lens_dirt(prevsurf, hdr = false)
 {
 	// Blur lens surface
 	var lenssurftemp, resultsurf;
-	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
-	lenssurftemp = render_surface[0]
+	if (hdr)
+		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, e_surface_format.rgba16float)
+	else
+		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	lenssurftemp = hdr ? render_surface_hdr_post[0] : render_surface[0]
 	
 	render_shader_obj = shader_map[?shader_blur]
 	with (render_shader_obj)
@@ -55,9 +58,11 @@ function render_high_lens_dirt(prevsurf)
 	}
 	surface_reset_target()
 	gpu_set_blendmode(bm_normal)
+	if (hdr)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
 	
 	// Apply lens dirt
-	resultsurf = render_high_get_apply_surf()
+	resultsurf = render_high_get_apply_surf(hdr)
 	
 	surface_set_target(resultsurf)
 	{
@@ -67,7 +72,7 @@ function render_high_lens_dirt(prevsurf)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_add_set(render_surface_lens, render_camera.value[e_value.CAM_LENS_DIRT_INTENSITY] * 10, c_white, render_camera.value[e_value.CAM_LENS_DIRT_POWER])
+			shader_add_set(render_surface_lens, render_camera.value[e_value.CAM_LENS_DIRT_INTENSITY] * 10, c_white, render_camera.value[e_value.CAM_LENS_DIRT_POWER], false, true)
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)

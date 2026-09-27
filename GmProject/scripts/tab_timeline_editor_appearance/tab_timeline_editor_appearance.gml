@@ -4,10 +4,19 @@ function tab_timeline_editor_appearance()
 {
 	if (tl_edit.type = e_tl_type.POINT_LIGHT || tl_edit.type = e_tl_type.SPOT_LIGHT)
 	{
+		tab_set_collumns(true, floor(content_width / 150))
+
 		// Shadows
 		tab_control_checkbox()
 		draw_checkbox("timelineeditorrendershadows", dx, dy, tl_edit.shadows, action_tl_shadows)
 		tab_next()
+
+		// Realistic falloff
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorrealisticfalloff", dx, dy, tl_edit.realistic_falloff, action_tl_realistic_falloff, "timelineeditorrealisticfallofftip")
+		tab_next()
+
+		tab_set_collumns(false)
 		return 0
 	}
 	

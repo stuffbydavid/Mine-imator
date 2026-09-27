@@ -21,8 +21,8 @@ namespace CppProject
 
 	void PrimitiveRenderer::Begin(IntType mode, IntType texture, QTransform transform)
 	{
-		// Get OpenGL drawing mode
-		Shader::RenderMode renderMode;
+		// Get drawing mode
+		Shader::RenderMode renderMode = Shader::NO_MODE;
 		switch (mode)
 		{
 			case pr_pointlist: renderMode = Shader::POINT_LIST; break;
@@ -108,127 +108,137 @@ namespace CppProject
 		IntType vertSize = vertices.Size() * sizeof(PrimitiveVertex);
 		IntType indSize = indices.Size() * sizeof(uint32_t);
 
-	#if API_D3D11
-		// Create/update vertex buffer
-		if (vertSize > vertexBufferSize)
+	#if OS_WINDOWS
+		if (IS_D3D11)
 		{
-			releaseAndReset(d3dVertexBuffer);
+			// Create/update vertex buffer
+			if (vertSize > vertexBufferSize)
+			{
+				releaseAndReset(d3dVertexBuffer);
 
-			D3D11_BUFFER_DESC vBufferDesc = {};
-			vBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-			vBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-			vBufferDesc.ByteWidth = vertSize;
-			vBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+				D3D11_BUFFER_DESC vBufferDesc = {};
+				vBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+				vBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				vBufferDesc.ByteWidth = vertSize;
+				vBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 
-			D3D11_SUBRESOURCE_DATA vBufferData = { vertices.Data(), 0, 0 };
-			D3DCheckError(D3DDevice->CreateBuffer(&vBufferDesc, &vBufferData, &d3dVertexBuffer));
+				D3D11_SUBRESOURCE_DATA vBufferData = { vertices.Data(), 0, 0 };
+				D3DCheckError(D3DDevice->CreateBuffer(&vBufferDesc, &vBufferData, &d3dVertexBuffer));
 
-			vertexBufferSize = vertSize;
+				vertexBufferSize = vertSize;
+			}
+			else
+			{
+				D3D11_MAPPED_SUBRESOURCE vBufferRes;
+				D3DCheckError(D3DContext->Map(d3dVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &vBufferRes));
+				memcpy(vBufferRes.pData, vertices.Data(), vertSize);
+				D3DContext->Unmap(d3dVertexBuffer, 0);
+			}
+
+			// Create/update index buffer
+			if (indSize > indexBufferSize)
+			{
+				releaseAndReset(d3dIndexBuffer);
+
+				D3D11_BUFFER_DESC iBufferDesc = {};
+				iBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+				iBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				iBufferDesc.ByteWidth = indSize;
+				iBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+
+				D3D11_SUBRESOURCE_DATA iBufferData = { indices.Data(), 0, 0 };
+				D3DCheckError(D3DDevice->CreateBuffer(&iBufferDesc, &iBufferData, &d3dIndexBuffer));
+
+				indexBufferSize = indSize;
+			}
+			else
+			{
+				D3D11_MAPPED_SUBRESOURCE iBufferRes;
+				D3DCheckError(D3DContext->Map(d3dIndexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &iBufferRes));
+				memcpy(iBufferRes.pData, indices.Data(), indSize);
+				D3DContext->Unmap(d3dIndexBuffer, 0);
+			}
+
+			// Bind buffers
+			UINT stride = sizeof(PrimitiveVertex);
+			UINT offset = 0;
+			D3DContext->IASetVertexBuffers(0, 1, &d3dVertexBuffer, &stride, &offset);
+			D3DContext->IASetIndexBuffer(d3dIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+			// Disable culling
+			D3DContext->RSSetState(GFX->d3dRasterizerStateMap[D3D11_CULL_NONE]);
 		}
-		else
-		{
-			D3D11_MAPPED_SUBRESOURCE vBufferRes;
-			D3DCheckError(D3DContext->Map(d3dVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &vBufferRes));
-			memcpy(vBufferRes.pData, vertices.Data(), vertSize);
-			D3DContext->Unmap(d3dVertexBuffer, 0);
-		}
-
-		// Create/update index buffer
-		if (indSize > indexBufferSize)
-		{
-			releaseAndReset(d3dIndexBuffer);
-
-			D3D11_BUFFER_DESC iBufferDesc = {};
-			iBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-			iBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-			iBufferDesc.ByteWidth = indSize;
-			iBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-
-			D3D11_SUBRESOURCE_DATA iBufferData = { indices.Data(), 0, 0 };
-			D3DCheckError(D3DDevice->CreateBuffer(&iBufferDesc, &iBufferData, &d3dIndexBuffer));
-
-			indexBufferSize = indSize;
-		}
-		else
-		{
-			D3D11_MAPPED_SUBRESOURCE iBufferRes;
-			D3DCheckError(D3DContext->Map(d3dIndexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &iBufferRes));
-			memcpy(iBufferRes.pData, indices.Data(), indSize);
-			D3DContext->Unmap(d3dIndexBuffer, 0);
-		}
-
-		// Bind buffers
-		UINT stride = sizeof(PrimitiveVertex);
-		UINT offset = 0;
-		D3DContext->IASetVertexBuffers(0, 1, &d3dVertexBuffer, &stride, &offset);
-		D3DContext->IASetIndexBuffer(d3dIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-		// Disable culling
-		D3DContext->RSSetState(GFX->d3dRasterizerStateMap[D3D11_CULL_NONE]);
-	#else
-		// Create buffers
-		if (!glVertexBuffer)
-		{
-			glVertexBuffer = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-			glVertexBuffer->create();
-			glVertexBuffer->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-
-			glIndexBuffer = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-			glIndexBuffer->create();
-			glIndexBuffer->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-		}
-		
-		GFX->glBindVertexArray(GFX->glCurrentVboId);
-
-		// Bind vertex buffer
-		if (!glVertexBuffer->bind())
-			return;
-
-		// Write data
-		if (vertSize > vertexBufferSize)
-		{
-			glVertexBuffer->allocate(vertices.Data(), vertSize);
-			vertexBufferSize = vertSize;
-		}
-		else
-			glVertexBuffer->write(0, vertices.Data(), vertSize);
-
-		// Bind index buffer
-		if (!glIndexBuffer->bind())
-		{
-			glVertexBuffer->release();
-			return;
-		}
-
-		if (indSize > indexBufferSize)
-		{
-			glIndexBuffer->allocate(indices.Data(), indSize);
-			indexBufferSize = indSize;
-		}
-		else
-			glIndexBuffer->write(0, indices.Data(), indSize);
-
-		// Disable culling
-		glDisable(GL_CULL_FACE);
 	#endif
+		if (IS_OPENGL)
+		{
+			// Create buffers
+			if (!glVertexBuffer)
+			{
+				glVertexBuffer = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+				glVertexBuffer->create();
+				glVertexBuffer->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+
+				glIndexBuffer = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+				glIndexBuffer->create();
+				glIndexBuffer->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+			}
+		
+			GFX->glBindVertexArray(GFX->glCurrentVboId);
+
+			// Bind vertex buffer
+			if (!glVertexBuffer->bind())
+				return;
+
+			// Write data
+			if (vertSize > vertexBufferSize)
+			{
+				glVertexBuffer->allocate(vertices.Data(), vertSize);
+				vertexBufferSize = vertSize;
+			}
+			else
+				glVertexBuffer->write(0, vertices.Data(), vertSize);
+
+			// Bind index buffer
+			if (!glIndexBuffer->bind())
+			{
+				glVertexBuffer->release();
+				return;
+			}
+
+			if (indSize > indexBufferSize)
+			{
+				glIndexBuffer->allocate(indices.Data(), indSize);
+				indexBufferSize = indSize;
+			}
+			else
+				glIndexBuffer->write(0, indices.Data(), indSize);
+
+			// Disable culling
+			glDisable(GL_CULL_FACE);
+		}
 
 		// Submit
 		GFX->shader->SubmitMatrix(Shader::MVP, GFX->surface->ortho, true);
 		GFX->shader->SubmitVertices(renderMode, indices.Size());
 
-	#if API_D3D11
-		// Restore culling
-		D3DContext->RSSetState(GFX->d3dRasterizerStateMap[GFX->culling ? D3D11_CULL_BACK : D3D11_CULL_NONE]);
-	#else
-		// Restore culling
-		if (GFX->culling)
-			glEnable(GL_CULL_FACE);
-		else
-			glDisable(GL_CULL_FACE);
-
-		glVertexBuffer->release();
-		glIndexBuffer->release();
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			// Restore culling
+			D3DContext->RSSetState(GFX->d3dRasterizerStateMap[GFX->culling ? D3D11_CULL_BACK : D3D11_CULL_NONE]);
+		}
 	#endif
+		if (IS_OPENGL)
+		{
+			// Restore culling
+			if (GFX->culling)
+				glEnable(GL_CULL_FACE);
+			else
+				glDisable(GL_CULL_FACE);
+
+			glVertexBuffer->release();
+			glIndexBuffer->release();
+		}
 
 		renderCalls++;
 		if (renderMode == Shader::LINE_LIST)

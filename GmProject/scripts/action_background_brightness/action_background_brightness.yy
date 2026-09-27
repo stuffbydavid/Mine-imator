@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_background_brightness",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_background_brightness",
+  "parent":{
+    "name":"Background",
+    "path":"folders/Scripts/App/Actions/Background.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

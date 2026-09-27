@@ -1,0 +1,1 @@
+render_surface_pool_event_destroy()

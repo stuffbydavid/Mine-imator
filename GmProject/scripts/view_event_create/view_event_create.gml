@@ -21,6 +21,7 @@ function view_event_create()
 	control_mouseon = null
 	control_mouseon_last = null
 	render = false
+	transparent_background = false
 	
 	width = 440
 	height = 280

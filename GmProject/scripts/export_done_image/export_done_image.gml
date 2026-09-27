@@ -14,6 +14,9 @@ function export_done_image()
 	render_background = true
 	render_hidden = false
 	
+	if (benchmark_mode)
+		return 0
+
 	toast_new(e_toast.POSITIVE, text_get("alertexportimage"))
 	toast_add_action("alertexportimageview", popup_open_url, export_filename)
 	toast_last.dismiss_time = 10

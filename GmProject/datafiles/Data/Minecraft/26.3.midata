@@ -1,7 +1,7 @@
 {
 	"version": "26.3",
+	"format": 10,
 	"patch": 0,
-	"format": 9,
 	"characters": [
 		{
 			"name": "human",

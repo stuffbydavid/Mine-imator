@@ -3,20 +3,20 @@
 
 function app_update_keyboard()
 {
-	if (dev_mode)
+	if (debug_mode)
 	{
 		if (keyboard_check_pressed(vk_f7))
 			minecraft_assets_reload()
 	
 		if (keyboard_check_pressed(vk_f9))
-			open_url(file_directory)
+			open_url(file_directory_get())
 	
 		if (keyboard_check_pressed(vk_f10))
 			open_url(working_directory)
 	}
 	
 	if (keyboard_check_pressed(vk_f11))
-		open_url(log_file)
+		open_url(log_file_get())
 	
 	if (keyboard_check_pressed(vk_f12))
 	{

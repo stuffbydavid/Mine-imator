@@ -166,7 +166,7 @@ function res_event_destroy()
 		buffer_delete(sound_buffer)
 
 	if (!is_cpp() && type = e_res_type.SOUND && minecraft_hash != "" && creator = app.bench_settings)
-		file_delete_lib(file_directory + filename)
+		file_delete_lib(file_directory_get() + filename)
 	
 	// Free blocks
 	if (scenery_tl_list != null)

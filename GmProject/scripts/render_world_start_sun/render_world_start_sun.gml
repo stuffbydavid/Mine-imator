@@ -9,7 +9,7 @@ function render_world_start_sun(cascade)
 	render_light_fov = 45
 	render_light_color = background_sunlight_color_final
 	render_light_strength = background_sunlight_strength
-	render_light_specular_strength = 1
+	render_light_specular_strength = background_sunlight_specular_strength
 	
 	gpu_set_ztestenable(true)
 	

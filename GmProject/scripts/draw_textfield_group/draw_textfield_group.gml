@@ -17,7 +17,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 {
 	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei;
 	
-	vertical = (app.panel_compact || window_compact) && stack
+	vertical = app.panel_compact && stack
 	fieldx = xx
 	fieldy = yy
 	fieldwid = vertical ? wid : (wid/textfield_amount)

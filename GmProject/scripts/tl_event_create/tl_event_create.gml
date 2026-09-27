@@ -123,6 +123,7 @@ function tl_event_create()
 	texture_blur = false
 	texture_filtering = false
 	shadows = true
+	realistic_falloff = false
 	ssao = true
 	glow = false
 	glow_texture = true

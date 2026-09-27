@@ -16,6 +16,8 @@ function render_world_shape(type, vbuf, facecamera, tex)
 	}
 	
 	render_set_texture(tex[e_texture_channel.DIFFUSE])
+	
+	shader_texture_surface = false
 	render_set_texture(tex[e_texture_channel.MATERIAL], "Material")
 	render_set_texture(tex[e_texture_channel.NORMAL], "Normal")
 	vbuffer_render(vbuf)

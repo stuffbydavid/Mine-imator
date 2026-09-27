@@ -4,12 +4,14 @@
 function app_update_animate()
 {
 	// Go through timelines
-	var bgobject, updatevalues, cameraarr, spawnerarr, biomeani;
+	var bgobject, updatevalues, cameraarr, spawnerarr, starttime, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
 	biomeani = (background_biome_next != background_biome)
 	bgobject = null
 	cameraarr = []
 	spawnerarr = []
+	starttime = get_timer()
+	
 	background_light_amount = 1
 	background_light_data[0] = 0
 	background_sun_direction = vec3(0)
@@ -140,6 +142,8 @@ function app_update_animate()
 		with (app)
 			tl_update_matrix(true)
 	}
+
+	render_alpha_hashing_update()
 	
 	// Spawn particles
 	for (var i = 0; i < array_length(spawnerarr); i++)
@@ -181,6 +185,7 @@ function app_update_animate()
 		background_sky_time						= bgobject.value[e_value.BG_SKY_TIME]
 		background_sky_rotation					= bgobject.value[e_value.BG_SKY_ROTATION]
 		background_sunlight_strength			= bgobject.value[e_value.BG_SUNLIGHT_STRENGTH]
+		background_sunlight_specular_strength	= bgobject.value[e_value.BG_SUNLIGHT_SPECULAR_STRENGTH]
 		background_sunlight_angle				= bgobject.value[e_value.BG_SUNLIGHT_ANGLE]
 		background_twilight						= bgobject.value[e_value.BG_TWILIGHT]
 		background_sky_clouds_show				= bgobject.value[e_value.BG_SKY_CLOUDS_SHOW]
@@ -225,6 +230,7 @@ function app_update_animate()
 		background_wind_directional_speed		= bgobject.value[e_value.BG_WIND_DIRECTIONAL_SPEED]
 		background_wind_directional_strength	= bgobject.value[e_value.BG_WIND_DIRECTIONAL_STRENGTH]
 		background_texture_animation_speed		= bgobject.value[e_value.BG_TEXTURE_ANI_SPEED]
+		background_brightness					= bgobject.value[e_value.BG_BRIGHTNESS]
 		
 		background_biome_next = background_biome
 		if (bgobject.keyframe_animate && background_biome != bgobject.keyframe_next_values[e_value.BG_BIOME])
@@ -272,21 +278,27 @@ function app_update_animate()
 	
 	background_sky_color_final = merge_color(background_sky_color, background_night_sky_color, background_sky_night_alpha())
 	
-	// Cameras
-	var isrendermode = (view_second.quality = e_view_mode.RENDER || view_main.quality = e_view_mode.RENDER);
-	if (window_state = "export_movie")
-		app_update_cameras(exportmovie_high_quality, true)
-	else if (!isrendermode || (isrendermode && render_samples = -1))
-		app_update_cameras(isrendermode, false)
+	// Benchmark
+	if (benchmark_mode)
+		benchmark_animate_total_time += get_timer() - starttime
 	
+	// Cameras
+	if (window_state = "export_movie")
+		app_update_cameras(exportmovie_renderer, true)
+			
 	// Update current marker
 	timeline_marker_current = null
 	
+	starttime = get_timer()
 	for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
 	{
 		if (timeline_marker >= timeline_marker_list[|i].pos)
 			timeline_marker_current = timeline_marker_list[|i]
 	}
+	
+	// Benchmark
+	if (benchmark_mode)
+		benchmark_animate_total_time += get_timer() - starttime
 	
 	history_resource_update = false
 }

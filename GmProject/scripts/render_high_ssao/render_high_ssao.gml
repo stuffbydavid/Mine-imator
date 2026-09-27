@@ -4,25 +4,6 @@ function render_high_ssao()
 {
 	render_ssao_kernel = render_generate_sample_kernel(12)
 	
-	// Render mask
-	render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-	surface_set_target(render_surface[2])
-	{
-		draw_clear(c_black)
-		render_world_start()
-		render_world(e_render_mode.AO_MASK)
-		render_world_done()
-		
-		// 2D mode
-		render_set_projection_ortho(0, 0, render_width, render_height, 0)
-		
-		// Alpha fix
-		gpu_set_blendmode_ext(bm_src_color, bm_one) 
-		draw_box(0, 0, render_width, render_height, false, c_black, 1)
-		gpu_set_blendmode(bm_normal)
-	}
-	surface_reset_target()
-	
 	// Calculate SSAO
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surface_set_target(render_surface[0])
@@ -33,7 +14,7 @@ function render_high_ssao()
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_high_ssao_set(render_surface[2])
+			shader_high_ssao_set()
 		}
 		draw_blank(0, 0, render_width, render_height) // Blank quad
 		with (render_shader_obj)
@@ -42,24 +23,36 @@ function render_high_ssao()
 	}
 	surface_reset_target()
 	
-	if (render_pass = e_render_pass.AO)
-		render_pass_surf = surface_duplicate(render_surface[0])
-	
-	// Apply to shadows
-	if (!render_shadows)
-		render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, true)
-	
-	surface_set_target(render_surface_shadows)
+	for (var i = 0; i < app.project_render_ssao_blur_passes; i++)
 	{
-		if (!render_shadows)
+		render_surface[1] = surface_require(render_surface[1], render_width, render_height)
+		render_shader_obj = shader_map[?shader_high_ssao_blur]
+		with (render_shader_obj)
+			shader_set(shader)
+
+		// Horizontal
+		surface_set_target(render_surface[1])
+		{
 			draw_clear(c_white)
-		else
-			gpu_set_blendmode_ext(bm_zero, bm_src_color)
-		
-		draw_surface(render_surface[0], 0, 0)
-		
-		if (render_shadows)
-			gpu_set_blendmode(bm_normal)
+			with (render_shader_obj)
+				shader_high_ssao_blur_set(1, 0)
+			draw_surface_exists(render_surface[0], 0, 0)
+		}
+		surface_reset_target()
+
+		// Vertical
+		surface_set_target(render_surface[0])
+		{
+			draw_clear(c_white)
+			with (render_shader_obj)
+				shader_high_ssao_blur_set(0, 1)
+			draw_surface_exists(render_surface[1], 0, 0)
+		}
+		surface_reset_target()
+
+		with (render_shader_obj)
+			shader_clear()
 	}
-	surface_reset_target()
+
+	render_pass_capture(e_render_pass.AO, render_surface[0])
 }

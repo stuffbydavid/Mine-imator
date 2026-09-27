@@ -5,7 +5,7 @@
 function action_project_render_texture_filtering_level(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_texture_filtering_level, project_render_texture_filtering_level, project_render_texture_filtering_level * add + val, 1)
+		history_set_var(action_project_render_texture_filtering_level, project_render_texture_filtering_level, project_render_texture_filtering_level * add + val, true)
 	
 	project_render_texture_filtering_level = project_render_texture_filtering_level * add + val
 	render_samples = -1

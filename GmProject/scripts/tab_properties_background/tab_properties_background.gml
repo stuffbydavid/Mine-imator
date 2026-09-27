@@ -12,14 +12,14 @@ function tab_properties_background()
 		tab_next()
 		
 		tab_control_dragger()
-		draw_dragger_sky("backgroundskyrotation", dx, dy, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
+		draw_dragger_sky("backgroundskyrotation", dx, dy, background_sky_rotation, -45, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 		tab_next()
 	}
 	else
 	{
 		tab_control(120)
 		draw_wheel_sky("backgroundskytime", dx + floor(dw * 0.25), dy + 60, background_sky_time, 45, action_background_sky_time, tab.background.tbx_sky_time, true)
-		draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, 0, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
+		draw_wheel_sky("backgroundskyrotation", dx + floor(dw * 0.75), dy + 60, background_sky_rotation, -45, action_background_sky_rotation, tab.background.tbx_sky_rotation, false)
 		tab_next()
 	}
 	
@@ -235,8 +235,13 @@ function tab_properties_background()
 		draw_dragger("backgroundsunlightstrength", dx, dy, dragger_width, round(background_sunlight_strength * 100), 0.1, 0, no_limit, 100, 1, tab.background.tbx_sunlight_strength, action_background_sunlight_strength)
 		tab_next()
 
+		// Sunlight specular strength
+		tab_control_dragger()
+		draw_dragger("backgroundsunlightspecularstrength", dx, dy, dragger_width, round(background_sunlight_specular_strength * 100), 0.1, 0, no_limit, 100, 1, tab.background.tbx_sunlight_specular_strength, action_background_sunlight_specular_strength)
+		tab_next()
+
 		dy += 8
-		
+
 		if (!background_image_show)
 		{
 			var moonres, moontex;
@@ -337,6 +342,11 @@ function tab_properties_background()
 		tab_next()
 
 		tab_set_collumns(false)
+
+		// Brightness
+		tab_control_dragger()
+		draw_dragger("backgroundbrightness", dx, dy, dragger_width, round(background_brightness * 100), .5, 0, no_limit, 100, 1, tab.background.tbx_brightness, action_background_brightness)
+		tab_next()
 
 		// Twilight
 		if (setting_advanced_mode)

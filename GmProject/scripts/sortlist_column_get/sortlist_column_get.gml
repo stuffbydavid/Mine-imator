@@ -14,7 +14,7 @@ function sortlist_column_get(slist, value, col)
 			return minecraft_asset_get_name("block", value[1])
 
 		case "libname":
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.display_name)
 		
@@ -51,7 +51,7 @@ function sortlist_column_get(slist, value, col)
 			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
 		
 		case "particleeditortypename":
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.name)
 		
@@ -68,7 +68,7 @@ function sortlist_column_get(slist, value, col)
 		
 		case "projectname":
 		case "resname":
-			if (dev_mode_debug_saveid)
+			if (debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
 			return string_remove_newline(value.display_name)
 		

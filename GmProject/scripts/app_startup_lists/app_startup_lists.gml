@@ -4,7 +4,7 @@ function app_startup_lists()
 {
 	globalvar value_name_list, transition_list, transition_list_order;
 	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
-	globalvar videotemplate_list, videoquality_list;
+	globalvar videotemplate_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
 	globalvar minecraft_block_sheet_size;
@@ -72,6 +72,7 @@ function app_startup_lists()
 		"CAM_FOV",
 		"CAM_BLADE_AMOUNT",
 		"CAM_BLADE_ANGLE",
+		"CAM_BLADE_STRETCH",
 		"CAM_LIGHT_MANAGEMENT",
 		"CAM_TONEMAPPER",
 		"CAM_EXPOSURE",
@@ -106,6 +107,7 @@ function app_startup_lists()
 		"CAM_DOF_FRINGE_BLUE",
 		"CAM_BLOOM",
 		"CAM_BLOOM_THRESHOLD",
+		"CAM_BLOOM_TRANSITION",
 		"CAM_BLOOM_INTENSITY",
 		"CAM_BLOOM_RADIUS",
 		"CAM_BLOOM_RATIO",
@@ -151,6 +153,7 @@ function app_startup_lists()
 		"BG_SKY_TIME",
 		"BG_SKY_ROTATION",
 		"BG_SUNLIGHT_STRENGTH",
+		"BG_SUNLIGHT_SPECULAR_STRENGTH",
 		"BG_SUNLIGHT_ANGLE",
 		"BG_SKY_SUN_ANGLE",
 		"BG_SKY_SUN_SCALE",
@@ -199,6 +202,7 @@ function app_startup_lists()
 		"BG_WIND_DIRECTIONAL_SPEED",
 		"BG_WIND_DIRECTIONAL_STRENGTH",
 		"BG_TEXTURE_ANI_SPEED",
+		"BG_BRIGHTNESS",
 		"TEXTURE_OBJ",
 		"TEXTURE_MATERIAL_OBJ",
 		"TEXTURE_NORMAL_OBJ",
@@ -249,7 +253,7 @@ function app_startup_lists()
 	
 	for (var i = 0; i < ds_list_size(camera_values_list); i++)
 	{
-		var valueid = e_value.CAM_FOV + i;
+		var valueid = camera_values_list[|i];
 		
 		if (tl_value_is_bool(valueid))
 			camera_use_default_list[|i] = false
@@ -405,16 +409,6 @@ function app_startup_lists()
 		new_videotemplate("uhd_4k_cinematic", 5120, 2160)
 	)
 	
-	// Video qualities
-	videoquality_list = ds_list_create()
-	ds_list_add(videoquality_list,
-		new_videoquality("best", 5000000),
-		new_videoquality("high", 2500000),
-		new_videoquality("medium", 1200000),
-		new_videoquality("low", 700000),
-		new_videoquality("verylow", 350000)
-	)
-	
 	// Language
 	language_english_map = ds_map_create()
 	language_map = ds_map_create()
@@ -553,6 +547,9 @@ function app_startup_lists()
 	render_pass_list = ds_list_create()
 	ds_list_add(render_pass_list,
 		"combined",
+		"depth",
+		"normal",
+		"material",
 		"diffuse",
 		"specular",
 		"ao",
@@ -560,8 +557,18 @@ function app_startup_lists()
 		"indirect",
 		"indirectshadows",
 		"reflections",
-		"depth",
-		"normal",
-		"material"
+		"fog",
+		"mask",
+		"glow",
+		"subsurface",
+		"subsurfacerange",
+		"emissive",
+		"roughness",
+		"metallic",
+		"fresnel",
+		"ssaomask",
+		"bloomthreshold",
+		"bloomblur",
+		"all",
 	)
 }

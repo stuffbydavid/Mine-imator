@@ -82,4 +82,9 @@ function tab_properties_project()
 	tab_control_menu(ui_large_height)
 	draw_button_menu("projectpack", e_menu.LIST, dx, dy, dw, ui_large_height, packfilename, project_pack.display_name, action_project_pack, false, project_pack.block_preview_texture)
 	tab_next()
+
+	// Renderer settings
+	tab_control_switch()
+	draw_edit_button("projecteditrendersettings", dx, dy, renderer_settings.show, tab_toggle, renderer_settings, "projecteditrendersettingstip")
+	tab_next()
 }

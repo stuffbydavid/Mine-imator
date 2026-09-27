@@ -76,7 +76,7 @@ function block_animate(root)
 		
 		tl_update()
 		tl_update_values()
-		animated = false
+		animated = app.setting_timeline_always_animated
 		
 		// Add text
 		if (other.has_text)
@@ -99,7 +99,7 @@ function block_animate(root)
 				type = e_tl_type.TEXT
 				temp = id
 				has_temp = false
-				animated = false
+				animated = app.setting_timeline_always_animated
 				
 				// Set parent to other timeline
 				inherit_rot_point = true
@@ -141,7 +141,7 @@ function block_animate(root)
 				type = e_tl_type.TEXT
 				temp = id
 				has_temp = false
-				animated = false
+				animated = app.setting_timeline_always_animated
 				
 				// Set parent to other timeline
 				inherit_rot_point = true

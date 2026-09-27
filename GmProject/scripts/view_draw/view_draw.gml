@@ -16,8 +16,8 @@ function view_draw(view)
 	mouseonresizehor = false
 	mouseonresizever = false
 	
-	if (view = view_main && view_second.show && view_main.quality = e_view_mode.RENDER && view_second.quality = e_view_mode.RENDER)
-		view_main.quality = e_view_mode.SHADED
+	if (view = view_main && view_second.show && view_main.renderer = e_renderer.REALISTIC && view_second.renderer = e_renderer.REALISTIC)
+		view_main.renderer = e_renderer.STANDARD
 	
 	// Calculate box
 	if (window_get_current() = e_window.VIEW_SECOND)
@@ -238,29 +238,37 @@ function view_draw(view)
 	
 	dx -= dw
 	
-	// "Render" quality
+	// "Realistic" renderer
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewmoderender", dx, dy, dw, dh, view.quality = e_view_mode.RENDER, setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL, null, false, "viewmoderender"))
+	if (draw_button_icon("viewrendererrealistic", dx, dy, dw, dh, view.renderer = e_renderer.REALISTIC, setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL, null, false, "viewrendererrealistic"))
 	{
-		view.quality = e_view_mode.RENDER
+		if (trial_version)
+		{
+			popup_show(popup_upgrade)
+			popup_upgrade.page = 2
+		}
+		else
+		{
+			view.renderer = e_renderer.REALISTIC
 		
-		if (view = view_main && view_second.quality = e_view_mode.RENDER)
-			view_second.quality = e_view_mode.SHADED
+			if (view = view_main && view_second.renderer = e_renderer.REALISTIC)
+				view_second.renderer = e_renderer.STANDARD
 		
-		if (view = view_second && view_main.quality = e_view_mode.RENDER)
-			view_main.quality = e_view_mode.SHADED
+			if (view = view_second && view_main.renderer = e_renderer.REALISTIC)
+				view_main.renderer = e_renderer.STANDARD
+		}
 	}
 	dx -= dw + padding
 	
-	// "Shaded" quality
+	// "Standard" renderer
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewmodeshaded", dx, dy, dw, dh, view.quality = e_view_mode.SHADED, setting_theme.dark ? icons.SPHERE_SHADING__DARK : icons.SPHERE_SHADING, null, false, "viewmodeshaded"))
-		view.quality = e_view_mode.SHADED
+	if (draw_button_icon("viewrendererstandard", dx, dy, dw, dh, view.renderer = e_renderer.STANDARD, setting_theme.dark ? icons.SPHERE_SHADING__DARK : icons.SPHERE_SHADING, null, false, "viewrendererstandard"))
+		view.renderer = e_renderer.STANDARD
 	dx -= dw + padding
 	
-	// "Flat" quality
-	if (draw_button_icon("viewmodeflat", dx, dy, dw, dh, view.quality = e_view_mode.FLAT, icons.CIRCLE_OUTLINE, null, false, "viewmodeflat"))
-		view.quality = e_view_mode.FLAT
+	// "Quick" renderer
+	if (draw_button_icon("viewrendererquick", dx, dy, dw, dh, view.renderer = e_renderer.QUICK, icons.CIRCLE_OUTLINE, null, false, "viewrendererquick"))
+		view.renderer = e_renderer.QUICK
 	dx -= dw + padding
 	
 	// Particles
@@ -321,6 +329,14 @@ function view_draw(view)
 	dx -= dw
 	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
 		view.gizmos = !view.gizmos
+
+	// Transparent background
+	dx -= dw + padding
+	if (draw_button_icon("viewtransparentbackground", dx, dy, dw, dh, view.transparent_background, icons.TEXTURE, null, false, view.transparent_background ? "viewtransparentbackgrounddisable" : "viewtransparentbackgroundenable"))
+	{
+		view.transparent_background = !view.transparent_background
+		render_samples = -1
+	}
 	
 	// Snap settings
 	if (view = view_main)
@@ -470,12 +486,35 @@ function view_draw(view)
 				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
 		}
 		
-		if (view.quality != e_view_mode.RENDER || view_render_real_time)
+		if (view.renderer != e_renderer.REALISTIC || view_render_real_time)
 			view_update(view, cam)
 		else if (window_focus = string(view) && !mouse_left && !mouse_right) // Freeze on slow renders bugfix
 			window_busy = ""
+
+		// Background checkboard
+		if (view.transparent_background)
+		{
+			var size = 16
+			draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
+			for (var yy = 0; yy < content_height; yy += size)
+			{
+				for (var xx = 0; xx < content_width; xx += size)
+				{
+					if (((xx / size) + (yy / size)) mod 2 = 0)
+						draw_box(content_x + xx, content_y + yy,
+							min(size, content_width - xx), min(size, content_height - yy),
+							false, c_level_top, 1)
+				}
+			}
+		}
+		
+		if (view.transparent_background)
+			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
 		
 		draw_surface_size(view.surface, content_x, content_y, content_width, content_height)
+		
+		if (view.transparent_background)
+			gpu_set_blendmode(bm_normal)
 		
 		if (view.grid)
 		{
@@ -857,7 +896,7 @@ function view_draw(view)
 	}
 	
 	// Render info
-	if (view.quality = e_view_mode.RENDER)
+	if (view.renderer = e_renderer.REALISTIC)
 	{
 		var infotext;
 		
@@ -871,7 +910,7 @@ function view_draw(view)
 		
 		if (project_render_pass != e_render_pass.COMBINED)
 		{
-			infotext = text_get("viewrenderpass", text_get("viewmodepass" + render_pass_list[|project_render_pass]))
+			infotext = text_get("viewrenderpass", text_get("viewrendererpass" + render_pass_list[|project_render_pass]))
 			
 			draw_label(infotext, content_x + 17, content_y + content_height - 31, fa_left, fa_bottom, c_black, .75, font_caption)
 			draw_label(infotext, content_x + 16, content_y + content_height - 32, fa_left, fa_bottom, c_white, 1, font_caption)

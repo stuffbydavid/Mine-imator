@@ -50,6 +50,7 @@ function tl_copy(to)
 	to.texture_blur = texture_blur
 	to.texture_filtering = texture_filtering
 	to.shadows = shadows
+	to.realistic_falloff = realistic_falloff
 	to.ssao = ssao
 	to.glow = glow
 	to.glow_texture = glow_texture

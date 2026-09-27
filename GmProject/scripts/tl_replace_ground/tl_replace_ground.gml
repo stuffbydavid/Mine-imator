@@ -8,7 +8,7 @@ function tl_replace_ground()
 		return 0
 	
 	lock = true
-	animated = false
+	animated = app.setting_timeline_always_animated
 	rot_point_custom = true
 	
 	// Minecraft sea/ground level (Y=63)

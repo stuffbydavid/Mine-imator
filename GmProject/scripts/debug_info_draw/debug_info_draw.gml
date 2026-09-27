@@ -40,9 +40,38 @@ function debug_info_draw()
 		str += "project_file: " + string_replace_all(project_file, "/", "\\") + " \n"
 		str += "project_folder: " + string_replace_all(project_folder, "/", "\\") + " \n"
 		str += "working_directory: " + string_replace_all(working_directory, "/", "\\") + " \n"
-		str += "file_directory: " + string_replace_all(file_directory, "/", "\\") + " \n"
+		str += "file_directory_get(): " + string_replace_all(file_directory_get(), "/", "\\") + " \n"
 		str += "\n"
 		
+		str += "Graphics API: " + graphics_api_get() + " \n"
+		str += "\n"
+
+		str += "Render surface pools: \n"
+		str += "======================================= \n"
+		if (ds_list_size(render_surface_pool_list) = 0)
+			str += "None \n"
+		else
+		{
+			for (var i = 0; i < ds_list_size(render_surface_pool_list); i++)
+			{
+				var pool = render_surface_pool_list[|i]
+				if (!instance_exists(pool))
+					continue
+
+				str += (pool = render_surface_pool_current ? "* " : "  ")
+				str += pool.owner_label + ": " + string(pool.width) + "x" + string(pool.height)
+				str += (pool.used ? " (used) \n" : " \n")
+			}
+		}
+		str += "\n"
+
+		str += "Optimizations: \n"
+		str += "======================================= \n"
+		str += "Light buffer caching: " + (render_shadow_cache_enabled ? "Enabled" : "Disabled") + " \n"
+		str += "G-buffer caching: " + (render_gbuffers_cache_enabled ? "Enabled" : "Disabled") + " \n"
+		str += "Hashed objects: " + string(app.render_alpha_hashed_count) + " \n"
+		str += "\n"
+
 		str += "instance_count: " + string(instance_count) + " \n"
 		str += "render_world() calls: " + string(render_world_count) + " \n"
 		str += "Vertex buffer triangles: " + string(get_vertex_buffer_triangles()) + " \n"
@@ -52,7 +81,7 @@ function debug_info_draw()
 		str += "Primitive render calls: " + string(get_primitive_render_calls()) + " \n"
 		str += "\n"
 		
-		if (dev_mode)
+		if (debug_mode)
 		{
 			if (!is_cpp() && ds_list_size(window_list) > 0) // Debug windows in GM
 			{

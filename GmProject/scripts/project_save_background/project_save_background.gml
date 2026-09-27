@@ -24,6 +24,7 @@ function project_save_background()
 		json_save_var("sky_time", background_sky_time)
 		json_save_var("sky_rotation", background_sky_rotation)
 		json_save_var("sunlight_strength", background_sunlight_strength)
+		json_save_var("sunlight_specular_strength", background_sunlight_specular_strength)
 		json_save_var("sunlight_angle", background_sunlight_angle)
 		
 		json_save_var_bool("twilight", background_twilight)
@@ -84,6 +85,7 @@ function project_save_background()
 		json_save_var("wind_directional_strength", background_wind_directional_strength)
 		
 		json_save_var("texture_animation_speed", background_texture_animation_speed)
+		json_save_var("brightness", background_brightness)
 		
 	json_save_object_done()
 }

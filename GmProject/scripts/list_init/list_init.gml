@@ -1281,6 +1281,17 @@ function list_init(name)
 			break
 		}
 		
+		// Raytrace resolution
+		case "renderindirectresolution":
+		case "renderreflectionsresolution":
+		{
+			menu_add_item(1, text_get("renderresolutionfull"))
+			menu_add_item(.5, text_get("renderresolutionhalf"))
+			menu_add_item(.25, text_get("renderresolutionquarter"))
+			menu_add_item(.125, text_get("renderresolutioneighth"))
+			break
+		}
+
 		// Shadow map detail
 		case "rendershadowssunbuffersize":
 		case "rendershadowsspotbuffersize":
@@ -1377,14 +1388,13 @@ function list_init(name)
 			break
 		}
 		
-		// Video quality
-		case "exportmovievideoquality":
+		// Renderer
+		case "exportmovierenderer":
+		case "exportimagerenderer":
 		{
-			for (var i = 0; i < ds_list_size(videoquality_list); i++)
-				with (videoquality_list[|i])
-					menu_add_item(id, text_get("exportmovievideoquality" + id.name))
-			
-			menu_add_item(0, text_get("exportmovievideoqualitycustom"))
+			menu_add_item(e_renderer.QUICK, text_get("renderrendererquick"))
+			menu_add_item(e_renderer.STANDARD, text_get("renderrendererstandard"))
+			menu_add_item(e_renderer.REALISTIC, text_get("renderrendererrealistic"))
 			
 			break
 		}
@@ -1400,26 +1410,36 @@ function list_init(name)
 			break
 		}
 		
-		// Render settings
-		case "projectrendersettings":
+		// Renderer
+		case "renderrenderer":
 		{
-			menu_add_item("", text_get("projectrendersettingscustom"))
-			menu_add_item("performance", text_get("projectrendersettingsperformance"), null)
-			menu_add_item("balanced", text_get("projectrendersettingsbalanced"), null)
-			menu_add_item("extreme", text_get("projectrendersettingsextreme"), null)
-			
-			var file = file_find_first(render_directory + "*.mirender", 0);
-			
-			while (file != "")
-			{
-				// Add all files but defaults
-				if (file != "performance.mirender" && file != "balanced.mirender" && file != "extreme.mirender")
-					menu_add_item(filename_change_ext(file, ""), filename_change_ext(file, ""), null)
-				
-				file = file_find_next()
-			}
+			menu_add_item(e_renderer.STANDARD, text_get("renderrendererstandard"), null)
+			menu_add_item(e_renderer.REALISTIC, text_get("renderrendererrealistic"), null)
 			
 			break
+		}
+		
+		// Presets
+		case "renderpresetstandard":
+		case "renderpresetrealistic":
+		{
+			var presetlist = render_preset_list[renderer_edit];
+			
+			for (var i = 0; i < ds_list_size(presetlist); i++)
+			{
+				var file, presetname, text;
+				file = presetlist[|i]
+				presetname = render_preset_map[?file].name
+				
+				if (text_exists("renderpreset" + presetname))
+					text = text_get("renderpreset" + presetname)
+				else
+					text = presetname
+				
+				menu_add_item(file, text)
+			}
+			
+			break;
 		}
 		
 		// Blend mode
@@ -1464,10 +1484,10 @@ function list_init(name)
 		}
 		
 		// Render pass
-		case "viewmodepass":
+		case "viewrendererpass":
 		{
 			for (var i = 0; i < e_render_pass.amount; i++)
-				list_item_add(text_get("viewmodepass" + render_pass_list[|i]), i)
+				list_item_add(text_get("viewrendererpass" + render_pass_list[|i]), i)
 			
 			break
 		}
@@ -1526,12 +1546,26 @@ function list_init(name)
 			break
 		}
 		
+		case "renderaamode":
+		{
+			menu_add_item(e_aa_mode.PROGRESSIVE, text_get("renderaamodeprogressive"))
+			menu_add_item(e_aa_mode.FXAA, text_get("renderaamodefxaa"))
+			break
+		}
+		
 		case "rendertonemapper":
 		case "frameeditorcameratonemapper":
 		{
 			menu_add_item(e_tonemapper.NONE, text_get("rendertonemappernone"))
 			menu_add_item(e_tonemapper.REINHARD, text_get("rendertonemapperreinhard"))
 			menu_add_item(e_tonemapper.ACES, text_get("rendertonemapperaces"))
+			menu_add_item(e_tonemapper.UCHIMURA, text_get("rendertonemapperuchimura"))
+			menu_add_item(e_tonemapper.LOTTES, text_get("rendertonemapperlottes"))
+			menu_add_item(e_tonemapper.HABLE, text_get("rendertonemapperhable"))
+			menu_add_item(e_tonemapper.GT7_CURVE, text_get("rendertonemappergt7curve"))
+			menu_add_item(e_tonemapper.PBR_NEUTRAL, text_get("rendertonemapperpbrneutral"))
+			menu_add_item(e_tonemapper.AGX, text_get("rendertonemapperagx"))
+			menu_add_item(e_tonemapper.AGX_PUNCHY, text_get("rendertonemapperagxpunchy"))
 			
 			break
 		}

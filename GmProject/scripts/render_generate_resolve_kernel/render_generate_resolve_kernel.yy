@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_generate_resolve_kernel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_generate_resolve_kernel",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

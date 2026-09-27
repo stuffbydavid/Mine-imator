@@ -17,7 +17,6 @@ function project_create()
 	log("Creating project", dirname)
 	
 	project_reset()
-	action_load_render_settings(render_default_file)
 	
 	project_name = popup_newproject.tbx_name.text
 	project_author = popup_newproject.tbx_author.text

@@ -174,6 +174,7 @@ function tl_update_values()
 		
 		tl_update_values_ease(e_value.CAM_BLADE_AMOUNT)
 		tl_update_values_ease(e_value.CAM_BLADE_ANGLE)
+		tl_update_values_ease(e_value.CAM_BLADE_STRETCH)
 		
 		tl_update_values_ease(e_value.CAM_ROTATE)
 		tl_update_values_ease(e_value.CAM_ROTATE_DISTANCE)
@@ -208,6 +209,7 @@ function tl_update_values()
 		
 		tl_update_values_ease(e_value.CAM_BLOOM)
 		tl_update_values_ease(e_value.CAM_BLOOM_THRESHOLD)
+		tl_update_values_ease(e_value.CAM_BLOOM_TRANSITION)
 		tl_update_values_ease(e_value.CAM_BLOOM_INTENSITY)
 		tl_update_values_ease(e_value.CAM_BLOOM_RADIUS)
 		tl_update_values_ease(e_value.CAM_BLOOM_RATIO)
@@ -270,6 +272,7 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_SKY_TIME)
 		tl_update_values_ease(e_value.BG_SKY_ROTATION)
 		tl_update_values_ease(e_value.BG_SUNLIGHT_STRENGTH)
+		tl_update_values_ease(e_value.BG_SUNLIGHT_SPECULAR_STRENGTH)
 		tl_update_values_ease(e_value.BG_SUNLIGHT_ANGLE)
 		tl_update_values_ease(e_value.BG_TWILIGHT)
 		tl_update_values_ease(e_value.BG_SKY_CLOUDS_SHOW)
@@ -314,6 +317,7 @@ function tl_update_values()
 		tl_update_values_ease(e_value.BG_WIND_DIRECTIONAL_SPEED)
 		tl_update_values_ease(e_value.BG_WIND_DIRECTIONAL_STRENGTH)
 		tl_update_values_ease(e_value.BG_TEXTURE_ANI_SPEED)
+		tl_update_values_ease(e_value.BG_BRIGHTNESS)
 	}
 	
 	// Texture

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_preset_import",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_preset_import",
+  "parent":{
+    "name":"Presets",
+    "path":"folders/Scripts/App/Actions/Project/Render/Presets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

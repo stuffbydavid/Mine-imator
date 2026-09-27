@@ -7,7 +7,7 @@
 
 function font_add_lib(fname, size, bold, italic, aa = true)
 {
-	var tmpfile = file_directory + "tmp.ttf"
+	var tmpfile = file_directory_get() + "tmp.ttf"
 	
 	file_copy_lib(fname, tmpfile)
 	

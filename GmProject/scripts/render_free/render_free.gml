@@ -2,39 +2,18 @@
 
 function render_free()
 {
-	// Render targets
-	surface_free(render_surface[0])
-	surface_free(render_surface[1])
-	surface_free(render_surface[2])
-	
-	surface_free(render_surface_hdr[0])
-	surface_free(render_surface_hdr[1])
-	surface_free(render_surface_hdr[2])
-	
-	// G-Buffers
-	surface_free(render_surface_depth)
-	surface_free(render_surface_normal)
-	surface_free(render_surface_material)
-	surface_free(render_surface_emissive)
-	surface_free(render_surface_diffuse)
-	
-	// Rendering
-	surface_free(render_surface_shadows)
-	surface_free(render_surface_specular)
-	
-	// Camera effects
-	surface_free(render_surface_lens)
-	
-	// Sampling
-	surface_free(render_surface_sample_expo)
-	surface_free(render_surface_sample_dec)
-	surface_free(render_surface_sample_alpha)
-	
-	// Light depth buffers
-	for (var i = 0; i < render_cascades_count; i++)
-		surface_free(render_surface_sun_buffer[i])
-	
-	surface_free(render_surface_spot_buffer)
-	surface_free(render_surface_point_buffer)
-	surface_free(render_surface_point_atlas_buffer)
+	render_surface_pool_save()
+
+	for (var i = 0; i < ds_list_size(render_surface_pool_list); i++)
+		render_surface_pool_free(render_surface_pool_list[|i])
+	ds_list_clear(render_surface_pool_list)
+	render_surface_pool_current = null
+	render_surface_pool_clear()
+
+	// Render passes are transient and are cleared at the start of each render
+	surface_free(render_pass_surf)
+	render_pass_surf = null
+	for (var pass = 0; pass < array_length(render_pass_surfs); pass++)
+		surface_free(render_pass_surfs[pass])
+	render_pass_surfs = array_create(e_render_pass.amount, null)
 }

@@ -319,7 +319,7 @@ namespace CppProject
 
 	void StringType::Table::Debug(QString name)
 	{
-		QFile debug(BUILD_FOLDER + "/Strings-" + name + ".txt");
+		QFile debug(QString(file_directory_get()) + "Strings-" + name + ".txt");
 		AddPerms(debug);
 		if (!debug.open(QFile::WriteOnly))
 			return;

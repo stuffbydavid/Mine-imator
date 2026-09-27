@@ -5,7 +5,7 @@
 function action_project_render_ssao_radius(val, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_ssao_radius, project_render_ssao_radius, project_render_ssao_radius * add + val, 1)
+		history_set_var(action_project_render_ssao_radius, project_render_ssao_radius, project_render_ssao_radius * add + val, true)
 	
 	project_render_ssao_radius = project_render_ssao_radius * add + val
 }

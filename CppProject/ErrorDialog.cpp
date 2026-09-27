@@ -38,7 +38,7 @@ namespace CppProject
 		button1->setFixedHeight(50);
 		button2->setFixedHeight(50);
 		button3->setFixedHeight(50);
-		button1->connect(button1, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)log_file); });
+		button1->connect(button1, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)log_file_get()); });
 		button2->connect(button2, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)link_forums_bugs); });
 		button3->connect(button3, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)link_forums_upload); });
 		buttonLayout->addWidget(button1);

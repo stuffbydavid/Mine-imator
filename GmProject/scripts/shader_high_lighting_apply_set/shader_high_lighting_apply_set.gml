@@ -1,14 +1,36 @@
-/// shader_high_lighting_apply_set(shadows, mask, material)
+/// shader_high_lighting_apply_set(shadows, ssao, mask, material)
 /// @arg shadows
+/// @arg ssao
 /// @arg mask
 /// @arg material
+/// @arg [fallbackonly]
 
-function shader_high_lighting_apply_set(shadows, mask, material)
+function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbackonly = false)
 {
-	render_set_uniform_int("uShadowsEnabled", render_shadows || render_ssao)
+	render_set_uniform_int("uFallbackOnly", fallbackonly)
+	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(material))
+	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(render_surface_diffuse))
+	texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_normal))
+	render_set_uniform("uBackgroundBrightness", app.background_brightness)
+	render_set_uniform_color("uFallbackColor", app.background_sky_color_final, 1)
+	render_set_uniform_color("uFogColor", app.background_fog_color_final, 1)
+	render_set_uniform("uGamma", render_gamma)
+	render_set_uniform("uProjMatrixInv", matrix_inverse_ext(proj_matrix))
+	shader_fog_fallback_set()
 	
-	if ((render_shadows || render_ssao) && surface_exists(shadows))
+	if (fallbackonly)
+		return 0
+	
+	render_set_uniform_int("uShadowsEnabled", render_shadows)
+	
+	if (render_shadows && surface_exists(shadows))
 		texture_set_stage(sampler_map[?"uShadows"], surface_get_texture(shadows))
+	
+	render_set_uniform_int("uSSAOEnabled", render_ssao)
+	render_set_uniform_int("uSSAOAlwaysVisible", app.project_render_ssao_always_visible)
+	
+	if (render_ssao && surface_exists(ssao))
+		texture_set_stage(sampler_map[?"uSSAO"], surface_get_texture(ssao))
 	
 	if (surface_exists(render_surface_specular))
 	{
@@ -18,16 +40,11 @@ function shader_high_lighting_apply_set(shadows, mask, material)
 	else
 		render_set_uniform_int("uSpecularEnabled", false)
 	
-	if (render_shadows && surface_exists(render_surface_emissive))
-		texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_emissive))
-	
 	texture_set_stage(sampler_map[?"uMask"], surface_get_texture(mask))
-	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(material))
+	render_set_uniform_color("uAmbientColor", render_shadows ? app.background_ambient_color_final : c_white, 1)
 	
 	render_set_uniform("uIndirectEnabled", render_indirect)
 	render_set_uniform("uIndirectStrength", app.project_render_indirect_strength)
 	
-	render_set_uniform("uReflectionsEnabled", render_reflections)
-	render_set_uniform_color("uFallbackColor", app.background_sky_color_final, 1)
-	render_set_uniform("uGamma", render_gamma)
+	render_set_uniform_int("uReflectionsEnabled", render_reflections)
 }

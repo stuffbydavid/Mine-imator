@@ -4,8 +4,13 @@ function app_startup_interface_export()
 {
 	export_surface = null
 	export_sample = 0
+	export_sample_rate_start = 0
+	export_sample_rate_count = 0
+	export_samples_per_second = 0
 	export_filename = ""
 	export_escape_time = 0
+	
+	export_render_time = 0
 	
 	exportmovie_format = ""
 	exportmovie_marker_previous = 0
@@ -14,7 +19,8 @@ function app_startup_interface_export()
 	exportmovie_frame = 0
 	exportmovie_frame_rate = 0
 	exportmovie_framespersecond = 0
-	exportmovie_high_quality = true
+	exportmovie_renderer = e_renderer.REALISTIC
 	exportmovie_start = null
 	exportmovie_buffer = null
+	exportmovie_benchmark_csv = ""
 }

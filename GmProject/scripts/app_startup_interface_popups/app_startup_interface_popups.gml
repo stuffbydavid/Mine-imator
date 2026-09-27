@@ -85,29 +85,30 @@ function app_startup_interface_popups()
 	popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 350, null, true)
 	with (popup_exportmovie)
 	{
+		renderer = app.setting_export_movie_renderer
+		if (trial_version && renderer = e_renderer.REALISTIC)
+			renderer = e_renderer.STANDARD
 		format = app.setting_export_movie_format
 		frame_rate = app.setting_export_movie_frame_rate
 		framespersecond = app.setting_export_movie_framespersecond
-		bit_rate = app.setting_export_movie_bit_rate
-		video_quality = find_videoquality(bit_rate)
 		include_audio = app.setting_export_movie_include_audio
 		remove_background = app.setting_export_movie_remove_background
 		include_hidden = app.setting_export_movie_include_hidden
-		high_quality = app.setting_export_movie_high_quality
 		watermark = app.setting_export_movie_watermark
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
 		tbx_framespersecond = new_textbox_integer()
-		tbx_bit_rate = new_textbox_integer()
 	}
 	
 	// Export image
 	popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 350, null, true)
 	with (popup_exportimage)
 	{
+		renderer = app.setting_export_image_renderer
+		if (trial_version && renderer = e_renderer.REALISTIC)
+			renderer = e_renderer.STANDARD
 		remove_background = app.setting_export_image_remove_background
 		include_hidden = app.setting_export_image_include_hidden
-		high_quality = app.setting_export_image_high_quality
 		watermark = app.setting_export_image_watermark
 		tbx_image_size_custom_width = new_textbox_integer()
 		tbx_image_size_custom_height = new_textbox_integer()
@@ -124,7 +125,6 @@ function app_startup_interface_popups()
 		page_ani_type = "right"
 		
 		open_advanced = false
-		custom_rendering = "default"
 	}
 	
 	// "Advanced mode" popup

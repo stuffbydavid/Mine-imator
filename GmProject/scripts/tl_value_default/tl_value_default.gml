@@ -41,7 +41,8 @@ function tl_value_default(valueid)
 		case e_value.CAM_EXPOSURE: return 1
 		case e_value.CAM_GAMMA: return 2.2
 		case e_value.CAM_BLADE_AMOUNT:
-		case e_value.CAM_BLADE_ANGLE: return 0
+		case e_value.CAM_BLADE_ANGLE:
+		case e_value.CAM_BLADE_STRETCH: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
 		case e_value.CAM_SHAKE_MODE:
 		case e_value.CAM_SHAKE_STRENGTH_X:
@@ -64,6 +65,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_DOF_FRINGE_ANGLE_GREEN: return -135
 		case e_value.CAM_DOF_FRINGE_ANGLE_BLUE: return -45
 		case e_value.CAM_BLOOM_THRESHOLD: return .85
+		case e_value.CAM_BLOOM_TRANSITION: return .5
 		case e_value.CAM_BLOOM_INTENSITY: return .4
 		case e_value.CAM_BLOOM_RADIUS: return 1
 		case e_value.CAM_BLOOM_RATIO: return 0
@@ -106,6 +108,7 @@ function tl_value_default(valueid)
 		case e_value.BG_SKY_TIME: return app.background_sky_time
 		case e_value.BG_SKY_ROTATION: return app.background_sky_rotation
 		case e_value.BG_SUNLIGHT_STRENGTH: return app.background_sunlight_strength
+		case e_value.BG_SUNLIGHT_SPECULAR_STRENGTH: return app.background_sunlight_specular_strength
 		case e_value.BG_SUNLIGHT_ANGLE: return app.background_sunlight_angle
 		case e_value.BG_TWILIGHT: return app.background_twilight
 		case e_value.BG_SKY_CLOUDS_SHOW: return app.background_sky_clouds_show
@@ -150,6 +153,7 @@ function tl_value_default(valueid)
 		case e_value.BG_WIND_DIRECTIONAL_SPEED: return app.background_wind_directional_speed
 		case e_value.BG_WIND_DIRECTIONAL_STRENGTH: return app.background_wind_directional_strength
 		case e_value.BG_TEXTURE_ANI_SPEED: return app.background_texture_animation_speed
+		case e_value.BG_BRIGHTNESS: return app.background_brightness
 		case e_value.PATH_OBJ:
 		case e_value.IK_TARGET:
 		case e_value.IK_TARGET_ANGLE:

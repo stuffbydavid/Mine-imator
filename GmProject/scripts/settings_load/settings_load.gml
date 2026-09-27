@@ -67,7 +67,7 @@ function settings_load()
 			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
 			game_set_speed(gamespeed_fps, targetfps)
 			
-			if (!dev_mode)
+			if (!debug_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()
@@ -130,6 +130,7 @@ function settings_load()
 			setting_timeline_hide_nonanimated = value_get_real(interfacemap[?"timeline_hide_nonanimated"], setting_timeline_hide_nonanimated)
 			setting_timeline_hide_ghosts = value_get_real(interfacemap[?"timeline_hide_ghosts"], setting_timeline_hide_ghosts)
 			setting_timeline_frame_snap = value_get_real(interfacemap[?"timeline_frame_snap"], setting_timeline_frame_snap)
+			setting_timeline_always_animated = value_get_real(interfacemap[?"timeline_always_animated"], setting_timeline_always_animated)
 			setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
 			setting_show_shortcuts_bar = value_get_real(interfacemap[?"show_shortcuts_bar"], setting_show_shortcuts_bar)
 			setting_gizmos_face_camera = value_get_real(interfacemap[?"gizmos_face_camera"], setting_gizmos_face_camera)
@@ -161,6 +162,7 @@ function settings_load()
 			setting_bench_height = max(bench_initial_height, value_get_real(interfacemap[?"bench_height"], setting_bench_height))
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
+			setting_renderer_settings_location = value_get_string(interfacemap[?"renderer_settings_location"], setting_renderer_settings_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
 			setting_object_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_object_editor_location) // Legacy
 			setting_object_editor_location = value_get_string(interfacemap[?"object_editor_location"], setting_object_editor_location)
@@ -181,6 +183,7 @@ function settings_load()
 			setting_view_main_fog = value_get_real(interfacemap[?"view_main_fog"], setting_view_main_fog)
 			setting_view_main_effects = value_get_real(interfacemap[?"view_main_effects"], setting_view_main_effects)
 			setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
+			setting_view_main_transparent_background = value_get_real(interfacemap[?"view_main_transparent_background"], setting_view_main_transparent_background)
 			setting_view_main_location = value_get_string(interfacemap[?"view_main_location"], setting_view_main_location)
 			
 			setting_view_second_show = value_get_real(interfacemap[?"view_second_show"], setting_view_second_show)
@@ -191,6 +194,7 @@ function settings_load()
 			setting_view_second_fog = value_get_real(interfacemap[?"view_second_fog"], setting_view_second_fog)
 			setting_view_second_effects = value_get_real(interfacemap[?"view_second_effects"], setting_view_second_effects)
 			setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
+			setting_view_second_transparent_background = value_get_real(interfacemap[?"view_second_transparent_background"], setting_view_second_transparent_background)
 			setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 			setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 			setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
@@ -286,12 +290,5 @@ function settings_load()
 			ds_list_merge(setting_world_import_filter_list, worldimportmap[?"filter_list"])
 			setting_world_import_unload_regions = value_get_real(worldimportmap[?"unload_regions"], setting_world_import_unload_regions)
 		}
-	}
-	
-	// Legacy
-	else
-	{
-		settings_load_legacy(fn)
-		settings_load_legacy_recent(data_directory + "recent.file")
 	}
 }

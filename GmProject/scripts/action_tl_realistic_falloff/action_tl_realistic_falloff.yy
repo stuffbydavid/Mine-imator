@@ -1,0 +1,1 @@
+{"$GMScript":"v1","%Name":"action_tl_realistic_falloff","isCompatibility":false,"isDnD":false,"name":"action_tl_realistic_falloff","parent":{"name":"Timeline editor","path":"folders/Scripts/App/Actions/Timeline/Timeline editor.yy",},"resourceType":"GMScript","resourceVersion":"2.0",}

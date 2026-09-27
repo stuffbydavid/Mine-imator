@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_high_tonemap",
   "parent":{
-    "name":"Raytracing",
-    "path":"folders/Scripts/Render/High quality/Raytracing.yy",
+    "name":"High quality",
+    "path":"folders/Scripts/Render/High quality.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

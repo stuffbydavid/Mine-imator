@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_project_render_block_subsurface",
   "parent":{
-    "name":"Models & scenery",
-    "path":"folders/Scripts/App/Actions/Project/Render/Models & scenery.yy",
+    "name":"Materials",
+    "path":"folders/Scripts/App/Actions/Project/Render/Materials.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

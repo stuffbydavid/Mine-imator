@@ -3,6 +3,13 @@
 
 function render_update_cascades(dir)
 {
+	if (render_cascades_count = 1)
+		render_cascade_ends = [0.0, 0.05]
+	else if (render_cascades_count = 2)
+		render_cascade_ends = [0.0, 0.035, 0.2]
+	else
+		render_cascade_ends = [0.0, 0.035, 0.15, 1.0]
+
 	// Get frustum for shadow cascades
 	var mV = matrix_create_lookat(cam_from, cam_to, cam_up);
 	var mP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev);
@@ -49,6 +56,7 @@ function render_update_cascades(dir)
 		// Get longest diagonal to fix jittering
 		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[3]));
 		diagonalXY = max(diagonalXY, vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7])))
+		cascade.worldSize = diagonalXY
 		
 		// Force square width/height (jitter fix 1)
 		var w, h, dif;

@@ -1,7 +1,7 @@
-/// project_load_update_values()
+/// project_load_values_update(map)
 /// @desc Updates values from previous versions
 
-function project_load_values_update()
+function project_load_values_update(map = null)
 {
 	// More background values can be keyframed (1.2.0)
 	if (load_format < e_project.FORMAT_120_PRE_3)
@@ -44,6 +44,14 @@ function project_load_values_update()
 			value[e_value.BG_GROUND_SLOT] = app.background_ground_slot
 	}
 	
+	// Old anamorphic ratio was moved into Blade Stretch, anamorphic doesn't rotate with blades (2.1.0)
+	if (load_format < e_project.FORMAT_210 && timeline.type = e_tl_type.CAMERA && load_format > e_project.FORMAT_123_PRE_2)
+	{
+		value[e_value.CAM_BLADE_ANGLE] = -value[e_value.CAM_BLADE_ANGLE]
+		value[e_value.CAM_BLADE_STRETCH] = -value[e_value.CAM_DOF_BLUR_RATIO]
+		value[e_value.CAM_DOF_BLUR_RATIO] = 0
+	}
+
 	// Separated leaf colors for custom biome setting (2.0.0)
 	if (load_format < e_project.FORMAT_200_PRE_5)
 	{
