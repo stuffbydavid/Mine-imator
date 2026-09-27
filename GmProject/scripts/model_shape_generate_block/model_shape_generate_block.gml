@@ -186,6 +186,29 @@ function model_shape_generate_block(bend)
 		}
 	}
 	
+	// Apply offsets to the four corners at the start of the segment axis
+	switch (segaxis)
+	{
+		case X:
+			p1 = vec3_add(p1, vertex_offsets[7])
+			p2 = vec3_add(p2, vertex_offsets[4])
+			p3 = vec3_add(p3, vertex_offsets[0])
+			p4 = vec3_add(p4, vertex_offsets[3])
+			break
+		case Y:
+			p1 = vec3_add(p1, vertex_offsets[6])
+			p2 = vec3_add(p2, vertex_offsets[7])
+			p3 = vec3_add(p3, vertex_offsets[3])
+			p4 = vec3_add(p4, vertex_offsets[2])
+			break
+		case Z:
+			p1 = vec3_add(p1, vertex_offsets[0])
+			p2 = vec3_add(p2, vertex_offsets[1])
+			p3 = vec3_add(p3, vertex_offsets[2])
+			p4 = vec3_add(p4, vertex_offsets[3])
+			break
+	}
+
 	// Apply transform
 	var mat;
 	if (isbent) // Apply start bend
@@ -343,6 +366,30 @@ function model_shape_generate_block(bend)
 			}
 		}
 		
+		// Interpolate corner offsets along the segment axis so bending remains supported
+		var offsetamount = segpos / size[segaxis];
+		switch (segaxis)
+		{
+			case X:
+				np1 = vec3_add(np1, vec3_add(vertex_offsets[7], vec3_mul(vec3_sub(vertex_offsets[6], vertex_offsets[7]), offsetamount)))
+				np2 = vec3_add(np2, vec3_add(vertex_offsets[4], vec3_mul(vec3_sub(vertex_offsets[5], vertex_offsets[4]), offsetamount)))
+				np3 = vec3_add(np3, vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[1], vertex_offsets[0]), offsetamount)))
+				np4 = vec3_add(np4, vec3_add(vertex_offsets[3], vec3_mul(vec3_sub(vertex_offsets[2], vertex_offsets[3]), offsetamount)))
+				break
+			case Y:
+				np1 = vec3_add(np1, vec3_add(vertex_offsets[6], vec3_mul(vec3_sub(vertex_offsets[5], vertex_offsets[6]), offsetamount)))
+				np2 = vec3_add(np2, vec3_add(vertex_offsets[7], vec3_mul(vec3_sub(vertex_offsets[4], vertex_offsets[7]), offsetamount)))
+				np3 = vec3_add(np3, vec3_add(vertex_offsets[3], vec3_mul(vec3_sub(vertex_offsets[0], vertex_offsets[3]), offsetamount)))
+				np4 = vec3_add(np4, vec3_add(vertex_offsets[2], vec3_mul(vec3_sub(vertex_offsets[1], vertex_offsets[2]), offsetamount)))
+				break
+			case Z:
+				np1 = vec3_add(np1, vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[4], vertex_offsets[0]), offsetamount)))
+				np2 = vec3_add(np2, vec3_add(vertex_offsets[1], vec3_mul(vec3_sub(vertex_offsets[5], vertex_offsets[1]), offsetamount)))
+				np3 = vec3_add(np3, vec3_add(vertex_offsets[2], vec3_mul(vec3_sub(vertex_offsets[6], vertex_offsets[2]), offsetamount)))
+				np4 = vec3_add(np4, vec3_add(vertex_offsets[3], vec3_mul(vec3_sub(vertex_offsets[7], vertex_offsets[3]), offsetamount)))
+				break
+		}
+
 		// Apply transform
 		if (isbent) // Apply segment bend
 		{
@@ -383,7 +430,7 @@ function model_shape_generate_block(bend)
 		np4 = point3D_mul_matrix(np4, mat)
 		
 		// Sharp lighting
-		if (sharpbend)
+		if (sharpbend || has_vertex_offsets)
 		{
 			n1 = null
 			n2 = null
