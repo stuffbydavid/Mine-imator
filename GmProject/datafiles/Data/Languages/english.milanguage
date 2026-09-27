@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.25"
+		"lastchange": "2026.09.26"
 	},
 	"particle/": {
 		"type/": {
@@ -4512,7 +4512,9 @@
 			"autoscroll": "Auto-scroll when playing animation",
 			"selectjump": "Jump to selected object in timeline list",
 			"framesnap": "Snap playback marker",
-			"framesnaptip": "Snap the animation to frames when playing."
+			"framesnaptip": "Snap the animation to frames when playing.",
+			"alwaysanimated": "New timelines always animated",
+			"alwaysanimatedtip": "Always set newly created objects as \"Animated\"."
 		},
 		"tools": "Tools",
 		"viewport": "Viewport",

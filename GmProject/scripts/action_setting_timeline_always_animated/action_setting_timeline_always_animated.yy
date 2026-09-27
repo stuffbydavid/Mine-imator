@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_timeline_always_animated",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_timeline_always_animated",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Actions/Settings/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

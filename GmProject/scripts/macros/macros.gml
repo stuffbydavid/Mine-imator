@@ -3,9 +3,7 @@
 
 function macros()
 {
-	// Debug
-	#macro dev_mode						true
-	#macro dev_mode_debug_names			dev_mode && false
+	//#macro dev_mode					debug_mode
 
 	// Versions
 	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
@@ -19,7 +17,7 @@ function macros()
 	#macro project_format				e_project.FORMAT_210
 	#macro settings_format				e_settings.FORMAT_200
 	#macro render_settings_format		e_render_settings.FORMAT_210
-	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_201
+	#macro minecraft_assets_format		e_minecraft_assets.FORMAT_210
 	
 	// Directories
 	#macro data_directory				working_directory + "Data/"

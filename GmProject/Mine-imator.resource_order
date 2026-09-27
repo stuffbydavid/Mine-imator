@@ -562,6 +562,7 @@
     {"name":"action_setting_snap_size_scale","order":19,"path":"scripts/action_setting_snap_size_scale/action_setting_snap_size_scale.yy",},
     {"name":"action_setting_spawn_cameras","order":6,"path":"scripts/action_setting_spawn_cameras/action_setting_spawn_cameras.yy",},
     {"name":"action_setting_theme","order":15,"path":"scripts/action_setting_theme/action_setting_theme.yy",},
+    {"name":"action_setting_timeline_always_animated","order":13,"path":"scripts/action_setting_timeline_always_animated/action_setting_timeline_always_animated.yy",},
     {"name":"action_setting_timeline_autoscroll","order":1,"path":"scripts/action_setting_timeline_autoscroll/action_setting_timeline_autoscroll.yy",},
     {"name":"action_setting_timeline_compact","order":3,"path":"scripts/action_setting_timeline_compact/action_setting_timeline_compact.yy",},
     {"name":"action_setting_timeline_display_frames","order":11,"path":"scripts/action_setting_timeline_display_frames/action_setting_timeline_display_frames.yy",},

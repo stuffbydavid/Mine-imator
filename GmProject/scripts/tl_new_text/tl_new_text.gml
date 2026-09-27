@@ -8,7 +8,7 @@ function tl_new_text(source)
 		type = e_tl_type.TEXT
 		temp = id
 		has_temp = false
-		animated = false
+		animated = app.setting_timeline_always_animated
 		text_font = source.text_font
 		text_3d = source.text_3d
 		text_face_camera = source.text_face_camera

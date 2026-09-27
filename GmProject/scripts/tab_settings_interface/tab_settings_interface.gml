@@ -102,6 +102,10 @@ function tab_settings_interface()
 	draw_switch("settingstimelineframesnap", dx, dy, setting_timeline_frame_snap, action_setting_timeline_frame_snap, "settingstimelineframesnaptip")
 	tab_next()
 	
+	tab_control_switch()
+	draw_switch("settingstimelinealwaysanimated", dx, dy, setting_timeline_always_animated, action_setting_timeline_always_animated, "settingstimelinealwaysanimatedtip")
+	tab_next()
+	
 	dy += label_height + 6
 	draw_label(text_get("settingstools"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8

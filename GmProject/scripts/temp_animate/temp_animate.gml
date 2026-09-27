@@ -8,7 +8,7 @@ function temp_animate()
 		type = other.type
 		temp = other.id
 		has_temp = true
-		animated = type_is_animated(type)
+		animated = type_is_animated(type) || app.setting_timeline_always_animated
 		
 		if (type = e_tl_type.TEXT)
 		{

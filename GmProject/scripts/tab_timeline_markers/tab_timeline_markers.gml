@@ -55,7 +55,7 @@ function tab_timeline_markers(tlx, tly, tlw, bary, barh, barw, markerh, markerba
 		var markx, markeditx, marky, markw, markh, marker, color, name;
 		marker = timeline_marker_list[|i]
 		color = setting_theme.accent_list[marker.color]
-		name = marker.name + (dev_mode_debug_names ? " [" + marker.save_id + "]" : "")
+		name = marker.name + (debug_names ? " [" + marker.save_id + "]" : "")
 			
 		markx = tlx + floor(marker.pos * timeline_zoom - timeline.hor_scroll.value)
 		markeditx = tlx + floor(marker.edit_pos * timeline_zoom - timeline.hor_scroll.value)

@@ -1092,6 +1092,7 @@
     {"id":{"name":"action_setting_snap_size_scale","path":"scripts/action_setting_snap_size_scale/action_setting_snap_size_scale.yy",},},
     {"id":{"name":"action_setting_spawn_cameras","path":"scripts/action_setting_spawn_cameras/action_setting_spawn_cameras.yy",},},
     {"id":{"name":"action_setting_theme","path":"scripts/action_setting_theme/action_setting_theme.yy",},},
+    {"id":{"name":"action_setting_timeline_always_animated","path":"scripts/action_setting_timeline_always_animated/action_setting_timeline_always_animated.yy",},},
     {"id":{"name":"action_setting_timeline_autoscroll","path":"scripts/action_setting_timeline_autoscroll/action_setting_timeline_autoscroll.yy",},},
     {"id":{"name":"action_setting_timeline_compact","path":"scripts/action_setting_timeline_compact/action_setting_timeline_compact.yy",},},
     {"id":{"name":"action_setting_timeline_display_frames","path":"scripts/action_setting_timeline_display_frames/action_setting_timeline_display_frames.yy",},},
