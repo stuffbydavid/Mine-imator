@@ -3,8 +3,7 @@
 
 function background_ground_update_texture()
 {
-	var texres;
-	texres = res_eval(background_ground_tex)
+	var texres = res_eval(background_ground_tex);
 	if (!texres.ready || (background_ground_slot = background_ground_slot_prev && texres.save_id = background_ground_tex_prev))
 		return 0
 	
@@ -21,10 +20,11 @@ function background_ground_update_texture()
 	else if (background_ground_texture != null)
 		texture_free(background_ground_texture)
 	
-	var size, bx, by, surf, tex;
-	var decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
-	var sheet = decodedslot[0]
-	var slot = decodedslot[1]
+	var size, bx, by, surf, decodedslot, sheet, slot;
+	decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
+	sheet = decodedslot[0]
+	slot = decodedslot[1]
+	
 	if (sheet < 0)
 	{
 		background_ground_ani = false

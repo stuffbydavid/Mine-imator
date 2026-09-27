@@ -1,6 +1,5 @@
-/// tests_run()
 /// @desc Performs a sequence of tests and saves the rendered results in the project folder under runs/, along with CSV tables of benchmark timing data.
-///		  Render settings are overwritten during playback by text keyframes. A renderer is skipped entirely if the keyframe is invisible.
+///	Render settings are overwritten during playback by text keyframes. A renderer is skipped entirely if the keyframe is invisible.
 
 function tests_run()
 {
@@ -236,8 +235,8 @@ function tests_run()
 				csv += string_format(benchmark_export_total_time / 1000, 0, 3) + ","
 				csv += string_format(othertime / 1000, 0, 3) + ","
 				csv += string(render_world_count) + ","
-				csv += string(get_vertex_buffer_triangles()) + ","
-				csv += string(get_vertex_buffer_render_calls()) + "\n"
+				csv += string(get_vbuffer_triangles()) + ","
+				csv += string(get_vbuffer_render_calls()) + "\n"
 			
 				log("Test image", export_filename, string_format(exporttime / 1000, 0, 3) + " msec")
 				if (renderer_current = e_renderer.REALISTIC) // != e_renderer.QUICK later on
@@ -273,21 +272,4 @@ function tests_run()
 	
 	game_end()
 	return true
-}
-
-/// Exports a high-quality render pass for the current frame and render settings.
-function tests_export_pass(directory, pass)
-{
-	var previouspass = project_render_pass;
-	directory_create_lib(directory)
-	project_render_pass = pass
-	export_filename = directory + "/" + ds_list_find_value(render_pass_list, pass) + ".png"
-
-	var starttime = get_timer();
-	export_start("export_image")
-	while (export_update()) {}
-
-	log("Test render pass", export_filename, string_format((get_timer() - starttime) / 1000, 0, 3) + " msec")
-
-	project_render_pass = previouspass
 }

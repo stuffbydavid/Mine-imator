@@ -1159,14 +1159,6 @@ function enums()
 		ROT_ANGLE_Z,
 		ROT_DISTANCE
 	}
-
-	enum e_transform_mode
-	{
-		GIMBAL,
-		GLOBAL,
-		LOCAL,
-		amount
-	}
 	
 	// Mouse controls
 	enum e_mouse
@@ -1218,6 +1210,7 @@ function enums()
 		MATERIAL
 	}
 	
+	// Biome color
 	enum e_biome_color
 	{
 		GRASS,
@@ -1234,6 +1227,7 @@ function enums()
 		amount
 	}
 
+	// Surface format
 	enum e_surface_format
 	{
 		rgba8unorm,

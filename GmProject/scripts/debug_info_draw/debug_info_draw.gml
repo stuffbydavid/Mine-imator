@@ -74,8 +74,8 @@ function debug_info_draw()
 
 		str += "instance_count: " + string(instance_count) + " \n"
 		str += "render_world() calls: " + string(render_world_count) + " \n"
-		str += "Vertex buffer triangles: " + string(get_vertex_buffer_triangles()) + " \n"
-		str += "Vertex buffer render calls: " + string(get_vertex_buffer_render_calls()) + " \n"
+		str += "Vertex buffer triangles: " + string(get_vbuffer_triangles()) + " \n"
+		str += "Vertex buffer render calls: " + string(get_vbuffer_render_calls()) + " \n"
 		str += "Primitive lines: " + string(get_primitive_lines()) + " \n"
 		str += "Primitive triangles: " + string(get_primitive_triangles()) + " \n"
 		str += "Primitive render calls: " + string(get_primitive_render_calls()) + " \n"

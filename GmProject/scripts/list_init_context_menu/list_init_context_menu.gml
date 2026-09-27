@@ -358,10 +358,10 @@ function list_init_context_menu(name)
 			if (trial_version)
 				list_item_add(text_get("toolbarhelpupgrade"), popup_upgrade, "", null, icons.KEY, null, popup_show)
 			
-			list_item_add(text_get("toolbarhelptutorials"), link_tutorials, "", null, icons.TUTORIALS, null, popup_open_url)
+			list_item_add(text_get("toolbarhelptutorials"), link_tutorials, "", null, icons.TUTORIALS, null, open_url)
 			
-			list_item_add(text_get("toolbarhelpreport"), link_forums_bugs, "", null, icons.BUG, null, popup_open_url, true)
-			list_item_add(text_get("toolbarhelpforums"), link_forums, "", null, icons.COMMENTS, null, popup_open_url)
+			list_item_add(text_get("toolbarhelpreport"), link_forums_bugs, "", null, icons.BUG, null, open_url, true)
+			list_item_add(text_get("toolbarhelpforums"), link_forums, "", null, icons.COMMENTS, null, open_url)
 			
 			break
 		}

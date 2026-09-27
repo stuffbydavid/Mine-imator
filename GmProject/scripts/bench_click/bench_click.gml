@@ -158,7 +158,7 @@ function bench_click(tab, key = false)
 						action_bench_sound_source("project")
 				}
 				else if (ds_list_empty(sounds_list.list))
-					soundlist_load(sounds_list, music_list)
+					minecraft_game_load_sounds(sounds_list, music_list)
 					
 				if (minecraft_game_found)
 					soundlist_select_default(sound_list_current)

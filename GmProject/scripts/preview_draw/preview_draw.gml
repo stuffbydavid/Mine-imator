@@ -257,8 +257,11 @@ function preview_draw(preview, xx, yy, width, height)
 							}
 							
 							case e_temp_type.ITEM:
+							{
+								prevcam_zoom = 36
 								off = point3D(-8, -0.5 * bool_to_float(select.item_3d), -8)
 								break
+							}
 							
 							case e_temp_type.BLOCK:
 							{

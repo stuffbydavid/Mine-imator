@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_java_directory_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_java_directory_get",
+  "parent":{
+    "name":"Path",
+    "path":"folders/Scripts/App/Path.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

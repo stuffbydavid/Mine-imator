@@ -6,7 +6,7 @@
   "name":"window_set_focus",
   "parent":{
     "name":"Window",
-    "path":"folders/Scripts/App/Libraries/Window.yy",
+    "path":"folders/Scripts/App/DLL/Window.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

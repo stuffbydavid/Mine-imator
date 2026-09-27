@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_load_scenery_world",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_load_scenery_world",
+  "parent":{
+    "name":"Resources",
+    "path":"folders/Scripts/Project/Resources.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

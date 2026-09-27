@@ -377,11 +377,6 @@ namespace CppProject
 		return (new Surface({ (int)args[0].ToInt(), (int)args[1].ToInt() }, format))->id;
 	}
 
-	IntType surface_create_ext2(IntType width, IntType height, IntType format, BoolType depthBuffer)
-	{
-		return (new Surface({ (int)width, (int)height }, format, depthBuffer))->id;
-	}
-
 	BoolType surface_exists(IntType id)
 	{
 		return (FindSurface(id) != nullptr);
@@ -425,24 +420,6 @@ namespace CppProject
 			return GFX->QColorToInt(surf->GetColor(QPoint(x, y)));
 		}
 		return -1;
-	}
-
-	void surface_clear_depth_cache(IntType id)
-	{
-		if (Surface* surf = FindSurface(id))
-			surf->ClearDepthCache();
-	}
-
-	RealType surface_get_depth(IntType id, IntType x, IntType y)
-	{
-		if (Surface* surf = FindSurface(id))
-			return surf->GetDepth(QPoint(x, y));
-		return 0.0;
-	}
-
-	IntType surface_get_max_size()
-	{
-		return GFX->GetMaxSize();
 	}
 
 	IntType surface_get_target()
@@ -654,89 +631,4 @@ namespace CppProject
 		}
 	}
 
-	IntType get_vertex_buffer_triangles()
-	{
-		IntType num = VB->trianglesSubmitted;
-		VB->trianglesSubmitted = 0;
-		return num;
-	}
-
-	IntType get_vertex_buffer_render_calls()
-	{
-		IntType num = VB->renderCalls;
-		VB->renderCalls = 0;
-		return num;
-	}
-
-	IntType get_primitive_lines()
-	{
-		IntType num = PR->linesSubmitted;
-		PR->linesSubmitted = 0;
-		return num;
-	}
-
-	IntType get_primitive_triangles()
-	{
-		IntType num = PR->trianglesSubmitted;
-		PR->trianglesSubmitted = 0;
-		return num;
-	}
-
-	IntType get_primitive_render_calls()
-	{
-		IntType num = PR->renderCalls;
-		PR->renderCalls = 0;
-		return num;
-	}
-
-	void vertex_buffer_set_save_data(IntType id, BoolType save)
-	{
-		if (VertexBuffer* buf = FindVertexBuffer(id))
-			buf->saveData = save;
-	}
-
-	void submit_batch()
-	{
-		GFX->SubmitBatch();
-	}
-
-	void shader_submit_int(IntType index, IntType value)
-	{
-		GFX->shader->SubmitInt(index, value);
-	}
-
-	void shader_submit_float(IntType index, RealType value)
-	{
-		GFX->shader->SubmitFloat(index, value);
-	}
-
-	void shader_submit_vec2(IntType index, RealType x, RealType y)
-	{
-		GFX->shader->SubmitVec2(index, x, y);
-	}
-
-	void shader_submit_vec3(IntType index, RealType x, RealType y, RealType z)
-	{
-		GFX->shader->SubmitVec3(index, x, y, z);
-	}
-
-	void shader_submit_vec4(IntType index, RealType x, RealType y, RealType z, RealType w)
-	{
-		GFX->shader->SubmitVec4(index, x, y, z, w);
-	}
-
-	void shader_submit_float_array(IntType index, VarType array)
-	{
-		GFX->shader->SubmitFloatArray(index, array);
-	}
-
-	void shader_submit_mat4_array(IntType index, ArrType array)
-	{
-		GFX->shader->SubmitMat4Array(index, array);
-	}
-
-	void update_frustum()
-	{
-		GFX->UpdateFrustum();
-	}
 }

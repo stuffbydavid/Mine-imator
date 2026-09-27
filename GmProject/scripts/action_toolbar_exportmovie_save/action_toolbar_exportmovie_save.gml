@@ -42,7 +42,7 @@ function action_toolbar_exportmovie_save()
 		log("Export movie", fn)
 		log("Format", exportmovie_format)
 		log("Framerate", exportmovie_framespersecond)
-		log("Audio", yesno(popup_exportmovie.include_audio))
+		log("Audio", string_yes_no(popup_exportmovie.include_audio))
 		log("Renderer", renderer_name_list[exportmovie_renderer])
 		log("Size", project_video_width, project_video_height)
 		

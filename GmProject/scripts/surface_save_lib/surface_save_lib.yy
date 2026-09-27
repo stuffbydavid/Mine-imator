@@ -6,7 +6,7 @@
   "name":"surface_save_lib",
   "parent":{
     "name":"File",
-    "path":"folders/Scripts/App/Libraries/File.yy",
+    "path":"folders/Scripts/App/DLL/File.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

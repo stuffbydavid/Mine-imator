@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_create_temp_move_pattern_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_create_temp_move_pattern_update",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -785,4 +785,16 @@ namespace CppProject
 		IntType offset = GetBlockOffset(pos);
 		return builder.renderModelIds[offset];
 	}
+
+	Section* Builder::GetSection(const WorldVec& pos)
+	{
+		IntType sectionX, sectionY, sectionZ, sectionPos;
+		WorldVec posOffset = pos + offset;
+		sectionX = posOffset.x >> 4;
+		sectionY = posOffset.y >> 4;
+		sectionZ = posOffset.z >> 4;
+		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+
+		return Builder::sections.Value(sectionPos);
+	}
 }

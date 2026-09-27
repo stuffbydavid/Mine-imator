@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_shape_spotlight_guidecircle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_shape_spotlight_guidecircle",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/Scripts/App/Interface/Components/View/Shape.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

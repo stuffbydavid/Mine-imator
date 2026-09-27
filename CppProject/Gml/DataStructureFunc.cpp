@@ -176,13 +176,6 @@ namespace CppProject
 			});
 	}
 
-	BoolType ds_list_valid(VarType id)
-	{
-		if (!id.IsAnyReal())
-			return false;
-		return (FindList(id) != nullptr);
-	}
-
 	void ds_map_add_list(IntType id, VarType key, IntType listId)
 	{
 		if (Map* map = FindMap(id))
@@ -273,13 +266,6 @@ namespace CppProject
 			return map->GetSize();
 
 		return 0;
-	}
-
-	BoolType ds_map_valid(VarType id)
-	{
-		if (!id.IsAnyReal())
-			return false;
-		return (FindMap(id) != nullptr);
 	}
 
 	void ds_priority_add(IntType id, VarType value, IntType prio)
@@ -380,13 +366,4 @@ namespace CppProject
 		return VarType();
 	}
 
-	IntType ds_string_map_create()
-	{
-		return (new StringHashMap())->id;
-	}
-
-	IntType ds_int_map_create()
-	{
-		return (new IntHashMap())->id;
-	}
 }

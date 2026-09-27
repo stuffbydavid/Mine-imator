@@ -14,7 +14,6 @@ function camera_work_reset()
 	cam_work_roll = 0
 	cam_work_zoom = 100
 	cam_work_zoom_goal = cam_work_zoom
-	cam_work_fov = 45
 	cam_work_moving = false
 	
 	cam_work_angle_look_xy = cam_work_angle_xy

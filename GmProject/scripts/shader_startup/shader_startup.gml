@@ -20,7 +20,7 @@ function shader_startup()
 	
 	// Init shaders
 	log("Shader init")
-	log("shaders_are_supported", yesno(shaders_are_supported()))
+	log("shaders_are_supported", string_yes_no(shaders_are_supported()))
 	
 	var err = false;
 	if (!shaders_are_supported())
@@ -94,7 +94,7 @@ function shader_startup()
 		
 		with (obj_shader)
 		{
-			log(name + " compiled", yesno(shader_is_compiled(shader)))
+			log(name + " compiled", string_yes_no(shader_is_compiled(shader)))
 			
 			if (!shader_is_compiled(shader))
 			{

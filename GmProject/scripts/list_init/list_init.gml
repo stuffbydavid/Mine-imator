@@ -1092,7 +1092,9 @@ function list_init(name)
 			var texsource, texobj;
 			
 			// Default
-			if (name = "frameeditorblocktexmaterial")
+			if (tl_edit.type = e_tl_type.STRUCTURE)
+				texsource = null
+			else if (name = "frameeditorblocktexmaterial")
 				texsource = tl_edit.temp.block_tex_material
 			else if (name = "frameeditorblocktexnormal")
 				texsource = tl_edit.temp.block_tex_normal

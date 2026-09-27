@@ -3,14 +3,12 @@
 
 function macros()
 {
-	//#macro dev_mode					debug_mode
-
 	// Versions
-	#macro mineimator_version			"2.1.0"		// Base Mine-imator version
-	#macro mineimator_version_sub		""			// Mod name and version (e.g. "Community Build 1.0.0")
-	#macro mineimator_version_extra		"WIP"		// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
+	#macro mineimator_version			"2.1"				// Base Mine-imator version
+	#macro mineimator_version_sub		""					// Mod name and version (e.g. "Community Build 1.0.0")
+	#macro mineimator_version_extra		"Pre-Release 1"		// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
-	#macro mineimator_version_date		"2026.09.XX"
+	#macro mineimator_version_date		"2026.10.XX"
 	#macro minecraft_assets_version		"26.3"
 	
 	// File formats

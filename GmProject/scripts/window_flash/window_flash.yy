@@ -6,7 +6,7 @@
   "name":"window_flash",
   "parent":{
     "name":"Window",
-    "path":"folders/Scripts/App/Libraries/Window.yy",
+    "path":"folders/Scripts/App/Window.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

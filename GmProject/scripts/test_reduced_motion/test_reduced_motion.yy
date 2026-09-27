@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"test_reduced_motion",
   "parent":{
-    "name":"Utility",
-    "path":"folders/Scripts/Utility.yy",
+    "name":"Interface",
+    "path":"folders/Scripts/App/Interface.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

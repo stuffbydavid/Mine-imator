@@ -2,15 +2,6 @@
 
 namespace CppProject
 {
-	StringType log_file_get()
-	{
-#if OS_WINDOWS
-		return data_directory + "/log.txt";
-#else
-		return QDir::homePath() + "/Mine-imator/log.txt";
-#endif
-	}
-
 	void Printer::Line(QString text)
 	{
 		QFile file(log_file_get());

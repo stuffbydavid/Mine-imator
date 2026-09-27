@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"skins_directory_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"skins_directory_get",
+  "parent":{
+    "name":"Path",
+    "path":"folders/Scripts/App/Path.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

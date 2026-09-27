@@ -91,6 +91,13 @@ function tab_frame_editor_texture()
 		else
 			tex = texobj.texture
 	}
+	else if (tl_edit.type = e_tl_type.STRUCTURE)
+	{
+		name = "frameeditorblocktex"
+		texobj = tl_edit.value[e_value.TEXTURE_OBJ]
+		texobj = res_eval(texobj)
+		tex = texobj.block_preview_texture
+	}
 	
 	if (name = "")
 		return 0
@@ -102,7 +109,7 @@ function tab_frame_editor_texture()
 	else
 		text = text_get("listnone")
 	
-	if (tl_edit.value[e_value.TEXTURE_OBJ] = null || tl_edit.value[e_value.TEXTURE_OBJ] = project_pack_res)
+	if (tl_edit.value[e_value.TEXTURE_OBJ] = null || (tl_edit.type != e_tl_type.STRUCTURE && tl_edit.value[e_value.TEXTURE_OBJ] = project_pack_res))
 		text = text_get("listdefault", text)
 	
 	tab_control_menu(ui_large_height)

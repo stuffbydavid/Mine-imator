@@ -45,6 +45,6 @@ function export_done_movie()
 	}
 	
 	toast_new(e_toast.POSITIVE, text_get("alertexportmovie"))
-	toast_add_action("alertexportmovieview", popup_open_url, fn)
+	toast_add_action("alertexportmovieview", open_url, fn)
 	toast_last.dismiss_time = 10
 }

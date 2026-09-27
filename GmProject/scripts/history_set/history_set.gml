@@ -9,7 +9,7 @@ function history_set(script)
 	history_pop()
 	history_push()
 	
-	log("Action", script_get_name(script))
+	//log("Action", script_get_name(script))
 	
 	hobj = new_history(script)
 	

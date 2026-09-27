@@ -50,7 +50,7 @@ function action_build_place()
 			if (hobj.structure_save_id != "")
 			{
 				var structure = new_tl(e_tl_type.STRUCTURE);
-				structure.animated = app.setting_timeline_always_animated
+				structure.animated = false
 				structure.save_id = hobj.structure_save_id
 				structure.name = hobj.structure_name
 				with (structure)
@@ -139,7 +139,7 @@ function action_build_place()
 
 					// Create structure
 					var structure = new_tl(e_tl_type.STRUCTURE);
-					structure.animated = app.setting_timeline_always_animated
+					structure.animated = false
 					structure.name = foldername
 					hobj.structure_pos = array_copy_1d(place_pos)
 					hobj.structure_pos = vec3_snap(hobj.structure_pos, transform_snap)

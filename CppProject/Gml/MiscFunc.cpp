@@ -1,0 +1,363 @@
+#include "Generated/Scripts.hpp"
+
+#include "AppHandler.hpp"
+#include "Asset/DataStructure.hpp"
+
+#include <QApplication>
+#include <QClipboard>
+#include <QDesktopWidget>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QStandardPaths>
+#include <QTime>
+
+namespace CppProject
+{
+	void array_copy(VarType dstArrRef, IntType dstIndex, VarType srcArrRef, IntType srcIndex, IntType len)
+	{
+		ArrType& dstArr = dstArrRef.Arr();
+		ArrType& srcArr = srcArrRef.Arr();
+		for (int i = 0; i < len; i++)
+			dstArr[dstIndex + i] = srcArr[srcIndex + i];
+	}
+
+	ArrType array_create(VarArgs args)
+	{
+		ArrType arr;
+		IntType size = args[0].ToInt();
+
+		if (args.Size() == 2) // Initialize with value
+		{
+			for (IntType i = 0; i < size; i++)
+				arr.Append(args[1]);
+		}
+		else // Initialize with undefined
+		{
+			for (IntType i = 0; i < size; i++)
+				arr.Append(VarType());
+		}
+		return arr;
+	}
+
+	IntType array_equals(VarType arr1Ref, VarType arr2Ref)
+	{
+		return arr1Ref.Arr() == arr2Ref.Arr();
+	}
+
+	IntType array_length(VarType arrRef)
+	{
+		return arrRef.Arr().Size();
+	}
+
+	VarType array_shift(VarType arrRef)
+	{
+		return arrRef.Arr().Shift();
+	}
+
+	VarType choose(VarArgs args)
+	{
+		return args[(IntType)Random::Get(args.Size())];
+	}
+
+	StringType chr(IntType code)
+	{
+		return QString(QChar((char)code));
+	}
+
+	RealType clamp(RealType value, RealType val1, RealType val2)
+	{
+		// Order of max/min is not strict in GML
+		if (val1 < val2)
+			return std::clamp(value, val1, val2);
+		else
+			return std::clamp(value, val2, val1);
+	}
+
+	StringType clipboard_get_text()
+	{
+		return QApplication::clipboard()->text();
+	}
+
+	IntType clipboard_has_text()
+	{
+		return !QApplication::clipboard()->text().isEmpty();
+	}
+
+	void clipboard_set_text(StringType text)
+	{
+		QApplication::clipboard()->setText(text);
+	}
+
+	IntType current_time()
+	{
+		return App->GetMsec();
+	}
+
+	IntType get_timer()
+	{
+		static const auto start = std::chrono::steady_clock::now();
+		return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
+	}
+
+	BoolType code_is_compiled()
+	{
+		return true;
+	}
+
+	StringType base64_decode(StringType str)
+	{
+		return QByteArray::fromBase64(str.ToUtf8(), QByteArray::Base64Encoding);
+	}
+
+	StringType environment_get_variable(StringType name)
+	{
+		return qgetenv(name.ToUtf8());
+	}
+
+	VarType external_call(VarArgs args)
+	{
+		// Do nothing, external_calls are replaced by their C++ functions in Library/
+		return VarType(); 
+	}
+
+	IntType external_define(VarArgs args)
+	{
+		// Do nothing
+		return 0;
+	}
+
+	void game_end()
+	{
+		throw AppEndRequest();
+	}
+
+	IntType game_get_speed(IntType)
+	{
+		return App->targetFps;
+	}
+
+	void game_set_speed(IntType, IntType fps)
+	{
+		App->targetFps = fps;
+	}
+
+	void gc_collect()
+	{
+		// Do nothing
+	}
+
+	void gc_target_frame_time(IntType)
+	{
+		// Do nothing
+	}
+
+	void gml_pragma(VarArgs args)
+	{
+		// Do nothing
+	}
+
+	void gml_release_mode(BoolType)
+	{
+		// Do nothing
+	}
+
+	IntType http_get_file(StringType url, StringType targetFile)
+	{
+		QNetworkRequest req((QString)url);
+		req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+		QNetworkReply* reply = App->httpManager.get(req);
+		AppHandler::HttpRequest request = { App->httpNextId, reply, url };
+		reply->connect(reply, &QNetworkReply::downloadProgress, [request](qint64 received, qint64 total)
+		{
+			App->HttpProgress(request, received, total);
+		});
+		reply->connect(reply, &QNetworkReply::finished, [targetFile, request]()
+		{
+			QFile file(targetFile);
+			AddPerms(file);
+			if (!file.open(QIODevice::WriteOnly))
+			{
+				WARNING("Could not open targe file "+ targetFile + " for writing.");
+				return;
+			}
+			file.write(request.data->readAll());
+			file.close();
+			App->HttpResponse(request);
+		});
+		return App->httpNextId++;
+	}
+
+	IntType http_get(StringType url)
+	{
+		QNetworkRequest req((QString)url);
+		req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+		QNetworkReply* reply = App->httpManager.get(req);
+		AppHandler::HttpRequest request = { App->httpNextId, reply, url };
+		reply->connect(reply, &QNetworkReply::finished, [request]()
+		{
+			App->HttpResponse(request);
+		});
+		return App->httpNextId++;
+	}
+
+	IntType irandom_range(IntType n1, IntType n2)
+	{
+		return n1 + (IntType)Random::Get((n2 - n1) + 1);
+	}
+
+	IntType irandom(IntType max)
+	{
+		return Random::Get(max + 1);
+	}
+
+	BoolType is_array(VarType v)
+	{
+		return (v.IsArray() || v.IsVec() || v.IsMatrix());
+	}
+
+	BoolType is_bool(VarType v)
+	{
+		return v.IsBool();
+	}
+
+	BoolType is_int32(VarType v)
+	{
+		return v.IsInt();
+	}
+
+	BoolType is_int64(VarType v)
+	{
+		return v.IsInt();
+	}
+
+	BoolType is_real(VarType v)
+	{
+		return (v.IsInt() || v.IsReal());
+	}
+
+	BoolType is_string(VarType v)
+	{
+		return v.IsString();
+	}
+
+	BoolType is_undefined(VarType v)
+	{
+		return v.IsUndefined();
+	}
+
+	RealType max(VarArgs args)
+	{
+		RealType maxVal = args[0];
+		for (IntType i = 1; i < args.Size(); i++)
+			maxVal = std::max(maxVal, args[i].ToReal());
+		return maxVal;
+	}
+
+	RealType min(VarArgs args)
+	{
+		RealType minVal = args[0];
+		for (IntType i = 1; i < args.Size(); i++)
+			minVal = std::min(minVal, args[i].ToReal());
+		return minVal;
+	}
+
+	IntType ord(StringType ch)
+	{
+		return ch.At(0).unicode();
+	}
+
+	IntType os_get_info()
+	{
+		return (new Map)->id;
+	}
+
+	StringType os_get_language()
+	{
+		return "";
+	}
+
+	StringType os_get_region()
+	{
+		return "";
+	}
+
+	BoolType os_is_network_connected()
+	{
+		return false;
+	}
+
+	IntType random_get_seed()
+	{
+		return Random::GetSeed();
+	}
+
+	RealType random_range(RealType min, RealType max)
+	{
+		return min + Random::Get(max - min);
+	}
+
+	void random_set_seed(IntType seed)
+	{
+		Random::Set(seed);
+	}
+
+	RealType random(RealType max)
+	{
+		return Random::Get(max);
+	}
+
+	void randomize()
+	{
+		Random::Set((IntType)(App->randomizeTimer.ElapsedMs() * 1000.0 * 12345678) & 0xFFFF);
+	}
+
+	RealType real(VarType v)
+	{
+		if (v.IsString())
+			return v.Str().ToReal();
+		return v.ToReal();
+	}
+
+	void show_debug_message(StringType str)
+	{
+		DEBUG(str);
+	}
+	
+	void show_message(StringType text)
+	{
+		QMessageBox msg;
+		msg.setModal(true);
+		msg.setText(text);
+		msg.setFixedWidth(300);
+		msg.setStyleSheet("QLabel{padding: 15px;}");
+		App->ExecDialog(&msg);
+	}
+
+	struct QMessageBoxNoEsc : public QMessageBox
+	{
+		void keyPressEvent(QKeyEvent* event) override
+		{
+			if (event->key() == Qt::Key_Escape) {
+				event->accept();
+				return;
+			}
+			else {
+				QMessageBox::keyPressEvent(event);
+			}
+		}
+	};
+
+	BoolType show_question(StringType text)
+	{
+		QMessageBoxNoEsc msg;
+		msg.setModal(true);
+		msg.setText(text);
+		msg.setFixedWidth(300);
+		msg.setStyleSheet("QLabel{padding: 15px;}");
+		msg.setStandardButtons(QMessageBox::Yes);
+		msg.addButton(QMessageBox::No);
+		App->ExecDialog(&msg);
+
+		return (msg.result() == QMessageBox::Yes);
+	}
+}

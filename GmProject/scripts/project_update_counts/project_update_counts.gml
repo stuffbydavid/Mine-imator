@@ -174,5 +174,5 @@ function project_update_counts()
 	// Project pack
 	res_eval(project_pack_res).count = -1
 	
-	debug_timer_stop("update counts")
+	//debug_timer_stop("update counts")
 }

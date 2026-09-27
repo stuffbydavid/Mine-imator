@@ -5,7 +5,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"forversion": "2.1.0",
-		"lastchange": "2026.09.26"
+		"lastchange": "2026.09.25"
 	},
 	"particle/": {
 		"type/": {
@@ -91,10 +91,10 @@
 			"collapse": "Collapse",
 			"hide": "Hide",
 			"show": "Show",
-			"mute": "Mute",
-			"unmute": "Unmute",
-			"lock": "Lock",
-			"unlock": "Unlock",
+			"mute": "Mute audio",
+			"unmute": "Unmute audio",
+			"lock": "Lock to prevent selection",
+			"unlock": "Unlock to allow selection",
 			"ghost": "Set ghost timeline",
 			"unghost": "Unset ghost timeline",
 			"filter": "Filter timelines",
@@ -237,7 +237,6 @@
 			"orbit": "Orbit view",
 			"pan": "Pan view",
 			"zoom": "Zoom",
-			"fov": "Adjust FOV",
 			"walk": "Walk navigation",
 			"forward": "Forward",
 			"left": "Left",
@@ -958,11 +957,7 @@
 			"rotatetip": "Rotate tool",
 			"scaletip": "Scale tool",
 			"bendtip": "Bend tool",
-			"transformtip": "Transform tool",
-			"rotationspacegimbal": "Transform mode: Gimbal",
-			"rotationspaceglobal": "Transform mode: Global",
-			"rotationspacelocal": "Transform mode: Local",
-			"rotationspaceconstraintgimbal": "Using Gimbal mode for this selection!"
+			"transformtip": "Transform tool"
 		},
 		"renderer/": {
 			"quick": "Quick mode",
@@ -4512,9 +4507,7 @@
 			"autoscroll": "Auto-scroll when playing animation",
 			"selectjump": "Jump to selected object in timeline list",
 			"framesnap": "Snap playback marker",
-			"framesnaptip": "Snap the animation to frames when playing.",
-			"alwaysanimated": "New timelines always animated",
-			"alwaysanimatedtip": "Always set newly created objects as \"Animated\"."
+			"framesnaptip": "Snap the animation to frames when playing."
 		},
 		"tools": "Tools",
 		"viewport": "Viewport",
@@ -4576,8 +4569,7 @@
 				"rotate": "Rotate tool",
 				"scale": "Scale tool",
 				"bend": "Bend tool",
-				"transform": "Multi-transform tool",
-				"rotationspacecycle": "Change transform mode"
+				"transform": "Multi-transform tool"
 			},
 			"snap": "Toggle snapping",
 			"rendermode": "Render mode",

@@ -16,7 +16,7 @@ function render_world_start_sun(cascade)
 	camera_set_view_mat(cam_render, render_cascades[cascade].matView)
 	camera_set_proj_mat(cam_render, render_cascades[cascade].matProj)
 	camera_apply(cam_render)
-	update_frustum()
+	render_update_frustum()
 	
 	light_proj_matrix = matrix_get(matrix_projection)
 	light_view_matrix = matrix_get(matrix_view)

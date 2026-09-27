@@ -1,5 +1,4 @@
 /// CppSeparate void res_load_audio(ScopeAny)
-/// res_load_audio()
 /// @desc Build peaks from raw audio data.
 
 function res_load_audio()

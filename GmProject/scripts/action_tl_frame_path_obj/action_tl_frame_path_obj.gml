@@ -42,8 +42,8 @@ function action_tl_frame_path_obj(path)
 			if (selected && ds_list_size(keyframe_list) = 0)
 			{
 				array_add(targets, id)
-				array_add(oldpos, tl_value_get_vec3(e_value.POS_X))
-				array_add(olddefault, tl_value_get_vec3(e_value.POS_X, true))
+				array_add(oldpos, tl_value_get_vec3(e_value.POS_X), false)
+				array_add(olddefault, tl_value_get_vec3(e_value.POS_X, true), false)
 			}
 		}
 	}

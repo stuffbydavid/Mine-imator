@@ -35,7 +35,7 @@ function settings_startup()
 	setting_watermark_scale = .33
 	setting_watermark_opacity = 1
 	
-	setting_theme = theme_light // TODO: Community/Discord poll to restore theme_classic for 2.1
+	setting_theme = theme_classic
 	if (debug_dark_theme)
 		setting_theme = theme_dark
 	
@@ -52,7 +52,6 @@ function settings_startup()
 	setting_timeline_hide_nonanimated = false
 	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
-	setting_timeline_always_animated = false
 	setting_z_is_up = false
 	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true
@@ -149,7 +148,6 @@ function settings_startup()
 	setting_snap_absolute = true
 	setting_snap_size_position = 1
 	setting_snap_size_rotation = 15
-	setting_transform_mode = e_transform_mode.GIMBAL
 	setting_snap_size_scale = 0.25
 	
 	setting_tool_select = false

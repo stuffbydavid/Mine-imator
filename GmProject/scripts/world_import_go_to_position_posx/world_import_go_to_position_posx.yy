@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"world_import_go_to_position_posx",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"world_import_go_to_position_posx",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Minecraft/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

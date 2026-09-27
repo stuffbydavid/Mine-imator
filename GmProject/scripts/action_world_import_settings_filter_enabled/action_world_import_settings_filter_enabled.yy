@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_world_import_settings_filter_enabled",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_world_import_settings_filter_enabled",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/App/Actions/Settings/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

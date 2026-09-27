@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"lib_startup",
   "parent":{
-    "name":"Libraries",
-    "path":"folders/Scripts/App/Libraries.yy",
+    "name":"DLL",
+    "path":"folders/Scripts/App/DLL.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

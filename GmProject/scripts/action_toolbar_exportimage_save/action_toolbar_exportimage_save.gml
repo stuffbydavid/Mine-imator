@@ -17,9 +17,9 @@ function action_toolbar_exportimage_save()
 	render_background = !popup_exportimage.remove_background
 	render_watermark = popup_exportimage.watermark
 	
-	log("Hidden", yesno(render_hidden))
-	log("Render background", yesno(render_background))
-	log("Watermark", yesno(render_watermark))
+	log("Hidden", string_yes_no(render_hidden))
+	log("Render background", string_yes_no(render_background))
+	log("Watermark", string_yes_no(render_watermark))
 	log("Renderer", renderer_name_list[popup_exportimage.renderer])
 	log("Size", project_video_width, project_video_height)
 	

@@ -6,7 +6,7 @@
   "name":"movie_audio_file_add",
   "parent":{
     "name":"Movie",
-    "path":"folders/Scripts/App/Libraries/Movie.yy",
+    "path":"folders/Scripts/App/DLL/Movie.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

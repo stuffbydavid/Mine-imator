@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_surface_pool_load",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/Render.yy",
+    "name":"Pool",
+    "path":"folders/Scripts/Render/Pool.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

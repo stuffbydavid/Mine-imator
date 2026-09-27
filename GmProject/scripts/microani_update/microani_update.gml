@@ -1,11 +1,10 @@
-/// microani_update(hover, click, active, [disabled, [custom, [goal]]])
+/// @desc Updates the current micro animation
 /// @arg hover
 /// @arg click
 /// @arg active
-/// @arg [disabled
-/// @arg [custom
-/// @arg [goal]]]
-/// @desc Updates the current micro animation
+/// @arg [disabled]
+/// @arg [custom]
+/// @arg [goal]
 
 function microani_update()
 {

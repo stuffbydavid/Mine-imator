@@ -648,27 +648,30 @@ namespace CppProject
 		else // OpenGL texture
 			uvRect = { 0.0, 0.0, 1.0, 1.0 }; // Keep UVs
 
-		// Bind new id to sampler
-		SamplerState& state = samplerState[sampler];
-		if (state.currentTexId != id)
-		{
-			if (state.currentTexId > -1)
-				GFX->SubmitBatch();
+		QVector4D newUvRect = getUvRect ?
+			QVector4D(0.f, 0.f, 1.f, 1.f) :
+			QVector4D(uvRect.x, uvRect.y, uvRect.w, uvRect.h);
 
+		// Bind new texture state to sampler
+		SamplerState& state = samplerState[sampler];
+		BoolType textureChanged = state.currentTexId != id;
+		BoolType objectUvRect = useBatching && sampler == 0;
+		BoolType uvRectChanged = !objectUvRect && samplerUvRect[sampler] != newUvRect;
+		
+		if (state.currentTexId > -1 && (textureChanged || uvRectChanged))
+			GFX->SubmitBatch();
+
+		if (textureChanged)
+		{
 			state.mipMap = GFX->mipMap;
 			state.changed = true;
 		}
 
 		state.currentTexId = id;
-
-		if (getUvRect) // UV transform is done on CPU
-			this->samplerUvRect[sampler] = { 0.f, 0.f, 1.f, 1.f };
-		else // UV transform is done in shader
-		{
-			this->samplerUvRect[sampler] = { (float)uvRect.x, (float)uvRect.y, (float)uvRect.w, (float)uvRect.h };
-			if (useBatching && sampler == 0) // First sampler uses object UV Rect
-				SubmitVec4(objRectUniformIndex, uvRect.x, uvRect.y, uvRect.w, uvRect.h);
-		}
+		samplerUvRect[sampler] = newUvRect;
+		
+		if (objectUvRect) // First sampler uses object UV Rect
+			SubmitVec4(objRectUniformIndex, newUvRect.x(), newUvRect.y(), newUvRect.z(), newUvRect.w());
 
 		return uvRect;
 	}

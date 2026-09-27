@@ -6,7 +6,7 @@
   "name":"simplex_lib",
   "parent":{
     "name":"Math",
-    "path":"folders/Scripts/App/Libraries/Math.yy",
+    "path":"folders/Scripts/App/DLL/Math.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

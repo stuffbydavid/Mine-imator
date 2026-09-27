@@ -8,8 +8,8 @@ function tab_settings_interface()
 	
 	// Color theme
 	tab_control_togglebutton(2)
-	togglebutton_add("settingsthemelight", null, theme_light, setting_theme = theme_light, action_setting_theme)
 	togglebutton_add("settingsthemeclassic", null, theme_classic, setting_theme = theme_classic, action_setting_theme)
+	togglebutton_add("settingsthemelight", null, theme_light, setting_theme = theme_light, action_setting_theme)
 	togglebutton_add("settingsthemedark", null, theme_dark, setting_theme = theme_dark, action_setting_theme)
 	togglebutton_add("settingsthemedarker", null, theme_darker, setting_theme = theme_darker, action_setting_theme)
 	draw_togglebutton("settingstheme", dx, dy, true, true)
@@ -100,10 +100,6 @@ function tab_settings_interface()
 	
 	tab_control_switch()
 	draw_switch("settingstimelineframesnap", dx, dy, setting_timeline_frame_snap, action_setting_timeline_frame_snap, "settingstimelineframesnaptip")
-	tab_next()
-	
-	tab_control_switch()
-	draw_switch("settingstimelinealwaysanimated", dx, dy, setting_timeline_always_animated, action_setting_timeline_always_animated, "settingstimelinealwaysanimatedtip")
 	tab_next()
 	
 	dy += label_height + 6

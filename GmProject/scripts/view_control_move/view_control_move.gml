@@ -22,8 +22,6 @@ function view_control_move(view)
 		matrix_remove_scale(mat)
 	}
 	
-	mat = view_transform_gizmo_matrix(e_value_type.TRANSFORM_POS, mat)
-
 	// Draw axis arrows
 	view_control_move_axis(view, e_view_control.POS_X, e_value.POS_X, c_control_red, control_pos(arrowstart, arrowend, X, mat, true), control_pos(arrowstart, arrowend, X, mat, false))
 	view_control_move_axis(view, e_view_control.POS_Y, e_value.POS_Y, (setting_z_is_up ? c_control_green : c_control_blue), control_pos(arrowstart, arrowend, Y, mat, true), control_pos(arrowstart, arrowend, Y, mat, false))
@@ -51,52 +49,44 @@ function view_control_move(view)
 			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
 			move = point3D_sub(move, view_control_plane_origin)
 			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
-			if (view_control_transform_mode != e_transform_mode.GIMBAL)
+			pos = point3D(0)
+			snapval = (dragger_snap ? setting_snap_size_position : snap_min)
+			
+			for (var i = X; i <= Z; i++)
 			{
-				var axes = [view_control_edit != e_view_control.POS_YZ, view_control_edit != e_view_control.POS_XZ, view_control_edit != e_view_control.POS_XY];
-				view_transform_move_apply(move, axes)
-			}
-			else
-			{
-				pos = point3D(0)
-				snapval = (dragger_snap ? setting_snap_size_position : snap_min)
+				if (i = Z && view_control_edit = e_view_control.POS_XY)
+					continue
+				else if (i = Y && view_control_edit = e_view_control.POS_XZ)
+					continue
+				else if (i = X && view_control_edit = e_view_control.POS_YZ)
+					continue
 				
-				for (var i = X; i <= Z; i++)
-				{
-					if (i = Z && view_control_edit = e_view_control.POS_XY)
-						continue
-					else if (i = Y && view_control_edit = e_view_control.POS_XZ)
-						continue
-					else if (i = X && view_control_edit = e_view_control.POS_YZ)
-						continue
-
-					// Snap distance? (Local snap)
-					if (!setting_snap_absolute && dragger_snap)
-						move[i] = snap(move[i], snapval)
-
-					move[i] /= tl_edit.value_inherit[e_value.SCA_X + axis_edit]
-
-					// Add object value
-					pos[i] = view_control_value[i] + move[i]
-
-					// Clamp value
-					pos[i] = tl_value_clamp(e_value.POS_X + i, pos[i])
-
-					// Snap final value? (Absolute snap)
-					if (setting_snap_absolute || !dragger_snap)
-						pos[i] = snap(pos[i], snapval)
-
-					// Get difference
-					pos[i] -= tl_edit.value[e_value.POS_X + i]
-				}
+				// Snap distance? (Local snap)
+				if (!setting_snap_absolute && dragger_snap)
+					move[i] = snap(move[i], snapval)
 				
-				// Update
-				tl_value_set_start(action_tl_frame_pos_xyz, true)
-				tl_value_set(e_value.POS_X, pos[X], true)
-				tl_value_set(e_value.POS_Y, pos[Y], true)
-				tl_value_set(e_value.POS_Z, pos[Z], true)
-				tl_value_set_done()
+				move[i] /= tl_edit.value_inherit[e_value.SCA_X + axis_edit]
+				
+				// Add object value
+				pos[i] = view_control_value[i] + move[i]
+				
+				// Clamp value
+				pos[i] = tl_value_clamp(e_value.POS_X + i, pos[i])
+				
+				// Snap final value? (Absolute snap)
+				if (setting_snap_absolute || !dragger_snap)
+					pos[i] = snap(pos[i], snapval)
+				
+				// Get difference
+				pos[i] -= tl_edit.value[e_value.POS_X + i]
 			}
+			
+			// Update
+			tl_value_set_start(action_tl_frame_pos_xyz, true)
+			tl_value_set(e_value.POS_X, pos[X], true)
+			tl_value_set(e_value.POS_Y, pos[Y], true)
+			tl_value_set(e_value.POS_Z, pos[Z], true)
+			tl_value_set_done()
 		}
 		
 		// Release
@@ -124,43 +114,33 @@ function view_control_move(view)
 			vecdot = vec2_dot(vec2_normalize(view_control_vec), vec2_normalize(vecmouse))
 			view_control_move_distance += (vec2_length(vecmouse) / veclen) * len * vecdot * dragger_multiplier * negate(view_control_flip)
 			
-			if (view_control_transform_mode != e_transform_mode.GIMBAL)
-			{
-				move[axis_edit] = view_control_move_distance
-				var axes = vec3(0);
-				axes[axis_edit] = 1
-				view_transform_move_apply(move, axes)
-			}
+			snapval = (dragger_snap ? setting_snap_size_position : snap_min)
+			
+			if (!setting_snap_absolute && dragger_snap)
+				move[axis_edit] = snap(view_control_move_distance, snapval)
 			else
+				move[axis_edit] = view_control_move_distance
+			
+			for (var i = X; i <= Z; i++)
 			{
-				snapval = (dragger_snap ? setting_snap_size_position : snap_min)
+				move[i] /= tl_edit.value_inherit[e_value.SCA_X + axis_edit]
 				
-				if (!setting_snap_absolute && dragger_snap)
-					move[axis_edit] = snap(view_control_move_distance, snapval)
-				else
-					move[axis_edit] = view_control_move_distance
+				newval[i] = view_control_value[i] + move[i]
 				
-				for (var i = X; i <= Z; i++)
-				{
-					move[i] /= tl_edit.value_inherit[e_value.SCA_X + axis_edit]
-
-					newval[i] = view_control_value[i] + move[i]
-
-					newval[i] = tl_value_clamp(e_value.POS_X + i, newval[i])
-
-					if ((setting_snap_absolute && move[i] != 0) || !dragger_snap)
-						newval[i] = snap(newval[i], snapval)
-
-					newval[i] -= tl_edit.value[e_value.POS_X + i]
-				}
+				newval[i] = tl_value_clamp(e_value.POS_X + i, newval[i])
 				
-				// Update
-				tl_value_set_start(action_tl_frame_pos_xyz, true)
-				tl_value_set(e_value.POS_X, newval[X], true)
-				tl_value_set(e_value.POS_Y, newval[Y], true)
-				tl_value_set(e_value.POS_Z, newval[Z], true)
-				tl_value_set_done()
+				if ((setting_snap_absolute && move[i] != 0) || !dragger_snap)
+					newval[i] = snap(newval[i], snapval)
+				
+				newval[i] -= tl_edit.value[e_value.POS_X + i]
 			}
+			
+			// Update
+			tl_value_set_start(action_tl_frame_pos_xyz, true)
+			tl_value_set(e_value.POS_X, newval[X], true)
+			tl_value_set(e_value.POS_Y, newval[Y], true)
+			tl_value_set(e_value.POS_Z, newval[Z], true)
+			tl_value_set_done()
 		}
 		
 		// Release
@@ -173,50 +153,4 @@ function view_control_move(view)
 			view_control_move_distance = 0
 		}
 	}
-}
-
-// Returns true if position is closer to camera than selected object
-function control_test_point(pos, tlpos, bias)
-{
-	var camdir = point3D_add(cam_from, vec3_mul(vec3_normalize(point3D_sub(cam_from, tlpos)), project_render_distance));
-	var worlddis = clamp(vec3_dot(vec3_sub(tlpos, cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
-	var pointdis = clamp(vec3_dot(vec3_sub(pos,   cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
-	
-	return (pointdis + bias < worlddis)
-}
-
-function control_pos(s, e, axis, mat, retstart)
-{
-	var startpos = vec3(0); startpos[axis] = s;
-	var endpos = vec3(0); endpos[axis] = e;
-	
-	if (view_control_edit = null)
-	{
-		var endpos3d = vec3(0);
-		endpos3d[axis] = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
-		endpos3d = point3D_mul_matrix(endpos3d, mat)
-		
-		if (control_test_point(endpos3d, tl_edit.world_pos, 0) && setting_gizmos_face_camera)
-		{
-			startpos = vec3_mul(startpos, -1)
-			endpos = vec3_mul(endpos, -1)
-		
-			view_control_move_flip_axis[axis] = true
-		}
-		else
-			view_control_move_flip_axis[axis] = false
-	}
-	else
-	{
-		if (view_control_move_flip_axis[axis])
-		{
-			startpos = vec3_mul(startpos, -1)
-			endpos = vec3_mul(endpos, -1)
-		}
-	}
-	
-	if (retstart)
-		return point3D_mul_matrix(startpos, mat)
-	else
-		return point3D_mul_matrix(endpos, mat)
 }
