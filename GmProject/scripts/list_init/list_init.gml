@@ -634,7 +634,7 @@ function list_init(name)
 		}
 		
 		// Background image
-		case "backgroundimage":
+		case "environmentimage":
 		{
 			// None
 			menu_add_item(null, text_get("listnone"))
@@ -654,16 +654,16 @@ function list_init(name)
 		}
 		
 		// Background image type
-		case "backgroundimagetype":
+		case "environmentimagetype":
 		{
-			menu_add_item("image", text_get("backgroundimagetypeimage"))
-			menu_add_item("sphere", text_get("backgroundimagetypesphere"))
-			menu_add_item("box", text_get("backgroundimagetypebox"))
+			menu_add_item("image", text_get("environmentimagetypeimage"))
+			menu_add_item("sphere", text_get("environmentimagetypesphere"))
+			menu_add_item("box", text_get("environmentimagetypebox"))
 			break
 		}
 		
 		// Background sky sun texture
-		case "backgroundskysuntex":
+		case "environmentskysuntex":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -688,13 +688,13 @@ function list_init(name)
 		}
 		
 		// Background sky moon texture
-		case "backgroundskymoontex":
+		case "environmentskymoontex":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).moon_textures[background_sky_moon_phase])
+			menu_add_item(project_pack_res, text_get("listdefault", res_eval(project_pack_res).display_name), res_eval(project_pack_res).moon_textures[env_sky_moon_phase])
 			
 			// Add existing resources
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
@@ -704,7 +704,7 @@ function list_init(name)
 					continue
 				
 				if (res.moon_textures[0])
-					menu_add_item(res, res.display_name, res.moon_textures[background_sky_moon_phase])
+					menu_add_item(res, res.display_name, res.moon_textures[env_sky_moon_phase])
 				else if (res.texture)
 					menu_add_item(res, res.display_name, res.texture)
 			}
@@ -713,16 +713,16 @@ function list_init(name)
 		}
 		
 		// Background sky moon phase
-		case "backgroundskymoonphase":
+		case "environmentskymoonphase":
 		{
 			for (var p = 0; p < 8; p++)
-				menu_add_item(p, text_get("backgroundskymoonphase" + string(p + 1)), background_sky_moon_tex.moon_textures[p])
+				menu_add_item(p, text_get("environmentskymoonphase" + string(p + 1)), env_sky_moon_tex.moon_textures[p])
 			
 			break
 		}
 		
 		// Background sky clouds texture
-		case "backgroundskycloudstex":
+		case "environmentskycloudstex":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -747,9 +747,9 @@ function list_init(name)
 		}
 		
 		// Background ground texture
-		case "backgroundgroundtex":
-		case "backgroundgroundtexmaterial":
-		case "backgroundgroundtexnormal":
+		case "environmentgroundtex":
+		case "environmentgroundtexmaterial":
+		case "environmentgroundtexnormal":
 		{
 			// Import from file
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
@@ -762,12 +762,12 @@ function list_init(name)
 			{
 				var res = res_list.display_list[|i];
 				
-				if (name = "backgroundgroundtexmaterial") // Material
+				if (name = "environmentgroundtexmaterial") // Material
 				{
 					if (res != res_eval(project_pack_res) && res.block_sheet_texture_material[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)
 				}
-				else if (name = "backgroundgroundtexnormal") // Normal
+				else if (name = "environmentgroundtexnormal") // Normal
 				{
 					if (res != res_eval(project_pack_res) && res.block_sheet_texture_normal[e_block_sheet.STATIC16] != null)
 						menu_add_item(res, res.display_name, res.block_preview_texture)

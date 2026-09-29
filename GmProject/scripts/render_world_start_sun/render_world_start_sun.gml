@@ -5,9 +5,9 @@ function render_world_start_sun(cascade)
 	render_sun_near = render_cascades[cascade].near
 	render_sun_far = render_cascades[cascade].far
 	render_light_fov = 45
-	render_light_color = background_sunlight_color_final
-	render_light_strength = background_sunlight_strength
-	render_light_specular_strength = background_sunlight_specular_strength
+	render_light_color = env_sunlight_color_final
+	render_light_strength = env_sunlight_strength
+	render_light_specular_strength = env_sunlight_specular_strength
 	
 	gpu_set_ztestenable(true)
 	
@@ -21,5 +21,5 @@ function render_world_start_sun(cascade)
 	light_view_proj_matrix = matrix_multiply(light_view_matrix, light_proj_matrix)
 	
 	render_sun_matrix = light_view_proj_matrix
-	render_sun_direction = background_sun_direction
+	render_sun_direction = env_sun_direction
 }

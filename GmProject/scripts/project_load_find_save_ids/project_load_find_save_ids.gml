@@ -40,19 +40,19 @@ function project_load_find_save_ids(isproject = false)
 	}
 
 	// Set background references
-	if (background_loaded)
+	if (env_loaded)
 	{
-		background_image = save_id_find(save_id_map[?background_image])
+		env_background_image = save_id_find(save_id_map[?env_background_image])
 		
-		background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
-		background_ground_tex_material = save_id_find(save_id_map[?background_ground_tex_material])
-		background_ground_tex_normal = save_id_find(save_id_map[?background_ground_tex_normal])
+		env_ground_tex = save_id_find(save_id_map[?env_ground_tex])
+		env_ground_tex_material = save_id_find(save_id_map[?env_ground_tex_material])
+		env_ground_tex_normal = save_id_find(save_id_map[?env_ground_tex_normal])
 		
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
 		{
-			background_sky_sun_tex = save_id_find(save_id_map[?background_sky_sun_tex])
-			background_sky_moon_tex = save_id_find(save_id_map[?background_sky_moon_tex])
-			background_sky_clouds_tex = save_id_find(save_id_map[?background_sky_clouds_tex])
+			env_sky_sun_tex = save_id_find(save_id_map[?env_sky_sun_tex])
+			env_sky_moon_tex = save_id_find(save_id_map[?env_sky_moon_tex])
+			env_sky_clouds_tex = save_id_find(save_id_map[?env_sky_clouds_tex])
 		}
 	}
 	

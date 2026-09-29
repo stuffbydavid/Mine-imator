@@ -26,7 +26,7 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 	{
 		var d, t, offz, mat, rotz, rotmat;
 		d = 60 * 6
-		t = (realtime ? current_step : app.background_time) mod d * 360
+		t = (realtime ? current_step : app.env_time) mod d * 360
 		offz = t/360
 		mat = matrix_get(matrix_world)
 		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1)
@@ -38,7 +38,7 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 	{
 		var d, t, offz;
 		d = 60 * 3
-		t = (realtime ? current_step : app.background_time) mod d * 2
+		t = (realtime ? current_step : app.env_time) mod d * 2
 		if (t < d)
 			offz = ease("easeinoutquad", t / d) * 2 - 1
 		else

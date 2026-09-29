@@ -7,7 +7,7 @@ function tab_frame_editor_environment()
 	if (draw_button_label("frameeditorenvironmentopen", dx + dw / 2, dy, null, null, e_button.PRIMARY, null, e_anchor.CENTER))
 	{
 		tab_show(properties, true)
-		properties.background.show = true
+		properties.environment.show = true
 	}
 	tab_next()
 }

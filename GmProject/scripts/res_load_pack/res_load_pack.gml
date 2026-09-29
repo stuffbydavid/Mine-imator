@@ -118,17 +118,17 @@ function res_load_pack()
 				if (project_pack = other.id)
 					action_project_pack(other.id)
 
-				if (background_ground_tex = other.id)
-					background_ground_update_texture()
+				if (env_ground_tex = other.id)
+					env_ground_update_texture()
 				
-				if (background_ground_tex_material = other.id)
-					background_ground_update_texture_material()
+				if (env_ground_tex_material = other.id)
+					env_ground_update_texture_material()
 				
-				if (background_ground_tex_normal = other.id)
-					background_ground_update_texture_normal()
+				if (env_ground_tex_normal = other.id)
+					env_ground_update_texture_normal()
 				
-				if (background_sky_clouds_tex = other.id)
-					background_sky_update_clouds()
+				if (env_sky_clouds_tex = other.id)
+					env_sky_update_clouds()
 				
 				lib_preview.update = true
 				res_preview.update = true

@@ -12,7 +12,7 @@ function render_alpha_hashing_used()
 		case e_tl_type.CHARACTER:
 		case e_tl_type.SPECIAL_BLOCK:
 		case e_tl_type.FOLDER:
-		case e_tl_type.BACKGROUND:
+		case e_tl_type.ENVIRONMENT:
 		case e_tl_type.AUDIO_TRACK:
 		case e_tl_type.PATH_POINT:
 		case e_tl_type.SPOT_LIGHT:

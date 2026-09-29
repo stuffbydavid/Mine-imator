@@ -63,22 +63,22 @@ function minecraft_assets_load()
 				}
 				
 				if (find_biome(overworld_biome))
-					app.background_biome = overworld_biome
+					app.env_biome = overworld_biome
 				else
-					app.background_biome = biome_list[|1].name
+					app.env_biome = biome_list[|1].name
 				
-				app.background_foliage_color = c_plains_biome_foliage
-				app.background_dry_foliage_color = c_plains_biome_dry_foliage
-				app.background_grass_color = c_plains_biome_grass
-				app.background_water_color = c_plains_biome_water
+				app.env_foliage_color = c_plains_biome_foliage
+				app.env_dry_foliage_color = c_plains_biome_dry_foliage
+				app.env_grass_color = c_plains_biome_grass
+				app.env_water_color = c_plains_biome_water
 				
-				app.background_leaves_oak_color = c_plains_biome_foliage
-				app.background_leaves_spruce_color = c_plains_biome_foliage_2
-				app.background_leaves_birch_color = c_plains_biome_foliage_2
-				app.background_leaves_jungle_color = c_plains_biome_foliage
-				app.background_leaves_acacia_color = c_plains_biome_foliage
-				app.background_leaves_dark_oak_color = c_plains_biome_foliage
-				app.background_leaves_mangrove_color = c_plains_biome_foliage
+				app.env_leaves_oak_color = c_plains_biome_foliage
+				app.env_leaves_spruce_color = c_plains_biome_foliage_2
+				app.env_leaves_birch_color = c_plains_biome_foliage_2
+				app.env_leaves_jungle_color = c_plains_biome_foliage
+				app.env_leaves_acacia_color = c_plains_biome_foliage
+				app.env_leaves_dark_oak_color = c_plains_biome_foliage
+				app.env_leaves_mangrove_color = c_plains_biome_foliage
 				
 				load_assets_stage = "textures"
 				load_assets_progress = 0.4

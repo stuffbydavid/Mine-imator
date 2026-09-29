@@ -25,5 +25,5 @@ function tl_replace_ground()
 		rot_point = vec3_mul(scenery.scenery_size, block_half_size)
 	
 	tl_update_rot_point()
-	app.background_ground_show = false
+	app.env_ground_show = false
 }

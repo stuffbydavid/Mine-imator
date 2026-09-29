@@ -131,6 +131,9 @@ function project_load_legacy_beta(loadbackground)
 				}
 			}
 			
+			if (tl_type[a] = "background")
+				tl_type[a] = "environment"
+			
 			if (load_format = e_project.FORMAT_05)
 			{
 				tl_values[a] = buffer_read_byte() div tl_parts[a]
@@ -598,23 +601,23 @@ function project_load_legacy_beta(loadbackground)
 	{
 		// Image
 		if (load.bg_select > -1)
-			background_image = load.bg_res[load.bg_select].load_id
+			env_background_image = load.bg_res[load.bg_select].load_id
 		
-		background_image_show = load.bg_show
-		background_image_stretch = load.bg_stretch
-		background_image_box = load.bg_box
+		env_background_image_show = load.bg_show
+		env_background_image_stretch = load.bg_stretch
+		env_background_image_box = load.bg_box
 		
 		// Ground
-		background_ground_show = load.bg_ground_show
+		env_ground_show = load.bg_ground_show
 		if (load.bg_ground_tex > -1)
 		{
-			background_ground_tex = load.ter_res[load.bg_ground_tex].load_id
+			env_ground_tex = load.ter_res[load.bg_ground_tex].load_id
 		}
 		else
-			background_ground_tex = "default"
+			env_ground_tex = "default"
 		
-		background_ground_tex_material = "default"
-		background_ground_tex_normal = "default"
+		env_ground_tex_material = "default"
+		env_ground_tex_normal = "default"
 		
 		var oldslot, legacyname, newslot;
 		oldslot = load.bg_ground_y * 16 + load.bg_ground_x
@@ -625,11 +628,11 @@ function project_load_legacy_beta(loadbackground)
 		
 		newslot = minecraft_assets_block_texture_picker_slot_find(legacyname)
 		if (newslot >= 0)
-			background_ground_slot = newslot
+			env_ground_slot = newslot
 		
 		// Sky
-		background_sky_color = load.sky_color
-		background_sky_time = load.sky_time
+		env_sky_color = load.sky_color
+		env_sky_time = load.sky_time
 		
 		// Lights
 		view_main.lights = load.sky_light
@@ -650,7 +653,7 @@ function project_load_legacy_beta(loadbackground)
 		project_tempo = load.tempo
 		timeline_repeat = load.loop
 		
-		background_loaded = true
+		env_loaded = true
 	}
 	
 	// Clean up

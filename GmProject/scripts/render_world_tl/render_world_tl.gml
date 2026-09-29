@@ -8,7 +8,7 @@ function render_world_tl()
 		type = e_tl_type.SPECIAL_BLOCK ||
 		type = e_tl_type.AUDIO_TRACK ||
 		type = e_tl_type.PATH_POINT ||
-		type = e_tl_type.BACKGROUND ||
+		type = e_tl_type.ENVIRONMENT ||
 		type = e_tl_type.STRUCTURE ||
 		type = e_tl_type.FOLDER)
 		return 0
@@ -164,7 +164,7 @@ function render_world_tl()
 		render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
 	}
 	
-	var renderfog = app.background_fog_show && fog && render_mode != e_render_mode.COLOR;
+	var renderfog = app.env_fog_show && fog && render_mode != e_render_mode.COLOR;
 	if (renderfog != shader_uniform_fog)
 	{
 		shader_uniform_fog = renderfog
@@ -190,9 +190,9 @@ function render_world_tl()
 	
 	if (value_inherit[e_value.WIND_INFLUENCE] != shader_uniform_wind_strength)
 	{
-		shader_uniform_wind_strength = app.background_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE]
+		shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE]
 		render_set_uniform("uWindStrength", shader_uniform_wind_strength)
-		render_set_uniform("uWindDirectionalStrength", shader_uniform_wind_strength * app.background_wind_directional_strength) 
+		render_set_uniform("uWindDirectionalStrength", shader_uniform_wind_strength * app.env_wind_directional_strength) 
 	}
 	
 	var prevblend = null;
@@ -258,7 +258,7 @@ function render_world_tl()
 	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 	
-	spd = app.background_time * glint_speed * app.project_render_glint_speed
+	spd = app.env_time * glint_speed * app.project_render_glint_speed
 	render_set_uniform_int("uGlintEnabled", glint_enabled ? 1 : 0)
 	render_set_uniform_vec2("uGlintOffset", spd * (0.000625), spd * (0.00125))
 	render_set_uniform("uGlintStrength", app.project_render_glint_strength * glint_strength)

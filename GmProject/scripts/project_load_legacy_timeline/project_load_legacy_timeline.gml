@@ -8,9 +8,11 @@ function project_load_legacy_timeline()
 		
 		var typename = buffer_read_string_int();
 		
-		// Pre-2.1 model parts
+		// Pre-2.1 type names
 		if (typename = "bodypart")
 			typename = "modelpart"
+		if (typename = "background")
+			typename = "environment"
 		
 		type = ds_list_find_index(tl_type_name_list, typename)
 		has_temp = (type < e_temp_type.amount)

@@ -148,17 +148,17 @@ function project_update_counts()
 	with (app)
 	{
 		var refs = [
-			background_image,
-			background_sky_sun_tex,
-			background_sky_moon_tex,
-			background_sky_clouds_tex,
-			background_ground_tex
+			env_background_image,
+			env_sky_sun_tex,
+			env_sky_moon_tex,
+			env_sky_clouds_tex,
+			env_ground_tex
 		];
 		
 		if (app.project_render_material_maps)
 		{
-			array_add(refs, background_ground_tex_material)
-			array_add(refs, background_ground_tex_normal)
+			array_add(refs, env_ground_tex_material)
+			array_add(refs, env_ground_tex_normal)
 		}
 		
 		for (var i = 0; i < array_length(refs); i++)

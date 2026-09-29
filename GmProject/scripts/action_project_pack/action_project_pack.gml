@@ -66,10 +66,10 @@ function action_project_pack(res, record = true)
 	if (!res.ready)
 		return 0
 
-	background_ground_update_texture()
-	background_ground_update_texture_material()
-	background_ground_update_texture_normal()
-	background_sky_update_clouds()
+	env_ground_update_texture()
+	env_ground_update_texture_material()
+	env_ground_update_texture_normal()
+	env_sky_update_clouds()
 	
 	render_update_item()
 	render_update_text()

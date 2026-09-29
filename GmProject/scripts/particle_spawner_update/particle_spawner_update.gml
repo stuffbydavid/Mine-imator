@@ -8,10 +8,10 @@ function particle_spawner_update(spawner)
 		temp = (is_timeline ? self.temp : select)
 		realtime = (!is_timeline || (is_timeline && app.object_editor.show && obj_edit = temp)) && 
 			(app.window_state != "export_movie" && app.window_state != "export_image")
-		spawn_currentstep = (realtime ? current_step : floor(app.background_time))
+		spawn_currentstep = (realtime ? current_step : floor(app.env_time))
 		
 		// Reset, switch to realtime
-		if (is_timeline && realtime && (spawn_laststep = floor(app.background_time)))
+		if (is_timeline && realtime && (spawn_laststep = floor(app.env_time)))
 		{
 			spawn_laststep = spawn_currentstep
 			particle_spawner_clear()

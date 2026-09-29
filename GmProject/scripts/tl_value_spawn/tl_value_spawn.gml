@@ -29,9 +29,9 @@ function tl_value_spawn()
 	}
 	
 	// Background objects inherit current settings
-	else if (type = e_tl_type.BACKGROUND)
+	else if (type = e_tl_type.ENVIRONMENT)
 	{
-		for (var v = e_value.BG_SKY_MOON_PHASE; v <= e_value.BG_BRIGHTNESS; v++)
+		for (var v = e_value.ENV_SKY_MOON_PHASE; v <= e_value.ENV_BRIGHTNESS; v++)
 			value[v] = tl_value_default(v)
 	}
 	

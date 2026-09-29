@@ -587,7 +587,7 @@
 		"spotlight": "Spot light",
 		"camera": "Camera",
 		"cameraeffects": "Camera effects",
-		"background": "Environment",
+		"environment": "Environment",
 		"audio": "Audio track",
 		"structure": "Structure",
 		"folder": "Folder",
@@ -741,7 +741,7 @@
 		"spotlighttip": "Spot lights emit a cone of light, like a flashlight.",
 		"cameratip": "A virtual camera the animation is seen through.",
 		"cameraeffectstip": "A number of optional effects for the active camera. (coming soon)",
-		"backgroundtip": "A timeline that can change the environment during the animation.",
+		"environmenttip": "A timeline that can change the environment during the animation.",
 		"pathtip": "A 3D path that can be used for moving objects and particles along. Paths are built by parenting path points."
 	},
 	"downloadskin/": {
@@ -3650,8 +3650,8 @@
 		"rgb": "RGB",
 		"hsv": "HSV"
 	},
-	"background": "ENVIRONMENT",
-	"background/": {
+	"environment": "ENVIRONMENT",
+	"environment/": {
 		"dimension": "Dimension",
 		"dimension/": {
 			"overworld": "Overworld",

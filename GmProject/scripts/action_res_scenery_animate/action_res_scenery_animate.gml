@@ -9,7 +9,7 @@ function action_res_scenery_animate(res)
 			history_destroy_loaded()
 
 		if (history_data.scenery_replace_ground)
-			background_ground_show = history_data.scenery_ground_show
+			env_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
@@ -31,7 +31,7 @@ function action_res_scenery_animate(res)
 			{
 				sceneryreplaceground = true
 				hobj.scenery_replace_ground = true
-				hobj.scenery_ground_show = background_ground_show
+				hobj.scenery_ground_show = env_ground_show
 			}
 		}
 	
@@ -58,7 +58,7 @@ function action_res_scenery_animate(res)
 		}
 
 		if (sceneryreplaceground)
-			background_ground_show = false
+			env_ground_show = false
 	
 		with (hobj)
 		{

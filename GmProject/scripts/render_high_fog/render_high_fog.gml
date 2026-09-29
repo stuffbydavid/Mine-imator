@@ -21,7 +21,7 @@ function render_high_fog(basesurf)
 		draw_clear_alpha(c_black, 0)
 		
 		// Draw fog
-		if (background_fog_show)
+		if (env_fog_show)
 		{
 			render_shader_obj = shader_map[?shader_high_fog_apply]
 			with (render_shader_obj)

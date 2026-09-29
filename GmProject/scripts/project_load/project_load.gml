@@ -30,7 +30,7 @@
 /// 	1.2.5 = camera aperture blade amount and angle
 /// 	2.0.0 PRE 1 = initial 2.0 project format
 /// 	2.0.0 PRE 5 = material maps, generalized patterns, revised clouds, background and camera values
-/// 	2.1.0 = path shape settings, normalized texture animation speed and new render settings.
+/// 	2.1.0 = path shape settings, normalized texture animation speed, new render settings, camera effects, structures and new type names
 /// @arg [filename]
 
 function project_load(fn = "")
@@ -98,9 +98,13 @@ function project_load(fn = "")
 	
 	if (!legacy)
 	{
+		var envmap = rootmap[?"environment"];
+		if (!ds_map_valid(envmap)) // Pre-2.1
+			envmap = rootmap[?"background"]
+			
 		project_load_project(rootmap[?"project"])
 		project_load_render(rootmap[?"render"])
-		project_load_background(rootmap[?"background"])
+		project_load_environment(envmap)
 		project_load_objects(rootmap)
 		project_load_markers(rootmap[?"markers"])
 	}
@@ -111,7 +115,7 @@ function project_load(fn = "")
 		{
 			project_load_legacy_project()
 			project_load_legacy_objects()
-			project_load_legacy_background()
+			project_load_legacy_environment()
 			project_load_legacy_work_camera()
 		}
 		else

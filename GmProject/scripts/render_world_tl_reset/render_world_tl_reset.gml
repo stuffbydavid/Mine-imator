@@ -62,7 +62,7 @@ function render_world_tl_reset()
 	render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
 	
 	// Fog
-	shader_uniform_fog = app.background_fog_show && render_mode != e_render_mode.COLOR
+	shader_uniform_fog = app.env_fog_show && render_mode != e_render_mode.COLOR
 	render_set_uniform_int("uFogShow", shader_uniform_fog)
 	render_set_uniform("uSSAO", 1)
 	
@@ -79,7 +79,7 @@ function render_world_tl_reset()
 	render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0) 
 	
 	// Wind
-	shader_uniform_wind_strength = app.background_wind_strength * app.setting_wind_enable
+	shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable
 	
 	// Glow
 	shader_uniform_glow = false

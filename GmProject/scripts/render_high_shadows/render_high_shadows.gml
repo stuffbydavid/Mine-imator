@@ -2,7 +2,7 @@ function render_high_shadows()
 {
 	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
 	sampleoffset = point3D(0)
-	sunout = (background_sunlight_color_final != c_black)
+	sunout = (env_sunlight_color_final != c_black)
 	samplestart = 0
 	sampleend = 0
 	lightlist = []
@@ -51,8 +51,8 @@ function render_high_shadows()
 	if (sunout)
 	{
 		var angle, sunangularradius, refangularradius;
-		angle = vec3_normalize(app.background_sun_direction)
-		sunangularradius = tan(degtorad(min(background_sunlight_angle, 179)) * .5) * project_render_shadows_blur_size
+		angle = vec3_normalize(app.env_sun_direction)
+		sunangularradius = tan(degtorad(min(env_sunlight_angle, 179)) * .5) * project_render_shadows_blur_size
 		refangularradius = tan(degtorad(.526) * .5)
 		render_sun_shadow_scale = (sunangularradius / refangularradius) * .5
 

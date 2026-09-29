@@ -63,5 +63,5 @@ function render_update_camera()
 	// Render modes can vary in zfar, keep original zfar
 	cam_far_prev = cam_far
 	
-	background_sky_update()
+	env_sky_update()
 }

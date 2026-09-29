@@ -9,7 +9,7 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		return 0
 	
 	if (biome = "")
-		biome = app.background_biome
+		biome = app.env_biome
 		
 	mix = clamp(mix, 0, 1)
 	
@@ -17,16 +17,16 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 	if (nextbiome != "" && biome != nextbiome)
 	{
 		var startframe, endframe;
-		startframe = app.background_tlactive.keyframe_current
-		endframe = app.background_tlactive.keyframe_next
+		startframe = app.env_tlactive.keyframe_current
+		endframe = app.env_tlactive.keyframe_next
 		
 		// Resolve colormaps only when the keyframe pair changes
 		if (color_biome_start_colors = null || color_biome_end_colors = null ||
 			color_biome_start_name != biome || color_biome_end_name != nextbiome ||
 			color_biome_start_frame != startframe || color_biome_end_frame != endframe)
 		{
-			color_biome_start_colors = res_biome_colors(biome, app.background_tlactive.keyframe_current_values)
-			color_biome_end_colors = res_biome_colors(nextbiome, app.background_tlactive.keyframe_next_values)
+			color_biome_start_colors = res_biome_colors(biome, app.env_tlactive.keyframe_current_values)
+			color_biome_end_colors = res_biome_colors(nextbiome, app.env_tlactive.keyframe_next_values)
 			color_biome_start_name = biome
 			color_biome_end_name = nextbiome
 			color_biome_start_frame = startframe
@@ -35,9 +35,9 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		else
 		{
 			if (biome = "custom")
-				color_biome_start_colors = res_biome_colors(biome, app.background_tlactive.keyframe_current_values)
+				color_biome_start_colors = res_biome_colors(biome, app.env_tlactive.keyframe_current_values)
 			if (nextbiome = "custom")
-				color_biome_end_colors = res_biome_colors(nextbiome, app.background_tlactive.keyframe_next_values)
+				color_biome_end_colors = res_biome_colors(nextbiome, app.env_tlactive.keyframe_next_values)
 		}
 		
 		if (color_biome_start_colors = null || color_biome_end_colors = null)

@@ -4,8 +4,8 @@ function project_load_values_update_name(name)
 	{
 		switch (name)
 		{
-			case "BG_SKY_CLOUDS_Z": return "BG_SKY_CLOUDS_OFFSET_Z"
-			case "BRIGHTNESS":		return "EMISSIVE"
+			case "BG_SKY_CLOUDS_Z":					return "ENV_SKY_CLOUDS_OFFSET_Z"
+			case "BRIGHTNESS":						return "EMISSIVE"
 			case "CAM_SHAKE_HORIZONTAL_SPEED":		return "CAM_SHAKE_SPEED_X"
 			case "CAM_SHAKE_VERTICAL_SPEED":		return "CAM_SHAKE_SPEED_Y"
 			case "CAM_SHAKE_HORIZONTAL_STRENGTH":	return "CAM_SHAKE_STRENGTH_X"
@@ -17,10 +17,13 @@ function project_load_values_update_name(name)
 	{
 		switch (name)
 		{
-			case "BG_SKY_CLOUDS_OFFSET": return "BG_SKY_CLOUDS_OFFSET_Y"
-			case "BG_SKY_CLOUDS_HEIGHT": return "BG_SKY_CLOUDS_OFFSET_Z"
+			case "BG_SKY_CLOUDS_OFFSET": return "ENV_SKY_CLOUDS_OFFSET_Y"
+			case "BG_SKY_CLOUDS_HEIGHT": return "ENV_SKY_CLOUDS_OFFSET_Z"
 		}
 	}
+	
+	if (string_pos("BG_", name) = 1)
+		return "ENV_" + string_delete(name, 1, 3)
 	
 	return name
 }

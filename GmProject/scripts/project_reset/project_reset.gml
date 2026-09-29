@@ -96,7 +96,7 @@ function project_reset()
 	project_render_preset[e_renderer.STANDARD] = render_preset_default
 	project_render_preset[e_renderer.REALISTIC] = render_preset_default
 	
-	project_reset_background()
+	project_reset_environment()
 	project_update_counts()
 	
 	timeline.hor_scroll.value = 0
@@ -110,7 +110,7 @@ function project_reset()
 	timeline_zoom = 16
 	timeline_zoom_goal = 16
 	timeline_camera = null
-	background_tlactive = null
+	env_tlactive = null
 	copy_kf_amount = 0
 	timeline_marker_length = 0
 	

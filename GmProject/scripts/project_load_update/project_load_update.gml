@@ -18,12 +18,12 @@ function project_load_update()
 	tl_update_list()
 	
 	// Update sky
-	if (background_loaded)
+	if (env_loaded)
 	{
-		background_sky_update_clouds()
-		background_ground_update_texture()
-		background_ground_update_texture_material()
-		background_ground_update_texture_normal()
+		env_sky_update_clouds()
+		env_ground_update_texture()
+		env_ground_update_texture_material()
+		env_ground_update_texture_normal()
 	}
 	
 	// Update scenery parts

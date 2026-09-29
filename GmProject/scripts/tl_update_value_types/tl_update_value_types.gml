@@ -17,9 +17,9 @@ function tl_update_value_types()
 	
 	value_type[e_value_type.KEYFRAME] = true
 	
-	if (type = e_tl_type.BACKGROUND)
+	if (type = e_tl_type.ENVIRONMENT)
 	{
-		value_type[e_value_type.BACKGROUND] = true
+		value_type[e_value_type.ENVIRONMENT] = true
 		return 0
 	}
 	

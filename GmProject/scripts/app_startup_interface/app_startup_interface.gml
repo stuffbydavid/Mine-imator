@@ -21,8 +21,8 @@ function app_startup_interface()
 	history_startup()
 	textfield_group_reset()
 	
-	background_ground_startup()
-	background_sky_startup()
+	env_ground_startup()
+	env_sky_startup()
 	
 	// Run headless tests
 	if (test_project != "")

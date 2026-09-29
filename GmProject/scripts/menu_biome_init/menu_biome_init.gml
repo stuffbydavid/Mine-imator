@@ -12,7 +12,7 @@ function menu_biome_init(menu)
 	for (var b = 0; b < ds_list_size(biome_list); b++)
 	{
 		var biome = biome_list[|b];
-		if (biome.dimension != background_dimension)
+		if (biome.dimension != env_dimension)
 			continue
 		
 		if (!(menu_expose && biome.group))

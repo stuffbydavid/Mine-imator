@@ -2,7 +2,7 @@ function project_reset_loaded()
 {
 	ds_map_clear(save_id_map)
 	tree_array = 0
-	background_loaded = false
+	env_loaded = false
 	
 	with (obj_template)
 		loaded = false

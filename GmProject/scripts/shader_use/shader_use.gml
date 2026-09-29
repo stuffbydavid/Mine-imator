@@ -25,20 +25,20 @@ function shader_use()
 	// Set wind
 	if (!is_undefined(uniform_map[?"uTime"]) && uniform_map[?"uTime"] > -1)
 	{
-		render_set_uniform("uTime", app.background_time)
+		render_set_uniform("uTime", app.env_time)
 		render_set_uniform("uWindEnable", 0)
 		render_set_uniform("uWindTerrain", 1)
-		render_set_uniform("uWindSpeed", app.background_wind * app.background_wind_speed)
-		render_set_uniform("uWindStrength", app.background_wind_strength * app.setting_wind_enable)
+		render_set_uniform("uWindSpeed", app.env_wind * app.env_wind_speed)
+		render_set_uniform("uWindStrength", app.env_wind_strength * app.setting_wind_enable)
 		
-		render_set_uniform_vec2("uWindDirection", sin(degtorad(app.background_wind_direction)), cos(degtorad(app.background_wind_direction)))
-		render_set_uniform("uWindDirectionalSpeed", app.background_wind * app.background_wind_directional_speed * .1 * app.background_time)
-		render_set_uniform("uWindDirectionalStrength", app.background_wind * app.background_wind_directional_strength * app.setting_wind_enable)
+		render_set_uniform_vec2("uWindDirection", sin(degtorad(app.env_wind_direction)), cos(degtorad(app.env_wind_direction)))
+		render_set_uniform("uWindDirectionalSpeed", app.env_wind * app.env_wind_directional_speed * .1 * app.env_time)
+		render_set_uniform("uWindDirectionalStrength", app.env_wind * app.env_wind_directional_strength * app.setting_wind_enable)
 	}
 
 	if (!is_undefined(uniform_map[?"uWaterMaterialTime"]) && uniform_map[?"uWaterMaterialTime"] > -1)
 	{
-		render_set_uniform("uWaterMaterialTime", app.background_time * app.project_render_water_wave_speed)
+		render_set_uniform("uWaterMaterialTime", app.env_time * app.project_render_water_wave_speed)
 		render_set_uniform("uWaterMaterialStrength", app.project_render_water_wave_strength)
 		render_set_uniform("uWaterMaterialScale", app.project_render_water_wave_scale)
 		render_set_uniform_int("uWaterMaterialOctaves", app.project_render_water_wave_detail)
@@ -47,14 +47,14 @@ function shader_use()
 	// Set fog
 	if (!is_undefined(uniform_map[?"uFogShow"]) && uniform_map[?"uFogShow"] > -1)
 	{
-		var fog = (app.background_fog_show && render_mode != e_render_mode.COLOR);
+		var fog = (app.env_fog_show && render_mode != e_render_mode.COLOR);
 		render_set_uniform_int("uFogShow", bool_to_float(fog))
 		
-		render_set_uniform_color("uFogColor", app.background_fog_object_color_final, 1)
-		render_set_uniform("uFogDistance", app.background_fog_distance)
+		render_set_uniform_color("uFogColor", app.env_fog_object_color_final, 1)
+		render_set_uniform("uFogDistance", app.env_fog_distance)
 		
-		render_set_uniform("uFogSize", app.background_fog_size)	
-		render_set_uniform("uFogHeight", app.background_fog_height)
+		render_set_uniform("uFogSize", app.env_fog_size)	
+		render_set_uniform("uFogHeight", app.env_fog_height)
 	}
 	
 	// Set camera position
@@ -92,7 +92,7 @@ function shader_use()
 		gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
 		
 		render_set_uniform_vec2("uGlintSize", sprite_get_width(tex)*2, sprite_get_height(tex)*2)
-		render_set_uniform_vec2("uGlintOffset", app.background_time * (0.000625) * app.project_render_glint_speed, app.background_time * (0.00125) * app.project_render_glint_speed)
+		render_set_uniform_vec2("uGlintOffset", app.env_time * (0.000625) * app.project_render_glint_speed, app.env_time * (0.00125) * app.project_render_glint_speed)
 		render_set_uniform_int("uGlintEnabled", 1)
 		render_set_uniform("uGlintStrength", app.project_render_glint_strength)
 	}

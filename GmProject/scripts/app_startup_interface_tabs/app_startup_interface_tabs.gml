@@ -59,11 +59,11 @@ function app_startup_interface_tabs()
 		}
 		
 		// Background
-		background = tab_add_category("background", icons.WORLD_SMALL, tab_properties_background, false)
-		with (background)
+		environment = tab_add_category("environment", icons.WORLD_SMALL, tab_properties_environment, false)
+		with (environment)
 		{
-			tbx_background_rotation = new_textbox_decimals()
-			tbx_background_rotation.suffix = "°"
+			tbx_background_image_rotation = new_textbox_decimals()
+			tbx_background_image_rotation.suffix = "°"
 			tbx_sky_time = new_textbox(true, 10, "-:0123456789")
 			tbx_sky_rotation = new_textbox_ndecimals()
 			tbx_sky_rotation.suffix = "°"

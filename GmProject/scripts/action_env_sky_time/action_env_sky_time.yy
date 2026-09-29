@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_sky_time",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_sky_time",
+  "parent":{
+    "name":"Sky",
+    "path":"folders/Scripts/App/Actions/Environment/Sky.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

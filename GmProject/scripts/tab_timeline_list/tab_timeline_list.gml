@@ -281,7 +281,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			// Icon overrides
 			if (tl.type = e_tl_type.CAMERA && tl = timeline_camera)
 				licon = icons.CAMERA_ACTIVE
-			else if (tl.type = e_tl_type.BACKGROUND && tl = background_tlactive)
+			else if (tl.type = e_tl_type.ENVIRONMENT && tl = env_tlactive)
 				licon = icons.CLOUD_ACTIVE
 			else if (place_build && tl = build_structure)
 			{

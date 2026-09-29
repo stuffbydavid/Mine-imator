@@ -10,32 +10,32 @@ function res_biome_colors(biomename, values = null)
 		if (values != null)
 		{
 			return [
-				values[e_value.BG_GRASS_COLOR],
-				values[e_value.BG_FOLIAGE_COLOR],
-				values[e_value.BG_DRY_FOLIAGE_COLOR],
-				values[e_value.BG_WATER_COLOR],
-				values[e_value.BG_LEAVES_OAK_COLOR],
-				values[e_value.BG_LEAVES_SPRUCE_COLOR],
-				values[e_value.BG_LEAVES_BIRCH_COLOR],
-				values[e_value.BG_LEAVES_JUNGLE_COLOR],
-				values[e_value.BG_LEAVES_ACACIA_COLOR],
-				values[e_value.BG_LEAVES_DARK_OAK_COLOR],
-				values[e_value.BG_LEAVES_MANGROVE_COLOR]
+				values[e_value.ENV_GRASS_COLOR],
+				values[e_value.ENV_FOLIAGE_COLOR],
+				values[e_value.ENV_DRY_FOLIAGE_COLOR],
+				values[e_value.ENV_WATER_COLOR],
+				values[e_value.ENV_LEAVES_OAK_COLOR],
+				values[e_value.ENV_LEAVES_SPRUCE_COLOR],
+				values[e_value.ENV_LEAVES_BIRCH_COLOR],
+				values[e_value.ENV_LEAVES_JUNGLE_COLOR],
+				values[e_value.ENV_LEAVES_ACACIA_COLOR],
+				values[e_value.ENV_LEAVES_DARK_OAK_COLOR],
+				values[e_value.ENV_LEAVES_MANGROVE_COLOR]
 			]
 		}
 
 		return [
-			app.background_grass_color,
-			app.background_foliage_color,
-			app.background_dry_foliage_color,
-			app.background_water_color,
-			app.background_leaves_oak_color,
-			app.background_leaves_spruce_color,
-			app.background_leaves_birch_color,
-			app.background_leaves_jungle_color,
-			app.background_leaves_acacia_color,
-			app.background_leaves_dark_oak_color,
-			app.background_leaves_mangrove_color
+			app.env_grass_color,
+			app.env_foliage_color,
+			app.env_dry_foliage_color,
+			app.env_water_color,
+			app.env_leaves_oak_color,
+			app.env_leaves_spruce_color,
+			app.env_leaves_birch_color,
+			app.env_leaves_jungle_color,
+			app.env_leaves_acacia_color,
+			app.env_leaves_dark_oak_color,
+			app.env_leaves_mangrove_color
 		]
 	}
 

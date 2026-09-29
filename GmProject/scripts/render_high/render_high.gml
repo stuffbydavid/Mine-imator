@@ -63,7 +63,7 @@ function render_high()
 			render_high_reflections(finalsurf)
 		
 		// Fog
-		if (background_fog_show)
+		if (env_fog_show)
 			render_high_fog(finalsurf)
 
 		// Apply HDR effects before tonemapping (DoF, Bloom, Glow, Lens Dirt)

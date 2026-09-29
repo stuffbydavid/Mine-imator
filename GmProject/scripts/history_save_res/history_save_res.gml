@@ -53,13 +53,13 @@ function history_save_res(res)
 		usage_tl_block_tex_material_amount = 0
 		usage_tl_block_tex_normal_amount = 0
 		
-		usage_background_image = false
-		usage_background_sky_sun_tex = false
-		usage_background_sky_moon_tex = false
-		usage_background_sky_clouds_tex = false
-		usage_background_ground_tex = false
-		usage_background_ground_tex_material = false
-		usage_background_ground_tex_normal = false
+		usage_env_background_image = false
+		usage_env_sky_sun_tex = false
+		usage_env_sky_moon_tex = false
+		usage_env_sky_clouds_tex = false
+		usage_env_ground_tex = false
+		usage_env_ground_tex_material = false
+		usage_env_ground_tex_normal = false
 	}
 	
 	// Save references
@@ -266,26 +266,26 @@ function history_save_res(res)
 	
 	with (app)
 	{
-		if (background_image = res)
-			save.usage_background_image = true
+		if (env_background_image = res)
+			save.usage_env_background_image = true
 		
-		if (background_sky_sun_tex = res)
-			save.usage_background_sky_sun_tex = true
+		if (env_sky_sun_tex = res)
+			save.usage_env_sky_sun_tex = true
 		
-		if (background_sky_moon_tex = res)
-			save.usage_background_sky_moon_tex = true
+		if (env_sky_moon_tex = res)
+			save.usage_env_sky_moon_tex = true
 		
-		if (background_sky_clouds_tex = res)
-			save.usage_background_sky_clouds_tex = true
+		if (env_sky_clouds_tex = res)
+			save.usage_env_sky_clouds_tex = true
 		
-		if (background_ground_tex = res)
-			save.usage_background_ground_tex = true
+		if (env_ground_tex = res)
+			save.usage_env_ground_tex = true
 		
-		if (background_ground_tex_material = res)
-			save.usage_background_ground_tex_material = true
+		if (env_ground_tex_material = res)
+			save.usage_env_ground_tex_material = true
 		
-		if (background_ground_tex_normal = res)
-			save.usage_background_ground_tex_normal = true
+		if (env_ground_tex_normal = res)
+			save.usage_env_ground_tex_normal = true
 	}
 	
 	return save

@@ -181,7 +181,7 @@ function bench_tab_select(tab, key = false)
 			case e_bench_tab.AUDIO_TRACK:		type = e_tl_type.AUDIO_TRACK; break
 			case e_bench_tab.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER; break
 			case e_bench_tab.LIGHT_SOURCE:		type = light_type; break
-			case e_bench_tab.ENVIRONMENT:		type = e_tl_type.BACKGROUND; break
+			case e_bench_tab.ENVIRONMENT:		type = e_tl_type.ENVIRONMENT; break
 		}
 	}
 	

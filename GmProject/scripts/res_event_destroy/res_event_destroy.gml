@@ -386,34 +386,34 @@ function res_event_destroy()
 	
 	with (app)
 	{
-		if (background_image = other.id)
-			background_image = null
+		if (env_background_image = other.id)
+			env_background_image = null
 		
-		if (background_sky_sun_tex = other.id)
-			background_sky_sun_tex = project_pack_res
+		if (env_sky_sun_tex = other.id)
+			env_sky_sun_tex = project_pack_res
 		
-		if (background_sky_moon_tex = other.id)
-			background_sky_moon_tex = project_pack_res
+		if (env_sky_moon_tex = other.id)
+			env_sky_moon_tex = project_pack_res
 		
-		if (background_sky_clouds_tex = other.id)
-			background_sky_clouds_tex = project_pack_res
+		if (env_sky_clouds_tex = other.id)
+			env_sky_clouds_tex = project_pack_res
 		
-		if (background_ground_tex = other.id)
+		if (env_ground_tex = other.id)
 		{
-			background_ground_tex = project_pack_res
-			background_ground_update_texture()
+			env_ground_tex = project_pack_res
+			env_ground_update_texture()
 		}
 		
-		if (background_ground_tex_material = other.id)
+		if (env_ground_tex_material = other.id)
 		{
-			background_ground_tex_material = project_pack_res
-			background_ground_update_texture_material()
+			env_ground_tex_material = project_pack_res
+			env_ground_update_texture_material()
 		}
 		
-		if (background_ground_tex_normal = other.id)
+		if (env_ground_tex_normal = other.id)
 		{
-			background_ground_tex_normal = project_pack_res
-			background_ground_update_texture_normal()
+			env_ground_tex_normal = project_pack_res
+			env_ground_update_texture_normal()
 		}
 
 	}

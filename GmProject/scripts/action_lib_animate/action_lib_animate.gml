@@ -10,7 +10,7 @@ function action_lib_animate(place = false)
 				instance_destroy()
 
 		if (history_data.scenery_replace_ground)
-			background_ground_show = history_data.scenery_ground_show
+			env_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
@@ -38,7 +38,7 @@ function action_lib_animate(place = false)
 			{
 				sceneryreplaceground = true
 				hobj.scenery_replace_ground = true
-				hobj.scenery_ground_show = background_ground_show
+				hobj.scenery_ground_show = env_ground_show
 			}
 		}
 		

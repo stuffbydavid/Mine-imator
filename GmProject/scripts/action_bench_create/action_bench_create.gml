@@ -74,7 +74,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 				instance_destroy()
 
 		if (history_data.scenery_replace_ground)
-			background_ground_show = history_data.scenery_ground_show
+			env_ground_show = history_data.scenery_ground_show
 	}
 	else
 	{
@@ -137,7 +137,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 			case e_bench_tab.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER; break
 			case e_bench_tab.AUDIO_TRACK:		tltype = e_tl_type.AUDIO_TRACK; break
 			case e_bench_tab.LIGHT_SOURCE:		tltype = bench_settings.light_type; break
-			case e_bench_tab.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND; break
+			case e_bench_tab.ENVIRONMENT:		tltype = e_tl_type.ENVIRONMENT; break
 		}
 
 		if (tab = e_bench_tab.SCHEMATIC)
@@ -358,7 +358,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 			{
 				sceneryreplaceground = true
 				hobj.scenery_replace_ground = true
-				hobj.scenery_ground_show = background_ground_show
+				hobj.scenery_ground_show = env_ground_show
 			}
 
 			if (sceneryreplaceground)

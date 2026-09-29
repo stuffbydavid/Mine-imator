@@ -167,42 +167,42 @@ function history_restore_res(save)
 				block_tex_normal = res
 
 		// Restore background usage
-		if (save.usage_background_image)
-			app.background_image = res
+		if (save.usage_env_background_image)
+			app.env_background_image = res
 		
-		if (save.usage_background_sky_sun_tex)
-			app.background_sky_sun_tex = res
+		if (save.usage_env_sky_sun_tex)
+			app.env_sky_sun_tex = res
 		
-		if (save.usage_background_sky_moon_tex)
-			app.background_sky_moon_tex = res
+		if (save.usage_env_sky_moon_tex)
+			app.env_sky_moon_tex = res
 		
-		if (save.usage_background_sky_clouds_tex)
-			app.background_sky_clouds_tex = res
+		if (save.usage_env_sky_clouds_tex)
+			app.env_sky_clouds_tex = res
 		
-		if (save.usage_background_ground_tex)
+		if (save.usage_env_ground_tex)
 		{
 			with (app)
 			{
-				background_ground_tex = res
-				background_ground_update_texture()
+				env_ground_tex = res
+				env_ground_update_texture()
 			}
 		}
 		
-		if (save.usage_background_ground_tex_material)
+		if (save.usage_env_ground_tex_material)
 		{
 			with (app)
 			{
-				background_ground_tex_material = res
-				background_ground_update_texture_material()
+				env_ground_tex_material = res
+				env_ground_update_texture_material()
 			}
 		}
 		
-		if (save.usage_background_ground_tex_normal)
+		if (save.usage_env_ground_tex_normal)
 		{
 			with (app)
 			{
-				background_ground_tex_normal = res
-				background_ground_update_texture_normal()
+				env_ground_tex_normal = res
+				env_ground_update_texture_normal()
 			}
 		}
 		

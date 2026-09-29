@@ -92,7 +92,7 @@ function app_startup_interface_timeline()
 	timeline_select_box_min = [ no_limit, no_limit, no_limit ]
 	timeline_select_box_max = [ -no_limit, -no_limit, -no_limit ]
 	
-	background_tlactive = null
+	env_tlactive = null
 	
 	// tl_update_list_indent scope fix
 	with (obj_timeline)

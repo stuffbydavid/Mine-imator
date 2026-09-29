@@ -119,7 +119,7 @@ function app_update_tl_edit_select()
 		if (value_type[e_value_type.SPOTLIGHT])
 			app.frame_editor.light.has_spotlight = true
 
-		if (value_type[e_value_type.BACKGROUND])
+		if (value_type[e_value_type.ENVIRONMENT])
 			app.frame_editor.environment.enabled = true
 
 		if (value_type[e_value_type.TRANSFORM])

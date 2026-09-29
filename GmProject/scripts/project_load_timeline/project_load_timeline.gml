@@ -11,9 +11,11 @@ function project_load_timeline(map)
 		
 		var typename = value_get_string(map[?"type"]);
 		
-		// Pre-2.1 model parts
+		// Pre-2.1 type names
 		if (typename = "bodypart")
 			typename = "modelpart"
+		if (typename = "background")
+			typename = "environment"
 		
 		type = ds_list_find_index(tl_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
@@ -21,7 +23,7 @@ function project_load_timeline(map)
 		temp = value_get_save_id(map[?"temp"], temp)
 		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
 		animated = value_get_real(map[?"animated"], animated)
-		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.BACKGROUND)
+		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.ENVIRONMENT)
 			animated = true
 		
 		color_tag = value_get_real(map[?"color_tag"], color_tag)

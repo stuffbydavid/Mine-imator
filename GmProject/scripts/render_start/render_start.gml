@@ -53,7 +53,7 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_indirect = render_shadows && project_render_indirect && (rendercombined || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
 	render_reflections = project_render_reflections && (rendercombined || render_pass = e_render_pass.REFLECTIONS)
 	render_glow = project_render_glow && renderer_current != e_renderer.QUICK
-	render_auxiliary = renderall || background_fog_show || render_pass = e_render_pass.FOG || render_pass = e_render_pass.GLOW ||
+	render_auxiliary = renderall || env_fog_show || render_pass = e_render_pass.FOG || render_pass = e_render_pass.GLOW ||
 					   render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE ||
 					   (renderer_current = e_renderer.REALISTIC && project_render_subsurface_samples > 0) || render_glow
 	

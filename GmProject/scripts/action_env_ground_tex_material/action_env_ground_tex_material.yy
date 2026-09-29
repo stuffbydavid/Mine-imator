@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_ground_tex_material",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_ground_tex_material",
+  "parent":{
+    "name":"Ground",
+    "path":"folders/Scripts/App/Actions/Environment/Ground.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

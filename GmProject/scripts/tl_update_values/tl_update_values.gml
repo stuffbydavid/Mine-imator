@@ -120,8 +120,8 @@ function tl_update_values()
 	}
 	
 	// Background
-	if (value_type[e_value_type.BACKGROUND])
-		for (var vid = e_value.BG_IMAGE_SHOW; vid <= e_value.BG_BRIGHTNESS; vid++)
+	if (value_type[e_value_type.ENVIRONMENT])
+		for (var vid = e_value.ENV_IMAGE_SHOW; vid <= e_value.ENV_BRIGHTNESS; vid++)
 			tl_update_values_ease(vid)
 	
 	// Texture

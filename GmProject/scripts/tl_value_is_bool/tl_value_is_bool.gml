@@ -6,11 +6,11 @@ function tl_value_is_bool(vid)
 			vid = e_value.FREEZE ||
 			vid = e_value.CLEAR ||
 			vid = e_value.CUSTOM_SEED ||
-			vid = e_value.BG_IMAGE_SHOW ||
-			vid = e_value.BG_SKY_CLOUDS_SHOW ||
-			vid = e_value.BG_GROUND_SHOW ||
-			vid = e_value.BG_FOG_SHOW ||
-			vid = e_value.BG_WIND ||
+			vid = e_value.ENV_IMAGE_SHOW ||
+			vid = e_value.ENV_SKY_CLOUDS_SHOW ||
+			vid = e_value.ENV_GROUND_SHOW ||
+			vid = e_value.ENV_FOG_SHOW ||
+			vid = e_value.ENV_WIND ||
 			vid = e_value.CAM_LIGHT_MANAGEMENT ||
 			vid = e_value.CAM_ROTATE ||
 			vid = e_value.CAM_SHAKE ||

@@ -48,7 +48,7 @@ function app_startup_interface_bench()
 	list_item_add("typecameraeffects", e_bench_tab.CAMERA_EFFECTS, "", null, icons.WAND, null, bench_tab_select)
 	list_item_add("typelightsource", e_bench_tab.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_tab_select)
 	list_item_add("typepath", e_bench_tab.PATH, "", null, icons.PATH, null, bench_tab_select)
-	list_item_add("typebackground", e_bench_tab.ENVIRONMENT, "", null, icons.CLOUD, null, bench_tab_select)
+	list_item_add("typeenvironment", e_bench_tab.ENVIRONMENT, "", null, icons.CLOUD, null, bench_tab_select)
 	list_item_add("typeshape", e_bench_tab.SHAPE, "", null, icons.SHAPES, null, bench_tab_select)
 	
 	bench_advanced_tabs = [
