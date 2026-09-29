@@ -30,7 +30,7 @@ function action_lib_animate(place = false)
 		else
 		{
 			hobj = history_set(action_lib_animate)
-			hobj.value_default = array()
+			hobj.value_default = []
 			hobj.parent_save_id = save_id_get(app)
 			
 			if (temp_edit.type = e_temp_type.SCENERY && temp_edit.scenery != null && setting_scenery_replace_ground &&

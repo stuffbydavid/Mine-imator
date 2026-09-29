@@ -38,7 +38,7 @@ function app_startup_themes()
 		name = "classic"
 		dark = false
 		pattern = 0
-		accent_list = array()
+		accent_list = []
 		
 		var satdec, satdec2, valdec;
 		satdec = 5
@@ -109,7 +109,7 @@ function app_startup_themes()
 		name = "light"
 		dark = false
 		pattern = 0
-		accent_list = array()
+		accent_list = []
 		
 		array_add(accent_list, make_color_hsv(0, 199, 219))
 		array_add(accent_list, make_color_hsv(18, 255, 216))
@@ -160,7 +160,7 @@ function app_startup_themes()
 		name = "dark"
 		dark = true
 		pattern = 0
-		accent_list = array()
+		accent_list = []
 		array_add(accent_list, make_color_hsv(2, 137, 255))
 		array_add(accent_list, make_color_hsv(18, 159, 255))
 		array_add(accent_list, make_color_hsv(38, 154, 255))
@@ -212,7 +212,7 @@ function app_startup_themes()
 		name = "darker"
 		dark = true
 		pattern = 0
-		accent_list = array()
+		accent_list = []
 		
 		array_add(accent_list, make_color_hsv(2, 137, 255))
 		array_add(accent_list, make_color_hsv(18, 159, 255))

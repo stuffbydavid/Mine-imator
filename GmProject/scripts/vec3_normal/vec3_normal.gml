@@ -21,5 +21,5 @@ function vec3_normal(vec, angle)
 		return vec3_normalize(t)
 	}
 	else
-		return [lengthdir_x(1, angle), lengthdir_y(1, angle), 0]
+		return [ lengthdir_x(1, angle), lengthdir_y(1, angle), 0 ]
 }

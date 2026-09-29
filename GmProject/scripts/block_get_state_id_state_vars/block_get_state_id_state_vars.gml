@@ -1,6 +1,6 @@
 function block_get_state_id_state_vars(block, stateid)
 {
-	var vars = array();
+	var vars = [];
 	
 	if (block.states_map != null)
 	{

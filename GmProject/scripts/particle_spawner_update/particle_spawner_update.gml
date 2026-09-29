@@ -204,17 +204,17 @@ function particle_spawner_update(spawner)
 						// Get nearest point in path table
 						var att, pointdata, pointpos, pointdis, curdis, curdata, curpos, points;
 						att = value[e_value.ATTRACTOR]
-						curdata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-						pointdata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-						curpos = [0, 0, 0]
-						pointpos = [0, 0, 0]
+						curdata = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+						pointdata = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+						curpos = [ 0, 0, 0 ]
+						pointpos = [ 0, 0, 0 ]
 						pointdis = no_limit
 						points = array_length(att.path_table_matrix)
 						
 						for (var j = 0; j < points; j += 3)
 						{
 							curdata = att.path_table_matrix[j]
-							curpos = [curdata[X], curdata[Y], curdata[Z]]
+							curpos = [ curdata[X], curdata[Y], curdata[Z] ]
 							curdis = point3D_distance(pt.pos, curpos)
 							
 							// New nearest point?
@@ -378,7 +378,7 @@ function particle_spawner_update(spawner)
 									// Get nearest point in path table
 									var path, pointpos, pointdis, pointi, points, curdis, curpos;
 									path = temp.pc_spawn_region_path
-									pointpos = [0, 0, 0]
+									pointpos = [ 0, 0, 0 ]
 									pointdis = no_limit
 									pointi = 0
 									points = array_length(path.path_table_matrix)
@@ -400,7 +400,7 @@ function particle_spawner_update(spawner)
 									var t, v, d, p, dis, dir;
 									
 									// Direction to next point
-									t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]]
+									t = [ pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z] ]
 									
 									// Get nearest position between two points given the current particle position
 									v = vec3_sub(pt.pos, pointpos)

@@ -19,7 +19,7 @@ function builder_read_schematic_nbt(structuremap)
 	mc_builder.build_size_x = sizemap[|X]
 	mc_builder.build_size_y = sizemap[|Z]
 	mc_builder.build_size_z = sizemap[|Y]
-	log("Size", [mc_builder.build_size_x, mc_builder.build_size_y, mc_builder.build_size_z])
+	log("Size", [ mc_builder.build_size_x, mc_builder.build_size_y, mc_builder.build_size_z ])
 				
 	if (mc_builder.build_size_x <= 0 || 
 		mc_builder.build_size_y <= 0 || 
@@ -70,7 +70,7 @@ function builder_read_schematic_nbt(structuremap)
 					
 		if (!is_undefined(block))
 		{
-			var vars = array();
+			var vars = [];
 						
 			// ID specific vars
 			if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?mcid]))
@@ -165,7 +165,7 @@ function builder_read_schematic_nbt(structuremap)
 					if (is_undefined(block))
 						continue
 								
-					var vars = array();
+					var vars = [];
 								
 					// ID specific vars
 					if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?finalstate]))

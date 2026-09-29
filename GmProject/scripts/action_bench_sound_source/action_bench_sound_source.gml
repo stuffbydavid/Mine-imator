@@ -16,7 +16,7 @@ function action_bench_sound_source(source)
 		{
 			var res = res_list.list[|i];
 			if (res.type = e_res_type.SOUND)
-				ds_list_add(slist.list, [-1, res.display_name, res])
+				ds_list_add(slist.list, [ -1, res.display_name, res ])
 		}
 		
 		if (slist.selected != null && ds_list_find_index(res_list.list, slist.selected) < 0)

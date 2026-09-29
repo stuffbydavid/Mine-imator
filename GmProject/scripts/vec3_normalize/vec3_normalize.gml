@@ -10,5 +10,5 @@ function vec3_normalize(vec)
 	if (len = 0)
 		return vec
 	
-	return [vec[@ X] / len, vec[@ Y] / len, vec[@ Z] / len]
+	return [ vec[@ X] / len, vec[@ Y] / len, vec[@ Z] / len ]
 }

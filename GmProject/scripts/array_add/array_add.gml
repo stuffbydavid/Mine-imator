@@ -6,7 +6,7 @@
 function array_add(arr, val, merge = true)
 {
 	if (!is_array(arr))
-		arr = array()
+		arr = []
 	
 	if (is_array(val) && merge)
 	{

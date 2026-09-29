@@ -9,7 +9,7 @@ function tests_run()
 	singlerenderer = ""
 	debugpass = -1
 	debugpassall = false
-	argssettingsqueue = array()
+	argssettingsqueue = []
 	
 	// Use region, if available
 	if (!test_all_frames && timeline_region_start != null)
@@ -140,7 +140,7 @@ function tests_run()
 		{
 			var renderername, settingsqueue;
 			renderername = renderer_name_list[renderer_current]
-			settingsqueue = array()
+			settingsqueue = []
 			project_render_preset[renderer_current] = "test"
 
 			// Only test a specific renderer

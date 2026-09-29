@@ -44,7 +44,7 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 						{
 							// State
 							if (legacy_block_state_vars[curid, d] = null)
-								legacy_block_state_vars[curid, d] = array()
+								legacy_block_state_vars[curid, d] = []
 							
 							// ID
 							if (block != null)
@@ -67,7 +67,7 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 				{
 					// State
 					if (legacy_block_state_vars[curid, val] = null)
-						legacy_block_state_vars[curid, val] = array()
+						legacy_block_state_vars[curid, val] = []
 					
 					// ID
 					if (block != null)

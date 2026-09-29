@@ -18,5 +18,5 @@ function matrix_angle(mat)
         rz = 0
     }
     
-    return [rx, ry, rz]
+    return [ rx, ry, rz ]
 }

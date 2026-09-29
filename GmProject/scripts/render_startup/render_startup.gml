@@ -51,7 +51,7 @@ function render_startup()
 	shader_reset_uniforms()
 	
 	renderer_current = e_renderer.QUICK
-	renderer_name_list = array("quick", "standard", "realistic")
+	renderer_name_list = [ "quick", "standard", "realistic" ]
 	renderer_edit = -1
 	
 	render_view_current = null
@@ -240,7 +240,7 @@ function render_startup()
 	// Cascades for sun
 	globalvar render_cascades_count, render_cascade_ends, render_cascades, render_cascade_debug;
 	render_cascades_count = 3
-	render_cascade_ends = [0.0, 0.035, 0.15, 1.0]
+	render_cascade_ends = [ 0.0, 0.035, 0.15, 1.0 ]
 	render_cascade_debug = 1
 	
 	for (var i = 0; i < render_cascades_count; i++)

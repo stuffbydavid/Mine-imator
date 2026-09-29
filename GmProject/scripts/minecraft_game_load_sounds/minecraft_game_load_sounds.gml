@@ -44,7 +44,7 @@ function minecraft_game_load_sounds(soundslist, musiclist)
 							if (filter < 0) // Other
 								filter = ds_list_size(minecraft_music_filter_list) - 1
 							
-							ds_list_add(musiclist.list, [filter, parsed[1], hash])
+							ds_list_add(musiclist.list, [ filter, parsed[1], hash ])
 						}
 						else
 						{
@@ -52,7 +52,7 @@ function minecraft_game_load_sounds(soundslist, musiclist)
 							if (filter < 0) // Other
 								filter = ds_list_size(minecraft_sound_filter_list) - 1
 							
-							ds_list_add(soundslist.list, [filter, parsed[1], hash])
+							ds_list_add(soundslist.list, [ filter, parsed[1], hash ])
 						}
 					}
 				}

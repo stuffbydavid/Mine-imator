@@ -5,7 +5,7 @@
 function file_find(dir, exts)
 {
 	var ret, f;
-	ret = array()
+	ret = []
 	
 	f = file_find_first(dir + "*", 0)
 	while (f != "")

@@ -48,7 +48,7 @@ function tl_update_values()
 	keyframe_transition = value[e_value.TRANSITION]
 	
 	if (keyframe_transition = "bezier")
-		keyframe_progress_ease = ease_bezier_curve([0, 0], [value[e_value.EASE_IN_X], value[e_value.EASE_IN_Y]], [value[e_value.EASE_OUT_X], value[e_value.EASE_OUT_Y]], [1, 1], keyframe_progress)
+		keyframe_progress_ease = ease_bezier_curve([ 0, 0 ], [ value[e_value.EASE_IN_X], value[e_value.EASE_IN_Y] ], [ value[e_value.EASE_OUT_X], value[e_value.EASE_OUT_Y] ], [ 1, 1 ], keyframe_progress)
 	else
 		keyframe_progress_ease = ease(keyframe_transition, keyframe_progress)
 	

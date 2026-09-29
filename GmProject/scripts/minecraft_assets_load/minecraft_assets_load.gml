@@ -99,8 +99,8 @@ function minecraft_assets_load()
 				ds_list_copy(model_texture_list, modeltextureslist)
 				
 				// Block textures
-				var blocksheetsizekeylist = array("block_sheet_size", "block_32_sheet_size", "block_64_sheet_size");
-				var blocktexturekeylist = array("block_textures", "block_32_textures", "block_64_textures");
+				var blocksheetsizekeylist = [ "block_sheet_size", "block_32_sheet_size", "block_64_sheet_size" ];
+				var blocktexturekeylist = [ "block_textures", "block_32_textures", "block_64_textures" ];
 				for (var size = 0; size < e_block_sheet.static_amount; size++)
 				{
 					var sheetsize = load_assets_map[?blocksheetsizekeylist[size]];
@@ -178,8 +178,8 @@ function minecraft_assets_load()
 					ds_map_copy(block_texture_preview_map, blocktexturepreviewmap)
 				
 				// Item textures
-				var itemsheetsizekeylist = array("item_sheet_size", "item_32_sheet_size");
-				var itemtexturekeylist = array("item_textures", "item_32_textures");
+				var itemsheetsizekeylist = [ "item_sheet_size", "item_32_sheet_size" ];
+				var itemtexturekeylist = [ "item_textures", "item_32_textures" ];
 				for (var size = 0; size < e_item_sheet.amount; size++)
 				{
 					var itemsheetsize = load_assets_map[?itemsheetsizekeylist[size]];

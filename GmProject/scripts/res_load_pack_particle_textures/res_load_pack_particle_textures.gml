@@ -111,8 +111,8 @@ function res_load_pack_particle_textures()
 			for (var j = 0; j < ds_list_size(ptemp.texture_list); j++)
 			{
 				psprite = particle_texture_map[?ptemp.texture_list[|j]]
-				particle_texture_uvs_map[?ptemp.texture_list[|j]] = [(drawx / tempwidth), 0, (sprite_get_width(psprite) / tempwidth), (sprite_get_height(psprite) / tempheight)]
-				particle_texture_pixeluvs_map[?ptemp.texture_list[|j]] = [drawx, 0, sprite_get_width(psprite), sprite_get_height(psprite)]
+				particle_texture_uvs_map[?ptemp.texture_list[|j]] = [ (drawx / tempwidth), 0, (sprite_get_width(psprite) / tempwidth), (sprite_get_height(psprite) / tempheight) ]
+				particle_texture_pixeluvs_map[?ptemp.texture_list[|j]] = [ drawx, 0, sprite_get_width(psprite), sprite_get_height(psprite) ]
 				
 				draw_sprite(psprite, 0, drawx, 0)
 				drawx += sprite_get_width(psprite)

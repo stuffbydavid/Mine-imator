@@ -12,7 +12,7 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 	var rad, sunx, suny, moonx, moony, mouseon, sunmouseon, moonmouseon;
 	
 	if (textbox_jump)
-		ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
+		ds_list_add(textbox_list, [ tbx, content_tab, yy, content_y, content_height ])
 	
 	rad = 49
 	if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < content_y || yy - rad > content_y + content_height)

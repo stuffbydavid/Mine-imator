@@ -20,8 +20,8 @@ function draw_texture_part(tex, xx, yy, left, top, w, h, xsca = 1, ysca = 1, col
 		if (target = -1 || target = application_surface)
 		{
 			render_set_uniform_int("uClipEnabled", 1)
-			render_set_uniform("uClipBox", [shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height])
-			render_set_uniform("uScreenSize", [1, 1])
+			render_set_uniform("uClipBox", [ shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height ])
+			render_set_uniform("uScreenSize", [ 1, 1 ])
 		}
 		else
 			render_set_uniform_int("uClipEnabled", 0)

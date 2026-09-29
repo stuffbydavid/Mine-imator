@@ -38,7 +38,7 @@ function action_bench_schematic_folder(folder, update = true)
 		{
 			var files = file_find(dir, ".schematic");
 			if (is_undefined(files))
-				files = array()
+				files = []
 			
 			for (var i = 0; i < array_length(files); i++)
 				files[i] = filename_new_ext(filename_name(files[i]), "")

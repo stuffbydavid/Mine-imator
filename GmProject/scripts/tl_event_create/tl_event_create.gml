@@ -27,7 +27,7 @@ function tl_event_create()
 	model = null
 	model_file = null
 	model_name = ""
-	model_state = array()
+	model_state = []
 	model_tex = null
 	model_tex_material = null
 	model_tex_normal = null
@@ -162,12 +162,12 @@ function tl_event_create()
 	// Only used if the timeline is a banner special block in scenery
 	pattern_type = ""
 	pattern_base_color = null
-	pattern_pattern_list = array()
-	pattern_color_list = array()
+	pattern_pattern_list = []
+	pattern_color_list = []
 	pattern_skin = null
 	
-	text_vbuffer = [null, null]
-	text_texture = [null, null]
+	text_vbuffer = [ null, null ]
+	text_texture = [ null, null ]
 	text_string = ""
 	text_res = null
 	text_font = project_pack_res
@@ -232,9 +232,9 @@ function tl_event_create()
 	
 	// Inverse kinematics
 	ik_target_prev = null
-	ik_target_pos = [0, 0, 0]
+	ik_target_pos = [ 0, 0, 0 ]
 	ik_target_angle_prev = null
-	ik_target_angle_pos = [0, 0, 0]
+	ik_target_angle_pos = [ 0, 0, 0 ]
 	ik_matrix_prev = MAT_IDENTITY
 	ik_angle_offset_prev = 0
 	ik_blend_prev = 0

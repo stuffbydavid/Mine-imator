@@ -92,7 +92,7 @@ function action_build_place()
 			hobj.build_type = build_type
 			hobj.build_save_obj = history_save_bench(build_settings)
 			hobj.build_save_obj.hobj = hobj
-			hobj.value_default = array()
+			hobj.value_default = []
 			hobj.structure_save_id = ""
 
 			var targetparent, action;

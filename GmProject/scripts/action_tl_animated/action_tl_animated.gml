@@ -65,7 +65,7 @@ function action_tl_animated(enabled)
 	else
 	{
 		// Apply setting to all model parts
-		targets = array()
+		targets = []
 		with (obj_timeline)
 		{
 			if (!selected && type != e_tl_type.MODEL_PART)

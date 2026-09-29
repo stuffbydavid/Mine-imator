@@ -5,5 +5,5 @@ function vec4_homogenize(vec)
 {
 	gml_pragma("forceinline")
 	
-	return [vec[X] / vec[W], vec[Y] / vec[W], vec[Z] / vec[W]]
+	return [ vec[X] / vec[W], vec[Y] / vec[W], vec[Z] / vec[W] ]
 }

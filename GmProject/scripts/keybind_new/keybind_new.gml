@@ -9,5 +9,5 @@ function keybind_new(char, ctrl = false, shift = false, alt = false)
 	if (is_string(char))
 		char = ord(char)
 	
-	return [char, ctrl, shift, alt]
+	return [ char, ctrl, shift, alt ]
 }

@@ -167,7 +167,7 @@ function app_startup_interface_popups()
 		pattern_list_edit = ds_list_create()
 		pattern_color_list_edit = ds_list_create()
 		
-		pattern_sprites = array()
+		pattern_sprites = []
 		
 		res_ratio = 1
 		pattern_resource = project_pack_res

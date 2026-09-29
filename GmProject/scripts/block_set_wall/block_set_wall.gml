@@ -11,7 +11,7 @@ function block_set_wall()
 	south = 0
 	north = 0
 	variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
-	states = array("none", "low", "tall")
+	states = [ "none", "low", "tall" ]
 	tall = false
 	i = 0
 	
@@ -110,7 +110,7 @@ function block_set_wall()
 	else
 		up = "true"
 	
-	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", states[east], "west", states[west], "south", states[south], "north", states[north], "up", up))
+	block_state_id_current = block_get_state_id(block_current, [ "variant", variant, "east", states[east], "west", states[west], "south", states[south], "north", states[north], "up", up ])
 	
 	return 0
 }

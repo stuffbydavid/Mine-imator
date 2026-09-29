@@ -184,7 +184,7 @@ function project_load_find_save_ids(isproject = false)
 
 		if (!animated)
 		{
-			var references = [e_value.PATH_OBJ, e_value.ATTRACTOR, e_value.IK_TARGET, e_value.IK_TARGET_ANGLE, e_value.SOUND_OBJ, e_value.TEXT_FONT];
+			var references = [ e_value.PATH_OBJ, e_value.ATTRACTOR, e_value.IK_TARGET, e_value.IK_TARGET_ANGLE, e_value.SOUND_OBJ, e_value.TEXT_FONT ];
 			for (var v = 0; v < array_length(references); v++)
 			{
 				var index = references[v];
@@ -208,7 +208,7 @@ function project_load_find_save_ids(isproject = false)
 			parent = app
 		
 		if (!is_array(parent.tree_array)) // Initialize array
-			parent.tree_array = array()
+			parent.tree_array = []
 		
 		if (parent_tree_index < 0)
 			parent.tree_array[array_length(parent.tree_array)] = id

@@ -5,7 +5,7 @@ function app_startup_micro_animations()
 	globalvar microani_arr, current_microani, microani_list, microani_delete_list;
 	globalvar microanis, microani_hover, microani_click, microani_value, microani_prefix;
 	
-	microani_arr = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	microani_arr = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 	current_microani = null
 	
 	microani_list = ds_list_create()

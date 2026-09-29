@@ -17,12 +17,12 @@ function frustum() constructor
 	
 	static reset = function()
 	{
-		p[0] = [ 1,  0,  0, 1] // Left
-		p[1] = [-1,  0,  0, 1] // Right
-		p[2] = [ 0,  1,  0, 1] // Bottom
-		p[3] = [ 0, -1,  0, 1] // Top
-		p[4] = [ 0,  0,  1, 1] // Behind view
-		p[5] = [ 0,  0, -1, 1] // Beyond view
+		p[0] = [ 1,  0,  0, 1 ] // Left
+		p[1] = [ -1,  0,  0, 1 ] // Right
+		p[2] = [ 0,  1,  0, 1 ] // Bottom
+		p[3] = [ 0, -1,  0, 1 ] // Top
+		p[4] = [ 0,  0,  1, 1 ] // Behind view
+		p[5] = [ 0,  0, -1, 1 ] // Beyond view
 	}
 	
 	static build = function(matVP, ortho = false)
@@ -40,14 +40,14 @@ function frustum() constructor
 		var cornersv4, near;
 		near = (ortho ? -1 : 0)
 		cornersv4 = [
-			[-1,  1,    1, 1], // Far
-			[ 1,  1,    1, 1],
-			[ 1, -1,    1, 1],
-			[-1, -1,    1, 1],
-			[-1,  1, near, 1], // Near
-			[ 1,  1, near, 1],
-			[ 1, -1, near, 1],
-			[-1, -1, near, 1]
+			[ -1,  1,    1, 1 ], // Far
+			[ 1,  1,    1, 1 ],
+			[ 1, -1,    1, 1 ],
+			[ -1, -1,    1, 1 ],
+			[ -1,  1, near, 1 ], // Near
+			[ 1,  1, near, 1 ],
+			[ 1, -1, near, 1 ],
+			[ -1, -1, near, 1 ]
 		]
 		
 		for (var i = 0; i < 8; i++)
@@ -59,7 +59,7 @@ function frustum() constructor
 	
 	static add_triangle = function(corner1, corner2, corner3)
 	{
-		vbuffer_add_triangle(corners[corner1], corners[corner2], corners[corner3], [0, 0], [0, 0], [0, 0])
+		vbuffer_add_triangle(corners[corner1], corners[corner2], corners[corner3], [ 0, 0 ], [ 0, 0 ], [ 0, 0 ])
 	}
 	
 	static build_vbuffer = function(color = c_white)

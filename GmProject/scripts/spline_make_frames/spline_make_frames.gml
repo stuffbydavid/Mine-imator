@@ -8,7 +8,7 @@ function spline_make_frames(points, closed, smooth)
 	t = vec3_direction(p, pn)
 	
 	if (t[Z] = 1 || t[Z] = -1)
-		n = [t[Z], 0, 0]
+		n = [ t[Z], 0, 0 ]
 	else
 		n = vec3_normal(t, 0)
 	
@@ -54,8 +54,8 @@ function spline_make_frames(points, closed, smooth)
 		p = points[@ i - 1]
 		pn = points[@ 0]
 		
-		t = vec3_normalize([p[PATH_TANGENT_X] + pn[PATH_TANGENT_X], p[PATH_TANGENT_Y] + pn[PATH_TANGENT_Y], p[PATH_TANGENT_Z] + pn[PATH_TANGENT_Z]])
-		n = vec3_normalize([p[PATH_NORMAL_X] + pn[PATH_NORMAL_X], p[PATH_NORMAL_Y] + pn[PATH_NORMAL_Y], p[PATH_NORMAL_Z] + pn[PATH_NORMAL_Z]])
+		t = vec3_normalize([ p[PATH_TANGENT_X] + pn[PATH_TANGENT_X], p[PATH_TANGENT_Y] + pn[PATH_TANGENT_Y], p[PATH_TANGENT_Z] + pn[PATH_TANGENT_Z] ])
+		n = vec3_normalize([ p[PATH_NORMAL_X] + pn[PATH_NORMAL_X], p[PATH_NORMAL_Y] + pn[PATH_NORMAL_Y], p[PATH_NORMAL_Z] + pn[PATH_NORMAL_Z] ])
 		
 		for (j = X; j <= Z; j++)
 		{

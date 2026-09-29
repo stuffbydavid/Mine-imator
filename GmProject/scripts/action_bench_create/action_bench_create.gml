@@ -112,7 +112,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 			hobj.bench_tab = tab
 			hobj.spawn_amount = 0
 			hobj.open_editor = (button = e_bench_button.EDIT || button = e_bench_button.CREATE_AND_EDIT)
-			hobj.value_default = array()
+			hobj.value_default = []
 			hobj.parent_save_id = save_id_get(app)
 		}
 		
@@ -272,7 +272,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 						model_tex_normal = null
 						model_file = null
 						model_part = null
-						model_state = array()
+						model_state = []
 					}
 					
 					if (type != e_temp_type.ITEM)
@@ -287,7 +287,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 						block_tex = null
 						block_tex_material = null
 						block_tex_normal = null
-						block_state = array()
+						block_state = []
 					}
 					
 					if (type != e_temp_type.SCENERY && scenery != null)

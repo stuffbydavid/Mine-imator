@@ -4,11 +4,11 @@
 function render_update_cascades(dir)
 {
 	if (render_cascades_count = 1)
-		render_cascade_ends = [0.0, 0.05]
+		render_cascade_ends = [ 0.0, 0.05 ]
 	else if (render_cascades_count = 2)
-		render_cascade_ends = [0.0, 0.035, 0.2]
+		render_cascade_ends = [ 0.0, 0.035, 0.2 ]
 	else
-		render_cascade_ends = [0.0, 0.035, 0.15, 1.0]
+		render_cascade_ends = [ 0.0, 0.035, 0.15, 1.0 ]
 
 	// Get frustum for shadow cascades
 	var mv = matrix_create_lookat(cam_from, cam_to, cam_up);
@@ -38,8 +38,8 @@ function render_update_cascades(dir)
 		
 		// Get orthographic bounding box
 		var orthomin, orthomax;
-		orthomin = [no_limit, no_limit, no_limit, no_limit]
-		orthomax = [-no_limit, -no_limit, -no_limit, -no_limit]
+		orthomin = [ no_limit, no_limit, no_limit, no_limit ]
+		orthomax = [ -no_limit, -no_limit, -no_limit, -no_limit ]
 		
 		// Frustum is built in world-space, convert to light space
 		for (var j = 0; j < 8; j++)

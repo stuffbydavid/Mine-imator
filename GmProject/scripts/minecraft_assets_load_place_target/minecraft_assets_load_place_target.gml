@@ -16,13 +16,13 @@ function minecraft_assets_load_place_target(map)
 			else if (is_real(partmap[?"scale"]))
 				sca = vec3(value_get_real(partmap[?"scale"], 1))
 			
-			newmap[?key] = array(null,
+			newmap[?key] = [ null,
 				value_get_real(partmap[?"bend"], true),
 				value_get_point3D(partmap[?"position"], vec3(0)),
 				value_get_point3D(partmap[?"rotation"], vec3(0)),
 				sca,
 				value_get_real(partmap[?"lock"], false)
-			)
+			]
 		}
 		key = ds_map_find_next(map, key)
 	}

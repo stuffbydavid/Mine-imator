@@ -1549,7 +1549,6 @@
     {"id":{"name":"array_add","path":"scripts/array_add/array_add.yy",},},
     {"id":{"name":"array_copy_1d","path":"scripts/array_copy_1d/array_copy_1d.yy",},},
     {"id":{"name":"array_copy_2d","path":"scripts/array_copy_2d/array_copy_2d.yy",},},
-    {"id":{"name":"array","path":"scripts/array/array.yy",},},
     {"id":{"name":"asset_load","path":"scripts/asset_load/asset_load.yy",},},
     {"id":{"name":"audio_is_ready","path":"scripts/audio_is_ready/audio_is_ready.yy",},},
     {"id":{"name":"background_ground_startup","path":"scripts/background_ground_startup/background_ground_startup.yy",},},

@@ -102,14 +102,14 @@ function project_load_timeline(map)
 
 				if (ds_list_valid(patternlist))
 				{
-					pattern_pattern_list = array()
+					pattern_pattern_list = []
 					for (var p = 0; p < ds_list_size(patternlist); p++)
 						array_add(pattern_pattern_list, patternlist[|p])
 				}
 				
 				if (ds_list_valid(colorlist))
 				{
-					pattern_color_list = array()
+					pattern_color_list = []
 					for (var c = 0; c < ds_list_size(colorlist); c++)
 						array_add(pattern_color_list, minecraft_swatch_dyes.map[? colorlist[|c]])
 				}

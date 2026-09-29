@@ -82,7 +82,7 @@ function block_set_fence()
 		}
 	}
 	
-	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", east, "west", west, "south", south, "north", north))
+	block_state_id_current = block_get_state_id(block_current, [ "variant", variant, "east", east, "west", west, "south", south, "north", north ])
 	
 	return 0
 }

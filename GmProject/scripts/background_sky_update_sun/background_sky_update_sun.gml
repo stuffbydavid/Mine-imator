@@ -9,7 +9,7 @@ function background_sky_update_sun()
 	if (mod_fix(background_sky_time, 360) = 0)
 		background_light_data[0] += 0.1
 	
-	background_sun_direction = vec3_normalize([background_light_data[0], background_light_data[1], background_light_data[2]])
+	background_sun_direction = vec3_normalize([ background_light_data[0], background_light_data[1], background_light_data[2] ])
 	
 	background_light_data[3] = range / 2
 	background_light_data[4] = (color_get_red(background_sunlight_color_final) / 255) * background_sunlight_strength

@@ -26,8 +26,8 @@ function minecraft_assets_load_startup()
 	window_set_size(load_assets_width, load_assets_height)
 	alarm[0] = 1
 	
-	pattern_update = array()
-	armor_update = array()
+	pattern_update = []
+	armor_update = []
 	
 	// Create default resource
 	with (mc_res)

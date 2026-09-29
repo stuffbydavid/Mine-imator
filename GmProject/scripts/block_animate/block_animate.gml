@@ -48,7 +48,7 @@ function block_animate(root)
 			block_name = other.block.name
 			block_state = array_copy_1d(other.block.default_state)
 			if (is_string(other.variant))
-				state_vars_add(block_state, array("variant", other.variant))
+				state_vars_add(block_state, [ "variant", other.variant ])
 			tl_update_scenery_part()
 			
 			texture_filtering = true

@@ -12,9 +12,9 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 	{
 		var mat, reppos, defrot, defscale;
 		mat = matrix_get(matrix_world)
-		reppos = [0, 0, 0]
-		defrot = [0, 0, 0]
-		defscale = [1, 1, 1]
+		reppos = [ 0, 0, 0 ]
+		defrot = [ 0, 0, 0 ]
+		defscale = [ 1, 1, 1 ]
 		
 		for (reppos[X] = 0; reppos[X] < rep[X]; reppos[X]++)
 		{

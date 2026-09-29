@@ -31,9 +31,9 @@ function tab_frame_editor_item()
 		}
 		else
 		{
-			textures = [res.item_sheet_texture[e_item_sheet.SIZE16]]
-			sheetsizes = [res.item_sheet_size]
-			slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
+			textures = [ res.item_sheet_texture[e_item_sheet.SIZE16] ]
+			sheetsizes = [ res.item_sheet_size ]
+			slots = [ res.item_sheet_size[X] * res.item_sheet_size[Y] ]
 		}
 		
 		var hei = 304;

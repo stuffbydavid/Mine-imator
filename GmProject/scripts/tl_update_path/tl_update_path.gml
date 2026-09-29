@@ -83,8 +83,8 @@ function tl_update_path()
 	
 	if (path_length = 0)
 	{
-		path_table[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-		path_table_matrix[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+		path_table[0] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+		path_table_matrix[0] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 		return 0
 	}
 	

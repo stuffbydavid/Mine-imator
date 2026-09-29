@@ -8,7 +8,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend, posebend;
 	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf, placeupdate;
 	tlamount = ds_list_size(app.project_timeline_list)
-	posebend = [0, 0, 0]
+	posebend = [ 0, 0, 0 ]
 	placeupdate = false
 	
 	if (object_index = obj_timeline)
@@ -83,8 +83,8 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 					// Make rotation matrix and add path position
 					var n, t;
-					n = vec3_normalize([curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z]])
-					t = vec3_normalize([curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z]])
+					n = vec3_normalize([ curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z] ])
+					t = vec3_normalize([ curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z] ])
 				
 					mat = matrix_create_rotate_to(t, n)
 				
@@ -140,7 +140,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				matrix = matrix_multiply(part_joints_matrix[0], matrix)
 			
 			// Check body part model timeline is "Inherit pose" is enabled, look at parent of root model and search for matching body parts to inherit from
-			posebend = [0, 0, 0]
+			posebend = [ 0, 0, 0 ]
 			
 			if (updatepose && part_of != null && part_of.inherit_pose && part_of.parent != app)
 			{

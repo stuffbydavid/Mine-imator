@@ -57,7 +57,7 @@ function block_set_chorus_plant()
 			down = "true"
 	}
 	
-	block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "up", up, "down", down))
+	block_state_id_current = block_get_state_id(block_current, [ "east", east, "west", west, "south", south, "north", north, "up", up, "down", down ])
 	
 	return 0
 }

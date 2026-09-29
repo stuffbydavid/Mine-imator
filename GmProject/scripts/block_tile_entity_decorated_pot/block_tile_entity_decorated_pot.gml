@@ -22,10 +22,10 @@ function block_tile_entity_decorated_pot(map)
 	}
 	
 	var state = [];
-	array_add(state, ["sherd_front", sherdsarr[|0]])
-	array_add(state, ["sherd_left", sherdsarr[|1]])
-	array_add(state, ["sherd_right", sherdsarr[|2]])
-	array_add(state, ["sherd_back", sherdsarr[|3]])
+	array_add(state, [ "sherd_front", sherdsarr[|0] ])
+	array_add(state, [ "sherd_left", sherdsarr[|1] ])
+	array_add(state, [ "sherd_right", sherdsarr[|2] ])
+	array_add(state, [ "sherd_back", sherdsarr[|3] ])
 	
 	array_add(state, block_get_state_id_state_vars(block_current, block_state_id_current))
 	

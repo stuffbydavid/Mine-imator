@@ -6,5 +6,5 @@ function point2D_sub(pnt1, pnt2)
 {
 	gml_pragma("forceinline")
 	
-	return [pnt1[@ X] - pnt2[@ X], pnt1[@ Y] - pnt2[@ Y]]
+	return [ pnt1[@ X] - pnt2[@ X], pnt1[@ Y] - pnt2[@ Y] ]
 }

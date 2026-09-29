@@ -47,7 +47,7 @@ function project_load_resource(map)
 			world_box_start = value_get_point3D(map[?"world_box_start"])
 			world_box_end = value_get_point3D(map[?"world_box_end"])
 			world_filter_mode = value_get_real(map[?"world_filter_mode"])
-			world_filter_array = array()
+			world_filter_array = []
 			
 			var filterlist = map[?"world_filter_array"];
 			if (ds_list_valid(filterlist))

@@ -279,7 +279,7 @@ function settings_load()
 		{
 			var mainwindowmap = map[?"main_window"];
 			var rectlist = mainwindowmap[?"rect"];
-			setting_main_window_rect = array(rectlist[|0], rectlist[|1], rectlist[|2], rectlist[|3])
+			setting_main_window_rect = [ rectlist[|0], rectlist[|1], rectlist[|2], rectlist[|3] ]
 			setting_main_window_maximized = mainwindowmap[?"maximized"]
 		}
 		

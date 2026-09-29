@@ -18,9 +18,9 @@ function tab_object_editor_item()
 	}
 	else
 	{
-		textures = [res.item_sheet_texture[e_item_sheet.SIZE16]]
-		sheetsizes = [res.item_sheet_size]
-		slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
+		textures = [ res.item_sheet_texture[e_item_sheet.SIZE16] ]
+		sheetsizes = [ res.item_sheet_size ]
+		slots = [ res.item_sheet_size[X] * res.item_sheet_size[Y] ]
 	}
 	draw_texture_picker(obj_edit.item_slot, textures, slots, sheetsizes, dx, dy, dw, dh, tab.item_scroll, action_lib_item_slot, mc_assets.item_texture_list, null, null, true)
 			

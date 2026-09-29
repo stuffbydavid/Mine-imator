@@ -11,7 +11,7 @@ function view_shape_camera(tl)
 	view_shape_circle(point3D(0, -3, 6.5), 2.5, tl.matrix)
 	
 	// Lens
-	var lens = array(
+	var lens = [
 		point3D(-1.5, 5, -1.5),
 		point3D(-1.5, 5, 1.5),
 		point3D(1.5, 5, -1.5),
@@ -20,6 +20,6 @@ function view_shape_camera(tl)
 		point3D(-3, 9, 3),
 		point3D(3, 9, -3),
 		point3D(3, 9, 3)
-	);
+	];
 	view_shape_draw(lens, tl.matrix)
 }

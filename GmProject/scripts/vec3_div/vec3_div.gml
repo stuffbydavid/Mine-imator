@@ -7,7 +7,7 @@ function vec3_div(vec, d)
 	gml_pragma("forceinline")
 	
 	if (is_array(d))
-		return [vec[@ X] / d[@ X], vec[@ Y] / d[@ Y], vec[@ Z] / d[@ Z]]
+		return [ vec[@ X] / d[@ X], vec[@ Y] / d[@ Y], vec[@ Z] / d[@ Z] ]
 	else
-		return [vec[@ X] / d, vec[@ Y] / d, vec[@ Z] / d]
+		return [ vec[@ X] / d, vec[@ Y] / d, vec[@ Z] / d ]
 }

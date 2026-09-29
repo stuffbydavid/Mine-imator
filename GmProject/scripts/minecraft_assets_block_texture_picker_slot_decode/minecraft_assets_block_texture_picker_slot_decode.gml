@@ -6,12 +6,12 @@ function minecraft_assets_block_texture_picker_slot_decode(slot)
 	{
 		var slotcount = ds_list_size(mc_assets.block_texture_list[sheet]);
 		if (slot < slotcount)
-			return array(sheet, slot)
+			return [ sheet, slot ]
 		slot -= slotcount
 	}
 
 	if (slot < ds_list_size(mc_assets.block_texture_ani_list))
-		return [e_block_sheet.ANIMATED, slot]
+		return [ e_block_sheet.ANIMATED, slot ]
 	
-	return array(-1, -1)
+	return [ -1, -1 ]
 }

@@ -246,9 +246,9 @@ function tab_object_editor_particles()
 	{
 		tab_object_editor_particles_value("particleeditordestroylifespan", 
 			obj_edit.pc_destroy_at_time_seconds, obj_edit.pc_destroy_at_time_israndom, obj_edit.pc_destroy_at_time_random_min, obj_edit.pc_destroy_at_time_random_max,
-			0.05, 0, no_limit, array(5, 5, 10), 0, 
-			array(tab.tbx_destroy_at_time_seconds, tab.tbx_destroy_at_time_random), 
-			array(action_lib_pc_destroy_at_time_seconds, action_lib_pc_destroy_at_time_israndom, action_lib_pc_destroy_at_time_random_min, action_lib_pc_destroy_at_time_random_max),
+			0.05, 0, no_limit, [ 5, 5, 10 ], 0,
+			[ tab.tbx_destroy_at_time_seconds, tab.tbx_destroy_at_time_random ],
+			[ action_lib_pc_destroy_at_time_seconds, action_lib_pc_destroy_at_time_israndom, action_lib_pc_destroy_at_time_random_min, action_lib_pc_destroy_at_time_random_max ],
 			null, false, suffix)
 	}
 	
@@ -395,9 +395,9 @@ function tab_object_editor_particles()
 			// Animation speed
 			tab_object_editor_particles_value("particleeditortypespriteanimationspeed", 
 				ptype_edit.sprite_animation_speed, ptype_edit.sprite_animation_speed_israndom, ptype_edit.sprite_animation_speed_random_min, ptype_edit.sprite_animation_speed_random_max, 
-				0.04, 0, no_limit, array(5, 5, 10), 0, 
-				array(tab.tbx_type_sprite_animation_speed, tab.tbx_type_sprite_animation_speed_random), 
-				array(action_lib_pc_type_sprite_animation_speed, action_lib_pc_type_sprite_animation_speed_israndom, action_lib_pc_type_sprite_animation_speed_random_min, action_lib_pc_type_sprite_animation_speed_random_max),
+				0.04, 0, no_limit, [ 5, 5, 10 ], 0,
+				[ tab.tbx_type_sprite_animation_speed, tab.tbx_type_sprite_animation_speed_random ],
+				[ action_lib_pc_type_sprite_animation_speed, action_lib_pc_type_sprite_animation_speed_israndom, action_lib_pc_type_sprite_animation_speed_random_min, action_lib_pc_type_sprite_animation_speed_random_max ],
 				null, true, text_get("particleeditorfps"))
 			
 			// On animation end
@@ -454,9 +454,9 @@ function tab_object_editor_particles()
 		axis_edit = X
 		tab_object_editor_particles_value("particleeditortypeangle" + (ptype_edit.angle_extend ? "x" : "xyz"), 
 			ptype_edit.angle[X], ptype_edit.angle_israndom[X], ptype_edit.angle_random_min[X], ptype_edit.angle_random_max[X], 
-			0.25, -no_limit, no_limit, array(0, 0, 360), 0, 
-			array(tab.tbx_type_xangle, tab.tbx_type_xangle_random), 
-			array(action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max), 
+			0.25, -no_limit, no_limit, [ 0, 0, 360 ], 0,
+			[ tab.tbx_type_xangle, tab.tbx_type_xangle_random ],
+			[ action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max ],
 			content_capwid)
 		
 		if (ptype_edit.angle_extend)
@@ -464,39 +464,39 @@ function tab_object_editor_particles()
 			axis_edit = sn
 			tab_object_editor_particles_value("particleeditortypeangley", 
 				ptype_edit.angle[sn], ptype_edit.angle_israndom[sn], ptype_edit.angle_random_min[sn], ptype_edit.angle_random_max[sn], 
-				0.25, -no_limit, no_limit, array(0, 0, 360), 0, 
-				array(tab.tbx_type_yangle, tab.tbx_type_yangle_random), 
-				array(action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max), 
+				0.25, -no_limit, no_limit, [ 0, 0, 360 ], 0,
+				[ tab.tbx_type_yangle, tab.tbx_type_yangle_random ],
+				[ action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max ],
 				content_capwid)
 			
 			axis_edit = ud
 			tab_object_editor_particles_value("particleeditortypeanglez", 
 				ptype_edit.angle[ud], ptype_edit.angle_israndom[ud], ptype_edit.angle_random_min[ud], ptype_edit.angle_random_max[ud], 
-				0.25, -no_limit, no_limit, array(0, 0, 360), 0, 
-				array(tab.tbx_type_zangle, tab.tbx_type_zangle_random), 
-				array(action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max), 
+				0.25, -no_limit, no_limit, [ 0, 0, 360 ], 0,
+				[ tab.tbx_type_zangle, tab.tbx_type_zangle_random ],
+				[ action_lib_pc_type_angle, action_lib_pc_type_angle_israndom, action_lib_pc_type_angle_random_min, action_lib_pc_type_angle_random_max ],
 				content_capwid)
 		}
 		
 		tab_object_editor_particles_value("particleeditortypeanglespeed", 
 			ptype_edit.angle_speed, ptype_edit.angle_speed_israndom, ptype_edit.angle_speed_random_min, ptype_edit.angle_speed_random_max, 
-			0.25, -no_limit, no_limit, array(20, 0, 20), 0, 
-			array(tab.tbx_type_angle_speed, tab.tbx_type_angle_speed_random), 
-			array(action_lib_pc_type_angle_speed, action_lib_pc_type_angle_speed_israndom, action_lib_pc_type_angle_speed_random_min, action_lib_pc_type_angle_speed_random_max), 
+			0.25, -no_limit, no_limit, [ 20, 0, 20 ], 0,
+			[ tab.tbx_type_angle_speed, tab.tbx_type_angle_speed_random ],
+			[ action_lib_pc_type_angle_speed, action_lib_pc_type_angle_speed_israndom, action_lib_pc_type_angle_speed_random_min, action_lib_pc_type_angle_speed_random_max ],
 			content_capwid, true, suffix)
 		
 		tab_object_editor_particles_value("particleeditortypeanglespeedadd", 
 			ptype_edit.angle_speed_add, ptype_edit.angle_speed_add_israndom, ptype_edit.angle_speed_add_random_min, ptype_edit.angle_speed_add_random_max, 
-			0.25, -no_limit, no_limit, array(0, -1, 1), 0, 
-			array(tab.tbx_type_angle_speed_add, tab.tbx_type_angle_speed_add_random), 
-			array(action_lib_pc_type_angle_speed_add, action_lib_pc_type_angle_speed_add_israndom, action_lib_pc_type_angle_speed_add_random_min, action_lib_pc_type_angle_speed_add_random_max), 
+			0.25, -no_limit, no_limit, [ 0, -1, 1 ], 0,
+			[ tab.tbx_type_angle_speed_add, tab.tbx_type_angle_speed_add_random ],
+			[ action_lib_pc_type_angle_speed_add, action_lib_pc_type_angle_speed_add_israndom, action_lib_pc_type_angle_speed_add_random_min, action_lib_pc_type_angle_speed_add_random_max ],
 			content_capwid, true, suffix)
 		
 		tab_object_editor_particles_value("particleeditortypeanglespeedmul", 
 			ptype_edit.angle_speed_mul, ptype_edit.angle_speed_mul_israndom, ptype_edit.angle_speed_mul_random_min, ptype_edit.angle_speed_mul_random_max, 
-			0.25, 0, no_limit, array(1, 0.75, 0.9), 0, 
-			array(tab.tbx_type_angle_speed_mul, tab.tbx_type_angle_speed_mul_random), 
-			array(action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max), 
+			0.25, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+			[ tab.tbx_type_angle_speed_mul, tab.tbx_type_angle_speed_mul_random ],
+			[ action_lib_pc_type_angle_speed_mul, action_lib_pc_type_angle_speed_mul_israndom, action_lib_pc_type_angle_speed_mul_random_min, action_lib_pc_type_angle_speed_mul_random_max ],
 			content_capwid, true, suffix)
 		
 		tab_collapse_end()
@@ -527,9 +527,9 @@ function tab_object_editor_particles()
 		axis_edit = X
 		tab_object_editor_particles_value("particleeditortypespeed" + (ptype_edit.spd_extend ? "x" : "xyz"), 
 			ptype_edit.spd[X], ptype_edit.spd_israndom[X], ptype_edit.spd_random_min[X], ptype_edit.spd_random_max[X], 
-			0.25, -no_limit, no_limit, array(0, -20, 20), 0, 
-			array(tab.tbx_type_xspd, tab.tbx_type_xspd_random), 
-			array(action_lib_pc_type_spd, action_lib_pc_type_spd_israndom, action_lib_pc_type_spd_random_min, action_lib_pc_type_spd_random_max), 
+			0.25, -no_limit, no_limit, [ 0, -20, 20 ], 0,
+			[ tab.tbx_type_xspd, tab.tbx_type_xspd_random ],
+			[ action_lib_pc_type_spd, action_lib_pc_type_spd_israndom, action_lib_pc_type_spd_random_min, action_lib_pc_type_spd_random_max ],
 			content_capwid, true, suffix)
 		
 		if (ptype_edit.spd_extend)
@@ -537,17 +537,17 @@ function tab_object_editor_particles()
 			axis_edit = sn
 			tab_object_editor_particles_value("particleeditortypespeedy", 
 				ptype_edit.spd[sn], ptype_edit.spd_israndom[sn], ptype_edit.spd_random_min[sn], ptype_edit.spd_random_max[sn], 
-				0.25, -no_limit, no_limit, array(0, -20, 20), 0, 
-				array(tab.tbx_type_yspd, tab.tbx_type_yspd_random), 
-				array(action_lib_pc_type_spd, action_lib_pc_type_spd_israndom, action_lib_pc_type_spd_random_min, action_lib_pc_type_spd_random_max), 
+				0.25, -no_limit, no_limit, [ 0, -20, 20 ], 0,
+				[ tab.tbx_type_yspd, tab.tbx_type_yspd_random ],
+				[ action_lib_pc_type_spd, action_lib_pc_type_spd_israndom, action_lib_pc_type_spd_random_min, action_lib_pc_type_spd_random_max ],
 				content_capwid, true, suffix)
 			
 			axis_edit = ud
 			tab_object_editor_particles_value("particleeditortypespeedz", 
 				ptype_edit.spd[ud], ptype_edit.spd_israndom[ud], ptype_edit.spd_random_min[ud], ptype_edit.spd_random_max[ud], 
-				0.25, -no_limit, no_limit, array(0, -20, 20), 0, 
-				array(tab.tbx_type_zspd, tab.tbx_type_zspd_random), 
-				array(action_lib_pc_type_spd, action_lib_pc_type_spd_israndom, action_lib_pc_type_spd_random_min, action_lib_pc_type_spd_random_max), 
+				0.25, -no_limit, no_limit, [ 0, -20, 20 ], 0,
+				[ tab.tbx_type_zspd, tab.tbx_type_zspd_random ],
+				[ action_lib_pc_type_spd, action_lib_pc_type_spd_israndom, action_lib_pc_type_spd_random_min, action_lib_pc_type_spd_random_max ],
 				content_capwid, true, suffix)
 		}
 		
@@ -556,9 +556,9 @@ function tab_object_editor_particles()
 		
 		tab_object_editor_particles_value("particleeditortypespeed" + (ptype_edit.spd_extend ? "x" : "xyz") + "add", 
 			ptype_edit.spd_add[X], ptype_edit.spd_add_israndom[X], ptype_edit.spd_add_random_min[X], ptype_edit.spd_add_random_max[X], 
-			0.1, -no_limit, no_limit, array(0, -1, 1), 0, 
-			array(tab.tbx_type_xspd_add, tab.tbx_type_xspd_add_random), 
-			array(action_lib_pc_type_spd_add, action_lib_pc_type_spd_add_israndom, action_lib_pc_type_spd_add_random_min, action_lib_pc_type_spd_add_random_max), 
+			0.1, -no_limit, no_limit, [ 0, -1, 1 ], 0,
+			[ tab.tbx_type_xspd_add, tab.tbx_type_xspd_add_random ],
+			[ action_lib_pc_type_spd_add, action_lib_pc_type_spd_add_israndom, action_lib_pc_type_spd_add_random_min, action_lib_pc_type_spd_add_random_max ],
 			content_capwid, true, suffix)
 		
 		if (ptype_edit.spd_extend)
@@ -566,17 +566,17 @@ function tab_object_editor_particles()
 			axis_edit = sn
 			tab_object_editor_particles_value("particleeditortypespeedyadd", 
 				ptype_edit.spd_add[sn], ptype_edit.spd_add_israndom[sn], ptype_edit.spd_add_random_min[sn], ptype_edit.spd_add_random_max[sn], 
-				0.1, -no_limit, no_limit, array(0, -1, 1), 0, 
-				array(tab.tbx_type_yspd_add, tab.tbx_type_yspd_add_random), 
-				array(action_lib_pc_type_spd_add, action_lib_pc_type_spd_add_israndom, action_lib_pc_type_spd_add_random_min, action_lib_pc_type_spd_add_random_max), 
+				0.1, -no_limit, no_limit, [ 0, -1, 1 ], 0,
+				[ tab.tbx_type_yspd_add, tab.tbx_type_yspd_add_random ],
+				[ action_lib_pc_type_spd_add, action_lib_pc_type_spd_add_israndom, action_lib_pc_type_spd_add_random_min, action_lib_pc_type_spd_add_random_max ],
 				content_capwid, true, suffix)
 			
 			axis_edit = ud
 			tab_object_editor_particles_value("particleeditortypespeedzadd", 
 				ptype_edit.spd_add[ud], ptype_edit.spd_add_israndom[ud], ptype_edit.spd_add_random_min[ud], ptype_edit.spd_add_random_max[ud], 
-				0.1, -no_limit, no_limit, array(0, -1, 1), 0, 
-				array(tab.tbx_type_zspd_add, tab.tbx_type_zspd_add_random), 
-				array(action_lib_pc_type_spd_add, action_lib_pc_type_spd_add_israndom, action_lib_pc_type_spd_add_random_min, action_lib_pc_type_spd_add_random_max), 
+				0.1, -no_limit, no_limit, [ 0, -1, 1 ], 0,
+				[ tab.tbx_type_zspd_add, tab.tbx_type_zspd_add_random ],
+				[ action_lib_pc_type_spd_add, action_lib_pc_type_spd_add_israndom, action_lib_pc_type_spd_add_random_min, action_lib_pc_type_spd_add_random_max ],
 				content_capwid, true, suffix)
 		}
 		
@@ -584,9 +584,9 @@ function tab_object_editor_particles()
 		axis_edit = X
 		tab_object_editor_particles_value("particleeditortypespeed" + (ptype_edit.spd_extend ? "x" : "xyz") + "mul", 
 			ptype_edit.spd_mul[X], ptype_edit.spd_mul_israndom[X], ptype_edit.spd_mul_random_min[X], ptype_edit.spd_mul_random_max[X], 
-			0.005, 0, no_limit, array(1, 0.75, 0.9), 0, 
-			array(tab.tbx_type_xspd_mul, tab.tbx_type_xspd_mul_random), 
-			array(action_lib_pc_type_spd_mul, action_lib_pc_type_spd_mul_israndom, action_lib_pc_type_spd_mul_random_min, action_lib_pc_type_spd_mul_random_max), 
+			0.005, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+			[ tab.tbx_type_xspd_mul, tab.tbx_type_xspd_mul_random ],
+			[ action_lib_pc_type_spd_mul, action_lib_pc_type_spd_mul_israndom, action_lib_pc_type_spd_mul_random_min, action_lib_pc_type_spd_mul_random_max ],
 			content_capwid, true, suffix)
 		
 		if (ptype_edit.spd_extend)
@@ -594,17 +594,17 @@ function tab_object_editor_particles()
 			axis_edit = sn
 			tab_object_editor_particles_value("particleeditortypespeedymul", 
 				ptype_edit.spd_mul[sn], ptype_edit.spd_mul_israndom[sn], ptype_edit.spd_mul_random_min[sn], ptype_edit.spd_mul_random_max[sn], 
-				0.005, 0, no_limit, array(1, 0.75, 0.9), 0, 
-				array(tab.tbx_type_yspd_mul, tab.tbx_type_yspd_mul_random), 
-				array(action_lib_pc_type_spd_mul, action_lib_pc_type_spd_mul_israndom, action_lib_pc_type_spd_mul_random_min, action_lib_pc_type_spd_mul_random_max), 
+				0.005, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+				[ tab.tbx_type_yspd_mul, tab.tbx_type_yspd_mul_random ],
+				[ action_lib_pc_type_spd_mul, action_lib_pc_type_spd_mul_israndom, action_lib_pc_type_spd_mul_random_min, action_lib_pc_type_spd_mul_random_max ],
 				content_capwid, true, suffix)
 			
 			axis_edit = ud
 			tab_object_editor_particles_value("particleeditortypespeedzmul", 
 				ptype_edit.spd_mul[ud], ptype_edit.spd_mul_israndom[ud], ptype_edit.spd_mul_random_min[ud], ptype_edit.spd_mul_random_max[ud], 
-				0.005, 0, no_limit, array(1, 0.75, 0.9), 0, 
-				array(tab.tbx_type_zspd_mul, tab.tbx_type_zspd_mul_random), 
-				array(action_lib_pc_type_spd_mul, action_lib_pc_type_spd_mul_israndom, action_lib_pc_type_spd_mul_random_min, action_lib_pc_type_spd_mul_random_max), 
+				0.005, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+				[ tab.tbx_type_zspd_mul, tab.tbx_type_zspd_mul_random ],
+				[ action_lib_pc_type_spd_mul, action_lib_pc_type_spd_mul_israndom, action_lib_pc_type_spd_mul_random_min, action_lib_pc_type_spd_mul_random_max ],
 				content_capwid, true, suffix)
 		}
 		
@@ -654,9 +654,9 @@ function tab_object_editor_particles()
 				axis_edit = X
 				tab_object_editor_particles_value("particleeditortyperotation" + (ptype_edit.rot_extend ? "x" : "xyz"), 
 					ptype_edit.rot[X], ptype_edit.rot_israndom[X], ptype_edit.rot_random_min[X], ptype_edit.rot_random_max[X], 
-					0.2, -no_limit, no_limit, array(0, 0, 360), 0, 
-					array(tab.tbx_type_xrot, tab.tbx_type_xrot_random), 
-					array(action_lib_pc_type_rot, action_lib_pc_type_rot_israndom, action_lib_pc_type_rot_random_min, action_lib_pc_type_rot_random_max), 
+					0.2, -no_limit, no_limit, [ 0, 0, 360 ], 0,
+					[ tab.tbx_type_xrot, tab.tbx_type_xrot_random ],
+					[ action_lib_pc_type_rot, action_lib_pc_type_rot_israndom, action_lib_pc_type_rot_random_min, action_lib_pc_type_rot_random_max ],
 					content_capwid)
 				
 				if (ptype_edit.rot_extend)
@@ -664,17 +664,17 @@ function tab_object_editor_particles()
 					axis_edit = sn
 					tab_object_editor_particles_value("particleeditortyperotationy", 
 						ptype_edit.rot[sn], ptype_edit.rot_israndom[sn], ptype_edit.rot_random_min[sn], ptype_edit.rot_random_max[sn], 
-						0.2, -no_limit, no_limit, array(0, 0, 360), 0, 
-						array(tab.tbx_type_yrot, tab.tbx_type_yrot_random), 
-						array(action_lib_pc_type_rot, action_lib_pc_type_rot_israndom, action_lib_pc_type_rot_random_min, action_lib_pc_type_rot_random_max), 
+						0.2, -no_limit, no_limit, [ 0, 0, 360 ], 0,
+						[ tab.tbx_type_yrot, tab.tbx_type_yrot_random ],
+						[ action_lib_pc_type_rot, action_lib_pc_type_rot_israndom, action_lib_pc_type_rot_random_min, action_lib_pc_type_rot_random_max ],
 						content_capwid)
 					
 					axis_edit = ud
 					tab_object_editor_particles_value("particleeditortyperotationz", 
 						ptype_edit.rot[ud], ptype_edit.rot_israndom[ud], ptype_edit.rot_random_min[ud], ptype_edit.rot_random_max[ud], 
-						0.2, -no_limit, no_limit, array(0, 0, 360), 0, 
-						array(tab.tbx_type_zrot, tab.tbx_type_zrot_random), 
-						array(action_lib_pc_type_rot, action_lib_pc_type_rot_israndom, action_lib_pc_type_rot_random_min, action_lib_pc_type_rot_random_max), 
+						0.2, -no_limit, no_limit, [ 0, 0, 360 ], 0,
+						[ tab.tbx_type_zrot, tab.tbx_type_zrot_random ],
+						[ action_lib_pc_type_rot, action_lib_pc_type_rot_israndom, action_lib_pc_type_rot_random_min, action_lib_pc_type_rot_random_max ],
 						content_capwid)
 				}
 				
@@ -706,9 +706,9 @@ function tab_object_editor_particles()
 				axis_edit = X
 				tab_object_editor_particles_value("particleeditortyperotationspeed" + (ptype_edit.rot_spd_extend ? "x" : "xyz"), 
 					ptype_edit.rot_spd[X], ptype_edit.rot_spd_israndom[X], ptype_edit.rot_spd_random_min[X], ptype_edit.rot_spd_random_max[X], 
-					0.5, -no_limit, no_limit, array(0, -180, 180), 0, 
-					array(tab.tbx_type_xrot_spd, tab.tbx_type_xrot_spd_random), 
-					array(action_lib_pc_type_rot_spd, action_lib_pc_type_rot_spd_israndom, action_lib_pc_type_rot_spd_random_min, action_lib_pc_type_rot_spd_random_max), 
+					0.5, -no_limit, no_limit, [ 0, -180, 180 ], 0,
+					[ tab.tbx_type_xrot_spd, tab.tbx_type_xrot_spd_random ],
+					[ action_lib_pc_type_rot_spd, action_lib_pc_type_rot_spd_israndom, action_lib_pc_type_rot_spd_random_min, action_lib_pc_type_rot_spd_random_max ],
 					content_capwid, true, suffix)
 				
 				if (ptype_edit.rot_spd_extend)
@@ -716,17 +716,17 @@ function tab_object_editor_particles()
 					axis_edit = sn
 					tab_object_editor_particles_value("particleeditortyperotationspeedy", 
 						ptype_edit.rot_spd[sn], ptype_edit.rot_spd_israndom[sn], ptype_edit.rot_spd_random_min[sn], ptype_edit.rot_spd_random_max[sn], 
-						0.5, -no_limit, no_limit, array(0, -180, 180), 0, 
-						array(tab.tbx_type_yrot_spd, tab.tbx_type_yrot_spd_random), 
-						array(action_lib_pc_type_rot_spd, action_lib_pc_type_rot_spd_israndom, action_lib_pc_type_rot_spd_random_min, action_lib_pc_type_rot_spd_random_max), 
+						0.5, -no_limit, no_limit, [ 0, -180, 180 ], 0,
+						[ tab.tbx_type_yrot_spd, tab.tbx_type_yrot_spd_random ],
+						[ action_lib_pc_type_rot_spd, action_lib_pc_type_rot_spd_israndom, action_lib_pc_type_rot_spd_random_min, action_lib_pc_type_rot_spd_random_max ],
 						content_capwid, true, suffix)
 					
 					axis_edit = ud
 					tab_object_editor_particles_value("particleeditortyperotationspeedz", 
 						ptype_edit.rot_spd[ud], ptype_edit.rot_spd_israndom[ud], ptype_edit.rot_spd_random_min[ud], ptype_edit.rot_spd_random_max[ud], 
-						0.5, -no_limit, no_limit, array(0, -180, 180), 0, 
-						array(tab.tbx_type_zrot_spd, tab.tbx_type_zrot_spd_random), 
-						array(action_lib_pc_type_rot_spd, action_lib_pc_type_rot_spd_israndom, action_lib_pc_type_rot_spd_random_min, action_lib_pc_type_rot_spd_random_max), 
+						0.5, -no_limit, no_limit, [ 0, -180, 180 ], 0,
+						[ tab.tbx_type_zrot_spd, tab.tbx_type_zrot_spd_random ],
+						[ action_lib_pc_type_rot_spd, action_lib_pc_type_rot_spd_israndom, action_lib_pc_type_rot_spd_random_min, action_lib_pc_type_rot_spd_random_max ],
 						content_capwid, true, suffix)
 				}
 				
@@ -734,9 +734,9 @@ function tab_object_editor_particles()
 				axis_edit = X
 				tab_object_editor_particles_value("particleeditortyperotationspeed" + (ptype_edit.rot_spd_extend ? "x" : "xyz") + "add", 
 					ptype_edit.rot_spd_add[X], ptype_edit.rot_spd_add_israndom[X], ptype_edit.rot_spd_add_random_min[X], ptype_edit.rot_spd_add_random_max[X], 
-					0.1, -no_limit, no_limit, array(0, -10, 10), 0, 
-					array(tab.tbx_type_xrot_spd_add, tab.tbx_type_xrot_spd_add_random), 
-					array(action_lib_pc_type_rot_spd_add, action_lib_pc_type_rot_spd_add_israndom, action_lib_pc_type_rot_spd_add_random_min, action_lib_pc_type_rot_spd_add_random_max), 
+					0.1, -no_limit, no_limit, [ 0, -10, 10 ], 0,
+					[ tab.tbx_type_xrot_spd_add, tab.tbx_type_xrot_spd_add_random ],
+					[ action_lib_pc_type_rot_spd_add, action_lib_pc_type_rot_spd_add_israndom, action_lib_pc_type_rot_spd_add_random_min, action_lib_pc_type_rot_spd_add_random_max ],
 					content_capwid, true, suffix)
 				
 				if (ptype_edit.rot_spd_extend)
@@ -744,17 +744,17 @@ function tab_object_editor_particles()
 					axis_edit = sn
 					tab_object_editor_particles_value("particleeditortyperotationspeedyadd", 
 						ptype_edit.rot_spd_add[sn], ptype_edit.rot_spd_add_israndom[sn], ptype_edit.rot_spd_add_random_min[sn], ptype_edit.rot_spd_add_random_max[sn], 
-						0.05, -no_limit, no_limit, array(0, -10, 10), 0, 
-						array(tab.tbx_type_yrot_spd_add, tab.tbx_type_yrot_spd_add_random), 
-						array(action_lib_pc_type_rot_spd_add, action_lib_pc_type_rot_spd_add_israndom, action_lib_pc_type_rot_spd_add_random_min, action_lib_pc_type_rot_spd_add_random_max), 
+						0.05, -no_limit, no_limit, [ 0, -10, 10 ], 0,
+						[ tab.tbx_type_yrot_spd_add, tab.tbx_type_yrot_spd_add_random ],
+						[ action_lib_pc_type_rot_spd_add, action_lib_pc_type_rot_spd_add_israndom, action_lib_pc_type_rot_spd_add_random_min, action_lib_pc_type_rot_spd_add_random_max ],
 						content_capwid, true, suffix)
 					
 					axis_edit = ud
 					tab_object_editor_particles_value("particleeditortyperotationspeedzadd", 
 						ptype_edit.rot_spd_add[ud], ptype_edit.rot_spd_add_israndom[ud], ptype_edit.rot_spd_add_random_min[ud], ptype_edit.rot_spd_add_random_max[ud], 
-						0.1, -no_limit, no_limit, array(0, -10, 10), 0, 
-						array(tab.tbx_type_zrot_spd_add, tab.tbx_type_zrot_spd_add_random), 
-						array(action_lib_pc_type_rot_spd_add, action_lib_pc_type_rot_spd_add_israndom, action_lib_pc_type_rot_spd_add_random_min, action_lib_pc_type_rot_spd_add_random_max), 
+						0.1, -no_limit, no_limit, [ 0, -10, 10 ], 0,
+						[ tab.tbx_type_zrot_spd_add, tab.tbx_type_zrot_spd_add_random ],
+						[ action_lib_pc_type_rot_spd_add, action_lib_pc_type_rot_spd_add_israndom, action_lib_pc_type_rot_spd_add_random_min, action_lib_pc_type_rot_spd_add_random_max ],
 						content_capwid, true, suffix)
 				}
 				
@@ -762,9 +762,9 @@ function tab_object_editor_particles()
 				axis_edit = X
 				tab_object_editor_particles_value("particleeditortyperotationspeed" + (ptype_edit.rot_spd_extend ? "x" : "xyz") + "mul", 
 					ptype_edit.rot_spd_mul[X], ptype_edit.rot_spd_mul_israndom[X], ptype_edit.rot_spd_mul_random_min[X], ptype_edit.rot_spd_mul_random_max[X], 
-					0.005, 0, no_limit, array(1, 0.75, 0.9), 0, 
-					array(tab.tbx_type_xrot_spd_mul, tab.tbx_type_xrot_spd_mul_random), 
-					array(action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max), 
+					0.005, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+					[ tab.tbx_type_xrot_spd_mul, tab.tbx_type_xrot_spd_mul_random ],
+					[ action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max ],
 					content_capwid, true, suffix)
 				
 				if (ptype_edit.rot_spd_extend)
@@ -772,17 +772,17 @@ function tab_object_editor_particles()
 					axis_edit = sn
 					tab_object_editor_particles_value("particleeditortyperotationspeedymul", 
 						ptype_edit.rot_spd_mul[sn], ptype_edit.rot_spd_mul_israndom[sn], ptype_edit.rot_spd_mul_random_min[sn], ptype_edit.rot_spd_mul_random_max[sn], 
-						0.005, 0, no_limit, array(1, 0.75, 0.9), 0, 
-						array(tab.tbx_type_yrot_spd_mul, tab.tbx_type_yrot_spd_mul_random), 
-						array(action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max), 
+						0.005, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+						[ tab.tbx_type_yrot_spd_mul, tab.tbx_type_yrot_spd_mul_random ],
+						[ action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max ],
 						content_capwid, true, suffix)
 					
 					axis_edit = ud
 					tab_object_editor_particles_value("particleeditortyperotationspeedzmul", 
 						ptype_edit.rot_spd_mul[ud], ptype_edit.rot_spd_mul_israndom[ud], ptype_edit.rot_spd_mul_random_min[ud], ptype_edit.rot_spd_mul_random_max[ud], 
-						0.005, 0, no_limit, array(1, 0.75, 0.9), 0, 
-						array(tab.tbx_type_zrot_spd_mul, tab.tbx_type_zrot_spd_mul_random), 
-						array(action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max), 
+						0.005, 0, no_limit, [ 1, 0.75, 0.9 ], 0,
+						[ tab.tbx_type_zrot_spd_mul, tab.tbx_type_zrot_spd_mul_random ],
+						[ action_lib_pc_type_rot_spd_mul, action_lib_pc_type_rot_spd_mul_israndom, action_lib_pc_type_rot_spd_mul_random_min, action_lib_pc_type_rot_spd_mul_random_max ],
 						content_capwid, true, suffix)
 				}
 				
@@ -797,17 +797,17 @@ function tab_object_editor_particles()
 			
 			tab_object_editor_particles_value("particleeditortypespriteangle", 
 				ptype_edit.sprite_angle, ptype_edit.sprite_angle_israndom, ptype_edit.sprite_angle_random_min, ptype_edit.sprite_angle_random_max, 
-				0.2, 0, no_limit, array(0, 0, 360), 0, 
-				array(tab.tbx_type_sprite_angle, tab.tbx_type_sprite_angle_random), 
-				array(action_lib_pc_type_sprite_angle, action_lib_pc_type_sprite_angle_israndom, action_lib_pc_type_sprite_angle_random_min, action_lib_pc_type_sprite_angle_random_max), 
+				0.2, 0, no_limit, [ 0, 0, 360 ], 0,
+				[ tab.tbx_type_sprite_angle, tab.tbx_type_sprite_angle_random ],
+				[ action_lib_pc_type_sprite_angle, action_lib_pc_type_sprite_angle_israndom, action_lib_pc_type_sprite_angle_random_min, action_lib_pc_type_sprite_angle_random_max ],
 				content_capwid)
 			
 			// Angle change
 			tab_object_editor_particles_value("particleeditortypespriteangleadd", 
 				ptype_edit.sprite_angle_add, ptype_edit.sprite_angle_add_israndom, ptype_edit.sprite_angle_add_random_min, ptype_edit.sprite_angle_add_random_max, 
-				0.1, -no_limit, no_limit, array(0, -90, 90), 0, 
-				array(tab.tbx_type_sprite_angle_add, tab.tbx_type_sprite_angle_add_random), 
-				array(action_lib_pc_type_sprite_angle_add, action_lib_pc_type_sprite_angle_add_israndom, action_lib_pc_type_sprite_angle_add_random_min, action_lib_pc_type_sprite_angle_add_random_max), 
+				0.1, -no_limit, no_limit, [ 0, -90, 90 ], 0,
+				[ tab.tbx_type_sprite_angle_add, tab.tbx_type_sprite_angle_add_random ],
+				[ action_lib_pc_type_sprite_angle_add, action_lib_pc_type_sprite_angle_add_israndom, action_lib_pc_type_sprite_angle_add_random_min, action_lib_pc_type_sprite_angle_add_random_max ],
 				content_capwid, true, suffix)
 		}
 	}
@@ -827,17 +827,17 @@ function tab_object_editor_particles()
 	
 	tab_object_editor_particles_value("particleeditortypeinitialscale", 
 		ptype_edit.scale, ptype_edit.scale_israndom, ptype_edit.scale_random_min, ptype_edit.scale_random_max, 
-		0.01, 0, no_limit, array(1, 0.5, 2), 0, 
-		array(tab.tbx_type_scale, tab.tbx_type_scale_random), 
-		array(action_lib_pc_type_scale, action_lib_pc_type_scale_israndom, action_lib_pc_type_scale_random_min, action_lib_pc_type_scale_random_max), 
+		0.01, 0, no_limit, [ 1, 0.5, 2 ], 0,
+		[ tab.tbx_type_scale, tab.tbx_type_scale_random ],
+		[ action_lib_pc_type_scale, action_lib_pc_type_scale_israndom, action_lib_pc_type_scale_random_min, action_lib_pc_type_scale_random_max ],
 		content_capwid)
 	
 	// Scale change
 	tab_object_editor_particles_value("particleeditortypescaleadd", 
 		ptype_edit.scale_add, ptype_edit.scale_add_israndom, ptype_edit.scale_add_random_min, ptype_edit.scale_add_random_max, 
-		0.01, -no_limit, no_limit, array(0, -0.2, -0.1), 0, 
-		array(tab.tbx_type_scale_add, tab.tbx_type_scale_add_random), 
-		array(action_lib_pc_type_scale_add, action_lib_pc_type_scale_add_israndom, action_lib_pc_type_scale_add_random_min, action_lib_pc_type_scale_add_random_max), 
+		0.01, -no_limit, no_limit, [ 0, -0.2, -0.1 ], 0,
+		[ tab.tbx_type_scale_add, tab.tbx_type_scale_add_random ],
+		[ action_lib_pc_type_scale_add, action_lib_pc_type_scale_add_israndom, action_lib_pc_type_scale_add_random_min, action_lib_pc_type_scale_add_random_max ],
 		content_capwid, true, suffix)
 	dy += 10
 	
@@ -866,9 +866,9 @@ function tab_object_editor_particles()
 	// Alpha change
 	tab_object_editor_particles_value("particleeditortypeopacityadd", 
 		ptype_edit.alpha_add * 100, ptype_edit.alpha_add_israndom, ptype_edit.alpha_add_random_min * 100, ptype_edit.alpha_add_random_max * 100, 
-		0.5, -no_limit, no_limit, array(0, -10, -5), 0, 
-		array(tab.tbx_type_alpha_add, tab.tbx_type_alpha_add_random), 
-		array(action_lib_pc_type_alpha_add, action_lib_pc_type_alpha_add_israndom, action_lib_pc_type_alpha_add_random_min, action_lib_pc_type_alpha_add_random_max),
+		0.5, -no_limit, no_limit, [ 0, -10, -5 ], 0,
+		[ tab.tbx_type_alpha_add, tab.tbx_type_alpha_add_random ],
+		[ action_lib_pc_type_alpha_add, action_lib_pc_type_alpha_add_israndom, action_lib_pc_type_alpha_add_random_min, action_lib_pc_type_alpha_add_random_max ],
 		null, true, suffix)
 	
 	// Color
@@ -924,9 +924,9 @@ function tab_object_editor_particles()
 		
 		tab_object_editor_particles_value("particleeditortypecolormixtime", 
 			ptype_edit.color_mix_time, ptype_edit.color_mix_time_israndom, ptype_edit.color_mix_time_random_min, ptype_edit.color_mix_time_random_max, 
-			0.05, 0, no_limit, array(3, 1, 5), 0, 
-			array(tab.tbx_type_color_mix_time, tab.tbx_type_color_mix_time_random), 
-			array(action_lib_pc_type_color_mix_time, action_lib_pc_type_color_mix_time_israndom, action_lib_pc_type_color_mix_time_random_min, action_lib_pc_type_color_mix_time_random_max),
+			0.05, 0, no_limit, [ 3, 1, 5 ], 0,
+			[ tab.tbx_type_color_mix_time, tab.tbx_type_color_mix_time_random ],
+			[ action_lib_pc_type_color_mix_time, action_lib_pc_type_color_mix_time_israndom, action_lib_pc_type_color_mix_time_random_min, action_lib_pc_type_color_mix_time_random_max ],
 			null, true, suffix)
 	}
 	

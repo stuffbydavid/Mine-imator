@@ -13,7 +13,7 @@ function view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
 	dofblurnear = min(cam_far, max(cam_near, (tl.value[e_value.CAM_DOF_DEPTH] - tl.value[e_value.CAM_DOF_RANGE]) - tl.value[e_value.CAM_DOF_FADE_SIZE]))
 	dofblurfar = min(cam_far, max(cam_near, (tl.value[e_value.CAM_DOF_DEPTH] + tl.value[e_value.CAM_DOF_RANGE]) + tl.value[e_value.CAM_DOF_FADE_SIZE]))
 		
-	viewfrustumdofpoints = array(
+	viewfrustumdofpoints = [
 		point3D(-((fovtan * dofnear) * ratio), dofnear, -fovtan * dofnear), // nbr
 		point3D(-((fovtan * dofnear) * ratio), dofnear, fovtan * dofnear), // ntr
 		point3D(((fovtan * dofnear) * ratio), dofnear, -fovtan * dofnear), // nbl
@@ -22,8 +22,8 @@ function view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
 		point3D(-((fovtan * doffar) * ratio), doffar, fovtan * doffar), // ftr
 		point3D(((fovtan * doffar) * ratio), doffar, -fovtan * doffar), // fbl
 		point3D(((fovtan * doffar) * ratio), doffar, fovtan * doffar) // ftl
-	)
-	viewfrustumdofblurpoints = array(
+	]
+	viewfrustumdofblurpoints = [
 		point3D(-((fovtan * dofblurnear) * ratio), dofblurnear, -fovtan * dofblurnear), // nbr
 		point3D(-((fovtan * dofblurnear) * ratio), dofblurnear, fovtan * dofblurnear), // ntr
 		point3D(((fovtan * dofblurnear) * ratio), dofblurnear, -fovtan * dofblurnear), // nbl
@@ -32,7 +32,7 @@ function view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
 		point3D(-((fovtan * dofblurfar) * ratio), dofblurfar, fovtan * dofblurfar), // ftr
 		point3D(((fovtan * dofblurfar) * ratio), dofblurfar, -fovtan * dofblurfar), // fbl
 		point3D(((fovtan * dofblurfar) * ratio), dofblurfar, fovtan * dofblurfar) // ftl
-	)
+	]
 	
 	// DOF outlines
 	//draw_set_alpha(.5)

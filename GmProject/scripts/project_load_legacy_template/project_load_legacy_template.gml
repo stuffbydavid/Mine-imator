@@ -37,7 +37,7 @@ function project_load_legacy_template()
 				if (!is_undefined(modelmap[?"state"]))
 					model_state = string_get_state_vars(modelmap[?"state"])
 				else
-					model_state = array()
+					model_state = []
 				
 				model_version = 0
 				project_load_template_update_model()

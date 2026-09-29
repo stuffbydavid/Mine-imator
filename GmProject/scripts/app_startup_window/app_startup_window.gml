@@ -114,7 +114,7 @@ function app_startup_window()
 	tip_arrow_xscale = 1
 	tip_arrow_yscale = 1
 	tip_arrow = 0
-	tip_text_array = array()
+	tip_text_array = []
 	tip_force_right = false
 	tip_right = false
 	tip_keybind = null

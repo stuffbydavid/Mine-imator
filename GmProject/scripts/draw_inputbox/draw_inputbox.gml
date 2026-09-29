@@ -18,7 +18,7 @@ function draw_inputbox(name, xx, yy, w, h, placeholder, tbx, script, disabled = 
 		font = font_value
 		
 	if (textbox_jump)
-		ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
+		ds_list_add(textbox_list, [ tbx, content_tab, yy, content_y, content_height ])
 	
 	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 		return 0

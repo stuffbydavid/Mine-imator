@@ -8,5 +8,5 @@ function point4D(xx, yy, zz, w)
 {
 	gml_pragma("forceinline")
 	
-	return [xx, yy, zz, w]
+	return [ xx, yy, zz, w ]
 }

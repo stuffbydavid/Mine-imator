@@ -36,11 +36,11 @@ function builder_set_model(ongeneration = false)
 
 	// Has timeline
 	if (tlvalid && !block_current.model_double)
-		block_tl_map[?build_pos] = array(block_current, block_state_id_current)
+		block_tl_map[?build_pos] = [ block_current, block_state_id_current ]
 	else
 	{
 		if (tlvalid && block_current.model_double)
-			block_tl_map[?build_pos] = array(block_current, block_state_id_current)
+			block_tl_map[?build_pos] = [ block_current, block_state_id_current ]
 	
 		// Look for the render model of the current state
 		if (ret = 0 && block_current.state_id_model_obj != null)
@@ -56,7 +56,7 @@ function builder_set_model(ongeneration = false)
 				// Multipart
 				if (is_array(modelobj))
 				{
-					model = array()
+					model = []
 					for (var i = 0; i < array_length(modelobj); i++)
 						array_add(model, block_get_render_model(modelobj[i], brightness, offset, offsetxy))
 				}

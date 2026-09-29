@@ -6,8 +6,8 @@ function block_tile_entity_banner(map)
 	if (ds_list_valid(map[?"patterns"])) // 1.20.5+ format
 	{
 		patterns = map[?"patterns"]
-		patternlist = array()
-		patterncolorlist = array()
+		patternlist = []
+		patterncolorlist = []
 		
 		// Base color
 		var color, col;
@@ -59,8 +59,8 @@ function block_tile_entity_banner(map)
 			legacy = false
 		}
 	
-		patternlist = array()
-		patterncolorlist = array()
+		patternlist = []
+		patterncolorlist = []
 	
 		if (ds_list_valid(patterns))
 		{

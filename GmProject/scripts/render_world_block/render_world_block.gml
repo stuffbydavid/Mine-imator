@@ -10,7 +10,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		return 0
 	
 	if (!is_array(resarr))
-		resarr = [resarr, project_pack_res, project_pack_res]
+		resarr = [ resarr, project_pack_res, project_pack_res ]
 
 	for (var channel = e_texture_channel.DIFFUSE; channel < e_texture_channel.amount; channel++)
 		resarr[channel] = res_eval(resarr[channel])

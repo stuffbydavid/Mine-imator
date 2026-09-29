@@ -5,7 +5,7 @@
 function string_split_escaped(str, sep)
 {
 	var arr, arrlen, escapestr;
-	arr = array()
+	arr = []
 	arrlen = 0
 	str += sep
 	escapestr = ""

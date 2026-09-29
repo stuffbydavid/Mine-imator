@@ -17,7 +17,7 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 	patterndir = (type = "banner" ? "entity/banner/" : "entity/shield/")
 	
 	skinratio = 1
-	maskarray = array()
+	maskarray = []
 	
 	// Don't bother generating patterns with colors
 	if (res.type = e_res_type.SKIN)

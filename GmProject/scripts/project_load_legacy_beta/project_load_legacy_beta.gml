@@ -25,12 +25,12 @@ function project_load_legacy_beta(loadbackground)
 					if (!is_undefined(modelmap[?"state"]))
 						lib_char_model_state[a] = string_get_state_vars(modelmap[?"state"])
 					else
-						lib_char_model_state[a] = array()
+						lib_char_model_state[a] = []
 				}
 				else
 				{
 					lib_char_model_name[a] = ""
-					lib_char_model_state[a] = array()
+					lib_char_model_state[a] = []
 					log("Could not convert model name", lib_char_model_legacy_name[a])
 				}
 			}

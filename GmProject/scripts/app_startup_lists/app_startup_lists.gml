@@ -454,8 +454,8 @@ function app_startup_lists()
 	ds_map_add(blend_mode_map, "normal", bm_normal)
 	ds_map_add(blend_mode_map, "add", bm_add)
 	ds_map_add(blend_mode_map, "subtract", bm_subtract)
-	ds_map_add(blend_mode_map, "multiply", array(bm_zero, bm_src_color))
-	ds_map_add(blend_mode_map, "screen", array(bm_one, bm_inv_src_color))
+	ds_map_add(blend_mode_map, "multiply", [ bm_zero, bm_src_color ])
+	ds_map_add(blend_mode_map, "screen", [ bm_one, bm_inv_src_color ])
 	
 	// List of icons in sync with e_tl_type
 	/*

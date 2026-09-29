@@ -21,7 +21,7 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
-			ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
+			ds_list_add(textbox_list, [ tbx, content_tab, yy, content_y, content_height ])
 		
 		return 0
 	}

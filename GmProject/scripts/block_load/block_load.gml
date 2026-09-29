@@ -127,7 +127,7 @@ function block_load(map, typemap)
 		
 		// Load default file
 		if (filename != "")
-			file = block_load_state_file(load_assets_dir + mc_blockstates_directory + filename, id, array())
+			file = block_load_state_file(load_assets_dir + mc_blockstates_directory + filename, id, [])
 		else
 			file = null
 		
@@ -135,7 +135,7 @@ function block_load(map, typemap)
 		if (is_string(map[?"default_state"]))
 			default_state = string_get_state_vars(map[?"default_state"])
 		else
-			default_state = array()
+			default_state = []
 		
 		//default_state_id = block_get_state_id(id, default_state)
 		
@@ -190,11 +190,11 @@ function block_load(map, typemap)
 		
 		// ID(s)
 		var idmap = map[?"id"];
-		mc_ids = array()
+		mc_ids = []
 		id_state_vars_map = null
 		if (is_string(idmap)) // Single
 		{
-			mc_ids = array(string_replace(idmap, "minecraft:", ""))
+			mc_ids = [ string_replace(idmap, "minecraft:", "") ]
 			mc_assets.block_id_map[?idmap] = id
 		}
 		else if (ds_map_valid(idmap)) // Map
@@ -241,7 +241,7 @@ function block_load(map, typemap)
 						if (value_filename[valid] != "")
 						{
 							if (value_file[valid] = null)
-								value_file[valid] = block_load_state_file(load_assets_dir + mc_blockstates_directory + value_filename[valid], other.id, array(name, value_name[valid]))
+								value_file[valid] = block_load_state_file(load_assets_dir + mc_blockstates_directory + value_filename[valid], other.id, [ name, value_name[valid] ])
 							curfile = value_file[valid]
 						}
 						

@@ -48,7 +48,7 @@ function spline_get_point(t, points, closed, smooth, amount = 0)
 		else
 		{
 			i = array_length(points) - 1
-			pos = vec3_add(points[i], vec3_mul([points[i - 1][PATH_TANGENT_X], points[i - 1][PATH_TANGENT_Y], points[i - 1][PATH_TANGENT_Z]], abs(t - i)))
+			pos = vec3_add(points[i], vec3_mul([ points[i - 1][PATH_TANGENT_X], points[i - 1][PATH_TANGENT_Y], points[i - 1][PATH_TANGENT_Z] ], abs(t - i)))
 		}
 		
 		point = array_copy_1d(points[i])

@@ -36,7 +36,7 @@ function draw_textfield(name, xx, yy, w, h, textbox, script, placeholder = "", l
 	if (xx + w < content_x || xx > content_x + content_width || yy + totalheight < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
-			ds_list_add(textbox_list, [textbox, content_tab, yy, content_y, content_height])
+			ds_list_add(textbox_list, [ textbox, content_tab, yy, content_y, content_height ])
 		
 		return 0
 	}

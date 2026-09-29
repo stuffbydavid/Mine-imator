@@ -6,5 +6,5 @@ function vec3_sub(v1, v2)
 {
 	gml_pragma("forceinline")
 	
-	return [v1[@ X] - v2[@ X], v1[@ Y] - v2[@ Y], v1[@ Z] - v2[@ Z]]
+	return [ v1[@ X] - v2[@ X], v1[@ Y] - v2[@ Y], v1[@ Z] - v2[@ Z] ]
 }

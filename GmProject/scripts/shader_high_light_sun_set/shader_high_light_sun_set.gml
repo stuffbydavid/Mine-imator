@@ -8,11 +8,11 @@ function shader_high_light_sun_set()
 	
 	var cascade1 = render_cascades[render_cascades_count > 1 ? 1 : 0];
 	var cascade2 = render_cascades[render_cascades_count > 2 ? 2 : render_cascades_count - 1];
-	render_set_uniform_mat4_array("uLightMatBiasMVP", array(render_cascades[0].matBias, cascade1.matBias, cascade2.matBias))
+	render_set_uniform_mat4_array("uLightMatBiasMVP", [ render_cascades[0].matBias, cascade1.matBias, cascade2.matBias ])
 	
-	render_set_uniform("uSunNear", [render_cascades[0].near, cascade1.near, cascade2.near])
-	render_set_uniform("uSunFar", [render_cascades[0].far, cascade1.far, cascade2.far])
-	render_set_uniform("uCascadeWorldSize", [render_cascades[0].worldSize, cascade1.worldSize, cascade2.worldSize])
+	render_set_uniform("uSunNear", [ render_cascades[0].near, cascade1.near, cascade2.near ])
+	render_set_uniform("uSunFar", [ render_cascades[0].far, cascade1.far, cascade2.far ])
+	render_set_uniform("uCascadeWorldSize", [ render_cascades[0].worldSize, cascade1.worldSize, cascade2.worldSize ])
 	render_set_uniform_color("uLightColor", render_light_color, 1)
 	render_set_uniform("uLightStrength", render_light_strength)
 	render_set_uniform("uLightSpecular", render_light_specular_strength)
@@ -34,6 +34,6 @@ function shader_high_light_sun_set()
 	texture_set_stage(sampler_map[?"uDepthBuffer2"], surface_get_texture(render_surface_sun_buffer[render_cascades_count > 2 ? 2 : render_cascades_count - 1]))
 	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer2"], true)
 	
-	render_set_uniform("uCascadeEndClipSpace", [render_cascades[0].clipEndDepth, cascade1.clipEndDepth, cascade2.clipEndDepth])
+	render_set_uniform("uCascadeEndClipSpace", [ render_cascades[0].clipEndDepth, cascade1.clipEndDepth, cascade2.clipEndDepth ])
 	render_set_uniform_int("uCascadeCount", render_cascades_count)
 }

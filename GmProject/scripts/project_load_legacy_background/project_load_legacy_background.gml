@@ -6,7 +6,7 @@ function project_load_legacy_background()
 	background_image = buffer_read_int()
 	if (background_image = 0)
 		background_image = null
-	var imagetype = array("image", "sphere", "box");
+	var imagetype = [ "image", "sphere", "box" ];
 	background_image_type = imagetype[buffer_read_byte()]
 	background_image_stretch = buffer_read_byte()
 	if (load_format >= e_project.FORMAT_100_DEBUG)

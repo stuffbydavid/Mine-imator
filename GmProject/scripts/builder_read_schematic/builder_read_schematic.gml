@@ -105,7 +105,7 @@ function builder_read_schematic(map)
 					
 					if (!is_undefined(block))
 					{
-						var vars = array();
+						var vars = [];
 						
 						// ID specific vars
 						if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?mcid]))

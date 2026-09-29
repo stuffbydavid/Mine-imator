@@ -43,7 +43,7 @@ function block_set_tripwire()
 			north = "true"
 	}
 	
-	block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north))
+	block_state_id_current = block_get_state_id(block_current, [ "east", east, "west", west, "south", south, "north", north ])
 	
 	return 0
 }

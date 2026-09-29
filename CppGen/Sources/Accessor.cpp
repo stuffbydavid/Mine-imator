@@ -119,12 +119,6 @@ void Accessor::resolve(ResolveScope* scope)
 					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
 				this->resolvedType->reset(*userFunction->getReturnType());
 			}
-			else if (this->name == STR(array)) // array(arg0, arg1...) returns array<typeof args>
-			{
-				this->resolvedType->reset(DataType::Type::Array, DataType());
-				for (DataType* inputType : inputTypes)
-					this->resolvedType->assign(DataType(DataType::Type::Array, inputType), this->func, this->line);
-			}
 			else if (this->name == STR(save_id_find)) // save_id_find returns unknown object
 				this->resolvedType->reset(DataType::Type::Reference, "");
 
@@ -652,14 +646,7 @@ String Accessor::toCpp(ResolveScope* scope)
 		targetFunc = Program::functions[this->name];
 		varArgs = targetFunc->varArgs;
 
-		if (this->name == STR(array)) // array(args) -> ArrType::From({ args })
-		{
-			if (this->callParameters.size() == 0) // array() -> ArrType()
-				return "ArrType()";
-			cpp += "ArrType::From";
-		}
-		else
-			cpp += nameToCpp(this->name);
+		cpp += nameToCpp(this->name);
 	}
 
 	else if (scopeObj != nullptr && scopeObj->instanceFunctions.containsKey(this->name)) // Instance function

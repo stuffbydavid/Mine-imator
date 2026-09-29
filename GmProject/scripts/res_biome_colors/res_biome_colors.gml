@@ -9,7 +9,7 @@ function res_biome_colors(biomename, values = null)
 	{
 		if (values != null)
 		{
-			return array(
+			return [
 				values[e_value.BG_GRASS_COLOR],
 				values[e_value.BG_FOLIAGE_COLOR],
 				values[e_value.BG_DRY_FOLIAGE_COLOR],
@@ -21,10 +21,10 @@ function res_biome_colors(biomename, values = null)
 				values[e_value.BG_LEAVES_ACACIA_COLOR],
 				values[e_value.BG_LEAVES_DARK_OAK_COLOR],
 				values[e_value.BG_LEAVES_MANGROVE_COLOR]
-			)
+			]
 		}
 
-		return array(
+		return [
 			app.background_grass_color,
 			app.background_foliage_color,
 			app.background_dry_foliage_color,
@@ -36,7 +36,7 @@ function res_biome_colors(biomename, values = null)
 			app.background_leaves_acacia_color,
 			app.background_leaves_dark_oak_color,
 			app.background_leaves_mangrove_color
-		)
+		]
 	}
 
 	if (biome.hardcoded)
@@ -54,5 +54,5 @@ function res_biome_colors(biomename, values = null)
 
 	water = biome.color_water
 	spruce = hex_to_color("62A857")
-	return array(grass, foliage, dryfoliage, water, foliage, spruce, spruce, foliage, foliage, foliage, foliage)
+	return [ grass, foliage, dryfoliage, water, foliage, spruce, spruce, foliage, foliage, foliage, foliage ]
 }

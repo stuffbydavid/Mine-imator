@@ -31,7 +31,7 @@ function block_set_speleothem()
 	else
 		thickness = "middle"
 	
-	block_state_id_current = block_get_state_id(block_current, array("vertical_direction", dir, "thickness", thickness))
+	block_state_id_current = block_get_state_id(block_current, [ "vertical_direction", dir, "thickness", thickness ])
 	
 	return 0
 }

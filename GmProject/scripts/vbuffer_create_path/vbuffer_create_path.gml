@@ -27,8 +27,8 @@ function vbuffer_create_path(path, small = false)
 	for (var i = 0; i < array_length(points); i++)
 	{
 		p = points[i]
-		frames[i] = matrix_create_rotate_to([p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z]],
-											[p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z]])
+		frames[i] = matrix_create_rotate_to([ p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z] ],
+											[ p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z] ])
 	}
 	
 	var p1, p2, p3, p4;
@@ -51,7 +51,7 @@ function vbuffer_create_path(path, small = false)
 		else
 			jp = .5 // Left side of rail
 		
-		ringp = [cos(jp * pi * 2), 0, -sin(jp * pi * 2)]
+		ringp = [ cos(jp * pi * 2), 0, -sin(jp * pi * 2) ]
 		
 		plength = length
 		length += point3D_distance(points[i], points[i + 1])
@@ -78,7 +78,7 @@ function vbuffer_create_path(path, small = false)
 			else
 				j = 0 // Right side of rail
 			
-			ringp = [cos(j * pi * 2), 0, -sin(j * pi * 2)]
+			ringp = [ cos(j * pi * 2), 0, -sin(j * pi * 2) ]
 			
 			// Next segment
 			n2 = vec3_normalize(vec3_mul_matrix(ringp, frames[i]))
@@ -95,9 +95,9 @@ function vbuffer_create_path(path, small = false)
 				t3 = vec2(0, length / texlength)
 				t4 = vec2(1, length / texlength)
 				
-				n1 = [frames[i][8], frames[i][9], frames[i][10]]
+				n1 = [ frames[i][8], frames[i][9], frames[i][10] ]
 				n2 = n1
-				n3 = [frames[i + 1][8], frames[i + 1][9], frames[i + 1][10]]
+				n3 = [ frames[i + 1][8], frames[i + 1][9], frames[i + 1][10] ]
 				n4 = n3
 			}
 			else
@@ -175,9 +175,9 @@ function vbuffer_create_path(path, small = false)
 			// Fill ends of tube
 			if (!closed)
 			{
-				t1 = [(cos((jp + .25) * pi * 2) + 1)/2, (sin((jp + .25) * pi * 2) + 1)/2]
-				t2 = [(cos((j + .25) * pi * 2) + 1)/2, (sin((j + .25) * pi * 2) + 1)/2]
-				t3 = [.5, .5]
+				t1 = [ (cos((jp + .25) * pi * 2) + 1)/2, (sin((jp + .25) * pi * 2) + 1)/2 ]
+				t2 = [ (cos((j + .25) * pi * 2) + 1)/2, (sin((j + .25) * pi * 2) + 1)/2 ]
+				t3 = [ .5, .5 ]
 				
 				if (mapped)
 				{

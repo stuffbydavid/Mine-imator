@@ -19,20 +19,20 @@ function tab_frame_editor_bend()
 		axislen += (tl_edit.model_part.bend_axis[i])
 	
 	if (!setting_z_is_up)
-		axis = array(X, Z, Y)
+		axis = [ X, Z, Y ]
 	else
-		axis = array(X, Y, Z)
-	axisname = array("x", "y", "z")
+		axis = [ X, Y, Z ]
+	axisname = [ "x", "y", "z" ]
 	
 	if (axislen = 3)
-		wheelx = [floor(dx + dw/6), floor(dx + dw/2), floor(dx + dw - dw/6)]
+		wheelx = [ floor(dx + dw/6), floor(dx + dw/2), floor(dx + dw - dw/6) ]
 	else if (axislen = 2)
-		wheelx = [dx + floor(dw * 0.25), dx + floor(dw * 0.75), 0]
+		wheelx = [ dx + floor(dw * 0.25), dx + floor(dw * 0.75), 0 ]
 	else
-		wheelx = [dx + floor(dw * 0.5), 0, 0]
+		wheelx = [ dx + floor(dw * 0.5), 0, 0 ]
 	wheel = 0
 	
-	color = [c_control_cyan, setting_z_is_up ? c_axisyellow : c_axismagenta, setting_z_is_up ? c_axismagenta : c_axisyellow]
+	color = [ c_control_cyan, setting_z_is_up ? c_axisyellow : c_axismagenta, setting_z_is_up ? c_axismagenta : c_axisyellow ]
 	
 	if (axislen > 0)
 	{

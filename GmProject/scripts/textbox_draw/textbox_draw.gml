@@ -90,7 +90,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		}
 		
 		// Automatic key presses
-		keys = array(
+		keys = [
 			vk_enter,
 			vk_backspace,
 			vk_delete,
@@ -99,7 +99,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 			vk_left,
 			vk_up,
 			vk_down
-		)
+		]
 		
 		for (k = 0; k < array_length(keys); k++)
 		{

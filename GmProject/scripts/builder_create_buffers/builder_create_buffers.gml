@@ -10,7 +10,7 @@ function builder_create_buffers()
 	build_size_sqrt = ceil(sqrt(build_size_total))
 	block_render_model = ds_grid_create(build_size_sqrt, build_size_sqrt)
 	block_render_model_multipart = ds_list_create()
-	ds_list_add(block_render_model_multipart, array()) // Air
+	ds_list_add(block_render_model_multipart, []) // Air
 	
 	ds_grid_clear(block_render_model, 0)
 	

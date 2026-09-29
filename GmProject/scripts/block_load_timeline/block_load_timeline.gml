@@ -10,7 +10,7 @@ function block_load_timeline(map, typemap)
 		tl_model_name = map[?"model"]
 		
 		// Model state
-		tl_model_state = array()
+		tl_model_state = []
 		tl_model_state_amount = 0
 		tl_has_model_state = false
 		
@@ -30,7 +30,7 @@ function block_load_timeline(map, typemap)
 					value = string_get_state_vars(ds_map_find_value(map[?"model_state"], key))
 					
 					// Apply to matching state IDs
-					state_id = array()
+					state_id = []
 					for (var i = 0; i < other.state_id_amount; i++)
 						if (state_vars_match_state_id(vars, other.id, i))
 							state_id = array_add(state_id, i)
@@ -107,7 +107,7 @@ function block_load_timeline(map, typemap)
 				value = value_get_point3D(ds_map_find_value(map[?"rotation_point"], key), point3D(0))
 				
 				// Apply to matching state IDs
-				state_id = array()
+				state_id = []
 				for (var i = 0; i < other.state_id_amount; i++)
 					if (state_vars_match_state_id(vars, other.id, i))
 						state_id = array_add(state_id, i)
@@ -135,7 +135,7 @@ function block_load_timeline(map, typemap)
 				value = value_get_point3D(ds_map_find_value(map[?"position"], key), point3D(0))
 				
 				// Apply to matching state IDs
-				state_id = array()
+				state_id = []
 				for (var i = 0; i < other.state_id_amount; i++)
 					if (state_vars_match_state_id(vars, other.id, i))
 						state_id = array_add(state_id, i)
@@ -163,7 +163,7 @@ function block_load_timeline(map, typemap)
 				value = value_get_point3D(ds_map_find_value(map[?"rotation"], key), point3D(0))
 				
 				// Apply to matching state IDs
-				state_id = array()
+				state_id = []
 				for (var i = 0; i < other.state_id_amount; i++)
 					if (state_vars_match_state_id(vars, other.id, i))
 						state_id = array_add(state_id, i)

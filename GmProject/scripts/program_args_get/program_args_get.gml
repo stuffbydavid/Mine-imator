@@ -2,5 +2,5 @@
 
 function program_args_get()
 {
-	return array()
+	return []
 }

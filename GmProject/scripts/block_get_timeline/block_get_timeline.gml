@@ -6,7 +6,7 @@ function block_get_timeline(block, stateid)
 	{
 		self.block = block
 		model_name = block.tl_model_name
-		model_state = array()
+		model_state = []
 		
 		if (model_name != "")
 		{
@@ -78,8 +78,8 @@ function block_get_timeline(block, stateid)
 			if (is_undefined(banner_color))
 			{
 				banner_color = c_white
-				banner_patterns = array()
-				banner_pattern_colors = array()
+				banner_patterns = []
+				banner_pattern_colors = []
 			}
 		}
 		

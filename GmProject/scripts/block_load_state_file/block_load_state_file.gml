@@ -173,7 +173,7 @@ function block_load_state_file(fn, block, state)
 							{
 								var curcondmap, condvars, cond;
 								curcondmap = orlist[|oc]
-								condvars = array()
+								condvars = []
 								cond = ds_map_find_first(curcondmap)
 								
 								while (!is_undefined(cond))
@@ -204,7 +204,7 @@ function block_load_state_file(fn, block, state)
 							{
 								var curcondmap, condvars, cond;
 								curcondmap = andlist[|oc]
-								condvars = array()
+								condvars = []
 								cond = ds_map_find_first(curcondmap)
 								
 								while (!is_undefined(cond))
@@ -246,7 +246,7 @@ function block_load_state_file(fn, block, state)
 						else
 						{
 							var condvars, cond;
-							condvars = array()
+							condvars = []
 							cond = ds_map_find_first(whenmap)
 							
 							while (!is_undefined(cond))

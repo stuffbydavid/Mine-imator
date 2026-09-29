@@ -1,7 +1,7 @@
 function value_get_state_vars(map)
 {
 	var vars, varslen;
-	vars = array()
+	vars = []
 	varslen = 0
 	
 	if (ds_map_valid(map))

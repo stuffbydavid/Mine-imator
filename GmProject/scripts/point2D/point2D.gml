@@ -6,5 +6,5 @@ function point2D(xx, yy)
 {
 	gml_pragma("forceinline")
 	
-	return [xx, yy]
+	return [ xx, yy ]
 }

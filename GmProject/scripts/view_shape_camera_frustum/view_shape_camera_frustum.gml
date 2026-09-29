@@ -39,7 +39,7 @@ function view_shape_camera_frustum(tl)
 	if (tl.value[e_value.CAM_DOF])
 		view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
 			
-	var viewfrustumpoints = array(
+	var viewfrustumpoints = [
 		point3D(-((fovtan * cam_near) * ratio), cam_near, -fovtan * cam_near), // nbr
 		point3D(-((fovtan * cam_near) * ratio), cam_near, fovtan * cam_near), // ntr
 		point3D(((fovtan * cam_near) * ratio), cam_near, -fovtan * cam_near), // nbl
@@ -48,7 +48,7 @@ function view_shape_camera_frustum(tl)
 		point3D(-((fovtan * cam_far) * ratio), cam_far, fovtan * cam_far), // ftr
 		point3D(((fovtan * cam_far) * ratio), cam_far, -fovtan * cam_far), // fbl
 		point3D(((fovtan * cam_far) * ratio), cam_far, fovtan * cam_far) // ftl
-	);
+	];
 	
 	// Frustum outline
 	draw_set_color(c_control_red)

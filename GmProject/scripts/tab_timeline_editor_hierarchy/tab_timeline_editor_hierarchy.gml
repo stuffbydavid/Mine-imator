@@ -21,7 +21,7 @@ function tab_timeline_editor_hierarchy()
 	// Lock to bended half
 	if (par != app && par.type = e_tl_type.MODEL_PART && par.model_part != null && par.model_part.bend_part != null)
 	{
-		var partname = array("right", "left", "front", "back", "upper", "lower");
+		var partname = [ "right", "left", "front", "back", "upper", "lower" ];
 		tab_control_switch()
 		draw_switch("timelineeditorlockbend" + partname[par.model_part.bend_part], dx, dy, tl_edit.lock_bend, action_tl_lock_bend, "", tl_edit.part_of != null)
 		tab_next()

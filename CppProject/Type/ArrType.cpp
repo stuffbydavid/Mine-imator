@@ -122,11 +122,6 @@ namespace CppProject
 		Printer::indent--;
 	}
 
-	ArrType array(VarArgs args)
-	{
-		return ArrType::From(args);
-	}
-
 	ArrType array_add(VarType arrRef, VarType vals, BoolType merge)
 	{
 		if (vals.IsArray() && merge)

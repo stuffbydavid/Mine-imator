@@ -461,10 +461,10 @@ function app_startup_interface_tabs()
 		sortlist_column_add(build_list, "buildname", 0)
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
-				sortlist_add(build_list, [false, mc_assets.block_list[|b].name])
+				sortlist_add(build_list, [ false, mc_assets.block_list[|b].name ])
 
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
-			sortlist_add(build_list, [true, mc_assets.special_block_list[|b].name])
+			sortlist_add(build_list, [ true, mc_assets.special_block_list[|b].name ])
 		build_list.column_sort = 0
 		sortlist_update(build_list)
 		
@@ -538,7 +538,7 @@ function app_startup_interface_tabs()
 		hierarchy = tab_add_category("timelineeditorhierarchy", icons.HIERARCHY_SMALL, tab_timeline_editor_hierarchy, true)
 		
 		// Graphics
-		appearance = tab_add_category("timelineeditorappearance", [icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL_DARK], tab_timeline_editor_appearance, false)
+		appearance = tab_add_category("timelineeditorappearance", [ icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL_DARK ], tab_timeline_editor_appearance, false)
 		with (appearance)
 		{
 			tbx_glint_scale = new_textbox_integer()
@@ -784,7 +784,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Material
-		material = tab_add_category("frameeditormaterial", [icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL_DARK], tab_frame_editor_material, false)
+		material = tab_add_category("frameeditormaterial", [ icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL_DARK ], tab_frame_editor_material, false)
 		with (material)
 		{
 			tbx_alpha = new_textbox_integer()

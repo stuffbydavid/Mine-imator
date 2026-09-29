@@ -58,15 +58,15 @@ function block_set_door()
 		return null
 	
 	// Pick models
-	var models = array(
+	var models = [
 		bottommodel.model[0],
 		topmodel.model[0]
-	);
+	];
 
 	models[1].offset_z = block_size
 
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "location", location)
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "direction", dir)
 	
-	return array(models[0].rendermodel_id, models[1].rendermodel_id)
+	return [ models[0].rendermodel_id, models[1].rendermodel_id ]
 }

@@ -241,8 +241,8 @@ function model_file_load_part(map, root, res, model)
 			}
 			
 			// Axis
-			bend_axis = array(false, false, false)
-			var axis = array();
+			bend_axis = [ false, false, false ]
+			var axis = [];
 			if (is_string(bendmap[?"axis"])) // Single
 			{
 				switch (bendmap[?"axis"])
@@ -301,7 +301,7 @@ function model_file_load_part(map, root, res, model)
 			}
 			
 			// Direction(Legacy)
-			bend_direction = array(0, 0, 0)
+			bend_direction = [ 0, 0, 0 ]
 			bend_direction_legacy = false
 			if (is_string(bendmap[?"direction"])) // Single
 			{

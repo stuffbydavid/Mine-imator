@@ -3,8 +3,8 @@
 function minecraft_assets_startup()
 {
 	globalvar block_rendermodels, block_objs, player_head_vbuffer;
-	block_rendermodels = array()
-	block_objs = array()
+	block_rendermodels = []
+	block_objs = []
 	player_head_vbuffer = null
 	
 	// Air

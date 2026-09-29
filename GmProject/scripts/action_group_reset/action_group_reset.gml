@@ -55,7 +55,7 @@ function action_group_reset()
 			break
 		
 		case e_context_group.EASE:
-			action_tl_frame_ease_set_all([1, 0, 0, 1], false)
+			action_tl_frame_ease_set_all([ 1, 0, 0, 1 ], false)
 			break
 	}
 }

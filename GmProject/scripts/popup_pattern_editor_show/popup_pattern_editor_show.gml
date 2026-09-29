@@ -66,7 +66,7 @@ function popup_pattern_editor_show(obj)
 			for (var i = 0; i < array_length(pattern_sprites); i++)
 				sprite_delete(pattern_sprites[i])
 			
-			pattern_sprites = array()
+			pattern_sprites = []
 			
 			// Create new pattern sprites
 			res_ratio = ceil(sprite_get_width(res.model_texture_map[?"entity/banner/banner_base"]) / sprite_get_width(mc_res.model_texture_map[?"entity/banner/banner_base"]))

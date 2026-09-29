@@ -4,7 +4,7 @@ function objects_indexed()
 {
 	globalvar objects_indexed_array;
 	
-	objects_indexed_array = array(
+	objects_indexed_array = [
 		obj_bench_settings,
 		obj_biome,
 		obj_context_menu_level,
@@ -33,7 +33,7 @@ function objects_indexed()
 		obj_toast,
 		obj_videotemplate,
 		obj_view
-	)
+	]
 	
 	// No type-wide use:
 	//	app, obj_block, obj_block_load_element,

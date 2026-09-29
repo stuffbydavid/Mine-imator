@@ -16,7 +16,7 @@ function project_update_counts()
 		if (creator = app.bench_settings)
 			continue
 
-		var refs = array(
+		var refs = [
 			model,
 			model_tex,
 			item_tex,
@@ -24,7 +24,7 @@ function project_update_counts()
 			scenery,
 			shape_tex,
 			text_font
-		);
+		];
 		
 		if (app.project_render_material_maps)
 		{
@@ -58,10 +58,10 @@ function project_update_counts()
 		if (temp > 0 && instance_exists(temp) && temp.object_index = obj_template)
 			temp.count++
 
-		var refs = array(
+		var refs = [
 			sprite_tex,
 			sprite_template_tex
-		);
+		];
 		
 		for (var i = 0; i < array_length(refs); i++)
 		{
@@ -80,9 +80,9 @@ function project_update_counts()
 		if (temp != null && instance_exists(temp) && temp.object_index = obj_template && part_of = null)
 			temp.count++
 
-		var refs = array(
+		var refs = [
 			glint_tex
-		);
+		];
 		
 		if (type = e_tl_type.BLOCK && part_of = null && !has_temp)
 		{
@@ -121,11 +121,11 @@ function project_update_counts()
 	// Count resources used by keyframes
 	with (obj_keyframe)
 	{
-		var refs = array(
+		var refs = [
 			value[e_value.TEXTURE_OBJ],
 			value[e_value.SOUND_OBJ],
 			value[e_value.TEXT_FONT]
-		);
+		];
 		
 		if (app.project_render_material_maps)
 		{
@@ -147,13 +147,13 @@ function project_update_counts()
 	// Count background resources
 	with (app)
 	{
-		var refs = array(
+		var refs = [
 			background_image,
 			background_sky_sun_tex,
 			background_sky_moon_tex,
 			background_sky_clouds_tex,
 			background_ground_tex
-		);
+		];
 		
 		if (app.project_render_material_maps)
 		{

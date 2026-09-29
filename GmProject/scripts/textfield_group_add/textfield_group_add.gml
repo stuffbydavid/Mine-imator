@@ -20,7 +20,7 @@ function textfield_group_add(name, value, def, script, axis, textbox, icon = nul
 	textfield_textbox = array_add(textfield_textbox, textbox)
 	
 	if (textbox_jump)
-		ds_list_add(textbox_list, [textbox, content_tab, dy, content_y, content_height])
+		ds_list_add(textbox_list, [ textbox, content_tab, dy, content_y, content_height ])
 	
 	textfield_icon = array_add(textfield_icon, icon)
 	textfield_mul = array_add(textfield_mul, mul)

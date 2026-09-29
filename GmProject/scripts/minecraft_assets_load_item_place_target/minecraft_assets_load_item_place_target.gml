@@ -16,11 +16,11 @@ function minecraft_assets_load_item_place_target(map)
 			parentaction = null
 			switch (itemval)
 			{
-				case "bow":		 parentaction = array(bow_parent_action_right, bow_parent_action_left); break
-				case "tool":	 parentaction = array(tool_parent_action, tool_parent_action); break
-				case "rod":		 parentaction = array(rod_parent_action, rod_parent_action); break
-				case "crossbow": parentaction = array(crossbow_parent_action_right,crossbow_parent_action_left); break
-				case "spear":	 parentaction = array(spear_parent_action, spear_parent_action); break
+				case "bow":		 parentaction = [ bow_parent_action_right, bow_parent_action_left ]; break
+				case "tool":	 parentaction = [ tool_parent_action, tool_parent_action ]; break
+				case "rod":		 parentaction = [ rod_parent_action, rod_parent_action ]; break
+				case "crossbow": parentaction = [ crossbow_parent_action_right,crossbow_parent_action_left ]; break
+				case "spear":	 parentaction = [ spear_parent_action, spear_parent_action ]; break
 			}
 
 			if (is_array(parentaction))

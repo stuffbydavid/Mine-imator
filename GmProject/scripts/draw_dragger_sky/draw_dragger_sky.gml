@@ -22,7 +22,7 @@ function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
 	if (xx + wid + capwidth < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
-			ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
+			ds_list_add(textbox_list, [ tbx, content_tab, yy, content_y, content_height ])
 		
 		return 0
 	}

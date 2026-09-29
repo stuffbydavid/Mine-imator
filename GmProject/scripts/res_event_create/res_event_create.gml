@@ -79,7 +79,7 @@ function res_event_create()
 	color_biome_end_colors = null
 	
 	sun_texture = null
-	moon_textures = [null, null, null, null, null, null, null, null]
+	moon_textures = [ null, null, null, null, null, null, null, null ]
 	//moonphases_texture = null
 	//moon_texture[0] = null
 	clouds_texture = null
@@ -110,7 +110,7 @@ function res_event_create()
 	world_box_start = null
 	world_box_end = null
 	world_filter_mode = 0
-	world_filter_array = array()
+	world_filter_array = []
 	scenery_download_skins = true
 	scenery_structure = false
 	scenery_integrity = 1
@@ -131,8 +131,8 @@ function res_event_create()
 	sound_buffer = null
 	sound_index = null
 	sound_samples = 0
-	sound_max_sample = array()
-	sound_min_sample = array()
+	sound_max_sample = []
+	sound_min_sample = []
 	
 	load_stage = ""
 	load_audio_sample = 0

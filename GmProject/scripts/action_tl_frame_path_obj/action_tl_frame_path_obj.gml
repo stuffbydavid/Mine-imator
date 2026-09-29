@@ -30,9 +30,9 @@ function action_tl_frame_path_obj(path)
 		return 0
 	}
 
-	targets = array()
-	oldpos = array()
-	olddefault = array()
+	targets = []
+	oldpos = []
+	olddefault = []
 	
 	if (path != null)
 	{

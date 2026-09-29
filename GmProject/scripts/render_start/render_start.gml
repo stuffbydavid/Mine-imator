@@ -30,7 +30,7 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
-	var optimizations = [false, false];
+	var optimizations = [ false, false ];
 	if (renderer_current = e_renderer.REALISTIC)
 	{
 		var realisticset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]].renderer[e_renderer.REALISTIC];

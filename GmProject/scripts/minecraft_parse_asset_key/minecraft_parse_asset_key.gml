@@ -61,5 +61,5 @@ function minecraft_parse_asset_key(key, textprefix = "")
 			
 	}
 	
-	return array(first, formatted)
+	return [ first, formatted ]
 }

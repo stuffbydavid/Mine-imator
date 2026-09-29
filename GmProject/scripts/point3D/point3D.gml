@@ -7,5 +7,5 @@ function point3D(xx, yy = 0, zz = 0)
 {
 	gml_pragma("forceinline")
 	
-	return [xx, yy, zz]
+	return [ xx, yy, zz ]
 }

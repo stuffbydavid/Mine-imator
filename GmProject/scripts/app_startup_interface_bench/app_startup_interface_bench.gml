@@ -51,18 +51,18 @@ function app_startup_interface_bench()
 	list_item_add("typebackground", e_bench_tab.ENVIRONMENT, "", null, icons.CLOUD, null, bench_tab_select)
 	list_item_add("typeshape", e_bench_tab.SHAPE, "", null, icons.SHAPES, null, bench_tab_select)
 	
-	bench_advanced_tabs = array(
+	bench_advanced_tabs = [
 		e_bench_tab.PROJECT,
 		e_bench_tab.MODEL,
 		e_bench_tab.AUDIO_TRACK,
 		e_bench_tab.CAMERA_EFFECTS,
 		e_bench_tab.ENVIRONMENT
-	)
+	]
 	
 	list_edit = null
 	
 	// Preview
-	bench_tab_preview = array(
+	bench_tab_preview = [
 		e_bench_tab.PROJECT,
 		e_bench_tab.CHARACTER,
 		e_bench_tab.EQUIPMENT,
@@ -76,7 +76,7 @@ function app_startup_interface_bench()
 		e_bench_tab.TEXT,
 		e_bench_tab.SOUND,
 		e_bench_tab.PARTICLE_SPAWNER
-	)
+	]
 
 	// Workbench settings
 	bench_settings = new_obj(obj_bench_settings)

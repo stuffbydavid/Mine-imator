@@ -7,7 +7,7 @@ function vec2(xx, yy = undefined)
 	gml_pragma("forceinline")
 	
 	if (is_undefined(yy))
-		return [xx, xx]
+		return [ xx, xx ]
 	else
-		return [xx, yy]
+		return [ xx, yy ]
 }

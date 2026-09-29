@@ -15,7 +15,7 @@ function block_set_tall_vine_up(variable, value)
 		return 0
 	
 	if (build_pos_z != (build_size_z - 1))
-		block_state_id_current = block_get_state_id(block_current, array(variable, value))
+		block_state_id_current = block_get_state_id(block_current, [ variable, value ])
 	
 	return 0
 }

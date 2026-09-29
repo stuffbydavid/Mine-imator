@@ -12,7 +12,7 @@ function tl_get_parent_action(newparent)
 	{
 		if ((newparent.type = e_tl_type.BLOCK || newparent.type = e_tl_type.SCENERY) &&
 			!(type = e_tl_type.SCENERY && newparent.type = e_tl_type.SCENERY)) // Don't parent scenery to each other
-			return array(newparent)
+			return [ newparent ]
 	}
 
 	// Model placement targets
@@ -54,14 +54,14 @@ function tl_get_parent_action(newparent)
 			root = root.part_of
 		
 		if (root != null && root.type = e_tl_type.MODEL)
-			return array(root, true, vec3(0), vec3(0), vec3(1), true)
+			return [ root, true, vec3(0), vec3(0), vec3(1), true ]
 		
 		if (root != null && (root.type = e_tl_type.CHARACTER || root.type = e_tl_type.SPECIAL_BLOCK) && root.temp != null)
 		{
 			var parentmodel = mc_assets.model_name_map[?root.temp.model_name];
 			if (!is_undefined(parentmodel) && parentmodel.equipment_list != null &&
 				ds_list_find_index(parentmodel.equipment_list, temp.model_name) >= 0)
-				return array(root, true, vec3(0), vec3(0), vec3(1), true)
+				return [ root, true, vec3(0), vec3(0), vec3(1), true ]
 		}
 	}
 	
@@ -69,7 +69,7 @@ function tl_get_parent_action(newparent)
 	if (type = e_tl_type.MODEL_PART && model_part_name != "" &&
 		newparent.type = e_tl_type.MODEL_PART && newparent.model_part != null &&
 		newparent.model_part_name = model_part_name)
-		return array(newparent, true, vec3(0), vec3(0), vec3(1), true)
+		return [ newparent, true, vec3(0), vec3(0), vec3(1), true ]
 
 	// Unmapped objects attach to lower arm halves of characters/models
 	if (newparent.type = e_tl_type.MODEL_PART && newparent.part_of != null && newparent.model_part != null &&

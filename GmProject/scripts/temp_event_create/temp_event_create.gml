@@ -35,7 +35,7 @@ function temp_event_create()
 	model_hide_list = null
 	model_shape_hide_list = null
 	model_file = null
-	model_state = array()
+	model_state = []
 	model_part_name = ""
 	model_part = null
 	
@@ -47,16 +47,16 @@ function temp_event_create()
 	
 	pattern_type = ""
 	pattern_base_color = minecraft_get_color("dye:white")
-	pattern_pattern_list = array()
-	pattern_color_list = array()
+	pattern_pattern_list = []
+	pattern_color_list = []
 	pattern_skin = null
 	
 	armor_array = []
-	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
-	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
-	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
-	array_add(armor_array, ["none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0]])
-	armor_skin_array = [null, null, null, null]
+	array_add(armor_array, [ "none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0] ])
+	array_add(armor_array, [ "none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0] ])
+	array_add(armor_array, [ "none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0] ])
+	array_add(armor_array, [ "none", minecraft_get_color("other:leather"), "none", minecraft_armor_trim_material_list[|0] ])
+	armor_skin_array = [ null, null, null, null ]
 	
 	item_tex = project_pack_res
 	item_tex_material = project_pack_res
@@ -71,7 +71,7 @@ function temp_event_create()
 	legacy_item_sheet = true
 	
 	block_name = default_block
-	block_state = array()
+	block_state = []
 	
 	block_tex = project_pack_res
 	block_tex_material = project_pack_res

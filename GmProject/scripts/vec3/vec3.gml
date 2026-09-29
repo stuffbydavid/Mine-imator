@@ -8,7 +8,7 @@ function vec3(xx, yy = undefined, zz = undefined)
 	gml_pragma("forceinline")
 	
 	if (is_undefined(yy))
-		return [xx, xx, xx]
+		return [ xx, xx, xx ]
 	else
-		return [xx, yy, zz]
+		return [ xx, yy, zz ]
 }

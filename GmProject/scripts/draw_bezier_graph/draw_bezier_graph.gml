@@ -31,7 +31,7 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 	gpu_set_tex_filter(true)
 	
 	// Draw curve
-	draw_bezier_curve([boxx, boxy + boxh], [easeinxpos, easeinypos], [easeoutxpos, easeoutypos], [boxx + boxw, boxy], 2, c_text_secondary, a_text_secondary)
+	draw_bezier_curve([ boxx, boxy + boxh ], [ easeinxpos, easeinypos ], [ easeoutxpos, easeoutypos ], [ boxx + boxw, boxy ], 2, c_text_secondary, a_text_secondary)
 	
 	// Preview progress
 	if (tl_edit != null)
@@ -148,6 +148,6 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 		else if (window_busy = "beziereasein")
 			action_tl_frame_ease_in(points, false)
 		else
-			action_tl_frame_ease_out([points[2], points[3]], false)
+			action_tl_frame_ease_out([ points[2], points[3] ], false)
 	}
 }

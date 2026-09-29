@@ -9,7 +9,7 @@ function vec4(xx, yy = undefined, zz = undefined, w = undefined)
 	gml_pragma("forceinline")
 	
 	if (is_undefined(yy))
-		return [xx, xx, xx, xx]
+		return [ xx, xx, xx, xx ]
 	else
-		return [xx, yy, zz, w]
+		return [ xx, yy, zz, w ]
 }

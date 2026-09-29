@@ -181,7 +181,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 
 			render_set_uniform_vec3("uSunDirection", 0.408, 0.408, 0.816)
 			render_set_uniform_int("uLightAmount", 1)
-			render_set_uniform("uLightData", array(0, 0, 0, 0, 1, 1, 1, 0))
+			render_set_uniform("uLightData", [ 0, 0, 0, 0, 1, 1, 1, 0 ])
 			render_set_uniform_color("uAmbientColor", c_ambient, 1)
 			render_set_uniform_color("uFallbackColor", c_white, 1)
 						
@@ -284,7 +284,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						break
 							
 					case e_temp_type.ITEM:
-						render_world_item(select.item_vbuffer, [select.item_tex, null, null], select.item_sheet, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, true)
+						render_world_item(select.item_vbuffer, [ select.item_tex, null, null ], select.item_sheet, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, true)
 						break
 							
 					case e_temp_type.BLOCK:
@@ -323,7 +323,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						var tex;
 						with (select)
 							tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-						render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [tex, spr_default_material, spr_default_normal])
+						render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [ tex, spr_default_material, spr_default_normal ])
 						break
 					}
 				}

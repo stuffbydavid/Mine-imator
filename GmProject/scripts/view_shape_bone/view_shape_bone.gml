@@ -7,14 +7,14 @@ function view_shape_bone(pos, length, mat)
 	var bonemat, points, pointlines, points2d, points2derror;
 	bonemat = matrix_multiply(matrix_create(vec3(0), vec3(0), vec3(length)), mat)
 	points = [
-		[0, 0, 0],
+		[ 0, 0, 0 ],
 		
-		[.125, .125, 1/6],
-		[-.125, .125, 1/6],
-		[-.125, -.125, 1/6],
-		[.125, -.125, 1/6],
+		[ .125, .125, 1/6 ],
+		[ -.125, .125, 1/6 ],
+		[ -.125, -.125, 1/6 ],
+		[ .125, -.125, 1/6 ],
 		
-		[0, 0, 1]
+		[ 0, 0, 1 ]
 	]
 	pointlines = [
 		0, 1,

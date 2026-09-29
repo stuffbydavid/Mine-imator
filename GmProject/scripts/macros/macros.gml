@@ -40,7 +40,7 @@ function macros()
 	#macro unzip_directory				file_directory_get() + "unzip/"
 	#macro render_default				"performance"
 	#macro render_default_file			render_directory + render_default + ".mirender"
-	#macro render_presets				array("performance.mirender", "balanced.mirender", "extreme.mirender")
+	#macro render_presets				[ "performance.mirender", "balanced.mirender", "extreme.mirender" ]
 	#macro render_preset_default		"balanced.mirender"
 	#macro render_preset_default_name	"balanced"
 	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
@@ -186,37 +186,37 @@ function macros()
 	#macro fog_near						3000
 	#macro fog_size						2000
 	#macro fog_height					1250
-	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")
-	#macro schematic_folders			array("Buildings", "Biomes", "Trees", "Structures", "Other")
-	#macro schematic_default			array("House 1", "Forest", "Oak tree 1", "Dungeon", "Creek")
+	#macro armor_parts					[ "helmet", "chestplate", "leggings", "boots" ]
+	#macro schematic_folders			[ "Buildings", "Biomes", "Trees", "Structures", "Other" ]
+	#macro schematic_default			[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
 	#macro scenery_large_threshold		300
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		512
-	#macro sound_filters				array("ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other")
+	#macro sound_filters				[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
 	#macro sound_default				"Step / Grass 1"
-	#macro music_filters				array("game", "menu", "records", "other")
+	#macro music_filters				[ "game", "menu", "records", "other" ]
 	#macro music_default				"Records / Cat"
-	#macro particle_folders				array("Effects", "Weather")
-	#macro particle_default				array("Default", "Snow")
+	#macro particle_folders				[ "Effects", "Weather" ]
+	#macro particle_default				[ "Default", "Snow" ]
 	#macro default_text					"AaBbCc"
 	
 	// Parenting actions for right/left arm
-	#macro item_parent_action			array(null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5))
-	#macro bow_parent_action_right		array(null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9))
-	#macro bow_parent_action_left		array(null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9))
-	#macro tool_parent_action			array(null, true, vec3(0, 2, 0), vec3(0, 145, 90), vec3(0.85))
-	#macro rod_parent_action			array(null, true, vec3(0, 2, -9), vec3(180, 145, 90), vec3(0.85))
-	#macro crossbow_parent_action_right	array(null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9))
-	#macro crossbow_parent_action_left	array(null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9))
-	#macro spear_parent_action			array(null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25))
-	#macro block_parent_action_right	array(null, true, vec3(0, 3.5, -9.5), vec3(-15, 15, 135), vec3(0.4))
-	#macro block_parent_action_left		array(null, true, vec3(0, 3.5, -9.5), vec3(15, 15, 45), vec3(0.4))
+	#macro item_parent_action			[ null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5) ]
+	#macro bow_parent_action_right		[ null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9) ]
+	#macro bow_parent_action_left		[ null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9) ]
+	#macro tool_parent_action			[ null, true, vec3(0, 2, 0), vec3(0, 145, 90), vec3(0.85) ]
+	#macro rod_parent_action			[ null, true, vec3(0, 2, -9), vec3(180, 145, 90), vec3(0.85) ]
+	#macro crossbow_parent_action_right	[ null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9) ]
+	#macro crossbow_parent_action_left	[ null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9) ]
+	#macro spear_parent_action			[ null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25) ]
+	#macro block_parent_action_right	[ null, true, vec3(0, 3.5, -9.5), vec3(-15, 15, 135), vec3(0.4) ]
+	#macro block_parent_action_left		[ null, true, vec3(0, 3.5, -9.5), vec3(15, 15, 45), vec3(0.4) ]
 	
 	// World
 	#macro block_size					16
 	#macro block_half_size				8
-	#macro block_size_list				array(16, 32, 64)
+	#macro block_size_list				[ 16, 32, 64 ]
 	#macro item_size					16
 	#macro clip_far						30000
 	#macro clip_near					1

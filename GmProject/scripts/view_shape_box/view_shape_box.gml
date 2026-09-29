@@ -5,7 +5,7 @@
 
 function view_shape_box(p1, p2, mat = null)
 {
-	var points = array(
+	var points = [
 		p1,
 		point3D(p1[X], p1[Y], p2[Z]),
 		point3D(p1[X], p2[Y], p1[Z]),
@@ -14,7 +14,7 @@ function view_shape_box(p1, p2, mat = null)
 		point3D(p2[X], p1[Y], p2[Z]),
 		point3D(p2[X], p2[Y], p1[Z]),
 		p2
-	);
+	];
 	
 	if (mat != null)
 		view_shape_draw(points, mat)

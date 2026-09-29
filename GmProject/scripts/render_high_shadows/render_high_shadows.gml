@@ -5,7 +5,7 @@ function render_high_shadows()
 	sunout = (background_sunlight_color_final != c_black)
 	samplestart = 0
 	sampleend = 0
-	lightlist = array()
+	lightlist = []
 	
 	// Get visible lights
 	with (obj_timeline)

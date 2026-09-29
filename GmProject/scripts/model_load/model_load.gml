@@ -195,7 +195,7 @@ function model_load(map, dir)
 		if (is_string(map[?"default_state"]))
 			default_state = string_get_state_vars(map[?"default_state"])
 		else
-			default_state = array()
+			default_state = []
 
 		// Model part list eligibility
 		var modelfile, state;
