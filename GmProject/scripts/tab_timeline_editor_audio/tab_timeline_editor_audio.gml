@@ -1,5 +1,3 @@
-/// tab_timeline_editor_audio()
-
 function tab_timeline_editor_audio()
 {
 	tab_control_button_label()
@@ -7,7 +5,7 @@ function tab_timeline_editor_audio()
 	{
 		bench_show_ani_type = "show"
 		bench_open = true	
-		bench_click(e_bench.SOUND)
+		bench_tab_select(e_bench_tab.SOUND)
 	}
 	tab_next()
 }

@@ -1,4 +1,3 @@
-/// view_shape_path(view, timeline)
 /// @arg view
 /// @arg timeline
 

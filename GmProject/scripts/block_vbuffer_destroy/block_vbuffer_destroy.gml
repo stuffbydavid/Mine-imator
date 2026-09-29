@@ -1,5 +1,3 @@
-/// block_vbuffer_destroy()
-
 function block_vbuffer_destroy()
 {
 	if (block_vbuffer != null)

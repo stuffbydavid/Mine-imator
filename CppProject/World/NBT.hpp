@@ -148,6 +148,7 @@ namespace CppProject
 			NbtTag* tag = value.value(key, nullptr);
 			if (!tag)
 				throw "Key " + (QString)key + " not found in compound";
+
 			if (tag->type != TAG_LIST)
 				throw "Unexpected type of key " + (QString)key + " compound: " + NumStr(tag->type);
 
@@ -161,6 +162,7 @@ namespace CppProject
 			QVector<ListStruct*> list;
 			for (IntType i = 0; i < tagList->value.Size(); i++)
 				list.append((ListStruct*)tagList->value[i]);
+			
 			return list;
 		}
 
@@ -170,8 +172,10 @@ namespace CppProject
 			NbtTag* tag = value.value(key, nullptr);
 			if (!tag)
 				throw "Key " + (QString)key + " not found in compound";
+
 			if (tag->type != TAG_COMPOUND)
 				throw "Unexpected type of key " + (QString)key + " compound: " + NumStr(tag->type);
+			
 			return (NbtCompound*)tag;
 		}
 
@@ -186,8 +190,10 @@ namespace CppProject
 			NbtTag* tag = value.value(key, nullptr);
 			if (!tag)
 				throw "Key " + (QString)key + " not found in compound";
+
 			if (tag->type != Et)
 				throw "Unexpected type of key " + (QString)key + " compound: " + NumStr(tag->type);
+			
 			return ((St*)tag)->value;
 		}
 	};

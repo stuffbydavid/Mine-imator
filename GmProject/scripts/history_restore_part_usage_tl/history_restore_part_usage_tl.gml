@@ -1,12 +1,11 @@
-/// history_restore_part_usage_tl(hobj)
-/// @arg hobj
+/// @arg historyobject
 
 function history_restore_part_usage_tl(hobj)
 {	
-	var tl, kfindex;
-	
 	with (hobj)
 	{
+		var tl, kfindex;
+	
 		// Restore references in timelines
 		for (var i = 0; i < usage_tl_attractor_amount; i++)
 		{

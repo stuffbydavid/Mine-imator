@@ -1,4 +1,5 @@
-/// @desc Updates interface colors based on selected theme
+/// @desc Updates interface colors based on selected theme.
+
 function interface_update()
 {
 	with (setting_theme)

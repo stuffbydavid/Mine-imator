@@ -1,4 +1,3 @@
-/// action_res_sound_load(filename)
 /// @arg filename
 
 function action_res_sound_load(fn)

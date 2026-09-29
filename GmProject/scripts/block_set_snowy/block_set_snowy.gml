@@ -1,4 +1,3 @@
-/// block_set_snowy()
 /// @desc Check for a snow block above the current block.
 
 function block_set_snowy()

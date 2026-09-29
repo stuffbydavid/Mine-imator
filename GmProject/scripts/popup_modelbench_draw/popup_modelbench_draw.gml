@@ -1,5 +1,3 @@
-/// popup_modelbench_draw()
-
 function popup_modelbench_draw()
 {
 	dy += 8

@@ -1,5 +1,3 @@
-/// res_load_pack_model_textures()
-
 function res_load_pack_model_textures()
 {
 	// Free old
@@ -43,6 +41,7 @@ function res_load_pack_model_textures()
 	model_texture_map = ds_map_create()
 	model_texture_material_map = ds_map_create()
 	model_texture_normal_map = ds_map_create()
+	
 	for (var t = 0; t < ds_list_size(mc_assets.model_texture_list); t++)
 	{
 		var name, fname, matfname, norfname, tex;

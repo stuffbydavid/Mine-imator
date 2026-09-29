@@ -1,6 +1,3 @@
-/// view_control_bend(view)
-/// @arg view
-
 function view_control_bend(view)
 {
 	var len, part, color;

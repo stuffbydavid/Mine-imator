@@ -1,4 +1,3 @@
-/// new_transition_texture_map(width, height, padding, center)
 /// @arg width
 /// @arg height
 /// @arg padding

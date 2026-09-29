@@ -1,5 +1,3 @@
-/// action_toolbar_build_mode()
-
 function action_toolbar_build_mode()
 {
 	if (place_build)

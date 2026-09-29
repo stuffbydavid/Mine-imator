@@ -1,9 +1,5 @@
-/// tab_frame_editor_camera()
-
 function tab_frame_editor_camera()
 {
-	var capwid, text;
-	
 	context_menu_group_temp = e_context_group.CAMERA
 	
 	// Camera size (Advanced mode only)
@@ -12,7 +8,7 @@ function tab_frame_editor_camera()
 		if (tl_edit.value[e_value.CAM_SIZE_USE_PROJECT]) // Use project settings
 		{
 			tab.camera.video_template = null
-			text = text_get("frameeditorcameravideosizeuseproject")
+			content_text = text_get("frameeditorcameravideosizeuseproject")
 		}
 		else
 		{
@@ -20,13 +16,13 @@ function tab_frame_editor_camera()
 				tab.camera.video_template = find_videotemplate(tl_edit.value[e_value.CAM_WIDTH], tl_edit.value[e_value.CAM_HEIGHT])
 			
 			if (tab.camera.video_template > 0) // Use template
-				text = text_get("projectvideosizetemplate" + tab.camera.video_template.name) + " (" + string(tab.camera.video_template.width) + "x" + string(tab.camera.video_template.height) + ")"
+				content_text = text_get("projectvideosizetemplate" + tab.camera.video_template.name) + " (" + string(tab.camera.video_template.width) + "x" + string(tab.camera.video_template.height) + ")"
 			else // Use custom
-				text = text_get("projectvideosizecustom")
+				content_text = text_get("projectvideosizecustom")
 		}
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorcameravideosize", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_SIZE_USE_PROJECT] ? null : tab.camera.video_template, text, action_tl_frame_cam_video_template)
+		draw_button_menu("frameeditorcameravideosize", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_SIZE_USE_PROJECT] ? null : tab.camera.video_template, content_text, action_tl_frame_cam_video_template)
 		tab_next()
 		
 		// Custom
@@ -96,39 +92,39 @@ function tab_frame_editor_camera()
 		switch (tl_edit.value[e_value.CAM_TONEMAPPER])
 		{
 			case e_tonemapper.REINHARD:
-				text = text_get("frameeditorcameratonemapperreinhard")
-				break;
+				content_text = text_get("frameeditorcameratonemapperreinhard")
+				break
 			case e_tonemapper.ACES:
-				text = text_get("frameeditorcameratonemapperaces")
-				break;
+				content_text = text_get("frameeditorcameratonemapperaces")
+				break
 			case e_tonemapper.UCHIMURA:
-				text = text_get("frameeditorcameratonemapperuchimura")
-				break;
+				content_text = text_get("frameeditorcameratonemapperuchimura")
+				break
 			case e_tonemapper.LOTTES:
-				text = text_get("frameeditorcameratonemapperlottes")
-				break;
+				content_text = text_get("frameeditorcameratonemapperlottes")
+				break
 			case e_tonemapper.HABLE:
-				text = text_get("frameeditorcameratonemapperhable")
-				break;
+				content_text = text_get("frameeditorcameratonemapperhable")
+				break
 			case e_tonemapper.GT7_CURVE:
-				text = text_get("frameeditorcameratonemappergt7curve")
-				break;
+				content_text = text_get("frameeditorcameratonemappergt7curve")
+				break
 			case e_tonemapper.PBR_NEUTRAL:
-				text = text_get("frameeditorcameratonemapperpbrneutral")
-				break;
+				content_text = text_get("frameeditorcameratonemapperpbrneutral")
+				break
 			case e_tonemapper.AGX:
-				text = text_get("frameeditorcameratonemapperagx")
-				break;
+				content_text = text_get("frameeditorcameratonemapperagx")
+				break
 			case e_tonemapper.AGX_PUNCHY:
-				text = text_get("frameeditorcameratonemapperagxpunchy")
-				break;
+				content_text = text_get("frameeditorcameratonemapperagxpunchy")
+				break
 			default:
-				text = text_get("frameeditorcameratonemappernone")
-				break;
+				content_text = text_get("frameeditorcameratonemappernone")
+				break
 		}
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorcameratonemapper", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_TONEMAPPER], text, action_tl_frame_cam_tonemapper)
+		draw_button_menu("frameeditorcameratonemapper", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_TONEMAPPER], content_text, action_tl_frame_cam_tonemapper)
 		tab_next()
 		
 		// Exposure
@@ -294,7 +290,7 @@ function tab_frame_editor_camera()
 			{
 				tab_collapse_start()
 				
-				var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1)
+				var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
 				
 				// Wheels
 				if (!app.panel_compact)
@@ -397,18 +393,18 @@ function tab_frame_editor_camera()
 			tex = null
 			
 			if (texobj != null)
-				text = texobj.display_name
+				content_text = texobj.display_name
 			else
-				text = text_get("listnone")
+				content_text = text_get("listnone")
 			
 			if (texobj = null)
-				text = text_get("listdefault", text)
+				content_text = text_get("listdefault", content_text)
 			
 			if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
 				tex = texobj.texture
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("frameeditorcameralensdirttexture", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_OBJ], text, action_tl_frame_texture_obj, false, tex)
+			draw_button_menu("frameeditorcameralensdirttexture", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_OBJ], content_text, action_tl_frame_texture_obj, false, tex)
 			tab_next()
 			
 			// Affected by bloom

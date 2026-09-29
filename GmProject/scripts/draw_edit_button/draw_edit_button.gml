@@ -1,12 +1,11 @@
-/// draw_edit_button(name, x, y, active, script, value, [tip, [disabled]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
 /// @arg value
-/// @arg [tip
-/// @arg [disabled]]
+/// @arg [tip]
+/// @arg [disabled]
 
 function draw_edit_button(name, xx, yy, active, script, value, tip = "", disabled = false)
 {

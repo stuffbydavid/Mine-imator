@@ -42,6 +42,7 @@ namespace CppProject
 			if (chunkCompound.HasKey("DataVersion"))
 			{
 				IntType dataVersion = chunkCompound.Int("DataVersion");
+
 				if (dataVersion >= JAVA_26_3)
 					format = JAVA_26_3; 
 				else if (dataVersion >= JAVA_1_18)
@@ -58,10 +59,12 @@ namespace CppProject
 			// Get region offset
 			x = ((IntType)chunkRoot->Int("xPos") & 31); // x % 32
 			z = ((IntType)chunkRoot->Int("zPos") & 31); // z % 32
+
 			rightEdge = (x == REGION_SIZE_CHUNKS - 1);
 			leftEdge = (x == 0);
 			frontEdge = (z == REGION_SIZE_CHUNKS - 1);
 			backEdge = (z == 0);
+			
 			regionIndex = (z << 5) + x; // z * 32 + x
 
 			// Get region position in blocks
@@ -81,6 +84,7 @@ namespace CppProject
 				const Map& legacyIdsMap = DsMap(global::legacy_biomes_ids_map);
 
 				legacyBiomes.Alloc(SECTION_SIZE * SECTION_SIZE);
+
 				for (IntType x = 0; x < SECTION_SIZE; x++)
 				for (IntType z = 0; z < SECTION_SIZE; z++)
 					legacyBiomes[z * SECTION_SIZE + x] = Preview::mcBiomeIdIndexMap[legacyIdsMap.Value(biomesArray.Value(z * SECTION_SIZE + x))];
@@ -90,7 +94,8 @@ namespace CppProject
 			if (format >= JAVA_1_2)
 			{
 				// Must be fully loaded
-				if (chunkRoot->HasKey("Status")) {
+				if (chunkRoot->HasKey("Status"))
+				{
 					StringType status = chunkRoot->String("Status").Replaced("minecraft:", "");
 					if (status != "full" &&
 						status != "fullchunk" &&
@@ -111,6 +116,7 @@ namespace CppProject
 
 					Section* section = new Section(this, y, box);
 					sections[section->chunkIndex] = section;
+					
 					if (!section->Load(comp, format))
 					{
 						error = true;
@@ -125,6 +131,7 @@ namespace CppProject
 				{
 					Section* section = new Section(this, y, box);
 					sections[section->chunkIndex] = section;
+					
 					if (!section->Load(chunkRoot, format))
 					{
 						error = true;
@@ -171,6 +178,7 @@ namespace CppProject
 							FindScript(scriptId),
 							blockEntity
 						});
+
 						((NbtList*)chunkRoot->value[blockEntitiesName])->value.Erase(i); // Erase from list to avoid deletion
 					}
 				}
@@ -224,30 +232,37 @@ namespace CppProject
 					startPos.x = SECTION_SIZEM1, endPos.x = SECTION_SIZE;
 				else
 					return;
+				
 				break;
 			}
+
 			case Region::GenerateMode::LEFT_EDGE:
 			{
 				if (leftEdge)
 					startPos.x = 0, endPos.x = 1;
 				else
 					return;
+				
 				break;
 			}
+
 			case Region::GenerateMode::FRONT_EDGE:
 			{
 				if (frontEdge)
 					startPos.z = SECTION_SIZEM1, endPos.z = SECTION_SIZE;
 				else
 					return;
+				
 				break;
 			}
+
 			case Region::GenerateMode::BACK_EDGE:
 			{
 				if (backEdge)
 					startPos.z = 0, endPos.z = 1;
 				else
 					return;
+				
 				break;
 			}
 
@@ -258,30 +273,37 @@ namespace CppProject
 					endPos.x = 1, endPos.z = 1;
 				else
 					return;
+				
 				break;
 			}
+
 			case Region::GenerateMode::RIGHT_BACK_CORNER:
 			{
 				if (rightEdge && backEdge)
 					startPos.x = SECTION_SIZEM1, endPos.z = 1;
 				else
 					return;
+				
 				break;
 			}
+
 			case Region::GenerateMode::RIGHT_FRONT_CORNER:
 			{
 				if (rightEdge && frontEdge)
 					startPos.x = SECTION_SIZEM1, startPos.z = SECTION_SIZEM1;
 				else
 					return;
+				
 				break;
 			}
+
 			case Region::GenerateMode::LEFT_FRONT_CORNER:
 			{
 				if (leftEdge && frontEdge)
 					startPos.z = SECTION_SIZEM1, endPos.x = 1;
 				else
 					return;
+				
 				break;
 			}
 		}
@@ -308,6 +330,7 @@ namespace CppProject
 						// Allocate vertex data for this section and next (to support Y=16 vertices outside section)
 						if (!meshes[m].vertexData[s].Size())
 							meshes[m].vertexData[s].Alloc(vertexDataSizeTotal);
+						
 						meshes[m].vertexData[s + 1].Alloc(vertexDataSizeTotal);
 					}
 				}
@@ -330,6 +353,7 @@ namespace CppProject
 			{
 				uint16_t sy = s * SECTION_SIZE;
 				Heap<FaceData>& faceData = mesh.faceData[s];
+				
 				if (!faceData.Size())
 					continue;
 
@@ -394,6 +418,7 @@ namespace CppProject
 
 			uint16_t faceDataIndex = (pos.y & SECTION_SIZEM1) * faceDataSizeXZ + (pos.z - startPos.z) * faceDataSizeX + (pos.x - startPos.x);
 			outBlockData = &mesh.faceData[sectionIndex][faceDataIndex].blockData[dir];
+			
 			return *outBlockData == blockData;
 		};
 
@@ -416,6 +441,7 @@ namespace CppProject
 		{
 			WorldVec offset = blockFaceMergeVec[dir][1] * d1;
 			BoolType exit = false;
+			
 			for (d2 = 0; d2 < d0; d2++) // Check faces in first direction
 			{
 				if (!faceMatch(pos + offset, offsetBlockData[d2]))
@@ -425,10 +451,13 @@ namespace CppProject
 				}
 				offset = offset + blockFaceMergeVec[dir][0];
 			}
+			
 			if (exit)
 				break;
+			
 			for (uint8_t b = 0; b < d2; b++) // Erase data of row faces
 				*(offsetBlockData[b]) = 0;
+			
 			faceOffset = faceOffset + blockFaceMergeVec[dir][1];
 		}
 

@@ -1,4 +1,3 @@
-/// render_world_sky_clouds()
 /// @desc Renders the cloud models.
 
 function render_world_sky_clouds()
@@ -13,6 +12,7 @@ function render_world_sky_clouds()
 		render_set_uniform("uSSAO", 0)
 	
 	var res = res_eval(background_sky_clouds_tex);
+	
 	// Shading
 	render_set_uniform_int("uIsSky", 1)
 	render_set_uniform_color("uBlendColor", background_sky_clouds_final, background_clouds_alpha)
@@ -47,6 +47,7 @@ function render_world_sky_clouds()
 	gpu_set_blendenable(true)
 	gpu_set_zwriteenable(false)
 	gpu_set_zfunc(cmpfunc_equal)
+	
 	for (var i = 0; i < array_length(background_sky_clouds_vbuffer_pos); i++)
 		vbuffer_render(background_sky_clouds_vbuffer, background_sky_clouds_vbuffer_pos[i], point3D(0, 0, 90))
 	

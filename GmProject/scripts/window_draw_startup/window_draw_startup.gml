@@ -1,5 +1,3 @@
-/// window_draw_startup()
-
 function window_draw_startup()
 {
 	content_x = 0
@@ -117,7 +115,6 @@ function window_draw_startup()
 		}
 		
 		var listheight;
-		
 		if (recent_display_mode = "list")
 			listheight = 28 + min(window_height - dy, (min(ds_list_size(recent_list), 8) * 44))
 		else

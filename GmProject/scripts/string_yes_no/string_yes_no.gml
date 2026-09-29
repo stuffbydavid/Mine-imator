@@ -1,4 +1,6 @@
-function string_yes_no(val)
+/// @arg bool
+
+function string_yes_no(value)
 {
-	return (val ? "yes" : "no")
+	return (value ? "yes" : "no")
 }

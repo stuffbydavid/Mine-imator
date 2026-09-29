@@ -1,5 +1,3 @@
-/// action_lib_model_part_name(name)
-/// @arg name
 /// @desc Changes the character body part.
 
 function action_lib_model_part_name(name)
@@ -10,11 +8,13 @@ function action_lib_model_part_name(name)
 	with (obj_edit)
 	{
 		model_part_name = name
+		
 		temp_update_model_part()
 		temp_update_model_shape()
 		temp_update_display_name()
 	}
 	
 	lib_preview.update = true
+	
 	tl_update_matrix()
 }

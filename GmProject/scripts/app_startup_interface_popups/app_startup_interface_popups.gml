@@ -1,5 +1,3 @@
-/// app_startup_interface_popups()
-
 function app_startup_interface_popups()
 {
 	// Welcome
@@ -13,6 +11,7 @@ function app_startup_interface_popups()
 	with (popup_newproject)
 	{
 		folder = ""
+		
 		tbx_name = new_textbox(true, 0, "")
 		tbx_author = new_textbox(true, 0, "")
 		tbx_description = new_textbox(false, 0, "")
@@ -23,6 +22,7 @@ function app_startup_interface_popups()
 	with (popup_saveas)
 	{
 		folder = ""
+		
 		tbx_name = new_textbox(true, 0, "")
 		tbx_author = new_textbox(true, 0, "")
 		tbx_description = new_textbox(false, 0, "")
@@ -47,6 +47,7 @@ function app_startup_interface_popups()
 		texture = null
 		fail_message = ""
 		start_time = 0
+		
 		tbx_username = new_textbox(true, 0, "")
 	}
 	
@@ -55,14 +56,15 @@ function app_startup_interface_popups()
 	with (popup_importimage)
 	{
 		filename = ""
-		filenames = ds_list_create();
-		do_all = false;
+		filenames = ds_list_create()
+		do_all = false
 		texture = null
 		type = e_res_type.SKIN
 		value_script = null
 		is_sheet = true
 		sheet_size = vec2(16, 16)
 		sheet_size_def = sheet_size
+		
 		tbx_sheet_width = new_textbox_integer()
 		tbx_sheet_height = new_textbox_integer()
 	}
@@ -77,6 +79,7 @@ function app_startup_interface_popups()
 		is_sheet = true
 		sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
 		sheet_size_def = sheet_size
+		
 		tbx_sheet_width = new_textbox_integer()
 		tbx_sheet_height = new_textbox_integer()
 	}
@@ -88,6 +91,7 @@ function app_startup_interface_popups()
 		renderer = app.setting_export_movie_renderer
 		if (trial_version && renderer = e_renderer.REALISTIC)
 			renderer = e_renderer.STANDARD
+		
 		format = app.setting_export_movie_format
 		frame_rate = app.setting_export_movie_frame_rate
 		framespersecond = app.setting_export_movie_framespersecond
@@ -95,6 +99,7 @@ function app_startup_interface_popups()
 		remove_background = app.setting_export_movie_remove_background
 		include_hidden = app.setting_export_movie_include_hidden
 		watermark = app.setting_export_movie_watermark
+		
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
 		tbx_framespersecond = new_textbox_integer()
@@ -107,9 +112,11 @@ function app_startup_interface_popups()
 		renderer = app.setting_export_image_renderer
 		if (trial_version && renderer = e_renderer.REALISTIC)
 			renderer = e_renderer.STANDARD
+		
 		remove_background = app.setting_export_image_remove_background
 		include_hidden = app.setting_export_image_include_hidden
 		watermark = app.setting_export_image_watermark
+		
 		tbx_image_size_custom_width = new_textbox_integer()
 		tbx_image_size_custom_height = new_textbox_integer()
 	}

@@ -1,5 +1,3 @@
-/// action_lib_pc_open()
-
 function action_lib_pc_open()
 {
 	var fn = file_dialog_open_particles();

@@ -1,12 +1,10 @@
-/// sortlist_filters_draw()
-
 function sortlist_filters_draw()
 {
-	var typelist, textprefix, scroll, capwid;
+	var typelist, textprefix, scroll;
 	typelist = null
 	textprefix = "type"
 	scroll = 0
-	capwid = 0
+	content_capwid = 0
 	
 	// Filter "type" column
 	typelist = settings_menu_sortlist.filter_type_list
@@ -20,6 +18,7 @@ function sortlist_filters_draw()
 		scroll = -settings_menu_scroll.value
 	else
 		scroll = 0
+	
 	settings_menu_sortlist.filter_scroll = settings_menu_scroll.value
 	
 	draw_set_font(font_label)
@@ -35,9 +34,9 @@ function sortlist_filters_draw()
 				continue
 		}
 		
-		capwid = max(capwid, string_width(text_get(textprefix + itemname)))
+		content_capwid = max(content_capwid, string_width(text_get(textprefix + itemname)))
 		
-		var active = ds_list_find_index(settings_menu_sortlist.filter_list, itemname) != -1
+		var active = ds_list_find_index(settings_menu_sortlist.filter_list, itemname) != -1;
 		
 		tab_control_checkbox()
 		if (draw_checkbox(textprefix + itemname, dx, dy + floor(scroll), active, null))
@@ -54,5 +53,5 @@ function sortlist_filters_draw()
 	
 	clip_end()
 	
-	settings_menu_w = (32 + capwid) + 32 + 24
+	settings_menu_w = (32 + content_capwid) + 32 + 24
 }

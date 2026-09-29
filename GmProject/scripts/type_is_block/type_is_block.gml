@@ -1,6 +1,3 @@
-/// type_is_block(type)
-/// @arg type
-
 function type_is_block(type)
 {
 	return (type = e_tl_type.SCENERY ||

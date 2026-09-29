@@ -1,16 +1,16 @@
-/// render_high_reflections(surf)
-/// @arg surf
-/// @desc Ray traces scene with reflections
+/// @desc Ray traces scene with reflections.
+/// @arg surface
 
 function render_high_reflections(surf)
 {
 	var ww, hh, sourcesurf;
-	gpu_set_blendmode_ext(bm_one, bm_zero)
 	ww = ceil(render_width * app.project_render_reflections_resolution)
 	hh = ceil(render_height * app.project_render_reflections_resolution)
 	
+	gpu_set_blendmode_ext(bm_one, bm_zero)
+	
 	// Raytrace
-	render_surface_reflections_raydata = surface_require(render_surface_reflections_raydata, ww, hh, false, e_surface_format.rgba32float)
+	render_surface_reflections_raydata = surface_require(render_surface_reflections_raydata, ww, hh, false, surface_rgba32float)
 	surface_set_target(render_surface_reflections_raydata)
 	{
 		gpu_set_texrepeat(false)
@@ -46,7 +46,7 @@ function render_high_reflections(surf)
 		sourcesurf = (bounce = 0 ? render_surface_shadows : surf)
 		
 		// Resolve reflections pass
-		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, e_surface_format.rgba16float)
+		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
 		surface_set_target(render_surface_hdr[0])
 		{
 			draw_clear_alpha(c_black, 0)

@@ -1,5 +1,3 @@
-/// block_vbuffer_start()
-
 function block_vbuffer_start()
 {
 	if (block_vbuffer != null)

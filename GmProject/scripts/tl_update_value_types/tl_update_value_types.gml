@@ -1,4 +1,3 @@
-/// tl_update_value_types()
 /// @desc Updates the available value types.
 
 function tl_update_value_types()
@@ -126,5 +125,5 @@ function tl_update_value_types()
 	
 	// Enable material tab
 	value_type[e_value_type.MATERIAL] = (value_type[e_value_type.MATERIAL_TEXTURE] || value_type[e_value_type.MATERIAL_COLOR] ||
-										value_type[e_value_type.MATERIAL_SURFACE] || value_type[e_value_type.MATERIAL_SUBSURFACE])
+										 value_type[e_value_type.MATERIAL_SURFACE] || value_type[e_value_type.MATERIAL_SUBSURFACE])
 }

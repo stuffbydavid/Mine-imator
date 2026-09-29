@@ -1,5 +1,3 @@
-/// action_lib_pc_type_remove()
-
 function action_lib_pc_type_remove()
 {
 	if (history_undo)

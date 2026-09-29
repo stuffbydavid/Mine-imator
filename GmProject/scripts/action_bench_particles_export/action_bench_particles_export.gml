@@ -1,8 +1,6 @@
-/// action_bench_particles_export()
-
 function action_bench_particles_export()
 {
-	var preset = bench_settings.particle_preset
+	var preset = bench_settings.particle_preset;
 	if (preset = null)
 		return 0
 	
@@ -12,7 +10,7 @@ function action_bench_particles_export()
 		return 0
 	}
 	
-	var source = file_exists_lib(preset) ? preset : particles_directory + bench_particle_preset_folder + "/" + preset + ".miparticles"
+	var source = file_exists_lib(preset) ? preset : particles_directory + bench_particle_preset_folder + "/" + preset + ".miparticles";
 	if (!file_exists_lib(source))
 		return 0
 	
@@ -23,7 +21,7 @@ function action_bench_particles_export()
 		return 0
 	}
 	
-	var fn = file_dialog_save_particles(presetname)
+	var fn = file_dialog_save_particles(presetname);
 	if (fn = "")
 		return 0
 	

@@ -1,5 +1,4 @@
-/// window_draw_world_import()
-/// Draw the world import interface.
+/// @desc Draw the world import interface.
 
 function window_draw_world_import()
 {
@@ -10,7 +9,7 @@ function window_draw_world_import()
 		return
 	}
 
-	var spacing, capwid, hasselection, surfacey, surfaceh;
+	var spacing, hasselection;
 	spacing = 12
 	content_x = 0
 	content_y = toolbar_size
@@ -41,14 +40,17 @@ function window_draw_world_import()
 	confirmy = window_height - 60 - confirmh - (setting_show_shortcuts_bar * 28)
 	
 	// Draw surface
+	var surfacey, surfaceh;
 	surfacey = content_y + content_height
 	surfaceh = window_height - surfacey
 	if (setting_show_shortcuts_bar)
 		surfaceh -= 28
+	
 	world_import_surface = surface_require(world_import_surface, window_width, surfaceh)
 	world_import_update_surface(0, surfacey, window_width, surfaceh, confirmx, confirmy, confirmw, confirmh)
-	draw_set_color(c_ltgray);
-	draw_rectangle(0, surfacey, window_width, surfacey + surfaceh, false);
+	
+	draw_set_color(c_ltgray)
+	draw_rectangle(0, surfacey, window_width, surfacey + surfaceh, false)
 	draw_surface(world_import_surface, 0, surfacey)
 	
 	// Draw world import toolbar
@@ -75,14 +77,14 @@ function window_draw_world_import()
 	
 	// World
 	dw = 256
-	capwid = 50
-	draw_button_menu("worldimportworld", e_menu.LIST, dx, dy, dw, 24, world_import_world_root, world_import_world_name, world_import_select_world, false, null, null, "", null, null, capwid)
+	content_capwid = 50
+	draw_button_menu("worldimportworld", e_menu.LIST, dx, dy, dw, 24, world_import_world_root, world_import_world_name, world_import_select_world, false, null, null, "", null, null, content_capwid)
 	
 	// Dimension
 	dx += dw + spacing
 	dw = 208
-	capwid = 80
-	draw_button_menu("worldimportdimension", e_menu.LIST, dx, dy, dw, 24, world_import_dimension, text_get("worldimport" + string_replace_all(world_import_dimension, "_", "")), world_import_select_dimension, false, null, null, "", null, null, capwid)
+	content_capwid = 80
+	draw_button_menu("worldimportdimension", e_menu.LIST, dx, dy, dw, 24, world_import_dimension, text_get("worldimport" + string_replace_all(world_import_dimension, "_", "")), world_import_select_dimension, false, null, null, "", null, null, content_capwid)
 	
 	dx += dw + 12
 	
@@ -92,7 +94,7 @@ function window_draw_world_import()
 	
 	if (draw_button_icon("worldimportbrowse", dx, dy, dw, dw, false, icons.FOLDER, null, false, "worldimportbrowsetip"))
 	{
-		var leveldat = file_dialog_open(text_get("worldimportbrowseworlds") + " (level.dat)|level.dat;", "", minecraft_java_directory_get() + "/saves", text_get("worldimportbrowsecaption"))
+		var leveldat = file_dialog_open(text_get("worldimportbrowseworlds") + " (level.dat)|level.dat;", "", minecraft_java_directory_get() + "/saves", text_get("worldimportbrowsecaption"));
 		if (file_exists_lib(leveldat))
 			world_import_select_world(filename_dir(leveldat))
 	}
@@ -163,6 +165,7 @@ function window_draw_world_import()
 	content_y = 0
 	content_width = window_width
 	content_height = window_height
+	
 	if (hasselection)
 		if (draw_button_label("worldimportconfirm", confirmx, confirmy, confirmw, null, e_button.BIG, null, e_anchor.LEFT))
 			world_import_confirm()

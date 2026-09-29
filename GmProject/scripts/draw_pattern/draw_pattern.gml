@@ -1,4 +1,3 @@
-/// draw_pattern(x, y, width, height)
 /// @arg x
 /// @arg y
 /// @arg width

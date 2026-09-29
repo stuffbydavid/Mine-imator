@@ -1,6 +1,5 @@
-/// eval_is_digit(char)
-/// @arg char
-/// @desc Determines if a character is a digit
+/// @desc Determines if a character is a digit.
+/// @arg character
 
 function eval_is_digit(char)
 {

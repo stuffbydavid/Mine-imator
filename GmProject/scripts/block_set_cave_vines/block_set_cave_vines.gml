@@ -1,5 +1,3 @@
-/// block_set_cave_vines()
-
 function block_set_cave_vines()
 {
 	var berries = block_get_state_id_value(block_current, block_state_id_current, "berries");

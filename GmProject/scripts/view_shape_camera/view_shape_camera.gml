@@ -1,6 +1,5 @@
-/// view_shape_camera(timeline)
-/// @arg timeline
 /// @desc Renders a camera shape.
+/// @arg timeline
 
 function view_shape_camera(tl)
 {
@@ -21,6 +20,6 @@ function view_shape_camera(tl)
 		point3D(-3, 9, 3),
 		point3D(3, 9, -3),
 		point3D(3, 9, 3)
-	)
+	);
 	view_shape_draw(lens, tl.matrix)
 }

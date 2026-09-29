@@ -1,5 +1,3 @@
-/// camera_work_reset()
-
 function camera_work_reset()
 {
 	cam_work_focus = point3D(0, 0, 16)
@@ -20,6 +18,7 @@ function camera_work_reset()
 	cam_work_angle_look_z = -cam_work_angle_z
 	cam_work_angle_look_off_xy = 0
 	cam_work_angle_look_off_z = 0
+	
 	camera_work_set_from()
 	
 	tl_focus = tl_edit

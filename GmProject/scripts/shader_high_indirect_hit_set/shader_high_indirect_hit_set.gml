@@ -1,5 +1,3 @@
-/// shader_high_indirect_hit_set()
-
 function shader_high_indirect_hit_set()
 {
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_depth))

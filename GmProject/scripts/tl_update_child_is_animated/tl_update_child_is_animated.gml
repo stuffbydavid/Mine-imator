@@ -1,5 +1,4 @@
-/// tl_update_child_is_animated()
-/// Updates whether any child is animated
+/// @desc Updates whether any child is animated.
 
 function tl_update_child_is_animated()
 {

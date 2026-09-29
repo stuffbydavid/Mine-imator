@@ -1,8 +1,8 @@
-/// render_world_build_box()
+/// @desc Renders a box wireframe while using the build tool.
 
 function render_world_build_box()
 {
-	var movingview = window_busy = "viewrotatecamera" || window_busy = "viewmovecamera" || window_busy = "viewpancamera"
+	var movingview = (window_busy = "viewrotatecamera" || window_busy = "viewmovecamera" || window_busy = "viewpancamera");
 	if (window_state != "" || build_box_render = null || !content_mouseon || movingview ||
 		(render_mode != e_render_mode.COLOR &&
 		 render_mode != e_render_mode.COLOR_FOG &&

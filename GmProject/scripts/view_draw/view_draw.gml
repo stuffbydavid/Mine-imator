@@ -1,6 +1,3 @@
-/// view_draw(view)
-/// @arg view
-
 function view_draw(view)
 {
 	if (!view.show)
@@ -31,8 +28,8 @@ function view_draw(view)
 	}
 	else
 	{
-		if (view == view_second && window_exists(e_window.VIEW_SECOND))
-			return 0;
+		if (view = view_second && window_exists(e_window.VIEW_SECOND))
+			return 0
 		
 		boxx = view_area_x
 		boxy = view_area_y
@@ -54,36 +51,47 @@ function view_draw(view)
 		switch (location)
 		{	
 			case "top":
+			{
 				boxh -= view_area_height * split
 				mouseonresizesplit = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
 				break
+			}
 			
 			case "right":
+			{
 				boxx += view_area_width * split
 				boxw -= view_area_width * split
 				mouseonresizesplit = app_mouse_box(boxx, boxy, 8, boxh)
 				break
+			}
 			
 			case "bottom":
+			{
 				boxy += view_area_height * split
 				boxh -= view_area_height * split
 				mouseonresizesplit = app_mouse_box(boxx, boxy, boxw, 8)
 				break
+			}
 			
 			case "left":
+			{
 				boxw -= view_area_width * split
 				mouseonresizesplit = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
 				break
+			}
 			
 			case "right_top":
+			{
 				boxw = min(view_area_width, view.width)
 				boxh = min(view_area_height, view.height)
 				boxx += view_area_width - boxw
 				mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
 				mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
 				break
+			}
 			
 			case "right_bottom":
+			{
 				boxw = min(view_area_width, view.width)
 				boxh = min(view_area_height, view.height)
 				boxx += view_area_width - boxw
@@ -91,21 +99,26 @@ function view_draw(view)
 				mouseonresizehor = app_mouse_box(boxx, boxy, 8, boxh)
 				mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
 				break
+			}
 			
 			case "left_bottom":
+			{
 				boxw = min(view_area_width, view.width)
 				boxh = min(view_area_height, view.height)
 				boxy += view_area_height - boxh
 				mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
 				mouseonresizever = app_mouse_box(boxx, boxy, boxw, 8)
 				break
+			}
 			
 			case "left_top":
+			{
 				boxw = min(view_area_width, view.width)
 				boxh = min(view_area_height, view.height)
 				mouseonresizehor = app_mouse_box(boxx + boxw - 4, boxy, 8, boxh)
 				mouseonresizever = app_mouse_box(boxx, boxy + boxh - 4, boxw, 8)
 				break
+			}
 		}
 		
 		if (popup_mouseon)
@@ -240,7 +253,7 @@ function view_draw(view)
 	
 	// "Realistic" renderer
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewrendererrealistic", dx, dy, dw, dh, view.renderer = e_renderer.REALISTIC, setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL, null, false, "viewrendererrealistic"))
+	if (draw_button_icon("viewrendererrealistic", dx, dy, dw, dh, view.renderer = e_renderer.REALISTIC, setting_theme.dark ? icons.SPHERE_MATERIAL_DARK : icons.SPHERE_MATERIAL, null, false, "viewrendererrealistic"))
 	{
 		if (trial_version)
 		{
@@ -262,7 +275,7 @@ function view_draw(view)
 	
 	// "Standard" renderer
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewrendererstandard", dx, dy, dw, dh, view.renderer = e_renderer.STANDARD, setting_theme.dark ? icons.SPHERE_SHADING__DARK : icons.SPHERE_SHADING, null, false, "viewrendererstandard"))
+	if (draw_button_icon("viewrendererstandard", dx, dy, dw, dh, view.renderer = e_renderer.STANDARD, setting_theme.dark ? icons.SPHERE_SHADING_DARK : icons.SPHERE_SHADING, null, false, "viewrendererstandard"))
 		view.renderer = e_renderer.STANDARD
 	dx -= dw + padding
 	
@@ -363,7 +376,7 @@ function view_draw(view)
 	
 	// Camera name
 	var listname, menuactive;
-	listname = (view = view_main ? "viewcameramain" : "viewcamerasecond");
+	listname = (view = view_main ? "viewcameramain" : "viewcamerasecond")
 	menuactive = false
 	
 	with (obj_menu)
@@ -472,7 +485,7 @@ function view_draw(view)
 		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		{
 			var viewbusy = place_busy;
-			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) == 1)
+			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) = 1)
 				viewbusy = window_busy
 			
 			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
@@ -494,7 +507,7 @@ function view_draw(view)
 		// Background checkboard
 		if (view.transparent_background)
 		{
-			var size = 16
+			var size = 16;
 			draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, 1)
 			for (var yy = 0; yy < content_height; yy += size)
 			{
@@ -731,14 +744,14 @@ function view_draw(view)
 			
 			switch (mouselocation)
 			{
-				case "left_top": view_glow_left_top = true; break;
-				case "top": view_glow_top = true; break;
-				case "right_top": view_glow_right_top = true; break;
-				case "right": view_glow_right = true; break;
-				case "right_bottom": view_glow_right_bottom = true; break;
-				case "bottom": view_glow_bottom = true; break;
-				case "left_bottom": view_glow_left_bottom = true; break;
-				case "left": view_glow_left = true; break;
+				case "left_top":	 view_glow_left_top = true; break
+				case "top":			 view_glow_top = true; break
+				case "right_top":	 view_glow_right_top = true; break
+				case "right":		 view_glow_right = true; break
+				case "right_bottom": view_glow_right_bottom = true; break
+				case "bottom":		 view_glow_bottom = true; break
+				case "left_bottom":  view_glow_left_bottom = true; break
+				case "left":		 view_glow_left = true; break
 			}
 			
 			if (view_glow_location_prev != mouselocation)
@@ -756,25 +769,11 @@ function view_draw(view)
 				// Set main view
 				switch (view.location)
 				{
-					case "top":
-						view_main.location = "bottom"
-						break
-					
-					case "bottom":
-						view_main.location = "top"
-						break
-					
-					case "right":
-						view_main.location = "left"
-						break
-					
-					case "left":
-						view_main.location = "right"
-						break
-					
-					default:
-						view_main.location = "full"
-						break
+					case "top":		view_main.location = "bottom"; break
+					case "bottom":  view_main.location = "top"; break
+					case "right":	view_main.location = "left"; break
+					case "left":	view_main.location = "right"; break
+					default:		view_main.location = "full"; break
 				}
 				
 				window_busy = ""
@@ -899,7 +898,6 @@ function view_draw(view)
 	if (view.renderer = e_renderer.REALISTIC)
 	{
 		var infotext;
-		
 		if (view_render_real_time)
 			infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), project_render_samples)
 		else

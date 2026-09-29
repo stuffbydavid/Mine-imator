@@ -1,20 +1,19 @@
-/// model_file_load(filename, resource)
+/// @desc Loads the parts and shapes from the selected filename.
 /// @arg filename
 /// @arg [resource]
-/// @desc Loads the parts and shapes from the selected filename.
 
-function model_file_load(fname, res = null)
+function model_file_load(fn, res = null)
 {
-	if (!file_exists_lib(fname))
+	if (!file_exists_lib(fn))
 	{
-		log("Could not find model file", fname)
+		log("Could not find model file", fn)
 		return null
 	}
 	
-	var map = json_load(fname);
+	var map = json_load(fn);
 	if (!ds_map_valid(map))
 	{
-		log("Could not parse model file", fname)
+		log("Could not parse model file", fn)
 		return null
 	}
 	
@@ -22,24 +21,28 @@ function model_file_load(fname, res = null)
 	if (!is_string(map[?"name"]))
 	{
 		log("Missing parameter \"name\"")
+		ds_map_destroy(map)
 		return null
 	}
 	
 	if (!is_string(map[?"texture"]))
 	{
 		log("Missing parameter \"texture\"")
+		ds_map_destroy(map)
 		return null
 	}
 	
 	if (!ds_list_valid(map[?"texture_size"]))
 	{
 		log("Missing array \"texture_size\"")
+		ds_map_destroy(map)
 		return null
 	}
 	
 	if (!ds_list_valid(map[?"parts"]))
 	{
 		log("Missing array \"parts\"")
+		ds_map_destroy(map)
 		return null
 	}
 	
@@ -71,7 +74,7 @@ function model_file_load(fname, res = null)
 			
 			texture_normal_name = value_get_string(map[?"texture_normal"], "")
 			if (texture_normal_name != "")
-				model_file_load_tex_normal(texture_normal_name, res)
+				model_file_load_texture_normal(texture_normal_name, res)
 		}
 		else
 		{
@@ -117,13 +120,14 @@ function model_file_load(fname, res = null)
 		floor_box_uvs = value_get_real(map[?"floor_box_uvs"], false)
 		
 		// Read all the parts of the root
-		var partlist = map[?"parts"]
 		render_part_list = ds_list_create()
 		file_part_list = ds_list_create()
 		part_list = ds_list_create()
+		
+		var partlist = map[?"parts"];
 		for (var p = 0; p < ds_list_size(partlist); p++)
 		{
-			var part = model_file_load_part(partlist[|p], id, res, id)
+			var part = model_file_load_part(partlist[|p], id, res, id);
 			if (part = null)
 				return null
 			if (part > 0)

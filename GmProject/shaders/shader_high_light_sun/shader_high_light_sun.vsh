@@ -1,5 +1,4 @@
-/// shader_high_light_sun
-/// @desc Add shadows from the sun
+/// @desc Add shadows from the sun.
 
 #define NUM_CASCADES 3
 

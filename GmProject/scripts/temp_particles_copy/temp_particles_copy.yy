@@ -6,7 +6,7 @@
   "name":"temp_particles_copy",
   "parent":{
     "name":"Particles",
-    "path":"folders/Scripts/Project/Templates/Particles.yy",
+    "path":"folders/Scripts/Project/Template/Particles.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

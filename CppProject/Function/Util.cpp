@@ -51,6 +51,7 @@ namespace CppProject
 		ArrType args;
 		for (QString str : App->args)
 			args.Append(StringType(str));
+		
 		return args;
 	}
 
@@ -80,6 +81,7 @@ namespace CppProject
 		fd.setAcceptMode(QFileDialog::AcceptOpen);
 		fd.setFileMode(QFileDialog::ExistingFiles);
 		fd.setNameFilters(GetFilenameFilterList(filter));
+		
 		if (file != "")
 		{
 			if (!file.Contains("/") && !dir.IsEmpty())
@@ -88,13 +90,16 @@ namespace CppProject
 		}
 		else if (!dir.IsEmpty())
 			fd.setDirectory(dir);
+		
 		fd.setWindowTitle(caption);
+		
 		if (!App->ExecDialog(&fd))
 			return "";
 
 		QStringList files = fd.selectedFiles();
 		if (files.size() > 0)
 			return files.join("\n");
+		
 		return "";
 	}
 

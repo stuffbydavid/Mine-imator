@@ -1,4 +1,3 @@
-/// render_high()
 /// @desc Renders the scene in high quality.
 
 function render_high()
@@ -57,8 +56,7 @@ function render_high()
 			render_high_ssao()
 		
 		// Composite current effects, avoid render surf 0 going forward
-		var finalsurf;
-		finalsurf = render_high_scene()
+		var finalsurf = render_high_scene();
 		
 		// Reflections
 		if (render_reflections)

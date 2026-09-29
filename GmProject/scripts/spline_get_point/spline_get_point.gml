@@ -1,10 +1,9 @@
-/// spline_get_point(progress, points, closed, smooth, [amount])
+/// @desc Calculates a 3D point on a 3D B-Spline curve given a list of points.
 /// @arg progress
 /// @arg points
 /// @arg closed
 /// @arg smooth
 /// @arg [amount]
-/// @desc Calculates a 3D point on a 3D B-Spline curve given a list of points
 
 function spline_get_point(t, points, closed, smooth, amount = 0)
 {
@@ -44,12 +43,12 @@ function spline_get_point(t, points, closed, smooth, amount = 0)
 		if (t <= 0)
 		{
 			i = 0
-			pos = vec3_add(points[i], vec3_mul(vec3_normalize(vec3_sub(points[i], points[i + 1])), abs(t)));
+			pos = vec3_add(points[i], vec3_mul(vec3_normalize(vec3_sub(points[i], points[i + 1])), abs(t)))
 		}
 		else
 		{
 			i = array_length(points) - 1
-			pos = vec3_add(points[i], vec3_mul([points[i - 1][PATH_TANGENT_X], points[i - 1][PATH_TANGENT_Y], points[i - 1][PATH_TANGENT_Z]], abs(t - i)));
+			pos = vec3_add(points[i], vec3_mul([points[i - 1][PATH_TANGENT_X], points[i - 1][PATH_TANGENT_Y], points[i - 1][PATH_TANGENT_Z]], abs(t - i)))
 		}
 		
 		point = array_copy_1d(points[i])

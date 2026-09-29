@@ -1,19 +1,14 @@
-/// tl_keyframes_stretch(pivot, stretch)
-/// @arg pivot
-/// @arg stretch
 /// @desc Sets the new position of each selected keyframe, scaled around a frame. Keeps every timeline's keyframes in order.
 
 function tl_keyframes_stretch(pivot, stretch)
 {
-	var prevpos, kf;
-	
 	with (obj_timeline)
 	{
-		prevpos = null
+		var prevpos = null;
 		
 		for (var k = 0; k < ds_list_size(keyframe_list); k++)
 		{
-			kf = keyframe_list[|k]
+			var kf = keyframe_list[|k];
 			
 			if (!kf.selected)
 				continue

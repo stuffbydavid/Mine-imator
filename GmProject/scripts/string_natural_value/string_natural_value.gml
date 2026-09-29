@@ -1,7 +1,3 @@
-/// string_natural_value(value, digits)
-/// @arg value
-/// @arg digits
-
 function string_natural_value(value, digits)
 {
 	var result, number;
@@ -9,7 +5,7 @@ function string_natural_value(value, digits)
 	number = ""
 	for (var i = 1; i <= string_length(value); i++)
 	{
-		var c = string_char_at(value, i)
+		var c = string_char_at(value, i);
 		if (ord(c) >= ord("0") && ord(c) <= ord("9"))
 			number += c
 		else

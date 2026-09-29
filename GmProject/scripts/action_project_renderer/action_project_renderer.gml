@@ -1,6 +1,3 @@
-/// action_project_renderer(renderer)
-/// @arg renderer
-
 function action_project_renderer(renderer)
 {
 	// Need "Full" version to customize Realistic renderer

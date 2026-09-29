@@ -1,5 +1,3 @@
-/// app_update_work_camera()
-
 function app_update_work_camera()
 {
 	if (cam_work_jump)

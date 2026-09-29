@@ -1,5 +1,3 @@
-/// toast_event_create()
-
 function toast_event_create()
 {
 	toast_y = app.window_height + 8

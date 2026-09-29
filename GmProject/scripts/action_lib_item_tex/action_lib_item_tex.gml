@@ -1,4 +1,3 @@
-/// action_lib_item_tex(resource)
 /// @arg resource
 
 function action_lib_item_tex(res)
@@ -35,6 +34,7 @@ function action_lib_item_tex(res)
 			case e_option.IMPORT_ITEM_SHEET_DONE: // Done importing new item sheet
 			{
 				fn = popup_importitemsheet.filename
+				
 				if (popup_importitemsheet.is_sheet)
 				{
 					res = new_res(fn, e_res_type.ITEM_SHEET)
@@ -61,5 +61,6 @@ function action_lib_item_tex(res)
 	}
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

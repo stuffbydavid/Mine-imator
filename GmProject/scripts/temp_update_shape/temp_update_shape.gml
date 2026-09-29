@@ -1,5 +1,3 @@
-/// temp_update_shape()
-
 function temp_update_shape()
 {
 	if (shape_vbuffer)

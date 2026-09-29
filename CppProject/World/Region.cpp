@@ -58,15 +58,19 @@ namespace CppProject
 
 		if (Region* right = adjacent[RIGHT])
 			right->adjacent[LEFT] = nullptr;
+
 		if (Region* left = adjacent[LEFT])
 			left->adjacent[RIGHT] = nullptr;
+
 		if (Region* front = adjacent[FRONT])
 			front->adjacent[BACK] = nullptr;
+
 		if (Region* back = adjacent[BACK])
 			back->adjacent[FRONT] = nullptr;
 
 		loadStatus = UNLOADED;
 		meshStatus = NOMESH;
+
 		generatedAmount = 0;
 		unload = false;
 	}
@@ -138,6 +142,7 @@ namespace CppProject
 			Chunk* chunk = new Chunk(this, chunkData, box);
 			chunks[chunk->regionIndex] = chunk;
 			chunkStatus[chunk->regionIndex] = ChunkStatus::CHUNK_LOADED;
+
 			numTimelines += chunk->numTimelines;
 		}
 
@@ -161,6 +166,7 @@ namespace CppProject
 		}
 
 		loadStatus = LOADED;
+
 		this->numTimelines = numTimelines;
 
 		tmr.Print(name + " read " + NumStr(offsets.size()) + " chunks");
@@ -176,16 +182,19 @@ namespace CppProject
 				right->AddAdjacent(LEFT, this);
 				this->AddAdjacent(RIGHT, right);
 			}
+
 			if (Region* left = Find(x - 1, z, LOADED))
 			{
 				left->AddAdjacent(RIGHT, this);
 				this->AddAdjacent(LEFT, left);
 			}
+
 			if (Region* front = Find(x, z + 1, LOADED))
 			{
 				front->AddAdjacent(BACK, this);
 				this->AddAdjacent(FRONT, front);
 			}
+
 			if (Region* back = Find(x, z - 1, LOADED))
 			{
 				back->AddAdjacent(FRONT, this);
@@ -208,6 +217,7 @@ namespace CppProject
 		}
 
 		loadProgress += (loadProgressTarget - loadProgress) / 2.0;
+
 		return loadProgress;
 	}
 
@@ -231,6 +241,7 @@ namespace CppProject
 		thread_task_end();
 
 		meshStatus = UPDATE_MESH;
+
 		generated[mode] = true;
 		generatedAmount++;
 	}
@@ -289,6 +300,7 @@ namespace CppProject
 					if (chunkMesh.vertexOffset)
 						for (IntType i = 0; i < chunkMesh.indices.Size(); i++)
 							mData.mesh.indexData[chunkMesh.indexOffset + i] += chunkMesh.vertexOffset;
+					
 					chunkMesh.indices.Clear();
 				}
 
@@ -323,9 +335,12 @@ namespace CppProject
 			// Free CPU data if mesh is fully generated
 			mData.mesh.numVertices = mData.numVertices;
 			mData.mesh.numIndices = mData.numIndices;
+			
 			WorldVec boundsPos = pos + WorldVec(0, CHUNK_HEIGHT_MIN, 0);
 			mData.mesh.bounds = Bounds(boundsPos, boundsPos + VecType(REGION_SIZE, CHUNK_HEIGHT_SIZE, REGION_SIZE));
+			
 			mData.mesh.CreateBuffers(generatedAmount == GenerateModeAmount);
+			
 			mData.changed = false;
 		}
 
@@ -342,37 +357,52 @@ namespace CppProject
 			case RIGHT:
 			{
 				GeneratePreview(RIGHT_EDGE);
+
 				if (adjacent[BACK])
 					GeneratePreview(RIGHT_BACK_CORNER);
+
 				if (adjacent[FRONT])
 					GeneratePreview(RIGHT_FRONT_CORNER);
+				
 				break;
 			}
+
 			case LEFT:
 			{
 				GeneratePreview(LEFT_EDGE);
+
 				if (adjacent[BACK])
 					GeneratePreview(LEFT_BACK_CORNER);
+
 				if (adjacent[FRONT])
 					GeneratePreview(LEFT_FRONT_CORNER);
+				
 				break;
 			}
+
 			case FRONT:
 			{
 				GeneratePreview(FRONT_EDGE);
+
 				if (adjacent[LEFT])
 					GeneratePreview(LEFT_FRONT_CORNER);
+
 				if (adjacent[RIGHT])
 					GeneratePreview(RIGHT_FRONT_CORNER);
+				
 				break;
 			}
+
 			case BACK:
 			{
 				GeneratePreview(BACK_EDGE);
+
 				if (adjacent[LEFT])
 					GeneratePreview(LEFT_BACK_CORNER);
+
 				if (adjacent[RIGHT])
 					GeneratePreview(RIGHT_BACK_CORNER);
+				
 				break;
 			}
 		}
@@ -383,6 +413,7 @@ namespace CppProject
 		// Outside height bounds
 		if (pos.y >= CHUNK_HEIGHT_MAX)
 			return { false, false, false, 15 }; // Fully lit air
+		
 		if (pos.y < CHUNK_HEIGHT_MIN)
 			return { true, true, false, 0 }; // Solid
 
@@ -393,12 +424,15 @@ namespace CppProject
 			{
 				if (adjacent[RIGHT])
 					return adjacent[RIGHT]->GetPreviewState({ 0, pos.y, pos.z }, mode);
+				
 				WARNING("Region: IsSolid out of bounds");
 			}
+			
 			if (pos.x < 0)
 			{
 				if (adjacent[LEFT])
 					return adjacent[LEFT]->GetPreviewState({ REGION_SIZE - 1, pos.y, pos.z}, mode);
+				
 				WARNING("Region: IsSolid out of bounds");
 			}
 
@@ -407,12 +441,15 @@ namespace CppProject
 			{
 				if (adjacent[FRONT])
 					return adjacent[FRONT]->GetPreviewState({ pos.x, pos.y, 0 }, mode);
+				
 				WARNING("Region: IsSolid out of bounds");
 			}
+			
 			if (pos.z < 0)
 			{
 				if (adjacent[BACK])
 					return adjacent[BACK]->GetPreviewState({ pos.x, pos.y, REGION_SIZE - 1 }, mode);
+				
 				WARNING("Region: IsSolid out of bounds");
 			}
 		}

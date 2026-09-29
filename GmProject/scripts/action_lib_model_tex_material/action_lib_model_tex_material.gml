@@ -1,18 +1,15 @@
-/// action_lib_model_tex_material(resource)
-/// @arg resource
 /// @desc Sets the model texture of the given library item.
+/// @arg resource
 
 function action_lib_model_tex_material(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		switch (res)
 		{
 			case e_option.BROWSE: // Load new
@@ -51,5 +48,6 @@ function action_lib_model_tex_material(res)
 	}
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

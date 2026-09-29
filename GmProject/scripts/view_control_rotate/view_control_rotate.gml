@@ -1,6 +1,3 @@
-/// view_control_rotate(view)
-/// @arg view
-
 function view_control_rotate(view)
 {
 	var len, xrot, yrot, zrot;
@@ -14,6 +11,7 @@ function view_control_rotate(view)
 		zrot[MAT_X] = matrix[MAT_X]
 		zrot[MAT_Y] = matrix[MAT_Y]
 		zrot[MAT_Z] = matrix[MAT_Z]
+		
 		matrix_remove_scale(zrot)
 	}
 	

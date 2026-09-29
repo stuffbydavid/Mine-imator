@@ -1,4 +1,3 @@
-/// ptype_event_destroy()
 /// @desc Destroy event of obj_particle_type.
 
 function ptype_event_destroy()

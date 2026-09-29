@@ -1,11 +1,3 @@
-/// draw_button_collapse(name, open, script, active, caption, tip)
-/// @arg name
-/// @arg open
-/// @arg script
-/// @arg active
-/// @arg caption
-/// @arg tip
-
 function draw_button_collapse(name, open, script, active, caption, tip = "")
 {
 	// Mouse states
@@ -25,7 +17,7 @@ function draw_button_collapse(name, open, script, active, caption, tip = "")
 	
 	// Button
 	draw_button_icon(name + "collapse", xx, yy, 20, 20, open && active, null, null, !active, "", spr_chevron_ani)
-	microani_update(mouseon, mousepress, open && active)
+	microani_update(mouseon, mousepress, open && active, !active)
 	
 	// Tip
 	//if (mouseon && active)

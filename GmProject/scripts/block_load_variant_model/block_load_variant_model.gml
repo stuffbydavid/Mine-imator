@@ -1,6 +1,3 @@
-/// block_load_variant_model(map, type)
-/// @arg type
-
 function block_load_variant_model(map, type)
 {
 	if (is_undefined(map[?"model"]))

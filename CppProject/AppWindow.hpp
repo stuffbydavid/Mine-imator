@@ -67,6 +67,7 @@ namespace CppProject
 	struct KeyChecker : QLineEdit
 	{
 		KeyChecker(QWidget* parent);
+
 		void focusOutEvent(QFocusEvent* e) override { QWidget::setFocus(); }
 		void keyPressEvent(QKeyEvent* event) override;
 		void keyReleaseEvent(QKeyEvent* event) override;

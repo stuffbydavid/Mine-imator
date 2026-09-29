@@ -1,5 +1,3 @@
-/// app_update_tl_edit_select()
-
 function app_update_tl_edit_select()
 {
 	with (frame_editor)

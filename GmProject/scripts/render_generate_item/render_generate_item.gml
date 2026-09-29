@@ -1,13 +1,12 @@
-/// render_generate_item([slot, resource, 3d])
-/// @arg [slot
-/// @arg resource
-/// @arg 3d]
-/// @desc Generates an item vbuffer, if no arguments are supplied, template is used
+/// @desc Generates an item vertex buffer. If no arguments are supplied, the template is used.
+/// @arg [slot]
+/// @arg [is3d]
+/// @arg [resourcearray]
 
-function render_generate_item()
+function render_generate_item(slot = null, is3d = null, resarr = null)
 {
-	var slot, res, is3d;
-	if (argument_count = 0)
+	var res;
+	if (slot = null)
 	{
 		slot = item_slot
 		res = item_tex
@@ -15,25 +14,26 @@ function render_generate_item()
 	}
 	else
 	{
-		slot = argument[0]
-		res = argument[1]
-		is3d = argument[2]
-		
-		if (item_slot = slot && item_res = res[e_texture_channel.DIFFUSE] && item_material_res = res[e_texture_channel.MATERIAL] && item_normal_res = res[e_texture_channel.NORMAL] && item_3d = is3d && item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
+		if (item_slot = slot &&
+			item_res = resarr[e_texture_channel.DIFFUSE] &&
+			item_material_res = resarr[e_texture_channel.MATERIAL] &&
+			item_normal_res = resarr[e_texture_channel.NORMAL] &&
+			item_3d = is3d &&
+			item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
 			return 0
 		
 		item_slot = slot
-		item_res = res[e_texture_channel.DIFFUSE]
-		item_material_res = res[e_texture_channel.MATERIAL]
-		item_normal_res = res[e_texture_channel.NORMAL]
+		item_res = resarr[e_texture_channel.DIFFUSE]
+		item_material_res = resarr[e_texture_channel.MATERIAL]
+		item_normal_res = resarr[e_texture_channel.NORMAL]
 		item_3d = is3d
 		item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT]
-		
-		res = res[e_texture_channel.DIFFUSE]
+		res = item_res
 	}
 
 	res = res_eval(res)
-	// Create vbuffer
+	
+	// Create vertex buffer
 	if (item_vbuffer)
 		vbuffer_destroy(item_vbuffer)
 	item_vbuffer = vbuffer_start()
@@ -43,7 +43,7 @@ function render_generate_item()
 	sheet = e_item_sheet.SIZE16
 	if (res.type = e_res_type.PACK)
 	{
-		var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list)
+		var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list);
 		if (decodedslot[0] >= 0)
 		{
 			sheet = decodedslot[0]

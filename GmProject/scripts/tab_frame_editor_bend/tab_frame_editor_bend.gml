@@ -1,5 +1,3 @@
-/// tab_frame_editor_bend()
-
 function tab_frame_editor_bend()
 {
 	if (tl_edit.model_part = null || tl_edit.model_part.bend_part = null || !tl_edit.value_type[e_value_type.TRANSFORM_BEND])
@@ -10,8 +8,9 @@ function tab_frame_editor_bend()
 	draw_label(text_get("frameeditorbend"), dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	dy += 26
 	
-	var snapval = (dragger_snap ? setting_snap_size_rotation : 0.1);
-	var def = tl_edit.model_part.bend_default_angle;
+	var snapval, def;
+	snapval = (dragger_snap ? setting_snap_size_rotation : 0.1)
+	def = tl_edit.model_part.bend_default_angle
 	
 	// Sliders
 	var axis, axislen, axisname, wheelx, wheel, color;

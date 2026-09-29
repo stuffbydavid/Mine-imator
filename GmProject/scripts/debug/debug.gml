@@ -1,16 +1,12 @@
-/// debug(string, [value1, value2, value3...])
 /// @arg string
-/// @arg [value1
-/// @arg value2
-/// @arg value3...]
+/// @arg [values...]
 
 function debug()
 {
-	var cap, valstr;
-	
 	if (!debug_mode)
 		return argument[argument_count - 1]
 	
+	var cap, valstr;
 	cap = string_repeat("\t", debug_indent) + string(argument[0])
 	valstr = ""
 	

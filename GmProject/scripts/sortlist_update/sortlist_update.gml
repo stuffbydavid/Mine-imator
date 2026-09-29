@@ -1,6 +1,5 @@
-/// sortlist_update(sortlist)
-/// @arg sortlist
 /// @desc Updates the sortlist when sorting or filtering.
+/// @arg sortlist
 
 function sortlist_update(slist)
 {
@@ -11,7 +10,9 @@ function sortlist_update(slist)
 		var sortedlist, valuelist, naturaldigits;
 		sortedlist = ds_list_create()
 		valuelist = ds_list_create()
+		
 		ds_list_copy(valuelist, slist.list)
+		
 		naturaldigits = 0
 
 		// Find the longest number
@@ -31,6 +32,7 @@ function sortlist_update(slist)
 			naturalvalue = string_natural_value(string_lower(string(value)), naturaldigits)
 			ds_list_add(sortedlist, naturalvalue)
 		}
+		
 		ds_list_sort(sortedlist, !slist.sort_asc)
 		
 		// Find which values belong to what items
@@ -65,6 +67,7 @@ function sortlist_update(slist)
 		var namelist, variantlist;
 		namelist = []
 		variantlist = []
+		
 		for (var p = 0; p < ds_list_size(slist.display_list); p++)
 		{
 			var value, match;
@@ -102,6 +105,7 @@ function sortlist_update(slist)
 		{
 			var item, typename;
 			item = slist.display_list[|p]
+			
 			typename = null
 			if (item.object_index = obj_template)
 				typename = temp_type_name_list[|item.type]

@@ -1,6 +1,5 @@
-/// project_load_start(filename)
+/// @desc Checks whether the format is correct.
 /// @arg filename
-/// @desc Checks whether the format is correct
 
 function project_load_start(fn)
 {
@@ -22,7 +21,7 @@ function project_load_start(fn)
 		return null
 	}
 	
-	load_format = map[?"format"];
+	load_format = map[?"format"]
 	
 	// Check format too new
 	if (load_format > project_format)

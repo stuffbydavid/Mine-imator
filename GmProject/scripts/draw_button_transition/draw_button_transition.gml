@@ -1,4 +1,3 @@
-/// draw_button_transition(x, y, transition)
 /// @arg x
 /// @arg y
 /// @arg transition

@@ -1,4 +1,3 @@
-/// export_start(state)
 function export_start(state)
 {
 	window_state = state

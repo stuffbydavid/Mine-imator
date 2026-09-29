@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"popup_armor_editor_show",
   "parent":{
-    "name":"Pattern editor",
-    "path":"folders/Scripts/App/Interface/Popups/Pattern editor.yy",
+    "name":"Armor editor",
+    "path":"folders/Scripts/App/Interface/Popups/Armor editor.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

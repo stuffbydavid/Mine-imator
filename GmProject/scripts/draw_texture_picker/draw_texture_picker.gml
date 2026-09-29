@@ -1,4 +1,6 @@
-/// draw_texture_picker(select, textures, slots, sheet_sizes, x, y, width, height, scrollbar, script, [namelists, resource, selectclick, searchstretch])
+/// @desc Draws a box for selecting between images from several texture sheets.
+///		  The sheets share a single 32px grid. The script receives a combined slot
+///		  number, whose offsets are the preceding sheet list sizes.
 /// @arg select
 /// @arg textures
 /// @arg slots
@@ -9,13 +11,10 @@
 /// @arg height
 /// @arg scrollbar
 /// @arg script
-/// @arg [namelists
-/// @arg resource
-/// @arg selectclick]
-/// @arg searchstretch]
-/// @desc Draws a box for selecting between images from several texture sheets.
-///		  The sheets share a single 32px grid. The script receives a combined slot
-///		  number, whose offsets are the preceding sheet list sizes.
+/// @arg [namelists]
+/// @arg [resource]
+/// @arg [selectclick]
+/// @arg [searchstretch]
 
 function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, hei, scroll, script, namelists = null, res = null, scriptselectclick = null, searchstretch = false)
 {
@@ -41,20 +40,18 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 
 	if (scroll.search && scroll.search_slots = null)
 	{
-		var searchslots;
-		searchslots = array_create(0)
+		var searchslots = [];
 		searchtext = string_lower(scroll.search_tbx.text)
 		slotoffset = 0
+		
 		for (var sheet = 0; sheet < array_length(slots); sheet++)
 		{
-			var names;
-			names = (namelists != null && sheet < array_length(namelists)) ? namelists[sheet] : null
+			var names = (namelists != null && sheet < array_length(namelists)) ? namelists[sheet] : null;
 			if (ds_list_valid(names))
 			{
 				for (var slot = 0; slot < min(slots[sheet], ds_list_size(names)); slot++)
 				{
-					var slotname;
-					slotname = string_lower(names[|slot])
+					var slotname = string_lower(names[|slot]);
 					if (string_pos(searchtext, slotname) > 0 || string_pos(string_replace_all(searchtext, " ", "_"), slotname) > 0)
 						array_add(searchslots, slotoffset + slot)
 				}
@@ -90,10 +87,12 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 	itemwid = slotwid + off * 2
 	itemhei = slothei + off * 2
 	itemsx = max(1, floor((wid - 14 * scroll.needed) / itemwid))
+	
 	displaycount = scroll.search ? array_length(scroll.search_slots) : 0
 	if (!scroll.search)
 		for (var sheet = 0; sheet < array_length(slots); sheet++)
 			displaycount += slots[sheet]
+	
 	contenthei = ceil(displaycount / itemsx) * itemhei
 	pickermouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
 	previoustipslot = scroll.picker_tip_slot
@@ -116,6 +115,7 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 
 	shader_texture_filter_linear = false
 	draw_texture_start()
+	
 	for (var displayslot = firstslot; displayslot < lastslot; displayslot++)
 	{
 		var combinedslot, sheet, slot, tex, sheetsize, tx, ty, col;
@@ -184,7 +184,9 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 			}
 		}
 	}
+	
 	draw_texture_done()
+	
 	clip_end()
 	if (clipactive)
 		clip_begin(clipx, clipy, clipwid, cliphei)

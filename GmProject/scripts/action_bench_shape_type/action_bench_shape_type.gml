@@ -1,6 +1,3 @@
-/// action_bench_shape_type(type)
-/// @arg type
-
 function action_bench_shape_type(type)
 {
 	if (!history_undo && !history_redo)

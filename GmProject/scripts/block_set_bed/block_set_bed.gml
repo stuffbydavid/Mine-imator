@@ -1,4 +1,3 @@
-/// block_set_bed()
 /// @desc Returns an array with the head and foot models.
 
 function block_set_bed()
@@ -12,9 +11,9 @@ function block_set_bed()
 	var models = array(
 		block_current.state_id_model_obj[block_state_id_current].model[0],
 		block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "part", "foot")].model[0]
-	)
+	);
 	
-	var facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
+	var facing = block_get_state_id_value(block_current, block_state_id_current, "facing");
 	if (facing = "north")
 		models[1].offset_y = block_size
 	else if (facing = "south")

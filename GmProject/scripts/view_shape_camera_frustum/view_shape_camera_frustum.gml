@@ -1,19 +1,21 @@
 /// @desc Renders an outline of a camera's frustum.
+/// @arg timeline
 
 function view_shape_camera_frustum(tl)
 {
 	if (tl.value[e_value.CAM_FOV] % 180 = 0)
 		return 0
 	
-	var tempmat = tl.matrix;
+	var tempmat, mat, ratio, fovtan;
+	tempmat = tl.matrix
 	
 	// Camera shake
 	if (tl.value[e_value.CAM_SHAKE])
 	{
 		var shake = vec3(
-			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_X]) * tl.value[e_value.CAM_SHAKE_STRENGTH_X],
-			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Y], 1000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Y],
-			simplex_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Z]
+			simplex1d_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_X]) * tl.value[e_value.CAM_SHAKE_STRENGTH_X],
+			simplex2d_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Y], 1000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Y],
+			simplex2d_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Z]
 		);
 	
 		// Create matrix
@@ -25,28 +27,28 @@ function view_shape_camera_frustum(tl)
 		
 		tempmat = matrix_multiply(shakemat, tempmat)
 	}
+	
 	// Convert matrix to world space
-	var mat = array_copy_1d(tempmat);
+	mat = array_copy_1d(tempmat)
 	matrix_remove_scale(mat)
 	
-	var ratio, sizemath;
 	ratio = (tl.value[e_value.CAM_WIDTH] / tl.value[e_value.CAM_HEIGHT])
-	sizemath = tan(degtorad(tl.value[e_value.CAM_FOV] * 0.5)) // Multiply this by distance
+	fovtan = tan(degtorad(tl.value[e_value.CAM_FOV] * 0.5)) // Multiply this by distance
 		
 	// DOF visualizer
 	if (tl.value[e_value.CAM_DOF])
-		view_shape_camera_frustum_dof(tl, mat, ratio, sizemath)
+		view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
 			
 	var viewfrustumpoints = array(
-		point3D(-((sizemath * cam_near) * ratio), cam_near, -sizemath * cam_near), //nbr
-		point3D(-((sizemath * cam_near) * ratio), cam_near, sizemath * cam_near), //ntr
-		point3D(((sizemath * cam_near) * ratio), cam_near, -sizemath * cam_near), //nbl
-		point3D(((sizemath * cam_near) * ratio), cam_near, sizemath * cam_near), //ntl
-		point3D(-((sizemath * cam_far) * ratio), cam_far, -sizemath * cam_far), //fbr
-		point3D(-((sizemath * cam_far) * ratio), cam_far, sizemath * cam_far), //ftr
-		point3D(((sizemath * cam_far) * ratio), cam_far, -sizemath * cam_far), //fbl
-		point3D(((sizemath * cam_far) * ratio), cam_far, sizemath * cam_far) //ftl
-	)
+		point3D(-((fovtan * cam_near) * ratio), cam_near, -fovtan * cam_near), // nbr
+		point3D(-((fovtan * cam_near) * ratio), cam_near, fovtan * cam_near), // ntr
+		point3D(((fovtan * cam_near) * ratio), cam_near, -fovtan * cam_near), // nbl
+		point3D(((fovtan * cam_near) * ratio), cam_near, fovtan * cam_near), // ntl
+		point3D(-((fovtan * cam_far) * ratio), cam_far, -fovtan * cam_far), // fbr
+		point3D(-((fovtan * cam_far) * ratio), cam_far, fovtan * cam_far), // ftr
+		point3D(((fovtan * cam_far) * ratio), cam_far, -fovtan * cam_far), // fbl
+		point3D(((fovtan * cam_far) * ratio), cam_far, fovtan * cam_far) // ftl
+	);
 	
 	// Frustum outline
 	draw_set_color(c_control_red)

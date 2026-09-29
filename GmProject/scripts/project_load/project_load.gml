@@ -1,42 +1,42 @@
-/// project_load([filename])
-/// @arg [filename]
 /// @desc Opens a .miproject, .mproj, .mani project or zipped archive.
 /// A file browser appears if no filename is given.
-///		Formats:
-///			0.1
-///			0.2
-///			0.5
-///			0.6
-///			0.7 DEMO
-///			1.0.0 DEMO 2
-///			1.0.0 DEMO 3 = added hasX in timeline, removed count in library, added spawn_rate, spawn_region toggle in particle types
-///			1.0.0 DEMO 4 = added ground_z in particles, has_background, removed text_system_font_*, camera rotation and ratio, block_ani, pars in timelines, timeline zoom, pos
-///			1.0.0 debug = shape hvoffset, map, closed, wind setting, char_model name, particle type iid, click->!lock, timeline depth, parent_pos, fog height, item_sheet, block_frames, new value types, shape face camera, timeline texture filtering & ssao, fog sky, render region
-///			1.0.0 = timeline_repeat
-///			1.0.5 = background_sunlight_follow
-///			1.0.5 2 = timeline fog, timeline_marker
-///			1.0.6 = new mobs
-///			1.0.6 2 = camera size in keyframes
-///			Community Build 1.0.0 = Community Build format
-///			Community Build 1.0.2 PRE = Community Build 1.0.2 pre-release format
-///			Community Build 1.0.2 = Community Build 1.0.2 format
-///			Community Build 1.0.3 = Community Build 1.0.3 format
-///			1.1.0 PRE 1 = redone in JSON
-///			1.1.0 PRE 3 = workbench model settings
-///			1.1.0 = finalized 1.1 JSON format
-///			1.1.3 = separate X, Y and Z bend angles
-///			1.2.0 PRE 1 = more keyframable background values and revised glow alpha
-///			1.2.0 PRE 3 = watermark anchors and scale
-///			1.2.2 = special block part roots
-///			1.2.3 PRE 2 = template particles, launch angles and camera bokeh values
-///			1.2.5 = camera aperture blade amount and angle
-///			2.0.0 PRE 1 = initial 2.0 project format
-///			2.0.0 PRE 5 = material maps, generalized patterns, revised clouds, background and camera values
-///			2.1.0 = path shape settings, normalized texture animation speed and new render settings
+/// Formats:
+/// 	0.1
+/// 	0.2
+/// 	0.5
+/// 	0.6
+/// 	0.7 DEMO
+/// 	1.0.0 DEMO 2
+/// 	1.0.0 DEMO 3 = added hasX in timeline, removed count in library, added spawn_rate, spawn_region toggle in particle types
+/// 	1.0.0 DEMO 4 = added ground_z in particles, has_background, removed text_system_font_*, camera rotation and ratio, block_ani, pars in timelines, timeline zoom, pos
+/// 	1.0.0 debug = shape hvoffset, map, closed, wind setting, char_model name, particle type iid, click->!lock, timeline depth, parent_pos, fog height, item_sheet, block_frames, new value types, shape face camera, timeline texture filtering & ssao, fog sky, render region
+/// 	1.0.0 = timeline_repeat
+/// 	1.0.5 = background_sunlight_follow
+/// 	1.0.5 2 = timeline fog, timeline_marker
+/// 	1.0.6 = new mobs
+/// 	1.0.6 2 = camera size in keyframes
+/// 	CB 1.0.0 = Community Build format
+/// 	CB 1.0.2 PRE = Community Build 1.0.2 pre-release format
+/// 	CB 1.0.2 = Community Build 1.0.2 format
+/// 	CB 1.0.3 = Community Build 1.0.3 format
+/// 	1.1.0 PRE 1 = redone in JSON
+/// 	1.1.0 PRE 3 = workbench model settings
+/// 	1.1.0 = finalized 1.1 JSON format
+/// 	1.1.3 = separate X, Y and Z bend angles
+/// 	1.2.0 PRE 1 = more keyframable background values and revised glow alpha
+/// 	1.2.0 PRE 3 = watermark anchors and scale
+/// 	1.2.2 = special block part roots
+/// 	1.2.3 PRE 2 = template particles, launch angles and camera bokeh values
+/// 	1.2.5 = camera aperture blade amount and angle
+/// 	2.0.0 PRE 1 = initial 2.0 project format
+/// 	2.0.0 PRE 5 = material maps, generalized patterns, revised clouds, background and camera values
+/// 	2.1.0 = path shape settings, normalized texture animation speed and new render settings.
+/// @arg [filename]
 
-function project_load()
+function project_load(fn = "")
 {
-	var fn = (argument_count > 0 ? argument[0] : file_dialog_open_project())
+	if (fn = "")
+		fn = file_dialog_open_project()
 	
 	if (fn = "")
 		return false

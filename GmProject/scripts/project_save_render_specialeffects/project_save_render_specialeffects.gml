@@ -1,6 +1,7 @@
 function project_save_render_specialeffects()
 {
 	json_save_object_start("specialeffects")
+	
 		json_save_var("ssao_radius", project_render_ssao_radius)
 		json_save_var("ssao_power", project_render_ssao_power)
 		json_save_var("ssao_blur_passes", project_render_ssao_blur_passes)
@@ -21,5 +22,6 @@ function project_save_render_specialeffects()
 		json_save_var("tonemapper", project_render_tonemapper)
 		json_save_var("exposure", project_render_exposure)
 		json_save_var("gamma", project_render_gamma)
+	
 	json_save_object_done()
 }

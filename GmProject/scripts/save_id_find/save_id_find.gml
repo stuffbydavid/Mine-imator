@@ -1,5 +1,3 @@
-/// save_id_find(saveid)
-/// @arg saveid
 /// @desc Finds the instance with the given save ID.
 
 function save_id_find(saveid)

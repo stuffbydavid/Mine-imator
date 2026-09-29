@@ -1,4 +1,3 @@
-/// block_set_fire()
 /// @desc Locates non-air blocks.
 
 function block_set_fire()

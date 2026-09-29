@@ -1,4 +1,3 @@
-/// load_next()
 /// @desc Loads the next resource in the queue.
 
 function load_next()

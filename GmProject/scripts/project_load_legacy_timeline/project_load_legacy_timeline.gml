@@ -1,5 +1,3 @@
-/// project_load_legacy_timeline()
-
 function project_load_legacy_timeline()
 {
 	with (new_obj(obj_timeline))
@@ -9,13 +7,17 @@ function project_load_legacy_timeline()
 		save_id_map[?load_id] = load_id
 		
 		var typename = buffer_read_string_int();
+		
+		// Pre-2.1 model parts
 		if (typename = "bodypart")
 			typename = "modelpart"
+		
 		type = ds_list_find_index(tl_type_name_list, typename)
 		has_temp = (type < e_temp_type.amount)
 		
 		name = buffer_read_string_int()
 		temp = project_load_legacy_save_id()
+		
 		var legacytext = buffer_read_string_int();
 		if (type = e_tl_type.TEXT)
 		{

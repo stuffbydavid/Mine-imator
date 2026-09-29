@@ -1,5 +1,3 @@
-/// ptype_copy(to)
-/// @arg to
 /// @desc Copies all the variables into the given object.
 
 function ptype_copy(to)

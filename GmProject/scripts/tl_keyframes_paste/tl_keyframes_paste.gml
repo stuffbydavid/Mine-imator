@@ -1,4 +1,3 @@
-/// tl_keyframes_paste(position)
 /// @arg position
 
 function tl_keyframes_paste(pos)

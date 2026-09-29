@@ -1,5 +1,3 @@
-/// shader_tonemap_set()
-
 function shader_tonemap_set()
 {
 	render_set_uniform_int("uTonemapper", render_tonemapper)

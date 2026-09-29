@@ -1,34 +1,32 @@
-/// popup_armor_editor_draw()
-
 function popup_armor_editor_draw()
 {
-	popup.preview.select = popup.armor_edit
-	popup.preview.last_select = popup.armor_edit
-	popup.preview.update = true
-	preview_draw(popup.preview, dx, dy, 200, dh - (dy - content_y + 44))
+	popup_current.preview.select = popup_current.armor_edit
+	popup_current.preview.last_select = popup_current.armor_edit
+	popup_current.preview.update = true
+	preview_draw(popup_current.preview, dx, dy, 200, dh - (dy - content_y + 44))
 	
 	// Settings
 	dx += 216
 	dw = 310
 	
-	var capwid = 128;
+	content_capwid = 128
 	
-	popup_armor_editor_draw_piece("helmet", 0, capwid)
-	
-	draw_divide(dx, dy, dw)
-	dy += 8
-	
-	popup_armor_editor_draw_piece("chestplate", 4, capwid)
+	popup_armor_editor_draw_piece("helmet", 0)
 	
 	draw_divide(dx, dy, dw)
 	dy += 8
 	
-	popup_armor_editor_draw_piece("leggings", 8, capwid)
+	popup_armor_editor_draw_piece("chestplate", 4)
 	
 	draw_divide(dx, dy, dw)
 	dy += 8
 	
-	popup_armor_editor_draw_piece("boots", 12, capwid)
+	popup_armor_editor_draw_piece("leggings", 8)
+	
+	draw_divide(dx, dy, dw)
+	dy += 8
+	
+	popup_armor_editor_draw_piece("boots", 12)
 	
 	dy += 12
 	tab_control_button_label()

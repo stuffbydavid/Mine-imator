@@ -1,4 +1,3 @@
-/// file_dialog_open_image_pack()
 /// @desc Opens a dialog box for selecting either an image or a resource pack.
 
 function file_dialog_open_image_pack()

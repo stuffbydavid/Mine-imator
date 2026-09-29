@@ -1,4 +1,3 @@
-/// file_dialog_open_image()
 /// @desc Opens a dialog box for selecting an image.
 
 function file_dialog_open_image()

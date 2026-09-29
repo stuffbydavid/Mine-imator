@@ -2,5 +2,5 @@
 
 function platform_get()
 {
-	return e_platform.WINDOWS;
+	return e_platform.WINDOWS
 }

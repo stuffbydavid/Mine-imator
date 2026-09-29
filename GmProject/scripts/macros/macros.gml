@@ -1,4 +1,3 @@
-/// macros()
 /// @desc Defines constants used in the project.
 
 function macros()

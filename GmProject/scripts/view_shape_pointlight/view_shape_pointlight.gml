@@ -1,6 +1,5 @@
-/// view_shape_pointlight(timeline)
-/// @arg timeline
 /// @desc Renders a pointlight shape.
+/// @arg timeline
 
 function view_shape_pointlight(tl)
 {

@@ -1,5 +1,3 @@
-/// action_res_remove()
-
 function action_res_remove()
 {
 	var hobj, projectpack;
@@ -21,6 +19,7 @@ function action_res_remove()
 			project_pack_default = (app.project_pack = res_edit)
 			part_amount = 0
 			part_child_amount = 0
+			
 			history_save_tl_select()
 		}
 		
@@ -34,12 +33,14 @@ function action_res_remove()
 		{
 			if (!app.history_undo)
 				scenery = null
+			
 			temp_set_scenery(scenery, !app.history_undo, hobj)
 		}
 		else if (model = res_edit)
 		{
 			if (!app.history_undo)
 				model = null
+			
 			temp_update_model()
 			temp_update_model_timeline_tree(hobj)
 			temp_update_model_shape()

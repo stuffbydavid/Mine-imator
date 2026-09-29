@@ -1,4 +1,7 @@
-/// tl_value_set_vec3(valueid, vec, [default])
+/// @arg valueid
+/// @arg vector
+/// @arg [default]
+
 function tl_value_set_vec3(valueid, vec, def = false)
 {
 	if (!def)

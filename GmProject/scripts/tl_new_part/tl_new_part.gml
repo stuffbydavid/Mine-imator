@@ -1,6 +1,3 @@
-/// tl_new_part(part)
-/// @arg part
-
 function tl_new_part(part)
 {
 	with (new_obj(obj_timeline))

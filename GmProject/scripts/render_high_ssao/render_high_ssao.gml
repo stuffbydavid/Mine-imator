@@ -1,5 +1,3 @@
-/// render_high_ssao()
-
 function render_high_ssao()
 {
 	render_ssao_kernel = render_generate_sample_kernel(12)

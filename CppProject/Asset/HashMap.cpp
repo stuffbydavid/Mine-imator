@@ -49,6 +49,7 @@ namespace CppProject
 				return VarType(hashIt.key());
 			}
 		}
+
 		return VarType();
 	}
 
@@ -71,10 +72,12 @@ namespace CppProject
 				hashIt.next();
 				if (foundKey)
 					return VarType(hashIt.key());
+
 				if (hashIt.key() == (T)key)
 					foundKey = true;
 			}
 		}
+
 		return VarType();
 	}
 

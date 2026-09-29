@@ -1,5 +1,3 @@
-/// shader_startup()
-
 function shader_startup()
 {
 	globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap, shader_check_uniform;
@@ -7,7 +5,7 @@ function shader_startup()
 	globalvar shader_blend_color, shader_blend_alpha;
 	globalvar shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height, shader_clip_active;
 	
-	// clip
+	// Clip
 	shader_clip_x = 0
 	shader_clip_y = 0
 	shader_clip_width = 0

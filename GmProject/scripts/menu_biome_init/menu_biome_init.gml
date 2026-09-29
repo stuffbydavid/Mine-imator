@@ -1,21 +1,17 @@
-/// menu_biome_init(menu)
-/// @arg menu
-
 function menu_biome_init(menu)
 {
 	list_init_start()
 	
-	var selectedbiome, biome;
-	selectedbiome = find_biome(menu.menu_value)
+	var selbiome = find_biome(menu.menu_value);
 	
 	// Extend variant list if needed
-	if (!menu_expose && selectedbiome.biome_base != null && menu.menu_ani = 0)
-		selectedbiome.biome_base.variants_extend = true
+	if (!menu_expose && selbiome.biome_base != null && menu.menu_ani = 0)
+		selbiome.biome_base.variants_extend = true
 	
 	// Add biomes with variants
 	for (var b = 0; b < ds_list_size(biome_list); b++)
 	{
-		biome = biome_list[|b]
+		var biome = biome_list[|b];
 		if (biome.dimension != background_dimension)
 			continue
 		

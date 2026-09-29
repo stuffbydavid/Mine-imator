@@ -1,6 +1,4 @@
-/// temp_copy(to)
-/// @arg to
-/// @desc Copies all the variables into the given object.
+/// @desc Copies all the template variables into the given object.
 
 function temp_copy(to)
 {

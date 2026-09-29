@@ -6,6 +6,7 @@ namespace CppProject
 	{
 		QFile file(log_file_get());
 		AddPerms(file);
+
 		if (!file.open(QFile::Append))
 			return;
 

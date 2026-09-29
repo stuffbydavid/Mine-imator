@@ -1,6 +1,3 @@
-/// res_load_pack_item_textures(type, suffix)
-/// @arg type
-/// @arg suffix
 /// @desc Creates texture sheets for 16px and 32px items.
 
 function res_load_pack_item_textures(type, suffix)
@@ -53,7 +50,7 @@ function res_load_pack_item_textures(type, suffix)
 	// Load textures
 	for (var size = 0; size < e_item_sheet.amount; size++)
 	{
-		var itemtexlist = mc_assets.item_texture_list[size]
+		var itemtexlist = mc_assets.item_texture_list[size];
 		if (ds_list_size(itemtexlist) = 0 || minecraft_item_sheet_size[size][X] <= 0 || minecraft_item_sheet_size[size][Y] <= 0)
 			continue
 
@@ -69,7 +66,7 @@ function res_load_pack_item_textures(type, suffix)
 
 			var name, fname;
 			name = itemtexlist[|t]
-			fname = load_assets_dir + mc_textures_directory + name + suffix + ".png";
+			fname = load_assets_dir + mc_textures_directory + name + suffix + ".png"
 
 			// Look if legacy name exists
 			if (!file_exists_lib(fname) && !is_undefined(legacy_item_texture_name_map[?name]))
@@ -120,7 +117,7 @@ function res_load_pack_item_textures(type, suffix)
 		if (texlist[size] = null)
 			continue
 		
-		var staticitemsize = itemscale * item_size * (size + 1)
+		var staticitemsize = itemscale * item_size * (size + 1);
 		log("Item textures", type, string(item_size * (size + 1)) + " surface")
 		draw_texture_start()
 		surf[size] = surface_create(minecraft_item_sheet_size[size][X] * staticitemsize, minecraft_item_sheet_size[size][Y] * staticitemsize)
@@ -148,7 +145,7 @@ function res_load_pack_item_textures(type, suffix)
 				{
 					if (type = "diffuse" && id != mc_res && mc_res.item_sheet_texture[size] != null)
 					{
-						var sourceitemsize = item_size * (size + 1)
+						var sourceitemsize = item_size * (size + 1);
 						draw_texture_part(mc_res.item_sheet_texture[size], dx, dy,
 							(t mod minecraft_item_sheet_size[size][X]) * sourceitemsize, (t div minecraft_item_sheet_size[size][X]) * sourceitemsize,
 							sourceitemsize, sourceitemsize, staticitemsize / sourceitemsize, staticitemsize / sourceitemsize)

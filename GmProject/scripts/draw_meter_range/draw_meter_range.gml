@@ -1,4 +1,3 @@
-/// draw_meter_range(name, x, y, width, min, max, snap, valuemin, valuemax, defaultmin, defaultmax, textboxmin, textboxmax, scriptmin, scriptmax)
 /// @arg name
 /// @arg x
 /// @arg y

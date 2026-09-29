@@ -1,5 +1,3 @@
-/// tab_frame_editor_path_point()
-
 function tab_frame_editor_path_point()
 {
 	if (!tl_edit.value_type[e_value_type.TRANSFORM_PATH_POINT])

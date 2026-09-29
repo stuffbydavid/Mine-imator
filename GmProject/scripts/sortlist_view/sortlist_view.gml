@@ -1,4 +1,3 @@
-/// sortlist_view(sortlist, value, [center, [items]])
 /// @arg sortlist
 /// @arg value
 /// @arg [center]
@@ -25,6 +24,7 @@ function sortlist_view(slist, value, center = true, items = null)
 
 		slist.scroll.value = max(0, index - floor(items / 2)) * app.ui_small_height
 		slist.scroll.value_goal = slist.scroll.value
+		
 		return true
 	}
 
@@ -36,6 +36,7 @@ function sortlist_view(slist, value, center = true, items = null)
 	itempadding = slist.header_show ? 3 : 5
 	itemtop = index * ui_small_height
 	itembottom = itemtop + ui_small_height + itempadding
+	
 	viewtop = slist.scroll.value_goal
 	if (itemtop < viewtop)
 		scrollvalue = itemtop
@@ -46,5 +47,6 @@ function sortlist_view(slist, value, center = true, items = null)
 
 	slist.scroll.value_goal = max(0, scrollvalue)
 	slist.scroll.value = clamp(slist.scroll.value, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
+	
 	return true
 }

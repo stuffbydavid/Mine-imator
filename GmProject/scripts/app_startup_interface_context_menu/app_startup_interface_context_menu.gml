@@ -1,36 +1,5 @@
-/// app_startup_interface_context_menu()
-
 function app_startup_interface_context_menu()
 {
-	enum e_context_type {
-		NONE,
-		NUMBER,
-		STRING,
-		BOOLEAN,
-		COLOR,
-		TIME
-	}
-	
-	/*
-		Update:
-		action_group_reset
-		action_group_copy
-		action_group_paste
-	*/
-	
-	enum e_context_group {
-		ROT_POINT,
-		POSITION,
-		ROTATION,
-		SCALE,
-		BEND,
-		LIGHT,
-		COLOR,
-		CAMERA,
-		EASE,
-		amount
-	}
-	
 	context_group_copy_list = ds_list_create()
 	for (var i = 0; i < e_context_group.amount; i++)
 		ds_list_add(context_group_copy_list, null)

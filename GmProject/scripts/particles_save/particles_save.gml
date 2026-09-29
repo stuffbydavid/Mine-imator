@@ -1,5 +1,6 @@
-/// particles_save(template, [filename])
 /// @desc Export the given particle creator.
+/// @arg template
+/// @arg [filename]
 
 function particles_save(temp, name = "")
 {

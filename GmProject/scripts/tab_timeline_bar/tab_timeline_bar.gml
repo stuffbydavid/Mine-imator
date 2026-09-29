@@ -1,4 +1,16 @@
-/// tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh, mouseinnames)
+/// @arg barx
+/// @arg bary
+/// @arg barwidth
+/// @arg barheight
+/// @arg headerheight
+/// @arg listwidth
+/// @arg timelinex
+/// @arg timeliney
+/// @arg timelinewidth
+/// @arg timelineheight
+/// @arg itemheight
+/// @arg markerheight
+/// @arg mouseinnames
 
 function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh, mouseinnames)
 {

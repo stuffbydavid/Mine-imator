@@ -1,8 +1,7 @@
-/// draw_button_color(name, x, y, w, color, default, hsvmode, script, [samerow])
 /// @arg name
 /// @arg x
 /// @arg y
-/// @arg w
+/// @arg width
 /// @arg color
 /// @arg default
 /// @arg hsvmode
@@ -21,7 +20,7 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script, samerow
 		buttonx = xx
 		buttonw = w
 	}
-	else if (!samerow && !app.panel_compact && tab_collumns_count > 1)
+	else if (!samerow && !app.panel_compact && tab_columns_count > 1)
 	{
 		buttonx = xx
 		buttonw = w
@@ -84,13 +83,13 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script, samerow
 		
 		draw_set_font(font_label)
 		
-		if (!samerow && !app.panel_compact && tab_collumns_count > 1)
+		if (!samerow && !app.panel_compact && tab_columns_count > 1)
 			draw_label(string_limit(text_get(name), textw - 8), xx, yy - (label_height + 8), fa_left, fa_top, labelcolor, labelalpha)
 		else
 			draw_label(string_limit(text_get(name), textw - 8), xx, yy + h/2, fa_left, fa_center, labelcolor, labelalpha)
 	}
 	
-	microani_update(mouseon, mouseclick, active || (mouseon && mouse_left), false)
+	microani_update(mouseon, mouseclick, active || (mouseon && mouse_left), false, true)
 	
 	if (mouseon && mouse_left_released)
 	{

@@ -1,5 +1,4 @@
-/// keyframe_update_item_name()
-/// @desc Updates ITEM_NAME value
+/// @desc Updates ITEM_NAME value.
 
 function keyframe_update_item_name()
 {
@@ -15,7 +14,7 @@ function keyframe_update_item_name()
 				
 		if (tex.type = e_res_type.PACK)
 		{
-			var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list)
+			var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list);
 			value[e_value.ITEM_NAME] = decodedslot[0] >= 0 ? mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]] : ""
 		}
 		else
@@ -23,7 +22,7 @@ function keyframe_update_item_name()
 	}
 	else if (res_eval(timeline.temp.item_tex).type = e_res_type.PACK)
 	{
-		var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list)
+		var decodedslot = minecraft_assets_texture_picker_slot_decode(slot, mc_assets.item_texture_list);
 		value[e_value.ITEM_NAME] = decodedslot[0] >= 0 ? mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]] : ""
 	}
 	else

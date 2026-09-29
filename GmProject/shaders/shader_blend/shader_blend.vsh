@@ -1,4 +1,3 @@
-/// shader_blend
 /// @desc Blends (multiplies) all pixels by the given color factor.
 
 attribute vec3 in_Position;

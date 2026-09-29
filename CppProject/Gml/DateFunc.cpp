@@ -6,7 +6,7 @@
 
 namespace CppProject
 {
-	QDateTime GmDateTimeToQ(RealType time)
+	static QDateTime GmDateTimeToQ(RealType time)
 	{
 		QDateTime newTime = QDateTime(QDate(1899, 12, 30), QTime(0, 0, 0), Qt::UTC);
 		newTime = newTime.addDays(std::floor(time));

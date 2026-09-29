@@ -1,9 +1,9 @@
-/// project_save([filename])
 /// @arg [filename]
 
-function project_save()
+function project_save(fn = "")
 {
-	var fn = (argument_count > 0 ? argument[0] : project_file)
+	if (fn = "")
+		fn = project_file
 	
 	log("Saving project", fn)
 	
@@ -30,6 +30,4 @@ function project_save()
 		project_changed = false
 		recent_add_wait = true
 	}
-	//if (app.window_state = "startup")
-	//	project_reset()
 }

@@ -1,4 +1,3 @@
-/// shader_alpha_test
 /// @desc Renders alpha<1.0 objects in solid black.
 
 attribute vec3 in_Position;
@@ -28,4 +27,3 @@ void main()
 	
 	gl_Position = getClipPosition(vPosition);
 }
-

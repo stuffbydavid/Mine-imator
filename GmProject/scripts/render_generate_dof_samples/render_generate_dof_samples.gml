@@ -1,18 +1,15 @@
-/// render_generate_dof_samples(blades, rotation, ratio, stretch)
-/// @arg blades
-/// @arg rotation
-/// @arg ratio
-/// @arg stretch
-/// @desc Generates progressive disk samples
+/// @desc Generates progressive disk samples.
 
 function render_generate_dof_samples(blades, rotation, ratio, stretch)
 {
-	var pixelvariation = (renderer_current = e_renderer.REALISTIC) || app.project_render_dof_realistic_blur
-	var samples = clamp(round(app.project_render_dof_quality), 8, 64)
-	var goldenangle = pi * (3 - sqrt(5))
-	var frameangle = 0
-	var c = cos(-degtorad(rotation))
-	var s = sin(-degtorad(rotation))
+	var pixelvariation, samples, goldenangle, frameangle, c, s;
+	pixelvariation = (renderer_current = e_renderer.REALISTIC || app.project_render_dof_realistic_blur)
+	samples = clamp(round(app.project_render_dof_quality), 8, 64)
+	goldenangle = pi * (3 - sqrt(5))
+	frameangle = 0
+	
+	c = cos(-degtorad(rotation))
+	s = sin(-degtorad(rotation))
 	
 	if (renderer_current = e_renderer.REALISTIC)
 		frameangle = frac(render_sample_current * .61803399) * pi * 2
@@ -24,8 +21,9 @@ function render_generate_dof_samples(blades, rotation, ratio, stretch)
 	
 	for (var i = 0; i < samples; i++)
 	{
-		var radius = sqrt((i + .5) / samples)
-		var angle = i * goldenangle + frameangle
+		var radius, angle;
+		radius = sqrt((i + .5) / samples)
+		angle = i * goldenangle + frameangle
 
 		render_dof_weight_samples[i] = radius
 		
@@ -45,26 +43,28 @@ function render_generate_dof_samples(blades, rotation, ratio, stretch)
 		}
 		else
 		{
-			var edge = 1
+			var edge, xx, yy;
+			edge = 1
 			
 			if (blades > 2)
 			{
-				var step = pi * 2 / blades
-				var firstnormal = pi * 1.5 + step * .5
-				var sectorangle = angle - firstnormal + step * .5
-				var localangle = sectorangle - floor(sectorangle / step) * step - step * .5
-				var polygonedge = cos(step * .5) / cos(localangle)
+				var step, firstnormal, sectorangle, localangle, polygonedge;
+				step = pi * 2 / blades
+				firstnormal = pi * 1.5 + step * .5
+				sectorangle = angle - firstnormal + step * .5
+				localangle = sectorangle - floor(sectorangle / step) * step - step * .5
+				polygonedge = cos(step * .5) / cos(localangle)
 				
 				// Bow each blade edge slightly toward a circular aperture
 				edge = lerp(polygonedge, 1, render_dof_blade_rounding)
 			}
 			
-			var xx = cos(angle) * radius * edge
-			var yy = sin(angle) * radius * edge
+			xx = cos(angle) * radius * edge
+			yy = sin(angle) * radius * edge
 			xx *= 1 - max(stretch, 0)
 			yy *= 1 + min(stretch, 0)
-			var rotatedx = xx * c - yy * s
-			var rotatedy = xx * s + yy * c
+			var rotatedx = xx * c - yy * s;
+			var rotatedy = xx * s + yy * c;
 			render_dof_samples[i * 2] = rotatedx * (1 - max(ratio, 0))
 			render_dof_samples[i * 2 + 1] = rotatedy * (1 + min(ratio, 0))
 			render_dof_area_samples[i] = edge * edge

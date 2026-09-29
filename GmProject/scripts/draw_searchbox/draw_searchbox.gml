@@ -1,11 +1,10 @@
-/// draw_searchbox(name, x, y, width, textbox, [stretch])
+/// @desc Draws a search box and returns whether its text changed.
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg textbox
 /// @arg [stretch]
-/// @desc Draws a search box and returns whether its text changed
 
 function draw_searchbox(name, xx, yy, wid, textbox, stretch = false)
 {

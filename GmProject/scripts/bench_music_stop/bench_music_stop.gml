@@ -1,10 +1,9 @@
-/// bench_music_stop([destroy])
-
 function bench_music_stop(destroy = true)
 {
 	var res, playindex;
 	res = bench_settings.music_res
 	playindex = bench_settings.music_play_index
+	
 	if (audio_exists(playindex))
 		audio_stop_sound(playindex)
 	
@@ -26,6 +25,7 @@ function bench_music_stop(destroy = true)
 	if (destroy)
 	{
 		bench_settings.music_res = null
+		
 		if (bench_settings.sound = res)
 			bench_settings.sound = null
 		

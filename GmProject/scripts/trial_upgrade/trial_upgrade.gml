@@ -1,10 +1,7 @@
-/// trial_upgrade(key)
 /// @arg key
 
-function trial_upgrade(argument0)
+function trial_upgrade(key)
 {
-	var key = argument0;
-	
 	if (!key_valid(key))
 		return false
 	

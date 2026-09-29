@@ -1,6 +1,3 @@
-/// action_tl_glint_tex(tex)
-/// @arg tex
-
 function action_tl_glint_tex(tex)
 {
 	if (history_undo)
@@ -24,6 +21,7 @@ function action_tl_glint_tex(tex)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_glint_tex, false);
+		
 		with (obj_timeline)
 			if (selected)
 				action_tl_glint_tex_tree(id, tex, hobj)

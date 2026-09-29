@@ -1,5 +1,3 @@
-/// menu_snap_settings()
-
 function menu_snap_settings()
 {
 	draw_set_font(font_label)

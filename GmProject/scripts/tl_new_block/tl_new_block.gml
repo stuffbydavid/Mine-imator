@@ -1,8 +1,3 @@
-/// tl_new_block(tltype, source, [saved])
-/// @arg tltype
-/// @arg source
-/// @arg [saved]
-
 function tl_new_block(tltype, source, saved = false)
 {
 	with (new_obj(obj_timeline))

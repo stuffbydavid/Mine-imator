@@ -1,16 +1,12 @@
-/// tab_frame_editor_sound()
-
 function tab_frame_editor_sound()
 {
-	var text;
-	
 	if (tl_edit.value[e_value.SOUND_OBJ] != null)
-		text = tl_edit.value[e_value.SOUND_OBJ].display_name
+		content_text = tl_edit.value[e_value.SOUND_OBJ].display_name
 	else
-		text = text_get("listnone")
+		content_text = text_get("listnone")
 	
 	tab_control_menu()
-	draw_button_menu("frameeditorsoundfile", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.SOUND_OBJ], text, action_tl_frame_sound_obj)
+	draw_button_menu("frameeditorsoundfile", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.SOUND_OBJ], content_text, action_tl_frame_sound_obj)
 	tab_next()
 	
 	tab_control_meter()

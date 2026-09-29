@@ -1,4 +1,3 @@
-/// texture_create_square(filename)
 /// @arg filename
 
 function texture_create_square(fn)

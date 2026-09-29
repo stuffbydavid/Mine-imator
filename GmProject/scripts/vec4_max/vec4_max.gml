@@ -1,7 +1,6 @@
 /// CppSeparate VecType vec4_max(VecType, VecType)
-/// vec4_max(vec1, vec2)
-/// @arg vec1
-/// @arg vec2
+/// @arg vector1
+/// @arg vector2
 
 function vec4_max(v1, v2)
 {

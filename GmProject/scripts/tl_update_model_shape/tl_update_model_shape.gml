@@ -1,4 +1,3 @@
-/// tl_update_model_shape()
 /// @desc Updates the meshes of the shapes in the timeline model.
 
 function tl_update_model_shape(clear = true)

@@ -1,6 +1,3 @@
-/// action_bench_light_type(type)
-/// @arg type
-
 function action_bench_light_type(type)
 {
 	if (!history_undo && !history_redo)

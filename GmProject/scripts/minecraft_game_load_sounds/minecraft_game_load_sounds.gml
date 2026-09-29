@@ -30,14 +30,14 @@ function minecraft_game_load_sounds(soundslist, musiclist)
 					{
 						var key, parsed;
 						key = string_delete(path, 1, string_length(prefix))
-						parsed = minecraft_parse_key(key)
+						parsed = minecraft_parse_asset_key(key)
 						
 						if (parsed[0] = "music" || parsed[0] = "records")
 						{
 							if (parsed[0] = "music") // Parse music category
 							{
 								key = string_delete(key, 1, string_length(parsed[0]) + 1)
-								parsed = minecraft_parse_key(key)
+								parsed = minecraft_parse_asset_key(key)
 							}
 							
 							var filter = ds_list_find_index(minecraft_music_filter_list, parsed[0]);

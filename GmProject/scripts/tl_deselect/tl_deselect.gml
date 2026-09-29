@@ -1,5 +1,3 @@
-/// tl_deselect()
-
 function tl_deselect()
 {
 	if (!selected)

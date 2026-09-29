@@ -1,12 +1,14 @@
 function block_tile_entity_sign_text(map)
 {
-	var messagemap = value_get_array(map[?"messages"], "")
-	var text = "";
+	var messagemap, text;
+	messagemap = value_get_array(map[?"messages"], "")
+	text = ""
 	
 	for (var i = 0; i < 4; i++)
 	{
-		var line = "";
-		var textmap = json_decode(messagemap[i]);
+		var line, textmap;
+		line = ""
+		textmap = json_decode(messagemap[i])
 			
 		if (ds_map_valid(textmap))
 		{
@@ -26,5 +28,5 @@ function block_tile_entity_sign_text(map)
 		text += line
 	}
 	
-	return text;
+	return text
 }

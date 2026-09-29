@@ -1,6 +1,3 @@
-/// project_load_project(map)
-/// @arg map
-
 function project_load_project(map)
 {
 	if (!ds_map_valid(map))

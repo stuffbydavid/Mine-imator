@@ -1,4 +1,3 @@
-/// action_tl_keyframes_load(filename)
 /// @arg filename
 
 function action_tl_keyframes_load(fn)
@@ -6,6 +5,7 @@ function action_tl_keyframes_load(fn)
 	if (history_undo)
 	{
 		tl_keyframes_remove()
+		
 		with (history_data)
 		{
 			history_destroy_loaded()
@@ -17,8 +17,10 @@ function action_tl_keyframes_load(fn)
 		}
 		
 		tl_update_list()
+		
 		with (obj_timeline)
 			tl_update_values()
+		
 		tl_update_matrix()
 	}
 	else
@@ -60,7 +62,7 @@ function action_tl_keyframes_load(fn)
 				}
 				
 				filename = fn
-				id.insert_pos = insertpos
+				self.insert_pos = insertpos
 				history_save_tl_select()
 			}
 		}

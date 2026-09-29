@@ -6,55 +6,55 @@ void main() {}
 
 mat3 transpose2(mat3 mat)
 {
-	mat3 trans;
+	mat3 trmat;
 
-	trans[0][0] = mat[0][0];
-	trans[1][0] = mat[0][1];
-	trans[2][0] = mat[0][2];
-	trans[0][1] = mat[1][0];
-	trans[1][1] = mat[1][1];
-	trans[2][1] = mat[1][2];
-	trans[0][2] = mat[2][0];
-	trans[1][2] = mat[2][1];
-	trans[2][2] = mat[2][2];
+	trmat[0][0] = mat[0][0];
+	trmat[1][0] = mat[0][1];
+	trmat[2][0] = mat[0][2];
+	trmat[0][1] = mat[1][0];
+	trmat[1][1] = mat[1][1];
+	trmat[2][1] = mat[1][2];
+	trmat[0][2] = mat[2][0];
+	trmat[1][2] = mat[2][1];
+	trmat[2][2] = mat[2][2];
 
-	return trans;
+	return trmat;
 }
 
-mat3 inverse2(mat4 Original)
+mat3 inverse2(mat4 mat)
 {
-	float det = Original[0][0] * Original[1][1] * Original[2][2]
-			  + Original[0][1] * Original[1][2] * Original[2][0]
-			  + Original[0][2] * Original[1][0] * Original[2][1]
-			  - Original[0][0] * Original[1][2] * Original[2][1]
-			  - Original[0][1] * Original[1][0] * Original[2][2]
-			  - Original[0][2] * Original[1][1] * Original[2][0];
+	float det = mat[0][0] * mat[1][1] * mat[2][2]
+			  + mat[0][1] * mat[1][2] * mat[2][0]
+			  + mat[0][2] * mat[1][0] * mat[2][1]
+			  - mat[0][0] * mat[1][2] * mat[2][1]
+			  - mat[0][1] * mat[1][0] * mat[2][2]
+			  - mat[0][2] * mat[1][1] * mat[2][0];
 
-	float inv_det = 1.0 / det;
+	float invdet = 1.0 / det;
 
 	mat3 tmp;
-	tmp[0][0] = Original[1][1] * Original[2][2] - Original[2][1] * Original[1][2];
-	tmp[1][0] = Original[2][0] * Original[1][2] - Original[1][0] * Original[2][2];
-	tmp[2][0] = Original[1][0] * Original[2][1] - Original[2][0] * Original[1][1];
-	tmp[0][1] = Original[2][1] * Original[0][2] - Original[0][1] * Original[2][2];
-	tmp[1][1] = Original[0][0] * Original[2][2] - Original[2][0] * Original[0][2];
-	tmp[2][1] = Original[2][0] * Original[0][1] - Original[0][0] * Original[2][1];
-	tmp[0][2] = Original[0][1] * Original[1][2] - Original[1][1] * Original[0][2];
-	tmp[1][2] = Original[1][0] * Original[0][2] - Original[0][0] * Original[1][2];
-	tmp[2][2] = Original[0][0] * Original[1][1] - Original[1][0] * Original[0][1];
+	tmp[0][0] = mat[1][1] * mat[2][2] - mat[2][1] * mat[1][2];
+	tmp[1][0] = mat[2][0] * mat[1][2] - mat[1][0] * mat[2][2];
+	tmp[2][0] = mat[1][0] * mat[2][1] - mat[2][0] * mat[1][1];
+	tmp[0][1] = mat[2][1] * mat[0][2] - mat[0][1] * mat[2][2];
+	tmp[1][1] = mat[0][0] * mat[2][2] - mat[2][0] * mat[0][2];
+	tmp[2][1] = mat[2][0] * mat[0][1] - mat[0][0] * mat[2][1];
+	tmp[0][2] = mat[0][1] * mat[1][2] - mat[1][1] * mat[0][2];
+	tmp[1][2] = mat[1][0] * mat[0][2] - mat[0][0] * mat[1][2];
+	tmp[2][2] = mat[0][0] * mat[1][1] - mat[1][0] * mat[0][1];
 
-	mat3 Result;
-	Result[0][0] = inv_det * tmp[0][0];
-	Result[1][0] = inv_det * tmp[1][0];
-	Result[2][0] = inv_det * tmp[2][0];
-	Result[0][1] = inv_det * tmp[0][1];
-	Result[1][1] = inv_det * tmp[1][1];
-	Result[2][1] = inv_det * tmp[2][1];
-	Result[0][2] = inv_det * tmp[0][2];
-	Result[1][2] = inv_det * tmp[1][2];
-	Result[2][2] = inv_det * tmp[2][2];
+	mat3 invmat;
+	invmat[0][0] = invdet * tmp[0][0];
+	invmat[1][0] = invdet * tmp[1][0];
+	invmat[2][0] = invdet * tmp[2][0];
+	invmat[0][1] = invdet * tmp[0][1];
+	invmat[1][1] = invdet * tmp[1][1];
+	invmat[2][1] = invdet * tmp[2][1];
+	invmat[0][2] = invdet * tmp[0][2];
+	invmat[1][2] = invdet * tmp[1][2];
+	invmat[2][2] = invdet * tmp[2][2];
 
-	return transpose2(Result);
+	return transpose2(invmat);
 }
 
 #pragma shady: macro_end

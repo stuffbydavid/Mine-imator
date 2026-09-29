@@ -1,4 +1,3 @@
-/// history_save_keyframes()
 /// @desc Saves the selected keyframes in memory.
 
 function history_save_keyframes()

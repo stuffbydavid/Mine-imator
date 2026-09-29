@@ -1,4 +1,3 @@
-/// tip_set(text, x, y, width, height, [checkmouse])
 /// @arg text
 /// @arg x
 /// @arg y
@@ -12,9 +11,8 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 		return 0
 	
 	var showtip;
-	
 	if (checkmouse)
-		showtip = app_mouse_box(xx, yy, w, h) && content_mouseon
+		showtip = (app_mouse_box(xx, yy, w, h) && content_mouseon)
 	else
 		showtip = true
 	

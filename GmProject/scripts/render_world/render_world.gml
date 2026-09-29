@@ -1,6 +1,3 @@
-/// render_world(mode)
-/// @arg mode
-
 function render_world(mode)
 {
 	// Choose shader
@@ -8,12 +5,10 @@ function render_world(mode)
 	render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 	with (render_shader_obj)
 		shader_use()
-	if (render_mode = e_render_mode.PLACE)
-		render_set_uniform("uGmDepth", bool_to_float(!is_cpp()))
 	
 	shader_check_uniform = true
 	
-	var i, renderlistsize, tl;
+	var i, renderlistsize;
 	renderlistsize = ds_list_size(render_list)
 	
 	render_world_tl_reset()
@@ -21,7 +16,7 @@ function render_world(mode)
 	// Render negative depth
 	for (i = 0; i < renderlistsize; i++)
 	{
-		tl = render_list[|i]
+		var tl = render_list[|i];
 		
 		if (tl.depth >= 0)
 			break

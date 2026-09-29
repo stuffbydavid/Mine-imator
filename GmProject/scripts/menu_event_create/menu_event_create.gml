@@ -1,17 +1,20 @@
-/// menu_event_create()
-
 function menu_event_create()
 {
 	menu_name = ""
 	menu_type = ""
 	menu_window = e_window.MAIN
 	menu_temp_edit = null
+	
 	menu_script = null
+	menu_list = null
+	
 	menu_value = null
 	menu_model_armor_variant = false
+	
 	menu_ani = 0
 	menu_ani_ease = 0
 	menu_ani_type = ""
+	
 	menu_flip = false
 	menu_x = 0
 	menu_x_start = 0
@@ -19,27 +22,35 @@ function menu_event_create()
 	menu_w = 0
 	menu_w_start = 0
 	menu_button_h = 0
+	menu_padding = 4
+	menu_height = 0
+	menu_height_goal = 0
+	
 	menu_amount = 0
 	menu_show_amount = 0
+	
 	menu_item[0] = null
 	menu_item_w = 0
 	menu_item_h = 0
+	
 	menu_include_tl_edit = true
-	menu_count = 0
 	menu_item_extend = null
+	menu_count = 0
+	
 	menu_scroll_vertical = new_obj(obj_scrollbar)
 	menu_scroll_horizontal = new_obj(obj_scrollbar)
-	menu_height = 0
-	menu_height_goal = 0
+	
 	menu_transition = null
+	
 	menu_steps = 0
 	menu_floating = false
-	menu_list = null
-	menu_padding = 4
+	
 	menu_busy_prev = ""
+	
 	menu_nav_use = false
 	menu_nav_index = 0
 	
 	app.menu_count++
+	
 	ds_list_add(app.menu_list, id)
 }

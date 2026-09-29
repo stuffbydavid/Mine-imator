@@ -1,10 +1,5 @@
-/// project_load_resource(map)
-/// @arg map
-
-function project_load_resource(argument0)
+function project_load_resource(map)
 {
-	var map = argument0;
-	
 	if (!ds_map_valid(map))
 		return 0
 	
@@ -16,6 +11,7 @@ function project_load_resource(argument0)
 		
 		var typestr = value_get_string(map[?"type"]);
 		
+		// Pre-2.1 schematic resources
 		if (typestr = "scenery")
 			typestr = "schematic"
 		
@@ -52,7 +48,8 @@ function project_load_resource(argument0)
 			world_box_end = value_get_point3D(map[?"world_box_end"])
 			world_filter_mode = value_get_real(map[?"world_filter_mode"])
 			world_filter_array = array()
-			var filterlist = map[?"world_filter_array"]
+			
+			var filterlist = map[?"world_filter_array"];
 			if (ds_list_valid(filterlist))
 				for (var i = 0; i < ds_list_size(filterlist); i++)
 					array_add(world_filter_array, filterlist[|i])

@@ -1,9 +1,5 @@
-/// tab_properties_resources()
-
 function tab_properties_resources()
 {
-	var capwid;
-	
 	// Preview selected resource
 	tab_control(160)
 	preview_draw(res_preview, dx, dy, dw, 160)

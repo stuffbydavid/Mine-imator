@@ -1,5 +1,3 @@
-/// app_event_step()
-
 function app_event_step()
 {
 	if (debug_mode && !is_cpp()) // Debug windows in GM

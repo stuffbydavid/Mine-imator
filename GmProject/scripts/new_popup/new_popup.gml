@@ -1,48 +1,39 @@
-/// new_popup(name, script, width, height, block, [custom, [revert, [close]]])
 /// @arg name
 /// @arg script
 /// @arg width
 /// @arg height
 /// @arg block
-/// @arg [custom
-/// @arg [revert
-/// @arg [close]]]
+/// @arg [custom]
+/// @arg [revert]
+/// @arg [closebutton]
+/// @arg [closescript]
 
-function new_popup()
+function new_popup(name, script, wid, hei, block, custom = false, revert = false, closebutton = null, closescript = null)
 {
-	var popup = new_obj(obj_popup);
-	
-	popup.name = argument[0]
-	popup.script = argument[1]
-	popup.width = argument[2]
-	popup.height = argument[3]
-	popup.block = argument[4]
-	popup.caption = text_get(popup.name + "caption")
-	popup.offset_x = 0
-	popup.offset_y = 0
-	
-	if (argument_count > 5)
-		popup.custom = argument[5]
-	else
-		popup.custom = false
-	
-	if (argument_count > 6)
-		popup.revert = argument[6]
-	else
-		popup.revert = false
-	
-	if (argument_count > 7)
-		popup.close_button = argument[7]
-	else
-		popup.close_button = !popup.custom
-	
-	if (argument_count > 8)
-		popup.closescript = argument[8]
-	else
-		popup.closescript = null
-	
-	popup.custom_height = -4
-	popup.custom_height_goal = 0
-	
-	return popup
+	with (new_obj(obj_popup))
+	{
+		self.name = name
+		self.script = script
+		width = wid
+		height = hei
+		
+		self.block = block
+		self.custom = custom
+		self.revert = revert
+		
+		if (closebutton != null)
+			close_button = closebutton
+		else
+			close_button = !custom
+			
+		close_script = closescript
+			
+		caption = text_get(name + "caption")
+		offset_x = 0
+		offset_y = 0
+		custom_height = -4
+		custom_height_goal = 0
+		
+		return id
+	}
 }

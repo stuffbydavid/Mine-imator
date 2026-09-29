@@ -1,5 +1,4 @@
-/// background_ground_startup()
-/// @desc Creates the vbuffer for drawing the ground.
+/// @desc Creates the vertex buffer for drawing the ground.
 
 function background_ground_startup()
 {
@@ -27,12 +26,12 @@ function background_ground_startup()
 	{
 		for (var yy = -totalsize; yy < totalsize; yy += size)
 		{
-			vertex_add(xx, yy, -0.01, 0, 0, 1, 0, 0)
-			vertex_add(xx + size, yy, -0.01, 0, 0, 1, rep, 0)
-			vertex_add(xx, yy + size, -0.01, 0, 0, 1, 0, rep)
-			vertex_add(xx + size, yy, -0.01, 0, 0, 1, rep, 0)
-			vertex_add(xx + size, yy + size, -0.01, 0, 0, 1, rep, rep)
-			vertex_add(xx, yy + size, -0.01, 0, 0, 1, 0, rep)
+			vertex_add_real(xx, yy, -0.01, 0, 0, 1, 0, 0)
+			vertex_add_real(xx + size, yy, -0.01, 0, 0, 1, rep, 0)
+			vertex_add_real(xx, yy + size, -0.01, 0, 0, 1, 0, rep)
+			vertex_add_real(xx + size, yy, -0.01, 0, 0, 1, rep, 0)
+			vertex_add_real(xx + size, yy + size, -0.01, 0, 0, 1, rep, rep)
+			vertex_add_real(xx, yy + size, -0.01, 0, 0, 1, 0, rep)
 		}
 	}
 	vbuffer_done()

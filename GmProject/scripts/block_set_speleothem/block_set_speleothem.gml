@@ -1,5 +1,3 @@
-/// block_set_speleothem()
-
 function block_set_speleothem()
 {
 	if (builder_scenery && !builder_scenery_legacy)

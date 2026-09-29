@@ -1,5 +1,6 @@
 /// CppSeparate void buffer_write_string(StringType)
 /// @desc Writes a string to the buffer.
+/// @arg string
 
 function buffer_write_string(str)
 {

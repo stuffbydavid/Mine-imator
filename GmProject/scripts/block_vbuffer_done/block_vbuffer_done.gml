@@ -1,5 +1,3 @@
-/// block_vbuffer_done()
-
 function block_vbuffer_done()
 {
 	for (var d = 0; d < e_block_depth.amount; d++)

@@ -1,4 +1,3 @@
-/// action_tl_keyframes_scale_cancel()
 /// @desc Returns the selected keyframes to where they were before scaling.
 
 function action_tl_keyframes_scale_cancel()
@@ -29,5 +28,6 @@ function action_tl_keyframes_scale_cancel()
 	}
 	
 	window_busy = ""
+	
 	tl_update_length()
 }

@@ -1,5 +1,3 @@
-/// action_bench_schematic_export()
-
 function action_bench_schematic_export()
 {
 	var schematic, source, filename;
@@ -21,7 +19,7 @@ function action_bench_schematic_export()
 	if (!file_exists_lib(source))
 		return 0
 	
-	var fn = file_dialog_save_resource(filename_new_ext(filename, ""), filename_ext(filename))
+	var fn = file_dialog_save_resource(filename_new_ext(filename, ""), filename_ext(filename));
 	if (fn = "")
 		return 0
 	

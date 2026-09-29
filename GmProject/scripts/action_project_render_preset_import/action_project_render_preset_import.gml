@@ -1,5 +1,4 @@
-/// action_project_render_preset_import([fn])
-/// @arg [fn]
+/// @arg [filename]
 
 function action_project_render_preset_import(fn = "")
 {
@@ -14,6 +13,7 @@ function action_project_render_preset_import(fn = "")
 
 		render_apply_settings(render_preset_edit, e_renderer.COMMON)
 		render_samples = -1
+		
 		return 0
 	}
 	else if (history_redo)
@@ -48,5 +48,6 @@ function action_project_render_preset_import(fn = "")
 	render_samples = -1
 	
 	log("Imported render settings", fn)
+	
 	return true
 }

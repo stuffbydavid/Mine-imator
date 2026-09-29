@@ -1,12 +1,5 @@
-/// action_tl_frame_item_slot(slot, [add])
-/// @arg slot
-/// @arg [add]
-
-function action_tl_frame_item_slot(slot, add)
+function action_tl_frame_item_slot(slot, add = false)
 {
-	if (is_undefined(add))
-		add = false
-	
 	tl_value_set_start(action_tl_frame_item_slot, true)
 	tl_value_set(e_value.ITEM_SLOT, slot, add)
 	tl_value_set_done()

@@ -1,4 +1,3 @@
-/// string_height_font(string, font)
 /// @arg string
 /// @arg font
 

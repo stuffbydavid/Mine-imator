@@ -1,6 +1,3 @@
-/// action_lib_pc_type_color_mix_random_start(color)
-/// @arg color
-
 function action_lib_pc_type_color_mix_random_start(color)
 {
 	if (!history_undo && !history_redo)

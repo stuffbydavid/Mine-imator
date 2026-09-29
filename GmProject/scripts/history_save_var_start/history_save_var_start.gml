@@ -1,13 +1,10 @@
-/// history_save_var_start(script, combine)
-/// @arg script
-/// @arg combine
 /// @desc Registering history for saving multiple variables.
 
 function history_save_var_start(script, combine)
 {
-	var hobj;
 	history_pop()
 	
+	var hobj;
 	if (combine &&
 		history_amount > 0 &&
 		history[0].script = script &&

@@ -1,5 +1,6 @@
 /// CppSeparate void builder_add_triangle(Scope<obj_builder_thread>, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, VarType)
-function builder_add_triangle()
+
+function builder_add_triangle(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3, matrix)
 {
 	vbuffer_current = block_vbuffer_current
 	vertex_wave = block_vertex_wave
@@ -9,13 +10,13 @@ function builder_add_triangle()
 	vertex_subsurface = block_vertex_subsurface
 	vertex_rgb = block_vertex_rgb
 	
-	vbuffer_add_triangle(
-		argument[0], argument[1], argument[2],
-		argument[3], argument[4], argument[5],
-		argument[6], argument[7], argument[8],
-		argument[9], argument[10],
-		argument[11], argument[12],
-		argument[13], argument[14],
-		false, argument[15]
+	vbuffer_add_triangle_real(
+		x1, y1, z1,
+		x2, y2, z2,
+		x3, y3, z3,
+		tx1, ty1,
+		tx2, ty2,
+		tx3, ty3,
+		false, matrix
 	)
 }

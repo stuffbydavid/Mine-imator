@@ -1,5 +1,3 @@
-/// action_lib_model_name(name)
-/// @arg name
 /// @desc Changes the character model.
 
 function action_lib_model_name(name)
@@ -25,8 +23,10 @@ function action_lib_model_name(name)
 				old_name = obj_edit.model_name
 				old_state = array_copy_1d(obj_edit.model_state)
 				new_name = name
+				
 				tl_amount = 0
 				part_child_amount = 0
+				
 				history_save_tl_select()
 			}
 			
@@ -59,10 +59,12 @@ function action_lib_model_name(name)
 			
 		model_name = name
 		model_state = array_copy_1d(state)
+		
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
 		temp_update_model_shape()
 		temp_update_display_name()
+		
 		model_shape_update_color()
 		
 		if (pattern_type != "")
@@ -116,6 +118,7 @@ function action_lib_model_name(name)
 	}
 	
 	app_update_tl_edit()
+	
 	tl_update_list()
 	tl_update_matrix()
 	

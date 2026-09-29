@@ -1,6 +1,3 @@
-/// action_tl_frame_path_obj(path)
-/// @arg path
-
 function action_tl_frame_path_obj(path)
 {
 	var hobj, targets, oldpos, olddefault;
@@ -16,6 +13,7 @@ function action_tl_frame_path_obj(path)
 				var pos, defaultpos;
 				pos = app.history_undo ? hobj.path_old_pos[t] : vec3(0)
 				defaultpos = app.history_undo ? hobj.path_old_default_pos[t] : vec3(0)
+				
 				tl_value_set_vec3(e_value.POS_X, pos)
 				tl_value_set_vec3(e_value.POS_X, defaultpos, true)
 				
@@ -28,6 +26,7 @@ function action_tl_frame_path_obj(path)
 		}
 
 		tl_update_matrix()
+		
 		return 0
 	}
 
@@ -49,6 +48,7 @@ function action_tl_frame_path_obj(path)
 	}
 
 	tl_value_set_start(action_tl_frame_path_obj, false)
+	
 	hobj = history_data
 	hobj.path_reset_amount = array_length(targets)
 	if (hobj.path_reset_amount > 0)
@@ -62,6 +62,7 @@ function action_tl_frame_path_obj(path)
 	}
 
 	tl_value_set(e_value.PATH_OBJ, path, false)
+	
 	for (var t = 0; t < hobj.path_reset_amount; t++)
 	{
 		with (targets[t])

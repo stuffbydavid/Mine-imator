@@ -1,4 +1,3 @@
-/// minecraft_assets_texture_picker_slot_decode(Real, Array)
 /// @desc Returns the sheet index and sheet-local slot for a contiguous picker slot.
 
 function minecraft_assets_texture_picker_slot_decode(slot, slotlists)

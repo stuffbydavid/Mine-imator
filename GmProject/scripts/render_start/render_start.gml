@@ -1,17 +1,16 @@
-/// render_start(target, camera, owner, [width, height])
 /// @arg target
 /// @arg camera
 /// @arg owner
 /// @arg [width]
 /// @arg [height]
 
-function render_start()
+function render_start(target, camera, owner, wid = null, hei = null)
 {
 	render_start_time = get_timer()
 	render_start_surface_time = benchmark_surface_total_time
 
-	render_target = argument[0]
-	render_camera = argument[1]
+	render_target = target
+	render_camera = camera
 	render_width = project_video_width
 	render_height = project_video_height
 	
@@ -31,10 +30,10 @@ function render_start()
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
-	var optimizations = [false, false]
+	var optimizations = [false, false];
 	if (renderer_current = e_renderer.REALISTIC)
 	{
-		var realisticset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]].renderer[e_renderer.REALISTIC]
+		var realisticset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]].renderer[e_renderer.REALISTIC];
 		optimizations = render_optimizations_state(realisticset)
 	}
 	if (renderer_current = e_renderer.STANDARD)
@@ -47,8 +46,8 @@ function render_start()
 	render_cascades_count = project_render_shadows_sun_cascades
 	
 	// General rendering effects
-	var renderall = (render_pass = e_render_pass.ALL)
-	var rendercombined = (render_pass = e_render_pass.COMBINED || renderall || render_pass = e_render_pass.BLOOM_THRESHOLD || render_pass = e_render_pass.BLOOM_BLUR)
+	var renderall = (render_pass = e_render_pass.ALL);
+	var rendercombined = (render_pass = e_render_pass.COMBINED || renderall || render_pass = e_render_pass.BLOOM_THRESHOLD || render_pass = e_render_pass.BLOOM_BLUR);
 	render_ssao = project_render_ssao && (rendercombined || render_pass = e_render_pass.DEPTH || render_pass = e_render_pass.NORMAL || render_pass = e_render_pass.AO || render_pass = e_render_pass.REFLECTIONS)
 	render_shadows = project_render_shadows && (rendercombined || render_pass = e_render_pass.SHADOWS || render_pass = e_render_pass.SPECULAR || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
 	render_indirect = render_shadows && project_render_indirect && (rendercombined || render_pass = e_render_pass.INDIRECT || render_pass = e_render_pass.INDIRECT_SHADOWS || render_pass = e_render_pass.REFLECTIONS)
@@ -130,14 +129,14 @@ function render_start()
 	depth_far = app.project_render_distance
 
 	// Argument overwrites size
-	if (argument_count > 3)
+	if (wid != null && hei != null)
 	{
-		render_width = argument[3]
-		render_height = argument[4]
+		render_width = wid
+		render_height = hei
 	}
 
 	// Re-use surfaces created for this render owner and output size
-	render_surface_pool_set(argument[2], render_width, render_height)
+	render_surface_pool_set(owner, render_width, render_height)
 
 	render_ratio = render_width / render_height
 	render_overlay = (render_camera_colors || render_watermark)

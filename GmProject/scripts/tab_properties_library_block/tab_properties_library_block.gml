@@ -1,18 +1,16 @@
-/// tab_properties_library_block(edittab)
-/// @arg edittab
-/// Common template settings for blocks and scenery.
+/// @desc Common template settings for blocks and scenery.
 
 function tab_properties_library_block(edittab)
 {
 	if (temp_edit.type = e_temp_type.BLOCK)
 	{
-		var text = "";
+		content_text = ""
 		if (!is_undefined(mc_assets.block_name_map[?temp_edit.block_name]))
-			text = minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name)
+			content_text = minecraft_asset_get_name("block", mc_assets.block_name_map[?temp_edit.block_name].name)
 			
 		// Block
 		tab_control(24)
-		draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), text)
+		draw_label_value(dx, dy, dw - 32, 24, text_get("typeblock"), content_text)
 			
 		// Change
 		if (draw_button_icon("libraryblockchange", dx + dw - 24, dy, 24, 24, object_editor.raised && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltipchangeblock"))
@@ -31,14 +29,13 @@ function tab_properties_library_block(edittab)
 	else
 	{
 		// Scenery
-		var text;
 		if (temp_edit.scenery != null)
-			text = temp_edit.scenery.display_name
+			content_text = temp_edit.scenery.display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu("libraryscenery", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.scenery, text, action_lib_scenery, false, null)
+		draw_button_menu("libraryscenery", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.scenery, content_text, action_lib_scenery, false, null)
 		tab_next()
 	}
 	
@@ -69,7 +66,7 @@ function tab_properties_library_block(edittab)
 	}
 	
 	// Repeat
-	tab_set_collumns(true, 2)
+	tab_set_columns(true, 2)
 	tab_control_checkbox()
 	draw_checkbox("libraryrepeat", dx, dy, temp_edit.block_repeat_enable, action_lib_block_repeat_enable)
 	tab_next()
@@ -80,7 +77,7 @@ function tab_properties_library_block(edittab)
 		draw_checkbox("librarycenter", dx, dy, temp_edit.block_center, action_lib_block_center)
 		tab_next()
 	}
-	tab_set_collumns(false)
+	tab_set_columns(false)
 		
 	if (temp_edit.block_repeat_enable)
 	{

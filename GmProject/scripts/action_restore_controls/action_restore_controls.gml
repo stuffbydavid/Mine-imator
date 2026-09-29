@@ -1,5 +1,3 @@
-/// action_restore_controls()
-
 function action_restore_controls()
 {
 	if (!question(text_get("questionrestorecontrols")))

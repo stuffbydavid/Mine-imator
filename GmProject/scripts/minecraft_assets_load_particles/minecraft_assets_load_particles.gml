@@ -1,6 +1,5 @@
-/// minecraft_assets_load_particles(list)
+/// @desc Loads particle templates from a list.
 /// @arg list
-/// @desc Loads particle templates from a list
 
 function minecraft_assets_load_particles(particlelist)
 {
@@ -17,7 +16,7 @@ function minecraft_assets_load_particles(particlelist)
 		if (ds_list_valid(tempmap[?"textures"]))
 		{
 			// "textures" list
-			var texturesmap = tempmap[?"textures"]
+			var texturesmap = tempmap[?"textures"];
 			ptemp.frames = ds_list_size(texturesmap)
 			ptemp.animated = ptemp.frames > 1
 			

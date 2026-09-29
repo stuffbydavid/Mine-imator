@@ -1,6 +1,3 @@
-/// action_background_image_type(type)
-/// @arg type
-
 function action_background_image_type(type)
 {
 	if (!history_undo && !history_redo)

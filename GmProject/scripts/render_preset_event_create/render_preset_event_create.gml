@@ -1,5 +1,3 @@
-/// render_preset_event_create()
-
 function render_preset_event_create()
 {
 	file = ""

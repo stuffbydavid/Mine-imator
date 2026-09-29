@@ -1,6 +1,3 @@
-/// tl_new_text(source)
-/// @arg source
-
 function tl_new_text(source)
 {
 	with (new_obj(obj_timeline))
@@ -19,6 +16,7 @@ function tl_new_text(source)
 		value[e_value.TEXT_OUTLINE_SIZE] = source.text_outline_size
 		value[e_value.TEXT_HALIGN] = source.text_halign
 		value[e_value.TEXT_VALIGN] = source.text_valign
+		
 		temp_update_rot_point()
 		tl_update()
 		tl_set_parent_root()

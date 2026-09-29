@@ -1,18 +1,16 @@
-/// action_background_image(resource)
-/// @arg resource
 /// @desc Sets background image.
+/// @arg resource
 
 function action_background_image(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
-	{
+	{	
+		var fn = "";
+		
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_image()
@@ -28,5 +26,6 @@ function action_background_image(res)
 	}
 	
 	background_image = res
+	
 	project_update_counts()
 }

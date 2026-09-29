@@ -1,5 +1,3 @@
-/// app_startup_collapse()
-
 function app_startup_collapse()
 {
 	globalvar collapse_map, collapse_ani, collapse_groups;

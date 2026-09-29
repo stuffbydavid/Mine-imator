@@ -1,5 +1,3 @@
-/// render_preset_clear()
-
 function render_preset_clear()
 {
 	has_standard = false

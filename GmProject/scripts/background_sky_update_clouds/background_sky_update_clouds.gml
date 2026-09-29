@@ -1,10 +1,8 @@
-/// background_sky_update_clouds()
 /// @desc Updates the vbuffer to be used for fancy/poor clouds.
 
 function background_sky_update_clouds()
 {
-	var tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col, colsidesdark, colsideslight, coltop, colbottom;
-	var res;
+	var res, tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col, colsidesdark, colsideslight, coltop, colbottom;
 	res = res_eval(background_sky_clouds_tex)
 	
 	if (!res.ready)
@@ -89,64 +87,64 @@ function background_sky_update_clouds()
 				{
 					vertex_rgb = colsidesdark
 					vertex_alpha = 1
-					vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty)
+					vertex_add_real(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty)
 					
 					vertex_alpha = topalpha
-					vertex_add(vx + blockw, vy + blockh, hei, 1, 0, 0, tx, ty + ph)
-					vertex_add(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph)
-					vertex_add(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph)
+					vertex_add_real(vx + blockw, vy + blockh, hei, 1, 0, 0, tx, ty + ph)
+					vertex_add_real(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph)
+					vertex_add_real(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph)
 					
 					vertex_alpha = 1
-					vertex_add(vx + blockw, vy, 0, 1, 0, 0, tx + pw, ty)
-					vertex_add(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty)
+					vertex_add_real(vx + blockw, vy, 0, 1, 0, 0, tx + pw, ty)
+					vertex_add_real(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty)
 				}
 				
 				if (!hascolor[mod_fix(xx - 1, texwid), yy])
 				{
 					vertex_rgb = colsidesdark
 					vertex_alpha = 1
-					vertex_add(vx, vy, 0, -1, 0, 0, tx, ty)
+					vertex_add_real(vx, vy, 0, -1, 0, 0, tx, ty)
 					
 					vertex_alpha = topalpha
-					vertex_add(vx, vy, hei, -1, 0, 0, tx, ty + ph)
-					vertex_add(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph)
-					vertex_add(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph)
+					vertex_add_real(vx, vy, hei, -1, 0, 0, tx, ty + ph)
+					vertex_add_real(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph)
+					vertex_add_real(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph)
 					
 					vertex_alpha = 1
-					vertex_add(vx, vy + blockh, 0, -1, 0, 0, tx + pw, ty)
-					vertex_add(vx, vy, 0, -1, 0, 0, tx, ty)
+					vertex_add_real(vx, vy + blockh, 0, -1, 0, 0, tx + pw, ty)
+					vertex_add_real(vx, vy, 0, -1, 0, 0, tx, ty)
 				}
 				
 				if (!hascolor[xx, (yy + 1) mod texhei])
 				{
 					vertex_rgb = colsideslight
 					vertex_alpha = 1
-					vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty)
+					vertex_add_real(vx, vy + blockh, 0, 0, 1, 0, tx, ty)
 					
 					vertex_alpha = topalpha
-					vertex_add(vx, vy + blockh, hei, 0, 1, 0, tx, ty + ph)
-					vertex_add(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph)
-					vertex_add(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph)
+					vertex_add_real(vx, vy + blockh, hei, 0, 1, 0, tx, ty + ph)
+					vertex_add_real(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph)
+					vertex_add_real(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph)
 					
 					vertex_alpha = 1
-					vertex_add(vx + blockw, vy + blockh, 0, 0, 1, 0, tx + pw, ty)
-					vertex_add(vx, vy + blockh, 0, 0, 1, 0, tx, ty)
+					vertex_add_real(vx + blockw, vy + blockh, 0, 0, 1, 0, tx + pw, ty)
+					vertex_add_real(vx, vy + blockh, 0, 0, 1, 0, tx, ty)
 				}
 				
 				if (!hascolor[xx, mod_fix(yy - 1, texhei)])
 				{
 					vertex_rgb = colsideslight
 					vertex_alpha = 1
-					vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty)
+					vertex_add_real(vx + blockw, vy, 0, 0, -1, 0, tx, ty)
 					
 					vertex_alpha = topalpha
-					vertex_add(vx + blockw, vy, hei, 0, -1, 0, tx, ty + ph)
-					vertex_add(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph)
-					vertex_add(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph)
+					vertex_add_real(vx + blockw, vy, hei, 0, -1, 0, tx, ty + ph)
+					vertex_add_real(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph)
+					vertex_add_real(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph)
 					
 					vertex_alpha = 1
-					vertex_add(vx, vy, 0, 0, -1, 0, tx + pw, ty)
-					vertex_add(vx + blockw, vy, 0, 0, -1, 0, tx, ty)
+					vertex_add_real(vx, vy, 0, 0, -1, 0, tx + pw, ty)
+					vertex_add_real(vx + blockw, vy, 0, 0, -1, 0, tx, ty)
 				}
 			}
 		}
@@ -156,23 +154,25 @@ function background_sky_update_clouds()
 	
 	vertex_rgb = col
 	vertex_alpha = 1
-	vertex_add(0, 0, 0, 0, 0, -1, 0, 0)
-	vertex_add(0, cloudsize, 0, 0, 0, -1, 0, 1)
-	vertex_add(cloudsize, cloudsize, 0, 0, 0, -1, 1, 1)
-	vertex_add(cloudsize, cloudsize, 0, 0, 0, -1, 1, 1)
-	vertex_add(cloudsize, 0, 0, 0, 0, -1, 1, 0)
-	vertex_add(0, 0, 0, 0, 0, -1, 0, 0)
+	
+	vertex_add_real(0, 0, 0, 0, 0, -1, 0, 0)
+	vertex_add_real(0, cloudsize, 0, 0, 0, -1, 0, 1)
+	vertex_add_real(cloudsize, cloudsize, 0, 0, 0, -1, 1, 1)
+	vertex_add_real(cloudsize, cloudsize, 0, 0, 0, -1, 1, 1)
+	vertex_add_real(cloudsize, 0, 0, 0, 0, -1, 1, 0)
+	vertex_add_real(0, 0, 0, 0, 0, -1, 0, 0)
 	
 	if (topalpha > 0)
 	{
 		vertex_rgb = coltop
 		vertex_alpha = topalpha
-		vertex_add(0, 0, hei, 0, 0, 1, 0, 0)
-		vertex_add(cloudsize, 0, hei, 0, 0, 1, 1, 0)
-		vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
-		vertex_add(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
-		vertex_add(0, cloudsize, hei, 0, 0, 1, 0, 1)
-		vertex_add(0, 0, hei, 0, 0, 1, 0, 0)
+		
+		vertex_add_real(0, 0, hei, 0, 0, 1, 0, 0)
+		vertex_add_real(cloudsize, 0, hei, 0, 0, 1, 1, 0)
+		vertex_add_real(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
+		vertex_add_real(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
+		vertex_add_real(0, cloudsize, hei, 0, 0, 1, 0, 1)
+		vertex_add_real(0, 0, hei, 0, 0, 1, 0, 0)
 	
 		vertex_rgb = c_white
 		vertex_alpha = 1

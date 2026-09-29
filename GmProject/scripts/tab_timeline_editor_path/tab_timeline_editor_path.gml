@@ -1,5 +1,3 @@
-/// tab_timeline_editor_path()
-
 function tab_timeline_editor_path()
 {
 	tab_control_button_label()

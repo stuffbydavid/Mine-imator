@@ -1,5 +1,4 @@
-/// vbuffer_render_matrix(vbuffer, matrix)
-/// @arg vbuffer
+/// @arg vertexbuffer
 /// @arg matrix
 
 function vbuffer_render_matrix(vbuf, mat)

@@ -1,6 +1,5 @@
-/// shader_clip_set(x, y, width, height)
 /// @arg x
-/// @arg x
+/// @arg y
 /// @arg width
 /// @arg height
 

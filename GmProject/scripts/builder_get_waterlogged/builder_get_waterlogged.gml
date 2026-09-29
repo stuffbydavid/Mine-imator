@@ -1,4 +1,7 @@
 /// CppSeparate IntType builder_get_waterlogged(Scope<obj_builder_thread>, IntType, IntType, IntType)
+/// @arg x
+/// @arg y
+/// @arg z
 
 function builder_get_waterlogged(xx, yy, zz)
 {

@@ -1,6 +1,3 @@
-/// action_background_sky_clouds_mode(mode)
-/// @arg mode
-
 function action_background_sky_clouds_mode(mode)
 {
 	if (!history_undo && !history_redo)

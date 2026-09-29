@@ -1,5 +1,3 @@
-/// tab_timeline_editor_block()
-
 function tab_timeline_editor_block()
 {
 	var oldtemp = temp_edit;

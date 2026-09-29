@@ -65,6 +65,7 @@ namespace CppProject
 	{
 		if (Font* font = PR->font)
 			return font->id;
+		
 		return 0;
 	}
 
@@ -186,6 +187,7 @@ namespace CppProject
 				transform.translate(-spr->origin.x(), -spr->origin.y());
 
 				PR->Begin(pr_trianglestrip, texture, transform);
+
 				draw_vertex_texture_color(0, 0, 0, 0, color, alpha);
 				draw_vertex_texture_color(spr->size.width(), 0, 1, 0, color, alpha);
 				draw_vertex_texture_color(0, spr->size.height(), 0, 1, color, alpha);
@@ -210,6 +212,7 @@ namespace CppProject
 				QPointF uvEnd = { uvStart.x() + uvSize.width(), uvStart.y() + uvSize.height() };
 
 				PR->Begin(pr_trianglelist, texture, transform);
+
 				draw_vertex_texture_color(0, 0, uvStart.x(), uvStart.y(), c1, alpha);
 				draw_vertex_texture_color(width, 0, uvEnd.x(), uvStart.y(), c2, alpha);
 				draw_vertex_texture_color(width, height, uvEnd.x(), uvEnd.y(), c3, alpha);
@@ -242,6 +245,7 @@ namespace CppProject
 				transform.scale(xscale, yscale);
 
 				PR->Begin(pr_trianglestrip, surfTexId, transform);
+
 				draw_vertex_texture_color(0, 0, 0, 0, color, alpha);
 				draw_vertex_texture_color(surf->size.width(), 0, 1, 0, color, alpha);
 				draw_vertex_texture_color(0, surf->size.height(), 0, 1, color, alpha);

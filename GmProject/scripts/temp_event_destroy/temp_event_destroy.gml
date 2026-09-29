@@ -1,5 +1,4 @@
-/// temp_event_destroy()
-/// @desc Destroy event of templates
+/// @desc Destroy event of templates.
 
 function temp_event_destroy()
 {
@@ -60,7 +59,7 @@ function temp_event_destroy()
 		temp_particles_type_clear()
 	
 	with (obj_timeline)
-		if (temp = other.id && part_of == null && !delete_ready)
+		if (temp = other.id && part_of = null && !delete_ready)
 			tl_remove_clean()
 	
 	with (obj_timeline)

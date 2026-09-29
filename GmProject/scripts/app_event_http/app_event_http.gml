@@ -1,5 +1,3 @@
-/// app_event_http()
-
 function app_event_http()
 {
 	// Check assets
@@ -124,7 +122,7 @@ function app_event_http()
 							case "download":	icon = icons.DOWNLOAD;			break
 							case "cake":		icon = icons.BIRTHDAY;			break
 							case "upgrade":		icon = icons.KEY;				break
-							case "render":		icon = (setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL);	break
+							case "render":		icon = (setting_theme.dark ? icons.SPHERE_MATERIAL_DARK : icons.SPHERE_MATERIAL);	break
 							default:			icon = null;					break
 						}
 						
@@ -160,7 +158,7 @@ function app_event_http()
 		http_downloadskin = null
 		
 		// Download skin popup
-		if (popup = popup_downloadskin)
+		if (popup_current = popup_downloadskin)
 		{
 			popup_downloadskin.fail_message = text_get("errordownloadskininternet")
 			
@@ -178,14 +176,14 @@ function app_event_http()
 		
 		if (async_load[?"status"] = 0)
 		{
-			if (popup = popup_downloadskin)
+			if (popup_current = popup_downloadskin)
 				popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
 			else
 				mc_builder.block_skull_texture_fail = true
 			
 			if (async_load[?"http_status"] = http_ok && file_exists_lib(download_image_file))
 			{
-				if (popup = popup_downloadskin)
+				if (popup_current = popup_downloadskin)
 				{
 					popup_downloadskin.texture = texture_create(download_image_file)
 					popup_downloadskin.fail_message = ""

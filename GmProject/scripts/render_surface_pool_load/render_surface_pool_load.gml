@@ -1,6 +1,3 @@
-/// render_surface_pool_load(pool)
-/// @arg pool
-
 function render_surface_pool_load(pool)
 {
 	render_surface = pool.surface

@@ -97,6 +97,7 @@ namespace CppProject
 				throw "avformat_find_stream_info failed";
 
 			codecContext = avcodec_alloc_context3(nullptr);
+			
 			IntType streamIndex = -1;
 			for (IntType i = 0; i < formatContext->nb_streams; i++)
 			{
@@ -106,9 +107,12 @@ namespace CppProject
 					codec = avcodec_find_decoder(par->codec_id);
 					if (!codec)
 						throw "avcodec_find_decoder failed";
+
 					if (avcodec_parameters_to_context(codecContext, par) < 0)
 						throw "avcodec_parameters_to_context failed";
+					
 					streamIndex = i;
+					
 					break;
 				}
 			}
@@ -120,6 +124,7 @@ namespace CppProject
 			AVStream* inputStream = formatContext->streams[streamIndex];
 			AVRational outputTimeBase = { 1, STREAM_AUDIO_SAMPLE_RATE };
 			AVRational timeBase = { 1, AV_TIME_BASE };
+			
 			IntType duration = 0;
 			if (inputStream->duration != AV_NOPTS_VALUE)
 				duration = av_rescale_q(inputStream->duration, inputStream->time_base, outputTimeBase);
@@ -137,6 +142,7 @@ namespace CppProject
 				decoded.waveformMax.reserve((int)peakCapacity);
 				decoded.waveformMin.reserve((int)peakCapacity);
 			}
+			
 			IntType peakSamples = 0;
 			int16_t peakMax = 0, peakMin = 0;
 
@@ -180,6 +186,7 @@ namespace CppProject
 				av_freep(&convertedData);
 				if (av_samples_alloc(&convertedData, nullptr, STREAM_AUDIO_CHANNELS, capacity, STREAM_AUDIO_SAMPLE_FORMAT, 1) < 0)
 					throw "av_samples_alloc failed";
+				
 				convertedCapacity = capacity;
 			};
 
@@ -197,12 +204,15 @@ namespace CppProject
 				{
 					int16_t channel1 = data[sample * STREAM_AUDIO_CHANNELS];
 					int16_t channel2 = data[sample * STREAM_AUDIO_CHANNELS + 1];
+					
 					peakMax = std::max(peakMax, std::max(channel1, channel2));
 					peakMin = std::min(peakMin, std::min(channel1, channel2));
+					
 					if (++peakSamples == peakSize)
 					{
 						decoded.waveformMax.append((RealType)peakMax / sample_max);
 						decoded.waveformMin.append((RealType)peakMin / sample_max);
+						
 						peakSamples = 0;
 						peakMax = 0;
 						peakMin = 0;
@@ -221,6 +231,7 @@ namespace CppProject
 					codecContext->sample_rate,
 					AV_ROUND_UP
 				);
+				
 				if (outCapacity <= 0)
 					return;
 
@@ -229,6 +240,7 @@ namespace CppProject
 				IntType outSamples = swr_convert(swrContext, &convertedData, outCapacity, (const uint8_t**)decodedFrame->extended_data, decodedFrame->nb_samples);
 				if (outSamples < 0)
 					throw "swr_convert failed";
+				
 				writeConverted(outSamples);
 			};
 
@@ -239,7 +251,7 @@ namespace CppProject
 					IntType result = avcodec_receive_frame(codecContext, decodedFrame);
 					if (result == AVERROR(EAGAIN) || result == AVERROR_EOF)
 						break;
-					if (result < 0)
+					else if (result < 0)
 						throw "avcodec_receive_frame failed";
 
 					try
@@ -251,6 +263,7 @@ namespace CppProject
 						av_frame_unref(decodedFrame);
 						throw;
 					}
+					
 					av_frame_unref(decodedFrame);
 				}
 			};
@@ -270,7 +283,9 @@ namespace CppProject
 					receiveFrames();
 					result = avcodec_send_packet(codecContext, inPacket);
 				}
+				
 				av_packet_unref(inPacket);
+				
 				if (result < 0)
 					throw "avcodec_send_packet failed";
 
@@ -284,8 +299,10 @@ namespace CppProject
 				receiveFrames();
 				result = avcodec_send_packet(codecContext, nullptr);
 			}
+			
 			if (result < 0 && result != AVERROR_EOF)
 				throw "avcodec_send_packet flush failed";
+			
 			receiveFrames();
 
 			// Drain delayed resampler samples
@@ -297,16 +314,19 @@ namespace CppProject
 					codecContext->sample_rate,
 					AV_ROUND_UP
 				);
+				
 				if (outCapacity <= 0)
 					break;
 
 				allocateConverted(outCapacity);
 
 				IntType outSamples = swr_convert(swrContext, &convertedData, outCapacity, nullptr, 0);
+				
 				if (outSamples == 0)
 					break;
-				if (outSamples < 0)
+				else if (outSamples < 0)
 					throw "swr_convert failed";
+				
 				writeConverted(outSamples);
 			}
 
@@ -327,14 +347,19 @@ namespace CppProject
 		// Cleanup
 		if (decodedFrame)
 			av_frame_free(&decodedFrame);
+
 		if (swrContext)
 			swr_free(&swrContext);
+
 		if (codecContext)
 			avcodec_free_context(&codecContext);
+
 		if (formatContext)
 			avformat_close_input(&formatContext);
+
 		if (convertedData)
 			av_freep(&convertedData);
+
 		if (inPacket)
 			av_packet_free(&inPacket);
 
@@ -353,6 +378,7 @@ namespace CppProject
 			pool.setMaxThreadCount(2);
 			initialized = true;
 		}
+
 		return pool;
 	}
 
@@ -427,6 +453,7 @@ namespace CppProject
 						delete instance;
 
 				delete sound;
+				
 				continue;
 			}
 
@@ -435,8 +462,10 @@ namespace CppProject
 			sound->samples = data->samples;
 			sound->waveform_max.vec.Alloc(data->waveformMax.size());
 			sound->waveform_min.vec.Alloc(data->waveformMin.size());
+			
 			for (RealType sample : data->waveformMax)
 				sound->waveform_max.Append(sample);
+			
 			for (RealType sample : data->waveformMin)
 				sound->waveform_min.Append(sample);
 
@@ -451,14 +480,17 @@ namespace CppProject
 			res->sound_samples = sound->samples;
 			res->sound_max_sample = sound->waveform_max;
 			res->sound_min_sample = sound->waveform_min;
+			
 			sound->ready.store(true, std::memory_order_release);
 			res->ready = true;
 			res->load_stage = "";
 			sound->decode.reset();
+			
 			loadingSounds.removeAt(i);
 
 			// Start playback requested while decoding
 			SoundInstance::StartPending(sound);
+			
 			tl_update_length();
 		}
 	}
@@ -466,6 +498,7 @@ namespace CppProject
 	Sound::~Sound()
 	{
 		loadingSounds.removeOne(this);
+
 		if (alBuffer)
 			alDeleteBuffers(1, &alBuffer);
 	}
@@ -477,6 +510,7 @@ namespace CppProject
 		videoBitRate = bitRate;
 		videoFrameRate = frameRate;
 		audioEnabled = audio > 0.0;
+
 		return 0;
 	}
 
@@ -558,6 +592,7 @@ namespace CppProject
 				audioStream = avformat_new_stream(outContext, audioCodec);
 				if (!audioStream)
 					throw "avformat_new_stream failed";
+				
 				audioStream->id = 1;
 				audioStream->codecpar->sample_rate = STREAM_AUDIO_SAMPLE_RATE;
 				audioStream->codecpar->frame_size = STREAM_AUDIO_FRAME_SIZE;
@@ -569,7 +604,9 @@ namespace CppProject
 				audioCodecContext->sample_fmt = STREAM_AUDIO_SAMPLE_FORMAT_MOVIE;
 				audioCodecContext->sample_rate = STREAM_AUDIO_SAMPLE_RATE;
 				audioCodecContext->bit_rate = STREAM_AUDIO_BIT_RATE;
+				
 				av_channel_layout_default(&audioCodecContext->ch_layout, STREAM_AUDIO_CHANNELS);
+				
 				if (outContext->oformat->flags & AVFMT_GLOBALHEADER)
 					audioCodecContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
@@ -579,6 +616,7 @@ namespace CppProject
 
 				audioFrameNum = 0;
 				audioTimeBase = { audioCodecContext->frame_size, STREAM_AUDIO_SAMPLE_RATE };
+				
 				avcodec_parameters_from_context(audioStream->codecpar, audioCodecContext);
 			}
 
@@ -596,6 +634,7 @@ namespace CppProject
 		{
 			log({ err });
 			WARNING(err);
+
 			return -1;
 		}
 	}
@@ -623,6 +662,7 @@ namespace CppProject
 				pitch
 			})
 		);
+
 		return 0.0;
 	}
 
@@ -648,8 +688,10 @@ namespace CppProject
 
 					if (av_interleaved_write_frame(outContext, packet) < 0)
 						throw "av_interleaved_write_frame failed";
+					
 					break;
 				}
+
 				case AVERROR(EAGAIN):
 				case AVERROR_EOF:
 					av_packet_free(&packet);
@@ -758,6 +800,7 @@ namespace CppProject
 		{
 			log({ err });
 			WARNING(err);
+
 			return -1;
 		}
 	}
@@ -768,6 +811,7 @@ namespace CppProject
 		{
 			// Flush video & audio
 			Encode(videoCodecContext, nullptr, videoStream);
+
 			if (audioEnabled)
 				Encode(audioCodecContext, nullptr, audioStream);
 
@@ -786,6 +830,7 @@ namespace CppProject
 
 				for (MovieSound* snd : movieSounds)
 					delete snd;
+				
 				movieSounds.clear();
 			}
 
@@ -804,6 +849,7 @@ namespace CppProject
 		{
 			log({ err });
 			WARNING(err);
+
 			return -1;
 		}
 	}

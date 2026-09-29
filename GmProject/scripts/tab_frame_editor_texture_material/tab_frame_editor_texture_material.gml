@@ -1,9 +1,7 @@
-/// tab_frame_editor_texture_material()
-
 function tab_frame_editor_texture_material()
 {
-	var texobj, name, tex, sliders;
-	name = ""
+	var tex, sliders, texobj;
+	content_name = ""
 	tex = null
 	sliders = false
 	
@@ -18,7 +16,7 @@ function tab_frame_editor_texture_material()
 			case e_tl_type.MODEL:
 			case e_tl_type.MODEL_PART:
 			{
-				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
+				content_name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
 				
 				var modelfile = tl_edit.temp.model_file;
 				if (tl_edit.type = e_temp_type.MODEL_PART)
@@ -39,7 +37,7 @@ function tab_frame_editor_texture_material()
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
 			{
-				name = "frameeditorblocktexmaterial"
+				content_name = "frameeditorblocktexmaterial"
 				with (tl_edit.temp)
 					texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				
@@ -53,9 +51,9 @@ function tab_frame_editor_texture_material()
 			
 			case e_tl_type.ITEM:
 			{
-				name = "frameeditoritemtexmaterial"
+				content_name = "frameeditoritemtexmaterial"
 				
-				texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ];
+				texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_material
@@ -80,7 +78,7 @@ function tab_frame_editor_texture_material()
 			
 			default: // Shapes
 			{
-				name = "frameeditorshapetexmaterial"
+				content_name = "frameeditorshapetexmaterial"
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				
@@ -97,7 +95,7 @@ function tab_frame_editor_texture_material()
 	else if (tl_edit.type = e_tl_type.PATH)
 	{
 		// Paths don't use templates
-		name = "frameeditorshapetexmaterial"
+		content_name = "frameeditorshapetexmaterial"
 		texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
 			
 		if (texobj = null)
@@ -111,22 +109,21 @@ function tab_frame_editor_texture_material()
 	else
 		sliders = true
 		
-	if (name != "")
+	if (content_name != "")
 	{
 		// Text to display
-		var text;
 		if (texobj != null)
-			text = texobj.display_name
+			content_text = texobj.display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			
 		if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = project_pack_res)
-			text = text_get("listdefault", text)
+			content_text = text_get("listdefault", content_text)
 			
 		if (project_render_material_maps)
 		{
 			tab_control_menu(ui_large_height)
-			draw_button_menu(name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], text, action_tl_frame_texture_material_obj, false, tex)
+			draw_button_menu(content_name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ], content_text, action_tl_frame_texture_material_obj, false, tex)
 			tab_next()
 		}
 	}

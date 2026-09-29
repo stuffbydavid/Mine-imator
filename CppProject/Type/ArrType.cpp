@@ -18,6 +18,7 @@ namespace CppProject
 
 		vec.Clear();
 		vec.Alloc(other.Size());
+
 		for (IntType i = 0; i < other.vec.Size(); i++)
 			vec.Append(other.vec.Value(i));
 
@@ -30,10 +31,12 @@ namespace CppProject
 		if (index < 0) // Invalid index
 			FATAL("ArrType []: Invalid index " + NumStr(index));
 	#endif
+
 		IntType sz = Size();
 		if (index >= sz) // Resize vector and add reals
 		{
 			vec.Alloc(index);
+
 			for (IntType i = sz; i <= index; i++)
 				vec.Append(0.0);
 		}
@@ -73,13 +76,16 @@ namespace CppProject
 
 		vec[lastPos].FreeData();
 		vec.heap.Erase(lastPos);
+
 		vec.size--;
+
 		return first;
 	}
 
 	void ArrType::Append(const ArrType& arr, IntType startIndex)
 	{
 		vec.Alloc(vec.Size() + arr.Size());
+
 		for (IntType i = startIndex; i < arr.Size(); i++)
 			vec.Append(arr.Value(i));
 	}
@@ -97,8 +103,10 @@ namespace CppProject
 	{
 		ArrType arr;
 		arr.vec.Alloc(vArgs.Size());
+
 		for (IntType i = 0; i < vArgs.Size(); i++)
 			arr.vec.Append(vArgs[i]);
+
 		return arr;
 	}
 
@@ -138,6 +146,7 @@ namespace CppProject
 	{
 		if (var.IsInt())
 			return ArrType();
+
 		return var.ToArr();
 	}
 
@@ -147,6 +156,7 @@ namespace CppProject
 		for (IntType i = 0; i < arr.Size(); i++)
 			for (IntType j = 0; j < arr[i].Arr().Size(); j++)
 				newArr[i][j] = arr[i][j];
+
 		return newArr;
 	}
 }

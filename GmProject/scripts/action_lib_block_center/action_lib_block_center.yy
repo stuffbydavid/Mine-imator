@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_lib_block_center",
   "parent":{
-    "name":"Repeat",
-    "path":"folders/Scripts/App/Actions/Library/Repeat.yy",
+    "name":"Block",
+    "path":"folders/Scripts/App/Actions/Library/Block.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

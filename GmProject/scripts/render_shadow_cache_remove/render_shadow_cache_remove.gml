@@ -1,8 +1,6 @@
-/// render_shadow_cache_remove(key)
-
 function render_shadow_cache_remove(key)
 {
-	var surf = render_shadow_cache[?key]
+	var surf = render_shadow_cache[?key];
 	
 	for (var i = 0; i < 3; i++)
 		if (render_surface_sun_buffer[i] = surf)

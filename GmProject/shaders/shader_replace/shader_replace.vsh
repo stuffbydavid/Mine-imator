@@ -1,4 +1,3 @@
-/// shader_replace
 /// @desc Replaces all pixels with the given color, alpha is rounded up.
 
 attribute vec3 in_Position;

@@ -1,5 +1,4 @@
-/// render_update_tl_resource()
-/// @desc Updates the resource used by a timeline for rendering their 3D model
+/// @desc Updates the resource used by a timeline for rendering their 3D model.
 
 function render_update_tl_resource()
 {
@@ -30,7 +29,7 @@ function render_update_tl_resource()
 			
 			model_part_tex_name = model_part_get_texture_name(model_part, temp.model_texture_name_map)
 			model_part_tex_material_name = model_part_get_texture_material_name(model_part, temp.model_texture_material_name_map)
-			model_part_tex_normal_name = model_part_get_tex_normal_name(model_part, temp.model_texture_normal_name_map)
+			model_part_tex_normal_name = model_part_get_texture_normal_name(model_part, temp.model_texture_normal_name_map)
 			
 			// Look up shape textures
 			model_part_shape_tex = []

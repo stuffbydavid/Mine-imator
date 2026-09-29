@@ -1,5 +1,3 @@
-/// app_startup_interface_bench()
-
 function app_startup_interface_bench()
 {
 	bench_open = false
@@ -22,62 +20,62 @@ function app_startup_interface_bench()
 	bench_particle_preset_folder = particle_folders[0]
 	
 	// Workbench tabs
-	bench_tab = e_bench.CHARACTER
+	bench_tab = e_bench_tab.CHARACTER
 	bench_tab_list = list_new()
 	list_edit = bench_tab_list
 	list_edit.get_name = true
 	list_edit.show_ticks = false
 	
-	list_item_add("typeproject", e_bench.PROJECT, "", null, icons.LIBRARY, null, bench_click)
-	list_item_add("typechar", e_bench.CHARACTER, "", null, icons.CHARACTER, null, bench_click)
+	list_item_add("typeproject", e_bench_tab.PROJECT, "", null, icons.LIBRARY, null, bench_tab_select)
+	list_item_add("typechar", e_bench_tab.CHARACTER, "", null, icons.CHARACTER, null, bench_tab_select)
 	if (ds_list_size(mc_assets.equipment_list) > 0)
-		list_item_add("typeequipment", e_bench.EQUIPMENT, "", null, icons.SHIELD, null, bench_click)
-	list_item_add("typemodel", e_bench.MODEL, "", null, icons.MODEL, null, bench_click)
-	list_item_add("typemodelpart", e_bench.MODEL_PART, "", null, icons.PART, null, bench_click)
+		list_item_add("typeequipment", e_bench_tab.EQUIPMENT, "", null, icons.SHIELD, null, bench_tab_select)
+	list_item_add("typemodel", e_bench_tab.MODEL, "", null, icons.MODEL, null, bench_tab_select)
+	list_item_add("typemodelpart", e_bench_tab.MODEL_PART, "", null, icons.PART, null, bench_tab_select)
 	
-	list_item_add("typeitem", e_bench.ITEM, "", null, icons.ITEM, null, bench_click)
-	list_item_add("typeworld", e_bench.WORLD, "", null, icons.SCENERY, null, bench_click)
-	list_item_add("typeschematic", e_bench.SCHEMATIC, "", null, icons.HOUSE, null, bench_click)
-	list_item_add("typeblock", e_bench.BLOCK, "", null, icons.BLOCK, null, bench_click)
-	list_item_add("typespblock", e_bench.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_click)
+	list_item_add("typeitem", e_bench_tab.ITEM, "", null, icons.ITEM, null, bench_tab_select)
+	list_item_add("typeworld", e_bench_tab.WORLD, "", null, icons.SCENERY, null, bench_tab_select)
+	list_item_add("typeschematic", e_bench_tab.SCHEMATIC, "", null, icons.HOUSE, null, bench_tab_select)
+	list_item_add("typeblock", e_bench_tab.BLOCK, "", null, icons.BLOCK, null, bench_tab_select)
+	list_item_add("typespblock", e_bench_tab.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_tab_select)
 	
-	list_item_add("typecamera", e_bench.CAMERA, "", null, icons.CAMERA, null, bench_click)
-	list_item_add("typesound", e_bench.SOUND, "", null, icons.VOLUME, null, bench_click)
-	list_item_add("typeaudio", e_bench.AUDIO_TRACK, "", null, icons.NOTE, null, bench_click)
-	list_item_add("typeparticles", e_bench.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_click)
-	list_item_add("typetext", e_bench.TEXT, "", null, icons.TEXT, null, bench_click)
+	list_item_add("typecamera", e_bench_tab.CAMERA, "", null, icons.CAMERA, null, bench_tab_select)
+	list_item_add("typesound", e_bench_tab.SOUND, "", null, icons.VOLUME, null, bench_tab_select)
+	list_item_add("typeaudio", e_bench_tab.AUDIO_TRACK, "", null, icons.NOTE, null, bench_tab_select)
+	list_item_add("typeparticles", e_bench_tab.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_tab_select)
+	list_item_add("typetext", e_bench_tab.TEXT, "", null, icons.TEXT, null, bench_tab_select)
 	
-	list_item_add("typecameraeffects", e_bench.CAMERA_EFFECTS, "", null, icons.WAND, null, bench_click)
-	list_item_add("typelightsource", e_bench.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_click)
-	list_item_add("typepath", e_bench.PATH, "", null, icons.PATH, null, bench_click)
-	list_item_add("typebackground", e_bench.ENVIRONMENT, "", null, icons.CLOUD, null, bench_click)
-	list_item_add("typeshape", e_bench.SHAPE, "", null, icons.SHAPES, null, bench_click)
+	list_item_add("typecameraeffects", e_bench_tab.CAMERA_EFFECTS, "", null, icons.WAND, null, bench_tab_select)
+	list_item_add("typelightsource", e_bench_tab.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_tab_select)
+	list_item_add("typepath", e_bench_tab.PATH, "", null, icons.PATH, null, bench_tab_select)
+	list_item_add("typebackground", e_bench_tab.ENVIRONMENT, "", null, icons.CLOUD, null, bench_tab_select)
+	list_item_add("typeshape", e_bench_tab.SHAPE, "", null, icons.SHAPES, null, bench_tab_select)
 	
 	bench_advanced_tabs = array(
-		e_bench.PROJECT,
-		e_bench.MODEL,
-		e_bench.AUDIO_TRACK,
-		e_bench.CAMERA_EFFECTS,
-		e_bench.ENVIRONMENT
+		e_bench_tab.PROJECT,
+		e_bench_tab.MODEL,
+		e_bench_tab.AUDIO_TRACK,
+		e_bench_tab.CAMERA_EFFECTS,
+		e_bench_tab.ENVIRONMENT
 	)
 	
 	list_edit = null
 	
 	// Preview
 	bench_tab_preview = array(
-		e_bench.PROJECT,
-		e_bench.CHARACTER,
-		e_bench.EQUIPMENT,
-		e_bench.MODEL,
-		e_bench.MODEL_PART,
-		e_bench.ITEM,
-		e_bench.SCHEMATIC,
-		e_bench.BLOCK,
-		e_bench.SPECIAL_BLOCK,
-		e_bench.SHAPE,
-		e_bench.TEXT,
-		e_bench.SOUND,
-		e_bench.PARTICLE_SPAWNER
+		e_bench_tab.PROJECT,
+		e_bench_tab.CHARACTER,
+		e_bench_tab.EQUIPMENT,
+		e_bench_tab.MODEL,
+		e_bench_tab.MODEL_PART,
+		e_bench_tab.ITEM,
+		e_bench_tab.SCHEMATIC,
+		e_bench_tab.BLOCK,
+		e_bench_tab.SPECIAL_BLOCK,
+		e_bench_tab.SHAPE,
+		e_bench_tab.TEXT,
+		e_bench_tab.SOUND,
+		e_bench_tab.PARTICLE_SPAWNER
 	)
 
 	// Workbench settings
@@ -92,31 +90,38 @@ function app_startup_interface_bench()
 		height = 0
 		height_goal = bench_initial_height
 		height_min = bench_initial_height
-		height_fixed = array_create(e_bench.amount, 0)
-		height_fixed_base = array_create(e_bench.amount, 0)
+		height_fixed = array_create(e_bench_tab.amount, 0)
+		height_fixed_base = array_create(e_bench_tab.amount, 0)
 		list_height = 0
 		list_minimum_height = 0
 		list_focus = ""
 		
 		// Default settings
 		temp_event_create()
+		
 		model_name = default_model
 		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		model_part_name = default_model_part
 		temp_update_model()
 		temp_update_model_part()
 		temp_update_model_shape()
+		
 		block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
+		
 		temp_particles_init()
+		
 		model_tex = project_pack_res
 		model_tex_material = project_pack_res
 		model_tex_normal = project_pack_res
+		
 		item_tex = project_pack_res
 		item_tex_material = project_pack_res
 		item_tex_normal = project_pack_res
+		
 		block_tex = project_pack_res
 		block_tex_material = project_pack_res
 		block_tex_normal = project_pack_res
+		
 		text_font = project_pack_res
 		text_aa = false
 		text_outline = false
@@ -127,7 +132,9 @@ function app_startup_interface_bench()
 		text = ""
 		tbx_text = new_textbox(false, 0, "")
 		tbx_text_outline_size = new_textbox_integer()
+		
 		particle_preset = ""
+		
 		type = e_temp_type.CHARACTER
 		shape_type = e_shape_type.CUBE
 		light_type = e_tl_type.POINT_LIGHT

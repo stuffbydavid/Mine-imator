@@ -1,10 +1,8 @@
-/// tab_collapse_end([divider])
-/// @arg [divider]
-
 function tab_collapse_end(divider = true)
 {
 	collapse_ani = 1
 	collapse_groups--
+	
 	dy += 4
 	
 	draw_box(content_x, dy, content_width, content_height, false, c_level_middle, 1)

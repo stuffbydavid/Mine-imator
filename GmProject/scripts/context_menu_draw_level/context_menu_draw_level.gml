@@ -1,11 +1,8 @@
-/// context_menu_draw_level(i)
-/// @arg i
+/// @arg levelindex
 
-function context_menu_draw_level(argument0)
+function context_menu_draw_level(levelindex)
 {
-	var levelindex, level, alphaease, aniease;
-	levelindex = argument0
-	level = context_menu_level[|levelindex]
+	var level = context_menu_level[|levelindex];
 	context_menu_current = level
 	
 	// Animation
@@ -24,6 +21,7 @@ function context_menu_draw_level(argument0)
 			level.ani = 0
 	}
 	
+	var aniease, alphaease;
 	aniease = ease("easeoutexpo", level.ani)
 	alphaease = aniease
 	aniease = 1
@@ -76,7 +74,6 @@ function context_menu_draw_level(argument0)
 		for (var i = 0; i < ds_list_size(level.level_list.item); i++)
 		{
 			var item = level.level_list.item[|i];
-			
 			if (item.divider)
 				dy += 8
 			
@@ -98,8 +95,10 @@ function context_menu_draw_level(argument0)
 		if (script_execute(level.level_script, dx, dy, dw, dh))
 		{
 			draw_set_alpha(1)
+			
 			if (clipped)
 				clip_end()
+			
 			return 0
 		}
 		

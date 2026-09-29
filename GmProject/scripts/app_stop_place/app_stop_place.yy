@@ -6,7 +6,7 @@
   "name":"app_stop_place",
   "parent":{
     "name":"Place",
-    "path":"folders/Scripts/App/Interface/Place.yy",
+    "path":"folders/Scripts/App/Place.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

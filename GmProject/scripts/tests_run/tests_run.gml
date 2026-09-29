@@ -1,5 +1,5 @@
 /// @desc Performs a sequence of tests and saves the rendered results in the project folder under runs/, along with CSV tables of benchmark timing data.
-///	Render settings are overwritten during playback by text keyframes. A renderer is skipped entirely if the keyframe is invisible.
+/// Render settings are overwritten during playback by text keyframes. A renderer is skipped entirely if the keyframe is invisible.
 
 function tests_run()
 {
@@ -21,8 +21,10 @@ function tests_run()
 	// Overwrite defaults by program arguments
 	if (test_frame_start > -1)
 		framestart = test_frame_start
+	
 	if (test_frame_end > -1)
 		frameend = test_frame_end
+	
 	if (test_renderer != "")
 	{
 		singlerenderer = test_renderer
@@ -32,6 +34,7 @@ function tests_run()
 			singlerenderer = ""
 		}
 	}
+	
 	if (test_debug_pass = "all")
 		debugpassall = true
 	else if (test_debug_pass != "")
@@ -47,10 +50,13 @@ function tests_run()
 	log("Test project file", project_file)
 	log("Test project start", framestart)
 	log("Test project end", frameend)
+	
 	if (singlerenderer != "")
 		log("Test project renderer", singlerenderer)
+	
 	if (test_render_settings != "")
 		log("Test project render settings", test_render_settings)
+	
 	if (test_agent != "")
 		log("Test project agent", test_agent)
 	
@@ -98,12 +104,15 @@ function tests_run()
 	curyear = date_get_year(curdatetime)
 	curmonth = date_get_month(curdatetime)
 	curday = date_get_day(curdatetime)
+	
 	testname = string(curyear) + (curmonth < 10 ? "0" : "") + string(curmonth) + (curday < 10 ? "0" : "") + string(curday) + "_"
 	testname += string_replace_all(date_time_string(date_current_datetime()), ":", "")
 	testname += "_" + graphics_api_get()
+	
 	agentname = filename_get_valid(test_agent)
 	if (agentname != "")
 		testname += "_" + agentname
+	
 	testname += is_optimized()  ? "" : "_DEBUG"
 	testdir = project_folder + "/runs/" + testname
 
@@ -131,7 +140,7 @@ function tests_run()
 		{
 			var renderername, settingsqueue;
 			renderername = renderer_name_list[renderer_current]
-			settingsqueue = array();
+			settingsqueue = array()
 			project_render_preset[renderer_current] = "test"
 
 			// Only test a specific renderer
@@ -155,7 +164,8 @@ function tests_run()
 			{
 				// Apply custom render settings one-by-one from text objects on the marker with a name matching the renderer
 				var skiprenderer = false;
-				with (obj_timeline) {
+				with (obj_timeline)
+				{
 					if (name != renderername ||
 						type != e_tl_type.TEXT)
 						continue
@@ -188,8 +198,10 @@ function tests_run()
 					// Apply next settings in the queue
 					cursetting = array_shift(settingsqueue)
 					log("Test frame", timeline_marker, renderername, cursetting)
+					
 					with (renderpreset)
 						render_preset_apply_settings(cursetting, renderer_current)
+					
 					render_apply_settings(renderpreset, e_renderer.COMMON)
 				}
 				else
@@ -202,6 +214,7 @@ function tests_run()
 				var exportbasename = testdir + "/" + string(timeline_marker) + "_" + renderername;
 				if (cursetting != "")
 					exportbasename += "_" + filename_get_valid(cursetting)
+				
 				export_filename = exportbasename + ".png"
 			
 				render_lights = (renderer_current != e_renderer.QUICK)
@@ -225,7 +238,7 @@ function tests_run()
 				csv += string(timeline_marker) + ","
 				csv += renderername + ","
 				csv += string_replace_all(cursetting, ",", " ") + ","
-				if (renderer_current == e_renderer.REALISTIC)
+				if (renderer_current = e_renderer.REALISTIC)
 					csv += string(project_render_samples) + ",,"
 				else
 					csv += "1,,"
@@ -255,7 +268,7 @@ function tests_run()
 	}
 
 	// Save run data
-	var totaltime = get_timer() - starttime
+	var totaltime = get_timer() - starttime;
 	log("Tests complete", string_format(totaltime / 1000, 0, 3) + " msec")
 	csv += "All_ms," + string_format(totaltime / 1000, 0, 3)
 	
@@ -271,5 +284,6 @@ function tests_run()
 		file_copy_lib(log_file_get(), testdir + "/log.txt")
 	
 	game_end()
+	
 	return true
 }

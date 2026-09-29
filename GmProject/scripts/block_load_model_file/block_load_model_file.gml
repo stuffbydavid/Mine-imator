@@ -1,31 +1,30 @@
-/// block_load_model_file(filename, resource)
 /// @arg filename
 /// @arg [resource]
 
-function block_load_model_file(fname, res = null)
+function block_load_model_file(fn, res = null)
 {
-	if (res = null && !is_undefined(load_assets_model_file_map[?filename_name(fname)])) // Previously loaded
-		return load_assets_model_file_map[?filename_name(fname)]
+	if (res = null && !is_undefined(load_assets_model_file_map[?filename_name(fn)])) // Previously loaded
+		return load_assets_model_file_map[?filename_name(fn)]
 	
-	if (!file_exists_lib(fname))
+	if (!file_exists_lib(fn))
 	{
-		log("Could not find model file", fname)
+		log("Could not find model file", fn)
 		return null
 	}
 	
 	var typemap, map;
 	typemap = ds_int_map_create()
-	map = json_load(fname, typemap)
+	map = json_load(fn, typemap)
 	if (!ds_map_valid(map))
 	{
-		log("Could not parse model file", fname)
+		log("Could not parse model file", fn)
 		ds_map_destroy(typemap)
 		return null
 	}
 	
 	with (new_obj(obj_block_load_model_file))
 	{
-		name = filename_new_ext(filename_name(fname), "")
+		name = filename_new_ext(filename_name(fn), "")
 		
 		// Parent
 		parent = null
@@ -135,7 +134,7 @@ function block_load_model_file(fname, res = null)
 						}
 						else if (is_real(rotationmap[?"x"]) || is_real(rotationmap[?"y"]) || is_real(rotationmap[?"z"])) // New free rotation
 						{
-							var angles = [0, 0, 0];
+							var angles = vec3(0, 0, 0);
 							
 							if (is_real(rotationmap[?"x"]))
 								angles[X] = rotationmap[?"x"]
@@ -167,7 +166,7 @@ function block_load_model_file(fname, res = null)
 						rotated = false
 					
 					// Faces
-					var facesmap = elementmap[?"faces"]
+					var facesmap = elementmap[?"faces"];
 					for (var f = 0; f < e_dir.amount; f++)
 					{
 						var curmap = facesmap[?dir_get_string(f)];
@@ -230,7 +229,7 @@ function block_load_model_file(fname, res = null)
 		}
 		
 		if (res = null)
-			load_assets_model_file_map[?filename_name(fname)] = id
+			load_assets_model_file_map[?filename_name(fn)] = id
 		
 		ds_map_destroy(map)
 		

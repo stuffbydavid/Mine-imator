@@ -1,7 +1,6 @@
-/// string_time(time, hours, milliseconds)
 /// @arg time
-/// @arg hours
-/// @arg milliseconds
+/// @arg [hours]
+/// @arg [milliseconds]
 
 function string_time(time, hour = true, millisecond = true)
 {
@@ -14,5 +13,5 @@ function string_time(time, hour = true, millisecond = true)
 	
 	return ((hour || hrs >= 1) ? (string_replace_all(string_format(hrs, hour ? 2 : 0, 0), " ", "0") + sep) : "") + // hours
 		   string_replace_all(string_format(mins, 2, 0), " ", "0") + sep + // minutes
-		   string_replace_all(string_format(secs, 2, millisecond ? 3 : 0), " ", "0"); // seconds
+		   string_replace_all(string_format(secs, 2, millisecond ? 3 : 0), " ", "0") // seconds
 }

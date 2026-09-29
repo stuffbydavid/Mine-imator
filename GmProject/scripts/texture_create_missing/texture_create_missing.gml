@@ -1,5 +1,3 @@
-/// texture_create_missing([size])
-/// @arg [size]
 /// @desc Creates a checkerboard texture.
 
 function texture_create_missing(size = 16)

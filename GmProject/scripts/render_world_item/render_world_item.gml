@@ -1,5 +1,4 @@
-/// render_world_item(vbuffer, resource, sheet, is3d, facecamera, bounce, rotate, [realtime])
-/// @arg vbuffer
+/// @arg vertexbuffer
 /// @arg resource
 /// @arg sheet
 /// @arg is3d
@@ -8,9 +7,9 @@
 /// @arg rotate
 /// @arg [realtime]
 
-function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate, realtime = false)
+function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
-	for (var c = e_texture_channel.DIFFUSE; c <= e_texture_channel.MATERIAL; c++)
+	for (var c = e_texture_channel.DIFFUSE; c < e_texture_channel.amount; c++)
 		res[c] = res_eval(res[c])
 	
 	if (facecamera)
@@ -18,7 +17,7 @@ function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate
 		var mat, rotz, rotmat;
 		mat = matrix_get(matrix_world)
 		rotz = 90 + point_direction(mat[MAT_X], mat[MAT_Y], proj_from[X], proj_from[Y])
-		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
+		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1)
 		rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, rotz, 1, 1, 1))
 		matrix_world_multiply_pre(rotmat)
 	}
@@ -30,7 +29,7 @@ function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate
 		t = (realtime ? current_step : app.background_time) mod d * 360
 		offz = t/360
 		mat = matrix_get(matrix_world)
-		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
+		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1)
 		rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, offz, 1, 1, 1))
 		matrix_world_multiply_pre(rotmat)
 	}
@@ -95,5 +94,5 @@ function render_world_item(vbuffer, res, sheet, is3d, facecamera, bounce, rotate
 	else
 		render_set_texture(spr_default_normal, "Normal")
 	
-	vbuffer_render(vbuffer)
+	vbuffer_render(vbuf)
 }

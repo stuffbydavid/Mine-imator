@@ -1,6 +1,3 @@
-/// value_get_state_vars(map)
-/// @arg map
-
 function value_get_state_vars(map)
 {
 	var vars, varslen;

@@ -3,8 +3,8 @@
   "%Name":"shader_noise",
   "name":"shader_noise",
   "parent":{
-    "name":"Noise",
-    "path":"folders/Shaders/Effects/Noise.yy",
+    "name":"Effects",
+    "path":"folders/Shaders/Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

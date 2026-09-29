@@ -9,11 +9,10 @@ function tab_properties_resources_edit()
 	
 	if (res_edit.type = e_res_type.PACK)
 	{
-		var showprojectpack, res;
-		showprojectpack = (res_edit != mc_res)
+		var showprojectpack = (res_edit != mc_res);
 		for (var i = 0; !showprojectpack && i < ds_list_size(res_list.display_list); i++)
 		{
-			res = res_list.display_list[|i]
+			var res = res_list.display_list[|i];
 			if (res != mc_res && res.type = e_res_type.PACK)
 			{
 				showprojectpack = true
@@ -28,7 +27,7 @@ function tab_properties_resources_edit()
 			tab_next()
 		}
 
-		capwid = text_caption_width("resourcespackimage", "resourcespackimagecharacter", "resourcespackimagecolormap", "resourcespackimageparticles")
+		content_capwid = text_caption_width("resourcespackimage", "resourcespackimagecharacter", "resourcespackimagecolormap", "resourcespackimageparticles")
 		
 		tab_control_menu()
 		draw_button_menu("resourcespackimage", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_image, text_get("resourcespack" + preview_edit.pack_image), action_res_preview_pack_image)
@@ -132,15 +131,17 @@ function tab_properties_resources_edit()
 			tab_next()
 		}
 		
-		var busy = window_busy;
-		var focus = window_focus;
+		var busy, focus;
+		busy = window_busy
+		focus = window_focus
 		
 		tab_control_meter()
 		draw_meter("resourcesscenerystructureintegrity", dx, dy, dw, round(res_edit.scenery_integrity * 100), 0, 100, 100, 1, tab.resources.tbx_scenery_integrity, action_res_scenery_integrity)
 		tab_next()
 		
 		// Auto-update for user's convenience
-		if ((focus = string(tab.resources.tbx_scenery_integrity) && window_focus = "") || (window_busy = "" && (busy = "resourcesscenerystructureintegrity" || busy = "resourcesscenerystructureintegrityinputdrag")))
+		if ((focus = string(tab.resources.tbx_scenery_integrity) && window_focus = "") ||
+			(window_busy = "" && (busy = "resourcesscenerystructureintegrity" || busy = "resourcesscenerystructureintegrityinputdrag")))
 		{
 			with (res_edit)
 				res_load()
@@ -153,7 +154,8 @@ function tab_properties_resources_edit()
 	
 	// Material texture format
 	if ((res_edit.type = e_res_type.BLOCK_SHEET || res_edit.type = e_res_type.DOWNLOADED_SKIN || res_edit.type = e_res_type.ITEM_SHEET || res_edit.type = e_res_type.PACK
-		 || res_edit.type = e_res_type.PARTICLE_SHEET || res_edit.type = e_res_type.SKIN || res_edit.type = e_res_type.TEXTURE || res_edit.type = e_res_type.MODEL) && res_edit != mc_res && setting_advanced_mode && project_render_material_maps)
+		 || res_edit.type = e_res_type.PARTICLE_SHEET || res_edit.type = e_res_type.SKIN || res_edit.type = e_res_type.TEXTURE || res_edit.type = e_res_type.MODEL)
+		 && res_edit != mc_res && setting_advanced_mode && project_render_material_maps)
 	{
 		tab_control_togglebutton()
 		togglebutton_add("resourcesmaterialformatlabpbr", null, e_material.FORMAT_LABPBR, res_edit.material_format = e_material.FORMAT_LABPBR, action_res_material_format)
@@ -164,8 +166,8 @@ function tab_properties_resources_edit()
 	
 	if (res_edit.filename != "") // Filename
 	{
-		var wid = text_max_width("resourcesfilenameopen") + 20;
-		capwid = text_caption_width("resourcesfilename")
+		var wid;
+		content_capwid = text_caption_width("resourcesfilename")
 		
 		// Model
 		tab_control(24)

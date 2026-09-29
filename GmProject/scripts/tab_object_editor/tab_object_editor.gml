@@ -1,5 +1,3 @@
-/// tab_object_editor()
-
 function tab_object_editor()
 {
 	if (obj_edit = null || !instance_exists(obj_edit))

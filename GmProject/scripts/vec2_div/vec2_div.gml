@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec2_div(VecType, VarType)
-/// vec2_div(vector, divisor)
 /// @arg vector
 /// @arg divisor
 

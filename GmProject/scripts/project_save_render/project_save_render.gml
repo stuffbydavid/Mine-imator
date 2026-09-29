@@ -1,5 +1,3 @@
-/// project_save_render()
-
 function project_save_render()
 {
 	json_save_object_start("render")

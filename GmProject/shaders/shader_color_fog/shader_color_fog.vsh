@@ -1,4 +1,3 @@
-/// shader_color_fog
 /// @desc Blends all pixels by the given color factor and enables fog.
 
 attribute vec3 in_Position;

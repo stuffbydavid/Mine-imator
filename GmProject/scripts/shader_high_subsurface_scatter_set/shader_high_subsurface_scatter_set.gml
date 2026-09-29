@@ -1,6 +1,5 @@
-/// shader_high_subsurface_scatter_set(ssssurf, rangesurf)
-/// @arg ssssurf
-/// @arg rangesurf
+/// @arg sssurface
+/// @arg rangesurface
 
 function shader_high_subsurface_scatter_set(ssssurf, rangesurf)
 {

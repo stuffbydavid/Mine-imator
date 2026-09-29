@@ -3,8 +3,8 @@
   "%Name":"shader_vignette",
   "name":"shader_vignette",
   "parent":{
-    "name":"Vignette",
-    "path":"folders/Shaders/Effects/Vignette.yy",
+    "name":"Effects",
+    "path":"folders/Shaders/Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

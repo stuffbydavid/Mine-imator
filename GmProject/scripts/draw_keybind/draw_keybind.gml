@@ -1,12 +1,11 @@
-/// draw_keybind(keybindID, x, y)
-/// @arg keybindID
+/// @arg keybindid
 /// @arg x
 /// @arg y
 
-function draw_keybind(keybindID, xx, yy)
+function draw_keybind(keybindid, xx, yy)
 {
 	var keyobj, name, mouseon, w;
-	keyobj = keybinds[keybindID]
+	keyobj = keybinds[keybindid]
 	name = "settingskey" + keyobj.name
 	w = dw
 	
@@ -20,7 +19,7 @@ function draw_keybind(keybindID, xx, yy)
 	
 	mouseon = app_mouse_box(xx, yy, w, tab_control_h) && content_mouseon
 	
-	context_menu_area(xx, yy, w, tab_control_h, "keybind", keybindID, null, null, null)
+	context_menu_area(xx, yy, w, tab_control_h, "keybind", keybindid, null, null, null)
 	
 	microani_set(name, null, mouseon || window_busy = name, false, false)
 	microani_update(mouseon || window_busy = name, false, false)
@@ -51,7 +50,7 @@ function draw_keybind(keybindID, xx, yy)
 	// Detect shortcut changes
 	if (window_busy = name)
 	{
-		var update = false
+		var update = false;
 		
 		if (keyboard_check_pressed(vk_anykey) || keyboard_check_released(vk_anykey))
 		{
@@ -87,7 +86,7 @@ function draw_keybind(keybindID, xx, yy)
 			window_busy = ""
 			
 			if (!array_equals(keybind_edit, keybind_new(null)))
-				keybind_set(keybindID, keybind_edit)
+				keybind_set(keybindid, keybind_edit)
 		}
 	}
 	

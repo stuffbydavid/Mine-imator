@@ -1,8 +1,12 @@
-/// tab_timeline_header(headerx, headery, headerw, headerh, listw)
+/// @arg headerx
+/// @arg headery
+/// @arg headerwidth
+/// @arg headerheight
+/// @arg listwidth
 
 function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 {
-	var timex, timelabel, maxpos, hrs, buttonsxstart, buttonsx, buttonsy;
+	var timex, timelabel, maxpos, hrs;
 	timex = headerx + 8
 	content_mouseon = app_mouse_box(headerx, headery, headerw, headerh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
@@ -15,7 +19,7 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	
 	// Advance X
 	maxpos = max(timeline_length, timeline_marker)
-	hrs = floor((maxpos / project_tempo) / 3600);
+	hrs = floor((maxpos / project_tempo) / 3600)
 	if (timeline_show_frames)
 		timex += string_width(text_get("timelineframe", string_repeat("0", string_length(string(floor(maxpos))))))
 	else if (hrs > 0)
@@ -43,7 +47,7 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	// Right click timeline timer
 	context_menu_area(headerx, headery, timex, headerh, "toolbarviewtimelineplayback", null, null, null, null)
 	
-	// Transition quick buttons
+	var buttonsxstart, buttonsx, buttonsy;
 	buttonsx = listw + 4
 	buttonsy = headery + 4
 	
@@ -91,7 +95,7 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	buttonsx += 6
 	
 	var transitiondisabled, curtransition, buttonmouseon;
-	transitiondisabled = !timeline_settings_keyframes && (tl_edit == null || !tl_edit.animated)
+	transitiondisabled = !timeline_settings_keyframes && (tl_edit = null || !tl_edit.animated)
 	curtransition = (tl_edit != null ? tl_edit.value[e_value.TRANSITION] : "linear")
 		
 	// Linear

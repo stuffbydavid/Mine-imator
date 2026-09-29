@@ -1,4 +1,6 @@
-/// sortlist_search_default(sortlist, value, search)
+/// @arg sortlist
+/// @arg value
+/// @arg search
 
 function sortlist_search_default(slist, value, search)
 {

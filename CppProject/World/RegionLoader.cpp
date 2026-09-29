@@ -15,6 +15,7 @@ namespace CppProject
 		StringType::AddQThread(thread);
 		VecType::AddQThread(thread);
 		QObject::moveToThread(thread);
+
 		thread->start();
 	}
 
@@ -25,8 +26,10 @@ namespace CppProject
 		{
 			if (!active) // Set on main thread
 				break;
+
 			if (region->loadStatus == Region::LOADING)
 				region->Load();
+
 			if (region->unload)
 				region->Unload();
 		}
@@ -35,11 +38,13 @@ namespace CppProject
 		{
 			if (!active) // Set on main thread
 				break;
+
 			if (region->meshStatus == Region::UPDATE_MESH)
 				region->UpdateMesh();
 		}
 
 		VecType::CleanHeapData();
+
 		emit UpdateDone();
 	}
 }

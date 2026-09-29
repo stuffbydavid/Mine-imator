@@ -1,4 +1,3 @@
-/// ds_map_merge(id, source, [overwrite])
 /// @arg id
 /// @arg source
 /// @arg [overwrite]

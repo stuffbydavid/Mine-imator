@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec3_add(VecType, VarType)
-/// vec3_add(vector1, vector2)
 /// @arg vector1
 /// @arg vector2
 

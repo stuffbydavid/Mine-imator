@@ -1,5 +1,3 @@
-/// action_lib_model_part_model_name(name)
-/// @arg name
 /// @desc Changes the character body part model.
 
 function action_lib_model_part_model_name(name)
@@ -9,7 +7,7 @@ function action_lib_model_part_model_name(name)
 	if (!history_undo && !history_redo)
 	{
 		with (history_set_var(action_lib_model_part_model_name, obj_edit.model_name, name, false))
-			id.state = array_copy_1d(obj_edit.model_state)
+			self.state = array_copy_1d(obj_edit.model_state)
 		
 		state = mc_assets.model_name_map[?name].default_state
 	}
@@ -20,13 +18,16 @@ function action_lib_model_part_model_name(name)
 	{
 		model_name = name
 		model_state = array_copy_1d(state)
+		
 		temp_update_model()
 		temp_update_model_part()
 		temp_update_model_shape()
 		temp_update_display_name()
+		
 		model_shape_update_color()
 	}
 	
 	lib_preview.update = true
+	
 	tl_update_matrix()
 }

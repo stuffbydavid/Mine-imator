@@ -1,5 +1,4 @@
-/// shader_replace_alpha
-/// @desc Replaces all pixels with the given color
+/// @desc Replaces all pixels with the given color.
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;

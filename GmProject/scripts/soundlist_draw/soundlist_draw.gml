@@ -1,14 +1,19 @@
-/// soundlist_draw(soundlist, x, y, width, height, name)
+/// @arg soundlist
+/// @arg x
+/// @arg y
+/// @arg width
+/// @arg height
+/// @arg [name]
 
 function soundlist_draw(slist, xx, yy, w, h, name = "")
 {
-	var filtershow, searchx, searchw, itemh, listhei, dy;
-	var clipactive, clipx, clipy, clipwid, cliphei;
-	var dw, visibley, visiblehei, mouseon, row, selected;
-
 	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 		return 0
 
+	var filtershow, searchx, searchw, itemh, listhei, dy;
+	var clipactive, clipx, clipy, clipwid, cliphei;
+	var dw, visibley, visiblehei, mouseon, row, selected;
+	
 	filtershow = (slist.source != "project")
 	searchx = xx + (filtershow ? 32 : 0)
 	searchw = w - (filtershow ? 32 : 0)
@@ -39,12 +44,14 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		var searchactive, scrollvalue;
 		searchactive = slist.search
 		scrollvalue = slist.scroll.value
+		
 		slist.search = slist.search_tbx.text != ""
 		if (slist.search)
 		{
 			slist.scroll.value = 0
 			slist.scroll.value_goal = 0
 		}
+		
 		soundlist_update(slist)
 		if (searchactive && !slist.search)
 			if (sortlist_view(slist, slist.select))
@@ -83,7 +90,9 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 	cliphei = shader_clip_height
 	
 	clip_begin(xx, yy, w - 12 * slist.scroll.needed, listhei)
+	
 	draw_set_font(font_value)
+	
 	for (var i = floor(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
 	{
 		if (dy >= yy + listhei)
@@ -94,6 +103,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		visiblehei = min(dy + itemh, yy + listhei) - visibley
 		mouseon = visiblehei > 0 && app_mouse_box(xx, visibley, dw, visiblehei) && content_mouseon
 		row = slist.display_list[|i]
+		
 		selected = (slist.select != null && row[2] = slist.select[2])
 		if (selected || mouseon && mouse_left)
 		{
@@ -116,6 +126,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 				window_focus = string(slist.scroll)
 			}
 		}
+		
 		dy += itemh
 	}
 	

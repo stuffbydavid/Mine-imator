@@ -1,4 +1,3 @@
-/// project_create()
 /// @desc Creates a new project from the newproject dialog settings.
 
 function project_create()
@@ -28,12 +27,12 @@ function project_create()
 	popup_close()
 	
 	// Add the selected resource pack to the new project
-	if (popup = popup_newproject && setting_project_pack != "")
+	if (popup_current = popup_newproject && setting_project_pack != "")
 	{
 		var packfn = packs_directory_get() + setting_project_pack;
 		if (file_exists_lib(packfn))
 		{
-			var packres = new_res(packfn, e_res_type.PACK)
+			var packres = new_res(packfn, e_res_type.PACK);
 			packres.loaded = true
 			with (packres)
 				res_load()

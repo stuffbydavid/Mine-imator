@@ -25,12 +25,12 @@ namespace CppProject
 		Shader::RenderMode renderMode = Shader::NO_MODE;
 		switch (mode)
 		{
-			case pr_pointlist: renderMode = Shader::POINT_LIST; break;
+			case pr_pointlist:		renderMode = Shader::POINT_LIST; break;
 			case pr_linelist:
-			case pr_linestrip: renderMode = Shader::LINE_LIST; break;
+			case pr_linestrip:		renderMode = Shader::LINE_LIST; break;
 			case pr_trianglelist:
 			case pr_trianglestrip:
-			case pr_trianglefan: renderMode = Shader::TRIANGLE_LIST; break;
+			case pr_trianglefan:	renderMode = Shader::TRIANGLE_LIST; break;
 		}
 
 		// Mode changed, submit last batch
@@ -46,8 +46,10 @@ namespace CppProject
 		this->mode = mode;
 		this->renderMode = renderMode;
 		this->transform = transform;
+		
 		beginIndex = vertices.Size();
 		currentIndex = 0;
+
 		depth += 0.0001;
 	}
 
@@ -97,6 +99,7 @@ namespace CppProject
 
 		// Add index
 		indices.Append(nextVertexIndex);
+
 		currentIndex++;
 	}
 
@@ -241,6 +244,7 @@ namespace CppProject
 		}
 
 		renderCalls++;
+
 		if (renderMode == Shader::LINE_LIST)
 			linesSubmitted += indices.Size() / 2;
 		else if (renderMode == Shader::TRIANGLE_LIST)
@@ -248,8 +252,10 @@ namespace CppProject
 
 		vertices.Reset();
 		indices.Reset();
+
 		mode = 0;
 		renderMode = Shader::NO_MODE;
+
 		depth = 0.0;
 	}
 }

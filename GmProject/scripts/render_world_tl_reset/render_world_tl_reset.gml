@@ -1,5 +1,4 @@
-/// render_world_tl_reset()
-/// @desc Resets render values after finishing rendering timelines
+/// @desc Resets render values after finishing rendering timelines.
 
 function render_world_tl_reset()
 {
@@ -90,6 +89,10 @@ function render_world_tl_reset()
 	
 	// Glint
 	render_set_uniform_int("uGlintEnabled", 0)
+	
+	// Depth during placement
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uGmDepth", bool_to_float(!is_cpp()))
 	
 	render_blend_prev = null
 	render_alpha_prev = null

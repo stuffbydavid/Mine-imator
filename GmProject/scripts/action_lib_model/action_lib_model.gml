@@ -1,11 +1,8 @@
-/// action_lib_model(resource)
 /// @arg resource
 
 function action_lib_model(res)
 {
-	var fn, hobj;
-	fn = ""
-	hobj = null
+	var hobj = null;
 	
 	if (history_undo)
 		res = history_undo_res()
@@ -13,6 +10,7 @@ function action_lib_model(res)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_model()
@@ -44,8 +42,10 @@ function action_lib_model(res)
 		{
 			old_model_save_id = save_id_get(temp_edit.model)
 			new_model_save_id = save_id_get(res)
+			
 			tl_amount = 0
 			part_child_amount = 0
+			
 			history_save_tl_select()
 		}
 		
@@ -120,8 +120,10 @@ function action_lib_model(res)
 	}
 	
 	app_update_tl_edit()
+	
 	tl_update_list()
 	tl_update_matrix()
+	
 	project_update_counts()
 	
 	lib_preview.update = true

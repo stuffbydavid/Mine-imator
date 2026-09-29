@@ -1,11 +1,8 @@
-/// history_restore_temp(save)
-/// @arg save
 /// @desc Adds a previously saved template.
 
 function history_restore_temp(save)
 {
-	var temp;
-	temp = new_obj(obj_template)
+	var temp = new_obj(obj_template);
 	
 	with (save)
 		temp_copy(temp)
@@ -31,7 +28,7 @@ function history_restore_temp(save)
 		// Restore references in particle types
 		for (var t = 0; t < save.usage_ptype_temp_amount; t++)
 			with (save_id_find(save.usage_ptype_temp_save_id[t]))
-				id.temp = temp
+				self.temp = temp
 		
 		// Restore timelines
 		for (var t = 0; t < save.usage_tl_amount; t++)

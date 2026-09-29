@@ -1,5 +1,3 @@
-/// tab_frame_editor_material()
-
 function tab_frame_editor_material()
 {
 	// Texture

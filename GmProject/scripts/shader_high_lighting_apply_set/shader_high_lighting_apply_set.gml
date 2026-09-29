@@ -1,8 +1,7 @@
-/// shader_high_lighting_apply_set(shadows, ssao, mask, material)
-/// @arg shadows
-/// @arg ssao
-/// @arg mask
-/// @arg material
+/// @arg shadowssurface
+/// @arg ssaosurface
+/// @arg masksurface
+/// @arg materialsurface
 /// @arg [fallbackonly]
 
 function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbackonly = false)

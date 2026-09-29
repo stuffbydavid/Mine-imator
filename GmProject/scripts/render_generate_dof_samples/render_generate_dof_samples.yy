@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_generate_dof_samples",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/Render.yy",
+    "name":"Sampling",
+    "path":"folders/Scripts/Render/Sampling.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

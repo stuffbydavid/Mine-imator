@@ -1,7 +1,4 @@
-/// render_preset_copy(to, allsettings)
-/// @arg to
-/// @arg allsettings
-/// @desc Copies the selected settings into the given preset
+/// @desc Copies the selected settings into the given preset.
 
 function render_preset_copy(to, allsettings = false)
 {

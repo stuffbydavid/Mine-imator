@@ -1,7 +1,4 @@
-/// action_tl_inherit_rot_point(enable)
-/// @arg enable
-
-function action_tl_inherit_rot_point(enable)
+function action_tl_inherit_rot_point(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_rot_point(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_rot_point, enable)
+				history_save_var(other.id, other.inherit_rot_point, enabled)
 			
-			inherit_rot_point = enable
+			inherit_rot_point = enabled
 			update_matrix = true
 		}
 	}

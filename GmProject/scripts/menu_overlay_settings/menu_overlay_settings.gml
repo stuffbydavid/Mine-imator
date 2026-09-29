@@ -1,9 +1,7 @@
-/// menu_overlay_settings()
-
 function menu_overlay_settings()
 {
 	draw_set_font(font_label)
-	var switchwid = text_max_width("viewsnapabsolute") + 28 + 16 + 24
+	var switchwid = text_max_width("viewsnapabsolute") + 28 + 16 + 24;
 	
 	tab_control_switch()
 	draw_switch("viewoverlaycontrols", dx, dy, setting_overlay_view_controls, action_setting_overlay_view_controls)

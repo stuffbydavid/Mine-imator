@@ -1,5 +1,3 @@
-/// tab_properties_library()
-
 function tab_properties_library()
 {
 	// Preview selected template

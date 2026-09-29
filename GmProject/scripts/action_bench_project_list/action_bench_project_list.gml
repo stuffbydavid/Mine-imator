@@ -1,9 +1,6 @@
-/// action_bench_project_list(list)
-
 function action_bench_project_list(list)
 {
-	var selected;
-	selected = bench_settings.project_selected
+	var selected = bench_settings.project_selected;
 	bench_settings.project_list = list
 	window_scroll_focus = string(list.scroll)
 	

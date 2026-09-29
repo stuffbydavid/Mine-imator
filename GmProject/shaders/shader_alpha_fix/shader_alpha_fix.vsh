@@ -1,5 +1,4 @@
-/// shader_alpha_fix
-/// @desc Renders everything black with only alpha
+/// @desc Renders everything black with only alpha.
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;

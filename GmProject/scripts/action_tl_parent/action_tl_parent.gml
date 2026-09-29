@@ -1,4 +1,3 @@
-/// action_tl_parent(parent, index, [historyobject])
 /// @arg parent
 /// @arg index
 /// @arg [historyobject]
@@ -20,9 +19,11 @@ function action_tl_parent(par, index, hobj = null)
 					tl_value_set_vec3(e_value.POS_X, other.tl_old_default_pos[t], true)
 					tl_value_set_vec3(e_value.ROT_X, other.tl_old_default_rot[t], true)
 					tl_value_set_vec3(e_value.SCA_X, other.tl_old_default_sca[t], true)
+					
 					lock_bend = other.tl_old_lock_bend[t]
 				}
 			}
+			
 			for (var t = 0; t < save_var_amount; t++)
 				with (save_id_find(save_var_save_id[t]))
 					lock = other.save_var_old_value[t]
@@ -42,6 +43,7 @@ function action_tl_parent(par, index, hobj = null)
 			
 			if (hobj = null)
 				hobj = history_set(action_tl_parent)
+			
 			with (hobj)
 			{
 				new_parent = save_id_get(par)

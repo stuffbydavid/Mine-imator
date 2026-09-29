@@ -1,6 +1,3 @@
-/// project_load_objects(map)
-/// @arg map
-
 function project_load_objects(map)
 {
 	// Templates

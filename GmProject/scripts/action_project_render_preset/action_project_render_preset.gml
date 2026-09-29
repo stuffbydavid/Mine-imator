@@ -1,4 +1,3 @@
-/// action_project_render_preset(file)
 /// @arg preset
 
 function action_project_render_preset(file)
@@ -9,7 +8,7 @@ function action_project_render_preset(file)
 	
 	if (!history_undo && !history_redo)
 	{
-		var hobj = history_set_var(action_project_render_preset, project_render_preset[renderer_edit], file, true)
+		var hobj = history_set_var(action_project_render_preset, project_render_preset[renderer_edit], file, true);
 		
 		// Save project settings
 		with (hobj)

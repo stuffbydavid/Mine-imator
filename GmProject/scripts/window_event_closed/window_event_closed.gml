@@ -1,5 +1,4 @@
-/// window_event_closed(window)
-/// Runs when a window is closed.
+/// @desc Runs when a window is closed.
 
 function window_event_closed(window)
 {

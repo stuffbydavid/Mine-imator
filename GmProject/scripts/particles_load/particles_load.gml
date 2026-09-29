@@ -1,13 +1,11 @@
-/// particles_load(filename, template, [newtemplate])
+/// @desc Loads a particle spawner file into the given template.
 /// @arg filename
 /// @arg template
 /// @arg [newtemplate]
-/// @desc Loads a particle spawner file into the given template.
 
 function particles_load(fn, temp, newtemp = false)
 {
-	var hobj;
-	hobj = null
+	var hobj = null;
 	
 	if (history_undo)
 	{
@@ -76,7 +74,7 @@ function particles_load(fn, temp, newtemp = false)
 		with (hobj)
 		{
 			filename = fn
-			id.temp_save_id = save_id_get(temp)
+			self.temp_save_id = save_id_get(temp)
 			new_temp = newtemp
 			if (newtemp)
 				temp_save_obj = history_save_temp(temp)

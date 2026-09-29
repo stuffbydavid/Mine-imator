@@ -1,9 +1,8 @@
-/// res_load_pack()
 /// @desc Unzips an archive or loads a .packcache file and stores the textures in the resource.
 
 function res_load_pack()
 {
-	var fname = load_folder + "/" + filename;
+	var fn = load_folder + "/" + filename;
 	
 	switch (load_stage)
 	{
@@ -15,7 +14,7 @@ function res_load_pack()
 			// Extract source textures
 			if (type != e_res_type.PACK_UNZIPPED)
 			{
-				if (!unzip(fname))
+				if (!unzip(fn))
 				{
 					log("Error unzipping pack")
 					error("errorunzippack")

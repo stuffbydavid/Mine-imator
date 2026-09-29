@@ -32,6 +32,7 @@ namespace CppProject
 		{
 			if (AppWin->mouseLocked)
 				return (AppWin->mouseLockPos + (AppWin->mousePos - AppWin->mouseLastPos)).x();
+			
 			return AppWin->mousePos.x();
 		}
 	}
@@ -47,6 +48,7 @@ namespace CppProject
 		{
 			if (AppWin->mouseLocked)
 				return (AppWin->mouseLockPos + (AppWin->mousePos - AppWin->mouseLastPos)).y();
+			
 			return AppWin->mousePos.y();
 		}
 	}

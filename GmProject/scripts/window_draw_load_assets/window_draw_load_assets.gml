@@ -1,5 +1,3 @@
-/// window_draw_load_assets()
-
 function window_draw_load_assets()
 {
 	if (!minecraft_assets_load())

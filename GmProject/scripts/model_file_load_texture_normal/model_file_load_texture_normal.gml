@@ -1,8 +1,7 @@
-/// model_file_load_tex_normal(name, resource)
 /// @arg name
 /// @arg resource
 
-function model_file_load_tex_normal(name, res)
+function model_file_load_texture_normal(name, res)
 {
 	var ext = filename_ext(name);
 	if (ext != ".png" && ext != ".jpg" && ext != ".jpeg")

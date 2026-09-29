@@ -1,4 +1,3 @@
-/// action_lib_pc_type_sprite_template(template)
 /// @arg template
 
 function action_lib_pc_type_sprite_template(temp)

@@ -1,5 +1,5 @@
 /// CppSeparate void builder_read_schematic_blocks(Scope<obj_builder>)
-/// @desc Read the blocks in a .schematic file and generate 3 buffers for block object ids, block states and waterlogged flags
+/// @desc Read the blocks in a .schematic file and generate 3 buffers for block object ids, block states and waterlogged flags.
 /// On the C++ side, 16x16x16 sections are generated with the schematic palettes. These sections are pre-generated when importing from a world.
 
 function builder_read_schematic_blocks()
@@ -23,11 +23,12 @@ function builder_read_schematic_blocks()
 			if (sch_blockdata_ints)
 			{
 				// Read big endian int
-				var off = sch_blockdata_array + b * 4;
-				var b1 = buffer_peek(buffer_current, off, buffer_u8);
-				var b2 = buffer_peek(buffer_current, off + 1, buffer_u8);
-				var b3 = buffer_peek(buffer_current, off + 2, buffer_u8);
-				var b4 = buffer_peek(buffer_current, off + 3, buffer_u8);
+				var off, b1, b2, b3, b4;
+				off = sch_blockdata_array + b * 4
+				b1 = buffer_peek(buffer_current, off, buffer_u8)
+				b2 = buffer_peek(buffer_current, off + 1, buffer_u8)
+				b3 = buffer_peek(buffer_current, off + 2, buffer_u8)
+				b4 = buffer_peek(buffer_current, off + 3, buffer_u8)
 				bindex = b1 * 16777216 + b2 * 65536 + b3 * 256 + b4
 			}
 			else
@@ -43,7 +44,7 @@ function builder_read_schematic_blocks()
 		else
 		{
 			// Read legacy block ID & data
-			var bid = buffer_peek(buffer_current, sch_legacy_blocksarray + b, buffer_u8)
+			var bid = buffer_peek(buffer_current, sch_legacy_blocksarray + b, buffer_u8);
 			if (bid > 0 && legacy_block_set[bid])
 			{
 				var bdata = buffer_peek(buffer_current, sch_legacy_dataarray + b, buffer_u8) mod 16;

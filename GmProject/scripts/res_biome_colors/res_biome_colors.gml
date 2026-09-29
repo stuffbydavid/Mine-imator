@@ -1,7 +1,3 @@
-/// res_biome_colors(biomename, [values])
-/// @arg biomename
-/// @arg [values]
-
 function res_biome_colors(biomename, values = null)
 {
 	var biome, grass, foliage, dryfoliage, water, spruce;
@@ -24,7 +20,8 @@ function res_biome_colors(biomename, values = null)
 				values[e_value.BG_LEAVES_JUNGLE_COLOR],
 				values[e_value.BG_LEAVES_ACACIA_COLOR],
 				values[e_value.BG_LEAVES_DARK_OAK_COLOR],
-				values[e_value.BG_LEAVES_MANGROVE_COLOR])
+				values[e_value.BG_LEAVES_MANGROVE_COLOR]
+			)
 		}
 
 		return array(
@@ -38,7 +35,8 @@ function res_biome_colors(biomename, values = null)
 			app.background_leaves_jungle_color,
 			app.background_leaves_acacia_color,
 			app.background_leaves_dark_oak_color,
-			app.background_leaves_mangrove_color)
+			app.background_leaves_mangrove_color
+		)
 	}
 
 	if (biome.hardcoded)

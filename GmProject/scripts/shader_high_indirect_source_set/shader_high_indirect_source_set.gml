@@ -1,7 +1,3 @@
-/// shader_high_indirect_source_set(previousbuffer, previousamount)
-/// @arg previousbuffer
-/// @arg previousamount
-
 function shader_high_indirect_source_set(previousbuffer, previousamount)
 {
 	texture_set_stage(sampler_map[?"uNormalBuffer"], surface_get_texture(render_surface_normal))

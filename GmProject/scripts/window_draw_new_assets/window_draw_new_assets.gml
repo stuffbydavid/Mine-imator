@@ -1,5 +1,3 @@
-/// window_draw_new_assets()
-
 function window_draw_new_assets()
 {
 	// Background
@@ -51,7 +49,7 @@ function window_draw_new_assets()
 	else
 	{
 		draw_set_font(font_button)
-		var capwid = string_width(text_get("newassetsdownload")) + button_padding;
+		content_capwid = string_width(text_get("newassetsdownload")) + button_padding
 		
 		// Download
 		if (draw_button_label("newassetsdownload", dx + dw, (content_y + content_height) - 44, null, null, e_button.PRIMARY, null, fa_right))
@@ -73,7 +71,7 @@ function window_draw_new_assets()
 		}
 		
 		// Skip
-		if (draw_button_label("newassetslater", (dx + dw) - (capwid + 8), (content_y + content_height) - 44, null, null, e_button.SECONDARY, null, fa_right))
+		if (draw_button_label("newassetslater", (dx + dw) - (content_capwid + 8), (content_y + content_height) - 44, null, null, e_button.SECONDARY, null, fa_right))
 		{
 			tip_show = false
 			if (!minecraft_assets_load_startup())
@@ -105,21 +103,21 @@ function window_draw_new_assets()
 		
 		for (var i = 0; i < array_length(new_assets_changes_lines); i++)
 		{
-			var text = new_assets_changes_lines[i];
+			content_text = new_assets_changes_lines[i]
 			
 			// Header
-			if (string_copy(text, 1, 2) = "- ")
+			if (string_copy(content_text, 1, 2) = "- ")
 			{
-				text = string_delete(text, 1, 2)
-				draw_label(text, dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
+				content_text = string_delete(content_text, 1, 2)
+				draw_label(content_text, dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 				dy += 20
 			}
 			else
 			{
-				if (string_copy(text, 1, 2) = "* ")
-					text = "• " + string_delete(text, 1, 2)
+				if (string_copy(content_text, 1, 2) = "* ")
+					content_text = "• " + string_delete(content_text, 1, 2)
 				
-				draw_label(text, dx, dy, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
+				draw_label(content_text, dx, dy, fa_left, fa_bottom, c_text_main, a_text_main, font_value)
 				dy += 17
 			}
 		}

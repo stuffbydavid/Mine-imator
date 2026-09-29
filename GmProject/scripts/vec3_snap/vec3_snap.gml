@@ -1,6 +1,5 @@
-/// vec3_snap(vec, val)
-/// @arg vec
-/// @arg val
+/// @arg vector
+/// @arg value
 
 function vec3_snap(vec, val)
 {

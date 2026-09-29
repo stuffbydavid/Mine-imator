@@ -1,6 +1,3 @@
-/// action_tl_text_face_camera(face)
-/// @arg face
-
 function action_tl_text_face_camera(face)
 {
 	if (!history_undo && !history_redo)

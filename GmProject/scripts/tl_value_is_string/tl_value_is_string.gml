@@ -1,4 +1,3 @@
-/// tl_value_is_string(valueid)
 /// @arg valueid
 
 function tl_value_is_string(vid)

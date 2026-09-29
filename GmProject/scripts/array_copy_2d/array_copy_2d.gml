@@ -1,5 +1,4 @@
 /// CppSeparate ArrType array_copy_2d(ArrType)
-/// array_copy_2d(array)
 /// @arg array
 
 function array_copy_2d(arr)

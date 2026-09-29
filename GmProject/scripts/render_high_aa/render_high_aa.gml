@@ -1,5 +1,4 @@
-/// render_high_aa(surface)
-/// @arg surface
+/// @arg basesurface
 
 function render_high_aa(prevsurf)
 {

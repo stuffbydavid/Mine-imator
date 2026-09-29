@@ -1,5 +1,3 @@
-/// recent_load()
-
 function recent_load()
 {
 	if (!file_exists_lib(recent_file))

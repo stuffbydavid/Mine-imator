@@ -1,5 +1,3 @@
-/// tl_select()
-
 function tl_select()
 {
 	if (selected)

@@ -1,4 +1,3 @@
-/// draw_dragger(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [captionwidth, [showcaption, [disabled, [tip]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -11,14 +10,14 @@
 /// @arg snap
 /// @arg textbox
 /// @arg script
-/// @arg [captionwidth
-/// @arg [showcaption
-/// @arg [disabled
-/// @arg [tip]]]]
+/// @arg [captionwidth]
+/// @arg [showcaption]
+/// @arg [disabled]
+/// @arg [tip]
 
 function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth = null, showcaption = true, disabled = false, tip = "")
 {
-	var caption, hei, fieldx, dragmouseon;
+	var hei, caption, fieldx, dragmouseon;
 	
 	hei = ui_small_height
 	
@@ -89,9 +88,9 @@ function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapva
 		var d;
 		
 		if (app.setting_unlimited_values)
-			d = snap(dragger_drag_value, snapval) - value;
+			d = snap(dragger_drag_value, snapval) - value
 		else
-			d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - value;
+			d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - value
 		
 		if (d <> 0)
 		{

@@ -1,17 +1,15 @@
-/// action_background_ground_tex_normal(resource)
 /// @arg resource
 
 function action_background_ground_tex_normal(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
+		
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_image_pack()
@@ -27,6 +25,7 @@ function action_background_ground_tex_normal(res)
 	}
 	
 	background_ground_tex_normal = res
+	
 	background_ground_update_texture_normal()
 	project_update_counts()
 }

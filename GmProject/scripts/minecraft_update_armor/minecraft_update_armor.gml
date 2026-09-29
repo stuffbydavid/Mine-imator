@@ -1,5 +1,3 @@
-/// minecraft_update_armor()
-
 function minecraft_update_armor()
 {
 	// Update pattern designs for templates

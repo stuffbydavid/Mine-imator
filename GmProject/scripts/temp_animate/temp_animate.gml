@@ -1,4 +1,3 @@
-/// temp_animate()
 /// @desc Adds a new timeline from the template.
 
 function temp_animate()

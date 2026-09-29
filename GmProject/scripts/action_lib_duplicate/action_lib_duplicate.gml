@@ -1,4 +1,3 @@
-/// action_lib_duplicate()
 /// @desc Duplicates the library template.
 
 function action_lib_duplicate()
@@ -24,10 +23,13 @@ function action_lib_duplicate()
 		
 		with (temp)
 			temp_add_lists()
+		
 		temp_edit = temp
 	}
 	
 	tab_object_editor_update_ptype_list()
+	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

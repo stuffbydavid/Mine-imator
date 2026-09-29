@@ -1,4 +1,3 @@
-/// matrix_angle(matrix)
 /// @arg matrix
 
 function matrix_angle(mat)

@@ -1,9 +1,6 @@
-/// res_load_pack_particle_textures()
-
 function res_load_pack_particle_textures()
 {
 	var particlesize, explosionsize, particlelist, explosionlist, surf;
-	var tempwidth, tempheight; 
 	particlesize = null
 	explosionsize = null
 	particlelist = ds_list_create()
@@ -68,7 +65,7 @@ function res_load_pack_particle_textures()
 			tex = texture_create_missing()
 		}
 		
-		if (legacy_particles_map[?name] != undefined)
+		if (!is_undefined(legacy_particles_map[?name]))
 		{
 			if (string_contains(name, "explosion"))
 			{
@@ -89,7 +86,7 @@ function res_load_pack_particle_textures()
 	particle_texture_atlas_map = ds_map_create()
 	for (var i = 0; i < ds_list_size(particle_template_list); i++)
 	{
-		var ptemp, drawx, psprite;
+		var ptemp, drawx, psprite, tempwidth, tempheight;
 		ptemp = particle_template_list[|i]
 		drawx = 0
 		psprite = 0
@@ -156,7 +153,7 @@ function res_load_pack_particle_textures()
 				var texname = mc_assets.particle_texture_list[|texindex];
 				var texcoord = legacy_particles_map[?texname];
 				
-				if (texcoord != undefined)
+				if (!is_undefined(texcoord))
 				{
 					var tex, wid, hei, scale;
 					tex = particle_texture_map[?texname]
@@ -195,7 +192,7 @@ function res_load_pack_particle_textures()
 				var texname = mc_assets.particle_texture_list[|texindex];
 				var texcoord = legacy_particles_map[?texname];
 				
-				if (texcoord != undefined)
+				if (!is_undefined(texcoord))
 				{
 					var tex, wid, hei, scale;
 					tex = particle_texture_map[?texname]

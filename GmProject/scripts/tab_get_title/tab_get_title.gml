@@ -1,17 +1,19 @@
-/// tab_get_title(tab)
-/// @arg tab
 /// @desc Returns the tab title.
 
 function tab_get_title(tab)
 {
 	if (tab = properties)
 		return text_get("tabprojectproperties")
+	
 	else if (tab = renderer_settings)
-		return text_get("tabrenderer")
+		return text_get("tabrenderer", text_get("renderrenderer" + (tab.renderer = e_renderer.STANDARD ? "standard" : "realistic")))
+	
 	else if (tab = timeline)
 		return text_get("tabtimeline")
+	
 	else if (tab = build_tool)
 		return text_get("tabbuildtool")
+	
 	else if (tab = object_editor)
 	{
 		if (obj_edit = null || !instance_exists(obj_edit))
@@ -40,6 +42,7 @@ function tab_get_title(tab)
 	}
 	else if (tab = ground_editor)
 		return text_get("tabground")
+	
 	else if (tab = timeline_editor)
 	{
 		var name = "";
@@ -53,9 +56,11 @@ function tab_get_title(tab)
 	}
 	else if (tab = frame_editor)
 	{
-		var name = "";
-		var frametab = "tabframeeditorsingle";
-		var framesel = round(timeline_marker);
+		var name, frametab, framesel;
+		name = ""
+		frametab = "tabframeeditorsingle"
+		framesel = round(timeline_marker)
+		
 		if (tl_edit)
 		{
 			name = string_remove_newline(tl_edit.display_name)
@@ -82,6 +87,7 @@ function tab_get_title(tab)
 			else if (tl_edit.keyframe_select_amount = 1)
 				framesel = round(tl_edit.keyframe_select.position)
 		}
+		
 		return text_get("tabframeeditor", name, text_get(frametab, string(framesel)))
 	}
 	else if (tab = settings)

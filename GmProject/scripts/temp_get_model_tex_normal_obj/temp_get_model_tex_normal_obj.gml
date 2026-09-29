@@ -1,7 +1,6 @@
-/// temp_get_model_tex_normal_obj(value)
-/// @arg value
 /// @desc Returns the resource whose texture to use when rendering instances of the template.
-///	A value (id) is supplied from a keyframe, if none is available then it is null.
+/// A value (id) is supplied from a keyframe, if none is available then it is null.
+/// @arg value
 
 function temp_get_model_tex_normal_obj(texobj)
 {

@@ -1,6 +1,3 @@
-/// project_load_particles(map)
-/// @arg map
-
 function project_load_particles(map)
 {
 	if (!ds_map_valid(map))
@@ -61,7 +58,6 @@ function project_load_particles(map)
 			else
 			{
 				var temptype = value_get_string(ptypemap[?"temp_type"], "sheet");
-				
 				if (temptype = "sheet")
 					temp = particle_sheet
 				else if (temptype = "template")

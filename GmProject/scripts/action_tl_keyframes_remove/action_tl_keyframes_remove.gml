@@ -1,4 +1,3 @@
-/// action_tl_keyframes_remove()
 /// @desc Removes selected keyframes.
 
 function action_tl_keyframes_remove()

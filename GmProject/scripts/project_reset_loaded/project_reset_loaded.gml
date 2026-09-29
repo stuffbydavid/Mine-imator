@@ -1,5 +1,3 @@
-/// project_reset_loaded()
-
 function project_reset_loaded()
 {
 	ds_map_clear(save_id_map)

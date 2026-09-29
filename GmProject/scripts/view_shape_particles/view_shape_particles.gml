@@ -1,4 +1,3 @@
-/// view_shape_particles(timeline)
 /// @arg timeline
 
 function view_shape_particles(tl)

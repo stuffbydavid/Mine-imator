@@ -1,12 +1,11 @@
-/// render_shadow_cache_update(lightlist, sunout)
-
 function render_shadow_cache_update(lightlist, sunout)
 {
 	if (!render_shadow_cache_enabled)
 	{
 		if (ds_map_size(render_shadow_cache) > 0)
 			render_shadow_cache_free()
-		return;
+		
+		return 0
 	}
 	
 	if (ds_map_size(render_shadow_cache) = 0)
@@ -23,7 +22,7 @@ function render_shadow_cache_update(lightlist, sunout)
 		render_surface_point_atlas_buffer = null
 	}
 	
-	var activekeys = ds_map_create()
+	var activekeys = ds_map_create();
 	
 	if (sunout)
 		for (var i = 0; i < render_cascades_count; i++)
@@ -31,13 +30,16 @@ function render_shadow_cache_update(lightlist, sunout)
 	
 	for (var i = 0; i < array_length(lightlist); i++)
 	{
-		var light = lightlist[i]
-		var lightkey = (light.type = e_tl_type.POINT_LIGHT ? "point:" : "spot:") + light.save_id
+		var light, lightkey;
+		light = lightlist[i]
+		lightkey = (light.type = e_tl_type.POINT_LIGHT ? "point:" : "spot:") + light.save_id
 		activekeys[?lightkey] = true
 	}
 	
-	var removekeys = []
-	var cachekey = ds_map_find_first(render_shadow_cache)
+	var removekeys, cachekey;
+	removekeys = []
+	cachekey = ds_map_find_first(render_shadow_cache)
+	
 	while (!is_undefined(cachekey))
 	{
 		if (!ds_map_exists(activekeys, cachekey))
@@ -45,7 +47,9 @@ function render_shadow_cache_update(lightlist, sunout)
 		
 		cachekey = ds_map_find_next(render_shadow_cache, cachekey)
 	}
+	
 	for (var i = 0; i < array_length(removekeys); i++)
 		render_shadow_cache_remove(removekeys[i])
+	
 	ds_map_destroy(activekeys)
 }

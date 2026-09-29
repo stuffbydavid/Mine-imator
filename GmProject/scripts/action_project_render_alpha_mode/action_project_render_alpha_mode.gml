@@ -1,6 +1,3 @@
-/// action_project_render_alpha_mode(mode)
-/// @arg mode
-
 function action_project_render_alpha_mode(mode)
 {
 	if (!history_undo && !history_redo)

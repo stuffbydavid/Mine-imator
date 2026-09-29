@@ -1,89 +1,8 @@
-/// app_startup_keybinds()
-
 function app_startup_keybinds()
 {
 	globalvar keybinds, keybind_edit;
 	keybinds = array_create(e_keybind.amount)
 	keybind_edit = null
-	
-	enum e_keybind_key
-	{
-		CHAR,
-		CTRL,
-		SHIFT,
-		ALT
-	}
-	
-	enum e_keybind
-	{
-		// File
-		PROJECT_NEW,
-		PROJECT_OPEN,
-		PROJECT_SAVE,
-		PROJECT_SAVE_AS,
-		IMPORT_ASSET,
-		
-		// Editing
-		UNDO,
-		REDO,
-		TIMELINE_DELETE,
-		TIMELINE_DUPLICATE,
-		TIMELINE_SELECT,
-		CREATE_FOLDER,
-		KEYFRAMES_CREATE,
-		KEYFRAMES_COPY,
-		KEYFRAMES_CUT,
-		KEYFRAMES_PASTE,
-		KEYFRAMES_DELETE,
-		KEYFRAMES_STRETCH,
-		KEYFRAMES_SCALE,
-		TIMELINE_HIDE,
-		TIMELINE_SHOW_HIDDEN,
-		
-		// Timeline
-		PLAY,
-		PLAY_STOP,
-		PLAY_BEGINNING,
-		MARKER_RIGHT,
-		MARKER_LEFT,
-		FRAME_PREVIOUS,
-		FRAME_NEXT,
-		
-		// Viewport
-		RENDER_MODE,
-		SECONDARY_VIEW,
-		PARTICLES_SPAWN,
-		PARTICLES_CLEAR,
-		
-		// Tools
-		WORKBENCH,
-		BUILD_TOOL,
-		TOOL_SELECT,
-		TOOL_MOVE,
-		TOOL_ROTATE,
-		TOOL_SCALE,
-		TOOL_BEND,
-		TOOL_TRANSFORM,
-		TRANSFORM_MODE_CYCLE,
-		SNAP,
-		
-		// Navigation
-		CAM_FORWARD,
-		CAM_BACK,
-		CAM_LEFT,
-		CAM_RIGHT,
-		CAM_ASCEND,
-		CAM_DESCEND,
-		CAM_ROLL_FORWARD,
-		CAM_ROLL_BACK,
-		CAM_RESET,
-		CAM_ROLL_RESET,
-		CAM_FAST,
-		CAM_SLOW,
-		CAM_VIEW_TIMELINE,
-		
-		amount
-	}
 	
 	// File
 	keybind_register("projectnew", e_keybind.PROJECT_NEW, keybind_new("N", true))
@@ -133,7 +52,6 @@ function app_startup_keybinds()
 	keybind_register("toolscale", e_keybind.TOOL_SCALE, keybind_new("S"))
 	keybind_register("toolbend", e_keybind.TOOL_BEND, keybind_new("N"))
 	keybind_register("tooltransform", e_keybind.TOOL_TRANSFORM, keybind_new("T"))
-	keybind_register("toolrotationspacecycle", e_keybind.TRANSFORM_MODE_CYCLE, keybind_new("Q"))
 	keybind_register("snap", e_keybind.SNAP, keybind_new("F"))
 	
 	// Navigation

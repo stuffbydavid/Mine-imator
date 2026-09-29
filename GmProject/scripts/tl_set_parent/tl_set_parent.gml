@@ -1,9 +1,8 @@
-/// tl_set_parent(parent, [index, [preserve, [historyobject]]])
 /// @desc Sets the parent of the timeline and optionally preserves the current world transform.
 /// @arg parent
-/// @arg [index
-/// @arg [preserve
-/// @arg [historyobject]]]
+/// @arg [index]
+/// @arg [preserve]
+/// @arg [historyobject]
 
 function tl_set_parent(newparent, index = -1, preserve = false, hobj = null)
 {

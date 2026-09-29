@@ -1,5 +1,3 @@
-/// shader_depth_point_set()
-
 function shader_depth_point_set()
 {
 	render_set_uniform_vec3("uEye", render_proj_from[X], render_proj_from[Y], render_proj_from[Z])

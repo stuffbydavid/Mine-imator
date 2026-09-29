@@ -1,10 +1,10 @@
-/// render_world_text(vbuffer, texture, facecamera, resource, outline)
-/// @arg vbuffer
+/// @arg vertexbuffer
 /// @arg texture
 /// @arg facecamera
 /// @arg resource
+/// @arg outline
 
-function render_world_text(vbuffer, tex, facecamera, res, outline)
+function render_world_text(vbuf, tex, facecamera, res, outline)
 {
 	res = res_eval(res)
 	if (facecamera)
@@ -23,13 +23,13 @@ function render_world_text(vbuffer, tex, facecamera, res, outline)
 	}
 	
 	render_set_texture(tex[0])
-	vbuffer_render(vbuffer[0])
+	vbuffer_render(vbuf[0])
 	
 	if (outline != null)
 	{
 		render_set_uniform_color("uBlendColor", outline, shader_blend_alpha)
 		render_set_texture(tex[1])
-		vbuffer_render(vbuffer[1])
+		vbuffer_render(vbuf[1])
 		render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	}
 }

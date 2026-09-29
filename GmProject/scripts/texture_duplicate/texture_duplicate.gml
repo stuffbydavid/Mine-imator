@@ -1,4 +1,3 @@
-/// texture_duplicate(texture)
 /// @arg texture
 
 function texture_duplicate(tex)

@@ -1,4 +1,3 @@
-/// project_load_find_save_ids()
 /// @desc Updates the references to objects within the project.
 
 function project_load_find_save_ids(isproject = false)
@@ -36,7 +35,7 @@ function project_load_find_save_ids(isproject = false)
 	// Set project pack
 	if (is_string(project_pack))
 	{
-		var pack = save_id_find(save_id_map[?project_pack])
+		var pack = save_id_find(save_id_map[?project_pack]);
 		project_pack = pack != null ? pack : mc_res
 	}
 
@@ -46,9 +45,7 @@ function project_load_find_save_ids(isproject = false)
 		background_image = save_id_find(save_id_map[?background_image])
 		
 		background_ground_tex = save_id_find(save_id_map[?background_ground_tex])
-		
 		background_ground_tex_material = save_id_find(save_id_map[?background_ground_tex_material])
-		
 		background_ground_tex_normal = save_id_find(save_id_map[?background_ground_tex_normal])
 		
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
@@ -211,7 +208,7 @@ function project_load_find_save_ids(isproject = false)
 			parent = app
 		
 		if (!is_array(parent.tree_array)) // Initialize array
-			parent.tree_array = array();
+			parent.tree_array = array()
 		
 		if (parent_tree_index < 0)
 			parent.tree_array[array_length(parent.tree_array)] = id
@@ -265,7 +262,6 @@ function project_load_find_save_ids(isproject = false)
 		
 		sprite_tex = save_id_find(save_id_map[?sprite_tex])
 		sprite_template_tex = save_id_find(save_id_map[?sprite_template_tex])
-		
 	}
 	
 	// Set marker IDs
@@ -281,6 +277,7 @@ function project_load_find_save_ids(isproject = false)
 		
 		ds_list_add(app.timeline_marker_list, id)
 	}
+	
 	if (markersort)
 		marker_list_sort()
 	

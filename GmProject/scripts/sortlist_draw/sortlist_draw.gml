@@ -1,13 +1,12 @@
-/// sortlist_draw(sortlist, x, y, width, height, select, [filter, [name]])
+/// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
 /// @arg sortlist
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg select
-/// @arg [filter
-/// @arg [name]]
-/// @desc Draws the given sorted list at x, y. Runs a script when a new value is selected.
+/// @arg [filter]
+/// @arg [name]
 
 function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 {
@@ -56,7 +55,6 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		
 		if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
-		
 	}
 	
 	// Name
@@ -64,7 +62,6 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	{
 		draw_set_font(font_label)
 		draw_label(string_limit(name, w - 144 - (filter ? 32 : 0)), xx + (filter ? 32 : 0), yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		
 	}
 
 	if (draw_searchbox("listsearch" + string(slist), searchx, yy, searchw, slist.search_tbx, !filter && name = ""))
@@ -123,6 +120,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 				app_mouse_clear()
 			}
 		}
+		
 		for (var c = 0; c < slist.columns; c++)
 		{
 			var dx, icon;
@@ -151,6 +149,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			icon = null
 			if (slist.column_sort = c)
 				icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
+			
 			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 3, slist.column_w[c], headerh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), headermouseon))
 			{
 				if (slist.column_sort = c)
@@ -185,8 +184,10 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	listhei = yy + h - listy
 	if (listhei <= 0)
 		return 0
+	
 	slist.view_height = listhei
 	slist.items_visible = max(1, floor(listhei / itemh))
+	
 	if (slist.view_value != null)
 	{
 		var viewvalue = slist.view_value;
@@ -200,6 +201,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		if (sortlist_view(slist, select, true, max(1, floor(listhei / itemh))))
 			slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
+	
 	if (slist.center_on_draw)
 	{
 		var centerindex = ds_list_find_index(slist.display_list, select);

@@ -1,4 +1,3 @@
-/// render_world_ground()
 /// @desc Renders a seemingly infinite plane with a repeated texture.
 
 function render_world_ground()
@@ -15,8 +14,9 @@ function render_world_ground()
 	var materialres = res_eval(background_ground_tex_material);
 
 	// Blend
-	var blend = block_texture_get_blend(background_ground_name, background_ground_tex);
-	var iswater = (background_ground_name = "block/water_flow" || background_ground_name = "block/water_still");
+	var blend, iswater;
+	blend = block_texture_get_blend(background_ground_name, background_ground_tex)
+	iswater = (background_ground_name = "block/water_flow" || background_ground_name = "block/water_still")
 	
 	// Shading
 	render_set_uniform_int("uIsGround", 1)

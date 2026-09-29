@@ -1,5 +1,3 @@
-/// action_tl_select_keyframes_last()
-
 function action_tl_select_keyframes_last()
 {
 	if (history_undo)
@@ -14,10 +12,9 @@ function action_tl_select_keyframes_last()
 	}
 	else
 	{
-		var shift = keyboard_check(vk_shift);
-		
-		var hobj;
+		var hobj, shift;
 		hobj = history_set(action_tl_select_keyframes_last)
+		shift = keyboard_check(vk_shift)
 		
 		with (hobj)
 			history_save_tl_select()

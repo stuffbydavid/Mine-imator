@@ -1,7 +1,4 @@
-/// action_tl_hq_hiding(enable)
-/// @arg enable
-
-function action_tl_hq_hiding(enable)
+function action_tl_hq_hiding(enabled)
 {
 	if (history_undo)
 	{
@@ -23,6 +20,6 @@ function action_tl_hq_hiding(enable)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_hq_hiding_tree(id, enable, hobj)
+				action_tl_hq_hiding_tree(id, enabled, hobj)
 	}
 }

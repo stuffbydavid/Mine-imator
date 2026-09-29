@@ -46,6 +46,7 @@ namespace CppProject
 	{
 		allSprites.append(this);
 		this->origin = origin;
+
 		image.convertTo(QImage::Format_RGBA8888);
 		size = image.size();
 		frames.append(new Frame(image, false));
@@ -139,6 +140,7 @@ namespace CppProject
 		{
 			if (!texture)
 				texture = new Texture(image);
+			
 			return texture->GetId();
 		}
 

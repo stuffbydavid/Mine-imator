@@ -1,5 +1,3 @@
-/// shader_color_fog_lights_set()
-
 function shader_color_fog_lights_set()
 {
 	render_set_uniform_int("uIsGround", 0)

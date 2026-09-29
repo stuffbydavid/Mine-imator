@@ -1,6 +1,5 @@
-/// action_bench_schematic(resource)
-/// @arg resource
 /// @desc Sets the schematic of the workbench.
+/// @arg resource
 
 function action_bench_schematic(res)
 {
@@ -29,6 +28,7 @@ function action_bench_schematic(res)
 				with (res)
 					res_load()
 		}
+		
 		history_set_res(action_bench_schematic, fn, bench_settings.scenery, res)
 	}
 	

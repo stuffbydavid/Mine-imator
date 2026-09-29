@@ -1,5 +1,3 @@
-/// tab_properties_project()
-
 function tab_properties_project()
 {
 	// Project name
@@ -43,12 +41,12 @@ function tab_properties_project()
 	
 	// Video size
 	if (project_video_template = 0)
-		text = text_get("projectvideosizecustom")
+		content_text = text_get("projectvideosizecustom")
 	else
-		text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
+		content_text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 	
 	tab_control_menu()
-	draw_button_menu("projectvideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
+	draw_button_menu("projectvideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, content_text, action_project_video_template)
 	tab_next()
 	
 	// Custom size
@@ -74,8 +72,7 @@ function tab_properties_project()
 	tab_next()
 
 	// Resource pack
-	var packfilename;
-	packfilename = ""
+	var packfilename = "";
 	if (project_pack != mc_res)
 		packfilename = project_pack.filename
 

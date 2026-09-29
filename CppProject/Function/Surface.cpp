@@ -20,6 +20,7 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->GetDepth(QPoint(x, y));
+		
 		return 0.0;
 	}
 

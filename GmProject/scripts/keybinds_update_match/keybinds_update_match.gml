@@ -1,5 +1,4 @@
-/// keybinds_update_match()
-/// @desc Updates match errors in keybinds
+/// @desc Updates match errors in keybinds.
 
 function keybinds_update_match()
 {

@@ -1,5 +1,3 @@
-/// action_tl_folder()
-
 function action_tl_folder()
 {
 	if (history_undo)
@@ -59,12 +57,14 @@ function action_tl_folder()
 				hobj.extend_value[hobj.extend_amount] = par.tree_extend
 				hobj.extend_amount++
 			}
+			
 			par.tree_extend = true
 			par = par.parent
 		}
 
 		if (!hobj.folder_shift)
 			tl_deselect_all()
+		
 		with (tl)
 		{
 			tl_update_recursive_select()
@@ -72,8 +72,9 @@ function action_tl_folder()
 		}
 	}
 	
-	app_update_tl_edit()
 	tl_update_list()
 	tl_update_matrix()
+	
+	app_update_tl_edit()
 	project_update_counts()
 }

@@ -1,4 +1,3 @@
-/// action_tl_load_loop(filename)
 /// @arg filename
 
 function action_tl_load_loop(fn)
@@ -6,6 +5,7 @@ function action_tl_load_loop(fn)
 	if (history_undo)
 	{
 		tl_keyframes_remove()
+		
 		with (history_data)
 		{
 			history_destroy_loaded()
@@ -17,14 +17,15 @@ function action_tl_load_loop(fn)
 		}
 		
 		tl_update_list()
+		
 		with (obj_timeline)
 			tl_update_values()
+		
 		tl_update_matrix()
 	}
 	else
 	{
-		var hobj;
-		hobj = null
+		var hobj = null;
 		
 		if (!history_redo)
 		{
@@ -35,6 +36,7 @@ function action_tl_load_loop(fn)
 			with (hobj)
 			{
 				load_static_amount = 0
+				
 				with (obj_timeline)
 				{
 					if (!animated)

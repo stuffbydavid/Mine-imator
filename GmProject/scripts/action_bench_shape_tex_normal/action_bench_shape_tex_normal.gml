@@ -1,4 +1,3 @@
-/// action_bench_shape_tex_normal(resource)
 /// @arg resource
 
 function action_bench_shape_tex_normal(res)

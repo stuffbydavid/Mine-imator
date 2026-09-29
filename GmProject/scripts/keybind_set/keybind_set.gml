@@ -1,10 +1,6 @@
-/// keybind_set(keybindID, keybind)
-/// @arg keybindID
-/// @arg keybind
-
-function keybind_set(keybindID, keybind)
+function keybind_set(keybindid, keybind)
 {
-	var obj = keybinds[keybindID];
+	var obj = keybinds[keybindid];
 	obj.keybind = keybind
 	
 	keybinds_update_match()

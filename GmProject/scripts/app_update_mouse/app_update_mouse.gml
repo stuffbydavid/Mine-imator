@@ -1,5 +1,3 @@
-/// app_update_mouse()
-
 function app_update_mouse()
 {
 	window_set_cursor(mouse_cursor)

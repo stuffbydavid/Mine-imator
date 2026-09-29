@@ -1,9 +1,7 @@
-/// tip_draw()
-
 function tip_draw()
 {
 	if (tip_window != window_get_current())
-		return 0;
+		return 0
 	
 	if (tip_show)
 		tip_alpha = test_reduced_motion(1, min(1, tip_alpha + 0.1 * delta))

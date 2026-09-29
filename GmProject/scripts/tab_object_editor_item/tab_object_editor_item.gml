@@ -1,5 +1,3 @@
-/// tab_object_editor_item()
-
 function tab_object_editor_item()
 {
 	var res = res_eval(obj_edit.item_tex);

@@ -69,7 +69,9 @@ namespace CppProject
 			// Create mesh buffers
 			mesh->bounds = Bounds(mesh->vertexData);
 			mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES);
+
 			meshes.append(mesh);
+
 			numIndices += numInd;
 		}
 
@@ -92,6 +94,7 @@ namespace CppProject
 				mesh->BeginUse();
 				shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices);
 				mesh->EndUse();
+
 				calls++;
 			}
 			else
@@ -122,6 +125,7 @@ namespace CppProject
 		}
 		
 		thread.elemAdded[elementIndex] = true;
+
 		return thread.currentVertex;
 	}
 
@@ -270,6 +274,7 @@ namespace CppProject
 					threadMesh->targetIndexOffset = mesh->numIndices;
 					mesh->numVertices += threadMesh->vertices.Size();
 					mesh->numIndices += threadMesh->indices.Size();
+
 					break;
 				}
 
@@ -279,6 +284,7 @@ namespace CppProject
 					Mesh<>* mesh = threadMesh->targetMesh = new Mesh;
 					mesh->numVertices = threadMesh->vertices.Size();
 					mesh->numIndices = threadMesh->indices.Size();
+
 					meshes.append(mesh);
 				}
 			}
@@ -345,12 +351,16 @@ namespace CppProject
 				Vertex& v1 = mesh->vertexData[mesh->indexData.Value(i * 3)];
 				Vertex& v2 = mesh->vertexData[mesh->indexData.Value(i * 3 + 1)];
 				Vertex& v3 = mesh->vertexData[mesh->indexData.Value(i * 3 + 2)];
+
 				VecType edge1 = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
 				VecType edge2 = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
+
 				VecType deltaUv1 = { v2.u - v1.u, v2.v - v1.v };
 				VecType deltaUv2 = { v3.u - v1.u, v3.v - v1.v };
+
 				RealType f = 1.0 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
 				VecType t = ((edge1 * deltaUv2.y - edge2 * deltaUv1.y) * f).GetNormalized();
+
 				v1.SetTangent(t.x, t.y, t.z);
 				v2.SetTangent(t.x, t.y, t.z);
 				v3.SetTangent(t.x, t.y, t.z);

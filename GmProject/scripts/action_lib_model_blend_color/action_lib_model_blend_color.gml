@@ -1,11 +1,8 @@
-/// action_lib_model_blend_color(col)
-/// @arg col
-
-function action_lib_model_blend_color(col)
+function action_lib_model_blend_color(color)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_model_blend_color, temp_edit.model_blend_color, col, true)
+		history_set_var(action_lib_model_blend_color, temp_edit.model_blend_color, color, true)
 	
 	with (temp_edit)
-		id.model_blend_color = col
+		self.model_blend_color = color
 }

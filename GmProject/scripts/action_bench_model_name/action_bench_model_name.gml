@@ -1,9 +1,7 @@
-/// action_bench_model_name(name)
-/// @arg name
-
 function action_bench_model_name(name)
 {
 	var settings, list, search;
+	
 	if (place_build)
 	{
 		settings = build_settings
@@ -14,18 +12,10 @@ function action_bench_model_name(name)
 		settings = bench_settings
 		switch (settings.type)
 		{
-			case e_temp_type.CHARACTER:
-				list = settings.char_list
-				break
-			case e_temp_type.EQUIPMENT:
-				list = settings.equipment_list
-				break
-			case e_temp_type.SPECIAL_BLOCK:
-				list = settings.special_block_list
-				break
-			case e_temp_type.MODEL_PART:
-				list = settings.special_block_list
-				break
+			case e_temp_type.CHARACTER:		list = settings.char_list; break
+			case e_temp_type.EQUIPMENT:		list = settings.equipment_list; break
+			case e_temp_type.SPECIAL_BLOCK: list = settings.special_block_list; break
+			case e_temp_type.MODEL_PART:	list = settings.special_block_list; break
 		}
 	}
 	
@@ -42,21 +32,21 @@ function action_bench_model_name(name)
 		// Modify states for better search
 		if (search != "" && !string_contains(string_lower(minecraft_asset_get_name("model", model_name)), search))
 		{
-			var m, val;
-			m = mc_assets.model_name_map[?name]
+			var model = mc_assets.model_name_map[?name];
 			
 			for (var i = 0; i < array_length(model_state); i += 2)
 			{
-				var state = model_state[i];
-				var statelist = m.states_map[?state];
+				var state, statelist;
+				state = model_state[i]
+				statelist = model.states_map[?state]
 				
 				for (var j = 0; j < statelist.value_amount; j++)
 				{
-					val = statelist.value_name[j]
+					var value = statelist.value_name[j];
 					
-					if (string_contains(string_lower(minecraft_asset_get_name("modelstatevalue", val)), search))
+					if (string_contains(string_lower(minecraft_asset_get_name("modelstatevalue", value)), search))
 					{
-						state_vars_set_value(model_state, state, val)
+						state_vars_set_value(model_state, state, value)
 						break
 					}
 				}
@@ -77,10 +67,12 @@ function action_bench_model_name(name)
 		temp_update_armor(id)
 		
 		if (preview != null)
+		{
 			with (preview)
 			{
 				preview_reset_view()
 				update = true
 			}
+		}
 	}
 }

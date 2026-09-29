@@ -1,5 +1,4 @@
-/// shader_depth_point
-/// @desc Renders to a depth buffer (using point distance)
+/// @desc Renders to a depth buffer (using point distance).
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;

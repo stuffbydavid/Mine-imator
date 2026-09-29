@@ -1,7 +1,6 @@
-/// vec3_normal(vector, angle)
+/// @desc Returns a normal vector based on given vector and angle.
 /// @arg vector
 /// @arg angle
-/// @desc Returns a normal vector based on given vector and angle.
 
 function vec3_normal(vec, angle)
 {

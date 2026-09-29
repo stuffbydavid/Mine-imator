@@ -1,5 +1,3 @@
-/// temp_remove_lists()
-
 function temp_remove_lists()
 {
 	with (app)

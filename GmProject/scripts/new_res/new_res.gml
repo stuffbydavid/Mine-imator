@@ -1,7 +1,6 @@
-/// new_res(filename, type)
+/// @desc Adds a new resource or replaces an existing one. Returns the new resource instance.
 /// @arg filename
 /// @arg type
-/// @desc Adds a new resource or replaces an existing one. Returns the new resource instance.
 
 function new_res(fn, type)
 {
@@ -26,7 +25,7 @@ function new_res(fn, type)
 	// Check replace
 	with (obj_resource)
 	{
-		if (id.type = type && filename = filename_name(fn))
+		if (self.type = type && filename = filename_name(fn))
 		{
 			res = id
 			break

@@ -1,4 +1,3 @@
-/// block_set_tall_vine_down()
 /// @desc Turns off wind on the top of the block stack if there is no windy block above.
 
 function block_set_tall_vine_down(variable, value)

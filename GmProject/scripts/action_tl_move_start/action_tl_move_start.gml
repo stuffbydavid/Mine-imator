@@ -1,5 +1,4 @@
-/// action_tl_move_start()
-/// @desc Move selected into dummy object
+/// @desc Move selected into dummy object.
 
 function action_tl_move_start()
 {
@@ -10,5 +9,6 @@ function action_tl_move_start()
 	timeline_move_obj.tree_list_filter = ds_list_create()
 	
 	action_tl_move_start_tree()
+	
 	tl_update_list()
 }

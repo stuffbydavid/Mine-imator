@@ -1,5 +1,3 @@
-/// render_surface_pool_event_destroy()
-
 function render_surface_pool_event_destroy()
 {
 	for (var i = 0; i < array_length(surface); i++)
@@ -72,10 +70,10 @@ function render_surface_pool_event_destroy()
 
 	if (shadow_cache != null)
 	{
-		var key = ds_map_find_first(shadow_cache)
+		var key = ds_map_find_first(shadow_cache);
 		while (!is_undefined(key))
 		{
-			var cache = shadow_cache[?key]
+			var cache = shadow_cache[?key];
 			for (var i = 0; i < array_length(surface_sun_buffer); i++)
 				if (surface_sun_buffer[i] = cache)
 					surface_sun_buffer[i] = null

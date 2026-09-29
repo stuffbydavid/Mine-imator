@@ -1,7 +1,3 @@
-/// block_get_state_id_state_vars(block, stateid)
-/// @arg block
-/// @arg stateid
-
 function block_get_state_id_state_vars(block, stateid)
 {
 	var vars = array();

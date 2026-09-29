@@ -1,15 +1,11 @@
-/// action_lib_pc_type_sprite_frame_height(value, add)
-/// @arg value
-/// @arg add
-
-function action_lib_pc_type_sprite_frame_height(val, add)
+function action_lib_pc_type_sprite_frame_height(value, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_pc_type_sprite_frame_height, ptype_edit.sprite_frame_height, ptype_edit.sprite_frame_height * add + val, true)
+		history_set_var(action_lib_pc_type_sprite_frame_height, ptype_edit.sprite_frame_height, ptype_edit.sprite_frame_height * add + value, true)
 	
 	with (ptype_edit)
 	{
-		sprite_frame_height = sprite_frame_height * add + val
+		sprite_frame_height = sprite_frame_height * add + value
 		ptype_update_sprite_vbuffers()
 	}
 	

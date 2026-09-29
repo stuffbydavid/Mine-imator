@@ -1,9 +1,5 @@
-/// tab_frame_editor_particles()
-
 function tab_frame_editor_particles()
 {
-	var text;
-	
 	// Spawn
 	tab_control_checkbox()
 	draw_switch("frameeditorparticlesspawn", dx, dy, tl_edit.value[e_value.SPAWN], action_tl_frame_spawn)
@@ -38,12 +34,12 @@ function tab_frame_editor_particles()
 	
 	// Attractor
 	if (tl_edit.value[e_value.ATTRACTOR] != null)
-		text = tl_edit.value[e_value.ATTRACTOR].display_name
+		content_text = tl_edit.value[e_value.ATTRACTOR].display_name
 	else
-		text = text_get("listnone")
+		content_text = text_get("listnone")
 	
 	tab_control_menu()
-	draw_button_menu("frameeditorparticlesattractor", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.ATTRACTOR], text, action_tl_frame_attractor)
+	draw_button_menu("frameeditorparticlesattractor", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.ATTRACTOR], content_text, action_tl_frame_attractor)
 	tab_next()
 	
 	// Force

@@ -1,5 +1,3 @@
-/// action_tl_create_temp()
-
 function action_tl_create_temp()
 {
 	var hobj, roottl, newtemp;
@@ -15,29 +13,7 @@ function action_tl_create_temp()
 		if (roottl = null || newtemp = null)
 			return 0
 
-		with (newtemp)
-			tl_create_temp_copy(roottl)
-
-		if (roottl.type = e_tl_type.BLOCK)
-		{
-			roottl.block_vbuffer = newtemp.block_vbuffer
-			newtemp.block_vbuffer = null
-		}
-		else if (roottl.type = e_tl_type.SPECIAL_BLOCK)
-			with (newtemp)
-				tl_create_temp_move_model(roottl)
-		
-		with (newtemp)
-			tl_create_temp_move_pattern_update(roottl)
-
-		with (obj_timeline)
-		{
-			if (temp != newtemp)
-				continue
-
-			id.temp = roottl
-			has_temp = false
-		}
+		tl_copy_temp(newtemp, roottl)
 
 		with (roottl)
 		{
@@ -68,38 +44,16 @@ function action_tl_create_temp()
 
 		// Create template
 		newtemp = new_obj(obj_template)
-		with (roottl)
-			tl_create_temp_copy(newtemp)
-
-		// Move runtime ownership
-		if (roottl.type = e_tl_type.BLOCK)
-		{
-			newtemp.block_vbuffer = roottl.block_vbuffer
-			roottl.block_vbuffer = null
-		}
-		else if (roottl.type = e_tl_type.SPECIAL_BLOCK)
-			with (roottl)
-				tl_create_temp_move_model(newtemp)
-		
-		with (roottl)
-			tl_create_temp_move_pattern_update(newtemp)
-
-		// Link the timeline hierarchy
-		with (obj_timeline)
-		{
-			if (temp != roottl)
-				continue
-
-			id.temp = newtemp
-			has_temp = true
-		}
+		tl_copy_temp(roottl, newtemp)
 
 		with (newtemp)
 		{
 			if (type = e_temp_type.SPECIAL_BLOCK)
 				temp_update_model_shape()
+			
 			temp_update_rot_point()
 			temp_update_display_name()
+			
 			temp_add_lists()
 			temp_select_edit(false)
 		}
@@ -113,7 +67,9 @@ function action_tl_create_temp()
 
 	tl_update_list()
 	tl_update_matrix()
+	
 	app_update_tl_edit()
 	project_update_counts()
+	
 	lib_preview.update = true
 }

@@ -1,9 +1,6 @@
-/// languages_load()
-
 function languages_load()
 {
 	var fn = languages_file;
-	
 	if (!file_exists_lib(fn))
 		return 0
 	
@@ -19,7 +16,10 @@ function languages_load()
 	
 	var list = map[?"languages"];
 	if (!ds_list_valid(list))
+	{
+		ds_map_destroy(map)
 		return 0
+	}
 	
 	for (var i = 0; i < ds_list_size(list); i++)
 	{
@@ -40,5 +40,5 @@ function languages_load()
 		obj.filename = fn
 	}
 	
-	ds_list_destroy(list)
+	ds_map_destroy(map)
 }

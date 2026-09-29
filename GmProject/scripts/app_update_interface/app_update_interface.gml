@@ -1,5 +1,3 @@
-/// app_update_interface()
-
 function app_update_interface()
 {
 	menu_button_mouseon = false

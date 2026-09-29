@@ -1,5 +1,3 @@
-/// app_startup()
-
 function app_startup()
 {
 	startup_error = true
@@ -7,9 +5,8 @@ function app_startup()
 	if (!lib_startup())
 		return false
 	
-	if (!is_cpp()) // Skip file lib in C++
-		if (!file_lib_startup())
-			return false
+	if (!file_lib_startup())
+		return false
 	
 	if (!file_exists_lib(legacy_file))
 		return missing_file(legacy_file)

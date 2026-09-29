@@ -1,4 +1,3 @@
-/// new_tl(type)
 /// @arg type
 
 function new_tl(tlype)

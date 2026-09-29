@@ -1,5 +1,3 @@
-/// shader_high_samples_unpack_set()
-
 function shader_high_samples_unpack_set()
 {
 	texture_set_stage(sampler_map[?"uSamples"], surface_get_texture(render_surface_samples))

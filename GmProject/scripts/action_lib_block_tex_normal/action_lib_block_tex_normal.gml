@@ -1,17 +1,15 @@
-/// action_lib_block_tex_normal(resource)
 /// @arg resource
 
 function action_lib_block_tex_normal(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
+	
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_image_pack()
@@ -32,15 +30,11 @@ function action_lib_block_tex_normal(res)
 		
 		// Update patterns
 		with (obj_timeline)
-		{
-			if (type = e_tl_type.SPECIAL_BLOCK && part_root != null)
-			{
-				if (part_root.temp = temp_edit)
-					array_add(pattern_update, id)
-			}
-		}
+			if (type = e_tl_type.SPECIAL_BLOCK && part_root != null && part_root.temp = temp_edit)
+				array_add(pattern_update, id)
 	}
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

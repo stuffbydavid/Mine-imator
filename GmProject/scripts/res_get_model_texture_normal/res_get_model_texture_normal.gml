@@ -1,5 +1,3 @@
-/// res_get_model_texture_normal(name)
-/// @arg name
 /// @desc Returns the model normal texture with the given name from a skin or texture pack.
 
 function res_get_model_texture_normal(name)

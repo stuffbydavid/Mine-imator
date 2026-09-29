@@ -1,4 +1,3 @@
-/// tab_control_sortlist(sortlist)
 /// @arg sortlist
 
 function tab_control_sortlist(slist)

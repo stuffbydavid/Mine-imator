@@ -1,4 +1,3 @@
-/// file_dialog_save_keyframes(filename)
 /// @arg filename
 
 function file_dialog_save_keyframes(fn)

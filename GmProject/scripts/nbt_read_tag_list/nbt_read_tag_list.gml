@@ -1,4 +1,3 @@
-/// nbt_read_tag_list(type, length)
 /// @arg type
 /// @arg length
 

@@ -1,21 +1,18 @@
-/// tab_properties_library_character()
-/// Common template settings for built-in models.
+/// @desc Common template settings for built-in models.
 
 function tab_properties_library_character()
 {
-	var text, wid;
 	switch (temp_edit.type)
 	{
-		case e_temp_type.CHARACTER: text = "librarycharmodel" break
-		case e_temp_type.EQUIPMENT: text = "libraryequipmentmodel" break
-		case e_temp_type.SPECIAL_BLOCK: text = "libraryspblockmodel" break
+		case e_temp_type.CHARACTER: content_text = "librarycharmodel"; break
+		case e_temp_type.EQUIPMENT: content_text = "libraryequipmentmodel"; break
+		case e_temp_type.SPECIAL_BLOCK: content_text = "libraryspblockmodel"; break
 		default: return 0
 	}
-	wid = text_max_width("librarycharmodelchange") + 20
-			
+	
 	// Model
 	tab_control(24)
-	draw_label_value(dx, dy, dw - 32, 24, text_get(text), temp_edit.model_file != null ? string(minecraft_asset_get_name("model", temp_edit.model_file.name)) : "")
+	draw_label_value(dx, dy, dw - 32, 24, text_get(content_text), temp_edit.model_file != null ? string(minecraft_asset_get_name("model", temp_edit.model_file.name)) : "")
 			
 	// Change
 	if (draw_button_icon("librarycharmodelchange", dx + dw - 24, dy, 24, 24, object_editor.raised && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltipchangemodel"))
@@ -41,7 +38,7 @@ function tab_properties_library_character()
 				
 		tab_next()
 				
-		if (popup = popup_pattern_editor)
+		if (popup_current = popup_pattern_editor)
 			current_microani.active.value = true
 	}
 			
@@ -55,7 +52,7 @@ function tab_properties_library_character()
 				
 		tab_next()
 				
-		if (popup = popup_armor_editor)
+		if (popup_current = popup_armor_editor)
 			current_microani.active.value = true
 	}
 			
@@ -82,7 +79,7 @@ function tab_properties_library_character()
 		// Skin (Normal map)
 		tex = null
 		with (res_eval(temp_edit.model_tex_normal))
-			tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			tex = res_get_model_texture_normal(model_part_get_texture_normal_name(temp_edit.model_file, temp_edit.model_texture_normal_name_map))
 			
 		tab_control_menu(ui_large_height)
 		draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexnormal" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexnormal" : "libraryskinnormal")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, res_eval(temp_edit.model_tex_normal).display_name, action_lib_model_tex_normal, false, tex, null)

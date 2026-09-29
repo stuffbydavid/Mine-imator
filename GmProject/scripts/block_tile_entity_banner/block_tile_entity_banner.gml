@@ -1,6 +1,3 @@
-/// block_tile_entity_banner(map)
-/// @arg map
-
 function block_tile_entity_banner(map)
 {
 	var patterns, base, legacy;
@@ -13,8 +10,9 @@ function block_tile_entity_banner(map)
 		patterncolorlist = array()
 		
 		// Base color
-		var color = c_white;
-		var col = block_get_state_id_value(block_current, block_state_id_current, "color");
+		var color, col;
+		color = c_white
+		col = block_get_state_id_value(block_current, block_state_id_current, "color")
 		if (!is_undefined(col))
 			color = minecraft_get_color("dye:" + col)
 		
@@ -88,8 +86,9 @@ function block_tile_entity_banner(map)
 		}
 	
 		// Override banner color if legacy
-		var colorindex = 0;
-		var color = c_white;
+		var colorindex, color;
+		colorindex = 0
+		color = c_white
 	
 		if (legacy)
 		{

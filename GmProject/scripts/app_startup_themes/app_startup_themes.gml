@@ -1,5 +1,3 @@
-/// app_startup_themes()
-
 function app_startup_themes()
 {
 	// Themes
@@ -123,9 +121,9 @@ function app_startup_themes()
 		array_add(accent_list, make_color_hsv(199, 201, 203))
 		array_add(accent_list, make_color_hsv(237, 193, 233))
 		
-		level_top = make_color_hsv(145, 5, 252);
-		level_middle = make_color_hsv(145, 5, 241);
-		level_bottom = make_color_hsv(139, 12, 226);
+		level_top = make_color_hsv(145, 5, 252)
+		level_middle = make_color_hsv(145, 5, 241)
+		level_bottom = make_color_hsv(139, 12, 226)
 		input_background = level_top
 		
 		text_main = make_color_hsv(140, 89, 20)

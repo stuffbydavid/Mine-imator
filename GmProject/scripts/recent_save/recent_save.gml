@@ -1,5 +1,3 @@
-/// recent_save()
-
 function recent_save()
 {
 	log("Updating recent list")

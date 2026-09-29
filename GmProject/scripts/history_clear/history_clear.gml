@@ -1,5 +1,3 @@
-/// history_clear()
-
 function history_clear()
 {
 	history_amount = 0

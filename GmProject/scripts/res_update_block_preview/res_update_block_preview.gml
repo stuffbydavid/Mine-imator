@@ -1,4 +1,3 @@
-/// res_update_block_preview()
 /// @desc Updates the preview of a loaded terrain file.
 
 function res_update_block_preview()

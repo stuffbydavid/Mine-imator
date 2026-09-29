@@ -76,6 +76,7 @@ namespace CppProject
 			camAngleZ = 10.0;
 			if (hasPlayer)
 				camAngleXY = playerRot.y;
+			
 			GoToPlayer();
 		}
 		else
@@ -94,6 +95,7 @@ namespace CppProject
 
 		Region::loader->active = true;
 		resetUpdate = false;
+		
 		mode = OPENWORLD;
 	}
 
@@ -137,7 +139,9 @@ namespace CppProject
 
 		World::Close();
 		selection.active = false;
+
 		dimension = "overworld";
+
 		global::_app->window_state = "";
 	}
 
@@ -145,7 +149,9 @@ namespace CppProject
 	{
 		Region::loader->disconnect();
 		Region::loader->active = false;
+
 		dimension = "overworld";
+
 		World::Close();
 	}
 
@@ -168,6 +174,7 @@ namespace CppProject
 		else if (dimension == "the_end")
 			dim = -1;
 		GFX->shader->SubmitInt(GFX->shader->GetUniformIndex("uDim"), dim);
+
 		PR->Begin(pr_trianglestrip);
 		draw_vertex_texture(0, 0, 0, 0);
 		draw_vertex_texture(rect.width(), 0, 1, 0);
@@ -207,9 +214,11 @@ namespace CppProject
 			draw_set_alpha(0.25);
 			draw_rectangle(0, 0, rect.width(), rect.height(), false);
 			draw_set_alpha(1.0);
+
 			IntType loadPadding = 200;
 			IntType loadHeight = 20;
 			draw_loading_bar(ScopeAny(global::_app->id), loadPadding, rect.height() / 2 - loadHeight / 2, rect.width() - loadPadding * 2, loadHeight, progress, "");
+			
 			surface_reset_target();
 
 			return;
@@ -224,6 +233,7 @@ namespace CppProject
 			// Interpolate parameters
 			RealType progress = (RealType)(App->GetMsec() - camAnim.startTime) / camAnim.length;
 			progress = std::min(1.0, 1.0 - std::pow(1.0 - progress, 3.0)); // Ease out exponential
+			
 			camPos = camAnim.posStart + (camAnim.posEnd - camAnim.posStart) * progress;
 			camTargetDis = camAnim.targetDisStart + (camAnim.targetDisEnd - camAnim.targetDisStart) * progress;
 
@@ -311,6 +321,7 @@ namespace CppProject
 					matrix_set(matrix_world, Matrix::Translation(region->pos));
 					GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, mData.mesh.numIndices);
 					mData.mesh.EndUse();
+
 					VB->renderCalls++;
 					VB->trianglesSubmitted += mData.mesh.numVertices;
 				}
@@ -320,6 +331,7 @@ namespace CppProject
 		}
 
 		gpu_set_texrepeat(true);
+
 		shader_reset();
 
 		// Box controls
@@ -382,6 +394,7 @@ namespace CppProject
 							(color.green() == 255) - (color.green() < 255 && color.green() > 0),
 							(color.blue() == 255) - (color.blue() < 255 && color.blue() > 0)
 						);
+
 						global::_app->mouse_cursor = cr_handpoint;
 						mouseActive = false;
 					}
@@ -397,6 +410,7 @@ namespace CppProject
 
 					mouseClickX = gmlGlobal::mouse_x;
 					mouseClickY = gmlGlobal::mouse_y;
+
 					global::_app->window_busy = "worldimport";
 
 					// Click/Resize
@@ -411,6 +425,7 @@ namespace CppProject
 							float depth;
 							resizeStartSelection = selection;
 							resizeStartPos = GetWorldPosition(resizeSurface, mousePoint, depth);
+
 							mode = Mode::RESIZE;
 							updateBoxResizeSurface = true;
 						}
@@ -436,8 +451,10 @@ namespace CppProject
 			{
 				if (mode == Mode::FLY) // Restore cursor
 					display_mouse_set(mouseLastX, mouseLastY);
+
 				global::_app->window_busy = "worldimportrelease";
 				mode = Mode::DEFAULT;
+
 				updateSurfaces = true;
 			}
 			else // Check mode
@@ -458,6 +475,7 @@ namespace CppProject
 							selection = { mouseBlock, mouseBlock + WorldVec(1, 1, 1) };
 							mode = Mode::SELECT;
 						}
+
 						break;
 					}
 
@@ -470,19 +488,26 @@ namespace CppProject
 						if (mouse_check_button(mb_left)) // Confirm
 						{
 							selection.Adjust();
+
 							VecType size = selection.GetSize();
 							selection.active = (size.x > 1 || size.y > 1 || size.z > 1);
+
 							mode = Mode::DEFAULT;
 							global::_app->window_busy = "worldimportrelease";
+
 							updateBoxResizeSurface = true;
+
 							app_mouse_clear(ScopeAny(global::_app->id));
 						}
 						else if (mouse_check_button(mb_right)) // Cancel
 						{
 							selection.active = false;
+
 							mode = Mode::DEFAULT;
 							global::_app->window_busy = "worldimportrelease";
+
 							updateSurfaces = true;
+
 							mouse_clear(mb_right);
 						}
 
@@ -504,19 +529,22 @@ namespace CppProject
 							
 							if (resizeDir.x > 0) // Right
 								selection.end.x = std::max(selection.start.x + 1, resizeStartSelection.end.x + delta);
-							if (resizeDir.x < 0) // Left
+							else if (resizeDir.x < 0) // Left
 								selection.start.x = std::min(selection.end.x - 1, resizeStartSelection.start.x - delta);
+							
 							if (resizeDir.y > 0) // Front
 								selection.end.y = std::max(selection.start.y + 1, resizeStartSelection.end.y + delta);
-							if (resizeDir.y < 0) // Back
+							else if (resizeDir.y < 0) // Back
 								selection.start.y = std::min(selection.end.y - 1, resizeStartSelection.start.y - delta);
+							
 							if (resizeDir.z > 0) // Top
 								selection.end.z = std::max(selection.start.z + 1, resizeStartSelection.end.z + delta);
-							if (resizeDir.z < 0) // Bottom
+							else if (resizeDir.z < 0) // Bottom
 								selection.start.z = std::min(selection.end.z - 1, resizeStartSelection.start.z - delta);
 						}
 
 						global::_app->mouse_cursor = cr_handpoint;
+
 						break;
 					}
 
@@ -526,9 +554,11 @@ namespace CppProject
 						camAngleXY += (mouseLastX - gmlGlobal::mouse_x) * 0.25;
 						camAngleZ -= (mouseLastY - gmlGlobal::mouse_y) * 0.25;
 						camAngleZ = std::clamp(camAngleZ, -89.9, 89.9);
+
 						UpdateCameraPosition();
 
 						global::_app->mouse_cursor = cr_size_all;
+
 						break;
 					}
 
@@ -538,10 +568,12 @@ namespace CppProject
 						RealType deltaX = (mouseLastX - gmlGlobal::mouse_x) * (camTargetDis * 0.00125);
 						RealType deltaY = (mouseLastY - gmlGlobal::mouse_y) * (camTargetDis * 0.00125);
 						VecType moveVec = right * deltaX - up * deltaY;
+
 						camPos += moveVec;
 						camTarget += moveVec;
 
 						global::_app->mouse_cursor = cr_size_all;
+
 						break;
 					}
 					
@@ -551,8 +583,10 @@ namespace CppProject
 						mouseLastX = display_mouse_get_x();
 						mouseLastY = display_mouse_get_y();
 						mouseLocked = false;
+
 						global::_app->mouse_cursor = cr_none;
 						mode = Mode::FLY;
+
 						break;
 					}
 
@@ -584,6 +618,7 @@ namespace CppProject
 							camAngleXY += (lockX - display_mouse_get_x()) * flyLookSensitivity * 0.25;
 							camAngleZ -= (lockY - display_mouse_get_y()) * flyLookSensitivity * 0.25;
 							camAngleZ = std::clamp(camAngleZ, -89.9, 89.9);
+
 							UpdateCameraTarget();
 						}
 
@@ -598,14 +633,19 @@ namespace CppProject
 						VecType moveVec = { 0, 0, 0 };
 						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_FORWARD))->active)
 							moveVec += forward;
+
 						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_BACK))->active)
 							moveVec -= forward;
+
 						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_RIGHT))->active)
 							moveVec += right;
+
 						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_LEFT))->active)
 							moveVec -= right;
+
 						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_ASCEND))->active)
 							camPos.y += mod, camTarget.y += mod;
+
 						if (ObjType(obj_keybind, global::keybinds.Value(e_keybind_CAM_DESCEND))->active)
 							camPos.y -= mod, camTarget.y -= mod;
 
@@ -615,9 +655,13 @@ namespace CppProject
 
 						if (AppWin->mouseEnableLock)
 							global::_app->mouse_cursor = cr_none;
+
 						display_mouse_set(lockX, lockY);
+
 						mouseLocked = true;
+
 						global::_app->shortcut_bar_state = "cameramove";
+
 						break;
 					}
 				}
@@ -628,6 +672,7 @@ namespace CppProject
 		shader_set(shaderBox->id);
 		matrix_set(matrix_view, matrixV);
 		matrix_set(matrix_projection, matrixP);
+
 		GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uEye"), camPos);
 
 		// Unloaded regions
@@ -644,6 +689,7 @@ namespace CppProject
 			GFX->shader->SubmitVec4(GFX->shader->GetUniformIndex("uColor"), col);
 			GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uResizeDir"), 0, 0, 0);
 			GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uBoxSize"), regionSize);
+
 			matrix_set(matrix_world,
 				Matrix::Scale(regionSize) *
 				Matrix::Translation((VecType)region->pos + regionSize / 2.0)
@@ -694,23 +740,27 @@ namespace CppProject
 			GFX->shader->SubmitInt(GFX->shader->GetUniformIndex("uBorder"), 0);
 			GFX->shader->SubmitFloat(GFX->shader->GetUniformIndex("uAlpha"), 1.f);
 			GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uResizeDir"), resizeDir);
+
 			if (selection.active)
 			{
 				matrix_set(matrix_world, selectionM);
 				GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uBoxSize"), selection.GetSize());
 				VB->Add(cube);
 			}
+
 			if (mouseActive)
 			{
 				matrix_set(matrix_world, mouseBoxM);
 				GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uBoxSize"), 1, 1, 1);
 				VB->Add(cube);
 			}
+
 			VB->SubmitBatch();
 
 			// Border
 			gpu_set_ztestenable(false);
 			GFX->shader->SubmitInt(GFX->shader->GetUniformIndex("uBorder"), 1);
+
 			if (selection.active)
 			{
 				matrix_set(matrix_world, selectionM);
@@ -720,6 +770,7 @@ namespace CppProject
 				GFX->shader->SubmitFloat(GFX->shader->GetUniformIndex("uAlpha"), 1.f);
 				VB->Add(cube);
 			}
+
 			if (mouseActive)
 			{
 				matrix_set(matrix_world, mouseBoxM);
@@ -729,6 +780,7 @@ namespace CppProject
 				GFX->shader->SubmitFloat(GFX->shader->GetUniformIndex("uAlpha"), 1.f);
 				VB->Add(cube);
 			}
+
 			VB->SubmitBatch();
 		}
 
@@ -745,8 +797,10 @@ namespace CppProject
 			GFX->shader->SubmitTexture(GFX->shader->GetSamplerIndex("uTexture"), playerHeadTex->GetTexture(0));
 			VB->Add(playerHead);
 			VB->SubmitBatch();
+
 			shader_reset();
 		}
+
 		GFX->SetCullFrontFace(false);
 
 		// Region loading bars
@@ -767,9 +821,11 @@ namespace CppProject
 			{
 				IntType loadingWidth = 300;
 				IntType loadingHeight = 15;
+
 				draw_loading_bar(ScopeAny(global::_app->id), loadingScreenPos.x - loadingWidth / 2, loadingScreenPos.y - loadingHeight / 2, loadingWidth, loadingHeight, progress, "");
 			}
 		}
+
 		surface_reset_target();
 
 		if (mode != Mode::FLY)
@@ -815,11 +871,14 @@ namespace CppProject
 
 		surface_set_target(resizeSurface->id);
 		shader_set(shaderBoxResize->id);
+
 		gpu_set_ztestenable(true);
 		gpu_set_texfilter(false);
 		GFX->SetCullFrontFace(true);
+
 		matrix_set(matrix_view, matrixV);
 		matrix_set(matrix_projection, matrixP);
+
 		draw_clear(0);
 
 		// Draw selection box with separate colors per side for hit detection
@@ -829,6 +888,7 @@ namespace CppProject
 			GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uEye"), camPos);
 			GFX->shader->SubmitVec3(GFX->shader->GetUniformIndex("uBoxSize"), selection.GetSize());
 			VB->Add(cube);
+
 			VB->SubmitBatch();
 		}
 		// Draw plane on mouse depth position oriented perpendicular to resize direction
@@ -860,7 +920,9 @@ namespace CppProject
 				);
 				GFX->SetCulling(false);
 				VB->Add(plane);
+
 				VB->SubmitBatch();
+
 				GFX->SetCulling(true);
 			}
 			else
@@ -869,8 +931,10 @@ namespace CppProject
 
 		shader_reset();
 		surface_reset_target();
+
 		gpu_set_ztestenable(false);
 		GFX->SetCullFrontFace(false);
+
 		resizeSurface->ClearColorCache();
 		resizeSurface->ClearDepthCache();
 	}
@@ -883,8 +947,10 @@ namespace CppProject
 
 		float tx = (float)point.x() / surface->size.width();
 		float ty = 1.0 - (float)point.y() / surface->size.height();
+
 		VecType clipSpace = { tx * 2.0 - 1.0, ty * 2.0 - 1.0, outDepth * 2.0 - 1.0, 1.0 };
 		VecType viewSpace = vec4_homogenize(GFX->matrixP.GetInversed() * clipSpace);
+
 		return GFX->matrixV.GetInversed() * VecType(viewSpace.x, viewSpace.y, viewSpace.z, 1.0);
 	}
 
@@ -962,24 +1028,31 @@ namespace CppProject
 		if (onLeftEdge)
 			if (Region* left = Region::Find(xReg - 1, zReg, Region::UNLOADED))
 				left->loadStatus = Region::LOADING;
+		
 		if (onLeftEdge && onBackEdge)
 			if (Region* backLeft = Region::Find(xReg - 1, zReg - 1, Region::UNLOADED))
 				backLeft->loadStatus = Region::LOADING;
+		
 		if (onBackEdge)
 			if (Region* back = Region::Find(xReg, zReg - 1, Region::UNLOADED))
 				back->loadStatus = Region::LOADING;
+		
 		if (onRightEdge && onBackEdge)
 			if (Region* backRight = Region::Find(xReg + 1, zReg - 1, Region::UNLOADED))
 				backRight->loadStatus = Region::LOADING;
+		
 		if (onRightEdge)
 			if (Region* right = Region::Find(xReg + 1, zReg, Region::UNLOADED))
 				right->loadStatus = Region::LOADING;
+		
 		if (onFrontEdge && onRightEdge)
 			if (Region* frontRight = Region::Find(xReg + 1, zReg + 1, Region::UNLOADED))
 				frontRight->loadStatus = Region::LOADING;
+		
 		if (onFrontEdge)
 			if (Region* front = Region::Find(xReg, zReg + 1, Region::UNLOADED))
 				front->loadStatus = Region::LOADING;
+		
 		if (onFrontEdge && onLeftEdge)
 			if (Region* frontLeft = Region::Find(xReg - 1, zReg + 1, Region::UNLOADED))
 				frontLeft->loadStatus = Region::LOADING;

@@ -1,6 +1,4 @@
-/// minecraft_texture_get_name(name)
-/// @arg name
-/// @desc Gets a translated or formatted texture key name
+/// @desc Gets a translated or formatted texture key name.
 
 function minecraft_texture_get_name(name)
 {
@@ -26,8 +24,7 @@ function minecraft_texture_get_name(name)
 	index = string_length(formatted)
 	while (index > 0)
 	{
-		var c;
-		c = string_char_at(formatted, index)
+		var c = string_char_at(formatted, index);
 		if (ord(c) < ord("0") || ord(c) > ord("9"))
 			break
 		index--

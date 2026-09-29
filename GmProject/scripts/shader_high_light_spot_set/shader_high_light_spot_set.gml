@@ -1,5 +1,3 @@
-/// shader_high_light_spot_set()
-
 function shader_high_light_spot_set()
 {
 	render_set_uniform("uEmissive", 0)
@@ -14,7 +12,8 @@ function shader_high_light_spot_set()
 	render_set_uniform("uLightStrength", render_light_strength)
 	render_set_uniform("uLightSpecular", render_light_specular_strength)
 	render_set_uniform("uLightSize", render_light_size)
-	var shadowscale = 1 / max(2 * tan((render_light_fov / 57.2958) * .5), .0001)
+	
+	var shadowscale = 1 / max(2 * tan((render_light_fov / 57.2958) * .5), .0001);
 	render_set_uniform("uShadowRadius", render_light_size * .5 * app.project_render_shadows_blur_size * shadowscale)
 	render_set_uniform_int("uShadowBlurQuality", app.project_render_shadows_jittered ? 0 : app.project_render_shadows_blur_quality)
 	render_set_uniform("uPCSSKernel", render_pcss_kernel_rotated)

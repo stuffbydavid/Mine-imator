@@ -1,6 +1,3 @@
-/// action_project_render_opaque_leaves(value)
-/// @arg value
-
 function action_project_render_opaque_leaves(value)
 {
 	if (!history_undo && !history_redo)

@@ -1,5 +1,3 @@
-/// shader_color_correction_set()
-
 function shader_color_correction_set()
 {
 	render_set_uniform("uContrast", render_camera.value[e_value.CAM_CONTRAST] + 1)

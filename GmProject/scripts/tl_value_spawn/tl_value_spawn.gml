@@ -1,5 +1,3 @@
-/// tl_value_spawn()
-
 function tl_value_spawn()
 {
 	// Cameras copy the work camera

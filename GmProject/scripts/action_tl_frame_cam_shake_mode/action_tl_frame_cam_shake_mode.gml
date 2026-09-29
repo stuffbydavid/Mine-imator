@@ -1,6 +1,3 @@
-/// action_tl_frame_cam_shake_mode(mode)
-/// @arg mode
-
 function action_tl_frame_cam_shake_mode(mode)
 {
 	tl_value_set_start(action_tl_frame_cam_shake_mode, false)

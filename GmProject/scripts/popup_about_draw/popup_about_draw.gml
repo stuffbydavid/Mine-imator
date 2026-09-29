@@ -1,5 +1,3 @@
-/// popup_about_draw()
-
 function popup_about_draw()
 {
 	// Header
@@ -13,9 +11,9 @@ function popup_about_draw()
 	// Program info
 	draw_set_font(font_value)
 	
-	var text, width, textx;
-	text = text_get("aboutversion", mineimator_version_full) + text_get("aboutreleasedate", mineimator_version_date)
-	width = string_width(text)
+	var width, textx;
+	content_text = text_get("aboutversion", mineimator_version_full) + text_get("aboutreleasedate", mineimator_version_date)
+	width = string_width(content_text)
 	textx = floor(dx + dw/2 - width/2)
 	
 	var version = text_get("aboutversion", mineimator_version_full) + (trial_version ? " " + text_get("startuptrial") : "");
@@ -35,7 +33,7 @@ function popup_about_draw()
 	// Button links
 	var buttonx, buttony;
 	buttonx = content_x + 12
-	buttony = content_y + content_height - (12 + 28);
+	buttony = content_y + content_height - (12 + 28)
 	
 	if (draw_button_icon("aboutsite", buttonx, buttony, 24, 24, false, icons.WORLD, null, false, "aboutsite"))
 		open_url(link_website)
@@ -118,7 +116,7 @@ function popup_about_draw()
 		"UpgradedMoon",
 		"Vash",
 		"__Mine__"
-	]
+	];
 	
 	for (var i = 0; i < array_length(list); i++)
 	{

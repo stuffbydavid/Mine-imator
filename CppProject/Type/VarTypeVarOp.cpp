@@ -7,24 +7,36 @@ namespace CppProject
 	{
 		if (IsUndefined() || other.IsUndefined())
 			return (IsUndefined() == other.IsUndefined());
+
 		if ((IsAnyReal() && other.IsString()) || (IsString() && other.IsAnyReal()))
 			return false;
 
 		switch (type)
 		{
-			case REAL_t: return (Real() == VarGetReal(other));
-			case INTEGER_t: return (Int() == VarGetReal(other));
+			case REAL_t:
+				return (Real() == VarGetReal(other));
+			
+			case INTEGER_t:
+				return (Int() == VarGetReal(other));
+			
 			case BOOLEAN_t:
 			{
 				if (other.IsBool())
 					return (Bool() == other.Bool());
+				
 				return (ToInt() == VarGetReal(other));
 			}
-			case STRING_t: return (Str() == VarGetStr(other));
-			case ARRAY_t: return Arr() == VarGetArr(other);
+			
+			case STRING_t:
+				return (Str() == VarGetStr(other));
+			
+			case ARRAY_t:
+				return Arr() == VarGetArr(other);
+			
 			default:
 				WARNING("Variant == Variant: Invalid left type " + TypeName(type));
 		}
+
 		return false;
 	}
 
@@ -33,18 +45,20 @@ namespace CppProject
 		// For map/hash support
 		if (IsAnyReal() && !other.IsAnyReal()) // reals are < string
 			return false;
+
 		if (IsString() && !other.IsString()) // strings are > real
 			return true;
 
 		switch (type)
 		{
-			case REAL_t: return (Real() > VarGetReal(other));
-			case INTEGER_t: return (Int() > VarGetReal(other));
-			case BOOLEAN_t: return (ToInt() > VarGetReal(other));
-			case STRING_t: return (Str() > VarGetStr(other));
+			case REAL_t:	return (Real() > VarGetReal(other));
+			case INTEGER_t:	return (Int() > VarGetReal(other));
+			case BOOLEAN_t:	return (ToInt() > VarGetReal(other));
+			case STRING_t:	return (Str() > VarGetStr(other));
 			default:
 				WARNING("Variant > Variant: Invalid left type " + TypeName(type));
 		}
+
 		return false;
 	}
 
@@ -52,13 +66,14 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: return (Real() >= VarGetReal(other));
-			case INTEGER_t: return (Int() >= VarGetReal(other));
-			case BOOLEAN_t: return (ToInt() >= VarGetReal(other));
-			case STRING_t: return (Str() >= VarGetStr(other));
+			case REAL_t:	return (Real() >= VarGetReal(other));
+			case INTEGER_t:	return (Int() >= VarGetReal(other));
+			case BOOLEAN_t:	return (ToInt() >= VarGetReal(other));
+			case STRING_t:	return (Str() >= VarGetStr(other));
 			default:
 				WARNING("Variant >= Variant: Invalid left type " + TypeName(type));
 		}
+
 		return false;
 	}
 
@@ -67,18 +82,20 @@ namespace CppProject
 		// For map/hash support
 		if (IsAnyReal() && !other.IsAnyReal()) // reals are < string
 			return true;
+
 		if (IsString() && !other.IsString()) // strings are > real
 			return false;
 
 		switch (type)
 		{
-			case REAL_t: return (Real() < VarGetReal(other));
-			case INTEGER_t: return (Int() < VarGetReal(other));
-			case BOOLEAN_t: return (ToInt() < VarGetReal(other));
-			case STRING_t: return (Str() < VarGetStr(other));
+			case REAL_t:	return (Real() < VarGetReal(other));
+			case INTEGER_t:	return (Int() < VarGetReal(other));
+			case BOOLEAN_t:	return (ToInt() < VarGetReal(other));
+			case STRING_t:	return (Str() < VarGetStr(other));
 			default:
 				WARNING("Variant < Variant: Invalid left type " + TypeName(type));
 		}
+
 		return true;
 	}
 
@@ -86,13 +103,14 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: return (Real() <= VarGetReal(other));
-			case INTEGER_t: return (Int() <= VarGetReal(other));
-			case BOOLEAN_t: return (ToInt() <= VarGetReal(other));
-			case STRING_t: return (Str() <= VarGetStr(other));
+			case REAL_t:	return (Real() <= VarGetReal(other));
+			case INTEGER_t:	return (Int() <= VarGetReal(other));
+			case BOOLEAN_t:	return (ToInt() <= VarGetReal(other));
+			case STRING_t:	return (Str() <= VarGetStr(other));
 			default:
 				WARNING("Variant <= Variant: Invalid left type " + TypeName(type));
 		}
+
 		return true;
 	}
 
@@ -100,23 +118,32 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: return Real() + VarGetReal(other);
+			case REAL_t:
+				return Real() + VarGetReal(other);
+			
 			case INTEGER_t:
 			{
 				if (other.IsReal()) // Convert to real
 					return ToReal() + other.Real();
+				
 				return Int() + VarGetInt(other);
 			}
+			
 			case BOOLEAN_t:
 			{
 				if (other.IsReal()) // Convert to real
 					return ToReal() + other.Real();
+				
 				return ToInt() + VarGetInt(other);
 			}
-			case STRING_t: return Str() + VarGetStr(other);
+
+			case STRING_t:
+				return Str() + VarGetStr(other);
+			
 			default:
 				WARNING("Variant + Variant: Invalid left type " + TypeName(type));
 		}
+
 		return *this;
 	}
 
@@ -124,7 +151,10 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: Real() += VarGetReal(other); break;
+			case REAL_t:
+				Real() += VarGetReal(other);
+				break;
+			
 			case INTEGER_t:
 			{
 				if (other.IsReal()) // Convert to real
@@ -132,15 +162,21 @@ namespace CppProject
 					SetReal(Int() + other.Real());
 					break;
 				}
+				
 				Int() += VarGetInt(other);
 				break;
 			}
+
 			case BOOLEAN_t: // Convert to real
 			{
 				SetReal(ToInt() + VarGetReal(other));
 				break;
 			}
-			case STRING_t: Str() += VarGetStr(other); break;
+			
+			case STRING_t:
+				Str() += VarGetStr(other);
+				break;
+			
 			default:
 				WARNING("Variant += Variant: Invalid left type " + TypeName(type));
 		}
@@ -150,22 +186,29 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: return Real() - VarGetReal(other);
+			case REAL_t:
+				return Real() - VarGetReal(other);
+			
 			case INTEGER_t:
 			{
 				if (other.IsReal()) // Convert to real
 					return ToReal() - other.Real();
+				
 				return Int() - VarGetInt(other);
 			}
+			
 			case BOOLEAN_t:
 			{
 				if (other.IsReal()) // Convert to real
 					return ToReal() - other.Real();
+				
 				return ToInt() - VarGetInt(other);
 			}
+			
 			default:
 				WARNING("Variant - Variant: Invalid left type " + TypeName(type));
 		}
+
 		return *this;
 	}
 
@@ -173,7 +216,9 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: Real() -= VarGetReal(other); break;
+			case REAL_t:
+				Real() -= VarGetReal(other); break;
+			
 			case INTEGER_t:
 			{
 				if (other.IsReal()) // Convert to real
@@ -181,14 +226,17 @@ namespace CppProject
 					SetReal(Int() - other.Real());
 					break;
 				}
+
 				Int() -= VarGetInt(other);
 				break;
 			}
+			
 			case BOOLEAN_t: // Convert to real
 			{
 				SetReal(ToInt() - VarGetReal(other));
 				break;
 			}
+			
 			default:
 				WARNING("Variant -= Variant: Invalid left type " + TypeName(type));
 		}

@@ -1,5 +1,3 @@
-/// trial_startup()
-
 function trial_startup()
 {
 	globalvar trial_version;

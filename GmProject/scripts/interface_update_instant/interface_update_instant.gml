@@ -1,5 +1,4 @@
-/// interface_update_instant()
-/// @desc Updates interface colors based on selected theme
+/// @desc Updates interface colors based on selected theme.
 
 function interface_update_instant()
 {

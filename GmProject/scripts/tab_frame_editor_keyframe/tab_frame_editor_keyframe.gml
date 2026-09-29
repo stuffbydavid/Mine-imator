@@ -1,10 +1,9 @@
-/// tab_frame_editor_keyframe()
-
 function tab_frame_editor_keyframe()
 {
 	var animated, hidden;
 	animated = tl_edit.animated
 	hidden = tl_edit.hide
+	
 	if ((!animated || hidden) && tl_edit_amount > 1)
 	{
 		with (obj_timeline)
@@ -32,34 +31,32 @@ function tab_frame_editor_keyframe()
 	}
 
 	// Transition
-	var trans, text;
-	trans = tl_edit.value[e_value.TRANSITION]
-	
-	if (trans != "linear" && trans != "instant" && trans != "bezier")
+	var transition = tl_edit.value[e_value.TRANSITION];
+	if (transition != "linear" && transition != "instant" && transition != "bezier")
 	{
-		if (string_contains(trans, "easeinout"))
+		if (string_contains(transition, "easeinout"))
 		{
-			trans = string_replace(trans, "easeinout", "")
-			text = text_get("transitioneaseinout", text_get("transitionease" + trans))
+			transition = string_replace(transition, "easeinout", "")
+			content_text = text_get("transitioneaseinout", text_get("transitionease" + transition))
 		}
 		
-		if (string_contains(trans, "easein"))
+		if (string_contains(transition, "easein"))
 		{
-			trans = string_replace(trans, "easein", "")
-			text = text_get("transitioneasein", text_get("transitionease" + trans))
+			transition = string_replace(transition, "easein", "")
+			content_text = text_get("transitioneasein", text_get("transitionease" + transition))
 		}
 		
-		if (string_contains(trans, "easeout"))
+		if (string_contains(transition, "easeout"))
 		{
-			trans = string_replace(trans, "easeout", "")
-			text = text_get("transitioneaseout", text_get("transitionease" + trans))
+			transition = string_replace(transition, "easeout", "")
+			content_text = text_get("transitioneaseout", text_get("transitionease" + transition))
 		}
 	}
 	else
-		text = text_get("transition" + trans)
+		content_text = text_get("transition" + transition)
 	
 	tab_control_menu(ui_large_height)
-	draw_button_menu("frameeditortransition", e_menu.TRANSITION_LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TRANSITION], text, menu_transitions, false, transition_texture_small_map[?tl_edit.value[e_value.TRANSITION]])
+	draw_button_menu("frameeditortransition", e_menu.TRANSITION_LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TRANSITION], content_text, menu_transitions, false, transition_texture_small_map[?tl_edit.value[e_value.TRANSITION]])
 	tab_next()
 	
 	// Bezier curve (Advanced mode only)

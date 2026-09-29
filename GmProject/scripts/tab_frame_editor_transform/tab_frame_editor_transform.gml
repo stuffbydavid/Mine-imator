@@ -1,13 +1,9 @@
-/// tab_frame_editor_transform()
-
 function tab_frame_editor_transform()
 {
 	dy -= 8
 	
-	var taby;
-	
 	// Position
-	taby = dy
+	var taby = dy;
 	microani_set("tabposition", null, false, false, false)
 	tab_frame_editor_position()
 	microani_set("tabposition", null, false, false, false)

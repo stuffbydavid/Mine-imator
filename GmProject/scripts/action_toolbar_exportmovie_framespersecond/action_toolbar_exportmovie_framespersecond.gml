@@ -1,8 +1,4 @@
-/// action_toolbar_exportmovie_framespersecond(value, add)
-/// @arg value
-/// @arg add
-
-function action_toolbar_exportmovie_framespersecond(val, add)
+function action_toolbar_exportmovie_framespersecond(value, add)
 {
-	popup.framespersecond = add * popup.framespersecond + val
+	popup_current.framespersecond = add * popup_current.framespersecond + value
 }

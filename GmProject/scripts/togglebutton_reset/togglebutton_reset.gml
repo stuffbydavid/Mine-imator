@@ -1,5 +1,3 @@
-/// togglebutton_reset()
-
 function togglebutton_reset()
 {
 	togglebutton_name = null

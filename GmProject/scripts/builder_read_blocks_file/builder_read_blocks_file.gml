@@ -1,5 +1,5 @@
 /// CppSeparate void builder_read_blocks_file(Scope<obj_builder>)
-/// Reads a legacy .blocks file
+/// @desc Reads a legacy .blocks file.
 
 function builder_read_blocks_file()
 {

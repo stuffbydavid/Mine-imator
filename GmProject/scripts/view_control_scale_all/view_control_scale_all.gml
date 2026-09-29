@@ -1,12 +1,11 @@
-/// view_control_scale_all(view, mat, radius)
 /// @arg view
-/// @arg mat
+/// @arg matrix
 /// @arg radius
 
 function view_control_scale_all(view, mat, radius)
 {
-	var coord, radius2D, alpha;
-	radius2D = ((radius / point3D_distance(tl_edit.world_pos, cam_from)) * content_height) / (cam_fov / 60)
+	var radius2d, coord, alpha;
+	radius2d = ((radius / point3D_distance(tl_edit.world_pos, cam_from)) * content_height) / (cam_fov / 60)
 	coord = point3D_project(matrix_position(mat), view_proj_matrix, content_width, content_height)
 	
 	if (point3D_project_error)
@@ -94,7 +93,7 @@ function view_control_scale_all(view, mat, radius)
 	}
 	
 	// Check mouse
-	if (place_tl = null && content_mouseon && (abs(point_distance(mouse_x - content_x, mouse_y - content_y, coord[X], coord[Y]) - radius2D) < view_3d_control_width/2))
+	if (place_tl = null && content_mouseon && (abs(point_distance(mouse_x - content_x, mouse_y - content_y, coord[X], coord[Y]) - radius2d) < view_3d_control_width/2))
 		view.control_mouseon = e_view_control.SCA_XYZ
 	
 	draw_set_color(c_white)

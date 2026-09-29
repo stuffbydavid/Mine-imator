@@ -1,4 +1,3 @@
-/// recent_add()
 /// @desc Adds the opened project to the top of the recent list.
 
 function recent_add()

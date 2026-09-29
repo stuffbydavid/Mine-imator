@@ -1,5 +1,3 @@
-/// project_save_background()
-
 function project_save_background()
 {
 	json_save_object_start("background")

@@ -1,6 +1,5 @@
-/// history_save_res(resource)
-/// @arg resource
 /// @desc Saves a resource in memory.
+/// @arg resource
 
 function history_save_res(res)
 {
@@ -13,34 +12,47 @@ function history_save_res(res)
 	with (save)
 	{
 		save_id = res.save_id
+		
 		usage_model_amount = 0
 		usage_model_tex_amount = 0
 		usage_model_tex_material_amount = 0
 		usage_model_tex_normal_amount = 0
+		
 		usage_item_tex_amount = 0
 		usage_item_tex_material_amount = 0
 		usage_item_tex_normal_amount = 0
+		
 		usage_block_tex_amount = 0
 		usage_block_tex_material_amount = 0
 		usage_block_tex_normal_amount = 0
+		
 		usage_scenery_amount = 0
+		
 		usage_shape_tex_amount = 0
 		usage_shape_tex_material_amount = 0
 		usage_shape_tex_normal_amount = 0
+		
 		usage_text_font_amount = 0
+		
 		usage_sprite_tex_amount = 0
 		usage_sprite_template_tex_amount = 0
+		
 		usage_kf_texture_amount = 0
 		usage_tl_texture_amount = 0
+		
 		usage_kf_sound_amount = 0
 		usage_tl_sound_amount = 0
+		
 		usage_kf_text_font_amount = 0
 		usage_tl_text_font_amount = 0
 		usage_tl_default_text_font_amount = 0
+		
 		usage_tl_glint_tex_amount = 0
+		
 		usage_tl_block_tex_amount = 0
 		usage_tl_block_tex_material_amount = 0
 		usage_tl_block_tex_normal_amount = 0
+		
 		usage_background_image = false
 		usage_background_sky_sun_tex = false
 		usage_background_sky_moon_tex = false

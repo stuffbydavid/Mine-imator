@@ -1,9 +1,6 @@
-/// app_update_micro_animations()
-
 function app_update_micro_animations()
 {
-	var constantspeed;
-	constantspeed = 0.1
+	var constantspeed = 0.1;
 	
 	// Timeline zoom
 	if (window_state = "")

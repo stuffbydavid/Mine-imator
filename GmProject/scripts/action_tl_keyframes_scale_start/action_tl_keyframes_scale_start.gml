@@ -1,4 +1,3 @@
-/// action_tl_keyframes_scale_start()
 /// @desc Starts scaling the selected keyframes around the playhead.
 
 function action_tl_keyframes_scale_start()
@@ -15,6 +14,7 @@ function action_tl_keyframes_scale_start()
 		
 		move_index = ds_list_find_index(timeline.keyframe_list, id)
 		move_pos = position
+		
 		selamount++
 		selmin = min(selmin, position)
 		selmax = max(selmax, position)
@@ -35,6 +35,7 @@ function action_tl_keyframes_scale_start()
 		timeline_scale_max = pivot / (pivot - selmin)
 	
 	action_tl_play_break()
+	
 	window_focus = "timeline"
 	window_busy = "timelinescalekeyframes"
 }

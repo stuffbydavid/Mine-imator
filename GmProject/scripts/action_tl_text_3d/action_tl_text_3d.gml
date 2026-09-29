@@ -1,6 +1,3 @@
-/// action_tl_text_3d(is3d)
-/// @arg is3d
-
 function action_tl_text_3d(is3d)
 {
 	if (!history_undo && !history_redo)

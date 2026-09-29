@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"get_open_filenames_ext",
   "parent":{
-    "name":"Path",
-    "path":"folders/Scripts/App/Path.yy",
+    "name":"File",
+    "path":"folders/Scripts/Utility/File.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

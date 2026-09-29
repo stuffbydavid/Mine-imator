@@ -1,6 +1,5 @@
-/// popup_importimage_show(filename, script)
 /// @arg filename
-/// @arg script
+/// @arg [script]
 
 function popup_importimage_show(fn, script = null)
 {
@@ -9,7 +8,7 @@ function popup_importimage_show(fn, script = null)
 		if (texture != null)
 			texture_free(texture)
 		
-		filename = fn;
+		filename = fn
 		value_script = script
 		
 		texture = texture_create(filename)

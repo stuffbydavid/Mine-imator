@@ -1,12 +1,11 @@
-/// app_update_lists()
-/// @desc Execute scripts in clicked item lists
+/// @desc Execute scripts in clicked item lists.
 
 function app_update_lists()
 {
 	if (list_item_script = null)
 		return 0
 	
-	if (list_item_script_value = undefined)
+	if (is_undefined(list_item_script_value))
 		script_execute(list_item_script)
 	else
 		script_execute(list_item_script, list_item_script_value)

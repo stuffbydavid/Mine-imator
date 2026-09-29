@@ -1,7 +1,16 @@
+/// @arg start
+/// @arg end
+/// @arg axis
+/// @arg matrix
+/// @arg returnstart
+
 function control_pos(s, e, axis, mat, retstart)
 {
-	var startpos = vec3(0); startpos[axis] = s;
-	var endpos = vec3(0); endpos[axis] = e;
+	var startpos, endpos;
+	startpos = vec3(0)
+	startpos[axis] = s
+	endpos = vec3(0)
+	endpos[axis] = e
 	
 	if (view_control_edit = null)
 	{

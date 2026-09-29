@@ -1,5 +1,8 @@
 /// CppSeparate void world_import_go_to_position(IntType, IntType)
-/// Jumps to a specified X/Z position.
+/// @desc Jumps to a specified X/Z position.
+/// @arg x
+/// @arg z
+
 function world_import_go_to_position(xx, zz)
 {
 	show_debug_message("Go to coordinates: [" + string(xx) + ", " + string(zz) + "]")

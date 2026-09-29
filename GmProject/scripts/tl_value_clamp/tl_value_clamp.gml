@@ -1,4 +1,3 @@
-/// tl_value_clamp(valueid, value)
 /// @arg valueid
 /// @arg value
 

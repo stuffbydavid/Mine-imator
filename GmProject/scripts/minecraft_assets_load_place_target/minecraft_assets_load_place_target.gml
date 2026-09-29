@@ -1,6 +1,3 @@
-/// minecraft_assets_load_place_target(map)
-/// @arg map
-
 function minecraft_assets_load_place_target(map)
 {
 	var newmap, key;

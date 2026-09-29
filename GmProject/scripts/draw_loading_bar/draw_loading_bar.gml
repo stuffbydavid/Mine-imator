@@ -1,11 +1,10 @@
-/// draw_loading_bar(x, y, width, height, percent, text, hinttext)
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg percent
 /// @arg text
-/// @arg hinttext
+/// @arg [hinttext]
 
 function draw_loading_bar(xx, yy, wid, hei, perc, text, hinttext = "")
 {

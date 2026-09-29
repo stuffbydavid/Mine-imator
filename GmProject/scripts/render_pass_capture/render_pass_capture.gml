@@ -1,6 +1,5 @@
-/// render_pass_capture(pass, surf)
 /// @arg pass
-/// @arg surf
+/// @arg surface
 
 function render_pass_capture(pass, surf)
 {
@@ -10,7 +9,7 @@ function render_pass_capture(pass, surf)
 	var copysurf;
 	if (surface_exists(surf))
 	{
-		var channel = render_pass_channel(pass)
+		var channel = render_pass_channel(pass);
 		copysurf = surface_create(surface_get_width(surf), surface_get_height(surf))
 		surface_set_target(copysurf)
 		{

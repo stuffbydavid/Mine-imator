@@ -1,6 +1,4 @@
-/// recent_time_string(time)
-/// @arg time
-/// @desc Returns a string telling how long ago a model was last opened
+/// @desc Returns a string telling how long ago a project was last opened.
 
 function recent_time_string(time)
 {

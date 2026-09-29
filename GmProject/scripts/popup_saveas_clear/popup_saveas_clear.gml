@@ -1,5 +1,3 @@
-/// popup_saveas_clear()
-
 function popup_saveas_clear()
 {
 	popup_saveas.tbx_name.text = text_get("saveascopy", project_name)

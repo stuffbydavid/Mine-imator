@@ -1,4 +1,3 @@
- /// action_tl_keyframes_load_file(filename, timeline, insertposition, maxlength)
 /// @arg filename
 /// @arg timeline
 /// @arg insertposition
@@ -11,6 +10,7 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 	if (string_contains(filename_ext(fn), ".miframes"))
 	{
 		log("Opening keyframes", fn)
+		
 		rootmap = project_load_start(fn)
 		if (rootmap = null)
 			return false
@@ -22,6 +22,7 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 	else
 	{
 		log("Opening legacy keyframes", fn)
+		
 		if (!project_load_legacy_start(fn))
 			return false
 		
@@ -42,6 +43,7 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 		tempo = value_get_real(rootmap[?"tempo"], project_tempo)
 		temposcale = (project_tempo / tempo)
 		kflist = rootmap[?"keyframes"]
+		
 		if (ds_list_valid(kflist))
 			num = ds_list_size(kflist)
 		else
@@ -56,6 +58,7 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 		temposcale = (project_tempo / tempo)
 		num = buffer_read_int()
 		len = buffer_read_int()
+		
 		dummy = new_obj(obj_data) // Create dummy for storing keyframe value types
 	}
 	
@@ -165,8 +168,10 @@ function action_tl_keyframes_load_file(fn, tl, insertpos, maxlen)
 	else
 	{
 		project_load_legacy_objects()
+		
 		with (dummy)
 			instance_destroy()
+		
 		buffer_delete(buffer_current)
 	}
 	

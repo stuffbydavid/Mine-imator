@@ -1,10 +1,8 @@
-/// action_project_pack(res, [record])
+/// @arg resource
+/// @arg [record]
 
 function action_project_pack(res, record = true)
 {
-	var fn;
-	fn = ""
-
 	if (record)
 	{
 		if (history_undo)
@@ -13,6 +11,8 @@ function action_project_pack(res, record = true)
 			res = history_redo_res()
 		else
 		{
+			var fn = "";
+	
 			if (res = e_option.BROWSE)
 			{
 				fn = file_dialog_open_pack()
@@ -20,6 +20,7 @@ function action_project_pack(res, record = true)
 					return 0
 
 				action_res_pack_load(fn, false, true)
+				
 				return 0
 			}
 
@@ -31,20 +32,25 @@ function action_project_pack(res, record = true)
 				{
 					var pack = null;
 					with (obj_resource)
+					{
 						if (type = e_res_type.PACK && filename = res)
 						{
 							pack = id
 							break
 						}
-
+					}
+					
 					if (pack = null)
 					{
 						fn = packs_directory_get() + res
 						if (!file_exists_lib(fn))
 							return 0
+						
 						action_res_pack_load(fn, false, true)
+						
 						return 0
 					}
+					
 					res = pack
 				}
 			}
@@ -64,6 +70,7 @@ function action_project_pack(res, record = true)
 	background_ground_update_texture_material()
 	background_ground_update_texture_normal()
 	background_sky_update_clouds()
+	
 	render_update_item()
 	render_update_text()
 	

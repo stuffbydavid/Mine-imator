@@ -1,5 +1,3 @@
-/// marker_event_create()
-
 function marker_event_create()
 {
 	pos = round(app.timeline_marker)

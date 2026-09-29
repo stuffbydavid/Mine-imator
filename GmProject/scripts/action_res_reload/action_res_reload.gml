@@ -1,5 +1,3 @@
-/// action_res_reload()
-
 function action_res_reload()
 {
 	var hobj = null;
@@ -28,8 +26,10 @@ function action_res_reload()
 	{
 		if (scenery = res_edit)
 			temp_set_scenery(scenery, !app.history_undo, hobj)
+		
 		else if (item_tex = res_edit)
 			render_generate_item()
+		
 		else if (model = res_edit)
 		{
 			temp_update_model()
@@ -51,8 +51,8 @@ function action_res_reload()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
-	
 	project_update_counts()
+	
 	lib_preview.update = true
 	res_preview.update = true
 	res_preview.reset_view = true

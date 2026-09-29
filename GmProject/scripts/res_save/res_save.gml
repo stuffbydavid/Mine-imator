@@ -1,4 +1,3 @@
-/// res_save()
 /// @desc Copies the file into the project directory.
 
 function res_save()

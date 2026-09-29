@@ -1,6 +1,5 @@
-/// builder_set_model([ongeneration])
-/// @arg [ongeneration]
 /// @desc Sets the render model of the current block.
+
 function builder_set_model(ongeneration = false)
 {
 	block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
@@ -24,7 +23,8 @@ function builder_set_model(ongeneration = false)
 			build_edge_yn = (build_pos_y = 0)
 			build_edge_zp = (build_pos_z = build_size_z - 1)
 			build_edge_zn = (build_pos_z = 0)
-			ret = script_execute(block_current.set_script);
+			
+			ret = script_execute(block_current.set_script)
 			if (ret != 0)
 				model = ret
 		}

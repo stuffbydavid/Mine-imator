@@ -1,6 +1,3 @@
-/// res_copy(to)
-/// @arg to
-
 function res_copy(to)
 {
 	to.type = type

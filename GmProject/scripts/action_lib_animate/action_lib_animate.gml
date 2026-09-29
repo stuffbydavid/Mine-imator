@@ -1,5 +1,3 @@
-/// action_lib_animate([place])
-
 function action_lib_animate(place = false)
 {
 	if (history_undo)
@@ -26,6 +24,7 @@ function action_lib_animate(place = false)
 			par = save_id_find(history_data.parent_save_id)
 			if (par = null)
 				par = app
+			
 			sceneryreplaceground = history_data.scenery_replace_ground
 		}
 		else
@@ -33,6 +32,7 @@ function action_lib_animate(place = false)
 			hobj = history_set(action_lib_animate)
 			hobj.value_default = array()
 			hobj.parent_save_id = save_id_get(app)
+			
 			if (temp_edit.type = e_temp_type.SCENERY && temp_edit.scenery != null && setting_scenery_replace_ground &&
 				temp_edit.scenery.scenery_size[X] > scenery_large_threshold && temp_edit.scenery.scenery_size[Y] > scenery_large_threshold)
 			{
@@ -92,5 +92,6 @@ function action_lib_animate(place = false)
 	
 	tl_update_list()
 	tl_update_matrix()
+	
 	project_update_counts()
 }

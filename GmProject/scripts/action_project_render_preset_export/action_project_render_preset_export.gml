@@ -1,5 +1,4 @@
-/// action_project_render_preset_export()
-/// @arg [fn]
+/// @arg [filename]
 
 function action_project_render_preset_export(fn = "")
 {
@@ -17,30 +16,10 @@ function action_project_render_preset_export(fn = "")
 		file_copy_lib(render_default_file, render_default_file + ".backup")
 	}
 	
-	json_save_start(fn)
-	json_save_object_start()
-	json_save_var("format", render_settings_format)
-	json_save_var("created_in", mineimator_version_full)
-	json_save_var("name", render_preset_edit.name)
-	
-	json_save_object_start("render")
 	with (render_preset_edit)
-	{
-		render_preset_save_settings(e_renderer.STANDARD)
-		render_preset_save_settings(e_renderer.REALISTIC)
-		render_preset_save_settings(e_renderer.COMMON)
-	}
-	if (!render_preset_edit.has_fx)
-		project_save_render_specialeffects()
-	if (!render_preset_edit.has_graphics)
-		project_save_render_graphics()
-	if (!render_preset_edit.has_materials)
-		project_save_render_materials()
-	json_save_object_done()
-	
-	json_save_object_done()
-	json_save_done()
+		render_preset_save(fn)
 	
 	log("Saved render settings", fn)
+	
 	toast_new(e_toast.POSITIVE, text_get("alertrendersaved"))
 }

@@ -1,6 +1,3 @@
-/// new_shader_sampler(name)
-/// @arg name
-
 function new_shader_sampler(name)
 {
 	var sampler = shader_get_sampler_index(shader, name);

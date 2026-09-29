@@ -1,4 +1,3 @@
-/// project_save_as()
 /// @desc Creates a new project from the saveas dialog settings.
 
 function project_save_as()

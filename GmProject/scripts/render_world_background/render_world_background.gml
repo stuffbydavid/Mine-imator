@@ -1,4 +1,3 @@
-/// render_world_background()
 /// @desc Draws background color/image.
 
 function render_world_background()
@@ -23,16 +22,16 @@ function render_world_background()
 	// Sunrise/sunset
 	if (background_twilight)
 	{
-		var cam_xyangle, p, backgroundcolor;
+		var camxyangle, p, backgroundcolor;
 		backgroundcolor = c_black
-		cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
+		camxyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
 		
 		// Sunset
-		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 270)) / 180, 1) * .25
+		p = clamp(0, 1 - abs(angle_difference_fix(camxyangle, 270)) / 180, 1) * .25
 		backgroundcolor = merge_color(backgroundcolor, background_fog_color_final, background_sunset_alpha * p)
 		
 		// Sunrise
-		p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 180, 1) * .25
+		p = clamp(0, 1 - abs(angle_difference_fix(camxyangle, 90)) / 180, 1) * .25
 		backgroundcolor = merge_color(backgroundcolor, background_fog_color_final, background_sunrise_alpha * p)
 		
 		gpu_set_blendmode(bm_add)

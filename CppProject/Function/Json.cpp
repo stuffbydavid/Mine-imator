@@ -13,6 +13,7 @@ namespace CppProject
 		IntType typeMap = 0;
 		if (args.Size() > 1)
 			typeMap = args[1];
+		
 		return json_load_from_string(file.readAll(), typeMap);
 	}
 

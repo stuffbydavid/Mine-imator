@@ -1,4 +1,3 @@
-/// minecraft_assets_texture_picker_slot_find(StringType, Array)
 /// @desc Returns a contiguous picker slot for a texture name, or -1 when absent.
 
 function minecraft_assets_texture_picker_slot_find(texturename, slotlists)

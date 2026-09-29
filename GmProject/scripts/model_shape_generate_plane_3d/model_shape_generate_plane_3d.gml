@@ -1,11 +1,10 @@
-/// model_shape_generate_plane_3d(bend, alphaarray)
+/// @desc Generates a 3D plane shape from an array of alpha values, transformed by a bend vector.
 /// @arg bend
 /// @arg alphaarray
-/// @desc Generates a 3D plane shape from an array of alpha values, transformed by a bend vector.
 
-function model_shape_generate_plane_3d(bend, alpha)
+function model_shape_generate_plane_3d(bend, alphaarr)
 {
-	if (!is_array(alpha))
+	if (!is_array(alphaarr))
 		return null
 	
 	// Plane dimensions
@@ -48,7 +47,7 @@ function model_shape_generate_plane_3d(bend, alpha)
 	var texsize, texuv, samplesize, texscale, texsizescale, ptexsize;
 	texsize = point3D_sub(to_noscale, from_noscale)
 	texuv = vec2_div(uv, texture_size)
-	samplesize = vec2(array_length(alpha), array_length(alpha[0]))
+	samplesize = vec2(array_length(alphaarr), array_length(alphaarr[0]))
 	texscale = vec2(ceil(texsize[X]) / samplesize[X], ceil(texsize[Z]) / samplesize[Y])
 	texsizescale = vec2_div(texture_size, texscale)
 	ptexsize = vec2_div(vec2(1 - 1 / 256), texsizescale)
@@ -133,7 +132,7 @@ function model_shape_generate_plane_3d(bend, alpha)
 			y2p[outer, inner] = p2
 			
 			// Pixel size
-			seginnersize = 1;
+			seginnersize = 1
 			if (arrinneraxis = X)
 			{
 				if (inner = (texture_mirror ? 0 : samplesize[X] - 1) && frac(texsize[X]) > 0)
@@ -193,15 +192,15 @@ function model_shape_generate_plane_3d(bend, alpha)
 				ax = samplesize[X] - 1 - ax
 			
 			// Transparent pixel found, continue
-			if (alpha[@ ax, ay] < 1)
+			if (alphaarr[@ ax, ay] < 1)
 				continue
 			
 			// Calculate which faces to add, continue if none are visible
 			var wface, eface, aface, bface;
-			wface = (ax = 0 || alpha[@ ax - 1, ay] < 1)
-			eface = (ax = samplesize[X] - 1 || alpha[@ ax + 1, ay] < 1)
-			aface = (ay = 0 || alpha[@ ax, ay - 1] < 1)
-			bface = (ay = samplesize[Y] - 1 || alpha[@ ax, ay + 1] < 1)
+			wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+			eface = (ax = samplesize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+			aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
+			bface = (ay = samplesize[Y] - 1 || alphaarr[@ ax, ay + 1] < 1)
 			
 			// Switch east/west face when mirrored
 			if (texture_mirror)

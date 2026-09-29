@@ -1,4 +1,4 @@
-/// history_copy_render_settings(obj)
+/// @arg object
 
 function history_copy_render_settings(obj)
 {

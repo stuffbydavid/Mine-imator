@@ -1,5 +1,4 @@
-/// popup_pattern_editor_show(obj)
-/// @arg obj
+/// @arg object
 
 function popup_pattern_editor_show(obj)
 {

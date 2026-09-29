@@ -1,5 +1,3 @@
-/// render_surface_pool_clear()
-
 function render_surface_pool_clear()
 {
 	render_surface = array_create(3, null)

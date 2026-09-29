@@ -1,4 +1,6 @@
-/// tl_value_get_vec3(valueid, [default])
+/// @arg valueid
+/// @arg [default]
+
 function tl_value_get_vec3(valueid, def = false)
 {
 	if (!def)

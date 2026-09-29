@@ -1,5 +1,4 @@
-/// bench_audio_track_update()
-/// Pick the currently selected or last added audio track timeline for new sounds.
+/// @desc Pick the currently selected or last added audio track timeline for new sounds.
 
 function bench_audio_track_update()
 {
@@ -16,7 +15,7 @@ function bench_audio_track_update()
 		{
 			for (var i = ds_list_size(app.project_timeline_list) - 1; i >= 0; i--)
 			{
-				var track = app.project_timeline_list[|i]
+				var track = app.project_timeline_list[|i];
 				if (track.type = e_tl_type.AUDIO_TRACK)
 				{
 					audio_track = track

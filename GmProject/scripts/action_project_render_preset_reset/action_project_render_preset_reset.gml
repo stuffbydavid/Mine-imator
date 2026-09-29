@@ -1,5 +1,3 @@
-/// action_project_render_preset_reset()
-
 function action_project_render_preset_reset()
 {
 	var fn;

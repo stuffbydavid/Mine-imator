@@ -1,5 +1,3 @@
-/// minecraft_update_patterns()
-
 function minecraft_update_patterns()
 {
 	// Update pattern designs for templates

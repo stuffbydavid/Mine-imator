@@ -19,14 +19,14 @@ namespace CppProject
 		{
 			switch (this->format)
 			{
-				case surface_rgba8unorm: d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM; break;
-				case surface_r8unorm: d3dFormat = DXGI_FORMAT_R8_UNORM; break;
-				case surface_rg8unorm: d3dFormat = DXGI_FORMAT_R8G8_UNORM; break;
-				case surface_rgba4unorm: d3dFormat = DXGI_FORMAT_B4G4R4A4_UNORM; break;
-				case surface_rgba16float: d3dFormat = DXGI_FORMAT_R16G16B16A16_FLOAT; break;
-				case surface_r16float: d3dFormat = DXGI_FORMAT_R16_FLOAT; break;
-				case surface_rgba32float: d3dFormat = DXGI_FORMAT_R32G32B32A32_FLOAT; break;
-				case surface_r32float: d3dFormat = DXGI_FORMAT_R32_FLOAT; break;
+				case surface_rgba8unorm:	d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM; break;
+				case surface_r8unorm:		d3dFormat = DXGI_FORMAT_R8_UNORM; break;
+				case surface_rg8unorm:		d3dFormat = DXGI_FORMAT_R8G8_UNORM; break;
+				case surface_rgba4unorm:	d3dFormat = DXGI_FORMAT_B4G4R4A4_UNORM; break;
+				case surface_rgba16float:	d3dFormat = DXGI_FORMAT_R16G16B16A16_FLOAT; break;
+				case surface_r16float:		d3dFormat = DXGI_FORMAT_R16_FLOAT; break;
+				case surface_rgba32float:	d3dFormat = DXGI_FORMAT_R32G32B32A32_FLOAT; break;
+				case surface_r32float:		d3dFormat = DXGI_FORMAT_R32_FLOAT; break;
 				default:
 					FATAL("Unknown surface format " + NumStr(this->format));
 					break;
@@ -38,45 +38,69 @@ namespace CppProject
 			switch (this->format)
 			{
 				case surface_rgba8unorm:
+				{
 					glInternalFormat = GL_RGBA8;
 					glFormat = GL_RGBA;
 					glType = GL_UNSIGNED_BYTE;
 					break;
+				}
+			
 				case surface_r8unorm:
+				{
 					glInternalFormat = GL_R8;
 					glFormat = GL_RED;
 					glType = GL_UNSIGNED_BYTE;
 					break;
+				}
+
 				case surface_rg8unorm:
+				{
 					glInternalFormat = GL_RG8;
 					glFormat = GL_RG;
 					glType = GL_UNSIGNED_BYTE;
 					break;
+				}
+
 				case surface_rgba4unorm:
+				{
 					glInternalFormat = GL_RGBA4;
 					glFormat = GL_RGBA;
 					glType = GL_UNSIGNED_SHORT_4_4_4_4;
 					break;
+				}
+
 				case surface_rgba16float:
+				{
 					glInternalFormat = GL_RGBA16F;
 					glFormat = GL_RGBA;
 					glType = GL_HALF_FLOAT;
 					break;
+				}
+
 				case surface_r16float:
+				{
 					glInternalFormat = GL_R16F;
 					glFormat = GL_RED;
 					glType = GL_HALF_FLOAT;
 					break;
+				}
+
 				case surface_rgba32float:
+				{
 					glInternalFormat = GL_RGBA32F;
 					glFormat = GL_RGBA;
 					glType = GL_FLOAT;
 					break;
+				}
+
 				case surface_r32float:
+				{
 					glInternalFormat = GL_R32F;
 					glFormat = GL_RED;
 					glType = GL_FLOAT;
 					break;
+				}
+
 				default:
 					FATAL("Unknown surface format " + NumStr(this->format));
 					break;
@@ -94,6 +118,7 @@ namespace CppProject
 			releaseAndReset(d3dDSV);
 			releaseAndReset(d3dRTV);
 			releaseAndReset(d3dSRV);
+			
 			Texture::d3dIdSRVMap.remove(d3dSRVId);
 		}
 	#endif
@@ -101,10 +126,13 @@ namespace CppProject
 		{
 			if (glFboId)
 				GFX->glDeleteFramebuffers(1, &glFboId);
+			
 			if (glColorTexId)
 				GFX->glDeleteTextures(1, &glColorTexId);
+			
 			if (glDepthStencilRboId)
 				GFX->glDeleteRenderbuffers(1, &glDepthStencilRboId);
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -128,6 +156,7 @@ namespace CppProject
 		{
 			if (size == this->size)
 				return;
+			
 			this->size = size;
 
 			// Free resources
@@ -151,6 +180,7 @@ namespace CppProject
 			texDesc.CPUAccessFlags = 0;
 			texDesc.MiscFlags = 0;
 			D3DCheckError(D3DDevice->CreateTexture2D(&texDesc, nullptr, &d3dColorTex));
+			
 			if (!d3dColorTex)
 				return;
 
@@ -169,6 +199,7 @@ namespace CppProject
 				depthStencilDesc.CPUAccessFlags = 0;
 				depthStencilDesc.MiscFlags = 0;
 				D3DCheckError(D3DDevice->CreateTexture2D(&depthStencilDesc, nullptr, &d3dDepthStencilTex));
+				
 				if (!d3dDepthStencilTex)
 					return;
 
@@ -192,8 +223,10 @@ namespace CppProject
 			srvDesc.Texture2D.MostDetailedMip = 0;
 			srvDesc.Texture2D.MipLevels = 1;
 			D3DCheckError(D3DDevice->CreateShaderResourceView(d3dColorTex, &srvDesc, &d3dSRV));
+			
 			if (!d3dSRVId)
 				d3dSRVId = Texture::d3dSRVNextId++;
+			
 			Texture::d3dIdSRVMap[d3dSRVId] = d3dSRV;
 		}
 	#endif
@@ -227,18 +260,21 @@ namespace CppProject
 
 			if (size == this->size)
 				return;
+			
 			this->size = size;
 
 			// Resize color and depth/stencil texture
 			GFX->glBindTexture(GL_TEXTURE_2D, glColorTexId);
 			GFX->glTexImage2D(GL_TEXTURE_2D, 0, glInternalFormat, size.width(), size.height(), 0, glFormat, glType, 0);
 			GFX->glBindTexture(GL_TEXTURE_2D, 0);
+			
 			if (depthBuffer)
 			{
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, glDepthStencilRboId);
 				GFX->glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.width(), size.height());
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			}
+
 			GL_CHECK_ERROR();
 
 			// Bind to FBOs
@@ -246,8 +282,10 @@ namespace CppProject
 			GFX->glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &prevFboId);
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, glFboId);
 			GFX->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glColorTexId, 0);
+			
 			if (depthBuffer)
 				GFX->glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, glDepthStencilRboId);
+			
 			GL_CHECK_ERROR();
 
 		#if DEBUG_MODE
@@ -257,6 +295,7 @@ namespace CppProject
 				WARNING("Incomplete framebuffer");
 		#endif
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, prevFboId);
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -267,8 +306,10 @@ namespace CppProject
 		if (IS_D3D11)
 		{
 			D3DContext->OMSetRenderTargets(1, &d3dRTV, d3dDSV);
+			
 			D3D11_VIEWPORT viewport = { 0, 0, (float)size.width(), (float)size.height(), 0.0, 1.0 };
 			D3DContext->RSSetViewports(1, &viewport);
+			
 			return true;
 		}
 	#endif
@@ -276,6 +317,7 @@ namespace CppProject
 		{
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, glFboId);
 			GL_CHECK_ERROR();
+
 		#if DEBUG_MODE && 1
 			GLenum status = GFX->glCheckFramebufferStatus(GL_FRAMEBUFFER);
 			GL_CHECK_ERROR();
@@ -292,8 +334,10 @@ namespace CppProject
 			GLenum buffers = GL_COLOR_ATTACHMENT0;
 			GFX->glDrawBuffers(1, &buffers);
 			GL_CHECK_ERROR();
+
 			return true;
 		}
+
 		return false;
 	}
 
@@ -330,12 +374,15 @@ namespace CppProject
 			// Create copy of texture for reading
 			ID3D11Texture2D* stagingTex;
 			ID3D11Texture2D* tex = color ? d3dColorTex : d3dDepthStencilTex;
+
 			D3D11_TEXTURE2D_DESC texDesc = {};
 			tex->GetDesc(&texDesc);
+
 			texDesc.Usage = D3D11_USAGE_STAGING;
 			texDesc.BindFlags = 0;
 			texDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 			D3DCheckError(D3DDevice->CreateTexture2D(&texDesc, nullptr, &stagingTex));
+			
 			if (!stagingTex)
 				return;
 
@@ -354,6 +401,7 @@ namespace CppProject
 				memcpy(dst + y * rowSize,
 					(uchar*)texRes.pData + y * texRes.RowPitch,
 					rowSize);
+			
 			D3DContext->Unmap(stagingTex, 0);
 			stagingTex->Release();
 		}
@@ -369,6 +417,7 @@ namespace CppProject
 			GFX->glGetIntegerv(GL_PACK_ALIGNMENT, &prevPackAlignment);
 			GFX->glPixelStorei(GL_PACK_ALIGNMENT, 1);
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, glFboId);
+			
 			if (color)
 				GFX->glReadPixels(0, 0, size.width(), size.height(), glFormat, glType, dataFlipped);
 			else
@@ -377,8 +426,10 @@ namespace CppProject
 				GFX->glReadPixels(0, 0, size.width(), size.height(), GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, dataFlipped);
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			}
+			
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, prevFboId);
 			GFX->glPixelStorei(GL_PACK_ALIGNMENT, prevPackAlignment);
+
 			GL_CHECK_ERROR();
 
 			// Copy in correct row order
@@ -415,19 +466,27 @@ namespace CppProject
 			dst[index * 4 + 2] = blue;
 			dst[index * 4 + 3] = alpha;
 		};
+
 		switch (format)
 		{
 			case surface_r8unorm:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 					setPixel(i, data[i], 0, 0, 255);
+				
 				break;
+			}
 
 			case surface_rg8unorm:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 					setPixel(i, data[i * pixelSize], data[i * pixelSize + 1], 0, 255);
+				
 				break;
+			}
 
 			case surface_rgba4unorm:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 				{
 					uint16_t packed;
@@ -448,8 +507,10 @@ namespace CppProject
 						);
 				}
 				break;
+			}
 
 			case surface_rgba16float:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 				for (IntType c = 0; c < 4; c++)
 				{
@@ -458,8 +519,10 @@ namespace CppProject
 					dst[i * 4 + c] = std::clamp((float)value, 0.f, 1.f) * 255;
 				}
 				break;
+			}
 
 			case surface_r16float:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 				{
 					qfloat16 value;
@@ -467,8 +530,10 @@ namespace CppProject
 					setPixel(i, std::clamp((float)value, 0.f, 1.f) * 255, 0, 0, 255);
 				}
 				break;
+			}
 
 			case surface_rgba32float:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 				for (IntType c = 0; c < 4; c++)
 				{
@@ -477,8 +542,10 @@ namespace CppProject
 					dst[i * 4 + c] = std::clamp(value, 0.f, 1.f) * 255;
 				}
 				break;
+			}
 
 			case surface_r32float:
+			{
 				for (IntType i = 0; i < pixelCount; i++)
 				{
 					float value;
@@ -486,6 +553,7 @@ namespace CppProject
 					setPixel(i, std::clamp(value, 0.f, 1.f) * 255, 0, 0, 255);
 				}
 				break;
+			}
 		}
 
 		delete[] data;
@@ -500,6 +568,7 @@ namespace CppProject
 		const IntType byteSize = sizeof(uint8_t);
 		const IntType floatSize = sizeof(float);
 		const IntType halfSize = floatSize / 2;
+
 		switch (format)
 		{
 			case surface_rgba8unorm:	return 4 * byteSize;

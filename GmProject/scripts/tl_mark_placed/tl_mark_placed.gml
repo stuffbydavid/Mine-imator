@@ -1,5 +1,4 @@
-/// tl_mark_placed(active)
-/// Marks a timeline as currently placing so it's ignored during depth/normal pass.
+/// @desc Marks a timeline as currently placing so it's ignored during depth/normal pass.
 
 function tl_mark_placed(active)
 {

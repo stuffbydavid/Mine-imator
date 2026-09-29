@@ -1,4 +1,3 @@
-/// draw_box_selection(x, y, width, height)
 /// @arg x
 /// @arg y
 /// @arg width

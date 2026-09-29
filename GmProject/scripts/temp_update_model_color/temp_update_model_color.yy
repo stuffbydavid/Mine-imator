@@ -6,7 +6,7 @@
   "name":"temp_update_model_color",
   "parent":{
     "name":"Update",
-    "path":"folders/Scripts/Project/Templates/Update.yy",
+    "path":"folders/Scripts/Project/Template/Update.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

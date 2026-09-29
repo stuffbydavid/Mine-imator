@@ -1,4 +1,3 @@
-/// draw_inputbox(name, x, y, width, height, placeholder, textbox, script, [disabled, [error, [font, [type, [alpha]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,61 +6,30 @@
 /// @arg placeholder
 /// @arg textbox
 /// @arg script
-/// @arg [disabled
-/// @arg [error
-/// @arg [font
-/// @arg [type
-/// @arg [alpha]]]]]
+/// @arg [disabled]
+/// @arg [error]
+/// @arg [font]
+/// @arg [type]
+/// @arg [alpha]
 
-function draw_inputbox()
+function draw_inputbox(name, xx, yy, w, h, placeholder, tbx, script, disabled = false, err = false, font = null, type = e_inputbox.LEFT, alpha = 1)
 {
-	var inputname, xx, yy, w, h, placeholder, tbx, script, disabled, err, capwid, padding, font, type, alpha, focused;
-	
-	inputname = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	w = argument[3]
-	h = argument[4]
-	placeholder = argument[5]
-	tbx = argument[6]
-	script = argument[7]
-	disabled = false
-	err = false
-	font = font_value
-	type = e_inputbox.LEFT
-	alpha = 1
-	focused = (window_focus = string(tbx))
-	
-	if (argument_count > 8)
-		disabled = argument[8]
-	
-	if (argument_count > 9)
-		err = argument[9]
-	
-	if (argument_count > 10)
-		font = argument[10]
-	
-	if (argument_count > 11)
-		type = argument[11]
-	
-	if (argument_count > 12)
-		alpha = argument[12]
-	
-	capwid = string_width(text_get(inputname))
-	padding = (h - 22) / 2
-	
+	if (font = null)
+		font = font_value
+		
 	if (textbox_jump)
 		ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
 	
 	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 		return 0
 	
-	var update;
-	
-	var mouseon;
+	var capwid, padding, focused, update, mouseon;
+	capwid = string_width(text_get(name))
+	padding = (h - 22) / 2
+	focused = (window_focus = string(tbx))
 	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "" || window_busy = string(tbx) + "click") && !disabled
 	
-	microani_set(string(tbx) + inputname, script, mouseon || window_focus = string(tbx), false, (mouseon && mouse_left) || (window_focus = string(tbx)))
+	microani_set(string(tbx) + name, script, mouseon || window_focus = string(tbx), false, (mouseon && mouse_left) || (window_focus = string(tbx)))
 	
 	// Field background
 	var bordercolor, borderalpha;
@@ -90,7 +58,7 @@ function draw_inputbox()
 	}
 	
 	// Search icon
-	if (string_contains(inputname, "search"))
+	if (string_contains(name, "search"))
 	{
 		draw_image(spr_icons, icons.SEARCH, xx + w - 14, yy + (h/2), 1, 1, tbx.text = "" ? bordercolor : c_accent, tbx.text = "" ? borderalpha : a_accent)
 		w -= 28

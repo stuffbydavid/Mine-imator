@@ -1,5 +1,3 @@
-/// tab_frame_editor_text()
-
 function tab_frame_editor_text()
 {
 	if (tl_edit.temp = null || tl_edit.type != e_tl_type.TEXT)
@@ -22,14 +20,13 @@ function tab_frame_editor_text()
 		}
 		else
 		{
-			var text;
 			if (tl_edit.value[e_value.TEXT_FONT] = null)
-				text = text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name)
+				content_text = text_get("listdefault", res_eval(tl_edit.temp.text_font).display_name)
 			else
-				text = res_eval(tl_edit.value[e_value.TEXT_FONT]).display_name
+				content_text = res_eval(tl_edit.value[e_value.TEXT_FONT]).display_name
 
 			tab_control_menu(ui_large_height)
-			draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXT_FONT], text, action_tl_frame_text_font)
+			draw_button_menu("frameeditortextfont", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXT_FONT], content_text, action_tl_frame_text_font)
 			tab_next()
 		}
 	}
@@ -47,7 +44,7 @@ function tab_frame_editor_text()
 	{
 		var sx = dx_start;
 		dx_start = dx
-		tab_set_collumns(true, 2)
+		tab_set_columns(true, 2)
 
 		tab_control_checkbox()
 		draw_checkbox("frameeditortext3d", dx, dy, tl_edit.text_3d, action_tl_text_3d)
@@ -57,7 +54,7 @@ function tab_frame_editor_text()
 		draw_checkbox("frameeditortextfacecamera", dx, dy, tl_edit.text_face_camera, action_tl_text_face_camera)
 		tab_next()
 
-		tab_set_collumns(false)
+		tab_set_columns(false)
 		dx_start = sx
 	}
 	
@@ -95,9 +92,11 @@ function tab_frame_editor_text()
 			tab_control_color(true)
 			draw_button_color("frameeditortextoutlinecolor", dx, dy, dw, tl_edit.value[e_value.TEXT_OUTLINE_COLOR], tl_edit.value_default[e_value.TEXT_OUTLINE_COLOR], false, action_tl_frame_text_outline_color, true)
 			tab_next()
+			
 			var fontres = tl_edit.temp.text_font;
 			if (tl_edit.has_temp && tl_edit.value[e_value.TEXT_FONT] != null)
 				fontres = tl_edit.value[e_value.TEXT_FONT]
+			
 			if (res_eval(fontres).type = e_res_type.FONT)
 			{
 				tab_control_dragger()

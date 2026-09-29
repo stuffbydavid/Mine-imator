@@ -1,6 +1,3 @@
-/// action_tl_path_shape_tex_mapped(mapped)
-/// @arg mapped
-
 function action_tl_path_shape_tex_mapped(mapped)
 {
 	if (history_undo)
@@ -11,7 +8,7 @@ function action_tl_path_shape_tex_mapped(mapped)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_tex_mapped = other.save_var_old_value[t]
+					self.path_shape_tex_mapped = other.save_var_old_value[t]
 					path_update = true
 				}
 			}
@@ -25,7 +22,7 @@ function action_tl_path_shape_tex_mapped(mapped)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_tex_mapped = other.save_var_new_value[t]
+					self.path_shape_tex_mapped = other.save_var_new_value[t]
 					path_update = true
 				}
 			}
@@ -43,7 +40,7 @@ function action_tl_path_shape_tex_mapped(mapped)
 			with (hobj)
 				history_save_var(other.id, other.path_shape_tex_mapped, mapped)
 			
-			id.path_shape_tex_mapped = mapped
+			self.path_shape_tex_mapped = mapped
 			path_update = true
 		}
 	}

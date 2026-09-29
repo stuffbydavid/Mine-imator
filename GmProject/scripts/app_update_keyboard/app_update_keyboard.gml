@@ -1,4 +1,3 @@
-/// app_update_keyboard()
 /// @desc Handle keyboard shortcuts.
 
 function app_update_keyboard()
@@ -8,17 +7,17 @@ function app_update_keyboard()
 		if (keyboard_check_pressed(vk_f7))
 			minecraft_assets_reload()
 	
-		if (keyboard_check_pressed(vk_f9))
+		if (keyboard_check_pressed(vk_f8))
 			open_url(file_directory_get())
 	
-		if (keyboard_check_pressed(vk_f10))
+		if (keyboard_check_pressed(vk_f9))
 			open_url(working_directory)
 	}
 	
-	if (keyboard_check_pressed(vk_f11))
+	if (keyboard_check_pressed(vk_f10))
 		open_url(log_file_get())
 	
-	if (keyboard_check_pressed(vk_f12))
+	if (keyboard_check_pressed(vk_f11))
 	{
 		if (keyboard_check(vk_shift))
 			debug_info_corner = (debug_info_corner + 1) mod 4

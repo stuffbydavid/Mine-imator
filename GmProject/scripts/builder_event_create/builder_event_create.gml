@@ -1,4 +1,3 @@
-/// builder_event_create()
 /// @desc Create event of the scenery builder handler.
 
 function builder_event_create()

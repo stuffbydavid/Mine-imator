@@ -1,5 +1,4 @@
-/// render_update_samples()
-/// @desc Detects if samples need to be cleared, resume, or stop
+/// @desc Detects if samples need to be cleared, resume, or stop.
 
 function render_update_samples()
 {
@@ -10,7 +9,7 @@ function render_update_samples()
 	render_world_done()
 	
 	// Update PCSS samples
-	var qualitychanged = render_update_pcss_kernel()
+	var qualitychanged = render_update_pcss_kernel();
 
 	// Check if sampling should reset
 	var refresh = (render_samples = -1 ||

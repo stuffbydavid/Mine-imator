@@ -1,7 +1,3 @@
-/// action_bench_schematic_folder(folder, [update])
-/// @arg folder
-/// @arg [update]
-
 function action_bench_schematic_folder(folder, update = true)
 {
 	bench_schematic_folder = folder
@@ -21,6 +17,7 @@ function action_bench_schematic_folder(folder, update = true)
 	{
 		bench_clear()
 		bench_settings.scenery = null
+		
 		with (bench_settings.preview)
 		{
 			preview_reset_view()
@@ -29,23 +26,23 @@ function action_bench_schematic_folder(folder, update = true)
 
 		for (var i = 0; i < ds_list_size(res_list.list); i++)
 		{
-			var res = res_list.list[|i]
+			var res = res_list.list[|i];
 			if (res.type = e_res_type.SCHEMATIC || res.type = e_res_type.FROM_WORLD)
 				sortlist_add(list, res)
 		}
 	}
 	else
 	{
-		var dir = schematics_directory + folder + "/"
+		var dir = schematics_directory + folder + "/";
 		if (directory_exists_lib(dir))
 		{
-			var files = file_find(dir, ".schematic")
+			var files = file_find(dir, ".schematic");
 			if (is_undefined(files))
 				files = array()
+			
 			for (var i = 0; i < array_length(files); i++)
-			{
 				files[i] = filename_new_ext(filename_name(files[i]), "")
-			}
+			
 			for (var i = 0; i < array_length(files); i++)
 				sortlist_add(list, files[i])
 		}
@@ -74,16 +71,18 @@ function action_bench_schematic_folder(folder, update = true)
 			if (schematic_folders[i] != folder)
 				continue
 			
-			var schematic = schematic_default[i]
+			var schematic = schematic_default[i];
 			for (var s = 0; s < ds_list_size(list.display_list); s++)
 			{
 				if (list.display_list[|s] = schematic)
 				{
 					sortlist_view(list, schematic)
 					action_bench_schematic_select(schematic)
+					
 					break
 				}
 			}
+			
 			break
 		}
 	}

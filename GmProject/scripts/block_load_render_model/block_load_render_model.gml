@@ -1,32 +1,31 @@
-/// block_load_render_model(model, rotation, uvlock, opaque, weight, [resource])
+/// @desc Creates a render-ready model from the loaded files.
 /// @arg model
 /// @arg rotation
 /// @arg uvlock
 /// @arg opaque
 /// @arg weight
 /// @arg [resource]
-/// @desc Creates a render-ready model from the loaded files.
 
 function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 {
-	var rotmat, modelstate, colY, alphaY, colZ, alphaZ;
+	var rotmat, modelstate, coly, alphay, colz, alphaz;
 	
 	// Get 
 	if (res = null)
 	{
 		modelstate = model_state_obj.id
-		colY = modelstate.model_preview_color_yp
-		alphaY = modelstate.model_preview_alpha_yp
-		colZ = modelstate.model_preview_color_zp
-		alphaZ = modelstate.model_preview_alpha_zp
+		coly = modelstate.model_preview_color_yp
+		alphay = modelstate.model_preview_alpha_yp
+		colz = modelstate.model_preview_color_zp
+		alphaz = modelstate.model_preview_alpha_zp
 	}
 	else
 	{
 		modelstate = null
-		colY = null
-		alphaY = null
-		colZ = null
-		alphaZ = null
+		coly = null
+		alphay = null
+		colz = null
+		alphaz = null
 	}
 	
 	// Create matrix for rotation
@@ -445,17 +444,17 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									{
 										switch (col)
 										{
-											case "grass":			face_block_vbuffer[nd] = e_block_vbuffer.GRASS;				break;
-											case "foliage":			face_block_vbuffer[nd] = e_block_vbuffer.FOLIAGE;			break;
-											case "dry_foliage":		face_block_vbuffer[nd] = e_block_vbuffer.DRY_FOLIAGE;		break;
+											case "grass":			face_block_vbuffer[nd] = e_block_vbuffer.GRASS;				break
+											case "foliage":			face_block_vbuffer[nd] = e_block_vbuffer.FOLIAGE;			break
+											case "dry_foliage":		face_block_vbuffer[nd] = e_block_vbuffer.DRY_FOLIAGE;		break
 											
-											case "oak_leaves":		face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_OAK;		break;
-											case "spruce_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_SPRUCE;		break;
-											case "birch_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_BIRCH;		break;
-											case "jungle_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_JUNGLE;		break;
-											case "acacia_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_ACACIA;		break;
-											case "dark_oak_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_DARK_OAK;	break;
-											case "mangrove_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_MANGROVE;	break;
+											case "oak_leaves":		face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_OAK;		break
+											case "spruce_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_SPRUCE;		break
+											case "birch_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_BIRCH;		break
+											case "jungle_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_JUNGLE;		break
+											case "acacia_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_ACACIA;		break
+											case "dark_oak_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_DARK_OAK;	break
+											case "mangrove_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_MANGROVE;	break
 										}	
 									}
 								}
@@ -484,8 +483,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							// Get preview color for world importer
 							if (res = null)
 							{
-								if ((nd = e_dir.UP && other.preview_color_zp = null && alphaZ != 0) ||
-									(nd = e_dir.SOUTH && other.preview_color_yp = null && alphaY != 0))
+								if ((nd = e_dir.UP && other.preview_color_zp = null && alphaz != 0) ||
+									(nd = e_dir.SOUTH && other.preview_color_yp = null && alphay != 0))
 								{
 									if (texturepage = e_block_sheet.ANIMATED)
 										buffer_current = load_assets_block_preview_ani_buffer
@@ -498,22 +497,22 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									
 									if (texturepage != e_block_sheet.STATIC16 && texturepage != e_block_sheet.ANIMATED)
 									{
-										alpha = (nd = e_dir.UP ? alphaZ : alphaY)
+										alpha = (nd = e_dir.UP ? alphaz : alphay)
 										if (alpha = -1)
 											alpha = 1
 									}
-									else if (py < sheetheight && ((nd = e_dir.UP && alphaZ = -1) || (nd = e_dir.SOUTH && alphaY = -1)))
+									else if (py < sheetheight && ((nd = e_dir.UP && alphaz = -1) || (nd = e_dir.SOUTH && alphay = -1)))
 										alpha = buffer_read_alpha(px, py, sheetwidth)
 									else
-										alpha = (nd = e_dir.UP ? alphaZ : alphaY)
+										alpha = (nd = e_dir.UP ? alphaz : alphay)
 									
 									// Not transparent
 									if (alpha > 0)
 									{
-										if ((nd = e_dir.UP && colZ = -1) || (nd = e_dir.SOUTH && colY = -1))
+										if ((nd = e_dir.UP && colz = -1) || (nd = e_dir.SOUTH && coly = -1))
 											col = buffer_read_color(px, py, sheetwidth)
 										else
-											col = (nd = e_dir.UP ? colZ : colY)
+											col = (nd = e_dir.UP ? colz : coly)
 										
 										if (face_texture_color[nd] > -1)
 											col = color_multiply(col, face_texture_color[nd])
@@ -524,24 +523,24 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 											colstr = ""
 											switch (face_block_vbuffer[nd])
 											{
-												case e_block_vbuffer.GRASS:				colstr = "grass";						break;
-												case e_block_vbuffer.FOLIAGE:			colstr = "foliage";						break;
-												case e_block_vbuffer.DRY_FOLIAGE:		colstr = "dry_foliage";					break;
-												case e_block_vbuffer.WATER:				colstr = "water";						break;
+												case e_block_vbuffer.GRASS:				colstr = "grass";						break
+												case e_block_vbuffer.FOLIAGE:			colstr = "foliage";						break
+												case e_block_vbuffer.DRY_FOLIAGE:		colstr = "dry_foliage";					break
+												case e_block_vbuffer.WATER:				colstr = "water";						break
 												
-												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_leaves_spruce;	break;
-												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_leaves_birch;		break;
+												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_leaves_spruce;	break
+												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_leaves_birch;		break
 												case e_block_vbuffer.LEAVES_OAK:
 												case e_block_vbuffer.LEAVES_JUNGLE:
 												case e_block_vbuffer.LEAVES_ACACIA:
 												case e_block_vbuffer.LEAVES_DARK_OAK:
-												case e_block_vbuffer.LEAVES_MANGROVE:	colstr = "foliage";						break;
+												case e_block_vbuffer.LEAVES_MANGROVE:	colstr = "foliage";						break
 											}
 											
 											if (rescol != null)
 												col = color_multiply(rescol, col)
 											
-											other.preview_tint = colstr;
+											other.preview_tint = colstr
 										}
 										
 										if (nd = e_dir.UP)
@@ -562,7 +561,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						// Apply to UV
 						for (var t = 0; t < 4; t++)
 						{
-							var uv = face_uv[nd, t]
+							var uv = face_uv[nd, t];
 							uv[X] *= uvscale
 							uv[Y] *= uvscale
 							face_uv[nd, t] = vec2_div(point2D_add(uv, texpos), texsize)
@@ -688,10 +687,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_block_vbuffer_xp = face_block_vbuffer[e_dir.EAST]
 						face_vbuffer_xp = face_vbuffer[e_dir.EAST]
 						face_edge_xp = face_edge[e_dir.EAST]
-						face_uv_xp_0 = face_uv[e_dir.EAST, 0];	face_uv_xp_0_x = face_uv_xp_0[X];	 face_uv_xp_0_y = face_uv_xp_0[Y];
-						face_uv_xp_1 = face_uv[e_dir.EAST, 1];	face_uv_xp_1_x = face_uv_xp_1[X];	 face_uv_xp_1_y = face_uv_xp_1[Y];
-						face_uv_xp_2 = face_uv[e_dir.EAST, 2];	face_uv_xp_2_x = face_uv_xp_2[X];	 face_uv_xp_2_y = face_uv_xp_2[Y];
-						face_uv_xp_3 = face_uv[e_dir.EAST, 3];	face_uv_xp_3_x = face_uv_xp_3[X];	 face_uv_xp_3_y = face_uv_xp_3[Y];
+						face_uv_xp_0 = face_uv[e_dir.EAST, 0]
+						face_uv_xp_0_x = face_uv_xp_0[X]
+						face_uv_xp_0_y = face_uv_xp_0[Y]
+						face_uv_xp_1 = face_uv[e_dir.EAST, 1]
+						face_uv_xp_1_x = face_uv_xp_1[X]
+						face_uv_xp_1_y = face_uv_xp_1[Y]
+						face_uv_xp_2 = face_uv[e_dir.EAST, 2]
+						face_uv_xp_2_x = face_uv_xp_2[X]
+						face_uv_xp_2_y = face_uv_xp_2[Y]
+						face_uv_xp_3 = face_uv[e_dir.EAST, 3]
+						face_uv_xp_3_x = face_uv_xp_3[X]
+						face_uv_xp_3_y = face_uv_xp_3[Y]
 					}
 					
 					if (face_render_xn)
@@ -701,10 +708,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_block_vbuffer_xn = face_block_vbuffer[e_dir.WEST]
 						face_vbuffer_xn = face_vbuffer[e_dir.WEST]
 						face_edge_xn = face_edge[e_dir.WEST]
-						face_uv_xn_0 = face_uv[e_dir.WEST, 0];	face_uv_xn_0_x = face_uv_xn_0[X];	 face_uv_xn_0_y = face_uv_xn_0[Y];
-						face_uv_xn_1 = face_uv[e_dir.WEST, 1];	face_uv_xn_1_x = face_uv_xn_1[X];	 face_uv_xn_1_y = face_uv_xn_1[Y];
-						face_uv_xn_2 = face_uv[e_dir.WEST, 2];	face_uv_xn_2_x = face_uv_xn_2[X];	 face_uv_xn_2_y = face_uv_xn_2[Y];
-						face_uv_xn_3 = face_uv[e_dir.WEST, 3];	face_uv_xn_3_x = face_uv_xn_3[X];	 face_uv_xn_3_y = face_uv_xn_3[Y];
+						face_uv_xn_0 = face_uv[e_dir.WEST, 0]
+						face_uv_xn_0_x = face_uv_xn_0[X]
+						face_uv_xn_0_y = face_uv_xn_0[Y]
+						face_uv_xn_1 = face_uv[e_dir.WEST, 1]
+						face_uv_xn_1_x = face_uv_xn_1[X]
+						face_uv_xn_1_y = face_uv_xn_1[Y]
+						face_uv_xn_2 = face_uv[e_dir.WEST, 2]
+						face_uv_xn_2_x = face_uv_xn_2[X]
+						face_uv_xn_2_y = face_uv_xn_2[Y]
+						face_uv_xn_3 = face_uv[e_dir.WEST, 3]
+						face_uv_xn_3_x = face_uv_xn_3[X]
+						face_uv_xn_3_y = face_uv_xn_3[Y]
 					}
 					
 					if (face_render_yp)
@@ -714,10 +729,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_block_vbuffer_yp = face_block_vbuffer[e_dir.SOUTH]
 						face_vbuffer_yp = face_vbuffer[e_dir.SOUTH]
 						face_edge_yp = face_edge[e_dir.SOUTH]
-						face_uv_yp_0 = face_uv[e_dir.SOUTH, 0];	face_uv_yp_0_x = face_uv_yp_0[X];	 face_uv_yp_0_y = face_uv_yp_0[Y];
-						face_uv_yp_1 = face_uv[e_dir.SOUTH, 1];	face_uv_yp_1_x = face_uv_yp_1[X];	 face_uv_yp_1_y = face_uv_yp_1[Y];
-						face_uv_yp_2 = face_uv[e_dir.SOUTH, 2];	face_uv_yp_2_x = face_uv_yp_2[X];	 face_uv_yp_2_y = face_uv_yp_2[Y];
-						face_uv_yp_3 = face_uv[e_dir.SOUTH, 3];	face_uv_yp_3_x = face_uv_yp_3[X];	 face_uv_yp_3_y = face_uv_yp_3[Y];
+						face_uv_yp_0 = face_uv[e_dir.SOUTH, 0]
+						face_uv_yp_0_x = face_uv_yp_0[X]
+						face_uv_yp_0_y = face_uv_yp_0[Y]
+						face_uv_yp_1 = face_uv[e_dir.SOUTH, 1]
+						face_uv_yp_1_x = face_uv_yp_1[X]
+						face_uv_yp_1_y = face_uv_yp_1[Y]
+						face_uv_yp_2 = face_uv[e_dir.SOUTH, 2]
+						face_uv_yp_2_x = face_uv_yp_2[X]
+						face_uv_yp_2_y = face_uv_yp_2[Y]
+						face_uv_yp_3 = face_uv[e_dir.SOUTH, 3]
+						face_uv_yp_3_x = face_uv_yp_3[X]
+						face_uv_yp_3_y = face_uv_yp_3[Y]
 					}
 					
 					if (face_render_yn)
@@ -727,10 +750,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_block_vbuffer_yn = face_block_vbuffer[e_dir.NORTH]
 						face_vbuffer_yn = face_vbuffer[e_dir.NORTH]
 						face_edge_yn = face_edge[e_dir.NORTH]
-						face_uv_yn_0 = face_uv[e_dir.NORTH, 0];	face_uv_yn_0_x = face_uv_yn_0[X];	 face_uv_yn_0_y = face_uv_yn_0[Y];
-						face_uv_yn_1 = face_uv[e_dir.NORTH, 1];	face_uv_yn_1_x = face_uv_yn_1[X];	 face_uv_yn_1_y = face_uv_yn_1[Y];
-						face_uv_yn_2 = face_uv[e_dir.NORTH, 2];	face_uv_yn_2_x = face_uv_yn_2[X];	 face_uv_yn_2_y = face_uv_yn_2[Y];
-						face_uv_yn_3 = face_uv[e_dir.NORTH, 3];	face_uv_yn_3_x = face_uv_yn_3[X];	 face_uv_yn_3_y = face_uv_yn_3[Y];
+						face_uv_yn_0 = face_uv[e_dir.NORTH, 0]
+						face_uv_yn_0_x = face_uv_yn_0[X]
+						face_uv_yn_0_y = face_uv_yn_0[Y]
+						face_uv_yn_1 = face_uv[e_dir.NORTH, 1]
+						face_uv_yn_1_x = face_uv_yn_1[X]
+						face_uv_yn_1_y = face_uv_yn_1[Y]
+						face_uv_yn_2 = face_uv[e_dir.NORTH, 2]
+						face_uv_yn_2_x = face_uv_yn_2[X]
+						face_uv_yn_2_y = face_uv_yn_2[Y]
+						face_uv_yn_3 = face_uv[e_dir.NORTH, 3]
+						face_uv_yn_3_x = face_uv_yn_3[X]
+						face_uv_yn_3_y = face_uv_yn_3[Y]
 					}
 					
 					if (face_render_zp)
@@ -740,10 +771,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_block_vbuffer_zp = face_block_vbuffer[e_dir.UP]
 						face_vbuffer_zp = face_vbuffer[e_dir.UP]
 						face_edge_zp = face_edge[e_dir.UP]
-						face_uv_zp_0 = face_uv[e_dir.UP, 0];	face_uv_zp_0_x = face_uv_zp_0[X];	 face_uv_zp_0_y = face_uv_zp_0[Y];
-						face_uv_zp_1 = face_uv[e_dir.UP, 1];	face_uv_zp_1_x = face_uv_zp_1[X];	 face_uv_zp_1_y = face_uv_zp_1[Y];
-						face_uv_zp_2 = face_uv[e_dir.UP, 2];	face_uv_zp_2_x = face_uv_zp_2[X];	 face_uv_zp_2_y = face_uv_zp_2[Y];
-						face_uv_zp_3 = face_uv[e_dir.UP, 3];	face_uv_zp_3_x = face_uv_zp_3[X];	 face_uv_zp_3_y = face_uv_zp_3[Y];
+						face_uv_zp_0 = face_uv[e_dir.UP, 0]
+						face_uv_zp_0_x = face_uv_zp_0[X]
+						face_uv_zp_0_y = face_uv_zp_0[Y]
+						face_uv_zp_1 = face_uv[e_dir.UP, 1]
+						face_uv_zp_1_x = face_uv_zp_1[X]
+						face_uv_zp_1_y = face_uv_zp_1[Y]
+						face_uv_zp_2 = face_uv[e_dir.UP, 2]
+						face_uv_zp_2_x = face_uv_zp_2[X]
+						face_uv_zp_2_y = face_uv_zp_2[Y]
+						face_uv_zp_3 = face_uv[e_dir.UP, 3]
+						face_uv_zp_3_x = face_uv_zp_3[X]
+						face_uv_zp_3_y = face_uv_zp_3[Y]
 					}
 					
 					if (face_render_zn)
@@ -753,10 +792,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_block_vbuffer_zn = face_block_vbuffer[e_dir.DOWN]
 						face_vbuffer_zn = face_vbuffer[e_dir.DOWN]
 						face_edge_zn = face_edge[e_dir.DOWN]
-						face_uv_zn_0 = face_uv[e_dir.DOWN, 0];	face_uv_zn_0_x = face_uv_zn_0[X];	 face_uv_zn_0_y = face_uv_zn_0[Y];
-						face_uv_zn_1 = face_uv[e_dir.DOWN, 1];	face_uv_zn_1_x = face_uv_zn_1[X];	 face_uv_zn_1_y = face_uv_zn_1[Y];
-						face_uv_zn_2 = face_uv[e_dir.DOWN, 2];	face_uv_zn_2_x = face_uv_zn_2[X];	 face_uv_zn_2_y = face_uv_zn_2[Y];
-						face_uv_zn_3 = face_uv[e_dir.DOWN, 3];	face_uv_zn_3_x = face_uv_zn_3[X];	 face_uv_zn_3_y = face_uv_zn_3[Y];
+						face_uv_zn_0 = face_uv[e_dir.DOWN, 0]
+						face_uv_zn_0_x = face_uv_zn_0[X]
+						face_uv_zn_0_y = face_uv_zn_0[Y]
+						face_uv_zn_1 = face_uv[e_dir.DOWN, 1]
+						face_uv_zn_1_x = face_uv_zn_1[X]
+						face_uv_zn_1_y = face_uv_zn_1[Y]
+						face_uv_zn_2 = face_uv[e_dir.DOWN, 2]
+						face_uv_zn_2_x = face_uv_zn_2[X]
+						face_uv_zn_2_y = face_uv_zn_2[Y]
+						face_uv_zn_3 = face_uv[e_dir.DOWN, 3]
+						face_uv_zn_3_x = face_uv_zn_3[X]
+						face_uv_zn_3_y = face_uv_zn_3[Y]
 					}
 					
 					other.element[other.element_amount++] = id

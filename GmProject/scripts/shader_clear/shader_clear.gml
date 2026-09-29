@@ -1,5 +1,3 @@
-/// shader_clear()
-
 function shader_clear()
 {
 	gpu_set_tex_mip_enable(mip_off)

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"new_transition_texture_map",
   "parent":{
-    "name":"App",
-    "path":"folders/Scripts/App.yy",
+    "name":"Interface",
+    "path":"folders/Scripts/App/Interface.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

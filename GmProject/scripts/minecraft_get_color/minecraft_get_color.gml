@@ -1,6 +1,4 @@
-/// minecraft_get_color(name)
-/// @arg name
-/// @desc Returns a Minecraft color based on given name
+/// @desc Returns a Minecraft color based on given name.
 
 function minecraft_get_color(name)
 {
@@ -14,14 +12,14 @@ function minecraft_get_color(name)
 			var swatch = minecraft_swatch_array[s];
 			
 			if (swatch.name != keys[0])
-				continue;
+				continue
 			
 			for (var c = 0; c < array_length(swatch.colors); c++)
 			{
 				if (keys[1] != swatch.color_names[c])
-					continue;
+					continue
 				else
-					return swatch.colors[c];
+					return swatch.colors[c]
 			}
 		}
 	}

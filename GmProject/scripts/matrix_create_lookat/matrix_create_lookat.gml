@@ -1,7 +1,3 @@
-/// matrix_create_lookat(from, to, up)
-/// @arg from
-/// @arg to
-/// @arg up
 /// @desc Built-in GameMaker function has NaN issues, do it manually.
 
 function matrix_create_lookat(from, to, up)

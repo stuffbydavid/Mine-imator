@@ -1,9 +1,8 @@
-/// string_get_real(string, [invalid])
-/// @arg string
-/// @arg [invalid]
 /// @desc An acceptable real number takes the following form:
 /// [whitespaces] [sign] [digits] [. [digits]] [{e |E} [sign] [digits]] [whitespaces]
-/// At least one digit or a decimal point must be present in prior to the exponent part
+/// At least one digit or a decimal point must be present in prior to the exponent part.
+/// @arg string
+/// @arg [invalid]
 
 function string_get_real(str, inv = undefined)
 {
@@ -14,14 +13,14 @@ function string_get_real(str, inv = undefined)
 	
 	// Trim white spaces at the end (to make it easier to check the final state)
 	len = string_length(str)
-	while (len > 1 && string_char_at(str, len) == " ")
+	while (len > 1 && string_char_at(str, len) = " ")
 		len--
 	
 	// Now check the string with a state machine
 	state = 0
 	for (var i = 1; i <= len; i++)
 	{
-		var c = string_char_at(str, i)
+		var c = string_char_at(str, i);
 		if (c = " ") // Ignore white spaces at the beginning
 		{
 			if (state = 0)

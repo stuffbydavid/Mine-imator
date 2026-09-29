@@ -1,5 +1,3 @@
-/// render_color_camera_set()
-
 function shader_color_camera_set()
 {
 	// Color

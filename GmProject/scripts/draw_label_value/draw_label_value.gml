@@ -1,4 +1,3 @@
-/// draw_label_value(x, y, width, height, caption, value, [vertical])
 /// @arg x
 /// @arg y
 /// @arg width

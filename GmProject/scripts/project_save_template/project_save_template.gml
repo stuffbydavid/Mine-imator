@@ -1,5 +1,3 @@
-/// project_save_template()
-
 function project_save_template()
 {
 	json_save_object_start()
@@ -32,7 +30,7 @@ function project_save_template()
 			if (pattern_type != "")
 			{
 				var color = ds_map_find_key(minecraft_swatch_dyes.map, pattern_base_color);
-				if (color != undefined)
+				if (!is_undefined(color))
 					json_save_var("pattern_base_color", color)
 				else
 					json_save_var("pattern_base_color", "white")
@@ -85,7 +83,7 @@ function project_save_template()
 				
 				if (res_eval(item_tex).type = e_res_type.PACK)
 				{
-					var decodedslot = minecraft_assets_texture_picker_slot_decode(item_slot, mc_assets.item_texture_list)
+					var decodedslot = minecraft_assets_texture_picker_slot_decode(item_slot, mc_assets.item_texture_list);
 					if (decodedslot[0] >= 0)
 						json_save_var("name", mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]])
 					else

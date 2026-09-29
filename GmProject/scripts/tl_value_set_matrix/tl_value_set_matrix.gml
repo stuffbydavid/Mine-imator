@@ -1,8 +1,7 @@
-/// tl_value_set_matrix(timeline, worldmatrix, [default])
+/// @desc Sets transform values from a world-space matrix.
 /// @arg timeline
 /// @arg worldmatrix
 /// @arg [default]
-/// @desc Sets transform values from a world-space matrix
 
 function tl_value_set_matrix(tl, worldmatrix, def = true)
 {

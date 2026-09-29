@@ -1,7 +1,3 @@
-/// tl_path_offset_get_position(path, offset)
-/// @arg path
-/// @arg offset
-
 function tl_path_offset_get_position(path, offset)
 {
 	var t, points;

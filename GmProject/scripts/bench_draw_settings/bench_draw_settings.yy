@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"bench_draw_settings",
   "parent":{
-    "name":"Bench",
-    "path":"folders/Scripts/App/Interface/Bench.yy",
+    "name":"Settings",
+    "path":"folders/Scripts/App/Interface/Bench/Settings.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,7 +1,3 @@
-/// shader_high_ssao_blur_set(checkx, checky)
-/// @arg checkx
-/// @arg checky
-
 function shader_high_ssao_blur_set(checkx, checky)
 {
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_depth))

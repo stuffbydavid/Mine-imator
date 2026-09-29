@@ -1,5 +1,4 @@
-/// action_project_render_preset_edit_locked()
-/// If the selected render preset is locked, copy all settings to "custom" and select it instead.
+/// @desc If the selected render preset is locked, copy all settings to "custom" and select it instead.
 
 function action_project_render_preset_edit_locked()
 {
@@ -10,6 +9,7 @@ function action_project_render_preset_edit_locked()
 		// Restore old custom settings
 		with (history_data)
 			render_preset_copy(custom)
+			
 		action_project_render_preset(render_preset_edit.file)
 		return 0
 	}
@@ -28,6 +28,7 @@ function action_project_render_preset_edit_locked()
 		// Save previous custom values
 		with (hobj)
 			render_preset_event_create()
+		
 		with (custom)
 			render_preset_copy(hobj)
 	}

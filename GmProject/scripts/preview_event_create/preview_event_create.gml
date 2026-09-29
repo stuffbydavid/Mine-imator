@@ -1,4 +1,3 @@
-/// preview_event_create()
 /// @desc Create event of a preview window.
 
 function preview_event_create()
@@ -21,8 +20,10 @@ function preview_event_create()
 	last_select = null
 	texture = null
 	reset_view = false
+	
 	view_width = 0
 	view_height = 0
+	
 	sound_play_index = null
 	sound_play_button = false
 	sound_playing = false
@@ -30,7 +31,9 @@ function preview_event_create()
 	fov = 45
 	xy_lock = false
 	world_pos = point3D(0)
+	
 	preview_reset_view()
+	
 	particle_spawner_init()
 	particle_spawn_active = true
 	

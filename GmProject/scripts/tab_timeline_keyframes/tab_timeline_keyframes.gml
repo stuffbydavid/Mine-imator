@@ -1,4 +1,11 @@
-/// tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl, mousetl)
+/// @arg timelinex
+/// @arg timeliney
+/// @arg timelinewidth
+/// @arg timelineheight
+/// @arg itemheight
+/// @arg timelinestartpos
+/// @arg mouseintimeline
+/// @arg mousetimeline
 
 function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl, mousetl)
 {
@@ -99,7 +106,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 				if (dx > tlx + tlw)
 					break
 				
-				soundlen = max(0, pitch == 0 ? 0 : ((sound.sound_samples / sample_rate / pitch) - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END]))
+				soundlen = max(0, pitch = 0 ? 0 : ((sound.sound_samples / sample_rate / pitch) - kf.value[e_value.SOUND_START] + kf.value[e_value.SOUND_END]))
 				
 				boxx = max(tlx, dx)
 				boxw = min(tlw, soundlen * project_tempo * timeline_zoom - max(0, tlx - dx))

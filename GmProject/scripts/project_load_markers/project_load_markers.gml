@@ -1,6 +1,3 @@
-/// project_load_markers(list)
-/// @arg list
-
 function project_load_markers(list)
 {
 	if (!ds_list_valid(list))

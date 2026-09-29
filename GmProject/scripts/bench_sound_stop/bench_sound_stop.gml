@@ -1,5 +1,3 @@
-/// bench_sound_stop()
-
 function bench_sound_stop()
 {
 	if (bench_settings.sound_list_current.source = "music")

@@ -3,8 +3,8 @@
   "%Name":"shader_add",
   "name":"shader_add",
   "parent":{
-    "name":"Add",
-    "path":"folders/Shaders/Effects/Add.yy",
+    "name":"Effects",
+    "path":"folders/Shaders/Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

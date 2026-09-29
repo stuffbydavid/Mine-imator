@@ -1,10 +1,9 @@
 function builder_read_schematic_nbt(structuremap)
 {
-	var structureversion, sizemap;
 	scenery_structure = true
 				
 	// Check DataVersion tag
-	structureversion = 1
+	var structureversion = 1;
 				
 	if (!is_undefined(structuremap[?"DataVersion"]))
 		structureversion = structuremap[?"DataVersion"]
@@ -16,7 +15,7 @@ function builder_read_schematic_nbt(structuremap)
 	}
 				
 	// Get size
-	sizemap = structuremap[?"size"]
+	var sizemap = structuremap[?"size"];
 	mc_builder.build_size_x = sizemap[|X]
 	mc_builder.build_size_y = sizemap[|Z]
 	mc_builder.build_size_z = sizemap[|Y]
@@ -112,7 +111,7 @@ function builder_read_schematic_nbt(structuremap)
 	}
 				
 	// Get block list
-	var blocklist = structuremap[?"blocks"]
+	var blocklist = structuremap[?"blocks"];
 	if (!ds_list_valid(blocklist))
 	{
 		log("Structure error", "Block list not found")
@@ -153,7 +152,7 @@ function builder_read_schematic_nbt(structuremap)
 			}
 						
 			// Tile entity/jigsaw
-			blocknbt = blockmap[?"nbt"];
+			blocknbt = blockmap[?"nbt"]
 			if (!is_undefined(blocknbt))
 			{
 				var finalstate = blocknbt[?"final_state"];
@@ -194,7 +193,7 @@ function builder_read_schematic_nbt(structuremap)
 					build_pos_x = pos[|X]
 					build_pos_y = pos[|Z]
 					build_pos_z = pos[|Y]
-					build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x;
+					build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x
 					block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
 					block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
 					script_execute(script, blocknbt)

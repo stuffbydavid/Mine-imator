@@ -1,5 +1,3 @@
-/// project_reset_background()
-
 function project_reset_background()
 {
 	background_dimension = "overworld"

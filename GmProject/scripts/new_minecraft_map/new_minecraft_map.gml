@@ -1,6 +1,5 @@
-/// new_minecraft_map(fn)
-/// @arg fn
 /// @desc Reads Minecraft map .dat and returns a texture. https://minecraft.wiki/w/Map_item_format
+/// @arg filename
 
 function new_minecraft_map(fn)
 {
@@ -20,7 +19,7 @@ function new_minecraft_map(fn)
 	buffer_current = buffer_load(temp_file)
 	
 	// Read NBT structure
-	rootmap = nbt_read_tag_compound();
+	rootmap = nbt_read_tag_compound()
 	if (rootmap = null)
 		return 0
 	

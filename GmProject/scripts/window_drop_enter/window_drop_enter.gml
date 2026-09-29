@@ -1,5 +1,4 @@
-/// window_drop_enter(files)
-/// Returns whether an array of filenames are accepted to be dropped on the window.
+/// @desc Returns whether an array of filenames are accepted to be dropped on the window.
 
 function window_drop_enter(files)
 {

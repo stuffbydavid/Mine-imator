@@ -1,6 +1,4 @@
-/// list_init(name)
-/// @arg name
-/// @desc Makes a list and returns it based on name
+/// @desc Makes a list and returns it based on name.
 
 function list_init(name)
 {
@@ -9,8 +7,10 @@ function list_init(name)
 	// Armor variant
 	if (name = "bencharmorvariant")
 	{
-		var armor = mc_assets.model_name_map[?"armor"]
-		var variant = state_vars_get_value(bench_settings.model_state, "helmet")
+		var armor, variant, statelist;
+		armor = mc_assets.model_name_map[?"armor"]
+		variant = state_vars_get_value(bench_settings.model_state, "helmet")
+		
 		if (state_vars_get_value(bench_settings.model_state, "chestplate") != variant ||
 			state_vars_get_value(bench_settings.model_state, "leggings") != variant ||
 			state_vars_get_value(bench_settings.model_state, "boots") != variant)
@@ -19,7 +19,7 @@ function list_init(name)
 			list_item_last.disabled = true
 		}
 		
-		var statelist = armor.states_map[?"chestplate"]
+		statelist = armor.states_map[?"chestplate"]
 		for (var i = 0; i < statelist.value_amount; i++)
 			menu_add_item(statelist.value_name[i], minecraft_asset_get_name("modelstatevalue", statelist.value_name[i]))
 		
@@ -106,7 +106,7 @@ function list_init(name)
 				if (string_contains(name, "material"))
 					tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 				else if (string_contains(name, "normal"))
-					tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_texture_normal_name_map))
+					tex = res_get_model_texture_normal(model_part_get_texture_normal_name(temp.model_file, temp.model_texture_normal_name_map))
 				else
 					tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 			}
@@ -125,7 +125,7 @@ function list_init(name)
 					if (string_contains(name, "material"))
 						tex = res_get_model_texture_material(model_part_get_texture_material_name(temp.model_file, temp.model_texture_material_name_map))
 					else if (string_contains(name, "normal"))
-						tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp.model_file, temp.model_texture_normal_name_map))
+						tex = res_get_model_texture_normal(model_part_get_texture_normal_name(temp.model_file, temp.model_texture_normal_name_map))
 					else
 						tex = res_get_model_texture(model_part_get_texture_name(temp.model_file, temp.model_texture_name_map))
 				}
@@ -155,7 +155,7 @@ function list_init(name)
 				menu_add_item(e_option.DOWNLOAD_SKIN, text_get("libraryskindownload"), null, icons.DOWNLOAD)
 			
 			// Default
-			var texobj = temp.model
+			var texobj = temp.model;
 			if (texobj != null)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
@@ -175,6 +175,7 @@ function list_init(name)
 				var tex;
 				with (temp)
 					tex = temp_get_model_tex_preview(texobj, model_file)
+				
 				menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
 			}
 			else
@@ -231,6 +232,7 @@ function list_init(name)
 					var tex;
 					with (temp)
 						tex = temp_get_model_tex_material_preview(texobj, model_file)
+					
 					menu_add_item(null, text_get("listdefault", texobj.display_name), tex)
 				}
 			}
@@ -269,7 +271,7 @@ function list_init(name)
 			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER)
 			
 			// Default
-			var texobj = temp.model
+			var texobj = temp.model;
 			if (texobj != null)
 			{
 				if (texobj.model_format = e_model_format.BLOCK)
@@ -282,9 +284,8 @@ function list_init(name)
 			if (texobj != null)
 			{
 				if (texobj.model_texture_normal_map = null && texobj.model_texture = null)
-				{
 					menu_add_item(null, text_get("listdefault", text_get("listnone")))
-				}
+				
 				else
 				{
 					var tex;
@@ -431,6 +432,7 @@ function list_init(name)
 					if (res != tl_edit.temp.text_font && font_exists(res.font))
 						menu_add_item(res, res.display_name)
 				}
+				
 				break
 			}
 
@@ -529,7 +531,6 @@ function list_init(name)
 			menu_add_item("cube", text_get("particleeditorspawnregiontypecube"), null, icons.BOUNDARY_CUBE)
 			menu_add_item("box", text_get("particleeditorspawnregiontypebox"), null, icons.BOUNDARY_BOX)
 			menu_add_item("path", text_get("particleeditorspawnregiontypepath"), null, icons.PATH)
-			
 			break
 		}
 		
@@ -539,10 +540,8 @@ function list_init(name)
 			menu_add_item(null, text_get("listnone"))
 			
 			with (obj_timeline)
-			{
 				if (type = e_tl_type.PATH)
 					menu_add_item(id, display_name)
-			}
 		
 			break
 		}
@@ -554,7 +553,6 @@ function list_init(name)
 			menu_add_item("spawn", text_get("particleeditorboundingboxtypespawn"))
 			menu_add_item("ground", text_get("particleeditorboundingboxtypeground"))
 			menu_add_item("custom", text_get("particleeditorboundingboxtypecustom"))
-			
 			break
 		}
 		
@@ -631,6 +629,7 @@ function list_init(name)
 					menu_add_item(temp.name, text_get("particleeditortypespritetemplate" + temp.name))
 				
 			}
+			
 			break
 		}
 		
@@ -660,7 +659,6 @@ function list_init(name)
 			menu_add_item("image", text_get("backgroundimagetypeimage"))
 			menu_add_item("sphere", text_get("backgroundimagetypesphere"))
 			menu_add_item("box", text_get("backgroundimagetypebox"))
-			
 			break
 		}
 		
@@ -679,6 +677,7 @@ function list_init(name)
 				var res = res_list.display_list[|i];
 				if (res = res_eval(project_pack_res))
 					continue
+				
 				if (res.sun_texture)
 					menu_add_item(res, res.display_name, res.sun_texture)
 				else if (res.texture)
@@ -703,6 +702,7 @@ function list_init(name)
 				var res = res_list.display_list[|i];
 				if (res = res_eval(project_pack_res))
 					continue
+				
 				if (res.moon_textures[0])
 					menu_add_item(res, res.display_name, res.moon_textures[background_sky_moon_phase])
 				else if (res.texture)
@@ -736,6 +736,7 @@ function list_init(name)
 				var res = res_list.display_list[|i];
 				if (res = res_eval(project_pack_res))
 					continue
+				
 				if (res.clouds_texture)
 					menu_add_item(res, res.display_name, res.clouds_texture)
 				else if (res.texture)
@@ -793,7 +794,6 @@ function list_init(name)
 			menu_add_item("suntexture", text_get("resourcespacksuntexture"))
 			menu_add_item("moontexture", text_get("resourcespackmoontexture"))
 			menu_add_item("cloudtexture", text_get("resourcespackcloudtexture"))
-			
 			break
 		}
 		
@@ -803,7 +803,6 @@ function list_init(name)
 			menu_add_item("diffuse", text_get("resourcespackmaterialdiffuse"))
 			menu_add_item("material", text_get("resourcespackmaterialmaterial"))
 			menu_add_item("normal", text_get("resourcespackmaterialnormal"))
-			
 			break
 		}
 
@@ -856,10 +855,8 @@ function list_init(name)
 			menu_add_item(null, text_get("listnone"))
 			
 			with (obj_timeline)
-			{
 				if (type = e_tl_type.PATH)
 					menu_add_item(id, display_name)
-			}
 			
 			break
 		}
@@ -926,6 +923,7 @@ function list_init(name)
 				var tex;
 				with (temp)
 					tex = temp_get_model_tex_preview(texobj, modelfile)
+				
 				menu_add_item(texsource, text_get("listdefault", texobj.display_name), tex)
 			}
 			else
@@ -941,6 +939,7 @@ function list_init(name)
 				var tex;
 				with (temp)
 					tex = temp_get_model_tex_preview(res, model_file)
+				
 				if (tex != null)
 					menu_add_item(res, res.display_name, tex)
 			}
@@ -993,6 +992,7 @@ function list_init(name)
 					var tex;
 					with (temp)
 						tex = temp_get_model_tex_material_preview(texobj, modelfile)
+					
 					menu_add_item(texsource, text_get("listdefault", texobj.display_name), tex)
 				}
 			}
@@ -1009,6 +1009,7 @@ function list_init(name)
 				var tex;
 				with (temp)
 					tex = temp_get_model_tex_material_preview(res, model_file)
+				
 				if (tex != null)
 					menu_add_item(res, res.display_name, tex)
 			}
@@ -1061,6 +1062,7 @@ function list_init(name)
 					var tex;
 					with (temp)
 						tex = temp_get_model_tex_normal_preview(texobj, modelfile)
+					
 					menu_add_item(texsource, text_get("listdefault", texobj.display_name), tex)
 				}
 			}
@@ -1077,6 +1079,7 @@ function list_init(name)
 				var tex;
 				with (temp)
 					tex = temp_get_model_tex_normal_preview(res, model_file)
+				
 				if (tex != null)
 					menu_add_item(res, res.display_name, tex)
 			}
@@ -1100,6 +1103,7 @@ function list_init(name)
 				texsource = tl_edit.temp.block_tex_normal
 			else if (name = "frameeditorblocktex")
 				texsource = tl_edit.temp.block_tex
+			
 			texobj = res_eval(texsource)
 			
 			// Animatable block in scenery
@@ -1127,6 +1131,7 @@ function list_init(name)
 								texsource = block_tex
 						}
 					}
+					
 					texobj = res_eval(texsource)
 				}
 			}
@@ -1200,6 +1205,7 @@ function list_init(name)
 					menu_add_item(null, text_get("listdefault", texobj.display_name))
 				else
 					menu_add_item(null, text_get("listdefault", texobj.display_name), texobj.texture)
+				
 				menu_add_item(0, text_get("listnone"))
 			}
 			else
@@ -1247,7 +1253,7 @@ function list_init(name)
 
 			for (var i = 0; i < ds_list_size(project_timeline_list); i++)
 			{
-				var track = project_timeline_list[|i]
+				var track = project_timeline_list[|i];
 				if (track.type = e_tl_type.AUDIO_TRACK)
 					menu_add_item(track, track.display_name)
 			}
@@ -1318,7 +1324,6 @@ function list_init(name)
 			menu_add_item("left", text_get("settingswatermarkleft"))
 			menu_add_item("center", text_get("settingswatermarkcenter"))
 			menu_add_item("right", text_get("settingswatermarkright"))
-			
 			break
 		}
 		
@@ -1327,7 +1332,6 @@ function list_init(name)
 			menu_add_item("top", text_get("settingswatermarktop"))
 			menu_add_item("center", text_get("settingswatermarkcenter"))
 			menu_add_item("bottom", text_get("settingswatermarkbottom"))
-			
 			break
 		}
 		
@@ -1342,7 +1346,7 @@ function list_init(name)
 			
 			for (var i = 0; i < ds_list_size(videotemplate_list); i++)
 				with (videotemplate_list[|i])
-					menu_add_item(id, text_get("projectvideosizetemplate" + id.name) + " (" + string(width) + "x" + string(height) + ")")
+					menu_add_item(id, text_get("projectvideosizetemplate" + self.name) + " (" + string(width) + "x" + string(height) + ")")
 			
 			menu_add_item(0, text_get("projectvideosizecustom"))
 			
@@ -1358,10 +1362,10 @@ function list_init(name)
 			menu_add_item("", mc_res.display_name, mc_res.block_preview_texture)
 
 			// List packs under /Packs
-			var packfiles = file_find(packs_directory_get(), ".zip")
+			var packfiles = file_find(packs_directory_get(), ".zip");
 			for (var i = 0; i < array_length(packfiles); i++)
 			{
-				var pack = filename_name(packfiles[i])
+				var pack = filename_name(packfiles[i]);
 				menu_add_item(pack, pack, minecraft_get_pack_image(pack))
 			}
 
@@ -1370,7 +1374,7 @@ function list_init(name)
 			{
 				for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 				{
-					var res = res_list.display_list[|i]
+					var res = res_list.display_list[|i];
 					if (res.type = e_res_type.PACK && !file_exists_lib(packs_directory_get() + res.filename))
 						menu_add_item(res.filename, res.filename, res.block_preview_texture)
 				}
@@ -1386,7 +1390,6 @@ function list_init(name)
 			menu_add_item("mov", text_get("exportmovieformatmov"))
 			menu_add_item("wmv", text_get("exportmovieformatwmv"))
 			menu_add_item("png", text_get("exportmovieformatpng"))
-			
 			break
 		}
 		
@@ -1397,7 +1400,6 @@ function list_init(name)
 			menu_add_item(e_renderer.QUICK, text_get("renderrendererquick"))
 			menu_add_item(e_renderer.STANDARD, text_get("renderrendererstandard"))
 			menu_add_item(e_renderer.REALISTIC, text_get("renderrendererrealistic"))
-			
 			break
 		}
 		
@@ -1408,7 +1410,6 @@ function list_init(name)
 			menu_add_item(30, "30")
 			menu_add_item(60, "60")
 			menu_add_item(0, text_get("exportmovieframeratecustom"))
-			
 			break
 		}
 		
@@ -1417,7 +1418,6 @@ function list_init(name)
 		{
 			menu_add_item(e_renderer.STANDARD, text_get("renderrendererstandard"), null)
 			menu_add_item(e_renderer.REALISTIC, text_get("renderrendererrealistic"), null)
-			
 			break
 		}
 		
@@ -1441,7 +1441,7 @@ function list_init(name)
 				menu_add_item(file, text)
 			}
 			
-			break;
+			break
 		}
 		
 		// Blend mode
@@ -1456,10 +1456,10 @@ function list_init(name)
 		// Project sort
 		case "startupsortby":
 		{
-			list_item_add(text_get("recentsortdatenewest"), e_recent_sort.date_newest, "", null, null, null, action_recent_sort)
-			list_item_add(text_get("recentsortdateoldest"), e_recent_sort.date_oldest, "", null, null, null, action_recent_sort)
-			list_item_add(text_get("recentsortnameaz"), e_recent_sort.name_az, "", null, null, null, action_recent_sort)
-			list_item_add(text_get("recentsortnameza"), e_recent_sort.name_za, "", null, null, null, action_recent_sort)
+			list_item_add(text_get("recentsortdatenewest"), e_recent_sort.DATE_NEWEST, "", null, null, null, action_recent_sort)
+			list_item_add(text_get("recentsortdateoldest"), e_recent_sort.DATE_OLDEST, "", null, null, null, action_recent_sort)
+			list_item_add(text_get("recentsortnameaz"), e_recent_sort.NAME_A_Z, "", null, null, null, action_recent_sort)
+			list_item_add(text_get("recentsortnameza"), e_recent_sort.NAME_Z_A, "", null, null, null, action_recent_sort)
 			
 			break
 		}
@@ -1480,7 +1480,7 @@ function list_init(name)
 		case "settingslanguage":
 		{
 			with (obj_language)
-				list_item_add(id.name, languages_directory + id.filename, id.locale, null, null, null, action_setting_language_load)
+				list_item_add(self.name, languages_directory + self.filename, self.locale, null, null, null, action_setting_language_load)
 			
 			break
 		}
@@ -1533,6 +1533,7 @@ function list_init(name)
 				menu_add_item(2, "200%")
 			if (interface_scale_default_get() >= 3)
 				menu_add_item(3, "300%")
+			
 			break
 		}
 		
@@ -1544,7 +1545,6 @@ function list_init(name)
 			
 			menu_add_item(e_alpha_mode.HASHED, text_get("renderalphamodehashed"))
 			menu_add_item(e_alpha_mode.BLEND, text_get("renderalphamodeblend"))
-			
 			break
 		}
 		
@@ -1568,7 +1568,6 @@ function list_init(name)
 			menu_add_item(e_tonemapper.PBR_NEUTRAL, text_get("rendertonemapperpbrneutral"))
 			menu_add_item(e_tonemapper.AGX, text_get("rendertonemapperagx"))
 			menu_add_item(e_tonemapper.AGX_PUNCHY, text_get("rendertonemapperagxpunchy"))
-			
 			break
 		}
 		

@@ -1,10 +1,6 @@
-/// history_restore_res(save)
-/// @arg save
-
 function history_restore_res(save)
 {
-	var res;
-	res = new_obj(obj_resource)
+	var res = new_obj(obj_resource);
 	
 	with (save)
 		res_copy(res)
@@ -20,41 +16,23 @@ function history_restore_res(save)
 		
 		// Restore template usage
 		for (var s = 0; s < save.usage_model_amount; s++)
-		{
 			with (save_id_find(save.usage_model_save_id[s]))
 				model = res
-		}
 		
-		#region Model textures
-		
+		// Restore model textures
 		for (var s = 0; s < save.usage_model_tex_amount; s++)
-		{
 			with (save_id_find(save.usage_model_tex_save_id[s]))
-			{
 				model_tex = res
-			}
-		}
 		
 		for (var s = 0; s < save.usage_model_tex_material_amount; s++)
-		{
 			with (save_id_find(save.usage_model_tex_material_save_id[s]))
-			{
 				model_tex_material = res
-			}
-		}
 		
 		for (var s = 0; s < save.usage_model_tex_normal_amount; s++)
-		{
 			with (save_id_find(save.usage_model_tex_normal_save_id[s]))
-			{
 				model_tex_normal = res
-			}
-		}
 		
-		#endregion
-		
-		#region Item textures
-		
+		// Restore item textures
 		for (var s = 0; s < save.usage_item_tex_amount; s++)
 		{
 			with (save_id_find(save.usage_item_tex_save_id[s]))
@@ -82,42 +60,25 @@ function history_restore_res(save)
 			}
 		}
 		
-		#endregion
-		
-		#region Block textures
-		
+		// Restore block textures
 		for (var s = 0; s < save.usage_block_tex_amount; s++)
-		{
 			with (save_id_find(save.usage_block_tex_save_id[s]))
-			{
 				block_tex = res
-			}
-		}
 		
 		for (var s = 0; s < save.usage_block_tex_material_amount; s++)
-		{
 			with (save_id_find(save.usage_block_tex_material_save_id[s]))
-			{
 				block_tex_material = res
-			}
-		}
 		
 		for (var s = 0; s < save.usage_block_tex_normal_amount; s++)
-		{
 			with (save_id_find(save.usage_block_tex_normal_save_id[s]))
-			{
 				block_tex_normal = res
-			}
-		}
 		
-		#endregion
-		
+		// Restore scenery
 		for (var s = 0; s < save.usage_scenery_amount; s++)
 			with (save_id_find(save.usage_scenery_save_id[s]))
 				scenery = res
 		
-		#region Shape textures
-		
+		// Restore shape textures
 		for (var s = 0; s < save.usage_shape_tex_amount; s++)
 			with (save_id_find(save.usage_shape_tex_save_id[s]))
 				shape_tex = res
@@ -130,15 +91,10 @@ function history_restore_res(save)
 			with (save_id_find(save.usage_shape_tex_normal_save_id[s]))
 				shape_tex_normal = res
 		
-		#endregion
-		
+		// Restore font
 		for (var s = 0; s < save.usage_text_font_amount; s++)
-		{
 			with (save_id_find(save.usage_text_font_save_id[s]))
-			{
 				text_font = res
-			}
-		}
 		
 		// Restore particle type usage
 		for (var s = 0; s < save.usage_sprite_tex_amount; s++)
@@ -195,49 +151,33 @@ function history_restore_res(save)
 				text_font = res
 		
 		for (var s = 0; s < save.usage_tl_glint_tex_amount; s++)
-		{
 			with (save_id_find(save.usage_tl_glint_tex_save_id[s]))
-			{
 				glint_tex = res
-			}
-		}
 
 		for (var s = 0; s < save.usage_tl_block_tex_amount; s++)
-		{
 			with (save_id_find(save.usage_tl_block_tex_save_id[s]))
 				block_tex = res
-		}
 
 		for (var s = 0; s < save.usage_tl_block_tex_material_amount; s++)
-		{
 			with (save_id_find(save.usage_tl_block_tex_material_save_id[s]))
 				block_tex_material = res
-		}
 
 		for (var s = 0; s < save.usage_tl_block_tex_normal_amount; s++)
-		{
 			with (save_id_find(save.usage_tl_block_tex_normal_save_id[s]))
 				block_tex_normal = res
-		}
 
 		// Restore background usage
 		if (save.usage_background_image)
 			app.background_image = res
 		
 		if (save.usage_background_sky_sun_tex)
-		{
 			app.background_sky_sun_tex = res
-		}
 		
 		if (save.usage_background_sky_moon_tex)
-		{
 			app.background_sky_moon_tex = res
-		}
 		
 		if (save.usage_background_sky_clouds_tex)
-		{
 			app.background_sky_clouds_tex = res
-		}
 		
 		if (save.usage_background_ground_tex)
 		{

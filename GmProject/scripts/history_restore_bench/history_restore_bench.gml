@@ -1,6 +1,3 @@
-/// history_restore_bench(save)
-/// @arg save
-
 function history_restore_bench(save)
 {
 	with (save)
@@ -39,6 +36,7 @@ function history_restore_bench(save)
 			
 			for (var p = 0; p < save.pc_type_amount; p++)
 				history_restore_ptype(save.pc_type_save_obj[p], id)
+			
 			temp_particles_restart()
 		}
 	}

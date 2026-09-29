@@ -1,55 +1,51 @@
-/// draw_button_label(name, x, y, [width, [icon, [type, [script, [anchor, [disabled]]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
-/// @arg [width
-/// @arg [icon
-/// @arg [type
-/// @arg [script
-/// @arg [anchor
-/// @arg [disabled]]]]]]
+/// @arg [width]
+/// @arg [icon]
+/// @arg [type]
+/// @arg [script]
+/// @arg [anchor]
+/// @arg [disabled]
 
-function draw_button_label(name, xx, yy, w = null, icon = null, type = e_button.PRIMARY, script = null, anchor = e_anchor.LEFT, disabled = false)
+function draw_button_label(name, xx, yy, wid = null, icon = null, type = e_button.PRIMARY, script = null, anchor = e_anchor.LEFT, disabled = false)
 {
-	var h, font, cap, capwid, customw;
-	h = 32
-	
-	cap = text_get(name)
-	
-	h = (type != e_button.TOOLBAR ? 32 : toolbar_size)
+	var hei, font, cap, capwid, customw;
+	hei = (type != e_button.TOOLBAR ? 32 : toolbar_size)
 	font = (type != e_button.TOOLBAR ? font_button : font_value)
+	cap = text_get(name)
 	
 	if (type = e_button.BIG)
 	{
-		h = 64
+		hei = 64
 		font = font_heading_big
 	}
 	else if (type = e_button.MEDIUM)
-		h = 48
+		hei = 48
 	
 	// Calculate width/position
 	draw_set_font(font)
 	capwid = string_width(cap)
 	
-	if (w = null)
+	if (wid = null)
 	{
-		w = capwid + (icon = null ? 24 : 52)
+		wid = capwid + (icon = null ? 24 : 52)
 		customw = false
 	}
 	else
 		customw = true
 	
 	if (anchor = e_anchor.CENTER)
-		xx = xx - floor(w/2)
+		xx = xx - floor(wid/2)
 	else if (anchor = e_anchor.RIGHT)
-		xx -= w
+		xx -= wid
 	
-	if (yy > content_y + content_height || yy + h < content_y || xx > content_x + content_width || xx + w < content_x)
+	if (yy > content_y + content_height || yy + hei < content_y || xx > content_x + content_width || xx + wid < content_x)
 		return 0
 	
 	var mouseon, mouseclick;
 	
-	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && !disabled
+	mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon && !disabled
 	mouseclick = mouseon && mouse_left
 	microani_set(name, script, mouseon, mouseclick, false)
 	
@@ -88,36 +84,36 @@ function draw_button_label(name, xx, yy, w = null, icon = null, type = e_button.
 	}
 	
 	// Background
-	draw_box(xx, yy, w, h, false, backcolor, backalpha)
+	draw_box(xx, yy, wid, hei, false, backcolor, backalpha)
 	
 	// Bevel
 	if (type = e_button.PRIMARY || type = e_button.MEDIUM || type = e_button.BIG)
-		draw_box_bevel(xx, yy, w, h, 1)
+		draw_box_bevel(xx, yy, wid, hei, 1)
 	
 	// Background
 	if (type = e_button.SECONDARY)
 	{
-		draw_box(xx, yy, w, h, false, c_level_top, draw_get_alpha())
-		draw_outline(xx, yy, w, h, 1, linecolor, linealpha, 1)
+		draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
+		draw_outline(xx, yy, wid, hei, 1, linecolor, linealpha, 1)
 	}
 	
 	// Focus ring
-	draw_box_hover(xx, yy, w, h, microani_arr[e_microani.PRESS])
+	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	if (customw)
-		contentx = floor((xx + w/2) - ((capwid + (icon = null ? 0 : 32)) / 2))
+		contentx = floor((xx + wid/2) - ((capwid + (icon = null ? 0 : 32)) / 2))
 	else
 		contentx = floor(xx + (icon = null ? 12 : 8))
 	
 	// Draw icon
 	if (icon != null)
 	{
-		draw_image(spr_icons, icon, contentx + 12, yy + h/2, 1, 1, contentcolor, contentalpha)
+		draw_image(spr_icons, icon, contentx + 12, yy + hei/2, 1, 1, contentcolor, contentalpha)
 		contentx += 32
 	}
 	
 	// Draw label
-	draw_label(cap, contentx, yy + h/2, fa_left, fa_middle, contentcolor, contentalpha)
+	draw_label(cap, contentx, yy + hei/2, fa_left, fa_middle, contentcolor, contentalpha)
 	
 	microani_update(mouseon, mouseclick, false, disabled)
 	

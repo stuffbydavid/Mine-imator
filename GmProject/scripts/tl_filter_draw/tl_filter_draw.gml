@@ -1,5 +1,3 @@
-/// tl_filter_draw()
-
 function tl_filter_draw()
 {
 	draw_set_font(font_label)

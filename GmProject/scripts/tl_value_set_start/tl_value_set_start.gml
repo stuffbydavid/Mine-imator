@@ -1,7 +1,3 @@
-/// tl_value_set_start(script, combine)
-/// @arg script
-/// @arg combine
-
 function tl_value_set_start(script, combine)
 {
 	with (app)
@@ -76,6 +72,7 @@ function tl_value_set_start(script, combine)
 			{
 				history_data.kf_set_tl_save_id[history_data.kf_set_amount] = save_id_get(timeline)
 				history_data.kf_set_index[history_data.kf_set_amount] = ds_list_find_index(timeline.keyframe_list, id)
+				history_data.kf_set_created[history_data.kf_set_amount] = created
 				history_data.kf_set_amount++
 			}
 		}

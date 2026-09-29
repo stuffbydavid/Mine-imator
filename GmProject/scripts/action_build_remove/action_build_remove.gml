@@ -1,5 +1,3 @@
-/// action_build_remove()
-
 function action_build_remove()
 {
 	var hobj, target, remove, structure;
@@ -8,6 +6,7 @@ function action_build_remove()
 	{
 		hobj = history_data
 		remove = history_restore_tl(hobj.remove_save_obj)
+		
 		if (hobj.build_structure_removed)
 			action_build_structure(remove)
 	}
@@ -51,7 +50,7 @@ function action_build_remove()
 			// Check the complete special block tree
 			if (target.type = e_tl_type.SPECIAL_BLOCK)
 			{
-				var children = [target];
+				var children = [ target ];
 				for (var t = 0; t < array_length(children); t++)
 				{
 					var child = children[t];
@@ -62,7 +61,7 @@ function action_build_remove()
 					{
 						var part = child.tree_list[|c];
 						if (part.type != e_tl_type.MODEL_PART || part.part_of != target)
-							return 0
+    						return 0
 						array_add(children, part)
 					}
 				}
@@ -84,6 +83,7 @@ function action_build_remove()
 		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
 			with (place_target_tl_part_of)
 				tl_mark_place_target(false)
+		
 		place_target_tl = null
 		place_target_tl_part_of = null
 
@@ -100,12 +100,15 @@ function action_build_remove()
 
 	place_pos = null
 	place_view_pos = null
+	
 	view_main.update_place_surfaces = true
 	view_second.update_place_surfaces = true
 
 	tl_update_list()
 	tl_update_length()
 	tl_update_matrix()
+	
 	app_update_tl_edit()
+	
 	project_update_counts()
 }

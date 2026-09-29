@@ -1,5 +1,4 @@
-/// project_load_values_update(map)
-/// @desc Updates values from previous versions
+/// @desc Updates values from previous versions.
 
 function project_load_values_update(map = null)
 {
@@ -89,7 +88,7 @@ function project_load_values_update(map = null)
 		}
 	}
 	
-	// Display texture animation speed as a percentage (2.1.0)
+	// Display texture animation speed as a percentage (2.1)
 	if (load_format < e_project.FORMAT_CTB_106) // Convert from pre-2.1 arbitrary decimal number
 	{
 		if (timeline.type = e_tl_type.BACKGROUND)

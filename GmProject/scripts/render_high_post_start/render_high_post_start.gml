@@ -1,5 +1,5 @@
-/// render_high_post_start(basesurf, [hdr])
-/// @arg basesurf
+/// @arg basesurface
+/// @arg [hdr]
 
 function render_high_post_start(prevsurf, hdr = false)
 {
@@ -27,7 +27,7 @@ function render_high_post_start(prevsurf, hdr = false)
 	// Initialize lens surface if needed
 	if (render_camera_lens_dirt && !render_effects_done)
 	{
-		render_surface_lens = surface_require(render_surface_lens, render_width, render_height, false, e_surface_format.rgba16float)
+		render_surface_lens = surface_require(render_surface_lens, render_width, render_height, false, surface_rgba16float)
 		
 		surface_set_target(render_surface_lens)
 		{

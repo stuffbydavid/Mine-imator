@@ -1,7 +1,6 @@
 /// CppSeparate VecType vec4_mul(VecType, VarType)
-/// vec4_mul(vector, mul)
 /// @arg vector
-/// @arg mul
+/// @arg multiplier
 
 function vec4_mul(vec, m)
 {

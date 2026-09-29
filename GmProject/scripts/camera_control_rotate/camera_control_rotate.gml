@@ -1,4 +1,3 @@
-/// camera_control_rotate(camera, lockx, locky)
 /// @arg camera
 /// @arg lockx
 /// @arg locky

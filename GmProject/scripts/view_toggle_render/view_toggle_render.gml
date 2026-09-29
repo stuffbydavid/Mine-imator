@@ -1,5 +1,3 @@
-/// view_toggle_render()
-
 function view_toggle_render()
 {
 	if (view_second.show)

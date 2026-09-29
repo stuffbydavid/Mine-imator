@@ -275,6 +275,7 @@ namespace CppProject
 		Mode mode = DEFAULT;
 		BoolType hasPlayer = false, resetUpdate = false;
 		QString dimension = "";
+
 		Matrix matrixV, matrixP, playerM, selectionM;
 		RealType camAngleXY, camAngleZ, camTargetDis;
 		VecType camPos, camTarget, spawnPos, playerPos, playerRot;
@@ -287,6 +288,7 @@ namespace CppProject
 			RealType angleZStart, angleZEnd;
 			BoolType animateCamPos = false;
 		} camAnim;
+
 		QVector<Region*> openLoadRegions;
 		WorldVec worldOriginPos;
 

@@ -1,11 +1,9 @@
-/// render_preset_equals(obj, renderer, allsettings)
-
 function render_preset_equals(obj, renderer, allsettings)
 {
 	var match, set, objset;
 	match = false
 
-	if (renderer == e_renderer.STANDARD && has_standard)
+	if (renderer = e_renderer.STANDARD && has_standard)
 	{
 		set = self.renderer[renderer]
 		objset = obj.renderer[renderer]
@@ -26,7 +24,7 @@ function render_preset_equals(obj, renderer, allsettings)
 		)
 	}
 
-	if (renderer == e_renderer.REALISTIC && has_realistic)
+	if (renderer = e_renderer.REALISTIC && has_realistic)
 	{
 		set = self.renderer[renderer]
 		objset = obj.renderer[renderer]
@@ -79,15 +77,15 @@ function render_preset_equals(obj, renderer, allsettings)
 		gamma = obj.gamma
 	)
 
-	set = self.renderer[e_renderer.STANDARD];
-	objset = obj.renderer[e_renderer.STANDARD];
+	set = self.renderer[e_renderer.STANDARD]
+	objset = obj.renderer[e_renderer.STANDARD]
 	match = (
 		match &&
 		set.shadows_blur_size = objset.shadows_blur_size
 	)
 
-	set = self.renderer[e_renderer.REALISTIC];
-	objset = obj.renderer[e_renderer.REALISTIC];
+	set = self.renderer[e_renderer.REALISTIC]
+	objset = obj.renderer[e_renderer.REALISTIC]
 	match = (
 		match &&
 		set.subsurface_backlight_spread = objset.subsurface_backlight_spread &&

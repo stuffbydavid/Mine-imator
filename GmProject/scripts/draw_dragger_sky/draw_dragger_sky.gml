@@ -1,11 +1,10 @@
-/// draw_dragger_sky(name, x, y, value, default, script, tbx, time)
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg value
 /// @arg default
 /// @arg script
-/// @arg tbx
+/// @arg textbox
 /// @arg time
 
 function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
@@ -73,7 +72,6 @@ function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
 		window_mouse_set(mouse_click_x, mouse_click_y)
 		
 		var d = snap(dragger_drag_value, snapval) - value;
-		
 		if (d <> 0)
 		{
 			script_execute(script, d, true)

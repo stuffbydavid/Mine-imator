@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"app_startup_keybinds",
   "parent":{
-    "name":"Keybinds",
-    "path":"folders/Scripts/App/Keybinds.yy",
+    "name":"Startup",
+    "path":"folders/Scripts/App/Interface/Startup.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

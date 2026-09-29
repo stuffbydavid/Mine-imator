@@ -1,5 +1,3 @@
-/// minecraft_game_startup()
-
 function minecraft_game_startup()
 {
 	globalvar minecraft_game_found, minecraft_game_assets_latest, minecraft_sound_filter_list, minecraft_music_filter_list;
@@ -21,25 +19,25 @@ function minecraft_game_startup()
 		return 0
 	
 	// Parse asset files
-	var folder, latestid
+	var folder, latestid;
 	folder = file_find_first(versionsdir + "*", 16)
 	latestid = 0
 	while (folder != "")
 	{
-		var filename = versionsdir + folder + "/" + folder + ".json"
+		var filename = versionsdir + folder + "/" + folder + ".json";
 		if (file_exists_lib(filename))
 		{
-			var map = json_load(filename)
+			var map = json_load(filename);
 			if (ds_map_valid(map))
 			{
-				var assetindex = map[?"assetIndex"]
+				var assetindex = map[?"assetIndex"];
 				if (ds_map_valid(assetindex))
 				{
-					var assetid = assetindex[?"id"]
+					var assetid = assetindex[?"id"];
 					if (is_string(assetid) && assetid != "")
 					{
 						// Asset IDs are assumed to increase for new Minecraft versions
-						var assetideval = eval(assetid, 0)
+						var assetideval = eval(assetid, 0);
 						if (assetideval > latestid)
 						{
 							var assetsfile = minecraft_java_directory_get() + "/assets/indexes/" + assetid + ".json";

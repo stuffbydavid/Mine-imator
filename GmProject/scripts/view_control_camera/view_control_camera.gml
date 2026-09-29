@@ -1,6 +1,3 @@
-/// view_control_camera(view)
-/// @arg view
-
 function view_control_camera(view)
 {
 	var len, xyang, zang;
@@ -13,6 +10,7 @@ function view_control_camera(view)
 		xyang[MAT_X] = world_pos_rotate[X]
 		xyang[MAT_Y] = world_pos_rotate[Y]
 		xyang[MAT_Z] = world_pos_rotate[Z]
+		
 		matrix_remove_scale(xyang)
 	}
 	
@@ -98,7 +96,7 @@ function view_control_camera(view)
 		mouse_cursor = cr_handpoint
 		
 		// Move
-		var veclen = vec2_length(view_control_vec)
+		var veclen = vec2_length(view_control_vec);
 		if (veclen > 0 && !mouse_still)
 		{
 			var vecmouse, vecdot, move, snapval, newval, dis;

@@ -1,4 +1,3 @@
-/// vbuffer_create_sphere(radius, tex1, tex2, detail, smooth, invert)
 /// @arg radius
 /// @arg tex1
 /// @arg tex2
@@ -84,35 +83,50 @@ function vbuffer_create_sphere(rad, tex1, tex2, detail, smooth, invert)
 				n3z = normz
 				n4z = normz
 			}
+
+			var normal1, normal2, normal3, normal4;
+			normal1 = vec3_normalize(vec3(n1x, n1y, n1z))
+			if (smooth)
+			{
+				normal2 = vec3_normalize(vec3(n2x, n2y, n2z))
+				normal3 = vec3_normalize(vec3(n3x, n3y, n3z))
+				normal4 = vec3_normalize(vec3(n4x, n4y, n4z))
+			}
+			else
+			{
+				normal2 = normal1
+				normal3 = normal1
+				normal4 = normal1
+			}
 			
 			if (jp > 0) 
 			{
 				if (invert)
 				{
-					vertex_add(x3, y3, z3, n3x * n, n3y * n, n3z * n, tex2[X] - i * texsize[X], texmid[Y] - t3z * (texsize[Y] / 2))
-					vertex_add(x1, y1, z1, n1x * n, n1y * n, n1z * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
-					vertex_add(x4, y4, z4, n4x * n, n4y * n, n4z * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
+					vertex_add_real(x3, y3, z3, normal3[X] * n, normal3[Y] * n, normal3[Z] * n, tex2[X] - i * texsize[X], texmid[Y] - t3z * (texsize[Y] / 2))
+					vertex_add_real(x1, y1, z1, normal1[X] * n, normal1[Y] * n, normal1[Z] * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
+					vertex_add_real(x4, y4, z4, normal4[X] * n, normal4[Y] * n, normal4[Z] * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
 				}
 				else
 				{
-					vertex_add(x1, y1, z1, n1x * n, n1y * n, n1z * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
-					vertex_add(x3, y3, z3, n3x * n, n3y * n, n3z * n, tex2[X] - i * texsize[X], texmid[Y] - t3z * (texsize[Y] / 2))
-					vertex_add(x4, y4, z4, n4x * n, n4y * n, n4z * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
+					vertex_add_real(x1, y1, z1, normal1[X] * n, normal1[Y] * n, normal1[Z] * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
+					vertex_add_real(x3, y3, z3, normal3[X] * n, normal3[Y] * n, normal3[Z] * n, tex2[X] - i * texsize[X], texmid[Y] - t3z * (texsize[Y] / 2))
+					vertex_add_real(x4, y4, z4, normal4[X] * n, normal4[Y] * n, normal4[Z] * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
 				}
 			}
 			if (j < 1)
 			{
 				if (invert)
 				{
-					vertex_add(x4, y4, z4, n4x * n, n4y * n, n4z * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
-					vertex_add(x1, y1, z1, n1x * n, n1y * n, n1z * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
-					vertex_add(x2, y2, z2, n2x * n, n2y * n, n2z * n, tex2[X] - ip * texsize[X], texmid[Y] - t2z * (texsize[Y] / 2))
+					vertex_add_real(x4, y4, z4, normal4[X] * n, normal4[Y] * n, normal4[Z] * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
+					vertex_add_real(x1, y1, z1, normal1[X] * n, normal1[Y] * n, normal1[Z] * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
+					vertex_add_real(x2, y2, z2, normal2[X] * n, normal2[Y] * n, normal2[Z] * n, tex2[X] - ip * texsize[X], texmid[Y] - t2z * (texsize[Y] / 2))
 				}
 				else
 				{
-					vertex_add(x1, y1, z1, n1x * n, n1y * n, n1z * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
-					vertex_add(x4, y4, z4, n4x * n, n4y * n, n4z * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
-					vertex_add(x2, y2, z2, n2x * n, n2y * n, n2z * n, tex2[X] - ip * texsize[X], texmid[Y] - t2z * (texsize[Y] / 2))
+					vertex_add_real(x1, y1, z1, normal1[X] * n, normal1[Y] * n, normal1[Z] * n, tex2[X] - ip * texsize[X], texmid[Y] - t1z * (texsize[Y] / 2))
+					vertex_add_real(x4, y4, z4, normal4[X] * n, normal4[Y] * n, normal4[Z] * n, tex2[X] - i * texsize[X], texmid[Y] - t4z * (texsize[Y] / 2))
+					vertex_add_real(x2, y2, z2, normal2[X] * n, normal2[Y] * n, normal2[Z] * n, tex2[X] - ip * texsize[X], texmid[Y] - t2z * (texsize[Y] / 2))
 				}
 			}
 		}

@@ -1,7 +1,4 @@
-/// json_save_array_value(value)
-/// @arg value
-
-function json_save_array_value(val)
+function json_save_array_value(value)
 {
 	if (json_add_comma)
 		buffer_write_byte(e_json_char.COMMA)
@@ -13,7 +10,7 @@ function json_save_array_value(val)
 	json_save_indent()
 	
 	// Value
-	json_save_value(val)
+	json_save_value(value)
 	
 	json_add_comma = true
 }

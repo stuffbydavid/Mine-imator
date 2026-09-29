@@ -1,5 +1,3 @@
-/// app_startup_lists()
-
 function app_startup_lists()
 {
 	globalvar value_name_list, transition_list, transition_list_order;
@@ -392,7 +390,6 @@ function app_startup_lists()
 	log("Make transitions")
 	transition_texture_map = new_transition_texture_map(36, 36, 6, true)
 	transition_texture_small_map = new_transition_texture_map(24, 24, 3, false)
-	log("Transitions OK")
 	
 	// Video templates
 	videotemplate_list = ds_list_create()
@@ -415,7 +412,7 @@ function app_startup_lists()
 	
 	language_load(language_file, language_english_map)
 	ds_map_copy(language_map, language_english_map)
-	langauge_new(language_file)
+	language_new(language_file)
 	
 	// Biomes
 	biome_list = ds_list_create()
@@ -528,10 +525,10 @@ function app_startup_lists()
 		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
-		icons.CUBE__DARK,
-		icons.CONE__DARK,
-		icons.CYLINDER__DARK,
-		icons.SPHERE__DARK,
+		icons.CUBE_DARK,
+		icons.CONE_DARK,
+		icons.CYLINDER_DARK,
+		icons.SPHERE_DARK,
 		icons.PLANE,
 		icons.CAMERA,
 		icons.NOTE,
@@ -569,6 +566,6 @@ function app_startup_lists()
 		"ssaomask",
 		"bloomthreshold",
 		"bloomblur",
-		"all",
+		"all"
 	)
 }

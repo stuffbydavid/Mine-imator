@@ -1,6 +1,3 @@
-/// list_init_context_menu(name)
-/// @arg name
-
 function list_init_context_menu(name)
 {
 	list_init_start()
@@ -13,7 +10,7 @@ function list_init_context_menu(name)
 			case "pathoffset":
 			{
 				list_item_add(text_get("contextmenupathsetlength"), null, "", null, null, null, action_tl_frame_path_offset_set_length)
-				break;
+				break
 			}
 		}
 	}
@@ -98,6 +95,7 @@ function list_init_context_menu(name)
 			list_item_last.disabled = (clipboard_get_text() = "" || !clipboard_has_text())
 			
 			list_item_add(text_get("contextmenutextboxselectall"), null, text_control_name(keybind_new("A", true)), null, icons.SELECT_ALL, null, action_textbox_select_all, false)
+			
 			break
 		}
 		
@@ -208,6 +206,7 @@ function list_init_context_menu(name)
 			
 			list_item_add(text_get("contextmenutlkeyframesselectregion"), null, "", null, null, null, action_tl_select_keyframes_region)
 			list_item_last.disabled = (timeline_region_start = null)
+			
 			break
 		}
 		
@@ -216,7 +215,6 @@ function list_init_context_menu(name)
 		{
 			list_item_add(text_get("contextmenutlmarkeredit"), context_menu_value, "", null, icons.PENCIL, null, action_tl_marker_editor, true)
 			list_item_add(text_get("contextmenutlmarkerdelete"), null, "", null, icons.DELETE, null, action_tl_marker_delete)
-			
 			break
 		}
 		
@@ -259,11 +257,9 @@ function list_init_context_menu(name)
 		
 		case "toolbarfilerecent":
 		{
-			var recent;
-			
 			for (var i = 0; i < min(ds_list_size(recent_list), 10); i++)
 			{
-				recent = recent_list[|i]
+				var recent = recent_list[|i];
 				list_item_add(recent.name, recent.filename, "", null, null, null, action_toolbar_open)
 			}
 			
@@ -308,7 +304,6 @@ function list_init_context_menu(name)
 		{
 			list_item_add(text_get("toolbarrenderimage"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
 			list_item_add(text_get("toolbarrendermovie"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
-			
 			break
 		}
 		
@@ -334,6 +329,7 @@ function list_init_context_menu(name)
 			list_item_last.toggled = setting_show_shortcuts_bar
 			
 			list_item_add(text_get("toolbarviewhome"), null, "", null, icons.HOUSE, null, action_setting_home_screen, true)
+			
 			break
 		}
 		

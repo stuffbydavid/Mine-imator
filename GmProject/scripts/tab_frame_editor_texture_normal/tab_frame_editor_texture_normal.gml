@@ -1,9 +1,7 @@
-/// tab_frame_editor_texture_normal()
-
 function tab_frame_editor_texture_normal()
 {
-	var texobj, name, tex;
-	name = ""
+	var tex, texobj;
+	content_name = ""
 	tex = null
 	
 	// Get material texture
@@ -17,7 +15,7 @@ function tab_frame_editor_texture_normal()
 			case e_tl_type.MODEL:
 			case e_tl_type.MODEL_PART:
 			{
-				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texnormal"
+				content_name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texnormal"
 				
 				var modelfile = tl_edit.temp.model_file;
 				if (tl_edit.type = e_temp_type.MODEL_PART)
@@ -35,7 +33,7 @@ function tab_frame_editor_texture_normal()
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
 			{
-				name = "frameeditorblocktexnormal"
+				content_name = "frameeditorblocktexnormal"
 				with (tl_edit.temp)
 					texobj = temp_get_block_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 				tex = texobj.block_preview_texture
@@ -44,9 +42,9 @@ function tab_frame_editor_texture_normal()
 			
 			case e_tl_type.ITEM:
 			{
-				name = "frameeditoritemtexnormal"
+				content_name = "frameeditoritemtexnormal"
 				
-				texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ];
+				texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_normal
@@ -67,7 +65,7 @@ function tab_frame_editor_texture_normal()
 			
 			default: // Shapes
 			{
-				name = "frameeditorshapetexnormal"
+				content_name = "frameeditorshapetexnormal"
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 				
@@ -80,7 +78,7 @@ function tab_frame_editor_texture_normal()
 	else if (tl_edit.type = e_tl_type.PATH)
 	{
 		// Paths don't use templates
-		name = "frameeditorshapetexnormal"
+		content_name = "frameeditorshapetexnormal"
 		texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 		
 		if (texobj = null)
@@ -91,20 +89,19 @@ function tab_frame_editor_texture_normal()
 	else
 		return 0
 	
-	if (name = "")
+	if (content_name = "")
 		return 0
 	
 	// Text to display
-	var text;
 	if (texobj != null)
-		text = texobj.display_name
+		content_text = texobj.display_name
 	else
-		text = text_get("listnone")
+		content_text = text_get("listnone")
 	
 	if (tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = project_pack_res)
-		text = text_get("listdefault", text)
+		content_text = text_get("listdefault", content_text)
 	
 	tab_control_menu(ui_large_height)
-	draw_button_menu(name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_NORMAL_OBJ], text, action_tl_frame_texture_normal_obj, false, tex)
+	draw_button_menu(content_name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_NORMAL_OBJ], content_text, action_tl_frame_texture_normal_obj, false, tex)
 	tab_next()
 }

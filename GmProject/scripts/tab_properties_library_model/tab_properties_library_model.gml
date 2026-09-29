@@ -1,16 +1,13 @@
-/// tab_properties_library_model()
-
 function tab_properties_library_model()
 {
-	var text;
 	if (temp_edit.model != null)
-		text = temp_edit.model.display_name
+		content_text = temp_edit.model.display_name
 	else
-		text = text_get("listnone")
+		content_text = text_get("listnone")
 			
 	// Model
 	tab_control_menu()
-	draw_button_menu("librarymodel", e_menu.LIST, dx, dy, dw, 24, temp_edit.model, text, action_lib_model, false, null)
+	draw_button_menu("librarymodel", e_menu.LIST, dx, dy, dw, 24, temp_edit.model, content_text, action_lib_model, false, null)
 	tab_next()
 			
 	// Texture
@@ -22,16 +19,16 @@ function tab_properties_library_model()
 	}
 			
 	if (texobj != null)
-		text = texobj.display_name
+		content_text = texobj.display_name
 	else
-		text = text_get("listnone")
+		content_text = text_get("listnone")
 			
 	// Default
 	if (temp_edit.model_tex = null)
-		text = text_get("listdefault", text)
+		content_text = text_get("listdefault", content_text)
 			
 	tab_control_menu(ui_large_height)
-	draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, text, action_lib_model_tex, false, tex)
+	draw_button_menu("librarymodeltex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, content_text, action_lib_model_tex, false, tex)
 	tab_next()
 			
 	if (project_render_material_maps)
@@ -44,16 +41,16 @@ function tab_properties_library_model()
 		}
 			
 		if (texobj != null)
-			text = texobj.display_name
+			content_text = texobj.display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			
 		// Default
 		if (temp_edit.model_tex_material = null)
-			text = text_get("listdefault", text)
+			content_text = text_get("listdefault", content_text)
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu("librarymodeltexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, text, action_lib_model_tex_material, false, tex)
+		draw_button_menu("librarymodeltexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, content_text, action_lib_model_tex_material, false, tex)
 		tab_next()
 			
 		// Texture (Normal map)
@@ -64,16 +61,16 @@ function tab_properties_library_model()
 		}
 			
 		if (texobj != null)
-			text = texobj.display_name
+			content_text = texobj.display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			
 		// Default
 		if (temp_edit.model_tex_normal = null)
-			text = text_get("listdefault", text)
+			content_text = text_get("listdefault", content_text)
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu("librarymodeltexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, text, action_lib_model_tex_normal, false, tex)
+		draw_button_menu("librarymodeltexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, content_text, action_lib_model_tex_normal, false, tex)
 		tab_next()
 	}
 			

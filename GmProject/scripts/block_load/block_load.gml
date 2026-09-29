@@ -1,7 +1,3 @@
-/// block_load(map, typemap)
-/// @arg map
-/// @arg typemap
-
 function block_load(map, typemap)
 {
 	with (new_obj(obj_block))
@@ -66,8 +62,7 @@ function block_load(map, typemap)
 		{
 			states_map = ds_map_create()
 			
-			var curstate;
-			curstate = ds_map_find_first(map[?"states"]);
+			var curstate = ds_map_find_first(map[?"states"]);
 			while (!is_undefined(curstate))
 			{
 				if (debug_names && !text_exists("blockstate" + curstate))

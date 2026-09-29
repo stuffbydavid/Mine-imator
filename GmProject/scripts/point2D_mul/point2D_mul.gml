@@ -1,5 +1,4 @@
 /// CppSeparate VecType point2D_mul(VecType, VarType)
-/// point2D_mul(point, multiplier)
 /// @arg point
 /// @arg multiplier
 

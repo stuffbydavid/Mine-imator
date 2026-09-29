@@ -1,4 +1,3 @@
-/// tl_replace_ground()
 /// @desc Scenery timeline takes the place of the ground.
 
 function tl_replace_ground()

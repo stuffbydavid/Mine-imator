@@ -1,5 +1,3 @@
-/// app_stop_place(keep, [clearmouse])
-
 function app_stop_place(keep = false, clearmouse = true)
 {
 	if (build_first_person)

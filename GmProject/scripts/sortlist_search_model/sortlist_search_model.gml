@@ -1,4 +1,6 @@
-/// sortlist_search_model(sortlist, value, search)
+/// @arg sortlist
+/// @arg value
+/// @arg search
 
 function sortlist_search_model(slist, value, search)
 {

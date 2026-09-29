@@ -34,6 +34,7 @@ namespace CppProject
 			(IntType)ceilf((RealType)sizeOffset.y / SECTION_SIZE),
 			(IntType)ceilf((RealType)sizeOffset.z / SECTION_SIZE)
 		};
+
 		Builder::sectionsXY = Builder::sectionsDim.x * Builder::sectionsDim.y;
 		IntType sectionsTotal = Builder::sectionsDim.x * Builder::sectionsDim.y * Builder::sectionsDim.z;
 		Builder::sections.Alloc(sectionsTotal);
@@ -45,10 +46,13 @@ namespace CppProject
 			IntType lastSizeX = self->build_size_x % SECTION_SIZE;
 			IntType lastSizeY = self->build_size_y % SECTION_SIZE;
 			IntType lastSizeZ = self->build_size_z % SECTION_SIZE;
+
 			if (!lastSizeX)
 				lastSizeX = SECTION_SIZE;
+
 			if (!lastSizeY)
 				lastSizeY = SECTION_SIZE;
+
 			if (!lastSizeZ)
 				lastSizeZ = SECTION_SIZE;
 
@@ -74,8 +78,10 @@ namespace CppProject
 					  (z < Builder::sectionsDim.z - 1) ? SECTION_SIZE : lastSizeZ,
 					  (y < Builder::sectionsDim.y - 1) ? SECTION_SIZE : lastSizeY }
 				);
+
 				if (self->build_single_block != null_)
 					section->AddBuilderState(singleEntry);
+
 				Builder::sections[s] = section;
 			}
 		}
@@ -107,6 +113,7 @@ namespace CppProject
 			paletteBlocks.Alloc(size);
 			paletteStateIds.Alloc(size);
 			paletteWaterlogged.Alloc(size);
+
 			for (IntType i = 0; i < size; i++)
 			{
 				paletteBlocks[i] = self->sch_palette_blocks[i];
@@ -150,6 +157,7 @@ namespace CppProject
 						uint8_t b2 = buffer->data[off + 1];
 						uint8_t b3 = buffer->data[off + 2];
 						uint8_t b4 = buffer->data[off + 3];
+
 						paletteIndex = (b1 << 24) + (b2 << 16) + (b3 << 8) + b4;
 					}
 					else // uchar indices
@@ -159,6 +167,7 @@ namespace CppProject
 					if (paletteIndex > 0)
 					{
 						block = ObjTypeOpt(obj_block, paletteBlocks[paletteIndex]);
+
 						state.stateId = paletteStateIds[paletteIndex];
 						state.waterlogged = paletteWaterlogged[paletteIndex];
 					}
@@ -223,6 +232,7 @@ namespace CppProject
 				IntType by = section->builder.pos.y + sy;
 				IntType bz = section->builder.pos.z + sz;
 				IntType bufferPos = bz * self->build_size_xy + by * self->build_size_x + bx;
+
 				obj_block* block = nullptr;
 				BuilderState state;
 
@@ -257,8 +267,10 @@ namespace CppProject
 	{
 		for (IntType s = 0; s < Builder::sections.Size(); s++)
 			delete Builder::sections[s];
+		
 		Builder::sections.FreeData();
 		Builder::offset = { 0, 0, 0 };
+
 		self->build_multithreaded = null_;
 	}
 
@@ -292,6 +304,7 @@ namespace CppProject
 		}
 
 		section->GetRenderModel(worldPos) = -index; // Negative number to use multipart list
+		
 		return 0;
 	}
 
@@ -367,7 +380,7 @@ namespace CppProject
 		return 0;
 	}
 
-	Vertex builder_create_vertex(Scope<obj_builder_thread> self, RealType x, RealType y, RealType z, RealType tx, RealType ty, RealType nx, RealType ny, RealType nz)
+	static Vertex BuilderCreateVertex(Scope<obj_builder_thread> self, RealType x, RealType y, RealType z, RealType tx, RealType ty, RealType nx, RealType ny, RealType nz)
 	{
 		BoolType wavexy, wavez;
 		wavexy = false;
@@ -431,10 +444,10 @@ namespace CppProject
 
 		// Add face
 		FindVertexBuffer(self->block_vbuffer_current)->AddFace(
-			builder_create_vertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
-			builder_create_vertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
-			builder_create_vertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
-			builder_create_vertex(self, x4, y4, z4, tx4, ty4, nx, ny, nz),
+			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
+			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
+			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
+			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, nx, ny, nz),
 			self->threadid
 		);
 	}
@@ -467,9 +480,9 @@ namespace CppProject
 
 		// Add triangle
 		FindVertexBuffer(self->block_vbuffer_current)->AddTriangle(
-			builder_create_vertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
-			builder_create_vertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
-			builder_create_vertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
+			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
+			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
+			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
 			self->threadid
 		);
 	}
@@ -521,6 +534,7 @@ namespace CppProject
 		global::_app->setting_world_import_filter_enabled = oldFilterEnabled;
 		global::_app->setting_world_import_filter_mode = oldFilterMode;
 		filterList.vec = oldFilterList;
+
 		World::ApplyFilter();
 		World::Close();
 
@@ -537,26 +551,32 @@ namespace CppProject
 		obj_resource* res = self.object;
 		IntType totalBytes = 0;
 		RealType approxGzipRatio = 0.14;
+
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d).Value(vb))->GetWriteBytes();
+		
 		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
-
 		if (mb > 50)
 		{
 			if (res->scenery_cache_save == null_)
 				res->scenery_cache_save = question(text_get({ "loadscenerysavecache", string(mb) + StringType("MB") }));
+
 			if (!res->scenery_cache_save)
 			{
 				// CPU data of meshes won't be needed
 				for (IntType d = 0; d < e_block_depth_amount; d++)
 				for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+				{
 					if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d).Value(vb)))
+					{
 						for (Mesh<>* mesh : buf->meshes)
 						{
 							mesh->vertexData.FreeData();
 							mesh->indexData.FreeData();
 						}
+					}
+				}
 				return;
 			}
 		}
@@ -666,6 +686,7 @@ namespace CppProject
 					break;
 				}
 			}
+
 			if (!valid)
 				break;
 		}
@@ -674,6 +695,7 @@ namespace CppProject
 		{
 			for (auto vbuffer : vbuffers)
 				delete vbuffer;
+			
 			return false;
 		}
 
@@ -690,6 +712,7 @@ namespace CppProject
 		}
 
 		tmr.Print("Read block mesh cache");
+		
 		return true;
 	}
 }

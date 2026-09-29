@@ -1,12 +1,11 @@
-/// textbox_draw(textbox, x, y, width, height, [contextmenu, [right]])
+/// @desc Draws a box with editable text at the given position and with the given dimensions.
 /// @arg textbox
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg [contextmenu
-/// @arg [right]]
-/// @desc Draws a box with editable text at the given position and with the given dimensions.
+/// @arg [contextmenu]
+/// @arg [right]
 
 function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 {
@@ -64,7 +63,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		if (contextmenu)
 			context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_context_type.NONE, null, null)
 		
-		var keys, key_press, action;
+		var keys, keypress, action;
 		textbox_isediting = true
 		textbox_isediting_respond = true
 		
@@ -104,12 +103,12 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		
 		for (k = 0; k < array_length(keys); k++)
 		{
-			key_press[keys[k]] = false
+			keypress[keys[k]] = false
 			if (keyboard_check(keys[k]))
 			{
 				if (current_time - textbox_key_delay[k] > 30)
 				{
-					key_press[keys[k]] = true
+					keypress[keys[k]] = true
 					textbox_key_delay[k] = current_time + 500 * keyboard_check_pressed(keys[k]) // 500 msec if first press, otherwise 30
 				}
 			}
@@ -123,7 +122,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		if (!tbx.read_only && window_busy = "" && !keyboard_check(vk_control))
 		{
 			// 0 = Do nothing, 1 = Erase to left, -1 = Erase to right, 2 = Delete selected
-			deletetext = key_press[vk_backspace] - key_press[vk_delete]
+			deletetext = keypress[vk_backspace] - keypress[vk_delete]
 			inserttext = textbox_input
 		}
 		
@@ -131,20 +130,20 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		if (!tbx.single_line)
 		{
 			tbx.start += mouse_wheel_down() - mouse_wheel_up() // Mouse wheel to scroll
-			if (key_press[vk_enter] && !tbx.read_only) // Enter for linebreak
+			if (keypress[vk_enter] && !tbx.read_only) // Enter for linebreak
 				inserttext = "\n"
 		}
 		
-		if (key_press[vk_right] || key_press[vk_left] ||
-			(key_press[vk_up] && textbox_select_mouseline > 0) ||
-			(key_press[vk_down] && textbox_select_mouseline < tbx.lines - 1)) // Arrow keys to move marker
+		if (keypress[vk_right] || keypress[vk_left] ||
+			(keypress[vk_up] && textbox_select_mouseline > 0) ||
+			(keypress[vk_down] && textbox_select_mouseline < tbx.lines - 1)) // Arrow keys to move marker
 		{
-			if (key_press[vk_right] || key_press[vk_left])
+			if (keypress[vk_right] || keypress[vk_left])
 			{
 				// Move marker around words
 				if (keyboard_check(vk_control))
 				{
-					if (key_press[vk_right])
+					if (keypress[vk_right])
 					{
 						var char = string_char_at(tbx.text, textbox_select_mousepos + 1);
 						
@@ -215,7 +214,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 				}
 				else
 				{
-					textbox_select_mousepos += (key_press[vk_right] - key_press[vk_left]) // Move marker right or left
+					textbox_select_mousepos += (keypress[vk_right] - keypress[vk_left]) // Move marker right or left
 					
 					if (textbox_select_mousepos > string_length(tbx.line[textbox_select_mouseline])) // Check if beyond end of line
 					{
@@ -240,12 +239,12 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 				}
 			}
 			
-			if (!tbx.single_line && (key_press[vk_up] || key_press[vk_down])) // Move marker up / down
+			if (!tbx.single_line && (keypress[vk_up] || keypress[vk_down])) // Move marker up / down
 			{
 				var currentx, nextx;
 				currentx = string_width(string_copy(tbx.line[textbox_select_mouseline], 1, textbox_select_mousepos))
 				nextx = 0
-				textbox_select_mouseline += key_press[vk_down] - key_press[vk_up]
+				textbox_select_mouseline += keypress[vk_down] - keypress[vk_up]
 				
 				for (textbox_select_mousepos = 0;
 					 textbox_select_mousepos <= string_length(tbx.line[textbox_select_mouseline]);
@@ -279,7 +278,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 			if (keyboard_check_pressed(ord("C")) || context_menu_tbx_copy)
 				action = 1
 			
-			if ((!tbx.read_only && key_press[ord("V")]) || context_menu_tbx_paste)
+			if ((!tbx.read_only && keypress[ord("V")]) || context_menu_tbx_paste)
 				action = 2
 			
 			if (keyboard_check_pressed(ord("A")) || context_menu_tbx_select_all)
@@ -569,7 +568,7 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		}
 		
 		// Move screen if text is edited or marker is moved
-		if (inserttext != "" || deletetext != 0 || key_press[vk_left] || key_press[vk_right] || key_press[vk_up] || key_press[vk_down])
+		if (inserttext != "" || deletetext != 0 || keypress[vk_left] || keypress[vk_right] || keypress[vk_up] || keypress[vk_down])
 		{
 			if (tbx.single_line)
 			{

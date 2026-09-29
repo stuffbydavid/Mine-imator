@@ -1,13 +1,11 @@
-/// render_pass_grid_draw(combinedsurf)
-/// @arg combinedsurf
-
-function render_pass_grid_draw(combinedsurf)
+function render_pass_grid_draw(combinedsurface)
 {
-	var passcount = e_render_pass.ALL
-	var columns = ceil(sqrt(passcount))
-	var rows = ceil(passcount / columns)
-	var cellw = render_width / columns
-	var cellh = render_height / rows
+	var passcount, columns, rows, cellw, cellh;
+	passcount = e_render_pass.ALL
+	columns = ceil(sqrt(passcount))
+	rows = ceil(passcount / columns)
+	cellw = render_width / columns
+	cellh = render_height / rows
 	
 	render_set_projection_ortho(0, 0, render_width, render_height, 0)
 	draw_set_font(app.font_label)
@@ -16,9 +14,10 @@ function render_pass_grid_draw(combinedsurf)
 	
 	for (var pass = e_render_pass.COMBINED; pass < e_render_pass.ALL; pass++)
 	{
-		var surf = (pass = e_render_pass.COMBINED ? combinedsurf : render_pass_surfs[pass])
-		var xx = (pass mod columns) * cellw
-		var yy = (pass div columns) * cellh
+		var surf, xx, yy;
+		surf = (pass = e_render_pass.COMBINED ? combinedsurface : render_pass_surfs[pass])
+		xx = (pass mod columns) * cellw
+		yy = (pass div columns) * cellh
 		
 		if (surface_exists(surf))
 			render_pass_draw(pass, surf, xx, yy, cellw, cellh)

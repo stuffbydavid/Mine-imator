@@ -1,6 +1,3 @@
-/// action_lib_shape_save_map(type)
-/// @arg type
-
 function action_lib_shape_save_map(type)
 {
 	var fn = file_dialog_save_image(text_get("type" + temp_type_name_list[|type]));

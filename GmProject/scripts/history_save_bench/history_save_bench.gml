@@ -1,5 +1,3 @@
-/// history_save_bench()
-
 function history_save_bench(source = null)
 {
 	if (source = null)
@@ -10,8 +8,10 @@ function history_save_bench(source = null)
 	
 	with (source)
 		temp_copy(save)
+	
 	with (save)
 		temp_get_save_ids()
+	
 	if (source != bench_settings)
 		return save
 	

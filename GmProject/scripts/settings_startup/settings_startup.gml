@@ -1,5 +1,3 @@
-/// settings_startup()
-
 function settings_startup()
 {
 	trial_startup()
@@ -57,7 +55,7 @@ function settings_startup()
 	setting_show_shortcuts_bar = true
 	setting_gizmos_face_camera = true
 	setting_fade_gizmos = true
-	setting_camera_lock_mouse = (platform_get() != e_platform.MAC_OS)
+	setting_camera_lock_mouse = true
 	setting_place_new = true
 	setting_interface_scale_auto = true
 	setting_interface_scale = interface_scale_default_get()

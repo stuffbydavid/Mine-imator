@@ -1,5 +1,3 @@
-/// lib_startup()
-
 function lib_startup()
 {
 	globalvar file_copy_temp;

@@ -1,5 +1,4 @@
-/// render_high_tonemap(surf)
-/// @arg surf
+/// @arg surface
 
 function render_high_tonemap(surf)
 {

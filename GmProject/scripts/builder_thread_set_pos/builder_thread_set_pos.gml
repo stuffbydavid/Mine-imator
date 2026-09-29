@@ -1,4 +1,5 @@
 /// CppSeparate void builder_thread_set_pos(Scope<obj_builder_thread>, IntType)
+
 function builder_thread_set_pos(position)
 {
 	build_pos = position

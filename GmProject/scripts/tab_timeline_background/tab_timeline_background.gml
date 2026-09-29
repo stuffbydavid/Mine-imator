@@ -1,4 +1,10 @@
-/// tab_timeline_background(tlx, tly, tlw, tlh, itemh, mouseinnames, mousetl)
+/// @arg timelinex
+/// @arg timeliney
+/// @arg timelinewidth
+/// @arg timelineheight
+/// @arg itemheight
+/// @arg mouseinnames
+/// @arg mousetimeline
 
 function tab_timeline_background(tlx, tly, tlw, tlh, itemh, mouseinnames, mousetl)
 {

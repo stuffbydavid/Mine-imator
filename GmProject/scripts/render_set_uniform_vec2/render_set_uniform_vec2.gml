@@ -1,8 +1,7 @@
-/// render_set_uniform_vec2(name, x, y)
+/// @desc Sets a 2-float uniform (if it exists) of the currently selected shader.
 /// @arg name
 /// @arg x
 /// @arg y
-/// @desc Sets a 2-float uniform (if it exists) of the currently selected shader.
 
 function render_set_uniform_vec2(name, xx, yy)
 {

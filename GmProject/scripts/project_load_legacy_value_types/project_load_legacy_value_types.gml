@@ -1,5 +1,3 @@
-/// project_load_legacy_value_types()
-
 function project_load_legacy_value_types()
 {
 	value_type[e_value_type.TRANSFORM_POS] = buffer_read_byte()

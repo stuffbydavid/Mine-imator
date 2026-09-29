@@ -1,4 +1,3 @@
-/// tl_update_length()
 /// @desc Updates the animation length.
 
 function tl_update_length()

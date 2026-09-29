@@ -1,4 +1,3 @@
-/// draw_radiobutton(name, x, y, value, active, script)
 /// @arg name
 /// @arg x
 /// @arg y

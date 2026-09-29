@@ -10,6 +10,7 @@ namespace CppProject
 	{
 		if (Sound* sound = FindSound(index))
 			return sound->IsReady();
+		
 		return false;
 	}
 
@@ -39,7 +40,9 @@ namespace CppProject
 		res->sound_index = snd->id;
 		res->sound_max_sample = ArrType();
 		res->sound_min_sample = ArrType();
+
 		snd->LoadAsync(fname.QStr(), res->id, tmpFname);
+
 		res->load_stage = "";
 	}
 
@@ -62,20 +65,25 @@ namespace CppProject
 			{
 				int leftEnd = leftIndex;
 				int rightEnd = rightIndex;
+				
 				while (leftEnd < left.size() && IsDigit(left[leftEnd]))
 					leftEnd++;
+				
 				while (rightEnd < right.size() && IsDigit(right[rightEnd]))
 					rightEnd++;
 
 				int leftNumber = leftIndex;
 				int rightNumber = rightIndex;
+				
 				while (leftNumber < leftEnd && left[leftNumber] == QChar('0'))
 					leftNumber++;
+				
 				while (rightNumber < rightEnd && right[rightNumber] == QChar('0'))
 					rightNumber++;
 
 				int leftLength = leftEnd - leftNumber;
 				int rightLength = rightEnd - rightNumber;
+				
 				if (leftLength != rightLength)
 					return leftLength < rightLength ? -1 : 1;
 
@@ -97,6 +105,7 @@ namespace CppProject
 
 		if (leftIndex < left.size())
 			return 1;
+
 		if (rightIndex < right.size())
 			return -1;
 
@@ -130,6 +139,7 @@ namespace CppProject
 		sorted.reserve(list->vec.size());
 		for (const SoundSortRow& row : rows)
 			sorted.append(list->vec[row.index]);
+
 		list->vec.swap(sorted);
 	}
 }

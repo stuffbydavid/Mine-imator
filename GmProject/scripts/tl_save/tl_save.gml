@@ -1,4 +1,3 @@
-/// tl_save()
 /// @desc Queues self and all children for saving.
 
 function tl_save()
@@ -23,8 +22,7 @@ function tl_save()
 				if (temp)
 					temp.save = true
 				
-				var sprite;
-				sprite = res_eval(sprite_tex)
+				var sprite = res_eval(sprite_tex);
 				if (sprite != null && instance_exists(sprite))
 					sprite.save = true
 				sprite = res_eval(sprite_template_tex)

@@ -1,13 +1,13 @@
-/// particle_spawner_update(spawner)
 /// @desc Runs once per step and updates the particle spawning and their positions, scale, alpha, color etc.
 
 function particle_spawner_update(spawner)
 {
-	if (app.window_state = "export_movie" || !app.popup || !app.popup.block)
+	if (app.window_state = "export_movie" || !app.popup_current || !app.popup_current.block)
 	{
 		var temp, realtime;
-		temp = (is_timeline ? id.temp : select)
-		realtime = (!is_timeline || (is_timeline && app.object_editor.show && obj_edit = temp)) && (app.window_state != "export_movie" && app.window_state != "export_image")
+		temp = (is_timeline ? self.temp : select)
+		realtime = (!is_timeline || (is_timeline && app.object_editor.show && obj_edit = temp)) && 
+			(app.window_state != "export_movie" && app.window_state != "export_image")
 		spawn_currentstep = (realtime ? current_step : floor(app.background_time))
 		
 		// Reset, switch to realtime
@@ -227,15 +227,15 @@ function particle_spawner_update(spawner)
 						}
 						
 						var v, d, p, t, n, b;
-						v = [0, 0, 0]
-						d = [0, 0, 0]
-						p = [0, 0, 0]
-						t = [0, 0, 0]
-						n = [0, 0, 0]
-						b = [0, 0, 0]
+						v = vec3(0)
+						d = vec3(0)
+						p = vec3(0)
+						t = vec3(0)
+						n = vec3(0)
+						b = vec3(0)
 						
 						// Direction to next point
-						t = [pointdata[PATH_TANGENT_X], pointdata[PATH_TANGENT_Y], pointdata[PATH_TANGENT_Z]]
+						t = vec3(pointdata[PATH_TANGENT_X], pointdata[PATH_TANGENT_Y], pointdata[PATH_TANGENT_Z])
 						
 						// Get nearest position between two points given the current particle position
 						v = vec3_sub(pt.pos, pointpos)
@@ -281,7 +281,7 @@ function particle_spawner_update(spawner)
 						pt.color = merge_color(pt.color_mix_start, pt.color_mix, clamp((s - pt.spawntime) / pt.color_mix_time, 0, 1))
 					
 					// Bounding box
-					var hit_bounding_box = false;
+					var hitboundingbox = false;
 					
 					if (temp.pc_bounding_box_type != "none" && pt.type.bounding_box)
 					{
@@ -290,7 +290,7 @@ function particle_spawner_update(spawner)
 						{
 							if (pt.pos[Z] < temp.pc_bounding_box_ground_z)
 							{
-								hit_bounding_box = true
+								hitboundingbox = true
 								
 								if (pt.type.bounce)
 								{
@@ -333,7 +333,7 @@ function particle_spawner_update(spawner)
 									var dis = point3D_distance(pt.pos, world_pos);
 									if (dis > temp.pc_spawn_region_sphere_radius)
 									{
-										hit_bounding_box = true
+										hitboundingbox = true
 										
 										for (var a = X; a <= Z; a++)
 										{
@@ -400,7 +400,7 @@ function particle_spawner_update(spawner)
 									var t, v, d, p, dis, dir;
 									
 									// Direction to next point
-									t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]];
+									t = [pointpos[PATH_TANGENT_X], pointpos[PATH_TANGENT_Y], pointpos[PATH_TANGENT_Z]]
 									
 									// Get nearest position between two points given the current particle position
 									v = vec3_sub(pt.pos, pointpos)
@@ -458,7 +458,7 @@ function particle_spawner_update(spawner)
 								// Reflect angle
 								if (normal != null)
 								{
-									hit_bounding_box = true
+									hitboundingbox = true
 									
 									for (var a = X; a <= Z; a++) 
 										pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
@@ -471,7 +471,7 @@ function particle_spawner_update(spawner)
 								{
 									if (pt.pos[a] < boxstart[a] || pt.pos[a] > boxend[a])
 									{
-										hit_bounding_box = true
+										hitboundingbox = true
 										
 										// Keep within box
 										pt.pos[a] = clamp(pt.pos[a], boxstart[a], boxend[a]) 
@@ -494,7 +494,7 @@ function particle_spawner_update(spawner)
 					}
 					
 					// Destroy particle
-					if (hit_bounding_box && temp.pc_destroy_at_bounding_box) 
+					if (hitboundingbox && temp.pc_destroy_at_bounding_box)
 					{ 
 						instance_destroy(pt) 
 						continue 

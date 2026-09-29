@@ -1,4 +1,3 @@
-/// draw_bezier_graph(x, y, width, height, points, sync)
 /// @arg x
 /// @arg y
 /// @arg width

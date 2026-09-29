@@ -1,4 +1,3 @@
-/// block_set_fence_gate()
 /// @desc Connects to fences and cobblestone walls in the same direction.
 
 function block_set_fence_gate()

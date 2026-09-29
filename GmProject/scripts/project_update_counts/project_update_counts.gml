@@ -1,4 +1,3 @@
-/// project_update_counts()
 /// @desc Perform a project-wide update of all usage counters for templates and resources.
 
 function project_update_counts()
@@ -44,7 +43,7 @@ function project_update_counts()
 			if (refs[i] = null)
 				continue
 				
-			var res = res_eval(refs[i])
+			var res = res_eval(refs[i]);
 			if (instance_exists(res) && res.object_index = obj_resource)
 				res.count++
 		}
@@ -69,7 +68,7 @@ function project_update_counts()
 			if (refs[i] = null)
 				continue
 				
-			var res = res_eval(refs[i])
+			var res = res_eval(refs[i]);
 			if (instance_exists(res) && res.object_index = obj_resource)
 				res.count++
 		}
@@ -88,6 +87,7 @@ function project_update_counts()
 		if (type = e_tl_type.BLOCK && part_of = null && !has_temp)
 		{
 			array_add(refs, block_tex)
+			
 			if (app.project_render_material_maps)
 			{
 				array_add(refs, block_tex_material)
@@ -97,6 +97,7 @@ function project_update_counts()
 		else if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp)
 		{
 			array_add(refs, model_tex)
+			
 			if (app.project_render_material_maps)
 			{
 				array_add(refs, model_tex_material)
@@ -111,7 +112,7 @@ function project_update_counts()
 			if (refs[i] = null)
 				continue
 				
-			var res = res_eval(refs[i])
+			var res = res_eval(refs[i]);
 			if (instance_exists(res) && res.object_index = obj_resource)
 				res.count++
 		}
@@ -137,7 +138,7 @@ function project_update_counts()
 			if (refs[i] = null)
 				continue
 				
-			var res = res_eval(refs[i])
+			var res = res_eval(refs[i]);
 			if (instance_exists(res) && res.object_index = obj_resource)
 				res.count++
 		}
@@ -165,7 +166,7 @@ function project_update_counts()
 			if (refs[i] = null)
 				continue
 			
-			var res = res_eval(refs[i])
+			var res = res_eval(refs[i]);
 			if (instance_exists(res) && res.object_index = obj_resource)
 				res.count++
 		}

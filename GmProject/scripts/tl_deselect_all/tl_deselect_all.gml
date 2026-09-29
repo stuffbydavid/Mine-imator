@@ -1,4 +1,3 @@
-/// tl_deselect_all()
 /// @desc Deselects all timelines and keyframes.
 
 function tl_deselect_all()

@@ -1,5 +1,3 @@
-/// popup_newproject_clear()
-
 function popup_newproject_clear()
 {
 	popup_newproject.tbx_name.text = text_get("newprojectnamedefault")

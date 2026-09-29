@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"projects_directory_get",
   "parent":{
-    "name":"Path",
-    "path":"folders/Scripts/App/Path.yy",
+    "name":"Directories",
+    "path":"folders/Scripts/App/Directories.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

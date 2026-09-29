@@ -1,5 +1,3 @@
-/// menu_grid_settings()
-
 function menu_grid_settings()
 {
 	draw_set_font(font_label)

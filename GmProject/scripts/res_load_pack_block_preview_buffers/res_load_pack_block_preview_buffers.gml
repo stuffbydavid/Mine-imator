@@ -1,4 +1,3 @@
-/// res_load_pack_block_preview_buffers()
 /// @desc Creates block preview buffers from cached sheets.
 
 function res_load_pack_block_preview_buffers()

@@ -1,6 +1,3 @@
-/// question(text)
-/// @arg text
-
 function question(text)
 {
 	var answer;
@@ -9,5 +6,5 @@ function question(text)
 	answer = show_question(text)
 	window_set_caption("")
 	
-	return answer;
+	return answer
 }

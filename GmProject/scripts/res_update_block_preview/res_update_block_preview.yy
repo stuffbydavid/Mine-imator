@@ -6,7 +6,7 @@
   "name":"res_update_block_preview",
   "parent":{
     "name":"Update",
-    "path":"folders/Scripts/Project/Resources/Update.yy",
+    "path":"folders/Scripts/Project/Resource/Update.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

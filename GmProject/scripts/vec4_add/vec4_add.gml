@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec4_add(VecType, VarType)
-/// vec4_add(vector, add)
 /// @arg vector
 /// @arg add
 

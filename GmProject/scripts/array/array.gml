@@ -1,6 +1,7 @@
 /// CppSeparate ArrType array(VarArgs args = VarArgs())
-/// array(values...)
 /// @arg values...
+
+/// TODO remove
 
 function array()
 {

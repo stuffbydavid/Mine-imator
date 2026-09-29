@@ -1,4 +1,3 @@
-/// block_set_fence()
 /// @desc Connects to other fences with the same material, fence gates and solid adjacent faces.
 
 function block_set_fence()
@@ -25,7 +24,7 @@ function block_set_fence()
 				east = "true"
 			else if (block.type = "fence_gate") // Fence gates
 			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z), "facing")
+				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z), "facing");
 				if (facing != "east" && facing != "west")
 					east = "true"
 			}
@@ -42,7 +41,7 @@ function block_set_fence()
 				west = "true"
 			else if (block.type = "fence_gate") // Fence gates
 			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z), "facing")
+				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z), "facing");
 				if (facing != "east" && facing != "west")
 					west = "true"
 			}
@@ -59,7 +58,7 @@ function block_set_fence()
 				south = "true"
 			else if (block.type = "fence_gate") // Fence gates
 			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z), "facing")
+				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z), "facing");
 				if (facing != "south" && facing != "north")
 					south = "true"
 			}
@@ -76,7 +75,7 @@ function block_set_fence()
 				north = "true"
 			else if (block.type = "fence_gate") // Fence gates
 			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z), "facing")
+				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z), "facing");
 				if (facing != "south" && facing != "north")
 					north = "true"
 			}

@@ -1,5 +1,3 @@
-/// action_lib_pc_type_duplicate()
-
 function action_lib_pc_type_duplicate()
 {
 	if (history_undo)
@@ -26,5 +24,6 @@ function action_lib_pc_type_duplicate()
 	}
 	
 	project_update_counts()
+	
 	tab_object_editor_particles_preview_restart()
 }

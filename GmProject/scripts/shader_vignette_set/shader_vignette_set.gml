@@ -1,5 +1,3 @@
-/// shader_vignette_set()
-
 function shader_vignette_set()
 {
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)

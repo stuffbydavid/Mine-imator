@@ -1,5 +1,3 @@
-/// app_startup_interface_views()
-
 function app_startup_interface_views()
 {
 	view_area_x = 0

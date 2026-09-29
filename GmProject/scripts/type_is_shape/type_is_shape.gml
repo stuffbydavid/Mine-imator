@@ -1,6 +1,3 @@
-/// type_is_shape(type)
-/// @arg type
-
 function type_is_shape(type)
 {
 	return (type = e_tl_type.CUBE || 

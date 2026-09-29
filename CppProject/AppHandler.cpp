@@ -58,16 +58,20 @@ namespace CppProject
 				if (arg == "--gfx")
 				{
 					nextArg = nextArg.toLower();
+
 				#if OS_WINDOWS
 					if (nextArg == "d3d" || nextArg == "d3d11")
 						gfxApi = GfxApi::D3D11;
 					else
 				#endif
+
 					if (nextArg == "gl" || nextArg == "opengl")
 						gfxApi = GfxApi::OpenGL;
 					else
 						FATAL("Unknown graphics API: " + nextArg);
+					
 					a++;
+					
 					continue;
 				}
 				else if (arg == "--test" && !RELEASE_MODE)
@@ -240,14 +244,12 @@ namespace CppProject
 			{
 				if (!GFX->StartOffScreenRender())
 					FATAL("Could not start headless rendering");
+				
 				headlessSurface = new Surface({ 1, 1 });
 			}
 			else
-			{
 				// Create main window
 				AddWindow();
-			}
-
 		}
 		catch (const QString& ex)
 		{
@@ -255,6 +257,7 @@ namespace CppProject
 				DEBUG("[FATAL ERROR] " + ex);
 			else
 				new ErrorDialog(ex);
+			
 			qApp->exit(1);
 		}
 	}
@@ -308,6 +311,7 @@ namespace CppProject
 		fpsSampleFrames = 0;
 		gmlGlobal::fps = 0;
 		stepDeadline = fpsSampleStart + std::chrono::milliseconds(10);
+
 		stepTimer.start(10, Qt::PreciseTimer, this);
 	}
 
@@ -337,6 +341,7 @@ namespace CppProject
 		}
 
 		win->UpdateSize();
+		
 		return win;
 	}
 
@@ -344,6 +349,7 @@ namespace CppProject
 	{
 		stepTimer.stop();
 		auto stepStart = std::chrono::steady_clock::now();
+		
 		Sound::UpdateLoads();
 
 		// Debug
@@ -385,6 +391,7 @@ namespace CppProject
 
 			if (!GFX->StartOffScreenRender())
 				continue;
+			
 			GFX->surface = win ? win->GetSurface() : headlessSurface;
 			GFX->surface->BeginUse(win ? win->size() : QSize());
 
@@ -411,6 +418,7 @@ namespace CppProject
 
 				GFX->shader->EndUse();
 				GFX->surface->EndUse();
+				
 				if (win)
 				{
 					mainWindow->closing = true;
@@ -418,6 +426,7 @@ namespace CppProject
 				}
 				else
 					qApp->exit();
+				
 				return;
 			}
 			catch (const QString& ex)
@@ -428,7 +437,9 @@ namespace CppProject
 
 					GFX->shader->EndUse();
 					GFX->surface->EndUse();
+					
 					qApp->exit(1);
+					
 					return;
 				}
 				else
@@ -438,6 +449,7 @@ namespace CppProject
 			}
 
 			GFX->SubmitBatch();
+
 			GFX->shader->EndUse();
 			GFX->surface->EndUse();
 
@@ -454,14 +466,17 @@ namespace CppProject
 		}
 
 		VB->EndFrame();
+
 		currentWindow = mainWindow;
 		blocked = false;
 
 		// Reset pressed & release key states
 		for (IntType key : keyStateMap.keys())
 			keyStateMap[key].pressed = keyStateMap[key].released = false;
+		
 		for (IntType key : keyWinStateMap.keys())
 			keyWinStateMap[key].pressed = keyWinStateMap[key].released = false;
+		
 		keyStateMap[vk_nokey].pressed = keyStateMap[vk_nokey].released = true;
 
 		// Add new window(s)
@@ -473,12 +488,14 @@ namespace CppProject
 				if (addWin.maximize)
 					win->Maximize();
 			}
+
 			addedWindows.clear();
 		}
 
 		// Measure completed frames
 		auto fpsNow = std::chrono::steady_clock::now();
 		fpsSampleFrames++;
+		
 		double fpsElapsed = std::chrono::duration<double>(fpsNow - fpsSampleStart).count();
 		if (fpsElapsed >= 1.0)
 		{
@@ -519,6 +536,7 @@ namespace CppProject
 		stepDeadline += std::chrono::duration_cast<std::chrono::steady_clock::duration>(stepBudget);
 		if (stepDeadline < stepNow)
 			stepDeadline = stepNow; // Do not accumulate catch-up frames after a slow frame or dialog
+		
 		auto stepDelay = std::chrono::ceil<std::chrono::milliseconds>(stepDeadline - stepNow);
 		fpsTimer.Reset();
 		stepTimer.start(int(stepDelay.count()), Qt::PreciseTimer, this);
@@ -543,10 +561,12 @@ namespace CppProject
 		// Clear keys
 		for (IntType key : keyStateMap.keys())
 			keyStateMap[key] = {};
+		
 		for (IntType key : keyWinStateMap.keys())
 			keyWinStateMap[key] = {};
 
 		blocked = true;
+
 		int res = dialog->exec();
 
 		GFX->StartOffScreenRender();
@@ -559,9 +579,9 @@ namespace CppProject
 		QVector<IntType> keys = {};
 		switch (event->key())
 		{
-			case Qt::Key_Alt: keys = { vk_alt, vk_ralt, vk_lalt }; break;
-			case Qt::Key_Control: keys = { vk_control, vk_rcontrol, vk_lcontrol }; break;
-			case Qt::Key_Shift: keys = { vk_shift, vk_rshift, vk_lshift }; break;
+			case Qt::Key_Alt:		keys = { vk_alt, vk_ralt, vk_lalt }; break;
+			case Qt::Key_Control:	keys = { vk_control, vk_rcontrol, vk_lcontrol }; break;
+			case Qt::Key_Shift:		keys = { vk_shift, vk_rshift, vk_lshift }; break;
 			default:
 			{
 				if (keyMap.contains(event->key())) // Mapped key
@@ -570,6 +590,7 @@ namespace CppProject
 					keys = { event->nativeVirtualKey() };
 				else
 					keys = { event->key() };
+				
 				break;
 			}
 		}
@@ -595,6 +616,7 @@ namespace CppProject
 			
 			keyStateMap[vk_nokey].down = false;
 			keyStateMap[vk_anykey].down = true;
+			
 			break;
 		}
 
@@ -612,12 +634,12 @@ namespace CppProject
 		IntType key = 0;
 		switch (keyCode)
 		{
-			case 312: key = vk_ralt; break;
-			case 56: key = vk_lalt; break;
-			case 285: key = vk_rcontrol; break;
-			case 29: key = vk_lcontrol; break;
-			case 54: key = vk_rshift; break;
-			case 42: key = vk_lshift; break;
+			case 312:	key = vk_ralt; break;
+			case 56:	key = vk_lalt; break;
+			case 285:	key = vk_rcontrol; break;
+			case 29:	key = vk_lcontrol; break;
+			case 54:	key = vk_rshift; break;
+			case 42:	key = vk_lshift; break;
 		}
 
 		if (key)
@@ -635,8 +657,10 @@ namespace CppProject
 	{
 		if (down && !this->down)
 			pressed = true;
+
 		if (!down && this->down)
 			released = true;
+		
 		this->down = down;
 
 		if (pressed)
@@ -655,20 +679,24 @@ namespace CppProject
 	void AppHandler::HttpProgress(const HttpRequest& request, IntType received, IntType total)
 	{
 		GFX->StartOffScreenRender();
+		
 		Map& asyncMap = DsMap(gmlGlobal::async_load);
 		asyncMap["id"] = request.id;
 		asyncMap["status"] = 1;
 		asyncMap["sizeDownloaded"] = received;
 		asyncMap["contentLength"] = total;
+		
 		app_event_http(ScopeAny(global::_app->id));
 	}
 
 	void AppHandler::HttpResponse(const HttpRequest& request)
 	{
 		GFX->StartOffScreenRender();
+		
 		Map& asyncMap = DsMap(gmlGlobal::async_load);
 		asyncMap["id"] = request.id;
 		asyncMap["http_status"] = request.data->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+		
 		if (request.data->error())
 		{
 			asyncMap["status"] = -1;

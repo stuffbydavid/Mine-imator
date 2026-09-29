@@ -1,4 +1,3 @@
-/// res_load_legacy_block_sheet(filename, format)
 /// @arg filename
 /// @arg format
 
@@ -39,7 +38,7 @@ function res_load_legacy_block_sheet(fn, format)
 		if (name = "")
 			continue
 		
-	var newindex = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], name);
+		var newindex = ds_list_find_index(mc_assets.block_texture_list[e_block_sheet.STATIC16], name);
 		if (newindex < 0)
 		{
 			// Look for legacy name

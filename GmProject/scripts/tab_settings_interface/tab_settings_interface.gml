@@ -1,5 +1,3 @@
-/// tab_settings_interface()
-
 function tab_settings_interface()
 {
 	dy += label_height + 6

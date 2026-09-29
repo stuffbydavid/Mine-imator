@@ -1,5 +1,3 @@
-/// draw_text_alignment(prefix, caption, halign, valign, horizontal, vertical)
-
 function draw_text_alignment(prefix, caption, halign, valign, horizontal, vertical)
 {
 	var olddx, olddw;

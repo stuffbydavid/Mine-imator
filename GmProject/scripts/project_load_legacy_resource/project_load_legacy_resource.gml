@@ -1,5 +1,3 @@
-/// project_load_legacy_resource()
-
 function project_load_legacy_resource()
 {
 	with (new_obj(obj_resource))
@@ -8,7 +6,7 @@ function project_load_legacy_resource()
 		load_id = buffer_read_int()
 		save_id_map[?load_id] = load_id
 		
-		var typename = buffer_read_string_int()
+		var typename = buffer_read_string_int();
 		
 		if (typename = "item")
 			typename = "itemsheet"

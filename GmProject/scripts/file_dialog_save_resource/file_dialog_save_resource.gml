@@ -1,4 +1,3 @@
-/// file_dialog_save_resource(filename, extensions)
 /// @arg filename
 /// @arg extensions
 

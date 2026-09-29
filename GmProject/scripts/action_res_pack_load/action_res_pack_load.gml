@@ -1,5 +1,6 @@
-/// action_res_pack_load(filename, [unpacked, projectpack])
 /// @arg filename
+/// @arg [unpacked]
+/// @arg [projectpack]
 
 function action_res_pack_load(fn, unpacked = true, projectpack = false)
 {
@@ -20,6 +21,7 @@ function action_res_pack_load(fn, unpacked = true, projectpack = false)
 			res = new_res(fn, e_res_type.PACK_UNZIPPED)
 		else
 			res = new_res(fn, e_res_type.PACK)
+		
 		fn = load_folder + "/" + res.filename
 		
 		res.loaded = true

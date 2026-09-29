@@ -1,4 +1,3 @@
-/// sortlist_draw_button(name, x, y, width, height, highlight, icon, isfirst, islast, listmouseon)
 /// @arg name
 /// @arg x
 /// @arg y
@@ -45,9 +44,8 @@ function sortlist_draw_button(name, xx, yy, w, h, highlight, icon, isfirst, isla
 	
 	// Draw label
 	if (!islast || isfirst)
-	{
 		draw_label(text, xx + 8, yy + h / 2, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-	}
+	
 	else
 	{
 		var textoff;

@@ -1,18 +1,18 @@
-/// minecraft_assets_reload()
 /// @desc Debug use only.
 
 function minecraft_assets_reload()
 {
-	var fname = minecraft_directory + minecraft_assets_version + ".midata";
+	var fn = minecraft_directory + minecraft_assets_version + ".midata";
 	
 	log("Reloading models")
 	
 	var typemap, map;
 	typemap = ds_int_map_create()
-	map = json_load(fname, typemap)
+	map = json_load(fn, typemap)
+	
 	if (!ds_map_valid(map))
 	{
-		log("Could not parse JSON", fname)
+		log("Could not parse JSON", fn)
 		ds_map_destroy(typemap)
 		return false
 	}

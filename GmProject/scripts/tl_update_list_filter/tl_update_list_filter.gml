@@ -1,6 +1,5 @@
-/// tl_update_list_filter(tl)
-/// @arg tl
-/// @desc Checks filters if timeline can added to visible tree list
+/// @desc Checks filters if the timeline can added to the visible tree list.
+/// @arg timeline
 
 function tl_update_list_filter(tl)
 {

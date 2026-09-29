@@ -1,8 +1,5 @@
-/// objects_indexed()
-/// Defines which object types require a type-wide instance index for:
-///		with (object)
-///		instance_exists(object)
-///		instance_number(object)
+/// @desc Defines which object types require a type-wide instance index for.
+
 function objects_indexed()
 {
 	globalvar objects_indexed_array;
@@ -36,7 +33,7 @@ function objects_indexed()
 		obj_toast,
 		obj_videotemplate,
 		obj_view
-	);
+	)
 	
 	// No type-wide use:
 	//	app, obj_block, obj_block_load_element,

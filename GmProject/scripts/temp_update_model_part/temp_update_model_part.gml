@@ -1,4 +1,3 @@
-/// temp_update_model_part()
 /// @desc Finds the model part from the given model file and name.
 /// If it doesn't exist the first part is selected (or null if none).
 

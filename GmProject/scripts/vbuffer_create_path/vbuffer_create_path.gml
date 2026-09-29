@@ -1,7 +1,3 @@
-/// vbuffer_create_path(path, [small])
-/// @arg path
-/// @arg [small]
-
 function vbuffer_create_path(path, small = false)
 {
 	var points, closed, rail, radius, invert, detail, mapped, texlength;

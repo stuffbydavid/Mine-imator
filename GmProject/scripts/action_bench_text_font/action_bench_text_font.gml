@@ -1,16 +1,14 @@
-/// action_bench_text_font(resource)
 /// @arg resource
 
 function action_bench_text_font(res)
 {
-	var fn = "";
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_font()
@@ -25,6 +23,6 @@ function action_bench_text_font(res)
 	}
 	
 	bench_settings.text_font = res
+	
 	preview_zoom_text(bench_settings.preview, bench_settings.text, res)
-	bench_settings.preview.update = true
 }

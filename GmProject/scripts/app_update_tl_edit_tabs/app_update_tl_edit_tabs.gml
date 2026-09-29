@@ -1,5 +1,3 @@
-/// app_update_tl_edit_tabs()
-
 function app_update_tl_edit_tabs()
 {
 	var showtl, showkf;

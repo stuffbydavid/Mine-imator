@@ -1,6 +1,3 @@
-/// action_lib_pc_type_sprite_animation_onend(onend)
-/// @arg onend
-
 function action_lib_pc_type_sprite_animation_onend(onend)
 {
 	if (!history_undo && !history_redo)

@@ -1,13 +1,13 @@
-/// res_load_scenery()
 /// @desc Creates vertex buffers from a schematic or blocks file.
-///		  The process is split into three steps for opening, reading and generating.
+/// The process is split into three steps for opening, reading and generating.
+
 function res_load_scenery()
 {
-	var fname, openerr, rootmap;
-	fname = load_folder + "/" + filename
+	var fn, openerr, rootmap, maxblocks;
+	fn = load_folder + "/" + filename
 	openerr = false
 	rootmap = null
-	var maxblocks = 20000 * thread_get_number();
+	maxblocks = 20000 * thread_get_number()
 
 	switch (load_stage)
 	{
@@ -29,7 +29,7 @@ function res_load_scenery()
 			}
 			else
 			{
-				if (!file_exists_lib(fname))
+				if (!file_exists_lib(fn))
 				{
 					if (scenery_instant)
 						load_stage = ""
@@ -41,15 +41,15 @@ function res_load_scenery()
 				}
 		
 				// Schematic/Structure file
-				var ext = filename_ext(fname);
+				var ext = filename_ext(fn);
 				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt")
 				{
-					log("Loading " + ext, fname)
+					log("Loading " + ext, fn)
 					debug_timer_start()
 		
 					// GZunzip
 					file_delete_lib(temp_file)
-					gzunzip(fname, temp_file)
+					gzunzip(fn, temp_file)
 			
 					if (!file_exists_lib(temp_file))
 					{
@@ -68,7 +68,7 @@ function res_load_scenery()
 					openerr = true
 		
 					// Read NBT structure
-					rootmap = nbt_read_tag_compound();
+					rootmap = nbt_read_tag_compound()
 					if (rootmap = null)
 						break
 				
@@ -78,7 +78,7 @@ function res_load_scenery()
 						nbt_debug_tag_compound("root", rootmap)
 					
 					// Parse blocks
-					if (ext == ".schematic" || ext == ".schem")
+					if (ext = ".schematic" || ext = ".schem")
 					{
 						// Version 3 nests the schematic inside the unnamed root compound
 						var schematicmap = rootmap[?"Schematic"];
@@ -93,7 +93,7 @@ function res_load_scenery()
 						{
 							openerr = !builder_read_schematic(schematicmap)
 							if (openerr)
-								break;
+								break
 						
 							builder_read_schematic_blocks()
 							builder_read_schematic_tile_entities()
@@ -113,9 +113,9 @@ function res_load_scenery()
 				// .blocks file (legacy)
 				else 
 				{
-					log("Loading .blocks", fname)
+					log("Loading .blocks", fn)
 			
-					buffer_current = buffer_load_lib(fname)
+					buffer_current = buffer_load_lib(fn)
 					with (mc_builder)
 						builder_read_blocks_file()
 				}
@@ -291,7 +291,7 @@ function res_load_scenery()
 			with (mc_builder)
 			{
 				if (!block_multithreaded_skip)
-					break;
+					break
 						
 				build_multithreaded = false
 				builder_spawn_threads(1)

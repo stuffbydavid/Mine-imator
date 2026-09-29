@@ -1,5 +1,3 @@
-/// project_save_particles()
-
 function project_save_particles()
 {
 	json_save_object_start("particles")

@@ -1,6 +1,3 @@
-/// project_load_template(map)
-/// @arg map
-
 function project_load_template(map)
 {
 	if (!ds_map_valid(map))
@@ -14,8 +11,11 @@ function project_load_template(map)
 		save_id_map[?load_id] = load_id
 		
 		var typename = value_get_string(map[?"type"]);
+		
+		// Pre-2.1 model parts
 		if (typename = "bodypart")
 			typename = "modelpart"
+		
 		type = ds_list_find_index(temp_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)
 		
@@ -47,11 +47,11 @@ function project_load_template(map)
 				model_state = value_get_state_vars(modelmap[?"state"])
 				
 				// Update legacy model name 
-				if (legacy_model_names_map[?model_name] != undefined)
+				if (!is_undefined(legacy_model_names_map[?model_name]))
 					model_name = legacy_model_names_map[?model_name]
 				
 				// Update legacy model states
-				if (legacy_model_states_map[?model_name] != undefined)
+				if (!is_undefined(legacy_model_states_map[?model_name]))
 				{
 					var legacymodelmap, statename;
 					legacymodelmap = legacy_model_states_map[?model_name]
@@ -61,7 +61,7 @@ function project_load_template(map)
 						statename = model_state[i]
 					
 						// Replace state name
-						if (legacymodelmap[?statename] != undefined)
+						if (!is_undefined(legacymodelmap[?statename]))
 							model_state[i] = legacymodelmap[?statename]
 					}
 				}
@@ -83,39 +83,39 @@ function project_load_template(map)
 				var valname = (load_format < e_project.FORMAT_200_PRE_5 ? "banner_base_color" : "pattern_base_color");
 				if (!is_undefined(map[?valname]))
 				{
-					var base_color, pattern_list, color_list;
+					var basecolor, patternlist, colorlist;
 					
 					if (load_format < e_project.FORMAT_200_PRE_5)
 					{
-						base_color = value_get_string(map[?"banner_base_color"], "white")
-						pattern_list = map[?"banner_pattern_list"]
-						color_list = map[?"banner_color_list"]
+						basecolor = value_get_string(map[?"banner_base_color"], "white")
+						patternlist = map[?"banner_pattern_list"]
+						colorlist = map[?"banner_color_list"]
 					}
 					else
 					{
-						base_color = value_get_string(map[?"pattern_base_color"], "white")
-						pattern_list = map[?"pattern_pattern_list"]
-						color_list = map[?"pattern_color_list"]
+						basecolor = value_get_string(map[?"pattern_base_color"], "white")
+						patternlist = map[?"pattern_pattern_list"]
+						colorlist = map[?"pattern_color_list"]
 					}
 					
-					pattern_base_color = minecraft_swatch_dyes.map[?base_color]
+					pattern_base_color = minecraft_swatch_dyes.map[?basecolor]
 					
-					if (ds_list_valid(pattern_list))
+					if (ds_list_valid(patternlist))
 					{
-						for (var p = 0; p < ds_list_size(pattern_list); p++)
-							array_add(pattern_pattern_list, pattern_list[|p])
+						for (var p = 0; p < ds_list_size(patternlist); p++)
+							array_add(pattern_pattern_list, patternlist[|p])
 					}
 					
-					if (ds_list_valid(color_list))
+					if (ds_list_valid(colorlist))
 					{
-						for (var c = 0; c < ds_list_size(color_list); c++)
-							array_add(pattern_color_list, minecraft_swatch_dyes.map[? color_list[|c]])
+						for (var c = 0; c < ds_list_size(colorlist); c++)
+							array_add(pattern_color_list, minecraft_swatch_dyes.map[? colorlist[|c]])
 					}
 				}
 				
 				if (model_name = "armor")
 				{
-					if (map[?"armor"] != undefined)
+					if (!is_undefined(map[?"armor"]))
 					{
 						var armor = map[?"armor"];
 						armor_array[1] = value_get_color(armor[?"helmet_dye"], armor_array[1])
@@ -194,11 +194,11 @@ function project_load_template(map)
 					block_state = value_get_state_vars(blockmap[?"state"])
 					
 					// Update legacy block name
-					if (legacy_block_names_map[?block_name] != undefined)
+					if (!is_undefined(legacy_block_names_map[?block_name]))
 						block_name = legacy_block_names_map[?block_name]
 					
 					// Update legacy block states
-					if (legacy_block_states_map[?block_name] != undefined)
+					if (!is_undefined(legacy_block_states_map[?block_name]))
 					{
 						var legacyblockmap, statename;
 						legacyblockmap = legacy_block_states_map[?block_name]
@@ -208,7 +208,7 @@ function project_load_template(map)
 							statename = block_state[i]
 					
 							// Replace state name
-							if (legacyblockmap[?statename] != undefined)
+							if (!is_undefined(legacyblockmap[?statename]))
 								block_state[i] = legacyblockmap[?statename]
 						}
 					}

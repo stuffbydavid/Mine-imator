@@ -1,11 +1,10 @@
-/// tl_value_set(valueid, value, add, [multiply])
-/// @arg valueid
-/// @arg value
-/// @arg add
-/// @arg [multiply]
 /// @desc Adds the given value to all selected timelines.
+/// @arg [valueid]
+/// @arg [value]
+/// @arg [add]
+/// @arg [multiply]
 
-function tl_value_set()
+function tl_value_set(vid = undefined, val = undefined, add = false, mul = false)
 {
 	if (history_undo)
 	{
@@ -21,8 +20,10 @@ function tl_value_set()
 			if (history_data.kf_set_created[k])
 				continue
 				
-			var kflist = save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list;
-			var kfindex = history_data.kf_set_index[k];
+			var kflist, kfindex;
+			kflist = save_id_find(history_data.kf_set_tl_save_id[k]).keyframe_list
+			kfindex = history_data.kf_set_index[k]
+			
 			if (kfindex < ds_list_size(kflist))
 			{
 				with (kflist[|kfindex])
@@ -36,11 +37,12 @@ function tl_value_set()
 		{
 			if (history_data.tl_set_animated[t])
 				continue
+			
 			with (save_id_find(history_data.tl_set_save_id[t]))
 			{
 				for (var v = 0; v < history_data.par_set_amount; v++)
 				{
-					var vid = history_data.value[v];
+					vid = history_data.value[v]
 					value[vid] = tl_value_find_save_id(vid, null, history_data.tl_set_old_value[t, v])
 					if (vid = e_value.TEXT && type = e_tl_type.TEXT)
 						value_default[vid] = value[vid]
@@ -67,11 +69,12 @@ function tl_value_set()
 		{
 			if (history_data.tl_set_animated[t])
 				continue
+			
 			with (save_id_find(history_data.tl_set_save_id[t]))
 			{
 				for (var v = 0; v < history_data.par_set_amount; v++)
 				{
-					var vid = history_data.value[v];
+					vid = history_data.value[v]
 					value[vid] = tl_value_find_save_id(vid, null, history_data.tl_set_new_value[t, v])
 					if (vid = e_value.TEXT && type = e_tl_type.TEXT)
 						value_default[vid] = value[vid]
@@ -82,12 +85,7 @@ function tl_value_set()
 	}
 	else
 	{
-		var vid, val, add, mul, tlcount;
-		vid = argument[0]
-		val = argument[1]
-		add = argument[2]
-		mul = (argument_count > 3 ? argument[3] : false)
-		tlcount = 0
+		var tlcount = 0;
 		
 		// Modify timelines
 		with (obj_timeline)
@@ -106,9 +104,9 @@ function tl_value_set()
 			if (tl_value_is_string(vid) || tl_value_is_texture(vid) || tl_value_is_obj(vid))
 				nval = val
 			else if (mul)
-				nval = value[vid] * val;
+				nval = value[vid] * val
 			else
-				nval = value[vid] * add + val;
+				nval = value[vid] * add + val
 			
 			if (value[vid] != nval)
 				update_matrix = true
@@ -136,9 +134,9 @@ function tl_value_set()
 				if (tl_value_is_string(vid) || tl_value_is_texture(vid) || tl_value_is_obj(vid))
 					nval = val
 				else if (mul)
-					nval = value[vid] * val;
+					nval = value[vid] * val
 				else
-					nval = value[vid] * add + val;
+					nval = value[vid] * add + val
 				
 				value[vid] = tl_value_clamp(vid, nval)
 				
@@ -152,10 +150,11 @@ function tl_value_set()
 		
 		if (tl_value_is_texture(vid) || vid = e_value.SOUND_OBJ || vid = e_value.TEXT_FONT)
 			project_update_counts()
+		
 		return 0
 	}
 	
-	// For undo / redo
+	// For undo/redo
 	with (obj_timeline)
 	{
 		cam_goalzoom = null

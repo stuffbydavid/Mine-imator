@@ -1,10 +1,9 @@
-/// texture_create_crop(texture, x, y, width, height)
+/// @desc Create a fixed-size texture.
 /// @arg texture
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @desc Create a fixed-size texture.
 
 function texture_create_crop(tex, xx, yy, wid, hei)
 {

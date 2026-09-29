@@ -1,5 +1,3 @@
-/// toolbar_draw()
-
 function toolbar_draw()
 {
 	content_x = 0
@@ -16,38 +14,37 @@ function toolbar_draw()
 	draw_divide(content_x, content_y + content_height, content_width)
 	draw_gradient(content_x, content_y + content_height, content_width, shadow_size, c_black, shadow_alpha, shadow_alpha, 0, 0)
 	
-	var capwid, padding;
-	padding = 0
+	var padding = 0;
 	
 	draw_set_font(font_value)
 	
 	// File
-	capwid = string_width(text_get("toolbarfile")) + 16
-	toolbar_draw_button("toolbarfile", dx, dy, capwid)
+	content_capwid = string_width(text_get("toolbarfile")) + 16
+	toolbar_draw_button("toolbarfile", dx, dy, content_capwid)
 	
-	dx += capwid + padding
+	dx += content_capwid + padding
 	
 	if (window_state = "")
 	{
-		capwid = string_width(text_get("toolbaredit")) + 16
-		toolbar_draw_button("toolbaredit", dx, dy, capwid)
-		dx += capwid + padding
+		content_capwid = string_width(text_get("toolbaredit")) + 16
+		toolbar_draw_button("toolbaredit", dx, dy, content_capwid)
+		dx += content_capwid + padding
 
 		// Render
-		capwid = string_width(text_get("toolbarrender")) + 16
-		toolbar_draw_button("toolbarrender", dx, dy, capwid)
-		dx += capwid + padding
+		content_capwid = string_width(text_get("toolbarrender")) + 16
+		toolbar_draw_button("toolbarrender", dx, dy, content_capwid)
+		dx += content_capwid + padding
 	}
 	
 	// View
-	capwid = string_width(text_get("toolbarview")) + 16
-	toolbar_draw_button("toolbarview", dx, dy, capwid)
-	dx += capwid + padding
+	content_capwid = string_width(text_get("toolbarview")) + 16
+	toolbar_draw_button("toolbarview", dx, dy, content_capwid)
+	dx += content_capwid + padding
 	
 	// Help
-	capwid = string_width(text_get("toolbarhelp")) + 16
-	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
-	dx += capwid + padding
+	content_capwid = string_width(text_get("toolbarhelp")) + 16
+	toolbar_draw_button("toolbarhelp", dx, dy, content_capwid)
+	dx += content_capwid + padding
 	
 	dx += 8
 	draw_label(text_get("toolbarbackup"), dx, dy + 22, fa_left, fa_bottom, c_text_secondary, a_text_secondary * clamp(backup_text_ani, 0, 1), font_value)

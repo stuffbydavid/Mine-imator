@@ -1,4 +1,4 @@
-/// @desc Calculates FABRIK for the leaf bone and parent bones
+/// @desc Calculates FABRIK for the leaf bone and parent bones.
 
 function tl_update_ik_calculate()
 {
@@ -85,12 +85,12 @@ function tl_update_ik_calculate()
 	// End effector
 	switch (model_part.bend_part)
 	{
-		case e_part.UPPER: offsetpos = [0, 0, offset]; break;
-		case e_part.LOWER: offsetpos = [0, 0, -offset]; break;
-		case e_part.RIGHT: offsetpos = [offset, 0, 0]; break;
-		case e_part.LEFT: offsetpos = [-offset, 0, 0]; break;
-		case e_part.FRONT: offsetpos = [0, offset, 0]; break;
-		case e_part.BACK: offsetpos = [0, -offset, 0]; break;
+		case e_part.UPPER:	offsetpos = [0, 0, offset]; break
+		case e_part.LOWER:	offsetpos = [0, 0, -offset]; break
+		case e_part.RIGHT:	offsetpos = [offset, 0, 0]; break
+		case e_part.LEFT:	offsetpos = [-offset, 0, 0]; break
+		case e_part.FRONT:	offsetpos = [0, offset, 0]; break
+		case e_part.BACK:	offsetpos = [0, -offset, 0]; break
 	}
 	
 	bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0)), mat))

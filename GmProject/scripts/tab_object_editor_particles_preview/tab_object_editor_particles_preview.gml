@@ -1,5 +1,3 @@
-/// tab_object_editor_particles_preview()
-
 function tab_object_editor_particles_preview()
 {
 	var size, xx, yy;
@@ -26,9 +24,11 @@ function tab_object_editor_particles_preview()
 		swid = texture_width(tex)
 		fwid = min(swid, ptype_edit.sprite_frame_width)
 		fhei = ptype_edit.sprite_frame_height
+		
 		ani = 0
 		if (ptype_edit.sprite_frame_start != ptype_edit.sprite_frame_end)
 			ani = particle_get_animation_percent(current_step, particle_editor_preview_start, ptype_edit.sprite_frame_start, ptype_edit.sprite_frame_end, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
+		
 		frame = round(ptype_edit.sprite_frame_start + (ptype_edit.sprite_frame_end - ptype_edit.sprite_frame_start) * ani)
 		framesx = swid div fwid
 		
@@ -40,20 +40,19 @@ function tab_object_editor_particles_preview()
 	}
 	else
 	{
-		var template = particle_template_map[?ptype_edit.sprite_template];
-		
-		var startf, endf;
-		startf = (ptype_edit.sprite_template_reverse ? (template.frames - 1) : 0)
-		endf = (ptype_edit.sprite_template_reverse ? 0 : (template.frames - 1))
+		var temp, startf, endf;
+		temp = particle_template_map[?ptype_edit.sprite_template]
+		startf = (ptype_edit.sprite_template_reverse ? (temp.frames - 1) : 0)
+		endf = (ptype_edit.sprite_template_reverse ? 0 : (temp.frames - 1))
 		
 		ani = particle_get_animation_percent(current_step, particle_editor_preview_start, startf, endf, particle_editor_preview_speed, ptype_edit.sprite_animation_onend)
 		ani *= !ptype_edit.sprite_template_still_frame
 		
 		frame = round(startf + (endf - startf) * ani)
 		
-		res = res_eval(ptype_edit.sprite_template_tex);
-		tex = res.particle_texture_atlas_map[?template.name];
-		uvs = res.particle_texture_pixeluvs_map[?template.texture_list[|frame]];
+		res = res_eval(ptype_edit.sprite_template_tex)
+		tex = res.particle_texture_atlas_map[?temp.name]
+		uvs = res.particle_texture_pixeluvs_map[?temp.texture_list[|frame]]
 		
 		scale = min(size / uvs[2], size / uvs[3])
 		

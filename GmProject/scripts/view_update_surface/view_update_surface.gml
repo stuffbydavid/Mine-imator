@@ -1,4 +1,3 @@
-/// view_update_surface(view, camera)
 /// @arg view
 /// @arg camera
 
@@ -16,9 +15,10 @@ function view_update_surface(view, cam)
 	render_background = !view.transparent_background
 	render_watermark = (
 		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||
-		(popup && popup.name = "exportmovie" && popup_exportmovie.watermark) ||
-		(popup && popup.name = "exportimage" && popup_exportimage.watermark)
+		(popup_current && popup_current.name = "exportmovie" && popup_exportmovie.watermark) ||
+		(popup_current && popup_current.name = "exportimage" && popup_exportimage.watermark)
 	)
+	
 	render_start(view.surface, cam, view, content_width, content_height)
 	
 	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
@@ -164,6 +164,7 @@ function view_update_surface(view, cam)
 		showplace = content_mouseon || (build_structure != null && instance_exists(build_structure))
 	else
 		showplace = place_tl != null && (content_mouseon || place_content_mouseon = null)
+	
 	if (showplace)
 	{
 		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
@@ -172,6 +173,7 @@ function view_update_surface(view, cam)
 	}
 	
 	view.surface = render_done()
+	
 	render_background = true
 	render_lights = true
 	render_particles = true

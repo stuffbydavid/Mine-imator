@@ -1,5 +1,3 @@
-/// tl_interval_settings_draw()
-
 function tl_interval_settings_draw()
 {
 	draw_set_font(font_label)

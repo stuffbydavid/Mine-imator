@@ -1,5 +1,3 @@
-/// action_tl_keyframes_move()
-
 function action_tl_keyframes_move()
 {
 	var movex, moved, stretchmode, stretch, pivot, handle, newhandle;
@@ -14,6 +12,7 @@ function action_tl_keyframes_move()
 	{
 		newhandle = max(0, handle + movex)
 		stretch = clamp((newhandle - pivot) / (handle - pivot), 0, timeline_move_kf_stretch_max)
+		
 		tl_keyframes_stretch(pivot, stretch)
 	}
 	

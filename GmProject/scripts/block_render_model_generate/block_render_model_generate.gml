@@ -1,5 +1,3 @@
-/// block_render_model_generate(model)
-/// @arg model
 /// @desc Generate triangles from the render model.
 
 function block_render_model_generate(model)
@@ -14,7 +12,7 @@ function block_render_model_generate(model)
 	// Set emissive
 	if (block_vertex_emissive = null)
 		block_vertex_emissive = model.emissive
-	var min_emissive = block_vertex_emissive;
+	var minemissive = block_vertex_emissive;
 	
 	// Generate elements
 	for (var e = 0; e < model.element_amount; e++)
@@ -39,7 +37,7 @@ function block_render_model_generate(model)
 		}
 		
 		// Light emission for individual elements
-		block_vertex_emissive = max(min_emissive, el.light_emission / 15)
+		block_vertex_emissive = max(minemissive, el.light_emission / 15)
 		
 		// X+
 		if (el.face_render_xp && !block_render_model_generate_face_cull(model, el, e_dir.EAST))
@@ -138,7 +136,7 @@ function block_render_model_generate(model)
 		}
 		
 		block_vertex_rgb = c_white
-		block_vertex_emissive = min_emissive
+		block_vertex_emissive = minemissive
 		
 		instance_deactivate_object(model.element[e])
 	}

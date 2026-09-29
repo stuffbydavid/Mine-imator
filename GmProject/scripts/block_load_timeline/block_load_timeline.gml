@@ -1,7 +1,4 @@
-/// block_load_timeline(map, typemap)
-/// @arg map
-/// @arg typemap
-/// @desc Loads the data required to create a timeline for the block
+/// @desc Loads the data required to create a timeline for the block.
 
 function block_load_timeline(map, typemap)
 {
@@ -68,7 +65,7 @@ function block_load_timeline(map, typemap)
 	
 	if (ds_map_valid(map[?"text"]))
 	{
-		var textmap = map[?"text"]
+		var textmap = map[?"text"];
 		
 		if (ds_map_valid(textmap[?"front"]))
 		{

@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec3_sub(VecType, VecType)
-/// vec3_sub(vector1, vector2)
 /// @arg vector1
 /// @arg vector2
 

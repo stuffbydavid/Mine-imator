@@ -1,4 +1,3 @@
-/// res_event_create()
 /// @desc Create event of a resource.
 
 function res_event_create()

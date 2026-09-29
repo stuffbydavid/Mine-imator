@@ -1,6 +1,4 @@
-/// project_load_legacy_beta(loadbackground)
-/// @arg loadbackground
-/// @desc Load a project made in Mine-imator BETA 0.5, 0.6 or 0.7 DEMO
+/// @desc Load a project made in Mine-imator BETA 0.5, 0.6 or 0.7 DEMO.
 
 function project_load_legacy_beta(loadbackground)
 {
@@ -114,7 +112,7 @@ function project_load_legacy_beta(loadbackground)
 			tl_parts[a] = 1
 			if (tl_type[a] = "char" || tl_type[a] = "spblock")
 			{
-				var modelname = lib_char_model_name[tl_lib[a]]
+				var modelname = lib_char_model_name[tl_lib[a]];
 				if (modelname = "spider" || modelname = "cave_spider")
 					tl_parts[a] = 7
 				else if (modelname = "ghast")
@@ -481,7 +479,7 @@ function project_load_legacy_beta(loadbackground)
 			// Go through parts
 			for (var b = 0; b < load.tl_parts[a]; b++)
 			{
-				tl = id;
+				tl = id
 				
 				// Choose target timeline
 				if (b > 0)
@@ -574,7 +572,7 @@ function project_load_legacy_beta(loadbackground)
 		if (par.part_list != null && partid > -1)
 		{
 			var modelpartlist, newpar;
-			modelpartlist = legacy_model_part_map[?par.temp.model_name];
+			modelpartlist = legacy_model_part_map[?par.temp.model_name]
 			if (ds_list_valid(modelpartlist) && partid < ds_list_size(modelpartlist))
 				with (par)
 					newpar = tl_part_find(modelpartlist[|partid])

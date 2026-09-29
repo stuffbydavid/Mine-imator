@@ -1,4 +1,3 @@
-/// action_res_list(resource)
 /// @arg resource
 
 function action_res_list(res)

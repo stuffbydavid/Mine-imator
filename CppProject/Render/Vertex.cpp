@@ -37,6 +37,7 @@ namespace CppProject
 			x = pntT.x();
 			y = pntT.y();
 		}
+
 		this->depth = depth;
 
 		u = uvRect.x + u * uvRect.w;
@@ -55,10 +56,13 @@ namespace CppProject
 
 			if (aPosition > -1)
 				prog->enableAttributeArray(aPosition);
+
 			if (aColor > -1)
 				prog->enableAttributeArray(aColor);
+
 			if (aUv > -1)
 				prog->enableAttributeArray(aUv);
+			
 			GL_CHECK_ERROR();
 
 			IntType offset = 0;
@@ -90,9 +94,12 @@ namespace CppProject
 
 		if (waveXY)
 			EnableFlag(WAVE_XY);
+		
 		if (waveZ)
 			EnableFlag(WAVE_Z);
+		
 		SetEmissive(emissive);
+		
 		if (subsurface)
 			EnableFlag(SUBSURFACE);
 	}
@@ -112,6 +119,7 @@ namespace CppProject
 		uint8_t x8 = ((normalized.x + 1.0) / 2.0) * 255;
 		uint8_t y8 = ((normalized.y + 1.0) / 2.0) * 255;
 		uint8_t z8 = ((normalized.z + 1.0) / 2.0) * 255;
+		
 		normal = (z8 << 16) | (y8 << 8) | x8;
 	}
 
@@ -121,6 +129,7 @@ namespace CppProject
 		uint8_t x8 = ((tx + 1.0) / 2.0) * 255;
 		uint8_t y8 = ((ty + 1.0) / 2.0) * 255;
 		uint8_t z8 = ((tz + 1.0) / 2.0) * 255;
+		
 		tangent = (z8 << 16) | (y8 << 8) | x8;
 	}
 
@@ -161,16 +170,22 @@ namespace CppProject
 
 			if (aPosition > -1)
 				GFX->glEnableVertexAttribArray(aPosition);
+
 			if (aNormal > -1)
 				GFX->glEnableVertexAttribArray(aNormal);
+
 			if (aColor > -1)
 				GFX->glEnableVertexAttribArray(aColor);
+
 			if (aUv > -1)
 				GFX->glEnableVertexAttribArray(aUv);
+
 			if (aData > -1)
 				GFX->glEnableVertexAttribArray(aData);
+
 			if (aTangent > -1)
 				GFX->glEnableVertexAttribArray(aTangent);
+			
 			GL_CHECK_ERROR();
 
 			IntType offset = 0;

@@ -1,5 +1,3 @@
-/// action_toolbar_save()
-
 function action_toolbar_save()
 {
 	if (directory_exists_lib(project_folder))

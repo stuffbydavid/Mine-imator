@@ -1,5 +1,3 @@
-/// tab_frame_editor_scale()
-
 function tab_frame_editor_scale()
 {
 	if (!tl_edit.value_type[e_value_type.TRANSFORM_SCA])
@@ -11,7 +9,7 @@ function tab_frame_editor_scale()
 	dy += 26
 	
 	var snapval, script;
-	snapval = (dragger_snap ? setting_snap_size_scale : snap_min);
+	snapval = (dragger_snap ? setting_snap_size_scale : snap_min)
 	script = (tab.transform.scale_all ? action_tl_frame_scale_all_axis : action_tl_frame_scale)
 	
 	if (frame_editor.transform.scale_all)

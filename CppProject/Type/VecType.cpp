@@ -25,6 +25,7 @@ namespace CppProject
 	{
 		size = std::clamp(arr.Size(), IntType(2), IntType(4));
 		z = w = 0.0;
+
 		for (IntType i = 0; i < size; i++)
 			*(&x + i) = arr.Value(i);
 	}
@@ -41,6 +42,7 @@ namespace CppProject
 		z = vec.z;
 		w = vec.w;
 		size = vec.size;
+
 		return *this;
 	}
 
@@ -69,6 +71,7 @@ namespace CppProject
 		x += vec.x;
 		y += vec.y;
 		z += vec.z;
+
 		if (size > 3)
 			w += vec.w;
 	}
@@ -78,6 +81,7 @@ namespace CppProject
 		x -= vec.x;
 		y -= vec.y;
 		z -= vec.z;
+
 		if (size > 3)
 			w -= vec.w;
 	}
@@ -87,6 +91,7 @@ namespace CppProject
 		x *= rl;
 		y *= rl;
 		z *= rl;
+
 		if (size > 3)
 			w *= rl;
 	}
@@ -96,6 +101,7 @@ namespace CppProject
 		x /= rl;
 		y /= rl;
 		z /= rl;
+
 		if (size > 3)
 			w /= rl;
 	}
@@ -104,12 +110,14 @@ namespace CppProject
 	{
 		ArrType arr;
 		arr.vec.Alloc(size);
+		
 		if (size == 2)
 			arr.vec = { x, y };
 		else if (size == 3)
 			arr.vec = { x, y, z };
 		else
 			arr.vec = { x, y, z, w };
+		
 		return arr;
 	}
 
@@ -129,6 +137,7 @@ namespace CppProject
 			FATAL("VecType: [] with index outside of range: " + NumStr(i));
 	#endif
 		CreateRef();
+		
 		return ref[i];
 	}
 
@@ -136,6 +145,7 @@ namespace CppProject
 	{
 		if (i < 0 || i >= size)
 			return 0;
+		
 		return *(&x + i);
 	}
 
@@ -149,6 +159,7 @@ namespace CppProject
 		RealType len = GetLength();
 		if (len > 0.0)
 			return { x / len, y / len, z / len, w / len };
+		
 		return *this;
 	}
 
@@ -199,12 +210,14 @@ namespace CppProject
 			return;
 
 		deleteArrayAndReset(ref);
+		
 		if (refThread)
 		{
 			FastVector<VecType*>& list = refOmpIndex >= 0 ? refThread->ompRefList[refOmpIndex] : refThread->refList;
 			if (refHeapIndex >= 0 && refHeapIndex < list.Size() && list[refHeapIndex] == this)
 				list[refHeapIndex] = nullptr;
 		}
+		
 		refHeapIndex = -1;
 		refOmpIndex = -1;
 		refThread = nullptr;
@@ -217,13 +230,15 @@ namespace CppProject
 			return;
 
 		for (IntType i = 0; i < thread->refList.Size(); i++)
+		{
 			if (VecType* hVec = thread->refList[i])
 			{
 				deleteArrayAndReset(hVec->ref);
 				hVec->refHeapIndex = -1;
 				hVec->refThread = nullptr;
 			}
-		
+		}
+
 		thread->refList.Clear();
 	}
 
@@ -238,6 +253,7 @@ namespace CppProject
 			thread->ompRefList[t].Reset();
 
 		thread->ompActive = true;
+
 		ompThreadData = thread;
 	}
 
@@ -260,10 +276,12 @@ namespace CppProject
 				vec->refHeapIndex = thread->refList.Append(vec);
 				vec->refOmpIndex = -1;
 			}
+
 			list.Reset();
 		}
 
 		thread->ompActive = false;
+
 		if (ompThreadData == thread)
 			ompThreadData = nullptr;
 	}
@@ -272,6 +290,7 @@ namespace CppProject
 	{
 		if (omp_get_num_threads() > 1 && ompThreadData)
 			return ompThreadData;
+		
 		return qThreadData.value(QThread::currentThread(), appThreadData);
 	}
 
@@ -279,6 +298,7 @@ namespace CppProject
 	{
 		ThreadData* data = new ThreadData;
 		qThreadData[thread] = data;
+		
 		if (!appThreadData)
 			appThreadData = data;
 	}
@@ -514,6 +534,7 @@ namespace CppProject
 		RealType len = vec3_length(v);
 		if (len == 0.0)
 			return v;
+		
 		return { v.x / len, v.y / len, v.z / len };
 	}
 

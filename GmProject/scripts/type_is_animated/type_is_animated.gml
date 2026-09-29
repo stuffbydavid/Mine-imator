@@ -1,5 +1,3 @@
-/// type_is_animated(type)
-
 function type_is_animated(type)
 {
 	return (!type_is_block(type) &&

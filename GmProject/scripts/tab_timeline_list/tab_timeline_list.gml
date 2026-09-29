@@ -1,4 +1,17 @@
-/// tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary, barh, headerh, itemh, mouseinnames, mousetl)
+/// @arg listx
+/// @arg listy
+/// @arg listwidth
+/// @arg listheight
+/// @arg timelinex
+/// @arg timeliney
+/// @arg timelinewidth
+/// @arg timelineheight
+/// @arg bary
+/// @arg barheight
+/// @arg headerheight
+/// @arg itemheight
+/// @arg mouseinnames
+/// @arg mousetimeline
 
 function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary, barh, headerh, itemh, mouseinnames, mousetl)
 {
@@ -261,8 +274,9 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 				}
 			}
 			
-			var list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list;
-			var licon = list[|tl.type];
+			var list, licon;
+			list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list_dark
+			licon = list[|tl.type]
 			
 			// Icon overrides
 			if (tl.type = e_tl_type.CAMERA && tl = timeline_camera)
@@ -299,9 +313,8 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		tl.list_mouseon = itemhover && !buttonhover
 		
 		// Timeline name
-		var namecolor, namealpha, name;
 		draw_set_font(font_value)
-		name = string_limit(tl.display_name, minw)
+		content_name = string_limit(tl.display_name, minw)
 		
 		// Rename textbox
 		if (timeline_rename && tl = timeline_rename)
@@ -325,7 +338,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		}
 		else
 		{
-			var backalpha;
+			var namecolor, namealpha, backalpha;
 			
 			// Draw name
 			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
@@ -354,14 +367,14 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			}
 			
 			if (debug_saveid)
-				name += " [" + string(tl.save_id) + "]"
+				content_name += " [" + string(tl.save_id) + "]"
 			
-			if (name != "")
+			if (content_name != "")
 			{
 				if (tl.color_tag != null)
-					draw_box_rounded(xx - 4, itemy + itemh/2 - 8, string_width(name) + 8, 16, setting_theme.accent_list[tl.color_tag], backalpha)
+					draw_box_rounded(xx - 4, itemy + itemh/2 - 8, string_width(content_name) + 8, 16, setting_theme.accent_list[tl.color_tag], backalpha)
 				
-				draw_label(name, xx, itemy + (itemh/2), fa_left, fa_middle, namecolor, namealpha, font_value)
+				draw_label(content_name, xx, itemy + (itemh/2), fa_left, fa_middle, namecolor, namealpha, font_value)
 			}
 			
 			itemmaxw += string_width(tl.display_name) + 8
@@ -372,14 +385,14 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			window_busy = ""
 			
 			// Detect if mouse is on icon or name
-			if (app_mouse_box(xx - 28, itemy, string_width(name) + 28, itemh, "place"))
+			if (app_mouse_box(xx - 28, itemy, string_width(content_name) + 28, itemh, "place"))
 				mousetlname = tl
 			
 			window_busy = "timelineclick"
 		}
 		
 		// Rename
-		if (mouse_left_double_pressed && app_mouse_box(xx, itemy, string_width(name), itemh, "place"))
+		if (mouse_left_double_pressed && app_mouse_box(xx, itemy, string_width(content_name), itemh, "place"))
 		{
 			window_busy = string(timeline.tbx_rename)
 			window_focus = window_busy
@@ -391,8 +404,8 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		// Timeline contents
 		if (!setting_timeline_compact && !tl.tree_extend && ds_list_size(tl.tree_list_filter) > 0)
 		{
-			xx += string_width(name) + 16
-			minw -= string_width(name) + 16
+			xx += string_width(content_name) + 16
+			minw -= string_width(content_name) + 16
 			
 			draw_set_font(font_caption)
 			

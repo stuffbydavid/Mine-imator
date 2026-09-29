@@ -1,5 +1,3 @@
-/// project_load_template_update_block()
-
 function project_load_template_update_block()
 {
 	if (!is_undefined(mc_assets.block_name_map[?block_name]))
@@ -15,7 +13,7 @@ function project_load_template_update_block()
 		}
 		
 		// Update legacy block state values
-		if (legacy_block_state_values_map[?block_name] != undefined)
+		if (!is_undefined(legacy_block_state_values_map[?block_name]))
 		{
 			var legacyblockmap, statename;
 			legacyblockmap = legacy_block_state_values_map[?block_name]
@@ -24,7 +22,7 @@ function project_load_template_update_block()
 			{
 				statename = block_state[i]
 				
-				if (legacyblockmap[?statename] != undefined)
+				if (!is_undefined(legacyblockmap[?statename]))
 				{
 					var statemap, statevalue;
 					statemap = legacyblockmap[?statename]
@@ -39,13 +37,13 @@ function project_load_template_update_block()
 						{
 							var state = block_state[j];
 							
-							if (valmap[?state] != undefined)
+							if (!is_undefined(valmap[?state]))
 								block_state[j + 1] = valmap[?state]
 						}
 					}
 					else // Replace single value
 					{
-						if (statemap[?statevalue] != undefined)
+						if (!is_undefined(statemap[?statevalue]))
 							block_state[i + 1] = statemap[?statevalue]
 					}
 				}

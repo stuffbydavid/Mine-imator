@@ -1,6 +1,3 @@
-/// shader_high_dof_coc_set(depthbuffer)
-/// @arg depthbuffer
-
 function shader_high_dof_coc_set(depthbuffer)
 {
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(depthbuffer))

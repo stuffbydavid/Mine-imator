@@ -1,9 +1,8 @@
-/// bool_to_float(bool)
 /// @arg bool
 
-function bool_to_float(val)
+function bool_to_float(value)
 {
-	if (val)
+	if (value)
 		return 1
 	
 	return 0

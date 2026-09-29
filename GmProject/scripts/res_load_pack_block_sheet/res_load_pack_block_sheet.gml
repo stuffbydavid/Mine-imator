@@ -1,5 +1,3 @@
-/// res_load_pack_block_sheet(type, suffix)
-
 function res_load_pack_block_sheet(type, suffix)
 {
 	var blocksize, blockscale, texlist, texanilist, surf, anisurf, fileslist;
@@ -25,7 +23,7 @@ function res_load_pack_block_sheet(type, suffix)
 	// Static textures
 	for (var size = 0; size < e_block_sheet.static_amount; size++)
 	{
-		var blocktexlist = mc_assets.block_texture_list[size]
+		var blocktexlist = mc_assets.block_texture_list[size];
 		if (ds_list_size(blocktexlist) = 0 || minecraft_block_sheet_size[size][X] <= 0 || minecraft_block_sheet_size[size][Y] <= 0)
 			continue
 		
@@ -49,9 +47,7 @@ function res_load_pack_block_sheet(type, suffix)
 				
 			if (file_exists_lib(fname))
 			{
-				var tex;
-				
-				tex = texture_create(fname)
+				var tex = texture_create(fname);
 				
 				// Pack size is determined by the maximum width of the first 10 block textures
 				if (size = e_block_sheet.STATIC16 && t < 10)
@@ -124,8 +120,8 @@ function res_load_pack_block_sheet(type, suffix)
 		if (texlist[size] = null)
 			continue
 	
-		var texturelist = mc_assets.block_texture_list[size]
-		var staticblocksize = blockscale * block_size_list[size]
+		var texturelist = mc_assets.block_texture_list[size];
+		var staticblocksize = blockscale * block_size_list[size];
 		surf[size] = surface_create(minecraft_block_sheet_size[size][X] * staticblocksize, minecraft_block_sheet_size[size][Y] * staticblocksize)
 		
 		draw_texture_start()
@@ -162,7 +158,7 @@ function res_load_pack_block_sheet(type, suffix)
 				}
 				else if (type = "diffuse" && id != mc_res && mc_res.block_sheet_texture[size] != null)
 				{
-					var sourceblocksize = block_size_list[size]
+					var sourceblocksize = block_size_list[size];
 					draw_texture_part(mc_res.block_sheet_texture[size], dx, dy,
 						(t mod minecraft_block_sheet_size[size][X]) * sourceblocksize, (t div minecraft_block_sheet_size[size][X]) * sourceblocksize,
 						sourceblocksize, sourceblocksize, staticblocksize / sourceblocksize, staticblocksize / sourceblocksize)
@@ -298,7 +294,7 @@ function res_load_pack_block_sheet(type, suffix)
 				{
 					// Set current and next image
 					var image, nextimage;
-					image = aniprogress * aniframes;
+					image = aniprogress * aniframes
 					nextimage = floor(image) + 1
 					if (framelist != null)
 					{
@@ -390,14 +386,16 @@ function res_load_pack_block_sheet(type, suffix)
 	{
 		// Setup texture sample positions
 		var samplepos, sampleposamount;
-		samplepos[0] = point2D(blocksize / 2, blocksize / 2)
-		samplepos[1] = point2D(0, blocksize / 2)
-		samplepos[2] = point2D(blocksize / 2, 0)
-		samplepos[3] = point2D(blocksize - 1, blocksize / 2)
-		samplepos[4] = point2D(blocksize / 2, blocksize - 1)
-		samplepos[5] = point2D(blocksize / 4, blocksize / 4)
-		samplepos[6] = point2D(0, 0)
-		samplepos[7] = point2D(blocksize- 1, blocksize - 1)
+		samplepos = [
+			point2D(blocksize / 2, blocksize / 2),
+			point2D(0, blocksize / 2),
+			point2D(blocksize / 2, 0),
+			point2D(blocksize - 1, blocksize / 2),
+			point2D(blocksize / 2, blocksize - 1),
+			point2D(blocksize / 4, blocksize / 4),
+			point2D(0, 0),
+			point2D(blocksize- 1, blocksize - 1)
+		]
 		sampleposamount = 8
 	
 		// Find block depths (static)

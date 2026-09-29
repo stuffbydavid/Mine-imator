@@ -1,5 +1,3 @@
-/// tab_frame_editor_light()
-
 function tab_frame_editor_light()
 {
 	context_menu_group_temp = e_context_group.LIGHT

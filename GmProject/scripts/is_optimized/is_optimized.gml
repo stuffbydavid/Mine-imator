@@ -2,5 +2,5 @@
 
 function is_optimized()
 {
-	return false;
+	return false
 }

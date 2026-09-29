@@ -63,16 +63,20 @@ namespace CppProject
 	Shader::Shader(QString name, IntType subAssetId) : Asset(ID_Shader, subAssetId, name)
 	{
 		allShaders.append(this);
+
 		this->name = name;
+
 		Load();
 	}
 
 	Shader::Shader(QString name, VertexFormat format, BoolType useBatching) : Asset(ID_Shader)
 	{
 		allShaders.append(this);
+
 		this->name = name;
 		this->vertexFormat = format;
 		this->useBatching = useBatching;
+
 		Load();
 	}
 
@@ -88,6 +92,7 @@ namespace CppProject
 				[](QtMsgType type, const QMessageLogContext& ctx, const QString& msg) {}
 			);
 			GraphicsApiHandler::glEnableLogger = false;
+
 			QOpenGLShader sh(QOpenGLShader::Vertex);
 			if (ENABLE_OPENGL_40 && sh.compileSourceCode(gl40shader))
 			{
@@ -98,11 +103,14 @@ namespace CppProject
 				{
 					gl43Supported = true;
 					gl43Core = new QOpenGLFunctions_4_3_Core;
+
 					if (!gl43Core->initializeOpenGLFunctions())
 						FATAL("Could not initialize OpenGL 4.3");
+
 					glslVersion = "430";
 				}
 			}
+
 			GraphicsApiHandler::glEnableLogger = true;
 			qInstallMessageHandler(oldHandler);
 
@@ -141,17 +149,21 @@ namespace CppProject
 		batchBufferSize = 0;
 		deleteAndReset(staticBufferData);
 		staticBufferSize = 0;
+
 		uniformNameMap.clear();
 		uniformLocationMap.clear();
 		uniforms.clear();
 		numUniforms = 0;
+
 		batchBufferObjectSize = 0;
 		samplerNameMap.clear();
 		numSamplers = 0;
 		useBaseTexture = false;
 		objRectUniformIndex = -1;
+
 		for (IntType m = 0; m < 6; m++)
 			matrixState[m] = MatrixState();
+
 		numOutputs = 0;
 
 		// Vertex shader
@@ -412,6 +424,7 @@ namespace CppProject
 			GFX->glBindVertexArray(0);
 			GL_CHECK_ERROR();
 		}
+
 		return true;
 	}
 
@@ -486,6 +499,7 @@ namespace CppProject
 		// Create float array from VarTypes to submit
 		floatData.resize(floatsNum);
 		floatData.fill(0.0f);
+
 		float* floats = floatData.data();
 		IntType i = 0, arrIndex = 0;
 		while (i < floatsNum && arrIndex < arr.Size())
@@ -498,9 +512,9 @@ namespace CppProject
 				switch (uni.type)
 				{
 					case INT:
-					case FLOAT: i += 3; break; // 1 float/ints written, skip 3
-					case VEC2: if (i % 4 == 2) i += 2; break; // 2 floats written, skip 2
-					case VEC3: if (i % 4 == 3) i++; break; // 3 floats written, skip 1
+					case FLOAT:	i += 3; break; // 1 float/ints written, skip 3
+					case VEC2:	if (i % 4 == 2) i += 2; break; // 2 floats written, skip 2
+					case VEC3:	if (i % 4 == 3) i++; break; // 3 floats written, skip 1
 				}
 			}
 		}
@@ -597,21 +611,25 @@ namespace CppProject
 
 		if (IS_OPENGL && uni.isStatic)
 		{
-			float floats[16];
 			matrixData.resize(arr.Size());
+
+			float floats[16];
 			for (IntType m = 0; m < arr.Size(); m++)
 			{
 				arr.Value(m).Mat().matrix.Copy(floats);
 				matrixData[m] = QMatrix4x4(floats).transposed();
 			}
+			
 			program->setUniformValueArray(uni.glLocation, matrixData.data(), matrixData.size());
 		}
 		else
 		{
 			floatData.resize(arr.Size() * 16);
+			
 			float* floats = floatData.data();
 			for (IntType m = 0; m < arr.Size(); m++)
 				arr.Value(m).Mat().matrix.Copy(&floats[m * 16]);
+			
 			WriteUniformValue(uni, floats);
 		}
 	}
@@ -815,11 +833,13 @@ namespace CppProject
 					// OpenGL 3.2 stores sampling parameters on the texture object, not its texture unit
 					BoolType textureConfigured = false;
 					for (IntType i = 0; i < glConfiguredTextureCount; i++)
+					{
 						if (glConfiguredTextures[i] == state.currentTexId)
 						{
 							textureConfigured = true;
 							break;
 						}
+					}
 
 					if (!textureConfigured)
 					{
@@ -862,12 +882,14 @@ namespace CppProject
 				D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
 				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
 			}
+
 			if (d3dObjectBuffer)
 			{
 				D3DContext->UpdateSubresource(d3dObjectBuffer, 0, nullptr, batchBufferData, 0, 0);
 				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
 				ResetObjects();
 			}
+
 			D3DContext->VSSetConstantBuffers(0, numConstantBuffers, cBuffers);
 			D3DContext->PSSetConstantBuffers(0, numConstantBuffers, cBuffers);
 
@@ -875,12 +897,13 @@ namespace CppProject
 			D3D_PRIMITIVE_TOPOLOGY topo = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
 			switch (mode)
 			{
-				case TRIANGLE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
-				case TRIANGLE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP; break;
-				case LINE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
-				case LINE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP; break;
-				case POINT_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
+				case TRIANGLE_LIST:		topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
+				case TRIANGLE_STRIP:	topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP; break;
+				case LINE_LIST:			topo = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
+				case LINE_STRIP:		topo = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP; break;
+				case POINT_LIST:		topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
 			}
+
 			D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
 			D3DContext->IASetPrimitiveTopology(topo);
 			D3DContext->DrawIndexed(numIndices, 0, 0);
@@ -891,6 +914,7 @@ namespace CppProject
 				texSamplers[s] = nullptr;
 				texSRVs[s] = nullptr;
 			}
+
 			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
 			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 		}
@@ -900,9 +924,9 @@ namespace CppProject
 			// Set up attributes
 			switch (vertexFormat)
 			{
-				case PRIMITIVE: PrimitiveVertex::SetAttributes(); break;
-				case VERTEX_BUFFER: Vertex::SetAttributes(); break;
-				case WORLD: WorldVertex::SetAttributes(); break;
+				case PRIMITIVE:		PrimitiveVertex::SetAttributes(); break;
+				case VERTEX_BUFFER:	Vertex::SetAttributes(); break;
+				case WORLD:			WorldVertex::SetAttributes(); break;
 			}
 
 			// Submit UvRects/repeat options
@@ -920,6 +944,7 @@ namespace CppProject
 				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
 				GL_CHECK_ERROR();
+
 				ResetObjects();
 			}
 
@@ -927,12 +952,13 @@ namespace CppProject
 			GLenum modeEnum = 0;
 			switch (mode)
 			{
-				case TRIANGLE_LIST: modeEnum = GL_TRIANGLES; break;
-				case TRIANGLE_STRIP: modeEnum = GL_TRIANGLE_STRIP; break;
-				case LINE_LIST: modeEnum = GL_LINES; break;
-				case LINE_STRIP: modeEnum = GL_LINE_STRIP; break;
-				case POINT_LIST: modeEnum = GL_POINTS; break;
+				case TRIANGLE_LIST:		modeEnum = GL_TRIANGLES; break;
+				case TRIANGLE_STRIP:	modeEnum = GL_TRIANGLE_STRIP; break;
+				case LINE_LIST:			modeEnum = GL_LINES; break;
+				case LINE_STRIP:		modeEnum = GL_LINE_STRIP; break;
+				case POINT_LIST:		modeEnum = GL_POINTS; break;
 			}
+
 			GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
 			GL_CHECK_ERROR();
 		}
@@ -983,8 +1009,10 @@ namespace CppProject
 			QString matrixRepl = "";
 			if (IS_D3D11)
 				matrixRepl = "mul(_uMatrixV, _uMatrixM)";
+
 			if (IS_OPENGL)
 				matrixRepl = "(_uMatrixV * _uMatrixM)";
+			
 			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), matrixRepl);
 		}
 
@@ -996,6 +1024,7 @@ namespace CppProject
 				BoolType isStatic = true;
 				if (useBatching)
 					isStatic = (m != MatrixId::M && m != MatrixId::MVP); // Per-object M and MVP
+				
 				code = "uniform mat4 " + matrixUniformName[m] + ";" + (isStatic ? " // Static" : "") + "\n" + code;
 			}
 		}
@@ -1023,6 +1052,7 @@ namespace CppProject
 				IntType arrayMaxSize = 1;
 				if (isArray)
 					arrayMaxSize = match.captured(3).replace(QRegularExpression("\\[|\\]"), "").toInt();
+				
 				BoolType isStatic = (match.captured(5) != "");
 				AddUniform(name, typeName, isStatic, isArray, arrayMaxSize);
 			}
@@ -1042,8 +1072,10 @@ namespace CppProject
 				QString samplerArgs = "_sampleUvRect(" + name + ", ";
 				if (IS_D3D11)
 					samplerArgs += name + "_s, ";
+				
 				samplerArgs += "_uUvRect[" + NumStr(samplerNameMap[name]) + "], "
 					+ "_uTexRepeat[" + NumStr(samplerNameMap[name]) + "] > 0,";
+				
 				code.replace("texture2D(" + name + ",", samplerArgs);
 			}
 			else
@@ -1055,6 +1087,7 @@ namespace CppProject
 		{
 			if (objRectUniformIndex < 0)
 				objRectUniformIndex = AddUniform("_objUvRect", "vec4", false);
+			
 			code.replace("_uUvRect[0]", "_objUvRect");
 		}
 	}
@@ -1120,6 +1153,7 @@ namespace CppProject
 			matrixState[matrixId].active = true;
 			matrixState[matrixId].uniform = uni;
 		}
+
 		return numUniforms++;
 	}
 
@@ -1139,6 +1173,7 @@ namespace CppProject
 					if (fileInfo.size() == 0 ||
 						shader->lastUpdate[filename] == lastModified)
 						continue;
+					
 					reload = true;
 					changedFilename = filename;
 				}

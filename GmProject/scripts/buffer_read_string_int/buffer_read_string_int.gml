@@ -1,5 +1,4 @@
-/// buffer_read_string_int()
-/// @desc Reads a string consisting of an int, then that many utf-8 characters.
+/// @desc Reads a string consisting of a 4-byte integer and a number of UTF-8 characters.
 
 function buffer_read_string_int()
 {

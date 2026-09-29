@@ -1,4 +1,3 @@
-/// background_ground_update_texture()
 /// @desc Updates the ground sprite depending on the chosen slot and texture.
 
 function background_ground_update_texture()
@@ -30,8 +29,10 @@ function background_ground_update_texture()
 		background_ground_ani = false
 		background_ground_texture = texture_create_missing()
 		background_ground_name = ""
+		
 		return 0
 	}
+	
 	if (texres.block_sheet_texture[sheet] = null)
 		texres = mc_res
 	
@@ -40,6 +41,7 @@ function background_ground_update_texture()
 	{
 		background_ground_ani = false
 		background_ground_name = mc_assets.block_texture_list[sheet][|slot]
+		
 		size = texture_width(texres.block_sheet_texture[sheet]) / minecraft_block_sheet_size[sheet][X]
 		bx = (slot mod minecraft_block_sheet_size[sheet][X]) * size
 		by = (slot div minecraft_block_sheet_size[sheet][X]) * size
@@ -54,17 +56,20 @@ function background_ground_update_texture()
 			background_ground_ani = false
 			background_ground_texture = texture_create_missing()
 			background_ground_name = ""
+			
 			return 0
 		}
 		
 		background_ground_ani = true
 		background_ground_name = mc_assets.block_texture_ani_list[|slot]
+		
 		size = texture_width(texres.block_sheet_texture[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
 		bx = (slot mod minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 		by = (slot div minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 	}
 	
 	draw_texture_start()
+	
 	surf = surface_create(size, size)
 	surface_set_target(surf)
 	{
@@ -75,6 +80,7 @@ function background_ground_update_texture()
 			{
 				draw_clear_alpha(c_black, 0)
 				draw_texture_part(texres.block_sheet_texture[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
+				
 				background_ground_ani_texture[f] = texture_surface(surf)
 				sprite_set_texture_page(background_ground_ani_texture[f], false)
 			}
@@ -85,11 +91,13 @@ function background_ground_update_texture()
 		{
 			draw_clear_alpha(c_black, 0)
 			draw_texture_part(texres.block_sheet_texture[sheet], 0, 0, bx, by, size, size)
+			
 			background_ground_texture = texture_surface(surf)
 			sprite_set_texture_page(background_ground_texture, false)
 		}
 	}
 	surface_reset_target()
 	surface_free(surf)
+	
 	draw_texture_done()
 }

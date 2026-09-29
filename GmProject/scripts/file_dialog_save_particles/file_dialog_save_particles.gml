@@ -1,4 +1,3 @@
-/// file_dialog_save_particles(filename)
 /// @arg filename
 
 function file_dialog_save_particles(fn)

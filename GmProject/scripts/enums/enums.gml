@@ -1,4 +1,3 @@
-/// enums()
 /// @desc Define enumerators used in the project.
 
 function enums()
@@ -11,7 +10,7 @@ function enums()
 		LINUX	= 2
 	}
 	
-	// Formats
+	// Project formats
 	enum e_project
 	{
 		FORMAT_01			= 1,
@@ -47,6 +46,7 @@ function enums()
 		FORMAT_210			= 36
 	}
 	
+	// Mine-imator settings format
 	enum e_settings
 	{
 		FORMAT_100_DEMO_4	= 0,
@@ -67,6 +67,7 @@ function enums()
 		FORMAT_200			= 29
 	}
 	
+	// Render settings format
 	enum e_render_settings
 	{
 		FORMAT_210			= 35
@@ -86,6 +87,7 @@ function enums()
 		FORMAT_210			= 10
 	}
 	
+	// Minecraft resource pack
 	enum e_minecraft_pack
 	{
 		FORMAT_161			= 1,
@@ -354,8 +356,8 @@ function enums()
 		amount
 	} // Update app_startup_lists() when adding values
 	
-	// Workbench options
-	enum e_bench
+	// Workbench tabs
+	enum e_bench_tab
 	{
 		PROJECT,
 		CHARACTER,
@@ -566,7 +568,7 @@ function enums()
 		COMMENTS,
 		COMPACT,
 		CONE,
-		CONE__DARK,
+		CONE_DARK,
 		CONTENT,
 		COPY,
 		COPY_ALL,
@@ -574,14 +576,14 @@ function enums()
 		COPY_SMALL,
 		CROWN,
 		CUBE,
-		CUBE__DARK,
+		CUBE_DARK,
 		CUBE_ADD,
 		CUSTOMIZATION,
 		CUT,
 		CUT_ALL,
 		CUT_KEYFRAME,
 		CYLINDER,
-		CYLINDER__DARK,
+		CYLINDER_DARK,
 		DASHBOARD,
 		DELETE,
 		DELETE_KEYFRAME,
@@ -766,7 +768,7 @@ function enums()
 		PIVOT,
 		PLANE,
 		PLANE_3D,
-		PLANE_3D__DARK,
+		PLANE_3D_DARK,
 		PLANE_3D_ADD,
 		PLANE_ADD,
 		PLAY,
@@ -823,15 +825,15 @@ function enums()
 		SORT_DOWN,
 		SORT_UP,
 		SPHERE,
-		SPHERE__DARK,
+		SPHERE_DARK,
 		SPHERE_MATERIAL,
-		SPHERE_MATERIAL__DARK,
+		SPHERE_MATERIAL_DARK,
 		SPHERE_MATERIAL_SMALL,
-		SPHERE_MATERIAL_SMALL__DARK,
+		SPHERE_MATERIAL_SMALL_DARK,
 		SPHERE_SHADING,
-		SPHERE_SHADING__DARK,
+		SPHERE_SHADING_DARK,
 		SPHERE_SHADING_SMALL,
-		SPHERE_SHADING_SMALL__DARK,
+		SPHERE_SHADING_SMALL_DARK,
 		SPHERE_TEXTURE,
 		SPLIT_CORNER,
 		SPLIT_HORIZONTAL,
@@ -855,7 +857,7 @@ function enums()
 		TEXTURE_SMALL,
 		TICK,
 		TORUS,
-		TORUS__DARK,
+		TORUS_DARK,
 		TRANSFORM,
 		TRANSFORM_SMALL,
 		TRANSFORMATION_GIMBAL,
@@ -1051,7 +1053,7 @@ function enums()
 		static_amount = 3
 	}
 	
-	// Buffer Depth
+	// Buffer depth
 	enum e_block_depth
 	{
 		DEPTH0, // Opaque
@@ -1129,6 +1131,7 @@ function enums()
 		amount
 	}
 	
+	// View control
 	enum e_view_control
 	{
 		POS_X,
@@ -1206,8 +1209,9 @@ function enums()
 	enum e_texture_channel
 	{
 		DIFFUSE,
+		MATERIAL,
 		NORMAL,
-		MATERIAL
+		amount
 	}
 	
 	// Biome color
@@ -1225,17 +1229,6 @@ function enums()
 		LEAVES_DARK_OAK,
 		LEAVES_MANGROVE,
 		amount
-	}
-
-	// Surface format
-	enum e_surface_format
-	{
-		rgba8unorm,
-		rgba32float,
-		r32float,
-		r8unorm,
-		r16float,
-		rgba16float
 	}
 	
 	// Material map format
@@ -1293,5 +1286,179 @@ function enums()
 		NORMAL			= 2,
 		ERROR			= 4,
 		PAUSED			= 8
+	}
+	
+	// Context menu type
+	enum e_context_type
+	{
+		NONE,
+		NUMBER,
+		STRING,
+		BOOLEAN,
+		COLOR,
+		TIME
+	}
+	
+	// Context menu group
+	enum e_context_group
+	{
+		ROT_POINT,
+		POSITION,
+		ROTATION,
+		SCALE,
+		BEND,
+		LIGHT,
+		COLOR,
+		CAMERA,
+		EASE,
+		amount
+	}
+	
+	// JSON character
+	enum e_json_char
+	{
+		CURLY_BEGIN		= ord("{"),
+		CURLY_END		= ord("}"),
+		SQUARE_BEGIN	= ord("["),
+		SQUARE_END		= ord("]"),
+		COMMA			= ord(","),
+		COLON			= ord(":"),
+		QUOTE			= ord("\""),
+		SPACE			= ord(" "),
+		TAB				= ord("\t"),
+		NEW_LINE		= ord("\n"),
+		RETURN			= ord("\r"),
+		POINT			= ord("."),
+		MINUS			= ord("-"),
+		PLUS			= ord("+"),
+		BACKSLASH		= ord("\\"),
+		E				= ord("e"),
+		CAPITAL_E		= ord("E"),
+		F				= ord("f"),
+		N				= ord("n"),
+		T				= ord("t"),
+		U				= ord("u"),
+		NUM_0			= ord("0"),
+		NUM_9			= ord("9")
+	}
+	
+	// JSON type
+	enum e_json_type
+	{
+		NUMBER,
+		STRING,
+		BOOL,
+		NULL,
+		ARRAY,
+		OBJECT
+	}
+	
+	// Recent projects
+	enum e_recent_sort 
+	{
+		DATE_NEWEST,
+		DATE_OLDEST,
+		NAME_A_Z,
+		NAME_Z_A
+	}
+	
+	// Micro animation
+	enum e_microani
+	{
+		HOVER,
+		RADIO_HOVER,
+		PRESS,
+		ACTIVE,
+		DISABLED,
+		CUSTOM,
+		FADE,
+		HOVER_LINEAR,
+		RADIO_HOVER_LINEAR,
+		PRESS_LINEAR,
+		ACTIVE_LINEAR,
+		DISABLED_LINEAR,
+		CUSTOM_LINEAR,
+		FADE_LINEAR,
+		GOAL_EASE
+	}
+	
+	// Keybind key
+	enum e_keybind_key
+	{
+		CHAR,
+		CTRL,
+		SHIFT,
+		ALT
+	}
+	
+	// Keybind
+	enum e_keybind
+	{
+		// File
+		PROJECT_NEW,
+		PROJECT_OPEN,
+		PROJECT_SAVE,
+		PROJECT_SAVE_AS,
+		IMPORT_ASSET,
+		
+		// Editing
+		UNDO,
+		REDO,
+		TIMELINE_DELETE,
+		TIMELINE_DUPLICATE,
+		TIMELINE_SELECT,
+		CREATE_FOLDER,
+		KEYFRAMES_CREATE,
+		KEYFRAMES_COPY,
+		KEYFRAMES_CUT,
+		KEYFRAMES_PASTE,
+		KEYFRAMES_DELETE,
+		KEYFRAMES_STRETCH,
+		KEYFRAMES_SCALE,
+		TIMELINE_HIDE,
+		TIMELINE_SHOW_HIDDEN,
+		
+		// Timeline
+		PLAY,
+		PLAY_STOP,
+		PLAY_BEGINNING,
+		MARKER_RIGHT,
+		MARKER_LEFT,
+		FRAME_PREVIOUS,
+		FRAME_NEXT,
+		
+		// Viewport
+		RENDER_MODE,
+		SECONDARY_VIEW,
+		PARTICLES_SPAWN,
+		PARTICLES_CLEAR,
+		
+		// Tools
+		WORKBENCH,
+		BUILD_TOOL,
+		TOOL_SELECT,
+		TOOL_MOVE,
+		TOOL_ROTATE,
+		TOOL_SCALE,
+		TOOL_BEND,
+		TOOL_TRANSFORM,
+		SNAP,
+		
+		// Navigation
+		CAM_FORWARD,
+		CAM_BACK,
+		CAM_LEFT,
+		CAM_RIGHT,
+		CAM_ASCEND,
+		CAM_DESCEND,
+		CAM_ROLL_FORWARD,
+		CAM_ROLL_BACK,
+		CAM_RESET,
+		CAM_ROLL_RESET,
+		CAM_FAST,
+		CAM_SLOW,
+		CAM_VIEW_TIMELINE,
+		
+		amount
 	}
 }

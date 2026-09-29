@@ -1,5 +1,4 @@
-/// shader_high_reflections_resolve_set(surf)
-/// @arg surf
+/// @arg surface
 
 function shader_high_reflections_resolve_set(surf)
 {

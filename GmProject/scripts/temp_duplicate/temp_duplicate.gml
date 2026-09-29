@@ -1,12 +1,9 @@
-/// temp_duplicate()
 /// @desc Duplicates the template, returns the new one.
 
 function temp_duplicate()
 {
-	var temp, copy;
-	temp = new_obj(obj_template)
+	var temp = new_obj(obj_template);
 	temp_copy(temp)
-	copy = id
 	
 	with (temp)
 	{

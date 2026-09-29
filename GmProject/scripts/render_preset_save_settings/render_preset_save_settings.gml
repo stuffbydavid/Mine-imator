@@ -1,12 +1,10 @@
-/// render_preset_save_settings(renderer)
-
 function render_preset_save_settings(renderer)
 {
-	var set;
 	if (renderer = e_renderer.STANDARD && has_standard)
 	{
-		set = self.renderer[renderer]
+		var set = self.renderer[renderer];
 		json_save_object_start("standard")
+		
 			json_save_var_bool("ssao", set.ssao)
 			json_save_var_bool("shadows", set.shadows)
 			json_save_var("dof_quality", set.dof_quality)
@@ -19,13 +17,15 @@ function render_preset_save_settings(renderer)
 			json_save_var_bool("glow", set.glow)
 			json_save_var_bool("aa", set.aa)
 			json_save_var("aa_power", set.aa_power)
+		
 		json_save_object_done()
 	}
 
 	if (renderer = e_renderer.REALISTIC && has_realistic)
 	{
-		set = self.renderer[renderer]
+		var set = self.renderer[renderer];
 		json_save_object_start("realistic")
+		
 			json_save_var("samples", set.samples)
 			json_save_var_bool("ssao", set.ssao)
 			json_save_var_bool("shadows", set.shadows)
@@ -50,6 +50,7 @@ function render_preset_save_settings(renderer)
 			json_save_var_bool("aa", set.aa)
 			json_save_var("aa_mode", set.aa_mode)
 			json_save_var("aa_power", set.aa_power)
+		
 		json_save_object_done()
 	}
 
@@ -58,6 +59,7 @@ function render_preset_save_settings(renderer)
 		if (has_fx)
 		{
 			json_save_object_start("specialeffects")
+		
 				json_save_var("ssao_radius", ssao_radius)
 				json_save_var("ssao_power", ssao_power)
 				json_save_var("ssao_blur_passes", ssao_blur_passes)
@@ -71,7 +73,7 @@ function render_preset_save_settings(renderer)
 				json_save_var("exposure", exposure)
 				json_save_var("gamma", gamma)
 
-				set = self.renderer[e_renderer.STANDARD]
+				var set = self.renderer[e_renderer.STANDARD];
 				json_save_var("shadows_blur_size", set.shadows_blur_size)
 
 				set = self.renderer[e_renderer.REALISTIC]
@@ -82,12 +84,14 @@ function render_preset_save_settings(renderer)
 				json_save_var("indirect_strength", set.indirect_strength)
 				json_save_var("reflections_fade_amount", set.reflections_fade_amount)
 				json_save_var("reflections_thickness", set.reflections_thickness)
+			
 			json_save_object_done()
 		}
 
 		if (has_graphics)
 		{
 			json_save_object_start("graphics")
+			
 				json_save_var("render_distance", render_distance)
 				json_save_var_bool("texture_filtering", texture_filtering)
 				json_save_var_bool("transparent_block_texture_filtering", transparent_block_texture_filtering)
@@ -96,12 +100,14 @@ function render_preset_save_settings(renderer)
 				json_save_var_bool("opaque_leaves", opaque_leaves)
 				json_save_var_bool("liquid_animation", liquid_animation)
 				json_save_var("render_alpha_mode", alpha_mode)
+			
 			json_save_object_done()
 		}
 
 		if (has_materials)
 		{
 			json_save_object_start("materials")
+			
 				json_save_var("block_emissive", block_emissive)
 				json_save_var("block_subsurface", block_subsurface)
 				json_save_var_bool("water_reflections", water_reflections)
@@ -111,6 +117,7 @@ function render_preset_save_settings(renderer)
 				json_save_var("water_wave_scale", water_wave_scale)
 				json_save_var("water_wave_detail", water_wave_detail)
 				json_save_var_bool("material_maps", material_maps)
+			
 			json_save_object_done()
 		}
 	}

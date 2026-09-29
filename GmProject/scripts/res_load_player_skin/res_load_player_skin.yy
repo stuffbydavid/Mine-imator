@@ -6,7 +6,7 @@
   "name":"res_load_player_skin",
   "parent":{
     "name":"Load",
-    "path":"folders/Scripts/Project/Resources/Load.yy",
+    "path":"folders/Scripts/Project/Resource/Load.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,14 +1,14 @@
-/// draw_togglebutton(name, x, y, [labels, [showcaption]])
+/// @desc Displays togglebutton options.
 /// @arg name
 /// @arg x
 /// @arg y
-/// @arg [labels
-/// @arg [showcaption]]
-/// @desc Displays togglebutton options
+/// @arg [labels]
+/// @arg [showcaption]
 
 function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 {
-	var h, w, buttonx, buttony, buttonh, buttoncount, buttoncols, buttonrows, buttonsize, mouseon, script, scriptvalue, axis;
+	var h, w, buttonx, buttony, buttonh, buttoncount, buttoncols, buttonrows, buttonsize;
+	var mouseon, script, scriptvalue, axis;
 	
 	h = ui_large_height + (label_height + 8)
 	w = dw
@@ -106,9 +106,9 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 		
 		draw_box(buttonx, buttony, boxwid, buttonh, false, backcolor, backalpha)
 		
-		var icon = togglebutton_icon[i];
+		var icon, buttonname, totalwidth, startx;
+		icon = togglebutton_icon[i]
 		
-		var buttonname, totalwidth, startx;
 		draw_set_font(font_button)
 		buttonname = string_limit((labels ? string(togglebutton_text[i]) : ""), boxwid - 16)
 		totalwidth = (labels ? string_width(buttonname) : 0) + (icon = null ? 0 : 24 + 8)

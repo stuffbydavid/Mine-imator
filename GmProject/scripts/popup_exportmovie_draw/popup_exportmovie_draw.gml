@@ -1,16 +1,12 @@
-/// popup_exportmovie_draw()
-
 function popup_exportmovie_draw()
 {
-	var text;
-	
 	// Renderer
 	tab_control_menu()
-	draw_button_menu("exportmovierenderer", e_menu.LIST, dx, dy, dw, 24, popup.renderer, text_get("renderrenderer" + renderer_name_list[popup.renderer]), action_toolbar_export_renderer)
+	draw_button_menu("exportmovierenderer", e_menu.LIST, dx, dy, dw, 24, popup_current.renderer, text_get("renderrenderer" + renderer_name_list[popup_current.renderer]), action_toolbar_export_renderer)
 	tab_next()
 
 	// Performance warning
-	if (popup.renderer = e_renderer.REALISTIC)
+	if (popup_current.renderer = e_renderer.REALISTIC)
 	{
 		var preset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]];
 		if (render_performance_warning(preset, e_renderer.REALISTIC))
@@ -19,24 +15,24 @@ function popup_exportmovie_draw()
 
 	// Video size
 	if (project_video_template = 0)
-		text = text_get("projectvideosizecustom")
+		content_text = text_get("projectvideosizecustom")
 	else
-		text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
+		content_text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 	
 	tab_control_menu()
-	draw_button_menu("exportmovievideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
+	draw_button_menu("exportmovievideosize", e_menu.LIST, dx, dy, dw, 24, project_video_template, content_text, action_project_video_template)
 	tab_next()
 	
-	var badvideosize = (popup.format = "mp4" || popup.format = "mov") && (project_video_width mod 2 = 1 || project_video_height mod 2 = 1)
+	var badvideosize = (popup_current.format = "mp4" || popup_current.format = "mov") && (project_video_width mod 2 = 1 || project_video_height mod 2 = 1);
 	
 	// Custom
 	if (project_video_template = 0)
 	{
-		textfield_group_add("exportmovievideosizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup.tbx_video_size_custom_width, null, 1, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1, surface_get_max_size())
-		textfield_group_add("exportmovievideosizecustomheight", project_video_height, 720, action_project_video_height, X, popup.tbx_video_size_custom_height, null, 1, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1, surface_get_max_size())
+		textfield_group_add("exportmovievideosizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup_current.tbx_video_size_custom_width, null, 1, (popup_current.format = "mp4" || popup_current.format = "mov") ? 2 : 1, surface_get_max_size())
+		textfield_group_add("exportmovievideosizecustomheight", project_video_height, 720, action_project_video_height, X, popup_current.tbx_video_size_custom_height, null, 1, (popup_current.format = "mp4" || popup_current.format = "mov") ? 2 : 1, surface_get_max_size())
 		
 		tab_control_textfield_group()
-		draw_textfield_group("exportmovievideosizecustom", dx, dy, dw, 1, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1, no_limit, (popup.format = "mp4" || popup.format = "mov") ? 2 : 1)
+		draw_textfield_group("exportmovievideosizecustom", dx, dy, dw, 1, (popup_current.format = "mp4" || popup_current.format = "mov") ? 2 : 1, no_limit, (popup_current.format = "mp4" || popup_current.format = "mov") ? 2 : 1)
 		tab_next()
 		
 		if (badvideosize)
@@ -51,52 +47,52 @@ function popup_exportmovie_draw()
 	
 	// Format
 	tab_control_menu()
-	draw_button_menu("exportmovieformat", e_menu.LIST, dx, dy, dw, 24, popup.format, text_get("exportmovieformat" + popup.format), action_toolbar_exportmovie_format)
+	draw_button_menu("exportmovieformat", e_menu.LIST, dx, dy, dw, 24, popup_current.format, text_get("exportmovieformat" + popup_current.format), action_toolbar_exportmovie_format)
 	tab_next()
 	
 	// Frame rate
-	if (popup.frame_rate = 0)
-		text = text_get("exportmovieframeratecustom")
+	if (popup_current.frame_rate = 0)
+		content_text = text_get("exportmovieframeratecustom")
 	else
-		text = string(popup.frame_rate)
+		content_text = string(popup_current.frame_rate)
 	
 	tab_control_menu()
-	draw_button_menu("exportmovieframerate", e_menu.LIST, dx, dy, dw, 24, popup.frame_rate, text, action_toolbar_exportmovie_frame_rate)
+	draw_button_menu("exportmovieframerate", e_menu.LIST, dx, dy, dw, 24, popup_current.frame_rate, content_text, action_toolbar_exportmovie_frame_rate)
 	tab_next()
 	
-	if (popup.frame_rate = 0)
+	if (popup_current.frame_rate = 0)
 	{
 		tab_control_dragger()
-		draw_dragger("exportmovieframespersecond", dx, dy, dragger_width, popup.framespersecond, 1, 1, 120, 30, 1, popup.tbx_framespersecond, action_toolbar_exportmovie_framespersecond)
+		draw_dragger("exportmovieframespersecond", dx, dy, dragger_width, popup_current.framespersecond, 1, 1, 120, 30, 1, popup_current.tbx_framespersecond, action_toolbar_exportmovie_framespersecond)
 		tab_next()
 	}
 	
-	if (popup.format = "png")
+	if (popup_current.format = "png")
 	{
 		// Remove background
 		tab_control_checkbox()
-		draw_checkbox("exportmovieremovebackground", dx, dy, popup.remove_background, action_toolbar_export_remove_background)
+		draw_checkbox("exportmovieremovebackground", dx, dy, popup_current.remove_background, action_toolbar_export_remove_background)
 		tab_next()
 		
-		if (popup.remove_background)
+		if (popup_current.remove_background)
 			draw_tooltip_label("exportimageblendmodewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	}
 	else
 	{
 		// Include audio
 		tab_control_checkbox()
-		draw_checkbox("exportmovieincludeaudio", dx, dy, popup.include_audio, action_toolbar_exportmovie_include_audio)
+		draw_checkbox("exportmovieincludeaudio", dx, dy, popup_current.include_audio, action_toolbar_exportmovie_include_audio)
 		tab_next()
 	}
 	
 	// Include hidden
 	tab_control_checkbox()
-	draw_checkbox("exportmovieincludehidden", dx, dy, popup.include_hidden, action_toolbar_export_include_hidden)
+	draw_checkbox("exportmovieincludehidden", dx, dy, popup_current.include_hidden, action_toolbar_export_include_hidden)
 	tab_next()
 	
 	// Watermark
 	tab_control_checkbox()
-	draw_checkbox("exportmoviewatermark", dx, dy, popup.watermark, action_toolbar_export_watermark)
+	draw_checkbox("exportmoviewatermark", dx, dy, popup_current.watermark, action_toolbar_export_watermark)
 	tab_next()
 	
 	// Save

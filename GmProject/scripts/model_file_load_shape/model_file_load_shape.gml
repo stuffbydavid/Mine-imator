@@ -1,7 +1,6 @@
-/// model_file_load_shape(map, resource)
+/// @desc Adds a shape from the given map (JSON object).
 /// @arg map
 /// @arg resource
-/// @desc Adds a shape from the given map (JSON object)
 
 function model_file_load_shape(map, res)
 {
@@ -73,7 +72,7 @@ function model_file_load_shape(map, res)
 					texture_material_inherit = other.texture_material_inherit
 				
 				if (texture_normal_name != "")
-					model_file_load_tex_normal(texture_normal_name, res)
+					model_file_load_texture_normal(texture_normal_name, res)
 				else
 					texture_normal_inherit = other.texture_normal_inherit
 			}
@@ -263,7 +262,7 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Update bounds
-		var boundsmat = matrix_create(position, rotation, vec3(1))
+		var boundsmat = matrix_create(position, rotation, vec3(1));
 		var startpos = point3D_mul_matrix(from, boundsmat);
 		var endpos = point3D_mul_matrix(to, boundsmat);
 		bounds_start[X] = min(startpos[X], endpos[X])

@@ -1,5 +1,4 @@
-/// tl_mark_place_target(active)
-/// Marks a timeline as the current placement target
+/// @desc Marks a timeline as the current placement target.
 
 function tl_mark_place_target(active)
 {

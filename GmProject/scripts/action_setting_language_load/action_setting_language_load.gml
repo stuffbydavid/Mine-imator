@@ -1,5 +1,4 @@
-/// action_setting_language_load(fn)
-/// @arg fn
+/// @arg filename
 
 function action_setting_language_load(fn)
 {

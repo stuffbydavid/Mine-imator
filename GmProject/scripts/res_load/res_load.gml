@@ -1,4 +1,3 @@
-/// res_load([reload])
 /// @desc Loads the file for the resource.
 
 function res_load(reload = false)

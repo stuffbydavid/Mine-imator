@@ -1,4 +1,3 @@
-/// block_set_vine()
 /// @desc Connects to non-air blocks above.
 
 function block_set_vine()

@@ -1,17 +1,16 @@
-/// app_startup_window()
-
 function app_startup_window()
 {
 	globalvar window_list, window_debug_current;
+	globalvar current_step, minute_steps, delta;
+	
 	window_list = ds_list_create()
 	window_debug_current = e_window.MAIN
 	
-	globalvar current_step, minute_steps, delta;
 	current_step = 0
 	minute_steps = 60 * 60
 	delta = 1
 	
-	log("Windows startup")
+	log("Window startup")
 	
 	http_assets = null
 	http_download_assets_file = null
@@ -60,6 +59,10 @@ function app_startup_window()
 	sortlist_resize_column = 0
 	sortlist_resize_column_x = 0
 	
+	content_name = ""
+	content_text = ""
+	content_capwid = 0
+
 	content_x = 0
 	content_y = 0
 	content_width = 0
@@ -80,11 +83,11 @@ function app_startup_window()
 	tab_control_h = 0
 	tab_collapse = false
 	
-	tab_collumns = false
-	tab_collumns_index = 0
-	tab_collumns_width = 0
-	tab_collumns_count = 2
-	tab_collumns_start_x = 0
+	tab_columns = false
+	tab_columns_index = 0
+	tab_columns_width = 0
+	tab_columns_count = 2
+	tab_columns_start_x = 0
 	
 	// Tips
 	tip_show = false
@@ -117,7 +120,7 @@ function app_startup_window()
 	tip_keybind = null
 	
 	// Popups
-	popup = null
+	popup_current = null
 	popup_ani = 0
 	popup_block_ani = 0
 	popup_block_ani_ease = "easeoutcirc"

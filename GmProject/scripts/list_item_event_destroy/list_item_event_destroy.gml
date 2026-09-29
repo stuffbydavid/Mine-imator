@@ -1,5 +1,3 @@
-/// list_item_event_destroy()
-
 function list_item_event_destroy()
 {
 	if (actions_left != null)

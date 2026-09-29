@@ -1,18 +1,15 @@
-/// action_lib_model_tex(resource)
-/// @arg resource
 /// @desc Sets the model texture of the given library item.
+/// @arg resource
 
 function action_lib_model_tex(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		switch (res)
 		{
 			case e_option.BROWSE: // Load new
@@ -45,6 +42,7 @@ function action_lib_model_tex(res)
 			case e_option.DOWNLOAD_SKIN_DONE: // Download, done
 			{
 				directory_create_lib(skins_directory_get())
+				
 				fn = skins_directory_get() + popup_downloadskin.username + ".png"
 				file_copy_lib(download_image_file, fn)
 				
@@ -73,5 +71,6 @@ function action_lib_model_tex(res)
 	}
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

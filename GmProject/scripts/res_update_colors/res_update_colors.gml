@@ -1,43 +1,43 @@
-/// res_update_colors([biome], [nextbiome], [mix])
+/// @desc Update grass & foliage colors for a resource.
 /// @arg [biome]
 /// @arg [nextbiome]
 /// @arg [mix]
-/// @desc Update grass & foliage colors for a resource
 
-function res_update_colors()
+function res_update_colors(biome = "", nextbiome = "", mix = 0)
 {
 	if (colormap_grass_texture = null)
 		return 0
 	
-	var biomename, colors;
-	biomename = argument_count > 0 ? argument[0] : app.background_biome
+	if (biome = "")
+		biome = app.background_biome
+		
+	mix = clamp(mix, 0, 1)
 	
-	if (argument_count > 2 && biomename != argument[1])
+	var colors;
+	if (nextbiome != "" && biome != nextbiome)
 	{
-		var nextname, startframe, endframe, mix;
-		nextname = argument[1]
+		var startframe, endframe;
 		startframe = app.background_tlactive.keyframe_current
 		endframe = app.background_tlactive.keyframe_next
-		mix = clamp(argument[2], 0, 1)
 		
 		// Resolve colormaps only when the keyframe pair changes
 		if (color_biome_start_colors = null || color_biome_end_colors = null ||
-			color_biome_start_name != biomename || color_biome_end_name != nextname ||
+			color_biome_start_name != biome || color_biome_end_name != nextbiome ||
 			color_biome_start_frame != startframe || color_biome_end_frame != endframe)
 		{
-			color_biome_start_colors = res_biome_colors(biomename, app.background_tlactive.keyframe_current_values)
-			color_biome_end_colors = res_biome_colors(nextname, app.background_tlactive.keyframe_next_values)
-			color_biome_start_name = biomename
-			color_biome_end_name = nextname
+			color_biome_start_colors = res_biome_colors(biome, app.background_tlactive.keyframe_current_values)
+			color_biome_end_colors = res_biome_colors(nextbiome, app.background_tlactive.keyframe_next_values)
+			color_biome_start_name = biome
+			color_biome_end_name = nextbiome
 			color_biome_start_frame = startframe
 			color_biome_end_frame = endframe
 		}
 		else
 		{
-			if (biomename = "custom")
-				color_biome_start_colors = res_biome_colors(biomename, app.background_tlactive.keyframe_current_values)
-			if (nextname = "custom")
-				color_biome_end_colors = res_biome_colors(nextname, app.background_tlactive.keyframe_next_values)
+			if (biome = "custom")
+				color_biome_start_colors = res_biome_colors(biome, app.background_tlactive.keyframe_current_values)
+			if (nextbiome = "custom")
+				color_biome_end_colors = res_biome_colors(nextbiome, app.background_tlactive.keyframe_next_values)
 		}
 		
 		if (color_biome_start_colors = null || color_biome_end_colors = null)
@@ -51,7 +51,7 @@ function res_update_colors()
 	{
 		color_biome_start_colors = null
 		color_biome_end_colors = null
-		colors = res_biome_colors(biomename)
+		colors = res_biome_colors(biome)
 		if (colors = null)
 			return 0
 	}

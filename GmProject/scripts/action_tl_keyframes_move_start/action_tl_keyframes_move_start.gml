@@ -1,9 +1,6 @@
-/// action_tl_keyframes_move_start(keyframe)
-/// @arg keyframe
-
 function action_tl_keyframes_move_start(keyframe)
 {
-	var selamount, selmin, selmax, list, rowfirst, rowlast, kf, isleft, isright;
+	var selamount, selmin, selmax;
 	selamount = 0
 	selmin = no_limit
 	selmax = -no_limit
@@ -15,6 +12,7 @@ function action_tl_keyframes_move_start(keyframe)
 		
 		move_index = ds_list_find_index(timeline.keyframe_list, id)
 		move_pos = position
+		
 		selamount++
 		selmin = min(selmin, position)
 		selmax = max(selmax, position)
@@ -30,14 +28,14 @@ function action_tl_keyframes_move_start(keyframe)
 	// Dragging the first or last selected keyframe of a row stretches it from the opposite edge
 	if (keybinds[e_keybind.KEYFRAMES_STRETCH].active && selamount > 1 && selmax > selmin)
 	{
+		var list, rowfirst, rowlast, isleft, isright;
 		list = keyframe.timeline.keyframe_list
 		rowfirst = null
 		rowlast = null
 		
 		for (var k = 0; k < ds_list_size(list); k++)
 		{
-			kf = list[|k]
-			
+			var kf = list[|k];
 			if (!kf.selected)
 				continue
 			

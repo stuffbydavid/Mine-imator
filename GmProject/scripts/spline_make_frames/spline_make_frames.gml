@@ -1,8 +1,4 @@
-/// spline_make_frames(points, closed, smooth)
-/// @arg points
-/// @arg closed
-/// @arg smooth
-/// @desc Constructs rotation frames based on tangents, detects changes in torsion and aligns normals
+/// @desc Constructs rotation frames based on tangents, detects changes in torsion and aligns normals.
 
 function spline_make_frames(points, closed, smooth)
 {

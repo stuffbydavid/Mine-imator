@@ -1,6 +1,3 @@
-/// tab_show(tab, raise)
-/// @arg tab
-
 function tab_show(tab, raise = false)
 {
 	var panel = tab.panel;

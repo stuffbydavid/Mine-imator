@@ -1,6 +1,5 @@
-/// render_pass_draw(pass, surf, x, y, width, height)
 /// @arg pass
-/// @arg surf
+/// @arg surface
 /// @arg x
 /// @arg y
 /// @arg width

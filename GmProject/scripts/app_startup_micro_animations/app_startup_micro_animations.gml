@@ -1,5 +1,4 @@
-/// app_startup_micro_animations()
-/// @desc Sets up micro animations for use with components
+/// @desc Sets up micro animations for use with components.
 
 function app_startup_micro_animations()
 {
@@ -14,23 +13,4 @@ function app_startup_micro_animations()
 	
 	microanis = ds_map_create()
 	microani_prefix = ""
-	
-	enum e_microani
-	{
-		HOVER,
-		RADIO_HOVER,
-		PRESS,
-		ACTIVE,
-		DISABLED,
-		CUSTOM,
-		FADE,
-		HOVER_LINEAR,
-		RADIO_HOVER_LINEAR,
-		PRESS_LINEAR,
-		ACTIVE_LINEAR,
-		DISABLED_LINEAR,
-		CUSTOM_LINEAR,
-		FADE_LINEAR,
-		GOAL_EASE
-	}
 }

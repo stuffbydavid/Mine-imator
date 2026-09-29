@@ -1,5 +1,3 @@
-/// project_startup()
-
 function project_startup()
 {
 	globalvar load_queue, load_format, load_folder, save_folder,

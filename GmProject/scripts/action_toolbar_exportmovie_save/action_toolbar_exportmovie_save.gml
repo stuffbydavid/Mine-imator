@@ -1,14 +1,12 @@
-/// action_toolbar_exportmovie_save()
-
 function action_toolbar_exportmovie_save()
 {
 	var fn;
 	switch (popup_exportmovie.format)
 	{
-		case "mp4":	fn = file_dialog_save_movie_mp4(project_name);	break
-		case "mov":	fn = file_dialog_save_movie_mov(project_name);	break
-		case "wmv":	fn = file_dialog_save_movie_wmv(project_name);	break
-		default:	fn = file_dialog_save_movie_png(project_name);	break
+		case "mp4":	fn = file_dialog_save_movie_mp4(project_name); break
+		case "mov":	fn = file_dialog_save_movie_mov(project_name); break
+		case "wmv":	fn = file_dialog_save_movie_wmv(project_name); break
+		default:	fn = file_dialog_save_movie_png(project_name); break
 	}
 	
 	if (fn = "")
@@ -47,11 +45,13 @@ function action_toolbar_exportmovie_save()
 		log("Size", project_video_width, project_video_height)
 		
 		movie_set(project_video_width, project_video_height, movie_bit_rate, exportmovie_framespersecond, popup_exportmovie.include_audio)
+		
 		var err = movie_start(fn, fmt);
 		if (err < 0)
 		{
 			log("Error when exporting, error code", err)
 			error("errorexportmovie")
+			
 			render_hidden = false
 			render_watermark = false
 			return 0
@@ -71,10 +71,12 @@ function action_toolbar_exportmovie_save()
 					}
 					else
 						app.exportmovie_current_sound = sound_index
+					
 					sound_file_id = movie_audio_file_add(temp_file)
 					if (sound_file_id < 0)
 					{
 						movie_done()
+						
 						log("Error adding audio file, error code", sound_file_id)
 						error("errorexportmovie")
 						return 0
@@ -91,19 +93,24 @@ function action_toolbar_exportmovie_save()
 				{
 					with (keyframe_list[|k])
 					{
-						if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready && value[e_value.SOUND_VOLUME] > 0 && value[e_value.SOUND_PITCH] > 0 && tl_keyframe_length(id) > 0 &&
+						if (value[e_value.SOUND_OBJ] != null && value[e_value.SOUND_OBJ].ready &&
+							value[e_value.SOUND_VOLUME] > 0 && value[e_value.SOUND_PITCH] > 0 && tl_keyframe_length(id) > 0 &&
 							position < app.exportmovie_marker_end &&
 							position + tl_keyframe_length(id) >= app.exportmovie_marker_start)
 						{
-							var ret = movie_audio_sound_add(value[e_value.SOUND_OBJ].sound_file_id, 
-															max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
-															value[e_value.SOUND_VOLUME], 
-															value[e_value.SOUND_PITCH], 
-															value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
-															value[e_value.SOUND_END])
+							var ret = movie_audio_sound_add(
+								value[e_value.SOUND_OBJ].sound_file_id, 
+								max(0, position - app.exportmovie_marker_start) / app.project_tempo, 
+								value[e_value.SOUND_VOLUME], 
+								value[e_value.SOUND_PITCH], 
+								value[e_value.SOUND_START] + max(0, app.exportmovie_marker_start - position) / app.project_tempo, 
+								value[e_value.SOUND_END]
+							);
+							
 							if (ret < 0)
 							{
 								movie_done()
+								
 								log("Error adding sound, error code", ret)
 								error("errorexportmovie")
 								return 0
@@ -116,6 +123,7 @@ function action_toolbar_exportmovie_save()
 		
 		if (!is_cpp())
 			exportmovie_buffer = buffer_create(project_video_width * project_video_height * 4, buffer_fixed, 4)
+		
 		render_background = true
 	}
 	else

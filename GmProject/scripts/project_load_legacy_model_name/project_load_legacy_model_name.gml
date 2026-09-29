@@ -1,4 +1,3 @@
-/// project_load_legacy_model_name(id)
 /// @arg id
 
 function project_load_legacy_model_name(modelid)

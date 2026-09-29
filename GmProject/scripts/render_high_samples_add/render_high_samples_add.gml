@@ -1,8 +1,6 @@
-/// render_high_samples_add()
-
 function render_high_samples_add()
 {
-	render_surface_samples = surface_require(render_surface_samples, render_width, render_height, false, e_surface_format.rgba32float)
+	render_surface_samples = surface_require(render_surface_samples, render_width, render_height, false, surface_rgba32float)
 	
 	// Add sample to accumulation buffer
 	surface_set_target(render_surface_samples)

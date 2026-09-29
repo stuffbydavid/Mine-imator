@@ -1,5 +1,3 @@
-/// project_reset()
-
 function project_reset()
 {
 	log("Resetting project")

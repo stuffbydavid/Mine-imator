@@ -1,6 +1,3 @@
-/// action_bench_create([button])
-/// @arg [button]
-
 function action_bench_create(button = e_bench_button.CREATE)
 {
 	var tab, editobj, placetarget, placeparent;
@@ -9,10 +6,10 @@ function action_bench_create(button = e_bench_button.CREATE)
 	placetarget = null
 	placeparent = null
 	
-	if (tab = e_bench.SOUND)
+	if (tab = e_bench_tab.SOUND)
 		return action_bench_sound_create()
 	
-	if (tab = e_bench.PROJECT)
+	if (tab = e_bench_tab.PROJECT)
 	{
 		var temp = bench_settings.project_selected;
 		if (temp != null && instance_exists(temp) && temp.object_index = obj_template)
@@ -28,15 +25,18 @@ function action_bench_create(button = e_bench_button.CREATE)
 				action_lib_animate(true)
 			}
 		}
+		
 		return 0
 	}
 
 	if (button = e_bench_button.START_BUILDING && !history_undo && !history_redo)
 	{
 		build_type = e_tl_type.BLOCK
-		if (tab = e_bench.SPECIAL_BLOCK)
+		if (tab = e_bench_tab.SPECIAL_BLOCK)
 			build_type = e_tl_type.SPECIAL_BLOCK
+		
 		app_start_place(true)
+		
 		return 0
 	}
 
@@ -44,9 +44,11 @@ function action_bench_create(button = e_bench_button.CREATE)
 	{
 		placetarget = place_target_tl
 		placeparent = place_target_tl_part_of
+		
 		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
 			with (place_target_tl_part_of)
 				tl_mark_place_target(false)
+		
 		place_target_tl = null
 		place_target_tl_part_of = null
 	}
@@ -81,7 +83,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 		particletemp = null
 		sceneryres = null
 		sceneryreplaceground = false
-		startplacing = (tab = e_bench.BLOCK && button = e_bench_button.CREATE) ||
+		startplacing = (tab = e_bench_tab.BLOCK && button = e_bench_button.CREATE) ||
 						(setting_place_new && !keyboard_check(vk_shift))
 		
 		if (history_redo)
@@ -95,7 +97,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
 			
-			if (tab = e_bench.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
+			if (tab = e_bench_tab.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
 			{
 				particletemp = save_id_find(history_data.particle_temp_save_id)
 				bench_settings.particle_preset = particletemp
@@ -120,25 +122,25 @@ function action_bench_create(button = e_bench_button.CREATE)
 
 		switch (tab)
 		{
-			case e_bench.CHARACTER:			temptype = e_temp_type.CHARACTER break
-			case e_bench.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT break
-			case e_bench.MODEL:				temptype = e_temp_type.MODEL break
-			case e_bench.MODEL_PART:		temptype = e_temp_type.MODEL_PART break
-			case e_bench.ITEM:				temptype = e_temp_type.ITEM break
-			case e_bench.SCHEMATIC:			temptype = e_temp_type.SCENERY break
-			case e_bench.BLOCK:				temptype = e_temp_type.BLOCK break
-			case e_bench.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK break
-			case e_bench.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type break
-			case e_bench.TEXT:				temptype = e_temp_type.TEXT break
-			case e_bench.PATH:				tltype = e_tl_type.PATH break
-			case e_bench.CAMERA:			tltype = e_tl_type.CAMERA break
-			case e_bench.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER break
-			case e_bench.AUDIO_TRACK:		tltype = e_tl_type.AUDIO_TRACK break
-			case e_bench.LIGHT_SOURCE:		tltype = bench_settings.light_type break
-			case e_bench.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND break
+			case e_bench_tab.CHARACTER:			temptype = e_temp_type.CHARACTER; break
+			case e_bench_tab.EQUIPMENT:			temptype = e_temp_type.EQUIPMENT; break
+			case e_bench_tab.MODEL:				temptype = e_temp_type.MODEL; break
+			case e_bench_tab.MODEL_PART:		temptype = e_temp_type.MODEL_PART; break
+			case e_bench_tab.ITEM:				temptype = e_temp_type.ITEM; break
+			case e_bench_tab.SCHEMATIC:			temptype = e_temp_type.SCENERY; break
+			case e_bench_tab.BLOCK:				temptype = e_temp_type.BLOCK; break
+			case e_bench_tab.SPECIAL_BLOCK:		temptype = e_temp_type.SPECIAL_BLOCK; break
+			case e_bench_tab.SHAPE:				temptype = e_temp_type.CUBE + bench_settings.shape_type; break
+			case e_bench_tab.TEXT:				temptype = e_temp_type.TEXT; break
+			case e_bench_tab.PATH:				tltype = e_tl_type.PATH; break
+			case e_bench_tab.CAMERA:			tltype = e_tl_type.CAMERA; break
+			case e_bench_tab.PARTICLE_SPAWNER:	temptype = e_temp_type.PARTICLE_SPAWNER; break
+			case e_bench_tab.AUDIO_TRACK:		tltype = e_tl_type.AUDIO_TRACK; break
+			case e_bench_tab.LIGHT_SOURCE:		tltype = bench_settings.light_type; break
+			case e_bench_tab.ENVIRONMENT:		tltype = e_tl_type.BACKGROUND; break
 		}
 
-		if (tab = e_bench.SCHEMATIC)
+		if (tab = e_bench_tab.SCHEMATIC)
 		{
 			if (history_redo)
 			{
@@ -157,7 +159,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 					hobj.scenery_res_save_obj = history_save_res(sceneryres)
 			}
 		}
-		else if (tab = e_bench.PARTICLE_SPAWNER && !history_redo)
+		else if (tab = e_bench_tab.PARTICLE_SPAWNER && !history_redo)
 			particletemp = bench_settings.particle_preset_temp
 
 		if (tltype != null) // Timeline
@@ -165,11 +167,11 @@ function action_bench_create(button = e_bench_button.CREATE)
 			tl = new_tl(tltype)
 			editobj = tl
 
-			if (tab = e_bench.PATH)
+			if (tab = e_bench_tab.PATH)
 			{
 				// Create default path points
 				var pathpoint, pointpos, pathpositions;
-				pathpositions = [vec3(-32, -32, 0), vec3(32, -32, 0), vec3(32, 32, 0), vec3(-32, 32, 0)]
+				pathpositions = [ vec3(-32, -32, 0), vec3(32, -32, 0), vec3(32, 32, 0), vec3(-32, 32, 0) ]
 				for (var i = 0; i < array_length(pathpositions); i++)
 				{
 					pointpos = pathpositions[i]
@@ -181,6 +183,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 						tl_value_set_vec3(e_value.POS_X, pointpos, true)
 					}
 				}
+				
 				tl.path_update = true
 			}
 
@@ -190,7 +193,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 				spawn_amount++
 			}
 			
-			if (tab = e_bench.CAMERA)
+			if (tab = e_bench_tab.CAMERA)
 				view_second.show = true
 		}
 		else if (particletemp != null)
@@ -205,16 +208,17 @@ function action_bench_create(button = e_bench_button.CREATE)
 			{
 				spawn_save_id[spawn_amount] = tl.save_id
 				spawn_amount++
+				
 				if (!app.history_redo)
 					particle_temp_save_id = particletemp.save_id
 			}
 		}
 		else if (temptype != null)
 		{
-			if (tab = e_bench.BLOCK || tab = e_bench.SPECIAL_BLOCK)
+			if (tab = e_bench_tab.BLOCK || tab = e_bench_tab.SPECIAL_BLOCK)
 			{
 				var blocktype = e_tl_type.BLOCK;
-				if (tab = e_bench.SPECIAL_BLOCK)
+				if (tab = e_bench_tab.SPECIAL_BLOCK)
 					blocktype = e_tl_type.SPECIAL_BLOCK
 				
 				tl = tl_new_block(blocktype, bench_settings)
@@ -223,9 +227,10 @@ function action_bench_create(button = e_bench_button.CREATE)
 					spawn_save_id[spawn_amount] = tl.save_id
 					spawn_amount++
 				}
+				
 				editobj = tl
 			}
-			else if (tab = e_bench.TEXT)
+			else if (tab = e_bench_tab.TEXT)
 			{
 				tl = tl_new_text(bench_settings)
 				with (hobj)
@@ -233,6 +238,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 					spawn_save_id[spawn_amount] = tl.save_id
 					spawn_amount++
 				}
+				
 				editobj = tl
 			}
 			else with (bench_settings)
@@ -342,12 +348,13 @@ function action_bench_create(button = e_bench_button.CREATE)
 			}
 		}
 
-		if (tab = e_bench.SCHEMATIC)
+		if (tab = e_bench_tab.SCHEMATIC)
 		{
 			if (history_redo)
 				sceneryreplaceground = history_data.scenery_replace_ground
+			
 			else if (setting_scenery_replace_ground && tl.temp.scenery != null &&
-				tl.temp.scenery.scenery_size[X] > scenery_large_threshold && tl.temp.scenery.scenery_size[Y] > scenery_large_threshold)
+					 tl.temp.scenery.scenery_size[X] > scenery_large_threshold && tl.temp.scenery.scenery_size[Y] > scenery_large_threshold)
 			{
 				sceneryreplaceground = true
 				hobj.scenery_replace_ground = true
@@ -382,6 +389,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 				tl_value_copy_vec3(e_value.POS_X, value_default, tl.value_default)
 				tl_value_copy_vec3(e_value.ROT_X, value_default, tl.value_default)
 				tl_value_copy_vec3(e_value.SCA_X, value_default, tl.value_default)
+				
 				parent = tl.parent
 				parent_save_id = save_id_get(tl.parent)
 			}
@@ -395,12 +403,14 @@ function action_bench_create(button = e_bench_button.CREATE)
 				(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
 				!sceneryreplaceground &&
 				tl.value_type[e_value_type.TRANSFORM_POS])
+			{
 				app_start_place(false, tl, true)
+			}
 			
 			log("Created", tl_type_name_list[|tl.type])
 
 			// Encourage parenting armor to a character
-			if (!setting_advanced_mode && tab = e_bench.EQUIPMENT)
+			if (!setting_advanced_mode && tab = e_bench_tab.EQUIPMENT)
 			{
 				toast_new(e_toast.INFO, text_get("alertequiparmor"))
 				toast_last.dismiss_time = 15
@@ -412,29 +422,33 @@ function action_bench_create(button = e_bench_button.CREATE)
 	{
 		obj_edit = editobj
 		tab_object_editor_update_ptype_list()
+		
 		if (!place_build)
 			tab_show(object_editor)
 	}
 	
-	if (tab = e_bench.PARTICLE_SPAWNER)
+	if (tab = e_bench_tab.PARTICLE_SPAWNER)
 	{
 		if (!history_undo && !history_redo)
 			action_bench_particles_folder(bench_particle_preset_folder)
 		
 		particle_spawner_clear()
 		preview_reset_view()
+		
 		update = true
 	}
 	
-	if (!history_undo && tab = e_bench.TEXT)
+	if (!history_undo && tab = e_bench_tab.TEXT)
 		bench_settings.text = ""
 
 	tl_update_list()
 	tl_update_matrix()
+	
 	if (history_undo)
 		app_update_tl_edit()
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 	
 	if (place_build)
@@ -443,11 +457,14 @@ function action_bench_create(button = e_bench_button.CREATE)
 		{
 			place_target_tl = placetarget
 			place_target_tl_part_of = placeparent
+			
 			with (placeparent)
 				tl_mark_place_target(true)
 		}
+		
 		place_pos = null
 		place_view_pos = null
+		
 		view_main.update_place_surfaces = true
 		view_second.update_place_surfaces = true
 	}

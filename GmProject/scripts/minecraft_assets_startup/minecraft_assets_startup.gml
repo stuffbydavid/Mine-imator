@@ -1,4 +1,3 @@
-/// minecraft_assets_startup()
 /// @desc Checks for new Minecraft assets.
 
 function minecraft_assets_startup()

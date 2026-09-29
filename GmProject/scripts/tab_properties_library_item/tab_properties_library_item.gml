@@ -1,5 +1,3 @@
-/// tab_properties_library_item()
-
 function tab_properties_library_item()
 {
 	var wid, res;
@@ -20,7 +18,7 @@ function tab_properties_library_item()
 		var sheet, slot;
 		if (res.type = e_res_type.PACK)
 		{
-			var decodedslot = minecraft_assets_texture_picker_slot_decode(temp_edit.item_slot, mc_assets.item_texture_list)
+			var decodedslot = minecraft_assets_texture_picker_slot_decode(temp_edit.item_slot, mc_assets.item_texture_list);
 			sheet = decodedslot[0]
 			slot = decodedslot[1]
 		}
@@ -88,11 +86,10 @@ function tab_properties_library_item()
 		tab_next()
 	}
 			
-	var sx;
-	sx = dx_start
-			
+	var sx = dx_start;
+	
 	dx_start = dx
-	tab_set_collumns(true, 2)
+	tab_set_columns(true, 2)
 			
 	// Graphics
 	tab_control_checkbox()
@@ -111,6 +108,6 @@ function tab_properties_library_item()
 	draw_checkbox("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
 	tab_next()
 			
-	tab_set_collumns(false)
+	tab_set_columns(false)
 	dx_start = sx
 }

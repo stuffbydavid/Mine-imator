@@ -1,5 +1,3 @@
-/// project_load_render(map)
-
 function project_load_render(map)
 {
 	if (!ds_map_valid(map))
@@ -27,8 +25,9 @@ function project_load_render(map)
 		if (!hassettings)
 			continue
 
-		var match = "";
-		var presetlist = render_preset_list[renderer];
+		var match, presetlist;
+		match = ""
+		presetlist = render_preset_list[renderer]
 		
 		// Exact preset match
 		for (var i = 0; i < ds_list_size(presetlist); i++)

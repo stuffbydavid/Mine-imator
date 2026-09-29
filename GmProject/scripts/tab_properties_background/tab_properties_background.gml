@@ -1,9 +1,5 @@
-/// tab_properties_background()
-
 function tab_properties_background()
 {
-	var capwid;
-	
 	// Time/rotation
 	if (window_compact || panel_compact)
 	{
@@ -51,7 +47,7 @@ function tab_properties_background()
 			draw_label(text_get("backgroundbiomecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
 			dy += 8
 
-			tab_set_collumns(true, floor(content_width/150))
+			tab_set_columns(true, floor(content_width/150))
 
 			// Grass
 			tab_control_color()
@@ -73,13 +69,13 @@ function tab_properties_background()
 			draw_button_color("backgroundwatercolor", dx, dy, dw, background_water_color, c_plains_biome_water, false, action_background_water_color)
 			tab_next()
 
-			tab_set_collumns(false)
+			tab_set_columns(false)
 
 			dy += 20
 			draw_label(text_get("backgroundleafcolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
 			dy += 8
 
-			tab_set_collumns(true, floor(content_width/150))
+			tab_set_columns(true, floor(content_width/150))
 
 			// Oak leaves
 			tab_control_color()
@@ -116,7 +112,7 @@ function tab_properties_background()
 			draw_button_color("backgroundleavesmangrovecolor", dx, dy, dw, background_leaves_mangrove_color, c_plains_biome_foliage, false, action_background_leaves_mangrove_color)
 			tab_next()
 
-			tab_set_collumns(false)
+			tab_set_columns(false)
 			tab_collapse_end()
 		}
 	}
@@ -139,21 +135,20 @@ function tab_properties_background()
 		
 		if (background_image_show)
 		{
-			var text, tex;
-			
-			capwid = text_caption_width("backgroundimage", "backgroundimagetype")
+			var tex;
+			content_capwid = text_caption_width("backgroundimage", "backgroundimagetype")
 			
 			// Background image
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			tex = null
 			if (background_image != null)
 			{
-				text = background_image.display_name
+				content_text = background_image.display_name
 				tex = background_image.texture
 			}
 			
 			tab_control_menu(ui_large_height)
-			draw_button_menu("backgroundimage", e_menu.LIST, dx, dy, dw, ui_large_height, background_image, text, action_background_image, false, tex)
+			draw_button_menu("backgroundimage", e_menu.LIST, dx, dy, dw, ui_large_height, background_image, content_text, action_background_image, false, tex)
 			tab_next()
 			
 			if (background_image != null)
@@ -201,7 +196,7 @@ function tab_properties_background()
 		else
 		{
 			var tex;
-			capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
+			content_capwid = text_caption_width("backgroundskysuntex", "backgroundskymoontex", "backgroundskymoonphase")
 			
 			// Sun
 			var sunres = res_eval(background_sky_sun_tex);
@@ -281,7 +276,7 @@ function tab_properties_background()
 		draw_label(text_get("backgrounddayscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
 		dy += 8
 
-		tab_set_collumns(true, floor(content_width/150))
+		tab_set_columns(true, floor(content_width/150))
 
 		// Sky
 		var skydefault, skybiome;
@@ -290,9 +285,11 @@ function tab_properties_background()
 			skydefault = c_sky_the_nether
 		else if (background_dimension = "the_end")
 			skydefault = c_sky_the_end
+		
 		skybiome = find_biome(background_biome)
 		if (skybiome != null && skybiome.sky_enabled)
 			skydefault = skybiome.sky_color
+		
 		tab_control_color()
 		draw_button_color("backgroundskycolor", dx, dy, dw, background_sky_color, skydefault, false, action_background_sky_color)
 		tab_next()
@@ -312,14 +309,14 @@ function tab_properties_background()
 		draw_button_color("backgroundambientcolor", dx, dy, dw, background_ambient_color, c_ambient, false, action_background_ambient_color)
 		tab_next()
 
-		tab_set_collumns(false)
+		tab_set_columns(false)
 
 		// Night colors
 		dy += 20
 		draw_label(text_get("backgroundnightscenecolors") + ":", dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
 		dy += 8
 
-		tab_set_collumns(true, floor(content_width/150))
+		tab_set_columns(true, floor(content_width/150))
 
 		// Sky
 		tab_control_color()
@@ -341,7 +338,7 @@ function tab_properties_background()
 		draw_button_color("backgroundnightcolor", dx, dy, dw, background_night_color, c_night, false, action_background_night_color)
 		tab_next()
 
-		tab_set_collumns(false)
+		tab_set_columns(false)
 
 		// Brightness
 		tab_control_dragger()
@@ -380,8 +377,10 @@ function tab_properties_background()
 		if (setting_advanced_mode)
 		{
 			// Cloud texture
-			var cloudres = res_eval(background_sky_clouds_tex);
-			var tex = ((cloudres.type = e_res_type.PACK) ? cloudres.clouds_texture : cloudres.texture);
+			var cloudres, tex;
+			cloudres = res_eval(background_sky_clouds_tex)
+			tex = ((cloudres.type = e_res_type.PACK) ? cloudres.clouds_texture : cloudres.texture)
+			
 			tab_control_menu(ui_large_height)
 			draw_button_menu("backgroundskycloudstex", e_menu.LIST, dx, dy, dw, ui_large_height, background_sky_clouds_tex, cloudres.display_name, action_background_sky_clouds_tex, false, tex)
 			tab_next()
@@ -445,7 +444,7 @@ function tab_properties_background()
 	draw_button_collapse("ground", collapse_map[?"ground"], action_background_ground_show, background_ground_show, "backgroundgroundshow")
 	tab_next()
 	
-	capwid = text_caption_width("backgroundground", "backgroundgroundtex")
+	content_capwid = text_caption_width("backgroundground", "backgroundgroundtex")
 	
 	if (background_ground_show && collapse_map[?"ground"])
 	{
@@ -453,6 +452,7 @@ function tab_properties_background()
 		
 		var wid, res;
 		res = res_eval(background_ground_tex)
+		
 		// Change ground
 		tab_control(24)
 		
@@ -463,15 +463,19 @@ function tab_properties_background()
 		
 		draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 		
-		var decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
-		var sheet = decodedslot[0]
-		var slot = decodedslot[1]
+		var decodedslot, sheet, slot;
+		decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
+		sheet = decodedslot[0]
+		slot = decodedslot[1]
+		
 		if (sheet >= 0 && res.block_sheet_texture[sheet] = null)
 			res = mc_res
+		
 		if (sheet = e_block_sheet.ANIMATED)
 			draw_texture_slot(res.block_sheet_texture[sheet][block_texture_get_frame(true)], slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[sheet][X], minecraft_block_sheet_size[sheet][Y], block_texture_get_blend(background_ground_name, res))
 		else if (sheet >= 0)
 			draw_texture_slot(res.block_sheet_texture[sheet], slot, dx + wid + 18, dy + 6, 16, 16, minecraft_block_sheet_size[sheet][X], minecraft_block_sheet_size[sheet][Y], block_texture_get_blend(background_ground_name, res))
+		
 		if (sheet >= 0)
 			tip_set(minecraft_texture_get_name(background_ground_name), dx + wid + 16, dy + 4, 20, 20)
 		
@@ -545,7 +549,7 @@ function tab_properties_background()
 		}
 		
 		// Fog distance
-		var fogdefault = background_dimension = "overworld" ? fog_far : fog_near;
+		var fogdefault = (background_dimension = "overworld" ? fog_far : fog_near);
 		tab_control_dragger()
 		draw_dragger("backgroundfogdistance", dx, dy, dragger_width, background_fog_distance, background_fog_distance / 100, 10, project_render_distance, fogdefault, 10, tab.background.tbx_fog_distance, action_background_fog_distance)
 		tab_next()

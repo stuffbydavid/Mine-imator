@@ -1,6 +1,5 @@
-/// filename_equals(fn1, fn2)
-/// @arg fn1
-/// @arg fn2
+/// @arg filename1
+/// @arg filename2
 
 function filename_equals(fn1, fn2)
 {

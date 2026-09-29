@@ -1,6 +1,3 @@
-/// tl_get_place_parent_action(target)
-/// @arg target
-
 function tl_get_place_parent_action(target)
 {
 	if (!type_is_block(type))

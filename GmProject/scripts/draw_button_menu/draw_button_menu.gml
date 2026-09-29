@@ -1,4 +1,3 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script|menuscript, [disabled, [texture, [icon, [caption, [texcolor, texalpha, [capwid]]]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -7,70 +6,24 @@
 /// @arg height
 /// @arg value
 /// @arg text
-/// @arg script|drawscript
-/// @arg [disabled
-/// @arg [texture
-/// @arg [icon
-/// @arg [caption
-/// @arg [texcolor
-/// @arg texalpha
-/// @arg [capwid]]]]]
+/// @arg script
+/// @arg [disabled]
+/// @arg [texture]
+/// @arg [icon]
+/// @arg [caption]
+/// @arg [texcolor]
+/// @arg [texalpha]
+/// @arg [captionwid]
 
-function draw_button_menu()
+function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, disabled = false, tex = null, icon = null, caption = "", texcolor = null, texalpha = null, capwid = null)
 {
-	var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha, capwid;
-	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch;
-	name = argument[0]
-	type = argument[1]
-	xx = argument[2] 
-	yy = argument[3]
-	wid = argument[4]
-	hei = argument[5]
-	value = argument[6]
-	text = argument[7]
-	script = argument[8]
-	
-	if (argument_count > 9)
-		disabled = argument[9]
-	else
-		disabled = false
-	
-	if (argument_count > 10)
-		tex = argument[10]
-	else
-		tex = null
-	
-	if (argument_count > 11)
-		icon = argument[11]
-	else
-		icon = null
-	
-	if (argument_count > 12)
-		caption = argument[12]
-	else
-		caption = ""
-	
-	if (argument_count > 13)
-	{
-		texcolor = argument[13]
-		texalpha = argument[14]
-		
-		if (texcolor = null)
-			texcolor = c_white
-		
-		if (texalpha = null)
-			texalpha = 1
-	}
-	else
-	{
+	if (texcolor = null)
 		texcolor = c_white
-		texalpha = 1
-	}
 	
-	if (argument_count > 15)
-		capwid = argument[15]
-	else
-		capwid = null
+	if (texalpha = null)
+		texalpha = 1
+		
+	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch;
 	
 	// Caption
 	if (menu_model_current != null)
@@ -88,8 +41,8 @@ function draw_button_menu()
 	
 	if (menu_bench)
 		nameid = "bench" + name
-	else if (content_tab = null && popup != null)
-		nameid = popup.name + name
+	else if (content_tab = null && popup_current != null)
+		nameid = popup_current.name + name
 	else
 		nameid = name
 	
@@ -186,7 +139,7 @@ function draw_button_menu()
 		mouse_cursor = cr_handpoint
 	
 	if (showsearch && menu_search_tbx.text != "")
-		text = "";
+		text = ""
 	
 	// Item
 	var item = list_item_add(text, null, caption, tex, icon, -1, null, false, false);
@@ -216,8 +169,9 @@ function draw_button_menu()
 	// Search tbx
 	if (showsearch)
 	{
-		var busyprev = window_busy;
-		var mouseonprev = content_mouseon;
+		var busyprev, mouseonprev;
+		busyprev = window_busy
+		mouseonprev = content_mouseon
 		
 		if (window_busy = "menu")
 		{
@@ -231,10 +185,9 @@ function draw_button_menu()
 			app_mouse_clear()
 		}
 		
-		var m = menuid;
-		
 		if (textbox_draw(menu_search_tbx, xx + 8 + (28 * bool_to_float(tex != null)), yy + (hei/2) - 8, wid - 32, hei, true))
 		{
+			var m = menuid;
 			menu_current = m
 			menu_expose = (menu_search_tbx.text != "")
 			menu_search = menu_search_tbx.text
@@ -277,7 +230,7 @@ function draw_button_menu()
 	// Disabled overlay
 	draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * microani_arr[e_microani.DISABLED])
 	
-	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
+	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip), 0.5)
 	
 	// Ctrl + Scroll
 	if (!menuactive && mouseon && keyboard_check(vk_control) && mouse_wheel != 0)
@@ -327,7 +280,7 @@ function draw_button_menu()
 			
 			if (it.value = value)
 			{
-				index = i;
+				index = i
 				break
 			}
 		}
@@ -374,7 +327,7 @@ function draw_button_menu()
 			if (menu_list[|i].menu_name = nameid)
 			{
 				m = menu_list[|i]
-				break;
+				break
 			}
 		}
 		
@@ -452,7 +405,7 @@ function draw_button_menu()
 		
 		current_microani = animation
 		
-		menu_popup = popup
+		menu_popup = popup_current
 		return true
 	}
 	

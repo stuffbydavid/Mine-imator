@@ -1,8 +1,6 @@
-/// action_bench_particles_import()
-
 function action_bench_particles_import()
 {
-	var fn, temp, presetname;
+	var fn, presetname, temp;
 	fn = file_dialog_open_particles()
 	if (!file_exists_lib(fn))
 		return 0
@@ -27,6 +25,7 @@ function action_bench_particles_import()
 
 	with (temp)
 		temp_add_lists()
+	
 	bench_settings.particle_preset = temp
 	action_bench_particles_folder("project")
 }

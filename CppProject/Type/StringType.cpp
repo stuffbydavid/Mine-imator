@@ -39,12 +39,15 @@ namespace CppProject
 			return *this;
 
 		AddRef(-1);
+
 		id = other.id;
 		omp = other.omp;
 		ompIndex = other.ompIndex;
+
 	#if STRINGTYPE_DEBUG
 		val = QStrPtr();
 	#endif
+
 		AddRef(1);
 
 		return *this;
@@ -71,6 +74,7 @@ namespace CppProject
 		{
 			omp = true;
 			ompIndex = omp_get_thread_num();
+
 			id = qThread->ompTable[ompIndex].idMap.value(str, -1);
 			if (id < 0) // Look in main table
 				id = qThread->mainTable.idMap.value(str, -1);
@@ -79,6 +83,7 @@ namespace CppProject
 		{
 			omp = false;
 			ompIndex = 0;
+
 			id = qThread->mainTable.idMap.value(str, -1);
 		}
 
@@ -140,7 +145,9 @@ namespace CppProject
 		if (omp &&
 			id >= qThread->ompTable[ompIndex].startId &&
 			!qThread->ompTable[ompIndex].mainIdMap.contains(id)) // String stored in OpenMP table (not remapped)
+		{
 			return &qThread->ompTable[ompIndex];
+		}
 
 		return &qThread->mainTable; // String stored in main table
 	}
@@ -169,6 +176,7 @@ namespace CppProject
 	void StringType::Clear()
 	{
 		AddRef(-1);
+
 		id = 0;
 	}
 
@@ -176,10 +184,12 @@ namespace CppProject
 	{
 		Table& mainTable = GetCurrentQThreadData()->mainTable;
 		QString* qStr = new QString(str);
+
 		IntType id = mainTable.nextId++;
 		mainTable.idMap[str] = id;
 		mainTable.entries[id] = { 1, qStr, qStr->length() };
 		mainTable.startId++;
+
 		return id;
 	}
 
@@ -206,6 +216,7 @@ namespace CppProject
 		}
 
 		qThread->ompActive = true;
+
 		ompThreadData = qThread;
 	}
 
@@ -222,6 +233,7 @@ namespace CppProject
 		{
 			Table& table = qThread->ompTable[t];
 			table.Clean();
+
 			for (IntType i = table.startId; i < table.nextId; i++)
 			{
 				if (!table.entries.contains(i))
@@ -229,6 +241,7 @@ namespace CppProject
 
 				const TableEntry& entry = table.entries.value(i);
 				IntType mainId = qThread->mainTable.idMap.value(*entry.val, -1);
+
 				if (mainId < 0) // New
 				{
 					mainId = qThread->mainTable.nextId++;
@@ -248,6 +261,7 @@ namespace CppProject
 		}
 
 		qThread->ompActive = false;
+
 		ompThreadData = nullptr;
 	}
 
@@ -310,6 +324,7 @@ namespace CppProject
 			{
 				idMap.remove(*entry.val);
 				delete entry.val;
+
 				it = entries.erase(it);
 			}
 			else
@@ -333,10 +348,12 @@ namespace CppProject
 			const TableEntry& entry = entries.value(i);
 			if (!entry.val)
 				WARNING("Invalid string");
+			
 			QString val = entry.val ? *entry.val : "?????";
 			val.replace("\n", " ");
 			text += NumStr(i) + "\t" + NumStr(entry.refs) + "\t" + val + "\n";
 		}
+
 		debug.write(text.toUtf8());
 		DEBUG("Saved string table for table " + name);
 	}

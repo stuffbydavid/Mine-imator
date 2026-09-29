@@ -1,5 +1,4 @@
-/// debug_ds_map(map)
-/// @arg map
+/// @arg id
 
 function debug_ds_map(map)
 {

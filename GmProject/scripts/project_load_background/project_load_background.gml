@@ -1,6 +1,3 @@
-/// project_load_background(map)
-/// @arg map
-
 function project_load_background(map)
 {
 	if (!ds_map_valid(map))
@@ -114,11 +111,8 @@ function project_load_background(map)
 	}
 	
 	background_ground_slot = minecraft_assets_block_texture_picker_slot_find(background_ground_name)
-		
 	background_ground_tex = value_get_save_id(map[?"ground_tex"], background_ground_tex)
-	
 	background_ground_tex_material = value_get_save_id(map[?"ground_tex_material"], background_ground_tex_material)
-	
 	background_ground_tex_normal = value_get_save_id(map[?"ground_tex_normal"], background_ground_tex_normal)
 	
 	background_biome = value_get_string(map[?"biome"], background_biome)
@@ -178,6 +172,7 @@ function project_load_background(map)
 	
 	background_texture_animation_speed = value_get_real(map[?"texture_animation_speed"], background_texture_animation_speed)
 	background_brightness = value_get_real(map[?"brightness"], background_brightness)
+	
 	if (load_format < e_project.FORMAT_CTB_106)
 		background_texture_animation_speed *= 3 // 75% for older projects
 	else if (load_format < e_project.FORMAT_210)

@@ -1,10 +1,6 @@
-/// action_toolbar_exportimage_save()
-
 function action_toolbar_exportimage_save()
 {
-	var fn;
-	fn = file_dialog_save_image(project_name)
-	
+	var fn = file_dialog_save_image(project_name);
 	if (fn = "")
 		return 0
 	

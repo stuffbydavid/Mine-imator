@@ -1,6 +1,3 @@
-/// tl_update_ik(parts)
-/// @arg parts
-
 function tl_update_ik(parts)
 {
 	if (array_length(parts) = 0)
@@ -9,7 +6,7 @@ function tl_update_ik(parts)
 	// Recursivly update IK data, break if positions are done moving
 	repeat (2)
 	{
-		var update = false
+		var update = false;
 		
 		for (var i = 0; i < array_length(parts); i++)
 			if (parts[i] != null)

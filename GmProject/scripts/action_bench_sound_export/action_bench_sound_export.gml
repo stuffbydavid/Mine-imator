@@ -1,8 +1,6 @@
-/// action_bench_sound_export()
-
 function action_bench_sound_export()
 {
-	var slist, selected, row, source, filename, split, ext, fn;
+	var slist, selected, source, filename;
 	slist = bench_settings.sound_list_current
 	selected = slist.selected
 	if (selected = null)
@@ -13,7 +11,7 @@ function action_bench_sound_export()
 	{
 		for (var i = 0; i < ds_list_size(slist.display_list); i++)
 		{
-			row = slist.display_list[|i]
+			var row = slist.display_list[|i];
 			if (row[2] = selected)
 			{
 				filename = row[1]
@@ -27,7 +25,7 @@ function action_bench_sound_export()
 	{
 		source = minecraft_java_directory_get() + "/assets/objects/" + string_copy(selected, 1, 2) + "/" + selected
 		
-		split = string_split_escaped(filename, " / ")
+		var split = string_split_escaped(filename, " / ");
 		filename = filename_get_valid(split[array_length(split) - 1]) + ".ogg"
 	}
 	
@@ -43,6 +41,7 @@ function action_bench_sound_export()
 	if (!file_exists_lib(source))
 		return 0
 
+	var ext, fn;
 	ext = filename_ext(filename)
 	fn = file_dialog_save_resource(filename_new_ext(filename, ""), ext)
 	if (fn = "")

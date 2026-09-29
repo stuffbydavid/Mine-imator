@@ -1,4 +1,3 @@
-/// action_tl_parent_tree(historyobject, newparent, newindex)
 /// @arg historyobject
 /// @arg newparent
 /// @arg newindex
@@ -24,6 +23,7 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 					with (hobj)
 					{
 						tl_save_id[tl_amount] = save_id_get(other.id)
+						
 						if (other.parent = app.timeline_move_obj)
 						{
 							tl_old_parent_save_id[tl_amount] = save_id_get(other.move_parent)
@@ -34,6 +34,7 @@ function action_tl_parent_tree(hobj, newparent, newindex)
 							tl_old_parent_save_id[tl_amount] = save_id_get(other.parent)
 							tl_old_parent_tree_index[tl_amount] = ds_list_find_index(other.parent.tree_list, other.id)
 						}
+						
 						tl_amount++
 					}
 				}

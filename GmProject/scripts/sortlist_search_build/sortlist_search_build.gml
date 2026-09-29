@@ -1,4 +1,6 @@
-/// sortlist_search_build(sortlist, value, search)
+/// @arg sortlist
+/// @arg value
+/// @arg search
 
 function sortlist_search_build(slist, value, search)
 {

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"draw_button_transition",
   "parent":{
-    "name":"Components",
-    "path":"folders/Scripts/App/Interface/Components.yy",
+    "name":"Button",
+    "path":"folders/Scripts/App/Interface/Components/Button.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

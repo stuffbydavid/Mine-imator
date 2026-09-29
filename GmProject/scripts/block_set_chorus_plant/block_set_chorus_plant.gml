@@ -1,4 +1,3 @@
-/// block_set_chorus_plant()
 /// @desc Connects to other chorus plants, chorus flowers and end stone below.
 
 function block_set_chorus_plant()

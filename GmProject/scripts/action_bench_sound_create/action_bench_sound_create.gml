@@ -1,13 +1,12 @@
-/// action_bench_sound_create()
-
 function action_bench_sound_create()
 {
 	if (history_undo)
 	{
 		// Undo sound action
-		var hobj, tl, kf;
+		var hobj, tl;
 		hobj = history_data
 		tl = save_id_find(hobj.sound_track_save_id)
+		
 		if (instance_exists(tl))
 		{
 			if (hobj.sound_track_created)
@@ -20,15 +19,14 @@ function action_bench_sound_create()
 			}
 			else if (hobj.sound_keyframe_index < ds_list_size(tl.keyframe_list))
 			{
-				kf = tl.keyframe_list[|hobj.sound_keyframe_index]
+				var kf = tl.keyframe_list[|hobj.sound_keyframe_index];
 				if (hobj.sound_keyframe_created)
 					with (kf)
 						instance_destroy()
 				else
-				{
 					kf.value[e_value.SOUND_OBJ] = save_id_find(hobj.sound_keyframe_old_res_save_id)
-				}
 			}
+			
 			if (!hobj.sound_track_created)
 				with (tl)
 					tl_update_values()
@@ -61,8 +59,7 @@ function action_bench_sound_create()
 		else
 		{
 			// Read selected sound
-			var sound;
-			sound = bench_settings.sound_list_current.select
+			var sound = bench_settings.sound_list_current.select;
 			if (!is_array(sound))
 				return 0
 
@@ -86,7 +83,8 @@ function action_bench_sound_create()
 			hobj = history_set(action_bench_create)
 			hobj.bench_save_obj = history_save_bench()
 			hobj.bench_tab = bench_tab
-			hobj.sound_track_created = bench_settings.audio_track == null
+			hobj.sound_track_created = bench_settings.audio_track = null
+			
 			if (hobj.sound_track_created)
 				tl = new_tl(e_tl_type.AUDIO_TRACK)
 			else
@@ -100,10 +98,9 @@ function action_bench_sound_create()
 			if (hobj.sound_hash != "")
 			{
 				// Reuse matching project resource
-				var otherres;
 				for (var i = 0; i < ds_list_size(res_list.list); i++)
 				{
-					otherres = res_list.list[|i]
+					var otherres = res_list.list[|i];
 					if (otherres.type = e_res_type.SOUND && otherres.minecraft_hash = hobj.sound_hash)
 					{
 						res = otherres
@@ -120,6 +117,7 @@ function action_bench_sound_create()
 					split = string_split_escaped(sound[1], " / ")
 					name = split[array_length(split) - 1]
 					filename = filename_name(filename_get_unique(project_folder + "/" + filename_get_valid(name) + ".ogg"))
+					
 					hobj.sound_display_name = filename_new_ext(filename, "")
 					hobj.sound_filename = filename
 				}
@@ -138,6 +136,7 @@ function action_bench_sound_create()
 				source = minecraft_java_directory_get() + "/assets/objects/" + string_copy(hobj.sound_hash, 1, 2) + "/" + hobj.sound_hash
 				filename = hobj.sound_filename
 				destination = project_folder + "/" + filename
+				
 				if (!file_exists_lib(source))
 					return 0
 					
@@ -154,6 +153,7 @@ function action_bench_sound_create()
 				
 				load_folder = project_folder
 				save_folder = project_folder
+				
 				with (res)
 					res_load()
 				
@@ -162,6 +162,7 @@ function action_bench_sound_create()
 					res_add_lists()
 				
 				hobj.sound_res_save_id = res.save_id
+				
 				if (!history_redo)
 				{
 					hobj.sound_res_created = true
@@ -184,6 +185,7 @@ function action_bench_sound_create()
 			var pos, kfcreated;
 			pos = hobj.sound_keyframe_pos
 			kfcreated = hobj.sound_keyframe_created
+			
 			if (kfcreated)
 			{
 				with (tl)
@@ -195,15 +197,16 @@ function action_bench_sound_create()
 		else
 		{
 			// Find open keyframe position
-			var pos, kfcreated, found;
+			var pos, kfcreated;
 			pos = round(timeline_marker)
 			kfcreated = false
+			
 			while (kf = null)
 			{
-				found = false
+				var found = false;
 				for (var i = 0; i < ds_list_size(tl.keyframe_list); i++)
 				{
-					var otherkf = tl.keyframe_list[|i]
+					var otherkf = tl.keyframe_list[|i];
 					if (otherkf.value[e_value.SOUND_OBJ] != null)
 					{
 						if (pos >= otherkf.position && pos < otherkf.position + tl_keyframe_length(otherkf) + 1)
@@ -239,6 +242,7 @@ function action_bench_sound_create()
 					kfcreated = true
 				}
 			}
+			
 			hobj.sound_keyframe_pos = kf.position
 			hobj.sound_keyframe_created = kfcreated
 			hobj.sound_keyframe_index = ds_list_find_index(tl.keyframe_list, kf)
@@ -258,7 +262,9 @@ function action_bench_sound_create()
 	tl_update_length()
 	tl_update_list()
 	tl_update_matrix()
-	project_update_counts()
-	lib_preview.update = true
+	
 	project_reset_loaded()
+	project_update_counts()
+	
+	lib_preview.update = true
 }

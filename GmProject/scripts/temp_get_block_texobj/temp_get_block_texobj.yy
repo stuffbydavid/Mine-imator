@@ -6,7 +6,7 @@
   "name":"temp_get_block_texobj",
   "parent":{
     "name":"Texture",
-    "path":"folders/Scripts/Project/Templates/Texture.yy",
+    "path":"folders/Scripts/Project/Template/Texture.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

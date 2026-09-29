@@ -1,6 +1,3 @@
-/// action_tl_play_repeat([seamless])
-/// @arg [seamless]
-
 function action_tl_play_repeat(seamless = false)
 {
 	project_changed = true
@@ -24,6 +21,7 @@ function action_tl_play_repeat(seamless = false)
 	if (timeline_playing && timeline_length > 0)
 	{
 		timeline_playing_start_time = current_time
+		
 		if (timeline_marker > timeline_length)
 			timeline_playing_start_marker = 0
 		else

@@ -1,5 +1,3 @@
-/// app_startup_interface_settings_menus()
-
 function app_startup_interface_settings_menus()
 {
 	// Button menu

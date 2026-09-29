@@ -1,6 +1,3 @@
-/// shader_high_fog_apply_set(fogbuffer)
-/// @arg fogbuffer
-
 function shader_high_fog_apply_set(fogbuffer)
 {
 	texture_set_stage(sampler_map[?"uFogBuffer"], surface_get_texture(fogbuffer))

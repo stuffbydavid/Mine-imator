@@ -1,4 +1,3 @@
-/// res_update_model_shape()
 /// @desc Updates the meshes of the shapes in the resource model.
 
 function res_update_model_shape()

@@ -1,5 +1,4 @@
-/// tl_update_type_name()
-/// @desc Updates the type name (shown in information window)
+/// @desc Updates the type name (shown in information window).
 
 function tl_update_type_name()
 {

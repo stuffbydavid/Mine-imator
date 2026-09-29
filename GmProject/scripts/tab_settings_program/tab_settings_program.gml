@@ -1,5 +1,3 @@
-/// tab_settings_program()
-
 function tab_settings_program()
 {
 	// Program mode
@@ -48,13 +46,13 @@ function tab_settings_program()
 		tab_collapse_start()
 		
 		// Image location
-		var directory = "../" + directory_name(setting_watermark_fn) + filename_name(setting_watermark_fn);
+		var dir = "../" + directory_name(setting_watermark_fn) + filename_name(setting_watermark_fn);
 		
 		if (setting_watermark_fn = "")
-			directory = text_get("settingswatermarknone")
+			dir = text_get("settingswatermarknone")
 		
 		tab_control(40)
-		draw_label_value(dx, dy, dw - 56, 40, text_get("settingswatermarkimagelocation"), directory, true)
+		draw_label_value(dx, dy, dw - 56, 40, text_get("settingswatermarkimagelocation"), dir, true)
 		if (draw_button_icon("settingswatermarkimport", dx + dw - (24 + 4 + 24), dy + 8, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltipimportwatermarkimage"))
 			action_setting_watermark_import()
 		if (draw_button_icon("settingswatermarkreset", dx + dw - 24, dy + 8, 24, 24, false, icons.RESET, null, setting_watermark_fn = "", "tooltipresetwatermarkimage"))

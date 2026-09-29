@@ -1,6 +1,3 @@
-/// view_control_move(view)
-/// @arg view
-
 function view_control_move(view)
 {
 	var len, arrowstart, arrowend, mat;
@@ -19,6 +16,7 @@ function view_control_move(view)
 		mat[MAT_X] = matrix[MAT_X]
 		mat[MAT_Y] = matrix[MAT_Y]
 		mat[MAT_Z] = matrix[MAT_Z]
+		
 		matrix_remove_scale(mat)
 	}
 	
@@ -46,7 +44,7 @@ function view_control_move(view)
 		if (!mouse_still)
 		{
 			var move, pos, snapval;
-			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
+			move = ray_plane_intersect(cam_from, view_control_ray_dir, view_control_plane_origin, view_control_plane_normal)
 			move = point3D_sub(move, view_control_plane_origin)
 			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
 			pos = point3D(0)
@@ -102,7 +100,7 @@ function view_control_move(view)
 		mouse_cursor = cr_handpoint
 		
 		// Move
-		var veclen = vec2_length(view_control_vec)
+		var veclen = vec2_length(view_control_vec);
 		if (veclen > 0 && !mouse_still)
 		{
 			var vecmouse, vecdot, move, snapval, newval;
@@ -126,7 +124,6 @@ function view_control_move(view)
 				move[i] /= tl_edit.value_inherit[e_value.SCA_X + axis_edit]
 				
 				newval[i] = view_control_value[i] + move[i]
-				
 				newval[i] = tl_value_clamp(e_value.POS_X + i, newval[i])
 				
 				if ((setting_snap_absolute && move[i] != 0) || !dragger_snap)

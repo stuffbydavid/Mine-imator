@@ -1,7 +1,3 @@
-/// render_refresh_effects(sceneeffects, posteffects, [hdr])
-/// @arg sceneeffects
-/// @arg posteffects
-
 function render_refresh_effects(sceneeffects = true, posteffects = true, hdr = false)
 {
 	var earlyeffects = hdr || renderer_current = e_renderer.QUICK;

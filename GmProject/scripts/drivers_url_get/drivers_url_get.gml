@@ -1,5 +1,5 @@
 /// CppSeparate StringType drivers_url_get()
-/// Returns an URL to an article showing how to update graphics drivers.
+/// @desc Returns an URL to an article showing how to update graphics drivers.
 
 function drivers_url_get()
 {

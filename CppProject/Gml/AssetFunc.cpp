@@ -46,8 +46,8 @@ namespace CppProject
 		if (Object::objectIdsMap.contains(id)) // Sub-asset id
 			return !Object::objectIdsMap.value(id).isEmpty();
 
-		else // Instance id
-			return (ObjOpt(id) != nullptr);
+		// Instance id
+		return (ObjOpt(id) != nullptr);
 	}
 
 	IntType instance_number(VarType subAssetId)
@@ -64,6 +64,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return (new SpriteFont(spr, string_map, sep))->id;
+		
 		return -1;
 	}
 
@@ -71,6 +72,7 @@ namespace CppProject
 	{
 		if (QFile::exists(name))
 			return (new Font(name, size, bold, italic, first, last))->id;
+		
 		return -1;
 	}
 
@@ -110,6 +112,7 @@ namespace CppProject
 	{
 		if (QFile::exists(file))
 			return (new Sprite(file, { (int)xorig, (int)yorig }))->id;
+		
 		return -1;
 	}
 
@@ -123,6 +126,7 @@ namespace CppProject
 			else
 				return (new Sprite(surf, { (int)xorig, (int)yorig }))->id;
 		}
+		
 		return -1;
 	}
 
@@ -136,6 +140,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return (new Sprite(spr))->id;
+		
 		return -1;
 	}
 
@@ -148,6 +153,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return spr->size.height();
+		
 		return -1;
 	}
 
@@ -155,6 +161,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return spr->frames.size();
+		
 		return -1;
 	}
 
@@ -162,8 +169,10 @@ namespace CppProject
 	{
 		if (id == 0)
 			return -1;
+		
 		if (Sprite* spr = FindSprite(id))
 				return spr->GetTexture(subimg);
+		
 		return -1;
 	}
 
@@ -171,6 +180,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return spr->size.width();
+		
 		return -1;
 	}
 

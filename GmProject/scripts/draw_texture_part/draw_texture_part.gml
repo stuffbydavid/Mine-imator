@@ -1,4 +1,3 @@
-/// draw_texture_part(texture, x, y, left, top, width, height, [xscale, yscale, [color, alpha, resettex]])
 /// @arg texture
 /// @arg x
 /// @arg y
@@ -6,57 +5,18 @@
 /// @arg top
 /// @arg width
 /// @arg height
-/// @arg [xscale
-/// @arg yscale
-/// @arg [color
-/// @arg alpha
-/// @arg resettex]]
+/// @arg [xscale]
+/// @arg [yscale]
+/// @arg [color]
+/// @arg [alpha]
+/// @arg [resettexture]
 
-function draw_texture_part()
+function draw_texture_part(tex, xx, yy, left, top, w, h, xsca = 1, ysca = 1, color = c_white, alpha = 1, resettex = true)
 {
-	var tex, xx, yy, left, top, w, h, xsca, ysca, color, alpha, resettex;
-	tex = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	left = argument[3]
-	top = argument[4]
-	w = argument[5]
-	h = argument[6]
-	
-	if (argument_count > 7)
-	{
-		xsca = argument[7]
-		ysca = argument[8]
-	}
-	else
-	{
-		xsca = 1
-		ysca = 1
-	}
-	
-	if (argument_count > 9)
-	{
-		color = argument[9]
-		alpha = draw_get_alpha() * argument[10]
-	}
-	else
-	{
-		color = c_white
-		alpha = draw_get_alpha()
-	}
-	
-	resettex = true
-	if (argument_count > 11)
-		resettex = argument[11]
-
-	var tw, th;
-	tw = texture_width(tex)
-	th = texture_height(tex)
-	
 	// Do not apply UI clipping while compositing into an off-screen texture or surface
 	if (shader_clip_active && !is_cpp())
 	{
-		var target = surface_get_target()
+		var target = surface_get_target();
 		if (target = -1 || target = application_surface)
 		{
 			render_set_uniform_int("uClipEnabled", 1)
@@ -67,6 +27,11 @@ function draw_texture_part()
 			render_set_uniform_int("uClipEnabled", 0)
 	}
 
+	var tw, th;
+	tw = texture_width(tex)
+	th = texture_height(tex)
+	alpha = draw_get_alpha() * alpha
+	
 	render_set_texture(tex)
 	
 	draw_primitive_begin(pr_trianglestrip)

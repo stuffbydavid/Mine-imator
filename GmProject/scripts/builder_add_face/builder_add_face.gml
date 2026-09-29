@@ -1,14 +1,15 @@
 /// CppSeparate void builder_add_face(Scope<obj_builder_thread>, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, RealType, VarType)
-function builder_add_face()
+
+function builder_add_face(x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, tx1, ty1, tx2, ty2, tx3, ty3, tx4, ty4, matrix)
 {
 	builder_add_triangle(
-		argument[0], argument[1], argument[2], argument[3], argument[4], argument[5], argument[6], argument[7], argument[8], 
-		argument[12], argument[13], argument[14], argument[15], argument[16], argument[17],
-		argument[20]
+		x1, y1, z1, x2, y2, z2, x3, y3, z3,
+		tx1, ty1, tx2, ty2, tx3, ty3,
+		matrix
 	)
 	builder_add_triangle(
-		argument[6], argument[7], argument[8], argument[9], argument[10], argument[11], argument[0], argument[1], argument[2], 
-		argument[16], argument[17], argument[18], argument[19], argument[12], argument[13],
-		argument[20]
+		x3, y3, z3, x4, y4, z4, x1, y1, z1,
+		tx3, ty3, tx4, ty4, tx1, ty1,
+		matrix
 	)
 }

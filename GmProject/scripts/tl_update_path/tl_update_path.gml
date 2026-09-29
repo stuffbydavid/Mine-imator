@@ -1,5 +1,3 @@
-/// tl_update_path()
-
 function tl_update_path()
 {
 	if (type != e_tl_type.PATH)
@@ -30,7 +28,14 @@ function tl_update_path()
 		var tl = tree_list[|i];
 		
 		if (tl.type = e_tl_type.PATH_POINT)
-			ds_list_add(path_points_list, [tl.value[e_value.POS_X], tl.value[e_value.POS_Y], tl.value[e_value.POS_Z], tl.value[e_value.PATH_POINT_ANGLE], tl.value[e_value.PATH_POINT_SCALE], 0, 0, 0, 0, 0, 0])
+			ds_list_add(path_points_list, [
+				tl.value[e_value.POS_X],
+				tl.value[e_value.POS_Y],
+				tl.value[e_value.POS_Z],
+				tl.value[e_value.PATH_POINT_ANGLE],
+				tl.value[e_value.PATH_POINT_SCALE],
+				0, 0, 0, 0, 0, 0
+			])
 	}
 	
 	// Update timelines
@@ -56,24 +61,24 @@ function tl_update_path()
 	splinepoints = spline_subdivide(ds_list_create_array(path_points_list), path_closed)
 	
 	// Calculate distance between points
-	var points_distance = [];
+	var pointsdistance = [];
 	var sampleprev, sample;
 	path_length = 0
 	
 	for (var i = 0; i < array_length(splinepoints); i++)
 	{
 		sampleprev = spline_get_point(i, splinepoints, path_closed, path_smooth, 0)
-		points_distance[i] = 0
+		pointsdistance[i] = 0
 		
 		for (var j = 0; j <= 1; j += 0.05)
 		{
 			sample = spline_get_point(i + j, splinepoints, path_closed, path_smooth, 0)
-			points_distance[i] += point3D_distance(sampleprev, sample)
+			pointsdistance[i] += point3D_distance(sampleprev, sample)
 			sampleprev = sample
 		}
 		
-		points_distance[i] = max(0.001, points_distance[i])
-		path_length += points_distance[i]
+		pointsdistance[i] = max(0.001, pointsdistance[i])
+		path_length += pointsdistance[i]
 	}
 	
 	if (path_length = 0)
@@ -90,16 +95,16 @@ function tl_update_path()
 		var length = (i/(detail - 1)) * path_length;
 		
 		var j = 0;
-		while (length > points_distance[j] && length > 0.01)
+		while (length > pointsdistance[j] && length > 0.01)
 		{
-			length -= points_distance[j]
+			length -= pointsdistance[j]
 			j++
 		}
 		
-		if (points_distance[j] = 0)
+		if (pointsdistance[j] = 0)
 			continue
 		
-		path_table[t] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed, path_smooth, 0)
+		path_table[t] = spline_get_point(j + (length / pointsdistance[j]), splinepoints, path_closed, path_smooth, 0)
 		path_table_matrix[t] = path_table[t]
 		t++
 	}

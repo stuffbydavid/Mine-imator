@@ -1,5 +1,3 @@
-/// action_tl_right()
-
 function action_tl_right()
 {
 	timeline_marker_move += project_tempo / game_get_speed(gamespeed_fps)

@@ -1,13 +1,11 @@
-/// tab_timeline()
-
 function tab_timeline()
 {
 	var itemh, tlx, tly, tlw, tlh, tlstartpos;
-	var listx, listy, listw, listh;
 	var headerx, headery, headerw, headerh;
 	var barx, bary, barw, barh;
+	var listx, listy, listw, listh;
 	var markerbarshow, markerbarx, markerbary, markerbarw, markerbarh, markerh;
-	var show_hor_scroll, mouseinmarkers, mouseintl, mouseinnames, mouseinbar, mousetl, listviewh;
+	var showhorscroll, mouseinmarkers, mouseintl, mouseinnames, mouseinbar, mousetl, listviewh;
 
 	if (place_tl != null && app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 		place_content_mouseon = "timeline"
@@ -40,16 +38,16 @@ function tab_timeline()
 	listh = (content_height - (headerh + barh) - (12 * timeline.hor_scroll_tl.needed) - (32 * !setting_timeline_compact))
 	
 	// Timeline
-	show_hor_scroll = (timeline.hor_scroll.needed && !(timeline_playing && setting_timeline_autoscroll))
+	showhorscroll = (timeline.hor_scroll.needed && !(timeline_playing && setting_timeline_autoscroll))
 	
 	tlx = content_x + listw
 	tly = content_y + (headerh + barh)
 	tlw = content_width - (12 * timeline.ver_scroll.needed) - listw
-	tlh = (content_height - (headerh + barh) - ((12 * show_hor_scroll)))
+	tlh = (content_height - (headerh + barh) - ((12 * showhorscroll)))
 	
 	// Marker bar
 	markerbarx = tlx
-	markerbary = (content_y + content_height) - ((12 * show_hor_scroll) + 24)
+	markerbary = (content_y + content_height) - ((12 * showhorscroll) + 24)
 	markerbarw = tlw
 	markerbarh = 24
 	
@@ -99,10 +97,21 @@ function tab_timeline()
 		timeline_insert_pos = timeline_marker
 	
 	// Mouse
-	mouseinmarkers = (app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mouseintl = (app_mouse_box(tlx, tly, tlw, tlh, "place") && !mouseinmarkers && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mouseinnames = (app_mouse_box(listx, listy, listw - 5, listh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	mouseinbar = (app_mouse_box(barx, bary, barw, barh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	mouseinmarkers = false
+	mouseintl = false
+	mouseinnames = false
+	mouseinbar = false
+	content_mouseon = false
+	
+	if (!popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	{
+		mouseinmarkers =  app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh)
+		mouseintl =		 (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers)
+		mouseinnames =	  app_mouse_box(listx, listy, listw - 5, listh, "place")
+		mouseinbar =	  app_mouse_box(barx, bary, barw, barh)
+		content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place")
+	}
+	
 	mousetl = floor((mouse_y - tly + floor(timeline.ver_scroll.value)) / itemh)
 	if (mousetl >= 0 && mousetl < ds_list_size(tree_visible_list))
 		mousetl = tree_visible_list[|mousetl]
@@ -119,17 +128,15 @@ function tab_timeline()
 	tab_timeline_background(tlx, tly, tlw, tlh, itemh, mouseinnames, mousetl)
 	
 	// Timeline bar
-	content_mouseon = app_mouse_box(barx, bary, barw, barh, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh, mouseinnames)
 	
 	// Keyframes
 	tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl, mousetl)
 	
 	// Markers
-	tab_timeline_markers(tlx, tly, tlw, bary, barh, barw, markerh, markerbarx, markerbary, markerbarw, markerbarh)
+	tab_timeline_markers(tlx, tly, tlw, bary, barw, barh, markerh, markerbarx, markerbary, markerbarw, markerbarh)
 	
 	// List
-	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary, barh, headerh, itemh, mouseinnames, mousetl)
 	
 	// Update shortcut bar

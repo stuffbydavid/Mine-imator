@@ -1,15 +1,12 @@
-/// tab_properties_library_model_part()
-
 function tab_properties_library_model_part()
 {
-	var text;
 	if (temp_edit.model_file != null)
-		text = text_get("librarymodelpartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
+		content_text = text_get("librarymodelpartof", minecraft_asset_get_name("modelpart", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
 	else
-		text = text_get("librarymodelpartunknown")
+		content_text = text_get("librarymodelpartunknown")
 			
 	tab_control(24)
-	draw_label_value(dx, dy, dw, 24, text_get("typemodelpart"), text)
+	draw_label_value(dx, dy, dw, 24, text_get("typemodelpart"), content_text)
 			
 	// Change
 	if (draw_button_icon("librarymodelpartchange", dx + dw - 24, dy, 24, 24, object_editor.show && obj_edit = temp_edit, icons.PENCIL))
@@ -35,7 +32,7 @@ function tab_properties_library_model_part()
 				
 		tab_next()
 				
-		if (popup = popup_armor_editor)
+		if (popup_current = popup_armor_editor)
 			current_microani.active.value = true
 	}
 			
@@ -49,7 +46,7 @@ function tab_properties_library_model_part()
 				
 		tab_next()
 				
-		if (popup = popup_armor_editor)
+		if (popup_current = popup_armor_editor)
 			current_microani.active.value = true
 	}
 			
@@ -76,7 +73,7 @@ function tab_properties_library_model_part()
 		// Skin (Normal map)
 		tex = null
 		with (res_eval(temp_edit.model_tex_normal))
-			tex = res_get_model_texture_normal(model_part_get_tex_normal_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			tex = res_get_model_texture_normal(model_part_get_texture_normal_name(temp_edit.model_file, temp_edit.model_texture_normal_name_map))
 			
 		tab_control_menu(ui_large_height)
 		draw_button_menu("librarymodelpartskinnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, res_eval(temp_edit.model_tex_normal).display_name, action_lib_model_tex_normal, false, tex, null)

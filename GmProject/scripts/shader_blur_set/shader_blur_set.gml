@@ -1,4 +1,3 @@
-/// shader_blur_set(kernel, radius, xdirection, ydirection, [clampedges])
 /// @arg kernel
 /// @arg radius
 /// @arg xdirection

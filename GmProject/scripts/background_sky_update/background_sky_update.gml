@@ -1,5 +1,3 @@
-/// background_sky_update()
-
 function background_sky_update()
 {
 	if (!background_fog_color_custom) // Fog color
@@ -9,6 +7,7 @@ function background_sky_update()
 		nextbiome = biome
 		if (background_biome_mix > 0)
 			nextbiome = find_biome(background_biome_next)
+		
 		biomefog = false
 		nextfog = false
 		
@@ -34,15 +33,15 @@ function background_sky_update()
 			
 			if (background_twilight)
 			{
-				var cam_xyangle, p;
-				cam_xyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
+				var camxyangle, p;
+				camxyangle = point_direction(cam_from[X], cam_from[Y], cam_to[X], cam_to[Y]) - background_sky_rotation
 				
 				// Sunset
-				p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 270)) / 180, 1)
+				p = clamp(0, 1 - abs(angle_difference_fix(camxyangle, 270)) / 180, 1)
 				background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_sunset_start, c_sunset_end, background_sunset_alpha), background_sunset_alpha * p)
 				
 				// Sunrise
-				p = clamp(0, 1 - abs(angle_difference_fix(cam_xyangle, 90)) / 180, 1)
+				p = clamp(0, 1 - abs(angle_difference_fix(camxyangle, 90)) / 180, 1)
 				background_fog_color_final = merge_color(background_fog_color_final, merge_color(c_sunset_start, c_sunset_end, background_sunrise_alpha), background_sunrise_alpha * p)
 			}
 		}
@@ -79,6 +78,7 @@ function background_sky_update()
 	num = (ceil(background_fog_distance / size) + 1) * size
 	xx = -num
 	i = 0
+	
 	while (xx < num)
 	{
 		var yy = -num;

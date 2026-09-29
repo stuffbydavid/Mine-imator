@@ -1,4 +1,3 @@
-/// block_set_door()
 /// @desc Returns an array with the lower and upper door models, from their combined data.
 
 function block_set_door()
@@ -52,8 +51,9 @@ function block_set_door()
 	if (open = "true")
 		dir = facing
 		
-	var bottommodel = block_current.state_id_model_obj[block_state_id_current];
-	var topmodel = block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "half", "upper")];
+	var bottommodel, topmodel;
+	bottommodel = block_current.state_id_model_obj[block_state_id_current]
+	topmodel = block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "half", "upper")]
 	if (is_undefined(bottommodel) || is_undefined(topmodel))
 		return null
 	
@@ -61,7 +61,7 @@ function block_set_door()
 	var models = array(
 		bottommodel.model[0],
 		topmodel.model[0]
-	)
+	);
 
 	models[1].offset_z = block_size
 

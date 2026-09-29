@@ -1,5 +1,3 @@
-/// project_load_legacy_background()
-
 function project_load_legacy_background()
 {
 	background_loaded = true
@@ -23,7 +21,7 @@ function project_load_legacy_background()
 	
 	background_ground_show = buffer_read_byte()
 	background_ground_legacy_name = legacy_block_100_texture_list[|buffer_read_int()]
-	var newslot = minecraft_assets_block_texture_picker_slot_find(background_ground_legacy_name)
+	var newslot = minecraft_assets_block_texture_picker_slot_find(background_ground_legacy_name);
 	if (newslot >= 0)
 		background_ground_slot = newslot
 	background_ground_tex = project_load_legacy_save_id()
@@ -80,9 +78,7 @@ function project_load_legacy_background()
 	
 	if (load_format >= e_project.FORMAT_CB_100)
 	{
-		var custombiome;
-		custombiome = buffer_read_byte()
-		
+		var custombiome = buffer_read_byte();
 		if (custombiome)
 			background_biome = biome_list[| 0].name
 		

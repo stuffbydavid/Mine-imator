@@ -1,5 +1,4 @@
-/// shader_material_uniforms()
-/// @desc Adds timeline material uniforms
+/// @desc Adds timeline material uniforms.
 
 function shader_material_uniforms()
 {

@@ -1,12 +1,8 @@
-/// action_background_sky_clouds_size_xy(value, add)
-/// @arg value
-/// @arg add
-
-function action_background_sky_clouds_size_xy(val, add)
+function action_background_sky_clouds_size_xy(value, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_background_sky_clouds_size_xy, background_sky_clouds_size_xy, background_sky_clouds_size_xy * add + val, true)
+		history_set_var(action_background_sky_clouds_size_xy, background_sky_clouds_size_xy, background_sky_clouds_size_xy * add + value, true)
 	
-	background_sky_clouds_size_xy = background_sky_clouds_size_xy * add + val
+	background_sky_clouds_size_xy = background_sky_clouds_size_xy * add + value
 	background_sky_update_clouds()
 }

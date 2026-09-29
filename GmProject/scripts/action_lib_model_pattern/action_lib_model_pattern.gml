@@ -1,7 +1,6 @@
-/// action_lib_model_pattern(color, patterns_array, colors_array)
 /// @arg color
-/// @arg patterns_array
-/// @arg colors_array
+/// @arg patternsarray
+/// @arg colorsarray
 
 function action_lib_model_pattern(color, patterns, colors)
 {
@@ -19,9 +18,9 @@ function action_lib_model_pattern(color, patterns, colors)
 	}
 	else
 	{
-		var hobj;
 		history_pop()
 		
+		var hobj;
 		if (history_amount > 0 && history[0].script = action_lib_model_pattern)
 			hobj = history[0]
 		else
@@ -48,5 +47,6 @@ function action_lib_model_pattern(color, patterns, colors)
 	}
 	
 	array_add(pattern_update, obj_edit)
+	
 	lib_preview.update = true
 }

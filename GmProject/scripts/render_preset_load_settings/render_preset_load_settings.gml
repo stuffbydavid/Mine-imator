@@ -1,5 +1,3 @@
-/// render_preset_load_settings(map)
-
 function render_preset_load_settings(map)
 {
 	var set;
@@ -44,7 +42,7 @@ function render_preset_load_settings(map)
 		set.subsurface_samples = value_get_real(realisticmap[?"subsurface_samples"], set.subsurface_samples)
 		set.indirect = value_get_real(realisticmap[?"indirect"], set.indirect)
 		set.indirect_precision = value_get_real(realisticmap[?"indirect_precision"], set.indirect_precision)
-		var resolution = value_get_real(realisticmap[?"indirect_resolution"], set.indirect_resolution)
+		var resolution = value_get_real(realisticmap[?"indirect_resolution"], set.indirect_resolution);
 		if (resolution = 1 || resolution = .5 || resolution = .25 || resolution = .125)
 			set.indirect_resolution = resolution
 		set.indirect_bounces = clamp(round(value_get_real(realisticmap[?"indirect_bounces"], set.indirect_bounces)), 1, 8)

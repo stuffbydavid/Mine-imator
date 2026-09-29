@@ -1,4 +1,3 @@
-/// render_world_particle()
 /// @desc Renders the particle.
 
 function render_world_particle()
@@ -110,7 +109,7 @@ function render_world_particle()
 			case e_temp_type.SCENERY:
 			{
 				if (scenery != null)
-				render_world_scenery(scenery, [temp.block_tex, temp.block_tex_normal, temp.block_tex_material], temp.block_repeat_enable, temp.block_repeat)
+				render_world_scenery(scenery, [temp.block_tex, temp.block_tex_material, temp.block_tex_normal], temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
@@ -132,7 +131,7 @@ function render_world_particle()
 					break
 				
 				var res = res_eval(temp.model_tex);
-				render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, null)
+				render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map)
 				break
 			}
 			
@@ -147,7 +146,7 @@ function render_world_particle()
 				var tex;
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_normal, spr_default_material])
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [tex, spr_default_material, spr_default_normal])
 				break
 			}
 		}
@@ -165,7 +164,7 @@ function render_world_particle()
 			var res = res_eval(type.sprite_template_tex);
 			var tex = res.particle_texture_atlas_map[?template.name];
 			
-			if (tex = undefined)
+			if (is_undefined(tex))
 			{
 				shader_blend_color = prevcolor
 				shader_blend_alpha = prevalpha

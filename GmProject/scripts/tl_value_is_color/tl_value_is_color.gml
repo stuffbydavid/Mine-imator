@@ -1,4 +1,3 @@
-/// tl_value_is_color(valueid)
 /// @arg valueid
 
 function tl_value_is_color(vid)

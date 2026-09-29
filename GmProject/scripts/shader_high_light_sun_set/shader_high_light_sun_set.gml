@@ -1,5 +1,3 @@
-/// shader_high_light_sun_set()
-
 function shader_high_light_sun_set()
 {
 	render_set_uniform("uEmissive", 0)
@@ -8,8 +6,8 @@ function shader_high_light_sun_set()
 	render_set_uniform_int("uIsSky", 0)
 	render_set_uniform_int("uIsWater", 0)
 	
-	var cascade1 = render_cascades[render_cascades_count > 1 ? 1 : 0]
-	var cascade2 = render_cascades[render_cascades_count > 2 ? 2 : render_cascades_count - 1]
+	var cascade1 = render_cascades[render_cascades_count > 1 ? 1 : 0];
+	var cascade2 = render_cascades[render_cascades_count > 2 ? 2 : render_cascades_count - 1];
 	render_set_uniform_mat4_array("uLightMatBiasMVP", array(render_cascades[0].matBias, cascade1.matBias, cascade2.matBias))
 	
 	render_set_uniform("uSunNear", [render_cascades[0].near, cascade1.near, cascade2.near])

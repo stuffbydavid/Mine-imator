@@ -1,29 +1,25 @@
-/// popup_exportimage_draw()
-
 function popup_exportimage_draw()
 {
-	var text;
-	
 	// Renderer
 	tab_control_menu()
-	draw_button_menu("exportimagerenderer", e_menu.LIST, dx, dy, dw, 24, popup.renderer, text_get("renderrenderer" + renderer_name_list[popup.renderer]), action_toolbar_export_renderer)
+	draw_button_menu("exportimagerenderer", e_menu.LIST, dx, dy, dw, 24, popup_current.renderer, text_get("renderrenderer" + renderer_name_list[popup_current.renderer]), action_toolbar_export_renderer)
 	tab_next()
 	
 	// Video size
 	if (project_video_template = 0)
-		text = text_get("projectvideosizecustom")
+		content_text = text_get("projectvideosizecustom")
 	else
-		text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
+		content_text = text_get("projectvideosizetemplate" + project_video_template.name) + " (" + string(project_video_template.width) + "x" + string(project_video_template.height) + ")"
 	
 	tab_control_menu()
-	draw_button_menu("exportimageimagesize", e_menu.LIST, dx, dy, dw, 24, project_video_template, text, action_project_video_template)
+	draw_button_menu("exportimageimagesize", e_menu.LIST, dx, dy, dw, 24, project_video_template, content_text, action_project_video_template)
 	tab_next()
 	
 	// Custom
 	if (project_video_template = 0)
 	{
-		textfield_group_add("exportimageimagesizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup.tbx_image_size_custom_width, null, 1, 1, surface_get_max_size())
-		textfield_group_add("exportimageimagesizecustomheight", project_video_height, 720, action_project_video_height, X, popup.tbx_image_size_custom_height, null, 1, 1, surface_get_max_size())
+		textfield_group_add("exportimageimagesizecustomwidth", project_video_width, 1280, action_project_video_width, X, popup_current.tbx_image_size_custom_width, null, 1, 1, surface_get_max_size())
+		textfield_group_add("exportimageimagesizecustomheight", project_video_height, 720, action_project_video_height, X, popup_current.tbx_image_size_custom_height, null, 1, 1, surface_get_max_size())
 		
 		tab_control_textfield_group()
 		draw_textfield_group("exportimageimagesizecustom", dx, dy, dw, 1, 1, no_limit, 1)
@@ -38,20 +34,20 @@ function popup_exportimage_draw()
 	
 	// Remove background
 	tab_control_checkbox()
-	draw_checkbox("exportimageremovebackground", dx, dy, popup.remove_background, action_toolbar_export_remove_background)
+	draw_checkbox("exportimageremovebackground", dx, dy, popup_current.remove_background, action_toolbar_export_remove_background)
 	tab_next()
 	
-	if (popup.remove_background)
+	if (popup_current.remove_background)
 		draw_tooltip_label("exportimageblendmodewarning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	
 	// Include hidden
 	tab_control_checkbox()
-	draw_checkbox("exportimageincludehidden", dx, dy, popup.include_hidden, action_toolbar_export_include_hidden)
+	draw_checkbox("exportimageincludehidden", dx, dy, popup_current.include_hidden, action_toolbar_export_include_hidden)
 	tab_next()
 	
 	// Watermark
 	tab_control_checkbox()
-	draw_checkbox("exportimagewatermark", dx, dy, popup.watermark, action_toolbar_export_watermark)
+	draw_checkbox("exportimagewatermark", dx, dy, popup_current.watermark, action_toolbar_export_watermark)
 	tab_next()
 	
 	// Save

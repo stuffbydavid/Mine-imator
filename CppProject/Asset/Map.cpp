@@ -22,7 +22,12 @@ namespace CppProject
 	{
 		switch (to->GetType())
 		{
-			case MAP: to->map = map; break;
+			case MAP:
+			{
+				to->map = map;
+				break;
+			}
+
 			case HASH_STRING:
 			{
 				if (StringHashMap* toHash = dynamic_cast<StringHashMap*>(to))
@@ -37,6 +42,7 @@ namespace CppProject
 				}
 				break;
 			}
+
 			case HASH_INT:
 			{
 				if (IntHashMap* toHash = dynamic_cast<IntHashMap*>(to))
@@ -75,6 +81,7 @@ namespace CppProject
 				return mapIt.key();
 			}
 		}
+
 		return VarType();
 	}
 
@@ -97,10 +104,12 @@ namespace CppProject
 				mapIt.next();
 				if (foundKey)
 					return mapIt.key();
+
 				if (mapIt.key() == key)
 					foundKey = true;
 			}
 		}
+
 		return VarType();
 	}
 

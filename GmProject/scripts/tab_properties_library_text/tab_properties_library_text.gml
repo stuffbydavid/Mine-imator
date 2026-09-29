@@ -1,5 +1,3 @@
-/// tab_properties_library_text()
-
 function tab_properties_library_text()
 {
 	// Font (Advanced mode only)
@@ -8,6 +6,7 @@ function tab_properties_library_text()
 		tab_control_menu(ui_large_height)
 		draw_button_menu("librarytextfont", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.text_font, res_eval(temp_edit.text_font).display_name, action_lib_text_font)
 		tab_next()
+		
 		if (res_eval(temp_edit.text_font).type = e_res_type.FONT)
 		{
 			tab_control_switch()
@@ -19,7 +18,7 @@ function tab_properties_library_text()
 	// 3D / Face camera
 	var sx = dx_start;
 	dx_start = dx
-	tab_set_collumns(true, 2)
+	tab_set_columns(true, 2)
 
 	tab_control_checkbox()
 	draw_checkbox("librarytext3d", dx, dy, temp_edit.text_3d, action_lib_text_3d)
@@ -29,7 +28,7 @@ function tab_properties_library_text()
 	draw_checkbox("librarytextfacecamera", dx, dy, temp_edit.text_face_camera, action_lib_text_face_camera)
 	tab_next()
 
-	tab_set_collumns(false)
+	tab_set_columns(false)
 	dx_start = sx
 
 	// Outline

@@ -38,6 +38,7 @@ namespace CppProject
 		#if DEBUG_MODE
 			format.setOption(QSurfaceFormat::DebugContext);
 		#endif
+			
 			QSurfaceFormat::setDefaultFormat(format);
 		}
 	}
@@ -70,6 +71,7 @@ namespace CppProject
 					d3dInfoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_ERROR, true);
 					d3dInfoQueue->Release();
 				}
+				
 				debugger->Release();
 			}
 		#endif
@@ -80,6 +82,7 @@ namespace CppProject
 			IDXGIAdapter* dxgiAdapter;
 			D3DCheckError(dxgiDevice->GetAdapter(&dxgiAdapter));
 			dxgiDevice->Release();
+			
 			DXGI_ADAPTER_DESC adapterDesc;
 			dxgiAdapter->GetDesc(&adapterDesc);
 			DEBUG("Graphics device: " + QString::fromStdWString(adapterDesc.Description));
@@ -92,6 +95,7 @@ namespace CppProject
 			sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 			sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 			sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+			
 			for (D3D11_FILTER filter : { D3D11_FILTER_MIN_MAG_MIP_POINT, D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR,
 				D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT, D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR })
 			{
@@ -119,20 +123,27 @@ namespace CppProject
 			depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 			depthStencilDesc.StencilEnable = FALSE;
 			D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_WRITE]));
+			
 			depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 			D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_NO_WRITE]));
+			
 			depthStencilDesc.DepthFunc = D3D11_COMPARISON_EQUAL;
 			depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 			D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_EQUAL_WRITE]));
+			
 			depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 			D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_TEST_EQUAL_NO_WRITE]));
+			
 			depthStencilDesc.DepthEnable = FALSE;
 			D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[DEPTH_NO_TEST_NO_WRITE]));
+			
 			D3DContext->OMSetDepthStencilState(d3dDepthStencilStateMap[DEPTH_NO_TEST_NO_WRITE], 1);
+			
 			depthStencilDesc.StencilEnable = TRUE;
 			depthStencilDesc.StencilWriteMask = 255;
 			depthStencilDesc.FrontFace = depthStencilDesc.BackFace = { D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_REPLACE, D3D11_COMPARISON_ALWAYS };
 			D3DCheckError(D3DDevice->CreateDepthStencilState(&depthStencilDesc, &d3dDepthStencilStateMap[STENCIL_WRITE]));
+			
 			depthStencilDesc.StencilWriteMask = 0;
 			depthStencilDesc.StencilReadMask = 255;
 			depthStencilDesc.FrontFace.StencilFunc = depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
@@ -161,6 +172,7 @@ namespace CppProject
 			blendState.RenderTarget[0].BlendEnable = FALSE;
 			blendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 			D3DDevice->CreateBlendState(&blendState, &d3dNoBlendState);
+			
 			blendState.RenderTarget[0].RenderTargetWriteMask = 0;
 			D3DDevice->CreateBlendState(&blendState, &d3dNoColorState);
 		}
@@ -175,14 +187,17 @@ namespace CppProject
 				// Create a context without a window or swapchain
 				glContext = new QOpenGLContext;
 				glContext->setFormat(QSurfaceFormat::defaultFormat());
+
 				if (!glContext->create() || !glContext->isValid())
 					FATAL("Could not create OpenGL context");
 
 				glOffScreenSurface = new QOffscreenSurface;
 				glOffScreenSurface->setFormat(glContext->format());
 				glOffScreenSurface->create();
+				
 				if (!glOffScreenSurface->isValid())
 					FATAL("Could not create OpenGL off-screen surface");
+				
 				if (!glContext->makeCurrent(glOffScreenSurface))
 					FATAL("Could not make OpenGL off-screen surface current");
 			}
@@ -192,8 +207,10 @@ namespace CppProject
 			// Find version
 			glVersion = NumStr(glContext->format().version().first) + "." + NumStr(glContext->format().version().second);
 			DEBUG("OpenGL version: " + glVersion);
+			
 			if (!initializeOpenGLFunctions())
 				FATAL("Could not initialize OpenGL, version is " + glVersion);
+			
 			DEBUG("GL_RENDERER: " + QString((char*)glGetString(GL_RENDERER)));
 			DEBUG("GL_VENDOR: " + QString((char*)glGetString(GL_VENDOR)));
 
@@ -201,6 +218,7 @@ namespace CppProject
 			glFrontFace(GL_CW);
 			glDepthMask(true);
 			glDepthFunc(GL_LEQUAL);
+
 			GL_CHECK_ERROR();
 
 			// Create debugger
@@ -216,6 +234,7 @@ namespace CppProject
 						else if (!msg.startsWith("Buffer detailed info")) DEBUG("[OpenGL debug] " + msg);
 					});
 				logger->startLogging(QOpenGLDebugLogger::SynchronousLogging);
+				
 				DEBUG("Started OpenGL debugger");
 			}
 			else
@@ -268,6 +287,7 @@ namespace CppProject
 			_com_error removedErr(D3DDevice->GetDeviceRemovedReason());
 			errMsg = "GPU device instance suspended: " + QString(removedErr.ErrorMessage());
 		}
+		
 		Printer::Fatal("Direct3D error: " + errMsg + "\nin " + func + ":" + NumStr(line));
 
 		return true;
@@ -285,16 +305,18 @@ namespace CppProject
 			QString error;
 			switch (errorCode)
 			{
-				case GL_INVALID_ENUM: error = "INVALID_ENUM"; break;
-				case GL_INVALID_VALUE: error = "INVALID_VALUE"; break;
-				case GL_INVALID_OPERATION: error = "INVALID_OPERATION"; break;
-				case GL_STACK_OVERFLOW: error = "STACK_OVERFLOW"; break;
-				case GL_STACK_UNDERFLOW: error = "STACK_UNDERFLOW"; break;
-				case GL_OUT_OF_MEMORY: error = "OUT_OF_MEMORY"; break;
-				case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION"; break;
-				default: error = "Unknown OpenGL error " + NumStr(errorCode);
+				case GL_INVALID_ENUM:					error = "INVALID_ENUM"; break;
+				case GL_INVALID_VALUE:					error = "INVALID_VALUE"; break;
+				case GL_INVALID_OPERATION:				error = "INVALID_OPERATION"; break;
+				case GL_STACK_OVERFLOW:					error = "STACK_OVERFLOW"; break;
+				case GL_STACK_UNDERFLOW:				error = "STACK_UNDERFLOW"; break;
+				case GL_OUT_OF_MEMORY:					error = "OUT_OF_MEMORY"; break;
+				case GL_INVALID_FRAMEBUFFER_OPERATION:	error = "INVALID_FRAMEBUFFER_OPERATION"; break;
+				default:								error = "Unknown OpenGL error " + NumStr(errorCode);
 			}
+			
 			DEBUG("[OpenGL ERROR] " + error + " in " + func + ":" + NumStr(line));
+
 			return true;
 		}
 	}
@@ -312,8 +334,10 @@ namespace CppProject
 				WARNING("BeginUse makeCurrent failed");
 				return false;
 			}
+			
 			glCurrentVboId = App->headless ? glHeadlessVboId : AppWin->glWidget->glVboId;
 			GL_CHECK_ERROR();
+			
 			return true;
 		}
 
@@ -331,6 +355,7 @@ namespace CppProject
 			// Update list of RTVs
 			if (index >= d3dMrtRTVs.size())
 				d3dMrtRTVs.resize(index + 1);
+			
 			d3dMrtRTVs[index] = frameBuffer->d3dRTV;
 
 			if (index == 0)
@@ -361,6 +386,7 @@ namespace CppProject
 			GLenum* buffers = new GLenum[index + 1];
 			for (IntType i = 0; i < glMrtCount; i++)
 				buffers[i] = GL_COLOR_ATTACHMENT0 + i;
+			
 			glDrawBuffers(index + 1, buffers);
 			GL_CHECK_ERROR();
 
@@ -451,6 +477,7 @@ namespace CppProject
 				glEnable(GL_CULL_FACE);
 			else
 				glDisable(GL_CULL_FACE);
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -461,6 +488,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		cullFront = enabled;
 
 	#if OS_WINDOWS
@@ -480,6 +508,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		depthTest = enabled;
 
 	#if OS_WINDOWS
@@ -492,6 +521,7 @@ namespace CppProject
 				glEnable(GL_DEPTH_TEST);
 			else
 				glDisable(GL_DEPTH_TEST);
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -502,6 +532,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		depthMask = enabled;
 
 	#if OS_WINDOWS
@@ -521,6 +552,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		depthFunc = func;
 
 	#if OS_WINDOWS
@@ -555,6 +587,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		colorWriteMask = mask;
 
 	#if OS_WINDOWS
@@ -574,6 +607,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		blend = enabled;
 
 	#if OS_WINDOWS
@@ -586,6 +620,7 @@ namespace CppProject
 				glEnable(GL_BLEND);
 			else
 				glDisable(GL_BLEND);
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -597,6 +632,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		blendSrcFactor = src;
 		blendDstFactor = dest;
 		blendAlphaSrcFactor = alphasrc;
@@ -618,6 +654,7 @@ namespace CppProject
 	{
 		ID3D11BlendState* state = nullptr;
 		d3dBlendStateIndex = 0;
+
 		for (BlendState& previous : d3dBlendStates)
 		{
 			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
@@ -627,6 +664,7 @@ namespace CppProject
 				state = previous.state;
 				break;
 			}
+
 			d3dBlendStateIndex++;
 		}
 
@@ -644,6 +682,7 @@ namespace CppProject
 
 			blendDesc.RenderTarget[0] = targetDesc;
 			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
+			
 			d3dBlendStates.append({ blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
 				colorWriteMask, blend, state });
 		}
@@ -658,6 +697,7 @@ namespace CppProject
 			return;
 
 		SubmitBatch();
+
 		lodBias = bias;
 
 	#if OS_WINDOWS
@@ -708,7 +748,9 @@ namespace CppProject
 
 			clipEnabled = true;
 			clipRect = rect;
+
 			draw_rectangle(rect.x(), rect.y(), rect.right() + 1, rect.bottom() + 1, false);
+
 			SubmitBatch();
 
 			D3DContext->OMSetDepthStencilState(d3dDepthStencilStateMap[STENCIL_TEST], 1);
@@ -730,13 +772,16 @@ namespace CppProject
 
 			clipEnabled = true;
 			clipRect = rect;
+
 			draw_rectangle(rect.x(), rect.y(), rect.right() + 1, rect.bottom() + 1, false);
+			
 			SubmitBatch();
 
 			// Render using stencil mask
 			glStencilFunc(GL_EQUAL, 1, 0xFF);
 			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 			glStencilMask(0x00);
+
 			GL_CHECK_ERROR();
 		}
 	}
@@ -751,10 +796,12 @@ namespace CppProject
 			QRect previous = clipStack.takeLast();
 			clipEnabled = false;
 			ClipBegin(previous);
+
 			return;
 		}
 
 		SubmitBatch();
+
 		clipEnabled = false;
 
 	#if OS_WINDOWS
@@ -778,6 +825,7 @@ namespace CppProject
 		clipSuspendStack.append(state);
 
 		clipStack.clear();
+
 		if (clipEnabled)
 			ClipEnd();
 	}
@@ -789,6 +837,7 @@ namespace CppProject
 
 		ClipState state = clipSuspendStack.takeLast();
 		clipStack = state.stack;
+
 		if (state.enabled)
 			ClipBegin(state.rect);
 	}
@@ -809,6 +858,7 @@ namespace CppProject
 				matrixV = matrix;
 				if (!frustumUpdate && matrixV != frustumV)
 					frustumUpdate = true;
+				
 				shader->SubmitMatrix(Shader::V, matrix);
 				break;
 			}
@@ -826,6 +876,7 @@ namespace CppProject
 				// Update frustum if either V or P changed (ignore ortho matrices)
 				if (frustumUpdate && !matrixP.m[15])
 					UpdateFrustum();
+				
 				break;
 			}
 		}
@@ -844,12 +895,14 @@ namespace CppProject
 			VecType(0, 0,  1, 1),
 			VecType(0, 0, -1, 1)
 		};
-		Matrix vpTransposed = (frustumV * frustumP).GetTransposed(); // VP transposed
+		
+		Matrix vpTransposed = (frustumV * frustumP).GetTransposed();
 		for (IntType i = 0; i < 6; i++)
 		{
 			VecType mul = vpTransposed * frustumBase[i];
 			frustum[i] = mul / sqrtf(mul.x * mul.x + mul.y * mul.y + mul.z * mul.z);
 		}
+		
 		frustumUpdate = false;
 	}
 
@@ -890,6 +943,7 @@ namespace CppProject
 		IntType r = in & 0x0ff;
 		IntType g = (in >> 8) & 0x0ff;
 		IntType b = (in >> 16) & 0x0ff;
+		
 		return QColor(r, g, b, alpha * 255);
 	}
 

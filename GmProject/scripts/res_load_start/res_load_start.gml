@@ -1,4 +1,3 @@
-/// res_load_start()
 /// @desc Starts loading the resource.
 
 function res_load_start()

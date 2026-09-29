@@ -1,4 +1,3 @@
-/// draw_button_icon(name, x, y, width, height, value, icon, [script, [disabled, [tip, [sprite]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -6,39 +5,15 @@
 /// @arg height
 /// @arg value
 /// @arg icon
-/// @arg [script
-/// @arg [disabled
-/// @arg [tip
-/// @arg [sprite]]]]
+/// @arg [script]
+/// @arg [disabled]
+/// @arg [tip]
+/// @arg [sprite]
 
-function draw_button_icon()
+function draw_button_icon(name, xx, yy, wid, hei, value, icon, script = null, disabled = false, tip = "", spr = null)
 {
-	var name, xx, yy, wid, hei, value, icon, script, disabled, tip, sprite;
-	
-	name = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	wid = argument[3]
-	hei = argument[4]
-	value = argument[5]
-	icon = argument[6]
-	script = null
-	disabled = false
-	tip = ""
-	sprite = spr_icons
-	
-	if (argument_count > 7)
-		script = argument[7]
-	
-	if (argument_count > 8)
-		disabled = argument[8]
-	
-	if (argument_count > 9)
-		tip = argument[9]
-	
-	if (argument_count > 10)
-		if (argument[10] != null)
-			sprite = argument[10]
+	if (spr = null)
+		spr = spr_icons
 	
 	if (tip != "")
 		tip_set(text_get(tip), xx, yy, wid, hei)
@@ -47,10 +22,9 @@ function draw_button_icon()
 		return 0
 	
 	var mouseon, animated, image;
-	
 	mouseon = (content_mouseon && !disabled && app_mouse_box(xx, yy, wid, hei))
-	animated = (sprite != spr_icons && sprite != null && icon = null && sprite_get_number(sprite) > 1)
-	image = ((wid != hei) && sprite != spr_icons && sprite != null && icon = null)
+	animated = (spr != spr_icons && spr != null && icon = null && sprite_get_number(spr) > 1)
+	image = ((wid != hei) && spr != spr_icons && spr != null && icon = null)
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint
@@ -98,14 +72,14 @@ function draw_button_icon()
 	draw_box(xx, yy, wid, hei, false, onbackcolor, onbackalpha)
 	
 	if (image)
-		draw_image(sprite, 0, xx, yy, 1, 1, oniconcolor, oniconalpha)
-	else if (animated) // Animated icon(if 'icon' is a sprite)
+		draw_image(spr, 0, xx, yy, 1, 1, oniconcolor, oniconalpha)
+	else if (animated) // Animated icon(if 'icon' is a spr)
 	{
-		var frame = floor((sprite_get_number(sprite) - 1) * microani_arr[e_microani.ACTIVE]);
-		draw_image(sprite, frame, xx + wid/2, yy + hei/2, 1, 1, oniconcolor, oniconalpha)
+		var frame = floor((sprite_get_number(spr) - 1) * microani_arr[e_microani.ACTIVE]);
+		draw_image(spr, frame, xx + wid/2, yy + hei/2, 1, 1, oniconcolor, oniconalpha)
 	}
 	else // Icon
-		draw_image(sprite, icon, xx + wid/2, yy + hei/2, 1, 1, oniconcolor, oniconalpha)
+		draw_image(spr, icon, xx + wid/2, yy + hei/2, 1, 1, oniconcolor, oniconalpha)
 	
 	microani_update(mouseon, mouseon && mouse_left, value, disabled)
 	

@@ -10,7 +10,9 @@ namespace CppProject
 	{
 		this->sound = sound;
 		this->loop = loop;
+
 		sounds.append(this);
+
 		Start();
 	}
 
@@ -45,6 +47,7 @@ namespace CppProject
 			alSourceStop(alSource);
 			alDeleteSources(1, &alSource);
 		}
+
 		sounds.removeOne(this);
 	}
 
@@ -58,6 +61,7 @@ namespace CppProject
 
 			ALint state;
 			alGetSourcei(sound->alSource, AL_SOURCE_STATE, &state);
+
 			if (state == AL_STOPPED)
 				delete sound;
 		}

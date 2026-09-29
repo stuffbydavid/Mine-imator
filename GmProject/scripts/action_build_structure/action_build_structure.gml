@@ -1,7 +1,3 @@
-/// action_build_structure(structure, [custom])
-/// @arg structure
-/// @arg [custom]
-
 function action_build_structure(structure, custom = -1)
 {
 	if (structure != null && !instance_exists(structure))

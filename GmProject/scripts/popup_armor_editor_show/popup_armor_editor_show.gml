@@ -1,5 +1,4 @@
-/// popup_armor_editor_show(obj)
-/// @arg obj
+/// @arg object
 
 function popup_armor_editor_show(obj)
 {

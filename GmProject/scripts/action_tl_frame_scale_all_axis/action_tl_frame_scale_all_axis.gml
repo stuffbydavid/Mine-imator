@@ -1,8 +1,4 @@
-/// action_tl_frame_scale_all_axis(value, add)
-/// @arg value
-/// @arg add
-
-function action_tl_frame_scale_all_axis(val, add)
+function action_tl_frame_scale_all_axis(value, add)
 {
 	var oldval, historyobj, mul, stopdrag;
 	axis_edit = X
@@ -19,8 +15,8 @@ function action_tl_frame_scale_all_axis(val, add)
 			
 			history_data.scale_link_drag = true
 			history_data.scale_oldval = oldval
+			history_data.scale_link_drag_val += value
 			
-			history_data.scale_link_drag_val += val
 			mul = (oldval + history_data.scale_link_drag_val) / oldval
 		}
 		else // Dragging
@@ -28,7 +24,8 @@ function action_tl_frame_scale_all_axis(val, add)
 			tl_value_set_start(action_tl_frame_scale_all_axis, true)
 			
 			oldval = history_data.scale_oldval
-			history_data.scale_link_drag_val += val
+			history_data.scale_link_drag_val += value
+			
 			mul = (oldval + history_data.scale_link_drag_val) / oldval
 		}
 	}
@@ -38,14 +35,15 @@ function action_tl_frame_scale_all_axis(val, add)
 		
 		stopdrag = true
 		oldval = history_data.scale_oldval
-		history_data.scale_link_drag_val += val
+		history_data.scale_link_drag_val += value
+		
 		mul = (oldval + history_data.scale_link_drag_val) / oldval
 	}
 	else // Manual input
 	{
 		tl_value_set_start(action_tl_frame_scale_all_axis, true)
 		
-		mul = val / oldval
+		mul = value / oldval
 	}
 	
 	tl_value_set(e_value.SCA_X, mul, false, true)

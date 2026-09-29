@@ -1,7 +1,4 @@
-/// action_tl_inherit_scale(enable)
-/// @arg enable
-
-function action_tl_inherit_scale(enable)
+function action_tl_inherit_scale(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_scale(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_scale, enable)
+				history_save_var(other.id, other.inherit_scale, enabled)
 			
-			inherit_scale = enable
+			inherit_scale = enabled
 			update_matrix = true
 		}
 	}

@@ -1,5 +1,4 @@
-/// tl_event_destroy()
-/// @desc Destroy event of timelines
+/// @desc Destroy event of timelines.
 
 function tl_event_destroy()
 {

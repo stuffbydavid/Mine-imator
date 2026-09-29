@@ -1,6 +1,3 @@
-/// view_control_scale(view)
-/// @arg view
-
 function view_control_scale(view)
 {
 	var len, arrowstart, arrowend, mat;
@@ -60,7 +57,7 @@ function view_control_scale(view)
 		if (!mouse_still)
 		{
 			var move, scale, snapval;
-			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
+			move = ray_plane_intersect(cam_from, view_control_ray_dir, view_control_plane_origin, view_control_plane_normal)
 			move = point3D_mul(point3D_sub(move, view_control_plane_origin), .125)
 			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
 			
@@ -118,7 +115,7 @@ function view_control_scale(view)
 		mouse_cursor = cr_handpoint
 		
 		// Move
-		var veclen = vec2_length(view_control_vec)
+		var veclen = vec2_length(view_control_vec);
 		if (veclen > 0 && !mouse_still)
 		{
 			var vecmouse, vecdot, move, snapval, newval;

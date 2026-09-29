@@ -3,8 +3,8 @@
   "%Name":"shader_blur",
   "name":"shader_blur",
   "parent":{
-    "name":"Blur",
-    "path":"folders/Shaders/Effects/Blur.yy",
+    "name":"Effects",
+    "path":"folders/Shaders/Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

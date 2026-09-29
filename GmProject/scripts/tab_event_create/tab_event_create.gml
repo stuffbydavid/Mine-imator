@@ -1,5 +1,3 @@
-/// tab_event_create()
-
 function tab_event_create()
 {
 	script = null

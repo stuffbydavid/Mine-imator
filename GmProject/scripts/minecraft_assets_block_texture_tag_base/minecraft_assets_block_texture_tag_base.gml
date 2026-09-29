@@ -1,4 +1,3 @@
-/// minecraft_assets_block_texture_tag_base(StringType, StringType)
 /// @desc Returns a texture name without a trailing render tag, if it has one.
 
 function minecraft_assets_block_texture_tag_base(texturename, tag)

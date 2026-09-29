@@ -1,5 +1,3 @@
-/// window_draw_timeline_move()
-
 function window_draw_timeline_move()
 {
 	if (window_busy != "timelinemove")

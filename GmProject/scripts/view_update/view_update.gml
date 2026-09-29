@@ -1,12 +1,10 @@
-/// view_update(view, camera)
 /// @arg view
 /// @arg camera
 
 function view_update(view, cam)
 {
-	var editcamobj = false;
-	
 	// Camera object disabled while placing or object locked
+	var editcamobj = false;
 	if (cam)
 		editcamobj = (place_tl = null && !place_build && !cam.lock)
 		
@@ -83,6 +81,7 @@ function view_update(view, cam)
 	{
 		if (!cam)
 			cam_work_zoom_goal = clamp(cam_work_zoom_goal * (1 + 0.25 * mouse_wheel), cam_near, cam_far)
+		
 		else if (cam.value[e_value.CAM_ROTATE] && editcamobj)
 		{
 			action_tl_select_single(cam)
@@ -101,6 +100,7 @@ function view_update(view, cam)
 		if (window_busy = "viewclick")
 		{
 			mouse_cursor = cr_handpoint
+			
 			if (place_build && cam = null)
 				shortcut_bar_state = "buildviewport"
 			else
@@ -111,6 +111,7 @@ function view_update(view, cam)
 				view_click_x = display_mouse_get_x()
 				view_click_y = display_mouse_get_y()
 				window_busy = "viewmovecamera"
+				
 				if (cam)
 					action_tl_select_single(cam)
 			}
@@ -129,6 +130,7 @@ function view_update(view, cam)
 					view_click_x = display_mouse_get_x()
 					view_click_y = display_mouse_get_y()
 					window_busy = "viewrotatecamera"
+					
 					if (cam)
 						action_tl_select_single(cam)
 				}
@@ -205,6 +207,7 @@ function view_update(view, cam)
 			
 			if (setting_camera_lock_mouse)
 				mouse_cursor = cr_none
+			
 			camera_control_move(cam, view_click_x, view_click_y)
 			
 			if (!mouse_right)

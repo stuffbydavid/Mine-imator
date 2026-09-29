@@ -17,8 +17,10 @@ namespace CppProject
 	{
 		if (GFX->blendSrcFactor == bm_src_alpha && GFX->blendDstFactor == bm_one)
 			return bm_add;
+		
 		if (GFX->blendSrcFactor == bm_zero && GFX->blendDstFactor == bm_inv_src_color)
 			return bm_subtract;
+		
 		if (GFX->blendSrcFactor == bm_src_alpha && GFX->blendDstFactor == bm_inv_src_color)
 			return bm_max;
 
@@ -84,10 +86,10 @@ namespace CppProject
 	{
 		switch (mode)
 		{
-			case bm_normal: gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_alpha); break;
-			case bm_add: gpu_set_blendmode_ext(bm_src_alpha, bm_one); break;
-			case bm_subtract: gpu_set_blendmode_ext(bm_zero, bm_inv_src_color); break;
-			case bm_max: gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_color); break;
+			case bm_normal:		gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_alpha); break;
+			case bm_add:		gpu_set_blendmode_ext(bm_src_alpha, bm_one); break;
+			case bm_subtract:	gpu_set_blendmode_ext(bm_zero, bm_inv_src_color); break;
+			case bm_max:		gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_color); break;
 		}
 	}
 
@@ -105,6 +107,7 @@ namespace CppProject
 				continue;
 
 			GFX->SubmitBatch();
+
 			state.filter = enabled;
 			state.changed = true;
 		}
@@ -119,6 +122,7 @@ namespace CppProject
 			return;
 
 		GFX->SubmitBatch();
+
 		state.filter = enabled;
 		state.changed = true;
 	}
@@ -132,6 +136,7 @@ namespace CppProject
 				continue;
 
 			GFX->SubmitBatch();
+
 			GFX->shader->samplerRepeat[s] = enabledInt;
 		}
 
@@ -145,6 +150,7 @@ namespace CppProject
 			return;
 
 		GFX->SubmitBatch();
+
 		GFX->shader->samplerRepeat[sampler] = enabledInt;
 	}
 
@@ -168,6 +174,7 @@ namespace CppProject
 			return;
 
 		GFX->SubmitBatch();
+
 		GFX->mipMap = enabled;
 
 		for (IntType s = 0; s < GFX->shader->numSamplers; s++)
@@ -260,10 +267,11 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case matrix_world: return GFX->matrixM;
-			case matrix_view: return GFX->matrixV;
-			case matrix_projection: return GFX->matrixP;
+			case matrix_world:		return GFX->matrixM;
+			case matrix_view:		return GFX->matrixV;
+			case matrix_projection:	return GFX->matrixP;
 		}
+
 		return MatrixType();
 	}
 
@@ -282,6 +290,7 @@ namespace CppProject
 			mat.matrix.m[9] *= -1;
 			mat.matrix.m[13] *= -1;
 		}
+
 		GFX->SetMatrix(type, mat.matrix);
 	}
 
@@ -294,6 +303,7 @@ namespace CppProject
 	{
 		if (Shader* shader = FindShader(id))
 			return shader->GetSamplerIndex(name);
+		
 		return -1;
 	}
 
@@ -301,6 +311,7 @@ namespace CppProject
 	{
 		if (Shader* shader = FindShader(id))
 			return shader->GetUniformIndex(name);
+		
 		return -1;
 	}
 
@@ -308,6 +319,7 @@ namespace CppProject
 	{
 		if (Shader* shader = FindShader(id))
 			return shader->IsLoaded();
+		
 		return false;
 	}
 
@@ -317,6 +329,7 @@ namespace CppProject
 			WARNING("shader_reset on default shader");
 
 		GFX->SubmitBatch();
+
 		GFX->shader->EndUse();
 		GFX->shader = PR->GetShader();
 		GFX->shader->BeginUse();
@@ -347,6 +360,7 @@ namespace CppProject
 		if (Shader* shader = FindShader(id))
 		{
 			GFX->SubmitBatch();
+
 			GFX->shader->EndUse();
 			GFX->shader = shader;
 			GFX->shader->BeginUse();
@@ -366,8 +380,10 @@ namespace CppProject
 	void surface_copy(IntType dest, IntType x, IntType y, IntType src)
 	{
 		surface_set_target(dest);
+
 		draw_clear_alpha(0, 0);
 		draw_surface(src, x, y);
+
 		surface_reset_target();
 	}
 
@@ -395,6 +411,7 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->size.height();
+		
 		return -1;
 	}
 
@@ -402,6 +419,7 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->frameBuffer->GetColorTexId();
+		
 		return -1;
 	}
 
@@ -409,6 +427,7 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->size.width();
+		
 		return -1;
 	}
 
@@ -419,6 +438,7 @@ namespace CppProject
 			GFX->SubmitBatch();
 			return GFX->QColorToInt(surf->GetColor(QPoint(x, y)));
 		}
+		
 		return -1;
 	}
 
@@ -438,9 +458,11 @@ namespace CppProject
 
 		GFX->SubmitBatch();
 		GFX->ResetMRT();
+
 		GFX->surface->EndUse();
 		GFX->surface = defaultSurface;
 		GFX->surface->BeginUse();
+
 		GFX->ClipResume();
 	}
 
@@ -479,14 +501,19 @@ namespace CppProject
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
+
 			GFX->ClipSuspend();
 			GFX->ResetMRT();
+
 			GFX->surface->EndUse();
 			GFX->surface = surf;
+
 			if (GFX->surface->BeginUse())
 				return 1;
 		}
+		
 		WARNING("surface_set_target failed for id " + NumStr(id));
+
 		return -1;
 	}
 
@@ -540,11 +567,15 @@ namespace CppProject
 		if (VertexBuffer* buf = FindVertexBuffer(buffer))
 		{
 			Vertex& vertex = buf->GetCurrentVertex(4);
+			
 			if (x > 0.0)
 				vertex.EnableFlag(Vertex::WAVE_XY);
+			
 			if (y > 0.0)
 				vertex.EnableFlag(Vertex::WAVE_Z);
+			
 			vertex.SetEmissive(z);
+
 			if (w > 0.0)
 				vertex.EnableFlag(Vertex::SUBSURFACE);
 		}
@@ -595,6 +626,7 @@ namespace CppProject
 	{
 		if (VertexBuffer* buf = FindVertexBuffer(buffer))
 			return buf->numIndices;
+		
 		return 0;
 	}
 

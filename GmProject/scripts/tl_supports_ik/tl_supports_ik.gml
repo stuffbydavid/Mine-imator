@@ -1,6 +1,3 @@
-/// tl_supports_ik(typeinit)
-/// @arg typeinit
-
 function tl_supports_ik(typeinit = true)
 {
 	if (!typeinit)

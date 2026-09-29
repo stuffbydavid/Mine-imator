@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec4_homogenize(VecType)
-/// vec4_homogenize(vector)
 /// @arg vector
 
 function vec4_homogenize(vec)

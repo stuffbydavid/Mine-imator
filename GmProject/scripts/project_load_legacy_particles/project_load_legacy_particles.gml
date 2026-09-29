@@ -1,5 +1,3 @@
-/// project_load_legacy_particles()
-
 function project_load_legacy_particles()
 {
 	pc_spawn_constant = buffer_read_byte()

@@ -1,5 +1,3 @@
-/// temp_update_model([copy])
-/// @arg [copy]
 /// @desc Gets the correct file and textures from the name and state or resource.
 
 function temp_update_model(copy = false)

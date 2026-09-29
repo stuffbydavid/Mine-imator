@@ -1,5 +1,5 @@
-/// render_preset_load(filename, setname)
 /// @arg filename
+/// @arg [setname]
 
 function render_preset_load(fn, setname = true)
 {
@@ -23,7 +23,7 @@ function render_preset_load(fn, setname = true)
 	}
 	
 	// Format
-	load_format = map[?"format"];
+	load_format = map[?"format"]
 	if (load_format < e_render_settings.FORMAT_210 ||
 		load_format > render_settings_format)
 	{

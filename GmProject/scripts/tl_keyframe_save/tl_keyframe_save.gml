@@ -1,4 +1,3 @@
-/// tl_keyframe_save(keyframe)
 /// @arg keyframe
 
 function tl_keyframe_save(kf)
@@ -19,8 +18,7 @@ function tl_keyframe_save(kf)
 		with (kf.value[e_value.IK_TARGET_ANGLE])
 			tl_save()
 	
-	var tex;
-	tex = res_eval(kf.value[e_value.TEXTURE_OBJ])
+	var tex = res_eval(kf.value[e_value.TEXTURE_OBJ]);
 	if (tex != null && instance_exists(tex))
 	{
 		tex.save = true

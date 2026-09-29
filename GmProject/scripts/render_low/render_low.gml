@@ -1,4 +1,3 @@
-/// render_low()
 /// @desc Renders the scene in low quality.
 
 function render_low()
@@ -45,7 +44,7 @@ function render_low()
 	{
 		cacheddepth = render_surface_depth
 		render_surface_depth = render_surface_depth_low
-		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, e_surface_format.r32float)
+		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, surface_r32float)
 		render_surface_depth_low = render_surface_depth
 		surface_set_target(render_surface_depth)
 		{

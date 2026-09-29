@@ -1,5 +1,4 @@
-/// tl_get_parent_action()
-/// Returns an optional array containing target, bend, transform and lock info when a timeline is parented.
+/// @desc Returns an optional array containing target, bend, transform and lock info when a timeline is parented.
 
 function tl_get_parent_action(newparent)
 {
@@ -27,10 +26,10 @@ function tl_get_parent_action(newparent)
 	// Item placement targets
 	if (type = e_tl_type.ITEM && !item_custom_slot && item_slot >= 0)
 	{
-		var decodedslot = minecraft_assets_texture_picker_slot_decode(item_slot, mc_assets.item_texture_list)
+		var decodedslot = minecraft_assets_texture_picker_slot_decode(item_slot, mc_assets.item_texture_list);
 		if (decodedslot[0] >= 0)
 		{
-			var itemname = mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]]
+			var itemname = mc_assets.item_texture_list[decodedslot[0]][|decodedslot[1]];
 			targetmap = minecraft_item_place_target_map[?itemname]
 		}
 	}
@@ -38,7 +37,7 @@ function tl_get_parent_action(newparent)
 	// Apply an exact body part target
 	if (newparent.type = e_tl_type.MODEL_PART && newparent.model_part != null && ds_map_valid(targetmap))
 	{
-		var action = targetmap[?newparent.model_part_name]
+		var action = targetmap[?newparent.model_part_name];
 		if (is_array(action))
 		{
 			action = array_copy_1d(action)
@@ -93,6 +92,7 @@ function tl_get_parent_action(newparent)
 			action = array_copy_1d(block_parent_action_right)
 		else
 			action = array_copy_1d(block_parent_action_left)
+		
 		targetscale = action[e_parent_action.SCA][X]
 		targetsize = vec3(1)
 		
@@ -113,6 +113,7 @@ function tl_get_parent_action(newparent)
 		targetscale /= max(1, targetsize[X], targetsize[Y])
 		action[e_parent_action.TARGET] = newparent
 		action[e_parent_action.SCA] = vec3(targetscale)
+		
 		return action
 	}
 

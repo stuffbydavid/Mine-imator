@@ -1,7 +1,6 @@
-/// string_split_escaped(string, separator)
+/// @desc Splits the given string by the separator and stores the elements in a new array.
 /// @arg string
 /// @arg separator
-/// @desc Splits the given string by the separator and stores the elements in a new array.
 
 function string_split_escaped(str, sep)
 {

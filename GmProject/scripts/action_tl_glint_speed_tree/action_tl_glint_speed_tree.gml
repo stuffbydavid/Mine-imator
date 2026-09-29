@@ -1,4 +1,3 @@
-/// action_tl_glint_speed_tree(timeline, newvalue, add, historyobject)
 /// @arg timeline
 /// @arg newvalue
 /// @arg add

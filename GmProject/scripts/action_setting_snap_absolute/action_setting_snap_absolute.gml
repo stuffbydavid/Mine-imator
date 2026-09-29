@@ -1,7 +1,4 @@
-/// action_setting_snap_absolute(absolute)
-/// @arg absolute
-
-function action_setting_snap_absolute(absolute)
+function action_setting_snap_absolute(enabled)
 {
-	setting_snap_absolute = absolute
+	setting_snap_absolute = enabled
 }

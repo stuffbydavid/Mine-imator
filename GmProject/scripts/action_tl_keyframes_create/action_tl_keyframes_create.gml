@@ -1,5 +1,3 @@
-/// action_tl_keyframes_create()
-
 function action_tl_keyframes_create()
 {
 	if (history_undo)
@@ -52,18 +50,20 @@ function action_tl_keyframes_create()
 			var prevanimated, kf;
 			prevanimated = animated
 			kf = tl_keyframe_add(app.timeline_marker)
-			animated = true
+			
 			hobj.tl_create_save_id[hobj.tl_create_amount] = save_id
 			hobj.tl_create_animated[hobj.tl_create_amount] = prevanimated
 			hobj.tl_create_index[hobj.tl_create_amount] = ds_list_find_index(keyframe_list, kf)
 			hobj.tl_create_amount++
 			
+			animated = true
 			update_matrix = true
 		}
 	}
 	
 	tl_update_matrix()
 	tl_update_length()
+	
 	if (setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated)
 		tl_update_list()
 	

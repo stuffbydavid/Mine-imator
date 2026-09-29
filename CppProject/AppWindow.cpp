@@ -12,12 +12,11 @@
 
 namespace CppProject
 {
-#if !OS_MAC
 	BoolType AppWindow::mouseEnableLock = true;
+
 #else
 	BoolType AppWindow::mouseEnableLock = false;
 #endif
-
 	AppWindow::AppWindow(IntType id) : id(id)
 	{
 	#if OS_WINDOWS
@@ -30,9 +29,11 @@ namespace CppProject
 				void mouseReleaseEvent(QMouseEvent* event) override { event->ignore(); }
 				void mouseMoveEvent(QMouseEvent* event) override { event->ignore(); }
 			};
+
 			d3dWidget = new D3DWidget;
 			d3dWidget->setMouseTracking(true);
 			QMainWindow::setCentralWidget(d3dWidget);
+
 			new KeyChecker(d3dWidget);
 
 			// Create swapchain
@@ -51,6 +52,7 @@ namespace CppProject
 			swapchainDesc.Windowed = true;
 			swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 			swapchainDesc.Flags = 0;
+			
 			HRESULT hr = DXGIFactory->CreateSwapChain(D3DDevice, &swapchainDesc, &d3dSwapchain);
 			if (FAILED(hr))
 			{
@@ -67,6 +69,7 @@ namespace CppProject
 		{
 			glWidget = new GLWidget;
 			QMainWindow::setCentralWidget(glWidget);
+
 			new KeyChecker(glWidget);
 		}
 
@@ -90,6 +93,7 @@ namespace CppProject
 	void AppWindow::ShowNormal()
 	{
 		QMainWindow::showNormal();
+
 		if (IS_OPENGL)
 			glWidget->widgetRender = true;
 	}
@@ -99,6 +103,7 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			glWidget->hide(); // Mac OS fix
+
 			QMainWindow::showMaximized();
 			glWidget->show();
 		}
@@ -113,7 +118,9 @@ namespace CppProject
 
 		newSize.rwidth() *= App->scale;
 		newSize.rheight() *= App->scale;
+
 		QMainWindow::setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, newSize, qApp->primaryScreen()->geometry()));
+		
 		QTimer::singleShot(100, [&]()
 		{
 			QMainWindow::showNormal();
@@ -122,6 +129,7 @@ namespace CppProject
 
 		if (IS_OPENGL)
 			glWidget->widgetRender = true;
+		
 		newSize = { 0, 0 };
 	}
 
@@ -171,6 +179,7 @@ namespace CppProject
 			// Redo frame if blocked, otherwise flip swapchain index and schedule draw
 			if (!App->blocked)
 				glWidget->swapchainIndex = 1 - glWidget->swapchainIndex;
+			
 			glWidget->update();
 		}
 	}
@@ -182,6 +191,7 @@ namespace CppProject
 			// Clear keys
 			for (IntType key : App->keyStateMap.keys())
 				App->keyStateMap[key] = {};
+			
 			for (IntType key : App->keyWinStateMap.keys())
 				App->keyWinStateMap[key] = {};
 		}
@@ -195,6 +205,7 @@ namespace CppProject
 		if (IS_D3D11)
 		{
 			surface->Resize(size());
+
 			releaseAndReset(d3dRTV);
 
 			D3DCheckError(d3dSwapchain->ResizeBuffers(2, width(), height(), DXGI_FORMAT_B8G8R8A8_UNORM, 0));
@@ -206,6 +217,7 @@ namespace CppProject
 				FATAL("Could not get back buffer texture");
 			else
 				D3DCheckError(D3DDevice->CreateRenderTargetView(backBufferTex, NULL, &d3dRTV));
+			
 			backBufferTex->Release();
 		}
 	#endif
@@ -230,6 +242,7 @@ namespace CppProject
 				appWindow->id = 0;
 				appWindow->close();
 			}
+
 			delete App;
 		}
 		else
@@ -239,10 +252,12 @@ namespace CppProject
 
 			if (App->mouseWindow == this)
 				App->mouseWindow = App->mainWindow;
+			
 			App->windows.removeOne(this);
 		}
 
 		closing = true;
+
 		event->accept();
 	}
 
@@ -287,6 +302,7 @@ namespace CppProject
 		QWidget::unsetCursor();
 		QWidget::setAttribute(Qt::WA_MacShowFocusRect, 0);
 		QLineEdit::setEchoMode(QLineEdit::NoEcho);
+
 		QWidget::connect(this, &QLineEdit::cursorPositionChanged, [&](int oldPos, int newPos)
 		{
 			// Disable left/right/home/end, keep cursor at string end
@@ -297,6 +313,7 @@ namespace CppProject
 				setPos = false;
 			}
 		});
+
 		QWidget::connect(this, &QLineEdit::textChanged, [&]()
 		{
 			// Add
@@ -349,9 +366,9 @@ namespace CppProject
 	{
 		switch (event->button())
 		{
-			case Qt::LeftButton: mouseDown[mb_left] = true; break;
-			case Qt::RightButton: mouseDown[mb_right] = true; break;
-			case Qt::MiddleButton: mouseDown[mb_middle] = true; break;
+			case Qt::LeftButton:	mouseDown[mb_left] = true; break;
+			case Qt::RightButton:	mouseDown[mb_right] = true; break;
+			case Qt::MiddleButton:	mouseDown[mb_middle] = true; break;
 		}
 	}
 
@@ -359,16 +376,18 @@ namespace CppProject
 	{
 		switch (event->button())
 		{
-			case Qt::LeftButton: mouseDown[mb_left] = false; break;
-			case Qt::RightButton: mouseDown[mb_right] = false; break;
-			case Qt::MiddleButton: mouseDown[mb_middle] = false; break;
+			case Qt::LeftButton:	mouseDown[mb_left] = false; break;
+			case Qt::RightButton:	mouseDown[mb_right] = false; break;
+			case Qt::MiddleButton:	mouseDown[mb_middle] = false; break;
 		}
+
 		mouseUnlock = true;
 	}
 
 	void AppWindow::mouseMoveEvent(QMouseEvent* event)
 	{
 		App->mouseWindow = this;
+
 		mousePos = event->pos();
 	}
 

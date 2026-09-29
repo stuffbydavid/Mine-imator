@@ -1,5 +1,4 @@
-/// render_blur_pyramid(surf, radius, weight, [hdr], [levels], [dirx], [diry], [radiusdiv])
-/// @arg surf
+/// @arg surface
 /// @arg radius
 /// @arg weight
 /// @arg [hdr]
@@ -15,7 +14,8 @@ function render_blur_pyramid(surf, radius, weight, hdr = false, levels = 6, dirx
 	// Return original surf if no radius (prevents downsamples from showing)
 	if (radius <= 0)
 	{
-		var format = hdr ? e_surface_format.rgba16float : e_surface_format.rgba8unorm;
+		var format = hdr ? surface_rgba16float : surface_rgba8unorm;
+		
 		render_surface_blur[0] = surface_require(render_surface_blur[0], render_width, render_height, false, format)
 		surface_set_target(render_surface_blur[0])
 		{
@@ -23,21 +23,25 @@ function render_blur_pyramid(surf, radius, weight, hdr = false, levels = 6, dirx
 			draw_surface_exists(surf, 0, 0)
 		}
 		surface_reset_target()
-		return 1;
+		
+		return 1
 	}
 
-	var downsource = surf;
-	var directional = dirx != undefined && diry != undefined;
-	var blurx = directional ? dirx : 1;
-	var blury = directional ? diry : 0;
+	var downsource, directional, blurx, blury;
+	downsource = surf
+	directional = (!is_undefined(dirx) && !is_undefined(diry))
+	blurx = directional ? dirx : 1
+	blury = directional ? diry : 0
 
 	// Each level keeps a similar blur radius in its own pixels
 	for (var i = 0; i < levels; i++)
 	{
-		var scale = power(2, i + 1);
-		var levelwidth = max(1, ceil(render_width / scale));
-		var levelheight = max(1, ceil(render_height / scale));
-		var format = hdr ? e_surface_format.rgba16float : e_surface_format.rgba8unorm;
+		var scale, levelwidth, levelheight, format;
+		scale = power(2, i + 1)
+		levelwidth = max(1, ceil(render_width / scale))
+		levelheight = max(1, ceil(render_height / scale))
+		format = hdr ? surface_rgba16float : surface_rgba8unorm
+		
 		render_surface_blur[i] = surface_require(render_surface_blur[i], levelwidth, levelheight, false, format)
 		render_surface_blur_temp[i] = surface_require(render_surface_blur_temp[i], levelwidth, levelheight, false, format)
 
@@ -140,5 +144,5 @@ function render_blur_pyramid(surf, radius, weight, hdr = false, levels = 6, dirx
 	var totalweight = 0;
 	for (var i = 0; i < levels; i++)
 		totalweight += power(weight, i)
-	return totalweight;
+	return totalweight
 }

@@ -1,6 +1,3 @@
-/// action_bench_schematic_select(schematic)
-/// @arg schematic
-
 function action_bench_schematic_select(schematic)
 {
 	bench_clear()
@@ -9,6 +6,7 @@ function action_bench_schematic_select(schematic)
 	{
 		var folder, res;
 		folder = schematics_directory + bench_schematic_folder
+		
 		res_creator = bench_settings
 		res = new_obj(obj_resource)
 		res_creator = app
@@ -22,6 +20,7 @@ function action_bench_schematic_select(schematic)
 		
 		load_folder = folder
 		save_folder = folder
+		
 		with (res)
 			res_load()
 		
@@ -31,14 +30,17 @@ function action_bench_schematic_select(schematic)
 		bench_settings.scenery = schematic
 		
 	bench_settings.schematic_selected = schematic
+	
 	with (bench_settings)
 	{
 		name = ""
 		temp_update_display_name()
 	}
+	
 	with (bench_settings.preview)
 	{
 		preview_reset_view()
+		
 		reset_view = true
 		update = true
 	}

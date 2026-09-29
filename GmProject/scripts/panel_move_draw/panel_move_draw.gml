@@ -1,5 +1,3 @@
-/// panel_move_draw()
-
 function panel_move_draw()
 {
 	var boxx, boxy, boxw, boxh, tabsh;
@@ -31,9 +29,7 @@ function panel_move_draw()
 	
 	draw_box(dx, dy, dw, tabsh, false, c_level_bottom, 1)
 	draw_box(dx, dy + tabsh, dw, 1, false, c_border, a_border)
-	
 	draw_box(dx, dy, tabw, tabsh + 1, false, c_level_middle, 1)
-	
 	draw_box(dx + tabw - 1, dy, 1, tabsh + 1, false, c_border, a_border)
 	
 	draw_label(tabname, floor(dx + 8), round(dy + (tabsh/2)), fa_left, fa_center, c_accent, 1)
@@ -48,6 +44,7 @@ function panel_move_draw()
 	content_direction = tab_move_direction
 	
 	clip_begin(content_x, content_y, content_width, content_width - tabsh)
+	
 	panel_draw_content()
 	draw_box(content_x, content_y, content_width, content_width, false, c_level_middle, .25)
 	

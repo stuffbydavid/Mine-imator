@@ -1,4 +1,3 @@
-/// string_contains(string, search)
 /// @arg string
 /// @arg search
 

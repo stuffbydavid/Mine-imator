@@ -1,18 +1,14 @@
-/// toast_new(variant, text)
-/// @arg variant
-/// @arg text
-
 function toast_new(variant, text)
 {
 	var toast, type, color, icon;
 	color = setting_theme.toast_color[variant]
 	switch (variant)
 	{
-		case e_toast.INFO: icon = icons.INFO; type = "info"; break;
-		case e_toast.POSITIVE: icon = icons.TICK; type = "positive"; break;
-		case e_toast.WARNING: icon = icons.WARNING_TRIANGLE; type = "warning"; break;
-		case e_toast.NEGATIVE: icon = icons.WARNING_TRIANGLE; type = "negative"; break;
-		default: icon = icons.HELP; type = "unknown";
+		case e_toast.INFO:		icon = icons.INFO; type = "info"; break
+		case e_toast.POSITIVE:	icon = icons.TICK; type = "positive"; break
+		case e_toast.WARNING:	icon = icons.WARNING_TRIANGLE; type = "warning"; break
+		case e_toast.NEGATIVE:	icon = icons.WARNING_TRIANGLE; type = "negative"; break
+		default:				icon = icons.HELP; type = "unknown"; break
 	}
 
 	for (var i = ds_list_size(toast_list) - 1; i >= 0; i--)
@@ -29,12 +25,14 @@ function toast_new(variant, text)
 		toast.variant = variant
 		toast.icon = icon
 		toast.iid = null
+		
 		ds_list_clear(toast.actions)
 		toast_last = toast
+		
 		return toast
 	}
 
-	toast = new_obj(obj_toast);
+	toast = new_obj(obj_toast)
 	ds_list_add(toast_list, toast)
 	toast_amount++
 	

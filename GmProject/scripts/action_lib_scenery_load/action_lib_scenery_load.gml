@@ -1,4 +1,3 @@
-/// action_lib_scenery_load(filename)
 /// @arg filename
 
 function action_lib_scenery_load(fn)
@@ -38,6 +37,7 @@ function action_lib_scenery_load(fn)
 			block_tex_normal = project_pack_res
 			
 			temp_update_display_name()
+			
 			loaded = true
 			with (temp_animate())
 				loaded = true
@@ -52,9 +52,9 @@ function action_lib_scenery_load(fn)
 		}
 	}
 	
-	project_reset_loaded()
-	
 	tl_update_list()
 	tl_update_matrix()
+	
+	project_reset_loaded()
 	project_update_counts()
 }

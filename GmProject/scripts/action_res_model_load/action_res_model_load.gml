@@ -1,9 +1,7 @@
-/// action_res_model_load(filename)
 /// @arg filename
 
 function action_res_model_load(fn)
 {
-
 	if (history_undo)
 	{
 		with (history_data)
@@ -35,12 +33,14 @@ function action_res_model_load(fn)
 		{
 			loaded = true
 			type = e_temp_type.MODEL
+			
 			model_tex = null
 			model_tex_material = null
 			model_tex_normal = null
 			model = res
 			
 			temp_update()
+			
 			with (temp_animate())
 			{
 				loaded = true
@@ -61,10 +61,10 @@ function action_res_model_load(fn)
 		}
 	}
 	
-	project_reset_loaded()
-	
 	tl_update_length()
 	tl_update_list()
 	tl_update_matrix()
+	
+	project_reset_loaded()
 	project_update_counts()
 }

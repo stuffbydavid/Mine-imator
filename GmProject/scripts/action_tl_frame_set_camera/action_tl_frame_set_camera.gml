@@ -1,7 +1,3 @@
-/// action_tl_frame_set_camera(valueslist, [reset])
-/// @arg valueslist
-/// @arg [reset]
-
 function action_tl_frame_set_camera(valueslist, reset = false)
 {
 	tl_value_set_start(action_tl_frame_set_camera, false)

@@ -1,5 +1,3 @@
-/// project_save_timeline()
-
 function project_save_timeline()
 {
 	json_save_object_start()
@@ -65,7 +63,7 @@ function project_save_timeline()
 			json_save_var("pattern_type", pattern_type)
 			
 			var color = ds_map_find_key(minecraft_swatch_dyes.map, pattern_base_color);
-			if (color != undefined)
+			if (!is_undefined(color))
 				json_save_var("pattern_base_color", color)
 			else
 				json_save_var("pattern_base_color", "white")

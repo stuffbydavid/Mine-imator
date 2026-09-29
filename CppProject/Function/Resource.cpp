@@ -57,11 +57,14 @@ namespace CppProject
 			char buffer[4096];
 			qint64 read;
 			while ((read = zip_fread(fileIn, buffer, sizeof(buffer))) > 0)
+			{
 				if (fileOut.write(buffer, read) != read)
 				{
 					success = false;
 					break;
 				}
+			}
+
 			if (read < 0)
 				success = false;
 		}
@@ -90,6 +93,7 @@ namespace CppProject
 		QFileInfo file(filename.QStr());
 		if (!file.exists() || !file.isFile())
 			return {};
+		
 		return { file.size(), file.lastModified().toMSecsSinceEpoch() };
 	}
 
@@ -97,6 +101,7 @@ namespace CppProject
 	{
 		if (self->id == global::mc_res)
 			return global::load_assets_zip_file;
+		
 		return VarGetStr(global::save_folder) + "/" + self->filename.ToStr();
 	}
 
@@ -106,6 +111,7 @@ namespace CppProject
 		QFile file(global::load_assets_file.QStr());
 		if (!file.open(QIODevice::ReadOnly))
 			return {};
+		
 		return QCryptographicHash::hash(file.readAll(), QCryptographicHash::Sha256);
 	}
 
@@ -118,6 +124,7 @@ namespace CppProject
 		Sprite::Frame* frame = sprite->frames[0];
 		if (frame->pageLoc)
 			return frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+		
 		return frame->image;
 	}
 
@@ -189,6 +196,7 @@ namespace CppProject
 			return false;
 
 		value = QString::fromUtf8(data);
+
 		return true;
 	}
 
@@ -221,6 +229,7 @@ namespace CppProject
 
 			list->vec.append({ (IntType)value, 0 });
 		}
+
 		return true;
 	}
 
@@ -260,8 +269,10 @@ namespace CppProject
 			IntType value = null_;
 			if (!PackCacheReadString(in, key) || !PackCacheReadSprite(in, value, sprites))
 				return false;
+			
 			map->Set(key, { value, 0 });
 		}
+
 		return true;
 	}
 
@@ -291,6 +302,7 @@ namespace CppProject
 			for (IntType j = 0; j < 4; j++)
 				out << VarGetReal(values.Value(j));
 		}
+
 		return out.status() == QDataStream::Ok;
 	}
 
@@ -321,6 +333,7 @@ namespace CppProject
 
 			map->Set(key, { values, 0 });
 		}
+
 		return true;
 	}
 
@@ -380,7 +393,9 @@ namespace CppProject
 		if (!res->block_sheet_texture[e_block_sheet_ANIMATED].IsArray()
 			|| !res->block_sheet_texture_material[e_block_sheet_ANIMATED].IsArray()
 			|| !res->block_sheet_texture_normal[e_block_sheet_ANIMATED].IsArray())
+		{
 			valid = false;
+		}
 		else
 		{
 			const ArrType& diffuse = res->block_sheet_texture[e_block_sheet_ANIMATED].Arr();
@@ -508,6 +523,7 @@ namespace CppProject
 			images[0] = diffuse;
 			images[1] = material;
 			images[2] = normal;
+
 			modelSprites.append(images);
 		}
 
@@ -535,8 +551,9 @@ namespace CppProject
 		{
 			IntType diffuse = null_, material = null_, normal = null_;
 			valid = PackCacheReadSprite(in, diffuse, sprites)
-				&& PackCacheReadSprite(in, material, sprites)
-				&& PackCacheReadSprite(in, normal, sprites);
+				 && PackCacheReadSprite(in, material, sprites)
+				 && PackCacheReadSprite(in, normal, sprites);
+			
 			animatedDiffuse[frame] = diffuse;
 			animatedMaterial[frame] = material;
 			animatedNormal[frame] = normal;
@@ -561,6 +578,7 @@ namespace CppProject
 			valid = PackCacheReadSprite(in, diffuse, sprites)
 				&& PackCacheReadSprite(in, material, sprites)
 				&& PackCacheReadSprite(in, normal, sprites);
+			
 			itemDiffuse[size] = diffuse;
 			itemMaterial[size] = material;
 			itemNormal[size] = normal;
@@ -609,6 +627,7 @@ namespace CppProject
 
 			for (Map* map : maps)
 				delete map;
+			
 			for (List* list : lists)
 				delete list;
 

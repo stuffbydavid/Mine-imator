@@ -1,4 +1,3 @@
-/// action_tl_keyframes_sound_resize_start()
 /// @desc Sets position + soundstart + soundend
 
 function action_tl_keyframes_sound_resize_start()
@@ -20,5 +19,6 @@ function action_tl_keyframes_sound_resize_start()
 	}
 	
 	timeline_sound_resize_mouse_pos = timeline_mouse_pos
+	
 	window_busy = "timelineresizesounds"
 }

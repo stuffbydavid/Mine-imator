@@ -1,6 +1,3 @@
-/// texture_create_fill(color, [size])
-/// @arg color
-/// @arg [size]
 /// @desc Creates a texture with a single color.
 
 function texture_create_fill(color, size = 16)

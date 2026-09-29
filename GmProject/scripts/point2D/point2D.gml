@@ -1,5 +1,4 @@
 /// CppSeparate VecType point2D(RealType, RealType)
-/// point2D(x, y)
 /// @arg x
 /// @arg y
 

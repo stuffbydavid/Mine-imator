@@ -1,6 +1,3 @@
-/// tl_value_default(valueid)
-/// @arg valueid
-
 function tl_value_default(valueid)
 {
 	switch (valueid)

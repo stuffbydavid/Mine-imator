@@ -1,5 +1,5 @@
-/// render_high_dof(basesurf)
-/// @arg basesurf
+/// @arg basesurface
+/// @arg [hdr]
 
 function render_high_dof(prevsurf, hdr = false)
 {
@@ -29,7 +29,7 @@ function render_high_dof(prevsurf, hdr = false)
 	gpu_set_texfilter(true)
 	{
 		render_surface[2] = surface_require(render_surface[2], render_width, render_height)
-		var cocsurftemp = render_surface[2]
+		var cocsurftemp = render_surface[2];
 		
 		render_shader_obj = shader_map[?shader_high_dof_coc_blur]
 		with (render_shader_obj)

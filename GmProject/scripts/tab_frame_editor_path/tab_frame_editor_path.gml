@@ -1,5 +1,3 @@
-/// tab_frame_editor_path()
-
 function tab_frame_editor_path()
 {
 	if (!tl_edit.value_type[e_value_type.TRANSFORM_POS] || tl_edit.type = e_tl_type.PATH || tl_edit.type = e_tl_type.PATH_POINT)
@@ -14,14 +12,13 @@ function tab_frame_editor_path()
 	{
 		tab_collapse_start()
 		
-		var text;
 		if (tl_edit.value[e_value.PATH_OBJ] != null)
-			text = tl_edit.value[e_value.PATH_OBJ].display_name
+			content_text = tl_edit.value[e_value.PATH_OBJ].display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], text, action_tl_frame_path_obj)
+		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], content_text, action_tl_frame_path_obj)
 		tab_next()
 		
 		// Force

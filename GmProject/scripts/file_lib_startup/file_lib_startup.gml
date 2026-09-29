@@ -1,8 +1,10 @@
-/// file_lib_startup()
-
 function file_lib_startup()
 {
 	globalvar buffer_current;
+	
+	// Skip in C++
+	if (!is_cpp())
+		return true
 	
 	// Define directories
 	log("working_directory", working_directory)

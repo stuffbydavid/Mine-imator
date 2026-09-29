@@ -1,4 +1,3 @@
-/// toolbar_draw_button(name, x, y, width, [menu])
 /// @arg name
 /// @arg x
 /// @arg y

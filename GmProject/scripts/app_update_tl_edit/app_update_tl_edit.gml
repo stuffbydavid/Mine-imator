@@ -1,5 +1,3 @@
-/// app_update_tl_edit()
-
 function app_update_tl_edit()
 {
 	app_update_tl_edit_tabs()

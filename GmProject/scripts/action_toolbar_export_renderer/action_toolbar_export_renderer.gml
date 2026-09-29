@@ -1,15 +1,11 @@
-/// action_toolbar_export_renderer(renderer)
-/// @arg renderer
-
 function action_toolbar_export_renderer(renderer)
 {
 	if (renderer = e_renderer.REALISTIC && trial_version)
 	{
 		popup_switch(popup_upgrade)
 		popup_upgrade.page = 2
-		return false
+		return 0
 	}
 
-	popup.renderer = renderer
-	return true
+	popup_current.renderer = renderer
 }

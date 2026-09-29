@@ -1,7 +1,4 @@
-/// action_tl_animated(enable)
-/// @arg enable
-
-function action_tl_animated(enable)
+function action_tl_animated(enabled)
 {
 	var hobj, blocked, blockedpart, count, targets;
 	blocked = false
@@ -11,6 +8,7 @@ function action_tl_animated(enable)
 	if (history_undo || history_redo)
 	{
 		hobj = history_data
+		
 		for (var t = 0; t < hobj.tl_amount; t++)
 		{
 			with (save_id_find(hobj.tl_save_id[t]))
@@ -77,10 +75,10 @@ function action_tl_animated(enable)
 			while (part != null && !part.selected)
 				part = part.part_of
 			
-			if (part = null || animated = enable || type = e_tl_type.AUDIO_TRACK || type = e_tl_type.BACKGROUND)
+			if (part = null || animated = enabled || type = e_tl_type.AUDIO_TRACK || type = e_tl_type.BACKGROUND)
 				continue
 			
-			if (!enable && ds_list_size(keyframe_list) > 1)
+			if (!enabled && ds_list_size(keyframe_list) > 1)
 			{
 				if (!selected)
 					blockedpart = true
@@ -96,6 +94,7 @@ function action_tl_animated(enable)
 		{
 			hobj = history_set(action_tl_animated)
 			hobj.tl_amount = 0
+			
 			for (var i = 0; i < count; i++)
 			{
 				with (targets[i])
@@ -104,7 +103,7 @@ function action_tl_animated(enable)
 					t = hobj.tl_amount
 					hobj.tl_save_id[t] = save_id
 					hobj.old_animated[t] = animated
-					hobj.new_animated[t] = enable
+					hobj.new_animated[t] = enabled
 					hobj.old_hide[t] = hide
 					hobj.kf_pos[t] = null
 					hobj.kf_added[t] = false
@@ -118,7 +117,7 @@ function action_tl_animated(enable)
 							valuechanged = true
 					}
 
-					if (!enable && ds_list_size(keyframe_list) = 1)
+					if (!enabled && ds_list_size(keyframe_list) = 1)
 					{
 						var kf = keyframe_list[|0];
 						hobj.kf_pos[t] = kf.position
@@ -135,10 +134,11 @@ function action_tl_animated(enable)
 						
 						keyframe_select = null
 						keyframe_select_amount = 0
+						
 						with (kf)
 							instance_destroy()
 					}
-					else if (enable && valuechanged && ds_list_size(keyframe_list) = 0)
+					else if (enabled && valuechanged && ds_list_size(keyframe_list) = 0)
 					{
 						var kf = tl_keyframe_add(app.timeline_marker);
 						hobj.kf_pos[t] = kf.position
@@ -149,11 +149,12 @@ function action_tl_animated(enable)
 							hobj.kf_value[t, v] = tl_value_get_save_id(v, kf.value[v])
 					}
 					
-					if (!enable)
+					if (!enabled)
 						value[e_value.VISIBLE] = true
 
 					hobj.new_hide[t] = hide
-					animated = enable
+					animated = enabled
+					
 					tl_update_values()
 					
 					for (var v = 0; v < e_value.amount; v++)
@@ -161,6 +162,7 @@ function action_tl_animated(enable)
 						hobj.new_default[t, v] = tl_value_get_save_id(v, value_default[v])
 						hobj.tl_animated_new_value[t, v] = tl_value_get_save_id(v, value[v])
 					}
+					
 					update_matrix = true
 					hobj.tl_amount++
 				}
@@ -179,6 +181,7 @@ function action_tl_animated(enable)
 	{
 		tl_update_length()
 		tl_update_matrix()
+		
 		if (setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated)
 			tl_update_list()
 

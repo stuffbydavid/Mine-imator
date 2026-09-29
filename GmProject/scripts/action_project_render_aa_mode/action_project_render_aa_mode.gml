@@ -1,6 +1,3 @@
-/// action_project_render_aa_mode(mode)
-/// @arg mode
-
 function action_project_render_aa_mode(mode)
 {
 	action_project_render_preset_edit_locked()

@@ -1,8 +1,8 @@
-/// app_event_create()
 /// @desc Entry point of the application.
 
 function app_event_create()
 {
+	// GML
 	enums()
 	gml_release_mode(true)
 	objects_indexed()

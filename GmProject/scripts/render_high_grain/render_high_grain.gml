@@ -1,5 +1,4 @@
-/// render_high_grain(basesurf)
-/// @arg basesurf
+/// @arg basesurface
 
 function render_high_grain(prevsurf)
 {

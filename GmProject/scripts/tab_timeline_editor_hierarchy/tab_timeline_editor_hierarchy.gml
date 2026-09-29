@@ -1,5 +1,3 @@
-/// tab_timeline_editor_hierarchy()
-
 function tab_timeline_editor_hierarchy()
 {
 	var par = tl_edit.parent;
@@ -8,14 +6,13 @@ function tab_timeline_editor_hierarchy()
 		par = tl_edit.move_parent
 	
 	// Parent
-	var text;
 	if (par = app)
-		text = text_get("timelinenone")
+		content_text = text_get("timelinenone")
 	else
-		text = string_remove_newline(par.display_name)
+		content_text = string_remove_newline(par.display_name)
 		
 	tab_control_menu()
-	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 24, par, text, action_tl_parent, tl_edit.part_of != null)
+	draw_button_menu("timelineeditorparent", e_menu.TIMELINE, dx, dy, dw, 24, par, content_text, action_tl_parent, tl_edit.part_of != null)
 	tab_next()
 		
 	if (!tl_edit.value_type[e_value_type.HIERARCHY])
@@ -45,7 +42,7 @@ function tab_timeline_editor_hierarchy()
 		tab_control(16)
 		draw_label(text_get("timelineeditorinherittransform"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 		tab_next()
-		tab_set_collumns(true, floor(content_width/150))
+		tab_set_columns(true, floor(content_width/150))
 		
 		// Position
 		tab_control_checkbox()
@@ -93,12 +90,12 @@ function tab_timeline_editor_hierarchy()
 			tab_next()
 		}
 			
-		tab_set_collumns(false)
+		tab_set_columns(false)
 		
 		tab_control(16)
 		draw_label(text_get("timelineeditorinheritmaterial"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 		tab_next()
-		tab_set_collumns(true, floor(content_width/150))
+		tab_set_columns(true, floor(content_width/150))
 		
 		// Color
 		if (tl_edit.value_type[e_value_type.MATERIAL_COLOR])
@@ -154,7 +151,7 @@ function tab_timeline_editor_hierarchy()
 		draw_checkbox("timelineeditorinheritselect", dx, dy, tl_edit.inherit_select, action_tl_inherit_select)
 		tab_next()
 			
-		tab_set_collumns(false)
+		tab_set_columns(false)
 		
 		dy += 8
 

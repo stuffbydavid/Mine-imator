@@ -1,5 +1,4 @@
-/// block_set_redstone_wire()
-/// @desc Connect to other redstone wires, or powered blocks facing the opposite direction
+/// @desc Connect to other redstone wires, or powered blocks facing the opposite direction.
 
 function block_set_redstone_wire()
 {

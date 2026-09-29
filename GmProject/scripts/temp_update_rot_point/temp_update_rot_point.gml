@@ -1,4 +1,3 @@
-/// temp_update_rot_point()
 /// @desc Updates the default rotation point of the template.
 
 function temp_update_rot_point()

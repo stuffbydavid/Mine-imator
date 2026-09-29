@@ -1,5 +1,3 @@
-/// action_bench_sound_import()
-
 function action_bench_sound_import()
 {
 	var fn, res;
@@ -16,12 +14,13 @@ function action_bench_sound_import()
 	res.loaded = true
 	with (res)
 		res_load()
+	
 	project_reset_loaded()
 
 	action_bench_sound_source("project")
 	
 	bench_settings.sound = res
-	bench_settings.sound_list_current.select = [-1, res.display_name, res]
+	bench_settings.sound_list_current.select = [ -1, res.display_name, res ]
 	bench_settings.sound_list_current.selected = res
 	bench_settings.sound_list_current.selected_name = res.display_name
 

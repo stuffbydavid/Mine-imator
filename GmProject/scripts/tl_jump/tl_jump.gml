@@ -1,5 +1,4 @@
-/// tl_jump(tl)
-/// @arg tl
+/// @arg timeline
 
 function tl_jump(tl)
 {

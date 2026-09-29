@@ -1,4 +1,3 @@
-/// action_lib_shape_type(type)
 /// @arg type
 
 function action_lib_shape_type(temptype)
@@ -9,9 +8,11 @@ function action_lib_shape_type(temptype)
 	with (temp_edit)
 	{
 		type = temptype
+		
 		with (obj_timeline)
 			if (temp = other.id && part_of = null)
 				type = other.type
+		
 		temp_update()
 	}
 

@@ -1,7 +1,6 @@
-/// point3D_project(point, matrix, width, height)
 /// @arg point
 /// @arg matrix
-/// @arg width 
+/// @arg width
 /// @arg height
 
 function point3D_project(pnt, mat, w, h)

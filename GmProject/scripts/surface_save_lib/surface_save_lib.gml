@@ -1,4 +1,3 @@
-/// surface_save_lib(surface, filename, [straightalpha])
 /// @arg surface
 /// @arg filename
 /// @arg [straightalpha]
@@ -26,6 +25,7 @@ function surface_save_lib(surf, fn, straightalpha = false)
 		surface_save(surf, fn)
 		return 0
 	}
+	
 	file_delete_lib(temp_image)
 	surface_save(surf, temp_image)
 	file_copy_lib(temp_image, fn)

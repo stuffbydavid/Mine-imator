@@ -1,4 +1,3 @@
-/// project_load_update()
 /// @desc Update program after reading a file.
 
 function project_load_update()
@@ -13,7 +12,7 @@ function project_load_update()
 	
 	if (ds_priority_size(load_queue) > 0)
 		load_start(ds_priority_find_max(load_queue), res_load_start)
-	else if (popup != null)
+	else if (popup_current != null)
 		popup_close()
 	
 	tl_update_list()

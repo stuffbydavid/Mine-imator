@@ -1,5 +1,3 @@
-/// json_load_array()
-
 function json_load_array()
 {
 	var list = ds_list_create();

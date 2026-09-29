@@ -1,5 +1,3 @@
-/// context_menu_draw()
-
 function context_menu_draw()
 {
 	if (context_menu_level_amount = 0 || context_menu_window != window_get_current())

@@ -1,6 +1,3 @@
-/// temp_update([copy])
-/// @arg copy
-
 function temp_update(copy = false)
 {
 	if (type = e_temp_type.CHARACTER ||

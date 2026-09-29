@@ -1,5 +1,3 @@
-/// model_shape_generate_plane(bend)
-/// @arg bend
 /// @desc Generates a plane shape transformed by a bend vector.
 
 function model_shape_generate_plane(bend)
@@ -66,7 +64,7 @@ function model_shape_generate_plane(bend)
 	if ((bend_size != null && bend_size >= 1) && scale[segaxis] > .5)
 		detail /= scale[segaxis]
 	
-	bendsegsize = bendsize / detail;
+	bendsegsize = bendsize / detail
 	invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 	
 	var p1, p2, n1, n2;

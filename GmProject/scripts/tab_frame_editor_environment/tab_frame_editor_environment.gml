@@ -1,5 +1,3 @@
-/// tab_frame_editor_environment()
-
 function tab_frame_editor_environment()
 {
 	draw_tooltip_label("frameeditorenvironmenttip", icons.INFO, e_toast.INFO)

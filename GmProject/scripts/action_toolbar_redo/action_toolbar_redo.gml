@@ -1,5 +1,3 @@
-/// action_toolbar_redo()
-
 function action_toolbar_redo()
 {
 	if (history_pos = 0)
@@ -36,5 +34,6 @@ function action_toolbar_redo()
 	history_resource_update = true
 	
 	render_samples = -1
+	
 	project_update_counts()
 }

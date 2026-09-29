@@ -1,5 +1,3 @@
-/// render_high_samples_unpack()
-
 function render_high_samples_unpack()
 {
 	// Unpack render from sample data

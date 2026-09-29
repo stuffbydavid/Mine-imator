@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"res_save_pack_cache",
   "parent":{
-    "name":"Resources",
-    "path":"folders/Scripts/Project/Resources.yy",
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

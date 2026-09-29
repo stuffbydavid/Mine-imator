@@ -1,5 +1,3 @@
-/// settings_save()
-
 function settings_save()
 {
 	log("Saving settings", settings_file)
@@ -179,11 +177,9 @@ function settings_save()
 	
 	json_save_object_start("controls")
 		
-		var obj;
-		
 		for (var i = 0; i < e_keybind.amount; i++)
 		{
-			obj = keybinds[i]
+			var obj = keybinds[i];
 			json_save_var(obj.name, obj.keybind)
 		}
 		

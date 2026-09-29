@@ -1,4 +1,3 @@
-/// legacy_startup()
 /// @desc Load various lookup tables from the legacy.midata file for loading old formats.
 
 function legacy_startup()
@@ -62,7 +61,7 @@ function legacy_startup()
 	}
 	
 	biomes_ids_map = ds_int_map_create()
-	key = ds_map_find_first(map[?"biome_ids"]);
+	key = ds_map_find_first(map[?"biome_ids"])
 	while (!is_undefined(key))
 	{
 		biomes_ids_map[?string_get_real(key)] = ds_map_find_value(map[?"biome_ids"], key)

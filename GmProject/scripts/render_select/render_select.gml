@@ -1,7 +1,3 @@
-/// render_select(mode, selectsurface)
-/// @arg mode
-/// @arg selectsurface
-
 function render_select(mode, selectsurface)
 {
 	// Draw selection on separate surface

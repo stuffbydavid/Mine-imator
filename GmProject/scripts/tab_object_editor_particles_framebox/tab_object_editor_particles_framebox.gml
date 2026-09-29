@@ -1,5 +1,3 @@
-/// tab_object_editor_particles_framebox()
-
 function tab_object_editor_particles_framebox()
 {
 	var size, xx, yy, res, tex, swid, scale;

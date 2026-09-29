@@ -1,5 +1,3 @@
-/// background_sky_startup()
-
 function background_sky_startup()
 {
 	background_image_sphere_vbuffer = null

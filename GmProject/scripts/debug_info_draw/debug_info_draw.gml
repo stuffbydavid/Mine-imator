@@ -1,5 +1,3 @@
-/// debug_info_draw()
-
 function debug_info_draw()
 {
 	if (debug_info <= 0)
@@ -13,10 +11,9 @@ function debug_info_draw()
 	// Debug info
 	var str = "";
 	
-	if (debug_info == 1)
-	{
-		str += "[F12] | FPS: " + string(fps) + " (" + string(fps_real) + ")"
-	}
+	if (debug_info = 1)
+		str += "[F11] | FPS: " + string(fps) + " (" + string(fps_real) + ")"
+	
 	else
 	{
 		str += "Performance: \n"
@@ -54,7 +51,7 @@ function debug_info_draw()
 		{
 			for (var i = 0; i < ds_list_size(render_surface_pool_list); i++)
 			{
-				var pool = render_surface_pool_list[|i]
+				var pool = render_surface_pool_list[|i];
 				if (!instance_exists(pool))
 					continue
 
@@ -98,20 +95,21 @@ function debug_info_draw()
 				str += "\n"
 			}
 			str += "[F7]: Reload Minecraft assets" + " \n"
-			str += "[F9]: Open file directory" + " \n"
-			str += "[F10]: Open working directory" + " \n"
-			str += "[F11]: Open log file" + " \n"
+			str += "[F8]: Open file directory" + " \n"
+			str += "[F9]: Open working directory" + " \n"
+			str += "[F10]: Open log file" + " \n"
 		}
-		str += "[F12 to disable]"
+		str += "[F11 to disable]"
 	}
 	
-	var w = string_width_font(str, font_label) + 16;
-	var h = string_height_font(str, font_label) + 16;
-	var xx = debug_info_corner mod 2 == 0 ? 8 : window_width - w - 8;
-	var yy = debug_info_corner < 2 ? 8 : window_height - h - 8;
-	var tx = xx + 8;
-	var ty = yy + h - 8;
-	var mouseon = app_mouse_box(xx, yy, w, h);
+	var w, h, xx, yy, tx, ty, mouseon;
+	w = string_width_font(str, font_label) + 16
+	h = string_height_font(str, font_label) + 16
+	xx = debug_info_corner mod 2 = 0 ? 8 : window_width - w - 8
+	yy = debug_info_corner < 2 ? 8 : window_height - h - 8
+	tx = xx + 8
+	ty = yy + h - 8
+	mouseon = app_mouse_box(xx, yy, w, h)
 	
 	draw_box(xx, yy, w, h, false, c_black, mouseon ? .375 : .75) //window_width - w - 8
 	draw_label(str, tx, ty, fa_left, fa_bottom, c_white, mouseon ? .5 : 1, font_label)

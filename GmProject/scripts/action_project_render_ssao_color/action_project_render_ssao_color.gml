@@ -1,6 +1,3 @@
-/// action_project_render_ssao_color(color)
-/// @arg color
-
 function action_project_render_ssao_color(color)
 {
 	if (!history_undo && !history_redo)

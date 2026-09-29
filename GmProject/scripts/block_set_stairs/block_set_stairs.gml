@@ -1,4 +1,3 @@
-/// block_set_stairs()
 /// @desc Defines logic for connecting adjacent stairs.
 
 function block_set_stairs()

@@ -1,4 +1,3 @@
-/// project_load_legacy_beta_value_id(type, id)
 /// @arg type
 /// @arg valueid
 

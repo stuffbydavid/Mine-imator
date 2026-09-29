@@ -25,7 +25,7 @@ namespace CppProject
 
 			// Add save to menu if valid
 			if (World::AddSave(saveRoot))
-				menu_add_item({ saveRoot, StringType(World::saves[saveRoot].name) });
+				menu_add_item(saveRoot, StringType(World::saves[saveRoot].name));
 		}
 	}
 
@@ -49,6 +49,7 @@ namespace CppProject
 		// Open world once currently loaded regions are done
 		World::preview->resetUpdate = update;
 		Region::loader->active = false;
+
 		QObject::connect(Region::loader, SIGNAL(UpdateDone()), World::preview, SLOT(Reset()));
 	}
 

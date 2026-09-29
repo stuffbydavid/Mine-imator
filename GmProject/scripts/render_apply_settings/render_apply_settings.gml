@@ -1,8 +1,6 @@
-/// render_apply_settings(preset, renderer)
-
 function render_apply_settings(preset, renderer)
 {
-	if (renderer == e_renderer.STANDARD && preset.has_standard)
+	if (renderer = e_renderer.STANDARD && preset.has_standard)
 	{
 		var settings = preset.renderer[e_renderer.STANDARD];
 		project_render_ssao = settings.ssao
@@ -21,7 +19,7 @@ function render_apply_settings(preset, renderer)
 		project_render_aa_power = settings.aa_power
 	}
 	
-	if (renderer == e_renderer.REALISTIC && preset.has_realistic)
+	if (renderer = e_renderer.REALISTIC && preset.has_realistic)
 	{
 		var settings = preset.renderer[e_renderer.REALISTIC];
 		project_render_samples = settings.samples
@@ -51,7 +49,7 @@ function render_apply_settings(preset, renderer)
 		project_render_aa_power = settings.aa_power
 	}
 	
-	if (renderer == e_renderer.COMMON)
+	if (renderer = e_renderer.COMMON)
 	{
 		if (preset.has_fx)
 		{

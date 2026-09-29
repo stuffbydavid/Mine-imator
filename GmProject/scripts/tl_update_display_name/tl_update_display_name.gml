@@ -1,4 +1,3 @@
-/// tl_update_display_name()
 /// @desc Sets the display name of a timeline (shown in timeline).
 
 function tl_update_display_name()

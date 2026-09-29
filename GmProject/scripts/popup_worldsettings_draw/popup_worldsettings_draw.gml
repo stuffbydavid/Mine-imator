@@ -1,5 +1,3 @@
-/// popup_worldsettings_draw()
-
 function popup_worldsettings_draw()
 {
 	content_mouseon = true
@@ -37,23 +35,28 @@ function popup_worldsettings_draw()
 			sortlist_remove(world_import_settings_block_list, world_import_settings_block_select)
 			sortlist_update(world_import_settings_filter_list)
 			sortlist_update(world_import_settings_block_list)
+			
 			ds_list_add(setting_world_import_filter_list, world_import_settings_block_select)
+			
 			world_import_settings_block_select = null
 		}
 		
 		if (draw_button_icon("worldsettingsfilterleft", dx + listdw / 2 - 12, dy + (tab_control_h/2) + 16, 24, 24, false, icons.CHEVRON_LEFT_TINY, null, world_import_settings_filter_select = null))
 		{
-			var blocklist = world_import_settings_block_list.list;
-			var index;
+			var blocklist, index;
+			blocklist = world_import_settings_block_list.list
+			
 			for (index = 0; index < ds_list_size(blocklist); index++)
 				if (blocklist[|index] > world_import_settings_filter_select)
-					break;
+					break
 			
 			sortlist_add(world_import_settings_block_list, world_import_settings_filter_select, index)
 			sortlist_remove(world_import_settings_filter_list, world_import_settings_filter_select)
 			sortlist_update(world_import_settings_block_list)
 			sortlist_update(world_import_settings_filter_list)
+			
 			ds_list_delete_value(setting_world_import_filter_list, world_import_settings_filter_select)
+			
 			world_import_settings_filter_select = null
 		}
 		

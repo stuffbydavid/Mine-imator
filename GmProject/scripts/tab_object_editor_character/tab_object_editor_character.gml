@@ -1,36 +1,33 @@
-/// tab_object_editor_character()
-
 function tab_object_editor_character()
 {
-	var labeltext, list, capwid;
+	var labeltext, list;
+	content_capwid = 0
+			
 	switch (obj_edit.type)
 	{
 		case e_temp_type.CHARACTER:
 		{
 			labeltext = text_get("templateeditormodel")
 			list = tab.char_list
-			capwid = 0
 			break
 		}
 		case e_temp_type.EQUIPMENT:
 		{
 			labeltext = text_get("templateeditorequipment")
 			list = tab.equipment_list
-			capwid = 0
 			break
 		}
 		case e_temp_type.SPECIAL_BLOCK:
 		{
 			labeltext = text_get("templateeditorblock")
 			list = (tab = build_tool) ? tab.build_list : tab.special_block_list
-			capwid = 0
 			break
 		}
 		case e_temp_type.MODEL_PART:
 		{
 			labeltext = text_get("templateeditormodel")
 			list = tab.model_part_model_list
-			capwid = text_caption_width("templateeditormodelpart")
+			content_capwid = text_caption_width("templateeditormodelpart")
 			break
 		}
 	}
@@ -51,6 +48,7 @@ function tab_object_editor_character()
 	}
 			
 	statesh += (32 * menus) + ((ui_small_height + 8) * ceil(checkboxes/2))
+	
 	var selected = (tab = build_tool) ? tab.build_selected : obj_edit.model_name;
 	sortlist_draw(list, dx, dy, dw, dh - statesh, selected, false)
 	menu_filter = list.search_tbx.text
@@ -79,14 +77,14 @@ function tab_object_editor_character()
 	for (var i = 0; i < statelen; i += 2)
 	{
 		var state = obj_edit.model_state[i];
-		capwid = max(capwid, string_width(minecraft_asset_get_name("modelstate", state)) + 8)
+		content_capwid = max(content_capwid, string_width(minecraft_asset_get_name("modelstate", state)) + 8)
 	}
 			
 	var dyy = (dy + dh - statesh) + 8;
 			
 	// Checkboxes
 	dy = dyy
-	tab_set_collumns(true, 2)
+	tab_set_columns(true, 2)
 			
 	for (var i = 0; i < statelen; i += 2)
 	{
@@ -114,7 +112,7 @@ function tab_object_editor_character()
 		tab_next()
 	}
 			
-	tab_set_collumns(false)
+	tab_set_columns(false)
 	dyy = dy
 			
 	// Menus
@@ -126,7 +124,7 @@ function tab_object_editor_character()
 		var state = obj_edit.model_state[i];
 		menu_model_current = model
 		menu_model_state_current = model ? model.states_map[?state] : null
-		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", obj_edit.model_state[i + 1]), (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state), false, null, null, "", c_white, 1, capwid)
+		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", obj_edit.model_state[i + 1]), (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state), false, null, null, "", c_white, 1, content_capwid)
 		dyy += 32
 	}
 	menu_model_current = null
@@ -135,7 +133,7 @@ function tab_object_editor_character()
 			
 	// Model part
 	if (obj_edit.type = e_temp_type.MODEL_PART)
-		draw_button_menu("templateeditormodelpart", e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_part_name, minecraft_asset_get_name("modelpart", obj_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, capwid)
+		draw_button_menu("templateeditormodelpart", e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_part_name, minecraft_asset_get_name("modelpart", obj_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, content_capwid)
 			
 	if (content_mouseon)
 		window_scroll_focus = string(list.scroll)

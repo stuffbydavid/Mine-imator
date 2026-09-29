@@ -1,6 +1,5 @@
-/// temp_update_model_timeline_tree([historyobject])
-/// @arg [historyobject]
 /// @desc Update timelines of the changed model.
+/// @arg [historyobject]
 
 function temp_update_model_timeline_tree(hobj = null)
 {
@@ -148,8 +147,10 @@ function temp_update_model_timeline_tree(hobj = null)
 		
 		tl_update_type_name()
 		tl_update_display_name()
+		
 		if (placed)
 			tl_mark_placed(true)
+		
 		update_matrix = true
 	}
 }

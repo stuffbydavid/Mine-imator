@@ -1,9 +1,8 @@
-/// list_init_end()
-
 function list_init_end()
 {
-	var list = list_edit;
-	var name = "";
+	var list, name;
+	list = list_edit
+	name = ""
 	
 	if (menu_filter != "")
 	{

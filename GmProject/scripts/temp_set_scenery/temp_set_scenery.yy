@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"temp_set_scenery",
   "parent":{
-    "name":"Templates",
-    "path":"folders/Scripts/Project/Templates.yy",
+    "name":"Template",
+    "path":"folders/Scripts/Project/Template.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

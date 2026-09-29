@@ -1,4 +1,3 @@
-/// res_load_pack_misc()
 /// @desc Loads miscellaneous textures into the resource.
 
 function res_load_pack_misc()
@@ -77,7 +76,7 @@ function res_load_pack_misc()
 	{
 		for (var i = 0; i < 8; i++)
 		{
-			var moon_phase_image_files = [
+			var files = [
 				mc_moon_phase_0_image_file,
 				mc_moon_phase_1_image_file,
 				mc_moon_phase_2_image_file,
@@ -87,7 +86,7 @@ function res_load_pack_misc()
 				mc_moon_phase_6_image_file,
 				mc_moon_phase_7_image_file
 			];
-			moon_textures[i] = texture_create(load_assets_dir + moon_phase_image_files[i]);
+			moon_textures[i] = texture_create(load_assets_dir + files[i])
 		}
 	}
 	

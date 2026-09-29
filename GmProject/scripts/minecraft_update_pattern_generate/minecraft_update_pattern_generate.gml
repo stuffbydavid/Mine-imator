@@ -1,10 +1,9 @@
-/// minecraft_update_pattern_generate(type, color, patterns, colors, [res])
+/// @desc Generates and returns a pattern skin.
 /// @arg type
 /// @arg color
 /// @arg patterns
 /// @arg colors
-/// @arg [res]
-/// @desc Generates and returns a pattern skin
+/// @arg [resource]
 
 function minecraft_update_pattern_generate(type, color, patternlist, colorlist, res = null)
 {
@@ -22,7 +21,7 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 	
 	// Don't bother generating patterns with colors
 	if (res.type = e_res_type.SKIN)
-		return sprite_duplicate(res.model_texture);
+		return sprite_duplicate(res.model_texture)
 	
 	draw_set_color(c_white)
 	draw_set_alpha(1)

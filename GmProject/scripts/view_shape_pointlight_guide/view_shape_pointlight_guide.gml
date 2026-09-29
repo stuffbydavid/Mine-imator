@@ -1,6 +1,5 @@
-/// view_shape_pointlight_guide(timeline)
-/// @arg timeline
 /// @desc Renders an outline of a pointlight's light.
+/// @arg timeline
 
 function view_shape_pointlight_guide(tl)
 {

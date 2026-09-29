@@ -1,4 +1,3 @@
-/// bench_clear()
 /// @desc Clear templates and resources associated with the workbench.
 
 function bench_clear()

@@ -1,5 +1,5 @@
-/// res_eval(id)
 /// @desc Evaluates a resource ID and returns an object.
+/// @arg resource
 
 function res_eval(res)
 {

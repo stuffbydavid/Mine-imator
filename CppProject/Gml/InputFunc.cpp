@@ -12,8 +12,8 @@ namespace CppProject
 			key == vk_rcontrol || key == vk_lcontrol ||
 			key == vk_rshift || key == vk_lshift)
 			return App->keyStateMap[key].down;
-		else
 	#endif
+		
 		return App->keyStateMap[key].down;
 	}
 
@@ -46,6 +46,7 @@ namespace CppProject
 	{
 		if (AppWin)
 			AppWin->mouseDown[button] = false;
+		
 		return false;
 	}
 

@@ -1,5 +1,4 @@
-/// log(string, [ values...])
-/// @desc Prints values to the log file
+/// @desc Prints values to the log file.
 /// @arg string
 /// @arg [values...]
 

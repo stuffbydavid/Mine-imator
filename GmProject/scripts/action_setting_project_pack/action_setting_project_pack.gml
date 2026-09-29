@@ -1,4 +1,3 @@
-/// action_setting_project_pack(pack)
 /// @arg filename
 
 function action_setting_project_pack(pack)
@@ -12,7 +11,7 @@ function action_setting_project_pack(pack)
 		directory_create_lib(packs_directory_get())
 		
 		// Copy chosen zip to Packs/
-		var packfn = packs_directory_get() + filename_name(fn)
+		var packfn = packs_directory_get() + filename_name(fn);
 		file_copy_lib(fn, packfn)
 		
 		if (!file_exists_lib(packfn))

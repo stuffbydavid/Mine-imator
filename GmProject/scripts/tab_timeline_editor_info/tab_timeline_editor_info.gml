@@ -1,5 +1,3 @@
-/// tab_properties_info()
-
 function tab_timeline_editor_info()
 {
 	// Type and template

@@ -1,18 +1,15 @@
-/// draw_switch(name, x, y, active, script, [tip, [disabled]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
-/// @arg [tip
-/// @arg [disabled]]
+/// @arg [tip]
+/// @arg [disabled]
 
 function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
 {
-	var text, switchx, switchy, w, h, pressed, thumbgoal;
-	
+	var text, switchx, switchy, w, h;
 	text = text_get(name)
-	
 	w = dw
 	h = ui_small_height
 	switchx = (xx + dw - 22)
@@ -22,10 +19,9 @@ function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
 		return 0
 	
 	// Mouse
-	var mouseon, mouseclick;
+	var mouseon, mouseclick, pressed, thumbgoal;
 	mouseon = app_mouse_box(switchx, switchy, h, 16) && content_mouseon && !disabled
 	mouseclick = mouseon && mouse_left
-	
 	pressed = false
 	
 	if (mouseon)

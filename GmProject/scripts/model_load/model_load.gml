@@ -1,4 +1,3 @@
-/// model_load(map, directory)
 /// @arg map
 /// @arg directory
 
@@ -148,7 +147,7 @@ function model_load(map, dir)
 						}
 						else if (ds_map_valid(curvalue[?"shape_texture"]))
 						{
-							value_shape_texture_name_map[v] = ds_map_create();
+							value_shape_texture_name_map[v] = ds_map_create()
 							ds_map_merge(value_shape_texture_name_map[v], curvalue[?"shape_texture"], true)
 							
 							// Material map
@@ -206,10 +205,10 @@ function model_load(map, dir)
 			state = ds_map_find_first(states_map)
 			while (!is_undefined(state))
 			{
-				var value = state_vars_get_value(default_state, state)
+				var value = state_vars_get_value(default_state, state);
 				if (value != "")
 				{
-					var statelist = states_map[?state]
+					var statelist = states_map[?state];
 					for (var v = 0; v < statelist.value_amount; v++)
 					{
 						if (value = statelist.value_name[v])

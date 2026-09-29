@@ -1,5 +1,3 @@
-/// tab_frame_editor_ik()
-
 function tab_frame_editor_ik()
 {
 	if (tl_edit.type != e_tl_type.MODEL_PART || !tl_edit.value_type[e_value_type.TRANSFORM_BEND] || tl_edit.model_part = null || tl_edit.model_part.ik_supported = false)
@@ -13,26 +11,25 @@ function tab_frame_editor_ik()
 	{
 		tab_collapse_start()
 		
-		var text;
 		
 		// Target object
 		if (tl_edit.value[e_value.IK_TARGET] != null)
-			text = tl_edit.value[e_value.IK_TARGET].display_name
+			content_text = tl_edit.value[e_value.IK_TARGET].display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 		
 		tab_control_menu()
-		draw_button_menu("frameeditoriktarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.IK_TARGET], text, action_tl_frame_ik_target)
+		draw_button_menu("frameeditoriktarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.IK_TARGET], content_text, action_tl_frame_ik_target)
 		tab_next()
 		
 		// Pole target object
 		if (tl_edit.value[e_value.IK_TARGET_ANGLE] != null)
-			text = tl_edit.value[e_value.IK_TARGET_ANGLE].display_name
+			content_text = tl_edit.value[e_value.IK_TARGET_ANGLE].display_name
 		else
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorikangletarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.IK_TARGET_ANGLE], text, action_tl_frame_ik_target_angle, tl_edit.value[e_value.IK_TARGET] = null)
+		draw_button_menu("frameeditorikangletarget", e_menu.TIMELINE, dx, dy, dw, 24, tl_edit.value[e_value.IK_TARGET_ANGLE], content_text, action_tl_frame_ik_target_angle, tl_edit.value[e_value.IK_TARGET] = null)
 		tab_next()
 		
 		// Angle offset

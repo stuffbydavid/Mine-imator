@@ -1,4 +1,3 @@
-/// view_place(view, camera)
 /// @arg view
 /// @arg camera
 
@@ -6,12 +5,14 @@ function view_place(view, cam)
 {
 	if (window_busy != place_busy || !content_mouseon)
 		return
+	
 	place_content_mouseon = null
 
 	var surfaceid, surfacenormal, surfacedepth;
 	surfaceid = view.surface_place_id
 	surfacenormal = view.surface_place_normal
 	surfacedepth = view.surface_place_depth_gm
+	
 	view.surface_place_id = surface_require(view.surface_place_id, content_width, content_height)
 	view.surface_place_normal = surface_require(view.surface_place_normal, content_width, content_height, false)
 	
@@ -57,7 +58,7 @@ function view_place(view, cam)
 	}
 	place_tl_render = true
 
-	var mx, my, tx, ty, depthval, normalface, worldtransform, localpos;
+	var mx, my, tx, ty, depthval;
 	mx = mouse_x - content_x
 	my = mouse_y - content_y
 	tx = mx / content_width
@@ -69,8 +70,7 @@ function view_place(view, cam)
 	else
 	{
 		// GameMaker path uses packed depth value in color
-		var packeddepth;
-		packeddepth = surface_getpixel(view.surface_place_depth_gm, mx, my)
+		var packeddepth = surface_getpixel(view.surface_place_depth_gm, mx, my);
 		packeddepth = color_get_red(packeddepth) / 255 + color_get_green(packeddepth) / (255 * 255) + color_get_blue(packeddepth) / (255 * 255 * 255)
 		depthval = 1 - sqr(packeddepth)
 	}

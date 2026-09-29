@@ -1,6 +1,3 @@
-/// action_tl_frame_cam_tonemapper(tonemapper)
-/// @arg tonemapper
-
 function action_tl_frame_cam_tonemapper(tonemapper)
 {
 	tl_value_set_start(action_tl_frame_cam_tonemapper, false)

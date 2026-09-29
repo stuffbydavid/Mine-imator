@@ -8,6 +8,7 @@ namespace CppProject
 	{
 		if (!id.IsAnyReal())
 			return false;
+		
 		return (FindList(id) != nullptr);
 	}
 
@@ -15,6 +16,7 @@ namespace CppProject
 	{
 		if (!id.IsAnyReal())
 			return false;
+		
 		return (FindMap(id) != nullptr);
 	}
 

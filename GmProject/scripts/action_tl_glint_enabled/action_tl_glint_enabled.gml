@@ -1,7 +1,4 @@
-/// action_tl_glint_enabled(enable)
-/// @arg enable
-
-function action_tl_glint_enabled(enable)
+function action_tl_glint_enabled(enabled)
 {
 	if (history_undo)
 	{
@@ -20,8 +17,9 @@ function action_tl_glint_enabled(enable)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_glint_enabled, false);
+		
 		with (obj_timeline)
 			if (selected)
-				action_tl_glint_enabled_tree(id, enable, hobj)
+				action_tl_glint_enabled_tree(id, enabled, hobj)
 	}
 }

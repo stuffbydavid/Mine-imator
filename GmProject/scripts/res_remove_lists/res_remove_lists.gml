@@ -1,5 +1,3 @@
-/// res_remove_lists()
-
 function res_remove_lists()
 {
 	with (app)

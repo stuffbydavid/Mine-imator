@@ -1,6 +1,3 @@
-/// action_lib_pc_spawn_region_path(path)
-/// @arg path
-
 function action_lib_pc_spawn_region_path(path)
 {
 	if (history_undo)

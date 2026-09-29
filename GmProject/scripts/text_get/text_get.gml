@@ -1,7 +1,5 @@
-/// text_get(key, val1, val2...)
 /// @arg key
-/// @arg val1
-/// @arg val2...
+/// @arg values...
 
 function text_get()
 {

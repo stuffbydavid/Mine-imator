@@ -1,4 +1,3 @@
-/// tl_select_single()
 /// @desc Deselects all but the given timeline.
 
 function tl_select_single()
@@ -18,7 +17,7 @@ function tl_select_single()
 	// Deselect all other keyframes
 	with (obj_keyframe)
 	{
-		if (id.timeline = other.id)
+		if (self.timeline = other.id)
 			continue
 		
 		selected = false

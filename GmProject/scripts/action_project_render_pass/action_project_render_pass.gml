@@ -1,6 +1,3 @@
-/// action_project_render_pass(pass)
-/// @arg pass
-
 function action_project_render_pass(pass)
 {
 	if (!history_undo && !history_redo)

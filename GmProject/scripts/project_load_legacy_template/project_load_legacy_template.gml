@@ -1,5 +1,3 @@
-/// project_load_legacy_template()
-
 function project_load_legacy_template()
 {
 	with (new_obj(obj_template))
@@ -11,8 +9,11 @@ function project_load_legacy_template()
 		save_id_map[?load_id] = load_id
 		
 		var typename = buffer_read_string_int();
+		
+		// Pre-2.1 model parts
 		if (typename = "bodypart")
 			typename = "modelpart"
+		
 		type = ds_list_find_index(temp_type_name_list, typename)
 		
 		name = buffer_read_string_int()

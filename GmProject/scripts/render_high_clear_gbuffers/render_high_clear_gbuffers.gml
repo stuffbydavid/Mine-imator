@@ -1,5 +1,3 @@
-// render_high_clear_gbuffers()
-
 function render_high_clear_gbuffers()
 {
 	surface_set_target(render_surface_specular)

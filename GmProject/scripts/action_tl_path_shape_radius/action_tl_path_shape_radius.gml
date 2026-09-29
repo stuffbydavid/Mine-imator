@@ -1,8 +1,4 @@
-/// action_tl_path_shape_radius(value, add)
-/// @arg value
-/// @arg add
-
-function action_tl_path_shape_radius(val, add)
+function action_tl_path_shape_radius(value, add)
 {
 	if (history_undo)
 	{
@@ -12,7 +8,7 @@ function action_tl_path_shape_radius(val, add)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_radius = other.save_var_old_value[t]
+					self.path_shape_radius = other.save_var_old_value[t]
 					path_update = true
 				}
 			}
@@ -26,7 +22,7 @@ function action_tl_path_shape_radius(val, add)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_radius = other.save_var_new_value[t]
+					self.path_shape_radius = other.save_var_new_value[t]
 					path_update = true
 				}
 			}
@@ -42,9 +38,9 @@ function action_tl_path_shape_radius(val, add)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.path_shape_radius, other.path_shape_radius * add + val)
+				history_save_var(other.id, other.path_shape_radius, other.path_shape_radius * add + value)
 			
-			id.path_shape_radius = id.path_shape_radius * add + val
+			self.path_shape_radius = self.path_shape_radius * add + value
 			path_update = true
 		}
 	}

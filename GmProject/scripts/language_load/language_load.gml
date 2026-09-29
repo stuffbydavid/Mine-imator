@@ -1,4 +1,3 @@
-/// language_load(filename, map, reload)
 /// @arg filename
 /// @arg map
 /// @arg [reload]
@@ -42,15 +41,13 @@ function language_load(fn, map, reload = false)
 			return 0
 		}
 	}
-	else
-		language_load_legacy(fn, map)
 	
 	// Check keys
 	if (!reload && map != language_english_map)
 	{
 		var missingkeyslist, key;
 		missingkeyslist = ds_list_create()
-		key = ds_map_find_first(language_english_map);
+		key = ds_map_find_first(language_english_map)
 		while (!is_undefined(key))
 		{
 			if (is_undefined(map[?key]))
@@ -61,7 +58,7 @@ function language_load(fn, map, reload = false)
 		if (ds_list_size(missingkeyslist) > 0)
 		{
 			ds_list_sort(missingkeyslist, true)
-			var msg = "The following texts are missing in the translation and will display as English:\n"
+			var msg = "The following texts are missing in the translation and will display as English:\n";
 			for (var i = 0; i < ds_list_size(missingkeyslist); i++)
 				msg += missingkeyslist[|i] + ": " + string_replace_all(language_english_map[?missingkeyslist[|i]], "\n", "\\n") + "\n"
 			log(msg)

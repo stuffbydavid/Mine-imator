@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"minecraft_get_color",
   "parent":{
-    "name":"Minecraft",
-    "path":"folders/Scripts/Minecraft.yy",
+    "name":"Color",
+    "path":"folders/Scripts/Minecraft/Color.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

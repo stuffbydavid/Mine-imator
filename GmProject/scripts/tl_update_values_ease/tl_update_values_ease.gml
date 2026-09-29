@@ -1,4 +1,3 @@
-/// tl_update_values_ease(valueid)
 /// @arg valueid
 
 function tl_update_values_ease(vid)

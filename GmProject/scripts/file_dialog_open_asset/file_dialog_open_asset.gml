@@ -1,6 +1,3 @@
-/// file_dialog_open_asset(multiple)
-/// @arg multiple
-
 function file_dialog_open_asset(multiple = false)
 {
 	if (multiple)

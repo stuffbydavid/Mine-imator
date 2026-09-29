@@ -1,6 +1,3 @@
-/// vec3_project_ray(point)
-/// @arg point
-
 function vec3_project_ray(point)
 {
 	// Update view ray
@@ -10,7 +7,7 @@ function vec3_project_ray(point)
 	px = -(point[X] * 2 - 1)
 	py = point[Y] * 2 - 1
 	
-	rayclip = vec4(px, py, -1, 1);
+	rayclip = vec4(px, py, -1, 1)
 	rayeye = point4D_mul_matrix(rayclip, matrix_inverse_ext(proj_matrix))
 	rayeye = vec4(rayeye[X], rayeye[Y], -1, 0)
 	

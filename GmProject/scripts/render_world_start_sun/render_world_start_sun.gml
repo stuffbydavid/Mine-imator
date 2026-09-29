@@ -1,5 +1,3 @@
-/// render_world_start_sun(cascade)
-/// @arg cascade
 /// @desc Render the scene from the sun's point of view.
 
 function render_world_start_sun(cascade)

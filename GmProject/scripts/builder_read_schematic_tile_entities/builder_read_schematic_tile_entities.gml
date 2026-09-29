@@ -37,7 +37,7 @@ function builder_read_schematic_tile_entities()
 						build_pos_x = ex
 						build_pos_y = ey
 						build_pos_z = ez
-						build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x;
+						build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x
 						block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
 						block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
 						script_execute(script, entity)

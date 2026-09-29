@@ -1,8 +1,7 @@
-/// tl_update_matrix([paths, updateik, updatepose])
-/// @arg [paths
-/// @arg updateik
-/// @arg updatepose]
 /// @desc Updates matrixes and positions.
+/// @arg [paths]
+/// @arg [updateik]
+/// @arg [updatepose]
 
 function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
@@ -62,7 +61,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				// Parent is a body part and we're locked to bended half
 				if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
 				{
-					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z]);
+					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z])
 					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0)), matrix_parent)
 				}
 			}
@@ -147,7 +146,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			{
 				var posetl = null;
 				with (part_of.parent)
-					posetl = tl_part_find(other.model_part_name);
+					posetl = tl_part_find(other.model_part_name)
 				
 				if (posetl != null)
 				{
@@ -172,7 +171,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				while (true)
 				{
-					par = tl.parent;
+					par = tl.parent
 					if (!tl.inherit_scale || par = app)
 						break
 					sca = vec3_mul(sca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
@@ -181,7 +180,6 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				// Remove scale
 				var parmat;
-				
 				matrix_remove_scale(matrix_parent)
 				parmat = array_copy_1d(matrix_parent)
 				
@@ -189,7 +187,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (!inherit_rotation)
 					matrix_remove_rotation(parmat)
 				
-				matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), parmat);
+				matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), parmat)
 				
 				if (hasik)
 					matrixnoscale = matrix_multiply(part_joints_matrix[0], matrixnoscale)
@@ -294,7 +292,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			
 			while (true)
 			{
-				par = tl.parent;
+				par = tl.parent
 				if (par = app)
 					break
 				

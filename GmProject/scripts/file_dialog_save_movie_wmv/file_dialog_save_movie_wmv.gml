@@ -1,4 +1,3 @@
-/// file_dialog_save_movie_wmv(filename)
 /// @arg filename
 
 function file_dialog_save_movie_wmv(fn)

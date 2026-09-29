@@ -1,5 +1,3 @@
-/// temp_get_save_ids()
-
 function temp_get_save_ids()
 {
 	switch (type)

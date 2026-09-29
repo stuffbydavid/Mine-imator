@@ -1,11 +1,9 @@
-/// action_lib_scenery(resource)
-/// @arg resource
 /// @desc Sets the scenery of the given library item.
+/// @arg resource
 
 function action_lib_scenery(res)
 {
-	var hobj;
-	hobj = null
+	var hobj = null;
 	
 	if (history_undo)
 		res = history_undo_res()
@@ -63,5 +61,6 @@ function action_lib_scenery(res)
 	app_update_tl_edit()
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

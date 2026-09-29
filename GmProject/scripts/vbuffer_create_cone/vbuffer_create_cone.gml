@@ -1,4 +1,3 @@
-/// vbuffer_create_cone(radius, texcoord1, texcoord2, texhorflip, texverflip, detail, smooth, closed, invert, mapped)
 /// @arg radius
 /// @arg texcoord1
 /// @arg texcoord2
@@ -59,7 +58,7 @@ function vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, detail, smooth, cl
 				texmid[X] = 3 / 4
 			
 			// Bottom
-			vbuffer_add_triangle(0, 0, -rad, x1, y1, -rad, x2, y2, -rad, 
+			vbuffer_add_triangle_real(0, 0, -rad, x1, y1, -rad, x2, y2, -rad,
 								texmid[X], texmid[Y], 
 								texmid[X] + cos(ip * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(ip * pi * 2) * (texsize[Y] / 2), 
 								texmid[X] + cos(i * pi * 2) * (texsize[X] / 2), texmid[Y] + sin(i * pi * 2) * (texsize[Y] / 2), invert)
@@ -102,18 +101,31 @@ function vbuffer_create_cone(rad, tex1, tex2, thflip, tvflip, detail, smooth, cl
 			normx = 0
 			normy = 0
 		}
-		
-		if (invert)
+
+		var normal1, normal2, normaltop;
+		normal1 = vec3_normalize(vec3(n1x, n1y, smooth ? 0 : 1))
+		if (smooth)
 		{
-			vertex_add(x2, y2, -rad, n2x, n2y, smooth ? 0 : 1, tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
-			vertex_add(0, 0, rad, normx, normy, 1, tex1[X] + texsize[X] * i, tex1[Y])
-			vertex_add(x1, y1, -rad, n1x, n1y, smooth ? 0 : 1, tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
+			normal2 = vec3_normalize(vec3(n2x, n2y, 0))
+			normaltop = vec3(0, 0, 1)
 		}
 		else
 		{
-			vertex_add(0, 0, rad, normx, normy, 1, tex1[X] + texsize[X] * i, tex1[Y])
-			vertex_add(x2, y2, -rad, n2x, n2y, smooth ? 0 : 1, tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
-			vertex_add(x1, y1, -rad, n1x, n1y, smooth ? 0 : 1, tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
+			normal2 = normal1
+			normaltop = normal1
+		}
+		
+		if (invert)
+		{
+			vertex_add_real(x2, y2, -rad, normal2[X], normal2[Y], normal2[Z], tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
+			vertex_add_real(0, 0, rad, normaltop[X], normaltop[Y], normaltop[Z], tex1[X] + texsize[X] * i, tex1[Y])
+			vertex_add_real(x1, y1, -rad, normal1[X], normal1[Y], normal1[Z], tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
+		}
+		else
+		{
+			vertex_add_real(0, 0, rad, normaltop[X], normaltop[Y], normaltop[Z], tex1[X] + texsize[X] * i, tex1[Y])
+			vertex_add_real(x2, y2, -rad, normal2[X], normal2[Y], normal2[Z], tex1[X] + texsize[X] * i, tex1[Y] + texsize[Y])
+			vertex_add_real(x1, y1, -rad, normal1[X], normal1[Y], normal1[Z], tex1[X] + texsize[X] * ip, tex1[Y] + texsize[Y])
 		}
 	}
 	

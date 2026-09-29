@@ -1,9 +1,8 @@
-/// menu_transitions(x, y, width, height, menu)
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg menu
+/// @arg [menu]
 
 function menu_transitions(xx, yy, wid, hei, menu = "all")
 {
@@ -36,6 +35,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
+		
 		dx = dx_start
 		dy += 46
 	}
@@ -64,6 +64,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
+		
 		dx = dx_start
 		dy += 46
 	}
@@ -91,6 +92,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
+		
 		dx = dx_start
 		dy += 46
 	}
@@ -118,6 +120,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
+		
 		dx = dx_start
 		dy += 46
 	}
@@ -145,6 +148,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 				dx += 46
 			}
 		}
+		
 		dx = dx_start
 		dy += 46
 	}
@@ -154,9 +158,9 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	{
 		switch (menu)
 		{
-			case "easein": timeline.transition_easein = transition break;
-			case "easeout": timeline.transition_easeout = transition break;
-			case "easeinout": timeline.transition_easeinout = transition break;
+			case "easein":		timeline.transition_easein = transition; break
+			case "easeout":		timeline.transition_easeout = transition; break
+			case "easeinout":	timeline.transition_easeinout = transition; break
 		}
 	}
 	

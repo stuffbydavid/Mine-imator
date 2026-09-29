@@ -1,6 +1,3 @@
-/// action_project_render_tonemapper(tonemapper)
-/// @arg tonemapper
-
 function action_project_render_tonemapper(tonemapper)
 {
 	if (!history_undo && !history_redo)

@@ -1,5 +1,3 @@
-/// app_cancel_place()
-
 function app_cancel_place()
 {
 	if (place_tl.parent != place_tl_parent)

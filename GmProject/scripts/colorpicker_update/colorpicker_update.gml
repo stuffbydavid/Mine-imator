@@ -1,8 +1,3 @@
-/// colorpicker_update(control, color, gethsb)
-/// @arg control
-/// @arg color
-/// @arg gethsb
-
 function colorpicker_update(control, color, gethsb)
 {
 	colorpicker.color = color

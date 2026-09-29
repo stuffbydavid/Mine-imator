@@ -1,6 +1,5 @@
-/// buffer_write_short(value)
+/// @desc Writes a short integer to the buffer.
 /// @arg value
-/// @desc Writes a short integer to the buffer
 
 function buffer_write_short(val)
 {

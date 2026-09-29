@@ -1,9 +1,8 @@
-/// render_world_start_light(from, to, sampleoffset, timeline]
+/// @desc Render the scene from the light's point of view.
 /// @arg from
 /// @arg to
 /// @arg sampleoffset
 /// @arg timeline
-/// @desc Render the scene from the light's point of view.
 
 function render_world_start_light(from, to, offset, tl)
 {

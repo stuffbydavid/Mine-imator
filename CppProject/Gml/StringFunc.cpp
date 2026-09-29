@@ -13,6 +13,7 @@ namespace CppProject
 		index--;
 		if (index < 0 || index >= str.GetLength())
 			return "";
+		
 		return QString(str.At(index));
 	}
 
@@ -21,6 +22,7 @@ namespace CppProject
 		index--;
 		if (index < 0)
 			index = 0;
+		
 		return str.Mid(index, count);
 	}
 
@@ -54,6 +56,7 @@ namespace CppProject
 		// Add space in front to match at least tot characters
 		while (text.length() < tot + (dec == 0 ? 0 : dec + 1))
 			text = " " + text;
+		
 		return text;
 	}
 
@@ -61,6 +64,7 @@ namespace CppProject
 	{
 		if (PR->font)
 			return PR->font->GetTextHeight(PR->font->GetWrappedText(str, w));
+		
 		return 0;
 	}
 
@@ -68,6 +72,7 @@ namespace CppProject
 	{
 		if (PR->font)
 			return PR->font->GetTextHeight(str);
+		
 		return 0;
 	}
 
@@ -127,6 +132,7 @@ namespace CppProject
 	{
 		if (PR->font)
 			return PR->font->GetTextWidth(str);
+		
 		return 0;
 	}
 

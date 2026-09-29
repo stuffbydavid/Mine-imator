@@ -1,5 +1,4 @@
 /// CppSeparate VecType point3D_sub(VecType, VecType)
-/// point3D_sub(point1, point2)
 /// @arg point1
 /// @arg point2
 

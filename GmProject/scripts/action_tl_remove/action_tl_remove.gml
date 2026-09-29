@@ -1,4 +1,3 @@
-/// action_tl_remove()
 /// @desc Removes all selected timelines.
 
 function action_tl_remove()

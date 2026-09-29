@@ -1,5 +1,3 @@
-/// tab_properties_library_shape()
-
 function tab_properties_library_shape()
 {
 	// Shape type
@@ -8,19 +6,18 @@ function tab_properties_library_shape()
 	tab_next()
 		
 	// Texture
-	var text, sprite;
-	sprite = null
+	var sprite = null;
 	if (temp_edit.shape_tex != null)
 	{
-		text = temp_edit.shape_tex.display_name
+		content_text = temp_edit.shape_tex.display_name
 		if (temp_edit.shape_tex.type != e_tl_type.CAMERA)
 			sprite = temp_edit.shape_tex.texture
 	}
 	else
-		text = text_get("listnone")
+		content_text = text_get("listnone")
 			
 	tab_control_menu(ui_large_height)
-	draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.shape_tex, text, action_lib_shape_tex, false, sprite)
+	draw_button_menu("libraryshapetex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.shape_tex, content_text, action_lib_shape_tex, false, sprite)
 	tab_next()
 			
 	if (project_render_material_maps)
@@ -28,33 +25,33 @@ function tab_properties_library_shape()
 		// Material texture
 		if (temp_edit.shape_tex_material != null)
 		{
-			text = temp_edit.shape_tex_material.display_name
+			content_text = temp_edit.shape_tex_material.display_name
 			sprite = temp_edit.shape_tex_material.texture
 		}
 		else
 		{
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			sprite = null
 		}
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu("libraryshapetexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.shape_tex_material, text, action_lib_shape_tex_material, false, sprite)
+		draw_button_menu("libraryshapetexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.shape_tex_material, content_text, action_lib_shape_tex_material, false, sprite)
 		tab_next()
 			
 		// Normal texture
 		if (temp_edit.shape_tex_normal != null)
 		{
-			text = temp_edit.shape_tex_normal.display_name
+			content_text = temp_edit.shape_tex_normal.display_name
 			sprite = temp_edit.shape_tex_normal.texture
 		}
 		else
 		{
-			text = text_get("listnone")
+			content_text = text_get("listnone")
 			sprite = null
 		}
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu("libraryshapetexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.shape_tex_normal, text, action_lib_shape_tex_normal, false, sprite)
+		draw_button_menu("libraryshapetexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.shape_tex_normal, content_text, action_lib_shape_tex_normal, false, sprite)
 		tab_next()
 	}
 			

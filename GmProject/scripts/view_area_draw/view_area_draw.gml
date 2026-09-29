@@ -1,5 +1,3 @@
-/// view_area_draw()
-
 function view_area_draw()
 {
 	// Calculate area

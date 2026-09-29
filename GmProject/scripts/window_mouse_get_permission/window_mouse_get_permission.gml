@@ -1,7 +1,7 @@
 /// CppSeparate BoolType window_mouse_get_permission()
-/// Returns whether the mouse position is allowed to be set by the software.
+/// @desc Returns whether system cursor positioning is enabled.
 
 function window_mouse_get_permission()
 {
-	return true;
+	return true
 }

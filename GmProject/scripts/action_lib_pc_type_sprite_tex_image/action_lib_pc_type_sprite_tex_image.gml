@@ -1,6 +1,3 @@
-/// action_lib_pc_type_sprite_tex_image(image)
-/// @arg image
-
 function action_lib_pc_type_sprite_tex_image(image)
 {
 	if (!history_undo && !history_redo)

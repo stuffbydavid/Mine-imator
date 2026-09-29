@@ -1,4 +1,3 @@
-/// minecraft_assets_load_legacy_block_data(id, map, bitmask, bitbase)
 /// @arg id
 /// @arg map
 /// @arg bitmask
@@ -27,9 +26,11 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 				var val, statevars, newid, newidnomc, block;
 				val = string_get_real(key)
 				statevars = string_get_state_vars(map[?key])
+				
 				newid = state_vars_get_value(statevars, "id")
 				if (newid != null)
 					newidnomc = string_replace(newid, "minecraft:", "")
+				
 				block = null
 				if (is_string(newid) && ds_map_exists(block_id_map, newid))
 					block = block_id_map[?newid]

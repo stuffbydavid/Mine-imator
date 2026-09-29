@@ -1,5 +1,3 @@
-/// minecraft_get_pack_image(pack)
-
 function minecraft_get_pack_image(pack)
 {
 	if (is_undefined(pack_image_map[?pack]))

@@ -1,4 +1,3 @@
-/// tab_object_editor_particles_value(name, value, israndom, randommin, randommax, multiplier, min, max, defaults, snap, textboxes, scripts, [captionwidth, [showcaption, [suffix]]])
 /// @arg name
 /// @arg value
 /// @arg israndom
@@ -11,9 +10,9 @@
 /// @arg snap
 /// @arg textboxes
 /// @arg scripts
-/// @arg [captionwidth
-/// @arg [showcaption
-/// @arg [suffix]]]
+/// @arg [captionwidth]
+/// @arg [showcaption]
+/// @arg [suffix]
 
 function tab_object_editor_particles_value(name, val, israndom, randommin, randommax, mul, minval, maxval, def, snapval, tbx, scripts, capwid = null, showcaption = true, suffix = "")
 {

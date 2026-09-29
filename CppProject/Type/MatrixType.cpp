@@ -43,6 +43,7 @@ namespace CppProject
 			FATAL("MatrixType: [] with index outside of range: " + NumStr(i));
 	#endif
 		CreateRef();
+
 		return mRef[i];
 	}
 
@@ -59,6 +60,7 @@ namespace CppProject
 	{
 		ArrType arr;
 		arr.vec.Alloc(16);
+
 		for (IntType i = 0; i < 16; i++)
 			arr.vec.Append(matrix.m[i]);
 

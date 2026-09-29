@@ -1,22 +1,9 @@
-/// tl_update_list([root, level, collapsed])
-/// @arg [root
-/// @arg level
-/// @arg collapsed]
+/// @arg [root]
+/// @arg [level]
+/// @arg [collapsed]
 
-function tl_update_list()
+function tl_update_list(root = true, tllevel = -1, collapsed = false)
 {
-	var root, tllevel, collapsed;
-	root = true
-	tllevel = -1
-	collapsed = false
-	
-	if (argument_count > 0)
-	{
-		root = argument[0]
-		tllevel = argument[1]
-		collapsed = argument[2]
-	}
-	
 	if (root)
 	{
 		for (var t = 0; t < ds_list_size(tree_list); t++)
@@ -27,9 +14,11 @@ function tl_update_list()
 		app.tree_update_extend = true
 		app.tree_update_color = null
 		app.tree_close_parent = null
+		
 		ds_list_clear(tree_visible_list)
 		ds_list_clear(tree_list_filter)
 		ds_list_clear(project_timeline_list)
+		
 		level = -1
 		indent_level = -1
 	}
@@ -96,7 +85,7 @@ function tl_update_list()
 		app.tree_close_parent = null
 	
 	// Connect hierarchy and indent of visible timelines
-	if (argument_count = 0 && app.timeline_search = "")
+	if (root && app.timeline_search = "")
 	{
 		for (var t = 0; t < ds_list_size(app.tree_list_filter); t++)
 		{

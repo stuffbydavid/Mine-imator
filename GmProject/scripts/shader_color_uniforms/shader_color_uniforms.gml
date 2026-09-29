@@ -1,5 +1,4 @@
-/// shader_color_uniforms()
-/// @desc Adds timeline color uniforms
+/// @desc Adds timeline color uniforms.
 
 function shader_color_uniforms()
 {

@@ -1,9 +1,8 @@
-/// model_file_load_part(map, root, resource, model)
+/// @desc Adds a part from the given map (JSON object) and returns its instance.
 /// @arg map
 /// @arg root
 /// @arg resource
 /// @arg model
-/// @desc Adds a part from the given map (JSON object) and returns its instance.
 
 function model_file_load_part(map, root, res, model)
 {
@@ -83,7 +82,7 @@ function model_file_load_part(map, root, res, model)
 					texture_material_inherit = other.texture_material_inherit
 				
 				if (texture_normal_name != "")
-					model_file_load_tex_normal(texture_normal_name, res)
+					model_file_load_texture_normal(texture_normal_name, res)
 				else
 					texture_normal_inherit = other.texture_normal_inherit
 			}
@@ -202,7 +201,7 @@ function model_file_load_part(map, root, res, model)
 		// Bend (optional)
 		if (!is_undefined(map[?"bend"]))
 		{
-			var bendmap = map[?"bend"]
+			var bendmap = map[?"bend"];
 			
 			// Inherit angles
 			bend_inherit = value_get_real(bendmap[?"inherit_bend"], false)
@@ -242,7 +241,7 @@ function model_file_load_part(map, root, res, model)
 			}
 			
 			// Axis
-			bend_axis = array(false, false, false);
+			bend_axis = array(false, false, false)
 			var axis = array();
 			if (is_string(bendmap[?"axis"])) // Single
 			{
@@ -425,7 +424,7 @@ function model_file_load_part(map, root, res, model)
 		has_3d_plane = false
 		
 		// Add shapes (optional)
-		var shapelist = map[?"shapes"]
+		var shapelist = map[?"shapes"];
 		if (ds_list_valid(shapelist))
 		{
 			shape_list = ds_list_create()
@@ -446,13 +445,13 @@ function model_file_load_part(map, root, res, model)
 		bounds_parts_end = bounds_end
 		
 		// Recursively add parts (optional)
-		var partlist = map[?"parts"]
+		var partlist = map[?"parts"];
 		if (ds_list_valid(partlist))
 		{
 			part_list = ds_list_create()
 			for (var p = 0; p < ds_list_size(partlist); p++)
 			{
-				var part = model_file_load_part(partlist[|p], root, res, model)
+				var part = model_file_load_part(partlist[|p], root, res, model);
 				if (part = null) // Something went wrong
 					return null
 				if (part > 0)
@@ -464,8 +463,8 @@ function model_file_load_part(map, root, res, model)
 		
 		// Update bounds of parent
 		var boundsstartdef, boundsenddef;
-		boundsstartdef = point3D_mul_matrix(bounds_parts_start, default_matrix);
-		boundsenddef = point3D_mul_matrix(bounds_parts_end, default_matrix);
+		boundsstartdef = point3D_mul_matrix(bounds_parts_start, default_matrix)
+		boundsenddef = point3D_mul_matrix(bounds_parts_end, default_matrix)
 		other.bounds_parts_start[X] = min(other.bounds_parts_start[X], boundsstartdef[X])
 		other.bounds_parts_start[Y] = min(other.bounds_parts_start[Y], boundsstartdef[Y])
 		other.bounds_parts_start[Z] = min(other.bounds_parts_start[Z], boundsstartdef[Z])

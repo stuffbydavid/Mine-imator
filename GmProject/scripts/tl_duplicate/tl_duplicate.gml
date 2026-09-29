@@ -1,4 +1,3 @@
-/// tl_duplicate()
 /// @desc Duplicates the given timeline and children. Returns the new one.
 
 function tl_duplicate()
@@ -42,6 +41,7 @@ function tl_duplicate()
 		{
 			var oldkf, newkf;
 			oldkf = other.keyframe_list[|k]
+			
 			newkf = new_obj(obj_keyframe)
 			newkf.position = oldkf.position
 			newkf.timeline = id
@@ -49,6 +49,7 @@ function tl_duplicate()
 			newkf.sound_play_index = null
 			for (var v = 0; v < e_value.amount; v++)
 				newkf.value[v] = oldkf.value[v]
+			
 			ds_list_add(keyframe_list, newkf)
 		}
 		
@@ -57,6 +58,7 @@ function tl_duplicate()
 		{
 			with (other.tree_list[|t])
 				ds_list_add(other.tree_list, tl_duplicate())
+			
 			tree_list[|t].parent = id
 		}
 		

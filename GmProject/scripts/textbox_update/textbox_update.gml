@@ -1,5 +1,3 @@
-/// textbox_update()
-
 function textbox_update()
 {
 	if (textbox_jump || (textbox_isediting && keyboard_check_pressed(vk_tab)))
@@ -13,7 +11,7 @@ function textbox_update()
 			{
 				tbxdata = textbox_list[|tbxpos]
 				if (tbxdata[0] = textbox_lastfocus)
-					break;
+					break
 			}
 
 			move = (keyboard_check(vk_shift) ? -1 : 1)
@@ -36,10 +34,13 @@ function textbox_update()
 				tab.scroll.value_goal = (tbxdata[2] - (tbxdata[3] - tab.scroll.value)) - (floor(tbxdata[4]/2))
 
 			tbx = tbxdata[0]
+			
 			window_focus = string(tbx)
+			
 			textbox_jumpto = tbx
-			ds_list_clear(textbox_list)
 			textbox_jump = false
+			
+			ds_list_clear(textbox_list)
 		}
 		else
 			textbox_jump = true
@@ -48,6 +49,7 @@ function textbox_update()
 	if (textbox_jumpto = -1 && textbox_isediting && !textbox_isediting_respond)
 	{
 		textbox_isediting = false
+		
 		if (window_busy = "")
 			window_focus = ""
 	}
@@ -56,9 +58,11 @@ function textbox_update()
 	if (textbox_isediting && keyboard_check_pressed(vk_escape))
 	{
 		window_focus = ""
+		
 		textbox_lastfocus = -1
 		textbox_isediting = false
 		textbox_input = ""
+		
 		return true
 	}
 

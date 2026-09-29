@@ -1,8 +1,4 @@
-/// minecraft_assets_load_biomes(list, biomes, dimensionkey)
-/// @arg list
-/// @arg biomes
-/// @arg dimensionkey
-/// @desc Loads biomes from Minecraft version
+/// @desc Loads biomes from Minecraft version.
 
 function minecraft_assets_load_biomes(list, biomes, dimensionkey)
 {
@@ -14,6 +10,7 @@ function minecraft_assets_load_biomes(list, biomes, dimensionkey)
 	{
 		var biome, biomeid;
 		biome = biomes[|b]
+		
 		with (new_obj(obj_biome))
 		{
 			biomeid = id
@@ -95,7 +92,7 @@ function minecraft_assets_load_biomes(list, biomes, dimensionkey)
 			if (ds_list_valid(biome[?"variant"]))
 			{
 				biome_variants = ds_list_create()
-				var biomevariants = biome[?"variant"]
+				var biomevariants = biome[?"variant"];
 				for (var v = 0; v < ds_list_size(biomevariants); v++)
 				{
 					var variant = biomevariants[|v];

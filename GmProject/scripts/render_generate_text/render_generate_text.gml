@@ -1,69 +1,41 @@
-/// render_generate_text(string, resource, 3d, [halign, valign, aa, size])
+/// @desc Generates a vertex buffer and a texture for the text (text_vbuffer, text_texture).
 /// @arg string
 /// @arg resource
-/// @arg 3d
+/// @arg is3d
 /// @arg [halign]
 /// @arg [valign]
-/// @arg [aa]
+/// @arg [antialiasing]
 /// @arg [size]
-/// @desc Generates a vbuffer and a surface (text_vbuffer, text_texture)
 
-function render_generate_text()
+function render_generate_text(str, res, is3d, halign = "center", valign = "center", aa = true, size = 3)
 {
-	var str, res, is3d, valign, halign, aa, size;
-	var alignmatch, aamatch, sizematch;
-	str = argument[0]
-	res = res_eval(argument[1])
-	is3d = argument[2]
-	halign = "center"
-	valign = "center"
-	aa = true
-	size = 3
+	res = res_eval(res)
 	
-	alignmatch = true
-	aamatch = true
-	
-	// Alignment
-	if (argument_count > 3)
-	{
-		halign = argument[3]
-		valign = argument[4]
-		
-		alignmatch = (text_halign_prev = halign && text_valign_prev = valign)
-		
-		if (!alignmatch)
-		{
-			text_halign_prev = halign
-			text_valign_prev = valign
-		}
-	}
-	
-	// Round up alpha
-	if (argument_count > 5)
-	{
-		aa = argument[5]
-		aamatch = (text_aa_prev = aa)
-		
-		if (!aamatch)
-			text_aa_prev = aa
-	}
-	if (argument_count > 6)
-		size = argument[6]
 	if (res.type != e_res_type.FONT)
 		size = 1
+	
 	size = clamp(size, 0, 8)
-	sizematch = (text_outline_size_prev = size)
-	text_outline_size_prev = size
 	
 	if (string_char_at(str, string_length(str)) = "\n")
 		str += " "
 	
-	if (text_texture[0] != null && text_string = str && text_res = res && text_3d_prev = is3d && alignmatch && aamatch && sizematch)
+	// Check for update
+	if (text_texture[0] != null &&
+		text_string = str &&
+		text_res = res &&
+		text_3d_prev = is3d &&
+		text_halign_prev = halign && text_valign_prev = valign &&
+		text_aa_prev = aa &&
+		text_outline_size_prev = size)
 		return 0
 	
 	text_string = str
 	text_res = res
 	text_3d_prev = is3d
+	text_halign_prev = halign
+	text_valign_prev = valign
+	text_aa_prev = aa
+	text_outline_size_prev = size
 	
 	draw_set_font(aa ? res.font : res.font_no_aa)
 	
@@ -75,16 +47,16 @@ function render_generate_text()
 	
 	switch (valign)
 	{
-		case "top": zz = -hei + 3 + padding; break;
-		case "center": zz = -hei / 2 + 0.5; break;
-		case "bottom": zz = -padding; break;
+		case "top":		zz = -hei + 3 + padding; break
+		case "center":	zz = -hei / 2 + 0.5; break
+		case "bottom":	zz = -padding; break
 	}
 	
 	switch (halign)
 	{
-		case "left": xx = -1 - padding; break;
-		case "center": xx = -wid / 2 - 1; break;
-		case "right": xx = -wid + padding; break;
+		case "left":	xx = -1 - padding; break
+		case "center":	xx = -wid / 2 - 1; break
+		case "right":	xx = -wid + padding; break
 	}
 	
 	// Generate padded text surface
@@ -99,9 +71,9 @@ function render_generate_text()
 		
 		switch (halign)
 		{
-			case "left": textxx = 1 + padding; draw_set_halign(fa_left); break;
-			case "center": textxx = ceil(wid / 2); draw_set_halign(fa_center); break;
-			case "right": textxx = wid - padding; draw_set_halign(fa_right); break;
+			case "left":	textxx = 1 + padding; draw_set_halign(fa_left); break
+			case "center":	textxx = ceil(wid / 2); draw_set_halign(fa_center); break
+			case "right":	textxx = wid - padding; draw_set_halign(fa_right); break
 		}
 		
 		draw_text_ext(textxx, 2 + padding, str, string_height(" ") - 2, -1)

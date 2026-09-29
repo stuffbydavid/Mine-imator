@@ -1,8 +1,10 @@
-/// block_render_model_generate_face_cull(model, element, culldir)
-/// @arg culldir
 /// @desc Returns whether the current face should be culled.
-function block_render_model_generate_face_cull(model, el, culldir) {
+/// @arg model
+/// @arg element
+/// @arg culldirection
 
+function block_render_model_generate_face_cull(model, el, culldir)
+{
 	switch (culldir)
 	{
 		case e_dir.EAST:

@@ -1,20 +1,18 @@
-/// action_build_first_person(enable)
-/// @arg enable
-
-function action_build_first_person(enable)
+function action_build_first_person(enabled)
 {
-	if (enable && !place_build)
+	if (enabled && !place_build)
 		return 0
 
-	if (build_first_person = enable)
+	if (build_first_person = enabled)
 		return 0
 
-	build_first_person = enable
+	build_first_person = enabled
 	
-	if (enable)
+	if (enabled)
 	{
 		build_first_person_move_speed_scroll = setting_move_speed_scroll
 		setting_move_speed_scroll = 1
+		
 		// Disable second view on main window
 		build_first_person_second = view_second.show && !window_exists(e_window.VIEW_SECOND)
 		if (build_first_person_second)

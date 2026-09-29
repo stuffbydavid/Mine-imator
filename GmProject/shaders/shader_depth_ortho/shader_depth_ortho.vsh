@@ -1,5 +1,4 @@
-/// shader_depth_ortho
-/// @desc Renders to a depth buffer for orthographic rendering
+/// @desc Renders to a depth buffer for orthographic rendering.
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;

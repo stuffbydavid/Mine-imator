@@ -1,5 +1,4 @@
-/// eval(str, default)
-/// @arg str
+/// @arg string
 /// @arg default
 
 function eval(str, def)
@@ -17,7 +16,7 @@ function eval(str, def)
 			continue
 		else if (char = "(") // Open brace
 		{
-			if (lastoperator == "--")
+			if (lastoperator = "--")
 				ds_stack_push(ops, "-(")
 			else
 				ds_stack_push(ops, "(")
@@ -103,7 +102,7 @@ function eval(str, def)
 			if (lastoperator != "" && char = "-")
 			{
 				lastoperator = "--"
-				continue;
+				continue
 			}
 			
 			// Solve previous operations if needed before adding current operator
@@ -148,7 +147,7 @@ function eval(str, def)
 	ds_stack_destroy(values)
 	ds_stack_destroy(ops)
 	
-	if (result = undefined)
+	if (is_undefined(result))
 		return def
 	else
 		return result

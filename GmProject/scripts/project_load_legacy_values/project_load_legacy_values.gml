@@ -1,4 +1,3 @@
-/// project_load_legacy_values(timeline)
 /// @arg timeline
 
 function project_load_legacy_values(tl)
@@ -97,7 +96,7 @@ function project_load_legacy_values(tl)
 			value[e_value.CAM_SIZE_KEEP_ASPECT_RATIO] = buffer_read_byte()
 		}
 		
-		//Bloom
+		// Bloom
 		if (load_format = e_project.FORMAT_CB_102)
 		{
 			value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM
@@ -108,7 +107,7 @@ function project_load_legacy_values(tl)
 			value[e_value.CAM_BLOOM_INTENSITY] = ((value[e_value.CAM_BLOOM_INTENSITY]-1)*-1)*100
 		}
 		
-		//Bloom
+		// Bloom
 		if (load_format >= e_project.FORMAT_CB_103)
 		{
 			value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM

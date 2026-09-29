@@ -9,10 +9,10 @@ namespace CppProject
 		IntType dsId = id;
 		switch (type)
 		{
-			case ds_type_map: return (FindMap(dsId) != nullptr);
-			case ds_type_list: return (FindList(dsId) != nullptr);
-			case ds_type_stack: return (FindStack(dsId) != nullptr);
-			case ds_type_priority: return (FindPriority(dsId) != nullptr);
+			case ds_type_map:		return (FindMap(dsId) != nullptr);
+			case ds_type_list:		return (FindList(dsId) != nullptr);
+			case ds_type_stack:		return (FindStack(dsId) != nullptr);
+			case ds_type_priority:	return (FindPriority(dsId) != nullptr);
 		}
 
 		return false;
@@ -130,6 +130,7 @@ namespace CppProject
 				return -1;
 
 			list->vec[index].dsType = ds_type_list;
+
 			return val;
 		}
 
@@ -146,6 +147,7 @@ namespace CppProject
 				return -1;
 
 			list->vec[index].dsType = ds_type_map;
+
 			return val;
 		}
 
@@ -163,6 +165,7 @@ namespace CppProject
 	void ds_list_sort(IntType id, BoolType ascending)
 	{
 		if (List* list = FindList(id))
+		{
 			std::sort(list->vec.begin(), list->vec.end(), [ascending](const List::ListValue& v1, const List::ListValue& v2)
 			{
 				if (v1.value.IsString()) // Sort alphabetically
@@ -174,6 +177,7 @@ namespace CppProject
 						v1.value < v2.value :
 						v1.value > v2.value;
 			});
+		}
 	}
 
 	void ds_map_add_list(IntType id, VarType key, IntType listId)
@@ -250,6 +254,7 @@ namespace CppProject
 	{
 		if (Map* map = FindMap(id))
 			return map->GetNextKey(key);
+		
 		return VarType();
 	}
 
@@ -257,6 +262,7 @@ namespace CppProject
 	{
 		if (Map* map = FindMap(id))
 			return map->Value(key);
+		
 		return VarType();
 	}
 
@@ -289,6 +295,7 @@ namespace CppProject
 
 			VarType val = priority->vec[maxId].value;
 			priority->vec.removeAt(maxId);
+
 			return val;
 		}
 

@@ -1,14 +1,13 @@
-/// app_update_place_scenery()
-/// Adjust position and rotation of placed object by scenery in the world.
+/// @desc Adjust position and rotation of placed object by scenery in the world.
 
 function app_update_place_scenery()
 {
 	// Check for valid scenery
 	if (!type_is_block(place_target_tl_part_of.type))
 		return 0
-		
+
 	var gridsize, worldtransform, inversetransform, localpos, localnormal;
-	gridsize = vec3(1);
+	gridsize = vec3(1)
 	if (place_target_tl.type = e_tl_type.SCENERY)
 		gridsize = place_target_tl.temp.scenery.scenery_size
 	else if (place_target_tl.type = e_tl_type.BLOCK)
@@ -19,7 +18,7 @@ function app_update_place_scenery()
 		worldtransform = place_target_tl.matrix_render
 	else
 		worldtransform = matrix_multiply(matrix_create(point3D(0, gridsize[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)), place_target_tl.matrix_render)
-		
+	
 	inversetransform = matrix_inverse_ext(worldtransform)
 	localpos = point3D_mul_matrix(place_pos, inversetransform)
 
@@ -120,7 +119,7 @@ function app_update_place_scenery()
 		}
 		else
 		{
-			var scenerysize = place_tl.temp.scenery.scenery_size
+			var scenerysize = place_tl.temp.scenery.scenery_size;
 			targetmin[X] = (1 - targetrepeat[Y]) * scenerysize[Y]
 			targetmax = vec3(scenerysize[Y], targetrepeat[X] * scenerysize[X], targetrepeat[Z] * scenerysize[Z])
 			legacywidth = scenerysize[Y]

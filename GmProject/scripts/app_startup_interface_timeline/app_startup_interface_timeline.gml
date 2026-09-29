@@ -1,5 +1,3 @@
-/// app_startup_interface_timeline()
-
 function app_startup_interface_timeline()
 {
 	timeline_playing = false
@@ -31,7 +29,6 @@ function app_startup_interface_timeline()
 	timeline_zoom_target = 0
 	timeline_zoom_button = 0
 	timeline_camera = null
-	background_tlactive = null
 	timeline_insert_pos = 0
 	timeline_show_frames = false
 	timeline_marker_length = 0
@@ -94,6 +91,8 @@ function app_startup_interface_timeline()
 	
 	timeline_select_box_min = [no_limit, no_limit, no_limit]
 	timeline_select_box_max = [-no_limit, -no_limit, -no_limit]
+	
+	background_tlactive = null
 	
 	// tl_update_list_indent scope fix
 	with (obj_timeline)

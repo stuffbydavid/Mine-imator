@@ -1,6 +1,3 @@
-/// block_tile_entity_head(map)
-/// @arg map
-
 function block_tile_entity_skull(map)
 {
 	var ownerid, texlist, texvalue, texurl;
@@ -35,12 +32,12 @@ function block_tile_entity_skull(map)
 		
 		mc_builder.block_skull_map[?build_pos] = ownerid
 		
-		if (ds_map_find_value(mc_builder.block_skull_texture_map, ownerid) = undefined)
+		if (is_undefined(ds_map_find_value(mc_builder.block_skull_texture_map, ownerid)))
 			mc_builder.block_skull_texture_map[?ownerid] = texurl
 	}
 	else // Pre-1.20.5 format
 	{
-		var mapname = "Owner"
+		var mapname = "Owner";
 		if (!ds_map_valid(map[?mapname]))
 		{
 			mapname = "SkullOwner"
@@ -83,7 +80,7 @@ function block_tile_entity_skull(map)
 		
 		mc_builder.block_skull_map[?build_pos] = ownerid
 		
-		if (ds_map_find_value(mc_builder.block_skull_texture_map, ownerid) = undefined)
+		if (is_undefined(ds_map_find_value(mc_builder.block_skull_texture_map, ownerid)))
 			mc_builder.block_skull_texture_map[?ownerid] = texurl
 	}
 }

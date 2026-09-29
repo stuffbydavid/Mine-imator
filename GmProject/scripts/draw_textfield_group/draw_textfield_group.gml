@@ -1,4 +1,3 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, [colortype, [drag, [update_values]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,17 +6,16 @@
 /// @arg min
 /// @arg max
 /// @arg snap
-/// @arg [showcaption
-/// @arg [stack
-/// @arg [colortype
-/// @arg [drag
-/// @arg [update_values]]]]
+/// @arg [showcaption]
+/// @arg [stack]
+/// @arg [colortype]
+/// @arg [drag]
+/// @arg [updatevalues]
 
-function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, textfield_update = true)
+function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, updatevalues = true)
 {
 	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei;
-	
-	vertical = app.panel_compact && stack
+	vertical = (app.panel_compact && stack)
 	fieldx = xx
 	fieldy = yy
 	fieldwid = vertical ? wid : (wid/textfield_amount)
@@ -246,7 +244,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			else
 				d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - textfield_value[i]
 			
-			if (d <> 0 && textfield_script[i] != null && textfield_update)
+			if (d <> 0 && textfield_script[i] != null && updatevalues)
 				script_execute(textfield_script[i], d, true)
 			else
 			{
@@ -275,7 +273,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		}
 		
 		// Idle update
-		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && fieldupdate = undefined)
+		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && is_undefined(fieldupdate))
 			textfield_textbox[i].text = string_decimals(textfield_value[i])
 		
 		if (vertical)

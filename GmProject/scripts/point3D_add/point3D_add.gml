@@ -1,5 +1,4 @@
 /// CppSeparate VecType point3D_add(VecType, VecType)
-/// point3D_add(point, vector)
 /// @arg point
 /// @arg vector
 

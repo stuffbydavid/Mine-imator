@@ -1,5 +1,3 @@
-/// nbt_read_tag_compound()
-
 function nbt_read_tag_compound()
 {
 	var map = ds_string_map_create();

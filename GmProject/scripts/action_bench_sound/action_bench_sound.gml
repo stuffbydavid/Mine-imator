@@ -1,15 +1,13 @@
-/// action_bench_sound(sound)
-
 function action_bench_sound(sound)
 {
 	if (!is_array(sound))
 		return 0
 
-	var res, playindex, music, automusic;
+	var res, music, automusic;
 	res = null
 	music = bench_settings.sound_list_current = bench_settings.music_list
 	automusic = !music && bench_music_mode && (!audio_exists(bench_settings.music_play_index) || !audio_is_playing(bench_settings.music_play_index))
-	music = music || automusic
+	music = (music || automusic)
 	
 	// Minecraft sound
 	if (is_string(sound[2]))
@@ -18,11 +16,13 @@ function action_bench_sound(sound)
 		hash = sound[2]
 		source = minecraft_java_directory_get() + "/assets/objects/" + string_copy(hash, 1, 2) + "/" + hash
 		destination = file_directory_get() + hash + "_" + string(current_time) + ".ogg"
+		
 		if (!file_exists_lib(source))
 			return 0
 
 		if (!bench_music_mode || music)
 			bench_music_stop()
+		
 		if (!automusic)
 		{
 			with (bench_settings.preview)
@@ -46,6 +46,7 @@ function action_bench_sound(sound)
 
 		load_folder = file_directory_get()
 		save_folder = file_directory_get()
+		
 		with (res)
 			res_load()
 	}
@@ -55,6 +56,7 @@ function action_bench_sound(sound)
 	{
 		if (!bench_music_mode || music)
 			bench_music_stop()
+		
 		if (!automusic)
 		{
 			with (bench_settings.preview)
@@ -63,6 +65,7 @@ function action_bench_sound(sound)
 			bench_settings.sound = null
 			bench_clear()
 		}
+		
 		res = sound[2]
 	}
 	else
@@ -98,17 +101,20 @@ function action_bench_sound(sound)
 		bench_settings.music_list.selected_name = sound[1]
 	}
 	
-	playindex = audio_play_sound(res.sound_index, 0, false)
+	var playindex = audio_play_sound(res.sound_index, 0, false);
 
 	if (music)
 		bench_settings.music_play_index = playindex
 	
 	if (!automusic)
+	{
 		with (bench_settings.preview)
 		{
 			select = res
 			update = true
 			sound_play_index = playindex
 		}
+	}
+	
 	return res
 }

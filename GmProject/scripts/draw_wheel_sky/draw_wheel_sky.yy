@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"draw_wheel_sky",
   "parent":{
-    "name":"Components",
-    "path":"folders/Scripts/App/Interface/Components.yy",
+    "name":"Wheel",
+    "path":"folders/Scripts/App/Interface/Components/Wheel.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

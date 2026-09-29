@@ -1,5 +1,3 @@
-/// tl_audio_stop()
-
 function tl_audio_stop()
 {
 	with (obj_keyframe)

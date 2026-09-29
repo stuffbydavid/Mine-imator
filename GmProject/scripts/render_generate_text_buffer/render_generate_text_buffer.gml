@@ -1,4 +1,9 @@
-/// render_generate_text_buffer(is3d, surf, xx, zz, wid, hei)
+/// @arg is3d
+/// @arg surface
+/// @arg x
+/// @arg z
+/// @arg width
+/// @arg height
 
 function render_generate_text_buffer(is3d, surf, xx, zz, wid, hei)
 {

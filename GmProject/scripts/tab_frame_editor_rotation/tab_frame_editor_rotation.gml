@@ -1,5 +1,3 @@
-/// tab_frame_editor_rotation()
-
 function tab_frame_editor_rotation()
 {
 	if (!tl_edit.value_type[e_value_type.TRANSFORM_ROT])
@@ -9,9 +7,9 @@ function tab_frame_editor_rotation()
 	tab_frame_editor_buttons()
 	draw_label(text_get("frameeditorrotation"), dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	dy += 26
-	
-	var snapval = (dragger_snap ? setting_snap_size_rotation : snap_min);
-	var def;
+
+	var snapval, def;
+	snapval = (dragger_snap ? setting_snap_size_rotation : snap_min)
 	
 	if (tl_edit.type = e_tl_type.CAMERA)
 		def = point3D(0)

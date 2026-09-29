@@ -1,5 +1,3 @@
-/// panel_area_draw()
-
 function panel_area_draw()
 {
 	// Calculate area
@@ -91,7 +89,7 @@ function panel_area_draw()
 		if (tab_move_mouseon_panel = null)
 		{
 			// Calculate sizes of the boxes to check
-			var toph, bottomh, lefttopw, leftbottomw, righttopw
+			var toph, bottomh, lefttopw, leftbottomw, righttopw;
 			toph = view_area_height
 			bottomh = view_area_height
 			lefttopw = view_area_width

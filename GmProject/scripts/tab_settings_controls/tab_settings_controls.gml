@@ -1,5 +1,3 @@
-/// tab_settings_controls()
-
 function tab_settings_controls()
 {
 	tab_control(20)
@@ -71,7 +69,6 @@ function tab_settings_controls()
 		draw_keybind(e_keybind.TOOL_SCALE, dx, dy)
 		draw_keybind(e_keybind.TOOL_BEND, dx, dy)
 		draw_keybind(e_keybind.TOOL_TRANSFORM, dx, dy)
-		draw_keybind(e_keybind.TRANSFORM_MODE_CYCLE, dx, dy)
 		draw_keybind(e_keybind.SNAP, dx, dy)
 		dy += 8
 		

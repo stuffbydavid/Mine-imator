@@ -1,5 +1,3 @@
-/// tab_object_editor_update_ptype_list()
-
 function tab_object_editor_update_ptype_list()
 {
 	if (obj_edit = null || !instance_exists(obj_edit) || obj_edit.type != e_temp_type.PARTICLE_SPAWNER)

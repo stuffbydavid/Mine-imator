@@ -1,5 +1,3 @@
-/// tab_frame_editor_position()
-
 function tab_frame_editor_position()
 {
 	if (!tl_edit.value_type[e_value_type.TRANSFORM_POS])

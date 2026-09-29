@@ -1,11 +1,10 @@
-/// scrollbar_draw(scrollbar, direction, x, y, size, maxsize)
+/// @desc Draws a scrollbar.
 /// @arg scrollbar
 /// @arg direction
 /// @arg x
 /// @arg y
 /// @arg size
 /// @arg maxsize
-/// @desc Draws a scrollbar.
 
 function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 {
@@ -103,6 +102,7 @@ function scrollbar_draw(sb, dir, xx, yy, size, maxsize)
 			window_busy = "scrollbar"
 		}
 	}
+	
 	if (!mouse_left)
 		sb.press = 0
 	

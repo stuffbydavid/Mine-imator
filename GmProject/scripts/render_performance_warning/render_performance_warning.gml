@@ -1,5 +1,3 @@
-/// render_performance_warning(preset, renderer)
-
 function render_performance_warning(preset, renderer)
 {
 	if (renderer = e_renderer.REALISTIC)
@@ -7,9 +5,11 @@ function render_performance_warning(preset, renderer)
 		if (!preset.has_realistic)
 			return false
 
-		var settings = preset.renderer[e_renderer.REALISTIC]
-		var optimizations = render_optimizations_state(settings)
-		var available = 0
+		var settings, optimizations, available;
+		settings = preset.renderer[e_renderer.REALISTIC]
+		optimizations = render_optimizations_state(settings)
+		available = 0
+		
 		if (optimizations[1] && settings.samples > 1)
 			available++
 		if (settings.shadows && settings.samples > 3 && optimizations[0])

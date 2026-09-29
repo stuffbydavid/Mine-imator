@@ -1,20 +1,16 @@
-/// project_load_legacy_render(map)
-
 function project_load_legacy_render(map)
 {
-	var custom = render_preset_map[?"custom"]
+	var custom = render_preset_map[?"custom"];
 	with (custom)
 	{
-		var standardset = renderer[e_renderer.STANDARD]
-		var realisticset = renderer[e_renderer.REALISTIC]
-
-		// Legacy projects stored one flat set of render settings
+		// Pre-2.1 projects stored one flat set of render settings
 		has_standard = true
 		has_realistic = true
 		has_fx = true
 		has_graphics = true
 		has_materials = true
 
+		var standardset = renderer[e_renderer.STANDARD];
 		with (standardset)
 		{
 			ssao = value_get_real(map[?"render_ssao"], ssao)
@@ -27,6 +23,7 @@ function project_load_legacy_render(map)
 			aa_power = value_get_real(map[?"render_aa_power"], aa_power)
 		}
 
+		var realisticset = renderer[e_renderer.REALISTIC];
 		with (realisticset)
 		{
 			samples = value_get_real(map[?"render_samples"], samples)

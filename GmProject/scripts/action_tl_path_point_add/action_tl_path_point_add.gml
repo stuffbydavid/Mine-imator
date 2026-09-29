@@ -1,5 +1,3 @@
-/// action_tl_path_point_add()
-
 function action_tl_path_point_add()
 {
 	var hobj, tl;

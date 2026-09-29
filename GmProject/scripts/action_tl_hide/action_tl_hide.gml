@@ -1,7 +1,6 @@
-/// action_tl_hide(timeline)
 /// @arg timeline
 
-function action_tl_hide(timeline)
+function action_tl_hide(tl)
 {
 	if (history_undo)
 	{
@@ -20,6 +19,6 @@ function action_tl_hide(timeline)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_hide, false);
-		action_tl_hide_tree(timeline, !timeline.hide, hobj)
+		action_tl_hide_tree(tl, !tl.hide, hobj)
 	}
 }

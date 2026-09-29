@@ -1,4 +1,3 @@
-/// string_word_wrap(string, width)
 /// @arg string
 /// @arg width
 

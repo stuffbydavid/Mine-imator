@@ -1,5 +1,3 @@
-/// shortcut_bar_update()
-
 function shortcut_bar_update()
 {
 	if (shortcut_bar_state != shortcut_bar_state_prev)
@@ -32,7 +30,6 @@ function shortcut_bar_update()
 			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "vieworbit")
 			shortcut_bar_add(keybind_new(null, false, true, false), e_mouse.DRAG_LEFT, "viewpan")
 			shortcut_bar_add(null, e_mouse.SCROLL, "viewzoom")
-			shortcut_bar_add(null, e_mouse.CLICK_MIDDLE, "viewfov")
 			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "viewwalk")
 			shortcut_bar_add(keybind_new("S"), null, "buildresetstructure")
 			shortcut_bar_add(keybind_new("F"), null, "buildfirstperson")
@@ -56,6 +53,7 @@ function shortcut_bar_update()
 			shortcut_bar_add(keybinds[e_keybind.CAM_DESCEND].keybind, null, "viewdescend")
 			shortcut_bar_add(keybinds[e_keybind.CAM_FAST].keybind, null, "viewfaster")
 			shortcut_bar_add(keybinds[e_keybind.CAM_SLOW].keybind, null, "viewslower")
+			
 			if (shortcut_bar_state = "cameramove" && window_state != "world_import")
 				shortcut_bar_add(null, e_mouse.SCROLL, "viewspeed")
 			

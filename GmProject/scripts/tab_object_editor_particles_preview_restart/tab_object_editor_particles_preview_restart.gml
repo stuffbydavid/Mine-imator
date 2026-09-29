@@ -1,5 +1,3 @@
-/// tab_object_editor_particles_preview_restart()
-
 function tab_object_editor_particles_preview_restart()
 {
 	if (ptype_edit)

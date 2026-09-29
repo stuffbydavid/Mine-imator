@@ -1,4 +1,3 @@
-/// res_event_destroy()
 /// @desc Called by the destroy event of a resource.
 
 function res_event_destroy()
@@ -420,11 +419,9 @@ function res_event_destroy()
 	}
 
 	// Remove from resource browser
-	var listed;
-	listed = (ds_list_find_index(app.res_list.list, id) >= 0 ||
+	if (ds_list_find_index(app.res_list.list, id) >= 0 ||
 		ds_list_find_index(app.bench_settings.project_res_list.list, id) >= 0 ||
 		ds_list_find_index(app.bench_settings.project_all_list.list, id) >= 0)
-	if (listed)
 	{
 		res_remove_lists()
 

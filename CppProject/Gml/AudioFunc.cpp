@@ -34,6 +34,7 @@ namespace CppProject
 	{
 		if (SoundInstance* instance = FindSoundInstance(index))
 			return instance->paused;
+		
 		return false;
 	}
 
@@ -57,6 +58,7 @@ namespace CppProject
 		if (App->audioSupported)
 			if (Sound* sound = FindSound(index))
 				return (new SoundInstance(sound, loop))->id;
+		
 		return -1;
 	}
 
@@ -90,8 +92,10 @@ namespace CppProject
 
 			ALfloat secs;
 			alGetSourcef(instance->alSource, AL_SEC_OFFSET, &secs);
+
 			return secs;
 		}
+		
 		return 0;
 	}
 

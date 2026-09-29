@@ -1,5 +1,3 @@
-/// colorpicker_draw()
-
 function colorpicker_draw()
 {
 	var bx, by, bw, bh;
@@ -28,6 +26,7 @@ function colorpicker_draw()
 		mouse_cursor = cr_handpoint
 		colorpicker.saturation = floor((clamp((mouse_x - bx) / bw, 0, 1)) * 255)
 		colorpicker.brightness = floor((clamp(1 - (mouse_y - by) / bh, 0, 1)) * 255)
+		
 		colorpicker_update(null, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
 	}
 	
@@ -79,50 +78,66 @@ function colorpicker_draw()
 	draw_togglebutton("colorpickermode", dx, dy, true, false)
 	tab_next()
 	
-	if (colorpicker.mode = "rgb")
+	switch (colorpicker.mode)
 	{
 		// RGB
-		textfield_group_add("colorpickerr", color_get_red(colorpicker.color), color_get_red(colorpicker.def), colorpicker_red, X, colorpicker.tbx_red)
-		textfield_group_add("colorpickerg", color_get_green(colorpicker.color), color_get_green(colorpicker.def), colorpicker_green, Y, colorpicker.tbx_green)
-		textfield_group_add("colorpickerb", color_get_blue(colorpicker.color), color_get_blue(colorpicker.def), colorpicker_blue, Z, colorpicker.tbx_blue)
-		if (draw_textfield_group("colorpickerrgb", dx, dy, 176, 1, 0, 255, 1, false, false, 3, true, false))
+		case "rgb":
 		{
-			colorpicker.red = min(255, string_get_real(colorpicker.tbx_red.text, 0))
-			colorpicker.green = min(255, string_get_real(colorpicker.tbx_green.text, 0))
-			colorpicker.blue = min(255, string_get_real(colorpicker.tbx_blue.text, 0))
-			colorpicker_update(null, make_color_rgb(colorpicker.red, colorpicker.green, colorpicker.blue), true)
+			textfield_group_add("colorpickerr", color_get_red(colorpicker.color), color_get_red(colorpicker.def), colorpicker_red, X, colorpicker.tbx_red)
+			textfield_group_add("colorpickerg", color_get_green(colorpicker.color), color_get_green(colorpicker.def), colorpicker_green, Y, colorpicker.tbx_green)
+			textfield_group_add("colorpickerb", color_get_blue(colorpicker.color), color_get_blue(colorpicker.def), colorpicker_blue, Z, colorpicker.tbx_blue)
+			
+			if (draw_textfield_group("colorpickerrgb", dx, dy, 176, 1, 0, 255, 1, false, false, 3, true, false))
+			{
+				colorpicker.red = min(255, string_get_real(colorpicker.tbx_red.text, 0))
+				colorpicker.green = min(255, string_get_real(colorpicker.tbx_green.text, 0))
+				colorpicker.blue = min(255, string_get_real(colorpicker.tbx_blue.text, 0))
+				colorpicker_update(null, make_color_rgb(colorpicker.red, colorpicker.green, colorpicker.blue), true)
+			}
+			
+			break
 		}
-	}
-	else if (colorpicker.mode = "hsv")
-	{
+		
 		// HSV
-		textfield_group_add("colorpickerh", floor(color_get_hue(colorpicker.color)), floor(color_get_hue(colorpicker.def)), colorpicker_hue, X, colorpicker.tbx_hue)
-		textfield_group_add("colorpickers", floor(color_get_saturation(colorpicker.color)), floor(color_get_saturation(colorpicker.def)), colorpicker_saturation, X, colorpicker.tbx_saturation)
-		textfield_group_add("colorpickerv", floor(color_get_value(colorpicker.color)), floor(color_get_value(colorpicker.def)), colorpicker_brightness, X, colorpicker.tbx_brightness)
-		var update = draw_textfield_group("colorpickerhsv", dx, dy, 176, 1, 0, 255, 1, false, false, 0, true, false);
-		if (update = colorpicker.tbx_hue)
+		case "hsv":
 		{
-			colorpicker.hue = min(255, string_get_real(colorpicker.tbx_hue.text, 0))
-			colorpicker_update(colorpicker.tbx_hue, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
+			textfield_group_add("colorpickerh", floor(color_get_hue(colorpicker.color)), floor(color_get_hue(colorpicker.def)), colorpicker_hue, X, colorpicker.tbx_hue)
+			textfield_group_add("colorpickers", floor(color_get_saturation(colorpicker.color)), floor(color_get_saturation(colorpicker.def)), colorpicker_saturation, X, colorpicker.tbx_saturation)
+			textfield_group_add("colorpickerv", floor(color_get_value(colorpicker.color)), floor(color_get_value(colorpicker.def)), colorpicker_brightness, X, colorpicker.tbx_brightness)
+			
+			var update = draw_textfield_group("colorpickerhsv", dx, dy, 176, 1, 0, 255, 1, false, false, 0, true, false);
+			if (update = colorpicker.tbx_hue)
+			{
+				colorpicker.hue = min(255, string_get_real(colorpicker.tbx_hue.text, 0))
+				colorpicker_update(colorpicker.tbx_hue, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
+			}
+			
+			if (update = colorpicker.tbx_saturation)
+			{
+				colorpicker.saturation = min(255, string_get_real(colorpicker.tbx_saturation.text, 0))
+				colorpicker_update(colorpicker.tbx_saturation, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
+			}
+			
+			if (update = colorpicker.tbx_brightness)
+			{
+				colorpicker.brightness = min(255, string_get_real(colorpicker.tbx_brightness.text, 0))
+				colorpicker_update(colorpicker.tbx_brightness, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
+			}
+			
+			break	
 		}
-		if (update = colorpicker.tbx_saturation)
+		
+		// Hexadecimal
+		case "hex":
 		{
-			colorpicker.saturation = min(255, string_get_real(colorpicker.tbx_saturation.text, 0))
-			colorpicker_update(colorpicker.tbx_saturation, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
-		}
-		if (update = colorpicker.tbx_brightness)
-		{
-			colorpicker.brightness = min(255, string_get_real(colorpicker.tbx_brightness.text, 0))
-			colorpicker_update(colorpicker.tbx_brightness, make_color_hsv(colorpicker.hue, colorpicker.saturation, colorpicker.brightness), false)
-		}
-	}
-	else if (colorpicker.mode = "hex")
-	{
-		if (draw_inputbox("colorpickerhex", dx, dy, 176, 24, color_to_hex(colorpicker.def), colorpicker.tbx_hexadecimal, null))
-			colorpicker_update(colorpicker.tbx_hexadecimal, colorpicker.tbx_hexadecimal.text = "" ? colorpicker.def : hex_to_color(colorpicker.tbx_hexadecimal.text), true)
+			if (draw_inputbox("colorpickerhex", dx, dy, 176, 24, color_to_hex(colorpicker.def), colorpicker.tbx_hexadecimal, null))
+				colorpicker_update(colorpicker.tbx_hexadecimal, colorpicker.tbx_hexadecimal.text = "" ? colorpicker.def : hex_to_color(colorpicker.tbx_hexadecimal.text), true)
 	
-		if (colorpicker.tbx_hexadecimal.text = "" && window_focus = "")
-			colorpicker.tbx_hexadecimal.text = "000000"
+			if (colorpicker.tbx_hexadecimal.text = "" && window_focus = "")
+				colorpicker.tbx_hexadecimal.text = "000000"
+			
+			break
+		}
 	}
 	
 	dy += ui_small_height + 4

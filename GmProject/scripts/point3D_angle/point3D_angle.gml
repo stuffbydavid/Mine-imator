@@ -1,7 +1,3 @@
-/// point3D_angle(from, to)
-/// @arg from
-/// @arg to
-
 function point3D_angle(from, to)
 {
 	var dir, yaw, pitch;

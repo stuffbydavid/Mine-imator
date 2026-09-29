@@ -1,5 +1,3 @@
-/// shader_depth_set()
-
 function shader_depth_set()
 {
 	var camera = render_mode = e_render_mode.DEPTH;

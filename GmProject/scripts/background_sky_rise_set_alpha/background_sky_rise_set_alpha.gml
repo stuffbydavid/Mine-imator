@@ -1,6 +1,3 @@
-/// background_sky_rise_set_alpha(rise)
-/// @arg rise
-
 function background_sky_rise_set_alpha(rise)
 {
 	var t, d, a;

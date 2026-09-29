@@ -1,7 +1,7 @@
-/// render_post(surface, [sceneeffects, posteffects, hdr])
 /// @arg surface
-/// @arg sceneeffects
-/// @arg posteffects
+/// @arg [sceneeffects]
+/// @arg [posteffects]
+/// @arg [hdr]
 
 function render_post(finalsurf, sceneeffects = true, posteffects = true, hdr = false)
 {

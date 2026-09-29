@@ -1,5 +1,4 @@
-/// shader_high_light_point
-/// Add shadows from a point light
+/// @desc Add shadows from a point light.
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;

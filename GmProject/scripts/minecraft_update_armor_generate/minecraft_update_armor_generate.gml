@@ -1,12 +1,12 @@
-/// minecraft_update_armor_generate(model, data, [res])
+/// @desc Generates and returns 4 armor skins.
 /// @arg model
 /// @arg data
-/// @arg [res]
-/// @desc Generates and returns 4 armor skins
+/// @arg [resource]
 
 function minecraft_update_armor_generate(model, data, res = null)
 {
 	var skins = [null, null, null, null];
+	
 	res = res_eval(res)
 	if (res = null || !res_is_ready(res) || (res.type != e_res_type.PACK && res.type != e_res_type.PACK_UNZIPPED))
 		res = mc_res
@@ -25,7 +25,7 @@ function minecraft_update_armor_generate(model, data, res = null)
 		trimmat = data[piece + 3]
 		//layernum = ((i = 2) ? "2" : "1")
 		
-		if (model == "armor_baby")
+		if (model = "armor_baby")
 			layername = "humanoid_baby"
 		else
 			layername = (i = 2) ? "humanoid_leggings" : "humanoid"
@@ -76,9 +76,9 @@ function minecraft_update_armor_generate(model, data, res = null)
 			surface_reset_target()
 		}
 		
-		skins[i] = texture_surface(armorsurf);
+		skins[i] = texture_surface(armorsurf)
 		surface_free(armorsurf)
 	}
 	
-	return skins;
+	return skins
 }

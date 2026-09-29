@@ -1,26 +1,20 @@
-/// @desc Updates the current micro animation
+/// @desc Updates the current micro animation.
 /// @arg hover
 /// @arg click
 /// @arg active
-/// @arg [disabled]
+/// @arg [disable]
 /// @arg [custom]
-/// @arg [goal]
+/// @arg [goalvalue]
 
-function microani_update()
+function microani_update(hover, click, active, disable = false, custom = false, goalvalue = 0)
 {
-	if (current_microani != null)
-	{
-		current_microani.hover.value = argument[0]
-		current_microani.holding.value = argument[1]
-		current_microani.active.value = argument[2]
-		
-		if (argument_count > 3)
-			current_microani.disable.value = argument[3]
-		
-		if (argument_count > 4)
-			current_microani.custom.value = argument[4]
-			
-		if (argument_count > 5)
-			current_microani.goal_value = argument[5]
-	}
+	if (current_microani = null)
+		return 0
+	
+	current_microani.hover.value = hover
+	current_microani.holding.value = click
+	current_microani.active.value = active
+	current_microani.disable.value = disable
+	current_microani.custom.value = custom
+	current_microani.goal_value = goalvalue
 }

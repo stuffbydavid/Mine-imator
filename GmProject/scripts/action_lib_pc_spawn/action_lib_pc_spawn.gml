@@ -1,4 +1,3 @@
-/// action_lib_pc_spawn()
 /// @desc Triggers spawning for all selected particle creators.
 
 function action_lib_pc_spawn()

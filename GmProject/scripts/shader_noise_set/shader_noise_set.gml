@@ -1,5 +1,3 @@
-/// shader_grain_set()
-
 function shader_noise_set()
 {
 	texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_grain_noise))

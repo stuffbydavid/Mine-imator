@@ -1,31 +1,33 @@
-function popup_armor_editor_draw_piece(piece, pieceid, capwid)
+function popup_armor_editor_draw_piece(piece, pieceid)
 {
 	if (settings_menu_name != "")
-		settings_menu_busy_prev = "popup" + popup.name
+		settings_menu_busy_prev = "popup" + popup_current.name
 	
 	if (context_menu_name != "")
-		context_menu_busy_prev = "popup" + popup.name
+		context_menu_busy_prev = "popup" + popup_current.name
 	
 	if (ds_list_size(menu_list) > 0)
-		menu_list[|0].menu_busy_prev = "popup" + popup.name
+		menu_list[|0].menu_busy_prev = "popup" + popup_current.name
 	
 	var piecetype = "";
 	
 	popup_armor_editor.piece_current = pieceid
 	
 	tab_control(24)
-	piecetype = popup_armor_editor_draw_piece_type(piece, pieceid, capwid)
+	piecetype = popup_armor_editor_draw_piece_type(piece, pieceid)
 	tab_next()
 	
 	popup_armor_editor.piece_data_id = 2
 	
 	tab_control(24)
-	draw_button_menu("armoreditorpattern" + piece, e_menu.LIST, dx, dy, dw, 24, popup.armor_edit.armor_array[pieceid + 2], text_get("armoreditorpattern" + popup.armor_edit.armor_array[pieceid + 2]), action_armor_editor, piecetype = "none", null, null, "", c_white, 1, capwid)
+	content_text = text_get("armoreditorpattern" + popup_current.armor_edit.armor_array[pieceid + 2])
+	draw_button_menu("armoreditorpattern" + piece, e_menu.LIST, dx, dy, dw, 24, popup_current.armor_edit.armor_array[pieceid + 2], content_text, action_armor_editor, piecetype = "none", null, null, "", c_white, 1, content_capwid)
 	tab_next()
 	
 	popup_armor_editor.piece_data_id = 3
 	
 	tab_control(24)
-	draw_button_menu("armoreditormaterial" + piece, e_menu.LIST, dx, dy, dw, 24, popup.armor_edit.armor_array[pieceid + 3], text_get("armoreditormaterial" + popup.armor_edit.armor_array[pieceid + 3]), action_armor_editor, (piecetype = "none" || popup.armor_edit.armor_array[pieceid + 2] = "none"), null, null, "", c_white, 1, capwid)
+	content_text = text_get("armoreditormaterial" + popup_current.armor_edit.armor_array[pieceid + 3])
+	draw_button_menu("armoreditormaterial" + piece, e_menu.LIST, dx, dy, dw, 24, popup_current.armor_edit.armor_array[pieceid + 3], content_text, action_armor_editor, (piecetype = "none" || popup_current.armor_edit.armor_array[pieceid + 2] = "none"), null, null, "", c_white, 1, content_capwid)
 	tab_next()
 }

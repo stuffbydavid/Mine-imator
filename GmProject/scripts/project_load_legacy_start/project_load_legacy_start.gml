@@ -1,11 +1,8 @@
-/// project_load_legacy_start(filename)
-/// @arg filename
 /// @desc Starts loading a legacy (pre 1.1.0) file.
+/// @arg filename
 
-function project_load_legacy_start(argument0)
+function project_load_legacy_start(fn)
 {
-	var fn = argument0;
-	
 	buffer_current = buffer_load_lib(fn)
 	load_format = buffer_read_byte()
 	

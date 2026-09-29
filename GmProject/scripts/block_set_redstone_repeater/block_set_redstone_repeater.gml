@@ -1,4 +1,3 @@
-/// block_set_redstone_repeater()
 /// @desc Set locked state.
 
 function block_set_redstone_repeater()

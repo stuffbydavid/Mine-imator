@@ -1,7 +1,4 @@
-/// action_res_project_pack(value)
-/// @arg value
-
-function action_res_project_pack(val)
+function action_res_project_pack(value)
 {
 	var res;
 
@@ -11,7 +8,7 @@ function action_res_project_pack(val)
 		res = history_redo_res()
 	else
 	{
-		res = val ? res_edit : mc_res
+		res = value ? res_edit : mc_res
 		history_set_res(action_res_project_pack, "", project_pack, res)
 	}
 

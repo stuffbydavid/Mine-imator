@@ -1,5 +1,4 @@
-/// temp_select_edit([showtab])
-/// Selects the template in the library and opens the tab for editing.
+/// @desc Selects the template in the library and opens the tab for editing.
 
 function temp_select_edit(showtab = true)
 {

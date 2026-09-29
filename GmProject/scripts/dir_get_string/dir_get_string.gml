@@ -1,4 +1,3 @@
-/// dir_get_string(direction)
 /// @arg direction
 
 function dir_get_string(dir)

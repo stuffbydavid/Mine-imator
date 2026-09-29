@@ -1,8 +1,6 @@
-/// tl_animate_scenery()
-
 function tl_animate_scenery()
 {
-	var list = temp.scenery.scenery_tl_list
+	var list = temp.scenery.scenery_tl_list;
 	if ((temp.scenery.scenery_tl_add = null || temp.scenery.scenery_tl_add) && ds_list_valid(list))
 	{
 		part_list = ds_list_create()

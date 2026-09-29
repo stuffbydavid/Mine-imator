@@ -1,4 +1,3 @@
-/// minecraft_assets_load()
 /// @desc Loads assets from an archive.
 
 function minecraft_assets_load()
@@ -83,7 +82,7 @@ function minecraft_assets_load()
 				
 				load_assets_stage = "textures"
 				load_assets_progress = 0.4
-				break;
+				break
 			}
 			
 			// Load textures
@@ -100,8 +99,8 @@ function minecraft_assets_load()
 				ds_list_copy(model_texture_list, modeltextureslist)
 				
 				// Block textures
-				var blocksheetsizekeylist = array("block_sheet_size", "block_32_sheet_size", "block_64_sheet_size")
-				var blocktexturekeylist = array("block_textures", "block_32_textures", "block_64_textures")
+				var blocksheetsizekeylist = array("block_sheet_size", "block_32_sheet_size", "block_64_sheet_size");
+				var blocktexturekeylist = array("block_textures", "block_32_textures", "block_64_textures");
 				for (var size = 0; size < e_block_sheet.static_amount; size++)
 				{
 					var sheetsize = load_assets_map[?blocksheetsizekeylist[size]];
@@ -179,8 +178,8 @@ function minecraft_assets_load()
 					ds_map_copy(block_texture_preview_map, blocktexturepreviewmap)
 				
 				// Item textures
-				var itemsheetsizekeylist = array("item_sheet_size", "item_32_sheet_size")
-				var itemtexturekeylist = array("item_textures", "item_32_textures")
+				var itemsheetsizekeylist = array("item_sheet_size", "item_32_sheet_size");
+				var itemtexturekeylist = array("item_textures", "item_32_textures");
 				for (var size = 0; size < e_item_sheet.amount; size++)
 				{
 					var itemsheetsize = load_assets_map[?itemsheetsizekeylist[size]];
@@ -234,7 +233,7 @@ function minecraft_assets_load()
 				// Create sheets and texture depth
 				with (mc_res)
 				{
-					var cachefile = file_directory_get() + app.setting_minecraft_assets_version + ".zip.packcache"
+					var cachefile = file_directory_get() + app.setting_minecraft_assets_version + ".zip.packcache";
 					pack_cache_loaded = file_exists_lib(cachefile) && res_load_pack_cache(cachefile)
 					if (pack_cache_loaded)
 					{
@@ -307,7 +306,7 @@ function minecraft_assets_load()
 				// Armor trims
 				var armormap = load_assets_map[?"armor_trims"];
 				if (!ds_map_valid(armormap))
-					armormap = load_assets_map[?"armor"];
+					armormap = load_assets_map[?"armor"]
 				if (!ds_map_valid(armormap))
 				{
 					log("No armor data found")
@@ -365,7 +364,7 @@ function minecraft_assets_load()
 					s.color_names = []
 					s.map = ds_map_create()
 					
-					colors = swatch[?"colors"];
+					colors = swatch[?"colors"]
 					
 					for (var j = 0; j < ds_list_size(colors); j++)
 					{
@@ -388,7 +387,7 @@ function minecraft_assets_load()
 					return false
 				}
 				
-				break;
+				break
 			}
 			
 			// Load models
@@ -591,7 +590,7 @@ function minecraft_assets_load()
 					{
 						// Blockstates
 						var filesarr = file_find(load_assets_dir + mc_blockstates_directory, ".json");
-						var unusedlist = ds_list_create()
+						var unusedlist = ds_list_create();
 						
 						for (var f = 0; f < array_length(filesarr); f++)
 							if (!ds_map_exists(load_assets_state_file_map, filename_name(filesarr[f])))
@@ -607,7 +606,7 @@ function minecraft_assets_load()
 						}
 						
 						// Block models
-						filesarr = file_find(load_assets_dir + mc_models_directory + "block/", ".json");
+						filesarr = file_find(load_assets_dir + mc_models_directory + "block/", ".json")
 						ds_list_clear(unusedlist)
 						
 						for (var f = 0; f < array_length(filesarr); f++)

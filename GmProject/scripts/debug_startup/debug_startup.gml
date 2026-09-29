@@ -1,5 +1,3 @@
-/// debug_startup()
-
 function debug_startup()
 {
 	// Developer options, overwritten by program arguments
@@ -71,59 +69,64 @@ function debug_startup()
 
 	// Program arguments not available in release build
 	if (is_release())
-		return;
+		return
 	
 	// Parse arguments
-	var args = program_args_get()
+	var args = program_args_get();
 	for (var a = 0; a < array_length(args); a++)
 	{
 		var arg, nextarg;
 		arg = args[a]
 		nextarg = ""
+		
 		if (a < array_length(args) - 1)
 			nextarg = args[a + 1]
 			
 		// Benchmarking/testing flags
-		switch (arg) {
-			case "--benchmark_exportmovie": benchmark_exportmovie = true break
+		switch (arg)
+		{
+			case "--benchmark_exportmovie": benchmark_exportmovie = true; break
 			case "--test":
+			{
 				test_project = nextarg
 				benchmark_mode = true
 				a++
 				break
-			case "--start":		test_frame_start = eval(nextarg, -1) a++ break
-			case "--end":		test_frame_end = eval(nextarg, -1) a++ break
-			case "--all":		test_all_frames = true break
-			case "--renderer":	test_renderer = nextarg a++ break
-			case "--set":		test_render_settings = nextarg a++ break
-			case "--pass":		test_debug_pass = nextarg a++ break
-			case "--agent":		test_agent = nextarg a++ break
+			}
+			case "--start":		test_frame_start = eval(nextarg, -1); a++; break
+			case "--end":		test_frame_end = eval(nextarg, -1); a++; break
+			case "--all":		test_all_frames = true; break
+			case "--renderer":	test_renderer = nextarg; a++; break
+			case "--set":		test_render_settings = nextarg; a++; break
+			case "--pass":		test_debug_pass = nextarg; a++; break
+			case "--agent":		test_agent = nextarg; a++; break
 		}
 		
 		if (!debug_mode)
-			continue;
+			continue
 			
 		// Developer flags
-		switch (arg) {
-			case "--project":			debug_project = nextarg a++ break
-			case "--full":				debug_full = true break
-			case "--trial":				debug_full = false break
-			case "--advanced":			debug_advanced = true break
-			case "--simple":			debug_advanced = false break
-			case "--skip_blocks":		debug_skip_blocks = true break
-			case "--no_skip_blocks":	debug_skip_blocks = false break
-			case "--skip_tangents":		debug_skip_tangents = true break
-			case "--no_skip_tangents":	debug_skip_tangents = false break
-			case "--show_bones":		debug_show_bones = true break
-			case "--no_show_bones":		debug_show_bones = false break
-			case "--schematics":		debug_schematics = true break
-			case "--no_schematics":		debug_schematics = false break
-			case "--names":				debug_names = true break
-			case "--no_names":			debug_names = false break
-			case "--saveid":			debug_saveid = true break
-			case "--no_saveid":			debug_saveid = false break
-			case "--unused":			debug_unused = true break
-			case "--no_unused":			debug_unused = false break
+		switch (arg)
+		{
+			case "--project":			debug_project = nextarg; a++; break
+			case "--full":				debug_full = true; break
+			case "--trial":				debug_full = false; break
+			case "--advanced":			debug_advanced = true; break
+			case "--simple":			debug_advanced = false; break
+			case "--skip_blocks":		debug_skip_blocks = true; break
+			case "--no_skip_blocks":	debug_skip_blocks = false; break
+			case "--skip_tangents":		debug_skip_tangents = true; break
+			case "--no_skip_tangents":	debug_skip_tangents = false; break
+			case "--show_bones":		debug_show_bones = true; break
+			case "--no_show_bones":		debug_show_bones = false; break
+			case "--schematics":		debug_schematics = true; break
+			case "--no_schematics":		debug_schematics = false; break
+			case "--names":				debug_names = true; break
+			case "--no_names":			debug_names = false; break
+			case "--saveid":			debug_saveid = true; break
+			case "--no_saveid":			debug_saveid = false; break
+			case "--unused":			debug_unused = true; break
+			case "--no_unused":			debug_unused = false; break
 		}
 	}
 }

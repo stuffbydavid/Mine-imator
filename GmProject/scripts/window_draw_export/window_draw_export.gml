@@ -1,5 +1,3 @@
-/// window_draw_export()
-
 function window_draw_export()
 {
 	// Update rendering
@@ -92,20 +90,23 @@ function window_draw_export()
 	}
 	
 	var samplecount = "";
+	content_text = ""
+	
 	if (usesamples)
 		samplecount = text_get("exportsamples", string(max(render_samples, 1)), string(project_render_samples))
-	var text = "";
 	
 	if (window_state = "export_movie")
-		text = text_get("exportframe", string(exportmovie_frame), string(totalframes)) + (usesamples ? (" (" + samplecount + ")") : "")
+		content_text = text_get("exportframe", string(exportmovie_frame), string(totalframes)) + (usesamples ? (" (" + samplecount + ")") : "")
 	else if (usesamples)
-		text = samplecount
+		content_text = samplecount
 	
-	var samplerate = export_samples_per_second
+	var samplerate, samplehint;
+	samplerate = export_samples_per_second
 	if (usesamples && samplerate = 0 && export_sample_rate_count > 0)
 		samplerate = export_sample_rate_count * 1000000 / max(1, get_timer() - export_sample_rate_start)
-	var samplehint = usesamples ? text_get("exportsamplespersecond", string_format(samplerate, 0, 1)) : ""
-	draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, text, samplehint)
+	samplehint = usesamples ? text_get("exportsamplespersecond", string_format(samplerate, 0, 1)) : ""
+	
+	draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, content_text, samplehint)
 	
 	window_set_caption(loadtext + " - Mine-imator")
 	

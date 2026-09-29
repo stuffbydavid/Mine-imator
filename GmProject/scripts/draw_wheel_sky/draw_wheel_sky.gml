@@ -1,11 +1,10 @@
-/// draw_wheel_sky(name, x, y, value, default, script, tbx, time)
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg value
 /// @arg default
 /// @arg script
-/// @arg tbx
+/// @arg textbox
 /// @arg time
 
 function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
@@ -107,7 +106,6 @@ function draw_wheel_sky(name, xx, yy, value, def, script, tbx, time)
 	draw_set_font(font_value)
 	
 	var label, labelw, labelx;
-	
 	if (time)
 		label = (window_focus = string(tbx) ? tbx.text : rotation_get_time(value))
 	else

@@ -77,10 +77,12 @@ namespace CppProject
 		float depth = 0.f;
 		if (IS_D3D11)
 			depth = ((packedDepth & 0xFFFFFF) / (RealType)0xFFFFFF + 1.0) / 2.0;
+
 		if (IS_OPENGL)
 			depth = (packedDepth >> 8) / (RealType)0xFFFFFF;
 
 		cacheDepthStencilData = cache;
+
 		if (!cache)
 			depthStencilData.clear();
 
@@ -99,9 +101,11 @@ namespace CppProject
 
 		size = newSize;
 		ortho = Matrix::Ortho(0, size.width(), size.height(), 0, -100, 100);
+
 		colorData.clear();
 		depthStencilData.clear();
 		cacheColorData = cacheDepthStencilData = false;
+
 		frameBuffer->Update(size);
 	}
 
@@ -110,18 +114,21 @@ namespace CppProject
 		// Resize if needed
 		if (expectedSize.width() > 0 && expectedSize.height() > 0 && size != expectedSize)
 			Resize(expectedSize);
+		
 		ClearColorCache();
 
 		if (!frameBuffer->BeginUse())
 			return false;
 
 		GFX->matrixP = ortho;
+
 		return true;
 	}
 
 	bool Surface::EndUse()
 	{
 		frameBuffer->EndUse();
+
 		return true;
 	}
 }

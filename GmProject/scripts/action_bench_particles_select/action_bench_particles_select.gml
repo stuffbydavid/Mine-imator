@@ -1,6 +1,3 @@
-/// action_bench_particles_select(preset)
-/// @arg preset
-
 function action_bench_particles_select(preset)
 {
 	with (bench_settings.preview)
@@ -20,6 +17,7 @@ function action_bench_particles_select(preset)
 			temp_particles_type_clear()
 			
 		temp_creator = app
+		
 		bench_settings.particle_preset_temp = preset
 		bench_settings.preview.fire = true
 	}

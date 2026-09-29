@@ -1,5 +1,3 @@
-/// block_set_tripwire()
-
 function block_set_tripwire()
 {
 	if (builder_scenery && !builder_scenery_legacy)

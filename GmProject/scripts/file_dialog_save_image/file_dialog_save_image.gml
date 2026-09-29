@@ -1,4 +1,3 @@
-/// file_dialog_save_image(filename)
 /// @arg filename
 
 function file_dialog_save_image(fn)

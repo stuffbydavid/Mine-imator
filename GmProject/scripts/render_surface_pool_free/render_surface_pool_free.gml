@@ -1,6 +1,3 @@
-/// render_surface_pool_free(pool)
-/// @arg pool
-
 function render_surface_pool_free(pool)
 {
 	if (!instance_exists(pool))

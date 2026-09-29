@@ -1,30 +1,37 @@
-function view_shape_camera_frustum_dof(tl, mat, ratio, sizemath)
+/// @arg timeline
+/// @arg matrix
+/// @arg ratio
+/// @arg fovtan
+
+function view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
 {
 	var dofnear, doffar, dofblurnear, dofblurfar;
+	var viewfrustumdofpoints, viewfrustumdofblurpoints;
+	
 	dofnear = min(cam_far, max(cam_near, tl.value[e_value.CAM_DOF_DEPTH] - tl.value[e_value.CAM_DOF_RANGE]))
 	doffar = min(cam_far, max(cam_near, tl.value[e_value.CAM_DOF_DEPTH] + tl.value[e_value.CAM_DOF_RANGE]))
 	dofblurnear = min(cam_far, max(cam_near, (tl.value[e_value.CAM_DOF_DEPTH] - tl.value[e_value.CAM_DOF_RANGE]) - tl.value[e_value.CAM_DOF_FADE_SIZE]))
 	dofblurfar = min(cam_far, max(cam_near, (tl.value[e_value.CAM_DOF_DEPTH] + tl.value[e_value.CAM_DOF_RANGE]) + tl.value[e_value.CAM_DOF_FADE_SIZE]))
 		
-	var viewfrustumdofpoints = array(
-		point3D(-((sizemath * dofnear) * ratio), dofnear, -sizemath * dofnear), //nbr
-		point3D(-((sizemath * dofnear) * ratio), dofnear, sizemath * dofnear), //ntr
-		point3D(((sizemath * dofnear) * ratio), dofnear, -sizemath * dofnear), //nbl
-		point3D(((sizemath * dofnear) * ratio), dofnear, sizemath * dofnear), //ntl
-		point3D(-((sizemath * doffar) * ratio), doffar, -sizemath * doffar), //fbr
-		point3D(-((sizemath * doffar) * ratio), doffar, sizemath * doffar), //ftr
-		point3D(((sizemath * doffar) * ratio), doffar, -sizemath * doffar), //fbl
-		point3D(((sizemath * doffar) * ratio), doffar, sizemath * doffar) //ftl
+	viewfrustumdofpoints = array(
+		point3D(-((fovtan * dofnear) * ratio), dofnear, -fovtan * dofnear), // nbr
+		point3D(-((fovtan * dofnear) * ratio), dofnear, fovtan * dofnear), // ntr
+		point3D(((fovtan * dofnear) * ratio), dofnear, -fovtan * dofnear), // nbl
+		point3D(((fovtan * dofnear) * ratio), dofnear, fovtan * dofnear), // ntl
+		point3D(-((fovtan * doffar) * ratio), doffar, -fovtan * doffar), // fbr
+		point3D(-((fovtan * doffar) * ratio), doffar, fovtan * doffar), // ftr
+		point3D(((fovtan * doffar) * ratio), doffar, -fovtan * doffar), // fbl
+		point3D(((fovtan * doffar) * ratio), doffar, fovtan * doffar) // ftl
 	)
-	var viewfrustumdofblurpoints = array(
-		point3D(-((sizemath * dofblurnear) * ratio), dofblurnear, -sizemath * dofblurnear), //nbr
-		point3D(-((sizemath * dofblurnear) * ratio), dofblurnear, sizemath * dofblurnear), //ntr
-		point3D(((sizemath * dofblurnear) * ratio), dofblurnear, -sizemath * dofblurnear), //nbl
-		point3D(((sizemath * dofblurnear) * ratio), dofblurnear, sizemath * dofblurnear), //ntl
-		point3D(-((sizemath * dofblurfar) * ratio), dofblurfar, -sizemath * dofblurfar), //fbr
-		point3D(-((sizemath * dofblurfar) * ratio), dofblurfar, sizemath * dofblurfar), //ftr
-		point3D(((sizemath * dofblurfar) * ratio), dofblurfar, -sizemath * dofblurfar), //fbl
-		point3D(((sizemath * dofblurfar) * ratio), dofblurfar, sizemath * dofblurfar) //ftl
+	viewfrustumdofblurpoints = array(
+		point3D(-((fovtan * dofblurnear) * ratio), dofblurnear, -fovtan * dofblurnear), // nbr
+		point3D(-((fovtan * dofblurnear) * ratio), dofblurnear, fovtan * dofblurnear), // ntr
+		point3D(((fovtan * dofblurnear) * ratio), dofblurnear, -fovtan * dofblurnear), // nbl
+		point3D(((fovtan * dofblurnear) * ratio), dofblurnear, fovtan * dofblurnear), // ntl
+		point3D(-((fovtan * dofblurfar) * ratio), dofblurfar, -fovtan * dofblurfar), // fbr
+		point3D(-((fovtan * dofblurfar) * ratio), dofblurfar, fovtan * dofblurfar), // ftr
+		point3D(((fovtan * dofblurfar) * ratio), dofblurfar, -fovtan * dofblurfar), // fbl
+		point3D(((fovtan * dofblurfar) * ratio), dofblurfar, fovtan * dofblurfar) // ftl
 	)
 	
 	// DOF outlines

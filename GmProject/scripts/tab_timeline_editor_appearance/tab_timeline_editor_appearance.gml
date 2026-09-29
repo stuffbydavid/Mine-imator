@@ -1,10 +1,8 @@
-/// tab_timeline_editor_appearance()
-
 function tab_timeline_editor_appearance()
 {
 	if (tl_edit.type = e_tl_type.POINT_LIGHT || tl_edit.type = e_tl_type.SPOT_LIGHT)
 	{
-		tab_set_collumns(true, floor(content_width / 150))
+		tab_set_columns(true, floor(content_width / 150))
 
 		// Shadows
 		tab_control_checkbox()
@@ -16,7 +14,7 @@ function tab_timeline_editor_appearance()
 		draw_checkbox("timelineeditorrealisticfalloff", dx, dy, tl_edit.realistic_falloff, action_tl_realistic_falloff, "timelineeditorrealisticfallofftip")
 		tab_next()
 
-		tab_set_collumns(false)
+		tab_set_columns(false)
 		return 0
 	}
 	
@@ -83,16 +81,15 @@ function tab_timeline_editor_appearance()
 	tab_next()
 		
 	// Alpha mode
-	var text;
 	if (tl_edit.alpha_mode = e_alpha_mode.BLEND)
-		text = text_get("renderalphamodeblend")
+		content_text = text_get("renderalphamodeblend")
 	else if (tl_edit.alpha_mode = e_alpha_mode.HASHED)
-		text = text_get("renderalphamodehashed")
+		content_text = text_get("renderalphamodehashed")
 	else
-		text = text_get("renderalphamodedefault")
+		content_text = text_get("renderalphamodedefault")
 			
 	tab_control_menu()
-	draw_button_menu("timelineeditoralphamode", e_menu.LIST, dx, dy, dw, 24, tl_edit.alpha_mode, text, action_tl_alpha_mode)
+	draw_button_menu("timelineeditoralphamode", e_menu.LIST, dx, dy, dw, 24, tl_edit.alpha_mode, content_text, action_tl_alpha_mode)
 	tab_next()
 		
 	// Render depth
@@ -100,7 +97,7 @@ function tab_timeline_editor_appearance()
 	draw_dragger("timelineeditordepth", dx, dy, dragger_width, tl_edit.depth, 0.1, -no_limit, no_limit, 0, 1, tab.appearance.tbx_depth, action_tl_depth, null, true, false, "timelineeditordepthtip")
 	tab_next()
 		
-	tab_set_collumns(true, floor(content_width/150))
+	tab_set_columns(true, floor(content_width/150))
 		
 	// Texture
 	tab_control_checkbox()
@@ -171,5 +168,5 @@ function tab_timeline_editor_appearance()
 	draw_checkbox("timelineeditorlqhiding", dx, dy, tl_edit.lq_hiding, action_tl_lq_hiding)
 	tab_next()
 		
-	tab_set_collumns(false)
+	tab_set_columns(false)
 }

@@ -1,53 +1,31 @@
-/// list_item_draw(item, x, y, width, height, [toggled, [margin, [xoffset, [animation]]]])
+/// @desc Draws a list item with icons/buttons.
 /// @arg item
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg [toggled
-/// @arg [margin
-/// @arg [xoffset
-/// @arg [animation]]]
-/// @desc Draws a list item with icons/buttons
+/// @arg [toggled]
+/// @arg [margin]
+/// @arg [xoffset]
+/// @arg [animation]
 
-function list_item_draw()
+function list_item_draw(item, xx, yy, width, height, toggled = false, margin = 0, xoffset = 0, animation = true)
 {
-	var item, xx, yy, width, height, toggled, margin, xoffset, components, animation, name;
-	var leftp, rightp, middley, mousehover, hover;
-	item = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	width = argument[3]
-	height = argument[4]
-	toggled = false
-	margin = 0
-	xoffset = 0
+	var components, name;
 	components = 0
-	animation = true
 	
 	if (item.list != null && item.list.get_name)
 		name = text_get(item.name)
 	else
 		name = item.name
 	
-	if (argument_count > 5)
-		toggled = argument[5]
-	
 	if (item.toggled)
 		toggled = true
 	
-	if (argument_count > 6)
-		if (argument[6] != null)
-			margin = argument[6]
-	
 	margin = 0
 	
-	if (argument_count > 7)
-		if (argument[7] != null)
-			xoffset = argument[7]
-	
-	if (argument_count > 8)
-		animation = argument[8]
+	if (xoffset = null)
+		xoffset = 0
 	
 	if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 		return 0
@@ -87,14 +65,14 @@ function list_item_draw()
 		
 		draw_box(xx, yy, width, height, false, backcolor, backalpha)
 		
-		var clip_state = clip_is_active();
+		var clipstate = clip_is_active();
 		
-		if (clip_state)
+		if (clipstate)
 			clip_end()
 		
 		draw_box_hover(xx, yy, width, height, microani_arr[e_microani.PRESS])
 		
-		if (clip_state)
+		if (clipstate)
 			clip_begin(shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height)
 	}
 	else
@@ -111,6 +89,7 @@ function list_item_draw()
 		backalpha = 0
 	}
 	
+	var leftp, rightp, middley, mousehover, hover;
 	leftp = margin
 	rightp = margin
 	middley = yy + height/2

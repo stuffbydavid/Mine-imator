@@ -1,11 +1,6 @@
-/// draw_tooltip_label(text, icon, type)
-/// @arg text
-/// @arg icon
-/// @arg type
-
 function draw_tooltip_label(text, icon, type)
 {
-	var color = setting_theme.toast_color[type]
+	var color = setting_theme.toast_color[type];
 	
 	draw_set_font(font_caption)
 	text = string_wrap(text_get(text), (dw - 32) + 4)

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"bench_sound_stop",
   "parent":{
-    "name":"Sound",
-    "path":"folders/Scripts/App/Actions/Bench/Sound.yy",
+    "name":"Bench",
+    "path":"folders/Scripts/App/Interface/Bench.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

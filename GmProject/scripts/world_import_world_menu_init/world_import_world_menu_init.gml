@@ -1,5 +1,6 @@
 /// CppSeparate void world_import_world_menu_init()
-/// Add the worlds available on the system to the menu list.
+/// @desc Add the worlds available on the system to the menu list.
+
 function world_import_world_menu_init()
 {
 	menu_add_item("Some World 1", "Some World 1")

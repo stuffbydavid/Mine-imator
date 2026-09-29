@@ -1,4 +1,3 @@
-/// view_toolbar_draw(view, x, y)
 /// @arg view
 /// @arg x
 /// @arg y
@@ -50,6 +49,7 @@ function view_toolbar_draw(view, xx, yy)
 	if (setting_separate_tool_modes)
 	{
 		tip_set_keybind(e_keybind.TOOL_SELECT)
+		
 		if (draw_button_icon("viewtoolselect", xx, yy, 24, 24, setting_tool_select, icons.SELECT, null, false, "viewtoolselecttip"))
 		{
 			action_tools_disable_all()
@@ -98,6 +98,7 @@ function view_toolbar_draw(view, xx, yy)
 	if (setting_separate_tool_modes)
 	{
 		tip_set_keybind(e_keybind.TOOL_SCALE)
+		
 		if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
 		{
 			if (setting_separate_tool_modes)
@@ -142,6 +143,7 @@ function view_toolbar_draw(view, xx, yy)
 	if (setting_separate_tool_modes)
 	{
 		tip_set_keybind(e_keybind.TOOL_TRANSFORM)
+		
 		if (draw_button_icon("viewtooltransform", xx, yy, 24, 24, setting_tool_transform, icons.MULTITRANSFORM, null, false, "viewtooltransformtip"))
 		{
 			action_tools_disable_all()
@@ -157,6 +159,7 @@ function view_toolbar_draw(view, xx, yy)
 		yy += 1 + padding
 		
 		tip_set_keybind(e_keybind.TOOL_SCALE)
+		
 		if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
 		{
 			if (setting_separate_tool_modes)

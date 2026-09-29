@@ -1,13 +1,11 @@
-/// popup_advanced_draw()
-
 function popup_advanced_draw()
 {
 	// Info
 	draw_set_font(font_value)
-	var text = string_limit_ext(text_get("advancedinfo"), (dw - 40) + 8, no_limit);
-	draw_label(text, floor(dx + dw/2), dy, fa_middle, fa_top, c_text_main, a_text_main, font_value)
+	content_text = string_limit_ext(text_get("advancedinfo"), (dw - 40) + 8, no_limit)
+	draw_label(content_text, floor(dx + dw/2), dy, fa_middle, fa_top, c_text_main, a_text_main, font_value)
 	
-	dy += string_height(text) + 19
+	dy += string_height(content_text) + 19
 	
 	draw_set_font(font_button)
 	var buttonx = string_width(text_get("advancedenable")) + button_padding;

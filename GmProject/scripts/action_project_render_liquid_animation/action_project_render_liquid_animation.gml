@@ -1,6 +1,3 @@
-/// action_project_render_liquid_animation(value)
-/// @arg value
-
 function action_project_render_liquid_animation(value)
 {
 	if (!history_undo && !history_redo)

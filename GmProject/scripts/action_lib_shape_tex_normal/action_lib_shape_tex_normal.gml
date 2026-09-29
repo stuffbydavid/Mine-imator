@@ -1,17 +1,14 @@
-/// action_lib_shape_tex_normal(resource)
 /// @arg resource
 
 function action_lib_shape_tex_normal(res)
 {
-	var fn;
-	fn = ""
-
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_image()
@@ -27,10 +24,9 @@ function action_lib_shape_tex_normal(res)
 	}
 	
 	with (temp_edit)
-	{
 		shape_tex_normal = res
-	}
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 }

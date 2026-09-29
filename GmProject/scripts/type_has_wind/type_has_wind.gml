@@ -1,6 +1,3 @@
-/// type_has_wind(type)
-/// @arg type
-
 function type_has_wind(type)
 {
 	return (type = e_tl_type.SCENERY || 

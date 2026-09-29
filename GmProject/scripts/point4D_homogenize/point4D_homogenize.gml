@@ -1,5 +1,4 @@
 /// CppSeparate VecType point4D_homogenize(VecType)
-/// point4D_homogenize(point)
 /// @arg point
 
 function point4D_homogenize(pnt)

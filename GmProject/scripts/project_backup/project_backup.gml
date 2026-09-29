@@ -1,5 +1,3 @@
-/// project_backup()
-
 function project_backup()
 {
 	var fn = project_folder + "/" + filename_name(project_folder);

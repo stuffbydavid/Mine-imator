@@ -1,5 +1,3 @@
-/// render_startup()
-
 function render_startup()
 {
 	globalvar renderer_current, renderer_name_list, renderer_edit;
@@ -281,7 +279,7 @@ function render_startup()
 	
 	// Load default render settings
 	globalvar render_default_settings;
-	render_default_settings = new_obj(obj_render_preset);
+	render_default_settings = new_obj(obj_render_preset)
 	
 	with (render_default_settings)
 	{

@@ -1,5 +1,3 @@
-/// shader_ca_set()
-
 function shader_ca_set()
 {
 	render_set_uniform("uBlurAmount", render_camera.value[e_value.CAM_CA_BLUR_AMOUNT])

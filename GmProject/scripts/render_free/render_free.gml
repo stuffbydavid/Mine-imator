@@ -1,5 +1,3 @@
-/// render_free()
-
 function render_free()
 {
 	render_surface_pool_save()

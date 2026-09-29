@@ -1,4 +1,4 @@
-// Read a .schematic file, returns whether successful
+/// @desc Read a .schematic file, returns whether successful.
 
 function builder_read_schematic(map)
 {
@@ -65,7 +65,7 @@ function builder_read_schematic(map)
 		}
 		
 		// Get palette
-		var palettemap = blocksmap[?"Palette"]
+		var palettemap = blocksmap[?"Palette"];
 		if (!ds_map_valid(palettemap))
 		{
 			log("Schematic error", "Palette not found")
@@ -80,8 +80,10 @@ function builder_read_schematic(map)
 			sch_palette_waterlogged[i] = false
 		}
 		
-		var palettemax = 0;
-		var key = ds_map_find_first(palettemap);
+		var palettemax, key;
+		palettemax = 0
+		key = ds_map_find_first(palettemap)
+		
 		while (!is_undefined(key))
 		{
 			if (!string_contains(key, "_NBT_"))
@@ -96,9 +98,11 @@ function builder_read_schematic(map)
 				// Has properties
 				if (bracketindex > 0)
 				{
-					var mcid = string_copy(key, 1, bracketindex - 1);
-					var varstr = string_copy(key, bracketindex + 1, string_length(key) - 1 - bracketindex);
-					var block = mc_assets.block_id_map[?mcid]
+					var mcid, varstr, block;
+					mcid = string_copy(key, 1, bracketindex - 1)
+					varstr = string_copy(key, bracketindex + 1, string_length(key) - 1 - bracketindex)
+					block = mc_assets.block_id_map[?mcid]
+					
 					if (!is_undefined(block))
 					{
 						var vars = array();
@@ -123,7 +127,7 @@ function builder_read_schematic(map)
 				// ID only
 				else if (!is_undefined(mc_assets.block_id_map[?key]))
 				{
-					var block = mc_assets.block_id_map[?key]
+					var block = mc_assets.block_id_map[?key];
 					sch_palette_blocks[index] = block
 							
 					// ID specific vars
@@ -205,21 +209,21 @@ function builder_read_schematic(map)
 		}
 		
 		// Get map
-		var metadata = map[?"Metadata"]
+		var metadata = map[?"Metadata"];
 		if (ds_map_valid(metadata))
 			file_map = metadata[?"FromMap"]
 	}
 	else
 	{
 		// Get block/data array
-		sch_legacy_blocksarray = map[?"Blocks"];
+		sch_legacy_blocksarray = map[?"Blocks"]
 		if (is_undefined(sch_legacy_blocksarray))
 		{
 			log("Schematic error", "Blocks array not found")
 			return false
 		}
 		
-		sch_legacy_dataarray = map[?"Data"];
+		sch_legacy_dataarray = map[?"Data"]
 		if (is_undefined(sch_legacy_dataarray))
 		{
 			log("Schematic error", "Data array not found")
@@ -234,7 +238,7 @@ function builder_read_schematic(map)
 		file_map = ""
 		
 	// Version 2 renamed TileEntities to BlockEntities, version 3 moved it into Blocks
-	sch_tileentity_list = map[?"TileEntities"];
+	sch_tileentity_list = map[?"TileEntities"]
 	if (!ds_list_valid(sch_tileentity_list))
 		sch_tileentity_list = map[?"BlockEntities"]
 	if (!ds_list_valid(sch_tileentity_list))

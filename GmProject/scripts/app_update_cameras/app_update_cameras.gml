@@ -1,6 +1,3 @@
-/// app_update_cameras(renderer, movie)
-/// @arg renderer
-/// @arg movie
 /// @desc Updates surface of all required cameras.
 
 function app_update_cameras(renderer, movie)
@@ -53,10 +50,12 @@ function app_update_cameras(renderer, movie)
 			renderer_current = renderer
 			render_start(other.cam_surf_tmp, other.id, other.id)
 			render_use_samples = false
+			
 			if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)
 				render_high()
 			else
 				render_low()
+			
 			other.cam_surf_tmp = render_done()
 		}
 		

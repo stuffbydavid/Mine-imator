@@ -5,7 +5,7 @@ function res_load_skulls()
 	{
 		if (scenery_instant)
 		{
-			var key = ds_map_find_first(mc_builder.block_skull_texture_map)
+			var key = ds_map_find_first(mc_builder.block_skull_texture_map);
 			while (!is_undefined(key))
 			{
 				mc_builder.block_skull_res_map[?key] = null

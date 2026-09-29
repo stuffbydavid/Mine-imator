@@ -1,5 +1,4 @@
-/// action_bench_particles(preset)
-/// @arg preset
+/// @arg filename
 
 function action_bench_particles(fn)
 {
@@ -12,6 +11,7 @@ function action_bench_particles(fn)
 	bench_clear()
 	particles_load(fn, bench_settings)
 	temp_creator = app
+	
 	with (bench_settings)
 	{
 		name = text_exists("benchparticles" + presetname) ? text_get("benchparticles" + presetname) : presetname

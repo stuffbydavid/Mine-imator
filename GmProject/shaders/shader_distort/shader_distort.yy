@@ -3,8 +3,8 @@
   "%Name":"shader_distort",
   "name":"shader_distort",
   "parent":{
-    "name":"Distort",
-    "path":"folders/Shaders/Effects/Distort.yy",
+    "name":"Effects",
+    "path":"folders/Shaders/Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

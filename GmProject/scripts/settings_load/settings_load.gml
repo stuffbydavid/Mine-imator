@@ -1,13 +1,20 @@
-/// settings_load()
 /// @desc Formats:
-///			100 DEMO 4 = Initial
-///			100 DEMO 5 = added spawn objects and camera
-///			100 = added undo/redo shortcuts, project folder, ssao, shadows, dof, aa, grid size, even more shortcuts, panels, tabs, views, z is up, fps
-///			103 = compact timeline, jump to select, real time render
-///			106 = wave animation, exportmovie/image settings
-///			106_2 = block emissive
-///			106_3 = remove camera buffer size
-///			110 = remade in JSON, texture filtering level
+/// 		100 DEMO 4 = Initial
+/// 		100 DEMO 5 = added spawn objects and camera
+/// 		100 = added undo/redo shortcuts, project folder, ssao, shadows, dof, aa, grid size, even more shortcuts, panels, tabs, views, z is up, fps
+/// 		103 = compact timeline, jump to select, real time render
+/// 		106 = wave animation, exportmovie/image settings
+/// 		106_2 = block brightness
+/// 		106_3 = remove camera buffer size
+/// 		CB 1.0.0 = Community Build format
+/// 		CB 1.0.2 = custom interface and bloom
+/// 		CB 1.1.0 = Community Build format
+/// 		1.1.0 PRE 1 = remade in JSON, texture filtering level
+/// 		1.1.0 = asset version metadata and named panel locations
+/// 		1.1.3 = removed legacy bend settings
+/// 		1.1.4 = bend pinch
+/// 		1.2.0 = bend style, glow, light bleeding, noisy grass/water, custom watermark and vignette
+/// 		2.0.0 = redesigned interface, window, tool, snapping, watermark and export settings.
 
 function settings_load()
 {
@@ -28,7 +35,7 @@ function settings_load()
 		if (!is_real(map[?"format"]))
 			return 0
 		
-		load_format = map[?"format"];
+		load_format = map[?"format"]
 		if (load_format > settings_format)
 			return 0
 		
@@ -138,6 +145,7 @@ function settings_load()
 			window_mouse_set_permission(setting_camera_lock_mouse)
 			setting_place_new = value_get_real(interfacemap[?"place_new"], setting_place_new)
 			setting_interface_scale_auto = value_get_real(interfacemap[?"scale_auto"], setting_interface_scale_auto)
+			
 			if (setting_interface_scale_auto)
 				setting_interface_scale = interface_scale_default_get()
 			else
@@ -218,11 +226,9 @@ function settings_load()
 		var controlsmap = map[?"controls"];
 		if (ds_map_valid(controlsmap))
 		{
-			var obj;
-			
 			for (var i = 0; i < e_keybind.amount; i++)
 			{
-				obj = keybinds[i]
+				var obj = keybinds[i];
 				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
 			}
 
@@ -272,13 +278,13 @@ function settings_load()
 		if (ds_map_valid(map[?"main_window"]))
 		{
 			var mainwindowmap = map[?"main_window"];
-			var rectlist = mainwindowmap[?"rect"]
+			var rectlist = mainwindowmap[?"rect"];
 			setting_main_window_rect = array(rectlist[|0], rectlist[|1], rectlist[|2], rectlist[|3])
 			setting_main_window_maximized = mainwindowmap[?"maximized"]
 		}
 		
 		// World import
-		var worldimportmap = map[?"world_import"]
+		var worldimportmap = map[?"world_import"];
 		if (ds_map_valid(worldimportmap))
 		{
 			setting_world_import_filter_enabled = value_get_real(worldimportmap[?"filter_enabled"], setting_world_import_filter_enabled)

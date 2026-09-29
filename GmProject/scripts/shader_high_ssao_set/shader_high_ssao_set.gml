@@ -1,5 +1,3 @@
-/// shader_high_ssao_set()
-
 function shader_high_ssao_set()
 {
 	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_depth))

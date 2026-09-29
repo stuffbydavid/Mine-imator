@@ -36,6 +36,7 @@ namespace CppProject
 			for (IntType i = 0; i < size; i++)
 				arr.Append(VarType());
 		}
+
 		return arr;
 	}
 
@@ -166,11 +167,13 @@ namespace CppProject
 		QNetworkRequest req((QString)url);
 		req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 		QNetworkReply* reply = App->httpManager.get(req);
+		
 		AppHandler::HttpRequest request = { App->httpNextId, reply, url };
 		reply->connect(reply, &QNetworkReply::downloadProgress, [request](qint64 received, qint64 total)
 		{
 			App->HttpProgress(request, received, total);
 		});
+		
 		reply->connect(reply, &QNetworkReply::finished, [targetFile, request]()
 		{
 			QFile file(targetFile);
@@ -180,10 +183,12 @@ namespace CppProject
 				WARNING("Could not open targe file "+ targetFile + " for writing.");
 				return;
 			}
+			
 			file.write(request.data->readAll());
 			file.close();
 			App->HttpResponse(request);
 		});
+		
 		return App->httpNextId++;
 	}
 
@@ -192,11 +197,13 @@ namespace CppProject
 		QNetworkRequest req((QString)url);
 		req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 		QNetworkReply* reply = App->httpManager.get(req);
+		
 		AppHandler::HttpRequest request = { App->httpNextId, reply, url };
 		reply->connect(reply, &QNetworkReply::finished, [request]()
 		{
 			App->HttpResponse(request);
 		});
+
 		return App->httpNextId++;
 	}
 
@@ -250,6 +257,7 @@ namespace CppProject
 		RealType maxVal = args[0];
 		for (IntType i = 1; i < args.Size(); i++)
 			maxVal = std::max(maxVal, args[i].ToReal());
+		
 		return maxVal;
 	}
 
@@ -258,6 +266,7 @@ namespace CppProject
 		RealType minVal = args[0];
 		for (IntType i = 1; i < args.Size(); i++)
 			minVal = std::min(minVal, args[i].ToReal());
+		
 		return minVal;
 	}
 
@@ -315,6 +324,7 @@ namespace CppProject
 	{
 		if (v.IsString())
 			return v.Str().ToReal();
+		
 		return v.ToReal();
 	}
 
@@ -337,7 +347,8 @@ namespace CppProject
 	{
 		void keyPressEvent(QKeyEvent* event) override
 		{
-			if (event->key() == Qt::Key_Escape) {
+			if (event->key() == Qt::Key_Escape)
+			{
 				event->accept();
 				return;
 			}

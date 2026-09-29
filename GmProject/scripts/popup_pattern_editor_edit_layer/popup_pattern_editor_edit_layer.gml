@@ -1,5 +1,3 @@
-/// popup_pattern_editor_edit_layer()
-
 function popup_pattern_editor_edit_layer()
 {
 	draw_label(text_get("patterneditorcolors"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)

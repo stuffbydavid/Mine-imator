@@ -15,8 +15,10 @@ namespace CppProject
 
 		// Free program and SSBO
 		deleteAndReset(program);
+
 		if (glSsboId)
 			GFX->glDeleteBuffers(1, &glSsboId);
+		
 		glSsboId = 0;
 
 		// Convert from GLES to GLSL for a given shader
@@ -29,6 +31,7 @@ namespace CppProject
 			for (QString line : code.split("\n"))
 			{
 				QString declaration = line.section(" ", 0, 0);
+
 				if (line.startsWith("#") && !preprocessorExceptions.contains(declaration))
 				{
 					header += line + "\n";
@@ -43,6 +46,7 @@ namespace CppProject
 				{
 					header += "layout(location = 0) out vec4 out_FragColor;\n";
 					code.replace("gl_FragColor", "out_FragColor");
+
 					numOutputs = 1;
 				}
 				else // Multiple rendertargets
@@ -56,6 +60,7 @@ namespace CppProject
 
 						header += "layout(location = " + outNumStr + ") out vec4 out_FragData" + outNumStr + ";\n";
 						code.replace(outData, "out_FragData" + outNumStr);
+
 						numOutputs++;
 					}
 				}
@@ -89,6 +94,7 @@ namespace CppProject
 				code.replace("in vec4 in_Colour;\n", "");
 				code.replace("in vec4 in_Wave;\n", "");
 				code.replace("in vec3 in_Tangent;\n", "");
+
 				header += "in uint _aNormal;\n"
 					"in uint _aColor;\n"
 					"in uint _aData;\n"
@@ -149,6 +155,7 @@ namespace CppProject
 				QRegularExpression uniFind("\\b" + uni.name + "\\b");
 				QString uniReplVs = "_obj[_objIndex]." + uni.name;
 				QString uniReplFs = "_obj[_vObjIndex]." + uni.name;
+
 				vsCode = vsCode.replace(uniHeader, "");
 				fsCode = fsCode.replace(uniHeader, "");
 				vsCode = vsCode.replace(uniFind, uniReplVs);
@@ -169,6 +176,7 @@ namespace CppProject
 		{
 			AddUniform("_uUvRect", "vec4", true, true, numSamplers);
 			AddUniform("_uTexRepeat", "int", true, true, numSamplers);
+
 			defines += "uniform vec4[" + NumStr(numSamplers) + "] _uUvRect;\n";
 			defines += "uniform int[" + NumStr(numSamplers) + "] _uTexRepeat;\n";
 		}
@@ -220,12 +228,15 @@ namespace CppProject
 		switch (vertexFormat)
 		{
 			case PRIMITIVE:
+			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
 				attributeLocation[1] = program->attributeLocation("in_Colour");
 				attributeLocation[2] = program->attributeLocation("in_TextureCoord");
 				break;
+			}
 
 			case VERTEX_BUFFER:
+			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
 				attributeLocation[1] = program->attributeLocation("_aNormal");
 				attributeLocation[2] = program->attributeLocation("_aColor");
@@ -233,11 +244,14 @@ namespace CppProject
 				attributeLocation[4] = program->attributeLocation("_aData");
 				attributeLocation[5] = program->attributeLocation("_aTangent");
 				break;
+			}
 
 			case WORLD:
+			{
 				attributeLocation[0] = program->attributeLocation("in_Pos");
 				attributeLocation[1] = program->attributeLocation("in_Data");
 				break;
+			}
 
 			default:
 				WARNING("Unknown vertex format");

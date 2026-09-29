@@ -1,5 +1,4 @@
 /// CppSeparate VecType point2D_add(VecType, VecType)
-/// point2D_sub(point1, point2)
 /// @arg point1
 /// @arg point2
 

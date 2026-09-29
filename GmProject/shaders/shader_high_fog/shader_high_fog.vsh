@@ -1,5 +1,4 @@
-/// shader_high_fog
-/// @desc White=fog, Black=no fog
+/// @desc White=fog, Black=no fog.
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;

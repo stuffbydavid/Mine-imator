@@ -1,4 +1,3 @@
-/// app_update_animate()
 /// @desc Handles the playing of various animations. Runs once per step.
 
 function app_update_animate()
@@ -271,8 +270,8 @@ function app_update_animate()
 	background_sunset_alpha = background_sky_rise_set_alpha(false)
 	background_sunrise_alpha = background_sky_rise_set_alpha(true)
 	
-	var twilight_color = merge_color(background_sunlight_color, background_twilight ? c_red : c_white, max(background_sunrise_alpha, background_sunset_alpha) * 0.75);
-	background_sunlight_color_final = merge_color(twilight_color, c_black, background_night_alpha)
+	var twilightcolor = merge_color(background_sunlight_color, background_twilight ? c_red : c_white, max(background_sunrise_alpha, background_sunset_alpha) * 0.75);
+	background_sunlight_color_final = merge_color(twilightcolor, c_black, background_night_alpha)
 	background_ambient_color_final = merge_color(background_ambient_color, background_night_color, background_night_alpha)
 	background_fog_color_final = background_fog_color
 	

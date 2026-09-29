@@ -1,5 +1,3 @@
-/// world_import_go_to_position_draw()
-
 function world_import_go_to_position_draw()
 {
 	draw_set_font(font_label)

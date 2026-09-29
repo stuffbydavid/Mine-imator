@@ -1,5 +1,6 @@
 /// CppSeparate void builder_create_buffers(Scope<obj_builder>)
-/// Allocate buffers (GML) or sections (C++)
+/// @desc Allocate buffers (GML) or sections (C++).
+
 function builder_create_buffers()
 {
 	block_obj = buffer_create(build_size_total * 2, buffer_fixed, 2)

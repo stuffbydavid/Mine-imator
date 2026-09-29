@@ -1,11 +1,7 @@
-/// action_lib_pc_destroy_at_time_random_min(value, add)
-/// @arg value
-/// @arg add
-
-function action_lib_pc_destroy_at_time_random_min(val, add)
+function action_lib_pc_destroy_at_time_random_min(value, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_pc_destroy_at_time_random_min, obj_edit.pc_destroy_at_time_random_min, obj_edit.pc_destroy_at_time_random_min * add + val, true)
+		history_set_var(action_lib_pc_destroy_at_time_random_min, obj_edit.pc_destroy_at_time_random_min, obj_edit.pc_destroy_at_time_random_min * add + value, true)
 	
-	obj_edit.pc_destroy_at_time_random_min = obj_edit.pc_destroy_at_time_random_min * add + val
+	obj_edit.pc_destroy_at_time_random_min = obj_edit.pc_destroy_at_time_random_min * add + value
 }

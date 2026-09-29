@@ -1,5 +1,3 @@
-/// action_build_place()
-
 function action_build_place()
 {
 	var hobj, tl, placetarget, placeparent;
@@ -11,9 +9,11 @@ function action_build_place()
 	{
 		placetarget = place_target_tl
 		placeparent = place_target_tl_part_of
+		
 		if (placeparent != null && instance_exists(placeparent))
 			with (placeparent)
 				tl_mark_place_target(false)
+		
 		place_target_tl = null
 		place_target_tl_part_of = null
 	}
@@ -32,6 +32,7 @@ function action_build_place()
 			{
 				if (build_structure = structure)
 					action_build_structure(null, false)
+				
 				with (structure)
 					tl_remove_clean()
 			}
@@ -53,6 +54,7 @@ function action_build_place()
 				structure.animated = false
 				structure.save_id = hobj.structure_save_id
 				structure.name = hobj.structure_name
+				
 				with (structure)
 				{
 					tl_value_set_vec3(e_value.POS_X, hobj.structure_pos)
@@ -96,6 +98,7 @@ function action_build_place()
 			var targetparent, action;
 			targetparent = app
 			action = null
+			
 			if (place_target_tl != null && instance_exists(place_target_tl))
 				with (build_settings)
 					action = tl_get_place_parent_action(app.place_target_tl)
@@ -110,10 +113,12 @@ function action_build_place()
 
 			if (targetparent != app && type_is_structure(targetparent.type))
 				action_build_structure(targetparent, false)
+			
 			else if (targetparent = app)
 			{
 				if (build_structure != null && !instance_exists(build_structure))
 					action_build_structure(null)
+				
 				if (build_structure != null)
 					targetparent = build_structure
 				else
@@ -123,6 +128,7 @@ function action_build_place()
 					basename = text_get("buildtoolstructure")
 					foldername = basename
 					suffix = 2
+					
 					found = true
 					while (found)
 					{
@@ -130,6 +136,7 @@ function action_build_place()
 						with (obj_timeline)
 							if (name = foldername)
 								found = true
+						
 						if (found)
 						{
 							foldername = basename + " " + string(suffix)
@@ -141,6 +148,7 @@ function action_build_place()
 					var structure = new_tl(e_tl_type.STRUCTURE);
 					structure.animated = false
 					structure.name = foldername
+					
 					hobj.structure_pos = array_copy_1d(place_pos)
 					hobj.structure_pos = vec3_snap(hobj.structure_pos, transform_snap)
 					
@@ -203,10 +211,12 @@ function action_build_place()
 
 	tl_update_list()
 	tl_update_matrix()
+	
 	if (history_undo)
 		app_update_tl_edit()
 	
 	project_update_counts()
+	
 	lib_preview.update = true
 
 	if (place_build)
@@ -216,6 +226,7 @@ function action_build_place()
 		{
 			place_target_tl = placetarget
 			place_target_tl_part_of = placeparent
+			
 			with (placeparent)
 				tl_mark_place_target(true)
 		}
@@ -224,6 +235,7 @@ function action_build_place()
 		
 		place_pos = null
 		place_view_pos = null
+		
 		view_main.update_place_surfaces = true
 		view_second.update_place_surfaces = true
 	}

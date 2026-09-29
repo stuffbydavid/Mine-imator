@@ -1,4 +1,3 @@
-/// render_world_sky()
 /// @desc Draws the sky or custom background as either a skybox or skysphere.
 
 function render_world_sky()
@@ -63,9 +62,10 @@ function render_world_sky()
 		render_set_texture(background_fog_texture)
 		
 		// Fog sphere radius cannot exceed render distance
-		var fogscalemath = ((background_fog_height / 1000) + ((background_fog_height / 1000) * max(background_sunrise_alpha, background_sunset_alpha)))
-		var fogscalexy = fogscalemath < 1 ? dis : dis / fogscalemath
-		var fogscalez = fogscalemath > 1 ? dis : dis * fogscalemath
+		var fogscalemath, fogscalexy, fogscalez;
+		fogscalemath = ((background_fog_height / 1000) + ((background_fog_height / 1000) * max(background_sunrise_alpha, background_sunset_alpha)))
+		fogscalexy = fogscalemath < 1 ? dis : dis / fogscalemath
+		fogscalez = fogscalemath > 1 ? dis : dis * fogscalemath
 		vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(fogscalexy, fogscalexy, fogscalez))
 		
 		//shader_texture_filter_linear = false
@@ -98,7 +98,8 @@ function render_world_sky()
 			background_sky_sun_moon_vbuffer = vbuffer_create_surface(1, point2D(0, 0), point2D(1, 1), false)
 		
 		render_set_uniform_color("uBlendColor", c_white, vis)
-		var sunres = res_eval(background_sky_sun_tex)
+		
+		var sunres = res_eval(background_sky_sun_tex);
 		if (sunres.type = e_res_type.PACK)
 			render_set_texture(sunres.sun_texture)
 		else
@@ -111,7 +112,8 @@ function render_world_sky()
 		vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, -1)), -0.15, 0)
 		
 		render_set_uniform_color("uBlendColor", c_white, vis)
-		var moonres = res_eval(background_sky_moon_tex)
+		
+		var moonres = res_eval(background_sky_moon_tex);
 		if (moonres.type = e_res_type.PACK && moonres.ready)
 		{
 			var phase = background_sky_moon_phase;

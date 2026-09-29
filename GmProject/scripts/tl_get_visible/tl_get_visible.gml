@@ -1,5 +1,3 @@
-/// tl_get_visible()
-
 function tl_get_visible()
 {
 	if (render_view_current = null)

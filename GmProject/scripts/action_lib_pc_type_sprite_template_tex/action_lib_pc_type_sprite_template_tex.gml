@@ -1,17 +1,14 @@
-/// action_lib_pc_type_sprite_template_tex(resource)
 /// @arg resource
 
 function action_lib_pc_type_sprite_template_tex(res)
 {
-	var fn;
-	fn = ""
-
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_pack()
@@ -34,5 +31,6 @@ function action_lib_pc_type_sprite_template_tex(res)
 	}
 	
 	project_update_counts()
+	
 	tab_object_editor_particles_preview_restart()
 }

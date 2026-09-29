@@ -1,4 +1,3 @@
-/// action_res_font_load(filename)
 /// @arg filename
 
 function action_res_font_load(fn)

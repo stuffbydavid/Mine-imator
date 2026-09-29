@@ -1,5 +1,3 @@
-/// panel_draw_content()
-
 function panel_draw_content()
 {
 	var minw, minh, maxh, dividew;
@@ -82,7 +80,7 @@ function panel_draw_content()
 		for (var col = 0; col < columns; col++)
 		{
 			// Number of categories in this column
-			var cats = max(1, round(catamount / columns)) 
+			var cats = max(1, round(catamount / columns));
 			if (col = columns - 1)
 				cats = catamount - c
 			

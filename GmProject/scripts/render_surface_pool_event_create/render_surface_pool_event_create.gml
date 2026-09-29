@@ -1,5 +1,3 @@
-/// render_surface_pool_event_create()
-
 function render_surface_pool_event_create()
 {
 	used = true

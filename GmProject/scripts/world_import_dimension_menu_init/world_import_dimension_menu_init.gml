@@ -1,5 +1,4 @@
-/// world_import_dimension_menu_init()
-/// Add the dimensions available on the system to the menu list.
+/// @desc Add the dimensions visited in the world to the menu list.
 
 function world_import_dimension_menu_init()
 {

@@ -1,5 +1,6 @@
-/// action_res_scenery_animate(resource)
-/// Creates a new template of the given scenery resource and animates it.
+/// @desc Creates a new template of the given scenery resource and animates it.
+/// @arg resource
+
 function action_res_scenery_animate(res)
 {
 	if (history_undo)
@@ -45,6 +46,7 @@ function action_res_scenery_animate(res)
 			
 			temp_update_display_name()
 			loaded = true
+			
 			with (temp_animate())
 			{
 				loaded = true
@@ -65,9 +67,10 @@ function action_res_scenery_animate(res)
 		}
 	}
 
-	project_reset_loaded()
 	tl_update_list()
 	tl_update_matrix()
+	
+	project_reset_loaded()
 	project_update_counts()
 
 }

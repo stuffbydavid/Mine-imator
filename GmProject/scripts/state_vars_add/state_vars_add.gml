@@ -1,7 +1,6 @@
-/// state_vars_add(destvars, srcvars)
-/// @arg dest
-/// @arg src
 /// @desc Combines two arrays of name-value pairs.
+/// @arg destination
+/// @arg source
 
 function state_vars_add(dest, src)
 {

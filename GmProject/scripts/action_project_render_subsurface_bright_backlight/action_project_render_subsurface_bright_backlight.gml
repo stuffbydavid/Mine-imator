@@ -1,6 +1,3 @@
-/// action_project_render_subsurface_bright_backlight(value)
-/// @arg value
-
 function action_project_render_subsurface_bright_backlight(value)
 {
 	if (!history_undo && !history_redo)

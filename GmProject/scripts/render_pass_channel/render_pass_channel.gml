@@ -1,6 +1,3 @@
-/// render_pass_channel(pass)
-/// @arg pass
-
 function render_pass_channel(pass)
 {
 	switch (pass)

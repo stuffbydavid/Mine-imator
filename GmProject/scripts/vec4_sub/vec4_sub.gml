@@ -1,7 +1,6 @@
 /// CppSeparate VecType vec4_sub(VecType, VarType)
-/// vec4_sub(vector, sub)
 /// @arg vector
-/// @arg sub
+/// @arg subtract
 
 function vec4_sub(vec, s)
 {

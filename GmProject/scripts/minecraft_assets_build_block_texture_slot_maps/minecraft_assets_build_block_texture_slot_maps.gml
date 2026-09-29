@@ -81,7 +81,7 @@ function minecraft_assets_build_block_texture_slot_maps()
 	// High-resolution pages
 	for (var size = e_block_sheet.STATIC32; size < e_block_sheet.static_amount; size++)
 	{
-		var texturecount = ds_list_size(mc_assets.block_texture_list[size])
+		var texturecount = ds_list_size(mc_assets.block_texture_list[size]);
 		for (var t = texturecount - 1; t >= 0; t--)
 		{
 			texturename = mc_assets.block_texture_list[size][|t]

@@ -1,4 +1,3 @@
-/// tl_value_interpolate(valueid, percent, valuestart, valueend)
 /// @arg valueid
 /// @arg percent
 /// @arg valuestart

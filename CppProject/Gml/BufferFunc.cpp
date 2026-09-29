@@ -47,6 +47,7 @@ namespace CppProject
 	{
 		if (Buffer* buf = FindBuffer(id))
 			return buf->data.Size();
+		
 		return 0;
 	}
 
@@ -72,6 +73,7 @@ namespace CppProject
 			else
 				delete buf;
 		}
+		
 		return -1;
 	}
 
@@ -126,6 +128,7 @@ namespace CppProject
 	{
 		if (Buffer* buf = FindBuffer(id))
 			return buf->pos;
+		
 		return -1;
 	}
 
@@ -134,33 +137,7 @@ namespace CppProject
 		if (Buffer* buf = FindBuffer(id))
 			if (buf->WriteVar(type, value, buf->pos))
 				return 0;
+		
 		return -1;
 	}
-
-	IntType buffer_fast_peek_u8(IntType id, IntType offset)
-	{
-		if (Buffer* buf = FindBuffer(id))
-			return CAST_BITS(uchar, buf->data[offset]);
-		return 0;
-	}
-
-	IntType buffer_fast_peek_s32(IntType id, IntType offset)
-	{
-		if (Buffer* buf = FindBuffer(id))
-			return CAST_BITS(int32_t, buf->data[offset]);
-		return 0;
-	}
-
-	void buffer_fast_poke_u8(IntType id, IntType offset, IntType value)
-	{
-		if (Buffer* buf = FindBuffer(id))
-			CAST_BITS(uchar, buf->data[offset]) = (uchar)value;
-	}
-
-	void buffer_fast_poke_s32(IntType id, IntType offset, IntType value)
-	{
-		if (Buffer* buf = FindBuffer(id))
-			CAST_BITS(int32_t, buf->data[offset]) = (int32_t)value;
-	}
-
 }

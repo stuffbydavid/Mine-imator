@@ -1,5 +1,3 @@
-/// project_save_resource()
-
 function project_save_resource()
 {
 	json_save_object_start()

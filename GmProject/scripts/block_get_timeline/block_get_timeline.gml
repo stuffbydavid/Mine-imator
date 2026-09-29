@@ -1,14 +1,10 @@
-/// block_get_timeline(block, stateid)
-/// @arg block
-/// @arg stateid
-
 function block_get_timeline(block, stateid)
 {
 	var pos = build_pos;
 	
 	with (new_obj(obj_block_tl))
 	{
-		id.block = block
+		self.block = block
 		model_name = block.tl_model_name
 		model_state = array()
 		
@@ -31,7 +27,7 @@ function block_get_timeline(block, stateid)
 			}
 			
 			// Unique case with decorated pot
-			if (mc_builder.block_decorated_pot_sherds_map[?pos] != undefined)
+			if (!is_undefined(mc_builder.block_decorated_pot_sherds_map[?pos]))
 				model_state = array_copy_1d(mc_builder.block_decorated_pot_sherds_map[?pos])
 		}
 		
@@ -88,7 +84,7 @@ function block_get_timeline(block, stateid)
 		}
 		
 		// Skull resource
-		if (mc_builder.block_skull_map[?pos] != undefined)
+		if (!is_undefined(mc_builder.block_skull_map[?pos]))
 		{
 			var userid = mc_builder.block_skull_map[?pos];
 			texture = mc_builder.block_skull_res_map[?userid]

@@ -1,6 +1,4 @@
-/// list_value_filter(list)
-/// @arg list
-/// @desc Filters ou duplicate values and executable items
+/// @desc Filters ou duplicate values and executable items.
 
 function list_value_filter(list)
 {
@@ -20,12 +18,12 @@ function list_value_filter(list)
 			continue
 		}
 		
-		if (	item.script != null ||
-				item.value = e_option.BROWSE ||
-				item.value = e_option.IMPORT_WORLD ||
-				item.value = e_option.DOWNLOAD_SKIN ||
-				item.value = e_option.DOWNLOAD_SKIN_DONE ||
-				item.value = e_option.IMPORT_ITEM_SHEET_DONE)
+		if (item.script != null ||
+			item.value = e_option.BROWSE ||
+			item.value = e_option.IMPORT_WORLD ||
+			item.value = e_option.DOWNLOAD_SKIN ||
+			item.value = e_option.DOWNLOAD_SKIN_DONE ||
+			item.value = e_option.IMPORT_ITEM_SHEET_DONE)
 		{
 			instance_destroy(item)
 			ds_list_delete(list.item, i)

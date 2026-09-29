@@ -1,10 +1,8 @@
-/// background_ground_update_texture_normal()
 /// @desc Updates the ground sprite depending on the chosen slot and texture.
 
 function background_ground_update_texture_normal()
 {
-	var texres;
-	texres = res_eval(background_ground_tex_normal)
+	var texres = res_eval(background_ground_tex_normal);
 	if (!texres.ready || (background_ground_slot = background_ground_slot_normal && texres.save_id = background_ground_tex_normal_prev))
 		return 0
 	
@@ -21,16 +19,19 @@ function background_ground_update_texture_normal()
 	else if (background_ground_texture_normal != null)
 		texture_free(background_ground_texture_normal)
 	
-	var size, bx, by, surf, tex;
-	var decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
-	var sheet = decodedslot[0]
-	var slot = decodedslot[1]
+	var size, bx, by, surf, tex, decodedslot, sheet, slot;
+	decodedslot = minecraft_assets_block_texture_picker_slot_decode(background_ground_slot)
+	sheet = decodedslot[0]
+	slot = decodedslot[1]
+	
 	if (sheet < 0)
 	{
 		background_ground_normal_ani = false
 		background_ground_texture_normal = sprite_duplicate(spr_default_normal)
+		
 		return 0
 	}
+	
 	if (texres.block_sheet_texture_normal[sheet] = null)
 		texres = mc_res
 	
@@ -38,6 +39,7 @@ function background_ground_update_texture_normal()
 	if (sheet != e_block_sheet.ANIMATED)
 	{
 		background_ground_normal_ani = false
+		
 		size = ceil(texture_width(texres.block_sheet_texture_normal[sheet]) / minecraft_block_sheet_size[sheet][X])
 		bx = (slot mod minecraft_block_sheet_size[sheet][X]) * size
 		by = (slot div minecraft_block_sheet_size[sheet][X]) * size
@@ -51,16 +53,19 @@ function background_ground_update_texture_normal()
 		{
 			background_ground_normal_ani = false
 			background_ground_texture_normal = sprite_duplicate(spr_default_normal)
+			
 			return 0
 		}
 		
 		background_ground_normal_ani = true
+		
 		size = ceil(texture_width(texres.block_sheet_texture_normal[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X])
 		bx = (slot mod minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 		by = (slot div minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]) * size
 	}
 	
 	draw_texture_start()
+	
 	surf = surface_create(size, size)
 	surface_set_target(surf)
 	{
@@ -71,6 +76,7 @@ function background_ground_update_texture_normal()
 			{
 				draw_clear_alpha(c_black, 0)
 				draw_texture_part(texres.block_sheet_texture_normal[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
+				
 				background_ground_ani_texture_normal[f] = texture_surface(surf)
 			}
 		}
@@ -80,10 +86,12 @@ function background_ground_update_texture_normal()
 		{
 			draw_clear_alpha(c_black, 0)
 			draw_texture_part(texres.block_sheet_texture_normal[sheet], 0, 0, bx, by, size, size)
+			
 			background_ground_texture_normal = texture_surface(surf)
 		}
 	}
 	surface_reset_target()
 	surface_free(surf)
+	
 	draw_texture_done()
 }

@@ -1,11 +1,8 @@
-/// new_shader(name)
-/// @arg name
-
 function new_shader(name)
 {
 	with (new_obj(obj_shader))
 	{
-		id.name = name
+		self.name = name
 		shader = asset_get_index(name)
 		script = asset_get_index(name + "_set")
 		uniform_map = ds_map_create()

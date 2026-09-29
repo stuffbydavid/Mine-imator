@@ -1,15 +1,13 @@
-/// tab_frame_editor_item()
-
 function tab_frame_editor_item()
 {
 	if (tl_edit.temp = null || tl_edit.type != e_tl_type.ITEM)
 		return 0
 	
 	var res = tl_edit.value[e_value.TEXTURE_OBJ];
-	
 	if (res = null)
 		res = tl_edit.temp.item_tex
 	res = res_eval(res)
+	
 	tab_control_switch()
 	draw_button_collapse("itemslot", collapse_map[?"itemslot"], action_tl_frame_custom_item_slot, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], "frameeditoritemcustomitemslot")
 	tab_next()
@@ -37,6 +35,7 @@ function tab_frame_editor_item()
 			sheetsizes = [res.item_sheet_size]
 			slots = [res.item_sheet_size[X] * res.item_sheet_size[Y]]
 		}
+		
 		var hei = 304;
 		tab_control(hei)
 		draw_texture_picker(tl_edit.value[e_value.ITEM_SLOT], textures, slots, sheetsizes, dx, dy, dw, hei, tab.item.item_scroll, action_tl_frame_item_slot, mc_assets.item_texture_list, null, null, true)

@@ -1,4 +1,8 @@
 /// CppSeparate void builder_set_state_id(Scope<obj_builder_thread>, IntType, IntType, IntType, IntType)
+/// @arg x
+/// @arg y
+/// @arg z
+/// @arg value
 
 function builder_set_state_id(xx, yy, zz, val)
 {

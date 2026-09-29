@@ -1,16 +1,13 @@
-/// popup_switch(popup)
-/// @arg popup
-
-function popup_switch(argument0)
+function popup_switch(popup)
 {
-	if (popup = null)
+	if (popup_current = null)
 	{
-		popup_show(argument0)
+		popup_show(popup)
 		return 0
 	}
 	
-	popup_switch_to = argument0
-	popup_switch_from = popup
+	popup_switch_to = popup
+	popup_switch_from = popup_current
 	window_busy = "popup" + popup_switch_to.name
 	popup_ani_type = "hide"
 }

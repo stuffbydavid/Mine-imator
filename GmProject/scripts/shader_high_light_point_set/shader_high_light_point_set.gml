@@ -1,5 +1,3 @@
-/// shader_high_light_point_set()
-
 function shader_high_light_point_set()
 {
 	render_set_uniform_int("uIsSky", 0)

@@ -1,5 +1,4 @@
 /// CppSeparate VecType matrix_position(MatrixType)
-/// matrix_position(matrix)
 /// @arg matrix
 
 function matrix_position(mat)

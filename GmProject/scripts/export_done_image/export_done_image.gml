@@ -1,10 +1,9 @@
-/// export_done_image()
-
 function export_done_image()
 {
 	render_free()
 	
 	surface_free(export_surface)
+	
 	export_surface = null
 	window_state = ""
 	
@@ -17,6 +16,7 @@ function export_done_image()
 	if (benchmark_mode)
 		return 0
 
+	// Alert user
 	toast_new(e_toast.POSITIVE, text_get("alertexportimage"))
 	toast_add_action("alertexportimageview", open_url, export_filename)
 	toast_last.dismiss_time = 10

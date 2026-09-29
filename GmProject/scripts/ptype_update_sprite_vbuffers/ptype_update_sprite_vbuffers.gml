@@ -1,16 +1,14 @@
-/// ptype_update_sprite_vbuffers()
 /// @desc Updates the 3D models for sprite particles.
 
 function ptype_update_sprite_vbuffers()
 {
-	var res, tex;
-	
 	// Clear old
 	for (var m = 0; m < sprite_vbuffer_amount; m++)
 		vbuffer_destroy(sprite_vbuffer[m])
 	
 	if (temp = particle_sheet)
 	{
+		var res, tex;
 		res = res_eval(sprite_tex)
 		tex = res.particles_texture[sprite_tex_image]
 		
@@ -25,26 +23,26 @@ function ptype_update_sprite_vbuffers()
 		for (var m = 0; m < sprite_vbuffer_amount; m++)
 		{
 			var frame, tx1, ty1, tx2, ty2;
-			frame = min(sprite_frame_start, sprite_frame_end) + m;
+			frame = min(sprite_frame_start, sprite_frame_end) + m
 			tx1 = ((frame mod framesx) * fwid) / swid
 			ty1 = ((frame div framesx) * fhei) / shei
 			tx2 = tx1 + fwid / swid
 			ty2 = ty1 + fhei / shei
 			
 			sprite_vbuffer[m] = vbuffer_start()
-			vertex_add(-fwid / 2, 0, fhei / 2, 0, 0, 1, tx1, ty1)
-			vertex_add(fwid / 2, 0, fhei / 2, 0, 0, 1, tx2, ty1)
-			vertex_add(fwid / 2, 0, -fhei / 2, 0, 0, 1, tx2, ty2)
-			vertex_add(-fwid / 2, 0, fhei / 2, 0, 0, 1, tx1, ty1)
-			vertex_add(fwid / 2, 0, -fhei / 2, 0, 0, 1, tx2, ty2)
-			vertex_add(-fwid / 2, 0, -fhei / 2, 0, 0, 1, tx1, ty2)
+			vertex_add_real(-fwid / 2, 0, fhei / 2, 0, 0, 1, tx1, ty1)
+			vertex_add_real(fwid / 2, 0, fhei / 2, 0, 0, 1, tx2, ty1)
+			vertex_add_real(fwid / 2, 0, -fhei / 2, 0, 0, 1, tx2, ty2)
+			vertex_add_real(-fwid / 2, 0, fhei / 2, 0, 0, 1, tx1, ty1)
+			vertex_add_real(fwid / 2, 0, -fhei / 2, 0, 0, 1, tx2, ty2)
+			vertex_add_real(-fwid / 2, 0, -fhei / 2, 0, 0, 1, tx1, ty2)
 			vbuffer_done()
 		}
 	}
 	else if (temp = particle_template)
 	{
+		var res, template, size;
 		res = res_eval(sprite_template_tex)
-		var template, size;
 		template = particle_template_map[?sprite_template]
 		size = template.size
 		
@@ -60,12 +58,12 @@ function ptype_update_sprite_vbuffers()
 			ty2 = uvs[3] + uvs[1]
 			
 			sprite_vbuffer[m] = vbuffer_start()
-			vertex_add(-size / 2, 0, size / 2, 0, 0, 1, tx1, ty1)
-			vertex_add(size / 2, 0, size / 2, 0, 0, 1, tx2, ty1)
-			vertex_add(size / 2, 0, -size / 2, 0, 0, 1, tx2, ty2)
-			vertex_add(-size / 2, 0, size / 2, 0, 0, 1, tx1, ty1)
-			vertex_add(size / 2, 0, -size / 2, 0, 0, 1, tx2, ty2)
-			vertex_add(-size / 2, 0, -size / 2, 0, 0, 1, tx1, ty2)
+			vertex_add_real(-size / 2, 0, size / 2, 0, 0, 1, tx1, ty1)
+			vertex_add_real(size / 2, 0, size / 2, 0, 0, 1, tx2, ty1)
+			vertex_add_real(size / 2, 0, -size / 2, 0, 0, 1, tx2, ty2)
+			vertex_add_real(-size / 2, 0, size / 2, 0, 0, 1, tx1, ty1)
+			vertex_add_real(size / 2, 0, -size / 2, 0, 0, 1, tx2, ty2)
+			vertex_add_real(-size / 2, 0, -size / 2, 0, 0, 1, tx1, ty2)
 			vbuffer_done()
 		}
 	}

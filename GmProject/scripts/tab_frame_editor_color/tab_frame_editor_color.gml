@@ -1,5 +1,3 @@
-/// tab_frame_editor_color()
-
 function tab_frame_editor_color()
 {
 	if (!tl_edit.value_type[e_value_type.MATERIAL_COLOR])
@@ -22,7 +20,7 @@ function tab_frame_editor_color()
 		if (setting_advanced_mode)
 		{
 			tab_collapse_start()
-			tab_set_collumns(true, floor(content_width/150))
+			tab_set_columns(true, floor(content_width/150))
 		}
 		
 		// Mul (/ Blend color)
@@ -64,7 +62,7 @@ function tab_frame_editor_color()
 				tab_next()
 			}
 			
-			tab_set_collumns(false)
+			tab_set_columns(false)
 		}
 		
 		// Mix

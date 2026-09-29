@@ -1,6 +1,3 @@
-/// open_url(url)
-/// @arg url
-
 function open_url(url)
 {
 	log("Open URL", url)

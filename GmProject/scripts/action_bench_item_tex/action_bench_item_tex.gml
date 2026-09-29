@@ -1,4 +1,3 @@
-/// action_bench_item_tex(resource)
 /// @arg resource
 
 function action_bench_item_tex(res)
@@ -24,6 +23,7 @@ function action_bench_item_tex(res)
 					res = new_res(fn, e_res_type.ITEM_SHEET)
 					with (res)
 						res_load()
+					
 					break
 				}
 
@@ -35,6 +35,7 @@ function action_bench_item_tex(res)
 			case e_option.IMPORT_ITEM_SHEET_DONE: // Done importing new item sheet
 			{
 				fn = popup_importitemsheet.filename
+				
 				if (popup_importitemsheet.is_sheet)
 				{
 					res = new_res(fn, e_res_type.ITEM_SHEET)

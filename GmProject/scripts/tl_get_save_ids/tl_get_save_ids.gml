@@ -1,5 +1,3 @@
-/// tl_get_save_ids()
-
 function tl_get_save_ids()
 {
 	temp = save_id_get(temp)

@@ -46,6 +46,7 @@ namespace CppProject
 
 				texDesc.Width = imgScaled.width();
 				texDesc.Height = imgScaled.height();
+
 				imgBits = imgScaled.constBits();
 			}
 
@@ -60,6 +61,7 @@ namespace CppProject
 			srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 			srvDesc.Texture2D.MipLevels = -1;
 			D3DCheckError(D3DDevice->CreateShaderResourceView(d3dTex, &srvDesc, &d3dSRV));
+			
 			d3dIdSRVMap[d3dSRVNextId] = d3dSRV;
 			d3dSRVId = d3dSRVNextId++;
 
@@ -79,6 +81,7 @@ namespace CppProject
 			GFX->glBindTexture(GL_TEXTURE_2D, glTexId);
 			GFX->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width(), img.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			GFX->glBindTexture(GL_TEXTURE_2D, 0);
+
 			GL_CHECK_ERROR();
 
 			delete[] data;
@@ -93,6 +96,7 @@ namespace CppProject
 			if (d3dSRVId)
 			{
 				d3dIdSRVMap.remove(d3dSRVId);
+
 				releaseAndReset(d3dTex);
 				releaseAndReset(d3dSRV);
 
@@ -104,6 +108,7 @@ namespace CppProject
 		{
 			if (glTexId)
 				GFX->glDeleteTextures(1, &glTexId);
+			
 			GL_CHECK_ERROR();
 
 			hasMipMaps.remove(glTexId);
@@ -121,6 +126,7 @@ namespace CppProject
 				D3DContext->GenerateMips(d3dSRV);
 				hasMipMaps[d3dSRVId] = true;
 			}
+
 			return d3dSRVId;
 		}
 	#endif
@@ -132,6 +138,7 @@ namespace CppProject
 				GFX->glBindTexture(GL_TEXTURE_2D, glTexId);
 				GFX->glGenerateMipmap(GL_TEXTURE_2D);
 				GFX->glBindTexture(GL_TEXTURE_2D, 0);
+
 				GL_CHECK_ERROR();
 
 				hasMipMaps[glTexId] = true;

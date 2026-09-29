@@ -1,4 +1,3 @@
-/// view_click(view, camera, [ctrl])
 /// @arg view
 /// @arg camera
 /// @arg [ctrl]

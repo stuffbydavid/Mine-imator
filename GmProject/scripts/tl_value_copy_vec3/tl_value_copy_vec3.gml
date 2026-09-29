@@ -1,4 +1,6 @@
-/// tl_value_copy_vec3(valueid, dest, src)
+/// @arg valueid
+/// @arg destination
+/// @arg source
 
 function tl_value_copy_vec3(valueid, dest, src)
 {

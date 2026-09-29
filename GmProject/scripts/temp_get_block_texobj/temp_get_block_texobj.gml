@@ -1,7 +1,6 @@
-/// temp_get_block_texobj(value)
-/// @arg value
 /// @desc Returns the resource whose texture to use when rendering instances of the template.
 /// A value (id) is supplied from a keyframe, if none is available then it is null.
+/// @arg value
 
 function temp_get_block_texobj(val)
 {
@@ -22,10 +21,12 @@ function temp_get_block_texobj(val)
 				}
 			}
 		}
+		
 		if (block_tex = null)
 			return res_eval(project_pack_res)
+		
 		return res_eval(block_tex)
 	}
 	
-	return val;
+	return val
 }

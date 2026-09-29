@@ -1,12 +1,12 @@
-/// recent_update()
-/// @desc Updates the recent model display list
+/// @desc Updates the recent project display list.
 
 function recent_update()
 {
-	var pinnedlist = ds_list_create();
-	var unpinnedlist = ds_list_create();
+	var pinnedlist, unpinnedlist, itemslist;
+	pinnedlist = ds_list_create()
+	unpinnedlist = ds_list_create()
+	itemslist = ds_list_create()
 	
-	var itemslist = ds_list_create();
 	ds_list_copy(itemslist, recent_list)
 	
 	// Separate recent items into separate lists
@@ -26,6 +26,7 @@ function recent_update()
 		else
 			ds_list_add(unpinnedlist, item)
 	}
+	
 	ds_list_clear(recent_list_display)
 	
 	// Sort lists separately

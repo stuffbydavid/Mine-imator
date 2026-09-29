@@ -1,5 +1,4 @@
-/// window_exists(window)
-/// Returns whether a window with the given e_window value has been created.
+/// @desc Returns whether a window with the given e_window value has been created.
 
 function window_exists(window)
 {

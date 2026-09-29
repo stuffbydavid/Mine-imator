@@ -1,9 +1,8 @@
-/// menu_add_timeline(timeline, root, level, menu)
+/// @desc Adds a new timeline to the dropdown menu.
 /// @arg timeline
 /// @arg root
 /// @arg level
 /// @arg menu
-/// @desc Adds a new timeline to the dropdown menu.
 
 function menu_add_timeline(tl, root, level, menu)
 {

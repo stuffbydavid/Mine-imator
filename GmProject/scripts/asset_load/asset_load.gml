@@ -1,12 +1,8 @@
-/// asset_load([filename])
+/// @desc Adds a file to the project. A file browser appears if no filename is given.
 /// @arg [filename]
-/// @desc Adds a file to the project.
-/// A file browser appears if no filename is given.
 
-function asset_load()
+function asset_load(fn = "")
 {
-	var fn;
-	
 	if (history_undo)
 	{
 		with (history_data)
@@ -23,9 +19,7 @@ function asset_load()
 		fn = history_data.filename
 	else
 	{
-		if (argument_count > 0)
-			fn = argument[0]
-		else
+		if (fn = "")
 			fn = file_dialog_open_asset()
 	}
 	
@@ -118,7 +112,7 @@ function asset_load()
 		case ".jpeg":
 		case ".dat":
 			log("Opening image", fn)
-			ds_list_add(popup_importimage.filenames, fn);
+			ds_list_add(popup_importimage.filenames, fn)
 			popup_importimage_show(popup_importimage.filenames[|0])
 			return true
 	}

@@ -1,4 +1,3 @@
-/// file_dialog_open_sound()
 /// @desc Opens a dialog box for selecting a sound.
 
 function file_dialog_open_sound()

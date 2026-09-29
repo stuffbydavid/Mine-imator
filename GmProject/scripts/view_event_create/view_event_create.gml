@@ -1,5 +1,3 @@
-/// view_event_create()
-
 function view_event_create()
 {
 	show = true

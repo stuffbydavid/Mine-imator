@@ -1,6 +1,5 @@
-/// view_shape_spotlight_guide(timeline)
-/// @arg timeline
 /// @desc Renders an outline of a spotlight's light cone.
+/// @arg timeline
 
 function view_shape_spotlight_guide(tl)
 {
@@ -14,15 +13,14 @@ function view_shape_spotlight_guide(tl)
 	sharpness = tl.value[e_value.LIGHT_SPOT_SHARPNESS]
 	fadesize = tl.value[e_value.LIGHT_FADE_SIZE]
 	
-	//draw_set_alpha(.5)
-	
 	// Range
-	draw_set_color(c_control_red)
 	var length, lensin, lencos;
-	length = max(0, range);
-	lensin = sin(degtorad(radius * 0.5));
-	lencos = cos(degtorad(radius * 0.5));
+	length = max(0, range)
+	lensin = sin(degtorad(radius * 0.5))
+	lencos = cos(degtorad(radius * 0.5))
 	
+	//draw_set_alpha(.5)
+	draw_set_color(c_control_red)
 	view_shape_line(point3D_mul_matrix(point3D(0, 0, 0), mat), point3D_mul_matrix(point3D(0, length, 0), mat))
 	
 	// Spot radius

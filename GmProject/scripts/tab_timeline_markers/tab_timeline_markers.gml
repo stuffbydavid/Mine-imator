@@ -1,6 +1,16 @@
-/// tab_timeline_markers(tlx, tly, tlw, bary, barh, barw, markerh, markerbarx, markerbary, markerbarw, markerbarh)
+/// @arg timelinex
+/// @arg timeliney
+/// @arg timelinewidth
+/// @arg bary
+/// @arg barwidth
+/// @arg barheight
+/// @arg markerheight
+/// @arg markerbarx
+/// @arg markerbary
+/// @arg markerbarwidth
+/// @arg markerbarheight
 
-function tab_timeline_markers(tlx, tly, tlw, bary, barh, barw, markerh, markerbarx, markerbary, markerbarw, markerbarh)
+function tab_timeline_markers(tlx, tly, tlw, bary, barw, barh, markerh, markerbarx, markerbary, markerbarw, markerbarh)
 {
 	// Marker
 	var markerx = floor(timeline_marker * timeline_zoom - timeline.hor_scroll.value);
@@ -52,15 +62,15 @@ function tab_timeline_markers(tlx, tly, tlw, bary, barh, barw, markerh, markerba
 	// Draw markers
 	for (var i = 0; i < ds_list_size(timeline_marker_list); i++)
 	{
-		var markx, markeditx, marky, markw, markh, marker, color, name;
+		var markx, markeditx, marky, markw, markh, marker, color;
 		marker = timeline_marker_list[|i]
 		color = setting_theme.accent_list[marker.color]
-		name = marker.name + (debug_names ? " [" + marker.save_id + "]" : "")
+		content_name = marker.name + (debug_names ? " [" + marker.save_id + "]" : "")
 			
 		markx = tlx + floor(marker.pos * timeline_zoom - timeline.hor_scroll.value)
 		markeditx = tlx + floor(marker.edit_pos * timeline_zoom - timeline.hor_scroll.value)
 		marky = markerbary + 4
-		markw = max(32, string_width(name) + 8)
+		markw = max(32, string_width(content_name) + 8)
 		markh = 16
 			
 		if ((markx > tlx + tlw) || (markx + markw < tlx))
@@ -85,7 +95,7 @@ function tab_timeline_markers(tlx, tly, tlw, bary, barh, barw, markerh, markerba
 		}
 			
 		draw_box(markx, marky, markw, markh, false, color, 1)
-		draw_text(markx + 4, marky + 16, name)
+		draw_text(markx + 4, marky + 16, content_name)
 			
 		if (barmouseon && app_mouse_box(markx, marky, markw, markh, "place"))
 		{

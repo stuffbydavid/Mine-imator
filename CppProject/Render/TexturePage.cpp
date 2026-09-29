@@ -22,6 +22,7 @@ namespace CppProject
 				break;
 			
 			WARNING("Could not allocate texture page with size " + NumStr(size) + "x" + NumStr(size));
+
 			pageSize >>= 1;
 			WARNING("Decreasing size");
 		}
@@ -30,11 +31,13 @@ namespace CppProject
 		if (!image.isNull())
 		{
 			image.fill(Qt::transparent);
+
 			uchar* imgBits = image.bits();
 			imgBits[0] = 255;
 			imgBits[1] = 255;
 			imgBits[2] = 255;
 			imgBits[3] = 255;
+
 			freeRegion = QRegion(0, 0, size, size);
 			freeRegion -= QRegion(0, 0, 1, 1);
 
@@ -60,6 +63,7 @@ namespace CppProject
 	{
 		if (!texture && !image.isNull())
 			texture = new Texture(image);
+		
 		return texture;
 	}
 
@@ -129,6 +133,7 @@ namespace CppProject
 				delete page;
 				return nullptr;
 			}
+
 			pages.push(page);
 		}
 
@@ -172,6 +177,7 @@ namespace CppProject
 				page->image.save((QString)gmlGlobal::working_directory + "/TexturePages/" + NumStr(p) + ".png");
 			p++;
 		}
+
 		DEBUG("Saved texture pages");
 	}
 
@@ -185,6 +191,7 @@ namespace CppProject
 	TexturePageLocation::~TexturePageLocation()
 	{
 		idMap.remove(id);
+
 		if (!allocatedRect.isEmpty())
 			page->Release(allocatedRect);
 	}

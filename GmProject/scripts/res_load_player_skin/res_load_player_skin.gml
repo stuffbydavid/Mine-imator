@@ -1,6 +1,5 @@
-/// res_load_player_skin(filename/texture)
-/// @arg filename/texture
 /// @desc Adds a human skin from the given filename or texture.
+/// @arg filename
 
 function res_load_player_skin(fn)
 {

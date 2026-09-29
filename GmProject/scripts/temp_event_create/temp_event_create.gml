@@ -1,4 +1,3 @@
-/// temp_event_create()
 /// @desc Create event of templates.
 
 function temp_event_create()

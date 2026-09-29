@@ -1,7 +1,4 @@
-/// action_tl_path_smooth(enable)
-/// @arg enable
-
-function action_tl_path_smooth(enable)
+function action_tl_path_smooth(enabled)
 {
 	if (history_undo)
 	{
@@ -37,6 +34,6 @@ function action_tl_path_smooth(enable)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_path_smooth_tree(id, enable, hobj)
+				action_tl_path_smooth_tree(id, enabled, hobj)
 	}
 }

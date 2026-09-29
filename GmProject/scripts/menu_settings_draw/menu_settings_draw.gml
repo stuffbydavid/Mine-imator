@@ -1,5 +1,3 @@
-/// menu_settings_draw()
-
 function menu_settings_draw()
 {
 	if (settings_menu_window != window_get_current())
@@ -17,9 +15,12 @@ function menu_settings_draw()
 			settings_menu_ani = 0
 			settings_menu_name = ""
 			settings_menu_ani_type = ""
+			
 			window_busy = settings_menu_busy_prev
+			
 			context_menu_close()
 			list_destroy(settings_menu_list)
+			
 			return 0
 		}
 	}

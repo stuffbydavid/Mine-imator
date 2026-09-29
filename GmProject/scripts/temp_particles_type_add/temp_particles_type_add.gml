@@ -1,4 +1,3 @@
-/// temp_particles_type_add()
 /// @desc Adds a new particle type to the template. Returns the new one.
 
 function temp_particles_type_add()

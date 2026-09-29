@@ -1,9 +1,8 @@
-/// temp_set_scenery(res, animate, [historyobject])
-/// @arg res
+/// @arg resource
 /// @arg animate
 /// @arg [historyobject]
 
-function temp_set_scenery(res, animate, hobj)
+function temp_set_scenery(res, animate, hobj = null)
 {
 	// Save and remove old timelines
 	with (obj_timeline)
@@ -85,7 +84,7 @@ function temp_set_scenery(res, animate, hobj)
 							{
 								with (tree_list[|t])
 								{
-									if (part_of == null)
+									if (part_of = null)
 									{
 										tl_set_parent(root)
 										t--
@@ -103,7 +102,8 @@ function temp_set_scenery(res, animate, hobj)
 		
 		// Destroy
 		while (ds_list_size(part_list) > 0)
-			tl_remove_clean(part_list[|0])
+			with (part_list[|0])
+				tl_remove_clean()
 		
 		with (obj_timeline)
 			if (delete_ready)
@@ -135,6 +135,7 @@ function temp_set_scenery(res, animate, hobj)
 		{
 			temp_update_display_name()
 			temp_update_rot_point()
+			
 			with (app)
 			{
 				tl_update_list()

@@ -1,4 +1,3 @@
-/// json_save_var_save_id(name, object)
 /// @arg name
 /// @arg object
 

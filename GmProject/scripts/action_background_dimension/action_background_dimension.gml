@@ -1,16 +1,15 @@
-/// action_background_dimension(dim)
-/// @arg dim
+/// @arg dimension
 
 function action_background_dimension(dim)
 {
-	var hobj, groundname, biomeobj, timeline;
-	timeline = false
+	var hobj;
 	
 	if (history_undo)
 	{
 		hobj = history_data
 		if (hobj.dimension_timeline)
 			tl_value_set()
+		
 		background_dimension = hobj.old_dimension
 		background_sky_clouds_show = hobj.old_clouds_show
 		background_sky_color = hobj.old_sky_color
@@ -24,6 +23,8 @@ function action_background_dimension(dim)
 	}
 	else
 	{
+		var timeline = false;
+		
 		if (history_redo)
 		{
 			dim = history_data.new_dimension
@@ -32,7 +33,7 @@ function action_background_dimension(dim)
 		}
 		else
 		{
-			timeline = action_tl_select_single(null, e_tl_type.BACKGROUND)
+			timeline = action_tl_select_single_type(e_tl_type.BACKGROUND)
 			if (timeline)
 			{
 				tl_value_set_start(action_background_dimension, false)
@@ -58,11 +59,13 @@ function action_background_dimension(dim)
 
 		background_dimension = dim
 		background_fog_size = fog_size
-		groundname = ""
+		
+		var groundname = "";
 
 		switch (dim)
 		{
 			case "overworld":
+			{
 				background_sky_clouds_show = true
 				background_sky_color = c_sky_overworld
 				background_image_show = false
@@ -70,9 +73,12 @@ function action_background_dimension(dim)
 				background_fog_distance = fog_far
 				background_biome = overworld_biome
 				groundname = overworld_ground
+				
 				break
-
+			}
+			
 			case "the_nether":
+			{
 				background_sky_clouds_show = false
 				background_sky_color = c_sky_the_nether
 				background_image_show = true
@@ -80,9 +86,12 @@ function action_background_dimension(dim)
 				background_fog_distance = fog_near
 				background_biome = the_nether_biome
 				groundname = the_nether_ground
+				
 				break
-
+			}
+			
 			case "the_end":
+			{
 				background_sky_clouds_show = false
 				background_sky_color = c_sky_the_end
 				background_image_show = true
@@ -90,10 +99,12 @@ function action_background_dimension(dim)
 				background_fog_distance = fog_near
 				background_biome = the_end_biome
 				groundname = the_end_ground
+				
 				break
+			}
 		}
 		
-		biomeobj = find_biome(background_biome)
+		var biomeobj = find_biome(background_biome);
 		if (biomeobj != null)
 			background_sky_color = biomeobj.sky_color
 
@@ -123,6 +134,7 @@ function action_background_dimension(dim)
 	background_ground_update_texture()
 	background_ground_update_texture_material()
 	background_ground_update_texture_normal()
+	
 	with (obj_resource)
 		res_update_colors()
 	

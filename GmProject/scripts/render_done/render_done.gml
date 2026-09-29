@@ -1,5 +1,3 @@
-/// render_done()
-
 function render_done()
 {
 	draw_set_color(render_prev_color)
@@ -8,8 +6,9 @@ function render_done()
 	
 	if (benchmark_mode)
 	{
-		var elapsed = get_timer() - render_start_time
-		var surfaceelapsed = benchmark_surface_total_time - render_start_surface_time
+		var elapsed, surfaceelapsed;
+		elapsed = get_timer() - render_start_time
+		surfaceelapsed = benchmark_surface_total_time - render_start_surface_time
 		benchmark_render_total_time += elapsed - surfaceelapsed
 	}
 	

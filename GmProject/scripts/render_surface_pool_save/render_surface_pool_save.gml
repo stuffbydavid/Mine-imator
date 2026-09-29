@@ -1,11 +1,9 @@
-/// render_surface_pool_save()
-
 function render_surface_pool_save()
 {
 	if (!instance_exists(render_surface_pool_current))
 		return
 
-	var pool = render_surface_pool_current
+	var pool = render_surface_pool_current;
 	pool.surface = render_surface
 	pool.surface_hdr = render_surface_hdr
 	pool.surface_hdr_post = render_surface_hdr_post

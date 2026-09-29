@@ -1,6 +1,5 @@
-/// save_id_get(object)
-/// @arg object
 /// @desc Safe way to get the save ID of an object. "" if invalid.
+/// @arg object
 
 function save_id_get(obj)
 {

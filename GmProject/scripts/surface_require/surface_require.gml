@@ -1,29 +1,18 @@
-/// surface_require(surface, width, height, [depth, [format]])
 /// @arg surface
 /// @arg width
 /// @arg height
-/// @arg [depth
-/// @arg [format]]
+/// @arg [depth]
+/// @arg [format]
 
-function surface_require(surf, w, h, depth = true, surfformat = e_surface_format.rgba8unorm)
+function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm)
 {
-	var format, starttime;
+	var starttime;
 	w = max(1, w)
 	h = max(1, h)
 	
 	// surface_rgba32float support not guaranteed in GM
-	if (surfformat == e_surface_format.rgba32float)
+	if (format = surface_rgba32float)
 		format = is_cpp() ? surface_rgba32float : surface_rgba16float
-	else if (surfformat == e_surface_format.rgba16float)
-		format = surface_rgba16float
-	else if (surfformat == e_surface_format.r32float)
-		format = surface_r32float
-	else if (surfformat = e_surface_format.r8unorm)
-		format = surface_r8unorm
-	else if (surfformat = e_surface_format.r16float)
-		format = surface_r16float
-	else
-		format = surface_rgba8unorm
 	
 	starttime = get_timer()
 	

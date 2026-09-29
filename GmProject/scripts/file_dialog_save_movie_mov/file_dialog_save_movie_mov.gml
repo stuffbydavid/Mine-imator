@@ -1,4 +1,3 @@
-/// file_dialog_save_movie_mov(filename)
 /// @arg filename
 
 function file_dialog_save_movie_mov(fn)

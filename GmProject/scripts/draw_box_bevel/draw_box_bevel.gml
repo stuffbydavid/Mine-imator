@@ -1,4 +1,3 @@
-/// draw_box_bevel(x, y, width, height, alpha, [light])
 /// @arg x
 /// @arg y
 /// @arg width

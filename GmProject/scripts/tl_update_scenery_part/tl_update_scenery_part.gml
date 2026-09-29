@@ -1,5 +1,3 @@
-/// tl_update_scenery_part()
-
 function tl_update_scenery_part()
 {
 	if (part_of = null && !((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp))

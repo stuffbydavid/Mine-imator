@@ -118,10 +118,13 @@ namespace CppProject
 	{
 		QString str;
 		str.setNum(num, 'f', prec);
+		
 		while (str.back() == '0')
 			str.chop(1);
+		
 		if (str.back() == '.')
 			str.chop(1);
+		
 		return str;
 	}
 
@@ -134,20 +137,21 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case UNDEFINED_t: return "Undefined";
-			case REAL_t: return "Real";
-			case REAL_REF_t: return "Real&";
-			case INTEGER_t: return "Integer";
-			case BOOLEAN_t: return "Boolean";
-			case STRING_t: return "String";
-			case VECTOR_t: return "Vector";
-			case MATRIX_t: return "Matrix";
-			case MATRIX_REF_t: return "Matrix&";
-			case ARRAY_t: return "Array";
-			case ARRAY_REF_t: return "Array&";
-			case VARIANT_t: return "Variant";
-			case VARIANT_REF_t: return "Variant&";
+			case UNDEFINED_t:	return "Undefined";
+			case REAL_t:		return "Real";
+			case REAL_REF_t:	return "Real&";
+			case INTEGER_t:		return "Integer";
+			case BOOLEAN_t:		return "Boolean";
+			case STRING_t:		return "String";
+			case VECTOR_t:		return "Vector";
+			case MATRIX_t:		return "Matrix";
+			case MATRIX_REF_t:	return "Matrix&";
+			case ARRAY_t:		return "Array";
+			case ARRAY_REF_t:	return "Array&";
+			case VARIANT_t:		return "Variant";
+			case VARIANT_REF_t:	return "Variant&";
 		}
+
 		return "";
 	}
 

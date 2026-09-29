@@ -1,5 +1,4 @@
-/// render_high_get_apply_surf([hdr])
-/// @desc Updates which target the final surface should be on
+/// @desc Updates which target the final surface should be on.
 
 function render_high_get_apply_surf(hdr = false)
 {
@@ -8,7 +7,7 @@ function render_high_get_apply_surf(hdr = false)
 	if (hdr)
 	{
 		var index = render_post_index ? 0 : 1;
-		render_surface_hdr[index] = surface_require(render_surface_hdr[index], render_width, render_height, true, e_surface_format.rgba16float)
+		render_surface_hdr[index] = surface_require(render_surface_hdr[index], render_width, render_height, true, surface_rgba16float)
 		return render_surface_hdr[index]
 	}
 	

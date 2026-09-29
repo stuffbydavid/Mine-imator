@@ -1,4 +1,3 @@
-/// block_set_bars()
 /// @desc Connects to other bars and panes or solid faces.
 
 function block_set_bars()

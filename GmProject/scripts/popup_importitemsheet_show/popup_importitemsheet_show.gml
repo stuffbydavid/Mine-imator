@@ -1,4 +1,3 @@
-/// popup_importitemsheet_show(filename, script)
 /// @arg filename
 /// @arg script
 
@@ -22,7 +21,7 @@ function popup_importitemsheet_show(fn, script)
 		sheet_size_def = array_copy_1d(sheet_size)
 	}
 	
-	if (popup != null)
+	if (popup_current != null)
 		popup_switch(popup_importitemsheet)
 	else
 		popup_show(popup_importitemsheet)

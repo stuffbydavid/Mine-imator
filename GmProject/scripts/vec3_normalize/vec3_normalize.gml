@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec3_normalize(VecType)
-/// vec3_normalize(vector)
 /// @arg vector
 
 function vec3_normalize(vec)

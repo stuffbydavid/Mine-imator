@@ -1,6 +1,3 @@
-/// string_natural_digits(value)
-/// @arg value
-
 function string_natural_digits(value)
 {
 	var digits, maxdigits;

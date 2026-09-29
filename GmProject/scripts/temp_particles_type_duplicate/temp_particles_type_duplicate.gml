@@ -1,5 +1,3 @@
-/// temp_particles_type_duplicate(type)
-/// @arg type
 /// @desc Duplicates the particle type, returns the new one.
 
 function temp_particles_type_duplicate(type)

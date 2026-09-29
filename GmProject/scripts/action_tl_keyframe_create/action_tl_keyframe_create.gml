@@ -1,7 +1,3 @@
-/// action_tl_keyframe_create(timeline, position)
-/// @arg timeline
-/// @arg position
-
 function action_tl_keyframe_create(timeline, position)
 {
 	if (history_undo)
@@ -34,11 +30,12 @@ function action_tl_keyframe_create(timeline, position)
 		{
 			tl = timeline
 			pos = position
+			
 			hobj = history_set(action_tl_keyframe_create)
 			with (hobj)
 			{
-				id.tl_save_id = save_id_get(tl)
-				id.position = pos
+				self.tl_save_id = save_id_get(tl)
+				self.position = pos
 				animated = tl.animated
 				
 				history_save_tl_select()
@@ -51,8 +48,10 @@ function action_tl_keyframe_create(timeline, position)
 		{
 			tl_select()
 			kf = tl_keyframe_add(pos)
+			
 			animated = true
 			update_matrix = true
+			
 			tl_update_matrix()
 		}
 		

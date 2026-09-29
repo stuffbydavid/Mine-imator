@@ -1,5 +1,4 @@
-/// function app_startup_interface_world_import()
-/// Initialize world import variables
+/// @desc Initialize world import variables.
 
 function app_startup_interface_world_import()
 { 
