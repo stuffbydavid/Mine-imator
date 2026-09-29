@@ -98,12 +98,26 @@ bool DeclarationList::resolve(ResolveScope* scope, const StringId& declScope, co
 		else
 			this->requiredArgs = i + 1;
 
-		// If input if supplied, apply to the expression
+		// If input is supplied, apply to the expression
 		if (inputPars != nullptr && i < static_cast<int>(inputPars.size()))
-			if (exprType.assign(*inputPars[i], this->func, this->isArgs ? 0 : this->line))
-				changed = true;
+			exprType.assign(*inputPars[i], this->func, this->isArgs ? 0 : this->line);
 
-		Variable* declVar = Program::declareVariable(declScope, decl->name, exprType, this->func, *scope->location, this->isArgs ? 0 : this->line);
+		Variable* declVar = nullptr;
+		if (this->isArgs)
+		{
+			for (Variable* var : this->func->vars)
+				if (var->line == 0 && var->name == decl->name)
+				{
+					declVar = var;
+					changed |= var->assignType(exprType, this->func, 0);
+					break;
+				}
+		}
+		if (declVar == nullptr)
+		{
+			declVar = Program::declareVariable(declScope, decl->name, exprType, this->func, *scope->location, this->isArgs ? 0 : this->line);
+			changed |= this->isArgs;
+		}
 
 		if (decl->expr != nullptr)
 			decl->expr->assignedTo = declVar;

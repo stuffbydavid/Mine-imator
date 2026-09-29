@@ -582,7 +582,12 @@ namespace CppProject
 
 	void GraphicsApiHandler::SetColorWrite(BoolType red, BoolType green, BoolType blue, BoolType alpha)
 	{
-		IntType mask = red | (green << 1) | (blue << 2) | (alpha << 3);
+		IntType mask =
+			(IntType)red |
+			((IntType)green << 1) |
+			((IntType)blue << 2) |
+			((IntType)alpha << 3);
+
 		if (colorWriteMask == mask)
 			return;
 

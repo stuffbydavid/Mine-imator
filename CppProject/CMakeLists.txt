@@ -494,10 +494,12 @@ else()
 		find_library(ICONV_LIBRARY iconv REQUIRED)
 		find_library(AUDIO_TOOLBOX_FRAMEWORK AudioToolbox REQUIRED)
 		find_library(CORE_AUDIO_FRAMEWORK CoreAudio REQUIRED)
+		find_library(CORE_GRAPHICS_FRAMEWORK CoreGraphics REQUIRED)
 		target_link_libraries(${PROJECT_NAME} PRIVATE
 			${ICONV_LIBRARY}
 			${AUDIO_TOOLBOX_FRAMEWORK}
 			${CORE_AUDIO_FRAMEWORK}
+			${CORE_GRAPHICS_FRAMEWORK}
 		)
 
 		message(STATUS "OpenMP runtime = ${OPENMP_RUNTIME_LIBRARY}")

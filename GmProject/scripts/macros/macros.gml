@@ -183,7 +183,7 @@ function macros()
 	#macro the_end_biome				"the_end"
 	#macro the_end_ground				"block/end_stone"
 	#macro fog_far						10000
-	#macro fog_near						2000
+	#macro fog_near						3000
 	#macro fog_size						2000
 	#macro fog_height					1250
 	#macro armor_parts					array("helmet", "chestplate", "leggings", "boots")

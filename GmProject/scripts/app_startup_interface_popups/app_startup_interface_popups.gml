@@ -127,6 +127,9 @@ function app_startup_interface_popups()
 	{
 		tbx_key = new_textbox(true, 8, "")
 		warntext = ""
+		if (key_expired)
+			warntext = "errorkeyexpired"
+		
 		page = 0
 		page_ani = 1
 		page_ani_type = "right"

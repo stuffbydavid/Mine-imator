@@ -55,6 +55,11 @@ namespace CppProject
 		return GmDateTimeToQ(time).date().year();
 	}
 
+	RealType date_month_span(RealType start, RealType end)
+	{
+		return (end - start) / 30.4375;
+	}
+
 	RealType date_hour_span(RealType start, RealType end)
 	{
 		return (end - start) * 24.0;

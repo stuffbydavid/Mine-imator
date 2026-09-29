@@ -1964,6 +1964,7 @@
     {"id":{"name":"json_save_var","path":"scripts/json_save_var/json_save_var.yy",},},
     {"id":{"name":"json_startup","path":"scripts/json_startup/json_startup.yy",},},
     {"id":{"name":"json_string_encode","path":"scripts/json_string_encode/json_string_encode.yy",},},
+    {"id":{"name":"key_save","path":"scripts/key_save/key_save.yy",},},
     {"id":{"name":"key_valid","path":"scripts/key_valid/key_valid.yy",},},
     {"id":{"name":"keybind_check","path":"scripts/keybind_check/keybind_check.yy",},},
     {"id":{"name":"keybind_clear","path":"scripts/keybind_clear/keybind_clear.yy",},},

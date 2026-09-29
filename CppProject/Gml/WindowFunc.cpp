@@ -9,8 +9,32 @@
 #include <QCursor>
 #include <QDesktopWidget>
 
+#if OS_MAC
+#include <CoreGraphics/CoreGraphics.h>
+#endif
+
 namespace CppProject
 {
+	static void SetMousePosition(const QPoint& position)
+	{
+		if (AppWindow::mouseEnableLock)
+		{
+		#if OS_MAC
+			CGError error = CGWarpMouseCursorPosition(CGPointMake(position.x(), position.y()));
+			CGAssociateMouseAndMouseCursorPosition(true);
+			if (error == kCGErrorSuccess)
+				AppWin->mousePos = AppWin->mapFromGlobal(position);
+		#else
+			QCursor::setPos(AppWin->screen(), position);
+		#endif
+		}
+		else if (!AppWin->mouseLocked)
+		{
+			AppWin->mouseLocked = true;
+			AppWin->mouseLockPos = AppWin->mouseLockWinPos = AppWin->mousePos;
+		}
+	}
+
 	IntType display_get_dpi_x()
 	{
 		return qApp->desktop()->logicalDpiX();
@@ -58,16 +82,7 @@ namespace CppProject
 		if (App->headless)
 			return;
 
-		if (AppWindow::mouseEnableLock)
-			QCursor::setPos(AppWin->screen(), { (int)(x * App->scale), (int)(y * App->scale) });
-		else
-		{
-			if (!AppWin->mouseLocked)
-			{
-				AppWin->mouseLocked = true;
-				AppWin->mouseLockPos = AppWin->mouseLockWinPos = AppWin->mousePos;
-			}
-		}
+		SetMousePosition({ (int)(x * App->scale), (int)(y * App->scale) });
 	}
 
 	IntType display_reset(IntType, IntType)
@@ -124,8 +139,9 @@ namespace CppProject
 		if (App->headless)
 			return;
 
-		QPoint global = AppWin->mapToGlobal({ (int)x, (int)y });
-		display_mouse_set(global.x(), global.y());
+		QPoint global = AppWin->mapToGlobal({ (int)(x * App->scale), (int)(y * App->scale) });
+		SetMousePosition(global);
+
 		AppWin->mouseLockWinPos = QPoint(x, y);
 	}
 

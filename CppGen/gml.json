@@ -300,6 +300,7 @@
         "date_get_year": { "return": "real", "args": [ "real" ] },
         "date_hour_span": { "return": "real", "args": [ "real", "real" ] },
         "date_minute_span": { "return": "real", "args": [ "real", "real" ] },
+        "date_month_span": { "return": "real", "args": [ "real", "real" ] },
         "date_second_span": { "return": "real", "args": [ "real", "real" ] },
         "date_time_string": { "return": "string", "args": [ "real" ] },
         "date_week_span": { "return": "real", "args": [ "real", "real" ] },

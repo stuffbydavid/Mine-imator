@@ -412,6 +412,7 @@
 		"exportmoviecaption": "Movie export error",
 		"loadmap": "An error occurred when importing the Minecraft map.",
 		"loadmapcaption": "Import Minecraft map error",
+		"keyexpired": "Your key has expired after 6 months.",
 		"upgrade": "Invalid key!",
 		"upgradecaption": "Upgrade error",
 		"downloadskinuser": "The user \"%1\" does not exist.",
@@ -822,7 +823,9 @@
 		"page0": "Watermark can be customized or removed.",
 		"page1": "Unlock \"Advanced mode\" and get access to all animation features.",
 		"page2": "Unlock the \"Realistic\" renderer in projects.",
-		"continue": "Upgrade"
+		"expiredkey": "Your key has expired after 6 months, visit the Mine-imator website to get a new one.",
+		"continue": "Upgrade",
+		"dismiss": "Dismiss"
 	},
 	"advanced/": {
 		"caption": "Advanced mode",
@@ -4518,7 +4521,6 @@
 		"fadegizmos": "Fade view controls",
 		"cameralockmouse": "Camera locks mouse",
 		"cameralockmousetip": "Rotating or moving any camera will lock the mouse cursor in place.",
-		"cameralockmousemessage": "Locking the mouse cursor requires added permissions which are given in System Preferences, do you want to continue?",
 		"placenew": "Place new objects with cursor",
 		"interfacescaleauto": "Automatically scale interface",
 		"interfacescaleautotip": "Scale the interface using the system's DPI (Dots per inch) setting.",

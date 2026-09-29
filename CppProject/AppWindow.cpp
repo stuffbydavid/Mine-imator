@@ -14,9 +14,6 @@ namespace CppProject
 {
 	BoolType AppWindow::mouseEnableLock = true;
 
-#else
-	BoolType AppWindow::mouseEnableLock = false;
-#endif
 	AppWindow::AppWindow(IntType id) : id(id)
 	{
 	#if OS_WINDOWS

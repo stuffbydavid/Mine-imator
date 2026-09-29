@@ -65,34 +65,53 @@ function popup_upgrade_draw()
 	
 	if (popup_upgrade.warntext != "")
 	{
-		tab_control(8)
+		tab_control(16)
 		draw_label(text_get(popup_upgrade.warntext), dx + dw/2, dy + 8, fa_center, fa_bottom, c_error, 1, font_caption)
 		tab_next()
 	}
 	
 	tab_control_button_label()
-	if (draw_button_label("upgradecontinue", dx + dw, dy, null, icons.KEY, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("upgradecontinue", dx + dw/2 + (key_expired ? 8 : 0), dy, null, icons.KEY, e_button.PRIMARY, null, key_expired ? e_anchor.LEFT : e_anchor.RIGHT))
 	{
-		var upgrade = trial_upgrade(popup_upgrade.tbx_key.text);
+		var key = popup_upgrade.tbx_key.text;
 		
-		if (upgrade)
+		if (key_valid(key))
 		{
-			if (popup_switch_from)
-				popup_switch(popup_switch_from)
+			if (key = key_current && key_expired)
+				popup_upgrade.warntext = "errorkeyexpired"
+			
+			else if (key = key_current && key_current_date_invalid)
+				popup_upgrade.warntext = "errorupgrade"
 			else
 			{
-				// Open "Advanced mode" popup
-				if (popup_current.open_advanced)
-				{
-					popup_switch(popup_advanced)
-					popup_upgrade.open_advanced = false
-				}
+				popup_upgrade.warntext = ""
+				
+				trial_upgrade(key)
+				
+				if (popup_switch_from)
+					popup_switch(popup_switch_from)
 				else
-					popup_close()
+				{
+					// Open "Advanced mode" popup
+					if (popup_current.open_advanced)
+					{
+						popup_switch(popup_advanced)
+						popup_upgrade.open_advanced = false
+					}
+					else
+						popup_close()
+				}
 			}
 		}
 		else
 			popup_upgrade.warntext = "errorupgrade"
+	}
+	
+	if (key_expired && draw_button_label("upgradedismiss", dx + dw/2 - 8, dy, null, null, e_button.SECONDARY, null, e_anchor.RIGHT))
+	{
+		key_expired_dismissed = true
+		key_save()
+		popup_close()
 	}
 	tab_next()
 }

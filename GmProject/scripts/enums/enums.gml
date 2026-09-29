@@ -73,6 +73,14 @@ function enums()
 		FORMAT_210			= 35
 	}
 	
+	// Key format
+	enum e_key_format
+	{
+		FORMAT_200			= 1,
+		FORMAT_210			= 2
+	}
+	
+	// Minecraft assets .midata format
 	enum e_minecraft_assets
 	{
 		FORMAT_110_PRE_1	= 1,

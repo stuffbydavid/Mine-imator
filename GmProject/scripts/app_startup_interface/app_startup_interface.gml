@@ -76,8 +76,15 @@ function app_startup_interface()
 	
 		project_reset()
 		
+		// Expired key
+		if (key_expired && !key_expired_dismissed)
+		{
+			show_message(text_get("upgradeexpiredkey"))
+			popup_show(popup_upgrade)
+		}
+		
 		// First start
-		if (!file_exists_lib(settings_file))
+		else if (!file_exists_lib(settings_file))
 			popup_show(popup_welcome)
 		
 	}
