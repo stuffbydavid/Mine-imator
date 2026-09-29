@@ -650,13 +650,20 @@ namespace CppProject
 
 		// Bind new id to sampler
 		SamplerState& state = samplerState[sampler];
-		if (state.currentTexId != id)
+		const QVector4D& currentUvRect = this->samplerUvRect[sampler];
+		BoolType uvRectChanged = !getUvRect && (!useBatching || sampler != 0) &&
+			(currentUvRect.x() != uvRect.x || currentUvRect.y() != uvRect.y ||
+			 currentUvRect.z() != uvRect.w || currentUvRect.w() != uvRect.h);
+		if (state.currentTexId != id || uvRectChanged)
 		{
 			if (state.currentTexId > -1)
 				GFX->SubmitBatch();
 
-			state.mipMap = GFX->mipMap;
-			state.changed = true;
+			if (state.currentTexId != id)
+			{
+				state.mipMap = GFX->mipMap;
+				state.changed = true;
+			}
 		}
 
 		state.currentTexId = id;

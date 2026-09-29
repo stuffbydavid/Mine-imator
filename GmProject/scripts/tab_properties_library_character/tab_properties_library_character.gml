@@ -73,7 +73,7 @@ function tab_properties_library_character()
 		// Skin (Material map)
 		tex = null
 		with (res_eval(temp_edit.model_tex_material))
-			tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_name_map))
+			tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_material_name_map))
 			
 		tab_control_menu(ui_large_height)
 		draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "libraryequipmenttexmaterial" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "libraryspblocktexmaterial" : "libraryskinmaterial")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, res_eval(temp_edit.model_tex_material).display_name, action_lib_model_tex_material, false, tex, null)

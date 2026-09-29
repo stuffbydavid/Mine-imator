@@ -137,12 +137,12 @@ function model_load(map, dir)
 							value_shape_texture_name_map[v] = shapetexnamemap
 							
 							// Material map
-							value_shape_texture_material_name_map = ds_map_create()
+							shapetexnamemap = ds_map_create()
 							shapetexnamemap[?""] = curvalue[?"shape_texture"]
 							value_shape_texture_material_name_map[v] = shapetexnamemap
 							
 							// Normal map
-							value_shape_tex_normal_name_map = ds_map_create()
+							shapetexnamemap = ds_map_create()
 							shapetexnamemap[?""] = curvalue[?"shape_texture"]
 							value_shape_tex_normal_name_map[v] = shapetexnamemap
 						}
