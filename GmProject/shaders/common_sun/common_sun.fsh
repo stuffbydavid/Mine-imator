@@ -21,6 +21,7 @@ uniform int uShadowBlurQuality; // static
 uniform vec2 uPCSSKernel[64]; // static
 uniform float uSunShadowDistance; // static
 uniform float uSunShadowScale; // static
+uniform float uDepthBufferSize; // static
 uniform vec2 uScreenSize; // static
 
 uniform vec3 uSSSRadius;
@@ -30,6 +31,9 @@ uniform float uSunAngularRadius;
 varying vec4 vScreenCoord0;
 varying vec4 vScreenCoord1;
 varying vec4 vScreenCoord2;
+varying vec2 vDepthSlope0;
+varying vec2 vDepthSlope1;
+varying vec2 vDepthSlope2;
 varying vec4 vClipPosition;
 varying float vClipSpaceDepth;
 
@@ -47,21 +51,45 @@ float cascadeDepthBuffer(int index, vec2 coord)
 		return texture2D(uDepthBuffer2, coord).r;
 }
 
+float getSunDepth(int cascade, vec2 coord, float range)
+{
+	return uSunNear[cascade] + cascadeDepthBuffer(cascade, coord) * range;
+}
+
+float getSunVisibility(int cascade, vec2 coord, float depth, vec2 sampleCoord, vec2 slope, float range, float bias)
+{
+	float receiverDepth = getPCSSReceiverDepth(coord, depth, sampleCoord, slope);
+	return getPCSSVisibility(receiverDepth, getSunDepth(cascade, sampleCoord, range), bias);
+}
+
+// Bilinearly weight the four depth comparisons around a filter sample
+float getSunFilteredVisibility(int cascade, vec2 coord, float depth, vec2 sampleCoord, vec2 slope, float range, float bias)
+{
+	vec4 bounds;
+	vec2 blend;
+	getPCSSTexels(sampleCoord, vec2(uDepthBufferSize), vec2(0.0), vec2(1.0), bounds, blend);
+
+	// Sample each texel independently so depth discontinuities stay intact
+	vec4 shadow;
+	shadow.x = getSunVisibility(cascade, coord, depth, bounds.xy, slope, range, bias);
+	shadow.y = getSunVisibility(cascade, coord, depth, bounds.zy, slope, range, bias);
+	shadow.z = getSunVisibility(cascade, coord, depth, bounds.xw, slope, range, bias);
+	shadow.w = getSunVisibility(cascade, coord, depth, bounds.zw, slope, range, bias);
+
+	return blendPCSSVisibility(shadow, blend);
+}
+
 float getSunShadow(
 	int cascade, vec2 coord, float fragDepth, float depthRange,
-	vec2 receiverDepthGradient, float bias,
+	vec2 depthSlope, float bias,
 	out float centerDepth
 )
 {
-	centerDepth = 0.0;
-	float sampleNear = uSunNear[cascade];
-	float sampleRange = depthRange;
-	
 	int quality = uShadowBlurQuality;
 	if (quality > PCSS_MAX_SAMPLES)
 		quality = PCSS_MAX_SAMPLES;
 
-	centerDepth = sampleNear + cascadeDepthBuffer(cascade, coord) * sampleRange;
+	centerDepth = getSunDepth(cascade, coord, depthRange);
 	
 	if (quality <= 0 || uSunShadowScale <= 0.000001)
 		return getPCSSVisibility(fragDepth, centerDepth, bias);
@@ -83,8 +111,6 @@ float getSunShadow(
 	float minimumFilterRadius = blurSize * filterWorldSize / PCSS_REFERENCE_SHADOW_SIZE * inverseWorldSize;
 	float searchWorldRadius = uSunShadowScale * uSunShadowDistance;
 	float searchRadius = max(searchWorldRadius * inverseWorldSize, minimumFilterRadius);
-	float gradientLength = length(receiverDepthGradient);
-	float searchBias = bias + min(gradientLength * searchRadius, bias * 2.0);
 	
 	// Always include the center so sparse searches cannot miss narrow shadows
 	float blockers = isPCSSBlocker(fragDepth, centerDepth, bias) ? 1.0 : 0.0;
@@ -97,9 +123,9 @@ float getSunShadow(
 			break;
 
 		vec2 sampleCoord = clamp(coord + uPCSSKernel[blockerIndex] * searchRadius, vec2(0.0), vec2(1.0));
-		float sampleDepth = sampleNear + cascadeDepthBuffer(cascade, sampleCoord) * sampleRange;
-		float receiverDepth = getPCSSReceiverDepth(coord, fragDepth, sampleCoord, receiverDepthGradient);
-		if (isPCSSBlocker(receiverDepth, sampleDepth, searchBias))
+		float sampleDepth = getSunDepth(cascade, sampleCoord, depthRange);
+		float receiverDepth = getPCSSReceiverDepth(coord, fragDepth, sampleCoord, depthSlope);
+		if (isPCSSBlocker(receiverDepth, sampleDepth, bias))
 		{
 			blockerDepth += sampleDepth - (receiverDepth - fragDepth);
 			blockers += 1.0;
@@ -114,7 +140,6 @@ float getSunShadow(
 	// Get penumbra for filter
 	float separation = max(fragDepth - blockerDepth - bias, 0.0); // Ignore the bias gap
 	float filterRadius = max(min(uSunShadowScale * separation, searchWorldRadius) * inverseWorldSize, minimumFilterRadius);
-	float filterBias = bias + min(gradientLength * filterRadius, bias * 2.0);
 	float visibility = 0.0;
 
 	// Filter shadow
@@ -124,9 +149,7 @@ float getSunShadow(
 			break;
 
 		vec2 sampleCoord = clamp(coord + uPCSSKernel[filterIndex] * filterRadius, vec2(0.0), vec2(1.0));
-		float sampleDepth = sampleNear + cascadeDepthBuffer(cascade, sampleCoord) * sampleRange;
-		float receiverDepth = getPCSSReceiverDepth(coord, fragDepth, sampleCoord, receiverDepthGradient);
-		visibility += getPCSSVisibility(receiverDepth, sampleDepth, filterBias);
+		visibility += getSunFilteredVisibility(cascade, coord, fragDepth, sampleCoord, depthSlope, depthRange, bias);
 	}
 
 	return visibility / float(quality);
@@ -136,7 +159,6 @@ void getSunLighting(
 	vec4 baseColor, vec3 normal,
 	float roughness, float metallic,
 	float F0, float sss,
-	vec2 receiverDepthGradient0, vec2 receiverDepthGradient1, vec2 receiverDepthGradient2,
 	out vec3 light, out vec3 spec
 )
 {
@@ -169,27 +191,27 @@ void getSunLighting(
 				i = uCascadeCount - 1;
 
 			vec4 screenCoord;
-			vec2 receiverDepthGradient;
-            float bias;
+			vec2 depthSlope;
+			float bias;
 			if (i == 0)
 			{
 				screenCoord = vScreenCoord0;
-				receiverDepthGradient = receiverDepthGradient0;
-                bias = 1.0;
-            }
+				depthSlope = vDepthSlope0;
+				bias = 1.0;
+			}
 			else if (i == 1)
 			{
 				screenCoord = vScreenCoord1;
-                receiverDepthGradient = receiverDepthGradient1;
-                bias = 3.0;
-            }
+				depthSlope = vDepthSlope1;
+				bias = 3.0;
+			}
 			else
 			{
 				i = 2;
 				screenCoord = vScreenCoord2;
-                receiverDepthGradient = receiverDepthGradient2;
-                bias = 6.0;
-            }
+				depthSlope = vDepthSlope2;
+				bias = 6.0;
+			}
 
 			float fragDepth = screenCoord.z;
 			vec2 fragCoord = screenCoord.xy;
@@ -200,11 +222,11 @@ void getSunLighting(
 				// Convert 0->1 to Near->Far
 				float depthRange = uSunFar[i] - uSunNear[i];
 				fragDepth = uSunNear[i] + fragDepth * depthRange;
-				receiverDepthGradient *= depthRange;
+				depthSlope *= depthRange;
 
 				// Find shadow
 				float sampleDepth;
-				shadow *= vec3(getSunShadow(i, fragCoord, fragDepth, depthRange, receiverDepthGradient, bias, sampleDepth));
+				shadow *= vec3(getSunShadow(i, fragCoord, fragDepth, depthRange, depthSlope, bias, sampleDepth));
 
 				// Subsurface translucency
 				if (sss > 0.0 && dif == 0.0)

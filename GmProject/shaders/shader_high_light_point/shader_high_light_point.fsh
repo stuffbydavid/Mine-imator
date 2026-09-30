@@ -41,6 +41,7 @@ varying vec4 vClipPosition;
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
 #pragma shady: inline(common_constants.MATH)
 #pragma shady: inline(common_shadows.PCSS_LIB)
+#pragma shady: inline(common_shadows.PCSS_PLANE_LIB)
 
 vec2 getShadowMapCoord(vec3 look, vec3 toPoint)
 {
@@ -154,14 +155,62 @@ vec3 getPointSampleDirection(vec3 direction, vec3 tangent, vec3 bitangent, vec2 
 	return normalize(direction + (tangent * offset.x + bitangent * offset.y) * radius);
 }
 
-float getPointReceiverDepth(vec3 direction, vec3 receiverPosition, vec3 receiverNormal, float fallbackDepth)
+// Reconstruct the ray through a texel on the selected atlas face
+vec3 getPointTexelDirection(vec2 coord, vec2 low)
 {
-	float denominator = dot(direction, receiverNormal);
-	if (abs(denominator) < 0.0001)
-		return fallbackDepth;
-	
-	float depth = dot(receiverPosition, receiverNormal) / denominator;
-	return depth > 0.0 ? depth : fallbackDepth;
+	vec3 look;
+	if (low.y > 0.0)
+	{
+		// Bottom atlas row: Y-, Z+, Z-
+		if (low.x < 0.1)
+			look = vec3(0.0, -1.0, 0.0);
+		else if (low.x < 0.5)
+			look = vec3(0.0, -0.0001, 1.0);
+		else
+			look = vec3(0.0, -0.0001, -1.0);
+	}
+	else if (low.x < 0.1)
+		look = vec3(1.0, 0.0, 0.0);
+	else if (low.x < 0.5)
+		look = vec3(-1.0, 0.0, 0.0);
+	else
+		look = vec3(0.0, 1.0, 0.0);
+
+	// Match the basis used by getShadowMapCoord, including the Z-face tilt
+	look = normalize(look);
+	vec3 up = normalize(vec3(-look.z * look.x, -look.z * look.y, 1.0 - look.z * look.z));
+	vec3 right = cross(up, look);
+
+	// Convert atlas coordinates back to face coordinates before forming the ray
+	vec2 uv = (coord - low) * vec2(3.0, 2.0);
+	return normalize(look + right * (uv.x * 2.0 - 1.0) + up * (1.0 - uv.y * 2.0));
+}
+
+float getPointVisibility(vec2 coord, vec2 low, vec3 pos, vec3 normal, float depth, float bias)
+{
+	vec3 ray = getPointTexelDirection(coord, low);
+	float receiverDepth = getPCSSRayDepth(ray, pos, normal, depth);
+	float sampleDepth = uLightNear + (uLightFar - uLightNear) * texture2D(uDepthBuffer, coord).r;
+
+	return getPCSSVisibility(receiverDepth, sampleDepth, bias);
+}
+
+float getPointFilteredVisibility(vec3 direction, vec3 pos, vec3 normal, float depth, float bias)
+{
+	vec2 low;
+	vec2 coord = getPointShadowMapCoord(direction, low);
+	vec4 bounds;
+	vec2 blend;
+	getPCSSTexels(coord, uDepthBufferSize * vec2(3.0, 2.0), low, low + vec2(1.0 / 3.0, 0.5), bounds, blend);
+
+	// Sample each texel independently so depth discontinuities stay intact
+	vec4 shadow;
+	shadow.x = getPointVisibility(bounds.xy, low, pos, normal, depth, bias);
+	shadow.y = getPointVisibility(bounds.zy, low, pos, normal, depth, bias);
+	shadow.z = getPointVisibility(bounds.xw, low, pos, normal, depth, bias);
+	shadow.w = getPointVisibility(bounds.zw, low, pos, normal, depth, bias);
+
+	return blendPCSSVisibility(shadow, blend);
 }
 
 float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, float bias, out float centerDepth)
@@ -195,7 +244,7 @@ float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, floa
 		vec2 offset = getPCSSSampleOffset(blockerIndex, rotation);
 		vec3 sampleDirection = getPointSampleDirection(direction, tangent, bitangent, offset, searchRadius);
 		float sampleDepth = getPointDepth(sampleDirection);
-		float receiverDepth = getPointReceiverDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
+		float receiverDepth = getPCSSRayDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
 		if (isPCSSBlocker(receiverDepth, sampleDepth, bias))
 		{
 			blockerDepth += sampleDepth;
@@ -221,9 +270,7 @@ float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, floa
 		
 		vec2 offset = getPCSSSampleOffset(filterIndex, rotation);
 		vec3 sampleDirection = getPointSampleDirection(direction, tangent, bitangent, offset, filterRadius);
-		float sampleDepth = getPointDepth(sampleDirection);
-		float receiverDepth = getPointReceiverDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
-		visibility += getPCSSVisibility(receiverDepth, sampleDepth, bias);
+		visibility += getPointFilteredVisibility(sampleDirection, receiverPosition, receiverNormal, fragDepth, bias);
 	}
 	
 	return visibility / float(quality);
@@ -237,11 +284,7 @@ void main()
 	vec2 tex = vTexCoord;
 	vec4 baseColor = texture2D(uTexture, tex) * vColor;
 	vec3 lightCol = uLightColor.rgb * uLightStrength;
-	vec3 receiverNormal = cross(dFdx(vPosition), dFdy(vPosition));
-	float receiverNormalLength = length(receiverNormal);
-	receiverNormal = receiverNormalLength > 0.000001 ? receiverNormal / receiverNormalLength : normalize(vNormal);
-	if (dot(receiverNormal, vNormal) < 0.0)
-		receiverNormal *= -1.0;
+	vec3 receiverNormal = normalize(vNormal);
 	
 	handleAlphaDiscard(vPosition, baseColor);
 	

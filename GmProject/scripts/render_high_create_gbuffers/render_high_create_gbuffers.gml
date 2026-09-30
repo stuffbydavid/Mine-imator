@@ -150,9 +150,11 @@ function render_high_create_gbuffers()
 			surface_set_target(render_surface_mask)
 			{
 				draw_clear(c_black)
+				gpu_set_blendmode_ext(bm_one, bm_zero)
 				render_world_start()
 				render_world(e_render_mode.SCENE_TEST)
 				render_world_done()
+				gpu_set_blendmode(bm_normal)
 
 				// 2D mode
 				render_set_projection_ortho(0, 0, render_width, render_height, 0)

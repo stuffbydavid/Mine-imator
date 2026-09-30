@@ -686,10 +686,10 @@ namespace CppProject
 			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest],
 				glBlendMap[alphasrc], glBlendMap[alphadest]);
 			
-			// The lighting mask always uses ordinary alpha blending
+			// The lighting mask stores the frontmost object's value without blending
 			if (maskBlend)
 				Shader::gl43Core->glBlendFuncSeparatei(1,
-					GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
 			
 			// Fog stores the frontmost object's value without blending
 			if (fogBlend)
@@ -752,10 +752,7 @@ namespace CppProject
 			if (maskBlend)
 			{
 				blendDesc.IndependentBlendEnable = TRUE;
-				targetDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-				targetDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-				targetDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+				targetDesc.BlendEnable = FALSE;
 				blendDesc.RenderTarget[1] = targetDesc;
 			}
 
@@ -804,10 +801,10 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			Shader::gl43Core->glBlendFuncSeparatei(1,
-				enabled ? GL_SRC_ALPHA : glBlendMap[blendSrcFactor],
-				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendDstFactor],
-				enabled ? GL_SRC_ALPHA : glBlendMap[blendAlphaSrcFactor],
-				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendAlphaDstFactor]);
+				enabled ? GL_ONE : glBlendMap[blendSrcFactor],
+				enabled ? GL_ZERO : glBlendMap[blendDstFactor],
+				enabled ? GL_ONE : glBlendMap[blendAlphaSrcFactor],
+				enabled ? GL_ZERO : glBlendMap[blendAlphaDstFactor]);
 			
 			Shader::gl43Core->glBlendFuncSeparatei(2,
 				fog ? GL_ONE : glBlendMap[blendSrcFactor],
