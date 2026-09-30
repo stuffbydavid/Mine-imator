@@ -37,8 +37,12 @@ uniform vec2 uTextureOffset;
 	varying vec4 vScreenCoord0;
 	varying vec4 vScreenCoord1;
 	varying vec4 vScreenCoord2;
+	varying vec2 vDepthSlope0;
+	varying vec2 vDepthSlope1;
+	varying vec2 vDepthSlope2;
 	varying vec4 vClipPosition;
 	varying float vClipSpaceDepth;
+	#pragma shady: inline(common_shadows.PCSS_PLANE_LIB)
 #endif
 
 #pragma shady: macro_end
@@ -67,6 +71,13 @@ uniform vec2 uTextureOffset;
 	vTangentView = normalize((gm_Matrices[MATRIX_WORLD_VIEW] * vec4(in_Tangent, 0.0)).xyz);
 	vNormalWorld = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
 	vTangentWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
+
+	#ifdef CPP_SUN_GBUFFERS
+		vec3 normal = normalize(vNormalWorld);
+		vDepthSlope0 = getPCSSOrthoSlope(uLightMatBiasMVP[0], normal);
+		vDepthSlope1 = getPCSSOrthoSlope(uLightMatBiasMVP[1], normal);
+		vDepthSlope2 = getPCSSOrthoSlope(uLightMatBiasMVP[2], normal);
+	#endif
 
 	// Color
 	vColor = uBlendColor * getVertexColor(in_Custom);

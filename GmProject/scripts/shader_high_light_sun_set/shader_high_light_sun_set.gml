@@ -22,6 +22,7 @@ function shader_high_light_sun_set()
 	render_set_uniform(e_uniform.PCSS_KERNEL, render_pcss_kernel_rotated)
 	render_set_uniform(e_uniform.SUN_SHADOW_DISTANCE, max(0, render_shadow_distance - cam_near))
 	render_set_uniform(e_uniform.SUN_SHADOW_SCALE, render_sun_shadow_scale)
+	render_set_uniform(e_uniform.DEPTH_BUFFER_SIZE, app.project_render_shadows_sun_buffer_size)
 	render_set_uniform_vec2(e_uniform.SCREEN_SIZE, render_width, render_height)
 
 	render_set_uniform_vec3(e_uniform.LIGHT_DIRECTION, render_sun_direction[X], render_sun_direction[Y], render_sun_direction[Z])
