@@ -27,5 +27,6 @@ function shader_high_light_spot_set()
 	render_set_uniform(e_uniform.LIGHT_SPOT_SHARPNESS, render_light_spot_sharpness)
 	
 	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_spot_buffer))
+	render_set_uniform(e_uniform.DEPTH_BUFFER_SIZE, app.project_render_shadows_spot_buffer_size)
 	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER], true)
 }

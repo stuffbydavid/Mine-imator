@@ -17,12 +17,8 @@ void main()
 		vec3 normalWorld, light, spec;
 		float roughness, metallic, F0, sss;
 		
-		vec2 gradient0 = getPCSSReceiverDepthGradient(vScreenCoord0.xy, vScreenCoord0.z);
-		vec2 gradient1 = getPCSSReceiverDepthGradient(vScreenCoord1.xy, vScreenCoord1.z);
-		vec2 gradient2 = getPCSSReceiverDepthGradient(vScreenCoord2.xy, vScreenCoord2.z);
-		
 		getGbuffers(baseColor, normalWorld, roughness, metallic, F0, sss, depth, normal, material, glint);
-		getSunLighting(baseColor, normalWorld, roughness, metallic, F0, sss, gradient0, gradient1, gradient2, light, spec);
+		getSunLighting(baseColor, normalWorld, roughness, metallic, F0, sss, light, spec);
 		
 		gl_FragData[0] = baseColor;
 		

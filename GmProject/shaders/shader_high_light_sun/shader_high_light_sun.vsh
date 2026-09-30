@@ -18,6 +18,9 @@ varying vec2 vTexCoord;
 varying vec4 vScreenCoord0;
 varying vec4 vScreenCoord1;
 varying vec4 vScreenCoord2;
+varying vec2 vDepthSlope0;
+varying vec2 vDepthSlope1;
+varying vec2 vDepthSlope2;
 varying float vClipSpaceDepth;
 varying vec4 vColor;
 varying vec4 vCustom;
@@ -32,6 +35,8 @@ uniform vec2 uTextureOffset;
 #pragma shady: inline(common_position.CLIP_POSITION_LIB)
 #pragma shady: inline(common_util.MATRIX_LIB)
 
+#pragma shady: inline(common_shadows.PCSS_PLANE_LIB)
+
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
@@ -44,6 +49,10 @@ void main()
 	vScreenCoord2 = uLightMatBiasMVP[2] * vec4(vPosition, 1.0);
 	
 	vNormal = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
+	vec3 normal = normalize(vNormal);
+	vDepthSlope0 = getPCSSOrthoSlope(uLightMatBiasMVP[0], normal);
+	vDepthSlope1 = getPCSSOrthoSlope(uLightMatBiasMVP[1], normal);
+	vDepthSlope2 = getPCSSOrthoSlope(uLightMatBiasMVP[2], normal);
 	vTangent = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
 	
 	vTexCoord = in_TextureCoord + uTextureOffset;

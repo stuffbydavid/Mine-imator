@@ -20,9 +20,6 @@ varying vec4 vColor;
 void main()
 {
 	vec4 baseColor = texture2D(uTexture, vTexCoord) * vColor;
-	vec2 receiverDepthGradient0 = getPCSSReceiverDepthGradient(vScreenCoord0.xy, vScreenCoord0.z);
-	vec2 receiverDepthGradient1 = getPCSSReceiverDepthGradient(vScreenCoord1.xy, vScreenCoord1.z);
-	vec2 receiverDepthGradient2 = getPCSSReceiverDepthGradient(vScreenCoord2.xy, vScreenCoord2.z);
 	
 	handleAlphaDiscard(vPosition, baseColor);
 	
@@ -38,7 +35,7 @@ void main()
 	}
 	
 	vec3 light, spec;
-	getSunLighting(baseColor, normal, roughness, metallic, F0, sss, receiverDepthGradient0, receiverDepthGradient1, receiverDepthGradient2, light, spec);
+	getSunLighting(baseColor, normal, roughness, metallic, F0, sss, light, spec);
 	
 	gl_FragData[0] = vec4(light, baseColor.a);
 	gl_FragData[1] = vec4(spec, baseColor.a);
