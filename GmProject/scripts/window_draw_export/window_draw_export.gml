@@ -67,17 +67,17 @@ function window_draw_export()
 
 		timeleftstr = ""
 		if (timelefthours > 0)
-			timeleftstr += text_get(((timelefthours = 1) ? "exporttimelefthour" : "exporttimelefthours"), string(timelefthours)) + ", "
+			timeleftstr += text_get(((timelefthours = 1) ? "export_movie/time_left/hour" : "export_movie/time_left/hours"), string(timelefthours)) + ", "
 		if (timeleftmins > 0)
-			timeleftstr += text_get(((timeleftmins = 1) ? "exporttimeleftminute" : "exporttimeleftminutes"), string(timeleftmins)) + " " + text_get("exporttimeleftand") + " "
-		timeleftstr += text_get(((timeleftsecs = 1) ? "exporttimeleftsecond" : "exporttimeleftseconds"), string(timeleftsecs))
+			timeleftstr += text_get(((timeleftmins = 1) ? "export_movie/time_left/minute" : "export_movie/time_left/minutes"), string(timeleftmins)) + " " + text_get("export_movie/time_left/and") + " "
+		timeleftstr += text_get(((timeleftsecs = 1) ? "export_movie/time_left/second" : "export_movie/time_left/seconds"), string(timeleftsecs))
 
-		draw_label(text_get("exporttimeleft", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_heading_big)
+		draw_label(text_get("export_movie/time_left", timeleftstr), framex + framew / 2, framey + frameh + 33, fa_center, fa_bottom, c_text_secondary, a_text_secondary, font_heading_big)
 	}
 	
 	// Bar
 	var loadtext, loadw, sw, sh;
-	loadtext = text_get("exportloading", string(floor(perc * 100)))
+	loadtext = text_get("export_movie/loading", string(floor(perc * 100)))
 	loadw = framew
 	sw = surface_get_width(export_surface)
 	sh = surface_get_height(export_surface)
@@ -93,10 +93,10 @@ function window_draw_export()
 	content_text = ""
 	
 	if (usesamples)
-		samplecount = text_get("exportsamples", string(max(render_samples, 1)), string(project_render_samples))
+		samplecount = text_get("export_movie/samples", string(max(render_samples, 1)), string(project_render_samples))
 	
 	if (window_state = "export_movie")
-		content_text = text_get("exportframe", string(exportmovie_frame), string(totalframes)) + (usesamples ? (" (" + samplecount + ")") : "")
+		content_text = text_get("export_movie/frame", string(exportmovie_frame), string(totalframes)) + (usesamples ? (" (" + samplecount + ")") : "")
 	else if (usesamples)
 		content_text = samplecount
 	
@@ -104,15 +104,15 @@ function window_draw_export()
 	samplerate = export_samples_per_second
 	if (usesamples && samplerate = 0 && export_sample_rate_count > 0)
 		samplerate = export_sample_rate_count * 1000000 / max(1, get_timer() - export_sample_rate_start)
-	samplehint = usesamples ? text_get("exportsamplespersecond", string_format(samplerate, 0, 1)) : ""
+	samplehint = usesamples ? text_get("export_movie/samples_per_second", string_format(samplerate, 0, 1)) : ""
 	
 	draw_loading_bar((framex + framew/2) - loadw/2, framey + frameh + 40, loadw, 8, perc, content_text, samplehint)
 	
 	window_set_caption(loadtext + " - Mine-imator")
 	
 	// Title
-	draw_label(window_state = "export_movie" ? text_get("exportmovietitle") : text_get("exportimagetitle"), framex + framew / 2, framey - 35, fa_center, fa_bottom, c_accent, 1, font_heading_big)
+	draw_label(window_state = "export_movie" ? text_get("export_movie/title") : text_get("export_image/title"), framex + framew / 2, framey - 35, fa_center, fa_bottom, c_accent, 1, font_heading_big)
 	
 	// Stop
-	draw_label(text_get("exportstop"), framex + framew / 2, framey - 16, fa_center, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
+	draw_label(text_get("export_movie/stop"), framex + framew / 2, framey - 16, fa_center, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
 }

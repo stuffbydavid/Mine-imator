@@ -7,7 +7,7 @@ function temp_particles_type_add()
 	
 	ds_list_add(pc_type_list, ptype)
 	
-	ptype.name = text_get("particleeditortypedefault", string(ds_list_size(pc_type_list)))
+	ptype.name = text_get("particle_editor/type/default", string(ds_list_size(pc_type_list)))
 	ptype.spawn_rate = 1 / ds_list_size(pc_type_list)
 	ptype.sprite_tex = project_pack_res
 	ptype.sprite_template_tex = project_pack_res

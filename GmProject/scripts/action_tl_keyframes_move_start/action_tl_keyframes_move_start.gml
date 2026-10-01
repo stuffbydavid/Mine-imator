@@ -71,5 +71,5 @@ function action_tl_keyframes_move_start(keyframe)
 		}
 	}
 	
-	window_busy = "timelinemovekeyframes"
+	window_busy = "timeline/move_keyframes"
 }

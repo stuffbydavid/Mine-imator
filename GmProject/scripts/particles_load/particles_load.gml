@@ -59,7 +59,7 @@ function particles_load(fn, temp, newtemp = false)
 		
 		if (!file_exists_lib(fn))
 		{
-			error("erroropenparticleszip")
+			error("error/open_particles_zip")
 			return 0
 		}
 	}

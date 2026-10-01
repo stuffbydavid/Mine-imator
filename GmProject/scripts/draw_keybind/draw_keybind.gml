@@ -6,7 +6,7 @@ function draw_keybind(keybindid, xx, yy)
 {
 	var keyobj, name, mouseon, w;
 	keyobj = keybinds[keybindid]
-	name = "settingskey" + keyobj.name
+	name = "settings/key/" + keyobj.name
 	w = dw
 	
 	tab_control(28)
@@ -39,7 +39,7 @@ function draw_keybind(keybindid, xx, yy)
 	
 	draw_set_alpha(microani_arr[e_microani.HOVER])
 	
-	if (draw_button_icon(name + "edit", dx + w - 24, dy + 2, 24, 24, window_busy = name, icons.PENCIL, null, false, "tooltipeditkeybind"))
+	if (draw_button_icon(name + "edit", dx + w - 24, dy + 2, 24, 24, window_busy = name, icons.PENCIL, null, false, "tooltip/edit_keybind"))
 	{
 		window_busy = name
 		keybind_edit = keybind_new(null)

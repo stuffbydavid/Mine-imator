@@ -15,7 +15,7 @@ function res_load_skulls()
 		if (!scenery_instant)
 			with (app)
 			{
-				popup_loading.text = text_get("loadsceneryblocks")
+				popup_loading.text = text_get("load_scenery/blocks")
 				popup_loading.progress = 0.2
 			}
 				
@@ -27,7 +27,7 @@ function res_load_skulls()
 		return 0
 	}
 			
-	app.popup_loading.text = text_get("loadscenerydownload", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
+	app.popup_loading.text = text_get("load_scenery/download", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
 	
 	// Continue through texture list
 	with (mc_builder)

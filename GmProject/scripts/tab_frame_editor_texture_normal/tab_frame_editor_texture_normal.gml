@@ -15,7 +15,7 @@ function tab_frame_editor_texture_normal()
 			case e_tl_type.MODEL:
 			case e_tl_type.MODEL_PART:
 			{
-				content_name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texnormal"
+				content_name = "frame_editor/" + tl_type_name_list[|tl_edit.type] + "_tex_normal"
 				
 				var modelfile = tl_edit.temp.model_file;
 				if (tl_edit.type = e_temp_type.MODEL_PART)
@@ -33,7 +33,7 @@ function tab_frame_editor_texture_normal()
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
 			{
-				content_name = "frameeditorblocktexnormal"
+				content_name = "frame_editor/block_tex_normal"
 				with (tl_edit.temp)
 					texobj = temp_get_block_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 				tex = texobj.block_preview_texture
@@ -42,7 +42,7 @@ function tab_frame_editor_texture_normal()
 			
 			case e_tl_type.ITEM:
 			{
-				content_name = "frameeditoritemtexnormal"
+				content_name = "frame_editor/item_tex_normal"
 				
 				texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 				
@@ -65,7 +65,7 @@ function tab_frame_editor_texture_normal()
 			
 			default: // Shapes
 			{
-				content_name = "frameeditorshapetexnormal"
+				content_name = "frame_editor/shape_tex_normal"
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 				
@@ -78,7 +78,7 @@ function tab_frame_editor_texture_normal()
 	else if (tl_edit.type = e_tl_type.PATH)
 	{
 		// Paths don't use templates
-		content_name = "frameeditorshapetexnormal"
+		content_name = "frame_editor/shape_tex_normal"
 		texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 		
 		if (texobj = null)
@@ -96,10 +96,10 @@ function tab_frame_editor_texture_normal()
 	if (texobj != null)
 		content_text = texobj.display_name
 	else
-		content_text = text_get("listnone")
+		content_text = text_get("list/none")
 	
 	if (tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = project_pack_res)
-		content_text = text_get("listdefault", content_text)
+		content_text = text_get("list/default", content_text)
 	
 	tab_control_menu(ui_large_height)
 	draw_button_menu(content_name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_NORMAL_OBJ], content_text, action_tl_frame_texture_normal_obj, false, tex)

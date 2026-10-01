@@ -36,17 +36,17 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 	compact = (app.panel_compact || window_compact)
 	draggerwid = (compact ? dragger_width : 80)
 	
-	draw_dragger(name + "input", (xx + wid - draggerwid) + (!compact * 6), yy, draggerwid, value, snapval * .1, minval, maxval, def, snapval, tbx, script, null, false)
+	draw_dragger(name + "/input", (xx + wid - draggerwid) + (!compact * 6), yy, draggerwid, value, snapval * .1, minval, maxval, def, snapval, tbx, script, null, false)
 	
 	inputfocus = microani_arr[e_microani.ACTIVE]
 	
 	// Idle
-	if (window_busy = name || (window_busy != name + "inputpress" && window_focus != string(tbx)))
+	if (window_busy = name || (window_busy != name + "/input/press" && window_focus != string(tbx)))
 		tbx.text = string_decimals(value)
 	
 	// Label
 	microani_set(name, script, (window_busy = name) || slidermouseon, slidermouseon && mouse_left, false, false, 1, false)
-	microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, locked, mouseon || (window_busy = name + "inputpress" || window_focus = string(tbx)))
+	microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, locked, mouseon || (window_busy = name + "/input/press" || window_focus = string(tbx)))
 	
 	var labelcolor, labelalpha;
 	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
@@ -73,7 +73,7 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 	trackx = linex + 6
 	trackwid = linewid - 12
 	
-	context_menu_area(linex, yy, linewid, thumbhei, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
+	context_menu_area(linex, yy, linewid, thumbhei, "context_menu/value", value, e_context_type.NUMBER, script, def)
 	
 	// Click on slider
 	if (slidermouseon)

@@ -15,7 +15,7 @@ function view_control_scale_all(view, mat, radius)
 	coord[Y] = round(coord[Y])
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != e_view_control.SCA_XYZ || view_control_edit_view != view)
 			return 0
@@ -28,7 +28,7 @@ function view_control_scale_all(view, mat, radius)
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_value_scale[X] = tl_edit.value[e_value.SCA_X]
 			view_control_value_scale[Y] = tl_edit.value[e_value.SCA_Y]
 			view_control_value_scale[Z] = tl_edit.value[e_value.SCA_Z]

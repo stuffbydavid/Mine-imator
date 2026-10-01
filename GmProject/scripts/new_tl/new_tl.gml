@@ -12,7 +12,7 @@ function new_tl(tlype)
 			glint_mode = e_glint.ARMOR
 		
 		if (type = e_tl_type.TEXT)
-			value[e_value.TEXT] = text_get("frameeditortextsample")
+			value[e_value.TEXT] = text_get("frame_editor/text/sample")
 		
 		if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
 			shadows = false

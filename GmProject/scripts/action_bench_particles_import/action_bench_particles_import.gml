@@ -13,8 +13,8 @@ function action_bench_particles_import()
 		type = e_temp_type.PARTICLE_SPAWNER
 		temp_particles_init()
 		
-		if (text_exists("benchparticles" + presetname))
-			name = text_get("benchparticles" + presetname)
+		if (text_exists("bench/particles/" + presetname))
+			name = text_get("bench/particles/" + presetname)
 		else
 			name = presetname
 		

@@ -31,7 +31,7 @@ function view_control_bend(view)
 	}
 	
 	// Is dragging
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.BEND_X && view_control_edit <= e_view_control.BEND_Z)
+	if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.BEND_X && view_control_edit <= e_view_control.BEND_Z)
 	{
 		mouse_cursor = cr_handpoint
 		

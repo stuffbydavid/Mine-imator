@@ -5,20 +5,20 @@ function tab_frame_editor_path()
 	
 	// Follow path
 	tab_control_switch()
-	draw_button_collapse("follow_path", collapse_map[?"follow_path"], null, true, "frameeditorfollowpath")
+	draw_button_collapse("frame_editor/follow_path", collapse_map[?"frame_editor/follow_path"], null, true, "frame_editor/follow_path")
 	tab_next()
 	
-	if (collapse_map[?"follow_path"])
+	if (collapse_map[?"frame_editor/follow_path"])
 	{
 		tab_collapse_start()
 		
 		if (tl_edit.value[e_value.PATH_OBJ] != null)
 			content_text = tl_edit.value[e_value.PATH_OBJ].display_name
 		else
-			content_text = text_get("listnone")
+			content_text = text_get("list/none")
 		
 		tab_control_menu()
-		draw_button_menu("frameeditorpath", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], content_text, action_tl_frame_path_obj)
+		draw_button_menu("frame_editor/path", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.PATH_OBJ], content_text, action_tl_frame_path_obj)
 		tab_next()
 		
 		// Force
@@ -27,7 +27,7 @@ function tab_frame_editor_path()
 			context_menu_value_name = "pathoffset"
 			
 			tab_control_dragger()
-			draw_dragger("frameeditorpathoffset", dx, dy, dragger_width, tl_edit.value[e_value.PATH_OFFSET], .1, -no_limit, no_limit, 0, 0.01, tab.constraints.tbx_path_offset, action_tl_frame_path_offset)
+			draw_dragger("frame_editor/path/offset", dx, dy, dragger_width, tl_edit.value[e_value.PATH_OFFSET], .1, -no_limit, no_limit, 0, 0.01, tab.constraints.tbx_path_offset, action_tl_frame_path_offset)
 			tab_next()
 			
 			context_menu_value_name = ""

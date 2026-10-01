@@ -1,7 +1,7 @@
 function action_project_render_shadows_spot_buffer_size(size)
 {
 	if (size >= 8192)
-		if (!question(text_get("questionbuffersizewarning")))
+		if (!question(text_get("question/buffer_size_warning")))
 			return 0
 	
 	action_project_render_preset_edit_locked()

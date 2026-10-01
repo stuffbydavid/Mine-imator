@@ -31,7 +31,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 				// Remove
 				if (hover)
 				{
-					if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
+					if (draw_button_icon("recent/delete" + string(item), iconx, recenty + 8, 24, 24, false, icons.DELETE, null, false, "tooltip/remove"))
 						action_recent_remove(item)
 					mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 				}
@@ -44,7 +44,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 				draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 				// Animation
-				microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
+			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 			
 				draw_box(xx, recenty, wid, 44, false, c_overlay, a_overlay * microani_arr[e_microani.HOVER])
 				draw_box_hover(xx, recenty, wid, 44, microani_arr[e_microani.HOVER])
@@ -68,7 +68,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 							return 0
 						}
 						else
-							error("erroropenprojectexists")
+							error("error/open_project_exists")
 					}
 				}
 			
@@ -107,10 +107,10 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 			timex = xx + 12 + namewidth + 12
 		
 			// File name
-			draw_label(text_get("recentname"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+			draw_label(text_get("recent/name"), namex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
 			// Last opened
-			draw_label(text_get("recentlastopened"), timex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+			draw_label(text_get("recent/last_opened"), timex, recenty + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 		
 			recenty += 28
 		
@@ -136,7 +136,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 				// Remove
 				if (hover)
 				{
-					if (draw_button_icon("recentdelete" + string(item), iconx, recenty + 10, 24, 24, false, icons.DELETE, null, false, "tooltipremove"))
+					if (draw_button_icon("recent/delete" + string(item), iconx, recenty + 10, 24, 24, false, icons.DELETE, null, false, "tooltip/remove"))
 						action_recent_remove(item)
 					mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 				}
@@ -145,7 +145,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 				// Oh yeah. Pin it
 				if (hover || item.pinned)
 				{
-					if (draw_button_icon("recentpin" + string(item), iconx, recenty + 10, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin"))
+					if (draw_button_icon("recent/pin" + string(item), iconx, recenty + 10, 24, 24, item.pinned, icons.PIN, null, false, "tooltip/pin"))
 						action_recent_pin(item)
 					mouseon = mouseon && !app_mouse_box(iconx, recenty + 8, 24, 24)
 				}
@@ -154,7 +154,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 				draw_box(xx + 4, recenty + 43, wid - 8, 1, false, c_overlay, a_overlay)
 			
 				// Animation
-				microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
+			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 			
 				draw_box(xx, recenty, wid, 44, false, c_overlay, a_overlay * microani_arr[e_microani.HOVER])
 				draw_box_hover(xx, recenty, wid, 44, microani_arr[e_microani.HOVER])
@@ -178,7 +178,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 							return 0
 						}
 						else
-							error("erroropenprojectexists")
+							error("error/open_project_exists")
 					}
 				}
 			
@@ -222,7 +222,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 					mouseon = hover
 				
 					// Animation
-					microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
+			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 				
 					// Card hover
 					draw_box(cardx, cardy, 240, 240, false, c_overlay, a_overlay * microani_arr[e_microani.HOVER])
@@ -252,7 +252,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 					// Oh yeah. Pin it
 					if (hover || item.pinned)
 					{
-						if (draw_button_icon("recentpin" + string(item), iconx, cardy + 12, 24, 24, item.pinned, icons.PIN, null, false, "tooltippin", null))
+						if (draw_button_icon("recent/pin" + string(item), iconx, cardy + 12, 24, 24, item.pinned, icons.PIN, null, false, "tooltip/pin", null))
 							action_recent_pin(item)
 					}
 					iconx -= 28
@@ -260,11 +260,11 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 					// Remove
 					if (hover)
 					{
-						if (draw_button_icon("recentdelete", iconx, cardy + 12, 24, 24, false, icons.DELETE, null, false, "tooltipremove", null))
+						if (draw_button_icon("recent/delete", iconx, cardy + 12, 24, 24, false, icons.DELETE, null, false, "tooltip/remove", null))
 							action_recent_remove(item)
 					}
 				
-					microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
+			microani_set("recent" + string(item), null, mouseon, mouseon && mouse_left, false)
 					microani_update(hover, hover && mouse_left, false)
 				
 					draw_set_font(font_value)
@@ -289,7 +289,7 @@ function draw_recent(xx, yy, wid, hei, mode = "")
 								return 0
 							}
 							else
-								error("erroropenprojectexists")
+								error("error/open_project_exists")
 						}
 					}
 				}

@@ -131,9 +131,6 @@ function project_load_legacy_beta(loadbackground)
 				}
 			}
 			
-			if (tl_type[a] = "background")
-				tl_type[a] = "environment"
-			
 			if (load_format = e_project.FORMAT_05)
 			{
 				tl_values[a] = buffer_read_byte() div tl_parts[a]
@@ -321,7 +318,11 @@ function project_load_legacy_beta(loadbackground)
 			load_id = loadid++
 			save_id_map[?load_id] = load_id
 			
-			type = ds_list_find_index(temp_type_name_list, load.lib_type[a])
+			var typename = load.lib_type[a];
+			if (ds_map_exists(legacy_type_name_map, typename))
+				typename = legacy_type_name_map[?typename]
+			
+			type = ds_list_find_index(temp_type_name_list, typename)
 			name = load.lib_name[a]
 			
 			// Characters
@@ -443,7 +444,12 @@ function project_load_legacy_beta(loadbackground)
 			tl = new_obj(obj_timeline)
 			lib = load.tl_lib[a]
 			tl.temp = load.lib_temp[lib]
-			tl.type = ds_list_find_index(tl_type_name_list, load.tl_type[a])
+			
+			var tltypename = load.tl_type[a];
+			if (ds_map_exists(legacy_type_name_map, tltypename))
+				tltypename = legacy_type_name_map[?tltypename]
+			
+			tl.type = ds_list_find_index(tl_type_name_list, tltypename)
 		}
 		
 		with (tl)

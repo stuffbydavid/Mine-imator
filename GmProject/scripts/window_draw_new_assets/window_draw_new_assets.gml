@@ -32,8 +32,8 @@ function window_draw_new_assets()
 	}
 	
 	// Title
-	draw_label(text_get("newassetstitle", new_assets_version), dx + dw / 2, dy + 227, fa_center, fa_bottom, c_accent, 1, font_heading)
-	draw_label(text_get("newassetssubtitle"), dx + dw / 2, dy + 244, fa_center, fa_bottom, c_text_main, a_text_main, font_value)
+	draw_label(text_get("new_assets/title", new_assets_version), dx + dw / 2, dy + 227, fa_center, fa_bottom, c_accent, 1, font_heading)
+	draw_label(text_get("new_assets/subtitle"), dx + dw / 2, dy + 244, fa_center, fa_bottom, c_text_main, a_text_main, font_value)
 	
 	dy += 264
 	dx += 12
@@ -43,20 +43,20 @@ function window_draw_new_assets()
 	{
 		// Loading
 		tab_control_loading()
-		draw_loading_bar(dx, dy, dw, 8, new_assets_download_progress, text_get("newassetsdownloading"))
+		draw_loading_bar(dx, dy, dw, 8, new_assets_download_progress, text_get("new_assets/downloading"))
 		tab_next()
 	}
 	else
 	{
 		draw_set_font(font_button)
-		content_capwid = string_width(text_get("newassetsdownload")) + button_padding
+		content_capwid = string_width(text_get("new_assets/download")) + button_padding
 		
 		// Download
-		if (draw_button_label("newassetsdownload", dx + dw, (content_y + content_height) - 44, null, null, e_button.PRIMARY, null, fa_right))
+		if (draw_button_label("new_assets/download", dx + dw, (content_y + content_height) - 44, null, null, e_button.PRIMARY, null, fa_right))
 		{
 			if (new_assets_format > minecraft_assets_format)
 			{
-				if (question(text_get("questionassetsnewer")))
+				if (question(text_get("question/assets_newer")))
 				{
 					open_url(link_download)
 					game_end()
@@ -71,12 +71,12 @@ function window_draw_new_assets()
 		}
 		
 		// Skip
-		if (draw_button_label("newassetslater", (dx + dw) - (content_capwid + 8), (content_y + content_height) - 44, null, null, e_button.SECONDARY, null, fa_right))
+		if (draw_button_label("new_assets/later", (dx + dw) - (content_capwid + 8), (content_y + content_height) - 44, null, null, e_button.SECONDARY, null, fa_right))
 		{
 			tip_show = false
 			if (!minecraft_assets_load_startup())
 			{
-				error("errorloadassets")
+				error("error/load_assets")
 				game_end()
 				return false
 			}
@@ -98,7 +98,7 @@ function window_draw_new_assets()
 		dy_start = dy
 		
 		dy += 16
-		draw_label(text_get("newassetschangelog"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("new_assets/changelog"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 20
 		
 		for (var i = 0; i < array_length(new_assets_changes_lines); i++)

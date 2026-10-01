@@ -26,30 +26,30 @@ function app_startup_interface_bench()
 	list_edit.get_name = true
 	list_edit.show_ticks = false
 	
-	list_item_add("typeproject", e_bench_tab.PROJECT, "", null, icons.LIBRARY, null, bench_tab_select)
-	list_item_add("typechar", e_bench_tab.CHARACTER, "", null, icons.CHARACTER, null, bench_tab_select)
+	list_item_add("type/project", e_bench_tab.PROJECT, "", null, icons.LIBRARY, null, bench_tab_select)
+	list_item_add("type/character", e_bench_tab.CHARACTER, "", null, icons.CHARACTER, null, bench_tab_select)
 	if (ds_list_size(mc_assets.equipment_list) > 0)
-		list_item_add("typeequipment", e_bench_tab.EQUIPMENT, "", null, icons.SHIELD, null, bench_tab_select)
-	list_item_add("typemodel", e_bench_tab.MODEL, "", null, icons.MODEL, null, bench_tab_select)
-	list_item_add("typemodelpart", e_bench_tab.MODEL_PART, "", null, icons.PART, null, bench_tab_select)
+		list_item_add("type/equipment", e_bench_tab.EQUIPMENT, "", null, icons.SHIELD, null, bench_tab_select)
+	list_item_add("type/model", e_bench_tab.MODEL, "", null, icons.MODEL, null, bench_tab_select)
+	list_item_add("type/model_part", e_bench_tab.MODEL_PART, "", null, icons.PART, null, bench_tab_select)
 	
-	list_item_add("typeitem", e_bench_tab.ITEM, "", null, icons.ITEM, null, bench_tab_select)
-	list_item_add("typeworld", e_bench_tab.WORLD, "", null, icons.SCENERY, null, bench_tab_select)
-	list_item_add("typeschematic", e_bench_tab.SCHEMATIC, "", null, icons.HOUSE, null, bench_tab_select)
-	list_item_add("typeblock", e_bench_tab.BLOCK, "", null, icons.BLOCK, null, bench_tab_select)
-	list_item_add("typespblock", e_bench_tab.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_tab_select)
+	list_item_add("type/item", e_bench_tab.ITEM, "", null, icons.ITEM, null, bench_tab_select)
+	list_item_add("type/world", e_bench_tab.WORLD, "", null, icons.SCENERY, null, bench_tab_select)
+	list_item_add("type/schematic", e_bench_tab.SCHEMATIC, "", null, icons.HOUSE, null, bench_tab_select)
+	list_item_add("type/block", e_bench_tab.BLOCK, "", null, icons.BLOCK, null, bench_tab_select)
+	list_item_add("type/special_block", e_bench_tab.SPECIAL_BLOCK, "", null, icons.BLOCK_SPECIAL, null, bench_tab_select)
 	
-	list_item_add("typecamera", e_bench_tab.CAMERA, "", null, icons.CAMERA, null, bench_tab_select)
-	list_item_add("typesound", e_bench_tab.SOUND, "", null, icons.VOLUME, null, bench_tab_select)
-	list_item_add("typeaudio", e_bench_tab.AUDIO_TRACK, "", null, icons.NOTE, null, bench_tab_select)
-	list_item_add("typeparticles", e_bench_tab.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_tab_select)
-	list_item_add("typetext", e_bench_tab.TEXT, "", null, icons.TEXT, null, bench_tab_select)
+	list_item_add("type/camera", e_bench_tab.CAMERA, "", null, icons.CAMERA, null, bench_tab_select)
+	list_item_add("type/sound", e_bench_tab.SOUND, "", null, icons.VOLUME, null, bench_tab_select)
+	list_item_add("type/audio", e_bench_tab.AUDIO_TRACK, "", null, icons.NOTE, null, bench_tab_select)
+	list_item_add("type/particles", e_bench_tab.PARTICLE_SPAWNER, "", null, icons.FIREWORKS, null, bench_tab_select)
+	list_item_add("type/text", e_bench_tab.TEXT, "", null, icons.TEXT, null, bench_tab_select)
 	
-	list_item_add("typecameraeffect", e_bench_tab.CAMERA_EFFECT, "", null, icons.WAND, null, bench_tab_select)
-	list_item_add("typelightsource", e_bench_tab.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_tab_select)
-	list_item_add("typepath", e_bench_tab.PATH, "", null, icons.PATH, null, bench_tab_select)
-	list_item_add("typeenvironment", e_bench_tab.ENVIRONMENT, "", null, icons.CLOUD, null, bench_tab_select)
-	list_item_add("typeshape", e_bench_tab.SHAPE, "", null, icons.SHAPES, null, bench_tab_select)
+	list_item_add("type/camera_effect", e_bench_tab.CAMERA_EFFECT, "", null, icons.WAND, null, bench_tab_select)
+	list_item_add("type/light_source", e_bench_tab.LIGHT_SOURCE, "", null, icons.LIGHT_POINT, null, bench_tab_select)
+	list_item_add("type/path", e_bench_tab.PATH, "", null, icons.PATH, null, bench_tab_select)
+	list_item_add("type/environment", e_bench_tab.ENVIRONMENT, "", null, icons.CLOUD, null, bench_tab_select)
+	list_item_add("type/shape", e_bench_tab.SHAPE, "", null, icons.SHAPES, null, bench_tab_select)
 	
 	bench_advanced_tabs = [
 		e_bench_tab.PROJECT,
@@ -178,20 +178,20 @@ function app_startup_interface_bench()
 		for (var i = 0; i < ds_list_size(res_type_name_list); i++)
 		{
 			var typename = res_type_name_list[|i];
-			if (typename != "packunzipped" && typename != "legacyblocksheet" &&
+			if (typename != "pack_unzipped" && typename != "legacy_block_sheet" &&
 				ds_list_find_index(project_all_list.filter_type_list, typename) < 0)
 				ds_list_add(project_all_list.filter_type_list, typename)
 		}
 
-		sortlist_column_add(project_lib_list, "libname", 0)
-		sortlist_column_add(project_lib_list, "libtype", 0.35)
-		sortlist_column_add(project_lib_list, "libinstances", 0.65)
-		sortlist_column_add(project_res_list, "projectname", 0)
-		sortlist_column_add(project_res_list, "projecttype", 0.35)
-		sortlist_column_add(project_res_list, "projectcount", 0.65)
-		sortlist_column_add(project_all_list, "projectname", 0)
-		sortlist_column_add(project_all_list, "projecttype", 0.35)
-		sortlist_column_add(project_all_list, "projectcount", 0.65)
+		sortlist_column_add(project_lib_list, "lib_name", 0)
+		sortlist_column_add(project_lib_list, "lib_type", 0.35)
+		sortlist_column_add(project_lib_list, "lib_instances", 0.65)
+		sortlist_column_add(project_res_list, "project_name", 0)
+		sortlist_column_add(project_res_list, "project_type", 0.35)
+		sortlist_column_add(project_res_list, "project_count", 0.65)
+		sortlist_column_add(project_all_list, "project_name", 0)
+		sortlist_column_add(project_all_list, "project_type", 0.35)
+		sortlist_column_add(project_all_list, "project_count", 0.65)
 		
 		// Character list
 		char_list = new_obj(obj_sortlist)
@@ -200,7 +200,7 @@ function app_startup_interface_bench()
 		char_list.script_select_click = action_bench_create
 		char_list.height_percent = bench_list_percent
 		
-		sortlist_column_add(char_list, "charname", 0)
+		sortlist_column_add(char_list, "char_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
@@ -213,7 +213,7 @@ function app_startup_interface_bench()
 		equipment_list.header_show = false
 		equipment_list.height_items = ds_list_size(mc_assets.equipment_list)
 		
-		sortlist_column_add(equipment_list, "spblockname", 0)
+		sortlist_column_add(equipment_list, "special_block_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.equipment_list); c++)
 			sortlist_add(equipment_list, mc_assets.equipment_list[|c].name)
@@ -225,7 +225,7 @@ function app_startup_interface_bench()
 		model_part_model_list.script_select_click = action_bench_create
 		model_part_model_list.height_percent = bench_list_percent
 		
-		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
+		sortlist_column_add(model_part_model_list, "model_part_model_name", 0)
 		
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 		{
@@ -258,7 +258,7 @@ function app_startup_interface_bench()
 		schematic_list.header_show = false
 		schematic_list.height_percent = 0.9
 		
-		sortlist_column_add(schematic_list, "schematicname", 0)
+		sortlist_column_add(schematic_list, "schematic_name", 0)
 		
 		schematic_list.column_sort = 0
 		schematic_list.sort_asc = false
@@ -271,7 +271,7 @@ function app_startup_interface_bench()
 		block_list.script_select_click = action_bench_create
 		block_list.height_percent = bench_list_percent
 		
-		sortlist_column_add(block_list, "blockname", 0)
+		sortlist_column_add(block_list, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
@@ -284,7 +284,7 @@ function app_startup_interface_bench()
 		special_block_list.script_select_click = action_bench_create
 		special_block_list.height_percent = bench_list_percent
 		
-		sortlist_column_add(special_block_list, "spblockname", 0)
+		sortlist_column_add(special_block_list, "special_block_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|c].name)
@@ -318,7 +318,7 @@ function app_startup_interface_bench()
 		particle_preset_list.header_show = false
 		particle_preset_list.height_percent = bench_list_percent
 		
-		sortlist_column_add(particle_preset_list, "particlepresetname", 0)
+		sortlist_column_add(particle_preset_list, "particle_preset_name", 0)
 		
 		particle_preset_list.column_sort = 0
 		particle_preset_list.sort_asc = false
@@ -337,8 +337,8 @@ function app_startup_interface_bench()
 		camera_effect_list_advanced.script_select_click = action_bench_create
 		camera_effect_list_advanced.header_show = false
 		
-		sortlist_column_add(camera_effect_list_simple, "cameraeffectname", 0)
-		sortlist_column_add(camera_effect_list_advanced, "cameraeffectname", 0)
+		sortlist_column_add(camera_effect_list_simple, "camera_effect_name", 0)
+		sortlist_column_add(camera_effect_list_advanced, "camera_effect_name", 0)
 			
 		for (var c = 0; c < e_cam_fx.amount; c++)
 		{
@@ -358,7 +358,7 @@ function app_startup_interface_bench()
 		shape_list.header_show = false
 		shape_list.height_items = e_shape_type.amount
 		
-		sortlist_column_add(shape_list, "shapename", 0)
+		sortlist_column_add(shape_list, "shape_name", 0)
 		
 		for (var i = 0; i < e_shape_type.amount; i++)
 			sortlist_add(shape_list, i)

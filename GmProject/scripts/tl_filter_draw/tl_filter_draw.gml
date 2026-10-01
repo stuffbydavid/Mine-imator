@@ -3,11 +3,11 @@ function tl_filter_draw()
 	draw_set_font(font_label)
 	
 	var switchwid, colorwid, px;
-	switchwid = max(text_max_width("timelinehidestructureblocks"), text_max_width("timelinehidenonanimated"), text_max_width("timelinehideghosts")) + 64
-	colorwid = max(text_max_width("timelinefiltertags"), (24 * 9) - 4)
+	switchwid = max(text_max_width("timeline/hide_structure_blocks"), text_max_width("timeline/hide_nonanimated"), text_max_width("timeline/hide_ghosts")) + 64
+	colorwid = max(text_max_width("timeline/filter_tags"), (24 * 9) - 4)
 	
 	// Color tags
-	draw_label(text_get("timelinefiltertags"), dx, dy + 9, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_label(text_get("timeline/filter_tags"), dx, dy + 9, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 	dy += 20
 	
 	tab_control(20)
@@ -41,17 +41,17 @@ function tl_filter_draw()
 
 	// Hide structure blocks
 	tab_control_switch()
-	draw_switch("timelinehidestructureblocks", dx, dy, setting_timeline_hide_structure_blocks, action_setting_timeline_hide_structure_blocks, "timelinehidestructureblockstip")
+	draw_switch("timeline/hide_structure_blocks", dx, dy, setting_timeline_hide_structure_blocks, action_setting_timeline_hide_structure_blocks, "timeline/hide_structure_blocks_tip")
 	tab_next()
 
 	// Hide non-animated timelines
 	tab_control_switch()
-	draw_switch("timelinehidenonanimated", dx, dy, setting_timeline_hide_nonanimated, action_setting_timeline_hide_nonanimated, "timelinehidenonanimatedtip")
+	draw_switch("timeline/hide_nonanimated", dx, dy, setting_timeline_hide_nonanimated, action_setting_timeline_hide_nonanimated, "timeline/hide_nonanimated_tip")
 	tab_next()
 	
 	// Hide ghosts
 	tab_control_switch()
-	draw_switch("timelinehideghosts", dx, dy, setting_timeline_hide_ghosts, action_setting_timeline_hide_ghosts, "timelinehideghoststip")
+	draw_switch("timeline/hide_ghosts", dx, dy, setting_timeline_hide_ghosts, action_setting_timeline_hide_ghosts, "timeline/hide_ghosts_tip")
 	tab_next()
 	
 	settings_menu_w = max(switchwid, colorwid) + 24

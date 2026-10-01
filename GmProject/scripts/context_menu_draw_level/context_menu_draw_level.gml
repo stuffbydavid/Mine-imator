@@ -79,7 +79,7 @@ function context_menu_draw_level(levelindex)
 			
 			if (list_item_draw(item, dx, dy + 24 * i, dw, 24, false))
 			{
-				if (context_menu_name = "contextmenuvalue" || context_menu_name = "contextmenucategory")
+				if (context_menu_name = "context_menu/value" || context_menu_name = "context_menu/category")
 					list_item_camera_effect_edit_type = context_menu_camera_effect_type_edit
 				item.context_menu_active = true
 				item.hovertime = 99999

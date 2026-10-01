@@ -24,6 +24,14 @@ function temp_copy(to)
 			to.model_use_blend_color = model_use_blend_color
 			to.model_blend_color = model_blend_color
 			to.model_blend_color_default = model_blend_color_default
+			to.pattern_type = pattern_type
+			to.pattern_base_color = pattern_base_color
+			to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
+			to.pattern_color_list = array_copy_1d(pattern_color_list)
+			if (pattern_skin != null)
+				to.pattern_skin = sprite_duplicate(pattern_skin)
+			else
+				to.pattern_skin = null
 			
 			if (type = e_temp_type.EQUIPMENT) 
 			{
@@ -37,17 +45,6 @@ function temp_copy(to)
 				}
 			}
 			
-			if (type = e_temp_type.SPECIAL_BLOCK)
-			{
-				to.pattern_base_color = pattern_base_color
-				to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
-				to.pattern_color_list = array_copy_1d(pattern_color_list)
-	
-				if (pattern_skin != null)
-					to.pattern_skin = sprite_duplicate(pattern_skin)
-				else
-					to.pattern_skin = null
-			}
 			break
 		}
 		

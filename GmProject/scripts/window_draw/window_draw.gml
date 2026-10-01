@@ -80,7 +80,7 @@ function window_draw()
 			if (menu_popup = null && popup_current)
 				menu_draw()
 			
-			window_set_caption(text_get("tabtimeline") + " - Mine-imator")
+			window_set_caption(text_get("tab/timeline") + " - Mine-imator")
 			break
 		}
 	}

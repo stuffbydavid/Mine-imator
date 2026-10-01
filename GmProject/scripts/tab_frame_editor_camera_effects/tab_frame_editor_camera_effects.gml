@@ -26,30 +26,30 @@ function tab_frame_editor_camera_effects()
 	// Aperture settings (Bloom/DOF)
 	if (setting_advanced_mode && aperturetype != null)
 	{
-		var nameprefix = "frameeditorcameraeffectaperture";
+		var nameprefix = "frame_editor/camera_effect/aperture";
 		 
 		tl_edit = fxtl[aperturetype]
 		camera_effect_type_edit = aperturetype
 		context_menu_group_temp = e_context_group.CAMERA
 		
 		tab_control_switch()
-		draw_button_collapse("aperture", collapse_map[?"aperture"], null, true, nameprefix, nameprefix + "tip")
+		draw_button_collapse("frame_editor/aperture", collapse_map[?"frame_editor/aperture"], null, true, nameprefix, nameprefix + "/tip")
 		tab_next()
 		
-		if (collapse_map[?"aperture"])
+		if (collapse_map[?"frame_editor/aperture"])
 		{
 			tab_collapse_start()
 			
 			tab_control_meter()
-			draw_meter(nameprefix + "bladeamount", dx, dy, dw, tl_edit.value[e_value.CAM_FX_BLADE_AMOUNT], 0, 16, 0, 1, tab.camera_effects.tbx_blade_amount, action_tl_frame_cam_fx_blade_amount)
+			draw_meter(nameprefix + "/blade_amount", dx, dy, dw, tl_edit.value[e_value.CAM_FX_BLADE_AMOUNT], 0, 16, 0, 1, tab.camera_effects.tbx_blade_amount, action_tl_frame_cam_fx_blade_amount)
 			tab_next()
 			
 			tab_control_dragger()
-			draw_dragger(nameprefix + "bladeangle", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLADE_ANGLE], 1, -no_limit, no_limit, 0, 0.1, tab.camera_effects.tbx_blade_angle, action_tl_frame_cam_fx_blade_angle)
+			draw_dragger(nameprefix + "/blade_angle", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLADE_ANGLE], 1, -no_limit, no_limit, 0, 0.1, tab.camera_effects.tbx_blade_angle, action_tl_frame_cam_fx_blade_angle)
 			tab_next()
 			
 			tab_control_meter()
-			draw_meter(nameprefix + "bladestretch", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLADE_STRETCH] * 100), -100, 100, 0, 1, tab.camera_effects.tbx_blade_stretch, action_tl_frame_cam_fx_blade_stretch)
+			draw_meter(nameprefix + "/blade_stretch", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLADE_STRETCH] * 100), -100, 100, 0, 1, tab.camera_effects.tbx_blade_stretch, action_tl_frame_cam_fx_blade_stretch)
 			tab_next()
 			
 			tab_collapse_end()

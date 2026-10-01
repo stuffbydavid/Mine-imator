@@ -20,5 +20,5 @@ function action_tl_keyframes_sound_resize_start()
 	
 	timeline_sound_resize_mouse_pos = timeline_mouse_pos
 	
-	window_busy = "timelineresizesounds"
+	window_busy = "timeline/resize_sounds"
 }

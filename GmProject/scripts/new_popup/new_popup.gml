@@ -16,7 +16,7 @@ function new_popup(name, script, wid, hei, block, custom = false, revert = false
 		self.script = script
 		width = wid
 		height = hei
-		
+
 		self.block = block
 		self.custom = custom
 		self.revert = revert
@@ -27,8 +27,9 @@ function new_popup(name, script, wid, hei, block, custom = false, revert = false
 			close_button = !custom
 			
 		close_script = closescript
-			
-		caption = text_get(name + "caption")
+
+		caption = text_get(name + "/caption")
+		
 		offset_x = 0
 		offset_y = 0
 		custom_height = -4

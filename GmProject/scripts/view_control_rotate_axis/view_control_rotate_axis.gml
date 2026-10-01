@@ -25,7 +25,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 	
 	var alpha = percent(anglevis, .05, .1);
 	
-	if ((window_busy = "rendercontrol" && view_control_edit = control) || view.control_mouseon_last = control || !setting_fade_gizmos)
+	if ((window_busy = "render/control" && view_control_edit = control) || view.control_mouseon_last = control || !setting_fade_gizmos)
 		alpha = 1
 	
 	if (alpha = 0)
@@ -34,7 +34,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 	draw_set_alpha(alpha)
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
 		{
@@ -56,7 +56,7 @@ function view_control_rotate_axis(view, control, vid, color, mat, len)
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_edit = control
 			view_control_edit_view = view
 			view_control_value = tl_edit.value[vid]

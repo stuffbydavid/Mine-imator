@@ -31,7 +31,7 @@ function res_load_audio()
 			if (ret < 0)
 			{
 				log("Error loading audio", ret)
-				error("errorloadaudio")
+				error("error/load_audio")
 				load_stage = ""
 				return 0
 			}

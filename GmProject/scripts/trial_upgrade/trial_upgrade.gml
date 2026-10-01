@@ -14,5 +14,5 @@ function trial_upgrade(key)
 	popup_exportmovie.watermark = false
 	settings_save()
 	
-	toast_new(e_toast.POSITIVE, text_get("alertupgraded"))
+	toast_new(e_toast.POSITIVE, text_get("alert/upgraded"))
 }

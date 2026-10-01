@@ -52,7 +52,7 @@ function project_load(fn = "")
 			fn = file_find_single(unzip_directory + name + "/", ".miproject;.mproj;.mani")
 		if (!file_exists_lib(fn))
 		{
-			error("erroropenprojectzip")
+			error("error/open_project_zip")
 			return false
 		}
 	}

@@ -10,12 +10,8 @@ function project_load_timeline(map)
 		save_id_map[?load_id] = load_id
 		
 		var typename = value_get_string(map[?"type"]);
-		
-		// Pre-2.1 type names
-		if (typename = "bodypart")
-			typename = "modelpart"
-		if (typename = "background")
-			typename = "environment"
+		if (ds_map_exists(legacy_type_name_map, typename))
+			typename = legacy_type_name_map[?typename]
 		
 		type = ds_list_find_index(tl_type_name_list, typename)
 		name = value_get_string(map[?"name"], name)

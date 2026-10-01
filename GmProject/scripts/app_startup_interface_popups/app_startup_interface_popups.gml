@@ -7,7 +7,7 @@ function app_startup_interface_popups()
 	popup_about = new_popup("about", popup_about_draw, 542, 480, true, true, false, true)
 	
 	// New project
-	popup_newproject = new_popup("newproject", popup_newproject_draw, 380, null, true)
+	popup_newproject = new_popup("new_project", popup_newproject_draw, 380, null, true)
 	with (popup_newproject)
 	{
 		folder = ""
@@ -18,7 +18,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Save as
-	popup_saveas = new_popup("saveas", popup_saveas_draw, 380, null, true)
+	popup_saveas = new_popup("save_as", popup_saveas_draw, 380, null, true)
 	with (popup_saveas)
 	{
 		folder = ""
@@ -39,7 +39,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Download skin
-	popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 300, null, true)
+	popup_downloadskin = new_popup("download_skin", popup_downloadskin_draw, 300, null, true)
 	with (popup_downloadskin)
 	{
 		value_script = null
@@ -52,7 +52,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Import image
-	popup_importimage = new_popup("importimage", popup_importimage_draw, 477, null, true) //236
+	popup_importimage = new_popup("import_image", popup_importimage_draw, 477, null, true) //236
 	with (popup_importimage)
 	{
 		filename = ""
@@ -70,7 +70,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Import item sheet
-	popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 288, null, true)
+	popup_importitemsheet = new_popup("import_item_sheet", popup_importitemsheet_draw, 288, null, true)
 	with (popup_importitemsheet)
 	{
 		filename = ""
@@ -85,7 +85,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Export movie
-	popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 350, null, true)
+	popup_exportmovie = new_popup("export_movie", popup_exportmovie_draw, 350, null, true)
 	with (popup_exportmovie)
 	{
 		renderer = app.setting_export_movie_renderer
@@ -106,7 +106,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Export image
-	popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 350, null, true)
+	popup_exportimage = new_popup("export_image", popup_exportimage_draw, 350, null, true)
 	with (popup_exportimage)
 	{
 		renderer = app.setting_export_image_renderer
@@ -128,7 +128,7 @@ function app_startup_interface_popups()
 		tbx_key = new_textbox(true, 8, "")
 		warntext = ""
 		if (key_expired)
-			warntext = "errorkeyexpired"
+			warntext = "error/key_expired"
 		
 		page = 0
 		page_ani = 1
@@ -149,7 +149,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Pattern editor
-	popup_pattern_editor = new_popup("patterneditor", popup_pattern_editor_draw, 550, null, true, false, false, false)
+	popup_pattern_editor = new_popup("pattern_editor", popup_pattern_editor_draw, 550, null, true, false, false, false)
 	with (popup_pattern_editor)
 	{
 		preview = new_obj(obj_preview)
@@ -179,7 +179,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Armor editor
-	popup_armor_editor = new_popup("armoreditor", popup_armor_editor_draw, 550, null, true, false, false, true)
+	popup_armor_editor = new_popup("armor_editor", popup_armor_editor_draw, 550, null, true, false, false, true)
 	with (popup_armor_editor)
 	{
 		preview = new_obj(obj_preview)

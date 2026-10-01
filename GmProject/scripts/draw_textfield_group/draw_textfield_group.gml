@@ -110,7 +110,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			maxval = textfield_max[i]
 		}
 		
-		context_menu_area(fieldx, boxy, boxwid, boxhei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
+		context_menu_area(fieldx, boxy, boxwid, boxhei, "context_menu/value", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
 		
 		microani_set(string(textfield_textbox[i]) + textfield_name[i], textfield_script[i], mouseon || window_focus = string(textfield_textbox[i]), false, (mouseon && mouse_left) || (window_focus = string(textfield_textbox[i])))
 		
@@ -186,7 +186,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		}
 		
 		active = (active || window_focus = string(textfield_textbox[i]))
-		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]) || (window_busy = textfield_name[i] + "drag") || (window_busy = textfield_name[i] + "press"), false, active)
+		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]) || (window_busy = textfield_name[i] + "/drag") || (window_busy = textfield_name[i] + "/press"), false, active)
 		
 		// Textbox
 		draw_set_font(font_digits)
@@ -209,11 +209,11 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			mouse_cursor = cr_size_we
 	
 			if (mouse_left_pressed)
-				window_busy = textfield_name[i] + "press"
+				window_busy = textfield_name[i] + "/press"
 		}
 		
 		// Mouse pressed
-		if (window_busy = textfield_name[i] + "press")
+		if (window_busy = textfield_name[i] + "/press")
 		{
 			mouse_cursor = cr_size_we
 			
@@ -226,12 +226,12 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			else if (mouse_dx != 0)
 			{
 				dragger_drag_value = textfield_value[i]
-				window_busy = textfield_name[i] + "drag" // Start dragging
+				window_busy = textfield_name[i] + "/drag" // Start dragging
 			}
 		}
 		
 		// Is dragging
-		if (window_busy = textfield_name[i] + "drag")
+		if (window_busy = textfield_name[i] + "/drag")
 		{ 
 			mouse_cursor = cr_none
 			dragger_drag_value += (mouse_x - mouse_click_x) * (textfield_mul[i] = null ? mul : textfield_mul[i]) * dragger_multiplier
@@ -273,7 +273,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		}
 		
 		// Idle update
-		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && is_undefined(fieldupdate))
+		if (window_busy != textfield_name[i] + "/press" && window_focus != string(textfield_textbox[i]) && is_undefined(fieldupdate))
 			textfield_textbox[i].text = string_decimals(textfield_value[i])
 		
 		if (vertical)

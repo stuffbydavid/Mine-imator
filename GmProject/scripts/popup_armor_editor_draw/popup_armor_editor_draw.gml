@@ -30,7 +30,7 @@ function popup_armor_editor_draw()
 	
 	dy += 12
 	tab_control_button_label()
-	if (draw_button_label("armoreditorok", content_x + content_width / 2, dy, 100, null, e_button.PRIMARY, null, e_anchor.CENTER))
+	if (draw_button_label("armor_editor/ok", content_x + content_width / 2, dy, 100, null, e_button.PRIMARY, null, e_anchor.CENTER))
 		popup_close()
 	tab_next()
 }

@@ -2,7 +2,7 @@
 
 function tab_frame_editor_camera_effect_type(fxtype)
 {
-	var nameprefix = "frameeditorcameraeffect";
+	var nameprefix = "frame_editor/camera_effect/";
 	context_menu_group_temp = e_context_group.CAMERA
 	
 	switch (fxtype)
@@ -11,10 +11,10 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.FADE:
 		{
 			tab_control_switch()
-			draw_button_collapse("fade", collapse_map[?"fade"], null, true, nameprefix + "fade", nameprefix + "fadetip")
+			draw_button_collapse("frame_editor/fade", collapse_map[?"frame_editor/fade"], null, true, nameprefix + "fade", nameprefix + "fade_tip")
 			tab_next()
 			
-			if (collapse_map[?"fade"])
+			if (collapse_map[?"frame_editor/fade"])
 			{
 				tab_collapse_start()
 				
@@ -23,7 +23,7 @@ function tab_frame_editor_camera_effect_type(fxtype)
 				tab_next()
 				
 				tab_control_color()
-				draw_button_color(nameprefix + "fadecolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
+				draw_button_color(nameprefix + "fade/color", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
 				tab_next()
 				
 				tab_collapse_end()
@@ -36,42 +36,42 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.SHAKE:
 		{
 			tab_control_switch()
-			draw_button_collapse("shake", collapse_map[?"shake"], null, true, nameprefix + "shake", nameprefix + "shaketip")
+			draw_button_collapse("frame_editor/shake", collapse_map[?"frame_editor/shake"], null, true, nameprefix + "shake", nameprefix + "shake/tip")
 			tab_next()
 
-			if (collapse_map[?"shake"])
+			if (collapse_map[?"frame_editor/shake"])
 			{
 				tab_collapse_start()
 
 				// Mode
 				tab_control_togglebutton()
-				togglebutton_add(nameprefix + "shakerotational", null, 0, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 0, action_tl_frame_cam_fx_shake_mode)
-				togglebutton_add(nameprefix + "shakepositional", null, 1, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 1, action_tl_frame_cam_fx_shake_mode)
-				draw_togglebutton(nameprefix + "shakemode", dx, dy)
+				togglebutton_add(nameprefix + "shake/rotational", null, 0, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 0, action_tl_frame_cam_fx_shake_mode)
+				togglebutton_add(nameprefix + "shake/positional", null, 1, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 1, action_tl_frame_cam_fx_shake_mode)
+				draw_togglebutton(nameprefix + "shake/mode", dx, dy)
 				tab_next()
 
 				// Strength
 				axis_edit = X
-				textfield_group_add(nameprefix + "shakestrengthx", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_x, null, 1, 0, no_limit)
+				textfield_group_add(nameprefix + "shake/strength/x", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_x, null, 1, 0, no_limit)
 				axis_edit = (setting_z_is_up ? Y : Z)
-				textfield_group_add(nameprefix + "shakestrengthy", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_y, null, 1, 0, no_limit)
+				textfield_group_add(nameprefix + "shake/strength/y", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_y, null, 1, 0, no_limit)
 				axis_edit = (setting_z_is_up ? Z : Y)
-				textfield_group_add(nameprefix + "shakestrengthz", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_z, null, 1, 0, no_limit)
+				textfield_group_add(nameprefix + "shake/strength/z", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_z, null, 1, 0, no_limit)
 
 				tab_control_textfield_group(true)
-				draw_textfield_group(nameprefix + "shakestrength", dx, dy, dw, null, null, null, .01, true, true, 1)
+				draw_textfield_group(nameprefix + "shake/strength", dx, dy, dw, null, null, null, .01, true, true, 1)
 				tab_next()
 
 				// Speed
 				axis_edit = X
-				textfield_group_add(nameprefix + "shakespeedx", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_x, null, 1, 0, no_limit)
+				textfield_group_add(nameprefix + "shake/speed/x", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_x, null, 1, 0, no_limit)
 				axis_edit = (setting_z_is_up ? Y : Z)
-				textfield_group_add(nameprefix + "shakespeedy", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_y, null, 1, 0, no_limit)
+				textfield_group_add(nameprefix + "shake/speed/y", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_y, null, 1, 0, no_limit)
 				axis_edit = (setting_z_is_up ? Z : Y)
-				textfield_group_add(nameprefix + "shakespeedz", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_z, null, 1, 0, no_limit)
+				textfield_group_add(nameprefix + "shake/speed/z", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_z, null, 1, 0, no_limit)
 
 				tab_control_textfield_group(true)
-				draw_textfield_group(nameprefix + "shakespeed", dx, dy, dw, null, null, null, .01, true, true, 1)
+				draw_textfield_group(nameprefix + "shake/speed", dx, dy, dw, null, null, null, .01, true, true, 1)
 				tab_next()
 
 				tab_collapse_end()
@@ -84,63 +84,63 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.DOF:
 		{
 			tab_control_switch()
-			draw_button_collapse("dof", collapse_map[?"dof"], null, true, nameprefix + "dof", nameprefix + "doftip")
+			draw_button_collapse("frame_editor/dof", collapse_map[?"frame_editor/dof"], null, true, nameprefix + "dof", nameprefix + "dof/tip")
 			tab_next()
 
-			if (collapse_map[?"dof"])
+			if (collapse_map[?"frame_editor/dof"])
 			{
 				tab_collapse_start()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "dofdepth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_FX_DOF_DEPTH] / 50), 0, project_render_distance, 0, 0, tab.camera_effects.tbx_dof_depth, action_tl_frame_cam_fx_dof_depth)
+				draw_dragger(nameprefix + "dof/depth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_FX_DOF_DEPTH] / 50), 0, project_render_distance, 0, 0, tab.camera_effects.tbx_dof_depth, action_tl_frame_cam_fx_dof_depth)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "dofrange", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_FX_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera_effects.tbx_dof_range, action_tl_frame_cam_fx_dof_range)
+				draw_dragger(nameprefix + "dof/range", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_FX_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera_effects.tbx_dof_range, action_tl_frame_cam_fx_dof_range)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "doffadesize", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera_effects.tbx_dof_fade_size, action_tl_frame_cam_fx_dof_fade_size)
+				draw_dragger(nameprefix + "dof/fade_size", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera_effects.tbx_dof_fade_size, action_tl_frame_cam_fx_dof_fade_size)
 				tab_next()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "dofblursize", dx, dy, dw, tl_edit.value[e_value.CAM_FX_DOF_BLUR_SIZE] * 100, 0, 10, 1, .01, tab.camera_effects.tbx_dof_blur_size, action_tl_frame_cam_fx_dof_blur_size)
+				draw_meter(nameprefix + "dof/blur_size", dx, dy, dw, tl_edit.value[e_value.CAM_FX_DOF_BLUR_SIZE] * 100, 0, 10, 1, .01, tab.camera_effects.tbx_dof_blur_size, action_tl_frame_cam_fx_dof_blur_size)
 				tab_next()
 
 				if (setting_advanced_mode)
 				{
 					tab_control_switch()
-					draw_button_collapse("dof_bokeh", collapse_map[?"dof_bokeh"], null, true, nameprefix + "dofbokeh")
+					draw_button_collapse("frame_editor/dof_bokeh", collapse_map[?"frame_editor/dof_bokeh"], null, true, nameprefix + "dof/bokeh")
 					tab_next()
 
-					if (collapse_map[?"dof_bokeh"])
+					if (collapse_map[?"frame_editor/dof_bokeh"])
 					{
 						tab_collapse_start()
 
 						tab_control_meter()
-						draw_meter(nameprefix + "dofblurratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_DOF_BLUR_RATIO] * 100), -100, 100, 0, 1, tab.camera_effects.tbx_dof_blur_ratio, action_tl_frame_cam_fx_dof_blur_ratio)
+						draw_meter(nameprefix + "dof/blur_ratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_DOF_BLUR_RATIO] * 100), -100, 100, 0, 1, tab.camera_effects.tbx_dof_blur_ratio, action_tl_frame_cam_fx_dof_blur_ratio)
 						tab_next()
 
 						tab_control_meter()
-						draw_meter(nameprefix + "dofbias", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_DOF_BIAS] * 10), 0, 100, 0, 1, tab.camera_effects.tbx_dof_bias, action_tl_frame_cam_fx_dof_bias)
+						draw_meter(nameprefix + "dof/bias", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_DOF_BIAS] * 10), 0, 100, 0, 1, tab.camera_effects.tbx_dof_bias, action_tl_frame_cam_fx_dof_bias)
 						tab_next()
 
 						tab_control_dragger()
-						draw_dragger(nameprefix + "dofthreshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_THRESHOLD] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera_effects.tbx_dof_threshold, action_tl_frame_cam_fx_dof_threshold)
+						draw_dragger(nameprefix + "dof/threshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_THRESHOLD] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera_effects.tbx_dof_threshold, action_tl_frame_cam_fx_dof_threshold)
 						tab_next()
 
 						tab_control_dragger()
-						draw_dragger(nameprefix + "dofgain", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_GAIN] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera_effects.tbx_dof_gain, action_tl_frame_cam_fx_dof_gain)
+						draw_dragger(nameprefix + "dof/gain", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_GAIN] * 100, .1, 0, no_limit * 100, 0, .1, tab.camera_effects.tbx_dof_gain, action_tl_frame_cam_fx_dof_gain)
 						tab_next()
 
 						tab_collapse_end(false)
 					}
 
 					tab_control_switch()
-					draw_button_collapse("dof_fringe", collapse_map[?"dof_fringe"], action_tl_frame_cam_fx_dof_fringe, tl_edit.value[e_value.CAM_FX_DOF_FRINGE], nameprefix + "doffringe")
+					draw_button_collapse("frame_editor/dof_fringe", collapse_map[?"frame_editor/dof_fringe"], action_tl_frame_cam_fx_dof_fringe, tl_edit.value[e_value.CAM_FX_DOF_FRINGE], nameprefix + "dof/fringe")
 					tab_next()
 
-					if (tl_edit.value[e_value.CAM_FX_DOF_FRINGE] && collapse_map[?"dof_fringe"])
+					if (tl_edit.value[e_value.CAM_FX_DOF_FRINGE] && collapse_map[?"frame_editor/dof_fringe"])
 					{
 						tab_collapse_start()
 
@@ -161,11 +161,11 @@ function tab_frame_editor_camera_effect_type(fxtype)
 
 						// Textboxes
 						axis_edit = X
-						textfield_group_add(nameprefix + "doffringeanglered", tl_edit.value[e_value.CAM_FX_DOF_FRINGE_ANGLE_RED], tl_edit.value_default[e_value.CAM_FX_DOF_FRINGE_ANGLE_RED], action_tl_frame_cam_fx_dof_fringe_angle, axis_edit, tab.camera_effects.tbx_dof_fringe_angle_red)
+						textfield_group_add(nameprefix + "dof/fringe/angle_red", tl_edit.value[e_value.CAM_FX_DOF_FRINGE_ANGLE_RED], tl_edit.value_default[e_value.CAM_FX_DOF_FRINGE_ANGLE_RED], action_tl_frame_cam_fx_dof_fringe_angle, axis_edit, tab.camera_effects.tbx_dof_fringe_angle_red)
 						axis_edit = Y
-						textfield_group_add(nameprefix + "doffringeanglegreen", tl_edit.value[e_value.CAM_FX_DOF_FRINGE_ANGLE_GREEN], tl_edit.value_default[e_value.CAM_FX_DOF_FRINGE_ANGLE_GREEN], action_tl_frame_cam_fx_dof_fringe_angle, axis_edit, tab.camera_effects.tbx_dof_fringe_angle_green)
+						textfield_group_add(nameprefix + "dof/fringe/angle_green", tl_edit.value[e_value.CAM_FX_DOF_FRINGE_ANGLE_GREEN], tl_edit.value_default[e_value.CAM_FX_DOF_FRINGE_ANGLE_GREEN], action_tl_frame_cam_fx_dof_fringe_angle, axis_edit, tab.camera_effects.tbx_dof_fringe_angle_green)
 						axis_edit = Z
-						textfield_group_add(nameprefix + "doffringeangleblue", tl_edit.value[e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE], tl_edit.value_default[e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE], action_tl_frame_cam_fx_dof_fringe_angle, axis_edit, tab.camera_effects.tbx_dof_fringe_angle_blue)
+						textfield_group_add(nameprefix + "dof/fringe/angle_blue", tl_edit.value[e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE], tl_edit.value_default[e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE], action_tl_frame_cam_fx_dof_fringe_angle, axis_edit, tab.camera_effects.tbx_dof_fringe_angle_blue)
 
 						tab_control_textfield_group()
 						draw_textfield_group(nameprefix + "doffringeangle", dx, dy, dw, 0.1, -no_limit, no_limit, snapval, false, true, 3)
@@ -173,14 +173,14 @@ function tab_frame_editor_camera_effect_type(fxtype)
 
 						// Offset
 						axis_edit = X
-						textfield_group_add(nameprefix + "doffringered", round(tl_edit.value[e_value.CAM_FX_DOF_FRINGE_RED] * 100), 100, action_tl_frame_cam_fx_dof_fringe_red, axis_edit, tab.camera_effects.tbx_dof_fringe_red)
+						textfield_group_add(nameprefix + "dof/fringe/red", round(tl_edit.value[e_value.CAM_FX_DOF_FRINGE_RED] * 100), 100, action_tl_frame_cam_fx_dof_fringe_red, axis_edit, tab.camera_effects.tbx_dof_fringe_red)
 						axis_edit = Y
-						textfield_group_add(nameprefix + "doffringegreen", round(tl_edit.value[e_value.CAM_FX_DOF_FRINGE_GREEN] * 100), 100, action_tl_frame_cam_fx_dof_fringe_green, axis_edit, tab.camera_effects.tbx_dof_fringe_green)
+						textfield_group_add(nameprefix + "dof/fringe/green", round(tl_edit.value[e_value.CAM_FX_DOF_FRINGE_GREEN] * 100), 100, action_tl_frame_cam_fx_dof_fringe_green, axis_edit, tab.camera_effects.tbx_dof_fringe_green)
 						axis_edit = Z
-						textfield_group_add(nameprefix + "doffringeblue", round(tl_edit.value[e_value.CAM_FX_DOF_FRINGE_BLUE] * 100), 100, action_tl_frame_cam_fx_dof_fringe_blue, axis_edit, tab.camera_effects.tbx_dof_fringe_blue)
+						textfield_group_add(nameprefix + "dof/fringe/blue", round(tl_edit.value[e_value.CAM_FX_DOF_FRINGE_BLUE] * 100), 100, action_tl_frame_cam_fx_dof_fringe_blue, axis_edit, tab.camera_effects.tbx_dof_fringe_blue)
 
 						tab_control_textfield_group(true)
-						draw_textfield_group(nameprefix + "doffringeoffset", dx, dy, dw, 1, 0, no_limit, 1, true, true, 3)
+						draw_textfield_group(nameprefix + "dof/fringe/offset", dx, dy, dw, 1, 0, no_limit, 1, true, true, 3)
 						tab_next()
 
 						tab_collapse_end(false)
@@ -197,38 +197,38 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.BLOOM:
 		{
 			tab_control_switch()
-			draw_button_collapse("bloom", collapse_map[?"bloom"], null, true, nameprefix + "bloom", nameprefix + "bloomtip")
+			draw_button_collapse("frame_editor/bloom", collapse_map[?"frame_editor/bloom"], null, true, nameprefix + "bloom", nameprefix + "bloom/tip")
 			tab_next()
 
-			if (collapse_map[?"bloom"])
+			if (collapse_map[?"frame_editor/bloom"])
 			{
 				tab_collapse_start()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "bloomradius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_RADIUS] * 100), 1, 0, no_limit, 100, 1, tab.camera_effects.tbx_bloom_radius, action_tl_frame_cam_fx_bloom_radius)
+				draw_dragger(nameprefix + "bloom/radius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_RADIUS] * 100), 1, 0, no_limit, 100, 1, tab.camera_effects.tbx_bloom_radius, action_tl_frame_cam_fx_bloom_radius)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "bloomintensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_INTENSITY] * 100), 1, 0, no_limit, 40, 1, tab.camera_effects.tbx_bloom_intensity, action_tl_frame_cam_fx_bloom_intensity)
+				draw_dragger(nameprefix + "bloom/intensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_INTENSITY] * 100), 1, 0, no_limit, 40, 1, tab.camera_effects.tbx_bloom_intensity, action_tl_frame_cam_fx_bloom_intensity)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "bloomthreshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_THRESHOLD], 0.01, 0, no_limit, 0.85, 0.01, tab.camera_effects.tbx_bloom_threshold, action_tl_frame_cam_fx_bloom_threshold)
+				draw_dragger(nameprefix + "bloom/threshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_THRESHOLD], 0.01, 0, no_limit, 0.85, 0.01, tab.camera_effects.tbx_bloom_threshold, action_tl_frame_cam_fx_bloom_threshold)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "bloomtransition", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_TRANSITION], 0.01, 0, no_limit, 0.5, 0.01, tab.camera_effects.tbx_bloom_transition, action_tl_frame_cam_fx_bloom_transition)
+				draw_dragger(nameprefix + "bloom/transition", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_TRANSITION], 0.01, 0, no_limit, 0.5, 0.01, tab.camera_effects.tbx_bloom_transition, action_tl_frame_cam_fx_bloom_transition)
 				tab_next()
 
 				// Advanced mode only
 				if (setting_advanced_mode)
 				{
 					tab_control_meter()
-					draw_meter(nameprefix + "bloomratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLOOM_RATIO] * 100), 0, 100, 0, 1, tab.camera_effects.tbx_bloom_ratio, action_tl_frame_cam_fx_bloom_ratio)
+					draw_meter(nameprefix + "bloom/ratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLOOM_RATIO] * 100), 0, 100, 0, 1, tab.camera_effects.tbx_bloom_ratio, action_tl_frame_cam_fx_bloom_ratio)
 					tab_next()
 
 					tab_control_color()
-					draw_button_color(nameprefix + "bloomblend", dx, dy, dw, tl_edit.value[e_value.CAM_FX_BLOOM_BLEND], c_white, false, action_tl_frame_cam_fx_bloom_blend)
+					draw_button_color(nameprefix + "bloom/blend", dx, dy, dw, tl_edit.value[e_value.CAM_FX_BLOOM_BLEND], c_white, false, action_tl_frame_cam_fx_bloom_blend)
 					tab_next()
 				}
 
@@ -242,10 +242,10 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.LENS_DIRT:
 		{
 			tab_control_switch()
-			draw_button_collapse("lensdirt", collapse_map[?"lensdirt"], null, true, nameprefix + "lensdirt", nameprefix + "lensdirttip")
+			draw_button_collapse("frame_editor/lens_dirt", collapse_map[?"frame_editor/lens_dirt"], null, true, nameprefix + "lens_dirt", nameprefix + "lens_dirt/tip")
 			tab_next()
 
-			if (collapse_map[?"lensdirt"])
+			if (collapse_map[?"frame_editor/lens_dirt"])
 			{
 				tab_collapse_start()
 
@@ -257,41 +257,41 @@ function tab_frame_editor_camera_effect_type(fxtype)
 				if (texobj != null)
 					content_text = texobj.display_name
 				else
-					content_text = text_get("listnone")
+					content_text = text_get("list/none")
 
 				if (texobj = null)
-					content_text = text_get("listdefault", content_text)
+					content_text = text_get("list/default", content_text)
 
 				if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
 					tex = texobj.texture
 
 				tab_control_menu(ui_large_height)
-				draw_button_menu(nameprefix + "lensdirttexture", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_OBJ], content_text, action_tl_frame_texture_obj, false, tex)
+				draw_button_menu(nameprefix + "lens_dirt/texture", e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_OBJ], content_text, action_tl_frame_texture_obj, false, tex)
 				tab_next()
 
 				// Affected by bloom
 				tab_control_switch()
-				draw_switch(nameprefix + "lensdirtbloom", dx, dy, tl_edit.value[e_value.CAM_FX_LENS_DIRT_BLOOM], action_tl_frame_cam_fx_lens_dirt_bloom)
+				draw_switch(nameprefix + "lens_dirt/bloom", dx, dy, tl_edit.value[e_value.CAM_FX_LENS_DIRT_BLOOM], action_tl_frame_cam_fx_lens_dirt_bloom)
 				tab_next()
 
 				// Affected by glow
 				tab_control_switch()
-				draw_switch(nameprefix + "lensdirtglow", dx, dy, tl_edit.value[e_value.CAM_FX_LENS_DIRT_GLOW], action_tl_frame_cam_fx_lens_dirt_glow)
+				draw_switch(nameprefix + "lens_dirt/glow", dx, dy, tl_edit.value[e_value.CAM_FX_LENS_DIRT_GLOW], action_tl_frame_cam_fx_lens_dirt_glow)
 				tab_next()
 
 				// Radius
 				tab_control_meter()
-				draw_meter(nameprefix + "lensdirtradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_LENS_DIRT_RADIUS] * 100), 0, 300, 50, 1, tab.camera_effects.tbx_lens_dirt_radius, action_tl_frame_cam_fx_lens_dirt_radius)
+				draw_meter(nameprefix + "lens_dirt/radius", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_LENS_DIRT_RADIUS] * 100), 0, 300, 50, 1, tab.camera_effects.tbx_lens_dirt_radius, action_tl_frame_cam_fx_lens_dirt_radius)
 				tab_next()
 
 				// Intensity
 				tab_control_meter()
-				draw_meter(nameprefix + "lensdirtintensity", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_LENS_DIRT_INTENSITY] * 100), 0, 200, 80, 1, tab.camera_effects.tbx_lens_dirt_intensity, action_tl_frame_cam_fx_lens_dirt_intensity)
+				draw_meter(nameprefix + "lens_dirt/intensity", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_LENS_DIRT_INTENSITY] * 100), 0, 200, 80, 1, tab.camera_effects.tbx_lens_dirt_intensity, action_tl_frame_cam_fx_lens_dirt_intensity)
 				tab_next()
 
 				// Power
 				tab_control_meter()
-				draw_meter(nameprefix + "lensdirtpower", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_LENS_DIRT_POWER] * 100), 100, 500, 150, 1, tab.camera_effects.tbx_lens_dirt_power, action_tl_frame_cam_fx_lens_dirt_power)
+				draw_meter(nameprefix + "lens_dirt/power", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_LENS_DIRT_POWER] * 100), 100, 500, 150, 1, tab.camera_effects.tbx_lens_dirt_power, action_tl_frame_cam_fx_lens_dirt_power)
 				tab_next()
 
 				tab_collapse_end()
@@ -304,23 +304,23 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.GRAIN:
 		{
 			tab_control_switch()
-			draw_button_collapse("grain", collapse_map[?"grain"], null, true, nameprefix + "grain", nameprefix + "graintip")
+			draw_button_collapse("frame_editor/grain", collapse_map[?"frame_editor/grain"], null, true, nameprefix + "grain", nameprefix + "grain/tip")
 			tab_next()
 
-			if (collapse_map[?"grain"])
+			if (collapse_map[?"frame_editor/grain"])
 			{
 				tab_collapse_start()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "grainstrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_GRAIN_STRENGTH] * 100), -100, 100, 10, 1, tab.camera_effects.tbx_grain_strength, action_tl_frame_cam_fx_grain_strength)
+				draw_meter(nameprefix + "grain/strength", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_GRAIN_STRENGTH] * 100), -100, 100, 10, 1, tab.camera_effects.tbx_grain_strength, action_tl_frame_cam_fx_grain_strength)
 				tab_next()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "grainsaturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_GRAIN_SATURATION] * 100), 0, 100, 10, 1, tab.camera_effects.tbx_grain_saturation, action_tl_frame_cam_fx_grain_saturation)
+				draw_meter(nameprefix + "grain/saturation", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_GRAIN_SATURATION] * 100), 0, 100, 10, 1, tab.camera_effects.tbx_grain_saturation, action_tl_frame_cam_fx_grain_saturation)
 				tab_next()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "grainsize", dx, dy, dw, tl_edit.value[e_value.CAM_FX_GRAIN_SIZE], 1, 10, 1, 1, tab.camera_effects.tbx_grain_size, action_tl_frame_cam_fx_grain_size)
+				draw_meter(nameprefix + "grain/size", dx, dy, dw, tl_edit.value[e_value.CAM_FX_GRAIN_SIZE], 1, 10, 1, 1, tab.camera_effects.tbx_grain_size, action_tl_frame_cam_fx_grain_size)
 				tab_next()
 
 				tab_collapse_end()
@@ -333,27 +333,27 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.VIGNETTE:
 		{
 			tab_control_switch()
-			draw_button_collapse("vignette", collapse_map[?"vignette"], null, true, nameprefix + "vignette", nameprefix + "vignettetip")
+			draw_button_collapse("frame_editor/vignette", collapse_map[?"frame_editor/vignette"], null, true, nameprefix + "vignette", nameprefix + "vignette/tip")
 			tab_next()
 
-			if (collapse_map[?"vignette"])
+			if (collapse_map[?"frame_editor/vignette"])
 			{
 				tab_collapse_start()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "vignetteradius", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_VIGNETTE_RADIUS] * 100), 0, 100, 100, 1, tab.camera_effects.tbx_vignette_radius, action_tl_frame_cam_fx_vignette_radius)
+				draw_meter(nameprefix + "vignette/radius", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_VIGNETTE_RADIUS] * 100), 0, 100, 100, 1, tab.camera_effects.tbx_vignette_radius, action_tl_frame_cam_fx_vignette_radius)
 				tab_next()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "vignettesoftness", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_VIGNETTE_SOFTNESS] * 100), 0, 100, 50, 1, tab.camera_effects.tbx_vignette_softness, action_tl_frame_cam_fx_vignette_softness)
+				draw_meter(nameprefix + "vignette/softness", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_VIGNETTE_SOFTNESS] * 100), 0, 100, 50, 1, tab.camera_effects.tbx_vignette_softness, action_tl_frame_cam_fx_vignette_softness)
 				tab_next()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "vignettestrength", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_VIGNETTE_STRENGTH] * 100), 0, 100, 100, 1, tab.camera_effects.tbx_vignette_strength, action_tl_frame_cam_fx_vignette_strength)
+				draw_meter(nameprefix + "vignette/strength", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_VIGNETTE_STRENGTH] * 100), 0, 100, 100, 1, tab.camera_effects.tbx_vignette_strength, action_tl_frame_cam_fx_vignette_strength)
 				tab_next()
 
 				tab_control_color()
-				draw_button_color(nameprefix + "vignettecolor", dx, dy, dw, tl_edit.value[e_value.CAM_FX_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_fx_vignette_color)
+				draw_button_color(nameprefix + "vignette/color", dx, dy, dw, tl_edit.value[e_value.CAM_FX_VIGNETTE_COLOR], c_black, false, action_tl_frame_cam_fx_vignette_color)
 				tab_next()
 
 				tab_collapse_end()
@@ -366,27 +366,27 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.CA:
 		{
 			tab_control_switch()
-			draw_button_collapse("ca", collapse_map[?"ca"], null, true, nameprefix + "ca", nameprefix + "catip")
+			draw_button_collapse("frame_editor/ca", collapse_map[?"frame_editor/ca"], null, true, nameprefix + "ca", nameprefix + "ca/tip")
 			tab_next()
 
-			if (collapse_map[?"ca"])
+			if (collapse_map[?"frame_editor/ca"])
 			{
 				tab_collapse_start()
 
 				tab_control_meter()
-				draw_meter(nameprefix + "cabluramount", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_CA_BLUR_AMOUNT] * 100), 0, 100, 5, 1, tab.camera_effects.tbx_ca_blur_amount, action_tl_frame_cam_fx_ca_blur_amount)
+				draw_meter(nameprefix + "ca/blur_amount", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_CA_BLUR_AMOUNT] * 100), 0, 100, 5, 1, tab.camera_effects.tbx_ca_blur_amount, action_tl_frame_cam_fx_ca_blur_amount)
 				tab_next()
 
 				tab_control_switch()
-				draw_switch(nameprefix + "cadistortchannels", dx, dy, tl_edit.value[e_value.CAM_FX_CA_DISTORT_CHANNELS], action_tl_frame_cam_fx_ca_distort_channels)
+				draw_switch(nameprefix + "ca/distort_channels", dx, dy, tl_edit.value[e_value.CAM_FX_CA_DISTORT_CHANNELS], action_tl_frame_cam_fx_ca_distort_channels)
 				tab_next()
 
-				textfield_group_add(nameprefix + "caredoffset", round(tl_edit.value[e_value.CAM_FX_CA_RED_OFFSET] * 100), 12, action_tl_frame_cam_fx_ca_red_offset, X, tab.camera_effects.tbx_ca_red_offset)
-				textfield_group_add(nameprefix + "cagreenoffset", round(tl_edit.value[e_value.CAM_FX_CA_GREEN_OFFSET] * 100), 8, action_tl_frame_cam_fx_ca_green_offset, X, tab.camera_effects.tbx_ca_green_offset)
-				textfield_group_add(nameprefix + "cablueoffset", round(tl_edit.value[e_value.CAM_FX_CA_BLUE_OFFSET] * 100), 4, action_tl_frame_cam_fx_ca_blue_offset, X, tab.camera_effects.tbx_ca_blue_offset)
+				textfield_group_add(nameprefix + "ca/red_offset", round(tl_edit.value[e_value.CAM_FX_CA_RED_OFFSET] * 100), 12, action_tl_frame_cam_fx_ca_red_offset, X, tab.camera_effects.tbx_ca_red_offset)
+				textfield_group_add(nameprefix + "ca/green_offset", round(tl_edit.value[e_value.CAM_FX_CA_GREEN_OFFSET] * 100), 8, action_tl_frame_cam_fx_ca_green_offset, X, tab.camera_effects.tbx_ca_green_offset)
+				textfield_group_add(nameprefix + "ca/blue_offset", round(tl_edit.value[e_value.CAM_FX_CA_BLUE_OFFSET] * 100), 4, action_tl_frame_cam_fx_ca_blue_offset, X, tab.camera_effects.tbx_ca_blue_offset)
 
 				tab_control_textfield_group(true)
-				draw_textfield_group(nameprefix + "caoffset", dx, dy, dw, 1, 0, no_limit, 1, true, true, 3)
+				draw_textfield_group(nameprefix + "ca/offset", dx, dy, dw, 1, 0, no_limit, 1, true, true, 3)
 				tab_next()
 
 				tab_collapse_end()
@@ -399,23 +399,23 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.DISTORT:
 		{
 			tab_control_switch()
-			draw_button_collapse("distort", collapse_map[?"distort"], null, true, nameprefix + "distort", nameprefix + "distorttip")
+			draw_button_collapse("frame_editor/distort", collapse_map[?"frame_editor/distort"], null, true, nameprefix + "distort", nameprefix + "distort/tip")
 			tab_next()
 
-			if (collapse_map[?"distort"])
+			if (collapse_map[?"frame_editor/distort"])
 			{
 				tab_collapse_start()
 
 				tab_control_switch()
-				draw_switch(nameprefix + "distortrepeat", dx, dy, tl_edit.value[e_value.CAM_FX_DISTORT_REPEAT], action_tl_frame_cam_fx_distort_repeat)
+				draw_switch(nameprefix + "distort/repeat", dx, dy, tl_edit.value[e_value.CAM_FX_DISTORT_REPEAT], action_tl_frame_cam_fx_distort_repeat)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "distortzoom", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DISTORT_ZOOM_AMOUNT] * 100, 1, snap_min, no_limit, 100, .01, tab.camera_effects.tbx_distort_zoom_amount, action_tl_frame_cam_fx_distort_zoom_amount)
+				draw_dragger(nameprefix + "distort/zoom", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DISTORT_ZOOM_AMOUNT] * 100, 1, snap_min, no_limit, 100, .01, tab.camera_effects.tbx_distort_zoom_amount, action_tl_frame_cam_fx_distort_zoom_amount)
 				tab_next()
 
 				tab_control_dragger()
-				draw_dragger(nameprefix + "distortamount", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DISTORT_AMOUNT] * 100, .1, -no_limit * 100, no_limit * 100, 5, 0.01, tab.camera_effects.tbx_distort_amount, action_tl_frame_cam_fx_distort_amount)
+				draw_dragger(nameprefix + "distort/amount", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DISTORT_AMOUNT] * 100, .1, -no_limit * 100, no_limit * 100, 5, 0.01, tab.camera_effects.tbx_distort_amount, action_tl_frame_cam_fx_distort_amount)
 				tab_next()
 
 				tab_collapse_end(false)
@@ -427,29 +427,29 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.LIGHT_MANAGEMENT:
 		{
 			tab_control_switch()
-			draw_button_collapse("lightmanagement", collapse_map[?"lightmanagement"], null, true, nameprefix + "lightmanagement", nameprefix + "lightmanagementtip")
+			draw_button_collapse("frame_editor/light_management", collapse_map[?"frame_editor/light_management"], null, true, nameprefix + "light_management", nameprefix + "light_management/tip")
 			tab_next()
 			
-			if (collapse_map[?"lightmanagement"])
+			if (collapse_map[?"frame_editor/light_management"])
 			{
 				tab_collapse_start()
 				
 				var tonemapper = tl_edit.value[e_value.CAM_FX_TONEMAPPER];
 				if (tonemapper >= 0 && tonemapper < array_length(render_tonemapper_names))
-					content_text = text_get("rendertonemapper" + render_tonemapper_names[tonemapper])
+					content_text = text_get("render/tonemapper/" + render_tonemapper_names[tonemapper])
 				else
-					content_text = text_get("rendertonemappernone")
+					content_text = text_get("render/tonemapper/none")
 				
 				tab_control_menu()
-				draw_button_menu("rendertonemapper", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_FX_TONEMAPPER], content_text, action_tl_frame_cam_fx_tonemapper)
+				draw_button_menu("render/tonemapper", e_menu.LIST, dx, dy, dw, 24, tl_edit.value[e_value.CAM_FX_TONEMAPPER], content_text, action_tl_frame_cam_fx_tonemapper)
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "lightmanagementexposure", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_EXPOSURE], 0.01, 0, no_limit, 1, 0.01, tab.camera_effects.tbx_exposure, action_tl_frame_cam_fx_exposure)
+				draw_dragger(nameprefix + "light_management/exposure", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_EXPOSURE], 0.01, 0, no_limit, 1, 0.01, tab.camera_effects.tbx_exposure, action_tl_frame_cam_fx_exposure)
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "lightmanagementgamma", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_GAMMA], 0.01, 0, no_limit, 2.2, 0.01, tab.camera_effects.tbx_gamma, action_tl_frame_cam_fx_gamma)
+				draw_dragger(nameprefix + "light_management/gamma", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_GAMMA], 0.01, 0, no_limit, 2.2, 0.01, tab.camera_effects.tbx_gamma, action_tl_frame_cam_fx_gamma)
 				tab_next()
 				
 				tab_collapse_end()
@@ -462,31 +462,31 @@ function tab_frame_editor_camera_effect_type(fxtype)
 		case e_cam_fx.COLOR_CORRECTION:
 		{
 			tab_control_switch()
-			draw_button_collapse("colorcorrection", collapse_map[?"colorcorrection"], null, true, nameprefix + "colorcorrection", nameprefix + "colorcorrectiontip")
+			draw_button_collapse("frame_editor/color_correction", collapse_map[?"frame_editor/color_correction"], null, true, nameprefix + "color_correction", nameprefix + "color_correction/tip")
 			tab_next()
 			
-			if (collapse_map[?"colorcorrection"])
+			if (collapse_map[?"frame_editor/color_correction"])
 			{
 				tab_collapse_start()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "colorcorrectioncontrast", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_CONTRAST] * 100), .1, 0, no_limit * 100, 0, 1, tab.camera_effects.tbx_contrast, action_tl_frame_cam_fx_clrcor_contrast)
+				draw_dragger(nameprefix + "color_correction/contrast", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_CONTRAST] * 100), .1, 0, no_limit * 100, 0, 1, tab.camera_effects.tbx_contrast, action_tl_frame_cam_fx_clrcor_contrast)
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "colorcorrectionbrightness", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BRIGHTNESS] * 100), .1, -no_limit * 100, no_limit * 100, 0, 1, tab.camera_effects.tbx_brightness, action_tl_frame_cam_fx_clrcor_brightness)
+				draw_dragger(nameprefix + "color_correction/brightness", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BRIGHTNESS] * 100), .1, -no_limit * 100, no_limit * 100, 0, 1, tab.camera_effects.tbx_brightness, action_tl_frame_cam_fx_clrcor_brightness)
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "colorcorrectionsaturation", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_SATURATION] * 100), .1, 0, no_limit * 100, 100, 1, tab.camera_effects.tbx_saturation, action_tl_frame_cam_fx_clrcor_saturation)
+				draw_dragger(nameprefix + "color_correction/saturation", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_SATURATION] * 100), .1, 0, no_limit * 100, 100, 1, tab.camera_effects.tbx_saturation, action_tl_frame_cam_fx_clrcor_saturation)
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "colorcorrectionvibrance", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_VIBRANCE] * 100), .1, 0, no_limit * 100, 0, 1, tab.camera_effects.tbx_vibrance, action_tl_frame_cam_fx_clrcor_vibrance)
+				draw_dragger(nameprefix + "color_correction/vibrance", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_VIBRANCE] * 100), .1, 0, no_limit * 100, 0, 1, tab.camera_effects.tbx_vibrance, action_tl_frame_cam_fx_clrcor_vibrance)
 				tab_next()
 				
 				tab_control_color()
-				draw_button_color(nameprefix + "colorcorrectioncolorburn", dx, dy, dw, tl_edit.value[e_value.CAM_FX_COLOR_BURN], c_white, false, action_tl_frame_cam_fx_clrcor_color_burn)
+				draw_button_color(nameprefix + "color_correction/color_burn", dx, dy, dw, tl_edit.value[e_value.CAM_FX_COLOR_BURN], c_white, false, action_tl_frame_cam_fx_clrcor_color_burn)
 				tab_next()
 				
 				tab_frame_editor_color(null, false)

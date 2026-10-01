@@ -21,9 +21,9 @@ function draw_switch(name, xx, yy, active, script, tip = "", disabled = false, l
 	
 	// Mouse
 	var mouseon, mouseclick, pressed, thumbgoal, labelon, labelclick;
-	labelon = labelononly && app_mouse_box(xx - 4, yy - 4, string_width(string_limit(text, w - 32)) + 8, h + 8)
+	labelon = labelononly && app_mouse_box(xx - 4, yy - 4, w / 2 + 4, h + 8)
 	labelclick = labelon && content_mouseon && !disabled && mouse_left_released
-	mouseon = app_mouse_box(xx - 4, yy - 4, dw + 6, h + 8) && content_mouseon && !disabled && !labelon
+	mouseon = app_mouse_box(xx + (labelononly ? w / 2 : -4), yy - 4, labelononly ? w / 2 + 2 : w + 6, h + 8) && content_mouseon && !disabled && !labelon
 	mouseclick = mouseon && mouse_left
 	pressed = false
 	

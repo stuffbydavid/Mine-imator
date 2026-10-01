@@ -9,7 +9,7 @@ function project_save_as()
 	
 	if (!directory_exists_lib(dirname))
 	{
-		error("errornewprojectaccess")
+		error("error/new_project_access")
 		return 0
 	}
 	
@@ -32,6 +32,6 @@ function project_save_as()
 	
 	project_save()
 	
-	toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))
-	toast_add_action("alertprojectcreatedview", open_url, project_folder)
+	toast_new(e_toast.POSITIVE, text_get("alert/project_created"))
+	toast_add_action("alert/project_created_view", open_url, project_folder)
 }

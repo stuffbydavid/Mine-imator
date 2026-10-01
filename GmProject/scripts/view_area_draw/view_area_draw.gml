@@ -20,7 +20,7 @@ function view_area_draw()
 	}
 
 	// Resizing
-	if (window_busy = "viewresizehor" || window_busy = "viewresizeboth") // Horizontal
+	if (window_busy = "view/resize_hor" || window_busy = "view/resize_both") // Horizontal
 	{
 		mouse_cursor = cr_size_we
 		if (string_contains(view_second.location, "left"))
@@ -33,7 +33,7 @@ function view_area_draw()
 			window_busy = ""
 	}
 	
-	if (window_busy = "viewresizever" || window_busy = "viewresizeboth") // Vertical
+	if (window_busy = "view/resize_ver" || window_busy = "view/resize_both") // Vertical
 	{
 		mouse_cursor = cr_size_ns
 		if (string_contains(view_second.location, "top"))
@@ -46,7 +46,7 @@ function view_area_draw()
 			window_busy = ""
 	}
 	
-	if (window_busy = "viewresizeboth") // Both
+	if (window_busy = "view/resize_both") // Both
 	{
 		if (view_second.location = "right" || view_second.location = "left_secondary")
 			mouse_cursor = cr_size_nesw
@@ -55,7 +55,7 @@ function view_area_draw()
 	}
 	
 	// Resizing split
-	if (window_busy = "viewresizesplithor")
+	if (window_busy = "view/resize_split_hor")
 	{
 		mouse_cursor = cr_size_we
 		view_split = clamp((mouse_x - view_area_x) / view_area_width, 0.1, 0.9)
@@ -67,7 +67,7 @@ function view_area_draw()
 			window_busy = ""
 	}
 	
-	if (window_busy = "viewresizesplitver")
+	if (window_busy = "view/resize_split_ver")
 	{
 		mouse_cursor = cr_size_ns
 		view_split = clamp((mouse_y - view_area_y) / view_area_height, 0.1, 0.9)

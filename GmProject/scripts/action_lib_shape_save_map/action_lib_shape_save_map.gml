@@ -1,6 +1,6 @@
 function action_lib_shape_save_map(type)
 {
-	var fn = file_dialog_save_image(text_get("type" + temp_type_name_list[|type]));
+	var fn = file_dialog_save_image(text_get("type/" + temp_type_name_list[|type]));
 	if (fn != "")
 	{
 		if (type = e_temp_type.CONE)

@@ -143,7 +143,7 @@ function view_draw(view)
 	content_height = boxh
 	content_mouseon = (view.mouseon && !popup_mouseon)
 	
-	if (window_busy = "viewmove" && view = view_second)
+	if (window_busy = "view/move" && view = view_second)
 	{
 		boxx = mouse_x - (boxw/2)
 		boxy = mouse_y
@@ -186,7 +186,7 @@ function view_draw(view)
 	
 	microani_prefix = string(view)
 	
-	if (view = view_main && view_second.show && !window_exists(e_window.VIEW_SECOND) && window_busy != "viewmove")
+	if (view = view_main && view_second.show && !window_exists(e_window.VIEW_SECOND) && window_busy != "view/move")
 	{
 		if (view_second.location = "left_top")
 			captionx += view_second.width
@@ -203,7 +203,7 @@ function view_draw(view)
 		if (window_get_current() != e_window.VIEW_SECOND)
 		{
 			// Close view
-			if (draw_button_icon("viewclose", dx, dy, dw, dh, false, icons.CLOSE, null, false, "viewclose"))
+			if (draw_button_icon("view/close", dx, dy, dw, dh, false, icons.CLOSE, null, false, "view/close"))
 			{
 				view.show = false
 				view_render = false
@@ -211,13 +211,13 @@ function view_draw(view)
 			dx -= dw + padding
 			
 			// Pop out
-			if (draw_button_icon("viewpopout", dx, dy, dw, dh, false, icons.EXTERNAL, null, false, "viewpopout"))
+			if (draw_button_icon("view/popout", dx, dy, dw, dh, false, icons.EXTERNAL, null, false, "view/pop_out"))
 				window_create(e_window.VIEW_SECOND, boxx, boxy, boxw, boxh)
 		}
 		else
 		{
 			// Pop back
-			if (draw_button_icon("viewpopout", dx, dy, dw, dh, false, icons.INTERNAL, null, false, "viewpopin"))
+			if (draw_button_icon("view/popout", dx, dy, dw, dh, false, icons.INTERNAL, null, false, "view/pop_in"))
 			{
 				window_close(e_window.VIEW_SECOND)
 				view.location = view.location_last
@@ -229,7 +229,7 @@ function view_draw(view)
 	{
 		// Close/hide second view
 		tip_set_keybind(e_keybind.SECONDARY_VIEW)
-		if (draw_button_icon("viewsecond", dx, dy, dw, dh, view_second.show, icons.VIEWPORT_SECONDARY, null, false, view_second.show ? "viewseconddisable" : "viewsecondenable"))
+		if (draw_button_icon("view/second", dx, dy, dw, dh, view_second.show, icons.VIEWPORT_SECONDARY, null, false, view_second.show ? "view/second_disable" : "view/second_enable"))
 			action_setting_secondary_view()
 	}
 	
@@ -239,21 +239,21 @@ function view_draw(view)
 	// Quality settings
 	dx -= 16 + padding
 	
-	if (draw_button_icon("viewqualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewqualitysettings"), icons.CHEVRON_DOWN_TINY))
+	if (draw_button_icon("view/qualitysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "view/qualitysettings"), icons.CHEVRON_DOWN_TINY))
 	{
-		menu_settings_set(dx, dy, (string(view) + "viewqualitysettings"), 24)
+		menu_settings_set(dx, dy, (string(view) + "view/qualitysettings"), 24)
 		settings_menu_view = view
 		settings_menu_script = menu_quality_settings
 	}
 	
-	if (settings_menu_name = (string(view) + "viewqualitysettings") && settings_menu_ani_type != "hide")
+	if (settings_menu_name = (string(view) + "view/qualitysettings") && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	
 	dx -= dw
 	
 	// "Realistic" renderer
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewrendererrealistic", dx, dy, dw, dh, view.renderer = e_renderer.REALISTIC, setting_theme.dark ? icons.SPHERE_MATERIAL_DARK : icons.SPHERE_MATERIAL, null, false, "viewrendererrealistic"))
+	if (draw_button_icon("view/renderer/realistic", dx, dy, dw, dh, view.renderer = e_renderer.REALISTIC, setting_theme.dark ? icons.SPHERE_MATERIAL_DARK : icons.SPHERE_MATERIAL, null, false, "view/renderer/realistic"))
 	{
 		if (trial_version)
 		{
@@ -275,17 +275,17 @@ function view_draw(view)
 	
 	// "Standard" renderer
 	tip_set_keybind(e_keybind.RENDER_MODE)
-	if (draw_button_icon("viewrendererstandard", dx, dy, dw, dh, view.renderer = e_renderer.STANDARD, setting_theme.dark ? icons.SPHERE_SHADING_DARK : icons.SPHERE_SHADING, null, false, "viewrendererstandard"))
+	if (draw_button_icon("view/renderer/standard", dx, dy, dw, dh, view.renderer = e_renderer.STANDARD, setting_theme.dark ? icons.SPHERE_SHADING_DARK : icons.SPHERE_SHADING, null, false, "view/renderer/standard"))
 		view.renderer = e_renderer.STANDARD
 	dx -= dw + padding
 	
 	// "Quick" renderer
-	if (draw_button_icon("viewrendererquick", dx, dy, dw, dh, view.renderer = e_renderer.QUICK, icons.CIRCLE_OUTLINE, null, false, "viewrendererquick"))
+	if (draw_button_icon("view/renderer/quick", dx, dy, dw, dh, view.renderer = e_renderer.QUICK, icons.CIRCLE_OUTLINE, null, false, "view/renderer/quick"))
 		view.renderer = e_renderer.QUICK
 	dx -= dw + padding
 	
 	// Particles
-	if (draw_button_icon("viewparticles", dx, dy, dw, dh, view.particles, icons.FIREWORKS, null, false, view.particles ? "viewparticlesdisable" : "viewparticlesenable"))
+	if (draw_button_icon("view/particles", dx, dy, dw, dh, view.particles, icons.FIREWORKS, null, false, view.particles ? "view/particles_disable" : "view/particles_enable"))
 		view.particles = !view.particles
 	
 	// Effects
@@ -293,7 +293,7 @@ function view_draw(view)
 	{
 		dx -= dw + padding
 		
-		if (draw_button_icon("vieweffects", dx, dy, dw, dh, view.effects, icons.WAND, null, false, view.effects ? "vieweffectsdisable" : "vieweffectsenable"))
+		if (draw_button_icon("view/effects", dx, dy, dw, dh, view.effects, icons.WAND, null, false, view.effects ? "view/effects_disable" : "view/effects_enable"))
 		{
 			view.effects = !view.effects
 			render_samples = -1
@@ -306,46 +306,46 @@ function view_draw(view)
 	dx -= 16 + padding
 	
 	// Grid
-	if (draw_button_icon("viewgridsettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewgridsettings"), icons.CHEVRON_DOWN_TINY))
+	if (draw_button_icon("view/grid/settings", dx, dy, 16, 24, settings_menu_name = (string(view) + "view/grid/settings"), icons.CHEVRON_DOWN_TINY))
 	{
-		menu_settings_set(dx, dy, (string(view) + "viewgridsettings"), 24)
+		menu_settings_set(dx, dy, (string(view) + "view/grid/settings"), 24)
 		settings_menu_view = view
 		settings_menu_script = menu_grid_settings
 	}
 	
-	if (settings_menu_name = (string(view) + "viewgridsettings") && settings_menu_ani_type != "hide")
+	if (settings_menu_name = (string(view) + "view/grid/settings") && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	dx -= dw
 	
-	if (draw_button_icon("viewgrid", dx, dy, dw, dh, view.grid, icons.GRID, null, false, view.grid ? "viewgriddisable" : "viewgridenable"))
+	if (draw_button_icon("view/grid", dx, dy, dw, dh, view.grid, icons.GRID, null, false, view.grid ? "view/grid_disable" : "view/grid_enable"))
 		view.grid = !view.grid
 	
 	// Aspect ratio
 	dx -= dw + padding
-	if (draw_button_icon("viewaspectratio", dx, dy, dw, dh, view.aspect_ratio, icons.LETTERBOX, null, false, view.aspect_ratio ? "viewaspectratiodisable" : "viewaspectratioenable"))
+	if (draw_button_icon("view/aspectratio", dx, dy, dw, dh, view.aspect_ratio, icons.LETTERBOX, null, false, view.aspect_ratio ? "view/aspect_ratio_disable" : "view/aspect_ratio_enable"))
 		view.aspect_ratio = !view.aspect_ratio
 	
 	// Overlay settings
 	dx -= 16 + padding
 	
-	if (draw_button_icon("viewoverlaysettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewoverlaysettings"), icons.CHEVRON_DOWN_TINY))
+	if (draw_button_icon("view/overlay/settings", dx, dy, 16, 24, settings_menu_name = (string(view) + "view/overlay/settings"), icons.CHEVRON_DOWN_TINY))
 	{
-		menu_settings_set(dx, dy, (string(view) + "viewoverlaysettings"), 24)
+		menu_settings_set(dx, dy, (string(view) + "view/overlay/settings"), 24)
 		settings_menu_view = view
 		settings_menu_script = menu_overlay_settings
 	}
 	
-	if (settings_menu_name = (string(view) + "viewoverlaysettings") && settings_menu_ani_type != "hide")
+	if (settings_menu_name = (string(view) + "view/overlay/settings") && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	
 	// Overlays
 	dx -= dw
-	if (draw_button_icon("viewoverlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "viewoverlaysdisable" : "viewoverlaysenable"))
+	if (draw_button_icon("view/overlays", dx, dy, dw, dh, view.gizmos, icons.OVERLAYS, null, false, view.gizmos ? "view/overlays_disable" : "view/overlays_enable"))
 		view.gizmos = !view.gizmos
 
 	// Transparent background
 	dx -= dw + padding
-	if (draw_button_icon("viewtransparentbackground", dx, dy, dw, dh, view.transparent_background, icons.TEXTURE, null, false, view.transparent_background ? "viewtransparentbackgrounddisable" : "viewtransparentbackgroundenable"))
+	if (draw_button_icon("view/transparentbackground", dx, dy, dw, dh, view.transparent_background, icons.TEXTURE, null, false, view.transparent_background ? "view/transparent_background_disable" : "view/transparent_background_enable"))
 	{
 		view.transparent_background = !view.transparent_background
 		render_samples = -1
@@ -358,25 +358,25 @@ function view_draw(view)
 		draw_divide_vertical(dx, dy, dh)
 		dx -= 16 + padding
 		
-		if (draw_button_icon("viewsnapsettings", dx, dy, 16, 24, settings_menu_name = (string(view) + "viewsnapsettings"), icons.CHEVRON_DOWN_TINY))
+		if (draw_button_icon("view/snap/settings", dx, dy, 16, 24, settings_menu_name = (string(view) + "view/snap/settings"), icons.CHEVRON_DOWN_TINY))
 		{
-			menu_settings_set(dx, dy, (string(view) + "viewsnapsettings"), 24)
+			menu_settings_set(dx, dy, (string(view) + "view/snap/settings"), 24)
 			settings_menu_view = view
 			settings_menu_script = menu_snap_settings
 		}
 		
-		if (settings_menu_name = (string(view) + "viewsnapsettings") && settings_menu_ani_type != "hide")
+		if (settings_menu_name = (string(view) + "view/snap/settings") && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
 		dx -= dw
 		
 		tip_set_keybind(e_keybind.SNAP)
-		if (draw_button_icon("viewsnap", dx, dy, dw, dh, setting_snap, icons.MAGNET, null, false, setting_snap ? "viewsnapdisable" : "viewsnapenable"))
+		if (draw_button_icon("view/snap", dx, dy, dw, dh, setting_snap, icons.MAGNET, null, false, setting_snap ? "view/snap/disable" : "view/snap/enable"))
 			setting_snap = !setting_snap
 	}
 	
 	// Camera name
 	var listname, menuactive;
-	listname = (view = view_main ? "viewcameramain" : "viewcamerasecond")
+	listname = (view = view_main ? "view/camera/main" : "view/camera/second")
 	menuactive = false
 	
 	with (obj_menu)
@@ -389,9 +389,9 @@ function view_draw(view)
 	}
 	
 	if (view.camera = -4 && cam = -4)
-		camname = text_get("viewworkcamera")
+		camname = text_get("view/work_camera")
 	else if (view.camera = -5)
-		camname = text_get("viewactivecamera", (cam = -4 ? text_get("viewworkcamera") : string_remove_newline(cam.display_name)))
+		camname = text_get("view/active_camera", (cam = -4 ? text_get("view/work_camera") : string_remove_newline(cam.display_name)))
 	else
 		camname = cam.display_name
 	
@@ -404,7 +404,7 @@ function view_draw(view)
 	view_second.title = camname
 	
 	/*
-	if (draw_button_icon("viewcamera", captionx, dy, 16, 24, settings_menu_name = listname, icons.CHEVRON_DOWN_TINY))
+	if (draw_button_icon("view/camera", captionx, dy, 16, 24, settings_menu_name = listname, icons.CHEVRON_DOWN_TINY))
 	{
 		settings_menu_view = view
 		menu_settings_set(captionx, dy, listname, 24)
@@ -611,7 +611,7 @@ function view_draw(view)
 				bench_click_ani_goal = 1
 			
 			tip_force_right = true
-			tip_set(text_get("viewbenchtip"), benchx, benchy, 86, 86, false)
+			tip_set(text_get("view/bench_tip"), benchx, benchy, 86, 86, false)
 			tip_force_right = false
 			
 			if (mouse_left_pressed)
@@ -670,7 +670,7 @@ function view_draw(view)
 				
 				if (mouse_left_pressed)
 				{
-					window_busy = "viewresizeboth"
+					window_busy = "view/resize_both"
 					view_resize_width = view.width
 					view_resize_height = view.height
 				}
@@ -680,7 +680,7 @@ function view_draw(view)
 				mouse_cursor = cr_size_we
 				if (mouse_left_pressed)
 				{
-					window_busy = "viewresizehor"
+					window_busy = "view/resize_hor"
 					view_resize_width = view.width
 				}
 			}
@@ -689,20 +689,20 @@ function view_draw(view)
 				mouse_cursor = cr_size_ns
 				if (mouse_left_pressed)
 				{
-					window_busy = "viewresizever"
+					window_busy = "view/resize_ver"
 					view_resize_height = view.height
 				}
 			}
 			else if (app_mouse_box(boxx, boxy, boxw, captionh) && !popup_mouseon && mouse_left_pressed)
-				window_busy = "viewclickcaption"
+				window_busy = "view/click_caption"
 		}
 		
-		if (window_busy = "viewclickcaption")
+		if (window_busy = "view/click_caption")
 		{
 			if (mouse_move > 10)
 			{
 				view_main.location = "full"
-				window_busy = "viewmove"
+				window_busy = "view/move"
 				view_glow_ani = 0
 				view_glow_location_prev = ""
 			}
@@ -710,7 +710,7 @@ function view_draw(view)
 				window_busy = ""
 		}
 		
-		if (window_busy = "viewmove")
+		if (window_busy = "view/move")
 		{
 			var mouselocation = "";
 			
@@ -780,7 +780,7 @@ function view_draw(view)
 			}
 		}
 	}
-	else if (window_busy = "viewmove")
+	else if (window_busy = "view/move")
 	{
 		view_glow_ani += test_reduced_motion(1, (0.035 * delta))
 		view_glow_ani = clamp(view_glow_ani, 0, 1)
@@ -830,7 +830,7 @@ function view_draw(view)
 		}
 		
 		if (mouse_left_pressed)
-			window_busy = "viewresizesplit" + mouselocation
+			window_busy = "view/resize_split_" + mouselocation
 	}
 	
 	// Resize guide
@@ -842,42 +842,42 @@ function view_draw(view)
 		lineleft = false
 		lineright = false
 		
-		if (location = "top" && (mouseonresizesplit || window_busy = "viewresizesplitver"))
+		if (location = "top" && (mouseonresizesplit || window_busy = "view/resize_split_ver"))
 			linetop = true
 		
-		if (location = "bottom" && (mouseonresizesplit || window_busy = "viewresizesplitver"))
+		if (location = "bottom" && (mouseonresizesplit || window_busy = "view/resize_split_ver"))
 			linebottom = true
 		
-		if (location = "left" && (mouseonresizesplit || window_busy = "viewresizesplithor"))
+		if (location = "left" && (mouseonresizesplit || window_busy = "view/resize_split_hor"))
 			lineright = true
 		
-		if (location = "right" && (mouseonresizesplit || window_busy = "viewresizesplithor"))
+		if (location = "right" && (mouseonresizesplit || window_busy = "view/resize_split_hor"))
 			lineleft = true
 		
-		if ((mouseonresizever || mouseonresizehor) || (window_busy = "viewresizeboth" || window_busy = "viewresizever" || window_busy = "viewresizehor"))
+		if ((mouseonresizever || mouseonresizehor) || (window_busy = "view/resize_both" || window_busy = "view/resize_ver" || window_busy = "view/resize_hor"))
 		{
 			if (location = "left_top")
 			{
-				lineright = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
-				linetop = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+				lineright = (mouseonresizehor || window_busy = "view/resize_hor" || window_busy = "view/resize_both")
+				linetop = (mouseonresizever || window_busy = "view/resize_ver" || window_busy = "view/resize_both")
 			}
 			
 			if (location = "right_top")
 			{
-				lineleft = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
-				linetop = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+				lineleft = (mouseonresizehor || window_busy = "view/resize_hor" || window_busy = "view/resize_both")
+				linetop = (mouseonresizever || window_busy = "view/resize_ver" || window_busy = "view/resize_both")
 			}
 			
 			if (location = "left_bottom")
 			{
-				lineright = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
-				linebottom = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+				lineright = (mouseonresizehor || window_busy = "view/resize_hor" || window_busy = "view/resize_both")
+				linebottom = (mouseonresizever || window_busy = "view/resize_ver" || window_busy = "view/resize_both")
 			}
 			
 			if (location = "right_bottom")
 			{
-				lineleft = (mouseonresizehor || window_busy = "viewresizehor" || window_busy = "viewresizeboth")
-				linebottom = (mouseonresizever || window_busy = "viewresizever" || window_busy = "viewresizeboth")
+				lineleft = (mouseonresizehor || window_busy = "view/resize_hor" || window_busy = "view/resize_both")
+				linebottom = (mouseonresizever || window_busy = "view/resize_ver" || window_busy = "view/resize_both")
 			}
 		}
 		
@@ -899,7 +899,7 @@ function view_draw(view)
 	{
 		var infotext;
 		if (view_render_real_time)
-			infotext = text_get("viewrenderfps", string(fps), max(1, render_samples), project_render_samples)
+			infotext = text_get("view/render_fps", string(fps), max(1, render_samples), project_render_samples)
 		else
 			infotext = ""
 		
@@ -908,7 +908,7 @@ function view_draw(view)
 		
 		if (project_render_pass != e_render_pass.COMBINED)
 		{
-			infotext = text_get("viewrenderpass", text_get("viewrendererpass" + render_pass_list[|project_render_pass]))
+			infotext = text_get("view/render_pass", text_get("view/renderer/pass/" + render_pass_list[|project_render_pass]))
 			
 			draw_label(infotext, content_x + 17, content_y + content_height - 31, fa_left, fa_bottom, c_black, .75, font_caption)
 			draw_label(infotext, content_x + 16, content_y + content_height - 32, fa_left, fa_bottom, c_white, 1, font_caption)
@@ -916,7 +916,7 @@ function view_draw(view)
 	}
 	
 	// Background overlay when moving second view
-	if (window_busy = "viewmove" && view = view_second)
+	if (window_busy = "view/move" && view = view_second)
 		draw_box(content_x, content_y, content_width, content_height, false, c_level_middle, .25)
 	
 	// Mouse on

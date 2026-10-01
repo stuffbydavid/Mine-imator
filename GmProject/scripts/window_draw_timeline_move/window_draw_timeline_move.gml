@@ -1,6 +1,6 @@
 function window_draw_timeline_move()
 {
-	if (window_busy != "timelinemove")
+	if (window_busy != "timeline/move")
 		return 0
 	
 	content_x = 0

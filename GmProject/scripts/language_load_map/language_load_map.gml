@@ -12,7 +12,7 @@ function language_load_map(prefix, smap, dmap)
 	while (!is_undefined(key))
 	{
 		if (string_contains(key, "/"))
-			language_load_map(prefix + string_replace(key, "/", ""), smap[?key], dmap)
+			language_load_map(prefix + key, smap[?key], dmap)
 		else
 			dmap[?prefix + key] = smap[?key]
 		

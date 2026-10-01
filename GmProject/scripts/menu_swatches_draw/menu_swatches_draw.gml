@@ -10,15 +10,15 @@ function menu_swatches_draw()
 		var swatch = minecraft_swatch_array[s];
 		
 		dy += 14
-		draw_label(text_get("swatch" + swatch.name), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("swatch/" + swatch.name), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 9
 		
 		var xx = dx;
 		for (var c = 0; c < array_length(swatch.colors); c++)
 		{
-			if (draw_button_swatch(xx, dy, 20, 20, "swatch" + swatch.name + swatch.color_names[c], swatch.colors[c]))
+			if (draw_button_swatch(xx, dy, 20, 20, "swatch/" + swatch.name + "/" + swatch.color_names[c], swatch.colors[c]))
 			{
-				if (context_menu_current.name = "contextmenuswatchset")
+				if (context_menu_current.name = "context_menu/swatchset")
 					list_item_script = action_value_set_color
 				else
 					list_item_script = action_value_mix_color

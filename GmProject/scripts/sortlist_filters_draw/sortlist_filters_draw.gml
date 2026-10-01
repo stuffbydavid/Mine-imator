@@ -2,7 +2,7 @@ function sortlist_filters_draw()
 {
 	var typelist, textprefix, scroll;
 	typelist = null
-	textprefix = "type"
+	textprefix = "type/"
 	scroll = 0
 	content_capwid = 0
 	
@@ -30,7 +30,7 @@ function sortlist_filters_draw()
 		// Skip internal resource types
 		if (typelist = res_type_name_list)
 		{
-			if (itemname = "packunzipped" || itemname = "legacyblocksheet")
+			if (itemname = "pack_unzipped" || itemname = "legacy_block_sheet")
 				continue
 		}
 		

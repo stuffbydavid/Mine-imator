@@ -29,7 +29,7 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 		searchx = xx
 		searchwid = wid
 	}
-	searchchanged = draw_searchbox("texturesearch" + string(scroll), searchx, yy, searchwid, scroll.search_tbx, searchstretch)
+	searchchanged = draw_searchbox("texture/search" + string(scroll), searchx, yy, searchwid, scroll.search_tbx, searchstretch)
 	if (searchchanged)
 	{
 		scroll.search = scroll.search_tbx.text != ""

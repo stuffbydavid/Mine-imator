@@ -4,7 +4,7 @@ function temp_update_display_name()
 {
 	if (name = "")
 	{
-		display_name = text_get("type" + temp_type_name_list[|type])
+		display_name = text_get("type/" + temp_type_name_list[|type])
 		
 		switch (type)
 		{
@@ -34,9 +34,9 @@ function temp_update_display_name()
 			case e_temp_type.MODEL_PART:
 			{
 				if (model_part != null)
-					display_name = text_get("librarymodelpartof", minecraft_asset_get_name("modelpart", model_part.name), minecraft_asset_get_name("model", model_file.name))
+					display_name = text_get("library/model_part_of", minecraft_asset_get_name("model/part", model_part.name), minecraft_asset_get_name("model", model_file.name))
 				else
-					display_name = text_get("librarymodelpartunknown")
+					display_name = text_get("library/model_part_unknown")
 				break
 			}
 			

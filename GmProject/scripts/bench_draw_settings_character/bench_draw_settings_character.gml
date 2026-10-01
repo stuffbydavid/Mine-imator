@@ -6,49 +6,49 @@ function bench_draw_settings_character()
 	{
 		case e_bench_tab.CHARACTER:
 		{
-			labeltext = text_get("benchmodel")
+			labeltext = text_get("bench/model")
 			list = bench_settings.char_list
 			part = bench_settings.model_file
-			texcap = "benchskin"
-			texmatcap = "benchskinmaterial"
-			texnormcap = "benchskinnormal"
+			texcap = "bench/skin"
+			texmatcap = "bench/skin_material"
+			texnormcap = "bench/skin_normal"
 			content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
 			break
 		}
 		
 		case e_bench_tab.EQUIPMENT:
 		{
-			labeltext = text_get("benchequipment")
+			labeltext = text_get("bench/equipment")
 			list = bench_settings.equipment_list
 			part = bench_settings.model_file
-			texcap = "benchequipmenttex"
-			texmatcap = "benchequipmenttexmaterial"
-			texnormcap = "benchequipmenttexnormal"
+			texcap = "bench/equipment_tex"
+			texmatcap = "bench/equipment_tex_material"
+			texnormcap = "bench/equipment_tex_normal"
 			content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
 			break
 		}
 		
 		case e_bench_tab.SPECIAL_BLOCK:
 		{
-			labeltext = text_get("benchspblock")
+			labeltext = text_get("bench/special_block")
 			list = bench_settings.special_block_list
 			part = bench_settings.model_file
-			texcap = "benchspblocktex"
-			texmatcap = "benchspblocktexmaterial"
-			texnormcap = "benchspblocktexnormal"
+			texcap = "bench/special_block_tex"
+			texmatcap = "bench/special_block_tex_material"
+			texnormcap = "bench/special_block_tex_normal"
 			content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
 			break
 		}
 		
 		case e_bench_tab.MODEL_PART:
 		{
-			labeltext = text_get("benchmodel")
+			labeltext = text_get("bench/model")
 			list = bench_settings.model_part_model_list
 			part = bench_settings.model_part
-			texcap = "benchmodelpartskin"
-			texmatcap = "benchmodelpartskinmaterial"
-			texnormcap = "benchmodelpartskinnormal"
-			content_capwid = text_caption_width("benchmodelpart", texcap, texmatcap, texnormcap)
+			texcap = "bench/model_part_skin"
+			texmatcap = "bench/model_part_skin_material"
+			texnormcap = "bench/model_part_skin_normal"
+			content_capwid = text_caption_width("bench/model_part", texcap, texmatcap, texnormcap)
 			break
 		}
 	}
@@ -67,7 +67,7 @@ function bench_draw_settings_character()
 	statelen = array_length(bench_settings.model_state)
 	
 	if (bench_settings.model_name = "armor")
-		content_capwid = max(content_capwid, text_caption_width("bencharmorvariant"))
+		content_capwid = max(content_capwid, text_caption_width("bench/armor_variant"))
 
 	for (var i = 0; i < statelen; i += 2)
 	{
@@ -75,7 +75,7 @@ function bench_draw_settings_character()
 		if (bench_settings.model_name = "armor" && array_contains(armor_parts, state))
 			continue
 		
-		content_capwid = max(content_capwid, text_caption_width(minecraft_asset_get_name("modelstate", state)))
+		content_capwid = max(content_capwid, text_caption_width(minecraft_asset_get_name("model/state", state)))
 	}
 
 	// Checkboxes
@@ -92,7 +92,7 @@ function bench_draw_settings_character()
 
 		tab_control(ui_small_height)
 
-		if (draw_checkbox("modelstate" + state, dx, dy, bench_settings.model_state[i + 1] = "true", null))
+		if (draw_checkbox("model/state/" + state, dx, dy, bench_settings.model_state[i + 1] = "true", null))
 		{
 			menu_model_state = menu_model_state_current
 
@@ -129,7 +129,7 @@ function bench_draw_settings_character()
 			menu_model_state_current = model.states_map[?"helmet"]
 			menu_model_armor_variant = true
 			
-			draw_button_menu("bencharmorvariant", e_menu.LIST, dx, dy, dw, 24, variant, variant = "multiple" ? text_get("listmultiple") : minecraft_asset_get_name("modelstatevalue", variant), action_bench_model_state, false, null, null, "", null, null, content_capwid)
+			draw_button_menu("bench/armor_variant", e_menu.LIST, dx, dy, dw, 24, variant, variant = "multiple" ? text_get("list/multiple") : minecraft_asset_get_name("model/state/value", variant), action_bench_model_state, false, null, null, "", null, null, content_capwid)
 			if (!keyboard_check(vk_control) || mouse_wheel = 0)
 				menu_model_armor_variant = false
 			
@@ -141,7 +141,7 @@ function bench_draw_settings_character()
 		menu_model_current = model
 		menu_model_state_current = model.states_map[?state]
 
-		draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", bench_settings.model_state[i + 1]), action_bench_model_state, false, null, null, "", null, null, content_capwid)
+		draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state[i + 1], minecraft_asset_get_name("model/state/value", bench_settings.model_state[i + 1]), action_bench_model_state, false, null, null, "", null, null, content_capwid)
 		dy += 32
 	}
 
@@ -152,7 +152,7 @@ function bench_draw_settings_character()
 	// Model part
 	if (bench_tab = e_bench_tab.MODEL_PART && bench_settings.model_file != null)
 	{
-		draw_button_menu("benchmodelpart", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("modelpart", bench_settings.model_part_name), action_bench_model_part_name, false, null, null, "", null, null, content_capwid)
+		draw_button_menu("bench/model_part", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("model/part", bench_settings.model_part_name), action_bench_model_part_name, false, null, null, "", null, null, content_capwid)
 		dy += 32
 	}
 
@@ -190,7 +190,7 @@ function bench_draw_settings_character()
 		panel_compact = true
 
 		tab_control_color()
-		draw_button_color("benchmodelcolor", dx, dy, dw, bench_settings.model_blend_color, bench_settings.model_blend_color_default, false, action_bench_model_blend_color)
+		draw_button_color("bench/model_color", dx, dy, dw, bench_settings.model_blend_color, bench_settings.model_blend_color_default, false, action_bench_model_blend_color)
 		tab_next()
 
 		panel_compact = false
@@ -201,7 +201,7 @@ function bench_draw_settings_character()
 	{
 		tab_control_button_label()
 
-		if (draw_button_label("benchpatterneditor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
+		if (draw_button_label("bench/pattern_editor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
 			popup_pattern_editor_show(bench_settings)
 
 		tab_next()
@@ -215,7 +215,7 @@ function bench_draw_settings_character()
 	{
 		tab_control_button_label()
 
-		if (draw_button_label("bencharmoreditor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
+		if (draw_button_label("bench/armor_editor", dx, dy, dw, icons.CUSTOMIZATION, e_button.SECONDARY))
 			popup_armor_editor_show(bench_settings)
 
 		tab_next()

@@ -2,7 +2,7 @@ function app_startup_lists()
 {
 	globalvar value_name_list, transition_list, transition_list_order;
 	globalvar camera_effect_name_list, camera_effect_advanced_name_list, camera_effect_value_range_list, camera_effect_legacy_name_list;
-	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
+	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list, legacy_type_name_map;
 	globalvar videotemplate_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
@@ -259,13 +259,13 @@ function app_startup_lists()
 		"shake",
 		"dof",
 		"bloom",
-		"lensdirt",
+		"lens_dirt",
 		"grain",
 		"vignette",
 		"ca",
 		"distort",
-		"lightmanagement",
-		"colorcorrection"
+		"light_management",
+		"color_correction"
 	)
 	
 	camera_effect_advanced_name_list = ds_list_create()
@@ -273,7 +273,7 @@ function app_startup_lists()
 		"shake",
 		"dof",
 		"bloom",
-		"lensdirt",
+		"lens_dirt",
 		"ca",
 		"distort"
 	)
@@ -311,14 +311,14 @@ function app_startup_lists()
 	// Template types
 	temp_type_name_list = ds_list_create()
 	ds_list_add(temp_type_name_list,
-		"char",
+		"character",
 		"equipment",
 		"model",
-		"modelpart",
+		"model_part",
 		"item",
 		"scenery",
 		"block",
-		"spblock",
+		"special_block",
 		"particles",
 		"text",
 		"cube",
@@ -331,14 +331,14 @@ function app_startup_lists()
 	// Timeline types
 	tl_type_name_list = ds_list_create()
 	ds_list_add(tl_type_name_list,
-		"char",
+		"character",
 		"equipment",
 		"model",
-		"modelpart",
+		"model_part",
 		"item",
 		"scenery",
 		"block",
-		"spblock",
+		"special_block",
 		"particles",
 		"text",
 		"cube",
@@ -347,12 +347,12 @@ function app_startup_lists()
 		"sphere",
 		"surface",
 		"camera",
-		"cameraeffect",
+		"camera_effect",
 		"audio",
-		"pointlight",
-		"spotlight",
+		"point_light",
+		"spot_light",
 		"path",
-		"pathpoint",
+		"path_point",
 		"environment",
 		"structure",
 		"folder"
@@ -362,20 +362,39 @@ function app_startup_lists()
 	res_type_name_list = ds_list_create()
 	ds_list_add(res_type_name_list,
 		"pack",
-		"packunzipped",
+		"pack_unzipped",
 		"skin",
-		"downloadskin",
+		"downloaded_skin",
 		"model",
-		"itemsheet",
-		"fromworld",
+		"item_sheet",
+		"from_world",
 		"schematic",
-		"blocksheet",
-		"legacyblocksheet",
+		"block_sheet",
+		"legacy_block_sheet",
 		"sound",
-		"particlesheet",
+		"particle_sheet",
 		"font",
 		"texture"
 	)
+	
+	// Legacy type names
+	legacy_type_name_map = ds_map_create()
+	legacy_type_name_map[?"char"] = "character"
+	legacy_type_name_map[?"bodypart"] = "model_part"
+	legacy_type_name_map[?"modelpart"] = "model_part"
+	legacy_type_name_map[?"spblock"] = "special_block"
+	legacy_type_name_map[?"cameraeffect"] = "camera_effect"
+	legacy_type_name_map[?"pointlight"] = "point_light"
+	legacy_type_name_map[?"spotlight"] = "spot_light"
+	legacy_type_name_map[?"pathpoint"] = "path_point"
+	legacy_type_name_map[?"packunzipped"] = "pack_unzipped"
+	legacy_type_name_map[?"downloadskin"] = "downloaded_skin"
+	legacy_type_name_map[?"itemsheet"] = "item_sheet"
+	legacy_type_name_map[?"fromworld"] = "from_world"
+	legacy_type_name_map[?"blocksheet"] = "block_sheet"
+	legacy_type_name_map[?"legacyblocksheet"] = "legacy_block_sheet"
+	legacy_type_name_map[?"particlesheet"] = "particle_sheet"
+	legacy_type_name_map[?"background"] = "environment"
 	
 	// Transitions
 	transition_list = ds_list_create()
@@ -499,11 +518,11 @@ function app_startup_lists()
 	)
 	
 	blend_mode_map = ds_map_create()
-	ds_map_add(blend_mode_map, "normal", bm_normal)
-	ds_map_add(blend_mode_map, "add", bm_add)
-	ds_map_add(blend_mode_map, "subtract", bm_subtract)
-	ds_map_add(blend_mode_map, "multiply", [ bm_zero, bm_src_color ])
-	ds_map_add(blend_mode_map, "screen", [ bm_one, bm_inv_src_color ])
+	blend_mode_map[?"normal"] = bm_normal
+	blend_mode_map[?"add"] = bm_add
+	blend_mode_map[?"subtract"] = bm_subtract
+	blend_mode_map[?"multiply"] = [ bm_zero, bm_src_color ]
+	blend_mode_map[?"screen"] = [ bm_one, bm_inv_src_color ]
 	
 	// List of icons in sync with e_tl_type
 	/*
@@ -602,20 +621,20 @@ function app_startup_lists()
 		"ao",
 		"shadows",
 		"indirect",
-		"indirectshadows",
+		"indirect_shadows",
 		"reflections",
 		"fog",
 		"mask",
 		"glow",
 		"subsurface",
-		"subsurfacerange",
+		"subsurface_range",
 		"emissive",
 		"roughness",
 		"metallic",
 		"fresnel",
-		"ssaomask",
-		"bloomthreshold",
-		"bloomblur",
+		"ssao_mask",
+		"bloom_threshold",
+		"bloom_blur",
 		"all"
 	)
 }

@@ -56,7 +56,7 @@ function menu_settings_draw()
 	content_y = round(content_y)
 	
 	// Prepare window state
-	if (window_busy = "settingsmenu" && settings_menu_ani_type = "" && settings_menu_ani = 1)
+	if (window_busy = "settings/menu" && settings_menu_ani_type = "" && settings_menu_ani = 1)
 		window_busy = ""
 	
 	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
@@ -148,7 +148,7 @@ function menu_settings_draw()
 			{
 				settings_menu_ani = 1
 				settings_menu_ani_type = "hide"
-				window_busy = "settingsmenu"
+				window_busy = "settings/menu"
 				window_focus = ""
 				
 				context_menu_close()
@@ -160,7 +160,7 @@ function menu_settings_draw()
 			{
 				settings_menu_ani = 1
 				settings_menu_ani_type = "hide"
-				window_busy = "settingsmenu"
+				window_busy = "settings/menu"
 				window_focus = ""
 				
 				context_menu_close()
@@ -171,5 +171,5 @@ function menu_settings_draw()
 	settings_menu_steps++
 	
 	if (window_busy = "" && settings_menu_ani_type != "hide")
-		window_busy = "settingsmenu"
+		window_busy = "settings/menu"
 }

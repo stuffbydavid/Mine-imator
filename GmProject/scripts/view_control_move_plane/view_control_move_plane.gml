@@ -58,16 +58,16 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 	
 	var alpha = percent(abs(vec3_dot(normal, vec3_normalize(point3D_sub(cam_from, matrix_position(mat))))), .1, .2);
 	
-	if (window_busy = "rendercontrol" && view_control_edit = control || !setting_fade_gizmos)
+	if (window_busy = "render/control" && view_control_edit = control || !setting_fade_gizmos)
 		alpha = 1
 	
-	if (alpha = 0 || (window_busy = "rendercontrol" && view_control_edit != control))
+	if (alpha = 0 || (window_busy = "render/control" && view_control_edit != control))
 		return 0
 	
 	draw_set_alpha(alpha)
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
 		{
@@ -91,7 +91,7 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_edit = control
 			view_control_edit_view = view
 			

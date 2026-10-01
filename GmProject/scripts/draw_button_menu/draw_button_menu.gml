@@ -29,13 +29,13 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 	// Caption
 	if (menu_model_current != null)
 	{
-		cap = minecraft_asset_get_name("modelstate", name)
-		name = "modelstate" + name
+		cap = minecraft_asset_get_name("model/state", name)
+		name = "model/state/" + name
 	}
 	else if (menu_block_current != null)
 	{
-		cap = minecraft_asset_get_name("blockstate", name)
-		name = "blockstate" + name
+		cap = minecraft_asset_get_name("block/state", name)
+		name = "block/state/" + name
 	}
 	else
 		cap = text_get(name)
@@ -254,9 +254,9 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		m.menu_ani = 0
 		m.menu_value = value
 		m.menu_name = nameid
-		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent" &&
-								  m.menu_name != "frameeditoriktarget" &&
-								  m.menu_name != "frameeditorikangletarget")
+		m.menu_include_tl_edit = (m.menu_name != "timeline_editor/parent" &&
+								  m.menu_name != "frame_editor/ik/target" &&
+								  m.menu_name != "frame_editor/ik/angle_target")
 		menu_current = m
 		menu_expose = true
 		
@@ -368,9 +368,9 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		m.menu_button_h = hei
 		m.menu_item_w = wid
 		m.menu_item_h = m.menu_button_h
-		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent" &&
-								  m.menu_name != "frameeditoriktarget" &&
-								  m.menu_name != "frameeditorikangletarget")
+		m.menu_include_tl_edit = (m.menu_name != "timeline_editor/parent" &&
+								  m.menu_name != "frame_editor/ik/target" &&
+								  m.menu_name != "frame_editor/ik/angle_target")
 		m.menu_model_armor_variant = menu_model_armor_variant
 		m.menu_camera_effect_edit_type = camera_effect_type_edit
 		m.menu_margin = 0//8

@@ -13,16 +13,16 @@ function tab_properties_library()
 	// Tools
 	tab_control(24)
 	
-	if (draw_button_icon("librarynew", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltiptemplatenew"))
+	if (draw_button_icon("library/new", dx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "tooltip/template/new"))
 		bench_open = true
 	
-	if (draw_button_icon("libraryanimate", dx + 28, dy, 24, 24, false, icons.ASSET_INSTANCE, null, temp_edit = null, "tooltiptemplateanimate"))
+	if (draw_button_icon("library/animate", dx + 28, dy, 24, 24, false, icons.ASSET_INSTANCE, null, temp_edit = null, "tooltip/template/animate"))
 		action_lib_animate()
 	
-	if (draw_button_icon("libraryduplicate", dx + (28 * 2), dy, 24, 24, false, icons.DUPLICATE, null, temp_edit = null, "tooltiptemplateduplicate"))
+	if (draw_button_icon("library/duplicate", dx + (28 * 2), dy, 24, 24, false, icons.DUPLICATE, null, temp_edit = null, "tooltip/template/duplicate"))
 		action_lib_duplicate()
 	
-	if (draw_button_icon("libraryremove", dx + (28 * 3), dy, 24, 24, false, icons.DELETE, null, temp_edit = null, "tooltiptemplateremove"))
+	if (draw_button_icon("library/remove", dx + (28 * 3), dy, 24, 24, false, icons.DELETE, null, temp_edit = null, "tooltip/template/remove"))
 		action_lib_remove()
 	
 	tab_next()
@@ -33,7 +33,7 @@ function tab_properties_library()
 	// Name
 	tab_control_textfield(false)
 	tab.library.tbx_name.text = temp_edit.name
-	draw_textfield("libraryname", dx, dy, dw, 24, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
+	draw_textfield("library/name", dx, dy, dw, 24, tab.library.tbx_name, action_lib_name, temp_edit.display_name, "left")
 	tab_next()
 	
 	switch (temp_edit.type)

@@ -20,7 +20,7 @@ function res_load_scenery()
 			{
 				if (!res_load_scenery_world())
 				{
-					error("errorloadworld")
+					error("error/load_world")
 					with (app)
 						load_next()
 					ready = true
@@ -54,7 +54,7 @@ function res_load_scenery()
 					if (!file_exists_lib(temp_file))
 					{
 						log("GZunzip error", "gzunzip")
-						error("errorloadschematic")
+						error("error/load_schematic")
 						if (scenery_instant)
 							load_stage = ""
 						else
@@ -143,11 +143,11 @@ function res_load_scenery()
 			if (!scenery_instant)
 				with (app)
 				{
-					popup_loading.text = text_get("loadsceneryblocks")
+					popup_loading.text = text_get("load_scenery/blocks")
 					if (mc_builder.file_map != "")
-						popup_loading.caption = text_get("loadscenerycaptionpieceof", mc_builder.file_map)
+						popup_loading.caption = text_get("load_scenery/caption_piece_of", mc_builder.file_map)
 					else
-						popup_loading.caption = text_get("loadscenerycaption", other.filename)
+						popup_loading.caption = text_get("load_scenery/caption", other.filename)
 					popup_loading.progress = 0.2
 				}
 		
@@ -163,7 +163,7 @@ function res_load_scenery()
 						scenery_tl_prompt_amount = mc_builder.sch_timeline_amount
 				}
 				else if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
-					scenery_tl_add = question(text_get("loadsceneryaddtimelines", mc_builder.sch_timeline_amount))
+					scenery_tl_add = question(text_get("load_scenery/add_timelines", mc_builder.sch_timeline_amount))
 				else // Less, always add
 					scenery_tl_add = true
 			}
@@ -237,7 +237,7 @@ function res_load_scenery()
 			
 				if (!scenery_instant)
 					with (app)
-						popup_loading.text = text_get("loadscenerymodel")
+						popup_loading.text = text_get("load_scenery/model")
 			}
 		
 			break
@@ -321,7 +321,7 @@ function res_load_scenery()
 
 			// Put map name in resource name
 			if (mc_builder.file_map != "")
-				display_name = text_get("loadscenerypieceof", mc_builder.file_map)
+				display_name = text_get("load_scenery/piece_of", mc_builder.file_map)
 				
 			// Save cached mesh
 			if (creator != app.bench_settings)
@@ -373,7 +373,7 @@ function res_load_scenery()
 	// Schematic error
 	if (openerr)
 	{
-		error("errorloadschematic")
+		error("error/load_schematic")
 		buffer_delete(buffer_current)
 		if (scenery_instant)
 			load_stage = ""

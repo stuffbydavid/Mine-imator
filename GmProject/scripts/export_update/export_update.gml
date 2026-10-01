@@ -12,7 +12,7 @@ function export_update()
 		export_escape_time = 0
 		window_taskbar_progress_state_set(e_window_taskbar_state.PAUSED)
 		
-		if (question(text_get("questionstoprender")))
+		if (question(text_get("question/stop_render")))
 		{
 			if (window_state = "export_movie")
 				export_done_movie()
@@ -133,7 +133,7 @@ function export_update()
 					window_beep()
 					
 					log("Error when adding frame, error code", err)
-					error("errorexportmovie")
+					error("error/export_movie")
 					
 					return false
 				}

@@ -65,10 +65,10 @@ function popup_draw()
 	
 	draw_set_alpha(ease("easeoutcirc", popup_ani))
 	
-	if (window_busy = "popupmove")
+	if (window_busy = "popup/move")
 		draw_set_alpha(0.5)
 	
-	if (window_busy = "popup" + popup_current.name)
+	if (window_busy = "popup/" + popup_current.name)
 		window_busy = ""
 	
 	// Box
@@ -95,19 +95,19 @@ function popup_draw()
 	draw_outline(boxx, boxy, boxw, boxh, 1, c_border, a_border, true) 
 	
 	// Move
-	if (window_busy = "popupclick")
+	if (window_busy = "popup/click")
 	{
 		if (mouse_move > 10)
 		{
 			popup_move_offset_x = popup_current.offset_x
 			popup_move_offset_y = popup_current.offset_y
-			window_busy = "popupmove"
+			window_busy = "popup/move"
 		}
 		else if (!mouse_left)
 			window_busy = ""
 	}
 	
-	if (window_busy = "popupmove")
+	if (window_busy = "popup/move")
 	{
 		popup_current.offset_x = popup_move_offset_x + (mouse_x - mouse_click_x)
 		popup_current.offset_y = popup_move_offset_y + (mouse_y - mouse_click_y)
@@ -138,7 +138,7 @@ function popup_draw()
 		dh -= 12
 		
 		// Caption
-		draw_label(text_get(popup_current.name + "caption"), dx, dy + 12, fa_left, fa_middle, c_accent, 1, font_heading)
+		draw_label(popup_current.caption, dx, dy + 12, fa_left, fa_middle, c_accent, 1, font_heading)
 		
 		closex = dx + dw - 24
 		closey = dy
@@ -183,10 +183,10 @@ function popup_draw()
 		popup_current.custom_height_goal = ceil((dy - dy_start) / 2) * 2
 	
 	if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
-		window_busy = "popupclick"
+		window_busy = "popup/click"
 	
 	if (window_busy = "" && popup_current.block)
-		window_busy = "popup" + popup_current.name
+		window_busy = "popup/" + popup_current.name
 	
 	draw_set_alpha(1)
 }

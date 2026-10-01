@@ -16,7 +16,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 	mousekfend = null
 
 	// Process moving keyframes to prevent marker lag
-	if (window_busy = "timelinemovekeyframes" && mouse_left)
+	if (window_busy = "timeline/move_keyframes" && mouse_left)
 		action_tl_keyframes_move()
 
 	// Keyframes
@@ -33,7 +33,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 		var tl = tree_visible_list[|t];
 		
 		// Draw ghosts
-		if (window_busy = "timelinemovekeyframes")
+		if (window_busy = "timeline/move_keyframes")
 		{
 			for (var k = 0; k < ds_list_size(tl.keyframe_list); k++)
 			{
@@ -212,9 +212,9 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 		clip_end()
 
 	// Drag select keyframes
-	if (window_busy != "timelineclickkeyframes" && window_busy != "timelineselectkeyframes")
+	if (window_busy != "timeline/click_keyframes" && window_busy != "timeline/select_keyframes")
 		timeline_zoom_current = timeline_zoom
-	if (window_busy = "timelineselectkeyframes")
+	if (window_busy = "timeline/select_keyframes")
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -288,7 +288,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 		{
 			if (app_mouse_box(content_x, content_y, content_width, content_height) && mouse_right_released)
 			{
-				menu_settings_set(mouse_x, mouse_y, "timelinelkeyframetransitions", 0)
+				menu_settings_set(mouse_x, mouse_y, "timeline/keyframe_transition", 0)
 				settings_menu_menu = "all"
 				settings_menu_script = menu_settings_transitions
 				settings_menu_w = 244
@@ -320,7 +320,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 			timeline_sound_end_mousex = mouse_x + timeline.hor_scroll.value
 			timeline_sound_end_value = mousekfend.value[e_value.SOUND_END]
 			window_focus = "timeline"
-			window_busy = "timelinesetsoundend"
+			window_busy = "timeline/set_sound_end"
 		}
 	}
 	
@@ -364,7 +364,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 			}
 			else
 			{
-				window_busy = "timelineclickkeyframes"
+				window_busy = "timeline/click_keyframes"
 				if (mousetl && mousetl.lock)
 					timeline_select = null
 				else
@@ -377,12 +377,12 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 		if (mouse_middle_pressed)
 		{
 			window_focus = "timeline"
-			window_busy = "timelinedrag"
+			window_busy = "timeline/drag"
 		}
 	}
 	
 	// Resize sounds
-	if (window_busy = "timelineresizesounds")
+	if (window_busy = "timeline/resize_sounds")
 	{
 		mouse_cursor = cr_size_we
 		if (!mouse_left)
@@ -392,7 +392,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 	}
 	
 	// Set sound end
-	if (window_busy = "timelinesetsoundend")
+	if (window_busy = "timeline/set_sound_end")
 	{
 		var newval = timeline_sound_end_value + ((mouse_x + timeline.hor_scroll.value) - timeline_sound_end_mousex) / (timeline_zoom * project_tempo);
 		action_tl_frame_sound_end(newval, false)
@@ -402,7 +402,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 	}
 	
 	// Moving keyframes
-	if (window_busy = "timelinemovekeyframes")
+	if (window_busy = "timeline/move_keyframes")
 	{
 		if (timeline_move_kf_stretch)
 			mouse_cursor = cr_size_we
@@ -414,10 +414,10 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 	}
 	
 	// Scaling keyframes
-	if (window_busy = "timelinescalekeyframes")
+	if (window_busy = "timeline/scale_keyframes")
 	{
 		mouse_cursor = cr_size_we
-		shortcut_bar_state = "timelinescale"
+		shortcut_bar_state = "timeline/scale"
 		
 		if (keyboard_check_pressed(vk_escape) || mouse_right_pressed)
 			action_tl_keyframes_scale_cancel()
@@ -428,7 +428,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 	}
 	
 	// Click keyframes
-	if (window_busy = "timelineclickkeyframes")
+	if (window_busy = "timeline/click_keyframes")
 	{
 		mouse_cursor = cr_handpoint
 		if (mouse_move > 5) // Select
@@ -436,7 +436,7 @@ function tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl
 			if (!keyboard_check(vk_shift) && !keyboard_check(vk_control))
 				action_tl_deselect_all()
 			
-			window_busy = "timelineselectkeyframes"
+			window_busy = "timeline/select_keyframes"
 		}
 		if (!mouse_left) // Move marker, select
 		{

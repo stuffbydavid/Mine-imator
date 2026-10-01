@@ -51,7 +51,7 @@ function context_menu_area(xx, yy, wid, hei, name, value = null, valuetype = nul
 		context_menu_camera_effect_type_edit = camera_effect_type_edit
 		
 		context_menu_busy_prev = window_busy
-		window_busy = "contextmenu"
+		window_busy = "context_menu"
 		
 		// Get current font
 		var font, c;

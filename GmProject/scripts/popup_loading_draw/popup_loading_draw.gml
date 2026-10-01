@@ -11,7 +11,7 @@ function popup_loading_draw()
 		var progress = (popup_current.load_amount - (ds_priority_size(load_queue) - objprogress)) / popup_current.load_amount;
 		
 		tab_control_loading()
-		draw_loading_bar(dx, dy, dw, 8, progress, text_get("loadingresources"), text_get("loadingpercent", string(floor(progress * 100))))
+		draw_loading_bar(dx, dy, dw, 8, progress, text_get("loading/resources"), text_get("loading/percent", string(floor(progress * 100))))
 		tab_next()
 	}
 	

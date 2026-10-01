@@ -11,7 +11,7 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 		return 0
 	
 	var editname, mouseon, dragging, actionx, layerpattern, layercolor;
-	editname = "patterneditoreditlayer" + string(index)
+	editname = "pattern_editor/editlayer" + string(index)
 	mouseon = (app_mouse_box(xx, yy, width, height) || (popup_pattern_editor.layer_edit = index && settings_menu_name = editname))
 	dragging = (popup_pattern_editor.layer_move = index)
 	layerpattern = (base ? 1 : ds_list_find_index(minecraft_pattern_list, popup_pattern_editor.pattern_list_edit[|index]))
@@ -33,12 +33,12 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 	if (base)
 	{
 		colorname = ds_map_find_key(minecraft_swatch_dyes.map, popup_pattern_editor.pattern_edit_preview.pattern_base_color)
-		content_name = text_get("patterneditorbase", text_get("swatchdye" + colorname))
+		content_name = text_get("pattern_editor/base", text_get("swatch/dye/" + colorname))
 	}
 	else
 	{
 		colorname = ds_map_find_key(minecraft_swatch_dyes.map, popup_pattern_editor.pattern_color_list_edit[|index])
-		content_name = text_get("patterneditorlayer", text_get("swatchdye" + colorname), text_get("patterneditorpatterns" + popup_pattern_editor.pattern_list_edit[|index]))
+		content_name = text_get("pattern_editor/layer", text_get("swatch/dye/" + colorname), text_get("pattern_editor/patterns/" + popup_pattern_editor.pattern_list_edit[|index]))
 	}
 	
 	draw_label(content_name, xx + 32, yy + height/2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
@@ -58,7 +58,7 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 				popup_pattern_editor.layer_move = index
 				popup_pattern_editor.layer_move_x = xx - mouse_x
 				popup_pattern_editor.layer_move_y = yy - mouse_y
-				window_busy = "patterneditordraglayer"
+				window_busy = "pattern_editor/drag_layer"
 			}
 		}
 		
@@ -69,7 +69,7 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 		// Remove layer
 		if (mouseon && !dragging)
 		{
-			if (draw_button_icon("patterneditorremovelayer" + string(index), actionx - 24, yy + height/2 - 14, 24, 24, false, icons.DELETE))
+			if (draw_button_icon("pattern_editor/removelayer" + string(index), actionx - 24, yy + height/2 - 14, 24, 24, false, icons.DELETE))
 				popup_pattern_editor.layer_remove = index
 			
 			actionx -= 28
@@ -83,7 +83,7 @@ function popup_pattern_editor_draw_layer(xx, yy, width, height, index, base)
 		{
 			menu_settings_set(actionx - 24, yy + height/2 - 14, editname, 24)
 			settings_menu_script = popup_pattern_editor_edit_layer
-			settings_menu_busy_prev = "popup" + popup_current.name
+			settings_menu_busy_prev = "popup/" + popup_current.name
 			popup_pattern_editor.layer_edit = index
 		}
 		

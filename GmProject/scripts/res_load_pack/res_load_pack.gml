@@ -17,7 +17,7 @@ function res_load_pack()
 				if (!unzip(fn))
 				{
 					log("Error unzipping pack")
-					error("errorunzippack")
+					error("error/unzip_pack")
 					with (app)
 						load_next()
 					return 0
@@ -31,7 +31,7 @@ function res_load_pack()
 			
 			with (app)
 			{
-				popup_loading.text = text_get("loadpackmodeltextures")
+				popup_loading.text = text_get("load_pack/model_textures")
 				popup_loading.progress = 0.25
 			}
 			break
@@ -46,7 +46,7 @@ function res_load_pack()
 			load_stage = "blocktextures"
 			with (app)
 			{
-				popup_loading.text = text_get("loadpackblocktextures")
+				popup_loading.text = text_get("load_pack/block_textures")
 				popup_loading.progress = 0.5
 			}
 			break
@@ -64,7 +64,7 @@ function res_load_pack()
 			load_stage = "itemtextures"
 			with (app)
 			{
-				popup_loading.text = text_get("loadpackitemtextures")
+				popup_loading.text = text_get("load_pack/item_textures")
 				popup_loading.progress = 0.75
 			}
 			break

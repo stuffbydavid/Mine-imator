@@ -27,7 +27,7 @@ function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
 		return 0
 	}
 	
-	context_menu_area(xx, yy, wid + capwidth, hei, "contextmenuvalue", value, time ? e_context_type.TIME : e_context_type.NUMBER, script, def)
+	context_menu_area(xx, yy, wid + capwidth, hei, "context_menu/value", value, time ? e_context_type.TIME : e_context_type.NUMBER, script, def)
 	
 	fieldx = xx + capwidth
 	dragmouseon = app_mouse_box(fieldx, yy, wid, hei) && content_mouseon && (window_focus != string(tbx))
@@ -59,13 +59,13 @@ function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
 		else if (mouse_dx != 0)
 		{
 			dragger_drag_value = value
-			window_busy = name + "drag" // Start dragging
+			window_busy = name + "/drag" // Start dragging
 			window_focus = ""
 		}
 	}
 	
 	// Is dragging
-	if (window_busy = name + "drag")
+	if (window_busy = name + "/drag")
 	{
 		mouse_cursor = cr_none
 		dragger_drag_value += (mouse_x - mouse_click_x) * dragger_multiplier
@@ -97,7 +97,7 @@ function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
 			script_execute(script, clamp(string_get_real(tbx.text, 0), -no_limit, no_limit), false)
 	}
 	
-	if (window_busy = name + "drag")
+	if (window_busy = name + "/drag")
 		current_microani.active.value = true
 	
 	// Set cursor
@@ -117,7 +117,7 @@ function draw_dragger_sky(name, xx, yy, value, def, script, tbx, time)
 	draw_label(caption, xx, yy + hei/2, fa_left, fa_middle, labelcolor, labelalpha, font_label)
 	
 	// Idle
-	if (window_busy != name + "drag" && window_busy != name + "press" && window_focus != string(tbx))
+	if (window_busy != name + "/drag" && window_busy != name + "/press" && window_focus != string(tbx))
 	{
 		if (time)
 			tbx.text = rotation_get_time(value)

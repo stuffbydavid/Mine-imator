@@ -446,7 +446,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					{
 						case "preview": tex = select.block_preview_texture; break
 						
-						case "modeltextures":
+						case "model_textures":
 						{
 							if (pack_image_material = "diffuse")
 								tex = select.model_texture_map[?pack_model_texture]
@@ -458,7 +458,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							break
 						}
 								
-						case "blocksheet":
+						case "block_sheet":
 						{
 							if (pack_image_material = "diffuse")
 								tex = (pack_block_sheet_ani ? select.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame(true)] : select.block_sheet_texture[pack_block_sheet_size])
@@ -470,7 +470,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							break
 						}
 								
-						case "colormap":
+						case "color_map":
 						{
 							switch (pack_colormap)
 							{
@@ -481,7 +481,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							break
 						}
 								
-						case "itemsheet":
+						case "item_sheet":
 						{
 							if (pack_image_material = "diffuse")
 								tex = select.item_sheet_texture[pack_item_sheet_size]
@@ -493,10 +493,10 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							break
 						}
 								
-						case "particlesheet":	tex = select.particles_texture[pack_particles]; break
-						case "suntexture":		tex = select.sun_texture; break
-						case "moontexture":		tex = select.moon_textures[pack_moon_phase]; break
-						case "cloudtexture":	tex = select.clouds_texture; break
+						case "particle_sheet":	tex = select.particles_texture[pack_particles]; break
+						case "sun_texture":		tex = select.sun_texture; break
+						case "moon_texture":		tex = select.moon_textures[pack_moon_phase]; break
+						case "cloud_texture":	tex = select.clouds_texture; break
 					}
 					
 					break

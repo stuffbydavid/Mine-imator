@@ -14,7 +14,7 @@ function app_startup_interface_tabs()
 	tab_move_mouseon_panel = null
 	tab_move_mouseon_panel_prev = null
 	tab_move_mouseon_position = 0
-	
+
 	// Project properties
 	properties = new_tab(setting_properties_location, true)
 	with (properties)
@@ -42,9 +42,9 @@ function app_startup_interface_tabs()
 			list.script = action_lib_list
 			list.filter_type_list = temp_type_name_list
 			
-			sortlist_column_add(list, "libname", 0)
-			sortlist_column_add(list, "libtype", 0.35)
-			sortlist_column_add(list, "libinstances", 0.65)
+			sortlist_column_add(list, "lib_name", 0)
+			sortlist_column_add(list, "lib_type", 0.35)
+			sortlist_column_add(list, "lib_instances", 0.65)
 			
 			tbx_name = new_textbox(1, 0, "")
 			tbx_repeat_x = new_textbox_integer()
@@ -123,9 +123,9 @@ function app_startup_interface_tabs()
 			list.script = action_res_list
 			list.filter_type_list = res_type_name_list
 			
-			sortlist_column_add(list, "resname", 0)
-			sortlist_column_add(list, "restype", 0.35)
-			sortlist_column_add(list, "rescount", 0.65)
+			sortlist_column_add(list, "res_name", 0)
+			sortlist_column_add(list, "res_type", 0.35)
+			sortlist_column_add(list, "res_count", 0.65)
 			
 			sortlist_add(list, mc_res)
 			
@@ -235,7 +235,7 @@ function app_startup_interface_tabs()
 		char_list.script = action_lib_model_name
 		char_list.script_search = sortlist_search_model
 		
-		sortlist_column_add(char_list, "charname", 0)
+		sortlist_column_add(char_list, "char_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
@@ -248,7 +248,7 @@ function app_startup_interface_tabs()
 		block_list.script = action_lib_block_name
 		block_list.script_search = sortlist_search_block
 		
-		sortlist_column_add(block_list, "blockname", 0)
+		sortlist_column_add(block_list, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
@@ -259,7 +259,7 @@ function app_startup_interface_tabs()
 		special_block_list.script = action_lib_model_name
 		special_block_list.script_search = sortlist_search_model
 		
-		sortlist_column_add(special_block_list, "spblockname", 0)
+		sortlist_column_add(special_block_list, "special_block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
 			sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
@@ -269,7 +269,7 @@ function app_startup_interface_tabs()
 		equipment_list.script = action_lib_model_name
 		equipment_list.script_search = sortlist_search_model
 		
-		sortlist_column_add(equipment_list, "spblockname", 0)
+		sortlist_column_add(equipment_list, "special_block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.equipment_list); b++)
 			sortlist_add(equipment_list, mc_assets.equipment_list[|b].name)
@@ -279,7 +279,7 @@ function app_startup_interface_tabs()
 		model_part_model_list.script = action_lib_model_part_model_name
 		model_part_model_list.script_search = sortlist_search_model
 		
-		sortlist_column_add(model_part_model_list, "modelpartmodelname", 0)
+		sortlist_column_add(model_part_model_list, "model_part_model_name", 0)
 		
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 		{
@@ -329,9 +329,9 @@ function app_startup_interface_tabs()
 		type_list.script = action_lib_pc_type_list
 		type_list.can_deselect = true
 		
-		sortlist_column_add(type_list, "particleeditortypename", 0)
-		sortlist_column_add(type_list, "particleeditortypekind", 0.4)
-		sortlist_column_add(type_list, "particleeditortyperate", 0.75)
+		sortlist_column_add(type_list, "particle_editor_type_name", 0)
+		sortlist_column_add(type_list, "particle_editor_type_kind", 0.4)
+		sortlist_column_add(type_list, "particle_editor_type_rate", 0.75)
 		
 		preview_start = current_time
 		preview_speed = 1
@@ -341,9 +341,9 @@ function app_startup_interface_tabs()
 		tbx_type_spawn_rate.suffix = "%"
 		tbx_type_text = new_textbox(false, 0, "")
 		tbx_type_sprite_frame_width = new_textbox_integer()
-		tbx_type_sprite_frame_width.suffix = text_get("particleeditorpixels")
+		tbx_type_sprite_frame_width.suffix = text_get("particle_editor/pixels")
 		tbx_type_sprite_frame_height = new_textbox_integer()
-		tbx_type_sprite_frame_height.suffix = text_get("particleeditorpixels")
+		tbx_type_sprite_frame_height.suffix = text_get("particle_editor/pixels")
 		tbx_type_sprite_frame_start = new_textbox_integer()
 		tbx_type_sprite_frame_end = new_textbox_integer()
 		
@@ -484,7 +484,7 @@ function app_startup_interface_tabs()
 		build_list.header_show = true
 		build_list.column_sort = 0
 		
-		sortlist_column_add(build_list, "buildname", 0)
+		sortlist_column_add(build_list, "build_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
@@ -529,7 +529,7 @@ function app_startup_interface_tabs()
 	with (timeline_editor)
 	{
 		// Information
-		info = tab_add_category("timelineeditorinfo", icons.LIST_BULLETED_SMALL, tab_timeline_editor_info, true)
+		info = tab_add_category("timeline_editor/info", icons.LIST_BULLETED_SMALL, tab_timeline_editor_info, true)
 		with (info)
 		{
 			tbx_name = new_textbox(true, 0, "")
@@ -539,7 +539,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Block
-		block = tab_add_category("timelineeditorblock", icons.BLOCK, tab_timeline_editor_block, true)
+		block = tab_add_category("timeline_editor/block", icons.BLOCK, tab_timeline_editor_block, true)
 		with (block)
 		{
 			tbx_repeat_x = new_textbox_integer()
@@ -548,10 +548,10 @@ function app_startup_interface_tabs()
 		}
 
 		// Audio
-		audio = tab_add_category("timelineeditoraudio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
+		audio = tab_add_category("timeline_editor/audio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
 		
 		// Path
-		path = tab_add_category("timelineeditorpath", icons.PATH_SMALL, tab_timeline_editor_path, true)
+		path = tab_add_category("timeline_editor/path", icons.PATH_SMALL, tab_timeline_editor_path, true)
 		with (path)
 		{
 			tbx_detail = new_textbox_decimals()
@@ -562,10 +562,10 @@ function app_startup_interface_tabs()
 		}
 		
 		// Hierarchy
-		hierarchy = tab_add_category("timelineeditorhierarchy", icons.HIERARCHY_SMALL, tab_timeline_editor_hierarchy, true)
+		hierarchy = tab_add_category("timeline_editor/hierarchy", icons.HIERARCHY_SMALL, tab_timeline_editor_hierarchy, true)
 		
 		// Graphics
-		appearance = tab_add_category("timelineeditorappearance", [ icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL_DARK ], tab_timeline_editor_appearance, true)
+		appearance = tab_add_category("timeline_editor/appearance", [ icons.SPHERE_SHADING_SMALL, icons.SPHERE_SHADING_SMALL_DARK ], tab_timeline_editor_appearance, true)
 		with (appearance)
 		{
 			tbx_glint_scale = new_textbox_integer()
@@ -583,7 +583,7 @@ function app_startup_interface_tabs()
 	with (frame_editor)
 	{
 		// Item
-		item = tab_add_category("frameeditoritem", icons.ITEM_SMALL, tab_frame_editor_item, false)
+		item = tab_add_category("frame_editor/item", icons.ITEM_SMALL, tab_frame_editor_item, false)
 		with (item)
 		{
 			item_scroll = new_obj(obj_scrollbar)
@@ -591,7 +591,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Camera
-		camera = tab_add_category("frameeditorcamera", icons.CAMERA_SMALL, tab_frame_editor_camera, false)
+		camera = tab_add_category("frame_editor/camera", icons.CAMERA_SMALL, tab_frame_editor_camera, false)
 		with (camera)
 		{
 			video_template = null
@@ -611,7 +611,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Camera effects
-		camera_effects = tab_add_category("frameeditorcameraeffect", icons.WAND, tab_frame_editor_camera_effects, false)
+		camera_effects = tab_add_category("frame_editor/camera_effect", icons.WAND, tab_frame_editor_camera_effects, false)
 		with (camera_effects)
 		{
 			tbx_mix_percent = new_textbox_integer()
@@ -717,7 +717,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Sound
-		sound = tab_add_category("frameeditorsound", icons.VOLUME_SMALL, tab_frame_editor_sound, true)
+		sound = tab_add_category("frame_editor/sound", icons.VOLUME_SMALL, tab_frame_editor_sound, true)
 		with (sound)
 		{
 			tbx_volume = new_textbox_integer()
@@ -729,7 +729,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Particles
-		particles = tab_add_category("frameeditorparticles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
+		particles = tab_add_category("frame_editor/particles", icons.PARTICLES_SMALL, tab_frame_editor_particles, false)
 		with (particles)
 		{
 			tbx_seed = new_textbox_ninteger()
@@ -739,7 +739,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Text
-		text = tab_add_category("frameeditortext", icons.TEXT_SMALL, tab_frame_editor_text, true)
+		text = tab_add_category("frame_editor/text", icons.TEXT_SMALL, tab_frame_editor_text, true)
 		with (text)
 		{
 			tbx_text = new_textbox(false, 0, "")
@@ -747,7 +747,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Light
-		light = tab_add_category("frameeditorlight", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
+		light = tab_add_category("frame_editor/light", icons.LIGHT_POINT_SMALL, tab_frame_editor_light, false)
 		with (light)
 		{
 			has_spotlight = false
@@ -765,10 +765,10 @@ function app_startup_interface_tabs()
 		}
 
 		// Environment
-		environment = tab_add_category("frameeditorenvironment", icons.WORLD_SMALL, tab_frame_editor_environment, true)
+		environment = tab_add_category("frame_editor/environment", icons.WORLD_SMALL, tab_frame_editor_environment, true)
 
 		// Transform
-		transform = tab_add_category("frameeditortransform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
+		transform = tab_add_category("frame_editor/transform", icons.TRANSFORM_SMALL, tab_frame_editor_transform, false)
 		with (transform)
 		{
 			// Position
@@ -805,7 +805,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Constraints
-		constraints = tab_add_category("frameeditorconstraints", icons.JOINT_SMALL, tab_frame_editor_constraints, false)
+		constraints = tab_add_category("frame_editor/constraints", icons.JOINT_SMALL, tab_frame_editor_constraints, false)
 		with (constraints)
 		{
 			// Path
@@ -819,7 +819,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Material
-		material = tab_add_category("frameeditormaterial", [ icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL_DARK ], tab_frame_editor_material, false)
+		material = tab_add_category("frame_editor/material", [ icons.SPHERE_MATERIAL_SMALL, icons.SPHERE_MATERIAL_SMALL_DARK ], tab_frame_editor_material, false)
 		with (material)
 		{
 			tbx_alpha = new_textbox_integer()
@@ -850,7 +850,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Keyframe
-		keyframe = tab_add_category("frameeditorkeyframe", icons.KEYFRAME_SMALL, tab_frame_editor_keyframe, false)
+		keyframe = tab_add_category("frame_editor/keyframe", icons.KEYFRAME_SMALL, tab_frame_editor_keyframe, false)
 		with (keyframe)
 		{
 			tbx_ease_in_x = new_textbox_integer()
@@ -874,7 +874,7 @@ function app_startup_interface_tabs()
 	with (settings)
 	{
 		// Program
-		program = tab_add_category("settingsprogram", icons.SETTINGS_SMALL, tab_settings_program, false)
+		program = tab_add_category("settings/program", icons.SETTINGS_SMALL, tab_settings_program, false)
 		with (program)
 		{
 			tbx_backup_time = new_textbox_integer()
@@ -889,10 +889,10 @@ function app_startup_interface_tabs()
 		}
 		
 		// Interface
-		interface = tab_add_category("settingsinterface", icons.BRUSH_SMALL, tab_settings_interface, false)
+		interface = tab_add_category("settings/interface", icons.BRUSH_SMALL, tab_settings_interface, false)
 		
 		// Controls
-		controls = tab_add_category("settingscontrols", icons.KEYBOARD_SMALL, tab_settings_controls, false)
+		controls = tab_add_category("settings/controls", icons.KEYBOARD_SMALL, tab_settings_controls, false)
 		with (controls)
 		{
 			tbx_move_speed = new_textbox_decimals()

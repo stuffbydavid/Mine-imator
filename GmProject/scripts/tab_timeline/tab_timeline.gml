@@ -70,7 +70,7 @@ function tab_timeline()
 	}
 	
 	// Pan before drawing the timeline rows
-	if (window_busy = "timelinedrag")
+	if (window_busy = "timeline/drag")
 	{
 		mouse_cursor = cr_size_all
 		timeline.hor_scroll.value = clamp(timeline.hor_scroll.value - mouse_dx, 0, floor(max(timeline_length, timeline_marker, timeline_marker_length) * timeline_zoom))
@@ -149,16 +149,16 @@ function tab_timeline()
 		shortcut_bar_state = "timeline"
 		
 		if (mouseintl)
-			shortcut_bar_state = "timelinekeyframes"
+			shortcut_bar_state = "timeline/keyframes"
 		
 		if (mouseinnames)
-			shortcut_bar_state = "timelinenames"
+			shortcut_bar_state = "timeline/names"
 		
 		if (mouseinbar)
-			shortcut_bar_state = "timelinebar"
+			shortcut_bar_state = "timeline/bar"
 		
-		if (window_busy = "timelinescalekeyframes")
-			shortcut_bar_state = "timelinescale"
+		if (window_busy = "timeline/scale_keyframes")
+			shortcut_bar_state = "timeline/scale"
 		
 		window_scroll_focus = string(timeline.ver_scroll)
 		
@@ -171,6 +171,6 @@ function tab_timeline()
 		}
 		
 		if (keyboard_check(vk_control))
-			window_scroll_focus = "timelinezoom"
+			window_scroll_focus = "timeline/zoom"
 	}
 }

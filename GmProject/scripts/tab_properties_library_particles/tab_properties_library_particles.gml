@@ -6,7 +6,7 @@ function tab_properties_library_particles()
 	
 	tab_control_button_label()
 			
-	if (draw_button_label("libraryparticleeditoropen", dx, dy, dw, null, e_button.SECONDARY))
+	if (draw_button_label("library/particle_editor_open", dx, dy, dw, null, e_button.SECONDARY))
 	{
 		if (object_editor.show && obj_edit = temp_edit)
 			tab_close(object_editor)

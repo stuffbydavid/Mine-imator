@@ -14,7 +14,7 @@ function action_bench_particles(fn)
 	
 	with (bench_settings)
 	{
-		name = text_exists("benchparticles" + presetname) ? text_get("benchparticles" + presetname) : presetname
+		name = text_exists("bench/particles/" + presetname) ? text_get("bench/particles/" + presetname) : presetname
 		temp_update_display_name()
 	}
 	

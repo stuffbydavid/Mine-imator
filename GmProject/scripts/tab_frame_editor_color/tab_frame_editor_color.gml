@@ -13,11 +13,11 @@ function tab_frame_editor_color(mixtbx, showmix = true)
 	if (setting_advanced_mode)
 	{
 		tab_control_switch()
-		draw_button_collapse("material_color", collapse_map[?"material_color"], null, true, "frameeditorcolor")
+		draw_button_collapse("frame_editor/material_color", collapse_map[?"frame_editor/material_color"], null, true, "frame_editor/color")
 		tab_next()
 	}
 	
-	if (collapse_map[?"material_color"] || !setting_advanced_mode)
+	if (collapse_map[?"frame_editor/material_color"] || !setting_advanced_mode)
 	{
 		if (setting_advanced_mode)
 		{
@@ -27,31 +27,31 @@ function tab_frame_editor_color(mixtbx, showmix = true)
 		
 		// Mul (/ Blend color)
 		tab_control_color()
-		draw_button_color("frameeditorblendcolor", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
+		draw_button_color("frame_editor/blend_color", dx, dy, dw, tl_edit.value[e_value.RGB_MUL], c_white, false, action_tl_frame_rgb_mul)
 		tab_next()
 		
 		if (setting_advanced_mode)
 		{
 			tab_control_color()
-			draw_button_color("frameeditorhsvmul", dx, dy, dw, tl_edit.value[e_value.HSB_MUL], c_white, true, action_tl_frame_hsb_mul)
+			draw_button_color("frame_editor/hsv_mul", dx, dy, dw, tl_edit.value[e_value.HSB_MUL], c_white, true, action_tl_frame_hsb_mul)
 			tab_next()
 			
 			// Add
 			tab_control_color()
-			draw_button_color("frameeditorrgbadd", dx, dy, dw, tl_edit.value[e_value.RGB_ADD], c_black, false, action_tl_frame_rgb_add)
+			draw_button_color("frame_editor/rgb_add", dx, dy, dw, tl_edit.value[e_value.RGB_ADD], c_black, false, action_tl_frame_rgb_add)
 			tab_next()
 			
 			tab_control_color()
-			draw_button_color("frameeditorhsvadd", dx, dy, dw, tl_edit.value[e_value.HSB_ADD], c_black, true, action_tl_frame_hsb_add)
+			draw_button_color("frame_editor/hsv_add", dx, dy, dw, tl_edit.value[e_value.HSB_ADD], c_black, true, action_tl_frame_hsb_add)
 			tab_next()
 			
 			// Sub
 			tab_control_color()
-			draw_button_color("frameeditorrgbsub", dx, dy, dw, tl_edit.value[e_value.RGB_SUB], c_black, false, action_tl_frame_rgb_sub)
+			draw_button_color("frame_editor/rgb_sub", dx, dy, dw, tl_edit.value[e_value.RGB_SUB], c_black, false, action_tl_frame_rgb_sub)
 			tab_next()
 			
 			tab_control_color()
-			draw_button_color("frameeditorhsvsub", dx, dy, dw, tl_edit.value[e_value.HSB_SUB], c_black, true, action_tl_frame_hsb_sub)
+			draw_button_color("frame_editor/hsv_sub", dx, dy, dw, tl_edit.value[e_value.HSB_SUB], c_black, true, action_tl_frame_hsb_sub)
 			tab_next()
 			
 			// Glow color
@@ -59,7 +59,7 @@ function tab_frame_editor_color(mixtbx, showmix = true)
 			if (glowenabled)
 			{
 				tab_control_color()
-				draw_button_color("frameeditorglowcolor", dx, dy, dw, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
+				draw_button_color("frame_editor/glow_color", dx, dy, dw, tl_edit.value[e_value.GLOW_COLOR], c_white, false, action_tl_frame_glow_color)
 				tab_next()
 			}
 			
@@ -70,11 +70,11 @@ function tab_frame_editor_color(mixtbx, showmix = true)
 		{
 			// Mix
 			tab_control_color()
-			draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
+			draw_button_color("frame_editor/mix_color", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
 			tab_next()
 
 			tab_control_meter()
-			draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 0, 100, 0, 1, mixtbx, action_tl_frame_mix_percent)
+			draw_meter("frame_editor/mix_percent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 0, 100, 0, 1, mixtbx, action_tl_frame_mix_percent)
 			tab_next()
 		}
 		

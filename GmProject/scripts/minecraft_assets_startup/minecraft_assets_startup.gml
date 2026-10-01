@@ -37,7 +37,7 @@ function minecraft_assets_startup()
 	// Load current
 	else if (!minecraft_assets_load_startup())
 	{
-		error("errorloadassets")
+		error("error/load_assets")
 		return false
 	}
 	

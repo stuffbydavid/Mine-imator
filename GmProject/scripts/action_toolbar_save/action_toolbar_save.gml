@@ -3,8 +3,8 @@ function action_toolbar_save()
 	if (directory_exists_lib(project_folder))
 	{
 		project_save()
-		toast_new(e_toast.POSITIVE, text_get("alertprojectsaved"))
+		toast_new(e_toast.POSITIVE, text_get("alert/project_saved"))
 	}
 	else
-		error("errorsaveproject")
+		error("error/save_project")
 }

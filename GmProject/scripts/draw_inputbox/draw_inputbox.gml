@@ -27,7 +27,7 @@ function draw_inputbox(name, xx, yy, w, h, placeholder, tbx, script, disabled = 
 	capwid = string_width(text_get(name))
 	padding = (h - 22) / 2
 	focused = (window_focus = string(tbx))
-	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "" || window_busy = string(tbx) + "click") && !disabled
+	mouseon = app_mouse_box(xx, yy, w, h) && content_mouseon && (window_busy = "" || window_busy = "textbox/" + string(tbx) + "/click") && !disabled
 	
 	microani_set(string(tbx) + name, script, mouseon || window_focus = string(tbx), false, (mouseon && mouse_left) || (window_focus = string(tbx)))
 	
@@ -126,7 +126,7 @@ function draw_inputbox(name, xx, yy, w, h, placeholder, tbx, script, disabled = 
 	
 	// Textbox context menu
 	if (window_focus = string(tbx))
-		context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_context_type.NONE, null, null)
+		context_menu_area(xx, yy, w, h, "context_menu/textbox", tbx, e_context_type.NONE, null, null)
 	
 	// Disabled overlay
 	draw_box(xx, yy, w, h, false, c_overlay, a_overlay * microani_arr[e_microani.DISABLED])

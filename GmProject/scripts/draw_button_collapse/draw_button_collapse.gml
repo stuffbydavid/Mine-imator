@@ -11,14 +11,13 @@ function draw_button_collapse(name, open, script, active, caption, tip = "", exp
 	// Mouse states
 	draw_set_font(font_label)
 	
-	var xx, yy, wid, mouseon, mousepress, mouseclick, switchclick, labelclick, hascollapse, labelwid;
+	var xx, yy, wid, mouseon, mousepress, mouseclick, switchclick, labelclick, hascollapse;
 	xx = dx - 8
 	yy = dy + (tab_control_h / 2) - 10
 	wid = script ? string_width(text_get(caption)) + 26 : dw + 8
 	switchclick = false
 	hascollapse = ds_map_exists(collapse_map, name)
 	labelclick = false
-	labelwid = string_width(string_limit(text_get(caption), dw - 48))
 	
 	mouseon = app_mouse_box(xx, dy, wid, 24) && content_mouseon && active
 	mousepress = mouseon && mouse_left
@@ -28,12 +27,12 @@ function draw_button_collapse(name, open, script, active, caption, tip = "", exp
 		return 0
 	
 	// Button
-	draw_button_icon(name + "collapse", xx, yy, 20, 20, open && active, null, null, !active, "", spr_chevron_ani)
+	draw_button_icon(name + "_collapse", xx, yy, 20, 20, open && active, null, null, !active, "", spr_chevron_ani)
 	microani_update(mouseon, mousepress, open && active, !active)
 	
 	// Tip
 	//if (mouseon && active)
-	//	tip_set(text_get((open ? "tooltiphideoptions" : "tooltipshowoptions")), xx, yy, 16, 16, false)
+	//	tip_set(text_get((open ? "tooltip/hide_options" : "tooltip/show_options")), xx, yy, 16, 16, false)
 	
 	// Cursor
 	if (mouseon)
@@ -47,7 +46,7 @@ function draw_button_collapse(name, open, script, active, caption, tip = "", exp
 	// Switch/label
 	if (script)
 	{
-		labelclick = hascollapse && mouse_left_released && content_mouseon && app_mouse_box(dx - 4, dy - 4, labelwid + 8, ui_small_height + 8) && !app_mouse_box(dx + dw - 22, dy + (ui_small_height / 2) - 7, 20, 14)
+		labelclick = hascollapse && mouse_left_released && content_mouseon && app_mouse_box(dx - 4, dy - 4, dw / 2 + 4, ui_small_height + 8)
 		switchclick = draw_switch(caption, dx, dy, active, script, tip, false, hascollapse)
 	}
 	else
@@ -57,11 +56,11 @@ function draw_button_collapse(name, open, script, active, caption, tip = "", exp
 	}
 	
 	// Expand on click
-	if (expandonenable && switchclick)
+	if (switchclick && hascollapse)
 	{
-		if (labelclick && active)
+		if (labelclick)
 			action_collapse(name, !collapse_map[?name])
-		else if (!active)
+		else if (expandonenable && !active)
 			action_collapse(name, true)
 	}
 	

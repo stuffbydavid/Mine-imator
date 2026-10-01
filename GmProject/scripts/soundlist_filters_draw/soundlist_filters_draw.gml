@@ -5,12 +5,12 @@ function soundlist_filters_draw()
 	if (slist.source = "music")
 	{
 		list = minecraft_music_filter_list
-		prefix = "musicfilter"
+		prefix = "music_filter/"
 	}
 	else
 	{
 		list = minecraft_sound_filter_list
-		prefix = "soundfilter"
+		prefix = "sound_filter/"
 	}
 	
 	scroll = settings_menu_scroll.needed ? -settings_menu_scroll.value : 0

@@ -11,11 +11,14 @@ function bench_draw_settings_camera_effects()
 	dy -= 8
 	
 	tab_control(bench_list_height(list))
-	sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.camera_effect_type, false, text_get("bencheffect"))
+	sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.camera_effect_type, false, text_get("bench/effect"))
 	tab_next()
 	
 	dy += 4
 	
 	var effectname = camera_effect_name_list[|bench_settings.camera_effect_type];
-	draw_tooltip_label("frameeditorcameraeffect" + effectname + "tip", icons.INFO, e_toast.INFO)
+	var tipname = "frame_editor/camera_effect/" + effectname + "/tip";
+	if (bench_settings.camera_effect_type = e_cam_fx.FADE)
+		tipname = "frame_editor/camera_effect/fade_tip"
+	draw_tooltip_label(tipname, icons.INFO, e_toast.INFO)
 }

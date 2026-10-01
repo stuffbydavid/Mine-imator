@@ -50,7 +50,7 @@ function panel_area_draw()
 	panel_draw(panel_map[?"right"])
 	
 	// Resizing
-	if (window_busy = "panelresize")
+	if (window_busy = "panel/resize")
 	{
 		if (panel_resize = panel_map[?"left"] || panel_resize = panel_map[?"left_secondary"])
 		{
@@ -81,7 +81,7 @@ function panel_area_draw()
 	}
 	
 	// Moving
-	if (window_busy = "tabmove")
+	if (window_busy = "tab/move")
 	{
 		panel_move_draw()
 		

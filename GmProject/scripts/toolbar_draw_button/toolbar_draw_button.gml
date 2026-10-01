@@ -10,7 +10,7 @@ function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 	trigger = false
 	click = false
 	
-	if (window_busy = "contextmenu")
+	if (window_busy = "context_menu")
 		window_busy = ""
 	
 	if (draw_button_label(name, xx, yy, wid, null, e_button.TOOLBAR, null, e_anchor.LEFT))
@@ -38,7 +38,7 @@ function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 		context_menu_name = name
 		context_menu_copy_axis_edit = axis_edit
 		context_menu_busy_prev = window_busy
-		window_busy = "contextmenu"
+		window_busy = "context_menu"
 		context_menu_group = context_menu_group_temp
 		context_menu_ani = ""
 		
@@ -56,7 +56,7 @@ function toolbar_draw_button(name, xx, yy, wid, hasmenu = true)
 		current_microani.hover.value = true
 	
 	if (context_menu_name != "")
-		window_busy = "contextmenu"
+		window_busy = "context_menu"
 	
 	return click
 }

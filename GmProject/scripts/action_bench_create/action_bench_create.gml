@@ -399,7 +399,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 			// Encourage parenting armor to a character
 			if (!setting_advanced_mode && tab = e_bench_tab.EQUIPMENT)
 			{
-				toast_new(e_toast.INFO, text_get("alertequiparmor"))
+				toast_new(e_toast.INFO, text_get("alert/equip_armor"))
 				toast_last.dismiss_time = 15
 			}
 		}

@@ -125,7 +125,7 @@ function action_build_place()
 				{
 					// Name the new structure
 					var basename, foldername, suffix, found;
-					basename = text_get("buildtoolstructure")
+					basename = text_get("build_tool/structure")
 					foldername = basename
 					suffix = 2
 					

@@ -8,7 +8,7 @@ function app_event_game_end()
 	{
 		if (project_changed)
 		{
-			var btn = show_message_ext("Mine-imator", text_get("questionconfirmexit", project_name), text_get("questionsave"), text_get("questiondontsave"), text_get("questioncancel"));
+			var btn = show_message_ext("Mine-imator", text_get("question/confirm_exit", project_name), text_get("question/save"), text_get("question/dont_save"), text_get("question/cancel"));
 			if (btn = 0)
 				project_save()
 			else if (btn != 1)

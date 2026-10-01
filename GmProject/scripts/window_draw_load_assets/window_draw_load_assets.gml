@@ -2,7 +2,7 @@ function window_draw_load_assets()
 {
 	if (!minecraft_assets_load())
 	{
-		error("errorloadassets")
+		error("error/load_assets")
 		game_end()
 		return 0
 	}
@@ -56,7 +56,7 @@ function window_draw_load_assets()
 	draw_label("Mine-imator " + string(mineimator_version), xoff + panelwid / 2, yoff + 289, fa_middle, fa_bottom, c_text_secondary, a_text_secondary, font_heading)
 	draw_label(string(string_upper(mineimator_version_sub)), xoff + panelwid / 2, yoff + 289 + 12, fa_middle, fa_bottom, c_text_secondary, a_text_secondary, font_subheading)
 	draw_label(string(string_upper(mineimator_version_extra)), xoff + panelwid / 2, yoff + 289 + (mineimator_version_sub = "" ? 16 : 26), fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
-	draw_label(text_get("startuploadingassets", app.setting_minecraft_assets_version, floor(load_assets_progress * 100)), xoff + panelwid / 2, yoff + 437, fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
+	draw_label(text_get("startup/loading_assets", app.setting_minecraft_assets_version, floor(load_assets_progress * 100)), xoff + panelwid / 2, yoff + 437, fa_middle, fa_bottom, c_text_tertiary, a_text_tertiary, font_caption)
 	
 	// Splash
 	if (load_assets_splash != null)
@@ -69,7 +69,7 @@ function window_draw_load_assets()
 	
 	// Splash credits
 	if (load_assets_credits != "")
-		draw_label(text_get("startupsplashauthor", load_assets_credits), xoff + panelwid / 2, yoff + 289 + 31, fa_middle, fa_top, c_text_tertiary, a_text_tertiary, font_caption)
+		draw_label(text_get("startup/splash_author", load_assets_credits), xoff + panelwid / 2, yoff + 289 + 31, fa_middle, fa_top, c_text_tertiary, a_text_tertiary, font_caption)
 	
 	// Loading bar
 	draw_box(xoff, yoff + hei - 8, wid, 8, false, c_level_top, .8)

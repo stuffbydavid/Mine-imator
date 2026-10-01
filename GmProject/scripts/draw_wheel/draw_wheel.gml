@@ -22,7 +22,7 @@ function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tb
 	
 	var modval, capwid, text, labelx, labely, labelw, labeltextw;
 	
-	context_menu_area(xx - rad, yy - rad, rad * 2, rad * 2, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
+	context_menu_area(xx - rad, yy - rad, rad * 2, rad * 2, "context_menu/value", value, e_context_type.NUMBER, script, def)
 	
 	draw_set_font(font_label)
 	

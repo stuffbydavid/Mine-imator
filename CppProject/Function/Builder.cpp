@@ -560,7 +560,7 @@ namespace CppProject
 		if (mb > 50)
 		{
 			if (res->scenery_cache_save == null_)
-				res->scenery_cache_save = question(text_get({ "loadscenerysavecache", string(mb) + StringType("MB") }));
+				res->scenery_cache_save = question(text_get({ "load_scenery/save_cache", string(mb) + StringType("MB") }));
 
 			if (!res->scenery_cache_save)
 			{

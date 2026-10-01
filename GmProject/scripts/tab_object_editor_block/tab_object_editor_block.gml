@@ -54,7 +54,7 @@ function tab_object_editor_block()
 	for (var i = 0; i < statelen; i += 2)
 	{
 		var state = obj_edit.block_state[i];
-		content_capwid = max(content_capwid, string_width(minecraft_asset_get_name("blockstate", state)) + 8)
+		content_capwid = max(content_capwid, string_width(minecraft_asset_get_name("block/state", state)) + 8)
 	}
 			
 	var dyy = (dy + dh - statesh) + 8;
@@ -74,7 +74,7 @@ function tab_object_editor_block()
 				
 		tab_control(ui_small_height)
 				
-		if (draw_checkbox("blockstate" + state, dx, dy, obj_edit.block_state[i + 1] = "true", null))
+		if (draw_checkbox("block/state/" + state, dx, dy, obj_edit.block_state[i + 1] = "true", null))
 		{
 			menu_block_state = menu_block_state_current
 					
@@ -99,7 +99,7 @@ function tab_object_editor_block()
 		var state = obj_edit.block_state[i];
 		menu_block_current = block
 		menu_block_state_current = block ? block.states_map[?state] : null
-		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.block_state[i + 1], minecraft_asset_get_name("blockstatevalue", obj_edit.block_state[i + 1]), script, false, null, null, "", c_white, 1, content_capwid)
+		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.block_state[i + 1], minecraft_asset_get_name("block/state/value", obj_edit.block_state[i + 1]), script, false, null, null, "", c_white, 1, content_capwid)
 		dyy += 32
 	}
 	

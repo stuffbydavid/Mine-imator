@@ -34,13 +34,13 @@ function tab_object_editor_particles_framebox()
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed)
 		{
-			window_busy = "particleeditortypeanimationstartend"
+			window_busy = "particle_editor/type/animation_start_end"
 			action_lib_pc_type_sprite_frame_start(mouseframe, false)
 			action_lib_pc_type_sprite_frame_end(mouseframe, false)
 		}
 	}
 	
-	if (window_busy = "particleeditortypeanimationstartend")
+	if (window_busy = "particle_editor/type/animation_start_end")
 	{
 		mouse_cursor = cr_handpoint
 		action_lib_pc_type_sprite_frame_end(mouseframe, false)
@@ -70,14 +70,14 @@ function tab_object_editor_particles_framebox()
 			col = c_accent
 			alpha = 1
 			
-			draw_label(text_get("particleeditortypespriteframeboxstart"), bx + floor(fwid / 2), min(by + (reverse ? 0 : fhei), yy + size), fa_center, reverse ? fa_bottom : fa_top, col, 1, font_label)
+			draw_label(text_get("particle_editor/type/sprite/frame/box_start"), bx + floor(fwid / 2), min(by + (reverse ? 0 : fhei), yy + size), fa_center, reverse ? fa_bottom : fa_top, col, 1, font_label)
 		}
 		else if (f = ptype_edit.sprite_frame_end)
 		{
 			col = c_error
 			alpha = 1
 			
-			draw_label(text_get("particleeditortypespriteframeboxend"), bx + floor(fwid / 2), min(by + (!reverse ? 0 : fhei), yy + size), fa_center, !reverse ? fa_bottom : fa_top, col, 1, font_label)
+			draw_label(text_get("particle_editor/type/sprite/frame/box_end"), bx + floor(fwid / 2), min(by + (!reverse ? 0 : fhei), yy + size), fa_center, !reverse ? fa_bottom : fa_top, col, 1, font_label)
 		}
 		
 		if (by + fhei > yy + size)

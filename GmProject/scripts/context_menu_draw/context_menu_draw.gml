@@ -88,5 +88,5 @@ function context_menu_draw()
 	}
 	
 	if (window_busy = "" && context_menu_name != "")
-		window_busy = "contextmenu"
+		window_busy = "context_menu"
 }

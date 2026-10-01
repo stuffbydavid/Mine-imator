@@ -21,7 +21,7 @@ function menu_biome_init(menu)
 		if (biome.biome_variants != null && ds_list_size(biome.biome_variants) > 0)
 		{
 			if (!menu_expose)
-				list_item_add_action(list_item_last, string(biome) + "extend", menu_item_set_extend, biome.variants_extend, biome, null, "left", biome.variants_extend ? "tooltiptlcollapse" : "tooltiptlexpand", spr_chevron_ani)
+				list_item_add_action(list_item_last, string(biome) + "extend", menu_item_set_extend, biome.variants_extend, biome, null, "left", biome.variants_extend ? "tooltip/tl/collapse" : "tooltip/tl/expand", spr_chevron_ani)
 			
 			if (biome.variants_extend || menu_expose)
 			{

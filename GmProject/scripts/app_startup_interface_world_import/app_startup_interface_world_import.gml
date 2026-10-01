@@ -2,7 +2,7 @@
 
 function app_startup_interface_world_import()
 { 
-	world_import_settings_popup = new_popup("worldsettings", popup_worldsettings_draw, 600, 532, true, false, false, true, world_import_apply_settings)
+	world_import_settings_popup = new_popup("world_settings", popup_worldsettings_draw, 600, 532, true, false, false, true, world_import_apply_settings)
 	world_import_surface = null
 	world_import_add_tl = false
 	world_import_temp = null
@@ -13,7 +13,7 @@ function app_startup_interface_world_import()
 	world_import_settings_block_list.can_deselect = true
 	world_import_settings_block_list.script = action_world_import_settings_block_select
 	
-	sortlist_column_add(world_import_settings_block_list, "blockfilter", 0)
+	sortlist_column_add(world_import_settings_block_list, "block_filter", 0)
 	for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 		if (ds_list_find_index(setting_world_import_filter_list, b) < 0) // Not filtered
 			sortlist_add(world_import_settings_block_list, b)
@@ -24,7 +24,7 @@ function app_startup_interface_world_import()
 	world_import_settings_filter_list.can_deselect = true
 	world_import_settings_filter_list.script = action_world_import_settings_filter_select
 	
-	sortlist_column_add(world_import_settings_filter_list, "blockfilter", 0)
+	sortlist_column_add(world_import_settings_filter_list, "block_filter", 0)
 	for (var i = 0; i < ds_list_size(setting_world_import_filter_list); i++) // Add indices from filter list
 		sortlist_add(world_import_settings_filter_list, setting_world_import_filter_list[|i])
 	

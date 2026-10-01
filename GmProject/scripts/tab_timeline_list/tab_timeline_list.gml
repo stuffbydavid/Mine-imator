@@ -37,17 +37,17 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	// Filter (advanced mode only)
 	if (setting_advanced_mode)
 	{
-		if (draw_button_icon("timelinefilter", listx + 8, bary + 4, 24, 24,
+		if (draw_button_icon("timeline/filter", listx + 8, bary + 4, 24, 24,
 			setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated ||setting_timeline_hide_ghosts || 
 			!array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)),
-			icons.FILTER, null, false, "tooltiptlfilter"))
+			icons.FILTER, null, false, "tooltip/tl/filter"))
 		{
-			menu_settings_set(listx + 8, bary + 4, "timelinefilter", 24)
+			menu_settings_set(listx + 8, bary + 4, "timeline/filter", 24)
 			settings_menu_script = tl_filter_draw
 			settings_menu_above = true
 		}
 	
-		if (settings_menu_name = "timelinefilter" && settings_menu_ani_type != "hide")
+		if (settings_menu_name = "timeline/filter" && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
 	}
 	
@@ -55,11 +55,11 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	searchx = (setting_advanced_mode ? listx + (24 + 16) : listx + 8) 
 	searchwid = (setting_advanced_mode ? listw - (24 + 24) : listw - 16) 
 	timeline.tbx_search.text = timeline_search
-	draw_textfield("timelinesearch", searchx, bary + 4, searchwid, 24, timeline.tbx_search, action_tl_search, text_get("listsearch"), "none")
+	draw_textfield("timeline/search", searchx, bary + 4, searchwid, 24, timeline.tbx_search, action_tl_search, text_get("list/search"), "none")
 	
 	// Context menu
 	if (mouseinnames)
-		context_menu_area(listx, listy, listw, listh, "timelinelist", mousetl, null, null, null)
+		context_menu_area(listx, listy, listw, listh, "timeline/list", mousetl, null, null, null)
 	
 	var rowmouseon = content_mouseon;
 	content_mouseon = mouseinnames
@@ -80,7 +80,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		itemx = (content_x + (indent * tl.indent_level)) - timeline.hor_scroll_tl.value
 		itemy = dy
 		itemw = listw - 8 - (indent * tl.indent_level) + timeline.hor_scroll_tl.value
-		itemhover = ((tl = mousetl) && mouseinnames) || (window_busy = "timelineclick" && timeline_select = tl)
+		itemhover = ((tl = mousetl) && mouseinnames) || (window_busy = "timeline/click" && timeline_select = tl)
 		buttonhover = false
 		
 		itemmaxw = (indent * tl.indent_level) + 32
@@ -115,7 +115,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
-		else if (itemhover || tl = context_menu_value || (window_busy = "timelineclick" && timeline_select = tl))
+		else if (itemhover || tl = context_menu_value || (window_busy = "timeline/click" && timeline_select = tl))
 			draw_box(content_x, itemy, listw, itemh, false, c_overlay, a_overlay)
 		
 		xx = itemx + itemw - ((buttonsize + 4) * (itemhover || tl.hide || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost)))
@@ -126,13 +126,13 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			if (tl.type != e_tl_type.AUDIO_TRACK)
 			{
 				// Hide
-				if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.HIDDEN_SMALL : icons.VISIBLE_SMALL, null, false, tl.hide ? "tooltiptlshow" : "tooltiptlhide"))
+				if (draw_button_icon("timeline/hide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.HIDDEN_SMALL : icons.VISIBLE_SMALL, null, false, tl.hide ? "tooltip/tl/show" : "tooltip/tl/hide"))
 					action_tl_hide(tl)
 			}
 			else
 			{
 				// Mute
-				if (draw_button_icon("timelinehide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.MUTE_SMALL : icons.VOLUME_SMALL, null, false, tl.hide ? "tooltiptlunmute" : "tooltiptlmute"))
+				if (draw_button_icon("timeline/hide" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.hide, tl.hide ? icons.MUTE_SMALL : icons.VOLUME_SMALL, null, false, tl.hide ? "tooltip/tl/unmute" : "tooltip/tl/mute"))
 					action_tl_hide(tl)
 			}
 			
@@ -145,7 +145,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		// Lock
 		if (itemhover || tl.lock)
 		{
-			if (draw_button_icon("timelinelock" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.lock, tl.lock ? icons.LOCK_SMALL : icons.UNLOCK_SMALL, null, false, (tl.lock ? "tooltiptlunlock" : "tooltiptllock")))
+			if (draw_button_icon("timeline/lock" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.lock, tl.lock ? icons.LOCK_SMALL : icons.UNLOCK_SMALL, null, false, (tl.lock ? "tooltip/tl/unlock" : "tooltip/tl/lock")))
 				action_tl_lock(tl)
 			
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
@@ -160,7 +160,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			
 			if (itemhover || tl.ghost)
 			{
-				if (draw_button_icon("timelineghosttl" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.ghost, icons.GHOST_SMALL, null, false, (tl.ghost ? "tooltiptlunghost" : "tooltiptlghost")))
+				if (draw_button_icon("timeline/ghosttl" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.ghost, icons.GHOST_SMALL, null, false, (tl.ghost ? "tooltip/tl/unghost" : "tooltip/tl/ghost")))
 					action_tl_ghost(tl)
 				
 				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
@@ -174,7 +174,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		
 		if (itemhover)
 		{
-			if (draw_button_icon("timelineselectkeyframes" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, false, icons.KEYFRAME_SMALL, null, false, "contextmenutlselectkeyframes"))
+			if (draw_button_icon("timeline/selectkeyframes" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, false, icons.KEYFRAME_SMALL, null, false, "context_menu/tl/select_keyframes"))
 				action_tl_select_keyframes(tl)
 			
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
@@ -225,7 +225,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		{
 			if (ds_list_size(tl.tree_list_filter) > 0 && (((xx + buttonsize + 8) - xright) < minw))
 			{
-				if (draw_button_icon("timelineexpand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand"), spr_chevron_ani))
+				if (draw_button_icon("timeline/expand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltip/tl/collapse" : "tooltip/tl/expand"), spr_chevron_ani))
 					action_tl_extend(tl)
 				
 				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
@@ -256,7 +256,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		{
 			var iconcolor, iconalpha;
 			
-			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
+			if (tl.selected || (window_busy = "timeline/click" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
 				if (tl.color_tag = null)
 					iconcolor = c_accent
@@ -349,7 +349,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			var namecolor, namealpha, backalpha;
 			
 			// Draw name
-			if (tl.selected || (window_busy = "timelineclick" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
+			if (tl.selected || (window_busy = "timeline/click" && timeline_select = tl) || ((itemhover && !buttonhover) && (mouse_left || mouse_left_released)))
 			{
 				if (tl.color_tag = null)
 					namecolor = c_accent
@@ -388,7 +388,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			itemmaxw += string_width(tl.display_name) + 8
 		}
 		
-		if (window_busy = "timelineclick")
+		if (window_busy = "timeline/click")
 		{
 			window_busy = ""
 			
@@ -396,14 +396,14 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			if (app_mouse_box(xx - 28, itemy, string_width(content_name) + 28, itemh, "place"))
 				mousetlname = tl
 			
-			window_busy = "timelineclick"
+			window_busy = "timeline/click"
 		}
 		
 		// Rename
 		if (mouse_left_double_pressed && app_mouse_box(xx, itemy, string_width(content_name), itemh, "place"))
 		{
-			window_busy = string(timeline.tbx_rename)
-			window_focus = window_busy
+			window_busy = "textbox/" + string(timeline.tbx_rename)
+			window_focus = string(timeline.tbx_rename)
 			
 			timeline.tbx_rename.text = tl.name
 			timeline_rename = tl
@@ -438,7 +438,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			}
 		}
 		
-		if (window_busy = "timelinemove")
+		if (window_busy = "timeline/move")
 		{
 			// Move highlight
 			if (timeline_move_highlight_tl = tl)
@@ -510,24 +510,24 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		var buttony = content_y + content_height - 28;
 
 		tip_set_keybind(e_keybind.CREATE_FOLDER)
-		if (draw_button_icon("timelineaddfolder", listx + 8, buttony, 24, 24, false, icons.FOLDER, null, false, "contextmenutladdfolder"))
+		if (draw_button_icon("timeline/addfolder", listx + 8, buttony, 24, 24, false, icons.FOLDER, null, false, "context_menu/tl/add_folder"))
 			action_tl_folder()
 
 		tip_set_keybind(e_keybind.TIMELINE_DUPLICATE)
-		if (draw_button_icon("timelineduplicate", listx + 36, buttony, 24, 24, false, icons.DUPLICATE, null, !timeline_settings, "contextmenutlduplicate"))
+		if (draw_button_icon("timeline/duplicate", listx + 36, buttony, 24, 24, false, icons.DUPLICATE, null, !timeline_settings, "context_menu/tl/duplicate"))
 		{
 			list_item_value = null
 			action_tl_duplicate()
 		}
 
 		tip_set_keybind(e_keybind.TIMELINE_DELETE)
-		if (draw_button_icon("timelinedelete", listx + 64, buttony, 24, 24, false, icons.DELETE, null, !timeline_settings, "contextmenutldelete"))
+		if (draw_button_icon("timeline/delete", listx + 64, buttony, 24, 24, false, icons.DELETE, null, !timeline_settings, "context_menu/tl/delete"))
 		{
 			list_item_value = null
 			action_tl_remove()
 		}
 
-		if (draw_button_icon("timelineexport", listx + 92, buttony, 24, 24, false, icons.ASSET_EXPORT, null, !timeline_settings, "contextmenutlexport"))
+		if (draw_button_icon("timeline/export", listx + 92, buttony, 24, 24, false, icons.ASSET_EXPORT, null, !timeline_settings, "context_menu/tl/export"))
 		{
 			list_item_value = null
 			object_save()
@@ -540,12 +540,12 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		mouse_cursor = cr_size_we
 		if (mouse_left_pressed)
 		{
-			window_busy = "timelinelistresize"
+			window_busy = "timeline/list_resize"
 			timeline_list_resize_start = listw
 		}
 	}
 	
-	if (window_busy = "timelinelistresize")
+	if (window_busy = "timeline/list_resize")
 	{
 		mouse_cursor = cr_size_we
 		tab.list_width = clamp(timeline_list_resize_start + (mouse_x - mouse_click_x), 128, content_width)
@@ -559,14 +559,14 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		mouse_cursor = cr_handpoint
 		if (mouse_left_pressed && (mousetl = null || mousetl.list_mouseon))
 		{
-			window_busy = "timelineclick"
+			window_busy = "timeline/click"
 			timeline_select = mousetl
 			timeline_select_startv = timeline.ver_scroll.value
 		}
 	}
 
 	// Move timelines
-	if (window_busy = "timelinemove")
+	if (window_busy = "timeline/move")
 	{
 		mouse_cursor = cr_size_all
 		timeline_move_highlight_tl = movehltl
@@ -576,7 +576,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	}
 	
 	// Drag select timelines
-	if (window_busy = "timelineselect")
+	if (window_busy = "timeline/select")
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -636,7 +636,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	}
 	
 	// Click name list
-	if (window_busy = "timelineclick")
+	if (window_busy = "timeline/click")
 	{
 		mouse_cursor = cr_handpoint
 		if (mouse_move > 5) // Select
@@ -647,7 +647,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			{
 				if (!keyboard_check(vk_shift) && !keyboard_check(vk_control))
 					action_tl_deselect_all()
-				window_busy = "timelineselect"
+				window_busy = "timeline/select"
 			}
 		}
 		

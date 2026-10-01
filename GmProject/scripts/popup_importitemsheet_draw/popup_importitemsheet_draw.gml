@@ -34,7 +34,7 @@ function popup_importitemsheet_draw()
 	
 	// Is sheet
 	tab_control_switch()
-	draw_switch("importitemsheetissheet", dx, dy, popup_current.is_sheet, action_toolbar_importitemsheet_is_sheet)
+	draw_switch("import_item_sheet/is_sheet", dx, dy, popup_current.is_sheet, action_toolbar_importitemsheet_is_sheet)
 	tab_next()
 	
 	if (popup_current.is_sheet)
@@ -43,18 +43,18 @@ function popup_importitemsheet_draw()
 		
 		// Size
 		axis_edit = X
-		textfield_group_add("importitemsheetcolumns", popup_current.sheet_size[X], popup_current.sheet_size_def[X], action_toolbar_importitemsheet_sheet_size, axis_edit, popup_current.tbx_sheet_width, null, 1, 1, no_limit)
+		textfield_group_add("import_item_sheet/columns", popup_current.sheet_size[X], popup_current.sheet_size_def[X], action_toolbar_importitemsheet_sheet_size, axis_edit, popup_current.tbx_sheet_width, null, 1, 1, no_limit)
 		axis_edit = Y
-		textfield_group_add("importitemsheetrows", popup_current.sheet_size[Y], popup_current.sheet_size_def[Y], action_toolbar_importitemsheet_sheet_size, axis_edit, popup_current.tbx_sheet_height, null, 1, 1, no_limit)
+		textfield_group_add("import_item_sheet/rows", popup_current.sheet_size[Y], popup_current.sheet_size_def[Y], action_toolbar_importitemsheet_sheet_size, axis_edit, popup_current.tbx_sheet_height, null, 1, 1, no_limit)
 		
 		tab_control_textfield_group(true)
-		draw_textfield_group("importitemsheetgrid", dx, dy, dw, .1, 1, no_limit, 1, true)
+		draw_textfield_group("import_item_sheet/grid", dx, dy, dw, .1, 1, no_limit, 1, true)
 		tab_next()
 	}
 	
 	// Create
 	tab_control_button_label()
-	if (draw_button_label("importitemsheetok", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
+	if (draw_button_label("import_item_sheet/ok", dx + dw, dy, null, null, e_button.PRIMARY, null, e_anchor.RIGHT))
 	{
 		if (popup_current.value_script != null)
 			script_execute(popup_current.value_script, e_option.IMPORT_ITEM_SHEET_DONE)

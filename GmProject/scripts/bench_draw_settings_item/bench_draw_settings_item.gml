@@ -1,9 +1,9 @@
 function bench_draw_settings_item()
 {
 	var res = res_eval(bench_settings.item_tex);
-	draw_label(text_get("typeitem") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
+	draw_label(text_get("type/item") + ":", dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
 
-	content_capwid = text_caption_width("typeitem")
+	content_capwid = text_caption_width("type/item")
 	
 	if (res.item_sheet_texture[e_item_sheet.SIZE16] != null)
 	{
@@ -75,19 +75,19 @@ function bench_draw_settings_item()
 	tab_set_columns(true, 2)
 
 	tab_control_checkbox()
-	draw_checkbox("benchitem3d", dx, dy, bench_settings.item_3d, action_bench_item_3d)
+	draw_checkbox("bench/item_3d", dx, dy, bench_settings.item_3d, action_bench_item_3d)
 	tab_next()
 
 	tab_control_checkbox()
-	draw_checkbox("benchitemfacecamera", dx, dy, bench_settings.item_face_camera, action_bench_item_face_camera)
+	draw_checkbox("bench/item_face_camera", dx, dy, bench_settings.item_face_camera, action_bench_item_face_camera)
 	tab_next()
 
 	tab_control_checkbox()
-	draw_checkbox("benchitembounce", dx, dy, bench_settings.item_bounce, action_bench_item_bounce)
+	draw_checkbox("bench/item_bounce", dx, dy, bench_settings.item_bounce, action_bench_item_bounce)
 	tab_next()
 
 	tab_control_checkbox()
-	draw_checkbox("benchitemspin", dx, dy, bench_settings.item_spin, action_bench_item_spin)
+	draw_checkbox("bench/item_spin", dx, dy, bench_settings.item_spin, action_bench_item_spin)
 	tab_next()
 
 	tab_set_columns(false)
@@ -98,8 +98,8 @@ function bench_draw_settings_item()
 	if (tex = null)
 		tex = res.texture
 
-	content_capwid = text_caption_width("benchitemtex", "benchitemtexmaterial", "benchitemtexnormal")
-	draw_button_menu("benchitemtex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex, res_eval(bench_settings.item_tex).display_name, action_bench_item_tex, false, res_eval(bench_settings.item_tex).block_preview_texture, null, "", null, null, content_capwid)
+	content_capwid = text_caption_width("bench/item_tex", "bench/item_tex_material", "bench/item_tex_normal")
+	draw_button_menu("bench/item_tex", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex, res_eval(bench_settings.item_tex).display_name, action_bench_item_tex, false, res_eval(bench_settings.item_tex).block_preview_texture, null, "", null, null, content_capwid)
 	dy += (ui_large_height + 8)
 
 	if (project_render_material_maps)
@@ -109,7 +109,7 @@ function bench_draw_settings_item()
 		if (tex = null)
 			tex = res.texture
 
-		draw_button_menu("benchitemtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_material, res_eval(bench_settings.item_tex_material).display_name, action_bench_item_tex_material, false, res_eval(bench_settings.item_tex_material).block_preview_texture, null, "", null, null, content_capwid)
+		draw_button_menu("bench/item_tex_material", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_material, res_eval(bench_settings.item_tex_material).display_name, action_bench_item_tex_material, false, res_eval(bench_settings.item_tex_material).block_preview_texture, null, "", null, null, content_capwid)
 		dy += (ui_large_height + 8)
 
 		// Image (Normal map)
@@ -117,7 +117,7 @@ function bench_draw_settings_item()
 		if (tex = null)
 			tex = res.texture
 
-		draw_button_menu("benchitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_normal, res_eval(bench_settings.item_tex_normal).display_name, action_bench_item_tex_normal, false, res_eval(bench_settings.item_tex_normal).block_preview_texture, null, "", null, null, content_capwid)
+		draw_button_menu("bench/item_tex_normal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_normal, res_eval(bench_settings.item_tex_normal).display_name, action_bench_item_tex_normal, false, res_eval(bench_settings.item_tex_normal).block_preview_texture, null, "", null, null, content_capwid)
 		dy += (ui_large_height + 8)
 	}
 	dy += 4

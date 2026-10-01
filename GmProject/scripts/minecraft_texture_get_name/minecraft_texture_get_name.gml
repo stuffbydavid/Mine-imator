@@ -17,8 +17,8 @@ function minecraft_texture_get_name(name)
 		assetname = string_replace(assetname, " noalpha", "")
 	}
 	
-	if (text_exists(type + assetname))
-		return minecraft_asset_get_name(type, assetname)
+	if (text_exists(type + "/" + assetname))
+		return minecraft_asset_get_name(type + "/", assetname)
 
 	formatted = string_format_snakecase(assetname)
 	index = string_length(formatted)

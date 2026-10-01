@@ -2,7 +2,7 @@ function action_toolbar_new()
 {
 	if (project_changed)
 	{
-		var btn = show_message_ext("Mine-imator", text_get("questionconfirmnew", project_name), text_get("questionsave"), text_get("questiondontsave"), text_get("questioncancel"));
+		var btn = show_message_ext("Mine-imator", text_get("question/confirm_new", project_name), text_get("question/save"), text_get("question/dont_save"), text_get("question/cancel"));
 		if (btn = 0)
 			project_save()
 		else if (btn != 1)

@@ -38,7 +38,7 @@ function history_set_res(script, fn, oldres, newres)
 
 	history[0] = hobj
 	
-	if (fn != "" && hobj.type = e_res_type.PACK && !hobj.replaced && question(text_get("questionprojectpack")))
+	if (fn != "" && hobj.type = e_res_type.PACK && !hobj.replaced && question(text_get("question/project_pack")))
 		action_project_pack(res)
 
 	return hobj

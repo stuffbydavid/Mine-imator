@@ -18,7 +18,7 @@ function action_build_first_person(enabled)
 		if (build_first_person_second)
 			view_second.show = false
 
-		place_busy = "firstperson"
+		place_busy = "first_person"
 		window_busy = place_busy
 		window_focus = string(view_main)
 		

@@ -2,9 +2,9 @@
 
 function world_import_dimension_menu_init()
 {
-	menu_add_item("overworld", text_get("worldimportoverworld"))
+	menu_add_item("overworld", text_get("world_import/overworld"))
 	if (world_import_has_dimension("the_nether"))
-		menu_add_item("the_nether", text_get("worldimportthenether"))
+		menu_add_item("the_nether", text_get("world_import/the_nether"))
 	if (world_import_has_dimension("the_end"))
-		menu_add_item("the_end", text_get("worldimporttheend"))
+		menu_add_item("the_end", text_get("world_import/the_end"))
 }

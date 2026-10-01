@@ -9,15 +9,15 @@ function tab_frame_editor_item()
 	res = res_eval(res)
 	
 	tab_control_switch()
-	draw_button_collapse("itemslot", collapse_map[?"itemslot"], action_tl_frame_custom_item_slot, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], "frameeditoritemcustomitemslot")
+	draw_button_collapse("frame_editor/itemslot", collapse_map[?"frame_editor/itemslot"], action_tl_frame_custom_item_slot, tl_edit.value[e_value.CUSTOM_ITEM_SLOT], "frame_editor/item/custom_item_slot")
 	tab_next()
 	
-	if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && collapse_map[?"itemslot"])
+	if (tl_edit.value[e_value.CUSTOM_ITEM_SLOT] && collapse_map[?"frame_editor/itemslot"])
 	{
 		tab_collapse_start()
 		
 		tab_control_dragger()
-		draw_dragger("frameeditoritemitemslot", dx, dy, dragger_width, tl_edit.value[e_value.ITEM_SLOT], .1, 0, no_limit, 0, 1, tab.item.item_slot, action_tl_frame_item_slot)
+		draw_dragger("frame_editor/item/item_slot", dx, dy, dragger_width, tl_edit.value[e_value.ITEM_SLOT], .1, 0, no_limit, 0, 1, tab.item.item_slot, action_tl_frame_item_slot)
 		tab_next()
 		
 		var textures, slots, sheetsizes;

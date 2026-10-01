@@ -6,7 +6,7 @@ function recent_time_string(time)
 	
 	// Never opened
 	if (time < 1)
-		return text_get("recentlastopenednever")
+		return text_get("recent/last_opened/never")
 	
 	var seconds, minutes, hours, days, weeks;
 	seconds = date_second_span(time, currenttime)
@@ -17,32 +17,32 @@ function recent_time_string(time)
 	
 	// The future.. somehow
 	if (currenttime < time)
-		return text_get("recentlastopenedfuture")
+		return text_get("recent/last_opened/future")
 	
 	// Last week
 	if ((date_get_week(currenttime) != date_get_week(time)) && weeks < 2)
-		return text_get("recentlastopenedlastweek")
+		return text_get("recent/last_opened/last_week")
 	
 	// Yesterday
 	if ((date_get_day(currenttime) != date_get_day(time)) && hours < 24)
-		return text_get("recentlastopenedyesterday")
+		return text_get("recent/last_opened/yesterday")
 	
 	// Opened recently
 	if (minutes < 1)
-		return text_get("recentlastopenedrecently")
+		return text_get("recent/last_opened/recently")
 	
 	// Minutes
 	if (minutes < 60)
-		return text_get("recentlastopenedminutes", floor(minutes))
+		return text_get("recent/last_opened/minutes", floor(minutes))
 	
 	// Hours
 	if (hours < 24)
-		return text_get("recentlastopenedhours", floor(hours))
+		return text_get("recent/last_opened/hours", floor(hours))
 	
 	// Days
 	if (days < 7)
-		return text_get("recentlastopeneddays", floor(days))
+		return text_get("recent/last_opened/days", floor(days))
 	
 	// Date
-	return text_get("recentlastopeneddate", date_get_day(time), date_get_month(time), date_get_year(time))
+	return text_get("recent/last_opened/date", date_get_day(time), date_get_month(time), date_get_year(time))
 }

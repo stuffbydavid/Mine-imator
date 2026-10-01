@@ -36,7 +36,7 @@ function view_control_move(view)
 	view_control_move_plane(view, e_view_control.POS_YZ, point3D(0, 1, 1), c_control_red, mat, vec3(1, 0, 0), point3D(0, ps, ps), point3D(0, pe, ps), point3D(0, pe, pe), point3D(0, ps, pe)) // YZ
 	
 	// Dragging plane
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_XY && view_control_edit <= e_view_control.POS_PAN)
+	if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_XY && view_control_edit <= e_view_control.POS_PAN)
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -95,7 +95,7 @@ function view_control_move(view)
 			view_control_plane = false
 		}
 	}
-	else if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_X && view_control_edit <= e_view_control.POS_Z) // Dragging axis arrow
+	else if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_X && view_control_edit <= e_view_control.POS_Z) // Dragging axis arrow
 	{
 		mouse_cursor = cr_handpoint
 		

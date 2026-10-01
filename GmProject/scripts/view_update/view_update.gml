@@ -43,14 +43,14 @@ function view_update(view, cam)
 		
 		if (mouse_left_pressed)
 		{
-			window_busy = "viewclick"
+			window_busy = "view/click"
 			window_focus = string(view)
 			view_click_right = false
 		}
 		
 		if (mouse_right_pressed)
 		{
-			window_busy = "viewclick"
+			window_busy = "view/click"
 			window_focus = string(view)
 			view_click_right = true
 		}
@@ -58,7 +58,7 @@ function view_update(view, cam)
 	
 	// Jump to object or build structure
 	var focustl = place_build ? build_structure : tl_edit;
-	if ((window_busy = "" && content_mouseon) && focustl != null && instance_exists(focustl) && focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
+	if ((window_busy = "" && content_mouseon) && focustl != null && instance_exists(focustl) && focustl.value_type[e_value_type.TRANSFORM_POS] && focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
 	{
 		tl_focus = focustl
 		cam_work_focus = focustl.world_pos
@@ -77,7 +77,7 @@ function view_update(view, cam)
 	if (mouse_wheel <> 0 &&
 		(!keyboard_check(vk_control) || !place_build) &&
 		(((window_busy = "" || window_busy = place_busy) && content_mouseon) ||
-		 (window_busy = "viewrotatecamera" && window_focus = string(view))))
+		 (window_busy = "view/rotate_camera" && window_focus = string(view))))
 	{
 		if (!cam)
 			cam_work_zoom_goal = clamp(cam_work_zoom_goal * (1 + 0.25 * mouse_wheel), cam_near, cam_far)
@@ -93,11 +93,11 @@ function view_update(view, cam)
 	
 	if (window_focus = string(view))
 	{
-		if (!cam && (window_busy = "viewrotatecamera" || window_busy = "viewmovecamera") && keybinds[e_keybind.CAM_RESET].pressed)
+		if (!cam && (window_busy = "view/rotate_camera" || window_busy = "view/move_camera") && keybinds[e_keybind.CAM_RESET].pressed)
 			setting_move_speed_scroll = 1
 
 		// Select or move camera
-		if (window_busy = "viewclick")
+		if (window_busy = "view/click")
 		{
 			mouse_cursor = cr_handpoint
 			
@@ -110,7 +110,7 @@ function view_update(view, cam)
 			{
 				view_click_x = display_mouse_get_x()
 				view_click_y = display_mouse_get_y()
-				window_busy = "viewmovecamera"
+				window_busy = "view/move_camera"
 				
 				if (cam)
 					action_tl_select_single(cam)
@@ -119,7 +119,7 @@ function view_update(view, cam)
 			{
 				if (keyboard_check(vk_shift))
 				{
-					window_busy = "viewpancamera"
+					window_busy = "view/pan_camera"
 					window_focus = string(view)
 					
 					if (cam)
@@ -129,7 +129,7 @@ function view_update(view, cam)
 				{
 					view_click_x = display_mouse_get_x()
 					view_click_y = display_mouse_get_y()
-					window_busy = "viewrotatecamera"
+					window_busy = "view/rotate_camera"
 					
 					if (cam)
 						action_tl_select_single(cam)
@@ -160,7 +160,7 @@ function view_update(view, cam)
 		}
 		
 		// Rotate camera
-		if (window_busy = "viewrotatecamera")
+		if (window_busy = "view/rotate_camera")
 		{
 			if (place_build && cam = null)
 				shortcut_bar_state = "buildviewport"
@@ -190,7 +190,7 @@ function view_update(view, cam)
 		}
 		
 		// Move camera
-		if (window_busy = "viewmovecamera")
+		if (window_busy = "view/move_camera")
 		{
 			if (cam = null)
 				shortcut_bar_state = "cameramove"
@@ -232,7 +232,7 @@ function view_update(view, cam)
 		}
 		
 		// Pan camera
-		if (window_busy = "viewpancamera")
+		if (window_busy = "view/pan_camera")
 		{
 			if (place_build && cam = null)
 				shortcut_bar_state = "buildviewport"
@@ -249,6 +249,6 @@ function view_update(view, cam)
 	}
 	
 	// Clear busy
-	if (window_busy = "viewpathpointclick")
+	if (window_busy = "view/path_point_click")
 		window_busy = ""
 }

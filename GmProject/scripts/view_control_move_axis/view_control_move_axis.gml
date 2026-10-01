@@ -26,7 +26,7 @@ function view_control_move_axis(view, control, vid, color, start3d, end3d, fade 
 	
 	alpha = fade ? percent(abs(vec3_dot(vec3_normalize(vec3_sub(end3d, center3d)), vec3_normalize(vec3_sub(cam_from, center3d)))), .975, .95) : 1
 	
-	if ((window_busy = "rendercontrol" && view_control_edit = control) || view.control_mouseon_last = control || !setting_fade_gizmos)
+	if ((window_busy = "render/control" && view_control_edit = control) || view.control_mouseon_last = control || !setting_fade_gizmos)
 		alpha = 1
 	
 	if (alpha = 0)
@@ -35,7 +35,7 @@ function view_control_move_axis(view, control, vid, color, start3d, end3d, fade 
 	draw_set_alpha(alpha)
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
 		{
@@ -53,7 +53,7 @@ function view_control_move_axis(view, control, vid, color, start3d, end3d, fade 
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_edit = control
 			view_control_edit_view = view
 			

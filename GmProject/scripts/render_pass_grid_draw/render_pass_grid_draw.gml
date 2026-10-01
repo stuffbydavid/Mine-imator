@@ -27,7 +27,7 @@ function render_pass_grid_draw(combinedsurface)
 		draw_rectangle(xx, yy, xx + cellw, yy + 22, false)
 		draw_set_alpha(1)
 		draw_set_color(c_white)
-		draw_text(xx + 4, yy + 3, text_get("viewrendererpass" + render_pass_list[|pass]))
+		draw_text(xx + 4, yy + 3, text_get("view/renderer/pass/" + render_pass_list[|pass]))
 	}
 	
 	draw_set_halign(fa_left)

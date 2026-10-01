@@ -242,7 +242,7 @@ function panel_draw(panel)
 			// Close button
 			if (tab.closeable && (hover || sel))
 			{
-				if (draw_button_icon("tabclose" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL) || (hover && mouse_middle_pressed))
+				if (draw_button_icon("tab/close" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL) || (hover && mouse_middle_pressed))
 				{
 					if (tab = build_tool)
 						app_stop_place()
@@ -275,7 +275,7 @@ function panel_draw(panel)
 			
 			// List glow
 			tab.glow = max(0, tab.glow - 0.05)
-			if (window_busy = "tabmove")
+			if (window_busy = "tab/move")
 			{
 				window_busy = ""
 				if (app_mouse_box(dx, dy, dw, dh))
@@ -285,7 +285,7 @@ function panel_draw(panel)
 					tab_move_mouseon_panel = panel
 					tab_move_mouseon_position = t
 				}
-				window_busy = "tabmove"
+				window_busy = "tab/move"
 			}
 			
 			if (tab.glow > 0)
@@ -304,7 +304,7 @@ function panel_draw(panel)
 		if (tabmaxw > tabsw)
 		{
 			// Moving?
-			if (window_busy = "tabmove")
+			if (window_busy = "tab/move")
 			{
 				window_busy = ""
 				if (app_mouse_box(boxx + tabsw, boxy, tabmaxw - tabsw, tabsh))
@@ -313,7 +313,7 @@ function panel_draw(panel)
 					tab_move_mouseon_panel = panel
 					tab_move_mouseon_position = panel.tab_list_amount
 				}
-				window_busy = "tabmove"
+				window_busy = "tab/move"
 			}
 			
 			// Glow for new tab
@@ -371,7 +371,7 @@ function panel_draw(panel)
 	// Resize
 	if (resizemouseon && mouse_left_pressed)
 	{
-		window_busy = "panelresize"
+		window_busy = "panel/resize"
 		panel_resize = panel
 		panel_resize_size = panel.size_real
 	}
@@ -379,11 +379,11 @@ function panel_draw(panel)
 	// Move
 	if (tabmouseon && mouse_cursor = cr_default && mouse_left_pressed)
 	{
-		window_busy = "tabclick"
+		window_busy = "tab/click"
 		tab_move = content_tab
 	}
 	
-	if (window_busy = "tabclick")
+	if (window_busy = "tab/click")
 	{
 		if (tab_move = null) // Tab was closed
 			window_busy = ""
@@ -392,7 +392,7 @@ function panel_draw(panel)
 		{
 			if (mouse_move > 10)
 			{
-				window_busy = "tabmove"
+				window_busy = "tab/move"
 				
 				tab_move_name = tabtitle[panel.tab_selected]
 				tab_move_x = min(boxw - tabw[panel.tab_selected], tabx[panel.tab_selected] - boxx)
@@ -414,7 +414,7 @@ function panel_draw(panel)
 	if (tablistmouseon != null && mouse_left_pressed)
 	{
 		panel.tab_selected = tablistmouseon
-		window_busy = "tabclick"
+		window_busy = "tab/click"
 		tab_move = panel.tab_list[tablistmouseon]
 	}
 }

@@ -28,7 +28,7 @@ function tab_object_editor_particles_value(name, val, israndom, randommin, rando
 	
 	tab_control_dragger()
 	
-	draw_button_icon("particleeditorrandom" + name, dx + dw - ui_small_height, dy, ui_small_height, ui_small_height, israndom, icons.RANDOMIZE, scripts[1], false, "tooltipparticlesrandom")
+	draw_button_icon("particle_editor/random" + name, dx + dw - ui_small_height, dy, ui_small_height, ui_small_height, israndom, icons.RANDOMIZE, scripts[1], false, "tooltip/particles/random")
 	
 	var suf1, suf2;
 	suf1 = tbx[0].suffix
@@ -47,8 +47,8 @@ function tab_object_editor_particles_value(name, val, israndom, randommin, rando
 			capwid = 0
 		}
 		
-		textfield_group_add(name + "min", randommin, def[1], scripts[2], axis_edit, tbx[0], null, mul, minval, randommax, "particleeditormin")
-		textfield_group_add(name + "max", randommax, def[2], scripts[3], axis_edit, tbx[1], null, mul, randommin, maxval, "particleeditormax")
+		textfield_group_add(name + "min", randommin, def[1], scripts[2], axis_edit, tbx[0], null, mul, minval, randommax, "particle_editor/min")
+		textfield_group_add(name + "max", randommax, def[2], scripts[3], axis_edit, tbx[1], null, mul, randommin, maxval, "particle_editor/max")
 		
 		tab_control_textfield_group()
 		

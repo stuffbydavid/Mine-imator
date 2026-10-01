@@ -44,7 +44,7 @@ function action_bench_model_name(name)
 				{
 					var value = statelist.value_name[j];
 					
-					if (string_contains(string_lower(minecraft_asset_get_name("modelstatevalue", value)), search))
+					if (string_contains(string_lower(minecraft_asset_get_name("model/state/value", value)), search))
 					{
 						state_vars_set_value(model_state, state, value)
 						break

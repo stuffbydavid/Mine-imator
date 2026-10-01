@@ -14,9 +14,9 @@ function view_update_surface(view, cam)
 	render_effects = (view = view_second && view.effects)
 	render_background = !view.transparent_background
 	render_watermark = (
-		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||
-		(popup_current && popup_current.name = "exportmovie" && popup_exportmovie.watermark) ||
-		(popup_current && popup_current.name = "exportimage" && popup_exportimage.watermark)
+		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"settings/watermark"]) ||
+		(popup_current && popup_current.name = "export_movie" && popup_exportmovie.watermark) ||
+		(popup_current && popup_current.name = "export_image" && popup_exportimage.watermark)
 	)
 	
 	render_start(view.surface, cam, view, content_width, content_height)
@@ -111,7 +111,7 @@ function view_update_surface(view, cam)
 						view.control_mouseon_last = view.control_mouseon
 						view.control_mouseon = null
 						
-						if (window_busy = "rendercontrol" && view_control_edit_view = view)
+						if (window_busy = "render/control" && view_control_edit_view = view)
 							app_mouse_wrap(content_x, content_y, content_width, content_height)
 						
 						if (!tl_edit.world_pos_2d_error && tl_edit.value_type[e_value_type.TRANSFORM_POS])

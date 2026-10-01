@@ -1,4 +1,4 @@
-/// @desc Visualize DOF settings of a Camera effects object in the scene.
+/// @desc Visualize DOF settings of a Camera effect object in the scene.
 /// @arg values
 /// @arg matrix
 /// @arg ratio

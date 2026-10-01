@@ -18,9 +18,9 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 	searchx = xx + (filtershow ? 32 : 0)
 	searchw = w - (filtershow ? 32 : 0)
 	
-	if (filtershow && draw_button_icon("soundfilter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
+	if (filtershow && draw_button_icon("sound_filter/" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltip/filter_list"))
 	{
-		menu_settings_set(xx, yy, "soundfilter" + string(slist), 24)
+		menu_settings_set(xx, yy, "sound_filter/" + string(slist), 24)
 		settings_menu_script = soundlist_filters_draw
 		settings_menu_soundlist = slist
 		settings_menu_h_max = 256
@@ -28,7 +28,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		settings_menu_scroll.value_goal = slist.filter_scroll
 	}
 	
-	if (filtershow && settings_menu_name = "soundfilter" + string(slist) && settings_menu_ani_type != "hide")
+	if (filtershow && settings_menu_name = "sound_filter/" + string(slist) && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 
 	if (name != "")
@@ -39,7 +39,7 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 		searchw = 144
 	}
 
-	if (draw_searchbox("soundsearch" + string(slist), searchx, yy, searchw, slist.search_tbx, name = ""))
+	if (draw_searchbox("sound/search" + string(slist), searchx, yy, searchw, slist.search_tbx, name = ""))
 	{
 		var searchactive, scrollvalue;
 		searchactive = slist.search

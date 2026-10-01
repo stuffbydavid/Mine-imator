@@ -21,14 +21,14 @@ function draw_searchbox(name, xx, yy, wid, textbox, stretch = false)
 			searchwid -= 28
 		}
 
-		if (draw_button_icon(name + "clear", clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltipclearsearch"))
+		if (draw_button_icon(name + "clear", clearx, yy, 24, 24, false, icons.CLOSE_SMALL, null, false, "tooltip/clear_search"))
 		{
 			textbox.text = ""
 			changed = true
 		}
 	}
 
-	if (draw_textfield(name, xx, yy, searchwid, 24, textbox, null, text_get("listsearch"), "none"))
+	if (draw_textfield(name, xx, yy, searchwid, 24, textbox, null, text_get("list/search"), "none"))
 		changed = true
 
 	return changed

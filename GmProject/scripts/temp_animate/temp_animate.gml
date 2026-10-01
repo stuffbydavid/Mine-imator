@@ -11,7 +11,7 @@ function temp_animate()
 		
 		if (type = e_tl_type.TEXT)
 		{
-			value[e_value.TEXT] = text_get("frameeditortextsample")
+			value[e_value.TEXT] = text_get("frame_editor/text/sample")
 			value[e_value.TEXT_OUTLINE] = temp.text_outline
 			value[e_value.TEXT_OUTLINE_COLOR] = temp.text_outline_color
 			value[e_value.TEXT_OUTLINE_SIZE] = temp.text_outline_size

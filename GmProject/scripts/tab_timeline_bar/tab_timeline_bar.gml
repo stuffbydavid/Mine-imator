@@ -155,7 +155,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 				if (mouse_left_pressed)
 				{
 					window_focus = "timeline"
-					window_busy = "timelinesetregionstart"
+					window_busy = "timeline/set_region_start"
 					timeline_region_pos = timeline_region_end
 				}
 			}
@@ -165,7 +165,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 				if (mouse_left_pressed)
 				{
 					window_focus = "timeline"
-					window_busy = "timelinesetregionend"
+					window_busy = "timeline/set_region_end"
 					timeline_region_pos = timeline_region_start
 				}
 			}
@@ -175,25 +175,25 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 		if (mouse_left_pressed && window_busy = "")
 		{
 			window_focus = "timeline"
-			window_busy = "timelinemarker"
+			window_busy = "timeline/marker"
 		}
 		
 		// Create region
 		if (mouse_right_pressed)
 		{
 			window_focus = "timeline"
-			window_busy = "timelinecreateregion"
+			window_busy = "timeline/create_region"
 			timeline_region_pos = timeline_mouse_pos
 			action_tl_play_break()
 		}
 	}
 	
 	// Set region
-	if (window_busy = "timelinecreateregion" || window_busy = "timelinesetregionstart" || window_busy = "timelinesetregionend")
+	if (window_busy = "timeline/create_region" || window_busy = "timeline/set_region_start" || window_busy = "timeline/set_region_end")
 	{
 		var release;
 		
-		if (window_busy = "timelinecreateregion")
+		if (window_busy = "timeline/create_region")
 		{
 			mouse_cursor = cr_handpoint
 			release = !mouse_right
@@ -206,7 +206,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 		
 		project_changed = true
 		
-		if (window_busy = "timelinesetregionend")
+		if (window_busy = "timeline/set_region_end")
 		{
 			if (timeline_mouse_pos >= timeline_region_pos)
 			{
@@ -245,7 +245,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 	}
 	
 	// Move marker
-	if (window_busy = "timelinemarker")
+	if (window_busy = "timeline/marker")
 	{
 		mouse_cursor = cr_handpoint
 		timeline_marker = max((timeline.hor_scroll.value + mouse_x - barx) / timeline_zoom, 0)
@@ -271,7 +271,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 	horscrollspeed = 15
 	
 	// Move view when selecting
-	if (window_busy = "timelinemove" || window_busy = "timelineselect" || (window_busy = "place" && mouseinnames))
+	if (window_busy = "timeline/move" || window_busy = "timeline/select" || (window_busy = "place" && mouseinnames))
 	{
 		if (mouse_y < tly + 6)
 			timeline.ver_scroll.value -= verscrollspeed
@@ -284,14 +284,14 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 	
 	
 	// Move view when selecting/moving keyframes
-	if (window_busy = "timelineselectkeyframes" || 
-		window_busy = "timelinemovekeyframes" || 
-		window_busy = "timelinecreateregion" || 
-		window_busy = "timelinesetregionstart" || 
-		window_busy = "timelinesetregionend" || 
-		window_busy = "timelineresizesounds" || 
-		window_busy = "timelinesetsoundend" ||
-		window_busy = "timelinemovemarker"
+	if (window_busy = "timeline/select_keyframes" ||
+		window_busy = "timeline/move_keyframes" ||
+		window_busy = "timeline/create_region" ||
+		window_busy = "timeline/set_region_start" ||
+		window_busy = "timeline/set_region_end" ||
+		window_busy = "timeline/resize_sounds" ||
+		window_busy = "timeline/set_sound_end" ||
+		window_busy = "timeline/move_marker"
 	)
 	{
 		if (mouse_x < tlx) // no padding needed here
@@ -299,10 +299,10 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 		if (mouse_x > tlx + tlw - 6)
 			timeline.hor_scroll.value += horscrollspeed
 		
-		if (window_busy != "timelinemovemarker" &&
-			window_busy != "timelinecreateregion" && 
-			window_busy != "timelinesetregionstart" &&
-			window_busy != "timelinesetregionend"
+		if (window_busy != "timeline/move_marker" &&
+			window_busy != "timeline/create_region" &&
+			window_busy != "timeline/set_region_start" &&
+			window_busy != "timeline/set_region_end"
 		)
 		{
 			if (mouse_y < tly + 6)
@@ -319,7 +319,7 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 	}
 
 	// Zoom
-	if (timeline_zoom_button <> 0 || (window_scroll_focus_prev = "timelinezoom" && window_busy = "" && mouse_wheel <> 0))
+	if (timeline_zoom_button <> 0 || (window_scroll_focus_prev = "timeline/zoom" && window_busy = "" && mouse_wheel <> 0))
 	{
 		var m;
 		if (timeline_zoom_button <> 0)

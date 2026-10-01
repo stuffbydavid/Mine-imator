@@ -13,9 +13,9 @@ function tab_timeline_background(tlx, tly, tlw, tlh, itemh, mouseinnames, mouset
 	{
 		draw_set_font(font_body_big)
 		
-		var textwid = string_width(text_get("timelineempty"));
+		var textwid = string_width(text_get("timeline/empty"));
 		if (tlw > (textwid + 32))
-			draw_label(text_get("timelineempty"), floor(tlx + tlw/2 - textwid/2), floor(tly + tlh/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
+			draw_label(text_get("timeline/empty"), floor(tlx + tlw/2 - textwid/2), floor(tly + tlh/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	}
 	
 	// Keyframe backgrounds

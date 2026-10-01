@@ -7,7 +7,7 @@ function menu_settings_set(xx, yy, name, buttonheight)
 {
 	settings_menu_busy_prev = window_busy
 	
-	window_busy = "settingsmenu"
+	window_busy = "settings/menu"
 	window_focus = ""
 	
 	app_mouse_clear()

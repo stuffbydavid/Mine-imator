@@ -99,7 +99,7 @@ function view_shape_path(view, tl)
 						if (setting_timeline_select_jump)
 							tl_jump(pointtl)
 						
-						window_busy = "viewpathpointclick"
+						window_busy = "view/path_point_click"
 					}
 				}
 			}

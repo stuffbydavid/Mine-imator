@@ -16,7 +16,7 @@ function colorpicker_show(name, color, def, script, xx, yy, wid, hei)
 	}
 	
 	settings_menu_busy_prev = window_busy
-	window_busy = "settingsmenu"
+	window_busy = "settings/menu"
 	window_focus = ""
 	app_mouse_clear()
 		

@@ -24,7 +24,7 @@ function bench_draw()
 	
 	if (bench_show_ani = 0)
 	{
-		if (window_busy = "bench" || window_busy = "benchresizewidth" || window_busy = "benchresizeheight" || window_busy = "benchresizecorner")
+		if (window_busy = "bench" || window_busy = "bench/resize_width" || window_busy = "bench/resize_height" || window_busy = "bench/resize_corner")
 			window_busy = ""
 		
 		bench_settings.height = 0
@@ -53,7 +53,7 @@ function bench_draw()
 
 	// Resize bench corner
 	var mousecorner = content_mouseon && app_mouse_box(content_x + content_width - 8, content_y + content_height - 8, 8, 8);
-	if (window_busy = "benchresizecorner")
+	if (window_busy = "bench/resize_corner")
 	{
 		mouse_cursor = cr_size_nwse
 		bench_width = clamp(bench_resize_width + mouse_x - mouse_click_x, bench_min_width, bench_max_width)
@@ -69,14 +69,14 @@ function bench_draw()
 		mouse_cursor = cr_size_nwse
 		if (mouse_left_pressed)
 		{
-			window_busy = "benchresizecorner"
+			window_busy = "bench/resize_corner"
 			bench_resize_width = bench_width
 			bench_resize_height = bench_settings.height
 		}
 	}
 
 	// Resize bench width
-	if (window_busy = "benchresizewidth")
+	if (window_busy = "bench/resize_width")
 	{
 		mouse_cursor = cr_size_we
 		bench_width = clamp(bench_resize_width + mouse_x - mouse_click_x, bench_min_width, bench_max_width)
@@ -91,13 +91,13 @@ function bench_draw()
 		mouse_cursor = cr_size_we
 		if (mouse_left_pressed)
 		{
-			window_busy = "benchresizewidth"
+			window_busy = "bench/resize_width"
 			bench_resize_width = bench_width
 		}
 	}
 
 	// Resize bench height
-	if (window_busy = "benchresizeheight")
+	if (window_busy = "bench/resize_height")
 	{
 		mouse_cursor = cr_size_ns
 		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_settings.height_min, max(bench_settings.height_min, window_height - content_y - 40)) - bench_settings.height_min
@@ -112,7 +112,7 @@ function bench_draw()
 		mouse_cursor = cr_size_ns
 		if (mouse_left_pressed)
 		{
-			window_busy = "benchresizeheight"
+			window_busy = "bench/resize_height"
 			bench_resize_height = bench_settings.height
 		}
 	}

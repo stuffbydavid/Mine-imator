@@ -55,13 +55,13 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 	lineheight = string_height(" ")
 	mouseover = (content_mouseon && app_mouse_box(xx, yy, w, h))
 	
-	if (!mouse_left && ((window_busy = string(tbx) + "tbxrelease") || (window_busy = string(tbx) + "click")))
+	if (!mouse_left && ((window_busy = "textbox/" + string(tbx) + "/release") || (window_busy = "textbox/" + string(tbx) + "/click")))
 		window_busy = ""
 	
 	if (window_focus = string(tbx))
 	{
 		if (contextmenu)
-			context_menu_area(xx, yy, w, h, "contextmenutextbox", tbx, e_context_type.NONE, null, null)
+			context_menu_area(xx, yy, w, h, "context_menu/textbox", tbx, e_context_type.NONE, null, null)
 		
 		var keys, keypress, action;
 		textbox_isediting = true
@@ -589,13 +589,13 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		}
 		
 		// Handle selecting
-		if (!mouse_left && (window_busy = string(tbx) + "click"))
+		if (!mouse_left && (window_busy = "textbox/" + string(tbx) + "/click"))
 			window_busy = ""
 		
-		if (!mouse_left && (window_busy = string(tbx)))
-			window_busy = string(tbx) + "tbxrelease"
+		if (!mouse_left && (window_busy = "textbox/" + string(tbx)))
+			window_busy = "textbox/" + string(tbx) + "/release"
 		
-		if (window_busy = string(tbx)) // Move up/down if dragging outside of box
+		if (window_busy = "textbox/" + string(tbx)) // Move up/down if dragging outside of box
 		{
 			textbox_marker = current_time
 			if (tbx.single_line)
@@ -962,17 +962,17 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 		if (ly + lineheight > h) // Exit if beyond box
 			break
 		
-		if ((window_busy = "" && window_focus = string(tbx)) || window_busy = string(tbx))
+		if ((window_busy = "" && window_focus = string(tbx)) || window_busy = "textbox/" + string(tbx))
 		{
 			if (l = tbx.lines - 1) 
 				hh = h-ly
 			else
 				hh = lineheight
 			
-			if ((mouse_x >= xx || window_busy = string(tbx)) &&
-				(mouse_x < xx + w || window_busy = string(tbx)) &&
-				(mouse_y >= yy + ly || (window_busy = string(tbx) && ly = 0)) &&
-				(mouse_y < yy + ly + hh || (window_busy = string(tbx) && (ly + lineheight > h || l = tbx.lines - 1)))) // Cursor is inside line
+			if ((mouse_x >= xx || window_busy = "textbox/" + string(tbx)) &&
+				(mouse_x < xx + w || window_busy = "textbox/" + string(tbx)) &&
+				(mouse_y >= yy + ly || (window_busy = "textbox/" + string(tbx) && ly = 0)) &&
+				(mouse_y < yy + ly + hh || (window_busy = "textbox/" + string(tbx) && (ly + lineheight > h || l = tbx.lines - 1)))) // Cursor is inside line
 			{
 				if (mouse_left)
 				{
@@ -988,11 +988,11 @@ function textbox_draw(tbx, xx, yy, w, h, contextmenu = true, right = false)
 						textbox_select_clickpos = 0
 						textbox_marker = current_time
 						window_focus = string(tbx)
-						window_busy = string(tbx) + "click"
+						window_busy = "textbox/" + string(tbx) + "/click"
 					}
 					else
 					{
-						window_busy = string(tbx)
+						window_busy = "textbox/" + string(tbx)
 						ww = 0
 						for (a = tbx.start * tbx.single_line; a < string_length(tbx.line[l]); a++) // Find character over mouse
 						{

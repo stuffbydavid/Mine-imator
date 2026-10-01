@@ -11,7 +11,7 @@ function popup_show(popup)
 	log("Show popup", popup_current.name)
 	
 	if (popup_current.block)
-		window_busy = "popup" + popup_current.name
+		window_busy = "popup/" + popup_current.name
 	
 	action_tl_play_break()
 	context_menu_close()

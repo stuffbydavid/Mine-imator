@@ -16,7 +16,7 @@ function tab_frame_editor_texture_material()
 			case e_tl_type.MODEL:
 			case e_tl_type.MODEL_PART:
 			{
-				content_name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texmaterial"
+				content_name = "frame_editor/" + tl_type_name_list[|tl_edit.type] + "_tex_material"
 				
 				var modelfile = tl_edit.temp.model_file;
 				if (tl_edit.type = e_temp_type.MODEL_PART)
@@ -37,7 +37,7 @@ function tab_frame_editor_texture_material()
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
 			{
-				content_name = "frameeditorblocktexmaterial"
+				content_name = "frame_editor/block_tex_material"
 				with (tl_edit.temp)
 					texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				
@@ -51,7 +51,7 @@ function tab_frame_editor_texture_material()
 			
 			case e_tl_type.ITEM:
 			{
-				content_name = "frameeditoritemtexmaterial"
+				content_name = "frame_editor/item_tex_material"
 				
 				texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
 				
@@ -78,7 +78,7 @@ function tab_frame_editor_texture_material()
 			
 			default: // Shapes
 			{
-				content_name = "frameeditorshapetexmaterial"
+				content_name = "frame_editor/shape_tex_material"
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				
@@ -95,7 +95,7 @@ function tab_frame_editor_texture_material()
 	else if (tl_edit.type = e_tl_type.PATH)
 	{
 		// Paths don't use templates
-		content_name = "frameeditorshapetexmaterial"
+		content_name = "frame_editor/shape_tex_material"
 		texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
 			
 		if (texobj = null)
@@ -115,10 +115,10 @@ function tab_frame_editor_texture_material()
 		if (texobj != null)
 			content_text = texobj.display_name
 		else
-			content_text = text_get("listnone")
+			content_text = text_get("list/none")
 			
 		if (tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ] = project_pack_res)
-			content_text = text_get("listdefault", content_text)
+			content_text = text_get("list/default", content_text)
 			
 		if (project_render_material_maps)
 		{
@@ -133,17 +133,17 @@ function tab_frame_editor_texture_material()
 	{
 		// Roughness
 		tab_control_meter()
-		draw_meter("frameeditorroughness", dx, dy, dw, round(tl_edit.value[e_value.ROUGHNESS] * 100), 0, 100, 100, 1, tab.material.tbx_roughness, action_tl_frame_roughness)
+		draw_meter("frame_editor/roughness", dx, dy, dw, round(tl_edit.value[e_value.ROUGHNESS] * 100), 0, 100, 100, 1, tab.material.tbx_roughness, action_tl_frame_roughness)
 		tab_next()
 		
 		// Metallic
 		tab_control_meter()
-		draw_meter("frameeditormetallic", dx, dy, dw, round(tl_edit.value[e_value.METALLIC] * 100), 0, 100, 0, 1, tab.material.tbx_metallic, action_tl_frame_metallic)
+		draw_meter("frame_editor/metallic", dx, dy, dw, round(tl_edit.value[e_value.METALLIC] * 100), 0, 100, 0, 1, tab.material.tbx_metallic, action_tl_frame_metallic)
 		tab_next()
 		
 		// Emissive
 		tab_control_dragger()
-		draw_dragger("frameeditoremissive", dx, dy, dragger_width, round(tl_edit.value[e_value.EMISSIVE] * 100), .1, 0, no_limit, 0, 1, tab.material.tbx_emissive, action_tl_frame_emissive)
+		draw_dragger("frame_editor/emissive", dx, dy, dragger_width, round(tl_edit.value[e_value.EMISSIVE] * 100), .1, 0, no_limit, 0, 1, tab.material.tbx_emissive, action_tl_frame_emissive)
 		tab_next()
 	}
 }

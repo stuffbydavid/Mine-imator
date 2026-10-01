@@ -65,7 +65,7 @@ function tab_object_editor_particles_preview()
 	
 	if (ptype_edit.temp = particle_sheet || (ptype_edit.temp = particle_template && !ptype_edit.sprite_template_still_frame))
 	{
-		if (draw_button_icon("particlesresetpreview", xx + size + 4, yy + size - 24, 24, 24, false, icons.RESET, null, false, "tooltipparticlesresetpreview"))
+		if (draw_button_icon("particles/reset_preview", xx + size + 4, yy + size - 24, 24, 24, false, icons.RESET, null, false, "tooltip/particles/reset_preview"))
 			tab_object_editor_particles_preview_restart()
 	}
 	

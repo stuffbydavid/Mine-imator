@@ -40,7 +40,7 @@ function action_bench_block_name(name)
 				{
 					var value = statelist.value_name[j];
 					
-					if (string_contains(string_lower(minecraft_asset_get_name("blockstatevalue", value)), search))
+					if (string_contains(string_lower(minecraft_asset_get_name("block/state/value", value)), search))
 					{
 						state_vars_set_value(block_state, state, value)
 						break

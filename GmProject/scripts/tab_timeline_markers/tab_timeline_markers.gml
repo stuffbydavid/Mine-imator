@@ -111,19 +111,19 @@ function tab_timeline_markers(tlx, tly, tlw, bary, barw, barh, markerh, markerba
 	if (markermouseon != null)
 	{
 		// Right click
-		context_menu_area(markerbarx, markerbary, markerbarw, markerbarh, "timelinemarker", markermouseon, null, null, null)
+		context_menu_area(markerbarx, markerbary, markerbarw, markerbarh, "timeline/marker", markermouseon, null, null, null)
 			
 		// Start moving
 		if (mouse_left_pressed)
 		{
-			window_busy = "timelinemovemarker"
+			window_busy = "timeline/move_marker"
 			markermouseon.edit_pos = markermouseon.pos
 			timeline_marker_edit = markermouseon
 			timeline_marker_edit_offset = mouse_x - markermouseonx
 		}
 	}
 		
-	if (window_busy = "timelinemovemarker")
+	if (window_busy = "timeline/move_marker")
 	{
 		var fail, mousepos;
 		fail = false

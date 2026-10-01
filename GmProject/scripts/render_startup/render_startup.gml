@@ -107,10 +107,10 @@ function render_startup()
 		"uchimura",
 		"lottes",
 		"hable",
-		"gt7curve",
-		"pbrneutral",
+		"gt7_curve",
+		"pbr_neutral",
 		"agx",
-		"agxpunchy"
+		"agx_punchy"
 	]
 	
 	// Surfaces for rendering

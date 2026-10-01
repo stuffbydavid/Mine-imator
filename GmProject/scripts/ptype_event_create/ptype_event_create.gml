@@ -8,7 +8,7 @@ function ptype_event_create()
 	
 	name = ""
 	temp = particle_template
-	text = text_get("particleeditortypetextsample")
+	text = text_get("particle_editor/type/text_sample")
 	spawn_rate = 0
 	sprite_vbuffer_amount = 0
 	sprite_vbuffer[0] = null

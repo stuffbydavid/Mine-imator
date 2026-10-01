@@ -10,7 +10,7 @@ function menu_add_timeline(tl, root, level, menu)
 		return 0
 	
 	if (tl = null)
-		list_item_add(text_get("timelinenone"), tl)
+		list_item_add(text_get("timeline/none"), tl)
 	else
 	{
 		var caption = "";
@@ -38,7 +38,7 @@ function menu_add_timeline(tl, root, level, menu)
 		list_item_add(string_remove_newline(tl.display_name), tl, caption)
 		
 		if (ds_list_size(tl.tree_list) && !menu_expose)
-			list_item_add_action(list_item_last, string(tl) + "extend", menu_item_set_extend, tl.tree_extend, tl, null, "left", tl.tree_extend ? "tooltiptlcollapse" : "tooltiptlexpand", spr_chevron_ani)
+			list_item_add_action(list_item_last, string(tl) + "extend", menu_item_set_extend, tl.tree_extend, tl, null, "left", tl.tree_extend ? "tooltip/tl/collapse" : "tooltip/tl/expand", spr_chevron_ani)
 	}
 	
 	if (!menu_expose)

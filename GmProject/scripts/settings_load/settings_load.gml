@@ -229,13 +229,36 @@ function settings_load()
 		var controlsmap = map[?"controls"];
 		if (ds_map_valid(controlsmap))
 		{
+			var legacymap = ds_map_create();
 			for (var i = 0; i < e_keybind.amount; i++)
 			{
-				var obj = keybinds[i];
-				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
+				var keyname, legacyname;
+				keyname = keybinds[i].name
+				legacyname = string_replace_all(keyname, "camera/", "cam")
+				legacyname = string_replace_all(legacyname, "/", "")
+				legacyname = string_replace_all(legacyname, "_", "")
+				
+				if (legacyname != keyname)
+					legacymap[?keyname] = legacyname
 			}
+			
+			for (var i = 0; i < e_keybind.amount; i++)
+			{
+				var obj, saved;
+				obj = keybinds[i]
+				saved = controlsmap[?obj.name]
+				if (is_undefined(saved) && ds_map_exists(legacymap, obj.name))
+				{
+					var legacyname = legacymap[?obj.name];
+					saved = controlsmap[?legacyname]
+				}
+				
+				obj.keybind = value_get_array(saved, obj.keybind)
+			}
+			
+			ds_map_destroy(legacymap)
 
-			if (is_undefined(controlsmap[?"toolbuild"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
+			if (is_undefined(controlsmap[?"tool/build"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
 				keybinds[e_keybind.TOOL_BEND].keybind = keybind_new("B", false, true)
 			
 			setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
@@ -250,19 +273,18 @@ function settings_load()
 		var exportmap = map[?"export"];
 		if (ds_map_valid(exportmap))
 		{
-			setting_export_movie_format = value_get_string(map[?"exportmovie_format"], setting_export_movie_format)
-			setting_export_movie_frame_rate = value_get_real(map[?"exportmovie_frame_rate"], setting_export_movie_frame_rate)
-			setting_export_movie_framespersecond = value_get_real(map[?"exportmovie_framespersecond"], setting_export_movie_framespersecond)
-			setting_export_movie_bit_rate = value_get_real(map[?"exportmovie_bit_rate"], setting_export_movie_bit_rate)
-			setting_export_movie_include_audio = value_get_real(map[?"exportmovie_include_audio"], setting_export_movie_include_audio)
-			setting_export_movie_remove_background = value_get_real(map[?"exportmovie_remove_background"], setting_export_movie_remove_background)
-			setting_export_movie_include_hidden = value_get_real(map[?"exportmovie_remove_background"], setting_export_movie_include_hidden)
-			setting_export_movie_high_quality = value_get_real(map[?"exportmovie_high_quality"], setting_export_movie_high_quality)
-			setting_export_movie_watermark = value_get_real(map[?"exportmovie_watermark"], setting_export_movie_watermark)
-			setting_export_image_remove_background = value_get_real(map[?"exportimage_remove_background"], setting_export_image_remove_background)
-			setting_export_image_include_hidden = value_get_real(map[?"exportimage_include_hidden"], setting_export_image_include_hidden)
-			setting_export_image_high_quality = value_get_real(map[?"exportimage_high_quality"], setting_export_image_high_quality)
-			setting_export_image_watermark = value_get_real(map[?"exportimage_watermark"], setting_export_image_watermark)
+			setting_export_movie_format = value_get_string(exportmap[?"export_movie_format"], setting_export_movie_format)
+			setting_export_movie_frame_rate = value_get_real(exportmap[?"export_movie_frame_rate"], setting_export_movie_frame_rate)
+			setting_export_movie_framespersecond = value_get_real(exportmap[?"export_movie_framespersecond"], setting_export_movie_framespersecond)
+			setting_export_movie_renderer = value_get_real(exportmap[?"export_movie_renderer"], setting_export_movie_renderer)
+			setting_export_movie_include_audio = value_get_real(exportmap[?"export_movie_include_audio"], setting_export_movie_include_audio)
+			setting_export_movie_remove_background = value_get_real(exportmap[?"export_movie_remove_background"], setting_export_movie_remove_background)
+			setting_export_movie_include_hidden = value_get_real(exportmap[?"export_movie_include_hidden"], setting_export_movie_include_hidden)
+			setting_export_movie_watermark = value_get_real(exportmap[?"export_movie_watermark"], setting_export_movie_watermark)
+			setting_export_image_remove_background = value_get_real(exportmap[?"export_image_remove_background"], setting_export_image_remove_background)
+			setting_export_image_include_hidden = value_get_real(exportmap[?"export_image_include_hidden"], setting_export_image_include_hidden)
+			setting_export_image_renderer = value_get_real(exportmap[?"export_image_renderer"], setting_export_image_renderer)
+			setting_export_image_watermark = value_get_real(exportmap[?"export_image_watermark"], setting_export_image_watermark)
 		}
 		
 		// Collapsible content

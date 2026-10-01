@@ -9,10 +9,8 @@ function project_load_legacy_template()
 		save_id_map[?load_id] = load_id
 		
 		var typename = buffer_read_string_int();
-		
-		// Pre-2.1 model parts
-		if (typename = "bodypart")
-			typename = "modelpart"
+		if (ds_map_exists(legacy_type_name_map, typename))
+			typename = legacy_type_name_map[?typename]
 		
 		type = ds_list_find_index(temp_type_name_list, typename)
 		

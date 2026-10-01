@@ -31,7 +31,7 @@ function window_draw_world_import()
 	if (hasselection)
 	{
 		draw_set_font(font_heading_big)
-		confirmw = string_width(text_get("worldimportconfirm")) + 70
+		confirmw = string_width(text_get("world_import/confirm")) + 70
 	}
 	else
 		confirmw = 0
@@ -62,8 +62,8 @@ function window_draw_world_import()
 	
 	// Cancel
 	draw_set_font(font_button)
-	dw = string_width(text_get("worldimportcancel")) + 24
-	if (draw_button_label("worldimportcancel", dx, content_y + 4, null, null, e_button.SECONDARY, null, e_anchor.LEFT))
+	dw = string_width(text_get("world_import/cancel")) + 24
+	if (draw_button_label("world_import/cancel", dx, content_y + 4, null, null, e_button.SECONDARY, null, e_anchor.LEFT))
 	{
 		window_state = ""
 		world_import_cancel()
@@ -78,13 +78,13 @@ function window_draw_world_import()
 	// World
 	dw = 256
 	content_capwid = 50
-	draw_button_menu("worldimportworld", e_menu.LIST, dx, dy, dw, 24, world_import_world_root, world_import_world_name, world_import_select_world, false, null, null, "", null, null, content_capwid)
+	draw_button_menu("world_import/world", e_menu.LIST, dx, dy, dw, 24, world_import_world_root, world_import_world_name, world_import_select_world, false, null, null, "", null, null, content_capwid)
 	
 	// Dimension
 	dx += dw + spacing
 	dw = 208
 	content_capwid = 80
-	draw_button_menu("worldimportdimension", e_menu.LIST, dx, dy, dw, 24, world_import_dimension, text_get("worldimport" + string_replace_all(world_import_dimension, "_", "")), world_import_select_dimension, false, null, null, "", null, null, content_capwid)
+	draw_button_menu("world_import/dimension", e_menu.LIST, dx, dy, dw, 24, world_import_dimension, text_get("world_import/" + world_import_dimension), world_import_select_dimension, false, null, null, "", null, null, content_capwid)
 	
 	dx += dw + 12
 	
@@ -92,36 +92,36 @@ function window_draw_world_import()
 	dw = 24
 	spacing = 4
 	
-	if (draw_button_icon("worldimportbrowse", dx, dy, dw, dw, false, icons.FOLDER, null, false, "worldimportbrowsetip"))
+	if (draw_button_icon("world_import/browse", dx, dy, dw, dw, false, icons.FOLDER, null, false, "world_import/browse_tip"))
 	{
-		var leveldat = file_dialog_open(text_get("worldimportbrowseworlds") + " (level.dat)|level.dat;", "", minecraft_java_directory_get() + "/saves", text_get("worldimportbrowsecaption"));
+		var leveldat = file_dialog_open(text_get("world_import/browse_worlds") + " (level.dat)|level.dat;", "", minecraft_java_directory_get() + "/saves", text_get("world_import/browse_caption"));
 		if (file_exists_lib(leveldat))
 			world_import_select_world(filename_dir(leveldat))
 	}
 	
 	dx += dw + spacing
 	var worldpicked = world_import_world_root != "";
-	if (draw_button_icon("worldimportreload", dx, dy, dw, dw, false, icons.REFRESH, null, !worldpicked, "worldimportreloadtip"))
+	if (draw_button_icon("world_import/reload", dx, dy, dw, dw, false, icons.REFRESH, null, !worldpicked, "world_import/reload_tip"))
 		world_import_select_world(world_import_world_root, world_import_dimension)
 	
 	dx += dw + 12
 	draw_divide_vertical(dx, content_y + 6, content_height - 12)
 	
 	dx += 12
-	if (draw_button_icon("worldimportgotoplayer", dx, dy, dw, dw, false, icons.PATH_POINT, null, !worldpicked, "worldimportgotoplayertip"))
+	if (draw_button_icon("world_import/gotoplayer", dx, dy, dw, dw, false, icons.PATH_POINT, null, !worldpicked, "world_import/go_to_player_tip"))
 		world_import_go_to_player()
 	dx += 24
 	
-	if (draw_button_icon("worldimportposition", dx, dy, 16, 24, settings_menu_name = "worldimportposition", icons.CHEVRON_DOWN_TINY, null, !worldpicked))
+	if (draw_button_icon("world_import/position", dx, dy, 16, 24, settings_menu_name = "world_import/position", icons.CHEVRON_DOWN_TINY, null, !worldpicked))
 	{
-		menu_settings_set(dx, dy, "worldimportposition", 24)
+		menu_settings_set(dx, dy, "world_import/position", 24)
 		settings_menu_script = world_import_go_to_position_draw
 	}
-	if (settings_menu_name = "worldimportposition" && settings_menu_ani_type != "hide")
+	if (settings_menu_name = "world_import/position" && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	
 	dx += 16 + spacing
-	if (draw_button_icon("worldimportsettings", dx, dy, dw, dw, false, icons.SETTINGS, null, false, "worldimportsettingstip"))
+	if (draw_button_icon("world_import/settings", dx, dy, dw, dw, false, icons.SETTINGS, null, false, "world_import/settings_tip"))
 		popup_show(world_import_settings_popup)
 	
 	dx += dw
@@ -134,30 +134,30 @@ function window_draw_world_import()
 	dy = content_y + 4
 	draw_set_font(font_label)
 	spacing = 12
-	dw = string_width(text_get("worldimportselection") + ":")
-	draw_label(text_get("worldimportselection") + ":", dx, content_y + content_height / 2, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	dw = string_width(text_get("world_import/selection") + ":")
+	draw_label(text_get("world_import/selection") + ":", dx, content_y + content_height / 2, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	
 	dx += dw + spacing
 	draw_set_font(font_button)
-	dw = string_width(text_get("worldimportselectionsmall")) + 24
-	if (draw_button_label("worldimportselectionsmall", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
+	dw = string_width(text_get("world_import/selection_small")) + 24
+	if (draw_button_label("world_import/selection_small", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
 		world_import_set_selection("small")
 	
 	dx += dw + spacing
-	dw = string_width(text_get("worldimportselectionmedium")) + 24
-	if (draw_button_label("worldimportselectionmedium", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
+	dw = string_width(text_get("world_import/selection_medium")) + 24
+	if (draw_button_label("world_import/selection_medium", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
 		world_import_set_selection("medium")
 	
 	dx += dw + spacing
-	dw = string_width(text_get("worldimportselectionlarge")) + 24
-	if (draw_button_label("worldimportselectionlarge", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
+	dw = string_width(text_get("world_import/selection_large")) + 24
+	if (draw_button_label("world_import/selection_large", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
 		world_import_set_selection("large")
 	
 	if (world_import_has_selection())
 	{
 		dx += dw + 20
 		var size = world_import_get_selection_size();
-		draw_label(text_get("worldimportselectionsize", size[X], size[Y], size[Z]), dx, content_y + content_height / 2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		draw_label(text_get("world_import/selection_size", size[X], size[Y], size[Z]), dx, content_y + content_height / 2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	}
 	
 	// Draw confirm button
@@ -167,13 +167,13 @@ function window_draw_world_import()
 	content_height = window_height
 	
 	if (hasselection)
-		if (draw_button_label("worldimportconfirm", confirmx, confirmy, confirmw, null, e_button.BIG, null, e_anchor.LEFT))
+		if (draw_button_label("world_import/confirm", confirmx, confirmy, confirmw, null, e_button.BIG, null, e_anchor.LEFT))
 			world_import_confirm()
 	
 	// Filter enabled
 	if (worldpicked && setting_world_import_filter_enabled && ds_list_size(setting_world_import_filter_list) > 0)
 	{
-		var filtertext = text_get("worldimportfilteractive");
+		var filtertext = text_get("world_import/filter_active");
 		draw_label(filtertext, confirmx + confirmw / 2 + 1, confirmy + 80 + 1, fa_center, fa_top, c_black, 1, font_heading_big)
 		draw_label(filtertext, confirmx + confirmw / 2, confirmy + 80, fa_center, fa_top, c_warning, 1, font_heading_big)
 	}

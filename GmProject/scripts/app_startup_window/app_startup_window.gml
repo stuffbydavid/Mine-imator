@@ -69,6 +69,7 @@ function app_startup_window()
 	content_height = 0
 	content_mouseon = false
 	content_tab = null
+	content_tab_name = ""
 	content_direction = null
 	
 	dx = 0
@@ -79,6 +80,7 @@ function app_startup_window()
 	dy_start = 0
 	dw_start = 0
 	dh_start = 0
+	
 	tab = null
 	tab_control_h = 0
 	tab_collapse = false

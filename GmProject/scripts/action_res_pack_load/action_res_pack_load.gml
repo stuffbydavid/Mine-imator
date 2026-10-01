@@ -36,7 +36,7 @@ function action_res_pack_load(fn, unpacked = true, projectpack = false)
 				history_save_loaded()
 			}
 
-			if (projectpack || question(text_get("questionprojectpack")))
+			if (projectpack || question(text_get("question/project_pack")))
 				action_project_pack(res)
 		}
 	}

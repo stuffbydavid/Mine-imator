@@ -12,7 +12,7 @@ function view_control_move_pan(view, radius)
 	normal = vec3_normalize(point3D_sub(cam_from, tl_edit.world_pos))
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != e_view_control.POS_PAN || view_control_edit_view != view)
 			return 0
@@ -30,7 +30,7 @@ function view_control_move_pan(view, radius)
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_edit = e_view_control.POS_PAN
 			view_control_edit_view = view
 			

@@ -6,7 +6,7 @@ function action_tl_frame_scale_all_axis(value, add)
 	historyobj = (history_pos > 0 || history_amount = 0 ? null : history[0])
 	stopdrag = false
 	
-	if (string_contains(window_busy, "drag") || string_contains(window_busy, "rendercontrol"))
+	if (string_contains(window_busy, "drag") || string_contains(window_busy, "render/control"))
 	{
 		// Start
 		if (historyobj = null || !historyobj.scale_link_drag)

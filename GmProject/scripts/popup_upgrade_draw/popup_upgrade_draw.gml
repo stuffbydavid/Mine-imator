@@ -16,14 +16,14 @@ function popup_upgrade_draw()
 	draw_sprite_ext(spr_upgrade_img, popup_current.page, floor(dx + dw/2 - (sprite_get_width(spr_upgrade_img)/2)) + pageoff, dy, 1, 1, 0, c_white, pagealpha * draw_get_alpha())
 	dy += sprite_get_height(spr_upgrade_img)
 	
-	if (draw_button_icon("upgradeleft", content_x + 12, dy - sprite_get_height(spr_upgrade_img)/2 - 16, 20, 32, false, icons.CHEVRON_LEFT))
+	if (draw_button_icon("upgrade/left", content_x + 12, dy - sprite_get_height(spr_upgrade_img)/2 - 16, 20, 32, false, icons.CHEVRON_LEFT))
 	{
 		popup_current.page = mod_fix((popup_current.page - 1), 3)
 		popup_current.page_ani = 0
 		popup_current.page_ani_type = "left"
 	}
 	
-	if (draw_button_icon("upgraderight", content_x + content_width - (12 + 20), dy - sprite_get_height(spr_upgrade_img)/2 - 16, 20, 32, false, icons.CHEVRON_RIGHT))
+	if (draw_button_icon("upgrade/right", content_x + content_width - (12 + 20), dy - sprite_get_height(spr_upgrade_img)/2 - 16, 20, 32, false, icons.CHEVRON_RIGHT))
 	{
 		popup_current.page = mod_fix((popup_current.page + 1), 3)
 		popup_current.page_ani = 0
@@ -34,13 +34,13 @@ function popup_upgrade_draw()
 	
 	// Image caption
 	draw_set_font(font_caption)
-	content_text = string_limit_ext(text_get("upgradepage" + string(popup_current.page)), (dw - 40) + 8, no_limit)
+	content_text = string_limit_ext(text_get("upgrade/page" + string(popup_current.page)), (dw - 40) + 8, no_limit)
 	draw_label(content_text, floor(dx + dw/2) + pageoff, dy, fa_middle, fa_top, c_text_secondary, a_text_secondary * pagealpha, font_caption)
 	dy += string_height(content_text) + 24
 	
 	// Info
 	draw_set_font(font_value)
-	content_text = string_limit_ext(text_get("upgradeinfo"), (dw - 40) + 8, no_limit)
+	content_text = string_limit_ext(text_get("upgrade/info"), (dw - 40) + 8, no_limit)
 	draw_label(content_text, floor(dx + dw/2), dy, fa_middle, fa_top, c_text_main, a_text_main, font_value)
 	dy += string_height(content_text) + 30
 	
@@ -57,7 +57,7 @@ function popup_upgrade_draw()
 	draw_inputbox("upgrade", dx + dw/2 - wid/2, dy, wid, 48, "XXXXXXXX", popup_upgrade.tbx_key, null, false, false, font_upgrade, e_inputbox.BIG)
 	draw_box_hover(dx + dw/2 - wid/2, dy, wid, 48, microani_arr[e_microani.PRESS])
 	
-	if (draw_button_icon("upgradekeypaste", dx + dw/2 + wid/2 + 8, dy + 10, 24, 24, false, icons.PASTE, null, false, "tooltippastekey"))
+	if (draw_button_icon("upgrade/key_paste", dx + dw/2 + wid/2 + 8, dy + 10, 24, 24, false, icons.PASTE, null, false, "tooltip/paste_key"))
 		popup_upgrade.tbx_key.text = string(clipboard_get_text())
 	
 	tab_next()
@@ -71,17 +71,17 @@ function popup_upgrade_draw()
 	}
 	
 	tab_control_button_label()
-	if (draw_button_label("upgradecontinue", dx + dw/2 + (key_expired ? 8 : 0), dy, null, icons.KEY, e_button.PRIMARY, null, key_expired ? e_anchor.LEFT : e_anchor.RIGHT))
+	if (draw_button_label("upgrade/continue", dx + dw/2 + (key_expired ? 8 : 0), dy, null, icons.KEY, e_button.PRIMARY, null, key_expired ? e_anchor.LEFT : e_anchor.RIGHT))
 	{
 		var key = popup_upgrade.tbx_key.text;
 		
 		if (key_valid(key))
 		{
 			if (key = key_current && key_expired)
-				popup_upgrade.warntext = "errorkeyexpired"
+				popup_upgrade.warntext = "error/key_expired"
 			
 			else if (key = key_current && key_current_date_invalid)
-				popup_upgrade.warntext = "errorupgrade"
+				popup_upgrade.warntext = "error/upgrade"
 			else
 			{
 				popup_upgrade.warntext = ""
@@ -104,10 +104,10 @@ function popup_upgrade_draw()
 			}
 		}
 		else
-			popup_upgrade.warntext = "errorupgrade"
+			popup_upgrade.warntext = "error/upgrade"
 	}
 	
-	if (key_expired && draw_button_label("upgradedismiss", dx + dw/2 - 8, dy, null, null, e_button.SECONDARY, null, e_anchor.RIGHT))
+	if (key_expired && draw_button_label("upgrade/dismiss", dx + dw/2 - 8, dy, null, null, e_button.SECONDARY, null, e_anchor.RIGHT))
 	{
 		key_expired_dismissed = true
 		key_save()

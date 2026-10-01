@@ -49,7 +49,7 @@ function view_control_scale(view)
 	}
 	
 	// Dragging plane
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_XY && view_control_edit <= e_view_control.SCA_YZ)
+	if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_XY && view_control_edit <= e_view_control.SCA_YZ)
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -110,7 +110,7 @@ function view_control_scale(view)
 			view_control_plane = false
 		}
 	}
-	else if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_X && view_control_edit <= e_view_control.SCA_Z) // Dragging single axis
+	else if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_X && view_control_edit <= e_view_control.SCA_Z) // Dragging single axis
 	{
 		mouse_cursor = cr_handpoint
 		

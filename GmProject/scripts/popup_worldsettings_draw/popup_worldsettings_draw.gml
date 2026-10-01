@@ -5,20 +5,20 @@ function popup_worldsettings_draw()
 	
 	// Unload far away regions
 	tab_control_switch()
-	draw_switch("worldsettingsunloadregions", dx, dy, setting_world_import_unload_regions, action_world_import_settings_unload_regions, "worldsettingsunloadregionstip")
+	draw_switch("world_settings/unload_regions", dx, dy, setting_world_import_unload_regions, action_world_import_settings_unload_regions, "world_settings/unload_regions_tip")
 	tab_next()
 	
 	// Filter settings
 	tab_control_switch()
-	draw_switch("worldsettingsfilterenabled", dx, dy, setting_world_import_filter_enabled, action_world_import_settings_filter_enabled)
+	draw_switch("world_settings/filter_enabled", dx, dy, setting_world_import_filter_enabled, action_world_import_settings_filter_enabled)
 	tab_next()
 	
 	if (setting_world_import_filter_enabled)
 	{
 		tab_control_togglebutton()
-		togglebutton_add("worldsettingsfilterremove", null, 0, setting_world_import_filter_mode = 0, action_world_import_settings_filter_mode)
-		togglebutton_add("worldsettingsfilterkeep", null, 1, setting_world_import_filter_mode = 1, action_world_import_settings_filter_mode)
-		draw_togglebutton("worldsettingsfiltermode", dx, dy)
+		togglebutton_add("world_settings/filter_remove", null, 0, setting_world_import_filter_mode = 0, action_world_import_settings_filter_mode)
+		togglebutton_add("world_settings/filter_keep", null, 1, setting_world_import_filter_mode = 1, action_world_import_settings_filter_mode)
+		draw_togglebutton("world_settings/filter_mode", dx, dy)
 		tab_next()
 		
 		var listdw = content_width - 24;
@@ -26,10 +26,10 @@ function popup_worldsettings_draw()
 		dy += 8
 		
 		tab_control_sortlist(world_import_settings_block_list)
-		sortlist_draw(world_import_settings_block_list, dx, dy, listdw / 2 - 20, tab_control_h, world_import_settings_block_select, false, text_get("worldsettingsfilterblocks"))
-		sortlist_draw(world_import_settings_filter_list, dx + listdw / 2 + 20, dy, listdw / 2 - 20, tab_control_h, world_import_settings_filter_select, false, text_get("worldsettingsfilterfiltered"))
+		sortlist_draw(world_import_settings_block_list, dx, dy, listdw / 2 - 20, tab_control_h, world_import_settings_block_select, false, text_get("world_settings/filter_blocks"))
+		sortlist_draw(world_import_settings_filter_list, dx + listdw / 2 + 20, dy, listdw / 2 - 20, tab_control_h, world_import_settings_filter_select, false, text_get("world_settings/filter_filtered"))
 		
-		if (draw_button_icon("worldsettingsfilterright", dx + listdw / 2 - 12, dy + (tab_control_h/2) - 16, 24, 24, false, icons.CHEVRON_RIGHT_TINY, null, world_import_settings_block_select = null))
+		if (draw_button_icon("world_settings/filterright", dx + listdw / 2 - 12, dy + (tab_control_h/2) - 16, 24, 24, false, icons.CHEVRON_RIGHT_TINY, null, world_import_settings_block_select = null))
 		{
 			sortlist_add(world_import_settings_filter_list, world_import_settings_block_select)
 			sortlist_remove(world_import_settings_block_list, world_import_settings_block_select)
@@ -41,7 +41,7 @@ function popup_worldsettings_draw()
 			world_import_settings_block_select = null
 		}
 		
-		if (draw_button_icon("worldsettingsfilterleft", dx + listdw / 2 - 12, dy + (tab_control_h/2) + 16, 24, 24, false, icons.CHEVRON_LEFT_TINY, null, world_import_settings_filter_select = null))
+		if (draw_button_icon("world_settings/filterleft", dx + listdw / 2 - 12, dy + (tab_control_h/2) + 16, 24, 24, false, icons.CHEVRON_LEFT_TINY, null, world_import_settings_filter_select = null))
 		{
 			var blocklist, index;
 			blocklist = world_import_settings_block_list.list
@@ -64,6 +64,6 @@ function popup_worldsettings_draw()
 		
 		dw = content_width - 24
 		dy += 8
-		draw_tooltip_label("worldsettingsfilterhelp", icons.INFO, e_toast.INFO)
+		draw_tooltip_label("world_settings/filter_help", icons.INFO, e_toast.INFO)
 	}
 }

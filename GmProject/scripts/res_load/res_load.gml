@@ -152,7 +152,7 @@ function res_load(reload = false)
 				
 				if (!map)
 				{
-					error("errorloadmap")
+					error("error/load_map")
 					break
 				}
 				else
@@ -272,7 +272,7 @@ function res_load(reload = false)
 				model_file = model_file_load(fn, id) // model_file will be null if unsuccessful
 				
 				if (model_file = null)
-					error("errorloadmodel")
+					error("error/load_model")
 				
 				// Create texture name maps
 				if (model_texture_name_map != null)
@@ -318,7 +318,7 @@ function res_load(reload = false)
 				var blockmodel = block_load_model_file(fn, id);
 				if (blockmodel = null)
 				{
-					error("errorloadmodel")
+					error("error/load_model")
 					break
 				}
 				

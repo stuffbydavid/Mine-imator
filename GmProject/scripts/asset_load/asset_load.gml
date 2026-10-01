@@ -50,7 +50,7 @@ function asset_load(fn = "")
 			if (directory_exists_lib(unzip_directory + "assets"))
 				action_res_pack_load(fn)
 			else
-				error("erroropenassetzip")
+				error("error/open_asset_zip")
 			return false
 		}
 	}

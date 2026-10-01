@@ -6,7 +6,7 @@ function action_bench_schematic_create_resource()
 
 	var tladd = res.scenery_tl_add;
 	if (res.scenery_tl_prompt_amount > 0)
-		tladd = question(text_get("loadsceneryaddtimelines", res.scenery_tl_prompt_amount))
+		tladd = question(text_get("load_scenery/add_timelines", res.scenery_tl_prompt_amount))
 	
 	res_creator = app
 	

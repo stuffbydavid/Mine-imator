@@ -141,7 +141,7 @@ Camera settings modify the camera active at the current test frame, if present.
 
 ### Bloom and lens dirt
 
-Bloom is calculated from scene-linear HDR color before tone mapping. Use `--pass bloomthreshold` to inspect the extracted highlights and `--pass bloomblur` to inspect the final blurred contribution, including blade streaks. Both debug passes use a fixed display curve so HDR values remain visible.
+Bloom is calculated from scene-linear HDR color before tone mapping. Use `--pass bloom_threshold` to inspect the extracted highlights and `--pass bloom_blur` to inspect the final blurred contribution, including blade streaks. Both debug passes use a fixed display curve so HDR values remain visible.
 
 | Setting | Values | Description |
 | --- | --- | --- |

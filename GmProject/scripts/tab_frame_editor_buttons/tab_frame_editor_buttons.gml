@@ -17,7 +17,7 @@ function tab_frame_editor_buttons()
 		if (frame_editor.transform.scale_all)
 			draw_set_alpha(1)
 		
-		draw_button_icon(content_name + "link", bx, by, 24, 24, frame_editor.transform.scale_all, icons.LINK, action_group_combine_scale, false, frame_editor.transform.scale_all ? "contextmenuscaleseparate" : "contextmenuscalecombine")
+		draw_button_icon(content_name + "link", bx, by, 24, 24, frame_editor.transform.scale_all, icons.LINK, action_group_combine_scale, false, frame_editor.transform.scale_all ? "context_menu/scale_separate" : "context_menu/scale_combine")
 		bx -= 28
 		
 		draw_set_alpha(alpha)
@@ -28,19 +28,19 @@ function tab_frame_editor_buttons()
 		if (frame_editor.transform.bend_sliders)
 			draw_set_alpha(1)
 		
-		draw_button_icon(content_name + "sliders", bx, by, 24, 24, frame_editor.transform.bend_sliders, icons.SLIDERS, action_group_bend_sliders, false, frame_editor.transform.bend_sliders ? "contextmenubendwheels" : "contextmenubendsliders")
+		draw_button_icon(content_name + "sliders", bx, by, 24, 24, frame_editor.transform.bend_sliders, icons.SLIDERS, action_group_bend_sliders, false, frame_editor.transform.bend_sliders ? "context_menu/bend_wheels" : "context_menu/bend_sliders")
 		bx -= 28
 		
 		draw_set_alpha(alpha)
 	}
 	
-	draw_button_icon(content_name + "reset", bx, by, 24, 24, false, icons.RESET, action_group_reset, false, "contextmenugroupreset")
+	draw_button_icon(content_name + "reset", bx, by, 24, 24, false, icons.RESET, action_group_reset, false, "context_menu/group/reset")
 	bx -= 28
 	
-	draw_button_icon(content_name + "paste", bx, by, 24, 24, false, icons.PASTE, action_group_paste, context_group_copy_list[|context_menu_group] = null, "contextmenugrouppaste")
+	draw_button_icon(content_name + "paste", bx, by, 24, 24, false, icons.PASTE, action_group_paste, context_group_copy_list[|context_menu_group] = null, "context_menu/group/paste")
 	bx -= 28
 	
-	draw_button_icon(content_name + "copy", bx, by, 24, 24, false, icons.COPY, action_group_copy, false, "contextmenugroupcopy")
+	draw_button_icon(content_name + "copy", bx, by, 24, 24, false, icons.COPY, action_group_copy, false, "context_menu/group/copy")
 	bx -= 28
 	
 	draw_set_alpha(1)

@@ -42,7 +42,7 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script, samerow
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
-	click = context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
+	click = context_menu_area(xx, yy, w, h, "context_menu/value", color, e_context_type.COLOR, script, def)
 	microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
 	
 	// Draw button

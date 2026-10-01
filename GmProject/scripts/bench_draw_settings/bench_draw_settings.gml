@@ -67,12 +67,12 @@ function bench_draw_settings(bx, by, bw, bh)
 	bench_buttons_hidden = false
 	
 	bench_create_disabled = false
-	bench_create_name = "benchcreate"
+	bench_create_name = "bench/create"
 	bench_create_icon = icons.ASSET_ADD
 	bench_create_button = e_bench_button.CREATE
 	
 	bench_edit_hidden = true
-	bench_edit_name = "benchedit"
+	bench_edit_name = "bench/edit"
 	bench_edit_icon = icons.PENCIL
 	bench_edit_button = e_bench_button.EDIT
 

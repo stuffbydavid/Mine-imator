@@ -122,9 +122,12 @@ function project_load_update()
 					
 					if (fx = e_cam_fx.LENS_DIRT)
 						newkey.value[e_value.TEXTURE_OBJ] = oldkey.value[e_value.TEXTURE_OBJ]
+					
 					newkey.value[e_value.VISIBLE] = oldkey.value[e_value.VISIBLE] && oldkey.legacy_camera_effect_enabled[fx]
+					
 					for (var v = e_value.TRANSITION; v <= e_value.EASE_OUT_Y; v++)
 						newkey.value[v] = oldkey.value[v]
+					
 					ds_list_add(effects.keyframe_list, newkey)
 				}
 			}

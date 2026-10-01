@@ -50,7 +50,7 @@ function action_toolbar_exportmovie_save()
 		if (err < 0)
 		{
 			log("Error when exporting, error code", err)
-			error("errorexportmovie")
+			error("error/export_movie")
 			
 			render_hidden = false
 			render_watermark = false
@@ -78,7 +78,7 @@ function action_toolbar_exportmovie_save()
 						movie_done()
 						
 						log("Error adding audio file, error code", sound_file_id)
-						error("errorexportmovie")
+						error("error/export_movie")
 						return 0
 					}
 				}
@@ -112,7 +112,7 @@ function action_toolbar_exportmovie_save()
 								movie_done()
 								
 								log("Error adding sound, error code", ret)
-								error("errorexportmovie")
+								error("error/export_movie")
 								return 0
 							}
 						}

@@ -16,7 +16,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	if (menu = "all")
 	{
 		dy += 14
-		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("transition/menu/other"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
 		
 		for (var i = 0; i < ds_list_size(transition_list); i++)
@@ -44,7 +44,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	if (menu = "easein" || menu = "all")
 	{
 		dy += 14
-		draw_label(text_get("transitionmenueasein"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("transition/menu/ease_in"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
 	
 		for (var i = 0; i < ds_list_size(transition_list); i++)
@@ -73,7 +73,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	if (menu = "easeout" || menu = "all")
 	{
 		dy += 14
-		draw_label(text_get("transitionmenueaseout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("transition/menu/ease_out"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
 	
 		for (var i = 0; i < ds_list_size(transition_list); i++)
@@ -101,7 +101,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	if (menu = "easeinout" || menu = "all")
 	{
 		dy += 14
-		draw_label(text_get("transitionmenueaseinout"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("transition/menu/ease_in_out"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
 	
 		for (var i = 0; i < ds_list_size(transition_list); i++)
@@ -129,7 +129,7 @@ function menu_transitions(xx, yy, wid, hei, menu = "all")
 	if (menu = "easeinout" && setting_advanced_mode)
 	{
 		dy += 14
-		draw_label(text_get("transitionmenuother"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("transition/menu/other"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 12
 		
 		for (var i = 0; i < ds_list_size(transition_list); i++)

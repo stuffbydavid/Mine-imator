@@ -13,7 +13,7 @@ function tab_object_editor_character()
 		}
 		case e_temp_type.EQUIPMENT:
 		{
-			labeltext = text_get("templateeditorequipment")
+			labeltext = text_get("template_editor/equipment")
 			list = tab.equipment_list
 			break
 		}
@@ -27,7 +27,7 @@ function tab_object_editor_character()
 		{
 			labeltext = text_get("templateeditormodel")
 			list = tab.model_part_model_list
-			content_capwid = text_caption_width("templateeditormodelpart")
+			content_capwid = text_caption_width("template_editor/model_part")
 			break
 		}
 	}
@@ -77,7 +77,7 @@ function tab_object_editor_character()
 	for (var i = 0; i < statelen; i += 2)
 	{
 		var state = obj_edit.model_state[i];
-		content_capwid = max(content_capwid, string_width(minecraft_asset_get_name("modelstate", state)) + 8)
+		content_capwid = max(content_capwid, string_width(minecraft_asset_get_name("model/state", state)) + 8)
 	}
 			
 	var dyy = (dy + dh - statesh) + 8;
@@ -97,7 +97,7 @@ function tab_object_editor_character()
 				
 		tab_control(ui_small_height)
 				
-		if (draw_checkbox("modelstate" + state, dx, dy, obj_edit.model_state[i + 1] = "true", null))
+		if (draw_checkbox("model/state/" + state, dx, dy, obj_edit.model_state[i + 1] = "true", null))
 		{
 			menu_model_state = menu_model_state_current
 					
@@ -124,7 +124,7 @@ function tab_object_editor_character()
 		var state = obj_edit.model_state[i];
 		menu_model_current = model
 		menu_model_state_current = model ? model.states_map[?state] : null
-		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_state[i + 1], minecraft_asset_get_name("modelstatevalue", obj_edit.model_state[i + 1]), (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state), false, null, null, "", c_white, 1, content_capwid)
+		draw_button_menu(state, e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_state[i + 1], minecraft_asset_get_name("model/state/value", obj_edit.model_state[i + 1]), (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state), false, null, null, "", c_white, 1, content_capwid)
 		dyy += 32
 	}
 	menu_model_current = null
@@ -133,7 +133,7 @@ function tab_object_editor_character()
 			
 	// Model part
 	if (obj_edit.type = e_temp_type.MODEL_PART)
-		draw_button_menu("templateeditormodelpart", e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_part_name, minecraft_asset_get_name("modelpart", obj_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, content_capwid)
+		draw_button_menu("template_editor/model_part", e_menu.LIST, dx, dyy, dw, 24, obj_edit.model_part_name, minecraft_asset_get_name("model/part", obj_edit.model_part_name), action_lib_model_part_name, false, null, null, "", c_white, 1, content_capwid)
 			
 	if (content_mouseon)
 		window_scroll_focus = string(list.scroll)

@@ -171,10 +171,10 @@ function action_tl_animated(enabled)
 		
 		// Show notification about forbidden changes
 		if (blocked)
-			toast_new(e_toast.WARNING, text_get(tl_edit_amount > 1 ? "alertanimatedmultiple" : "alertanimated"))
+			toast_new(e_toast.WARNING, text_get(tl_edit_amount > 1 ? "alert/animated_multiple" : "alert/animated"))
 		
 		else if (blockedpart)
-			toast_new(e_toast.INFO, text_get("alertanimatedpart"))
+			toast_new(e_toast.INFO, text_get("alert/animated_part"))
 	}
 
 	if (count > 0 || history_undo || history_redo)

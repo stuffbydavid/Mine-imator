@@ -7,7 +7,7 @@ function sortlist_column_get(slist, value, col)
 {
 	switch (slist.column_name[col])
 	{
-		case "buildname":
+		case "build_name":
 		{
 			if (value[0])
 				return minecraft_asset_get_name("model", value[1])
@@ -15,7 +15,7 @@ function sortlist_column_get(slist, value, col)
 			return minecraft_asset_get_name("block", value[1])
 		}
 		
-		case "libname":
+		case "lib_name":
 		{
 			if (debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
@@ -23,15 +23,15 @@ function sortlist_column_get(slist, value, col)
 			return string_remove_newline(value.display_name)
 		}
 		
-		case "libtype":
-			return text_get("type" + temp_type_name_list[|value.type])
+		case "lib_type":
+			return text_get("type/" + temp_type_name_list[|value.type])
 		
-		case "libinstances":
+		case "lib_instances":
 			return value.count = -1 ? "-" : value.count
 		
-		case "charname":
-		case "spblockname":
-		case "modelpartmodelname":
+		case "char_name":
+		case "special_block_name":
+		case "model_part_model_name":
 		{
 			if (is_undefined(mc_assets.model_name_map[?value]))
 				return 0
@@ -39,7 +39,7 @@ function sortlist_column_get(slist, value, col)
 			return minecraft_asset_get_name("model", mc_assets.model_name_map[?value].name)
 		}
 		
-		case "blockname":
+		case "block_name":
 		{
 			if (is_undefined(mc_assets.block_name_map[?value]))
 				return 0
@@ -47,26 +47,26 @@ function sortlist_column_get(slist, value, col)
 			return minecraft_asset_get_name("block", mc_assets.block_name_map[?value].name)
 		}
 		
-		case "blockfilter":
+		case "block_filter":
 			return minecraft_asset_get_name("block", mc_assets.block_list[|value].name)
 		
-		case "sceneryname":
-		case "schematicname":
+		case "scenery_name":
+		case "schematic_name":
 		{
 			if (!is_string(value))
 				return value.display_name
 
 			var fn = filename_new_ext(filename_name(value), "");
-			return text_exists("benchschematic" + fn) ? text_get("benchschematic" + fn) : fn
+			return text_exists("bench/schematic/" + fn) ? text_get("bench/schematic/" + fn) : fn
 		}
 		
-		case "shapename":
-			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
+		case "shape_name":
+			return text_get("type/" + tl_type_name_list[|e_tl_type.CUBE + value])
 		
-		case "cameraeffectname":
-			return text_get("frameeditorcameraeffect" + camera_effect_name_list[|value])
+		case "camera_effect_name":
+			return text_get("frame_editor/camera_effect/" + camera_effect_name_list[|value])
 		
-		case "particleeditortypename":
+		case "particle_editor_type_name":
 		{
 			if (debug_saveid)
 				return string_remove_newline(value.name) + " [" + string(value.save_id) + "]"
@@ -74,21 +74,21 @@ function sortlist_column_get(slist, value, col)
 			return string_remove_newline(value.name)
 		}
 		
-		case "particleeditortypekind":
+		case "particle_editor_type_kind":
 		{
 			if (value.temp = particle_sheet)
-				return text_get("particleeditortypespritesheet")
+				return text_get("particle_editor/type/sprite_sheet")
 			else if (value.temp = particle_template)
-				return text_get("particleeditortypetemplate")
+				return text_get("particle_editor/type/template")
 			else
 				return string_remove_newline(value.temp.display_name)
 		}
 		
-		case "particleeditortyperate":
+		case "particle_editor_type_rate":
 			return string(floor(value.spawn_rate * 100)) + "%"
 		
-		case "projectname":
-		case "resname":
+		case "project_name":
+		case "res_name":
 		{
 			if (debug_saveid)
 				return string_remove_newline(value.display_name) + " [" + string(value.save_id) + "]"
@@ -96,31 +96,31 @@ function sortlist_column_get(slist, value, col)
 			return string_remove_newline(value.display_name)
 		}
 		
-		case "projecttype":
+		case "project_type":
 		{
 			if (value.object_index = obj_resource)
-				return text_get("type" + res_type_name_list[|value.type])
+				return text_get("type/" + res_type_name_list[|value.type])
 			
-			return text_get("type" + temp_type_name_list[|value.type])
+			return text_get("type/" + temp_type_name_list[|value.type])
 		}
 		
 		case "resfilename":
 			return string_remove_newline(value.filename)
 		
-		case "restype":
-			return text_get("type" + res_type_name_list[|value.type])
+		case "res_type":
+			return text_get("type/" + res_type_name_list[|value.type])
 		
-		case "projectcount":
-		case "rescount":
+		case "project_count":
+		case "res_count":
 			return value.count = -1 ? "-" : value.count
 		
-		case "particlepresetname":
+		case "particle_preset_name":
 		{
 			if (!is_string(value))
 				return string_remove_newline(value.display_name)
 
 			var fn = filename_new_ext(filename_name(value), "");
-			return text_exists("benchparticles" + fn) ? text_get("benchparticles" + fn) : fn
+			return text_exists("bench/particles/" + fn) ? text_get("bench/particles/" + fn) : fn
 		}
 	}
 }

@@ -43,7 +43,7 @@ function action_tl_keyframes_load(fn)
 			
 			if (!tl_edit)
 			{
-				error("erroropenkeyframes")
+				error("error/open_keyframes")
 				return 0
 			}
 			

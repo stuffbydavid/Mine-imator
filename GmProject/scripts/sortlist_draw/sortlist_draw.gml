@@ -43,9 +43,9 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	// Draw filter
 	if (filter)
 	{
-		if (draw_button_icon("listfilter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltipfilterlist"))
+		if (draw_button_icon("list/filter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltip/filter_list"))
 		{
-			menu_settings_set(xx, yy, "listfilter" + string(slist), 24)
+			menu_settings_set(xx, yy, "list/filter" + string(slist), 24)
 			settings_menu_script = sortlist_filters_draw
 			settings_menu_sortlist = slist
 			settings_menu_h_max = 256
@@ -53,7 +53,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			settings_menu_scroll.value_goal = slist.filter_scroll
 		}
 		
-		if ((settings_menu_name = "listfilter" + string(slist)) && settings_menu_ani_type != "hide")
+		if ((settings_menu_name = "list/filter" + string(slist)) && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
 	}
 	
@@ -64,7 +64,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		draw_label(string_limit(name, w - 144 - (filter ? 32 : 0)), xx + (filter ? 32 : 0), yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	}
 
-	if (draw_searchbox("listsearch" + string(slist), searchx, yy, searchw, slist.search_tbx, !filter && name = ""))
+		if (draw_searchbox("list/search" + string(slist), searchx, yy, searchw, slist.search_tbx, !filter && name = ""))
 	{
 		searchcleared = slist.search && (slist.search_tbx.text = "")
 		slist.scroll.value = 0
@@ -102,7 +102,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	else
 	{
 		// Dragging
-		if (window_busy = "sortlist_resize" && sortlist_resize = slist)
+		if (window_busy = "sortlist/resize" && sortlist_resize = slist)
 		{
 			slist.column_x[sortlist_resize_column] = sortlist_resize_column_x + (mouse_x - mouse_click_x) / w
 			slist.column_x[sortlist_resize_column] = clamp(0, slist.column_x[sortlist_resize_column], 0.9)
@@ -141,7 +141,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 					sortlist_resize = slist
 					sortlist_resize_column = c
 					sortlist_resize_column_x = slist.column_x[c]
-					window_busy = "sortlist_resize"
+					window_busy = "sortlist/resize"
 				}
 			}
 			
@@ -150,7 +150,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			if (slist.column_sort = c)
 				icon = (slist.sort_asc ? icons.SORT_UP : icons.SORT_DOWN)
 			
-			if (sortlist_draw_button("column" + slist.column_name[c], xx + dx, yy + 3, slist.column_w[c], headerh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), headermouseon))
+			if (sortlist_draw_button("column/" + slist.column_name[c], xx + dx, yy + 3, slist.column_w[c], headerh - 6, slist.column_sort = c, icon, (c = 0), (c = slist.columns - 1), headermouseon))
 			{
 				if (slist.column_sort = c)
 				{

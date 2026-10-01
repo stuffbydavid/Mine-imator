@@ -13,19 +13,19 @@ function tab_properties_resources()
 	// Tools
 	tab_control(24)
 	
-	if (draw_button_icon("resourcesnew", dx, dy, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltipresourcenew"))
+	if (draw_button_icon("resources/new", dx, dy, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltip/resource/new"))
 		action_toolbar_import_asset()
 	
-	if (draw_button_icon("previewexport", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, (!res_edit || res_edit.type = e_res_type.FROM_WORLD), "tooltipresourcesave"))
+	if (draw_button_icon("preview/export", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, (!res_edit || res_edit.type = e_res_type.FROM_WORLD), "tooltip/resource/save"))
 		action_res_export()
 	
-	if (draw_button_icon("resourcesreload", dx + (28 * 2), dy, 24, 24, false, icons.REFRESH, null, (!res_edit || res_edit = mc_res), "tooltipresourcereload"))
+	if (draw_button_icon("resources/reload", dx + (28 * 2), dy, 24, 24, false, icons.REFRESH, null, (!res_edit || res_edit = mc_res), "tooltip/resource/reload"))
 		action_res_reload()
 	
-	if (draw_button_icon("resourcesreplace", dx + (28 * 3), dy, 24, 24, false, icons.REPLACE, null, (!res_edit || res_edit = mc_res || res_edit.type = e_res_type.FROM_WORLD), "tooltipresourcereplace"))
+	if (draw_button_icon("resources/replace", dx + (28 * 3), dy, 24, 24, false, icons.REPLACE, null, (!res_edit || res_edit = mc_res || res_edit.type = e_res_type.FROM_WORLD), "tooltip/resource/replace"))
 		action_res_replace()
 	
-	if (draw_button_icon("resourcesremove", dx + (28 * 4), dy, 24, 24, false, icons.DELETE, null, (!res_edit || res_edit = mc_res), "tooltipresourceremove"))
+	if (draw_button_icon("resources/remove", dx + (28 * 4), dy, 24, 24, false, icons.DELETE, null, (!res_edit || res_edit = mc_res), "tooltip/resource/remove"))
 		action_res_remove()
 	
 	tab_next()

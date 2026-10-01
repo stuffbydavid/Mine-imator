@@ -37,5 +37,5 @@ function action_tl_keyframes_scale_start()
 	action_tl_play_break()
 	
 	window_focus = "timeline"
-	window_busy = "timelinescalekeyframes"
+	window_busy = "timeline/scale_keyframes"
 }

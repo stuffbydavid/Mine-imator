@@ -11,7 +11,7 @@ function app_update_work_camera()
 		if (tl_focus != null && !instance_exists(tl_focus))
 			tl_focus = (tl_edit != null && instance_exists(tl_edit)) ? tl_edit : null
 
-		if (tl_focus != null)
+		if (tl_focus != null && tl_focus.value_type[e_value_type.TRANSFORM_POS])
 		{
 			cam_work_focus_tl = tl_focus
 			

@@ -277,7 +277,7 @@ namespace CppProject
 			updateBoxResizeSurface = true;
 		}
 
-		if (global::_app->window_busy == "worldimportrelease")
+		if (global::_app->window_busy == "world_import/release")
 			global::_app->window_busy = "";
 
 		// World
@@ -411,7 +411,7 @@ namespace CppProject
 					mouseClickX = gmlGlobal::mouse_x;
 					mouseClickY = gmlGlobal::mouse_y;
 
-					global::_app->window_busy = "worldimport";
+					global::_app->window_busy = "world_import";
 
 					// Click/Resize
 					if (mouseButton == mb_left)
@@ -443,7 +443,7 @@ namespace CppProject
 		}
 		
 		// Handle input
-		if (global::_app->window_busy == "worldimport")
+		if (global::_app->window_busy == "world_import")
 		{
 			global::_app->shortcut_bar_state = "worldimport";
 
@@ -452,7 +452,7 @@ namespace CppProject
 				if (mode == Mode::FLY) // Restore cursor
 					display_mouse_set(mouseLastX, mouseLastY);
 
-				global::_app->window_busy = "worldimportrelease";
+				global::_app->window_busy = "world_import/release";
 				mode = Mode::DEFAULT;
 
 				updateSurfaces = true;
@@ -493,7 +493,7 @@ namespace CppProject
 							selection.active = (size.x > 1 || size.y > 1 || size.z > 1);
 
 							mode = Mode::DEFAULT;
-							global::_app->window_busy = "worldimportrelease";
+							global::_app->window_busy = "world_import/release";
 
 							updateBoxResizeSurface = true;
 
@@ -504,7 +504,7 @@ namespace CppProject
 							selection.active = false;
 
 							mode = Mode::DEFAULT;
-							global::_app->window_busy = "worldimportrelease";
+							global::_app->window_busy = "world_import/release";
 
 							updateSurfaces = true;
 

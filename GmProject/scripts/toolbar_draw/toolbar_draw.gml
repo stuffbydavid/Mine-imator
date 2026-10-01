@@ -19,40 +19,40 @@ function toolbar_draw()
 	draw_set_font(font_value)
 	
 	// File
-	content_capwid = string_width(text_get("toolbarfile")) + 16
-	toolbar_draw_button("toolbarfile", dx, dy, content_capwid)
+	content_capwid = string_width(text_get("toolbar/file")) + 16
+	toolbar_draw_button("toolbar/file", dx, dy, content_capwid)
 	
 	dx += content_capwid + padding
 	
 	if (window_state = "")
 	{
-		content_capwid = string_width(text_get("toolbaredit")) + 16
-		toolbar_draw_button("toolbaredit", dx, dy, content_capwid)
+		content_capwid = string_width(text_get("toolbar/edit")) + 16
+		toolbar_draw_button("toolbar/edit", dx, dy, content_capwid)
 		dx += content_capwid + padding
 
 		// Render
-		content_capwid = string_width(text_get("toolbarrender")) + 16
-		toolbar_draw_button("toolbarrender", dx, dy, content_capwid)
+		content_capwid = string_width(text_get("toolbar/render")) + 16
+		toolbar_draw_button("toolbar/render", dx, dy, content_capwid)
 		dx += content_capwid + padding
 	}
 	
 	// View
-	content_capwid = string_width(text_get("toolbarview")) + 16
-	toolbar_draw_button("toolbarview", dx, dy, content_capwid)
+	content_capwid = string_width(text_get("toolbar/view")) + 16
+	toolbar_draw_button("toolbar/view", dx, dy, content_capwid)
 	dx += content_capwid + padding
 	
 	// Help
-	content_capwid = string_width(text_get("toolbarhelp")) + 16
-	toolbar_draw_button("toolbarhelp", dx, dy, content_capwid)
+	content_capwid = string_width(text_get("toolbar/help")) + 16
+	toolbar_draw_button("toolbar/help", dx, dy, content_capwid)
 	dx += content_capwid + padding
 	
 	dx += 8
-	draw_label(text_get("toolbarbackup"), dx, dy + 22, fa_left, fa_bottom, c_text_secondary, a_text_secondary * clamp(backup_text_ani, 0, 1), font_value)
+	draw_label(text_get("toolbar/backup"), dx, dy + 22, fa_left, fa_bottom, c_text_secondary, a_text_secondary * clamp(backup_text_ani, 0, 1), font_value)
 	
 	// "Simple mode" button label
 	if (!setting_advanced_mode)
 	{
-		if (draw_button_label("toolbarsimplemode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
+		if (draw_button_label("toolbar/simple_mode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
 		{
 			if (trial_version)
 			{

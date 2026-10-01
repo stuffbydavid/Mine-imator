@@ -15,6 +15,9 @@ function project_load_resource(map)
 		if (typestr = "scenery")
 			typestr = "schematic"
 		
+		if (ds_map_exists(legacy_type_name_map, typestr))
+			typestr = legacy_type_name_map[?typestr]
+		
 		type = ds_list_find_index(res_type_name_list, typestr)
 		
 		filename = value_get_string(map[?"filename"], filename)

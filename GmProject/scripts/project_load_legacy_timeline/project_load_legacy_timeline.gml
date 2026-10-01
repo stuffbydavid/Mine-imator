@@ -7,12 +7,8 @@ function project_load_legacy_timeline()
 		save_id_map[?load_id] = load_id
 		
 		var typename = buffer_read_string_int();
-		
-		// Pre-2.1 type names
-		if (typename = "bodypart")
-			typename = "modelpart"
-		if (typename = "background")
-			typename = "environment"
+		if (ds_map_exists(legacy_type_name_map, typename))
+			typename = legacy_type_name_map[?typename]
 		
 		type = ds_list_find_index(tl_type_name_list, typename)
 		has_temp = (type < e_temp_type.amount)

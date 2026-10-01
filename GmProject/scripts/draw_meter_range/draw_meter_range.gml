@@ -32,15 +32,15 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	
 	var draggerwid = 128;
 	
-	textfield_group_add(name + "mininput", minval, mindef, minscript, X, mintbx, null, 0.1, minrange, min(maxval, maxrange))
-	textfield_group_add(name + "maxinput", maxval, maxdef, maxscript, X, maxtbx, null, 0.1, max(minval, minrange), maxrange)
+	textfield_group_add(name + "_min_input", minval, mindef, minscript, X, mintbx, null, 0.1, minrange, min(maxval, maxrange))
+	textfield_group_add(name + "_max_input", maxval, maxdef, maxscript, X, maxtbx, null, 0.1, max(minval, minrange), maxrange)
 	draw_textfield_group(name, (xx + wid - draggerwid) + 8, yy, draggerwid, 0, null, null, snapval, false, false, 0, true)
 	
 	textfocus = microani_arr[e_microani.CUSTOM]
 	
 	// Caption
-	microani_set(name, null, window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, false, false, 1, false)
-	microani_update(window_busy = name + "min" || window_busy = name + "max" || slidermouseon, slidermouseon && mouse_left, window_busy = name + "min" || window_busy = name + "max", false, mouseon || textfocus)
+	microani_set(name, null, window_busy = name + "/min" || window_busy = name + "/max" || slidermouseon, slidermouseon && mouse_left, false, false, 1, false)
+	microani_update(window_busy = name + "/min" || window_busy = name + "/max" || slidermouseon, slidermouseon && mouse_left, window_busy = name + "/min" || window_busy = name + "/max", false, mouseon || textfocus)
 	
 	var labelcolor, labelalpha;
 	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
@@ -64,10 +64,10 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	
 	thumby = yy + thumbhei / 2
 	
-	minthumbpos = (window_busy = name + "min" ? meter_drag_value : minval)
+	minthumbpos = (window_busy = name + "/min" ? meter_drag_value : minval)
 	minthumbpos = trackx + floor(percent(minthumbpos, minrange, maxrange) * trackwid) - 6
 	
-	maxthumbpos = (window_busy = name + "max" ? meter_drag_value : maxval)
+	maxthumbpos = (window_busy = name + "/max" ? meter_drag_value : maxval)
 	maxthumbpos = trackx + floor(percent(maxthumbpos, minrange, maxrange) * trackwid) - 6
 	
 	minmouseon = app_mouse_box(minthumbpos, thumby - 10, 12, 20) && content_mouseon
@@ -83,12 +83,12 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 		{
 			if (minmouseon)
 			{
-				window_busy = name + "min"
+				window_busy = name + "/min"
 				meter_drag_value = minval
 			}
 			else if (maxmouseon)
 			{
-				window_busy = name + "max"
+				window_busy = name + "/max"
 				meter_drag_value = maxval
 			}
 			window_focus = name
@@ -102,7 +102,7 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	}
 	
 	// Dragging
-	if (window_busy = name + "min" || window_busy = name + "max")
+	if (window_busy = name + "/min" || window_busy = name + "/max")
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -111,7 +111,7 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 		else
 			meter_drag_value = clamp(minrange + (mouse_x - linex) * (max(1, (maxrange - minrange)) / linewid), minrange, maxrange)
 		
-		if (window_busy = name + "min")
+		if (window_busy = name + "/min")
 		{
 			var d = min(snap(meter_drag_value, snapval), maxval) - minval;
 			if (d <> 0)
@@ -132,9 +132,9 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	}
 	
 	// Clamp positions during drag
-	if (window_busy = name + "min")
+	if (window_busy = name + "/min")
 		minthumbpos = min(minthumbpos, maxthumbpos)
-	if (window_busy = name + "max")
+	if (window_busy = name + "/max")
 		maxthumbpos = max(minthumbpos, maxthumbpos)
 	
 	// Rail line
@@ -153,8 +153,8 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	draw_box(minthumbpos, thumby - 1, maxthumbpos - minthumbpos, 2, false, color, alpha)
 	
 	// Minimum dragger
-	microani_set(name + "min", minscript, (window_busy = name + "min") || minmouseon, minmouseon && mouse_left, false)
-	microani_update((window_busy = name + "min") || minmouseon, minmouseon && mouse_left, false)
+	microani_set(name + "/min", minscript, (window_busy = name + "/min") || minmouseon, minmouseon && mouse_left, false)
+	microani_update((window_busy = name + "/min") || minmouseon, minmouseon && mouse_left, false)
 	
 	color = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
 	color = merge_color(color, c_accent_pressed, max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))
@@ -167,8 +167,8 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 	draw_box_hover(minthumbpos, thumby - 10, 12, 20, microani_arr[e_microani.ACTIVE])
 	
 	// Maximum dragger
-	microani_set(name + "max", maxscript, (window_busy = name + "max") || maxmouseon, maxmouseon && mouse_left, false)
-	microani_update((window_busy = name + "max") || maxmouseon, maxmouseon && mouse_left, false)
+	microani_set(name + "/max", maxscript, (window_busy = name + "/max") || maxmouseon, maxmouseon && mouse_left, false)
+	microani_update((window_busy = name + "/max") || maxmouseon, maxmouseon && mouse_left, false)
 	
 	color = merge_color(c_accent, c_accent_hover, microani_arr[e_microani.HOVER])
 	color = merge_color(color, c_accent_pressed, max(microani_arr[e_microani.ACTIVE], microani_arr[e_microani.PRESS]))

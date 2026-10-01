@@ -46,7 +46,7 @@ function export_done_movie()
 	}
 	
 	// Alert user
-	toast_new(e_toast.POSITIVE, text_get("alertexportmovie"))
-	toast_add_action("alertexportmovieview", open_url, fn)
+	toast_new(e_toast.POSITIVE, text_get("alert/export_movie"))
+	toast_add_action("alert/export_movie_view", open_url, fn)
 	toast_last.dismiss_time = 10
 }

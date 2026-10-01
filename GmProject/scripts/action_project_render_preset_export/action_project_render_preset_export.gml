@@ -10,7 +10,7 @@ function action_project_render_preset_export(fn = "")
 		
 	if (filename_equals(fn, render_default_file))
 	{
-		if (!question(text_get("questionsetasdefault")))
+		if (!question(text_get("question/set_as_default")))
 			return 0
 		
 		file_copy_lib(render_default_file, render_default_file + ".backup")
@@ -21,5 +21,5 @@ function action_project_render_preset_export(fn = "")
 	
 	log("Saved render settings", fn)
 	
-	toast_new(e_toast.POSITIVE, text_get("alertrendersaved"))
+	toast_new(e_toast.POSITIVE, text_get("alert/render_saved"))
 }

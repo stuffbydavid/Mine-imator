@@ -2,7 +2,7 @@
 
 function action_tl_move_start()
 {
-	window_busy = "timelinemove"
+	window_busy = "timeline/move"
 	
 	timeline_move_obj = new_obj(obj_data)
 	timeline_move_obj.tree_list = ds_list_create()

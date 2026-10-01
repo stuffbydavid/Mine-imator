@@ -24,7 +24,7 @@ function draw_button_accent(xx, yy, wid, hei, index)
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
-	microani_set("accentlistitem" + string(index), null, mouseon, mouseclick, setting_accent = index, 0.5)
+	microani_set("accent/list_item" + string(index), null, mouseon, mouseclick, setting_accent = index, 0.5)
 	microani_update(mouseon, mouseclick, setting_accent = index, 0.5)
 	
 	if (accent != null)
@@ -38,7 +38,7 @@ function draw_button_accent(xx, yy, wid, hei, index)
 		draw_box(xx, yy, wid, hei, false, setting_accent_custom, microani_arr[e_microani.ACTIVE])
 		draw_image(spr_icons, icons.PICKER, xx + wid/2, yy + hei/2, 1, 1, merge_color(c_text_secondary, c_level_middle, microani_arr[e_microani.ACTIVE]), lerp(a_text_secondary, 1, microani_arr[e_microani.ACTIVE]))
 		
-		tip_set(text_get("tooltipcustomaccentcolor"), xx, yy, wid, hei)
+		tip_set(text_get("tooltip/custom_accent_color"), xx, yy, wid, hei)
 	}
 	
 	// Hover/press animation

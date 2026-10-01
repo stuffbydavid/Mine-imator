@@ -7,9 +7,9 @@ function tab_properties_library_item()
 	tab_control(24)
 			
 	draw_set_font(font_label)
-	wid = string_width(text_get("typeitem") + ":")
+	wid = string_width(text_get("type/item") + ":")
 			
-	draw_label(text_get("typeitem") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	draw_label(text_get("type/item") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
 			
 	draw_box(dx + wid + 16, dy + 4, 20, 20, false, c_level_bottom, 1)
 			
@@ -35,7 +35,7 @@ function tab_properties_library_item()
 				tip_set(minecraft_texture_get_name(mc_assets.item_texture_list[sheet][|slot]), dx + wid + 16, dy + 4, 20, 20)
 		}
 				
-		if (draw_button_icon("libraryitemchange", dx + dw - 24, dy, 24, 24, object_editor.show && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltipchangeitem"))
+		if (draw_button_icon("library/item_change", dx + dw - 24, dy, 24, 24, object_editor.show && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltip/change_item"))
 		{
 			if (obj_edit = temp_edit)
 				tab_toggle(object_editor)
@@ -60,7 +60,7 @@ function tab_properties_library_item()
 		tex = res.texture
 			
 	tab_control_menu(ui_large_height)
-	draw_button_menu("libraryitemtex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex, res_eval(temp_edit.item_tex).display_name, action_lib_item_tex, false, tex)
+	draw_button_menu("library/item_tex", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex, res_eval(temp_edit.item_tex).display_name, action_lib_item_tex, false, tex)
 	tab_next()
 			
 	if (project_render_material_maps)
@@ -72,7 +72,7 @@ function tab_properties_library_item()
 			tex = res.texture
 				
 		tab_control_menu(ui_large_height)
-		draw_button_menu("libraryitemtexmaterial", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_material, res_eval(temp_edit.item_tex_material).display_name, action_lib_item_tex_material, false, tex)
+		draw_button_menu("library/item_tex_material", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_material, res_eval(temp_edit.item_tex_material).display_name, action_lib_item_tex_material, false, tex)
 		tab_next()
 				
 		// Image (Normal map)
@@ -82,7 +82,7 @@ function tab_properties_library_item()
 			tex = res.texture
 				
 		tab_control_menu(ui_large_height)
-		draw_button_menu("libraryitemtexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_normal, res_eval(temp_edit.item_tex_normal).display_name, action_lib_item_tex_normal, false, tex)
+		draw_button_menu("library/item_tex_normal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.item_tex_normal, res_eval(temp_edit.item_tex_normal).display_name, action_lib_item_tex_normal, false, tex)
 		tab_next()
 	}
 			
@@ -93,19 +93,19 @@ function tab_properties_library_item()
 			
 	// Graphics
 	tab_control_checkbox()
-	draw_checkbox("libraryitem3d", dx, dy, temp_edit.item_3d, action_lib_item_3d)
+	draw_checkbox("library/item_3d", dx, dy, temp_edit.item_3d, action_lib_item_3d)
 	tab_next()
 			
 	tab_control_checkbox()
-	draw_checkbox("libraryitemfacecamera", dx, dy, temp_edit.item_face_camera, action_lib_item_face_camera)
+	draw_checkbox("library/item_face_camera", dx, dy, temp_edit.item_face_camera, action_lib_item_face_camera)
 	tab_next()
 			
 	tab_control_checkbox()
-	draw_checkbox("libraryitembounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce)
+	draw_checkbox("library/item_bounce", dx, dy, temp_edit.item_bounce, action_lib_item_bounce)
 	tab_next()
 			
 	tab_control_checkbox()
-	draw_checkbox("libraryitemspin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
+	draw_checkbox("library/item_spin", dx, dy, temp_edit.item_spin, action_lib_item_spin)
 	tab_next()
 			
 	tab_set_columns(false)

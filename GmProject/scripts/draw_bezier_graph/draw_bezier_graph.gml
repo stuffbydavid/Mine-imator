@@ -65,7 +65,7 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 		
 		if (mouse_left)
 		{
-			window_busy = "beziereasein"
+			window_busy = "bezier/ease_in"
 			handle_drag_offset_x = mouse_x - easeinxpos
 			handle_drag_offset_y = mouse_y - easeinypos
 		}
@@ -80,7 +80,7 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 		
 		if (mouse_left)
 		{
-			window_busy = "beziereaseout"
+			window_busy = "bezier/ease_out"
 			handle_drag_offset_x = mouse_x - easeoutxpos
 			handle_drag_offset_y = mouse_y - easeoutypos
 		}
@@ -92,7 +92,7 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 	points[3] *= 100
 	
 	// You know what to do
-	if (window_busy = "beziereasein")
+	if (window_busy = "bezier/ease_in")
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -114,7 +114,7 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 			window_busy = ""
 	}
 	
-	if (window_busy = "beziereaseout")
+	if (window_busy = "bezier/ease_out")
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -145,7 +145,7 @@ function draw_bezier_graph(xx, yy, wid, hei, points, sync)
 		
 		if (sync)
 			action_tl_frame_ease_all(points, false)
-		else if (window_busy = "beziereasein")
+		else if (window_busy = "bezier/ease_in")
 			action_tl_frame_ease_in(points, false)
 		else
 			action_tl_frame_ease_out([ points[2], points[3] ], false)

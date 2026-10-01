@@ -29,7 +29,7 @@ function app_startup_interface()
 	{
 		if (!project_load(test_project))
 		{
-			error("errortest")
+			error("error/test")
 			game_end()
 		}
 		else
@@ -79,7 +79,7 @@ function app_startup_interface()
 		// Expired key
 		if (key_expired && !key_expired_dismissed)
 		{
-			show_message(text_get("upgradeexpiredkey"))
+			show_message(text_get("upgrade/expired_key"))
 			popup_show(popup_upgrade)
 		}
 		

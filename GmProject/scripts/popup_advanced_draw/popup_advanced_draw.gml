@@ -2,26 +2,26 @@ function popup_advanced_draw()
 {
 	// Info
 	draw_set_font(font_value)
-	content_text = string_limit_ext(text_get("advancedinfo"), (dw - 40) + 8, no_limit)
+	content_text = string_limit_ext(text_get("advanced/info"), (dw - 40) + 8, no_limit)
 	draw_label(content_text, floor(dx + dw/2), dy, fa_middle, fa_top, c_text_main, a_text_main, font_value)
 	
 	dy += string_height(content_text) + 19
 	
 	draw_set_font(font_button)
-	var buttonx = string_width(text_get("advancedenable")) + button_padding;
+	var buttonx = string_width(text_get("advanced/enable")) + button_padding;
 	
 	tab_control_button_label()
 	
 	// Enabled advanced mode
-	if (draw_button_label("advancedenable", dx + dw - buttonx, dy))
+	if (draw_button_label("advanced/enable", dx + dw - buttonx, dy))
 	{
 		action_setting_program_mode(true)
 		popup_close()
 	}
 	
 	// Not now
-	buttonx += 12 + (string_width(text_get("advancednotnow")) + button_padding)
-	if (draw_button_label("advancednotnow", dx + dw - buttonx, dy, null, null, e_button.SECONDARY))
+	buttonx += 12 + (string_width(text_get("advanced/not_now")) + button_padding)
+	if (draw_button_label("advanced/not_now", dx + dw - buttonx, dy, null, null, e_button.SECONDARY))
 		popup_close()
 	
 	tab_next()

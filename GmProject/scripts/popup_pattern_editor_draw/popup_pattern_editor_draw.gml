@@ -18,7 +18,7 @@ function popup_pattern_editor_draw()
 	listw = dw - (dx - dx_start)
 	
 	// Add layer
-	if (draw_button_label("patterneditoraddlayer", dx, dy, listw, icons.PLUS, e_button.SECONDARY))
+	if (draw_button_label("pattern_editor/add_layer", dx, dy, listw, icons.PLUS, e_button.SECONDARY))
 	{
 		var pt = 1 + irandom(ds_list_size(minecraft_pattern_list) - 2);
 		ds_list_add(popup_current.pattern_list_edit, minecraft_pattern_list[|pt])
@@ -107,11 +107,11 @@ function popup_pattern_editor_draw()
 	dy += 325 + 8
 	
 	draw_set_font(font_button)
-	var buttonx = string_width(text_get("patterneditordone")) + button_padding;
+	var buttonx = string_width(text_get("pattern_editor/done")) + button_padding;
 	
 	// Done
 	tab_control_button_label()
-	if (draw_button_label("patterneditordone", dx_start + dw - buttonx, dy))
+	if (draw_button_label("pattern_editor/done", dx_start + dw - buttonx, dy))
 	{
 		if (popup_current.pattern_edit.object_index = obj_bench_settings)
 		{
@@ -132,10 +132,10 @@ function popup_pattern_editor_draw()
 		popup_close()
 	}
 	
-	buttonx += 12 + (string_width(text_get("patterneditorcancel")) + button_padding)
+	buttonx += 12 + (string_width(text_get("pattern_editor/cancel")) + button_padding)
 	
 	// Cancel
-	if (draw_button_label("patterneditorcancel", dx_start + dw - buttonx, dy, null, null, e_button.SECONDARY))
+	if (draw_button_label("pattern_editor/cancel", dx_start + dw - buttonx, dy, null, null, e_button.SECONDARY))
 	{
 		array_add(pattern_update, popup_current.pattern_edit)
 		
@@ -200,7 +200,7 @@ function popup_pattern_editor_draw()
 			
 			popup_current.layer_move = null
 			popup_current.update = true
-			window_busy = "popup" + popup_current.name
+			window_busy = "popup/" + popup_current.name
 		}
 		
 		if (mouse_y < listystart)
