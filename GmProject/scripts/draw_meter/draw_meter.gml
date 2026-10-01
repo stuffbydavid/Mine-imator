@@ -66,7 +66,7 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 		return 0
 	
 	// Slider
-	yy += 24
+	yy += 28
 	
 	linex = xx
 	linewid = wid

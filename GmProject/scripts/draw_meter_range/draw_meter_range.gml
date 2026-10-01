@@ -55,7 +55,7 @@ function draw_meter_range(name, xx, yy, wid, minrange, maxrange, snapval, minval
 		return 0
 	
 	// Slider
-	yy += 24
+	yy += 28
 	
 	linex = xx
 	linewid = wid

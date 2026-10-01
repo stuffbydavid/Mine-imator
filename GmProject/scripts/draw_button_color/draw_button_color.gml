@@ -35,7 +35,7 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script, samerow
 		textw = floor(w/2) - 8
 	}
 	
-	active = (settings_menu_name = "colorpicker" && colorpicker.value_name = name)
+	active = (settings_menu_name = "colorpicker" && colorpicker.value_name = name && colorpicker.camera_effect_edit_type = camera_effect_type_edit)
 	mouseon = app_mouse_box(buttonx, yy, buttonw, h) && content_mouseon
 	mouseclick = mouseon && mouse_left
 	

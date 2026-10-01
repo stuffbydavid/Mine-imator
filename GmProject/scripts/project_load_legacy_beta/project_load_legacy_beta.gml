@@ -251,7 +251,7 @@ function project_load_legacy_beta(loadbackground)
 			}
 			
 			load.skin_res[a] = id
-		res_add_lists()
+			res_add_lists()
 		}
 	}
 	
@@ -479,6 +479,13 @@ function project_load_legacy_beta(loadbackground)
 				rot_point = point3D_copy(load.lib_rotpoint[lib])
 			}
 			
+			// Store effects (to convert fade)
+			else if (type = e_tl_type.CAMERA)
+			{
+				legacy_camera_effect_default = array_create(e_cam_fx.amount, false)
+				legacy_camera_effect_available = array_create(e_cam_fx.amount, false)
+			}
+			
 			// Go through parts
 			for (var b = 0; b < load.tl_parts[a]; b++)
 			{
@@ -525,6 +532,14 @@ function project_load_legacy_beta(loadbackground)
 							value[e_value.CAM_ROTATE] = true
 							value[e_value.ROT_X] = value[e_value.CAM_ROTATE_ANGLE_Z]
 							value[e_value.ROT_Z] = value[e_value.CAM_ROTATE_ANGLE_XY]
+							
+							// Enable fade effect in camera
+							legacy_camera_effect_enabled = array_create(e_cam_fx.amount, false)
+							if (value[e_value.MIX_PERCENT] > 0)
+							{
+								legacy_camera_effect_enabled[e_cam_fx.FADE] = true
+								other.legacy_camera_effect_available[e_cam_fx.FADE] = true
+							}
 						}
 						else
 							value[e_value.VISIBLE] = readkf.set[1]

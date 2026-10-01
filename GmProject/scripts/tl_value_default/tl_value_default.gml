@@ -35,62 +35,61 @@ function tl_value_default(valueid)
 		case e_value.LIGHT_SPOT_RADIUS: return 50
 		case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
 		case e_value.CAM_FOV: return 45
-		case e_value.CAM_EXPOSURE: return 1
-		case e_value.CAM_GAMMA: return 2.2
-		case e_value.CAM_BLADE_AMOUNT:
-		case e_value.CAM_BLADE_ANGLE:
-		case e_value.CAM_BLADE_STRETCH: return 0
+		case e_value.CAM_FX_EXPOSURE: return 1
+		case e_value.CAM_FX_GAMMA: return 2.2
+		case e_value.CAM_FX_BLADE_AMOUNT:
+		case e_value.CAM_FX_BLADE_ANGLE:
+		case e_value.CAM_FX_BLADE_STRETCH: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
-		case e_value.CAM_SHAKE_MODE:
-		case e_value.CAM_SHAKE_STRENGTH_X:
-		case e_value.CAM_SHAKE_STRENGTH_Y:
-		case e_value.CAM_SHAKE_STRENGTH_Z:
-		case e_value.CAM_SHAKE_SPEED_X:
-		case e_value.CAM_SHAKE_SPEED_Y:
-		case e_value.CAM_SHAKE_SPEED_Z: return 1
-		case e_value.CAM_DOF_RANGE: return 200
-		case e_value.CAM_DOF_FADE_SIZE: return 100
-		case e_value.CAM_DOF_BLUR_SIZE: return .01
-		case e_value.CAM_DOF_BLUR_RATIO:
-		case e_value.CAM_DOF_BIAS:
-		case e_value.CAM_DOF_THRESHOLD:
-		case e_value.CAM_DOF_GAIN: return 0
-		case e_value.CAM_DOF_FRINGE_RED:
-		case e_value.CAM_DOF_FRINGE_GREEN:
-		case e_value.CAM_DOF_FRINGE_BLUE: return 1
-		case e_value.CAM_DOF_FRINGE_ANGLE_RED: return 90
-		case e_value.CAM_DOF_FRINGE_ANGLE_GREEN: return -135
-		case e_value.CAM_DOF_FRINGE_ANGLE_BLUE: return -45
-		case e_value.CAM_BLOOM_THRESHOLD: return .85
-		case e_value.CAM_BLOOM_TRANSITION: return .5
-		case e_value.CAM_BLOOM_INTENSITY: return .4
-		case e_value.CAM_BLOOM_RADIUS: return 1
-		case e_value.CAM_BLOOM_RATIO: return 0
-		case e_value.CAM_BLOOM_BLEND: return c_white
-		case e_value.CAM_LENS_DIRT_BLOOM:
-		case e_value.CAM_LENS_DIRT_GLOW: return true
-		case e_value.CAM_LENS_DIRT_RADIUS: return .5
-		case e_value.CAM_LENS_DIRT_INTENSITY: return .8
-		case e_value.CAM_LENS_DIRT_POWER: return 1.5
-		case e_value.CAM_COLOR_CORRECTION: return false
-		case e_value.CAM_CONTRAST:
-		case e_value.CAM_BRIGHTNESS: return 0
-		case e_value.CAM_SATURATION: return 1
-		case e_value.CAM_VIBRANCE: return 0
-		case e_value.CAM_COLOR_BURN: return c_white
-		case e_value.CAM_GRAIN_STRENGTH:
-		case e_value.CAM_GRAIN_SATURATION: return .10
-		case e_value.CAM_GRAIN_SIZE:
-		case e_value.CAM_VIGNETTE_RADIUS: return 1
-		case e_value.CAM_VIGNETTE_SOFTNESS: return 0.5
-		case e_value.CAM_VIGNETTE_STRENGTH: return 1
-		case e_value.CAM_VIGNETTE_COLOR: return c_black
-		case e_value.CAM_CA_BLUR_AMOUNT: return 0.05
-		case e_value.CAM_CA_RED_OFFSET: return .12
-		case e_value.CAM_CA_GREEN_OFFSET: return .08
-		case e_value.CAM_CA_BLUE_OFFSET: return .04
-		case e_value.CAM_DISTORT_ZOOM_AMOUNT: return 1
-		case e_value.CAM_DISTORT_AMOUNT: return .05
+		case e_value.CAM_FX_SHAKE_MODE:
+		case e_value.CAM_FX_SHAKE_STRENGTH_X:
+		case e_value.CAM_FX_SHAKE_STRENGTH_Y:
+		case e_value.CAM_FX_SHAKE_STRENGTH_Z:
+		case e_value.CAM_FX_SHAKE_SPEED_X:
+		case e_value.CAM_FX_SHAKE_SPEED_Y:
+		case e_value.CAM_FX_SHAKE_SPEED_Z: return 1
+		case e_value.CAM_FX_DOF_RANGE: return 200
+		case e_value.CAM_FX_DOF_FADE_SIZE: return 100
+		case e_value.CAM_FX_DOF_BLUR_SIZE: return .01
+		case e_value.CAM_FX_DOF_BLUR_RATIO:
+		case e_value.CAM_FX_DOF_BIAS:
+		case e_value.CAM_FX_DOF_THRESHOLD:
+		case e_value.CAM_FX_DOF_GAIN: return 0
+		case e_value.CAM_FX_DOF_FRINGE_RED:
+		case e_value.CAM_FX_DOF_FRINGE_GREEN:
+		case e_value.CAM_FX_DOF_FRINGE_BLUE: return 1
+		case e_value.CAM_FX_DOF_FRINGE_ANGLE_RED: return 90
+		case e_value.CAM_FX_DOF_FRINGE_ANGLE_GREEN: return -135
+		case e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE: return -45
+		case e_value.CAM_FX_BLOOM_THRESHOLD: return .85
+		case e_value.CAM_FX_BLOOM_TRANSITION: return .5
+		case e_value.CAM_FX_BLOOM_INTENSITY: return .4
+		case e_value.CAM_FX_BLOOM_RADIUS: return 1
+		case e_value.CAM_FX_BLOOM_RATIO: return 0
+		case e_value.CAM_FX_BLOOM_BLEND: return c_white
+		case e_value.CAM_FX_LENS_DIRT_BLOOM:
+		case e_value.CAM_FX_LENS_DIRT_GLOW: return true
+		case e_value.CAM_FX_LENS_DIRT_RADIUS: return .5
+		case e_value.CAM_FX_LENS_DIRT_INTENSITY: return .8
+		case e_value.CAM_FX_LENS_DIRT_POWER: return 1.5
+		case e_value.CAM_FX_CONTRAST:
+		case e_value.CAM_FX_BRIGHTNESS: return 0
+		case e_value.CAM_FX_SATURATION: return 1
+		case e_value.CAM_FX_VIBRANCE: return 0
+		case e_value.CAM_FX_COLOR_BURN: return c_white
+		case e_value.CAM_FX_GRAIN_STRENGTH:
+		case e_value.CAM_FX_GRAIN_SATURATION: return .10
+		case e_value.CAM_FX_GRAIN_SIZE:
+		case e_value.CAM_FX_VIGNETTE_RADIUS: return 1
+		case e_value.CAM_FX_VIGNETTE_SOFTNESS: return 0.5
+		case e_value.CAM_FX_VIGNETTE_STRENGTH: return 1
+		case e_value.CAM_FX_VIGNETTE_COLOR: return c_black
+		case e_value.CAM_FX_CA_BLUR_AMOUNT: return 0.05
+		case e_value.CAM_FX_CA_RED_OFFSET: return .12
+		case e_value.CAM_FX_CA_GREEN_OFFSET: return .08
+		case e_value.CAM_FX_CA_BLUE_OFFSET: return .04
+		case e_value.CAM_FX_DISTORT_ZOOM_AMOUNT: return 1
+		case e_value.CAM_FX_DISTORT_AMOUNT: return .05
 		case e_value.CAM_WIDTH: return 1280
 		case e_value.CAM_HEIGHT: return 720
 		case e_value.CAM_SIZE_USE_PROJECT:

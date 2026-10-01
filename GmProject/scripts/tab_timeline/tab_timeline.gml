@@ -121,6 +121,8 @@ function tab_timeline()
 	timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom))
 	timeline_zoom_button = 0
 	
+	tip_position = "top"
+	
 	// Header
 	tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	
@@ -138,6 +140,8 @@ function tab_timeline()
 	
 	// List
 	tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary, barh, headerh, itemh, mouseinnames, mousetl)
+	
+	tip_position = "bottom"
 	
 	// Update shortcut bar
 	if (content_mouseon)

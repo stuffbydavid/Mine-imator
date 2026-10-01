@@ -6,21 +6,22 @@ function view_shape_camera_frustum(tl)
 	if (tl.value[e_value.CAM_FOV] % 180 = 0)
 		return 0
 	
-	var tempmat, mat, ratio, fovtan;
+	var tempmat, mat, ratio, fovtan, effects;
 	tempmat = tl.matrix
+	effects = render_camera_effects_get()
 	
 	// Camera shake
-	if (tl.value[e_value.CAM_SHAKE])
+	if (effects != null && app.timeline_camera_effect_enabled[e_cam_fx.SHAKE])
 	{
 		var shake = vec3(
-			simplex1d_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_X]) * tl.value[e_value.CAM_SHAKE_STRENGTH_X],
-			simplex2d_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Y], 1000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Y],
-			simplex2d_lib((app.timeline_marker/app.project_tempo) * tl.value[e_value.CAM_SHAKE_SPEED_Z], 2000) * tl.value[e_value.CAM_SHAKE_STRENGTH_Z]
+			simplex1d_lib((app.timeline_marker/app.project_tempo) * effects[e_value.CAM_FX_SHAKE_SPEED_X]) * effects[e_value.CAM_FX_SHAKE_STRENGTH_X],
+			simplex2d_lib((app.timeline_marker/app.project_tempo) * effects[e_value.CAM_FX_SHAKE_SPEED_Y], 1000) * effects[e_value.CAM_FX_SHAKE_STRENGTH_Y],
+			simplex2d_lib((app.timeline_marker/app.project_tempo) * effects[e_value.CAM_FX_SHAKE_SPEED_Z], 2000) * effects[e_value.CAM_FX_SHAKE_STRENGTH_Z]
 		);
 	
 		// Create matrix
 		var shakemat;
-		if (tl.value[e_value.CAM_SHAKE_MODE])
+		if (effects[e_value.CAM_FX_SHAKE_MODE])
 			shakemat = matrix_create(shake, vec3(0), vec3(1))
 		else
 			shakemat = matrix_create(vec3(0), shake, vec3(1))
@@ -36,8 +37,8 @@ function view_shape_camera_frustum(tl)
 	fovtan = tan(degtorad(tl.value[e_value.CAM_FOV] * 0.5)) // Multiply this by distance
 		
 	// DOF visualizer
-	if (tl.value[e_value.CAM_DOF])
-		view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
+	if (effects != null && app.timeline_camera_effect_enabled[e_cam_fx.DOF])
+		view_shape_camera_frustum_dof(effects, mat, ratio, fovtan)
 			
 	var viewfrustumpoints = [
 		point3D(-((fovtan * cam_near) * ratio), cam_near, -fovtan * cam_near), // nbr

@@ -17,9 +17,9 @@ function render_high_bloom(prevsurf, hdr = false)
 	thresholdsurf = hdr ? render_surface_hdr_post[0] : render_surface[0]
 	bloomsurftemp = hdr ? render_surface_hdr_post[2] : render_surface[2]
 	resultsurf = render_high_get_apply_surf(hdr)
-	baseradius = ((render_camera.value[e_value.CAM_BLOOM_RADIUS] * 10) * render_height / 500)
+	baseradius = ((render_camera_effects[e_value.CAM_FX_BLOOM_RADIUS] * 10) * render_height / 500)
 	bloomstrength = 1
-	var levelweight = clamp(0.5 + render_camera.value[e_value.CAM_BLOOM_RADIUS], 0.5, 2.75);
+	var levelweight = clamp(0.5 + render_camera_effects[e_value.CAM_FX_BLOOM_RADIUS], 0.5, 2.75);
 	gpu_set_tex_repeat(false)
 	var captureblur = render_pass = e_render_pass.BLOOM_BLUR || render_pass = e_render_pass.ALL;
 	if (captureblur)
@@ -56,18 +56,18 @@ function render_high_bloom(prevsurf, hdr = false)
 	
 	#region Bloom streaks
 	
-	var bladeamount = max(1, render_camera.value[e_value.CAM_BLADE_AMOUNT]);
+	var bladeamount = max(1, render_camera_effects[e_value.CAM_FX_BLADE_AMOUNT]);
 	var streaks = (bladeamount mod 2 = 0) ? bladeamount / 2 : bladeamount;
 	
-	if (render_camera.value[e_value.CAM_BLOOM_RATIO] > 0)
+	if (render_camera_effects[e_value.CAM_FX_BLOOM_RATIO] > 0)
 	{
-		var bladeangle = degtorad(render_camera.value[e_value.CAM_BLADE_ANGLE]);
+		var bladeangle = degtorad(render_camera_effects[e_value.CAM_FX_BLADE_ANGLE]);
 		
 		for (var b = 0; b < streaks; b++)
 		{
 			var bladerot = degtorad((180 / streaks) * b) + bladeangle;
 			var totalweight = render_blur_pyramid(thresholdsurf, baseradius, levelweight, hdr, 5, cos(bladerot), sin(bladerot), 4);
-			bloomstrength = (1 / streaks * render_camera.value[e_value.CAM_BLOOM_RATIO] * render_camera.value[e_value.CAM_BLOOM_INTENSITY]) / totalweight
+			bloomstrength = (1 / streaks * render_camera_effects[e_value.CAM_FX_BLOOM_RATIO] * render_camera_effects[e_value.CAM_FX_BLOOM_INTENSITY]) / totalweight
 			
 			surface_set_target(bloomsurftemp)
 			{
@@ -85,7 +85,7 @@ function render_high_bloom(prevsurf, hdr = false)
 				with (render_shader_obj)
 				{
 					shader_set(shader)
-					shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0, true)
+					shader_add_set(render_surface_blur[0], bloomstrength, render_camera_effects[e_value.CAM_FX_BLOOM_BLEND], 1, baseradius > 0, true)
 				}
 				draw_surface_exists(bloomsurftemp, 0, 0)
 				with (render_shader_obj)
@@ -109,7 +109,7 @@ function render_high_bloom(prevsurf, hdr = false)
 					with (render_shader_obj)
 					{
 						shader_set(shader)
-						shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0, true)
+						shader_add_set(render_surface_blur[0], bloomstrength, render_camera_effects[e_value.CAM_FX_BLOOM_BLEND], 1, baseradius > 0, true)
 					}
 					draw_surface_exists(bloomsurftemp, 0, 0)
 					with (render_shader_obj)
@@ -124,10 +124,10 @@ function render_high_bloom(prevsurf, hdr = false)
 	
 	#region Bloom
 	
-	if (render_camera.value[e_value.CAM_BLOOM_RATIO] < 1)
+	if (render_camera_effects[e_value.CAM_FX_BLOOM_RATIO] < 1)
 	{
 		var totalweight = render_blur_pyramid(thresholdsurf, baseradius, levelweight, hdr);
-		bloomstrength = ((1.0 - render_camera.value[e_value.CAM_BLOOM_RATIO]) * render_camera.value[e_value.CAM_BLOOM_INTENSITY]) / totalweight
+		bloomstrength = ((1.0 - render_camera_effects[e_value.CAM_FX_BLOOM_RATIO]) * render_camera_effects[e_value.CAM_FX_BLOOM_INTENSITY]) / totalweight
 		
 		surface_set_target(bloomsurftemp)
 		{
@@ -145,7 +145,7 @@ function render_high_bloom(prevsurf, hdr = false)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0, true)
+				shader_add_set(render_surface_blur[0], bloomstrength, render_camera_effects[e_value.CAM_FX_BLOOM_BLEND], 1, baseradius > 0, true)
 			}
 			draw_surface_exists(bloomsurftemp, 0, 0)
 			with (render_shader_obj)
@@ -169,7 +169,7 @@ function render_high_bloom(prevsurf, hdr = false)
 				with (render_shader_obj)
 				{
 					shader_set(shader)
-					shader_add_set(render_surface_blur[0], bloomstrength, render_camera.value[e_value.CAM_BLOOM_BLEND], 1, baseradius > 0, true)
+					shader_add_set(render_surface_blur[0], bloomstrength, render_camera_effects[e_value.CAM_FX_BLOOM_BLEND], 1, baseradius > 0, true)
 				}
 				draw_surface_exists(bloomsurftemp, 0, 0)
 				with (render_shader_obj)

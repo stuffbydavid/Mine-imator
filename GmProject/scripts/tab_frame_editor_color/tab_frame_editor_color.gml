@@ -1,11 +1,13 @@
-function tab_frame_editor_color()
+/// @arg mixtextbox
+
+function tab_frame_editor_color(mixtbx, showmix = true)
 {
-	if (!tl_edit.value_type[e_value_type.MATERIAL_COLOR])
+	if (!tl_edit.value_type[e_value_type.MATERIAL_COLOR] && !(tl_edit.type = e_tl_type.CAMERA_EFFECT && tl_edit.camera_effect_type = e_cam_fx.COLOR_CORRECTION))
 		return 0
 	
 	context_menu_group_temp = e_context_group.COLOR
 	
-	#region Texture settings
+	#region Color settings
 	
 	// Have all settings exposed in 'Advanced mode'
 	if (setting_advanced_mode)
@@ -53,8 +55,7 @@ function tab_frame_editor_color()
 			tab_next()
 			
 			// Glow color
-			var glowenabled = tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA];
-			
+			var glowenabled = (tl_edit.glow && !tl_edit.value_type[e_value_type.CAMERA] && !tl_edit.value_type[e_value_type.CAMERA_EFFECT]);
 			if (glowenabled)
 			{
 				tab_control_color()
@@ -65,14 +66,17 @@ function tab_frame_editor_color()
 			tab_set_columns(false)
 		}
 		
-		// Mix
-		tab_control_color()
-		draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
-		tab_next()
-		
-		tab_control_meter()
-		draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 0, 100, 0, 1, tab.material.tbx_mix_percent, action_tl_frame_mix_percent)
-		tab_next()
+		if (showmix)
+		{
+			// Mix
+			tab_control_color()
+			draw_button_color("frameeditormixcolor", dx, dy, dw, tl_edit.value[e_value.MIX_COLOR], c_black, false, action_tl_frame_mix_color)
+			tab_next()
+
+			tab_control_meter()
+			draw_meter("frameeditormixpercent", dx, dy, dw, floor(tl_edit.value[e_value.MIX_PERCENT] * 100), 0, 100, 0, 1, mixtbx, action_tl_frame_mix_percent)
+			tab_next()
+		}
 		
 		if (setting_advanced_mode)
 			tab_collapse_end()

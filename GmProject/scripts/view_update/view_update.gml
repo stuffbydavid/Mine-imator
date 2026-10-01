@@ -172,9 +172,15 @@ function view_update(view, cam)
 				mouse_cursor = cr_none
 			
 			if (!cam || cam.value[e_value.CAM_ROTATE])
-				camera_control_rotate(cam, view_click_x, view_click_y)
+				camera_control_rotate(cam, view_click_x, view_click_y, setting_camera_lock_mouse)
 			else
-				camera_control_move(cam, view_click_x, view_click_y)
+				camera_control_move(cam, view_click_x, view_click_y, setting_camera_lock_mouse)
+			
+			if (!setting_camera_lock_mouse)
+			{
+				view_click_x = display_mouse_get_x()
+				view_click_y = display_mouse_get_y()
+			}
 			
 			if (!mouse_left)
 			{
@@ -208,7 +214,13 @@ function view_update(view, cam)
 			if (setting_camera_lock_mouse)
 				mouse_cursor = cr_none
 			
-			camera_control_move(cam, view_click_x, view_click_y)
+			camera_control_move(cam, view_click_x, view_click_y, setting_camera_lock_mouse)
+			
+			if (!setting_camera_lock_mouse)
+			{
+				view_click_x = display_mouse_get_x()
+				view_click_y = display_mouse_get_y()
+			}
 			
 			if (!mouse_right)
 			{

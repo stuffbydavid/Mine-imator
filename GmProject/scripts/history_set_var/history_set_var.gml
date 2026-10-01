@@ -18,7 +18,7 @@ function history_set_var(script, oldval, newval, combine)
 		hobj.old_value = oldval
 		hobj.save_set_var = true
 	}
-	else if (combine && history_amount > 0 &&
+	else if (combine && !history_separate && history_amount > 0 &&
 		history[0].script = script &&
 		history[0].save_temp_edit = save_id_get(temp_edit) &&
 		history[0].save_renderer_edit = renderer_edit &&

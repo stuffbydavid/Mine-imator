@@ -85,38 +85,35 @@ function tl_value_set(vid = undefined, val = undefined, add = false, mul = false
 	}
 	else
 	{
-		var tlcount = 0;
-		
 		// Modify timelines
-		with (obj_timeline)
+		for (var tlcount = 0; tlcount < history_data.tl_set_amount; tlcount++)
 		{
-			if (!selected)
-				continue
-			
-			if (history_data.par_set_n = history_data.par_set_amount)
-				history_data.tl_set_old_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
-			if (history_data.scale_link_drag)
+			with (save_id_find(history_data.tl_set_save_id[tlcount]))
 			{
-				value[vid] = history_data.tl_set_old_value[tlcount, history_data.par_set_n]
+				if (history_data.par_set_n = history_data.par_set_amount)
+					history_data.tl_set_old_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
+				
+				if (history_data.scale_link_drag)
+					value[vid] = history_data.tl_set_old_value[tlcount, history_data.par_set_n]
+
+				var nval;
+				if (tl_value_is_string(vid) || tl_value_is_texture(vid) || tl_value_is_obj(vid))
+					nval = val
+				else if (mul)
+					nval = value[vid] * val
+				else
+					nval = value[vid] * add + val
+
+				if (value[vid] != nval)
+					update_matrix = true
+
+				value[vid] = tl_value_clamp(vid, nval)
+
+				if (type = e_tl_type.TEXT && vid = e_value.TEXT && !animated)
+					value_default[vid] = value[vid]
+
+				history_data.tl_set_new_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
 			}
-			
-			var nval;
-			if (tl_value_is_string(vid) || tl_value_is_texture(vid) || tl_value_is_obj(vid))
-				nval = val
-			else if (mul)
-				nval = value[vid] * val
-			else
-				nval = value[vid] * add + val
-			
-			if (value[vid] != nval)
-				update_matrix = true
-			
-			value[vid] = tl_value_clamp(vid, nval)
-			if (vid = e_value.TEXT && type = e_tl_type.TEXT && !animated)
-				value_default[vid] = value[vid]
-			history_data.tl_set_new_value[tlcount, history_data.par_set_n] = tl_value_get_save_id(vid, value[vid])
-			
-			tlcount++
 		}
 		
 		// Save and modify keyframes
@@ -165,6 +162,7 @@ function tl_value_set(vid = undefined, val = undefined, add = false, mul = false
 	{
 		tl_update_length()
 		tl_update_matrix()
+		
 		app_update_tl_edit()
 	}
 }

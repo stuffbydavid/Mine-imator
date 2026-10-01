@@ -83,6 +83,11 @@ function project_load_legacy_timeline()
 			else
 				log("Could not find model part for", findtemp.model_name, findtemp.legacy_model_name, legacy_model_part_id)
 		}
+		else if (type = e_tl_type.CAMERA)
+		{
+			legacy_camera_effect_default = array_create(e_cam_fx.amount, false)
+			legacy_camera_effect_available = array_create(e_cam_fx.amount, false)
+		}
 		
 		part_of = project_load_legacy_save_id()
 		
@@ -103,6 +108,13 @@ function project_load_legacy_timeline()
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
 			project_load_legacy_values(id)
 		
+		if (type = e_tl_type.CAMERA && load_format >= e_project.FORMAT_100_DEMO_4)
+		{
+			legacy_camera_effect_default = legacy_camera_effect_enabled
+			for (var fx = 0; fx < e_cam_fx.amount; fx++)
+				legacy_camera_effect_available[fx] = legacy_camera_effect_default[fx]
+		}
+		
 		keyframe_amount = buffer_read_int()
 		if (keyframe_amount = 0)
 			for (var v = 0; v < e_value.amount; v++)
@@ -120,7 +132,13 @@ function project_load_legacy_timeline()
 				
 				for (var v = 0; v < e_value.amount; v++)
 					value[v] = other.value[v]
+				
 				project_load_legacy_values(other.id)
+				
+				if (other.type = e_tl_type.CAMERA)
+					for (var fx = 0; fx < e_cam_fx.amount; fx++)
+						if (legacy_camera_effect_enabled[fx])
+							other.legacy_camera_effect_available[fx] = true
 				
 				ds_list_add(other.keyframe_list, id)
 			}
@@ -196,8 +214,14 @@ function project_load_legacy_timeline()
 						value[e_value.BEND_ANGLE_LEGACY]= 0
 			}
 			
-			hq_hiding = buffer_read_byte() // hide_quality_high
-			lq_hiding = buffer_read_byte() // hide_quality_low
+			var hqhide, lqhide;
+			hqhide = buffer_read_byte() // hide_quality_high
+			lqhide = buffer_read_byte() // hide_quality_low
+			
+			mode_visible[e_renderer.QUICK] = !lqhide
+			mode_visible[e_renderer.STANDARD] = !lqhide
+			mode_visible[e_renderer.REALISTIC] = !hqhide
+			
 			/*foliage_tint =*/ buffer_read_byte() // biome
 		}
 		

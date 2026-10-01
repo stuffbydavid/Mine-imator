@@ -3,7 +3,6 @@ function menu_event_create()
 	menu_name = ""
 	menu_type = ""
 	menu_window = e_window.MAIN
-	menu_temp_edit = null
 	
 	menu_script = null
 	menu_list = null
@@ -33,7 +32,10 @@ function menu_event_create()
 	menu_item_w = 0
 	menu_item_h = 0
 	
+	menu_temp_edit = null
 	menu_include_tl_edit = true
+	menu_camera_effect_edit_type = null
+	
 	menu_item_extend = null
 	menu_count = 0
 	

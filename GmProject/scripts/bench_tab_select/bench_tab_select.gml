@@ -178,6 +178,7 @@ function bench_tab_select(tab, key = false)
 			case e_bench_tab.TEXT:				type = e_temp_type.TEXT; break
 			case e_bench_tab.PATH:				type = e_tl_type.PATH; break
 			case e_bench_tab.CAMERA:			type = e_tl_type.CAMERA; break
+			case e_bench_tab.CAMERA_EFFECT:		type = e_tl_type.CAMERA_EFFECT; break
 			case e_bench_tab.AUDIO_TRACK:		type = e_tl_type.AUDIO_TRACK; break
 			case e_bench_tab.PARTICLE_SPAWNER:  type = e_temp_type.PARTICLE_SPAWNER; break
 			case e_bench_tab.LIGHT_SOURCE:		type = light_type; break
@@ -195,18 +196,28 @@ function bench_tab_select(tab, key = false)
 		case e_bench_tab.EQUIPMENT: 		sortlist = bench_settings.equipment_list; break
 		case e_bench_tab.SPECIAL_BLOCK: 	sortlist = bench_settings.special_block_list; break
 		case e_bench_tab.MODEL_PART: 		sortlist = bench_settings.model_part_model_list; break
+		
 		case e_bench_tab.BLOCK:
 		{
 			sortlist = bench_settings.block_list
 			sortvalue = bench_settings.block_name
 			break
 		}
+		
 		case e_bench_tab.SHAPE:
 		{
 			sortlist = bench_settings.shape_list
 			sortvalue = bench_settings.shape_type
 			break
 		}
+		
+		case e_bench_tab.CAMERA_EFFECT:
+		{
+			sortlist = setting_advanced_mode ? bench_settings.camera_effect_list_advanced : bench_settings.camera_effect_list_simple
+			sortvalue = bench_settings.camera_effect_type
+			break
+		}
+		
 		case e_bench_tab.PARTICLE_SPAWNER:
 		{
 			sortlist = bench_settings.particle_preset_list

@@ -18,4 +18,7 @@ function tab_collapse_end(divider = true)
 		draw_divide(content_x, dy, content_width - (floor(tab.scroll.needed * 12) + 1))
 		dy += 8
 	}
+	
+	if (collapse_groups > 0)
+		dy += 4
 }

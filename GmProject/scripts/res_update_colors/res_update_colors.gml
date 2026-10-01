@@ -17,16 +17,16 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 	if (nextbiome != "" && biome != nextbiome)
 	{
 		var startframe, endframe;
-		startframe = app.env_tlactive.keyframe_current
-		endframe = app.env_tlactive.keyframe_next
+		startframe = app.timeline_environment.keyframe_current
+		endframe = app.timeline_environment.keyframe_next
 		
 		// Resolve colormaps only when the keyframe pair changes
 		if (color_biome_start_colors = null || color_biome_end_colors = null ||
 			color_biome_start_name != biome || color_biome_end_name != nextbiome ||
 			color_biome_start_frame != startframe || color_biome_end_frame != endframe)
 		{
-			color_biome_start_colors = res_biome_colors(biome, app.env_tlactive.keyframe_current_values)
-			color_biome_end_colors = res_biome_colors(nextbiome, app.env_tlactive.keyframe_next_values)
+			color_biome_start_colors = res_biome_colors(biome, app.timeline_environment.keyframe_current_values)
+			color_biome_end_colors = res_biome_colors(nextbiome, app.timeline_environment.keyframe_next_values)
 			color_biome_start_name = biome
 			color_biome_end_name = nextbiome
 			color_biome_start_frame = startframe
@@ -35,9 +35,10 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		else
 		{
 			if (biome = "custom")
-				color_biome_start_colors = res_biome_colors(biome, app.env_tlactive.keyframe_current_values)
+				color_biome_start_colors = res_biome_colors(biome, app.timeline_environment.keyframe_current_values)
+			
 			if (nextbiome = "custom")
-				color_biome_end_colors = res_biome_colors(nextbiome, app.env_tlactive.keyframe_next_values)
+				color_biome_end_colors = res_biome_colors(nextbiome, app.timeline_environment.keyframe_next_values)
 		}
 		
 		if (color_biome_start_colors = null || color_biome_end_colors = null)
@@ -51,6 +52,7 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 	{
 		color_biome_start_colors = null
 		color_biome_end_colors = null
+		
 		colors = res_biome_colors(biome)
 		if (colors = null)
 			return 0

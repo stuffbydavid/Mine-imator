@@ -57,6 +57,7 @@ function bench_draw_settings_character()
 	tab_control(bench_list_height(list))
 	sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.model_name, false, labeltext)
 	tab_next()
+	
 	menu_filter = list.search_tbx.text
 	menu_filter_normal = sortlist_column_get(list, bench_settings.model_name, 0)
 

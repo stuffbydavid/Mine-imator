@@ -14,8 +14,9 @@
 /// @arg [texcolor]
 /// @arg [texalpha]
 /// @arg [captionwid]
+/// @arg [tip]
 
-function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, disabled = false, tex = null, icon = null, caption = "", texcolor = null, texalpha = null, capwid = null)
+function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, disabled = false, tex = null, icon = null, caption = "", texcolor = null, texalpha = null, capwid = null, tip = "")
 {
 	if (texcolor = null)
 		texcolor = c_white
@@ -46,6 +47,9 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 	else
 		nameid = name
 	
+	if (camera_effect_type_edit != null)
+		nameid += "fx" + string(camera_effect_type_edit)
+
 	// Check if menu is currently active
 	menuactive = false
 	menuhide = false
@@ -84,7 +88,10 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		
 		if (capwid = null && (!window_compact || app.panel_compact))
 		{
-			draw_label(string_limit(cap, dw), xx, yy - 3, fa_left, fa_top, textcolor, textalpha)
+			cap = string_limit(cap, dw)
+			draw_label(cap, xx, yy - 3, fa_left, fa_top, textcolor, textalpha)
+			if (tip != "")
+				draw_help_circle(tip, xx + string_width(cap) + 4, yy - 5, disabled)
 			yy += (label_height + 8)
 		}
 		else
@@ -96,6 +103,8 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 			}
 			
 			draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha)
+			if (tip != "")
+				draw_help_circle(tip, xx + string_width(cap) + 4, yy + (hei/2) - 10, disabled)
 			wid -= capwid
 			xx += capwid
 		}
@@ -292,6 +301,8 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		list_item_script = script
 		list_item_script_value = item.value
 		
+		list_item_camera_effect_edit_type = camera_effect_type_edit
+		
 		current_microani.holding.init(1)
 		current_microani.goal_ease = ((mouse_wheel) + 1) * .5
 		
@@ -361,6 +372,7 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 								  m.menu_name != "frameeditoriktarget" &&
 								  m.menu_name != "frameeditorikangletarget")
 		m.menu_model_armor_variant = menu_model_armor_variant
+		m.menu_camera_effect_edit_type = camera_effect_type_edit
 		m.menu_margin = 0//8
 		m.menu_transition = null
 		m.menu_steps = 0

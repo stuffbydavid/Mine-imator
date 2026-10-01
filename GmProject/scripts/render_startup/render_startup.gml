@@ -2,7 +2,7 @@ function render_startup()
 {
 	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
-	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_start_time, render_start_surface_time,
+	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_camera_effects, render_camera_effect_enabled, render_start_time, render_start_surface_time,
 			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
 			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
@@ -17,7 +17,7 @@ function render_startup()
 			  render_glow, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
-			  render_tonemapper, render_exposure, render_gamma, render_auxiliary;
+			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	render_use_samples = false
@@ -46,8 +46,9 @@ function render_startup()
 	gpu_set_tex_mip_filter(tf_linear)
 	gpu_set_texrepeat(true)
 	gpu_set_ztestenable(false)
-	render_set_culling(true)
 	gpu_set_tex_max_mip(4)
+	
+	render_set_culling(true)
 	shader_reset_uniforms()
 	
 	renderer_current = e_renderer.QUICK
@@ -59,6 +60,8 @@ function render_startup()
 	render_height = 1
 	render_ratio = 1
 	render_camera = null
+	render_camera_effects = null
+	render_camera_effect_enabled = null
 	
 	render_light_specular_strength = 0
 	render_light_realistic_falloff = false
@@ -96,6 +99,19 @@ function render_startup()
 	render_surface_time = 0
 	render_active = null
 	render_repeat = vec3(0)
+	
+	render_tonemapper_names = [
+		"none",
+		"reinhard",
+		"aces",
+		"uchimura",
+		"lottes",
+		"hable",
+		"gt7curve",
+		"pbrneutral",
+		"agx",
+		"agxpunchy"
+	]
 	
 	// Surfaces for rendering
 	globalvar render_surface_pool_list, render_surface_pool_current,
@@ -155,8 +171,6 @@ function render_startup()
 
 	render_gamma = 1
 	
-	render_gamma = 1
-	
 	// Progressive anti-aliasing
 	globalvar aa_matrix, aa_jitter_matrix;
 	aa_matrix = MAT_IDENTITY
@@ -196,6 +210,7 @@ function render_startup()
 	render_shadow_cache = null
 	render_shadow_cache_ready = null
 	render_shadow_cache_enabled = false
+	
 	globalvar render_gbuffers_cache_enabled, render_gbuffers_cache_ready;
 	render_gbuffers_cache_enabled = false
 	render_gbuffers_cache_ready = false

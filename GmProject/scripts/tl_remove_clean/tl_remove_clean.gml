@@ -134,6 +134,18 @@ function tl_remove_clean()
 		
 	if (app.timeline_camera = id)
 		app.timeline_camera = null
+	
+	app.timeline_camera_effect_value = null
+	app.timeline_camera_effect_enabled = null
+	
+	if (type = e_tl_type.CAMERA_EFFECT)
+	{
+		for (var c = 0; c < ds_list_size(camera_effect_name_list); c++)
+			ds_map_delete(collapse_map, camera_effect_name_list[|c] + save_id)
+		
+		ds_map_delete(collapse_map, "dof_bokeh" + save_id)
+		ds_map_delete(collapse_map, "dof_fringe" + save_id)
+	}
 		
 	while (ds_list_size(keyframe_list))
 		with (keyframe_list[|0])

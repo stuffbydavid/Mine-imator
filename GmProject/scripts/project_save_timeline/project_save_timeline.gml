@@ -48,6 +48,9 @@ function project_save_timeline()
 			json_save_object_done()
 		}
 
+		if (type = e_tl_type.CAMERA_EFFECT)
+			json_save_var("camera_effect_type", camera_effect_type)
+		
 		if (part_of != null)
 		{
 			json_save_var_save_id("part_of", part_of)
@@ -172,23 +175,27 @@ function project_save_timeline()
 		
 		if (value_type[e_value_type.APPEARANCE])
 		{
-			json_save_var_bool("backfaces", backfaces)
-			json_save_var_bool("texture_blur", texture_blur)
-			json_save_var_bool("texture_filtering", texture_filtering)
-			json_save_var_bool("shadows", shadows)
-			if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
-				json_save_var_bool("realistic_falloff", realistic_falloff)
-			json_save_var_bool("ssao", ssao)
-			json_save_var_bool("glow", glow)
-			json_save_var_bool("glow_texture", glow_texture)
-			json_save_var_bool("only_render_glow", only_render_glow)
 			json_save_var_bool("glint_enabled", glint_enabled)
 			json_save_var("glint_mode", glint_mode)
 			json_save_var("glint_scale", glint_scale)
 			json_save_var("glint_speed", glint_speed)
 			json_save_var("glint_strength", glint_strength)
 			json_save_var_save_id("glint_tex", glint_tex)
+			
+			json_save_var_bool("glow", glow)
+			json_save_var_bool("glow_texture", glow_texture)
+			json_save_var_bool("only_render_glow", only_render_glow)
+			
+			json_save_var_bool("texture_blur", texture_blur)
+			json_save_var_bool("texture_filtering", texture_filtering)
+			json_save_var_bool("shadows", shadows)
+			
+			if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+				json_save_var_bool("realistic_falloff", realistic_falloff)
+			
+			json_save_var_bool("ssao", ssao)
 			json_save_var_bool("fog", fog)
+			json_save_var_bool("backfaces", backfaces)
 			
 			if (type_has_wind(type))
 			{
@@ -196,10 +203,10 @@ function project_save_timeline()
 				json_save_var_bool("wind_terrain", wind_terrain)
 			}
 			
-			json_save_var_bool("hq_hiding", hq_hiding)
-			json_save_var_bool("lq_hiding", lq_hiding)
 			json_save_var("blend_mode", blend_mode)
 			json_save_var("alpha_mode", alpha_mode)
+			
+			json_save_var("mode_visible", mode_visible)
 		}
 		
 		if (value_type[e_value_type.PATH])

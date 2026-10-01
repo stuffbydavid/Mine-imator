@@ -118,6 +118,16 @@ function tab_settings_interface()
 	draw_label(text_get("settingsviewport"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label) 
 	dy += 8
 	
+	// Quick mode shading
+	tab_control_switch()
+	draw_switch("settingsquickmodeshading", dx, dy, setting_quick_mode_shading, action_setting_quick_mode_shading)
+	tab_next()
+	
+	// Quick mode anti-aliasing
+	tab_control_switch()
+	draw_switch("settingsquickmodeaa", dx, dy, setting_quick_mode_aa, action_setting_quick_mode_aa)
+	tab_next()
+	
 	// Gizmos face camera
 	tab_control_switch()
 	draw_switch("settingsgizmosfacecamera", dx, dy, setting_gizmos_face_camera, action_setting_gizmos_face_camera)

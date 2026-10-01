@@ -33,10 +33,14 @@ function tl_value_set_start(script, combine)
 	
 	// Register history
 	history_pop()
-	if (combine && history_amount > 0 &&
+
+	if (combine && !history_separate && history_amount > 0 &&
 		history[0].par_script = script &&
-		history[0].save_axis_edit = axis_edit)
+		history[0].save_axis_edit = axis_edit &&
+		history[0].save_camera_effect_type_edit = camera_effect_type_edit)
+	{
 		history_data = history[0]
+	}
 	else
 	{
 		history_push()
@@ -53,6 +57,7 @@ function tl_value_set_start(script, combine)
 		{
 			if (!selected)
 				continue
+
 			history_data.tl_set_save_id[history_data.tl_set_amount] = save_id
 			history_data.tl_set_animated[history_data.tl_set_amount] = animated
 			history_data.tl_set_amount++
@@ -83,6 +88,7 @@ function tl_value_set_start(script, combine)
 	}
 	
 	history_data.par_set_n = 0
-	render_samples = -1
 	history_resource_update = true
+
+	render_samples = -1
 }

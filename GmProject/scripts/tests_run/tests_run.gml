@@ -135,6 +135,11 @@ function tests_run()
 		// Save camera values
 		if (timeline_camera)
 			renderpreset.cam_value = timeline_camera.value
+		renderpreset.camfx_value = render_camera_effects_get()
+		
+		var camfxenabled = array_copy_1d(timeline_camera_effect_enabled);
+		if (renderpreset.camfx_value != null)
+			renderpreset.camfx_value = array_copy_1d(renderpreset.camfx_value)
 			
 		for (renderer_current = e_renderer.QUICK; renderer_current <= e_renderer.REALISTIC; renderer_current++)
 		{
@@ -154,6 +159,11 @@ function tests_run()
 
 			if (timeline_camera)
 				timeline_camera.value = renderpreset.cam_value
+			
+			timeline_camera_effect_value = null
+			timeline_camera_effect_enabled = array_copy_1d(camfxenabled)
+			if (renderpreset.camfx_value != null)
+				timeline_camera_effect_value = array_copy_1d(renderpreset.camfx_value)
 
 			if (array_length(argssettingsqueue) > 0)
 			{
@@ -217,7 +227,7 @@ function tests_run()
 				
 				export_filename = exportbasename + ".png"
 			
-				render_lights = (renderer_current != e_renderer.QUICK)
+				render_lights = (renderer_current != e_renderer.QUICK || setting_quick_mode_shading)
 				popup_exportimage.renderer = renderer_current
 			
 				benchmark_render_total_time = 0

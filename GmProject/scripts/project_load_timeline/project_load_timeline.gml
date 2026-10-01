@@ -23,6 +23,7 @@ function project_load_timeline(map)
 		temp = value_get_save_id(map[?"temp"], temp)
 		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
 		animated = value_get_real(map[?"animated"], animated)
+		
 		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.ENVIRONMENT)
 			animated = true
 		
@@ -35,7 +36,7 @@ function project_load_timeline(map)
 		if (type = e_tl_type.MODEL_PART)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
 		
-		if (type = e_tl_type.TEXT)
+		else if (type = e_tl_type.TEXT)
 		{
 			if (load_format < e_project.FORMAT_210)
 			{
@@ -45,6 +46,9 @@ function project_load_timeline(map)
 			value_default[e_value.TEXT] = value_get_string(map[?"text"], value_default[e_value.TEXT])
 			text_aa = value_get_real(map[?"text_aa"], text_aa)
 		}
+		
+		else if (type = e_tl_type.CAMERA_EFFECT)
+			camera_effect_type = value_get_real(map[?"camera_effect_type"], e_cam_fx.FADE)
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
 		
@@ -182,6 +186,20 @@ function project_load_timeline(map)
 		project_load_values(defaultmap, value_default)
 		project_load_values_update_default()
 		
+		if (load_format < e_project.FORMAT_210 && type = e_tl_type.CAMERA)
+		{
+			legacy_camera_effect_default = array_create(e_cam_fx.amount, false)
+			legacy_camera_effect_available = array_create(e_cam_fx.amount, false)
+			legacy_camera_effect_default[e_cam_fx.FADE] = (value_default[e_value.ALPHA] < 1 || value_default[e_value.MIX_PERCENT] > 0)
+			
+			for (var fx = e_cam_fx.SHAKE; fx < e_cam_fx.amount; fx++)
+				if (ds_map_valid(defaultmap))
+					legacy_camera_effect_default[fx] = value_get_real(defaultmap[?camera_effect_legacy_name_list[|fx]], false)
+			
+			for (var fx = 0; fx < e_cam_fx.amount; fx++)
+				legacy_camera_effect_available[fx] = legacy_camera_effect_default[fx]
+		}
+		
 		// Preserve anti-aliasing from legacy frame values
 		if (type = e_tl_type.TEXT && ds_map_valid(defaultmap))
 			text_aa = text_aa || value_get_real(defaultmap[?"TEXT_AA"], false)
@@ -215,6 +233,19 @@ function project_load_timeline(map)
 					
 					project_load_values(kfmap[?key], value)
 					project_load_values_update(kfmap[?key])
+					
+					if (load_format < e_project.FORMAT_210 && other.type = e_tl_type.CAMERA)
+					{
+						legacy_camera_effect_enabled = array_create(e_cam_fx.amount, false)
+						legacy_camera_effect_enabled[e_cam_fx.FADE] = (value[e_value.ALPHA] < 1 || value[e_value.MIX_PERCENT] > 0)
+						
+						for (var fx = e_cam_fx.SHAKE; fx < e_cam_fx.amount; fx++)
+							legacy_camera_effect_enabled[fx] = value_get_real(framemap[?camera_effect_legacy_name_list[|fx]], other.legacy_camera_effect_default[fx])
+						
+						for (var fx = 0; fx < e_cam_fx.amount; fx++)
+							if (legacy_camera_effect_enabled[fx])
+								other.legacy_camera_effect_available[fx] = true
+					}
 					
 					if (other.type = e_tl_type.TEXT && other.has_temp && !texttemplatesettings)
 					{
@@ -272,6 +303,8 @@ function project_load_timeline(map)
 		backfaces = value_get_real(map[?"backfaces"], backfaces)
 		texture_blur = value_get_real(map[?"texture_blur"], texture_blur)
 		texture_filtering = value_get_real(map[?"texture_filtering"], texture_filtering)
+		if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+			shadows = false
 		shadows = value_get_real(map[?"shadows"], shadows)
 		realistic_falloff = value_get_real(map[?"realistic_falloff"], realistic_falloff)
 		ssao = value_get_real(map[?"ssao"], ssao)
@@ -294,9 +327,20 @@ function project_load_timeline(map)
 			wind_terrain = value_get_real(map[?"wind_terrain"], wind_terrain)
 		}
 		
-		hq_hiding = value_get_real(map[?"hq_hiding"], hq_hiding)
-		lq_hiding = value_get_real(map[?"lq_hiding"], lq_hiding)
-		
+		var modevisible = map[?"mode_visible"];
+		if (ds_list_valid(modevisible))
+		{
+			for (var i = 0; i < min(ds_list_size(modevisible), e_renderer.COMMON); i++)
+				mode_visible[i] = value_get_real(modevisible[|i], mode_visible[i])
+		}
+		else
+		{
+			// Convert legacy quality hiding flags to renderer visibility
+			mode_visible[e_renderer.QUICK] = !value_get_real(map[?"lq_hiding"], false)
+			mode_visible[e_renderer.STANDARD] = mode_visible[e_renderer.QUICK]
+			mode_visible[e_renderer.REALISTIC] = !value_get_real(map[?"hq_hiding"], false)
+		}
+
 		blend_mode = value_get_string(map[?"blend_mode"], blend_mode)
 		
 		if (load_format < e_project.FORMAT_200_PRE_5)

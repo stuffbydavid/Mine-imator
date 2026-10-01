@@ -289,7 +289,7 @@ function view_draw(view)
 		view.particles = !view.particles
 	
 	// Effects
-	if (cam != null)
+	if (view = view_second)
 	{
 		dx -= dw + padding
 		

@@ -83,6 +83,7 @@ function tl_update_values_progress(markerpos)
 		var range = keyframe_next.position - keyframe_current.position;
 		if (loopnext)
 			range += regionsize
+		
 		else if (loopprev)
 		{
 			markerpos += regionsize

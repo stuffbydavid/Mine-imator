@@ -2,9 +2,6 @@ function bench_draw_settings_world()
 {
 	bench_buttons_hidden = true
 
-	draw_sprite(spr_bench_example, 4, examplex, dy)
-	dy += 144 + 16
-
 	draw_tooltip_label("benchworldtip1", icons.INFO, e_toast.INFO)
 	dy += 8
 	draw_tooltip_label("benchworldtip2", null, e_toast.INFO)

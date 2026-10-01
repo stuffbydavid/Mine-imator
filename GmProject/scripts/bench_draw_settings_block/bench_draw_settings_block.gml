@@ -92,7 +92,6 @@ function bench_draw_settings_block()
 		draw_button_menu("benchblocktexnormal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.block_tex_normal, res_eval(bench_settings.block_tex_normal).display_name, action_bench_block_tex_normal, false, res_eval(bench_settings.block_tex_normal).block_preview_texture, null, "", null, null, content_capwid)
 		dy += (ui_large_height + 8)
 	}
-	dy += 4
 
 	window_scroll_focus = string(bench_settings.block_list.scroll)
 }

@@ -14,6 +14,9 @@ function new_tl(tlype)
 		if (type = e_tl_type.TEXT)
 			value[e_value.TEXT] = text_get("frameeditortextsample")
 		
+		if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+			shadows = false
+			
 		tl_update()
 		
 		tl_set_parent_root()

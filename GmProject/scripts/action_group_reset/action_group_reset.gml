@@ -51,8 +51,40 @@ function action_group_reset()
 			break
 		
 		case e_context_group.CAMERA:
-			action_tl_frame_set_camera(camera_use_default_list, true)
+		{
+			if (context_menu_camera_effect_type_edit = null)
+				action_tl_frame_set_camera(camera_use_default_list, true)
+			else
+			{
+				var fxtype, fxrange;
+				fxtype = context_menu_camera_effect_type_edit
+				fxrange = camera_effect_value_range_list[|fxtype]
+				camera_effect_type_edit = fxtype
+				
+				tl_value_set_start(action_group_reset, false)
+				
+				for (var v = fxrange[0]; v <= fxrange[1]; v++)
+					if (fxtype != e_cam_fx.FADE || v != e_value.GLOW_COLOR)
+						tl_value_set(v, tl_value_default(v))
+				
+				if (camera_effect_type_use_aperture(fxtype))
+					for (var v = e_value.CAM_FX_BLADE_AMOUNT; v <= e_value.CAM_FX_BLADE_STRETCH; v++)
+						tl_value_set(v, tl_value_default(v))
+				
+				if (fxtype = e_cam_fx.COLOR_CORRECTION)
+					for (var v = e_value.RGB_ADD; v <= e_value.HSB_MUL; v++)
+						tl_value_set(v, tl_value_default(v))
+				
+				if (fxtype = e_cam_fx.LENS_DIRT)
+					tl_value_set(e_value.TEXTURE_OBJ, null)
+				
+				tl_value_set_done()
+				
+				camera_effect_type_edit = null
+			}
+			
 			break
+		}
 		
 		case e_context_group.EASE:
 			action_tl_frame_ease_set_all([ 1, 0, 0, 1 ], false)

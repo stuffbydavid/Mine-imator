@@ -61,9 +61,7 @@ function tab_frame_editor_texture()
 			}
 			
 			case e_tl_type.TEXT:
-			{
 				break // Text doesn't use textures
-			}
 			
 			default: // Shapes
 			{
@@ -73,6 +71,7 @@ function tab_frame_editor_texture()
 				
 				if (texobj != null && texobj.type != e_tl_type.CAMERA) // Don't preview cameras
 					tex = texobj.texture
+				
 				break
 			}
 		}

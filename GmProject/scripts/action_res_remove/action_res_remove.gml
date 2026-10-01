@@ -31,14 +31,14 @@ function action_res_remove()
 	{
 		if (scenery = res_edit)
 		{
-			if (!app.history_undo)
+			if (!history_undo)
 				scenery = null
 			
-			temp_set_scenery(scenery, !app.history_undo, hobj)
+			temp_set_scenery(scenery, !history_undo, hobj)
 		}
 		else if (model = res_edit)
 		{
-			if (!app.history_undo)
+			if (!history_undo)
 				model = null
 			
 			temp_update_model()

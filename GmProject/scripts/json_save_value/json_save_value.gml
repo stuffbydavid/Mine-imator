@@ -1,11 +1,11 @@
 function json_save_value(value)
 {
-	if (is_real(value) || is_int32(value) || is_int64(value))
+	if (is_bool(value))
+		buffer_write_string(value ? "true" : "false")
+	else if (is_real(value) || is_int32(value) || is_int64(value))
 		buffer_write_string(string_decimals(value))
 	else if (is_array(value))
 		json_save_array(value, array_length(value))
-	else if (is_bool(value))
-		buffer_write_string(string(value))
 	else
 	{
 		buffer_write_byte(e_json_char.QUOTE)

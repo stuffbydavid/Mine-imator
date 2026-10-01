@@ -32,7 +32,16 @@ function tab_timeline_editor_info()
 			with (tl_edit.part_root = null ? tl_edit.temp : tl_edit.part_root.temp)
 				temp_select_edit(true)
 	}
+	
 	tab_next()
+	
+	// Effect
+	if (tl_edit.type = e_tl_type.CAMERA_EFFECT)
+	{
+		tab_control_menu()
+		draw_button_menu("timelineeditoreffect", e_menu.LIST, dx, dy, dw, 24, tl_edit.camera_effect_type, text_get("frameeditorcameraeffect" + camera_effect_name_list[|tl_edit.camera_effect_type]), action_tl_camera_effect_type)
+		tab_next()
+	}
 	
 	// Name
 	tab_control_textfield()

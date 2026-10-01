@@ -62,7 +62,7 @@ function render_low()
 	if (render_camera_dof)
 		render_surface_depth = cacheddepth
 	
-	if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.FXAA)
+	if (setting_quick_mode_aa)
 		finalsurf = render_high_aa(finalsurf)
 	
 	render_target = surface_require(render_target, render_width, render_height)

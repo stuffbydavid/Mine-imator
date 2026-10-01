@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_camera_effects_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_camera_effects_get",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

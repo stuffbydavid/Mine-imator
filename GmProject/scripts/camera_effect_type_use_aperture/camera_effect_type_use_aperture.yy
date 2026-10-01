@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"camera_effect_type_use_aperture",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"camera_effect_type_use_aperture",
+  "parent":{
+    "name":"Type",
+    "path":"folders/Scripts/Project/Timeline/Type.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

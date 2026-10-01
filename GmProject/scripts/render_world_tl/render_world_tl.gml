@@ -7,6 +7,7 @@ function render_world_tl()
 		type = e_tl_type.EQUIPMENT ||
 		type = e_tl_type.SPECIAL_BLOCK ||
 		type = e_tl_type.AUDIO_TRACK ||
+		type = e_tl_type.CAMERA_EFFECT ||
 		type = e_tl_type.PATH_POINT ||
 		type = e_tl_type.ENVIRONMENT ||
 		type = e_tl_type.STRUCTURE ||
@@ -31,7 +32,7 @@ function render_world_tl()
 	}
 	
 	// Only render glow effect?
-	if ((glow && only_render_glow) && render_mode != e_render_mode.AUXILIARY)
+	if ((glow && only_render_glow) && render_mode != e_render_mode.AUXILIARY && render_mode != e_render_mode.CLICK)
 		return 0
 	
 	// Not registered on shadow depth testing?

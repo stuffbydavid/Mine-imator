@@ -147,7 +147,7 @@ function render_high_shadows()
 	{
 		with (lightlist[i])
 		{
-			if (!value_inherit[e_value.VISIBLE] || hide || (render_view_current.render && hq_hiding) || (!render_view_current.render && lq_hiding))
+			if (!value_inherit[e_value.VISIBLE] || hide || !mode_visible[renderer_current])
 				continue
 			
 			if (app.project_render_shadows_jittered && render_sample_current > 1)

@@ -183,6 +183,9 @@ function settings_load()
 			
 			setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)
 			
+			setting_quick_mode_shading = value_get_real(interfacemap[?"quick_mode_shading"], setting_quick_mode_shading)
+			setting_quick_mode_aa = value_get_real(interfacemap[?"quick_mode_aa"], setting_quick_mode_aa)
+			
 			setting_view_main_overlays = value_get_real(interfacemap[?"view_main_overlays"], setting_view_main_overlays)
 			setting_view_main_aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], setting_view_main_aspect_ratio)
 			setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)

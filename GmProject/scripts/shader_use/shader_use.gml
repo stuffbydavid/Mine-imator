@@ -103,6 +103,10 @@ function shader_use()
 	if (!is_undefined(uniform_map[?"uTextureOffset"]) && uniform_map[?"uTextureOffset"] > -1)
 		render_set_uniform_vec2("uTextureOffset", 0, 0)
 	
+	// Tone mapping in quick mode
+	if (renderer_current = e_renderer.QUICK && render_mode = e_render_mode.COLOR_FOG)
+		shader_tonemap_set()
+
 	// Init script
 	if (script > -1)
 		script_execute(script)

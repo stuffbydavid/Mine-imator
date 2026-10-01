@@ -9,9 +9,9 @@ function view_update_surface(view, cam)
 	
 	// Render
 	renderer_current = view.renderer
-	render_lights = (view.renderer != e_renderer.QUICK)
+	render_lights = (view.renderer != e_renderer.QUICK || setting_quick_mode_shading)
 	render_particles = view.particles
-	render_effects = view.effects
+	render_effects = (view = view_second && view.effects)
 	render_background = !view.transparent_background
 	render_watermark = (
 		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"]) ||

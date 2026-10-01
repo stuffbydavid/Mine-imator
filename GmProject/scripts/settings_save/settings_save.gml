@@ -133,6 +133,9 @@ function settings_save()
 		
 		json_save_var("view_split", view_split)
 		
+		json_save_var_bool("quick_mode_shading", setting_quick_mode_shading)
+		json_save_var_bool("quick_mode_aa", setting_quick_mode_aa)
+		
 		json_save_var_bool("view_main_overlays", view_main.overlays)
 		json_save_var_bool("view_main_aspect_ratio", view_main.aspect_ratio)
 		json_save_var_bool("view_main_grid", view_main.grid)

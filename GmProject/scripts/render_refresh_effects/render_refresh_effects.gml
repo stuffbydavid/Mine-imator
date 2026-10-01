@@ -1,6 +1,6 @@
 function render_refresh_effects(sceneeffects = true, posteffects = true, hdr = false)
 {
-	var earlyeffects = hdr || renderer_current = e_renderer.QUICK;
+	var earlyeffects = (hdr || renderer_current = e_renderer.QUICK);
 
 	ds_list_clear(render_effects_list)
 	ds_list_add(render_effects_list,

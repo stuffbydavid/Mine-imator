@@ -12,38 +12,38 @@ function shader_high_dof_set(blurbuffer)
 	
 	render_set_uniform_vec2("uScreenSize", render_width, render_height)
 	
-	render_set_uniform("uBlurSize", render_camera.value[e_value.CAM_DOF_BLUR_SIZE])
+	render_set_uniform("uBlurSize", render_camera_effects[e_value.CAM_FX_DOF_BLUR_SIZE])
 	
-	render_set_uniform("uBias", render_camera.value[e_value.CAM_DOF_BIAS])
-	render_set_uniform("uThreshold", render_camera.value[e_value.CAM_DOF_THRESHOLD])
-	render_set_uniform("uGain", render_camera.value[e_value.CAM_DOF_GAIN])
+	render_set_uniform("uBias", render_camera_effects[e_value.CAM_FX_DOF_BIAS])
+	render_set_uniform("uThreshold", render_camera_effects[e_value.CAM_FX_DOF_THRESHOLD])
+	render_set_uniform("uGain", render_camera_effects[e_value.CAM_FX_DOF_GAIN])
 	
-	var fringe = render_camera.value[e_value.CAM_DOF_FRINGE];
+	var fringe = render_camera_effects[e_value.CAM_FX_DOF_FRINGE];
 	render_set_uniform_int("uFringe", bool_to_float(fringe))
 	if (fringe)
 	{
 		var fringesize, angle, strength;
-		fringesize = render_height / render_width * render_camera.value[e_value.CAM_DOF_BLUR_SIZE]
+		fringesize = render_height / render_width * render_camera_effects[e_value.CAM_FX_DOF_BLUR_SIZE]
 		
-		angle = -degtorad(render_camera.value[e_value.CAM_DOF_FRINGE_ANGLE_RED] + 180)
-		strength = render_camera.value[e_value.CAM_DOF_FRINGE_RED] * fringesize
+		angle = -degtorad(render_camera_effects[e_value.CAM_FX_DOF_FRINGE_ANGLE_RED] + 180)
+		strength = render_camera_effects[e_value.CAM_FX_DOF_FRINGE_RED] * fringesize
 		render_set_uniform_vec2("uFringeOffsetRed", cos(angle) * strength, sin(angle) * strength)
 		
-		angle = -degtorad(render_camera.value[e_value.CAM_DOF_FRINGE_ANGLE_GREEN] + 180)
-		strength = render_camera.value[e_value.CAM_DOF_FRINGE_GREEN] * fringesize
+		angle = -degtorad(render_camera_effects[e_value.CAM_FX_DOF_FRINGE_ANGLE_GREEN] + 180)
+		strength = render_camera_effects[e_value.CAM_FX_DOF_FRINGE_GREEN] * fringesize
 		render_set_uniform_vec2("uFringeOffsetGreen", cos(angle) * strength, sin(angle) * strength)
 		
-		angle = -degtorad(render_camera.value[e_value.CAM_DOF_FRINGE_ANGLE_BLUE] + 180)
-		strength = render_camera.value[e_value.CAM_DOF_FRINGE_BLUE] * fringesize
+		angle = -degtorad(render_camera_effects[e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE] + 180)
+		strength = render_camera_effects[e_value.CAM_FX_DOF_FRINGE_BLUE] * fringesize
 		render_set_uniform_vec2("uFringeOffsetBlue", cos(angle) * strength, sin(angle) * strength)
 	}
 	
-	render_generate_dof_samples(render_camera.value[e_value.CAM_BLADE_AMOUNT], render_camera.value[e_value.CAM_BLADE_ANGLE], render_camera.value[e_value.CAM_DOF_BLUR_RATIO], render_camera.value[e_value.CAM_BLADE_STRETCH])
-	render_set_uniform_int("uBladeAmount", render_camera.value[e_value.CAM_BLADE_AMOUNT])
-	render_set_uniform("uBladeRotation", -degtorad(render_camera.value[e_value.CAM_BLADE_ANGLE]))
-	render_set_uniform("uBlurRatio", render_camera.value[e_value.CAM_DOF_BLUR_RATIO])
+	render_generate_dof_samples(render_camera_effects[e_value.CAM_FX_BLADE_AMOUNT], render_camera_effects[e_value.CAM_FX_BLADE_ANGLE], render_camera_effects[e_value.CAM_FX_DOF_BLUR_RATIO], render_camera_effects[e_value.CAM_FX_BLADE_STRETCH])
+	render_set_uniform_int("uBladeAmount", render_camera_effects[e_value.CAM_FX_BLADE_AMOUNT])
+	render_set_uniform("uBladeRotation", -degtorad(render_camera_effects[e_value.CAM_FX_BLADE_ANGLE]))
+	render_set_uniform("uBlurRatio", render_camera_effects[e_value.CAM_FX_DOF_BLUR_RATIO])
 	render_set_uniform("uBladeRounding", render_dof_blade_rounding)
-	render_set_uniform("uBladeStretch", render_camera.value[e_value.CAM_BLADE_STRETCH])
+	render_set_uniform("uBladeStretch", render_camera_effects[e_value.CAM_FX_BLADE_STRETCH])
 	render_set_uniform_int("uPixelRotation", bool_to_float(pixelvariation))
 	render_set_uniform("uNoiseSize", render_sample_noise_size)
 	render_set_uniform_int("uSampleAmount", render_dof_sample_amount)

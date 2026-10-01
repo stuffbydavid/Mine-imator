@@ -25,7 +25,7 @@ function action_res_reload()
 	with (obj_template)
 	{
 		if (scenery = res_edit)
-			temp_set_scenery(scenery, !app.history_undo, hobj)
+			temp_set_scenery(scenery, !history_undo, hobj)
 		
 		else if (item_tex = res_edit)
 			render_generate_item()

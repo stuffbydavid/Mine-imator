@@ -14,24 +14,30 @@ function app_startup_interface_timeline()
 	timeline_list_first = 0
 	timeline_list_visible = 0
 	timeline_mouse_pos = null
+	
+	timeline_length = 0
 	timeline_marker = 0
 	timeline_marker_move = 0
 	timeline_marker_previous = 0
+	timeline_marker_length = 0
 	timeline_region_start = null
 	timeline_region_end = null
 	timeline_region_pos = 0
 	timeline_region_x1 = 0
 	timeline_region_x2 = 0
-	timeline_length = 0
 	timeline_zoom = 16
 	timeline_zoom_goal = 16
 	timeline_zoom_current = 16
 	timeline_zoom_target = 0
 	timeline_zoom_button = 0
+	
 	timeline_camera = null
+	timeline_camera_effect_value = null
+	timeline_camera_effect_enabled = null
+	timeline_environment = null
+	
 	timeline_insert_pos = 0
 	timeline_show_frames = false
-	timeline_marker_length = 0
 	
 	timeline_move_obj = null
 	timeline_move_highlight_tl = null
@@ -44,10 +50,12 @@ function app_startup_interface_timeline()
 	timeline_move_kf_stretch_pivot = 0
 	timeline_move_kf_stretch_handle = 0
 	timeline_move_kf_stretch_max = no_limit
+	
 	timeline_scale_pivot = 0
 	timeline_scale_span = 0
 	timeline_scale_mouse_pos = 0
 	timeline_scale_max = no_limit
+	
 	timeline_sound_resize_mouse_pos = null
 	timeline_sound_end_mousex = 0
 	timeline_sound_end_value = 0
@@ -69,6 +77,7 @@ function app_startup_interface_timeline()
 	tree_list = ds_list_create()
 	tree_list_filter = ds_list_create()
 	tree_visible_list = ds_list_create()
+	
 	tree_update_parent_filter = app
 	tree_update_extend = false
 	tree_update_color = null
@@ -91,8 +100,6 @@ function app_startup_interface_timeline()
 	
 	timeline_select_box_min = [ no_limit, no_limit, no_limit ]
 	timeline_select_box_max = [ -no_limit, -no_limit, -no_limit ]
-	
-	env_tlactive = null
 	
 	// tl_update_list_indent scope fix
 	with (obj_timeline)

@@ -100,9 +100,15 @@ function tab_frame_editor_keyframe()
 		tab_next()
 	}
 	
-	// Visible
+	// Visible/Enabled
+	var visiblename = "visible";
+	if (tl_edit.type = e_tl_type.CAMERA ||
+		tl_edit.type = e_tl_type.CAMERA_EFFECT ||
+		tl_edit.type = e_tl_type.ENVIRONMENT)
+		visiblename = "enabled"
+	
 	tab_control_switch()
-	draw_switch("frameeditorvisible", dx, dy, tl_edit.value[e_value.VISIBLE], action_tl_frame_visible)
+	draw_switch("frameeditor" + visiblename, dx, dy, tl_edit.value[e_value.VISIBLE], action_tl_frame_visible)
 	tab_next()
 	
 	// Hidden status

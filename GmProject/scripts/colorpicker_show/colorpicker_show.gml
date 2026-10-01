@@ -9,7 +9,7 @@
 
 function colorpicker_show(name, color, def, script, xx, yy, wid, hei)
 {
-	if (settings_menu_name = "colorpicker" && colorpicker.value_script = script)
+	if (settings_menu_name = "colorpicker" && colorpicker.value_script = script && colorpicker.camera_effect_edit_type = camera_effect_type_edit)
 	{
 		popup_close()
 		return 0
@@ -59,4 +59,6 @@ function colorpicker_show(name, color, def, script, xx, yy, wid, hei)
 	colorpicker.tbx_green.text = string(colorpicker.green)
 	colorpicker.tbx_blue.text = string(colorpicker.blue)
 	colorpicker.tbx_hexadecimal.text = color_to_hex(color)
+	
+	colorpicker.camera_effect_edit_type = camera_effect_type_edit
 }

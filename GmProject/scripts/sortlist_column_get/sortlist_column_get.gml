@@ -63,6 +63,9 @@ function sortlist_column_get(slist, value, col)
 		case "shapename":
 			return text_get("type" + tl_type_name_list[|e_tl_type.CUBE + value])
 		
+		case "cameraeffectname":
+			return text_get("frameeditorcameraeffect" + camera_effect_name_list[|value])
+		
 		case "particleeditortypename":
 		{
 			if (debug_saveid)

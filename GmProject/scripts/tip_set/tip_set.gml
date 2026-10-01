@@ -20,7 +20,7 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 	{
 		tip_window = window_get_current()
 		
-		if (tip_box_x != xx || tip_box_y != yy || tip_text != text)
+		if (tip_box_x != xx || tip_box_y != yy || tip_text != text || tip_position_last != tip_position)
 		{
 			tip_text = text
 			
@@ -96,8 +96,8 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 					tip_arrow_x -= 1
 				}
 				
-				// Show above controls in the lower quarter of the window
-				if (yy + h/2 > window_height * 0.9 || tip_y + tip_h > window_height)
+				// Show above controls when requested
+				if (tip_position = "top")
 				{
 					tip_y = yy - (4 + tip_h)
 					tip_arrow_y = yy - 4
@@ -130,6 +130,7 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 		tip_show = true
 		tip_box_x = xx
 		tip_box_y = yy
+		tip_position_last = tip_position
 	}
 	
 	if (tip_keybind != null)

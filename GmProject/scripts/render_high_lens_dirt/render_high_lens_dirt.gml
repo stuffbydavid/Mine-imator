@@ -16,7 +16,7 @@ function render_high_lens_dirt(prevsurf, hdr = false)
 		shader_set(shader)
 	
 	// Radius changes based on the render height to make it consistant with the size of the render
-	var baseradius = ((render_camera.value[e_value.CAM_LENS_DIRT_RADIUS] * 10) * render_height / 500);
+	var baseradius = ((render_camera_effects[e_value.CAM_FX_LENS_DIRT_RADIUS] * 10) * render_height / 500);
 	gpu_set_tex_repeat(false)
 	gpu_set_texfilter(true)
 	
@@ -53,7 +53,7 @@ function render_high_lens_dirt(prevsurf, hdr = false)
 	gpu_set_blendmode_ext(bm_zero, bm_src_color)
 	surface_set_target(render_surface_lens)
 	{
-		var texobj = render_camera.value[e_value.TEXTURE_OBJ];
+		var texobj = render_camera_effects[e_value.TEXTURE_OBJ];
 		draw_image_box_cover(texobj.texture, 0, 0, render_width, render_height)
 	}
 	surface_reset_target()
@@ -72,7 +72,7 @@ function render_high_lens_dirt(prevsurf, hdr = false)
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_add_set(render_surface_lens, render_camera.value[e_value.CAM_LENS_DIRT_INTENSITY] * 10, c_white, render_camera.value[e_value.CAM_LENS_DIRT_POWER], false, true)
+			shader_add_set(render_surface_lens, render_camera_effects[e_value.CAM_FX_LENS_DIRT_INTENSITY] * 10, c_white, render_camera_effects[e_value.CAM_FX_LENS_DIRT_POWER], false, true)
 		}
 		draw_surface_exists(prevsurf, 0, 0)
 		with (render_shader_obj)

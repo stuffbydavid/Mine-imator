@@ -39,15 +39,22 @@ function tab_timeline_editor_hierarchy()
 	{
 		tab_collapse_start()
 
-		tab_control(16)
-		draw_label(text_get("timelineeditorinherittransform"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
-		tab_next()
+		if (tl_edit.value_type[e_value_type.TRANSFORM])
+		{
+			tab_control(16)
+			draw_label(text_get("timelineeditorinherittransform"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+			tab_next()
+		}
+		
 		tab_set_columns(true, floor(content_width/150))
 		
 		// Position
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorinheritposition", dx, dy, tl_edit.inherit_position, action_tl_inherit_position)
-		tab_next()
+		if (tl_edit.value_type[e_value_type.TRANSFORM_POS])
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorinheritposition", dx, dy, tl_edit.inherit_position, action_tl_inherit_position)
+			tab_next()
+		}
 		
 		// Rotation
 		if (tl_edit.value_type[e_value_type.TRANSFORM_ROT])

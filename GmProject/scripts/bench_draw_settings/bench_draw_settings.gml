@@ -14,7 +14,8 @@ function bench_draw_settings(bx, by, bw, bh)
 	content_width = dw
 	content_height = dh
 	
-	var prevalpha, aniease, sy;
+	var headerhei, prevalpha, aniease, sy;
+	headerhei = 144
 	prevalpha = draw_get_alpha()
 	
 	bench_settings_ani += test_reduced_motion(1, (0.09 * delta))
@@ -24,17 +25,43 @@ function bench_draw_settings(bx, by, bw, bh)
 	draw_set_alpha(aniease * prevalpha)
 	
 	dx += -16 + (16 * aniease)
-	examplex = floor(dx + (dw - sprite_get_width(spr_bench_example)) / 2)
 	
 	sy = dy
 	
 	// Preview
 	if (array_contains(bench_tab_preview, bench_tab))
 	{
-		preview_draw(bench_settings.preview, dx, dy, dw, 144)
-		dy += 144 + 8
+		preview_draw(bench_settings.preview, dx, dy, dw, headerhei)
+		dy += headerhei + 8
 	}
 	
+	// Example image
+	if (array_contains(bench_tab_example, bench_tab))
+	{
+		var subimg = 0;
+		switch (bench_tab)
+		{
+			case e_bench_tab.WORLD:				subimg = 0; break
+			case e_bench_tab.CAMERA:			subimg = 1; break
+			case e_bench_tab.AUDIO_TRACK:		subimg = 2; break
+			case e_bench_tab.CAMERA_EFFECT:		subimg = 3 + bench_settings.camera_effect_type; break
+			case e_bench_tab.LIGHT_SOURCE:		subimg = (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 14 : 15; break
+			case e_bench_tab.PATH:				subimg = 16; break
+			case e_bench_tab.ENVIRONMENT:		subimg = 17; break
+		}
+		
+		var sprwid = sprite_get_width(spr_bench_example);
+		if (dw < sprwid)
+		{
+			var maxwid = max(0, dw);
+			draw_sprite_part(spr_bench_example, subimg, (sprwid - maxwid) / 2, 0, maxwid, sprite_get_height(spr_bench_example), dx, dy)
+		}
+		else
+			draw_sprite(spr_bench_example, subimg, floor(dx + (dw - sprwid) / 2), dy)
+
+		dy += headerhei + 16
+	}
+
 	menu_bench = true
 	
 	bench_buttons_hidden = false
@@ -66,7 +93,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench_tab.AUDIO_TRACK:		bench_draw_settings_audio_track(); break
 		case e_bench_tab.PARTICLE_SPAWNER:	bench_draw_settings_particle_spawner(); break
 		case e_bench_tab.TEXT:				bench_draw_settings_text(); break
-		case e_bench_tab.CAMERA_EFFECTS:	bench_draw_settings_camera_effects(); break
+		case e_bench_tab.CAMERA_EFFECT:		bench_draw_settings_camera_effects(); break
 		case e_bench_tab.LIGHT_SOURCE:		bench_draw_settings_light_source(); break
 		case e_bench_tab.PATH:				bench_draw_settings_path(); break
 		case e_bench_tab.ENVIRONMENT:		bench_draw_settings_environment(); break
@@ -76,9 +103,9 @@ function bench_draw_settings(bx, by, bw, bh)
 	menu_bench = false
 	
 	draw_set_alpha(prevalpha)
-	dx = bx
 	
-	dy += 36
+	dx = bx
+	dy += 44
 	
 	if (bench_buttons_hidden)
 		return 0

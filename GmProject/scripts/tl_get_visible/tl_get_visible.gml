@@ -1,5 +1,7 @@
 function tl_get_visible()
 {
+	var renderer;
+
 	if (render_view_current = null)
 		return true
 	
@@ -7,29 +9,11 @@ function tl_get_visible()
 		return false
 	
 	if (render_active = "image")
-	{
-		if (app.popup_exportimage.renderer = e_renderer.REALISTIC && hq_hiding)
-			return false
-		
-		if (app.popup_exportimage.renderer != e_renderer.REALISTIC && lq_hiding)
-			return false
-	}
+		renderer = app.popup_exportimage.renderer
 	else if (render_active = "movie")
-	{
-		if (app.exportmovie_renderer = e_renderer.REALISTIC && hq_hiding)
-			return false
-		
-		if (app.exportmovie_renderer != e_renderer.REALISTIC && lq_hiding)
-			return false
-	}
-	else if (render_view_current != null)
-	{
-		if (render_view_current.renderer = e_renderer.REALISTIC && hq_hiding)
-			return false
-		
-		if (render_view_current.renderer != e_renderer.REALISTIC && lq_hiding)
-			return false
-	}
+		renderer = app.exportmovie_renderer
+	else
+		renderer = render_view_current.renderer
 	
-	return true
+	return mode_visible[renderer]
 }

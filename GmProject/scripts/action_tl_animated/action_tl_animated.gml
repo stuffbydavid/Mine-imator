@@ -15,7 +15,7 @@ function action_tl_animated(enabled)
 			{
 				if (hobj.kf_pos[t] != null)
 				{
-					if (app.history_undo != hobj.kf_added[t])
+					if (history_undo != hobj.kf_added[t])
 					{
 						var kf = tl_keyframe_add(hobj.kf_pos[t]);
 						
@@ -34,7 +34,7 @@ function action_tl_animated(enabled)
 					}
 				}
 
-				if (app.history_undo)
+				if (history_undo)
 				{
 					animated = hobj.old_animated[t]
 					hide = hobj.old_hide[t]

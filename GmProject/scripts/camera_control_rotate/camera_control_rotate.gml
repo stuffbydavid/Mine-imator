@@ -1,13 +1,15 @@
 /// @arg camera
 /// @arg lockx
 /// @arg locky
+/// @arg [lockmouse]
 
-function camera_control_rotate(cam, lockx, locky)
+function camera_control_rotate(cam, lockx, locky, lockmouse = true)
 {
 	var mx, my;
 	mx = -((display_mouse_get_x() - lockx) / 4)
 	my = ((display_mouse_get_y() - locky) / 4)
-	display_mouse_set(lockx, locky)
+	if (lockmouse)
+		display_mouse_set(lockx, locky)
 	
 	if (!cam)
 	{

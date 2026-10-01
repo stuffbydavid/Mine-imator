@@ -45,10 +45,13 @@ function context_menu_area(xx, yy, wid, hei, name, value = null, valuetype = nul
 		app_mouse_clear()
 		
 		context_menu_name = name
+		context_menu_group = context_menu_group_temp
+		
 		context_menu_copy_axis_edit = axis_edit
+		context_menu_camera_effect_type_edit = camera_effect_type_edit
+		
 		context_menu_busy_prev = window_busy
 		window_busy = "contextmenu"
-		context_menu_group = context_menu_group_temp
 		
 		// Get current font
 		var font, c;

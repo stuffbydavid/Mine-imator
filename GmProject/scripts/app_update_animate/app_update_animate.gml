@@ -3,10 +3,10 @@
 function app_update_animate()
 {
 	// Go through timelines
-	var bgobject, updatevalues, cameraarr, spawnerarr, starttime, biomeani;
+	var envobject, updatevalues, cameraarr, spawnerarr, starttime, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
 	biomeani = (env_biome_next != env_biome)
-	bgobject = null
+	envobject = null
 	cameraarr = []
 	spawnerarr = []
 	starttime = get_timer()
@@ -93,15 +93,15 @@ function app_update_animate()
 		if (type = e_temp_type.PARTICLE_SPAWNER)
 			array_add(spawnerarr, id)
 		
-		// Find background changer
+		// Find environment changer
 		if (type = e_tl_type.ENVIRONMENT && value_inherit[e_value.VISIBLE] && !hide)
-			bgobject = id
+			envobject = id
 		
 		// Add light
 		if ((type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT) && value_inherit[e_value.VISIBLE])
 		{
 			// Invisible via timeline?
-			if ((hide && !render_hidden) || (!app.view_render && lq_hiding))
+			if ((hide && !render_hidden) || !mode_visible[renderer_current])
 				continue
 			
 			app.env_light_data[app.env_light_amount * 8 + 0] = world_pos[X]
@@ -137,10 +137,8 @@ function app_update_animate()
 		project_use_path_tl_array[i].update_matrix = true
 	
 	if (array_length(project_use_path_tl_array) > 0)
-	{
 		with (app)
 			tl_update_matrix(true)
-	}
 
 	render_alpha_hashing_update()
 	
@@ -157,90 +155,99 @@ function app_update_animate()
 	for (var i = 0; i < array_length(cameraarr); i++)
 	{
 		var cam = cameraarr[i];
-		
 		if (cam.selected || (cam.value_inherit[e_value.VISIBLE] && !cam.hide))
 		{
 			timeline_camera = cam
 			break
 		}
 	}
+	
+	// Invalidate camera effects
+	timeline_camera_effect_value = null
+	timeline_camera_effect_enabled = null
+	
 	timeline_marker_previous = timeline_marker
 	
-	// Background
-	env_tlactive = null
+	// Environment
+	timeline_environment = null
 	env_biome_next = env_biome
 	env_biome_mix = 0
-	if (bgobject)
+	
+	if (envobject)
 	{
-		env_tlactive = bgobject
+		timeline_environment = envobject
 		
-		env_background_image_show					= bgobject.value[e_value.ENV_IMAGE_SHOW]
-		env_background_image_rotation				= bgobject.value[e_value.ENV_IMAGE_ROTATION]
-		env_sky_sun_angle				= bgobject.value[e_value.ENV_SKY_SUN_ANGLE]
-		env_sky_sun_scale				= bgobject.value[e_value.ENV_SKY_SUN_SCALE]
-		env_sky_moon_phase				= bgobject.value[e_value.ENV_SKY_MOON_PHASE]
-		env_sky_moon_angle				= bgobject.value[e_value.ENV_SKY_MOON_ANGLE]
-		env_sky_moon_scale				= bgobject.value[e_value.ENV_SKY_MOON_SCALE]
-		env_sky_time						= bgobject.value[e_value.ENV_SKY_TIME]
-		env_sky_rotation					= bgobject.value[e_value.ENV_SKY_ROTATION]
-		env_sunlight_strength			= bgobject.value[e_value.ENV_SUNLIGHT_STRENGTH]
-		env_sunlight_specular_strength	= bgobject.value[e_value.ENV_SUNLIGHT_SPECULAR_STRENGTH]
-		env_sunlight_angle				= bgobject.value[e_value.ENV_SUNLIGHT_ANGLE]
-		env_twilight						= bgobject.value[e_value.ENV_TWILIGHT]
-		env_sky_clouds_show				= bgobject.value[e_value.ENV_SKY_CLOUDS_SHOW]
-		env_sky_clouds_speed				= bgobject.value[e_value.ENV_SKY_CLOUDS_SPEED]
-		env_sky_clouds_offset_y			= bgobject.value[e_value.ENV_SKY_CLOUDS_OFFSET_Y]
-		env_sky_clouds_offset_z			= bgobject.value[e_value.ENV_SKY_CLOUDS_OFFSET_Z]
-		env_ground_show					= bgobject.value[e_value.ENV_GROUND_SHOW]
-		env_ground_slot					= bgobject.value[e_value.ENV_GROUND_SLOT]
-		env_biome						= bgobject.value[e_value.ENV_BIOME]
-		env_sky_color					= bgobject.value[e_value.ENV_SKY_COLOR]
-		env_sky_clouds_color				= bgobject.value[e_value.ENV_SKY_CLOUDS_COLOR]
-		env_sunlight_color				= bgobject.value[e_value.ENV_SUNLIGHT_COLOR]
-		env_ambient_color				= bgobject.value[e_value.ENV_AMBIENT_COLOR]
-		env_night_sky_color				= bgobject.value[e_value.ENV_NIGHT_SKY_COLOR]
-		env_night_sky_clouds_color		= bgobject.value[e_value.ENV_NIGHT_SKY_CLOUDS_COLOR]
-		env_night_sky_stars_color		= bgobject.value[e_value.ENV_NIGHT_SKY_STARS_COLOR]
-		env_night_color					= bgobject.value[e_value.ENV_NIGHT_COLOR]
-		env_grass_color					= bgobject.value[e_value.ENV_GRASS_COLOR]
-		env_foliage_color				= bgobject.value[e_value.ENV_FOLIAGE_COLOR]
-		env_dry_foliage_color			= bgobject.value[e_value.ENV_DRY_FOLIAGE_COLOR]
-		env_water_color					= bgobject.value[e_value.ENV_WATER_COLOR]
-		env_leaves_oak_color				= bgobject.value[e_value.ENV_LEAVES_OAK_COLOR]
-		env_leaves_spruce_color			= bgobject.value[e_value.ENV_LEAVES_SPRUCE_COLOR]
-		env_leaves_birch_color			= bgobject.value[e_value.ENV_LEAVES_BIRCH_COLOR]
-		env_leaves_jungle_color			= bgobject.value[e_value.ENV_LEAVES_JUNGLE_COLOR]
-		env_leaves_acacia_color			= bgobject.value[e_value.ENV_LEAVES_ACACIA_COLOR]
-		env_leaves_dark_oak_color		= bgobject.value[e_value.ENV_LEAVES_DARK_OAK_COLOR]
-		env_leaves_mangrove_color		= bgobject.value[e_value.ENV_LEAVES_MANGROVE_COLOR]
-		env_fog_show						= bgobject.value[e_value.ENV_FOG_SHOW]
-		env_fog_sky						= bgobject.value[e_value.ENV_FOG_SKY]
-		env_fog_color_custom				= bgobject.value[e_value.ENV_FOG_CUSTOM_COLOR]
-		env_fog_color					= bgobject.value[e_value.ENV_FOG_COLOR]
-		env_fog_custom_object_color		= bgobject.value[e_value.ENV_FOG_CUSTOM_OBJECT_COLOR]
-		env_fog_object_color				= bgobject.value[e_value.ENV_FOG_OBJECT_COLOR]
-		env_fog_distance					= bgobject.value[e_value.ENV_FOG_DISTANCE]
-		env_fog_size						= bgobject.value[e_value.ENV_FOG_SIZE]
-		env_fog_height					= bgobject.value[e_value.ENV_FOG_HEIGHT]
-		env_wind							= bgobject.value[e_value.ENV_WIND]
-		env_wind_speed					= bgobject.value[e_value.ENV_WIND_SPEED]
-		env_wind_strength				= bgobject.value[e_value.ENV_WIND_STRENGTH]
-		env_wind_direction				= bgobject.value[e_value.ENV_WIND_DIRECTION]
-		env_wind_directional_speed		= bgobject.value[e_value.ENV_WIND_DIRECTIONAL_SPEED]
-		env_wind_directional_strength	= bgobject.value[e_value.ENV_WIND_DIRECTIONAL_STRENGTH]
-		env_texture_animation_speed		= bgobject.value[e_value.ENV_TEXTURE_ANI_SPEED]
-		env_brightness					= bgobject.value[e_value.ENV_BRIGHTNESS]
+		env_background_image_show		= envobject.value[e_value.ENV_IMAGE_SHOW]
+		env_background_image_rotation	= envobject.value[e_value.ENV_IMAGE_ROTATION]
+		env_sky_sun_angle				= envobject.value[e_value.ENV_SKY_SUN_ANGLE]
+		env_sky_sun_scale				= envobject.value[e_value.ENV_SKY_SUN_SCALE]
+		env_sky_moon_phase				= envobject.value[e_value.ENV_SKY_MOON_PHASE]
+		env_sky_moon_angle				= envobject.value[e_value.ENV_SKY_MOON_ANGLE]
+		env_sky_moon_scale				= envobject.value[e_value.ENV_SKY_MOON_SCALE]
+		env_sky_time					= envobject.value[e_value.ENV_SKY_TIME]
+		env_sky_rotation				= envobject.value[e_value.ENV_SKY_ROTATION]
+		env_sunlight_strength			= envobject.value[e_value.ENV_SUNLIGHT_STRENGTH]
+		env_sunlight_specular_strength	= envobject.value[e_value.ENV_SUNLIGHT_SPECULAR_STRENGTH]
+		env_sunlight_angle				= envobject.value[e_value.ENV_SUNLIGHT_ANGLE]
+		env_twilight					= envobject.value[e_value.ENV_TWILIGHT]
+		env_sky_clouds_show				= envobject.value[e_value.ENV_SKY_CLOUDS_SHOW]
+		env_sky_clouds_speed			= envobject.value[e_value.ENV_SKY_CLOUDS_SPEED]
+		env_sky_clouds_offset_y			= envobject.value[e_value.ENV_SKY_CLOUDS_OFFSET_Y]
+		env_sky_clouds_offset_z			= envobject.value[e_value.ENV_SKY_CLOUDS_OFFSET_Z]
+		env_ground_show					= envobject.value[e_value.ENV_GROUND_SHOW]
+		env_ground_slot					= envobject.value[e_value.ENV_GROUND_SLOT]
+		env_biome						= envobject.value[e_value.ENV_BIOME]
+		env_sky_color					= envobject.value[e_value.ENV_SKY_COLOR]
+		env_sky_clouds_color			= envobject.value[e_value.ENV_SKY_CLOUDS_COLOR]
+		env_sunlight_color				= envobject.value[e_value.ENV_SUNLIGHT_COLOR]
+		env_ambient_color				= envobject.value[e_value.ENV_AMBIENT_COLOR]
+		env_night_sky_color				= envobject.value[e_value.ENV_NIGHT_SKY_COLOR]
+		env_night_sky_clouds_color		= envobject.value[e_value.ENV_NIGHT_SKY_CLOUDS_COLOR]
+		env_night_sky_stars_color		= envobject.value[e_value.ENV_NIGHT_SKY_STARS_COLOR]
+		env_night_color					= envobject.value[e_value.ENV_NIGHT_COLOR]
+		env_grass_color					= envobject.value[e_value.ENV_GRASS_COLOR]
+		env_foliage_color				= envobject.value[e_value.ENV_FOLIAGE_COLOR]
+		env_dry_foliage_color			= envobject.value[e_value.ENV_DRY_FOLIAGE_COLOR]
+		env_water_color					= envobject.value[e_value.ENV_WATER_COLOR]
+		env_leaves_oak_color			= envobject.value[e_value.ENV_LEAVES_OAK_COLOR]
+		env_leaves_spruce_color			= envobject.value[e_value.ENV_LEAVES_SPRUCE_COLOR]
+		env_leaves_birch_color			= envobject.value[e_value.ENV_LEAVES_BIRCH_COLOR]
+		env_leaves_jungle_color			= envobject.value[e_value.ENV_LEAVES_JUNGLE_COLOR]
+		env_leaves_acacia_color			= envobject.value[e_value.ENV_LEAVES_ACACIA_COLOR]
+		env_leaves_dark_oak_color		= envobject.value[e_value.ENV_LEAVES_DARK_OAK_COLOR]
+		env_leaves_mangrove_color		= envobject.value[e_value.ENV_LEAVES_MANGROVE_COLOR]
+		env_fog_show					= envobject.value[e_value.ENV_FOG_SHOW]
+		env_fog_sky						= envobject.value[e_value.ENV_FOG_SKY]
+		env_fog_color_custom			= envobject.value[e_value.ENV_FOG_CUSTOM_COLOR]
+		env_fog_color					= envobject.value[e_value.ENV_FOG_COLOR]
+		env_fog_custom_object_color		= envobject.value[e_value.ENV_FOG_CUSTOM_OBJECT_COLOR]
+		env_fog_object_color			= envobject.value[e_value.ENV_FOG_OBJECT_COLOR]
+		env_fog_distance				= envobject.value[e_value.ENV_FOG_DISTANCE]
+		env_fog_size					= envobject.value[e_value.ENV_FOG_SIZE]
+		env_fog_height					= envobject.value[e_value.ENV_FOG_HEIGHT]
+		env_wind						= envobject.value[e_value.ENV_WIND]
+		env_wind_speed					= envobject.value[e_value.ENV_WIND_SPEED]
+		env_wind_strength				= envobject.value[e_value.ENV_WIND_STRENGTH]
+		env_wind_direction				= envobject.value[e_value.ENV_WIND_DIRECTION]
+		env_wind_directional_speed		= envobject.value[e_value.ENV_WIND_DIRECTIONAL_SPEED]
+		env_wind_directional_strength	= envobject.value[e_value.ENV_WIND_DIRECTIONAL_STRENGTH]
+		env_texture_animation_speed		= envobject.value[e_value.ENV_TEXTURE_ANI_SPEED]
+		env_brightness					= envobject.value[e_value.ENV_BRIGHTNESS]
 		
 		env_biome_next = env_biome
-		if (bgobject.keyframe_animate && env_biome != bgobject.keyframe_next_values[e_value.ENV_BIOME])
+		
+		if (envobject.keyframe_animate && env_biome != envobject.keyframe_next_values[e_value.ENV_BIOME])
 		{
-			env_biome_next = bgobject.keyframe_next_values[e_value.ENV_BIOME]
-			env_biome_mix = clamp(bgobject.keyframe_progress_ease, 0, 1)
+			env_biome_next = envobject.keyframe_next_values[e_value.ENV_BIOME]
+			env_biome_mix = clamp(envobject.keyframe_progress_ease, 0, 1)
+			
 			with (obj_resource)
 				res_update_colors(app.env_biome, app.env_biome_next, app.env_biome_mix)
+			
 			properties.library.preview.update = true
 			env_biome_prev = env_biome
 		}
+		
 		else if (env_biome = "custom" || env_biome_prev != env_biome || biomeani)
 		{
 			with (obj_resource)

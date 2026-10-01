@@ -11,6 +11,15 @@ function render_start(target, camera, owner, wid = null, hei = null)
 
 	render_target = target
 	render_camera = camera
+	render_camera_effects = null
+	render_camera_effect_enabled = null
+	
+	if ((owner = app.view_second && render_effects) || owner = "image" || owner = "movie")
+	{
+		render_camera_effects = render_camera_effects_get()
+		render_camera_effect_enabled = app.timeline_camera_effect_enabled
+	}
+	
 	render_width = project_video_width
 	render_height = project_video_height
 	
@@ -30,12 +39,14 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
+	
 	var optimizations = [ false, false ];
 	if (renderer_current = e_renderer.REALISTIC)
 	{
 		var realisticset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]].renderer[e_renderer.REALISTIC];
 		optimizations = render_optimizations_state(realisticset)
 	}
+	
 	if (renderer_current = e_renderer.STANDARD)
 	{
 		project_render_indirect = false
@@ -57,20 +68,21 @@ function render_start(target, camera, owner, wid = null, hei = null)
 					   render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE ||
 					   (renderer_current = e_renderer.REALISTIC && project_render_subsurface_samples > 0) || render_glow
 	
-	// Use camera settings
-	if (render_camera != null)
+	// Use camera size
+	if (render_camera != null && !render_camera.value[e_value.CAM_SIZE_USE_PROJECT])
 	{
-		if (!render_camera.value[e_value.CAM_SIZE_USE_PROJECT])
+		render_width = render_camera.value[e_value.CAM_WIDTH]
+		render_height = render_camera.value[e_value.CAM_HEIGHT]
+	}
+	
+	// Use camera effects
+	if (render_camera_effects != null)
+	{
+		if (render_camera_effect_enabled[e_cam_fx.LIGHT_MANAGEMENT])
 		{
-			render_width = render_camera.value[e_value.CAM_WIDTH]
-			render_height = render_camera.value[e_value.CAM_HEIGHT]
-		}
-		
-		if (render_camera.value[e_value.CAM_LIGHT_MANAGEMENT])
-		{
-			render_tonemapper = render_camera.value[e_value.CAM_TONEMAPPER]
-			render_exposure = render_camera.value[e_value.CAM_EXPOSURE]
-			render_gamma = render_camera.value[e_value.CAM_GAMMA]
+			render_tonemapper = render_camera_effects[e_value.CAM_FX_TONEMAPPER]
+			render_exposure = render_camera_effects[e_value.CAM_FX_EXPOSURE]
+			render_gamma = render_camera_effects[e_value.CAM_FX_GAMMA]
 		}
 		else
 		{
@@ -79,28 +91,21 @@ function render_start(target, camera, owner, wid = null, hei = null)
 			render_gamma = project_render_gamma
 		}
 		
-		render_camera_bloom = (render_effects && render_camera.value[e_value.CAM_BLOOM]) && rendercombined
-		render_camera_lens_dirt = (render_effects && render_camera.value[e_value.CAM_LENS_DIRT] && render_camera.value[e_value.TEXTURE_OBJ] != null) && rendercombined
-		render_camera_dof = (render_effects && render_camera.value[e_value.CAM_DOF]) && rendercombined
-		render_camera_color_correction = (render_effects && render_camera.value[e_value.CAM_COLOR_CORRECTION]) && rendercombined
-		render_camera_grain = (render_effects && render_camera.value[e_value.CAM_GRAIN]) && rendercombined
-		render_camera_vignette = (render_effects && render_camera.value[e_value.CAM_VIGNETTE]) && rendercombined
-		render_camera_ca = (render_effects && render_camera.value[e_value.CAM_CA]) && rendercombined
-		render_camera_distort = (render_effects && render_camera.value[e_value.CAM_DISTORT]) && rendercombined
+		render_camera_bloom = (render_effects && render_camera_effect_enabled[e_cam_fx.BLOOM]) && rendercombined
+		render_camera_lens_dirt = (render_effects && render_camera_effect_enabled[e_cam_fx.LENS_DIRT] && instance_exists(render_camera_effects[e_value.TEXTURE_OBJ])) && rendercombined
+		render_camera_dof = (render_effects && render_camera_effect_enabled[e_cam_fx.DOF]) && rendercombined
+		render_camera_color_correction = (render_effects && render_camera_effect_enabled[e_cam_fx.COLOR_CORRECTION]) && rendercombined
+		render_camera_grain = (render_effects && render_camera_effect_enabled[e_cam_fx.GRAIN]) && rendercombined
+		render_camera_vignette = (render_effects && render_camera_effect_enabled[e_cam_fx.VIGNETTE]) && rendercombined
+		render_camera_ca = (render_effects && render_camera_effect_enabled[e_cam_fx.CA]) && rendercombined
+		render_camera_distort = (render_effects && render_camera_effect_enabled[e_cam_fx.DISTORT]) && rendercombined
 		
-		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM]) || (render_glow && render_camera.value[e_value.CAM_LENS_DIRT_GLOW])) && rendercombined
-		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_BLOOM] && rendercombined
-		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera.value[e_value.CAM_LENS_DIRT_GLOW] && rendercombined
+		render_camera_lens_dirt = render_camera_lens_dirt && ((render_camera_bloom && render_camera_effects[e_value.CAM_FX_LENS_DIRT_BLOOM]) || (render_glow && render_camera_effects[e_value.CAM_FX_LENS_DIRT_GLOW])) && rendercombined
+		render_camera_lens_dirt_bloom = render_camera_lens_dirt && render_camera_effects[e_value.CAM_FX_LENS_DIRT_BLOOM] && rendercombined
+		render_camera_lens_dirt_glow = render_camera_lens_dirt && render_camera_effects[e_value.CAM_FX_LENS_DIRT_GLOW] && rendercombined
 		
-		render_camera_colors = (render_camera.value[e_value.ALPHA] < 1 || 
-								render_camera.value[e_value.EMISSIVE] > 0 || 
-								render_camera.value[e_value.MIX_COLOR] > 0 ||
-								render_camera.value[e_value.RGB_ADD] != c_black ||
-								render_camera.value[e_value.RGB_SUB] != c_black ||
-								render_camera.value[e_value.RGB_MUL] != c_white ||
-								render_camera.value[e_value.HSB_ADD] != c_black ||
-								render_camera.value[e_value.HSB_SUB] != c_black ||
-								render_camera.value[e_value.HSB_MUL] != c_red)
+		render_camera_colors = render_effects && rendercombined &&
+			(render_camera_effect_enabled[e_cam_fx.FADE] || render_camera_effect_enabled[e_cam_fx.COLOR_CORRECTION])
 	}
 	else
 	{
@@ -164,5 +169,4 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_update_camera()
 	
 	camera_apply(cam_render)
-	
 }

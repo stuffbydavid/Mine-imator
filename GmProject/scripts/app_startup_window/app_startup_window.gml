@@ -107,6 +107,8 @@ function app_startup_window()
 	tip_box_y = 0
 	tip_location_x = 0
 	tip_location_y = 0
+	tip_position = "bottom"
+	tip_position_last = ""
 	tip_wrap = true
 	tip_keybind_draw = false
 	tip_arrow_x = 0

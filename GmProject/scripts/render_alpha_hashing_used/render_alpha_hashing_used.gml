@@ -18,6 +18,7 @@ function render_alpha_hashing_used()
 		case e_tl_type.SPOT_LIGHT:
 		case e_tl_type.POINT_LIGHT:
 		case e_tl_type.CAMERA:
+		case e_tl_type.CAMERA_EFFECT:
 			return false
 	}
 

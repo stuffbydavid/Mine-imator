@@ -20,8 +20,6 @@ function tl_event_create()
 	hide = false
 	ghost = false
 	delete_ready = false
-	depth = 0
-	
 	model_part = null
 	model_part_name = ""
 	model = null
@@ -50,6 +48,8 @@ function tl_event_create()
 	part_list = null
 	part_root = null
 	scenery_animate = false
+	
+	camera_effect_type = e_cam_fx.FADE
 	
 	for (var v = 0; v < e_value.amount; v++)
 	{
@@ -118,29 +118,30 @@ function tl_event_create()
 	rot_point_custom = false
 	rot_point = point3D(0)
 	rot_point_render = point3D(0)
-	backfaces = false
+	
+	glint_enabled = false
+	glint_tex = project_pack_res
+	glint_mode = e_glint.ITEM
+	glint_scale = 1
+	glint_speed = 1
+	glint_strength = 1
+
+	glow = false
+	glow_texture = true
+	only_render_glow = false
+	blend_mode = "normal"
+	alpha_mode = e_alpha_mode.DEFAULT
+	depth = 0
 	texture_blur = false
 	texture_filtering = false
 	shadows = true
 	realistic_falloff = false
 	ssao = true
-	glow = false
-	glow_texture = true
-	only_render_glow = false
-	fog = true
 	wind = false
 	wind_terrain = true
-	hq_hiding = false
-	lq_hiding = false
-	blend_mode = "normal"
-	alpha_mode = e_alpha_mode.DEFAULT
-	
-	glint_enabled = false
-	glint_mode = e_glint.ITEM
-	glint_scale = 1
-	glint_speed = 1
-	glint_strength = 1
-	glint_tex = project_pack_res
+	fog = true
+	backfaces = false
+	mode_visible = [ true, true, true ]
 	
 	particle_list = null
 	

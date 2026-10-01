@@ -23,6 +23,13 @@ function tl_update_value_types()
 		return 0
 	}
 	
+	if (type = e_tl_type.CAMERA_EFFECT)
+	{
+		value_type[e_value_type.CAMERA_EFFECT] = true
+		value_type[e_value_type.HIERARCHY] = true
+		return 0
+	}
+	
 	if (type = e_tl_type.PATH)
 		value_type[e_value_type.PATH] = true
 	
@@ -64,7 +71,7 @@ function tl_update_value_types()
 		value_type[e_value_type.TRANSFORM_BEND] = true
 	
 	// Color
-	if (type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
+	if (type != e_tl_type.CAMERA && type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
 		value_type[e_value_type.MATERIAL_COLOR] = true
 	
 	// Particles
@@ -91,7 +98,8 @@ function tl_update_value_types()
 		value_type[e_value_type.MATERIAL_TEXTURE] = true
 	
 	// Material (Color)
-	if (type != e_tl_type.POINT_LIGHT &&
+	if (type != e_tl_type.CAMERA &&
+		type != e_tl_type.POINT_LIGHT &&
 		type != e_tl_type.SPOT_LIGHT)
 		value_type[e_value_type.MATERIAL_COLOR] = true
 	

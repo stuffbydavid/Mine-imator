@@ -47,7 +47,7 @@ function action_lib_scenery(res)
 	tl_deselect_all()
 	
 	with (temp_edit)
-		temp_set_scenery(res, !app.history_undo, hobj)
+		temp_set_scenery(res, !history_undo, hobj)
 	
 	// Restore old timelines
 	if (history_undo)

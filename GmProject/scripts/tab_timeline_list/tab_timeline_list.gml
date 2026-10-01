@@ -104,10 +104,12 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 				tl_set_parent(tl)
 			}
-				
+			
 			tl_update_list()
 			tl_update_matrix()
+			
 			render_samples = -1
+			
 			app_stop_place(true)
 		}
 		
@@ -136,6 +138,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 		}
+		
 		xx -= (buttonsize + 4) * (itemhover || tl.lock || (!setting_timeline_hide_ghosts && tl.ghost))
 		itemmaxw += buttonsize + buttonpad
 		
@@ -147,6 +150,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			
 			buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 		}
+		
 		itemmaxw += buttonsize + buttonpad
 		
 		// Ghost toggle (Advanced mode only)
@@ -162,6 +166,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
 			}
 		}
+		
 		itemmaxw += buttonsize + buttonpad
 		
 		// Select all keyframes
@@ -278,14 +283,17 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list_dark
 			licon = list[|tl.type]
 			
-			// Icon overrides
+			// Icon overrides for current camera/environment
 			if (tl.type = e_tl_type.CAMERA && tl = timeline_camera)
 				licon = icons.CAMERA_ACTIVE
-			else if (tl.type = e_tl_type.ENVIRONMENT && tl = env_tlactive)
+			
+			else if (tl.type = e_tl_type.ENVIRONMENT && tl = timeline_environment)
 				licon = icons.CLOUD_ACTIVE
+			
+			// Structure editing in build mode
 			else if (place_build && tl = build_structure)
 			{
-				licon = icons.SCENERY_EDIT // Structure editing in build mode
+				licon = icons.SCENERY_EDIT
 				iconcolor = c_accent
 				iconalpha = 1
 			}

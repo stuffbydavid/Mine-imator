@@ -1,15 +1,17 @@
 /// @arg camera
 /// @arg lockx
 /// @arg locky
+/// @arg [lockmouse]
 
-function camera_control_move(cam, lockx, locky)
+function camera_control_move(cam, lockx, locky, lockmouse = true)
 {
 	var movespeed, mx, my;
 	movespeed = 3
 	mx = -((display_mouse_get_x() - lockx) / 8) * setting_look_sensitivity
 	my = -((display_mouse_get_y() - locky) / 8) * setting_look_sensitivity
 	
-	display_mouse_set(lockx, locky)
+	if (lockmouse)
+		display_mouse_set(lockx, locky)
 	
 	cam_work_moving = false
 	

@@ -39,7 +39,8 @@ function export_update()
 		render_active = "image"
 		renderer_current = popup_exportimage.renderer
 	}
-	render_lights = (renderer_current != e_renderer.QUICK)
+	render_lights = (renderer_current != e_renderer.QUICK || setting_quick_mode_shading)
+	render_effects = true
 	
 	// Process a number frames until a step has elapsed (1/fps seconds)
 	var starttime = current_time;

@@ -344,8 +344,11 @@ function menu_draw()
 					m.menu_value = mouseitem.value
 					
 					menu_model_armor_variant = m.menu_model_armor_variant
+					
 					list_item_script = (mouseitem.script = null ? m.menu_script : mouseitem.script)
 					list_item_script_value = m.menu_value
+					
+					list_item_camera_effect_edit_type = m.menu_camera_effect_edit_type
 					
 					for (var j = 0; j < m.menu_amount; j++)
 					{

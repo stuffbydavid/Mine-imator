@@ -45,5 +45,7 @@ function colorpicker_update(control, color, gethsb)
 	if (control != colorpicker.tbx_hexadecimal)
 		colorpicker.tbx_hexadecimal.text = color_to_hex(colorpicker.color)
 	
+	camera_effect_type_edit = colorpicker.camera_effect_edit_type
 	script_execute(colorpicker.value_script, colorpicker.color)
+	camera_effect_type_edit = null
 }

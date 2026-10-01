@@ -11,7 +11,6 @@ function tl_copy(to)
 	to.lock = lock
 	to.hide = hide
 	to.ghost = ghost
-	to.depth = depth
 	
 	to.lock_bend = lock_bend
 	to.part_mixing_shapes = part_mixing_shapes
@@ -46,28 +45,30 @@ function tl_copy(to)
 	to.rot_point = point3D_copy(rot_point)
 	to.rot_point_render = point3D_copy(rot_point_render)
 	
-	to.backfaces = backfaces
+	to.glint_enabled = glint_enabled
+	to.glint_tex = glint_tex
+	to.glint_mode = glint_mode
+	to.glint_scale = glint_scale
+	to.glint_speed = glint_speed
+	to.glint_strength = glint_strength
+	
+	to.glow = glow
+	to.glow_texture = glow_texture
+	to.only_render_glow = only_render_glow
+	
+	to.blend_mode = blend_mode
+	to.alpha_mode = alpha_mode
+	to.depth = depth
 	to.texture_blur = texture_blur
 	to.texture_filtering = texture_filtering
 	to.shadows = shadows
 	to.realistic_falloff = realistic_falloff
 	to.ssao = ssao
-	to.glow = glow
-	to.glow_texture = glow_texture
-	to.only_render_glow = only_render_glow
-	to.glint_enabled = glint_enabled
-	to.glint_mode = glint_mode
-	to.glint_scale = glint_scale
-	to.glint_speed = glint_speed
-	to.glint_strength = glint_strength
-	to.glint_tex = glint_tex
-	to.fog = fog
 	to.wind = wind
 	to.wind_terrain = wind_terrain
-	to.hq_hiding = hq_hiding
-	to.lq_hiding = lq_hiding
-	to.blend_mode = blend_mode
-	to.alpha_mode = alpha_mode
+	to.fog = fog
+	to.backfaces = backfaces
+	to.mode_visible = array_copy_1d(mode_visible)
 	
 	to.path_update = true
 	to.path_closed = path_closed
@@ -81,6 +82,8 @@ function tl_copy(to)
 	to.path_shape_detail = path_shape_detail
 	to.path_shape_tex_mapped = path_shape_tex_mapped
 	to.path_shape_tex_length = path_shape_tex_length
+	
+	to.camera_effect_type = camera_effect_type
 	
 	if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
 	{

@@ -1229,12 +1229,12 @@ function list_init(name)
 		}
 		
 		// Camera lens dirt texture
-		case "frameeditorcameralensdirttexture":
+		case "frameeditorcameraeffectlensdirttexture":
 		{
 			menu_add_item(null, text_get("listdefault", text_get("listnone")))
 			
 			// Import from file
-			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER, action_tl_frame_cam_lens_dirt_tex_browse)
+			menu_add_item(e_option.BROWSE, text_get("listbrowse"), null, icons.FOLDER, action_tl_frame_cam_fx_lens_dirt_tex_browse)
 			
 			for (var i = 0; i < ds_list_size(res_list.display_list); i++)
 			{
@@ -1526,17 +1526,31 @@ function list_init(name)
 			break
 		}
 		
+		// Interface scale
 		case "settingsinterfacescale":
 		{
 			menu_add_item(1, "100%")
+			
 			if (interface_scale_default_get() >= 2)
 				menu_add_item(2, "200%")
+			
 			if (interface_scale_default_get() >= 3)
 				menu_add_item(3, "300%")
 			
 			break
 		}
 		
+		// Camera effect
+		case "timelineeditoreffect":
+		{
+			for (var i = 0; i < e_cam_fx.amount; i++)
+				if (setting_advanced_mode || ds_list_find_index(camera_effect_advanced_name_list, camera_effect_name_list[|i]) < 0)
+					menu_add_item(i, text_get("frameeditorcameraeffect" + camera_effect_name_list[|i]))
+			
+			break
+		}
+		
+		// Alpha mode
 		case "renderalphamode":
 		case "timelineeditoralphamode":
 		{
@@ -1548,6 +1562,7 @@ function list_init(name)
 			break
 		}
 		
+		// AA mode
 		case "renderaamode":
 		{
 			menu_add_item(e_aa_mode.PROGRESSIVE, text_get("renderaamodeprogressive"))
@@ -1555,22 +1570,16 @@ function list_init(name)
 			break
 		}
 		
+		// Tone mapper
 		case "rendertonemapper":
-		case "frameeditorcameratonemapper":
 		{
-			menu_add_item(e_tonemapper.NONE, text_get("rendertonemappernone"))
-			menu_add_item(e_tonemapper.REINHARD, text_get("rendertonemapperreinhard"))
-			menu_add_item(e_tonemapper.ACES, text_get("rendertonemapperaces"))
-			menu_add_item(e_tonemapper.UCHIMURA, text_get("rendertonemapperuchimura"))
-			menu_add_item(e_tonemapper.LOTTES, text_get("rendertonemapperlottes"))
-			menu_add_item(e_tonemapper.HABLE, text_get("rendertonemapperhable"))
-			menu_add_item(e_tonemapper.GT7_CURVE, text_get("rendertonemappergt7curve"))
-			menu_add_item(e_tonemapper.PBR_NEUTRAL, text_get("rendertonemapperpbrneutral"))
-			menu_add_item(e_tonemapper.AGX, text_get("rendertonemapperagx"))
-			menu_add_item(e_tonemapper.AGX_PUNCHY, text_get("rendertonemapperagxpunchy"))
+			for (var i = 0; i < array_length(render_tonemapper_names); i++)
+				menu_add_item(i, text_get("rendertonemapper" + render_tonemapper_names[i]))
+			
 			break
 		}
 		
+		// Armor pattern
 		case "armoreditorpatternhelmet":
 		case "armoreditorpatternchestplate":
 		case "armoreditorpatternleggings":
@@ -1584,6 +1593,7 @@ function list_init(name)
 			break
 		}
 		
+		// Armor material
 		case "armoreditormaterialhelmet":
 		case "armoreditormaterialchestplate":
 		case "armoreditormaterialleggings":

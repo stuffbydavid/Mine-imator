@@ -142,6 +142,9 @@ function shader_startup()
 	with (shader_map[?shader_color_fog])
 	{
 		shader_color_uniforms()
+		new_shader_uniform("uTonemapper")
+		new_shader_uniform("uExposure")
+		new_shader_uniform("uGamma")
 	}
 	
 	with (shader_map[?shader_color_fog_lights])

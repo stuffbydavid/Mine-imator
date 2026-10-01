@@ -103,21 +103,26 @@ function project_reset()
 	timeline.ver_scroll.value = 0
 	
 	action_tl_play_break()
+	
 	timeline_repeat = false
 	timeline_marker = 0
 	timeline_marker_previous = 0
+	timeline_marker_length = 0
 	timeline_length = 0
 	timeline_zoom = 16
 	timeline_zoom_goal = 16
+	
 	timeline_camera = null
-	env_tlactive = null
-	copy_kf_amount = 0
-	timeline_marker_length = 0
+	timeline_camera_effect_value = null
+	timeline_camera_effect_enabled = null
+	timeline_environment = null
 	
 	timeline_intervals_show = false
 	timeline_interval_size = 24
 	timeline_interval_offset = 0
 	timeline_hide_color_tag = array_create(9, false)
+	
+	copy_kf_amount = 0
 	
 	properties.library.list.column_sort = null
 	properties.resources.list.column_sort = null

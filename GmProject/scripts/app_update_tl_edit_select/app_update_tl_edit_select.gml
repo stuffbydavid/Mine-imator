@@ -6,6 +6,8 @@ function app_update_tl_edit_select()
 		camera.show = false
 		camera.enabled = false
 		camera.video_template = null
+		camera_effects.show = false
+		camera_effects.enabled = false
 		sound.enabled = false
 		particles.enabled = false
 		text.enabled = false
@@ -61,7 +63,9 @@ function app_update_tl_edit_select()
 			if (checkwalk)
 			{
 				checkwalk = false
+				
 				app.timeline_settings_import_loop_tl = null
+				
 				if (type = e_tl_type.CHARACTER)
 				{
 					if (keyframe_select_amount = 1 && keyframe_select != null && ds_list_find_index(keyframe_list, keyframe_select) < ds_list_size(keyframe_list) - 1)
@@ -80,6 +84,7 @@ function app_update_tl_edit_select()
 			if (checkexport)
 			{
 				var obj = ((part_of != null) ? part_of : id);
+				
 				if (checkexportobj = null)
 				{
 					checkexportobj = obj
@@ -103,6 +108,9 @@ function app_update_tl_edit_select()
 
 		if (value_type[e_value_type.CAMERA])
 			app.frame_editor.camera.enabled = true
+		
+		if (value_type[e_value_type.CAMERA_EFFECT])
+			app.frame_editor.camera_effects.enabled = true
 		
 		if (value_type[e_value_type.SOUND])
 			app.frame_editor.sound.enabled = true
@@ -151,6 +159,9 @@ function app_update_tl_edit_select()
 		
 		if (value_type_show[e_value_type.CAMERA])
 			app.frame_editor.camera.show = true
+		
+		if (value_type_show[e_value_type.CAMERA_EFFECT])
+			app.frame_editor.camera_effects.show = true
 	}
 	
 	if (timeline_settings_import_loop_tl != null)

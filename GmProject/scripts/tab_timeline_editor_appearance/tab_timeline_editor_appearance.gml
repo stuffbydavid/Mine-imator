@@ -6,13 +6,16 @@ function tab_timeline_editor_appearance()
 
 		// Shadows
 		tab_control_checkbox()
-		draw_checkbox("timelineeditorrendershadows", dx, dy, tl_edit.shadows, action_tl_shadows)
+		draw_checkbox("timelineeditorrendershadows", dx, dy, tl_edit.shadows, action_tl_shadows, "timelineeditorrendershadowstip")
 		tab_next()
 
 		// Realistic falloff
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorrealisticfalloff", dx, dy, tl_edit.realistic_falloff, action_tl_realistic_falloff, "timelineeditorrealisticfallofftip")
-		tab_next()
+		if (setting_advanced_mode)
+		{
+			tab_control_checkbox()
+			draw_checkbox("timelineeditorrealisticfalloff", dx, dy, tl_edit.realistic_falloff, action_tl_realistic_falloff, "timelineeditorrealisticfallofftip")
+			tab_next()
+		}
 
 		tab_set_columns(false)
 		return 0
@@ -23,6 +26,11 @@ function tab_timeline_editor_appearance()
 		// Enchanted
 		tab_control_switch()
 		draw_switch("timelineeditorenchanted", dx, dy, tl_edit.glint_enabled, action_tl_glint_enabled)
+		tab_next()
+
+		// Glow
+		tab_control_switch()
+		draw_switch("timelineeditorglow", dx, dy, tl_edit.glow, action_tl_glow)
 		tab_next()
 		return 0
 	}
@@ -73,6 +81,23 @@ function tab_timeline_editor_appearance()
 			
 		tab_collapse_end()
 	}
+
+	// Glow
+	tab_control_switch()
+	draw_button_collapse("tl_glow", collapse_map[?"tl_glow"], action_tl_glow, tl_edit.glow, "timelineeditorglow")
+	tab_next()
+	if (tl_edit.glow && collapse_map[?"tl_glow"])
+	{
+		tab_collapse_start()
+		tab_control_checkbox()
+		draw_checkbox("timelineeditorglowtexture", dx, dy, tl_edit.glow_texture, action_tl_glow_texture)
+		tab_next()
+		tab_control_checkbox()
+		draw_checkbox("timelineeditoronlyrenderglow", dx, dy, tl_edit.only_render_glow, action_tl_only_render_glow)
+		tab_next()
+		tab_collapse_end()
+	}
+
 	dy += 8
 		
 	// Blend mode
@@ -89,7 +114,7 @@ function tab_timeline_editor_appearance()
 		content_text = text_get("renderalphamodedefault")
 			
 	tab_control_menu()
-	draw_button_menu("timelineeditoralphamode", e_menu.LIST, dx, dy, dw, 24, tl_edit.alpha_mode, content_text, action_tl_alpha_mode)
+	draw_button_menu("timelineeditoralphamode", e_menu.LIST, dx, dy, dw, 24, tl_edit.alpha_mode, content_text, action_tl_alpha_mode, false, null, null, "", null, null, null, "timelineeditoralphamodetip")
 	tab_next()
 		
 	// Render depth
@@ -131,23 +156,6 @@ function tab_timeline_editor_appearance()
 			tab_next()
 		}
 	}
-		
-	// Glow
-	tab_control_checkbox()
-	draw_checkbox("timelineeditorglow", dx, dy, tl_edit.glow, action_tl_glow)
-	tab_next()
-		
-	if (tl_edit.glow)
-	{
-		tab_control_checkbox()
-		draw_checkbox("timelineeditorglowtexture", dx, dy, tl_edit.glow_texture, action_tl_glow_texture)
-		tab_next()
-			
-		tab_control_checkbox()
-		draw_checkbox("timelineeditoronlyrenderglow", dx, dy, tl_edit.only_render_glow, action_tl_only_render_glow)
-		tab_next()
-	}
-		
 	// Fog
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorfog", dx, dy, tl_edit.fog, action_tl_fog)
@@ -157,16 +165,42 @@ function tab_timeline_editor_appearance()
 	tab_control_checkbox()
 	draw_checkbox("timelineeditorbackfaces", dx, dy, tl_edit.backfaces, action_tl_backfaces)
 	tab_next()
-		
-	// High quality hiding
-	tab_control_checkbox()
-	draw_checkbox("timelineeditorhqhiding", dx, dy, tl_edit.hq_hiding, action_tl_hq_hiding)
-	tab_next()
-		
-	// Low quality hiding
-	tab_control_checkbox()
-	draw_checkbox("timelineeditorlqhiding", dx, dy, tl_edit.lq_hiding, action_tl_lq_hiding)
-	tab_next()
-		
+
 	tab_set_columns(false)
+		
+	// Mode visibility
+	tab_control_switch()
+	draw_button_collapse("tl_modevisibility", collapse_map[?"tl_modevisibility"], null, true, "timelineeditormodevisibility")
+	tab_next()
+	
+	if (collapse_map[?"tl_modevisibility"])
+	{
+		var rendereredit = renderer_edit;
+
+		tab_collapse_start()
+		
+		tab_control_checkbox()
+		renderer_edit = e_renderer.QUICK
+		draw_checkbox("timelineeditormodequick", dx, dy, tl_edit.mode_visible[renderer_edit], action_tl_mode_visible)
+		tab_next()
+
+		tab_control_checkbox()
+		renderer_edit = e_renderer.STANDARD
+		draw_checkbox("timelineeditormodestandard", dx, dy, tl_edit.mode_visible[renderer_edit], action_tl_mode_visible)
+		tab_next()
+
+		tab_control_checkbox()
+		renderer_edit = e_renderer.REALISTIC
+		draw_checkbox("timelineeditormoderealistic", dx, dy, tl_edit.mode_visible[renderer_edit], action_tl_mode_visible)
+		tab_next()
+
+		renderer_edit = rendereredit
+		tab_collapse_end()
+	}
+	
+	if (!tl_edit.mode_visible[view_main.renderer] && (!view_second.show || !tl_edit.mode_visible[view_second.renderer]))
+	{
+		dy += 8
+		draw_tooltip_label("timelineeditormodevisibilitytip", icons.INFO, e_toast.INFO)
+	}
 }

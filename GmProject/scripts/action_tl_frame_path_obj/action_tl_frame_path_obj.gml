@@ -11,13 +11,13 @@ function action_tl_frame_path_obj(path)
 			with (save_id_find(hobj.path_reset_save_id[t]))
 			{
 				var pos, defaultpos;
-				pos = app.history_undo ? hobj.path_old_pos[t] : vec3(0)
-				defaultpos = app.history_undo ? hobj.path_old_default_pos[t] : vec3(0)
+				pos = history_undo ? hobj.path_old_pos[t] : vec3(0)
+				defaultpos = history_undo ? hobj.path_old_default_pos[t] : vec3(0)
 				
 				tl_value_set_vec3(e_value.POS_X, pos)
 				tl_value_set_vec3(e_value.POS_X, defaultpos, true)
 				
-				if (!app.history_undo && ds_list_size(keyframe_list) > 0)
+				if (!history_undo && ds_list_size(keyframe_list) > 0)
 					with (keyframe_list[|0])
 						tl_value_set_vec3(e_value.POS_X, vec3(0))
 				

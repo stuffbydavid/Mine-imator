@@ -112,11 +112,27 @@ function tl_update_values()
 	
 	// Camera
 	if (value_type[e_value_type.CAMERA])
-	{
-		for (var vid = e_value.CAM_FOV; vid <= e_value.CAM_HEIGHT; vid++)
+		for (var vid = e_value.CAM_FOV; vid <= e_value.CAM_ROTATE_ANGLE_Z; vid++)
 			tl_update_values_ease(vid)
+	
+	// Camera effects
+	if (value_type[e_value_type.CAMERA_EFFECT])
+	{
+		var fxrange = camera_effect_value_range_list[|camera_effect_type];
+		for (var vid = fxrange[0]; vid <= fxrange[1]; vid++)
+			if (camera_effect_type != e_cam_fx.FADE || vid != e_value.GLOW_COLOR)
+				tl_update_values_ease(vid)
 		
-		tl_update_values_ease(e_value.TEXTURE_OBJ)
+		if (camera_effect_type_use_aperture(camera_effect_type))
+			for (var vid = e_value.CAM_FX_BLADE_AMOUNT; vid <= e_value.CAM_FX_BLADE_STRETCH; vid++)
+				tl_update_values_ease(vid)
+		
+		if (camera_effect_type = e_cam_fx.COLOR_CORRECTION)
+			for (var vid = e_value.RGB_ADD; vid <= e_value.HSB_MUL; vid++)
+				tl_update_values_ease(vid)
+		
+		if (camera_effect_type = e_cam_fx.LENS_DIRT)
+			tl_update_values_ease(e_value.TEXTURE_OBJ)
 	}
 	
 	// Background

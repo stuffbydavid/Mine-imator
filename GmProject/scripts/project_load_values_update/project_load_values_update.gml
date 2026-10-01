@@ -35,8 +35,8 @@ function project_load_values_update(map = null)
 	{
 		if (timeline.type = e_tl_type.CAMERA)
 		{
-			value[e_value.CAM_BLOOM_RATIO] = max(0, value[e_value.CAM_BLOOM_RATIO])
-			value[e_value.CAM_DOF_BLUR_RATIO] = max(0, value[e_value.CAM_DOF_BLUR_RATIO])
+			value[e_value.CAM_FX_BLOOM_RATIO] = max(0, value[e_value.CAM_FX_BLOOM_RATIO])
+			value[e_value.CAM_FX_DOF_BLUR_RATIO] = max(0, value[e_value.CAM_FX_DOF_BLUR_RATIO])
 		}
 		
 		if (timeline.type = e_tl_type.ENVIRONMENT)
@@ -46,9 +46,16 @@ function project_load_values_update(map = null)
 	// Old anamorphic ratio was moved into Blade Stretch, anamorphic doesn't rotate with blades (2.1.0)
 	if (load_format < e_project.FORMAT_210 && timeline.type = e_tl_type.CAMERA && load_format > e_project.FORMAT_123_PRE_2)
 	{
-		value[e_value.CAM_BLADE_ANGLE] = -value[e_value.CAM_BLADE_ANGLE]
-		value[e_value.CAM_BLADE_STRETCH] = -value[e_value.CAM_DOF_BLUR_RATIO]
-		value[e_value.CAM_DOF_BLUR_RATIO] = 0
+		if (ds_map_valid(map))
+		{
+			if (ds_map_exists(map, "CAM_BLADE_ANGLE") || ds_map_exists(map, "CAM_FX_BLADE_ANGLE"))
+				value[e_value.CAM_FX_BLADE_ANGLE] = -value[e_value.CAM_FX_BLADE_ANGLE]
+			
+			if (ds_map_exists(map, "CAM_DOF_BLUR_RATIO") || ds_map_exists(map, "CAM_FX_DOF_BLUR_RATIO"))
+				value[e_value.CAM_FX_BLADE_STRETCH] = -value[e_value.CAM_FX_DOF_BLUR_RATIO]
+		}
+		
+		value[e_value.CAM_FX_DOF_BLUR_RATIO] = 0
 	}
 
 	// Separated leaf colors for custom biome setting (2.0.0)
@@ -79,13 +86,6 @@ function project_load_values_update(map = null)
 	{
 		if (timeline.type = e_tl_type.ENVIRONMENT)
 			value[e_value.ENV_SUNLIGHT_STRENGTH] += 1
-		
-		if (timeline.type = e_tl_type.CAMERA && value[e_value.CAM_SHAKE])
-		{
-			value[e_value.CAM_SHAKE_MODE] = 1
-			value[e_value.CAM_SHAKE_SPEED_X] *= 10
-			value[e_value.CAM_SHAKE_SPEED_Y] *= 10
-		}
 	}
 	
 	// Display texture animation speed as a percentage (2.1)

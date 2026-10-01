@@ -1,17 +1,18 @@
-/// @arg timeline
+/// @desc Visualize DOF settings of a Camera effects object in the scene.
+/// @arg values
 /// @arg matrix
 /// @arg ratio
 /// @arg fovtan
 
-function view_shape_camera_frustum_dof(tl, mat, ratio, fovtan)
+function view_shape_camera_frustum_dof(values, mat, ratio, fovtan)
 {
 	var dofnear, doffar, dofblurnear, dofblurfar;
 	var viewfrustumdofpoints, viewfrustumdofblurpoints;
 	
-	dofnear = min(cam_far, max(cam_near, tl.value[e_value.CAM_DOF_DEPTH] - tl.value[e_value.CAM_DOF_RANGE]))
-	doffar = min(cam_far, max(cam_near, tl.value[e_value.CAM_DOF_DEPTH] + tl.value[e_value.CAM_DOF_RANGE]))
-	dofblurnear = min(cam_far, max(cam_near, (tl.value[e_value.CAM_DOF_DEPTH] - tl.value[e_value.CAM_DOF_RANGE]) - tl.value[e_value.CAM_DOF_FADE_SIZE]))
-	dofblurfar = min(cam_far, max(cam_near, (tl.value[e_value.CAM_DOF_DEPTH] + tl.value[e_value.CAM_DOF_RANGE]) + tl.value[e_value.CAM_DOF_FADE_SIZE]))
+	dofnear = min(cam_far, max(cam_near, values[e_value.CAM_FX_DOF_DEPTH] - values[e_value.CAM_FX_DOF_RANGE]))
+	doffar = min(cam_far, max(cam_near, values[e_value.CAM_FX_DOF_DEPTH] + values[e_value.CAM_FX_DOF_RANGE]))
+	dofblurnear = min(cam_far, max(cam_near, (values[e_value.CAM_FX_DOF_DEPTH] - values[e_value.CAM_FX_DOF_RANGE]) - values[e_value.CAM_FX_DOF_FADE_SIZE]))
+	dofblurfar = min(cam_far, max(cam_near, (values[e_value.CAM_FX_DOF_DEPTH] + values[e_value.CAM_FX_DOF_RANGE]) + values[e_value.CAM_FX_DOF_FADE_SIZE]))
 		
 	viewfrustumdofpoints = [
 		point3D(-((fovtan * dofnear) * ratio), dofnear, -fovtan * dofnear), // nbr

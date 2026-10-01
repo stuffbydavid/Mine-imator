@@ -3,6 +3,9 @@
 
 function tl_value_clamp(vid, val)
 {
+	if (tl_value_is_texture(vid))
+		return val
+
 	if (app.setting_unlimited_values)
 	{
 		if (tl_value_is_string(vid) || tl_value_is_bool(vid) || tl_value_is_obj(vid))
@@ -31,9 +34,9 @@ function tl_value_clamp(vid, val)
 		case e_value.SUBSURFACE_RADIUS_GREEN:
 		case e_value.SUBSURFACE_RADIUS_BLUE:
 		case e_value.WIND_INFLUENCE:
-		case e_value.CAM_VIGNETTE_RADIUS:
-		case e_value.CAM_VIGNETTE_SOFTNESS:
-		case e_value.CAM_VIGNETTE_STRENGTH: return clamp(val, 0, 1)
+		case e_value.CAM_FX_VIGNETTE_RADIUS:
+		case e_value.CAM_FX_VIGNETTE_SOFTNESS:
+		case e_value.CAM_FX_VIGNETTE_STRENGTH: return clamp(val, 0, 1)
 		case e_value.RGB_ADD:
 		case e_value.RGB_SUB:
 		case e_value.RGB_MUL:
@@ -44,9 +47,9 @@ function tl_value_clamp(vid, val)
 		case e_value.SUBSURFACE_COLOR:
 		case e_value.GLOW_COLOR:
 		case e_value.LIGHT_COLOR:
-		case e_value.CAM_BLOOM_BLEND:
-		case e_value.CAM_COLOR_BURN:
-		case e_value.CAM_VIGNETTE_COLOR:
+		case e_value.CAM_FX_BLOOM_BLEND:
+		case e_value.CAM_FX_COLOR_BURN:
+		case e_value.CAM_FX_VIGNETTE_COLOR:
 		case e_value.ENV_SKY_COLOR: 
 		case e_value.ENV_SKY_CLOUDS_COLOR:
 		case e_value.ENV_SUNLIGHT_COLOR:
@@ -71,30 +74,30 @@ function tl_value_clamp(vid, val)
 		case e_value.BEND_ANGLE_Y:
 		case e_value.BEND_ANGLE_Z: return clamp(val, -180, 180)
 		case e_value.CAM_FOV: return clamp(val, 1, 170)
-		case e_value.CAM_BLADE_AMOUNT: return clamp(val, 0, 32)
-		case e_value.CAM_DOF_BLUR_RATIO:
-		case e_value.CAM_BLADE_STRETCH: return clamp(val, -1, 1)
+		case e_value.CAM_WIDTH:
+		case e_value.CAM_HEIGHT: return max(1, val)
 		case e_value.CAM_ROTATE_DISTANCE: return max(1, val)
-		case e_value.CAM_EXPOSURE:
-		case e_value.CAM_BLOOM_THRESHOLD:
-		case e_value.CAM_BLOOM_TRANSITION:
-		case e_value.CAM_GAMMA:
+		case e_value.CAM_FX_BLADE_AMOUNT: return clamp(val, 0, 32)
+		case e_value.CAM_FX_DOF_BLUR_RATIO:
+		case e_value.CAM_FX_BLADE_STRETCH: return clamp(val, -1, 1)
+		case e_value.CAM_FX_EXPOSURE:
+		case e_value.CAM_FX_BLOOM_THRESHOLD:
+		case e_value.CAM_FX_BLOOM_TRANSITION:
+		case e_value.CAM_FX_GAMMA:
+		case e_value.CAM_FX_SHAKE_STRENGTH_X:
+		case e_value.CAM_FX_SHAKE_STRENGTH_Y:
+		case e_value.CAM_FX_SHAKE_STRENGTH_Z:
+		case e_value.CAM_FX_SHAKE_SPEED_X:
+		case e_value.CAM_FX_SHAKE_SPEED_Y:
+		case e_value.CAM_FX_SHAKE_SPEED_Z:
+		case e_value.CAM_FX_CA_RED_OFFSET:
+		case e_value.CAM_FX_CA_GREEN_OFFSET:
+		case e_value.CAM_FX_CA_BLUE_OFFSET:
 		case e_value.ENV_SUNLIGHT_STRENGTH:
 		case e_value.ENV_SUNLIGHT_SPECULAR_STRENGTH:
 		case e_value.LIGHT_STRENGTH:
 		case e_value.EMISSIVE:
-		case e_value.SUBSURFACE:
-		case e_value.CAM_SHAKE_STRENGTH_X:
-		case e_value.CAM_SHAKE_STRENGTH_Y:
-		case e_value.CAM_SHAKE_STRENGTH_Z:
-		case e_value.CAM_SHAKE_SPEED_X:
-		case e_value.CAM_SHAKE_SPEED_Y:
-		case e_value.CAM_SHAKE_SPEED_Z:
-		case e_value.CAM_CA_RED_OFFSET:
-		case e_value.CAM_CA_GREEN_OFFSET:
-		case e_value.CAM_CA_BLUE_OFFSET: return clamp(val, 0, no_limit)
-		case e_value.CAM_WIDTH:
-		case e_value.CAM_HEIGHT: return max(1, val)
+		case e_value.SUBSURFACE: return clamp(val, 0, no_limit)
 		case e_value.ENV_SKY_MOON_PHASE: return clamp(val, 0, 7)
 		case e_value.ENV_FOG_DISTANCE:
 		case e_value.ENV_FOG_SIZE: return clamp(val, 10, app.project_render_distance)

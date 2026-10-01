@@ -12,9 +12,9 @@ function tl_value_is_color(vid)
 			vid = e_value.GLOW_COLOR ||
 			vid = e_value.SUBSURFACE_COLOR ||
 			vid = e_value.LIGHT_COLOR ||
-			vid = e_value.CAM_BLOOM_BLEND ||
-			vid = e_value.CAM_COLOR_BURN ||
-			vid = e_value.CAM_VIGNETTE_COLOR ||
+			vid = e_value.CAM_FX_BLOOM_BLEND ||
+			vid = e_value.CAM_FX_COLOR_BURN ||
+			vid = e_value.CAM_FX_VIGNETTE_COLOR ||
 			vid = e_value.ENV_SKY_COLOR ||
 			vid = e_value.ENV_SKY_CLOUDS_COLOR ||
 			vid = e_value.ENV_SUNLIGHT_COLOR ||

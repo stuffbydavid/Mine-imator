@@ -90,18 +90,24 @@ function render_preset_apply_settings(settings, renderer)
 			case "exposure": exposure = val; break
 			case "gamma": gamma = val; break
 			case "material_maps": material_maps = val; break
-			default: // Camera, or unknown
+			default: // Camera, camera effects, or unknown
 			{
 				var camvaluename, camvalue;
 				camvaluename = string_upper(name)
 				if (string_pos("CAM_", camvaluename) != 1)
 					camvaluename = "CAM_" + camvaluename
-				camvalue = ds_list_find_index(value_name_list, camvaluename)
 				
-				if (app.timeline_camera && camvalue >= e_value.CAM_FOV && camvalue <= e_value.CAM_HEIGHT)
+				camvalue = ds_list_find_index(value_name_list, camvaluename)
+				if (camvalue < 0)
+					camvalue = ds_list_find_index(value_name_list, "CAM_FX_" + string_delete(camvaluename, 1, 4))
+				
+				if (app.timeline_camera && camvalue >= e_value.CAM_FOV && camvalue <= e_value.CAM_ROTATE_ANGLE_Z)
 					app.timeline_camera.value[camvalue] = val
+				else if (camvalue >= e_value.CAM_FX_SHAKE_MODE && camvalue <= e_value.CAM_FX_COLOR_BURN && render_camera_effects_get() != null)
+					app.timeline_camera_effect_value[camvalue] = val
 				else
 					log("Unknown setting", name)
+				
 				break
 			}
 		}

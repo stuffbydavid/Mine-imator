@@ -1,5 +1,12 @@
 function view_toggle_render()
 {
+	if (trial_version)
+	{
+		popup_show(popup_upgrade)
+		popup_upgrade.page = 2
+		return 0
+	}
+	
 	if (view_second.show)
 	{
 		if (view_second.renderer = e_renderer.REALISTIC)

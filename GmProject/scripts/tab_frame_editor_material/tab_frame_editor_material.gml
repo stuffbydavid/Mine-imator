@@ -10,7 +10,7 @@ function tab_frame_editor_material()
 	
 	// Color properties
 	if (tl_edit.value_type[e_value_type.MATERIAL_COLOR])
-		tab_frame_editor_color()
+		tab_frame_editor_color(tab.material.tbx_mix_percent)
 	
 	// Only show more settings in 'Advanced mode'
 	if (!setting_advanced_mode)

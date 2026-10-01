@@ -15,19 +15,19 @@ function bench_show()
 	
 	if (bench_settings.list_focus != "")
 		window_focus = bench_settings.list_focus
-	
-	// Select audio track
-	if (bench_tab = e_bench_tab.SOUND)
-		bench_audio_track_update()
-	
+		
 	// Refresh schematic project folder
-	else if (bench_tab = e_bench_tab.SCHEMATIC && bench_schematic_folder = "project")
+	if (bench_tab = e_bench_tab.SCHEMATIC && bench_schematic_folder = "project")
 		action_bench_schematic_folder(bench_schematic_folder)
-
+		
+	// Select audio track
+	else if (bench_tab = e_bench_tab.SOUND)
+		bench_audio_track_update()
+		
 	// Load particle folder
 	else if (bench_tab = e_bench_tab.PARTICLE_SPAWNER)
 		action_bench_particles_folder(bench_particle_preset_folder)
-	
+			
 	// Adjust zoom and highlight text on tab click
 	else if (bench_tab = e_bench_tab.TEXT)
 	{
