@@ -113,9 +113,9 @@ function project_reset()
 	timeline_zoom_goal = 16
 	
 	timeline_camera = null
-	timeline_camera_effect_value = null
-	timeline_camera_effect_enabled = null
 	timeline_environment = null
+	
+	tl_camera_effects_reset()
 	
 	timeline_intervals_show = false
 	timeline_interval_size = 24

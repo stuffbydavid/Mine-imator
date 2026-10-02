@@ -34,7 +34,7 @@ function popup_upgrade_draw()
 	
 	// Image caption
 	draw_set_font(font_caption)
-	content_text = string_limit_ext(text_get("upgrade/page" + string(popup_current.page)), (dw - 40) + 8, no_limit)
+	content_text = string_limit_ext(text_get("upgrade/page_" + string(popup_current.page)), (dw - 40) + 8, no_limit)
 	draw_label(content_text, floor(dx + dw/2) + pageoff, dy, fa_middle, fa_top, c_text_secondary, a_text_secondary * pagealpha, font_caption)
 	dy += string_height(content_text) + 24
 	

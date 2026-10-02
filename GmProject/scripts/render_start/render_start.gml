@@ -14,10 +14,13 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_camera_effects = null
 	render_camera_effect_enabled = null
 	
-	if ((owner = app.view_second && render_effects) || owner = "image" || owner = "movie")
+	if ((owner = app.view_second && render_effects) || owner = "image" || owner = "movie" || owner = camera)
 	{
-		render_camera_effects = render_camera_effects_get()
-		render_camera_effect_enabled = app.timeline_camera_effect_enabled
+		var fxscope = camera != null ? camera : app;
+		with (fxscope)
+			render_camera_effects = tl_camera_effects_get()
+		
+		render_camera_effect_enabled = fxscope.camera_effect_enabled
 	}
 	
 	render_width = project_video_width

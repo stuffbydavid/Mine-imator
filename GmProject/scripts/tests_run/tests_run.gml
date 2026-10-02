@@ -135,9 +135,13 @@ function tests_run()
 		// Save camera values
 		if (timeline_camera)
 			renderpreset.cam_value = timeline_camera.value
-		renderpreset.camfx_value = render_camera_effects_get()
 		
-		var camfxenabled = array_copy_1d(timeline_camera_effect_enabled);
+		// Get effects
+		var fxscope = (timeline_camera != null ? timeline_camera : app);
+		with (fxscope)
+			renderpreset.camfx_value = tl_camera_effects_get()
+		
+		var camfxenabled = array_copy_1d(fxscope.camera_effect_enabled);
 		if (renderpreset.camfx_value != null)
 			renderpreset.camfx_value = array_copy_1d(renderpreset.camfx_value)
 			
@@ -160,10 +164,10 @@ function tests_run()
 			if (timeline_camera)
 				timeline_camera.value = renderpreset.cam_value
 			
-			timeline_camera_effect_value = null
-			timeline_camera_effect_enabled = array_copy_1d(camfxenabled)
+			fxscope.camera_effect_value = null
+			fxscope.camera_effect_enabled = array_copy_1d(camfxenabled)
 			if (renderpreset.camfx_value != null)
-				timeline_camera_effect_value = array_copy_1d(renderpreset.camfx_value)
+				fxscope.camera_effect_value = array_copy_1d(renderpreset.camfx_value)
 
 			if (array_length(argssettingsqueue) > 0)
 			{

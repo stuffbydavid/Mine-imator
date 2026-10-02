@@ -21,6 +21,8 @@ function tl_update_list(root = true, tllevel = -1, collapsed = false)
 		
 		level = -1
 		indent_level = -1
+		
+		tl_camera_effects_reset()
 	}
 	else
 	{

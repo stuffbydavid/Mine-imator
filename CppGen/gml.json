@@ -333,6 +333,7 @@
         "draw_sprite_ext": { "return": "void", "args": [ "int", "int", "int", "int", "real", "real", "real", "int", "real" ] },
         "draw_sprite_general": { "return": "void", "args": [ "int", "int", "int", "int", "int", "int", "int", "int", "real", "real", "real", "int", "int", "int", "int", "real" ] },
         "draw_sprite_part_ext": { "return": "void", "args": [ "int", "int", "int", "int", "int", "int", "int", "int", "real", "real", "int", "real" ] },
+        "draw_sprite_part": { "return": "void", "args": [ "int", "int", "int", "int", "int", "int", "int", "int" ] },
         "draw_sprite": { "return": "void", "args": [ "int", "int", "int", "int" ] },
         "draw_surface_ext": { "return": "void", "args": [ "int", "int", "int", "real", "real", "real", "int", "real" ] },
         "draw_surface": { "return": "void", "args": [ "int", "int", "int" ] },

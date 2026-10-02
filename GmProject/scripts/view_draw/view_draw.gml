@@ -204,10 +204,8 @@ function view_draw(view)
 		{
 			// Close view
 			if (draw_button_icon("view/close", dx, dy, dw, dh, false, icons.CLOSE, null, false, "view/close"))
-			{
 				view.show = false
-				view_render = false
-			}
+			
 			dx -= dw + padding
 			
 			// Pop out
@@ -499,10 +497,7 @@ function view_draw(view)
 				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
 		}
 		
-		if (view.renderer != e_renderer.REALISTIC || view_render_real_time)
-			view_update(view, cam)
-		else if (window_focus = string(view) && !mouse_left && !mouse_right) // Freeze on slow renders bugfix
-			window_busy = ""
+		view_update(view, cam)
 
 		// Background checkboard
 		if (view.transparent_background)
@@ -897,11 +892,7 @@ function view_draw(view)
 	// Render info
 	if (view.renderer = e_renderer.REALISTIC)
 	{
-		var infotext;
-		if (view_render_real_time)
-			infotext = text_get("view/render_fps", string(fps), max(1, render_samples), project_render_samples)
-		else
-			infotext = ""
+		var infotext = text_get("view/render_fps", string(fps), max(1, render_samples), project_render_samples);
 		
 		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
 		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? c_error : c_white, 1, font_caption)

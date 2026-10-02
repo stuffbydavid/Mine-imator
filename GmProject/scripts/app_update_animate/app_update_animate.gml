@@ -163,8 +163,7 @@ function app_update_animate()
 	}
 	
 	// Invalidate camera effects
-	timeline_camera_effect_value = null
-	timeline_camera_effect_enabled = null
+	tl_camera_effects_reset()
 	
 	timeline_marker_previous = timeline_marker
 	

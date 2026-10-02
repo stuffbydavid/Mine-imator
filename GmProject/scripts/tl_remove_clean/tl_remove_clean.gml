@@ -135,8 +135,7 @@ function tl_remove_clean()
 	if (app.timeline_camera = id)
 		app.timeline_camera = null
 	
-	app.timeline_camera_effect_value = null
-	app.timeline_camera_effect_enabled = null
+	tl_camera_effects_reset()
 	
 	if (type = e_tl_type.CAMERA_EFFECT)
 	{

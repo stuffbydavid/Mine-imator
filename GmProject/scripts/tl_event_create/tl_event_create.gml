@@ -50,6 +50,9 @@ function tl_event_create()
 	scenery_animate = false
 	
 	camera_effect_type = e_cam_fx.FADE
+	camera_effect_value = null
+	camera_effect_enabled = null
+	camera_effect_aperture_scope = null
 	
 	for (var v = 0; v < e_value.amount; v++)
 	{

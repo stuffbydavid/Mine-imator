@@ -56,9 +56,6 @@ function app_startup_interface_views()
 	view_glow_ani = 0
 	view_glow_location_prev = ""
 	
-	view_render = false
-	view_render_real_time = true
-	
 	view_control_ratio = 1
 	view_control_edit = null
 	view_control_edit_view = null

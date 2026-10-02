@@ -94,7 +94,6 @@ function panel_draw_content()
 				if (cat[c].show && cat[c].script)
 				{
 					dy += 8
-					content_tab_name = cat[c].name
 					script_execute(cat[c].script)
 					dy += 8
 				}

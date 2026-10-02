@@ -40,7 +40,6 @@ function render_update_camera()
 			
 			// Create matrix
 			var shakemat;
-			
 			if (render_camera_effects[e_value.CAM_FX_SHAKE_MODE])
 				shakemat = matrix_create(shake, vec3(0), vec3(1))
 			else

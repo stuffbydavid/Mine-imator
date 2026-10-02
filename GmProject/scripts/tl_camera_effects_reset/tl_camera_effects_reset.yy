@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"camera_effect_type_use_aperture",
+  "%Name":"tl_camera_effects_reset",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"camera_effect_type_use_aperture",
+  "name":"tl_camera_effects_reset",
   "parent":{
     "name":"Effects",
     "path":"folders/Scripts/Project/Timeline/Effects.yy",

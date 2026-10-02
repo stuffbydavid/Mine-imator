@@ -8,10 +8,11 @@ function view_shape_camera_frustum(tl)
 	
 	var tempmat, mat, ratio, fovtan, effects;
 	tempmat = tl.matrix
-	effects = render_camera_effects_get()
+	with (tl)
+		effects = tl_camera_effects_get()
 	
 	// Camera shake
-	if (effects != null && app.timeline_camera_effect_enabled[e_cam_fx.SHAKE])
+	if (effects != null && tl.camera_effect_enabled[e_cam_fx.SHAKE])
 	{
 		var shake = vec3(
 			simplex1d_lib((app.timeline_marker/app.project_tempo) * effects[e_value.CAM_FX_SHAKE_SPEED_X]) * effects[e_value.CAM_FX_SHAKE_STRENGTH_X],
@@ -37,7 +38,7 @@ function view_shape_camera_frustum(tl)
 	fovtan = tan(degtorad(tl.value[e_value.CAM_FOV] * 0.5)) // Multiply this by distance
 		
 	// DOF visualizer
-	if (effects != null && app.timeline_camera_effect_enabled[e_cam_fx.DOF])
+	if (effects != null && tl.camera_effect_enabled[e_cam_fx.DOF])
 		view_shape_camera_frustum_dof(effects, mat, ratio, fovtan)
 			
 	var viewfrustumpoints = [

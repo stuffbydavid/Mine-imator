@@ -818,9 +818,9 @@
 	"upgrade/": {
 		"caption": "Upgrade",
 		"info": "You are currently using the trial version of Mine-imator. To unlock more advanced features, get an upgrade key from the link below, and enter it here.",
-		"page0": "Watermark can be customized or removed.",
-		"page1": "Unlock \"Advanced mode\" and get access to all animation features.",
-		"page2": "Unlock the \"Realistic\" renderer in projects.",
+		"page_0": "Watermark can be customized or removed.",
+		"page_1": "Unlock \"Advanced mode\" and get access to all animation features.",
+		"page_2": "Unlock the \"Realistic\" renderer in projects.",
 		"expired_key": "Your key has expired after 6 months, visit the Mine-imator website to get a new one.",
 		"continue": "Upgrade",
 		"dismiss": "Dismiss"

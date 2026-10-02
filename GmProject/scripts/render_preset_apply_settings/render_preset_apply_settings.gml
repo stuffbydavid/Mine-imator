@@ -103,8 +103,20 @@ function render_preset_apply_settings(settings, renderer)
 				
 				if (app.timeline_camera && camvalue >= e_value.CAM_FOV && camvalue <= e_value.CAM_ROTATE_ANGLE_Z)
 					app.timeline_camera.value[camvalue] = val
-				else if (camvalue >= e_value.CAM_FX_SHAKE_MODE && camvalue <= e_value.CAM_FX_COLOR_BURN && render_camera_effects_get() != null)
-					app.timeline_camera_effect_value[camvalue] = val
+				
+				else if (camvalue >= e_value.CAM_FX_SHAKE_MODE && camvalue <= e_value.CAM_FX_COLOR_BURN)
+				{
+					var fxscope, fxvalues;
+					fxscope = (app.timeline_camera != null ? app.timeline_camera : app)
+					fxvalues = null
+					with (fxscope)
+						fxvalues = tl_camera_effects_get()
+					
+					if (fxvalues != null)
+						fxscope.camera_effect_value[camvalue] = val
+					else
+						log("Unknown setting", name)
+				}
 				else
 					log("Unknown setting", name)
 				

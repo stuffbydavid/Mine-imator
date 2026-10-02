@@ -952,7 +952,7 @@ StringId Accessor::getNextInChainScope(ResolveScope* scope)
 		return scope->currentInChain;
 
 	else if (this->name == STR(other)) // Previous scope reference
-		return scope->previous;
+		return scope->previous != 0 ? scope->previous : STR(any);
 
 	else // Variable* reference
 	{

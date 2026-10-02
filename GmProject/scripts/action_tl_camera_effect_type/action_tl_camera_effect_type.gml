@@ -35,8 +35,7 @@ function action_tl_camera_effect_type(fxtype)
 		}
 	}
 	
-	app.timeline_camera_effect_value = null
-	app.timeline_camera_effect_enabled = null
+	tl_camera_effects_reset()
 	
 	timeline_marker_previous = -1
 	

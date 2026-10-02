@@ -228,6 +228,11 @@ namespace CppProject
 		draw_sprite_general(id, subimg, left, top, width, height, x, y, xscale, yscale, 0.0, col, col, col, col, alpha);
 	}
 
+	void draw_sprite_part(IntType id, IntType subimg, IntType left, IntType top, IntType width, IntType height, IntType x, IntType y)
+	{
+		draw_sprite_part_ext(id, subimg, left, top, width, height, x, y, 1.0, 1.0, -1, draw_get_alpha());
+	}
+
 	void draw_sprite(IntType id, IntType subimg, IntType x, IntType y)
 	{
 		draw_sprite_ext(id, subimg, x, y, 1.0, 1.0, 0.0, -1, draw_get_alpha());

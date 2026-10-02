@@ -32,8 +32,6 @@ function app_startup_interface_timeline()
 	timeline_zoom_button = 0
 	
 	timeline_camera = null
-	timeline_camera_effect_value = null
-	timeline_camera_effect_enabled = null
 	timeline_environment = null
 	
 	timeline_insert_pos = 0
@@ -66,6 +64,10 @@ function app_startup_interface_timeline()
 	timeline_settings_run_fn = ""
 	timeline_settings_keyframes = false
 	timeline_settings_keyframes_export = false
+	
+	camera_effect_value = null
+	camera_effect_enabled = null
+	camera_effect_aperture_scope = null
 	
 	copy_kf_amount = 0
 	copy_kf_pos[0] = 0
