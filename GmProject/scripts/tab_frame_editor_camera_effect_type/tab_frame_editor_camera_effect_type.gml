@@ -43,36 +43,55 @@ function tab_frame_editor_camera_effect_type(fxtype)
 			{
 				tab_collapse_start()
 
-				// Mode
-				tab_control_togglebutton()
-				togglebutton_add(nameprefix + "shake/rotational", null, 0, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 0, action_tl_frame_cam_fx_shake_mode)
-				togglebutton_add(nameprefix + "shake/positional", null, 1, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 1, action_tl_frame_cam_fx_shake_mode)
-				draw_togglebutton(nameprefix + "shake/mode", dx, dy)
+				tab_control_meter()
+				draw_meter(nameprefix + "shake/amount", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X] * 100), 0, 500, 100, 1, tab.camera_effects.tbx_shake_amount, action_tl_frame_cam_fx_shake_amount)
 				tab_next()
+				
+				// Custom
+				if (setting_advanced_mode)
+				{
+					tab_control_switch()
+					draw_button_collapse("frame_editor/shake/custom", collapse_map[?"frame_editor/shake/custom"], null, true, nameprefix + "shake/custom")
+					tab_next()
 
-				// Strength
-				axis_edit = X
-				textfield_group_add(nameprefix + "shake/strength/x", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_x, null, 1, 0, no_limit)
-				axis_edit = (setting_z_is_up ? Y : Z)
-				textfield_group_add(nameprefix + "shake/strength/y", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_y, null, 1, 0, no_limit)
-				axis_edit = (setting_z_is_up ? Z : Y)
-				textfield_group_add(nameprefix + "shake/strength/z", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_z, null, 1, 0, no_limit)
+					if (collapse_map[?"frame_editor/shake/custom"])
+					{
+						tab_collapse_start()
 
-				tab_control_textfield_group(true)
-				draw_textfield_group(nameprefix + "shake/strength", dx, dy, dw, null, null, null, .01, true, true, 1)
-				tab_next()
+						// Mode
+						tab_control_togglebutton()
+						togglebutton_add(nameprefix + "shake/rotational", null, 0, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 0, action_tl_frame_cam_fx_shake_mode)
+						togglebutton_add(nameprefix + "shake/positional", null, 1, tl_edit.value[e_value.CAM_FX_SHAKE_MODE] = 1, action_tl_frame_cam_fx_shake_mode)
+						draw_togglebutton(nameprefix + "shake/mode", dx, dy)
+						tab_next()
 
-				// Speed
-				axis_edit = X
-				textfield_group_add(nameprefix + "shake/speed/x", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_x, null, 1, 0, no_limit)
-				axis_edit = (setting_z_is_up ? Y : Z)
-				textfield_group_add(nameprefix + "shake/speed/y", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_y, null, 1, 0, no_limit)
-				axis_edit = (setting_z_is_up ? Z : Y)
-				textfield_group_add(nameprefix + "shake/speed/z", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_z, null, 1, 0, no_limit)
+						// Strength
+						axis_edit = X
+						textfield_group_add(nameprefix + "shake/strength/x", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_x, null, 1, 0, no_limit)
+						axis_edit = (setting_z_is_up ? Y : Z)
+						textfield_group_add(nameprefix + "shake/strength/y", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_y, null, 1, 0, no_limit)
+						axis_edit = (setting_z_is_up ? Z : Y)
+						textfield_group_add(nameprefix + "shake/strength/z", round(tl_edit.value[e_value.CAM_FX_SHAKE_STRENGTH_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_strength, axis_edit, tab.camera_effects.tbx_shake_strength_z, null, 1, 0, no_limit)
 
-				tab_control_textfield_group(true)
-				draw_textfield_group(nameprefix + "shake/speed", dx, dy, dw, null, null, null, .01, true, true, 1)
-				tab_next()
+						tab_control_textfield_group(true)
+						draw_textfield_group(nameprefix + "shake/strength", dx, dy, dw, null, null, null, .01, true, true, 1)
+						tab_next()
+
+						// Speed
+						axis_edit = X
+						textfield_group_add(nameprefix + "shake/speed/x", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_x, null, 1, 0, no_limit)
+						axis_edit = (setting_z_is_up ? Y : Z)
+						textfield_group_add(nameprefix + "shake/speed/y", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_y, null, 1, 0, no_limit)
+						axis_edit = (setting_z_is_up ? Z : Y)
+						textfield_group_add(nameprefix + "shake/speed/z", round(tl_edit.value[e_value.CAM_FX_SHAKE_SPEED_X + axis_edit] * 100), 100, action_tl_frame_cam_fx_shake_speed, axis_edit, tab.camera_effects.tbx_shake_speed_z, null, 1, 0, no_limit)
+
+						tab_control_textfield_group(true)
+						draw_textfield_group(nameprefix + "shake/speed", dx, dy, dw, null, null, null, .01, true, true, 1)
+						tab_next()
+
+						tab_collapse_end(false)
+					}
+				}
 
 				tab_collapse_end()
 			}
@@ -91,24 +110,49 @@ function tab_frame_editor_camera_effect_type(fxtype)
 			{
 				tab_collapse_start()
 
-				tab_control_dragger()
-				draw_dragger(nameprefix + "dof/depth", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_DEPTH], max(0.5, tl_edit.value[e_value.CAM_FX_DOF_DEPTH] / 50), 0, project_render_distance, 0, 0, tab.camera_effects.tbx_dof_depth, action_tl_frame_cam_fx_dof_depth)
+				draw_set_font(font_label)
+				draw_label(string_limit(text_get(nameprefix + "dof/focus") + ":", dw), dx, dy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary)
+				
+				tab_control_togglebutton()
+				togglebutton_add(nameprefix + "dof/foreground", icons.PLAYER, 0, (tl_edit.value[e_value.CAM_FX_DOF_DEPTH] = 0 && tl_edit.value[e_value.CAM_FX_DOF_RANGE] = 100), action_tl_frame_cam_fx_dof_preset)
+				togglebutton_add(nameprefix + "dof/background", icons.SCENERY, 1, (tl_edit.value[e_value.CAM_FX_DOF_DEPTH] = project_render_distance && tl_edit.value[e_value.CAM_FX_DOF_RANGE] = project_render_distance - 200), action_tl_frame_cam_fx_dof_preset)
+				draw_togglebutton(nameprefix + "dof/focus", dx, dy + label_height + 8, true, false)
 				tab_next()
 
-				tab_control_dragger()
-				draw_dragger(nameprefix + "dof/range", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_RANGE], max(0.5, tl_edit.value[e_value.CAM_FX_DOF_RANGE] / 50), 0, no_limit, 200, 0, tab.camera_effects.tbx_dof_range, action_tl_frame_cam_fx_dof_range)
-				tab_next()
-
-				tab_control_dragger()
-				draw_dragger(nameprefix + "dof/fade_size", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera_effects.tbx_dof_fade_size, action_tl_frame_cam_fx_dof_fade_size)
-				tab_next()
-
-				tab_control_meter()
-				draw_meter(nameprefix + "dof/blur_size", dx, dy, dw, tl_edit.value[e_value.CAM_FX_DOF_BLUR_SIZE] * 100, 0, 10, 1, .01, tab.camera_effects.tbx_dof_blur_size, action_tl_frame_cam_fx_dof_blur_size)
+				tab_control(ui_large_height)
+				togglebutton_add(nameprefix + "dof/pick_focus_point", icons.PICKER, null, window_busy = "pick_depth", action_tl_frame_cam_fx_dof_pick)
+				draw_togglebutton(nameprefix + "dof/pick_focus_point", dx, dy, true, false)
 				tab_next()
 
 				if (setting_advanced_mode)
 				{
+					tab_control_switch()
+					draw_button_collapse("frame_editor/dof_custom", collapse_map[?"frame_editor/dof_custom"], null, true, nameprefix + "dof/custom")
+					tab_next()
+
+					if (collapse_map[?"frame_editor/dof_custom"])
+					{
+						tab_collapse_start()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "dof/depth", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_DOF_DEPTH]), max(0.5, tl_edit.value[e_value.CAM_FX_DOF_DEPTH] / 50), 0, project_render_distance, 0, 1, tab.camera_effects.tbx_dof_depth, action_tl_frame_cam_fx_dof_depth)
+						tab_next()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "dof/range", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_DOF_RANGE]), max(0.5, tl_edit.value[e_value.CAM_FX_DOF_RANGE] / 50), 0, no_limit, 200, 1, tab.camera_effects.tbx_dof_range, action_tl_frame_cam_fx_dof_range)
+						tab_next()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "dof/fade_size", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_DOF_FADE_SIZE], 2, 0, no_limit, 100, 0, tab.camera_effects.tbx_dof_fade_size, action_tl_frame_cam_fx_dof_fade_size)
+						tab_next()
+
+						tab_control_meter()
+						draw_meter(nameprefix + "dof/blur_size", dx, dy, dw, tl_edit.value[e_value.CAM_FX_DOF_BLUR_SIZE] * 100, 0, 10, 1.5, .01, tab.camera_effects.tbx_dof_blur_size, action_tl_frame_cam_fx_dof_blur_size)
+						tab_next()
+
+						tab_collapse_end(false)
+					}
+					
 					tab_control_switch()
 					draw_button_collapse("frame_editor/dof_bokeh", collapse_map[?"frame_editor/dof_bokeh"], null, true, nameprefix + "dof/bokeh")
 					tab_next()
@@ -204,32 +248,46 @@ function tab_frame_editor_camera_effect_type(fxtype)
 			{
 				tab_collapse_start()
 
-				tab_control_dragger()
-				draw_dragger(nameprefix + "bloom/radius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_RADIUS] * 100), 1, 0, no_limit, 100, 1, tab.camera_effects.tbx_bloom_radius, action_tl_frame_cam_fx_bloom_radius)
+				tab_control_meter()
+				draw_meter(nameprefix + "bloom/amount", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLOOM_INTENSITY] * 100), 0, 500, 100, 1, tab.camera_effects.tbx_bloom_amount, action_tl_frame_cam_fx_bloom_amount)
 				tab_next()
 
-				tab_control_dragger()
-				draw_dragger(nameprefix + "bloom/intensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_INTENSITY] * 100), 1, 0, no_limit, 40, 1, tab.camera_effects.tbx_bloom_intensity, action_tl_frame_cam_fx_bloom_intensity)
-				tab_next()
-
-				tab_control_dragger()
-				draw_dragger(nameprefix + "bloom/threshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_THRESHOLD], 0.01, 0, no_limit, 0.85, 0.01, tab.camera_effects.tbx_bloom_threshold, action_tl_frame_cam_fx_bloom_threshold)
-				tab_next()
-
-				tab_control_dragger()
-				draw_dragger(nameprefix + "bloom/transition", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_TRANSITION], 0.01, 0, no_limit, 0.5, 0.01, tab.camera_effects.tbx_bloom_transition, action_tl_frame_cam_fx_bloom_transition)
-				tab_next()
-
-				// Advanced mode only
 				if (setting_advanced_mode)
 				{
-					tab_control_meter()
-					draw_meter(nameprefix + "bloom/ratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLOOM_RATIO] * 100), 0, 100, 0, 1, tab.camera_effects.tbx_bloom_ratio, action_tl_frame_cam_fx_bloom_ratio)
+					tab_control_switch()
+					draw_button_collapse("frame_editor/bloom/custom", collapse_map[?"frame_editor/bloom/custom"], null, true, nameprefix + "bloom/custom")
 					tab_next()
 
-					tab_control_color()
-					draw_button_color(nameprefix + "bloom/blend", dx, dy, dw, tl_edit.value[e_value.CAM_FX_BLOOM_BLEND], c_white, false, action_tl_frame_cam_fx_bloom_blend)
-					tab_next()
+					if (collapse_map[?"frame_editor/bloom/custom"])
+					{
+						tab_collapse_start()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "bloom/radius", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_RADIUS] * 100), 1, 0, no_limit, 100, 1, tab.camera_effects.tbx_bloom_radius, action_tl_frame_cam_fx_bloom_radius)
+						tab_next()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "bloom/intensity", dx, dy, dragger_width, round(tl_edit.value[e_value.CAM_FX_BLOOM_INTENSITY] * 100), 1, 0, no_limit, 100, 1, tab.camera_effects.tbx_bloom_intensity, action_tl_frame_cam_fx_bloom_intensity)
+						tab_next()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "bloom/threshold", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_THRESHOLD], 0.01, 0, no_limit, 0.85, 0.01, tab.camera_effects.tbx_bloom_threshold, action_tl_frame_cam_fx_bloom_threshold)
+						tab_next()
+
+						tab_control_dragger()
+						draw_dragger(nameprefix + "bloom/transition", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_BLOOM_TRANSITION], 0.01, 0, no_limit, 0.5, 0.01, tab.camera_effects.tbx_bloom_transition, action_tl_frame_cam_fx_bloom_transition)
+						tab_next()
+
+						tab_control_meter()
+						draw_meter(nameprefix + "bloom/ratio", dx, dy, dw, round(tl_edit.value[e_value.CAM_FX_BLOOM_RATIO] * 100), 0, 100, 0, 1, tab.camera_effects.tbx_bloom_ratio, action_tl_frame_cam_fx_bloom_ratio)
+						tab_next()
+
+						tab_control_color()
+						draw_button_color(nameprefix + "bloom/blend", dx, dy, dw, tl_edit.value[e_value.CAM_FX_BLOOM_BLEND], c_white, false, action_tl_frame_cam_fx_bloom_blend)
+						tab_next()
+
+						tab_collapse_end(false)
+					}
 				}
 
 				tab_collapse_end()

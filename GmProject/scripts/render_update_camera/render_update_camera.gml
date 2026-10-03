@@ -1,5 +1,16 @@
 function render_update_camera()
 {
+	var shake = null;
+	if (render_camera_effects != null && render_camera_effect_enabled[e_cam_fx.SHAKE] &&
+		(render_camera != null || (render_view_current = view_second && render_effects)))
+	{
+		shake = vec3(
+			simplex1d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_X]) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_X],
+			simplex2d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_Y], 1000) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_Y],
+			simplex2d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_Z], 2000) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_Z]
+		)
+	}
+
 	if (!render_camera) // Use work camera
 	{
 		var xx, yy, zz, cx, cy;
@@ -22,6 +33,25 @@ function render_update_camera()
 			cx * (xx * xx + yy * yy)
 		)
 		cam_fov = 45
+
+		if (shake != null)
+		{
+			var forward, right, up, workmat, workshake;
+			forward = vec3_normalize(point3D_sub(cam_to, cam_from))
+			right = vec3_normalize(vec3_cross(forward, cam_up))
+			up = vec3_normalize(vec3_cross(right, forward))
+
+			workmat = [ right[X], right[Y], right[Z], 0,
+						forward[X], forward[Y], forward[Z], 0,
+						up[X], up[Y], up[Z], 0,
+						cam_from[X], cam_from[Y], cam_from[Z], 1 ]
+			workshake = render_camera_effects[e_value.CAM_FX_SHAKE_MODE] ? matrix_create(shake, vec3(0), vec3(1)) : matrix_create(vec3(0), shake, vec3(1))
+			workmat = matrix_multiply(workshake, workmat)
+
+			cam_from = point3D(workmat[MAT_X], workmat[MAT_Y], workmat[MAT_Z])
+			cam_to = point3D_mul_matrix(point3D(0, 1, 0), workmat)
+			cam_up = vec3(workmat[8], workmat[9], workmat[10])
+		}
 	}
 	else
 	{
@@ -30,14 +60,8 @@ function render_update_camera()
 		pos = render_camera.world_pos
 		
 		// Camera shake
-		if (render_camera_effects != null && render_camera_effect_enabled[e_cam_fx.SHAKE])
-		{			
-			var shake = vec3(
-				simplex1d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_X]) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_X],
-				simplex2d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_Y], 1000) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_Y],
-				simplex2d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_Z], 2000) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_Z]
-			);
-			
+		if (shake != null)
+		{
 			// Create matrix
 			var shakemat;
 			if (render_camera_effects[e_value.CAM_FX_SHAKE_MODE])

@@ -29,7 +29,7 @@ function sortlist_column_get(slist, value, col)
 		case "lib_instances":
 			return value.count = -1 ? "-" : value.count
 		
-		case "char_name":
+		case "character_name":
 		case "special_block_name":
 		case "model_part_model_name":
 		{

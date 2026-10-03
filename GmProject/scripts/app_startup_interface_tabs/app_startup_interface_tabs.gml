@@ -235,7 +235,7 @@ function app_startup_interface_tabs()
 		char_list.script = action_lib_model_name
 		char_list.script_search = sortlist_search_model
 		
-		sortlist_column_add(char_list, "char_name", 0)
+		sortlist_column_add(char_list, "character_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
@@ -617,6 +617,8 @@ function app_startup_interface_tabs()
 			tbx_mix_percent = new_textbox_integer()
 			tbx_mix_percent.suffix = "%"
 			
+			tbx_shake_amount = new_textbox_decimals()
+			tbx_shake_amount.suffix = "%"
 			tbx_shake_strength_x = new_textbox_decimals()
 			tbx_shake_strength_x.suffix = "%"
 			tbx_shake_strength_y = new_textbox_decimals()
@@ -630,8 +632,8 @@ function app_startup_interface_tabs()
 			tbx_shake_speed_z = new_textbox_decimals()
 			tbx_shake_speed_z.suffix = "%"
 			
-			tbx_dof_depth = new_textbox_decimals()
-			tbx_dof_range = new_textbox_decimals()
+			tbx_dof_depth = new_textbox_integer()
+			tbx_dof_range = new_textbox_integer()
 			tbx_dof_fade_size = new_textbox_decimals()
 			tbx_dof_blur_size = new_textbox_decimals()
 			tbx_dof_blur_size.suffix = "%"
@@ -656,12 +658,14 @@ function app_startup_interface_tabs()
 			tbx_dof_fringe_blue = new_textbox_integer()
 			tbx_dof_fringe_blue.suffix = "%"
 		
-			tbx_bloom_threshold = new_textbox_ndecimals()
-			tbx_bloom_transition = new_textbox_ndecimals()
-			tbx_bloom_intensity = new_textbox_integer()
-			tbx_bloom_intensity.suffix = "%"
+			tbx_bloom_amount = new_textbox_integer()
+			tbx_bloom_amount.suffix = "%"
 			tbx_bloom_radius = new_textbox_integer()
 			tbx_bloom_radius.suffix = "%"
+			tbx_bloom_intensity = new_textbox_integer()
+			tbx_bloom_intensity.suffix = "%"
+			tbx_bloom_threshold = new_textbox_ndecimals()
+			tbx_bloom_transition = new_textbox_ndecimals()
 			tbx_bloom_ratio = new_textbox_integer()
 			tbx_bloom_ratio.suffix = "%"
 			

@@ -4,6 +4,8 @@ function action_tl_move_start()
 {
 	window_busy = "timeline/move"
 	
+	action_tl_play_break()
+	
 	timeline_move_obj = new_obj(obj_data)
 	timeline_move_obj.tree_list = ds_list_create()
 	timeline_move_obj.tree_list_filter = ds_list_create()

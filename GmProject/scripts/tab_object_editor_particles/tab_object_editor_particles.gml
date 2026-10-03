@@ -56,6 +56,8 @@ function tab_object_editor_particles()
 	draw_togglebutton("particle_editor/spawn/type", dx, dy)
 	tab_next()
 	
+	dy += 4
+	
 	if (obj_edit.pc_spawn_constant)
 		draw_tooltip_label("particle_editor/spawn/constant_tip", icons.PARTICLES, e_toast.INFO)
 	else
@@ -63,11 +65,11 @@ function tab_object_editor_particles()
 	
 	draw_set_font(font_label)
 	tab_control_dragger()
-	draw_dragger("particle_editor/spawn/amount", dx, dy, 64, obj_edit.pc_spawn_amount, obj_edit.pc_spawn_constant ? 2 : 0.2, 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount, string_width(text_get("particle_editor/spawn/amount")) + 8)
+	draw_dragger("particle_editor/spawn/amount", dx, dy, 96, obj_edit.pc_spawn_amount, obj_edit.pc_spawn_constant ? 2 : 0.2, 1, no_limit, 100, 1, tab.tbx_spawn_amount, action_lib_pc_spawn_amount, string_width(text_get("particle_editor/spawn/amount")) + 8)
 	
 	draw_set_font(font_label)
 	
-	textx = dx + 64 + 16 + string_width(text_get("particle_editor/spawn/amount"))
+	textx = dx + 96 + 16 + string_width(text_get("particle_editor/spawn/amount"))
 	content_text = string_limit((obj_edit.pc_spawn_constant ? text_get("particle_editor/per_minute") : text_get("particle_editor/per_burst")), (dw - (textx - dx)) - 8)
 	
 	draw_label(content_text, textx, dy + (ui_small_height/2), fa_left, fa_middle, c_text_main, a_text_main, font_value)
@@ -100,7 +102,7 @@ function tab_object_editor_particles()
 			case "sphere":
 			{
 				tab_control_dragger()
-				draw_dragger(prefix + "sphere_radius", dx, dy, 64, obj_edit.pc_spawn_region_sphere_radius, obj_edit.pc_spawn_region_sphere_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_sphere_radius, action_lib_pc_spawn_region_sphere_radius)
+				draw_dragger(prefix + "sphere_radius", dx, dy, 96, obj_edit.pc_spawn_region_sphere_radius, obj_edit.pc_spawn_region_sphere_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_sphere_radius, action_lib_pc_spawn_region_sphere_radius)
 				tab_next()
 				
 				break
@@ -109,7 +111,7 @@ function tab_object_editor_particles()
 			case "cube":
 			{
 				tab_control_dragger()
-				draw_dragger(prefix + "cube_size", dx, dy, 64, obj_edit.pc_spawn_region_cube_size, obj_edit.pc_spawn_region_cube_size / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_cube_size, action_lib_pc_spawn_region_cube_size)
+				draw_dragger(prefix + "cube_size", dx, dy, 96, obj_edit.pc_spawn_region_cube_size, obj_edit.pc_spawn_region_cube_size / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_cube_size, action_lib_pc_spawn_region_cube_size)
 				tab_next()
 				
 				break
@@ -143,7 +145,7 @@ function tab_object_editor_particles()
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(prefix + "path_radius", dx, dy, 64, obj_edit.pc_spawn_region_path_radius, obj_edit.pc_spawn_region_path_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_path_radius, action_lib_pc_spawn_region_path_radius)
+				draw_dragger(prefix + "path_radius", dx, dy, 96, obj_edit.pc_spawn_region_path_radius, obj_edit.pc_spawn_region_path_radius / 100, 0, no_limit, 100, 0, tab.tbx_spawn_region_path_radius, action_lib_pc_spawn_region_path_radius)
 				tab_next()
 				
 				break
@@ -162,7 +164,7 @@ function tab_object_editor_particles()
 	if (obj_edit.pc_bounding_box_type = "ground")
 	{
 		tab_control_dragger()
-		draw_dragger("particle_editor/bounding_box/ground_" + (setting_z_is_up ? "z" : "y"), dx, dy, 64, obj_edit.pc_bounding_box_ground_z, 0.1, -no_limit, no_limit, 0, 0, tab.tbx_bounding_box_ground_z, action_lib_pc_bounding_box_ground_z)
+		draw_dragger("particle_editor/bounding_box/ground_" + (setting_z_is_up ? "z" : "y"), dx, dy, 96, obj_edit.pc_bounding_box_ground_z, 0.1, -no_limit, no_limit, 0, 0, tab.tbx_bounding_box_ground_z, action_lib_pc_bounding_box_ground_z)
 		tab_next()
 	}
 	else if (obj_edit.pc_bounding_box_type = "custom")
@@ -236,7 +238,7 @@ function tab_object_editor_particles()
 		wid = 0
 	}
 	
-	draw_dragger("particle_editor/destroy/amount_val", dx + wid, dy, 64, obj_edit.pc_destroy_at_amount_val, 0.25, 0, no_limit, 200, 1, tab.tbx_destroy_at_amount_val, action_lib_pc_destroy_at_amount_val, wid, false)
+	draw_dragger("particle_editor/destroy/amount_val", dx + wid, dy, 96, obj_edit.pc_destroy_at_amount_val, 0.25, 0, no_limit, 200, 1, tab.tbx_destroy_at_amount_val, action_lib_pc_destroy_at_amount_val, wid, false)
 	
 	tab_next(wid = 0)
 	
@@ -978,7 +980,7 @@ function tab_object_editor_particles()
 		if (ptype_edit.bounce)
 		{
 			tab_control_dragger()
-			draw_dragger("particle_editor/type/bounce_factor", dx, dy, 64, ptype_edit.bounce_factor, 0.01, 0, no_limit, 0.5, 0, tab.tbx_type_bounce_factor, action_lib_pc_type_bounce_factor)
+			draw_dragger("particle_editor/type/bounce_factor", dx, dy, 96, ptype_edit.bounce_factor, 0.01, 0, no_limit, 0.5, 0, tab.tbx_type_bounce_factor, action_lib_pc_type_bounce_factor)
 			tab_next()
 		}
 	}

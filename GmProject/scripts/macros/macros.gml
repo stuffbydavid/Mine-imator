@@ -5,7 +5,7 @@ function macros()
 	// Versions
 	#macro mineimator_version			"2.1"				// Base Mine-imator version
 	#macro mineimator_version_sub		""					// Mod name and version (e.g. "Community Build 1.0.0")
-	#macro mineimator_version_extra		"Pre-Release 1"		// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
+	#macro mineimator_version_extra		"WIP"				// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
 	#macro mineimator_version_date		"2026.10.XX"
 	#macro minecraft_assets_version		"26.3"
@@ -145,7 +145,7 @@ function macros()
 	#macro button_icon_padding			52
 	#macro snap_min						0.000001
 	#macro transform_snap				0.0001
-	#macro dragger_width				74
+	#macro dragger_width				112
 	#macro label_height					9
 	#macro load_assets_width			780
 	#macro load_assets_height			450
@@ -200,6 +200,7 @@ function macros()
 	#macro particle_folders				[ "Effects", "Weather" ]
 	#macro particle_default				[ "Default", "Snow" ]
 	#macro default_text					"AaBbCc"
+	#macro default_tonemapper			e_tonemapper.LOTTES
 	
 	// Parenting actions for right/left arm
 	#macro item_parent_action			[ null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5) ]

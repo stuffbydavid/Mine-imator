@@ -812,6 +812,7 @@ function enums()
 		PLANE_3D_DARK,
 		PLANE_3D_ADD,
 		PLANE_ADD,
+		PLAYER,
 		PLAY,
 		PLAY_REGION,
 		PLUS,

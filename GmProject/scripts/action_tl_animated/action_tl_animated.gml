@@ -75,7 +75,7 @@ function action_tl_animated(enabled)
 			while (part != null && !part.selected)
 				part = part.part_of
 			
-			if (part = null || animated = enabled || type = e_tl_type.AUDIO_TRACK || type = e_tl_type.ENVIRONMENT)
+			if (part = null || animated = enabled || type = e_tl_type.AUDIO_TRACK)
 				continue
 			
 			if (!enabled && ds_list_size(keyframe_list) > 1)

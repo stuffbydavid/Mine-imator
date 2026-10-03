@@ -4,7 +4,7 @@ function tab_properties_library_character()
 {
 	switch (temp_edit.type)
 	{
-		case e_temp_type.CHARACTER: content_text = "library/char_model"; break
+		case e_temp_type.CHARACTER: content_text = "library/character_model"; break
 		case e_temp_type.EQUIPMENT: content_text = "library/equipment_model"; break
 		case e_temp_type.SPECIAL_BLOCK: content_text = "library/special_block_model"; break
 		default: return 0
@@ -15,7 +15,7 @@ function tab_properties_library_character()
 	draw_label_value(dx, dy, dw - 32, 24, text_get(content_text), temp_edit.model_file != null ? string(minecraft_asset_get_name("model", temp_edit.model_file.name)) : "")
 			
 	// Change
-	if (draw_button_icon("library/char_model_change", dx + dw - 24, dy, 24, 24, object_editor.raised && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltip/change_model"))
+	if (draw_button_icon("library/character_model_change", dx + dw - 24, dy, 24, 24, object_editor.raised && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltip/change_model"))
 	{
 		if (obj_edit = temp_edit)
 			tab_toggle(object_editor, true)

@@ -2,6 +2,7 @@ function tl_camera_effects_reset()
 {
 	app.camera_effect_value = null
 	app.camera_effect_enabled = null
+	app.camera_effect_scope = null
 	
 	with (obj_timeline)
 	{
@@ -9,6 +10,7 @@ function tl_camera_effects_reset()
 		{
 			camera_effect_value = null
 			camera_effect_enabled = null
+			camera_effect_scope = null
 		}
 	}
 }

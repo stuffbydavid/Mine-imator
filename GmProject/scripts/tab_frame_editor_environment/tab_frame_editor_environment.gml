@@ -1,6 +1,6 @@
 function tab_frame_editor_environment()
 {
-	draw_tooltip_label("frame_editor/environment/tip", icons.INFO, e_toast.INFO)
+	draw_tooltip_label(tl_edit.animated ? "frame_editor/environment/tip" : "frame_editor/environment/tip_non_animated", icons.INFO, e_toast.INFO)
 	dy += 8
 
 	tab_control_button_label()

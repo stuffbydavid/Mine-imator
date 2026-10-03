@@ -92,4 +92,5 @@ function window_draw()
 	context_menu_draw()
 	tip_draw()
 	debug_info_draw()
+	window_draw_pick()
 }

@@ -20,7 +20,7 @@ function project_load_timeline(map)
 		has_temp = value_get_real(map[?"has_temp"], type < e_temp_type.amount)
 		animated = value_get_real(map[?"animated"], animated)
 		
-		if (type = e_tl_type.AUDIO_TRACK || type = e_tl_type.ENVIRONMENT)
+		if (type = e_tl_type.AUDIO_TRACK)
 			animated = true
 		
 		color_tag = value_get_real(map[?"color_tag"], color_tag)

@@ -26,10 +26,10 @@ function view_update_surface(view, cam)
 	else
 		render_low()
 
-	if (tl_focus != null && instance_exists(tl_focus))
+	if (view = view_main && tl_focus != null && instance_exists(tl_focus))
 	{
 		tl_focus.world_pos_2d = view_shape_project(tl_focus.world_pos)
-		tl_focus.world_pos_2d_error = (point3D_project_error || tl_focus.world_pos_2d[X] < 0 || tl_focus.world_pos_2d[Y] < 0 || tl_focus.world_pos_2d[X] >= content_width || tl_focus.world_pos_2d[Y] >= content_height)
+		cam_work_focus_2d_error = (point3D_project_error || tl_focus.world_pos_2d[X] < 0 || tl_focus.world_pos_2d[Y] < 0 || tl_focus.world_pos_2d[X] >= content_width || tl_focus.world_pos_2d[Y] >= content_height)
 	}
 	
 	if (view.gizmos && !place_build)

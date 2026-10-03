@@ -35,22 +35,23 @@ function tl_value_default(valueid)
 		case e_value.LIGHT_SPOT_RADIUS: return 50
 		case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
 		case e_value.CAM_FOV: return 45
+		case e_value.CAM_FX_TONEMAPPER: return default_tonemapper
 		case e_value.CAM_FX_EXPOSURE: return 1
 		case e_value.CAM_FX_GAMMA: return 2.2
 		case e_value.CAM_FX_BLADE_AMOUNT:
 		case e_value.CAM_FX_BLADE_ANGLE:
 		case e_value.CAM_FX_BLADE_STRETCH: return 0
 		case e_value.CAM_ROTATE_DISTANCE: return 100
-		case e_value.CAM_FX_SHAKE_MODE:
+		case e_value.CAM_FX_SHAKE_MODE: return 0
 		case e_value.CAM_FX_SHAKE_STRENGTH_X:
 		case e_value.CAM_FX_SHAKE_STRENGTH_Y:
 		case e_value.CAM_FX_SHAKE_STRENGTH_Z:
 		case e_value.CAM_FX_SHAKE_SPEED_X:
 		case e_value.CAM_FX_SHAKE_SPEED_Y:
 		case e_value.CAM_FX_SHAKE_SPEED_Z: return 1
-		case e_value.CAM_FX_DOF_RANGE: return 200
+		case e_value.CAM_FX_DOF_RANGE: return 100
 		case e_value.CAM_FX_DOF_FADE_SIZE: return 100
-		case e_value.CAM_FX_DOF_BLUR_SIZE: return .01
+		case e_value.CAM_FX_DOF_BLUR_SIZE: return .015
 		case e_value.CAM_FX_DOF_BLUR_RATIO:
 		case e_value.CAM_FX_DOF_BIAS:
 		case e_value.CAM_FX_DOF_THRESHOLD:
@@ -63,7 +64,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_FX_DOF_FRINGE_ANGLE_BLUE: return -45
 		case e_value.CAM_FX_BLOOM_THRESHOLD: return .85
 		case e_value.CAM_FX_BLOOM_TRANSITION: return .5
-		case e_value.CAM_FX_BLOOM_INTENSITY: return .4
+		case e_value.CAM_FX_BLOOM_INTENSITY: return 1
 		case e_value.CAM_FX_BLOOM_RADIUS: return 1
 		case e_value.CAM_FX_BLOOM_RATIO: return 0
 		case e_value.CAM_FX_BLOOM_BLEND: return c_white

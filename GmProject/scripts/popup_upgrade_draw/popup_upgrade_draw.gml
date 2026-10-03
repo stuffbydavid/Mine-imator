@@ -71,7 +71,7 @@ function popup_upgrade_draw()
 	}
 	
 	tab_control_button_label()
-	if (draw_button_label("upgrade/continue", dx + dw/2 + (key_expired ? 8 : 0), dy, null, icons.KEY, e_button.PRIMARY, null, key_expired ? e_anchor.LEFT : e_anchor.RIGHT))
+	if (draw_button_label("upgrade/continue", dx + dw/2 + (key_expired ? 8 : 0), dy, null, icons.KEY, e_button.PRIMARY, null, key_expired ? e_anchor.LEFT : e_anchor.CENTER))
 	{
 		var key = popup_upgrade.tbx_key.text;
 		

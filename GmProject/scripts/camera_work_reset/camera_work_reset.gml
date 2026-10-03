@@ -3,6 +3,7 @@ function camera_work_reset()
 	cam_work_focus = point3D(0, 0, 16)
 	cam_work_focus_last = point3D(0, 0, 6)
 	cam_work_focus_tl = null
+	cam_work_focus_2d_error = false
 	cam_work_jump = false
 	
 	cam_work_angle_xy = 315

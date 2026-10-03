@@ -1246,6 +1246,19 @@ function list_init(name)
 			break
 		}
 		
+		// Camera effect target
+		case "bench/camera":
+		{
+			menu_add_item(app, text_get("bench/all_cameras"))
+			for (var i = 0; i < ds_list_size(project_timeline_list); i++)
+			{
+				var cam = project_timeline_list[|i];
+				if (cam.type = e_tl_type.CAMERA)
+					menu_add_item(cam, cam.display_name)
+			}
+			break
+		}
+
 		// Audio track
 		case "bench/audio_track":
 		{
@@ -1544,7 +1557,7 @@ function list_init(name)
 		case "timeline_editor/effect":
 		{
 			for (var i = 0; i < e_cam_fx.amount; i++)
-				if (setting_advanced_mode || ds_list_find_index(camera_effect_advanced_name_list, camera_effect_name_list[|i]) < 0)
+				if (setting_advanced_mode || i <= e_cam_fx.LENS_DIRT)
 					menu_add_item(i, text_get("frame_editor/camera_effect/" + camera_effect_name_list[|i]))
 			
 			break

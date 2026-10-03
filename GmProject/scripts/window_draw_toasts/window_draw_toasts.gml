@@ -5,7 +5,7 @@ function window_draw_toasts()
 	toast_mouseon = false
 	
 	var busy = window_busy;
-	if (popup_current && busy = "popup" + popup_current.name)
+	if (popup_current && busy = "popup/" + popup_current.name)
 		window_busy = "" 
 	
 	for (var i = toast_amount - 1; i >= 0; i--)

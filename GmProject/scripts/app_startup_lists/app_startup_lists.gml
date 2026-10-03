@@ -1,7 +1,7 @@
 function app_startup_lists()
 {
 	globalvar value_name_list, transition_list, transition_list_order;
-	globalvar camera_effect_name_list, camera_effect_advanced_name_list, camera_effect_value_range_list, camera_effect_legacy_name_list;
+	globalvar camera_effect_name_list, camera_effect_value_range_list, camera_effect_legacy_name_list;
 	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list, legacy_type_name_map;
 	globalvar videotemplate_list;
 	globalvar language_english_map, language_map;
@@ -266,16 +266,6 @@ function app_startup_lists()
 		"distort",
 		"light_management",
 		"color_correction"
-	)
-	
-	camera_effect_advanced_name_list = ds_list_create()
-	ds_list_add(camera_effect_advanced_name_list,
-		"shake",
-		"dof",
-		"bloom",
-		"lens_dirt",
-		"ca",
-		"distort"
 	)
 	
 	camera_effect_value_range_list = ds_list_create()

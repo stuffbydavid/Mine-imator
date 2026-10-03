@@ -3,8 +3,8 @@
   "%Name":"shader_high_dof_coc",
   "name":"shader_high_dof_coc",
   "parent":{
-    "name":"DOF",
-    "path":"folders/Shaders/High quality/DOF.yy",
+    "name":"DoF",
+    "path":"folders/Shaders/High quality/DoF.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

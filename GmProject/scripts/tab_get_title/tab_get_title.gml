@@ -21,7 +21,7 @@ function tab_get_title(tab)
 		switch (obj_edit.type)
 		{
 			case e_temp_type.CHARACTER:
-				return text_get("tab/char_model", string_remove_newline(obj_edit.display_name))
+				return text_get("tab/character_model", string_remove_newline(obj_edit.display_name))
 
 			case e_temp_type.EQUIPMENT:
 				return text_get("tab/equipment", string_remove_newline(obj_edit.display_name))

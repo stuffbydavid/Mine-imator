@@ -200,7 +200,7 @@ function app_startup_interface_bench()
 		char_list.script_select_click = action_bench_create
 		char_list.height_percent = bench_list_percent
 		
-		sortlist_column_add(char_list, "char_name", 0)
+		sortlist_column_add(char_list, "character_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
 			sortlist_add(char_list, mc_assets.char_list[|c].name)
@@ -326,6 +326,7 @@ function app_startup_interface_bench()
 		
 		// Camera effects
 		camera_effect_type = e_cam_fx.FADE
+		camera_effect_camera = app
 		
 		camera_effect_list_simple = new_obj(obj_sortlist)
 		camera_effect_list_simple.script = action_bench_camera_effect
@@ -342,9 +343,8 @@ function app_startup_interface_bench()
 			
 		for (var c = 0; c < e_cam_fx.amount; c++)
 		{
-			if (ds_list_find_index(camera_effect_advanced_name_list, camera_effect_name_list[|c]) < 0)
+			if (c <= e_cam_fx.LENS_DIRT)
 				sortlist_add(camera_effect_list_simple, c)
-			
 			sortlist_add(camera_effect_list_advanced, c)
 		}
 		

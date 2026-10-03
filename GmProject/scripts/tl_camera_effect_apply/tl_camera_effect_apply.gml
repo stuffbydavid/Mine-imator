@@ -30,7 +30,8 @@ function tl_camera_effect_apply(scope)
 	if (cam != scope)
 		return 0
 
-	if (other.camera_effect_enabled[camera_effect_type])
+	if (other.camera_effect_enabled[camera_effect_type] &&
+		(scope = app || other.camera_effect_scope[camera_effect_type] = scope))
 		return 0
 	
 	if (other.camera_effect_value = null)
@@ -46,7 +47,9 @@ function tl_camera_effect_apply(scope)
 			other.camera_effect_value[v] = value[v]
 	
 	if (camera_effect_type_use_aperture(camera_effect_type) &&
-		(other.camera_effect_aperture_scope = null || (other.camera_effect_aperture_scope = scope && camera_effect_type = e_cam_fx.BLOOM)))
+		(other.camera_effect_aperture_scope = null ||
+		(scope != app && other.camera_effect_aperture_scope = app) ||
+		(other.camera_effect_aperture_scope = scope && camera_effect_type = e_cam_fx.BLOOM)))
 	{
 		for (var v = e_value.CAM_FX_BLADE_AMOUNT; v <= e_value.CAM_FX_BLADE_STRETCH; v++)
 			other.camera_effect_value[v] = value[v]
@@ -62,4 +65,5 @@ function tl_camera_effect_apply(scope)
 		other.camera_effect_value[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ]
 	
 	other.camera_effect_enabled[camera_effect_type] = true
+	other.camera_effect_scope[camera_effect_type] = scope
 }

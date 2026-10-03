@@ -108,11 +108,11 @@ function window_draw_world_import()
 	draw_divide_vertical(dx, content_y + 6, content_height - 12)
 	
 	dx += 12
-	if (draw_button_icon("world_import/gotoplayer", dx, dy, dw, dw, false, icons.PATH_POINT, null, !worldpicked, "world_import/go_to_player_tip"))
+	if (draw_button_icon("world_import/gotoplayer", dx, dy, dw, dw, false, icons.PLAYER, null, !worldpicked, "world_import/go_to_player_tip"))
 		world_import_go_to_player()
-	dx += 24
+	dx += dw + spacing
 	
-	if (draw_button_icon("world_import/position", dx, dy, 16, 24, settings_menu_name = "world_import/position", icons.CHEVRON_DOWN_TINY, null, !worldpicked))
+	if (draw_button_icon("world_import/position", dx, dy, dw, dw, settings_menu_name = "world_import/position", icons.PATH_POINT, null, !worldpicked, "world_import/go_to_position"))
 	{
 		menu_settings_set(dx, dy, "world_import/position", 24)
 		settings_menu_script = world_import_go_to_position_draw
@@ -120,7 +120,7 @@ function window_draw_world_import()
 	if (settings_menu_name = "world_import/position" && settings_menu_ani_type != "hide")
 		current_microani.active.value = true
 	
-	dx += 16 + spacing
+	dx += dw + spacing
 	if (draw_button_icon("world_import/settings", dx, dy, dw, dw, false, icons.SETTINGS, null, false, "world_import/settings_tip"))
 		popup_show(world_import_settings_popup)
 	

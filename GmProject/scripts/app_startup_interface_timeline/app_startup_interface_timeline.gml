@@ -67,6 +67,7 @@ function app_startup_interface_timeline()
 	
 	camera_effect_value = null
 	camera_effect_enabled = null
+	camera_effect_scope = null
 	camera_effect_aperture_scope = null
 	
 	copy_kf_amount = 0

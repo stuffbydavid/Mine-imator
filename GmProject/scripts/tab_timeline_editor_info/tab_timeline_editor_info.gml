@@ -50,7 +50,7 @@ function tab_timeline_editor_info()
 	tab_next()
 	
 	// Animated
-	if (tl_edit.type != e_tl_type.AUDIO_TRACK && tl_edit.type != e_tl_type.ENVIRONMENT)
+	if (tl_edit.type != e_tl_type.AUDIO_TRACK)
 	{
 		tab_control_checkbox()
 		draw_switch("timeline_editor/animated", dx, dy, tl_edit.animated, action_tl_animated)

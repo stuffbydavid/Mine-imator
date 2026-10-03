@@ -170,6 +170,17 @@ function action_bench_create(button = e_bench_button.CREATE)
 			if (tab = e_bench_tab.CAMERA_EFFECT)
 			{
 				tl.camera_effect_type = camfxtype
+				
+				if (!history_redo)
+				{
+					par = bench_settings.camera_effect_camera
+					if (par != app && (!instance_exists(par) || par.type != e_tl_type.CAMERA))
+						par = app
+					
+					with (tl)
+						tl_set_parent(par)
+				}
+				
 				with (tl)
 				{
 					tl_update_type_name()
