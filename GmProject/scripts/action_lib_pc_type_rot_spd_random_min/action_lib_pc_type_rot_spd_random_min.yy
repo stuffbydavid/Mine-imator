@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_pc_type_rot_spd_random_min",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Rotation",
-    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Rotation.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_pc_type_rot_spd_random_min",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_pc_type_rot_spd_random_min",
+  "parent":{
+    "name":"Rotation",
+    "path":"folders/Scripts/App/Actions/Library/Particle editor/Types/Rotation.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

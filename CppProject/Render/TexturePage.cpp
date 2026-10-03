@@ -10,6 +10,7 @@ namespace CppProject
 	IntType TexturePage::pageSize = PAGE_SIZE;
 	IntType TexturePageLocation::nextId = 1000000;
 	QHash<IntType, TexturePageLocation*> TexturePageLocation::idMap;
+	static constexpr int PAGE_GUTTER = 1;
 
 	TexturePage::TexturePage()
 	{
@@ -21,6 +22,7 @@ namespace CppProject
 				break;
 			
 			WARNING("Could not allocate texture page with size " + NumStr(size) + "x" + NumStr(size));
+
 			pageSize >>= 1;
 			WARNING("Decreasing size");
 		}
@@ -28,15 +30,20 @@ namespace CppProject
 		// Add 1x1 white pixel in top left as default texture
 		if (!image.isNull())
 		{
+			image.fill(Qt::transparent);
+
 			uchar* imgBits = image.bits();
 			imgBits[0] = 255;
 			imgBits[1] = 255;
 			imgBits[2] = 255;
 			imgBits[3] = 255;
-			rects.append({ 0, 0, 1, 1 });
+
+			freeRegion = QRegion(0, 0, size, size);
+			freeRegion -= QRegion(0, 0, 1, 1);
 
 			defaultLocation = new TexturePageLocation(
 				this,
+				{ 0, 0, 1, 1 },
 				{ 0, 0, 1, 1 },
 				{ 0.f, 0.f, 1.f / size, 1.f / size }
 			);
@@ -56,112 +63,102 @@ namespace CppProject
 	{
 		if (!texture && !image.isNull())
 			texture = new Texture(image);
+		
 		return texture;
+	}
+
+	bool TexturePage::Allocate(QSize imageSize, QRect& rect, QRect& allocatedRect)
+	{
+		QSize allocatedSize(imageSize.width() + PAGE_GUTTER * 2, imageSize.height() + PAGE_GUTTER * 2);
+		int best = -1;
+		int bestShortSide = size;
+		int bestLongSide = size;
+
+		// Choose the tightest fitting free rectangle
+		QVector<QRect> freeRects = freeRegion.rects();
+		for (int i = 0; i < freeRects.size(); i++)
+		{
+			const QRect& freeRect = freeRects[i];
+			if (freeRect.width() < allocatedSize.width() || freeRect.height() < allocatedSize.height())
+				continue;
+
+			int shortSide = std::min(freeRect.width() - allocatedSize.width(), freeRect.height() - allocatedSize.height());
+			int longSide = std::max(freeRect.width() - allocatedSize.width(), freeRect.height() - allocatedSize.height());
+			if (shortSide < bestShortSide || (shortSide == bestShortSide && longSide < bestLongSide))
+			{
+				best = i;
+				bestShortSide = shortSide;
+				bestLongSide = longSide;
+			}
+		}
+
+		if (best < 0)
+			return false;
+
+		QRect freeRect = freeRects[best];
+		allocatedRect = { freeRect.x(), freeRect.y(), allocatedSize.width(), allocatedSize.height() };
+		rect = { allocatedRect.x() + PAGE_GUTTER, allocatedRect.y() + PAGE_GUTTER, imageSize.width(), imageSize.height() };
+		freeRegion -= QRegion(allocatedRect);
+
+		return true;
+	}
+
+	void TexturePage::Release(QRect allocatedRect)
+	{
+		freeRegion |= QRegion(allocatedRect);
 	}
 
 	TexturePageLocation* TexturePage::Add(const QImage& image)
 	{
-		// Image invalid or too big, not supported for texture pages
-		if (image.isNull() || image.width() > pageSize || image.height() > pageSize)
+		if (image.isNull())
 			return nullptr;
 
-		QSize imageSize = image.size();
 		TexturePage* page = nullptr;
-		QPoint pos;
-
-		// Find existing page location
-		IntType numPages = pages.size();
-		if (numPages)
+		QRect rect, allocatedRect;
+		for (IntType p = pages.size() - 1; p >= 0; p--)
 		{
-			for (IntType p = numPages - 1; p >= 0; p--)
+			TexturePage* currentPage = pages[p];
+			if (currentPage->Allocate(image.size(), rect, allocatedRect))
 			{
-				TexturePage* currentPage = pages[p];
-				bool free = true;
-				pos = currentPage->lastFree.value(imageSize, { 0, 0 });
-
-				while (true)
-				{
-					QPoint moveVec = { 16, 16 };
-					QRect rect = { pos, imageSize };
-
-					// Check rectangles
-					free = true;
-					for (const QRect& otherRect : currentPage->rects)
-					{
-						if (otherRect.intersects(rect))
-						{
-							// Snap to rectangle right
-							moveVec.rx() = (otherRect.right() - pos.x()) + 1;
-							free = false;
-							break;
-						}
-					}
-
-					// Move rectangle
-					if (!free)
-					{
-						pos.rx() += moveVec.x();
-						if (pos.x() + imageSize.width() >= currentPage->size) // Next column
-						{
-							pos.rx() = 0;
-							pos.ry() += moveVec.y();
-							if (pos.y() + imageSize.height() >= currentPage->size) // No space in page, move to next
-								break;
-						}
-					}
-					else
-						break;
-				}
-
-				// Found free spot
-				if (free)
-				{
-					currentPage->lastFree[imageSize] = pos;
-					page = currentPage;
-					break;
-				}
+				page = currentPage;
+				break;
 			}
-
-			if (page)
-				deleteAndReset(page->texture);
 		}
 
-		// Add new page
 		if (!page)
 		{
 			page = new TexturePage;
-			pos = { 0, 1 };
+			if (!page->Allocate(image.size(), rect, allocatedRect))
+			{
+				delete page;
+				return nullptr;
+			}
+
 			pages.push(page);
 		}
 
-		// Write sprite on page
-		const uchar* srcBits = image.constBits();
-		uchar* dstBits = page->image.bits();
-
-		for (int y = 0; y < image.height(); y++)
+		if (!QRect(0, 0, page->size, page->size).contains(allocatedRect))
 		{
-			for (int x = 0; x < image.width(); x++)
-			{
-				if (pos.x() + x >= page->size || pos.y() + y >= page->size)
-					continue;
-
-				IntType srcIndex = y * image.width() + x;
-				IntType dstIndex = (pos.y() + y) * page->size + (pos.x() + x);
-				srcIndex *= 4;
-				dstIndex *= 4;
-				dstBits[dstIndex + 0] = srcBits[srcIndex + 0];
-				dstBits[dstIndex + 1] = srcBits[srcIndex + 1];
-				dstBits[dstIndex + 2] = srcBits[srcIndex + 2];
-				dstBits[dstIndex + 3] = srcBits[srcIndex + 3];
-			}
+			page->Release(allocatedRect);
+			return nullptr;
 		}
 
-		// Create location
-		QRect rect = { pos, imageSize };
-		page->rects.append(rect.adjusted(0, 0, 1, 1));
+		deleteAndReset(page->texture);
+
+		// Copy the image and duplicate its edge pixels into the gutter
+		for (int y = -PAGE_GUTTER; y < image.height() + PAGE_GUTTER; y++)
+		{
+			const uchar* srcRow = image.constScanLine(qBound(0, y, image.height() - 1));
+			uchar* dstRow = page->image.scanLine(rect.y() + y);
+			memcpy(dstRow + (rect.x() - PAGE_GUTTER) * 4, srcRow, 4);
+			memcpy(dstRow + rect.x() * 4, srcRow, image.width() * 4);
+			memcpy(dstRow + (rect.x() + image.width()) * 4, srcRow + (image.width() - 1) * 4, 4);
+		}
+
 		return new TexturePageLocation(
 			page,
 			rect,
+			allocatedRect,
 			{
 				(RealType)rect.topLeft().x() / page->size,
 				(RealType)rect.topLeft().y() / page->size,
@@ -180,11 +177,12 @@ namespace CppProject
 				page->image.save((QString)gmlGlobal::working_directory + "/TexturePages/" + NumStr(p) + ".png");
 			p++;
 		}
+
 		DEBUG("Saved texture pages");
 	}
 
-	TexturePageLocation::TexturePageLocation(TexturePage* page, QRect rect, UvRect uvRect) :
-		page(page), rect(rect), uvRect(uvRect)
+	TexturePageLocation::TexturePageLocation(TexturePage* page, QRect rect, QRect allocatedRect, UvRect uvRect) :
+		page(page), rect(rect), allocatedRect(allocatedRect), uvRect(uvRect)
 	{
 		id = nextId++;
 		idMap[id] = this;
@@ -194,17 +192,7 @@ namespace CppProject
 	{
 		idMap.remove(id);
 
-		// Remove matching rectangle from page
-		for (auto it = page->rects.begin(); it != page->rects.end(); it++)
-		{
-			if ((*it).topLeft() == rect.topLeft())
-			{
-				int at = it - page->rects.begin();
-				page->rects.removeAt(at);
-				return;
-			}
-		}
-
-		//page->lastFree.remove(location.rect.size());
+		if (!allocatedRect.isEmpty())
+			page->Release(allocatedRect);
 	}
 }

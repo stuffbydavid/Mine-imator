@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "lengthdir_z",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/Utility/Math.yy",
+  "$GMScript":"v1",
+  "%Name":"lengthdir_z",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"lengthdir_z",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

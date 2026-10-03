@@ -1,15 +1,16 @@
-/// block_animate(root)
-/// @arg root
-
 function block_animate(root)
 {
 	// Create timeline
 	with (new_obj(obj_timeline))
 	{
 		temp = id
+		has_temp = false
 		
 		// Set to be a part of scenery
 		inherit_rot_point = true
+		inherit_alpha = true
+		inherit_color = true
+		inherit_texture = true
 		part_of = root
 		part_root = root
 		ds_list_add(root.part_list, id)
@@ -47,7 +48,7 @@ function block_animate(root)
 			block_name = other.block.name
 			block_state = array_copy_1d(other.block.default_state)
 			if (is_string(other.variant))
-				state_vars_add(block_state, array("variant", other.variant))
+				state_vars_add(block_state, [ "variant", other.variant ])
 			tl_update_scenery_part()
 			
 			texture_filtering = true
@@ -58,7 +59,10 @@ function block_animate(root)
 		rot_point = array_copy_1d(other.rot_point)
 		
 		// Position & rotation
-		var pos = point3D_mul_matrix(other.position, matrix_create(point3D(0, root.temp.scenery.scenery_size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
+		var pos = point3D_mul_matrix(
+			other.position,
+			matrix_create(point3D(0, root.temp.scenery.scenery_size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1))
+		);
 		value_default[e_value.POS_X] = snap(pos[X], 0.01)
 		value_default[e_value.POS_Y] = snap(pos[Y], 0.01)
 		value_default[e_value.POS_Z] = snap(pos[Z], 0.01)
@@ -68,13 +72,11 @@ function block_animate(root)
 		
 		// Texture
 		if (other.texture != null)
-		{
 			value_default[e_value.TEXTURE_OBJ] = other.texture
-			value_default[e_value.TEXTURE_OBJ].count++
-		}
 		
 		tl_update()
 		tl_update_values()
+		animated = false
 		
 		// Add text
 		if (other.has_text)
@@ -92,10 +94,13 @@ function block_animate(root)
 			textcolor = other.text_front_color
 			textglowcolor = other.text_front_glow_color
 			textemissive = other.text_front_emissive
+			
 			with (new_obj(obj_timeline))
 			{
 				type = e_tl_type.TEXT
 				temp = id
+				has_temp = false
+				animated = false
 				
 				// Set parent to other timeline
 				inherit_rot_point = true
@@ -103,18 +108,13 @@ function block_animate(root)
 				ds_list_add(other.part_list, id)
 				tl_set_parent(other.id)
 				
-				id.text = text
+				value_default[e_value.TEXT] = text
+				value[e_value.TEXT] = text
 				tl_update_scenery_part()
 				
-				value_default[e_value.POS_X] = textpos[X]
-				value_default[e_value.POS_Y] = textpos[Y]
-				value_default[e_value.POS_Z] = textpos[Z]
-				value_default[e_value.ROT_X] = textrot[X]
-				value_default[e_value.ROT_Y] = textrot[Y]
-				value_default[e_value.ROT_Z] = textrot[Z]
-				value_default[e_value.SCA_X] = textscale
-				value_default[e_value.SCA_Y] = textscale
-				value_default[e_value.SCA_Z] = textscale
+				tl_value_set_vec3(e_value.POS_X, textpos, true)
+				tl_value_set_vec3(e_value.ROT_X, textrot, true)
+				tl_value_set_vec3(e_value.SCA_X, vec3(textscale), true)
 				value_default[e_value.RGB_MUL] = textcolor
 				value_default[e_value.EMISSIVE] = textemissive
 				
@@ -141,6 +141,8 @@ function block_animate(root)
 			{
 				type = e_tl_type.TEXT
 				temp = id
+				has_temp = false
+				animated = false
 				
 				// Set parent to other timeline
 				inherit_rot_point = true
@@ -148,7 +150,8 @@ function block_animate(root)
 				ds_list_add(other.part_list, id)
 				tl_set_parent(other.id)
 				
-				id.text = text
+				value_default[e_value.TEXT] = text
+				value[e_value.TEXT] = text
 				tl_update_scenery_part()
 				
 				value_default[e_value.POS_X] = textpos[X]

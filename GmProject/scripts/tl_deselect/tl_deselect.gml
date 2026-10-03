@@ -1,5 +1,3 @@
-/// tl_deselect()
-
 function tl_deselect()
 {
 	if (!selected)
@@ -15,9 +13,16 @@ function tl_deselect()
 	
 	tl_edit_amount--
 	tl_edit = null
+	
 	with (obj_timeline)
+	{
 		if (selected)
+		{
 			tl_edit = id
+			obj_edit = has_temp ? temp : id
+		}
+	}
+	tl_focus = tl_edit
 	
 	tl_update_value_types_show()
 	tl_update_parent_is_selected()

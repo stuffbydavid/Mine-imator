@@ -1,5 +1,8 @@
 * text=auto
+.gitattributes text eol=lf
 *.gml text eol=lf
+*.fsh text eol=lf
+*.vsh text eol=lf
 *.resource_order text eol=lf
 *.yy text eol=lf
 *.yyp text eol=lf

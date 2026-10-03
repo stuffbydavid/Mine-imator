@@ -1,4 +1,4 @@
-/// render_world_model_file_parts(modelfile, resource, texturenamemap, hidelist, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, [matrixmap])
+/// @desc Renders a modelfile in its default position. If a matrix map is given, renders all parts in their depth order.
 /// @arg modelfile
 /// @arg resource
 /// @arg texturenamemap
@@ -8,10 +8,11 @@
 /// @arg shapehidelist
 /// @arg shapetexnamemap
 /// @arg [matrixmap]
-/// @desc Renders a modelfile in its default position. If a matrix map is given, renders all parts in their depth order.
 
 function render_world_model_file_parts(modelfile, res, texnamemap, hidelist, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, matrixmap = null)
 {
+	res = res_eval(res)
+
 	var partlist, mat;
 	partlist = modelfile.part_list
 	
@@ -44,7 +45,7 @@ function render_world_model_file_parts(modelfile, res, texnamemap, hidelist, sha
 		if (part.part_mixing_shapes)
 			render_set_uniform_int("uColorsExt", part.part_mixing_shapes)
 		
-		render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, null)
+		render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap)
 		
 		if (part.part_mixing_shapes)
 			render_set_uniform_int("uColorsExt", 0)

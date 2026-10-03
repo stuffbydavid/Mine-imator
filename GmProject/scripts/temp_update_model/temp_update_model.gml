@@ -1,5 +1,3 @@
-/// temp_update_model([copy])
-/// @arg [copy]
 /// @desc Gets the correct file and textures from the name and state or resource.
 
 function temp_update_model(copy = false)
@@ -15,9 +13,9 @@ function temp_update_model(copy = false)
 		model_texture_material_name_map = ds_map_create()
 	ds_map_clear(model_texture_material_name_map)
 	
-	if (model_tex_normal_name_map = null)
-		model_tex_normal_name_map = ds_map_create()
-	ds_map_clear(model_tex_normal_name_map)
+	if (model_texture_normal_name_map = null)
+		model_texture_normal_name_map = ds_map_create()
+	ds_map_clear(model_texture_normal_name_map)
 	
 	// Each key in the map points to a shape texture
 	if (model_shape_texture_name_map = null)
@@ -28,9 +26,9 @@ function temp_update_model(copy = false)
 		model_shape_texture_material_name_map = ds_map_create()
 	ds_map_clear(model_shape_texture_material_name_map)
 	
-	if (model_shape_tex_normal_name_map = null)
-		model_shape_tex_normal_name_map = ds_map_create()
-	ds_map_clear(model_shape_tex_normal_name_map)
+	if (model_shape_texture_normal_name_map = null)
+		model_shape_texture_normal_name_map = ds_map_create()
+	ds_map_clear(model_shape_texture_normal_name_map)
 	
 	// Parts to hide
 	if (model_hide_list = null)
@@ -60,11 +58,11 @@ function temp_update_model(copy = false)
 		
 		temptexnamemap = model_texture_name_map
 		temptexmatnamemap = model_texture_material_name_map
-		temptexnormnamemap = model_tex_normal_name_map
+		temptexnormnamemap = model_texture_normal_name_map
 		
 		tempshapetexnamemap = model_shape_texture_name_map
 		tempshapetexmatnamemap = model_shape_texture_material_name_map
-		tempshapetexnormnamemap = model_shape_tex_normal_name_map
+		tempshapetexnormnamemap = model_shape_texture_normal_name_map
 		
 		tempcolornamemap = model_color_name_map
 		temphidelist = model_hide_list
@@ -76,7 +74,11 @@ function temp_update_model(copy = false)
 			curpatterntype = pattern_type
 			
 			if (texture_name_map != null)
+			{
 				ds_map_merge(temptexnamemap, texture_name_map)
+				ds_map_merge(temptexmatnamemap, texture_name_map)
+				ds_map_merge(temptexnormnamemap, texture_name_map)
+			}
 			
 			if (states_map != null)
 			{
@@ -154,8 +156,8 @@ function temp_update_model(copy = false)
 	if (model_file != null && is_undefined(model_texture_material_name_map[?""]))
 		model_texture_material_name_map[?""] = model_file.texture_material_name
 	
-	if (model_file != null && is_undefined(model_tex_normal_name_map[?""]))
-		model_tex_normal_name_map[?""] = model_file.texture_normal_name
+	if (model_file != null && is_undefined(model_texture_normal_name_map[?""]))
+		model_texture_normal_name_map[?""] = model_file.texture_normal_name
 	
 	if (pattern_type != "")
 		array_add(pattern_update, id)

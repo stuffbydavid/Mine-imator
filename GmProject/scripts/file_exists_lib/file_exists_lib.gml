@@ -1,4 +1,3 @@
-/// file_exists_lib(filename)
 /// @arg filename
 
 function file_exists_lib(fn)

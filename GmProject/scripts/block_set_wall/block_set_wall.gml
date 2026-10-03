@@ -1,5 +1,3 @@
-/// block_set_wall()
-
 function block_set_wall()
 {
 	if (builder_scenery && !builder_scenery_legacy)
@@ -13,7 +11,7 @@ function block_set_wall()
 	south = 0
 	north = 0
 	variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
-	states = array("none", "low", "tall")
+	states = [ "none", "low", "tall" ]
 	tall = false
 	i = 0
 	
@@ -40,7 +38,7 @@ function block_set_wall()
 					east++
 				else if (block.type = "fence_gate") // Fence gates
 				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z + i), "facing")
+					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z + i), "facing");
 					if (facing != "east" && facing != "west")
 						east++
 				}
@@ -57,7 +55,7 @@ function block_set_wall()
 					west++
 				else if (block.type = "fence_gate") // Fence gates
 				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z + i), "facing")
+					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z + i), "facing");
 					if (facing != "east" && facing != "west")
 						west++
 				}
@@ -74,7 +72,7 @@ function block_set_wall()
 					south++
 				else if (block.type = "fence_gate") // Fence gates
 				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z + i), "facing")
+					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z + i), "facing");
 					if (facing != "south" && facing != "north")
 						south++
 				}
@@ -91,7 +89,7 @@ function block_set_wall()
 					north++
 				else if (block.type = "fence_gate") // Fence gates
 				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z + i), "facing")
+					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z + i), "facing");
 					if (facing != "south" && facing != "north")
 						north++
 				}
@@ -112,7 +110,7 @@ function block_set_wall()
 	else
 		up = "true"
 	
-	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", states[east], "west", states[west], "south", states[south], "north", states[north], "up", up))
+	block_state_id_current = block_get_state_id(block_current, [ "variant", variant, "east", states[east], "west", states[west], "south", states[south], "north", states[north], "up", up ])
 	
 	return 0
 }

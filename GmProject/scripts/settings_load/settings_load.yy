@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "settings_load",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Settings",
-    "path": "folders/Scripts/App/Settings.yy",
+  "$GMScript":"v1",
+  "%Name":"settings_load",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"settings_load",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Scripts/App/Settings.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

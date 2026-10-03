@@ -12,6 +12,8 @@
 #define AppWin App->currentWindow
 #define PR App->prRenderer
 #define VB App->vbRenderer
+#define IS_D3D11 (App->gfxApi == GfxApi::D3D11)
+#define IS_OPENGL (App->gfxApi == GfxApi::OpenGL)
 
 namespace CppProject
 {
@@ -41,7 +43,7 @@ namespace CppProject
 		// Create a new AppWindow containing an GLRenderer.
 		AppWindow* AddWindow(QRect rect = {}, IntType id = 0, AppWindow* from = nullptr);
 
-		// Runs once per frame and runs the app logic and drawing to the opened widgets.
+		// Runs once per frame and runs the app logic and drawing to the opened widgets or headless surface.
 		void timerEvent(QTimerEvent* event) override;
 
 		// Gets the amount of milliseconds since the application started.
@@ -63,9 +65,13 @@ namespace CppProject
 		// Runs when a HTTP response is received.
 		void HttpResponse(const HttpRequest& request);
 
+		GfxApi gfxApi = DEFAULT_GFX_API;
+		BoolType headless = false;
+		Surface* headlessSurface = nullptr;
 		PrimitiveRenderer* prRenderer = nullptr;
 		VertexBufferRenderer* vbRenderer = nullptr;
-
+		
+		QVector<QString> args;
 		AppWindow* mainWindow = nullptr;
 		AppWindow* mouseWindow = nullptr;
 		AppWindow* currentWindow = nullptr;
@@ -80,13 +86,17 @@ namespace CppProject
 		QVector<AddedWindow> addedWindows;
 
 		QBasicTimer stepTimer;
+		std::chrono::steady_clock::time_point stepDeadline;
 		BoolType blocked = false;
 
 		Timer randomizeTimer;
 		IntType startTime = 0;
 		RealType scale = 1.0;
+		IntType targetFps = 60;
 		Timer fpsTimer;
 		QDateTime fpsLastUpdate;
+		std::chrono::steady_clock::time_point fpsSampleStart;
+		IntType fpsSampleFrames = 0;
 
 		QNetworkAccessManager httpManager;
 		IntType httpNextId = 1;
@@ -99,7 +109,7 @@ namespace CppProject
 
 		ALCdevice* openALDevice = nullptr;
 		ALCcontext* openALContext = nullptr;
-		BoolType audioSupported;
+		BoolType audioSupported = false;
 
 		QHash<IntType, Qt::CursorShape> cursorMap;
 		QHash<IntType, IntType> keyMap;

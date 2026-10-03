@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "view_shape_line",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shape",
-    "path": "folders/Scripts/App/Interface/Components/View/Shape.yy",
+  "$GMScript":"v1",
+  "%Name":"view_shape_line",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_shape_line",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/Scripts/App/Interface/Components/View/Shape.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

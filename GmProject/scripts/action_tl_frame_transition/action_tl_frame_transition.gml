@@ -1,6 +1,3 @@
-/// action_tl_frame_transition(name)
-/// @arg name
-
 function action_tl_frame_transition(name)
 {
 	tl_value_set_start(action_tl_frame_transition, false)

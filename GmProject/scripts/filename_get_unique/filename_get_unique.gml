@@ -1,6 +1,5 @@
-/// filename_get_unique(filename)
-/// @arg filename
 /// @desc If the given filename exists, add a number to it.
+/// @arg filename
 
 function filename_get_unique(fn)
 {

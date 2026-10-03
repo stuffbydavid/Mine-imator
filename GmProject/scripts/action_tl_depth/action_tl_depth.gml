@@ -1,8 +1,4 @@
-/// action_tl_depth(value, add)
-/// @arg value
-/// @arg add
-
-function action_tl_depth(val, add)
+function action_tl_depth(value, add)
 {
 	if (history_undo)
 	{
@@ -38,6 +34,6 @@ function action_tl_depth(val, add)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_depth_tree(id, val, add, hobj)
+				action_tl_depth_tree(id, value, add, hobj)
 	}
 }

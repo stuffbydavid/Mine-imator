@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec3_normalize(VecType)
-/// vec3_normalize(vector)
 /// @arg vector
 
 function vec3_normalize(vec)
@@ -11,5 +10,5 @@ function vec3_normalize(vec)
 	if (len = 0)
 		return vec
 	
-	return [vec[@ X] / len, vec[@ Y] / len, vec[@ Z] / len]
+	return [ vec[@ X] / len, vec[@ Y] / len, vec[@ Z] / len ]
 }

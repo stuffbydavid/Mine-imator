@@ -1,7 +1,6 @@
 /// CppSeparate void matrix_remove_rotation(VarType)
-/// matrix_remove_rotation(matrix)
-/// @arg matrix
 /// @desc Removes all rotation from the matrix.
+/// @arg matrix
 
 function matrix_remove_rotation(mat)
 {

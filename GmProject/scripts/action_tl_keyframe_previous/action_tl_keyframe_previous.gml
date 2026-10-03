@@ -1,8 +1,6 @@
-/// action_tl_keyframe_previous()
-
 function action_tl_keyframe_previous()
 {
-	var pos, prevpos, index;
+	var pos, prevpos;
 	pos = 0
 	prevpos = 0
 	
@@ -23,8 +21,7 @@ function action_tl_keyframe_previous()
 		
 		if (keyframe_current != null)
 		{
-			index = ds_list_find_index(keyframe_list, keyframe_current)
-			
+			var index = ds_list_find_index(keyframe_list, keyframe_current);
 			if (index > 0)
 				prevpos = max(prevpos, keyframe_list[|index - 1].position)
 		}

@@ -1,9 +1,7 @@
-/// action_res_model_load(filename)
 /// @arg filename
 
 function action_res_model_load(fn)
 {
-
 	if (history_undo)
 	{
 		with (history_data)
@@ -35,19 +33,22 @@ function action_res_model_load(fn)
 		{
 			loaded = true
 			type = e_temp_type.MODEL
+			
 			model_tex = null
 			model_tex_material = null
 			model_tex_normal = null
 			model = res
-			model.count++
+			
 			temp_update()
+			
 			with (temp_animate())
 			{
 				loaded = true
 				for (var p = 0; p < ds_list_size(part_list); p++)
 					part_list[|p].loaded = true
 			}
-			sortlist_add(other.lib_list, id)
+			
+			temp_add_lists()
 		}
 		
 		if (!history_redo)
@@ -60,9 +61,10 @@ function action_res_model_load(fn)
 		}
 	}
 	
-	project_reset_loaded()
-	
 	tl_update_length()
 	tl_update_list()
 	tl_update_matrix()
+	
+	project_reset_loaded()
+	project_update_counts()
 }

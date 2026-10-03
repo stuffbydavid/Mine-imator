@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"bench_draw_settings_schematic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"bench_draw_settings_schematic",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Scripts/App/Interface/Bench/Settings.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

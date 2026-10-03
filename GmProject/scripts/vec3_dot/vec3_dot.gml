@@ -1,5 +1,4 @@
 /// CppSeparate RealType vec3_dot(VecType, VecType)
-/// vec3_dot(vector1, vector2)
 /// @arg vector1
 /// @arg vector2
 

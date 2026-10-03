@@ -1,7 +1,3 @@
-/// render_select(mode, selectsurface)
-/// @arg mode
-/// @arg selectsurface
-
 function render_select(mode, selectsurface)
 {
 	// Draw selection on separate surface
@@ -30,10 +26,7 @@ function render_select(mode, selectsurface)
 			gpu_set_texrepeat(false)
 			render_shader_obj = shader_map[?shader_border]
 			with (render_shader_obj)
-			{
-				border_mode = mode
 				shader_use()
-			}
 			draw_surface_exists(hlsurf, 0, 0)
 			with (render_shader_obj)
 				shader_reset()

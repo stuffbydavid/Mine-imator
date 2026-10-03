@@ -1,6 +1,3 @@
-/// popup_downloadskin_show(script)
-/// @arg script
-
 function popup_downloadskin_show(script)
 {
 	with (popup_downloadskin)

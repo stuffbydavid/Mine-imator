@@ -37,7 +37,9 @@ namespace CppProject
 			submit ||
 			currentBatch->numObjects >= MAX_BATCH_OBJECTS ||
 			currentBatch->mesh.numIndices >= MAX_BATCH_INDICES)
+		{
 			SubmitBatch();
+		}
 	}
 
 	void VertexBufferRenderer::SubmitBatch()
@@ -52,7 +54,9 @@ namespace CppProject
 		{
 			VertexBuffer* buffer = FindVertexBuffer(currentBatch->objects[0]);
 			IntType calls = buffer->Submit(GFX->shader, currentBatch->matrixM[0]);
+
 			renderCalls += calls;
+
 			if (calls)
 				trianglesSubmitted += buffer->numIndices / 3;
 		}
@@ -73,6 +77,7 @@ namespace CppProject
 			{
 				submitBatch = currentBatch;
 				submitBatch->CreateBuffers();
+
 				activeBatches.append(submitBatch);
 			}
 
@@ -82,6 +87,7 @@ namespace CppProject
 				submitBatch->mesh.BeginUse();
 				GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, submitBatch->mesh.numIndices);
 				submitBatch->mesh.EndUse();
+
 				renderCalls++;
 				trianglesSubmitted += submitBatch->mesh.numIndices / 3;
 			}
@@ -147,6 +153,7 @@ namespace CppProject
 	{
 		numObjects = 0;
 		bounds.Reset();
+
 		mesh.numVertices = mesh.numIndices = 0;
 		mesh.FreeBuffers();
 	}
@@ -177,6 +184,7 @@ namespace CppProject
 		}
 
 		mesh.CreateBuffers();
+
 		VB->batchesCreated++;
 	}
 }

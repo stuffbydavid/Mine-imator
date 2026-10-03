@@ -1,30 +1,30 @@
-/// action_lib_model_state(value)
-/// @arg value
-
-function action_lib_model_state(val)
+function action_lib_model_state(value)
 {
 	var state, hobj;
 	hobj = null
 	
 	if (history_undo)
 	{
-		val = history_data.old_value
+		value = history_data.old_value
 		state = history_data.state
 	}
 	else
 	{
 		if (history_redo)
 		{
-			val = history_data.new_value
+			value = history_data.new_value
 			state = history_data.state
 		}
 		else
 		{
+			if (is_undefined(menu_model_state) || menu_model_state = null)
+				return null
+			
 			state = menu_model_state.name
-			hobj = history_set_var(action_lib_model_state, state_vars_get_value(temp_edit.model_state, state), val, false)
+			hobj = history_set_var(action_lib_model_state, state_vars_get_value(obj_edit.model_state, state), value, false)
 			with (hobj)
 			{
-				id.state = state
+				self.state = state
 				tl_amount = 0
 				part_child_amount = 0
 				history_save_tl_select()
@@ -33,7 +33,7 @@ function action_lib_model_state(val)
 			// Find affected timelines
 			with (obj_timeline)
 			{
-				if (temp != temp_edit || part_list = null)
+				if (temp != obj_edit || part_list = null)
 					continue
 				
 				with (hobj)
@@ -50,16 +50,22 @@ function action_lib_model_state(val)
 		}
 	}
 	
-	tl_deselect_all()
-	
-	with (temp_edit)
+	with (obj_edit)
 	{
-		state_vars_set_value(model_state, state, val)
+		if (object_index != obj_timeline)
+			tl_deselect_all()
+			
+		state_vars_set_value(model_state, state, value)
+		
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
 		temp_update_model_shape()
 		temp_update_display_name()
+		
 		model_shape_update_color()
+		
+		if (object_index = obj_timeline && id != app.place_tl)
+			tl_select_single()
 	}
 	
 	if (history_undo)
@@ -101,6 +107,7 @@ function action_lib_model_state(val)
 	}
 	
 	app_update_tl_edit()
+	
 	tl_update_list()
 	tl_update_matrix()
 	

@@ -1,4 +1,3 @@
-/// tl_update_model_shape_bend()
 /// @desc Updates the shapes of the model part if the bending was changed since the last call.
 
 function tl_update_model_shape_bend()

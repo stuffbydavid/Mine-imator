@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_camera_effects_reset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_camera_effects_reset",
+  "parent":{
+    "name":"Effects",
+    "path":"folders/Scripts/Project/Timeline/Effects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

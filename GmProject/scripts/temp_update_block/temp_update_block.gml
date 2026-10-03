@@ -1,7 +1,7 @@
-/// temp_update_block()
 /// @desc Updates the block vbuffers of the given template.
-function temp_update_block() {
 
+function temp_update_block()
+{
 	block_vbuffer_start()
 
 	with (mc_builder)
@@ -56,5 +56,4 @@ function temp_update_block() {
 	}
 
 	block_vbuffer_done()
-
 }

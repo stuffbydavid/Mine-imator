@@ -1,15 +1,16 @@
-/// action_project_render_samples(value, add)
-/// @arg value
-/// @arg add
-
-function action_project_render_samples(val, add)
+function action_project_render_samples(value, add)
 {
+	action_project_render_preset_edit_locked()
+
+	var settings, samples;
+	settings = render_preset_edit.renderer[renderer_edit]
+	samples = settings.samples
+	
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_samples, project_render_samples, project_render_samples * add + val, 1)
+		history_set_var(action_project_render_samples, samples, samples * add + value, true)
 	
-	var valold = project_render_samples;
-	project_render_samples = project_render_samples * add + val
+	settings.samples = samples * add + value
 	
-	if (project_render_samples < valold)
+	if (settings.samples < samples)
 		render_samples = -1
 }

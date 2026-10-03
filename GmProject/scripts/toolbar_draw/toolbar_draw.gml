@@ -1,5 +1,3 @@
-/// toolbar_draw()
-
 function toolbar_draw()
 {
 	content_x = 0
@@ -16,41 +14,45 @@ function toolbar_draw()
 	draw_divide(content_x, content_y + content_height, content_width)
 	draw_gradient(content_x, content_y + content_height, content_width, shadow_size, c_black, shadow_alpha, shadow_alpha, 0, 0)
 	
-	var capwid, padding;
-	padding = 0
+	var padding = 0;
 	
 	draw_set_font(font_value)
 	
-	capwid = string_width(text_get("toolbarfile")) + 16
-	toolbar_draw_button("toolbarfile", dx, dy, capwid)
-	dx += capwid + padding
+	// File
+	content_capwid = string_width(text_get("toolbar/file")) + 16
+	toolbar_draw_button("toolbar/file", dx, dy, content_capwid)
+	
+	dx += content_capwid + padding
 	
 	if (window_state = "")
 	{
-		capwid = string_width(text_get("toolbaredit")) + 16
-		toolbar_draw_button("toolbaredit", dx, dy, capwid)
-		dx += capwid + padding
-		
-		capwid = string_width(text_get("toolbarrender")) + 16
-		toolbar_draw_button("toolbarrender", dx, dy, capwid)
-		dx += capwid + padding
+		content_capwid = string_width(text_get("toolbar/edit")) + 16
+		toolbar_draw_button("toolbar/edit", dx, dy, content_capwid)
+		dx += content_capwid + padding
+
+		// Render
+		content_capwid = string_width(text_get("toolbar/render")) + 16
+		toolbar_draw_button("toolbar/render", dx, dy, content_capwid)
+		dx += content_capwid + padding
 	}
 	
-	capwid = string_width(text_get("toolbarview")) + 16
-	toolbar_draw_button("toolbarview", dx, dy, capwid)
-	dx += capwid + padding
+	// View
+	content_capwid = string_width(text_get("toolbar/view")) + 16
+	toolbar_draw_button("toolbar/view", dx, dy, content_capwid)
+	dx += content_capwid + padding
 	
-	capwid = string_width(text_get("toolbarhelp")) + 16
-	toolbar_draw_button("toolbarhelp", dx, dy, capwid)
-	dx += capwid + padding
+	// Help
+	content_capwid = string_width(text_get("toolbar/help")) + 16
+	toolbar_draw_button("toolbar/help", dx, dy, content_capwid)
+	dx += content_capwid + padding
 	
 	dx += 8
-	draw_label(text_get("toolbarbackup"), dx, dy + 22, fa_left, fa_bottom, c_text_secondary, a_text_secondary * clamp(backup_text_ani, 0, 1), font_value)
+	draw_label(text_get("toolbar/backup"), dx, dy + 22, fa_left, fa_bottom, c_text_secondary, a_text_secondary * clamp(backup_text_ani, 0, 1), font_value)
 	
 	// "Simple mode" button label
 	if (!setting_advanced_mode)
 	{
-		if (draw_button_label("toolbarsimplemode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
+		if (draw_button_label("toolbar/simple_mode", content_x + content_width - 10, dy, null, null, e_button.TOOLBAR, null, fa_right))
 		{
 			if (trial_version)
 			{

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"draw_searchbox",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_searchbox",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/App/Interface/Components.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

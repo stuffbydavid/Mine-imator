@@ -1,5 +1,3 @@
-/// access_error()
-
 function access_error()
 {
 	show_message(

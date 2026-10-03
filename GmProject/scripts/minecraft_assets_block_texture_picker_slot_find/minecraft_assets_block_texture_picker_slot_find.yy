@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_assets_block_texture_picker_slot_find",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_assets_block_texture_picker_slot_find",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Scripts/Minecraft/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

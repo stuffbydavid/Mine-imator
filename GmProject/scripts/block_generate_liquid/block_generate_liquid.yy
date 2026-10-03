@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "block_generate_liquid",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Types",
-    "path": "folders/Scripts/Minecraft/Blocks/Types.yy",
+  "$GMScript":"v1",
+  "%Name":"block_generate_liquid",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_generate_liquid",
+  "parent":{
+    "name":"Types",
+    "path":"folders/Scripts/Minecraft/Blocks/Types.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

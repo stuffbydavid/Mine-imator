@@ -1,5 +1,4 @@
-/// render_update_tl_resource()
-/// @desc Updates the resource used by a timeline for rendering their 3D model
+/// @desc Updates the resource used by a timeline for rendering their 3D model.
 
 function render_update_tl_resource()
 {
@@ -10,7 +9,7 @@ function render_update_tl_resource()
 	
 	switch (type)
 	{
-		case e_tl_type.BODYPART:
+		case e_tl_type.MODEL_PART:
 		{
 			if (model_part = null)
 				return 0
@@ -30,17 +29,18 @@ function render_update_tl_resource()
 			
 			model_part_tex_name = model_part_get_texture_name(model_part, temp.model_texture_name_map)
 			model_part_tex_material_name = model_part_get_texture_material_name(model_part, temp.model_texture_material_name_map)
-			model_part_tex_normal_name = model_part_get_tex_normal_name(model_part, temp.model_tex_normal_name_map)
+			model_part_tex_normal_name = model_part_get_texture_normal_name(model_part, temp.model_texture_normal_name_map)
 			
 			// Look up shape textures
 			model_part_shape_tex = []
 			model_part_shape_tex_material = []
 			model_part_shape_tex_normal = []
 			model_part_shape_material_res = []
+			
 			var shapetexnamemap, shapetexmatnamemap, shapetexnormnamemap;
 			shapetexnamemap = temp.model_shape_texture_name_map
 			shapetexmatnamemap = temp.model_shape_texture_material_name_map
-			shapetexnormnamemap = temp.model_shape_tex_normal_name_map
+			shapetexnormnamemap = temp.model_shape_texture_normal_name_map
 			
 			for (var i = 0; i < ds_list_size(model_part.shape_list); i++)
 			{
@@ -88,8 +88,6 @@ function render_update_tl_resource()
 				// Material
 				if (materialres != null)
 				{
-					model_part_shape_material_res[i] = materialres.material_format
-					
 					with (materialres)
 					{
 						if (id = mc_res)
@@ -97,6 +95,9 @@ function render_update_tl_resource()
 						else
 							other.model_part_shape_tex_material[i] = res_get_model_texture_material(shapetexmatname)
 					}
+					model_part_shape_material_res[i] = materialres.material_format
+					if (model_part_shape_tex_material[i] = null)
+						model_part_shape_material_res[i] = e_material.FORMAT_NONE
 				}
 				else // No material texture
 				{
@@ -108,7 +109,7 @@ function render_update_tl_resource()
 				if (normalres != null) 
 				{
 					with (normalres)
-						other.model_part_shape_tex_normal[i] = res_get_model_tex_normal(shapetexnormname)
+						other.model_part_shape_tex_normal[i] = res_get_model_texture_normal(shapetexnormname)
 				}
 				else // No normal texture
 					model_part_shape_tex_normal[i] = null

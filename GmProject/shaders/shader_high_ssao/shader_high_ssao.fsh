@@ -4,17 +4,10 @@ varying vec2 vTexCoord;
 
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
-uniform sampler2D uEmissiveBuffer;
+uniform sampler2D uMaterialBuffer;
 uniform sampler2D uNoiseBuffer;
-uniform sampler2D uMaskBuffer;
-
-uniform float uNormalBufferScale;
-
-uniform float uNear;
-uniform float uFar;
 
 uniform mat4 uProjMatrix;
-uniform mat4 uProjMatrixInv;
 
 uniform vec2 uScreenSize;
 uniform float uNoiseSize;
@@ -24,67 +17,44 @@ uniform float uRadius;
 uniform float uPower;
 uniform vec4 uColor;
 
-// Get depth
-float unpackValue(vec4 c)
-{
-	return c.r + c.g / 255.0 + c.b / (255.0 * 255.0);
-}
-
-// Get normal Value
-vec3 unpackNormal(vec4 c)
-{
-	return (c.rgb / uNormalBufferScale) * 2.0 - 1.0;
-}
-
-// Transform linear depth to exponential depth
-float transformDepth(float depth)
-{
-	return (uFar - (uNear * uFar) / (depth * (uFar - uNear) + uNear)) / (uFar - uNear);
-}
-
-// Reconstruct a position from a screen space coordinate and (linear) depth
-vec3 posFromBuffer(vec2 coord, float depth)
-{
-	vec4 pos = uProjMatrixInv * vec4(coord.x * 2.0 - 1.0, 1.0 - coord.y * 2.0, transformDepth(depth), 1.0);
-	return pos.xyz / pos.w;
-}
-
-vec3 unpackNormalBlueNoise(vec4 c)
-{
-	return normalize(vec3(c.r, c.g, c.b * 0.5));
-}
+#pragma shady: inline(common_constants.MATH)
+#pragma shady: inline(common_util.TBN_LIB)
+#pragma shady: inline(common_util.DEPTH_BUFFER_LIB)
+#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
+#pragma shady: inline(common_util.DEPTH_RECONSTRUCT_LIB)
 
 float getSSAOstrength(vec2 uv)
 {
-	float emissive = unpackValue(texture2D(uEmissiveBuffer, uv)) * 255.0;
-	float mask = texture2D(uMaskBuffer, uv).r;
+	float emissive = texture2D(uNormalBuffer, uv).a;
+	float mask = texture2D(uMaterialBuffer, uv).a;
 	return (1.0 - clamp(emissive, 0.0, 1.0)) * mask;
 }
 
 void main()
 {
 	// Perform alpha test to ignore background
-	if (texture2D(uDepthBuffer, vTexCoord).a < 1.0)
+	float originDepth = readDepth(vTexCoord);
+	if (isDepthBackground(originDepth))
 		discard;
 	
 	// Get view space origin
-	float originDepth = unpackValue(texture2D(uDepthBuffer,vTexCoord));
 	vec3 origin = posFromBuffer(vTexCoord, originDepth);
 	
 	// Get scaled radius
 	float sampleRadius = uRadius * (1.0 - originDepth);
 	
 	// Get normal
-	vec3 normal = unpackNormal(texture2D(uNormalBuffer, vTexCoord));
+	vec3 normal = normalize(unpackNormal(texture2D(uNormalBuffer, vTexCoord)));
 	
-	// Random vector from noise
+	// Random angle from noise
 	vec2 noiseScale = uScreenSize / uNoiseSize;
-	vec3 randVec	= unpackNormalBlueNoise(texture2D(uNoiseBuffer, vTexCoord * noiseScale));
-
+	float theta = texture2D(uNoiseBuffer, vTexCoord * noiseScale).r * TWO_PI;
+	
 	// Construct kernel basis matrix
-	vec3 tangent = normalize(randVec - normal * dot(randVec, normal));
-	vec3 bitangent = cross(normal, tangent);
-	mat3 kernelBasis = mat3(tangent, bitangent, normal);
+	vec3 reference = (abs(normal.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0));
+	mat3 kernelBasis = getTBN(normal, cross(reference, normal));
+	vec3 tangent = kernelBasis * vec3(cos(theta), sin(theta), 0.0);
+	kernelBasis = mat3(tangent, cross(tangent, normal), normal);
 	
 	// Calculate occlusion factor
 	float occlusion = 0.0;
@@ -99,7 +69,7 @@ void main()
 		sampleCoord.y = 1.0 - sampleCoord.y;
 		
 		// Get sample depth
-		float sampleDepth = posFromBuffer(sampleCoord, unpackValue(texture2D(uDepthBuffer, sampleCoord))).z;
+		float sampleDepth = posFromBuffer(sampleCoord, readDepth(sampleCoord)).z;
 		
 		// Get sample strength
 		float sampleStrength = getSSAOstrength(sampleCoord);

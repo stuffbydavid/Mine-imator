@@ -1,4 +1,3 @@
-/// tl_update_value_types()
 /// @desc Updates the available value types.
 
 function tl_update_value_types()
@@ -6,7 +5,10 @@ function tl_update_value_types()
 	for (var v = 0; v < e_value_type.amount; v++)
 		value_type[v] = false
 	
-	if (type = e_tl_type.AUDIO)
+	if ((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp)
+		value_type[e_value_type.BLOCK] = true
+	
+	if (type = e_tl_type.AUDIO_TRACK)
 	{
 		value_type[e_value_type.SOUND] = true
 		value_type[e_value_type.AUDIO] = true
@@ -15,9 +17,16 @@ function tl_update_value_types()
 	
 	value_type[e_value_type.KEYFRAME] = true
 	
-	if (type = e_tl_type.BACKGROUND)
+	if (type = e_tl_type.ENVIRONMENT)
 	{
-		value_type[e_value_type.BACKGROUND] = true
+		value_type[e_value_type.ENVIRONMENT] = true
+		return 0
+	}
+	
+	if (type = e_tl_type.CAMERA_EFFECT)
+	{
+		value_type[e_value_type.CAMERA_EFFECT] = true
+		value_type[e_value_type.HIERARCHY] = true
 		return 0
 	}
 	
@@ -58,11 +67,11 @@ function tl_update_value_types()
 		value_type[e_value_type.TRANSFORM_SCA] = true
 	
 	// Bend
-	if (type = e_tl_type.BODYPART && model_part != null && model_part.bend_part != null)
+	if (type = e_tl_type.MODEL_PART && model_part != null && model_part.bend_part != null)
 		value_type[e_value_type.TRANSFORM_BEND] = true
 	
 	// Color
-	if (type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
+	if (type != e_tl_type.CAMERA && type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
 		value_type[e_value_type.MATERIAL_COLOR] = true
 	
 	// Particles
@@ -89,7 +98,8 @@ function tl_update_value_types()
 		value_type[e_value_type.MATERIAL_TEXTURE] = true
 	
 	// Material (Color)
-	if (type != e_tl_type.POINT_LIGHT &&
+	if (type != e_tl_type.CAMERA &&
+		type != e_tl_type.POINT_LIGHT &&
 		type != e_tl_type.SPOT_LIGHT)
 		value_type[e_value_type.MATERIAL_COLOR] = true
 	
@@ -123,5 +133,5 @@ function tl_update_value_types()
 	
 	// Enable material tab
 	value_type[e_value_type.MATERIAL] = (value_type[e_value_type.MATERIAL_TEXTURE] || value_type[e_value_type.MATERIAL_COLOR] ||
-										value_type[e_value_type.MATERIAL_SURFACE] || value_type[e_value_type.MATERIAL_SUBSURFACE])
+										 value_type[e_value_type.MATERIAL_SURFACE] || value_type[e_value_type.MATERIAL_SUBSURFACE])
 }

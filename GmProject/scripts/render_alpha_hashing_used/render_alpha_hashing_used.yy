@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_alpha_hashing_used",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_alpha_hashing_used",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

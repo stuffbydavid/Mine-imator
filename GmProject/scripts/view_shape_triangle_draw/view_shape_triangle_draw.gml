@@ -1,7 +1,6 @@
-/// view_shape_triangle_draw(p1, p2, p3)
-/// @arg p1
-/// @arg p2
-/// @arg p3
+/// @arg point1
+/// @arg point2
+/// @arg point3
 
 function view_shape_triangle_draw(p1, p2, p3)
 {

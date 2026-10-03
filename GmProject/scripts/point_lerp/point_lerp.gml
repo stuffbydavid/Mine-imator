@@ -1,4 +1,3 @@
-/// point_lerp(point1, point2, amount)
 /// @arg point1
 /// @arg point2
 /// @arg amount

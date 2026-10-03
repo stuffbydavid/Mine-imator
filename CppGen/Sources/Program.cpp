@@ -635,6 +635,10 @@ Script::Script(String dir)
 	if (!yyFile.exists)
 		return;
 
+	FileInfo gmlFile = FileInfo(dir + "/" + dirInfo.name + ".gml");
+	if (!gmlFile.exists)
+		return;
+
 	String json = File::readAllText(yyFile.fullName);
 	Json root = JsonConvert::deserializeObject(json);
 
@@ -683,6 +687,10 @@ void Program::resolveProject()
 		}
 
 		Program::objects[STR(app)]->constructor->resolve(ResolveScope(STR(app)));
+		
+		// App create is invoked directly by AppHandler
+		if (Program::objects[STR(app)]->createFunction != nullptr)
+			Program::objects[STR(app)]->createFunction->resolve(ResolveScope(STR(any)));
 
 		// Resolve app functions
 		if (Program::appDrawFunction != nullptr)

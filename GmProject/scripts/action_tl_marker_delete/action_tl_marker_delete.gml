@@ -1,22 +1,21 @@
-/// action_tl_marker_delete()
-
 function action_tl_marker_delete()
 {
-	var marker;
-	
 	if (history_undo)
 	{
-		marker = new_obj(obj_marker);
-		marker.save_id = history_data.marker_save_id
-		marker.name = history_data.marker_name
-		marker.color = history_data.marker_color
-		marker.pos = history_data.marker_pos
+		var marker = new_obj(obj_marker);
+		with (marker)
+		{
+			save_id = history_data.marker_save_id
+			name = history_data.marker_name
+			color = history_data.marker_color
+			pos = history_data.marker_pos
+		}
 		
 		ds_list_add(timeline_marker_list, marker)
 	}
 	else
 	{
-		var hobj;
+		var marker, hobj;
 		marker = list_item_value
 		
 		if (!history_redo)

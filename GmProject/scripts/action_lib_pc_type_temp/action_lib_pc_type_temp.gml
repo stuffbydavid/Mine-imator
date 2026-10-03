@@ -1,4 +1,3 @@
-/// action_lib_pc_type_temp(template)
 /// @arg template
 
 function action_lib_pc_type_temp(temp)
@@ -12,11 +11,13 @@ function action_lib_pc_type_temp(temp)
 	
 	ptype_edit.temp = temp
 	
+	project_update_counts()
+	
 	if (temp = particle_sheet || temp = particle_template)
 	{
 		with (ptype_edit)
 			ptype_update_sprite_vbuffers()
 	}
 	
-	tab_template_editor_particles_preview_restart()
+	tab_object_editor_particles_preview_restart()
 }

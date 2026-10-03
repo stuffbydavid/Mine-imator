@@ -69,6 +69,7 @@ namespace CppProject
 			{
 				if (required)
 					FATAL("Invalid id " + NumStr(id));
+
 				return nullptr;
 			}
 
@@ -84,6 +85,7 @@ namespace CppProject
 			{
 				if (required)
 					FATAL("Invalid id " + NumStr(id));
+
 				return nullptr;
 			}
 
@@ -92,8 +94,10 @@ namespace CppProject
 			{
 				if (required)
 					FATAL("Unexpected type for id " + NumStr(id));
+
 				return nullptr;
 			}
+
 			return (T*)asset;
 		}
 

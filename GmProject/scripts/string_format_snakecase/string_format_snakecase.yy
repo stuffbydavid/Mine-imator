@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "string_format_snakecase",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "String",
-    "path": "folders/Scripts/Utility/String.yy",
+  "$GMScript":"v1",
+  "%Name":"string_format_snakecase",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"string_format_snakecase",
+  "parent":{
+    "name":"String",
+    "path":"folders/Scripts/Utility/String.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

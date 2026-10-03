@@ -47,14 +47,13 @@ namespace CppProject
 		bool closing = false;
 		IntType id = 0;
 		QSize newSize = { 0, 0 };
-	#if API_D3D11
+	#if OS_WINDOWS
 		Surface* surface = nullptr;
 		ID3D11RenderTargetView* d3dRTV = nullptr;
 		IDXGISwapChain* d3dSwapchain = nullptr;
 		QWidget* d3dWidget = nullptr;
-	#else
-		GLWidget* glWidget = nullptr;
 	#endif
+		GLWidget* glWidget = nullptr;
 
 		QHash<IntType, BoolType> mouseDown;
 		int mouseWheel = 0;
@@ -68,6 +67,7 @@ namespace CppProject
 	struct KeyChecker : QLineEdit
 	{
 		KeyChecker(QWidget* parent);
+
 		void focusOutEvent(QFocusEvent* e) override { QWidget::setFocus(); }
 		void keyPressEvent(QKeyEvent* event) override;
 		void keyReleaseEvent(QKeyEvent* event) override;

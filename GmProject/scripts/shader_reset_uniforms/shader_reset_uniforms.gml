@@ -1,5 +1,4 @@
-/// shader_reset_uniforms()
-/// @desc Uniforms to help prevent uniform updating in render_world_tl()
+/// @desc Uniforms to help prevent uniform updating in render_world_tl().
 
 function shader_reset_uniforms()
 {

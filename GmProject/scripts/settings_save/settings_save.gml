@@ -1,5 +1,3 @@
-/// settings_save()
-
 function settings_save()
 {
 	log("Saving settings", settings_file)
@@ -10,6 +8,7 @@ function settings_save()
 	
 	json_save_object_start("assets")
 		
+		json_save_var("lastknown", minecraft_assets_version)
 		json_save_var("version", setting_minecraft_assets_version)
 		
 		if (setting_minecraft_assets_new_version != "")
@@ -55,14 +54,18 @@ function settings_save()
 		if (setting_advanced_mode)
 			json_save_var("advanced_mode", setting_advanced_mode)
 		
-		json_save_var("fps", room_speed)
+		json_save_var("fps", game_get_speed(gamespeed_fps))
 		json_save_var("project_folder", json_string_encode(setting_project_folder))
+		json_save_var("project_pack", json_string_encode(setting_project_pack))
+		
 		json_save_var_bool("backup", setting_backup)
 		json_save_var("backup_time", setting_backup_time)
 		json_save_var("backup_amount", setting_backup_amount)
+		
 		json_save_var_bool("spawn_cameras", setting_spawn_cameras)
 		json_save_var_bool("unlimited_values", setting_unlimited_values)
 		json_save_var_bool("scenery_remove_edges", setting_scenery_remove_edges)
+		json_save_var_bool("scenery_replace_ground", setting_scenery_replace_ground)
 		
 		json_save_var_bool("watermark_custom", setting_watermark_custom)
 		json_save_var("watermark_fn", setting_watermark_fn)
@@ -88,6 +91,8 @@ function settings_save()
 		json_save_var_bool("timeline_compact", setting_timeline_compact)
 		json_save_var_bool("reduced_motion", setting_reduced_motion)
 		json_save_var_bool("timeline_select_jump", setting_timeline_select_jump)
+		json_save_var_bool("timeline_hide_structure_blocks", setting_timeline_hide_structure_blocks)
+		json_save_var_bool("timeline_hide_nonanimated", setting_timeline_hide_nonanimated)
 		json_save_var_bool("timeline_hide_ghosts", setting_timeline_hide_ghosts)
 		json_save_var_bool("timeline_frame_snap", setting_timeline_frame_snap)
 		json_save_var_bool("z_is_up", setting_z_is_up)
@@ -106,10 +111,14 @@ function settings_save()
 		json_save_var("panel_top_size", panel_map[?"top"].size)
 		json_save_var("panel_left_top_size", panel_map[?"left"].size)
 		json_save_var("panel_right_top_size", panel_map[?"right"].size)
+		json_save_var("bench_width", bench_width)
+		json_save_var("bench_height", bench_initial_height + bench_height_add)
 		
 		json_save_var("properties_location", properties.panel.location)
+		json_save_var("renderer_settings_location", renderer_settings.panel.location)
 		json_save_var("ground_editor_location", ground_editor.panel.location)
-		json_save_var("template_editor_location", template_editor.panel.location)
+		json_save_var("object_editor_location", object_editor.panel.location)
+		json_save_var("build_mode_location", build_tool.panel.location)
 		json_save_var("timeline_location", timeline.panel.location)
 		json_save_var("timeline_editor_location", timeline_editor.panel.location)
 		json_save_var("frame_editor_location", frame_editor.panel.location)
@@ -124,12 +133,16 @@ function settings_save()
 		
 		json_save_var("view_split", view_split)
 		
+		json_save_var_bool("quick_mode_shading", setting_quick_mode_shading)
+		json_save_var_bool("quick_mode_aa", setting_quick_mode_aa)
+		
 		json_save_var_bool("view_main_overlays", view_main.overlays)
 		json_save_var_bool("view_main_aspect_ratio", view_main.aspect_ratio)
 		json_save_var_bool("view_main_grid", view_main.grid)
 		json_save_var_bool("view_main_gizmos", view_main.gizmos)
 		json_save_var_bool("view_main_effects", view_main.effects)
 		json_save_var_bool("view_main_particles", view_main.particles)
+		json_save_var_bool("view_main_transparent_background", view_main.transparent_background)
 		json_save_var("view_main_location", view_main.location)
 		
 		json_save_var_bool("view_second_show", view_second.show)
@@ -139,6 +152,7 @@ function settings_save()
 		json_save_var_bool("view_second_gizmos", view_second.gizmos)
 		json_save_var_bool("view_second_effects", view_second.effects)
 		json_save_var_bool("view_second_particles", view_second.particles)
+		json_save_var_bool("view_second_transparent_background", view_second.transparent_background)
 		json_save_var("view_second_location", view_second.location)
 		json_save_var("view_second_width", view_second.width)
 		json_save_var("view_second_height", view_second.height)
@@ -149,6 +163,10 @@ function settings_save()
 			window_state_save(e_window.VIEW_SECOND)
 			json_save_object_done()
 		}
+		
+		json_save_var_bool("overlay_view_controls", setting_overlay_view_controls)
+		json_save_var_bool("overlay_view_shapes", setting_overlay_view_shapes)
+		json_save_var_bool("overlay_view_guides", setting_overlay_view_guides)
 		
 		json_save_var_bool("snap", setting_snap)
 		json_save_var_bool("snap_absolute", setting_snap_absolute)
@@ -162,11 +180,9 @@ function settings_save()
 	
 	json_save_object_start("controls")
 		
-		var obj;
-		
 		for (var i = 0; i < e_keybind.amount; i++)
 		{
-			obj = keybinds[i]
+			var obj = keybinds[i];
 			json_save_var(obj.name, obj.keybind)
 		}
 		
@@ -179,19 +195,18 @@ function settings_save()
 	
 	json_save_object_start("export")
 		
-		json_save_var("exportmovie_format", popup_exportmovie.format)
-		json_save_var("exportmovie_frame_rate", popup_exportmovie.frame_rate)
-		json_save_var("exportmovie_framespersecond", popup_exportmovie.framespersecond)
-		json_save_var("exportmovie_bit_rate", popup_exportmovie.bit_rate)
-		json_save_var_bool("exportmovie_include_audio", popup_exportmovie.include_audio)
-		json_save_var_bool("exportmovie_remove_background", popup_exportmovie.remove_background)
-		json_save_var_bool("exportmovie_include_hidden", popup_exportmovie.include_hidden)
-		json_save_var_bool("exportmovie_high_quality", popup_exportmovie.high_quality)
-		json_save_var_bool("exportmovie_watermark", popup_exportmovie.watermark)
-		json_save_var_bool("exportimage_remove_background", popup_exportimage.remove_background)
-		json_save_var_bool("exportimage_include_hidden", popup_exportimage.include_hidden)
-		json_save_var_bool("exportimage_high_quality", popup_exportimage.high_quality)
-		json_save_var_bool("exportimage_watermark", popup_exportimage.watermark)
+		json_save_var("export_movie_format", popup_exportmovie.format)
+		json_save_var("export_movie_frame_rate", popup_exportmovie.frame_rate)
+		json_save_var("export_movie_framespersecond", popup_exportmovie.framespersecond)
+		json_save_var("export_movie_renderer", popup_exportmovie.renderer)
+		json_save_var_bool("export_movie_include_audio", popup_exportmovie.include_audio)
+		json_save_var_bool("export_movie_remove_background", popup_exportmovie.remove_background)
+		json_save_var_bool("export_movie_include_hidden", popup_exportmovie.include_hidden)
+		json_save_var_bool("export_movie_watermark", popup_exportmovie.watermark)
+		json_save_var_bool("export_image_remove_background", popup_exportimage.remove_background)
+		json_save_var_bool("export_image_include_hidden", popup_exportimage.include_hidden)
+		json_save_var("export_image_renderer", popup_exportimage.renderer)
+		json_save_var_bool("export_image_watermark", popup_exportimage.watermark)
 		
 	json_save_object_done()
 	

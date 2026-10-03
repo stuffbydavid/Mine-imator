@@ -1,4 +1,3 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, [colortype, [drag, [update_values]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,22 +6,21 @@
 /// @arg min
 /// @arg max
 /// @arg snap
-/// @arg [showcaption
-/// @arg [stack
-/// @arg [colortype
-/// @arg [drag
-/// @arg [update_values]]]]
+/// @arg [showcaption]
+/// @arg [stack]
+/// @arg [colortype]
+/// @arg [drag]
+/// @arg [updatevalues]
 
-function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, textfield_update = true)
+function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, updatevalues = true)
 {
 	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei;
-	
-	vertical = (app.panel_compact) && stack
+	vertical = (app.panel_compact && stack)
 	fieldx = xx
 	fieldy = yy
 	fieldwid = vertical ? wid : (wid/textfield_amount)
 	fieldupdate = undefined
-	hei = (vertical ? (ui_small_height * textfield_amount) : ui_small_height) + ((label_height + 8) * showcaption)
+	hei = (vertical ? real(ui_small_height * textfield_amount) : ui_small_height) + ((label_height + 8) * showcaption)
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
@@ -53,7 +51,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 	fieldy = yy
 	dragw = 16
 	
-	draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_input_background, draw_get_alpha())
 	
 	// Draw field backgrounds
 	if (vertical)
@@ -112,7 +110,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			maxval = textfield_max[i]
 		}
 		
-		context_menu_area(fieldx, boxy, boxwid, boxhei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
+		context_menu_area(fieldx, boxy, boxwid, boxhei, "context_menu/value", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
 		
 		microani_set(string(textfield_textbox[i]) + textfield_name[i], textfield_script[i], mouseon || window_focus = string(textfield_textbox[i]), false, (mouseon && mouse_left) || (window_focus = string(textfield_textbox[i])))
 		
@@ -188,12 +186,12 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		}
 		
 		active = (active || window_focus = string(textfield_textbox[i]))
-		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]) || (window_busy = textfield_name[i] + "drag") || (window_busy = textfield_name[i] + "press"), false, active)
+		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]) || (window_busy = textfield_name[i] + "/drag") || (window_busy = textfield_name[i] + "/press"), false, active)
 		
 		// Textbox
 		draw_set_font(font_digits)
 		
-		var update = textbox_draw(textfield_textbox[i], fieldx + dragw, boxy + ceil(boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true);
+		update = textbox_draw(textfield_textbox[i], fieldx + dragw, boxy + ceil(boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true)
 		
 		// Textbox press
 		if (app_mouse_box(fieldx + dragw, boxy, boxwid - (8 + dragw), boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]))
@@ -211,11 +209,11 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			mouse_cursor = cr_size_we
 	
 			if (mouse_left_pressed)
-				window_busy = textfield_name[i] + "press"
+				window_busy = textfield_name[i] + "/press"
 		}
 		
 		// Mouse pressed
-		if (window_busy = textfield_name[i] + "press")
+		if (window_busy = textfield_name[i] + "/press")
 		{
 			mouse_cursor = cr_size_we
 			
@@ -228,12 +226,12 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			else if (mouse_dx != 0)
 			{
 				dragger_drag_value = textfield_value[i]
-				window_busy = textfield_name[i] + "drag" // Start dragging
+				window_busy = textfield_name[i] + "/drag" // Start dragging
 			}
 		}
 		
 		// Is dragging
-		if (window_busy = textfield_name[i] + "drag")
+		if (window_busy = textfield_name[i] + "/drag")
 		{ 
 			mouse_cursor = cr_none
 			dragger_drag_value += (mouse_x - mouse_click_x) * (textfield_mul[i] = null ? mul : textfield_mul[i]) * dragger_multiplier
@@ -246,7 +244,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			else
 				d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - textfield_value[i]
 			
-			if (d <> 0 && textfield_script[i] != null && textfield_update)
+			if (d <> 0 && textfield_script[i] != null && updatevalues)
 				script_execute(textfield_script[i], d, true)
 			else
 			{
@@ -275,7 +273,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		}
 		
 		// Idle update
-		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && fieldupdate = undefined)
+		if (window_busy != textfield_name[i] + "/press" && window_focus != string(textfield_textbox[i]) && is_undefined(fieldupdate))
 			textfield_textbox[i].text = string_decimals(textfield_value[i])
 		
 		if (vertical)

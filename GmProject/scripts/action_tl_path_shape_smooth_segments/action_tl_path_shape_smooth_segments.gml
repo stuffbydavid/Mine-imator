@@ -1,6 +1,3 @@
-/// action_tl_path_shape_smooth_segments(smooth_segments)
-/// @arg smooth_segments
-
 function action_tl_path_shape_smooth_segments(smooth_segments)
 {
 	if (history_undo)
@@ -11,7 +8,7 @@ function action_tl_path_shape_smooth_segments(smooth_segments)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_smooth_segments = other.save_var_old_value[t]
+					self.path_shape_smooth_segments = other.save_var_old_value[t]
 					path_update = true
 				}
 			}
@@ -25,7 +22,7 @@ function action_tl_path_shape_smooth_segments(smooth_segments)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_smooth_segments = other.save_var_new_value[t]
+					self.path_shape_smooth_segments = other.save_var_new_value[t]
 					path_update = true
 				}
 			}
@@ -43,7 +40,7 @@ function action_tl_path_shape_smooth_segments(smooth_segments)
 			with (hobj)
 				history_save_var(other.id, other.path_shape_smooth_segments, smooth_segments)
 			
-			id.path_shape_smooth_segments = smooth_segments
+			self.path_shape_smooth_segments = smooth_segments
 			path_update = true
 		}
 	}

@@ -1,7 +1,6 @@
-/// model_file_load_shape(map, resource)
+/// @desc Adds a shape from the given map (JSON object).
 /// @arg map
 /// @arg resource
-/// @desc Adds a shape from the given map (JSON object)
 
 function model_file_load_shape(map, res)
 {
@@ -73,7 +72,7 @@ function model_file_load_shape(map, res)
 					texture_material_inherit = other.texture_material_inherit
 				
 				if (texture_normal_name != "")
-					model_file_load_tex_normal(texture_normal_name, res)
+					model_file_load_texture_normal(texture_normal_name, res)
 				else
 					texture_normal_inherit = other.texture_normal_inherit
 			}
@@ -86,6 +85,9 @@ function model_file_load_shape(map, res)
 			texture_size = value_get_point2D(map[?"texture_size"])
 			var size = max(texture_size[X], texture_size[Y]);
 			texture_size = vec2(size, size) // Make square
+			
+			texture_scroll_speed = value_get_real(map[?"texture_scroll_speed"], 0)
+			texture_scroll_direction = value_get_real(map[?"texture_scroll_direction"], 0)
 		}
 		else
 		{
@@ -97,6 +99,8 @@ function model_file_load_shape(map, res)
 			texture_material_inherit = other.texture_material_inherit
 			texture_normal_inherit = other.texture_normal_inherit
 			texture_size = texture_inherit.texture_size
+			texture_scroll_speed = texture_inherit.texture_scroll_speed
+			texture_scroll_direction = texture_inherit.texture_scroll_direction
 		}
 		
 		// Color (optional)
@@ -186,7 +190,7 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Position (optional)
-		position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
+		position_noscale = value_get_point3D(map[?"position"], point3D(0))
 		position = point3D_mul(position_noscale, other.scale)
 		
 		// Rotation (optional)
@@ -258,7 +262,7 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Update bounds
-		var boundsmat = matrix_create(position, rotation, vec3(1))
+		var boundsmat = matrix_create(position, rotation, vec3(1));
 		var startpos = point3D_mul_matrix(from, boundsmat);
 		var endpos = point3D_mul_matrix(to, boundsmat);
 		bounds_start[X] = min(startpos[X], endpos[X])

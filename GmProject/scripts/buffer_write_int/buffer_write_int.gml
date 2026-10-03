@@ -1,6 +1,5 @@
-/// buffer_write_int(value)
+/// @desc Writes an integer to the buffer.
 /// @arg value
-/// @desc Writes an integer to the buffer
 
 function buffer_write_int(val)
 {

@@ -1,4 +1,3 @@
-/// block_set_bars()
 /// @desc Connects to other bars and panes or solid faces.
 
 function block_set_bars()
@@ -50,7 +49,7 @@ function block_set_bars()
 			north = "true"
 	}
 	
-	block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north))
+	block_state_id_current = block_get_state_id(block_current, [ "east", east, "west", west, "south", south, "north", north ])
 	
 	return 0
 }

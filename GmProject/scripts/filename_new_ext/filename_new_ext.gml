@@ -1,7 +1,6 @@
-/// filename_new_ext(filename, newextension)
+/// @desc Changes the filename extension, accepting a new value with a leading dot, eg. ".png".
 /// @arg filename
 /// @arg newextension
-/// @desc Changes the filename extension, accepting a new value with a leading dot, eg. ".png"
 
 function filename_new_ext(fn, newext)
 {

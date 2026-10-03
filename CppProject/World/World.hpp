@@ -87,7 +87,7 @@ namespace CppProject
 	// Compressed block vertex
 	struct WorldVertex
 	{
-		WorldVertex(const WorldVec& regionPos, uint16_t blockData);
+		WorldVertex(const WorldVec& regionPos, uint32_t blockData);
 
 		// Setup shader attributes
 		static void SetAttributes();
@@ -249,6 +249,9 @@ namespace CppProject
 		// Go to the player or start position.
 		void GoToPlayer();
 
+		// Go to a specified X/Z position.
+		void GoToPosition(IntType x, IntType z);
+
 		// Set selection size.
 		void SetSelectionSize(VecType size);
 
@@ -272,6 +275,7 @@ namespace CppProject
 		Mode mode = DEFAULT;
 		BoolType hasPlayer = false, resetUpdate = false;
 		QString dimension = "";
+
 		Matrix matrixV, matrixP, playerM, selectionM;
 		RealType camAngleXY, camAngleZ, camTargetDis;
 		VecType camPos, camTarget, spawnPos, playerPos, playerRot;
@@ -284,6 +288,7 @@ namespace CppProject
 			RealType angleZStart, angleZEnd;
 			BoolType animateCamPos = false;
 		} camAnim;
+
 		QVector<Region*> openLoadRegions;
 		WorldVec worldOriginPos;
 
@@ -500,7 +505,7 @@ namespace CppProject
 		// Stores the faces added to a block in the section.
 		struct FaceData
 		{
-			uint16_t blockData[FaceDirectionAmount];
+			uint32_t blockData[FaceDirectionAmount];
 		};
 
 		// Stores the vertices in a chunk.

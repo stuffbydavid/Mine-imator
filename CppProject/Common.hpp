@@ -47,19 +47,15 @@ typedef double RealType;
 typedef int64_t IntType;
 typedef bool BoolType;
 
-// Pick graphics API
+// Pick default graphics API
 #ifdef OS_WINDOWS
-#define API_D3D11 1
-#define API_OPENGL 0
+#define DEFAULT_GFX_API GfxApi::D3D11
 #else
-#define API_D3D11 0
-#define API_OPENGL 1
+#define DEFAULT_GFX_API GfxApi::OpenGL
 #endif
 
-#if API_OPENGL
 #include <QOpenGLBuffer>
 #include <QOpenGLContext>
-#endif
 
 #define OPENMP_FOR omp parallel for schedule(dynamic)
 #define OPENMP_MAX_THREADS 32
@@ -70,8 +66,7 @@ typedef bool BoolType;
 namespace CppProject
 {
 	// Data type
-#define TYPE_OPTIMIZED !DEBUG_MODE
-#if TYPE_OPTIMIZED
+#if OPTIMIZED
 	typedef char Type;
 
 	#define UNDEFINED_t 0
@@ -106,6 +101,12 @@ namespace CppProject
 	};
 #endif
 
+	enum GfxApi
+	{
+		D3D11 = 0,
+		OpenGL = 1
+	};
+
 	inline void AddPerms(QFile& file)
 	{
 		file.setPermissions(file.permissions() |
@@ -117,10 +118,13 @@ namespace CppProject
 	{
 		QString str;
 		str.setNum(num, 'f', prec);
+		
 		while (str.back() == '0')
 			str.chop(1);
+		
 		if (str.back() == '.')
 			str.chop(1);
+		
 		return str;
 	}
 
@@ -133,20 +137,21 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case UNDEFINED_t: return "Undefined";
-			case REAL_t: return "Real";
-			case REAL_REF_t: return "Real&";
-			case INTEGER_t: return "Integer";
-			case BOOLEAN_t: return "Boolean";
-			case STRING_t: return "String";
-			case VECTOR_t: return "Vector";
-			case MATRIX_t: return "Matrix";
-			case MATRIX_REF_t: return "Matrix&";
-			case ARRAY_t: return "Array";
-			case ARRAY_REF_t: return "Array&";
-			case VARIANT_t: return "Variant";
-			case VARIANT_REF_t: return "Variant&";
+			case UNDEFINED_t:	return "Undefined";
+			case REAL_t:		return "Real";
+			case REAL_REF_t:	return "Real&";
+			case INTEGER_t:		return "Integer";
+			case BOOLEAN_t:		return "Boolean";
+			case STRING_t:		return "String";
+			case VECTOR_t:		return "Vector";
+			case MATRIX_t:		return "Matrix";
+			case MATRIX_REF_t:	return "Matrix&";
+			case ARRAY_t:		return "Array";
+			case ARRAY_REF_t:	return "Array&";
+			case VARIANT_t:		return "Variant";
+			case VARIANT_REF_t:	return "Variant&";
 		}
+
 		return "";
 	}
 

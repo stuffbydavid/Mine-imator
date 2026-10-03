@@ -1,4 +1,3 @@
-/// block_set_chest()
 /// @desc Finds double chests.
 
 function block_set_chest()

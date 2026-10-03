@@ -12,6 +12,7 @@ namespace CppProject
 	{
 		Sprite(Sprite* other);
 		Sprite(QString name, IntType subAssetId, int numFrames, QPoint origin);
+		Sprite(QImage image, QPoint origin);
 		Sprite(const StringType& filename, QPoint origin);
 		Sprite(Surface* surface, QPoint origin);
 		Sprite(Surface* surface, QRect rect, QPoint origin);

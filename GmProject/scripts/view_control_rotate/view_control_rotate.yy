@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "view_control_rotate",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Control",
-    "path": "folders/Scripts/App/Interface/Components/View/Control.yy",
+  "$GMScript":"v1",
+  "%Name":"view_control_rotate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_control_rotate",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

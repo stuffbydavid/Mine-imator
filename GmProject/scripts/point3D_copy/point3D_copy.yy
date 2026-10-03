@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "point3D_copy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Point",
-    "path": "folders/Scripts/Utility/Math/Point.yy",
+  "$GMScript":"v1",
+  "%Name":"point3D_copy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"point3D_copy",
+  "parent":{
+    "name":"Point",
+    "path":"folders/Scripts/Utility/Math/Point.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

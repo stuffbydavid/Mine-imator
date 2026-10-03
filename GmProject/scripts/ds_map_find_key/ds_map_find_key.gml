@@ -1,5 +1,4 @@
-/// ds_map_find_key(map, value)
-/// @arg map
+/// @arg id
 /// @arg value
 
 function ds_map_find_key(map, val)

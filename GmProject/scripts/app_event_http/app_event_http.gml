@@ -1,9 +1,7 @@
-/// app_event_http()
-
 function app_event_http()
 {
 	// Check assets
-	if (async_load[?"id"] = http_assets && async_load[?"status"] < 1 && (!dev_mode || dev_mode_check_assets))
+	if (async_load[?"id"] = http_assets && async_load[?"status"] < 1 && (!debug_mode || debug_check_assets))
 	{
 		http_assets = null
 		if (async_load[?"status"] = 0 && async_load[?"http_status"] = http_ok)
@@ -37,7 +35,7 @@ function app_event_http()
 								setting_minecraft_assets_new_image = ""
 							
 							// Alert
-							toast_new(e_toast.INFO, text_get("alertnewassets", setting_minecraft_assets_new_version))
+							toast_new(e_toast.INFO, text_get("alert/new_assets", setting_minecraft_assets_new_version))
 							toast_last.dismiss_time = no_limit
 							
 							log("New assets found", setting_minecraft_assets_new_version)
@@ -88,7 +86,7 @@ function app_event_http()
 			// Load new assets
 			if (!minecraft_assets_load_startup())
 			{
-				error("errorloadassets")
+				error("error/load_assets")
 				game_end()
 				return false
 			}
@@ -124,7 +122,7 @@ function app_event_http()
 							case "download":	icon = icons.DOWNLOAD;			break
 							case "cake":		icon = icons.BIRTHDAY;			break
 							case "upgrade":		icon = icons.KEY;				break
-							case "render":		icon = (setting_theme.dark ? icons.SPHERE_MATERIAL__DARK : icons.SPHERE_MATERIAL);	break
+							case "render":		icon = (setting_theme.dark ? icons.SPHERE_MATERIAL_DARK : icons.SPHERE_MATERIAL);	break
 							default:			icon = null;					break
 						}
 						
@@ -140,8 +138,8 @@ function app_event_http()
 							button = string_replace(button, "button", "")
 							
 							toast_new(e_toast.INFO, text)
-							toast_add_action(button, popup_open_url, buttonurl)
-							toast_add_action("alertclose", toast_set_close, toast_last)
+							toast_add_action(button, open_url, buttonurl)
+							toast_add_action("alert/close", toast_set_close, toast_last)
 							toast_last.dismiss_time = no_limit
 							toast_last.iid = iid
 						}
@@ -160,9 +158,9 @@ function app_event_http()
 		http_downloadskin = null
 		
 		// Download skin popup
-		if (popup = popup_downloadskin)
+		if (popup_current = popup_downloadskin)
 		{
-			popup_downloadskin.fail_message = text_get("errordownloadskininternet")
+			popup_downloadskin.fail_message = text_get("error/download_skin_internet")
 			
 			if (popup_downloadskin.texture)
 			{
@@ -178,14 +176,14 @@ function app_event_http()
 		
 		if (async_load[?"status"] = 0)
 		{
-			if (popup = popup_downloadskin)
-				popup_downloadskin.fail_message = text_get("errordownloadskinuser", string_remove_newline(popup_downloadskin.username))
+			if (popup_current = popup_downloadskin)
+			popup_downloadskin.fail_message = text_get("error/download_skin_user", string_remove_newline(popup_downloadskin.username))
 			else
 				mc_builder.block_skull_texture_fail = true
 			
 			if (async_load[?"http_status"] = http_ok && file_exists_lib(download_image_file))
 			{
-				if (popup = popup_downloadskin)
+				if (popup_current = popup_downloadskin)
 				{
 					popup_downloadskin.texture = texture_create(download_image_file)
 					popup_downloadskin.fail_message = ""

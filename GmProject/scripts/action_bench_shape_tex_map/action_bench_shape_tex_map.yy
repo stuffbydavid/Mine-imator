@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_shape_tex_map",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shape",
-    "path": "folders/Scripts/App/Actions/Bench/Shape.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_shape_tex_map",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_shape_tex_map",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/Scripts/App/Actions/Bench/Shape.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

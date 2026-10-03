@@ -1,4 +1,3 @@
-/// load_next()
 /// @desc Loads the next resource in the queue.
 
 function load_next()
@@ -12,6 +11,7 @@ function load_next()
 		popup_loading.load_object = null
 		popup_loading.load_script = null
 		popup_close()
+		
 		lib_preview.update = true
 		res_preview.update = true
 		bench_settings.preview.update = true

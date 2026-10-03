@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_loading_bar",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Components",
-    "path": "folders/Scripts/App/Interface/Components.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_loading_bar",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_loading_bar",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/App/Interface/Components.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

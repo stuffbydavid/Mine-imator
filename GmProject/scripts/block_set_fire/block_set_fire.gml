@@ -1,4 +1,3 @@
-/// block_set_fire()
 /// @desc Locates non-air blocks.
 
 function block_set_fire()
@@ -49,7 +48,7 @@ function block_set_fire()
 			up = "true"
 	}
 	
-	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", east, "west", west, "south", south, "north", north, "up", up))
+	block_state_id_current = block_get_state_id(block_current, [ "variant", variant, "east", east, "west", west, "south", south, "north", north, "up", up ])
 	
 	return 0
 }

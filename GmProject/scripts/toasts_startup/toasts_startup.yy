@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "toasts_startup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Toasts",
-    "path": "folders/Scripts/App/Interface/Toasts.yy",
+  "$GMScript":"v1",
+  "%Name":"toasts_startup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"toasts_startup",
+  "parent":{
+    "name":"Toasts",
+    "path":"folders/Scripts/App/Interface/Toasts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

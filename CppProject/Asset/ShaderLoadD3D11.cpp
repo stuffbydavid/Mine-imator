@@ -1,4 +1,4 @@
-#if API_D3D11
+#if OS_WINDOWS
 #include "Shader.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/Vertex.hpp"
@@ -16,7 +16,7 @@ namespace CppProject
         { Shader::MAT4, "float4x4" },
     };
 
-	void Shader::LoadCode(QString vsCode, QString fsCode, BoolType useCache)
+	void Shader::LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache)
 	{
         // Free resources
         releaseAndReset(d3dVertexShader);
@@ -34,11 +34,13 @@ namespace CppProject
         {
             QRegularExpressionMatch match = varIt.next();
             QString interMod = match.captured(1);
-            if (!interMod.isEmpty())
-                interMod = "nointerpolation ";
             QString typeName = match.captured(2);
             QString name = match.captured(3);
             QString arr = match.captured(4);
+
+            if (!interMod.isEmpty())
+                interMod = "nointerpolation ";
+
             varsDecl += "\t" + interMod + typeName + " " + name + arr + " : " + QString((char)('A' + varId++)) + ";\n";
 
             vsCode.replace(match.captured(0) + "\n", "");
@@ -58,6 +60,7 @@ namespace CppProject
         switch (vertexFormat)
         {
             case PRIMITIVE:
+            {
                 inputDecl += "\tfloat3 Position : A;\n";
                 inputDecl += "\tfloat4 Color : B;\n";
                 inputDecl += "\tfloat2 TextureCoord : C;\n";
@@ -70,9 +73,12 @@ namespace CppProject
                 vsCode.replace(QRegularExpression("\\bin_Position\\b"), "_attrs.Position");
                 vsCode.replace(QRegularExpression("\\bin_Colour\\b"), "_attrs.Color");
                 vsCode.replace(QRegularExpression("\\bin_TextureCoord\\b"), "_attrs.TextureCoord");
+
                 break;
+            }
 
             case VERTEX_BUFFER:
+            {
                 inputDecl += "\tfloat3 Position : A;\n";
                 inputDecl += "\tuint Normal : B;\n";
                 inputDecl += "\tuint Color : C;\n";
@@ -101,9 +107,12 @@ namespace CppProject
                 vsCode.replace(QRegularExpression("\\bin_TextureCoord\\b"), "_attrs.TextureCoord");
                 vsCode.replace(QRegularExpression("\\bin_Wave\\b"), "_attrs.Wave");
                 vsCode.replace(QRegularExpression("\\bin_Tangent\\b"), "_attrs.Tangent");
+
                 break;
+            }
 
             case WORLD:
+            {
                 inputDecl += "\tuint Pos : A;\n";
                 inputDecl += "\tuint Data : B;\n";
                 attrsDecl = inputDecl;
@@ -112,7 +121,9 @@ namespace CppProject
 
                 vsCode.replace(QRegularExpression("\\bin_Pos\\b"), "_attrs.Pos");
                 vsCode.replace(QRegularExpression("\\bin_Data\\b"), "_attrs.Data");
+
                 break;
+            }
         }
 
         inputDecl = "struct Input\n{\n" + inputDecl + "};\n\n";
@@ -124,12 +135,26 @@ namespace CppProject
 
         // Replace main signature and add return value
         QRegularExpression mainMatch("void main\\(\\).*?\\n{(.*)}", QRegularExpression::DotMatchesEverythingOption);
-        vsCode.replace(mainMatch, "Vars main(Input _input)\n{\n\tVars _vars;\n\tAttrs _attrs;" + setAttrs + "\\1\treturn _vars; \n }");
-        fsCode.replace(mainMatch, "PSOut main(Vars _vars)\n{\n\tPSOut _out;\\1\n\treturn _out;\n}");
+        auto replaceMain = [&](QString& code, QString signature, QString setup, QString result)
+        {
+            QRegularExpressionMatch match = mainMatch.match(code);
+            if (!match.hasMatch())
+                return;
+
+            QString body = match.captured(1);
+            body.replace(QRegularExpression("\\breturn\\s*;"), "return " + result + ";");
+            code.replace(match.capturedStart(), match.capturedLength(),
+                signature + "\n{\n\t" + setup + body + "\n\treturn " + result + ";\n}");
+        };
+
+        replaceMain(vsCode, "Vars main(Input _input)", "Vars _vars;\n\tAttrs _attrs;" + setAttrs, "_vars");
+        replaceMain(fsCode, "PSOut main(Vars _vars)", "PSOut _out;", "_out");
 
         // Create fragment shader output
         numOutputs = 1;
+        fsCode.replace("gl_FragCoord", "_vars.gl_Position");
         fsCode.replace("gl_FragColor", "_out.Color0");
+
         auto fragDataIt = QRegularExpression("gl_FragData\\[(\\d)\\]").globalMatch(fsCode);
         while (fragDataIt.hasNext())
         {
@@ -163,7 +188,7 @@ namespace CppProject
 
             // Pro RegEx hacker way to replace M * expr with mul(M, expr), beats writing a GLSL parser
             QStringList matrices = gmMatrixUniformName;
-            auto matIt = QRegularExpression("mat\\d ([a-zA-Z0-9]*)(\\[.*?\\])?.*;").globalMatch(code);
+            auto matIt = QRegularExpression("\\bmat\\d\\s+([a-zA-Z0-9_]+)(\\s*\\[.*?\\])?").globalMatch(code);
             while (matIt.hasNext())
             {
                 QRegularExpressionMatch match = matIt.next();
@@ -179,6 +204,7 @@ namespace CppProject
             {
                 mat.replace("[", "\\[");
                 mat.replace("]", "\\]");
+                
                 auto mulIt = QRegularExpression("((" + mat + ")|([a-zA-Z0-9]+\\((.*?, )?" + mat + "\\)))( *\\* *)(.*?);").globalMatch(code);
                 while (mulIt.hasNext())
                 {
@@ -215,6 +241,7 @@ namespace CppProject
                 QString typeName = match.captured(1);
                 QString name = match.captured(2);
                 QString args = match.captured(3);
+               
                 if (name == "main")
                     continue;
 
@@ -228,6 +255,7 @@ namespace CppProject
                     code.replace(match.captured(0), typeName + " " + name + " (Vars _vars" + (args.isEmpty() ? "" : ", " + args) + ")\n");
                     code.replace(QRegularExpression("\\b" + name + "\\("), name + "(_vars, ");
                 }
+
                 code.replace(", )", ")");
                 code.replace(typeName + " " + name + " (", typeName + " " + name + "(");
             }
@@ -236,15 +264,20 @@ namespace CppProject
             code.replace(QRegularExpression("\\bvec2\\("), "float2_(");
             code.replace(QRegularExpression("\\bvec3\\("), "float3_(");
             code.replace(QRegularExpression("\\bvec4\\("), "float4_(");
+            code.replace(QRegularExpression("\\bmat2\\("), "float2x2_(");
             code.replace(QRegularExpression("\\bmat3\\("), "float3x3_(");
             code.replace(QRegularExpression("\\bvec2\\b"), "float2");
             code.replace(QRegularExpression("\\bvec3\\b"), "float3");
             code.replace(QRegularExpression("\\bvec4\\b"), "float4");
+            code.replace(QRegularExpression("\\bmat2\\b"), "float2x2");
             code.replace(QRegularExpression("\\bmat3\\b"), "float3x3");
             code.replace(QRegularExpression("\\bmat4\\b"), "float4x4");
             code.replace(QRegularExpression("\\bmix\\b"), "lerp");
             code.replace(QRegularExpression("\\bfract\\b"), "frac");
             code.replace(QRegularExpression("\\bpow\\b"), "power");
+            code.replace(QRegularExpression("\\batan\\b"), "atan2");
+            code.replace(QRegularExpression("\\bdFdx\\b"), "ddx");
+            code.replace(QRegularExpression("\\bdFdy\\b"), "ddy");
 
             // Replace for with while
             code.replace(QRegularExpression("for \\((.*?); ?([a-zA-Z]+)(.*?); ?.*?\\)"), "\\1-1; [loop] while (++\\2\\3)");
@@ -274,6 +307,7 @@ namespace CppProject
                 if (uni.isArray)
                     decl += "[" + NumStr(uni.arrayMaxSize) + "]";
                 decl += ";\n";
+
                 if (uni.isStatic)
                     staticBufferDecl += decl;
                 else
@@ -307,7 +341,8 @@ namespace CppProject
         {
             // Get maximum objects allowed
             batchBufferObjectSize = ceil(batchBufferObjectSize / 16.0) * 16;
-            batchBufferMaxObjects = MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
+            batchBufferMaxObjects = D3D11_MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
+            
             bufferDecl = "cbuffer ObjectBuffer : register(b" + NumStr(bufId++) + ")\n" + bufferDecl + "\t} _obj[" + NumStr(batchBufferMaxObjects) + "];\n}\n";
         }
         else
@@ -335,16 +370,37 @@ namespace CppProject
         funcsDecl += "float4 float4_(float2 x, float y, float z) { return float4(x.x, x.y, y, z); };\n";
         funcsDecl += "float4 float4_(float x, float y, float z, float w) { return float4(x, y, z, w); };\n";
         funcsDecl += "float4 float4_(float4 x) { return x; };\n";
+        funcsDecl += "float2x2 float2x2_(float x) { return float2x2(x, 0.0, 0.0, x); };\n";
+        funcsDecl += "float2x2 float2x2_(float2 x, float2 y) { return transpose(float2x2(x, y)); };\n";
+        funcsDecl += "float2x2 float2x2_(float x, float y, float z, float w) { return transpose(float2x2(x, y, z, w)); };\n";
+        funcsDecl += "float2x2 float2x2_(float2x2 x) { return x; };\n";
         funcsDecl += "float3x3 float3x3_(float3 x, float3 y, float3 z) { return transpose(float3x3(x, y, z)); };\n";
+        funcsDecl += "float3x3 float3x3_(float x, float y, float z, float w, float v, float u, float t, float s, float r) { return transpose(float3x3(x, y, z, w, v, u, t, s, r)); };\n";
+        funcsDecl += "float3x3 float3x3_(float3x3 x) { return x; };\n";
 
         vsCode = staticBufferDecl + bufferDecl + samplersDecl + funcsDecl + vsCode;
         fsCode = staticBufferDecl + bufferDecl + samplersDecl + funcsDecl + fsCode;
 
         Heap<char> vsData, fsData;
         QString vsCacheName, fsCacheName;
-    #if DEBUG_MODE
+
+    #if !RELEASE_MODE
         vsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".fsh.d3d";
+
+        if (useCache && QFile::exists(vsCacheName) && QFile::exists(fsCacheName))
+        {
+            QDateTime cacheModified = std::min(QFileInfo(vsCacheName).lastModified(), QFileInfo(fsCacheName).lastModified());
+
+            for (const QString& sourceName : sourceDependencies)
+            {
+                if (QFileInfo(sourceName).lastModified() >= cacheModified)
+                {
+                    useCache = false;
+                    break;
+                }
+            }
+        }
     #else
         vsCacheName = ":/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ":/Shaders/Compiled/" + name + ".fsh.d3d";
@@ -352,7 +408,7 @@ namespace CppProject
 
         if (!useCache || !QFile::exists(vsCacheName) || !QFile::exists(fsCacheName))
         {
-        #if DEBUG_MODE
+        #if !RELEASE_MODE
             // Compile code and store in assets
             auto compileCode = [&](QString code, BoolType isVertex, Heap<char>& dst)
             {
@@ -364,12 +420,15 @@ namespace CppProject
             #else
                 flags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
             #endif
+
                 std::string codeStd = code.toStdString();
                 std::string target = isVertex ? "vs_4_0" : "ps_4_0";
+
+				DEBUG("Compiling " + name + " (" + QString(target.c_str()) + ")");
                 if (FAILED(D3DCompile(codeStd.c_str(), code.length(), nullptr, nullptr, nullptr, "main", target.c_str(), flags, 0, &data, &errMsgs)))
                 {
                     std::string errMsg((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize());
-                    WARNING("Loading " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
+                    WARNING("Compiling " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
                     DEBUG(code);
                     errMsgs->Release();
                     return false;
@@ -395,6 +454,7 @@ namespace CppProject
 
             if (!compileCode(vsCode, true, vsData))
                 return;
+
             if (!compileCode(fsCode, false, fsData))
                 return;
         #else
@@ -439,12 +499,15 @@ namespace CppProject
             switch (vertexFormat)
             {
                 case PRIMITIVE:
+                {
                     addElement(DXGI_FORMAT_R32G32B32_FLOAT, sizeof(float) * 3);
                     addElement(DXGI_FORMAT_R32G32B32A32_FLOAT, sizeof(float) * 4);
                     addElement(DXGI_FORMAT_R32G32_FLOAT, sizeof(float) * 2);
                     break;
+                }
 
                 case VERTEX_BUFFER:
+                {
                     addElement(DXGI_FORMAT_R32G32B32_FLOAT, sizeof(float) * 3);
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
@@ -452,11 +515,14 @@ namespace CppProject
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     break;
+                }
 
                 case WORLD:
+                {
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     break;
+                }
             }
 
             D3DCheckError(D3DDevice->CreateInputLayout(elements.data(), elements.size(), vsData.Data(), vsData.Size(), &d3dInputLayout[vertexFormat]));

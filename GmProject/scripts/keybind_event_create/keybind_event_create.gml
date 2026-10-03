@@ -1,5 +1,3 @@
-/// keybind_event_create()
-
 function keybind_event_create()
 {
 	name = ""

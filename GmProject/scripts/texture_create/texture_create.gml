@@ -1,4 +1,3 @@
-/// texture_create(filename)
 /// @arg filename
 
 function texture_create(fn)

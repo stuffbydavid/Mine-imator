@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "spline_subdivide",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Curve",
-    "path": "folders/Scripts/Utility/Math/Curve.yy",
+  "$GMScript":"v1",
+  "%Name":"spline_subdivide",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"spline_subdivide",
+  "parent":{
+    "name":"Curve",
+    "path":"folders/Scripts/Utility/Math/Curve.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

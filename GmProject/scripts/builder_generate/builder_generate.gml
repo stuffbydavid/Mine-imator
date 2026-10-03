@@ -1,4 +1,3 @@
-/// builder_generate()
 /// @desc Generate triangles from the block render models.
 
 function builder_generate()
@@ -165,7 +164,7 @@ function builder_generate()
 		return 0
 	
 	// Current state ID
-	block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z);
+	block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
 	
 	// Block position
 	block_pos_x = build_pos_x * block_size
@@ -188,7 +187,7 @@ function builder_generate()
 			if (modelindex > 0)
 				model = modelindex
 			else if (modelindex < 0)
-				model = builder_get_render_model_multipart(build_pos_x, build_pos_y, build_pos_z, -modelindex);
+				model = builder_get_render_model_multipart(build_pos_x, build_pos_y, build_pos_z, -modelindex)
 		}
 		
 		// Get single model
@@ -227,10 +226,10 @@ function builder_generate()
 		if (is_array(model))
 		{
 			for (var i = 0; i < array_length(model); i++)
-				block_render_model_generate(block_rendermodels[model[i]]);
+				block_render_model_generate(block_rendermodels[model[i]])
 		}
 		else if (model > 0)
-			block_render_model_generate(block_rendermodels[model]);
+			block_render_model_generate(block_rendermodels[model])
 	}
 	
 	// Reset wind, brightness, and light bleeding

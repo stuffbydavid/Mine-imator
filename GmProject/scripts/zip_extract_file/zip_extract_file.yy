@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"zip_extract_file",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"zip_extract_file",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,3 @@
-/// movie_audio_file_decode(source, destination)
 /// @arg source
 /// @arg destination
 

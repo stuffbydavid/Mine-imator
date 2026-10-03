@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_timeline_display_time",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/App/Actions/Settings/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_timeline_display_time",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_timeline_display_time",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Actions/Settings/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

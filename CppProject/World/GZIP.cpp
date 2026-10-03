@@ -30,7 +30,9 @@ namespace CppProject
 				break;
 			}
 		}
+
 		gzclose(gzIn);
+
 		return true;
 	}
 
@@ -54,11 +56,13 @@ namespace CppProject
 			WARNING("gzopen failed");
 			return false;
 		}
+
 		char buf[1024];
 		while (int len = gzread(gzIn, buf, sizeof(buf)))
 			file.write(buf, len);
 
 		gzclose(gzIn);
+
 		return true;
 	}
 
@@ -95,6 +99,7 @@ namespace CppProject
 			return false;
 
 		dst.resize(strm.total_out);
+
 		return true;
 	}
 
@@ -110,8 +115,10 @@ namespace CppProject
 			WARNING("gzopen failed");
 			return false;
 		}
+
 		gzwrite(gzOut, src.data(), src.size());
 		gzclose(gzOut);
+
 		return true;
 	}
 }

@@ -1,11 +1,10 @@
-/// minecraft_assets_startup()
 /// @desc Checks for new Minecraft assets.
 
 function minecraft_assets_startup()
 {
 	globalvar block_rendermodels, block_objs, player_head_vbuffer;
-	block_rendermodels = array()
-	block_objs = array()
+	block_rendermodels = []
+	block_objs = []
 	player_head_vbuffer = null
 	
 	// Air
@@ -18,7 +17,7 @@ function minecraft_assets_startup()
 		new_assets_version = setting_minecraft_assets_new_version
 		new_assets_format = setting_minecraft_assets_new_format
 		new_assets_changes = setting_minecraft_assets_new_changes
-		new_assets_changes_lines = string_split(new_assets_changes, "\n")
+		new_assets_changes_lines = string_split_escaped(new_assets_changes, "\n")
 		new_assets_image = setting_minecraft_assets_new_image
 		new_assets_scroll = new_obj(obj_scrollbar)
 		
@@ -38,7 +37,7 @@ function minecraft_assets_startup()
 	// Load current
 	else if (!minecraft_assets_load_startup())
 	{
-		error("errorloadassets")
+		error("error/load_assets")
 		return false
 	}
 	

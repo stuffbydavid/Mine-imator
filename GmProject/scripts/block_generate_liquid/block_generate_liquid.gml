@@ -1,5 +1,3 @@
-/// block_generate_liquid(waterlogged)
-/// @arg waterlogged
 /// @desc Creates a liquid mesh from the surrounding block data.
 
 function block_generate_liquid(waterlogged = false)
@@ -126,8 +124,8 @@ function block_generate_liquid(waterlogged = false)
 	else
 		vbuf = e_block_vbuffer.ANIMATED
 	
-	sheetwidth = block_sheet_ani_width
-	sheetheight = block_sheet_ani_height
+	sheetwidth = minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
+	sheetheight = minecraft_block_sheet_size[e_block_sheet.ANIMATED][Y]
 	slotstillposx = (slot mod sheetwidth) * block_size
 	slotstillposy = (slot div sheetwidth) * block_size
 	slotstillsizex = 1 / (sheetwidth * block_size)
@@ -146,8 +144,8 @@ function block_generate_liquid(waterlogged = false)
 	topangle = 0
 	
 	// Corners
-	var level = (waterlogged ? 0 : block_state_id_current);
-	var corner0z, corner1z, corner2z, corner3z, minz, averagez;
+	var level, corner0z, corner1z, corner2z, corner3z, minz, averagez;
+	level = (waterlogged ? 0 : block_state_id_current)
 	
 	// Wave
 	if (app.project_render_liquid_animation)
@@ -345,100 +343,152 @@ function block_generate_liquid(waterlogged = false)
 	// Texture coordinates (clockwise starting at top-left)
 	var sidetex0x, sidetex0y, sidetex1x, sidetex1y, sidetex2x, sidetex2y, sidetex3x, sidetex3y;
 	var cornerlefttex0x, cornerlefttex0y, cornerlefttex1x, cornerlefttex1y, cornerlefttex2x, cornerlefttex2y, cornerlefttex3x, cornerlefttex3y;
-	var cornerrighttex0x, cornerrighttex0y, cornerrighttex1x, cornerrighttex1y, cornerrighttex2x, cornerrighttex2y, cornerrighttex3x, cornerrighttex3y
+	var cornerrighttex0x, cornerrighttex0y, cornerrighttex1x, cornerrighttex1y, cornerrighttex2x, cornerrighttex2y, cornerrighttex3x, cornerrighttex3y;
 	var toptex0x, toptex0y, toptex1x, toptex1y, toptex2x, toptex2y, toptex3x, toptex3y;
 	var topmidtexx, topmidtexy;
 	
 	// Side
-	sidetex0x = 0; sidetex0y = block_size - minz
-	sidetex1x = block_size; sidetex1y = block_size - minz
-	sidetex2x = block_size; sidetex2y = block_size
-	sidetex3x = 0; sidetex3y = block_size
+	sidetex0x = 0
+	sidetex0y = block_size - minz
+	sidetex1x = block_size
+	sidetex1y = block_size - minz
+	sidetex2x = block_size
+	sidetex2y = block_size
+	sidetex3x = 0
+	sidetex3y = block_size
 	
 	// Corner (left side)
-	cornerlefttex0x = 0; cornerlefttex0y = block_size - corner0z
-	cornerlefttex1x = 0; cornerlefttex1y = block_size - corner1z
-	cornerlefttex2x = 0; cornerlefttex2y = block_size - corner2z
-	cornerlefttex3x = 0; cornerlefttex3y = block_size - corner3z
+	cornerlefttex0x = 0
+	cornerlefttex0y = block_size - corner0z
+	cornerlefttex1x = 0
+	cornerlefttex1y = block_size - corner1z
+	cornerlefttex2x = 0
+	cornerlefttex2y = block_size - corner2z
+	cornerlefttex3x = 0
+	cornerlefttex3y = block_size - corner3z
 	
 	// Corner (right side)
-	cornerrighttex0x = block_size; cornerrighttex0y = block_size - corner0z
-	cornerrighttex1x = block_size; cornerrighttex1y = block_size - corner1z
-	cornerrighttex2x = block_size; cornerrighttex2y = block_size - corner2z
-	cornerrighttex3x = block_size; cornerrighttex3y = block_size - corner3z
+	cornerrighttex0x = block_size
+	cornerrighttex0y = block_size - corner0z
+	cornerrighttex1x = block_size
+	cornerrighttex1y = block_size - corner1z
+	cornerrighttex2x = block_size
+	cornerrighttex2y = block_size - corner2z
+	cornerrighttex3x = block_size
+	cornerrighttex3y = block_size - corner3z
 	
 	// Top
 	if (topangle <> 0)
 	{
 		var p = (mod_fix(topangle, 90) / 90) * block_size;
 		
-		toptex0x = p; toptex0y = 0
-		toptex1x = block_size; toptex1y = p
-		toptex2x = block_size - p; toptex2y = block_size
-		toptex3x = 0; toptex3y = block_size - p
+		toptex0x = p
+		toptex0y = 0
+		toptex1x = block_size
+		toptex1y = p
+		toptex2x = block_size - p
+		toptex2y = block_size
+		toptex3x = 0
+		toptex3y = block_size - p
 		
 		repeat (topangle div 90)
 		{
 			var tmpx, tmpy;
-			tmpx = toptex0x; tmpy = toptex0y
-			toptex0x = toptex1x; toptex0y = toptex1y
-			toptex1x = toptex2x; toptex1y = toptex2y
-			toptex2x = toptex3x; toptex2y = toptex3y
-			toptex3x = tmpx; toptex3y = tmpy
+			tmpx = toptex0x
+			tmpy = toptex0y
+			toptex0x = toptex1x
+			toptex0y = toptex1y
+			toptex1x = toptex2x
+			toptex1y = toptex2y
+			toptex2x = toptex3x
+			toptex2y = toptex3y
+			toptex3x = tmpx
+			toptex3y = tmpy
 		}
 	}
 	else
 	{
-		toptex0x = 0; toptex0y = 0
-		toptex1x = block_size; toptex1y = 0
-		toptex2x = block_size; toptex2y = block_size
-		toptex3x = 0; toptex3y = block_size
+		toptex0x = 0
+		toptex0y = 0
+		toptex1x = block_size
+		toptex1y = 0
+		toptex2x = block_size
+		toptex2y = block_size
+		toptex3x = 0
+		toptex3y = block_size
 	}
 	
-	topmidtexx = block_size / 2; topmidtexy = block_size / 2
+	topmidtexx = block_half_size
+	topmidtexy = block_half_size
 	
 	// Transform to sheet
-	sidetex0x = (sidetex0x + slotflowposx) * slotflowsizex; sidetex0y = (sidetex0y + slotflowposy) * slotflowsizey
-	sidetex1x = (sidetex1x + slotflowposx) * slotflowsizex; sidetex1y = (sidetex1y + slotflowposy) * slotflowsizey
-	sidetex2x = (sidetex2x + slotflowposx) * slotflowsizex; sidetex2y = (sidetex2y + slotflowposy) * slotflowsizey
-	sidetex3x = (sidetex3x + slotflowposx) * slotflowsizex; sidetex3y = (sidetex3y + slotflowposy) * slotflowsizey
+	sidetex0x = (sidetex0x + slotflowposx) * slotflowsizex
+	sidetex0y = (sidetex0y + slotflowposy) * slotflowsizey
+	sidetex1x = (sidetex1x + slotflowposx) * slotflowsizex
+	sidetex1y = (sidetex1y + slotflowposy) * slotflowsizey
+	sidetex2x = (sidetex2x + slotflowposx) * slotflowsizex
+	sidetex2y = (sidetex2y + slotflowposy) * slotflowsizey
+	sidetex3x = (sidetex3x + slotflowposx) * slotflowsizex
+	sidetex3y = (sidetex3y + slotflowposy) * slotflowsizey
 	
-	cornerlefttex0x = (cornerlefttex0x + slotflowposx) * slotflowsizex; cornerlefttex0y = (cornerlefttex0y + slotflowposy) * slotflowsizey
-	cornerlefttex1x = (cornerlefttex1x + slotflowposx) * slotflowsizex; cornerlefttex1y = (cornerlefttex1y + slotflowposy) * slotflowsizey
-	cornerlefttex2x = (cornerlefttex2x + slotflowposx) * slotflowsizex; cornerlefttex2y = (cornerlefttex2y + slotflowposy) * slotflowsizey
-	cornerlefttex3x = (cornerlefttex3x + slotflowposx) * slotflowsizex; cornerlefttex3y = (cornerlefttex3y + slotflowposy) * slotflowsizey
+	cornerlefttex0x = (cornerlefttex0x + slotflowposx) * slotflowsizex
+	cornerlefttex0y = (cornerlefttex0y + slotflowposy) * slotflowsizey
+	cornerlefttex1x = (cornerlefttex1x + slotflowposx) * slotflowsizex
+	cornerlefttex1y = (cornerlefttex1y + slotflowposy) * slotflowsizey
+	cornerlefttex2x = (cornerlefttex2x + slotflowposx) * slotflowsizex
+	cornerlefttex2y = (cornerlefttex2y + slotflowposy) * slotflowsizey
+	cornerlefttex3x = (cornerlefttex3x + slotflowposx) * slotflowsizex
+	cornerlefttex3y = (cornerlefttex3y + slotflowposy) * slotflowsizey
 	
-	cornerrighttex0x = (cornerrighttex0x + slotflowposx) * slotflowsizex; cornerrighttex0y = (cornerrighttex0y + slotflowposy) * slotflowsizey
-	cornerrighttex1x = (cornerrighttex1x + slotflowposx) * slotflowsizex; cornerrighttex1y = (cornerrighttex1y + slotflowposy) * slotflowsizey
-	cornerrighttex2x = (cornerrighttex2x + slotflowposx) * slotflowsizex; cornerrighttex2y = (cornerrighttex2y + slotflowposy) * slotflowsizey
-	cornerrighttex3x = (cornerrighttex3x + slotflowposx) * slotflowsizex; cornerrighttex3y = (cornerrighttex3y + slotflowposy) * slotflowsizey
+	cornerrighttex0x = (cornerrighttex0x + slotflowposx) * slotflowsizex
+	cornerrighttex0y = (cornerrighttex0y + slotflowposy) * slotflowsizey
+	cornerrighttex1x = (cornerrighttex1x + slotflowposx) * slotflowsizex
+	cornerrighttex1y = (cornerrighttex1y + slotflowposy) * slotflowsizey
+	cornerrighttex2x = (cornerrighttex2x + slotflowposx) * slotflowsizex
+	cornerrighttex2y = (cornerrighttex2y + slotflowposy) * slotflowsizey
+	cornerrighttex3x = (cornerrighttex3x + slotflowposx) * slotflowsizex
+	cornerrighttex3y = (cornerrighttex3y + slotflowposy) * slotflowsizey
 	
 	if (topflow)
 	{
-		toptex0x = (toptex0x + slotflowposx) * slotflowsizex; toptex0y = (toptex0y + slotflowposy) * slotflowsizey
-		toptex1x = (toptex1x + slotflowposx) * slotflowsizex; toptex1y = (toptex1y + slotflowposy) * slotflowsizey
-		toptex2x = (toptex2x + slotflowposx) * slotflowsizex; toptex2y = (toptex2y + slotflowposy) * slotflowsizey
-		toptex3x = (toptex3x + slotflowposx) * slotflowsizex; toptex3y = (toptex3y + slotflowposy) * slotflowsizey
-		topmidtexx = (topmidtexx + slotflowposx) * slotflowsizex; topmidtexy = (topmidtexy + slotflowposy) * slotflowsizey
+		toptex0x = (toptex0x + slotflowposx) * slotflowsizex
+		toptex0y = (toptex0y + slotflowposy) * slotflowsizey
+		toptex1x = (toptex1x + slotflowposx) * slotflowsizex
+		toptex1y = (toptex1y + slotflowposy) * slotflowsizey
+		toptex2x = (toptex2x + slotflowposx) * slotflowsizex
+		toptex2y = (toptex2y + slotflowposy) * slotflowsizey
+		toptex3x = (toptex3x + slotflowposx) * slotflowsizex
+		toptex3y = (toptex3y + slotflowposy) * slotflowsizey
+		topmidtexx = (topmidtexx + slotflowposx) * slotflowsizex
+		topmidtexy = (topmidtexy + slotflowposy) * slotflowsizey
 	}
 	else
 	{
-		toptex0x = (toptex0x + slotstillposx) * slotstillsizex; toptex0y = (toptex0y + slotstillposy) * slotstillsizey
-		toptex1x = (toptex1x + slotstillposx) * slotstillsizex; toptex1y = (toptex1y + slotstillposy) * slotstillsizey
-		toptex2x = (toptex2x + slotstillposx) * slotstillsizex; toptex2y = (toptex2y + slotstillposy) * slotstillsizey
-		toptex3x = (toptex3x + slotstillposx) * slotstillsizex; toptex3y = (toptex3y + slotstillposy) * slotstillsizey
-		topmidtexx = (topmidtexx + slotstillposx) * slotstillsizex; topmidtexy = (topmidtexy + slotstillposy) * slotstillsizey
+		toptex0x = (toptex0x + slotstillposx) * slotstillsizex
+		toptex0y = (toptex0y + slotstillposy) * slotstillsizey
+		toptex1x = (toptex1x + slotstillposx) * slotstillsizex
+		toptex1y = (toptex1y + slotstillposy) * slotstillsizey
+		toptex2x = (toptex2x + slotstillposx) * slotstillsizex
+		toptex2y = (toptex2y + slotstillposy) * slotstillsizey
+		toptex3x = (toptex3x + slotstillposx) * slotstillsizex
+		toptex3y = (toptex3y + slotstillposy) * slotstillsizey
+		topmidtexx = (topmidtexx + slotstillposx) * slotstillsizex
+		topmidtexy = (topmidtexy + slotstillposy) * slotstillsizey
 	}
 	
 	// Add triangles
 	var x1, x2, y1, y2, z1, z2;
 	var midx, midy, midz;
 	
-	x1 = block_pos_x;	  y1 = block_pos_y;		z1 = floor(block_pos_z);
-	x2 = x1 + block_size; y2 = y1 + block_size; z2 = z1 + minz;
+	x1 = block_pos_x
+	y1 = block_pos_y
+	z1 = floor(block_pos_z)
+	x2 = x1 + block_size
+	y2 = y1 + block_size
+	z2 = z1 + minz
 	
-	midx = x1 + block_size / 2
-	midy = y1 + block_size / 2
+	midx = x1 + block_half_size
+	midy = y1 + block_half_size
 	midz = z1 + averagez
 	
 	// Move waterlogged sides in to prevent Z fighting a little

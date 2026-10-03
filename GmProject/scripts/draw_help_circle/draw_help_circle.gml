@@ -1,4 +1,3 @@
-/// draw_help_circle(text, x, y, disabled)
 /// @arg text
 /// @arg x
 /// @arg y

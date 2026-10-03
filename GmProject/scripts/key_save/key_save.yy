@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"key_save",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"key_save",
+  "parent":{
+    "name":"Trial",
+    "path":"folders/Scripts/App/Trial.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

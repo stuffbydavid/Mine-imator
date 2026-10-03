@@ -1,9 +1,7 @@
-/// minecraft_update_patterns()
-
 function minecraft_update_patterns()
 {
 	// Update pattern designs for templates
-	if (pattern_update != null && window_busy != "popup" + popup_loading.name)
+	if (pattern_update != null && window_busy != "popup/" + popup_loading.name)
 	{
 		var obj = pattern_update;
 		

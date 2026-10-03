@@ -1,5 +1,3 @@
-/// model_shape_generate_block(bend)
-/// @arg bend
 /// @desc Generates a block shape transformed by a bend vector.
 
 function model_shape_generate_block(bend)
@@ -43,7 +41,7 @@ function model_shape_generate_block(bend)
 	texsize = vec3(texsize[X] / texture_size[X], texsize[Y] / texture_size[Y], texsize[Z] / texture_size[Y])
 	texsizefix = vec3(texsizefix[X] / texture_size[X], texsizefix[Y] / texture_size[Y], texsizefix[Z] / texture_size[Y])
 	
-	texuv = vec2_div(floor_box_uvs ? [floor(uv[X]), floor(uv[Y])] : uv, texture_size)
+	texuv = vec2_div(floor_box_uvs ? [ floor(uv[X]), floor(uv[Y]) ] : uv, texture_size)
 	
 	// Block face texture mapping
 	var texeast1, texeast2, texeast3, texeast4;
@@ -118,7 +116,7 @@ function model_shape_generate_block(bend)
 	if ((bend_size != null && bend_size >= 1) && scale[segaxis] > .5)
 		detail /= scale[segaxis]
 	
-	bendsegsize = bendsize / detail;
+	bendsegsize = bendsize / detail
 	invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 	
 	// Find start points/normals
@@ -367,7 +365,12 @@ function model_shape_generate_block(bend)
 				bendvec = vec3_mul(bend, segp)
 			}
 			
-			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef)))
+			var matsca = vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef));
+			// Don't scale shapes outside bend deformation
+			//if (segpos > size[segaxis] - 0.0001)
+			//	matsca = vec3_add(vec3(1), bendscale)
+			
+			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), matsca)
 		}
 		else // Apply rotation only
 			mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)

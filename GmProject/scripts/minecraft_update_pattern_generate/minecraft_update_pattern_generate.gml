@@ -1,27 +1,27 @@
-/// minecraft_update_pattern_generate(type, color, patterns, colors, [res])
+/// @desc Generates and returns a pattern skin.
 /// @arg type
 /// @arg color
 /// @arg patterns
 /// @arg colors
-/// @arg [res]
-/// @desc Generates and returns a pattern skin
+/// @arg [resource]
 
 function minecraft_update_pattern_generate(type, color, patternlist, colorlist, res = null)
 {
 	var skinratio, maskarray, patternskin;
+	res = res_eval(res)
 	if (res = null || !res_is_ready(res))
 		res = mc_res
 	
 	var patternbase, patterndir;
-	patternbase = (type = "banner" ? "entity/banner_base" : "entity/shield_base")
+	patternbase = (type = "banner" ? "entity/banner/banner_base" : "entity/shield/shield_base")
 	patterndir = (type = "banner" ? "entity/banner/" : "entity/shield/")
 	
 	skinratio = 1
-	maskarray = array()
+	maskarray = []
 	
 	// Don't bother generating patterns with colors
 	if (res.type = e_res_type.SKIN)
-		return sprite_duplicate(res.model_texture);
+		return sprite_duplicate(res.model_texture)
 	
 	draw_set_color(c_white)
 	draw_set_alpha(1)

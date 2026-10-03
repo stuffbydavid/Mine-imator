@@ -1,7 +1,3 @@
-/// tl_value_set_start(script, combine)
-/// @arg script
-/// @arg combine
-
 function tl_value_set_start(script, combine)
 {
 	with (app)
@@ -20,7 +16,7 @@ function tl_value_set_start(script, combine)
 	// Add new keyframes
 	with (obj_timeline)
 	{
-		if (!selected || keyframe_select != null)
+		if (!selected || keyframe_select != null || !animated)
 			continue
 		
 		// If marker is on a keyframe, edit that, if not, add new keyframe
@@ -37,10 +33,14 @@ function tl_value_set_start(script, combine)
 	
 	// Register history
 	history_pop()
-	if (combine && history_amount > 0 &&
+
+	if (combine && !history_separate && history_amount > 0 &&
 		history[0].par_script = script &&
-		history[0].save_axis_edit = axis_edit)
+		history[0].save_axis_edit = axis_edit &&
+		history[0].save_camera_effect_type_edit = camera_effect_type_edit)
+	{
 		history_data = history[0]
+	}
 	else
 	{
 		history_push()
@@ -49,8 +49,19 @@ function tl_value_set_start(script, combine)
 		history_data.par_script = script
 		
 		history_data.par_set_amount = 0
+		history_data.tl_set_amount = 0
 		history_data.kf_add_amount = 0
 		history_data.kf_set_amount = 0
+
+		with (obj_timeline)
+		{
+			if (!selected)
+				continue
+
+			history_data.tl_set_save_id[history_data.tl_set_amount] = save_id
+			history_data.tl_set_animated[history_data.tl_set_amount] = animated
+			history_data.tl_set_amount++
+		}
 		
 		with (obj_keyframe)
 		{
@@ -66,16 +77,18 @@ function tl_value_set_start(script, combine)
 			{
 				history_data.kf_set_tl_save_id[history_data.kf_set_amount] = save_id_get(timeline)
 				history_data.kf_set_index[history_data.kf_set_amount] = ds_list_find_index(timeline.keyframe_list, id)
+				history_data.kf_set_created[history_data.kf_set_amount] = created
 				history_data.kf_set_amount++
 			}
 		}
 		
 		history[0] = history_data
 		
-		log("Action", script_get_name(script))
+		//log("Action", script_get_name(script))
 	}
 	
 	history_data.par_set_n = 0
-	render_samples = -1
 	history_resource_update = true
+
+	render_samples = -1
 }

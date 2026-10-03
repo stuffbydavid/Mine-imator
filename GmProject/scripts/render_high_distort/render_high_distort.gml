@@ -1,5 +1,4 @@
-/// render_high_distort(basesurf)
-/// @arg basesurf
+/// @arg basesurface
 
 function render_high_distort(prevsurf)
 {

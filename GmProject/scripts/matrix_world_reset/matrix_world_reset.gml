@@ -1,5 +1,3 @@
-/// matrix_world_reset()
-
 function matrix_world_reset()
 {
 	gml_pragma("forceinline")

@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec4_mul_matrix(VecType, MatrixType)
-/// vec4_mul_matrix(vector, matrix)
 /// @arg vector
 /// @arg matrix
 

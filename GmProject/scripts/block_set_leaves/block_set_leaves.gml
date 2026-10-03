@@ -1,4 +1,3 @@
-/// block_set_leaves()
 /// @desc Returns the opaque or transparent model.
 
 function block_set_leaves()

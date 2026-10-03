@@ -1,12 +1,13 @@
-/// tab_event_create()
-
 function tab_event_create()
 {
 	script = null
 	panel = null
 	panel_last = null
+	
 	show = false
+	raised = false
 	closeable = true
+	
 	scroll = null
 	glow = 0
 	category_amount = 0

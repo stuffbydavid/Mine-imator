@@ -1,4 +1,3 @@
-/// render_world_model_part(part, resource, texturenamemap, shapevbuffermap, colormap, shapehidelist, shapetexnamemap, shapetexnamemap, tlobject)
 /// @arg part
 /// @arg resource
 /// @arg texturenamemap
@@ -6,17 +5,19 @@
 /// @arg colornamemap
 /// @arg shapehidelist
 /// @arg shapetexnamemap
-/// @arg tlobject
+/// @arg [timeline]
 
-function render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, tlobject)
+function render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, tl = null)
 {
 	if (part.shape_list = null)
 		return 0
+
+	res = res_eval(res)
 	
 	var parttexname, mat;
-	parttexname = (tlobject ? "" : string(model_part_get_texture_name(part, texnamemap)))
+	parttexname = (tl ? "" : string(model_part_get_texture_name(part, texnamemap)))
 	
-	if (!tlobject)
+	if (!tl)
 		mat = matrix_get(matrix_world)
 	
 	var shape, texobj, blendcolor, alpha;
@@ -45,22 +46,26 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Does the part need to move a certain amount for this shape to render?
 		if (shape.move_required)
 		{
-			if (!tlobject)
+			if (!tl)
 				continue
 			
-			if (!(abs(tlobject.value[e_value.POS_X]) > shape.move_required_array[X] &&
-			abs(tlobject.value[e_value.POS_Y]) > shape.move_required_array[Y] &&
-			abs(tlobject.value[e_value.POS_Z]) > shape.move_required_array[Z]))
+			if (!(abs(tl.value[e_value.POS_X]) > shape.move_required_array[X] &&
+			abs(tl.value[e_value.POS_Y]) > shape.move_required_array[Y] &&
+			abs(tl.value[e_value.POS_Z]) > shape.move_required_array[Z]))
 				continue
 		}
 		
 		// Set shape texture
-		if (tlobject)
+		if (tl)
 		{
 			if (s > array_length(model_part_shape_tex) - 1)
 				continue
 			
 			render_set_texture(model_part_shape_tex[s])
+			
+			render_set_uniform_vec2("uTextureOffset",
+									(app.env_time / 60) * shape.texture_scroll_speed * sin(degtorad(shape.texture_scroll_direction)),
+									(app.env_time / 60) * shape.texture_scroll_speed * cos(degtorad(shape.texture_scroll_direction)))
 			
 			render_set_uniform_int("uMaterialFormat", model_part_shape_material_res[s])
 			
@@ -145,32 +150,32 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				render_set_texture(select.pattern_skin)
 		}
 		
-		if (tlobject != null)
+		if (tl != null)
 		{
 			// Use skin if provided to timeline, else use skin in template
-			if (sprite_exists(tlobject.pattern_skin))
+			if (sprite_exists(tl.pattern_skin))
 			{
 				// Only use pattern if timeline is using its template's resource
 				var tempres = null;
 				
-				with (tlobject.temp)
+				with (tl.temp)
 					tempres = temp_get_model_texobj(null)
 				
 				if (res = tempres)
-					if (sprite_exists(tlobject.pattern_skin))
-						render_set_texture(tlobject.pattern_skin)
+					if (sprite_exists(tl.pattern_skin))
+						render_set_texture(tl.pattern_skin)
 			}
-			else if (tlobject.temp.pattern_type != "")
+			else if (tl.temp.pattern_type != "")
 			{
 				// Only use pattern if timeline is using its template's resource
 				var tempres = null;
 				
-				with (tlobject.temp)
+				with (tl.temp)
 					tempres = temp_get_model_texobj(null)
 				
 				if (res = tempres)
-					if (sprite_exists(tlobject.temp.pattern_skin))
-						render_set_texture(tlobject.temp.pattern_skin)
+					if (sprite_exists(tl.temp.pattern_skin))
+						render_set_texture(tl.temp.pattern_skin)
 			}
 		}
 		
@@ -181,55 +186,55 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Preview
 		if (object_index = obj_preview && select.object_index != obj_resource && select.model_name = "armor")
 		{
-			if (shape.description = "helmet")
+			if (shape.description = "helmet" || shape.description = "helmet_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[0]))
 					render_set_texture(select.armor_skin_array[0])
 			}
 			
-			if (shape.description = "chestplate")
+			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[1]))
 					render_set_texture(select.armor_skin_array[1])
 			}
 			
-			if (shape.description = "leggings")
+			if (shape.description = "leggings" || shape.description = "leggings_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[2]))
 					render_set_texture(select.armor_skin_array[2])
 			}
 			
-			if (shape.description = "boots")
+			if (shape.description = "boots" || shape.description = "boots_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[3]))
 					render_set_texture(select.armor_skin_array[3])
 			}
 		}
 		
-		if (tlobject != null && tlobject.temp.model_name = "armor")
+		if (tl != null && tl.temp.model_name = "armor")
 		{
-			if (shape.description = "helmet")
+			if (shape.description = "helmet" || shape.description = "helmet_baby")
 			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[0]))
-					render_set_texture(tlobject.temp.armor_skin_array[0])
+				if (sprite_exists(tl.temp.armor_skin_array[0]))
+					render_set_texture(tl.temp.armor_skin_array[0])
 			}
 			
-			if (shape.description = "chestplate")
+			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
 			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[1]))
-					render_set_texture(tlobject.temp.armor_skin_array[1])
+				if (sprite_exists(tl.temp.armor_skin_array[1]))
+					render_set_texture(tl.temp.armor_skin_array[1])
 			}
 			
-			if (shape.description = "leggings")
+			if (shape.description = "leggings" || shape.description = "leggings_baby")
 			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[2]))
-					render_set_texture(tlobject.temp.armor_skin_array[2])
+				if (sprite_exists(tl.temp.armor_skin_array[2]))
+					render_set_texture(tl.temp.armor_skin_array[2])
 			}
 			
-			if (shape.description = "boots")
+			if (shape.description = "boots" || shape.description = "boots_baby")
 			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[3]))
-					render_set_texture(tlobject.temp.armor_skin_array[3])
+				if (sprite_exists(tl.temp.armor_skin_array[3]))
+					render_set_texture(tl.temp.armor_skin_array[3])
 			}
 		}
 		
@@ -251,8 +256,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			if (object_index = obj_preview && select.model_use_blend_color)
 				blendcolor = color_multiply(blendcolor, select.model_blend_color)
 			
-			if (tlobject != null && tlobject.temp.model_use_blend_color)
-				blendcolor = color_multiply(blendcolor, tlobject.temp.model_blend_color)
+			if (tl != null && tl.temp.model_use_blend_color)
+				blendcolor = color_multiply(blendcolor, tl.temp.model_blend_color)
 		}
 		
 		// Blend shape color/alpha
@@ -278,7 +283,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Mix color
 		if (shape.color_mix_percent > 0)
 		{
-			if (tlobject != null)
+			if (tl != null)
 				render_set_uniform_color("uMixColor", merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
 			else
 				render_set_uniform_color("uMixColor", shape.color_mix, shape.color_mix_percent)
@@ -286,7 +291,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		
 		// Shape matrix
 		var rendermatrix;
-		if (tlobject)
+		if (tl)
 			rendermatrix = matrix_multiply(shape.matrix, matrix_render)
 		else
 			rendermatrix = matrix_multiply(shape.matrix, mat)
@@ -296,7 +301,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		{
 			var d, t, offz;
 			d = 60 * 3
-			t = app.background_time mod d * 2
+			t = app.env_time mod d * 2
 			if (t < d)
 				offz = ease("easeinoutquad", t / d) * 2 - 1
 			else
@@ -321,6 +326,6 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			vbuffer_render_matrix(shapevbuffermap[?shape], rendermatrix)
 	}
 	
-	if (!tlobject)
+	if (!tl)
 		matrix_set(matrix_world, mat)
 }

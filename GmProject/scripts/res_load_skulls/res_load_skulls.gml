@@ -1,13 +1,23 @@
 function res_load_skulls()
 {
 	// Finished
-	if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !mc_builder.block_tl_add)
+	if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !mc_builder.block_tl_add || scenery_instant)
 	{
-		with (app)
+		if (scenery_instant)
 		{
-			popup_loading.text = text_get("loadsceneryblocks")
-			popup_loading.progress = 2 / 10
+			var key = ds_map_find_first(mc_builder.block_skull_texture_map);
+			while (!is_undefined(key))
+			{
+				mc_builder.block_skull_res_map[?key] = null
+				key = ds_map_find_next(mc_builder.block_skull_texture_map, key)
+			}
 		}
+		if (!scenery_instant)
+			with (app)
+			{
+				popup_loading.text = text_get("load_scenery/blocks")
+				popup_loading.progress = 0.2
+			}
 				
 		load_stage = "blocks"
 				
@@ -17,7 +27,7 @@ function res_load_skulls()
 		return 0
 	}
 			
-	app.popup_loading.text = text_get("loadscenerydownload", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
+	app.popup_loading.text = text_get("load_scenery/download", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
 	
 	// Continue through texture list
 	with (mc_builder)

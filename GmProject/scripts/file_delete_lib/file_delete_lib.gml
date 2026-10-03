@@ -1,4 +1,3 @@
-/// file_delete_lib(filename)
 /// @arg filename
 
 function file_delete_lib(fn)

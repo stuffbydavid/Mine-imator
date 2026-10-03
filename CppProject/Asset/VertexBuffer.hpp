@@ -48,6 +48,7 @@ namespace CppProject
 		IntType numIndices = 0;
 		QVector<Mesh<>*> meshes;
 		BoolType saveData = false; // Whether to discard data on CPU-side if it can't be used for batches
+		bool valid = true;
 
 		struct ThreadData
 		{

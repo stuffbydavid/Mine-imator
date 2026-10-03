@@ -1,12 +1,12 @@
-/// recent_update()
-/// @desc Updates the recent model display list
+/// @desc Updates the recent project display list.
 
 function recent_update()
 {
-	var pinnedlist = ds_list_create();
-	var unpinnedlist = ds_list_create();
+	var pinnedlist, unpinnedlist, itemslist;
+	pinnedlist = ds_list_create()
+	unpinnedlist = ds_list_create()
+	itemslist = ds_list_create()
 	
-	var itemslist = ds_list_create();
 	ds_list_copy(itemslist, recent_list)
 	
 	// Separate recent items into separate lists
@@ -26,6 +26,7 @@ function recent_update()
 		else
 			ds_list_add(unpinnedlist, item)
 	}
+	
 	ds_list_clear(recent_list_display)
 	
 	// Sort lists separately
@@ -34,12 +35,19 @@ function recent_update()
 	
 	// Put them back together
 	for (var i = 0; i < ds_list_size(pinnedlist); i++)
-		ds_list_add(recent_list_display, pinnedlist[|i])
+	{
+		if (recent_search = "" || string_contains(string_upper(filename_name(pinnedlist[|i].name)), string_upper(recent_search)))
+			ds_list_add(recent_list_display, pinnedlist[|i])
+	}
 	
 	for (var i = 0; i < ds_list_size(unpinnedlist); i++)
-		ds_list_add(recent_list_display, unpinnedlist[|i])
+	{
+		if (recent_search = "" || string_contains(string_upper(filename_name(unpinnedlist[|i].name)), string_upper(recent_search)))
+			ds_list_add(recent_list_display, unpinnedlist[|i])
+	}
 	
-	recent_list_amount = ds_list_size(recent_list_display)
+	recent_list_amount_display = ds_list_size(recent_list_display)
+	recent_list_amount = ds_list_size(unpinnedlist) + ds_list_size(pinnedlist)
 	
 	// Cleanup
 	ds_list_destroy(pinnedlist)

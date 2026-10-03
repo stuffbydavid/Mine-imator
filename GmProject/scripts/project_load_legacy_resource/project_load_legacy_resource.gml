@@ -1,5 +1,3 @@
-/// project_load_legacy_resource()
-
 function project_load_legacy_resource()
 {
 	with (new_obj(obj_resource))
@@ -8,7 +6,7 @@ function project_load_legacy_resource()
 		load_id = buffer_read_int()
 		save_id_map[?load_id] = load_id
 		
-		var typename = buffer_read_string_int()
+		var typename = buffer_read_string_int();
 		
 		if (typename = "item")
 			typename = "itemsheet"
@@ -19,8 +17,11 @@ function project_load_legacy_resource()
 		if (typename = "particles")
 			typename = "particlesheet"
 		
-		if (typename = "schematic")
-			typename = "scenery"
+		if (typename = "scenery")
+			typename = "schematic"
+		
+		if (ds_map_exists(legacy_type_name_map, typename))
+			typename = legacy_type_name_map[?typename]
 		
 		type = ds_list_find_index(res_type_name_list, typename)
 		
@@ -50,6 +51,6 @@ function project_load_legacy_resource()
 		
 		scenery_tl_add = false
 		
-		sortlist_add(app.res_list, id)
+		res_add_lists()
 	}
 }

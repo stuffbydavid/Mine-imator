@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "surface_get_alpha_array",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Surface",
-    "path": "folders/Scripts/Utility/Surface.yy",
+  "$GMScript":"v1",
+  "%Name":"surface_get_alpha_array",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"surface_get_alpha_array",
+  "parent":{
+    "name":"Surface",
+    "path":"folders/Scripts/Utility/Surface.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

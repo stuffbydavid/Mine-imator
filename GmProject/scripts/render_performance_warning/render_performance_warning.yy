@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_performance_warning",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_performance_warning",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,3 @@
-/// new_obj(object)
 /// @arg object
 
 function new_obj(obj)

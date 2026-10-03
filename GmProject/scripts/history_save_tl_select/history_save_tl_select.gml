@@ -1,4 +1,3 @@
-/// history_save_tl_select()
 /// @desc Saves the selected timelines in the history object.
 
 function history_save_tl_select()

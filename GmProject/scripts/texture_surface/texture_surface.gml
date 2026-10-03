@@ -1,4 +1,3 @@
-/// texture_surface(surface)
 /// @arg surface
 
 function texture_surface(surf)

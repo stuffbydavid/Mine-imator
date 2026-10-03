@@ -1,23 +1,22 @@
-/// block_load_state_file(filename, block, state)
+/// @desc Loads the different block variants from the state file.
 /// @arg filename
 /// @arg block
 /// @arg state
-/// @desc Loads the different block variants from the state file.
 
-function block_load_state_file(fname, block, state)
+function block_load_state_file(fn, block, state)
 {
-	if (!file_exists_lib(fname))
+	if (!file_exists_lib(fn))
 	{
-		log("Could not find state file", filename_name(fname))
+		log("Could not find state file", filename_name(fn))
 		return null
 	}
 	
 	var jsontypemap, map;
 	jsontypemap = ds_int_map_create()
-	map = json_load(fname, jsontypemap);
+	map = json_load(fn, jsontypemap)
 	if (!ds_map_valid(map))
 	{
-		log("Could not parse state file", filename_name(fname))
+		log("Could not parse state file", filename_name(fn))
 		ds_map_destroy(jsontypemap)
 		return null
 	}
@@ -28,57 +27,76 @@ function block_load_state_file(fname, block, state)
 	
 	if (!ds_map_valid(variantsmap) && !ds_list_valid(multipartlist))
 	{
-		log("No models in the states file", fname)
+		log("No models in the states file", fn)
 		ds_map_destroy(map)
 		return null
 	}
 	
 	with (new_obj(obj_block_load_state_file))
 	{
-		name = filename_name(fname)
+		name = filename_name(fn)
 		state_id_map = ds_map_create()
 		state_default_variant_id = 0
 		
-		model_preview_color_yp = -1
-		model_preview_alpha_yp = -1
 		model_preview_color_zp = -1
 		model_preview_alpha_zp = -1
+		model_preview_color_yp = -1
+		model_preview_alpha_yp = -1
 		
 		// Read colors from assets for block JSON (used to modify undesired block colors/alpha)
 		if (ds_map_valid(mc_assets.block_texture_preview_map[?name]))
 		{
 			var blockmap = mc_assets.block_texture_preview_map[?name];
 			
-			if (blockmap[?"colorZ"] != undefined)
-			{
-				if (is_string(blockmap[?"colorZ"]))
-					model_preview_color_yp = hex_to_color(blockmap[?"colorZ"])
-				else
-				{
-					model_preview_color_yp = null
-					model_preview_alpha_yp = null
-				}
-			}
-			
-			if (model_preview_alpha_yp != null && blockmap[?"alphaZ"] != undefined)
-				model_preview_alpha_yp = blockmap[?"alphaZ"]
-			
-			if (blockmap[?"colorY"] != undefined)
+			// Top color
+			if (!is_undefined(blockmap[?"colorY"]))
 			{
 				if (is_string(blockmap[?"colorY"]))
 					model_preview_color_zp = hex_to_color(blockmap[?"colorY"])
 				else
-				{
 					model_preview_color_zp = null
-					model_preview_alpha_zp = null
-				}
 			}
 			
-			if (model_preview_alpha_zp != null && blockmap[?"alphaY"] != undefined)
+			// Side color
+			if (!is_undefined(blockmap[?"colorZ"]))
+			{
+				if (is_string(blockmap[?"colorZ"]))
+					model_preview_color_yp = hex_to_color(blockmap[?"colorZ"])
+				else
+					model_preview_color_yp = null
+			}
+			
+			// If one side has defined color and the other doesn't, both sides use the one color
+			if (model_preview_color_zp < 0 && model_preview_color_yp != -1)
+				model_preview_color_zp = model_preview_color_yp
+			else if (model_preview_color_yp < 0 && model_preview_color_zp != -1)
+				model_preview_color_yp = model_preview_color_zp
+			/*
+			else if (model_preview_color_zp = null && model_preview_color_yp = null)
+			{
+				model_preview_color_zp = hex_to_color("000000")
+				model_preview_color_yp = hex_to_color("000000")
+				model_preview_alpha_zp = 0
+				model_preview_alpha_yp = 0
+			}*/
+			
+			if (!is_undefined(blockmap[?"alphaY"]) && is_real(blockmap[?"alphaY"]))
 				model_preview_alpha_zp = blockmap[?"alphaY"]
+			if (!is_undefined(blockmap[?"alphaZ"]) && is_real(blockmap[?"alphaZ"]))
+				model_preview_alpha_yp = blockmap[?"alphaZ"]
+			
+			if (model_preview_color_zp >= 0 && model_preview_color_yp >= 0 && model_preview_alpha_zp < 0 && model_preview_alpha_yp < 0)
+			{
+				model_preview_alpha_zp = 1
+				model_preview_alpha_yp = 1
+			}
+			else if (model_preview_alpha_zp < 0 && model_preview_alpha_yp >= 0)
+				model_preview_alpha_zp = model_preview_alpha_yp
+			else if (model_preview_alpha_yp < 0 && model_preview_alpha_zp >= 0)
+				model_preview_alpha_yp = model_preview_alpha_zp
 		}
 		
-		var first_state = true;
+		var firststate = true;
 		
 		// Load variants
 		if (ds_map_valid(variantsmap))
@@ -101,13 +119,13 @@ function block_load_state_file(fname, block, state)
 						state_vars_add(vars, state)
 						other.state_id_map[?block_get_state_id(block, vars)] = id
 						
-						if (first_state)
+						if (firststate)
 							other.state_default_variant_id = block_get_state_id(block, vars)
 					}
 					else
 						other.state_id_map[?0] = id
 					
-					first_state = false
+					firststate = false
 					
 					// Load model(s)
 					model_amount = 0
@@ -155,7 +173,7 @@ function block_load_state_file(fname, block, state)
 							{
 								var curcondmap, condvars, cond;
 								curcondmap = orlist[|oc]
-								condvars = array()
+								condvars = []
 								cond = ds_map_find_first(curcondmap)
 								
 								while (!is_undefined(cond))
@@ -165,7 +183,7 @@ function block_load_state_file(fname, block, state)
 										val = (val ? "true" : "false")
 									
 									if (string_contains(val, "|")) // OR
-										state_vars_set_value(condvars, cond, string_split(val, "|"))
+										state_vars_set_value(condvars, cond, string_split_escaped(val, "|"))
 									else
 										state_vars_set_value(condvars, cond, val)
 									
@@ -186,7 +204,7 @@ function block_load_state_file(fname, block, state)
 							{
 								var curcondmap, condvars, cond;
 								curcondmap = andlist[|oc]
-								condvars = array()
+								condvars = []
 								cond = ds_map_find_first(curcondmap)
 								
 								while (!is_undefined(cond))
@@ -196,7 +214,7 @@ function block_load_state_file(fname, block, state)
 										val = (val ? "true" : "false")
 									
 									if (string_contains(val, "|")) // OR
-										state_vars_set_value(condvars, cond, string_split(val, "|"))
+										state_vars_set_value(condvars, cond, string_split_escaped(val, "|"))
 									else
 										state_vars_set_value(condvars, cond, val)
 									
@@ -228,7 +246,7 @@ function block_load_state_file(fname, block, state)
 						else
 						{
 							var condvars, cond;
-							condvars = array()
+							condvars = []
 							cond = ds_map_find_first(whenmap)
 							
 							while (!is_undefined(cond))
@@ -238,7 +256,7 @@ function block_load_state_file(fname, block, state)
 									val = (val ? "true" : "false")
 								
 								if (string_contains(val, "|")) // OR
-									state_vars_set_value(condvars, cond, string_split(val, "|"))
+									state_vars_set_value(condvars, cond, string_split_escaped(val, "|"))
 								else
 									state_vars_set_value(condvars, cond, val)
 								
@@ -252,10 +270,10 @@ function block_load_state_file(fname, block, state)
 								{
 									other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
 									
-									if (first_state)
+									if (firststate)
 									{
 										other.state_default_variant_id = i
-										first_state = false
+										firststate = false
 									}
 								}
 							}
@@ -268,10 +286,10 @@ function block_load_state_file(fname, block, state)
 						{
 							other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
 							
-							if (first_state)
+							if (firststate)
 							{
 								other.state_default_variant_id = i
-								first_state = false
+								firststate = false
 							}
 						}
 					}
@@ -297,7 +315,7 @@ function block_load_state_file(fname, block, state)
 			}
 		}
 		
-		load_assets_state_file_map[?filename_name(fname)] = id
+		load_assets_state_file_map[?filename_name(fn)] = id
 		
 		//ds_map_destroy(map) // Error
 		ds_map_destroy(jsontypemap)

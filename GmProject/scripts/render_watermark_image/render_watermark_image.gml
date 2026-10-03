@@ -1,17 +1,16 @@
-/// render_watermark_image([width, height])
-/// @arg [width
-/// @arg height]
+/// @arg [width]
+/// @arg [height]
 
-function render_watermark_image(draw_width = undefined, draw_height = undefined)
+function render_watermark_image(wid = null, hei = null)
 {
-	var watermark_x, watermark_y, watermark_width, watermark_height;
-	watermark_x = 0
-	watermark_y = 0
+	var watermarkx, watermarky, watermarkwid, watermarkhei;
+	watermarkx = 0
+	watermarky = 0
 	
-	if (is_undefined(draw_width))
+	if (wid = null || hei = null)
 	{
-		draw_width = render_width
-		draw_height = render_height
+		wid = render_width
+		hei = render_height
 	}
 	
 	var sprite, scale, opacity, halign, valign, padding, padx, pady;
@@ -41,38 +40,38 @@ function render_watermark_image(draw_width = undefined, draw_height = undefined)
 		sprite = spr_watermark
 	}
 	
-	watermark_width = sprite_get_width(sprite)
-	watermark_height = sprite_get_height(sprite)
+	watermarkwid = sprite_get_width(sprite)
+	watermarkhei = sprite_get_height(sprite)
 	
-	if (watermark_width > watermark_height)
-		scale *= draw_width/watermark_width
+	if (watermarkwid > watermarkhei)
+		scale *= wid/watermarkwid
 	else
-		scale *= draw_height/watermark_height
+		scale *= hei/watermarkhei
 	
 	gpu_set_texfilter(true)
 	
-	watermark_x = draw_width - (watermark_width/2 * scale)
-	watermark_y = draw_height - (watermark_height/2 * scale)
+	watermarkx = wid - (watermarkwid/2 * scale)
+	watermarky = hei - (watermarkhei/2 * scale)
 	
 	switch (halign)
 	{
 		case "left":
 		{
-			watermark_x = watermark_width/2 * scale
-			padx = draw_width * padding
+			watermarkx = watermarkwid/2 * scale
+			padx = wid * padding
 			break
 		}
 		
 		case "center":
 		{
-			watermark_x = draw_width/2;
+			watermarkx = wid/2
 			break
 		}
 		
 		case "right":
 		{
-			watermark_x = draw_width - (watermark_width/2 * scale)
-			padx = -(draw_width * padding)
+			watermarkx = wid - (watermarkwid/2 * scale)
+			padx = -(wid * padding)
 			break
 		}
 	}
@@ -81,35 +80,35 @@ function render_watermark_image(draw_width = undefined, draw_height = undefined)
 	{
 		case "top":
 		{
-			watermark_y = watermark_height/2 * scale
-			pady = (draw_height * padding)
+			watermarky = watermarkhei/2 * scale
+			pady = (hei * padding)
 			break
 		}
 		case "center":
 		{
-			watermark_y = draw_height/2
+			watermarky = hei/2
 			break
 		}
 		case "bottom":
 		{
-			watermark_y = draw_height - (watermark_height/2 * scale)
-			pady = -(draw_height * padding)
+			watermarky = hei - (watermarkhei/2 * scale)
+			pady = -(hei * padding)
 			break
 		}
 	}
 	
-	watermark_x -= (watermark_width/2) * scale
-	watermark_y -= (watermark_height/2) * scale
+	watermarkx -= (watermarkwid/2) * scale
+	watermarky -= (watermarkhei/2) * scale
 	
-	watermark_x += padx
-	watermark_y += pady
+	watermarkx += padx
+	watermarky += pady
 	
 	gpu_set_texfilter(true)
 	
-	draw_image(sprite, 0, round(watermark_x), round(watermark_y), scale, scale, c_white, opacity)
+	draw_image(sprite, 0, round(watermarkx), round(watermarky), scale, scale, c_white, opacity)
 	
 	gpu_set_blendmode_ext_sepalpha(bm_src_color, bm_one, bm_one, bm_one)
-	draw_image(sprite, 0, round(watermark_x), round(watermark_y), scale, scale, c_black, opacity)
+	draw_image(sprite, 0, round(watermarkx), round(watermarky), scale, scale, c_black, opacity)
 	gpu_set_blendmode(bm_normal)
 	
 	gpu_set_texfilter(false)

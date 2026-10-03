@@ -1,4 +1,3 @@
-/// project_create()
 /// @desc Creates a new project from the newproject dialog settings.
 
 function project_create()
@@ -10,14 +9,13 @@ function project_create()
 	
 	if (!directory_exists_lib(dirname))
 	{
-		error("errornewprojectaccess")
+		error("error/new_project_access")
 		return 0
 	}
 	
 	log("Creating project", dirname)
 	
 	project_reset()
-	action_load_render_settings(render_default_file)
 	
 	project_name = popup_newproject.tbx_name.text
 	project_author = popup_newproject.tbx_author.text
@@ -28,8 +26,23 @@ function project_create()
 	
 	popup_close()
 	
+	// Add the selected resource pack to the new project
+	if (popup_current = popup_newproject && setting_project_pack != "")
+	{
+		var packfn = packs_directory_get() + setting_project_pack;
+		if (file_exists_lib(packfn))
+		{
+			var packres = new_res(packfn, e_res_type.PACK);
+			packres.loaded = true
+			with (packres)
+				res_load()
+		
+			action_project_pack(packres)
+		}
+	}
 	project_save()
 	
-	toast_new(e_toast.POSITIVE, text_get("alertprojectcreated"))
-	toast_add_action("alertprojectcreatedview", popup_open_url, project_folder)
+	toast_new(e_toast.POSITIVE, text_get("alert/project_created"))
+	toast_add_action("alert/project_created_view", open_url, project_folder)
+	toast_last.dismiss_time = 10
 }

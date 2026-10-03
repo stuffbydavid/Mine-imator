@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_assets_block_texture_tag_base",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_assets_block_texture_tag_base",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Scripts/Minecraft/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

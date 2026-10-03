@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_folder",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "List",
-    "path": "folders/Scripts/App/Actions/Timeline/List.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_folder",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_folder",
+  "parent":{
+    "name":"List",
+    "path":"folders/Scripts/App/Actions/Timeline/List.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

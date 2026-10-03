@@ -1,9 +1,6 @@
-/// action_setting_watermark_import()
-
 function action_setting_watermark_import()
 {
 	var fn = file_dialog_open_image();
-	
 	if (fn = "")
 		return 0
 	

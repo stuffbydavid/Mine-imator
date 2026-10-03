@@ -1,30 +1,45 @@
-/// project_load([filename])
-/// @arg [filename]
 /// @desc Opens a .miproject, .mproj, .mani project or zipped archive.
 /// A file browser appears if no filename is given.
-///		Formats:
-///			0.1
-///			0.2
-///			0.5
-///			0.6
-///			0.7 DEMO
-///			1.0.0 DEMO 2
-///			1.0.0 DEMO 3 = added hasX in timeline, removed count in library, added spawn_rate, spawn_region toggle in particle types
-///			1.0.0 DEMO 4 = added ground_z in particles, has_background, removed text_system_font_*, camera rotation and ratio, block_ani, pars in timelines, timeline zoom, pos
-///			1.0.0 debug = shape hvoffset, map, closed, wind setting, char_model name, particle type iid, click->!lock, timeline depth, parent_pos, fog height, item_sheet, block_frames, new value types, shape face camera, timeline texture filtering & ssao, fog sky, render region
-///			1.0.0 = timeline_repeat
-///			1.0.5 = background_sunlight_follow
-///			1.0.5 2 = timeline fog, timeline_marker
-///			1.0.6 = new mobs
-///			1.0.6 2 = camera size in keyframes
-///			1.1.0 PRE 1 = redone in JSON
+/// Formats:
+/// 	0.1
+/// 	0.2
+/// 	0.5
+/// 	0.6
+/// 	0.7 DEMO
+/// 	1.0.0 DEMO 2
+/// 	1.0.0 DEMO 3 = added hasX in timeline, removed count in library, added spawn_rate, spawn_region toggle in particle types
+/// 	1.0.0 DEMO 4 = added ground_z in particles, has_background, removed text_system_font_*, camera rotation and ratio, block_ani, pars in timelines, timeline zoom, pos
+/// 	1.0.0 debug = shape hvoffset, map, closed, wind setting, char_model name, particle type iid, click->!lock, timeline depth, parent_pos, fog height, item_sheet, block_frames, new value types, shape face camera, timeline texture filtering & ssao, fog sky, render region
+/// 	1.0.0 = timeline_repeat
+/// 	1.0.5 = background_sunlight_follow
+/// 	1.0.5 2 = timeline fog, timeline_marker
+/// 	1.0.6 = new mobs
+/// 	1.0.6 2 = camera size in keyframes
+/// 	CB 1.0.0 = Community Build format
+/// 	CB 1.0.2 PRE = Community Build 1.0.2 pre-release format
+/// 	CB 1.0.2 = Community Build 1.0.2 format
+/// 	CB 1.0.3 = Community Build 1.0.3 format
+/// 	1.1.0 PRE 1 = redone in JSON
+/// 	1.1.0 PRE 3 = workbench model settings
+/// 	1.1.0 = finalized 1.1 JSON format
+/// 	1.1.3 = separate X, Y and Z bend angles
+/// 	1.2.0 PRE 1 = more keyframable background values and revised glow alpha
+/// 	1.2.0 PRE 3 = watermark anchors and scale
+/// 	1.2.2 = special block part roots
+/// 	1.2.3 PRE 2 = template particles, launch angles and camera bokeh values
+/// 	1.2.5 = camera aperture blade amount and angle
+/// 	2.0.0 PRE 1 = initial 2.0 project format
+/// 	2.0.0 PRE 5 = material maps, generalized patterns, revised clouds, background and camera values
+/// 	2.1.0 = path shape settings, normalized texture animation speed, new render settings, camera effects, structures and new type names
+/// @arg [filename]
 
-function project_load()
+function project_load(fn = "")
 {
-	var fn = (argument_count > 0 ? argument[0] : file_dialog_open_project())
+	if (fn = "")
+		fn = file_dialog_open_project()
 	
 	if (fn = "")
-		return 0
+		return false
 	
 	var name = filename_new_ext(filename_name(fn), "");
 	
@@ -37,13 +52,13 @@ function project_load()
 			fn = file_find_single(unzip_directory + name + "/", ".miproject;.mproj;.mani")
 		if (!file_exists_lib(fn))
 		{
-			error("erroropenprojectzip")
-			return 0
+			error("error/open_project_zip")
+			return false
 		}
 	}
 	
 	if (!file_exists_lib(fn))
-		return 0
+		return false
 	
 	// Post 1.1.0 (JSON)
 	var ext, rootmap, legacy, buf;
@@ -53,7 +68,7 @@ function project_load()
 		log("Opening project", fn)
 		rootmap = project_load_start(fn)
 		if (rootmap = null)
-			return 0
+			return false
 		
 		legacy = false
 	}
@@ -63,7 +78,7 @@ function project_load()
 	{
 		log("Opening legacy project", fn)
 		if (!project_load_legacy_start(fn))
-			return 0
+			return false
 		
 		buf = buffer_current
 		legacy = true
@@ -83,9 +98,13 @@ function project_load()
 	
 	if (!legacy)
 	{
+		var envmap = rootmap[?"environment"];
+		if (!ds_map_valid(envmap)) // Pre-2.1
+			envmap = rootmap[?"background"]
+			
 		project_load_project(rootmap[?"project"])
 		project_load_render(rootmap[?"render"])
-		project_load_background(rootmap[?"background"])
+		project_load_environment(envmap)
 		project_load_objects(rootmap)
 		project_load_markers(rootmap[?"markers"])
 	}
@@ -96,7 +115,7 @@ function project_load()
 		{
 			project_load_legacy_project()
 			project_load_legacy_objects()
-			project_load_legacy_background()
+			project_load_legacy_environment()
 			project_load_legacy_work_camera()
 		}
 		else
@@ -106,7 +125,7 @@ function project_load()
 	}
 	
 	// Update project
-	project_load_find_save_ids()
+	project_load_find_save_ids(true)
 	project_load_update()
 	project_reset_loaded()
 	log("Project loaded")
@@ -114,7 +133,7 @@ function project_load()
 	// Save into newest format
 	if (load_format < e_project.FORMAT_110_PRE_1)
 	{
-		if (!dev_mode)
+		if (!debug_mode)
 			file_rename_lib(fn, fn + ".old")
 		project_save()
 	}

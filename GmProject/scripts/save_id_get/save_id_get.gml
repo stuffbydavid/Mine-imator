@@ -1,6 +1,5 @@
-/// save_id_get(object)
-/// @arg object
 /// @desc Safe way to get the save ID of an object. "" if invalid.
+/// @arg object
 
 function save_id_get(obj)
 {
@@ -9,7 +8,7 @@ function save_id_get(obj)
 		if (obj = "")
 			return ""
 		
-		if (obj = mc_res.save_id) // Default asset
+		if (obj = "default" || obj = mc_res.save_id) // Pack IDs
 			return obj
 	}
 	else

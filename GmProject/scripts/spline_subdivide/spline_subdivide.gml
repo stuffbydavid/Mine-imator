@@ -1,7 +1,3 @@
-/// spline_subdivide(points, closed)
-/// @arg points
-/// @arg closed
-
 function spline_subdivide(points, closed)
 {
 	var arr, amount;

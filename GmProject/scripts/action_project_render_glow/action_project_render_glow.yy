@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_project_render_glow",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Glow",
-    "path": "folders/Scripts/App/Actions/Project/Render/Glow.yy",
+  "$GMScript":"v1",
+  "%Name":"action_project_render_glow",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_glow",
+  "parent":{
+    "name":"Glow",
+    "path":"folders/Scripts/App/Actions/Project/Render/Glow.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

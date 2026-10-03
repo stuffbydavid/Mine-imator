@@ -1,5 +1,3 @@
-/// model_shape_generate_plane(bend)
-/// @arg bend
 /// @desc Generates a plane shape transformed by a bend vector.
 
 function model_shape_generate_plane(bend)
@@ -38,7 +36,7 @@ function model_shape_generate_plane(bend)
 	
 	// Convert to 0-1
 	texsize = vec3(texsize[X] / texture_size[X], texsize[Y] / texture_size[Y], texsize[Z] / texture_size[Y])
-	texuv = vec2_div(floor_box_uvs ? [floor(uv[X]), floor(uv[Y])] : uv, texture_size)
+	texuv = vec2_div(floor_box_uvs ? [ floor(uv[X]), floor(uv[Y]) ] : uv, texture_size)
 	
 	// Plane texture mapping
 	var tex1, tex2, tex3, tex4;
@@ -66,7 +64,7 @@ function model_shape_generate_plane(bend)
 	if ((bend_size != null && bend_size >= 1) && scale[segaxis] > .5)
 		detail /= scale[segaxis]
 	
-	bendsegsize = bendsize / detail;
+	bendsegsize = bendsize / detail
 	invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 	
 	var p1, p2, n1, n2;
@@ -190,8 +188,8 @@ function model_shape_generate_plane(bend)
 			
 			// Blocky bending
 			var bendscale = vec3(0);
-			if (sharpbend)
-				startscale = model_shape_get_bend_scale(bendstart, bendend, segp, true, segpos, bend)
+			//if (sharpbend)
+			//	startscale = model_shape_get_bend_scale(bendstart, bendend, segp, true, segpos, bend)
 			
 			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(bendscale, vec3(1)))
 		}

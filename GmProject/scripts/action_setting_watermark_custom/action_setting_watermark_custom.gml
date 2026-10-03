@@ -1,6 +1,3 @@
-/// action_setting_watermark_custom(custom)
-/// @arg custom
-
 function action_setting_watermark_custom(custom)
 {
 	if (trial_version)

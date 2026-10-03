@@ -1,17 +1,18 @@
-/// menu_draw()
-/// @desc Draws open dropdown menus
+/// @desc Draws open dropdown menus.
 
 function menu_draw()
 {
-	var m, menu_remove, menu_active, listh, menuh, contentmenu, yy, aniease, updatewidth, menu_x_draw, menu_wid_draw;
-	menu_remove = null
+	var menuremove = null;
+	
 	menu_current = null
 	
 	for (var i = 0; i < ds_list_size(menu_list); i++)
 	{
+		var m, menuactive, listh, menuh, contentmenu, yy, aniease, updatewidth, menuxdraw, menuwiddraw;
 		m = menu_list[|i]
-		menu_active = (i = (ds_list_size(menu_list) - 1))
 		menu_current = m
+		
+		menuactive = (i = (ds_list_size(menu_list) - 1))
 		contentmenu = (m.menu_type = e_menu.TRANSITION_LIST || m.menu_type = e_menu.CONTENT)
 		updatewidth = false
 		
@@ -25,7 +26,7 @@ function menu_draw()
 			if (m.menu_ani <= 0)
 			{
 				m.menu_ani = 0
-				menu_remove = menu_current
+				menuremove = menu_current
 				
 				continue
 			}
@@ -58,17 +59,17 @@ function menu_draw()
 		content_width = m.menu_w
 		content_height = menuh
 		
-		menu_x_draw = lerp(m.menu_x_start, content_x, aniease)
-		menu_wid_draw = lerp(m.menu_w_start, content_width, aniease)
+		menuxdraw = lerp(m.menu_x_start, content_x, aniease)
+		menuwiddraw = lerp(m.menu_w_start, content_width, aniease)
 		
 		// Draw
-		draw_box(menu_x_draw, yy, menu_wid_draw, menuh, false, c_level_top, 1)
+		draw_box(menuxdraw, yy, menuwiddraw, menuh, false, c_input_background, 1)
 		
 		if (menuh > 2)
-			draw_outline(menu_x_draw, yy, menu_wid_draw, menuh, 1, c_border, a_border, true)
+			draw_outline(menuxdraw, yy, menuwiddraw, menuh, 1, c_border, a_border, true)
 		
 		// Hide outline touching button
-		draw_box(menu_x_draw + 1, yy + (m.menu_flip), menu_wid_draw - 2, menuh - 1, false, c_level_top, 1)
+		draw_box(menuxdraw + 1, yy + (m.menu_flip), menuwiddraw - 2, menuh - 1, false, c_input_background, 1)
 		
 		// Drop shadow
 		var shadowy, shadowh;
@@ -76,16 +77,16 @@ function menu_draw()
 		{
 			shadowy = yy
 			shadowh = menuh
-			draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+			draw_dropshadow(menuxdraw, shadowy, menuwiddraw, shadowh, c_black, aniease)
 		}
 		else
 		{
 			shadowy = (m.menu_flip ? yy : yy - m.menu_button_h)
 			shadowh = menuh + m.menu_button_h
-			draw_dropshadow(menu_x_draw, shadowy, menu_wid_draw, shadowh, c_black, aniease)
+			draw_dropshadow(menuxdraw, shadowy, menuwiddraw, shadowh, c_black, aniease)
 		}
 		
-		if (window_busy = "menu" && m.menu_ani_type != "hide" && menu_active)
+		if (window_busy = "menu" && m.menu_ani_type != "hide" && menuactive)
 			window_busy = ""
 		
 		// Scrollbars
@@ -120,13 +121,14 @@ function menu_draw()
 		
 		content_width = m.menu_w - (12 * m.menu_scroll_vertical.needed)
 		content_height = menuh - (12 * m.menu_scroll_horizontal.needed)
-		menu_wid_draw = lerp(m.menu_w_start, content_width, aniease)
+		menuwiddraw = lerp(m.menu_w_start, content_width, aniease)
 		
 		content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
-		var menumouseon = app_mouse_box(m.menu_x, m.menu_y, m.menu_w, m.menu_button_h) && (m.menu_type != e_menu.CONTENT && m.menu_type != e_menu.TRANSITION_LIST);
 		
-		var mouseitem = null;
-		var toggledindex = -1;
+		var menumouseon, mouseitem, toggledindex;
+		menumouseon = app_mouse_box(m.menu_x, m.menu_y, m.menu_w, m.menu_button_h) && (m.menu_type != e_menu.CONTENT && m.menu_type != e_menu.TRANSITION_LIST)
+		mouseitem = null
+		toggledindex = -1
 		
 		draw_set_font(font_value)
 		switch (m.menu_type)
@@ -149,7 +151,6 @@ function menu_draw()
 				for (var j = 0; j < m.menu_amount; j++)
 				{
 					var item, itemy, itemh;
-					
 					item = m.menu_list.item[|j]
 					itemy = yy
 					itemh = m.menu_item_h
@@ -163,6 +164,7 @@ function menu_draw()
 					
 					if (m.menu_nav_use)
 						item.toggled = (j = m.menu_nav_index)
+					
 					else if (j = m.menu_nav_index)
 					{
 						m.menu_nav_index = -1
@@ -172,7 +174,7 @@ function menu_draw()
 					if (m.menu_value = item.value)
 						toggledindex = j
 					
-					list_item_draw(item, menu_x_draw, itemy, menu_wid_draw, itemh, false, m.menu_margin, -m.menu_scroll_horizontal.value)
+					list_item_draw(item, menuxdraw, itemy, menuwiddraw, itemh, false, m.menu_margin, -m.menu_scroll_horizontal.value)
 					
 					if (item.hover)
 					{
@@ -206,7 +208,7 @@ function menu_draw()
 			case e_menu.CONTENT: // Script with content
 			case e_menu.TRANSITION_LIST:
 			{
-				clip_begin(menu_x_draw, content_y, window_width, content_height)
+				clip_begin(menuxdraw, content_y, window_width, content_height)
 				
 				if (m.menu_type = e_menu.CONTENT)
 				{
@@ -269,7 +271,7 @@ function menu_draw()
 		}
 		
 		// Check keyboard navigation
-		var nav_close = false;
+		var navclose = false;
 		if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_down))
 		{
 			if (!m.menu_nav_use)
@@ -286,7 +288,7 @@ function menu_draw()
 		{
 			if (m.menu_nav_use)
 			{
-				nav_close = true
+				navclose = true
 				mouseitem = m.menu_list.item[|m.menu_nav_index]
 			}
 			else
@@ -322,7 +324,10 @@ function menu_draw()
 		}
 		
 		// Check click
-		if ((!(m.menu_scroll_vertical.needed && m.menu_scroll_vertical.mouseon) && !(m.menu_scroll_horizontal.needed && m.menu_scroll_horizontal.mouseon) && mouse_left_released && menu_active && m.menu_ani_type != "hide" && menu_search_busy = "") || nav_close)
+		if ((!(m.menu_scroll_vertical.needed && m.menu_scroll_vertical.mouseon) &&
+		     !(m.menu_scroll_horizontal.needed && m.menu_scroll_horizontal.mouseon) &&
+			 mouse_left_released && menuactive &&
+			 m.menu_ani_type != "hide" && menu_search_busy = "") || navclose)
 		{
 			var close = false;
 			
@@ -338,8 +343,12 @@ function menu_draw()
 					m.menu_ani = 2
 					m.menu_value = mouseitem.value
 					
+					menu_model_armor_variant = m.menu_model_armor_variant
+					
 					list_item_script = (mouseitem.script = null ? m.menu_script : mouseitem.script)
 					list_item_script_value = m.menu_value
+					
+					list_item_camera_effect_edit_type = m.menu_camera_effect_edit_type
 					
 					for (var j = 0; j < m.menu_amount; j++)
 					{
@@ -355,7 +364,7 @@ function menu_draw()
 						close = true
 				}
 				
-				if (!content_mouseon && !menumouseon && !nav_close)
+				if (!content_mouseon && !menumouseon && !navclose)
 					close = true
 			}
 			
@@ -376,18 +385,19 @@ function menu_draw()
 		
 		m.menu_steps++
 		
-		if (window_busy = "" && m.menu_ani_type != "hide" && menu_active)
+		if (window_busy = "" && m.menu_ani_type != "hide" && menuactive)
 			window_busy = "menu"
 	}
 	
-	if (menu_remove != null)
+	if (menuremove != null)
 	{
-		instance_destroy(menu_remove)
+		instance_destroy(menuremove)
 		menu_search_tbx.text = ""
 		menu_search_busy = ""
 		
 		if (ds_list_size(menu_list) = 0)
 			menu_popup = null
 	}
+	
 	menu_current = null
 }

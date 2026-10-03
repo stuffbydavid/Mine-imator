@@ -1,6 +1,5 @@
-/// history_save_res(resource)
-/// @arg resource
 /// @desc Saves a resource in memory.
+/// @arg resource
 
 function history_save_res(res)
 {
@@ -13,37 +12,54 @@ function history_save_res(res)
 	with (save)
 	{
 		save_id = res.save_id
+		
 		usage_model_amount = 0
 		usage_model_tex_amount = 0
 		usage_model_tex_material_amount = 0
 		usage_model_tex_normal_amount = 0
+		
 		usage_item_tex_amount = 0
 		usage_item_tex_material_amount = 0
 		usage_item_tex_normal_amount = 0
+		
 		usage_block_tex_amount = 0
 		usage_block_tex_material_amount = 0
 		usage_block_tex_normal_amount = 0
+		
 		usage_scenery_amount = 0
+		
 		usage_shape_tex_amount = 0
 		usage_shape_tex_material_amount = 0
 		usage_shape_tex_normal_amount = 0
+		
 		usage_text_font_amount = 0
+		
 		usage_sprite_tex_amount = 0
 		usage_sprite_template_tex_amount = 0
+		
 		usage_kf_texture_amount = 0
 		usage_tl_texture_amount = 0
+		
 		usage_kf_sound_amount = 0
 		usage_tl_sound_amount = 0
+		
 		usage_kf_text_font_amount = 0
 		usage_tl_text_font_amount = 0
+		usage_tl_default_text_font_amount = 0
+		
 		usage_tl_glint_tex_amount = 0
-		usage_background_image = false
-		usage_background_sky_sun_tex = false
-		usage_background_sky_moon_tex = false
-		usage_background_sky_clouds_tex = false
-		usage_background_ground_tex = false
-		usage_background_ground_tex_material = false
-		usage_background_ground_tex_normal = false
+		
+		usage_tl_block_tex_amount = 0
+		usage_tl_block_tex_material_amount = 0
+		usage_tl_block_tex_normal_amount = 0
+		
+		usage_env_background_image = false
+		usage_env_sky_sun_tex = false
+		usage_env_sky_moon_tex = false
+		usage_env_sky_clouds_tex = false
+		usage_env_ground_tex = false
+		usage_env_ground_tex_material = false
+		usage_env_ground_tex_normal = false
 	}
 	
 	// Save references
@@ -198,36 +214,78 @@ function history_save_res(res)
 			save.usage_tl_text_font_save_id[save.usage_tl_text_font_amount] = save_id
 			save.usage_tl_text_font_amount++
 		}
+
+		if (type = e_tl_type.TEXT && part_of = null && !has_temp && text_font = res)
+		{
+			save.usage_tl_default_text_font_save_id[save.usage_tl_default_text_font_amount] = save_id
+			save.usage_tl_default_text_font_amount++
+		}
 		
 		if (glint_tex = res)
 		{
 			save.usage_tl_glint_tex_save_id[save.usage_tl_glint_tex_amount] = save_id
 			save.usage_tl_glint_tex_amount++
 		}
+
+		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex = res)
+		{
+			save.usage_model_tex_save_id[save.usage_model_tex_amount] = save_id
+			save.usage_model_tex_amount++
+		}
+
+		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex_material = res)
+		{
+			save.usage_model_tex_material_save_id[save.usage_model_tex_material_amount] = save_id
+			save.usage_model_tex_material_amount++
+		}
+
+		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex_normal = res)
+		{
+			save.usage_model_tex_normal_save_id[save.usage_model_tex_normal_amount] = save_id
+			save.usage_model_tex_normal_amount++
+		}
+
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex = res)
+		{
+			save.usage_tl_block_tex_save_id[save.usage_tl_block_tex_amount] = save_id
+			save.usage_tl_block_tex_amount++
+		}
+
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex_material = res)
+		{
+			save.usage_tl_block_tex_material_save_id[save.usage_tl_block_tex_material_amount] = save_id
+			save.usage_tl_block_tex_material_amount++
+		}
+
+		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex_normal = res)
+		{
+			save.usage_tl_block_tex_normal_save_id[save.usage_tl_block_tex_normal_amount] = save_id
+			save.usage_tl_block_tex_normal_amount++
+		}
 	}
 	
 	with (app)
 	{
-		if (background_image = res)
-			save.usage_background_image = true
+		if (env_background_image = res)
+			save.usage_env_background_image = true
 		
-		if (background_sky_sun_tex = res)
-			save.usage_background_sky_sun_tex = true
+		if (env_sky_sun_tex = res)
+			save.usage_env_sky_sun_tex = true
 		
-		if (background_sky_moon_tex = res)
-			save.usage_background_sky_moon_tex = true
+		if (env_sky_moon_tex = res)
+			save.usage_env_sky_moon_tex = true
 		
-		if (background_sky_clouds_tex = res)
-			save.usage_background_sky_clouds_tex = true
+		if (env_sky_clouds_tex = res)
+			save.usage_env_sky_clouds_tex = true
 		
-		if (background_ground_tex = res)
-			save.usage_background_ground_tex = true
+		if (env_ground_tex = res)
+			save.usage_env_ground_tex = true
 		
-		if (background_ground_tex_material = res)
-			save.usage_background_ground_tex_material = true
+		if (env_ground_tex_material = res)
+			save.usage_env_ground_tex_material = true
 		
-		if (background_ground_tex_normal = res)
-			save.usage_background_ground_tex_normal = true
+		if (env_ground_tex_normal = res)
+			save.usage_env_ground_tex_normal = true
 	}
 	
 	return save

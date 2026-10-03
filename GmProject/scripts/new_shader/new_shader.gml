@@ -1,11 +1,8 @@
-/// new_shader(name)
-/// @arg name
-
 function new_shader(name)
 {
 	with (new_obj(obj_shader))
 	{
-		id.name = name
+		self.name = name
 		shader = asset_get_index(name)
 		script = asset_get_index(name + "_set")
 		uniform_map = ds_map_create()
@@ -14,6 +11,7 @@ function new_shader(name)
 		// Set common uniforms
 		new_shader_sampler("uTexture")
 		new_shader_uniform("uTextureSize")
+		new_shader_uniform("uTextureOffset")
 		new_shader_uniform("uBlendColor")
 		
 		// Wind
@@ -36,9 +34,14 @@ function new_shader(name)
 		new_shader_uniform("uCameraPosition")
 		
 		// Rendering effects
+		new_shader_uniform("uAAMatrix")
 		new_shader_uniform("uTAAMatrix")
 		new_shader_uniform("uSampleIndex")
 		new_shader_uniform("uAlphaHash")
+		
+		// Build mode
+		new_shader_uniform("uViewportSize")
+		new_shader_uniform("uLineLength")
 		
 		shader_map[?shader] = id
 		return id

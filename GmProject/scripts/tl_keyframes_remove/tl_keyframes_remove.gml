@@ -1,4 +1,3 @@
-/// tl_keyframes_remove()
 /// @desc Remove all selected keyframes.
 
 function tl_keyframes_remove()

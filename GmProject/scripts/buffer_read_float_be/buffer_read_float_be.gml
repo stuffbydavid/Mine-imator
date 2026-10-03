@@ -1,4 +1,3 @@
-/// buffer_read_float_be()
 /// @desc Reads a big endian float from the buffer.
 
 function buffer_read_float_be()

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_build_select",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_build_select",
+  "parent":{
+    "name":"Build",
+    "path":"folders/Scripts/App/Actions/Build.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

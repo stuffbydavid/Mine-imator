@@ -1,8 +1,10 @@
-/// file_lib_startup()
-
 function file_lib_startup()
 {
 	globalvar buffer_current;
+	
+	// Skip in C++
+	if (!is_cpp())
+		return true
 	
 	// Define directories
 	log("working_directory", working_directory)
@@ -16,7 +18,7 @@ function file_lib_startup()
 	// Write access
 	var surf, tmpfile1, tmpfile2;
 	surf = surface_create(32, 32)
-	tmpfile1 = file_directory + "tmp.png" // Can I write to file bundle?
+	tmpfile1 = file_directory_get() + "tmp.png" // Can I write to file bundle?
 	tmpfile2 = data_directory + "tmp.png" // Can I copy to installation folder?
 	
 	log("Trying to save files")

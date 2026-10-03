@@ -1,10 +1,7 @@
-/// tab_toggle(tab)
-/// @arg tab
-
-function tab_toggle(tab)
+function tab_toggle(tab, raise = false)
 {
 	if (tab.show)
 		tab_close(tab)
 	else
-		tab_show(tab)
+		tab_show(tab, raise)
 }

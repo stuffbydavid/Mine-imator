@@ -1,11 +1,9 @@
-/// history_save_ptype(ptype)
-/// @arg ptype
 /// @desc Saves a particle type into memory.
+/// @arg particletype
 
 function history_save_ptype(ptype)
 {
-	var save;
-	save = new_obj(obj_history_save)
+	var save = new_obj(obj_history_save);
 	save.hobj = id
 	
 	with (ptype)

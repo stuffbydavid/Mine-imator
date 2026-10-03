@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "bezier_curve_cubic",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Curve",
-    "path": "folders/Scripts/Utility/Math/Curve.yy",
+  "$GMScript":"v1",
+  "%Name":"bezier_curve_cubic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"bezier_curve_cubic",
+  "parent":{
+    "name":"Curve",
+    "path":"folders/Scripts/Utility/Math/Curve.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,6 +1,5 @@
-/// temp_update_model_timeline_tree([historyobject])
-/// @arg [historyobject]
 /// @desc Update timelines of the changed model.
+/// @arg [historyobject]
 
 function temp_update_model_timeline_tree(hobj = null)
 {
@@ -10,7 +9,7 @@ function temp_update_model_timeline_tree(hobj = null)
 			continue
 		
 		// Save indices of children
-		if (hobj != null && !app.history_undo)
+		if (hobj != null && !history_undo)
 		{
 			for (var p = 0; p < ds_list_size(part_list); p++)
 			{
@@ -36,7 +35,7 @@ function temp_update_model_timeline_tree(hobj = null)
 			}
 		}
 		
-		if (hobj != null && !app.history_undo)
+		if (hobj != null && !history_undo)
 		{
 			hobj.usage_tl_attractor_amount = 0
 			hobj.usage_tl_ik_target_amount = 0
@@ -86,7 +85,7 @@ function temp_update_model_timeline_tree(hobj = null)
 						}
 						
 						// Save references
-						if (!app.history_redo)
+						if (!history_redo)
 							if (history_save_part_usage_tl(id, hobj))
 								unused = false
 						
@@ -148,6 +147,10 @@ function temp_update_model_timeline_tree(hobj = null)
 		
 		tl_update_type_name()
 		tl_update_display_name()
+		
+		if (placed)
+			tl_mark_placed(true)
+		
 		update_matrix = true
 	}
 }

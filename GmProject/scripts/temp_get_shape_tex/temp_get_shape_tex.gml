@@ -1,7 +1,7 @@
-/// temp_get_shape_tex(textureobject, [default])
 /// @arg textureobject
+/// @arg [default]
 
-function temp_get_shape_tex(texobj, def = undefined)
+function temp_get_shape_tex(texobj, def = null)
 {
 	if (texobj != null)
 	{
@@ -14,7 +14,7 @@ function temp_get_shape_tex(texobj, def = undefined)
 			return texobj.texture
 	}
 	
-	if (def != undefined)
+	if (def != null)
 		return def
 	else
 		return shape_texture

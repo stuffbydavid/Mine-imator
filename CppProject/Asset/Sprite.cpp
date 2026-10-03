@@ -42,6 +42,16 @@ namespace CppProject
 		}
 	}
 
+	Sprite::Sprite(QImage image, QPoint origin) : Asset(ID_Sprite)
+	{
+		allSprites.append(this);
+		this->origin = origin;
+
+		image.convertTo(QImage::Format_RGBA8888);
+		size = image.size();
+		frames.append(new Frame(image, false));
+	}
+
 	Sprite::Sprite(const StringType& filename, QPoint origin) : Asset(ID_Sprite)
 	{
 		allSprites.append(this);
@@ -130,6 +140,7 @@ namespace CppProject
 		{
 			if (!texture)
 				texture = new Texture(image);
+			
 			return texture->GetId();
 		}
 

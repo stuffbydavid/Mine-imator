@@ -1,15 +1,10 @@
-/// render_set_texture(texture, [type])
+/// @desc Sets the texture of the currently selected shader.
 /// @arg texture
 /// @arg [type]
-/// @desc Sets the texture of the currently selected shader.
 
 function render_set_texture(tex, type = "")
 {
-	var sampler, scalex, scaley;
-	sampler = render_shader_obj.sampler_map[?"uTexture" + type]
-	scalex = 1
-	scaley = 1
-	
+	var sampler = render_shader_obj.sampler_map[?"uTexture" + type];
 	if (is_undefined(sampler) || sampler < 0)
 		return 0
 	
@@ -20,7 +15,7 @@ function render_set_texture(tex, type = "")
 	}
 	
 	// Set filter
-	var mipactive = (shader_texture_filter_mipmap && type = "") ? mip_on : mip_off;
+	var mipactive = shader_texture_filter_mipmap ? mip_on : mip_off;
 	
 	if (gpu_get_texfilter_ext(sampler) != shader_texture_filter_linear)
 		gpu_set_texfilter_ext(sampler, shader_texture_filter_linear)

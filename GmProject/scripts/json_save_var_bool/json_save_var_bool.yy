@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "json_save_var_bool",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Save",
-    "path": "folders/Scripts/Utility/File/JSON/Save.yy",
+  "$GMScript":"v1",
+  "%Name":"json_save_var_bool",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"json_save_var_bool",
+  "parent":{
+    "name":"Save",
+    "path":"folders/Scripts/Utility/File/JSON/Save.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

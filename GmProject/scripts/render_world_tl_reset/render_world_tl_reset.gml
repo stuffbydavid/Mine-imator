@@ -1,5 +1,4 @@
-/// render_world_tl_reset()
-/// @desc Resets render values after finishing rendering timelines
+/// @desc Resets render values after finishing rendering timelines.
 
 function render_world_tl_reset()
 {
@@ -15,6 +14,13 @@ function render_world_tl_reset()
 	shader_blend_alpha = 1
 	
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+	render_set_uniform_color("uReplaceColor", c_black, 1)
+	
+	if (!render_alpha_hash_force)
+	{
+		render_alpha_hash = render_alpha_hash_allowed && app.project_render_alpha_mode
+		render_set_uniform_int("uAlphaHash", render_alpha_hash)
+	}
 	
 	// Mix color
 	shader_uniform_color_ext = 0
@@ -34,6 +40,7 @@ function render_world_tl_reset()
 	render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
 	render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
 	
+	render_set_uniform_vec2("uTextureOffset", 0, 0)
 	render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
 	
 	// Emissive
@@ -55,8 +62,9 @@ function render_world_tl_reset()
 	render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
 	
 	// Fog
-	shader_uniform_fog = true
+	shader_uniform_fog = app.env_fog_show && render_mode != e_render_mode.COLOR
 	render_set_uniform_int("uFogShow", shader_uniform_fog)
+	render_set_uniform("uSSAO", 1)
 	
 	// SSS
 	shader_uniform_sss = 0
@@ -71,15 +79,20 @@ function render_world_tl_reset()
 	render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0) 
 	
 	// Wind
-	shader_uniform_wind_strength = app.background_wind_strength * app.setting_wind_enable
+	shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable
 	
 	// Glow
 	shader_uniform_glow = false
 	shader_uniform_glow_texture = false
 	shader_uniform_glow_color = c_white
+	render_set_uniform_int("uOnlyRenderGlow", 0)
 	
 	// Glint
 	render_set_uniform_int("uGlintEnabled", 0)
+	
+	// Depth during placement
+	if (render_mode = e_render_mode.PLACE)
+		render_set_uniform("uGmDepth", bool_to_float(!is_cpp()))
 	
 	render_blend_prev = null
 	render_alpha_prev = null

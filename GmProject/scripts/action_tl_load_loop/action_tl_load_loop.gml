@@ -1,4 +1,3 @@
-/// action_tl_load_loop(filename)
 /// @arg filename
 
 function action_tl_load_loop(fn)
@@ -6,21 +5,27 @@ function action_tl_load_loop(fn)
 	if (history_undo)
 	{
 		tl_keyframes_remove()
+		
 		with (history_data)
 		{
 			history_destroy_loaded()
 			history_restore_tl_select()
+
+			for (var t = 0; t < load_static_amount; t++)
+				with (save_id_find(load_static_save_id[t]))
+					animated = false
 		}
 		
 		tl_update_list()
+		
 		with (obj_timeline)
 			tl_update_values()
+		
 		tl_update_matrix()
 	}
 	else
 	{
-		var hobj;
-		hobj = null
+		var hobj = null;
 		
 		if (!history_redo)
 		{
@@ -30,6 +35,17 @@ function action_tl_load_loop(fn)
 			hobj = history_set(action_tl_load_loop)
 			with (hobj)
 			{
+				load_static_amount = 0
+				
+				with (obj_timeline)
+				{
+					if (!animated)
+					{
+						other.load_static_save_id[other.load_static_amount] = save_id
+						other.load_static_amount++
+					}
+				}
+				
 				filename = fn
 				history_save_tl_select()
 			}
@@ -58,6 +74,7 @@ function action_tl_load_loop(fn)
 			{
 				tl_keyframe_select(tl_keyframe_add(insertpos))
 				tl_keyframe_select(tl_keyframe_add(goalpos))
+				animated = true
 			}
 		}
 		
@@ -84,4 +101,5 @@ function action_tl_load_loop(fn)
 	}
 	
 	app_update_tl_edit()
+	project_update_counts()
 }

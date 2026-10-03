@@ -1,5 +1,3 @@
-/// particle_spawner_clear()
-
 function particle_spawner_clear()
 {
 	with (obj_particle)

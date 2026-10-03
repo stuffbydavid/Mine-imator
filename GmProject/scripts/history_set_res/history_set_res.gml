@@ -1,9 +1,8 @@
-/// history_set_res(script, filename, oldresource, newresource)
+/// @desc Registering history for selecting/loading a new resource.
 /// @arg script
 /// @arg filename
 /// @arg oldresource
 /// @arg newresource
-/// @desc Registering history for selecting/loading a new resource.
 
 function history_set_res(script, fn, oldres, newres)
 {
@@ -12,24 +11,35 @@ function history_set_res(script, fn, oldres, newres)
 	
 	log("Action Load resource", script_get_name(script), fn)
 	
-	with (new_history(script))
+	var res = newres;
+	if (res = project_pack_res)
+		res = app.project_pack
+
+	var hobj = new_history(script);
+	with (hobj)
 	{
 		filename = fn
 		type = null
+		
 		old_res_save_id = save_id_get(oldres)
 		new_res_save_id = save_id_get(newres)
+		
 		replaced = false
 		copied = false
 		
-		if (newres != null && newres.object_index = obj_resource) // Not camera
+		if (res != null && instance_exists(res) && res.object_index = obj_resource) // Not camera
 		{
-			type = newres.type
-			replaced = newres.replaced
-			copied = newres.copied
-			player_skin = newres.player_skin 
+			type = res.type
+			replaced = res.replaced
+			copied = res.copied
+			player_skin = res.player_skin
 		}
-		
-		other.history[0] = id
-		return id
 	}
+
+	history[0] = hobj
+	
+	if (fn != "" && hobj.type = e_res_type.PACK && !hobj.replaced && question(text_get("question/project_pack")))
+		action_project_pack(res)
+
+	return hobj
 }

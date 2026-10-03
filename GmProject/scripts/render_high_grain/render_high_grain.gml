@@ -1,5 +1,4 @@
-/// render_high_grain(basesurf)
-/// @arg basesurf
+/// @arg basesurface
 
 function render_high_grain(prevsurf)
 {
@@ -9,7 +8,7 @@ function render_high_grain(prevsurf)
 	var size = max(ceil(render_width/8), ceil(render_height/8));
 	render_grain_noise = surface_require(render_grain_noise, size, size)
 	
-	random_set_seed(background_time)
+	random_set_seed(env_time)
 	render_generate_noise(size, size, render_grain_noise)
 	
 	surface_set_target(resultsurf)

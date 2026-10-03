@@ -1,5 +1,3 @@
-/// tl_update_depth()
-
 function tl_update_depth()
 {
 	ds_list_delete_value(render_list, id)

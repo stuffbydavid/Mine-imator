@@ -1,7 +1,3 @@
-/// block_load(map, typemap)
-/// @arg map
-/// @arg typemap
-
 function block_load(map, typemap)
 {
 	with (new_obj(obj_block))
@@ -18,8 +14,8 @@ function block_load(map, typemap)
 			return null
 		}
 		
-		if (dev_mode_debug_names && !text_exists("block" + name))
-			log("block/" + name + dev_mode_name_translation_message)
+		if (debug_names && !text_exists("block/" + name))
+			log("block/" + name + mc_unknown_asset_warning)
 		
 		// Type (overridden by states)
 		if (is_string(map[?"type"]))
@@ -66,12 +62,11 @@ function block_load(map, typemap)
 		{
 			states_map = ds_map_create()
 			
-			var curstate;
-			curstate = ds_map_find_first(map[?"states"]);
+			var curstate = ds_map_find_first(map[?"states"]);
 			while (!is_undefined(curstate))
 			{
-				if (dev_mode_debug_names && !text_exists("blockstate" + curstate))
-					log("block/state/" + curstate + dev_mode_name_translation_message)
+				if (debug_names && !text_exists("block/state/" + curstate))
+					log("block/state/" + curstate + mc_unknown_asset_warning)
 				
 				with (new_obj(obj_block_state))
 				{
@@ -120,8 +115,8 @@ function block_load(map, typemap)
 						
 						value_map[?value_name[v]] = v
 						
-						if (dev_mode_debug_names && string_length(value_name[v]) > 3 && !text_exists("blockstatevalue" + value_name[v]))
-							log("block/state/value/" + value_name[v] + dev_mode_name_translation_message)
+						if (debug_names && string_length(value_name[v]) > 3 && !text_exists("block/state/value/" + value_name[v]))
+							log("block/state/value/" + value_name[v] + mc_unknown_asset_warning)
 					}
 					
 					other.states_map[?curstate] = id
@@ -132,7 +127,7 @@ function block_load(map, typemap)
 		
 		// Load default file
 		if (filename != "")
-			file = block_load_state_file(load_assets_dir + mc_blockstates_directory + filename, id, array())
+			file = block_load_state_file(load_assets_dir + mc_blockstates_directory + filename, id, [])
 		else
 			file = null
 		
@@ -140,9 +135,9 @@ function block_load(map, typemap)
 		if (is_string(map[?"default_state"]))
 			default_state = string_get_state_vars(map[?"default_state"])
 		else
-			default_state = array()
+			default_state = []
 		
-		default_state_id = block_get_state_id(id, default_state)
+		//default_state_id = block_get_state_id(id, default_state)
 		
 		// Subsurface
 		if (is_real(map[?"subsurface"]))
@@ -195,11 +190,11 @@ function block_load(map, typemap)
 		
 		// ID(s)
 		var idmap = map[?"id"];
-		mc_ids = array()
+		mc_ids = []
 		id_state_vars_map = null
 		if (is_string(idmap)) // Single
 		{
-			mc_ids = array(string_replace(idmap, "minecraft:", ""))
+			mc_ids = [ string_replace(idmap, "minecraft:", "") ]
 			mc_assets.block_id_map[?idmap] = id
 		}
 		else if (ds_map_valid(idmap)) // Map
@@ -220,7 +215,7 @@ function block_load(map, typemap)
 		state_id_emissive = null
 		state_id_random_offset = null
 		state_id_random_offset_xy = null
-		state_id_subsurface = null
+		//state_id_subsurface = null
 		
 		for (var sid = 0; sid < state_id_amount; sid++)
 		{
@@ -246,7 +241,7 @@ function block_load(map, typemap)
 						if (value_filename[valid] != "")
 						{
 							if (value_file[valid] = null)
-								value_file[valid] = block_load_state_file(load_assets_dir + mc_blockstates_directory + value_filename[valid], other.id, array(name, value_name[valid]))
+								value_file[valid] = block_load_state_file(load_assets_dir + mc_blockstates_directory + value_filename[valid], other.id, [ name, value_name[valid] ])
 							curfile = value_file[valid]
 						}
 						
