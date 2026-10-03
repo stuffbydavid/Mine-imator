@@ -111,7 +111,7 @@ namespace CppProject
 				if (isVertex)
 				{
 					code.replace("gl_Position = ", "_vObjIndex = _objIndex;\n\tgl_Position = ");
-					header += "flat out uint _vObjIndex;\nuint _objIndex = _aData >> 16;\n";
+					header += "flat out uint _vObjIndex;\nuint _objIndex = (_aData >> 16) + uint(gl_InstanceID);\n";
 				}
 				else
 					header += "flat in uint _vObjIndex;\n";

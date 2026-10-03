@@ -51,7 +51,7 @@ If asked for validation of changes, pass in the `--test <.miproject>` flag into 
 
 On Windows, if tests succeed in the default DirectX mode, run Mine-imator again with `--gfx OpenGL` added to test OpenGL unless asked otherwise.
 
-If asked for a specific range of tests, use `--start X` and `--end Y` (Y exclusive), or `--all` to run through all frames in the project. By default, the `quick`, `standard`, and `realistic` renderers are tested; use `--renderer <quick|standard|realistic>` to limit a run. For typical, non-troubleshooting validation, all renderers should be tested.
+If asked for a specific range of tests, use `--start X` and `--end Y` (Y inclusive), or `--all` to run through all frames in the project. By default, the `quick`, `standard`, and `realistic` renderers are tested; use `--renderer <quick|standard|realistic>` to limit a run. For typical, non-troubleshooting validation, all renderers should be tested.
 
 For debugging a rendering issue in the pipeline, use `--pass <pass>` to save a high-quality pass in a new folder with the current frame/test name. Possible values are `diffuse`, `specular`, `ao`, `shadows`, `indirect`, `indirect_shadows`, `reflections`, `depth`, `normal`, `material` and `all` to save every pass.
 

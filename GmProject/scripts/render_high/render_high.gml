@@ -2,7 +2,8 @@
 
 function render_high()
 {
-	render_alpha_hash = render_alpha_hash_allowed && project_render_alpha_mode
+	render_alpha_hash = (render_alpha_hash_allowed && project_render_alpha_mode)
+	
 	if (!render_use_samples && renderer_current = e_renderer.REALISTIC)
 	{
 		ds_map_clear(render_shadow_cache_ready)
@@ -13,12 +14,14 @@ function render_high()
 	if (!render_use_samples)
 	{
 		render_update_pcss_kernel()
+		
 		samplestart = 0
 		sampleend = 1
 	}
 	else
 	{
 		render_update_samples()
+		
 		if (render_samples_done)
 		{
 			samplestart = 0
@@ -95,9 +98,9 @@ function render_high()
 			else
 			{
 				draw_clear_alpha(c_black, 0)
-			gpu_set_blendmode_ext(bm_one, bm_zero)
+				gpu_set_blendmode_ext(bm_one, bm_zero)
 				draw_surface_exists(finalsurf, 0, 0)
-			gpu_set_blendmode(bm_normal)
+				gpu_set_blendmode(bm_normal)
 			}
 		}
 		surface_reset_target()
@@ -152,5 +155,6 @@ function render_high()
 	
 	if (render_use_samples)
 		render_samples_clear = false
+	
 	render_alpha_hash = false
 }

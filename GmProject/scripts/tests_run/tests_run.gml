@@ -124,7 +124,7 @@ function tests_run()
 	csv = "Frame,Renderer,Setting,Samples,Animate_ms,Total_ms,Render_ms,Surface_ms,Export_ms,Other_ms,render_world_calls,vertex_buffer_tris,vertex_buffer_submits\n"
 	csvfilename = testdir + "/benchmark_" + testname + ".csv"
 	
-	for (timeline_marker = framestart; timeline_marker < min(timeline_length, frameend); timeline_marker++)
+	for (timeline_marker = framestart; timeline_marker <= min(timeline_length, frameend); timeline_marker++)
 	{
 		// Animate
 		benchmark_animate_total_time = 0

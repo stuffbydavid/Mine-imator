@@ -520,7 +520,12 @@ namespace CppProject
 		}
 
 		if (IS_OPENGL && uni.isStatic)
-			program->setUniformValueArray(uni.glLocation, floats, floatsNum / tupleSize, tupleSize);
+		{
+			if (uni.type == MAT4)
+				GFX->glUniformMatrix4fv(uni.glLocation, floatsNum / tupleSize, GL_FALSE, floats);
+			else
+				program->setUniformValueArray(uni.glLocation, floats, floatsNum / tupleSize, tupleSize);
+		}
 		else
 			WriteUniformValue(uni, floats, uni.totalBufferSize);
 	}
@@ -745,7 +750,7 @@ namespace CppProject
 		return false;
 	}
 
-	void Shader::SubmitVertices(RenderMode mode, IntType numIndices)
+	void Shader::SubmitVertices(RenderMode mode, IntType numIndices, IntType numInstances)
 	{
 		if (!IsLoaded())
 			return;
@@ -906,7 +911,11 @@ namespace CppProject
 
 			D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
 			D3DContext->IASetPrimitiveTopology(topo);
-			D3DContext->DrawIndexed(numIndices, 0, 0);
+
+			if (numInstances > 1)
+				D3DContext->DrawIndexedInstanced(numIndices, numInstances, 0, 0, 0);
+			else
+				D3DContext->DrawIndexed(numIndices, 0, 0);
 
 			// Reset input
 			for (IntType s = 0; s < numSamplers; s++)
@@ -939,8 +948,12 @@ namespace CppProject
 			// Submit SSBO
 			if (useBatching)
 			{
+				IntType numObjects = batchBufferObjectIndex;
+				if (batchBufferObjectIndex == batchBufferMaxObjects - 1)
+					numObjects++;
+
 				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
-				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, batchBufferObjectIndex * batchBufferObjectSize, batchBufferData);
+				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, numObjects * batchBufferObjectSize, batchBufferData);
 				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
 				GL_CHECK_ERROR();
@@ -959,7 +972,11 @@ namespace CppProject
 				case POINT_LIST:		modeEnum = GL_POINTS; break;
 			}
 
-			GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
+			if (numInstances > 1)
+				GFX->glDrawElementsInstanced(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0, (GLsizei)numInstances);
+			else
+				GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
+			
 			GL_CHECK_ERROR();
 		}
 	}

@@ -82,7 +82,7 @@ namespace CppProject
 		bool SubmitObject();
 
 		// Submit a number of previously bound vertices and indices for rendering.
-		void SubmitVertices(RenderMode mode, IntType numIndices);
+		void SubmitVertices(RenderMode mode, IntType numIndices, IntType numInstances = 1);
 
 		// Resets the current batch of objects, called when SubmitVertices is skipped for culling.
 		void ResetObjects();

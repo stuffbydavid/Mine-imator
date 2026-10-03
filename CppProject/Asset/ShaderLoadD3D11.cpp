@@ -85,6 +85,9 @@ namespace CppProject
                 inputDecl += "\tfloat2 TextureCoord: D;\n";
                 inputDecl += "\tuint Data: E;\n";
                 inputDecl += "\tuint Tangent: F;\n";
+                if (useBatching)
+                    inputDecl += "\tuint InstanceID: SV_InstanceID;\n";
+                
                 attrsDecl += "\tfloat3 Position: A;\n";
                 attrsDecl += "\tfloat3 Normal: B;\n";
                 attrsDecl += "\tfloat4 Color: C;\n";
@@ -100,6 +103,8 @@ namespace CppProject
                 setAttrs += "\n\t_attrs.Wave = " UNPACK_VERTEX_WAVE("_input.Data") ";";
                 setAttrs += "\n\t_attrs.Tangent = " UNPACK_VERTEX_NORMAL("_input.Tangent") ";";
                 setAttrs += "\n\t_vars._vObjIndex = _input.Data >> 16;";
+                if (useBatching)
+                    setAttrs += "\n\t_vars._vObjIndex += _input.InstanceID;";
 
                 vsCode.replace(QRegularExpression("\\bin_Position\\b"), "_attrs.Position");
                 vsCode.replace(QRegularExpression("\\bin_Normal\\b"), "_attrs.Normal");
@@ -391,6 +396,8 @@ namespace CppProject
         if (useCache && QFile::exists(vsCacheName) && QFile::exists(fsCacheName))
         {
             QDateTime cacheModified = std::min(QFileInfo(vsCacheName).lastModified(), QFileInfo(fsCacheName).lastModified());
+            if (QFileInfo(__FILE__).lastModified() >= cacheModified)
+                useCache = false;
 
             for (const QString& sourceName : sourceDependencies)
             {

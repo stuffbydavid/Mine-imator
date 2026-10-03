@@ -268,6 +268,14 @@ namespace CppProject
 			glBlendMap[bm_dest_color] = GL_DST_COLOR;
 			glBlendMap[bm_inv_dest_color] = GL_ONE_MINUS_DST_COLOR;
 			glBlendMap[bm_src_alpha_sat] = GL_SRC_ALPHA_SATURATE;
+
+			glBlendFuncSeparate(
+				glBlendMap[blendSrcFactor],
+				glBlendMap[blendDstFactor],
+				glBlendMap[blendAlphaSrcFactor],
+				glBlendMap[blendAlphaDstFactor]
+			);
+			GL_CHECK_ERROR();
 		}
 
 		// Load application resources
