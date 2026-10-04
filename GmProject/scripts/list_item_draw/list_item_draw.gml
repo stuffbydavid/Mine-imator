@@ -65,15 +65,17 @@ function list_item_draw(item, xx, yy, width, height, toggled = false, margin = 0
 		
 		draw_box(xx, yy, width, height, false, backcolor, backalpha)
 		
-		var clipstate = clip_is_active();
+		if (microani_arr[e_microani.PRESS] > 0)
+		{
+			var clipstate = clip_is_active();
+			if (clipstate)
+				clip_end()
 		
-		if (clipstate)
-			clip_end()
+			draw_box_hover(xx, yy, width, height, microani_arr[e_microani.PRESS])
 		
-		draw_box_hover(xx, yy, width, height, microani_arr[e_microani.PRESS])
-		
-		if (clipstate)
-			clip_begin(shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height)
+			if (clipstate)
+				clip_begin(shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height)
+		}
 	}
 	else
 	{

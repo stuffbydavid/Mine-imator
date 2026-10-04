@@ -7,6 +7,9 @@ function block_vbuffer_done()
 			vertex_end(block_vbuffer[d, vb])
 			block_vbuffer[d, vb] = vbuffer_generate_tangents(block_vbuffer[d, vb])
 			vertex_freeze(block_vbuffer[d, vb])
+
+			if (!vbuffer_is_empty(block_vbuffer[d, vb]))
+				block_vbuffer_active[d] = true
 		}
 	}
 }

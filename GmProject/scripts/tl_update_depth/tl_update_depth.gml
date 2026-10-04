@@ -8,4 +8,6 @@ function tl_update_depth()
 			break
 	
 	ds_list_insert(render_list, pos, id)
+	
+	render_list_depth_dirty = true
 }

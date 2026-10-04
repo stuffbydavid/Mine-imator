@@ -82,7 +82,7 @@ function settings_startup()
 	setting_view_split = 0.5
 	
 	setting_quick_mode_shading = true
-	setting_quick_mode_aa = false
+	setting_quick_mode_aa = true
 	
 	setting_view_main_overlays = true
 	setting_view_main_aspect_ratio = false

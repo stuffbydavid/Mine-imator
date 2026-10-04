@@ -214,6 +214,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		filterprev = gpu_get_tex_mip_bias()
 		gpu_set_tex_mip_bias(-16)
 	}
+	
 	if (tex != texprev)
 	{
 		render_set_texture(tex)

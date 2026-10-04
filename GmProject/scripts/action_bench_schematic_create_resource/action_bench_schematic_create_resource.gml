@@ -36,6 +36,8 @@ function action_bench_schematic_create_resource()
 		}
 		
 		block_vbuffer = res.block_vbuffer
+		block_vbuffer_active = res.block_vbuffer_active
+		
 		res.block_vbuffer = null
 		
 		file_copy_lib(res.scenery_source, app.project_folder + "/" + filename)

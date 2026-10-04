@@ -311,6 +311,7 @@ function render_world_tl()
 					render_world_block(temp.block_vbuffer, [ render_res_diffuse, render_res_material, render_res_normal ], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, [ render_res_diffuse, render_res_material, render_res_normal ], temp.block_repeat_enable, temp.block_repeat)
+				
 				break
 			}
 			
@@ -321,6 +322,7 @@ function render_world_tl()
 					render_world_item(temp.item_vbuffer, [ item_res, item_material_res, item_normal_res ], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else
 					render_world_item(item_vbuffer, [ item_res, item_material_res, item_normal_res ], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
+				
 				break
 			}
 			
@@ -336,6 +338,7 @@ function render_world_tl()
 					outline = value[e_value.TEXT_OUTLINE_COLOR]
 				
 				render_world_text(text_vbuffer, text_texture, temp.text_face_camera, text_res, outline)
+				
 				break
 			}
 			
@@ -358,6 +361,7 @@ function render_world_tl()
 					if (render_world_block_transparent != true)
 						render_world_block_map(temp.model.model_block_map, res)
 				}
+				
 				break
 			}
 			
@@ -425,6 +429,7 @@ function render_world_tl()
 				}
 				
 				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [ tex, texmat, normtex ])
+				
 				break
 			}
 		}

@@ -69,7 +69,7 @@ function tab_timeline()
 		listw -= 5
 	}
 	
-	// Pan before drawing the timeline rows
+	// Panning
 	if (window_busy = "timeline/drag")
 	{
 		mouse_cursor = cr_size_all
@@ -86,7 +86,57 @@ function tab_timeline()
 		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
 		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
 	}
-
+	
+	// Auto scrolling
+	var verscrollspeed, horscrollspeed;
+	verscrollspeed = 8
+	horscrollspeed = 15
+	
+	if (window_busy = "timeline/move" || window_busy = "timeline/select" || (window_busy = "place" && mouseinnames))
+	{
+		if (mouse_y < tly + 6)
+			timeline.ver_scroll.value -= verscrollspeed
+		
+		if (mouse_y > tly + tlh - 6)
+			timeline.ver_scroll.value += verscrollspeed
+		
+		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
+		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
+	}
+	
+	if (window_busy = "timeline/select_keyframes" ||
+		window_busy = "timeline/move_keyframes" ||
+		window_busy = "timeline/create_region" ||
+		window_busy = "timeline/set_region_start" ||
+		window_busy = "timeline/set_region_end" ||
+		window_busy = "timeline/resize_sounds" ||
+		window_busy = "timeline/set_sound_end" ||
+		window_busy = "timeline/move_marker")
+	{
+		if (mouse_x < tlx)
+			timeline.hor_scroll.value -= horscrollspeed
+		
+		if (mouse_x > tlx + tlw - 6)
+			timeline.hor_scroll.value += horscrollspeed
+		
+		if (window_busy != "timeline/move_marker" &&
+			window_busy != "timeline/create_region" &&
+			window_busy != "timeline/set_region_start" &&
+			window_busy != "timeline/set_region_end")
+		{
+			if (mouse_y < tly + 6)
+				timeline.ver_scroll.value -= verscrollspeed
+			
+			if (mouse_y > tly + tlh - 6)
+				timeline.ver_scroll.value += verscrollspeed
+		}
+		
+		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
+		timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
+		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
+		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
+	}
+	
 	timeline_list_first = floor(timeline.ver_scroll.value / itemh)
 	timeline_list_visible = floor(listviewh / itemh)
 	
@@ -95,7 +145,7 @@ function tab_timeline()
 		timeline_insert_pos = tlstartpos
 	else
 		timeline_insert_pos = timeline_marker
-	
+
 	// Mouse
 	mouseinmarkers = false
 	mouseintl = false
@@ -130,7 +180,7 @@ function tab_timeline()
 	tab_timeline_background(tlx, tly, tlw, tlh, itemh, mouseinnames, mousetl)
 	
 	// Timeline bar
-	tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh, mouseinnames)
+	tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh)
 	
 	// Keyframes
 	tab_timeline_keyframes(tlx, tly, tlw, tlh, itemh, tlstartpos, mouseintl, mousetl)

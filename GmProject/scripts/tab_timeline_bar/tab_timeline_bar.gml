@@ -10,9 +10,8 @@
 /// @arg timelineheight
 /// @arg itemheight
 /// @arg markerheight
-/// @arg mouseinnames
 
-function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh, mouseinnames)
+function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw, tlh, itemh, markerh)
 {
 	timeline_region_x1 = 0
 	timeline_region_x2 = 0
@@ -265,59 +264,6 @@ function tab_timeline_bar(barx, bary, barw, barh, headerh, listw, tlx, tly, tlw,
 	
 	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place") && !popup_mouseon && !toast_mouseon && !context_menu_mouseon
 	
-	// Auto scroll
-	var verscrollspeed, horscrollspeed;
-	verscrollspeed = 8
-	horscrollspeed = 15
-	
-	// Move view when selecting
-	if (window_busy = "timeline/move" || window_busy = "timeline/select" || (window_busy = "place" && mouseinnames))
-	{
-		if (mouse_y < tly + 6)
-			timeline.ver_scroll.value -= verscrollspeed
-		if (mouse_y > tly + tlh - 6)
-			timeline.ver_scroll.value += verscrollspeed
-		
-		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
-		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
-	}
-	
-	
-	// Move view when selecting/moving keyframes
-	if (window_busy = "timeline/select_keyframes" ||
-		window_busy = "timeline/move_keyframes" ||
-		window_busy = "timeline/create_region" ||
-		window_busy = "timeline/set_region_start" ||
-		window_busy = "timeline/set_region_end" ||
-		window_busy = "timeline/resize_sounds" ||
-		window_busy = "timeline/set_sound_end" ||
-		window_busy = "timeline/move_marker"
-	)
-	{
-		if (mouse_x < tlx) // no padding needed here
-			timeline.hor_scroll.value -= horscrollspeed
-		if (mouse_x > tlx + tlw - 6)
-			timeline.hor_scroll.value += horscrollspeed
-		
-		if (window_busy != "timeline/move_marker" &&
-			window_busy != "timeline/create_region" &&
-			window_busy != "timeline/set_region_start" &&
-			window_busy != "timeline/set_region_end"
-		)
-		{
-			if (mouse_y < tly + 6)
-				timeline.ver_scroll.value -= verscrollspeed
-			if (mouse_y > tly + tlh - 6)
-				timeline.ver_scroll.value += verscrollspeed
-		}
-		
-		timeline.ver_scroll.value = max(0, timeline.ver_scroll.value)
-		timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
-		
-		timeline.ver_scroll.value_goal = timeline.ver_scroll.value
-		timeline.hor_scroll.value_goal = timeline.hor_scroll.value
-	}
-
 	// Zoom
 	if (timeline_zoom_button <> 0 || (window_scroll_focus_prev = "timeline/zoom" && window_busy = "" && mouse_wheel <> 0))
 	{

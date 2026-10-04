@@ -60,10 +60,16 @@ function view_pick_depth(view, cam)
 		viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse_ext(proj_matrix)))
 		
 		// Work camera view
-		if (cam < 0)
+		if (!cam)
 		{
-			var hitpos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix));
-			viewdepth = clamp(round(point3D_distance(hitpos, tl_edit.world_pos)), 0, project_render_distance)
+			var hitpos, focuscam, focuspos;
+			hitpos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix))
+			focuscam = view_second.camera = -5 ? timeline_camera : view_second.camera
+			focuspos = cam_from
+			if (view_second.show && instance_exists(focuscam))
+				focuspos = focuscam.world_pos
+			
+			viewdepth = clamp(round(point3D_distance(hitpos, focuspos)), 0, project_render_distance)
 		}
 		
 		// Camera view

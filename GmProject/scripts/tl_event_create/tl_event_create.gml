@@ -194,6 +194,7 @@ function tl_event_create()
 	item_3d = true
 	item_custom_slot = false
 	
+	render_visible = true
 	render_res_diffuse = null
 	render_res_material = null
 	render_res_normal = null
@@ -205,7 +206,7 @@ function tl_event_create()
 	tex_obj_normal = null
 	tex_obj_normal_prev = -5
 	
-	render_visible = true
+	block_vbuffer_active = null
 
 	placed = false
 	parent_is_placed = false

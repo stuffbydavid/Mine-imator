@@ -104,6 +104,7 @@ function res_event_create()
 	particle_texture_pixeluvs_map = null
 	
 	block_vbuffer = null
+	block_vbuffer_active = null
 	
 	scenery_tl_add = null
 	scenery_tl_prompt_amount = 0

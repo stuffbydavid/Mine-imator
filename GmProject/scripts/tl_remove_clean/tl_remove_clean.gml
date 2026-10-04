@@ -16,6 +16,8 @@ function tl_remove_clean()
 		
 	// Remove from render list
 	ds_list_delete_value(render_list, id)
+	
+	render_list_depth_dirty = true
 		
 	// Remove from parent
 	ds_list_delete_value(parent.tree_list, id)

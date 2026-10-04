@@ -2797,6 +2797,7 @@
     {"id":{"name":"tl_event_destroy","path":"scripts/tl_event_destroy/tl_event_destroy.yy",},},
     {"id":{"name":"tl_filter_draw","path":"scripts/tl_filter_draw/tl_filter_draw.yy",},},
     {"id":{"name":"tl_find_save_ids","path":"scripts/tl_find_save_ids/tl_find_save_ids.yy",},},
+    {"id":{"name":"tl_get_block_res","path":"scripts/tl_get_block_res/tl_get_block_res.yy",},},
     {"id":{"name":"tl_get_parent_action","path":"scripts/tl_get_parent_action/tl_get_parent_action.yy",},},
     {"id":{"name":"tl_get_place_parent_action","path":"scripts/tl_get_place_parent_action/tl_get_place_parent_action.yy",},},
     {"id":{"name":"tl_get_save_ids","path":"scripts/tl_get_save_ids/tl_get_save_ids.yy",},},

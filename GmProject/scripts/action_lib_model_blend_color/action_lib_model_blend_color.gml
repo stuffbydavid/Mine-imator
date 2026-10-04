@@ -4,5 +4,7 @@ function action_lib_model_blend_color(color)
 		history_set_var(action_lib_model_blend_color, temp_edit.model_blend_color, color, true)
 	
 	with (temp_edit)
-		self.model_blend_color = color
+		model_blend_color = color
+	
+	lib_preview.update = true
 }

@@ -3,7 +3,7 @@ function render_startup()
 	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
 	globalvar render_view_current, render_width, render_height, render_ratio, render_pack_current, render_camera, render_camera_effects, render_camera_effect_enabled, render_start_time, render_start_surface_time,
-			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
+			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_list_depth_bounds, render_list_depth_dirty, render_block_transparent_list, render_lights, render_particles, render_hidden,
 			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
 			  render_active, render_repeat, render_world_count, render_world_block_transparent, point3D_project_error;
@@ -90,7 +90,12 @@ function render_startup()
 	render_auxiliary = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
+	
 	render_list = ds_list_create()
+	render_list_depth_bounds = [ 0, 0, 0, 0 ]
+	render_list_depth_dirty = true
+	render_block_transparent_list = [ ds_list_create(), ds_list_create(), ds_list_create() ]
+	
 	render_lights = true
 	render_particles = true
 	render_hidden = false
