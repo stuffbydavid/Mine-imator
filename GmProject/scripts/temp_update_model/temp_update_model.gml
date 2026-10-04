@@ -1,6 +1,6 @@
 /// @desc Gets the correct file and textures from the name and state or resource.
 
-function temp_update_model(copy = false)
+function temp_update_model(copy = false, updatepattern = true)
 {
 	model_file = null
 	
@@ -159,7 +159,7 @@ function temp_update_model(copy = false)
 	if (model_file != null && is_undefined(model_texture_normal_name_map[?""]))
 		model_texture_normal_name_map[?""] = model_file.texture_normal_name
 	
-	if (pattern_type != "")
+	if (pattern_type != "" && updatepattern)
 		array_add(pattern_update, id)
 	
 	if (!copy)

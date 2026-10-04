@@ -2,7 +2,7 @@ function project_startup()
 {
 	globalvar load_queue, load_format, load_folder, save_folder,
 			  temp_edit, ptype_edit, tl_edit_amount, tl_edit, obj_edit, res_edit, axis_edit, camera_effect_type_edit,
-			  temp_creator, res_creator, save_id_seed, save_id_map, tl_focus, shape_texture;
+			  temp_creator, res_creator, save_id_seed, save_id_map, tl_focus;
 	
 	load_queue = ds_priority_create()
 	
@@ -23,8 +23,6 @@ function project_startup()
 	save_id_map = ds_map_create()
 	
 	tl_focus = null
-	
-	shape_texture = texture_sprite(spr_shape)
 	
 	project_bend_style = "blocky"
 }

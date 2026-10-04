@@ -5,6 +5,8 @@ function app_startup()
 	if (!lib_startup())
 		return false
 	
+	texture_startup()
+	
 	if (!file_lib_startup())
 		return false
 	

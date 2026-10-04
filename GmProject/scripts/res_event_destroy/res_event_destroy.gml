@@ -429,4 +429,31 @@ function res_event_destroy()
 			with (app)
 				action_bench_sound_source("project")
 	}
+	
+	// Free texture page
+	res_clear_pack_res_textures()
+	
+	if (pack_res_texture_map != null)
+	{
+		ds_map_destroy(pack_res_texture_map)
+		pack_res_texture_map = null
+	}
+	
+	if (pack_sprite_texture_map != null)
+	{
+		var key = ds_map_find_first(pack_sprite_texture_map);
+		while (!is_undefined(key))
+		{
+			texture_free(pack_sprite_texture_map[?key])
+			key = ds_map_find_next(pack_sprite_texture_map, key)
+		}
+		
+		ds_map_destroy(pack_sprite_texture_map)
+	}
+	
+	if (render_pack_current = id)
+		render_pack_current = null
+	
+	if (pack_texture_page >= 0)
+		texture_page_destroy(pack_texture_page)
 }

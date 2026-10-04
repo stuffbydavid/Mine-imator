@@ -12,14 +12,14 @@ function env_ground_update_texture_normal()
 	// Clear old
 	if (env_ground_normal_ani)
 	{
-		if (env_ground_ani_tex_normal[0] != null)
+		if (env_ground_ani_texture_normal[0] != null)
 			for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
 				texture_free(env_ground_ani_texture_normal[f])
 	}
 	else if (env_ground_texture_normal != null)
 		texture_free(env_ground_texture_normal)
 	
-	var size, bx, by, surf, tex, decodedslot, sheet, slot;
+	var size, bx, by, surf, decodedslot, sheet, slot;
 	decodedslot = minecraft_assets_block_texture_picker_slot_decode(env_ground_slot)
 	sheet = decodedslot[0]
 	slot = decodedslot[1]
@@ -28,6 +28,8 @@ function env_ground_update_texture_normal()
 	{
 		env_ground_normal_ani = false
 		env_ground_texture_normal = sprite_duplicate(spr_default_normal)
+		
+		sprite_set_texture_page(env_ground_texture_normal, false)
 		
 		return 0
 	}
@@ -54,6 +56,8 @@ function env_ground_update_texture_normal()
 			env_ground_normal_ani = false
 			env_ground_texture_normal = sprite_duplicate(spr_default_normal)
 			
+			sprite_set_texture_page(env_ground_texture_normal, false)
+			
 			return 0
 		}
 		
@@ -77,7 +81,7 @@ function env_ground_update_texture_normal()
 				draw_clear_alpha(c_black, 0)
 				draw_texture_part(texres.block_sheet_texture_normal[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
 				
-				env_ground_ani_texture_normal[f] = texture_surface(surf)
+				env_ground_ani_texture_normal[f] = texture_surface(surf, true, false)
 			}
 		}
 		
@@ -87,7 +91,7 @@ function env_ground_update_texture_normal()
 			draw_clear_alpha(c_black, 0)
 			draw_texture_part(texres.block_sheet_texture_normal[sheet], 0, 0, bx, by, size, size)
 			
-			env_ground_texture_normal = texture_surface(surf)
+			env_ground_texture_normal = texture_surface(surf, true, false)
 		}
 	}
 	surface_reset_target()

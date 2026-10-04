@@ -14,7 +14,7 @@ function minecraft_update_patterns()
 				with (obj)
 				{
 					if (sprite_exists(pattern_skin))
-						sprite_delete(pattern_skin)
+						texture_free(pattern_skin)
 					
 					var res;
 					with (obj)
@@ -32,7 +32,7 @@ function minecraft_update_patterns()
 			with (obj)
 			{
 				if (sprite_exists(pattern_skin))
-					sprite_delete(pattern_skin)
+					texture_free(pattern_skin)
 				
 				var res;
 				with (obj)

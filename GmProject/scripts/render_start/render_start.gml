@@ -14,6 +14,8 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_camera_effects = null
 	render_camera_effect_enabled = null
 	
+	render_pack_current = res_eval(project_pack_res)
+	
 	if ((owner = app.view_second && render_effects) || owner = "image" || owner = "movie" || owner = camera)
 	{
 		var fxscope = camera != null ? camera : app;

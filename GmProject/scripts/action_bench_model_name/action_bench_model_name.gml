@@ -59,12 +59,6 @@ function action_bench_model_name(name)
 			temp_update_model_part()
 		
 		temp_update_model_shape()
-		model_shape_update_color()
-		
-		if (pattern_type != "")
-			array_add(pattern_update, id)
-		
-		temp_update_armor(id)
 		
 		if (preview != null)
 		{

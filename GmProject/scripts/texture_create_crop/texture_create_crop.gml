@@ -4,8 +4,10 @@
 /// @arg y
 /// @arg width
 /// @arg height
+/// @arg [usepage]
+/// @arg [render]
 
-function texture_create_crop(tex, xx, yy, wid, hei)
+function texture_create_crop(tex, xx, yy, wid, hei, usepage = true, render = true)
 {
 	var ntex, surf;
 	xx = -xx
@@ -20,7 +22,8 @@ function texture_create_crop(tex, xx, yy, wid, hei)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
-	ntex = texture_surface(surf)
+	
+	ntex = texture_surface(surf, render, usepage)
 	surface_free(surf)
 	
 	return ntex

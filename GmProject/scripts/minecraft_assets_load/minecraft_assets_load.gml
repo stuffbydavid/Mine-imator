@@ -233,6 +233,9 @@ function minecraft_assets_load()
 				// Create sheets and texture depth
 				with (mc_res)
 				{
+					texture_page_set_current(pack_texture_page)
+					res_load_pack_render_textures()
+					
 					var cachefile = file_directory_get() + app.setting_minecraft_assets_version + ".zip.packcache";
 					pack_cache_loaded = file_exists_lib(cachefile) && res_load_pack_cache(cachefile)
 					if (pack_cache_loaded)
@@ -246,6 +249,7 @@ function minecraft_assets_load()
 						res_load_pack_model_textures()
 						res_load_pack_block_textures()
 						res_load_pack_item_textures("diffuse", "")
+						
 						for (var size = 0; size < e_item_sheet.amount; size++)
 						{
 							if (item_sheet_texture[size] != null)
@@ -268,6 +272,8 @@ function minecraft_assets_load()
 						res_save_pack_cache(cachefile)
 					}
 					res_update_colors(biome_list[|1].name)
+					
+					texture_page_reset()
 				}
 				
 				load_assets_stage = "misc"

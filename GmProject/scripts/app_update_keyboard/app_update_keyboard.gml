@@ -22,7 +22,7 @@ function app_update_keyboard()
 		if (keyboard_check(vk_shift))
 			debug_info_corner = (debug_info_corner + 1) mod 4
 		else
-			debug_info = (debug_info + 1) mod 3
+			debug_info = (debug_info + 1) mod 4
 	}
 
 	// First-person build shortcuts

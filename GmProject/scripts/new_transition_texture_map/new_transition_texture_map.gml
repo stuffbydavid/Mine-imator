@@ -57,7 +57,7 @@ function new_transition_texture_map(w, h, padding, center)
 		surface_reset_target()
 		gpu_set_tex_filter(false)
 		
-		map[?transition_list[|t]] = texture_surface(surfaa)
+		map[?transition_list[|t]] = texture_surface(surfaa, false)
 		
 		if (center)
 			sprite_set_offset(map[?transition_list[|t]], w/2, h/2)

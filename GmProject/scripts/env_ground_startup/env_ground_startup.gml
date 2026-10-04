@@ -18,7 +18,7 @@ function env_ground_startup()
 	env_ground_normal_ani = false
 	env_ground_ani_texture[0] = null
 	env_ground_ani_texture_material[0] = null
-	env_ground_ani_tex_normal[0] = null
+	env_ground_ani_texture_normal[0] = null
 	
 	env_ground_vbuffer = vbuffer_start()
 	

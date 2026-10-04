@@ -59,6 +59,7 @@ function project_reset()
 		{
 			with (musicres)
 				res_remove_lists()
+			
 			musicres.creator = bench_settings
 		}
 	}
@@ -86,7 +87,12 @@ function project_reset()
 		instance_destroy()
 	
 	with (mc_res)
+	{
 		count = 0
+		res_clear_pack_res_textures()
+	}
+	
+	texture_page_reset()
 
 	render_apply_settings(render_default_settings, e_renderer.STANDARD)
 	render_apply_settings(render_default_settings, e_renderer.REALISTIC)

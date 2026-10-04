@@ -396,7 +396,8 @@ namespace CppProject
         if (useCache && QFile::exists(vsCacheName) && QFile::exists(fsCacheName))
         {
             QDateTime cacheModified = std::min(QFileInfo(vsCacheName).lastModified(), QFileInfo(fsCacheName).lastModified());
-            if (QFileInfo(__FILE__).lastModified() >= cacheModified)
+            if (QFileInfo(__FILE__).lastModified() >= cacheModified ||
+                QFileInfo(QFileInfo(__FILE__).absolutePath() + "/Shader.cpp").lastModified() >= cacheModified)
                 useCache = false;
 
             for (const QString& sourceName : sourceDependencies)
@@ -411,6 +412,10 @@ namespace CppProject
     #else
         vsCacheName = ":/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ":/Shaders/Compiled/" + name + ".fsh.d3d";
+    #endif
+
+    #if !RELEASE_MODE
+        SaveConvertedCode(vsCode, fsCode, "hlsl");
     #endif
 
         if (!useCache || !QFile::exists(vsCacheName) || !QFile::exists(fsCacheName))

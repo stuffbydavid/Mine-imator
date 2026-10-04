@@ -30,6 +30,14 @@ function render_world_tl()
 		if (app.place_content_mouseon != null && !app.content_mouseon)
 			return 0
 	}
+		
+	// Transparent block pass
+	if (render_world_block_transparent = true &&
+		type != e_tl_type.SCENERY &&
+		type != e_tl_type.BLOCK &&
+		type != e_tl_type.MODEL &&
+		type != e_tl_type.PARTICLE_SPAWNER)
+		return 0
 	
 	// Only render glow effect?
 	if ((glow && only_render_glow) && render_mode != e_render_mode.AUXILIARY && render_mode != e_render_mode.CLICK)
@@ -77,9 +85,9 @@ function render_world_tl()
 		type = e_tl_type.POINT_LIGHT ||
 		type = e_tl_type.CAMERA)
 	{
-		if (render_mode = e_render_mode.CLICK)
+		if (render_mode = e_render_mode.CLICK && render_world_block_transparent != true)
 		{
-			render_set_texture(shape_texture)
+			render_set_texture(spr_shape)
 			vbuffer_render(render_click_box, world_pos)
 		}
 		
@@ -87,16 +95,22 @@ function render_world_tl()
 			return 0
 	}
 	
+	// Discard alpha zero objects
 	if ((value_inherit[e_value.ALPHA] * 1000) = 0)
 		return 0
 	
 	// Set render options
+	if (render_res_diffuse != null && render_res_diffuse.object_index = obj_resource)
+		render_apply_res(render_res_diffuse)
+	
 	render_set_culling(!backfaces)
+	
 	shader_texture_filter_linear = texture_blur
 	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
 	
 	shader_blend_color = value_inherit[e_value.RGB_MUL]
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
+	
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
 	if (render_mode = e_render_mode.G_BUFFERS)
@@ -256,7 +270,7 @@ function render_world_tl()
 	else
 		tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
 	
-	if (render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
+	if (glint_enabled && !is_undefined(render_shader_obj.uniform_map[?"uGlintEnabled"]) && render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 	
 	spd = app.env_time * glint_speed * app.project_render_glint_speed
@@ -271,7 +285,7 @@ function render_world_tl()
 		matrix_set(matrix_world, matrix_render)
 		
 		// Reset material textures for other timelines
-		if (type != e_tl_type.SCENERY && type != e_tl_type.BLOCK)
+		if (type != e_tl_type.SCENERY && type != e_tl_type.BLOCK && type != e_tl_type.MODEL_PART)
 		{
 			render_set_texture(spr_default_material, "Material")
 			render_set_texture(spr_default_normal, "Normal")
@@ -332,13 +346,17 @@ function render_world_tl()
 					var res = res_eval(value_inherit[e_value.TEXTURE_OBJ]);
 					if (res = null)
 						res = res_eval(temp.model_tex)
+					
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
+					
 					render_world_block(temp.model.block_vbuffer, res)
 					
 					with (temp)
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
-					render_world_block_map(temp.model.model_block_map, res)
+					
+					if (render_world_block_transparent != true)
+						render_world_block_map(temp.model.model_block_map, res)
 				}
 				break
 			}

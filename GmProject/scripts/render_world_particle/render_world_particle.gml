@@ -5,10 +5,23 @@ function render_world_particle()
 	var temp, prevcolor, prevalpha;
 	temp = type.temp
 	
+	// Transparent block pass
+	if (render_world_block_transparent = true)
+	{
+		if (temp = particle_sheet || temp = particle_template)
+			return 0
+		
+		if (temp.type != e_temp_type.BLOCK && temp.type != e_temp_type.SCENERY &&
+			(temp.type != e_temp_type.MODEL || temp.model = null || temp.model.model_format != e_model_format.BLOCK))
+			return 0
+	}
+	
 	prevcolor = shader_blend_color
 	prevalpha = shader_blend_alpha
+	
 	shader_blend_color = color_multiply(prevcolor, color)
 	shader_blend_alpha *= alpha
+	
 	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
 	
 	if (temp != particle_sheet && temp != particle_template)
@@ -87,7 +100,8 @@ function render_world_particle()
 					
 					with (temp)
 						res = temp_get_model_texobj(null)
-					render_world_block_map(temp.model.model_block_map, res)
+					if (render_world_block_transparent != true)
+						render_world_block_map(temp.model.model_block_map, res)
 					break
 				}
 			}
@@ -156,13 +170,17 @@ function render_world_particle()
 		if (type.temp = particle_sheet)
 		{
 			var res = res_eval(type.sprite_tex);
+			render_apply_res(res)
 			render_set_texture(res.particles_texture[type.sprite_tex_image])
 		}
 		else
 		{
-			var template = particle_template_map[?type.sprite_template];
-			var res = res_eval(type.sprite_template_tex);
-			var tex = res.particle_texture_atlas_map[?template.name];
+			var temp, res, tex;
+			temp = particle_template_map[?type.sprite_template]
+			res = res_eval(type.sprite_template_tex)
+			tex = res.particle_texture_atlas_map[?temp.name]
+			
+			render_apply_res(res)
 			
 			if (is_undefined(tex))
 			{

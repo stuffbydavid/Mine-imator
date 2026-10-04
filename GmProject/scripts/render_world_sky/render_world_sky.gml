@@ -59,7 +59,7 @@ function render_world_sky()
 		
 		shader_texture_filter_linear = false
 		render_set_uniform_color("uBlendColor", env_fog_color_final, 1)
-		render_set_texture(env_fog_texture)
+		render_set_texture(spr_fog)
 		
 		// Fog sphere radius cannot exceed render distance
 		var fogscalemath, fogscalexy, fogscalez;
@@ -87,7 +87,7 @@ function render_world_sky()
 				env_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
 			
 			render_set_uniform_color("uBlendColor", env_night_sky_stars_color, env_night_alpha)
-			render_set_texture(env_sky_stars_texture)
+			render_set_texture(spr_stars)
 			vbuffer_render_matrix(env_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
 		}
 		
@@ -100,6 +100,8 @@ function render_world_sky()
 		render_set_uniform_color("uBlendColor", c_white, vis)
 		
 		var sunres = res_eval(env_sky_sun_tex);
+		render_apply_res(sunres)
+		
 		if (sunres.type = e_res_type.PACK)
 			render_set_texture(sunres.sun_texture)
 		else
@@ -114,6 +116,8 @@ function render_world_sky()
 		render_set_uniform_color("uBlendColor", c_white, vis)
 		
 		var moonres = res_eval(env_sky_moon_tex);
+		render_apply_res(moonres)
+		
 		if (moonres.type = e_res_type.PACK && moonres.ready)
 		{
 			var phase = env_sky_moon_phase;

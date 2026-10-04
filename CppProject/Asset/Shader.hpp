@@ -37,6 +37,8 @@ namespace CppProject
 	#endif
 		void LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache);
 		void LoadCodeCommon(QString& code);
+
+		// Load Shady macros and expand them inline in the shader code.
 		BoolType ExpandShadyInline(QString& code, QString extension, QStringList includeStack = {});
 		BoolType LoadShadyMacro(QString shaderName, QString macroName, QString extension,
 			QString& code, QStringList includeStack);
@@ -99,6 +101,11 @@ namespace CppProject
 
 		// Checks if any shader needs to be reloaded.
 		static void CheckReload();
+
+#if !RELEASE_MODE
+		// Saves converted shader sources for debugging.
+		void SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension);
+#endif
 
 		// The format of vertices sent into the shader.
 		enum VertexFormat : int
@@ -168,7 +175,7 @@ namespace CppProject
 		};
 		QHash<IntType, UniformState> uniforms;
 		IntType numUniforms = 0;
-		IntType objRectUniformIndex = -1;
+		QHash<IntType, IntType> objRectUniformIndexMap;
 		QVector<float> floatData;
 		QVector<QMatrix4x4> matrixData;
 
@@ -205,6 +212,7 @@ namespace CppProject
 		MatrixState matrixState[6];
 
 		static QVector<Shader*> allShaders;
+		static bool saveConverted;
 		static TexturePage* currentPage;
 		static QMap<QString, DataType> dataTypeNameMap;
 		static QMap<DataType, IntType> dataTypeSizeMap;

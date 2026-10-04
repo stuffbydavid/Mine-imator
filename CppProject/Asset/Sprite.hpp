@@ -36,6 +36,7 @@ namespace CppProject
 			QImage image;
 			TexturePageLocation* pageLoc = nullptr;
 			Texture* texture = nullptr;
+			IntType texturePageIndex = -1;
 		};
 
 		QSize size = { 0, 0 };

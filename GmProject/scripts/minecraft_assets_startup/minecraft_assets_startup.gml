@@ -22,7 +22,7 @@ function minecraft_assets_startup()
 		new_assets_scroll = new_obj(obj_scrollbar)
 		
 		if (new_assets_image != "" && file_exists_lib(new_assets_image))
-			new_assets_image_texture = texture_create(new_assets_image)
+			new_assets_image_texture = texture_create(new_assets_image, false)
 		else
 			new_assets_image_texture = null
 		

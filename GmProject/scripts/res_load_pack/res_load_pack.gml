@@ -3,6 +3,7 @@
 function res_load_pack()
 {
 	var fn = load_folder + "/" + filename;
+	texture_page_set_current(pack_texture_page)
 	
 	switch (load_stage)
 	{
@@ -16,6 +17,7 @@ function res_load_pack()
 			{
 				if (!unzip(fn))
 				{
+					texture_page_reset()
 					log("Error unzipping pack")
 					error("error/unzip_pack")
 					with (app)
@@ -27,6 +29,7 @@ function res_load_pack()
 			type = e_res_type.PACK
 			load_stage = "modeltextures"
 			load_assets_dir = unzip_directory
+			
 			res_load_pack_version()
 			
 			with (app)
@@ -34,6 +37,7 @@ function res_load_pack()
 				popup_loading.text = text_get("load_pack/model_textures")
 				popup_loading.progress = 0.25
 			}
+			
 			break
 		}
 		
@@ -44,11 +48,13 @@ function res_load_pack()
 			res_load_pack_model_textures()
 			
 			load_stage = "blocktextures"
+			
 			with (app)
 			{
 				popup_loading.text = text_get("load_pack/block_textures")
 				popup_loading.progress = 0.5
 			}
+			
 			break
 		}
 		
@@ -62,11 +68,13 @@ function res_load_pack()
 			res_load_pack_block_textures()
 			
 			load_stage = "itemtextures"
+			
 			with (app)
 			{
 				popup_loading.text = text_get("load_pack/item_textures")
 				popup_loading.progress = 0.75
 			}
+			
 			break
 		}
 		
@@ -85,8 +93,10 @@ function res_load_pack()
 			res_save_pack_cache(save_folder + "/" + filename + ".packcache")
 			
 			load_stage = "done"
+			
 			with (app)
 				popup_loading.progress = 0.9
+			
 			break
 		}
 
@@ -94,11 +104,14 @@ function res_load_pack()
 		case "done":
 		{
 			res_update_colors()
+			
 			ready = true
 			app.history_resource_update = true
 			
 			log("Pack loaded")
 			move_all_to_texture_page()
+			
+			texture_page_reset()
 			
 			// Update dependent resources
 			with (obj_template)
@@ -137,6 +150,7 @@ function res_load_pack()
 			}
 			
 			load_stage = "next"
+			
 			break
 		}
 		
@@ -148,4 +162,6 @@ function res_load_pack()
 			break
 		}
 	}
+	
+	texture_page_reset()
 }

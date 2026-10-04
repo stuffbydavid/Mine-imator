@@ -12,6 +12,7 @@ function render_world_sky_clouds()
 		render_set_uniform("uSSAO", 0)
 	
 	var res = res_eval(env_sky_clouds_tex);
+	render_apply_res(res)
 	
 	// Shading
 	render_set_uniform_int("uIsSky", 1)

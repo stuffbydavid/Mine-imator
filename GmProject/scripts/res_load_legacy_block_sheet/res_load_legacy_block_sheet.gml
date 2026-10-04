@@ -14,7 +14,7 @@ function res_load_legacy_block_sheet(fn, format)
 	
 	// Find dimensions
 	var oldtex, sheetwid, blocksize;
-	oldtex = texture_create(fn)
+	oldtex = texture_create(fn, true, false)
 	sheetwid = 16
 	if (format >= e_project.FORMAT_100_DEMO_2)
 		sheetwid = 32
@@ -78,6 +78,7 @@ function res_load_legacy_block_sheet(fn, format)
 	
 	newtex = texture_surface(newsurf)
 	surface_free(newsurf)
+	texture_free(oldtex)
 	
 	return newtex
 }

@@ -17,7 +17,7 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 	patterndir = (type = "banner" ? "entity/banner/" : "entity/shield/")
 	
 	skinratio = 1
-	maskarray = []
+	maskarray = array_create(ds_list_size(minecraft_pattern_list), null)
 	
 	// Don't bother generating patterns with colors
 	if (res.type = e_res_type.SKIN)
@@ -35,16 +35,21 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 	}
 	
 	// Generate masks
+	var size = 64 * skinratio;
 	shader_mask = (res.pack_format < e_minecraft_pack.FORMAT_115)
-	for (var i = 0; i < ds_list_size(minecraft_pattern_list); i++)
+	maskarray[0] = texture_create_crop(res.model_texture_map[?patterndir + minecraft_pattern_list[|0]], 0, 0, size, size, false)
+	
+	for (var i = 0; i < array_length(patternlist); i++)
 	{
-		var patternname = minecraft_pattern_list[|i];
-		array_add(maskarray, texture_create_crop(res.model_texture_map[?patterndir + patternname], 0, 0, 64 * skinratio, 64 * skinratio))
+		var pattern = ds_list_find_index(minecraft_pattern_list, patternlist[i]);
+		if (pattern >= 0 && maskarray[pattern] = null)
+			maskarray[pattern] = texture_create_crop(res.model_texture_map[?patterndir + patternlist[i]], 0, 0, size, size, false)
 	}
+	
 	shader_mask = false
 	
 	// Create skin
-	var patternsurf = surface_create(64 * skinratio, 64 * skinratio);
+	var patternsurf = surface_create(size, size);
 	
 	surface_set_target(patternsurf)
 	{
@@ -56,7 +61,8 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 		for (var i = 0; i < array_length(patternlist); i++)
 		{
 			var pattern = ds_list_find_index(minecraft_pattern_list, patternlist[i]);
-			draw_image(maskarray[pattern], 0, 0, 0, 1, 1, colorlist[i], 1)
+			if (pattern >= 0)
+				draw_image(maskarray[pattern], 0, 0, 0, 1, 1, colorlist[i], 1)
 		}
 		
 		// Alpha fix
@@ -70,7 +76,8 @@ function minecraft_update_pattern_generate(type, color, patternlist, colorlist, 
 	
 	// Destroy pattern masks
 	for (var i = 0; i < array_length(maskarray); i++)
-		texture_free(maskarray[i])
+		if (maskarray[i] != null)
+			texture_free(maskarray[i])
 	
 	surface_free(patternsurf)
 	

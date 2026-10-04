@@ -123,7 +123,12 @@ namespace CppProject
 
 		Sprite::Frame* frame = sprite->frames[0];
 		if (frame->pageLoc)
-			return frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+		{
+			if (frame->pageLoc->page)
+				return frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+			else
+				return QImage();
+		}
 		
 		return frame->image;
 	}

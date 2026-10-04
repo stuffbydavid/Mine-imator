@@ -1,6 +1,8 @@
 /// @desc Copies all the template variables into the given object.
+/// @arg object
+/// @arg [copypatternskin]
 
-function temp_copy(to)
+function temp_copy(to, copypatternskin = true)
 {
 	to.type = type
 	to.name = name
@@ -28,7 +30,7 @@ function temp_copy(to)
 			to.pattern_base_color = pattern_base_color
 			to.pattern_pattern_list = array_copy_1d(pattern_pattern_list)
 			to.pattern_color_list = array_copy_1d(pattern_color_list)
-			if (pattern_skin != null)
+			if (copypatternskin && pattern_skin != null)
 				to.pattern_skin = sprite_duplicate(pattern_skin)
 			else
 				to.pattern_skin = null

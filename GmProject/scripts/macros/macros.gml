@@ -167,6 +167,9 @@ function macros()
 	#macro project_pack_res				-3
 	#macro particle_sheet				-5
 	#macro particle_template			-6
+	#macro texture_page_ui				0
+	#macro texture_page_res				1
+	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
 	#macro default_model				"human"

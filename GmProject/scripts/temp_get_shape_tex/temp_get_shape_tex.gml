@@ -17,5 +17,5 @@ function temp_get_shape_tex(texobj, def = null)
 	if (def != null)
 		return def
 	else
-		return shape_texture
+		return spr_shape
 }

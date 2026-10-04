@@ -194,7 +194,7 @@ function tl_remove_clean()
 				ds_map_destroy(model_color_map)
 
 			if (sprite_exists(pattern_skin))
-				sprite_delete(pattern_skin)
+				texture_free(pattern_skin)
 		}
 		else if (type = e_tl_type.BLOCK)
 			block_vbuffer_destroy()

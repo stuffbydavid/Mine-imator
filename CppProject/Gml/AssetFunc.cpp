@@ -133,7 +133,10 @@ namespace CppProject
 	void sprite_delete(IntType id)
 	{
 		if (Sprite* spr = FindSprite(id))
+		{
+			GFX->SubmitBatch();
 			delete spr;
+		}
 	}
 
 	IntType sprite_duplicate(IntType id)

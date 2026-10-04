@@ -123,6 +123,9 @@ namespace CppProject
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
 
+		// Set the highest sampled mipmap level
+		void SetMaxMip(IntType value);
+
 		// Converts an integer to a QColor
 		static QColor IntToQColor(IntType in, RealType alpha = 1.0);
 
@@ -164,12 +167,13 @@ namespace CppProject
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
+		IntType maxMip = 1000;
 		BoolType mipMap = true;
 
 	#if OS_WINDOWS
 		ID3D11Device* d3dDevice = nullptr;
 		ID3D11DeviceContext* d3dContext = nullptr;
-		QHash<D3D11_FILTER, ID3D11SamplerState*> d3dSamplerStateMap;
+		QHash<QPair<IntType, IntType>, ID3D11SamplerState*> d3dSamplerStateMap;
 		QHash<D3D11_CULL_MODE, ID3D11RasterizerState*> d3dRasterizerStateMap;
 		enum DepthStencilState
 		{

@@ -185,6 +185,10 @@ namespace CppProject
 		vsCode = defines + vsCode;
 		fsCode = defines + fsCode;
 
+	#if !RELEASE_MODE
+		SaveConvertedCode(vsCode, fsCode, "glsl");
+	#endif
+
 		program = new QOpenGLShaderProgram;
 		if (!program->addShaderFromSourceCode(QOpenGLShader::Vertex, vsCode))
 		{

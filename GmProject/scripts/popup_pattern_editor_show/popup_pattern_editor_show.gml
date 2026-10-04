@@ -30,11 +30,11 @@ function popup_pattern_editor_show(obj)
 					temp_event_create()
 			}
 			
-			temp_copy(other.pattern_edit_preview)
+			temp_copy(other.pattern_edit_preview, false)
 			
 			with (other.pattern_edit_preview)
 			{
-				temp_update_model()
+				temp_update_model(false, false)
 				temp_update_model_shape()
 			}
 		}
@@ -64,7 +64,7 @@ function popup_pattern_editor_show(obj)
 		{
 			// Clear previous patterns
 			for (var i = 0; i < array_length(pattern_sprites); i++)
-				sprite_delete(pattern_sprites[i])
+				texture_free(pattern_sprites[i])
 			
 			pattern_sprites = []
 			
@@ -75,17 +75,18 @@ function popup_pattern_editor_show(obj)
 			for (var i = 0; i < ds_list_size(minecraft_pattern_list); i++)
 			{
 				var bannername = minecraft_pattern_list[|i];
-				array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner/" + bannername], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio))
+				array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner/" + bannername], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio, true, false))
 			}
 			shader_mask = false
 			
 			// Crop texture
-			array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner/banner_base"], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio))
+			array_add(pattern_sprites, texture_create_crop(res.model_texture_map[?"entity/banner/banner_base"], res_ratio, res_ratio, 20 * res_ratio, 40 * res_ratio, true, false))
 			
 			pattern_resource = res
 		}
 		
 		update = true
+		preview.update = true
 	}
 	
 	popup_show(popup_pattern_editor)

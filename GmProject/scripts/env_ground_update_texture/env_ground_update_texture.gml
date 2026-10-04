@@ -27,7 +27,7 @@ function env_ground_update_texture()
 	if (sheet < 0)
 	{
 		env_ground_ani = false
-		env_ground_texture = texture_create_missing()
+		env_ground_texture = texture_create_missing(16, true, false)
 		env_ground_name = ""
 		
 		return 0
@@ -54,7 +54,7 @@ function env_ground_update_texture()
 		if (texres.block_sheet_texture[e_block_sheet.ANIMATED] = null)
 		{
 			env_ground_ani = false
-			env_ground_texture = texture_create_missing()
+			env_ground_texture = texture_create_missing(16, true, false)
 			env_ground_name = ""
 			
 			return 0
@@ -81,8 +81,7 @@ function env_ground_update_texture()
 				draw_clear_alpha(c_black, 0)
 				draw_texture_part(texres.block_sheet_texture[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
 				
-				env_ground_ani_texture[f] = texture_surface(surf)
-				sprite_set_texture_page(env_ground_ani_texture[f], false)
+				env_ground_ani_texture[f] = texture_surface(surf, true, false)
 			}
 		}
 		
@@ -92,8 +91,7 @@ function env_ground_update_texture()
 			draw_clear_alpha(c_black, 0)
 			draw_texture_part(texres.block_sheet_texture[sheet], 0, 0, bx, by, size, size)
 			
-			env_ground_texture = texture_surface(surf)
-			sprite_set_texture_page(env_ground_texture, false)
+			env_ground_texture = texture_surface(surf, true, false)
 		}
 	}
 	surface_reset_target()

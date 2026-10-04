@@ -16,7 +16,7 @@ function minecraft_update_armor()
 				for (var j = 0; j < 4; j++)
 				{
 					if (sprite_exists(armor_skin_array[j]))
-						sprite_delete(armor_skin_array[j])
+						texture_free(armor_skin_array[j])
 				}
 				
 				var res;

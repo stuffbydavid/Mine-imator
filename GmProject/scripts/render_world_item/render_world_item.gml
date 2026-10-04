@@ -12,6 +12,8 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 	for (var c = e_texture_channel.DIFFUSE; c < e_texture_channel.amount; c++)
 		res[c] = res_eval(res[c])
 	
+	render_apply_res(res[e_texture_channel.DIFFUSE])
+	
 	if (facecamera)
 	{
 		var mat, rotz, rotmat;

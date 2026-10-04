@@ -156,7 +156,7 @@ namespace CppProject
 
 	void gpu_set_tex_max_mip(IntType maxmip)
 	{
-		// Do nothing
+		GFX->SetMaxMip(maxmip);
 	}
 
 	void gpu_set_tex_mip_bias(IntType bias)
@@ -178,7 +178,11 @@ namespace CppProject
 		GFX->mipMap = enabled;
 
 		for (IntType s = 0; s < GFX->shader->numSamplers; s++)
-			GFX->shader->samplerState[s].changed = true;
+		{
+			Shader::SamplerState& state = GFX->shader->samplerState[s];
+			state.mipMap = enabled;
+			state.changed = true;
+		}
 	}
 
 	void gpu_set_tex_mip_filter_ext(IntType sampler, IntType filter)

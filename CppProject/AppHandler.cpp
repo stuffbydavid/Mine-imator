@@ -74,6 +74,11 @@ namespace CppProject
 					
 					continue;
 				}
+				else if (arg == "--saveShaders" && !RELEASE_MODE)
+				{
+					Shader::saveConverted = true;
+					continue;
+				}
 				else if (arg == "--test" && !RELEASE_MODE)
 					headless = true;
 
@@ -290,8 +295,9 @@ namespace CppProject
 		prRenderer = new PrimitiveRenderer;
 		vbRenderer = new VertexBufferRenderer;
 
-		// First texture page
-		new TexturePage;
+		// Reserve UI and resource texture pages before loading assets
+		texture_page_set_current(texture_page_create());
+		texture_page_create();
 
 		// Load sprites and shaders into memory
 		Shader::Init();

@@ -35,11 +35,15 @@ function minecraft_assets_load_startup()
 		save_id = "minecraft"
 		type = e_res_type.PACK
 		display_name = "Minecraft"
+		
 		font_minecraft = true
 		font = new_minecraft_font()
 		font_preview = font
 		font_no_aa = font
+		
 		material_format = e_material.FORMAT_NONE
+		
+		pack_texture_page = texture_page_create()
 	}
 	
 	// Load assets from version in settings, if it fails, reset to default

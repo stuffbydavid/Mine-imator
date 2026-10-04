@@ -2,5 +2,5 @@
 
 function texture_duplicate(tex)
 {
-	return sprite_duplicate(tex)
+	return texture_page_add_res(sprite_duplicate(tex))
 }

@@ -7,6 +7,9 @@ function render_world_block_map(modelmap, res)
 	if (modelmap = null)
 		return 0
 	
+	res = res_eval(res)
+	render_apply_res(res)
+	
 	var key = ds_map_find_first(modelmap);
 	while (!is_undefined(key))
 	{

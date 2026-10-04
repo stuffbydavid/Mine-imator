@@ -7,25 +7,14 @@ function render_world(mode)
 		shader_use()
 	
 	shader_check_uniform = true
-	
-	var i, renderlistsize;
-	renderlistsize = ds_list_size(render_list)
+	render_world_block_transparent = false
 	
 	render_world_tl_reset()
 	
-	// Render negative depth
-	for (i = 0; i < renderlistsize; i++)
-	{
-		var tl = render_list[|i];
-		
-		if (tl.depth >= 0)
-			break
-		
-		with (tl)
-			render_world_tl()
-	}
+	// Negative depth objects
+	render_world_list(-1)
 	
-	// Neutral depth (0)
+	// Neutral depth ground and clouds
 	if (render_mode != e_render_mode.CLICK &&
 		render_mode != e_render_mode.SELECT &&
 		render_mode != e_render_mode.PLACE_SELECT &&
@@ -41,11 +30,13 @@ function render_world(mode)
 		render_world_tl_reset()
 	}
 	
-	// Positive depth
-	for (; i < renderlistsize; i++)
-		with (render_list[|i])
-			render_world_tl()
+	// Neutral and positive depth objects
+	render_world_list(0)
+	render_world_list(1)
 	
+	render_world_block_transparent = null
+	
+	// Build box
 	if (app.place_build)
 		render_world_build_box()
 

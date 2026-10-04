@@ -27,7 +27,7 @@ function env_ground_update_texture_material()
 	if (sheet < 0)
 	{
 		env_ground_material_ani = false
-		env_ground_texture_material = texture_create_fill(c_black)
+		env_ground_texture_material = texture_create_fill(c_black, 16, false)
 		
 		return 0
 	}
@@ -52,7 +52,7 @@ function env_ground_update_texture_material()
 		if (texres.block_sheet_texture_material[e_block_sheet.ANIMATED] = null)
 		{
 			env_ground_material_ani = false
-			env_ground_texture_material = texture_create_fill(c_black)
+			env_ground_texture_material = texture_create_fill(c_black, 16, false)
 			
 			return 0
 		}
@@ -77,7 +77,7 @@ function env_ground_update_texture_material()
 				draw_clear_alpha(c_black, 0)
 				draw_texture_part(texres.block_sheet_texture_material[e_block_sheet.ANIMATED][f], 0, 0, bx, by, size, size)
 				
-				env_ground_ani_texture_material[f] = texture_surface(surf)
+				env_ground_ani_texture_material[f] = texture_surface(surf, true, false)
 			}
 		}
 		
@@ -87,7 +87,7 @@ function env_ground_update_texture_material()
 			draw_clear_alpha(c_black, 0)
 			draw_texture_part(texres.block_sheet_texture_material[sheet], 0, 0, bx, by, size, size)
 			
-			env_ground_texture_material = texture_surface(surf)
+			env_ground_texture_material = texture_surface(surf, true, false)
 		}
 	}
 	surface_reset_target()

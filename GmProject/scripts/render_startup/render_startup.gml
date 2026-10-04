@@ -2,11 +2,11 @@ function render_startup()
 {
 	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
-	globalvar render_view_current, render_width, render_height, render_ratio, render_camera, render_camera_effects, render_camera_effect_enabled, render_start_time, render_start_surface_time,
+	globalvar render_view_current, render_width, render_height, render_ratio, render_pack_current, render_camera, render_camera_effects, render_camera_effect_enabled, render_start_time, render_start_surface_time,
 			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_lights, render_particles, render_hidden,
 			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
-			  render_active, render_repeat, render_world_count, point3D_project_error;
+			  render_active, render_repeat, render_world_count, render_world_block_transparent, point3D_project_error;
 	
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
@@ -59,6 +59,7 @@ function render_startup()
 	render_width = 1
 	render_height = 1
 	render_ratio = 1
+	render_pack_current = null
 	render_camera = null
 	render_camera_effects = null
 	render_camera_effect_enabled = null
@@ -168,6 +169,7 @@ function render_startup()
 	render_post_index = 0
 	
 	render_world_count = 0
+	render_world_block_transparent = null
 
 	render_gamma = 1
 	

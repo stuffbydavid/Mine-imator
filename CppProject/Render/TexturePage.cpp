@@ -7,13 +7,16 @@
 namespace CppProject
 {
 	QStack<TexturePage*> TexturePage::pages;
+	IntType TexturePage::currentPageIndex = -1;
 	IntType TexturePage::pageSize = PAGE_SIZE;
 	IntType TexturePageLocation::nextId = 1000000;
 	QHash<IntType, TexturePageLocation*> TexturePageLocation::idMap;
+
 	static constexpr int PAGE_GUTTER = 1;
 
 	TexturePage::TexturePage()
 	{
+		// Reduce the page size if the image allocation fails
 		while (pageSize > 0)
 		{
 			size = pageSize;
@@ -29,34 +32,120 @@ namespace CppProject
 
 		// Add 1x1 white pixel in top left as default texture
 		if (!image.isNull())
-		{
-			image.fill(Qt::transparent);
+			Clear();
 
-			uchar* imgBits = image.bits();
-			imgBits[0] = 255;
-			imgBits[1] = 255;
-			imgBits[2] = 255;
-			imgBits[3] = 255;
-
-			freeRegion = QRegion(0, 0, size, size);
-			freeRegion -= QRegion(0, 0, 1, 1);
-
-			defaultLocation = new TexturePageLocation(
-				this,
-				{ 0, 0, 1, 1 },
-				{ 0, 0, 1, 1 },
-				{ 0.f, 0.f, 1.f / size, 1.f / size }
-			);
-		}
-
-		// Select as shader page
-		if (!Shader::currentPage)
+		// Provide a default white pixel for untextured draws
+		if (!Shader::currentPage && defaultLocation)
 			Shader::currentPage = this;
 	}
 
 	TexturePage::~TexturePage()
 	{
+		// Sprite and font owners may release their locations after the page
+		deleteAndReset(defaultLocation);
+		for (TexturePageLocation* location : locations)
+		{
+			TexturePageLocation::idMap.remove(location->id);
+			location->id = -1;
+			location->page = nullptr;
+		}
+
+		// Release the GPU texture and owned overflow chain
+		if (Shader::currentPage == this)
+			Shader::currentPage = nullptr;
+
 		deleteAndReset(texture);
+		deleteAndReset(nextPage);
+	}
+
+	IntType TexturePage::CreatePage()
+	{
+		// Append roots so existing indices are never reused
+		pages.push(new TexturePage);
+		return pages.size() - 1;
+	}
+
+	void TexturePage::SetCurrent(IntType index)
+	{
+		if (index < 0 || index >= pages.size() || !pages[index])
+		{
+			WARNING("Texture page index out of range: " + NumStr(index));
+			return;
+		}
+
+		currentPageIndex = index;
+	}
+
+	void TexturePage::ClearPage(IntType index)
+	{
+		if (index < 0 || index >= pages.size() || !pages[index])
+			return;
+
+		// Finish queued draws before invalidating the chain's textures
+		GFX->SubmitBatch();
+
+		for (TexturePage* page = pages[index]; page; page = page->nextPage)
+			page->Clear();
+	}
+
+	void TexturePage::DestroyPage(IntType index)
+	{
+		if (index < 0 || index >= pages.size() || !pages[index])
+			return;
+
+		GFX->SubmitBatch();
+
+		// Remove the root before deleting its linked pages
+		TexturePage* page = pages[index];
+		pages[index] = nullptr;
+		delete page;
+
+		// Prefer the UI page for allocation, then any surviving root
+		if (currentPageIndex == index)
+			currentPageIndex = !pages.isEmpty() && pages[0] ? 0 : -1;
+
+		for (IntType p = 0; p < pages.size(); p++)
+		{
+			if (pages[p])
+			{
+				if (currentPageIndex < 0)
+					currentPageIndex = p;
+				
+				if (!Shader::currentPage)
+					Shader::currentPage = pages[p];
+				
+				break;
+			}
+		}
+	}
+
+	void TexturePage::Clear()
+	{
+		// Detach live locations so their later destruction cannot release reused space
+		deleteAndReset(defaultLocation);
+		for (TexturePageLocation* location : locations)
+		{
+			TexturePageLocation::idMap.remove(location->id);
+			location->id = -1;
+			location->page = nullptr;
+		}
+
+		locations.clear();
+		deleteAndReset(texture);
+
+		if (image.isNull())
+			return;
+
+		// Reset the allocator and reserve the default white pixel
+		image.fill(Qt::transparent);
+		memset(image.bits(), 255, 4);
+		freeRegion = QRegion(0, 0, size, size) - QRegion(0, 0, 1, 1);
+		defaultLocation = new TexturePageLocation(
+			this,
+			{ 0, 0, 1, 1 },
+			{ 0, 0, 1, 1 },
+			{ 0.f, 0.f, 1.f / size, 1.f / size }
+		);
 	}
 
 	Texture* TexturePage::GetTexture()
@@ -69,35 +158,48 @@ namespace CppProject
 
 	bool TexturePage::Allocate(QSize imageSize, QRect& rect, QRect& allocatedRect)
 	{
-		QSize allocatedSize(imageSize.width() + PAGE_GUTTER * 2, imageSize.height() + PAGE_GUTTER * 2);
 		int best = -1;
 		int bestShortSide = size;
 		int bestLongSide = size;
+		QRect bestRect, bestAllocatedRect;
+
+		// Keep large tile sheets aligned through four mip levels
+		int alignment = 1;
+		if (std::max(imageSize.width(), imageSize.height()) >= 256 &&
+			std::min(imageSize.width(), imageSize.height()) >= 16 &&
+			imageSize.width() % 16 == 0 && imageSize.height() % 16 == 0)
+			alignment = 16;
 
 		// Choose the tightest fitting free rectangle
 		QVector<QRect> freeRects = freeRegion.rects();
 		for (int i = 0; i < freeRects.size(); i++)
 		{
 			const QRect& freeRect = freeRects[i];
-			if (freeRect.width() < allocatedSize.width() || freeRect.height() < allocatedSize.height())
+			int x = ((freeRect.x() + PAGE_GUTTER + alignment - 1) / alignment) * alignment;
+			int y = ((freeRect.y() + PAGE_GUTTER + alignment - 1) / alignment) * alignment;
+			QRect candidate(freeRect.x(), freeRect.y(),
+				x - freeRect.x() + imageSize.width() + PAGE_GUTTER,
+				y - freeRect.y() + imageSize.height() + PAGE_GUTTER);
+			if (freeRect.width() < candidate.width() || freeRect.height() < candidate.height())
 				continue;
 
-			int shortSide = std::min(freeRect.width() - allocatedSize.width(), freeRect.height() - allocatedSize.height());
-			int longSide = std::max(freeRect.width() - allocatedSize.width(), freeRect.height() - allocatedSize.height());
+			int shortSide = std::min(freeRect.width() - candidate.width(), freeRect.height() - candidate.height());
+			int longSide = std::max(freeRect.width() - candidate.width(), freeRect.height() - candidate.height());
 			if (shortSide < bestShortSide || (shortSide == bestShortSide && longSide < bestLongSide))
 			{
 				best = i;
 				bestShortSide = shortSide;
 				bestLongSide = longSide;
+				bestRect = { x, y, imageSize.width(), imageSize.height() };
+				bestAllocatedRect = candidate;
 			}
 		}
 
 		if (best < 0)
 			return false;
 
-		QRect freeRect = freeRects[best];
-		allocatedRect = { freeRect.x(), freeRect.y(), allocatedSize.width(), allocatedSize.height() };
-		rect = { allocatedRect.x() + PAGE_GUTTER, allocatedRect.y() + PAGE_GUTTER, imageSize.width(), imageSize.height() };
+		allocatedRect = bestAllocatedRect;
+		rect = bestRect;
 		freeRegion -= QRegion(allocatedRect);
 
 		return true;
@@ -105,36 +207,57 @@ namespace CppProject
 
 	void TexturePage::Release(QRect allocatedRect)
 	{
+		if (allocatedRect.isEmpty())
+			return;
+
+		// Clear released pixels so deleted textures do not remain in page dumps or mipmaps
+		if (texture)
+		{
+			GFX->SubmitBatch();
+			deleteAndReset(texture);
+		}
+
+		for (int y = allocatedRect.top(); y <= allocatedRect.bottom(); y++)
+			memset(image.scanLine(y) + allocatedRect.x() * 4, 0, allocatedRect.width() * 4);
+		
 		freeRegion |= QRegion(allocatedRect);
 	}
 
-	TexturePageLocation* TexturePage::Add(const QImage& image)
+	TexturePageLocation* TexturePage::Add(const QImage& image, IntType index)
 	{
-		if (image.isNull())
+		// Resolve the root and reject images that require a standalone texture
+		if (index < 0)
+			index = currentPageIndex;
+
+		if (image.isNull() || index < 0 || index >= pages.size() || !pages[index])
 			return nullptr;
 
-		TexturePage* page = nullptr;
-		QRect rect, allocatedRect;
-		for (IntType p = pages.size() - 1; p >= 0; p--)
-		{
-			TexturePage* currentPage = pages[p];
-			if (currentPage->Allocate(image.size(), rect, allocatedRect))
-			{
-				page = currentPage;
-				break;
-			}
-		}
+		TexturePage* page = pages[index];
+		if (image.width() + PAGE_GUTTER * 2 > page->size ||
+			image.height() + PAGE_GUTTER * 2 > page->size)
+			return nullptr;
 
-		if (!page)
+		// Search only this root's chain, extending it when all pages are full
+		QRect rect, allocatedRect;
+		while (!page->Allocate(image.size(), rect, allocatedRect))
 		{
-			page = new TexturePage;
-			if (!page->Allocate(image.size(), rect, allocatedRect))
+			if (page->nextPage)
 			{
-				delete page;
+				page = page->nextPage;
+				continue;
+			}
+
+			// Verify a fresh page can fit the image before linking it
+			TexturePage* next = new TexturePage;
+			if (!next->Allocate(image.size(), rect, allocatedRect))
+			{
+				delete next;
 				return nullptr;
 			}
 
-			pages.push(page);
+			page->nextPage = next;
+			page = next;
+			break;
 		}
 
 		if (!QRect(0, 0, page->size, page->size).contains(allocatedRect))
@@ -143,7 +266,12 @@ namespace CppProject
 			return nullptr;
 		}
 
-		deleteAndReset(page->texture);
+		// Finish queued draws before rebuilding the modified page's GPU texture
+		if (page->texture)
+		{
+			GFX->SubmitBatch();
+			deleteAndReset(page->texture);
+		}
 
 		// Copy the image and duplicate its edge pixels into the gutter
 		for (int y = -PAGE_GUTTER; y < image.height() + PAGE_GUTTER; y++)
@@ -170,12 +298,16 @@ namespace CppProject
 
 	void TexturePage::Debug()
 	{
+		// Flatten the root chains into sequential image filenames
 		int p = 1;
 		for (TexturePage* page : pages)
 		{
-			if (!page->image.isNull())
-				page->image.save((QString)gmlGlobal::working_directory + "/TexturePages/" + NumStr(p) + ".png");
-			p++;
+			for (; page; page = page->nextPage)
+			{
+				if (!page->image.isNull())
+					page->image.save((QString)gmlGlobal::working_directory + "/TexturePages/" + NumStr(p) + ".png");
+				p++;
+			}
 		}
 
 		DEBUG("Saved texture pages");
@@ -186,13 +318,19 @@ namespace CppProject
 	{
 		id = nextId++;
 		idMap[id] = this;
+		page->locations.insert(this);
 	}
 
 	TexturePageLocation::~TexturePageLocation()
 	{
 		idMap.remove(id);
 
-		if (!allocatedRect.isEmpty())
-			page->Release(allocatedRect);
+		// Cleared or destroyed pages have already detached this location
+		if (page)
+		{
+			page->locations.remove(this);
+			if (!allocatedRect.isEmpty())
+				page->Release(allocatedRect);
+		}
 	}
 }

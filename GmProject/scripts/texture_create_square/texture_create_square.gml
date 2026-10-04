@@ -2,7 +2,7 @@
 
 function texture_create_square(fn)
 {
-	var tex = texture_create(fn);
+	var tex = texture_create(fn, true, false);
 	if (!tex)
 		return null
 	
@@ -11,7 +11,10 @@ function texture_create_square(fn)
 	hh = texture_height(tex)
 	
 	if (ww = hh)
-		return tex
+	{
+		sprite_set_texture_page(tex, true)
+		return texture_page_add_res(tex)
+	}
 	
 	var size, surf, newtex;
 	size = max(ww, hh)

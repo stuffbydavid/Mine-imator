@@ -102,7 +102,7 @@ namespace CppProject
 				sampDesc.Filter = filter;
 				sampDesc.MaxLOD = (filter == D3D11_FILTER_MIN_MAG_MIP_POINT || filter == D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT)
 					? 0 : D3D11_FLOAT32_MAX; // Mip point = disable mipmapping
-				D3DCheckError(d3dDevice->CreateSamplerState(&sampDesc, &d3dSamplerStateMap[filter]));
+				D3DCheckError(d3dDevice->CreateSamplerState(&sampDesc, &d3dSamplerStateMap[{ filter, lodBias }]));
 			}
 
 			// Create rasterizer states for each cull mode
@@ -716,13 +716,51 @@ namespace CppProject
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
-			for (D3D11_FILTER filter : d3dSamplerStateMap.keys())
+			// Cache each filter and bias combination
+			for (D3D11_FILTER filter : {
+				D3D11_FILTER_MIN_MAG_MIP_POINT,
+				D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR,
+				D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT,
+				D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR
+			})
+			{
+				QPair<IntType, IntType> key = { filter, lodBias };
+				if (d3dSamplerStateMap.contains(key))
+					continue;
+				
+				D3D11_SAMPLER_DESC desc;
+				d3dSamplerStateMap.value({ filter, 0 })->GetDesc(&desc);
+				desc.MipLODBias = lodBias;
+				D3DCheckError(D3DDevice->CreateSamplerState(&desc, &d3dSamplerStateMap[key]));
+			}
+		}
+	#endif
+	}
+
+	void GraphicsApiHandler::SetMaxMip(IntType value)
+	{
+		value = std::max<IntType>(0, value);
+		if (maxMip == value)
+			return;
+
+		SubmitBatch();
+		maxMip = value;
+
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			for (auto it = d3dSamplerStateMap.begin(); it != d3dSamplerStateMap.end(); ++it)
 			{
 				D3D11_SAMPLER_DESC desc;
-				d3dSamplerStateMap[filter]->GetDesc(&desc);
-				desc.MipLODBias = lodBias;
-				d3dSamplerStateMap[filter]->Release();
-				D3DCheckError(D3DDevice->CreateSamplerState(&desc, &d3dSamplerStateMap[filter]));
+				it.value()->GetDesc(&desc);
+				if (desc.MaxLOD == 0)
+					continue;
+
+				desc.MaxLOD = (FLOAT)maxMip;
+				ID3D11SamplerState* state = nullptr;
+				D3DCheckError(d3dDevice->CreateSamplerState(&desc, &state));
+				it.value()->Release();
+				it.value() = state;
 			}
 		}
 	#endif

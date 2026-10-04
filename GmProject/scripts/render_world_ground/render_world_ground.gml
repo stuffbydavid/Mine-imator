@@ -11,7 +11,10 @@ function render_world_ground()
 	if (render_mode = e_render_mode.PLACE)
 		render_set_uniform("uIsBlock", 1)
 
-	var materialres = res_eval(env_ground_tex_material);
+	var materialres, res;
+	materialres = res_eval(env_ground_tex_material)
+	res = res_eval(env_ground_tex)
+	render_apply_res(res)
 
 	// Blend
 	var blend, iswater;

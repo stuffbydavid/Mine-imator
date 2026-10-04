@@ -1,9 +1,21 @@
 function popup_pattern_editor_draw()
 {
+	if (popup_current.update)
+	{
+		if (popup_current.pattern_edit_preview.pattern_skin)
+			texture_free(popup_current.pattern_edit_preview.pattern_skin)
+		
+		var patternsarr, colorsarr;
+		patternsarr = ds_list_create_array(popup_current.pattern_list_edit)
+		colorsarr = ds_list_create_array(popup_current.pattern_color_list_edit)
+		popup_current.pattern_edit_preview.pattern_skin = minecraft_update_pattern_generate(popup_current.pattern_edit_preview.model_name, popup_current.pattern_edit_preview.pattern_base_color, patternsarr, colorsarr)
+		popup_current.update = false
+		popup_current.preview.update = true
+	}
+	
 	dx_start = dx
 	
 	// Model preview
-	popup_current.preview.update = true
 	setting_wind_enable = false
 	preview_draw(popup_current.preview, dx, dy, 200, 332)
 	setting_wind_enable = true
@@ -126,6 +138,9 @@ function popup_pattern_editor_draw()
 		else
 			action_lib_model_pattern(popup_current.pattern_edit_preview.pattern_base_color, ds_list_create_array(popup_current.pattern_list_edit), ds_list_create_array(popup_current.pattern_color_list_edit))
 		
+		if (sprite_exists(popup_current.pattern_edit_preview.pattern_skin))
+			texture_free(popup_current.pattern_edit_preview.pattern_skin)
+		
 		instance_destroy(popup_current.pattern_edit_preview, false)
 		popup_current.pattern_edit_preview = null
 		
@@ -138,6 +153,9 @@ function popup_pattern_editor_draw()
 	if (draw_button_label("pattern_editor/cancel", dx_start + dw - buttonx, dy, null, null, e_button.SECONDARY))
 	{
 		array_add(pattern_update, popup_current.pattern_edit)
+		
+		if (sprite_exists(popup_current.pattern_edit_preview.pattern_skin))
+			texture_free(popup_current.pattern_edit_preview.pattern_skin)
 		
 		instance_destroy(popup_current.pattern_edit_preview, false)
 		popup_current.pattern_edit_preview = null
@@ -153,16 +171,6 @@ function popup_pattern_editor_draw()
 		
 		popup_current.layer_remove = null
 		popup_current.update = true
-	}
-	
-	if (popup_current.update)
-	{
-		if (popup_current.pattern_edit_preview.pattern_skin)
-			sprite_delete(popup_current.pattern_edit_preview.pattern_skin)
-		
-		popup_current.pattern_edit_preview.pattern_skin = minecraft_update_pattern_generate(popup_current.pattern_edit_preview.model_name, popup_current.pattern_edit_preview.pattern_base_color, ds_list_create_array(popup_current.pattern_list_edit), ds_list_create_array(popup_current.pattern_color_list_edit))
-		
-		popup_current.update = false
 	}
 	
 	// Draw moving layer

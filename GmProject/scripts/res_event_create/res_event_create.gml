@@ -44,6 +44,10 @@ function res_event_create()
 	model_shape_alpha_map = null
 	
 	player_skin = false
+	
+	pack_texture_page = -1
+	pack_sprite_texture_map = null
+	pack_res_texture_map = null
 	pack_format = e_minecraft_pack.LATEST
 	pack_cache_loaded = false
 	load_reload = false

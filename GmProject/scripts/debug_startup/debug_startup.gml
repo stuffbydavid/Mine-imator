@@ -42,7 +42,7 @@ function debug_startup()
 		debug_info			= 0
 	}
 	
-	debug_info_corner = 2
+	debug_info_corner = 3
 	debug_indent = 0
 	
 	// Benchmarking/testing settings, overwritten by program arguments

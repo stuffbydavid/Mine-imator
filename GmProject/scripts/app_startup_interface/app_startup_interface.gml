@@ -24,6 +24,8 @@ function app_startup_interface()
 	env_ground_startup()
 	env_sky_startup()
 	
+	texture_page_reset()
+	
 	// Run headless tests
 	if (test_project != "")
 	{

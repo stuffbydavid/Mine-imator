@@ -98,7 +98,7 @@ function settings_load()
 			setting_watermark_opacity = value_get_real(programmap[?"watermark_opacity"], setting_watermark_opacity)
 			
 			if (setting_watermark_fn != "")
-				setting_watermark_image = texture_create(setting_watermark_fn)
+				setting_watermark_image = texture_create(setting_watermark_fn, false)
 		}
 		
 		// Interface

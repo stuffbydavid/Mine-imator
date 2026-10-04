@@ -43,6 +43,8 @@ function render_set_texture(tex, type = "")
 	// Sprite texture
 	else
 	{
+		tex = render_get_pack_texture(tex)
+		
 		if (sprite_exists(tex))
 		{
 			texture_set_stage(sampler, sprite_get_texture(tex, 0))

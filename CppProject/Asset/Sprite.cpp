@@ -19,7 +19,10 @@ namespace CppProject
 		{
 			QImage copy;
 			if (frame->pageLoc)
-				copy = frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+			{
+				if (frame->pageLoc->page)
+					copy = frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+			}
 			else
 				copy = frame->image.copy();
 
@@ -66,7 +69,7 @@ namespace CppProject
 	Sprite::Sprite(Surface* surface, QPoint origin) : Asset(ID_Sprite)
 	{
 		allSprites.append(this);
-		useTexturePage = false;
+		useTexturePage = (TexturePage::currentPageIndex > 1);
 		this->origin = origin;
 		size = surface->size;
 
@@ -76,7 +79,7 @@ namespace CppProject
 	Sprite::Sprite(Surface* surface, QRect rect, QPoint origin) : Asset(ID_Sprite)
 	{
 		allSprites.append(this);
-		useTexturePage = false;
+		useTexturePage = (TexturePage::currentPageIndex > 1);
 		this->origin = origin;
 		size = surface->size;
 
@@ -109,17 +112,23 @@ namespace CppProject
 
 		Frame* frame = frames[index];
 		if (frame->pageLoc) // Pixel from texture page
-			return frame->pageLoc->page->image.pixelColor(frame->pageLoc->rect.topLeft() + point);
+		{
+			if (frame->pageLoc->page)
+				return frame->pageLoc->page->image.pixelColor(frame->pageLoc->rect.topLeft() + point);
+			else
+				return Qt::transparent;
+		}
 		else // Pixel from image
 			return frame->image.pixelColor(point);
 	}
 
 	Sprite::Frame::Frame(QImage image, bool toPage) : image(image)
 	{
+		texturePageIndex = TexturePage::currentPageIndex;
 		if (toPage)
 		{
 			// Check if image is supported for a texture page
-			if (pageLoc = TexturePage::Add(image))
+			if (pageLoc = TexturePage::Add(image, texturePageIndex))
 				this->image = QImage();
 		}
 	}
@@ -152,12 +161,12 @@ namespace CppProject
 		if (pageLoc) // Already on texture page
 			return false;
 
-		if (pageLoc = TexturePage::Add(image))
+		if (pageLoc = TexturePage::Add(image, texturePageIndex))
 		{
 			deleteAndReset(texture);
 			image = QImage(); // Free image
 		}
 
-		return true;
+		return (pageLoc != nullptr);
 	}
 }

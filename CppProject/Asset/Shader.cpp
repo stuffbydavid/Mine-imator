@@ -19,7 +19,9 @@
 namespace CppProject
 {
 	QVector<Shader*> Shader::allShaders;
+	bool Shader::saveConverted = false;
 	TexturePage* Shader::currentPage = nullptr;
+
 	QMap<QString, Shader::DataType> Shader::dataTypeNameMap = {
 		{ "int", Shader::INT },
 		{ "float", Shader::FLOAT },
@@ -159,7 +161,7 @@ namespace CppProject
 		samplerNameMap.clear();
 		numSamplers = 0;
 		useBaseTexture = false;
-		objRectUniformIndex = -1;
+		objRectUniformIndexMap.clear();
 
 		for (IntType m = 0; m < 6; m++)
 			matrixState[m] = MatrixState();
@@ -659,6 +661,9 @@ namespace CppProject
 
 		if (id <= 0) // Default blank pixel from texture page
 		{
+			if (!currentPage || !currentPage->defaultLocation)
+				return UvRect();
+
 			id = currentPage->GetTexture()->GetId();
 			uvRect = currentPage->defaultLocation->uvRect;
 		}
@@ -678,8 +683,7 @@ namespace CppProject
 		// Bind new texture state to sampler
 		SamplerState& state = samplerState[sampler];
 		BoolType textureChanged = state.currentTexId != id;
-		BoolType objectUvRect = useBatching && sampler == 0;
-		BoolType uvRectChanged = !objectUvRect && samplerUvRect[sampler] != newUvRect;
+		BoolType uvRectChanged = (!useBatching && samplerUvRect[sampler] != newUvRect);
 		
 		if (state.currentTexId > -1 && (textureChanged || uvRectChanged))
 			GFX->SubmitBatch();
@@ -693,8 +697,8 @@ namespace CppProject
 		state.currentTexId = id;
 		samplerUvRect[sampler] = newUvRect;
 		
-		if (objectUvRect) // First sampler uses object UV Rect
-			SubmitVec4(objRectUniformIndex, newUvRect.x(), newUvRect.y(), newUvRect.z(), newUvRect.w());
+		if (useBatching) // Each sampler uses an object UV rect
+			SubmitVec4(objRectUniformIndexMap.value(sampler, -1), newUvRect.x(), newUvRect.y(), newUvRect.z(), newUvRect.w());
 
 		return uvRect;
 	}
@@ -821,7 +825,7 @@ namespace CppProject
 					else
 						filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 
-					texSamplers[s] = GFX->d3dSamplerStateMap.value(filter);
+					texSamplers[s] = GFX->d3dSamplerStateMap.value({ filter, GFX->lodBias });
 					texSRVs[s] = Texture::d3dIdSRVMap.value(state.currentTexId);
 				}
 			#endif
@@ -853,6 +857,7 @@ namespace CppProject
 						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
 						GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
+						GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, GFX->maxMip);
 						glConfiguredTextures[glConfiguredTextureCount++] = state.currentTexId;
 					}
 					GL_CHECK_ERROR();
@@ -1099,13 +1104,17 @@ namespace CppProject
 				WARNING("Shader: Sampler " + name + " not defined in texture2D call");
 		}
 
-		// Object UvRect required when base sampler is used
+		// Store atlas UV rects per object for every sampler
 		if (useBatching && numSamplers > 0)
 		{
-			if (objRectUniformIndex < 0)
-				objRectUniformIndex = AddUniform("_objUvRect", "vec4", false);
-			
-			code.replace("_uUvRect[0]", "_objUvRect");
+			for (IntType s = 0; s < numSamplers; s++)
+			{
+				QString name = "_objUvRect" + NumStr(s);
+				if (!objRectUniformIndexMap.contains(s))
+					objRectUniformIndexMap[s] = AddUniform(name, "vec4", false);
+				
+				code.replace("_uUvRect[" + NumStr(s) + "]", name);
+			}
 		}
 	}
 
@@ -1147,7 +1156,7 @@ namespace CppProject
 			}
 			if (IS_OPENGL)
 			{
-				if (uni.type == VEC3) // vec3 alignment is same as vec4
+				if (uni.type == VEC3 || uni.type == MAT4) // std430 vec3 and matrix columns align to 16 bytes
 					alignment = 16;
 			}
 
@@ -1208,4 +1217,36 @@ namespace CppProject
 		}
 	#endif
 	}
+
+#if !RELEASE_MODE
+	void Shader::SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension)
+	{
+		if (!saveConverted)
+			return;
+
+		QString directory = (QString)gmlGlobal::working_directory + "ShaderConverted";
+		if (!QDir().mkpath(directory))
+		{
+			WARNING("Could not create converted shader directory: " + directory);
+			return;
+		}
+
+		for (int stage = 0; stage < 2; stage++)
+		{
+			QString filename = directory + "/" + name + (stage == 0 ? ".vsh." : ".fsh.") + extension;
+			QFile file(filename);
+
+			AddPerms(file);
+			if (!file.open(QFile::WriteOnly | QFile::Truncate))
+			{
+				WARNING("Could not open converted shader " + filename + ": " + file.errorString());
+				continue;
+			}
+
+			QByteArray data = (stage == 0 ? vsCode : fsCode).toUtf8();
+			if (file.write(data) != data.size() || !file.flush())
+				WARNING("Could not write converted shader " + filename + ": " + file.errorString());
+		}
+	}
+#endif
 }

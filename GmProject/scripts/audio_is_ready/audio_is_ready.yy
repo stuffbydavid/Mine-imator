@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"audio_is_ready",
   "parent":{
-    "name":"Load",
-    "path":"folders/Scripts/Project/Resource/Load.yy",
+    "name":"Utility",
+    "path":"folders/Scripts/Utility.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
