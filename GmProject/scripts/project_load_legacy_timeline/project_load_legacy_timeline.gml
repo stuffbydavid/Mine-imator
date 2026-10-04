@@ -37,10 +37,12 @@ function project_load_legacy_timeline()
 		lock = buffer_read_byte()
 		if (load_format < e_project.FORMAT_100_DEBUG)
 			lock = !lock
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			depth = buffer_read_int()
 		
 		legacy_model_part_id = buffer_read_short()
+		
 		if (type = e_tl_type.MODEL_PART)
 		{
 			// Find part model

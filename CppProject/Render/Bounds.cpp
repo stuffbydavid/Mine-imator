@@ -11,20 +11,6 @@ namespace CppProject
 		}
 	}
 
-	QVector<VecType> Bounds::GetPoints() const
-	{
-		return {
-			{ minPoint.x, minPoint.y, minPoint.z, 1 },
-			{ maxPoint.x, minPoint.y, minPoint.z, 1 },
-			{ minPoint.x, maxPoint.y, minPoint.z, 1 },
-			{ maxPoint.x, maxPoint.y, minPoint.z, 1 },
-			{ minPoint.x, minPoint.y, maxPoint.z, 1 },
-			{ maxPoint.x, minPoint.y, maxPoint.z, 1 },
-			{ minPoint.x, maxPoint.y, maxPoint.z, 1 },
-			{ maxPoint.x, maxPoint.y, maxPoint.z, 1 }
-		};
-	}
-
 	void Bounds::AddPoint(VecType point)
 	{
 		if (empty)
@@ -54,7 +40,25 @@ namespace CppProject
 		if (bounds.empty)
 			return;
 
-		for (const VecType& pnt : bounds.GetPoints())
-			AddPoint(transform * pnt);
+		const VecType center(
+			(bounds.minPoint.x + bounds.maxPoint.x) * 0.5,
+			(bounds.minPoint.y + bounds.maxPoint.y) * 0.5,
+			(bounds.minPoint.z + bounds.maxPoint.z) * 0.5,
+			1.0
+		);
+		const VecType extents(
+			(bounds.maxPoint.x - bounds.minPoint.x) * 0.5,
+			(bounds.maxPoint.y - bounds.minPoint.y) * 0.5,
+			(bounds.maxPoint.z - bounds.minPoint.z) * 0.5
+		);
+		const VecType worldCenter = transform * center;
+		const VecType worldExtents(
+			std::abs(transform.m[0]) * extents.x + std::abs(transform.m[4]) * extents.y + std::abs(transform.m[8]) * extents.z,
+			std::abs(transform.m[1]) * extents.x + std::abs(transform.m[5]) * extents.y + std::abs(transform.m[9]) * extents.z,
+			std::abs(transform.m[2]) * extents.x + std::abs(transform.m[6]) * extents.y + std::abs(transform.m[10]) * extents.z
+		);
+
+		AddPoint({ worldCenter.x - worldExtents.x, worldCenter.y - worldExtents.y, worldCenter.z - worldExtents.z });
+		AddPoint({ worldCenter.x + worldExtents.x, worldCenter.y + worldExtents.y, worldCenter.z + worldExtents.z });
 	}
 }

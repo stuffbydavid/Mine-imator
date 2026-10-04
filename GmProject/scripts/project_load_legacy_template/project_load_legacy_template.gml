@@ -15,14 +15,17 @@ function project_load_legacy_template()
 		type = ds_list_find_index(temp_type_name_list, typename)
 		
 		name = buffer_read_string_int()
+		
 		if (load_format = e_project.FORMAT_100_DEMO_2)
 			/*count = */buffer_read_int()
 		
 		model_tex = project_load_legacy_save_id()
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			legacy_model_name = buffer_read_string_int()
 		else 
 			legacy_model_name = project_load_legacy_model_name(buffer_read_int())
+		
 		legacy_model_part_id = buffer_read_int()
 		
 		// Find new model name and state
@@ -38,6 +41,7 @@ function project_load_legacy_template()
 					model_state = []
 				
 				model_version = 0
+				
 				project_load_template_update_model()
 
 				// Equipment was formerly saved as a special block
@@ -61,12 +65,15 @@ function project_load_legacy_template()
 		}
 		
 		item_tex = project_load_legacy_save_id()
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			legacy_item_sheet = buffer_read_byte()
+		
 		item_slot = buffer_read_int()
 		item_3d = buffer_read_byte()
 		item_face_camera = buffer_read_byte()
 		item_bounce = buffer_read_byte()
+		item_spin = false
 		
 		// Read legacy block
 		var bid, bdata;
@@ -96,18 +103,21 @@ function project_load_legacy_template()
 		shape_tex = buffer_read_int()
 		if (shape_tex = 0)
 			shape_tex = null
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 		{
 			shape_tex_mapped = buffer_read_byte()
 			shape_tex_hoffset = buffer_read_double()
 			shape_tex_voffset = buffer_read_double()
 		}
+		
 		shape_tex_hrepeat = buffer_read_double()
 		shape_tex_vrepeat = buffer_read_double()
 		shape_tex_hmirror = buffer_read_byte()
 		shape_tex_vmirror = buffer_read_byte()
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			shape_closed = buffer_read_byte()
+		
 		shape_invert = buffer_read_byte()
 		shape_detail = buffer_read_int()
 		if (load_format >= e_project.FORMAT_100_DEBUG)
@@ -116,12 +126,14 @@ function project_load_legacy_template()
 		text_font = project_load_legacy_save_id()
 		if (text_font = "root")
 			text_font = null
+		
 		if (load_format < e_project.FORMAT_100_DEMO_4)
 		{
 			buffer_read_string_int() // system font name
 			buffer_read_byte() // system font bold
 			buffer_read_byte() // system font italic
 		}
+		
 		text_face_camera = buffer_read_byte()
 		
 		if (type = e_temp_type.PARTICLE_SPAWNER)

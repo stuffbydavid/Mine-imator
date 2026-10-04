@@ -25,6 +25,7 @@ namespace CppProject
 			buffer->meshes.size() == 1 &&
 			mesh->numIndices >= MAX_BATCH_INDICES
 		);
+
 		if (instanced)
 		{
 			Bounds worldBounds;
@@ -52,8 +53,7 @@ namespace CppProject
 		currentBatch->numObjects++;
 
 		bool submit = GFX->shader->SubmitObject();
-		if (!GFX->shader->useBatching ||
-			submit ||
+		if (submit ||
 			currentBatch->numObjects >= MAX_BATCH_OBJECTS ||
 			(!instanced && currentBatch->mesh.numIndices >= MAX_BATCH_INDICES))
 		{
@@ -91,7 +91,7 @@ namespace CppProject
 			renderCalls++;
 			trianglesSubmitted += mesh->numIndices / 3 * currentBatch->numObjects;
 		}
-		else
+		else if (GFX->IsVisible(currentBatch->bounds))
 		{
 			// Look for identical batches
 			for (Batch* frameBatch : activeBatches)
@@ -112,19 +112,15 @@ namespace CppProject
 				activeBatches.append(submitBatch);
 			}
 
-			// Render if within view
-			if (GFX->IsVisible(currentBatch->bounds))
-			{
-				submitBatch->mesh.BeginUse();
-				GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, submitBatch->mesh.numIndices);
-				submitBatch->mesh.EndUse();
+			submitBatch->mesh.BeginUse();
+			GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, submitBatch->mesh.numIndices);
+			submitBatch->mesh.EndUse();
 
-				renderCalls++;
-				trianglesSubmitted += submitBatch->mesh.numIndices / 3;
-			}
-			else
-				GFX->shader->ResetObjects();
+			renderCalls++;
+			trianglesSubmitted += submitBatch->mesh.numIndices / 3;
 		}
+		else
+			GFX->shader->ResetObjects();
 
 		// Mark as active
 		if (submitBatch)

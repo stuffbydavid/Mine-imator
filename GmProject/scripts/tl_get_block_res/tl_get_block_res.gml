@@ -39,7 +39,7 @@ function tl_get_block_res()
 					else if (ptemp.type = e_temp_type.MODEL && ptemp.model != null && ptemp.model.model_format = e_model_format.BLOCK)
 						res = ptemp.model
 
-					if (res != null && res.block_vbuffer != null &&
+					if (res != null && res.block_vbuffer != null && res.block_vbuffer_active != null &&
 						(res.block_vbuffer_active[e_block_depth.DEPTH1] || res.block_vbuffer_active[e_block_depth.DEPTH2]))
 						return res
 				}

@@ -671,10 +671,13 @@ namespace CppProject
 		// Load vertex buffers
 		QVector<VertexBuffer*> vbuffers;
 		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
+		ArrType activeDepths;
 		BoolType valid = true;
 
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		{
+			activeDepths[d] = false;
+
 			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			{
 				auto vbuffer = new VertexBuffer(in);
@@ -685,6 +688,9 @@ namespace CppProject
 					valid = false;
 					break;
 				}
+
+				if (vbuffer->numIndices > 0)
+					activeDepths[d] = true;
 			}
 
 			if (!valid)
@@ -710,6 +716,8 @@ namespace CppProject
 			vertex_delete_buffer(self->block_vbuffer[d][vb]);
 			self->block_vbuffer[d][vb] = vbuffers.at(i++)->id;
 		}
+
+		self->block_vbuffer_active = activeDepths;
 
 		tmr.Print("Read block mesh cache");
 		

@@ -24,7 +24,7 @@ function render_world_list(depthsign)
 			// Find transparent block meshes
 			var res = tl_get_block_res();
 
-			if (res != null && res.block_vbuffer != null &&
+			if (res != null && res.block_vbuffer != null && res.block_vbuffer_active != null &&
 				(res.block_vbuffer_active[e_block_depth.DEPTH1] || res.block_vbuffer_active[e_block_depth.DEPTH2]))
 				ds_list_add(transpblocks, id)
 		}

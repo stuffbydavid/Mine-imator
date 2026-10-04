@@ -69,6 +69,28 @@ function tab_timeline()
 		listw -= 5
 	}
 	
+	// Mouse
+	mouseinmarkers = false
+	mouseintl = false
+	mouseinnames = false
+	mouseinbar = false
+	content_mouseon = false
+	
+	if (!popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+	{
+		mouseinmarkers =  app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh)
+		mouseintl =		 (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers)
+		mouseinnames =	  app_mouse_box(listx, listy, listw - 5, listh, "place")
+		mouseinbar =	  app_mouse_box(barx, bary, barw, barh)
+		content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place")
+	}
+	
+	mousetl = floor((mouse_y - tly + floor(timeline.ver_scroll.value)) / itemh)
+	if (mousetl >= 0 && mousetl < ds_list_size(tree_visible_list))
+		mousetl = tree_visible_list[|mousetl]
+	else
+		mousetl = null
+		
 	// Panning
 	if (window_busy = "timeline/drag")
 	{
@@ -146,28 +168,6 @@ function tab_timeline()
 	else
 		timeline_insert_pos = timeline_marker
 
-	// Mouse
-	mouseinmarkers = false
-	mouseintl = false
-	mouseinnames = false
-	mouseinbar = false
-	content_mouseon = false
-	
-	if (!popup_mouseon && !toast_mouseon && !context_menu_mouseon)
-	{
-		mouseinmarkers =  app_mouse_box(markerbarx, markerbary, markerbarw, markerbarh)
-		mouseintl =		 (app_mouse_box(tlx, tly, tlw, tlh) && !mouseinmarkers)
-		mouseinnames =	  app_mouse_box(listx, listy, listw - 5, listh, "place")
-		mouseinbar =	  app_mouse_box(barx, bary, barw, barh)
-		content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height, "place")
-	}
-	
-	mousetl = floor((mouse_y - tly + floor(timeline.ver_scroll.value)) / itemh)
-	if (mousetl >= 0 && mousetl < ds_list_size(tree_visible_list))
-		mousetl = tree_visible_list[|mousetl]
-	else
-		mousetl = null
-	
 	timeline_mouse_pos = max(0, round((mouse_x - tlx + timeline.hor_scroll.value) / timeline_zoom))
 	timeline_zoom_button = 0
 	

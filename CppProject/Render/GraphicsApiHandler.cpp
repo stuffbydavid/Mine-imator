@@ -959,21 +959,13 @@ namespace CppProject
 
 	BoolType GraphicsApiHandler::IsVisible(const Bounds& worldBounds) const
 	{
-		QVector<VecType> points = worldBounds.GetPoints();
 		for (const VecType& frustumVec : frustum)
 		{
-			// If all of the points lie behind one of the planes, the box is not rendered
-			bool pointInside = false;
-			for (const VecType& point : points)
-			{
-				if (VecType::DotProduct(frustumVec, point) > 0.0)
-				{
-					pointInside = true;
-					break;
-				}
-			}
+			const RealType x = (frustumVec.x > 0.0 ? worldBounds.maxPoint.x : worldBounds.minPoint.x);
+			const RealType y = (frustumVec.y > 0.0 ? worldBounds.maxPoint.y : worldBounds.minPoint.y);
+			const RealType z = (frustumVec.z > 0.0 ? worldBounds.maxPoint.z : worldBounds.minPoint.z);
 
-			if (!pointInside)
+			if (frustumVec.x * x + frustumVec.y * y + frustumVec.z * z + frustumVec.w <= 0.0)
 				return false;
 		}
 
