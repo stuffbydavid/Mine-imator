@@ -13,40 +13,8 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 		res[c] = res_eval(res[c])
 	
 	render_apply_res(res[e_texture_channel.DIFFUSE])
-	
-	if (facecamera)
-	{
-		var mat, rotz, rotmat;
-		mat = matrix_get(matrix_world)
-		rotz = 90 + point_direction(mat[MAT_X], mat[MAT_Y], proj_from[X], proj_from[Y])
-		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1)
-		rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, rotz, 1, 1, 1))
-		matrix_world_multiply_pre(rotmat)
-	}
-	
-	else if (rotate)
-	{
-		var d, t, offz, mat, rotz, rotmat;
-		d = 60 * 6
-		t = (realtime ? current_step : app.env_time) mod d * 360
-		offz = t/360
-		mat = matrix_get(matrix_world)
-		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1)
-		rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, offz, 1, 1, 1))
-		matrix_world_multiply_pre(rotmat)
-	}
-	
-	if (bounce)
-	{
-		var d, t, offz;
-		d = 60 * 3
-		t = (realtime ? current_step : app.env_time) mod d * 2
-		if (t < d)
-			offz = ease("easeinoutquad", t / d) * 2 - 1
-		else
-			offz = 1 - ease("easeinoutquad", (t - d) / d) * 2
-		matrix_world_multiply_post(matrix_build(0, 0, (realtime ? 0 : 2) + offz * 1.5, 0, 0, 0, 1, 1, 1))
-	}
+	if (facecamera || bounce || rotate)
+		matrix_set(matrix_world, render_world_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
 	
 	if (res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet] != null)
 		render_set_texture(res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet])

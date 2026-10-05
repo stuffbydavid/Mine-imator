@@ -226,6 +226,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			// Add rotation point
 			matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point_render, -1), vec3(0), vec3(1)), matrix)
 			
+			if (type = e_tl_type.MODEL_PART)
+				model_part_shape_render_matrix_part = null
+			
 			// Scale for position controls
 			value_inherit[e_value.SCA_X] = 1
 			value_inherit[e_value.SCA_Y] = 1

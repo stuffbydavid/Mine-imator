@@ -25,7 +25,7 @@ function project_load_environment(map)
 	if (load_format < e_project.FORMAT_210)
 		env_sky_time *= -1
 	env_sky_rotation = value_get_real(map[?"sky_rotation"], env_sky_rotation)
-	env_sunlight_strength = value_get_real(map[?"sunlight_strength"], env_sunlight_strength)
+	env_sunlight_strength = value_get_real(map[?"sunlight_strength"], load_format < e_project.FORMAT_200_PRE_5 ? 0 : env_sunlight_strength)
 	env_sunlight_specular_strength = value_get_real(map[?"sunlight_specular_strength"], env_sunlight_specular_strength)
 	
 	if (load_format < e_project.FORMAT_200_PRE_5)

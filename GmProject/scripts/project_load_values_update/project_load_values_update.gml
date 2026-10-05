@@ -82,12 +82,6 @@ function project_load_values_update(map = null)
 		if (timeline.type = e_tl_type.ENVIRONMENT)
 			value[e_value.ENV_BIOME] = app.env_biome
 	
-	if (load_format < e_project.FORMAT_200_PRE_5)
-	{
-		if (timeline.type = e_tl_type.ENVIRONMENT)
-			value[e_value.ENV_SUNLIGHT_STRENGTH] += 1
-	}
-	
 	// Display texture animation speed as a percentage (2.1)
 	if (load_format < e_project.FORMAT_CTB_106) // Convert from pre-2.1 arbitrary decimal number
 	{

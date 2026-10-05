@@ -18,7 +18,12 @@ function project_load_values(map, arr)
 			else if (map[?key] = "null")
 				arr[@ index] = null
 			else
-				arr[@ index]= map[?key]
+			{
+				arr[@ index] = map[?key]
+				
+				if (index = e_value.ENV_SUNLIGHT_STRENGTH && load_format < e_project.FORMAT_200_PRE_5)
+					arr[@ index] += 1
+			}
 		}
 		
 		key = ds_map_find_next(map, key)

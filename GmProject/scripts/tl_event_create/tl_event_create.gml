@@ -20,30 +20,40 @@ function tl_event_create()
 	hide = false
 	ghost = false
 	delete_ready = false
+	
 	model_part = null
 	model_part_name = ""
+	
 	model = null
 	model_file = null
 	model_name = ""
 	model_state = []
+	
 	model_tex = null
 	model_tex_material = null
 	model_tex_normal = null
 	model_texture_name_map = null
 	model_texture_material_name_map = null
 	model_texture_normal_name_map = null
-	model_shape_texture_name_map = null
-	model_shape_texture_material_name_map = null
-	model_shape_texture_normal_name_map = null
+	
 	model_hide_list = null
 	model_shape_hide_list = null
 	model_color_name_map = null
 	model_color_map = null
+	
 	model_shape_vbuffer_map = null
 	model_shape_alpha_map = null
+	model_shape_texture_name_map = null
+	model_shape_texture_material_name_map = null
+	model_shape_texture_normal_name_map = null
+	
+	model_part_shape_render_matrix = []
+	model_part_shape_render_matrix_part = null
+	
 	model_use_blend_color = false
 	model_blend_color = c_white
 	model_blend_color_default = c_white
+	
 	part_of = null
 	part_list = null
 	part_root = null
@@ -119,6 +129,7 @@ function tl_event_create()
 	inherit_select = false
 	inherit_pose = false
 	scale_resize = true
+	
 	rot_point_custom = false
 	rot_point = point3D(0)
 	rot_point_render = point3D(0)

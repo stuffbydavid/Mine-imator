@@ -20,6 +20,9 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	
 	if (!tl)
 		mat = matrix_get(matrix_world)
+	else if (tl.model_part_shape_render_matrix_part != part || array_length(tl.model_part_shape_render_matrix) != ds_list_size(part.shape_list))
+		with (tl)
+			tl_update_model_shape_matrix()
 	
 	var shape, texobj, blendcolor, alpha, sundepth;
 	texobj = null
@@ -294,41 +297,31 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				render_set_uniform_color(e_uniform.MIX_COLOR, shape.color_mix, shape.color_mix_percent)
 		}
 		
-		// Shape matrix
-		var rendermatrix;
-		if (tl)
-			rendermatrix = matrix_multiply(shape.matrix, matrix_render)
-		else
-			rendermatrix = matrix_multiply(shape.matrix, mat)
-		
-		// Bounce
-		if (shape.item_bounce)
-		{
-			var d, t, offz;
-			d = 60 * 3
-			t = app.env_time mod d * 2
-			if (t < d)
-				offz = ease("easeinoutquad", t / d) * 2 - 1
-			else
-				offz = 1 - ease("easeinoutquad", (t - d) / d) * 2
-			rendermatrix = matrix_multiply(rendermatrix, matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
-		}
-		
-		// Face camera
-		if (shape.face_camera)
-		{
-			var rotx, rotz, rotmat;
-			
-			matrix_remove_rotation(rendermatrix)
-			rotx = -point_zdirection(rendermatrix[MAT_X], rendermatrix[MAT_Y], rendermatrix[MAT_Z], proj_from[X], proj_from[Y], proj_from[Z])
-			rotz = 90 + point_direction(rendermatrix[MAT_X], rendermatrix[MAT_Y], proj_from[X], proj_from[Y])
-			rotmat = matrix_build(0, 0, 0, rotx, 0, rotz, 1, 1, 1)
-			rendermatrix = matrix_multiply(rotmat, rendermatrix)
-		}
-		
 		// Pick vertex buffer from map if available
 		if (shapevbuffermap != null && !is_undefined(shapevbuffermap[?shape]))
-			vbuffer_render_matrix(shapevbuffermap[?shape], rendermatrix)
+		{
+			var vbuf = shapevbuffermap[?shape];
+			if (tl != null && !shape.item_bounce && !shape.face_camera && tl.model_part_shape_render_matrix_part = part)
+			{
+				// Submit cached matrix without array conversion
+				matrix_set(matrix_world, tl.model_part_shape_render_matrix[s])
+				vertex_submit(vbuf, pr_trianglelist, -1)
+				matrix_world_reset()
+				continue
+			}
+
+			// Shape matrix
+			var rendermatrix;
+			if (tl)
+				rendermatrix = matrix_multiply(shape.matrix, matrix_render)
+			else
+				rendermatrix = matrix_multiply(shape.matrix, mat)
+
+			if (shape.item_bounce || shape.face_camera)
+				rendermatrix = render_world_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
+
+			vbuffer_render_matrix(vbuf, rendermatrix)
+		}
 	}
 	
 	if (!tl)

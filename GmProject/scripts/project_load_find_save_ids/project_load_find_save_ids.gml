@@ -204,7 +204,7 @@ function project_load_find_save_ids(isproject = false)
 		
 		// Set parent
 		parent = save_id_find(save_id_map[?parent])
-		if (parent = null)
+		if (parent = null || parent = project_pack_res)
 			parent = app
 		
 		if (!is_array(parent.tree_array)) // Initialize array

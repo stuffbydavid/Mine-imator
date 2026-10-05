@@ -2,6 +2,8 @@
 
 function tl_update_model_shape(clear = true)
 {
+	model_part_shape_render_matrix_part = null
+
 	// Clear old alpha arrays
 	if (model_shape_alpha_map != null)
 		ds_map_clear(model_shape_alpha_map)
