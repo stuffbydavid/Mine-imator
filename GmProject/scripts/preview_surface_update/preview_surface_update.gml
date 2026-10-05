@@ -212,14 +212,14 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					case e_res_type.SCHEMATIC:
 					case e_res_type.FROM_WORLD:
 						if (select.ready)
-							render_world_block(select.block_vbuffer, mc_res, true, select.scenery_size)
+							render_world_block(select, mc_res, true, select.scenery_size)
 						break
 							
 					case e_res_type.MODEL:
 					{
 						if (select.model_format = e_model_format.BLOCK)
 						{
-							render_world_block(select.block_vbuffer, mc_res)
+							render_world_block(select, mc_res)
 							render_world_block_map(select.model_block_map, select)
 						}
 						else if (select.model_file != null)
@@ -251,7 +251,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 								res = mc_res
 							
-							render_world_block(select.model.block_vbuffer, res)
+							render_world_block(select.model, res)
 									
 							with (select)
 								res = temp_get_model_texobj(null)
@@ -288,7 +288,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						break
 							
 					case e_temp_type.BLOCK:
-						render_world_block(select.block_vbuffer, select.block_tex, true, rep)
+						render_world_block(select, select.block_tex, true, rep)
 						break
 							
 					case e_temp_type.MODEL_PART:

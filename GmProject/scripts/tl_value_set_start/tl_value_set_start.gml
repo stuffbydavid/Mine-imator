@@ -37,7 +37,8 @@ function tl_value_set_start(script, combine)
 	if (combine && !history_separate && history_amount > 0 &&
 		history[0].par_script = script &&
 		history[0].save_axis_edit = axis_edit &&
-		history[0].save_camera_effect_type_edit = camera_effect_type_edit)
+		history[0].save_camera_effect_type_edit = camera_effect_type_edit &&
+		(script != action_env_biome_color || history[0].save_biome_color_edit = biome_color_edit))
 	{
 		history_data = history[0]
 	}

@@ -64,23 +64,13 @@ function res_event_create()
 	colormap_foliage_texture = null
 	colormap_dry_foliage_texture = null
 	
-	color_grass = null
-	color_foliage = null
-	color_dry_foliage = null
-	color_water = null
-	color_leaves_oak = null
-	color_leaves_spruce = null
-	color_leaves_birch = null
-	color_leaves_jungle = null
-	color_leaves_acacia = null
-	color_leaves_dark_oak = null
-	color_leaves_mangrove = null
 	color_biome_start_name = ""
 	color_biome_end_name = ""
 	color_biome_start_frame = null
 	color_biome_end_frame = null
 	color_biome_start_colors = null
 	color_biome_end_colors = null
+	color_list = []
 	
 	sun_texture = null
 	moon_textures = [ null, null, null, null, null, null, null, null ]

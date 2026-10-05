@@ -308,7 +308,7 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp.block_vbuffer, [ render_res_diffuse, render_res_material, render_res_normal ], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp, [ render_res_diffuse, render_res_material, render_res_normal ], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, [ render_res_diffuse, render_res_material, render_res_normal ], temp.block_repeat_enable, temp.block_repeat)
 				
@@ -353,7 +353,7 @@ function render_world_tl()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model.block_vbuffer, res)
+					render_world_block(temp.model, res)
 					
 					with (temp)
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])

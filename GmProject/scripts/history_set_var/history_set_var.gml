@@ -25,7 +25,8 @@ function history_set_var(script, oldval, newval, combine)
 		(history[0].save_render_preset_edit = render_preset_edit ||
 		 (history[0].save_render_preset_locked && render_preset_edit = render_preset_map[?"custom"])) &&
 		history[0].save_obj_edit = save_id_get(obj_edit) &&
-		history[0].save_axis_edit = axis_edit) // Add to existing
+		history[0].save_axis_edit = axis_edit &&
+		(script != action_env_biome_color || history[0].save_biome_color_edit = biome_color_edit)) // Add to existing
 	{
 		hobj = history[0]
 	}

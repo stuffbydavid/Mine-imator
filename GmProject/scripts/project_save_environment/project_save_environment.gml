@@ -53,17 +53,11 @@ function project_save_environment()
 		json_save_var_color("night_sky_stars_color", env_night_sky_stars_color)
 		json_save_var_color("night_color", env_night_color)
 		
-		json_save_var_color("grass_color", env_grass_color)
-		json_save_var_color("foliage_color", env_foliage_color)
-		json_save_var_color("dry_foliage_color", env_dry_foliage_color)
-		json_save_var_color("water_color", env_water_color)
-		json_save_var_color("leaves_oak_color", env_leaves_oak_color)
-		json_save_var_color("leaves_spruce_color", env_leaves_spruce_color)
-		json_save_var_color("leaves_birch_color", env_leaves_birch_color)
-		json_save_var_color("leaves_jungle_color", env_leaves_jungle_color)
-		json_save_var_color("leaves_acacia_color", env_leaves_acacia_color)
-		json_save_var_color("leaves_dark_oak_color", env_leaves_dark_oak_color)
-		json_save_var_color("leaves_mangrove_color", env_leaves_mangrove_color)
+		for (var i = 0; i < e_biome_color.amount; i++)
+		{
+			var name = biome_color_name_list[i];
+			json_save_var_color(name, env_color_list[biome_color_name_map[? name]])
+		}
 		
 		json_save_var_bool("fog_show", env_fog_show)
 		json_save_var_bool("fog_sky", env_fog_sky)

@@ -1,11 +1,12 @@
-/// @arg vertexbuffer
+/// @arg block
 /// @arg resourcearray
 /// @arg [rotate]
 /// @arg [size]
 /// @arg [template]
 
-function render_world_block(vbuffer, resarr, rotate = false, size = undefined, temp = null)
+function render_world_block(block, resarr, rotate = false, size = undefined, temp = null)
 {
+	var vbuffer = block.block_vbuffer;
 	if (vbuffer = null)
 		return 0
 	
@@ -83,11 +84,13 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 
 				if (statictex = null)
 					statictex = mc_res.block_sheet_texture[s]
+				
 				if (statictexmat = null)
 				{
 					statictexmat = mc_res.block_sheet_texture_material[s]
 					staticmaterialformat = mc_res.material_format
 				}
+				
 				if (statictexnormal = null)
 					statictexnormal = mc_res.block_sheet_texture_normal[s]
 
@@ -142,7 +145,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		// Grass
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 		{
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_grass), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.GRASS]), shader_blend_alpha)
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
 			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
@@ -150,7 +153,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		// Foliage
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE]))
 		{
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_foliage), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.FOLIAGE]), shader_blend_alpha)
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE])
 			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
@@ -158,7 +161,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		// Dry foliage
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE]))
 		{
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_dry_foliage), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.DRY_FOLIAGE]), shader_blend_alpha)
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE])
 			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
@@ -236,25 +239,16 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16])
 		
-	var cols = [
-		resdif.color_grass,
-		resdif.color_foliage,
-		resdif.color_dry_foliage,
-		resdif.color_leaves_oak,
-		resdif.color_leaves_spruce,
-		resdif.color_leaves_birch,
-		resdif.color_leaves_jungle,
-		resdif.color_leaves_acacia,
-		resdif.color_leaves_dark_oak,
-		resdif.color_leaves_mangrove
-	];
-	
 	for (var vbuf = e_block_vbuffer.GRASS; vbuf <= e_block_vbuffer.LEAVES_MANGROVE; vbuf++)
 	{
 		if (vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, vbuf]))
 			continue
 		
-		render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, cols[vbuf - e_block_vbuffer.GRASS]), shader_blend_alpha)
+		var colorindex = vbuf - e_block_vbuffer.GRASS;
+		if (colorindex >= e_biome_color.WATER)
+			colorindex++
+		
+		render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ colorindex]), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, vbuf])
 	}
 	
@@ -315,11 +309,10 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		texnormalprev = texnormal
 	}
 	
-	render_set_texture(tex)
-	
 	#endregion
 	
 	#region Depth 2
+	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16])
 	
@@ -353,7 +346,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 			render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 		{
 			render_set_texture(texani)
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_water), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.WATER]), shader_blend_alpha)
 			render_set_uniform_int(e_uniform.IS_WATER, app.project_render_water_reflections)
 			
 			if (app.project_render_water_reflections) // Default water reflections provided by MI

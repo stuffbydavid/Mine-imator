@@ -51,22 +51,26 @@ function tab_properties_environment()
 
 			// Grass
 			tab_control_color()
-			draw_button_color("environment/grass_color", dx, dy, dw, env_grass_color, c_plains_biome_grass, false, action_env_grass_color)
+			biome_color_edit = e_biome_color.GRASS
+			draw_button_color("environment/grass_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_grass, false, action_env_biome_color)
 			tab_next()
 
 			// Foliage
 			tab_control_color()
-			draw_button_color("environment/foliage_color", dx, dy, dw, env_foliage_color, c_plains_biome_foliage, false, action_env_foliage_color)
+			biome_color_edit = e_biome_color.FOLIAGE
+			draw_button_color("environment/foliage_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage, false, action_env_biome_color)
 			tab_next()
 
 			// Dry foliage
 			tab_control_color()
-			draw_button_color("environment/dry_foliage_color", dx, dy, dw, env_dry_foliage_color, c_plains_biome_dry_foliage, false, action_env_dry_foliage_color)
+			biome_color_edit = e_biome_color.DRY_FOLIAGE
+			draw_button_color("environment/dry_foliage_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_dry_foliage, false, action_env_biome_color)
 			tab_next()
 
 			// Water
 			tab_control_color()
-			draw_button_color("environment/water_color", dx, dy, dw, env_water_color, c_plains_biome_water, false, action_env_water_color)
+			biome_color_edit = e_biome_color.WATER
+			draw_button_color("environment/water_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_water, false, action_env_biome_color)
 			tab_next()
 
 			tab_set_columns(false)
@@ -79,41 +83,50 @@ function tab_properties_environment()
 
 			// Oak leaves
 			tab_control_color()
-			draw_button_color("environment/leaves/oak_color", dx, dy, dw, env_leaves_oak_color, c_plains_biome_foliage, false, action_env_leaves_oak_color)
+			biome_color_edit = e_biome_color.LEAVES_OAK
+			draw_button_color("environment/leaves/oak_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage, false, action_env_biome_color)
 			tab_next()
 
 			// Spruce leaves
 			tab_control_color()
-			draw_button_color("environment/leaves/spruce_color", dx, dy, dw, env_leaves_spruce_color, c_plains_biome_foliage_2, false, action_env_leaves_spruce_color)
+			biome_color_edit = e_biome_color.LEAVES_SPRUCE
+			draw_button_color("environment/leaves/spruce_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage_2, false, action_env_biome_color)
 			tab_next()
 
 			// Birch
 			tab_control_color()
-			draw_button_color("environment/leaves/birch_color", dx, dy, dw, env_leaves_birch_color, c_plains_biome_foliage_2, false, action_env_leaves_birch_color)
+			biome_color_edit = e_biome_color.LEAVES_BIRCH
+			draw_button_color("environment/leaves/birch_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage_2, false, action_env_biome_color)
 			tab_next()
 
 			// Jungle
 			tab_control_color()
-			draw_button_color("environment/leaves/jungle_color", dx, dy, dw, env_leaves_jungle_color, c_plains_biome_foliage, false, action_env_leaves_jungle_color)
+			biome_color_edit = e_biome_color.LEAVES_JUNGLE
+			draw_button_color("environment/leaves/jungle_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage, false, action_env_biome_color)
 			tab_next()
 
 			// Acacia
 			tab_control_color()
-			draw_button_color("environment/leaves/acacia_color", dx, dy, dw, env_leaves_acacia_color, c_plains_biome_foliage, false, action_env_leaves_acacia_color)
+			biome_color_edit = e_biome_color.LEAVES_ACACIA
+			draw_button_color("environment/leaves/acacia_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage, false, action_env_biome_color)
 			tab_next()
 
 			// Dark oak
 			tab_control_color()
-			draw_button_color("environment/leaves/dark_oak_color", dx, dy, dw, env_leaves_dark_oak_color, c_plains_biome_foliage, false, action_env_leaves_dark_oak_color)
+			biome_color_edit = e_biome_color.LEAVES_DARK_OAK
+			draw_button_color("environment/leaves/dark_oak_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage, false, action_env_biome_color)
 			tab_next()
 
 			// Mangrove
 			tab_control_color()
-			draw_button_color("environment/leaves/mangrove_color", dx, dy, dw, env_leaves_mangrove_color, c_plains_biome_foliage, false, action_env_leaves_mangrove_color)
+			biome_color_edit = e_biome_color.LEAVES_MANGROVE
+			draw_button_color("environment/leaves/mangrove_color", dx, dy, dw, env_color_list[biome_color_edit], c_plains_biome_foliage, false, action_env_biome_color)
 			tab_next()
 
 			tab_set_columns(false)
 			tab_collapse_end()
+			
+			biome_color_edit = null
 		}
 	}
 

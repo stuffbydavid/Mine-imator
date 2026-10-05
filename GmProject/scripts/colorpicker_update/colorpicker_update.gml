@@ -46,6 +46,8 @@ function colorpicker_update(control, color, gethsb)
 		colorpicker.tbx_hexadecimal.text = color_to_hex(colorpicker.color)
 	
 	camera_effect_type_edit = colorpicker.camera_effect_edit_type
+	biome_color_edit = colorpicker.value_biome_color_edit
 	script_execute(colorpicker.value_script, colorpicker.color)
+	biome_color_edit = null
 	camera_effect_type_edit = null
 }

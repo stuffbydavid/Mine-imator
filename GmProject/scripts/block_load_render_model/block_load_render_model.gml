@@ -528,8 +528,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 												case e_block_vbuffer.DRY_FOLIAGE:		colstr = "dry_foliage";					break
 												case e_block_vbuffer.WATER:				colstr = "water";						break
 												
-												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_leaves_spruce;	break
-												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_leaves_birch;		break
+												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_list[@ e_biome_color.LEAVES_SPRUCE];	break
+												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_list[@ e_biome_color.LEAVES_BIRCH];	break
 												case e_block_vbuffer.LEAVES_OAK:
 												case e_block_vbuffer.LEAVES_JUNGLE:
 												case e_block_vbuffer.LEAVES_ACACIA:

@@ -13,7 +13,6 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		
 	mix = clamp(mix, 0, 1)
 	
-	var colors;
 	if (nextbiome != "" && biome != nextbiome)
 	{
 		var startframe, endframe;
@@ -44,29 +43,18 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		if (color_biome_start_colors = null || color_biome_end_colors = null)
 			return 0
 		
-		colors = array_create(e_biome_color.amount)
+		color_list = array_create(e_biome_color.amount)
 		for (var i = 0; i < e_biome_color.amount; i++)
-			colors[i] = merge_color(color_biome_start_colors[i], color_biome_end_colors[i], mix)
+			color_list[i] = merge_color(color_biome_start_colors[i], color_biome_end_colors[i], mix)
 	}
 	else
 	{
 		color_biome_start_colors = null
 		color_biome_end_colors = null
 		
-		colors = res_biome_colors(biome)
-		if (colors = null)
+		if (find_biome(biome) = null)
 			return 0
+		
+		color_list = res_biome_colors(biome)
 	}
-
-	color_grass = colors[e_biome_color.GRASS]
-	color_foliage = colors[e_biome_color.FOLIAGE]
-	color_dry_foliage = colors[e_biome_color.DRY_FOLIAGE]
-	color_water = colors[e_biome_color.WATER]
-	color_leaves_oak = colors[e_biome_color.LEAVES_OAK]
-	color_leaves_spruce = colors[e_biome_color.LEAVES_SPRUCE]
-	color_leaves_birch = colors[e_biome_color.LEAVES_BIRCH]
-	color_leaves_jungle = colors[e_biome_color.LEAVES_JUNGLE]
-	color_leaves_acacia = colors[e_biome_color.LEAVES_ACACIA]
-	color_leaves_dark_oak = colors[e_biome_color.LEAVES_DARK_OAK]
-	color_leaves_mangrove = colors[e_biome_color.LEAVES_MANGROVE]
 }

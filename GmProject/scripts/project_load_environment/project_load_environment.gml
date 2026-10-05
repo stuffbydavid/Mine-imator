@@ -141,17 +141,12 @@ function project_load_environment(map)
 	env_night_sky_stars_color = value_get_color(map[?"night_sky_stars_color"], env_night_sky_stars_color)
 	env_night_color = value_get_color(map[?"night_color"], env_night_color)
 	
-	env_water_color = value_get_color(map[?"water_color"], env_water_color)
-	env_grass_color = value_get_color(map[?"grass_color"], env_grass_color)
-	env_foliage_color = value_get_color(map[?"foliage_color"], env_foliage_color)
-	env_dry_foliage_color = value_get_color(map[?"dry_foliage_color"], env_dry_foliage_color)
-	env_leaves_oak_color = value_get_color(map[?"leaves_oak_color"], env_leaves_oak_color)
-	env_leaves_spruce_color = value_get_color(map[?"leaves_spruce_color"], env_leaves_spruce_color)
-	env_leaves_birch_color = value_get_color(map[?"leaves_birch_color"], env_leaves_birch_color)
-	env_leaves_jungle_color = value_get_color(map[?"leaves_jungle_color"], env_leaves_jungle_color)
-	env_leaves_acacia_color = value_get_color(map[?"leaves_acacia_color"], env_leaves_acacia_color)
-	env_leaves_dark_oak_color = value_get_color(map[?"leaves_dark_oak_color"], env_leaves_dark_oak_color)
-	env_leaves_mangrove_color = value_get_color(map[?"leaves_mangrove_color"], env_leaves_mangrove_color)
+	for (var i = 0; i < e_biome_color.amount; i++)
+	{
+		var name = biome_color_name_list[i];
+		var colorid = biome_color_name_map[? name];
+		env_color_list[colorid] = value_get_color(map[? name], env_color_list[colorid])
+	}
 	
 	env_fog_show = value_get_real(map[?"fog_show"], env_fog_show)
 	env_fog_sky = value_get_real(map[?"fog_sky"], env_fog_sky)

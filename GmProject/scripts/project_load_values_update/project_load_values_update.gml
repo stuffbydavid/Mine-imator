@@ -16,10 +16,8 @@ function project_load_values_update(map = null)
 			
 			value[e_value.ENV_GROUND_SHOW] = app.env_ground_show
 			
-			value[e_value.ENV_GRASS_COLOR] = app.env_grass_color
-			value[e_value.ENV_FOLIAGE_COLOR] = app.env_foliage_color
-			value[e_value.ENV_DRY_FOLIAGE_COLOR] = app.env_dry_foliage_color
-			value[e_value.ENV_WATER_COLOR] = app.env_water_color
+			for (var i = e_biome_color.GRASS; i <= e_biome_color.WATER; i++)
+				value[e_value.ENV_GRASS_COLOR + i] = app.env_color_list[i]
 			
 			value[e_value.ENV_FOG_SHOW] = app.env_fog_show
 			value[e_value.ENV_FOG_SKY] = app.env_fog_sky
@@ -61,21 +59,16 @@ function project_load_values_update(map = null)
 	// Separated leaf colors for custom biome setting (2.0.0)
 	if (load_format < e_project.FORMAT_200_PRE_5)
 	{
-		app.env_leaves_oak_color = app.env_foliage_color
-		app.env_leaves_spruce_color = c_plains_biome_foliage_2
-		app.env_leaves_birch_color = c_plains_biome_foliage_2
-		app.env_leaves_jungle_color = app.env_foliage_color
-		app.env_leaves_acacia_color = app.env_foliage_color
-		app.env_leaves_dark_oak_color = app.env_foliage_color
-		app.env_leaves_mangrove_color = app.env_foliage_color
+		for (var i = e_biome_color.LEAVES_OAK; i < e_biome_color.amount; i++)
+		{
+			app.env_color_list[i] = app.env_color_list[e_biome_color.FOLIAGE]
+			value[e_value.ENV_GRASS_COLOR + i] = value[e_value.ENV_FOLIAGE_COLOR]
+		}
 		
-		value[e_value.ENV_LEAVES_OAK_COLOR] = value[e_value.ENV_FOLIAGE_COLOR]
-		value[e_value.ENV_LEAVES_SPRUCE_COLOR] = app.env_leaves_spruce_color
-		value[e_value.ENV_LEAVES_BIRCH_COLOR] = app.env_leaves_birch_color
-		value[e_value.ENV_LEAVES_JUNGLE_COLOR] = value[e_value.ENV_FOLIAGE_COLOR]
-		value[e_value.ENV_LEAVES_ACACIA_COLOR] = value[e_value.ENV_FOLIAGE_COLOR]
-		value[e_value.ENV_LEAVES_DARK_OAK_COLOR] = value[e_value.ENV_FOLIAGE_COLOR]
-		value[e_value.ENV_LEAVES_MANGROVE_COLOR] = value[e_value.ENV_FOLIAGE_COLOR]
+		app.env_color_list[e_biome_color.LEAVES_SPRUCE] = c_plains_biome_foliage_2
+		app.env_color_list[e_biome_color.LEAVES_BIRCH] = c_plains_biome_foliage_2
+		value[e_value.ENV_LEAVES_SPRUCE_COLOR] = app.env_color_list[e_biome_color.LEAVES_SPRUCE]
+		value[e_value.ENV_LEAVES_BIRCH_COLOR] = app.env_color_list[e_biome_color.LEAVES_BIRCH]
 	}
 	
 	if (load_format < e_project.FORMAT_200_PRE_5)

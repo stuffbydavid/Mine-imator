@@ -9,7 +9,7 @@
 
 function colorpicker_show(name, color, def, script, xx, yy, wid, hei)
 {
-	if (settings_menu_name = "colorpicker" && colorpicker.value_script = script && colorpicker.camera_effect_edit_type = camera_effect_type_edit)
+	if (settings_menu_name = "colorpicker" && colorpicker.value_script = script && colorpicker.value_name = name && colorpicker.camera_effect_edit_type = camera_effect_type_edit)
 	{
 		popup_close()
 		return 0
@@ -43,6 +43,7 @@ function colorpicker_show(name, color, def, script, xx, yy, wid, hei)
 		
 	colorpicker.value_name = name
 	colorpicker.value_script = script
+	colorpicker.value_biome_color_edit = biome_color_edit
 	colorpicker.mode = "rgb"
 		
 	colorpicker.def = def

@@ -96,7 +96,7 @@ function render_world_particle()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model.block_vbuffer, res)
+					render_world_block(temp.model, res)
 					
 					with (temp)
 						res = temp_get_model_texobj(null)
@@ -135,7 +135,7 @@ function render_world_particle()
 			
 			case e_temp_type.BLOCK:
 			{
-				render_world_block(temp.block_vbuffer, temp.block_tex, true, rep) 
+				render_world_block(temp, temp.block_tex, true, rep)
 				break
 			}
 			

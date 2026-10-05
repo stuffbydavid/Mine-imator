@@ -14,6 +14,7 @@ function action_toolbar_redo()
 	tl_edit = save_id_find(history_data.save_tl_edit)
 	res_edit = save_id_find(history_data.save_res_edit)
 	axis_edit = history_data.save_axis_edit
+	biome_color_edit = history_data.save_biome_color_edit
 	renderer_edit = history_data.save_renderer_edit
 	render_preset_edit = history_data.save_render_preset_edit
 	save_id_seed = history_data.save_save_id_seed

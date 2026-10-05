@@ -1,5 +1,8 @@
 function tl_value_default(valueid)
 {
+	if (valueid >= e_value.ENV_GRASS_COLOR && valueid <= e_value.ENV_LEAVES_MANGROVE_COLOR)
+		return app.env_color_list[valueid - e_value.ENV_GRASS_COLOR]
+	
 	switch (valueid)
 	{
 		case e_value.SCA_X:
@@ -123,17 +126,6 @@ function tl_value_default(valueid)
 		case e_value.ENV_NIGHT_SKY_CLOUDS_COLOR: return app.env_night_sky_clouds_color
 		case e_value.ENV_NIGHT_SKY_STARS_COLOR: return app.env_night_sky_stars_color
 		case e_value.ENV_NIGHT_COLOR: return app.env_night_color
-		case e_value.ENV_GRASS_COLOR: return app.env_grass_color
-		case e_value.ENV_FOLIAGE_COLOR: return app.env_foliage_color
-		case e_value.ENV_DRY_FOLIAGE_COLOR: return app.env_dry_foliage_color
-		case e_value.ENV_WATER_COLOR: return app.env_water_color
-		case e_value.ENV_LEAVES_OAK_COLOR: return app.env_leaves_oak_color
-		case e_value.ENV_LEAVES_SPRUCE_COLOR: return app.env_leaves_spruce_color
-		case e_value.ENV_LEAVES_BIRCH_COLOR: return app.env_leaves_birch_color
-		case e_value.ENV_LEAVES_JUNGLE_COLOR: return app.env_leaves_jungle_color
-		case e_value.ENV_LEAVES_ACACIA_COLOR: return app.env_leaves_acacia_color
-		case e_value.ENV_LEAVES_DARK_OAK_COLOR: return app.env_leaves_dark_oak_color
-		case e_value.ENV_LEAVES_MANGROVE_COLOR: return app.env_leaves_mangrove_color
 		case e_value.ENV_FOG_SHOW: return app.env_fog_show
 		case e_value.ENV_FOG_SKY: return app.env_fog_sky
 		case e_value.ENV_FOG_CUSTOM_COLOR: return app.env_fog_color_custom

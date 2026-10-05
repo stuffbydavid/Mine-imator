@@ -11,7 +11,7 @@ function app_startup_lists()
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
 	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
-	globalvar biome_list, particle_template_list, particle_template_map;
+	globalvar biome_list, biome_color_name_list, biome_color_name_map, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
 	globalvar render_pass_list;
@@ -474,6 +474,28 @@ function app_startup_lists()
 	// Biomes
 	biome_list = ds_list_create()
 	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_dry_foliage, c_plains_biome_water, null))
+	
+	biome_color_name_list = [
+		"grass_color", "foliage_color", "dry_foliage_color", "water_color",
+		"leaves_oak_color", "leaves_spruce_color", "leaves_birch_color", "leaves_jungle_color",
+		"leaves_acacia_color", "leaves_dark_oak_color", "leaves_mangrove_color"
+	]
+	
+	biome_color_name_map = ds_map_create()
+	for (var i = 0; i < e_biome_color.amount; i++)
+		biome_color_name_map[? biome_color_name_list[i]] = i
+	
+	biome_color_name_map[? "grass"] = e_biome_color.GRASS
+	biome_color_name_map[? "foliage"] = e_biome_color.FOLIAGE
+	biome_color_name_map[? "dry_foliage"] = e_biome_color.DRY_FOLIAGE
+	biome_color_name_map[? "water"] = e_biome_color.WATER
+	biome_color_name_map[? "oak_leaves"] = e_biome_color.LEAVES_OAK
+	biome_color_name_map[? "spruce_leaves"] = e_biome_color.LEAVES_SPRUCE
+	biome_color_name_map[? "birch_leaves"] = e_biome_color.LEAVES_BIRCH
+	biome_color_name_map[? "jungle_leaves"] = e_biome_color.LEAVES_JUNGLE
+	biome_color_name_map[? "acacia_leaves"] = e_biome_color.LEAVES_ACACIA
+	biome_color_name_map[? "dark_oak_leaves"] = e_biome_color.LEAVES_DARK_OAK
+	biome_color_name_map[? "mangrove_leaves"] = e_biome_color.LEAVES_MANGROVE
 	
 	// Particles
 	particle_template_list = ds_list_create()

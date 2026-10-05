@@ -58,17 +58,19 @@ function project_reset_environment()
 	env_biome_prev = env_biome
 	env_biome_next = env_biome
 	env_biome_mix = 0
-	env_grass_color = c_plains_biome_grass
-	env_foliage_color = c_plains_biome_foliage
-	env_dry_foliage_color = c_plains_biome_dry_foliage
-	env_water_color = c_plains_biome_water
-	env_leaves_oak_color = c_plains_biome_foliage
-	env_leaves_spruce_color = c_plains_biome_foliage_2
-	env_leaves_birch_color = c_plains_biome_foliage_2
-	env_leaves_jungle_color = c_plains_biome_foliage
-	env_leaves_acacia_color = c_plains_biome_foliage
-	env_leaves_dark_oak_color = c_plains_biome_foliage
-	env_leaves_mangrove_color = c_plains_biome_foliage
+	env_color_list = [
+		c_plains_biome_grass,
+		c_plains_biome_foliage,
+		c_plains_biome_dry_foliage,
+		c_plains_biome_water,
+		c_plains_biome_foliage,
+		c_plains_biome_foliage_2,
+		c_plains_biome_foliage_2,
+		c_plains_biome_foliage,
+		c_plains_biome_foliage,
+		c_plains_biome_foliage,
+		c_plains_biome_foliage
+	]
 	
 	with (mc_res)
 		res_update_colors()

@@ -14,6 +14,7 @@ function new_history(script)
 		save_res_edit = save_id_get(res_edit)
 		
 		save_axis_edit = axis_edit
+		save_biome_color_edit = biome_color_edit
 		save_camera_effect_type_edit = camera_effect_type_edit
 		save_renderer_edit = renderer_edit
 		save_render_preset_edit = render_preset_edit

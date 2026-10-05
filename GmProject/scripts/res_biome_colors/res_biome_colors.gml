@@ -24,19 +24,7 @@ function res_biome_colors(biomename, values = null)
 			]
 		}
 
-		return [
-			app.env_grass_color,
-			app.env_foliage_color,
-			app.env_dry_foliage_color,
-			app.env_water_color,
-			app.env_leaves_oak_color,
-			app.env_leaves_spruce_color,
-			app.env_leaves_birch_color,
-			app.env_leaves_jungle_color,
-			app.env_leaves_acacia_color,
-			app.env_leaves_dark_oak_color,
-			app.env_leaves_mangrove_color
-		]
+		return app.env_color_list
 	}
 
 	if (biome.hardcoded)

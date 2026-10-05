@@ -48,6 +48,7 @@ function context_menu_area(xx, yy, wid, hei, name, value = null, valuetype = nul
 		context_menu_group = context_menu_group_temp
 		
 		context_menu_copy_axis_edit = axis_edit
+		context_menu_biome_color_edit = biome_color_edit
 		context_menu_camera_effect_type_edit = camera_effect_type_edit
 		
 		context_menu_busy_prev = window_busy

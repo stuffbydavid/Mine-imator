@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_env_leaves_acacia_color",
+  "%Name":"action_env_biome_color",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_env_leaves_acacia_color",
+  "name":"action_env_biome_color",
   "parent":{
     "name":"Biome",
     "path":"folders/Scripts/App/Actions/Environment/Biome.yy",

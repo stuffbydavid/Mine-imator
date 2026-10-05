@@ -82,7 +82,7 @@ function project_load_legacy_environment()
 		if (custombiome)
 			env_biome = biome_list[| 0].name
 		
-		env_foliage_color = buffer_read_int()
-		env_grass_color = env_foliage_color
+		env_color_list[e_biome_color.FOLIAGE] = buffer_read_int()
+		env_color_list[e_biome_color.GRASS] = env_color_list[e_biome_color.FOLIAGE]
 	}
 }

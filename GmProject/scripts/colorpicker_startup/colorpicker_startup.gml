@@ -6,6 +6,7 @@ function colorpicker_startup()
 	{
 		value_name = ""
 		value_script = null
+		value_biome_color_edit = null
 		color = null
 		def = null
 		
