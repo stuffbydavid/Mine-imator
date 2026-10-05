@@ -50,6 +50,8 @@ function res_event_create()
 	pack_res_texture_map = null
 	pack_format = e_minecraft_pack.LATEST
 	pack_cache_loaded = false
+	pack_has_materials = false
+	pack_has_normals = false
 	load_reload = false
 	
 	block_sheet_texture = array_create(e_block_sheet.amount, null)

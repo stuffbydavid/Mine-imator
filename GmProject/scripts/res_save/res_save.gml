@@ -53,7 +53,8 @@ function res_save()
 					fn = name + "/" + key + ".png"
 			
 				directory_create_lib(save_folder + "/" + filename_dir(fn))
-				texture_export(model_texture_normal_map[?key], save_folder + "/" + fn)
+				if (model_texture_normal_map[?key] != null)
+					texture_export(model_texture_normal_map[?key], save_folder + "/" + fn)
 			
 				key = ds_map_find_next(model_texture_normal_map, key)
 			}

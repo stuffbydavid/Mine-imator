@@ -81,9 +81,7 @@ function tab_frame_editor_texture_normal()
 		content_name = "frame_editor/shape_tex_normal"
 		texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 		
-		if (texobj = null)
-			tex = spr_default_normal
-		else
+		if (texobj != null)
 			tex = texobj.texture
 	}
 	else

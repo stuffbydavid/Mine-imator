@@ -16,7 +16,7 @@
 
 namespace CppProject
 {
-	static constexpr uchar PACK_CACHE_FORMAT = 4;
+	static constexpr uchar PACK_CACHE_FORMAT = 5;
 	static constexpr qint64 PACK_CACHE_MAX_IMAGE_BYTES = 512LL * 1024 * 1024;
 	static constexpr qint32 PACK_CACHE_MAX_RECORDS = 100000;
 
@@ -375,6 +375,8 @@ namespace CppProject
 		out << sourceInfo.size;
 		out << sourceInfo.modified;
 		out << (qint32)VarGetInt(res->pack_format);
+		out << (quint8)res->pack_has_materials;
+		out << (quint8)res->pack_has_normals;
 
 		// Write processed textures
 		auto writeSprite = [&out](IntType id) { return PackCacheWriteSprite(out, id); };
@@ -474,6 +476,8 @@ namespace CppProject
 		qint64 sourceSize = -1;
 		qint64 sourceModified = -1;
 		qint32 packFormat = 0;
+		quint8 hasMaterials = 0;
+		quint8 hasNormals = 0;
 		in >> format;
 		in >> assetsVersionSize;
 		if (in.status() != QDataStream::Ok || format != PACK_CACHE_FORMAT || !assetsVersionSize || assetsVersionSize > 64)
@@ -492,6 +496,8 @@ namespace CppProject
 		in >> sourceSize;
 		in >> sourceModified;
 		in >> packFormat;
+		in >> hasMaterials;
+		in >> hasNormals;
 		if (in.status() != QDataStream::Ok)
 			return PackCacheReject("sheet size");
 
@@ -652,6 +658,8 @@ namespace CppProject
 
 		// Apply fully validated assets
 		res->pack_format = (IntType)packFormat;
+		res->pack_has_materials = hasMaterials != 0;
+		res->pack_has_normals = hasNormals != 0;
 		res->block_preview_texture = packImage;
 
 		res->model_texture_map = diffuseMap->id;

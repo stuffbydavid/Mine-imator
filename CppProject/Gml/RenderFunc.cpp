@@ -523,7 +523,7 @@ namespace CppProject
 
 	void texture_set_stage(IntType stage, IntType tex)
 	{
-		if (tex > 0 && GFX->shader->IsLoaded())
+		if (GFX->shader->IsLoaded())
 			GFX->shader->SubmitTexture(stage, tex);
 	}
 

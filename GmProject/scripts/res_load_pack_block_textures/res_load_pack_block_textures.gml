@@ -23,11 +23,13 @@ function res_load_pack_block_textures()
 	
 	if (block_sheet_texture_material[e_block_sheet.ANIMATED] != null)
 		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
-			texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
+			if (block_sheet_texture_material[e_block_sheet.ANIMATED][f] != null)
+				texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
 	
 	if (block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
 		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
-			texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
+			if (block_sheet_texture_normal[e_block_sheet.ANIMATED][f] != null)
+				texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
 
 	block_sheet_texture[e_block_sheet.ANIMATED] = null
 	block_sheet_texture_material[e_block_sheet.ANIMATED] = null
@@ -49,21 +51,8 @@ function res_load_pack_block_textures()
 	}
 	else
 	{
-		for (var size = 0; size < e_block_sheet.static_amount; size++)
-			if (block_sheet_texture[size] != null)
-				block_sheet_texture_material[size] = texture_duplicate(spr_default_material)
-		
-		block_sheet_texture_material[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
-		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
-			block_sheet_texture_material[e_block_sheet.ANIMATED][f] = texture_duplicate(spr_default_material)
-		
-		for (var size = 0; size < e_block_sheet.static_amount; size++)
-			if (block_sheet_texture[size] != null)
-				block_sheet_texture_normal[size] = texture_duplicate(spr_default_normal)
-		
-		block_sheet_texture_normal[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
-		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
-			block_sheet_texture_normal[e_block_sheet.ANIMATED][f] = texture_duplicate(spr_default_normal)
+		block_sheet_texture_material[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count, null)
+		block_sheet_texture_normal[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count, null)
 	}
 	
 	log("Block textures all", "done")

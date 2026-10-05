@@ -2,7 +2,7 @@ function debug_startup()
 {
 	// Developer options, overwritten by program arguments
 	globalvar debug_project, debug_full, debug_advanced;
-	globalvar debug_skip_blocks, debug_max_blocks, debug_skip_tangents, debug_show_bones;
+	globalvar debug_skip_blocks, debug_max_blocks, debug_show_bones;
 	globalvar debug_schematics, debug_names, debug_saveid, debug_unused;
 	globalvar debug_check_assets, debug_dark_theme;
 	globalvar debug_info, debug_info_corner, debug_indent, debug_timer;
@@ -14,7 +14,6 @@ function debug_startup()
 		debug_advanced		= true
 		debug_skip_blocks	= true
 		debug_max_blocks	= 10
-		debug_skip_tangents	= false
 		debug_show_bones	= false
 		debug_schematics	= false
 		debug_names			= false
@@ -31,7 +30,6 @@ function debug_startup()
 		debug_advanced		= false
 		debug_skip_blocks	= false
 		debug_max_blocks	= 0
-		debug_skip_tangents	= false
 		debug_show_bones	= false
 		debug_schematics	= false
 		debug_names			= false
@@ -115,8 +113,6 @@ function debug_startup()
 			case "--simple":			debug_advanced = false; break
 			case "--skip_blocks":		debug_skip_blocks = true; break
 			case "--no_skip_blocks":	debug_skip_blocks = false; break
-			case "--skip_tangents":		debug_skip_tangents = true; break
-			case "--no_skip_tangents":	debug_skip_tangents = false; break
 			case "--show_bones":		debug_show_bones = true; break
 			case "--no_show_bones":		debug_show_bones = false; break
 			case "--schematics":		debug_schematics = true; break

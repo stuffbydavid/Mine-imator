@@ -15,6 +15,12 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	res = res_eval(res)
 	render_apply_res(res)
 	
+	if (!tl && !render_depth_pass)
+	{
+		render_set_material_textures_none()
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+	}
+	
 	var parttexname, mat;
 	parttexname = (tl ? "" : string(model_part_get_texture_name(part, texnamemap)))
 	
@@ -77,7 +83,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 
 				if (model_part_shape_tex_material[s] = null)
 				{
-					render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+					render_set_texture(0, e_texture_channel.MATERIAL)
 
 					if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 					{
@@ -121,7 +127,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				}
 				
 				if (model_part_shape_tex_normal[s] = null)
-					render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+					render_set_texture(0, e_texture_channel.NORMAL)
 				else
 					render_set_texture(model_part_shape_tex_normal[s], e_texture_channel.NORMAL)
 			}

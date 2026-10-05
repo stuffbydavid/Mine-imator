@@ -17,6 +17,8 @@ function res_load(reload = false)
 			ready = false
 			load_reload = reload
 			pack_cache_loaded = false
+			pack_has_materials = false
+			pack_has_normals = false
 			
 			with (app)
 			{
@@ -258,7 +260,8 @@ function res_load(reload = false)
 				var key = ds_map_find_first(model_texture_normal_map);
 				while (!is_undefined(key))
 				{
-					texture_free(model_texture_normal_map[?key])
+					if (model_texture_normal_map[?key] != null)
+						texture_free(model_texture_normal_map[?key])
 					key = ds_map_find_next(model_texture_normal_map, key)
 				}
 				ds_map_destroy(model_texture_normal_map)

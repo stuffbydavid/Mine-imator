@@ -4,7 +4,7 @@
 
 function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
 {
-	var sampler, diffuse;
+	var sampler, diffuse, validtex;
 	sampler = render_shader_obj.sampler_texture[channel]
 	diffuse = (channel = e_texture_channel.DIFFUSE)
 	if (sampler < 0)
@@ -28,7 +28,8 @@ function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
 	// Surface
 	if (shader_texture_surface)
 	{
-		if (surface_exists(tex))
+		validtex = (tex != 0 && tex != null && surface_exists(tex))
+		if (validtex)
 		{
 			texture_set_stage(sampler, surface_get_texture(tex))
 			
@@ -45,9 +46,11 @@ function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
 	// Sprite texture
 	else
 	{
-		tex = render_get_pack_texture(tex)
+		if (tex != 0 && tex != null)
+			tex = render_get_pack_texture(tex)
 		
-		if (sprite_exists(tex))
+		validtex = (tex != 0 && tex != null && sprite_exists(tex))
+		if (validtex)
 		{
 			texture_set_stage(sampler, sprite_get_texture(tex, 0))
 			
@@ -63,6 +66,8 @@ function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
 	
 	if (diffuse)
 		render_set_uniform_vec2(e_uniform.TEXTURE_SIZE, shader_texture_width, shader_texture_height)
+	else if (channel = e_texture_channel.NORMAL)
+		render_set_uniform_int(e_uniform.HAS_NORMAL_MAP, validtex)
 	
 	gpu_set_texrepeat_ext(sampler, true)
 }

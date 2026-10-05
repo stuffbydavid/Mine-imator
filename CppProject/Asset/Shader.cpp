@@ -654,7 +654,8 @@ namespace CppProject
 
 		if (sampler < 0 || sampler >= numSamplers || sampler >= 32)
 		{
-			WARNING("Shader: Sampler index out of range: " + NumStr(sampler));
+			if (id > 0)
+				WARNING("Shader: Sampler index out of range: " + NumStr(sampler));
 			return UvRect();
 		}
 

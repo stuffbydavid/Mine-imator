@@ -17,8 +17,6 @@ function res_load_pack_render_textures()
 	pack_sprite_texture_map = ds_int_map_create()
 	
 	var sprites = [
-		spr_default_material,
-		spr_default_normal,
 		spr_shape,
 		spr_fog,
 		spr_stars,

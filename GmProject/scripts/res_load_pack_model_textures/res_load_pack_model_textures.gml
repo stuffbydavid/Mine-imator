@@ -9,6 +9,7 @@ function res_load_pack_model_textures()
 			texture_free(model_texture_map[?key])
 			key = ds_map_find_next(model_texture_map, key)
 		}
+		
 		ds_map_destroy(model_texture_map)
 	}
 	
@@ -20,6 +21,7 @@ function res_load_pack_model_textures()
 			texture_free(model_texture_material_map[?key])
 			key = ds_map_find_next(model_texture_material_map, key)
 		}
+		
 		ds_map_destroy(model_texture_material_map)
 	}
 	
@@ -28,9 +30,12 @@ function res_load_pack_model_textures()
 		var key = ds_map_find_first(model_texture_normal_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_texture_normal_map[?key])
+			if (model_texture_normal_map[?key] != null)
+				texture_free(model_texture_normal_map[?key])
+			
 			key = ds_map_find_next(model_texture_normal_map, key)
 		}
+		
 		ds_map_destroy(model_texture_normal_map)
 	}
 	
@@ -76,6 +81,8 @@ function res_load_pack_model_textures()
 				tex = res_load_player_skin(matfname)
 			else
 				tex = texture_create_square(matfname)
+			
+			pack_has_materials = true
 		}
 		else
 			tex = null
@@ -89,9 +96,11 @@ function res_load_pack_model_textures()
 				tex = res_load_player_skin(norfname)
 			else
 				tex = texture_create_square(norfname)
+			
+			pack_has_normals = true
 		}
 		else 
-			tex = texture_duplicate(spr_default_normal)
+			tex = null
 		
 		model_texture_normal_map[?name] = tex
 	}

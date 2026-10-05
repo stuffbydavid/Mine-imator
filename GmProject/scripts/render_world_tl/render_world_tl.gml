@@ -287,8 +287,8 @@ function render_world_tl()
 		// Reset material textures for other timelines
 		if (type != e_tl_type.SCENERY && type != e_tl_type.BLOCK && type != e_tl_type.MODEL_PART)
 		{
-			render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
-			render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+			render_set_material_textures_none()
+			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 		}
 		
 		render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
@@ -378,7 +378,7 @@ function render_world_tl()
 					
 					if (value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = null)
 					{
-						texmat = spr_default_material
+						texmat = 0
 						render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 					}
 					else
@@ -388,7 +388,7 @@ function render_world_tl()
 					}
 					
 					if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = null)
-						texnorm = spr_default_normal
+						texnorm = 0
 					else
 						texnorm = value_inherit[e_value.TEXTURE_NORMAL_OBJ].texture
 					
@@ -401,8 +401,7 @@ function render_world_tl()
 				else if (render_mode = e_render_mode.CLICK)
 				{
 					render_set_texture(spr_shape)
-					render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
-					render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+					render_set_material_textures_none()
 					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 					
 					vbuffer_render(path_select_vbuffer)
@@ -413,14 +412,15 @@ function render_world_tl()
 			
 			default: // Shapes
 			{
-				var matres, texmat, normtex;
+				var matres, normres, texmat, normtex;
 				with (temp)
 				{
 					tex = temp_get_shape_tex(temp_get_shape_texobj(other.value_inherit[e_value.TEXTURE_OBJ]))
 					
 					matres = temp_get_shape_tex_material_obj(other.value_inherit[e_value.TEXTURE_MATERIAL_OBJ])
-					texmat = temp_get_shape_tex(matres, spr_default_material)
-					normtex = temp_get_shape_tex(temp_get_shape_tex_normal_obj(other.value_inherit[e_value.TEXTURE_NORMAL_OBJ]), spr_default_normal)
+					texmat = matres != null ? temp_get_shape_tex(matres) : 0
+					normres = temp_get_shape_tex_normal_obj(other.value_inherit[e_value.TEXTURE_NORMAL_OBJ])
+					normtex = normres != null ? temp_get_shape_tex(normres) : 0
 					
 					if (matres != null)
 						render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matres.material_format)

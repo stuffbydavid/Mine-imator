@@ -56,11 +56,17 @@ function res_load_pack_block_sheet(type, suffix)
 				ds_list_add(texlist[size], tex)
 				if (fileslist != null)
 					ds_list_delete_value(fileslist, fname)
+				
+				if (type = "material")
+					pack_has_materials = true
+				else if (type = "normal")
+					pack_has_normals = true
 			}
 			else
 			{
 				if (debug_mode)
 					log("Block texture not found", blocktexlist[|t] + suffix)
+				
 				ds_list_add(texlist[size], null)
 			}
 		}
@@ -86,6 +92,11 @@ function res_load_pack_block_sheet(type, suffix)
 			
 			if (fileslist != null)
 				ds_list_delete_value(fileslist, fname)
+			
+			if (type = "material")
+				pack_has_materials = true
+			else if (type = "normal")
+				pack_has_normals = true
 		}
 		else
 		{

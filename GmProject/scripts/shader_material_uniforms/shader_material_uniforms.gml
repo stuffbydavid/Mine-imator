@@ -33,5 +33,5 @@ function shader_material_uniforms()
 	new_shader_uniform(e_uniform.WATER_MATERIAL_STRENGTH)
 	new_shader_uniform(e_uniform.WATER_MATERIAL_SCALE)
 	new_shader_uniform(e_uniform.WATER_MATERIAL_OCTAVES)
-	new_shader_uniform(e_uniform.USE_NORMAL_MAP)
+	new_shader_uniform(e_uniform.HAS_NORMAL_MAP)
 }

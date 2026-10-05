@@ -11,9 +11,15 @@ function render_world_ground()
 	if (render_mode = e_render_mode.PLACE)
 		render_set_uniform(e_uniform.IS_BLOCK, 1)
 
-	var materialres, res;
+	var materialres, normalres, res, hasmat, hasnorm;
 	materialres = res_eval(env_ground_tex_material)
+	normalres = res_eval(env_ground_tex_normal)
 	res = res_eval(env_ground_tex)
+	hasmat = (materialres.type != e_res_type.PACK || materialres.pack_has_materials) &&
+		(env_ground_material_ani ? env_ground_ani_texture_material[0] != null : env_ground_texture_material != null)
+	hasnorm = (normalres.type != e_res_type.PACK || normalres.pack_has_normals) &&
+		(env_ground_normal_ani ? env_ground_ani_texture_normal[0] != null : env_ground_texture_normal != null)
+	
 	render_apply_res(res)
 
 	// Blend
@@ -28,7 +34,7 @@ function render_world_ground()
 	render_set_uniform_int(e_uniform.GLOW_TEXTURE, 0)
 	render_set_uniform_int(e_uniform.FOG_SHOW, app.env_fog_show && render_mode != e_render_mode.COLOR)
 	render_set_uniform_int(e_uniform.IS_WATER, iswater && app.project_render_water_reflections)
-	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialres.material_format)
+	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, hasmat ? materialres.material_format : e_material.FORMAT_NONE)
 	
 	if (materialres = mc_res)
 	{
@@ -51,12 +57,16 @@ function render_world_ground()
 	else
 		render_set_texture(env_ground_texture)
 	
-	if (env_ground_material_ani)
+	if (!hasmat)
+		render_set_texture(0, e_texture_channel.MATERIAL)
+	else if (env_ground_material_ani)
 		render_set_texture(env_ground_ani_texture_material[block_texture_get_frame()], e_texture_channel.MATERIAL)
 	else
 		render_set_texture(env_ground_texture_material, e_texture_channel.MATERIAL)
 	
-	if (env_ground_normal_ani)
+	if (!hasnorm)
+		render_set_texture(0, e_texture_channel.NORMAL)
+	else if (env_ground_normal_ani)
 		render_set_texture(env_ground_ani_texture_normal[block_texture_get_frame()], e_texture_channel.NORMAL)
 	else
 		render_set_texture(env_ground_texture_normal, e_texture_channel.NORMAL)

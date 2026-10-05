@@ -98,9 +98,7 @@ function tab_frame_editor_texture_material()
 		content_name = "frame_editor/shape_tex_material"
 		texobj = tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ]
 			
-		if (texobj = null)
-			tex = spr_default_material
-		else
+		if (texobj != null)
 			tex = texobj.texture
 			
 		if (texobj = null)

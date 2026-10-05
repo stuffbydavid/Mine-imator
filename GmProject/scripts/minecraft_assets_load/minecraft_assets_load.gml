@@ -259,8 +259,8 @@ function minecraft_assets_load()
 									texture_free(item_sheet_texture_material[size])
 								if (item_sheet_texture_normal[size] != null)
 									texture_free(item_sheet_texture_normal[size])
-								item_sheet_texture_material[size] = sprite_duplicate(spr_default_material)
-								item_sheet_texture_normal[size] = sprite_duplicate(spr_default_normal)
+								item_sheet_texture_material[size] = null
+								item_sheet_texture_normal[size] = null
 							}
 						}
 					}

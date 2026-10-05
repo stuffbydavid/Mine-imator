@@ -54,6 +54,7 @@ function render_world_particle()
 			{
 				if (temp.model_file != null)
 					off = point3D(0, 0, -(temp.model_file.bounds_parts_end[Z] - temp.model_file.bounds_parts_start[Z]) / 2)
+				
 				break
 			}
 			
@@ -65,6 +66,7 @@ function render_world_particle()
 				
 				var displaysize = vec3_mul(vec3_mul(scenery.scenery_size, rep), vec3(block_size));
 				off = vec3_mul(displaysize, vec3(-0.5))
+				
 				break
 			}
 			
@@ -100,8 +102,10 @@ function render_world_particle()
 					
 					with (temp)
 						res = temp_get_model_texobj(null)
+					
 					if (render_world_block_transparent != true)
 						render_world_block_map(temp.model.model_block_map, res)
+					
 					break
 				}
 			}
@@ -117,6 +121,7 @@ function render_world_particle()
 				with (temp)
 					res = temp_get_model_texobj(null)
 				render_world_model_file_parts(temp.model_file, res, temp.model_texture_name_map, temp.model_hide_list, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map)
+				
 				break
 			}
 			
@@ -146,12 +151,20 @@ function render_world_particle()
 				
 				var res = res_eval(temp.model_tex);
 				render_world_model_part(temp.model_part, res, temp.model_texture_name_map, temp.model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map)
+				
 				break
 			}
 			
 			case e_temp_type.TEXT:
 			{
+				if (!render_depth_pass)
+				{
+					render_set_material_textures_none()
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+				}
+				
 				render_world_text(type.text_vbuffer, type.text_texture, temp.text_face_camera, temp.text_font, temp.text_outline ? temp.text_outline_color : null)
+				
 				break
 			}
 			
@@ -160,13 +173,24 @@ function render_world_particle()
 				var tex;
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [ tex, spr_default_material, spr_default_normal ])
+				
+				if (!render_depth_pass)
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+				
+				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [ tex, 0, 0 ])
+				
 				break
 			}
 		}
 	}
 	else // Sprite
 	{
+		if (!render_depth_pass)
+		{
+			render_set_material_textures_none()
+			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+		}
+		
 		if (type.temp = particle_sheet)
 		{
 			var res = res_eval(type.sprite_tex);
@@ -190,15 +214,7 @@ function render_world_particle()
 				return 0
 			}
 			else
-			{
 				render_set_texture(tex)
-				if (!render_depth_pass)
-				{
-					render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
-					render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
-					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
-				}
-			}
 		}
 		
 		var xyang, zang, m;

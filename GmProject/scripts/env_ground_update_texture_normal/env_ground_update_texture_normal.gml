@@ -27,15 +27,22 @@ function env_ground_update_texture_normal()
 	if (sheet < 0)
 	{
 		env_ground_normal_ani = false
-		env_ground_texture_normal = sprite_duplicate(spr_default_normal)
-		
-		sprite_set_texture_page(env_ground_texture_normal, false)
+		env_ground_texture_normal = null
 		
 		return 0
 	}
 	
 	if (texres.block_sheet_texture_normal[sheet] = null)
 		texres = mc_res
+	
+	if (texres.block_sheet_texture_normal[sheet] = null ||
+		(sheet = e_block_sheet.ANIMATED && texres.block_sheet_texture_normal[sheet][0] = null))
+	{
+		env_ground_normal_ani = false
+		env_ground_texture_normal = null
+		
+		return 0
+	}
 	
 	// In static block list
 	if (sheet != e_block_sheet.ANIMATED)
@@ -50,17 +57,6 @@ function env_ground_update_texture_normal()
 	// In animated block list
 	else
 	{
-		// Static block sheet only
-		if (texres.block_sheet_texture_normal[e_block_sheet.ANIMATED] = null)
-		{
-			env_ground_normal_ani = false
-			env_ground_texture_normal = sprite_duplicate(spr_default_normal)
-			
-			sprite_set_texture_page(env_ground_texture_normal, false)
-			
-			return 0
-		}
-		
 		env_ground_normal_ani = true
 		
 		size = ceil(texture_width(texres.block_sheet_texture_normal[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X])

@@ -801,8 +801,13 @@ function list_init(name)
 		case "resources/pack/material":
 		{
 			menu_add_item("diffuse", text_get("resources/pack/material/diffuse"))
-			menu_add_item("material", text_get("resources/pack/material/material"))
-			menu_add_item("normal", text_get("resources/pack/material/normal"))
+			
+			if (res_edit.pack_has_materials)
+				menu_add_item("material", text_get("resources/pack/material/material"))
+			
+			if (res_edit.pack_has_normals)
+				menu_add_item("normal", text_get("resources/pack/material/normal"))
+			
 			break
 		}
 

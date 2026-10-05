@@ -34,7 +34,8 @@ function res_event_destroy()
 		var key = ds_map_find_first(model_texture_normal_map);
 		while (!is_undefined(key))
 		{
-			texture_free(model_texture_normal_map[?key])
+			if (model_texture_normal_map[?key] != null)
+				texture_free(model_texture_normal_map[?key])
 			key = ds_map_find_next(model_texture_normal_map, key)
 		}
 		ds_map_destroy(model_texture_normal_map)
@@ -74,11 +75,13 @@ function res_event_destroy()
 	
 	if (block_sheet_texture_material[e_block_sheet.ANIMATED] != null)
 		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
-			texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
+			if (block_sheet_texture_material[e_block_sheet.ANIMATED][f] != null)
+				texture_free(block_sheet_texture_material[e_block_sheet.ANIMATED][f])
 	
 	if (block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
 		for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
-			texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
+			if (block_sheet_texture_normal[e_block_sheet.ANIMATED][f] != null)
+				texture_free(block_sheet_texture_normal[e_block_sheet.ANIMATED][f])
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)

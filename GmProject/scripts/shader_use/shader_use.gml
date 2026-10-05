@@ -18,7 +18,7 @@ function shader_use()
 	render_set_uniform(e_uniform.SAMPLE_INDEX, render_sample_current)
 	render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	
-	render_set_uniform_int(e_uniform.USE_NORMAL_MAP, debug_skip_tangents ? 0 : 1)
+	render_set_uniform_int(e_uniform.HAS_NORMAL_MAP, 0)
 	
 	render_set_uniform(e_uniform.GAMMA, render_gamma)
 	

@@ -9,6 +9,10 @@ function tab_properties_resources_edit()
 	
 	if (res_edit.type = e_res_type.PACK)
 	{
+		if ((preview_edit.pack_image_material = "material" && !res_edit.pack_has_materials) ||
+			(preview_edit.pack_image_material = "normal" && !res_edit.pack_has_normals))
+			action_res_preview_pack_image_material("diffuse")
+		
 		var showprojectpack = (res_edit != mc_res);
 		for (var i = 0; !showprojectpack && i < ds_list_size(res_list.display_list); i++)
 		{
@@ -32,15 +36,19 @@ function tab_properties_resources_edit()
 		tab_control_menu()
 		draw_button_menu("resources/pack/image", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_image, text_get("resources/pack/" + preview_edit.pack_image), action_res_preview_pack_image)
 		tab_next()
+		
+		if ((res_edit.pack_has_materials || res_edit.pack_has_normals) &&
+			(preview_edit.pack_image = "model_textures" || preview_edit.pack_image = "item_sheet" || preview_edit.pack_image = "block_sheet"))
+		{
+			tab_control_menu()
+			draw_button_menu("resources/pack/material", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_image_material, text_get("resources/pack/material/" + preview_edit.pack_image_material), action_res_preview_pack_image_material)
+			tab_next()
+		}
 
 		switch (preview_edit.pack_image)
 		{
 			case "model_textures":
 			{
-				tab_control_menu()
-				draw_button_menu("resources/pack/material", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_image_material, text_get("resources/pack/material/" + preview_edit.pack_image_material), action_res_preview_pack_image_material)
-				tab_next()
-				
 				tab_control_menu()
 				draw_button_menu("resources/pack/image/model_texture", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_model_texture, preview_edit.pack_model_texture, action_res_preview_pack_model_texture)
 				tab_next()
@@ -50,10 +58,6 @@ function tab_properties_resources_edit()
 			case "item_sheet":
 			{
 				tab_control_menu()
-				draw_button_menu("resources/pack/material", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_image_material, text_get("resources/pack/material/" + preview_edit.pack_image_material), action_res_preview_pack_image_material)
-				tab_next()
-
-				tab_control_menu()
 				draw_button_menu("resources/pack/image/item_sheet_size", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_item_sheet_size, text_get("resources/pack/image/item_sheet_size_" + string(item_size * (preview_edit.pack_item_sheet_size + 1))), action_res_preview_pack_item_sheet_size)
 				tab_next()
 				break
@@ -61,10 +65,6 @@ function tab_properties_resources_edit()
 			
 			case "block_sheet":
 			{
-				tab_control_menu()
-				draw_button_menu("resources/pack/material", e_menu.LIST, dx, dy, dw, 24, preview_edit.pack_image_material, text_get("resources/pack/material/" + preview_edit.pack_image_material), action_res_preview_pack_image_material)
-				tab_next()
-				
 				tab_control_togglebutton()
 				togglebutton_add("resources/pack/image/block_sheet_static", null, 0, !preview_edit.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)
 				togglebutton_add("resources/pack/image/block_sheet_animated", null, 1, preview_edit.pack_block_sheet_ani, action_res_preview_pack_block_sheet_ani)

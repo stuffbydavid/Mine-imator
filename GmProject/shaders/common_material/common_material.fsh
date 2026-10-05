@@ -5,7 +5,7 @@ void main() {}
 #pragma shady: macro_begin NORMAL_MAP_LIB
 
 uniform sampler2D uTextureNormal; // static
-uniform int uUseNormalMap; // static
+uniform int uHasNormalMap;
 uniform float uWaterMaterialTime; // static
 uniform float uWaterMaterialStrength; // static
 uniform float uWaterMaterialScale; // static
@@ -50,7 +50,7 @@ vec3 getWaterNormal(vec3 position)
 
 vec3 getMappedNormal(vec2 uv, mat3 tbn)
 {
-	if (uUseNormalMap < 1)
+	if (uHasNormalMap < 1)
 		return normalize(tbn * vec3(0.0, 0.0, 1.0));
 	
 	vec4 n = texture2D(uTextureNormal, uv).rgba;
@@ -118,10 +118,10 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 	}
 
 	float baseEmissive = max(uEmissive, vCustom.z * uDefaultEmissive);
-	vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
 	
 	if (uMaterialFormat == 2) // LabPBR
 	{
+		vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
 		if (matColor.g > 0.898) // Metallic
 		{
 			metallic = 1.0; F0 = 1.0; sss = 0.0;
@@ -140,6 +140,7 @@ void getMaterial(out float roughness, out float metallic, out float emissive, ou
 	
 	if (uMaterialFormat == 1) // SEUS
 	{
+		vec4 matColor = texture2D(uTextureMaterial, vTexCoord);
 		roughness = (1.0 - matColor.r);
 		metallic = matColor.g;
 		emissive = max(baseEmissive, matColor.b * uDefaultEmissive);

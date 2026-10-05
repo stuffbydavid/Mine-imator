@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"shader_reload_handles",
+  "%Name":"render_set_material_none",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"shader_reload_handles",
+  "name":"render_set_material_none",
   "parent":{
-    "name":"Shaders",
-    "path":"folders/Scripts/Render/Shaders.yy",
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

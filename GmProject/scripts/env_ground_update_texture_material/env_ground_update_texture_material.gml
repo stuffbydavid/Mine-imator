@@ -19,7 +19,7 @@ function env_ground_update_texture_material()
 	else if (env_ground_texture_material != null)
 		texture_free(env_ground_texture_material)
 	
-	var size, bx, by, surf, tex, decodedslot, sheet, slot;
+	var size, bx, by, surf, decodedslot, sheet, slot;
 	decodedslot = minecraft_assets_block_texture_picker_slot_decode(env_ground_slot)
 	sheet = decodedslot[0]
 	slot = decodedslot[1]
@@ -27,13 +27,22 @@ function env_ground_update_texture_material()
 	if (sheet < 0)
 	{
 		env_ground_material_ani = false
-		env_ground_texture_material = texture_create_fill(c_black, 16, false)
+		env_ground_texture_material = null
 		
 		return 0
 	}
 	
 	if (texres.block_sheet_texture_material[sheet] = null)
 		texres = mc_res
+	
+	if (texres.block_sheet_texture_material[sheet] = null ||
+		(sheet = e_block_sheet.ANIMATED && texres.block_sheet_texture_material[sheet][0] = null))
+	{
+		env_ground_material_ani = false
+		env_ground_texture_material = null
+		
+		return 0
+	}
 	
 	// In static block list
 	if (sheet != e_block_sheet.ANIMATED)
@@ -48,15 +57,6 @@ function env_ground_update_texture_material()
 	// In animated block list
 	else
 	{
-		// Static block sheet only
-		if (texres.block_sheet_texture_material[e_block_sheet.ANIMATED] = null)
-		{
-			env_ground_material_ani = false
-			env_ground_texture_material = texture_create_fill(c_black, 16, false)
-			
-			return 0
-		}
-		
 		env_ground_material_ani = true
 		
 		size = ceil(texture_width(texres.block_sheet_texture_material[e_block_sheet.ANIMATED][0]) / minecraft_block_sheet_size[e_block_sheet.ANIMATED][X])

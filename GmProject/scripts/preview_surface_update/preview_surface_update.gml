@@ -170,10 +170,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 			render_set_uniform_int(e_uniform.ALPHA_HASH, 0)
 			render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 			render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
-			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
-			render_set_uniform(e_uniform.EMISSIVE, 0)
-			render_set_uniform(e_uniform.METALLIC, 0)
-			render_set_uniform(e_uniform.ROUGHNESS, 1)
+			render_set_material_none()
 			render_set_uniform(e_uniform.SSS, 0)
 			render_set_uniform_vec3(e_uniform.SSS_RADIUS, 1, 1, 1)
 			render_set_uniform_color(e_uniform.SSS_COLOR, c_white, 1)
@@ -323,7 +320,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						var tex;
 						with (select)
 							tex = temp_get_shape_tex(temp_get_shape_texobj(null))
-						render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [ tex, spr_default_material, spr_default_normal ])
+						render_world_shape(select.type, select.shape_vbuffer, select.shape_face_camera, [ tex, 0, 0 ])
 						break
 					}
 				}

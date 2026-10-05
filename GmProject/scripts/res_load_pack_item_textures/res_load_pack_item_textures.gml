@@ -84,6 +84,11 @@ function res_load_pack_item_textures(type, suffix)
 
 				if (fileslist != null)
 					ds_list_delete_value(fileslist, fname)
+				
+				if (type = "material")
+					pack_has_materials = true
+				else if (type = "normal")
+					pack_has_normals = true
 			}
 			else
 			{
@@ -97,18 +102,22 @@ function res_load_pack_item_textures(type, suffix)
 	if (fileslist != null)
 	{
 		ds_list_sort(fileslist, true)
+		
 		if (ds_list_size(fileslist) > 0)
 		{
 			var str = "The following item textures were unused:\n";
 			for (var i = 0; i < ds_list_size(fileslist); i++)
 				str += "  " + filename_name(fileslist[|i]) + "\n"
+			
 			log(str)
 		}
+		
 		ds_list_destroy(fileslist)
 	}
 	
 	if (itemsize = null)
 		itemsize = item_size
+	
 	itemscale = itemsize / item_size
 	
 	// Create item sheets
@@ -139,6 +148,7 @@ function res_load_pack_item_textures(type, suffix)
 					wid = texture_width(tex)
 					hei = texture_height(tex)
 					scale = staticitemsize / wid
+					
 					draw_texture_part(tex, dx, dy, 0, 0, wid, hei, scale, scale)
 				}
 				else
@@ -184,5 +194,6 @@ function res_load_pack_item_textures(type, suffix)
 	}
 	
 	log("Item textures", type, "done")
+	
 	debug_timer_stop("Item textures: " + type)
 }

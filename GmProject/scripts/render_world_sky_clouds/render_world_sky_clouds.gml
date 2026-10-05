@@ -32,8 +32,8 @@ function render_world_sky_clouds()
 	else
 		render_set_texture(res.texture)
 	
-	render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
-	render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+	render_set_material_textures_none()
+	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 	
 	// Disable fog
 	if (!env_fog_show || !env_fog_sky)

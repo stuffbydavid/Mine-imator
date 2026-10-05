@@ -18,4 +18,6 @@ function res_copy(to)
 	to.scenery_palette = scenery_palette
 	to.scenery_randomize = scenery_randomize
 	to.material_format = material_format
+	to.pack_has_materials = pack_has_materials
+	to.pack_has_normals = pack_has_normals
 }

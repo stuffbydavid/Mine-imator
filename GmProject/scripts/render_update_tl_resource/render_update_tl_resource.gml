@@ -86,7 +86,7 @@ function render_update_tl_resource()
 					other.model_part_shape_tex[i] = res_get_model_texture(shapetexname)
 				
 				// Material
-				if (materialres != null)
+				if (materialres != null && (materialres.type != e_res_type.PACK || materialres.pack_has_materials))
 				{
 					with (materialres)
 					{
@@ -102,11 +102,11 @@ function render_update_tl_resource()
 				else // No material texture
 				{
 					model_part_shape_tex_material[i] = null
-					model_part_shape_material_res[i] = (temp.model = null ? mc_res.material_format : e_material.FORMAT_NONE)
+					model_part_shape_material_res[i] = e_material.FORMAT_NONE
 				}
 				
 				// Normal
-				if (normalres != null) 
+				if (normalres != null && (normalres.type != e_res_type.PACK || normalres.pack_has_normals))
 				{
 					with (normalres)
 						other.model_part_shape_tex_normal[i] = res_get_model_texture_normal(shapetexnormname)
