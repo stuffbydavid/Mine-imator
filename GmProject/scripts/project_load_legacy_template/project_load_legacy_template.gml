@@ -3,8 +3,7 @@ function project_load_legacy_template()
 	with (new_obj(obj_template))
 	{
 		loaded = true
-		block_center = true
-		block_center_legacy = true
+		
 		load_id = buffer_read_int()
 		save_id_map[?load_id] = load_id
 		
@@ -100,6 +99,9 @@ function project_load_legacy_template()
 		block_repeat[Y] = buffer_read_int()
 		block_repeat[Z] = buffer_read_int()
 		
+		block_center = true
+		block_center_legacy = true
+		
 		shape_tex = buffer_read_int()
 		if (shape_tex = 0)
 			shape_tex = null
@@ -115,11 +117,13 @@ function project_load_legacy_template()
 		shape_tex_vrepeat = buffer_read_double()
 		shape_tex_hmirror = buffer_read_byte()
 		shape_tex_vmirror = buffer_read_byte()
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			shape_closed = buffer_read_byte()
 		
 		shape_invert = buffer_read_byte()
 		shape_detail = buffer_read_int()
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			shape_face_camera = buffer_read_byte()
 		

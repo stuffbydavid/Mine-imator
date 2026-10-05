@@ -180,7 +180,7 @@ function project_load_timeline(map)
 		// Default values
 		var defaultmap = map[?"default_values"];
 		project_load_values(defaultmap, value_default)
-		project_load_values_update_default()
+		project_load_values_update_default(defaultmap, value_default)
 		
 		if (load_format < e_project.FORMAT_210 && type = e_tl_type.CAMERA)
 		{

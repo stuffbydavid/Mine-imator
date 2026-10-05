@@ -14,9 +14,6 @@ function render_update_cascades(dir)
 	var mv = matrix_create_lookat(cam_from, cam_to, cam_up);
 	var mp = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev);
 	
-	cam_frustum.build(matrix_multiply(mv, mp))
-	cam_frustum.build_vbuffer()
-	
 	var startz, endz, disz, sunmatv;
 	startz = cam_near
 	endz = min(cam_far_prev, 7500)

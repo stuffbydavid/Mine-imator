@@ -433,6 +433,9 @@ namespace CppProject
 
 	void VarType::SetVar(const VarType& var, BoolType copyRefValue)
 	{
+		if (this == &var)
+			return;
+		
 		switch (var.lastAssigned)
 		{
 			case UNDEFINED_t:	SetUndefined(); break;

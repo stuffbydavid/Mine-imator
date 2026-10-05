@@ -2230,6 +2230,7 @@
     {"id":{"name":"project_load_legacy_beta_value_id","path":"scripts/project_load_legacy_beta_value_id/project_load_legacy_beta_value_id.yy",},},
     {"id":{"name":"project_load_legacy_beta_value","path":"scripts/project_load_legacy_beta_value/project_load_legacy_beta_value.yy",},},
     {"id":{"name":"project_load_legacy_beta","path":"scripts/project_load_legacy_beta/project_load_legacy_beta.yy",},},
+    {"id":{"name":"project_load_legacy_camera","path":"scripts/project_load_legacy_camera/project_load_legacy_camera.yy",},},
     {"id":{"name":"project_load_legacy_environment","path":"scripts/project_load_legacy_environment/project_load_legacy_environment.yy",},},
     {"id":{"name":"project_load_legacy_model_name","path":"scripts/project_load_legacy_model_name/project_load_legacy_model_name.yy",},},
     {"id":{"name":"project_load_legacy_objects","path":"scripts/project_load_legacy_objects/project_load_legacy_objects.yy",},},

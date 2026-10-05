@@ -10,6 +10,9 @@ namespace CppProject
 
 	ArrType& ArrType::operator=(const ArrType& other) // arr = otherArr
 	{
+		if (this == &other)
+			return *this;
+		
 		if (!vec.Size() && !other.Size())
 			return *this;
 

@@ -16,7 +16,7 @@ function project_load_legacy_environment()
 	env_sky_clouds_show = buffer_read_byte()
 	
 	var flat = buffer_read_byte();
-	env_sky_clouds_mode = (flat ? "flat" : "faded")
+	env_sky_clouds_mode = (flat ? "flat" : "normal")
 	env_sky_clouds_speed = buffer_read_double()
 	
 	env_ground_show = buffer_read_byte()

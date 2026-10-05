@@ -85,6 +85,13 @@ function project_load_legacy_timeline()
 		{
 			legacy_camera_effect_default = array_create(e_cam_fx.amount, false)
 			legacy_camera_effect_available = array_create(e_cam_fx.amount, false)
+
+			if (load_format >= e_project.FORMAT_100_DEMO_4)
+			{
+				project_load_values_update_default(null, value_default)
+				for (var v = e_value.CAM_FX_SHAKE_MODE; v <= e_value.CAM_FX_COLOR_BURN; v++)
+					value[v] = value_default[v]
+			}
 		}
 		
 		part_of = project_load_legacy_save_id()
@@ -131,6 +138,9 @@ function project_load_legacy_timeline()
 				for (var v = 0; v < e_value.amount; v++)
 					value[v] = other.value[v]
 				
+				if (other.type = e_tl_type.CAMERA && load_format < e_project.FORMAT_100_DEMO_4)
+					legacy_camera_effect_enabled = array_create(e_cam_fx.amount, false)
+
 				project_load_legacy_values(other.id)
 				
 				if (other.type = e_tl_type.CAMERA)
