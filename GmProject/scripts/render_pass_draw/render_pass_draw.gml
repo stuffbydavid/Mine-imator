@@ -14,7 +14,7 @@ function render_pass_draw(pass, surf, xx, yy, width, height)
 	with (render_shader_obj)
 	{
 		shader_set(shader)
-		render_set_uniform_int("uChannel", 0)
+		render_set_uniform_int(e_uniform.CHANNEL, 0)
 	}
 	
 	draw_surface_ext(surf, xx, yy, width / surface_get_width(surf), height / surface_get_height(surf), 0, c_white, 1)

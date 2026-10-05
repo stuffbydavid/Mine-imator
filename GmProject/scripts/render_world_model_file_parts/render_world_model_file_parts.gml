@@ -43,12 +43,12 @@ function render_world_model_file_parts(modelfile, res, texnamemap, hidelist, sha
 		}
 		
 		if (part.part_mixing_shapes)
-			render_set_uniform_int("uColorsExt", part.part_mixing_shapes)
+			render_set_uniform_int(e_uniform.COLORS_EXT, part.part_mixing_shapes)
 		
 		render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap)
 		
 		if (part.part_mixing_shapes)
-			render_set_uniform_int("uColorsExt", 0)
+			render_set_uniform_int(e_uniform.COLORS_EXT, 0)
 		
 		// Render child parts
 		if (matrixmap = null)

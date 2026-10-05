@@ -10,16 +10,16 @@ function shader_add_set(surf, amount, color = c_white, pow = 1, tentfilter = fal
 	texture_set_stage(sampler_map[?"uAddTexture"], surface_get_texture(surf))
 	gpu_set_texfilter_ext(sampler_map[?"uAddTexture"], false)
 	
-	render_set_uniform("uAmount", amount)
-	render_set_uniform_color("uBlendColor", color, 1)
-	render_set_uniform("uPower", pow)
+	render_set_uniform(e_uniform.AMOUNT, amount)
+	render_set_uniform_color(e_uniform.BLEND_COLOR, color, 1)
+	render_set_uniform(e_uniform.POWER, pow)
 
-	render_set_uniform_int("uTentFilter", tentfilter ? 1 : 0)
+	render_set_uniform_int(e_uniform.TENT_FILTER, tentfilter ? 1 : 0)
 	if (tentfilter)
 	{
-		render_set_uniform_vec2("uAddTexelSize", 1 / surface_get_width(surf), 1 / surface_get_height(surf))
+		render_set_uniform_vec2(e_uniform.ADD_TEXEL_SIZE, 1 / surface_get_width(surf), 1 / surface_get_height(surf))
 		gpu_set_texfilter_ext(sampler_map[?"uAddTexture"], true)
 	}
 
-	render_set_uniform_int("uAffectAlpha", affectalpha ? 1 : 0)
+	render_set_uniform_int(e_uniform.AFFECT_ALPHA, affectalpha ? 1 : 0)
 }

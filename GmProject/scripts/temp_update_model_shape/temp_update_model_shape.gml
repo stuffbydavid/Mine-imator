@@ -27,12 +27,12 @@ function temp_update_model_shape()
 	{
 		// Create maps for 3D planes
 		if (model_shape_alpha_map = null)
-			model_shape_alpha_map = ds_map_create()
+			model_shape_alpha_map = ds_int_map_create()
 	}
 	
 	// Create map for shape ID->mesh
 	if (model_shape_vbuffer_map = null)
-		model_shape_vbuffer_map = ds_map_create()
+		model_shape_vbuffer_map = ds_int_map_create()
 	
 	// Get texture (from library setting)
 	var res = temp_get_model_texobj(null);

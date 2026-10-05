@@ -3,10 +3,10 @@
 /// @arg x
 /// @arg y
 
-function render_set_uniform_vec2(name, xx, yy)
+function render_set_uniform_vec2(uniformid, xx, yy)
 {
-	var uniform = render_shader_obj.uniform_map[?name];
+	var uniform = render_shader_obj.uniform_handle[uniformid];
 	
-	if (!is_undefined(uniform) && uniform > -1)
+	if (uniform > -1)
 		shader_submit_vec2(uniform, xx, yy)
 }

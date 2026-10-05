@@ -56,18 +56,18 @@ function render_world_tl()
 		if (selected || lock || !tl_update_list_filter(id))
 			return 0
 		
-		render_set_uniform_color("uReplaceColor", id, 1)
+		render_set_uniform_color(e_uniform.REPLACE_COLOR, id, 1)
 	}
 	
 	// Placement data
 	if (render_mode = e_render_mode.PLACE)
 	{
-		render_set_uniform_color("uReplaceColor", id, 1)
-		render_set_uniform("uIsBlock", bool_to_float(type_is_block(type)))
+		render_set_uniform_color(e_uniform.REPLACE_COLOR, id, 1)
+		render_set_uniform(e_uniform.IS_BLOCK, bool_to_float(type_is_block(type)))
 	}
 	
 	if (render_mode = e_render_mode.SCENE_TEST)
-		render_set_uniform_color("uReplaceColor", c_white, 1)
+		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_white, 1)
 	
 	// Outlined?
 	else if (render_mode = e_render_mode.SELECT && !parent_is_selected && !selected)
@@ -111,10 +111,10 @@ function render_world_tl()
 	shader_blend_color = value_inherit[e_value.RGB_MUL]
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
 	
-	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 	
 	if (render_mode = e_render_mode.G_BUFFERS)
-		render_set_uniform("uSSAO", ssao ? shader_blend_alpha : 0)
+		render_set_uniform(e_uniform.SSAO, ssao ? shader_blend_alpha : 0)
 	
 	if (colors_ext != shader_uniform_color_ext ||
 		value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
@@ -134,56 +134,56 @@ function render_world_tl()
 		shader_uniform_mix_color = value_inherit[e_value.MIX_COLOR]
 		shader_uniform_mix_percent = value_inherit[e_value.MIX_PERCENT]
 		
-		render_set_uniform_int("uColorsExt", shader_uniform_color_ext)
-		render_set_uniform_color("uRGBAdd", shader_uniform_rgb_add, 1)
-		render_set_uniform_color("uHSBAdd", shader_uniform_hsb_add, 1)
-		render_set_uniform_color("uRGBSub", shader_uniform_rgb_sub, 1)
-		render_set_uniform_color("uHSBSub", shader_uniform_hsb_sub, 1)
-		render_set_uniform_color("uHSBMul", shader_uniform_hsb_mul, 1)
-		render_set_uniform_color("uMixColor", shader_uniform_mix_color, shader_uniform_mix_percent)
+		render_set_uniform_int(e_uniform.COLORS_EXT, shader_uniform_color_ext)
+		render_set_uniform_color(e_uniform.RGB_ADD, shader_uniform_rgb_add, 1)
+		render_set_uniform_color(e_uniform.HSB_ADD, shader_uniform_hsb_add, 1)
+		render_set_uniform_color(e_uniform.RGB_SUB, shader_uniform_rgb_sub, 1)
+		render_set_uniform_color(e_uniform.HSB_SUB, shader_uniform_hsb_sub, 1)
+		render_set_uniform_color(e_uniform.HSB_MUL, shader_uniform_hsb_mul, 1)
+		render_set_uniform_color(e_uniform.MIX_COLOR, shader_uniform_mix_color, shader_uniform_mix_percent)
 	}
 	
 	if (!render_alpha_hash_force)
 	{
 		render_alpha_hash = render_alpha_hash_allowed && (alpha_mode = e_alpha_mode.DEFAULT ? app.project_render_alpha_mode : alpha_mode)
-		render_set_uniform_int("uAlphaHash", render_alpha_hash)
+		render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	}
 	
 	if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 	{
 		shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-		render_set_uniform("uEmissive", shader_uniform_emissive)
+		render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 	}
 	
 	if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
 	{
 		shader_uniform_metallic = value_inherit[e_value.METALLIC]
-		render_set_uniform("uMetallic", shader_uniform_metallic)
+		render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
 	}
 	
 	if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
 	{
 		shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-		render_set_uniform("uRoughness", shader_uniform_roughness)
+		render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 	}
 	
 	if (wind != shader_uniform_wind)
 	{
 		shader_uniform_wind = wind
-		render_set_uniform("uWindEnable", shader_uniform_wind)
+		render_set_uniform(e_uniform.WIND_ENABLE, shader_uniform_wind)
 	}
 	
 	if (wind_terrain != shader_uniform_wind_terrain)
 	{
 		shader_uniform_wind_terrain = wind_terrain
-		render_set_uniform("uWindTerrain", shader_uniform_wind_terrain)
+		render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
 	}
 	
 	var renderfog = app.env_fog_show && fog && render_mode != e_render_mode.COLOR;
 	if (renderfog != shader_uniform_fog)
 	{
 		shader_uniform_fog = renderfog
-		render_set_uniform_int("uFogShow", shader_uniform_fog)
+		render_set_uniform_int(e_uniform.FOG_SHOW, shader_uniform_fog)
 	}
 	
 	if (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
@@ -198,16 +198,16 @@ function render_world_tl()
 		shader_uniform_sss_blue = value_inherit[e_value.SUBSURFACE_RADIUS_BLUE]
 		shader_uniform_sss_color = value_inherit[e_value.SUBSURFACE_COLOR]
 		
-		render_set_uniform("uSSS", shader_uniform_sss)
-		render_set_uniform_vec3("uSSSRadius", shader_uniform_sss_red, shader_uniform_sss_green, shader_uniform_sss_blue)
-		render_set_uniform_color("uSSSColor", shader_uniform_sss_color, 1.0)
+		render_set_uniform(e_uniform.SSS, shader_uniform_sss)
+		render_set_uniform_vec3(e_uniform.SSS_RADIUS, shader_uniform_sss_red, shader_uniform_sss_green, shader_uniform_sss_blue)
+		render_set_uniform_color(e_uniform.SSS_COLOR, shader_uniform_sss_color, 1.0)
 	}
 	
 	if (value_inherit[e_value.WIND_INFLUENCE] != shader_uniform_wind_strength)
 	{
 		shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE]
-		render_set_uniform("uWindStrength", shader_uniform_wind_strength)
-		render_set_uniform("uWindDirectionalStrength", shader_uniform_wind_strength * app.env_wind_directional_strength) 
+		render_set_uniform(e_uniform.WIND_STRENGTH, shader_uniform_wind_strength)
+		render_set_uniform(e_uniform.WIND_DIRECTIONAL_STRENGTH, shader_uniform_wind_strength * app.env_wind_directional_strength)
 	}
 	
 	var prevblend = null;
@@ -229,7 +229,7 @@ function render_world_tl()
 	
 	// Glow
 	var glowonlycombined = glow && only_render_glow && render_mode = e_render_mode.AUXILIARY;
-	render_set_uniform_int("uOnlyRenderGlow", glowonlycombined)
+	render_set_uniform_int(e_uniform.ONLY_RENDER_GLOW, glowonlycombined)
 
 	if (glow != shader_uniform_glow ||
 		glow_texture != shader_uniform_glow_texture ||
@@ -241,15 +241,15 @@ function render_world_tl()
 		
 		if (shader_uniform_glow)
 		{
-			render_set_uniform_int("uGlow", 1)
-			render_set_uniform_int("uGlowTexture", glow_texture)
-			render_set_uniform_color("uGlowColor", shader_uniform_glow_color, 1)
+			render_set_uniform_int(e_uniform.GLOW, 1)
+			render_set_uniform_int(e_uniform.GLOW_TEXTURE, glow_texture)
+			render_set_uniform_color(e_uniform.GLOW_COLOR, shader_uniform_glow_color, 1)
 		}
 		else
 		{
-			render_set_uniform_int("uGlow", 0)
-			render_set_uniform_int("uGlowTexture", 0)
-			render_set_uniform_color("uGlowColor", c_black, 0)
+			render_set_uniform_int(e_uniform.GLOW, 0)
+			render_set_uniform_int(e_uniform.GLOW_TEXTURE, 0)
+			render_set_uniform_color(e_uniform.GLOW_COLOR, c_black, 0)
 		}
 	}
 
@@ -270,14 +270,14 @@ function render_world_tl()
 	else
 		tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
 	
-	if (glint_enabled && !is_undefined(render_shader_obj.uniform_map[?"uGlintEnabled"]) && render_shader_obj.uniform_map[?"uGlintEnabled"] > -1)
+	if (glint_enabled && !is_undefined(render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED]) && render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED] > -1)
 		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
 	
 	spd = app.env_time * glint_speed * app.project_render_glint_speed
-	render_set_uniform_int("uGlintEnabled", glint_enabled ? 1 : 0)
-	render_set_uniform_vec2("uGlintOffset", spd * (0.000625), spd * (0.00125))
-	render_set_uniform("uGlintStrength", app.project_render_glint_strength * glint_strength)
-	render_set_uniform_vec2("uGlintSize", sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
+	render_set_uniform_int(e_uniform.GLINT_ENABLED, glint_enabled ? 1 : 0)
+	render_set_uniform_vec2(e_uniform.GLINT_OFFSET, spd * (0.000625), spd * (0.00125))
+	render_set_uniform(e_uniform.GLINT_STRENGTH, app.project_render_glint_strength * glint_strength)
+	render_set_uniform_vec2(e_uniform.GLINT_SIZE, sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
 	
 	// Render
 	if (type != e_tl_type.PARTICLE_SPAWNER)
@@ -287,11 +287,11 @@ function render_world_tl()
 		// Reset material textures for other timelines
 		if (type != e_tl_type.SCENERY && type != e_tl_type.BLOCK && type != e_tl_type.MODEL_PART)
 		{
-			render_set_texture(spr_default_material, "Material")
-			render_set_texture(spr_default_normal, "Normal")
+			render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+			render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
 		}
 		
-		render_set_uniform_vec2("uTextureOffset", 0, 0)
+		render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
 		
 		switch (type)
 		{
@@ -379,12 +379,12 @@ function render_world_tl()
 					if (value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = null)
 					{
 						texmat = spr_default_material
-						render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+						render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 					}
 					else
 					{
 						texmat = value_inherit[e_value.TEXTURE_MATERIAL_OBJ].texture
-						render_set_uniform_int("uMaterialFormat", value_inherit[e_value.TEXTURE_MATERIAL_OBJ].material_format)
+						render_set_uniform_int(e_uniform.MATERIAL_FORMAT, value_inherit[e_value.TEXTURE_MATERIAL_OBJ].material_format)
 					}
 					
 					if (value_inherit[e_value.TEXTURE_NORMAL_OBJ] = null)
@@ -393,17 +393,17 @@ function render_world_tl()
 						texnorm = value_inherit[e_value.TEXTURE_NORMAL_OBJ].texture
 					
 					render_set_texture(tex)
-					render_set_texture(texmat, "Material")
-					render_set_texture(texnorm, "Normal")
+					render_set_texture(texmat, e_texture_channel.MATERIAL)
+					render_set_texture(texnorm, e_texture_channel.NORMAL)
 					
 					vbuffer_render(path_vbuffer)
 				}
 				else if (render_mode = e_render_mode.CLICK)
 				{
 					render_set_texture(spr_shape)
-					render_set_texture(spr_default_material, "Material")
-					render_set_texture(spr_default_normal, "Normal")
-					render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+					render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+					render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 					
 					vbuffer_render(path_select_vbuffer)
 				}
@@ -423,9 +423,9 @@ function render_world_tl()
 					normtex = temp_get_shape_tex(temp_get_shape_tex_normal_obj(other.value_inherit[e_value.TEXTURE_NORMAL_OBJ]), spr_default_normal)
 					
 					if (matres != null)
-						render_set_uniform_int("uMaterialFormat", matres.material_format)
+						render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matres.material_format)
 					else
-						render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+						render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 				}
 				
 				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [ tex, texmat, normtex ])

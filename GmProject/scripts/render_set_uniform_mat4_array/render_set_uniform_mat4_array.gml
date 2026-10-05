@@ -1,7 +1,7 @@
-function render_set_uniform_mat4_array(name, value)
+function render_set_uniform_mat4_array(uniformid, value)
 {
-	var uniform = render_shader_obj.uniform_map[?name];
+	var uniform = render_shader_obj.uniform_handle[uniformid];
 	
-	if (!is_undefined(uniform) && uniform > -1)
+	if (uniform > -1)
 		shader_submit_mat4_array(uniform, value)
 }

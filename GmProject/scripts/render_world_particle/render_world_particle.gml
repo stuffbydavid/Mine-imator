@@ -22,7 +22,7 @@ function render_world_particle()
 	shader_blend_color = color_multiply(prevcolor, color)
 	shader_blend_alpha *= alpha
 	
-	render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 	
 	if (temp != particle_sheet && temp != particle_template)
 	{
@@ -192,9 +192,9 @@ function render_world_particle()
 			else
 			{
 				render_set_texture(tex)
-				render_set_texture(spr_default_material, "Material")
-				render_set_texture(spr_default_normal, "Normal")
-				render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+				render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+				render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 			}
 		}
 		

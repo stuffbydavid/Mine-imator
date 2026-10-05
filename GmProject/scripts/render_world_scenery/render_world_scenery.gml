@@ -31,19 +31,19 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 						if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
 						{
 							shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-							render_set_uniform("uRoughness", shader_uniform_roughness)
+							render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 						}
 						
 						if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
 						{
 							shader_uniform_metallic = value_inherit[e_value.METALLIC]
-							render_set_uniform("uMetallic", shader_uniform_metallic)
+							render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
 						}
 						
 						if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 						{
 							shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-							render_set_uniform("uEmissive", shader_uniform_emissive)
+							render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 						}
 					}
 				}

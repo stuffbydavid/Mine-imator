@@ -58,43 +58,43 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 		if (shader_uniform_metallic != 0)
 		{
 			shader_uniform_metallic = 0
-			render_set_uniform("uMetallic", shader_uniform_metallic)
+			render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
 		}
 		
 		if (shader_uniform_roughness != 0)
 		{
 			shader_uniform_roughness = 0
-			render_set_uniform("uRoughness", shader_uniform_roughness)
+			render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 		}
 		
 		if (shader_uniform_emissive != 0)
 		{
 			shader_uniform_emissive = 0
-			render_set_uniform("uEmissive", shader_uniform_emissive)
+			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 		}
 		
 		if (res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet] != null)
-			render_set_texture(res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet], "Material")
+			render_set_texture(res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet], e_texture_channel.MATERIAL)
 		else
-			render_set_texture(res[e_texture_channel.MATERIAL].texture, "Material")
+			render_set_texture(res[e_texture_channel.MATERIAL].texture, e_texture_channel.MATERIAL)
 		
-		render_set_uniform_int("uMaterialFormat", res[e_texture_channel.MATERIAL].material_format)
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, res[e_texture_channel.MATERIAL].material_format)
 	}
 	else
 	{
-		render_set_texture(spr_default_material, "Material")
-		render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+		render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 	}
 	
 	if (res[e_texture_channel.NORMAL] != null && res[e_texture_channel.NORMAL] != mc_res)
 	{
 		if (res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet] != null)
-			render_set_texture(res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet], "Normal")
+			render_set_texture(res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet], e_texture_channel.NORMAL)
 		else
-			render_set_texture(res[e_texture_channel.NORMAL].texture, "Normal")
+			render_set_texture(res[e_texture_channel.NORMAL].texture, e_texture_channel.NORMAL)
 	}
 	else
-		render_set_texture(spr_default_normal, "Normal")
+		render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
 	
 	vbuffer_render(vbuf)
 }

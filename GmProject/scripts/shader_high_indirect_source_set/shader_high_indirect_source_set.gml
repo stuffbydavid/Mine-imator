@@ -9,6 +9,6 @@ function shader_high_indirect_source_set(previousbuffer, previousamount)
 	texture_set_stage(sampler_map[?"uPreviousBuffer"], surface_get_texture(previousbuffer))
 	gpu_set_texrepeat_ext(sampler_map[?"uPreviousBuffer"], false)
 	
-	render_set_uniform("uPreviousAmount", previousamount)
-	render_set_uniform("uGamma", render_gamma)
+	render_set_uniform(e_uniform.PREVIOUS_AMOUNT, previousamount)
+	render_set_uniform(e_uniform.GAMMA, render_gamma)
 }

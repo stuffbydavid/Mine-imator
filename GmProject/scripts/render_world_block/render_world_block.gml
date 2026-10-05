@@ -29,7 +29,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 	texmat = resmat.block_sheet_texture_material[e_block_sheet.STATIC16]
 	texnormal = resnorm.block_sheet_texture_normal[e_block_sheet.STATIC16]
 	
-	render_set_uniform_int("uMaterialFormat", resmat.material_format)
+	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, resmat.material_format)
 	
 	texprev = tex
 	texmatprev = texmat
@@ -54,8 +54,8 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 	
 	var blend = shader_blend_color;
 	render_set_texture(tex)
-	render_set_texture(texmat, "Material")
-	render_set_texture(texnormal, "Normal")
+	render_set_texture(texmat, e_texture_channel.MATERIAL)
+	render_set_texture(texnormal, e_texture_channel.NORMAL)
 	
 	// Rotate by 90 degrees for legacy support
 	if (rotate)
@@ -93,7 +93,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 
 				if (staticmaterialformat != materialformatprev)
 				{
-					render_set_uniform_int("uMaterialFormat", staticmaterialformat)
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, staticmaterialformat)
 					materialformatprev = staticmaterialformat
 				}
 
@@ -105,13 +105,13 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 
 				if (statictexmat != texmatprev)
 				{
-					render_set_texture(statictexmat, "Material")
+					render_set_texture(statictexmat, e_texture_channel.MATERIAL)
 					texmatprev = statictexmat
 				}
 
 				if (statictexnormal != texnormalprev)
 				{
-					render_set_texture(statictexnormal, "Normal")
+					render_set_texture(statictexnormal, e_texture_channel.NORMAL)
 					texnormalprev = statictexnormal
 				}
 
@@ -119,7 +119,7 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 			}
 		}
 		if (materialformatprev != resmat.material_format)
-			render_set_uniform_int("uMaterialFormat", resmat.material_format)
+			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, resmat.material_format)
 	
 		if (tex != texprev)
 		{
@@ -129,38 +129,38 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 
 		if (texmat != texmatprev)
 		{
-			render_set_texture(texmat, "Material")
+			render_set_texture(texmat, e_texture_channel.MATERIAL)
 			texmatprev = texmat
 		}
 
 		if (texnormal != texnormalprev)
 		{
-			render_set_texture(texnormal, "Normal")
+			render_set_texture(texnormal, e_texture_channel.NORMAL)
 			texnormalprev = texnormal
 		}
 
 		// Grass
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
 		{
-			render_set_uniform_color("uBlendColor", color_multiply(blend, resdif.color_grass), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_grass), shader_blend_alpha)
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
-			render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
 	
 		// Foliage
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE]))
 		{
-			render_set_uniform_color("uBlendColor", color_multiply(blend, resdif.color_foliage), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_foliage), shader_blend_alpha)
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE])
-			render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
 	
 		// Dry foliage
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE]))
 		{
-			render_set_uniform_color("uBlendColor", color_multiply(blend, resdif.color_dry_foliage), shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_dry_foliage), shader_blend_alpha)
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE])
-			render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
 	
 		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
@@ -173,30 +173,30 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		
 			if (texanimat != texmatprev)
 			{
-				render_set_texture(texanimat, "Material")
+				render_set_texture(texanimat, e_texture_channel.MATERIAL)
 				texmatprev = texanimat
 			}
 		
 			if (texaninormal != texnormalprev)
 			{
-				render_set_texture(texaninormal, "Normal")
+				render_set_texture(texaninormal, e_texture_channel.NORMAL)
 				texnormalprev = texaninormal
 			}
 		
 			if (texanimatsheet)
 			{
-				render_set_uniform("uMetallic", 0)
-				render_set_uniform("uRoughness", 1)
-				render_set_uniform("uEmissive", 0)
+				render_set_uniform(e_uniform.METALLIC, 0)
+				render_set_uniform(e_uniform.ROUGHNESS, 1)
+				render_set_uniform(e_uniform.EMISSIVE, 0)
 			}
 		
 			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])	
 		
 			if (resmat != mc_res && texanimatsheet)
 			{
-				render_set_uniform("uMetallic", 0)
-				render_set_uniform("uRoughness", 1)
-				render_set_uniform("uEmissive", 0)
+				render_set_uniform(e_uniform.METALLIC, 0)
+				render_set_uniform(e_uniform.ROUGHNESS, 1)
+				render_set_uniform(e_uniform.EMISSIVE, 0)
 			}
 		}
 	}
@@ -223,13 +223,13 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 	
 	if (texmat != texmatprev)
 	{
-		render_set_texture(texmat, "Material")
+		render_set_texture(texmat, e_texture_channel.MATERIAL)
 		texmatprev = texmat
 	}
 	
 	if (texnormal != texnormalprev)
 	{
-		render_set_texture(texnormal, "Normal")
+		render_set_texture(texnormal, e_texture_channel.NORMAL)
 		texnormalprev = texnormal
 	}
 	
@@ -254,11 +254,11 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		if (vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, vbuf]))
 			continue
 		
-		render_set_uniform_color("uBlendColor", color_multiply(blend, cols[vbuf - e_block_vbuffer.GRASS]), shader_blend_alpha)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, cols[vbuf - e_block_vbuffer.GRASS]), shader_blend_alpha)
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, vbuf])
 	}
 	
-	render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
+	render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
 	{
@@ -270,30 +270,30 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 		
 		if (texanimat != texmatprev)
 		{
-			render_set_texture(texanimat, "Material")
+			render_set_texture(texanimat, e_texture_channel.MATERIAL)
 			texmatprev = texanimat
 		}
 		
 		if (texaninormal != texnormalprev)
 		{
-			render_set_texture(texaninormal, "Normal")
+			render_set_texture(texaninormal, e_texture_channel.NORMAL)
 			texnormalprev = texaninormal
 		}
 		
 		if (texanimatsheet)
 		{
-			render_set_uniform("uMetallic", 0)
-			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uEmissive", 0)
+			render_set_uniform(e_uniform.METALLIC, 0)
+			render_set_uniform(e_uniform.ROUGHNESS, 1)
+			render_set_uniform(e_uniform.EMISSIVE, 0)
 		}
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
 		
 		if (resmat != mc_res && texanimatsheet)
 		{
-			render_set_uniform("uMetallic", 0)
-			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uEmissive", 0)
+			render_set_uniform(e_uniform.METALLIC, 0)
+			render_set_uniform(e_uniform.ROUGHNESS, 1)
+			render_set_uniform(e_uniform.EMISSIVE, 0)
 		}
 	}
 	
@@ -305,13 +305,13 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 	
 	if (texmat != texmatprev)
 	{
-		render_set_texture(texmat, "Material")
+		render_set_texture(texmat, e_texture_channel.MATERIAL)
 		texmatprev = texmat
 	}
 	
 	if (texnormal != texnormalprev)
 	{
-		render_set_texture(texnormal, "Normal")
+		render_set_texture(texnormal, e_texture_channel.NORMAL)
 		texnormalprev = texnormal
 	}
 	
@@ -326,23 +326,23 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
 	{
 		render_set_texture(texani)
-		render_set_texture(texanimat, "Material")
-		render_set_texture(texaninormal, "Normal")
+		render_set_texture(texanimat, e_texture_channel.MATERIAL)
+		render_set_texture(texaninormal, e_texture_channel.NORMAL)
 		
 		if (texanimatsheet)
 		{
-			render_set_uniform("uMetallic", 0)
-			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uEmissive", 0)
+			render_set_uniform(e_uniform.METALLIC, 0)
+			render_set_uniform(e_uniform.ROUGHNESS, 1)
+			render_set_uniform(e_uniform.EMISSIVE, 0)
 		}
 		
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
 		
 		if (resmat != mc_res && texanimatsheet)
 		{
-			render_set_uniform("uMetallic", 0)
-			render_set_uniform("uRoughness", 1)
-			render_set_uniform("uEmissive", 0)
+			render_set_uniform(e_uniform.METALLIC, 0)
+			render_set_uniform(e_uniform.ROUGHNESS, 1)
+			render_set_uniform(e_uniform.EMISSIVE, 0)
 		}
 	}
 	
@@ -353,42 +353,42 @@ function render_world_block(vbuffer, resarr, rotate = false, size = undefined, t
 			render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 		{
 			render_set_texture(texani)
-			render_set_uniform_color("uBlendColor", color_multiply(blend, resdif.color_water), shader_blend_alpha)
-			render_set_uniform_int("uIsWater", app.project_render_water_reflections)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_water), shader_blend_alpha)
+			render_set_uniform_int(e_uniform.IS_WATER, app.project_render_water_reflections)
 			
 			if (app.project_render_water_reflections) // Default water reflections provided by MI
 			{
-				render_set_texture(spr_default_material, "Material")
-				render_set_texture(spr_default_normal, "Normal")
+				render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+				render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
 				
 				if (shader_uniform_roughness != app.project_render_water_roughness)
 				{
 					shader_uniform_roughness = app.project_render_water_roughness
-					render_set_uniform("uRoughness", shader_uniform_roughness)
+					render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 				}
 				
 				if (shader_uniform_metallic != 0)
 				{
 					shader_uniform_metallic = 0
-					render_set_uniform("uMetallic", shader_uniform_metallic)
+					render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
 				}
 				
 				if (shader_uniform_emissive != 0)
 				{
 					shader_uniform_emissive = 0
-					render_set_uniform("uEmissive", shader_uniform_emissive)
+					render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 				}
 			}
 			else
 			{
-				render_set_texture(texanimat, "Material")
-				render_set_texture(texaninormal, "Normal")
+				render_set_texture(texanimat, e_texture_channel.MATERIAL)
+				render_set_texture(texaninormal, e_texture_channel.NORMAL)
 			}
 			
 			vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
 			
-			render_set_uniform_color("uBlendColor", blend, shader_blend_alpha)
-			render_set_uniform_int("uIsWater", 0)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
+			render_set_uniform_int(e_uniform.IS_WATER, 0)
 		}
 	}
 	

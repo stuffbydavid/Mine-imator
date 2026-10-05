@@ -1,14 +1,16 @@
 /// @desc Sets the texture of the currently selected shader.
 /// @arg texture
-/// @arg [type]
+/// @arg [channel]
 
-function render_set_texture(tex, type = "")
+function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
 {
-	var sampler = render_shader_obj.sampler_map[?"uTexture" + type];
-	if (is_undefined(sampler) || sampler < 0)
+	var sampler, diffuse;
+	sampler = render_shader_obj.sampler_texture[channel]
+	diffuse = (channel = e_texture_channel.DIFFUSE)
+	if (sampler < 0)
 		return 0
 	
-	if (type = "")
+	if (diffuse)
 	{
 		shader_texture_width = 0
 		shader_texture_height = 0
@@ -30,7 +32,7 @@ function render_set_texture(tex, type = "")
 		{
 			texture_set_stage(sampler, surface_get_texture(tex))
 			
-			if (type = "")
+			if (diffuse)
 			{
 				shader_texture_width = surface_get_width(tex)
 				shader_texture_height = surface_get_height(tex)
@@ -49,7 +51,7 @@ function render_set_texture(tex, type = "")
 		{
 			texture_set_stage(sampler, sprite_get_texture(tex, 0))
 			
-			if (type = "")
+			if (diffuse)
 			{
 				shader_texture_width = sprite_get_width(tex)
 				shader_texture_height = sprite_get_height(tex)
@@ -59,8 +61,8 @@ function render_set_texture(tex, type = "")
 			texture_set_stage(sampler, 0)
 	}
 	
-	if (type = "")
-		render_set_uniform_vec2("uTextureSize", shader_texture_width, shader_texture_height)
+	if (diffuse)
+		render_set_uniform_vec2(e_uniform.TEXTURE_SIZE, shader_texture_width, shader_texture_height)
 	
 	gpu_set_texrepeat_ext(sampler, true)
 }

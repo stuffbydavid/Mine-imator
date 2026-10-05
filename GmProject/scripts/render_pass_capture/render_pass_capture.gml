@@ -20,7 +20,7 @@ function render_pass_capture(pass, surf)
 			with (render_shader_obj)
 			{
 				shader_set(shader)
-				render_set_uniform_int("uChannel", channel)
+				render_set_uniform_int(e_uniform.CHANNEL, channel)
 			}
 			
 			draw_surface_exists(surf, 0, 0)

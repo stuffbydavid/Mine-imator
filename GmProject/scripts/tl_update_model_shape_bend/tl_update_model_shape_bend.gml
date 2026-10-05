@@ -30,7 +30,7 @@ function tl_update_model_shape_bend()
 	
 	// Create map if unavailable
 	if (model_shape_vbuffer_map = null)
-		model_shape_vbuffer_map = ds_map_create()
+		model_shape_vbuffer_map = ds_int_map_create()
 	
 	bend_rot_last = bend
 	bend_model_part_last = model_part

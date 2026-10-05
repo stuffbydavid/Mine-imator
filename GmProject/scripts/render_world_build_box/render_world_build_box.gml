@@ -14,8 +14,8 @@ function render_world_build_box()
 	with (render_shader_obj)
 		shader_use()
 		
-	render_set_uniform_vec2("uViewportSize", render_width, render_height)
-	render_set_uniform("uLineLength", block_half_size * 1.0025 * 2)
+	render_set_uniform_vec2(e_uniform.VIEWPORT_SIZE, render_width, render_height)
+	render_set_uniform(e_uniform.LINE_LENGTH, block_half_size * 1.0025 * 2)
 	
 	gpu_set_zwriteenable(false)
 	render_set_culling(false)

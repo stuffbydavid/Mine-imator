@@ -21,10 +21,11 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	if (!tl)
 		mat = matrix_get(matrix_world)
 	
-	var shape, texobj, blendcolor, alpha;
+	var shape, texobj, blendcolor, alpha, sundepth;
 	texobj = null
 	blendcolor = null
 	alpha = null
+	sundepth = (render_mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 	render_blend_prev = null
 	render_alpha_prev = null
 	
@@ -64,61 +65,64 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			
 			render_set_texture(model_part_shape_tex[s])
 			
-			render_set_uniform_vec2("uTextureOffset",
+			render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET,
 									(app.env_time / 60) * shape.texture_scroll_speed * sin(degtorad(shape.texture_scroll_direction)),
 									(app.env_time / 60) * shape.texture_scroll_speed * cos(degtorad(shape.texture_scroll_direction)))
 			
-			render_set_uniform_int("uMaterialFormat", model_part_shape_material_res[s])
-			
-			if (model_part_shape_tex_material[s] = null)
+			if (!sundepth)
 			{
-				render_set_texture(spr_default_material, "Material")
+				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, model_part_shape_material_res[s])
+
+				if (model_part_shape_tex_material[s] = null)
+				{
+					render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+
+					if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
+					{
+						shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+						render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+					}
+
+					if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+					{
+						shader_uniform_metallic = value_inherit[e_value.METALLIC]
+						render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+					}
+
+					if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+					{
+						shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+						render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+					}
+				}
+				else
+				{
+					render_set_texture(model_part_shape_tex_material[s], e_texture_channel.MATERIAL)
+
+					if (shader_uniform_metallic != 1)
+					{
+						shader_uniform_metallic = 0
+						render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+					}
+
+					if (shader_uniform_roughness != 0)
+					{
+						shader_uniform_roughness = 0
+						render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+					}
+
+					if (shader_uniform_emissive != 1)
+					{
+						shader_uniform_emissive = 0
+						render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+					}
+				}
 				
-				if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
-				{
-					shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-					render_set_uniform("uEmissive", shader_uniform_emissive)
-				}
-	
-				if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
-				{
-					shader_uniform_metallic = value_inherit[e_value.METALLIC]
-					render_set_uniform("uMetallic", shader_uniform_metallic)
-				}
-	
-				if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
-				{
-					shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-					render_set_uniform("uRoughness", shader_uniform_roughness)
-				}
+				if (model_part_shape_tex_normal[s] = null)
+					render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+				else
+					render_set_texture(model_part_shape_tex_normal[s], e_texture_channel.NORMAL)
 			}
-			else
-			{
-				render_set_texture(model_part_shape_tex_material[s], "Material")
-				
-				if (shader_uniform_metallic != 1)
-				{
-					shader_uniform_metallic = 0
-					render_set_uniform("uMetallic", shader_uniform_metallic)
-				}
-		
-				if (shader_uniform_roughness != 0)
-				{
-					shader_uniform_roughness = 0
-					render_set_uniform("uRoughness", shader_uniform_roughness)
-				}
-		
-				if (shader_uniform_emissive != 1)
-				{
-					shader_uniform_emissive = 0
-					render_set_uniform("uEmissive", shader_uniform_emissive)
-				}
-			}
-			
-			if (model_part_shape_tex_normal[s] = null)
-				render_set_texture(spr_default_normal, "Normal")
-			else
-				render_set_texture(model_part_shape_tex_normal[s], "Normal")
 		}
 		else
 		{
@@ -276,7 +280,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Set color/alpha
 		if (blendcolor != render_blend_prev || alpha != render_alpha_prev)
 		{
-			render_set_uniform_color("uBlendColor", blendcolor, alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, blendcolor, alpha)
 			render_blend_prev = blendcolor
 			render_alpha_prev = alpha
 		}
@@ -285,9 +289,9 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		if (shape.color_mix_percent > 0)
 		{
 			if (tl != null)
-				render_set_uniform_color("uMixColor", merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
+				render_set_uniform_color(e_uniform.MIX_COLOR, merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
 			else
-				render_set_uniform_color("uMixColor", shape.color_mix, shape.color_mix_percent)
+				render_set_uniform_color(e_uniform.MIX_COLOR, shape.color_mix, shape.color_mix_percent)
 		}
 		
 		// Shape matrix

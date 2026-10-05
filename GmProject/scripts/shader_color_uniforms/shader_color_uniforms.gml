@@ -2,11 +2,11 @@
 
 function shader_color_uniforms()
 {
-	new_shader_uniform("uColorsExt")
-	new_shader_uniform("uRGBAdd")
-	new_shader_uniform("uRGBSub")
-	new_shader_uniform("uHSBAdd")
-	new_shader_uniform("uHSBSub")
-	new_shader_uniform("uHSBMul")
-	new_shader_uniform("uMixColor")
+	new_shader_uniform(e_uniform.COLORS_EXT)
+	new_shader_uniform(e_uniform.RGB_ADD)
+	new_shader_uniform(e_uniform.RGB_SUB)
+	new_shader_uniform(e_uniform.HSB_ADD)
+	new_shader_uniform(e_uniform.HSB_SUB)
+	new_shader_uniform(e_uniform.HSB_MUL)
+	new_shader_uniform(e_uniform.MIX_COLOR)
 }

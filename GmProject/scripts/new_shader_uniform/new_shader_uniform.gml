@@ -1,7 +1,5 @@
-function new_shader_uniform(name)
+function new_shader_uniform(uniformid)
 {
-	var uniform = shader_get_uniform(shader, name);
-	
-	if (uniform > -1)
-		uniform_map[?name] = uniform
+	uniform_used[uniformid] = true
+	uniform_handle[uniformid] = shader_get_uniform(shader, shader_uniform_name_list[uniformid])
 }

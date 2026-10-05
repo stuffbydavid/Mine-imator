@@ -1,5 +1,6 @@
 #include "Shader.hpp"
 
+#include "Generated/Scripts.hpp"
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
 #include "Render/GLWidget.hpp"
@@ -1212,7 +1213,15 @@ namespace CppProject
 				shader->Load(false);
 
 				if (shader->IsLoaded())
+				{
+					for (IntType id : Object::GetAll(ID_obj_shader))
+					{
+						if (obj_shader* obj = ObjTypeOpt(obj_shader, id); obj && obj->shader == shader->id)
+							shader_reload_handles(Scope<obj_shader>(obj));
+					}
+
 					DEBUG("Reloaded " + changedFilename);
+				}
 			}
 		}
 	#endif

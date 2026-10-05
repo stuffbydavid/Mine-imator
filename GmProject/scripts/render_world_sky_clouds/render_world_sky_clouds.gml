@@ -6,10 +6,10 @@ function render_world_sky_clouds()
 		return 0
 	
 	if (render_mode = e_render_mode.SCENE_TEST)
-		render_set_uniform_color("uReplaceColor", c_black, 1)
+		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
 
 	if (render_mode = e_render_mode.G_BUFFERS)
-		render_set_uniform("uSSAO", 0)
+		render_set_uniform(e_uniform.SSAO, 0)
 	
 	var res, twopass;
 	res = res_eval(env_sky_clouds_tex)
@@ -17,14 +17,14 @@ function render_world_sky_clouds()
 	render_apply_res(res)
 	
 	// Shading
-	render_set_uniform_int("uIsSky", 1)
-	render_set_uniform_color("uBlendColor", env_sky_clouds_final, env_clouds_alpha)
-	render_set_uniform_color("uGlowColor", c_black, 1)
-	render_set_uniform_int("uGlowTexture", 0)
-	render_set_uniform("uMetallic", 0)
-	render_set_uniform("uRoughness", 1)
-	render_set_uniform("uEmissive", 0)
-	render_set_uniform("uLightSpecular", 0)
+	render_set_uniform_int(e_uniform.IS_SKY, 1)
+	render_set_uniform_color(e_uniform.BLEND_COLOR, env_sky_clouds_final, env_clouds_alpha)
+	render_set_uniform_color(e_uniform.GLOW_COLOR, c_black, 1)
+	render_set_uniform_int(e_uniform.GLOW_TEXTURE, 0)
+	render_set_uniform(e_uniform.METALLIC, 0)
+	render_set_uniform(e_uniform.ROUGHNESS, 1)
+	render_set_uniform(e_uniform.EMISSIVE, 0)
+	render_set_uniform(e_uniform.LIGHT_SPECULAR, 0)
 	
 	// Texture
 	if (res.type = e_res_type.PACK)
@@ -32,12 +32,12 @@ function render_world_sky_clouds()
 	else
 		render_set_texture(res.texture)
 	
-	render_set_texture(spr_default_material, "Material")
-	render_set_texture(spr_default_normal, "Normal")
+	render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+	render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
 	
 	// Disable fog
 	if (!env_fog_show || !env_fog_sky)
-		render_set_uniform("uFogShow", 0)
+		render_set_uniform(e_uniform.FOG_SHOW, 0)
 	
 	if (twopass)
 	{
@@ -65,8 +65,8 @@ function render_world_sky_clouds()
 	}
 	
 	// Reset
-	render_set_uniform_int("uIsSky", 0)
-	render_set_uniform("uLightSpecular", render_light_specular_strength)
+	render_set_uniform_int(e_uniform.IS_SKY, 0)
+	render_set_uniform(e_uniform.LIGHT_SPECULAR, render_light_specular_strength)
 	if (!env_fog_show || !env_fog_sky)
-		render_set_uniform("uFogShow", app.env_fog_show)
+		render_set_uniform(e_uniform.FOG_SHOW, app.env_fog_show)
 }

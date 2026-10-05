@@ -6,32 +6,32 @@ function shader_material_uniforms()
 	shader_color_uniforms()
 
 	// Render setting
-	new_shader_uniform("uDefaultEmissive")
-	new_shader_uniform("uDefaultSubsurface")
+	new_shader_uniform(e_uniform.DEFAULT_EMISSIVE)
+	new_shader_uniform(e_uniform.DEFAULT_SUBSURFACE)
 	
 	// Material textures
-	new_shader_sampler("uTextureMaterial")
-	new_shader_sampler("uTextureNormal")
-	new_shader_uniform("uMaterialFormat")
+	sampler_texture[e_texture_channel.MATERIAL] = new_shader_sampler("uTextureMaterial")
+	sampler_texture[e_texture_channel.NORMAL] = new_shader_sampler("uTextureNormal")
+	new_shader_uniform(e_uniform.MATERIAL_FORMAT)
 	
 	// Surface
-	new_shader_uniform("uRoughness")
-	new_shader_uniform("uMetallic")
-	new_shader_uniform("uEmissive")
+	new_shader_uniform(e_uniform.ROUGHNESS)
+	new_shader_uniform(e_uniform.METALLIC)
+	new_shader_uniform(e_uniform.EMISSIVE)
 	
 	// Subsurface
-	new_shader_uniform("uSSS")
-	new_shader_uniform("uSSSRadius")
-	new_shader_uniform("uSSSColor")
-	new_shader_uniform("uSSSBacklightSpread")
-	new_shader_uniform("uSSSBacklightStrength")
-	new_shader_uniform("uSSSBrightBacklight")
+	new_shader_uniform(e_uniform.SSS)
+	new_shader_uniform(e_uniform.SSS_RADIUS)
+	new_shader_uniform(e_uniform.SSS_COLOR)
+	new_shader_uniform(e_uniform.SSS_BACKLIGHT_SPREAD)
+	new_shader_uniform(e_uniform.SSS_BACKLIGHT_STRENGTH)
+	new_shader_uniform(e_uniform.SSS_BRIGHT_BACKLIGHT)
 	
 	// Other
-	new_shader_uniform("uIsWater")
-	new_shader_uniform("uWaterMaterialTime")
-	new_shader_uniform("uWaterMaterialStrength")
-	new_shader_uniform("uWaterMaterialScale")
-	new_shader_uniform("uWaterMaterialOctaves")
-	new_shader_uniform("uUseNormalMap")
+	new_shader_uniform(e_uniform.IS_WATER)
+	new_shader_uniform(e_uniform.WATER_MATERIAL_TIME)
+	new_shader_uniform(e_uniform.WATER_MATERIAL_STRENGTH)
+	new_shader_uniform(e_uniform.WATER_MATERIAL_SCALE)
+	new_shader_uniform(e_uniform.WATER_MATERIAL_OCTAVES)
+	new_shader_uniform(e_uniform.USE_NORMAL_MAP)
 }

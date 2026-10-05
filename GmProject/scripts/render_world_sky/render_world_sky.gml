@@ -7,7 +7,7 @@ function render_world_sky()
 	
 	var hashprev = render_alpha_hash;
 	render_alpha_hash = false
-	render_set_uniform_int("uAlphaHash", render_alpha_hash)
+	render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	
 	// Choose shader
 	render_shader_obj = shader_map[?shader_blend]
@@ -44,7 +44,7 @@ function render_world_sky()
 			}
 		}
 		
-		render_set_uniform_color("uBlendColor", c_white, 1)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, 1)
 		render_set_texture(env_background_image.texture)
 		vbuffer_render(vbuf, cam_from, point3D(0, 0, env_background_image_rotation), vec3(dis))
 	}
@@ -58,7 +58,7 @@ function render_world_sky()
 		gpu_set_texrepeat(false)
 		
 		shader_texture_filter_linear = false
-		render_set_uniform_color("uBlendColor", env_fog_color_final, 1)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, env_fog_color_final, 1)
 		render_set_texture(spr_fog)
 		
 		// Fog sphere radius cannot exceed render distance
@@ -86,7 +86,7 @@ function render_world_sky()
 			if (env_sky_stars_vbuffer = null)
 				env_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
 			
-			render_set_uniform_color("uBlendColor", env_night_sky_stars_color, env_night_alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, env_night_sky_stars_color, env_night_alpha)
 			render_set_texture(spr_stars)
 			vbuffer_render_matrix(env_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
 		}
@@ -97,7 +97,7 @@ function render_world_sky()
 		if (env_sky_sun_moon_vbuffer = null)
 			env_sky_sun_moon_vbuffer = vbuffer_create_surface(1, point2D(0, 0), point2D(1, 1), false)
 		
-		render_set_uniform_color("uBlendColor", c_white, vis)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, vis)
 		
 		var sunres = res_eval(env_sky_sun_tex);
 		render_apply_res(sunres)
@@ -113,7 +113,7 @@ function render_world_sky()
 		// Moon
 		vis = percent(vec3_dot(env_sun_direction, vec3(0, 0, -1)), -0.15, 0)
 		
-		render_set_uniform_color("uBlendColor", c_white, vis)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, vis)
 		
 		var moonres = res_eval(env_sky_moon_tex);
 		render_apply_res(moonres)
@@ -137,5 +137,5 @@ function render_world_sky()
 	gpu_set_zwriteenable(true)
 	
 	render_alpha_hash = hashprev
-	render_set_uniform_int("uAlphaHash", render_alpha_hash)
+	render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 }

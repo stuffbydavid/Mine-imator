@@ -27,9 +27,9 @@ function render_world_text(vbuf, tex, facecamera, res, outline)
 	
 	if (outline != null)
 	{
-		render_set_uniform_color("uBlendColor", outline, shader_blend_alpha)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, outline, shader_blend_alpha)
 		render_set_texture(tex[1])
 		vbuffer_render(vbuf[1])
-		render_set_uniform_color("uBlendColor", shader_blend_color, shader_blend_alpha)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 	}
 }

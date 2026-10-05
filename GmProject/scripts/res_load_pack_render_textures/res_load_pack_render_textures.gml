@@ -14,7 +14,7 @@ function res_load_pack_render_textures()
 		ds_map_destroy(pack_sprite_texture_map)
 	}
 	
-	pack_sprite_texture_map = ds_map_create()
+	pack_sprite_texture_map = ds_int_map_create()
 	
 	var sprites = [
 		spr_default_material,
@@ -31,7 +31,7 @@ function res_load_pack_render_textures()
 	res_clear_pack_res_textures()
 	
 	if (pack_res_texture_map = null)
-		pack_res_texture_map = ds_map_create()
+		pack_res_texture_map = ds_int_map_create()
 	
 	var key = ds_map_find_first(texture_res_map);
 	while (!is_undefined(key))

@@ -274,7 +274,7 @@ function render_startup()
 	// Render modes
 	globalvar render_mode, render_mode_shader_map, render_shader_obj;
 	render_mode = null
-	render_mode_shader_map = ds_map_create()
+	render_mode_shader_map = ds_int_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
 	render_mode_shader_map[?e_render_mode.SELECT] = shader_blend
 	render_mode_shader_map[?e_render_mode.PLACE_SELECT] = shader_blend
