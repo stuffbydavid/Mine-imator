@@ -510,11 +510,20 @@ function res_load_pack_block_sheet(type, suffix)
 	
 	// Store animated page frames and clean up.
 	if (type = "diffuse")
+	{
 		block_sheet_texture[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
+		block_sheet_animated_diffuse = true
+	}
 	else if (type = "material")
+	{
 		block_sheet_texture_material[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
+		block_sheet_animated_material = true
+	}
 	else if (type = "normal")
+	{
 		block_sheet_texture_normal[e_block_sheet.ANIMATED] = array_create(minecraft_block_animated_sheet_frame_count)
+		block_sheet_animated_normal = true
+	}
 
 	for (var f = 0; f < minecraft_block_animated_sheet_frame_count; f++)
 	{

@@ -79,6 +79,7 @@ function temp_event_create()
 	
 	block_vbuffer = null
 	block_vbuffer_active = null
+	block_vbuffer_depth_active = []
 	block_repeat_enable = false
 	block_repeat = vec3(1)
 	block_center_legacy = false

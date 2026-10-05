@@ -6,10 +6,10 @@
 
 function render_world_block_depth(block, resdif, rotate = false, size = undefined)
 {
-	var vbuffer, tex, texprev, texani;
-	vbuffer = block.block_vbuffer
-	if (vbuffer = null)
+	if (block.block_vbuffer = null)
 		return 0
+
+	var tex, texprev, texani, active0, active1, active2, texready, basebound;
 
 	resdif = res_eval(resdif)
 	
@@ -17,12 +17,20 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 
 	tex = resdif.block_sheet_texture[e_block_sheet.STATIC16]
 	texprev = tex
-	if (resdif.block_sheet_texture[e_block_sheet.ANIMATED] != null)
-		texani = resdif.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
-	else
-		texani = mc_res.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
+	texready = false
 
-	render_set_texture(tex)
+	active0 = e_block_depth.DEPTH0 * e_block_vbuffer.amount
+	active1 = e_block_depth.DEPTH1 * e_block_vbuffer.amount
+	active2 = e_block_depth.DEPTH2 * e_block_vbuffer.amount
+	
+	if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.ANIMATED] ||
+		block.block_vbuffer_active[@ active1 + e_block_vbuffer.ANIMATED] ||
+		block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED] ||
+		(render_mode = e_render_mode.DEPTH && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER]))
+	{
+		var frame = block_texture_get_frame();
+		texani = resdif.block_sheet_animated_diffuse ? resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame] : mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
+	}
 
 	// Rotate by 90 degrees for legacy support
 	if (rotate)
@@ -32,46 +40,60 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 	
 	if (render_world_block_transparent != true)
 	{
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16]))
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16])
+		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.STATIC16])
+		{
+			render_set_texture(tex)
+			texready = true
+			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.STATIC16])
+		}
 
 		for (var s = e_block_sheet.STATIC32; s < e_block_sheet.static_amount; s++)
 		{
 			var staticvbuffer = e_block_vbuffer.STATIC32 + s - e_block_sheet.STATIC32;
-			if (vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, staticvbuffer]))
+			if (!block.block_vbuffer_active[@ active0 + staticvbuffer])
 				continue
 
 			var statictex = resdif.block_sheet_texture[s];
 			if (statictex = null)
 				statictex = mc_res.block_sheet_texture[s]
 
-			if (statictex != texprev)
+			if (!texready || statictex != texprev)
 			{
 				render_set_texture(statictex)
 				texprev = statictex
 			}
 
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, staticvbuffer])
+			texready = true
+			vbuffer_render(block.block_vbuffer[@ active0 + staticvbuffer])
 		}
 
-		if (tex != texprev)
+		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.GRASS] ||
+			block.block_vbuffer_active[@ active0 + e_block_vbuffer.FOLIAGE] ||
+			block.block_vbuffer_active[@ active0 + e_block_vbuffer.DRY_FOLIAGE])
 		{
-			render_set_texture(tex)
-			texprev = tex
+			if (!texready || tex != texprev)
+			{
+				render_set_texture(tex)
+				texprev = tex
+			}
+			
+			texready = true
 		}
 
 		for (var colorbuf = e_block_vbuffer.GRASS; colorbuf <= e_block_vbuffer.DRY_FOLIAGE; colorbuf++)
-			if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, colorbuf]))
-				vbuffer_render(vbuffer[e_block_depth.DEPTH0, colorbuf])
+			if (block.block_vbuffer_active[@ active0 + colorbuf])
+				vbuffer_render(block.block_vbuffer[@ active0 + colorbuf])
 
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
+		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.ANIMATED])
 		{
-			if (texani != texprev)
+			if (!texready || texani != texprev)
 			{
 				render_set_texture(texani)
 				texprev = texani
 			}
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])
+			
+			texready = true
+			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.ANIMATED])
 		}
 	}
 	
@@ -82,49 +104,78 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 	if (render_world_block_transparent != null && !render_world_block_transparent)
 		return 0
 
-	if (tex != texprev)
+	if (block.block_vbuffer_active[@ active1 + e_block_vbuffer.STATIC16])
 	{
-		render_set_texture(tex)
-		texprev = tex
+		if (!texready || tex != texprev)
+		{
+			render_set_texture(tex)
+			texprev = tex
+		}
+		
+		texready = true
+		vbuffer_render(block.block_vbuffer[@ active1 + e_block_vbuffer.STATIC16])
 	}
 
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16])
-
+	basebound = false
+	
 	for (var vbuf = e_block_vbuffer.GRASS; vbuf <= e_block_vbuffer.LEAVES_MANGROVE; vbuf++)
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, vbuf]))
-			vbuffer_render(vbuffer[e_block_depth.DEPTH1, vbuf])
-
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
 	{
-		if (texani != texprev)
+		if (!block.block_vbuffer_active[@ active1 + vbuf])
+			continue
+		
+		if (!basebound)
+		{
+			if (!texready || tex != texprev)
+			{
+				render_set_texture(tex)
+				texprev = tex
+			}
+			
+			texready = true
+			basebound = true
+		}
+		
+		vbuffer_render(block.block_vbuffer[@ active1 + vbuf])
+	}
+
+	if (block.block_vbuffer_active[@ active1 + e_block_vbuffer.ANIMATED])
+	{
+		if (!texready || texani != texprev)
 		{
 			render_set_texture(texani)
 			texprev = texani
 		}
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
+		
+		texready = true
+		vbuffer_render(block.block_vbuffer[@ active1 + e_block_vbuffer.ANIMATED])
 	}
-
-	if (tex != texprev)
-		render_set_texture(tex)
 
 	#endregion
 
 	#region Depth 2
 
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16])
-
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
+	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.STATIC16])
 	{
-		render_set_texture(texani)
-		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
+		if (!texready || tex != texprev)
+		{
+			render_set_texture(tex)
+			texprev = tex
+		}
+		
+		texready = true
+		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.STATIC16])
 	}
 
-	if (render_mode = e_render_mode.DEPTH && !vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))
+	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED])
 	{
 		render_set_texture(texani)
-		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
+		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.ANIMATED])
+	}
+
+	if (render_mode = e_render_mode.DEPTH && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
+	{
+		render_set_texture(texani)
+		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])
 	}
 
 	#endregion

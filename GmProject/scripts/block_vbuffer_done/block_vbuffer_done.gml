@@ -4,12 +4,16 @@ function block_vbuffer_done()
 	{
 		for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
 		{
-			vertex_end(block_vbuffer[d, vb])
-			block_vbuffer[d, vb] = vbuffer_generate_tangents(block_vbuffer[d, vb])
-			vertex_freeze(block_vbuffer[d, vb])
+			var index, active;
+			index = d * e_block_vbuffer.amount + vb
+			vertex_end(block_vbuffer[@ index])
+			block_vbuffer[@ index] = vbuffer_generate_tangents(block_vbuffer[@ index])
+			vertex_freeze(block_vbuffer[@ index])
 
-			if (!vbuffer_is_empty(block_vbuffer[d, vb]))
-				block_vbuffer_active[d] = true
+			active = !vbuffer_is_empty(block_vbuffer[@ index])
+			block_vbuffer_active[@ index] = active
+			if (active)
+				block_vbuffer_depth_active[d] = true
 		}
 	}
 }

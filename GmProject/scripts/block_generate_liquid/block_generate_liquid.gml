@@ -518,7 +518,7 @@ function block_generate_liquid(waterlogged = false)
 	corner2z += z1
 	corner3z += z1
 	
-	block_vbuffer_current = mc_builder.vbuffer[dep, vbuf]
+	block_vbuffer_current = mc_builder.vbuffer[@ dep * e_block_vbuffer.amount + vbuf]
 	block_vertex_emissive = block_current.emissive
 	
 	// X+

@@ -23,6 +23,7 @@ function tl_copy_temp(src, dest)
 			dest.block_randomize = block_randomize
 			dest.block_vbuffer = block_vbuffer
 			dest.block_vbuffer_active = block_vbuffer_active
+			dest.block_vbuffer_depth_active = block_vbuffer_depth_active
 			block_vbuffer = null
 		}
 		else if (type = e_tl_type.TEXT)

@@ -554,7 +554,7 @@ namespace CppProject
 
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d).Value(vb))->GetWriteBytes();
+			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->GetWriteBytes();
 		
 		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
 		if (mb > 50)
@@ -568,7 +568,7 @@ namespace CppProject
 				for (IntType d = 0; d < e_block_depth_amount; d++)
 				for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 				{
-					if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d).Value(vb)))
+					if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
 					{
 						for (Mesh<>* mesh : buf->meshes)
 						{
@@ -602,7 +602,7 @@ namespace CppProject
 		// Write vertex buffers
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-			FindVertexBuffer(res->block_vbuffer.Value(d).Value(vb))->Write(out);
+			FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->Write(out);
 
 		tmr.Print("Write block mesh cache");
 
@@ -671,7 +671,7 @@ namespace CppProject
 		// Load vertex buffers
 		QVector<VertexBuffer*> vbuffers;
 		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
-		ArrType activeDepths;
+		ArrType activeDepths, activeBuffers;
 		BoolType valid = true;
 
 		for (IntType d = 0; d < e_block_depth_amount; d++)
@@ -689,7 +689,9 @@ namespace CppProject
 					break;
 				}
 
-				if (vbuffer->numIndices > 0)
+				BoolType active = (vbuffer->numIndices > 0);
+				activeBuffers[d * e_block_vbuffer_amount + vb] = active;
+				if (active)
 					activeDepths[d] = true;
 			}
 
@@ -713,11 +715,13 @@ namespace CppProject
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 		{
-			vertex_delete_buffer(self->block_vbuffer[d][vb]);
-			self->block_vbuffer[d][vb] = vbuffers.at(i++)->id;
+			IntType index = d * e_block_vbuffer_amount + vb;
+			vertex_delete_buffer(self->block_vbuffer[index]);
+			self->block_vbuffer[index] = vbuffers.at(i++)->id;
 		}
 
-		self->block_vbuffer_active = activeDepths;
+		self->block_vbuffer_active = activeBuffers;
+		self->block_vbuffer_depth_active = activeDepths;
 
 		tmr.Print("Read block mesh cache");
 		

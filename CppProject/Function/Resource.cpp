@@ -672,6 +672,9 @@ namespace CppProject
 		res->block_sheet_texture_material[e_block_sheet_ANIMATED] = animatedMaterial;
 		res->block_sheet_texture_normal = blockNormal;
 		res->block_sheet_texture_normal[e_block_sheet_ANIMATED] = animatedNormal;
+		res->block_sheet_animated_diffuse = true;
+		res->block_sheet_animated_material = true;
+		res->block_sheet_animated_normal = true;
 		res->block_sheet_depth_list = staticDepth->id;
 		res->block_sheet_ani_depth_list = animatedDepth->id;
 

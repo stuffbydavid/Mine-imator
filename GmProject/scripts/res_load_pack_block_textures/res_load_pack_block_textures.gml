@@ -34,6 +34,9 @@ function res_load_pack_block_textures()
 	block_sheet_texture[e_block_sheet.ANIMATED] = null
 	block_sheet_texture_material[e_block_sheet.ANIMATED] = null
 	block_sheet_texture_normal[e_block_sheet.ANIMATED] = null
+	block_sheet_animated_diffuse = false
+	block_sheet_animated_material = false
+	block_sheet_animated_normal = false
 	
 	if (block_sheet_depth_list != null)
 		ds_list_destroy(block_sheet_depth_list)

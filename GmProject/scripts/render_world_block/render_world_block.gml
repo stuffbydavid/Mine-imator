@@ -11,8 +11,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	if (render_depth_pass)
 		return render_world_block_depth(block, resdif, rotate, size)
 	
-	var vbuffer = block.block_vbuffer;
-	if (vbuffer = null)
+	if (block.block_vbuffer = null)
 		return 0
 	
 	resdif = res_eval(resdif)
@@ -23,6 +22,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	var texmat, texmatprev, texanimat, texanimatsheet;
 	var texnormal, texnormalprev, texaninormal;
 	var hasmat, hasnorm, materialformat;
+	var active0, active1, active2, animactive, frame, texready, blend, basebound;
 	
 	render_apply_res(resdif)
 	
@@ -46,28 +46,29 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	texprev = tex
 	texmatprev = texmat
 	texnormalprev = texnormal
+	texready = false
+
+	active0 = e_block_depth.DEPTH0 * e_block_vbuffer.amount
+	active1 = e_block_depth.DEPTH1 * e_block_vbuffer.amount
+	active2 = e_block_depth.DEPTH2 * e_block_vbuffer.amount
 	
-	if (resdif.block_sheet_texture[e_block_sheet.ANIMATED] != null)
-		texani = resdif.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
-	else
-		texani = mc_res.block_sheet_texture[e_block_sheet.ANIMATED][block_texture_get_frame()]
+	animactive = (
+		block.block_vbuffer_active[@ active0 + e_block_vbuffer.ANIMATED] ||
+		block.block_vbuffer_active[@ active1 + e_block_vbuffer.ANIMATED] ||
+		block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED] ||
+		block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER]
+	)
 	
-	texanimatsheet = (!hasmat || resmat.block_sheet_texture_material[e_block_sheet.ANIMATED] = null)
+	if (animactive)
+	{
+		frame = block_texture_get_frame()
+		texani = resdif.block_sheet_animated_diffuse ? resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame] : mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
+		texanimatsheet = !hasmat || !resmat.block_sheet_animated_material
+		texanimat = texanimatsheet ? 0 : resmat.block_sheet_texture_material[e_block_sheet.ANIMATED][frame]
+		texaninormal = hasnorm && resnorm.block_sheet_animated_normal ? resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED][frame] : 0
+	}
 	
-	if (!texanimatsheet)
-		texanimat = resmat.block_sheet_texture_material[e_block_sheet.ANIMATED][block_texture_get_frame()]
-	else
-		texanimat = 0
-	
-	if (hasnorm && resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED] != null)
-		texaninormal = resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED][block_texture_get_frame()]
-	else
-		texaninormal = 0
-	
-	var blend = shader_blend_color;
-	render_set_texture(tex)
-	render_set_texture(texmat, e_texture_channel.MATERIAL)
-	render_set_texture(texnormal, e_texture_channel.NORMAL)
+	blend = shader_blend_color
 	
 	// Rotate by 90 degrees for legacy support
 	if (rotate)
@@ -77,15 +78,21 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	
 	if (render_world_block_transparent != true)
 	{
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16]))
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.STATIC16])
+		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.STATIC16])
+		{
+			render_set_texture(tex)
+			render_set_texture(texmat, e_texture_channel.MATERIAL)
+			render_set_texture(texnormal, e_texture_channel.NORMAL)
+			texready = true
+			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.STATIC16])
+		}
 
 		// High-resolution sheets
 		var materialformatprev = materialformat;
 		for (var s = e_block_sheet.STATIC32; s < e_block_sheet.static_amount; s++)
 		{
 			var staticvbuffer = e_block_vbuffer.STATIC32 + s - e_block_sheet.STATIC32;
-			if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, staticvbuffer]))
+			if (block.block_vbuffer_active[@ active0 + staticvbuffer])
 			{
 				var statictex, statictexmat, statictexnormal, staticmaterialformat;
 				statictex = resdif.block_sheet_texture[s]
@@ -108,96 +115,93 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 					materialformatprev = staticmaterialformat
 				}
 
-				if (statictex != texprev)
+				if (!texready || statictex != texprev)
 				{
 					render_set_texture(statictex)
 					texprev = statictex
 				}
 
-				if (statictexmat != texmatprev)
+				if (!texready || statictexmat != texmatprev)
 				{
 					render_set_texture(statictexmat, e_texture_channel.MATERIAL)
 					texmatprev = statictexmat
 				}
 
-				if (statictexnormal != texnormalprev)
+				if (!texready || statictexnormal != texnormalprev)
 				{
 					render_set_texture(statictexnormal, e_texture_channel.NORMAL)
 					texnormalprev = statictexnormal
 				}
 
-				vbuffer_render(vbuffer[e_block_depth.DEPTH0, staticvbuffer])
+				texready = true
+				vbuffer_render(block.block_vbuffer[@ active0 + staticvbuffer])
 			}
 		}
 		if (materialformatprev != materialformat)
 			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
 	
-		if (tex != texprev)
+		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.GRASS] ||
+			block.block_vbuffer_active[@ active0 + e_block_vbuffer.FOLIAGE] ||
+			block.block_vbuffer_active[@ active0 + e_block_vbuffer.DRY_FOLIAGE])
 		{
-			render_set_texture(tex)
-			texprev = tex
+			if (!texready || tex != texprev)
+			{
+				render_set_texture(tex)
+				texprev = tex
+			}
+			
+			if (!texready || texmat != texmatprev)
+			{
+				render_set_texture(texmat, e_texture_channel.MATERIAL)
+				texmatprev = texmat
+			}
+			
+			if (!texready || texnormal != texnormalprev)
+			{
+				render_set_texture(texnormal, e_texture_channel.NORMAL)
+				texnormalprev = texnormal
+			}
+			
+			texready = true
 		}
 
-		if (texmat != texmatprev)
+		// Biome colors
+		for (var colorbuf = e_block_vbuffer.GRASS; colorbuf <= e_block_vbuffer.DRY_FOLIAGE; colorbuf++)
 		{
-			render_set_texture(texmat, e_texture_channel.MATERIAL)
-			texmatprev = texmat
-		}
-
-		if (texnormal != texnormalprev)
-		{
-			render_set_texture(texnormal, e_texture_channel.NORMAL)
-			texnormalprev = texnormal
-		}
-
-		// Grass
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS]))
-		{
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.GRASS]), shader_blend_alpha)
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.GRASS])
+			if (!block.block_vbuffer_active[@ active0 + colorbuf])
+				continue
+			
+			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.GRASS + colorbuf - e_block_vbuffer.GRASS]), shader_blend_alpha)
+			vbuffer_render(block.block_vbuffer[@ active0 + colorbuf])
 			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 		}
 	
-		// Foliage
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE]))
+		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.ANIMATED])
 		{
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.FOLIAGE]), shader_blend_alpha)
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.FOLIAGE])
-			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
-		}
-	
-		// Dry foliage
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE]))
-		{
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.DRY_FOLIAGE]), shader_blend_alpha)
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.DRY_FOLIAGE])
-			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
-		}
-	
-		if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED]))
-		{
-			if (texani != texprev)
+			if (!texready || texani != texprev)
 			{
 				render_set_texture(texani)
 				texprev = texani
 			}
 		
-			if (texanimat != texmatprev)
+			if (!texready || texanimat != texmatprev)
 			{
 				render_set_texture(texanimat, e_texture_channel.MATERIAL)
 				texmatprev = texanimat
 			}
 		
-			if (texaninormal != texnormalprev)
+			if (!texready || texaninormal != texnormalprev)
 			{
 				render_set_texture(texaninormal, e_texture_channel.NORMAL)
 				texnormalprev = texaninormal
 			}
 		
+			texready = true
 			if (texanimatsheet)
 				render_set_material_none()
 		
-			vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.ANIMATED])	
+			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.ANIMATED])
+			
 			if (texanimatsheet)
 				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
 		}
@@ -217,96 +221,128 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		gpu_set_tex_mip_bias(-16)
 	}
 	
-	if (tex != texprev)
+	if (block.block_vbuffer_active[@ active1 + e_block_vbuffer.STATIC16])
 	{
-		render_set_texture(tex)
-		texprev = tex
-	}
-	
-	if (texmat != texmatprev)
-	{
-		render_set_texture(texmat, e_texture_channel.MATERIAL)
-		texmatprev = texmat
-	}
-	
-	if (texnormal != texnormalprev)
-	{
-		render_set_texture(texnormal, e_texture_channel.NORMAL)
-		texnormalprev = texnormal
-	}
-	
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.STATIC16])
+		if (!texready || tex != texprev)
+		{
+			render_set_texture(tex)
+			texprev = tex
+		}
 		
+		if (!texready || texmat != texmatprev)
+		{
+			render_set_texture(texmat, e_texture_channel.MATERIAL)
+			texmatprev = texmat
+		}
+		
+		if (!texready || texnormal != texnormalprev)
+		{
+			render_set_texture(texnormal, e_texture_channel.NORMAL)
+			texnormalprev = texnormal
+		}
+		
+		texready = true
+		vbuffer_render(block.block_vbuffer[@ active1 + e_block_vbuffer.STATIC16])
+	}
+		
+	basebound = false
 	for (var vbuf = e_block_vbuffer.GRASS; vbuf <= e_block_vbuffer.LEAVES_MANGROVE; vbuf++)
 	{
-		if (vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, vbuf]))
+		if (!block.block_vbuffer_active[@ active1 + vbuf])
 			continue
+		if (!basebound)
+		{
+			if (!texready || tex != texprev)
+			{
+				render_set_texture(tex)
+				texprev = tex
+			}
+			
+			if (!texready || texmat != texmatprev)
+			{
+				render_set_texture(texmat, e_texture_channel.MATERIAL)
+				texmatprev = texmat
+			}
+			
+			if (!texready || texnormal != texnormalprev)
+			{
+				render_set_texture(texnormal, e_texture_channel.NORMAL)
+				texnormalprev = texnormal
+			}
+			
+			texready = true
+			basebound = true
+		}
 		
 		var colorindex = vbuf - e_block_vbuffer.GRASS;
 		if (colorindex >= e_biome_color.WATER)
 			colorindex++
 		
 		render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ colorindex]), shader_blend_alpha)
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, vbuf])
+		vbuffer_render(block.block_vbuffer[@ active1 + vbuf])
 	}
 	
 	render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 	
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED]))
+	if (block.block_vbuffer_active[@ active1 + e_block_vbuffer.ANIMATED])
 	{
-		if (texani != texprev)
+		if (!texready || texani != texprev)
 		{
 			render_set_texture(texani)
 			texprev = texani
 		}
 		
-		if (texanimat != texmatprev)
+		if (!texready || texanimat != texmatprev)
 		{
 			render_set_texture(texanimat, e_texture_channel.MATERIAL)
 			texmatprev = texanimat
 		}
 		
-		if (texaninormal != texnormalprev)
+		if (!texready || texaninormal != texnormalprev)
 		{
 			render_set_texture(texaninormal, e_texture_channel.NORMAL)
 			texnormalprev = texaninormal
 		}
 		
+		texready = true
 		if (texanimatsheet)
 			render_set_material_none()
 		
-		vbuffer_render(vbuffer[e_block_depth.DEPTH1, e_block_vbuffer.ANIMATED])
+		vbuffer_render(block.block_vbuffer[@ active1 + e_block_vbuffer.ANIMATED])
+		
 		if (texanimatsheet)
 			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
-	}
-	
-	if (tex != texprev)
-	{
-		render_set_texture(tex)
-		texprev = tex
-	}
-	
-	if (texmat != texmatprev)
-	{
-		render_set_texture(texmat, e_texture_channel.MATERIAL)
-		texmatprev = texmat
-	}
-	
-	if (texnormal != texnormalprev)
-	{
-		render_set_texture(texnormal, e_texture_channel.NORMAL)
-		texnormalprev = texnormal
 	}
 	
 	#endregion
 	
 	#region Depth 2
 	
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16]))
-		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.STATIC16])
+	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.STATIC16])
+	{
+		if (!texready || tex != texprev)
+		{
+			render_set_texture(tex)
+			texprev = tex
+		}
+		
+		if (!texready || texmat != texmatprev)
+		{
+			render_set_texture(texmat, e_texture_channel.MATERIAL)
+			texmatprev = texmat
+		}
+		
+		if (!texready || texnormal != texnormalprev)
+		{
+			render_set_texture(texnormal, e_texture_channel.NORMAL)
+			texnormalprev = texnormal
+		}
+		
+		texready = true
+		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.STATIC16])
+	}
 	
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED]))
+	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED])
 	{
 		render_set_texture(texani)
 		render_set_texture(texanimat, e_texture_channel.MATERIAL)
@@ -315,12 +351,12 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		if (texanimatsheet)
 			render_set_material_none()
 		
-		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.ANIMATED])
+		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.ANIMATED])
 		if (texanimatsheet)
 			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
 	}
 	
-	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER]))
+	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
 	{
 		if (render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH && 
 			render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH && 
@@ -358,7 +394,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 				render_set_texture(texaninormal, e_texture_channel.NORMAL)
 			}
 			
-			vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.WATER])
+			vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])
 			
 			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
 			render_set_uniform_int(e_uniform.IS_WATER, 0)

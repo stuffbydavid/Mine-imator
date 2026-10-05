@@ -218,6 +218,7 @@ function tl_event_create()
 	tex_obj_normal_prev = -5
 	
 	block_vbuffer_active = null
+	block_vbuffer_depth_active = []
 
 	placed = false
 	parent_is_placed = false

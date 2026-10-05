@@ -57,6 +57,9 @@ function res_event_create()
 	block_sheet_texture = array_create(e_block_sheet.amount, null)
 	block_sheet_texture_material = array_create(e_block_sheet.amount, null)
 	block_sheet_texture_normal = array_create(e_block_sheet.amount, null)
+	block_sheet_animated_diffuse = false
+	block_sheet_animated_material = false
+	block_sheet_animated_normal = false
 	
 	block_sheet_depth_list = null
 	block_sheet_ani_depth_list = null
@@ -97,6 +100,7 @@ function res_event_create()
 	
 	block_vbuffer = null
 	block_vbuffer_active = null
+	block_vbuffer_depth_active = []
 	
 	scenery_tl_add = null
 	scenery_tl_prompt_amount = 0
