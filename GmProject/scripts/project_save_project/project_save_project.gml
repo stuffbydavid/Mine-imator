@@ -18,12 +18,12 @@ function project_save_project()
 		if (project_pack != mc_res)
 			json_save_var("pack", save_id_get(project_pack))
 		
-		if (view_main.camera = -4 || view_main.camera = -5)
+		if (view_main.camera = view_camera_work || view_main.camera = view_camera_active)
 			json_save_var("view_main_camera", view_main.camera)
 		else
 			json_save_var("view_main_camera", save_id_get(view_main.camera))
 		
-		if (view_second.camera = -4 || view_second.camera = -5)
+		if (view_second.camera = view_camera_work || view_second.camera = view_camera_active)
 			json_save_var("view_second_camera", view_second.camera)
 		else
 			json_save_var("view_second_camera", save_id_get(view_second.camera))

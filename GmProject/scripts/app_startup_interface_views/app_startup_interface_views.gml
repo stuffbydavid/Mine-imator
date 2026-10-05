@@ -33,7 +33,7 @@ function app_startup_interface_views()
 	view_main.transparent_background = setting_view_main_transparent_background
 	view_main.location = setting_view_main_location
 	view_main.renderer = e_renderer.STANDARD
-	view_main.camera = -4
+	view_main.camera = view_camera_work
 	view_main.title = ""
 	
 	view_second = new_obj(obj_view)
@@ -50,7 +50,7 @@ function app_startup_interface_views()
 	view_second.width = setting_view_second_width
 	view_second.height = setting_view_second_height
 	view_second.renderer = e_renderer.STANDARD
-	view_second.camera = -5
+	view_second.camera = view_camera_active
 	view_second.title = ""
 	
 	view_glow_ani = 0

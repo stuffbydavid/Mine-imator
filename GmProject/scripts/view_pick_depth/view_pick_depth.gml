@@ -64,7 +64,7 @@ function view_pick_depth(view, cam)
 		{
 			var hitpos, focuscam, focuspos;
 			hitpos = point3D_mul_matrix(viewspace, matrix_inverse_ext(view_matrix))
-			focuscam = view_second.camera = -5 ? timeline_camera : view_second.camera
+			focuscam = view_second.camera = view_camera_active ? timeline_camera : view_second.camera
 			focuspos = cam_from
 			if (view_second.show && instance_exists(focuscam))
 				focuspos = focuscam.world_pos

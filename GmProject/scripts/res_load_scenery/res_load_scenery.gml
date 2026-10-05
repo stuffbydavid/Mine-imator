@@ -14,8 +14,6 @@ function res_load_scenery()
 		// Open file
 		case "open":
 		{
-			debug("res_load_scenery", "open")
-			
 			if (type = e_res_type.FROM_WORLD)
 			{
 				if (!res_load_scenery_world())

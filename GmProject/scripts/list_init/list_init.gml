@@ -1511,12 +1511,12 @@ function list_init(name)
 		case "view/camera/main":
 		case "view/camera/second":
 		{
-			list_item_add(text_get("view/camera/work"), -4)
+			list_item_add(text_get("view/camera/work"), view_camera_work)
 			
-			var tlname = (timeline_camera = -4 ? text_get("view/camera/work") : timeline_camera.display_name);
+			var tlname = (timeline_camera = view_camera_work ? text_get("view/camera/work") : timeline_camera.display_name);
 			
-			list_item_add(text_get("view/camera/active", tlname), -5)
-			//list_item_last.toggled = (settings_menu_view.camera = -5)
+			list_item_add(text_get("view/camera/active", tlname), view_camera_active)
+			//list_item_last.toggled = (settings_menu_view.camera = view_camera_active)
 			
 			with (obj_timeline)
 				if (type = e_tl_type.CAMERA)

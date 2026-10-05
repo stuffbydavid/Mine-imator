@@ -165,6 +165,8 @@ function macros()
 	// Values
 	#macro null							noone
 	#macro project_pack_res				-3
+	#macro view_camera_work				-4
+	#macro view_camera_active			-5
 	#macro particle_sheet				-5
 	#macro particle_template			-6
 	#macro texture_page_ui				0
@@ -172,6 +174,8 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
+
+	// Assets
 	#macro default_model				"human"
 	#macro default_model_part			"head"
 	#macro default_model_part_model		"armor"

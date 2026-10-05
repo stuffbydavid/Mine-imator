@@ -162,11 +162,11 @@ function view_draw(view)
 	// Set camera to use
 	
 	// View camera doesn't exist, set to active camera
-	if (view.camera != -4 && view.camera != -5 && !instance_exists(view.camera))
-		view.camera = -5
+	if (view.camera != view_camera_work && view.camera != view_camera_active && !instance_exists(view.camera))
+		view.camera = view_camera_active
 	
 	cam = view.camera
-	if (cam = -5)
+	if (cam = view_camera_active)
 		cam = timeline_camera
 	
 	// Caption
@@ -386,10 +386,10 @@ function view_draw(view)
 		}
 	}
 	
-	if (view.camera = -4 && cam = -4)
+	if (view.camera = view_camera_work && cam = view_camera_work)
 		camname = text_get("view/work_camera")
-	else if (view.camera = -5)
-		camname = text_get("view/active_camera", (cam = -4 ? text_get("view/work_camera") : string_remove_newline(cam.display_name)))
+	else if (view.camera = view_camera_active)
+		camname = text_get("view/active_camera", (cam = view_camera_work ? text_get("view/work_camera") : string_remove_newline(cam.display_name)))
 	else
 		camname = cam.display_name
 	
