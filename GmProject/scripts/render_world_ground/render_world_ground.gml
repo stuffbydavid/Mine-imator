@@ -44,7 +44,7 @@ function render_world_ground()
 	}
 	
 	// Texture
-	shader_texture_filter_mipmap = app.project_render_texture_filtering
+	shader_texture_filter_mipmap = !render_depth_pass && app.project_render_texture_filtering
 	
 	if (env_ground_ani)
 		render_set_texture(env_ground_ani_texture[block_texture_get_frame()])

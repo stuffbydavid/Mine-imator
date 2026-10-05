@@ -212,14 +212,14 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					case e_res_type.SCHEMATIC:
 					case e_res_type.FROM_WORLD:
 						if (select.ready)
-							render_world_block(select, mc_res, true, select.scenery_size)
+							render_world_block(select, mc_res, project_pack_res, project_pack_res, true, select.scenery_size)
 						break
 							
 					case e_res_type.MODEL:
 					{
 						if (select.model_format = e_model_format.BLOCK)
 						{
-							render_world_block(select, mc_res)
+							render_world_block(select, mc_res, project_pack_res, project_pack_res)
 							render_world_block_map(select.model_block_map, select)
 						}
 						else if (select.model_file != null)
@@ -251,7 +251,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 								res = mc_res
 							
-							render_world_block(select.model, res)
+							render_world_block(select.model, res, project_pack_res, project_pack_res)
 									
 							with (select)
 								res = temp_get_model_texobj(null)
@@ -280,15 +280,15 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							
 					case e_temp_type.SCENERY:
 						if (select.scenery != null)
-							render_world_scenery(select.scenery, select.block_tex, select.block_repeat_enable, select.block_repeat)
+							render_world_scenery(select.scenery, select.block_tex, project_pack_res, project_pack_res, select.block_repeat_enable, select.block_repeat)
 						break
 							
 					case e_temp_type.ITEM:
-						render_world_item(select.item_vbuffer, [ select.item_tex, null, null ], select.item_sheet, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, true)
+						render_world_item(select.item_vbuffer, select.item_tex, null, null, select.item_sheet, select.item_3d, select.item_face_camera, select.item_bounce, select.item_spin, true)
 						break
 							
 					case e_temp_type.BLOCK:
-						render_world_block(select, select.block_tex, true, rep)
+						render_world_block(select, select.block_tex, project_pack_res, project_pack_res, true, rep)
 						break
 							
 					case e_temp_type.MODEL_PART:

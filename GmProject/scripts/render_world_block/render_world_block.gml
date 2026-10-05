@@ -1,29 +1,28 @@
 /// @arg block
-/// @arg resourcearray
+/// @arg diffuse
+/// @arg normal
+/// @arg material
 /// @arg [rotate]
 /// @arg [size]
 /// @arg [template]
 
-function render_world_block(block, resarr, rotate = false, size = undefined, temp = null)
+function render_world_block(block, resdif, resnorm, resmat, rotate = false, size = undefined, temp = null)
 {
+	if (render_depth_pass)
+		return render_world_block_depth(block, resdif, rotate, size)
+	
 	var vbuffer = block.block_vbuffer;
 	if (vbuffer = null)
 		return 0
 	
-	if (!is_array(resarr))
-		resarr = [ resarr, project_pack_res, project_pack_res ]
-
-	for (var channel = e_texture_channel.DIFFUSE; channel < e_texture_channel.amount; channel++)
-		resarr[channel] = res_eval(resarr[channel])
+	resdif = res_eval(resdif)
+	resnorm = res_eval(resnorm)
+	resmat = res_eval(resmat)
 	
-	var resdif, resnorm, resmat;
 	var tex, texprev, texani;
 	var texmat, texmatprev, texanimat, texanimatsheet;
 	var texnormal, texnormalprev, texaninormal;
 	
-	resdif = resarr[e_texture_channel.DIFFUSE]
-	resnorm = resarr[e_texture_channel.NORMAL]
-	resmat = resarr[e_texture_channel.MATERIAL]
 	render_apply_res(resdif)
 	
 	tex = resdif.block_sheet_texture[e_block_sheet.STATIC16]

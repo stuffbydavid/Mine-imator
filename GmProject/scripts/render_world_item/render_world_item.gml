@@ -1,5 +1,7 @@
 /// @arg vertexbuffer
-/// @arg resource
+/// @arg diffuse
+/// @arg normal
+/// @arg material
 /// @arg sheet
 /// @arg is3d
 /// @arg facecamera
@@ -7,21 +9,25 @@
 /// @arg rotate
 /// @arg [realtime]
 
-function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, realtime = false)
+function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
-	for (var c = e_texture_channel.DIFFUSE; c < e_texture_channel.amount; c++)
-		res[c] = res_eval(res[c])
+	if (render_depth_pass)
+		return render_world_item_depth(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime)
 	
-	render_apply_res(res[e_texture_channel.DIFFUSE])
+	resdif = res_eval(resdif)
+	resnorm = res_eval(resnorm)
+	resmat = res_eval(resmat)
+	
+	render_apply_res(resdif)
 	if (facecamera || bounce || rotate)
 		matrix_set(matrix_world, render_world_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
 	
-	if (res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet] != null)
-		render_set_texture(res[e_texture_channel.DIFFUSE].item_sheet_texture[sheet])
+	if (resdif.item_sheet_texture[sheet] != null)
+		render_set_texture(resdif.item_sheet_texture[sheet])
 	else
-		render_set_texture(res[e_texture_channel.DIFFUSE].texture)
+		render_set_texture(resdif.texture)
 	
-	if (res[e_texture_channel.MATERIAL] != null && res[e_texture_channel.MATERIAL] != mc_res)
+	if (resmat != null && resmat != mc_res)
 	{
 		if (shader_uniform_metallic != 0)
 		{
@@ -41,12 +47,12 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 		}
 		
-		if (res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet] != null)
-			render_set_texture(res[e_texture_channel.MATERIAL].item_sheet_texture_material[sheet], e_texture_channel.MATERIAL)
+		if (resmat.item_sheet_texture_material[sheet] != null)
+			render_set_texture(resmat.item_sheet_texture_material[sheet], e_texture_channel.MATERIAL)
 		else
-			render_set_texture(res[e_texture_channel.MATERIAL].texture, e_texture_channel.MATERIAL)
+			render_set_texture(resmat.texture, e_texture_channel.MATERIAL)
 		
-		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, res[e_texture_channel.MATERIAL].material_format)
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, resmat.material_format)
 	}
 	else
 	{
@@ -54,12 +60,12 @@ function render_world_item(vbuf, res, sheet, is3d, facecamera, bounce, rotate, r
 		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 	}
 	
-	if (res[e_texture_channel.NORMAL] != null && res[e_texture_channel.NORMAL] != mc_res)
+	if (resnorm != null && resnorm != mc_res)
 	{
-		if (res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet] != null)
-			render_set_texture(res[e_texture_channel.NORMAL].item_sheet_texture_normal[sheet], e_texture_channel.NORMAL)
+		if (resnorm.item_sheet_texture_normal[sheet] != null)
+			render_set_texture(resnorm.item_sheet_texture_normal[sheet], e_texture_channel.NORMAL)
 		else
-			render_set_texture(res[e_texture_channel.NORMAL].texture, e_texture_channel.NORMAL)
+			render_set_texture(resnorm.texture, e_texture_channel.NORMAL)
 	}
 	else
 		render_set_texture(spr_default_normal, e_texture_channel.NORMAL)

@@ -19,7 +19,7 @@ function render_world_particle()
 	prevcolor = shader_blend_color
 	prevalpha = shader_blend_alpha
 	
-	shader_blend_color = color_multiply(prevcolor, color)
+	shader_blend_color = render_depth_pass ? c_white : color_multiply(prevcolor, color)
 	shader_blend_alpha *= alpha
 	
 	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
@@ -96,7 +96,7 @@ function render_world_particle()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model, res)
+					render_world_block(temp.model, res, project_pack_res, project_pack_res)
 					
 					with (temp)
 						res = temp_get_model_texobj(null)
@@ -123,19 +123,19 @@ function render_world_particle()
 			case e_temp_type.SCENERY:
 			{
 				if (scenery != null)
-				render_world_scenery(scenery, [ temp.block_tex, temp.block_tex_material, temp.block_tex_normal ], temp.block_repeat_enable, temp.block_repeat)
+				render_world_scenery(scenery, temp.block_tex, temp.block_tex_normal, temp.block_tex_material, temp.block_repeat_enable, temp.block_repeat)
 				break
 			}
 			
 			case e_temp_type.ITEM:
 			{
-				render_world_item(temp.item_vbuffer, [ temp.item_tex, null, null ], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
+				render_world_item(temp.item_vbuffer, temp.item_tex, null, null, temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce, temp.item_spin)
 				break
 			}
 			
 			case e_temp_type.BLOCK:
 			{
-				render_world_block(temp, temp.block_tex, true, rep)
+				render_world_block(temp, temp.block_tex, project_pack_res, project_pack_res, true, rep)
 				break
 			}
 			
@@ -192,9 +192,12 @@ function render_world_particle()
 			else
 			{
 				render_set_texture(tex)
-				render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
-				render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
-				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+				if (!render_depth_pass)
+				{
+					render_set_texture(spr_default_material, e_texture_channel.MATERIAL)
+					render_set_texture(spr_default_normal, e_texture_channel.NORMAL)
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+				}
 			}
 		}
 		

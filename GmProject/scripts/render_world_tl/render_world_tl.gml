@@ -44,10 +44,7 @@ function render_world_tl()
 		return 0
 	
 	// Not registered on shadow depth testing?
-	if (!shadows &&
-		(render_mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
-		 render_mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
-		 render_mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH))
+	if (!shadows && render_depth_pass && render_mode != e_render_mode.DEPTH)
 		return 0
 	
 	// Click mode
@@ -105,13 +102,16 @@ function render_world_tl()
 	
 	render_set_culling(!backfaces)
 	
-	shader_texture_filter_linear = texture_blur
-	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
-	
-	shader_blend_color = value_inherit[e_value.RGB_MUL]
+	shader_blend_color = render_depth_pass ? c_white : value_inherit[e_value.RGB_MUL]
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
 	
 	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
+	
+	// Depth pass rendering
+	if (render_depth_pass)
+		return render_world_tl_depth()
+	shader_texture_filter_linear = texture_blur
+	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
 	
 	if (render_mode = e_render_mode.G_BUFFERS)
 		render_set_uniform(e_uniform.SSAO, ssao ? shader_blend_alpha : 0)
@@ -308,9 +308,9 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp, [ render_res_diffuse, render_res_material, render_res_normal ], true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp, render_res_diffuse, render_res_normal, render_res_material, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
 				else if (temp.scenery)
-					render_world_scenery(temp.scenery, [ render_res_diffuse, render_res_material, render_res_normal ], temp.block_repeat_enable, temp.block_repeat)
+					render_world_scenery(temp.scenery, render_res_diffuse, render_res_normal, render_res_material, temp.block_repeat_enable, temp.block_repeat)
 				
 				break
 			}
@@ -319,9 +319,9 @@ function render_world_tl()
 			{
 				var itemanimate = (parent = null || parent = app || parent.object_index != obj_timeline || parent.type != e_tl_type.MODEL_PART);
 				if (item_vbuffer = null)
-					render_world_item(temp.item_vbuffer, [ item_res, item_material_res, item_normal_res ], temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
+					render_world_item(temp.item_vbuffer, item_res, item_normal_res, item_material_res, temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else
-					render_world_item(item_vbuffer, [ item_res, item_material_res, item_normal_res ], item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
+					render_world_item(item_vbuffer, item_res, item_normal_res, item_material_res, item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				
 				break
 			}
@@ -353,7 +353,7 @@ function render_world_tl()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model, res)
+					render_world_block(temp.model, res, project_pack_res, project_pack_res)
 					
 					with (temp)
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])

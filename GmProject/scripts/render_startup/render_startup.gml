@@ -272,7 +272,7 @@ function render_startup()
 	}
 	
 	// Render modes
-	globalvar render_mode, render_mode_shader_map, render_shader_obj;
+	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass;
 	render_mode = null
 	render_mode_shader_map = ds_int_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
@@ -298,6 +298,9 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.G_BUFFERS] = shader_high_gbuffers
 	render_mode_shader_map[?e_render_mode.AUXILIARY] = shader_high_auxiliary
 	render_mode_shader_map[?e_render_mode.PLACE] = shader_place
+	
+	render_shader_obj = null
+	render_depth_pass = false
 	
 	// Load default render settings
 	globalvar render_default_settings;

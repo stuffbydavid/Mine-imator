@@ -1,9 +1,11 @@
 /// @desc Generates an item vertex buffer. If no arguments are supplied, the template is used.
 /// @arg [slot]
 /// @arg [is3d]
-/// @arg [resourcearray]
+/// @arg [diffuse]
+/// @arg [normal]
+/// @arg [material]
 
-function render_generate_item(slot = null, is3d = null, resarr = null)
+function render_generate_item(slot = null, is3d = null, resdif = null, resnorm = null, resmat = null)
 {
 	var res;
 	if (slot = null)
@@ -15,17 +17,17 @@ function render_generate_item(slot = null, is3d = null, resarr = null)
 	else
 	{
 		if (item_slot = slot &&
-			item_res = resarr[e_texture_channel.DIFFUSE] &&
-			item_material_res = resarr[e_texture_channel.MATERIAL] &&
-			item_normal_res = resarr[e_texture_channel.NORMAL] &&
+			item_res = resdif &&
+			item_material_res = resmat &&
+			item_normal_res = resnorm &&
 			item_3d = is3d &&
 			item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT])
 			return 0
 		
 		item_slot = slot
-		item_res = resarr[e_texture_channel.DIFFUSE]
-		item_material_res = resarr[e_texture_channel.MATERIAL]
-		item_normal_res = resarr[e_texture_channel.NORMAL]
+		item_res = resdif
+		item_material_res = resmat
+		item_normal_res = resnorm
 		item_3d = is3d
 		item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT]
 		res = item_res

@@ -1,9 +1,11 @@
 /// @arg scenery
-/// @arg resource
+/// @arg diffuse
+/// @arg normal
+/// @arg material
 /// @arg repeatenable
 /// @arg repeat
 
-function render_world_scenery(scenery, res, repeatenable, rep)
+function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, rep)
 {
 	if (!scenery.ready)
 		return 0
@@ -24,9 +26,9 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 				{
 					var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size));
 					matrix_set(matrix_world, matrix_multiply(matrix_create(pos, defrot, defscale), mat))
-					render_world_block(scenery, res, true, scenery.scenery_size)
+					render_world_block(scenery, resdif, resnorm, resmat, true, scenery.scenery_size)
 					
-					if (self.object_index != obj_preview)
+					if (self.object_index != obj_preview && !render_depth_pass)
 					{
 						if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
 						{
@@ -51,5 +53,5 @@ function render_world_scenery(scenery, res, repeatenable, rep)
 		}
 	}
 	else
-		render_world_block(scenery, res, true, scenery.scenery_size)
+		render_world_block(scenery, resdif, resnorm, resmat, true, scenery.scenery_size)
 }

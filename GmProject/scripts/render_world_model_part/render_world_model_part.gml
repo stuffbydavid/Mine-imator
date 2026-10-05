@@ -24,11 +24,10 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		with (tl)
 			tl_update_model_shape_matrix()
 	
-	var shape, texobj, blendcolor, alpha, sundepth;
+	var shape, texobj, blendcolor, alpha;
 	texobj = null
 	blendcolor = null
 	alpha = null
-	sundepth = (render_mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH)
 	render_blend_prev = null
 	render_alpha_prev = null
 	
@@ -72,7 +71,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 									(app.env_time / 60) * shape.texture_scroll_speed * sin(degtorad(shape.texture_scroll_direction)),
 									(app.env_time / 60) * shape.texture_scroll_speed * cos(degtorad(shape.texture_scroll_direction)))
 			
-			if (!sundepth)
+			if (!render_depth_pass)
 			{
 				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, model_part_shape_material_res[s])
 
@@ -249,9 +248,9 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		#endregion
 		
 		// Blend color
-		blendcolor = shape.color_blend
+		blendcolor = render_depth_pass ? c_white : shape.color_blend
 		alpha = shape.color_alpha
-		if (colornamemap != null)
+		if (!render_depth_pass && colornamemap != null)
 		{
 			var color = colornamemap[? shape.description];
 			if (!is_undefined(color))
@@ -259,7 +258,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		// Model blend color
-		if (shape.use_model_color)
+		if (!render_depth_pass && shape.use_model_color)
 		{
 			if (object_index = obj_preview && select.model_use_blend_color)
 				blendcolor = color_multiply(blendcolor, select.model_blend_color)
@@ -269,7 +268,9 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		// Blend shape color/alpha
-		if (blendcolor != c_white || alpha != 1)
+		if (render_depth_pass)
+			alpha = shader_blend_alpha * alpha
+		else if (blendcolor != c_white || alpha != 1)
 		{
 			blendcolor = color_multiply(shader_blend_color, blendcolor)
 			alpha = shader_blend_alpha * shape.color_alpha
@@ -289,7 +290,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		// Mix color
-		if (shape.color_mix_percent > 0)
+		if (!render_depth_pass && shape.color_mix_percent > 0)
 		{
 			if (tl != null)
 				render_set_uniform_color(e_uniform.MIX_COLOR, merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
