@@ -11,6 +11,8 @@ uniform vec4 uAmbientColor;
 uniform sampler2D uMask;
 uniform sampler2D uMaterialBuffer;
 uniform sampler2D uDiffuseBuffer;
+uniform sampler2D uFogBuffer;
+uniform int uFogApply;
 uniform int uReflectionsEnabled;
 uniform vec4 uFallbackColor;
 uniform vec4 uFogColor;
@@ -97,6 +99,12 @@ void main()
 	}
 
 	baseColor.rgb *= coverage;
+	
+	if (uFogApply > 0 && coverage > 0.0001)
+	{
+		vec3 fogColor = pow(uFogColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
+		baseColor.rgb = mix(baseColor.rgb / coverage, fogColor, texture2D(uFogBuffer, vTexCoord).r) * coverage;
+	}
 	
 	gl_FragColor = baseColor;
 }

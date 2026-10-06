@@ -14,10 +14,10 @@ function render_startup()
 			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
-			  render_glow, render_camera_ca, render_camera_distort, render_camera_color_correction, render_camera_grain,
+			  render_glow, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
-			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary;
+			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	render_use_samples = false
@@ -77,7 +77,7 @@ function render_startup()
 	render_glow = false
 	render_camera_ca = false
 	render_camera_distort = false
-	render_camera_color_correction = false
+	render_camera_cc = false
 	render_camera_grain = false
 	render_camera_vignette = false
 	render_overlay = false
@@ -88,6 +88,7 @@ function render_startup()
 	render_shadows = false
 	render_indirect = false
 	render_auxiliary = false
+	render_auxiliary_material = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	
@@ -272,7 +273,7 @@ function render_startup()
 	}
 	
 	// Render modes
-	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass;
+	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass, render_material_pass;
 	render_mode = null
 	render_mode_shader_map = ds_int_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
@@ -301,6 +302,7 @@ function render_startup()
 	
 	render_shader_obj = null
 	render_depth_pass = false
+	render_material_pass = true
 	
 	// Load default render settings
 	globalvar render_default_settings;

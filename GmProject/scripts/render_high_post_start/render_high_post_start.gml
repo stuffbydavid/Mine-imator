@@ -29,11 +29,7 @@ function render_high_post_start(prevsurf, hdr = false)
 	{
 		render_surface_lens = surface_require(render_surface_lens, render_width, render_height, false, surface_rgba16float)
 		
-		surface_set_target(render_surface_lens)
-		{
-			draw_clear_alpha(c_black, 1)
-		}
-		surface_reset_target()
+		surface_clear(render_surface_lens, c_black)
 	}
 	
 	return basesurf

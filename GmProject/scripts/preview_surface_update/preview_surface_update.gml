@@ -162,6 +162,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 			render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), fov, render_ratio, 1, 32000)
 			
 			render_mode = e_render_mode.PREVIEW
+			render_material_pass = true
 			render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 			with (render_shader_obj)
 				shader_use()

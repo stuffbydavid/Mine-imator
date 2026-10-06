@@ -43,7 +43,7 @@ function render_post(finalsurf, sceneeffects = true, posteffects = true, hdr = f
 	render_update_effects()
 	
 	// Color correction
-	if (render_camera_color_correction && posteffects && !hdr)
+	if (render_camera_cc && posteffects && !hdr)
 		finalsurf = render_high_cc(finalsurf)
 	render_update_effects()
 	

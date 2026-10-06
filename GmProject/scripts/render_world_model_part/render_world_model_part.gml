@@ -20,7 +20,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	res = res_eval(res)
 	render_apply_res(res)
 	
-	if (!istl && !render_depth_pass)
+	if (!istl && !render_depth_pass && render_material_pass)
 	{
 		render_set_material_textures_none()
 		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
@@ -142,7 +142,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				offsetset = true
 			}
 			
-			if (!render_depth_pass)
+			if (!render_depth_pass && render_material_pass)
 			{
 				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, model_part_shape_material_res[s])
 

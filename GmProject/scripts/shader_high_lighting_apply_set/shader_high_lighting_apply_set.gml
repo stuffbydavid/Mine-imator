@@ -7,14 +7,25 @@
 function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbackonly = false)
 {
 	render_set_uniform_int(e_uniform.FALLBACK_ONLY, fallbackonly)
+	
+	if (renderer_current = e_renderer.STANDARD && app.env_fog_show && !fallbackonly)
+	{
+		render_set_uniform_int(e_uniform.FOG_APPLY, 1)
+		texture_set_stage(sampler_map[?"uFogBuffer"], surface_get_texture(render_surface_fog))
+	}
+	else
+		render_set_uniform_int(e_uniform.FOG_APPLY, 0)
+	
 	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(material))
 	texture_set_stage(sampler_map[?"uDiffuseBuffer"], surface_get_texture(render_surface_diffuse))
 	texture_set_stage(sampler_map[?"uEmissive"], surface_get_texture(render_surface_normal))
+	
 	render_set_uniform(e_uniform.BACKGROUND_BRIGHTNESS, app.env_brightness)
 	render_set_uniform_color(e_uniform.FALLBACK_COLOR, app.env_sky_color_final, 1)
-	render_set_uniform_color(e_uniform.FOG_COLOR, app.env_fog_color_final, 1)
+	render_set_uniform_color(e_uniform.FOG_COLOR, app.env_fog_object_color_final, 1)
 	render_set_uniform(e_uniform.GAMMA, render_gamma)
 	render_set_uniform(e_uniform.PROJ_MATRIX_INV, matrix_inverse_ext(proj_matrix))
+	
 	shader_fog_fallback_set()
 	
 	if (fallbackonly)

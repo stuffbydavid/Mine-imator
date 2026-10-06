@@ -38,11 +38,7 @@ function render_high_shadows()
 	resultsurftemp = render_surface_hdr[0]
 	specresultsurftemp = render_surface_hdr[1]
 	
-	surface_set_target(render_surface_shadows)
-	{
-		draw_clear_alpha(c_black, 1)
-	}
-	surface_reset_target()
+	surface_clear(render_surface_shadows, c_black)
 	
 	aa_matrix = aa_jitter_matrix
 	

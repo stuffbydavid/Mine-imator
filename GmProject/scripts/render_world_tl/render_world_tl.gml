@@ -149,22 +149,25 @@ function render_world_tl()
 		render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	}
 	
-	if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
+	if (render_material_pass)
 	{
-		shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-		render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
-	}
+		if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
+		{
+			shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+		}
 	
-	if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
-	{
-		shader_uniform_metallic = value_inherit[e_value.METALLIC]
-		render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
-	}
+		if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+		{
+			shader_uniform_metallic = value_inherit[e_value.METALLIC]
+			render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+		}
 	
-	if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
-	{
-		shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-		render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+		if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+		{
+			shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+			render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+		}
 	}
 	
 	if (wind != shader_uniform_wind)
@@ -186,11 +189,11 @@ function render_world_tl()
 		render_set_uniform_int(e_uniform.FOG_SHOW, shader_uniform_fog)
 	}
 	
-	if (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
+	if (render_material_pass && (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_RED] != shader_uniform_sss_red ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] != shader_uniform_sss_green ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] != shader_uniform_sss_blue ||
-		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
+		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color))
 	{
 		shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
 		shader_uniform_sss_red = value_inherit[e_value.SUBSURFACE_RADIUS_RED]
@@ -263,21 +266,27 @@ function render_world_tl()
 		gpu_set_zwriteenable(false)
 	
 	// Glint mode
-	var tex, spd, glintres;
-	glintres = res_eval(glint_tex)
-	if (glintres.texture)
-		tex = glintres.texture
-	else
-		tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
-	
-	if (glint_enabled && !is_undefined(render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED]) && render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED] > -1)
-		texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
-	
-	spd = app.env_time * glint_speed * app.project_render_glint_speed
-	render_set_uniform_int(e_uniform.GLINT_ENABLED, glint_enabled ? 1 : 0)
-	render_set_uniform_vec2(e_uniform.GLINT_OFFSET, spd * (0.000625), spd * (0.00125))
-	render_set_uniform(e_uniform.GLINT_STRENGTH, app.project_render_glint_strength * glint_strength)
-	render_set_uniform_vec2(e_uniform.GLINT_SIZE, sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
+	if (render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED] > -1)
+	{
+		render_set_uniform_int(e_uniform.GLINT_ENABLED, glint_enabled ? 1 : 0)
+		
+		if (glint_enabled)
+		{
+			var glintres, tex, spd;
+			glintres = res_eval(glint_tex)
+			if (glintres.texture)
+				tex = glintres.texture
+			else
+				tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
+			
+			texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
+			
+			spd = app.env_time * glint_speed * app.project_render_glint_speed
+			render_set_uniform_vec2(e_uniform.GLINT_OFFSET, spd * (0.000625), spd * (0.00125))
+			render_set_uniform(e_uniform.GLINT_STRENGTH, app.project_render_glint_strength * glint_strength)
+			render_set_uniform_vec2(e_uniform.GLINT_SIZE, sprite_get_width(tex) * 2 * glint_scale, sprite_get_height(tex) * 2 * glint_scale)
+		}
+	}
 	
 	// Render
 	if (type != e_tl_type.PARTICLE_SPAWNER)
@@ -369,7 +378,7 @@ function render_world_tl()
 			{
 				if (path_vbuffer != null)
 				{
-					var texmat, texnorm;
+					var tex, texmat, texnorm;
 					
 					if (value_inherit[e_value.TEXTURE_OBJ] = null)
 						tex = spr_shape
@@ -412,7 +421,7 @@ function render_world_tl()
 			
 			default: // Shapes
 			{
-				var matres, normres, texmat, normtex;
+				var tex, matres, normres, texmat, normtex;
 				with (temp)
 				{
 					tex = temp_get_shape_tex(temp_get_shape_texobj(other.value_inherit[e_value.TEXTURE_OBJ]))

@@ -20,32 +20,45 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	
 	var tex, texprev, texani;
 	var texmat, texmatprev, texanimat, texanimatsheet;
-	var texnormal, texnormalprev, texaninormal;
-	var hasmat, hasnorm, materialformat;
+	var texnorm, texnormprev, texaninorm;
+	var hasmat, hasnorm, matformat;
 	var active0, active1, active2, animactive, frame, texready, blend, basebound;
 	
 	render_apply_res(resdif)
 	
-	hasmat = (resmat.type != e_res_type.PACK || resmat.pack_has_materials)
-	hasnorm = (resnorm.type != e_res_type.PACK || resnorm.pack_has_normals)
-	
 	tex = resdif.block_sheet_texture[e_block_sheet.STATIC16]
-	texmat = hasmat ? resmat.block_sheet_texture_material[e_block_sheet.STATIC16] : 0
-	texnormal = hasnorm ? resnorm.block_sheet_texture_normal[e_block_sheet.STATIC16] : 0
 	
-	if (texmat = null)
+	// Material pass
+	if (render_material_pass)
+	{
+		hasmat = (resmat.type != e_res_type.PACK || resmat.pack_has_materials)
+		hasnorm = (resnorm.type != e_res_type.PACK || resnorm.pack_has_normals)
+		
+		texmat = hasmat ? resmat.block_sheet_texture_material[e_block_sheet.STATIC16] : 0
+		texnorm = hasnorm ? resnorm.block_sheet_texture_normal[e_block_sheet.STATIC16] : 0
+		
+		if (texmat = null)
+			texmat = 0
+	
+		if (texnorm = null)
+			texnorm = 0
+		
+		matformat = texmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
+	}
+	else
+	{
+		hasmat = false
+		hasnorm = false
 		texmat = 0
+		texnorm = 0
+		matformat = e_material.FORMAT_NONE
+	}
 	
-	if (texnormal = null)
-		texnormal = 0
-	
-	materialformat = texmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
-	
-	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
+	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
 	
 	texprev = tex
 	texmatprev = texmat
-	texnormalprev = texnormal
+	texnormprev = texnorm
 	texready = false
 
 	active0 = e_block_depth.DEPTH0 * e_block_vbuffer.amount
@@ -65,7 +78,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		texani = resdif.block_sheet_animated_diffuse ? resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame] : mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
 		texanimatsheet = !hasmat || !resmat.block_sheet_animated_material
 		texanimat = texanimatsheet ? 0 : resmat.block_sheet_texture_material[e_block_sheet.ANIMATED][frame]
-		texaninormal = hasnorm && resnorm.block_sheet_animated_normal ? resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED][frame] : 0
+		texaninorm = hasnorm && resnorm.block_sheet_animated_normal ? resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED][frame] : 0
 	}
 	
 	blend = shader_blend_color
@@ -82,23 +95,24 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		{
 			render_set_texture(resdif, tex)
 			render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
-			render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
+			render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
+			
 			texready = true
 			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.STATIC16])
 		}
 
 		// High-resolution sheets
-		var materialformatprev = materialformat;
+		var materialformatprev = matformat;
 		for (var s = e_block_sheet.STATIC32; s < e_block_sheet.static_amount; s++)
 		{
-			var staticvbuffer = e_block_vbuffer.STATIC32 + s - e_block_sheet.STATIC32;
-			if (block.block_vbuffer_active[@ active0 + staticvbuffer])
+			var staticvbuf = e_block_vbuffer.STATIC32 + s - e_block_sheet.STATIC32;
+			if (block.block_vbuffer_active[@ active0 + staticvbuf])
 			{
-				var statictex, statictexmat, statictexnormal, staticmaterialformat;
+				var statictex, statictexmat, statictexnorm, staticmatformat;
 				statictex = resdif.block_sheet_texture[s]
 				statictexmat = hasmat ? resmat.block_sheet_texture_material[s] : 0
-				statictexnormal = hasnorm ? resnorm.block_sheet_texture_normal[s] : 0
-				staticmaterialformat = statictexmat != null && statictexmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
+				statictexnorm = hasnorm ? resnorm.block_sheet_texture_normal[s] : 0
+				staticmatformat = statictexmat != null && statictexmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
 
 				if (statictex = null)
 					statictex = mc_res.block_sheet_texture[s]
@@ -106,13 +120,13 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 				if (statictexmat = null)
 					statictexmat = 0
 				
-				if (statictexnormal = null)
-					statictexnormal = 0
+				if (statictexnorm = null)
+					statictexnorm = 0
 
-				if (staticmaterialformat != materialformatprev)
+				if (staticmatformat != materialformatprev)
 				{
-					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, staticmaterialformat)
-					materialformatprev = staticmaterialformat
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, staticmatformat)
+					materialformatprev = staticmatformat
 				}
 
 				if (!texready || statictex != texprev)
@@ -127,18 +141,18 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 					texmatprev = statictexmat
 				}
 
-				if (!texready || statictexnormal != texnormalprev)
+				if (!texready || statictexnorm != texnormprev)
 				{
-					render_set_texture(resnorm, statictexnormal, e_texture_channel.NORMAL)
-					texnormalprev = statictexnormal
+					render_set_texture(resnorm, statictexnorm, e_texture_channel.NORMAL)
+					texnormprev = statictexnorm
 				}
 
 				texready = true
-				vbuffer_render(block.block_vbuffer[@ active0 + staticvbuffer])
+				vbuffer_render(block.block_vbuffer[@ active0 + staticvbuf])
 			}
 		}
-		if (materialformatprev != materialformat)
-			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
+		if (materialformatprev != matformat)
+			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
 	
 		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.GRASS] ||
 			block.block_vbuffer_active[@ active0 + e_block_vbuffer.FOLIAGE] ||
@@ -156,10 +170,10 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 				texmatprev = texmat
 			}
 			
-			if (!texready || texnormal != texnormalprev)
+			if (!texready || texnorm != texnormprev)
 			{
-				render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
-				texnormalprev = texnormal
+				render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
+				texnormprev = texnorm
 			}
 			
 			texready = true
@@ -190,10 +204,10 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 				texmatprev = texanimat
 			}
 		
-			if (!texready || texaninormal != texnormalprev)
+			if (!texready || texaninorm != texnormprev)
 			{
-				render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
-				texnormalprev = texaninormal
+				render_set_texture(resnorm, texaninorm, e_texture_channel.NORMAL)
+				texnormprev = texaninorm
 			}
 		
 			texready = true
@@ -203,7 +217,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.ANIMATED])
 			
 			if (texanimatsheet)
-				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
+				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
 		}
 	}
 	
@@ -235,10 +249,10 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			texmatprev = texmat
 		}
 		
-		if (!texready || texnormal != texnormalprev)
+		if (!texready || texnorm != texnormprev)
 		{
-			render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
-			texnormalprev = texnormal
+			render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
+			texnormprev = texnorm
 		}
 		
 		texready = true
@@ -264,10 +278,10 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 				texmatprev = texmat
 			}
 			
-			if (!texready || texnormal != texnormalprev)
+			if (!texready || texnorm != texnormprev)
 			{
-				render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
-				texnormalprev = texnormal
+				render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
+				texnormprev = texnorm
 			}
 			
 			texready = true
@@ -298,10 +312,10 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			texmatprev = texanimat
 		}
 		
-		if (!texready || texaninormal != texnormalprev)
+		if (!texready || texaninorm != texnormprev)
 		{
-			render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
-			texnormalprev = texaninormal
+			render_set_texture(resnorm, texaninorm, e_texture_channel.NORMAL)
+			texnormprev = texaninorm
 		}
 		
 		texready = true
@@ -311,7 +325,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		vbuffer_render(block.block_vbuffer[@ active1 + e_block_vbuffer.ANIMATED])
 		
 		if (texanimatsheet)
-			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
+			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
 	}
 	
 	#endregion
@@ -332,10 +346,10 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			texmatprev = texmat
 		}
 		
-		if (!texready || texnormal != texnormalprev)
+		if (!texready || texnorm != texnormprev)
 		{
-			render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
-			texnormalprev = texnormal
+			render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
+			texnormprev = texnorm
 		}
 		
 		texready = true
@@ -346,14 +360,15 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	{
 		render_set_texture(resdif, texani)
 		render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
-		render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
+		render_set_texture(resnorm, texaninorm, e_texture_channel.NORMAL)
 		
 		if (texanimatsheet)
 			render_set_material_none()
 		
 		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.ANIMATED])
+		
 		if (texanimatsheet)
-			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, materialformat)
+			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
 	}
 	
 	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
@@ -391,7 +406,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			else
 			{
 				render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
-				render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
+				render_set_texture(resnorm, texaninorm, e_texture_channel.NORMAL)
 			}
 			
 			vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])

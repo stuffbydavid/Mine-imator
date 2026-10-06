@@ -15,7 +15,7 @@
 
 function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary, barh, headerh, itemh, mouseinnames, mousetl)
 {
-	var buttonsize, buttonpad, searchx, searchwid, itemmaxw, tlmaxw, indent, tlhierarchy;
+	var buttonsize, buttonpad, searchx, searchwid, itemmaxw, tlmaxw, listmaxy, indent, tlhierarchy;
 	var mousetlname, mousemovetl, mousemoveindex, movehltl, movehlpos;
 	indent = 20
 	tlhierarchy = (timeline_search = "")
@@ -69,10 +69,11 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	dy = listy - (floor(timeline.ver_scroll.value) - timeline_list_first * itemh)
 	
 	tlmaxw = 0
+	listmaxy = listy + listh + (12 * timeline.hor_scroll_tl.needed)
 	
 	for (var t = timeline_list_first; listw > 0 && listh > 0 && t < ds_list_size(tree_visible_list); t++)
 	{
-		if (dy > listy + listh)
+		if (dy > listmaxy)
 			break
 		
 		var tl, itemx, itemy, itemw, itemhover, buttonhover, minw, xx, xright;

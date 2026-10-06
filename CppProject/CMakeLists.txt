@@ -165,7 +165,6 @@ set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "QtGenerated")
 set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets")
 set_property(TARGET Qt5::rcc PROPERTY MAP_IMPORTED_CONFIG_DEBUGBENCHMARKS "Release;") # Map to Qt release build
 set_property(TARGET Qt5::rcc PROPERTY MAP_IMPORTED_CONFIG_RUNBENCHMARKS "Release;")
-set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC OFF)
 set(CMAKE_AUTOUIC OFF)
 
@@ -371,6 +370,15 @@ add_executable(${PROJECT_NAME}
 	${RESOURCE_SOURCES}
 	${APP_ICON_RESOURCE}
 )
+
+# World.hpp declares Qt objects for signals and slots
+set_property(TARGET ${PROJECT_NAME} PROPERTY AUTOMOC OFF)
+qt5_wrap_cpp(WORLD_MOC_SOURCES
+	"${CMAKE_CURRENT_SOURCE_DIR}/World/World.hpp"
+	TARGET ${PROJECT_NAME}
+)
+target_sources(${PROJECT_NAME} PRIVATE ${WORLD_MOC_SOURCES})
+source_group("QtGenerated" FILES ${WORLD_MOC_SOURCES})
 
 set_source_files_properties("${CPPGEN_BUILD_STAMP}" PROPERTIES GENERATED TRUE HEADER_FILE_ONLY TRUE)
 target_sources(${PROJECT_NAME} PRIVATE "${CPPGEN_BUILD_STAMP}")

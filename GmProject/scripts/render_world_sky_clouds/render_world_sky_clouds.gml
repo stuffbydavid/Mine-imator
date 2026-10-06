@@ -14,6 +14,9 @@ function render_world_sky_clouds()
 	var res, twopass;
 	res = res_eval(env_sky_clouds_tex)
 	twopass = (render_mode != e_render_mode.DEPTH && render_mode != e_render_mode.G_BUFFERS)
+	if (render_mode = e_render_mode.AUXILIARY && !render_auxiliary_material && !render_glow)
+		twopass = false
+	
 	render_apply_res(res)
 	
 	// Shading

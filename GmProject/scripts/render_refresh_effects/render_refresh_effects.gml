@@ -10,7 +10,7 @@ function render_refresh_effects(sceneeffects = true, posteffects = true, hdr = f
 		render_camera_lens_dirt && (sceneeffects || posteffects) && earlyeffects,
 		render_camera_ca && posteffects && !hdr,
 		render_camera_distort && posteffects && !hdr,
-		render_camera_color_correction && posteffects && !hdr,
+		render_camera_cc && posteffects && !hdr,
 		render_camera_grain && posteffects && !hdr,
 		render_camera_vignette && posteffects && !hdr,
 		render_overlay && posteffects && !hdr

@@ -6,7 +6,7 @@
 	render_surface_diffuse
 		- RGBA: Diffuse data
 
-	render_surface_mask
+	render_surface_mask (GameMaker)
 		- R: Scene lighting mask
 	
 	shader_high_gbuffers:
@@ -48,40 +48,57 @@
 
 function render_high_create_gbuffers()
 {
+	var needglow, needsss;
+	needglow = (render_glow || render_pass = e_render_pass.ALL || render_pass = e_render_pass.GLOW)
+	needsss = (render_auxiliary_material || render_pass = e_render_pass.ALL || render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE)
+	
 	if (render_gbuffers_cache_enabled && render_gbuffers_cache_ready)
 	{
 		if (!surface_exists(render_surface_diffuse) || !surface_exists(render_surface_mask) ||
 			!surface_exists(render_surface_material) || !surface_exists(render_surface_depth) ||
 			!surface_exists(render_surface_normal) || !surface_exists(render_surface_specular) ||
 			!surface_exists(render_surface_specular_base) ||
-			surface_get_width(render_surface_diffuse) != render_width || surface_get_height(render_surface_diffuse) != render_height ||
-			(render_auxiliary && (!surface_exists(render_surface_fog) || !surface_exists(render_surface_sss) ||
-				!surface_exists(render_surface_sss_range) || !surface_exists(render_surface_glow))))
+			surface_get_width(render_surface_diffuse) != render_width || surface_get_height(render_surface_diffuse) != render_height)
+		{
 			render_gbuffers_cache_ready = false
+		}
+		
+		if (render_auxiliary && (!surface_exists(render_surface_fog) ||
+			(needsss && (!surface_exists(render_surface_sss) || !surface_exists(render_surface_sss_range))) ||
+			(needglow && !surface_exists(render_surface_glow))))
+		{
+			render_gbuffers_cache_ready = false
+		}
 	}
+	
 	if (!render_gbuffers_cache_enabled)
 		render_gbuffers_cache_ready = false
 
-	render_surface_diffuse = surface_require(render_surface_diffuse, render_width, render_height)
-	render_surface_mask = surface_require(render_surface_mask, render_width, render_height)
+	render_surface_diffuse	= surface_require(render_surface_diffuse, render_width, render_height)
+	render_surface_mask		= surface_require(render_surface_mask, render_width, render_height)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height)
-	render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, surface_r32float)
+	render_surface_depth	= surface_require(render_surface_depth, render_width, render_height, true, surface_r32float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, surface_rgba16float)
-	render_surface_normal = surface_require(render_surface_normal, render_width, render_height, true, surface_rgba16float)
+	render_surface_normal	= surface_require(render_surface_normal, render_width, render_height, true, surface_rgba16float)
 
 	if (render_auxiliary)
 	{
 		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, true, surface_r8unorm)
-		render_surface_sss = surface_require(render_surface_sss, render_width, render_height, false, surface_r16float)
-		render_surface_sss_range = surface_require(render_surface_sss_range, render_width, render_height, false)
-		render_surface_glow = surface_require(render_surface_glow, render_width, render_height, false)
+		
+		if (needsss)
+		{
+			render_surface_sss = surface_require(render_surface_sss, render_width, render_height, false, surface_r16float)
+			render_surface_sss_range = surface_require(render_surface_sss_range, render_width, render_height, false)
+		}
+		
+		if (needglow)
+			render_surface_glow = surface_require(render_surface_glow, render_width, render_height, false)
 	}
 
 	if (!render_gbuffers_cache_ready)
 	{
 		render_high_clear_gbuffers()
 		
-		// In C++, skip the SCENE_TEST pass by writing to the mask surface directly
 		var fusedmask = false;
 
 		// Diffuse data
@@ -97,6 +114,7 @@ function render_high_create_gbuffers()
 			render_world_start()
 			render_world_sky()
 			
+			// Enable scene lighting mask rendering
 			if (!app.place_build)
 				fusedmask = render_mask_blend(true, render_surface_mask)
 			
@@ -119,7 +137,7 @@ function render_high_create_gbuffers()
 		}
 		surface_reset_target()
 
-		// Scene lighting mask (GameMaker)
+		// Separate scene lighting pass (GameMaker)
 		if (!fusedmask)
 		{
 			surface_set_target(render_surface_mask)
@@ -158,10 +176,18 @@ function render_high_create_gbuffers()
 		if (render_auxiliary)
 		{
 			surface_set_target_ext(0, render_surface_fog)
-			surface_set_target_ext(1, render_surface_sss)
-			surface_set_target_ext(2, render_surface_sss_range)
-			if (render_glow)
-				surface_set_target_ext(3, render_surface_glow)
+			if (!render_auxiliary_material)
+			{
+				if (render_glow)
+					surface_set_target_ext(1, render_surface_glow)
+			}
+			else
+			{
+				surface_set_target_ext(1, render_surface_sss)
+				surface_set_target_ext(2, render_surface_sss_range)
+				if (render_glow)
+					surface_set_target_ext(3, render_surface_glow)
+			}
 			{
 				render_world_start()
 				render_world(e_render_mode.AUXILIARY)
@@ -185,6 +211,7 @@ function render_high_create_gbuffers()
 		if (render_gbuffers_cache_enabled)
 		{
 			render_surface_specular_base = surface_require(render_surface_specular_base, render_width, render_height, false, surface_rgba16float)
+			
 			surface_set_target(render_surface_specular_base)
 			{
 				gpu_set_blendmode_ext(bm_one, bm_zero)
@@ -192,6 +219,7 @@ function render_high_create_gbuffers()
 				gpu_set_blendmode(bm_normal)
 			}
 			surface_reset_target()
+			
 			render_gbuffers_cache_ready = true
 		}
 	}
@@ -201,6 +229,7 @@ function render_high_create_gbuffers()
 			render_world_start()
 		else
 			render_world_start(depth_far)
+		
 		render_world_done()
 
 		surface_set_target(render_surface_specular)
@@ -212,27 +241,21 @@ function render_high_create_gbuffers()
 		surface_reset_target()
 	}
 
-	render_pass_capture(e_render_pass.DIFFUSE, render_surface_diffuse)
-
-	render_pass_capture(e_render_pass.MATERIAL, render_surface_material)
-
-	render_pass_capture(e_render_pass.DEPTH, render_surface_depth)
-
-	render_pass_capture(e_render_pass.NORMAL, render_surface_normal)
-
-	render_pass_capture(e_render_pass.FOG, render_surface_fog)
-
-	render_pass_capture(e_render_pass.MASK, render_surface_mask)
-
-	render_pass_capture(e_render_pass.GLOW, render_surface_glow)
-
-	render_pass_capture(e_render_pass.SUBSURFACE, render_surface_sss)
-
-	render_pass_capture(e_render_pass.SUBSURFACE_RANGE, render_surface_sss_range)
-
-	render_pass_capture(e_render_pass.EMISSIVE, render_surface_normal)
-	render_pass_capture(e_render_pass.ROUGHNESS, render_surface_material)
-	render_pass_capture(e_render_pass.METALLIC, render_surface_material)
-	render_pass_capture(e_render_pass.FRESNEL, render_surface_material)
-	render_pass_capture(e_render_pass.SSAO_MASK, render_surface_material)
+	if (render_pass != e_render_pass.COMBINED)
+	{
+		render_pass_capture(e_render_pass.DIFFUSE, render_surface_diffuse)
+		render_pass_capture(e_render_pass.MATERIAL, render_surface_material)
+		render_pass_capture(e_render_pass.DEPTH, render_surface_depth)
+		render_pass_capture(e_render_pass.NORMAL, render_surface_normal)
+		render_pass_capture(e_render_pass.FOG, render_surface_fog)
+		render_pass_capture(e_render_pass.MASK, render_surface_mask)
+		render_pass_capture(e_render_pass.GLOW, render_surface_glow)
+		render_pass_capture(e_render_pass.SUBSURFACE, render_surface_sss)
+		render_pass_capture(e_render_pass.SUBSURFACE_RANGE, render_surface_sss_range)
+		render_pass_capture(e_render_pass.EMISSIVE, render_surface_normal)
+		render_pass_capture(e_render_pass.ROUGHNESS, render_surface_material)
+		render_pass_capture(e_render_pass.METALLIC, render_surface_material)
+		render_pass_capture(e_render_pass.FRESNEL, render_surface_material)
+		render_pass_capture(e_render_pass.SSAO_MASK, render_surface_material)
+	}
 }

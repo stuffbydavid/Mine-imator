@@ -13,19 +13,29 @@ function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamer
 {
 	if (render_depth_pass)
 		return render_world_item_depth(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime)
-	var texmat, texnorm;
 	
+	var texmat, texnorm;
 	resdif = res_eval(resdif)
 	resnorm = res_eval(resnorm)
 	resmat = res_eval(resmat)
-	texmat = (resmat.type = e_res_type.PACK && !resmat.pack_has_materials) ? 0 : resmat.item_sheet_texture_material[sheet]
-	texnorm = (resnorm.type = e_res_type.PACK && !resnorm.pack_has_normals) ? 0 : resnorm.item_sheet_texture_normal[sheet]
 	
-	if (texmat = null && resmat.type != e_res_type.PACK)
-		texmat = resmat.texture
+	// Material pass
+	if (render_material_pass)
+	{
+		texmat = ((resmat.type = e_res_type.PACK && !resmat.pack_has_materials) ? 0 : resmat.item_sheet_texture_material[sheet])
+		texnorm = ((resnorm.type = e_res_type.PACK && !resnorm.pack_has_normals) ? 0 : resnorm.item_sheet_texture_normal[sheet])
+		
+		if (texmat = null && resmat.type != e_res_type.PACK)
+			texmat = resmat.texture
 	
-	if (texnorm = null && resnorm.type != e_res_type.PACK)
-		texnorm = resnorm.texture
+		if (texnorm = null && resnorm.type != e_res_type.PACK)
+			texnorm = resnorm.texture
+	}
+	else
+	{
+		texmat = 0
+		texnorm = 0
+	}
 	
 	render_apply_res(resdif)
 	

@@ -11,7 +11,5 @@
 
 function world_import_update_surface(xx, yy, width, height, confirmx, confirmy, confirmwidth, confirmheight)
 {
-	surface_set_target(world_import_surface)
-	draw_clear(c_level_middle)
-	surface_reset_target()
+	surface_clear(world_import_surface, c_level_middle)
 }

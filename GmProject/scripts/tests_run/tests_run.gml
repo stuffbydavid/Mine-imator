@@ -192,7 +192,7 @@ function tests_run()
 					
 					if (keyframe_current = null ||
 						keyframe_current.position != app.timeline_marker ||
-						keyframe_current.value[e_value.TEXT] = "")
+						string_pos("=", keyframe_current.value[e_value.TEXT]) <= 0)
 						continue
 					
 					settingsqueue = string_split_escaped(keyframe_current.value[e_value.TEXT], "\n")

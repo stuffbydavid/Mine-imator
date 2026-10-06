@@ -2,14 +2,24 @@ function render_world(mode)
 {
 	// Choose shader
 	render_mode = mode
-	render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
-	render_depth_pass = (mode = e_render_mode.DEPTH ||
+	render_material_pass = (mode != e_render_mode.AUXILIARY || render_auxiliary_material)
+	if (!render_material_pass)
+		render_shader_obj = shader_map[?shader_high_auxiliary_standard]
+	else
+		render_shader_obj = shader_map[?render_mode_shader_map[?mode]]
+	
+	render_depth_pass = (
+		mode = e_render_mode.DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
-		mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+		mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH
+	)
 	
 	with (render_shader_obj)
 		shader_use()
+	
+	if (!render_material_pass)
+		render_set_uniform_int(e_uniform.GLOW_PASS, render_glow)
 	
 	shader_check_uniform = true
 	render_world_block_transparent = false
