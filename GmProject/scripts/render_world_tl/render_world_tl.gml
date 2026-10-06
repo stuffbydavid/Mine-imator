@@ -300,7 +300,7 @@ function render_world_tl()
 				if (model_part = null || render_res_diffuse = null)
 					break
 				
-				render_world_model_part(model_part, render_res_diffuse, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, self)
+				render_world_model_part(model_part, render_res_diffuse, temp.model_texture_name_map, model_shape_vbuffer_map, temp.model_color_map, temp.model_shape_hide_list, temp.model_shape_texture_name_map, true)
 				break
 			}
 			
