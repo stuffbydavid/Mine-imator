@@ -7,6 +7,7 @@ uniform float uExposure;
 uniform float uGamma;
 
 uniform vec3 uCameraPosition; // static
+uniform int uFogPass; // static
 
 varying vec3 vPosition;
 varying vec4 vColor;
@@ -30,6 +31,14 @@ void main()
 	if (uTonemapper > 0)
 		gl_FragData[0].rgb = applyToneMapper(gl_FragData[0].rgb, uTonemapper, uExposure, uGamma);
 	
-	gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, getFog(vPosition, uCameraPosition)); // Mix fog
+	float fog = getFog(vPosition, uCameraPosition);
+	if (uFogPass > 0)
+		gl_FragData[2] = vec4(vec3(fog), 1.0);
+	else
+	{
+		gl_FragData[2] = vec4(0.0);
+		gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, fog); // Mix fog
+	}
+	
 	gl_FragData[1] = vec4(uReplaceColor.rgb, gl_FragData[0].a);
 }

@@ -681,19 +681,26 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest], glBlendMap[alphasrc], glBlendMap[alphadest]);
+			
 			if (maskBlend)
 				Shader::gl43Core->glBlendFuncSeparatei(1, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			
+			if (fogBlend)
+				Shader::gl43Core->glBlendFuncSeparatei(2, GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
+			
 			GL_CHECK_ERROR();
 		}
 	}
 
-	void GraphicsApiHandler::SetMaskBlending(BoolType enabled)
+	void GraphicsApiHandler::SetMaskBlending(BoolType enabled, BoolType fog)
 	{
-		if (maskBlend == enabled)
+		if (maskBlend == enabled && fogBlend == fog)
 			return;
 
 		SubmitBatch();
+
 		maskBlend = enabled;
+		fogBlend = fog;
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -706,6 +713,13 @@ namespace CppProject
 				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendDstFactor],
 				enabled ? GL_SRC_ALPHA : glBlendMap[blendAlphaSrcFactor],
 				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendAlphaDstFactor]);
+			
+			Shader::gl43Core->glBlendFuncSeparatei(2,
+				fog ? GL_ONE : glBlendMap[blendSrcFactor],
+				fog ? GL_ZERO : glBlendMap[blendDstFactor],
+				fog ? GL_ONE : glBlendMap[blendAlphaSrcFactor],
+				fog ? GL_ZERO : glBlendMap[blendAlphaDstFactor]);
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -720,7 +734,7 @@ namespace CppProject
 		{
 			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
 				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
-				previous.enabled == blend && previous.writeMask == colorWriteMask && previous.maskBlend == maskBlend)
+				previous.enabled == blend && previous.writeMask == colorWriteMask && previous.maskBlend == maskBlend && previous.fogBlend == fogBlend)
 			{
 				state = previous.state;
 				break;
@@ -742,6 +756,7 @@ namespace CppProject
 			targetDesc.RenderTargetWriteMask = colorWriteMask;
 
 			blendDesc.RenderTarget[0] = targetDesc;
+
 			if (maskBlend)
 			{
 				blendDesc.IndependentBlendEnable = TRUE;
@@ -751,10 +766,20 @@ namespace CppProject
 				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
 				blendDesc.RenderTarget[1] = targetDesc;
 			}
+
+			if (fogBlend)
+			{
+				blendDesc.IndependentBlendEnable = TRUE;
+				targetDesc.BlendEnable = FALSE;
+				blendDesc.RenderTarget[2] = targetDesc;
+			}
+
 			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
 			
-			d3dBlendStates.append({ blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
-				colorWriteMask, blend, maskBlend, state });
+			d3dBlendStates.append({
+				blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
+				colorWriteMask, blend, maskBlend, fogBlend, state
+			});
 		}
 
 		D3DContext->OMSetBlendState(state, nullptr, 0xFFFFFFFF);

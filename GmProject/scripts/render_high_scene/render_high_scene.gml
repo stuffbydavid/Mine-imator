@@ -5,7 +5,7 @@ function render_high_scene()
 	var resultsurf;
 	
 	gpu_set_blendmode_ext(bm_one, bm_zero)
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, surface_rgba16float)
+	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
 	resultsurf = render_surface_hdr[1] // Render directly to target?
 	
 	render_pass_capture(e_render_pass.SPECULAR, render_surface_specular)

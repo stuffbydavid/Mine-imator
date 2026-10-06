@@ -1,63 +1,45 @@
 /// @desc Creates render passes for use re-used data in more complex effects.
 
-/*
-	Docs:
-	
-	render_surface_diffuse
-		- RGBA: Diffuse data
-
-	render_surface_mask (GameMaker)
-		- R: Scene lighting mask
-	
-	shader_high_gbuffers:
-	
-		- render_surface_depth (r32float)
-			R: Depth
-	
-		- render_surface_normal (rgba16float)
-			RGB: View-space normal
-			A: Emissive
-	
-		- render_surface_material
-			R: Roughness
-			G: Metallic
-			B: Fresnel Term
-			A: SSAO Mask
-	
-		- render_surface_specular
-			RGB: Glint
-			A: Unused
-	
-	shader_high_auxiliary:
-	
-		- render_surface_fog (r8float)
-			R: Fog strength
-
-		- render_surface_sss (r16float)
-			R: Subsurface Amount
-
-		- render_surface_range
-			RGB: Subsurface RGB radius
-			A: Unused
-
-		- render_surface_glow
-			RGBA: Glow color
-	
-	*Specular is an additive effect, used for glint/specular/reflections.
-*/
-
 function render_high_create_gbuffers()
 {
-	var needglow, needsss;
+	var needglow, needsss, maskdepth;
 	needglow = (render_glow || render_pass = e_render_pass.ALL || render_pass = e_render_pass.GLOW)
 	needsss = (render_auxiliary_material || render_pass = e_render_pass.ALL || render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE)
+	maskdepth = (app.place_build || !render_mask_blend_supported())
+	render_fog_combined = (renderer_current = e_renderer.STANDARD && render_auxiliary && !needglow && !needsss && !maskdepth)
+	
+	// Recreate the mask when switching between combined rendering and the fallback
+	if (is_cpp() && surface_exists(render_surface_mask) && surface_get_depth_enabled(render_surface_mask) != maskdepth)
+	{
+		surface_free(render_surface_mask)
+		
+		render_surface_mask = null
+		render_gbuffers_cache_ready = false
+	}
+	
+	if (render_auxiliary && is_cpp() && surface_exists(render_surface_fog) && surface_get_depth_enabled(render_surface_fog) != !render_fog_combined)
+	{
+		surface_free(render_surface_fog)
+		
+		render_surface_fog = null
+		render_gbuffers_cache_ready = false
+	}
+	
+	// A cached glint buffer is only needed while glint is visible
+	if (!render_glint && render_surface_specular_base != null)
+	{
+		surface_free(render_surface_specular_base)
+		
+		render_surface_specular_base = null
+		render_gbuffers_cache_ready = false
+	}
 	
 	if (render_gbuffers_cache_enabled && render_gbuffers_cache_ready)
 	{
 		if (!surface_exists(render_surface_diffuse) || !surface_exists(render_surface_mask) ||
 			!surface_exists(render_surface_material) || !surface_exists(render_surface_depth) ||
 			!surface_exists(render_surface_normal) || !surface_exists(render_surface_specular) ||
-			!surface_exists(render_surface_specular_base) ||
+			(render_glint && !surface_exists(render_surface_specular_base)) ||
 			surface_get_width(render_surface_diffuse) != render_width || surface_get_height(render_surface_diffuse) != render_height)
 		{
 			render_gbuffers_cache_ready = false
@@ -75,15 +57,15 @@ function render_high_create_gbuffers()
 		render_gbuffers_cache_ready = false
 
 	render_surface_diffuse	= surface_require(render_surface_diffuse, render_width, render_height)
-	render_surface_mask		= surface_require(render_surface_mask, render_width, render_height)
-	render_surface_material = surface_require(render_surface_material, render_width, render_height)
+	render_surface_mask		= surface_require(render_surface_mask, render_width, render_height, maskdepth)
+	render_surface_material = surface_require(render_surface_material, render_width, render_height, false)
 	render_surface_depth	= surface_require(render_surface_depth, render_width, render_height, true, surface_r32float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, surface_rgba16float)
-	render_surface_normal	= surface_require(render_surface_normal, render_width, render_height, true, surface_rgba16float)
+	render_surface_normal	= surface_require(render_surface_normal, render_width, render_height, false, surface_rgba16float)
 
 	if (render_auxiliary)
 	{
-		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, true, surface_r8unorm)
+		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, !render_fog_combined, surface_r8unorm)
 		
 		if (needsss)
 		{
@@ -99,7 +81,7 @@ function render_high_create_gbuffers()
 	{
 		render_high_clear_gbuffers()
 		
-		var fusedmask = false;
+		var combinedmask = false;
 
 		// Diffuse data
 		surface_set_target(render_surface_diffuse)
@@ -116,12 +98,15 @@ function render_high_create_gbuffers()
 			
 			// Enable scene lighting mask rendering
 			if (!app.place_build)
-				fusedmask = render_mask_blend(true, render_surface_mask)
+				combinedmask = render_mask_blend(true, render_surface_mask, render_fog_combined ? render_surface_fog : null)
+			
+			if (!combinedmask)
+				render_fog_combined = false
 			
 			render_world(e_render_mode.COLOR)
 			render_world_done()
 			
-			if (fusedmask)
+			if (combinedmask)
 				render_mask_blend(false, render_surface_mask)
 
 			if (render_background)
@@ -136,9 +121,17 @@ function render_high_create_gbuffers()
 			gpu_set_blendmode(bm_normal)
 		}
 		surface_reset_target()
+		
+		// Restore standalone fog depth if the combined target could not be attached
+		if (render_auxiliary && !render_fog_combined && is_cpp() && !surface_get_depth_enabled(render_surface_fog))
+		{
+			surface_free(render_surface_fog)
+			render_surface_fog = surface_require(null, render_width, render_height, true, surface_r8unorm)
+			surface_clear(render_surface_fog, c_black)
+		}
 
 		// Separate scene lighting pass (GameMaker)
-		if (!fusedmask)
+		if (!combinedmask)
 		{
 			surface_set_target(render_surface_mask)
 			{
@@ -162,7 +155,8 @@ function render_high_create_gbuffers()
 		surface_set_target_ext(0, render_surface_depth)
 		surface_set_target_ext(1, render_surface_normal)
 		surface_set_target_ext(2, render_surface_material)
-		surface_set_target_ext(3, render_surface_specular)
+		if (render_glint)
+			surface_set_target_ext(3, render_surface_specular)
 		{
 			gpu_set_blendmode_ext(bm_one, bm_zero)
 			render_world_start(depth_far)
@@ -173,7 +167,7 @@ function render_high_create_gbuffers()
 		surface_reset_target()
 
 		// Auxiliary buffers
-		if (render_auxiliary)
+		if (render_auxiliary && !render_fog_combined)
 		{
 			surface_set_target_ext(0, render_surface_fog)
 			if (!render_auxiliary_material)
@@ -208,17 +202,25 @@ function render_high_create_gbuffers()
 				surface_reset_target()
 			}
 		}
+		else if (render_fog_combined)
+		{
+			// Keep the full camera projection previously restored by the auxiliary pass
+			render_world_start()
+			render_world_done()
+		}
 		if (render_gbuffers_cache_enabled)
 		{
-			render_surface_specular_base = surface_require(render_surface_specular_base, render_width, render_height, false, surface_rgba16float)
-			
-			surface_set_target(render_surface_specular_base)
+			if (render_glint)
 			{
-				gpu_set_blendmode_ext(bm_one, bm_zero)
-				draw_surface(render_surface_specular, 0, 0)
-				gpu_set_blendmode(bm_normal)
+				render_surface_specular_base = surface_require(render_surface_specular_base, render_width, render_height, false, surface_rgba16float)
+				surface_set_target(render_surface_specular_base)
+				{
+					gpu_set_blendmode_ext(bm_one, bm_zero)
+					draw_surface(render_surface_specular, 0, 0)
+					gpu_set_blendmode(bm_normal)
+				}
+				surface_reset_target()
 			}
-			surface_reset_target()
 			
 			render_gbuffers_cache_ready = true
 		}
@@ -232,13 +234,18 @@ function render_high_create_gbuffers()
 		
 		render_world_done()
 
-		surface_set_target(render_surface_specular)
+		if (render_glint)
 		{
-			gpu_set_blendmode_ext(bm_one, bm_zero)
-			draw_surface(render_surface_specular_base, 0, 0)
-			gpu_set_blendmode(bm_normal)
+			surface_set_target(render_surface_specular)
+			{
+				gpu_set_blendmode_ext(bm_one, bm_zero)
+				draw_surface(render_surface_specular_base, 0, 0)
+				gpu_set_blendmode(bm_normal)
+			}
+			surface_reset_target()
 		}
-		surface_reset_target()
+		else
+			surface_clear(render_surface_specular, c_black)
 	}
 
 	if (render_pass != e_render_pass.COMBINED)

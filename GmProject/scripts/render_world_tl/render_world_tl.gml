@@ -182,7 +182,7 @@ function render_world_tl()
 		render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
 	}
 	
-	var renderfog = app.env_fog_show && fog && render_mode != e_render_mode.COLOR;
+	var renderfog = (app.env_fog_show && fog && (render_mode != e_render_mode.COLOR || render_fog_combined));
 	if (renderfog != shader_uniform_fog)
 	{
 		shader_uniform_fog = renderfog
@@ -266,7 +266,7 @@ function render_world_tl()
 		gpu_set_zwriteenable(false)
 	
 	// Glint mode
-	if (render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED] > -1)
+	if (render_shader_obj.uniform_handle[e_uniform.GLINT_ENABLED] > -1 && (render_mode != e_render_mode.G_BUFFERS || render_glint))
 	{
 		render_set_uniform_int(e_uniform.GLINT_ENABLED, glint_enabled ? 1 : 0)
 		

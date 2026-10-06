@@ -62,7 +62,7 @@ function render_world_tl_reset()
 	render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
 	
 	// Fog
-	shader_uniform_fog = app.env_fog_show && render_mode != e_render_mode.COLOR
+	shader_uniform_fog = (app.env_fog_show && (render_mode != e_render_mode.COLOR || render_fog_combined))
 	render_set_uniform_int(e_uniform.FOG_SHOW, shader_uniform_fog)
 	render_set_uniform(e_uniform.SSAO, 1)
 	

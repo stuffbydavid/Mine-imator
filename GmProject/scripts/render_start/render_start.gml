@@ -45,14 +45,26 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	// Apply render preset
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
 	
-	// Update timeline visibility and glow usage
-	var checkglow = (project_render_glow && renderer_current != e_renderer.QUICK);
+	// Update timeline visibility and glow/glint usage
+	var checkglow, checkglint;
+	checkglow = (project_render_glow && renderer_current != e_renderer.QUICK)
+	checkglint = (project_render_glint_strength != 0)
 	render_glow = false
+	render_glint = false
+	render_fog_combined = false
+	
 	with (obj_timeline)
 	{
 		render_visible = tl_get_visible()
-		if (checkglow && !render_glow && render_visible && glow)
-			render_glow = true
+		
+		if (render_visible)
+		{
+			if (checkglow && !render_glow && glow)
+				render_glow = true
+		
+			if (checkglint && !render_glint && glint_enabled && glint_strength != 0)
+				render_glint = true
+		}
 	}
 	
 	if (renderer_current = e_renderer.STANDARD)

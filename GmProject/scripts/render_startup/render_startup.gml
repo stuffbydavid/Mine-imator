@@ -14,10 +14,10 @@ function render_startup()
 			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff;
 	
 	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
-			  render_glow, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
+			  render_glow, render_glint, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
-			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material;
+			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material, render_fog_combined;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	render_use_samples = false
@@ -75,6 +75,7 @@ function render_startup()
 	render_camera_bloom = false
 	render_camera_dof = false
 	render_glow = false
+	render_glint = false
 	render_camera_ca = false
 	render_camera_distort = false
 	render_camera_cc = false
@@ -89,6 +90,7 @@ function render_startup()
 	render_indirect = false
 	render_auxiliary = false
 	render_auxiliary_material = false
+	render_fog_combined = false
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	

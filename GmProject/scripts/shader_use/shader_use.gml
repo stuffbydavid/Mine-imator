@@ -47,8 +47,9 @@ function shader_use()
 	// Set fog
 	if (!is_undefined(uniform_handle[e_uniform.FOG_SHOW]) && uniform_handle[e_uniform.FOG_SHOW] > -1)
 	{
-		var fog = (app.env_fog_show && render_mode != e_render_mode.COLOR);
+		var fog = (app.env_fog_show && (render_mode != e_render_mode.COLOR || render_fog_combined));
 		render_set_uniform_int(e_uniform.FOG_SHOW, bool_to_float(fog))
+		render_set_uniform_int(e_uniform.FOG_PASS, render_fog_combined && render_mode = e_render_mode.COLOR)
 		
 		render_set_uniform_color(e_uniform.FOG_COLOR, app.env_fog_object_color_final, 1)
 		render_set_uniform(e_uniform.FOG_DISTANCE, app.env_fog_distance)
@@ -80,7 +81,10 @@ function shader_use()
 		render_set_uniform_int(e_uniform.SSS_BRIGHT_BACKLIGHT, app.project_render_subsurface_bright_backlight)
 	
 	// Glint
-	if (!is_undefined(uniform_handle[e_uniform.GLINT_ENABLED]) && uniform_handle[e_uniform.GLINT_ENABLED] > -1)
+	render_set_uniform_int(e_uniform.GLINT_PASS, render_glint)
+	
+	if (!is_undefined(uniform_handle[e_uniform.GLINT_ENABLED]) && uniform_handle[e_uniform.GLINT_ENABLED] > -1 &&
+		(render_mode != e_render_mode.G_BUFFERS || render_glint))
 	{
 		var res = res_eval(project_pack_res);
 		if (res.glint_armor_texture = null)

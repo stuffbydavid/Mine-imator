@@ -5,6 +5,14 @@ function render_high_post_start(prevsurf, hdr = false)
 {
 	var basesurf;
 	
+	// Continue ping-pong from the input surface after effects are refreshed
+	if (hdr)
+		render_post_index = (prevsurf = render_surface_hdr[0])
+	else if (render_gbuffers_cache_enabled || renderer_current = e_renderer.QUICK)
+		render_post_index = (prevsurf = render_surface_post[0])
+	else
+		render_post_index = (prevsurf = render_surface_material)
+	
 	// Are there any post processing effects?
 	render_effects_progress = -1
 	render_update_effects()

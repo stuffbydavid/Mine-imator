@@ -10,6 +10,14 @@ namespace CppProject
 		return (new Surface({ (int)width, (int)height }, format, depthBuffer))->id;
 	}
 
+	BoolType surface_get_depth_enabled(IntType id)
+	{
+		if (Surface* surf = FindSurface(id))
+			return surf->frameBuffer->depthBuffer;
+		
+		return false;
+	}
+
 	void surface_clear_depth_cache(IntType id)
 	{
 		if (Surface* surf = FindSurface(id))

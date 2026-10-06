@@ -120,8 +120,8 @@ namespace CppProject
 		// Sets the blending functions.
 		void SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest);
 		
-		// Sets independent alpha blending for the mask render target.
-		void SetMaskBlending(BoolType enabled);
+		// Sets independent alpha blending for the mask and optional fog overwrite target
+		void SetMaskBlending(BoolType enabled, BoolType fog = false);
 
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
@@ -167,7 +167,7 @@ namespace CppProject
 		IntType blendDstFactor = 6; // bm_inv_src_alpha
 		IntType blendAlphaSrcFactor = 5;
 		IntType blendAlphaDstFactor = 6;
-		BoolType maskBlend = false;
+		BoolType maskBlend = false, fogBlend = false;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
@@ -194,7 +194,7 @@ namespace CppProject
 		struct BlendState
 		{
 			IntType src, dst, srcAlpha, dstAlpha, writeMask;
-			BoolType enabled, maskBlend;
+			BoolType enabled, maskBlend, fogBlend;
 			ID3D11BlendState* state = nullptr;
 		};
 		QVector<BlendState> d3dBlendStates;

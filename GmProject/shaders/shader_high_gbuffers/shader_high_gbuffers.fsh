@@ -4,6 +4,7 @@ uniform vec3 uCameraPosition; // static
 uniform float uGamma;
 uniform int uIsSky;
 uniform float uSSAO;
+uniform int uGlintPass; // static
 
 varying vec3 vPosition;
 varying vec2 vTexCoord;
@@ -46,5 +47,9 @@ void main()
 	gl_FragData[0] = vec4(vDepth, 0.0, 0.0, 1.0); // Depth
 	gl_FragData[1] = vec4(packNormal(normalView).rgb, emissive); // Normal, emissive
 	gl_FragData[2] = vec4(roughness, metallic, F, uSSAO); // Material, SSAO
-	gl_FragData[3] = vec4(getGlint(baseColor, tex, uTextureSize, uGamma), 1.0); // Glint
+	
+	if (uGlintPass > 0)
+		gl_FragData[3] = vec4(getGlint(baseColor, tex, uTextureSize, uGamma), 1.0); // Glint
+	else
+		gl_FragData[3] = vec4(0.0);
 }

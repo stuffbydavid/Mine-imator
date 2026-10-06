@@ -32,7 +32,7 @@ function render_world_ground()
 	render_set_uniform_color(e_uniform.BLEND_COLOR, blend, 1)
 	render_set_uniform_color(e_uniform.GLOW_COLOR, c_black, 1)
 	render_set_uniform_int(e_uniform.GLOW_TEXTURE, 0)
-	render_set_uniform_int(e_uniform.FOG_SHOW, app.env_fog_show && render_mode != e_render_mode.COLOR)
+	render_set_uniform_int(e_uniform.FOG_SHOW, app.env_fog_show && (render_mode != e_render_mode.COLOR || render_fog_combined))
 	render_set_uniform_int(e_uniform.IS_WATER, iswater && app.project_render_water_reflections)
 	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, hasmat ? materialres.material_format : e_material.FORMAT_NONE)
 	

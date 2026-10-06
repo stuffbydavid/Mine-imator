@@ -56,7 +56,7 @@ function render_high_indirect()
 		surface_reset_target()
 		
 		// Resolve
-		render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, true, surface_rgba16float)
+		render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
 		surface_set_target(render_surface_hdr[1])
 		{
 			draw_clear_alpha(c_black, 0)

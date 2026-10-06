@@ -790,7 +790,7 @@ void SwitchStatement::writeCpp(ResolveScope* scope)
 	// Regular switch
 	else
 	{
-		CodeWriter::writeLine("switch ((IntType)" + this->expr->toCpp(switchScope) + ")");
+		CodeWriter::writeLine("switch ((IntType)(" + this->expr->toCpp(switchScope) + "))");
 		CodeWriter::writeLine("{", 1);
 
 		for (Case* switchCase : this->cases) // Cases
