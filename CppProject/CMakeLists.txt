@@ -134,10 +134,23 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_CXX_FLAGS}"
 set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_LINKER_FLAGS}"
 	CACHE STRING "Executable linker flags for RelWithDebInfo" FORCE)
 
+# Development builds on Linux may use the distribution's Qt 5.15 packages instead
+# of the static Qt built by Setup.sh. Zlib and FreeType then come from the system.
+option(MI_SYSTEM_QT "Build against the system Qt 5.15, zlib and FreeType (Linux development builds)" OFF)
+set(MI_LIBZIP_LIBRARY "" CACHE FILEPATH "Override the static libzip library (required with MI_SYSTEM_QT)")
+
 # Find Qt package
-find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
-	PATHS "${QT_INSTALL_DIR}"
-	NO_DEFAULT_PATH)
+if(MI_SYSTEM_QT)
+	find_package(Qt5 5.15 CONFIG REQUIRED COMPONENTS Widgets Gui Network)
+	find_package(ZLIB REQUIRED)
+	find_package(Freetype REQUIRED)
+	find_package(OpenGL REQUIRED)
+	message(STATUS "Using system Qt ${Qt5_VERSION}")
+else()
+	find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
+		PATHS "${QT_INSTALL_DIR}"
+		NO_DEFAULT_PATH)
+endif()
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "QtGenerated")
 set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets")
 set(CMAKE_AUTOMOC ON)
@@ -357,12 +370,28 @@ else()
 endif()
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_CURRENT_SOURCE_DIR}"
-	"${QT_INSTALL_DIR}/include/QtZlib"
 	"${CMAKE_CURRENT_SOURCE_DIR}/External/Sources"
 	"${LIBZIP_SOURCE_DIR}/lib"
 	"${OPENAL_SOURCE_DIR}/include"
-	"${QT_SOURCE_DIR}/qtbase/src/3rdparty/freetype/include"
 )
+if(MI_SYSTEM_QT)
+	target_include_directories(${PROJECT_NAME} PRIVATE ${ZLIB_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS})
+	target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB Freetype::Freetype OpenGL::GL ${CMAKE_DL_LIBS})
+else()
+	target_include_directories(${PROJECT_NAME} PRIVATE
+		"${QT_INSTALL_DIR}/include/QtZlib"
+		"${QT_SOURCE_DIR}/qtbase/src/3rdparty/freetype/include"
+	)
+endif()
+
+# Static libzip location
+if(MI_LIBZIP_LIBRARY)
+	set(LIBZIP_LIBRARY "${MI_LIBZIP_LIBRARY}")
+elseif(MSVC)
+	set(LIBZIP_LIBRARY "${EXTERNAL_PLATFORM_DIR}/zip.lib")
+else()
+	set(LIBZIP_LIBRARY "${EXTERNAL_PLATFORM_DIR}/libzip.a")
+endif()
 
 if(APPLE)
 	# Fix FFmpeg include issue with VERSION
@@ -398,7 +427,7 @@ if(WIN32)
 	)
 
 	target_link_libraries(${PROJECT_NAME} PRIVATE
-		"${EXTERNAL_PLATFORM_DIR}/zip.lib"
+		"${LIBZIP_LIBRARY}"
 		"${EXTERNAL_PLATFORM_DIR}/OpenAL32.lib"
 		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
@@ -442,7 +471,7 @@ else()
 	# Static-library order matters to GNU-family linkers: dependants precede the
 	# archives that satisfy them
 	target_link_libraries(${PROJECT_NAME} PRIVATE
-		"${EXTERNAL_PLATFORM_DIR}/libzip.a"
+		"${LIBZIP_LIBRARY}"
 		"${EXTERNAL_PLATFORM_DIR}/libopenal.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"

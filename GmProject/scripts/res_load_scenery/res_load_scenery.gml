@@ -200,6 +200,10 @@ function res_load_scenery()
 				debug_timer_stop("res_load_scenery, Set models")
 				debug_timer_start()
 			
+				// Light levels for shaderpacks
+				with (mc_builder)
+					builder_compute_light()
+				
 				// Prepare vbuffers
 				block_vbuffer_start()
 		

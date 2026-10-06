@@ -125,6 +125,7 @@ function settings_startup()
 	setting_world_import_filter_mode = 0
 	setting_world_import_filter_list = ds_list_create()
 	setting_world_import_unload_regions = true
+	setting_world_import_functional_blocks = true
 	
 	// Viewport
 	setting_snap = false

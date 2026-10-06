@@ -4,6 +4,8 @@
 function block_tile_entity_decorated_pot(map)
 {
 	var sherdsarr = map[?"sherds"];
+	if (!ds_list_valid(sherdsarr) || ds_list_size(sherdsarr) < 4)
+		return 0
 	
 	for (var i = 0; i < ds_list_size(sherdsarr); i++)
 	{

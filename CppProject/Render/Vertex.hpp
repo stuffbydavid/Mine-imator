@@ -40,6 +40,7 @@ namespace CppProject
 	};
 
 	// A vertex stored in a 3D vertex buffer.
+	// The fields after the tangent are Minecraft data used by shaderpacks (see ShaderPack/SpTransformer.hpp).
 	struct Vertex
 	{
 		Vertex() {}
@@ -78,6 +79,21 @@ namespace CppProject
 		// Set the object index
 		void SetIndex(IntType index);
 
+		// Set the Mine-imator block and state ID the vertex belongs to (for shaderpack block IDs).
+		void SetBlock(IntType blockId, IntType stateId);
+
+		// Set the light levels (0-15, fractions allowed for smooth lighting) and ambient occlusion (0-1).
+		void SetLight(RealType blockLight, RealType skyLight, RealType ao);
+
+		// Set the fluid flag of the light data (mc_Entity.y).
+		void SetFluid(BoolType fluid);
+
+		// Set the texture coordinate at the center of the face.
+		void SetMidTexCoord(RealType u, RealType v);
+
+		// Set the offset to the center of the block in 1/64 block units and the light emission (0-15).
+		void SetMidBlock(RealType dx, RealType dy, RealType dz, IntType emission);
+
 		// Set shader attributes.
 		static void SetAttributes();
 
@@ -87,5 +103,9 @@ namespace CppProject
 		float u, v; // 3
 		uint32_t data = 0; // 4
 		uint32_t tangent = 0;
+		uint32_t block = 0; // Block ID (12 bits) | state ID (20 bits), 0 for none
+		uint32_t midTex = 0xFFFFFFFF; // U16 | V16 of the face center, all bits set for none
+		uint32_t light = 0x00FFF000; // Block light (0-240) | sky light (0-240) << 8 | AO (0-255) << 16 | flags << 24
+		uint32_t midBlock = 0; // Signed 8 bit X/Y/Z offset to the block center | emission << 24
 	};
 }

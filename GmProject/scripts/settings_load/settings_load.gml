@@ -40,6 +40,11 @@ function settings_load()
 		{
 			setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
 			
+			// Move from the previous built-in assets to the current ones, unless another version was picked
+			var builtinversion = value_get_string(assetsmap[?"builtin_version"], "1.20.2");
+			if (builtinversion != minecraft_version && setting_minecraft_assets_version = builtinversion)
+				setting_minecraft_assets_version = minecraft_version
+			
 			var newmap = assetsmap[?"new"];
 			if (ds_map_valid(newmap))
 			{
@@ -262,6 +267,7 @@ function settings_load()
 			setting_world_import_filter_mode = value_get_real(worldimportmap[?"filter_mode"], setting_world_import_filter_mode)
 			ds_list_merge(setting_world_import_filter_list, worldimportmap[?"filter_list"])
 			setting_world_import_unload_regions = value_get_real(worldimportmap[?"unload_regions"], setting_world_import_unload_regions)
+			setting_world_import_functional_blocks = value_get_real(worldimportmap[?"functional_blocks"], setting_world_import_functional_blocks)
 		}
 	}
 	

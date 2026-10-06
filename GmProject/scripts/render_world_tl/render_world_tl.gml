@@ -83,6 +83,16 @@ function render_world_tl()
 	if (render_mode = e_render_mode.AO_MASK)
 		render_set_uniform_color("uReplaceColor", ssao ? merge_color(c_black, c_white, shader_blend_alpha) : c_black, 1)
 	
+	// Shaderpack geometry type
+	if (render_mode = e_render_mode.SHADERPACK)
+	{
+		shaderpack_set_shadows(shadows)
+		if (type = e_tl_type.PARTICLE_SPAWNER)
+			shaderpack_set_phase(e_shaderpack_phase.PARTICLES)
+		else
+			shaderpack_set_phase(shader_blend_alpha < 1 ? e_shaderpack_phase.ENTITIES_TRANSLUCENT : e_shaderpack_phase.ENTITIES)
+	}
+	
 	if (colors_ext != shader_uniform_color_ext ||
 		value_inherit[e_value.RGB_ADD] != shader_uniform_rgb_add ||
 		value_inherit[e_value.HSB_ADD] != shader_uniform_hsb_add ||

@@ -10,6 +10,7 @@
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/PrimitiveRenderer.hpp"
 #include "Render/VertexBufferRenderer.hpp"
+#include "ShaderPack/SpHost.hpp"
 
 namespace CppProject
 {
@@ -496,6 +497,12 @@ namespace CppProject
 
 	void texture_set_stage(IntType stage, IntType tex)
 	{
+		if (ShaderPackHost::IsRecording())
+		{
+			ShaderPackHost::SetTexture(stage, tex);
+			return;
+		}
+
 		if (tex > 0 && GFX->shader->IsLoaded())
 			GFX->shader->SubmitTexture(stage, tex);
 	}
@@ -622,7 +629,12 @@ namespace CppProject
 	void vertex_submit(IntType buffer, IntType primitive, IntType texture)
 	{
 		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			VB->Add(buf);
+		{
+			if (ShaderPackHost::IsRecording())
+				ShaderPackHost::RecordVertexBuffer(buf);
+			else
+				VB->Add(buf);
+		}
 	}
 
 	void vertex_texcoord(IntType buffer, RealType u, RealType v)

@@ -61,6 +61,11 @@ function project_reset_render()
 	project_render_glint_speed = 1
 	project_render_glint_strength = 1
 	
+	project_render_shaderpack = ""
+	project_render_shaderpack_options = ""
+	project_render_shaderpack_warmup = 8
+	shaderpack_update()
+	
 	texture_set_mipmap_level(project_render_texture_filtering_level)
 	render_generate_dof_samples(0, 0, 0)
 	render_samples = -1

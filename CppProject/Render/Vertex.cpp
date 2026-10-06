@@ -100,7 +100,8 @@ namespace CppProject
 	{
 		return (
 			x == o.x && y == o.y && z == o.z &&
-			normal == o.normal && u == o.u && v == o.v
+			normal == o.normal && u == o.u && v == o.v &&
+			block == o.block && light == o.light && midTex == o.midTex && midBlock == o.midBlock
 		);
 	}
 
@@ -145,6 +146,37 @@ namespace CppProject
 	{
 		// Pack 16 bit index in 3rd and 4th byte
 		data |= index << 16;
+	}
+
+	void Vertex::SetBlock(IntType blockId, IntType stateId)
+	{
+		block = ((uint32_t)blockId & 4095u) | ((uint32_t)stateId << 12);
+	}
+
+	void Vertex::SetLight(RealType blockLight, RealType skyLight, RealType ao)
+	{
+		uint32_t b = (uint32_t)qBound(0, (int)std::round(blockLight * 16.0), 240);
+		uint32_t s = (uint32_t)qBound(0, (int)std::round(skyLight * 16.0), 240);
+		uint32_t a = (uint32_t)qBound(0, (int)std::round(ao * 255.0), 255);
+		light = (light & 0xFF000000u) | b | (s << 8) | (a << 16);
+	}
+
+	void Vertex::SetFluid(BoolType fluid)
+	{
+		light = fluid ? (light | (1u << 24)) : (light & ~(1u << 24));
+	}
+
+	void Vertex::SetMidTexCoord(RealType mu, RealType mv)
+	{
+		uint32_t u16 = (uint32_t)qBound(0, (int)std::round(mu * 65535.0), 65535);
+		uint32_t v16 = (uint32_t)qBound(0, (int)std::round(mv * 65535.0), 65535);
+		midTex = u16 | (v16 << 16);
+	}
+
+	void Vertex::SetMidBlock(RealType dx, RealType dy, RealType dz, IntType emission)
+	{
+		auto pack = [](RealType v) { return (uint32_t)(uint8_t)(int8_t)qBound(-127, (int)std::round(v), 127); };
+		midBlock = pack(dx) | (pack(dy) << 8) | (pack(dz) << 16) | ((uint32_t)qBound(0, (int)emission, 15) << 24);
 	}
 
 	void Vertex::SetAttributes()

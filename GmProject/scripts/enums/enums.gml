@@ -838,7 +838,30 @@ function enums()
 		AO_MASK,
 		MATERIAL,
 		SUBSURFACE,
-		GLINT
+		GLINT,
+		SHADERPACK
+	}
+	
+	// Geometry phases of the shaderpack renderer (matches ShaderPacks::GeometryPhase)
+	enum e_shaderpack_phase
+	{
+		SKY_BASIC,
+		SKY_TEXTURED,
+		CLOUDS,
+		TERRAIN_SOLID,
+		TERRAIN_CUTOUT,
+		WATER,
+		ENTITIES,
+		ENTITIES_TRANSLUCENT,
+		BLOCK,
+		BLOCK_TRANSLUCENT,
+		PARTICLES,
+		PARTICLES_TRANSLUCENT,
+		WEATHER,
+		TEXTURED,
+		TEXTURED_LIT,
+		BASIC,
+		HAND
 	}
 	
 	// Viewport render mode

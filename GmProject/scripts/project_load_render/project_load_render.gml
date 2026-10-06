@@ -63,4 +63,9 @@ function project_load_render(map)
 	project_render_exposure = value_get_real(map[?"exposure"], project_render_exposure)
 	project_render_gamma = value_get_real(map[?"gamma"], project_render_gamma)
 	project_render_material_maps = value_get_real(map[?"material_maps"], project_render_material_maps)
+	
+	project_render_shaderpack = value_get_string(map[?"shaderpack"], project_render_shaderpack)
+	project_render_shaderpack_options = value_get_string(map[?"shaderpack_options"], project_render_shaderpack_options)
+	project_render_shaderpack_warmup = value_get_real(map[?"shaderpack_warmup"], project_render_shaderpack_warmup)
+	shaderpack_update()
 }

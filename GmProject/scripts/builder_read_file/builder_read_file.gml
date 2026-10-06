@@ -230,9 +230,34 @@ function builder_read_schematic_nbt(structuremap)
 	// Read palette
 	for (var i = 0; i < ds_list_size(palettelist); i++)
 	{
-		var block, blockmap, mcid, propertiesmap, propertiesarr, key;
+		var block, blockmap, mcid, propertiesmap, propertiesarr, propertiesstr, key;
 		blockmap = palettelist[|i]
-		mcid = blockmap[?"Name"]
+		mcid = ""
+		propertiesmap = undefined
+		propertiesstr = ""
+		
+		if (is_string(blockmap)) // "minecraft:id[name=value,...]"
+		{
+			mcid = blockmap
+			var bracket = string_pos("[", blockmap);
+			if (bracket > 0)
+			{
+				mcid = string_copy(blockmap, 1, bracket - 1)
+				propertiesstr = string_replace(string_delete(blockmap, 1, bracket), "]", "")
+			}
+		}
+		else if (ds_map_valid(blockmap))
+		{
+			// "Name" and "Properties" before 26.3, "id" and "properties" after
+			mcid = value_get_string(blockmap[?"Name"], value_get_string(blockmap[?"id"], value_get_string(blockmap[?""], "")))
+			propertiesmap = blockmap[?"Properties"]
+			if (is_undefined(propertiesmap))
+				propertiesmap = blockmap[?"properties"]
+		}
+		
+		if (mcid != "" && !string_contains(mcid, ":"))
+			mcid = "minecraft:" + mcid
+		
 		block = mc_assets.block_id_map[?mcid]
 		propertiesarr = null
 					
@@ -243,10 +268,12 @@ function builder_read_schematic_nbt(structuremap)
 			// ID specific vars
 			if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?mcid]))
 				state_vars_add(vars, block.id_state_vars_map[?mcid])
+			
+			if (propertiesstr != "")
+				propertiesarr = string_get_state_vars(propertiesstr)
 						
 			// Read Properties tag
-			propertiesmap = blockmap[?"Properties"]
-			if (!is_undefined(propertiesmap))
+			if (ds_map_valid(propertiesmap))
 			{
 				key = ds_map_find_first(propertiesmap)
 							
@@ -287,10 +314,12 @@ function builder_read_schematic_nbt(structuremap)
 	}
 				
 	// Parse blocks states
+	var entities = [];
 	with (mc_builder)
 	{
 		debug_timer_start()
 		builder_start()
+		sch_timeline_amount = 0
 		
 		for (var i = 0; i < ds_list_size(blocklist); i++)
 		{
@@ -328,8 +357,18 @@ function builder_read_schematic_nbt(structuremap)
 							
 				if (!is_undefined(finalstate))
 				{
-					// Replace jigsaw with final_state value
-					block = mc_assets.block_id_map[?finalstate]
+					// Replace jigsaw with final_state value ("minecraft:id[name=value,...]")
+					var finalid, finalprops, bracket;
+					finalid = finalstate
+					finalprops = ""
+					bracket = string_pos("[", finalstate)
+					if (bracket > 0)
+					{
+						finalid = string_copy(finalstate, 1, bracket - 1)
+						finalprops = string_replace(string_delete(finalstate, 1, bracket), "]", "")
+					}
+					
+					block = mc_assets.block_id_map[?finalid]
 								
 					if (is_undefined(block))
 						continue
@@ -337,8 +376,11 @@ function builder_read_schematic_nbt(structuremap)
 					var vars = array();
 								
 					// ID specific vars
-					if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?finalstate]))
-						state_vars_add(vars, block.id_state_vars_map[?finalstate])
+					if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?finalid]))
+						state_vars_add(vars, block.id_state_vars_map[?finalid])
+					
+					if (finalprops != "")
+						state_vars_add(vars, string_get_state_vars(finalprops))
 								
 					stateid = block_get_state_id(block, vars)
 				}
@@ -348,26 +390,41 @@ function builder_read_schematic_nbt(structuremap)
 			
 			if (block != null)
 			{
-				buffer_poke(block_obj, index * 2, buffer_u16, block.block_id)
-				buffer_poke(block_state_id, index * 2, buffer_u16, stateid)
-				buffer_poke(block_waterlogged, index, buffer_u8, waterlogged)
+				builder_set_block(pos[|X], pos[|Z], pos[|Y], block.block_id, stateid, waterlogged)
+				if (block.timeline)
+					sch_timeline_amount++
 			}
 			
-			// Execute tile entity script
-			if (entity != null)
+			// Tile entity script, executed below
+			if (entity != null && block != null)
 			{
 				script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""))
 				if (script > -1)
+					entities[array_length(entities)] = [script, blocknbt, pos[|X], pos[|Z], pos[|Y], block.id, stateid]
+			}
+		}
+		
+		// Execute tile entity scripts in a builder thread, like for schematics
+		if (array_length(entities) > 0)
+		{
+			builder_spawn_threads(1)
+			with (thread_list[|0])
+			{
+				for (var i = 0; i < array_length(entities); i++)
 				{
-					build_pos_x = pos[|X]
-					build_pos_y = pos[|Z]
-					build_pos_z = pos[|Y]
-					build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x;
-					block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
-					block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
-					script_execute(script, blocknbt)
+					var data = entities[i];
+					build_pos_x = data[2]
+					build_pos_y = data[3]
+					build_pos_z = data[4]
+					build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x
+					
+					// Use the block that was just read
+					block_current = data[5]
+					block_state_id_current = real(data[6])
+					script_execute(data[0], data[1])
 				}
 			}
+			builder_combine_threads()
 		}
 	}
 				

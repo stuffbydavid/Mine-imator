@@ -57,6 +57,11 @@ function block_load_model_file(fname, res = null)
 				while (!is_undefined(key))
 				{
 					var texname = ds_map_find_value(map[?"textures"], key);
+					
+					// Texture with options (26.x), use the sprite
+					if (ds_map_valid(texname))
+						texname = value_get_string(texname[?"sprite"], "")
+					
 					texname = string_replace(texname, "minecraft:", "")
 					
 					texture_map[?key] = block_load_model_file_texture(texname, res)
@@ -106,9 +111,9 @@ function block_load_model_file(fname, res = null)
 						scale = vec3(1)
 						
 						if (is_real(rotationmap[?"angle"]))
-							angle = snap(clamp(rotationmap[?"angle"], -45, 45), 22.5)
+							angle = rotationmap[?"angle"]
 						
-						if (is_bool(rotationmap[?"rescale"]) && rotationmap[?"rescale"])
+						if (is_bool(rotationmap[?"rescale"]) && rotationmap[?"rescale"] && abs(angle) < 90)
 							scale = vec3(1 / dcos(abs(angle)))
 						
 						if (is_string(rotationmap[?"axis"]))
@@ -119,6 +124,11 @@ function block_load_model_file(fname, res = null)
 								case "z": rot[Y] = angle; scale[Y] = 1; break
 								case "y": rot[Z] = angle; scale[Z] = 1; break
 							}
+						}
+						else // Rotation around multiple axes (26.x)
+						{
+							rot = vec3(value_get_real(rotationmap[?"x"], 0), value_get_real(rotationmap[?"z"], 0), value_get_real(rotationmap[?"y"], 0))
+							scale = vec3(1)
 						}
 						
 						matrix = matrix_create(point3D_mul(origin, -1), vec3(0), vec3(1))

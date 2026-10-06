@@ -40,6 +40,8 @@ function app_startup_interface_tabs()
 			tbx_ssao_power.suffix = "%"
 			tbx_samples = new_textbox_integer()
 			tbx_render_distance = new_textbox_integer()
+			tbx_shaderpack_options = new_textbox(false, 0, "")
+			tbx_shaderpack_warmup = new_textbox_integer()
 			tbx_subsurface_samples = new_textbox_integer()
 			tbx_subsurface_highlight = new_textbox_integer()
 			tbx_subsurface_highlight.suffix = "%"
