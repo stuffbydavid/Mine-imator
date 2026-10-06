@@ -2,7 +2,7 @@
 
 function app_startup_interface_world_import()
 { 
-	world_import_settings_popup = new_popup("worldsettings", popup_worldsettings_draw, 600, 532, true, false, false, true, world_import_apply_settings)
+	world_import_settings_popup = new_popup("worldsettings", popup_worldsettings_draw, 600, 564, true, false, false, true, world_import_apply_settings)
 	world_import_surface = null
 	world_import_add_tl = false
 	world_import_temp = null
@@ -339,6 +339,11 @@ function action_world_import_settings_unload_regions(value)
 	setting_world_import_unload_regions = value
 }
 
+function action_world_import_settings_functional_blocks(value)
+{
+	setting_world_import_functional_blocks = value
+}
+
 function popup_worldsettings_draw()
 {
 	content_mouseon = true
@@ -347,6 +352,11 @@ function popup_worldsettings_draw()
 	// Unload far away regions
 	tab_control_switch()
 	draw_switch("worldsettingsunloadregions", dx, dy, setting_world_import_unload_regions, action_world_import_settings_unload_regions, "worldsettingsunloadregionstip")
+	tab_next()
+	
+	// Functional blocks (doors, chests, signs...) as separate models
+	tab_control_switch()
+	draw_switch("worldsettingsfunctionalblocks", dx, dy, setting_world_import_functional_blocks, action_world_import_settings_functional_blocks, "worldsettingsfunctionalblockstip")
 	tab_next()
 	
 	// Filter settings

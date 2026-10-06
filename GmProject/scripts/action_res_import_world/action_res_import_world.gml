@@ -42,6 +42,7 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode,
 			world_box_end = boxend
 			world_filter_mode = filtermode
 			world_filter_array = filterarray
+			scenery_tl_add = app.setting_world_import_functional_blocks // Functional blocks as timelines
 			res_load()
 		}
 		

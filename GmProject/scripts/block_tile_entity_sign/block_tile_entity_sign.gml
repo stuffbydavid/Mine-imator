@@ -9,25 +9,73 @@ function block_tile_entity_sign_text(map)
 	for (var i = 0; i < 4; i++)
 	{
 		var line = "";
-		var textmap = json_decode(messagemap[i]);
-			
-		if (ds_map_valid(textmap))
-		{
-			if (is_string(textmap[?"text"]))
-				line = textmap[?"text"]
-				
-			ds_map_destroy(textmap)
-		}
-			
+		if (i < array_length(messagemap))
+			line = block_tile_entity_sign_component(messagemap[i])
+		
 		if (line = "")
 			line = " "
-			
+		
 		if (i > 0)
 			text += "\n"
 		text += line
 	}
 	
 	return text;
+}
+
+/// block_tile_entity_sign_component(value)
+/// @arg value
+/// @desc Returns the plain text of a text component. Sign messages are JSON strings in 1.20-1.21.4,
+///		  and text components stored as NBT (strings, compounds or lists) since 1.21.5.
+
+function block_tile_entity_sign_component(value)
+{
+	var str, first, json;
+	str = ""
+	
+	// Text component stored as NBT
+	if (ds_map_valid(value))
+	{
+		if (is_string(value[?"text"]))
+			str = value[?"text"]
+		else if (is_string(value[?""])) // Element of a list with mixed types
+			str = value[?""]
+		
+		if (ds_list_valid(value[?"extra"]))
+			str += block_tile_entity_sign_component(value[?"extra"])
+		
+		return str
+	}
+	
+	if (ds_list_valid(value))
+	{
+		for (var e = 0; e < ds_list_size(value); e++)
+			str += block_tile_entity_sign_component(value[|e])
+		return str
+	}
+	
+	if (!is_string(value))
+		return ""
+	
+	// JSON text (1.20-1.21.4)
+	first = string_char_at(value, 1)
+	if (first = "{" || first = "[")
+	{
+		json = json_decode("{\"text\":\"\",\"extra\":[" + value + "]}")
+		if (ds_map_valid(json))
+		{
+			str = block_tile_entity_sign_component(json)
+			ds_map_destroy(json)
+			return str
+		}
+	}
+	
+	// JSON string literal
+	if (first = "\"" && string_length(value) >= 2 && string_char_at(value, string_length(value)) = "\"")
+		return string_copy(value, 2, string_length(value) - 2)
+	
+	// Plain text (1.21.5+)
+	return value
 }
 
 function block_tile_entity_sign(map)
