@@ -1,8 +1,9 @@
-/// @desc Sets the texture of the currently selected shader.
+/// @desc Sets the texture of a resource in the currently selected shader.
+/// @arg resource
 /// @arg texture
 /// @arg [channel]
 
-function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
+function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 {
 	var sampler, diffuse, validtex;
 	sampler = render_shader_obj.sampler_texture[channel]
@@ -46,7 +47,7 @@ function render_set_texture(tex, channel = e_texture_channel.DIFFUSE)
 	// Sprite texture
 	else
 	{
-		if (tex != 0 && tex != null)
+		if (res != render_pack_current && tex != 0 && tex != null)
 			tex = render_get_pack_texture(tex)
 		
 		validtex = (tex != 0 && tex != null && sprite_exists(tex))

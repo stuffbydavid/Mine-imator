@@ -71,7 +71,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			if (s > array_length(model_part_shape_tex) - 1)
 				continue
 			
-			render_set_texture(model_part_shape_tex[s])
+			render_set_texture(tl.render_res_diffuse, model_part_shape_tex[s])
 			
 			render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET,
 									(app.env_time / 60) * shape.texture_scroll_speed * sin(degtorad(shape.texture_scroll_direction)),
@@ -83,7 +83,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 
 				if (model_part_shape_tex_material[s] = null)
 				{
-					render_set_texture(0, e_texture_channel.MATERIAL)
+					render_set_texture(null, 0, e_texture_channel.MATERIAL)
 
 					if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 					{
@@ -105,7 +105,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				}
 				else
 				{
-					render_set_texture(model_part_shape_tex_material[s], e_texture_channel.MATERIAL)
+					render_set_texture(tl.render_res_material, model_part_shape_tex_material[s], e_texture_channel.MATERIAL)
 
 					if (shader_uniform_metallic != 1)
 					{
@@ -127,9 +127,9 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				}
 				
 				if (model_part_shape_tex_normal[s] = null)
-					render_set_texture(0, e_texture_channel.NORMAL)
+					render_set_texture(null, 0, e_texture_channel.NORMAL)
 				else
-					render_set_texture(model_part_shape_tex_normal[s], e_texture_channel.NORMAL)
+					render_set_texture(tl.render_res_normal, model_part_shape_tex_normal[s], e_texture_channel.NORMAL)
 			}
 		}
 		else
@@ -150,7 +150,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			with (res)
 			{
 				texobj = res_get_model_texture(shapetexname)
-				render_set_texture(texobj)
+				render_set_texture(res, texobj)
 			}
 		}
 		
@@ -160,7 +160,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		if (object_index = obj_preview && select.pattern_type != "")
 		{
 			if (sprite_exists(select.pattern_skin))
-				render_set_texture(select.pattern_skin)
+				render_set_texture(null, select.pattern_skin)
 		}
 		
 		if (tl != null)
@@ -176,7 +176,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				
 				if (res = tempres)
 					if (sprite_exists(tl.pattern_skin))
-						render_set_texture(tl.pattern_skin)
+						render_set_texture(null, tl.pattern_skin)
 			}
 			else if (tl.temp.pattern_type != "")
 			{
@@ -188,7 +188,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				
 				if (res = tempres)
 					if (sprite_exists(tl.temp.pattern_skin))
-						render_set_texture(tl.temp.pattern_skin)
+						render_set_texture(null, tl.temp.pattern_skin)
 			}
 		}
 		
@@ -202,25 +202,25 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			if (shape.description = "helmet" || shape.description = "helmet_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[0]))
-					render_set_texture(select.armor_skin_array[0])
+					render_set_texture(null, select.armor_skin_array[0])
 			}
 			
 			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[1]))
-					render_set_texture(select.armor_skin_array[1])
+					render_set_texture(null, select.armor_skin_array[1])
 			}
 			
 			if (shape.description = "leggings" || shape.description = "leggings_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[2]))
-					render_set_texture(select.armor_skin_array[2])
+					render_set_texture(null, select.armor_skin_array[2])
 			}
 			
 			if (shape.description = "boots" || shape.description = "boots_baby")
 			{
 				if (sprite_exists(select.armor_skin_array[3]))
-					render_set_texture(select.armor_skin_array[3])
+					render_set_texture(null, select.armor_skin_array[3])
 			}
 		}
 		
@@ -229,25 +229,25 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			if (shape.description = "helmet" || shape.description = "helmet_baby")
 			{
 				if (sprite_exists(tl.temp.armor_skin_array[0]))
-					render_set_texture(tl.temp.armor_skin_array[0])
+					render_set_texture(null, tl.temp.armor_skin_array[0])
 			}
 			
 			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
 			{
 				if (sprite_exists(tl.temp.armor_skin_array[1]))
-					render_set_texture(tl.temp.armor_skin_array[1])
+					render_set_texture(null, tl.temp.armor_skin_array[1])
 			}
 			
 			if (shape.description = "leggings" || shape.description = "leggings_baby")
 			{
 				if (sprite_exists(tl.temp.armor_skin_array[2]))
-					render_set_texture(tl.temp.armor_skin_array[2])
+					render_set_texture(null, tl.temp.armor_skin_array[2])
 			}
 			
 			if (shape.description = "boots" || shape.description = "boots_baby")
 			{
 				if (sprite_exists(tl.temp.armor_skin_array[3]))
-					render_set_texture(tl.temp.armor_skin_array[3])
+					render_set_texture(null, tl.temp.armor_skin_array[3])
 			}
 		}
 		

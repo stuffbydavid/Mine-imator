@@ -53,23 +53,23 @@ function render_world_ground()
 	shader_texture_filter_mipmap = !render_depth_pass && app.project_render_texture_filtering
 	
 	if (env_ground_ani)
-		render_set_texture(env_ground_ani_texture[block_texture_get_frame()])
+		render_set_texture(res, env_ground_ani_texture[block_texture_get_frame()])
 	else
-		render_set_texture(env_ground_texture)
+		render_set_texture(res, env_ground_texture)
 	
 	if (!hasmat)
-		render_set_texture(0, e_texture_channel.MATERIAL)
+		render_set_texture(null, 0, e_texture_channel.MATERIAL)
 	else if (env_ground_material_ani)
-		render_set_texture(env_ground_ani_texture_material[block_texture_get_frame()], e_texture_channel.MATERIAL)
+		render_set_texture(materialres, env_ground_ani_texture_material[block_texture_get_frame()], e_texture_channel.MATERIAL)
 	else
-		render_set_texture(env_ground_texture_material, e_texture_channel.MATERIAL)
+		render_set_texture(materialres, env_ground_texture_material, e_texture_channel.MATERIAL)
 	
 	if (!hasnorm)
-		render_set_texture(0, e_texture_channel.NORMAL)
+		render_set_texture(null, 0, e_texture_channel.NORMAL)
 	else if (env_ground_normal_ani)
-		render_set_texture(env_ground_ani_texture_normal[block_texture_get_frame()], e_texture_channel.NORMAL)
+		render_set_texture(normalres, env_ground_ani_texture_normal[block_texture_get_frame()], e_texture_channel.NORMAL)
 	else
-		render_set_texture(env_ground_texture_normal, e_texture_channel.NORMAL)
+		render_set_texture(normalres, env_ground_texture_normal, e_texture_channel.NORMAL)
 	
 	// Submit ground mesh at an offset from the camera
 	var sheet, groundscale, groundsquare, xo, yo;

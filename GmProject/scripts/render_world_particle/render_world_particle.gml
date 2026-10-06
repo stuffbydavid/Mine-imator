@@ -195,7 +195,7 @@ function render_world_particle()
 		{
 			var res = res_eval(type.sprite_tex);
 			render_apply_res(res)
-			render_set_texture(res.particles_texture[type.sprite_tex_image])
+			render_set_texture(res, res.particles_texture[type.sprite_tex_image])
 		}
 		else
 		{
@@ -214,7 +214,7 @@ function render_world_particle()
 				return 0
 			}
 			else
-				render_set_texture(tex)
+				render_set_texture(res, tex)
 		}
 		
 		var xyang, zang, m;

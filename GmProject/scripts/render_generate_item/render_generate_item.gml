@@ -38,6 +38,7 @@ function render_generate_item(slot = null, is3d = null, resdif = null, resnorm =
 	// Create vertex buffer
 	if (item_vbuffer)
 		vbuffer_destroy(item_vbuffer)
+	
 	item_vbuffer = vbuffer_start()
 	
 	// Calculate texture position and size

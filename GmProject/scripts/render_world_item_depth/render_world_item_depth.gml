@@ -17,9 +17,9 @@ function render_world_item_depth(vbuf, resdif, sheet, is3d, facecamera, bounce, 
 		matrix_set(matrix_world, render_world_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
 	
 	if (resdif.item_sheet_texture[sheet] != null)
-		render_set_texture(resdif.item_sheet_texture[sheet])
+		render_set_texture(resdif, resdif.item_sheet_texture[sheet])
 	else
-		render_set_texture(resdif.texture)
+		render_set_texture(resdif, resdif.texture)
 	
 	vbuffer_render(vbuf)
 	

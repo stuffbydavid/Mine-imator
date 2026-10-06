@@ -32,7 +32,7 @@ function draw_texture_part(tex, xx, yy, left, top, w, h, xsca = 1, ysca = 1, col
 	th = texture_height(tex)
 	alpha = draw_get_alpha() * alpha
 	
-	render_set_texture(tex)
+	render_set_texture(null, tex)
 	
 	draw_primitive_begin(pr_trianglestrip)
 	draw_vertex_texture_color(xx, yy, left / tw, top / th, color, alpha)
@@ -42,5 +42,5 @@ function draw_texture_part(tex, xx, yy, left, top, w, h, xsca = 1, ysca = 1, col
 	draw_primitive_end()
 	
 	if (resettex)
-		render_set_texture(0)
+		render_set_texture(null, 0)
 }

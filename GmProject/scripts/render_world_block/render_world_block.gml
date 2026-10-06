@@ -80,9 +80,9 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	{
 		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.STATIC16])
 		{
-			render_set_texture(tex)
-			render_set_texture(texmat, e_texture_channel.MATERIAL)
-			render_set_texture(texnormal, e_texture_channel.NORMAL)
+			render_set_texture(resdif, tex)
+			render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
+			render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
 			texready = true
 			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.STATIC16])
 		}
@@ -117,19 +117,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 
 				if (!texready || statictex != texprev)
 				{
-					render_set_texture(statictex)
+					render_set_texture(resdif, statictex)
 					texprev = statictex
 				}
 
 				if (!texready || statictexmat != texmatprev)
 				{
-					render_set_texture(statictexmat, e_texture_channel.MATERIAL)
+					render_set_texture(resmat, statictexmat, e_texture_channel.MATERIAL)
 					texmatprev = statictexmat
 				}
 
 				if (!texready || statictexnormal != texnormalprev)
 				{
-					render_set_texture(statictexnormal, e_texture_channel.NORMAL)
+					render_set_texture(resnorm, statictexnormal, e_texture_channel.NORMAL)
 					texnormalprev = statictexnormal
 				}
 
@@ -146,19 +146,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		{
 			if (!texready || tex != texprev)
 			{
-				render_set_texture(tex)
+				render_set_texture(resdif, tex)
 				texprev = tex
 			}
 			
 			if (!texready || texmat != texmatprev)
 			{
-				render_set_texture(texmat, e_texture_channel.MATERIAL)
+				render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
 				texmatprev = texmat
 			}
 			
 			if (!texready || texnormal != texnormalprev)
 			{
-				render_set_texture(texnormal, e_texture_channel.NORMAL)
+				render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
 				texnormalprev = texnormal
 			}
 			
@@ -180,19 +180,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		{
 			if (!texready || texani != texprev)
 			{
-				render_set_texture(texani)
+				render_set_texture(resdif, texani)
 				texprev = texani
 			}
 		
 			if (!texready || texanimat != texmatprev)
 			{
-				render_set_texture(texanimat, e_texture_channel.MATERIAL)
+				render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
 				texmatprev = texanimat
 			}
 		
 			if (!texready || texaninormal != texnormalprev)
 			{
-				render_set_texture(texaninormal, e_texture_channel.NORMAL)
+				render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
 				texnormalprev = texaninormal
 			}
 		
@@ -225,19 +225,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	{
 		if (!texready || tex != texprev)
 		{
-			render_set_texture(tex)
+			render_set_texture(resdif, tex)
 			texprev = tex
 		}
 		
 		if (!texready || texmat != texmatprev)
 		{
-			render_set_texture(texmat, e_texture_channel.MATERIAL)
+			render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
 			texmatprev = texmat
 		}
 		
 		if (!texready || texnormal != texnormalprev)
 		{
-			render_set_texture(texnormal, e_texture_channel.NORMAL)
+			render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
 			texnormalprev = texnormal
 		}
 		
@@ -254,19 +254,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 		{
 			if (!texready || tex != texprev)
 			{
-				render_set_texture(tex)
+				render_set_texture(resdif, tex)
 				texprev = tex
 			}
 			
 			if (!texready || texmat != texmatprev)
 			{
-				render_set_texture(texmat, e_texture_channel.MATERIAL)
+				render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
 				texmatprev = texmat
 			}
 			
 			if (!texready || texnormal != texnormalprev)
 			{
-				render_set_texture(texnormal, e_texture_channel.NORMAL)
+				render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
 				texnormalprev = texnormal
 			}
 			
@@ -288,19 +288,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	{
 		if (!texready || texani != texprev)
 		{
-			render_set_texture(texani)
+			render_set_texture(resdif, texani)
 			texprev = texani
 		}
 		
 		if (!texready || texanimat != texmatprev)
 		{
-			render_set_texture(texanimat, e_texture_channel.MATERIAL)
+			render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
 			texmatprev = texanimat
 		}
 		
 		if (!texready || texaninormal != texnormalprev)
 		{
-			render_set_texture(texaninormal, e_texture_channel.NORMAL)
+			render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
 			texnormalprev = texaninormal
 		}
 		
@@ -322,19 +322,19 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	{
 		if (!texready || tex != texprev)
 		{
-			render_set_texture(tex)
+			render_set_texture(resdif, tex)
 			texprev = tex
 		}
 		
 		if (!texready || texmat != texmatprev)
 		{
-			render_set_texture(texmat, e_texture_channel.MATERIAL)
+			render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
 			texmatprev = texmat
 		}
 		
 		if (!texready || texnormal != texnormalprev)
 		{
-			render_set_texture(texnormal, e_texture_channel.NORMAL)
+			render_set_texture(resnorm, texnormal, e_texture_channel.NORMAL)
 			texnormalprev = texnormal
 		}
 		
@@ -344,9 +344,9 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	
 	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED])
 	{
-		render_set_texture(texani)
-		render_set_texture(texanimat, e_texture_channel.MATERIAL)
-		render_set_texture(texaninormal, e_texture_channel.NORMAL)
+		render_set_texture(resdif, texani)
+		render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
+		render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
 		
 		if (texanimatsheet)
 			render_set_material_none()
@@ -362,7 +362,7 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH && 
 			render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 		{
-			render_set_texture(texani)
+			render_set_texture(resdif, texani)
 			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.WATER]), shader_blend_alpha)
 			render_set_uniform_int(e_uniform.IS_WATER, app.project_render_water_reflections)
 			
@@ -390,8 +390,8 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 			}
 			else
 			{
-				render_set_texture(texanimat, e_texture_channel.MATERIAL)
-				render_set_texture(texaninormal, e_texture_channel.NORMAL)
+				render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
+				render_set_texture(resnorm, texaninormal, e_texture_channel.NORMAL)
 			}
 			
 			vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])

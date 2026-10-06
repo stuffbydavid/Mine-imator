@@ -110,7 +110,7 @@ function render_world_tl_depth()
 				if (path_vbuffer != null)
 				{
 					tex = (value_inherit[e_value.TEXTURE_OBJ] = null) ? spr_shape : value_inherit[e_value.TEXTURE_OBJ].texture
-					render_set_texture(tex)
+					render_set_texture(value_inherit[e_value.TEXTURE_OBJ], tex)
 					vbuffer_render(path_vbuffer)
 				}
 				

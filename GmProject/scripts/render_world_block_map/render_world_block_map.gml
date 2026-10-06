@@ -20,7 +20,7 @@ function render_world_block_map(modelmap, res)
 			with (res)
 				tex = res_get_model_texture(key)
 			
-			render_set_texture(tex)
+			render_set_texture(res, tex)
 			vbuffer_render(vbuffer)
 		}
 		

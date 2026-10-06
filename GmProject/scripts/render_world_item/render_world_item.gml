@@ -33,9 +33,9 @@ function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamer
 		matrix_set(matrix_world, render_world_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
 	
 	if (resdif.item_sheet_texture[sheet] != null)
-		render_set_texture(resdif.item_sheet_texture[sheet])
+		render_set_texture(resdif, resdif.item_sheet_texture[sheet])
 	else
-		render_set_texture(resdif.texture)
+		render_set_texture(resdif, resdif.texture)
 	
 	if (texmat != null && texmat != 0)
 	{
@@ -57,17 +57,17 @@ function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamer
 			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 		}
 		
-		render_set_texture(texmat, e_texture_channel.MATERIAL)
+		render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
 		
 		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, resmat.material_format)
 	}
 	else
 	{
-		render_set_texture(0, e_texture_channel.MATERIAL)
+		render_set_texture(null, 0, e_texture_channel.MATERIAL)
 		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 	}
 	
-	render_set_texture(texnorm, e_texture_channel.NORMAL)
+	render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
 	
 	vbuffer_render(vbuf)
 }

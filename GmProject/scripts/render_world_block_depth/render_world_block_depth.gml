@@ -42,7 +42,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 	{
 		if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.STATIC16])
 		{
-			render_set_texture(tex)
+			render_set_texture(resdif, tex)
 			texready = true
 			vbuffer_render(block.block_vbuffer[@ active0 + e_block_vbuffer.STATIC16])
 		}
@@ -59,7 +59,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 
 			if (!texready || statictex != texprev)
 			{
-				render_set_texture(statictex)
+				render_set_texture(resdif, statictex)
 				texprev = statictex
 			}
 
@@ -73,7 +73,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 		{
 			if (!texready || tex != texprev)
 			{
-				render_set_texture(tex)
+				render_set_texture(resdif, tex)
 				texprev = tex
 			}
 			
@@ -88,7 +88,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 		{
 			if (!texready || texani != texprev)
 			{
-				render_set_texture(texani)
+				render_set_texture(resdif, texani)
 				texprev = texani
 			}
 			
@@ -108,7 +108,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 	{
 		if (!texready || tex != texprev)
 		{
-			render_set_texture(tex)
+			render_set_texture(resdif, tex)
 			texprev = tex
 		}
 		
@@ -127,7 +127,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 		{
 			if (!texready || tex != texprev)
 			{
-				render_set_texture(tex)
+				render_set_texture(resdif, tex)
 				texprev = tex
 			}
 			
@@ -142,7 +142,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 	{
 		if (!texready || texani != texprev)
 		{
-			render_set_texture(texani)
+			render_set_texture(resdif, texani)
 			texprev = texani
 		}
 		
@@ -158,7 +158,7 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 	{
 		if (!texready || tex != texprev)
 		{
-			render_set_texture(tex)
+			render_set_texture(resdif, tex)
 			texprev = tex
 		}
 		
@@ -168,13 +168,13 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 
 	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED])
 	{
-		render_set_texture(texani)
+		render_set_texture(resdif, texani)
 		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.ANIMATED])
 	}
 
 	if (render_mode = e_render_mode.DEPTH && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
 	{
-		render_set_texture(texani)
+		render_set_texture(resdif, texani)
 		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])
 	}
 

@@ -45,7 +45,7 @@ function render_world_sky()
 		}
 		
 		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, 1)
-		render_set_texture(env_background_image.texture)
+		render_set_texture(env_background_image, env_background_image.texture)
 		vbuffer_render(vbuf, cam_from, point3D(0, 0, env_background_image_rotation), vec3(dis))
 	}
 	
@@ -59,7 +59,7 @@ function render_world_sky()
 		
 		shader_texture_filter_linear = false
 		render_set_uniform_color(e_uniform.BLEND_COLOR, env_fog_color_final, 1)
-		render_set_texture(spr_fog)
+		render_set_texture(null, spr_fog)
 		
 		// Fog sphere radius cannot exceed render distance
 		var fogscalemath, fogscalexy, fogscalez;
@@ -87,7 +87,7 @@ function render_world_sky()
 				env_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
 			
 			render_set_uniform_color(e_uniform.BLEND_COLOR, env_night_sky_stars_color, env_night_alpha)
-			render_set_texture(spr_stars)
+			render_set_texture(null, spr_stars)
 			vbuffer_render_matrix(env_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
 		}
 		
@@ -103,9 +103,9 @@ function render_world_sky()
 		render_apply_res(sunres)
 		
 		if (sunres.type = e_res_type.PACK)
-			render_set_texture(sunres.sun_texture)
+			render_set_texture(sunres, sunres.sun_texture)
 		else
-			render_set_texture(sunres.texture)
+			render_set_texture(sunres, sunres.texture)
 			
 		var sca = (dis / 15000) * 1850;
 		vbuffer_render_matrix(env_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, min(dis * 0.7, max(0, (dis * 0.7) / env_sky_sun_scale)), 90, 0, 0 + env_sky_sun_angle, sca * min(1, env_sky_sun_scale), sca * min(1, env_sky_sun_scale), sca), skymat))
@@ -121,10 +121,10 @@ function render_world_sky()
 		if (moonres.type = e_res_type.PACK && moonres.ready)
 		{
 			var phase = env_sky_moon_phase;
-			render_set_texture(moonres.moon_textures[phase])
+			render_set_texture(moonres, moonres.moon_textures[phase])
 		}
 		else
-			render_set_texture(moonres.texture)
+			render_set_texture(moonres, moonres.texture)
 			
 		vbuffer_render_matrix(env_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, max(-dis * 0.7, min(0, (-dis * 0.7) / env_sky_moon_scale)), -90, 0, 0 - env_sky_moon_angle, sca * min(1, env_sky_moon_scale), sca * min(1, env_sky_moon_scale), sca), skymat))
 		

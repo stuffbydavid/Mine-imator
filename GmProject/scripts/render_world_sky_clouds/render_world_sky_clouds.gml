@@ -28,9 +28,9 @@ function render_world_sky_clouds()
 	
 	// Texture
 	if (res.type = e_res_type.PACK)
-		render_set_texture(res.clouds_texture)
+		render_set_texture(res, res.clouds_texture)
 	else
-		render_set_texture(res.texture)
+		render_set_texture(res, res.texture)
 	
 	render_set_material_textures_none()
 	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)

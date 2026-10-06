@@ -84,7 +84,7 @@ function render_world_tl()
 	{
 		if (render_mode = e_render_mode.CLICK && render_world_block_transparent != true)
 		{
-			render_set_texture(spr_shape)
+			render_set_texture(null, spr_shape)
 			vbuffer_render(render_click_box, world_pos)
 		}
 		
@@ -392,15 +392,15 @@ function render_world_tl()
 					else
 						texnorm = value_inherit[e_value.TEXTURE_NORMAL_OBJ].texture
 					
-					render_set_texture(tex)
-					render_set_texture(texmat, e_texture_channel.MATERIAL)
-					render_set_texture(texnorm, e_texture_channel.NORMAL)
+					render_set_texture(value_inherit[e_value.TEXTURE_OBJ], tex)
+					render_set_texture(value_inherit[e_value.TEXTURE_MATERIAL_OBJ], texmat, e_texture_channel.MATERIAL)
+					render_set_texture(value_inherit[e_value.TEXTURE_NORMAL_OBJ], texnorm, e_texture_channel.NORMAL)
 					
 					vbuffer_render(path_vbuffer)
 				}
 				else if (render_mode = e_render_mode.CLICK)
 				{
-					render_set_texture(spr_shape)
+					render_set_texture(null, spr_shape)
 					render_set_material_textures_none()
 					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 					
