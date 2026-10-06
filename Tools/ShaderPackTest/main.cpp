@@ -473,6 +473,7 @@ static int CmdRender(const QString& path, const QString& outFile, int worldTime,
 	HostTexture atlasTex;
 	atlasTex.id = atlas;
 	atlasTex.size = QSize(64, 64);
+	atlasTex.mipmapped = true;
 
 	// Output framebuffer
 	int w = 960, h = 540;

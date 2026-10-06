@@ -5,6 +5,13 @@ function render_high()
 {
 	var starttime, samplestart, sampleend;
 	
+	// Minecraft shaderpack
+	if (render_shaderpack_active())
+	{
+		render_high_shaderpack()
+		return 0
+	}
+	
 	starttime = current_time
 	render_surface_time = 0
 	render_update_samples()

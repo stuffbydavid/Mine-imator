@@ -37,8 +37,18 @@ function render_world(mode)
 		render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 	{
 		render_world_tl_reset()
-		render_world_ground()
-		render_world_sky_clouds()
+		if (render_mode = e_render_mode.SHADERPACK)
+		{
+			// Shaderpacks draw their own sky and clouds
+			shaderpack_set_shadows(true)
+			shaderpack_set_phase(e_shaderpack_phase.TERRAIN_SOLID)
+			render_world_ground()
+		}
+		else
+		{
+			render_world_ground()
+			render_world_sky_clouds()
+		}
 		render_world_tl_reset()
 	}
 	

@@ -632,5 +632,20 @@ namespace CppProject
 		static obj_block* filteredMcLegacyBlockIdObj[256][16];
 		static Heap<obj_block*> blocks;
 		static Heap<obj_block_render_model*> renderModels;
+
+		// Computes Minecraft-like sky and block light for the current builder blocks, used by shaderpacks.
+		// Requires the render models to be set.
+		static void ComputeLight();
+
+		// Frees the computed light.
+		static void FreeLight();
+
+		// Returns the smooth light (0-15) and ambient occlusion (0-1) at a vertex in builder block coordinates,
+		// with the face normal used to sample neighboring blocks. Returns false if no light was computed.
+		static BoolType GetVertexLight(const VecType& pos, const VecType& normal, RealType& blockLight, RealType& skyLight, RealType& ao);
+
+		// Light per block (sky << 4 | block) and opacity (0, 1 or 15) | emission << 4, indexed by (z * size.y + y) * size.x + x.
+		static Heap<uint8_t> light, lightOpacity;
+		static BoolType lightReady;
 	};
 }

@@ -98,10 +98,6 @@ namespace ShaderPacks
 			int levels = 1;
 		};
 
-		QMatrix4x4 RotX(float deg) { QMatrix4x4 m; m.rotate(deg, 1, 0, 0); return m; }
-		QMatrix4x4 RotY(float deg) { QMatrix4x4 m; m.rotate(deg, 0, 1, 0); return m; }
-		QMatrix4x4 RotZ(float deg) { QMatrix4x4 m; m.rotate(deg, 0, 0, 1); return m; }
-
 		bool IsSamplerType(GLenum type)
 		{
 			switch (type)
@@ -167,7 +163,7 @@ namespace ShaderPacks
 
 		// Sampler objects
 		GLuint samplerNearest = 0, samplerLinear = 0, samplerLinearMip = 0, samplerNearestMip = 0;
-		GLuint samplerShadowCompare = 0, samplerShadowCompareNearest = 0, samplerRepeatLinear = 0, samplerAtlas = 0;
+		GLuint samplerShadowCompare = 0, samplerShadowCompareNearest = 0, samplerRepeatLinear = 0, samplerAtlas = 0, samplerAtlasNoMip = 0;
 
 		// Geometry
 		GLuint vao = 0, quadVbo = 0, quadIbo = 0;
@@ -420,6 +416,7 @@ namespace ShaderPacks
 			make(samplerShadowCompareNearest, GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, true);
 			make(samplerRepeatLinear, GL_LINEAR, GL_LINEAR, GL_REPEAT, false);
 			make(samplerAtlas, GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST, GL_REPEAT, false);
+			make(samplerAtlasNoMip, GL_NEAREST, GL_NEAREST, GL_REPEAT, false);
 		}
 
 		void CreateGeometry()
@@ -1502,9 +1499,14 @@ namespace ShaderPacks
 		{
 			// gbufferModelView: rotation of the camera (Minecraft Camera.setRotation)
 			QMatrix4x4 view;
-			view.rotate(state.roll, 0, 0, 1);
-			view.rotate(state.pitch, 1, 0, 0);
-			view.rotate(state.yaw + 180.f, 0, 1, 0);
+			if (state.useViewRotation)
+				view = state.viewRotation;
+			else
+			{
+				view.rotate(state.roll, 0, 0, 1);
+				view.rotate(state.pitch, 1, 0, 0);
+				view.rotate(state.yaw + 180.f, 0, 1, 0);
+			}
 			modelView = view;
 			modelViewInv = modelView.inverted();
 
@@ -1926,7 +1928,7 @@ namespace ShaderPacks
 
 			static const QSet<QString> objectUniforms = {
 				"mi_ModelMat", "mi_ModelNormalMat", "mi_ColorModulator", "mi_UvRect", "mi_ModelViewMat", "mi_ModelViewMatInverse",
-				"mi_ProjMat", "mi_ProjMatInverse", "mi_NormalMat", "mi_AmbientOcclusionLevel", "mi_AlphaTestRef", "entityColor",
+				"mi_ProjMat", "mi_ProjMatInverse", "mi_NormalMat", "mi_AmbientOcclusionLevel", "mi_SeparateAo", "mi_OldLighting", "mi_AlphaTestRef", "entityColor",
 				"entityId", "blockEntityId", "currentRenderedItemId", "atlasSize", "renderStage"
 			};
 			QStringList missing;
@@ -2010,6 +2012,8 @@ namespace ShaderPacks
 						*uvRect = t.uvRect;
 					if (!t.id)
 						return fallback;
+					if (!t.mipmapped) // A mipmap filter would make the texture incomplete
+						sampler = samplerAtlasNoMip;
 					return t.id;
 				}
 				case SamplerSource::Custom:
@@ -2027,7 +2031,7 @@ namespace ShaderPacks
 					if (resourceProvider && !spec.path.isEmpty())
 					{
 						HostTexture t = resourceProvider(spec.path);
-						sampler = samplerAtlas;
+						sampler = t.mipmapped ? samplerAtlas : samplerAtlasNoMip;
 						return t.id;
 					}
 					return 0;
@@ -2477,6 +2481,8 @@ namespace ShaderPacks
 			SetUniform(p, "mi_ProjMatInverse", UVal::Mat4(proj.inverted()));
 			SetUniform(p, "mi_NormalMat", UVal::Mat3(QMatrix4x4(mv.normalMatrix())));
 			SetUniform(p, "mi_AmbientOcclusionLevel", UVal::Float(pack->directives.ambientOcclusionLevel));
+			SetUniform(p, "mi_SeparateAo", UVal::Float(pack->properties.Flag("separateAo", false) ? 1.f : 0.f));
+			SetUniform(p, "mi_OldLighting", UVal::Float(pack->properties.Flag("oldLighting", false) ? 1.f : 0.f));
 			SetUniform(p, "renderStage", UVal::Int(RenderStage(phase)));
 
 			// Alpha test
@@ -2490,7 +2496,7 @@ namespace ShaderPacks
 
 			// Default render state, Minecraft uses counter-clockwise front faces
 			gl->glGetIntegerv(GL_FRONT_FACE, &savedFrontFace);
-			gl->glFrontFace(GL_CCW);
+			gl->glFrontFace(state.clockwiseFrontFaces ? GL_CW : GL_CCW);
 			gl->glEnable(GL_DEPTH_TEST);
 			gl->glDepthFunc(GL_LEQUAL);
 			bool sky = (phase == GeometryPhase::SkyBasic || phase == GeometryPhase::SkyTextured);
@@ -2538,7 +2544,10 @@ namespace ShaderPacks
 
 			BindSamplers(p, gbufferFlip, &object, true);
 
-			if (object.cullBackFaces)
+			// Iris renders terrain without face culling in the shadow pass
+			bool terrain = (currentPhase == GeometryPhase::TerrainSolid || currentPhase == GeometryPhase::TerrainCutout ||
+							currentPhase == GeometryPhase::Water);
+			if (object.cullBackFaces && !(inShadowPass && terrain))
 				gl->glEnable(GL_CULL_FACE);
 			else
 				gl->glDisable(GL_CULL_FACE);
@@ -2641,7 +2650,7 @@ namespace ShaderPacks
 				gl->glDeleteBuffers(1, &b);
 
 			GLuint samplers[] = { samplerNearest, samplerLinear, samplerLinearMip, samplerNearestMip, samplerShadowCompare,
-								  samplerShadowCompareNearest, samplerRepeatLinear, samplerAtlas };
+								  samplerShadowCompareNearest, samplerRepeatLinear, samplerAtlas, samplerAtlasNoMip };
 			gl->glDeleteSamplers(8, samplers);
 			GLuint buffers[] = { quadVbo, quadIbo, skyVbo, skyIbo };
 			gl->glDeleteBuffers(4, buffers);
@@ -2973,7 +2982,7 @@ namespace ShaderPacks
 		return impl->projection;
 	}
 
-	void Renderer::DrawSky(const HostTexture& sun, const HostTexture& moon)
+	void Renderer::DrawSky(const HostTexture& sun, const HostTexture& moon, bool moonPhaseGrid)
 	{
 		Impl& d = *impl;
 		const FrameState& st = d.state;
@@ -3100,7 +3109,9 @@ namespace ShaderPacks
 			if (sun.id)
 				drawQuad(d.sunOffset, sun, 4);
 
-			if (moon.id)
+			if (moon.id && !moonPhaseGrid)
+				drawQuad(d.moonOffset, moon, 5);
+			else if (moon.id)
 			{
 				// Moon phases texture has 4x2 phases
 				HostTexture m2 = moon;

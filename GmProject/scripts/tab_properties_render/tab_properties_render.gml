@@ -14,6 +14,45 @@ function tab_properties_render()
 	draw_button_menu("projectrendersettings", e_menu.LIST, dx, dy, dw, 24, project_render_settings, text, action_project_render_settings)
 	tab_next()
 	
+	// Minecraft shaderpack (OptiFine/Iris format)
+	if (project_render_shaderpack = "")
+		text = text_get("rendershaderpacknone")
+	else
+		text = filename_name(project_render_shaderpack)
+	
+	tab_control_menu()
+	draw_button_menu("rendershaderpack", e_menu.LIST, dx, dy, dw, 24, project_render_shaderpack, text, action_project_render_shaderpack)
+	tab_next()
+	
+	if (project_render_shaderpack != "")
+	{
+		// Option values
+		tab_control_textfield(true, 76)
+		tab.render.tbx_shaderpack_options.text = project_render_shaderpack_options
+		draw_textfield("rendershaderpackoptions", dx, dy, dw, 76, tab.render.tbx_shaderpack_options, action_project_render_shaderpack_options, "SHADOW_QUALITY=2;!profile=HIGH", "top")
+		tab_next()
+		
+		// Repeated frames for temporal effects
+		tab_control_dragger()
+		draw_dragger("rendershaderpackwarmup", dx, dy, dragger_width, project_render_shaderpack_warmup, .1, 1, 64, 8, 1, tab.render.tbx_shaderpack_warmup, action_project_render_shaderpack_warmup, null, true, false, "rendershaderpackwarmuptip")
+		tab_next()
+		
+		// Status
+		var err = shaderpack_get_error();
+		if (!shaderpack_is_loaded() || err != "")
+		{
+			tab_control(24)
+			var msg = (shaderpack_is_loaded() ? text_get("rendershaderpackwarnings") : text_get("rendershaderpackerror"));
+			draw_label(string_limit(msg + ": " + string_replace_all(err, "\n", " "), dw), dx, dy + 12, fa_left, fa_middle, shaderpack_is_loaded() ? c_text_secondary : c_error, a_text_secondary)
+			tab_next()
+		}
+	}
+	
+	tab_control_button_label()
+	if (draw_button_label("rendershaderpackfolder", dx, dy, dw, icons.FOLDER, e_button.SECONDARY))
+		open_url(shaderpacks_directory)
+	tab_next()
+	
 	if (project_render_settings != "")
 		return 0
 	

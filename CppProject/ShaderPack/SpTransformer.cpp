@@ -1085,6 +1085,8 @@ namespace ShaderPacks
 			AddUniform(s, "vec4", "mi_ColorModulator");
 			AddUniform(s, "vec4", "mi_UvRect");
 			AddUniform(s, "float", "mi_AmbientOcclusionLevel");
+			AddUniform(s, "float", "mi_SeparateAo");
+			AddUniform(s, "float", "mi_OldLighting");
 			AddUniform(s, "isampler2D", "mi_BlockOffsets");
 			AddUniform(s, "isampler2D", "mi_BlockIds");
 
@@ -1102,8 +1104,15 @@ namespace ShaderPacks
 				"	vec3 t = mi_UnpackDir(mi_TangentPacked);\n"
 				"	mi_glTangent = vec4(dot(t, t) > 0.01 ? normalize(mat3(mi_ModelMat) * t) : vec3(1.0, 0.0, 0.0), 1.0);\n"
 				"	vec4 c = vec4(float(mi_ColorPacked & 255u), float((mi_ColorPacked >> 8u) & 255u), float((mi_ColorPacked >> 16u) & 255u), float((mi_ColorPacked >> 24u) & 255u)) / 255.0;\n"
-				"	float ao = float((mi_LightPacked >> 16u) & 255u) / 255.0;\n"
-				"	c.rgb *= mix(1.0, ao, mi_AmbientOcclusionLevel);\n"
+				"	float ao = mix(1.0, float((mi_LightPacked >> 16u) & 255u) / 255.0, mi_AmbientOcclusionLevel);\n"
+				"	if (mi_SeparateAo > 0.5 && mi_BlockPacked != 0u)\n"
+				"		c.a *= ao;\n"
+				"	else\n"
+				"		c.rgb *= ao;\n"
+				"	if (mi_OldLighting > 0.5 && mi_BlockPacked != 0u) {\n"
+				"		vec3 wn = mi_glNormal * mi_glNormal;\n"
+				"		c.rgb *= wn.x * 0.6 + wn.z * 0.8 + wn.y * (mi_glNormal.y > 0.0 ? 1.0 : 0.5);\n"
+				"	}\n"
 				"	mi_glColor = c * mi_ColorModulator;\n"
 				"	mi_UV0 = mi_UvRect.xy + mi_TexCoord * mi_UvRect.zw;\n"
 				"	mi_UV2 = vec2(float(mi_LightPacked & 255u), float((mi_LightPacked >> 8u) & 255u));\n"

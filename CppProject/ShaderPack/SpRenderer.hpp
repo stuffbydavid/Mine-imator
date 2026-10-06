@@ -32,6 +32,9 @@ namespace ShaderPacks
 		float nearPlane = 0.05f;
 		float renderDistance = 256.f; // "far" uniform in blocks
 		QMatrix4x4 jitter;			  // Optional projection jitter (TAA)
+		bool clockwiseFrontFaces = false; // Winding of front faces of the host geometry on screen (Minecraft uses CCW)
+		bool useViewRotation = false; // Use viewRotation instead of yaw/pitch/roll
+		QMatrix4x4 viewRotation;	  // Rotation from world directions to view space (camera looks down -Z)
 
 		// Time
 		int worldTime = 6000; // 0-23999
@@ -84,6 +87,7 @@ namespace ShaderPacks
 		unsigned int id = 0;   // OpenGL texture name, 0 for default
 		QVector4D uvRect = QVector4D(0.f, 0.f, 1.f, 1.f); // Sub-rectangle for textures in atlases/pages
 		QSize size;			   // Size of the full texture in pixels
+		bool mipmapped = false; // Whether the texture has a complete mipmap chain
 	};
 
 	// Per-object state for a draw call.
@@ -155,7 +159,8 @@ namespace ShaderPacks
 		QMatrix4x4 GbufferProjection() const;
 
 		// Sky geometry helpers (Minecraft-like sky disc, sun and moon quads) drawn with the sky programs.
-		void DrawSky(const HostTexture& sun, const HostTexture& moon);
+		// moonPhaseGrid tells whether the moon texture contains all 4x2 phases (moon_phases.png) or a single phase.
+		void DrawSky(const HostTexture& sun, const HostTexture& moon, bool moonPhaseGrid = true);
 
 		// Debugging: saves all render targets as images in a folder and returns statistics per target.
 		QStringList DumpTargets(const QString& folder);

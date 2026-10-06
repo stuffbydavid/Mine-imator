@@ -63,5 +63,9 @@ function project_save_render()
 		json_save_var("gamma", project_render_gamma)
 		json_save_var_bool("material_maps", project_render_material_maps)
 		
+		json_save_var("shaderpack", json_string_encode(project_render_shaderpack))
+		json_save_var("shaderpack_options", json_string_encode(project_render_shaderpack_options))
+		json_save_var("shaderpack_warmup", project_render_shaderpack_warmup)
+		
 	json_save_object_done()
 }

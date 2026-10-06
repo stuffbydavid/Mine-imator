@@ -42,6 +42,7 @@ function macros()
 	#macro minecraft_directory			data_directory + "Minecraft/"
 	#macro render_directory				data_directory + "Render/"
 	#macro splash_directory				data_directory + "Splashes/"
+	#macro shaderpacks_directory		user_directory_get() + "Shaderpacks/"
 	
 	// Files
 	#macro language_file				languages_directory + "english.milanguage"

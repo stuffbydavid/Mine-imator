@@ -17,6 +17,7 @@ find_package(ZLIB REQUIRED)
 
 get_filename_component(ENGINE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../CppProject/ShaderPack" ABSOLUTE)
 file(GLOB ENGINE_SOURCES CONFIGURE_DEPENDS "${ENGINE_DIR}/*.cpp" "${ENGINE_DIR}/*.hpp")
+list(FILTER ENGINE_SOURCES EXCLUDE REGEX "/SpHost\\.(c|h)pp$") # Mine-imator integration
 
 add_executable(ShaderPackTest main.cpp ${ENGINE_SOURCES})
 target_include_directories(ShaderPackTest PRIVATE "${ENGINE_DIR}" "${LIBZIP_INCLUDE_DIR}")

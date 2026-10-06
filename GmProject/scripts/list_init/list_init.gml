@@ -1275,6 +1275,18 @@ function list_init(name)
 			break
 		}
 		
+		// Minecraft shaderpacks in the shaderpacks folder (folders and zip files)
+		case "rendershaderpack":
+		{
+			menu_add_item("", text_get("rendershaderpacknone"))
+			
+			var packs = shaderpack_list(shaderpacks_directory);
+			for (var i = 0; i < array_length(packs); i++)
+				menu_add_item(packs[i], packs[i], null)
+			
+			break
+		}
+		
 		// Render settings
 		case "projectrendersettings":
 		{

@@ -23,6 +23,13 @@ function render_startup()
 	
 	globalvar render_blend_prev, render_alpha_prev;
 	
+	// Shaderpack rendering
+	globalvar render_shaderpack_surface, shaderpack_loaded_key;
+	render_shaderpack_surface = null
+	shaderpack_loaded_key = ""
+	if (!directory_exists_lib(shaderpacks_directory))
+		directory_create_lib(shaderpacks_directory)
+	
 	// Update shader_reset_uniforms()
 	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
 			  shader_uniform_hsb_sub, shader_uniform_hsb_mul, shader_uniform_mix_color, shader_uniform_mix_percent,
@@ -230,6 +237,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.MATERIAL] = shader_high_material
 	render_mode_shader_map[?e_render_mode.SUBSURFACE] = shader_high_subsurface
 	render_mode_shader_map[?e_render_mode.GLINT] = shader_high_glint
+	render_mode_shader_map[?e_render_mode.SHADERPACK] = shader_high_material // Only used for capturing textures
 	
 	// Init settings
 	project_reset_render()

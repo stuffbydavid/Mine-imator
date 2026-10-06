@@ -62,6 +62,9 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 		matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 	
 	#region Depth 0
+	if (render_mode = e_render_mode.SHADERPACK)
+		shaderpack_set_phase(e_shaderpack_phase.TERRAIN_SOLID)
+	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH0, e_block_vbuffer.NORMAL])
 	
@@ -132,6 +135,9 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	#endregion
 	
 	#region Depth 1
+	if (render_mode = e_render_mode.SHADERPACK)
+		shaderpack_set_phase(e_shaderpack_phase.TERRAIN_CUTOUT)
+	
 	var filterprev;
 	
 	// Disable texture filtering on transparent blocks
@@ -281,6 +287,9 @@ function render_world_block(vbuffer, res, rotate = false, size = undefined, temp
 	#endregion
 	
 	#region Depth 2
+	if (render_mode = e_render_mode.SHADERPACK)
+		shaderpack_set_phase(e_shaderpack_phase.WATER)
+	
 	if (!vbuffer_is_empty(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL]))
 		vbuffer_render(vbuffer[e_block_depth.DEPTH2, e_block_vbuffer.NORMAL])
 	

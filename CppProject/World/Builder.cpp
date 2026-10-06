@@ -5,8 +5,9 @@
 #include "Asset/Buffer.hpp"
 #include "GZIP.hpp"
 
+
 #define BLOCK_MESH_CACHE_ENABLED 1
-#define BLOCK_MESH_CACHE_FORMAT 2
+#define BLOCK_MESH_CACHE_FORMAT 3 // 3: Vertex with shaderpack data (52 bytes)
 
 namespace CppProject
 {
@@ -18,6 +19,8 @@ namespace CppProject
 	Heap<obj_block*> Builder::blocks;
 	Heap<obj_block_render_model*> Builder::renderModels;
 	obj_block* Builder::filteredMcLegacyBlockIdObj[256][16];
+	Heap<uint8_t> Builder::light, Builder::lightOpacity;
+	BoolType Builder::lightReady = false;
 
 	Section* Builder::GetSection(const WorldVec& pos)
 	{
@@ -29,6 +32,226 @@ namespace CppProject
 		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
 
 		return Builder::sections.Value(sectionPos);
+	}
+
+	void Builder::FreeLight()
+	{
+		light.FreeData();
+		lightOpacity.FreeData();
+		lightReady = false;
+	}
+
+	void Builder::ComputeLight()
+	{
+		FreeLight();
+		const IntType sx = size.x, sy = size.y, sz = size.z;
+		const IntType total = sx * sy * sz;
+		if (total <= 0 || total > 1024 * 1024 * 1024 || !sections.Size())
+			return;
+
+		Timer tmr;
+		light.Alloc(total);
+		lightOpacity.Alloc(total);
+
+		// Blocks that are fluids reduce light like Minecraft's water
+		QVector<uint8_t> blockIsWater(blocks.Size(), 0);
+		for (IntType b = 1; b < blocks.Size(); b++)
+			if (blocks.Value(b) && blocks.Value(b)->name.IsString() && blocks.Value(b)->name.Str() == StringType("water"))
+				blockIsWater[b] = 1;
+
+		// Opacity and emission from the render models
+		#pragma OPENMP_FOR
+		for (IntType z = 0; z < sz; z++)
+		{
+			for (IntType y = 0; y < sy; y++)
+			{
+				for (IntType x = 0; x < sx; x++)
+				{
+					WorldVec pos = { x, y, z };
+					Section* section = GetSection(pos);
+					uint8_t opacity = 0, emission = 0;
+					if (section)
+					{
+						const BuilderState& state = section->GetBuilderState(pos);
+						obj_block* block = (state.blockId < blocks.Size()) ? blocks.Value(state.blockId) : nullptr;
+						if (block)
+						{
+							RealType emissive = 0.0;
+							int16_t model = section->builder.renderModelIds.Size() ? section->GetRenderModel(pos) : 0;
+							if (model > 0 && model < renderModels.Size() && renderModels.Value(model))
+							{
+								obj_block_render_model* rm = renderModels.Value(model);
+								BoolType full = rm->face_full_xp && rm->face_full_xn && rm->face_full_yp && rm->face_full_yn && rm->face_full_zp && rm->face_full_zn;
+								IntType depth = std::max({ rm->face_min_depth_xp, rm->face_min_depth_xn, rm->face_min_depth_yp,
+														   rm->face_min_depth_yn, rm->face_min_depth_zp, rm->face_min_depth_zn });
+								if (full)
+									opacity = (depth == e_block_depth_DEPTH0) ? 15 : 1;
+								if (rm->emissive.IsAnyReal())
+									emissive = rm->emissive.ToReal();
+							}
+							else if (block->emissive.IsAnyReal())
+								emissive = block->emissive.ToReal();
+
+							if (blockIsWater[state.blockId])
+								opacity = std::max(opacity, (uint8_t)1);
+							emission = (uint8_t)qBound(0, (int)std::round(emissive * 15.0), 15);
+						}
+						if (state.waterlogged)
+							opacity = std::max(opacity, (uint8_t)1);
+					}
+					lightOpacity[(z * sy + y) * sx + x] = (opacity > 1 ? 15 : opacity) | (emission << 4);
+				}
+			}
+		}
+
+		// Propagates light levels from the queued positions in decreasing order
+		auto propagate = [&](QVector<QVector<IntType>>& buckets, bool sky)
+		{
+			const IntType offsets[6] = { 1, -1, sx, -sx, sx * sy, -sx * sy };
+			for (IntType level = 15; level > 0; level--)
+			{
+				QVector<IntType>& bucket = buckets[level];
+				for (IntType q = 0; q < bucket.size(); q++)
+				{
+					IntType i = bucket[q];
+					uint8_t cur = sky ? (light[i] >> 4) : (light[i] & 15);
+					if (cur != level)
+						continue;
+					IntType x = i % sx, y = (i / sx) % sy, z = i / (sx * sy);
+					for (IntType d = 0; d < 6; d++)
+					{
+						if ((d == 0 && x == sx - 1) || (d == 1 && x == 0) || (d == 2 && y == sy - 1) ||
+							(d == 3 && y == 0) || (d == 4 && z == sz - 1) || (d == 5 && z == 0))
+							continue;
+						IntType n = i + offsets[d];
+						uint8_t op = lightOpacity[n] & 15;
+						if (op >= 15)
+							continue;
+						IntType nl = level - std::max<IntType>(1, op);
+						if (nl <= 0)
+							continue;
+						uint8_t old = sky ? (light[n] >> 4) : (light[n] & 15);
+						if (nl > old)
+						{
+							light[n] = sky ? ((light[n] & 15) | (nl << 4)) : ((light[n] & 0xF0) | nl);
+							buckets[nl].append(n);
+						}
+					}
+				}
+				bucket.clear();
+			}
+		};
+
+		// Sky light falls down columns from the top of the selection
+		QVector<QVector<IntType>> buckets(16);
+		for (IntType y = 0; y < sy; y++)
+		{
+			for (IntType x = 0; x < sx; x++)
+			{
+				IntType level = 15;
+				for (IntType z = sz - 1; z >= 0; z--)
+				{
+					IntType i = (z * sy + y) * sx + x;
+					uint8_t op = lightOpacity[i] & 15;
+					level = (op >= 15) ? 0 : std::max<IntType>(0, level - op);
+					light[i] = (uint8_t)(level << 4);
+					if (level > 1)
+						buckets[level].append(i);
+				}
+			}
+		}
+		propagate(buckets, true);
+
+		// Block light from emissive blocks
+		for (IntType i = 0; i < total; i++)
+		{
+			uint8_t emission = lightOpacity[i] >> 4;
+			if (emission > 0)
+			{
+				light[i] = (light[i] & 0xF0) | emission;
+				buckets[emission].append(i);
+			}
+		}
+		propagate(buckets, false);
+
+		lightReady = true;
+		tmr.Print("Compute scenery light");
+	}
+
+	BoolType Builder::GetVertexLight(const VecType& pos, const VecType& normal, RealType& blockLight, RealType& skyLight, RealType& ao)
+	{
+		if (!lightReady)
+			return false;
+
+		// Dominant axis of the normal decides the layer of blocks to sample
+		IntType axis = 0;
+		RealType ax = std::abs(normal.x), ay = std::abs(normal.y), az = std::abs(normal.z);
+		if (ay > ax && ay >= az)
+			axis = 1;
+		else if (az > ax && az > ay)
+			axis = 2;
+		RealType p[3] = { pos.x, pos.y, pos.z };
+		RealType n[3] = { normal.x, normal.y, normal.z };
+		IntType dims[3] = { size.x, size.y, size.z };
+		IntType t1 = (axis + 1) % 3, t2 = (axis + 2) % 3;
+
+		IntType layer = (IntType)std::floor(p[axis] + (n[axis] >= 0.0 ? 0.5 : -0.5));
+		RealType sumSky = 0.0, sumBlock = 0.0, sumAo = 0.0;
+		IntType lit = 0;
+		for (IntType a = 0; a < 2; a++)
+		{
+			for (IntType b = 0; b < 2; b++)
+			{
+				IntType c[3];
+				c[axis] = layer;
+				c[t1] = (IntType)std::floor(p[t1] + (a ? 0.5 : -0.5));
+				c[t2] = (IntType)std::floor(p[t2] + (b ? 0.5 : -0.5));
+				if (c[0] < 0 || c[1] < 0 || c[2] < 0 || c[0] >= dims[0] || c[1] >= dims[1] || c[2] >= dims[2])
+				{
+					// Outside of the selection, open sky above and nothing known around
+					sumAo += 1.0;
+					if (c[2] >= dims[2])
+					{
+						sumSky += 15.0;
+						lit++;
+					}
+					continue;
+				}
+				IntType i = (c[2] * dims[1] + c[1]) * dims[0] + c[0];
+				if ((lightOpacity.Value(i) & 15) >= 15)
+				{
+					sumAo += 0.2;
+					continue;
+				}
+				sumAo += 1.0;
+				sumSky += light.Value(i) >> 4;
+				sumBlock += light.Value(i) & 15;
+				lit++;
+			}
+		}
+
+		ao = sumAo / 4.0;
+		if (lit > 0)
+		{
+			skyLight = sumSky / lit;
+			blockLight = sumBlock / lit;
+		}
+		else
+		{
+			// Surrounded by opaque blocks, use the block containing the vertex
+			IntType c[3];
+			for (IntType k = 0; k < 3; k++)
+				c[k] = qBound<IntType>(0, (IntType)std::floor(p[k]), dims[k] - 1);
+			IntType i = (c[2] * dims[1] + c[1]) * dims[0] + c[0];
+			skyLight = light.Value(i) >> 4;
+			blockLight = light.Value(i) & 15;
+		}
+		return true;
+	}
+
+	void builder_compute_light(Scope<obj_builder> self)
+	{
+		Builder::ComputeLight();
 	}
 
 	void builder_create_buffers(Scope<obj_builder> self)
@@ -269,6 +492,7 @@ namespace CppProject
 		for (IntType s = 0; s < Builder::sections.Size(); s++)
 			delete Builder::sections[s];
 		Builder::sections.FreeData();
+		Builder::FreeLight();
 		Builder::offset = { 0, 0, 0 };
 		self->build_multithreaded = null_;
 	}
@@ -401,13 +625,32 @@ namespace CppProject
 			}
 		}
 
-		return Vertex{
+		Vertex vertex{
 			x, y, z,
 			nx, ny, nz,
 			self->block_vertex_rgb, self->block_vertex_alpha,
 			tx, ty,
 			wavexy, wavez, self->block_vertex_emissive, self->block_vertex_subsurface
 		};
+
+		// Minecraft data for shaderpacks
+		if (obj_block* block = ObjTypeOpt(obj_block, self->block_current))
+		{
+			vertex.SetBlock(block->block_id, (IntType)self->block_state_id_current);
+			if (block->name.IsString() && (block->name.Str() == StringType("water") || block->name.Str() == StringType("lava")))
+				vertex.SetFluid(true);
+		}
+
+		RealType blockLight, skyLight, ao;
+		if (Builder::GetVertexLight(VecType(x / block_size_, y / block_size_, z / block_size_), VecType(nx, ny, nz), blockLight, skyLight, ao))
+			vertex.SetLight(blockLight, skyLight, ao);
+
+		RealType emissive = self->block_vertex_emissive.IsAnyReal() ? self->block_vertex_emissive.ToReal() : 0.0;
+		RealType centerX = (self->build_pos_x + 0.5) * block_size_;
+		RealType centerY = (self->build_pos_y + 0.5) * block_size_;
+		RealType centerZ = (self->build_pos_z + 0.5) * block_size_;
+		vertex.SetMidBlock((centerX - x) * 4.0, (centerY - y) * 4.0, (centerZ - z) * 4.0, (IntType)std::round(emissive * 15.0));
+		return vertex;
 	}
 
 	void builder_add_face(Scope<obj_builder_thread> self,
@@ -441,13 +684,14 @@ namespace CppProject
 		RealType nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2);
 
 		// Add face
-		FindVertexBuffer(self->block_vbuffer_current)->AddFace(
-			builder_create_vertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
-			builder_create_vertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
-			builder_create_vertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
-			builder_create_vertex(self, x4, y4, z4, tx4, ty4, nx, ny, nz),
-			self->threadid
-		);
+		Vertex v1 = builder_create_vertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz);
+		Vertex v2 = builder_create_vertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz);
+		Vertex v3 = builder_create_vertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz);
+		Vertex v4 = builder_create_vertex(self, x4, y4, z4, tx4, ty4, nx, ny, nz);
+		RealType midU = (tx1 + tx2 + tx3 + tx4) / 4.0, midV = (ty1 + ty2 + ty3 + ty4) / 4.0;
+		for (Vertex* v : { &v1, &v2, &v3, &v4 })
+			v->SetMidTexCoord(midU, midV);
+		FindVertexBuffer(self->block_vbuffer_current)->AddFace(v1, v2, v3, v4, self->threadid);
 	}
 
 	void builder_add_triangle(Scope<obj_builder_thread> self,
@@ -477,12 +721,13 @@ namespace CppProject
 		RealType nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2);
 
 		// Add triangle
-		FindVertexBuffer(self->block_vbuffer_current)->AddTriangle(
-			builder_create_vertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
-			builder_create_vertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
-			builder_create_vertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
-			self->threadid
-		);
+		Vertex v1 = builder_create_vertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz);
+		Vertex v2 = builder_create_vertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz);
+		Vertex v3 = builder_create_vertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz);
+		RealType midU = (tx1 + tx2 + tx3) / 3.0, midV = (ty1 + ty2 + ty3) / 3.0;
+		for (Vertex* v : { &v1, &v2, &v3 })
+			v->SetMidTexCoord(midU, midV);
+		FindVertexBuffer(self->block_vbuffer_current)->AddTriangle(v1, v2, v3, self->threadid);
 	}
 
 	BoolType res_load_scenery_world(Scope<obj_resource> self)
