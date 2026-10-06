@@ -320,6 +320,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						else
 							texname = elem.face_texture[f]
 						
+						// References may omit the # (26.x)
+						if (string_char_at(texname, 1) != "#" && !is_undefined(texturemap[?texname]))
+							texname = "#" + texname
+						
 						while (string_char_at(texname, 1) = "#") // Fetch from map
 						{
 							texname = string_delete(texname, 1, 1)

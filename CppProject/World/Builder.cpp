@@ -7,7 +7,7 @@
 
 
 #define BLOCK_MESH_CACHE_ENABLED 1
-#define BLOCK_MESH_CACHE_FORMAT 3 // 3: Vertex with shaderpack data (52 bytes)
+#define BLOCK_MESH_CACHE_FORMAT 4 // 3: Vertex with shaderpack data (52 bytes), 4: Minecraft 26.3 block sheet layout
 
 namespace CppProject
 {
@@ -495,6 +495,21 @@ namespace CppProject
 		Builder::FreeLight();
 		Builder::offset = { 0, 0, 0 };
 		self->build_multithreaded = null_;
+	}
+
+	void builder_set_block(Scope<obj_builder> self, IntType x, IntType y, IntType z, IntType blockId, IntType stateId, BoolType waterlogged)
+	{
+		WorldVec pos = { x, y, z };
+		Section* section = Builder::GetSection(pos);
+		if (!section)
+			return;
+
+		// Unset blocks use the first palette entry
+		if (!section->builder.palette.Size())
+			section->AddBuilderState({ 0, 0, false });
+
+		BuilderState state = { (uint16_t)blockId, (uint16_t)stateId, waterlogged };
+		section->builder.paletteIndices[section->GetBlockOffset(pos)] = section->AddBuilderState(state);
 	}
 
 	void builder_set_state_id(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)

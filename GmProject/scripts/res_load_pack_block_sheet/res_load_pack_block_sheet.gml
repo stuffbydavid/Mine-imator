@@ -2,9 +2,10 @@
 
 function res_load_pack_block_sheet(type, suffix)
 {
-	var blocksize, texlist, texanilist, surf, anisurf, fileslist;
+	var blocksize, texlist, texanilist, surf, anisurf, fileslist, widthcounts;
 	blocksize = null
 	fileslist = null
+	widthcounts = ds_map_create() // Number of static textures of each width
 	
 	debug_timer_start()
 	
@@ -37,6 +38,7 @@ function res_load_pack_block_sheet(type, suffix)
 		{
 			var tex = texture_create(fname);
 			blocksize = max(blocksize, texture_width(tex))
+			widthcounts[?string(texture_width(tex))] = value_get_real(widthcounts[?string(texture_width(tex))], 0) + 1
 			ds_list_add(texlist, tex)
 			
 			if (dev_mode_debug_unused)
@@ -92,8 +94,31 @@ function res_load_pack_block_sheet(type, suffix)
 		ds_list_destroy(fileslist)
 	}
 	
+	// A few larger textures (like 26.x signs and shelves) should not scale up the whole sheet,
+	// limit the slot size to twice the most common texture width
+	var commonwidth, commoncount, key;
+	commonwidth = null
+	commoncount = 0
+	key = ds_map_find_first(widthcounts)
+	while (!is_undefined(key))
+	{
+		if (widthcounts[?key] > commoncount)
+		{
+			commoncount = widthcounts[?key]
+			commonwidth = real(key)
+		}
+		key = ds_map_find_next(widthcounts, key)
+	}
+	ds_map_destroy(widthcounts)
+	
+	if (blocksize != null && commonwidth != null)
+		blocksize = min(blocksize, commonwidth * 2)
+	
 	if (blocksize = null)
 		blocksize = block_size
+	
+	// Keep the sheet within common texture size limits
+	blocksize = min(blocksize, floor(16384 / max(block_sheet_width, block_sheet_height)))
 	
 	log("Block textures, blocksize", type, blocksize)
 	
