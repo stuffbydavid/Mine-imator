@@ -1,8 +1,9 @@
 function render_high_shadows()
 {
-	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, samplestart, sampleend, lightlist;
+	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, sundirect, samplestart, sampleend, lightlist;
 	sampleoffset = point3D(0)
 	sunout = (env_sunlight_color_final != c_black)
+	sundirect = (render_sun_combined && !render_glint)
 	samplestart = 0
 	sampleend = 0
 	lightlist = []
@@ -33,18 +34,25 @@ function render_high_shadows()
 	// Initialize targets
 	render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, surface_rgba16float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, surface_rgba16float)
-	render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
-	render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
+	
+	// Local lights and fallback sunlight still need temporary targets
+	if (!sundirect || array_length(lightlist) > 0 || ds_list_size(render_shadowless_point_list) > 0)
+	{
+		render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
+		render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
+	}
+	
 	resultsurftemp = render_surface_hdr[0]
 	specresultsurftemp = render_surface_hdr[1]
 	
-	surface_clear(render_surface_shadows, c_black)
+	if (!sundirect)
+		surface_clear(render_surface_shadows, c_black)
 	
 	aa_matrix = aa_jitter_matrix
 	
 	#region Sun
 	
-	if (sunout)
+	if (sunout && !sundirect)
 	{
 		if (!render_sun_combined)
 		{
@@ -62,7 +70,8 @@ function render_high_shadows()
 		// Add to shadows
 		surface_set_target(render_surface_shadows)
 		{
-			gpu_set_blendmode(bm_add)
+			// Combined sunlight is already alpha-blended
+			gpu_set_blendmode_ext(render_sun_combined ? bm_one : bm_src_alpha, bm_one)
 			draw_surface_exists(resultsurftemp, 0, 0)
 			gpu_set_blendmode(bm_normal)
 		}
@@ -70,7 +79,7 @@ function render_high_shadows()
 		
 		surface_set_target(render_surface_specular)
 		{
-			gpu_set_blendmode(bm_add)
+			gpu_set_blendmode_ext(render_sun_combined ? bm_one : bm_src_alpha, bm_one)
 			draw_surface_exists(specresultsurftemp, 0, 0)
 			gpu_set_blendmode(bm_normal)
 		}

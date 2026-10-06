@@ -154,10 +154,19 @@ function render_high_create_gbuffers()
 		// G-buffers
 		if (render_sun_combined)
 		{
-			render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
-			render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
-			surface_clear(render_surface_hdr[0], c_black)
-			surface_clear(render_surface_hdr[1], c_black)
+			if (render_glint)
+			{
+				render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
+				render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
+				surface_clear(render_surface_hdr[0], c_black)
+				surface_clear(render_surface_hdr[1], c_black)
+			}
+			else
+			{
+				// Clear final sunlight targets before the combined pass
+				render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, surface_rgba16float)
+				surface_clear(render_surface_shadows, c_black)
+			}
 		}
 		
 		surface_set_target_ext(0, render_surface_depth)
@@ -171,8 +180,8 @@ function render_high_create_gbuffers()
 			if (render_sun_combined)
 			{
 				var sunindex = render_glint ? 4 : 3;
-				surface_set_target_ext(sunindex, render_surface_hdr[0])
-				surface_set_target_ext(sunindex + 1, render_surface_hdr[1])
+				surface_set_target_ext(sunindex, render_glint ? render_surface_hdr[0] : render_surface_shadows)
+				surface_set_target_ext(sunindex + 1, render_glint ? render_surface_hdr[1] : render_surface_specular)
 				render_sun_blend(sunindex)
 			}
 			

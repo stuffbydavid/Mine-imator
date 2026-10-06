@@ -34,8 +34,11 @@
 			A: Unused
 			Glint sampling and the fourth attachment are skipped when no visible glint is used
 		
-		- render_surface_hdr[0/1] (rgba16float, MRT 3/4 without glint or 4/5 with glint)
+		- render_surface_shadows/specular (rgba16float, MRT 3/4 without glint)
+		- render_surface_hdr[0/1] (rgba16float, MRT 4/5 with glint)
 			RGB: Sunlight diffuse/specular with independent alpha blending
+			Without glint, sunlight writes directly to final targets without alpha-weighted copies
+			Local lights retain temporary targets and additive copies
 			
 			Standard C++ renders cascades first and combines sunlight with the G-buffer traversal
 			GameMaker, build mode and unavailable independent blending retain the separate sunlight pass
