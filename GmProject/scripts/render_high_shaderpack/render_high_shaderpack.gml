@@ -66,6 +66,9 @@ function render_high_shaderpack()
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_surface_exists(render_shaderpack_surface, 0, 0)
 		gpu_set_blendmode(bm_normal)
+
+		if (render_watermark)
+			render_watermark_image()
 	}
 	surface_reset_target()
 	
