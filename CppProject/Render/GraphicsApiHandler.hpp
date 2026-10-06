@@ -123,6 +123,9 @@ namespace CppProject
 		// Sets independent alpha blending for the mask and optional fog overwrite target
 		void SetMaskBlending(BoolType enabled, BoolType fog = false);
 
+		// Alpha-blends the two sunlight outputs without blending the G-buffer data.
+		void SetSunBlending(IntType index);
+
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
 
@@ -168,6 +171,7 @@ namespace CppProject
 		IntType blendAlphaSrcFactor = 5;
 		IntType blendAlphaDstFactor = 6;
 		BoolType maskBlend = false, fogBlend = false;
+		IntType sunBlendIndex = -1;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
@@ -194,6 +198,7 @@ namespace CppProject
 		struct BlendState
 		{
 			IntType src, dst, srcAlpha, dstAlpha, writeMask;
+			IntType sunIndex;
 			BoolType enabled, maskBlend, fogBlend;
 			ID3D11BlendState* state = nullptr;
 		};

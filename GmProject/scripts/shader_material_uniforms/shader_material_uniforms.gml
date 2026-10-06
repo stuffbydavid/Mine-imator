@@ -10,8 +10,8 @@ function shader_material_uniforms()
 	new_shader_uniform(e_uniform.DEFAULT_SUBSURFACE)
 	
 	// Material textures
-	sampler_texture[e_texture_channel.MATERIAL] = new_shader_sampler("uTextureMaterial")
-	sampler_texture[e_texture_channel.NORMAL] = new_shader_sampler("uTextureNormal")
+	sampler_texture[e_texture_channel.MATERIAL] = new_shader_sampler(e_sampler.TEXTURE_MATERIAL)
+	sampler_texture[e_texture_channel.NORMAL] = new_shader_sampler(e_sampler.TEXTURE_NORMAL)
 	new_shader_uniform(e_uniform.MATERIAL_FORMAT)
 	
 	// Surface

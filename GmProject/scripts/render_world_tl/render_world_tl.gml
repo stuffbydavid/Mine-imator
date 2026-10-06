@@ -279,7 +279,7 @@ function render_world_tl()
 			else
 				tex = (glint_mode = e_glint.ITEM ? glintres.glint_item_texture : glintres.glint_armor_texture)
 			
-			texture_set_stage(render_shader_obj.sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
+			texture_set_stage(render_shader_obj.sampler_handle[e_sampler.GLINT_TEXTURE], sprite_get_texture(tex, 0))
 			
 			spd = app.env_time * glint_speed * app.project_render_glint_speed
 			render_set_uniform_vec2(e_uniform.GLINT_OFFSET, spd * (0.000625), spd * (0.00125))

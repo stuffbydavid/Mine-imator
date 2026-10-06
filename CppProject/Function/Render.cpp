@@ -50,4 +50,10 @@ namespace CppProject
 
 		return true;
 	}
+
+	void render_sun_blend(IntType index)
+	{
+		if (render_mask_blend_supported())
+			GFX->SetSunBlending(index);
+	}
 }

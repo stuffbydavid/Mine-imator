@@ -977,6 +977,43 @@ function enums()
 		PLACE
 	}
 	
+	// Shader samplers
+	enum e_sampler
+	{
+		ADD_TEXTURE,
+		BLUR_BUFFER,
+		DEPTH_BUFFER,
+		DEPTH_BUFFER0,
+		DEPTH_BUFFER1,
+		DEPTH_BUFFER2,
+		DIFFUSE_BUFFER,
+		DIRECT,
+		EMISSIVE,
+		FOG_BUFFER,
+		GLINT_TEXTURE,
+		LIGHT_BUFFER,
+		MASK,
+		MATERIAL_BUFFER,
+		METALLIC_BUFFER,
+		NOISE_BUFFER,
+		NORMAL_BUFFER,
+		PALETTE,
+		PALETTE_KEY,
+		PREVIOUS_BUFFER,
+		SSAO,
+		SSS_BUFFER,
+		SSS_RANGE_BUFFER,
+		SAMPLES,
+		SCENE_BUFFER,
+		SHADOWS,
+		SOURCE_BUFFER,
+		SPECULAR,
+		TEXTURE,
+		TEXTURE_MATERIAL,
+		TEXTURE_NORMAL,
+		amount
+	} // Update shader_startup_samplers() when adding samplers
+	
 	// Shader uniforms
 	enum e_uniform
 	{

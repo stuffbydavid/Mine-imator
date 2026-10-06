@@ -1,13 +1,13 @@
 function shader_high_dof_set(blurbuffer)
 {
-	texture_set_stage(sampler_map[?"uBlurBuffer"], surface_get_texture(blurbuffer))
+	texture_set_stage(sampler_handle[e_sampler.BLUR_BUFFER], surface_get_texture(blurbuffer))
 	
 	var pixelvariation = (renderer_current = e_renderer.REALISTIC || app.project_render_dof_realistic_blur);
 	if (pixelvariation)
 	{
-		texture_set_stage(sampler_map[?"uNoiseBuffer"], surface_get_texture(render_sample_noise_texture))
-		gpu_set_texrepeat_ext(sampler_map[?"uNoiseBuffer"], true)
-		gpu_set_texfilter_ext(sampler_map[?"uNoiseBuffer"], false)
+		texture_set_stage(sampler_handle[e_sampler.NOISE_BUFFER], surface_get_texture(render_sample_noise_texture))
+		gpu_set_texrepeat_ext(sampler_handle[e_sampler.NOISE_BUFFER], true)
+		gpu_set_texfilter_ext(sampler_handle[e_sampler.NOISE_BUFFER], false)
 	}
 	
 	render_set_uniform_vec2(e_uniform.SCREEN_SIZE, render_width, render_height)

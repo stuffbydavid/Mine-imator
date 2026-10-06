@@ -1,9 +1,9 @@
 function shader_high_ssao_blur_set(checkx, checky)
 {
-	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_depth))
-	texture_set_stage(sampler_map[?"uNormalBuffer"], surface_get_texture(render_surface_normal))
-	gpu_set_texrepeat_ext(sampler_map[?"uDepthBuffer"], false)
-	gpu_set_texrepeat_ext(sampler_map[?"uNormalBuffer"], false)
+	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_depth))
+	texture_set_stage(sampler_handle[e_sampler.NORMAL_BUFFER], surface_get_texture(render_surface_normal))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.DEPTH_BUFFER], false)
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.NORMAL_BUFFER], false)
 	
 	render_set_uniform(e_uniform.NEAR, depth_near)
 	render_set_uniform(e_uniform.FAR, depth_far)

@@ -7,5 +7,6 @@ function render_shadow_cache_surface(key, width, height)
 	
 	surf = surface_require(surf, width, height, true, surface_r32float)
 	render_shadow_cache[?key] = surf
+	
 	return surf
 }

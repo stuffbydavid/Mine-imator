@@ -239,7 +239,7 @@ namespace CppProject
             LoadCodeCommon(code);
 
             // Find user functions, send in attributes/varyings
-            auto funcIt = QRegularExpression("^([a-zA-Z0-9]+?) ([a-zA-Z0-9]+?)\\((.*?)\\)\\n", QRegularExpression::MultilineOption).globalMatch(code);
+            auto funcIt = QRegularExpression("^([a-zA-Z0-9]+?) ([a-zA-Z0-9]+?)\\(([^)]*)\\)\\n", QRegularExpression::MultilineOption).globalMatch(code);
             while (funcIt.hasNext())
             {
                 QRegularExpressionMatch match = funcIt.next();

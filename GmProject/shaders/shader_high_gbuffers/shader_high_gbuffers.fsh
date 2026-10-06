@@ -1,55 +1,15 @@
-uniform sampler2D uTexture; // static
-uniform vec2 uTextureSize;
-uniform vec3 uCameraPosition; // static
-uniform float uGamma;
-uniform int uIsSky;
-uniform float uSSAO;
-uniform int uGlintPass; // static
-
-varying vec3 vPosition;
-varying vec2 vTexCoord;
-varying float vDepth;
-varying vec4 vColor;
-varying vec3 vNormalView;
-varying vec3 vTangentView;
-varying vec3 vNormalWorld;
-varying vec3 vTangentWorld;
-varying vec4 vCustom;
-
-#pragma shady: inline(common_material.MATERIAL_LIB)
-#pragma shady: inline(common_util.TBN_LIB)
-#pragma shady: inline(common_material.NORMAL_MAP_LIB)
-#pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
-#pragma shady: inline(common_material.FRESNEL_LIB)
-#pragma shady: inline(common_effect.EFFECT_GLINT_LIB)
-#pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
+#pragma shady: inline(common_gbuffers.GBUFFERS_LIB)
 
 void main()
 {
-	vec2 tex = vTexCoord;
-	vec4 baseColor = vColor * texture2D(uTexture, tex);
+	vec4 baseColor, depth, normal, material, glint;
+	vec3 normalWorld;
+	float roughness, metallic, F0, sss;
 	
-	handleAlphaDiscard(vPosition, baseColor);
+	getGbuffers(baseColor, normalWorld, roughness, metallic, F0, sss, depth, normal, material, glint);
 	
-	// Material
-	float roughness, metallic, emissive, F0, sss;
-	getMaterial(roughness, metallic, emissive, F0, sss);
-
-	mat3 tbnWorld = getTBN(vNormalWorld, vTangentWorld);
-	mat3 tbnView = getTBN(vNormalView, vTangentView);
-	vec3 normalWorld = getMaterialNormal(tex, vPosition, tbnWorld);
-	vec3 normalView = transformMaterialNormal(normalWorld, tbnWorld, tbnView);
-
-	float F = getFresnel(normalWorld, mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
-	if (uIsSky > 0)
-		F = 0.0;
-
-	gl_FragData[0] = vec4(vDepth, 0.0, 0.0, 1.0); // Depth
-	gl_FragData[1] = vec4(packNormal(normalView).rgb, emissive); // Normal, emissive
-	gl_FragData[2] = vec4(roughness, metallic, F, uSSAO); // Material, SSAO
-	
-	if (uGlintPass > 0)
-		gl_FragData[3] = vec4(getGlint(baseColor, tex, uTextureSize, uGamma), 1.0); // Glint
-	else
-		gl_FragData[3] = vec4(0.0);
+	gl_FragData[0] = depth;
+	gl_FragData[1] = normal;
+	gl_FragData[2] = material;
+	gl_FragData[3] = glint;
 }

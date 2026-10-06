@@ -3,7 +3,10 @@ function render_world(mode)
 	// Choose shader
 	render_mode = mode
 	render_material_pass = (mode != e_render_mode.AUXILIARY || render_auxiliary_material)
-	if (!render_material_pass)
+	
+	if (mode = e_render_mode.G_BUFFERS && render_sun_combined)
+		render_shader_obj = shader_map[?shader_high_gbuffers_sun]
+	else if (!render_material_pass)
 		render_shader_obj = shader_map[?shader_high_auxiliary_standard]
 	else
 		render_shader_obj = shader_map[?render_mode_shader_map[?mode]]

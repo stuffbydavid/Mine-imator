@@ -52,6 +52,7 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_glow = false
 	render_glint = false
 	render_fog_combined = false
+	render_sun_combined = false
 	
 	with (obj_timeline)
 	{

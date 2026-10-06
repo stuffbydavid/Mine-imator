@@ -200,6 +200,10 @@ namespace CppProject
 		if (!ExpandShadyInline(vsCode, ".vsh") || !ExpandShadyInline(fsCode, ".fsh"))
 			return;
 
+		// Expose code in CppOnly comments
+		vsCode.replace("/// CppOnly ", "");
+		fsCode.replace("/// CppOnly ", "");
+
 		// Find vertex format
 		if (vertexFormat == UNKNOWN)
 		{
@@ -1064,7 +1068,7 @@ namespace CppProject
 		}
 
 		// Find uniforms and samplers
-		auto uniIt = QRegularExpression("^uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
+		auto uniIt = QRegularExpression("^[ \\t]*uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
 		while (uniIt.hasNext())
 		{
 			QRegularExpressionMatch match = uniIt.next();

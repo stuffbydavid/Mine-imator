@@ -91,9 +91,9 @@ function shader_use()
 			res = mc_res
 		
 		var tex = res.glint_armor_texture;
-		texture_set_stage(sampler_map[?"uGlintTexture"], sprite_get_texture(tex, 0))
-		gpu_set_texrepeat_ext(sampler_map[?"uGlintTexture"], true)
-		gpu_set_tex_filter_ext(sampler_map[?"uGlintTexture"], true)
+		texture_set_stage(sampler_handle[e_sampler.GLINT_TEXTURE], sprite_get_texture(tex, 0))
+		gpu_set_texrepeat_ext(sampler_handle[e_sampler.GLINT_TEXTURE], true)
+		gpu_set_tex_filter_ext(sampler_handle[e_sampler.GLINT_TEXTURE], true)
 		
 		render_set_uniform_vec2(e_uniform.GLINT_SIZE, sprite_get_width(tex)*2, sprite_get_height(tex)*2)
 		render_set_uniform_vec2(e_uniform.GLINT_OFFSET, app.env_time * (0.000625) * app.project_render_glint_speed, app.env_time * (0.00125) * app.project_render_glint_speed)

@@ -26,6 +26,6 @@ function shader_high_light_spot_set()
 	render_set_uniform_int(e_uniform.LIGHT_REALISTIC_FALLOFF, render_light_realistic_falloff)
 	render_set_uniform(e_uniform.LIGHT_SPOT_SHARPNESS, render_light_spot_sharpness)
 	
-	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_spot_buffer))
-	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer"], true)
+	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_spot_buffer))
+	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER], true)
 }

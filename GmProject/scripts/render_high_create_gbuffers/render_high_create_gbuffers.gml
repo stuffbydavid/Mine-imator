@@ -152,6 +152,14 @@ function render_high_create_gbuffers()
 		}
 
 		// G-buffers
+		if (render_sun_combined)
+		{
+			render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
+			render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
+			surface_clear(render_surface_hdr[0], c_black)
+			surface_clear(render_surface_hdr[1], c_black)
+		}
+		
 		surface_set_target_ext(0, render_surface_depth)
 		surface_set_target_ext(1, render_surface_normal)
 		surface_set_target_ext(2, render_surface_material)
@@ -159,9 +167,22 @@ function render_high_create_gbuffers()
 			surface_set_target_ext(3, render_surface_specular)
 		{
 			gpu_set_blendmode_ext(bm_one, bm_zero)
+			
+			if (render_sun_combined)
+			{
+				var sunindex = render_glint ? 4 : 3;
+				surface_set_target_ext(sunindex, render_surface_hdr[0])
+				surface_set_target_ext(sunindex + 1, render_surface_hdr[1])
+				render_sun_blend(sunindex)
+			}
+			
 			render_world_start(depth_far)
 			render_world(e_render_mode.G_BUFFERS)
 			render_world_done()
+			
+			if (render_sun_combined)
+				render_sun_blend(-1)
+			
 			gpu_set_blendmode(bm_normal)
 		}
 		surface_reset_target()

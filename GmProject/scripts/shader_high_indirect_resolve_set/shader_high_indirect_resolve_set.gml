@@ -1,16 +1,16 @@
 function shader_high_indirect_resolve_set()
 {
-	texture_set_stage(sampler_map[?"uDepthBuffer"], surface_get_texture(render_surface_depth))
-	gpu_set_texrepeat_ext(sampler_map[?"uDepthBuffer"], false)
+	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_depth))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.DEPTH_BUFFER], false)
 	
-	texture_set_stage(sampler_map[?"uNormalBuffer"], surface_get_texture(render_surface_normal))
-	gpu_set_texrepeat_ext(sampler_map[?"uNormalBuffer"], false)
+	texture_set_stage(sampler_handle[e_sampler.NORMAL_BUFFER], surface_get_texture(render_surface_normal))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.NORMAL_BUFFER], false)
 	
-	texture_set_stage(sampler_map[?"uMaterialBuffer"], surface_get_texture(render_surface_material))
-	gpu_set_texrepeat_ext(sampler_map[?"uMaterialBuffer"], false)
+	texture_set_stage(sampler_handle[e_sampler.MATERIAL_BUFFER], surface_get_texture(render_surface_material))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.MATERIAL_BUFFER], false)
 	
-	texture_set_stage(sampler_map[?"uSourceBuffer"], surface_get_texture(render_surface_hdr[0]))
-	gpu_set_texrepeat_ext(sampler_map[?"uSourceBuffer"], false)
+	texture_set_stage(sampler_handle[e_sampler.SOURCE_BUFFER], surface_get_texture(render_surface_hdr[0]))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.SOURCE_BUFFER], false)
 	
 	render_set_uniform_vec2(e_uniform.RAY_DATA_SIZE, surface_get_width(render_surface_indirect_raydata), surface_get_height(render_surface_indirect_raydata))
 	render_set_uniform(e_uniform.NEAR, depth_near)

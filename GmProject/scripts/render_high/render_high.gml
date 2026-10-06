@@ -33,6 +33,12 @@
 			RGB: Glint
 			A: Unused
 			Glint sampling and the fourth attachment are skipped when no visible glint is used
+		
+		- render_surface_hdr[0/1] (rgba16float, MRT 3/4 without glint or 4/5 with glint)
+			RGB: Sunlight diffuse/specular with independent alpha blending
+			
+			Standard C++ renders cascades first and combines sunlight with the G-buffer traversal
+			GameMaker, build mode and unavailable independent blending retain the separate sunlight pass
 	
 	shader_high_auxiliary / shader_high_auxiliary_standard (unless render_fog_combined):
 	
@@ -100,6 +106,17 @@ function render_high()
 		render_high_update_jitter()
 		
 		// Create render passes
+		render_sun_combined = (
+			is_cpp() && renderer_current = e_renderer.STANDARD && render_shadows &&
+			env_sunlight_color_final != c_black && !app.place_build && render_mask_blend_supported() &&
+			cam_far_prev <= cam_near + depth_far && !render_gbuffers_cache_enabled)
+		
+		if (render_sun_combined)
+		{
+			render_shadow_cache_update([], true)
+			render_high_shadows_sun()
+		}
+		
 		render_high_create_gbuffers()
 		
 		// Shadows

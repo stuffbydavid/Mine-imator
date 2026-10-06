@@ -25,14 +25,14 @@ function shader_high_light_sun_set()
 
 	render_set_uniform_vec3(e_uniform.LIGHT_DIRECTION, render_sun_direction[X], render_sun_direction[Y], render_sun_direction[Z])
 	
-	texture_set_stage(sampler_map[?"uDepthBuffer0"], surface_get_texture(render_surface_sun_buffer[0]))
-	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer0"], true)
+	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER0], surface_get_texture(render_surface_sun_buffer[0]))
+	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER0], true)
 	
-	texture_set_stage(sampler_map[?"uDepthBuffer1"], surface_get_texture(render_surface_sun_buffer[render_cascades_count > 1 ? 1 : 0]))
-	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer1"], true)
+	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER1], surface_get_texture(render_surface_sun_buffer[render_cascades_count > 1 ? 1 : 0]))
+	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER1], true)
 	
-	texture_set_stage(sampler_map[?"uDepthBuffer2"], surface_get_texture(render_surface_sun_buffer[render_cascades_count > 2 ? 2 : render_cascades_count - 1]))
-	gpu_set_texfilter_ext(sampler_map[?"uDepthBuffer2"], true)
+	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER2], surface_get_texture(render_surface_sun_buffer[render_cascades_count > 2 ? 2 : render_cascades_count - 1]))
+	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER2], true)
 	
 	render_set_uniform(e_uniform.CASCADE_END_CLIP_SPACE, [ render_cascades[0].clipEndDepth, cascade1.clipEndDepth, cascade2.clipEndDepth ])
 	render_set_uniform_int(e_uniform.CASCADE_COUNT, render_cascades_count)
