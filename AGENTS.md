@@ -53,7 +53,32 @@ On Windows, if tests succeed in the default DirectX mode, run Mine-imator again 
 
 If asked for a specific range of tests, use `--start X` and `--end Y` (Y inclusive), or `--all` to run through all frames in the project. By default, the `quick`, `standard`, and `realistic` renderers are tested; use `--renderer <quick|standard|realistic>` to limit a run. For typical, non-troubleshooting validation, all renderers should be tested.
 
-For debugging a rendering issue in the pipeline, use `--pass <pass>` to save a high-quality pass in a new folder with the current frame/test name. Possible values are `diffuse`, `specular`, `ao`, `shadows`, `indirect`, `indirect_shadows`, `reflections`, `depth`, `normal`, `material` and `all` to save every pass. To debug the generated HLSL/GLSL code from GML shaders, pass in `--saveShaders` to save the converted output into ShaderConverted/ in the build folder.
+For debugging a rendering issue in the pipeline, use `--pass <pass>` to save a high-quality pass in a new folder with the current frame/test name. Supported pass names are:
+
+| Pass | Description |
+| --- | --- |
+| `diffuse` | Surface color before lighting |
+| `specular` | Specular lighting |
+| `ao` | Ambient occlusion |
+| `shadows` | Shadow contribution |
+| `indirect` | Indirect lighting |
+| `indirect_shadows` | Shadows on indirect lighting |
+| `reflections` | Reflected light |
+| `fog` | Fog contribution |
+| `mask` | Scene lighting mask |
+| `glow` | Glow contribution |
+| `subsurface` | Subsurface scattering |
+| `subsurface_range` | Subsurface scattering range |
+| `emissive` | Emissive material contribution |
+| `roughness` | Material roughness |
+| `metallic` | Material metallic value |
+| `fresnel` | Material Fresnel value |
+| `ssao_mask` | Screen-space ambient occlusion mask |
+| `bloom_threshold` | Pixels selected for bloom |
+| `bloom_blur` | Blurred bloom image |
+| `all` | Grid of all passes, including combined, depth, normal, and material |
+
+`depth`, `normal`, and `material` are available in the `all` grid but are not accepted as individual `--pass` values. To debug the generated HLSL/GLSL code from GML shaders, pass in `--saveShaders` to save the converted output into ShaderConverted/ in the build folder.
 
 To test render settings, use `--set "<settings>"` and pass in a comma-separated list of values, such as `"shadows=true,samples=64"`. You are advised to combine settings using spaces to perform multiple tests if needed, rather than multiple runs, for example `"shadows=true,samples=8 samples=16 samples=32"`. Consult RENDER.md for the full list of render and camera settings. For each frame, settings are restored to the defaults in `test_base.mirender`, if available.
 

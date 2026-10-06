@@ -80,6 +80,9 @@ function render_high_create_gbuffers()
 	if (!render_gbuffers_cache_ready)
 	{
 		render_high_clear_gbuffers()
+		
+		// In C++, skip the SCENE_TEST pass by writing to the mask surface directly
+		var fusedmask = false;
 
 		// Diffuse data
 		surface_set_target(render_surface_diffuse)
@@ -93,8 +96,15 @@ function render_high_create_gbuffers()
 			// World
 			render_world_start()
 			render_world_sky()
+			
+			if (!app.place_build)
+				fusedmask = render_mask_blend(true, render_surface_mask)
+			
 			render_world(e_render_mode.COLOR)
 			render_world_done()
+			
+			if (fusedmask)
+				render_mask_blend(false, render_surface_mask)
 
 			if (render_background)
 			{
@@ -109,23 +119,26 @@ function render_high_create_gbuffers()
 		}
 		surface_reset_target()
 
-		// Scene lighting mask
-		surface_set_target(render_surface_mask)
+		// Scene lighting mask (GameMaker)
+		if (!fusedmask)
 		{
-			draw_clear(c_black)
-			render_world_start()
-			render_world(e_render_mode.SCENE_TEST)
-			render_world_done()
+			surface_set_target(render_surface_mask)
+			{
+				draw_clear(c_black)
+				render_world_start()
+				render_world(e_render_mode.SCENE_TEST)
+				render_world_done()
 
-			// 2D mode
-			render_set_projection_ortho(0, 0, render_width, render_height, 0)
+				// 2D mode
+				render_set_projection_ortho(0, 0, render_width, render_height, 0)
 
-			// Alpha fix
-			gpu_set_blendmode_ext(bm_src_color, bm_one)
-			draw_box(0, 0, render_width, render_height, false, c_black, 1)
-			gpu_set_blendmode(bm_normal)
+				// Alpha fix
+				gpu_set_blendmode_ext(bm_src_color, bm_one)
+				draw_box(0, 0, render_width, render_height, false, c_black, 1)
+				gpu_set_blendmode(bm_normal)
+			}
+			surface_reset_target()
 		}
-		surface_reset_target()
 
 		// G-buffers
 		surface_set_target_ext(0, render_surface_depth)
@@ -149,7 +162,6 @@ function render_high_create_gbuffers()
 			surface_set_target_ext(2, render_surface_sss_range)
 			if (render_glow)
 				surface_set_target_ext(3, render_surface_glow)
-
 			{
 				render_world_start()
 				render_world(e_render_mode.AUXILIARY)

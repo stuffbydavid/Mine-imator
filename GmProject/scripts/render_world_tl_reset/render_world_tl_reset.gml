@@ -14,7 +14,7 @@ function render_world_tl_reset()
 	shader_blend_alpha = 1
 	
 	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
-	render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
+	render_set_uniform_color(e_uniform.REPLACE_COLOR, render_mode = e_render_mode.COLOR ? c_white : c_black, 1)
 	
 	if (!render_alpha_hash_force)
 	{

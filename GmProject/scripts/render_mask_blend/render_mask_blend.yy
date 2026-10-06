@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_mask_blend",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_mask_blend",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

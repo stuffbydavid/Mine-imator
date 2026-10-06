@@ -2,6 +2,7 @@
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
+#include "Asset/Shader.hpp"
 #include "Asset/Surface.hpp"
 #include "Generated/GmlFunc.hpp"
 #include "GLWidget.hpp"
@@ -352,11 +353,18 @@ namespace CppProject
 		return false;
 	}
 
-	void GraphicsApiHandler::SetMRTIndex(IntType index, FrameBuffer* frameBuffer)
+	void GraphicsApiHandler::SetMRTIndex(IntType index, FrameBuffer* frameBuffer, QColor clearColor)
 	{
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
+			if (index > 0 && d3dMrtRTVs.isEmpty())
+			{
+				d3dMrtRTVs.resize(index + 1);
+				d3dMrtRTVs[0] = surface->frameBuffer->d3dRTV;
+				d3dMrtDSV = surface->frameBuffer->d3dDSV;
+			}
+
 			if (!d3dMrtDSV)
 				d3dMrtDSV = frameBuffer->d3dDSV;
 
@@ -378,6 +386,13 @@ namespace CppProject
 
 			// Clear RTV
 			float rgba[4] = { 0.f, 0.f, 0.f, 0.f };
+			if (clearColor.isValid())
+			{
+				rgba[0] = clearColor.redF();
+				rgba[1] = clearColor.greenF();
+				rgba[2] = clearColor.blueF();
+				rgba[3] = clearColor.alphaF();
+			}
 			D3DContext->ClearRenderTargetView(frameBuffer->d3dRTV, rgba);
 		}
 	#endif
@@ -397,6 +412,14 @@ namespace CppProject
 			
 			glDrawBuffers(index + 1, buffers);
 			GL_CHECK_ERROR();
+			
+			if (clearColor.isValid())
+			{
+				GLfloat rgba[4] = { (GLfloat)clearColor.redF(), (GLfloat)clearColor.greenF(),
+					(GLfloat)clearColor.blueF(), (GLfloat)clearColor.alphaF() };
+				glClearBufferfv(GL_COLOR, index, rgba);
+				GL_CHECK_ERROR();
+			}
 
 			delete[] buffers;
 		}
@@ -658,6 +681,31 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest], glBlendMap[alphasrc], glBlendMap[alphadest]);
+			if (maskBlend)
+				Shader::gl43Core->glBlendFuncSeparatei(1, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			GL_CHECK_ERROR();
+		}
+	}
+
+	void GraphicsApiHandler::SetMaskBlending(BoolType enabled)
+	{
+		if (maskBlend == enabled)
+			return;
+
+		SubmitBatch();
+		maskBlend = enabled;
+
+	#if OS_WINDOWS
+		if (IS_D3D11)
+			ApplyBlendState();
+	#endif
+		if (IS_OPENGL)
+		{
+			Shader::gl43Core->glBlendFuncSeparatei(1,
+				enabled ? GL_SRC_ALPHA : glBlendMap[blendSrcFactor],
+				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendDstFactor],
+				enabled ? GL_SRC_ALPHA : glBlendMap[blendAlphaSrcFactor],
+				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendAlphaDstFactor]);
 			GL_CHECK_ERROR();
 		}
 	}
@@ -672,7 +720,7 @@ namespace CppProject
 		{
 			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
 				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
-				previous.enabled == blend && previous.writeMask == colorWriteMask)
+				previous.enabled == blend && previous.writeMask == colorWriteMask && previous.maskBlend == maskBlend)
 			{
 				state = previous.state;
 				break;
@@ -694,10 +742,19 @@ namespace CppProject
 			targetDesc.RenderTargetWriteMask = colorWriteMask;
 
 			blendDesc.RenderTarget[0] = targetDesc;
+			if (maskBlend)
+			{
+				blendDesc.IndependentBlendEnable = TRUE;
+				targetDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+				targetDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+				targetDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+				blendDesc.RenderTarget[1] = targetDesc;
+			}
 			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
 			
 			d3dBlendStates.append({ blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
-				colorWriteMask, blend, state });
+				colorWriteMask, blend, maskBlend, state });
 		}
 
 		D3DContext->OMSetBlendState(state, nullptr, 0xFFFFFFFF);

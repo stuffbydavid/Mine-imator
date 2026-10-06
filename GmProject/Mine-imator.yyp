@@ -2342,6 +2342,7 @@
     {"id":{"name":"render_high_vignette","path":"scripts/render_high_vignette/render_high_vignette.yy",},},
     {"id":{"name":"render_high","path":"scripts/render_high/render_high.yy",},},
     {"id":{"name":"render_low","path":"scripts/render_low/render_low.yy",},},
+    {"id":{"name":"render_mask_blend","path":"scripts/render_mask_blend/render_mask_blend.yy",},},
     {"id":{"name":"render_optimizations_state","path":"scripts/render_optimizations_state/render_optimizations_state.yy",},},
     {"id":{"name":"render_pass_capture","path":"scripts/render_pass_capture/render_pass_capture.yy",},},
     {"id":{"name":"render_pass_channel","path":"scripts/render_pass_channel/render_pass_channel.yy",},},

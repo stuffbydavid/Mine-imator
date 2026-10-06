@@ -84,8 +84,8 @@ namespace CppProject
 		// Restores the most recently suspended nested clip state.
 		void ClipResume();
 
-		// Sets a framebuffer as render target at an index.
-		void SetMRTIndex(IntType index, FrameBuffer* frameBuffer);
+		// Sets a framebuffer as render target at an index, optionally clearing it
+		void SetMRTIndex(IntType index, FrameBuffer* frameBuffer, QColor clearColor = QColor());
 
 		// Resets the bound MRTs.
 		void ResetMRT();
@@ -119,14 +119,17 @@ namespace CppProject
 
 		// Sets the blending functions.
 		void SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest);
+		
+		// Sets independent alpha blending for the mask render target.
+		void SetMaskBlending(BoolType enabled);
 
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
 
-		// Set the highest sampled mipmap level
+		// Set the highest sampled mipmap level.
 		void SetMaxMip(IntType value);
 
-		// Converts an integer to a QColor
+		// Converts an integer to a QColor.
 		static QColor IntToQColor(IntType in, RealType alpha = 1.0);
 
 		// Convers a QColor to an integer.
@@ -164,6 +167,7 @@ namespace CppProject
 		IntType blendDstFactor = 6; // bm_inv_src_alpha
 		IntType blendAlphaSrcFactor = 5;
 		IntType blendAlphaDstFactor = 6;
+		BoolType maskBlend = false;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
@@ -190,7 +194,7 @@ namespace CppProject
 		struct BlendState
 		{
 			IntType src, dst, srcAlpha, dstAlpha, writeMask;
-			BoolType enabled;
+			BoolType enabled, maskBlend;
 			ID3D11BlendState* state = nullptr;
 		};
 		QVector<BlendState> d3dBlendStates;

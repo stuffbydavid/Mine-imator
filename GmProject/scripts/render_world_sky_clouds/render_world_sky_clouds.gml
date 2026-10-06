@@ -5,7 +5,7 @@ function render_world_sky_clouds()
 	if (!env_sky_clouds_show || !render_background)
 		return 0
 	
-	if (render_mode = e_render_mode.SCENE_TEST)
+	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.COLOR)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
 
 	if (render_mode = e_render_mode.G_BUFFERS)

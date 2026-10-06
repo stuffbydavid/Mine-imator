@@ -145,6 +145,7 @@ function shader_startup()
 	with (shader_map[?shader_color_fog])
 	{
 		shader_color_uniforms()
+		new_shader_uniform(e_uniform.REPLACE_COLOR)
 		new_shader_uniform(e_uniform.TONEMAPPER)
 		new_shader_uniform(e_uniform.EXPOSURE)
 		new_shader_uniform(e_uniform.GAMMA)
