@@ -23,7 +23,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 4. Open Windows PowerShell (via Start menu)
 5. Get Mine-imator sources
     1. Run `cd $env:DEV_DIR`
-    2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
+    2. Run `git clone https://github.com/AssilF/MI-Shader-Fusion.git Mine-imator`
     3. Run `cd Mine-imator`
 6. Set up external libraries and build Qt
     * Run `.\Setup.ps1`
@@ -52,7 +52,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     5. Run `mkdir -p $DEV_DIR`
 3. Get Mine-imator sources
     1. Run `cd $DEV_DIR`
-    2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
+    2. Run `git clone https://github.com/AssilF/MI-Shader-Fusion.git Mine-imator`
     3. Run `cd Mine-imator`
 4. Set up external libraries and build Qt
     * Run `./Setup.sh`
@@ -95,7 +95,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     2. Run `mkdir -p $DEV_DIR`
 4. Get Mine-imator sources
     1. Run `cd $DEV_DIR`
-    2. Run `git clone https://github.com/stuffbydavid/Mine-imator.git`
+    2. Run `git clone https://github.com/AssilF/MI-Shader-Fusion.git Mine-imator`
     3. Run `cd Mine-imator`
 5. Set up external libraries and build Qt
     * Run `./Setup.sh`
