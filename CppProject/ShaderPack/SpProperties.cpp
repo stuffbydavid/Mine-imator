@@ -184,7 +184,21 @@ namespace ShaderPacks
 					LogWarning("Invalid texture definition " + key + "=" + value);
 					continue;
 				}
-				textures[rest.left(dot)][rest.mid(dot + 1)] = spec;
+
+				// A suffix allows several definitions for one sampler ("colortex6.1")
+				QString sampler = rest.mid(dot + 1).section('.', 0, 0);
+				if (spec.raw)
+				{
+					SamplerPatchSpec patch;
+					patch.stage = rest.left(dot);
+					patch.sampler = sampler;
+					patch.target = spec.target;
+					patch.newName = "customtex" + QString::number(samplerPatches.size());
+					customTextures[patch.newName] = spec;
+					samplerPatches.append(patch);
+				}
+				else
+					textures[rest.left(dot)][sampler] = spec;
 			}
 			else if (key.startsWith("customTexture."))
 			{

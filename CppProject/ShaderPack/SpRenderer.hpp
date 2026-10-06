@@ -160,6 +160,9 @@ namespace ShaderPacks
 		// Debugging: saves all render targets as images in a folder and returns statistics per target.
 		QStringList DumpTargets(const QString& folder);
 
+		// Debugging: reads a pixel of the current (read side) contents of a color target.
+		QVector4D ReadTargetPixel(int buffer, int x, int y);
+
 		// Errors from the last Init/frame
 		QStringList errors;
 

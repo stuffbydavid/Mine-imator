@@ -151,7 +151,7 @@ namespace ShaderPacks
 		bool shadowColorUsed[8] = {};
 		bool shadowEnabled = false;
 		int shadowResolution = 1024;
-		Tex noiseTex, lightmapTex, whiteTex, blockOffsetsTex, blockIdsTex;
+		Tex noiseTex, lightmapTex, whiteTex, defaultNormalsTex, defaultSpecularTex, blockOffsetsTex, blockIdsTex;
 		QHash<QString, Tex> customTextures; // "stage:sampler" or "custom:name"
 
 		struct ImageTarget
@@ -218,6 +218,7 @@ namespace ShaderPacks
 			AlphaTestSpec alphaTest;
 			ScaleSpec scale;
 			QHash<int, bool> flips;
+			QSet<int> deactivatedOverrides; // Buffers whose custom texture overrides no longer apply (flipped earlier in the stage)
 			QVector<SamplerBinding> samplers;
 			QVector<ImageBinding> images;
 			QVector<UniformBinding> uniforms;
@@ -229,6 +230,7 @@ namespace ShaderPacks
 			int uploadedFrame = -2;
 		};
 		QHash<QString, Program*> programs; // Compiled programs by name
+		QSet<int> compileDeactivatedOverrides; // Set while compiling the programs of a pass
 		QVector<Program*> allPrograms;
 
 		struct Pass
@@ -577,6 +579,11 @@ namespace ShaderPacks
 			uint32_t white = 0xFFFFFFFF;
 			CreateTexture(whiteTex, GL_TEXTURE_2D, 1, 1, 1, ParseInternalFormat("RGBA8"), 1, &white, GL_RGBA, GL_UNSIGNED_BYTE);
 
+			// Iris' defaults for objects without PBR textures (flat normal, no specular)
+			uint8_t flatNormal[4] = { 127, 127, 255, 255 }, noSpecular[4] = { 0, 0, 0, 0 };
+			CreateTexture(defaultNormalsTex, GL_TEXTURE_2D, 1, 1, 1, ParseInternalFormat("RGBA8"), 1, flatNormal, GL_RGBA, GL_UNSIGNED_BYTE);
+			CreateTexture(defaultSpecularTex, GL_TEXTURE_2D, 1, 1, 1, ParseInternalFormat("RGBA8"), 1, noSpecular, GL_RGBA, GL_UNSIGNED_BYTE);
+
 			InternalFormatInfo rgba8 = ParseInternalFormat("RGBA8");
 			CreateTexture(lightmapTex, GL_TEXTURE_2D, 16, 16, 1, rgba8, 1);
 
@@ -752,6 +759,9 @@ namespace ShaderPacks
 		{
 			TransformParams params;
 			params.kind = kind;
+			for (const SamplerPatchSpec& patch : pack->properties.samplerPatches)
+				if (patch.stage == StageOfProgram(source.name))
+					params.samplerPatches.append(patch);
 			params.programName = source.name;
 
 			QString base = source.name;
@@ -851,6 +861,7 @@ namespace ShaderPacks
 			p->alphaTest = alpha;
 			p->scale = pack->properties.scale.value(base);
 			p->flips = pack->properties.flip.value(base);
+			p->deactivatedOverrides = compileDeactivatedOverrides;
 
 			auto blendIt = pack->properties.blend.constFind(base);
 			if (blendIt != pack->properties.blend.constEnd())
@@ -901,9 +912,12 @@ namespace ShaderPacks
 		{
 			index = 0;
 
-			// Custom textures override built-in names
+			// Custom textures override built-in names, except for color buffers that were already
+			// written (flipped) by an earlier pass of the same stage (Iris' CustomTextureSamplerInterceptor)
 			QString stageKey = p->stage + ":" + name;
-			if (customTextures.contains(stageKey) || pack->properties.textures.value(p->stage).contains(name))
+			int overriddenBuffer = ColorBufferIndex(name);
+			bool overrideActive = !(overriddenBuffer >= 0 && p->deactivatedOverrides.contains(overriddenBuffer));
+			if (overrideActive && (customTextures.contains(stageKey) || pack->properties.textures.value(p->stage).contains(name)))
 			{
 				customKey = stageKey;
 				return SamplerSource::Custom;
@@ -1103,12 +1117,16 @@ namespace ShaderPacks
 					programs[name] = p;
 			}
 
+			// Buffers flipped by an earlier pass of the stage, see ResolveSampler
+			QSet<int> flippedAtLeastOnce;
 			auto buildPasses = [&](const QString& prefix, QVector<Pass>& passes)
 			{
+				flippedAtLeastOnce.clear();
 				for (int i = 0; i < 100; i++)
 				{
 					QString name = prefix + (i == 0 ? QString() : QString::number(i));
 					Pass pass;
+					compileDeactivatedOverrides = flippedAtLeastOnce;
 					const ProgramSource* src = pack->Program(name);
 					if (src && src->IsValid())
 					{
@@ -1127,7 +1145,18 @@ namespace ShaderPacks
 					}
 					if (pass.program || !pass.computes.isEmpty())
 						passes.append(pass);
+
+					if (Program* p = pass.program)
+					{
+						for (int b : p->drawBuffers)
+							if (p->flips.value(b, true))
+								flippedAtLeastOnce.insert(b);
+						for (auto it = p->flips.constBegin(); it != p->flips.constEnd(); ++it)
+							if (it.value())
+								flippedAtLeastOnce.insert(it.key());
+					}
 				}
+				compileDeactivatedOverrides.clear();
 			};
 
 			buildPasses("begin", beginPasses);
@@ -1145,17 +1174,22 @@ namespace ShaderPacks
 					for (const ProgramSource* c : pack->ComputePrograms("setup" + QString::number(i)))
 						if (Program* cp = Compile(*c, ProgramKind::Compute))
 							setupComputes.append(cp);
+				compileDeactivatedOverrides = flippedAtLeastOnce;
 				for (const ProgramSource* c : pack->ComputePrograms("final"))
 					if (Program* cp = Compile(*c, ProgramKind::Compute))
 						finalComputes.append(cp);
+				compileDeactivatedOverrides.clear();
 				for (const ProgramSource* c : pack->ComputePrograms("shadow"))
 					if (Program* cp = Compile(*c, ProgramKind::Compute))
 						shadowComputes.append(cp);
 			}
 
+			// Final uses the overrides state at the end of the composite stage
+			compileDeactivatedOverrides = flippedAtLeastOnce;
 			if (const ProgramSource* fin = pack->Program("final"))
 				if (fin->IsValid())
 					finalProgram = Compile(*fin, ProgramKind::Composite);
+			compileDeactivatedOverrides.clear();
 
 			// Shadow pass is enabled when a shadow program compiled
 			shadowEnabled = false;
@@ -1966,14 +2000,16 @@ namespace ShaderPacks
 				case SamplerSource::ObjectSpecular:
 				{
 					sampler = samplerAtlas;
+					GLuint fallback = (s.source == SamplerSource::ObjectNormals) ? defaultNormalsTex.id :
+									  (s.source == SamplerSource::ObjectSpecular) ? defaultSpecularTex.id : whiteTex.id;
 					if (!object)
-						return whiteTex.id;
+						return fallback;
 					const HostTexture& t = (s.source == SamplerSource::ObjectTexture) ? object->texture :
 										   (s.source == SamplerSource::ObjectNormals) ? object->normals : object->specular;
 					if (uvRect)
 						*uvRect = t.uvRect;
 					if (!t.id)
-						return (s.source == SamplerSource::ObjectTexture) ? whiteTex.id : 0;
+						return fallback;
 					return t.id;
 				}
 				case SamplerSource::Custom:
@@ -2171,6 +2207,81 @@ namespace ShaderPacks
 			ex->glMemoryBarrier(GL_ALL_BARRIER_BITS);
 		}
 
+		// Debugging (SP_TRACE=<frame>): logs statistics of the buffers written by a pass.
+		int traceFrame = qEnvironmentVariableIsSet("SP_TRACE") ? qEnvironmentVariableIntValue("SP_TRACE") : -1;
+
+		void TracePass(Program* p, const QSet<int>& writeState)
+		{
+			if (traceFrame != frameCounter)
+				return;
+
+			GLuint fbo = 0;
+			gl->glGenFramebuffers(1, &fbo);
+			gl->glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
+			QStringList out;
+			for (int b : p->drawBuffers)
+			{
+				if (b < 0 || b >= 16 || !colorTargets[b].used)
+					continue;
+				Tex& t = WriteTex(b, writeState);
+				gl->glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, t.id, 0);
+				gl->glReadBuffer(GL_COLOR_ATTACHMENT0);
+				QVector<float> px(t.w * t.h * 4);
+				if (t.format.isInteger)
+				{
+					QVector<int> ipx(t.w * t.h * 4);
+					gl->glReadPixels(0, 0, t.w, t.h, GL_RGBA_INTEGER, GL_INT, ipx.data());
+					for (int i = 0; i < ipx.size(); i++)
+						px[i] = ipx[i];
+				}
+				else
+					gl->glReadPixels(0, 0, t.w, t.h, GL_RGBA, GL_FLOAT, px.data());
+
+				double sum[4] = { 0, 0, 0, 0 };
+				int nans = 0;
+				for (int i = 0; i < t.w * t.h; i++)
+					for (int c = 0; c < 4; c++)
+					{
+						float v = px[i * 4 + c];
+						if (std::isnan(v) || std::isinf(v))
+							nans++;
+						else
+							sum[c] += v;
+					}
+				int n = t.w * t.h;
+				static QString traceDir = qEnvironmentVariable("SP_TRACE_DIR");
+				if (!traceDir.isEmpty())
+				{
+					QImage img(t.w, t.h, QImage::Format_RGBA8888);
+					for (int y = 0; y < t.h; y++)
+						for (int x = 0; x < t.w; x++)
+						{
+							const float* px4 = &px[((t.h - 1 - y) * t.w + x) * 4];
+							auto c = [](float v) { return std::isnan(v) ? 255 : qBound(0, (int)(v * 255.f), 255); };
+							img.setPixel(x, y, qRgba(c(px4[0]), c(px4[1]), c(px4[2]), 255));
+						}
+					img.save(QString("%1/%2_colortex%3.png").arg(traceDir, p->name).arg(b));
+				}
+				out << QString("%1%2 mean(%3 %4 %5 %6) nan=%7").arg(b).arg(&t == &colorTargets[b].alt ? "a" : "m")
+						   .arg(sum[0] / n, 0, 'g', 4).arg(sum[1] / n, 0, 'g', 4).arg(sum[2] / n, 0, 'g', 4).arg(sum[3] / n, 0, 'g', 4).arg(nans);
+			}
+			gl->glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+			gl->glDeleteFramebuffers(1, &fbo);
+			Log(QString("Trace %1: %2").arg(p->name, out.join(" | ")));
+
+			QStringList samplers;
+			for (const SamplerBinding& s : p->samplers)
+			{
+				GLint bound = 0, unitValue = -1;
+				gl->glActiveTexture(GL_TEXTURE0 + s.unit);
+				gl->glGetIntegerv(GL_TEXTURE_BINDING_2D, &bound);
+				gl->glGetUniformiv(p->id, s.location, &unitValue);
+				samplers << QString("%1@%2/%3=%4").arg(s.name).arg(s.unit).arg(unitValue).arg(bound);
+			}
+			gl->glActiveTexture(GL_TEXTURE0);
+			Log(QString("Trace samplers %1: %2").arg(p->name, samplers.join(" ")));
+		}
+
 		// Runs a list of composite passes, updating the flip state like Iris' CompositeRenderer.
 		void RunPasses(const QVector<Pass>& passes)
 		{
@@ -2207,15 +2318,15 @@ namespace ShaderPacks
 				float sc = p->scale.scale;
 				gl->glViewport((int)(p->scale.offsetX * pw), (int)(p->scale.offsetY * ph), qMax(1, (int)(pw * sc)), qMax(1, (int)(ph * sc)));
 
+				// viewWidth/viewHeight stay the main framebuffer size like in Iris
 				gl->glUseProgram(p->id);
 				UploadFrameUniforms(p);
-				SetUniform(p, "viewWidth", UVal::Float((float)pw));
-				SetUniform(p, "viewHeight", UVal::Float((float)ph));
 				BindSamplers(p, readState, nullptr, false);
 				BindImages(p, readState);
 				ApplyBlend(p, nullptr);
 
 				DrawFullscreen();
+				TracePass(p, readState);
 
 				// Flip written buffers
 				for (int b : p->drawBuffers)
@@ -2236,7 +2347,6 @@ namespace ShaderPacks
 					else
 						flipped.insert(it.key());
 				}
-				p->uploadedFrame = -3; // viewWidth/Height were overwritten
 			}
 
 			gl->glDisable(GL_BLEND);
@@ -2521,7 +2631,7 @@ namespace ShaderPacks
 				DeleteTexture(t);
 			for (Tex& t : shadowColor)
 				DeleteTexture(t);
-			for (Tex* t : { &noiseTex, &lightmapTex, &whiteTex, &blockOffsetsTex, &blockIdsTex })
+			for (Tex* t : { &noiseTex, &lightmapTex, &whiteTex, &defaultNormalsTex, &defaultSpecularTex, &blockOffsetsTex, &blockIdsTex })
 				DeleteTexture(*t);
 			for (Tex& t : customTextures)
 				DeleteTexture(t);
@@ -3007,6 +3117,32 @@ namespace ShaderPacks
 
 namespace ShaderPacks
 {
+	QVector4D Renderer::ReadTargetPixel(int buffer, int x, int y)
+	{
+		Impl& d = *impl;
+		if (buffer < 0 || buffer >= 16 || !d.colorTargets[buffer].used)
+			return QVector4D();
+		auto* gl = d.gl;
+		GLuint fbo = 0;
+		gl->glGenFramebuffers(1, &fbo);
+		gl->glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
+		gl->glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, d.ReadTex(buffer, d.flipped).id, 0);
+		gl->glReadBuffer(GL_COLOR_ATTACHMENT0);
+		float px[4] = { 0, 0, 0, 0 };
+		if (d.colorTargets[buffer].settings.format.isInteger)
+		{
+			int ipx[4] = { 0, 0, 0, 0 };
+			gl->glReadPixels(x, y, 1, 1, GL_RGBA_INTEGER, GL_INT, ipx);
+			for (int i = 0; i < 4; i++)
+				px[i] = ipx[i];
+		}
+		else
+			gl->glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, px);
+		gl->glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+		gl->glDeleteFramebuffers(1, &fbo);
+		return QVector4D(px[0], px[1], px[2], px[3]);
+	}
+
 	QStringList Renderer::DumpTargets(const QString& folder)
 	{
 		Impl& d = *impl;

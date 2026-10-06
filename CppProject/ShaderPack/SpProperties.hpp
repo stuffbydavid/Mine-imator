@@ -47,6 +47,14 @@ namespace ShaderPacks
 		int width = 0, height = 0, depth = 0;
 	};
 
+	// A raw custom texture replaces samplers of a matching type and name in the programs of a stage,
+	// by renaming them to a generated custom texture name (Iris' customTexturePatching).
+	struct SamplerPatchSpec
+	{
+		QString stage, sampler, newName;
+		unsigned int target = 0;
+	};
+
 	// Custom image (Iris "image.<name>=...").
 	struct ImageSpec
 	{
@@ -88,7 +96,8 @@ namespace ShaderPacks
 		QHash<QString, QHash<int, bool>> flip;			  // program -> buffer -> flip
 		QHash<int, BufferSizeSpec> bufferSize;			  // color buffer -> size
 		QHash<QString, QHash<QString, TextureSpec>> textures; // stage -> sampler -> texture
-		QHash<QString, TextureSpec> customTextures;		  // customTexture.<name>
+		QHash<QString, TextureSpec> customTextures;		  // customTexture.<name> and generated customtex<n>
+		QVector<SamplerPatchSpec> samplerPatches;		  // Raw texture.<stage>.<sampler> directives
 		QVector<ImageSpec> images;
 		QHash<int, QPair<qint64, QString>> bufferObjects; // index -> size, optional file
 		QString noiseTexture;

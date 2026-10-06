@@ -120,6 +120,22 @@ namespace ShaderPacks
 			return t.kind == K_WS || t.kind == K_COMMENT || t.kind == K_NEWLINE || t.text.isEmpty();
 		}
 
+		// Returns whether a sampler type can sample a texture target (GL_TEXTURE_1D/2D/3D/RECTANGLE).
+		bool SamplerMatchesTarget(const QString& type, unsigned int target)
+		{
+			QString base = type;
+			if (base.startsWith('i') || base.startsWith('u'))
+				base = base.mid(1);
+			switch (target)
+			{
+				case 0x0DE0: return base == "sampler1D";
+				case 0x0DE1: return base == "sampler2D";
+				case 0x806F: return base == "sampler3D";
+				case 0x84F5: return base == "sampler2DRect";
+				default: return false;
+			}
+		}
+
 		// ---------------------------------------------------------------------------------------------
 		// Source model with analysis of global declarations
 
@@ -1004,14 +1020,20 @@ namespace ShaderPacks
 		{
 			Source& src = s.src;
 
+			// Iris uniform with the program's alpha test reference
+			if (src.Uses("alphaTestRef"))
+			{
+				src.Rename("alphaTestRef", "mi_AlphaTestRef");
+				AddUniform(s, "float", "mi_AlphaTestRef");
+			}
+
+			// Chunk fade-in (IRIS_FEATURE_FADE_VARIABLE), geometry is always fully faded in
+			if (s.stage == STAGE_VERTEX && src.Uses("mc_chunkFade") && !src.FindDecl("mc_chunkFade"))
+				s.header.append(params.programName.startsWith("shadow") ? "const float mc_chunkFade = -1.0;" : "const float mc_chunkFade = 1.0;");
+
 			// Matrices (all stages)
 			if (s.core)
 			{
-				if (src.Uses("alphaTestRef"))
-				{
-					src.Rename("alphaTestRef", "mi_AlphaTestRef");
-					AddUniform(s, "float", "mi_AlphaTestRef");
-				}
 				static const QPair<const char*, const char*> coreUniforms[] = {
 					{ "modelViewMatrix", "mi_ModelViewMat" }, { "modelViewMatrixInverse", "mi_ModelViewMatInverse" },
 					{ "projectionMatrix", "mi_ProjMat" }, { "projectionMatrixInverse", "mi_ProjMatInverse" },
@@ -1307,7 +1329,15 @@ namespace ShaderPacks
 			for (const GlobalDecl& d : prev.src.decls)
 				if (!d.removed && (d.Has("out") || d.Has("varying")))
 					for (const Declarator& dec : d.declarators)
+					{
 						outs.insert(dec.name);
+
+						// Vertex outputs some packs never write: most drivers then pass zeros,
+						// so initialize them to keep results consistent between drivers
+						if (prev.stage == STAGE_VERTEX && dec.array.isEmpty() && !d.Has("const") &&
+							!d.type.startsWith("mat") && TypeComponents(d.type) > 0)
+							prev.prologue.append(dec.name + " = " + (d.type == "bool" ? QString("false") : d.type + "(0)") + ";");
+					}
 			for (const QString& h : prev.header)
 			{
 				QRegularExpressionMatch m = QRegularExpression("\\bout\\s+\\w+\\s+(\\w+)").match(h);
@@ -1378,8 +1408,19 @@ namespace ShaderPacks
 			s.stage = (Stage)st;
 			ParseVersion(s, source.version.isEmpty() ? "#version 110" : source.version);
 			s.core = (s.profile == "core") || (s.version >= 150 && s.profile.isEmpty());
+			// Iris always uses the core profile transformation for lines
+			if (params.kind == ProgramKind::Geometry && params.programName == "gbuffers_line")
+				s.core = true;
 			s.src.Parse(source.body);
 			s.src.RemoveUnusedFunctions();
+
+			// Raw custom textures replace uniform samplers of the same name and type
+			for (const SamplerPatchSpec& patch : params.samplerPatches)
+			{
+				GlobalDecl* d = s.src.FindDecl(patch.sampler);
+				if (d && d->Has("uniform") && SamplerMatchesTarget(d->type, patch.target))
+					s.src.Rename(patch.sampler, patch.newName);
+			}
 
 			// Internal names may not be used by packs
 			for (const QString& id : s.src.identifiers)

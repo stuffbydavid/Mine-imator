@@ -39,6 +39,7 @@ namespace ShaderPacks
 		ProgramKind kind = ProgramKind::Geometry;
 		QString programName;
 		bool alphaTest = false; // Insert an alpha test for compatibility profile gbuffers programs
+		QVector<SamplerPatchSpec> samplerPatches; // Raw custom textures of the program's stage
 	};
 
 	struct TransformResult

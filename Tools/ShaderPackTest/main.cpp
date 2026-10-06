@@ -18,6 +18,7 @@
 #include <QOpenGLExtraFunctions>
 #include <QOpenGLFunctions_4_3_Core>
 #include <QElapsedTimer>
+#include <QRegularExpression>
 #include <QTextStream>
 #include <random>
 
@@ -548,6 +549,16 @@ static int CmdRender(const QString& path, const QString& outFile, int worldTime,
 
 	for (const QString& e : renderer.errors)
 		out << "  " << e.left(300) << "\n";
+
+	// SP_PROBE="4:1,37 4:0,37" prints pixels of color targets
+	for (const QString& probe : qEnvironmentVariable("SP_PROBE").split(' ', Qt::SkipEmptyParts))
+	{
+		QStringList parts = probe.split(QRegularExpression("[:,]"));
+		if (parts.size() != 3)
+			continue;
+		QVector4D v = renderer.ReadTargetPixel(parts[0].toInt(), parts[1].toInt(), parts[2].toInt());
+		out << "  probe colortex" << parts[0] << " (" << parts[1] << "," << parts[2] << ") = " << v.x() << " " << v.y() << " " << v.z() << " " << v.w() << "\n";
+	}
 
 	if (qEnvironmentVariableIsSet("SP_DUMP"))
 	{
