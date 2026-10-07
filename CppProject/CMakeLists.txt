@@ -417,6 +417,19 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 if(WIN32)
 	message(STATUS "Windows platform (${WINDOWS_ARCH})")
 
+	# OpenGL is needed for shaderpacks, Direct3D 11 is the original Mine-imator renderer
+	set(MI_GRAPHICS_API "OpenGL" CACHE STRING "Graphics API of Windows builds (OpenGL or D3D11)")
+	set_property(CACHE MI_GRAPHICS_API PROPERTY STRINGS OpenGL D3D11)
+	if(MI_GRAPHICS_API STREQUAL "D3D11")
+		target_compile_definitions(${PROJECT_NAME} PRIVATE GRAPHICS_D3D11)
+		set(GRAPHICS_API_LIBRARIES d3d11 "$<$<CONFIG:Debug>:d3dcompiler>")
+	elseif(MI_GRAPHICS_API STREQUAL "OpenGL")
+		set(GRAPHICS_API_LIBRARIES opengl32)
+	else()
+		message(FATAL_ERROR "MI_GRAPHICS_API must be OpenGL or D3D11")
+	endif()
+	message(STATUS "Graphics API = ${MI_GRAPHICS_API}")
+
 	# Qt and the bundled static libraries are built against the static MSVC CRT
 	set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
 	target_compile_options(${PROJECT_NAME} PRIVATE /MP /bigobj)
@@ -440,8 +453,7 @@ if(WIN32)
 		mfuuid
 		strmiids
 		Avrt
-		d3d11
-		"$<$<CONFIG:Debug>:d3dcompiler>"
+		${GRAPHICS_API_LIBRARIES}
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
 		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"

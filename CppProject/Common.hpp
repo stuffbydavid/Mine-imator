@@ -47,8 +47,8 @@ typedef double RealType;
 typedef int64_t IntType;
 typedef bool BoolType;
 
-// Pick graphics API
-#ifdef OS_WINDOWS
+// Pick graphics API, Windows builds use Direct3D 11 when configured with MI_GRAPHICS_API=D3D11
+#if defined(OS_WINDOWS) && defined(GRAPHICS_D3D11)
 #define API_D3D11 1
 #define API_OPENGL 0
 #else
