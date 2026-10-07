@@ -26,8 +26,11 @@ MI-Shader-Fusion is a fork of [Mine-imator](https://github.com/stuffbydavid/Mine
 - Toggle it under **Import from world > Settings > Import functional blocks as functional models**
 
 ## Requirements
-- Shaderpacks need the OpenGL renderer, which is used on Linux and Mac OS. Windows builds use DirectX 11 and show a message instead.
+- Shaderpacks need the OpenGL renderer, which is used on all platforms. Windows builds can be configured with `-DMI_GRAPHICS_API=D3D11` to use the original DirectX 11 renderer instead, without shaderpacks.
 - Packs using compute shaders need OpenGL 4.3 (not available on Mac OS).
+
+## Download
+Windows builds are made by GitHub Actions on every push. Download `MI-Shader-Fusion-Windows-x64` from the latest successful run under [Actions](https://github.com/AssilF/MI-Shader-Fusion/actions/workflows/windows.yml), or the zip from [Releases](https://github.com/AssilF/MI-Shader-Fusion/releases) for builds of `master`. Unzip it and run `Mine-imator.exe`.
 - Mob models are those of Minecraft 1.20.2; newer mobs are not included yet.
 
 ## Building
