@@ -1,4 +1,4 @@
-Prmpt:
+Prompt:
 
 *Look at the `e_renderer.STANDARD` render path for GameMaker, then the underlying C++ implementation in CppProject. What are the highest prio optimization opportunities for shadow rendering from the sunlight, with 1 or more cascades? List actions to take in the shader code, GML or CppProject engine under Render/ or Asset/.*
 

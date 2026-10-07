@@ -9,6 +9,16 @@ function render_world_list(depthsign)
 	if (endindex = startindex)
 		return 0
 	
+	// Depth passes
+	if (render_depth_pass)
+	{
+		for (i = startindex; i < endindex; i++)
+			with (render_list[|i])
+				render_world_tl()
+		
+		return 0
+	}
+	
 	transpblocks = render_block_transparent_list[depthsign + 1]
 	ds_list_clear(transpblocks)
 

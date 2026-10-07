@@ -197,6 +197,14 @@ namespace CppProject
                     "\tif (repeat) uv = mod(uv, float2(1.0, 1.0));\n"
                     "\tuv = uvRect.xy + uv * uvRect.zw;\n"
                     "\treturn tex.SampleGrad(s, uv, derivX, derivY);\n"
+                    "}\n\n"
+                    "// Optimized depth lookup\n"
+                    "float4 _sampleDepth(Texture2D tex, SamplerState s, bool repeat, float2 uv)\n"
+                    "{\n"
+                    "\tfloat2 derivX = ddx(uv);\n"
+                    "\tfloat2 derivY = ddy(uv);\n"
+                    "\tif (repeat) uv = mod(uv, float2(1.0, 1.0));\n"
+                    "\treturn tex.SampleGrad(s, uv, derivX, derivY);\n"
                     "}\n\n" + code;
 
             // Pro RegEx hacker way to replace M * expr with mul(M, expr), beats writing a GLSL parser
@@ -561,6 +569,8 @@ namespace CppProject
             batchBufferSize = ceil((batchBufferMaxObjects * batchBufferObjectSize) / 16.0) * 16;
             batchBufferData = new char[batchBufferSize];
             cBufferDesc.ByteWidth = batchBufferSize;
+            cBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+            cBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
             D3DCheckError(D3DDevice->CreateBuffer(&cBufferDesc, nullptr, &d3dObjectBuffer));
         }
 
@@ -569,6 +579,8 @@ namespace CppProject
             staticBufferSize = ceil(staticBufferSize / 16.0) * 16;
             staticBufferData = new char[staticBufferSize];
             cBufferDesc.ByteWidth = staticBufferSize;
+            cBufferDesc.CPUAccessFlags = 0;
+            cBufferDesc.Usage = D3D11_USAGE_DEFAULT;
             D3DCheckError(D3DDevice->CreateBuffer(&cBufferDesc, nullptr, &d3dStaticBuffer));
         }
 

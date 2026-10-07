@@ -12,9 +12,9 @@ uniform float uSunNear[NUM_CASCADES]; // static
 uniform float uSunFar[NUM_CASCADES]; // static
 uniform float uCascadeWorldSize[NUM_CASCADES]; // static
 
-uniform sampler2D uDepthBuffer0; // static pass_uv
-uniform sampler2D uDepthBuffer1; // static pass_uv
-uniform sampler2D uDepthBuffer2; // static pass_uv
+uniform sampler2D uDepthBuffer0; // static pass_uv depth_uv
+uniform sampler2D uDepthBuffer1; // static pass_uv depth_uv
+uniform sampler2D uDepthBuffer2; // static pass_uv depth_uv
 uniform float uCascadeEndClipSpace[NUM_CASCADES]; // static
 uniform int uCascadeCount; // static
 uniform int uShadowBlurQuality; // static

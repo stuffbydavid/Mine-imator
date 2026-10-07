@@ -167,6 +167,7 @@ namespace CppProject
 		{
 			objRectUniformIndex[s] = -1;
 			samplerPassUv[s] = false;
+			samplerDepthUv[s] = false;
 		}
 
 		for (IntType m = 0; m < 6; m++)
@@ -405,8 +406,8 @@ namespace CppProject
 
 		if (useBatching)
 		{
-			// Clear batch buffer
-			memset(batchBufferData, 0, batchBufferSize);
+			// Later object records inherit the initialized first record
+			memset(batchBufferData, 0, batchBufferObjectSize);
 			batchBufferObjectIndex = 0;
 
 			if (IS_OPENGL)
@@ -810,6 +811,12 @@ namespace CppProject
 			}
 		}
 
+		// Upload the populated prefix instead of the entire object buffer
+		IntType numObjects = batchBufferObjectIndex;
+		if (batchBufferObjectIndex == batchBufferMaxObjects - 1)
+			numObjects++;
+		
+		IntType objectBytes = std::max<IntType>(1, numObjects) * batchBufferObjectSize;
 		// Bind textures and submit samplers
 	#if OS_WINDOWS
 		ID3D11SamplerState* texSamplers[32] = {};
@@ -911,7 +918,10 @@ namespace CppProject
 
 			if (d3dObjectBuffer)
 			{
-				D3DContext->UpdateSubresource(d3dObjectBuffer, 0, nullptr, batchBufferData, 0, 0);
+				D3D11_MAPPED_SUBRESOURCE objectBufferRes = {};
+				D3DCheckError(D3DContext->Map(d3dObjectBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &objectBufferRes));
+				memcpy(objectBufferRes.pData, batchBufferData, objectBytes);
+				D3DContext->Unmap(d3dObjectBuffer, 0);
 				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
 				ResetObjects();
 			}
@@ -969,12 +979,8 @@ namespace CppProject
 			// Submit SSBO
 			if (useBatching)
 			{
-				IntType numObjects = batchBufferObjectIndex;
-				if (batchBufferObjectIndex == batchBufferMaxObjects - 1)
-					numObjects++;
-
 				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
-				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, numObjects * batchBufferObjectSize, batchBufferData);
+				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, objectBytes, batchBufferData);
 				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
 				GL_CHECK_ERROR();
@@ -1097,6 +1103,9 @@ namespace CppProject
 
 			if (match.captured(1) == "sampler2D" && match.captured(0).contains("pass_uv"))
 				samplerPassUv[samplerNameMap[name]] = true;
+			
+			if (match.captured(1) == "sampler2D" && match.captured(0).contains("depth_uv"))
+				samplerDepthUv[samplerNameMap[name]] = true;
 
 			if (IS_D3D11) // Erase uniforms in HLSL, replaced by Cbuffer
 				code.replace(match.captured(0) + "\n", "");
@@ -1110,12 +1119,15 @@ namespace CppProject
 			QString name = match.captured(1);
 			if (samplerNameMap.contains(name))
 			{
-				QString samplerArgs = "_sampleUvRect(" + name + ", ";
+				IntType sampler = samplerNameMap[name];
+				QString samplerArgs = (samplerDepthUv[sampler] ? "_sampleDepth(" : "_sampleUvRect(") + name + ", ";
 				if (IS_D3D11)
 					samplerArgs += name + "_s, ";
 				
-				samplerArgs += "_uUvRect[" + NumStr(samplerNameMap[name]) + "], "
-					+ "_uTexRepeat[" + NumStr(samplerNameMap[name]) + "] > 0,";
+				if (!samplerDepthUv[sampler])
+					samplerArgs += "_uUvRect[" + NumStr(sampler) + "], ";
+				
+				samplerArgs += "_uTexRepeat[" + NumStr(sampler) + "] > 0,";
 				
 				code.replace("texture2D(" + name + ",", samplerArgs);
 			}

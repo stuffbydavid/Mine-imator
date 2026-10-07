@@ -178,6 +178,7 @@ namespace CppProject
 		IntType numUniforms = 0;
 		IntType objRectUniformIndex[32];
 		BoolType samplerPassUv[32];
+		BoolType samplerDepthUv[32];
 		QVector<float> floatData;
 		QVector<QMatrix4x4> matrixData;
 

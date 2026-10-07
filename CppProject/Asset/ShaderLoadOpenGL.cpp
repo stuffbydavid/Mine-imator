@@ -80,6 +80,16 @@ namespace CppProject
 					"\tuv = uvRect.xy + uv * uvRect.zw;\n"
 					"\tuv.y = 1.0 - uv.y;\n"
 					"\treturn textureGrad(s, uv, derivX, derivY);\n"
+					"}\n\n"
+                    "// Optimized depth lookup\n"
+					"vec4 _sampleDepth(sampler2D s, bool repeat, vec2 uv)\n"
+					"{\n"
+					"\tvec2 lodUv = vec2(uv.x, 1.0 - uv.y);\n"
+					"\tvec2 derivX = dFdx(lodUv);\n"
+					"\tvec2 derivY = dFdy(lodUv);\n"
+					"\tif (repeat) uv = mod(uv, vec2(1.0, 1.0));\n"
+					"\tuv.y = 1.0 - uv.y;\n"
+					"\treturn textureGrad(s, uv, derivX, derivY);\n"
 					"}\n\n";
 			}
 
