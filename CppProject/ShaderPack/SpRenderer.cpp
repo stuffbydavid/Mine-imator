@@ -1512,9 +1512,9 @@ namespace ShaderPacks
 
 			// Minecraft projection: far plane is 4x the render distance
 			float aspect = (float)state.width / (float)qMax(1, state.height);
-			float far = qMax(state.renderDistance * 4.f, 32.f);
+			float farPlane = qMax(state.renderDistance * 4.f, 32.f);
 			QMatrix4x4 proj;
-			proj.perspective(state.fov, aspect, state.nearPlane, far);
+			proj.perspective(state.fov, aspect, state.nearPlane, farPlane);
 			projection = state.jitter * proj;
 			projectionInv = projection.inverted();
 

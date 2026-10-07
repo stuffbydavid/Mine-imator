@@ -41,6 +41,9 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     5. **Note**: Assets must still be added, removed, reorganized or renamed via the GameMaker IDE
 9. Generate Release build in `install\`
     * Run `.\Setup.ps1 Release`
+10. Windows builds use the OpenGL renderer, which shaderpacks need. For the original Direct3D 11 renderer, set the CMake cache variable `MI_GRAPHICS_API` to `D3D11` in the build folder (for example with `cmake -DMI_GRAPHICS_API=D3D11 build-release`) and build again.
+
+The `Windows build` GitHub Actions workflow (`.github/workflows/windows.yml`) runs these steps on every push and uploads the install folder.
 
 ## Building Mine-imator (Mac OS Intel)
 1. Open terminal (⌘+Space and type terminal)

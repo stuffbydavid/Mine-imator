@@ -9,7 +9,7 @@ namespace ShaderPacks
 	struct Option
 	{
 		enum Kind { BOOLEAN, STRING };
-		enum Source { DEFINE, CONST };
+		enum Source { DEFINE, CONSTANT };
 
 		QString name;
 		Kind kind = BOOLEAN;

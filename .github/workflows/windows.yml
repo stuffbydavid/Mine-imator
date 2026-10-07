@@ -1,0 +1,105 @@
+# Builds the Windows x64 executable with the OpenGL renderer and uploads the install folder.
+# Static Qt takes about an hour to build, it is cached between runs.
+name: Windows build
+
+on:
+  push:
+    branches: [master, 'claude/**']
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Windows x64
+    runs-on: windows-2022
+    timeout-minutes: 330
+    env:
+      DEV_DIR: C:\Dev
+      QT_CACHE_PATHS: |
+        C:\Dev\Qt\5.15.19\install
+        C:\Dev\Qt\5.15.19\qt5\qtbase\src\3rdparty\freetype\include
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Restore Qt
+        id: qt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.QT_CACHE_PATHS }}
+          key: qt-5.15.19-static-msvc-x64-v1
+
+      - name: Extract library sources
+        shell: pwsh
+        run: |
+          $archives = @{
+            "FFmpeg" = "ffmpeg-5.1.10.tar.xz"
+            "OpenAL" = "openal-soft-1.24.3.tar.bz2"
+            "Libzip" = "libzip-1.11.4.tar.gz"
+            "OpenSSL" = "openssl-3.0.21.tar.gz"
+          }
+          foreach ($entry in $archives.GetEnumerator()) {
+            $archive = Resolve-Path "CppProject\External\Sources\$($entry.Value)"
+            $destination = Join-Path $env:DEV_DIR $entry.Key
+            New-Item -ItemType Directory -Force -Path $destination | Out-Null
+            Push-Location $destination
+            cmake -E tar xf $archive
+            if ($LASTEXITCODE -ne 0) { throw "Could not extract $archive" }
+            Pop-Location
+          }
+
+      - name: Build Qt
+        if: steps.qt-cache.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: .\Setup.ps1 Qt x64
+
+      - name: Save Qt
+        if: steps.qt-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.QT_CACHE_PATHS }}
+          key: ${{ steps.qt-cache.outputs.cache-primary-key }}
+
+      - name: Build Mine-imator
+        shell: pwsh
+        run: .\Setup.ps1 Release x64 *>&1 | Tee-Object -FilePath build.log
+
+      - name: Summarize errors
+        if: failure()
+        shell: pwsh
+        run: |
+          Select-String -Path build.log -Pattern 'error (C|LNK)\d+' |
+            ForEach-Object { ($_.Line -replace '^.*?\\MI-Shader-Fusion\\MI-Shader-Fusion\\', '') -replace ' \[[^\]]*vcxproj\]', '' } |
+            Sort-Object -Unique | Select-Object -First 300
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: MI-Shader-Fusion-Windows-x64
+          path: install/Mine-imator
+          if-no-files-found: error
+
+      - name: Package release
+        if: github.ref == 'refs/heads/master'
+        shell: pwsh
+        run: Compress-Archive -Path install\Mine-imator -DestinationPath MI-Shader-Fusion-Windows-x64.zip
+
+      - name: Publish release
+        if: github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: windows-build-${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          name: Windows build ${{ github.run_number }}
+          prerelease: true
+          files: MI-Shader-Fusion-Windows-x64.zip
+          body: |
+            Windows x64 build of ${{ github.sha }} with the OpenGL renderer.
+            Unzip and run Mine-imator.exe from the Mine-imator folder.

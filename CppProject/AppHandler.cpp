@@ -23,8 +23,11 @@
 #include <QStandardPaths>
 
 #ifdef OS_WINDOWS
+#include <windows.h>
+#undef max
+#undef min
+
 #define USE_GPU 1
-typedef unsigned long DWORD;
 extern "C" __declspec(dllexport) DWORD NvOptimusEnablement = USE_GPU;
 extern "C" __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = USE_GPU;
 #endif
