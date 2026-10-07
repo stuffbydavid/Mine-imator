@@ -597,9 +597,9 @@ namespace CppProject
 		}
 	}
 
-#if OS_WINDOWS
 	void GraphicsApiHandler::ApplyDepthState()
 	{
+#if OS_WINDOWS
 		DepthStencilState state = DEPTH_NO_TEST_NO_WRITE;
 		if (depthTest)
 		{
@@ -608,8 +608,8 @@ namespace CppProject
 				: (depthMask ? DEPTH_TEST_WRITE : DEPTH_TEST_NO_WRITE);
 		}
 		D3DContext->OMSetDepthStencilState(d3dDepthStencilStateMap[state], 1);
-	}
 #endif
+	}
 
 	void GraphicsApiHandler::SetColorWrite(BoolType red, BoolType green, BoolType blue, BoolType alpha)
 	{
@@ -680,20 +680,108 @@ namespace CppProject
 	#endif
 		if (IS_OPENGL)
 		{
-			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest], glBlendMap[alphasrc], glBlendMap[alphadest]);
+			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest],
+				glBlendMap[alphasrc], glBlendMap[alphadest]);
 			
+			// The lighting mask always uses ordinary alpha blending
 			if (maskBlend)
-				Shader::gl43Core->glBlendFuncSeparatei(1, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				Shader::gl43Core->glBlendFuncSeparatei(1,
+					GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			
+			// Fog stores the frontmost object's value without blending
 			if (fogBlend)
 				Shader::gl43Core->glBlendFuncSeparatei(2, GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
 			
-			if (sunBlendIndex >= 0)
-				for (IntType i = sunBlendIndex; i < sunBlendIndex + 2; i++)
-					Shader::gl43Core->glBlendFuncSeparatei(i, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			ApplySunBlendState();
 			
 			GL_CHECK_ERROR();
 		}
+	}
+
+	void GraphicsApiHandler::ApplyBlendState()
+	{
+#if OS_WINDOWS
+		ID3D11BlendState* state = nullptr;
+		d3dBlendStateIndex = 0;
+
+		for (BlendState& previous : d3dBlendStates)
+		{
+			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
+				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
+				previous.enabled == blend && previous.writeMask == colorWriteMask &&
+				previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.sunIndex == sunBlendIndex)
+			{
+				state = previous.state;
+				break;
+			}
+
+			d3dBlendStateIndex++;
+		}
+
+		if (!state)
+		{
+			D3D11_BLEND_DESC blendDesc = {};
+			D3D11_RENDER_TARGET_BLEND_DESC targetDesc = {};
+			targetDesc.BlendEnable = blend;
+			targetDesc.SrcBlend = d3dBlendColorMap[blendSrcFactor];
+			targetDesc.DestBlend = d3dBlendColorMap[blendDstFactor];
+			targetDesc.SrcBlendAlpha = d3dBlendAlphaMap[blendAlphaSrcFactor];
+			targetDesc.DestBlendAlpha = d3dBlendAlphaMap[blendAlphaDstFactor];
+			targetDesc.BlendOp = targetDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+			targetDesc.RenderTargetWriteMask = colorWriteMask;
+
+			blendDesc.RenderTarget[0] = targetDesc;
+
+			if (sunBlendIndex >= 0)
+			{
+				blendDesc.IndependentBlendEnable = TRUE;
+
+				for (IntType i = 1; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; i++)
+					blendDesc.RenderTarget[i] = targetDesc;
+
+				D3D11_RENDER_TARGET_BLEND_DESC sunDesc = targetDesc;
+				sunDesc.SrcBlend = sunDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+				sunDesc.DestBlend = sunDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+				blendDesc.RenderTarget[sunBlendIndex] = sunDesc;
+				blendDesc.RenderTarget[sunBlendIndex + 1] = sunDesc;
+			}
+
+			if (maskBlend)
+			{
+				blendDesc.IndependentBlendEnable = TRUE;
+				targetDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+				targetDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+				targetDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+				blendDesc.RenderTarget[1] = targetDesc;
+			}
+
+			if (fogBlend)
+			{
+				blendDesc.IndependentBlendEnable = TRUE;
+				targetDesc.BlendEnable = FALSE;
+				blendDesc.RenderTarget[2] = targetDesc;
+			}
+
+			// Combined color rendering keeps depth, normals and materials unblended
+			if (maskBlend && sunBlendIndex >= 0)
+			{
+				targetDesc.BlendEnable = FALSE;
+
+				for (IntType i = 3; i < sunBlendIndex; i++)
+					blendDesc.RenderTarget[i] = targetDesc;
+			}
+
+			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
+
+			d3dBlendStates.append({
+				blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
+				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, state
+			});
+		}
+
+		D3DContext->OMSetBlendState(state, nullptr, 0xFFFFFFFF);
+#endif
 	}
 
 	void GraphicsApiHandler::SetMaskBlending(BoolType enabled, BoolType fog)
@@ -743,92 +831,37 @@ namespace CppProject
 	#endif
 		if (IS_OPENGL)
 		{
+			// Restore the previous sunlight targets and any combined scene data
 			if (previous >= 0)
-				for (IntType i = previous; i < previous + 2; i++)
-					Shader::gl43Core->glBlendFuncSeparatei(i, glBlendMap[blendSrcFactor], glBlendMap[blendDstFactor], glBlendMap[blendAlphaSrcFactor], glBlendMap[blendAlphaDstFactor]);
+			{
+				IntType start = maskBlend && previous > 3 ? 3 : previous;
+				for (IntType i = start; i < previous + 2; i++)
+					Shader::gl43Core->glBlendFuncSeparatei(i,
+						glBlendMap[blendSrcFactor], glBlendMap[blendDstFactor],
+						glBlendMap[blendAlphaSrcFactor], glBlendMap[blendAlphaDstFactor]);
+			}
 			
-			if (index >= 0)
-				for (IntType i = index; i < index + 2; i++)
-					Shader::gl43Core->glBlendFuncSeparatei(i, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			ApplySunBlendState();
 			
 			GL_CHECK_ERROR();
 		}
 	}
-#if OS_WINDOWS
-	void GraphicsApiHandler::ApplyBlendState()
+
+	void GraphicsApiHandler::ApplySunBlendState()
 	{
-		ID3D11BlendState* state = nullptr;
-		d3dBlendStateIndex = 0;
-
-		for (BlendState& previous : d3dBlendStates)
-		{
-			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
-				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
-				previous.enabled == blend && previous.writeMask == colorWriteMask && previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.sunIndex == sunBlendIndex)
-			{
-				state = previous.state;
-				break;
-			}
-
-			d3dBlendStateIndex++;
-		}
-
-		if (!state)
-		{
-			D3D11_BLEND_DESC blendDesc = {};
-			D3D11_RENDER_TARGET_BLEND_DESC targetDesc = {};
-			targetDesc.BlendEnable = blend;
-			targetDesc.SrcBlend = d3dBlendColorMap[blendSrcFactor];
-			targetDesc.DestBlend = d3dBlendColorMap[blendDstFactor];
-			targetDesc.SrcBlendAlpha = d3dBlendAlphaMap[blendAlphaSrcFactor];
-			targetDesc.DestBlendAlpha = d3dBlendAlphaMap[blendAlphaDstFactor];
-			targetDesc.BlendOp = targetDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-			targetDesc.RenderTargetWriteMask = colorWriteMask;
-
-			blendDesc.RenderTarget[0] = targetDesc;
-
-			if (sunBlendIndex >= 0)
-			{
-				blendDesc.IndependentBlendEnable = TRUE;
-				
-				for (IntType i = 1; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; i++)
-					blendDesc.RenderTarget[i] = targetDesc;
-				
-				D3D11_RENDER_TARGET_BLEND_DESC sunDesc = targetDesc;
-				sunDesc.SrcBlend = sunDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-				sunDesc.DestBlend = sunDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
-				blendDesc.RenderTarget[sunBlendIndex] = sunDesc;
-				blendDesc.RenderTarget[sunBlendIndex + 1] = sunDesc;
-			}
-
-			if (maskBlend)
-			{
-				blendDesc.IndependentBlendEnable = TRUE;
-				targetDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-				targetDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-				targetDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
-				blendDesc.RenderTarget[1] = targetDesc;
-			}
-
-			if (fogBlend)
-			{
-				blendDesc.IndependentBlendEnable = TRUE;
-				targetDesc.BlendEnable = FALSE;
-				blendDesc.RenderTarget[2] = targetDesc;
-			}
-
-			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
-			
-			d3dBlendStates.append({
-				blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
-				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, state
-			});
-		}
-
-		D3DContext->OMSetBlendState(state, nullptr, 0xFFFFFFFF);
+		if (sunBlendIndex < 0)
+			return;
+		
+		// Sunlight color and highlights always use ordinary alpha blending
+		for (IntType i = sunBlendIndex; i < sunBlendIndex + 2; i++)
+			Shader::gl43Core->glBlendFuncSeparatei(i,
+				GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		// Combined color rendering stores depth, normals and materials without blending
+		if (maskBlend)
+			for (IntType i = 3; i < sunBlendIndex; i++)
+				Shader::gl43Core->glBlendFuncSeparatei(i, GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
 	}
-#endif
 
 	void GraphicsApiHandler::SetLODBias(IntType bias)
 	{

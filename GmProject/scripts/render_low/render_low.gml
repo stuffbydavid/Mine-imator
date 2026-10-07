@@ -1,4 +1,4 @@
-/// @desc Renders the scene in low quality.
+/// @desc Renders the scene in low quality (Quick).
 
 function render_low()
 {

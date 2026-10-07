@@ -7,7 +7,10 @@ function render_high_create_gbuffers()
 	needsss = (render_auxiliary_material || render_pass = e_render_pass.ALL || render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE)
 	maskdepth = (app.place_build || !render_mask_blend_supported())
 	render_fog_combined = (renderer_current = e_renderer.STANDARD && render_auxiliary && !needglow && !needsss && !maskdepth)
-	
+	render_color_combined = (render_sun_combined && !render_glint && !needglow && !needsss && !maskdepth)
+	if (render_color_combined)
+		render_fog_combined = true
+
 	// Recreate the mask when switching between combined rendering and the fallback
 	if (is_cpp() && surface_exists(render_surface_mask) && surface_get_depth_enabled(render_surface_mask) != maskdepth)
 	{
@@ -17,7 +20,7 @@ function render_high_create_gbuffers()
 		render_gbuffers_cache_ready = false
 	}
 	
-	if (render_auxiliary && is_cpp() && surface_exists(render_surface_fog) && surface_get_depth_enabled(render_surface_fog) != !render_fog_combined)
+	if ((render_auxiliary || render_color_combined) && is_cpp() && surface_exists(render_surface_fog) && surface_get_depth_enabled(render_surface_fog) != !render_fog_combined)
 	{
 		surface_free(render_surface_fog)
 		
@@ -63,7 +66,7 @@ function render_high_create_gbuffers()
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, surface_rgba16float)
 	render_surface_normal	= surface_require(render_surface_normal, render_width, render_height, false, surface_rgba16float)
 
-	if (render_auxiliary)
+	if (render_auxiliary || render_color_combined)
 	{
 		render_surface_fog = surface_require(render_surface_fog, render_width, render_height, !render_fog_combined, surface_r8unorm)
 		
@@ -82,6 +85,8 @@ function render_high_create_gbuffers()
 		render_high_clear_gbuffers()
 		
 		var combinedmask = false;
+		if (render_color_combined)
+			render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, surface_rgba16float)
 
 		// Diffuse data
 		surface_set_target(render_surface_diffuse)
@@ -101,10 +106,18 @@ function render_high_create_gbuffers()
 				combinedmask = render_mask_blend(true, render_surface_mask, render_fog_combined ? render_surface_fog : null)
 			
 			if (!combinedmask)
+			{
 				render_fog_combined = false
-			
+				render_color_combined = false
+			}
+			if (render_color_combined)
+				render_color_combined = render_color_gbuffers(render_surface_depth, render_surface_normal, render_surface_material, render_surface_shadows, render_surface_specular)
+
 			render_world(e_render_mode.COLOR)
 			render_world_done()
+
+			if (render_color_combined)
+				render_sun_blend(-1)
 			
 			if (combinedmask)
 				render_mask_blend(false, render_surface_mask)
@@ -151,50 +164,53 @@ function render_high_create_gbuffers()
 			surface_reset_target()
 		}
 
-		// G-buffers
-		if (render_sun_combined)
+		if (!render_color_combined)
 		{
-			if (render_glint)
+			// G-buffers
+			if (render_sun_combined)
 			{
-				render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
-				render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
-				surface_clear(render_surface_hdr[0], c_black)
-				surface_clear(render_surface_hdr[1], c_black)
+				if (render_glint)
+				{
+					render_surface_hdr[0] = surface_require(render_surface_hdr[0], render_width, render_height, true, surface_rgba16float)
+					render_surface_hdr[1] = surface_require(render_surface_hdr[1], render_width, render_height, false, surface_rgba16float)
+					surface_clear(render_surface_hdr[0], c_black)
+					surface_clear(render_surface_hdr[1], c_black)
+				}
+				else
+				{
+					// Clear final sunlight targets before the combined pass
+					render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, surface_rgba16float)
+					surface_clear(render_surface_shadows, c_black)
+				}
 			}
-			else
-			{
-				// Clear final sunlight targets before the combined pass
-				render_surface_shadows = surface_require(render_surface_shadows, render_width, render_height, false, surface_rgba16float)
-				surface_clear(render_surface_shadows, c_black)
-			}
-		}
 		
-		surface_set_target_ext(0, render_surface_depth)
-		surface_set_target_ext(1, render_surface_normal)
-		surface_set_target_ext(2, render_surface_material)
-		if (render_glint)
-			surface_set_target_ext(3, render_surface_specular)
-		{
-			gpu_set_blendmode_ext(bm_one, bm_zero)
-			
-			if (render_sun_combined)
+			surface_set_target_ext(0, render_surface_depth)
+			surface_set_target_ext(1, render_surface_normal)
+			surface_set_target_ext(2, render_surface_material)
+			if (render_glint)
+				surface_set_target_ext(3, render_surface_specular)
 			{
-				var sunindex = render_glint ? 4 : 3;
-				surface_set_target_ext(sunindex, render_glint ? render_surface_hdr[0] : render_surface_shadows)
-				surface_set_target_ext(sunindex + 1, render_glint ? render_surface_hdr[1] : render_surface_specular)
-				render_sun_blend(sunindex)
+				gpu_set_blendmode_ext(bm_one, bm_zero)
+			
+				if (render_sun_combined)
+				{
+					var sunindex = render_glint ? 4 : 3;
+					surface_set_target_ext(sunindex, render_glint ? render_surface_hdr[0] : render_surface_shadows)
+					surface_set_target_ext(sunindex + 1, render_glint ? render_surface_hdr[1] : render_surface_specular)
+					render_sun_blend(sunindex)
+				}
+			
+				render_world_start(depth_far)
+				render_world(e_render_mode.G_BUFFERS)
+				render_world_done()
+			
+				if (render_sun_combined)
+					render_sun_blend(-1)
+
+				gpu_set_blendmode(bm_normal)
 			}
-			
-			render_world_start(depth_far)
-			render_world(e_render_mode.G_BUFFERS)
-			render_world_done()
-			
-			if (render_sun_combined)
-				render_sun_blend(-1)
-			
-			gpu_set_blendmode(bm_normal)
+			surface_reset_target()
 		}
-		surface_reset_target()
 
 		// Auxiliary buffers
 		if (render_auxiliary && !render_fog_combined)

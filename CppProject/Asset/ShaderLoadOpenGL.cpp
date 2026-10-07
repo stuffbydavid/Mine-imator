@@ -27,7 +27,7 @@ namespace CppProject
 			QString header = "";
 
 			// Move preprocessor declarations to header
-			const QStringList preprocessorExceptions = { "#if", "#endif", "#ifndef" };
+			const QStringList preprocessorExceptions = { "#if", "#endif", "#ifndef", "#ifdef" };
 			for (QString line : code.split("\n"))
 			{
 				QString declaration = line.section(" ", 0, 0);

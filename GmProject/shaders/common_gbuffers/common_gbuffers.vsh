@@ -32,7 +32,7 @@ uniform vec2 uTextureOffset;
 #pragma shady: inline(common_position.CLIP_POSITION_LIB)
 #pragma shady: inline(common_util.MATRIX_LIB)
 
-#if CPP_SUN_GBUFFERS
+#ifdef CPP_SUN_GBUFFERS
 	#define NUM_CASCADES 3
 	uniform mat4 uLightMatBiasMVP[NUM_CASCADES]; // static
 	varying vec4 vScreenCoord0;
@@ -42,14 +42,14 @@ uniform vec2 uTextureOffset;
 	varying float vClipSpaceDepth;
 #endif
 
-void main()
-{
+#pragma shady: macro_end
+#pragma shady: macro_begin GBUFFERS_VERTEX_LIB
 	vPosition = getWorldPosition(in_Position, in_Wave);
 	vTexCoord = in_TextureCoord + uTextureOffset;
 
 	gl_Position = getClipPosition(vPosition);
 	
-	#if CPP_SUN_GBUFFERS
+	#ifdef CPP_SUN_GBUFFERS
 		vClipPosition = gl_Position;
 		vClipSpaceDepth = gl_Position.z;
 	
@@ -72,6 +72,5 @@ void main()
 	// Color
 	vColor = uBlendColor * in_Colour;
 	vCustom = in_Wave;
-}
 
 #pragma shady: macro_end

@@ -1,68 +1,123 @@
-/// @desc Renders the scene in high quality.
+/// @desc Renders the scene in high quality (Standard/Realistic).
 /*
-	COLOR pass:
-	
-		- render_surface_diffuse (rgba8unorm, MRT 0)
-			RGBA: Diffuse data
-
-		- render_surface_mask (rgba8unorm, MRT 1 in C++)
-			R: Scene lighting mask, with independent alpha blending
-			Separate SCENE_TEST pass in GM or when combined mask rendering is unavailable
+	Preparing the scene (render_high_create_gbuffers):
+		COLOR draws object colors and records which objects receive lighting
+		G_BUFFERS records distance, surface direction, material properties and optional glint
+		AUXILIARY records fog, glow and light passing through materials when needed
 		
-		- render_surface_fog (r8unorm, MRT 2 when render_fog_combined)
-			R: Fog strength, overwritten independently of diffuse blend modes
-			Standard fog-only auxiliary work is combined here when independent MRT blending is available
-			Glow, SSS and build mode retain the separate auxiliary pass
+		C++ records the lighting mask alongside COLOR, while GameMaker uses SCENE_TEST separately
 	
-	shader_high_gbuffers:
-	
-		- render_surface_depth (r32float, MRT 0)
-			R: Depth
-	
-		- render_surface_normal (rgba16float, MRT 1)
-			RGB: Packed view-space normal
-			A: Emissive
-	
-		- render_surface_material (rgba8unorm, MRT 2)
-			R: Roughness
-			G: Metallic
-			B: Fresnel Term
-			A: SSAO Mask
-	
-		- render_surface_specular (rgba16float, MRT 3 only when render_glint)
-			RGB: Glint
-			A: Unused
-			Glint sampling and the fourth attachment are skipped when no visible glint is used
+	Buffer contents:
+		render_surface_diffuse (rgba8unorm):
+			RGB object colors before lighting
+			A opacity
 		
-		- render_surface_shadows/specular (rgba16float, MRT 3/4 without glint)
-		- render_surface_hdr[0/1] (rgba16float, MRT 4/5 with glint)
-			RGB: Sunlight diffuse/specular with independent alpha blending
-			Without glint, sunlight writes directly to final targets without alpha-weighted copies
-			Local lights retain temporary targets and additive copies
-			
-			Standard C++ renders cascades first and combines sunlight with the G-buffer traversal
-			GameMaker, build mode and unavailable independent blending retain the separate sunlight pass
+		render_surface_mask (rgba8unorm):
+			R lighting mask
+			A object opacity used for blending
+		
+		render_surface_fog (r8unorm):
+			R fog strength, from clear to fully fogged
+		
+		render_surface_depth (r32float):
+			R camera depth
+			G/B zero
+			A one when writing a full RGBA target
+		
+		render_surface_normal (rgba16float):
+			RGB packed surface direction relative to the camera
+			A emissive strength
+		
+		render_surface_material (rgba8unorm):
+			R roughness
+			G metallic
+			B angle-dependent reflectivity
+			A ambient occlusion mask
+		
+		render_surface_specular (rgba16float):
+			RGB glint and lighting highlights
+			A used when blending lighting
+		
+		render_surface_shadows (rgba16float):
+			RGB light reaching the surface
+			A used when blending lighting
+		
+		render_surface_hdr[0/1] (rgba16float):
+			RGB temporary lighting color/highlights
+			A object opacity used for blending
+		
+	These temporary images are reused later for indirect lighting and the lit scene
+		render_surface_sss (r16float):
+			R amount of light passing through the material
+		
+		render_surface_sss_range (rgba8unorm):
+			RGB light transmission radius per color channel
+			A unused
+		
+		render_surface_glow (rgba8unorm):
+			RGB glow color
+			A opacity
+		
+		render_surface_specular_base (rgba16float):
+			RGB cached glint
+			A unused
+		
+		render_surface_sun_buffer[]:
+			R sun shadow depth per cascade, repeated in G/B/A on full RGBA targets in GameMaker
+			C++ reads native depth instead of these color channels
+		
+		render_surface_samples (rgba32float in C++, rgba16float in GameMaker):
+			RGBA accumulated sample colors and opacity
+		
+		render_target (rgba8unorm):
+			RGBA finished image colors and opacity, or the selected debug image
+		
+		Diffuse and scene depth keep depth storage for deciding which object is in front
+		Mask and fog need their own depth storage only when drawn separately
+		Glow and light transmission images are only created when needed by rendering or debug output
 	
-	shader_high_auxiliary / shader_high_auxiliary_standard (unless render_fog_combined):
+	Combined layouts:
+		- COLOR writes diffuse, mask and optional fog
+		- G_BUFFERS writes depth, normal, material and optional glint
+		- Combined sunlight adds lighting color and highlights to G_BUFFERS
+		- With glint these go to temporary images, otherwise directly to shadows/specular
+		- The full COLOR combination writes diffuse, mask, fog, depth, normal, material, shadows and specular together
+		- AUXILIARY writes fog plus optional light transmission and glow
 	
-		- render_surface_fog (r8unorm, MRT 0)
-			R: Fog strength
-
-		- render_surface_sss (r16float, MRT 1 when render_auxiliary_material)
-			R: Subsurface Amount
-
-		- render_surface_sss_range (rgba8unorm, MRT 2 when render_auxiliary_material)
-			RGB: Subsurface RGB radius
-			A: Unused
-
-		- render_surface_glow (rgba8unorm, optional MRT 1 in Standard or MRT 3 with SSS)
-			RGBA: Glow color
+	Standard optimizations (C++ only):
+		- render_fog_combined records fog alongside COLOR when no separate glow or light transmission data is needed
+			This skips AUXILIARY without changing the object's color blending
+		- render_sun_combined prepares sun shadows first, then calculates sunlight alongside G_BUFFERS
+			This skips the separate HIGH_LIGHT_SUN draw
+		- render_color_combined also records G_BUFFERS and sunlight alongside COLOR
+			This skips G_BUFFERS as well, but needs the sunlight shortcut and no glint, glow or light transmission data
+		- The fog and sunlight optimizations can still work independently when the full combination is unavailable
+		- Build mode, graphics support, camera range, caching and debug output can require separate draws
 	
-	C++ depth attachments are retained on diffuse/depth and on mask/fog only for their standalone passes
-	Normal, material, specular, SSS, SSS range and glow do not need separate depth attachments
-	Auxiliary SSS/glow surfaces are only required when needed by rendering or pass capture
-	When G-buffer caching is enabled, render_surface_specular_base stores glint only while render_glint is true
-	Specular remains allocated for additive lighting/reflections, restored from cached glint or cleared before each cached sample
+	Realistic optimizations:
+		- Alpha hashing builds transparency across samples by keeping or discarding pixels instead of partially blending them
+			Transparent shadows also use hashing, so their shadow maps must be redrawn for each sample
+		- render_shadow_cache_enabled reuses sun cascades and point/spot shadow maps when transparent and jittered shadows are off
+			Soft shadow filtering can still vary between samples without rebuilding cached shadow maps
+		- render_gbuffers_cache_enabled reuses scene colors, depth, materials and auxiliary data when AA is off or uses FXAA
+			This scene cache also requires transparent shadows to be off and no hashed alpha to be requested
+			Cached glint is restored before adding each sample's lighting, rather than accumulating lighting into the cached image
+		- Cache readiness is cleared when sampling restarts, including camera, output size or shadow quality changes
+	
+	Lighting and effects:
+		- Sun shadows draw the scene from the sun, with one draw per cascade
+		- Point and spot lights keep their own lighting draws and any required shadow maps
+		- Without glint, combined sunlight goes straight into the final lighting images
+		- Glint and local lights use temporary lighting images before adding their results
+		- Indirect lighting and ambient occlusion are calculated when enabled
+		- render_high_scene combines object colors and lighting, then reflections and fog are applied as needed
+		 -Standard includes fog in the lighting result, while Realistic applies fog separately
+		- Camera effects such as depth of field and bloom are applied before adjusting brightness and colors
+	
+	Finishing the image:
+		- Realistic adds each sample to the accumulated image, reusing cached scene data when safe
+		- Debug output can save individual rendering stages instead of the finished image
+		- The remaining camera effects and final edge smoothing are applied after samples are combined
 */
 
 function render_high()

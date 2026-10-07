@@ -46,7 +46,7 @@ namespace CppProject
 		// Initialize graphics API and load application resources, runs after QApp creation.
 		void Init();
 
-		// Sets a world/view/projection matrix
+		// Sets a world/view/projection matrix.
 		void SetMatrix(IntType type, Matrix matrix);
 
 		// Update frustum points from view * projection matrix.
@@ -84,7 +84,7 @@ namespace CppProject
 		// Restores the most recently suspended nested clip state.
 		void ClipResume();
 
-		// Sets a framebuffer as render target at an index, optionally clearing it
+		// Sets a framebuffer as render target at an index, optionally clearing it.
 		void SetMRTIndex(IntType index, FrameBuffer* frameBuffer, QColor clearColor = QColor());
 
 		// Resets the bound MRTs.
@@ -108,6 +108,9 @@ namespace CppProject
 		// Sets whether depth writing is enabled.
 		void SetDepthWrite(BoolType enabled);
 
+		// Applies the current depth test, write mask, and comparison function in D3D11.
+		void ApplyDepthState();
+
 		// Sets the depth comparison function.
 		void SetDepthFunc(IntType func);
 
@@ -119,12 +122,18 @@ namespace CppProject
 
 		// Sets the blending functions.
 		void SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest);
-		
-		// Sets independent alpha blending for the mask and optional fog overwrite target
+
+		// Apply the current blend state in D3D11.
+		void ApplyBlendState();
+
+		// Sets independent alpha blending for the mask and optional fog overwrite target.
 		void SetMaskBlending(BoolType enabled, BoolType fog = false);
 
-		// Alpha-blends the two sunlight outputs without blending the G-buffer data.
+		// Alpha-blends sunlight and overwrites G-buffer data, including the combined color layout.
 		void SetSunBlending(IntType index);
+
+		// Applies sunlight blending and combined scene data overrides in OpenGL.
+		void ApplySunBlendState();
 
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
@@ -208,12 +217,11 @@ namespace CppProject
 		ID3D11BlendState* d3dNoColorState = nullptr;
 		QHash<IntType, D3D11_BLEND> d3dBlendColorMap;
 		QHash<IntType, D3D11_BLEND> d3dBlendAlphaMap;
-		void ApplyBlendState();
-		void ApplyDepthState();
 		IDXGIFactory* dxgiFactory = nullptr;
 		QVector<ID3D11RenderTargetView*> d3dMrtRTVs;
 		ID3D11DepthStencilView* d3dMrtDSV = nullptr;
 	#endif
+
 		QOpenGLContext* glContext = nullptr;
 		QOffscreenSurface* glOffScreenSurface = nullptr;
 		GLuint glHeadlessVboId = 0;

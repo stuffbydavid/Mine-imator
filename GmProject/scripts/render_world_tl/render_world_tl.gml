@@ -113,7 +113,7 @@ function render_world_tl()
 	shader_texture_filter_linear = texture_blur
 	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
 	
-	if (render_mode = e_render_mode.G_BUFFERS)
+	if (render_mode = e_render_mode.G_BUFFERS || (render_mode = e_render_mode.COLOR && render_color_combined))
 		render_set_uniform(e_uniform.SSAO, ssao ? shader_blend_alpha : 0)
 	
 	if (colors_ext != shader_uniform_color_ext ||

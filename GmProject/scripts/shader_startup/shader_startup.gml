@@ -78,7 +78,10 @@ function shader_startup()
 		new_shader("shader_high_gbuffers")
 		
 		if (is_cpp())
+		{
 			new_shader("shader_high_gbuffers_sun")
+			new_shader("shader_high_gbuffers_color")
+		}
 			
 		new_shader("shader_high_auxiliary")
 		new_shader("shader_high_auxiliary_standard")
@@ -487,9 +490,20 @@ function shader_startup()
 		new_shader_uniform(e_uniform.RENDER_BACKGROUND)
 	}
 	
-	for (var i = 0; i < (is_cpp() ? 2 : 1); i++)
+	var common1 = [ shader_high_gbuffers ];
+	var common2 = [ shader_high_light_sun ];
+	
+	if (is_cpp())
 	{
-		with (shader_map[?i = 0 ? shader_high_gbuffers : shader_high_gbuffers_sun])
+		array_add(common1, shader_high_gbuffers_sun)
+		array_add(common2, shader_high_gbuffers_sun)
+		array_add(common1, shader_high_gbuffers_color)
+		array_add(common2, shader_high_gbuffers_color)
+	}
+	
+	for (var i = 0; i < array_length(common1); i++)
+	{
+		with (shader_map[?common1[i]])
 		{
 			shader_material_uniforms()
 
@@ -506,11 +520,14 @@ function shader_startup()
 			new_shader_uniform(e_uniform.SSAO)
 			new_shader_uniform(e_uniform.NEAR)
 			new_shader_uniform(e_uniform.FAR)
+			
+			if (common1[i] = shader_high_gbuffers_color)
+				new_shader_uniform(e_uniform.REPLACE_COLOR)
 		}
 		
-		with (shader_map[?i = 0 ? shader_high_light_sun : shader_high_gbuffers_sun])
+		with (shader_map[?common2[i]])
 		{
-			if (i = 0)
+			if (common2[i] = shader_high_light_sun)
 				shader_material_uniforms()
 
 			new_shader_sampler(e_sampler.DEPTH_BUFFER0)

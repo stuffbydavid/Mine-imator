@@ -56,4 +56,36 @@ namespace CppProject
 		if (render_mask_blend_supported())
 			GFX->SetSunBlending(index);
 	}
+
+	BoolType render_color_gbuffers(IntType depth, IntType normal, IntType material, IntType shadows, IntType specular)
+	{
+		if (!render_mask_blend_supported() || !GFX->maskBlend || !GFX->fogBlend)
+			return false;
+		
+		Surface* surfaces[] = {
+			FindSurface(depth),
+			FindSurface(normal),
+			FindSurface(material),
+			FindSurface(shadows),
+			FindSurface(specular)
+		};
+
+		for (Surface* surface : surfaces)
+			if (!surface)
+				return false;
+		
+		GFX->SubmitBatch();
+		
+		for (IntType i = 0; i < 5; i++)
+		{
+			surfaces[i]->ClearColorCache();
+			
+			QColor clear = i == 0 ? QColor(255, 255, 255, 255) : QColor(0, 0, 0, i < 3 ? 0 : 255);
+			GFX->SetMRTIndex(i + 3, surfaces[i]->frameBuffer, clear);
+		}
+		
+		GFX->SetSunBlending(6);
+		
+		return true;
+	}
 }

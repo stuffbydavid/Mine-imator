@@ -17,7 +17,7 @@ function render_startup()
 			  render_glow, render_glint, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
-			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material, render_fog_combined, render_sun_combined;
+			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material, render_fog_combined, render_sun_combined, render_color_combined;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	render_use_samples = false
