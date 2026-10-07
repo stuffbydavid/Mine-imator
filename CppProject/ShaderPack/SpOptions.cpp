@@ -189,7 +189,7 @@ namespace ShaderPacks
 
 					Option opt;
 					opt.name = name;
-					opt.source = Option::CONST;
+					opt.source = Option::CONSTANT;
 					if (!isString)
 					{
 						if (value != "true" && value != "false")

@@ -69,7 +69,15 @@ jobs:
 
       - name: Build Mine-imator
         shell: pwsh
-        run: .\Setup.ps1 Release x64
+        run: .\Setup.ps1 Release x64 *>&1 | Tee-Object -FilePath build.log
+
+      - name: Summarize errors
+        if: failure()
+        shell: pwsh
+        run: |
+          Select-String -Path build.log -Pattern 'error (C|LNK)\d+' |
+            ForEach-Object { ($_.Line -replace '^.*?\\MI-Shader-Fusion\\MI-Shader-Fusion\\', '') -replace ' \[[^\]]*vcxproj\]', '' } |
+            Sort-Object -Unique | Select-Object -First 300
 
       - name: Upload
         uses: actions/upload-artifact@v4
