@@ -207,6 +207,7 @@ function macros()
 	#macro particle_folders				[ "Effects", "Weather" ]
 	#macro particle_default				[ "Default", "Snow" ]
 	#macro default_text					"AaBbCc"
+	#macro light_shadows_threshold		20
 	#macro default_tonemapper			e_tonemapper.LOTTES
 	
 	// Parenting actions for right/left arm

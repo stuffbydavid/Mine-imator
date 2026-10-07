@@ -5,9 +5,11 @@ function tl_update_value_types()
 	for (var v = 0; v < e_value_type.amount; v++)
 		value_type[v] = false
 	
+	// Blocks
 	if ((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp)
 		value_type[e_value_type.BLOCK] = true
 	
+	// Audio track
 	if (type = e_tl_type.AUDIO_TRACK)
 	{
 		value_type[e_value_type.SOUND] = true
@@ -15,14 +17,17 @@ function tl_update_value_types()
 		return 0
 	}
 	
+	// Keyframe settings
 	value_type[e_value_type.KEYFRAME] = true
 	
+	// Environment
 	if (type = e_tl_type.ENVIRONMENT)
 	{
 		value_type[e_value_type.ENVIRONMENT] = true
 		return 0
 	}
 	
+	// Camera effect
 	if (type = e_tl_type.CAMERA_EFFECT)
 	{
 		value_type[e_value_type.CAMERA_EFFECT] = true
@@ -30,9 +35,11 @@ function tl_update_value_types()
 		return 0
 	}
 	
+	// Path
 	if (type = e_tl_type.PATH)
 		value_type[e_value_type.PATH] = true
 	
+	// Path point
 	if (type = e_tl_type.PATH_POINT)
 	{
 		value_type[e_value_type.TRANSFORM] = true
@@ -60,26 +67,19 @@ function tl_update_value_types()
 		value_type[e_value_type.TRANSFORM_ROT] = true
 	
 	// Scale
-	if (type != e_tl_type.PARTICLE_SPAWNER &&
-		type != e_tl_type.CAMERA &&
-		type != e_tl_type.POINT_LIGHT &&
-		type != e_tl_type.SPOT_LIGHT)
+	if (type != e_tl_type.PARTICLE_SPAWNER && type != e_tl_type.CAMERA && !type_is_light(type))
 		value_type[e_value_type.TRANSFORM_SCA] = true
 	
 	// Bend
 	if (type = e_tl_type.MODEL_PART && model_part != null && model_part.bend_part != null)
 		value_type[e_value_type.TRANSFORM_BEND] = true
 	
-	// Color
-	if (type != e_tl_type.CAMERA && type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
-		value_type[e_value_type.MATERIAL_COLOR] = true
-	
 	// Particles
 	if (type = e_tl_type.PARTICLE_SPAWNER)
 		value_type[e_value_type.PARTICLES] = true
 	
 	// Light
-	if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+	if (type_is_light(type))
 		value_type[e_value_type.LIGHT] = true
 	
 	// Spotlight
@@ -91,28 +91,19 @@ function tl_update_value_types()
 		value_type[e_value_type.CAMERA] = true
 	
 	// Material (texture)
-	if (type != e_tl_type.CAMERA &&
-		type != e_tl_type.POINT_LIGHT &&
-		type != e_tl_type.SPOT_LIGHT &&
-		type != e_tl_type.FOLDER)
+	if (type != e_tl_type.CAMERA && !type_is_light(type) && type != e_tl_type.FOLDER)
 		value_type[e_value_type.MATERIAL_TEXTURE] = true
 	
 	// Material (Color)
-	if (type != e_tl_type.CAMERA &&
-		type != e_tl_type.POINT_LIGHT &&
-		type != e_tl_type.SPOT_LIGHT)
+	if (type != e_tl_type.CAMERA && !type_is_light(type))
 		value_type[e_value_type.MATERIAL_COLOR] = true
 	
 	// Material (Surface)
-	if (type != e_tl_type.CAMERA &&
-		type != e_tl_type.POINT_LIGHT &&
-		type != e_tl_type.SPOT_LIGHT)
+	if (type != e_tl_type.CAMERA && !type_is_light(type))
 		value_type[e_value_type.MATERIAL_SURFACE] = true
 	
 	// Material (Subsurface)
-	if (type != e_tl_type.CAMERA &&
-		type != e_tl_type.POINT_LIGHT &&
-		type != e_tl_type.SPOT_LIGHT)
+	if (type != e_tl_type.CAMERA && !type_is_light(type))
 		value_type[e_value_type.MATERIAL_SUBSURFACE] = true
 	
 	// Text
@@ -125,10 +116,7 @@ function tl_update_value_types()
 	
 	// Rotation point
 	value_type[e_value_type.ROT_POINT] = true
-	if (type = e_tl_type.PARTICLE_SPAWNER ||
-		type = e_tl_type.CAMERA ||
-		type = e_tl_type.POINT_LIGHT ||
-		type = e_tl_type.SPOT_LIGHT)
+	if (type = e_tl_type.PARTICLE_SPAWNER || type = e_tl_type.CAMERA || type_is_light(type))
 		value_type[e_value_type.ROT_POINT] = false
 	
 	// Enable material tab

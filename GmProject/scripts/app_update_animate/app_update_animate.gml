@@ -93,7 +93,7 @@ function app_update_animate()
 			array_add(spawnerarr, id)
 		
 		// Add light
-		if ((type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT) && value_inherit[e_value.VISIBLE])
+		if (type_is_light(type) && value_inherit[e_value.VISIBLE])
 		{
 			// Invisible via timeline?
 			if ((hide && !render_hidden) || !mode_visible[renderer_current])

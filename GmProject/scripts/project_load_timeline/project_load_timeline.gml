@@ -299,8 +299,6 @@ function project_load_timeline(map)
 		backfaces = value_get_real(map[?"backfaces"], backfaces)
 		texture_blur = value_get_real(map[?"texture_blur"], texture_blur)
 		texture_filtering = value_get_real(map[?"texture_filtering"], texture_filtering)
-		if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
-			shadows = false
 		shadows = value_get_real(map[?"shadows"], shadows)
 		realistic_falloff = value_get_real(map[?"realistic_falloff"], realistic_falloff)
 		ssao = value_get_real(map[?"ssao"], ssao)

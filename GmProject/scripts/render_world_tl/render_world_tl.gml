@@ -78,9 +78,8 @@ function render_world_tl()
 	
 	// Box for clicking
 	if (type = e_tl_type.PARTICLE_SPAWNER ||
-		type = e_tl_type.SPOT_LIGHT ||
-		type = e_tl_type.POINT_LIGHT ||
-		type = e_tl_type.CAMERA)
+		type = e_tl_type.CAMERA ||
+		type_is_light(type))
 	{
 		if (render_mode = e_render_mode.CLICK && render_world_block_transparent != true)
 		{

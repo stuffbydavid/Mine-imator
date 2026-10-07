@@ -13,7 +13,10 @@ function new_tl(tlype)
 		
 		if (type = e_tl_type.TEXT)
 			value[e_value.TEXT] = text_get("frame_editor/text/sample")
-			
+		
+		if (type_is_light(type))
+			tl_light_check_shadows()
+		
 		tl_update()
 		
 		tl_set_parent_root()

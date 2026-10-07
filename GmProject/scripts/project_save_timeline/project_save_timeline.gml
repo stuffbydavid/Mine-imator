@@ -190,7 +190,7 @@ function project_save_timeline()
 			json_save_var_bool("texture_filtering", texture_filtering)
 			json_save_var_bool("shadows", shadows)
 			
-			if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+			if (type_is_light(type))
 				json_save_var_bool("realistic_falloff", realistic_falloff)
 			
 			json_save_var_bool("ssao", ssao)

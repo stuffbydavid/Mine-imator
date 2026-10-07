@@ -82,6 +82,9 @@ function tl_duplicate()
 			pattern_color_list = array_copy_1d(other.pattern_color_list)
 			array_add(pattern_update, id)
 		}
+	
+		if (type_is_light(type))
+			tl_light_check_shadows()
 		
 		// Update
 		tl_update()

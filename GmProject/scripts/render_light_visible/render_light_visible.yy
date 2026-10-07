@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_light_visible",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_light_visible",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

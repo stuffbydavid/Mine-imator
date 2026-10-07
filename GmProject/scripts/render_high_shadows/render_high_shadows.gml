@@ -1,28 +1,55 @@
 function render_high_shadows()
 {
-	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, sundirect, samplestart, sampleend, lightlist;
+	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, sundirect, samplestart, sampleend, lightlist, lightplanes, lightmat;
 	sampleoffset = point3D(0)
 	sunout = (env_sunlight_color_final != c_black)
 	sundirect = (render_sun_combined && !render_glint)
 	samplestart = 0
 	sampleend = 0
 	lightlist = []
+	lightplanes = []
 	
 	// Get visible lights
 	with (obj_timeline)
 	{
 		// Light source check
-		if (type != e_tl_type.POINT_LIGHT && type != e_tl_type.SPOT_LIGHT)
+		if (!type_is_light(type))
 			continue
 		
 		// Hidden
 		if (!value_inherit[e_value.VISIBLE] || hide)
 			continue
 		
+		// Build camera planes once, independent of the current sun/light projection
+		if (array_length(lightplanes) = 0)
+		{
+			lightmat = matrix_multiply(
+				matrix_create_lookat(cam_from, cam_to, cam_up),
+				matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev)
+			)
+			lightmat = matrix_transpose(matrix_multiply(lightmat, aa_jitter_matrix))
+			lightplanes = [
+				vec4(1, 0, 0, 1),
+				vec4(-1, 0, 0, 1),
+				vec4(0, 1, 0, 1),
+				vec4(0, -1, 0, 1),
+				vec4(0, 0, 1, 1),
+				vec4(0, 0, -1, 1)
+			]
+			
+			for (var p = 0; p < 6; p++)
+			{
+				var plane = vec4_mul_matrix(lightplanes[p], lightmat);
+				lightplanes[p] = vec4_div(plane, vec3_length(plane))
+			}
+		}
+		
 		// Shadowless pointlight
 		if (type = e_tl_type.POINT_LIGHT && !shadows)
 		{
-			ds_list_add(render_shadowless_point_list, id)
+			if (render_light_visible(lightplanes))
+				ds_list_add(render_shadowless_point_list, id)
+			
 			continue
 		}
 		
@@ -67,6 +94,7 @@ function render_high_shadows()
 			}
 			surface_reset_target()
 		}
+		
 		// Add to shadows
 		surface_set_target(render_surface_shadows)
 		{
@@ -107,6 +135,10 @@ function render_high_shadows()
 				sampleoffset[Y] = lengthdir_y(dis, xyang) * lengthdir_x(1, zang)
 				sampleoffset[Z] = lengthdir_z(dis, zang)
 			}
+			
+			// Cull after jitter generation to retain later lights' sample positions
+			if (!render_light_visible(lightplanes))
+				continue
 			
 			#region Point light
 			

@@ -2,11 +2,12 @@ function render_startup()
 {
 	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
-	globalvar render_view_current, render_width, render_height, render_ratio, render_pack_current, render_camera, render_camera_effects, render_camera_effect_enabled, render_start_time, render_start_surface_time,
-			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_list_depth_bounds, render_list_depth_dirty, render_block_transparent_list, render_lights, render_particles, render_hidden,
-			  render_background, render_watermark, proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
+	globalvar render_view_current, render_width, render_height, render_ratio, render_pack_current, render_camera, render_camera_effects, render_camera_effect_enabled,
+			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_list_depth_bounds, render_list_depth_dirty, render_block_transparent_list,
+			  render_lights, render_particles, render_hidden,  render_background, render_watermark, render_blend_prev, render_alpha_prev, 
+			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
-			  render_active, render_repeat, render_world_count, render_world_block_transparent, point3D_project_error;
+			  render_active, render_repeat, render_start_time, render_start_surface_time, render_world_count, render_world_block_transparent, point3D_project_error;
 	
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
@@ -17,13 +18,10 @@ function render_startup()
 			  render_glow, render_glint, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
-			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material, render_fog_combined, render_sun_combined, render_color_combined;
+			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material,
+			  render_fog_combined, render_sun_combined, render_color_combined;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
-	render_use_samples = false
-	render_sun_shadow_scale = 0
-	
-	globalvar render_blend_prev, render_alpha_prev;
 	
 	// Update shader_reset_uniforms()
 	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
@@ -55,6 +53,7 @@ function render_startup()
 	renderer_name_list = [ "quick", "standard", "realistic" ]
 	renderer_edit = -1
 	
+	render_use_samples = false
 	render_view_current = null
 	render_width = 1
 	render_height = 1
@@ -92,6 +91,7 @@ function render_startup()
 	render_auxiliary_material = false
 	render_fog_combined = false
 	render_sun_combined = false
+	render_sun_shadow_scale = 0
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	
@@ -144,6 +144,7 @@ function render_startup()
 	render_surface_hdr_post[0] = null
 	render_surface_hdr_post[1] = null
 	render_surface_hdr_post[2] = null
+	
 	for (var i = 0; i < 6; i++)
 	{
 		render_surface_blur[i] = null
@@ -196,28 +197,34 @@ function render_startup()
 	render_alpha_hashed_count = 0
 	
 	// Noise sampling
-	project_render_dof_quality = 16
-	project_render_dof_realistic_blur = false
 	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array,
 			  render_pcss_kernel, render_pcss_kernel_rotated, render_pcss_quality_prev;
+	
+	project_render_dof_quality = 16
+	project_render_dof_realistic_blur = false
+	
 	render_sample_noise_texture = null
 	render_sample_noise_size = 128
 	render_sample_noise_texture_array = []
+	
 	render_pcss_kernel = render_generate_progressive_disk_samples(4, 0)
 	render_pcss_kernel_rotated = render_pcss_kernel
 	render_pcss_quality_prev = -1
 	
 	// Shadows
 	globalvar render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_spot_buffer, 
-	render_surface_point_buffer, render_surface_point_atlas_buffer, render_shadow_cache, render_shadow_cache_ready, render_shadow_cache_enabled;
+			  render_surface_point_buffer, render_surface_point_atlas_buffer, render_shadow_cache, render_shadow_cache_ready, render_shadow_cache_enabled;
 	
 	project_render_shadows_jittered = false
 	project_render_shadows_sun_cascades = 3
+	
 	render_shadowless_point_amount = 0
 	render_shadowless_point_list = ds_list_create()
+	
 	render_surface_spot_buffer = null
 	render_surface_point_buffer = null
 	render_surface_point_atlas_buffer = null
+	
 	render_shadow_cache = null
 	render_shadow_cache_ready = null
 	render_shadow_cache_enabled = false

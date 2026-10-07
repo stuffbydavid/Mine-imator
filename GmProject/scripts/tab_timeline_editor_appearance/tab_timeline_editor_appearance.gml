@@ -1,6 +1,6 @@
 function tab_timeline_editor_appearance()
 {
-	if (tl_edit.type = e_tl_type.POINT_LIGHT || tl_edit.type = e_tl_type.SPOT_LIGHT)
+	if (type_is_light(tl_edit.type))
 	{
 		tab_set_columns(true, floor(content_width / 150))
 
