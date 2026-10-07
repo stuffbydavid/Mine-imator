@@ -18,6 +18,7 @@ namespace CppProject
 {
 	struct TexturePage;
 	struct VarType;
+	template <typename T> struct Heap;
 
 	// Shader asset that can be converted from GLSL ES 1.0 with uniforms converted into SSBOs.
 	struct Shader : Asset
@@ -32,11 +33,23 @@ namespace CppProject
 
 		// Loads the vertex & fragment shader from filesystem or memory.
 		void Load(BoolType useCache = true);
+
 	#if OS_WINDOWS
 		void LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache);
+		QString LoadPointD3D11(const QString& varsDecl, BoolType useCache);
+	#if !RELEASE_MODE
+		BoolType CompileCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst);
 	#endif
+	#endif
+
 		void LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache);
+		BoolType LoadPointOpenGL(const QString& vsCode, const QString& fsCode);
+		BoolType LoadProgramOpenGL(const QString& vsCode, const QString& fsCode, const QString& gsCode = "");
+
 		void LoadCodeCommon(QString& code);
+
+		// Load HLSL/GLSL geometry shader code.
+		QString LoadGeometryCode(const QString& extension);
 
 		// Load Shady macros and expand them inline in the shader code.
 		BoolType ExpandShadyInline(QString& code, QString extension, QStringList includeStack = {});
@@ -104,7 +117,7 @@ namespace CppProject
 
 #if !RELEASE_MODE
 		// Saves converted shader sources for debugging.
-		void SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension);
+		void SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension, const QString& gsCode = "");
 #endif
 
 		// The format of vertices sent into the shader.
@@ -141,11 +154,15 @@ namespace CppProject
 	#if OS_WINDOWS
 		ID3D11VertexShader* d3dVertexShader = nullptr;
 		ID3D11PixelShader* d3dPixelShader = nullptr;
+		ID3D11GeometryShader* d3dPointShader = nullptr;
+		ID3D11Buffer* d3dPointBuffer = nullptr;
 		ID3D11Buffer* d3dObjectBuffer = nullptr;
 		ID3D11Buffer* d3dStaticBuffer = nullptr;
 		static ID3D11InputLayout* d3dInputLayout[4];
 	#endif
 		QOpenGLShaderProgram* program = nullptr;
+		IntType glPointEye = -1, glPointProjection = -1, glPointVertical = -1;
+		IntType pointMultiviewUniform = -1;
 		GLuint glSsboId = 0, glSsboBlockIndex = GL_INVALID_INDEX;
 
 		// Whether batching is supported for objects (requires Direct3D 11/OpenGL 4.3+)
@@ -202,6 +219,7 @@ namespace CppProject
 		IntType numSamplers = 0;
 		BoolType useBaseTexture = false;
 		BoolType depthOnly = false;
+		BoolType pointShader = false;
 		UniformState uvRectUniform;
 		UniformState texRepeatUniform;
 

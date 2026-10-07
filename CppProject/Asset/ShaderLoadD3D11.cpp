@@ -20,9 +20,14 @@ namespace CppProject
 	{
         fsCode.prepend("#define CPP_D3D 1\n");
 
+        if (pointShader)
+            vsCode.replace("if (_pointMultiview > 0)", "[branch] if (_pointMultiview > 0)");
+
         // Free resources
         releaseAndReset(d3dVertexShader);
         releaseAndReset(d3dPixelShader);
+        releaseAndReset(d3dPointShader);
+        releaseAndReset(d3dPointBuffer);
         releaseAndReset(d3dObjectBuffer);
         releaseAndReset(d3dStaticBuffer);
         deleteAndReset(samplerRepeatData);
@@ -404,7 +409,6 @@ namespace CppProject
 
         Heap<char> vsData, fsData;
         QString vsCacheName, fsCacheName;
-
     #if !RELEASE_MODE
         vsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".fsh.d3d";
@@ -415,7 +419,7 @@ namespace CppProject
             if (QFileInfo(__FILE__).lastModified() >= cacheModified ||
                 QFileInfo(QFileInfo(__FILE__).absolutePath() + "/Shader.cpp").lastModified() >= cacheModified)
                 useCache = false;
-
+           
             for (const QString& sourceName : sourceDependencies)
             {
                 if (QFileInfo(sourceName).lastModified() >= cacheModified)
@@ -430,87 +434,36 @@ namespace CppProject
         fsCacheName = ":/Shaders/Compiled/" + name + ".fsh.d3d";
     #endif
 
-    #if !RELEASE_MODE
-        SaveConvertedCode(vsCode, fsCode, "hlsl");
-    #endif
-
         if (!useCache || !QFile::exists(vsCacheName) || !QFile::exists(fsCacheName))
         {
         #if !RELEASE_MODE
-            // Compile code and store in assets
-            auto compileCode = [&](QString code, BoolType isVertex, Heap<char>& dst)
-            {
-                ID3DBlob* data;
-                ID3DBlob* errMsgs;
-                DWORD flags = D3DCOMPILE_PACK_MATRIX_COLUMN_MAJOR | D3DCOMPILE_ENABLE_STRICTNESS;
-            #if 0
-                flags |= D3DCOMPILE_DEBUG;
-            #else
-                flags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
-            #endif
-
-                std::string codeStd = code.toStdString();
-                std::string target = isVertex ? "vs_4_0" : "ps_4_0";
-
-				DEBUG("Compiling " + name + " (" + QString(target.c_str()) + ")");
-                if (FAILED(D3DCompile(codeStd.c_str(), code.length(), nullptr, nullptr, nullptr, "main", target.c_str(), flags, 0, &data, &errMsgs)))
-                {
-                    std::string errMsg((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize());
-                    WARNING("Compiling " + name + (isVertex ? " vertex" : " fragment") + " shader failed\n\t" + QString(errMsg.c_str()));
-                    DEBUG(code);
-                    errMsgs->Release();
-                    return false;
-                }
-
-                // Write to output heap
-                dst.Alloc(data->GetBufferSize());
-                memcpy(dst.data, data->GetBufferPointer(), data->GetBufferSize());
-                data->Release();
-
-                // Write to file
-                QFile file(isVertex ? vsCacheName : fsCacheName);
-                AddPerms(file);
-                if (!file.open(QFile::WriteOnly))
-                {
-                    WARNING("Could not open file: " + file.errorString());
-                    return false;
-                }
-                file.write(dst.Data(), dst.Size());
-
-                return true;
-            };
-
-            if (!compileCode(vsCode, true, vsData))
-                return;
-
-            if (!compileCode(fsCode, false, fsData))
+            if (!CompileCodeD3D11(vsCode, "vs_4_0", vsCacheName, vsData) ||
+                !CompileCodeD3D11(fsCode, "ps_4_0", fsCacheName, fsData))
                 return;
         #else
             WARNING("No cache found for shader: " + name);
+            return;
         #endif
         }
         else
         {
-            // Read compiled data
-            QFile vsFile(vsCacheName);
-            if (!vsFile.open(QFile::ReadOnly))
+            QFile vsFile(vsCacheName), fsFile(fsCacheName);
+            if (!vsFile.open(QFile::ReadOnly) || !fsFile.open(QFile::ReadOnly))
             {
-                WARNING("Could not open vertex shader");
+                WARNING("Could not open shader cache for " + name);
                 return;
             }
             vsData = vsFile.readAll();
-
-            QFile fsFile(fsCacheName);
-            if (!fsFile.open(QFile::ReadOnly))
-            {
-                WARNING("Could not open fragment shader");
-                return;
-            }
             fsData = fsFile.readAll();
         }
-
         D3DCheckError(D3DDevice->CreateVertexShader(vsData.Data(), vsData.Size(), nullptr, &d3dVertexShader));
         D3DCheckError(D3DDevice->CreatePixelShader(fsData.Data(), fsData.Size(), nullptr, &d3dPixelShader));
+        
+        QString gsCode = LoadPointD3D11(varsDecl, useCache);
+
+    #if !RELEASE_MODE
+        SaveConvertedCode(vsCode, fsCode, "hlsl", gsCode);
+    #endif
 
         // Create layout if needed
         if (!d3dInputLayout[vertexFormat])
@@ -590,5 +543,53 @@ namespace CppProject
             samplerRepeatData = new int32_t[samplerRepeatDataSize];
         }
 	}
+
+#if !RELEASE_MODE
+	BoolType Shader::CompileCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst)
+	{
+        ID3DBlob* data = nullptr;
+        ID3DBlob* errMsgs = nullptr;
+        DWORD flags = D3DCOMPILE_PACK_MATRIX_COLUMN_MAJOR | D3DCOMPILE_ENABLE_STRICTNESS;
+    #if 0
+        flags |= D3DCOMPILE_DEBUG;
+    #else
+        flags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
+    #endif
+
+        std::string codeStd = code.toStdString();
+        std::string targetStd = target.toStdString();
+
+        DEBUG("Compiling " + name + " (" + target + ")");
+        if (FAILED(D3DCompile(codeStd.c_str(), code.length(), nullptr, nullptr, nullptr, "main", targetStd.c_str(), flags, 0, &data, &errMsgs)))
+        {
+            QString errMsg = errMsgs ? QString::fromUtf8((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize()) : "No compiler diagnostics";
+            WARNING("Compiling " + name + " (" + target + ") shader failed\n\t" + errMsg);
+            DEBUG(code);
+
+            releaseAndReset(errMsgs);
+            releaseAndReset(data);
+
+            return false;
+        }
+        releaseAndReset(errMsgs);
+
+        // Write to output heap
+        dst.Alloc(data->GetBufferSize());
+        memcpy(dst.data, data->GetBufferPointer(), data->GetBufferSize());
+        data->Release();
+
+        // Write to file
+        QFile file(cacheName);
+        AddPerms(file);
+        if (!file.open(QFile::WriteOnly))
+        {
+            WARNING("Could not open file: " + file.errorString());
+            return false;
+        }
+        file.write(dst.Data(), dst.Size());
+
+        return true;
+	}
+#endif
 }
 #endif

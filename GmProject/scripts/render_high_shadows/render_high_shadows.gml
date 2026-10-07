@@ -130,7 +130,7 @@ function render_high_shadows()
 				else
 					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, surface_r32float)
 				
-				var pointcached, pointdirect;
+				var pointcached, pointdirect, multiview;
 				pointcached = (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, pointkey))
 				pointdirect = is_cpp()
 				
@@ -168,8 +168,19 @@ function render_high_shadows()
 						}
 						
 						render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
+						
+						// Enable multi-view rendering for a single depth render pass
+						multiview = (pointdirect && render_point_viewports(true, atlassize, render_proj_from, render_light_far));
+						
 						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 						render_world_done()
+						
+						if (multiview)
+						{
+							// Disable multi-view and stop processing other directions
+							render_point_viewports(false, atlassize, render_proj_from, render_light_far)
+							break
+						}
 					
 						if (!pointdirect)
 						{

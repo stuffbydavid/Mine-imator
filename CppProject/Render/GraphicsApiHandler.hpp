@@ -167,6 +167,11 @@ namespace CppProject
 		VecType frustum[6];
 		BoolType frustumUpdate = true;
 
+		// Multi-view rendering
+		BoolType pointMultiview = false;
+		Bounds pointBounds;
+		float pointParameters[12] = {};
+
 		// Current GPU settings
 		BoolType depthMask = false;
 		BoolType depthTest = false;

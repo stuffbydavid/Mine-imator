@@ -2352,6 +2352,7 @@
     {"id":{"name":"render_pass_draw","path":"scripts/render_pass_draw/render_pass_draw.yy",},},
     {"id":{"name":"render_pass_grid_draw","path":"scripts/render_pass_grid_draw/render_pass_grid_draw.yy",},},
     {"id":{"name":"render_performance_warning","path":"scripts/render_performance_warning/render_performance_warning.yy",},},
+    {"id":{"name":"render_point_viewports","path":"scripts/render_point_viewports/render_point_viewports.yy",},},
     {"id":{"name":"render_post","path":"scripts/render_post/render_post.yy",},},
     {"id":{"name":"render_preset_apply_settings","path":"scripts/render_preset_apply_settings/render_preset_apply_settings.yy",},},
     {"id":{"name":"render_preset_clear","path":"scripts/render_preset_clear/render_preset_clear.yy",},},

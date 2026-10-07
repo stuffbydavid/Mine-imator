@@ -157,6 +157,7 @@ namespace CppProject
 		uniformLocationMap.clear();
 		uniforms.clear();
 		numUniforms = 0;
+		pointMultiviewUniform = -1;
 
 		batchBufferObjectSize = 0;
 		samplerNameMap.clear();
@@ -214,6 +215,9 @@ namespace CppProject
 		depthOnly = fsCode.contains("#define CPP_DEPTH_ONLY");
 		if (depthOnly)
 			fsCode.remove(QRegularExpression("#ifndef CPP_DEPTH_ONLY[\\s\\S]*?#endif"));
+
+		// Point light shader
+		pointShader = vsCode.contains("#define CPP_POINT_MULTIVIEW");
 
 		// Find vertex format
 		if (vertexFormat == UNKNOWN)
@@ -358,6 +362,27 @@ namespace CppProject
 		return false;
 	}
 
+	QString Shader::LoadGeometryCode(const QString& extension)
+	{
+		QString filename = "/Shaders/" + name + ".gsh." + extension;
+	#if !RELEASE_MODE
+		filename = ASSETS_DIR + filename;
+	#else
+		filename = ":" + filename;
+	#endif
+
+		sourceDependencies.insert(filename);
+
+		QFile file(filename);
+		if (!file.open(QFile::ReadOnly | QFile::Text))
+		{
+			WARNING("Shader: " + filename + " not found");
+			return "";
+		}
+
+		return QTextStream(&file).readAll();
+	}
+
 	BoolType Shader::IsLoaded() const
 	{
 	#if OS_WINDOWS
@@ -380,12 +405,26 @@ namespace CppProject
 		{
 			D3DContext->VSSetShader(d3dVertexShader, 0, 0);
 			D3DContext->PSSetShader(d3dPixelShader, 0, 0);
+			D3DContext->GSSetShader(GFX->pointMultiview ? d3dPointShader : nullptr, 0, 0);
+
+			if (GFX->pointMultiview && d3dPointBuffer)
+			{
+				D3DContext->UpdateSubresource(d3dPointBuffer, 0, nullptr, GFX->pointParameters, 0, 0);
+				D3DContext->GSSetConstantBuffers(0, 1, &d3dPointBuffer);
+			}
 		}
 	#endif
 		if (IS_OPENGL)
 		{
 			if (!program->bind())
 				return false;
+
+			if (GFX->pointMultiview && glPointProjection >= 0)
+			{
+				GFX->glUniform4fv(glPointEye, 1, GFX->pointParameters);
+				GFX->glUniform4fv(glPointProjection, 1, GFX->pointParameters + 4);
+				GFX->glUniform4fv(glPointVertical, 1, GFX->pointParameters + 8);
+			}
 		}
 
 		// Reset samplers
@@ -421,6 +460,9 @@ namespace CppProject
 		// Clear static buffer
 		if (IS_D3D11)
 			memset(staticBufferData, 0, staticBufferSize);
+		
+		if (pointMultiviewUniform >= 0)
+			SubmitInt(pointMultiviewUniform, GFX->pointMultiview);
 		
 		if (IS_OPENGL)
 		{
@@ -1262,7 +1304,7 @@ namespace CppProject
 	}
 
 #if !RELEASE_MODE
-	void Shader::SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension)
+	void Shader::SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension, const QString& gsCode)
 	{
 		if (!saveConverted)
 			return;
@@ -1274,9 +1316,32 @@ namespace CppProject
 			return;
 		}
 
-		for (int stage = 0; stage < 2; stage++)
+		int stages= 2;
+		if (!gsCode.isEmpty())
+			stages = 3;
+
+		for (int stage = 0; stage < stages; stage++)
 		{
-			QString filename = directory + "/" + name + (stage == 0 ? ".vsh." : ".fsh.") + extension;
+			QString suffix;
+			QByteArray data;
+
+			if (stage == 0)
+			{
+				suffix = ".vsh.";
+				data = vsCode.toUtf8();
+			}
+			else if (stage == 1)
+			{
+				suffix = ".fsh.";
+				data = fsCode.toUtf8();
+			}
+			else
+			{
+				suffix = ".gsh.";
+				data = gsCode.toUtf8();
+			}
+
+			QString filename = directory + "/" + name + suffix + extension;
 			QFile file(filename);
 
 			AddPerms(file);
@@ -1286,7 +1351,6 @@ namespace CppProject
 				continue;
 			}
 
-			QByteArray data = (stage == 0 ? vsCode : fsCode).toUtf8();
 			if (file.write(data) != data.size() || !file.flush())
 				WARNING("Could not write converted shader " + filename + ": " + file.errorString());
 		}

@@ -21,6 +21,9 @@ namespace CppProject
 		
 		glSsboId = 0;
 
+		// Clear multi-view data
+		glPointEye = glPointProjection = glPointVertical = -1;
+
 		// Convert from GLES to GLSL for a given shader
 		auto processCode = [&](QString code, BoolType isVertex)
 		{
@@ -195,47 +198,29 @@ namespace CppProject
 		vsCode = defines + vsCode;
 		fsCode = defines + fsCode;
 
-	#if !RELEASE_MODE
-		SaveConvertedCode(vsCode, fsCode, "glsl");
-	#endif
-
-		program = new QOpenGLShaderProgram;
-		if (!program->addShaderFromSourceCode(QOpenGLShader::Vertex, vsCode))
+		if (!LoadPointOpenGL(vsCode, fsCode))
 		{
-			WARNING("Loading " + name + " vertex shader failed\n\t" + program->log());
-			deleteAndReset(program);
-			return;
-		}
+			if (!LoadProgramOpenGL(vsCode, fsCode))
+				return;
 
-		if (!program->addShaderFromSourceCode(QOpenGLShader::Fragment, fsCode))
-		{
-			WARNING("Loading " + name + " fragment shader failed\n\t" + program->log());
-			deleteAndReset(program);
-			return;
+		#if !RELEASE_MODE
+			SaveConvertedCode(vsCode, fsCode, "glsl");
+		#endif
 		}
-
+		
 		// Find uniform locations
-		if (program->bind())
+		for (IntType i = 0; i < numUniforms; i++)
+			if (uniforms[i].isStatic)
+				uniforms[i].glLocation = program->uniformLocation(uniforms[i].name);
+		
+		for (StringType name : samplerNameMap.keys())
+			samplerState[samplerNameMap[name]].glLocation = uniforms[uniformNameMap[name]].glLocation;
+		
+		for (IntType m = 0; m < 6; m++)
 		{
-			for (IntType i = 0; i < numUniforms; i++)
-				if (uniforms[i].isStatic)
-					uniforms[i].glLocation = program->uniformLocation(uniforms[i].name);
-
-			for (StringType name : samplerNameMap.keys())
-				samplerState[samplerNameMap[name]].glLocation = uniforms[uniformNameMap[name]].glLocation;
-
-			for (IntType m = 0; m < 6; m++)
-			{
-				QString name = matrixUniformName[m];
-				if (matrixState[m].active)
-					matrixState[m].uniform.glLocation = uniforms[uniformNameMap[name]].glLocation;
-			}
-		}
-		else
-		{
-			WARNING("Linking " + name + " shader failed\n\t" + program->log());
-			deleteAndReset(program);
-			return;
+			QString name = matrixUniformName[m];
+			if (matrixState[m].active)
+				matrixState[m].uniform.glLocation = uniforms[uniformNameMap[name]].glLocation;
 		}
 
 		// Store attribute locations
@@ -289,5 +274,23 @@ namespace CppProject
 		}
 
 		program->release();
+	}
+
+	BoolType Shader::LoadProgramOpenGL(const QString& vsCode, const QString& fsCode, const QString& gsCode)
+	{
+		program = new QOpenGLShaderProgram;
+
+		if (!program->addShaderFromSourceCode(QOpenGLShader::Vertex, vsCode) ||
+			!program->addShaderFromSourceCode(QOpenGLShader::Fragment, fsCode) ||
+			(!gsCode.isEmpty() && !program->addShaderFromSourceCode(QOpenGLShader::Geometry, gsCode)) ||
+			!program->bind())
+		{
+			WARNING("Loading " + name + " shader failed\n\t" + program->log());
+			deleteAndReset(program);
+
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -1,4 +1,7 @@
-/// @desc Renders to a depth buffer (using point distance).
+/// @desc Renders to a point light depth buffer.
+
+/// CppOnly #define CPP_POINT_MULTIVIEW
+/// CppOnly uniform int _pointMultiview; // static
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
@@ -23,7 +26,11 @@ void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	
-	gl_Position = getClipPosition(vPosition);
 	vColor = uBlendColor * in_Colour;
+	
+	/// CppOnly if (_pointMultiview > 0) {
+	/// CppOnly gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+	/// CppOnly } else {
+	gl_Position = getClipPosition(vPosition);
+	/// CppOnly }
 }

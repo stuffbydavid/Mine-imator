@@ -1121,6 +1121,13 @@ namespace CppProject
 
 	BoolType GraphicsApiHandler::IsVisible(const Bounds& worldBounds) const
 	{
+		if (pointMultiview)
+			return (
+				worldBounds.maxPoint.x >= pointBounds.minPoint.x && worldBounds.minPoint.x <= pointBounds.maxPoint.x &&
+				worldBounds.maxPoint.y >= pointBounds.minPoint.y && worldBounds.minPoint.y <= pointBounds.maxPoint.y &&
+				worldBounds.maxPoint.z >= pointBounds.minPoint.z && worldBounds.minPoint.z <= pointBounds.maxPoint.z
+			);
+		
 		for (const VecType& frustumVec : frustum)
 		{
 			const RealType x = (frustumVec.x > 0.0 ? worldBounds.maxPoint.x : worldBounds.minPoint.x);

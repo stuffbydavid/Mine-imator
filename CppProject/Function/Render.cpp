@@ -36,6 +36,76 @@ namespace CppProject
 		return !IS_OPENGL || Shader::gl43Supported;
 	}
 
+	BoolType render_point_viewports(BoolType enabled, IntType size, VecType eye, RealType range)
+	{
+		Shader* shader = FindShader(ID_shader_depth_point);
+		if (enabled && (!shader || !shader->IsLoaded() || shader->pointMultiviewUniform < 0 || (IS_OPENGL && shader->glPointProjection < 0)))
+			return false;
+
+	#if OS_WINDOWS
+		if (enabled && IS_D3D11 && !shader->d3dPointShader)
+			return false;
+	#endif
+
+		GFX->SubmitBatch();
+		
+		GFX->pointMultiview = enabled;
+		
+		if (!enabled)
+		{
+			render_set_viewport(0, 0, GFX->surface->size.width(), GFX->surface->size.height());
+			return true;
+		}
+
+		// Multi-view setup
+		const Matrix& projection = GFX->matrixP;
+		Matrix vertical = Matrix::LookAt(eye, eye + VecType(0, -0.0001, 1), { 0, 0, 1 });
+		RealType extent = range * 1.0001;
+
+		GFX->pointBounds = Bounds(eye - VecType(extent, extent, extent), eye + VecType(extent, extent, extent));
+
+		// Keep the existing projection and vertical-face normalization
+		float* parameters = GFX->pointParameters;
+		parameters[0] = eye.x;
+		parameters[1] = eye.y;
+		parameters[2] = eye.z;
+		parameters[3] = vertical.m[10];
+		parameters[4] = projection.m[0];
+		parameters[5] = projection.m[5];
+		parameters[6] = projection.m[10];
+		parameters[7] = projection.m[14];
+		parameters[8] = vertical.m[0];
+		parameters[9] = vertical.m[5];
+		parameters[10] = vertical.m[9];
+		parameters[11] = vertical.m[6];
+	
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3D11_VIEWPORT viewports[6];
+			for (IntType face = 0; face < 6; face++)
+				viewports[face] = { (float)((face % 3) * size), (float)((face / 3) * size), (float)size, (float)size, 0.0f, 1.0f };
+			
+			D3DContext->RSSetViewports(6, viewports);
+		}
+	#endif
+		if (IS_OPENGL)
+		{
+			GLfloat viewports[6 * 4];
+			for (IntType face = 0; face < 6; face++)
+			{
+				viewports[face * 4] = (face % 3) * size;
+				viewports[face * 4 + 1] = GFX->surface->size.height() - (face / 3 + 1) * size;
+				viewports[face * 4 + 2] = viewports[face * 4 + 3] = size;
+			}
+
+			Shader::gl43Core->glViewportArrayv(0, 6, viewports);
+			GL_CHECK_ERROR();
+		}
+
+		return true;
+	}
+
 	BoolType render_mask_blend(BoolType enabled, IntType mask, IntType fog)
 	{
 		if (!render_mask_blend_supported())

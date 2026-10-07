@@ -1,3 +1,5 @@
+/// @desc Renders to a spot light depth buffer.
+
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
 attribute vec4 in_Colour;
