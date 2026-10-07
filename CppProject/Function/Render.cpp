@@ -12,6 +12,25 @@ namespace CppProject
 		GFX->UpdateFrustum();
 	}
 
+	void render_set_viewport(IntType x, IntType y, IntType width, IntType height)
+	{
+		GFX->SubmitBatch();
+
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3D11_VIEWPORT viewport = { (float)x, (float)y, (float)width, (float)height, 0.0f, 1.0f };
+			D3DContext->RSSetViewports(1, &viewport);
+		}
+	#endif
+		if (IS_OPENGL)
+		{
+			// Convert top-left surface coordinates to OpenGL's bottom-left origin
+			GFX->glViewport(x, GFX->surface->size.height() - y - height, width, height);
+			GL_CHECK_ERROR();
+		}
+	}
+
 	BoolType render_mask_blend_supported()
 	{
 		return !IS_OPENGL || Shader::gl43Supported;

@@ -15,7 +15,7 @@ function tests_run()
 	if (!test_all_frames && timeline_region_start != null)
 	{
 		framestart = timeline_region_start
-		frameend = timeline_region_end
+		frameend = timeline_region_end - 1
 	}
 	
 	// Overwrite defaults by program arguments

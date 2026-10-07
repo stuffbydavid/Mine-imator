@@ -2377,6 +2377,7 @@
     {"id":{"name":"render_set_uniform_vec2","path":"scripts/render_set_uniform_vec2/render_set_uniform_vec2.yy",},},
     {"id":{"name":"render_set_uniform_vec3","path":"scripts/render_set_uniform_vec3/render_set_uniform_vec3.yy",},},
     {"id":{"name":"render_set_uniform","path":"scripts/render_set_uniform/render_set_uniform.yy",},},
+    {"id":{"name":"render_set_viewport","path":"scripts/render_set_viewport/render_set_viewport.yy",},},
     {"id":{"name":"render_shadow_cache_free","path":"scripts/render_shadow_cache_free/render_shadow_cache_free.yy",},},
     {"id":{"name":"render_shadow_cache_remove","path":"scripts/render_shadow_cache_remove/render_shadow_cache_remove.yy",},},
     {"id":{"name":"render_shadow_cache_surface","path":"scripts/render_shadow_cache_surface/render_shadow_cache_surface.yy",},},

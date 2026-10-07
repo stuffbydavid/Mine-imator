@@ -123,13 +123,18 @@ function render_high_shadows()
 				atlasx = 0
 				atlasy = 0
 				atlassize = app.project_render_shadows_point_buffer_size
+				
 				var pointkey = "point:" + save_id;
 				if (render_shadow_cache_enabled)
 					render_surface_point_atlas_buffer = render_shadow_cache_surface(pointkey, atlassize * 3, atlassize * 2)
 				else
 					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, surface_r32float)
-				var pointcached = render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, pointkey);
-				if (!pointcached)
+				
+				var pointcached, pointdirect;
+				pointcached = (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, pointkey))
+				pointdirect = is_cpp()
+				
+				if (!pointcached && !pointdirect)
 					render_surface_point_buffer = surface_require(render_surface_point_buffer, atlassize, atlassize, true, surface_r32float)
 				
 				aa_matrix = MAT_IDENTITY
@@ -139,31 +144,41 @@ function render_high_shadows()
 				// Depth
 				if (!pointcached)
 				{
+					// C++ renders all faces into one atlas without intermediate copies
+					if (pointdirect)
+					{
+						surface_set_target(render_surface_point_atlas_buffer)
+						gpu_set_blendmode_ext(bm_one, bm_zero)
+						draw_clear(c_white)
+					}
+					
 					for (var d = e_dir.EAST; d < e_dir.amount; d++)
 					{
 						var look = dir_get_vec3(d);
 						if (d = e_dir.DOWN || d = e_dir.UP)
 							look[Y] -= 0.0001
 					
-						surface_set_target(render_surface_point_buffer)
+						if (pointdirect)
+							render_set_viewport(atlasx, atlasy, atlassize, atlassize)
+						else
 						{
+							surface_set_target(render_surface_point_buffer)
 							gpu_set_blendmode_ext(bm_one, bm_zero)
-						
 							draw_clear(c_white)
-							render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
-							render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
-						
-							render_world_done()
-						
-							gpu_set_blendmode(bm_normal)
 						}
-						surface_reset_target()
+						
+						render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
+						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+						render_world_done()
 					
-						surface_set_target(render_surface_point_atlas_buffer)
+						if (!pointdirect)
 						{
+							gpu_set_blendmode(bm_normal)
+							surface_reset_target()
+							surface_set_target(render_surface_point_atlas_buffer)
 							draw_surface(render_surface_point_buffer, atlasx, atlasy)
+							surface_reset_target()
 						}
-						surface_reset_target()
 					
 						atlasx += atlassize
 					
@@ -172,6 +187,12 @@ function render_high_shadows()
 							atlasx = 0
 							atlasy += atlassize
 						}
+					}
+					
+					if (pointdirect)
+					{
+						gpu_set_blendmode(bm_normal)
+						surface_reset_target()
 					}
 				}
 				
