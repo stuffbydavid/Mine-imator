@@ -9,7 +9,7 @@ namespace CppProject
 	// Wrapper for a GPU framebuffer.
 	struct FrameBuffer
 	{
-		FrameBuffer(IntType format = 0, BoolType depthBuffer = true);
+		FrameBuffer(IntType format = 0, BoolType depthBuffer = true, BoolType depthOnly = false);
 		~FrameBuffer();
 
 		// Returns the color texture handle of the surface for reading.
@@ -35,6 +35,7 @@ namespace CppProject
 
 		IntType format;
 		BoolType depthBuffer;
+		BoolType depthOnly;
 		QSize size = { 0, 0 };
 
 	#if OS_WINDOWS

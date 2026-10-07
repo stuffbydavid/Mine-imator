@@ -12,7 +12,7 @@ namespace CppProject
 	// Surface asset
 	struct Surface : Asset
 	{
-		Surface(QSize size = {}, IntType format = surface_rgba8unorm, BoolType depthBuffer = true);
+		Surface(QSize size = {}, IntType format = surface_rgba8unorm, BoolType depthBuffer = true, BoolType depthOnly = false);
 		~Surface();
 
 		// Returns the surface as a QImage.

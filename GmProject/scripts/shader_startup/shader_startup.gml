@@ -1,7 +1,7 @@
 function shader_startup()
 {
 	globalvar shader_map, shader_texture_surface, shader_texture_filter_linear, shader_texture_filter_mipmap, shader_check_uniform;
-	globalvar shader_texture_width, shader_texture_height;
+	globalvar shader_texture_width, shader_texture_height, shader_texture_binding, shader_texture_binding_res, shader_texture_binding_pack, shader_texture_binding_surface;
 	globalvar shader_blend_color, shader_blend_alpha;
 	globalvar shader_clip_x, shader_clip_y, shader_clip_width, shader_clip_height, shader_clip_active;
 	
@@ -102,6 +102,10 @@ function shader_startup()
 		
 		shader_texture_width = 0
 		shader_texture_height = 0
+		shader_texture_binding = null
+		shader_texture_binding_res = null
+		shader_texture_binding_pack = null
+		shader_texture_binding_surface = false
 		
 		with (obj_shader)
 		{

@@ -439,6 +439,10 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && tl_get_visible())
 				render_update_tl_resource()
 			
+			// Update shape matrices, vertex buffers and visibility
+			if (type = e_tl_type.MODEL_PART && model_part != null)
+				tl_update_model_shape_render()
+			
 			update_matrix = false
 		}
 	}

@@ -12,9 +12,9 @@ uniform float uSunNear[NUM_CASCADES]; // static
 uniform float uSunFar[NUM_CASCADES]; // static
 uniform float uCascadeWorldSize[NUM_CASCADES]; // static
 
-uniform sampler2D uDepthBuffer0; // static
-uniform sampler2D uDepthBuffer1; // static
-uniform sampler2D uDepthBuffer2; // static
+uniform sampler2D uDepthBuffer0; // static pass_uv
+uniform sampler2D uDepthBuffer1; // static pass_uv
+uniform sampler2D uDepthBuffer2; // static pass_uv
 uniform float uCascadeEndClipSpace[NUM_CASCADES]; // static
 uniform int uCascadeCount; // static
 uniform int uShadowBlurQuality; // static
@@ -49,15 +49,25 @@ float cascadeDepthBuffer(int index, vec2 coord)
 float getSunShadow(
 	int cascade, vec2 coord, float fragDepth, float depthRange,
 	vec2 receiverDepthGradient, float bias,
-	out float centerDepth
+	bool needCenterDepth, out float centerDepth
 )
 {
-	centerDepth = uSunNear[cascade] + cascadeDepthBuffer(cascade, coord) * depthRange;
+	centerDepth = 0.0;
+	float sampleNear = uSunNear[cascade];
+	float sampleRange = depthRange;
+	
+	#ifdef CPP_D3D
+		sampleNear += sampleRange * 0.5;
+		sampleRange *= 0.5;
+	#endif
 
 	int quality = uShadowBlurQuality;
 	if (quality > PCSS_MAX_SAMPLES)
 		quality = PCSS_MAX_SAMPLES;
 
+	if (quality <= 0 || uSunShadowScale <= 0.0 || needCenterDepth)
+		centerDepth = sampleNear + cascadeDepthBuffer(cascade, coord) * sampleRange;
+	
 	if (quality <= 0 || uSunShadowScale <= 0.0)
 		return getPCSSVisibility(fragDepth, centerDepth, bias);
 
@@ -65,7 +75,8 @@ float getSunShadow(
 	int blockerSamples = getPCSSBlockerSamples(quality);
 	float cascadeScale = uCascadeWorldSize[0] / max(uCascadeWorldSize[cascade], 0.0001);
 	float searchRadius = (uSunShadowScale * 8.0 / PCSS_REFERENCE_SHADOW_SIZE) * cascadeScale;
-	float searchBias = bias + min(length(receiverDepthGradient) * searchRadius, bias * 2.0);
+	float gradientLength = length(receiverDepthGradient);
+	float searchBias = bias + min(gradientLength * searchRadius, bias * 2.0);
 	float blockerDepth = 0.0;
 	float blockers = 0.0;
 
@@ -76,7 +87,7 @@ float getSunShadow(
 			break;
 
 		vec2 sampleCoord = clamp(coord + getPCSSSampleOffset(blockerIndex, rotation) * searchRadius, vec2(0.0), vec2(1.0));
-		float sampleDepth = uSunNear[cascade] + cascadeDepthBuffer(cascade, sampleCoord) * depthRange;
+		float sampleDepth = sampleNear + cascadeDepthBuffer(cascade, sampleCoord) * sampleRange;
 		if (isPCSSBlocker(fragDepth, sampleDepth, searchBias))
 		{
 			blockerDepth += sampleDepth;
@@ -92,7 +103,7 @@ float getSunShadow(
 	// Get penumbra for filter
 	float separation = max(fragDepth - blockerDepth - bias, 0.0) / max(depthRange, 0.0001); // Ignore the bias gap
 	float filterRadius = min(uSunShadowScale * separation * cascadeScale, 64.0 / PCSS_REFERENCE_SHADOW_SIZE);
-	float filterBias = bias + min(length(receiverDepthGradient) * filterRadius, bias * 2.0);
+	float filterBias = bias + min(gradientLength * filterRadius, bias * 2.0);
 	float visibility = 0.0;
 
 	// Filter shadow
@@ -102,7 +113,7 @@ float getSunShadow(
 			break;
 
 		vec2 sampleCoord = clamp(coord + getPCSSSampleOffset(filterIndex, rotation) * filterRadius, vec2(0.0), vec2(1.0));
-		float sampleDepth = uSunNear[cascade] + cascadeDepthBuffer(cascade, sampleCoord) * depthRange;
+		float sampleDepth = sampleNear + cascadeDepthBuffer(cascade, sampleCoord) * sampleRange;
 		visibility += getPCSSVisibility(fragDepth, sampleDepth, filterBias);
 	}
 
@@ -180,7 +191,7 @@ void getSunLighting(
 
 				// Find shadow
 				float sampleDepth;
-				shadow *= vec3(getSunShadow(i, fragCoord, fragDepth, depthRange, receiverDepthGradient, bias, sampleDepth));
+				shadow *= vec3(getSunShadow(i, fragCoord, fragDepth, depthRange, receiverDepthGradient, bias, sss > 0.0 && dif == 0.0, sampleDepth));
 
 				// Subsurface translucency
 				if (sss > 0.0 && dif == 0.0)

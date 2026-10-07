@@ -5,9 +5,9 @@
 
 namespace CppProject
 {
-	IntType surface_create_ext2(IntType width, IntType height, IntType format, BoolType depthBuffer)
+	IntType surface_create_ext2(IntType width, IntType height, IntType format, BoolType depthBuffer, BoolType depthOnly)
 	{
-		return (new Surface({ (int)width, (int)height }, format, depthBuffer))->id;
+		return (new Surface({ (int)width, (int)height }, format, depthBuffer, depthOnly))->id;
 	}
 
 	BoolType surface_get_depth_enabled(IntType id)

@@ -109,6 +109,9 @@ function app_update_animate()
 			app.env_light_data[app.env_light_amount * 8 + 7] = 1
 			app.env_light_amount++
 		}
+		
+		// Block rendering
+		tl_update_block_render()
 	}
 	
 	if (updatevalues)

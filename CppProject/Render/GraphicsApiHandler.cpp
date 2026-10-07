@@ -458,6 +458,9 @@ namespace CppProject
 
 	void GraphicsApiHandler::ClearColor(QColor color)
 	{
+		if (surface->frameBuffer->depthOnly)
+			return;
+
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{

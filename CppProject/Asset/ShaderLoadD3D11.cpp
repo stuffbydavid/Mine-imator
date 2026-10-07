@@ -18,6 +18,8 @@ namespace CppProject
 
 	void Shader::LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache)
 	{
+        fsCode.prepend("#define CPP_D3D 1\n");
+
         // Free resources
         releaseAndReset(d3dVertexShader);
         releaseAndReset(d3dPixelShader);
@@ -147,16 +149,21 @@ namespace CppProject
                 return;
 
             QString body = match.captured(1);
-            body.replace(QRegularExpression("\\breturn\\s*;"), "return " + result + ";");
+            QString returnCode = result.isEmpty() ? "return;" : "return " + result + ";";
+            body.replace(QRegularExpression("\\breturn\\s*;"), returnCode);
             code.replace(match.capturedStart(), match.capturedLength(),
-                signature + "\n{\n\t" + setup + body + "\n\treturn " + result + ";\n}");
+                signature + "\n{\n\t" + setup + body + "\n\t" + returnCode + "\n}");
         };
 
         replaceMain(vsCode, "Vars main(Input _input)", "Vars _vars;\n\tAttrs _attrs;" + setAttrs, "_vars");
-        replaceMain(fsCode, "PSOut main(Vars _vars)", "PSOut _out;", "_out");
+
+        if (depthOnly)
+            replaceMain(fsCode, "void main(Vars _vars)", "", "");
+        else
+            replaceMain(fsCode, "PSOut main(Vars _vars)", "PSOut _out;", "_out");
 
         // Create fragment shader output
-        numOutputs = 1;
+        numOutputs = depthOnly ? 0 : 1;
         fsCode.replace("gl_FragCoord", "_vars.gl_Position");
         fsCode.replace("gl_FragColor", "_out.Color0");
 
@@ -173,7 +180,8 @@ namespace CppProject
         for (IntType i = 0; i < numOutputs; i++)
             poutDecl += "\tfloat4 Color" + NumStr(i) + " : SV_Target" + NumStr(i) + ";\n";
         poutDecl += "};\n\n";
-        fsCode = poutDecl + fsCode;
+        if (!depthOnly)
+            fsCode = poutDecl + fsCode;
 
         // Process code
         auto processCode = [&](QString code, BoolType isVertex)

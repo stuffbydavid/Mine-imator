@@ -13,4 +13,5 @@ function shader_clear()
 	
 	shader_texture_width = 0
 	shader_texture_height = 0
+	shader_texture_binding = null
 }

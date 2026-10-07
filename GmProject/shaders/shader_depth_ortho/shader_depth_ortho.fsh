@@ -1,3 +1,5 @@
+/// CppOnly #define CPP_DEPTH_ONLY 1
+
 uniform sampler2D uTexture; // static
 
 varying vec2 vTexCoord;
@@ -14,5 +16,7 @@ void main()
 	vec4 col = texture2D(uTexture, tex) * vColor;
 	handleAlphaDiscard(vPosition, col);
 
-	gl_FragColor = vec4(vDepth);
+	#ifndef CPP_DEPTH_ONLY
+		gl_FragColor = vec4(vDepth);
+	#endif
 }

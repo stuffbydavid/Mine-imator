@@ -170,12 +170,14 @@ namespace CppProject
 			BoolType isArray = false;
 			IntType arrayMaxSize = 0;
 			BoolType isStatic = true;
+			BoolType forceTexScale = false;
 			IntType bufferOffset, bufferSize, totalBufferSize;
 			IntType glLocation = -1;
 		};
-		QHash<IntType, UniformState> uniforms;
+		QVector<UniformState> uniforms;
 		IntType numUniforms = 0;
-		QHash<IntType, IntType> objRectUniformIndexMap;
+		IntType objRectUniformIndex[32];
+		BoolType samplerPassUv[32];
 		QVector<float> floatData;
 		QVector<QMatrix4x4> matrixData;
 
@@ -198,6 +200,7 @@ namespace CppProject
 		QHash<StringType, IntType> samplerNameMap; // name->index in samplerState
 		IntType numSamplers = 0;
 		BoolType useBaseTexture = false;
+		BoolType depthOnly = false;
 		UniformState uvRectUniform;
 		UniformState texRepeatUniform;
 

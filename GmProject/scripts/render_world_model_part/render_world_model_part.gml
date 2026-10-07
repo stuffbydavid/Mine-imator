@@ -32,7 +32,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	if (!istl)
 		mat = matrix_get(matrix_world)
 	else if (model_part_shape_render_matrix_part != part || array_length(model_part_shape_render_matrix) != shapecount)
-		tl_update_model_shape_matrix()
+		tl_update_model_shape_render()
 	
 	render_blend_prev = null
 	render_alpha_prev = null
@@ -78,12 +78,20 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 
 	for (var s = 0; s < shapecount; s++)
 	{
-		var shape, vbuf;
+		var shape, vbuf, tex, texres;
 		shape = shapelist[|s]
 		
 		// Hidden?
-		if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
-			continue
+		if (istl)
+		{
+			if (model_part_shape_hidden[s])
+				continue
+		}
+		else
+		{
+			if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
+				continue
+		}
 		
 		// Click mode
 		if (render_mode = e_render_mode.CLICK && shape.locked)
@@ -105,12 +113,17 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				continue
 		}
 		
-		if (shapevbuffermap = null)
-			continue
+		if (istl)
+			vbuf = model_part_shape_vbuffer[s]
+		else
+		{
+			if (shapevbuffermap = null)
+				continue
+			
+			vbuf = shapevbuffermap[?shape]
+		}
 		
-		vbuf = shapevbuffermap[?shape]
-		
-		if (is_undefined(vbuf))
+		if (is_undefined(vbuf) || vbuf = null)
 			continue
 
 		// Set shape texture
@@ -119,7 +132,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			if (s > array_length(model_part_shape_tex) - 1)
 				continue
 			
-			render_set_texture(render_res_diffuse, model_part_shape_tex[s])
+			tex = model_part_shape_tex[s]
+			texres = render_res_diffuse
 			
 			var offsetx, offsety;
 			offsetx = 0
@@ -217,75 +231,41 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			with (res)
 			{
 				texobj = res_get_model_texture(shapetexname)
-				render_set_texture(res, texobj)
+				tex = texobj
 			}
+			texres = res
 		}
 		
-		#region Pattern rendering
-		
+		// Pattern overrides the shape texture, armor overrides the pattern
 		if (patterntex != null)
-			render_set_texture(null, patterntex)
-		
-		#endregion
-		
-		#region Armor rendering
-		
-		// Preview
-		if (previewarmor)
 		{
-			if (shape.description = "helmet" || shape.description = "helmet_baby")
-			{
-				if (sprite_exists(select.armor_skin_array[0]))
-					render_set_texture(null, select.armor_skin_array[0])
-			}
+			tex = patterntex
+			texres = null
+		}
+		
+		if (previewarmor || tlarmor)
+		{
+			var armorindex = minecraft_armor_shape_index_map[?shape.description];
+			if (is_undefined(armorindex))
+				armorindex = -1
 			
-			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
+			if (armorindex >= 0)
 			{
-				if (sprite_exists(select.armor_skin_array[1]))
-					render_set_texture(null, select.armor_skin_array[1])
-			}
-			
-			if (shape.description = "leggings" || shape.description = "leggings_baby")
-			{
-				if (sprite_exists(select.armor_skin_array[2]))
-					render_set_texture(null, select.armor_skin_array[2])
-			}
-			
-			if (shape.description = "boots" || shape.description = "boots_baby")
-			{
-				if (sprite_exists(select.armor_skin_array[3]))
-					render_set_texture(null, select.armor_skin_array[3])
+				if (previewarmor && sprite_exists(select.armor_skin_array[armorindex]))
+				{
+					tex = select.armor_skin_array[armorindex]
+					texres = null
+				}
+				
+				if (tlarmor && sprite_exists(temp.armor_skin_array[armorindex]))
+				{
+					tex = temp.armor_skin_array[armorindex]
+					texres = null
+				}
 			}
 		}
 		
-		if (tlarmor)
-		{
-			if (shape.description = "helmet" || shape.description = "helmet_baby")
-			{
-				if (sprite_exists(temp.armor_skin_array[0]))
-					render_set_texture(null, temp.armor_skin_array[0])
-			}
-			
-			if (shape.description = "chestplate" || shape.description = "chestplate_baby")
-			{
-				if (sprite_exists(temp.armor_skin_array[1]))
-					render_set_texture(null, temp.armor_skin_array[1])
-			}
-			
-			if (shape.description = "leggings" || shape.description = "leggings_baby")
-			{
-				if (sprite_exists(temp.armor_skin_array[2]))
-					render_set_texture(null, temp.armor_skin_array[2])
-			}
-			
-			if (shape.description = "boots" || shape.description = "boots_baby")
-			{
-				if (sprite_exists(temp.armor_skin_array[3]))
-					render_set_texture(null, temp.armor_skin_array[3])
-			}
-		}
-		
-		#endregion
+		render_set_texture(texres, tex)
 		
 		// Blend color
 		var blendcolor, alpha;
@@ -345,7 +325,6 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			// Submit cached matrix without array conversion
 			matrix_set(matrix_world, model_part_shape_render_matrix[s])
 			vertex_submit(vbuf, pr_trianglelist, -1)
-			matrix_world_reset()
 			continue
 		}
 
@@ -359,7 +338,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		if (shape.item_bounce || shape.face_camera)
 			rendermatrix = render_world_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
 
-		vbuffer_render_matrix(vbuf, rendermatrix)
+		matrix_set(matrix_world, rendermatrix)
+		vertex_submit(vbuf, pr_trianglelist, -1)
 	}
 	
 	if (!istl)

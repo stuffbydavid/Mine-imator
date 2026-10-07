@@ -5,17 +5,12 @@
 
 function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 {
-	var sampler, diffuse, validtex;
+	var sampler, diffuse, validtex, sourcetex;
+	sourcetex = tex
 	sampler = render_shader_obj.sampler_texture[channel]
 	diffuse = (channel = e_texture_channel.DIFFUSE)
 	if (sampler < 0)
 		return 0
-	
-	if (diffuse)
-	{
-		shader_texture_width = 0
-		shader_texture_height = 0
-	}
 	
 	// Set filter
 	var mipactive = shader_texture_filter_mipmap ? mip_on : mip_off;
@@ -25,6 +20,21 @@ function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 	
 	if (gpu_get_tex_mip_enable() != mipactive)
 		gpu_set_tex_mip_enable(mipactive)
+	
+	// Texture unchanged
+	if (diffuse && shader_check_uniform && shader_texture_binding != null &&
+		shader_texture_binding_res = res && shader_texture_binding = tex &&
+		shader_texture_binding_pack = render_pack_current && shader_texture_binding_surface = shader_texture_surface)
+	{
+		gpu_set_texrepeat_ext(sampler, true)
+		return 0
+	}
+	
+	if (diffuse)
+	{
+		shader_texture_width = 0
+		shader_texture_height = 0
+	}
 	
 	// Surface
 	if (shader_texture_surface)
@@ -66,7 +76,19 @@ function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 	}
 	
 	if (diffuse)
+	{
 		render_set_uniform_vec2(e_uniform.TEXTURE_SIZE, shader_texture_width, shader_texture_height)
+		
+		if (validtex && shader_check_uniform)
+		{
+			shader_texture_binding = sourcetex
+			shader_texture_binding_res = res
+			shader_texture_binding_pack = render_pack_current
+			shader_texture_binding_surface = shader_texture_surface
+		}
+		else
+			shader_texture_binding = null
+	}
 	else if (channel = e_texture_channel.NORMAL)
 		render_set_uniform_int(e_uniform.HAS_NORMAL_MAP, validtex)
 	

@@ -6,9 +6,9 @@
 
 namespace CppProject
 {
-	Surface::Surface(QSize size, IntType format, BoolType depthBuffer) : Asset(ID_Surface)
+	Surface::Surface(QSize size, IntType format, BoolType depthBuffer, BoolType depthOnly) : Asset(ID_Surface)
 	{
-		frameBuffer = new FrameBuffer(format, depthBuffer);
+		frameBuffer = new FrameBuffer(format, depthBuffer, depthOnly);
 		if (size.width() && size.height())
 			Resize(size);
 	}
@@ -75,10 +75,16 @@ namespace CppProject
 
 		uint32_t packedDepth = depthStencilData.value(point.y() * size.width() + point.x());
 		float depth = 0.f;
-		if (IS_D3D11)
+		if (frameBuffer->depthOnly)
+		{
+			memcpy(&depth, &packedDepth, sizeof(depth));
+			if (IS_D3D11)
+				depth = (depth + 1.f) * 0.5f;
+		}
+		else if (IS_D3D11)
 			depth = ((packedDepth & 0xFFFFFF) / (RealType)0xFFFFFF + 1.0) / 2.0;
 
-		if (IS_OPENGL)
+		else if (IS_OPENGL)
 			depth = (packedDepth >> 8) / (RealType)0xFFFFFF;
 
 		cacheDepthStencilData = cache;

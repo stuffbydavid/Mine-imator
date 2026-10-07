@@ -36,9 +36,9 @@ function render_high_shadows_sun()
 	{
 		var sunkey = "sun" + string(i);
 		if (render_shadow_cache_enabled)
-			render_surface_sun_buffer[i] = render_shadow_cache_surface(sunkey, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size)
+			render_surface_sun_buffer[i] = render_shadow_cache_surface(sunkey, project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, is_cpp())
 		else
-			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, true, surface_r32float)
+			render_surface_sun_buffer[i] = surface_require(render_surface_sun_buffer[i], project_render_shadows_sun_buffer_size, project_render_shadows_sun_buffer_size, true, surface_r32float, is_cpp())
 
 		if (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, sunkey))
 		{

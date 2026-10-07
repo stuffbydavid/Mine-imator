@@ -45,10 +45,19 @@ void getGbuffers(
 	float emissive;
 	getMaterial(roughness, metallic, emissive, F0, sss);
 
-	mat3 tbnWorld = getTBN(vNormalWorld, vTangentWorld);
-	mat3 tbnView = getTBN(vNormalView, vTangentView);
-	normalWorld = getMaterialNormal(tex, vPosition, tbnWorld);
-	vec3 normalView = transformMaterialNormal(normalWorld, tbnWorld, tbnView);
+	vec3 normalView;
+	if (uHasNormalMap < 1 && uIsWater == 0)
+	{
+		normalWorld = normalize(vNormalWorld);
+		normalView = normalize(vNormalView);
+	}
+	else
+	{
+		mat3 tbnWorld = getTBN(vNormalWorld, vTangentWorld);
+		mat3 tbnView = getTBN(vNormalView, vTangentView);
+		normalWorld = getMaterialNormal(tex, vPosition, tbnWorld);
+		normalView = transformMaterialNormal(normalWorld, tbnWorld, tbnView);
+	}
 
 	float F = getFresnel(normalWorld, mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
 	if (uIsSky > 0)

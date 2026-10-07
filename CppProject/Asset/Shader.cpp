@@ -162,7 +162,12 @@ namespace CppProject
 		samplerNameMap.clear();
 		numSamplers = 0;
 		useBaseTexture = false;
-		objRectUniformIndexMap.clear();
+
+		for (IntType s = 0; s < 32; s++)
+		{
+			objRectUniformIndex[s] = -1;
+			samplerPassUv[s] = false;
+		}
 
 		for (IntType m = 0; m < 6; m++)
 			matrixState[m] = MatrixState();
@@ -203,6 +208,11 @@ namespace CppProject
 		// Expose code in CppOnly comments
 		vsCode.replace("/// CppOnly ", "");
 		fsCode.replace("/// CppOnly ", "");
+
+		// Depth output only
+		depthOnly = fsCode.contains("#define CPP_DEPTH_ONLY");
+		if (depthOnly)
+			fsCode.remove(QRegularExpression("#ifndef CPP_DEPTH_ONLY[\\s\\S]*?#endif"));
 
 		// Find vertex format
 		if (vertexFormat == UNKNOWN)
@@ -546,7 +556,7 @@ namespace CppProject
 		if (uni.type != VEC2)
 			WARNING("Shader: Submitting vec2 into " + uni.typeName + " uniform " + uni.name);
 
-		if (uni.name == "uTexScale") // set uTexScale to 1
+		if (uni.forceTexScale) // set uTexScale to 1
 			x = y = 1.0;
 
 		if (IS_OPENGL && uni.isStatic)
@@ -689,7 +699,7 @@ namespace CppProject
 		// Bind new texture state to sampler
 		SamplerState& state = samplerState[sampler];
 		BoolType textureChanged = state.currentTexId != id;
-		BoolType uvRectChanged = (!useBatching && samplerUvRect[sampler] != newUvRect);
+		BoolType uvRectChanged = ((!useBatching || samplerPassUv[sampler]) && samplerUvRect[sampler] != newUvRect);
 		
 		if (state.currentTexId > -1 && (textureChanged || uvRectChanged))
 			GFX->SubmitBatch();
@@ -703,8 +713,8 @@ namespace CppProject
 		state.currentTexId = id;
 		samplerUvRect[sampler] = newUvRect;
 		
-		if (useBatching) // Each sampler uses an object UV rect
-			SubmitVec4(objRectUniformIndexMap.value(sampler, -1), newUvRect.x(), newUvRect.y(), newUvRect.z(), newUvRect.w());
+		if (useBatching && objRectUniformIndex[sampler] >= 0)
+			SubmitVec4(objRectUniformIndex[sampler], newUvRect.x(), newUvRect.y(), newUvRect.z(), newUvRect.w());
 
 		return uvRect;
 	}
@@ -1085,6 +1095,9 @@ namespace CppProject
 				AddUniform(name, typeName, isStatic, isArray, arrayMaxSize);
 			}
 
+			if (match.captured(1) == "sampler2D" && match.captured(0).contains("pass_uv"))
+				samplerPassUv[samplerNameMap[name]] = true;
+
 			if (IS_D3D11) // Erase uniforms in HLSL, replaced by Cbuffer
 				code.replace(match.captured(0) + "\n", "");
 		}
@@ -1110,14 +1123,17 @@ namespace CppProject
 				WARNING("Shader: Sampler " + name + " not defined in texture2D call");
 		}
 
-		// Store atlas UV rects per object for every sampler
+		// Atlas textures vary per object, render targets keep pass-wide UV rectangles
 		if (useBatching && numSamplers > 0)
 		{
 			for (IntType s = 0; s < numSamplers; s++)
 			{
+				if (samplerPassUv[s])
+					continue;
+
 				QString name = "_objUvRect" + NumStr(s);
-				if (!objRectUniformIndexMap.contains(s))
-					objRectUniformIndexMap[s] = AddUniform(name, "vec4", false);
+				if (objRectUniformIndex[s] < 0)
+					objRectUniformIndex[s] = AddUniform(name, "vec4", false);
 				
 				code.replace("_uUvRect[" + NumStr(s) + "]", name);
 			}
@@ -1132,6 +1148,7 @@ namespace CppProject
 		uni.type = dataTypeNameMap[uni.typeName];
 		uni.isStatic = (isStatic || isArray || uni.type == DataType::SAMPLER2D || !useBatching); // Always static for arrays, samplers and when batching disabled
 		uni.isArray = isArray;
+		uni.forceTexScale = (name == "uTexScale");
 		uni.arrayMaxSize = arrayMaxSize;
 		uni.bufferSize = dataTypeSizeMap[uni.type];
 
@@ -1172,7 +1189,7 @@ namespace CppProject
 		}
 
 		uniformNameMap[name] = numUniforms;
-		uniforms[numUniforms] = uni;
+		uniforms.append(uni);
 
 		// Add sampler
 		if (uni.type == SAMPLER2D)

@@ -110,6 +110,7 @@ function render_high_create_gbuffers()
 				render_fog_combined = false
 				render_color_combined = false
 			}
+			
 			if (render_color_combined)
 				render_color_combined = render_color_gbuffers(render_surface_depth, render_surface_normal, render_surface_material, render_surface_shadows, render_surface_specular)
 

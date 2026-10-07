@@ -49,6 +49,8 @@ function tl_event_create()
 	
 	model_part_shape_render_matrix = []
 	model_part_shape_render_matrix_part = null
+	model_part_shape_vbuffer = []
+	model_part_shape_hidden = []
 	
 	model_use_blend_color = false
 	model_blend_color = c_white
@@ -219,6 +221,7 @@ function tl_event_create()
 	
 	block_vbuffer_active = null
 	block_vbuffer_depth_active = []
+	block_vbuffer_transparent_render = false
 
 	placed = false
 	parent_is_placed = false

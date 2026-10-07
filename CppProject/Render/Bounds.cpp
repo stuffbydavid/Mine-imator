@@ -31,11 +31,24 @@ namespace CppProject
 		if (bounds.empty)
 			return;
 
-		AddPoint(bounds.minPoint);
-		AddPoint(bounds.maxPoint);
+		if (empty)
+		{
+			minPoint = bounds.minPoint;
+			maxPoint = bounds.maxPoint;
+			empty = false;
+
+			return;
+		}
+
+		minPoint.x = std::min(minPoint.x, bounds.minPoint.x);
+		minPoint.y = std::min(minPoint.y, bounds.minPoint.y);
+		minPoint.z = std::min(minPoint.z, bounds.minPoint.z);
+		maxPoint.x = std::max(maxPoint.x, bounds.maxPoint.x);
+		maxPoint.y = std::max(maxPoint.y, bounds.maxPoint.y);
+		maxPoint.z = std::max(maxPoint.z, bounds.maxPoint.z);
 	}
 
-	void Bounds::AddBounds(const Bounds& bounds, Matrix transform)
+	void Bounds::AddBounds(const Bounds& bounds, const Matrix& transform)
 	{
 		if (bounds.empty)
 			return;

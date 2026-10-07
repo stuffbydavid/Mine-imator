@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_update_model_shape_matrix",
+  "%Name":"tl_update_block_render",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_update_model_shape_matrix",
+  "name":"tl_update_block_render",
   "parent":{
     "name":"Update",
     "path":"folders/Scripts/Project/Timeline/Update.yy",

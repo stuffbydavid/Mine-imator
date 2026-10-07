@@ -3,8 +3,9 @@
 /// @arg height
 /// @arg [depth]
 /// @arg [format]
+/// @arg [depthonly]
 
-function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm)
+function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm, depthonly = false)
 {
 	var starttime;
 	w = max(1, w)
@@ -18,13 +19,13 @@ function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm)
 	
 	// First usage
 	if (surf < 0)
-		surf = surface_create_ext2(w, h, format, depth)
+		surf = surface_create_ext2(w, h, format, depth, depthonly)
 	
 	// Corrupted/remake for depth
 	else if (!surface_exists(surf) || surface_get_width(surf) < 0) 
 	{
 		surface_free(surf)
-		surf = surface_create_ext2(w, h, format, depth)
+		surf = surface_create_ext2(w, h, format, depth, depthonly)
 	}
 	
 	// Wrong size

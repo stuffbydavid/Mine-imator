@@ -22,7 +22,7 @@ namespace CppProject
 		void AddBounds(const Bounds& bounds);
 
 		// Adds the given transformed bounds.
-		void AddBounds(const Bounds& bounds, Matrix transform);
+		void AddBounds(const Bounds& bounds, const Matrix& transform);
 
 		VecType minPoint, maxPoint;
 		BoolType empty = true;

@@ -4,6 +4,8 @@ function shader_use()
 {
 	shader_set(shader)
 	
+	shader_texture_binding = null
+	
 	// Default color
 	shader_blend_color = c_white
 	shader_blend_alpha = 1

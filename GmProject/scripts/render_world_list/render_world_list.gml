@@ -18,15 +18,14 @@ function render_world_list(depthsign)
 		{
 			render_world_tl()
 			
-			if (!render_visible || (!app.place_tl_render && (placed || parent_is_placed)))
+			// Find visible transparent block meshes
+			if (!block_vbuffer_transparent_render || !render_visible || (!app.place_tl_render && (placed || parent_is_placed)))
 				continue
 				
-			// Find transparent block meshes
-			var res = tl_get_block_res();
-
-			if (res != null && res.block_vbuffer != null &&
-				(res.block_vbuffer_depth_active[e_block_depth.DEPTH1] || res.block_vbuffer_depth_active[e_block_depth.DEPTH2]))
-				ds_list_add(transpblocks, id)
+			if (type = e_tl_type.PARTICLE_SPAWNER && !render_particles)
+				continue
+				
+			ds_list_add(transpblocks, id)
 		}
 
 	}

@@ -26,13 +26,11 @@ namespace CppProject
 			mesh->numIndices >= MAX_BATCH_INDICES
 		);
 
-		if (instanced)
-		{
-			Bounds worldBounds;
-			worldBounds.AddBounds(mesh->bounds, GFX->matrixM);
-			if (!GFX->IsVisible(worldBounds))
-				return;
-		}
+		Bounds worldBounds;
+		worldBounds.AddBounds(mesh->bounds, GFX->matrixM);
+
+		if (instanced && !GFX->IsVisible(worldBounds))
+			return;
 
 		// Flush incompatible batches or combined meshes over the size limit
 		if (currentBatch->numObjects &&
@@ -47,7 +45,7 @@ namespace CppProject
 		currentBatch->objects[currentBatch->numObjects] = buffer->id;
 		currentBatch->isInstanced = instanced;
 		currentBatch->matrixM[currentBatch->numObjects] = GFX->matrixM;
-		currentBatch->bounds.AddBounds(mesh->bounds, GFX->matrixM);
+		currentBatch->bounds.AddBounds(worldBounds);
 		currentBatch->mesh.numVertices += mesh->numVertices;
 		currentBatch->mesh.numIndices += mesh->numIndices;
 		currentBatch->numObjects++;

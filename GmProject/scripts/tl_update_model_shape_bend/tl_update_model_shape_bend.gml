@@ -35,5 +35,7 @@ function tl_update_model_shape_bend()
 	bend_rot_last = bend
 	bend_model_part_last = model_part
 	
+	model_part_shape_render_matrix_part = null
+	
 	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)
 }

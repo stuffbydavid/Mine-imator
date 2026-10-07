@@ -56,4 +56,8 @@ function temp_update_block()
 	}
 
 	block_vbuffer_done()
+	
+	with (obj_timeline)
+		if (temp = other.id)
+			tl_update_block_render()
 }

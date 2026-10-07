@@ -4,8 +4,10 @@ function render_world_tl_reset()
 {
 	matrix_world_reset()
 	render_set_culling(true)
+	
 	shader_texture_filter_linear = false
 	shader_texture_filter_mipmap = false
+	shader_texture_binding = null
 	
 	shader_texture_width = 0
 	shader_texture_height = 0

@@ -20,7 +20,7 @@ function tl_get_block_res()
 		
 		case e_tl_type.PARTICLE_SPAWNER:
 		{
-			if (render_particles && ds_list_valid(particle_list) && ds_list_size(particle_list) > 0 && ds_list_valid(temp.pc_type_list))
+			if (ds_list_valid(temp.pc_type_list))
 			{
 				for (var p = 0; p < ds_list_size(temp.pc_type_list); p++)
 				{

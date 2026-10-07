@@ -10,9 +10,10 @@
 
 namespace CppProject
 {
-	FrameBuffer::FrameBuffer(IntType format, BoolType depthBuffer) :
+	FrameBuffer::FrameBuffer(IntType format, BoolType depthBuffer, BoolType depthOnly) :
 		format(format),
-		depthBuffer(depthBuffer)
+		depthBuffer(depthBuffer || depthOnly),
+		depthOnly(depthOnly)
 	{
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -179,6 +180,32 @@ namespace CppProject
 			texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 			texDesc.CPUAccessFlags = 0;
 			texDesc.MiscFlags = 0;
+
+			if (depthOnly)
+			{
+				texDesc.Format = DXGI_FORMAT_R32_TYPELESS;
+				texDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+				D3DCheckError(D3DDevice->CreateTexture2D(&texDesc, nullptr, &d3dDepthStencilTex));
+				
+				D3D11_DEPTH_STENCIL_VIEW_DESC depthDesc = {};
+				depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
+				depthDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+				D3DCheckError(D3DDevice->CreateDepthStencilView(d3dDepthStencilTex, &depthDesc, &d3dDSV));
+				
+				D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
+				viewDesc.Format = DXGI_FORMAT_R32_FLOAT;
+				viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+				viewDesc.Texture2D.MipLevels = 1;
+				D3DCheckError(D3DDevice->CreateShaderResourceView(d3dDepthStencilTex, &viewDesc, &d3dSRV));
+				
+				if (!d3dSRVId)
+					d3dSRVId = Texture::d3dSRVNextId++;
+				
+				Texture::d3dIdSRVMap[d3dSRVId] = d3dSRV;
+
+				return;
+			}
+
 			D3DCheckError(D3DDevice->CreateTexture2D(&texDesc, nullptr, &d3dColorTex));
 			
 			if (!d3dColorTex)
@@ -253,7 +280,7 @@ namespace CppProject
 				GFX->glGenTextures(1, &glColorTexId);
 
 			// Create Renderbuffer object
-			if (!glDepthStencilRboId && depthBuffer)
+			if (!glDepthStencilRboId && depthBuffer && !depthOnly)
 				GFX->glGenRenderbuffers(1, &glDepthStencilRboId);
 
 			GL_CHECK_ERROR();
@@ -265,10 +292,15 @@ namespace CppProject
 
 			// Resize color and depth/stencil texture
 			GFX->glBindTexture(GL_TEXTURE_2D, glColorTexId);
-			GFX->glTexImage2D(GL_TEXTURE_2D, 0, glInternalFormat, size.width(), size.height(), 0, glFormat, glType, 0);
+			GFX->glTexImage2D(GL_TEXTURE_2D, 0, depthOnly ? GL_DEPTH_COMPONENT32F : glInternalFormat,
+				size.width(), size.height(), 0, depthOnly ? GL_DEPTH_COMPONENT : glFormat, depthOnly ? GL_FLOAT : glType, 0);
+			
+			if (depthOnly)
+				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
+			
 			GFX->glBindTexture(GL_TEXTURE_2D, 0);
 			
-			if (depthBuffer)
+			if (depthBuffer && !depthOnly)
 			{
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, glDepthStencilRboId);
 				GFX->glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.width(), size.height());
@@ -281,10 +313,16 @@ namespace CppProject
 			GLint prevFboId;
 			GFX->glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &prevFboId);
 			GFX->glBindFramebuffer(GL_FRAMEBUFFER, glFboId);
-			GFX->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glColorTexId, 0);
+			GFX->glFramebufferTexture2D(GL_FRAMEBUFFER, depthOnly ? GL_DEPTH_ATTACHMENT : GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glColorTexId, 0);
 			
-			if (depthBuffer)
+			if (depthBuffer && !depthOnly)
 				GFX->glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, glDepthStencilRboId);
+			
+			if (depthOnly)
+			{
+				GFX->glDrawBuffer(GL_NONE);
+				GFX->glReadBuffer(GL_NONE);
+			}
 			
 			GL_CHECK_ERROR();
 
@@ -305,8 +343,11 @@ namespace CppProject
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
-			D3DContext->OMSetRenderTargets(1, &d3dRTV, d3dDSV);
-			
+			if (depthOnly)
+				D3DContext->OMSetRenderTargets(0, nullptr, d3dDSV);
+			else
+				D3DContext->OMSetRenderTargets(1, &d3dRTV, d3dDSV);
+						
 			D3D11_VIEWPORT viewport = { 0, 0, (float)size.width(), (float)size.height(), 0.0, 1.0 };
 			D3DContext->RSSetViewports(1, &viewport);
 			
@@ -331,7 +372,7 @@ namespace CppProject
 			GFX->glViewport(0, 0, size.width(), size.height());
 			GL_CHECK_ERROR();
 
-			GLenum buffers = GL_COLOR_ATTACHMENT0;
+			GLenum buffers = depthOnly ? GL_NONE : GL_COLOR_ATTACHMENT0;
 			GFX->glDrawBuffers(1, &buffers);
 			GL_CHECK_ERROR();
 
@@ -359,6 +400,9 @@ namespace CppProject
 
 	void FrameBuffer::CopyData(BoolType color, uchar* dst)
 	{
+		if (depthOnly)
+			color = false;
+
 		if (!color && !depthBuffer)
 		{
 			WARNING("No depth buffer created");
@@ -420,6 +464,8 @@ namespace CppProject
 			
 			if (color)
 				GFX->glReadPixels(0, 0, size.width(), size.height(), glFormat, glType, dataFlipped);
+			else if (depthOnly)
+				GFX->glReadPixels(0, 0, size.width(), size.height(), GL_DEPTH_COMPONENT, GL_FLOAT, dataFlipped);
 			else
 			{
 				GFX->glBindRenderbuffer(GL_RENDERBUFFER, glDepthStencilRboId);
@@ -550,6 +596,10 @@ namespace CppProject
 				{
 					float value;
 					memcpy(&value, data + i * pixelSize, sizeof(value));
+					
+					if (depthOnly && IS_D3D11)
+						value = value * 0.5f + 0.5f;
+					
 					setPixel(i, std::clamp(value, 0.f, 1.f) * 255, 0, 0, 255);
 				}
 				break;

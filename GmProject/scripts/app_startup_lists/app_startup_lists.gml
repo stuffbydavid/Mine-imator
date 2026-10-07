@@ -9,7 +9,7 @@ function app_startup_lists()
 	globalvar minecraft_block_sheet_size;
 	globalvar minecraft_block_animated_sheet_frame_count, minecraft_item_sheet_size, minecraft_item_place_target_map;
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
-	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
+	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list, minecraft_armor_shape_index_map;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
 	globalvar biome_list, biome_color_name_list, biome_color_name_map, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
@@ -516,6 +516,17 @@ function app_startup_lists()
 	
 	minecraft_armor_trim_pattern_list = ds_list_create()
 	minecraft_armor_trim_material_list = ds_list_create()
+	
+	minecraft_armor_shape_index_map = ds_map_create()
+	minecraft_armor_shape_index_map[? "helmet"] = 0
+	minecraft_armor_shape_index_map[? "helmet_baby"] = 0
+	minecraft_armor_shape_index_map[? "chestplate"] = 1
+	minecraft_armor_shape_index_map[? "chestplate_baby"] = 1
+	minecraft_armor_shape_index_map[? "leggings"] = 2
+	minecraft_armor_shape_index_map[? "leggings_baby"] = 2
+	minecraft_armor_shape_index_map[? "boots"] = 3
+	minecraft_armor_shape_index_map[? "boots_baby"] = 3
+	
 	minecraft_map_color_array = []
 	minecraft_swatch_array = []
 	minecraft_swatch_color_map = ds_map_create()
