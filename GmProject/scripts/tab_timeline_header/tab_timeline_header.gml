@@ -240,7 +240,7 @@ function tab_timeline_header(headerx, headery, headerw, headerh, listw)
 	buttonsx += 24 + 6
 	draw_divide_vertical(buttonsx, buttonsy, 24)
 	buttonsx += 4
-	
+
 	// Zoom out
 	if (draw_button_icon("timeline/zoomout", buttonsx, buttonsy, 24, 24, false, icons.ZOOM_OUT, null, timeline_zoom_goal <= 0.25, "tooltip/tl/zoom_out"))
 		timeline_zoom_button = 1

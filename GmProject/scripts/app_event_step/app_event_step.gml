@@ -48,6 +48,7 @@ function app_event_step()
 		
 		app_update_toasts()
 		app_update_interface()
+		app_update_audio_scrub()
 		app_update_lists()
 		app_update_minecraft_resources()
 		

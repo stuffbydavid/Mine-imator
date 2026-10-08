@@ -1,6 +1,6 @@
 function app_update_play()
 {
-	if (!timeline_playing)
+	if (!timeline_playing || window_busy = "timeline/marker")
 		return 0
 	
 	timeline_marker = timeline_playing_start_marker + ((current_time - timeline_playing_start_time) / 1000) * project_tempo

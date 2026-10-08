@@ -4534,7 +4534,9 @@
 			"auto_scroll": "Auto-scroll when playing animation",
 			"select_jump": "Jump to selected object in timeline list",
 			"frame_snap": "Snap playback marker",
-			"frame_snap_tip": "Snap the animation to frames when playing."
+			"frame_snap_tip": "Snap the animation to frames when playing.",
+			"audio_scrub": "Audio scrubbing",
+			"audio_scrub_tip": "Audio gets played back when the marker is dragged over an audio track."
 		},
 		"tools": "Tools",
 		"viewport": "Viewport",
