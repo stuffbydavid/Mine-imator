@@ -3,6 +3,7 @@
 function action_tl_play_start()
 {
 	tl_audio_scrub_end(true)
+	tl_audio_stop()
 	
 	with (obj_timeline)
 	{

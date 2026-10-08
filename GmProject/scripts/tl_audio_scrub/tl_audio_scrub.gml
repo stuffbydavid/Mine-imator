@@ -1,10 +1,9 @@
-/// tl_audio_scrub(markerpos)
 /// @desc Plays overlapping audio bursts while the timeline marker is dragged.
-/// @arg markerpos
+/// @arg markerposition
 
 function tl_audio_scrub(markerpos)
 {
-	if (timeline_playing && window_busy != "timelinemarker")
+	if (timeline_playing && window_busy != "timeline/marker")
 		return 0
 
 	var now, burstms, throttlems, dir, burstindex, lastbursttime, sounds;

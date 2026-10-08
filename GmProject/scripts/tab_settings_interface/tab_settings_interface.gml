@@ -100,6 +100,10 @@ function tab_settings_interface()
 	draw_switch("settings/timeline/frame_snap", dx, dy, setting_timeline_frame_snap, action_setting_timeline_frame_snap, "settings/timeline/frame_snap_tip")
 	tab_next()
 	
+	tab_control_switch()
+	draw_switch("settings/timeline/audio_scrub", dx, dy, setting_timeline_audio_scrub, action_setting_timeline_audio_scrub, "settings/timeline/audio_scrub_tip")
+	tab_next()
+	
 	dy += label_height + 6
 	draw_label(text_get("settings/tools"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
 	dy += 8

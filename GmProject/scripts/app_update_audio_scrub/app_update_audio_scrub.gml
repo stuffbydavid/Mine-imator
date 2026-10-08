@@ -1,4 +1,3 @@
-/// app_update_audio_scrub()
 /// @desc Fades and stops the two overlapping scrub bursts.
 
 function app_update_audio_scrub()
