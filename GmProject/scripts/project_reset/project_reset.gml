@@ -16,6 +16,7 @@ function project_reset()
 	
 	render_free()
 	render_samples = -1
+	render_scene_bounds = null
 	render_preset_edit = null
 	
 	lib_preview.update = true

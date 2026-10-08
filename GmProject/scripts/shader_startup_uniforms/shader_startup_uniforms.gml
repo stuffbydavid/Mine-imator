@@ -161,6 +161,7 @@ function shader_startup_uniforms()
 		"uSunDirection",
 		"uSunFar",
 		"uSunNear",
+		"uSunShadowDistance",
 		"uSunShadowScale",
 		"uTAAMatrix",
 		"uTentFilter",

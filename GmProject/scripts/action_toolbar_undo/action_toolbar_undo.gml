@@ -35,6 +35,7 @@ function action_toolbar_undo()
 	history_resource_update = true
 	
 	render_samples = -1
+	render_scene_bounds = null
 	
 	project_update_counts()
 }

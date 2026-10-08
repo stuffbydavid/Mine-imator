@@ -1,6 +1,7 @@
 #if OS_WINDOWS
 #include "Shader.hpp"
 #include "Heap.hpp"
+
 namespace CppProject
 {
 	QString Shader::LoadPointD3D11(const QString& varsDecl, BoolType useCache)

@@ -40,4 +40,6 @@ function tl_value_set_matrix(tl, worldmatrix, def = true)
 			tl_value_set_vec3(e_value.SCA_X, sca, true)
 		}
 	}
+	
+	render_scene_bounds = null
 }

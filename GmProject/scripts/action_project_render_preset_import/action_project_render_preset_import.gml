@@ -19,11 +19,14 @@ function action_project_render_preset_import(fn = "")
 	else if (history_redo)
 		fn = history_data.filename
 
-	if (fn = "")
-		fn = file_dialog_open_render()
-
-	if (!file_exists_lib(fn) || fn = "")
-		return false
+	if (fn != null)
+	{
+		if (fn = "")
+			fn = file_dialog_open_render()
+		
+		if (!file_exists_lib(fn) || fn = "")
+			return false
+	}
 		
 	if (!history_redo)
 	{
@@ -40,14 +43,36 @@ function action_project_render_preset_import(fn = "")
 			render_preset_copy(hobj, true)
 	}
 
-	with (render_preset_edit)
-		render_preset_load(fn, false)
-
-	// Apply common settings in preset
-	render_apply_settings(render_preset_edit, e_renderer.COMMON)
-	render_samples = -1
+	if (fn = null)
+	{
+		// Reset both renderers from the loaded default preset
+		with (render_preset_map[?render_preset_default])
+			render_preset_copy(render_preset_edit, true)
+		
+		// Common settings belong to the project, not a Custom snapshot
+		with (render_preset_edit)
+		{
+			has_standard = true
+			has_realistic = true
+			has_fx = false
+			has_graphics = false
+			has_materials = false
+		}
+		
+		render_apply_settings(render_default_settings, e_renderer.COMMON)
+	}
+	else
+	{
+		with (render_preset_edit)
+			render_preset_load(fn, false)
+		
+		// Apply common settings in preset
+		render_apply_settings(render_preset_edit, e_renderer.COMMON)
+		
+		log("Imported render settings", fn)
+	}
 	
-	log("Imported render settings", fn)
+	render_samples = -1
 	
 	return true
 }

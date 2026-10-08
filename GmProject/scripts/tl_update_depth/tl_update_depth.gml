@@ -10,4 +10,5 @@ function tl_update_depth()
 	ds_list_insert(render_list, pos, id)
 	
 	render_list_depth_dirty = true
+	render_scene_bounds = null
 }

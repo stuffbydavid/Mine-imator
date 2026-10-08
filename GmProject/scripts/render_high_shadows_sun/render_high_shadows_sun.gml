@@ -2,12 +2,8 @@
 
 function render_high_shadows_sun()
 {
-	var angle, sunangularradius, refangularradius;
-	angle = vec3_normalize(app.env_sun_direction)
-	sunangularradius = tan(degtorad(min(env_sunlight_angle, 179)) * .5) * project_render_shadows_blur_size
-	refangularradius = tan(degtorad(.526) * .5)
-	
-	render_sun_shadow_scale = (sunangularradius / refangularradius) * .5
+	var angle = vec3_normalize(app.env_sun_direction);
+	render_sun_shadow_scale = tan(degtorad(min(env_sunlight_angle, 179)) * .5) * project_render_shadows_blur_size
 
 	// Jitter sun direction
 	if (project_render_shadows_jittered && render_sample_current > 1)
@@ -17,7 +13,7 @@ function render_high_shadows_sun()
 		tangent = vec3_normalize(vec3_cross(ref, angle))
 		bitangent = vec3_cross(angle, tangent)
 		diskangle = random(pi * 2)
-		diskradius = sunangularradius * sqrt(random(1))
+		diskradius = render_sun_shadow_scale * sqrt(random(1))
 		diskoffset = vec3_add(vec3_mul(tangent, cos(diskangle) * diskradius), vec3_mul(bitangent, sin(diskangle) * diskradius))
 		angle = vec3_normalize(vec3_add(angle, diskoffset))
 	}

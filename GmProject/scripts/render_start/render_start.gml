@@ -57,7 +57,11 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	
 	with (obj_timeline)
 	{
-		render_visible = tl_get_visible()
+		var vis = tl_get_visible();
+		if (render_visible != vis)
+			render_scene_bounds = null
+		
+		render_visible = vis
 		
 		if (render_visible)
 		{

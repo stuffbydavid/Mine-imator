@@ -108,7 +108,7 @@ namespace CppProject
 		// Sets whether depth writing is enabled.
 		void SetDepthWrite(BoolType enabled);
 
-		// Applies the current depth test, write mask, and comparison function in D3D11.
+		// Apply a Direct3D depth stencil state based on the current depth settings.
 		void ApplyDepthState();
 
 		// Sets the depth comparison function.
@@ -123,7 +123,7 @@ namespace CppProject
 		// Sets the blending functions.
 		void SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest);
 
-		// Apply the current blend state in D3D11.
+		// Apply a Direct3D blend state based on the current blending settings.
 		void ApplyBlendState();
 
 		// Sets independent alpha blending for the mask and optional fog overwrite target.

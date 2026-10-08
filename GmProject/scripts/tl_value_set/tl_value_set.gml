@@ -165,4 +165,6 @@ function tl_value_set(vid = undefined, val = undefined, add = false, mul = false
 		
 		app_update_tl_edit()
 	}
+	
+	render_scene_bounds = null
 }

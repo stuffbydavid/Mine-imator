@@ -2313,6 +2313,7 @@
     {"id":{"name":"render_generate_text","path":"scripts/render_generate_text/render_generate_text.yy",},},
     {"id":{"name":"render_get_noise_texture","path":"scripts/render_get_noise_texture/render_get_noise_texture.yy",},},
     {"id":{"name":"render_get_pack_texture","path":"scripts/render_get_pack_texture/render_get_pack_texture.yy",},},
+    {"id":{"name":"render_get_scene_bounds","path":"scripts/render_get_scene_bounds/render_get_scene_bounds.yy",},},
     {"id":{"name":"render_high_aa","path":"scripts/render_high_aa/render_high_aa.yy",},},
     {"id":{"name":"render_high_bloom","path":"scripts/render_high_bloom/render_high_bloom.yy",},},
     {"id":{"name":"render_high_ca","path":"scripts/render_high_ca/render_high_ca.yy",},},
