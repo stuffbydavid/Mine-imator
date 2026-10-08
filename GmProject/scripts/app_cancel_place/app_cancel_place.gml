@@ -26,6 +26,9 @@ function app_cancel_place()
 	}
 
 	tl_update_matrix()
+	
 	render_samples = -1
+	view_changed()
+	
 	app_stop_place()
 }

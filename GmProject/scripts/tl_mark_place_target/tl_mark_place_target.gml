@@ -6,6 +6,9 @@ function tl_mark_place_target(active)
 		return 0
 	
 	place_target = active
+	
+	view_changed()
+	
 	if (type = e_tl_type.MODEL_PART && id = app.place_target_tl_part_of)
 		return 0
 	

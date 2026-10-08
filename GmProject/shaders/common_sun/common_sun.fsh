@@ -63,7 +63,7 @@ float getSunShadow(
 
 	centerDepth = sampleNear + cascadeDepthBuffer(cascade, coord) * sampleRange;
 	
-	if (quality <= 0 || uSunShadowScale <= 0.0)
+	if (quality <= 0 || uSunShadowScale <= 0.000001)
 		return getPCSSVisibility(fragDepth, centerDepth, bias);
 
 	// The kernel rotates between accumulated samples, not between neighboring pixels
@@ -71,8 +71,18 @@ float getSunShadow(
 	
 	// Convert world-space penumbra sizes to this cascade's texture coordinates
 	float inverseWorldSize = 1.0 / max(uCascadeWorldSize[cascade], 0.0001);
+	
+	// Scale the minimum world-space blur with the setting across all cascades
+	float blurSize = uSunShadowScale / max(uSunAngularRadius, 0.000001);
+	float filterWorldSize = uCascadeWorldSize[0];
+	
+	// Use the near split as reference even when one cascade covers the full range
+	if (uCascadeCount == 1)
+		filterWorldSize *= min(1.0, max(300.0, uSunShadowDistance * 0.1) / max(uSunShadowDistance, 0.0001));
+	
+	float minimumFilterRadius = blurSize * filterWorldSize / PCSS_REFERENCE_SHADOW_SIZE * inverseWorldSize;
 	float searchWorldRadius = uSunShadowScale * uSunShadowDistance;
-	float searchRadius = searchWorldRadius * inverseWorldSize;
+	float searchRadius = max(searchWorldRadius * inverseWorldSize, minimumFilterRadius);
 	float gradientLength = length(receiverDepthGradient);
 	float searchBias = bias + min(gradientLength * searchRadius, bias * 2.0);
 	
@@ -103,7 +113,7 @@ float getSunShadow(
 
 	// Get penumbra for filter
 	float separation = max(fragDepth - blockerDepth - bias, 0.0); // Ignore the bias gap
-	float filterRadius = min(uSunShadowScale * separation, searchWorldRadius) * inverseWorldSize;
+	float filterRadius = max(min(uSunShadowScale * separation, searchWorldRadius) * inverseWorldSize, minimumFilterRadius);
 	float filterBias = bias + min(gradientLength * filterRadius, bias * 2.0);
 	float visibility = 0.0;
 
@@ -160,22 +170,26 @@ void getSunLighting(
 
 			vec4 screenCoord;
 			vec2 receiverDepthGradient;
+            float bias;
 			if (i == 0)
 			{
 				screenCoord = vScreenCoord0;
 				receiverDepthGradient = receiverDepthGradient0;
-			}
+                bias = 1.0;
+            }
 			else if (i == 1)
 			{
 				screenCoord = vScreenCoord1;
-				receiverDepthGradient = receiverDepthGradient1;
-			}
+                receiverDepthGradient = receiverDepthGradient1;
+                bias = 3.0;
+            }
 			else
 			{
 				i = 2;
 				screenCoord = vScreenCoord2;
-				receiverDepthGradient = receiverDepthGradient2;
-			}
+                receiverDepthGradient = receiverDepthGradient2;
+                bias = 6.0;
+            }
 
 			float fragDepth = screenCoord.z;
 			vec2 fragCoord = screenCoord.xy;
@@ -187,9 +201,6 @@ void getSunLighting(
 				float depthRange = uSunFar[i] - uSunNear[i];
 				fragDepth = uSunNear[i] + fragDepth * depthRange;
 				receiverDepthGradient *= depthRange;
-
-				// Calculate bias
-				float bias = 1.0;
 
 				// Find shadow
 				float sampleDepth;

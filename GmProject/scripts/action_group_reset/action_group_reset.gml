@@ -35,7 +35,7 @@ function action_group_reset()
 		}
 		
 		case e_context_group.SCALE:
-			action_tl_frame_scale_xyz(vec3(1))
+			action_tl_frame_scale_xyz(vec3(tl_edit.value_default[e_value.SCA_X], tl_edit.value_default[e_value.SCA_Y], tl_edit.value_default[e_value.SCA_Z]))
 			break
 		
 		case e_context_group.BEND:

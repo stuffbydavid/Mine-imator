@@ -11,6 +11,7 @@ function popup_close()
 	
 	window_busy = ""
 	window_focus = ""
+	view_changed()
 	
 	popup_ani_type = "hide"
 	

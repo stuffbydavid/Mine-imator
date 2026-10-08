@@ -26,8 +26,11 @@ function app_update_animate()
 	env_time = (timeline_marker / project_tempo) * 60
 	
 	// Update samples
-	if ((env_time_prev != env_time || app.history_resource_update) || app.timeline_playing)
+	if (updatevalues || env_time_prev != env_time || app.history_resource_update || app.timeline_playing)
+	{
 		render_samples = -1
+		view_changed()
+	}
 	
 	with (obj_timeline)
 	{

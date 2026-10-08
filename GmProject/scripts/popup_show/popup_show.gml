@@ -13,6 +13,7 @@ function popup_show(popup)
 	if (popup_current.block)
 		window_busy = "popup/" + popup_current.name
 	
+	view_changed()
 	action_tl_play_break()
 	context_menu_close()
 }

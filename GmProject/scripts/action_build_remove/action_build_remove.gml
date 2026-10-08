@@ -101,8 +101,7 @@ function action_build_remove()
 	place_pos = null
 	place_view_pos = null
 	
-	view_main.update_place_surfaces = true
-	view_second.update_place_surfaces = true
+	view_changed()
 
 	tl_update_list()
 	tl_update_length()

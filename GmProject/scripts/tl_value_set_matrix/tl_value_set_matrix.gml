@@ -42,4 +42,6 @@ function tl_value_set_matrix(tl, worldmatrix, def = true)
 	}
 	
 	render_scene_bounds = null
+	
+	view_changed()
 }

@@ -51,8 +51,8 @@ function action_build_first_person(enabled)
 			view_second.show = true
 		
 		build_first_person_second = false
-		view_main.update_place_surfaces = true
 	}
 
+	view_changed()
 	app_mouse_clear()
 }

@@ -129,16 +129,20 @@ function project_load(fn = "")
 	project_load_find_save_ids(true)
 	project_load_update()
 	project_reset_loaded()
+	
 	log("Project loaded")
+	
+	timeline_marker_previous = -1
+	view_changed()
 	
 	// Save into newest format
 	if (load_format < e_project.FORMAT_110_PRE_1)
 	{
-		if (!debug_mode)
-			file_rename_lib(fn, fn + ".old")
+		file_rename_lib(fn, fn + ".old")
 		project_save()
 	}
 	
 	recent_add_wait = true
+	
 	return true
 }

@@ -6,10 +6,10 @@
 function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
 	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend, posebend;
-	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf, placeupdate;
+	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf, viewupdate;
 	tlamount = ds_list_size(app.project_timeline_list)
 	posebend = [ 0, 0, 0 ]
-	placeupdate = false
+	viewupdate = false
 	
 	if (object_index = obj_timeline)
 		start = ds_list_find_index(app.project_timeline_list, id)
@@ -45,11 +45,10 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			continue
 		}
 		
-		if (!curtl.placed && !curtl.parent_is_placed)
-			placeupdate = true
-		
 		with (curtl)
 		{
+			viewupdate = true
+			
 			// Get parent matrix
 			if (parent != app)
 			{
@@ -448,11 +447,8 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	}
 	
 	// Update view buffers for accurate object placing
-	if (placeupdate && (app.place_build || app.place_tl != null))
-	{
-		app.view_main.update_place_surfaces = true
-		app.view_second.update_place_surfaces = true
-	}
+	if (viewupdate)
+		view_changed()
 	
 	update_matrix = false
 	

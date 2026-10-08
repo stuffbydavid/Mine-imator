@@ -464,7 +464,6 @@ function action_bench_create(button = e_bench_button.CREATE)
 		place_pos = null
 		place_view_pos = null
 		
-		view_main.update_place_surfaces = true
-		view_second.update_place_surfaces = true
+		view_changed()
 	}
 }

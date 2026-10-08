@@ -32,7 +32,10 @@ function particle_spawner_update(spawner)
 	
 	// Don't allow samples to be rendered
 	if (is_timeline && realtime)
+	{
 		render_samples = -1
+		view_changed()
+	}
 	
 	if (!realtime)
 	{

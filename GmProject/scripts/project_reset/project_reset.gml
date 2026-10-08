@@ -19,6 +19,8 @@ function project_reset()
 	render_scene_bounds = null
 	render_preset_edit = null
 	
+	view_changed()
+	
 	lib_preview.update = true
 	res_preview.update = true
 	

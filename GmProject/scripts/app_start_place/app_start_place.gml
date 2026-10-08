@@ -27,9 +27,8 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	place_content_mouseon = null
 	
-	view_main.update_place_surfaces = true
+	view_changed()
 	view_main.place_depth_value = 0.995
-	view_second.update_place_surfaces = true
 	view_second.place_depth_value = 0.995
 	
 	if (build)

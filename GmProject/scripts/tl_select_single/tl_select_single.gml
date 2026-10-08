@@ -31,4 +31,6 @@ function tl_select_single()
 	
 	selected = true
 	tl_update_parent_is_selected()
+	
+	view_changed()
 }

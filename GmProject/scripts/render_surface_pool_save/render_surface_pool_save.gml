@@ -1,7 +1,7 @@
 function render_surface_pool_save()
 {
 	if (!instance_exists(render_surface_pool_current))
-		return
+		return 0
 
 	var pool = render_surface_pool_current;
 	pool.surface = render_surface
@@ -32,10 +32,12 @@ function render_surface_pool_save()
 	pool.surface_samples = render_surface_samples
 	pool.gbuffers_cache_ready = render_gbuffers_cache_ready
 
+	pool.sun_cascades = render_cascades
+	pool.shadow_cache = render_shadow_cache
+	pool.shadow_cache_ready = render_shadow_cache_ready
+	
 	pool.surface_sun_buffer = render_surface_sun_buffer
 	pool.surface_spot_buffer = render_surface_spot_buffer
 	pool.surface_point_buffer = render_surface_point_buffer
 	pool.surface_point_atlas_buffer = render_surface_point_atlas_buffer
-	pool.shadow_cache = render_shadow_cache
-	pool.shadow_cache_ready = render_shadow_cache_ready
 }

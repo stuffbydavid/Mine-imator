@@ -11,4 +11,6 @@ function tl_select()
 	tl_focus = id
 	
 	tl_update_parent_is_selected()
+	
+	view_changed()
 }

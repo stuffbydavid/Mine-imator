@@ -32,5 +32,6 @@ function minecraft_update_armor()
 		}
 		
 		armor_update = []
+		view_changed()
 	}
 }

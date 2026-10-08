@@ -1,7 +1,8 @@
 function minecraft_update_patterns()
 {
 	// Update pattern designs for templates
-	if (pattern_update != null && window_busy != "popup/" + popup_loading.name)
+	if (pattern_update != null && (!is_array(pattern_update) || array_length(pattern_update) > 0) &&
+		window_busy != "popup/" + popup_loading.name)
 	{
 		var obj = pattern_update;
 		
@@ -46,5 +47,6 @@ function minecraft_update_patterns()
 		}
 		
 		pattern_update = []
+		view_changed()
 	}
 }

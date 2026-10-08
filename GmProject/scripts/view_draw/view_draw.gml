@@ -524,6 +524,13 @@ function view_draw(view)
 		if (view.transparent_background)
 			gpu_set_blendmode(bm_normal)
 		
+		if (surface_exists(view.surface_gizmos))
+		{
+			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)
+			draw_surface_size(view.surface_gizmos, content_x, content_y, content_width, content_height)
+			gpu_set_blendmode(bm_normal)
+		}
+		
 		if (view.grid)
 		{
 			var cellwid, cellhei;

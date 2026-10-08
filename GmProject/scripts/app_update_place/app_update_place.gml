@@ -18,11 +18,11 @@ function app_update_place()
 		place_cam_work_angle_look_xy != cam_work_angle_look_xy ||
 		place_cam_work_angle_look_z != cam_work_angle_look_z)
 	{
-		view_main.update_place_surfaces = true
-		view_second.update_place_surfaces = true
 		place_cam_work_from = cam_work_from
 		place_cam_work_angle_look_xy = cam_work_angle_look_xy
 		place_cam_work_angle_look_z = cam_work_angle_look_z
+		
+		view_changed(build_first_person ? view_main : null)
 	}
 	
 	// Update object with position from last step
@@ -101,9 +101,6 @@ function app_update_place()
 				build_box_render = build_box_top
 			}
 		}
-
-		if (!place_build && place_tl.type = e_tl_type.TEXT)
-			app_update_place_text()
 			
 		if (place_build)
 		{
@@ -115,6 +112,13 @@ function app_update_place()
 			
 			place_view_pos = null
 			return 0
+		}
+		else
+		{
+			if (place_tl.type = e_tl_type.TEXT)
+				app_update_place_text()
+			else if (type_is_light(place_tl.type))
+				place_pos[Z] += block_size
 		}
 
 		// Update timeline and parent to compatible objects

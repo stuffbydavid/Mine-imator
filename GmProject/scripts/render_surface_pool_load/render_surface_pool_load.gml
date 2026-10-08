@@ -28,10 +28,12 @@ function render_surface_pool_load(pool)
 	render_surface_samples = pool.surface_samples
 	render_gbuffers_cache_ready = pool.gbuffers_cache_ready
 
+	render_shadow_cache = pool.shadow_cache
+	render_shadow_cache_ready = pool.shadow_cache_ready
+	render_cascades = pool.sun_cascades
+	
 	render_surface_sun_buffer = pool.surface_sun_buffer
 	render_surface_spot_buffer = pool.surface_spot_buffer
 	render_surface_point_buffer = pool.surface_point_buffer
 	render_surface_point_atlas_buffer = pool.surface_point_atlas_buffer
-	render_shadow_cache = pool.shadow_cache
-	render_shadow_cache_ready = pool.shadow_cache_ready
 }

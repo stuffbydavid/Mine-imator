@@ -19,6 +19,7 @@ function view_pick_depth(view, cam)
 		view.surface_place_depth_gm = surface_require(view.surface_place_depth_gm, content_width, content_height, false)
 
 	render_start(null, cam, view, content_width, content_height)
+	
 	place_tl_render = false
 
 	if (is_cpp())
@@ -36,9 +37,10 @@ function view_pick_depth(view, cam)
 		gpu_set_blendmode(bm_normal)
 	}
 	surface_reset_target()
+	
 	render_done()
+	
 	place_tl_render = true
-	view.update_place_surfaces = true
 
 	var mx, my, depthval;
 	mx = mouse_x - content_x

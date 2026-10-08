@@ -8,32 +8,15 @@ function action_tl_frame_scale_all_axis(value, add)
 	
 	if (string_contains(window_busy, "drag") || string_contains(window_busy, "render/control"))
 	{
-		// Start
-		if (historyobj = null || !historyobj.scale_link_drag)
+		tl_value_set_start(action_tl_frame_scale_all_axis, historyobj != null && historyobj.scale_link_drag)
+		
+		if (!history_data.scale_link_drag)
 		{
-			tl_value_set_start(action_tl_frame_scale_all_axis, false)
-			
 			history_data.scale_link_drag = true
 			history_data.scale_oldval = oldval
-			history_data.scale_link_drag_val += value
-			
-			mul = (oldval + history_data.scale_link_drag_val) / oldval
 		}
-		else // Dragging
-		{
-			tl_value_set_start(action_tl_frame_scale_all_axis, true)
-			
-			oldval = history_data.scale_oldval
-			history_data.scale_link_drag_val += value
-			
-			mul = (oldval + history_data.scale_link_drag_val) / oldval
-		}
-	}
-	else if (historyobj != null && historyobj.scale_link_drag) // Stop dragging
-	{
-		tl_value_set_start(action_tl_frame_scale_all_axis, true)
 		
-		stopdrag = true
+		stopdrag = !add
 		oldval = history_data.scale_oldval
 		history_data.scale_link_drag_val += value
 		
@@ -41,7 +24,8 @@ function action_tl_frame_scale_all_axis(value, add)
 	}
 	else // Manual input
 	{
-		tl_value_set_start(action_tl_frame_scale_all_axis, true)
+		tl_value_set_start(action_tl_frame_scale_all_axis, historyobj = null || !historyobj.scale_link_drag)
+		history_data.scale_link_drag = false
 		
 		mul = value / oldval
 	}

@@ -263,7 +263,7 @@ void TernaryCondition::resolve(ResolveScope* scope)
 	this->expr2->resolve(scope);
 	this->expr3->resolve(scope);
 
-	this->expr1->applyType(scope, DataType::scalar(DataType::Type::IntOrReal));
+	this->expr1->applyType(scope, DataType::scalar(DataType::Type::Bool));
 
 	// Both types should be the same
 	this->expr3->applyType(scope, *this->expr2->resolvedType);

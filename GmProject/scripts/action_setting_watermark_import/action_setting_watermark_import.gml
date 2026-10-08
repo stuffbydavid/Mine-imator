@@ -11,4 +11,6 @@ function action_setting_watermark_import()
 	
 	texture_page_reset()
 	setting_watermark_image = texture_create(setting_watermark_fn, false)
+	
+	view_changed()
 }

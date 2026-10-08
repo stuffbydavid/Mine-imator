@@ -5,4 +5,6 @@ function action_setting_watermark_reset()
 	
 	texture_free(setting_watermark_image)
 	setting_watermark_image = null
+	
+	view_changed()
 }

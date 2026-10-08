@@ -15,18 +15,18 @@ function tab_frame_editor_scale()
 	if (frame_editor.transform.scale_all)
 	{
 		tab_control_dragger()
-		draw_dragger("frame_editor/scale/xyz", dx, dy, dragger_width, tl_edit.value[e_value.SCA_X], max(0.0001, tl_edit.value[e_value.SCA_X] / 50), snap_min, no_limit, 1, snapval, tab.transform.tbx_sca_x, script)
+		draw_dragger("frame_editor/scale/xyz", dx, dy, dragger_width, tl_edit.value[e_value.SCA_X], max(0.0001, tl_edit.value[e_value.SCA_X] / 50), snap_min, no_limit, tl_edit.value_default[e_value.SCA_X], snapval, tab.transform.tbx_sca_x, script)
 		tab_next()
 	}
 	else
 	{
-		textfield_group_add("frame_editor/scale/x", tl_edit.value[e_value.SCA_X], 1, script, X, tab.transform.tbx_sca_x, null, max(0.0001, tl_edit.value[e_value.SCA_X] / 50))
+		textfield_group_add("frame_editor/scale/x", tl_edit.value[e_value.SCA_X], tl_edit.value_default[e_value.SCA_X], script, X, tab.transform.tbx_sca_x, null, max(0.0001, tl_edit.value[e_value.SCA_X] / 50))
 	
 		axis_edit = (setting_z_is_up ? Y : Z)
-		textfield_group_add("frame_editor/scale/y", tl_edit.value[e_value.SCA_X + axis_edit], 1, script, axis_edit, tab.transform.tbx_sca_y, null, max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50))
+		textfield_group_add("frame_editor/scale/y", tl_edit.value[e_value.SCA_X + axis_edit], tl_edit.value_default[e_value.SCA_X + axis_edit], script, axis_edit, tab.transform.tbx_sca_y, null, max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50))
 	
 		axis_edit = (setting_z_is_up ? Z : Y)
-		textfield_group_add("frame_editor/scale/z", tl_edit.value[e_value.SCA_X + axis_edit], 1, script, axis_edit, tab.transform.tbx_sca_z, null, max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50))
+		textfield_group_add("frame_editor/scale/z", tl_edit.value[e_value.SCA_X + axis_edit], tl_edit.value_default[e_value.SCA_X + axis_edit], script, axis_edit, tab.transform.tbx_sca_z, null, max(0.0001, tl_edit.value[e_value.SCA_X + axis_edit] / 50))
 		
 		tab_control_textfield_group()
 		draw_textfield_group("frame_editor/scale", dx, dy, dw, 0.1, snap_min, no_limit, snapval, false, true, 3)

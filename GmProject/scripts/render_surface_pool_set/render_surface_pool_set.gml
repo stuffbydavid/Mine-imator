@@ -32,6 +32,8 @@ function render_surface_pool_set(owner, width, height)
 	}
 
 	pool.used = true
+	
 	render_surface_pool_current = pool
+	
 	render_surface_pool_load(pool)
 }

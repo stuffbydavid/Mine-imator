@@ -48,9 +48,9 @@ function app_stop_place(keep = false, clearmouse = true)
 	// Clear placement state
 	place_tl = null
 	place_history = null
-	
 	place_content_mouseon = null
 	
+	view_changed()
 	window_busy = ""
 	
 	if (clearmouse)

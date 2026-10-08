@@ -36,6 +36,7 @@ function action_toolbar_redo()
 	
 	render_samples = -1
 	render_scene_bounds = null
+	view_changed()
 	
 	project_update_counts()
 }

@@ -8,4 +8,6 @@ function action_setting_watermark_custom(custom)
 	}
 	
 	setting_watermark_custom = custom
+	
+	view_changed()
 }

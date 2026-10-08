@@ -2,15 +2,6 @@
 
 function tl_remove_clean()
 {
-	with (app)
-	{
-		if (place_build || place_tl != null)
-		{
-			view_main.update_place_surfaces = true
-			view_second.update_place_surfaces = true
-		}
-	}
-	
 	// Deselect
 	tl_deselect()
 		
@@ -19,6 +10,7 @@ function tl_remove_clean()
 	
 	render_list_depth_dirty = true
 	render_scene_bounds = null
+	view_changed()
 		
 	// Remove from parent
 	ds_list_delete_value(parent.tree_list, id)

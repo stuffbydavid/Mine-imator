@@ -23,7 +23,7 @@ function view_place(view, cam)
 	if (view.surface_place_id != surfaceid || view.surface_place_normal != surfacenormal ||
 		(!is_cpp() && view.surface_place_depth_gm != surfacedepth) ||
 		view.surface_place_width != content_width || view.surface_place_height != content_height)
-		view.update_place_surfaces = true
+		view_changed(view)
 	
 	view.surface_place_width = content_width
 	view.surface_place_height = content_height

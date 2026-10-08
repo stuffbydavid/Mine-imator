@@ -28,10 +28,12 @@ function render_surface_pool_clear()
 	render_surface_samples = null
 	render_gbuffers_cache_ready = false
 
+	render_cascades = []
+	render_shadow_cache = null
+	render_shadow_cache_ready = null
+	
 	render_surface_sun_buffer = array_create(3, null)
 	render_surface_spot_buffer = null
 	render_surface_point_buffer = null
 	render_surface_point_atlas_buffer = null
-	render_shadow_cache = null
-	render_shadow_cache_ready = null
 }

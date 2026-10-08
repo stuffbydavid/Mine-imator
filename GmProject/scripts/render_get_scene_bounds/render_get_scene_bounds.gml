@@ -1,12 +1,10 @@
-/// @desc Returns scene bounds as minimum XY followed by maximum XY.
+/// @desc Returns scene bounds as two points.
 
 function render_get_scene_bounds()
 {
-	var minx, miny, maxx, maxy, empty;
-	minx = 0
-	miny = 0
-	maxx = 0
-	maxy = 0
+	var minimum, maximum, empty;
+	minimum = point3D(0)
+	maximum = point3D(0)
 	empty = true
 	
 	for (var i = 0; i < ds_list_size(render_list); i++)
@@ -16,14 +14,14 @@ function render_get_scene_bounds()
 			if (hide || !render_visible || (!app.place_tl_render && (placed || parent_is_placed)))
 				continue
 			
-			if (type = e_tl_type.CAMERA_EFFECT || type = e_tl_type.ENVIRONMENT || type = e_tl_type.AUDIO_TRACK)
+			if (!type_is_visible(type) || type = e_tl_type.CAMERA || type_is_light(type))
 				continue
 				
-			var halfwidth, halflength, centerx, centery, extentx, extenty;
+			var halfwidth, halflength, halfheight, center, extent;
 			halfwidth = block_size * 0.5
 			halflength = halfwidth
-			centerx = world_pos[X]
-			centery = world_pos[Y]
+			halfheight = halfwidth
+			center = point3D(world_pos[X], world_pos[Y], world_pos[Z])
 			
 			if (type = e_tl_type.SCENERY)
 			{
@@ -37,32 +35,39 @@ function render_get_scene_bounds()
 				// Scenery rendering swaps the original width and length
 				halfwidth = (res.scenery_size[Y] + res.scenery_size[X] * max(0, ceil(rep[X]) - 1)) * block_size * 0.5
 				halflength = (res.scenery_size[X] + res.scenery_size[Y] * max(0, ceil(rep[Y]) - 1)) * block_size * 0.5
-				centerx = matrix_render[@ 12] + matrix_render[@ 0] * halfwidth + matrix_render[@ 4] * halflength
-				centery = matrix_render[@ 13] + matrix_render[@ 1] * halfwidth + matrix_render[@ 5] * halflength
+				halfheight = res.scenery_size[Z] * max(1, ceil(rep[Z])) * block_size * 0.5
+				center = point3D(
+					matrix_render[@ 12] + matrix_render[@ 0] * halfwidth + matrix_render[@ 4] * halflength,
+					matrix_render[@ 13] + matrix_render[@ 1] * halfwidth + matrix_render[@ 5] * halflength,
+					matrix_render[@ 14] + matrix_render[@ 2] * halfwidth + matrix_render[@ 6] * halflength + matrix_render[@ 10] * halfheight
+				)
 			}
 			
 			// Project the footprint onto XY
-			extentx = abs(matrix_render[@ 0]) * halfwidth + abs(matrix_render[@ 4]) * halflength
-			extenty = abs(matrix_render[@ 1]) * halfwidth + abs(matrix_render[@ 5]) * halflength
+			extent = point3D(
+				abs(matrix_render[@ 0]) * halfwidth + abs(matrix_render[@ 4]) * halflength,
+				abs(matrix_render[@ 1]) * halfwidth + abs(matrix_render[@ 5]) * halflength,
+				abs(matrix_render[@ 2]) * halfwidth + abs(matrix_render[@ 6]) * halflength + abs(matrix_render[@ 10]) * halfheight
+			)
 			
 			if (empty)
 			{
-				minx = centerx - extentx
-				miny = centery - extenty
-				maxx = centerx + extentx
-				maxy = centery + extenty
+				minimum = point3D_sub(center, extent)
+				maximum = point3D_add(center, extent)
 				
 				empty = false
 			}
 			else
 			{
-				minx = min(minx, centerx - extentx)
-				miny = min(miny, centery - extenty)
-				maxx = max(maxx, centerx + extentx)
-				maxy = max(maxy, centery + extenty)
+				minimum[@ X] = min(minimum[X], center[X] - extent[X])
+				minimum[@ Y] = min(minimum[Y], center[Y] - extent[Y])
+				minimum[@ Z] = min(minimum[Z], center[Z] - extent[Z])
+				maximum[@ X] = max(maximum[X], center[X] + extent[X])
+				maximum[@ Y] = max(maximum[Y], center[Y] + extent[Y])
+				maximum[@ Z] = max(maximum[Z], center[Z] + extent[Z])
 			}
 		}
 	}
 	
-	return [ minx, miny, maxx, maxy ]
+	return [ minimum, maximum ]
 }

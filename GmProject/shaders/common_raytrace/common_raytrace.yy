@@ -3,8 +3,8 @@
   "%Name":"common_raytrace",
   "name":"common_raytrace",
   "parent":{
-    "name":"common",
-    "path":"folders/Shaders/common.yy",
+    "name":"Common",
+    "path":"folders/Shaders/Common.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_changed",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_changed",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

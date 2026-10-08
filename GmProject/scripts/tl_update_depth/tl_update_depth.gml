@@ -11,4 +11,6 @@ function tl_update_depth()
 	
 	render_list_depth_dirty = true
 	render_scene_bounds = null
+	
+	view_changed()
 }

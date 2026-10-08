@@ -236,7 +236,6 @@ function action_build_place()
 		place_pos = null
 		place_view_pos = null
 		
-		view_main.update_place_surfaces = true
-		view_second.update_place_surfaces = true
+		view_changed()
 	}
 }

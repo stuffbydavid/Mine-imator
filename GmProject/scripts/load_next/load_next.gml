@@ -16,4 +16,6 @@ function load_next()
 		res_preview.update = true
 		bench_settings.preview.update = true
 	}
+	
+	view_changed()
 }

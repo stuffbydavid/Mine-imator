@@ -212,15 +212,14 @@ function render_startup()
 	render_pcss_quality_prev = -1
 	
 	// Shadows
-	globalvar render_shadow_distance, render_scene_bounds, render_cascades_count, render_cascade_ends, render_cascades, render_cascade_debug,
+	globalvar render_shadow_distance, render_scene_bounds, render_cascades_count, render_cascades,
 			  render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_spot_buffer, 
 			  render_surface_point_buffer, render_surface_point_atlas_buffer, render_shadow_cache, render_shadow_cache_ready, render_shadow_cache_enabled;
 	
 	render_shadow_distance = 0
 	render_scene_bounds = null
 	render_cascades_count = 3
-	render_cascade_ends = []
-	render_cascade_debug = 1
+	render_cascades = []
 	
 	project_render_shadows_jittered = false
 	project_render_shadows_sun_cascades = 3
@@ -277,11 +276,7 @@ function render_startup()
 	render_blend_prev = null
 	render_alpha_prev = null
 	
-	for (var i = 0; i < render_cascades_count; i++)
-	{
-		render_cascades[i] = new frustum()
-		render_surface_sun_buffer[i] = null
-	}
+	render_surface_sun_buffer = array_create(render_cascades_count, null)
 	
 	// Render modes
 	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass, render_material_pass;
