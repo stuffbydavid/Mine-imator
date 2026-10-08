@@ -272,25 +272,34 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Update bounds
-		var boundsmat = matrix_create(position, rotation, vec3(1))
-		var corners = array_create(type = "plane" ? 4 : 8)
+		var boundsmat, corners;
+		boundsmat = matrix_create(position, rotation, vec3(1))
+		
 		if (type = "plane")
 		{
-			corners[0] = point3D(from[X], from[Y], from[Z])
-			corners[1] = point3D(to[X], from[Y], from[Z])
-			corners[2] = point3D(from[X], from[Y], to[Z])
-			corners[3] = point3D(to[X], from[Y], to[Z])
+			corners = [
+				point3D(from[X], from[Y], from[Z]),
+				point3D(to[X], from[Y], from[Z]),
+				point3D(from[X], from[Y], to[Z]),
+				point3D(to[X], from[Y], to[Z])
+			]
+			
+			if (is3d)
+				for (var j = 0; j < 4; j++)
+					corners[j + 4] = point3D(corners[j][X], to[Y], corners[j][Z])
 		}
 		else
 		{
-			corners[0] = point3D(from[X], to[Y], from[Z])
-			corners[1] = point3D(to[X], to[Y], from[Z])
-			corners[2] = point3D(to[X], from[Y], from[Z])
-			corners[3] = point3D(from[X], from[Y], from[Z])
-			corners[4] = point3D(from[X], to[Y], to[Z])
-			corners[5] = point3D(to[X], to[Y], to[Z])
-			corners[6] = point3D(to[X], from[Y], to[Z])
-			corners[7] = point3D(from[X], from[Y], to[Z])
+			corners = [
+				point3D(from[X], to[Y], from[Z]),
+				point3D(to[X], to[Y], from[Z]),
+				point3D(to[X], from[Y], from[Z]),
+				point3D(from[X], from[Y], from[Z]),
+				point3D(from[X], to[Y], to[Z]),
+				point3D(to[X], to[Y], to[Z]),
+				point3D(to[X], from[Y], to[Z]),
+				point3D(from[X], from[Y], to[Z])
+			]
 		}
 
 		bounds_start = point3D_mul_matrix(vec3_add(corners[0], vertex_offsets[0]), boundsmat)
@@ -298,7 +307,10 @@ function model_file_load_shape(map, res)
 		
 		for (var j = 1; j < array_length(corners); j++)
 		{
-			var corner = point3D_mul_matrix(vec3_add(corners[j], vertex_offsets[j]), boundsmat)
+			var corner, offsetindex;
+			offsetindex = (type = "plane" ? (j mod 4) : j)
+			corner = point3D_mul_matrix(vec3_add(corners[j], vertex_offsets[offsetindex]), boundsmat)
+			
 			for (var axis = X; axis <= Z; axis++)
 			{
 				bounds_start[axis] = min(bounds_start[axis], corner[axis])

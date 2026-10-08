@@ -129,19 +129,24 @@ function model_shape_generate_block(bend)
 		{
 			bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
 			bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
+			
 			p1 = point3D(x1, y1, z2)
 			p2 = point3D(x1, y2, z2)
 			p3 = point3D(x1, y2, z1)
 			p4 = point3D(x1, y1, z1)
+			
 			n1 = vec3(0, 1, 0)
 			n2 = vec3(0, -1, 0)
 			n3 = vec3(0, 0, 1)
 			n4 = vec3(0, 0, -1)
+			
 			texp1 = texsouth1[X] // South/Above X
 			texp2 = texnorth2[X] // North X
 			texp3 = texdown4[X] // Below X
+			
 			texstart1 = texwest1; texstart2 = texwest2; texstart3 = texwest3; texstart4 = texwest4;
 			texend1 = texeast1; texend2 = texeast2; texend3 = texeast3; texend4 = texeast4;
+			
 			break
 		}
 		
@@ -149,19 +154,24 @@ function model_shape_generate_block(bend)
 		{
 			bendstart = (bend_offset - (position[Y] + y1)) - bendsize / 2
 			bendend = (bend_offset - (position[Y] + y1)) + bendsize / 2
+			
 			p1 = point3D(x2, y1, z2)
 			p2 = point3D(x1, y1, z2)
 			p3 = point3D(x1, y1, z1)
 			p4 = point3D(x2, y1, z1)
+			
 			n1 = vec3(1, 0, 0)
 			n2 = vec3(-1, 0, 0)
 			n3 = vec3(0, 0, 1)
 			n4 = vec3(0, 0, -1)
+			
 			texp1 = texeast2[X] // East X
 			texp2 = texwest1[X] // West X
 			texp3 = texup1[Y] // Above/Below Y
+			
 			texstart1 = texnorth1; texstart2 = texnorth2; texstart3 = texnorth3; texstart4 = texnorth4;
 			texend1 = texsouth1; texend2 = texsouth2; texend3 = texsouth3; texend4 = texsouth4;
+			
 			break
 		}
 		
@@ -169,17 +179,21 @@ function model_shape_generate_block(bend)
 		{
 			bendstart = (bend_offset - (position[Z] + z1)) - bendsize / 2
 			bendend = (bend_offset - (position[Z] + z1)) + bendsize / 2
+			
 			p1 = point3D(x1, y2, z1)
 			p2 = point3D(x2, y2, z1)
 			p3 = point3D(x2, y1, z1)
 			p4 = point3D(x1, y1, z1)
+			
 			n1 = vec3(1, 0, 0)
 			n2 = vec3(-1, 0, 0)
 			n3 = vec3(0, 1, 0)
 			n4 = vec3(0, -1, 0)
+			
 			texp1 = texsouth3[Y] // East/South/West/North Y
 			texstart1 = texdown1; texstart2 = texdown2; texstart3 = texdown3; texstart4 = texdown4;
 			texend1 = texup1; texend2 = texup2; texend3 = texup3; texend4 = texup4;
+			
 			break
 		}
 	}
@@ -188,23 +202,29 @@ function model_shape_generate_block(bend)
 	switch (segaxis)
 	{
 		case X:
+		{
 			p1 = vec3_add(p1, vertex_offsets[7])
 			p2 = vec3_add(p2, vertex_offsets[4])
 			p3 = vec3_add(p3, vertex_offsets[0])
 			p4 = vec3_add(p4, vertex_offsets[3])
 			break
+		}
 		case Y:
+		{
 			p1 = vec3_add(p1, vertex_offsets[6])
 			p2 = vec3_add(p2, vertex_offsets[7])
 			p3 = vec3_add(p3, vertex_offsets[3])
 			p4 = vec3_add(p4, vertex_offsets[2])
 			break
+		}
 		case Z:
+		{
 			p1 = vec3_add(p1, vertex_offsets[0])
 			p2 = vec3_add(p2, vertex_offsets[1])
 			p3 = vec3_add(p3, vertex_offsets[2])
 			p4 = vec3_add(p4, vertex_offsets[3])
 			break
+		}
 	}
 
 	// Apply transform
@@ -275,6 +295,7 @@ function model_shape_generate_block(bend)
 					break
 				}
 			}
+			
 			break
 		}
 		
@@ -369,23 +390,30 @@ function model_shape_generate_block(bend)
 		switch (segaxis)
 		{
 			case X:
+			{
 				np1 = vec3_add(np1, vec3_add(vertex_offsets[7], vec3_mul(vec3_sub(vertex_offsets[6], vertex_offsets[7]), offsetamount)))
 				np2 = vec3_add(np2, vec3_add(vertex_offsets[4], vec3_mul(vec3_sub(vertex_offsets[5], vertex_offsets[4]), offsetamount)))
 				np3 = vec3_add(np3, vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[1], vertex_offsets[0]), offsetamount)))
 				np4 = vec3_add(np4, vec3_add(vertex_offsets[3], vec3_mul(vec3_sub(vertex_offsets[2], vertex_offsets[3]), offsetamount)))
 				break
+			}
+			
 			case Y:
+			{
 				np1 = vec3_add(np1, vec3_add(vertex_offsets[6], vec3_mul(vec3_sub(vertex_offsets[5], vertex_offsets[6]), offsetamount)))
 				np2 = vec3_add(np2, vec3_add(vertex_offsets[7], vec3_mul(vec3_sub(vertex_offsets[4], vertex_offsets[7]), offsetamount)))
 				np3 = vec3_add(np3, vec3_add(vertex_offsets[3], vec3_mul(vec3_sub(vertex_offsets[0], vertex_offsets[3]), offsetamount)))
 				np4 = vec3_add(np4, vec3_add(vertex_offsets[2], vec3_mul(vec3_sub(vertex_offsets[1], vertex_offsets[2]), offsetamount)))
 				break
+			}
 			case Z:
+			{
 				np1 = vec3_add(np1, vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[4], vertex_offsets[0]), offsetamount)))
 				np2 = vec3_add(np2, vec3_add(vertex_offsets[1], vec3_mul(vec3_sub(vertex_offsets[5], vertex_offsets[1]), offsetamount)))
 				np3 = vec3_add(np3, vec3_add(vertex_offsets[2], vec3_mul(vec3_sub(vertex_offsets[6], vertex_offsets[2]), offsetamount)))
 				np4 = vec3_add(np4, vec3_add(vertex_offsets[3], vec3_mul(vec3_sub(vertex_offsets[7], vertex_offsets[3]), offsetamount)))
 				break
+			}
 		}
 
 		// Apply transform
