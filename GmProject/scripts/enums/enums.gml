@@ -562,6 +562,7 @@ function enums()
 		BETA,
 		BIRTHDAY,
 		BLOCK,
+		BLOCK_SMALL,
 		BLOCK_SPECIAL,
 		BOLD,
 		BOUNDARY_BOX,

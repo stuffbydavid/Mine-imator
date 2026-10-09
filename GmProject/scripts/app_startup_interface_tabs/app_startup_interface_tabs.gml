@@ -539,7 +539,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Block
-		block = tab_add_category("timeline_editor/block", icons.BLOCK, tab_timeline_editor_block, true)
+		block = tab_add_category("timeline_editor/block", icons.BLOCK_SMALL, tab_timeline_editor_block, true)
 		with (block)
 		{
 			tbx_repeat_x = new_textbox_integer()
