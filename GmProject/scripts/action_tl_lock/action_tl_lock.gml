@@ -19,6 +19,15 @@ function action_tl_lock(tl)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_lock, false);
-		action_tl_lock_tree(tl, !tl.lock, hobj)
+		
+		var nval = !tl.lock;
+		if (tl.selected) // Apply to all selected timelines
+		{
+			with (obj_timeline)
+				if (selected && !parent_is_selected)
+					action_tl_lock_tree(id, nval, hobj)
+		}
+		else // Only apply to clicked timeline
+			action_tl_lock_tree(tl, nval, hobj)
 	}
 }
