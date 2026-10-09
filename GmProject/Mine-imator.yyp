@@ -2411,7 +2411,6 @@
     {"id":{"name":"render_world_background","path":"scripts/render_world_background/render_world_background.yy",},},
     {"id":{"name":"render_world_block_depth","path":"scripts/render_world_block_depth/render_world_block_depth.yy",},},
     {"id":{"name":"render_world_block_map","path":"scripts/render_world_block_map/render_world_block_map.yy",},},
-    {"id":{"name":"render_world_block_transform","path":"scripts/render_world_block_transform/render_world_block_transform.yy",},},
     {"id":{"name":"render_world_block","path":"scripts/render_world_block/render_world_block.yy",},},
     {"id":{"name":"render_world_build_box","path":"scripts/render_world_build_box/render_world_build_box.yy",},},
     {"id":{"name":"render_world_done","path":"scripts/render_world_done/render_world_done.yy",},},

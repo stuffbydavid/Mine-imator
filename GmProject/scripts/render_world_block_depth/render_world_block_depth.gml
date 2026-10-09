@@ -1,10 +1,8 @@
 /// @desc Renders a block in a depth pass.
 /// @arg block
 /// @arg diffuse
-/// @arg [rotate]
-/// @arg [size]
 
-function render_world_block_depth(block, resdif, rotate = false, size = undefined)
+function render_world_block_depth(block, resdif)
 {
 	if (block.block_vbuffer = null)
 		return 0
@@ -31,10 +29,6 @@ function render_world_block_depth(block, resdif, rotate = false, size = undefine
 		var frame = block_texture_get_frame();
 		texani = resdif.block_sheet_animated_diffuse ? resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame] : mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
 	}
-
-	// Rotate by 90 degrees for legacy support
-	if (rotate)
-		matrix_world_multiply_pre(render_world_block_transform(size[Y]))
 
 	#region Depth 0
 	

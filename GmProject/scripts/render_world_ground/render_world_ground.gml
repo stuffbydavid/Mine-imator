@@ -9,10 +9,7 @@ function render_world_ground()
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_white, 1)
 	
 	if (render_mode = e_render_mode.PLACE)
-	{
 		render_set_uniform(e_uniform.IS_BLOCK, 1)
-		render_set_uniform(e_uniform.PLACE_NORMAL_MATRIX, matrix_create(vec3(0), vec3(0), vec3(1)))
-	}
 
 	var materialres, normalres, res, hasmat, hasnorm;
 	materialres = res_eval(env_ground_tex_material)

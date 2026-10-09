@@ -15,6 +15,7 @@ function builder_spawn_threads(number)
 		thread.build_size_xy = build_size_xy
 		thread.build_size_total = build_size_total
 		thread.build_size_sqrt = build_size_sqrt
+		thread.build_transform = build_transform
 		thread.block_render_model = block_render_model
 		thread.block_render_model_multipart_map = ds_int_map_create()
 		thread.block_multithreaded_skip = false

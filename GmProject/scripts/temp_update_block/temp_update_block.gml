@@ -23,6 +23,7 @@ function temp_update_block()
 		}
 		
 		build_randomize = other.block_randomize
+		build_transform = true
 		
 		builder_start()
 		builder_spawn_threads(1)

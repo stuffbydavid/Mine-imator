@@ -51,21 +51,8 @@ function render_world_tl()
 	// Placement data
 	if (render_mode = e_render_mode.PLACE)
 	{
-		var gridmatrix, gridsize;
-		gridmatrix = matrix_render
-		gridsize = null
-		if (type = e_tl_type.SCENERY && temp.scenery != null)
-			gridsize = temp.scenery.scenery_size
-		else if (type = e_tl_type.BLOCK)
-			gridsize = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
-		
-		// Match the legacy mesh axes used by placement cell calculations
-		if (gridsize != null)
-			gridmatrix = matrix_multiply(render_world_block_transform(gridsize[Y]), gridmatrix)
-		
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, id, 1)
 		render_set_uniform(e_uniform.IS_BLOCK, bool_to_float(type_is_block(type)))
-		render_set_uniform(e_uniform.PLACE_NORMAL_MATRIX, matrix_transpose(gridmatrix))
 	}
 	
 	if (render_mode = e_render_mode.SCENE_TEST)
@@ -321,7 +308,7 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp, render_res_diffuse, render_res_normal, render_res_material, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp, render_res_diffuse, render_res_normal, render_res_material)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res_diffuse, render_res_normal, render_res_material, temp.block_repeat_enable, temp.block_repeat)
 				

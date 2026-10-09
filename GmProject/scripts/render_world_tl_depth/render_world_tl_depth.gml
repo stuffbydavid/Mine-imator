@@ -47,7 +47,7 @@ function render_world_tl_depth()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block_depth(temp, render_res_diffuse, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1))
+					render_world_block_depth(temp, render_res_diffuse)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res_diffuse, project_pack_res, project_pack_res, temp.block_repeat_enable, temp.block_repeat)
 				

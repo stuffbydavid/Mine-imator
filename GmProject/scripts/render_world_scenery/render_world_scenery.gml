@@ -26,7 +26,7 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 				{
 					var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size));
 					matrix_set(matrix_world, matrix_multiply(matrix_create(pos, defrot, defscale), mat))
-					render_world_block(scenery, resdif, resnorm, resmat, true, scenery.scenery_size)
+					render_world_block(scenery, resdif, resnorm, resmat)
 					
 					if (self.object_index != obj_preview && !render_depth_pass)
 					{
@@ -53,5 +53,5 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 		}
 	}
 	else
-		render_world_block(scenery, resdif, resnorm, resmat, true, scenery.scenery_size)
+		render_world_block(scenery, resdif, resnorm, resmat)
 }

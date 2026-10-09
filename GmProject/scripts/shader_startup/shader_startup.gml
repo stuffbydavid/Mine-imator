@@ -228,7 +228,6 @@ function shader_startup()
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
 		new_shader_uniform(e_uniform.GM_DEPTH)
 		new_shader_uniform(e_uniform.IS_BLOCK)
-		new_shader_uniform(e_uniform.PLACE_NORMAL_MATRIX)
 	}
 	
 	with (shader_map[?shader_high_dof])
