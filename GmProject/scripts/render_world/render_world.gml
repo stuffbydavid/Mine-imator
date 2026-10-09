@@ -77,7 +77,7 @@ function render_world(mode)
 	render_world_block_transparent = null
 	
 	// Build box
-	if (app.place_build)
+	if (app.place_build && !render_depth_pass)
 		render_world_build_box()
 
 	render_world_tl_reset()

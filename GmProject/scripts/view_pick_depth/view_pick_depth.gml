@@ -14,9 +14,8 @@ function view_pick_depth(view, cam)
 		return 0
 
 	view.surface_place_id = surface_require(view.surface_place_id, content_width, content_height)
-	view.surface_place_normal = surface_require(view.surface_place_normal, content_width, content_height, false)
 	if (!is_cpp())
-		view.surface_place_depth_gm = surface_require(view.surface_place_depth_gm, content_width, content_height, false)
+		view.surface_place_depth_gm = surface_require(view.surface_place_depth_gm, content_width, content_height, false, surface_r32float)
 
 	render_start(null, cam, view, content_width, content_height)
 	
@@ -25,9 +24,8 @@ function view_pick_depth(view, cam)
 	if (is_cpp())
 		surface_clear_depth_cache(view.surface_place_id)
 	surface_set_target_ext(0, view.surface_place_id)
-	surface_set_target_ext(1, view.surface_place_normal)
 	if (!is_cpp())
-		surface_set_target_ext(2, view.surface_place_depth_gm)
+		surface_set_target_ext(1, view.surface_place_depth_gm)
 	{
 		gpu_set_blendmode_ext(bm_one, bm_zero)
 		draw_clear_alpha(c_black, 0)
@@ -49,9 +47,8 @@ function view_pick_depth(view, cam)
 		depthval = surface_get_depth(view.surface_place_id, mx, my)
 	else
 	{
-		var packeddepth = surface_getpixel(view.surface_place_depth_gm, mx, my);
-		packeddepth = color_get_red(packeddepth) / 255 + color_get_green(packeddepth) / (255 * 255) + color_get_blue(packeddepth) / (255 * 255 * 255)
-		depthval = 1 - sqr(packeddepth)
+		var depthpixel = surface_getpixel(view.surface_place_depth_gm, mx, my);
+		depthval = 1 - depthpixel[0]
 	}
 
 	var viewdepth = project_render_distance;

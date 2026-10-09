@@ -321,6 +321,7 @@ function render_startup()
 		has_fx = true
 		has_graphics = true
 		has_materials = true
+		
 		if (file_exists(render_default_file))
 			render_preset_load(render_default_file, false)
 	}

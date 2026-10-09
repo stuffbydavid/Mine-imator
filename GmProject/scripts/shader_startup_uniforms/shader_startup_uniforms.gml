@@ -115,6 +115,7 @@ function shader_startup_uniforms()
 		"uPaletteSize",
 		"uPixelCheck",
 		"uPixelRotation",
+		"uPlaceNormalMatrix",
 		"uPower",
 		"uPrecision",
 		"uPreviousAmount",

@@ -8,6 +8,7 @@ uniform vec4 uBlendColor;
 uniform vec2 uTextureOffset;
 
 uniform mat4 uTAAMatrix;
+uniform mat4 uPlaceNormalMatrix;
 
 varying vec3 vPosition;
 varying vec2 vTexCoord;
@@ -25,6 +26,6 @@ void main()
 	
 	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0));
 	vClipDepth = gl_Position.z;
-	vNormal = normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal);
+	vNormal = (uPlaceNormalMatrix * vec4(normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal), 0.0)).xyz;
 	vColor = uBlendColor * in_Colour;
 }

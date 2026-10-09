@@ -358,7 +358,7 @@ namespace CppProject
 
 			if (global::_app->window_busy == "")
 			{
-				global::_app->shortcut_bar_state = "worldimport";
+				global::_app->shortcut_bar_state = "world_import";
 
 				// Mouse wheel
 				IntType mouseWheelDelta = mouse_wheel_down() - mouse_wheel_up();
@@ -445,7 +445,7 @@ namespace CppProject
 		// Handle input
 		if (global::_app->window_busy == "world_import")
 		{
-			global::_app->shortcut_bar_state = "worldimport";
+			global::_app->shortcut_bar_state = "world_import";
 
 			if (mode >= Mode::RESIZE && !mouse_check_button(mouseButton)) // Exit resize/camera movement
 			{
@@ -483,7 +483,7 @@ namespace CppProject
 					case Mode::SELECT:
 					{
 						selection.end = mouseBlock + WorldVec(1, 1, 1);
-						global::_app->shortcut_bar_state = "worldimportselection";
+						global::_app->shortcut_bar_state = "world_import/selection";
 
 						if (mouse_check_button(mb_left)) // Confirm
 						{
@@ -660,7 +660,7 @@ namespace CppProject
 
 						mouseLocked = true;
 
-						global::_app->shortcut_bar_state = "cameramove";
+						global::_app->shortcut_bar_state = "camera_move";
 
 						break;
 					}

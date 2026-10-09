@@ -44,7 +44,6 @@ function view_event_create()
 	surface_control_edit = null
 	
 	surface_place_id = null
-	surface_place_normal = null
 	surface_place_depth_gm = null
 	surface_place_width = 0
 	surface_place_height = 0

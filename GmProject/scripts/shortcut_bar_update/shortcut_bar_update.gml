@@ -4,7 +4,7 @@ function shortcut_bar_update()
 	{
 		ds_list_clear(shortcut_bar_list)
 		
-		if (shortcut_bar_state = "viewport" || shortcut_bar_state = "viewportcam")
+		if (shortcut_bar_state = "viewport" || shortcut_bar_state = "viewport/camera")
 		{
 			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "view/select")
 			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "view/select_part")
@@ -20,7 +20,7 @@ function shortcut_bar_update()
 			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "view/walk")
 		}
 		
-		if (shortcut_bar_state = "buildviewport")
+		if (shortcut_bar_state = "viewport/build")
 		{
 			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "build/remove")
 			shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "build/place")
@@ -35,9 +35,9 @@ function shortcut_bar_update()
 			shortcut_bar_add(keybind_new("F"), null, "build/first_person")
 		}
 
-		if (shortcut_bar_state = "cameramove" || shortcut_bar_state = "tlcameramove" || shortcut_bar_state = "firstperson")
+		if (shortcut_bar_state = "camera_move" || shortcut_bar_state = "tl_camera_move" || shortcut_bar_state = "first_person")
 		{
-			if (shortcut_bar_state = "firstperson")
+			if (shortcut_bar_state = "first_person")
 			{
 				shortcut_bar_add(null, e_mouse.CLICK_LEFT, "build/remove")
 				shortcut_bar_add(null, e_mouse.CLICK_RIGHT, "build/place")
@@ -54,16 +54,16 @@ function shortcut_bar_update()
 			shortcut_bar_add(keybinds[e_keybind.CAM_FAST].keybind, null, "view/faster")
 			shortcut_bar_add(keybinds[e_keybind.CAM_SLOW].keybind, null, "view/slower")
 			
-			if (shortcut_bar_state = "cameramove" && window_state != "world_import")
+			if (shortcut_bar_state = "camera_move" && window_state != "world_import")
 				shortcut_bar_add(null, e_mouse.SCROLL, "view/speed")
 			
-			if (shortcut_bar_state = "tlcameramove")
+			if (shortcut_bar_state = "tl_camera_move")
 			{
 				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_FORWARD].keybind, null, "view/roll_forward")
 				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_BACK].keybind, null, "view/roll_back")
 				shortcut_bar_add(keybinds[e_keybind.CAM_ROLL_RESET].keybind, null, "view/roll_reset")
 			}
-			else if (shortcut_bar_state = "firstperson")
+			else if (shortcut_bar_state = "first_person")
 				shortcut_bar_add(keybind_new(vk_escape), null, "first_person/cancel")
 			
 			else if (window_state != "world_import")
@@ -112,7 +112,7 @@ function shortcut_bar_update()
 			shortcut_bar_add(keybind_new(null, true, false, false), e_mouse.SCROLL, "view/zoom")
 		}
 		
-		if (shortcut_bar_state = "worldimport")
+		if (shortcut_bar_state = "world_import")
 		{
 			shortcut_bar_add(null, e_mouse.CLICK_LEFT, "world/create_selection")
 			shortcut_bar_add(null, e_mouse.DRAG_LEFT, "view/orbit")

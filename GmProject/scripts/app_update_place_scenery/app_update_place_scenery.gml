@@ -6,7 +6,7 @@ function app_update_place_scenery()
 	if (!type_is_block(place_target_tl_part_of.type))
 		return 0
 
-	var gridsize, worldtransform, inversetransform, localpos, localnormal;
+	var gridsize, worldtransform, inversetransform, localpos;
 	gridsize = vec3(1)
 	if (place_target_tl.type = e_tl_type.SCENERY)
 		gridsize = place_target_tl.temp.scenery.scenery_size
@@ -17,20 +17,17 @@ function app_update_place_scenery()
 	if (place_target_tl_part_of.type = e_tl_type.SPECIAL_BLOCK)
 		worldtransform = place_target_tl.matrix_render
 	else
-		worldtransform = matrix_multiply(matrix_create(point3D(0, gridsize[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)), place_target_tl.matrix_render)
+		worldtransform = matrix_multiply(render_world_block_transform(gridsize[Y]), place_target_tl.matrix_render)
 	
 	inversetransform = matrix_inverse_ext(worldtransform)
 	localpos = point3D_mul_matrix(place_pos, inversetransform)
-
-	// Convert the world-space normal into the scenery grid
-	localnormal = vec3_normalize(vec3_mul_matrix(place_view_normal, matrix_transpose(worldtransform)))
 
 	if (place_build)
 	{
 		// Trace into the target before rounding to its local cell
 		var localray, tracenormal, inside, boxcell, boxcenter;
 		localray = vec3_normalize(vec3_mul_matrix(place_view_ray, inversetransform))
-		tracenormal = vec3_normalize(vec3_sub(localray, localnormal))
+		tracenormal = vec3_normalize(vec3_sub(localray, place_view_normal))
 		inside = vec3_add(localpos, vec3_mul(tracenormal, block_size * 0.025))
 		boxcell = vec3(
 			round(inside[X] / block_size - 0.5),
@@ -42,51 +39,17 @@ function app_update_place_scenery()
 		build_box_render = build_box
 	}
 	
-	// Find facenormal
-	var east, west, south, north, up, down, facenormal, normaldot;
-	east = vec3_dot(localnormal, vec3(1, 0, 0))
-	west = vec3_dot(localnormal, vec3(-1, 0, 0))
-	south = vec3_dot(localnormal, vec3(0, 1, 0))
-	north = vec3_dot(localnormal, vec3(0, -1, 0))
-	up = vec3_dot(localnormal, vec3(0, 0, 1))
-	down = vec3_dot(localnormal, vec3(0, 0, -1))
-	facenormal = vec3(1, 0, 0)
-	normaldot = east
-
-	if (west > normaldot)
-	{
-		facenormal = vec3(-1, 0, 0)
-		normaldot = west
-	}
-	if (south > normaldot)
-	{
-		facenormal = vec3(0, 1, 0)
-		normaldot = south
-	}
-	if (north > normaldot)
-	{
-		facenormal = vec3(0, -1, 0)
-		normaldot = north
-	}
-	if (up > normaldot)
-	{
-		facenormal = vec3(0, 0, 1)
-		normaldot = up
-	}
-	if (down > normaldot)
-		facenormal = vec3(0, 0, -1)
-	
-	// Bias the hit into its cell to absorb depth readback error at facenormal boundaries
+	// Bias the hit into its cell to absorb depth readback error at face boundaries
 	var cell, sourceface, worldrotation, worldangle;
 	cell = vec3(
-		floor((localpos[X] - facenormal[X]) / block_size),
-		floor((localpos[Y] - facenormal[Y]) / block_size),
-		floor((localpos[Z] - facenormal[Z]) / block_size)
+		floor((localpos[X] - place_view_normal[X]) / block_size),
+		floor((localpos[Y] - place_view_normal[Y]) / block_size),
+		floor((localpos[Z] - place_view_normal[Z]) / block_size)
 	)
 	sourceface = point3D_mul_matrix(vec3(
-		(cell[X] + 0.5) * block_size + facenormal[X] * block_half_size,
-		(cell[Y] + 0.5) * block_size + facenormal[Y] * block_half_size,
-		(cell[Z] + 0.5) * block_size + facenormal[Z] * block_half_size
+		(cell[X] + 0.5) * block_size + place_view_normal[X] * block_half_size,
+		(cell[Y] + 0.5) * block_size + place_view_normal[Y] * block_half_size,
+		(cell[Z] + 0.5) * block_size + place_view_normal[Z] * block_half_size
 	), worldtransform)
 
 	worldrotation = array_copy_1d(place_target_tl.matrix_render)
@@ -129,9 +92,9 @@ function app_update_place_scenery()
 		targetface = vec3(0)
 		for (var axis = X; axis <= Z; axis++)
 		{
-			if (facenormal[axis] > 0)
+			if (place_view_normal[axis] > 0)
 				targetface[axis] = targetmin[axis] * block_size
-			else if (facenormal[axis] < 0)
+			else if (place_view_normal[axis] < 0)
 				targetface[axis] = targetmax[axis] * block_size
 			else
 				targetface[axis] = (floor((targetmin[axis] + targetmax[axis]) * 0.5) + 0.5) * block_size
@@ -140,14 +103,14 @@ function app_update_place_scenery()
 			matrix_create(point3D_mul(rotpoint, -1), vec3(0), vec3(1)),
 			matrix_create(vec3(0), place_rot, place_sca)
 		)
-		targetmatrix = matrix_multiply(matrix_create(point3D(0, legacywidth * block_size, 0), vec3(0, 0, 90), vec3(1)), targetmatrix)
+		targetmatrix = matrix_multiply(render_world_block_transform(legacywidth), targetmatrix)
 
 		place_pos = point3D_sub(sourceface, point3D_mul_matrix(targetface, targetmatrix))
 	}
 	else
 		place_pos = point3D_mul_matrix(vec3(
-			(cell[X] + 0.5 + facenormal[X]) * block_size,
-			(cell[Y] + 0.5 + facenormal[Y]) * block_size,
-			(cell[Z] + facenormal[Z]) * block_size
+			(cell[X] + 0.5 + place_view_normal[X]) * block_size,
+			(cell[Y] + 0.5 + place_view_normal[Y]) * block_size,
+			(cell[Z] + place_view_normal[Z]) * block_size
 		), worldtransform)
 }

@@ -8,19 +8,17 @@ function view_place(view, cam)
 	
 	place_content_mouseon = null
 
-	var surfaceid, surfacenormal, surfacedepth;
+	var surfaceid, surfacedepth;
 	surfaceid = view.surface_place_id
-	surfacenormal = view.surface_place_normal
 	surfacedepth = view.surface_place_depth_gm
 	
 	view.surface_place_id = surface_require(view.surface_place_id, content_width, content_height)
-	view.surface_place_normal = surface_require(view.surface_place_normal, content_width, content_height, false)
 	
 	if (!is_cpp())
-		view.surface_place_depth_gm = surface_require(view.surface_place_depth_gm, content_width, content_height, false)
+		view.surface_place_depth_gm = surface_require(view.surface_place_depth_gm, content_width, content_height, false, surface_r32float)
 		
 	// Outdated or invalid surfaces
-	if (view.surface_place_id != surfaceid || view.surface_place_normal != surfacenormal ||
+	if (view.surface_place_id != surfaceid ||
 		(!is_cpp() && view.surface_place_depth_gm != surfacedepth) ||
 		view.surface_place_width != content_width || view.surface_place_height != content_height)
 		view_changed(view)
@@ -40,9 +38,8 @@ function view_place(view, cam)
 		if (is_cpp())
 			surface_clear_depth_cache(view.surface_place_id)
 		surface_set_target_ext(0, view.surface_place_id)
-		surface_set_target_ext(1, view.surface_place_normal)
 		if (!is_cpp())
-			surface_set_target_ext(2, view.surface_place_depth_gm)
+			surface_set_target_ext(1, view.surface_place_depth_gm)
 		{
 			gpu_set_blendmode_ext(bm_one, bm_zero)
 			draw_clear_alpha(c_black, 0)
@@ -69,10 +66,9 @@ function view_place(view, cam)
 		depthval = surface_get_depth(view.surface_place_id, mx, my)
 	else
 	{
-		// GameMaker path uses packed depth value in color
-		var packeddepth = surface_getpixel(view.surface_place_depth_gm, mx, my);
-		packeddepth = color_get_red(packeddepth) / 255 + color_get_green(packeddepth) / (255 * 255) + color_get_blue(packeddepth) / (255 * 255 * 255)
-		depthval = 1 - sqr(packeddepth)
+		// Zero-cleared float depth represents the background
+		var depthpixel = surface_getpixel(view.surface_place_depth_gm, mx, my);
+		depthval = 1 - depthpixel[0]
 	}
 	
 	// Calculate world hit position
@@ -90,13 +86,17 @@ function view_place(view, cam)
 	// Retrieve color and normal
 	if (depthval < maxdepth)
 	{
-		var normalpacked = surface_getpixel(view.surface_place_normal, mx, my);
-		place_view_color = surface_getpixel(view.surface_place_id, mx, my)
-		place_view_normal = vec3_normalize(vec3(
-			color_get_red(normalpacked) / 255 * 2 - 1,
-			color_get_green(normalpacked) / 255 * 2 - 1,
-			color_get_blue(normalpacked) / 255 * 2 - 1
-		))
+		var pixel = surface_getpixel_ext(view.surface_place_id, mx, my);
+		place_view_color = pixel & 0xffffff
+		switch ((pixel >> 24) & 255)
+		{
+			case e_dir.EAST: place_view_normal = vec3(1, 0, 0); break
+			case e_dir.WEST: place_view_normal = vec3(-1, 0, 0); break
+			case e_dir.SOUTH: place_view_normal = vec3(0, 1, 0); break
+			case e_dir.NORTH: place_view_normal = vec3(0, -1, 0); break
+			case e_dir.UP: place_view_normal = vec3(0, 0, 1); break
+			case e_dir.DOWN: place_view_normal = vec3(0, 0, -1); break
+		}
 		place_view_air = false
 	}
 	else

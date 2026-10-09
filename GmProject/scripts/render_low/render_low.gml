@@ -46,6 +46,7 @@ function render_low()
 		render_surface_depth = render_surface_depth_low
 		render_surface_depth = surface_require(render_surface_depth, render_width, render_height, true, surface_r32float)
 		render_surface_depth_low = render_surface_depth
+		
 		surface_set_target(render_surface_depth)
 		{
 			draw_clear(c_white)
