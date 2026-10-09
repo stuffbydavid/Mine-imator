@@ -1,5 +1,4 @@
-/// vec3_rotate_axis_angle(v, axis, angle)
-/// @arg v
+/// @arg vector
 /// @arg axis
 /// @arg angle
 

@@ -1,47 +1,75 @@
-/// render_world_sky_clouds()
 /// @desc Renders the cloud models.
 
 function render_world_sky_clouds()
 {
-	if (!background_sky_clouds_show || !render_background || render_mode = e_render_mode.DEPTH_NO_SKY)
+	if (!env_sky_clouds_show || !render_background)
 		return 0
 	
-	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AO_MASK)
-		render_set_uniform_color("uReplaceColor", c_black, 1)
+	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.COLOR)
+		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
+
+	if (render_mode = e_render_mode.G_BUFFERS || (render_mode = e_render_mode.COLOR && render_color_combined))
+		render_set_uniform(e_uniform.SSAO, 0)
 	
-	var res = background_sky_clouds_tex;
-	if (!res_is_ready(res))
-		res = mc_res
+	var res, twopass;
+	res = res_eval(env_sky_clouds_tex)
+	twopass = (render_mode != e_render_mode.DEPTH && (render_mode != e_render_mode.G_BUFFERS || render_sun_combined))
+	if (render_mode = e_render_mode.AUXILIARY && !render_auxiliary_material && !render_glow)
+		twopass = false
+	
+	render_apply_res(res)
 	
 	// Shading
-	render_set_uniform_int("uIsSky", 1)
-	render_set_uniform_color("uBlendColor", background_sky_clouds_final, background_clouds_alpha)
-	render_set_uniform_color("uGlowColor", c_black, 1)
-	render_set_uniform_int("uGlowTexture", 0)
-	render_set_uniform("uMetallic", 0)
-	render_set_uniform("uRoughness", 1)
-	render_set_uniform("uEmissive", 0)
-	render_set_uniform("uLightSpecular", 0)
+	render_set_uniform_int(e_uniform.IS_SKY, 1)
+	render_set_uniform_color(e_uniform.BLEND_COLOR, env_sky_clouds_final, env_clouds_alpha)
+	render_set_uniform_color(e_uniform.GLOW_COLOR, c_black, 1)
+	render_set_uniform_int(e_uniform.GLOW_TEXTURE, 0)
+	render_set_uniform(e_uniform.METALLIC, 0)
+	render_set_uniform(e_uniform.ROUGHNESS, 1)
+	render_set_uniform(e_uniform.EMISSIVE, 0)
+	render_set_uniform(e_uniform.LIGHT_SPECULAR, 0)
 	
 	// Texture
 	if (res.type = e_res_type.PACK)
-		render_set_texture(res.clouds_texture)
+		render_set_texture(res, res.clouds_texture)
 	else
-		render_set_texture(res.texture)
+		render_set_texture(res, res.texture)
 	
-	render_set_texture(spr_default_material, "Material")
-	render_set_texture(spr_default_normal, "Normal")
+	render_set_material_textures_none()
+	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 	
 	// Disable fog
-	if (!background_fog_show || !background_fog_sky)
-		render_set_uniform("uFogShow", 0)
+	if (!env_fog_show || !env_fog_sky)
+		render_set_uniform(e_uniform.FOG_SHOW, 0)
 	
-	for (var i = 0; i < array_length(background_sky_clouds_vbuffer_pos); i++)
-		vbuffer_render(background_sky_clouds_vbuffer, background_sky_clouds_vbuffer_pos[i])
+	if (twopass)
+	{
+		// Only draw clouds' depth
+		gpu_set_blendenable(false)
+		gpu_set_colorwriteenable(false, false, false, false)
+		for (var i = 0; i < array_length(env_sky_clouds_vbuffer_pos); i++)
+			vbuffer_render(env_sky_clouds_vbuffer, env_sky_clouds_vbuffer_pos[i], point3D(0, 0, 90))
+
+		// Re-draw clouds to the written depth
+		gpu_set_colorwriteenable(true, true, true, true)
+		gpu_set_blendenable(true)
+		gpu_set_zwriteenable(false)
+		gpu_set_zfunc(cmpfunc_equal)
+	}
+	
+	for (var i = 0; i < array_length(env_sky_clouds_vbuffer_pos); i++)
+		vbuffer_render(env_sky_clouds_vbuffer, env_sky_clouds_vbuffer_pos[i], point3D(0, 0, 90))
+	
+	if (twopass)
+	{
+		// Restore z draw
+		gpu_set_zfunc(cmpfunc_lessequal)
+		gpu_set_zwriteenable(true)
+	}
 	
 	// Reset
-	render_set_uniform_int("uIsSky", 0)
-	render_set_uniform("uLightSpecular", render_light_specular_strength)
-	if (!background_fog_show || !background_fog_sky)
-		render_set_uniform("uFogShow", app.background_fog_show)
+	render_set_uniform_int(e_uniform.IS_SKY, 0)
+	render_set_uniform(e_uniform.LIGHT_SPECULAR, render_light_specular_strength)
+	if (!env_fog_show || !env_fog_sky)
+		render_set_uniform(e_uniform.FOG_SHOW, app.env_fog_show)
 }

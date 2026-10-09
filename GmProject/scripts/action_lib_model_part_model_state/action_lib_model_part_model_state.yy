@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_lib_model_part_model_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_model_part_model_state",
+  "parent":{
+    "name":"Model",
+    "path":"folders/Scripts/App/Actions/Library/Model.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

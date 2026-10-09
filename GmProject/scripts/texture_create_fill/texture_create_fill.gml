@@ -1,20 +1,13 @@
-/// texture_create_fill(color, [size])
-/// @arg color
-/// @arg [size]
 /// @desc Creates a texture with a single color.
 
-function texture_create_fill(color, size = 16)
+function texture_create_fill(color, size = 16, usepage = true)
 {
 	var surf, newtex;
 	
 	surf = surface_create(size, size)
-	surface_set_target(surf)
-	{
-		draw_clear(color)
-	}
-	surface_reset_target()
+	surface_clear(surf, color)
 	
-	newtex = texture_surface(surf)
+	newtex = texture_surface(surf, true, usepage)
 	surface_free(surf)
 	
 	return newtex

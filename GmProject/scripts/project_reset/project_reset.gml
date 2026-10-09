@@ -1,19 +1,25 @@
-/// project_reset()
-
 function project_reset()
 {
 	log("Resetting project")
+	
+	if (place_build)
+		app_stop_place()
 	
 	project_reset_backup()
 	history_clear()
 	
 	temp_edit = null
+	obj_edit = null
 	res_edit = null
 	tl_edit = null
 	tl_edit_amount = 0
 	
 	render_free()
 	render_samples = -1
+	render_scene_bounds = null
+	render_preset_edit = null
+	
+	view_changed()
 	
 	lib_preview.update = true
 	res_preview.update = true
@@ -24,16 +30,17 @@ function project_reset()
 	project_name = ""
 	project_author = ""
 	project_description = ""
+	project_pack = mc_res
+	
 	project_video_width = 1280
 	project_video_height = 720
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = true
-	project_render_settings = render_default
 	project_tempo = 24
-	project_grid_rows = 3
 	project_grid_columns = 3
-	view_main.camera = -4
-	view_second.camera = -5
+	project_grid_rows = 3
+	view_main.camera = view_camera_work
+	view_second.camera = view_camera_active
 	
 	app_update_step = 0
 	
@@ -45,6 +52,20 @@ function project_reset()
 	ds_list_clear(project_model_list)
 	
 	camera_work_reset()
+
+	// Keep active background music outside the project
+	var musicres = null;
+	if (bench_music_mode && instance_exists(bench_settings.music_res))
+	{
+		musicres = bench_settings.music_res
+		if (musicres.creator = app)
+		{
+			with (musicres)
+				res_remove_lists()
+			
+			musicres.creator = bench_settings
+		}
+	}
 	
 	log("Destroying instances")
 	
@@ -59,7 +80,7 @@ function project_reset()
 		instance_destroy()
 	
 	with (obj_resource)
-		if (id != mc_res)
+		if (id != mc_res && id != musicres)
 			instance_destroy()
 	
 	with (obj_keyframe)
@@ -69,29 +90,51 @@ function project_reset()
 		instance_destroy()
 	
 	with (mc_res)
+	{
 		count = 0
+		res_clear_pack_res_textures()
+	}
 	
-	project_reset_render()
-	project_reset_background()
+	texture_page_reset()
+
+	render_apply_settings(render_default_settings, e_renderer.STANDARD)
+	render_apply_settings(render_default_settings, e_renderer.REALISTIC)
+	render_apply_settings(render_default_settings, e_renderer.COMMON)
+	
+	project_render_preset[e_renderer.QUICK] = render_preset_default
+	project_render_preset[e_renderer.STANDARD] = render_preset_default
+	project_render_preset[e_renderer.REALISTIC] = render_preset_default
+	
+	project_reset_environment()
+	project_update_counts()
 	
 	timeline.hor_scroll.value = 0
 	timeline.ver_scroll.value = 0
 	
 	action_tl_play_break()
+	
 	timeline_repeat = false
 	timeline_marker = 0
 	timeline_marker_previous = 0
+	timeline_marker_length = 0
 	timeline_length = 0
 	timeline_zoom = 16
 	timeline_zoom_goal = 16
+	
 	timeline_camera = null
-	copy_kf_amount = 0
-	timeline_marker_length = 0
+	timeline_environment = null
+	
+	tl_camera_effects_reset()
 	
 	timeline_intervals_show = false
 	timeline_interval_size = 24
 	timeline_interval_offset = 0
 	timeline_hide_color_tag = array_create(9, false)
+	
+	copy_kf_amount = 0
+	
+	properties.library.list.column_sort = null
+	properties.resources.list.column_sort = null
 	
 	ds_list_clear(tree_list)
 	ds_list_clear(tree_visible_list)

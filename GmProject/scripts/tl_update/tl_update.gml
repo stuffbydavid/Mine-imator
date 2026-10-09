@@ -1,5 +1,3 @@
-/// tl_update()
-
 function tl_update()
 {
 	tl_update_value_types()

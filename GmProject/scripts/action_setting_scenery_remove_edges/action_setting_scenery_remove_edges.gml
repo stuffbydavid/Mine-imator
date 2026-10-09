@@ -1,8 +1,5 @@
-/// action_setting_scenery_remove_edges(value)
-/// @arg value
-
-function action_setting_scenery_remove_edges(val)
+function action_setting_scenery_remove_edges(value)
 {
-	setting_scenery_remove_edges = val
-	toast_new(e_toast.WARNING, text_get("alertreloadobjects"))
+	setting_scenery_remove_edges = value
+	toast_new(e_toast.WARNING, text_get("alert/reload_objects"))
 }

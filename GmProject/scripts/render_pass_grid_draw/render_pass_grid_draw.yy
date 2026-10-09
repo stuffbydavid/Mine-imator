@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_pass_grid_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_pass_grid_draw",
+  "parent":{
+    "name":"Passes",
+    "path":"folders/Scripts/Render/Passes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,5 +1,3 @@
-/// app_startup_interface_popups()
-
 function app_startup_interface_popups()
 {
 	// Welcome
@@ -9,20 +7,22 @@ function app_startup_interface_popups()
 	popup_about = new_popup("about", popup_about_draw, 542, 480, true, true, false, true)
 	
 	// New project
-	popup_newproject = new_popup("newproject", popup_newproject_draw, 380, null, true)
+	popup_newproject = new_popup("new_project", popup_newproject_draw, 380, null, true)
 	with (popup_newproject)
 	{
 		folder = ""
+		
 		tbx_name = new_textbox(true, 0, "")
 		tbx_author = new_textbox(true, 0, "")
 		tbx_description = new_textbox(false, 0, "")
 	}
 	
 	// Save as
-	popup_saveas = new_popup("saveas", popup_saveas_draw, 380, null, true)
+	popup_saveas = new_popup("save_as", popup_saveas_draw, 380, null, true)
 	with (popup_saveas)
 	{
 		folder = ""
+		
 		tbx_name = new_textbox(true, 0, "")
 		tbx_author = new_textbox(true, 0, "")
 		tbx_description = new_textbox(false, 0, "")
@@ -39,7 +39,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Download skin
-	popup_downloadskin = new_popup("downloadskin", popup_downloadskin_draw, 300, null, true)
+	popup_downloadskin = new_popup("download_skin", popup_downloadskin_draw, 300, null, true)
 	with (popup_downloadskin)
 	{
 		value_script = null
@@ -47,59 +47,76 @@ function app_startup_interface_popups()
 		texture = null
 		fail_message = ""
 		start_time = 0
+		
 		tbx_username = new_textbox(true, 0, "")
 	}
 	
 	// Import image
-	popup_importimage = new_popup("importimage", popup_importimage_draw, 236, null, true)
+	popup_importimage = new_popup("import_image", popup_importimage_draw, 477, null, true) //236
 	with (popup_importimage)
 	{
 		filename = ""
+		filenames = ds_list_create()
+		do_all = false
+		texture = null
 		type = e_res_type.SKIN
+		value_script = null
+		is_sheet = true
+		sheet_size = vec2(16, 16)
+		sheet_size_def = sheet_size
+		
+		tbx_sheet_width = new_textbox_integer()
+		tbx_sheet_height = new_textbox_integer()
 	}
 	
 	// Import item sheet
-	popup_importitemsheet = new_popup("importitemsheet", popup_importitemsheet_draw, 288, null, true)
+	popup_importitemsheet = new_popup("import_item_sheet", popup_importitemsheet_draw, 288, null, true)
 	with (popup_importitemsheet)
 	{
 		filename = ""
 		value_script = null
 		texture = null
 		is_sheet = true
-		sheet_size = vec2(item_sheet_width, item_sheet_height)
+		sheet_size = vec2(minecraft_item_sheet_size[e_item_sheet.SIZE16][X], minecraft_item_sheet_size[e_item_sheet.SIZE16][Y])
 		sheet_size_def = sheet_size
+		
 		tbx_sheet_width = new_textbox_integer()
 		tbx_sheet_height = new_textbox_integer()
 	}
 	
 	// Export movie
-	popup_exportmovie = new_popup("exportmovie", popup_exportmovie_draw, 350, null, true)
+	popup_exportmovie = new_popup("export_movie", popup_exportmovie_draw, 350, null, true)
 	with (popup_exportmovie)
 	{
+		renderer = app.setting_export_movie_renderer
+		if (trial_version && renderer = e_renderer.REALISTIC)
+			renderer = e_renderer.STANDARD
+		
 		format = app.setting_export_movie_format
 		frame_rate = app.setting_export_movie_frame_rate
 		framespersecond = app.setting_export_movie_framespersecond
-		bit_rate = app.setting_export_movie_bit_rate
-		video_quality = find_videoquality(bit_rate)
 		include_audio = app.setting_export_movie_include_audio
 		remove_background = app.setting_export_movie_remove_background
 		include_hidden = app.setting_export_movie_include_hidden
-		high_quality = app.setting_export_movie_high_quality
 		watermark = app.setting_export_movie_watermark
+		
 		tbx_video_size_custom_width = new_textbox_integer()
 		tbx_video_size_custom_height = new_textbox_integer()
 		tbx_framespersecond = new_textbox_integer()
-		tbx_bit_rate = new_textbox_integer()
 	}
 	
 	// Export image
-	popup_exportimage = new_popup("exportimage", popup_exportimage_draw, 350, null, true)
+	popup_exportimage = new_popup("export_image", popup_exportimage_draw, 350, null, true)
 	with (popup_exportimage)
 	{
+		renderer = app.setting_export_image_renderer
+		if (trial_version && renderer = e_renderer.REALISTIC)
+			renderer = e_renderer.STANDARD
+		
 		remove_background = app.setting_export_image_remove_background
 		include_hidden = app.setting_export_image_include_hidden
-		high_quality = app.setting_export_image_high_quality
 		watermark = app.setting_export_image_watermark
+		
 		tbx_image_size_custom_width = new_textbox_integer()
 		tbx_image_size_custom_height = new_textbox_integer()
 	}
@@ -110,12 +127,14 @@ function app_startup_interface_popups()
 	{
 		tbx_key = new_textbox(true, 8, "")
 		warntext = ""
+		if (key_expired)
+			warntext = "error/key_expired"
+		
 		page = 0
 		page_ani = 1
 		page_ani_type = "right"
 		
 		open_advanced = false
-		custom_rendering = "default"
 	}
 	
 	// "Advanced mode" popup
@@ -130,7 +149,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Pattern editor
-	popup_pattern_editor = new_popup("patterneditor", popup_pattern_editor_draw, 550, null, true, false, false, false)
+	popup_pattern_editor = new_popup("pattern_editor", popup_pattern_editor_draw, 550, null, true, false, false, false)
 	with (popup_pattern_editor)
 	{
 		preview = new_obj(obj_preview)
@@ -148,10 +167,10 @@ function app_startup_interface_popups()
 		pattern_list_edit = ds_list_create()
 		pattern_color_list_edit = ds_list_create()
 		
-		pattern_sprites = array()
+		pattern_sprites = []
 		
 		res_ratio = 1
-		pattern_resource = mc_res
+		pattern_resource = project_pack_res
 		
 		update = false
 		layer_move = null
@@ -160,7 +179,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Armor editor
-	popup_armor_editor = new_popup("armoreditor", popup_armor_editor_draw, 550, null, true, false, false, true)
+	popup_armor_editor = new_popup("armor_editor", popup_armor_editor_draw, 550, null, true, false, false, true)
 	with (popup_armor_editor)
 	{
 		preview = new_obj(obj_preview)

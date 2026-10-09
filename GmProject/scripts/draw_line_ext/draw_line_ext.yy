@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_line_ext",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Draw",
-    "path": "folders/Scripts/Utility/Draw.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_line_ext",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_line_ext",
+  "parent":{
+    "name":"Draw",
+    "path":"folders/Scripts/Utility/Draw.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

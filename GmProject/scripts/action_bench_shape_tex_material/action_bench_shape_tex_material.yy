@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_shape_tex_material",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shape",
-    "path": "folders/Scripts/App/Actions/Bench/Shape.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_shape_tex_material",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_shape_tex_material",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/Scripts/App/Actions/Bench/Shape.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

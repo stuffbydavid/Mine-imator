@@ -1,5 +1,3 @@
-/// recent_load()
-
 function recent_load()
 {
 	if (!file_exists_lib(recent_file))
@@ -36,7 +34,7 @@ function recent_load()
 			
 			var thumbnailfn = filename_path(recentobj.filename) + "thumbnail.png";
 			if (file_exists_lib(thumbnailfn))
-				recentobj.thumbnail = texture_create(thumbnailfn)
+				recentobj.thumbnail = texture_create(thumbnailfn, false)
 			else
 				recentobj.thumbnail = null
 			

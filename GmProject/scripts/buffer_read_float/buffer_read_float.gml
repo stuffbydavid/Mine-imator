@@ -1,4 +1,3 @@
-/// buffer_read_float()
 /// @desc Reads a float from the buffer.
 
 function buffer_read_float()

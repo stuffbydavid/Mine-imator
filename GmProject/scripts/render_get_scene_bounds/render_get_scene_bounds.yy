@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_get_scene_bounds",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_get_scene_bounds",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

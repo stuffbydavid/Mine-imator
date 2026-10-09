@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "block_texture_get_blend",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Blocks",
-    "path": "folders/Scripts/Minecraft/Blocks.yy",
+  "$GMScript":"v1",
+  "%Name":"block_texture_get_blend",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_texture_get_blend",
+  "parent":{
+    "name":"Blocks",
+    "path":"folders/Scripts/Minecraft/Blocks.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

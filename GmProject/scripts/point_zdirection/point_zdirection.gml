@@ -1,11 +1,10 @@
-/// point_zdirection(x1, y1, z1, x2, y2, z2)
+/// @desc http://gmc.yoyogames.com/index.php?showtopic=166489
 /// @arg x1
-/// @arg x1
+/// @arg y1
 /// @arg z1
 /// @arg x2
 /// @arg y2
 /// @arg z2
-/// @desc http://gmc.yoyogames.com/index.php?showtopic=166489
 
 function point_zdirection(x1, y1, z1, x2, y2, z2)
 {

@@ -1,6 +1,3 @@
-/// action_tl_frame_hsb_add(color)
-/// @arg color
-
 function action_tl_frame_hsb_add(color)
 {
 	tl_value_set_start(action_tl_frame_hsb_add, true)

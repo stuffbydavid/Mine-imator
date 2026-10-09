@@ -1,5 +1,3 @@
-/// window_draw_startup()
-
 function window_draw_startup()
 {
 	content_x = 0
@@ -21,16 +19,16 @@ function window_draw_startup()
 	draw_sprite(spr_logo, 0, window_width / 2, headersize/2)
 	
 	// Version
-	var trial = (trial_version ? " " + text_get("startuptrial") : "");
-	draw_button_text(text_get("startupversion", mineimator_version_full + trial), (window_width / 2) + 259, floor((headersize/2) + (sprite_get_height(spr_logo)/2)) + 3, popup_switch, popup_about)
+	var trial = (trial_version ? " " + text_get("startup/trial") : "");
+	draw_button_text(text_get("startup/version", mineimator_version_full + trial), (window_width / 2) + 259, floor((headersize/2) + (sprite_get_height(spr_logo)/2)) + 3, popup_switch, popup_about)
 	
 	dy = headersize + 48
 	dw = min(window_width - 48, 1008)
 	
 	// No recent projects text
-	if (ds_list_size(recent_list) = 0)
+	if (recent_list_amount = 0)
 	{
-		draw_label(text_get("recentnone"), window_width / 2, dy, fa_center, fa_middle, c_accent, 1, font_heading_big)
+		draw_label(text_get("recent/none"), window_width / 2, dy, fa_center, fa_middle, c_accent, 1, font_heading_big)
 		dy += 48
 	}
 	
@@ -38,8 +36,8 @@ function window_draw_startup()
 	draw_set_font(font_button)
 	
 	var newprojectwidth, browsewidth, centerx;
-	newprojectwidth = string_width(text_get("startupnewproject")) + button_icon_padding
-	browsewidth = string_width(text_get("startupbrowse")) + button_icon_padding
+	newprojectwidth = string_width(text_get("startup/new_project")) + button_icon_padding
+	browsewidth = string_width(text_get("startup/browse")) + button_icon_padding
 	centerx = round((window_width / 2) - ((browsewidth + newprojectwidth) / 2))
 	
 	if (ds_list_size(recent_list) > 0)
@@ -49,7 +47,7 @@ function window_draw_startup()
 	
 	// New project
 	dx -= newprojectwidth
-	if (draw_button_label("startupnewproject", dx, dy, null, icons.FILE))
+	if (draw_button_label("startup/new_project", dx, dy, null, icons.FILE))
 	{
 		popup_newproject_clear()
 		popup_switch(popup_newproject)
@@ -61,7 +59,7 @@ function window_draw_startup()
 		dx = centerx
 	
 	// Browse
-	if (draw_button_label("startupbrowse", dx, dy, null, icons.FOLDER, e_button.SECONDARY))
+	if (draw_button_label("startup/browse", dx, dy, null, icons.FOLDER, e_button.SECONDARY))
 	{
 		if (project_load())
 			window_state = ""
@@ -70,7 +68,7 @@ function window_draw_startup()
 	// List style
 	if (recent_list_amount > 0)
 	{
-		if (draw_button_icon("startuprecentdisplay", dx - 24 - 8, dy + 4, 24, 24, false, recent_display_mode = "grid" ? icons.VIEW_LIST : icons.VIEW_GRID, null, false, recent_display_mode = "grid" ? "tooltipviewlist" : "tooltipviewgrid"))
+		if (draw_button_icon("startup/recentdisplay", dx - 24 - 8, dy + 4, 24, 24, false, recent_display_mode = "grid" ? icons.VIEW_LIST : icons.VIEW_GRID, null, false, recent_display_mode = "grid" ? "tooltip/view_list" : "tooltip/view_grid"))
 		{
 			if (recent_display_mode = "list")
 				recent_display_mode = "grid"
@@ -79,31 +77,44 @@ function window_draw_startup()
 		}
 	}
 	
-	// Show recent models
+	// Show recent projects
 	if (recent_list_amount > 0)
 	{
-		// Recent model grid/list button
+		// Recent project grid/list button
 		dx -= (12 + 28)
 		
 		dx = (window_width / 2) - (dw / 2)
 		
 		draw_set_font(font_heading)
 		
-		// Recent models label
-		draw_label(text_get("startuprecentprojects"), dx, dy + 16, fa_left, fa_middle, c_accent, 1)
+		// Recent projects label
+		draw_label(text_get("startup/recent_projects"), dx, dy + 16, fa_left, fa_middle, c_accent, 1)
 		
-		var labelwid = string_width(text_get("startuprecentprojects"));
+		var labelwid = string_width(text_get("startup/recent_projects"));
 		
-		if (draw_button_label("startupsortby", dx + labelwid + 16, dy, null, icons.SORT_DOWN, e_button.TERTIARY))
-			menu_settings_set(dx + labelwid + 16, dy, "startupsortby", 32)
+		if (draw_button_label("startup/sort_by", dx + labelwid + 16, dy, null, icons.SORT_DOWN, e_button.TERTIARY))
+		{
+			menu_settings_set(dx + labelwid + 16, dy, "startup/sort_by", 32)
+			settings_menu_script = null
+		}
 		
-		if (settings_menu_name = "startupsortby" && settings_menu_ani_type != "hide")
+		if (settings_menu_name = "startup/sort_by" && settings_menu_ani_type != "hide")
 			current_microani.active.value = true
 		
-		dy += 72
+		dy += 40
+		tab_control(24)
+		draw_textfield("recent/search", dx, dy, 240, 24, tbx_recent_search, action_recent_search, text_get("recent/search_caption"), "none")
+		tab_next()
+		dy += 32
+		
+		// No searched projects text
+		if (recent_list_amount > 0 && recent_list_amount_display = 0)
+		{
+			draw_label(text_get("recent/search_none"), window_width / 2, dy, fa_center, fa_middle, c_accent, 1, font_heading_big)
+			//dy += 48
+		}
 		
 		var listheight;
-		
 		if (recent_display_mode = "list")
 			listheight = 28 + min(window_height - dy, (min(ds_list_size(recent_list), 8) * 44))
 		else
@@ -118,10 +129,10 @@ function window_draw_startup()
 		// Jonathan splash
 		var midx, midy;
 		midx = snap(window_width / 2, 2)
-		midy = snap(headersize + ((window_height - headersize) / 1.75), 2)
+		midy = snap((2 * headersize) + ((window_height - (2 * headersize)) / 2), 2)
 		
 		// Only draw splash if it fits well on screen
-		if ((midy + (sprite_get_height(spr_jonathan_splash) / 1.75)) < (window_height - 50))
+		if ((midy + (sprite_get_height(spr_jonathan_splash) / 2)) <= window_height)
 			draw_image(spr_jonathan_splash, 0, midx, midy)
 	}
 }

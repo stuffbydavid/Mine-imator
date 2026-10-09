@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_toolbar_build_mode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_toolbar_build_mode",
+  "parent":{
+    "name":"Toolbar",
+    "path":"folders/Scripts/App/Actions/Toolbar.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

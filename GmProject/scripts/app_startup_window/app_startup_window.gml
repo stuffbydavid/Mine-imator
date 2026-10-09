@@ -1,17 +1,16 @@
-/// app_startup_window()
-
 function app_startup_window()
 {
 	globalvar window_list, window_debug_current;
+	globalvar current_step, minute_steps, delta;
+	
 	window_list = ds_list_create()
 	window_debug_current = e_window.MAIN
 	
-	globalvar current_step, minute_steps, delta;
 	current_step = 0
 	minute_steps = 60 * 60
 	delta = 1
 	
-	log("Windows startup")
+	log("Window startup")
 	
 	http_assets = null
 	http_download_assets_file = null
@@ -60,6 +59,10 @@ function app_startup_window()
 	sortlist_resize_column = 0
 	sortlist_resize_column_x = 0
 	
+	content_name = ""
+	content_text = ""
+	content_capwid = 0
+
 	content_x = 0
 	content_y = 0
 	content_width = 0
@@ -76,15 +79,16 @@ function app_startup_window()
 	dy_start = 0
 	dw_start = 0
 	dh_start = 0
+	
 	tab = null
 	tab_control_h = 0
 	tab_collapse = false
 	
-	tab_collumns = false
-	tab_collumns_index = 0
-	tab_collumns_width = 0
-	tab_collumns_count = 2
-	tab_collumns_start_x = 0
+	tab_columns = false
+	tab_columns_index = 0
+	tab_columns_width = 0
+	tab_columns_count = 2
+	tab_columns_start_x = 0
 	
 	// Tips
 	tip_show = false
@@ -104,6 +108,8 @@ function app_startup_window()
 	tip_box_y = 0
 	tip_location_x = 0
 	tip_location_y = 0
+	tip_position = "bottom"
+	tip_position_last = ""
 	tip_wrap = true
 	tip_keybind_draw = false
 	tip_arrow_x = 0
@@ -111,13 +117,13 @@ function app_startup_window()
 	tip_arrow_xscale = 1
 	tip_arrow_yscale = 1
 	tip_arrow = 0
-	tip_text_array = array()
+	tip_text_array = []
 	tip_force_right = false
 	tip_right = false
 	tip_keybind = null
 	
 	// Popups
-	popup = null
+	popup_current = null
 	popup_ani = 0
 	popup_block_ani = 0
 	popup_block_ani_ease = "easeoutcirc"
@@ -129,9 +135,18 @@ function app_startup_window()
 	// Place
 	place_tl = null
 	place_tl_render = true
+	place_tl_parent = app
+	place_tl_parent_index = -1
+	place_target_tl = null
+	place_target_tl_part_of = null
 	place_spawn = false
-	place_view_pos = null
-	place_view_mouse = null
+	place_history = null
+	place_build = false
+	place_busy = "place"
+	place_pos = null
+	place_rot = vec3(0)
+	place_sca = vec3(1)
+	place_content_mouseon = null
 	place_cam_work_from = vec3(0)
 	place_cam_work_angle_look_xy = 0
 	place_cam_work_angle_look_z = 0

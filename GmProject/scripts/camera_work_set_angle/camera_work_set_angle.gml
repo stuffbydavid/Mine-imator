@@ -1,5 +1,3 @@
-/// camera_work_set_angle()
-
 function camera_work_set_angle()
 {
 	cam_work_angle_xy = point_direction(cam_work_focus[X], cam_work_focus[Y], cam_work_from[X], cam_work_from[Y])

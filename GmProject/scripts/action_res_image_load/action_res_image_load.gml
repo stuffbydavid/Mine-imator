@@ -1,4 +1,3 @@
-/// action_res_image_load(filename, type)
 /// @arg filename
 /// @arg type
 
@@ -17,6 +16,7 @@ function action_res_image_load(fn, type)
 		{
 			fn = history_data.filename
 			type = history_data.type
+			
 			if (type = e_res_type.ITEM_SHEET)
 				itemsheetsize = history_data.item_sheet_size
 		}
@@ -26,8 +26,8 @@ function action_res_image_load(fn, type)
 			
 			if (type = e_res_type.ITEM_SHEET)
 			{
-				if (popup_importitemsheet.is_sheet)
-					itemsheetsize = popup_importitemsheet.sheet_size
+				if (popup_importimage.is_sheet)
+					itemsheetsize = popup_importimage.sheet_size
 				else
 					type = e_res_type.TEXTURE
 			}
@@ -48,8 +48,9 @@ function action_res_image_load(fn, type)
 			with (hobj)
 			{
 				filename = fn
-				id.type = type
-				id.item_sheet_size = res.item_sheet_size
+				self.type = type
+				self.item_sheet_size = res.item_sheet_size
+				
 				history_save_loaded()
 			}
 		}

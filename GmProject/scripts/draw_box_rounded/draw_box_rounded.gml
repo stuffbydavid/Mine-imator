@@ -1,22 +1,21 @@
-/// draw_box_rounded(x, y, width, height, [color, alpha, [roundlefttop, roundrighttop, roundrightbottom, roundleftbottom, [roundsize, roundsprite]]])
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @arg [color
-/// @arg alpha
-/// @arg [roundlefttop
-/// @arg roundrighttop
-/// @arg roundrightbottom
-/// @arg roundleftbottom
-/// @arg [roundsize
-/// @arg roundsprite]]]
+/// @arg [color]
+/// @arg [alpha]
+/// @arg [roundlefttop]
+/// @arg [roundrighttop]
+/// @arg [roundrightbottom]
+/// @arg [roundleftbottom]
+/// @arg [roundsize]
+/// @arg [roundsprite]
 
-function draw_box_rounded(xx, yy, w, h, incolor, inalpha, roundlefttop = true, roundrighttop = true, roundrightbottom = true, roundleftbottom = true, roundsize = 2, roundsprite = undefined)
+function draw_box_rounded(xx, yy, w, h, incolor = null, inalpha = 1, roundlefttop = true, roundrighttop = true, roundrightbottom = true, roundleftbottom = true, roundsize = 2, roundsprite = null)
 {
 	var oldcolor, oldalpha;
 	
-	if (!is_undefined(incolor))
+	if (incolor != null)
 	{
 		oldcolor = draw_get_color()
 		oldalpha = draw_get_alpha()
@@ -24,7 +23,7 @@ function draw_box_rounded(xx, yy, w, h, incolor, inalpha, roundlefttop = true, r
 		draw_set_alpha(oldalpha * inalpha)
 	}
 	
-	if (is_undefined(roundsprite))
+	if (roundsprite = null)
 		roundsprite = spr_rounded_2
 	
 	draw_primitive_begin(pr_trianglefan)
@@ -84,7 +83,8 @@ function draw_box_rounded(xx, yy, w, h, incolor, inalpha, roundlefttop = true, r
 	if (roundleftbottom)
 		draw_image(roundsprite, 0, xx + roundsize, yy + h-roundsize, 1, 1, draw_get_color(), 1, -270)
 	
-	if (!is_undefined(incolor)) {
+	if (!is_undefined(incolor))
+	{
 		draw_set_color(oldcolor)
 		draw_set_alpha(oldalpha)
 	}

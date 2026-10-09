@@ -1,5 +1,3 @@
-/// colorpicker_startup()
-
 function colorpicker_startup()
 {
 	colorpicker = new_obj(obj_colorpicker)
@@ -8,11 +6,14 @@ function colorpicker_startup()
 	{
 		value_name = ""
 		value_script = null
+		value_biome_color_edit = null
 		color = null
 		def = null
+		
 		hue = 0
 		saturation = 0
 		value = 0
+		
 		tbx_red = new_textbox(1, 3, "0123456789")
 		tbx_green = new_textbox(1, 3, "0123456789")
 		tbx_blue = new_textbox(1, 3, "0123456789")
@@ -20,6 +21,7 @@ function colorpicker_startup()
 		tbx_saturation = new_textbox(1, 3, "0123456789")
 		tbx_brightness = new_textbox(1, 3, "0123456789")
 		tbx_hexadecimal = new_textbox_hex()
+		
 		mode = "rgb"
 	}
 }

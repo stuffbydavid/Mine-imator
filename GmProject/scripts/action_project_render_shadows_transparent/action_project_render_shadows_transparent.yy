@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_project_render_shadows_transparent",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shadows",
-    "path": "folders/Scripts/App/Actions/Project/Render/Shadows.yy",
+  "$GMScript":"v1",
+  "%Name":"action_project_render_shadows_transparent",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_shadows_transparent",
+  "parent":{
+    "name":"Shadows",
+    "path":"folders/Scripts/App/Actions/Project/Render/Shadows.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

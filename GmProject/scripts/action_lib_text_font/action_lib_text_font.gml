@@ -1,17 +1,14 @@
-/// action_lib_text_font(resource)
 /// @arg resource
 
 function action_lib_text_font(res)
 {
-	var fn;
-	fn = ""
-
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_font()
@@ -27,12 +24,9 @@ function action_lib_text_font(res)
 	}
 	
 	with (temp_edit)
-	{
-		if (text_font != null)
-			text_font.count--
 		text_font = res
-		text_font.count++
-	}
+	
+	project_update_counts()
 	
 	lib_preview.update = true
 }

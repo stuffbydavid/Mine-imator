@@ -1,5 +1,4 @@
-/// tl_update_hide()
-/// @desc Hides the children (if they inherit visibility)
+/// @desc Hides the children (if they inherit visibility).
 
 function tl_update_hide()
 {

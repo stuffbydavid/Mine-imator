@@ -1,7 +1,6 @@
-/// history_restore_tl(save, [tl])
-/// @arg save
-/// @arg [tl]
 /// @desc Restores a saved timeline from memory.
+/// @arg save
+/// @arg [timeline]
 
 function history_restore_tl(save, tl = null)
 {
@@ -16,12 +15,13 @@ function history_restore_tl(save, tl = null)
 		save_id = save.save_id
 		tl_find_save_ids()
 		
-		if (temp != null && part_of = null)
-			temp.count++
-		
 		// Restore default values
 		for (var v = 0; v < e_value.amount; v++)
+		{
 			value_default[v] = tl_value_find_save_id(v, null, save.value_default[v])
+			if (!animated)
+				value[v] = tl_value_find_save_id(v, null, save.value[v])
+		}
 		
 		// Restore keyframes
 		for (var k = 0; k < save.kf_amount; k++)
@@ -32,8 +32,10 @@ function history_restore_tl(save, tl = null)
 				timeline = tl
 				selected = false
 				sound_play_index = null
+				
 				for (var v = 0; v < e_value.amount; v++)
 					value[v] = tl_value_find_save_id(v, null, save.kf_value[k, v])
+				
 				ds_list_add(other.keyframe_list, id)
 			}
 		}
@@ -47,6 +49,7 @@ function history_restore_tl(save, tl = null)
 			pattern_base_color = save.pattern_base_color
 			pattern_pattern_list = array_copy_1d(save.pattern_pattern_list)
 			pattern_color_list = array_copy_1d(save.pattern_color_list)
+			
 			array_add(pattern_update, id)
 		}
 		

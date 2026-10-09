@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"texture_startup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"texture_startup",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Utility/Texture.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_deselect_all",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Select",
-    "path": "folders/Scripts/Project/Timeline/Select.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_deselect_all",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_deselect_all",
+  "parent":{
+    "name":"Select",
+    "path":"folders/Scripts/Project/Timeline/Select.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

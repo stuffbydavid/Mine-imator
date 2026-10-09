@@ -1,6 +1,3 @@
-/// block_load_variant_model(map, type)
-/// @arg type
-
 function block_load_variant_model(map, type)
 {
 	if (is_undefined(map[?"model"]))
@@ -23,6 +20,8 @@ function block_load_variant_model(map, type)
 		rot[X] = clamp(snap(map[?"x"], 90), 0, 270)
 	if (!is_undefined(map[?"y"]))
 		rot[Z] = clamp(snap(map[?"y"], 90), 0, 270)
+	if (!is_undefined(map[?"z"]))
+		rot[Y] = clamp(snap(map[?"z"], 90), 0, 270)
 	
 	// UV lock
 	var uvlock = false;

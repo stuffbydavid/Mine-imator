@@ -1,6 +1,5 @@
-/// missing_file(filename)
-/// @arg filename
 /// @desc Shows a message that a file is missing.
+/// @arg filename
 
 function missing_file(fn)
 {

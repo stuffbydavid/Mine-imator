@@ -1,6 +1,3 @@
-/// action_lib_name(name)
-/// @arg name
-
 function action_lib_name(name)
 {
 	if (!history_undo && !history_redo)
@@ -8,7 +5,7 @@ function action_lib_name(name)
 	
 	with (temp_edit)
 	{
-		id.name = name
+		self.name = name
 		temp_update_display_name()
 	}
 }

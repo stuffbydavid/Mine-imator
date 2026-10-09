@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_eval",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_eval",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

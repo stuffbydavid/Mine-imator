@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "vec4_homogenize",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Vector",
-    "path": "folders/Scripts/Utility/Math/Vector.yy",
+  "$GMScript":"v1",
+  "%Name":"vec4_homogenize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vec4_homogenize",
+  "parent":{
+    "name":"Vector",
+    "path":"folders/Scripts/Utility/Math/Vector.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_update_cascades",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Render/Update.yy",
+  "$GMScript":"v1",
+  "%Name":"render_update_cascades",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_update_cascades",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Render/Update.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

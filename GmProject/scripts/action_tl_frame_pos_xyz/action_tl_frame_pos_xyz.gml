@@ -1,6 +1,3 @@
-/// action_tl_frame_pos_xyz(point)
-/// @arg point
-
 function action_tl_frame_pos_xyz(point)
 {
 	tl_value_set_start(action_tl_frame_pos_xyz, false)

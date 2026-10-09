@@ -40,6 +40,7 @@ namespace CppProject
 			else if (it->dsType == ds_type_map)
 				delete FindList(it->value.ToInt());
 		}
+
 		vec.clear();
 	}
 
@@ -88,6 +89,7 @@ namespace CppProject
 				maxId = i;
 			}
 		}
+
 		return maxId;
 	}
 }

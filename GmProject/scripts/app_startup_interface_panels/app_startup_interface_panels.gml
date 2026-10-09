@@ -1,5 +1,3 @@
-/// app_startup_interface_panels()
-
 function app_startup_interface_panels()
 {
 	panel_map = ds_map_create()

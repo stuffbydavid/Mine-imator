@@ -1,5 +1,4 @@
-/// render_high_vignette(basesurf)
-/// @arg basesurf
+/// @arg basesurface
 
 function render_high_vignette(prevsurf)
 {

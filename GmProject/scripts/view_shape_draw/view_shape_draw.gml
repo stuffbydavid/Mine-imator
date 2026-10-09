@@ -1,20 +1,16 @@
-/// view_shape_draw(points, [matrix])
+/// @desc Renders a shape from 8 points.
 /// @arg points
 /// @arg [matrix]
-/// @desc Renders a shape from 8 points.
 
-function view_shape_draw()
+function view_shape_draw(points, mat = null)
 {
-	var points;
-	points = argument[0]
-	
-	if (argument_count > 1)
+	if (mat != null)
 	{
 		// Convert to world space
-		var mat = array_copy_1d(argument[1]);
-		matrix_remove_scale(mat)
+		var matcopy = array_copy_1d(mat);
+		matrix_remove_scale(matcopy)
 		for (var p = 0; p < 8; p++)
-			points[p] = point3D_mul_matrix(points[p], mat)
+			points[p] = point3D_mul_matrix(points[p], matcopy)
 	}
 	
 	view_shape_line(points[0], points[1])

@@ -1,8 +1,8 @@
-/// app_mouse_box(x, y, width, height, [busy])
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
+/// @arg [busy]
 
 function app_mouse_box(xx, yy, w, h, busy = "")
 {

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "particle_event_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Particle",
-    "path": "folders/Scripts/Project/Particle.yy",
+  "$GMScript":"v1",
+  "%Name":"particle_event_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"particle_event_destroy",
+  "parent":{
+    "name":"Particle",
+    "path":"folders/Scripts/Project/Particle.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

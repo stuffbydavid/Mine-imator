@@ -1,6 +1,5 @@
-/// time_get_rotation(string)
+/// @desc Converts ToD string (ex. 1:13:14) into a rotational value.
 /// @arg string
-/// @desc Converts ToD string (ex. 1:13:14) into a rotational value
 
 function time_get_rotation(str)
 {

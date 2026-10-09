@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_bench_text_outline_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_text_outline_size",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/App/Actions/Bench/Text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

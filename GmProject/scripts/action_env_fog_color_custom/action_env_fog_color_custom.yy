@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_fog_color_custom",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_fog_color_custom",
+  "parent":{
+    "name":"Fog",
+    "path":"folders/Scripts/App/Actions/Environment/Fog.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

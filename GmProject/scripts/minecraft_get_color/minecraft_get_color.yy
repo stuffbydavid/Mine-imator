@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "minecraft_get_color",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Minecraft",
-    "path": "folders/Scripts/Minecraft.yy",
+  "$GMScript":"v1",
+  "%Name":"minecraft_get_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_get_color",
+  "parent":{
+    "name":"Color",
+    "path":"folders/Scripts/Minecraft/Color.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

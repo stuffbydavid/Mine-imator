@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"interface_scale_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"interface_scale_set",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

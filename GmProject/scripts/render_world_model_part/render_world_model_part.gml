@@ -1,38 +1,97 @@
-/// render_world_model_part(part, resource, texturenamemap, shapevbuffermap, colormap, shapehidelist, shapetexnamemap, shapetexnamemap, tlobject)
 /// @arg part
 /// @arg resource
 /// @arg texturenamemap
-/// @arg shapevbuffermap
+/// @arg shapevertexbuffermap
 /// @arg colornamemap
 /// @arg shapehidelist
 /// @arg shapetexnamemap
-/// @arg tlobject
+/// @arg [istimeline]
 
-function render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, tlobject)
+function render_world_model_part(part, res, texnamemap, shapevbuffermap, colornamemap, shapehidelist, shapetexnamemap, istl = false)
 {
-	if (part.shape_list = null)
+	var shapelist, shapecount;
+	shapelist = part.shape_list
+	
+	if (shapelist = null)
 		return 0
 	
+	shapecount = ds_list_size(shapelist)
+
+	res = res_eval(res)
+	render_apply_res(res)
+	
+	if (!istl && !render_depth_pass && render_material_pass)
+	{
+		render_set_material_textures_none()
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+	}
+	
 	var parttexname, mat;
-	parttexname = (tlobject ? "" : string(model_part_get_texture_name(part, texnamemap)))
+	parttexname = (istl ? "" : string(model_part_get_texture_name(part, texnamemap)))
 	
-	if (!tlobject)
+	if (!istl)
 		mat = matrix_get(matrix_world)
+	else if (model_part_shape_render_matrix_part != part || array_length(model_part_shape_render_matrix) != shapecount)
+		tl_update_model_shape_render()
 	
-	var shape, texobj, blendcolor, alpha;
-	texobj = null
-	blendcolor = null
-	alpha = null
 	render_blend_prev = null
 	render_alpha_prev = null
 	
-	for (var s = 0; s < ds_list_size(part.shape_list); s++)
+	var prevx, prevy, offsetset;
+	prevx = 0
+	prevy = 0
+	offsetset = false
+	
+	var patterntex, custompattern;
+	patterntex = null
+	if (object_index = obj_preview && select.pattern_type != "" && sprite_exists(select.pattern_skin))
+		patterntex = select.pattern_skin
+	
+	custompattern = istl && sprite_exists(pattern_skin)
+	
+	if (istl && (custompattern || temp.pattern_type != ""))
 	{
-		shape = part.shape_list[|s]
+		var tempres = null;
+		with (temp)
+			tempres = temp_get_model_texobj(null)
+		
+		if (res = tempres)
+		{
+			if (custompattern)
+				patterntex = pattern_skin
+			else if (sprite_exists(temp.pattern_skin))
+				patterntex = temp.pattern_skin
+		}
+	}
+	
+	var previewarmor, tlarmor, previewblend, tlblend, previewcolor, timelinecolor;
+	previewarmor = (object_index = obj_preview && select.object_index != obj_resource && select.model_name = "armor")
+	tlarmor = (istl && temp.model_name = "armor")
+	previewblend = (object_index = obj_preview && select.model_use_blend_color)
+	tlblend = (istl && temp.model_use_blend_color)
+	
+	if (previewblend)
+		previewcolor = select.model_blend_color
+	
+	if (tlblend)
+		timelinecolor = temp.model_blend_color
+
+	for (var s = 0; s < shapecount; s++)
+	{
+		var shape, vbuf, tex, texres;
+		shape = shapelist[|s]
 		
 		// Hidden?
-		if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
-			continue
+		if (istl)
+		{
+			if (model_part_shape_hidden[s])
+				continue
+		}
+		else
+		{
+			if (shapehidelist != null && ds_list_find_index(shapehidelist, shape.description) > -1)
+				continue
+		}
 		
 		// Click mode
 		if (render_mode = e_render_mode.CLICK && shape.locked)
@@ -45,79 +104,119 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Does the part need to move a certain amount for this shape to render?
 		if (shape.move_required)
 		{
-			if (!tlobject)
+			if (!istl)
 				continue
 			
-			if (!(abs(tlobject.value[e_value.POS_X]) > shape.move_required_array[X] &&
-			abs(tlobject.value[e_value.POS_Y]) > shape.move_required_array[Y] &&
-			abs(tlobject.value[e_value.POS_Z]) > shape.move_required_array[Z]))
+			if (!(abs(value[e_value.POS_X]) > shape.move_required_array[X] &&
+				abs(value[e_value.POS_Y]) > shape.move_required_array[Y] &&
+				abs(value[e_value.POS_Z]) > shape.move_required_array[Z]))
 				continue
 		}
 		
+		if (istl)
+			vbuf = model_part_shape_vbuffer[s]
+		else
+		{
+			if (shapevbuffermap = null)
+				continue
+			
+			vbuf = shapevbuffermap[?shape]
+		}
+		
+		if (is_undefined(vbuf) || vbuf = null)
+			continue
+
 		// Set shape texture
-		if (tlobject)
+		if (istl)
 		{
 			if (s > array_length(model_part_shape_tex) - 1)
 				continue
 			
-			render_set_texture(model_part_shape_tex[s])
+			tex = model_part_shape_tex[s]
+			texres = render_res_diffuse
 			
-			render_set_uniform_int("uMaterialFormat", model_part_shape_material_res[s])
+			var offsetx, offsety;
+			offsetx = 0
+			offsety = 0
 			
-			if (model_part_shape_tex_material[s] = null)
+			if (shape.texture_scroll_speed != 0)
 			{
-				render_set_texture(spr_default_material, "Material")
-				
-				if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
-				{
-					shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-					render_set_uniform("uEmissive", shader_uniform_emissive)
-				}
-	
-				if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
-				{
-					shader_uniform_metallic = value_inherit[e_value.METALLIC]
-					render_set_uniform("uMetallic", shader_uniform_metallic)
-				}
-	
-				if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
-				{
-					shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-					render_set_uniform("uRoughness", shader_uniform_roughness)
-				}
-			}
-			else
-			{
-				render_set_texture(model_part_shape_tex_material[s], "Material")
-				
-				if (shader_uniform_metallic != 1)
-				{
-					shader_uniform_metallic = 0
-					render_set_uniform("uMetallic", shader_uniform_metallic)
-				}
-		
-				if (shader_uniform_roughness != 0)
-				{
-					shader_uniform_roughness = 0
-					render_set_uniform("uRoughness", shader_uniform_roughness)
-				}
-		
-				if (shader_uniform_emissive != 1)
-				{
-					shader_uniform_emissive = 0
-					render_set_uniform("uEmissive", shader_uniform_emissive)
-				}
+				var scroll = (app.env_time / 60) * shape.texture_scroll_speed;
+				offsetx = scroll * sin(degtorad(shape.texture_scroll_direction))
+				offsety = scroll * cos(degtorad(shape.texture_scroll_direction))
 			}
 			
-			if (model_part_shape_tex_normal[s] = null)
-				render_set_texture(spr_default_normal, "Normal")
-			else
-				render_set_texture(model_part_shape_tex_normal[s], "Normal")
+			if (!offsetset || offsetx != prevx || offsety != prevy)
+			{
+				render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, offsetx, offsety)
+				
+				prevx = offsetx
+				prevy = offsety
+				
+				offsetset = true
+			}
+			
+			if (!render_depth_pass && render_material_pass)
+			{
+				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, model_part_shape_material_res[s])
+
+				if (model_part_shape_tex_material[s] = null)
+				{
+					render_set_texture(null, 0, e_texture_channel.MATERIAL)
+
+					if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
+					{
+						shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+						render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+					}
+
+					if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+					{
+						shader_uniform_metallic = value_inherit[e_value.METALLIC]
+						render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+					}
+
+					if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+					{
+						shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+						render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+					}
+				}
+				else
+				{
+					render_set_texture(render_res_material, model_part_shape_tex_material[s], e_texture_channel.MATERIAL)
+
+					if (shader_uniform_metallic != 1)
+					{
+						shader_uniform_metallic = 0
+						render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+					}
+
+					if (shader_uniform_roughness != 0)
+					{
+						shader_uniform_roughness = 0
+						render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+					}
+
+					if (shader_uniform_emissive != 1)
+					{
+						shader_uniform_emissive = 0
+						render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+					}
+				}
+				
+				if (model_part_shape_tex_normal[s] = null)
+					render_set_texture(null, 0, e_texture_channel.NORMAL)
+				else
+					render_set_texture(render_res_normal, model_part_shape_tex_normal[s], e_texture_channel.NORMAL)
+			}
 		}
 		else
 		{
+			var shapetexname, texobj;
+			
 			// Get texture (shape texture overrides part texture)
-			var shapetexname = parttexname;
+			shapetexname = parttexname
 			if (shape.texture_name != "")
 				shapetexname = shape.texture_name
 			
@@ -132,113 +231,48 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			with (res)
 			{
 				texobj = res_get_model_texture(shapetexname)
-				render_set_texture(texobj)
+				tex = texobj
 			}
+			texres = res
 		}
 		
-		#region Pattern rendering
-		
-		// Preview
-		if (object_index = obj_preview && select.pattern_type != "")
+		// Pattern overrides the shape texture, armor overrides the pattern
+		if (patterntex != null)
 		{
-			if (sprite_exists(select.pattern_skin))
-				render_set_texture(select.pattern_skin)
+			tex = patterntex
+			texres = null
 		}
 		
-		if (tlobject != null)
+		if (previewarmor || tlarmor)
 		{
-			// Use skin if provided to timeline, else use skin in template
-			if (sprite_exists(tlobject.pattern_skin))
+			var armorindex = minecraft_armor_shape_index_map[?shape.description];
+			if (is_undefined(armorindex))
+				armorindex = -1
+			
+			if (armorindex >= 0)
 			{
-				// Only use pattern if timeline is using its template's resource
-				var tempres = null;
+				if (previewarmor && sprite_exists(select.armor_skin_array[armorindex]))
+				{
+					tex = select.armor_skin_array[armorindex]
+					texres = null
+				}
 				
-				with (tlobject.temp)
-					tempres = temp_get_model_texobj(null)
-				
-				if (res = tempres)
-					if (sprite_exists(tlobject.pattern_skin))
-						render_set_texture(tlobject.pattern_skin)
-			}
-			else if (tlobject.temp.pattern_type != "")
-			{
-				// Only use pattern if timeline is using its template's resource
-				var tempres = null;
-				
-				with (tlobject.temp)
-					tempres = temp_get_model_texobj(null)
-				
-				if (res = tempres)
-					if (sprite_exists(tlobject.temp.pattern_skin))
-						render_set_texture(tlobject.temp.pattern_skin)
+				if (tlarmor && sprite_exists(temp.armor_skin_array[armorindex]))
+				{
+					tex = temp.armor_skin_array[armorindex]
+					texres = null
+				}
 			}
 		}
 		
-		#endregion
-		
-		#region Armor rendering
-		
-		// Preview
-		if (object_index = obj_preview && select.object_index != obj_resource && select.model_name = "armor")
-		{
-			if (shape.description = "helmet")
-			{
-				if (sprite_exists(select.armor_skin_array[0]))
-					render_set_texture(select.armor_skin_array[0])
-			}
-			
-			if (shape.description = "chestplate")
-			{
-				if (sprite_exists(select.armor_skin_array[1]))
-					render_set_texture(select.armor_skin_array[1])
-			}
-			
-			if (shape.description = "leggings")
-			{
-				if (sprite_exists(select.armor_skin_array[2]))
-					render_set_texture(select.armor_skin_array[2])
-			}
-			
-			if (shape.description = "boots")
-			{
-				if (sprite_exists(select.armor_skin_array[3]))
-					render_set_texture(select.armor_skin_array[3])
-			}
-		}
-		
-		if (tlobject != null && tlobject.temp.model_name = "armor")
-		{
-			if (shape.description = "helmet")
-			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[0]))
-					render_set_texture(tlobject.temp.armor_skin_array[0])
-			}
-			
-			if (shape.description = "chestplate")
-			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[1]))
-					render_set_texture(tlobject.temp.armor_skin_array[1])
-			}
-			
-			if (shape.description = "leggings")
-			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[2]))
-					render_set_texture(tlobject.temp.armor_skin_array[2])
-			}
-			
-			if (shape.description = "boots")
-			{
-				if (sprite_exists(tlobject.temp.armor_skin_array[3]))
-					render_set_texture(tlobject.temp.armor_skin_array[3])
-			}
-		}
-		
-		#endregion
+		render_set_texture(texres, tex)
 		
 		// Blend color
-		blendcolor = shape.color_blend
+		var blendcolor, alpha;
+		blendcolor = render_depth_pass ? c_white : shape.color_blend
 		alpha = shape.color_alpha
-		if (colornamemap != null)
+		
+		if (!render_depth_pass && colornamemap != null)
 		{
 			var color = colornamemap[? shape.description];
 			if (!is_undefined(color))
@@ -246,17 +280,19 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		// Model blend color
-		if (shape.use_model_color)
+		if (!render_depth_pass && shape.use_model_color)
 		{
-			if (object_index = obj_preview && select.model_use_blend_color)
-				blendcolor = color_multiply(blendcolor, select.model_blend_color)
+			if (previewblend)
+				blendcolor = color_multiply(blendcolor, previewcolor)
 			
-			if (tlobject != null && tlobject.temp.model_use_blend_color)
-				blendcolor = color_multiply(blendcolor, tlobject.temp.model_blend_color)
+			if (tlblend)
+				blendcolor = color_multiply(blendcolor, timelinecolor)
 		}
 		
 		// Blend shape color/alpha
-		if (blendcolor != c_white || alpha != 1)
+		if (render_depth_pass)
+			alpha = shader_blend_alpha * alpha
+		else if (blendcolor != c_white || alpha != 1)
 		{
 			blendcolor = color_multiply(shader_blend_color, blendcolor)
 			alpha = shader_blend_alpha * shape.color_alpha
@@ -270,57 +306,42 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		// Set color/alpha
 		if (blendcolor != render_blend_prev || alpha != render_alpha_prev)
 		{
-			render_set_uniform_color("uBlendColor", blendcolor, alpha)
+			render_set_uniform_color(e_uniform.BLEND_COLOR, blendcolor, alpha)
 			render_blend_prev = blendcolor
 			render_alpha_prev = alpha
 		}
 		
 		// Mix color
-		if (shape.color_mix_percent > 0)
+		if (!render_depth_pass && shape.color_mix_percent > 0)
 		{
-			if (tlobject != null)
-				render_set_uniform_color("uMixColor", merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
+			if (istl)
+				render_set_uniform_color(e_uniform.MIX_COLOR, merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
 			else
-				render_set_uniform_color("uMixColor", shape.color_mix, shape.color_mix_percent)
+				render_set_uniform_color(e_uniform.MIX_COLOR, shape.color_mix, shape.color_mix_percent)
 		}
 		
+		if (istl && !shape.item_bounce && !shape.face_camera && model_part_shape_render_matrix_part = part)
+		{
+			// Submit cached matrix without array conversion
+			matrix_set(matrix_world, model_part_shape_render_matrix[s])
+			vertex_submit(vbuf, pr_trianglelist, -1)
+			continue
+		}
+
 		// Shape matrix
 		var rendermatrix;
-		if (tlobject)
+		if (istl)
 			rendermatrix = matrix_multiply(shape.matrix, matrix_render)
 		else
 			rendermatrix = matrix_multiply(shape.matrix, mat)
-		
-		// Bounce
-		if (shape.item_bounce)
-		{
-			var d, t, offz;
-			d = 60 * 3
-			t = app.background_time mod d * 2
-			if (t < d)
-				offz = ease("easeinoutquad", t / d) * 2 - 1
-			else
-				offz = 1 - ease("easeinoutquad", (t - d) / d) * 2
-			rendermatrix = matrix_multiply(rendermatrix, matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
-		}
-		
-		// Face camera
-		if (shape.face_camera)
-		{
-			var rotx, rotz, rotmat;
-			
-			matrix_remove_rotation(rendermatrix)
-			rotx = -point_zdirection(rendermatrix[MAT_X], rendermatrix[MAT_Y], rendermatrix[MAT_Z], proj_from[X], proj_from[Y], proj_from[Z])
-			rotz = 90 + point_direction(rendermatrix[MAT_X], rendermatrix[MAT_Y], proj_from[X], proj_from[Y])
-			rotmat = matrix_build(0, 0, 0, rotx, 0, rotz, 1, 1, 1)
-			rendermatrix = matrix_multiply(rotmat, rendermatrix)
-		}
-		
-		// Pick vertex buffer from map if available
-		if (shapevbuffermap != null && !is_undefined(shapevbuffermap[?shape]))
-			vbuffer_render_matrix(shapevbuffermap[?shape], rendermatrix)
+
+		if (shape.item_bounce || shape.face_camera)
+			rendermatrix = render_world_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
+
+		matrix_set(matrix_world, rendermatrix)
+		vertex_submit(vbuf, pr_trianglelist, -1)
 	}
 	
-	if (!tlobject)
+	if (!istl)
 		matrix_set(matrix_world, mat)
 }

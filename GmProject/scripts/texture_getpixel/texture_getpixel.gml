@@ -1,8 +1,7 @@
-/// texture_getpixel(texture, x, y)
+/// @desc Check the color of a pixel in the texture.
 /// @arg texture
 /// @arg x
 /// @arg y
-/// @desc Check the color of a pixel in the texture.
 
 function texture_getpixel(tex, xx, yy)
 {

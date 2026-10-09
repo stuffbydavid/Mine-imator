@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "access_error",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Dialogues",
-    "path": "folders/Scripts/App/Dialogues.yy",
+  "$GMScript":"v1",
+  "%Name":"access_error",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"access_error",
+  "parent":{
+    "name":"Dialogues",
+    "path":"folders/Scripts/App/Dialogues.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

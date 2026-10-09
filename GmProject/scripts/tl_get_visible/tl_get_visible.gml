@@ -1,7 +1,7 @@
-/// tl_get_visible()
-
 function tl_get_visible()
 {
+	var renderer;
+
 	if (render_view_current = null)
 		return true
 	
@@ -9,29 +9,11 @@ function tl_get_visible()
 		return false
 	
 	if (render_active = "image")
-	{
-		if (app.popup_exportimage.high_quality && hq_hiding)
-			return false
-		
-		if (!app.popup_exportimage.high_quality && lq_hiding)
-			return false
-	}
+		renderer = app.popup_exportimage.renderer
 	else if (render_active = "movie")
-	{
-		if (app.exportmovie_high_quality && hq_hiding)
-			return false
-		
-		if (!app.exportmovie_high_quality && lq_hiding)
-			return false
-	}
-	else if (render_view_current != null)
-	{
-		if (render_view_current.quality = e_view_mode.RENDER && hq_hiding)
-			return false
-		
-		if (render_view_current.quality != e_view_mode.RENDER && lq_hiding)
-			return false
-	}
+		renderer = app.exportmovie_renderer
+	else
+		renderer = render_view_current.renderer
 	
-	return true
+	return mode_visible[renderer]
 }

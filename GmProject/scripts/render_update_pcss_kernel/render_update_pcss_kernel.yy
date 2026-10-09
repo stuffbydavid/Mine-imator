@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_update_pcss_kernel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_update_pcss_kernel",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Render/Update.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

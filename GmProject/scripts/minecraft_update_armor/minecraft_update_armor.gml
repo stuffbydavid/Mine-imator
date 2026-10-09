@@ -1,29 +1,30 @@
-/// minecraft_update_armor()
-
 function minecraft_update_armor()
 {
 	// Update pattern designs for templates
-	if (array_length(armor_update) > 0 && window_busy != "popup" + popup_loading.name)
+	if (array_length(armor_update) > 0 && window_busy != "popup/" + popup_loading.name)
 	{
 		var obj = null;
 		
 		for (var i = 0; i < array_length(armor_update); i++)
 		{
 			obj = armor_update[i]
+			if (obj = null || !instance_exists(obj))
+				continue
 			
 			with (obj)
 			{
 				for (var j = 0; j < 4; j++)
 				{
 					if (sprite_exists(armor_skin_array[j]))
-						sprite_delete(armor_skin_array[j])
+						texture_free(armor_skin_array[j])
 				}
 				
 				var res;
 				with (obj)
 					res = temp_get_model_texobj(null)
 				
-				armor_skin_array = minecraft_update_armor_generate(armor_array, res)
+				if (res != null && obj.model_file != null && instance_exists(obj.model_file))
+					armor_skin_array = minecraft_update_armor_generate(obj.model_file.name, armor_array, res)
 				
 				if (obj = temp_edit)
 					app.lib_preview.update = true
@@ -31,6 +32,6 @@ function minecraft_update_armor()
 		}
 		
 		armor_update = []
+		view_changed()
 	}
 }
-

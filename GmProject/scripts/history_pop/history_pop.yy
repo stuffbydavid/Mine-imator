@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "history_pop",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "History",
-    "path": "folders/Scripts/App/History.yy",
+  "$GMScript":"v1",
+  "%Name":"history_pop",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"history_pop",
+  "parent":{
+    "name":"History",
+    "path":"folders/Scripts/App/History.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

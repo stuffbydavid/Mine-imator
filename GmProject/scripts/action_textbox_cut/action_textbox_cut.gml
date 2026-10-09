@@ -1,5 +1,3 @@
-/// action_textbox_cut()
-
 function action_textbox_cut()
 {
 	context_menu_tbx_action = true

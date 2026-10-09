@@ -1,5 +1,5 @@
-/// builder_combine_threads()
-/// Combines the results of all the threads
+/// @desc Combines the results of all the threads.
+
 function builder_combine_threads()
 {
 	for (var t = 0; t < ds_list_size(thread_list); t++)
@@ -35,6 +35,7 @@ function builder_combine_threads()
 			instance_destroy()
 		}
 	}
+	
 	if (ds_list_size(thread_list) > 1)
 		thread_task_end()
 	ds_list_clear(thread_list)

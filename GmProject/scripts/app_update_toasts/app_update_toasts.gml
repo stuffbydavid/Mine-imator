@@ -1,5 +1,3 @@
-/// app_update_toasts()
-
 function app_update_toasts()
 {
 	// Execute actions
@@ -24,7 +22,6 @@ function app_update_toasts()
 			else
 				remove_alpha -= (.1 * delta)
 		}
-			
 	}
 	
 	// Offscreen and ready to remove

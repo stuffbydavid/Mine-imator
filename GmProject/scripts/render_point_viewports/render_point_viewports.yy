@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_point_viewports",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_point_viewports",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

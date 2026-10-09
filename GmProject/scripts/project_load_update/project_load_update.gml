@@ -1,21 +1,7 @@
-/// project_load_update()
 /// @desc Update program after reading a file.
 
 function project_load_update()
 {
-	// Doesn't use custom render settings
-	if (project_render_settings != "") 
-	{
-		// Load file
-		if (file_exists(render_directory + project_render_settings + ".mirender"))
-			action_load_render_settings(render_directory + project_render_settings + ".mirender")
-		else // Doesn't exist, set render settings to program default
-		{
-			project_render_settings = render_default
-			action_load_render_settings(render_default_file)
-		}
-	}
-	
 	// Load resources
 	with (obj_resource)
 		if (loaded)
@@ -26,25 +12,33 @@ function project_load_update()
 	
 	if (ds_priority_size(load_queue) > 0)
 		load_start(ds_priority_find_max(load_queue), res_load_start)
-	else if (popup != null)
+	
+	else if (popup_current != null)
 		popup_close()
+	
+	// Legacy cameras
+	if (load_format < e_project.FORMAT_210)
+		with (obj_timeline)
+			if (loaded && type = e_tl_type.CAMERA && is_array(legacy_camera_effect_available))
+				project_load_legacy_camera()
 	
 	tl_update_list()
 	
 	// Update sky
-	if (background_loaded)
+	if (env_loaded)
 	{
-		background_sky_update_clouds()
-		background_ground_update_texture()
-		background_ground_update_texture_material()
-		background_ground_update_texture_normal()
+		env_sky_update_clouds()
+		env_ground_update_texture()
+		env_ground_update_texture_material()
+		env_ground_update_texture_normal()
 	}
 	
 	// Update scenery parts
 	with (obj_timeline)
-		if (loaded && part_of != null)
+		if (loaded && (part_of != null ||
+			(!has_temp && (type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK))))
 			tl_update_scenery_part()
-	
+
 	// Update templates and timelines
 	with (obj_template)
 	{
@@ -53,7 +47,7 @@ function project_load_update()
 		
 		temp_update()
 		
-		if (type = e_temp_type.CHARACTER || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL || type = e_temp_type.BODYPART)
+		if (type = e_temp_type.CHARACTER || type = e_temp_type.EQUIPMENT || type = e_temp_type.SPECIAL_BLOCK || type = e_temp_type.MODEL || type = e_temp_type.MODEL_PART)
 		{
 			if (load_format >= e_project.FORMAT_110_PRE_1 && !load_update_tree)
 				temp_update_model_timeline_parts()
@@ -98,10 +92,10 @@ function project_load_update()
 				with (keyframe_list[|i])
 				{
 					if (value[e_value.ITEM_NAME] != "")
-						value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, value[e_value.ITEM_NAME])
+						value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(value[e_value.ITEM_NAME], mc_assets.item_texture_list)
 					
 					if (value[e_value.ITEM_SLOT] < 0)
-						value[e_value.ITEM_SLOT] = ds_list_find_index(mc_assets.item_texture_list, default_item)
+						value[e_value.ITEM_SLOT] = minecraft_assets_texture_picker_slot_find(default_item, mc_assets.item_texture_list)
 				}
 			}
 		}
@@ -134,8 +128,9 @@ function project_load_update()
 		if (loaded)
 			ptype_update_sprite_vbuffers()
 	
-	tl_update_length()
-	
 	app.update_matrix = true
+	tl_update_length()
 	tl_update_matrix()
+	
+	project_update_counts()
 }

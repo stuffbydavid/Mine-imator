@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"graphics_api_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"graphics_api_get",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/Scripts/Utility.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

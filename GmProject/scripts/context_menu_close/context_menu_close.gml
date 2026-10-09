@@ -1,5 +1,3 @@
-/// context_menu_close()
-
 function context_menu_close()
 {
 	if (context_menu_name = "")

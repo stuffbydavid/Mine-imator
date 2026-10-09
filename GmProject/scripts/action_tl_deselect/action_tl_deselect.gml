@@ -1,4 +1,3 @@
-/// action_tl_deselect(timeline)
 /// @arg timeline
 
 function action_tl_deselect(tl)

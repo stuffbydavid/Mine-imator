@@ -7,19 +7,11 @@
 
 #define GFX GraphicsApiHandler::handler
 
-#if API_OPENGL
-#include <QOpenGLFunctions_3_1>
-#include <QOffscreenSurface>
-
-#if DEBUG_MODE
-#define GL_CHECK_ERROR() GFX->CheckGLError(__FUNCTION__, __LINE__)
-#else
-#define GL_CHECK_ERROR() false
-#endif
-#else
+// D3D11 headers
+#if OS_WINDOWS
 #include <windows.h>
 #include <d3d11.h>
-#if DEBUG_MODE
+#if !RELEASE_MODE
 #include <d3dcompiler.h>
 #endif
 #undef max
@@ -31,16 +23,22 @@
 #define D3DCheckError(hResult) GFX->CheckD3DError(hResult, __FUNCTION__, __LINE__)
 #endif
 
+// GL headers
+#include <QOpenGLFunctions_3_1>
+#include <QOffscreenSurface>
+#if DEBUG_MODE
+#define GL_CHECK_ERROR() GFX->CheckGLError(__FUNCTION__, __LINE__)
+#else
+#define GL_CHECK_ERROR() false
+#endif
+
 namespace CppProject
 {
 	struct Shader;
 	struct Surface;
 	struct FrameBuffer;
 
-	struct GraphicsApiHandler
-	#if API_OPENGL
-		: QOpenGLFunctions_3_1
-	#endif
+	struct GraphicsApiHandler : QOpenGLFunctions_3_1
 	{
 		// Runs before QApp creation.
 		GraphicsApiHandler();
@@ -48,7 +46,7 @@ namespace CppProject
 		// Initialize graphics API and load application resources, runs after QApp creation.
 		void Init();
 
-		// Sets a world/view/projection matrix
+		// Sets a world/view/projection matrix.
 		void SetMatrix(IntType type, Matrix matrix);
 
 		// Update frustum points from view * projection matrix.
@@ -63,13 +61,13 @@ namespace CppProject
 		// Returns the maximum width/height of an image or framebuffer.
 		IntType GetMaxSize();
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		// Returns whether a Direct3D error has occurred.
 		BoolType CheckD3DError(HRESULT result, QString func, IntType line);
-	#else
+	#endif
+
 		// Returns whether an OpenGL error has occurred.
 		BoolType CheckGLError(QString func, IntType line);
-	#endif
 
 		// Starts rendering off-screen, returns whether successful.
 		BoolType StartOffScreenRender();
@@ -80,8 +78,14 @@ namespace CppProject
 		// Stops using a clipping rectangle.
 		void ClipEnd();
 
-		// Sets a framebuffer as render target at an index.
-		void SetMRTIndex(IntType index, FrameBuffer* frameBuffer);
+		// Temporarily disables clipping while preserving the full nested clip state.
+		void ClipSuspend();
+
+		// Restores the most recently suspended nested clip state.
+		void ClipResume();
+
+		// Sets a framebuffer as render target at an index, optionally clearing it.
+		void SetMRTIndex(IntType index, FrameBuffer* frameBuffer, QColor clearColor = QColor());
 
 		// Resets the bound MRTs.
 		void ResetMRT();
@@ -104,13 +108,40 @@ namespace CppProject
 		// Sets whether depth writing is enabled.
 		void SetDepthWrite(BoolType enabled);
 
+		// Apply a Direct3D depth stencil state based on the current depth settings.
+		void ApplyDepthState();
+
+		// Sets the depth comparison function.
+		void SetDepthFunc(IntType func);
+
+		// Sets which color channels can be written.
+		void SetColorWrite(BoolType red, BoolType green, BoolType blue, BoolType alpha);
+
+		// Sets whether color blending is enabled.
+		void SetBlending(BoolType enabled);
+
 		// Sets the blending functions.
 		void SetBlendingFuncs(IntType src, IntType dest, IntType alphasrc, IntType alphadest);
+
+		// Apply a Direct3D blend state based on the current blending settings.
+		void ApplyBlendState();
+
+		// Sets independent alpha blending for the mask and optional fog overwrite target.
+		void SetMaskBlending(BoolType enabled, BoolType fog = false);
+
+		// Alpha-blends sunlight and overwrites G-buffer data, including the combined color layout.
+		void SetSunBlending(IntType index);
+
+		// Applies sunlight blending and combined scene data overrides in OpenGL.
+		void ApplySunBlendState();
 
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
 
-		// Converts an integer to a QColor
+		// Set the highest sampled mipmap level.
+		void SetMaxMip(IntType value);
+
+		// Converts an integer to a QColor.
 		static QColor IntToQColor(IntType in, RealType alpha = 1.0);
 
 		// Convers a QColor to an integer.
@@ -121,6 +152,14 @@ namespace CppProject
 		Surface* surface = nullptr;
 		BoolType clipEnabled = false;
 		QRect clipRect;
+		QVector<QRect> clipStack;
+		struct ClipState
+		{
+			BoolType enabled;
+			QRect rect;
+			QVector<QRect> stack;
+		};
+		QVector<ClipState> clipSuspendStack;
 
 		// Matrix
 		Matrix matrixM, matrixV, matrixP, matrixVP;
@@ -128,30 +167,42 @@ namespace CppProject
 		VecType frustum[6];
 		BoolType frustumUpdate = true;
 
+		// Multi-view rendering
+		BoolType pointMultiview = false;
+		Bounds pointBounds;
+		float pointParameters[12] = {};
+
 		// Current GPU settings
 		BoolType depthMask = false;
 		BoolType depthTest = false;
+		IntType depthFunc = 4; // cmpfunc_lessequal
 		BoolType culling = false;
 		BoolType cullFront = false;
 		BoolType blend = false;
-		IntType blendSrcFactor = 0;
-		IntType blendDstFactor = 0;
-		IntType blendAlphaSrcFactor = 0;
-		IntType blendAlphaDstFactor = 0;
+		IntType colorWriteMask = 15;
+		IntType blendSrcFactor = 5; // bm_src_alpha
+		IntType blendDstFactor = 6; // bm_inv_src_alpha
+		IntType blendAlphaSrcFactor = 5;
+		IntType blendAlphaDstFactor = 6;
+		BoolType maskBlend = false, fogBlend = false;
+		IntType sunBlendIndex = -1;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
+		IntType maxMip = 1000;
 		BoolType mipMap = true;
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		ID3D11Device* d3dDevice = nullptr;
 		ID3D11DeviceContext* d3dContext = nullptr;
-		QHash<D3D11_FILTER, ID3D11SamplerState*> d3dSamplerStateMap;
+		QHash<QPair<IntType, IntType>, ID3D11SamplerState*> d3dSamplerStateMap;
 		QHash<D3D11_CULL_MODE, ID3D11RasterizerState*> d3dRasterizerStateMap;
 		enum DepthStencilState
 		{
 			DEPTH_TEST_WRITE,
 			DEPTH_TEST_NO_WRITE,
+			DEPTH_TEST_EQUAL_WRITE,
+			DEPTH_TEST_EQUAL_NO_WRITE,
 			DEPTH_NO_TEST_NO_WRITE,
 			STENCIL_WRITE,
 			STENCIL_TEST
@@ -160,7 +211,9 @@ namespace CppProject
 
 		struct BlendState
 		{
-			IntType src, dst, srcAlpha, dstAlpha;
+			IntType src, dst, srcAlpha, dstAlpha, writeMask;
+			IntType sunIndex;
+			BoolType enabled, maskBlend, fogBlend;
 			ID3D11BlendState* state = nullptr;
 		};
 		QVector<BlendState> d3dBlendStates;
@@ -172,16 +225,18 @@ namespace CppProject
 		IDXGIFactory* dxgiFactory = nullptr;
 		QVector<ID3D11RenderTargetView*> d3dMrtRTVs;
 		ID3D11DepthStencilView* d3dMrtDSV = nullptr;
-	#else
+	#endif
+
 		QOpenGLContext* glContext = nullptr;
 		QOffscreenSurface* glOffScreenSurface = nullptr;
+		GLuint glHeadlessVboId = 0;
 		GLuint glCurrentVboId = 0;
 		QString glVersion = "";
 		QHash<IntType, IntType> glBlendMap;
 		IntType glMrtCount = 0;
 		static bool glEnableLogger;
-	#endif
 
 		static GraphicsApiHandler* handler;
+
 	};
 }

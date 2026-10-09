@@ -1,34 +1,39 @@
-/// surface_require(surface, width, height, [depth, [hdr]])
 /// @arg surface
 /// @arg width
 /// @arg height
-/// @arg [depth
-/// @arg [hdr]]
+/// @arg [depth]
+/// @arg [format]
+/// @arg [depthonly]
 
-function surface_require(surf, w, h, depth = true, hdr = false)
+function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm, depthonly = false)
 {
 	var starttime;
 	w = max(1, w)
 	h = max(1, h)
 	
-	starttime = current_time
+	// surface_rgba32float support not guaranteed in GM
+	if (format = surface_rgba32float)
+		format = is_cpp() ? surface_rgba32float : surface_rgba16float
+	
+	starttime = get_timer()
 	
 	// First usage
 	if (surf < 0)
-		surf = surface_create_ext2(w, h, depth, hdr)
+		surf = surface_create_ext2(w, h, format, depth, depthonly)
 	
 	// Corrupted/remake for depth
 	else if (!surface_exists(surf) || surface_get_width(surf) < 0) 
 	{
 		surface_free(surf)
-		surf = surface_create_ext2(w, h, depth, hdr)
+		surf = surface_create_ext2(w, h, format, depth, depthonly)
 	}
 	
 	// Wrong size
 	else if (surface_get_width(surf) != w || surface_get_height(surf) != h)
 		surface_resize(surf, w, h)
 	
-	render_surface_time += current_time - starttime
+	if (benchmark_mode)
+		benchmark_surface_total_time += get_timer() - starttime
 	
 	return surf
 }

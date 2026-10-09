@@ -1,8 +1,4 @@
-/// json_save_var_color(name, value)
-/// @arg name
-/// @arg value
-
-function json_save_var_color(name, val)
+function json_save_var_color(name, value)
 {
 	if (json_add_comma)
 		buffer_write_byte(e_json_char.COMMA)
@@ -21,7 +17,7 @@ function json_save_var_color(name, val)
 	buffer_write_byte(e_json_char.SPACE)
 	
 	// Value
-	json_save_value("#" + color_to_hex(val))
+	json_save_value("#" + color_to_hex(value))
 	
 	json_add_comma = true
 }

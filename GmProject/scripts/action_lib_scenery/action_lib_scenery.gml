@@ -1,11 +1,9 @@
-/// action_lib_scenery(resource)
-/// @arg resource
 /// @desc Sets the scenery of the given library item.
+/// @arg resource
 
 function action_lib_scenery(res)
 {
-	var hobj;
-	hobj = null
+	var hobj = null;
 	
 	if (history_undo)
 		res = history_undo_res()
@@ -26,7 +24,7 @@ function action_lib_scenery(res)
 			if (!file_exists_lib(fn))
 				return 0
 			
-			res = new_res(fn, e_res_type.SCENERY)
+			res = new_res(fn, e_res_type.SCHEMATIC)
 			if (res.replaced)
 			{
 				res_edit = res
@@ -49,7 +47,7 @@ function action_lib_scenery(res)
 	tl_deselect_all()
 	
 	with (temp_edit)
-		temp_set_scenery(res, !app.history_undo, hobj)
+		temp_set_scenery(res, !history_undo, hobj)
 	
 	// Restore old timelines
 	if (history_undo)
@@ -61,6 +59,8 @@ function action_lib_scenery(res)
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+	
+	project_update_counts()
 	
 	lib_preview.update = true
 }

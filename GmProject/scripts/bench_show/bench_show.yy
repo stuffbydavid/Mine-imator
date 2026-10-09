@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"bench_show",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"bench_show",
+  "parent":{
+    "name":"Bench",
+    "path":"folders/Scripts/App/Interface/Bench.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

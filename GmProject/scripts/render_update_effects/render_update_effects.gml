@@ -1,5 +1,4 @@
-/// render_update_effects()
-/// @desc Updates rendering to determine if it's done with effects
+/// @desc Updates rendering to determine if it's done with effects.
 
 function render_update_effects()
 {

@@ -1,4 +1,3 @@
-/// block_set_colored_bars()
 /// @desc Runs the script for bars, but retains the color attribute of the block.
 
 function block_set_colored_bars()

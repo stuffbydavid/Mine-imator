@@ -1,116 +1,166 @@
-/// render_update_cascades(direction)
 /// @desc Updates sun cascades based on camera info.
+/// @arg direction
 
 function render_update_cascades(dir)
 {
-	// Get frustum for shadow cascades
-	var mV = matrix_create_lookat(cam_from, cam_to, cam_up);
-	var mP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev);
+	var mindis, pool, scenemin, scenemax, extent, far, distance, rangechanged;
+	mindis = 1000
+	pool = render_surface_pool_current
 	
-	cam_frustum.build(matrix_multiply(mV, mP))
-	cam_frustum.build_vbuffer()
+	if (render_scene_bounds = null)
+		render_scene_bounds = render_get_scene_bounds()
 	
-	var startz, endz, disz, sunmatV;
+	scenemin = render_scene_bounds[0]
+	scenemax = render_scene_bounds[1]
+	
+	// Bounds use XY, include the camera height above the ground plane
+	extent = vec3(
+		max(abs(scenemin[X] - cam_from[X]), abs(scenemax[X] - cam_from[X])),
+		max(abs(scenemin[Y] - cam_from[Y]), abs(scenemax[Y] - cam_from[Y])),
+		cam_from[Z]
+	)
+	
+	far = cam_far_prev
+	if (env_fog_show && env_fog_height > scenemax[Z])
+		far = min(env_fog_distance, far)
+	
+	distance = min(far, max(mindis, ceil(vec3_length(extent) * 1.1 / mindis) * mindis))
+	rangechanged = (
+		pool.sun_shadow_distance = 0 || distance > pool.sun_shadow_distance ||
+		pool.sun_shadow_camera != render_camera || pool.sun_shadow_far != far || array_length(pool.sun_shadow_bounds) != 2 ||
+		!vec3_equals(pool.sun_shadow_bounds[0], scenemin) || !vec3_equals(pool.sun_shadow_bounds[1], scenemax)
+	)
+	
+	if (rangechanged)
+	{
+		pool.sun_shadow_distance = distance
+		pool.sun_shadow_far = far
+		pool.sun_shadow_camera = render_camera
+		pool.sun_shadow_bounds = [ point3D_copy(scenemin), point3D_copy(scenemax) ]
+	}
+	
+	render_shadow_distance = pool.sun_shadow_distance
+	
+	// Cached depth maps must retain the matrices used to render them
+	var fitsettings, fitchanged;
+	fitsettings = [ cam_near, cam_fov, render_ratio, render_cascades_count, project_render_shadows_sun_buffer_size, dir[X], dir[Y], dir[Z] ]
+	fitchanged = (rangechanged || !array_equals(pool.sun_fit_settings, fitsettings))
+	
+	if (fitchanged)
+	{
+		for (var i = 0; i < 3; i++)
+			ds_map_delete(render_shadow_cache_ready, "sun" + string(i))
+		
+		pool.sun_fit_settings = fitsettings
+	}
+	
+	// Define cascades
+	var cascades, dis1, dis2;
+	dis1 = max(300, render_shadow_distance * 0.1)
+	dis2 = max(600, render_shadow_distance * 0.25)
+	switch (render_cascades_count)
+	{
+		case 1: cascades = [ 0, render_shadow_distance ]; break
+		case 2: cascades = [ 0, dis1, render_shadow_distance ]; break
+		case 3: cascades = [ 0, dis1, dis2, render_shadow_distance ]; break
+	}
+
+	var startz, endz, disz, sunmatv, sunup, sceneorigin, scenedepth, scenehalf;
 	startz = cam_near
-	endz = min(cam_far_prev, 7500)
+	endz = max(startz + 0.001, render_shadow_distance)
 	disz = endz - startz
-	sunmatV = matrix_create_lookat(vec3(dir[X], dir[Y], dir[Z]), vec3(0), vec3(0, 0, 1))
+	
+	// Anchor the light basis to the cached scene bounds
+	sceneorigin = point3D((scenemin[X] + scenemax[X]) * 0.5, (scenemin[Y] + scenemax[Y]) * 0.5, 0)
+	scenehalf = point3D((scenemax[X] - scenemin[X]) * 0.5, (scenemax[Y] - scenemin[Y]) * 0.5, 0)
+	sunup = abs(dir[Z]) < 0.999 ? vec3(0, 0, 1) : vec3(0, 1, 0)
+	sunmatv = matrix_create_lookat(sceneorigin, vec3_sub(sceneorigin, dir), sunup)
+	scenedepth = abs(sunmatv[@ 2]) * scenehalf[X] + abs(sunmatv[@ 6]) * scenehalf[Y]
+	
+	// Get camera projection and rotation-independent frustum dimensions
+	var mp, forward, slopesquared, radiuspadding, matbias, matdepth, d3d;
+	mp = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, cam_near, cam_far_prev)
+	forward = vec3_direction(cam_from, cam_to)
+	slopesquared = sqr(tan(degtorad(cam_fov) * 0.5)) * (1 + sqr(render_ratio))
+	radiuspadding = project_render_shadows_sun_buffer_size / max(1, project_render_shadows_sun_buffer_size - 2)
+	
+	// Convert -1->1 to 0->1 for shader sampling and native D3D depth
+	matbias = [ 0.5, 0, 0, 0,
+				0, 0.5, 0, 0,
+				0, 0, 0.5, 0,
+				0.5, 0.5, 0.5, 1 ]
+	matdepth = [ 1, 0, 0, 0,
+				 0, 1, 0, 0,
+				 0, 0, 0.5, 0,
+				 0, 0, 0.5, 1 ]
+	d3d = (is_cpp() && graphics_api_get() = "D3D")
 	
 	for (var i = 0; i < render_cascades_count; i++)
 	{
+		if (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, "sun" + string(i)))
+			continue
+		
 		// Calculate frustum splits of the camera
-		var cascade, zn, zf, submP;
+		var cascade, zn, zf;
 		cascade = render_cascades[i]
-		zn = (cam_near + (render_cascade_ends[i] * disz))
-		zf = (cam_near + (render_cascade_ends[i + 1] * disz))
-		submP = matrix_build_projection_perspective_fov(-cam_fov, -render_ratio, zn, zf);
-		cascade.build(matrix_multiply(mV, submP))
+		zn = startz + cascades[i]
+		zf = startz + cascades[i + 1]
 		
-		// Build debug vbuffer (Camera frustum split)
-		//cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
+		// Fit a sphere whose radius does not change with camera rotation
+		var centerdistance, radius, center;
+		centerdistance = min((zn + zf) * (1 + slopesquared) * 0.5, zf)
+		radius = sqrt(max(sqr(centerdistance - zn) + slopesquared * sqr(zn), sqr(zf - centerdistance) + slopesquared * sqr(zf)))
+		center = point3D_mul_matrix(vec3_add(cam_from, vec3_mul(forward, centerdistance)), sunmatv)
 		
-		// Get orthographic bounding box
-		var orthoMin, orthoMax;
-		orthoMin = [no_limit, no_limit, no_limit, no_limit]
-		orthoMax = [-no_limit, -no_limit, -no_limit, -no_limit]
+		// Leave one texel on each edge so alignment cannot clip receivers
+		radius *= radiuspadding
+		cascade.worldSize = radius * 2
 		
-		// Frustum is built in world-space, convert to light space
-		for (var j = 0; j < 8; j++)
+		// Align the center to a scene-anchored texel grid without rounding the range
+		var pixelsize, centerx, centery, depthpadding, orthomin, orthomax;
+		pixelsize = cascade.worldSize / project_render_shadows_sun_buffer_size
+		centerx = round(center[X] / pixelsize) * pixelsize
+		centery = round(center[Y] / pixelsize) * pixelsize
+		
+		// Keep depth scale fixed too, with conservative coverage for the XY-only bounds
+		depthpadding = max(1, pixelsize)
+		orthomin = [ centerx - radius, centery - radius, center[Z] - radius - scenedepth - disz - depthpadding, 1 ]
+		orthomax = [ centerx + radius, centery + radius, center[Z] + radius + scenedepth + depthpadding, 1 ]
+		
+		if (false) // Debug cascade bounds
 		{
-			var corner = vec4_mul_matrix(cascade.corners[j], sunmatV);
-			orthoMin = vec4_min(orthoMin, corner)
-			orthoMax = vec4_max(orthoMax, corner)
+			var lightpoints, lightatvinv;
+			lightpoints = [
+				point3D(orthomin[X], orthomax[Y], orthomax[Z]),
+				point3D(orthomin[X], orthomin[Y], orthomax[Z]),
+				point3D(orthomax[X], orthomin[Y], orthomax[Z]),
+				point3D(orthomax[X], orthomax[Y], orthomax[Z]),
+				point3D(orthomin[X], orthomax[Y], orthomin[Z]),
+				point3D(orthomin[X], orthomin[Y], orthomin[Z]),
+				point3D(orthomax[X], orthomin[Y], orthomin[Z]),
+				point3D(orthomax[X], orthomax[Y], orthomin[Z])
+			]
+			lightatvinv = matrix_inverse_ext(sunmatv)
+			
+			for (var j = 0; j < 8; j++)
+				cascade.corners[j] = point3D_mul_matrix(lightpoints[j], lightatvinv)
+			
+			cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
 		}
-		
-		// Extend Z
-		orthoMin[Z] = -30000
-		orthoMax[Z] += 100
-		
-		// Get longest diagonal to fix jittering
-		var diagonalXY = vec3_length(vec3_sub(cascade.corners[1], cascade.corners[3]));
-		diagonalXY = max(diagonalXY, vec3_length(vec3_sub(cascade.corners[1], cascade.corners[7])))
-		
-		// Force square width/height (jitter fix 1)
-		var w, h, dif;
-		w = orthoMax[X] - orthoMin[X]
-		h = orthoMax[Y] - orthoMin[Y]
-		
-		dif = diagonalXY - h
-		if (dif > 0)
-		{
-			orthoMax[Y] += dif / 2
-			orthoMin[Y] -= dif / 2
-		}
-		
-		dif = diagonalXY - w
-		if (dif > 0)
-		{
-			orthoMax[X] += dif / 2
-			orthoMin[X] -= dif / 2
-		}
-		
-		// Round pixel size (jitter fix 2)
-		var pixelsize = diagonalXY / project_render_shadows_sun_buffer_size;
-		orthoMax[X] = round(orthoMax[X] / pixelsize) * pixelsize
-		orthoMin[X] = round(orthoMin[X] / pixelsize) * pixelsize
-		orthoMax[Y] = round(orthoMax[Y] / pixelsize) * pixelsize
-		orthoMin[Y] = round(orthoMin[Y] / pixelsize) * pixelsize
-		
-		var lightMatVinv = matrix_inverse(sunmatV);
-		var lightPoints = [
-			[orthoMin[X], orthoMax[Y], orthoMax[Z]],
-			[orthoMin[X], orthoMin[Y], orthoMax[Z]],
-			[orthoMax[X], orthoMin[Y], orthoMax[Z]],
-			[orthoMax[X], orthoMax[Y], orthoMax[Z]],
-			[orthoMin[X], orthoMax[Y], orthoMin[Z]],
-			[orthoMin[X], orthoMin[Y], orthoMin[Z]],
-			[orthoMax[X], orthoMin[Y], orthoMin[Z]],
-			[orthoMax[X], orthoMax[Y], orthoMin[Z]]
-		];
-		
-		for (var j = 0; j < 8; j++)
-			cascade.corners[j] = vec3_mul_matrix(lightPoints[j], lightMatVinv)
-		
-		// Build debug vbuffer (Ortho box)
-		//cascade.build_vbuffer(i = 0 ? c_red : (i = 1 ? c_lime : c_blue))
 		
 		// Set projection for cascade
-		cascade.near = orthoMin[Z]
-		cascade.far = orthoMax[Z]
-		cascade.matView = sunmatV
-		cascade.matProj = matrix_create_ortho(orthoMin[X], orthoMax[X], orthoMax[Y], orthoMin[Y], -orthoMin[Z], -orthoMax[Z]);
+		cascade.near = orthomin[Z]
+		cascade.far = orthomax[Z]
+		cascade.matView = sunmatv
+		cascade.matProj = matrix_create_ortho(orthomin[X], orthomax[X], orthomax[Y], orthomin[Y], -orthomin[Z], -orthomax[Z])
 		
-		// Matrix for converting -1->1 to 0->1 in shader
-		var matBias = [ 0.5,     0,   0, 0,
-						  0,   0.5,   0, 0,
-						  0,     0, 0.5, 0,
-						  0.5, 0.5, 0.5, 1 ];
+		cascade.matBias = matrix_multiply(matrix_multiply(cascade.matView, cascade.matProj), matbias)
 		
-		cascade.matBias = matrix_multiply(matrix_multiply(cascade.matView, cascade.matProj), matBias)
+		// D3D clips native depth to 0->1, keep the full caster range
+		if (d3d)
+			cascade.matProj = matrix_multiply(cascade.matProj, matdepth)
 		
 		// Set clip end
-		var vView = [0.0, 0.0, zf, 1.0];
-		var vClip = vec4_mul_matrix(vView, mP);
-		cascade.clipEndDepth = vClip[Z];
+		cascade.clipEndDepth = zf * mp[@ 10] + mp[@ 14]
 	}
 }

@@ -1,8 +1,6 @@
-/// texture_create_missing([size])
-/// @arg [size]
 /// @desc Creates a checkerboard texture.
 
-function texture_create_missing(size = 16)
+function texture_create_missing(size = 16, render = true, usepage = true)
 {
 	var surf, newtex;
 	
@@ -13,7 +11,7 @@ function texture_create_missing(size = 16)
 	}
 	surface_reset_target()
 	
-	newtex = texture_surface(surf)
+	newtex = texture_surface(surf, render, usepage)
 	surface_free(surf)
 	
 	return newtex

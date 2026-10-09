@@ -1,4 +1,3 @@
-/// movie_start(filename, format)
 /// @arg filename
 /// @arg format
 

@@ -252,6 +252,43 @@ void GML::parseGMLScript(String file)
 			tokenLength = end - pos;
 			tokenValue = gml.substring(pos, tokenLength);
 		}
+		else if (currentChar == '$' ||
+			(currentChar == '0' && pos + 1 < gmlLength && (gml[pos + 1] == 'x' || gml[pos + 1] == 'X')))
+		{
+			int start = pos + (currentChar == '$' ? 1 : 2);
+			int end = start;
+			while (end < gmlLength)
+			{
+				char character = gml[end];
+				if (!((character >= '0' && character <= '9') ||
+					(character >= 'a' && character <= 'f') ||
+					(character >= 'A' && character <= 'F')))
+					break;
+				
+				end++;
+			}
+			
+			unsigned long long value = 0;
+			auto result = std::from_chars(gml.data() + start, gml.data() + end, value, 16);
+			bool invalidSuffix = end < gmlLength && (gml[end] == '_' ||
+				(gml[end] >= 'a' && gml[end] <= 'z') ||
+				(gml[end] >= 'A' && gml[end] <= 'Z'));
+			
+			if (result.ec != std::errc() || invalidSuffix)
+			{
+				Console::writeLine("FATAL ERROR in {0}:", file);
+				Console::writeLine("  Invalid hexadecimal literal at line {0}, {1}", line, pos - linePos);
+				std::exit(1);
+			}
+
+			// Normalize to decimal for numeric resolution and real-valued C++ output
+			tokenType = Token::Type::Number;
+			tokenLength = end - pos;
+			if (value <= (unsigned long long)std::numeric_limits<long long>::max())
+				tokenValue = std::to_string(value);
+			else
+				tokenValue = "-" + std::to_string(~value + 1);
+		}
 		else if (isDigit)
 		{
 			int end = pos + 1;

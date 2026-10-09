@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "project_load_markers",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Load",
-    "path": "folders/Scripts/Project/Load.yy",
+  "$GMScript":"v1",
+  "%Name":"project_load_markers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_load_markers",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Load.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

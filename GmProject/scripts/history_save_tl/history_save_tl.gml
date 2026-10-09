@@ -1,6 +1,5 @@
-/// history_save_tl(timeline)
-/// @arg timeline
 /// @desc Saves a timeline in memory.
+/// @arg timeline
 
 function history_save_tl(tl)
 {
@@ -17,7 +16,11 @@ function history_save_tl(tl)
 		
 		// Save values
 		for (var v = 0; v < e_value.amount; v++)
+		{
 			value_default[v] = tl_value_get_save_id(v, tl.value_default[v])
+			if (!animated)
+				value[v] = tl_value_get_save_id(v, tl.value[v])
+		}
 		
 		// Save keyframes
 		kf_amount = ds_list_size(tl.keyframe_list)
@@ -55,6 +58,7 @@ function history_save_tl(tl)
 		usage_tl_attractor_amount = 0
 		usage_tl_ik_target_amount = 0
 		usage_tl_ik_target_angle_amount = 0
+		
 		with (obj_timeline)
 		{
 			if (value[e_value.TEXTURE_OBJ] = tl)
@@ -94,6 +98,7 @@ function history_save_tl(tl)
 		usage_kf_ik_target_amount = 0
 		usage_kf_ik_target_angle_amount = 0
 		usage_kf_attractor_amount = 0
+		
 		with (obj_keyframe)
 		{
 			if (value[e_value.TEXTURE_OBJ] = tl)

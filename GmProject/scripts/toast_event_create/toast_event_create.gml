@@ -1,5 +1,3 @@
-/// toast_event_create()
-
 function toast_event_create()
 {
 	toast_y = app.window_height + 8
@@ -16,6 +14,7 @@ function toast_event_create()
 	remove_alpha = 1
 	
 	time_created = current_time
+	shake_time = null
 	dismiss_time = no_limit
 	iid = null
 }

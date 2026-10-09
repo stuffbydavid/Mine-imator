@@ -24,6 +24,7 @@ namespace CppProject
 		ds >> root;
 		if (root != TAG_COMPOUND)
 			throw "Unexpected root tag " + NumStr(root);
+		
 		ReadString();
 	}
 
@@ -31,18 +32,18 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case TAG_BYTE: return new NbtByte(*this);
-			case TAG_SHORT: return new NbtShort(*this);
-			case TAG_INT: return new NbtInt(*this);
-			case TAG_LONG: return new NbtLong(*this);
-			case TAG_FLOAT: return new NbtFloat(*this);
-			case TAG_DOUBLE: return new NbtDouble(*this);
-			case TAG_BYTE_ARRAY: return new NbtByteArray(*this);
-			case TAG_STRING: return new NbtString(*this);
-			case TAG_LIST: return new NbtList(*this);
-			case TAG_COMPOUND: return new NbtCompound(*this);
-			case TAG_INT_ARRAY: return new NbtIntArray(*this);
-			case TAG_LONG_ARRAY: return new NbtLongArray(*this);
+			case TAG_BYTE:			return new NbtByte(*this);
+			case TAG_SHORT:			return new NbtShort(*this);
+			case TAG_INT:			return new NbtInt(*this);
+			case TAG_LONG:			return new NbtLong(*this);
+			case TAG_FLOAT:			return new NbtFloat(*this);
+			case TAG_DOUBLE:		return new NbtDouble(*this);
+			case TAG_BYTE_ARRAY:	return new NbtByteArray(*this);
+			case TAG_STRING:		return new NbtString(*this);
+			case TAG_LIST:			return new NbtList(*this);
+			case TAG_COMPOUND:		return new NbtCompound(*this);
+			case TAG_INT_ARRAY:		return new NbtIntArray(*this);
+			case TAG_LONG_ARRAY:	return new NbtLongArray(*this);
 		}
 
 		throw "Unknown tag " + NumStr(type);
@@ -53,12 +54,12 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case TAG_BYTE: ds.skipRawData(1); break;
-			case TAG_SHORT: ds.skipRawData(2); break;
-			case TAG_INT: ds.skipRawData(4); break;
-			case TAG_LONG: ds.skipRawData(8); break;
-			case TAG_FLOAT: ds.skipRawData(4); break;
-			case TAG_DOUBLE: ds.skipRawData(8); break;
+			case TAG_BYTE:		ds.skipRawData(1); break;
+			case TAG_SHORT:		ds.skipRawData(2); break;
+			case TAG_INT:		ds.skipRawData(4); break;
+			case TAG_LONG:		ds.skipRawData(8); break;
+			case TAG_FLOAT:		ds.skipRawData(4); break;
+			case TAG_DOUBLE:	ds.skipRawData(8); break;
 			case TAG_BYTE_ARRAY:
 			{
 				int32_t size;
@@ -66,35 +67,43 @@ namespace CppProject
 				ds.skipRawData(size);
 				break;
 			}
+
 			case TAG_STRING:
 				SkipString();
 				break;
+			
 			case TAG_LIST:
 			{
 				int8_t listType;
 				int32_t size;
 				ds >> listType;
 				ds >> size;
+				
 				if (IntType listTypeSize = nbtTypeSize.value((NbtType)listType, 0))
 					ds.skipRawData(size * listTypeSize);
 				else
 					for (IntType i = 0; i < size; i++)
 						SkipTag((NbtType)listType);
+				
 				break;
 			}
+
 			case TAG_COMPOUND:
 			{
 				while (true)
 				{
 					int8_t type;
 					ds >> type;
+					
 					if (!type)
 						break;
+					
 					SkipString();
 					SkipTag((NbtType)type);
 				}
 				break;
 			}
+
 			case TAG_INT_ARRAY:
 			{
 				int32_t size;
@@ -102,6 +111,7 @@ namespace CppProject
 				ds.skipRawData(size * 4);
 				break;
 			}
+
 			case TAG_LONG_ARRAY:
 			{
 				int32_t size;
@@ -109,6 +119,7 @@ namespace CppProject
 				ds.skipRawData(size * 8);
 				break;
 			}
+
 			default:
 				throw "Unknown tag " + NumStr(type);
 		}
@@ -118,16 +129,12 @@ namespace CppProject
 	{
 		int16_t len;
 		ds >> len;
-		if (stringSkipMc && len > MINECRAFT_ID_LENGTH)
-		{
-			ds.skipRawData(MINECRAFT_ID_LENGTH);
-			len -= MINECRAFT_ID_LENGTH;
-		}
 
 		char* str = new char[len + 1];
 		ds.readRawData(str, len);
 		str[len] = '\0';
-		QString qStr(str);
+
+		QString qStr = QString::fromUtf8(str, len);
 		delete[] str;
 
 		return qStr;
@@ -143,6 +150,7 @@ namespace CppProject
 	NbtByte::NbtByte(NbtStream& stream) : NbtTag(TAG_BYTE)
 	{
 		stream.ds >> value;
+
 		if (stream.debug)
 			DEBUG(NumStr(value));
 	}
@@ -150,6 +158,7 @@ namespace CppProject
 	NbtShort::NbtShort(NbtStream& stream) : NbtTag(TAG_SHORT)
 	{
 		stream.ds >> value;
+
 		if (stream.debug)
 			DEBUG(NumStr(value));
 	}
@@ -157,6 +166,7 @@ namespace CppProject
 	NbtInt::NbtInt(NbtStream& stream) : NbtTag(TAG_INT)
 	{
 		stream.ds >> value;
+
 		if (stream.debug)
 			DEBUG(NumStr(value));
 	}
@@ -166,6 +176,7 @@ namespace CppProject
 		qint64 val;
 		stream.ds >> val;
 		value = val;
+
 		if (stream.debug)
 			DEBUG(NumStr(value));
 	}
@@ -174,7 +185,9 @@ namespace CppProject
 	{
 		qint32 floatBytes;
 		stream.ds >> floatBytes;
+
 		value = CAST_BITS(float, floatBytes);
+
 		if (stream.debug)
 			DEBUG(NumStr(value));
 	}
@@ -183,7 +196,9 @@ namespace CppProject
 	{
 		qint64 dbBytes;
 		stream.ds >> dbBytes;
+
 		value = CAST_BITS(double, dbBytes);
+
 		if (stream.debug)
 			DEBUG(NumStr(value));
 	}
@@ -192,8 +207,10 @@ namespace CppProject
 	{
 		int32_t size;
 		stream.ds >> size;
+
 		value.Alloc(size);
 		stream.ds.readRawData((char*)value.data, size);
+
 		if (stream.debug)
 			DEBUG(NumStr(size) + " bytes");
 	}
@@ -201,6 +218,7 @@ namespace CppProject
 	NbtString::NbtString(NbtStream& stream) : NbtTag(TAG_STRING)
 	{
 		value = stream.ReadString();
+
 		if (stream.debug)
 			DEBUG(value);
 	}
@@ -211,7 +229,9 @@ namespace CppProject
 		int32_t size;
 		stream.ds >> listType;
 		stream.ds >> size;
+
 		this->listType = (NbtType)listType;
+
 		value.Alloc(size);
 		for (int32_t i = 0; i < size; i++)
 			value[i] = stream.ReadTag((NbtType)listType);
@@ -222,6 +242,7 @@ namespace CppProject
 		for (IntType i = 0; i < value.Size(); i++)
 			if (value[i])
 				delete value[i];
+		
 		value.FreeData();
 	}
 
@@ -234,18 +255,15 @@ namespace CppProject
 			if (!type)
 				break;
 
-			BoolType resetSkipMcId = false, resetFilter = false;
+			BoolType resetFilter = false;
 			StringType name = stream.ReadString();
 			if (!name.IsEmpty())
 			{
-				if (name == "palette" && type == TAG_LIST) // Skip minecraft: in biome ids and disable filter
-					stream.stringSkipMc = true, stream.filterEnabled = false, resetSkipMcId = true, resetFilter = true;
+				if (name == "palette" && type == TAG_LIST) // Disable filter
+					stream.filterEnabled = false, resetFilter = true;
 
 				else if (name == "palette" || name == "Palette" || name == "block_entities" || name == "TileEntities") // Disable filter for block palette/entities
 					stream.filterEnabled = false, resetFilter = true;
-
-				else if (name == "Name") // Skip minecraft: in block ids
-					stream.stringSkipMc = true, resetSkipMcId = true;
 
 				else if (stream.filterEnabled && !stream.filter.isEmpty()) // Check name with filter
 				{
@@ -264,12 +282,17 @@ namespace CppProject
 			}
 
 			value[name] = stream.ReadTag((NbtType)type);
+			if (name == "Name" && type == TAG_STRING) // Remove "minecraft:" from "Name" string values
+			{
+				NbtString* str = (NbtString*)value[name];
+
+				if (str->value.StartsWith("minecraft:"))
+					str->value = str->value.Mid(MINECRAFT_ID_LENGTH);
+			}
 
 			if (stream.debug)
 				Printer::indent--;
 
-			if (resetSkipMcId)
-				stream.stringSkipMc = false;
 			if (resetFilter)
 				stream.filterEnabled = true;
 		}
@@ -299,27 +322,33 @@ namespace CppProject
 
 			switch (tag->type)
 			{
-				case TAG_BYTE: val = (IntType)((NbtByte*)tag)->value; break;
-				case TAG_SHORT: val = (IntType)((NbtShort*)tag)->value; break;
-				case TAG_INT: val = (IntType)((NbtInt*)tag)->value; break;
-				case TAG_LONG: val = (IntType)((NbtLong*)tag)->value; break;
-				case TAG_FLOAT: val = (RealType)((NbtFloat*)tag)->value; break;
-				case TAG_DOUBLE: val = (RealType)((NbtDouble*)tag)->value; break;
+				case TAG_BYTE:		val = (IntType)((NbtByte*)tag)->value; break;
+				case TAG_SHORT:		val = (IntType)((NbtShort*)tag)->value; break;
+				case TAG_INT:		val = (IntType)((NbtInt*)tag)->value; break;
+				case TAG_LONG:		val = (IntType)((NbtLong*)tag)->value; break;
+				case TAG_FLOAT:		val = (RealType)((NbtFloat*)tag)->value; break;
+				case TAG_DOUBLE:	val = (RealType)((NbtDouble*)tag)->value; break;
 				case TAG_BYTE_ARRAY:
 				{
 					val = ArrType();
 					const Heap<int8_t>& data = ((NbtByteArray*)tag)->value;
+
 					val.Arr().vec.Alloc(data.Size());
+					
 					for (IntType i = 0; i < data.Size(); i++)
 						val.Arr().Append((IntType)data.Value(i));
+					
 					break;
 				}
-				case TAG_STRING: val = ((NbtString*)tag)->value; break;
+
+				case TAG_STRING:	val = ((NbtString*)tag)->value; break;
 				case TAG_LIST:
 				{
 					CppProject::List* list = new CppProject::List;
 					const Heap<NbtTag*>& data = ((NbtList*)tag)->value;
+
 					list->vec.resize(data.Size());
+					
 					for (IntType i = 0; i < data.Size(); i++)
 					{
 						auto var = toVarType(data.Value(i));
@@ -329,30 +358,40 @@ namespace CppProject
 
 					val = list->id;
 					dsType = ds_type_list;
+					
 					break;
 				}
+
 				case TAG_COMPOUND:
 				{
 					val = (((NbtCompound*)tag)->ToMap())->id;
 					dsType = ds_type_map;
 					break;
 				}
+
 				case TAG_INT_ARRAY:
 				{
 					val = ArrType();
 					const Heap<int32_t>& data = ((NbtIntArray*)tag)->value;
+
 					val.Arr().vec.Alloc(data.Size());
+					
 					for (IntType i = 0; i < data.Size(); i++)
 						val.Arr().Append((IntType)data.Value(i));
+					
 					break;
 				}
+
 				case TAG_LONG_ARRAY:
 				{
 					val = ArrType();
 					const Heap<int64_t>& data = ((NbtLongArray*)tag)->value;
+
 					val.Arr().vec.Alloc(data.Size());
+					
 					for (IntType i = 0; i < data.Size(); i++)
 						val.Arr().Append((IntType)data.Value(i));
+					
 					break;
 				}
 			}
@@ -376,9 +415,12 @@ namespace CppProject
 	{
 		int32_t size;
 		stream.ds >> size;
+
 		value.Alloc(size);
+		
 		for (int32_t i = 0; i < size; i++)
 			stream.ds >> value[i];
+		
 		if (stream.debug)
 			DEBUG(NumStr(size) + " ints");
 	}
@@ -387,13 +429,16 @@ namespace CppProject
 	{
 		int32_t size;
 		stream.ds >> size;
+
 		value.Alloc(size);
+
 		for (int32_t i = 0; i < size; i++)
 		{
 			qint64 val;
 			stream.ds >> val;
 			value[i] = val;
 		}
+
 		if (stream.debug)
 			DEBUG(NumStr(size) + " longs");
 	}

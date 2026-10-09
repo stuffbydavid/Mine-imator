@@ -1,8 +1,9 @@
-/// tl_update_model_shape()
 /// @desc Updates the meshes of the shapes in the timeline model.
 
 function tl_update_model_shape(clear = true)
 {
+	model_part_shape_render_matrix_part = null
+
 	// Clear old alpha arrays
 	if (model_shape_alpha_map != null)
 		ds_map_clear(model_shape_alpha_map)
@@ -33,16 +34,16 @@ function tl_update_model_shape(clear = true)
 	{
 		// Create maps for 3D planes
 		if (model_shape_alpha_map = null)
-			model_shape_alpha_map = ds_map_create()
+			model_shape_alpha_map = ds_int_map_create()
 	}
 	
 	// Create map for shape ID->mesh
 	if (model_shape_vbuffer_map = null)
-		model_shape_vbuffer_map = ds_map_create()
+		model_shape_vbuffer_map = ds_int_map_create()
 	
 	// Get resource
 	var res = null;
-	if (temp.object_index = obj_template)
+	if (temp.object_index = obj_template || !temp.has_temp)
 		with (temp)
 			res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 	

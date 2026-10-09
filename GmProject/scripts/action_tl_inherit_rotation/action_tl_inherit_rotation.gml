@@ -1,7 +1,4 @@
-/// action_tl_inherit_rotation(enable)
-/// @arg enable
-
-function action_tl_inherit_rotation(enable)
+function action_tl_inherit_rotation(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_rotation(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_rotation, enable)
+				history_save_var(other.id, other.inherit_rotation, enabled)
 			
-			inherit_rotation = enable
+			inherit_rotation = enabled
 			update_matrix = true
 		}
 	}

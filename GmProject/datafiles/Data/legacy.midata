@@ -477,7 +477,7 @@
 		"31": {
 			"data": {
 				"0": "id=minecraft:dead_bush",
-				"1": "id=minecraft:grass",
+				"1": "id=minecraft:short_grass",
 				"2": "id=minecraft:fern"
 			}
 		},
@@ -2970,7 +2970,7 @@
 		"block/lily_pad": "block/waterlily",
 		"block/sugar_cane": "block/reeds",
 		"block/cobweb": "block/web",
-		"block/grass": "block/tallgrass",
+		"block/short_grass": "block/tallgrass",
 		"block/dead_bush": "block/deadbush",
 		"block/brown_mushroom": "block/mushroom_brown",
 		"block/red_mushroom": "block/mushroom_red",
@@ -4204,30 +4204,24 @@
 	"legacy_model_names":
 	{
 		"fangs": "evoker_fangs",
-		"ender_crystal": "end_crystal",
 		"zombie_pigman": "piglin",
 		"enchantment_table": "book",
+		"ender_crystal": "end_crystal",
 		"dragon_head": "mob_head"
 	},
 	"legacy_model_states":
 	{
-		"villager": {
-			"variant": "profession"
-		},
-		"zombie_villager": {
-			"variant": "profession"
+		"vex": {
+			"charging": "variant"
 		},
 		"snow_golem": {
 			"variant": "pumpkin"
 		},
-		"vex": {
-			"charging": "variant"
+		"strider": {
+			"cold": "variant"
 		},
 		"wither": {
 			"invulnerable": "variant"
-		},
-		"strider": {
-			"cold": "variant"
 		},
 		"mob_head": {
 			"type": "character"
@@ -4235,29 +4229,140 @@
 	},
 	"legacy_model_state_values":
 	{
-		"villager": {
+		"human": {
 			"variant": {
-				"villager": "nitwit",
-				"smith": "toolsmith",
-				"priest": "cleric"
+				"alex": { "type": "slim" },
+				"steve": { "type": "wide" }
 			}
 		},
-		"zombie_villager": {
+		"skeleton": {
 			"variant": {
-				"villager": "nitwit",
-				"smith": "toolsmith",
-				"priest": "cleric"
+				"stray_skeleton": "stray"
+			}
+		},
+		"chicken": {
+			"variant": {
+				"temperate": "chicken_temperate",
+				"cold": "chicken_cold",
+				"warm": "chicken_warm"
+			}
+		},
+		"cow": {
+			"variant": {
+				"temperate": "cow_temperate",
+				"cold": "cow_cold",
+				"warm": "cow_warm",
+				"red_mooshroom": "mooshroom_red",
+				"brown_mooshroom": "mooshroom_brown"
+			}
+		},
+		"pig": {
+			"variant": {
+				"temperate": "pig_temperate",
+				"cold": "pig_cold",
+				"warm": "pig_warm"
+			}
+		},
+		"rabbit": {
+			"variant": {
+				"black": "rabbit_black",
+				"brown": "rabbit_brown",
+				"caerbannog": "rabbit_caerbannog",
+				"gold": "rabbit_gold",
+				"salt": "rabbit_salt",
+				"toast": "rabbit_toast",
+				"white": "rabbit_white",
+				"white_splotched": "rabbit_white_splotched"
+			}
+		},
+		"cat": {
+			"variant": {
+				"all_black": "cat_all_black",
+				"black": "cat_black",
+				"british_shorthair": "cat_british_shorthair",
+				"calico": "cat_calico",
+				"jellie": "cat_jellie",
+				"persian": "cat_persian",
+				"ragdoll": "cat_ragdoll",
+				"red": "cat_red",
+				"siamese": "cat_siamese",
+				"tabby": "cat_tabby",
+				"white": "cat_white"
+			}
+		},
+		"wolf": {
+			"variant": {
+				"normal": "wolf_pale",
+				"tame": "wolf_pale_tame",
+				"angry": "wolf_pale_angry",
+				"pale": "wolf_pale",
+				"pale_tame": "wolf_pale_tame",
+				"pale_angry": "wolf_pale_angry",
+				"woods": "wolf_woods",
+				"woods_tame": "wolf_woods_tame",
+				"woods_angry": "wolf_woods_angry",
+				"ashen": "wolf_ashen",
+				"ashen_tame": "wolf_ashen_tame",
+				"ashen_angry": "wolf_ashen_angry",
+				"black": "wolf_black",
+				"black_tame": "wolf_black_tame",
+				"black_angry": "wolf_black_angry",
+				"chestnut": "wolf_chestnut",
+				"chestnut_tame": "wolf_chestnut_tame",
+				"chestnut_angry": "wolf_chestnut_angry",
+				"rusty": "wolf_rusty",
+				"rusty_tame": "wolf_rusty_tame",
+				"rusty_angry": "wolf_rusty_angry",
+				"spotted": "wolf_spotted",
+				"spotted_tame": "wolf_spotted_tame",
+				"spotted_angry": "wolf_spotted_angry",
+				"striped": "wolf_striped",
+				"striped_tame": "wolf_striped_tame",
+				"striped_angry": "wolf_striped_angry",
+				"snowy": "wolf_snowy",
+				"snowy_tame": "wolf_snowy_tame",
+				"snowy_angry": "wolf_snowy_angry"
+			}
+		},
+		"parrot": {
+			"variant": {
+				"blue": "parrot_blue",
+				"green": "parrot_green",
+				"grey": "parrot_grey",
+				"red_blue": "parrot_red_blue",
+				"yellow_blue": "parrot_yellow_blue"
+			}
+		},
+		"horse": {
+			"variant": {
+				"black": "horse_black",
+				"brown": "horse_brown",
+				"chestnut": "horse_chestnut",
+				"creamy": "horse_creamy",
+				"darkbrown": "horse_darkbrown",
+				"gray": "horse_gray",
+				"white": "horse_white",
+				"skeleton": "skeleton_horse",
+				"zombie": "zombie_horse"
 			}
 		},
 		"llama": {
 			"variant": {
-				"normal": "creamy"
+				"normal": "llama_creamy",
+				"brown": "llama_brown",
+				"creamy": "llama_creamy",
+				"gray": "llama_gray",
+				"white": "llama_white"
 			}
 		},
-		"snow_golem": {
-			"pumpkin": {
-				"snow_golem": "true",
-				"snowman": "false"
+		"villager": {
+			"variant": {
+				"butcher": { "variant": "villager", "profession": "butcher" },
+				"farmer": { "variant": "villager", "profession": "farmer" },
+				"librarian": { "variant": "villager", "profession": "librarian" },
+				"priest": { "variant": "villager", "profession": "cleric" },
+				"smith": { "variant": "villager", "profession": "toolsmith" },
+				"villager": { "variant": "villager", "profession": "nitwit" }
 			}
 		},
 		"vex": {
@@ -4266,16 +4371,25 @@
 				"true": "charging"
 			}
 		},
-		"wither": {
+		"zombie_villager": {
 			"variant": {
-				"false": "normal",
-				"true": "invulnerable"
+				"butcher": { "variant": "villager", "profession": "butcher" },
+				"farmer": { "variant": "villager", "profession": "farmer" },
+				"librarian": { "variant": "villager", "profession": "librarian" },
+				"priest": { "variant": "villager", "profession": "cleric" },
+				"smith": { "variant": "villager", "profession": "toolsmith" },
+				"villager": { "variant": "villager", "profession": "nitwit" }
 			}
 		},
-		"strider": {
+		"snow_golem": {
+			"pumpkin": {
+				"snow_golem": "true",
+				"snowman": "false"
+			}
+		},
+		"happy_ghast": {
 			"variant": {
-				"false": "normal",
-				"true": "cold"
+				"normal": "happy_ghast"
 			}
 		},
 		"shulker": {
@@ -4283,14 +4397,32 @@
 				"none": "normal"
 			}
 		},
-		"panda": {
+		"fox": {
 			"variant": {
-				"none": "normal"
+				"fox": "fox_red",
+				"fox_sleeping": "fox_red_sleep",
+				"snow_fox": "fox_snow",
+				"snow_fox_sleeping": "fox_snow_sleep"
 			}
 		},
-		"shulker_box": {
+		"panda": {
 			"variant": {
-				"none": "normal"
+				"none": "panda",
+				"normal": "panda",
+				"lazy": "panda_lazy",
+				"playful": "panda_playful",
+				"weak": "panda_weak",
+				"worried": "panda_worried",
+				"aggressive": "panda_aggressive",
+				"brown": "panda_brown"
+			}
+		},
+		"bee": {
+			"variant": {
+				"normal": "bee",
+				"normal_nectar": "bee_nectar",
+				"angry": "bee_angry",
+				"angry_nectar": "bee_angry_nectar"
 			}
 		},
 		"piglin": {
@@ -4300,10 +4432,44 @@
 				"zombified": "zombified_piglin"
 			}
 		},
-		"human": {
+		"strider": {
 			"variant": {
-				"alex": { "type": "slim" },
-				"steve": { "type": "wide" }
+				"false": "strider",
+				"true": "strider_cold",
+				"normal": "strider",
+				"cold": "strider_cold"
+			}
+		},
+		"axolotl": {
+			"variant": {
+				"lucy": "axolotl_lucy",
+				"wild": "axolotl_wild",
+				"gold": "axolotl_gold",
+				"cyan": "axolotl_cyan",
+				"blue": "axolotl_blue"
+			}
+		},
+		"frog": {
+			"variant": {
+				"temperate": "frog_temperate",
+				"cold": "frog_cold",
+				"warm": "frog_warm"
+			}
+		},
+		"camel": {
+			"variant": {
+				"normal": "camel"
+			}
+		},
+		"wither": {
+			"variant": {
+				"false": "normal",
+				"true": "invulnerable"
+			}
+		},
+		"shulker_box": {
+			"variant": {
+				"none": "normal"
 			}
 		}
 	},
@@ -4312,7 +4478,19 @@
 		"cobblestone_wall": "wall",
 		"grass_path": "dirt_path",
 		"target_block": "target",
-		"jigsaw_block": "jigsaw"
+		"jigsaw_block": "jigsaw",
+		"iron_bars": "bars"
+	},
+	"legacy_block_states":
+	{
+	},
+	"legacy_block_state_values":
+	{
+		"grass": {
+			"type": {
+				"grass": "short_grass"
+			}
+		}
 	},
 	"legacy_particles":
 	{

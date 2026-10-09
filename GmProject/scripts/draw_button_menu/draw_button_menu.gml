@@ -1,4 +1,3 @@
-/// draw_button_menu(name, type, x, y, width, height, value, text, script|menuscript, [disabled, [texture, [icon, [caption, [texcolor, texalpha, [capwid]]]]]])
 /// @arg name
 /// @arg type
 /// @arg x
@@ -7,92 +6,50 @@
 /// @arg height
 /// @arg value
 /// @arg text
-/// @arg script|drawscript
-/// @arg [disabled
-/// @arg [texture
-/// @arg [icon
-/// @arg [caption
-/// @arg [texcolor
-/// @arg texalpha
-/// @arg [capwid]]]]]
+/// @arg script
+/// @arg [disabled]
+/// @arg [texture]
+/// @arg [icon]
+/// @arg [caption]
+/// @arg [texcolor]
+/// @arg [texalpha]
+/// @arg [captionwid]
+/// @arg [tip]
 
-function draw_button_menu()
+function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, disabled = false, tex = null, icon = null, caption = "", texcolor = null, texalpha = null, capwid = null, tip = "")
 {
-	var name, type, xx, yy, wid, hei, value, text, script, tex, disabled, icon, caption, texcolor, texalpha, capwid;
-	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch;
-	name = argument[0]
-	type = argument[1]
-	xx = argument[2] 
-	yy = argument[3]
-	wid = argument[4]
-	hei = argument[5]
-	value = argument[6]
-	text = argument[7]
-	script = argument[8]
-	
-	if (argument_count > 9)
-		disabled = argument[9]
-	else
-		disabled = false
-	
-	if (argument_count > 10)
-		tex = argument[10]
-	else
-		tex = null
-	
-	if (argument_count > 11)
-		icon = argument[11]
-	else
-		icon = null
-	
-	if (argument_count > 12)
-		caption = argument[12]
-	else
-		caption = ""
-	
-	if (argument_count > 13)
-	{
-		texcolor = argument[13]
-		texalpha = argument[14]
-		
-		if (texcolor = null)
-			texcolor = c_white
-		
-		if (texalpha = null)
-			texalpha = 1
-	}
-	else
-	{
+	if (texcolor = null)
 		texcolor = c_white
-		texalpha = 1
-	}
 	
-	if (argument_count > 15)
-		capwid = argument[15]
-	else
-		capwid = null
+	if (texalpha = null)
+		texalpha = 1
+		
+	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch;
 	
 	// Caption
 	if (menu_model_current != null)
 	{
-		cap = minecraft_asset_get_name("modelstate", name)
-		name = "modelstate" + name
+		cap = minecraft_asset_get_name("model/state", name)
+		name = "model/state/" + name
 	}
 	else if (menu_block_current != null)
 	{
-		cap = minecraft_asset_get_name("blockstate", name)
-		name = "blockstate" + name
+		cap = minecraft_asset_get_name("block/state", name)
+		name = "block/state/" + name
 	}
 	else
 		cap = text_get(name)
 	
 	if (menu_bench)
 		nameid = "bench" + name
-	else if (content_tab = null && popup != null)
-		nameid = popup.name + name
+	else if (content_tab = null && popup_current != null)
+		nameid = popup_current.name + name
 	else
 		nameid = name
 	
+	if (camera_effect_type_edit != null)
+		nameid += "fx" + string(camera_effect_type_edit)
+
 	// Check if menu is currently active
 	menuactive = false
 	menuhide = false
@@ -131,7 +88,10 @@ function draw_button_menu()
 		
 		if (capwid = null && (!window_compact || app.panel_compact))
 		{
-			draw_label(string_limit(cap, dw), xx, yy - 3, fa_left, fa_top, textcolor, textalpha)
+			cap = string_limit(cap, dw)
+			draw_label(cap, xx, yy - 3, fa_left, fa_top, textcolor, textalpha)
+			if (tip != "")
+				draw_help_circle(tip, xx + string_width(cap) + 4, yy - 5, disabled)
 			yy += (label_height + 8)
 		}
 		else
@@ -143,6 +103,8 @@ function draw_button_menu()
 			}
 			
 			draw_label(cap, xx, yy + hei/2, fa_left, fa_middle, textcolor, textalpha)
+			if (tip != "")
+				draw_help_circle(tip, xx + string_width(cap) + 4, yy + (hei/2) - 10, disabled)
 			wid -= capwid
 			xx += capwid
 		}
@@ -172,19 +134,21 @@ function draw_button_menu()
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.PRESS])
 	borderalpha = lerp(borderalpha, a_accent, microani_arr[e_microani.ACTIVE])
 	
-	draw_box(xx, yy, wid, hei, false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, hei, false, c_input_background, draw_get_alpha())
 	draw_outline(xx, yy, wid, hei, 1, bordercolor, borderalpha * fadealpha, true)
 	
 	draw_box_hover(xx, yy, wid, hei, microani_arr[e_microani.PRESS])
 	
 	// Mouse
 	mouseon = (app_mouse_box(xx, yy, wid, hei) && !disabled && content_mouseon) || (menuactive && app_mouse_box(xx, yy, wid, hei, "menu"))
+	if (mouseon)
+		menu_button_mouseon = true
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
 	if (showsearch && menu_search_tbx.text != "")
-		text = "";
+		text = ""
 	
 	// Item
 	var item = list_item_add(text, null, caption, tex, icon, -1, null, false, false);
@@ -205,7 +169,7 @@ function draw_button_menu()
 	if (current_microani.goal_ease != 0.5)
 		clip_begin(xx, yy, wid, hei)
 	
-	list_item_draw(item, xx, yy + ((current_microani.goal_ease * 2) - 1) * 12, wid, hei, false, null, null, false)
+	list_item_draw(item, xx, yy + floor(((current_microani.goal_ease * 2) - 1) * 12), wid, hei, false, null, null, false)
 	instance_destroy(item)
 	
 	if (current_microani.goal_ease != 0.5)
@@ -214,8 +178,9 @@ function draw_button_menu()
 	// Search tbx
 	if (showsearch)
 	{
-		var busyprev = window_busy;
-		var mouseonprev = content_mouseon;
+		var busyprev, mouseonprev;
+		busyprev = window_busy
+		mouseonprev = content_mouseon
 		
 		if (window_busy = "menu")
 		{
@@ -229,10 +194,9 @@ function draw_button_menu()
 			app_mouse_clear()
 		}
 		
-		var m = menuid;
-		
 		if (textbox_draw(menu_search_tbx, xx + 8 + (28 * bool_to_float(tex != null)), yy + (hei/2) - 8, wid - 32, hei, true))
 		{
+			var m = menuid;
 			menu_current = m
 			menu_expose = (menu_search_tbx.text != "")
 			menu_search = menu_search_tbx.text
@@ -275,7 +239,7 @@ function draw_button_menu()
 	// Disabled overlay
 	draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * microani_arr[e_microani.DISABLED])
 	
-	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip))
+	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip), 0.5)
 	
 	// Ctrl + Scroll
 	if (!menuactive && mouseon && keyboard_check(vk_control) && mouse_wheel != 0)
@@ -290,7 +254,9 @@ function draw_button_menu()
 		m.menu_ani = 0
 		m.menu_value = value
 		m.menu_name = nameid
-		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+		m.menu_include_tl_edit = (m.menu_name != "timeline_editor/parent" &&
+								  m.menu_name != "frame_editor/ik/target" &&
+								  m.menu_name != "frame_editor/ik/angle_target")
 		menu_current = m
 		menu_expose = true
 		
@@ -310,7 +276,7 @@ function draw_button_menu()
 		
 		// Find index of chosen value
 		var index = 0;
-		var item = null;
+		item = null
 		
 		list_value_filter(list)
 		
@@ -323,7 +289,7 @@ function draw_button_menu()
 			
 			if (it.value = value)
 			{
-				index = i;
+				index = i
 				break
 			}
 		}
@@ -334,6 +300,8 @@ function draw_button_menu()
 		
 		list_item_script = script
 		list_item_script_value = item.value
+		
+		list_item_camera_effect_edit_type = camera_effect_type_edit
 		
 		current_microani.holding.init(1)
 		current_microani.goal_ease = ((mouse_wheel) + 1) * .5
@@ -370,7 +338,7 @@ function draw_button_menu()
 			if (menu_list[|i].menu_name = nameid)
 			{
 				m = menu_list[|i]
-				break;
+				break
 			}
 		}
 		
@@ -400,7 +368,11 @@ function draw_button_menu()
 		m.menu_button_h = hei
 		m.menu_item_w = wid
 		m.menu_item_h = m.menu_button_h
-		m.menu_include_tl_edit = (m.menu_name != "timelineeditorparent")
+		m.menu_include_tl_edit = (m.menu_name != "timeline_editor/parent" &&
+								  m.menu_name != "frame_editor/ik/target" &&
+								  m.menu_name != "frame_editor/ik/angle_target")
+		m.menu_model_armor_variant = menu_model_armor_variant
+		m.menu_camera_effect_edit_type = camera_effect_type_edit
 		m.menu_margin = 0//8
 		m.menu_transition = null
 		m.menu_steps = 0
@@ -445,7 +417,7 @@ function draw_button_menu()
 		
 		current_microani = animation
 		
-		menu_popup = popup
+		menu_popup = popup_current
 		return true
 	}
 	

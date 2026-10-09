@@ -1,7 +1,6 @@
 /// CppSeparate void matrix_remove_scale(VarType)
-/// matrix_remove_scale(matrix)
-/// @arg matrix
 /// @desc Removes all scaling from the matrix.
+/// @arg matrix
 
 function matrix_remove_scale(mat)
 {

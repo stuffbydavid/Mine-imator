@@ -1,5 +1,4 @@
-/// render_high_cc(basesurf)
-/// @arg basesurf
+/// @arg basesurface
 
 function render_high_cc(prevsurf)
 {

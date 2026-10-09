@@ -1,6 +1,5 @@
-/// builder_set_model([ongeneration])
-/// @arg [ongeneration]
 /// @desc Sets the render model of the current block.
+
 function builder_set_model(ongeneration = false)
 {
 	block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
@@ -24,7 +23,8 @@ function builder_set_model(ongeneration = false)
 			build_edge_yn = (build_pos_y = 0)
 			build_edge_zp = (build_pos_z = build_size_z - 1)
 			build_edge_zn = (build_pos_z = 0)
-			ret = script_execute(block_current.set_script);
+			
+			ret = script_execute(block_current.set_script)
 			if (ret != 0)
 				model = ret
 		}
@@ -36,11 +36,11 @@ function builder_set_model(ongeneration = false)
 
 	// Has timeline
 	if (tlvalid && !block_current.model_double)
-		block_tl_map[?build_pos] = array(block_current, block_state_id_current)
+		block_tl_map[?build_pos] = [ block_current, block_state_id_current ]
 	else
 	{
 		if (tlvalid && block_current.model_double)
-			block_tl_map[?build_pos] = array(block_current, block_state_id_current)
+			block_tl_map[?build_pos] = [ block_current, block_state_id_current ]
 	
 		// Look for the render model of the current state
 		if (ret = 0 && block_current.state_id_model_obj != null)
@@ -56,7 +56,7 @@ function builder_set_model(ongeneration = false)
 				// Multipart
 				if (is_array(modelobj))
 				{
-					model = array()
+					model = []
 					for (var i = 0; i < array_length(modelobj); i++)
 						array_add(model, block_get_render_model(modelobj[i], brightness, offset, offsetxy))
 				}

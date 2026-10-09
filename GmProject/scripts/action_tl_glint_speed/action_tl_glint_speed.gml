@@ -1,8 +1,4 @@
-/// action_tl_glint_speed(value, add)
-/// @arg value
-/// @arg add
-
-function action_tl_glint_speed(val, add)
+function action_tl_glint_speed(value, add)
 {
 	if (history_undo)
 	{
@@ -25,6 +21,6 @@ function action_tl_glint_speed(val, add)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_glint_speed_tree(id, val, add, hobj)
+				action_tl_glint_speed_tree(id, value, add, hobj)
 	}
 }

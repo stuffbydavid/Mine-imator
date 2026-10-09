@@ -1,5 +1,3 @@
-/// json_save_indent()
-
 function json_save_indent()
 {
 	repeat (json_indent)

@@ -1,7 +1,7 @@
-/// temp_update_block()
 /// @desc Updates the block vbuffers of the given template.
-function temp_update_block() {
 
+function temp_update_block()
+{
 	block_vbuffer_start()
 
 	with (mc_builder)
@@ -23,6 +23,7 @@ function temp_update_block() {
 		}
 		
 		build_randomize = other.block_randomize
+		build_transform = true
 		
 		builder_start()
 		builder_spawn_threads(1)
@@ -56,5 +57,8 @@ function temp_update_block() {
 	}
 
 	block_vbuffer_done()
-
+	
+	with (obj_timeline)
+		if (temp = other.id)
+			tl_update_block_render()
 }

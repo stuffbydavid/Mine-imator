@@ -1,9 +1,6 @@
-/// render_set_culling(enable)
-/// @arg enable
-
-function render_set_culling(enable)
+function render_set_culling(enabled)
 {
-	var mode = (enable ? cull_counterclockwise : cull_noculling);
+	var mode = (enabled ? cull_counterclockwise : cull_noculling);
 	
 	if (mode = gpu_get_cullmode())
 		return 0

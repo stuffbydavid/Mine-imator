@@ -1,4 +1,3 @@
-/// action_tl_depth_tree(timeline, newvalue, add, historyobject)
 /// @arg timeline
 /// @arg newvalue
 /// @arg add
@@ -10,6 +9,7 @@ function action_tl_depth_tree(tl, nval, add, hobj)
 		history_save_var(tl, tl.depth, tl.depth * add + nval)
 	
 	tl.depth = tl.depth * add + nval
+	
 	with (tl)
 		tl_update_depth()
 	

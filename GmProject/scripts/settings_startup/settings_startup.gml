@@ -1,12 +1,10 @@
-/// settings_startup()
-
 function settings_startup()
 {
 	trial_startup()
 	
-	setting_advanced_mode = dev_mode_advanced
+	setting_advanced_mode = debug_advanced
 	
-	setting_minecraft_assets_version = minecraft_version
+	setting_minecraft_assets_version = minecraft_assets_version
 	setting_minecraft_assets_new_version = ""
 	setting_minecraft_assets_new_format = 0
 	setting_minecraft_assets_new_changes = ""
@@ -14,6 +12,7 @@ function settings_startup()
 	
 	setting_project_folder = projects_directory_get()
 	directory_create_lib(setting_project_folder)
+	setting_project_pack = ""
 	
 	closed_toast_list = ds_list_create()
 	
@@ -34,16 +33,22 @@ function settings_startup()
 	setting_watermark_scale = .33
 	setting_watermark_opacity = 1
 	
-	setting_theme = theme_light
+	setting_theme = theme_classic
+	if (debug_dark_theme)
+		setting_theme = theme_dark
+	
 	setting_accent = 3
-	setting_accent_custom = hex_to_color("03A9F4")
+	setting_accent_custom = hex_to_color("03A9F4") //4367A3
 	
 	setting_language_filename = language_file
 	
 	setting_timeline_autoscroll = true
+	setting_timeline_audio_scrub = true
 	setting_timeline_compact = false
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
+	setting_timeline_hide_structure_blocks = true
+	setting_timeline_hide_nonanimated = false
 	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
@@ -51,27 +56,34 @@ function settings_startup()
 	setting_show_shortcuts_bar = true
 	setting_gizmos_face_camera = true
 	setting_fade_gizmos = true
-	setting_camera_lock_mouse = (platform_get() != e_platform.MAC_OS)
+	setting_camera_lock_mouse = true
 	setting_place_new = true
 	setting_interface_scale_auto = true
 	setting_interface_scale = interface_scale_default_get()
 	setting_interface_compact = false
 	
-	setting_panel_left_bottom_size = 300
-	setting_panel_right_bottom_size = 300
-	setting_panel_bottom_size = 300
-	setting_panel_top_size = 205
-	setting_panel_left_top_size = 300
-	setting_panel_right_top_size = 300
+	setting_panel_left_bottom_size = panel_width
+	setting_panel_right_bottom_size = panel_width
+	setting_panel_bottom_size = panel_bottom_height
+	setting_panel_top_size = panel_top_height
+	setting_panel_left_top_size = panel_width
+	setting_panel_right_top_size = panel_width
+	setting_bench_width = bench_initial_width
+	setting_bench_height = bench_initial_height
 	
 	setting_properties_location = "right"
+	setting_renderer_settings_location = "right_secondary"
 	setting_ground_editor_location = "right_secondary"
-	setting_template_editor_location = "right_secondary"
+	setting_object_editor_location = "right_secondary"
+	setting_build_mode_location = "right_secondary"
 	setting_timeline_editor_location = "right"
 	setting_frame_editor_location = "right_secondary"
 	setting_settings_location = "right_secondary"
 	
 	setting_view_split = 0.5
+	
+	setting_quick_mode_shading = true
+	setting_quick_mode_aa = true
 	
 	setting_view_main_overlays = true
 	setting_view_main_aspect_ratio = false
@@ -80,6 +92,7 @@ function settings_startup()
 	setting_view_main_fog = true
 	setting_view_main_effects = true
 	setting_view_main_particles = true
+	setting_view_main_transparent_background = false
 	setting_view_main_location = "full"
 	
 	setting_view_second_show = false
@@ -90,32 +103,38 @@ function settings_startup()
 	setting_view_second_fog = true
 	setting_view_second_effects = true
 	setting_view_second_particles = true
+	setting_view_second_transparent_background = false
 	setting_view_second_location = "right_bottom"
 	setting_view_second_width = 440
 	setting_view_second_height = 280
 	
+	setting_overlay_view_controls = true
+	setting_overlay_view_shapes = true
+	setting_overlay_view_guides = false
+	
 	setting_modelbench_popup_hidden = false
 	
 	setting_move_speed = 1
+	setting_move_speed_scroll = 1
 	setting_look_sensitivity = 1
 	setting_fast_modifier = 3
 	setting_slow_modifier = 0.25
 	
 	setting_scenery_remove_edges = true
+	setting_scenery_replace_ground = true
 	
 	setting_export_movie_format = "mp4"
 	setting_export_movie_frame_rate = 30
 	setting_export_movie_framespersecond = 30
-	setting_export_movie_bit_rate = 2500000
+	setting_export_movie_renderer = trial_version ? e_renderer.STANDARD : e_renderer.REALISTIC
 	setting_export_movie_include_audio = true
 	setting_export_movie_remove_background = false
 	setting_export_movie_include_hidden = false
-	setting_export_movie_high_quality = true
 	setting_export_movie_watermark = trial_version
 	
 	setting_export_image_remove_background = false
 	setting_export_image_include_hidden = false
-	setting_export_image_high_quality = true
+	setting_export_image_renderer = trial_version ? e_renderer.STANDARD : e_renderer.REALISTIC
 	setting_export_image_watermark = trial_version
 	
 	project_render_pass = e_render_pass.COMBINED
@@ -131,7 +150,7 @@ function settings_startup()
 	setting_snap_absolute = true
 	setting_snap_size_position = 1
 	setting_snap_size_rotation = 15
-	setting_snap_size_scale = 1
+	setting_snap_size_scale = 0.25
 	
 	setting_tool_select = false
 	setting_tool_move = true

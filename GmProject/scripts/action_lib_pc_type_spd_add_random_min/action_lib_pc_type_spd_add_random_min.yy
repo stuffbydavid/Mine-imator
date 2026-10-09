@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_pc_type_spd_add_random_min",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Speed",
-    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Speed.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_pc_type_spd_add_random_min",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_pc_type_spd_add_random_min",
+  "parent":{
+    "name":"Speed",
+    "path":"folders/Scripts/App/Actions/Library/Particle editor/Types/Speed.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

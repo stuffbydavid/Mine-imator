@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_get_pack_texture",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_get_pack_texture",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

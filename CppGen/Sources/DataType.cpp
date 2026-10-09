@@ -436,7 +436,12 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 				(ass.rawTypeArray && inputAss.rawTypeArray)) // Both array
 			{
 				addNew = false;
-				if (inputRawType > ass.rawType) // Overwrite if larger
+				// A dynamic array cannot be narrowed to a fixed-size vector or matrix
+				if (ass.rawTypeArray && inputAss.rawTypeArray &&
+					(ass.rawType == Type::Array || inputRawType == Type::Array))
+					inputRawType = Type::Array;
+				if (inputRawType != ass.rawType &&
+					(inputRawType > ass.rawType || inputRawType == Type::Array))
 				{
 					ass.rawType = inputRawType;
 					ass.rawTypeReal = inputAss.rawTypeReal;

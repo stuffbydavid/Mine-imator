@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"thread_task_end",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"thread_task_end",
+  "parent":{
+    "name":"Thread",
+    "path":"folders/Scripts/Utility/Thread.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

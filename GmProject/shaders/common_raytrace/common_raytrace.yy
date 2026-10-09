@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"common_raytrace",
+  "name":"common_raytrace",
+  "parent":{
+    "name":"Common",
+    "path":"folders/Shaders/Common.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

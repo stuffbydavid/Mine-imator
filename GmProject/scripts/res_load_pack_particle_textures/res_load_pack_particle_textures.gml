@@ -1,9 +1,6 @@
-/// res_load_pack_particle_textures()
-
 function res_load_pack_particle_textures()
 {
 	var particlesize, explosionsize, particlelist, explosionlist, surf;
-	var tempwidth, tempheight; 
 	particlesize = null
 	explosionsize = null
 	particlelist = ds_list_create()
@@ -58,19 +55,17 @@ function res_load_pack_particle_textures()
 		fname = load_assets_dir + mc_textures_directory + name + ".png"
 		
 		if (file_exists_lib(fname))
-		{
 			tex = texture_create_square(fname)
-		}
 		else if (id != mc_res)
 			tex = texture_duplicate(mc_res.particle_texture_map[?name])
 		else
 		{
-			if (dev_mode)
+			if (debug_mode)
 				log("Particle texture not found", mc_assets.particle_texture_list[|t])
 			tex = texture_create_missing()
 		}
 		
-		if (legacy_particles_map[?name] != undefined)
+		if (!is_undefined(legacy_particles_map[?name]))
 		{
 			if (string_contains(name, "explosion"))
 			{
@@ -91,7 +86,7 @@ function res_load_pack_particle_textures()
 	particle_texture_atlas_map = ds_map_create()
 	for (var i = 0; i < ds_list_size(particle_template_list); i++)
 	{
-		var ptemp, drawx, psprite;
+		var ptemp, drawx, psprite, tempwidth, tempheight;
 		ptemp = particle_template_list[|i]
 		drawx = 0
 		psprite = 0
@@ -116,8 +111,8 @@ function res_load_pack_particle_textures()
 			for (var j = 0; j < ds_list_size(ptemp.texture_list); j++)
 			{
 				psprite = particle_texture_map[?ptemp.texture_list[|j]]
-				particle_texture_uvs_map[?ptemp.texture_list[|j]] = [(drawx / tempwidth), 0, (sprite_get_width(psprite) / tempwidth), (sprite_get_height(psprite) / tempheight)]
-				particle_texture_pixeluvs_map[?ptemp.texture_list[|j]] = [drawx, 0, sprite_get_width(psprite), sprite_get_height(psprite)]
+				particle_texture_uvs_map[?ptemp.texture_list[|j]] = [ (drawx / tempwidth), 0, (sprite_get_width(psprite) / tempwidth), (sprite_get_height(psprite) / tempheight) ]
+				particle_texture_pixeluvs_map[?ptemp.texture_list[|j]] = [ drawx, 0, sprite_get_width(psprite), sprite_get_height(psprite) ]
 				
 				draw_sprite(psprite, 0, drawx, 0)
 				drawx += sprite_get_width(psprite)
@@ -158,7 +153,7 @@ function res_load_pack_particle_textures()
 				var texname = mc_assets.particle_texture_list[|texindex];
 				var texcoord = legacy_particles_map[?texname];
 				
-				if (texcoord != undefined)
+				if (!is_undefined(texcoord))
 				{
 					var tex, wid, hei, scale;
 					tex = particle_texture_map[?texname]
@@ -181,7 +176,7 @@ function res_load_pack_particle_textures()
 		surf = null
 	}
 	
-	// Particle sheet 2(Explosion)
+	// Particle sheet 2 (Explosion)
 	if (particles_texture[1] = null)
 	{
 		draw_texture_start()
@@ -197,7 +192,7 @@ function res_load_pack_particle_textures()
 				var texname = mc_assets.particle_texture_list[|texindex];
 				var texcoord = legacy_particles_map[?texname];
 				
-				if (texcoord != undefined)
+				if (!is_undefined(texcoord))
 				{
 					var tex, wid, hei, scale;
 					tex = particle_texture_map[?texname]

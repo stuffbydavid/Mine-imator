@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_get_block_res",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_get_block_res",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Render/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

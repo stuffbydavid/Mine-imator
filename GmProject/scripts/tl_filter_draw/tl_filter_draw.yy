@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_filter_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/App/Interface/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_filter_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_filter_draw",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Interface/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

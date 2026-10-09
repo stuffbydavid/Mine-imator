@@ -1,4 +1,3 @@
-/// tl_value_is_string(valueid)
 /// @arg valueid
 
 function tl_value_is_string(vid)
@@ -7,5 +6,5 @@ function tl_value_is_string(vid)
 			vid = e_value.TEXT_HALIGN ||
 			vid = e_value.TEXT_VALIGN ||
 			vid = e_value.TRANSITION ||
-			vid = e_value.BG_BIOME)
+			vid = e_value.ENV_BIOME)
 }

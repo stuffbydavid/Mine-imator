@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_dimension",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_dimension",
+  "parent":{
+    "name":"Environment",
+    "path":"folders/Scripts/App/Actions/Environment.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_generate_progressive_disk_samples",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_generate_progressive_disk_samples",
+  "parent":{
+    "name":"Sampling",
+    "path":"folders/Scripts/Render/Sampling.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -14,6 +14,7 @@ namespace CppProject
 	{
 		if (!url.StartsWith("http"))
 			url = "file:///" + url;
+		
 		return QDesktopServices::openUrl((QString)url);
 	}
 
@@ -60,8 +61,8 @@ namespace CppProject
 			// Open destination file for writing
 			struct zip_file* zf = zip_fopen_index(za, i, 0);
 			QFile file(fileName);
-			AddPerms(file);
 
+			AddPerms(file);
 			if (!zf || !file.open(QFile::WriteOnly))
 			{
 				WARNING("Could not extract file " + QString(sb.name) + ": " + file.errorString());
@@ -80,16 +81,19 @@ namespace CppProject
 					readErr = true;
 					break;
 				}
+
 				if (file.write(buf, readNum) < 0)
 				{
 					WARNING("Could not extract file " + StringType(sb.name));
 					readErr = true;
 					break;
 				}
+
 				sum += readNum;
 			}
 
 			zip_fclose(zf);
+
 			if (!readErr)
 				files++;
 		}
@@ -98,6 +102,7 @@ namespace CppProject
 			return -1;
 		
 		DEBUG("Extracted " + NumStr(files) + "/" + NumStr(numFiles) + " files");
+
 		return files == numFiles;
 	}
 
@@ -140,6 +145,7 @@ namespace CppProject
 		BoolType ok = srcFile.rename(dst);
 		if (!ok)
 			WARNING("Could not rename file " + src.QStr() + ": " + srcFile.errorString());
+		
 		return ok;
 	}
 
@@ -161,6 +167,7 @@ namespace CppProject
 		BoolType ok = srcFile.copy(dst);
 		if (!ok)
 			WARNING("Could not copy file " + src.QStr() + ": " + srcFile.errorString());
+		
 		return ok;
 	}
 
@@ -174,6 +181,7 @@ namespace CppProject
 		BoolType ok = file.remove();
 		if (!ok)
 			WARNING("Could not delete file " + fn.QStr() + ": " + file.errorString());
+		
 		return ok;
 	}
 
@@ -187,6 +195,7 @@ namespace CppProject
 		BoolType ok = QDir().mkpath(dir);
 		if (!ok)
 			WARNING("Could not create directory " + dir);
+		
 		return ok;
 	}
 
@@ -195,6 +204,7 @@ namespace CppProject
 		BoolType ok = QDir(dir).removeRecursively();
 		if (!ok)
 			WARNING("Could not delete directory " + dir);
+		
 		return ok;
 	}
 

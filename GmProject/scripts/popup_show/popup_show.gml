@@ -1,21 +1,19 @@
-/// popup_show(popup)
-/// @arg popup
-
-function popup_show(argument0)
+function popup_show(popup)
 {
-	if (!popup)
+	if (!popup_current)
 	{
 		popup_ani = 0
 		popup_ani_type = "show"
 	}
 	
-	popup = argument0
+	popup_current = popup
 	
-	log("Show popup", popup.name)
+	log("Show popup", popup_current.name)
 	
-	if (popup.block)
-		window_busy = "popup" + popup.name
+	if (popup_current.block)
+		window_busy = "popup/" + popup_current.name
 	
+	view_changed()
 	action_tl_play_break()
 	context_menu_close()
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "clip_end",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Scissor",
-    "path": "folders/Scripts/Utility/Scissor.yy",
+  "$GMScript":"v1",
+  "%Name":"clip_end",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"clip_end",
+  "parent":{
+    "name":"Scissor",
+    "path":"folders/Scripts/Utility/Scissor.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

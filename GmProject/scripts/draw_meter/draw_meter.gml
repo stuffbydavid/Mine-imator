@@ -1,4 +1,3 @@
-/// draw_meter(name, x, y, width, value, min, max, default, snap, textbox, script, [tip])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -14,39 +13,37 @@
 
 function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx, script, tip = "")
 {
-	var hei, thumbhei, linex, linewid, trackx, trackwid, dragval, dragx, dragy, mouseon, slidermouseon, locked, inputfocus;
+	var hei, thumbhei, linex, linewid, trackx, trackwid, dragval, dragx, dragy, mouseon, slidermouseon, locked, inputfocus, compact;
 	thumbhei = 20
-	hei = (thumbhei + 24)
+	compact = (app.panel_compact || window_compact)
+	hei = compact ? ui_small_height : thumbhei + 32
 	locked = (minval = maxval)
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
-			ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
+			ds_list_add(textbox_list, [ tbx, content_tab, yy, content_y, content_height ])
 		
 		return 0
 	}
 	
 	mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
-	slidermouseon = app_mouse_box(xx, yy + 24, wid, thumbhei) && content_mouseon
+	slidermouseon = !compact && app_mouse_box(xx, yy + 24, wid, thumbhei + 8) && content_mouseon
 	
 	// Textbox
 	microani_set(name, script, false, false, false)
 	
-	var compact = (app.panel_compact || window_compact);
-	var draggerwid = (compact ? dragger_width : 80);
-	
-	draw_dragger(name + "input", (xx + wid - draggerwid) + (!compact * 6), yy, draggerwid, value, snapval * .1, minval, maxval, def, snapval, tbx, script, null, false)
+	draw_dragger(name + "/input", xx + wid - dragger_width, yy, dragger_width, value, snapval * .1, minval, maxval, def, snapval, tbx, script, null, false)
 	
 	inputfocus = microani_arr[e_microani.ACTIVE]
 	
 	// Idle
-	if (window_busy = name || (window_busy != name + "inputpress" && window_focus != string(tbx)))
+	if (window_busy = name || (window_busy != name + "/input/press" && window_focus != string(tbx)))
 		tbx.text = string_decimals(value)
 	
 	// Label
 	microani_set(name, script, (window_busy = name) || slidermouseon, slidermouseon && mouse_left, false, false, 1, false)
-	microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, locked, mouseon || (window_busy = name + "inputpress" || window_focus = string(tbx)))
+	microani_update(slidermouseon, slidermouseon && mouse_left, window_busy = name, locked, mouseon || (window_busy = name + "/input/press" || window_focus = string(tbx)))
 	
 	var labelcolor, labelalpha;
 	labelcolor = merge_color(c_text_secondary, c_text_main, microani_arr[e_microani.HOVER])
@@ -56,7 +53,7 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 	
 	draw_set_font(font_label)
 	
-	var labelshort = string_limit(text_get(name), dw - draggerwid);
+	var labelshort = string_limit(text_get(name), dw - dragger_width);
 	draw_label(labelshort, xx, yy + ui_small_height/2, fa_left, fa_middle, labelcolor, labelalpha)
 	
 	if (string_width(labelshort) < dw)
@@ -66,14 +63,14 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 		return 0
 	
 	// Slider
-	yy += 24
+	yy += 28
 	
 	linex = xx
 	linewid = wid
 	trackx = linex + 6
 	trackwid = linewid - 12
 	
-	context_menu_area(linex, yy, linewid, thumbhei, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
+	context_menu_area(linex, yy - 4, linewid, thumbhei + 8, "context_menu/value", value, e_context_type.NUMBER, script, def)
 	
 	// Click on slider
 	if (slidermouseon)

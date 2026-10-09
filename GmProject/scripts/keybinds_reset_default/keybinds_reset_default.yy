@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "keybinds_reset_default",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Keybinds",
-    "path": "folders/Scripts/App/Keybinds.yy",
+  "$GMScript":"v1",
+  "%Name":"keybinds_reset_default",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"keybinds_reset_default",
+  "parent":{
+    "name":"Keybinds",
+    "path":"folders/Scripts/App/Keybinds.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

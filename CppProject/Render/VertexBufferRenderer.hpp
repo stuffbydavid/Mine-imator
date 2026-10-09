@@ -42,6 +42,7 @@ namespace CppProject
 			Mesh<> mesh;
 			Bounds bounds;
 			bool isInCurrentFrame = false;
+			bool isInstanced = false;
 		};
 
 		Batch* currentBatch = nullptr;

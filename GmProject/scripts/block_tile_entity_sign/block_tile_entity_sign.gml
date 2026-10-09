@@ -1,41 +1,8 @@
-/// block_tile_entity_sign(map)
-/// @arg map
-
-function block_tile_entity_sign_text(map)
-{
-	var messagemap = value_get_array(map[?"messages"], "")
-	var text = "";
-	
-	for (var i = 0; i < 4; i++)
-	{
-		var line = "";
-		var textmap = json_decode(messagemap[i]);
-			
-		if (ds_map_valid(textmap))
-		{
-			if (is_string(textmap[?"text"]))
-				line = textmap[?"text"]
-				
-			ds_map_destroy(textmap)
-		}
-			
-		if (line = "")
-			line = " "
-			
-		if (i > 0)
-			text += "\n"
-		text += line
-	}
-	
-	return text;
-}
-
 function block_tile_entity_sign(map)
 {
-	var frontmap = map[?"front_text"];
-	var backmap = map[?"back_text"];
-	
-	var text, colorname, color, glowcolor, glowing;
+	var frontmap, backmap, text, colorname, color, glowcolor, glowing;
+	frontmap = map[?"front_text"]
+	backmap = map[?"back_text"]
 	
 	// 1.20+
 	if (ds_map_valid(frontmap))
@@ -77,7 +44,7 @@ function block_tile_entity_sign(map)
 				{
 					var extramap = ds_list_find_value(textmap[?"extra"], 0);
 					if (ds_map_valid(extramap) && is_string(extramap[?"text"]))
-						textmap = extramap;
+						textmap = extramap
 				}
 				
 				if (is_string(textmap[?"text"]))

@@ -1,0 +1,27 @@
+function project_save_render_specialeffects()
+{
+	json_save_object_start("specialeffects")
+	
+		json_save_var("ssao_radius", project_render_ssao_radius)
+		json_save_var("ssao_power", project_render_ssao_power)
+		json_save_var("ssao_blur_passes", project_render_ssao_blur_passes)
+		json_save_var_color("ssao_color", project_render_ssao_color)
+		json_save_var_bool("ssao_always_visible", project_render_ssao_always_visible)
+		json_save_var("shadows_blur_size", project_render_shadows_blur_size)
+		json_save_var("subsurface_backlight_spread", project_render_subsurface_backlight_spread)
+		json_save_var("subsurface_backlight_strength", project_render_subsurface_backlight_strength)
+		json_save_var_bool("subsurface_bright_backlight", project_render_subsurface_bright_backlight)
+		json_save_var("indirect_blur_radius", project_render_indirect_blur_radius)
+		json_save_var("indirect_strength", project_render_indirect_strength)
+		json_save_var("reflections_thickness", project_render_reflections_thickness)
+		json_save_var("reflections_fade_amount", project_render_reflections_fade_amount)
+		json_save_var("glow_radius", project_render_glow_radius)
+		json_save_var("glow_intensity", project_render_glow_intensity)
+		json_save_var("glint_speed", project_render_glint_speed)
+		json_save_var("glint_strength", project_render_glint_strength)
+		json_save_var("tonemapper", project_render_tonemapper)
+		json_save_var("exposure", project_render_exposure)
+		json_save_var("gamma", project_render_gamma)
+	
+	json_save_object_done()
+}

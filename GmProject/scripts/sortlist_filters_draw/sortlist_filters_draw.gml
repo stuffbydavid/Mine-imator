@@ -1,19 +1,14 @@
-/// sortlist_filters_draw()
-
 function sortlist_filters_draw()
 {
-	var typelist, scroll, itemname, capwid;
+	var typelist, textprefix, scroll;
 	typelist = null
+	textprefix = "type/"
 	scroll = 0
-	capwid = 0
+	content_capwid = 0
 	
-	// Filter "type" collumn
-	if (settings_menu_sortlist = app.properties.library.list)
-		typelist = temp_type_name_list
-	
-	if (settings_menu_sortlist = app.properties.resources.list)
-		typelist = res_type_name_list
-	
+	// Filter "type" column
+	typelist = settings_menu_sortlist.filter_type_list
+
 	if (typelist = null)
 		return 0
 	
@@ -24,30 +19,32 @@ function sortlist_filters_draw()
 	else
 		scroll = 0
 	
+	settings_menu_sortlist.filter_scroll = settings_menu_scroll.value
+	
 	draw_set_font(font_label)
 	
 	for (var i = 0; i < ds_list_size(typelist); i++)
 	{
-		itemname = typelist[|i]
+		var itemname = typelist[|i];
 		
-		// Skip items (Resources sortlist)
+		// Skip internal resource types
 		if (typelist = res_type_name_list)
 		{
-			if (itemname = "packunzipped" || itemname = "legacyblocksheet" || itemname = "fromworld")
+			if (itemname = "pack_unzipped" || itemname = "legacy_block_sheet")
 				continue
 		}
 		
-		capwid = max(capwid, string_width(text_get("type" + itemname)))
+		content_capwid = max(content_capwid, string_width(text_get(textprefix + itemname)))
 		
-		var active = ds_list_find_index(settings_menu_sortlist.filter_list, typelist[|i]) != -1;
+		var active = ds_list_find_index(settings_menu_sortlist.filter_list, itemname) != -1;
 		
 		tab_control_checkbox()
-		if (draw_checkbox("type" + itemname, dx, dy + scroll, active, null))
+		if (draw_checkbox(textprefix + itemname, dx, dy + floor(scroll), active, null))
 		{
 			if (active)
-				ds_list_delete_value(settings_menu_sortlist.filter_list, typelist[|i])
+				ds_list_delete_value(settings_menu_sortlist.filter_list, itemname)
 			else
-				ds_list_add(settings_menu_sortlist.filter_list, typelist[|i])
+				ds_list_add(settings_menu_sortlist.filter_list, itemname)
 		
 			sortlist_update(settings_menu_sortlist)
 		}
@@ -56,5 +53,5 @@ function sortlist_filters_draw()
 	
 	clip_end()
 	
-	settings_menu_w = (32 + capwid) + 32 + 24
+	settings_menu_w = (32 + content_capwid) + 32 + 24
 }

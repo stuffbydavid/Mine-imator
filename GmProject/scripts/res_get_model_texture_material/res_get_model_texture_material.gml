@@ -1,5 +1,3 @@
-/// res_get_model_texture_material(name)
-/// @arg name
 /// @desc Returns the model material texture with the given name from a skin or texture pack.
 
 function res_get_model_texture_material(name)

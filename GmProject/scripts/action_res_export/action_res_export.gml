@@ -1,5 +1,3 @@
-/// action_res_export()
-
 function action_res_export()
 {
 	if (res_edit.type = e_res_type.PACK)

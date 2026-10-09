@@ -1,13 +1,20 @@
-/// settings_load()
 /// @desc Formats:
-///			100 DEMO 4 = Initial
-///			100 DEMO 5 = added spawn objects and camera
-///			100 = added undo/redo shortcuts, project folder, ssao, shadows, dof, aa, grid size, even more shortcuts, panels, tabs, views, z is up, fps
-///			103 = compact timeline, jump to select, real time render
-///			106 = wave animation, exportmovie/image settings
-///			106_2 = block emissive
-///			106_3 = remove camera buffer size
-///			110 = remade in JSON, texture filtering level
+/// 		100 DEMO 4 = Initial
+/// 		100 DEMO 5 = added spawn objects and camera
+/// 		100 = added undo/redo shortcuts, project folder, ssao, shadows, dof, aa, grid size, even more shortcuts, panels, tabs, views, z is up, fps
+/// 		103 = compact timeline, jump to select, real time render
+/// 		106 = wave animation, exportmovie/image settings
+/// 		106_2 = block brightness
+/// 		106_3 = remove camera buffer size
+/// 		CB 1.0.0 = Community Build format
+/// 		CB 1.0.2 = custom interface and bloom
+/// 		CB 1.1.0 = Community Build format
+/// 		1.1.0 PRE 1 = remade in JSON, texture filtering level
+/// 		1.1.0 = asset version metadata and named panel locations
+/// 		1.1.3 = removed legacy bend settings
+/// 		1.1.4 = bend pinch
+/// 		1.2.0 = bend style, glow, light bleeding, noisy grass/water, custom watermark and vignette
+/// 		2.0.0 = redesigned interface, window, tool, snapping, watermark and export settings.
 
 function settings_load()
 {
@@ -28,7 +35,7 @@ function settings_load()
 		if (!is_real(map[?"format"]))
 			return 0
 		
-		load_format = map[?"format"];
+		load_format = map[?"format"]
 		if (load_format > settings_format)
 			return 0
 		
@@ -38,7 +45,9 @@ function settings_load()
 		var assetsmap = map[?"assets"];
 		if (ds_map_valid(assetsmap))
 		{
-			setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
+			var lastknown = value_get_string(assetsmap[?"lastknown"], "");
+			if (lastknown = minecraft_assets_version) // No Mine-imator update
+				setting_minecraft_assets_version = value_get_string(assetsmap[?"version"])
 			
 			var newmap = assetsmap[?"new"];
 			if (ds_map_valid(newmap))
@@ -62,18 +71,23 @@ function settings_load()
 			setting_advanced_mode = value_get_real(programmap[?"advanced_mode"], setting_advanced_mode)
 			
 			// No interface setting, but custom fps can be loaded from file
-			room_speed = value_get_real(programmap[?"fps"], room_speed)
+			var targetfps = value_get_real(programmap[?"fps"], game_get_speed(gamespeed_fps));
+			game_set_speed(gamespeed_fps, targetfps)
 			
-			if (!dev_mode)
+			if (!debug_mode)
 				setting_project_folder = value_get_string(programmap[?"project_folder"], setting_project_folder)
 			if (!directory_exists_lib(setting_project_folder))
 				setting_project_folder = projects_directory_get()
+			
+			setting_project_pack = value_get_string(programmap[?"project_pack"], setting_project_pack)
 			
 			setting_backup = value_get_real(programmap[?"backup"], setting_backup)
 			setting_backup_time = value_get_real(programmap[?"backup_time"], setting_backup_time)
 			setting_backup_amount = value_get_real(programmap[?"backup_amount"], setting_backup_amount)
 			setting_spawn_cameras = value_get_real(programmap[?"spawn_cameras"], setting_spawn_cameras)
 			setting_unlimited_values = value_get_real(programmap[?"unlimited_values"], setting_unlimited_values)
+			setting_scenery_remove_edges = value_get_real(programmap[?"scenery_remove_edges"], setting_scenery_remove_edges)
+			setting_scenery_replace_ground = value_get_real(programmap[?"scenery_replace_ground"], setting_scenery_replace_ground)
 			
 			setting_watermark_custom = value_get_real(programmap[?"watermark_custom"], setting_watermark_custom)
 			setting_watermark_fn = value_get_string(programmap[?"watermark_fn"], setting_watermark_fn)
@@ -84,7 +98,7 @@ function settings_load()
 			setting_watermark_opacity = value_get_real(programmap[?"watermark_opacity"], setting_watermark_opacity)
 			
 			if (setting_watermark_fn != "")
-				setting_watermark_image = texture_create(setting_watermark_fn)
+				setting_watermark_image = texture_create(setting_watermark_fn, false)
 		}
 		
 		// Interface
@@ -98,7 +112,7 @@ function settings_load()
 			if (setting_language_filename != language_file)
 				language_load(setting_language_filename, language_map)
 			
-			var themename = theme_light.name;
+			var themename = theme_classic.name;
 			themename = value_get_string(interfacemap[?"theme"], themename)
 			
 			with (obj_theme)
@@ -114,11 +128,14 @@ function settings_load()
 			setting_accent_custom = value_get_color(interfacemap[?"accent_custom"], setting_accent_custom)
 			
 			setting_timeline_autoscroll = value_get_real(interfacemap[?"timeline_autoscroll"], setting_timeline_autoscroll)
+			setting_timeline_audio_scrub = value_get_real(interfacemap[?"timeline_audio_scrub"], setting_timeline_audio_scrub)
 			setting_timeline_show_markers = value_get_real(interfacemap[?"timeline_show_markers"], setting_timeline_show_markers)
 			setting_interface_compact = value_get_real(interfacemap[?"interface_compact"], setting_interface_compact)
 			setting_timeline_compact = value_get_real(interfacemap[?"timeline_compact"], setting_timeline_compact)
 			setting_reduced_motion = value_get_real(interfacemap[?"reduced_motion"], setting_reduced_motion)
 			setting_timeline_select_jump = value_get_real(interfacemap[?"timeline_select_jump"], setting_timeline_select_jump)
+			setting_timeline_hide_structure_blocks = value_get_real(interfacemap[?"timeline_hide_structure_blocks"], setting_timeline_hide_structure_blocks)
+			setting_timeline_hide_nonanimated = value_get_real(interfacemap[?"timeline_hide_nonanimated"], setting_timeline_hide_nonanimated)
 			setting_timeline_hide_ghosts = value_get_real(interfacemap[?"timeline_hide_ghosts"], setting_timeline_hide_ghosts)
 			setting_timeline_frame_snap = value_get_real(interfacemap[?"timeline_frame_snap"], setting_timeline_frame_snap)
 			setting_z_is_up = value_get_real(interfacemap[?"z_is_up"], setting_z_is_up)
@@ -129,6 +146,7 @@ function settings_load()
 			window_mouse_set_permission(setting_camera_lock_mouse)
 			setting_place_new = value_get_real(interfacemap[?"place_new"], setting_place_new)
 			setting_interface_scale_auto = value_get_real(interfacemap[?"scale_auto"], setting_interface_scale_auto)
+			
 			if (setting_interface_scale_auto)
 				setting_interface_scale = interface_scale_default_get()
 			else
@@ -148,10 +166,15 @@ function settings_load()
 			setting_panel_top_size = value_get_real(interfacemap[?"panel_top_size"], setting_panel_top_size)
 			setting_panel_left_top_size = value_get_real(interfacemap[?"panel_left_top_size"], setting_panel_left_top_size)
 			setting_panel_right_top_size = value_get_real(interfacemap[?"panel_right_top_size"], setting_panel_right_top_size)
+			setting_bench_width = clamp(value_get_real(interfacemap[?"bench_width"], setting_bench_width), bench_min_width, bench_max_width)
+			setting_bench_height = max(bench_initial_height, value_get_real(interfacemap[?"bench_height"], setting_bench_height))
 			
 			setting_properties_location = value_get_string(interfacemap[?"properties_location"], setting_properties_location)
+			setting_renderer_settings_location = value_get_string(interfacemap[?"renderer_settings_location"], setting_renderer_settings_location)
 			setting_ground_editor_location = value_get_string(interfacemap[?"ground_editor_location"], setting_ground_editor_location)
-			setting_template_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_template_editor_location)
+			setting_object_editor_location = value_get_string(interfacemap[?"template_editor_location"], setting_object_editor_location) // Legacy
+			setting_object_editor_location = value_get_string(interfacemap[?"object_editor_location"], setting_object_editor_location)
+			setting_build_mode_location = value_get_string(interfacemap[?"build_mode_location"], setting_object_editor_location)
 			setting_timeline_editor_location = value_get_string(interfacemap[?"timeline_editor_location"], setting_timeline_editor_location)
 			setting_frame_editor_location = value_get_string(interfacemap[?"frame_editor_location"], setting_frame_editor_location)
 			setting_settings_location = value_get_string(interfacemap[?"settings_location"], setting_settings_location)
@@ -161,6 +184,9 @@ function settings_load()
 			
 			setting_view_split = value_get_real(interfacemap[?"view_split"], setting_view_split)
 			
+			setting_quick_mode_shading = value_get_real(interfacemap[?"quick_mode_shading"], setting_quick_mode_shading)
+			setting_quick_mode_aa = value_get_real(interfacemap[?"quick_mode_aa"], setting_quick_mode_aa)
+			
 			setting_view_main_overlays = value_get_real(interfacemap[?"view_main_overlays"], setting_view_main_overlays)
 			setting_view_main_aspect_ratio = value_get_real(interfacemap[?"view_main_aspect_ratio"], setting_view_main_aspect_ratio)
 			setting_view_main_grid = value_get_real(interfacemap[?"view_main_grid"], setting_view_main_grid)
@@ -168,6 +194,7 @@ function settings_load()
 			setting_view_main_fog = value_get_real(interfacemap[?"view_main_fog"], setting_view_main_fog)
 			setting_view_main_effects = value_get_real(interfacemap[?"view_main_effects"], setting_view_main_effects)
 			setting_view_main_particles = value_get_real(interfacemap[?"view_main_particles"], setting_view_main_particles)
+			setting_view_main_transparent_background = value_get_real(interfacemap[?"view_main_transparent_background"], setting_view_main_transparent_background)
 			setting_view_main_location = value_get_string(interfacemap[?"view_main_location"], setting_view_main_location)
 			
 			setting_view_second_show = value_get_real(interfacemap[?"view_second_show"], setting_view_second_show)
@@ -178,12 +205,17 @@ function settings_load()
 			setting_view_second_fog = value_get_real(interfacemap[?"view_second_fog"], setting_view_second_fog)
 			setting_view_second_effects = value_get_real(interfacemap[?"view_second_effects"], setting_view_second_effects)
 			setting_view_second_particles = value_get_real(interfacemap[?"view_second_particles"], setting_view_second_particles)
+			setting_view_second_transparent_background = value_get_real(interfacemap[?"view_second_transparent_background"], setting_view_second_transparent_background)
 			setting_view_second_location = value_get_string(interfacemap[?"view_second_location"], setting_view_second_location)
 			setting_view_second_width = value_get_real(interfacemap[?"view_second_width"], setting_view_second_width)
 			setting_view_second_height = value_get_real(interfacemap[?"view_second_height"], setting_view_second_height)
 			
 			if (ds_map_valid(interfacemap[?"view_second_window"]))
 				window_state_restore(e_window.VIEW_SECOND, interfacemap[?"view_second_window"])
+			
+			setting_overlay_view_controls = value_get_real(interfacemap[?"overlay_view_controls"], setting_overlay_view_controls)
+			setting_overlay_view_shapes = value_get_real(interfacemap[?"overlay_view_shapes"], setting_overlay_view_shapes)
+			setting_overlay_view_guides = value_get_real(interfacemap[?"overlay_view_guides"], setting_overlay_view_guides)
 			
 			setting_snap = value_get_real(interfacemap[?"snap"], setting_snap)
 			setting_snap_absolute = value_get_real(interfacemap[?"snap_absolute"], setting_snap_absolute)
@@ -198,13 +230,37 @@ function settings_load()
 		var controlsmap = map[?"controls"];
 		if (ds_map_valid(controlsmap))
 		{
-			var obj;
+			var legacymap = ds_map_create();
+			for (var i = 0; i < e_keybind.amount; i++)
+			{
+				var keyname, legacyname;
+				keyname = keybinds[i].name
+				legacyname = string_replace_all(keyname, "camera/", "cam")
+				legacyname = string_replace_all(legacyname, "/", "")
+				legacyname = string_replace_all(legacyname, "_", "")
+				
+				if (legacyname != keyname)
+					legacymap[?keyname] = legacyname
+			}
 			
 			for (var i = 0; i < e_keybind.amount; i++)
 			{
+				var obj, saved;
 				obj = keybinds[i]
-				obj.keybind = value_get_array(controlsmap[?obj.name], obj.keybind)
+				saved = controlsmap[?obj.name]
+				if (is_undefined(saved) && ds_map_exists(legacymap, obj.name))
+				{
+					var legacyname = legacymap[?obj.name];
+					saved = controlsmap[?legacyname]
+				}
+				
+				obj.keybind = value_get_array(saved, obj.keybind)
 			}
+			
+			ds_map_destroy(legacymap)
+
+			if (is_undefined(controlsmap[?"tool/build"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
+				keybinds[e_keybind.TOOL_BEND].keybind = keybind_new("B", false, true)
 			
 			setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 			setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)
@@ -218,19 +274,18 @@ function settings_load()
 		var exportmap = map[?"export"];
 		if (ds_map_valid(exportmap))
 		{
-			setting_export_movie_format = value_get_string(map[?"exportmovie_format"], setting_export_movie_format)
-			setting_export_movie_frame_rate = value_get_real(map[?"exportmovie_frame_rate"], setting_export_movie_frame_rate)
-			setting_export_movie_framespersecond = value_get_real(map[?"exportmovie_framespersecond"], setting_export_movie_framespersecond)
-			setting_export_movie_bit_rate = value_get_real(map[?"exportmovie_bit_rate"], setting_export_movie_bit_rate)
-			setting_export_movie_include_audio = value_get_real(map[?"exportmovie_include_audio"], setting_export_movie_include_audio)
-			setting_export_movie_remove_background = value_get_real(map[?"exportmovie_remove_background"], setting_export_movie_remove_background)
-			setting_export_movie_include_hidden = value_get_real(map[?"exportmovie_remove_background"], setting_export_movie_include_hidden)
-			setting_export_movie_high_quality = value_get_real(map[?"exportmovie_high_quality"], setting_export_movie_high_quality)
-			setting_export_movie_watermark = value_get_real(map[?"exportmovie_watermark"], setting_export_movie_watermark)
-			setting_export_image_remove_background = value_get_real(map[?"exportimage_remove_background"], setting_export_image_remove_background)
-			setting_export_image_include_hidden = value_get_real(map[?"exportimage_include_hidden"], setting_export_image_include_hidden)
-			setting_export_image_high_quality = value_get_real(map[?"exportimage_high_quality"], setting_export_image_high_quality)
-			setting_export_image_watermark = value_get_real(map[?"exportimage_watermark"], setting_export_image_watermark)
+			setting_export_movie_format = value_get_string(exportmap[?"export_movie_format"], setting_export_movie_format)
+			setting_export_movie_frame_rate = value_get_real(exportmap[?"export_movie_frame_rate"], setting_export_movie_frame_rate)
+			setting_export_movie_framespersecond = value_get_real(exportmap[?"export_movie_framespersecond"], setting_export_movie_framespersecond)
+			setting_export_movie_renderer = value_get_real(exportmap[?"export_movie_renderer"], setting_export_movie_renderer)
+			setting_export_movie_include_audio = value_get_real(exportmap[?"export_movie_include_audio"], setting_export_movie_include_audio)
+			setting_export_movie_remove_background = value_get_real(exportmap[?"export_movie_remove_background"], setting_export_movie_remove_background)
+			setting_export_movie_include_hidden = value_get_real(exportmap[?"export_movie_include_hidden"], setting_export_movie_include_hidden)
+			setting_export_movie_watermark = value_get_real(exportmap[?"export_movie_watermark"], setting_export_movie_watermark)
+			setting_export_image_remove_background = value_get_real(exportmap[?"export_image_remove_background"], setting_export_image_remove_background)
+			setting_export_image_include_hidden = value_get_real(exportmap[?"export_image_include_hidden"], setting_export_image_include_hidden)
+			setting_export_image_renderer = value_get_real(exportmap[?"export_image_renderer"], setting_export_image_renderer)
+			setting_export_image_watermark = value_get_real(exportmap[?"export_image_watermark"], setting_export_image_watermark)
 		}
 		
 		// Collapsible content
@@ -249,13 +304,13 @@ function settings_load()
 		if (ds_map_valid(map[?"main_window"]))
 		{
 			var mainwindowmap = map[?"main_window"];
-			var rectlist = mainwindowmap[?"rect"]
-			setting_main_window_rect = array(rectlist[|0], rectlist[|1], rectlist[|2], rectlist[|3])
+			var rectlist = mainwindowmap[?"rect"];
+			setting_main_window_rect = [ rectlist[|0], rectlist[|1], rectlist[|2], rectlist[|3] ]
 			setting_main_window_maximized = mainwindowmap[?"maximized"]
 		}
 		
 		// World import
-		var worldimportmap = map[?"world_import"]
+		var worldimportmap = map[?"world_import"];
 		if (ds_map_valid(worldimportmap))
 		{
 			setting_world_import_filter_enabled = value_get_real(worldimportmap[?"filter_enabled"], setting_world_import_filter_enabled)
@@ -263,12 +318,5 @@ function settings_load()
 			ds_list_merge(setting_world_import_filter_list, worldimportmap[?"filter_list"])
 			setting_world_import_unload_regions = value_get_real(worldimportmap[?"unload_regions"], setting_world_import_unload_regions)
 		}
-	}
-	
-	// Legacy
-	else
-	{
-		settings_load_legacy(fn)
-		settings_load_legacy_recent(data_directory + "recent.file")
 	}
 }

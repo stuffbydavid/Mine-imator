@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"string_height_font",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"string_height_font",
+  "parent":{
+    "name":"String",
+    "path":"folders/Scripts/Utility/String.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

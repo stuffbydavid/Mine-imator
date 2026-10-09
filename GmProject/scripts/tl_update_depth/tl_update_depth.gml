@@ -1,5 +1,3 @@
-/// tl_update_depth()
-
 function tl_update_depth()
 {
 	ds_list_delete_value(render_list, id)
@@ -10,4 +8,9 @@ function tl_update_depth()
 			break
 	
 	ds_list_insert(render_list, pos, id)
+	
+	render_list_depth_dirty = true
+	render_scene_bounds = null
+	
+	view_changed()
 }

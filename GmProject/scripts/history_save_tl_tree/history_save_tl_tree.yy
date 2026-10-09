@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "history_save_tl_tree",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Save",
-    "path": "folders/Scripts/App/History/Save.yy",
+  "$GMScript":"v1",
+  "%Name":"history_save_tl_tree",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"history_save_tl_tree",
+  "parent":{
+    "name":"Save",
+    "path":"folders/Scripts/App/History/Save.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

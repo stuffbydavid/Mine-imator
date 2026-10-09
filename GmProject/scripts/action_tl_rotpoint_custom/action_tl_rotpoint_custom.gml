@@ -1,7 +1,4 @@
-/// action_tl_rotpoint_custom(enable)
-/// @arg enable
-
-function action_tl_rotpoint_custom(enable)
+function action_tl_rotpoint_custom(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_rotpoint_custom(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.rot_point_custom, enable)
+				history_save_var(other.id, other.rot_point_custom, enabled)
 			
-			rot_point_custom = enable
+			rot_point_custom = enabled
 			tl_update_rot_point()
 		}
 	}

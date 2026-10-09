@@ -1,7 +1,4 @@
-/// action_tl_texture_blur(enable)
-/// @arg enable
-
-function action_tl_texture_blur(enable)
+function action_tl_texture_blur(enabled)
 {
 	if (history_undo)
 	{
@@ -20,8 +17,9 @@ function action_tl_texture_blur(enable)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_texture_blur, false);
+		
 		with (obj_timeline)
 			if (selected)
-				action_tl_texture_blur_tree(id, enable, hobj)
+				action_tl_texture_blur_tree(id, enabled, hobj)
 	}
 }

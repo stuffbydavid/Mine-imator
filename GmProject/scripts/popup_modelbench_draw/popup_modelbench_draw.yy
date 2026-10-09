@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "popup_modelbench_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Modelbench ad",
-    "path": "folders/Scripts/App/Interface/Popups/Modelbench ad.yy",
+  "$GMScript":"v1",
+  "%Name":"popup_modelbench_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"popup_modelbench_draw",
+  "parent":{
+    "name":"Modelbench ad",
+    "path":"folders/Scripts/App/Interface/Popups/Modelbench ad.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

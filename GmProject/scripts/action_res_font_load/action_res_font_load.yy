@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_res_font_load",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Resources",
-    "path": "folders/Scripts/App/Actions/Resources.yy",
+  "$GMScript":"v1",
+  "%Name":"action_res_font_load",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_res_font_load",
+  "parent":{
+    "name":"Resources",
+    "path":"folders/Scripts/App/Actions/Resources.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

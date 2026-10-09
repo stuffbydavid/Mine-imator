@@ -1,10 +1,3 @@
-/// model_shape_get_bend_scale(bendstart, bendend, weight, start, bendpos, bend)
-/// @arg bendstart
-/// @arg bendend
-/// @arg weight
-/// @arg start
-/// @arg bendpos
-/// @arg bend
 /// @desc Returns a scale for blocky bending to adjust pinching.
 
 function model_shape_get_bend_scale(bendstart, bendend, weight, start, bendpos, bend)
@@ -12,7 +5,6 @@ function model_shape_get_bend_scale(bendstart, bendend, weight, start, bendpos, 
 	if (bendpos > bendstart && bendpos < bendend)
 	{
 		var bendscale;
-		
 		if (weight <= 0.5)
 			bendscale = vec3(weight * 2)
 		else

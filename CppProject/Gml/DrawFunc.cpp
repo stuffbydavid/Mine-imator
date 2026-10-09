@@ -10,24 +10,6 @@
 
 namespace CppProject
 {
-	BoolType clip_is_active()
-	{
-		return GFX->clipEnabled;
-	}
-
-	void clip_begin(IntType x, IntType y, IntType width, IntType height)
-	{
-		if (width == 0 && height == 0) // Re-use previous rect
-			GFX->ClipBegin(GFX->clipRect);
-		else
-			GFX->ClipBegin({ (int)x, (int)y, (int)width, (int)height });
-	}
-
-	void clip_end()
-	{
-		GFX->ClipEnd();
-	}
-
 	IntType color_get_blue(IntType color)
 	{
 		return GFX->IntToQColor(color).blue();
@@ -83,6 +65,7 @@ namespace CppProject
 	{
 		if (Font* font = PR->font)
 			return font->id;
+		
 		return 0;
 	}
 
@@ -204,6 +187,7 @@ namespace CppProject
 				transform.translate(-spr->origin.x(), -spr->origin.y());
 
 				PR->Begin(pr_trianglestrip, texture, transform);
+
 				draw_vertex_texture_color(0, 0, 0, 0, color, alpha);
 				draw_vertex_texture_color(spr->size.width(), 0, 1, 0, color, alpha);
 				draw_vertex_texture_color(0, spr->size.height(), 0, 1, color, alpha);
@@ -228,6 +212,7 @@ namespace CppProject
 				QPointF uvEnd = { uvStart.x() + uvSize.width(), uvStart.y() + uvSize.height() };
 
 				PR->Begin(pr_trianglelist, texture, transform);
+
 				draw_vertex_texture_color(0, 0, uvStart.x(), uvStart.y(), c1, alpha);
 				draw_vertex_texture_color(width, 0, uvEnd.x(), uvStart.y(), c2, alpha);
 				draw_vertex_texture_color(width, height, uvEnd.x(), uvEnd.y(), c3, alpha);
@@ -241,6 +226,11 @@ namespace CppProject
 	void draw_sprite_part_ext(IntType id, IntType subimg, IntType left, IntType top, IntType width, IntType height, IntType x, IntType y, RealType xscale, RealType yscale, IntType col, RealType alpha)
 	{
 		draw_sprite_general(id, subimg, left, top, width, height, x, y, xscale, yscale, 0.0, col, col, col, col, alpha);
+	}
+
+	void draw_sprite_part(IntType id, IntType subimg, IntType left, IntType top, IntType width, IntType height, IntType x, IntType y)
+	{
+		draw_sprite_part_ext(id, subimg, left, top, width, height, x, y, 1.0, 1.0, -1, draw_get_alpha());
 	}
 
 	void draw_sprite(IntType id, IntType subimg, IntType x, IntType y)
@@ -260,6 +250,7 @@ namespace CppProject
 				transform.scale(xscale, yscale);
 
 				PR->Begin(pr_trianglestrip, surfTexId, transform);
+
 				draw_vertex_texture_color(0, 0, 0, 0, color, alpha);
 				draw_vertex_texture_color(surf->size.width(), 0, 1, 0, color, alpha);
 				draw_vertex_texture_color(0, surf->size.height(), 0, 1, color, alpha);

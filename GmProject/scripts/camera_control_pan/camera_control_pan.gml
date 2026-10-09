@@ -1,10 +1,8 @@
-/// camera_control_pan(camera)
 /// @arg camera
 
 function camera_control_pan(cam)
 {
-	var mx, my, move;
-	var mat, vert;
+	var mx, my, move, mat, vert;
 	mx = -((mouse_x - mouse_previous_x) / 8) * (.075 * (cam_work_zoom/50))
 	my = ((mouse_y - mouse_previous_y) / 8) * (.075 * (cam_work_zoom/50))
 	move = 4 * setting_move_speed

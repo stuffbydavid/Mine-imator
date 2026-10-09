@@ -1,20 +1,19 @@
-/// draw_box(x, y, width, height, outline, [color, alpha])
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg outline
-/// @arg [color
-/// @arg alpha]
+/// @arg [color]
+/// @arg [alpha]
 
-function draw_box(xx, yy, width, height, outline, incolor, inalpha)
+function draw_box(xx, yy, width, height, outline, incolor = null, inalpha = 1)
 {
 	var color, alpha;
 	
 	color = draw_get_color()
 	alpha = draw_get_alpha()
 	
-	if (!is_undefined(incolor))
+	if (incolor != null)
 	{
 		color = incolor
 		alpha *= inalpha

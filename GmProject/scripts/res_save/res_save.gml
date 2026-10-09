@@ -1,4 +1,3 @@
-/// res_save()
 /// @desc Copies the file into the project directory.
 
 function res_save()
@@ -44,9 +43,9 @@ function res_save()
 			}
 		}
 		
-		if (model_tex_normal_map != null)
+		if (model_texture_normal_map != null)
 		{
-			key = ds_map_find_first(model_tex_normal_map)
+			key = ds_map_find_first(model_texture_normal_map)
 			while (!is_undefined(key))
 			{
 				var fn = key;
@@ -54,9 +53,10 @@ function res_save()
 					fn = name + "/" + key + ".png"
 			
 				directory_create_lib(save_folder + "/" + filename_dir(fn))
-				texture_export(model_tex_normal_map[?key], save_folder + "/" + fn)
+				if (model_texture_normal_map[?key] != null)
+					texture_export(model_texture_normal_map[?key], save_folder + "/" + fn)
 			
-				key = ds_map_find_next(model_tex_normal_map, key)
+				key = ds_map_find_next(model_texture_normal_map, key)
 			}
 		}
 	}

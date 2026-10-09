@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_background_image_stretch",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_background_image_stretch",
+  "parent":{
+    "name":"Image",
+    "path":"folders/Scripts/App/Actions/Environment/Image.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

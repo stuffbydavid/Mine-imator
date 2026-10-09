@@ -1,12 +1,8 @@
-/// asset_load([filename])
+/// @desc Adds a file to the project. A file browser appears if no filename is given.
 /// @arg [filename]
-/// @desc Adds a file to the project.
-/// A file browser appears if no filename is given.
 
-function asset_load()
+function asset_load(fn = "")
 {
-	var fn;
-	
 	if (history_undo)
 	{
 		with (history_data)
@@ -23,9 +19,7 @@ function asset_load()
 		fn = history_data.filename
 	else
 	{
-		if (argument_count > 0)
-			fn = argument[0]
-		else
+		if (fn = "")
 			fn = file_dialog_open_asset()
 	}
 	
@@ -35,6 +29,13 @@ function asset_load()
 	var ext = string_lower(filename_ext(fn));
 	if (ext = ".zip")
 	{
+		// Query resource packs without extracting them first
+		if (zip_is_resource_pack(fn))
+		{
+			action_res_pack_load(fn, false)
+			return true
+		}
+
 		// Unzip and look for valid files
 		var validfile = unzip_asset(fn);
 		
@@ -49,7 +50,7 @@ function asset_load()
 			if (directory_exists_lib(unzip_directory + "assets"))
 				action_res_pack_load(fn)
 			else
-				error("erroropenassetzip")
+				error("error/open_asset_zip")
 			return false
 		}
 	}
@@ -78,6 +79,7 @@ function asset_load()
 			return true
 		
 		case ".schematic":
+		case ".schem":
 		case ".nbt":
 		case ".blocks":
 			log("Opening scenery", fn)
@@ -110,8 +112,8 @@ function asset_load()
 		case ".jpeg":
 		case ".dat":
 			log("Opening image", fn)
-			popup_importimage.filename = fn
-			popup_show(popup_importimage)
+			ds_list_add(popup_importimage.filenames, fn)
+			popup_importimage_show(popup_importimage.filenames[|0])
 			return true
 	}
 	
@@ -138,6 +140,7 @@ function asset_load()
 	}
 	
 	project_reset_loaded()
+	project_update_counts()
 	
 	save_folder = project_folder
 	load_folder = filename_dir(fn)
@@ -174,9 +177,11 @@ function asset_load()
 				load_id = save_id
 				save_id_map[?load_id] = load_id
 				type = e_temp_type.PARTICLE_SPAWNER
+				
 				project_load_particles(rootmap[?"particles"])
-				sortlist_add(other.lib_list, id)
+				temp_add_lists()
 			}
+			
 			project_load_objects(rootmap)
 			project_load_find_save_ids()
 			
@@ -196,9 +201,11 @@ function asset_load()
 				load_id = save_id
 				save_id_map[?load_id] = load_id
 				type = e_temp_type.PARTICLE_SPAWNER
+				
 				project_load_legacy_particles()
-				sortlist_add(other.lib_list, id)
+				temp_add_lists()
 			}
+			
 			project_load_legacy_objects()
 			project_load_find_save_ids()
 			
@@ -219,6 +226,7 @@ function asset_load()
 				project_load_legacy_project()
 				instance_destroy()
 			}
+			
 			project_load_legacy_objects()
 			project_load_find_save_ids()
 			project_load_update()

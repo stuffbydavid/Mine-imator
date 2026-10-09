@@ -1,5 +1,3 @@
-/// action_tools_disable_all()
-
 function action_tools_disable_all()
 {
 	setting_tool_select = false

@@ -22,6 +22,7 @@ namespace CppProject
 			// Check section box with given selection
 			WorldVec fullSize = WorldVec(SECTION_SIZE, SECTION_SIZE, SECTION_SIZE);
 			WorldVec worldPos = region->pos + chunk->regionPos + WorldVec(0, chunkIndex * SECTION_SIZE, 0);
+
 			if (!box.Intersects({ worldPos, worldPos + fullSize }))
 				return;
 
@@ -48,6 +49,7 @@ namespace CppProject
 			sectionY = builderPos.z >> 4;
 			sectionZ = builderPos.y >> 4;
 			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+
 			Builder::sections[sectionPos] = this;
 		}
 		else // Preview section
@@ -58,7 +60,7 @@ namespace CppProject
 			preview.regionPos = { chunk->regionPos.x, chunk->regionPos.y + chunkIndex * SECTION_SIZE, chunk->regionPos.z };
 
 			// Hide naturally occuring bedrock
-			preview.hideBedrock = (y <= 0 || (region->dimName == "nether" && y == 7));
+			preview.hideBedrock = (y <= 0 || (region->dimName == "the_nether" && y == 7));
 
 			// Enable section in GetPreviewState
 			IntType regionIndex = (chunkIndex << 10) + (chunk->z << 5) + chunk->x;
@@ -89,6 +91,7 @@ namespace CppProject
 					{
 						preview.hasLight = true;
 						const Heap<int8_t>& skyLightArray = nbt->ByteArray("SkyLight");
+
 						for (IntType i = 0; i < SECTION_SIZE3 / 2; i++)
 						{
 							IntType i2 = i << 1;
@@ -102,6 +105,7 @@ namespace CppProject
 					{
 						preview.hasLight = true;
 						const Heap<int8_t>& blockLightArray = nbt->ByteArray("BlockLight");
+
 						for (IntType i = 0; i < SECTION_SIZE3 / 2; i++)
 						{
 							IntType i2 = i << 1;
@@ -158,6 +162,7 @@ namespace CppProject
 					preview.states.Alloc(SECTION_SIZE3);
 					preview.blockStyleIndices.Alloc(SECTION_SIZE3);
 					preview.hasLight = true;
+
 					if (chunk->legacyBiomes.Size())
 						preview.biomeIndices.Alloc(SECTION_SIZE3);
 					else
@@ -194,6 +199,7 @@ namespace CppProject
 							{
 								if (block->timeline)
 									chunk->numTimelines++;
+								
 								builder.paletteIndices[builderIndex] = AddBuilderState({
 									(uint16_t)block->block_id,
 									(uint16_t)global::legacy_block_state_id[legacyId][legacyData].ToInt(),
@@ -228,6 +234,7 @@ namespace CppProject
 						if (uint16_t blockStyleIndex = Preview::filteredMcLegacyBlockIdStyleIndex[legacyId][legacyData]) // Non-air
 						{
 							preview.blockStyleIndices[blockIndex] = blockStyleIndex;
+							
 							PreviewState& state = BlockStyle::blockPreviewStates[blockStyleIndex];
 							BoolType solid = state.IsSolid();
 							if (!solid)
@@ -294,7 +301,9 @@ namespace CppProject
 		{
 			auto parsePaletteEntry = [&](StringType id, NbtCompound* entry = nullptr)
 			{
-				if (id == "air") { // Air blocks
+				id = id.Replaced("minecraft:", "");
+				if (id == "air") // Air blocks
+				{
 					blockStylePalette.Append({ 0, false });
 					return;
 				}
@@ -309,6 +318,7 @@ namespace CppProject
 				}
 
 				preview.hasBlocks = true;
+				
 				blockStylePalette.Append({
 					Preview::filteredMcBlockIdStyleIndexMap.value(id),
 					(waterlogged || World::filteredMcBlockIdWaterloggedMap.value(id, false))
@@ -316,13 +326,15 @@ namespace CppProject
 			};
 
 			NbtTag* paletteTag = nbt->value.value(paletteName);
-			if (paletteTag->type != TAG_LIST) {
+			if (paletteTag->type != TAG_LIST)
+			{
 				WARNING("Invalid section: Unexpected Palette tag type");
 				return;
 			}
 
 			NbtType paletteType = ((NbtList*)paletteTag)->listType;
-			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING) {
+			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING)
+			{
 				WARNING("Invalid section: Unexpected Palette tag list type");
 				return;
 			}
@@ -373,6 +385,7 @@ namespace CppProject
 				{
 					if (entry.waterlogged)
 						preview.hasTransparent = true;
+					
 					preview.states[b] = { false, false, entry.waterlogged, preview.states.Value(b).value };
 				}
 			}
@@ -381,8 +394,8 @@ namespace CppProject
 		{
 			const PreviewPaletteEntry& entry = blockStylePalette.Value(0);
 			const PreviewState& state = BlockStyle::blockPreviewStates[entry.styleIndex];
-			preview.singleBlockStyle = BlockStyle::blockStyles[entry.styleIndex];
 
+			preview.singleBlockStyle = BlockStyle::blockStyles[entry.styleIndex];
 			preview.singleState = {
 				state.IsBlock(),
 				state.IsSolid(),
@@ -390,6 +403,7 @@ namespace CppProject
 				(uint8_t)(state.GetLight() + preview.states.Value(0).value)
 			};
 			preview.hasTransparent = (!state.IsSolid() || (entry.waterlogged && !state.IsBlock()));
+
 			preview.states.FreeData();
 		}
 		else if (blockStylePalette.Size() > 1)
@@ -405,14 +419,16 @@ namespace CppProject
 			// Parse biome palette
 			FastVector<uint16_t> biomePalette;
 			QVector<NbtString*> paletteStrings = biomesRoot->List<TAG_STRING, NbtString>("palette");
+
 			biomePalette.Alloc(paletteStrings.size());
 			for (NbtString* entry : paletteStrings)
-				biomePalette.Append(Preview::mcBiomeIdIndexMap.value(entry->value));
+				biomePalette.Append(Preview::mcBiomeIdIndexMap.value(entry->value.Replaced("minecraft:", "")));
 
 			if (biomesRoot->HasKey("data")) // Has array
 			{
 				preview.biomeIndices.Alloc(SECTION_SIZE3);
 				ParsePaletteIndices(biomesRoot->LongArray("data"), preview.biomeIndices, biomePalette.Size(), format);
+				
 				for (IntType b = 0; b < SECTION_SIZE3; b++) // From palette index to biome id
 					preview.biomeIndices[b] = biomePalette[preview.biomeIndices.Value(b)];
 
@@ -423,6 +439,7 @@ namespace CppProject
 		else if (chunk->legacyBiomes.Size()) // Legacy biomes
 		{
 			preview.biomeIndices.Alloc(SECTION_SIZE3);
+
 			for (uint8_t x = blockStart.x; x < blockEnd.x; x++)
 			for (uint8_t y = blockStart.y; y < blockEnd.y; y++)
 			for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
@@ -456,6 +473,7 @@ namespace CppProject
 		{
 			auto parsePaletteEntry = [&](StringType id, NbtCompound* entry = nullptr)
 			{
+				id = id.Replaced("minecraft:", "");
 				if (id != "air") // Non air
 				{
 					if (obj_block* block = Builder::filteredMcBlockIdObjMap.value(id, nullptr))
@@ -474,10 +492,12 @@ namespace CppProject
 								{
 									StringType name = propIt.key();
 									StringType value = ((NbtString*)propIt.value())->value;
+									
 									IntType i = 0;
 									for (i = 0; i < vars.Size(); i += 2)
 										if (vars.Value(i) == name)
 											break;
+									
 									vars[i] = name;
 									vars[i + 1] = value;
 
@@ -487,12 +507,15 @@ namespace CppProject
 								}
 							}
 						}
+						else
+							state.waterlogged = block->waterlogged; // If block has "waterlogged: true"
 
 						if (vars.Size()) // Array to id
 							state.stateId = block_get_state_id(block->id, vars);
 
 						builder.palette.Append(state);
 						paletteHasTimeline.append(block->timeline);
+						
 						return;
 					}
 				}
@@ -502,13 +525,15 @@ namespace CppProject
 			};
 
 			NbtTag* paletteTag = nbt->value.value(paletteName);
-			if (paletteTag->type != TAG_LIST) {
+			if (paletteTag->type != TAG_LIST)
+			{
 				WARNING("Invalid section: Unexpected Palette tag type");
 				return;
 			}
 
 			NbtType paletteType = ((NbtList*)paletteTag)->listType;
-			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING) {
+			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING)
+			{
 				WARNING("Invalid section: Unexpected Palette tag list type");
 				return;
 			}
@@ -517,6 +542,7 @@ namespace CppProject
 			if (paletteType == TAG_COMPOUND)
 			{
 				QVector<NbtCompound*> paletteComps = nbt->List<TAG_COMPOUND, NbtCompound>(paletteName);
+				
 				builder.palette.Alloc(paletteComps.size());
 				for (NbtCompound* entry : paletteComps)
 				{
@@ -526,10 +552,12 @@ namespace CppProject
 						parsePaletteEntry(entry->String(""), entry);
 				}
 			}
+
 			// List of strings
 			else
 			{
 				QVector<NbtString*> paletteStrings = nbt->List<TAG_STRING, NbtString>(paletteName);
+				
 				builder.palette.Alloc(paletteStrings.size());
 				for (NbtString* entry : paletteStrings)
 					parsePaletteEntry(entry->value);
@@ -552,6 +580,7 @@ namespace CppProject
 			{
 				Heap<uint16_t> indices;
 				indices.Alloc(SECTION_SIZE3);
+				
 				ParsePaletteIndices(nbt->LongArray(dataName), indices, builder.palette.Size(), format, 4);
 
 				IntType b = 0;
@@ -650,6 +679,7 @@ namespace CppProject
 				// Store block data of face
 				uint16_t texPos = (dir == Chunk::FaceDirection::TOP ? style->topPos : style->sidePos) + biomeIndex; 
 				uint8_t light = std::max(state.GetLight(), blockFaceBaseLight[dir]) + std::min((dirState.GetLight()) * 2.5, 37.0);
+				
 				faceData.blockData[dir] = (texPos << 6) | light;
 			}
 		}
@@ -680,8 +710,10 @@ namespace CppProject
 				if (paletteIndex >= paletteSize)
 					FATAL("paletteIndex out of bounds");
 			#endif
+				
 				if (blockIndex < SECTION_SIZE3)
 					paletteIndices[blockIndex++] = paletteIndex;
+				
 				curLong >>= bitsPerBlock - bitsRem;
 				bitsLeft -= bitsPerBlock - bitsRem;
 			}
@@ -693,11 +725,14 @@ namespace CppProject
 				if (paletteIndex >= paletteSize)
 					FATAL("paletteIndex out of bounds");
 			#endif
+				
 				if (blockIndex < SECTION_SIZE3)
 					paletteIndices[blockIndex++] = paletteIndex;
+				
 				curLong >>= bitsPerBlock;
 				bitsLeft -= bitsPerBlock;
 			}
+			
 			prevLong = curLong;
 			bitsRem = (format >= Chunk::Format::JAVA_1_16) ? 0 : bitsLeft; // Discard remaining bits in 1.16+
 		}
@@ -760,6 +795,7 @@ namespace CppProject
 		IntType blockX = (posOffset.x & SECTION_SIZEM1) - blockStart.x;
 		IntType blockY = (posOffset.y & SECTION_SIZEM1) - blockStart.z; // blockStart use Y up
 		IntType blockZ = (posOffset.z & SECTION_SIZEM1) - blockStart.y;
+		
 		return blockZ * builder.sizeXY + blockY * builder.size.x + blockX;
 	}
 
@@ -780,5 +816,17 @@ namespace CppProject
 	{
 		IntType offset = GetBlockOffset(pos);
 		return builder.renderModelIds[offset];
+	}
+
+	Section* Builder::GetSection(const WorldVec& pos)
+	{
+		IntType sectionX, sectionY, sectionZ, sectionPos;
+		WorldVec posOffset = pos + offset;
+		sectionX = posOffset.x >> 4;
+		sectionY = posOffset.y >> 4;
+		sectionZ = posOffset.z >> 4;
+		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+
+		return Builder::sections.Value(sectionPos);
 	}
 }

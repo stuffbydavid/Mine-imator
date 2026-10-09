@@ -1,6 +1,5 @@
-/// buffer_write_double(value)
+/// @desc Writes a double to the buffer.
 /// @arg value
-/// @desc Writes a double to the buffer
 
 function buffer_write_double(val)
 {

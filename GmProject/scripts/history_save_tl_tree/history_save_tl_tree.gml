@@ -1,6 +1,3 @@
-/// history_save_tl_tree(treeobj)
-/// @arg treeobj
-
 function history_save_tl_tree(treeobj)
 {
 	for (var t = 0; t < ds_list_size(treeobj.tree_list); t++)

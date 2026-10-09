@@ -1,14 +1,13 @@
-/// app_mouse_wrap(x, y, width, height)
+/// @desc Wraps mouse position in a box.
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
-/// @desc Wraps mouse position in a box
 
 function app_mouse_wrap(xx, yy, w, h)
 {
 	if (!window_mouse_get_permission())
-		return 0;
+		return 0
 	
 	var setx, sety, size;
 	setx = mouse_x

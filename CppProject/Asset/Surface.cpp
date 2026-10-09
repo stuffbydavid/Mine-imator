@@ -6,9 +6,9 @@
 
 namespace CppProject
 {
-	Surface::Surface(QSize size, BoolType depthBuffer, BoolType hdr) : Asset(ID_Surface)
+	Surface::Surface(QSize size, IntType format, BoolType depthBuffer, BoolType depthOnly) : Asset(ID_Surface)
 	{
-		frameBuffer = new FrameBuffer(depthBuffer, hdr);
+		frameBuffer = new FrameBuffer(format, depthBuffer, depthOnly);
 		if (size.width() && size.height())
 			Resize(size);
 	}
@@ -73,13 +73,22 @@ namespace CppProject
 		if (!cacheDepthStencilData)
 			frameBuffer->CopyData(false, (uchar*)depthStencilData.data());
 
-	#if API_D3D11
-		float depth = ((depthStencilData.value(point.y() * size.width() + point.x()) & 0xFFFFFF) / (RealType)0xFFFFFF + 1.0) / 2.0;
-	#else
-		float depth = (depthStencilData.value(point.y() * size.width() + point.x()) >> 8) / (RealType)0xFFFFFF;
-	#endif
+		uint32_t packedDepth = depthStencilData.value(point.y() * size.width() + point.x());
+		float depth = 0.f;
+		if (frameBuffer->depthOnly)
+		{
+			memcpy(&depth, &packedDepth, sizeof(depth));
+			if (IS_D3D11)
+				depth = (depth + 1.f) * 0.5f;
+		}
+		else if (IS_D3D11)
+			depth = ((packedDepth & 0xFFFFFF) / (RealType)0xFFFFFF + 1.0) / 2.0;
+
+		else if (IS_OPENGL)
+			depth = (packedDepth >> 8) / (RealType)0xFFFFFF;
 
 		cacheDepthStencilData = cache;
+
 		if (!cache)
 			depthStencilData.clear();
 
@@ -98,9 +107,11 @@ namespace CppProject
 
 		size = newSize;
 		ortho = Matrix::Ortho(0, size.width(), size.height(), 0, -100, 100);
+
 		colorData.clear();
 		depthStencilData.clear();
 		cacheColorData = cacheDepthStencilData = false;
+
 		frameBuffer->Update(size);
 	}
 
@@ -109,17 +120,21 @@ namespace CppProject
 		// Resize if needed
 		if (expectedSize.width() > 0 && expectedSize.height() > 0 && size != expectedSize)
 			Resize(expectedSize);
+		
+		ClearColorCache();
 
 		if (!frameBuffer->BeginUse())
 			return false;
 
 		GFX->matrixP = ortho;
+
 		return true;
 	}
 
 	bool Surface::EndUse()
 	{
 		frameBuffer->EndUse();
+
 		return true;
 	}
 }

@@ -1,5 +1,4 @@
-/// block_set_redstone_wire()
-/// @desc Connect to other redstone wires, or powered blocks facing the opposite direction
+/// @desc Connect to other redstone wires, or powered blocks facing the opposite direction.
 
 function block_set_redstone_wire()
 {
@@ -163,7 +162,7 @@ function block_set_redstone_wire()
 		north = "side"
 	}
 	
-	block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "power", pow))
+	block_state_id_current = block_get_state_id(block_current, [ "east", east, "west", west, "south", south, "north", north, "power", pow ])
 	
 	return 0
 }

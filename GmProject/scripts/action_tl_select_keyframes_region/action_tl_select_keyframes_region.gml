@@ -1,5 +1,3 @@
-/// action_tl_select_keyframes_region()
-
 function action_tl_select_keyframes_region()
 {
 	if (history_undo)
@@ -14,10 +12,9 @@ function action_tl_select_keyframes_region()
 	}
 	else
 	{
-		var shift = keyboard_check(vk_shift);
-		
-		var hobj;
+		var hobj, shift;
 		hobj = history_set(action_tl_select_keyframes_region)
+		shift = keyboard_check(vk_shift)
 		
 		with (hobj)
 			history_save_tl_select()
@@ -27,7 +24,7 @@ function action_tl_select_keyframes_region()
 		
 		with (obj_keyframe)
 		{
-			if (timeline.lock)
+			if (timeline.lock || !tl_update_list_filter(timeline))
 				continue
 			
 			if (position >= app.timeline_region_start && position <= app.timeline_region_end)

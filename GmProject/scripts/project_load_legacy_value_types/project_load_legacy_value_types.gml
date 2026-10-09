@@ -1,5 +1,3 @@
-/// project_load_legacy_value_types()
-
 function project_load_legacy_value_types()
 {
 	value_type[e_value_type.TRANSFORM_POS] = buffer_read_byte()
@@ -16,9 +14,9 @@ function project_load_legacy_value_types()
 		value_type[e_value_type.MATERIAL_TEXTURE] = buffer_read_byte() 
 	
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
-		value_type[e_value_type.BACKGROUND] = buffer_read_byte()
+		value_type[e_value_type.ENVIRONMENT] = buffer_read_byte()
 	else
-		value_type[e_value_type.BACKGROUND] = false
+		value_type[e_value_type.ENVIRONMENT] = false
 	
 	if (load_format >= e_project.FORMAT_100_DEBUG)
 		value_type[e_value_type.MATERIAL_TEXTURE] = buffer_read_byte() 

@@ -192,9 +192,11 @@ namespace CppProject
 		// Clear old regions
 		for (Region* region : World::regions)
 			delete region;
+		
 		World::regions.clear();
 
 		currentRegionsDir = QDir();
+
 		StringType::qThreadActive = false;
 	}
 
@@ -210,6 +212,7 @@ namespace CppProject
 		builder->build_size_y = size.z;
 		builder->build_size_z = size.y;
 		Builder::offset = { box.start.x & SECTION_SIZEM1, box.start.z & SECTION_SIZEM1, box.start.y & SECTION_SIZEM1 };
+
 		builder_start(Scope<obj_builder>(builder));
 
 		// Load regions within box
@@ -224,6 +227,7 @@ namespace CppProject
 				builder->builder_scenery_legacy = true;
 			builder->sch_timeline_amount += region->numTimelines;
 		}
+
 		debug_timer_stop("Load world sections");
 
 		// Add missing sections with only air
@@ -258,7 +262,9 @@ namespace CppProject
 						self->build_pos = self->build_pos_z * self->build_size_xy + self->build_pos_y * self->build_size_x + self->build_pos_x;
 						self->block_current = builder_get_block(self, self->build_pos_x, self->build_pos_y, self->build_pos_z);
 						self->block_state_id_current = builder_get_state_id(self, self->build_pos_x, self->build_pos_y, self->build_pos_z);
+						
 						script_execute(self, { blockEntity.script->id, blockEntity.map->id });
+						
 						delete blockEntity.map;
 					}
 				}
@@ -284,7 +290,7 @@ namespace CppProject
 				{ TAG_INT, { "version", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
 				{ TAG_STRING, { "LevelName", "Dimension" }},
 				{ TAG_LIST, { "Pos", "Rotation" }},
-				{ TAG_COMPOUND, { "Data", "Player", "spawn" } },
+				{ TAG_COMPOUND, { "Data", "Player", "spawn" }},
 				{ TAG_INT_ARRAY, { "pos" }}
 			}));
 			NbtCompound saveData(stream);
@@ -307,6 +313,7 @@ namespace CppProject
 					else
 						newName += info.name[i];
 				}
+
 				info.name = newName;
 			}
 
@@ -325,7 +332,8 @@ namespace CppProject
 
 			info.playerDim = "overworld";
 
-			auto loadPlayerData = [&info](NbtCompound* player) {
+			auto loadPlayerData = [&info](NbtCompound* player)
+			{
 				QVector<NbtDouble*> playerPos = player->List<NbtType::TAG_DOUBLE, NbtDouble>("Pos");
 				QVector<NbtFloat*> playerRot = player->List<NbtType::TAG_FLOAT, NbtFloat>("Rotation");
 				info.playerPos = { (RealType)playerPos[0]->value, (RealType)playerPos[1]->value, (RealType)playerPos[2]->value };
@@ -335,15 +343,17 @@ namespace CppProject
 					info.playerPos.y += 24.0 / 16.0;
 
 				if (player->GetType("Dimension") == TAG_STRING) // String dimension
-					info.playerDim = player->String("Dimension").Replaced("minecraft:", "").Replaced("the_", "");
+					info.playerDim = player->String("Dimension").Replaced("minecraft:", "");
 
 				else // Integer dimension
+				{
 					switch (player->Int("Dimension"))
 					{
-					case 0: info.playerDim = "overworld"; break;
-					case 1: info.playerDim = "end"; break;
-					case -1: info.playerDim = "nether"; break;
+						case 0:		info.playerDim = "overworld"; break;
+						case -1:	info.playerDim = "the_nether"; break;
+						case 1:		info.playerDim = "the_end"; break;
 					}
+				}
 
 				info.hasPlayer = true;
 			};
@@ -351,7 +361,6 @@ namespace CppProject
 			// Load player
 			if (data->HasKey("Player"))
 				loadPlayerData(data->Compound("Player"));
-
 			else
 			{
 				// Get player from newest <UUID>.dat file
@@ -375,10 +384,10 @@ namespace CppProject
 						{ TAG_STRING, { "Dimension" }},
 						{ TAG_LIST, { "Pos", "Rotation" }},
 					}));
+
 					NbtCompound playerData(playerStream);
 					loadPlayerData(&playerData);
 				}
-
 			}
 		}
 		catch (const QString& str)
@@ -410,16 +419,19 @@ namespace CppProject
 			filter = "*.mcr";
 			overworldDir.setNameFilters({ filter });
 		}
+
 		QDir netherDir(netherPath, filter);
 		QDir endDir(endPath, filter);
 
 		info.dimDir["overworld"] = overworldDir;
 		if (netherDir.exists() && !netherDir.isEmpty())
-			info.dimDir["nether"] = netherDir;
+			info.dimDir["the_nether"] = netherDir;
+
 		if (endDir.exists() && !endDir.isEmpty())
-			info.dimDir["end"] = endDir;
+			info.dimDir["the_end"] = endDir;
 
 		World::saves[dir] = info;
+
 		return true;
 	}
 

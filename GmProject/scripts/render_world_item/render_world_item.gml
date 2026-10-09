@@ -1,103 +1,83 @@
-/// render_world_item(vbuffer, is3d, facecamera, bounce, rotate, resource)
-/// @arg vbuffer
+/// @arg vertexbuffer
+/// @arg diffuse
+/// @arg normal
+/// @arg material
+/// @arg sheet
 /// @arg is3d
 /// @arg facecamera
 /// @arg bounce
 /// @arg rotate
-/// @arg resource
+/// @arg [realtime]
 
-function render_world_item(vbuffer, is3d, facecamera, bounce, rotate, res)
+function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
-	if (!res_is_ready(res[0]))
-		res[0] = mc_res
+	if (render_depth_pass)
+		return render_world_item_depth(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime)
 	
-	if (!res_is_ready(res[1]))
-		res[1] = mc_res
+	var texmat, texnorm;
+	resdif = res_eval(resdif)
+	resnorm = res_eval(resnorm)
+	resmat = res_eval(resmat)
 	
-	if (!res_is_ready(res[2]))
-		res[2] = mc_res
-	
-	if (facecamera)
+	// Material pass
+	if (render_material_pass)
 	{
-		var mat, rotz, rotmat;
-		mat = matrix_get(matrix_world)
-		rotz = 90 + point_direction(mat[MAT_X], mat[MAT_Y], proj_from[X], proj_from[Y])
-		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
-		rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, rotz, 1, 1, 1))
-		matrix_world_multiply_pre(rotmat)
-	}
+		texmat = ((resmat.type = e_res_type.PACK && !resmat.pack_has_materials) ? 0 : resmat.item_sheet_texture_material[sheet])
+		texnorm = ((resnorm.type = e_res_type.PACK && !resnorm.pack_has_normals) ? 0 : resnorm.item_sheet_texture_normal[sheet])
+		
+		if (texmat = null && resmat.type != e_res_type.PACK)
+			texmat = resmat.texture
 	
-	if (rotate)
-	{
-		var d, t, offz, mat, rotz, rotmat;
-		d = 60 * 6
-		t = app.background_time mod d * 360
-		offz = t/360
-		mat = matrix_get(matrix_world)
-		rotmat = matrix_build(-8, -0.5 * is3d, 0, 0, 0, 0, 1, 1, 1);
-		rotmat = matrix_multiply(rotmat, matrix_build(8, 0.5 * is3d, 0, 0, 0, offz, 1, 1, 1))
-		matrix_world_multiply_pre(rotmat)
+		if (texnorm = null && resnorm.type != e_res_type.PACK)
+			texnorm = resnorm.texture
 	}
-	
-	if (bounce)
-	{
-		var d, t, offz;
-		d = 60 * 3
-		t = app.background_time mod d * 2
-		if (t < d)
-			offz = ease("easeinoutquad", t / d) * 2 - 1
-		else
-			offz = 1 - ease("easeinoutquad", (t - d) / d) * 2
-		matrix_world_multiply_post(matrix_build(0, 0, offz, 0, 0, 0, 1, 1, 1))
-	}
-	
-	if (res[0].item_sheet_texture != null)
-		render_set_texture(res[0].item_sheet_texture)
 	else
-		render_set_texture(res[0].texture)
+	{
+		texmat = 0
+		texnorm = 0
+	}
 	
-	if (res[1] != null && res[1] != mc_res)
+	render_apply_res(resdif)
+	
+	if (facecamera || bounce || rotate)
+		matrix_set(matrix_world, render_world_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
+	
+	if (resdif.item_sheet_texture[sheet] != null)
+		render_set_texture(resdif, resdif.item_sheet_texture[sheet])
+	else
+		render_set_texture(resdif, resdif.texture)
+	
+	if (texmat != null && texmat != 0)
 	{
 		if (shader_uniform_metallic != 0)
 		{
 			shader_uniform_metallic = 0
-			render_set_uniform("uMetallic", shader_uniform_metallic)
+			render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
 		}
 		
 		if (shader_uniform_roughness != 0)
 		{
 			shader_uniform_roughness = 0
-			render_set_uniform("uRoughness", shader_uniform_roughness)
+			render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 		}
 		
 		if (shader_uniform_emissive != 0)
 		{
 			shader_uniform_emissive = 0
-			render_set_uniform("uEmissive", shader_uniform_emissive)
+			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 		}
 		
-		if (res[1].item_sheet_texture_material != null)
-			render_set_texture(res[1].item_sheet_texture_material, "Material")
-		else
-			render_set_texture(res[1].texture, "Material")
+		render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
 		
-		render_set_uniform_int("uMaterialFormat", res[1].material_format)
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, resmat.material_format)
 	}
 	else
 	{
-		render_set_texture(spr_default_material, "Material")
-		render_set_uniform_int("uMaterialFormat", e_material.FORMAT_NONE)
+		render_set_texture(null, 0, e_texture_channel.MATERIAL)
+		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 	}
 	
-	if (res[2] != null && res[2] != mc_res)
-	{
-		if (res[2].item_sheet_tex_normal != null)
-			render_set_texture(res[2].item_sheet_tex_normal, "Normal")
-		else
-			render_set_texture(res[2].texture, "Normal")
-	}
-	else
-		render_set_texture(spr_default_normal, "Normal")
+	render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
 	
-	vbuffer_render(vbuffer)
+	vbuffer_render(vbuf)
 }

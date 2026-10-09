@@ -1,10 +1,9 @@
 /// CppSeparate IntType block_get_render_model(VarType, RealType, BoolType, BoolType)
-/// block_get_render_model(modelobject, emissive, offset, offsetxy)
+/// @desc Returns a random or single model.
 /// @arg modelobject
 /// @arg emissive
 /// @arg offset
 /// @arg offsetxy
-/// @desc Returns a random or single model.
 
 function block_get_render_model(modelobj, emissive, offset, offsetxy)
 {
