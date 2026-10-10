@@ -281,7 +281,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 			}
 			
 			var list, licon;
-			list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list_dark
+			list = setting_theme.dark ? timeline_icon_list_dark : timeline_icon_list
 			licon = list[|tl.type]
 			
 			// Icon overrides for current camera/environment
