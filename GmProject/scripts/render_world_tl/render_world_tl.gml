@@ -308,7 +308,7 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp, render_res_diffuse, render_res_normal, render_res_material, true, temp.block_repeat_enable ? temp.block_repeat : vec3(1), temp)
+					render_world_block(temp, render_res_diffuse, render_res_normal, render_res_material)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res_diffuse, render_res_normal, render_res_material, temp.block_repeat_enable, temp.block_repeat)
 				

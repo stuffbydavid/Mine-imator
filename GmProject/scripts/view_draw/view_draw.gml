@@ -492,9 +492,9 @@ function view_draw(view)
 		if (content_mouseon)
 		{
 			if (place_build && cam = null)
-				shortcut_bar_state = "buildviewport"
+				shortcut_bar_state = "viewport/build"
 			else
-				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
+				shortcut_bar_state = "viewport" + (cam = null ? "" : "/camera")
 		}
 		
 		view_update(view, cam)

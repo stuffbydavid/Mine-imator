@@ -8,6 +8,8 @@ function builder_thread_event_create()
 	build_size_total = 0
 	build_size_sqrt = 0
 	
+	build_transform = false
+	
 	build_pos = 0
 	build_pos_x = 0
 	build_pos_y = 0

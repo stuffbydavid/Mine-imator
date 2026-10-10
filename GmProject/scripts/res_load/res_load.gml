@@ -338,6 +338,7 @@ function res_load(reload = false)
 					build_size_y = 1
 					build_size_z = 1
 					build_randomize = other.scenery_randomize
+					build_transform = false
 					
 					builder_start()
 					builder_spawn_threads(1)

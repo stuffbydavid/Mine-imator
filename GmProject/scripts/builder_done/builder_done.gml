@@ -11,7 +11,9 @@ function builder_done()
 		ds_grid_destroy(block_render_model)
 		ds_list_destroy(block_render_model_multipart)
 	}
+	
 	build_multithreaded = null
+	build_transform = false
 	
 	vertex_rgb = c_white
 	vertex_alpha = 1

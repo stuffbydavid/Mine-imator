@@ -140,7 +140,7 @@ function render_world_particle()
 			
 			case e_temp_type.BLOCK:
 			{
-				render_world_block(temp, temp.block_tex, project_pack_res, project_pack_res, true, rep)
+				render_world_block(temp, temp.block_tex, project_pack_res, project_pack_res)
 				break
 			}
 			

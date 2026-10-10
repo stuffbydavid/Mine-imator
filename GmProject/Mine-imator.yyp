@@ -3088,6 +3088,7 @@
     {"id":{"name":"common_effect","path":"shaders/common_effect/common_effect.yy",},},
     {"id":{"name":"common_gbuffers","path":"shaders/common_gbuffers/common_gbuffers.yy",},},
     {"id":{"name":"common_material","path":"shaders/common_material/common_material.yy",},},
+    {"id":{"name":"common_place","path":"shaders/common_place/common_place.yy",},},
     {"id":{"name":"common_position","path":"shaders/common_position/common_position.yy",},},
     {"id":{"name":"common_raytrace","path":"shaders/common_raytrace/common_raytrace.yy",},},
     {"id":{"name":"common_screen","path":"shaders/common_screen/common_screen.yy",},},

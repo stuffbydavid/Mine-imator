@@ -19,7 +19,7 @@ function app_start_place(build, tl = null, spawn = false)
 	place_view_pos = null
 	place_view_air = false
 	place_view_color = 0
-	place_view_normal = vec3(0)
+	place_view_normal = vec3(0, 1, 0)
 	place_view_ray = vec3(0)
 	
 	place_target_tl = null

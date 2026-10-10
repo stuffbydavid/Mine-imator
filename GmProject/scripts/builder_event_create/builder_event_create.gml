@@ -35,6 +35,7 @@ function builder_event_create()
 	build_single_stateid = 0
 	build_multithreaded = null
 	build_randomize = false
+	build_transform = false
 	
 	block_obj = null
 	block_waterlogged = null

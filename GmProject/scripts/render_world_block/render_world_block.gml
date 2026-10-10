@@ -2,14 +2,11 @@
 /// @arg diffuse
 /// @arg normal
 /// @arg material
-/// @arg [rotate]
-/// @arg [size]
-/// @arg [template]
 
-function render_world_block(block, resdif, resnorm, resmat, rotate = false, size = undefined, temp = null)
+function render_world_block(block, resdif, resnorm, resmat)
 {
 	if (render_depth_pass)
-		return render_world_block_depth(block, resdif, rotate, size)
+		return render_world_block_depth(block, resdif)
 	
 	if (block.block_vbuffer = null)
 		return 0
@@ -82,10 +79,6 @@ function render_world_block(block, resdif, resnorm, resmat, rotate = false, size
 	}
 	
 	blend = shader_blend_color
-	
-	// Rotate by 90 degrees for legacy support
-	if (rotate)
-		matrix_world_multiply_pre(matrix_create(point3D(0, size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1)))
 	
 	#region Depth 0
 	

@@ -59,9 +59,9 @@ function block_animate(root)
 		rot_point = array_copy_1d(other.rot_point)
 		
 		// Position & rotation
-		var pos = point3D_mul_matrix(
-			other.position,
-			matrix_create(point3D(0, root.temp.scenery.scenery_size[Y] * block_size, 0), vec3(0, 0, 90), vec3(1))
+		var pos = point3D(
+			other.position[Y],
+			root.temp.scenery.scenery_size[Y] * block_size - other.position[X], other.position[Z]
 		);
 		value_default[e_value.POS_X] = snap(pos[X], 0.01)
 		value_default[e_value.POS_Y] = snap(pos[Y], 0.01)

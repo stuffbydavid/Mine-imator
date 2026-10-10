@@ -435,7 +435,7 @@ namespace CppProject
 		return -1;
 	}
 
-	IntType surface_getpixel(IntType id, IntType x, IntType y)
+	VarType surface_getpixel(IntType id, IntType x, IntType y)
 	{
 		if (Surface* surf = FindSurface(id))
 		{
@@ -443,6 +443,19 @@ namespace CppProject
 			return GFX->QColorToInt(surf->GetColor(QPoint(x, y)));
 		}
 		
+		return -1;
+	}
+
+	IntType surface_getpixel_ext(IntType id, IntType x, IntType y)
+	{
+		if (Surface* surf = FindSurface(id))
+		{
+			GFX->SubmitBatch();
+			QColor color = surf->GetColor(QPoint(x, y));
+
+			return GFX->QColorToInt(color) | ((IntType)color.alpha() << 24);
+		}
+
 		return -1;
 	}
 

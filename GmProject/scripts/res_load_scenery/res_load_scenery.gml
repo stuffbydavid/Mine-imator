@@ -247,6 +247,7 @@ function res_load_scenery()
 			with (mc_builder)
 			{
 				builder_scenery = true
+				build_transform = true
 				build_multithreaded = true
 				
 				var blockstartpos = build_pos;
@@ -291,6 +292,7 @@ function res_load_scenery()
 				if (!block_multithreaded_skip)
 					break
 						
+				build_transform = true
 				build_multithreaded = false
 				builder_spawn_threads(1)
 				with (thread_list[|0])

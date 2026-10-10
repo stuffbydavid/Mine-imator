@@ -210,7 +210,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					case e_res_type.SCHEMATIC:
 					case e_res_type.FROM_WORLD:
 						if (select.ready)
-							render_world_block(select, mc_res, project_pack_res, project_pack_res, true, select.scenery_size)
+							render_world_block(select, mc_res, project_pack_res, project_pack_res)
 						break
 							
 					case e_res_type.MODEL:
@@ -286,7 +286,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						break
 							
 					case e_temp_type.BLOCK:
-						render_world_block(select, select.block_tex, project_pack_res, project_pack_res, true, rep)
+						render_world_block(select, select.block_tex, project_pack_res, project_pack_res)
 						break
 							
 					case e_temp_type.MODEL_PART:

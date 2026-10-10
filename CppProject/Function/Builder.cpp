@@ -9,7 +9,7 @@
 
 namespace CppProject
 {
-	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 3;
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 4;
 
 	Heap<Section*> Builder::sections;
 	WorldVec Builder::size, Builder::offset = { 0, 0, 0 }, Builder::sectionsDim;
@@ -272,6 +272,7 @@ namespace CppProject
 		Builder::offset = { 0, 0, 0 };
 
 		self->build_multithreaded = null_;
+		self->build_transform = false;
 	}
 
 	void builder_set_state_id(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)
@@ -401,6 +402,16 @@ namespace CppProject
 				else if (self->block_vertex_wave == e_vertex_wave_Z_ONLY)
 					wavez = true;
 			}
+		}
+
+		// Bake the timeline block axes after model transforms
+		if (self->build_transform)
+		{
+			RealType oldX = x, oldNX = nx;
+			x = y;
+			y = self->build_size_x * block_size_ - oldX;
+			nx = ny;
+			ny = -oldNX;
 		}
 
 		return Vertex{

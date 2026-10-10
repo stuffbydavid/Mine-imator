@@ -81,7 +81,7 @@ function view_update(view, cam)
 	{
 		place_content_mouseon = view
 		mouse_cursor = cr_none
-		shortcut_bar_state = "firstperson"
+		shortcut_bar_state = "first_person"
 		
 		camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y)
 		
@@ -169,9 +169,9 @@ function view_update(view, cam)
 			mouse_cursor = cr_handpoint
 			
 			if (place_build && cam = null)
-				shortcut_bar_state = "buildviewport"
+				shortcut_bar_state = "viewport/build"
 			else
-				shortcut_bar_state = "viewport" + (cam = null ? "" : "cam")
+				shortcut_bar_state = "viewport" + (cam = null ? "" : "/camera")
 			
 			if (view_click_right && (!cam || editcamobj) && mouse_move > 5)
 			{
@@ -230,7 +230,7 @@ function view_update(view, cam)
 		if (window_busy = "view/rotate_camera")
 		{
 			if (place_build && cam = null)
-				shortcut_bar_state = "buildviewport"
+				shortcut_bar_state = "viewport/build"
 
 			if (cam != null)
 				render_samples = -1
@@ -260,10 +260,10 @@ function view_update(view, cam)
 		if (window_busy = "view/move_camera")
 		{
 			if (cam = null)
-				shortcut_bar_state = "cameramove"
+				shortcut_bar_state = "camera_move"
 			else
 			{
-				shortcut_bar_state = "tlcameramove"
+				shortcut_bar_state = "tl_camera_move"
 				render_samples = -1
 			}
 			
@@ -302,7 +302,7 @@ function view_update(view, cam)
 		if (window_busy = "view/pan_camera")
 		{
 			if (place_build && cam = null)
-				shortcut_bar_state = "buildviewport"
+				shortcut_bar_state = "viewport/build"
 
 			camera_control_pan(cam)
 			
