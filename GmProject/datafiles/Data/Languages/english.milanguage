@@ -4,7 +4,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"for_version": "2.1-pre1",
-		"last_change": "2026.10.01"
+		"last_change": "2026.10.08"
 	},
 	"particle/": {
 		"type/": {
@@ -2113,6 +2113,9 @@
 				"moonlighttrail": "Moonlight Trail",
 				"crafter": "Crafter",
 				"builder": "Builder",
+				"aurora": "Aurora",
+				"hero": "Hero",
+				"twisted": "Twisted",
 				"minecon_2011": "MineCon 2011",
 				"minecon_2012": "MineCon 2012",
 				"minecon_2013": "MineCon 2013",

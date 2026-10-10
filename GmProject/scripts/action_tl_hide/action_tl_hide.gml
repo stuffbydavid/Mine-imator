@@ -19,6 +19,15 @@ function action_tl_hide(tl)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_hide, false);
-		action_tl_hide_tree(tl, !tl.hide, hobj)
+		
+		var nval = !tl.hide;
+		if (tl.selected) // Apply to all selected timelines
+		{
+			with (obj_timeline)
+				if (selected && !parent_is_selected)
+					action_tl_hide_tree(id, nval, hobj)
+		}
+		else // Only apply to clicked timeline
+			action_tl_hide_tree(tl, nval, hobj)
 	}
 }
