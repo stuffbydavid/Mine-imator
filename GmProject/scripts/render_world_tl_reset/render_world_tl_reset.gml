@@ -24,6 +24,24 @@ function render_world_tl_reset()
 		render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	}
 	
+	if (render_fast_pass)
+	{
+		render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
+		
+		shader_uniform_wind = false
+		shader_uniform_wind_terrain = false
+		shader_uniform_wind_strength = null
+		shader_uniform_wind_directional_strength = null
+		
+		render_set_uniform(e_uniform.WIND_ENABLE, shader_uniform_wind)
+		render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
+		
+		render_blend_prev = null
+		render_alpha_prev = null
+		
+		return 0
+	}
+	
 	// Mix color
 	shader_uniform_color_ext = 0
 	shader_uniform_rgb_add = c_black
@@ -81,7 +99,8 @@ function render_world_tl_reset()
 	render_set_uniform_color(e_uniform.SSS_COLOR, shader_uniform_sss_color, 1.0)
 	
 	// Wind
-	shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable
+	shader_uniform_wind_strength = null
+	shader_uniform_wind_directional_strength = null
 	
 	// Glow
 	shader_uniform_glow = false

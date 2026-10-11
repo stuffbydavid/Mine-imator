@@ -36,7 +36,6 @@ function shader_startup()
 		shader_map = ds_map_create()
 		
 		new_shader("shader_alpha_fix")
-		new_shader("shader_alpha_test")
 		new_shader("shader_blend")
 		new_shader("shader_build_box")
 		new_shader("shader_outline")

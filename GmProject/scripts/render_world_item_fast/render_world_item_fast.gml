@@ -1,4 +1,4 @@
-/// @desc Renders an item in a depth pass.
+/// @desc Renders an item with minimal settings and materials, intended for selection, scene test and depth passes.
 /// @arg vertexbuffer
 /// @arg diffuse
 /// @arg sheet
@@ -8,7 +8,7 @@
 /// @arg rotate
 /// @arg [realtime]
 
-function render_world_item_depth(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime = false)
+function render_world_item_fast(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
 	resdif = res_eval(resdif)
 	render_apply_res(resdif)

@@ -7,6 +7,7 @@
 #include "GraphicsApiHandler.hpp"
 
 #include <QFloat16>
+#include <QOpenGLExtraFunctions>
 
 namespace CppProject
 {
@@ -120,6 +121,8 @@ namespace CppProject
 
 	FrameBuffer::~FrameBuffer()
 	{
+		ResetColorPixelAsync();
+
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
@@ -161,6 +164,9 @@ namespace CppProject
 
 	void FrameBuffer::Update(QSize size)
 	{
+		if (size != this->size || (IS_OPENGL && fboContext && fboContext != GFX->glContext))
+			ResetColorPixelAsync();
+		
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
@@ -495,6 +501,212 @@ namespace CppProject
 
 			delete[] dataFlipped;
 		}
+	}
+
+	void FrameBuffer::ResetColorPixelAsync()
+	{
+		for (PixelReadback& slot : pixelReadbacks)
+		{
+		#if OS_WINDOWS
+			releaseAndReset(slot.texture);
+			releaseAndReset(slot.query);
+		#endif
+			if (IS_OPENGL && GFX && GFX->glContext)
+			{
+				if (slot.fence)
+					GFX->glContext->extraFunctions()->glDeleteSync(slot.fence);
+
+				if (slot.pbo)
+					GFX->glDeleteBuffers(1, &slot.pbo);
+			}
+			slot = PixelReadback();
+		}
+
+		pixelReadbackNext = pixelReadbackSerial = pixelReadbackCompleted = 0;
+		memset(pixelReadbackValue, 0, sizeof(pixelReadbackValue));
+	}
+
+	BoolType FrameBuffer::CopyColorPixelAsync(QPoint point, uchar* dst, IntType& completed, IntType& submitted)
+	{
+		completed = submitted = 0;
+
+		if (depthOnly || size.isEmpty())
+			return false;
+
+		IntType pixelSize = GetPixelSize(true);
+		point.rx() = std::clamp(point.x(), 0, size.width() - 1);
+		point.ry() = std::clamp(point.y(), 0, size.height() - 1);
+
+		for (PixelReadback& slot : pixelReadbacks)
+		{
+			if (!slot.pending)
+				continue;
+
+			BoolType ready = false;
+		#if OS_WINDOWS
+			if (IS_D3D11)
+			{
+				HRESULT result = D3DContext->GetData(slot.query, nullptr, 0, D3D11_ASYNC_GETDATA_DONOTFLUSH);
+				if (FAILED(result))
+				{
+					slot.pending = false;
+					continue;
+				}
+				ready = (result == S_OK);
+			}
+		#endif
+			if (IS_OPENGL)
+			{
+				GLenum status = GFX->glContext->extraFunctions()->glClientWaitSync(slot.fence, 0, 0);
+				if (status == GL_WAIT_FAILED)
+				{
+					GFX->glContext->extraFunctions()->glDeleteSync(slot.fence);
+					slot.fence = nullptr;
+					slot.pending = false;
+					continue;
+				}
+				ready = (status == GL_ALREADY_SIGNALED || status == GL_CONDITION_SATISFIED);
+			}
+
+			if (!ready)
+				continue;
+
+			uchar value[16] = {};
+			BoolType copied = false;
+		#if OS_WINDOWS
+			if (IS_D3D11)
+			{
+				D3D11_MAPPED_SUBRESOURCE mapped = {};
+				if (SUCCEEDED(D3DContext->Map(slot.texture, 0, D3D11_MAP_READ, D3D11_MAP_FLAG_DO_NOT_WAIT, &mapped)))
+				{
+					memcpy(value, mapped.pData, pixelSize);
+					D3DContext->Unmap(slot.texture, 0);
+					copied = true;
+				}
+			}
+		#endif
+			if (IS_OPENGL)
+			{
+				GLint prevPackBuffer;
+				GFX->glGetIntegerv(GL_PIXEL_PACK_BUFFER_BINDING, &prevPackBuffer);
+				GFX->glBindBuffer(GL_PIXEL_PACK_BUFFER, slot.pbo);
+
+				void* mapped = GFX->glContext->extraFunctions()->glMapBufferRange(GL_PIXEL_PACK_BUFFER, 0, pixelSize, GL_MAP_READ_BIT);
+				if (mapped)
+				{
+					memcpy(value, mapped, pixelSize);
+					GFX->glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
+					copied = true;
+				}
+
+				GFX->glBindBuffer(GL_PIXEL_PACK_BUFFER, prevPackBuffer);
+				GFX->glContext->extraFunctions()->glDeleteSync(slot.fence);
+				slot.fence = nullptr;
+			}
+
+			if (copied && slot.serial > pixelReadbackCompleted)
+			{
+				memcpy(pixelReadbackValue, value, pixelSize);
+				pixelReadbackCompleted = slot.serial;
+			}
+
+			slot.pending = false;
+		}
+
+		for (IntType i = 0; i < pixelReadbackCount; i++)
+		{
+			IntType index = (pixelReadbackNext + i) % pixelReadbackCount;
+			PixelReadback& slot = pixelReadbacks[index];
+			if (slot.pending)
+				continue;
+
+		#if OS_WINDOWS
+			if (IS_D3D11)
+			{
+				if (!slot.texture)
+				{
+					D3D11_TEXTURE2D_DESC desc = {};
+					d3dColorTex->GetDesc(&desc);
+					desc.Width = desc.Height = desc.MipLevels = desc.ArraySize = 1;
+					desc.Usage = D3D11_USAGE_STAGING;
+					desc.BindFlags = desc.MiscFlags = 0;
+					desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+					if (FAILED(D3DDevice->CreateTexture2D(&desc, nullptr, &slot.texture)))
+						break;
+				}
+
+				if (!slot.query)
+				{
+					D3D11_QUERY_DESC desc = { D3D11_QUERY_EVENT, 0 };
+					if (FAILED(D3DDevice->CreateQuery(&desc, &slot.query)))
+						break;
+				}
+
+				D3D11_BOX box = { (UINT)point.x(), (UINT)point.y(), 0, (UINT)point.x() + 1, (UINT)point.y() + 1, 1 };
+				D3DContext->CopySubresourceRegion(slot.texture, 0, 0, 0, 0, d3dColorTex, 0, &box);
+				D3DContext->End(slot.query);
+			}
+		#endif
+			if (IS_OPENGL)
+			{
+				GLint prevFbo, prevPackBuffer, prevAlignment, prevRowLength, prevSkipPixels, prevSkipRows;
+				GFX->glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &prevFbo);
+				GFX->glGetIntegerv(GL_PIXEL_PACK_BUFFER_BINDING, &prevPackBuffer);
+				GFX->glGetIntegerv(GL_PACK_ALIGNMENT, &prevAlignment);
+				GFX->glGetIntegerv(GL_PACK_ROW_LENGTH, &prevRowLength);
+				GFX->glGetIntegerv(GL_PACK_SKIP_PIXELS, &prevSkipPixels);
+				GFX->glGetIntegerv(GL_PACK_SKIP_ROWS, &prevSkipRows);
+				
+				if (!slot.pbo)
+				{
+					GFX->glGenBuffers(1, &slot.pbo);
+					if (!slot.pbo)
+						break;
+
+					GFX->glBindBuffer(GL_PIXEL_PACK_BUFFER, slot.pbo);
+					GFX->glBufferData(GL_PIXEL_PACK_BUFFER, pixelSize, nullptr, GL_STREAM_READ);
+				}
+				else
+					GFX->glBindBuffer(GL_PIXEL_PACK_BUFFER, slot.pbo);
+				
+				GFX->glBindFramebuffer(GL_READ_FRAMEBUFFER, glFboId);
+				GFX->glPixelStorei(GL_PACK_ALIGNMENT, 1);
+				GFX->glPixelStorei(GL_PACK_ROW_LENGTH, 0);
+				GFX->glPixelStorei(GL_PACK_SKIP_PIXELS, 0);
+				GFX->glPixelStorei(GL_PACK_SKIP_ROWS, 0);
+
+				GFX->glReadPixels(point.x(), size.height() - 1 - point.y(), 1, 1, glFormat, glType, nullptr);
+
+				slot.fence = GFX->glContext->extraFunctions()->glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+
+				GFX->glPixelStorei(GL_PACK_ALIGNMENT, prevAlignment);
+				GFX->glPixelStorei(GL_PACK_ROW_LENGTH, prevRowLength);
+				GFX->glPixelStorei(GL_PACK_SKIP_PIXELS, prevSkipPixels);
+				GFX->glPixelStorei(GL_PACK_SKIP_ROWS, prevSkipRows);
+
+				GFX->glBindBuffer(GL_PIXEL_PACK_BUFFER, prevPackBuffer);
+				GFX->glBindFramebuffer(GL_READ_FRAMEBUFFER, prevFbo);
+			}
+
+			if (IS_OPENGL && !slot.fence)
+				break;
+
+			slot.pending = true;
+			slot.serial = ++pixelReadbackSerial;
+
+			submitted = slot.serial;
+			pixelReadbackNext = (index + 1) % pixelReadbackCount;
+
+			break;
+		}
+
+		completed = pixelReadbackCompleted;
+		if (!completed)
+			return false;
+		
+		memcpy(dst, pixelReadbackValue, pixelSize);
+
+		return true;
 	}
 
 	void FrameBuffer::CopyColorData(uchar* dst)

@@ -44,6 +44,8 @@ function view_event_create()
 	surface_control_edit = null
 	
 	surface_place_id = null
+	surface_place_async_id = null
+	surface_place_async_list = array_create(8)
 	surface_place_separate = false
 	surface_place_tl_list = [ 0 ]
 	surface_place_tl_list_id = -1

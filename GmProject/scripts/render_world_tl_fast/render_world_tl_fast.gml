@@ -1,6 +1,6 @@
-/// @desc Renders a timeline object for a depth pass.
+/// @desc Renders a timeline object with minimal settings and materials, intended for selection, scene test and depth passes.
 
-function render_world_tl_depth()
+function render_world_tl_fast()
 {
 	if (!render_alpha_hash_force)
 	{
@@ -20,11 +20,14 @@ function render_world_tl_depth()
 		render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
 	}
 
-	if (value_inherit[e_value.WIND_INFLUENCE] != shader_uniform_wind_strength)
+	var windstrength = app.env_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE];
+	if (windstrength != shader_uniform_wind_strength ||
+		windstrength * app.env_wind_directional_strength != shader_uniform_wind_directional_strength)
 	{
-		shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE]
+		shader_uniform_wind_strength = windstrength
+		shader_uniform_wind_directional_strength = windstrength * app.env_wind_directional_strength
 		render_set_uniform(e_uniform.WIND_STRENGTH, shader_uniform_wind_strength)
-		render_set_uniform(e_uniform.WIND_DIRECTIONAL_STRENGTH, shader_uniform_wind_strength * app.env_wind_directional_strength)
+		render_set_uniform(e_uniform.WIND_DIRECTIONAL_STRENGTH, shader_uniform_wind_directional_strength)
 	}
 
 	if (type != e_tl_type.PARTICLE_SPAWNER)
@@ -47,7 +50,7 @@ function render_world_tl_depth()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block_depth(temp, render_res_diffuse)
+					render_world_block(temp, render_res_diffuse, null, null)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res_diffuse, project_pack_res, project_pack_res, temp.block_repeat_enable, temp.block_repeat)
 				
@@ -59,9 +62,9 @@ function render_world_tl_depth()
 				itemanimate = (parent = null || parent = app || parent.object_index != obj_timeline || parent.type != e_tl_type.MODEL_PART)
 				
 				if (item_vbuffer = null)
-					render_world_item_depth(temp.item_vbuffer, item_res, temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
+					render_world_item_fast(temp.item_vbuffer, item_res, temp.item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				else
-					render_world_item_depth(item_vbuffer, item_res, item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
+					render_world_item_fast(item_vbuffer, item_res, item_sheet, temp.item_3d, temp.item_face_camera, temp.item_bounce && itemanimate, temp.item_spin && itemanimate)
 				
 				break
 			}
@@ -93,7 +96,7 @@ function render_world_tl_depth()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block_depth(temp.model, res)
+					render_world_block(temp.model, res, null, null)
 					
 					with (temp)
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
@@ -112,6 +115,11 @@ function render_world_tl_depth()
 					tex = (value_inherit[e_value.TEXTURE_OBJ] = null) ? spr_shape : value_inherit[e_value.TEXTURE_OBJ].texture
 					render_set_texture(value_inherit[e_value.TEXTURE_OBJ], tex)
 					vbuffer_render(path_vbuffer)
+				}
+				else if (render_mode = e_render_mode.CLICK)
+				{
+					render_set_texture(null, spr_shape)
+					vbuffer_render(path_select_vbuffer)
 				}
 				
 				break

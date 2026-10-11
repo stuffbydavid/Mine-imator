@@ -8,12 +8,15 @@ function render_world_sky_clouds()
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.COLOR)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
 
+	if (render_fast_pass)
+		return render_world_sky_clouds_fast()
+	
 	if (render_mode = e_render_mode.G_BUFFERS || (render_mode = e_render_mode.COLOR && render_color_combined))
 		render_set_uniform(e_uniform.SSAO, 0)
 	
 	var res, twopass;
 	res = res_eval(env_sky_clouds_tex)
-	twopass = (render_mode != e_render_mode.DEPTH && (render_mode != e_render_mode.G_BUFFERS || render_sun_combined))
+	twopass = (render_mode != e_render_mode.G_BUFFERS || render_sun_combined)
 	if (render_mode = e_render_mode.AUXILIARY && !render_auxiliary_material && !render_glow)
 		twopass = false
 	
@@ -51,6 +54,7 @@ function render_world_sky_clouds()
 		// Only draw clouds' depth
 		gpu_set_blendenable(false)
 		gpu_set_colorwriteenable(false, false, false, false)
+		
 		for (var i = 0; i < array_length(env_sky_clouds_vbuffer_pos); i++)
 			vbuffer_render(env_sky_clouds_vbuffer, env_sky_clouds_vbuffer_pos[i], point3D(0, 0, 90))
 

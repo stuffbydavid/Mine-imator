@@ -17,7 +17,7 @@ function render_world_shape(type, vbuf, facecamera, tex)
 	render_set_texture(null, tex[e_texture_channel.DIFFUSE])
 	
 	shader_texture_surface = false
-	if (!render_depth_pass)
+	if (!render_fast_pass)
 	{
 		render_set_texture(null, tex[e_texture_channel.MATERIAL], e_texture_channel.MATERIAL)
 		render_set_texture(null, tex[e_texture_channel.NORMAL], e_texture_channel.NORMAL)

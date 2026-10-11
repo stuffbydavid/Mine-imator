@@ -1,12 +1,9 @@
-/// @desc Renders a block in a depth pass.
+/// @desc Renders a block with minimal settings and materials, intended for selection, scene test and depth passes.
 /// @arg block
 /// @arg diffuse
 
-function render_world_block_depth(block, resdif)
+function render_world_block_fast(block, resdif)
 {
-	if (block.block_vbuffer = null)
-		return 0
-
 	var tex, texprev, texani, active0, active1, active2, texready, basebound;
 
 	resdif = res_eval(resdif)
@@ -24,7 +21,7 @@ function render_world_block_depth(block, resdif)
 	if (block.block_vbuffer_active[@ active0 + e_block_vbuffer.ANIMATED] ||
 		block.block_vbuffer_active[@ active1 + e_block_vbuffer.ANIMATED] ||
 		block.block_vbuffer_active[@ active2 + e_block_vbuffer.ANIMATED] ||
-		(render_mode = e_render_mode.DEPTH && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER]))
+		((!render_depth_pass || render_mode = e_render_mode.DEPTH) && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER]))
 	{
 		var frame = block_texture_get_frame();
 		texani = resdif.block_sheet_animated_diffuse ? resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame] : mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
@@ -166,7 +163,7 @@ function render_world_block_depth(block, resdif)
 		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.ANIMATED])
 	}
 
-	if (render_mode = e_render_mode.DEPTH && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
+	if ((!render_depth_pass || render_mode = e_render_mode.DEPTH) && block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
 	{
 		render_set_texture(resdif, texani)
 		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])

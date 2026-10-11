@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_world_item_depth",
+  "%Name":"render_world_tl_fast",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_world_item_depth",
+  "name":"render_world_tl_fast",
   "parent":{
     "name":"World",
     "path":"folders/Scripts/Render/World.yy",

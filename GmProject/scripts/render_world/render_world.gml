@@ -11,6 +11,14 @@ function render_world(mode)
 		mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH
 	)
+	render_fast_pass = (
+		render_depth_pass ||
+		mode = e_render_mode.CLICK ||
+		mode = e_render_mode.SELECT ||
+		mode = e_render_mode.PLACE_SELECT ||
+		mode = e_render_mode.PLACE_PARENT ||
+		mode = e_render_mode.SCENE_TEST
+	)
 
 	if (render_place)
 	{
@@ -76,6 +84,7 @@ function render_world(mode)
 		gpu_set_tex_filter(false)
 	
 	shader_check_uniform = false
+	render_fast_pass = false
 	render_depth_pass = false
 	render_place_pass = false
 	render_world_count++

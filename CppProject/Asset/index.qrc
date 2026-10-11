@@ -7,8 +7,6 @@
 		<file>Shaders/Compiled/shader_add.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_alpha_fix.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_alpha_fix.vsh.d3d</file>
-		<file>Shaders/Compiled/shader_alpha_test.fsh.d3d</file>
-		<file>Shaders/Compiled/shader_alpha_test.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_blend.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_blend.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_blur.fsh.d3d</file>
@@ -113,8 +111,6 @@
 		<file>Shaders/shader_add.vsh</file>
 		<file>Shaders/shader_alpha_fix.fsh</file>
 		<file>Shaders/shader_alpha_fix.vsh</file>
-		<file>Shaders/shader_alpha_test.fsh</file>
-		<file>Shaders/shader_alpha_test.vsh</file>
 		<file>Shaders/shader_blend.fsh</file>
 		<file>Shaders/shader_blend.vsh</file>
 		<file>Shaders/shader_blur.fsh</file>

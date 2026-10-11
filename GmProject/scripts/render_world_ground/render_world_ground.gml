@@ -8,6 +8,9 @@ function render_world_ground()
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_white, 1)
 	
+	if (render_fast_pass)
+		return render_world_ground_fast()
+		
 	if (render_place_pass)
 		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.BLOCK)
 
@@ -21,7 +24,7 @@ function render_world_ground()
 		(env_ground_normal_ani ? env_ground_ani_texture_normal[0] != null : env_ground_texture_normal != null)
 	
 	render_apply_res(res)
-
+	
 	// Blend
 	var blend, iswater;
 	blend = block_texture_get_blend(env_ground_name, env_ground_tex)
@@ -50,7 +53,7 @@ function render_world_ground()
 	}
 	
 	// Texture
-	shader_texture_filter_mipmap = !render_depth_pass && app.project_render_texture_filtering
+	shader_texture_filter_mipmap = app.project_render_texture_filtering
 	
 	if (env_ground_ani)
 		render_set_texture(res, env_ground_ani_texture[block_texture_get_frame()])
@@ -74,10 +77,11 @@ function render_world_ground()
 	// Submit ground mesh at an offset from the camera
 	var sheet, groundscale, groundsquare, xo, yo;
 	sheet = minecraft_assets_block_texture_picker_slot_decode(env_ground_slot)[0]
-	groundscale = (sheet >= 0 && sheet < e_block_sheet.static_amount ? block_size_list[sheet] / block_size : 1)
+	groundscale = (sheet >= 0 && sheet < e_block_sheet.static_amount ? (block_size_list[sheet] / block_size) : 1)
 	groundsquare = block_size * groundscale
 	xo = (cam_from[X] div groundsquare) * groundsquare
 	yo = (cam_from[Y] div groundsquare) * groundsquare
+	
 	vbuffer_render(env_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16 * groundscale, block_size / 16 * groundscale, 1))
 	
 	// Reset

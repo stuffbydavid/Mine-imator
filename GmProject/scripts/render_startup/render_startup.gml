@@ -30,7 +30,7 @@ function render_startup()
 			  shader_uniform_emissive, shader_uniform_metallic, shader_uniform_roughness, shader_uniform_wind,
 			  shader_uniform_wind_terrain, shader_uniform_fog, shader_uniform_sss, shader_uniform_sss_red,
 			  shader_uniform_sss_green, shader_uniform_sss_blue, shader_uniform_sss_color, shader_uniform_glow, shader_uniform_glow_texture,
-			  shader_uniform_glow_color, shader_uniform_wind_strength;
+			  shader_uniform_glow_color, shader_uniform_wind_strength, shader_uniform_wind_directional_strength;
 	
 	globalvar render_pass_surf, render_pass_surfs;
 	
@@ -287,7 +287,7 @@ function render_startup()
 	render_surface_sun_buffer = array_create(render_cascades_count, null)
 	
 	// Render modes
-	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass, render_material_pass;
+	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass, render_fast_pass, render_material_pass;
 	render_mode = null
 	render_mode_shader_map = ds_int_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
@@ -299,7 +299,6 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.COLOR_FOG] = shader_color_fog
 	render_mode_shader_map[?e_render_mode.COLOR_FOG_LIGHTS] = shader_color_fog_lights
 	render_mode_shader_map[?e_render_mode.ALPHA_FIX] = shader_alpha_fix
-	render_mode_shader_map[?e_render_mode.ALPHA_TEST] = shader_alpha_test
 	render_mode_shader_map[?e_render_mode.DEPTH] = shader_depth
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SUN_DEPTH] = shader_depth_ortho
 	render_mode_shader_map[?e_render_mode.HIGH_LIGHT_SPOT_DEPTH] = shader_depth
@@ -314,6 +313,7 @@ function render_startup()
 	render_mode_shader_map[?e_render_mode.AUXILIARY] = shader_high_auxiliary
 	
 	render_shader_obj = null
+	render_fast_pass = false
 	render_depth_pass = false
 	render_material_pass = true
 	

@@ -5,12 +5,26 @@
 
 function render_world_block(block, resdif, resnorm, resmat)
 {
-	if (render_depth_pass)
-		return render_world_block_depth(block, resdif)
-	
+	// Invalid vertex buffer
 	if (block.block_vbuffer = null)
 		return 0
+
+	// Early transparency check
+	if (render_world_block_transparent != null && is_array(block.block_vbuffer_depth_active) &&
+		array_length(block.block_vbuffer_depth_active) > e_block_depth.DEPTH2)
+	{
+		if (render_world_block_transparent = false && !block.block_vbuffer_depth_active[@ e_block_depth.DEPTH0])
+			return 0
+
+		if (render_world_block_transparent = true &&
+			!block.block_vbuffer_depth_active[@ e_block_depth.DEPTH1] &&
+			!block.block_vbuffer_depth_active[@ e_block_depth.DEPTH2])
+			return 0
+	}
 	
+	if (render_fast_pass)
+		return render_world_block_fast(block, resdif)
+
 	resdif = res_eval(resdif)
 	resnorm = res_eval(resnorm)
 	resmat = res_eval(resmat)
@@ -366,47 +380,42 @@ function render_world_block(block, resdif, resnorm, resmat)
 	
 	if (block.block_vbuffer_active[@ active2 + e_block_vbuffer.WATER])
 	{
-		if (render_mode != e_render_mode.HIGH_LIGHT_SUN_DEPTH && 
-			render_mode != e_render_mode.HIGH_LIGHT_SPOT_DEPTH && 
-			render_mode != e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+		render_set_texture(resdif, texani)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.WATER]), shader_blend_alpha)
+		render_set_uniform_int(e_uniform.IS_WATER, app.project_render_water_reflections)
+
+		if (app.project_render_water_reflections) // Default water reflections provided by MI
 		{
-			render_set_texture(resdif, texani)
-			render_set_uniform_color(e_uniform.BLEND_COLOR, color_multiply(blend, resdif.color_list[@ e_biome_color.WATER]), shader_blend_alpha)
-			render_set_uniform_int(e_uniform.IS_WATER, app.project_render_water_reflections)
-			
-			if (app.project_render_water_reflections) // Default water reflections provided by MI
+			render_set_material_textures_none()
+
+			if (shader_uniform_roughness != app.project_render_water_roughness)
 			{
-				render_set_material_textures_none()
-				
-				if (shader_uniform_roughness != app.project_render_water_roughness)
-				{
-					shader_uniform_roughness = app.project_render_water_roughness
-					render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
-				}
-				
-				if (shader_uniform_metallic != 0)
-				{
-					shader_uniform_metallic = 0
-					render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
-				}
-				
-				if (shader_uniform_emissive != 0)
-				{
-					shader_uniform_emissive = 0
-					render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
-				}
+				shader_uniform_roughness = app.project_render_water_roughness
+				render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 			}
-			else
+
+			if (shader_uniform_metallic != 0)
 			{
-				render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
-				render_set_texture(resnorm, texaninorm, e_texture_channel.NORMAL)
+				shader_uniform_metallic = 0
+				render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
 			}
-			
-			vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])
-			
-			render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
-			render_set_uniform_int(e_uniform.IS_WATER, 0)
+
+			if (shader_uniform_emissive != 0)
+			{
+				shader_uniform_emissive = 0
+				render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+			}
 		}
+		else
+		{
+			render_set_texture(resmat, texanimat, e_texture_channel.MATERIAL)
+			render_set_texture(resnorm, texaninorm, e_texture_channel.NORMAL)
+		}
+
+		vbuffer_render(block.block_vbuffer[@ active2 + e_block_vbuffer.WATER])
+
+		render_set_uniform_color(e_uniform.BLEND_COLOR, blend, shader_blend_alpha)
+		render_set_uniform_int(e_uniform.IS_WATER, 0)
 	}
 	
 	if (filterprev != null)

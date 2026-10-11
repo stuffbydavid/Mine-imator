@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_world_block_depth",
+  "%Name":"render_world_sky_clouds_fast",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_world_block_depth",
+  "name":"render_world_sky_clouds_fast",
   "parent":{
     "name":"World",
     "path":"folders/Scripts/Render/World.yy",
