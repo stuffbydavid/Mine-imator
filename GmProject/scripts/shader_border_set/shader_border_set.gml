@@ -6,7 +6,7 @@ function shader_border_set()
 	if (render_mode = e_render_mode.PLACE_SELECT)
 		col = c_yellow
 	else if (render_mode = e_render_mode.PLACE_PARENT)
-		col = make_color_rgb(176, 164, 255)
+		col = c_place_target
 	
 	render_set_uniform_color(e_uniform.COLOR, col, 1)
 }

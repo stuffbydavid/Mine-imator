@@ -5,8 +5,9 @@
 
 function camera_control_move(cam, lockx, locky, lockmouse = true)
 {
-	var movespeed, mx, my;
+	var movespeed, mx, my, elapsed;
 	movespeed = 3
+	elapsed = delta_time / (1000000 / 60)
 	mx = -((display_mouse_get_x() - lockx) / 8) * setting_look_sensitivity
 	my = -((display_mouse_get_y() - locky) / 8) * setting_look_sensitivity
 	
@@ -30,7 +31,7 @@ function camera_control_move(cam, lockx, locky, lockmouse = true)
 		}
 		
 		// Move
-		move = movespeed * setting_move_speed * setting_move_speed_scroll * delta
+		move = movespeed * setting_move_speed * setting_move_speed_scroll * elapsed
 		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
 		if (keybinds[e_keybind.CAM_FAST].active)
@@ -85,7 +86,7 @@ function camera_control_move(cam, lockx, locky, lockmouse = true)
 		var move, roll, spd, spdm, xd, yd, zd;
 		
 		// Move
-		move = movespeed * setting_move_speed * setting_move_speed_scroll * delta
+		move = movespeed * setting_move_speed * setting_move_speed_scroll * elapsed
 		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
 		if (keybinds[e_keybind.CAM_FAST].active)
@@ -118,7 +119,7 @@ function camera_control_move(cam, lockx, locky, lockmouse = true)
 		zd += (-dsin(cam.value[e_value.ROT_X])) * (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		
 		// Roll
-		roll = (keybinds[e_keybind.CAM_ROLL_FORWARD].active - keybinds[e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * delta
+		roll = (keybinds[e_keybind.CAM_ROLL_FORWARD].active - keybinds[e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * elapsed
 		
 		// Set
 		tl_value_set_start(camera_control_move, true)

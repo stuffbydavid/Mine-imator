@@ -1,6 +1,7 @@
 function render_high_samples_add()
 {
-	render_surface_samples = surface_require(render_surface_samples, render_width, render_height, false, surface_rgba32float)
+	var format = (is_cpp() ? surface_rgba32float : surface_rgba16float); // surface_rgba32float support not guaranteed in GM
+	render_surface_samples = surface_require(render_surface_samples, render_width, render_height, false, format)
 	
 	// Add sample to accumulation buffer
 	surface_set_target(render_surface_samples)

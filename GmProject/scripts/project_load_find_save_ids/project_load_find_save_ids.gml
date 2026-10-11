@@ -184,14 +184,19 @@ function project_load_find_save_ids(isproject = false)
 
 		if (!animated)
 		{
-			var references = [ e_value.PATH_OBJ, e_value.ATTRACTOR, e_value.IK_TARGET, e_value.IK_TARGET_ANGLE, e_value.SOUND_OBJ, e_value.TEXT_FONT ];
-			for (var v = 0; v < array_length(references); v++)
+			for (var v = 0; v < e_value.amount; v++)
 			{
-				var index = references[v];
-				if (value_default[index] != null)
-					value_default[index] = save_id_find(save_id_map[?value_default[index]])
+				if (!tl_value_is_obj(v))
+					continue
+				
+				if (!tl_value_is_texture(v) && value_default[v] != null)
+					value_default[v] = save_id_find(save_id_map[?value_default[v]])
+				
+				if (tl_value_is_texture(v) && value[v] = "none")
+					value[v] = 0
+				else if (value[v] != null)
+					value[v] = save_id_find(save_id_map[?value[v]])
 			}
-			value = array_copy_1d(value_default)
 		}
 		
 		// Glint

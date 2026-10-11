@@ -11,7 +11,7 @@ function render_high_get_apply_surf(hdr = false)
 		return render_surface_hdr[index]
 	}
 	
-	// Keep cached G-buffers intact while post effects use separate targets
+	// Keep cached G-buffers intact during post effects
 	if (render_post_index)
 	{
 		if (render_gbuffers_cache_enabled || renderer_current = e_renderer.QUICK)

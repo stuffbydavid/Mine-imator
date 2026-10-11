@@ -5,12 +5,14 @@
 function app_start_place(build, tl = null, spawn = false)
 {
 	place_busy = build ? "" : "place"
+	
 	window_busy = place_busy
+	window_place = true
 	
 	place_build = build
 	place_tl = tl
 	place_history = build ? null : history[0]
-	place_spawn = build || spawn
+	place_spawn = (build || spawn)
 	
 	place_pos = null
 	place_rot = vec3(0)
@@ -18,18 +20,16 @@ function app_start_place(build, tl = null, spawn = false)
 		
 	place_view_pos = null
 	place_view_air = false
-	place_view_color = 0
+	place_view_tl = 0
 	place_view_normal = vec3(0, 1, 0)
 	place_view_ray = vec3(0)
 	
 	place_target_tl = null
-	place_target_tl_part_of = null
+	place_target_tl_root = null
 	
 	place_content_mouseon = null
 	
 	view_changed()
-	view_main.place_depth_value = 0.995
-	view_second.place_depth_value = 0.995
 	
 	if (build)
 	{

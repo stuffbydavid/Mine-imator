@@ -7,9 +7,15 @@ function tl_mark_place_target(active)
 	
 	place_target = active
 	
-	view_changed()
+	// Update place parent list
+	if (active)
+		ds_list_add(render_place_parent_list, id)
+	else
+		ds_list_delete_value(render_place_parent_list, id)
 	
-	if (type = e_tl_type.MODEL_PART && id = app.place_target_tl_part_of)
+	view_changed(app.build_first_person ? app.view_main : null)
+	
+	if (type = e_tl_type.MODEL_PART && id = app.place_target_tl_root)
 		return 0
 	
 	for (var t = 0; t < ds_list_size(tree_list); t++)

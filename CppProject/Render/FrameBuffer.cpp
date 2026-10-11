@@ -3,7 +3,7 @@
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
-#include "Generated/GmlFunc.hpp"
+#include "Generated/Scripts.hpp"
 #include "GraphicsApiHandler.hpp"
 
 #include <QFloat16>
@@ -28,6 +28,7 @@ namespace CppProject
 				case surface_r16float:		d3dFormat = DXGI_FORMAT_R16_FLOAT; break;
 				case surface_rgba32float:	d3dFormat = DXGI_FORMAT_R32G32B32A32_FLOAT; break;
 				case surface_r32float:		d3dFormat = DXGI_FORMAT_R32_FLOAT; break;
+				case surface_rg32float:		d3dFormat = DXGI_FORMAT_R32G32_FLOAT; break;
 				default:
 					FATAL("Unknown surface format " + NumStr(this->format));
 					break;
@@ -98,6 +99,14 @@ namespace CppProject
 				{
 					glInternalFormat = GL_R32F;
 					glFormat = GL_RED;
+					glType = GL_FLOAT;
+					break;
+				}
+
+				case surface_rg32float:
+				{
+					glInternalFormat = GL_RG32F;
+					glFormat = GL_RG;
 					glType = GL_FLOAT;
 					break;
 				}
@@ -590,6 +599,17 @@ namespace CppProject
 				break;
 			}
 
+			case surface_rg32float:
+			{
+				for (IntType i = 0; i < pixelCount; i++)
+				{
+					float values[2];
+					memcpy(values, data + i * pixelSize, sizeof(values));
+					setPixel(i, std::clamp(values[0], 0.f, 1.f) * 255, std::clamp(values[1], 0.f, 1.f) * 255, 0, 255);
+				}
+				break;
+			}
+
 			case surface_r32float:
 			{
 				for (IntType i = 0; i < pixelCount; i++)
@@ -629,6 +649,7 @@ namespace CppProject
 			case surface_r16float:		return 1 * halfSize;
 			case surface_rgba32float:	return 4 * floatSize;
 			case surface_r32float:		return 1 * floatSize;
+			case surface_rg32float:		return 2 * floatSize;
 		}
 
 		return 0;

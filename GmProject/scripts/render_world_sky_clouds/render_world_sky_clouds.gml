@@ -29,6 +29,10 @@ function render_world_sky_clouds()
 	render_set_uniform(e_uniform.EMISSIVE, 0)
 	render_set_uniform(e_uniform.LIGHT_SPECULAR, 0)
 	
+	// Place mode
+	if (render_place_pass)
+		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.CLOUDS)
+	
 	// Texture
 	if (res.type = e_res_type.PACK)
 		render_set_texture(res, res.clouds_texture)
@@ -68,8 +72,12 @@ function render_world_sky_clouds()
 	}
 	
 	// Reset
+	if (render_place_pass)
+		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.SCENE)
+	
 	render_set_uniform_int(e_uniform.IS_SKY, 0)
 	render_set_uniform(e_uniform.LIGHT_SPECULAR, render_light_specular_strength)
+	
 	if (!env_fog_show || !env_fog_sky)
 		render_set_uniform(e_uniform.FOG_SHOW, app.env_fog_show)
 }

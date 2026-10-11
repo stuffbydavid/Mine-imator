@@ -551,7 +551,7 @@ function view_draw(view)
 		}
 				
 		view_pick_depth(view, cam)
-		view_place(view, cam)
+		view_place(view)
 	}
 	
 	// Revert content size for overlays

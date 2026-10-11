@@ -93,7 +93,7 @@ namespace CppProject
 		IntType startTime = 0;
 		RealType scale = 1.0;
 		IntType targetFps = 60;
-		Timer fpsTimer;
+		Timer frameTimer;
 		QDateTime fpsLastUpdate;
 		std::chrono::steady_clock::time_point fpsSampleStart;
 		IntType fpsSampleFrames = 0;

@@ -85,7 +85,6 @@ function shader_startup()
 			
 		new_shader("shader_high_auxiliary")
 		new_shader("shader_high_auxiliary_standard")
-		new_shader("shader_place")
 		new_shader("shader_high_subsurface_scatter")
 		new_shader("shader_high_indirect_blur")
 		new_shader("shader_high_reflections_hit")
@@ -223,11 +222,27 @@ function shader_startup()
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
 
-	with (shader_map[?shader_place])
+	var placeshaders = [
+		shader_color_fog,
+		shader_color_fog_lights,
+		shader_high_gbuffers,
+		shader_high_gbuffers_sun,
+		shader_high_gbuffers_color
+	];
+	for (var s = 0; s < array_length(placeshaders); s++)
 	{
-		new_shader_uniform(e_uniform.REPLACE_COLOR)
-		new_shader_uniform(e_uniform.GM_DEPTH)
-		new_shader_uniform(e_uniform.IS_BLOCK)
+		with (shader_map[?placeshaders[s]])
+		{
+			new_shader_uniform(e_uniform.PLACE_ID)
+			new_shader_uniform(e_uniform.PLACE_TYPE)
+			new_shader_uniform(e_uniform.RENDER_PLACE)
+			
+			if (s < 2)
+			{
+				new_shader_uniform(e_uniform.NEAR)
+				new_shader_uniform(e_uniform.FAR)
+			}
+		}
 	}
 	
 	with (shader_map[?shader_high_dof])

@@ -6,9 +6,12 @@ function tl_remove_clean()
 	tl_deselect()
 		
 	// Remove from render list
-	ds_list_delete_value(render_list, id)
+	for (var s = 0; s < 3; s++)
+		ds_list_delete_value(render_list[s], id)
 	
-	render_list_depth_dirty = true
+	ds_list_delete_value(render_place_parent_list, id)
+	
+	render_place_tl_list = null
 	render_scene_bounds = null
 	view_changed()
 		

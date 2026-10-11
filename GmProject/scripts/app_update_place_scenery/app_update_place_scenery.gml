@@ -3,33 +3,16 @@
 function app_update_place_scenery()
 {
 	// Check for valid scenery
-	if (!type_is_block(place_target_tl_part_of.type))
+	if (!type_is_block(place_target_tl_root.type))
 		return 0
 
 	var worldtransform, inversetransform, localpos;
 	worldtransform = place_target_tl.matrix_render
 	inversetransform = matrix_inverse_ext(worldtransform)
 	localpos = point3D_mul_matrix(place_pos, inversetransform)
-
-	if (place_build)
-	{
-		// Trace into the target before rounding to its local cell
-		var localray, tracenormal, inside, boxcell, boxcenter;
-		localray = vec3_normalize(vec3_mul_matrix(place_view_ray, inversetransform))
-		tracenormal = vec3_normalize(vec3_sub(localray, place_view_normal))
-		inside = vec3_add(localpos, vec3_mul(tracenormal, block_size * 0.025))
-		boxcell = vec3(
-			round(inside[X] / block_size - 0.5),
-			round(inside[Y] / block_size - 0.5),
-			round(inside[Z] / block_size - 0.5)
-		)
-		boxcenter = vec3_mul(vec3_add(boxcell, 0.5), block_size)
-		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3(1)), worldtransform)
-		build_box_render = build_box
-	}
 	
-	// Bias the hit into its cell to absorb depth readback error at face boundaries
-	var cell, sourceface, worldrotation, worldangle;
+	// Find local cell and face
+	var cell, sourceface;
 	cell = vec3(
 		floor((localpos[X] - place_view_normal[X]) / block_size),
 		floor((localpos[Y] - place_view_normal[Y]) / block_size),
@@ -41,10 +24,19 @@ function app_update_place_scenery()
 		(cell[Z] + 0.5) * block_size + place_view_normal[Z] * block_half_size
 	), worldtransform)
 
-	worldrotation = array_copy_1d(place_target_tl.matrix_render)
+	// Assign wireframe box transform
+	if (place_build)
+	{
+		var boxcenter = vec3_mul(vec3_add(cell, 0.5), block_size);
+		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3(1)), worldtransform)
+		build_box_render = build_box
+	}
+	
+	// Set rotation
+	var worldrotation, worldangle;
+	worldrotation = array_copy_1d(worldtransform)
 	matrix_remove_scale(worldrotation)
 	worldangle = matrix_angle(worldrotation)
-	
 	place_rot = vec3(radtodeg(worldangle[X]), radtodeg(worldangle[Y]), radtodeg(worldangle[Z]))
 
 	// Adjust final position by size/repeat setting of placed block or scenery

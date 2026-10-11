@@ -120,7 +120,9 @@ function project_save_timeline()
 			json_save_array_done()
 		}
 		
-		project_save_values("default_values", animated ? value_default : value, app.value_default)
+		project_save_values("default_values", value_default, app.value_default)
+		if (!animated)
+			project_save_values("current_values", value, value_default)
 		
 		json_save_object_start("keyframes")
 			

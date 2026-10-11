@@ -7,7 +7,8 @@ function render_high_indirect()
 	hh = ceil(render_height * app.project_render_indirect_resolution)
 	
 	// Raytrace
-	render_surface_indirect_raydata = surface_require(render_surface_indirect_raydata, ww, hh, false, surface_rgba32float)
+	var format = (is_cpp() ? surface_rgba32float : surface_rgba16float); // surface_rgba32float support not guaranteed in GM
+	render_surface_indirect_raydata = surface_require(render_surface_indirect_raydata, ww, hh, false, format)
 	surface_set_target(render_surface_indirect_raydata)
 	{
 		gpu_set_texrepeat(false)

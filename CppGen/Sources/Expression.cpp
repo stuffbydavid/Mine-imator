@@ -22,19 +22,26 @@ String Expression::toConditionCpp(ResolveScope* scope, bool)
 
 String Expression::toTernaryCpp(ResolveScope* scope, Expression* expr1, Expression* expr2, Expression* expr3)
 {
-	bool expr2TypeVarType = expr2->getResolvedCppType() == DataType::CppType::VarType;
-	bool expr3TypeVarType = expr3->getResolvedCppType() == DataType::CppType::VarType;
+	DataType::CppType expr2Type = expr2->getResolvedCppType();
+	DataType::CppType expr3Type = expr3->getResolvedCppType();
+	bool expr2TypeVarType = expr2Type == DataType::CppType::VarType;
+	bool expr3TypeVarType = expr3Type == DataType::CppType::VarType;
+	bool expr2Numeric = expr2Type == DataType::CppType::RealType || expr2Type == DataType::CppType::IntType || expr2Type == DataType::CppType::BoolType;
+	bool expr3Numeric = expr3Type == DataType::CppType::RealType || expr3Type == DataType::CppType::IntType || expr3Type == DataType::CppType::BoolType;
+	
+	// Different non-numeric branches need an explicit common variant type
+	bool variant = expr2TypeVarType || expr3TypeVarType || (expr2Type != expr3Type && !(expr2Numeric && expr3Numeric));
 
 	String cpp = expr1->toConditionCpp(scope, true) + " ? ";
 
-	if (expr3TypeVarType && !expr2TypeVarType) // Wrap expr2 in VarType() if expr3 is VarType
+	if (variant && !expr2TypeVarType)
 		cpp += "VarType(" + expr2->toCpp(scope) + ")";
 	else
 		cpp += expr2->toCpp(scope);
 
 	cpp += " : ";
 
-	if (expr2TypeVarType && !expr3TypeVarType) // Wrap expr3 in VarType() if expr2 is VarType
+	if (variant && !expr3TypeVarType)
 		cpp += "VarType(" + expr3->toCpp(scope) + ")";
 	else
 		cpp += expr3->toCpp(scope);

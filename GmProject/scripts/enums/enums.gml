@@ -973,8 +973,7 @@ function enums()
 		HIGH_FOG,
 		SCENE_TEST,
 		G_BUFFERS,
-		AUXILIARY,
-		PLACE
+		AUXILIARY
 	}
 	
 	// Shader samplers
@@ -1090,14 +1089,15 @@ function enums()
 		GLOW_PASS,
 		GLOW_COLOR,
 		GLOW_TEXTURE,
-		GM_DEPTH,
 		HAS_NORMAL_MAP,
 		HSB_ADD,
 		HSB_MUL,
 		HSB_SUB,
 		INDIRECT_ENABLED,
 		INDIRECT_STRENGTH,
-		IS_BLOCK,
+		PLACE_ID,
+		PLACE_TYPE,
+		RENDER_PLACE,
 		IS_GROUND,
 		IS_SKY,
 		IS_WATER,
@@ -1207,6 +1207,15 @@ function enums()
 		amount
 	} // Update shader_startup_uniforms() when adding uniforms
 
+	// Place type
+	enum e_place_type
+	{
+		SCENE,
+		PLACED,
+		BLOCK,
+		CLOUDS
+	}
+	
 	// Anti-aliasing
 	enum e_aa_mode
 	{

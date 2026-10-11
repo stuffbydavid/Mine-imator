@@ -1,30 +1,36 @@
-/// @desc Renders a range of depth signs, followed by transparent block meshes.
+/// @desc Renders the list of a depth sign, followed by transparent block meshes.
 
 function render_world_list(depthsign)
 {
-	var startindex, endindex, transpblocks, filterprev, i;
-	startindex = render_list_depth_bounds[depthsign + 1]
-	endindex = render_list_depth_bounds[depthsign + 2]
+	var list, listsize;
+
+	// Select list
+	if (render_mode = e_render_mode.PLACE_PARENT)
+		list = render_place_parent_list
+	else
+		list = render_list[depthsign + 1]
 	
-	if (endindex = startindex)
+	listsize = ds_list_size(list)
+	if (listsize = 0)
 		return 0
 	
 	// Depth passes
 	if (render_depth_pass)
 	{
-		for (i = startindex; i < endindex; i++)
-			with (render_list[|i])
+		for (var i = 0; i < listsize; i++)
+			with (list[|i])
 				render_world_tl()
 		
 		return 0
 	}
 	
+	var transpblocks, i;
 	transpblocks = render_block_transparent_list[depthsign + 1]
 	ds_list_clear(transpblocks)
 
-	for (i = startindex; i < endindex; i++)
+	for (i = 0; i < listsize; i++)
 	{
-		with (render_list[|i])
+		with (list[|i])
 		{
 			render_world_tl()
 			
@@ -44,7 +50,7 @@ function render_world_list(depthsign)
 		return 0
 	
 	// Render transparent blocks, turning off texture filtering if needed
-	filterprev = gpu_get_tex_mip_bias()
+	var filterprev = gpu_get_tex_mip_bias();
 	
 	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)
 		gpu_set_tex_mip_bias(-16)

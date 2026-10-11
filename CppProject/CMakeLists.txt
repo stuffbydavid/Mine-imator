@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.18)
 
 # Toolchain-affecting settings established before project()
-set(PROJECT_CONFIGURATION_TYPES "Debug;DebugBenchmarks;RelWithDebInfo;RunBenchmarks;Release")
+set(PROJECT_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release")
+if(CMAKE_GENERATOR MATCHES "^Visual Studio")
+	set(PROJECT_CONFIGURATION_TYPES "Debug;DebugGL;RelWithDebInfo;RelWithDebInfoGL;Release")
+endif()
 get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 if(IS_MULTI_CONFIG)
 	set(CMAKE_CONFIGURATION_TYPES "${PROJECT_CONFIGURATION_TYPES}" CACHE STRING "Supported build configurations" FORCE)
@@ -139,22 +142,9 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_CXX_FLAGS}"
 	CACHE STRING "C++ flags for RelWithDebInfo" FORCE)
 set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_LINKER_FLAGS}"
 	CACHE STRING "Executable linker flags for RelWithDebInfo" FORCE)
-
-# Benchmark configurations
-set(CMAKE_CXX_FLAGS_DEBUGBENCHMARKS "${CMAKE_CXX_FLAGS_DEBUG}"
-	CACHE STRING "C++ flags for DebugBenchmarks" FORCE)
-set(CMAKE_EXE_LINKER_FLAGS_DEBUGBENCHMARKS "${CMAKE_EXE_LINKER_FLAGS_DEBUG}"
-	CACHE STRING "Executable linker flags for DebugBenchmarks" FORCE)
-set(CMAKE_CXX_FLAGS_RUNBENCHMARKS "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}"
-	CACHE STRING "C++ flags for RunBenchmarks" FORCE)
-set(CMAKE_EXE_LINKER_FLAGS_RUNBENCHMARKS "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO}"
-	CACHE STRING "Executable linker flags for RunBenchmarks" FORCE)
-set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGBENCHMARKS Release) # Map to Qt release build
-set(CMAKE_MAP_IMPORTED_CONFIG_RUNBENCHMARKS Release)
-
-if(WIN32)
-	set(CMAKE_RC_FLAGS_DEBUGBENCHMARKS "${CMAKE_RC_FLAGS_DEBUG}"
-		CACHE STRING "Resource compiler flags for DebugBenchmarks" FORCE)
+if(CMAKE_GENERATOR MATCHES "^Visual Studio")
+	set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGGL "Release;")
+	set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFOGL "Release;")
 endif()
 
 # Find Qt package
@@ -163,8 +153,6 @@ find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
 	NO_DEFAULT_PATH)
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "QtGenerated")
 set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets")
-set_property(TARGET Qt5::rcc PROPERTY MAP_IMPORTED_CONFIG_DEBUGBENCHMARKS "Release;") # Map to Qt release build
-set_property(TARGET Qt5::rcc PROPERTY MAP_IMPORTED_CONFIG_RUNBENCHMARKS "Release;")
 set(CMAKE_AUTORCC OFF)
 set(CMAKE_AUTOUIC OFF)
 
@@ -415,9 +403,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 	"PROJECT_NAME=\"${PROJECT_NAME}\""
 	"ASSETS_DIR=\"${ASSET_SOURCE_DIR}\""
 	"GM_SHADERS_DIR=\"${GM_SHADERS_DIR}\""
-	"DEBUG_MODE=$<IF:$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>>,1,0>"
+	"DEBUG_MODE=$<IF:$<CONFIG:Debug>,1,0>"
 	"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
-	"OPTIMIZED=$<IF:$<OR:$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>,$<CONFIG:Release>>,1,0>"
+	"OPTIMIZED=$<IF:$<OR:$<CONFIG:RelWithDebInfo>,$<CONFIG:Release>>,1,0>"
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	OpenMP::OpenMP_CXX
@@ -447,10 +435,10 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>,$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>>:d3dcompiler>"
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:d3dcompiler>"
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:DebugBenchmarks>,$<CONFIG:RelWithDebInfo>,$<CONFIG:RunBenchmarks>>:/IGNORE:4099>"
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"
 	)
 	
 	# Toggle console
@@ -460,10 +448,14 @@ if(WIN32)
 	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
 	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
 
-	# Apply test arguments
-	set(TEST_ARGS "--test \"${REPO_DIR}/rendering/test_project/test_project.miproject\"")
-	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_COMMAND_ARGUMENTS
-		"$<$<OR:$<CONFIG:DebugBenchmarks>,$<CONFIG:RunBenchmarks>>:${TEST_ARGS}>")
+	# GL configurations only launch an existing Debug or RelWithDebInfo executable
+	if(CMAKE_GENERATOR MATCHES "^Visual Studio")
+		set_target_properties(${PROJECT_NAME} PROPERTIES
+			VS_GLOBAL_ForceImportAfterCppTargets "${CMAKE_CURRENT_SOURCE_DIR}/LaunchGL.targets"
+			VS_DEBUGGER_COMMAND "$<$<CONFIG:DebugGL>:${CMAKE_BINARY_DIR}/Debug/${PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}>$<$<CONFIG:RelWithDebInfoGL>:${CMAKE_BINARY_DIR}/RelWithDebInfo/${PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}>"
+			VS_DEBUGGER_COMMAND_ARGUMENTS "$<$<OR:$<CONFIG:DebugGL>,$<CONFIG:RelWithDebInfoGL>>:--gfx gl>"
+		)
+	endif()
 else()
 	target_compile_options(${PROJECT_NAME} PRIVATE
 		-Wall

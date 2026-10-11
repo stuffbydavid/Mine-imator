@@ -224,9 +224,10 @@ function tl_event_create()
 	block_vbuffer_transparent_render = false
 
 	placed = false
-	parent_is_placed = false
 	place_target = false
+	parent_is_placed = false
 	parent_is_place_target = false
+	render_place_id = 0
 	
 	// Path
 	path_update = false

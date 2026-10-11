@@ -36,6 +36,22 @@ namespace CppProject
 		return !IS_OPENGL || Shader::gl43Supported;
 	}
 
+	BoolType render_target_blend(IntType index, BoolType enabled)
+	{
+		if (IS_OPENGL && !Shader::gl43Supported)
+			return false;
+
+		GFX->SetTargetBlending(index, enabled);
+		
+		return true;
+	}
+
+	void render_target_write(IntType index, BoolType enabled)
+	{
+		if (index >= 0 && index < 8)
+			GFX->SetTargetWrite(index, enabled);
+	}
+
 	BoolType render_point_viewports(BoolType enabled, IntType size, VecType eye, RealType range)
 	{
 		Shader* shader = FindShader(ID_shader_depth_point);
@@ -158,6 +174,13 @@ namespace CppProject
 			FindSurface(shadows),
 			FindSurface(specular)
 		};
+		QColor clearColors[] = {
+			QColor(255, 0, 0, 255),
+			QColor(0, 0, 0, 0),
+			QColor(0, 0, 0, 0),
+			QColor(0, 0, 0, 255),
+			QColor(0, 0, 0, 255)
+		};
 
 		for (Surface* surface : surfaces)
 			if (!surface)
@@ -168,9 +191,7 @@ namespace CppProject
 		for (IntType i = 0; i < 5; i++)
 		{
 			surfaces[i]->ClearColorCache();
-			
-			QColor clear = i == 0 ? QColor(255, 255, 255, 255) : QColor(0, 0, 0, i < 3 ? 0 : 255);
-			GFX->SetMRTIndex(i + 3, surfaces[i]->frameBuffer, clear);
+			GFX->SetMRTIndex(i + 3, surfaces[i]->frameBuffer, clearColors[i]);
 		}
 		
 		GFX->SetSunBlending(6);

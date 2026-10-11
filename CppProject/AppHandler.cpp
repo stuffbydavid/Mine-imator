@@ -317,6 +317,7 @@ namespace CppProject
 		fpsSampleFrames = 0;
 		gmlGlobal::fps = 0;
 		stepDeadline = fpsSampleStart + std::chrono::milliseconds(10);
+		frameTimer.Reset();
 
 		stepTimer.start(10, Qt::PreciseTimer, this);
 	}
@@ -355,6 +356,10 @@ namespace CppProject
 	{
 		stepTimer.stop();
 		auto stepStart = std::chrono::steady_clock::now();
+
+		// Measure the full interval between update steps
+		gmlGlobal::delta_time = frameTimer.ElapsedMs() * 1000.0;
+		frameTimer.Reset();
 		
 		Sound::UpdateLoads();
 
@@ -513,9 +518,6 @@ namespace CppProject
 		// Update fps every second
 		if (fpsLastUpdate.msecsTo(QDateTime::currentDateTime()) > 1000)
 		{
-			// Calculate delta_time as duration of previous step in microseconds
-			gmlGlobal::delta_time = fpsTimer.ElapsedMs() * 1000.0;
-
 			// Measure processing time directly, excluding the variable timer delay
 			double elapsedMs = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - stepStart).count();
 			if (elapsedMs > 0.0)
@@ -544,7 +546,6 @@ namespace CppProject
 			stepDeadline = stepNow; // Do not accumulate catch-up frames after a slow frame or dialog
 		
 		auto stepDelay = std::chrono::ceil<std::chrono::milliseconds>(stepDeadline - stepNow);
-		fpsTimer.Reset();
 		stepTimer.start(int(stepDelay.count()), Qt::PreciseTimer, this);
 	}
 

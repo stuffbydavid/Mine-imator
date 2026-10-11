@@ -14,6 +14,13 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_camera_effects = null
 	render_camera_effect_enabled = null
 	
+	render_place = (owner = app.view_main || owner = app.view_second) && app.window_place
+	render_place_pass = false
+	render_place_output = (renderer_current = e_renderer.QUICK ? 1 : 0)
+	render_place_view = null
+	if (render_place)
+		render_place_view = owner
+	
 	render_pack_current = res_eval(project_pack_res)
 	
 	if ((owner = app.view_second && render_effects) || owner = "image" || owner = "movie" || owner = camera)

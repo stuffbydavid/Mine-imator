@@ -636,6 +636,9 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			glColorMask(red, green, blue, alpha);
+			for (IntType i = 0; i < 8; i++)
+				if (targetWriteDisableMask & (1 << i))
+					glColorMaski(i, false, false, false, false);
 			GL_CHECK_ERROR();
 		}
 	}
@@ -696,6 +699,7 @@ namespace CppProject
 				Shader::gl43Core->glBlendFuncSeparatei(2, GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
 			
 			ApplySunBlendState();
+			ApplyTargetBlendState();
 			
 			GL_CHECK_ERROR();
 		}
@@ -712,7 +716,8 @@ namespace CppProject
 			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
 				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
 				previous.enabled == blend && previous.writeMask == colorWriteMask &&
-				previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.sunIndex == sunBlendIndex)
+				previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.sunIndex == sunBlendIndex &&
+				previous.targetAlphaBlendMask == targetAlphaBlendMask && previous.targetWriteDisableMask == targetWriteDisableMask)
 			{
 				state = previous.state;
 				break;
@@ -735,18 +740,21 @@ namespace CppProject
 
 			blendDesc.RenderTarget[0] = targetDesc;
 
-			if (sunBlendIndex >= 0)
+			if (sunBlendIndex >= 0 || targetAlphaBlendMask || targetWriteDisableMask)
 			{
 				blendDesc.IndependentBlendEnable = TRUE;
 
 				for (IntType i = 1; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; i++)
 					blendDesc.RenderTarget[i] = targetDesc;
 
-				D3D11_RENDER_TARGET_BLEND_DESC sunDesc = targetDesc;
-				sunDesc.SrcBlend = sunDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-				sunDesc.DestBlend = sunDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
-				blendDesc.RenderTarget[sunBlendIndex] = sunDesc;
-				blendDesc.RenderTarget[sunBlendIndex + 1] = sunDesc;
+				if (sunBlendIndex >= 0)
+				{
+					D3D11_RENDER_TARGET_BLEND_DESC sunDesc = targetDesc;
+					sunDesc.SrcBlend = sunDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+					sunDesc.DestBlend = sunDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+					blendDesc.RenderTarget[sunBlendIndex] = sunDesc;
+					blendDesc.RenderTarget[sunBlendIndex + 1] = sunDesc;
+				}
 			}
 
 			if (maskBlend)
@@ -775,11 +783,28 @@ namespace CppProject
 					blendDesc.RenderTarget[i] = targetDesc;
 			}
 
+			for (IntType i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; i++)
+			{
+				if (!(targetAlphaBlendMask & (1 << i)))
+					continue;
+				
+				auto& alphaDesc = blendDesc.RenderTarget[i];
+				alphaDesc.BlendEnable = blend;
+				alphaDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+				alphaDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+				alphaDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+				alphaDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+			}
+			
+			for (IntType i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; i++)
+				if (targetWriteDisableMask & (1 << i))
+					blendDesc.RenderTarget[i].RenderTargetWriteMask = 0;
+			
 			D3DCheckError(D3DDevice->CreateBlendState(&blendDesc, &state));
 
 			d3dBlendStates.append({
 				blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
-				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, state
+				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, targetAlphaBlendMask, targetWriteDisableMask, state
 			});
 		}
 
@@ -815,6 +840,8 @@ namespace CppProject
 				fog ? GL_ONE : glBlendMap[blendAlphaSrcFactor],
 				fog ? GL_ZERO : glBlendMap[blendAlphaDstFactor]);
 			
+			ApplyTargetBlendState();
+			
 			GL_CHECK_ERROR();
 		}
 	}
@@ -845,6 +872,7 @@ namespace CppProject
 			}
 			
 			ApplySunBlendState();
+			ApplyTargetBlendState();
 			
 			GL_CHECK_ERROR();
 		}
@@ -864,6 +892,70 @@ namespace CppProject
 		if (maskBlend)
 			for (IntType i = 3; i < sunBlendIndex; i++)
 				Shader::gl43Core->glBlendFuncSeparatei(i, GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
+	}
+
+	void GraphicsApiHandler::SetTargetBlending(IntType index, BoolType enabled)
+	{
+		IntType bit = 1 << index;
+		IntType mask = enabled ? targetAlphaBlendMask & ~bit : targetAlphaBlendMask | bit;
+		if (mask == targetAlphaBlendMask)
+			return;
+
+		SubmitBatch();
+
+		targetAlphaBlendMask = mask;
+
+#if OS_WINDOWS
+		if (IS_D3D11)
+			ApplyBlendState();
+	#endif
+		if (IS_OPENGL)
+		{
+			Shader::gl43Core->glBlendFuncSeparatei(index,
+				enabled ? glBlendMap[blendSrcFactor] : GL_SRC_ALPHA,
+				enabled ? glBlendMap[blendDstFactor] : GL_ONE_MINUS_SRC_ALPHA,
+				enabled ? glBlendMap[blendAlphaSrcFactor] : GL_ONE,
+				enabled ? glBlendMap[blendAlphaDstFactor] : GL_ONE_MINUS_SRC_ALPHA);
+			GL_CHECK_ERROR();
+			
+			ApplySunBlendState();
+			ApplyTargetBlendState();
+			GL_CHECK_ERROR();
+		}
+	}
+
+	void GraphicsApiHandler::ApplyTargetBlendState()
+	{
+		if (!targetAlphaBlendMask)
+			return;
+
+		for (IntType i = 0; i < 8; i++)
+			if (targetAlphaBlendMask & (1 << i))
+				Shader::gl43Core->glBlendFuncSeparatei(i, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	void GraphicsApiHandler::SetTargetWrite(IntType index, BoolType enabled)
+	{
+		IntType bit = 1 << index;
+		IntType mask = enabled ? targetWriteDisableMask & ~bit : targetWriteDisableMask | bit;
+		if (mask == targetWriteDisableMask)
+			return;
+
+		SubmitBatch();
+
+		targetWriteDisableMask = mask;
+
+	#if OS_WINDOWS
+		if (IS_D3D11)
+			ApplyBlendState();
+	#endif
+		if (IS_OPENGL)
+		{
+			glColorMaski(index,
+				enabled && (colorWriteMask & 1), enabled && (colorWriteMask & 2),
+				enabled && (colorWriteMask & 4), enabled && (colorWriteMask & 8));
+			GL_CHECK_ERROR();
+		}
 	}
 
 	void GraphicsApiHandler::SetLODBias(IntType bias)

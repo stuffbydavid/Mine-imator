@@ -19,9 +19,10 @@
 		render_surface_fog (r8unorm):
 			R fog strength, from clear to fully fogged
 		
-		render_surface_depth (r32float):
+		render_surface_depth (rg32float in C++, r32float/rgba32float while picking in GameMaker):
 			R camera depth
-			G/B zero
+			G packed object ID and local face ID while picking
+			B zero
 			A one when writing a full RGBA target
 		
 		render_surface_normal (rgba16float):
@@ -166,7 +167,7 @@ function render_high()
 		// Create render passes
 		render_sun_combined = (
 			is_cpp() && renderer_current = e_renderer.STANDARD && render_shadows &&
-			env_sunlight_color_final != c_black && !app.place_build && render_mask_blend_supported() &&
+			env_sunlight_color_final != c_black && render_mask_blend_supported() &&
 			cam_far_prev <= cam_near + depth_far && !render_gbuffers_cache_enabled)
 		
 		if (render_sun_combined)

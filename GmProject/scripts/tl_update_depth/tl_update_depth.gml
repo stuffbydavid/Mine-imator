@@ -1,15 +1,17 @@
 function tl_update_depth()
 {
-	ds_list_delete_value(render_list, id)
+	for (var depthindex = 0; depthindex < 3; depthindex++)
+		ds_list_delete_value(render_list[depthindex], id)
 	
-	var pos;
-	for (pos = 0; pos < ds_list_size(render_list); pos++)
-		if (render_list[|pos].depth > depth)
+	var list, pos;
+	list = render_list[sign(depth) + 1]
+	for (pos = 0; pos < ds_list_size(list); pos++)
+		if (list[|pos].depth > depth)
 			break
 	
-	ds_list_insert(render_list, pos, id)
+	ds_list_insert(list, pos, id)
 	
-	render_list_depth_dirty = true
+	render_place_tl_list = null
 	render_scene_bounds = null
 	
 	view_changed()

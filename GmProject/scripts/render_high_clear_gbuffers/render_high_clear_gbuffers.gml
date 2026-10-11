@@ -2,7 +2,7 @@ function render_high_clear_gbuffers()
 {
 	surface_clear(render_surface_specular, c_black)
 	surface_clear(render_surface_material, c_black, 0)
-	surface_clear(render_surface_depth, c_white)
+	surface_clear(render_surface_depth, c_red)
 	surface_clear(render_surface_normal, c_black, 0)
 
 	if (render_auxiliary)

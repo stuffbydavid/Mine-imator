@@ -26,8 +26,8 @@ function view_event_create()
 	surface_tool_scale = false
 	surface_tool_bend = false
 	surface_tool_transform = false
-	surface_work_from = point3D(0)
-	surface_work_angle = vec3(0)
+	surface_cam_work_from = point3D(0)
+	surface_cam_work_angle = vec3(0)
 	
 	surface_cam_from = point3D(0)
 	surface_cam_to = point3D(0)
@@ -44,10 +44,14 @@ function view_event_create()
 	surface_control_edit = null
 	
 	surface_place_id = null
-	surface_place_depth_gm = null
-	surface_place_width = 0
-	surface_place_height = 0
-	update_place_surfaces = false
+	surface_place_separate = false
+	surface_place_tl_list = [ 0 ]
+	surface_place_tl_list_id = -1
+	surface_place_depth_near = 0
+	surface_place_depth_far = 0
+	surface_place_proj_matrix = array_copy_1d(MAT_IDENTITY)
+	surface_place_view_matrix = array_copy_1d(MAT_IDENTITY)
+	surface_place_active = false
 	
 	mouseon = false
 	control_mouseon = null

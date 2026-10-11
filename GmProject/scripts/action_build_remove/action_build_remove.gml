@@ -79,13 +79,7 @@ function action_build_remove()
 			hobj.build_structure_removed = remove = build_structure
 		}
 
-		// Clear references before destroying the target
-		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
-			with (place_target_tl_part_of)
-				tl_mark_place_target(false)
-		
 		place_target_tl = null
-		place_target_tl_part_of = null
 
 		if (remove = build_structure)
 			action_build_structure(null, false)
@@ -96,10 +90,14 @@ function action_build_remove()
 		with (obj_timeline)
 			if (delete_ready)
 				instance_destroy()
+		
+		if (place_target_tl_root != null && !instance_exists(place_target_tl_root))
+			place_target_tl_root = null
 	}
 
 	place_pos = null
 	place_view_pos = null
+	build_box_render = null
 	
 	view_changed()
 

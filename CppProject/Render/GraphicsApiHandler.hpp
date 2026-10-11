@@ -135,6 +135,15 @@ namespace CppProject
 		// Applies sunlight blending and combined scene data overrides in OpenGL.
 		void ApplySunBlendState();
 
+		// Restores scene blending when true, otherwise uses normal alpha blending for the target.
+		void SetTargetBlending(IntType index, BoolType enabled);
+
+		// Apply the target blending state for assigned targets.
+		void ApplyTargetBlendState();
+
+		// Enables color writes for an individual render target
+		void SetTargetWrite(IntType index, BoolType enabled);
+
 		// Set bias level for mipmapping.
 		void SetLODBias(IntType value);
 
@@ -186,6 +195,7 @@ namespace CppProject
 		IntType blendAlphaDstFactor = 6;
 		BoolType maskBlend = false, fogBlend = false;
 		IntType sunBlendIndex = -1;
+		IntType targetAlphaBlendMask = 0, targetWriteDisableMask = 0;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
 		IntType lodBias = 0;
@@ -214,6 +224,7 @@ namespace CppProject
 			IntType src, dst, srcAlpha, dstAlpha, writeMask;
 			IntType sunIndex;
 			BoolType enabled, maskBlend, fogBlend;
+			IntType targetAlphaBlendMask, targetWriteDisableMask;
 			ID3D11BlendState* state = nullptr;
 		};
 		QVector<BlendState> d3dBlendStates;

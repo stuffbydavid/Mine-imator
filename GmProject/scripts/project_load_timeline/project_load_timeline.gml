@@ -182,6 +182,14 @@ function project_load_timeline(map)
 		project_load_values(defaultmap, value_default)
 		project_load_values_update_default(defaultmap, value_default)
 		
+		if (!animated)
+		{
+			value = array_copy_1d(value_default)
+			var currentmap = map[?"current_values"];
+			if (ds_map_valid(currentmap))
+				project_load_values(currentmap, value)
+		}
+		
 		if (load_format < e_project.FORMAT_210 && type = e_tl_type.CAMERA)
 		{
 			legacy_camera_effect_default = array_create(e_cam_fx.amount, false)

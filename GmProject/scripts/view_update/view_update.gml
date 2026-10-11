@@ -14,36 +14,40 @@ function view_update(view, cam)
 		(popup_current && popup_current.name = "export_movie" && popup_exportmovie.watermark) ||
 		(popup_current && popup_current.name = "export_image" && popup_exportimage.watermark)
 	)
+
 	if (!surface_exists(view.surface) ||
 		view.surface_width != content_width || view.surface_height != content_height ||
 		view.surface_renderer != view.renderer || view.surface_camera_last != cam ||
 		view.surface_particles != view.particles || view.surface_effects != view.effects ||
 		view.surface_gizmos_enabled != view.gizmos || view.surface_transparent_background != view.transparent_background ||
-		view.surface_watermark != watermark)
+		view.surface_watermark != watermark || view.surface_place_active != window_place ||
+		(window_place && !surface_exists(view.surface_place_id)))
 	{
 		view_changed(view)
 	}
 	
-	// First-person movement continuously refreshes only the main viewport
-	if (place_build && build_first_person)
-	{
-		if (view = view_main)
-			view_changed(view)
-	}
+	// Mouse enters or leaves this view
+	if (place_build && !build_first_person && view.surface_mouseon != content_mouseon)
+		view_changed(view)
 	
-	// Work camera
-	else if (!cam && 
-		(!vec3_equals(view.surface_work_from, cam_work_from) ||
-		view.surface_work_angle[@ X] != cam_work_angle_look_xy || view.surface_work_angle[@ Y] != cam_work_angle_look_z ||
-		view.surface_work_angle[@ Z] != cam_work_roll))
+	// Work camera changed
+	if (!cam && (!build_first_person || view = view_main) &&
+		(!vec3_equals(view.surface_cam_work_from, cam_work_from) ||
+		view.surface_cam_work_angle[@ X] != cam_work_angle_look_xy || view.surface_cam_work_angle[@ Y] != cam_work_angle_look_z ||
+		view.surface_cam_work_angle[@ Z] != cam_work_roll))
 	{
 		view_changed(view)
 	}
+	
+	// Mouse press
+	if (!window_place && content_mouseon && (mouse_left_pressed || mouse_right_pressed || mouse_left_released || mouse_right_released))
+		view_changed(view)
 	
 	// Refresh gizmo hover only when the mouse moves or enters/leaves the view
 	mousechanged = (view.surface_mouseon != content_mouseon || (content_mouseon &&
 		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)))
 	
+	// Update gizmos
 	if (!surface_exists(view.surface_gizmos) ||
 		view.surface_tool_move != setting_tool_move || view.surface_tool_rotate != setting_tool_rotate ||
 		view.surface_tool_scale != setting_tool_scale || view.surface_tool_bend != setting_tool_bend ||
@@ -52,13 +56,6 @@ function view_update(view, cam)
 		(view.gizmos && mousechanged))
 	{
 		view.update_gizmos = true
-	}
-	
-	// Picking needs the current view's render state
-	if (content_mouseon &&
-	    (mouse_left_pressed || mouse_right_pressed || mouse_left_released || mouse_right_released || place_tl != null || place_build))
-	{
-		view_changed(view)
 	}
 	
 	// Update only the overlay while dragging until object values change
@@ -85,8 +82,6 @@ function view_update(view, cam)
 		
 		camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y)
 		
-		view_changed(view)
-
 		if (mouse_wheel <> 0)
 			action_build_scroll()
 
@@ -106,7 +101,7 @@ function view_update(view, cam)
 	if (content_mouseon && (window_busy = "" || window_busy = place_busy))
 	{
 		place_content_mouseon = view
-		mouse_cursor = cr_handpoint
+		mouse_cursor = (place_tl != null ? cr_drag : cr_handpoint)
 		
 		if (mouse_left_pressed)
 		{
@@ -166,7 +161,7 @@ function view_update(view, cam)
 		// Select or move camera
 		if (window_busy = "view/click")
 		{
-			mouse_cursor = cr_handpoint
+			mouse_cursor = (place_tl != null ? cr_drag : cr_handpoint)
 			
 			if (place_build && cam = null)
 				shortcut_bar_state = "viewport/build"

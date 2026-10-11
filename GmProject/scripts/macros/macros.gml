@@ -126,6 +126,7 @@ function macros()
 	#macro c_sunset_end					hex_to_color("C04E37")
 	#macro c_normal						make_color_rgb(127, 127, 255)
 	#macro c_text_outline				make_color_rgb(92, 80, 255)
+	#macro c_place_target				make_color_rgb(176, 164, 255)
 	
 	// Encoding
 	#macro sample_rate					44100
@@ -174,6 +175,9 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
+	#macro surface_rg32float			8
+	#macro place_id_bits				21
+	#macro place_dir_none				e_dir.amount
 
 	// Assets
 	#macro default_model				"human"

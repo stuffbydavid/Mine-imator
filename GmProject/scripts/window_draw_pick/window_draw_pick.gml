@@ -6,9 +6,13 @@ function window_draw_pick()
 	if (mouse_left_pressed || mouse_right_pressed || mouse_middle_pressed || keyboard_check_pressed(vk_escape))
 	{
 		window_busy = ""
+		window_place = place_build
+		
 		mouse_cursor = cr_default
 		window_set_cursor(cr_default)
+		
 		app_mouse_clear()
+		
 		return 0
 	}
 

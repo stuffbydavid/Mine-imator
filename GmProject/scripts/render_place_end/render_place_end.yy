@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_place_end",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_place_end",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

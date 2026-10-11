@@ -20,6 +20,10 @@ function view_update_surface(view, cam, watermark)
 	render_background = !view.transparent_background
 	render_watermark = watermark
 	
+	// Reset samples if place mode changed
+	if (view.surface_place_active != window_place || (window_place && !surface_exists(view.surface_place_id)))
+		render_samples = -1
+	
 	render_start(view.surface, cam, view, content_width, content_height)
 	
 	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
@@ -33,9 +37,9 @@ function view_update_surface(view, cam, watermark)
 		cam_work_focus_2d_error = (point3D_project_error || tl_focus.world_pos_2d[X] < 0 || tl_focus.world_pos_2d[Y] < 0 || tl_focus.world_pos_2d[X] >= content_width || tl_focus.world_pos_2d[Y] >= content_height)
 	}
 	
+	// Selected objects
 	if (view.gizmos && !place_build)
 	{
-		// Selection
 		if (tl_edit_amount > 0)
 			view.surface_select = render_select(e_render_mode.SELECT, view.surface_select)
 		
@@ -54,16 +58,22 @@ function view_update_surface(view, cam, watermark)
 	// Placed objects
 	var showplace;
 	if (place_build)
-		showplace = content_mouseon || (build_structure != null && instance_exists(build_structure))
+		showplace = (content_mouseon || (build_structure != null && instance_exists(build_structure)))
 	else
-		showplace = place_tl != null && (content_mouseon || place_content_mouseon = null)
+		showplace = (place_tl != null && (content_mouseon || place_content_mouseon = null || place_content_mouseon = "timeline"))
 	
 	if (showplace)
 	{
-		view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
+		// Highlight target parent while placing
+		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
+			view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
+			
+		// Highlight selection
 		if (!place_build)
 			view.surface_select = render_select(e_render_mode.PLACE_SELECT, view.surface_select)
 	}
+	
+	view.surface = render_done()
 	
 	// Save the view state
 	view.surface_cam_from = point3D_copy(cam_from)
@@ -72,10 +82,14 @@ function view_update_surface(view, cam, watermark)
 	view.surface_cam_fov = cam_fov
 	view.surface_cam_near = cam_near
 	view.surface_cam_far = cam_far
+	view.surface_cam_work_from = point3D_copy(cam_work_from)
+	view.surface_cam_work_angle = vec3(cam_work_angle_look_xy, cam_work_angle_look_z, cam_work_roll)
+	
 	view.surface_proj_matrix = array_copy_1d(proj_matrix)
 	view.surface_view_matrix = array_copy_1d(view_matrix)
 	view.surface_view_proj_matrix = array_copy_1d(view_proj_matrix)
-	view.surface = render_done()
+	
+	view.surface_place_active = window_place
 	view.surface_width = content_width
 	view.surface_height = content_height
 	view.surface_renderer = view.renderer
@@ -85,8 +99,6 @@ function view_update_surface(view, cam, watermark)
 	view.surface_gizmos_enabled = view.gizmos
 	view.surface_transparent_background = view.transparent_background
 	view.surface_watermark = watermark
-	view.surface_work_from = point3D_copy(cam_work_from)
-	view.surface_work_angle = vec3(cam_work_angle_look_xy, cam_work_angle_look_z, cam_work_roll)
 	
 	// Keep accumulating Realistic samples until the image is finished
 	if (view.renderer = e_renderer.REALISTIC && !render_samples_done)
