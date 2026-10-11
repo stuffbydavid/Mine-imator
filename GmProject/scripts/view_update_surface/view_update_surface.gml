@@ -41,7 +41,7 @@ function view_update_surface(view, cam, watermark)
 	if (view.gizmos && !place_build)
 	{
 		if (tl_edit_amount > 0)
-			view.surface_select = render_select(e_render_mode.SELECT, view.surface_select)
+			view.surface_select = render_select_outline(e_render_mode.SELECT, view.surface_select)
 		
 		if (!view.transparent_background && surface_exists(render_target))
 		{
@@ -66,11 +66,11 @@ function view_update_surface(view, cam, watermark)
 	{
 		// Highlight target parent while placing
 		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
-			view.surface_select = render_select(e_render_mode.PLACE_PARENT, view.surface_select)
+			view.surface_select = render_select_outline(e_render_mode.PLACE_PARENT, view.surface_select)
 			
 		// Highlight selection
 		if (!place_build)
-			view.surface_select = render_select(e_render_mode.PLACE_SELECT, view.surface_select)
+			view.surface_select = render_select_outline(e_render_mode.PLACE_SELECT, view.surface_select)
 	}
 	
 	view.surface = render_done()

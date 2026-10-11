@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_high_fog",
   "parent":{
-    "name":"Fog",
-    "path":"folders/Scripts/Render/High quality/Fog.yy",
+    "name":"High quality",
+    "path":"folders/Scripts/Render/High quality.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

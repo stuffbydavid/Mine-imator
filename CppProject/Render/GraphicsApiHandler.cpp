@@ -717,6 +717,7 @@ namespace CppProject
 				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
 				previous.enabled == blend && previous.writeMask == colorWriteMask &&
 				previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.sunIndex == sunBlendIndex &&
+				previous.sunEnabled == sunBlendEnabled &&
 				previous.targetAlphaBlendMask == targetAlphaBlendMask && previous.targetWriteDisableMask == targetWriteDisableMask)
 			{
 				state = previous.state;
@@ -740,14 +741,14 @@ namespace CppProject
 
 			blendDesc.RenderTarget[0] = targetDesc;
 
-			if (sunBlendIndex >= 0 || targetAlphaBlendMask || targetWriteDisableMask)
+			if (sunBlendEnabled || targetAlphaBlendMask || targetWriteDisableMask)
 			{
 				blendDesc.IndependentBlendEnable = TRUE;
 
 				for (IntType i = 1; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; i++)
 					blendDesc.RenderTarget[i] = targetDesc;
 
-				if (sunBlendIndex >= 0)
+				if (sunBlendEnabled)
 				{
 					D3D11_RENDER_TARGET_BLEND_DESC sunDesc = targetDesc;
 					sunDesc.SrcBlend = sunDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
@@ -775,7 +776,7 @@ namespace CppProject
 			}
 
 			// Combined color rendering keeps depth, normals and materials unblended
-			if (maskBlend && sunBlendIndex >= 0)
+			if (maskBlend && sunBlendEnabled)
 			{
 				targetDesc.BlendEnable = FALSE;
 
@@ -804,7 +805,7 @@ namespace CppProject
 
 			d3dBlendStates.append({
 				blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
-				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, targetAlphaBlendMask, targetWriteDisableMask, state
+				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, sunBlendEnabled, targetAlphaBlendMask, targetWriteDisableMask, state
 			});
 		}
 
@@ -846,14 +847,18 @@ namespace CppProject
 		}
 	}
 
-	void GraphicsApiHandler::SetSunBlending(IntType index)
+	void GraphicsApiHandler::SetSunBlending(IntType index, BoolType enabled)
 	{
-		if (sunBlendIndex == index)
+		if (!enabled)
+			index = 0;
+		if (sunBlendIndex == index && sunBlendEnabled == enabled)
 			return;
 		SubmitBatch();
 
 		IntType previous = sunBlendIndex;
+		BoolType previousEnabled = sunBlendEnabled;
 		sunBlendIndex = index;
+		sunBlendEnabled = enabled;
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -862,7 +867,7 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			// Restore the previous sunlight targets and any combined scene data
-			if (previous >= 0)
+			if (previousEnabled)
 			{
 				IntType start = maskBlend && previous > 3 ? 3 : previous;
 				for (IntType i = start; i < previous + 2; i++)
@@ -880,7 +885,7 @@ namespace CppProject
 
 	void GraphicsApiHandler::ApplySunBlendState()
 	{
-		if (sunBlendIndex < 0)
+		if (!sunBlendEnabled)
 			return;
 		
 		// Sunlight color and highlights always use ordinary alpha blending

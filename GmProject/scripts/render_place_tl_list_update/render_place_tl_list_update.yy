@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_place_tl_list_update",
   "parent":{
-    "name":"World",
-    "path":"folders/Scripts/Render/World.yy",
+    "name":"Place",
+    "path":"folders/Scripts/Render/Place.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

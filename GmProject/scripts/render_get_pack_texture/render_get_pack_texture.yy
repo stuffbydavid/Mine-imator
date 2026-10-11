@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_get_pack_texture",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/Render.yy",
+    "name":"Texture",
+    "path":"folders/Scripts/Render/Texture.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

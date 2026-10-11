@@ -3,8 +3,8 @@
   "%Name":"shader_high_gbuffers_sun",
   "name":"shader_high_gbuffers_sun",
   "parent":{
-    "name":"High quality",
-    "path":"folders/Shaders/High quality.yy",
+    "name":"G-buffers",
+    "path":"folders/Shaders/High quality/G-buffers.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

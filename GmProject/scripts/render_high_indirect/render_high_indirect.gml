@@ -1,4 +1,4 @@
-/// @desc Ray traces shadow surf for light bounces, returns indirect lighting buffer.
+/// @desc Ray traces shadow surface for light bounces, returns indirect lighting buffer.
 
 function render_high_indirect()
 {

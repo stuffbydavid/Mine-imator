@@ -26,7 +26,7 @@ function render_high_shadows_sun()
 	render_alpha_hash = render_alpha_hash_shadows
 	render_alpha_hash_force = true
 
-	render_update_cascades(angle)
+	render_high_shadows_update_cascades(angle)
 
 	for (var i = 0; i < render_cascades_count; i++)
 	{

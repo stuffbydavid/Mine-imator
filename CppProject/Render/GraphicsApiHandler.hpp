@@ -130,7 +130,7 @@ namespace CppProject
 		void SetMaskBlending(BoolType enabled, BoolType fog = false);
 
 		// Alpha-blends sunlight and overwrites G-buffer data, including the combined color layout.
-		void SetSunBlending(IntType index);
+		void SetSunBlending(IntType index, BoolType enabled);
 
 		// Applies sunlight blending and combined scene data overrides in OpenGL.
 		void ApplySunBlendState();
@@ -194,7 +194,8 @@ namespace CppProject
 		IntType blendAlphaSrcFactor = 5;
 		IntType blendAlphaDstFactor = 6;
 		BoolType maskBlend = false, fogBlend = false;
-		IntType sunBlendIndex = -1;
+		IntType sunBlendIndex = 0;
+		BoolType sunBlendEnabled = false;
 		IntType targetAlphaBlendMask = 0, targetWriteDisableMask = 0;
 		BoolType texFilter = false;
 		BoolType texRepeat = true;
@@ -223,7 +224,7 @@ namespace CppProject
 		{
 			IntType src, dst, srcAlpha, dstAlpha, writeMask;
 			IntType sunIndex;
-			BoolType enabled, maskBlend, fogBlend;
+			BoolType enabled, maskBlend, fogBlend, sunEnabled;
 			IntType targetAlphaBlendMask, targetWriteDisableMask;
 			ID3D11BlendState* state = nullptr;
 		};

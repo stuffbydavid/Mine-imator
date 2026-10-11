@@ -84,11 +84,13 @@ function render_watermark_image(wid = null, hei = null)
 			pady = (hei * padding)
 			break
 		}
+		
 		case "center":
 		{
 			watermarky = hei/2
 			break
 		}
+		
 		case "bottom":
 		{
 			watermarky = hei - (watermarkhei/2 * scale)

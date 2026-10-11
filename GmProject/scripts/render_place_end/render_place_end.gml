@@ -19,7 +19,7 @@ function render_place_end()
 	
 	// Restore object blend states for target
 	if (is_cpp())
-		render_target_blend(1, true)
+		render_set_target_blend(1, true)
 	
 	// Remove MRT binding
 	surface_reset_target()

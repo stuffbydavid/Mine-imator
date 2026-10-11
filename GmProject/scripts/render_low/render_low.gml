@@ -52,7 +52,7 @@ function render_low()
 	}
 	surface_reset_target()
 	
-	if (render_effects_done)
+	if (render_fx_done)
 		return 0
 	
 	// Camera depth for depth-aware post effects
@@ -75,12 +75,12 @@ function render_low()
 		surface_reset_target()
 	}
 
-	finalsurf = render_post(surf)
+	finalsurf = render_fx(surf)
 	if (render_camera_dof)
 		render_surface_depth = cacheddepth
 	
 	if (setting_quick_mode_aa)
-		finalsurf = render_high_aa(finalsurf)
+		finalsurf = render_fx_aa(finalsurf)
 	
 	render_target = surface_require(render_target, render_width, render_height)
 	surface_set_target(render_target)

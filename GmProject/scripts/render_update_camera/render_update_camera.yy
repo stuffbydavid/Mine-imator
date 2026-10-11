@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_update_camera",
   "parent":{
-    "name":"Update",
-    "path":"folders/Scripts/Render/Update.yy",
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

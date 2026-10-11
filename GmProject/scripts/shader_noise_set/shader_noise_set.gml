@@ -1,6 +1,6 @@
 function shader_noise_set()
 {
-	texture_set_stage(sampler_handle[e_sampler.NOISE_BUFFER], surface_get_texture(render_grain_noise))
+	texture_set_stage(sampler_handle[e_sampler.NOISE_BUFFER], surface_get_texture(render_surface_grain_noise))
 	gpu_set_texrepeat_ext(sampler_handle[e_sampler.NOISE_BUFFER], true)
 	gpu_set_tex_filter_ext(sampler_handle[e_sampler.NOISE_BUFFER], true)
 	

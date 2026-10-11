@@ -15,7 +15,7 @@ function render_place_begin(depthsurf = null)
 		
 		// Disable object blend mode settings for surface output
 		if (is_cpp())
-			render_target_blend(1, false)
+			render_set_target_blend(1, false)
 		
 		view.surface_place_separate = true
 	}

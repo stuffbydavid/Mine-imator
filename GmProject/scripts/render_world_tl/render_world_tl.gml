@@ -281,7 +281,7 @@ function render_world_tl()
 		if (placed || parent_is_placed)
 		{
 			// Disable write for place data MRT
-			render_target_write(render_place_output, false)
+			render_set_target_write(render_place_output, false)
 			
 			placetype = e_place_type.PLACED
 		}
@@ -468,5 +468,5 @@ function render_world_tl()
 		gpu_set_zwriteenable(true)
 
 	if (render_place_pass && (placed || parent_is_placed))
-		render_target_write(render_place_output, true)
+		render_set_target_write(render_place_output, true)
 }

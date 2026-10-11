@@ -25,8 +25,9 @@ function render_surface_pool_clear()
 	render_surface_indirect_raydata = null
 	render_surface_reflections_raydata = null
 	render_surface_lens = null
-	render_grain_noise = null
+	render_surface_grain_noise = null
 	render_surface_samples = null
+	
 	render_gbuffers_cache_ready = false
 
 	render_cascades = []

@@ -1,4 +1,4 @@
-/// @desc Reads linear viewport depth and packed object/face ID from the previous render
+/// @desc Reads linear viewport depth and packed object/face ID from the previous render.
 
 function view_get_place_pixel(view, xx, yy)
 {

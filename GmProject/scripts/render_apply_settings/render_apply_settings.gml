@@ -81,6 +81,7 @@ function render_apply_settings(preset, renderer)
 			project_render_texture_filtering = preset.texture_filtering
 			project_render_transparent_block_texture_filtering = preset.transparent_block_texture_filtering
 			project_render_texture_filtering_level = preset.texture_filtering_level
+			
 			texture_set_mipmap_level(project_render_texture_filtering_level)
 	
 			project_bend_style = preset.bend_style

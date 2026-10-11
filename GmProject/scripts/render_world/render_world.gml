@@ -58,18 +58,7 @@ function render_world(mode)
 		render_world_list(-1)
 		
 		// Neutral depth ground and clouds
-		if (render_mode != e_render_mode.CLICK &&
-			render_mode != e_render_mode.SELECT &&
-			render_mode != e_render_mode.PLACE_SELECT &&
-			(!render_depth_pass || mode = e_render_mode.DEPTH))
-		{
-			render_world_tl_reset()
-			render_world_ground()
-
-			render_world_sky_clouds()
-
-			render_world_tl_reset()
-		}
+		render_world_environment()
 		
 		// Neutral and positive depth objects
 		render_world_list(0)

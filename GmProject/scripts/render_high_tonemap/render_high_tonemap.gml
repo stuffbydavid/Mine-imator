@@ -2,7 +2,7 @@
 
 function render_high_tonemap(surf)
 {
-	var resultsurf = render_high_get_apply_surf();
+	var resultsurf = render_high_get_apply_surface();
 	
 	// Tonemap / gamma
 	surface_set_target(resultsurf)

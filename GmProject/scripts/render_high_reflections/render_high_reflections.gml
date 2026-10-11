@@ -43,7 +43,7 @@ function render_high_reflections(surf)
 	
 	for (var bounce = 0; bounce < app.project_render_reflections_bounces; bounce++)
 	{
-		// first bounce uses fallback colors (render_surface_shadows, set by render_high_scene), future bounces use current render with established reflections
+		// first bounce uses fallback colors (render_surface_shadows, set by render_high_lighting), future bounces use current render with established reflections
 		sourcesurf = (bounce = 0 ? render_surface_shadows : surf)
 		
 		// Resolve reflections pass

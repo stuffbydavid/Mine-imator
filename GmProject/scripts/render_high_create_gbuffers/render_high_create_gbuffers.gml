@@ -5,7 +5,7 @@ function render_high_create_gbuffers()
 	var needglow, needsss, maskdepth, depthformat;
 	needglow = (render_glow || render_pass = e_render_pass.ALL || render_pass = e_render_pass.GLOW)
 	needsss = (render_auxiliary_material || render_pass = e_render_pass.ALL || render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE)
-	maskdepth = !render_mask_blend_supported()
+	maskdepth = !render_mask_blend_is_supported()
 	
 	render_fog_combined = (renderer_current = e_renderer.STANDARD && render_auxiliary && !needglow && !needsss && !maskdepth)
 	render_color_combined = (render_sun_combined && !render_glint && !needglow && !needsss && !maskdepth)
@@ -119,7 +119,7 @@ function render_high_create_gbuffers()
 			render_world_sky()
 			
 			// Enable scene lighting mask rendering
-			combinedmask = render_mask_blend(true, render_surface_mask, render_fog_combined ? render_surface_fog : null)
+			combinedmask = render_set_mask_blend(true, render_surface_mask, render_fog_combined ? render_surface_fog : null)
 			
 			if (!combinedmask)
 			{
@@ -128,7 +128,7 @@ function render_high_create_gbuffers()
 			}
 			
 			if (render_color_combined)
-				render_color_combined = render_color_gbuffers(render_surface_depth, render_surface_normal, render_surface_material, render_surface_shadows, render_surface_specular)
+				render_color_combined = render_high_set_color_gbuffers(render_surface_depth, render_surface_normal, render_surface_material, render_surface_shadows, render_surface_specular)
 
 			if (render_color_combined)
 				render_place_begin(render_surface_depth)
@@ -138,10 +138,10 @@ function render_high_create_gbuffers()
 			render_world(e_render_mode.COLOR)
 
 			if (render_color_combined)
-				render_sun_blend(-1)
+				render_high_set_sun_blend(6, false)
 			
 			if (combinedmask)
-				render_mask_blend(false, render_surface_mask)
+				render_set_mask_blend(false, render_surface_mask)
 			
 			if (render_color_combined)
 				render_place_end()
@@ -219,14 +219,14 @@ function render_high_create_gbuffers()
 			if (render_glint)
 				surface_set_target_ext(3, render_surface_specular)
 			{
+				var sunindex = (render_glint ? 4 : 3);
 				gpu_set_blendmode_ext(bm_one, bm_zero)
 			
 				if (render_sun_combined)
 				{
-					var sunindex = render_glint ? 4 : 3;
 					surface_set_target_ext(sunindex, render_glint ? render_surface_hdr[0] : render_surface_shadows)
 					surface_set_target_ext(sunindex + 1, render_glint ? render_surface_hdr[1] : render_surface_specular)
-					render_sun_blend(sunindex)
+					render_high_set_sun_blend(sunindex, true)
 				}
 			
 				render_world_start(depth_far)
@@ -236,7 +236,7 @@ function render_high_create_gbuffers()
 				render_place_end()
 			
 				if (render_sun_combined)
-					render_sun_blend(-1)
+					render_high_set_sun_blend(sunindex, false)
 
 				gpu_set_blendmode(bm_normal)
 			}

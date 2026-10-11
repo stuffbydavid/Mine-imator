@@ -25,7 +25,7 @@ function render_surface_pool_load(pool)
 	render_surface_indirect_raydata = pool.surface_indirect_raydata
 	render_surface_reflections_raydata = pool.surface_reflections_raydata
 	render_surface_lens = pool.surface_lens
-	render_grain_noise = pool.grain_noise
+	render_surface_grain_noise = pool.surface_grain_noise
 	render_surface_samples = pool.surface_samples
 	render_gbuffers_cache_ready = pool.gbuffers_cache_ready
 

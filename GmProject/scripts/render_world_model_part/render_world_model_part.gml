@@ -336,7 +336,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			rendermatrix = matrix_multiply(shape.matrix, mat)
 
 		if (shape.item_bounce || shape.face_camera)
-			rendermatrix = render_world_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
+			rendermatrix = render_world_get_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
 
 		matrix_set(matrix_world, rendermatrix)
 		vertex_submit(vbuf, pr_trianglelist, -1)

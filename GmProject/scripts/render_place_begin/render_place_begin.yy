@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_place_begin",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/Render.yy",
+    "name":"Place",
+    "path":"folders/Scripts/Render/Place.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -111,7 +111,7 @@
 		- Without glint, combined sunlight goes straight into the final lighting images
 		- Glint and local lights use temporary lighting images before adding their results
 		- Indirect lighting and ambient occlusion are calculated when enabled
-		- render_high_scene combines object colors and lighting, then reflections and fog are applied as needed
+		- render_high_lighting combines object colors and lighting, then reflections and fog are applied as needed
 		 -Standard includes fog in the lighting result, while Realistic applies fog separately
 		- Camera effects such as depth of field and bloom are applied before adjusting brightness and colors
 	
@@ -134,14 +134,14 @@ function render_high()
 	var samplestart, sampleend, finalsurf;
 	if (!render_use_samples)
 	{
-		render_update_pcss_kernel()
+		render_high_shadows_update_kernel()
 		
 		samplestart = 0
 		sampleend = 1
 	}
 	else
 	{
-		render_update_samples()
+		render_high_update_samples()
 		
 		if (render_samples_done)
 		{
@@ -167,7 +167,7 @@ function render_high()
 		// Create render passes
 		render_sun_combined = (
 			is_cpp() && renderer_current = e_renderer.STANDARD && render_shadows &&
-			env_sunlight_color_final != c_black && render_mask_blend_supported() &&
+			env_sunlight_color_final != c_black && render_mask_blend_is_supported() &&
 			cam_far_prev <= cam_near + depth_far && !render_gbuffers_cache_enabled)
 		
 		if (render_sun_combined)
@@ -191,7 +191,7 @@ function render_high()
 			render_high_ssao()
 		
 		// Composite current effects, avoid render surf 0 going forward
-		finalsurf = render_high_scene()
+		finalsurf = render_high_lighting()
 		
 		// Reflections
 		if (render_reflections)
@@ -202,15 +202,15 @@ function render_high()
 			render_high_fog(finalsurf)
 
 		// Apply HDR effects before tonemapping (DoF, Bloom, Glow, Lens Dirt)
-		render_refresh_effects(true, true, true)
-		finalsurf = render_post(finalsurf, true, true, true)
+		render_fx_refresh(true, true, true)
+		finalsurf = render_fx(finalsurf, true, true, true)
 		finalsurf = render_high_tonemap(finalsurf)
 
 		// Finish the combined tile before assembling the all-passes grid
 		if (render_pass = e_render_pass.ALL)
 		{
-			render_refresh_effects(false, true)
-			finalsurf = render_post(finalsurf, false, true)
+			render_fx_refresh(false, true)
+			finalsurf = render_fx(finalsurf, false, true)
 		}
 		
 		// Store debug passes and samples before final post processing
@@ -253,11 +253,11 @@ function render_high()
 	// Apply basic post-process effects
 	if (!render_pass)
 	{
-		render_refresh_effects(false, true)
-		finalsurf = render_post(finalsurf, false, true)
+		render_fx_refresh(false, true)
+		finalsurf = render_fx(finalsurf, false, true)
 		
 		if (app.project_render_aa && app.project_render_aa_mode = e_aa_mode.FXAA)
-			finalsurf = render_high_aa(finalsurf)
+			finalsurf = render_fx_aa(finalsurf)
 		
 		render_target = surface_require(render_target, render_width, render_height)
 		if (finalsurf != render_target)

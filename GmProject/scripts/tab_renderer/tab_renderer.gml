@@ -69,7 +69,9 @@ function tab_renderer()
 		tab_control_dragger()
 		draw_dragger("render/samples", dx, dy, dragger_width, rendererset.samples, .5, 1, 256, 24, 1, tab.tbx_samples, action_project_render_samples)
 		tab_next()
-		if (render_performance_warning(render_preset_edit, renderer_edit))
+		
+		// Performance warning
+		if (render_high_get_realistic_warning(render_preset_edit))
 			draw_tooltip_label("render/renderer/realistic_warning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	}
 	

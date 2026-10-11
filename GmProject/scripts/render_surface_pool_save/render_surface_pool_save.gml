@@ -29,7 +29,7 @@ function render_surface_pool_save()
 	pool.surface_indirect_raydata = render_surface_indirect_raydata
 	pool.surface_reflections_raydata = render_surface_reflections_raydata
 	pool.surface_lens = render_surface_lens
-	pool.grain_noise = render_grain_noise
+	pool.surface_grain_noise = render_surface_grain_noise
 	pool.surface_samples = render_surface_samples
 	pool.gbuffers_cache_ready = render_gbuffers_cache_ready
 

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"shader_high_indirect_source_set",
   "parent":{
-    "name":"Shaders",
-    "path":"folders/Scripts/Render/Shaders.yy",
+    "name":"High quality",
+    "path":"folders/Scripts/Render/Shaders/Set/High quality.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

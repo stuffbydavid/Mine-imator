@@ -9,7 +9,7 @@ function popup_exportmovie_draw()
 	if (popup_current.renderer = e_renderer.REALISTIC)
 	{
 		var preset = render_preset_map[?project_render_preset[e_renderer.REALISTIC]];
-		if (render_performance_warning(preset, e_renderer.REALISTIC))
+		if (render_high_get_realistic_warning(preset))
 			draw_tooltip_label("export_movie/performance_warning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	}
 

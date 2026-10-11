@@ -14,7 +14,7 @@ function render_startup()
 			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_sun_shadow_scale, render_light_offset, render_shadow_from,
 			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff;
 	
-	globalvar render_effects, render_effects_done, render_effects_list, render_effects_progress, render_camera_bloom, render_camera_dof,
+	globalvar render_effects, render_fx_done, render_fx_list, render_fx_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glint, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
@@ -68,9 +68,10 @@ function render_startup()
 	render_light_realistic_falloff = false
 	
 	render_effects = false
-	render_effects_done = false
-	render_effects_list = ds_list_create()
-	render_effects_progress = 0
+	render_fx_done = false
+	render_fx_list = ds_list_create()
+	render_fx_progress = 0
+	render_fx_index = 0
 	
 	render_camera_bloom = false
 	render_camera_dof = false
@@ -137,7 +138,7 @@ function render_startup()
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow,
 			  render_surface_indirect_raydata, render_surface_reflections_raydata,
-			  render_surface_samples, render_surface_post, render_surface_specular_base, depth_near, depth_far, render_post_index;
+			  render_surface_samples, render_surface_post, render_surface_specular_base, depth_near, depth_far, render_fx_index;
 
 	render_surface_pool_list = ds_list_create()
 	render_surface_pool_current = null
@@ -185,7 +186,6 @@ function render_startup()
 	
 	depth_near = clip_near
 	depth_far = 5000
-	render_post_index = 0
 	
 	render_world_count = 0
 	render_world_block_transparent = null
@@ -203,7 +203,6 @@ function render_startup()
 	render_alpha_hash_force = false // If enabled, forces scene objects to use hashing based on render_alpha_hash
 	render_alpha_hash_allowed = false
 	render_alpha_hash_shadows = false
-	render_alpha_hashed_count = 0
 	
 	// Noise sampling
 	globalvar render_sample_noise_texture, render_sample_noise_size, render_sample_noise_texture_array,
@@ -261,8 +260,8 @@ function render_startup()
 	render_dof_blade_rounding = .25
 	
 	// Grain
-	globalvar render_grain_noise;
-	render_grain_noise = null
+	globalvar render_surface_grain_noise;
+	render_surface_grain_noise = null
 	
 	// Subsurface
 	globalvar render_subsurface_kernel, render_blur_kernel;

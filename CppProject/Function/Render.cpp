@@ -31,12 +31,18 @@ namespace CppProject
 		}
 	}
 
-	BoolType render_mask_blend_supported()
+	void render_set_target_write(IntType index, BoolType enabled)
+	{
+		if (index >= 0 && index < 8)
+			GFX->SetTargetWrite(index, enabled);
+	}
+
+	BoolType render_mask_blend_is_supported()
 	{
 		return !IS_OPENGL || Shader::gl43Supported;
 	}
 
-	BoolType render_target_blend(IntType index, BoolType enabled)
+	BoolType render_set_target_blend(IntType index, BoolType enabled)
 	{
 		if (IS_OPENGL && !Shader::gl43Supported)
 			return false;
@@ -46,13 +52,41 @@ namespace CppProject
 		return true;
 	}
 
-	void render_target_write(IntType index, BoolType enabled)
+	BoolType render_set_mask_blend(BoolType enabled, IntType mask, IntType fog)
 	{
-		if (index >= 0 && index < 8)
-			GFX->SetTargetWrite(index, enabled);
+		if (!render_mask_blend_is_supported())
+			return false;
+
+		GFX->SubmitBatch();
+
+		if (enabled)
+		{
+			Surface* surf = FindSurface(mask);
+			Surface* fogSurf = (fog != noone ? FindSurface(fog) : nullptr);
+			if (!surf || (fog != noone && !fogSurf))
+				return false;
+
+			surf->ClearColorCache();
+			GFX->SetMRTIndex(1, surf->frameBuffer, QColor(0, 0, 0, 255));
+
+			if (fogSurf)
+			{
+				fogSurf->ClearColorCache();
+				GFX->SetMRTIndex(2, fogSurf->frameBuffer, QColor(0, 0, 0, 255));
+			}
+		}
+		else
+		{
+			GFX->ResetMRT();
+			GFX->surface->frameBuffer->BeginUse();
+		}
+
+		GFX->SetMaskBlending(enabled, enabled && fog != noone);
+
+		return true;
 	}
 
-	BoolType render_point_viewports(BoolType enabled, IntType size, VecType eye, RealType range)
+	BoolType render_high_shadows_viewports(BoolType enabled, IntType size, VecType eye, RealType range)
 	{
 		Shader* shader = FindShader(ID_shader_depth_point);
 		if (enabled && (!shader || !shader->IsLoaded() || shader->pointMultiviewUniform < 0 || (IS_OPENGL && shader->glPointProjection < 0)))
@@ -122,49 +156,15 @@ namespace CppProject
 		return true;
 	}
 
-	BoolType render_mask_blend(BoolType enabled, IntType mask, IntType fog)
+	void render_high_set_sun_blend(IntType index, BoolType enabled)
 	{
-		if (!render_mask_blend_supported())
-			return false;
-
-		GFX->SubmitBatch();
-
-		if (enabled)
-		{
-			Surface* surf = FindSurface(mask);
-			Surface* fogSurf = (fog != noone ? FindSurface(fog) : nullptr);
-			if (!surf || (fog != noone && !fogSurf))
-				return false;
-
-			surf->ClearColorCache();
-			GFX->SetMRTIndex(1, surf->frameBuffer, QColor(0, 0, 0, 255));
-
-			if (fogSurf)
-			{
-				fogSurf->ClearColorCache();
-				GFX->SetMRTIndex(2, fogSurf->frameBuffer, QColor(0, 0, 0, 255));
-			}
-		}
-		else
-		{
-			GFX->ResetMRT();
-			GFX->surface->frameBuffer->BeginUse();
-		}
-
-		GFX->SetMaskBlending(enabled, enabled && fog != noone);
-
-		return true;
+		if (render_mask_blend_is_supported())
+			GFX->SetSunBlending(index, enabled);
 	}
 
-	void render_sun_blend(IntType index)
+	BoolType render_high_set_color_gbuffers(IntType depth, IntType normal, IntType material, IntType shadows, IntType specular)
 	{
-		if (render_mask_blend_supported())
-			GFX->SetSunBlending(index);
-	}
-
-	BoolType render_color_gbuffers(IntType depth, IntType normal, IntType material, IntType shadows, IntType specular)
-	{
-		if (!render_mask_blend_supported() || !GFX->maskBlend || !GFX->fogBlend)
+		if (!render_mask_blend_is_supported() || !GFX->maskBlend || !GFX->fogBlend)
 			return false;
 		
 		Surface* surfaces[] = {
@@ -194,7 +194,7 @@ namespace CppProject
 			GFX->SetMRTIndex(i + 3, surfaces[i]->frameBuffer, clearColors[i]);
 		}
 		
-		GFX->SetSunBlending(6);
+		GFX->SetSunBlending(6, true);
 		
 		return true;
 	}

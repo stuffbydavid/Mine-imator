@@ -33,7 +33,7 @@ function render_surface_pool_event_create()
 	surface_lens = null
 	surface_samples = null
 	
-	grain_noise = null
+	surface_grain_noise = null
 	gbuffers_cache_ready = false
 
 	sun_shadow_distance = 0

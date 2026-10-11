@@ -47,7 +47,7 @@ function render_high_shadows()
 		// Shadowless pointlight
 		if (type = e_tl_type.POINT_LIGHT && !shadows)
 		{
-			if (render_light_visible(lightplanes))
+			if (tl_get_light_visible(lightplanes))
 				ds_list_add(render_shadowless_point_list, id)
 			
 			continue
@@ -137,7 +137,7 @@ function render_high_shadows()
 			}
 			
 			// Cull after jitter generation to retain later lights' sample positions
-			if (!render_light_visible(lightplanes))
+			if (!tl_get_light_visible(lightplanes))
 				continue
 			
 			#region Point light
@@ -202,7 +202,7 @@ function render_high_shadows()
 						render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
 						
 						// Enable multi-view rendering for a single depth render pass
-						multiview = (pointdirect && render_point_viewports(true, atlassize, render_proj_from, render_light_far));
+						multiview = (pointdirect && render_high_shadows_viewports(true, atlassize, render_proj_from, render_light_far));
 						
 						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 						render_world_done()
@@ -210,7 +210,7 @@ function render_high_shadows()
 						if (multiview)
 						{
 							// Disable multi-view and stop processing other directions
-							render_point_viewports(false, atlassize, render_proj_from, render_light_far)
+							render_high_shadows_viewports(false, atlassize, render_proj_from, render_light_far)
 							break
 						}
 					
@@ -305,8 +305,9 @@ function render_high_shadows()
 						gpu_set_blendmode(bm_normal)
 					}
 					surface_reset_target()
-						if (render_shadow_cache_enabled)
-							render_shadow_cache_ready[?spotkey] = true
+					
+					if (render_shadow_cache_enabled)
+						render_shadow_cache_ready[?spotkey] = true
 				}
 				else
 				{

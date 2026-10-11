@@ -60,7 +60,12 @@ function render_generate_text(str, res, is3d, halign = "center", valign = "cente
 	}
 	
 	// Generate padded text surface
-	var surf = surface_create(wid, hei);
+	var surf, alpha;
+	surf = surface_create(wid, hei)
+	
+	alpha = draw_get_alpha()
+	draw_set_alpha(1)
+	
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
@@ -83,26 +88,31 @@ function render_generate_text(str, res, is3d, halign = "center", valign = "cente
 	}
 	surface_reset_target()
 	
-	// Generate outline/glow
+	// Generate outline
 	var outlinesurf = surface_create(wid, hei);
 	surface_set_target(outlinesurf)
 	{
 		draw_clear_alpha(c_black, 0)
 		
 		gpu_set_texrepeat(false)
-		render_shader_obj = shader_map[?shader_outline]
+		
+		render_shader_obj = shader_map[?shader_text_outline]
 		with (render_shader_obj)
 		{
 			shader_set(shader)
-			shader_outline_set(wid, hei, size)
+			shader_text_outline_set(wid, hei, size)
 		}
+		
 		draw_surface_exists(surf, 0, 0)
+		
 		with (render_shader_obj)
 			shader_reset()
 			
 		gpu_set_texrepeat(true)
 	}
 	surface_reset_target()
+	
+	draw_set_alpha(alpha)
 	
 	draw_set_font(app.font_value)
 	
