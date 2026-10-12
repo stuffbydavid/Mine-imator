@@ -25,8 +25,10 @@ void main()
 		if (uColorsExt > 0)
 			applyColorTransform(gl_FragData[0], true);
 		
-		gl_FragData[1] = vec4(uReplaceColor.rgb, baseColor.a);
-		gl_FragData[2] = vec4(vec3(getFog(vPosition, uCameraPosition)), 1.0);
+		float fog = getFog(vPosition, uCameraPosition);
+		gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, fog);
+		gl_FragData[1] = vec4(gl_FragData[0].rgb * uReplaceColor.rgb, baseColor.a);
+		gl_FragData[2] = vec4(fog, normal.a * uReplaceColor.r, 0.0, baseColor.a);
 		gl_FragData[3] = depth;
 		gl_FragData[4] = normal;
 		gl_FragData[5] = material;

@@ -2,6 +2,9 @@
 
 function shader_high_reflections_resolve_set(surf)
 {
+	texture_set_stage(sampler_handle[e_sampler.MASK], surface_get_texture(render_surface_mask))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.MASK], false)
+
 	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_depth))
 	gpu_set_texrepeat_ext(sampler_handle[e_sampler.DEPTH_BUFFER], false)
 	
@@ -14,8 +17,6 @@ function shader_high_reflections_resolve_set(surf)
 	texture_set_stage(sampler_handle[e_sampler.SCENE_BUFFER], surface_get_texture(surf))
 	gpu_set_texrepeat_ext(sampler_handle[e_sampler.SCENE_BUFFER], false)
 	
-	texture_set_stage(sampler_handle[e_sampler.METALLIC_BUFFER], surface_get_texture(render_surface_diffuse))
-	gpu_set_texrepeat_ext(sampler_handle[e_sampler.METALLIC_BUFFER], false)
 
 	render_set_uniform(e_uniform.NEAR, depth_near)
 	render_set_uniform(e_uniform.FAR, depth_far)

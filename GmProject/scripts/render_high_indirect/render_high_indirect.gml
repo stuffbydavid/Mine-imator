@@ -49,7 +49,7 @@ function render_high_indirect()
 				shader_high_indirect_source_set(previoussurf, bounce > 0)
 			}
 			
-			draw_surface_exists(render_surface_diffuse, 0, 0)
+			draw_surface_exists(render_surface_mask, 0, 0)
 			
 			with (render_shader_obj)
 				shader_clear()
@@ -70,7 +70,9 @@ function render_high_indirect()
 			}
 			
 			gpu_set_texfilter(false)
+			gpu_set_blendmode_ext(bm_one, bm_zero)
 			draw_surface_ext(render_surface_indirect_raydata, 0, 0, render_width / ww, render_height / hh, 0, c_white, 1)
+			gpu_set_blendmode(bm_normal)
 			
 			with (render_shader_obj)
 				shader_clear()
@@ -92,7 +94,9 @@ function render_high_indirect()
 				shader_high_indirect_blur_set()
 			}
 			
+			gpu_set_blendmode_ext(bm_one, bm_zero)
 			draw_surface_exists(render_surface_hdr[1], 0, 0)
+			gpu_set_blendmode(bm_normal)
 			
 			with (render_shader_obj)
 				shader_clear()

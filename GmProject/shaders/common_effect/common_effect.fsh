@@ -212,11 +212,12 @@ vec4 applyVignette(vec4 color, vec2 texCoord)
 
 uniform int uFogShow;
 uniform vec4 uFogColor; // static
+uniform float uFogDensity; // static
 uniform float uFogDistance; // static
 uniform float uFogSize; // static
 uniform float uFogHeight; // static
 
-float getFog(vec3 pos, vec3 camPos)
+float getFogAtDensity(vec3 pos, vec3 camPos, float density)
 {
 	float fog;
 	if (uFogShow > 0)
@@ -225,12 +226,17 @@ float getFog(vec3 pos, vec3 camPos)
 
 		fog = clamp(1.0 - (uFogDistance - fogDepth) / uFogSize, 0.0, 1.0);
 		fog *= clamp(1.0 - (pos.z - uFogHeight) / uFogSize, 0.0, 1.0);
-		fog = 1.0 - pow(1.0 - fog, 2.0); // Quadratic transition
+		fog = 1.0 - pow(1.0 - fog, 2.0 * density); // Quadratic transition at full density
 	}
 	else
 		fog = 0.0;
 
 	return fog;
+}
+
+float getFog(vec3 pos, vec3 camPos)
+{
+	return getFogAtDensity(pos, camPos, uFogDensity);
 }
 
 #pragma shady: macro_end

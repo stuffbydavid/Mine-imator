@@ -49,9 +49,11 @@ function shader_use()
 	// Set fog
 	if (!is_undefined(uniform_handle[e_uniform.FOG_SHOW]) && uniform_handle[e_uniform.FOG_SHOW] > -1)
 	{
-		var fog = (app.env_fog_show && (render_mode != e_render_mode.COLOR || render_fog_combined));
+		var fog = app.env_fog_show;
+		var fogdensity = (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.AUXILIARY || render_mode = e_render_mode.HIGH_FOG) ? .5 : 1;
 		render_set_uniform_int(e_uniform.FOG_SHOW, bool_to_float(fog))
-		render_set_uniform_int(e_uniform.FOG_PASS, render_fog_combined && render_mode = e_render_mode.COLOR)
+		render_set_uniform_int(e_uniform.FOG_PASS, render_mode = e_render_mode.COLOR && (render_fog_combined || !render_auxiliary))
+		render_set_uniform(e_uniform.FOG_DENSITY, fogdensity)
 		
 		render_set_uniform_color(e_uniform.FOG_COLOR, app.env_fog_object_color_final, 1)
 		render_set_uniform(e_uniform.FOG_DISTANCE, app.env_fog_distance)
