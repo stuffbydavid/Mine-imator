@@ -81,6 +81,5 @@ void main()
 		}
 	}
 	
-	gl_FragColor = vec4(light, 1.0);
 	gl_FragColor = vec4(light, texture2D(uMask, vTexCoord).a);
 }

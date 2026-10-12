@@ -51,7 +51,6 @@ void main()
 
 	if (uFallbackOnly == 0)
 	{
-		float mask = texture2D(uMask, vTexCoord).r;
 		float unlitCoverage = coverage - litCoverage;
 		vec3 unlitColor = max(baseColor.rgb * coverage - litColor.rgb, vec3(0.0));
 		unlitColor = unlitCoverage > 0.0001 ? unlitColor / unlitCoverage : vec3(0.0);
@@ -82,7 +81,6 @@ void main()
 		if (uSSAOAlwaysVisible > 0)
 			diffuse *= ssao;
 		
-		// Recover emissive strength from the opacity-weighted shared target
 		if (uShadowsEnabled > 0)
 			diffuse += litCoverage > 0.0001 ? texture2D(uFogBuffer, vTexCoord).g / litCoverage : 0.0;
 		
