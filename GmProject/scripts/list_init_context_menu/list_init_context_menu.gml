@@ -300,10 +300,10 @@ function list_init_context_menu(name)
 		}
 		
 		// Render menu
-		case "toolbar/render":
+		case "toolbar/export":
 		{
-			list_item_add(text_get("toolbar/render/image"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
-			list_item_add(text_get("toolbar/render/movie"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
+			list_item_add(text_get("toolbar/export/image"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
+			list_item_add(text_get("toolbar/export/movie"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
 			break
 		}
 		

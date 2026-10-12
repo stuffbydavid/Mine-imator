@@ -85,7 +85,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Export movie
-	popup_exportmovie = new_popup("export_movie", popup_exportmovie_draw, 350, null, true)
+	popup_exportmovie = new_popup("export_movie", popup_exportmovie_draw, 400, null, true)
 	with (popup_exportmovie)
 	{
 		renderer = app.setting_export_movie_renderer
@@ -106,7 +106,7 @@ function app_startup_interface_popups()
 	}
 	
 	// Export image
-	popup_exportimage = new_popup("export_image", popup_exportimage_draw, 350, null, true)
+	popup_exportimage = new_popup("export_image", popup_exportimage_draw, 400, null, true)
 	with (popup_exportimage)
 	{
 		renderer = app.setting_export_image_renderer

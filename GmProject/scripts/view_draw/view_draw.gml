@@ -897,20 +897,45 @@ function view_draw(view)
 			draw_box(boxx - 2, boxy, 4, boxh, false, c_hover, a_hover)
 	}
 	
-	// Render info
+	// Realistic render info
 	if (view.renderer = e_renderer.REALISTIC)
 	{
-		var infotext = text_get("view/render_fps", string(fps), max(1, render_samples), project_render_samples);
+		var barx, bary, barwid, barhei;
+		barx = content_x + 16
+		bary = content_y + content_height - 36
+		barwid = min(200, content_width - 32)
+		barhei = 18
 		
-		draw_label(infotext, content_x + 17, content_y + content_height - 15, fa_left, fa_bottom, c_black, .75, font_caption)
-		draw_label(infotext, content_x + 16, content_y + content_height - 16, fa_left, fa_bottom, fps < 25 ? c_error : c_white, 1, font_caption)
+		if (barwid > 0)
+		{
+			var fillwid, infotext;
+			fillwid = floor(barwid * clamp(max(1, render_samples) / max(1, project_render_samples), 0, 1))
+			infotext = text_get("view/render_progress", max(1, render_samples), project_render_samples);
+			
+			draw_box(barx, bary, barwid, barhei, false, c_level_bottom, 1)
+			draw_box(barx, bary, fillwid, barhei, false, c_accent, 1)
+			
+			if (fillwid > 0)
+			{
+				clip_begin(barx, bary, fillwid, barhei)
+				draw_label(infotext, barx + barwid / 2, bary + barhei / 2, fa_center, fa_middle, setting_theme.dark ? c_level_bottom : c_white, 1, font_caption)
+				clip_end()
+			}
+			
+			if (fillwid < barwid)
+			{
+				clip_begin(barx + fillwid, bary, barwid - fillwid, barhei)
+				draw_label(infotext, barx + barwid / 2, bary + barhei / 2, fa_center, fa_middle, c_text_main, 1, font_caption)
+				clip_end()
+			}
+		}
 		
 		if (project_render_pass != e_render_pass.COMBINED)
 		{
 			infotext = text_get("view/render_pass", text_get("view/renderer/pass/" + render_pass_list[|project_render_pass]))
 			
-			draw_label(infotext, content_x + 17, content_y + content_height - 31, fa_left, fa_bottom, c_black, .75, font_caption)
-			draw_label(infotext, content_x + 16, content_y + content_height - 32, fa_left, fa_bottom, c_white, 1, font_caption)
+			draw_label(infotext, barx + 1, bary - 3, fa_left, fa_bottom, c_black, .75, font_caption)
+			draw_label(infotext, barx, bary - 4, fa_left, fa_bottom, c_white, 1, font_caption)
 		}
 	}
 	

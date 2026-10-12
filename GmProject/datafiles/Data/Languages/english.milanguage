@@ -531,10 +531,10 @@
 			"show_hidden": "Show hidden",
 			"preferences": "Preferences..."
 		},
-		"render": "Render",
-		"render/": {
-			"image": "Render image...",
-			"movie": "Render movie..."
+		"export": "Export",
+		"export/": {
+			"image": "Export image...",
+			"movie": "Export movie..."
 		},
 		"view": "View",
 		"view/": {
@@ -1037,7 +1037,7 @@
 		"transparent_background_enable": "Enable transparent background",
 		"transparent_background_disable": "Disable transparent background",
 		"render_pass": "Render pass: %1",
-		"render_fps": "%1 FPS (%2/%3 samples)",
+		"render_progress": "%1/%2 samples",
 		"render_time": "Rendered in %1 seconds",
 		"work_camera": "Work camera",
 		"active_camera": "Active camera (%1)",

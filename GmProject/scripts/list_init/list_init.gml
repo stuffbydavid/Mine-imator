@@ -1411,16 +1411,6 @@ function list_init(name)
 			break
 		}
 		
-		// Renderer
-		case "export_movie/renderer":
-		case "export_image/renderer":
-		{
-			menu_add_item(e_renderer.QUICK, text_get("render/renderer/quick"))
-			menu_add_item(e_renderer.STANDARD, text_get("render/renderer/standard"))
-			menu_add_item(e_renderer.REALISTIC, text_get("render/renderer/realistic"))
-			break
-		}
-		
 		// Video framerate
 		case "export_movie/frame_rate":
 		{

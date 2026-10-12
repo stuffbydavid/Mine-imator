@@ -26,13 +26,14 @@ function toolbar_draw()
 	
 	if (window_state = "")
 	{
+		// Edit
 		content_capwid = string_width(text_get("toolbar/edit")) + 16
 		toolbar_draw_button("toolbar/edit", dx, dy, content_capwid)
 		dx += content_capwid + padding
 
-		// Render
-		content_capwid = string_width(text_get("toolbar/render")) + 16
-		toolbar_draw_button("toolbar/render", dx, dy, content_capwid)
+		// Export
+		content_capwid = string_width(text_get("toolbar/export")) + 16
+		toolbar_draw_button("toolbar/export", dx, dy, content_capwid)
 		dx += content_capwid + padding
 	}
 	
