@@ -689,12 +689,11 @@ namespace CppProject
 			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest],
 				glBlendMap[alphasrc], glBlendMap[alphadest]);
 			
-			// Store premultiplied lit color and coverage, excluding unlit sky geometry
+			// Exclude unlit geometry from lighting coverage
 			if (maskBlend)
 				Shader::gl43Core->glBlendFuncSeparatei(1,
 					GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, maskUnlit ? GL_ZERO : GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			
-			// Fog and emissive retain the contributions behind transparent objects
 			if (fogBlend)
 				Shader::gl43Core->glBlendFuncSeparatei(2, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			

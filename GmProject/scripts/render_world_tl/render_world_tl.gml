@@ -139,25 +139,22 @@ function render_world_tl()
 		render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	}
 	
-	if (render_material_pass)
+	if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 	{
-		if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
-		{
-			shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
-		}
-	
-		if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
-		{
-			shader_uniform_metallic = value_inherit[e_value.METALLIC]
-			render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
-		}
-	
-		if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
-		{
-			shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-			render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
-		}
+		shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+		render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+	}
+
+	if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+	{
+		shader_uniform_metallic = value_inherit[e_value.METALLIC]
+		render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+	}
+
+	if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+	{
+		shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+		render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 	}
 	
 	if (wind != shader_uniform_wind)
@@ -179,11 +176,11 @@ function render_world_tl()
 		render_set_uniform_int(e_uniform.FOG_SHOW, shader_uniform_fog)
 	}
 	
-	if (render_material_pass && (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
+	if (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_RED] != shader_uniform_sss_red ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] != shader_uniform_sss_green ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] != shader_uniform_sss_blue ||
-		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color))
+		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
 	{
 		shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
 		shader_uniform_sss_red = value_inherit[e_value.SUBSURFACE_RADIUS_RED]

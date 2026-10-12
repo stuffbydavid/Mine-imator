@@ -126,7 +126,7 @@ namespace CppProject
 		// Apply a Direct3D blend state based on the current blending settings.
 		void ApplyBlendState();
 
-		// Sets independent alpha blending for the mask and shared fog/emissive target.
+		// Sets independent alpha blending for the mask and shared fog/emissive target
 		void SetMaskBlending(BoolType enabled, BoolType fog = false, BoolType unlit = false);
 
 		// Alpha-blends sunlight and overwrites G-buffer data, including the combined color layout.

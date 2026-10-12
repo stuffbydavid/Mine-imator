@@ -49,7 +49,6 @@ void main()
 		gl_FragData[0].rgb = applyToneMapper(gl_FragData[0].rgb, uTonemapper, uExposure, uGamma);
 	
 	float fog = getFog(vPosition, uCameraPosition);
-	// Leave material lookup to the auxiliary pass when it will rebuild this target
 	if (uFogPass > 0)
 	{
 		float roughness, metallic, emissive, F0, sss;

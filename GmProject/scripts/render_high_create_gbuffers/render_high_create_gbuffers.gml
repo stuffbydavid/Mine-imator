@@ -50,8 +50,7 @@ function render_high_create_gbuffers()
 			render_gbuffers_cache_ready = false
 		}
 		
-		if (render_auxiliary && (!surface_exists(render_surface_fog) ||
-			(needsss && (!surface_exists(render_surface_sss) || !surface_exists(render_surface_sss_range))) ||
+		if (render_auxiliary && ((needsss && (!surface_exists(render_surface_sss) || !surface_exists(render_surface_sss_range))) ||
 			(needglow && !surface_exists(render_surface_glow))))
 		{
 			render_gbuffers_cache_ready = false
@@ -177,7 +176,6 @@ function render_high_create_gbuffers()
 		{
 			surface_free(render_surface_fog)
 
-			// The auxiliary pass below rebuilds fog and emissive together
 			render_surface_fog = surface_require(null, render_width, render_height, true, surface_rgba16float)
 		}
 

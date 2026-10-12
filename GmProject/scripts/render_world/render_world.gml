@@ -3,16 +3,13 @@ function render_world(mode)
 	// Choose shader
 	render_mode = mode
 
-	// The lightweight auxiliary shader also needs emissive material values
-	render_material_pass = true
-	
 	render_depth_pass = (
 		mode = e_render_mode.DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH
 	)
-	// Scene tests need full color and fog setup for the premultiplied lighting mask
+	// Scene tests also need color and fog setup
 	render_fast_pass = (
 		render_depth_pass ||
 		mode = e_render_mode.CLICK ||

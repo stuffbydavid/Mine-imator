@@ -39,31 +39,19 @@ function render_world_block(block, resdif, resnorm, resmat)
 	
 	tex = resdif.block_sheet_texture[e_block_sheet.STATIC16]
 	
-	// Material pass
-	if (render_material_pass)
-	{
-		hasmat = (resmat.type != e_res_type.PACK || resmat.pack_has_materials)
-		hasnorm = (resnorm.type != e_res_type.PACK || resnorm.pack_has_normals)
-		
-		texmat = hasmat ? resmat.block_sheet_texture_material[e_block_sheet.STATIC16] : 0
-		texnorm = hasnorm ? resnorm.block_sheet_texture_normal[e_block_sheet.STATIC16] : 0
-		
-		if (texmat = null)
-			texmat = 0
-	
-		if (texnorm = null)
-			texnorm = 0
-		
-		matformat = texmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
-	}
-	else
-	{
-		hasmat = false
-		hasnorm = false
+	hasmat = (resmat.type != e_res_type.PACK || resmat.pack_has_materials)
+	hasnorm = (resnorm.type != e_res_type.PACK || resnorm.pack_has_normals)
+
+	texmat = hasmat ? resmat.block_sheet_texture_material[e_block_sheet.STATIC16] : 0
+	texnorm = hasnorm ? resnorm.block_sheet_texture_normal[e_block_sheet.STATIC16] : 0
+
+	if (texmat = null)
 		texmat = 0
+
+	if (texnorm = null)
 		texnorm = 0
-		matformat = e_material.FORMAT_NONE
-	}
+
+	matformat = texmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
 	
 	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
 	
