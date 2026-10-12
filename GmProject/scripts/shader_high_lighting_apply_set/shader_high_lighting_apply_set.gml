@@ -9,16 +9,14 @@ function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbacko
 	render_set_uniform_int(e_uniform.FALLBACK_ONLY, fallbackonly)
 	
 	if (renderer_current = e_renderer.STANDARD && app.env_fog_show && !fallbackonly)
-	{
 		render_set_uniform_int(e_uniform.FOG_APPLY, 1)
-		texture_set_stage(sampler_handle[e_sampler.FOG_BUFFER], surface_get_texture(render_surface_fog))
-	}
 	else
 		render_set_uniform_int(e_uniform.FOG_APPLY, 0)
 	
 	texture_set_stage(sampler_handle[e_sampler.MATERIAL_BUFFER], surface_get_texture(material))
-	texture_set_stage(sampler_handle[e_sampler.DIFFUSE_BUFFER], surface_get_texture(render_surface_diffuse))
-	texture_set_stage(sampler_handle[e_sampler.EMISSIVE], surface_get_texture(render_surface_normal))
+	texture_set_stage(sampler_handle[e_sampler.MASK], surface_get_texture(mask))
+	texture_set_stage(sampler_handle[e_sampler.NORMAL_BUFFER], surface_get_texture(render_surface_normal))
+	texture_set_stage(sampler_handle[e_sampler.FOG_BUFFER], surface_get_texture(render_surface_fog))
 	
 	render_set_uniform(e_uniform.BACKGROUND_BRIGHTNESS, app.env_brightness)
 	render_set_uniform_color(e_uniform.FALLBACK_COLOR, app.env_sky_color_final, 1)
@@ -50,7 +48,6 @@ function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbacko
 	else
 		render_set_uniform_int(e_uniform.SPECULAR_ENABLED, false)
 	
-	texture_set_stage(sampler_handle[e_sampler.MASK], surface_get_texture(mask))
 	render_set_uniform_color(e_uniform.AMBIENT_COLOR, render_shadows ? app.env_ambient_color_final : c_white, 1)
 	
 	render_set_uniform(e_uniform.INDIRECT_ENABLED, render_indirect)

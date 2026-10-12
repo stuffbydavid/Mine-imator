@@ -172,7 +172,7 @@ function render_world_tl()
 		render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
 	}
 	
-	var renderfog = (app.env_fog_show && fog && (render_mode != e_render_mode.COLOR || render_fog_combined));
+	var renderfog = (app.env_fog_show && fog);
 	if (renderfog != shader_uniform_fog)
 	{
 		shader_uniform_fog = renderfog
@@ -456,7 +456,7 @@ function render_world_tl()
 	
 	if (prevblend != null)
 	{
-		if (prevblend = bm_normal && (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS))
+		if (prevblend = bm_normal && (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS || render_mode = e_render_mode.AUXILIARY))
 			gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
 		else
 			gpu_set_blendmode(prevblend)

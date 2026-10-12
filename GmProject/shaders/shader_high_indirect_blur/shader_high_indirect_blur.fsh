@@ -6,6 +6,7 @@ varying vec2 vTexCoord;
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uNoiseBuffer;
+uniform sampler2D uMask;
 uniform vec2 uScreenSize;
 uniform vec2 uPixelCheck;
 
@@ -101,5 +102,5 @@ void main()
 	
 	color /= weight;
 	
-	gl_FragColor = vec4(color, 1.0);
+	gl_FragColor = vec4(color, texture2D(uMask, vTexCoord).a);
 }

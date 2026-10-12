@@ -15,7 +15,9 @@ varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
 varying float vPlaceDistance;
+varying vec4 vCustom;
 
+#pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_color.COLOR_ADJUST_LIB)
 #pragma shady: inline(common_color.TONEMAP_LIB)
@@ -47,14 +49,18 @@ void main()
 		gl_FragData[0].rgb = applyToneMapper(gl_FragData[0].rgb, uTonemapper, uExposure, uGamma);
 	
 	float fog = getFog(vPosition, uCameraPosition);
+	// Leave material lookup to the auxiliary pass when it will rebuild this target
 	if (uFogPass > 0)
-		gl_FragData[2] = vec4(vec3(fog), 1.0);
-	else
 	{
-		gl_FragData[2] = vec4(0.0);
-		gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, fog); // Mix fog
+		float roughness, metallic, emissive, F0, sss;
+		getMaterial(roughness, metallic, emissive, F0, sss);
+		gl_FragData[2] = vec4(fog, emissive * uReplaceColor.r, 0.0, gl_FragData[0].a);
 	}
+	else
+		gl_FragData[2] = vec4(0.0);
+
+	gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, fog); // Mix fog
 	
 	if (uRenderPlace == 0)
-		gl_FragData[1] = vec4(uReplaceColor.rgb, gl_FragData[0].a);
+		gl_FragData[1] = vec4(gl_FragData[0].rgb * uReplaceColor.rgb, gl_FragData[0].a);
 }

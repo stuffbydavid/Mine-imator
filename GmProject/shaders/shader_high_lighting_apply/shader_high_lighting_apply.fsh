@@ -4,13 +4,12 @@ uniform int uSSAOAlwaysVisible;
 uniform int uSpecularEnabled;
 uniform sampler2D uShadows;
 uniform sampler2D uSSAO;
-uniform sampler2D uEmissive;
+uniform sampler2D uNormalBuffer;
 uniform sampler2D uSpecular;
 uniform vec4 uAmbientColor;
 
 uniform sampler2D uMask;
 uniform sampler2D uMaterialBuffer;
-uniform sampler2D uDiffuseBuffer;
 uniform sampler2D uFogBuffer;
 uniform int uFogApply;
 uniform int uReflectionsEnabled;
@@ -32,7 +31,7 @@ vec3 getReflectionFallback(vec2 uv)
 {
 	vec3 fallback = pow(uFallbackColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
 	vec4 position = uProjMatrixInv * vec4(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0, 1.0, 1.0);
-	vec3 normal = unpackNormal(texture2D(uEmissive, uv));
+	vec3 normal = unpackNormal(texture2D(uNormalBuffer, uv));
 	vec3 viewDir = normalize(-(position.xyz / position.w));
 	vec3 rayDir = reflect(-viewDir, normal);
 	float fog = getFogFallback(vec3(0.0), rayDir);
@@ -47,14 +46,20 @@ void main()
 	vec3 reflectionFallback = getReflectionFallback(vTexCoord);
 	float coverage = baseColor.a;
 	baseColor.rgb = coverage > 0.0001 ? baseColor.rgb / coverage : vec3(0.0);
+	vec4 litColor = texture2D(uMask, vTexCoord);
+	float litCoverage = min(litColor.a, coverage);
 
 	if (uFallbackOnly == 0)
 	{
 		float mask = texture2D(uMask, vTexCoord).r;
+		float unlitCoverage = coverage - litCoverage;
+		vec3 unlitColor = max(baseColor.rgb * coverage - litColor.rgb, vec3(0.0));
+		unlitColor = unlitCoverage > 0.0001 ? unlitColor / unlitCoverage : vec3(0.0);
+		unlitColor = pow(unlitColor, vec3(uGamma)) * uBackgroundBrightness * unlitCoverage;
+		baseColor.rgb = litCoverage > 0.0001 ? litColor.rgb / litCoverage : vec3(0.0);
 		
 		// Apply gamma to base
 		baseColor.rgb = pow(baseColor.rgb, vec3(uGamma));
-		baseColor.rgb *= mix(uBackgroundBrightness, 1.0, mask);
 		
 		vec3 spec = mix(vec3(1.0), baseColor.rgb, matColor.g) * reflectionFallback * matColor.b;
 		
@@ -72,38 +77,40 @@ void main()
 		vec3 diffuse = ambient;
 		
 		if (uShadowsEnabled > 0)
-			diffuse += texture2D(uShadows, vTexCoord).rgb;
+			diffuse += litCoverage > 0.0001 ? texture2D(uShadows, vTexCoord).rgb / litCoverage : vec3(0.0);
 		
 		if (uSSAOAlwaysVisible > 0)
 			diffuse *= ssao;
 		
-		// Add emissive
+		// Recover emissive strength from the opacity-weighted shared target
 		if (uShadowsEnabled > 0)
-			diffuse += texture2D(uEmissive, vTexCoord).a;
+			diffuse += litCoverage > 0.0001 ? texture2D(uFogBuffer, vTexCoord).g / litCoverage : 0.0;
 		
-		baseColor.rgb *= mix(vec3(1.0), diffuse, mask);
+		baseColor.rgb *= diffuse;
 		
 		// If reflections are disabled, add fallback color for fresnel
 		if (uReflectionsEnabled == 0)
 			baseColor.rgb += spec;
 		
 		if (uSpecularEnabled > 0)
-			baseColor.rgb += texture2D(uSpecular, vTexCoord).rgb;
+			baseColor.rgb += litCoverage > 0.0001 ? texture2D(uSpecular, vTexCoord).rgb / litCoverage : vec3(0.0);
+
+		baseColor.rgb = baseColor.rgb * litCoverage + unlitColor;
 	}
 	else
 	{
-		vec4 diffuseSample = texture2D(uDiffuseBuffer, vTexCoord);
-		vec3 diffuseColor = diffuseSample.a > 0.0001 ? diffuseSample.rgb / diffuseSample.a : vec3(0.0);
+		vec3 diffuseColor = litCoverage > 0.0001 ? litColor.rgb / litCoverage : vec3(0.0);
 		diffuseColor = pow(diffuseColor, vec3(uGamma));
-		baseColor.rgb += mix(vec3(1.0), diffuseColor, matColor.g) * reflectionFallback * matColor.b;
+		baseColor.rgb *= coverage;
+		baseColor.rgb += mix(vec3(1.0), diffuseColor, matColor.g) * reflectionFallback * matColor.b * litCoverage;
 	}
-
-	baseColor.rgb *= coverage;
 	
 	if (uFogApply > 0 && coverage > 0.0001)
 	{
 		vec3 fogColor = pow(uFogColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
-		baseColor.rgb = mix(baseColor.rgb / coverage, fogColor, texture2D(uFogBuffer, vTexCoord).r) * coverage;
+		vec4 fogData = texture2D(uFogBuffer, vTexCoord);
+		float fog = fogData.a > 0.0001 ? fogData.r / fogData.a : 0.0;
+		baseColor.rgb = mix(baseColor.rgb / coverage, fogColor, fog) * coverage;
 	}
 	
 	gl_FragColor = baseColor;
