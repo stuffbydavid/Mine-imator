@@ -9,7 +9,7 @@ function view_get_place_pixel(view, xx, yy)
 	pixelstate = null
 	
 	// Async pixel lookup in first-person build mode
-	if (is_cpp() && build_first_person && view = view_main)
+	if (is_cpp() && build_first_person && view = view_main && !mouse_left_pressed && !mouse_right_pressed)
 	{
 		// Surface changes, reset asynchronous list
 		var listsize = 8;

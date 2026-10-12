@@ -85,7 +85,7 @@ function action_build_place()
 		else
 		{
 			if (!place_build || place_pos = null)
-				return 0
+				return false
 
 			// Save the build selection independently of the workbench
 			hobj = history_set(action_build_place)
@@ -238,4 +238,6 @@ function action_build_place()
 		
 		view_changed()
 	}
+	
+	return true
 }

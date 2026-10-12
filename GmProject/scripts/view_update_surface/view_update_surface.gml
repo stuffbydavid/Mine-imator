@@ -1,13 +1,15 @@
 /// @arg view
 /// @arg camera
 /// @arg watermark
+/// @arg [buildedit]
 
-function view_update_surface(view, cam, watermark)
+function view_update_surface(view, cam, watermark, buildedit = false)
 {
 	//debug("view_update_surface", view, cam, watermark)
 	
 	view.update = false
 	view.update_gizmos = true
+	
 	render_view_current = view
 
 	app_update_cameras(view.renderer, false)
@@ -107,4 +109,21 @@ function view_update_surface(view, cam, watermark)
 	render_background = true
 	render_lights = true
 	render_particles = true
+	
+	if (buildedit)
+	{
+		// Pick the edited scene before drawing its new wireframe
+		view_place(view)
+		
+		app_update_place()
+		
+		if (build_first_person)
+			view.surface_place_async_id = null
+		
+		if (view.update)
+		{
+			render_samples = -1
+			view_update_surface(view, cam, watermark)
+		}
+	}
 }

@@ -4,10 +4,20 @@
 function view_update(view, cam)
 {
 	// Camera object disabled while placing or object locked
-	var editcamobj = false, watermark, mousechanged;
+	var editcamobj, watermark, mousechanged, buildedited;
+	editcamobj = false
+	buildedited = false
+	
 	if (cam)
 		editcamobj = (place_tl = null && !place_build && !cam.lock)
 		
+	// Real-time view setting
+	if (debug_realtime_views)
+	{
+		view.update = true
+		view.update_gizmos = true
+	}
+	
 	// Refresh when the viewport size, camera or display options change
 	watermark = (
 		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"settings/watermark"]) ||
@@ -26,9 +36,14 @@ function view_update(view, cam)
 		view_changed(view)
 	}
 	
-	// Mouse enters or leaves this view
-	if (place_build && !build_first_person && view.surface_mouseon != content_mouseon)
-		view_changed(view)
+	// Mouse enters or leaves view in build mode
+	if (place_build)
+	{
+		if (!build_first_person && view.surface_mouseon != content_mouseon)
+			view_changed(view)
+	
+		view.surface_mouseon = content_mouseon
+	}
 	
 	// Work camera changed
 	if (!cam && (!build_first_person || view = view_main) &&
@@ -63,15 +78,12 @@ function view_update(view, cam)
 		view.update_gizmos = true
 	
 	// Update surface
-	if (view.update)
+	if (view.update && !place_build)
 		view_update_surface(view, cam, watermark)
 	
 	// Update gizmo surface
-	if (view.update_gizmos)
+	if (view.update_gizmos && !place_build)
 		view_update_gizmos(view, cam)
-	
-	if (window_busy = "render/control" && view_control_edit_view = view)
-		mouse_cursor = cr_handpoint
 
 	// First-person build controls
 	if (place_build && build_first_person && view = view_main)
@@ -86,16 +98,23 @@ function view_update(view, cam)
 			action_build_scroll()
 
 		if (mouse_left_pressed)
-			action_build_remove()
+			buildedited = action_build_remove()
 		
 		else if (mouse_right_pressed && place_pos != null)
-			action_build_place()
+			buildedited = action_build_place()
 
 		if (!window_has_focus())
 			action_build_first_person(false)
 
+		if (buildedited || view.update)
+			view_update_surface(view, cam, watermark, buildedited)
+		
 		return 0
 	}
+	
+	// Cursor while interacting with gizmos
+	if (window_busy = "render/control" && view_control_edit_view = view)
+		mouse_cursor = cr_handpoint
 	
 	// Click
 	if (content_mouseon && (window_busy = "" || window_busy = place_busy))
@@ -206,10 +225,10 @@ function view_update(view, cam)
 					if (view_click_right)
 					{
 						if (place_pos != null)
-							action_build_place()
+							buildedited = action_build_place()
 					}
 					else
-						action_build_remove()
+						buildedited = action_build_remove()
 				}
 				else if (place_tl = null)
 				{
@@ -309,6 +328,10 @@ function view_update(view, cam)
 			}
 		}
 	}
+	
+	// Update from new build action
+	if (place_build && (buildedited || view.update))
+		view_update_surface(view, cam, watermark, buildedited)
 	
 	// Clear busy
 	if (window_busy = "view/path_point_click")
