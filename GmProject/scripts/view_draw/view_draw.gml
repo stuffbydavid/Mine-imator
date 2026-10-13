@@ -524,6 +524,14 @@ function view_draw(view)
 		if (view.transparent_background)
 			gpu_set_blendmode(bm_normal)
 		
+		// Preview watermark
+		if ((settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"settings/watermark"]) ||
+			(popup_current && popup_current.name = "export_movie" && popup_exportmovie.watermark) ||
+			(popup_current && popup_current.name = "export_image" && popup_exportimage.watermark))
+		{
+			render_watermark_image(content_x, content_y, content_width, content_height)
+		}
+
 		if (!place_build && surface_exists(view.surface_gizmos))
 		{
 			gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha)

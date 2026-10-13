@@ -97,6 +97,23 @@ function tab_timeline_editor_appearance()
 		tab_next()
 		tab_collapse_end()
 	}
+		
+	// Render depth
+	tab_control_switch()
+	draw_button_collapse("timeline_editor/depth", collapse_map[?"timeline_editor/depth"], action_tl_render_depth_custom, tl_edit.render_depth_custom, "timeline_editor/depth", "timeline_editor/depth_tip")
+	tab_next()
+	
+	if (tl_edit.render_depth_custom && collapse_map[?"timeline_editor/depth"])
+	{
+		tab_collapse_start()
+		tab_control_dragger()
+		draw_dragger("timeline_editor/depth/value", dx, dy, dragger_width, tl_edit.render_depth, 0.1, -no_limit, no_limit, 0, 1, tab.appearance.tbx_depth, action_tl_render_depth, null, true)
+		tab_next()
+		
+		var tip = (tl_edit.render_depth > 0 ? "positive_tip" : "zero_negative_tip")
+		draw_tooltip_label("timeline_editor/depth/" + tip, icons.INFO, e_toast.INFO)
+		tab_collapse_end()
+	}
 
 	dy += 8
 		
@@ -116,12 +133,7 @@ function tab_timeline_editor_appearance()
 	tab_control_menu()
 	draw_button_menu("timeline_editor/alpha_mode", e_menu.LIST, dx, dy, dw, 24, tl_edit.alpha_mode, content_text, action_tl_alpha_mode, false, null, null, "", null, null, null, "timeline_editor/alpha_mode_tip")
 	tab_next()
-		
-	// Render depth
-	tab_control_dragger()
-	draw_dragger("timeline_editor/depth", dx, dy, dragger_width, tl_edit.depth, 0.1, -no_limit, no_limit, 0, 1, tab.appearance.tbx_depth, action_tl_depth, null, true, false, "timeline_editor/depth_tip")
-	tab_next()
-		
+	
 	tab_set_columns(true, floor(content_width/150))
 		
 	// Texture

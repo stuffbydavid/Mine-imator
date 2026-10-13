@@ -1,4 +1,4 @@
-function action_tl_depth(value, add)
+function action_tl_render_depth_custom(enabled)
 {
 	if (history_undo)
 	{
@@ -8,7 +8,7 @@ function action_tl_depth(value, add)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					depth = other.save_var_old_value[t]
+					render_depth_custom = other.save_var_old_value[t]
 					tl_update_depth()
 				}
 			}
@@ -22,7 +22,7 @@ function action_tl_depth(value, add)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					depth = other.save_var_new_value[t]
+					render_depth_custom = other.save_var_new_value[t]
 					tl_update_depth()
 				}
 			}
@@ -30,10 +30,19 @@ function action_tl_depth(value, add)
 	}
 	else
 	{
-		var hobj = history_save_var_start(action_tl_depth, true);
-		
+		var hobj = history_save_var_start(action_tl_render_depth_custom, false);
 		with (obj_timeline)
+		{
 			if (selected)
-				action_tl_depth_tree(id, value, add, hobj)
+			{
+				with (hobj)
+					history_save_var(other.id, other.render_depth_custom, enabled)
+				
+				render_depth_custom = enabled
+				tl_update_depth()
+			}
+		}
 	}
+	
+	view_changed()
 }

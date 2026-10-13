@@ -1,18 +1,27 @@
+/// @desc Updates inherited render depth settings used for real-time sorting before rendering.
+
 function tl_update_depth()
 {
-	for (var depthindex = 0; depthindex < 3; depthindex++)
-		ds_list_delete_value(render_list[depthindex], id)
+	render_depth_custom_current = render_depth_custom
+	render_depth_current = render_depth
 	
-	var list, pos;
-	list = render_list[sign(depth) + 1]
-	for (pos = 0; pos < ds_list_size(list); pos++)
-		if (list[|pos].depth > depth)
-			break
+	if (!render_depth_custom_current)
+	{
+		var par = id;
+		while (par.parent != app && par.parent != null && par.inherit_alpha)
+		{
+			par = par.parent
+			if (par.render_depth_custom)
+			{
+				render_depth_custom_current = true
+				render_depth_current = par.render_depth
+			}
+		}
+	}
 	
-	ds_list_insert(list, pos, id)
+	for (var i = 0; i < ds_list_size(tree_list); i++)
+		with (tree_list[|i])
+			tl_update_depth()
 	
-	render_place_tl_list = null
-	render_scene_bounds = null
-	
-	view_changed()
+	render_list_default_update = true
 }

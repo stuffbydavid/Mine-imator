@@ -4,9 +4,10 @@
 function view_update(view, cam)
 {
 	// Camera object disabled while placing or object locked
-	var editcamobj, watermark, mousechanged, buildedited;
+	var editcamobj, buildedited;
 	editcamobj = false
 	buildedited = false
+	view.place_output = (window_place || (window_busy = "pick_depth" && view.renderer = e_renderer.QUICK))
 	
 	if (cam)
 		editcamobj = (place_tl = null && !place_build && !cam.lock)
@@ -19,19 +20,13 @@ function view_update(view, cam)
 	}
 	
 	// Refresh when the viewport size, camera or display options change
-	watermark = (
-		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"settings/watermark"]) ||
-		(popup_current && popup_current.name = "export_movie" && popup_exportmovie.watermark) ||
-		(popup_current && popup_current.name = "export_image" && popup_exportimage.watermark)
-	)
-
 	if (!surface_exists(view.surface) ||
 		view.surface_width != content_width || view.surface_height != content_height ||
 		view.surface_renderer != view.renderer || view.surface_camera_last != cam ||
 		view.surface_particles != view.particles || view.surface_effects != view.effects ||
 		view.surface_gizmos_enabled != view.gizmos || view.surface_transparent_background != view.transparent_background ||
-		view.surface_watermark != watermark || view.surface_place_active != window_place ||
-		(window_place && !surface_exists(view.surface_place_id)))
+		view.surface_place_active != view.place_output ||
+		(view.place_output && !surface_exists(view.surface_place_id)))
 	{
 		view_changed(view)
 	}
@@ -59,8 +54,8 @@ function view_update(view, cam)
 		view_changed(view)
 	
 	// Refresh gizmo hover only when the mouse moves or enters/leaves the view
-	mousechanged = (view.surface_mouseon != content_mouseon || (content_mouseon &&
-		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)))
+	var mousechanged = (view.surface_mouseon != content_mouseon || (content_mouseon &&
+		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)));
 	
 	// Update gizmos
 	if (!surface_exists(view.surface_gizmos) ||
@@ -79,7 +74,7 @@ function view_update(view, cam)
 	
 	// Update surface
 	if (view.update && !place_build)
-		view_update_surface(view, cam, watermark)
+		view_update_surface(view, cam)
 	
 	// Update gizmo surface
 	if (view.update_gizmos && !place_build)
@@ -107,7 +102,7 @@ function view_update(view, cam)
 			action_build_first_person(false)
 
 		if (buildedited || view.update)
-			view_update_surface(view, cam, watermark, buildedited)
+			view_update_surface(view, cam, buildedited)
 		
 		return 0
 	}
@@ -331,7 +326,7 @@ function view_update(view, cam)
 	
 	// Update from new build action
 	if (place_build && (buildedited || view.update))
-		view_update_surface(view, cam, watermark, buildedited)
+		view_update_surface(view, cam, buildedited)
 	
 	// Clear busy
 	if (window_busy = "view/path_point_click")

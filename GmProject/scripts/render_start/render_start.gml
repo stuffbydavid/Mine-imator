@@ -14,9 +14,12 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_camera_effects = null
 	render_camera_effect_enabled = null
 	
-	render_place = (owner = app.view_main || owner = app.view_second) && app.window_place
+	render_place = false
+	if (owner = app.view_main || owner = app.view_second)
+		render_place = owner.place_output
+	
 	render_place_pass = false
-	render_place_output = (renderer_current = e_renderer.QUICK ? 1 : 0)
+	render_place_target = (renderer_current = e_renderer.QUICK ? 1 : 0)
 	render_place_view = null
 	
 	if (render_place)
@@ -26,7 +29,7 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	
 	if ((owner = app.view_second && render_effects) || owner = "image" || owner = "movie" || owner = camera)
 	{
-		var fxscope = camera != null ? camera : app;
+		var fxscope = (camera != null ? camera : app);
 		with (fxscope)
 			render_camera_effects = tl_camera_effects_get()
 		
@@ -54,10 +57,15 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_apply_settings(render_preset_map[?project_render_preset[renderer_current]], renderer_current)
 	
 	// Update timeline visibility and glow/glint/alpha hashing usage
-	var checkglow, checkglint, alphahashused;
+	var checkglow, checkglint, alphahashused, boundsowner, boundsvisible, boundscount, boundsupdate;
 	checkglow = (project_render_glow && renderer_current != e_renderer.QUICK)
 	checkglint = (project_render_glint_strength != 0)
 	alphahashused = false
+	
+	boundsowner = (is_string(owner) ? app : owner)
+	boundsvisible = boundsowner.render_world_visible
+	boundscount = 0
+	boundsupdate = (boundsowner.render_world_bounds_id != render_world_id)
 	
 	render_glow = false
 	render_glint = false
@@ -67,11 +75,16 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	
 	with (obj_timeline)
 	{
-		var vis = tl_get_visible();
-		if (render_visible != vis)
-			render_scene_bounds = null
+		render_visible = tl_get_render_visible()
 		
-		render_visible = vis
+		// Visibility changed for view/camera/export
+		if (boundscount >= array_length(boundsvisible) || boundsvisible[boundscount] != render_visible)
+		{
+			boundsupdate = true
+			boundsvisible[@ boundscount] = render_visible
+		}
+		
+		boundscount++
 		
 		if (render_visible)
 		{
@@ -85,6 +98,16 @@ function render_start(target, camera, owner, wid = null, hei = null)
 				alphahashused = true
 		}
 	}
+	
+	// Recalculate bounds for shadows
+	if (boundsupdate || boundscount != boundsowner.render_world_visible_count)
+		boundsowner.render_world_bounds = null
+	
+	boundsowner.render_world_visible = boundsvisible
+	boundsowner.render_world_visible_count = boundscount
+	
+	render_world_bounds_owner = boundsowner
+	render_world_bounds_current = boundsowner.render_world_bounds
 	
 	if (renderer_current = e_renderer.STANDARD)
 	{
@@ -223,6 +246,7 @@ function render_start(target, camera, owner, wid = null, hei = null)
 	render_update_text()
 	render_update_item()
 	render_update_camera()
+	render_update_depth_list(owner)
 	
 	camera_apply(cam_render)
 }

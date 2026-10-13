@@ -13,17 +13,29 @@ function view_pick_depth(view, cam)
 	if (!mouse_left_pressed)
 		return 0
 
-	var mx, my, depthval, data;
+	var mx, my, depthval;
 	mx = mouse_x - content_x
 	my = mouse_y - content_y
 	
-	// Get depth from previous render
-	data = view_get_place_pixel(view, mx, my)
-	depthval = data[0]
-	
-	// Use background
-	if (data[2] = place_dir_none)
-		depthval = 1
+	// Use depth surface from last high-quality render
+	if (view.renderer != e_renderer.QUICK && !window_place)
+	{
+		if (!surface_exists(view.surface_pick_depth_id))
+			return 0
+		
+		var pixel = surface_getpixel(view.surface_pick_depth_id, mx, my);
+		depthval = pixel[0]
+		
+		// Picked background
+		if (surface_exists(view.surface_pick_mask_id) &&
+			color_get_red(surface_getpixel_ext(view.surface_pick_mask_id, mx, my)) = 0)
+			depthval = 1
+	}
+	else
+	{
+		var data = view_get_place_pixel(view, mx, my);
+		depthval = data[2] = place_dir_none ? 1 : data[0]
+	}
 	
 	var viewdepth = project_render_distance;
 	if (depthval < 1)

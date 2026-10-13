@@ -3,7 +3,7 @@ function render_startup()
 	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
 	globalvar render_view_current, render_width, render_height, render_ratio, render_pack_current, render_camera, render_camera_effects, render_camera_effect_enabled,
-			  render_prev_color, render_prev_alpha, render_click_box, render_list, render_block_transparent_list,
+			  render_prev_color, render_prev_alpha, render_click_box, render_list_default, render_list_default_update, render_list_custom, render_depth_list_current, render_block_transparent_list,
 			  render_lights, render_particles, render_hidden,  render_background, render_watermark, render_blend_prev, render_alpha_prev, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
@@ -20,7 +20,7 @@ function render_startup()
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
 			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material,
 			  render_fog_combined, render_sun_combined, render_color_combined,
-			  render_place, render_place_pass, render_place_output, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
+			  render_place, render_place_pass, render_place_target, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	
@@ -93,7 +93,7 @@ function render_startup()
 	
 	render_place = false
 	render_place_pass = false
-	render_place_output = 0
+	render_place_target = 0
 	render_place_view = null
 	render_place_tl_list = null
 	render_place_tl_list_id = 0
@@ -106,8 +106,12 @@ function render_startup()
 	
 	render_click_box = vbuffer_create_cube(view_3d_box_size / 2, point2D(0, 0), point2D(1, 1), 1, 1, false, false)
 	
-	render_list = [ ds_list_create(), ds_list_create(), ds_list_create() ]
-	render_block_transparent_list = [ ds_list_create(), ds_list_create(), ds_list_create() ]
+	render_list_default = ds_list_create()
+	render_list_default_update = true
+	render_list_custom = ds_list_create()
+	
+	render_depth_list_current = null
+	render_block_transparent_list = ds_list_create()
 	
 	render_lights = true
 	render_particles = true
@@ -220,14 +224,17 @@ function render_startup()
 	render_pcss_quality_prev = -1
 	
 	// Shadows
-	globalvar render_shadow_distance, render_scene_bounds, render_cascades_count, render_cascades,
+	globalvar render_shadow_distance, render_cascades_count, render_cascades, render_world_id, render_world_bounds_current, render_world_bounds_owner, 
 			  render_shadowless_point_list, render_shadowless_point_data, render_shadowless_point_amount, render_surface_sun_buffer, render_surface_spot_buffer, 
 			  render_surface_point_buffer, render_surface_point_atlas_buffer, render_shadow_cache, render_shadow_cache_ready, render_shadow_cache_enabled;
 	
 	render_shadow_distance = 0
-	render_scene_bounds = null
 	render_cascades_count = 3
 	render_cascades = []
+	
+	render_world_id = 0
+	render_world_bounds_current = null
+	render_world_bounds_owner = null
 	
 	project_render_shadows_jittered = false
 	project_render_shadows_sun_cascades = 3

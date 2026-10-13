@@ -6,12 +6,17 @@ function render_high_shadows_update_cascades(dir)
 	var mindis, pool, scenemin, scenemax, extent, far, distance, rangechanged;
 	mindis = 1000
 	pool = render_surface_pool_current
+
+	// Update bounds for owner
+	if (render_world_bounds_current = null)
+	{
+		render_world_bounds_current = render_world_get_bounds()
+		render_world_bounds_owner.render_world_bounds = render_world_bounds_current
+		render_world_bounds_owner.render_world_bounds_id = render_world_id
+	}
 	
-	if (render_scene_bounds = null)
-		render_scene_bounds = render_world_get_bounds()
-	
-	scenemin = render_scene_bounds[0]
-	scenemax = render_scene_bounds[1]
+	scenemin = render_world_bounds_current[0]
+	scenemax = render_world_bounds_current[1]
 	
 	// Bounds use XY, include the camera height above the ground plane
 	extent = vec3(

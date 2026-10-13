@@ -148,7 +148,21 @@ function tl_event_create()
 	only_render_glow = false
 	blend_mode = "normal"
 	alpha_mode = e_alpha_mode.DEFAULT
-	depth = 0
+	
+	render_depth = 0
+	render_depth_custom = false
+	render_depth_current = 0
+	render_depth_custom_current = false
+	render_sort_distance = 0
+	
+	render_depth_list = null
+	render_list_update = true
+	render_list_camera_from = null
+	render_world_bounds = null
+	render_world_bounds_id = -1
+	render_world_visible = []
+	render_world_visible_count = 0
+	
 	texture_blur = false
 	texture_filtering = false
 	shadows = true

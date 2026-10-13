@@ -19,6 +19,9 @@ function tl_update_list(root = true, tllevel = -1, collapsed = false)
 		ds_list_clear(tree_list_filter)
 		ds_list_clear(project_timeline_list)
 		
+		render_list_default_update = true
+		render_world_changed()
+
 		level = -1
 		indent_level = -1
 		

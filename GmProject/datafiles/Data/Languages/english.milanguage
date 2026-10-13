@@ -4102,7 +4102,12 @@
 		"alpha_mode": "Alpha mode",
 		"alpha_mode_tip": "For Realistic rendering, determines the method for blending transparent objects",
 		"depth": "Render depth",
-		"depth_tip": "Controls the rendering order of objects to fix transparency issues.",
+		"depth_tip": "Enables manual control of the object's rendering order, to change the behavior of transparency.",
+		"depth/": {
+			"value": "Value",
+			"positive_tip": "This object will be rendered after others with a lower depth value.",
+			"zero_negative_tip": "This object will be rendered before others with a higher depth value."
+		},
 		"texture_blur": "Blur texture",
 		"texture_filtering": "Texture filtering",
 		"shadows": "Cast shadows",

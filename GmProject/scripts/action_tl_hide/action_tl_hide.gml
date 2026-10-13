@@ -21,4 +21,6 @@ function action_tl_hide(tl)
 		var hobj = history_save_var_start(action_tl_hide, false);
 		action_tl_hide_tree(tl, !tl.hide, hobj)
 	}
+	
+	render_world_changed()
 }

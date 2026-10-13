@@ -1,11 +1,10 @@
 /// @arg view
 /// @arg camera
-/// @arg watermark
 /// @arg [buildedit]
 
-function view_update_surface(view, cam, watermark, buildedit = false)
+function view_update_surface(view, cam, buildedit = false)
 {
-	//debug("view_update_surface", view, cam, watermark)
+	//debug("view_update_surface", view, cam)
 	
 	view.update = false
 	view.update_gizmos = true
@@ -20,16 +19,39 @@ function view_update_surface(view, cam, watermark, buildedit = false)
 	render_particles = view.particles
 	render_effects = (view = view_second && view.effects)
 	render_background = !view.transparent_background
-	render_watermark = watermark
+	render_watermark = false
 	
 	// Reset samples if place mode changed
-	if (view.surface_place_active != window_place || (window_place && !surface_exists(view.surface_place_id)))
+	if (view.surface_place_active != view.place_output || (view.place_output && !surface_exists(view.surface_place_id)))
 		render_samples = -1
 	
 	render_start(view.surface, cam, view, content_width, content_height)
 	
 	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
+	{
 		render_high()
+		
+		// Update surfaces for placing/picking
+		if (!render_place)
+		{
+			if (view.surface_place_separate && surface_exists(view.surface_place_id))
+				surface_free(view.surface_place_id)
+			
+			view.surface_place_id = null
+			view.surface_place_separate = false
+		}
+		
+		view.surface_pick_depth_id = render_surface_depth
+		view.surface_pick_mask_id = render_surface_mask
+		
+		if (view.renderer = e_renderer.STANDARD || !render_samples_done)
+		{
+			view.surface_place_depth_near = depth_near
+			view.surface_place_depth_far = depth_far
+			view.surface_place_proj_matrix = matrix_multiply(proj_matrix, aa_matrix)
+			view.surface_place_view_matrix = array_copy_1d(view_matrix)
+		}
+	}
 	else
 		render_low()
 
@@ -91,7 +113,7 @@ function view_update_surface(view, cam, watermark, buildedit = false)
 	view.surface_view_matrix = array_copy_1d(view_matrix)
 	view.surface_view_proj_matrix = array_copy_1d(view_proj_matrix)
 	
-	view.surface_place_active = window_place
+	view.surface_place_active = view.place_output
 	view.surface_width = content_width
 	view.surface_height = content_height
 	view.surface_renderer = view.renderer
@@ -100,7 +122,6 @@ function view_update_surface(view, cam, watermark, buildedit = false)
 	view.surface_effects = view.effects
 	view.surface_gizmos_enabled = view.gizmos
 	view.surface_transparent_background = view.transparent_background
-	view.surface_watermark = watermark
 	
 	// Keep accumulating Realistic samples until the image is finished
 	if (view.renderer = e_renderer.REALISTIC && !render_samples_done)
@@ -123,7 +144,7 @@ function view_update_surface(view, cam, watermark, buildedit = false)
 		if (view.update)
 		{
 			render_samples = -1
-			view_update_surface(view, cam, watermark)
+			view_update_surface(view, cam)
 		}
 	}
 }

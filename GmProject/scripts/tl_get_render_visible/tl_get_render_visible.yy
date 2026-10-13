@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_get_visible",
+  "%Name":"tl_get_render_visible",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_get_visible",
+  "name":"tl_get_render_visible",
   "parent":{
     "name":"Timeline",
     "path":"folders/Scripts/Project/Timeline.yy",

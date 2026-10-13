@@ -83,7 +83,7 @@ function view_update_gizmos(view, cam)
 			{
 				var vis;
 				with (tl_edit)
-					vis = tl_get_visible()
+					vis = (value_inherit[e_value.VISIBLE] && !hide)
 				
 				// Update 2D position
 				tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)

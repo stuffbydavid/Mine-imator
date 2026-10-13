@@ -11,6 +11,7 @@ function render_world(mode)
 		mode = e_render_mode.HIGH_LIGHT_SPOT_DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH
 	)
+	
 	render_fast_pass = (
 		render_depth_pass ||
 		mode = e_render_mode.CLICK ||
@@ -53,24 +54,29 @@ function render_world(mode)
 	
 	render_world_tl_reset()
 	
-	// Rebuild compact timeline ID list for placing
-	if (render_place_tl_list = null)
-		render_place_tl_list_update()
-	
-	// Simple render
+	// Placed parent
 	if (mode = e_render_mode.PLACE_PARENT)
-		render_world_list(0)
+		render_world_list(render_place_parent_list)
+	
+	// Order-independent render
+	else if (render_fast_pass)
+	{
+		render_world_environment()
+		render_world_list(app.project_timeline_list)
+	}
 	else
 	{
 		// Negative depth objects
-		render_world_list(-1)
+		render_world_list(render_depth_list_current[e_depth_list.NEGATIVE])
 		
-		// Neutral depth ground and clouds
+		// Ground and clouds
 		render_world_environment()
 		
-		// Neutral and positive depth objects
-		render_world_list(0)
-		render_world_list(1)
+		// Default opaque objects and neutral depth
+		render_world_list(render_list_default)
+		
+		// Positive depth objects
+		render_world_list(render_depth_list_current[e_depth_list.POSITIVE])
 	}
 	
 	render_world_block_transparent = null

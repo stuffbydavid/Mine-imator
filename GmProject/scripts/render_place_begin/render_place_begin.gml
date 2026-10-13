@@ -34,4 +34,8 @@ function render_place_begin(depthsurf = null)
 	view.surface_place_depth_far = depth_far
 	view.surface_place_proj_matrix = matrix_multiply(proj_matrix, aa_matrix)
 	view.surface_place_view_matrix = array_copy_1d(view_matrix)
+	
+	// Rebuild compact ID list
+	if (render_place_tl_list = null)
+		render_place_tl_list_update()
 }

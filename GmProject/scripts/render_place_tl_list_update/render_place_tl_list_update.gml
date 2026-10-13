@@ -1,24 +1,15 @@
-/// @desc Rebuild compact picking IDs in render order.
+/// @desc Rebuild compact picking IDs from the project timeline list.
 
 function render_place_tl_list_update()
 {
-	var count, index;
-	count = 1
-	for (var depthindex = 0; depthindex < 3; depthindex++)
-		count += ds_list_size(render_list[depthindex])
+	var count = ds_list_size(project_timeline_list);
+	render_place_tl_list = array_create(count + 1, 0)
 	
-	render_place_tl_list = array_create(count, 0)
-	index = 1
-	for (var depthindex = 0; depthindex < 3; depthindex++)
+	for (var i = 0; i < count; i++)
 	{
-		var list = render_list[depthindex];
-		for (var i = 0; i < ds_list_size(list); i++)
-		{
-			var tl = list[|i];
-			tl.render_place_id = index
-			render_place_tl_list[index] = tl
-			index++
-		}
+		var tl = project_timeline_list[|i];
+		tl.render_place_id = i + 1
+		render_place_tl_list[i + 1] = tl
 	}
 	
 	render_place_tl_list_id++
