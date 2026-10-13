@@ -13,10 +13,10 @@ function render_preset_event_create()
 	// Standard renderer settings
 	with (renderer[e_renderer.STANDARD])
 	{
+		// Performance/quality
 		ssao = true
+		ssao_blur_passes = 2
 		shadows = true
-		dof_quality = 16
-		dof_realistic_blur = false
 		shadows_blur_quality = 20
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
@@ -25,17 +25,21 @@ function render_preset_event_create()
 		glow = true
 		aa = true
 		aa_power = 1
-
+		dof_quality = 16
+		dof_realistic_blur = false
+		
+		// Appearance
 		shadows_blur_size = 1
 	}
 
 	// Realistic renderer settings
 	with (renderer[e_renderer.REALISTIC])
 	{
+		// Performance/quality
 		samples = 24
 		ssao = true
+		ssao_blur_passes = 2
 		shadows = true
-		dof_quality = 16
 		shadows_blur_quality = 20
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
@@ -56,7 +60,9 @@ function render_preset_event_create()
 		aa = true
 		aa_mode = e_aa_mode.PROGRESSIVE
 		aa_power = 1
+		dof_quality = 16
 
+		// Appearance
 		subsurface_backlight_spread = .5
 		subsurface_backlight_strength = 1
 		subsurface_bright_backlight = false
@@ -66,10 +72,9 @@ function render_preset_event_create()
 		reflections_thickness = 1
 	}
 
-	// Common special effects settings
+	// Common special effects appearance settings
 	ssao_radius = 12
 	ssao_power = 1
-	ssao_blur_passes = 2
 	ssao_color = c_black
 	ssao_always_visible = false
 	glow_radius = 1

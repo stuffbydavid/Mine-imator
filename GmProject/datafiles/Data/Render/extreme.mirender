@@ -1,10 +1,11 @@
 {
 	"format": 35,
-	"created_in": "2.0",
+	"created_in": "2.1",
 	"name": "extreme",
 	"render": {
 		"standard": {
 			"ssao": true,
+			"ssao_blur_passes": 4,
 			"shadows": true,
 			"shadows_blur_quality": 50,
 			"shadows_sun_cascades": 3,
@@ -13,25 +14,36 @@
 			"shadows_point_buffer_size": 512,
 			"glow": true,
 			"aa": true,
-			"aa_power": 1
+			"aa_power": 1,
+			"dof_quality": 16,
+			"dof_realistic_blur": false
 		},
 		"realistic": {
-			"samples": 128,
+			"samples": 64,
 			"ssao": true,
+			"ssao_blur_passes": 4,
 			"shadows": true,
+			"shadows_blur_quality": 20,
 			"shadows_sun_cascades": 3,
 			"shadows_sun_buffer_size": 4096,
 			"shadows_spot_buffer_size": 1024,
 			"shadows_point_buffer_size": 512,
-			"shadows_transparent": 0,
+			"shadows_jittered": false,
+			"shadows_transparent": true,
 			"subsurface_samples": 7,
 			"indirect": true,
 			"indirect_precision": 0.3,
+			"indirect_resolution": 1,
+			"indirect_bounces": 1,
 			"reflections": true,
 			"reflections_precision": 0.3,
+			"reflections_resolution": 1,
+			"reflections_bounces": 1,
 			"glow": true,
 			"aa": true,
-			"aa_power": 1
+			"aa_mode": 0,
+			"aa_power": 1,
+			"dof_quality": 16
 		}
 	}
 }

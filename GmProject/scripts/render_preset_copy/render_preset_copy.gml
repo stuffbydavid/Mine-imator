@@ -10,9 +10,8 @@ function render_preset_copy(to, allsettings = false)
 		toset = to.renderer[e_renderer.STANDARD]
 		to.has_standard = has_standard
 		toset.ssao = fromset.ssao
+		toset.ssao_blur_passes = fromset.ssao_blur_passes
 		toset.shadows = fromset.shadows
-		toset.dof_quality = fromset.dof_quality
-		toset.dof_realistic_blur = fromset.dof_realistic_blur
 		toset.shadows_blur_quality = fromset.shadows_blur_quality
 		toset.shadows_sun_cascades = fromset.shadows_sun_cascades
 		toset.shadows_sun_buffer_size = fromset.shadows_sun_buffer_size
@@ -21,6 +20,8 @@ function render_preset_copy(to, allsettings = false)
 		toset.glow = fromset.glow
 		toset.aa = fromset.aa
 		toset.aa_power = fromset.aa_power
+		toset.dof_quality = fromset.dof_quality
+		toset.dof_realistic_blur = fromset.dof_realistic_blur
 	}
 	
 	if (has_realistic || allsettings)
@@ -30,8 +31,8 @@ function render_preset_copy(to, allsettings = false)
 		to.has_realistic = has_realistic
 		toset.samples = fromset.samples
 		toset.ssao = fromset.ssao
+		toset.ssao_blur_passes = fromset.ssao_blur_passes
 		toset.shadows = fromset.shadows
-		toset.dof_quality = fromset.dof_quality
 		toset.shadows_blur_quality = fromset.shadows_blur_quality
 		toset.shadows_sun_cascades = fromset.shadows_sun_cascades
 		toset.shadows_sun_buffer_size = fromset.shadows_sun_buffer_size
@@ -52,6 +53,7 @@ function render_preset_copy(to, allsettings = false)
 		toset.aa = fromset.aa
 		toset.aa_mode = fromset.aa_mode
 		toset.aa_power = fromset.aa_power
+		toset.dof_quality = fromset.dof_quality
 	}
 	
 	if (has_fx || allsettings)
@@ -59,7 +61,6 @@ function render_preset_copy(to, allsettings = false)
 		to.has_fx = has_fx
 		to.ssao_radius = ssao_radius
 		to.ssao_power = ssao_power
-		to.ssao_blur_passes = ssao_blur_passes
 		to.ssao_color = ssao_color
 		to.ssao_always_visible = ssao_always_visible
 		to.glow_radius = glow_radius

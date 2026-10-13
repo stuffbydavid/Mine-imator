@@ -32,8 +32,6 @@ function project_load_timeline(map)
 		
 		if (load_format >= e_project.FORMAT_210)
 			render_depth_custom = value_get_real(map[?"render_depth_custom"], render_depth_custom)
-		else
-			render_depth_custom = true
 		
 		if (type = e_tl_type.MODEL_PART)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)

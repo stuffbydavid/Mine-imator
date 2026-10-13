@@ -17,7 +17,7 @@ function render_startup()
 	globalvar render_effects, render_fx_done, render_fx_list, render_fx_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glint, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
-			  render_ssao, render_shadows, render_indirect, render_reflections, render_pass,
+			  render_ssao, render_shadows, render_indirect, render_reflections, render_resolution_factors, render_pass,
 			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material,
 			  render_fog_combined, render_sun_combined, render_color_combined,
 			  render_place, render_place_pass, render_place_target, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
@@ -190,6 +190,8 @@ function render_startup()
 	
 	depth_near = clip_near
 	depth_far = 5000
+	
+	render_resolution_factors = [ 1, 0.5, 0.25, 0.125 ]
 	
 	render_world_count = 0
 	render_world_block_transparent = null

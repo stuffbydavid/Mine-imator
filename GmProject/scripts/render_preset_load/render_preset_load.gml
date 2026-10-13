@@ -51,5 +51,7 @@ function render_preset_load(fn, setname = true)
 		return false
 	}
 	
+	ds_map_destroy(map)
+	
 	return true
 }

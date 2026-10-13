@@ -1312,9 +1312,9 @@ function list_init(name)
 		case "render/reflections/resolution":
 		{
 			menu_add_item(1, text_get("render/resolution_full"))
-			menu_add_item(.5, text_get("render/resolution_half"))
-			menu_add_item(.25, text_get("render/resolution_quarter"))
-			menu_add_item(.125, text_get("render/resolution_eighth"))
+			menu_add_item(0.5, text_get("render/resolution_half"))
+			menu_add_item(0.25, text_get("render/resolution_quarter"))
+			menu_add_item(0.125, text_get("render/resolution_eighth"))
 			break
 		}
 

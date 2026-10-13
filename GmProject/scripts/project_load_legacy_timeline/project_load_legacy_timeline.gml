@@ -41,8 +41,6 @@ function project_load_legacy_timeline()
 		if (load_format >= e_project.FORMAT_100_DEBUG)
 			render_depth = buffer_read_int()
 		
-		render_depth_custom = true
-		
 		legacy_model_part_id = buffer_read_short()
 		
 		if (type = e_tl_type.MODEL_PART)

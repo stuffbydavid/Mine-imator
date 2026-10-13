@@ -39,6 +39,7 @@ function action_project_render_preset_import(fn = "")
 			render_preset_event_create()
 			history_copy_render_settings(app)
 		}
+		
 		with (render_preset_edit)
 			render_preset_copy(hobj, true)
 	}

@@ -199,17 +199,17 @@ function macros()
 	#macro fog_height					1250
 	#macro armor_parts					[ "helmet", "chestplate", "leggings", "boots" ]
 	#macro schematic_folders			[ "Buildings", "Biomes", "Trees", "Structures", "Other" ]
-	#macro schematic_default			[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
+	#macro schematic_folders_default	[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
 	#macro scenery_large_threshold		300
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		512
 	#macro sound_filters				[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
-	#macro sound_default				"Step / Grass 1"
 	#macro music_filters				[ "game", "menu", "records", "other" ]
-	#macro music_default				"Records / Cat"
+	#macro default_sound				"Step / Grass 1"
+	#macro default_music				"Records / Cat"
 	#macro particle_folders				[ "Effects", "Weather" ]
-	#macro particle_default				[ "Default", "Snow" ]
+	#macro particle_folders_default		[ "Default", "Snow" ]
 	#macro default_text					"AaBbCc"
 	#macro light_shadows_threshold		10
 	#macro default_tonemapper			e_tonemapper.LOTTES
