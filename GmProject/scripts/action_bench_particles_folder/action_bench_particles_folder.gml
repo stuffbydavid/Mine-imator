@@ -78,7 +78,7 @@ function action_bench_particles_folder(folder, update = true)
 		if (particle_folders[i] != folder)
 			continue
 		
-		var particle = particle_default[i];
+		var particle = particle_folders_default[i];
 		if (ds_list_find_index(list.display_list, particle) >= 0)
 		{
 			sortlist_view(list, particle)

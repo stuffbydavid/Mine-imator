@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"tl_get_block_res",
   "parent":{
-    "name":"World",
-    "path":"folders/Scripts/Render/World.yy",
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

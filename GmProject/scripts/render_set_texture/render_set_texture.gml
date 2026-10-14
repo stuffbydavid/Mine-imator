@@ -5,7 +5,7 @@
 
 function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 {
-	var sampler, diffuse, validtex, sourcetex;
+	var sampler, diffuse, setsize, validtex, sourcetex;
 	sourcetex = tex
 	sampler = render_shader_obj.sampler_texture[channel]
 	diffuse = (channel = e_texture_channel.DIFFUSE)
@@ -30,6 +30,8 @@ function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 		return 0
 	}
 	
+	setsize = (diffuse && render_shader_obj.uniform_handle[e_uniform.TEXTURE_SIZE] > -1)
+	
 	if (diffuse)
 	{
 		shader_texture_width = 0
@@ -44,7 +46,7 @@ function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 		{
 			texture_set_stage(sampler, surface_get_texture(tex))
 			
-			if (diffuse)
+			if (setsize)
 			{
 				shader_texture_width = surface_get_width(tex)
 				shader_texture_height = surface_get_height(tex)
@@ -65,7 +67,7 @@ function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 		{
 			texture_set_stage(sampler, sprite_get_texture(tex, 0))
 			
-			if (diffuse)
+			if (setsize)
 			{
 				shader_texture_width = sprite_get_width(tex)
 				shader_texture_height = sprite_get_height(tex)
@@ -77,7 +79,8 @@ function render_set_texture(res, tex, channel = e_texture_channel.DIFFUSE)
 	
 	if (diffuse)
 	{
-		render_set_uniform_vec2(e_uniform.TEXTURE_SIZE, shader_texture_width, shader_texture_height)
+		if (setsize)
+			render_set_uniform_vec2(e_uniform.TEXTURE_SIZE, shader_texture_width, shader_texture_height)
 		
 		if (validtex && shader_check_uniform)
 		{

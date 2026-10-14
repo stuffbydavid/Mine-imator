@@ -9,6 +9,7 @@ function render_surface_pool_load(pool)
 	render_surface_specular_base = pool.surface_specular_base
 
 	render_surface_depth = pool.surface_depth
+	render_surface_depth_format = pool.surface_depth_format
 	render_surface_depth_low = pool.surface_depth_low
 	render_surface_normal = pool.surface_normal
 	render_surface_material = pool.surface_material
@@ -24,7 +25,7 @@ function render_surface_pool_load(pool)
 	render_surface_indirect_raydata = pool.surface_indirect_raydata
 	render_surface_reflections_raydata = pool.surface_reflections_raydata
 	render_surface_lens = pool.surface_lens
-	render_grain_noise = pool.grain_noise
+	render_surface_grain_noise = pool.surface_grain_noise
 	render_surface_samples = pool.surface_samples
 	render_gbuffers_cache_ready = pool.gbuffers_cache_ready
 

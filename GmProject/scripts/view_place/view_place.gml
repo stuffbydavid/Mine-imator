@@ -1,106 +1,100 @@
-/// @arg view
-/// @arg camera
-
-function view_place(view, cam)
+function view_place(view)
 {
 	if (window_busy != place_busy || !content_mouseon)
-		return
+		return 0
 	
 	place_content_mouseon = null
 
-	var surfaceid, surfacedepth;
-	surfaceid = view.surface_place_id
-	surfacedepth = view.surface_place_depth_gm
-	
-	view.surface_place_id = surface_require(view.surface_place_id, content_width, content_height)
-	
-	if (!is_cpp())
-		view.surface_place_depth_gm = surface_require(view.surface_place_depth_gm, content_width, content_height, false, surface_r32float)
-		
-	// Outdated or invalid surfaces
-	if (view.surface_place_id != surfaceid ||
-		(!is_cpp() && view.surface_place_depth_gm != surfacedepth) ||
-		view.surface_place_width != content_width || view.surface_place_height != content_height)
-		view_changed(view)
-	
-	view.surface_place_width = content_width
-	view.surface_place_height = content_height
-
-	// Update placement surfaces with placed object hidden
-	if (view.update_place_surfaces)
+	if (!surface_exists(view.surface_place_id))
 	{
-		render_start(null, null, view, content_width, content_height) // No camera to disable effects
-		render_camera = cam
-		render_update_camera()
-		place_tl_render = false
-		
-		// Render timeline IDs and normals
-		if (is_cpp())
-			surface_clear_depth_cache(view.surface_place_id)
-		surface_set_target_ext(0, view.surface_place_id)
-		if (!is_cpp())
-			surface_set_target_ext(1, view.surface_place_depth_gm)
-		{
-			gpu_set_blendmode_ext(bm_one, bm_zero)
-			draw_clear_alpha(c_black, 0)
-			render_world_start()
-			render_world(e_render_mode.PLACE)
-			render_world_done()
-			gpu_set_blendmode(bm_normal)
-		}
-		surface_reset_target()
-		
-		render_done()
-		view.update_place_surfaces = false
+		view_changed(view)
+		return 0
 	}
-	place_tl_render = true
-
-	var mx, my, tx, ty, depthval;
+	
+	var mx, my, tx, ty, data, depthval, tl, face, pixelstate, depthnear, depthfar, projmatrix, viewmatrix, tllist;
 	mx = mouse_x - content_x
 	my = mouse_y - content_y
 	tx = mx / content_width
 	ty = 1 - my / content_height
 	
-	// C++ path uses optimized depth lookup
-	if (is_cpp())
-		depthval = surface_get_depth(view.surface_place_id, mx, my)
-	else
+	// Get depth, object id and face index at mouse from the previous render
+	data = view_get_place_pixel(view, mx, my)
+	if (array_length(data) = 0)
+		return 0
+	
+	depthval = data[0]
+	tl = data[1]
+	pixelstate = null
+	
+	depthnear = view.surface_place_depth_near
+	depthfar = view.surface_place_depth_far
+	projmatrix = view.surface_place_proj_matrix
+	viewmatrix = view.surface_place_view_matrix
+	tllist = view.surface_place_tl_list
+	
+	// Get camera state of pixel readback to reconstruct an accurate world hit
+	if (array_length(data) > 3)
 	{
-		// Zero-cleared float depth represents the background
-		var depthpixel = surface_getpixel(view.surface_place_depth_gm, mx, my);
-		depthval = 1 - depthpixel[0]
+		pixelstate = data[3]
+		depthnear = pixelstate[1]
+		depthfar = pixelstate[2]
+		projmatrix = pixelstate[3]
+		viewmatrix = pixelstate[4]
+		tllist = pixelstate[5]
+		
+		// Set position
+		var sx, sy, sw, sh;
+		sx = pixelstate[6]
+		sy = pixelstate[7]
+		sw = pixelstate[8]
+		sh = pixelstate[9]
+		
+		tx = sx / sw
+		ty = 1 - sy / sh
 	}
+	
+	// Invalid object
+	if (tl > 0 && (tl >= array_length(tllist) || !instance_exists(tllist[tl])))
+		return 0
+	
+	face = data[2]
+	if (face = place_dir_none)
+		depthval = 1
 	
 	// Calculate world hit position
 	var maxdepth, clipspace, viewspace, inverseview;
 	maxdepth = 0.99975
-	clipspace = vec4(tx * 2 - 1, ty * 2 - 1, min(maxdepth, depthval) * 2 - 1, 1)
-	viewspace = vec4_homogenize(vec4_mul_matrix(clipspace, matrix_inverse_ext(proj_matrix)))
-	inverseview = matrix_inverse_ext(view_matrix)
+	clipspace = vec4(tx * 2 - 1, ty * 2 - 1, depthval >= 1 ? maxdepth * 2 - 1 : 0, 1)
+	viewspace = vec4_mul_matrix(clipspace, matrix_inverse_ext(projmatrix))
+	if (depthval < 1)
+		viewspace = vec3_mul(viewspace, lerp(depthnear, depthfar, depthval) / viewspace[Z])
+	else
+		viewspace = vec4_homogenize(viewspace)
+	inverseview = matrix_inverse_ext(viewmatrix)
 	
-	place_view_color = 0
+	place_view_tl = 0
 	place_view_normal = vec3(0, 1, 0)
 	place_view_pos = point3D_mul_matrix(viewspace, inverseview)
 	place_view_ray = vec3_normalize(vec3_mul_matrix(viewspace, inverseview))
 	
 	// Retrieve color and normal
-	if (depthval < maxdepth)
+	if (depthval < 1)
 	{
-		var pixel = surface_getpixel_ext(view.surface_place_id, mx, my);
-		place_view_color = pixel & 0xffffff
-		switch ((pixel >> 24) & 255)
+		if (tl < array_length(tllist))
+			place_view_tl = tllist[tl]
+		
+		switch (face)
 		{
-			case e_dir.EAST: place_view_normal = vec3(1, 0, 0); break
-			case e_dir.WEST: place_view_normal = vec3(-1, 0, 0); break
-			case e_dir.SOUTH: place_view_normal = vec3(0, 1, 0); break
-			case e_dir.NORTH: place_view_normal = vec3(0, -1, 0); break
-			case e_dir.UP: place_view_normal = vec3(0, 0, 1); break
-			case e_dir.DOWN: place_view_normal = vec3(0, 0, -1); break
+			case e_dir.EAST:	place_view_normal = vec3(1, 0, 0); break
+			case e_dir.WEST:	place_view_normal = vec3(-1, 0, 0); break
+			case e_dir.SOUTH:	place_view_normal = vec3(0, 1, 0); break
+			case e_dir.NORTH:	place_view_normal = vec3(0, -1, 0); break
+			case e_dir.UP:		place_view_normal = vec3(0, 0, 1); break
+			case e_dir.DOWN:	place_view_normal = vec3(0, 0, -1); break
 		}
+		
 		place_view_air = false
 	}
 	else
 		place_view_air = true
-
-	render_samples = -1
 }

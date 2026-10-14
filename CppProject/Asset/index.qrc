@@ -7,14 +7,12 @@
 		<file>Shaders/Compiled/shader_add.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_alpha_fix.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_alpha_fix.vsh.d3d</file>
-		<file>Shaders/Compiled/shader_alpha_test.fsh.d3d</file>
-		<file>Shaders/Compiled/shader_alpha_test.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_blend.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_blend.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_blur.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_blur.vsh.d3d</file>
-		<file>Shaders/Compiled/shader_border.fsh.d3d</file>
-		<file>Shaders/Compiled/shader_border.vsh.d3d</file>
+		<file>Shaders/Compiled/shader_outline.fsh.d3d</file>
+		<file>Shaders/Compiled/shader_outline.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_ca.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_ca.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_clip.fsh.d3d</file>
@@ -85,8 +83,8 @@
 		<file>Shaders/Compiled/shader_high_subsurface_scatter.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_noise.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_noise.vsh.d3d</file>
-		<file>Shaders/Compiled/shader_outline.fsh.d3d</file>
-		<file>Shaders/Compiled/shader_outline.vsh.d3d</file>
+		<file>Shaders/Compiled/shader_text_outline.fsh.d3d</file>
+		<file>Shaders/Compiled/shader_text_outline.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_palette.fsh.d3d</file>
 		<file>Shaders/Compiled/shader_palette.vsh.d3d</file>
 		<file>Shaders/Compiled/shader_replace.fsh.d3d</file>
@@ -113,14 +111,12 @@
 		<file>Shaders/shader_add.vsh</file>
 		<file>Shaders/shader_alpha_fix.fsh</file>
 		<file>Shaders/shader_alpha_fix.vsh</file>
-		<file>Shaders/shader_alpha_test.fsh</file>
-		<file>Shaders/shader_alpha_test.vsh</file>
 		<file>Shaders/shader_blend.fsh</file>
 		<file>Shaders/shader_blend.vsh</file>
 		<file>Shaders/shader_blur.fsh</file>
 		<file>Shaders/shader_blur.vsh</file>
-		<file>Shaders/shader_border.fsh</file>
-		<file>Shaders/shader_border.vsh</file>
+		<file>Shaders/shader_outline.fsh</file>
+		<file>Shaders/shader_outline.vsh</file>
 		<file>Shaders/shader_ca.fsh</file>
 		<file>Shaders/shader_ca.vsh</file>
 		<file>Shaders/shader_clip.fsh</file>
@@ -203,8 +199,8 @@
 		<file>Shaders/shader_high_subsurface_scatter.vsh</file>
 		<file>Shaders/shader_noise.fsh</file>
 		<file>Shaders/shader_noise.vsh</file>
-		<file>Shaders/shader_outline.fsh</file>
-		<file>Shaders/shader_outline.vsh</file>
+		<file>Shaders/shader_text_outline.fsh</file>
+		<file>Shaders/shader_text_outline.vsh</file>
 		<file>Shaders/shader_palette.fsh</file>
 		<file>Shaders/shader_palette.vsh</file>
 		<file>Shaders/shader_replace.fsh</file>

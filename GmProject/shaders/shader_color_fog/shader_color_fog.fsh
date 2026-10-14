@@ -8,22 +8,37 @@ uniform float uGamma;
 
 uniform vec3 uCameraPosition; // static
 uniform int uFogPass; // static
+uniform float uNear; // static
+uniform float uFar; // static
 
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
+varying float vPlaceDistance;
 
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_color.COLOR_ADJUST_LIB)
 #pragma shady: inline(common_color.TONEMAP_LIB)
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)
+#pragma shady: inline(common_place.PLACE_LIB)
 
 void main()
 {
 	vec2 tex = vTexCoord;
 	gl_FragData[0] = vColor * texture2D(uTexture, tex); // Get base
+	gl_FragData[1] = vec4(0.0);
 	
-	handleAlphaDiscard(vPosition, gl_FragData[0]);
+	if (uRenderPlace > 0)
+	{
+		// Ignore transparent texels on non-block objects
+		if (uPlaceType == PLACE_TYPE_SCENE && gl_FragData[0].a < 0.05)
+			discard;
+		
+		gl_FragData[1] = getPlaceOutput(vPlaceDistance, uNear, uFar);
+	}
+	
+	if (uRenderPlace == 0 || uPlaceType == PLACE_TYPE_PLACED || uPlaceType == PLACE_TYPE_CLOUDS)
+		handleAlphaDiscard(vPosition, gl_FragData[0]);
 	
 	if (uColorsExt > 0)
 		applyColorTransform(gl_FragData[0], true);
@@ -40,5 +55,6 @@ void main()
 		gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, fog); // Mix fog
 	}
 	
-	gl_FragData[1] = vec4(uReplaceColor.rgb, gl_FragData[0].a);
+	if (uRenderPlace == 0)
+		gl_FragData[1] = vec4(uReplaceColor.rgb, gl_FragData[0].a);
 }

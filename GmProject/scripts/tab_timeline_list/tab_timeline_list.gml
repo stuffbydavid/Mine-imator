@@ -90,30 +90,6 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		if (itemhover)
 			mouse_cursor = cr_handpoint
 			
-		// Parent hovering item to selected timeline
-		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
-		{
-			with (place_history)
-			{
-				parent = tl
-				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
-			}
-			
-			with (place_tl)
-			{
-				tl_value_set_vec3(e_value.POS_X, vec3(0))
-				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
-				tl_set_parent(tl)
-			}
-			
-			tl_update_list()
-			tl_update_matrix()
-			
-			render_samples = -1
-			
-			app_stop_place(true)
-		}
-		
 		if ((itemhover && mouse_left) || tl.selected)
 			draw_box(content_x, itemy, listw, itemh, false, c_accent_overlay, a_accent_overlay)
 		else if (itemhover || tl = context_menu_value || (window_busy = "timeline/click" && timeline_select = tl))
@@ -221,15 +197,21 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 				draw_image(spr_connect, 3, connectx - 2, itemy, 1, 1, c_border, a_border)
 		}
 		
-		// Extent timeline tree
+		// Extend timeline tree
 		if (tlhierarchy)
 		{
 			if (ds_list_size(tl.tree_list_filter) > 0 && (((xx + buttonsize + 8) - xright) < minw))
 			{
+				var busy = window_busy;
+				if (busy = "place")
+					window_busy = ""
+				
 				if (draw_button_icon("timeline/expand" + string(tl), xx, itemy + buttonpad, buttonsize, buttonsize, tl.tree_extend, null, null, false, (tl.tree_extend ? "tooltip/tl/collapse" : "tooltip/tl/expand"), spr_chevron_ani))
 					action_tl_extend(tl)
 				
-				buttonhover = buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place")
+				window_busy = busy
+				
+				buttonhover = (buttonhover || app_mouse_box(xx, itemy + buttonpad, buttonsize, buttonsize, "place"))
 				
 				// Only offset x if button is present
 				if (setting_timeline_compact)
@@ -251,7 +233,31 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 				minw -= (buttonsize + 4)
 			}
 		}
-		
+
+		// Parent hovering item to selected timeline
+		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
+		{
+			with (place_history)
+			{
+				parent = tl
+				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
+			}
+
+			with (place_tl)
+			{
+				tl_value_set_vec3(e_value.POS_X, vec3(0))
+				tl_value_set_vec3(e_value.POS_X, vec3(0), true)
+				tl_set_parent(tl)
+			}
+
+			tl_update_list()
+			tl_update_matrix()
+
+			render_samples = -1
+
+			app_stop_place(true)
+		}
+
 		// Timeline icon
 		if (!setting_timeline_compact)
 		{

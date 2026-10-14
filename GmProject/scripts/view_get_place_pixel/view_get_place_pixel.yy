@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_get_place_pixel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_get_place_pixel",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

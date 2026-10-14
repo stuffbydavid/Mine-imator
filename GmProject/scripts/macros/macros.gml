@@ -126,6 +126,7 @@ function macros()
 	#macro c_sunset_end					hex_to_color("C04E37")
 	#macro c_normal						make_color_rgb(127, 127, 255)
 	#macro c_text_outline				make_color_rgb(92, 80, 255)
+	#macro c_place_target				make_color_rgb(176, 164, 255)
 	
 	// Encoding
 	#macro sample_rate					44100
@@ -174,6 +175,9 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
+	#macro surface_rg32float			8
+	#macro place_id_bits				21
+	#macro place_dir_none				e_dir.amount
 
 	// Assets
 	#macro default_model				"human"
@@ -195,19 +199,19 @@ function macros()
 	#macro fog_height					1250
 	#macro armor_parts					[ "helmet", "chestplate", "leggings", "boots" ]
 	#macro schematic_folders			[ "Buildings", "Biomes", "Trees", "Structures", "Other" ]
-	#macro schematic_default			[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
+	#macro schematic_folders_default	[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
 	#macro scenery_large_threshold		300
 	#macro scenery_instant_threshold	20 * 1024 // 20kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		512
 	#macro sound_filters				[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
-	#macro sound_default				"Step / Grass 1"
 	#macro music_filters				[ "game", "menu", "records", "other" ]
-	#macro music_default				"Records / Cat"
+	#macro default_sound				"Step / Grass 1"
+	#macro default_music				"Records / Cat"
 	#macro particle_folders				[ "Effects", "Weather" ]
-	#macro particle_default				[ "Default", "Snow" ]
+	#macro particle_folders_default		[ "Default", "Snow" ]
 	#macro default_text					"AaBbCc"
-	#macro light_shadows_threshold		20
+	#macro light_shadows_threshold		10
 	#macro default_tonemapper			e_tonemapper.LOTTES
 	
 	// Parenting actions for right/left arm

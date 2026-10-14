@@ -1,7 +1,9 @@
+/// @arg [x]
+/// @arg [y]
 /// @arg [width]
 /// @arg [height]
 
-function render_watermark_image(wid = null, hei = null)
+function render_watermark_image(xx = 0, yy = 0, wid = null, hei = null)
 {
 	var watermarkx, watermarky, watermarkwid, watermarkhei;
 	watermarkx = 0
@@ -84,11 +86,13 @@ function render_watermark_image(wid = null, hei = null)
 			pady = (hei * padding)
 			break
 		}
+		
 		case "center":
 		{
 			watermarky = hei/2
 			break
 		}
+		
 		case "bottom":
 		{
 			watermarky = hei - (watermarkhei/2 * scale)
@@ -105,10 +109,10 @@ function render_watermark_image(wid = null, hei = null)
 	
 	gpu_set_texfilter(true)
 	
-	draw_image(sprite, 0, round(watermarkx), round(watermarky), scale, scale, c_white, opacity)
+	draw_image(sprite, 0, xx + round(watermarkx), yy + round(watermarky), scale, scale, c_white, opacity)
 	
 	gpu_set_blendmode_ext_sepalpha(bm_src_color, bm_one, bm_one, bm_one)
-	draw_image(sprite, 0, round(watermarkx), round(watermarky), scale, scale, c_black, opacity)
+	draw_image(sprite, 0, xx + round(watermarkx), yy + round(watermarky), scale, scale, c_black, opacity)
 	gpu_set_blendmode(bm_normal)
 	
 	gpu_set_texfilter(false)

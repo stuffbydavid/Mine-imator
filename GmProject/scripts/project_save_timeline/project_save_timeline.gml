@@ -13,7 +13,8 @@ function project_save_timeline()
 		json_save_var_bool("hide", hide)
 		json_save_var_bool("lock", lock)
 		json_save_var_bool("ghost", ghost)
-		json_save_var("depth", depth)
+		json_save_var("render_depth", render_depth)
+		json_save_var_bool("render_depth_custom", render_depth_custom)
 		
 		if (type = e_tl_type.MODEL_PART)
 			json_save_var("model_part_name", json_string_encode(model_part_name))
@@ -120,7 +121,9 @@ function project_save_timeline()
 			json_save_array_done()
 		}
 		
-		project_save_values("default_values", animated ? value_default : value, app.value_default)
+		project_save_values("default_values", value_default, app.value_default)
+		if (!animated)
+			project_save_values("current_values", value, value_default)
 		
 		json_save_object_start("keyframes")
 			

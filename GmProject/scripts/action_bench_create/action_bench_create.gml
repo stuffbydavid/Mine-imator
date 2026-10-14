@@ -43,14 +43,14 @@ function action_bench_create(button = e_bench_button.CREATE)
 	if (place_build && (history_undo || history_redo))
 	{
 		placetarget = place_target_tl
-		placeparent = place_target_tl_part_of
+		placeparent = place_target_tl_root
 		
-		if (place_target_tl_part_of != null && instance_exists(place_target_tl_part_of))
-			with (place_target_tl_part_of)
+		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
+			with (place_target_tl_root)
 				tl_mark_place_target(false)
 		
 		place_target_tl = null
-		place_target_tl_part_of = null
+		place_target_tl_root = null
 	}
 
 	if (history_undo)
@@ -455,7 +455,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 		if (placetarget != null && placeparent != null && instance_exists(placetarget) && instance_exists(placeparent))
 		{
 			place_target_tl = placetarget
-			place_target_tl_part_of = placeparent
+			place_target_tl_root = placeparent
 			
 			with (placeparent)
 				tl_mark_place_target(true)

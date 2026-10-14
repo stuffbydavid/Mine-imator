@@ -71,7 +71,7 @@ function action_bench_schematic_folder(folder, update = true)
 			if (schematic_folders[i] != folder)
 				continue
 			
-			var schematic = schematic_default[i];
+			var schematic = schematic_folders_default[i];
 			for (var s = 0; s < ds_list_size(list.display_list); s++)
 			{
 				if (list.display_list[|s] = schematic)

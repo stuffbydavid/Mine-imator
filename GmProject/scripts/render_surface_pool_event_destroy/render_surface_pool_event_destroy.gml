@@ -84,8 +84,8 @@ function render_surface_pool_event_destroy()
 	surface_free(surface_lens)
 	surface_lens = null
 	
-	surface_free(grain_noise)
-	grain_noise = null
+	surface_free(surface_grain_noise)
+	surface_grain_noise = null
 	
 	surface_free(surface_samples)
 	surface_samples = null

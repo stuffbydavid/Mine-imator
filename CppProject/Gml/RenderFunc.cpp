@@ -1,4 +1,5 @@
 #include "Generated/GmlFunc.hpp"
+#include "Generated/Scripts.hpp"
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
@@ -440,6 +441,17 @@ namespace CppProject
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
+
+			switch (surf->frameBuffer->format)
+			{
+				case surface_r16float:
+				case surface_rgba16float:
+				case surface_r32float:
+				case surface_rg32float:
+				case surface_rgba32float:
+					return (ArrType)surf->GetColorFloat(QPoint(x, y));
+			}
+
 			return GFX->QColorToInt(surf->GetColor(QPoint(x, y)));
 		}
 		

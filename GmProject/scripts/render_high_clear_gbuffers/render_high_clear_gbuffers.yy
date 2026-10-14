@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_high_clear_gbuffers",
   "parent":{
-    "name":"High quality",
-    "path":"folders/Scripts/Render/High quality.yy",
+    "name":"G-buffers",
+    "path":"folders/Scripts/Render/High quality/G-buffers.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -41,12 +41,13 @@ function model_file_load_part(map, root, res, model)
 		if (res = null && debug_names && !text_exists("model/part/" + name))
 			log("model/part/" + name + mc_unknown_asset_warning)
 		
-		// Depth
-		depth = value_get_real(map[?"depth"], 0)
+		// Render depth
+		render_depth = value_get_real(map[?"depth"], 0)
 		
+		// Create render list for preview rendering or particles
 		var pos;
 		for (pos = 0; pos < ds_list_size(model.render_part_list); pos++)
-			if (model.render_part_list[|pos].depth > depth)
+			if (model.render_part_list[|pos].render_depth > render_depth)
 				break
 		
 		ds_list_insert(model.render_part_list, pos, id)

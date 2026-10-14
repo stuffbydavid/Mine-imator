@@ -26,7 +26,7 @@ function shader_high_lighting_apply_set(shadows, ssao, mask, material, fallbacko
 	render_set_uniform(e_uniform.GAMMA, render_gamma)
 	render_set_uniform(e_uniform.PROJ_MATRIX_INV, matrix_inverse_ext(proj_matrix))
 	
-	shader_fog_fallback_set()
+	shader_high_fog_fallback_set()
 	
 	if (fallbackonly)
 		return 0

@@ -11,8 +11,8 @@
 
 function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamera, bounce, rotate, realtime = false)
 {
-	if (render_depth_pass)
-		return render_world_item_depth(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime)
+	if (render_fast_pass)
+		return render_world_item_fast(vbuf, resdif, sheet, is3d, facecamera, bounce, rotate, realtime)
 	
 	var texmat, texnorm;
 	resdif = res_eval(resdif)
@@ -40,7 +40,7 @@ function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamer
 	render_apply_res(resdif)
 	
 	if (facecamera || bounce || rotate)
-		matrix_set(matrix_world, render_world_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
+		matrix_set(matrix_world, render_world_get_item_transform(matrix_get(matrix_world), facecamera, bounce, rotate, true, is3d, realtime))
 	
 	if (resdif.item_sheet_texture[sheet] != null)
 		render_set_texture(resdif, resdif.item_sheet_texture[sheet])

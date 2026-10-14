@@ -41,4 +41,7 @@ function action_tl_mode_visible(enabled, tl = null, hobj = null)
 			if (!tl.tree_list[|i].selected)
 				action_tl_mode_visible(enabled, tl.tree_list[|i], hobj)
 	}
+	
+	if (tl = null)
+		render_world_changed()
 }

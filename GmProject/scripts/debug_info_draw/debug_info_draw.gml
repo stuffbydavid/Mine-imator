@@ -69,7 +69,6 @@ function debug_info_draw()
 		str += "======================================= \n"
 		str += "Light buffer caching: " + (render_shadow_cache_enabled ? "Enabled" : "Disabled") + " \n"
 		str += "G-buffer caching: " + (render_gbuffers_cache_enabled ? "Enabled" : "Disabled") + " \n"
-		str += "Hashed objects: " + string(app.render_alpha_hashed_count) + " \n"
 		str += "\n"
 
 		str += "instance_count: " + string(instance_count) + " \n"

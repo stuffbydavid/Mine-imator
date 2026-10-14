@@ -13,13 +13,12 @@ function project_reset()
 	res_edit = null
 	tl_edit = null
 	tl_edit_amount = 0
+	render_preset_edit = null
 	
 	render_free()
 	render_samples = -1
-	render_scene_bounds = null
-	render_preset_edit = null
-	
-	view_changed()
+	render_list_default_update = true
+	render_world_changed()
 	
 	lib_preview.update = true
 	res_preview.update = true

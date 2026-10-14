@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"shader_submit_float",
   "parent":{
-    "name":"Shaders",
-    "path":"folders/Scripts/Render/Shaders.yy",
+    "name":"Submit",
+    "path":"folders/Scripts/Render/Shaders/Submit.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

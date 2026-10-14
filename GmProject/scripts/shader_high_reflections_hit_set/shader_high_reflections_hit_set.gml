@@ -18,5 +18,5 @@ function shader_high_reflections_hit_set()
 	render_set_uniform(e_uniform.PROJ_MATRIX, proj_matrix)
 	render_set_uniform(e_uniform.PROJ_MATRIX_INV, matrix_inverse_ext(proj_matrix))
 	render_set_uniform_vec2(e_uniform.SCREEN_SIZE, render_width, render_height)
-	shader_fog_fallback_set()
+	shader_high_fog_fallback_set()
 }

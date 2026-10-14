@@ -4,6 +4,14 @@ function view_event_create()
 	update = true
 	update_gizmos = true
 	
+	render_depth_list = null
+	render_list_update = true
+	render_list_camera_from = null
+	render_world_bounds = null
+	render_world_bounds_id = -1
+	render_world_visible = []
+	render_world_visible_count = 0
+	
 	location = "full"
 	location_last = "full"
 	
@@ -20,14 +28,13 @@ function view_event_create()
 	surface_effects = false
 	surface_gizmos_enabled = false
 	surface_transparent_background = false
-	surface_watermark = false
 	surface_tool_move = false
 	surface_tool_rotate = false
 	surface_tool_scale = false
 	surface_tool_bend = false
 	surface_tool_transform = false
-	surface_work_from = point3D(0)
-	surface_work_angle = vec3(0)
+	surface_cam_work_from = point3D(0)
+	surface_cam_work_angle = vec3(0)
 	
 	surface_cam_from = point3D(0)
 	surface_cam_to = point3D(0)
@@ -44,14 +51,24 @@ function view_event_create()
 	surface_control_edit = null
 	
 	surface_place_id = null
-	surface_place_depth_gm = null
-	surface_place_width = 0
-	surface_place_height = 0
-	update_place_surfaces = false
+	surface_place_async_id = null
+	surface_place_async_list = array_create(8)
+	surface_place_separate = false
+	surface_place_tl_list = [ 0 ]
+	surface_place_tl_list_id = -1
+	surface_place_depth_near = 0
+	surface_place_depth_far = 0
+	surface_place_proj_matrix = array_copy_1d(MAT_IDENTITY)
+	surface_place_view_matrix = array_copy_1d(MAT_IDENTITY)
+	surface_place_active = false
+	
+	surface_pick_depth_id = null
+	surface_pick_mask_id = null
 	
 	mouseon = false
 	control_mouseon = null
 	control_mouseon_last = null
+	place_output = false
 	render = false
 	transparent_background = false
 	

@@ -20,6 +20,7 @@ function app_startup_window()
 	
 	window_width = 1
 	window_height = 1
+	
 	window_set_focus()
 	window_set_min_width(100)
 	window_set_min_height(100)
@@ -30,6 +31,7 @@ function app_startup_window()
 	window_state = ""
 	window_busy = ""
 	window_focus = ""
+	window_place = false
 	
 	mouse_cursor = cr_default
 	mouse_current_x = 0
@@ -138,7 +140,7 @@ function app_startup_window()
 	place_tl_parent = app
 	place_tl_parent_index = -1
 	place_target_tl = null
-	place_target_tl_part_of = null
+	place_target_tl_root = null
 	place_spawn = false
 	place_history = null
 	place_build = false
@@ -147,9 +149,6 @@ function app_startup_window()
 	place_rot = vec3(0)
 	place_sca = vec3(1)
 	place_content_mouseon = null
-	place_cam_work_from = vec3(0)
-	place_cam_work_angle_look_xy = 0
-	place_cam_work_angle_look_z = 0
 	
 	// Compact
 	ui_large_height = 32

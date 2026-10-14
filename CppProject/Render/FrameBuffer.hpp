@@ -27,6 +27,12 @@ namespace CppProject
 		// Copies the color or depth/stencil data to the given destination.
 		void CopyData(BoolType color, uchar* dst);
 
+		// Returns the latest completed pixel lookup while scheduling a new readback.
+		BoolType CopyColorPixelAsync(QPoint point, uchar* dst, IntType& completed, IntType& submitted);
+
+		// Resets asynchronous pixel readback state, freeing any resources or fences.
+		void ResetColorPixelAsync();
+
 		// Copies the color data to the given destination with 8 bits for RGBA.
 		void CopyColorData(uchar* dst);
 
@@ -37,6 +43,22 @@ namespace CppProject
 		BoolType depthBuffer;
 		BoolType depthOnly;
 		QSize size = { 0, 0 };
+
+		static constexpr IntType pixelReadbackCount = 3;
+		struct PixelReadback
+		{
+			BoolType pending = false;
+			IntType serial = 0;
+		#if OS_WINDOWS
+			ID3D11Texture2D* texture = nullptr;
+			ID3D11Query* query = nullptr;
+		#endif
+			GLuint pbo = 0;
+			GLsync fence = nullptr;
+		};
+		PixelReadback pixelReadbacks[pixelReadbackCount];
+		IntType pixelReadbackNext = 0, pixelReadbackSerial = 0, pixelReadbackCompleted = 0;
+		uchar pixelReadbackValue[16] = {};
 
 	#if OS_WINDOWS
 		DXGI_FORMAT d3dFormat = DXGI_FORMAT_UNKNOWN;

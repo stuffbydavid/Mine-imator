@@ -28,10 +28,10 @@ function tl_new_part(part)
 		
 		show_tool_position = part.show_position
 		
-		depth = part.depth
+		render_depth = part.render_depth
+		render_depth_custom = ((other.loaded && load_format < e_project.FORMAT_210) || part.render_depth != 0)
 		
 		tl_set_parent(other.id)
-		tl_update_depth()
 		tl_value_spawn()
 		
 		return id

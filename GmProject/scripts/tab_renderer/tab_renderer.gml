@@ -69,7 +69,9 @@ function tab_renderer()
 		tab_control_dragger()
 		draw_dragger("render/samples", dx, dy, dragger_width, rendererset.samples, .5, 1, 256, 24, 1, tab.tbx_samples, action_project_render_samples)
 		tab_next()
-		if (render_performance_warning(render_preset_edit, renderer_edit))
+		
+		// Performance warning
+		if (render_high_get_realistic_warning(render_preset_edit))
 			draw_tooltip_label("render/renderer/realistic_warning", icons.WARNING_TRIANGLE, e_toast.WARNING)
 	}
 	
@@ -101,7 +103,7 @@ function tab_renderer()
 		tab_next()
 
 		tab_control_meter()
-		draw_meter("render/ssao/blur_passes", dx, dy, dw, project_render_ssao_blur_passes, 0, 8, 2, 1, tab.tbx_ssao_blur_passes, action_project_render_ssao_blur_passes)
+		draw_meter("render/ssao/blur_passes", dx, dy, dw, rendererset.ssao_blur_passes, 0, 8, 2, 1, tab.tbx_ssao_blur_passes, action_project_render_ssao_blur_passes)
 		tab_next()
 
 		tab_control_color()
@@ -368,15 +370,18 @@ function tab_renderer()
 	if (collapse_map[?"render/render_dof"])
 	{
 		tab_collapse_start()
+		
 		tab_control_meter()
 		draw_meter("render/dof/quality", dx, dy, dw, rendererset.dof_quality, 8, 64, 16, 1, tab.tbx_dof_quality, action_project_render_dof_quality)
 		tab_next()
+		
 		if (renderer_edit = e_renderer.STANDARD)
 		{
 			tab_control_switch()
 			draw_switch("render/dof/realistic_blur", dx, dy, rendererset.dof_realistic_blur, action_project_render_dof_realistic_blur, "render/dof/realistic_blur_tip")
 			tab_next()
 		}
+		
 		tab_collapse_end()
 	}
 

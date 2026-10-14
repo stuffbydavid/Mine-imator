@@ -13,11 +13,15 @@
 
 function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx, script, tip = "")
 {
-	var hei, thumbhei, linex, linewid, trackx, trackwid, dragval, dragx, dragy, mouseon, slidermouseon, locked, inputfocus, compact;
+	var hei, thumbhei, linex, linewid, trackx, trackwid, dragval, dragx, dragy, mouseon, slidermouseon, locked, dragmul, inputfocus, compact;
 	thumbhei = 20
 	compact = (app.panel_compact || window_compact)
 	hei = compact ? ui_small_height : thumbhei + 32
 	locked = (minval = maxval)
+	
+	dragmul = snapval * .1
+	if (!locked)
+		dragmul = min(dragmul, (maxval - minval) / 300)
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
@@ -32,8 +36,7 @@ function draw_meter(name, xx, yy, wid, value, minval, maxval, def, snapval, tbx,
 	
 	// Textbox
 	microani_set(name, script, false, false, false)
-	
-	draw_dragger(name + "/input", xx + wid - dragger_width, yy, dragger_width, value, snapval * .1, minval, maxval, def, snapval, tbx, script, null, false)
+	draw_dragger(name + "/input", xx + wid - dragger_width, yy, dragger_width, value, dragmul, minval, maxval, def, snapval, tbx, script, null, false)
 	
 	inputfocus = microani_arr[e_microani.ACTIVE]
 	

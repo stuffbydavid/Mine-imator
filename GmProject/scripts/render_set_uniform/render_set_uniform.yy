@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_set_uniform",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/Render.yy",
+    "name":"Uniform",
+    "path":"folders/Scripts/Render/Uniform.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

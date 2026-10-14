@@ -50,7 +50,7 @@ function app_update_animate()
 		{
 			if (render_visible)
 			{
-				if (render_update_tl_resource())
+				if (tl_update_render_res())
 				{
 					tex_obj_prev = tex_obj
 					tex_obj_material_prev = tex_obj_material
@@ -141,8 +141,6 @@ function app_update_animate()
 		with (app)
 			tl_update_matrix(true)
 
-	render_alpha_hashing_update()
-	
 	// Spawn particles
 	for (var i = 0; i < array_length(spawnerarr); i++)
 		with (spawnerarr[i])

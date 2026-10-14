@@ -1,0 +1,84 @@
+/// @arg basesurface
+/// @arg [hdr]
+
+function render_fx_lens_dirt(prevsurf, hdr = false)
+{
+	// Blur lens surface
+	var lenssurftemp, resultsurf;
+	if (hdr)
+		render_surface_hdr_post[0] = surface_require(render_surface_hdr_post[0], render_width, render_height, false, surface_rgba16float)
+	else
+		render_surface[0] = surface_require(render_surface[0], render_width, render_height)
+	lenssurftemp = hdr ? render_surface_hdr_post[0] : render_surface[0]
+	
+	render_shader_obj = shader_map[?shader_blur]
+	with (render_shader_obj)
+		shader_set(shader)
+	
+	// Radius changes based on the render height to make it consistant with the size of the render
+	var baseradius = ((render_camera_effects[e_value.CAM_FX_LENS_DIRT_RADIUS] * 10) * render_height / 500);
+	gpu_set_tex_repeat(false)
+	gpu_set_texfilter(true)
+	
+	for (var i = 0; i < 3; i++)
+	{
+		var radius = baseradius / (1 + 1.333 * i);
+		
+		// Horizontal
+		surface_set_target(lenssurftemp)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_blur_kernel, radius, 1, 0)
+			draw_surface_exists(render_surface_lens, 0, 0)
+		}
+		surface_reset_target()
+		
+		// Vertical
+		surface_set_target(render_surface_lens)
+		{
+			with (render_shader_obj)
+				shader_blur_set(render_blur_kernel, radius, 0, 1)
+			draw_surface_exists(lenssurftemp, 0, 0)
+		}
+		surface_reset_target()
+	}
+	
+	with (render_shader_obj)
+		shader_clear()
+	
+	gpu_set_tex_repeat(true)
+	gpu_set_texfilter(false)
+	
+	// Multiply lens with dirt
+	gpu_set_blendmode_ext(bm_zero, bm_src_color)
+	surface_set_target(render_surface_lens)
+	{
+		var texobj = render_camera_effects[e_value.TEXTURE_OBJ];
+		draw_image_box_cover(texobj.texture, 0, 0, render_width, render_height)
+	}
+	surface_reset_target()
+	gpu_set_blendmode(bm_normal)
+	if (hdr)
+		gpu_set_blendmode_ext(bm_one, bm_zero)
+	
+	// Apply lens dirt
+	resultsurf = render_high_get_apply_surface(hdr)
+	
+	surface_set_target(resultsurf)
+	{
+		draw_clear_alpha(c_black, 0)
+		
+		render_shader_obj = shader_map[?shader_add]
+		with (render_shader_obj)
+		{
+			shader_set(shader)
+			shader_add_set(render_surface_lens, render_camera_effects[e_value.CAM_FX_LENS_DIRT_INTENSITY] * 10, c_white, render_camera_effects[e_value.CAM_FX_LENS_DIRT_POWER], false, true)
+		}
+		draw_surface_exists(prevsurf, 0, 0)
+		with (render_shader_obj)
+			shader_clear()
+	}
+	surface_reset_target()
+	
+	return resultsurf
+}

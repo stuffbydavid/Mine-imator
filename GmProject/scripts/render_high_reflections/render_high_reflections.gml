@@ -10,7 +10,8 @@ function render_high_reflections(surf)
 	gpu_set_blendmode_ext(bm_one, bm_zero)
 	
 	// Raytrace
-	render_surface_reflections_raydata = surface_require(render_surface_reflections_raydata, ww, hh, false, surface_rgba32float)
+	var format = (is_cpp() ? surface_rgba32float : surface_rgba16float); // surface_rgba32float support not guaranteed in GM
+	render_surface_reflections_raydata = surface_require(render_surface_reflections_raydata, ww, hh, false, format)
 	surface_set_target(render_surface_reflections_raydata)
 	{
 		gpu_set_texrepeat(false)
@@ -42,7 +43,7 @@ function render_high_reflections(surf)
 	
 	for (var bounce = 0; bounce < app.project_render_reflections_bounces; bounce++)
 	{
-		// first bounce uses fallback colors (render_surface_shadows, set by render_high_scene), future bounces use current render with established reflections
+		// first bounce uses fallback colors (render_surface_shadows, set by render_high_lighting), future bounces use current render with established reflections
 		sourcesurf = (bounce = 0 ? render_surface_shadows : surf)
 		
 		// Resolve reflections pass

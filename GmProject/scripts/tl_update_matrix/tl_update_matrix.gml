@@ -5,11 +5,10 @@
 
 function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
-	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend, posebend;
-	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf, viewupdate;
+	var tlamount, viewupdate, worldupdate, start;
 	tlamount = ds_list_size(app.project_timeline_list)
-	posebend = [ 0, 0, 0 ]
 	viewupdate = false
+	worldupdate = false
 	
 	if (object_index = obj_timeline)
 		start = ds_list_find_index(app.project_timeline_list, id)
@@ -21,7 +20,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	
 	for (var i = start; i < tlamount; i++)
 	{
-		curtl = app.project_timeline_list[|i]
+		var curtl = app.project_timeline_list[|i];
 		
 		// Update children
 		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.EQUIPMENT || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
@@ -49,6 +48,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		{
 			viewupdate = true
 			
+			if (type_is_visible(type) && type != e_tl_type.CAMERA && !type_is_light(type))
+				worldupdate = true
+			
 			// Get parent matrix
 			if (parent != app)
 			{
@@ -60,7 +62,11 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				// Parent is a body part and we're locked to bended half
 				if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
 				{
-					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z])
+					var bend = vec3(
+						parent.value_inherit[e_value.BEND_ANGLE_X],
+						parent.value_inherit[e_value.BEND_ANGLE_Y],
+						parent.value_inherit[e_value.BEND_ANGLE_Z]
+					);
 					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0)), matrix_parent)
 				}
 			}
@@ -115,6 +121,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Create main matrix
+			var pos, rot, sca, hasik;
 			pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
 			rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 			sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
@@ -139,8 +146,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				matrix = matrix_multiply(part_joints_matrix[0], matrix)
 			
 			// Check body part model timeline is "Inherit pose" is enabled, look at parent of root model and search for matching body parts to inherit from
-			posebend = [ 0, 0, 0 ]
-			
+			var posebend = [ 0, 0, 0 ];
 			if (updatepose && part_of != null && part_of.inherit_pose && part_of.parent != app)
 			{
 				var posetl = null;
@@ -166,19 +172,19 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
 			{
 				// Get actual scale
-				tl = id
-				
+				var tl = id;
 				while (true)
 				{
-					par = tl.parent
+					var par = tl.parent;
 					if (!tl.inherit_scale || par = app)
 						break
+					
 					sca = vec3_mul(sca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
 					tl = par
 				}
 				
 				// Remove scale
-				var parmat;
+				var parmat, matrixnoscale;
 				matrix_remove_scale(matrix_parent)
 				parmat = array_copy_1d(matrix_parent)
 				
@@ -232,11 +238,11 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			value_inherit[e_value.SCA_X] = 1
 			value_inherit[e_value.SCA_Y] = 1
 			value_inherit[e_value.SCA_Z] = 1
-			tl = id
 			
+			var tl = id;
 			while (1)
 			{
-				par = tl.parent
+				var par = tl.parent;
 				if (par = app)
 					break
 			
@@ -246,10 +252,13 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				if (!par.inherit_scale)
 					break
+				
 				tl = par
 			}
 			
 			// Inherit
+			var lastalpha, lasttex, ikblend
+			lastalpha = value_inherit[e_value.ALPHA];
 			lasttex = value_inherit[e_value.TEXTURE_OBJ]
 			ikblend = value[e_value.IK_BLEND] * hasik
 			value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
@@ -279,6 +288,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = value[e_value.TEXTURE_MATERIAL_OBJ] // Overwritten
 			value_inherit[e_value.TEXTURE_NORMAL_OBJ] = value[e_value.TEXTURE_NORMAL_OBJ] // Overwritten
 			
+			var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
 			inhalpha = true
 			inhcolor = true
 			inhglowcolor = true
@@ -287,14 +297,14 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			inhtex = true
 			inhsurf = true
 			inhsubsurf = true
-			tl = id
 			
 			for (var j = X; j <= Z; j++)
 				value_inherit[e_value.BEND_ANGLE_X + j] += posebend[j]
 			
+			tl = id
 			while (true)
 			{
-				par = tl.parent
+				var par = tl.parent;
 				if (par = app)
 					break
 				
@@ -392,6 +402,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				tl = par
 			}
 			
+			if (lastalpha != value_inherit[e_value.ALPHA])
+				render_list_default_update = true
+			
 			colors_ext = (value_inherit[e_value.ALPHA] < 1 ||
 						  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
 						  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
@@ -435,8 +448,8 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Update render resource
-			if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && tl_get_visible())
-				render_update_tl_resource()
+			if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && tl_get_render_visible())
+				tl_update_render_res()
 			
 			// Update shape matrices, vertex buffers and visibility
 			if (type = e_tl_type.MODEL_PART && model_part != null)
@@ -447,7 +460,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	}
 	
 	// Update view buffers for accurate object placing
-	if (viewupdate)
+	if (worldupdate)
+		render_world_changed()
+	else if (viewupdate)
 		view_changed()
 	
 	update_matrix = false

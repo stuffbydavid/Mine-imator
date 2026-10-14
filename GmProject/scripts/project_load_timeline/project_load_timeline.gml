@@ -27,7 +27,11 @@ function project_load_timeline(map)
 		hide = value_get_real(map[?"hide"], hide)
 		lock = value_get_real(map[?"lock"], lock)
 		ghost = value_get_real(map[?"ghost"], ghost)
-		depth = value_get_real(map[?"depth"], depth)
+		
+		render_depth = value_get_real(map[?"render_depth"], value_get_real(map[?"depth"], render_depth))
+		
+		if (load_format >= e_project.FORMAT_210)
+			render_depth_custom = value_get_real(map[?"render_depth_custom"], render_depth_custom)
 		
 		if (type = e_tl_type.MODEL_PART)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)
@@ -181,6 +185,14 @@ function project_load_timeline(map)
 		var defaultmap = map[?"default_values"];
 		project_load_values(defaultmap, value_default)
 		project_load_values_update_default(defaultmap, value_default)
+		
+		if (!animated)
+		{
+			value = array_copy_1d(value_default)
+			var currentmap = map[?"current_values"];
+			if (ds_map_valid(currentmap))
+				project_load_values(currentmap, value)
+		}
 		
 		if (load_format < e_project.FORMAT_210 && type = e_tl_type.CAMERA)
 		{

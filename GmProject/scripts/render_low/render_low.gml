@@ -9,6 +9,18 @@ function render_low()
 	render_alpha_hash = false
 	render_alpha_hash_force = true
 	
+	// Allocate surface for place data
+	if (render_place)
+	{
+		var view = render_place_view;
+		if (!view.surface_place_separate)
+			view.surface_place_id = null
+		
+		var format = (is_cpp() ? surface_rg32float : surface_rgba32float);
+		view.surface_place_id = surface_require(view.surface_place_id, render_width, render_height, false, format)
+		surface_clear(view.surface_place_id, c_red)
+	}
+	
 	surface_set_target(surf)
 	{
 		draw_clear_alpha(c_black, 0)
@@ -20,7 +32,11 @@ function render_low()
 		// World
 		render_world_start()
 		render_world_sky()
+		render_place_begin()
 		render_world(render_lights ? e_render_mode.COLOR_FOG_LIGHTS : e_render_mode.COLOR_FOG)
+		render_place_end()
+		if (app.place_build)
+			render_world_build_box()
 		render_world_done()
 
 		if (render_background)
@@ -36,7 +52,7 @@ function render_low()
 	}
 	surface_reset_target()
 	
-	if (render_effects_done)
+	if (render_fx_done)
 		return 0
 	
 	// Camera depth for depth-aware post effects
@@ -59,12 +75,12 @@ function render_low()
 		surface_reset_target()
 	}
 
-	finalsurf = render_post(surf)
+	finalsurf = render_fx(surf)
 	if (render_camera_dof)
 		render_surface_depth = cacheddepth
 	
 	if (setting_quick_mode_aa)
-		finalsurf = render_high_aa(finalsurf)
+		finalsurf = render_fx_aa(finalsurf)
 	
 	render_target = surface_require(render_target, render_width, render_height)
 	surface_set_target(render_target)

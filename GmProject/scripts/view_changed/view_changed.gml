@@ -8,13 +8,11 @@ function view_changed(view = null)
 		{
 			update = true
 			update_gizmos = true
-			update_place_surfaces = true
 		}
 	}
 	else
 	{
 		view.update = true
 		view.update_gizmos = true
-		view.update_place_surfaces = true
 	}
 }

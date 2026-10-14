@@ -91,7 +91,7 @@ function action_project_pack(res, record = true)
 	}
 	
 	with (obj_timeline)
-		render_update_tl_resource()
+		tl_update_render_res()
 		
 	with (obj_particle_type)
 		ptype_update_sprite_vbuffers()

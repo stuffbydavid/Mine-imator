@@ -20,7 +20,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	res = res_eval(res)
 	render_apply_res(res)
 	
-	if (!istl && !render_depth_pass && render_material_pass)
+	if (!istl && !render_fast_pass && render_material_pass)
 	{
 		render_set_material_textures_none()
 		render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
@@ -67,8 +67,8 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	var previewarmor, tlarmor, previewblend, tlblend, previewcolor, timelinecolor;
 	previewarmor = (object_index = obj_preview && select.object_index != obj_resource && select.model_name = "armor")
 	tlarmor = (istl && temp.model_name = "armor")
-	previewblend = (object_index = obj_preview && select.model_use_blend_color)
-	tlblend = (istl && temp.model_use_blend_color)
+	previewblend = (!render_fast_pass && object_index = obj_preview && select.model_use_blend_color)
+	tlblend = (!render_fast_pass && istl && temp.model_use_blend_color)
 	
 	if (previewblend)
 		previewcolor = select.model_blend_color
@@ -156,7 +156,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				offsetset = true
 			}
 			
-			if (!render_depth_pass && render_material_pass)
+			if (!render_fast_pass && render_material_pass)
 			{
 				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, model_part_shape_material_res[s])
 
@@ -269,42 +269,36 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		
 		// Blend color
 		var blendcolor, alpha;
-		blendcolor = render_depth_pass ? c_white : shape.color_blend
-		alpha = shape.color_alpha
+		blendcolor = c_white
+		alpha = shader_blend_alpha * shape.color_alpha
 		
-		if (!render_depth_pass && colornamemap != null)
+		if (!render_fast_pass)
 		{
-			var color = colornamemap[? shape.description];
-			if (!is_undefined(color))
-				blendcolor = color
-		}
-		
-		// Model blend color
-		if (!render_depth_pass && shape.use_model_color)
-		{
-			if (previewblend)
-				blendcolor = color_multiply(blendcolor, previewcolor)
+			blendcolor = shape.color_blend
+			if (colornamemap != null)
+			{
+				var color = colornamemap[? shape.description];
+				if (!is_undefined(color))
+					blendcolor = color
+			}
 			
-			if (tlblend)
-				blendcolor = color_multiply(blendcolor, timelinecolor)
-		}
-		
-		// Blend shape color/alpha
-		if (render_depth_pass)
-			alpha = shader_blend_alpha * alpha
-		else if (blendcolor != c_white || alpha != 1)
-		{
-			blendcolor = color_multiply(shader_blend_color, blendcolor)
-			alpha = shader_blend_alpha * shape.color_alpha
-		}
-		else
-		{
-			blendcolor = shader_blend_color
-			alpha = shader_blend_alpha
+			if (shape.use_model_color)
+			{
+				if (previewblend)
+					blendcolor = color_multiply(blendcolor, previewcolor)
+				
+				if (tlblend)
+					blendcolor = color_multiply(blendcolor, timelinecolor)
+			}
+			
+			if (blendcolor = c_white)
+				blendcolor = shader_blend_color
+			else
+				blendcolor = color_multiply(shader_blend_color, blendcolor)
 		}
 		
 		// Set color/alpha
-		if (blendcolor != render_blend_prev || alpha != render_alpha_prev)
+		if (render_mode != e_render_mode.CLICK && (blendcolor != render_blend_prev || alpha != render_alpha_prev))
 		{
 			render_set_uniform_color(e_uniform.BLEND_COLOR, blendcolor, alpha)
 			render_blend_prev = blendcolor
@@ -312,7 +306,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		// Mix color
-		if (!render_depth_pass && shape.color_mix_percent > 0)
+		if (!render_fast_pass && shape.color_mix_percent > 0)
 		{
 			if (istl)
 				render_set_uniform_color(e_uniform.MIX_COLOR, merge_color(shape.color_mix, value_inherit[e_value.MIX_COLOR], value_inherit[e_value.MIX_PERCENT]), lerp(shape.color_mix_percent, value_inherit[e_value.MIX_PERCENT], value_inherit[e_value.MIX_PERCENT]))
@@ -336,7 +330,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			rendermatrix = matrix_multiply(shape.matrix, mat)
 
 		if (shape.item_bounce || shape.face_camera)
-			rendermatrix = render_world_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
+			rendermatrix = render_world_get_item_transform(rendermatrix, shape.face_camera, shape.item_bounce, false, false, false, false)
 
 		matrix_set(matrix_world, rendermatrix)
 		vertex_submit(vbuf, pr_trianglelist, -1)

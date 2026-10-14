@@ -12,10 +12,13 @@ function app_stop_place(keep = false, clearmouse = true)
 		place_tl = null
 		place_history = null
 		place_target_tl = null
-		place_target_tl_part_of = null
+		place_target_tl_root = null
 		place_content_mouseon = null
 		
 		window_busy = ""
+		window_place = false
+		view_changed()
+		
 		tab_close(build_tool)
 		if (obj_edit = build_settings)
 			obj_edit = null
@@ -26,8 +29,8 @@ function app_stop_place(keep = false, clearmouse = true)
 		return 0
 	}
 
-	if (place_target_tl_part_of != null)
-		with (place_target_tl_part_of)
+	if (place_target_tl_root != null)
+		with (place_target_tl_root)
 			tl_mark_place_target(false)
 
 	// Save the final parent so redo restores the placed object correctly
@@ -50,8 +53,9 @@ function app_stop_place(keep = false, clearmouse = true)
 	place_history = null
 	place_content_mouseon = null
 	
-	view_changed()
 	window_busy = ""
+	window_place = false
+	view_changed()
 	
 	if (clearmouse)
 		mouse_clear(mb_left)

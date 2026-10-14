@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_high_shadows_shadowless",
   "parent":{
-    "name":"Lighting",
-    "path":"folders/Scripts/Render/High quality/Lighting.yy",
+    "name":"Shadows",
+    "path":"folders/Scripts/Render/High quality/Shadows.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -30,4 +30,6 @@ function action_tl_hide(tl)
 		else // Only apply to clicked timeline
 			action_tl_hide_tree(tl, nval, hobj)
 	}
+	
+	render_world_changed()
 }

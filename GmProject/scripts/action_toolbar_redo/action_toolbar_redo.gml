@@ -35,8 +35,7 @@ function action_toolbar_redo()
 	history_resource_update = true
 	
 	render_samples = -1
-	render_scene_bounds = null
-	view_changed()
+	render_world_changed()
 	
 	project_update_counts()
 }

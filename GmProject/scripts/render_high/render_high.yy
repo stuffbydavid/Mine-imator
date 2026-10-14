@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"render_high",
   "parent":{
-    "name":"Render",
-    "path":"folders/Scripts/Render.yy",
+    "name":"High quality",
+    "path":"folders/Scripts/Render/High quality.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

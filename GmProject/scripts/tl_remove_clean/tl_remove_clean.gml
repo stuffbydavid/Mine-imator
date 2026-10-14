@@ -4,13 +4,15 @@ function tl_remove_clean()
 {
 	// Deselect
 	tl_deselect()
-		
-	// Remove from render list
-	ds_list_delete_value(render_list, id)
 	
-	render_list_depth_dirty = true
-	render_scene_bounds = null
-	view_changed()
+	ds_list_delete_value(render_place_parent_list, id)
+	
+	if (is_array(render_depth_list))
+		for (var i = 0; i < e_depth_list.amount; i++)
+			ds_list_destroy(render_depth_list[i])
+	
+	render_list_default_update = true
+	render_world_changed()
 		
 	// Remove from parent
 	ds_list_delete_value(parent.tree_list, id)

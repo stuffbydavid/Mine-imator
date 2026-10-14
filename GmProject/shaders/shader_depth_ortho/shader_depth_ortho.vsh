@@ -29,7 +29,7 @@ void main()
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
 	gl_Position = getClipPosition(vPosition);
-	vDepth = (gl_Position.z * .5 + .5);
+	vDepth = gl_Position.z;
 	
 	vColor = uBlendColor * in_Colour;
 }

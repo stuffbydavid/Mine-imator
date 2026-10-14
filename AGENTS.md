@@ -27,7 +27,7 @@ Common build commands:
   configure with `-DCMAKE_BUILD_TYPE=Debug`, then run
   `cmake --build build --target Mine-imator --parallel`
 
-Use `Debug` for debugging unless optimized behavior or benchmark-representative performance is required, then use `RelWithDebInfo`. Don't use the developer-facing `DebugBenchmarks` or `RunBenchmarks` configs.
+Use `Debug` for debugging unless optimized behavior or benchmark-representative performance is required, then use `RelWithDebInfo`.
 
 ## Development
 The project has a GameMaker/GML "front-end" which is converted to C++ code using the CppGen tool, automatically invoked when building CppProject. Add missing GML features to CppGen/gml.json, then inform the developer about new additions:

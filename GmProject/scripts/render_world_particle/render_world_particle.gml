@@ -19,10 +19,11 @@ function render_world_particle()
 	prevcolor = shader_blend_color
 	prevalpha = shader_blend_alpha
 	
-	shader_blend_color = render_depth_pass ? c_white : color_multiply(prevcolor, color)
+	shader_blend_color = render_fast_pass ? c_white : color_multiply(prevcolor, color)
 	shader_blend_alpha *= alpha
 	
-	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
+	if (render_mode != e_render_mode.CLICK)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 	
 	if (temp != particle_sheet && temp != particle_template)
 	{
@@ -157,7 +158,7 @@ function render_world_particle()
 			
 			case e_temp_type.TEXT:
 			{
-				if (!render_depth_pass)
+				if (!render_fast_pass)
 				{
 					render_set_material_textures_none()
 					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
@@ -174,7 +175,7 @@ function render_world_particle()
 				with (temp)
 					tex = temp_get_shape_tex(temp_get_shape_texobj(null))
 				
-				if (!render_depth_pass)
+				if (!render_fast_pass)
 					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
 				
 				render_world_shape(temp.type, temp.shape_vbuffer, temp.shape_face_camera, [ tex, 0, 0 ])
@@ -185,7 +186,7 @@ function render_world_particle()
 	}
 	else // Sprite
 	{
-		if (!render_depth_pass)
+		if (!render_fast_pass)
 		{
 			render_set_material_textures_none()
 			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)

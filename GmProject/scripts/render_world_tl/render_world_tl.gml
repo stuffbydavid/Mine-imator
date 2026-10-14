@@ -2,24 +2,11 @@
 
 function render_world_tl()
 {
-	// No 3D representation?
-	if (!type_is_visible(type))
-		return 0
-	
-	if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))
-		return 0
-	
-	if (!app.place_tl_render && (placed || parent_is_placed))
-		return 0
-	
-	// Invisible?
-	if (!render_visible)
-		return 0
-		
 	// Place mode
 	if (placed || parent_is_placed)
 	{
-		if (app.place_content_mouseon != null && !app.content_mouseon)
+		// GM cannot mask the pick target without also hiding this G-buffer draw
+		if (!is_cpp() && render_place_pass && render_mode = e_render_mode.G_BUFFERS)
 			return 0
 	}
 		
@@ -48,13 +35,7 @@ function render_world_tl()
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, id, 1)
 	}
 	
-	// Placement data
-	if (render_mode = e_render_mode.PLACE)
-	{
-		render_set_uniform_color(e_uniform.REPLACE_COLOR, id, 1)
-		render_set_uniform(e_uniform.IS_BLOCK, bool_to_float(type_is_block(type)))
-	}
-	
+	// Scene test
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_white, 1)
 	
@@ -93,16 +74,21 @@ function render_world_tl()
 	
 	render_set_culling(!backfaces)
 	
-	shader_blend_color = render_depth_pass ? c_white : value_inherit[e_value.RGB_MUL]
+	shader_blend_color = render_fast_pass ? c_white : value_inherit[e_value.RGB_MUL]
 	shader_blend_alpha = value_inherit[e_value.ALPHA]
 	
-	render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
+	if (render_mode != e_render_mode.CLICK)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 	
-	// Depth pass rendering
-	if (render_depth_pass)
-		return render_world_tl_depth()
-	shader_texture_filter_linear = texture_blur
-	shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
+	if (!render_depth_pass)
+	{
+		shader_texture_filter_linear = texture_blur
+		shader_texture_filter_mipmap = (app.project_render_texture_filtering && texture_filtering)
+	}
+	
+	// Fast pass
+	if (render_fast_pass)
+		return render_world_tl_fast()
 	
 	if (render_mode = e_render_mode.G_BUFFERS || (render_mode = e_render_mode.COLOR && render_color_combined))
 		render_set_uniform(e_uniform.SSAO, ssao ? shader_blend_alpha : 0)
@@ -197,11 +183,14 @@ function render_world_tl()
 		render_set_uniform_color(e_uniform.SSS_COLOR, shader_uniform_sss_color, 1.0)
 	}
 	
-	if (value_inherit[e_value.WIND_INFLUENCE] != shader_uniform_wind_strength)
+	var windstrength = app.env_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE];
+	if (windstrength != shader_uniform_wind_strength ||
+		windstrength * app.env_wind_directional_strength != shader_uniform_wind_directional_strength)
 	{
-		shader_uniform_wind_strength = app.env_wind_strength * app.setting_wind_enable * value_inherit[e_value.WIND_INFLUENCE]
+		shader_uniform_wind_strength = windstrength
+		shader_uniform_wind_directional_strength = windstrength * app.env_wind_directional_strength
 		render_set_uniform(e_uniform.WIND_STRENGTH, shader_uniform_wind_strength)
-		render_set_uniform(e_uniform.WIND_DIRECTIONAL_STRENGTH, shader_uniform_wind_strength * app.env_wind_directional_strength)
+		render_set_uniform(e_uniform.WIND_DIRECTIONAL_STRENGTH, shader_uniform_wind_directional_strength)
 	}
 	
 	var prevblend = null;
@@ -279,6 +268,22 @@ function render_world_tl()
 		}
 	}
 	
+	// Place mode
+	if (render_place_pass)
+	{
+		var placetype = type_is_block(type) ? e_place_type.BLOCK : e_place_type.SCENE;
+		if (placed || parent_is_placed)
+		{
+			// Disable write for place data MRT
+			render_set_target_write(render_place_target, false)
+			
+			placetype = e_place_type.PLACED
+		}
+
+		render_set_uniform_int(e_uniform.PLACE_ID, render_place_id)
+		render_set_uniform_int(e_uniform.PLACE_TYPE, placetype)
+	}
+
 	// Render
 	if (type != e_tl_type.PARTICLE_SPAWNER)
 	{
@@ -398,15 +403,6 @@ function render_world_tl()
 					
 					vbuffer_render(path_vbuffer)
 				}
-				else if (render_mode = e_render_mode.CLICK)
-				{
-					render_set_texture(null, spr_shape)
-					render_set_material_textures_none()
-					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
-					
-					vbuffer_render(path_select_vbuffer)
-				}
-				
 				break
 			}
 			
@@ -441,6 +437,7 @@ function render_world_tl()
 				render_world_particle()
 	}
 	
+	// Reset
 	matrix_world_reset()
 	shader_texture_surface = false
 	
@@ -454,4 +451,7 @@ function render_world_tl()
 
 	if (glowonlycombined)
 		gpu_set_zwriteenable(true)
+
+	if (render_place_pass && (placed || parent_is_placed))
+		render_set_target_write(render_place_target, true)
 }

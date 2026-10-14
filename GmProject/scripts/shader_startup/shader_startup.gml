@@ -36,11 +36,10 @@ function shader_startup()
 		shader_map = ds_map_create()
 		
 		new_shader("shader_alpha_fix")
-		new_shader("shader_alpha_test")
 		new_shader("shader_blend")
 		new_shader("shader_build_box")
-		new_shader("shader_border")
 		new_shader("shader_outline")
+		new_shader("shader_text_outline")
 		new_shader("shader_palette")
 		new_shader("shader_color_camera")
 		new_shader("shader_color_fog")
@@ -85,7 +84,6 @@ function shader_startup()
 			
 		new_shader("shader_high_auxiliary")
 		new_shader("shader_high_auxiliary_standard")
-		new_shader("shader_place")
 		new_shader("shader_high_subsurface_scatter")
 		new_shader("shader_high_indirect_blur")
 		new_shader("shader_high_reflections_hit")
@@ -132,13 +130,13 @@ function shader_startup()
 	}
 	
 	// Set special uniforms
-	with (shader_map[?shader_border])
+	with (shader_map[?shader_outline])
 	{
 		new_shader_uniform(e_uniform.TEX_SIZE)
 		new_shader_uniform(e_uniform.COLOR)
 	}
 	
-	with (shader_map[?shader_outline])
+	with (shader_map[?shader_text_outline])
 	{
 		new_shader_uniform(e_uniform.TEX_SIZE)
 		new_shader_uniform(e_uniform.OUTLINE_SIZE)
@@ -154,14 +152,14 @@ function shader_startup()
 	
 	with (shader_map[?shader_color_camera])
 	{
-		shader_color_uniforms()
+		shader_startup_color_uniforms()
 		
 		new_shader_uniform(e_uniform.BRIGHTNESS)
 	}
 	
 	with (shader_map[?shader_color_fog])
 	{
-		shader_color_uniforms()
+		shader_startup_color_uniforms()
 		
 		new_shader_uniform(e_uniform.FOG_PASS)
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
@@ -172,7 +170,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_color_fog_lights])
 	{
-		shader_material_uniforms()
+		shader_startup_material_uniforms()
 		
 		new_shader_sampler(e_sampler.GLINT_TEXTURE)
 		
@@ -223,11 +221,27 @@ function shader_startup()
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
 
-	with (shader_map[?shader_place])
+	var placeshaders = [
+		shader_color_fog,
+		shader_color_fog_lights,
+		shader_high_gbuffers,
+		shader_high_gbuffers_sun,
+		shader_high_gbuffers_color
+	];
+	for (var s = 0; s < array_length(placeshaders); s++)
 	{
-		new_shader_uniform(e_uniform.REPLACE_COLOR)
-		new_shader_uniform(e_uniform.GM_DEPTH)
-		new_shader_uniform(e_uniform.IS_BLOCK)
+		with (shader_map[?placeshaders[s]])
+		{
+			new_shader_uniform(e_uniform.PLACE_ID)
+			new_shader_uniform(e_uniform.PLACE_TYPE)
+			new_shader_uniform(e_uniform.RENDER_PLACE)
+			
+			if (s < 2)
+			{
+				new_shader_uniform(e_uniform.NEAR)
+				new_shader_uniform(e_uniform.FAR)
+			}
+		}
 	}
 	
 	with (shader_map[?shader_high_dof])
@@ -290,7 +304,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_light_point])
 	{
-		shader_material_uniforms()
+		shader_startup_material_uniforms()
 		
 		new_shader_sampler(e_sampler.DEPTH_BUFFER)
 		
@@ -315,7 +329,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_light_point_shadowless])
 	{
-		shader_material_uniforms()
+		shader_startup_material_uniforms()
 		
 		new_shader_uniform(e_uniform.IS_SKY)
 		new_shader_uniform(e_uniform.LIGHT_AMOUNT)
@@ -326,7 +340,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_light_spot])
 	{
-		shader_material_uniforms()
+		shader_startup_material_uniforms()
 		
 		new_shader_sampler(e_sampler.DEPTH_BUFFER)
 		
@@ -509,7 +523,7 @@ function shader_startup()
 	{
 		with (shader_map[?common1[i]])
 		{
-			shader_material_uniforms()
+			shader_startup_material_uniforms()
 
 			new_shader_sampler(e_sampler.GLINT_TEXTURE)
 
@@ -532,7 +546,7 @@ function shader_startup()
 		with (shader_map[?common2[i]])
 		{
 			if (common2[i] = shader_high_light_sun)
-				shader_material_uniforms()
+				shader_startup_material_uniforms()
 
 			new_shader_sampler(e_sampler.DEPTH_BUFFER0)
 			new_shader_sampler(e_sampler.DEPTH_BUFFER1)
@@ -561,7 +575,7 @@ function shader_startup()
 
 	with (shader_map[?shader_high_auxiliary])
 	{
-		shader_material_uniforms()
+		shader_startup_material_uniforms()
 
 		new_shader_uniform(e_uniform.GLOW)
 		new_shader_uniform(e_uniform.GLOW_TEXTURE)
@@ -572,7 +586,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_auxiliary_standard])
 	{
-		shader_color_uniforms()
+		shader_startup_color_uniforms()
 		
 		new_shader_uniform(e_uniform.GLOW_PASS)
 		new_shader_uniform(e_uniform.GLOW_TEXTURE)

@@ -1,9 +1,9 @@
 uniform vec2 uTexSize;
-uniform float uOutlineSize;
+uniform vec4 uColor;
 
 varying vec2 vTexCoord;
 
-bool outline(vec2 off)
+bool isHighlight(vec2 off)
 {
 	vec2 pos = vec2(vTexCoord.x + off.x * (1.0 / uTexSize.x),
 					vTexCoord.y + off.y * (1.0 / uTexSize.y));
@@ -12,17 +12,14 @@ bool outline(vec2 off)
 
 void main()
 {
+	float size = 2.0;
 	if (texture2D(gm_BaseTexture, vTexCoord).a > 0.0)
 		discard;
-	else if (outline(vec2(uOutlineSize, uOutlineSize))
-		 || outline(vec2(-uOutlineSize, uOutlineSize))
-		 || outline(vec2(uOutlineSize, -uOutlineSize))
-		 || outline(vec2(-uOutlineSize, -uOutlineSize))
-		 || outline(vec2(0.0, -uOutlineSize))
-		 || outline(vec2(0.0, uOutlineSize))
-		 || outline(vec2(-uOutlineSize, 0.0))
-		 || outline(vec2(uOutlineSize, 0.0)))
-		 gl_FragColor = vec4(1.0);
+	else if (isHighlight(vec2(size, size))
+		 || isHighlight(vec2(-size, size))
+		 || isHighlight(vec2(size, -size))
+		 || isHighlight(vec2(-size, -size)))
+		 gl_FragColor = uColor;
 	else
 		discard;
 }

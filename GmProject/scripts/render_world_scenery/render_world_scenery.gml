@@ -28,7 +28,7 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 					matrix_set(matrix_world, matrix_multiply(matrix_create(pos, defrot, defscale), mat))
 					render_world_block(scenery, resdif, resnorm, resmat)
 					
-					if (self.object_index != obj_preview && !render_depth_pass)
+					if (self.object_index != obj_preview && !render_fast_pass)
 					{
 						if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
 						{

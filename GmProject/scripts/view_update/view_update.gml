@@ -4,46 +4,60 @@
 function view_update(view, cam)
 {
 	// Camera object disabled while placing or object locked
-	var editcamobj = false, watermark, mousechanged;
+	var editcamobj, buildedited;
+	editcamobj = false
+	buildedited = false
+	view.place_output = (window_place || (window_busy = "pick_depth" && view.renderer = e_renderer.QUICK))
+	
 	if (cam)
 		editcamobj = (place_tl = null && !place_build && !cam.lock)
 		
+	// Real-time view setting
+	if (debug_realtime_views)
+	{
+		view.update = true
+		view.update_gizmos = true
+	}
+	
 	// Refresh when the viewport size, camera or display options change
-	watermark = (
-		(settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"settings/watermark"]) ||
-		(popup_current && popup_current.name = "export_movie" && popup_exportmovie.watermark) ||
-		(popup_current && popup_current.name = "export_image" && popup_exportimage.watermark)
-	)
 	if (!surface_exists(view.surface) ||
 		view.surface_width != content_width || view.surface_height != content_height ||
 		view.surface_renderer != view.renderer || view.surface_camera_last != cam ||
 		view.surface_particles != view.particles || view.surface_effects != view.effects ||
 		view.surface_gizmos_enabled != view.gizmos || view.surface_transparent_background != view.transparent_background ||
-		view.surface_watermark != watermark)
+		view.surface_place_active != view.place_output ||
+		(view.place_output && !surface_exists(view.surface_place_id)))
 	{
 		view_changed(view)
 	}
 	
-	// First-person movement continuously refreshes only the main viewport
-	if (place_build && build_first_person)
+	// Mouse enters or leaves view in build mode
+	if (place_build)
 	{
-		if (view = view_main)
+		if (!build_first_person && view.surface_mouseon != content_mouseon)
 			view_changed(view)
+	
+		view.surface_mouseon = content_mouseon
 	}
 	
-	// Work camera
-	else if (!cam && 
-		(!vec3_equals(view.surface_work_from, cam_work_from) ||
-		view.surface_work_angle[@ X] != cam_work_angle_look_xy || view.surface_work_angle[@ Y] != cam_work_angle_look_z ||
-		view.surface_work_angle[@ Z] != cam_work_roll))
+	// Work camera changed
+	if (!cam && (!build_first_person || view = view_main) &&
+		(!vec3_equals(view.surface_cam_work_from, cam_work_from) ||
+		view.surface_cam_work_angle[@ X] != cam_work_angle_look_xy || view.surface_cam_work_angle[@ Y] != cam_work_angle_look_z ||
+		view.surface_cam_work_angle[@ Z] != cam_work_roll))
 	{
 		view_changed(view)
 	}
+	
+	// Mouse press
+	if (!window_place && content_mouseon && (mouse_left_pressed || mouse_right_pressed || mouse_left_released || mouse_right_released))
+		view_changed(view)
 	
 	// Refresh gizmo hover only when the mouse moves or enters/leaves the view
-	mousechanged = (view.surface_mouseon != content_mouseon || (content_mouseon &&
-		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)))
+	var mousechanged = (view.surface_mouseon != content_mouseon || (content_mouseon &&
+		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)));
 	
+	// Update gizmos
 	if (!surface_exists(view.surface_gizmos) ||
 		view.surface_tool_move != setting_tool_move || view.surface_tool_rotate != setting_tool_rotate ||
 		view.surface_tool_scale != setting_tool_scale || view.surface_tool_bend != setting_tool_bend ||
@@ -54,27 +68,17 @@ function view_update(view, cam)
 		view.update_gizmos = true
 	}
 	
-	// Picking needs the current view's render state
-	if (content_mouseon &&
-	    (mouse_left_pressed || mouse_right_pressed || mouse_left_released || mouse_right_released || place_tl != null || place_build))
-	{
-		view_changed(view)
-	}
-	
 	// Update only the overlay while dragging until object values change
 	if (window_busy = "render/control" && view_control_edit_view = view && (!mouse_still || !mouse_left))
 		view.update_gizmos = true
 	
 	// Update surface
-	if (view.update)
-		view_update_surface(view, cam, watermark)
+	if (view.update && !place_build)
+		view_update_surface(view, cam)
 	
 	// Update gizmo surface
-	if (view.update_gizmos)
+	if (view.update_gizmos && !place_build)
 		view_update_gizmos(view, cam)
-	
-	if (window_busy = "render/control" && view_control_edit_view = view)
-		mouse_cursor = cr_handpoint
 
 	// First-person build controls
 	if (place_build && build_first_person && view = view_main)
@@ -85,28 +89,33 @@ function view_update(view, cam)
 		
 		camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y)
 		
-		view_changed(view)
-
 		if (mouse_wheel <> 0)
 			action_build_scroll()
 
 		if (mouse_left_pressed)
-			action_build_remove()
+			buildedited = action_build_remove()
 		
 		else if (mouse_right_pressed && place_pos != null)
-			action_build_place()
+			buildedited = action_build_place()
 
 		if (!window_has_focus())
 			action_build_first_person(false)
 
+		if (buildedited || view.update)
+			view_update_surface(view, cam, buildedited)
+		
 		return 0
 	}
+	
+	// Cursor while interacting with gizmos
+	if (window_busy = "render/control" && view_control_edit_view = view)
+		mouse_cursor = cr_handpoint
 	
 	// Click
 	if (content_mouseon && (window_busy = "" || window_busy = place_busy))
 	{
 		place_content_mouseon = view
-		mouse_cursor = cr_handpoint
+		mouse_cursor = (place_tl != null ? cr_drag : cr_handpoint)
 		
 		if (mouse_left_pressed)
 		{
@@ -166,7 +175,7 @@ function view_update(view, cam)
 		// Select or move camera
 		if (window_busy = "view/click")
 		{
-			mouse_cursor = cr_handpoint
+			mouse_cursor = (place_tl != null ? cr_drag : cr_handpoint)
 			
 			if (place_build && cam = null)
 				shortcut_bar_state = "viewport/build"
@@ -211,10 +220,10 @@ function view_update(view, cam)
 					if (view_click_right)
 					{
 						if (place_pos != null)
-							action_build_place()
+							buildedited = action_build_place()
 					}
 					else
-						action_build_remove()
+						buildedited = action_build_remove()
 				}
 				else if (place_tl = null)
 				{
@@ -314,6 +323,10 @@ function view_update(view, cam)
 			}
 		}
 	}
+	
+	// Update from new build action
+	if (place_build && (buildedited || view.update))
+		view_update_surface(view, cam, buildedited)
 	
 	// Clear busy
 	if (window_busy = "view/path_point_click")

@@ -8,14 +8,14 @@ function action_build_place()
 	if (place_build && (history_undo || history_redo))
 	{
 		placetarget = place_target_tl
-		placeparent = place_target_tl_part_of
+		placeparent = place_target_tl_root
 		
 		if (placeparent != null && instance_exists(placeparent))
 			with (placeparent)
 				tl_mark_place_target(false)
 		
 		place_target_tl = null
-		place_target_tl_part_of = null
+		place_target_tl_root = null
 	}
 
 	if (history_undo)
@@ -85,7 +85,7 @@ function action_build_place()
 		else
 		{
 			if (!place_build || place_pos = null)
-				return 0
+				return false
 
 			// Save the build selection independently of the workbench
 			hobj = history_set(action_build_place)
@@ -225,12 +225,12 @@ function action_build_place()
 		if (placetarget != null && placeparent != null && instance_exists(placetarget) && instance_exists(placeparent))
 		{
 			place_target_tl = placetarget
-			place_target_tl_part_of = placeparent
+			place_target_tl_root = placeparent
 			
 			with (placeparent)
 				tl_mark_place_target(true)
 		}
-		else if (place_target_tl_part_of = null && build_structure != null && instance_exists(build_structure))
+		else if (place_target_tl_root = null && build_structure != null && instance_exists(build_structure))
 			action_build_structure(build_structure)
 		
 		place_pos = null
@@ -238,4 +238,6 @@ function action_build_place()
 		
 		view_changed()
 	}
+	
+	return true
 }

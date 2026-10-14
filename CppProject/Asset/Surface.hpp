@@ -2,6 +2,7 @@
 #include "Asset.hpp"
 #include "Render/Matrix.hpp"
 #include "Render/FrameBuffer.hpp"
+#include "Type/VecType.hpp"
 
 #define surface_rgba8unorm IntType(0)
 
@@ -20,6 +21,12 @@ namespace CppProject
 
 		// Returns the color value of a surface pixel, optionally the result is cached for multiple calls.
 		QColor GetColor(QPoint point, BoolType cache = true);
+
+		// Returns the floating point channels of a surface pixel, optionally the result is cached for multiple calls.
+		VecType GetColorFloat(QPoint point, BoolType cache = true);
+
+		// Returns the last completed asyncronous lookup of a single pixel while scheduling a new readback.
+		VecType GetColorFloatAsync(QPoint point, IntType& completed, IntType& submitted);
 
 		// Clears the color cache created in GetColor().
 		void ClearColorCache();
@@ -40,8 +47,8 @@ namespace CppProject
 		FrameBuffer* frameBuffer = nullptr;
 		QSize size;
 		Matrix ortho;
-		QVector<uchar> colorData;
+		QVector<uchar> colorData, colorFloatData;
 		QVector<uint32_t> depthStencilData;
-		BoolType cacheColorData = false, cacheDepthStencilData = false;
+		BoolType cacheColorData = false, cacheColorFloatData = false, cacheDepthStencilData = false;
 	};
 }

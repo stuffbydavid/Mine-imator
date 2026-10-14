@@ -58,7 +58,8 @@ function tl_copy(to)
 	
 	to.blend_mode = blend_mode
 	to.alpha_mode = alpha_mode
-	to.depth = depth
+	to.render_depth = render_depth
+	to.render_depth_custom = render_depth_custom
 	to.texture_blur = texture_blur
 	to.texture_filtering = texture_filtering
 	to.shadows = shadows
