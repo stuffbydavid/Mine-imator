@@ -8,33 +8,33 @@ function builder_read_schematic(map)
 		return false
 	}
 	
-	// Get format, version 3 keeps the palette inside a Blocks compound while a legacy
-	// schematic stores a Blocks byte array, so compare the tag type instead of the value
+	// Get format
 	builder_scenery_legacy = is_undefined(map[?"Palette"]) && (map[?"Blocks_NBT_type"] != e_nbt.TAG_COMPOUND)
 	
-	var blocksmap = map;
+	var blocksmap, sizekeys;
+	blocksmap = map
+	sizekeys = [ "Width", "Length", "Height" ]
 	
 	// Get size
-	build_size_x = map[?"Width"]
-	build_size_y = map[?"Length"]
-	build_size_z = map[?"Height"]
-	log("Size", string(build_size_x) + " x " + string(build_size_y) + " x " + string(build_size_z))
-	
-	if (is_undefined(build_size_x) || 
-		is_undefined(build_size_y) || 
-		is_undefined(build_size_z))
+	for (var a = X; a <= Z; a++)
 	{
-		log("Schematic error", "Size not fully defined")
-		return false
+		var size = map[?sizekeys[a]];
+		if (is_undefined(size))
+		{
+			log("Schematic error", "Size not fully defined")
+			return false
+		}
+		
+		if (size <= 0)
+		{
+			log("Schematic error", "Size cannot be 0")
+			return false
+		}
+		
+		build_size[a] = size
 	}
 	
-	if (build_size_x <= 0 || 
-		build_size_y <= 0 || 
-		build_size_z <= 0)
-	{
-		log("Schematic error", "Size cannot be 0")
-		return false
-	}
+	log("Size", string(build_size[X]) + " x " + string(build_size[Y]) + " x " + string(build_size[Z]))
 	
 	if (!builder_scenery_legacy)
 	{
@@ -76,7 +76,7 @@ function builder_read_schematic(map)
 		for (var i = 0; i < ds_map_size(palettemap); i++)
 		{
 			sch_palette_blocks[i] = null
-			sch_palette_stateids[i] = null
+			sch_palette_state_ids[i] = null
 			sch_palette_waterlogged[i] = false
 		}
 		
@@ -115,7 +115,7 @@ function builder_read_schematic(map)
 						state_vars_add(vars, string_get_state_vars(varstr))
 						
 						sch_palette_blocks[index] = block
-						sch_palette_stateids[index] = block_get_state_id(block, vars)
+						sch_palette_state_ids[index] = block_get_state_id(block, vars)
 						
 						// Check waterlogged status 
 						if (state_vars_get_value(vars, "waterlogged") != "false") 
@@ -132,9 +132,9 @@ function builder_read_schematic(map)
 							
 					// ID specific vars
 					if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?key]))
-						sch_palette_stateids[index] = block_get_state_id(block, block.id_state_vars_map[?key])
+						sch_palette_state_ids[index] = block_get_state_id(block, block.id_state_vars_map[?key])
 					else
-						sch_palette_stateids[index] = 0
+						sch_palette_state_ids[index] = 0
 							
 					sch_palette_waterlogged[index] = block.waterlogged
 				}
@@ -155,14 +155,12 @@ function builder_read_schematic(map)
 		sch_blockdata_ints = (blocksmap[?blockdatakey + "_NBT_type"] = e_nbt.TAG_INT_ARRAY)
 		debug("blockdataints", sch_blockdata_ints)
 		
-		// BlockData is an array of varints (Sponge Schematic specification). An index below 128
-		// encodes as a single byte and can be read from the file buffer directly, anything above
-		// spans several bytes. The block loop needs random access into the array, so decode the
-		// indices once into big endian integers appended to the file buffer.
-		if (!sch_blockdata_ints && palettemax > 128)
+		// BlockData is an array of varints (Sponge Schematic specification)
+		// Currently broken
+		if (false && !sch_blockdata_ints && palettemax > 128)
 		{
 			var blockamount, basepos, readpos, endpos, writepos;
-			blockamount = build_size_x * build_size_y * build_size_z
+			blockamount = build_size[X] * build_size[Y] * build_size[Z]
 			basepos = buffer_get_size(buffer_current)
 			readpos = sch_blockdata_array
 			endpos = sch_blockdata_array + blocksmap[?blockdatakey + "_NBT_length"]
@@ -216,15 +214,15 @@ function builder_read_schematic(map)
 	else
 	{
 		// Get block/data array
-		sch_legacy_blocksarray = map[?"Blocks"]
-		if (is_undefined(sch_legacy_blocksarray))
+		sch_legacy_blocks_array = map[?"Blocks"]
+		if (is_undefined(sch_legacy_blocks_array))
 		{
 			log("Schematic error", "Blocks array not found")
 			return false
 		}
 		
-		sch_legacy_dataarray = map[?"Data"]
-		if (is_undefined(sch_legacy_dataarray))
+		sch_legacy_data_array = map[?"Data"]
+		if (is_undefined(sch_legacy_data_array))
 		{
 			log("Schematic error", "Data array not found")
 			return false

@@ -11,22 +11,19 @@ function temp_update_block()
 		
 		if (other.block_repeat_enable)
 		{
-			build_size_x = other.block_repeat[Y]
-			build_size_y = other.block_repeat[X]
-			build_size_z = other.block_repeat[Z]
+			build_size[X] = other.block_repeat[Y]
+			build_size[Y] = other.block_repeat[X]
+			build_size[Z] = other.block_repeat[Z]
 		}
 		else
-		{
-			build_size_x = 1
-			build_size_y = 1
-			build_size_z = 1
-		}
+			build_size = vec3(1)
 		
 		build_randomize = other.block_randomize
 		build_transform = true
 		
 		builder_start()
 		builder_spawn_threads(1)
+		
 		with (thread_list[|0])
 		{
 			// Set models
@@ -36,8 +33,11 @@ function temp_update_block()
 				builder_set_model()
 			}
 		}
+		
 		builder_combine_threads()
+		
 		builder_spawn_threads(1)
+		
 		with (thread_list[|0])
 		{
 			// Generate
@@ -47,11 +47,12 @@ function temp_update_block()
 				builder_generate()
 			}
 		}
+		
 		builder_combine_threads()
+		
 		builder_done()
 		
 		build_randomize = false
-		
 		build_single_block = null
 		build_single_stateid = 0
 	}

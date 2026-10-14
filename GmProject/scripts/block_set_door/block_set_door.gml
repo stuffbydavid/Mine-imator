@@ -7,12 +7,12 @@ function block_set_door()
 	
 	// Fetch hinge value from upper half
 	var hinge = block_get_state_id_value(block_current, block_state_id_current, "hinge");
-	if (!build_edge_zp)
+	if (!build_edge[ZP])
 	{
-		var aboveblock = builder_get_block(build_pos_x, build_pos_y, build_pos_z + 1);
+		var aboveblock = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z] + 1);
 		if (aboveblock = block_current)
 		{
-			var abovestateid = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z + 1);
+			var abovestateid = builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z] + 1);
 			hinge = block_get_state_id_value(block_current, abovestateid, "hinge")
 			block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "hinge", hinge)
 		}
@@ -58,15 +58,13 @@ function block_set_door()
 		return null
 	
 	// Pick models
-	var models = [
-		bottommodel.model[0],
-		topmodel.model[0]
-	];
+	bottommodel = bottommodel.model[0]
+	topmodel = topmodel.model[0]
 
-	models[1].offset_z = block_size
+	topmodel.offset[Z] = block_size
 
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "location", location)
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "direction", dir)
 	
-	return [ models[0].rendermodel_id, models[1].rendermodel_id ]
+	return [ bottommodel.rendermodel_id, topmodel.rendermodel_id ]
 }

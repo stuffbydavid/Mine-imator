@@ -16,17 +16,18 @@ function builder_read_schematic_nbt(structuremap)
 				
 	// Get size
 	var sizemap = structuremap[?"size"];
-	mc_builder.build_size_x = sizemap[|X]
-	mc_builder.build_size_y = sizemap[|Z]
-	mc_builder.build_size_z = sizemap[|Y]
-	log("Size", [ mc_builder.build_size_x, mc_builder.build_size_y, mc_builder.build_size_z ])
+	mc_builder.build_size[X] = sizemap[|X]
+	mc_builder.build_size[Y] = sizemap[|Z]
+	mc_builder.build_size[Z] = sizemap[|Y]
+	log("Size", [ mc_builder.build_size[X], mc_builder.build_size[Y], mc_builder.build_size[Z] ])
 				
-	if (mc_builder.build_size_x <= 0 || 
-		mc_builder.build_size_y <= 0 || 
-		mc_builder.build_size_z <= 0)
+	for (var a = X; a <= Z; a++)
 	{
-		log("Structure error", "Size cannot be 0")
-		return false
+		if (mc_builder.build_size[a] <= 0)
+		{
+			log("Structure error", "Size cannot be 0")
+			return false
+		}
 	}
 				
 	// Get palette
@@ -138,16 +139,22 @@ function builder_read_schematic_nbt(structuremap)
 			entity = null
 						
 			// Integrity test
-			random_set_seed(index)
-						
+			build_pos[X] = pos[|X]
+			build_pos[Y] = pos[|Z]
+			build_pos[Z] = pos[|Y]
+			
+			var randmax, integrity;
+			randmax = 10000
+			integrity = builder_irandom(randmax - 1) / randmax;
+			
 			if (other.scenery_integrity_invert)
 			{
-				if (random(1) < other.scenery_integrity)
+				if (integrity < other.scenery_integrity)
 					continue
 			}
 			else
 			{
-				if (random(1) > other.scenery_integrity)
+				if (integrity >= other.scenery_integrity)
 					continue
 			}
 						
@@ -190,12 +197,16 @@ function builder_read_schematic_nbt(structuremap)
 				var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""));
 				if (script > -1)
 				{
-					build_pos_x = pos[|X]
-					build_pos_y = pos[|Z]
-					build_pos_z = pos[|Y]
-					build_pos = build_pos_z * build_size_xy + build_pos_y * build_size_x + build_pos_x
-					block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
-					block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
+					build_pos[X] = pos[|X]
+					build_pos[Y] = pos[|Z]
+					build_pos[Z] = pos[|Y]
+					build_pos_index = build_pos[Z] * build_size_xy + build_pos[Y] * build_size[X] + build_pos[X]
+					
+					block_current = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z])
+					if (block_current = null)
+						continue
+					
+					block_state_id_current = builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z])
 					script_execute(script, blocknbt)
 				}
 			}

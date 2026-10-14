@@ -83,16 +83,7 @@ function view_place(view)
 		if (tl < array_length(tllist))
 			place_view_tl = tllist[tl]
 		
-		switch (face)
-		{
-			case e_dir.EAST:	place_view_normal = vec3(1, 0, 0); break
-			case e_dir.WEST:	place_view_normal = vec3(-1, 0, 0); break
-			case e_dir.SOUTH:	place_view_normal = vec3(0, 1, 0); break
-			case e_dir.NORTH:	place_view_normal = vec3(0, -1, 0); break
-			case e_dir.UP:		place_view_normal = vec3(0, 0, 1); break
-			case e_dir.DOWN:	place_view_normal = vec3(0, 0, -1); break
-		}
-		
+		place_view_normal = dir_get_vec3(face)
 		place_view_air = false
 	}
 	else

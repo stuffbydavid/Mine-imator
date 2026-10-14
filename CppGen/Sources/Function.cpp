@@ -131,6 +131,44 @@ bool Function::writeCppImplementation()
 		return false;
 	this->implWritten = true;
 
+	// Cache only declared instance arrays and leave nested with scopes independent
+	for (StringId member : this->arrRefs)
+	{
+		StringId scope = getScope();
+		Variable* var = Program::findVariable(scope, member, this, Statement::Location(), 0);
+		bool valid = scope != STR(global) && this->structObject == nullptr;
+		if (var != nullptr)
+			valid = valid && var->scope != STR(global) && var->scope != this->name && var->type->cppType == DataType::CppType::ArrType;
+		else
+		{
+			bool found = false;
+			for (Object* obj : Program::objects.values)
+			{
+				if (obj->instanceVars.containsKey(member))
+				{
+					found = true;
+					valid = valid && obj->instanceVars[member]->type->cppType == DataType::CppType::ArrType;
+				}
+			}
+			valid = (valid && found && scope == STR(any));
+		}
+		
+		String cached = "_cppArrRef_" + CodeObject::nameToCpp(member);
+		for (Variable* local : this->vars)
+			if (local->name == member || CodeObject::nameToCpp(local->name) == cached)
+				valid = false;
+		
+		if (!valid)
+		{
+			Console::writeLine("FATAL ERROR: ArrRef {0} must name an unshadowed instance ArrType in {1} ({2})", member, this->name, this->sourceFile);
+			std::exit(1);
+		}
+		
+		String access = scope == STR(any) ? "sArr(" + CodeObject::nameToCpp(member) + ")" :
+			(scope == STR(app) ? "global::_app->" : "self->") + CodeObject::nameToCpp(member);
+		this->cppLinesBegin.add("ArrType& " + cached + " = " + access + ";");
+	}
+
 	// Name
 	if (this->isConstructor)
 		CodeWriter::write(String(this->structObject->name) + "::" + String(this->structObject->name));
@@ -849,7 +887,7 @@ Expression* Function::parseExprMulDiv()
 {
 	Expression* expr = parseExprModInvNegate();
 	if (peekToken() == Token::Type::Mul || peekToken() == Token::Type::Div || peekToken() == Token::Type::DivInt ||
-		peekToken() == Token::Type::BitwiseAnd || peekToken() == Token::Type::BitwiseOr ||
+		peekToken() == Token::Type::BitwiseAnd || peekToken() == Token::Type::BitwiseOr || peekToken() == Token::Type::BitwiseXor ||
 		peekToken() == Token::Type::ShiftLeft || peekToken() == Token::Type::ShiftRight)
 	{
 		Token::Type parsedOperation = this->lastPeeked;

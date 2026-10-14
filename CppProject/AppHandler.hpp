@@ -55,7 +55,7 @@ namespace CppProject
 		// Sets whether a GML key is down.
 		void SetKeyDown(QKeyEvent* event, BoolType down);
 
-		// Sets whether a Windows key is down (right or left shift/alt/control)
+		// Sets whether a Windows key is down (right or left shift/alt/control).
 		void SetWinKeyDown(IntType key, BoolType down);
 
 		// Runs when a HTTP request progresses.
@@ -86,7 +86,7 @@ namespace CppProject
 		QVector<AddedWindow> addedWindows;
 
 		QBasicTimer stepTimer;
-		std::chrono::steady_clock::time_point stepDeadline;
+		std::chrono::steady_clock::time_point stepDeadline, loadDrawDeadline;
 		BoolType blocked = false;
 
 		Timer randomizeTimer;

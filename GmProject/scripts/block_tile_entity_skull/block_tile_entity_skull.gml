@@ -30,7 +30,7 @@ function block_tile_entity_skull(map)
 		
 		ownerid = filename_change_ext(filename_name(texurl), "")
 		
-		mc_builder.block_skull_map[?build_pos] = ownerid
+		mc_builder.block_skull_map[?build_pos_index] = ownerid
 		
 		if (is_undefined(ds_map_find_value(mc_builder.block_skull_texture_map, ownerid)))
 			mc_builder.block_skull_texture_map[?ownerid] = texurl
@@ -78,7 +78,7 @@ function block_tile_entity_skull(map)
 		
 		ownerid = filename_change_ext(filename_name(texurl), "")
 		
-		mc_builder.block_skull_map[?build_pos] = ownerid
+		mc_builder.block_skull_map[?build_pos_index] = ownerid
 		
 		if (is_undefined(ds_map_find_value(mc_builder.block_skull_texture_map, ownerid)))
 			mc_builder.block_skull_texture_map[?ownerid] = texurl

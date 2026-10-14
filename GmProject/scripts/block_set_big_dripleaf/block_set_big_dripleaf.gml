@@ -5,7 +5,7 @@ function block_set_big_dripleaf()
 	if ((builder_scenery && !builder_scenery_legacy) || block_get_state_id_value(block_current, block_state_id_current, "type") = "big_dripleaf_stem")
 		return 0
 	
-	if (build_pos_z != (build_size_z - 1))
+	if (build_pos[Z] != (build_size[Z] - 1))
 	{
 		var facing = block_get_state_id_value(block_current, block_state_id_current, "facing");
 		block_state_id_current = block_get_state_id(block_current, [ "type", "big_dripleaf_stem", "facing", facing, "tilt", "none" ])

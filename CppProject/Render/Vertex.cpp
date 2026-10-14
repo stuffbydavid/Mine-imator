@@ -86,9 +86,15 @@ namespace CppProject
 				   IntType color, RealType alpha,
 				   RealType u, RealType v,
 				   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface) :
-		x(x), y(y), z(z), u(u), v(v)
+		Vertex(x, y, z, PackNormal(nx, ny, nz), color, alpha, u, v, waveXY, waveZ, emissive, subsurface)
 	{
-		SetNormal(nx, ny, nz);
+	}
+
+	Vertex::Vertex(RealType x, RealType y, RealType z, uint32_t packedNormal,
+				   IntType color, RealType alpha, RealType u, RealType v,
+				   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface) :
+		x(x), y(y), z(z), normal(packedNormal), u(u), v(v)
+	{
 		SetTangent(0, 0, 0);
 		SetColor(color, alpha);
 
@@ -114,13 +120,18 @@ namespace CppProject
 
 	void Vertex::SetNormal(RealType nx, RealType ny, RealType nz)
 	{
+		normal = PackNormal(nx, ny, nz);
+	}
+
+	uint32_t Vertex::PackNormal(RealType nx, RealType ny, RealType nz)
+	{
 		// Pack normal xyz as 0-255 in integer
 		VecType normalized = VecType(nx, ny, nz).GetNormalized();
 		uint8_t x8 = ((normalized.x + 1.0) / 2.0) * 255;
 		uint8_t y8 = ((normalized.y + 1.0) / 2.0) * 255;
 		uint8_t z8 = ((normalized.z + 1.0) / 2.0) * 255;
 		
-		normal = (z8 << 16) | (y8 << 8) | x8;
+		return (z8 << 16) | (y8 << 8) | x8;
 	}
 
 	void Vertex::SetTangent(RealType tx, RealType ty, RealType tz)

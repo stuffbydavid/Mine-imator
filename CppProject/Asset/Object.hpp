@@ -67,15 +67,37 @@ namespace CppProject
 			long long memoryOffset = 0;
 		};
 
+		// Grow during registration and use direct indexing during script execution.
+		struct MemberTable
+		{
+			Member& operator[](IntType memberId)
+			{
+				if (memberId >= members.size())
+					members.resize(memberId + 1);
+				
+				return members[memberId];
+			}
+
+			Member value(IntType memberId) const
+			{
+				if (memberId < 0 || memberId >= members.size())
+					return Member();
+				
+				return members.at(memberId);
+			}
+
+			QVector<Member> members;
+		};
+
 		static QHash<IntType, QVector<IntType>> objectIdsMap; // Maps a sub-asset id to a list of object ids
-		static QHash<IntType, QHash<IntType, Member>> memberMap; // Maps a sub-asset id to a mapping of member ids to memory offsets
+		static QHash<IntType, MemberTable> memberMap; // Maps a sub-asset id to indexed member types and memory offsets
 		QHash<IntType, function<VarType(VarArgs)>> instanceFuncMap; // Maps an instance function id to a lambda taking VarArgs arguments, returning VarType
 
 		virtual ~Object();
 
 	protected:
 		Object(QString name, IntType subAssetId);
-		QHash<IntType, Member>* memMap = nullptr;
+		const MemberTable* memMap = nullptr;
 		QHash<IntType, function<VarType(VarArgs)>>* funcMap = nullptr;
 		QHash<IntType, VarType> dynamicMemberMap; // Maps member ids to VarTypes that are created in runtime
 	};

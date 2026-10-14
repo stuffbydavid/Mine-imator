@@ -117,6 +117,7 @@ namespace CppProject
 			QHash<IntType, TableEntry> entries; // Map string id to entry
 			QHash<QString, IntType> idMap; // Map QString to id
 			QHash<IntType, IntType> mainIdMap; // String id on thread table to main table id
+			QHash<IntType, IntType> mainRefChanges; // Main table reference changes during OpenMP work
 			IntType nextId = 0;
 			IntType startId = 0;
 		};

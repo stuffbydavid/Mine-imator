@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"builder_irandom_range",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"builder_irandom_range",
+  "parent":{
+    "name":"Builder",
+    "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

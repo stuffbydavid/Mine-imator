@@ -121,7 +121,7 @@ namespace CppProject
 		Timer tmr;
 		thread_task_begin();
 
-		#pragma OPENMP_FOR reduction(+:numTimelines)
+		#pragma OPENMP_FOR(1) reduction(+:numTimelines)
 		for (IntType i = 0; i < numChunks; i++)
 		{
 			IntType offset = offsets[i];
@@ -229,7 +229,7 @@ namespace CppProject
 		// Generate chunk triangles
 		thread_task_begin();
 
-		#pragma OPENMP_FOR
+		#pragma OPENMP_FOR(1)
 		for (IntType i = 0; i < REGION_CHUNKS; i++)
 		{
 			if (chunks[i] && !chunks[i]->error)
@@ -281,7 +281,7 @@ namespace CppProject
 			}
 
 			// Copy chunk data to region mesh
-			#pragma OPENMP_FOR
+			#pragma OPENMP_FOR(1)
 			for (int16_t i = 0; i < REGION_CHUNKS; i++)
 			{
 				Chunk* chunk = chunks[i];

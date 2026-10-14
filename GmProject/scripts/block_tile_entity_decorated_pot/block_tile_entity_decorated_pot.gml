@@ -29,5 +29,5 @@ function block_tile_entity_decorated_pot(map)
 	
 	array_add(state, block_get_state_id_state_vars(block_current, block_state_id_current))
 	
-	mc_builder.block_decorated_pot_sherds_map[?build_pos] = state
+	mc_builder.block_decorated_pot_sherds_map[?build_pos_index] = state
 }

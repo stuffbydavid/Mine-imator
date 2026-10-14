@@ -6,6 +6,6 @@
 
 function builder_set_render_model(xx, yy, zz, val)
 {
-	var pos = zz * build_size_xy + yy * build_size_x + xx;
+	var pos = zz * build_size_xy + yy * build_size[X] + xx;
 	ds_grid_set(block_render_model, pos div build_size_sqrt, pos mod build_size_sqrt, val)
 }
