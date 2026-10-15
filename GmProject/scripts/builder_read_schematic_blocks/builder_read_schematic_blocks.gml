@@ -37,17 +37,17 @@ function builder_read_schematic_blocks()
 			if (bindex > 0)
 			{
 				block = sch_palette_blocks[bindex]
-				stateid = sch_palette_stateids[bindex]
+				stateid = sch_palette_state_ids[bindex]
 				waterlogged = sch_palette_waterlogged[bindex]
 			}
 		}
 		else
 		{
 			// Read legacy block ID & data
-			var bid = buffer_peek(buffer_current, sch_legacy_blocksarray + b, buffer_u8);
+			var bid = buffer_peek(buffer_current, sch_legacy_blocks_array + b, buffer_u8);
 			if (bid > 0 && legacy_block_set[bid])
 			{
-				var bdata = buffer_peek(buffer_current, sch_legacy_dataarray + b, buffer_u8) mod 16;
+				var bdata = buffer_peek(buffer_current, sch_legacy_data_array + b, buffer_u8) mod 16;
 				block = legacy_block_obj[bid, bdata]
 				stateid = legacy_block_state_id[bid, bdata]
 			}

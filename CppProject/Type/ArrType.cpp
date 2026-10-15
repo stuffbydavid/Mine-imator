@@ -67,6 +67,30 @@ namespace CppProject
 		return vec.Value(index);
 	}
 
+	RealType ArrType::RealValue(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size())
+			return VarArgs::outOfBounds.ToReal();
+
+		return vec.Value(index).ToReal();
+	}
+
+	IntType ArrType::IntValue(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size())
+			return VarArgs::outOfBounds.ToInt();
+
+		return vec.Value(index).ToInt();
+	}
+
+	BoolType ArrType::BoolValue(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size())
+			return VarArgs::outOfBounds.ToBool();
+
+		return vec.Value(index).ToBool();
+	}
+
 	VarType ArrType::Shift()
 	{
 		if (!vec.Size())

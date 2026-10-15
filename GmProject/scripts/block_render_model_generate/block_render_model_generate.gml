@@ -1,3 +1,4 @@
+/// CppSeparate void block_render_model_generate(Scope<obj_builder_thread>, IntType)
 /// @desc Generate triangles from the render model.
 
 function block_render_model_generate(model)
@@ -5,141 +6,137 @@ function block_render_model_generate(model)
 	instance_activate_object(model)
 	
 	var offx, offy, offz;
-	offx = model.offset_x + block_pos_x
-	offy = model.offset_y + block_pos_y
-	offz = model.offset_z + block_pos_z
-	
+	offx = block_pos[X] + model.offset[X]
+	offy = block_pos[Y] + model.offset[Y]
+	offz = block_pos[Z] + model.offset[Z]
+
 	// Set emissive
 	if (block_vertex_emissive = null)
 		block_vertex_emissive = model.emissive
-	var minemissive = block_vertex_emissive;
 	
+	var minemissive = block_vertex_emissive;
+
 	// Generate elements
 	for (var e = 0; e < model.element_amount; e++)
 	{
-		var el = model.element[e];
+		var el, mat, fromx, fromy, fromz, tox, toy, toz;
+		el = model.element[e]
 		instance_activate_object(el)
 		
-		var x1, x2, y1, y2, z1, z2, mat;
-		x1 = el.from_x; y1 = el.from_y; z1 = el.from_z
-		x2 = el.to_x;   y2 = el.to_y;   z2 = el.to_z
-		
+		fromx = el.from[X]
+		fromy = el.from[Y]
+		fromz = el.from[Z]
+		tox = el.to[X]
+		toy = el.to[Y]
+		toz = el.to[Z]
+
 		// Apply offset to transformation matrix if rotated
 		if (el.rotated)
 			mat = matrix_multiply(el.matrix, matrix_build(offx, offy, offz, 0, 0, 0, 1, 1, 1))
-		
-		// Otherwise simply add offset to shape
 		else
 		{
 			mat = null
-			x1 += offx; y1 += offy; z1 += offz
-			x2 += offx; y2 += offy; z2 += offz
+			
+			fromx += offx
+			fromy += offy
+			fromz += offz
+			tox += offx
+			toy += offy
+			toz += offz
 		}
-		
+
 		// Light emission for individual elements
 		block_vertex_emissive = max(minemissive, el.light_emission / 15)
-		
-		// X+
-		if (el.face_render_xp && !block_render_model_generate_face_cull(model, el, e_dir.EAST))
+		for (var f = 0; f < block_faces; f++)
 		{
+			if (!el.face_render[f] || block_render_model_generate_face_cull(model, el, f))
+				continue
+
 			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color_xp
+				block_vertex_rgb = el.face_texture_color[f]
 			else
 				block_vertex_rgb = block_color
-			
-			if (el.face_vbuffer_xp != null)
-				block_vbuffer_current = el.face_vbuffer_xp
-			else
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth_xp * e_block_vbuffer.amount + el.face_block_vbuffer_xp]
-			
-			builder_add_face(x2, y2, z2, x2, y1, z2, x2, y1, z1, x2, y2, z1, el.face_uv_xp_0_x, el.face_uv_xp_0_y, el.face_uv_xp_1_x, el.face_uv_xp_1_y, el.face_uv_xp_2_x, el.face_uv_xp_2_y, el.face_uv_xp_3_x, el.face_uv_xp_3_y, mat)
+
+			block_vbuffer_current = el.face_vbuffer[f]
+			if (block_vbuffer_current = null)
+				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth[f] * e_block_vbuffer.amount + el.face_block_vbuffer[f]]
+
+			// Read the four UV coordinates once per face
+			var uv0, uv1, uv2, uv3;
+			uv0 = el.face_uv[f, 0]
+			uv1 = el.face_uv[f, 1]
+			uv2 = el.face_uv[f, 2]
+			uv3 = el.face_uv[f, 3]
+
+			switch (f)
+			{
+				case XP:
+				{
+					builder_add_face_real(
+						tox, toy, toz, tox, fromy, toz, tox, fromy, fromz, tox, toy, fromz,
+						uv0[X], uv0[Y], uv1[X], uv1[Y], uv2[X], uv2[Y], uv3[X], uv3[Y],
+						mat
+					)
+					break
+				}
+				
+				case XN:
+				{
+					builder_add_face_real(
+						fromx, fromy, toz, fromx, toy, toz, fromx, toy, fromz, fromx, fromy, fromz,
+						uv0[X], uv0[Y], uv1[X], uv1[Y], uv2[X], uv2[Y], uv3[X], uv3[Y],
+						mat
+					)
+					break
+				}
+				
+				case YP:
+				{
+					builder_add_face_real(
+						fromx, toy, toz, tox, toy, toz, tox, toy, fromz, fromx, toy, fromz,
+						uv0[X], uv0[Y], uv1[X], uv1[Y], uv2[X], uv2[Y], uv3[X], uv3[Y],
+						mat
+					)
+					break
+				}
+				
+				case YN:
+				{
+					builder_add_face_real(
+						tox, fromy, toz, fromx, fromy, toz, fromx, fromy, fromz, tox, fromy, fromz,
+						uv0[X], uv0[Y], uv1[X], uv1[Y], uv2[X], uv2[Y], uv3[X], uv3[Y],
+						mat
+					)
+					break
+				}
+				
+				case ZP:
+				{
+					builder_add_face_real(
+						fromx, fromy, toz, tox, fromy, toz, tox, toy, toz, fromx, toy, toz,
+						uv0[X], uv0[Y], uv1[X], uv1[Y], uv2[X], uv2[Y], uv3[X], uv3[Y],
+						mat
+					)
+					break
+				}
+				
+				case ZN:
+				{
+					builder_add_face_real(
+						fromx, toy, fromz, tox, toy, fromz, tox, fromy, fromz, fromx, fromy, fromz,
+						uv0[X], uv0[Y], uv1[X], uv1[Y], uv2[X], uv2[Y], uv3[X], uv3[Y],
+						mat
+					)
+					break
+				}
+			}
 		}
-		
-		// X-
-		if (el.face_render_xn && !block_render_model_generate_face_cull(model, el, e_dir.WEST))
-		{
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color_xn
-			else
-				block_vertex_rgb = block_color
-			
-			if (el.face_vbuffer_xn != null)
-				block_vbuffer_current = el.face_vbuffer_xn
-			else
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth_xn * e_block_vbuffer.amount + el.face_block_vbuffer_xn]
-			
-			builder_add_face(x1, y1, z2, x1, y2, z2, x1, y2, z1, x1, y1, z1, el.face_uv_xn_0_x, el.face_uv_xn_0_y, el.face_uv_xn_1_x, el.face_uv_xn_1_y, el.face_uv_xn_2_x, el.face_uv_xn_2_y, el.face_uv_xn_3_x, el.face_uv_xn_3_y, mat)
-		}
-		
-		// Y+
-		if (el.face_render_yp && !block_render_model_generate_face_cull(model, el, e_dir.SOUTH))
-		{
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color_yp
-			else
-				block_vertex_rgb = block_color
-			
-			if (el.face_vbuffer_yp != null)
-				block_vbuffer_current = el.face_vbuffer_yp
-			else
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth_yp * e_block_vbuffer.amount + el.face_block_vbuffer_yp]
-			
-			builder_add_face(x1, y2, z2, x2, y2, z2, x2, y2, z1, x1, y2, z1, el.face_uv_yp_0_x, el.face_uv_yp_0_y, el.face_uv_yp_1_x, el.face_uv_yp_1_y, el.face_uv_yp_2_x, el.face_uv_yp_2_y, el.face_uv_yp_3_x, el.face_uv_yp_3_y, mat)
-		}
-		
-		// Y-
-		if (el.face_render_yn && !block_render_model_generate_face_cull(model, el, e_dir.NORTH))
-		{
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color_yn
-			else
-				block_vertex_rgb = block_color
-			
-			if (el.face_vbuffer_yn != null)
-				block_vbuffer_current = el.face_vbuffer_yn
-			else
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth_yn * e_block_vbuffer.amount + el.face_block_vbuffer_yn]
-			
-			builder_add_face(x2, y1, z2, x1, y1, z2, x1, y1, z1, x2, y1, z1, el.face_uv_yn_0_x, el.face_uv_yn_0_y, el.face_uv_yn_1_x, el.face_uv_yn_1_y, el.face_uv_yn_2_x, el.face_uv_yn_2_y, el.face_uv_yn_3_x, el.face_uv_yn_3_y, mat)
-		}
-		
-		// Z+
-		if (el.face_render_zp && !block_render_model_generate_face_cull(model, el, e_dir.UP))
-		{
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color_zp
-			else
-				block_vertex_rgb = block_color
-			
-			if (el.face_vbuffer_zp != null)
-				block_vbuffer_current = el.face_vbuffer_zp
-			else
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth_zp * e_block_vbuffer.amount + el.face_block_vbuffer_zp]
-			
-			builder_add_face(x1, y1, z2, x2, y1, z2, x2, y2, z2, x1, y2, z2, el.face_uv_zp_0_x, el.face_uv_zp_0_y, el.face_uv_zp_1_x, el.face_uv_zp_1_y, el.face_uv_zp_2_x, el.face_uv_zp_2_y, el.face_uv_zp_3_x, el.face_uv_zp_3_y, mat)
-		}
-		
-		// Z-
-		if (el.face_render_zn && !block_render_model_generate_face_cull(model, el, e_dir.DOWN))
-		{
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color_zn
-			else
-				block_vertex_rgb = block_color
-			
-			if (el.face_vbuffer_zn != null)
-				block_vbuffer_current = el.face_vbuffer_zn
-			else
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth_zn * e_block_vbuffer.amount + el.face_block_vbuffer_zn]
-			
-			builder_add_face(x1, y2, z1, x2, y2, z1, x2, y1, z1, x1, y1, z1, el.face_uv_zn_0_x, el.face_uv_zn_0_y, el.face_uv_zn_1_x, el.face_uv_zn_1_y, el.face_uv_zn_2_x, el.face_uv_zn_2_y, el.face_uv_zn_3_x, el.face_uv_zn_3_y, mat)
-		}
-		
+
 		block_vertex_rgb = c_white
 		block_vertex_emissive = minemissive
 		
-		instance_deactivate_object(model.element[e])
+		instance_deactivate_object(el)
 	}
-	
+
 	instance_deactivate_object(model)
 }

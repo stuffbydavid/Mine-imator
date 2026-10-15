@@ -114,7 +114,7 @@ int Program::main(int argc, char** argv)
 	Console::writeLine("Input project: " + gmDir);
 	Console::writeLine("Scripts output folder: " + outputDir);
 	const String cacheFile = outputDir + "/CppGen.cache";
-	const String cacheFingerprint = getCacheFingerprint(repoRootDir, gmDir, gmlSpecFile);
+	String cacheFingerprint = getCacheFingerprint(repoRootDir, gmDir, gmlSpecFile);
 
 	GML::parseGMLSpec(gmlSpecFile);
 	Program::strings.add("");
@@ -185,24 +185,13 @@ int Program::main(int argc, char** argv)
 		for (Declaration* decl : declStmt->declarations->declarations)
 			declareVariable(STR(global), decl->name, DataType(), declStmt->func, Statement::Location(), declStmt->line);
 
-	// Forced types
-	varTypeOverride = {
-		{ "build_pos", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_pos_x", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_pos_y", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_pos_z", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_size_x", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_size_y", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_size_z", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_size_xy", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_size_total", makeObject<DataType>(DataType::Type::Integer) },
-		{ "build_single_stateid", makeObject<DataType>(DataType::Type::Integer) },
-		{ "block_pos_x", makeObject<DataType>(DataType::Type::Integer) },
-		{ "block_pos_y", makeObject<DataType>(DataType::Type::Integer) },
-		{ "block_pos_z", makeObject<DataType>(DataType::Type::Integer) },
-		{ "blockstartpos", makeObject<DataType>(DataType::Type::Integer) },
-		{ "blockendpos", makeObject<DataType>(DataType::Type::Integer )}
-	};
+	// Type overrides affect every script, so changes require a full resolve
+	std::vector<String> overrides;
+	for (StringId name : varTypeOverride.keys)
+		overrides.push_back(String(name) + "=" + varTypeOverride[name]->toString());
+	std::sort(overrides.begin(), overrides.end());
+	for (const String& entry : overrides)
+		cacheFingerprint += "\nCppGen " + entry;
 
 	timer.restart();
 	List<String> modifiedGmlFiles;
@@ -667,6 +656,7 @@ void Program::resolveProject()
 	while (true)
 	{
 		int passVariants = Variable::variantVariables;
+		bool mergedTypes = false;
 		for (Function* func : Program::functions.values)
 			func->isTraversed = false;
 		for (Object* obj : Program::objects.values)
@@ -707,6 +697,22 @@ void Program::resolveProject()
 			for (Function* func : obj->instanceFunctions.values)
 				func->resolve(ResolveScope(obj->name));
 
+		// Resolve dynamic scripts before merging their instance variable types
+		if (Accessor::resolveFunctionReferences)
+		{
+			for (Function* func : Program::functions.values)
+			{
+				if (func->isUnused)
+				{
+					// Ensure scope is correct for block scripts
+					if (String(func->name).startsWith("block_set_") || String(func->name).startsWith("block_tile_entity_"))
+						func->resolve(ResolveScope(STR(obj_builder_thread)));
+					else
+						func->resolve(ResolveScope(STR(any)));
+				}
+			}
+		}
+
 		if (Program::mergeUnknownVars)
 		{
 			// Merge instance variables with other instance variables of same name declared in the same function scope
@@ -722,47 +728,31 @@ void Program::resolveProject()
 
 						Variable* v2 = func->instanceVarDecls[vv];
 						if (v2->name == v1->name)
-							v2->type->assign(*v1->type, func, 0);
+							mergedTypes |= v2->assignType(*v1->type, func, 0);
 					}
 				}
 			}
 
-			// Merge unknown variables with instnace variables of same name
+			// Merge unknown variables with instance variables of same name
 			for (Variable* unknownVar : Program::unknownScopeVars.values)
 			{
 				// Apply instance variables to unknown
 				for (Object* obj : Program::objects.values)
 					for (Variable* instVar : obj->instanceVars.values)
 						if (unknownVar->name == instVar->name)
-							unknownVar->assignType(*instVar->type, nullptr, 0);
+							mergedTypes |= unknownVar->assignType(*instVar->type, nullptr, 0);
 
 				// Apply unknown variables to instances
 				for (Object* obj : Program::objects.values)
 					for (Variable* instVar : obj->instanceVars.values)
 						if (unknownVar->name == instVar->name)
-							instVar->assignType(*unknownVar->type, nullptr, 0);
+							mergedTypes |= instVar->assignType(*unknownVar->type, nullptr, 0);
 			}
 		}
 
 		// Nothing was changed, break pass
-		if (Variable::variantVariables == passVariants)
+		if (!mergedTypes && Variable::variantVariables == passVariants)
 			break;
-	}
-
-	// Resolve unused functions in any scope
-	if (Accessor::resolveFunctionReferences)
-	{
-		for (Function* func : Program::functions.values)
-		{
-			if (func->isUnused)
-			{
-				// Ensure scope is correct for block scripts
-				if (String(func->name).startsWith("block_set_") || String(func->name).startsWith("block_tile_entity_"))
-					func->resolve(ResolveScope(STR(obj_builder_thread)));
-				else
-					func->resolve(ResolveScope(STR(any)));
-			}
-		}
 	}
 }
 

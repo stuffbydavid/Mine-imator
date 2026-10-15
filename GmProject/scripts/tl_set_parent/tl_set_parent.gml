@@ -86,4 +86,5 @@ function tl_set_parent(newparent, index = -1, preserve = false, hobj = null)
 	}
 
 	update_matrix = true
+	tl_update_depth()
 }

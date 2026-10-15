@@ -129,6 +129,15 @@ namespace CppProject
 		return thread.currentVertex;
 	}
 
+	void VertexBuffer::ThreadData::MeshData::Reserve(IntType addedVertices, IntType addedIndices)
+	{
+		// Double mesh capacity before appending a complete primitive
+		if (vertices.Size() + addedVertices > vertices.heap.Size())
+			vertices.Alloc(std::max(vertices.Size() + addedVertices, std::max<IntType>(1024, vertices.heap.Size() * 2)));
+		if (indices.Size() + addedIndices > indices.heap.Size())
+			indices.Alloc(std::max(indices.Size() + addedIndices, std::max<IntType>(1024, indices.heap.Size() * 2)));
+	}
+
 	void VertexBuffer::AddVertex(const Vertex& vertex, IntType threadId)
 	{
 		ThreadData& thread = threads[threadId];
@@ -140,12 +149,7 @@ namespace CppProject
 		else
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(1, 1);
 
 		// Check if already added in current face
 		IntType i = 0;
@@ -180,12 +184,7 @@ namespace CppProject
 		if (mesh->indices.Size() + 3 > MAX_MESH_INDICES)
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(3, 3);
 
 		// Create triangle
 		IntType vertOffset = mesh->vertices.Size();
@@ -212,12 +211,7 @@ namespace CppProject
 		if (mesh->indices.Size() + 6 > MAX_MESH_INDICES)
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(4, 6);
 
 		// Create face
 		IntType vertOffset = mesh->vertices.Size();
@@ -335,7 +329,7 @@ namespace CppProject
 		// Copy mesh data from thread(s)
 		if (numThreads > 1)
 		{
-			#pragma OPENMP_FOR
+			#pragma omp parallel for schedule(static)
 			for (IntType t = 0; t < numThreads; t++)
 				processThread(t);
 		}

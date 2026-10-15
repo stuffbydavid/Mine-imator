@@ -26,37 +26,45 @@ function block_set_chest()
 			{
 				case "east":
 				{
-					if (!build_edge_yn)
-						connectblock = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z)
-					if (!build_edge_yp)
-						discardblock = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z)
+					if (!build_edge[YN])
+						connectblock = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z])
+					
+					if (!build_edge[YP])
+						discardblock = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z])
+					
 					break
 				}
 				
 				case "west":
 				{
-					if (!build_edge_yp)
-						connectblock = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z)
-					if (!build_edge_yn)
-						discardblock = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z)
+					if (!build_edge[YP])
+						connectblock = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z])
+					
+					if (!build_edge[YN])
+						discardblock = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z])
+					
 					break
 				}
 				
 				case "south":
 				{
-					if (!build_edge_xp)
-						connectblock = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z)
-					if (!build_edge_xn)
-						discardblock = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z)
+					if (!build_edge[XP])
+						connectblock = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z])
+					
+					if (!build_edge[XN])
+						discardblock = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z])
+					
 					break
 				}
 				
 				case "north":
 				{
-					if (!build_edge_xn)
-						connectblock = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z)
-					if (!build_edge_xp)
-						discardblock = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z)
+					if (!build_edge[XN])
+						connectblock = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z])
+					
+					if (!build_edge[XP])
+						discardblock = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z])
+					
 					break
 				}
 			}

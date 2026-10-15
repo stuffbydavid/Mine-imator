@@ -13,9 +13,8 @@ function view_area_draw()
 	// First-person crosshair
 	if (place_build && build_first_person)
 	{
-		var index = view_area_height > 800 ? 1 : 0;
 		gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color)
-		draw_sprite(spr_crosshair, index, floor(view_area_x + view_area_width / 2), floor(view_area_y + view_area_height / 2))
+		draw_sprite(spr_crosshair, 0, floor(view_area_x + view_area_width / 2), floor(view_area_y + view_area_height / 2))
 		gpu_set_blendmode(bm_normal)
 	}
 

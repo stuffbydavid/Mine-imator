@@ -30,14 +30,12 @@ function render_preset_apply_settings(settings, renderer)
 		{
 			case "samples": set.samples = val; break
 			case "ssao": set.ssao = val; break
+			case "ssao_blur_passes": set.ssao_blur_passes = clamp(round(val), 0, 8); break
 			case "ssao_radius": ssao_radius = val; break
 			case "ssao_power": ssao_power = val; break
-			case "ssao_blur_passes": ssao_blur_passes = clamp(round(val), 0, 8); break
 			case "ssao_color": ssao_color = val; break
 			case "ssao_always_visible": ssao_always_visible = val; break
 			case "shadows": set.shadows = val; break
-			case "dof_quality": set.dof_quality = clamp(round(val), 8, 64); break
-			case "dof_realistic_blur": if (renderer = e_renderer.STANDARD) set.dof_realistic_blur = val; break
 			case "shadows_blur_quality": set.shadows_blur_quality = val; break
 			case "shadows_smoother_blur": set.shadows_smoother_blur = val; break
 			case "shadows_blur_size": standardset.shadows_blur_size = val; break
@@ -53,13 +51,13 @@ function render_preset_apply_settings(settings, renderer)
 			case "subsurface_bright_backlight": realisticset.subsurface_bright_backlight = val; break
 			case "indirect": set.indirect = val; break
 			case "indirect_precision": set.indirect_precision = val; break
-			case "indirect_resolution": if (val = 1 || val = .5 || val = .25 || val = .125) set.indirect_resolution = val; break
+			case "indirect_resolution": if (array_contains(render_resolution_factors, val)) set.indirect_resolution = val; break
 			case "indirect_bounces": set.indirect_bounces = clamp(round(val), 1, 8); break
 			case "indirect_blur_radius": realisticset.indirect_blur_radius = val; break
 			case "indirect_strength": realisticset.indirect_strength = val; break
 			case "reflections": set.reflections = val; break
 			case "reflections_precision": set.reflections_precision = val; break
-			case "reflections_resolution": if (val = 1 || val = .5 || val = .25 || val = .125) set.reflections_resolution = val; break
+			case "reflections_resolution": if (array_contains(render_resolution_factors, val)) set.reflections_resolution = val; break
 			case "reflections_bounces": set.reflections_bounces = clamp(round(val), 1, 8); break
 			case "reflections_thickness": realisticset.reflections_thickness = val; break
 			case "reflections_fade_amount": realisticset.reflections_fade_amount = val; break
@@ -69,6 +67,8 @@ function render_preset_apply_settings(settings, renderer)
 			case "aa": set.aa = val; break
 			case "aa_mode": set.aa_mode = val; break
 			case "aa_power": set.aa_power = val; break
+			case "dof_quality": set.dof_quality = clamp(round(val), 8, 64); break
+			case "dof_realistic_blur": if (renderer = e_renderer.STANDARD) set.dof_realistic_blur = val; break
 			case "distance": render_distance = val; break
 			case "bend_style": bend_style = val; break
 			case "opaque_leaves": opaque_leaves = val; break

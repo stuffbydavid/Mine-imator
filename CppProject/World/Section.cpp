@@ -791,10 +791,9 @@ namespace CppProject
 
 	IntType Section::GetBlockOffset(const WorldVec& pos)
 	{
-		WorldVec posOffset = (pos + Builder::offset);
-		IntType blockX = (posOffset.x & SECTION_SIZEM1) - blockStart.x;
-		IntType blockY = (posOffset.y & SECTION_SIZEM1) - blockStart.z; // blockStart use Y up
-		IntType blockZ = (posOffset.z & SECTION_SIZEM1) - blockStart.y;
+		IntType blockX = ((pos.x + Builder::offset.x) & SECTION_SIZEM1) - blockStart.x;
+		IntType blockY = ((pos.y + Builder::offset.y) & SECTION_SIZEM1) - blockStart.z; // blockStart uses Y up
+		IntType blockZ = ((pos.z + Builder::offset.z) & SECTION_SIZEM1) - blockStart.y;
 		
 		return blockZ * builder.sizeXY + blockY * builder.size.x + blockX;
 	}
@@ -821,10 +820,9 @@ namespace CppProject
 	Section* Builder::GetSection(const WorldVec& pos)
 	{
 		IntType sectionX, sectionY, sectionZ, sectionPos;
-		WorldVec posOffset = pos + offset;
-		sectionX = posOffset.x >> 4;
-		sectionY = posOffset.y >> 4;
-		sectionZ = posOffset.z >> 4;
+		sectionX = (pos.x + offset.x) >> 4;
+		sectionY = (pos.y + offset.y) >> 4;
+		sectionZ = (pos.z + offset.z) >> 4;
 		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
 
 		return Builder::sections.Value(sectionPos);

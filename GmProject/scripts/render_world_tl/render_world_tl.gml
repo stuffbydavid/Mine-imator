@@ -2,20 +2,6 @@
 
 function render_world_tl()
 {
-	// No 3D representation?
-	if (!type_is_visible(type))
-		return 0
-	
-	if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))
-		return 0
-	
-	if (!app.place_tl_render && (placed || parent_is_placed))
-		return 0
-	
-	// Invisible?
-	if (!render_visible)
-		return 0
-		
 	// Place mode
 	if (placed || parent_is_placed)
 	{
@@ -49,6 +35,7 @@ function render_world_tl()
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, id, 1)
 	}
 	
+	// Scene test
 	if (render_mode = e_render_mode.SCENE_TEST)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_white, 1)
 	
@@ -285,7 +272,7 @@ function render_world_tl()
 		if (placed || parent_is_placed)
 		{
 			// Disable write for place data MRT
-			render_set_target_write(render_place_output, false)
+			render_set_target_write(render_place_target, false)
 			
 			placetype = e_place_type.PLACED
 		}
@@ -463,5 +450,5 @@ function render_world_tl()
 		gpu_set_zwriteenable(true)
 
 	if (render_place_pass && (placed || parent_is_placed))
-		render_set_target_write(render_place_output, true)
+		render_set_target_write(render_place_target, true)
 }

@@ -17,19 +17,19 @@ function action_build_remove()
 			hobj = history_data
 			remove = save_id_find(hobj.remove_save_id)
 			if (remove = null)
-				return 0
+				return false
 		}
 		else
 		{
 			target = place_target_tl
 			if (target = null || !instance_exists(target))
-				return 0
+				return false
 
 			// Scenery block removal
 			if (target.type = e_tl_type.SCENERY)
 			{
 				toast_new(e_toast.INFO, "Deleting scenery blocks coming soon")
-				return 0
+				return false
 			}
 
 			// Use the special block owning the rendered model part
@@ -38,13 +38,13 @@ function action_build_remove()
 
 			// Only blocks
 			if (target.type != e_tl_type.BLOCK && target.type != e_tl_type.SPECIAL_BLOCK)
-				return 0
+				return false
 
 			// Check for user-added block children
 			if (target.type = e_tl_type.BLOCK)
 			{
 				if (ds_list_size(target.keyframe_list) > 1 || ds_list_size(target.tree_list) > 0)
-					return 0
+					return false
 			}
 
 			// Check the complete special block tree
@@ -55,13 +55,13 @@ function action_build_remove()
 				{
 					var child = children[t];
 					if (ds_list_size(child.keyframe_list) > 1)
-						return 0
+						return false
 
 					for (var c = 0; c < ds_list_size(child.tree_list); c++)
 					{
 						var part = child.tree_list[|c];
 						if (part.type != e_tl_type.MODEL_PART || part.part_of != target)
-    						return 0
+    						return false
 						array_add(children, part)
 					}
 				}
@@ -108,4 +108,6 @@ function action_build_remove()
 	app_update_tl_edit()
 	
 	project_update_counts()
+	
+	return true
 }

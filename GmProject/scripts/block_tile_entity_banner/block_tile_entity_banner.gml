@@ -39,9 +39,9 @@ function block_tile_entity_banner(map)
 			}
 		}
 		
-		mc_builder.block_banner_color_map[?build_pos] = color
-		mc_builder.block_banner_patterns_map[?build_pos] = patternlist
-		mc_builder.block_banner_pattern_colors_map[?build_pos] = patterncolorlist
+		mc_builder.block_banner_color_map[?build_pos_index] = color
+		mc_builder.block_banner_patterns_map[?build_pos_index] = patternlist
+		mc_builder.block_banner_pattern_colors_map[?build_pos_index] = patterncolorlist
 	}
 	else // Pre-1.20.5 format
 	{
@@ -102,8 +102,8 @@ function block_tile_entity_banner(map)
 				color = minecraft_swatch_dyes.map[?col]
 		}
 		
-		mc_builder.block_banner_color_map[?build_pos] = color
-		mc_builder.block_banner_patterns_map[?build_pos] = patternlist
-		mc_builder.block_banner_pattern_colors_map[?build_pos] = patterncolorlist
+		mc_builder.block_banner_color_map[?build_pos_index] = color
+		mc_builder.block_banner_patterns_map[?build_pos_index] = patternlist
+		mc_builder.block_banner_pattern_colors_map[?build_pos_index] = patterncolorlist
 	}
 }

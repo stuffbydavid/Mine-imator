@@ -1,5 +1,8 @@
 /// @desc Creates vertex buffers from a schematic or blocks file.
 /// The process is split into three steps for opening, reading and generating.
+/// Force C++ generator to reduce types to int for OpenMP loops:
+/// CppGen int blockstartpos
+/// CppGen int blockendpos
 
 function res_load_scenery()
 {
@@ -169,10 +172,8 @@ function res_load_scenery()
 			mc_builder.block_skull_texture_count = ds_map_size(mc_builder.block_skull_texture_map)
 			mc_builder.block_skull_finish_count = 0
 			mc_builder.block_skull_fail_count = 0
-			mc_builder.build_pos_x = 0
-			mc_builder.build_pos_y = 0
-			mc_builder.build_pos_z = 0
-			mc_builder.build_pos = 0
+			mc_builder.build_pos = vec3(0)
+			mc_builder.build_pos_index = 0
 			mc_builder.block_tl_add = scenery_tl_add
 			mc_builder.block_tl_list = scenery_tl_list
 			mc_builder.build_randomize = scenery_randomize
@@ -195,13 +196,14 @@ function res_load_scenery()
 			{
 				builder_scenery = true
 				
-				var blockstartpos = build_pos;
-				var blockendpos = build_pos + maxblocks;
+				var blockstartpos = build_pos_index;
+				var blockendpos = build_pos_index + maxblocks;
 				if (blockendpos > build_size_total)
 					blockendpos = build_size_total
+				
 				builder_spawn_threads(thread_get_number())
 				
-				/// CppOnly #pragma OPENMP_FOR
+				/// CppOnly #pragma OPENMP_FOR(16)
 				for (var p = blockstartpos; p < blockendpos; p++)
 				{
 					with (thread_list[|thread_get_id()])
@@ -212,16 +214,16 @@ function res_load_scenery()
 				}
 				
 				builder_combine_threads()
-				build_pos = blockendpos
+				build_pos_index = blockendpos
 				
 				builder_scenery = false
 			}
 		
 			if (!scenery_instant)
 				with (app)
-					popup_loading.progress = 0.2 + (0.2) * (mc_builder.build_pos / mc_builder.build_size_total)
+					popup_loading.progress = 0.2 + (0.2) * (mc_builder.build_pos_index / mc_builder.build_size_total)
 					
-			if (mc_builder.build_pos = mc_builder.build_size_total)
+			if (mc_builder.build_pos_index = mc_builder.build_size_total)
 			{
 				debug_timer_stop("res_load_scenery, Set models")
 				debug_timer_start()
@@ -230,8 +232,8 @@ function res_load_scenery()
 				block_vbuffer_start()
 		
 				load_stage = "model"
-				mc_builder.build_pos_z = 0
-				mc_builder.build_pos = 0
+				mc_builder.build_pos[Z] = 0
+				mc_builder.build_pos_index = 0
 			
 				if (!scenery_instant)
 					with (app)
@@ -250,13 +252,13 @@ function res_load_scenery()
 				build_transform = true
 				build_multithreaded = true
 				
-				var blockstartpos = build_pos;
-				var blockendpos = build_pos + maxblocks;
+				var blockstartpos = build_pos_index;
+				var blockendpos = build_pos_index + maxblocks;
 				if (blockendpos > build_size_total)
 					blockendpos = build_size_total
 				builder_spawn_threads(thread_get_number())
 				
-				/// CppOnly #pragma OPENMP_FOR
+				/// CppOnly #pragma OPENMP_FOR(16)
 				for (var p = blockstartpos; p < blockendpos; p++)
 				{
 					with (thread_list[|thread_get_id()])
@@ -267,17 +269,17 @@ function res_load_scenery()
 				}
 				
 				builder_combine_threads()
-				build_pos = blockendpos
+				build_pos_index = blockendpos
 				
 				builder_scenery = false
 			}
 		
 			if (!scenery_instant)
 				with (app)
-					popup_loading.progress = 0.4 + 0.5 * (mc_builder.build_pos / mc_builder.build_size_total)
+					popup_loading.progress = 0.4 + 0.5 * (mc_builder.build_pos_index / mc_builder.build_size_total)
 					
 			// All done
-			if (mc_builder.build_pos = mc_builder.build_size_total)
+			if (mc_builder.build_pos_index = mc_builder.build_size_total)
 				load_stage = "done"
 			
 			break
@@ -316,7 +318,7 @@ function res_load_scenery()
 				build_randomize = false
 			}
 			
-			scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
+			scenery_size = vec3(mc_builder.build_size[Y], mc_builder.build_size[X], mc_builder.build_size[Z])
 			ready = true
 
 			// Put map name in resource name

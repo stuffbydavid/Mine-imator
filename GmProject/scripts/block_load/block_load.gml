@@ -22,7 +22,7 @@ function block_load(map, typemap)
 		{
 			type = map[?"type"]
 			set_script = asset_get_index("block_set_" + type)
-			generate_script = asset_get_index("block_generate_" + type)
+			generate_script = asset_get_index("builder_generate_" + type)
 		}
 		else
 		{

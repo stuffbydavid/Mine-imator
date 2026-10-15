@@ -74,5 +74,6 @@ function app_startup_collapse()
 	collapse_register("timeline_editor/inherit")
 	collapse_register("timeline_editor/glint", true)
 	collapse_register("timeline_editor/glow", true)
+	collapse_register("timeline_editor/depth", true)
 	collapse_register("timeline_editor/mode_visibility")
 }

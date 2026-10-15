@@ -136,7 +136,7 @@ function render_high_create_gbuffers()
 				render_place_begin(render_surface_depth)
 			
 			// Combined color writes depth to MRT 3
-			render_place_output = (render_color_combined ? 3 : 0)
+			render_place_target = (render_color_combined ? 3 : 0)
 			render_world(e_render_mode.COLOR)
 
 			if (render_color_combined)

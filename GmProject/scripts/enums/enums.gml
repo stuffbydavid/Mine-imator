@@ -1208,6 +1208,14 @@ function enums()
 		amount
 	} // Update shader_startup_uniforms() when adding uniforms
 
+	// Render depth list
+	enum e_depth_list
+	{
+		NEGATIVE,
+		POSITIVE,
+		amount
+	}
+	
 	// Place type
 	enum e_place_type
 	{

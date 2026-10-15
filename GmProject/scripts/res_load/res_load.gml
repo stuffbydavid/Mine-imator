@@ -334,9 +334,7 @@ function res_load(reload = false)
 				block_vbuffer_start()
 				with (mc_builder)
 				{
-					build_size_x = 1
-					build_size_y = 1
-					build_size_z = 1
+					build_size = vec3(1)
 					build_randomize = other.scenery_randomize
 					build_transform = false
 					

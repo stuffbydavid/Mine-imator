@@ -14,7 +14,7 @@ function soundlist_select_default(slist)
 	if (musicplaying)
 		return false
 
-	defaultname = slist.source = "music" ? music_default : sound_default
+	defaultname = (slist.source = "music" ? default_music : default_sound)
 	for (var i = 0; i < ds_list_size(slist.display_list); i++)
 	{
 		var row = slist.display_list[|i];

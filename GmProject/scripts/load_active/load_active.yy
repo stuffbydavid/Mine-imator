@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_get_visible",
+  "%Name":"load_active",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_get_visible",
+  "name":"load_active",
   "parent":{
-    "name":"Timeline",
-    "path":"folders/Scripts/Project/Timeline.yy",
+    "name":"Loading",
+    "path":"folders/Scripts/App/Loading.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

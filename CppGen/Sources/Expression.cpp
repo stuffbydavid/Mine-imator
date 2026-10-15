@@ -165,8 +165,8 @@ void BinaryOperation::resolve(ResolveScope* scope)
 	this->left->resolve(scope);
 	this->right->resolve(scope);
 
-	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr ||
-		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) //  &, |, <<, >>, both expressions must be integer
+	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr || this->op == Token::Type::BitwiseXor ||
+		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) // &, |, ^, <<, >> require integer operands
 	{
 		this->left->applyType(scope, DataType::scalar(DataType::Type::Integer));
 		this->right->applyType(scope, DataType::scalar(DataType::Type::Integer));
@@ -222,7 +222,8 @@ String BinaryOperation::toCpp(ResolveScope* scope)
 		this->op == Token::Type::ShiftLeft ||
 		this->op == Token::Type::ShiftRight ||
 		this->op == Token::Type::BitwiseAnd ||
-		this->op == Token::Type::BitwiseOr
+		this->op == Token::Type::BitwiseOr ||
+		this->op == Token::Type::BitwiseXor
 	);
 	if (opNeedInts) // Cast left to int
 		cpp += "(IntType)";

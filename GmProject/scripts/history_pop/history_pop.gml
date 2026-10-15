@@ -27,7 +27,6 @@ function history_pop()
 	history_pos = 0
 	
 	render_samples = -1
-	render_scene_bounds = null
 	view_changed()
 	
 	history_resource_update = true

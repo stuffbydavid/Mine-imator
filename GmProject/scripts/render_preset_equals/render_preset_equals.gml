@@ -10,9 +10,8 @@ function render_preset_equals(obj, renderer, allsettings)
 		match = (
 			obj.has_standard &&
 			set.ssao = objset.ssao &&
+			set.ssao_blur_passes = objset.ssao_blur_passes &&
 			set.shadows = objset.shadows &&
-			set.dof_quality = objset.dof_quality &&
-			set.dof_realistic_blur = objset.dof_realistic_blur &&
 			set.shadows_blur_quality = objset.shadows_blur_quality &&
 			set.shadows_smoother_blur = objset.shadows_smoother_blur &&
 			set.shadows_sun_cascades = objset.shadows_sun_cascades &&
@@ -21,7 +20,9 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.shadows_point_buffer_size = objset.shadows_point_buffer_size &&
 			set.glow = objset.glow &&
 			set.aa = objset.aa &&
-			set.aa_power = objset.aa_power
+			set.aa_power = objset.aa_power &&
+			set.dof_quality = objset.dof_quality &&
+			set.dof_realistic_blur = objset.dof_realistic_blur
 		)
 	}
 
@@ -33,8 +34,8 @@ function render_preset_equals(obj, renderer, allsettings)
 			obj.has_realistic &&
 			set.samples = objset.samples &&
 			set.ssao = objset.ssao &&
+			set.ssao_blur_passes = objset.ssao_blur_passes &&
 			set.shadows = objset.shadows &&
-			set.dof_quality = objset.dof_quality &&
 			set.shadows_blur_quality = objset.shadows_blur_quality &&
 			set.shadows_smoother_blur = objset.shadows_smoother_blur &&
 			set.shadows_sun_cascades = objset.shadows_sun_cascades &&
@@ -55,7 +56,8 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.glow = objset.glow &&
 			set.aa = objset.aa &&
 			set.aa_mode = objset.aa_mode &&
-			set.aa_power = objset.aa_power
+			set.aa_power = objset.aa_power &&
+			set.dof_quality = objset.dof_quality
 		)
 	}
 
@@ -67,7 +69,6 @@ function render_preset_equals(obj, renderer, allsettings)
 		has_fx = obj.has_fx &&
 		ssao_radius = obj.ssao_radius &&
 		ssao_power = obj.ssao_power &&
-		ssao_blur_passes = obj.ssao_blur_passes &&
 		ssao_color = obj.ssao_color &&
 		ssao_always_visible = obj.ssao_always_visible &&
 		glow_radius = obj.glow_radius &&

@@ -1,9 +1,15 @@
 function popup_exportmovie_draw()
 {
 	// Renderer
-	tab_control_menu()
-	draw_button_menu("export_movie/renderer", e_menu.LIST, dx, dy, dw, 24, popup_current.renderer, text_get("render/renderer/" + renderer_name_list[popup_current.renderer]), action_toolbar_export_renderer)
+	tab_control_togglebutton()
+	togglebutton_add("render/renderer/quick", icons.CIRCLE_OUTLINE, e_renderer.QUICK, popup_current.renderer = e_renderer.QUICK, action_toolbar_export_renderer)
+	togglebutton_add("render/renderer/standard", setting_theme.dark ? icons.SPHERE_SHADING_DARK : icons.SPHERE_SHADING, e_renderer.STANDARD, popup_current.renderer = e_renderer.STANDARD, action_toolbar_export_renderer)
+	togglebutton_add("render/renderer/realistic", setting_theme.dark ? icons.SPHERE_MATERIAL_DARK : icons.SPHERE_MATERIAL, e_renderer.REALISTIC, popup_current.renderer = e_renderer.REALISTIC, action_toolbar_export_renderer)
+	draw_label(text_get("export_movie/renderer"), dx, dy - 3, fa_left, fa_top, c_text_secondary, a_text_secondary, font_label)
+	draw_togglebutton("export_movie/renderer", dx, dy + label_height + 8, true, false)
 	tab_next()
+	
+	dy += 4
 
 	// Performance warning
 	if (popup_current.renderer = e_renderer.REALISTIC)

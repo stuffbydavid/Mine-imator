@@ -18,9 +18,4 @@ function popup_loading_draw()
 	tab_control_loading()
 	draw_loading_bar(dx, dy, dw, 8, popup_current.progress, popup_current.caption, popup_current.text)
 	tab_next()
-
-	// Load the next stage
-	if (popup_ani = 1 && popup_current.load_object && popup_current.load_script)
-		with (popup_current.load_object)
-			script_execute(app.popup_current.load_script)
 }

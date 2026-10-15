@@ -14,10 +14,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 	if (res = null)
 	{
 		modelstate = model_state_obj.id
-		coly = modelstate.model_preview_color_yp
-		alphay = modelstate.model_preview_alpha_yp
-		colz = modelstate.model_preview_color_zp
-		alphaz = modelstate.model_preview_alpha_zp
+		coly = modelstate.model_preview_color[YP]
+		alphay = modelstate.model_preview_alpha[YP]
+		colz = modelstate.model_preview_color[ZP]
+		alphaz = modelstate.model_preview_alpha[ZP]
 	}
 	else
 	{
@@ -68,15 +68,13 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		random_offset_xy = 0
 		
 		// Reset offset
-		offset_x = 0
-		offset_y = 0
-		offset_z = 0
+		offset = vec3(0)
 		
 		// Set weight
 		weight = wei
 		
 		// For culling
-		for (var f = 0; f < e_dir.amount; f++)
+		for (var f = 0; f < block_faces; f++)
 		{
 			face_full[f] = false
 			face_min[f] = null
@@ -85,10 +83,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		}
 		
 		// For the world importer
-		preview_color_zp = null
-		preview_alpha_zp = 0
-		preview_color_yp = null
-		preview_alpha_yp = 0
+		preview_color = array_create(block_faces, null)
+		preview_alpha = array_create(block_faces, 0)
 		preview_tint = ""
 		
 		// Add elements
@@ -107,7 +103,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 					
 					// Set face rotations and rotated directions
 					var facenewdir, faceuvrot;
-					for (var f = 0; f < e_dir.amount; f++)
+					for (var f = 0; f < block_faces; f++)
 					{
 						facenewdir[f] = f
 						faceuvrot[f] = 0
@@ -155,20 +151,20 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						// Shift face references (clockwise, Z -> X)
 						repeat (facerot[Z] / 90)
 						{
-							var eastrotdir = facenewdir[e_dir.EAST];
-							facenewdir[e_dir.EAST] = facenewdir[e_dir.SOUTH]
-							facenewdir[e_dir.SOUTH] = facenewdir[e_dir.WEST]
-							facenewdir[e_dir.WEST] = facenewdir[e_dir.NORTH]
-							facenewdir[e_dir.NORTH] = eastrotdir
+							var eastrotdir = facenewdir[XP];
+							facenewdir[XP] = facenewdir[YP]
+							facenewdir[YP] = facenewdir[XN]
+							facenewdir[XN] = facenewdir[YN]
+							facenewdir[YN] = eastrotdir
 						}
 						
 						repeat (facerot[X] / 90)
 						{
-							var uprotdir = facenewdir[e_dir.UP];
-							facenewdir[e_dir.UP] = facenewdir[e_dir.NORTH]
-							facenewdir[e_dir.NORTH] = facenewdir[e_dir.DOWN]
-							facenewdir[e_dir.DOWN] = facenewdir[e_dir.SOUTH]
-							facenewdir[e_dir.SOUTH] = uprotdir
+							var uprotdir = facenewdir[ZP];
+							facenewdir[ZP] = facenewdir[YN]
+							facenewdir[YN] = facenewdir[ZN]
+							facenewdir[ZN] = facenewdir[YP]
+							facenewdir[YP] = uprotdir
 						}
 						
 						// Rotate UV by shape rotation
@@ -176,45 +172,45 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						{
 							case 0:
 							{
-								faceuvrot[e_dir.UP] = facerot[Z]
-								faceuvrot[e_dir.DOWN] = -facerot[Z]
+								faceuvrot[ZP] = facerot[Z]
+								faceuvrot[ZN] = -facerot[Z]
 								break
 							}
 							
 							case 90:
 							{
-								faceuvrot[facenewdir[e_dir.EAST]] = 90
-								faceuvrot[facenewdir[e_dir.WEST]] = -90
-								faceuvrot[facenewdir[e_dir.UP]] = 180
-								faceuvrot[e_dir.UP] = facerot[Z]
-								faceuvrot[e_dir.DOWN] = 180 - facerot[Z]
+								faceuvrot[facenewdir[XP]] = 90
+								faceuvrot[facenewdir[XN]] = -90
+								faceuvrot[facenewdir[ZP]] = 180
+								faceuvrot[ZP] = facerot[Z]
+								faceuvrot[ZN] = 180 - facerot[Z]
 								break
 							}
 							
 							case 180:
 							{
-								faceuvrot[e_dir.EAST] = 180
-								faceuvrot[e_dir.WEST] = 180
-								faceuvrot[e_dir.SOUTH] = 180
-								faceuvrot[e_dir.NORTH] = 180
-								faceuvrot[e_dir.UP] = facerot[Z]
-								faceuvrot[e_dir.DOWN] = -facerot[Z]
+								faceuvrot[XP] = 180
+								faceuvrot[XN] = 180
+								faceuvrot[YP] = 180
+								faceuvrot[YN] = 180
+								faceuvrot[ZP] = facerot[Z]
+								faceuvrot[ZN] = -facerot[Z]
 								break
 							}
 							
 							case 270:
 							{
-								faceuvrot[facenewdir[e_dir.EAST]] = -90
-								faceuvrot[facenewdir[e_dir.WEST]] = 90
-								faceuvrot[facenewdir[e_dir.DOWN]] = 180
-								faceuvrot[e_dir.UP] = 180 + facerot[Z]
-								faceuvrot[e_dir.DOWN] = -facerot[Z]
+								faceuvrot[facenewdir[XP]] = -90
+								faceuvrot[facenewdir[XN]] = 90
+								faceuvrot[facenewdir[ZN]] = 180
+								faceuvrot[ZP] = 180 + facerot[Z]
+								faceuvrot[ZN] = -facerot[Z]
 								break
 							}
 						}
 					}
 					
-					for (var f = 0; f < e_dir.amount; f++)
+					for (var f = 0; f < block_faces; f++)
 					{
 						var nd = facenewdir[f];
 						
@@ -272,42 +268,42 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						{
 							switch (nd)
 							{
-								case e_dir.EAST:
+								case XP:
 									face_uv[nd, 0] = point2D(block_size - to[Y], block_size - to[Z])
 									face_uv[nd, 1] = point2D(block_size - from[Y], block_size - to[Z])
 									face_uv[nd, 2] = point2D(block_size - from[Y], block_size - from[Z])
 									face_uv[nd, 3] = point2D(block_size - to[Y], block_size - from[Z])
 									break
 								
-								case e_dir.WEST:
+								case XN:
 									face_uv[nd, 0] = point2D(from[Y], block_size - to[Z])
 									face_uv[nd, 1] = point2D(to[Y], block_size - to[Z])
 									face_uv[nd, 2] = point2D(to[Y], block_size - from[Z])
 									face_uv[nd, 3] = point2D(from[Y], block_size - from[Z])
 									break
 								
-								case e_dir.SOUTH:
+								case YP:
 									face_uv[nd, 0] = point2D(from[X], block_size - to[Z])
 									face_uv[nd, 1] = point2D(to[X], block_size - to[Z])
 									face_uv[nd, 2] = point2D(to[X], block_size - from[Z])
 									face_uv[nd, 3] = point2D(from[X], block_size - from[Z])
 									break
 								
-								case e_dir.NORTH:
+								case YN:
 									face_uv[nd, 0] = point2D(block_size - to[X], block_size - to[Z])
 									face_uv[nd, 1] = point2D(block_size - from[X], block_size - to[Z])
 									face_uv[nd, 2] = point2D(block_size - from[X], block_size - from[Z])
 									face_uv[nd, 3] = point2D(block_size - to[X], block_size - from[Z])
 									break
 								
-								case e_dir.UP:
+								case ZP:
 									face_uv[nd, 0] = point2D(from[X], from[Y])
 									face_uv[nd, 1] = point2D(to[X], from[Y])
 									face_uv[nd, 2] = point2D(to[X], to[Y])
 									face_uv[nd, 3] = point2D(from[X], to[Y])
 									break
 								
-								case e_dir.DOWN:
+								case ZN:
 									face_uv[nd, 0] = point2D(from[X], block_size - to[Y])
 									face_uv[nd, 1] = point2D(to[X], block_size - to[Y])
 									face_uv[nd, 2] = point2D(to[X], block_size - from[Y])
@@ -483,8 +479,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							// Get preview color for world importer
 							if (res = null)
 							{
-								if ((nd = e_dir.UP && other.preview_color_zp = null && alphaz != 0) ||
-									(nd = e_dir.SOUTH && other.preview_color_yp = null && alphay != 0))
+								if ((nd = ZP && other.preview_color[ZP] = null && alphaz != 0) ||
+									(nd = YP && other.preview_color[YP] = null && alphay != 0))
 								{
 									if (texturepage = e_block_sheet.ANIMATED)
 										buffer_current = load_assets_block_preview_ani_buffer
@@ -497,22 +493,22 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									
 									if (texturepage != e_block_sheet.STATIC16 && texturepage != e_block_sheet.ANIMATED)
 									{
-										alpha = (nd = e_dir.UP ? alphaz : alphay)
+										alpha = (nd = ZP ? alphaz : alphay)
 										if (alpha = -1)
 											alpha = 1
 									}
-									else if (py < sheetheight && ((nd = e_dir.UP && alphaz = -1) || (nd = e_dir.SOUTH && alphay = -1)))
+									else if (py < sheetheight && ((nd = ZP && alphaz = -1) || (nd = YP && alphay = -1)))
 										alpha = buffer_read_alpha(px, py, sheetwidth)
 									else
-										alpha = (nd = e_dir.UP ? alphaz : alphay)
+										alpha = (nd = ZP ? alphaz : alphay)
 									
 									// Not transparent
 									if (alpha > 0)
 									{
-										if ((nd = e_dir.UP && colz = -1) || (nd = e_dir.SOUTH && coly = -1))
+										if ((nd = ZP && colz = -1) || (nd = YP && coly = -1))
 											col = buffer_read_color(px, py, sheetwidth)
 										else
-											col = (nd = e_dir.UP ? colz : coly)
+											col = (nd = ZP ? colz : coly)
 										
 										if (face_texture_color[nd] > -1)
 											col = color_multiply(col, face_texture_color[nd])
@@ -543,16 +539,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 											other.preview_tint = colstr
 										}
 										
-										if (nd = e_dir.UP)
-										{
-											other.preview_color_zp = col
-											other.preview_alpha_zp = alpha
-										}
-										else
-										{
-											other.preview_color_yp = col
-											other.preview_alpha_yp = alpha
-										}
+										other.preview_color[nd] = col
+										other.preview_alpha[nd] = alpha
 									}
 								}
 							}
@@ -573,10 +561,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						{
 							switch (nd)
 							{
-								case e_dir.EAST:
-								case e_dir.WEST:
+								case XP:
+								case XN:
 								{
-									if (nd = e_dir.EAST)
+									if (nd = XP)
 										face_edge[nd] = (to[X] = block_size)
 									else
 										face_edge[nd] = (from[X] = 0)
@@ -602,10 +590,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									break
 								}
 								
-								case e_dir.SOUTH:
-								case e_dir.NORTH:
+								case YP:
+								case YN:
 								{
-									if (nd = e_dir.SOUTH)
+									if (nd = YP)
 										face_edge[nd] = (to[Y] = block_size)
 									else
 										face_edge[nd] = (from[Y] = 0)
@@ -631,10 +619,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									break
 								}
 								
-								case e_dir.UP:
-								case e_dir.DOWN:
+								case ZP:
+								case ZN:
 								{
-									if (nd = e_dir.UP)
+									if (nd = ZP)
 										face_edge[nd] = (to[Z] = block_size)
 									else
 										face_edge[nd] = (from[Z] = 0)
@@ -662,187 +650,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							}
 						}
 					}
-					
-					// Convert from arrays
-					
-					from_x = from[X]
-					from_y = from[Y]
-					from_z = from[Z]
-					
-					to_x = to[X]
-					to_y = to[Y]
-					to_z = to[Z]
-					
-					face_render_xp = face_render[e_dir.EAST]
-					face_render_xn = face_render[e_dir.WEST]
-					face_render_yp = face_render[e_dir.SOUTH]
-					face_render_yn = face_render[e_dir.NORTH]
-					face_render_zp = face_render[e_dir.UP]
-					face_render_zn = face_render[e_dir.DOWN]
-					
-					if (face_render_xp)
-					{
-						face_texture_color_xp = face_texture_color[e_dir.EAST]
-						face_depth_xp = face_depth[e_dir.EAST]
-						face_block_vbuffer_xp = face_block_vbuffer[e_dir.EAST]
-						face_vbuffer_xp = face_vbuffer[e_dir.EAST]
-						face_edge_xp = face_edge[e_dir.EAST]
-						face_uv_xp_0 = face_uv[e_dir.EAST, 0]
-						face_uv_xp_0_x = face_uv_xp_0[X]
-						face_uv_xp_0_y = face_uv_xp_0[Y]
-						face_uv_xp_1 = face_uv[e_dir.EAST, 1]
-						face_uv_xp_1_x = face_uv_xp_1[X]
-						face_uv_xp_1_y = face_uv_xp_1[Y]
-						face_uv_xp_2 = face_uv[e_dir.EAST, 2]
-						face_uv_xp_2_x = face_uv_xp_2[X]
-						face_uv_xp_2_y = face_uv_xp_2[Y]
-						face_uv_xp_3 = face_uv[e_dir.EAST, 3]
-						face_uv_xp_3_x = face_uv_xp_3[X]
-						face_uv_xp_3_y = face_uv_xp_3[Y]
-					}
-					
-					if (face_render_xn)
-					{
-						face_texture_color_xn = face_texture_color[e_dir.WEST]
-						face_depth_xn = face_depth[e_dir.WEST]
-						face_block_vbuffer_xn = face_block_vbuffer[e_dir.WEST]
-						face_vbuffer_xn = face_vbuffer[e_dir.WEST]
-						face_edge_xn = face_edge[e_dir.WEST]
-						face_uv_xn_0 = face_uv[e_dir.WEST, 0]
-						face_uv_xn_0_x = face_uv_xn_0[X]
-						face_uv_xn_0_y = face_uv_xn_0[Y]
-						face_uv_xn_1 = face_uv[e_dir.WEST, 1]
-						face_uv_xn_1_x = face_uv_xn_1[X]
-						face_uv_xn_1_y = face_uv_xn_1[Y]
-						face_uv_xn_2 = face_uv[e_dir.WEST, 2]
-						face_uv_xn_2_x = face_uv_xn_2[X]
-						face_uv_xn_2_y = face_uv_xn_2[Y]
-						face_uv_xn_3 = face_uv[e_dir.WEST, 3]
-						face_uv_xn_3_x = face_uv_xn_3[X]
-						face_uv_xn_3_y = face_uv_xn_3[Y]
-					}
-					
-					if (face_render_yp)
-					{
-						face_texture_color_yp = face_texture_color[e_dir.SOUTH]
-						face_depth_yp = face_depth[e_dir.SOUTH]
-						face_block_vbuffer_yp = face_block_vbuffer[e_dir.SOUTH]
-						face_vbuffer_yp = face_vbuffer[e_dir.SOUTH]
-						face_edge_yp = face_edge[e_dir.SOUTH]
-						face_uv_yp_0 = face_uv[e_dir.SOUTH, 0]
-						face_uv_yp_0_x = face_uv_yp_0[X]
-						face_uv_yp_0_y = face_uv_yp_0[Y]
-						face_uv_yp_1 = face_uv[e_dir.SOUTH, 1]
-						face_uv_yp_1_x = face_uv_yp_1[X]
-						face_uv_yp_1_y = face_uv_yp_1[Y]
-						face_uv_yp_2 = face_uv[e_dir.SOUTH, 2]
-						face_uv_yp_2_x = face_uv_yp_2[X]
-						face_uv_yp_2_y = face_uv_yp_2[Y]
-						face_uv_yp_3 = face_uv[e_dir.SOUTH, 3]
-						face_uv_yp_3_x = face_uv_yp_3[X]
-						face_uv_yp_3_y = face_uv_yp_3[Y]
-					}
-					
-					if (face_render_yn)
-					{
-						face_texture_color_yn = face_texture_color[e_dir.NORTH]
-						face_depth_yn = face_depth[e_dir.NORTH]
-						face_block_vbuffer_yn = face_block_vbuffer[e_dir.NORTH]
-						face_vbuffer_yn = face_vbuffer[e_dir.NORTH]
-						face_edge_yn = face_edge[e_dir.NORTH]
-						face_uv_yn_0 = face_uv[e_dir.NORTH, 0]
-						face_uv_yn_0_x = face_uv_yn_0[X]
-						face_uv_yn_0_y = face_uv_yn_0[Y]
-						face_uv_yn_1 = face_uv[e_dir.NORTH, 1]
-						face_uv_yn_1_x = face_uv_yn_1[X]
-						face_uv_yn_1_y = face_uv_yn_1[Y]
-						face_uv_yn_2 = face_uv[e_dir.NORTH, 2]
-						face_uv_yn_2_x = face_uv_yn_2[X]
-						face_uv_yn_2_y = face_uv_yn_2[Y]
-						face_uv_yn_3 = face_uv[e_dir.NORTH, 3]
-						face_uv_yn_3_x = face_uv_yn_3[X]
-						face_uv_yn_3_y = face_uv_yn_3[Y]
-					}
-					
-					if (face_render_zp)
-					{
-						face_texture_color_zp = face_texture_color[e_dir.UP]
-						face_depth_zp = face_depth[e_dir.UP]
-						face_block_vbuffer_zp = face_block_vbuffer[e_dir.UP]
-						face_vbuffer_zp = face_vbuffer[e_dir.UP]
-						face_edge_zp = face_edge[e_dir.UP]
-						face_uv_zp_0 = face_uv[e_dir.UP, 0]
-						face_uv_zp_0_x = face_uv_zp_0[X]
-						face_uv_zp_0_y = face_uv_zp_0[Y]
-						face_uv_zp_1 = face_uv[e_dir.UP, 1]
-						face_uv_zp_1_x = face_uv_zp_1[X]
-						face_uv_zp_1_y = face_uv_zp_1[Y]
-						face_uv_zp_2 = face_uv[e_dir.UP, 2]
-						face_uv_zp_2_x = face_uv_zp_2[X]
-						face_uv_zp_2_y = face_uv_zp_2[Y]
-						face_uv_zp_3 = face_uv[e_dir.UP, 3]
-						face_uv_zp_3_x = face_uv_zp_3[X]
-						face_uv_zp_3_y = face_uv_zp_3[Y]
-					}
-					
-					if (face_render_zn)
-					{
-						face_texture_color_zn = face_texture_color[e_dir.DOWN]
-						face_depth_zn = face_depth[e_dir.DOWN]
-						face_block_vbuffer_zn = face_block_vbuffer[e_dir.DOWN]
-						face_vbuffer_zn = face_vbuffer[e_dir.DOWN]
-						face_edge_zn = face_edge[e_dir.DOWN]
-						face_uv_zn_0 = face_uv[e_dir.DOWN, 0]
-						face_uv_zn_0_x = face_uv_zn_0[X]
-						face_uv_zn_0_y = face_uv_zn_0[Y]
-						face_uv_zn_1 = face_uv[e_dir.DOWN, 1]
-						face_uv_zn_1_x = face_uv_zn_1[X]
-						face_uv_zn_1_y = face_uv_zn_1[Y]
-						face_uv_zn_2 = face_uv[e_dir.DOWN, 2]
-						face_uv_zn_2_x = face_uv_zn_2[X]
-						face_uv_zn_2_y = face_uv_zn_2[Y]
-						face_uv_zn_3 = face_uv[e_dir.DOWN, 3]
-						face_uv_zn_3_x = face_uv_zn_3[X]
-						face_uv_zn_3_y = face_uv_zn_3[Y]
-					}
-					
 					other.element[other.element_amount++] = id
 				}
 			}
 		}
-		
-		// Convert from arrays
-		
-		face_full_xp = face_full[e_dir.EAST]
-		face_min_xp = face_min[e_dir.EAST]
-		face_max_xp = face_max[e_dir.EAST]
-		face_min_depth_xp = face_min_depth[e_dir.EAST]
-		
-		face_full_xn = face_full[e_dir.WEST]
-		face_min_xn = face_min[e_dir.WEST]
-		face_max_xn = face_max[e_dir.WEST]
-		face_min_depth_xn = face_min_depth[e_dir.WEST]
-		
-		face_full_yp = face_full[e_dir.SOUTH]
-		face_min_yp = face_min[e_dir.SOUTH]
-		face_max_yp = face_max[e_dir.SOUTH]
-		face_min_depth_yp = face_min_depth[e_dir.SOUTH]
-		
-		face_full_yn = face_full[e_dir.NORTH]
-		face_min_yn = face_min[e_dir.NORTH]
-		face_max_yn = face_max[e_dir.NORTH]
-		face_min_depth_yn = face_min_depth[e_dir.NORTH]
-		
-		face_full_zp = face_full[e_dir.UP]
-		face_min_zp = face_min[e_dir.UP]
-		face_max_zp = face_max[e_dir.UP]
-		face_min_depth_zp = face_min_depth[e_dir.UP]
-		
-		face_full_zn = face_full[e_dir.DOWN]
-		face_min_zn = face_min[e_dir.DOWN]
-		face_max_zn = face_max[e_dir.DOWN]
-		face_min_depth_zn = face_min_depth[e_dir.DOWN]
-		
 		ds_map_destroy(texturemap)
 		return id
 	}

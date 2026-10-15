@@ -26,4 +26,6 @@ function action_tl_hide_select(hide)
 			action_tl_hide_tree(id, hide, hobj)
 		}
 	}
+	
+	render_world_changed()
 }

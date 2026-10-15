@@ -66,6 +66,24 @@ function project_load_update()
 		if (!loaded)
 			continue
 		
+		// Restore custom depth where legacy timelines used it for transparency
+		if (load_format < e_project.FORMAT_210)
+		{
+			render_depth_custom = (render_depth != 0)
+			
+			if (!render_depth_custom)
+			{
+				for (var i = 0; i < ds_list_size(keyframe_list); i++)
+				{
+					if (keyframe_list[|i].value[e_value.ALPHA] < 1)
+					{
+						render_depth_custom = true
+						break
+					}
+				}
+			}
+		}
+
 		// Convert legacy bending
 		if (load_format < e_project.FORMAT_113 && model_part != null && model_part.bend_part != null)
 		{

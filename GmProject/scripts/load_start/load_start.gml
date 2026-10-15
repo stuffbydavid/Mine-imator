@@ -17,6 +17,7 @@ function load_start(object, script)
 		progress = 0
 		load_object = object
 		load_script = script
+		load_wait = false
 	}
 
 	// Show resource name before the first loading frame

@@ -38,10 +38,8 @@ function block_load_state_file(fn, block, state)
 		state_id_map = ds_map_create()
 		state_default_variant_id = 0
 		
-		model_preview_color_zp = -1
-		model_preview_alpha_zp = -1
-		model_preview_color_yp = -1
-		model_preview_alpha_yp = -1
+		model_preview_color = array_create(block_faces, -1)
+		model_preview_alpha = array_create(block_faces, -1)
 		
 		// Read colors from assets for block JSON (used to modify undesired block colors/alpha)
 		if (ds_map_valid(mc_assets.block_texture_preview_map[?name]))
@@ -52,48 +50,48 @@ function block_load_state_file(fn, block, state)
 			if (!is_undefined(blockmap[?"colorY"]))
 			{
 				if (is_string(blockmap[?"colorY"]))
-					model_preview_color_zp = hex_to_color(blockmap[?"colorY"])
+					model_preview_color[ZP] = hex_to_color(blockmap[?"colorY"])
 				else
-					model_preview_color_zp = null
+					model_preview_color[ZP] = null
 			}
 			
 			// Side color
 			if (!is_undefined(blockmap[?"colorZ"]))
 			{
 				if (is_string(blockmap[?"colorZ"]))
-					model_preview_color_yp = hex_to_color(blockmap[?"colorZ"])
+					model_preview_color[YP] = hex_to_color(blockmap[?"colorZ"])
 				else
-					model_preview_color_yp = null
+					model_preview_color[YP] = null
 			}
 			
 			// If one side has defined color and the other doesn't, both sides use the one color
-			if (model_preview_color_zp < 0 && model_preview_color_yp != -1)
-				model_preview_color_zp = model_preview_color_yp
-			else if (model_preview_color_yp < 0 && model_preview_color_zp != -1)
-				model_preview_color_yp = model_preview_color_zp
+			if (model_preview_color[ZP] < 0 && model_preview_color[YP] != -1)
+				model_preview_color[ZP] = model_preview_color[YP]
+			else if (model_preview_color[YP] < 0 && model_preview_color[ZP] != -1)
+				model_preview_color[YP] = model_preview_color[ZP]
 			/*
-			else if (model_preview_color_zp = null && model_preview_color_yp = null)
+			else if (model_preview_color[ZP] = null && model_preview_color[YP] = null)
 			{
-				model_preview_color_zp = hex_to_color("000000")
-				model_preview_color_yp = hex_to_color("000000")
-				model_preview_alpha_zp = 0
-				model_preview_alpha_yp = 0
+				model_preview_color[ZP] = hex_to_color("000000")
+				model_preview_color[YP] = hex_to_color("000000")
+				model_preview_alpha[ZP] = 0
+				model_preview_alpha[YP] = 0
 			}*/
 			
 			if (!is_undefined(blockmap[?"alphaY"]) && is_real(blockmap[?"alphaY"]))
-				model_preview_alpha_zp = blockmap[?"alphaY"]
+				model_preview_alpha[ZP] = blockmap[?"alphaY"]
 			if (!is_undefined(blockmap[?"alphaZ"]) && is_real(blockmap[?"alphaZ"]))
-				model_preview_alpha_yp = blockmap[?"alphaZ"]
+				model_preview_alpha[YP] = blockmap[?"alphaZ"]
 			
-			if (model_preview_color_zp >= 0 && model_preview_color_yp >= 0 && model_preview_alpha_zp < 0 && model_preview_alpha_yp < 0)
+			if (model_preview_color[ZP] >= 0 && model_preview_color[YP] >= 0 && model_preview_alpha[ZP] < 0 && model_preview_alpha[YP] < 0)
 			{
-				model_preview_alpha_zp = 1
-				model_preview_alpha_yp = 1
+				model_preview_alpha[ZP] = 1
+				model_preview_alpha[YP] = 1
 			}
-			else if (model_preview_alpha_zp < 0 && model_preview_alpha_yp >= 0)
-				model_preview_alpha_zp = model_preview_alpha_yp
-			else if (model_preview_alpha_yp < 0 && model_preview_alpha_zp >= 0)
-				model_preview_alpha_yp = model_preview_alpha_zp
+			else if (model_preview_alpha[ZP] < 0 && model_preview_alpha[YP] >= 0)
+				model_preview_alpha[ZP] = model_preview_alpha[YP]
+			else if (model_preview_alpha[YP] < 0 && model_preview_alpha[ZP] >= 0)
+				model_preview_alpha[YP] = model_preview_alpha[ZP]
 		}
 		
 		var firststate = true;

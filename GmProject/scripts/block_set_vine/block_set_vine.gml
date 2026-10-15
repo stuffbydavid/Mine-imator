@@ -7,9 +7,9 @@ function block_set_vine()
 	
 	var up = "false";
 	
-	if (!build_edge_zp)
+	if (!build_edge[ZP])
 	{
-		var block = builder_get_block(build_pos_x, build_pos_y, build_pos_z + 1);
+		var block = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z] + 1);
 		if (block != null && block != block_current)
 			up = "true"
 	}

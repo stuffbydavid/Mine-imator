@@ -4,6 +4,14 @@ function view_event_create()
 	update = true
 	update_gizmos = true
 	
+	render_depth_list = null
+	render_list_update = true
+	render_list_camera_from = null
+	render_world_bounds = null
+	render_world_bounds_id = -1
+	render_world_visible = []
+	render_world_visible_count = 0
+	
 	location = "full"
 	location_last = "full"
 	
@@ -20,7 +28,6 @@ function view_event_create()
 	surface_effects = false
 	surface_gizmos_enabled = false
 	surface_transparent_background = false
-	surface_watermark = false
 	surface_tool_move = false
 	surface_tool_rotate = false
 	surface_tool_scale = false
@@ -55,9 +62,13 @@ function view_event_create()
 	surface_place_view_matrix = array_copy_1d(MAT_IDENTITY)
 	surface_place_active = false
 	
+	surface_pick_depth_id = null
+	surface_pick_mask_id = null
+	
 	mouseon = false
 	control_mouseon = null
 	control_mouseon_last = null
+	place_output = false
 	render = false
 	transparent_background = false
 	

@@ -22,4 +22,12 @@ function app_startup_interface_export()
 	exportmovie_start = null
 	exportmovie_buffer = null
 	exportmovie_benchmark_csv = ""
+	
+	render_depth_list = null
+	render_list_update = true
+	render_list_camera_from = null
+	render_world_bounds = null
+	render_world_bounds_id = -1
+	render_world_visible = []
+	render_world_visible_count = 0
 }

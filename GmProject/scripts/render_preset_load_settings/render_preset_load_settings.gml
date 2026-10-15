@@ -10,9 +10,8 @@ function render_preset_load_settings(map)
 		has_standard = true
 		set = renderer[e_renderer.STANDARD]
 		set.ssao = value_get_real(standardmap[?"ssao"], set.ssao)
+		set.ssao_blur_passes = clamp(round(value_get_real(standardmap[?"ssao_blur_passes"], set.ssao_blur_passes)), 0, 8)
 		set.shadows = value_get_real(standardmap[?"shadows"], set.shadows)
-		set.dof_quality = clamp(round(value_get_real(standardmap[?"dof_quality"], set.dof_quality)), 8, 64)
-		set.dof_realistic_blur = value_get_real(standardmap[?"dof_realistic_blur"], set.dof_realistic_blur)
 		set.shadows_blur_quality = value_get_real(standardmap[?"shadows_blur_quality"], set.shadows_blur_quality)
 		set.shadows_smoother_blur = value_get_real(standardmap[?"shadows_smoother_blur"], set.shadows_smoother_blur)
 		set.shadows_sun_cascades = clamp(round(value_get_real(standardmap[?"shadows_sun_cascades"], set.shadows_sun_cascades)), 1, 3)
@@ -22,6 +21,8 @@ function render_preset_load_settings(map)
 		set.glow = value_get_real(standardmap[?"glow"], set.glow)
 		set.aa = value_get_real(standardmap[?"aa"], set.aa)
 		set.aa_power = value_get_real(standardmap[?"aa_power"], set.aa_power)
+		set.dof_quality = clamp(round(value_get_real(standardmap[?"dof_quality"], set.dof_quality)), 8, 64)
+		set.dof_realistic_blur = value_get_real(standardmap[?"dof_realistic_blur"], set.dof_realistic_blur)
 	}
 
 	var realisticmap = map[?"realistic"];
@@ -31,8 +32,8 @@ function render_preset_load_settings(map)
 		set = renderer[e_renderer.REALISTIC]
 		set.samples = value_get_real(realisticmap[?"samples"], set.samples)
 		set.ssao = value_get_real(realisticmap[?"ssao"], set.ssao)
+		set.ssao_blur_passes = clamp(round(value_get_real(realisticmap[?"ssao_blur_passes"], set.ssao_blur_passes)), 0, 8)
 		set.shadows = value_get_real(realisticmap[?"shadows"], set.shadows)
-		set.dof_quality = clamp(round(value_get_real(realisticmap[?"dof_quality"], set.dof_quality)), 8, 64)
 		set.shadows_blur_quality = value_get_real(realisticmap[?"shadows_blur_quality"], set.shadows_blur_quality)
 		set.shadows_smoother_blur = value_get_real(realisticmap[?"shadows_smoother_blur"], set.shadows_smoother_blur)
 		set.shadows_sun_cascades = clamp(round(value_get_real(realisticmap[?"shadows_sun_cascades"], set.shadows_sun_cascades)), 1, 3)
@@ -44,20 +45,25 @@ function render_preset_load_settings(map)
 		set.subsurface_samples = value_get_real(realisticmap[?"subsurface_samples"], set.subsurface_samples)
 		set.indirect = value_get_real(realisticmap[?"indirect"], set.indirect)
 		set.indirect_precision = value_get_real(realisticmap[?"indirect_precision"], set.indirect_precision)
+		
 		var resolution = value_get_real(realisticmap[?"indirect_resolution"], set.indirect_resolution);
-		if (resolution = 1 || resolution = .5 || resolution = .25 || resolution = .125)
+		if (array_contains(render_resolution_factors, resolution))
 			set.indirect_resolution = resolution
+		
 		set.indirect_bounces = clamp(round(value_get_real(realisticmap[?"indirect_bounces"], set.indirect_bounces)), 1, 8)
 		set.reflections = value_get_real(realisticmap[?"reflections"], set.reflections)
 		set.reflections_precision = value_get_real(realisticmap[?"reflections_precision"], set.reflections_precision)
+		
 		resolution = value_get_real(realisticmap[?"reflections_resolution"], set.reflections_resolution)
-		if (resolution = 1 || resolution = .5 || resolution = .25 || resolution = .125)
+		if (array_contains(render_resolution_factors, resolution))
 			set.reflections_resolution = resolution
+		
 		set.reflections_bounces = clamp(round(value_get_real(realisticmap[?"reflections_bounces"], set.reflections_bounces)), 1, 8)
 		set.glow = value_get_real(realisticmap[?"glow"], set.glow)
 		set.aa = value_get_real(realisticmap[?"aa"], set.aa)
 		set.aa_mode = value_get_real(realisticmap[?"aa_mode"], set.aa_mode)
 		set.aa_power = value_get_real(realisticmap[?"aa_power"], set.aa_power)
+		set.dof_quality = clamp(round(value_get_real(realisticmap[?"dof_quality"], set.dof_quality)), 8, 64)
 	}
 
 	var fxmap = map[?"specialeffects"];
@@ -66,7 +72,6 @@ function render_preset_load_settings(map)
 		has_fx = true
 		ssao_radius = value_get_real(fxmap[?"ssao_radius"], ssao_radius)
 		ssao_power = value_get_real(fxmap[?"ssao_power"], ssao_power)
-		ssao_blur_passes = clamp(round(value_get_real(fxmap[?"ssao_blur_passes"], ssao_blur_passes)), 0, 8)
 		ssao_color = value_get_color(fxmap[?"ssao_color"], ssao_color)
 		ssao_always_visible = value_get_real(fxmap[?"ssao_always_visible"], ssao_always_visible)
 		glow_radius = value_get_real(fxmap[?"glow_radius"], glow_radius)

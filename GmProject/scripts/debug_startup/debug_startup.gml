@@ -4,40 +4,42 @@ function debug_startup()
 	globalvar debug_project, debug_full, debug_advanced;
 	globalvar debug_skip_blocks, debug_max_blocks, debug_show_bones;
 	globalvar debug_schematics, debug_names, debug_saveid, debug_unused;
-	globalvar debug_check_assets, debug_dark_theme;
+	globalvar debug_check_assets, debug_realtime_views, debug_dark_theme;
 	globalvar debug_info, debug_info_corner, debug_indent, debug_timer;
 
 	if (debug_mode)
 	{
-		debug_project		= file_directory_get() + "dev_project/dev_project.miproject"
-		debug_full			= true
-		debug_advanced		= true
-		debug_skip_blocks	= true
-		debug_max_blocks	= 10
-		debug_show_bones	= false
-		debug_schematics	= false
-		debug_names			= false
-		debug_saveid		= false
-		debug_unused		= false
-		debug_check_assets	= true
-		debug_dark_theme	= true
-		debug_info			= 1
+		debug_project		 = file_directory_get() + "dev_project/dev_project.miproject"
+		debug_full			 = true
+		debug_advanced		 = true
+		debug_skip_blocks	 = false
+		debug_max_blocks	 = 10
+		debug_show_bones	 = false
+		debug_schematics	 = false
+		debug_names			 = false
+		debug_saveid		 = false
+		debug_unused		 = false
+		debug_check_assets	 = true
+		debug_realtime_views = false
+		debug_dark_theme	 = true
+		debug_info			 = 1
 	}
 	else
 	{
-		debug_project		= ""
-		debug_full			= false
-		debug_advanced		= false
-		debug_skip_blocks	= false
-		debug_max_blocks	= 0
-		debug_show_bones	= false
-		debug_schematics	= false
-		debug_names			= false
-		debug_saveid		= false
-		debug_unused		= false
-		debug_check_assets	= false
-		debug_dark_theme	= false
-		debug_info			= 0
+		debug_project		 = ""
+		debug_full			 = false
+		debug_advanced		 = false
+		debug_skip_blocks	 = false
+		debug_max_blocks	 = 0
+		debug_show_bones	 = false
+		debug_schematics	 = false
+		debug_names			 = false
+		debug_saveid		 = false
+		debug_unused		 = false
+		debug_check_assets	 = false
+		debug_realtime_views = false
+		debug_dark_theme	 = false
+		debug_info			 = 0
 	}
 	
 	debug_info_corner = 3
@@ -123,6 +125,8 @@ function debug_startup()
 			case "--no_saveid":			debug_saveid = false; break
 			case "--unused":			debug_unused = true; break
 			case "--no_unused":			debug_unused = false; break
+			case "--realtime":			debug_realtime_views = true; break
+			case "--no_realtime":		debug_realtime_views = false; break
 		}
 	}
 }

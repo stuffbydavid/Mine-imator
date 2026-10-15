@@ -2,10 +2,10 @@
 
 function builder_thread_set_pos(position)
 {
-	build_pos = position
+	build_pos_index = position
 	
 	// Set block X/Y/Z of the thread from the position
-	build_pos_x = build_pos mod build_size_x
-	build_pos_y = (build_pos div build_size_x) mod build_size_y
-	build_pos_z = build_pos div build_size_xy
+	build_pos[X] = build_pos_index mod build_size[X]
+	build_pos[Y] = (build_pos_index div build_size[X]) mod build_size[Y]
+	build_pos[Z] = build_pos_index div build_size_xy
 }

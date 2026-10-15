@@ -28,6 +28,24 @@ Accessor::Accessor(
 	type = Type::Accessor;
 }
 
+DataType::CppType Accessor::numericArrayReadType()
+{
+	if (this->assignExpr == nullptr && this->arrayAccessors.size() == 1 &&
+		this->arrayAccessors[0]->type == DataType::Type::Array && Program::varTypeOverride.containsKey(this->name))
+	{
+		DataType::Assignment* array = Program::varTypeOverride[this->name]->getFirstAssignment(DataType::Type::Array);
+		if (array != nullptr && array->containerStorage != nullptr)
+		{
+			DataType::CppType cppType = array->containerStorage->cppType;
+			if (cppType == DataType::CppType::RealType ||
+				cppType == DataType::CppType::IntType ||
+				cppType == DataType::CppType::BoolType)
+				return cppType;
+		}
+	}
+	return DataType::CppType::VarType;
+}
+
 void Accessor::markAsAssign(Expression* expr)
 {
 	this->assignExpr = expr;
@@ -403,9 +421,13 @@ void Accessor::resolve(ResolveScope* scope)
 			if (var != nullptr && this->arrayAccessors[0]->isReference && this->assignExpr != nullptr)
 				var->markReference();
 
-			// Multiple Value() calls and all non-vector/matrix lookups return VarType.
+			// Propagate explicitly typed array elements to local variables as well as emitted reads
 			if (!returnsRealReference)
-				this->resolvedTypeCpp = DataType::CppType::VarType;
+			{
+				this->resolvedTypeCpp = numericArrayReadType();
+				if (this->resolvedTypeCpp != DataType::CppType::VarType)
+					this->resolvedType->reset(*Program::varTypeOverride[this->name]->getFirstAssignment(DataType::Type::Array)->containerStorage);
+			}
 		}
 	}
 
@@ -748,6 +770,10 @@ String Accessor::toCpp(ResolveScope* scope)
 			else // Id from Scope variable
 				cpp += "s" + macroName + "(" + nameToCpp(this->name) + ")";
 		}
+		
+		// References belong to the entry scope, never another instance or with scope
+		if (scope->location->level == 0 && this->previousInChain == nullptr && this->func->arrRefs.contains(this->name))
+			cpp = "_cppArrRef_" + nameToCpp(this->name);
 
 		if (this->arrayAccessors.size() == 1)
 		{
@@ -780,6 +806,19 @@ String Accessor::toCpp(ResolveScope* scope)
 				// Prefer .Value(index/key) const for read-only
 				if (this->assignExpr == nullptr)
 					accessorFunc = "Value";
+				
+				// Explicit numeric array types opt into reads without variant copies
+				if (accessorFunc == "Value" && dsType == DataType::Type::Array &&
+					this->writtenType->cppType == DataType::CppType::ArrType && Program::varTypeOverride.containsKey(this->name))
+				{
+					switch (numericArrayReadType())
+					{
+						case DataType::CppType::RealType: accessorFunc = "RealValue"; this->needLtZero = true; break;
+						case DataType::CppType::IntType: accessorFunc = "IntValue"; this->needLtZero = true; break;
+						case DataType::CppType::BoolType: accessorFunc = "BoolValue"; break;
+						default: break;
+					}
+				}
 			}
 		}
 	}
@@ -889,7 +928,11 @@ String Accessor::toCpp(ResolveScope* scope)
 		{
 			if (acc->type == DataType::Type::Array)
 			{
-				cpp += "[" + acc->expr->toCpp(argumentScope) + "]";
+				// Copy the final read value instead of retaining a vector component reference
+				if (this->assignExpr == nullptr && acc == this->arrayAccessors[this->arrayAccessors.size() - 1])
+					cpp += ".Value(" + acc->expr->toCpp(argumentScope) + ")";
+				else
+					cpp += "[" + acc->expr->toCpp(argumentScope) + "]";
 				continue;
 			}
 

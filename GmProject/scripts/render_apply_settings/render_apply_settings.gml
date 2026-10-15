@@ -4,9 +4,8 @@ function render_apply_settings(preset, renderer)
 	{
 		var settings = preset.renderer[e_renderer.STANDARD];
 		project_render_ssao = settings.ssao
+		project_render_ssao_blur_passes = settings.ssao_blur_passes
 		project_render_shadows = settings.shadows
-		project_render_dof_quality = settings.dof_quality
-		project_render_dof_realistic_blur = settings.dof_realistic_blur
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
 		project_render_shadows_smoother_blur = settings.shadows_smoother_blur
 		project_render_shadows_jittered = false
@@ -18,6 +17,8 @@ function render_apply_settings(preset, renderer)
 		project_render_aa = settings.aa
 		project_render_aa_mode = e_aa_mode.FXAA
 		project_render_aa_power = settings.aa_power
+		project_render_dof_quality = settings.dof_quality
+		project_render_dof_realistic_blur = settings.dof_realistic_blur
 	}
 	
 	if (renderer = e_renderer.REALISTIC && preset.has_realistic)
@@ -25,9 +26,8 @@ function render_apply_settings(preset, renderer)
 		var settings = preset.renderer[e_renderer.REALISTIC];
 		project_render_samples = settings.samples
 		project_render_ssao = settings.ssao
+		project_render_ssao_blur_passes = settings.ssao_blur_passes
 		project_render_shadows = settings.shadows
-		project_render_dof_quality = settings.dof_quality
-		project_render_dof_realistic_blur = true
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
 		project_render_shadows_smoother_blur = settings.shadows_smoother_blur
 		project_render_shadows_sun_cascades = clamp(round(settings.shadows_sun_cascades), 1, 3)
@@ -49,6 +49,8 @@ function render_apply_settings(preset, renderer)
 		project_render_aa = settings.aa
 		project_render_aa_mode = settings.aa_mode
 		project_render_aa_power = settings.aa_power
+		project_render_dof_quality = settings.dof_quality
+		project_render_dof_realistic_blur = true
 	}
 	
 	if (renderer = e_renderer.COMMON)
@@ -57,7 +59,6 @@ function render_apply_settings(preset, renderer)
 		{
 			project_render_ssao_radius = preset.ssao_radius
 			project_render_ssao_power = preset.ssao_power
-			project_render_ssao_blur_passes = preset.ssao_blur_passes
 			project_render_ssao_color = preset.ssao_color
 			project_render_ssao_always_visible = preset.ssao_always_visible
 			project_render_shadows_blur_size = preset.renderer[e_renderer.STANDARD].shadows_blur_size

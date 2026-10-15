@@ -1,52 +1,38 @@
-/// @desc Renders the list of a depth sign, followed by transparent block meshes.
+/// @desc Renders the given list of timeline objects, followed by transparent block meshes.
 
-function render_world_list(depthsign)
+function render_world_list(list)
 {
-	var list, listsize;
-
-	// Select list
-	if (render_mode = e_render_mode.PLACE_PARENT)
-		list = render_place_parent_list
-	else
-		list = render_list[depthsign + 1]
-	
-	listsize = ds_list_size(list)
-	if (listsize = 0)
+	if (ds_list_size(list) = 0)
 		return 0
 	
-	// Depth passes
-	if (render_depth_pass)
-	{
-		for (var i = 0; i < listsize; i++)
-			with (list[|i])
-				render_world_tl()
-		
-		return 0
-	}
-	
-	var transpblocks, i;
-	transpblocks = render_block_transparent_list[depthsign + 1]
-	ds_list_clear(transpblocks)
-
-	for (i = 0; i < listsize; i++)
+	var transpblocks = false;
+	for (var i = 0; i < ds_list_size(list); i++)
 	{
 		with (list[|i])
 		{
+			if (!render_visible)
+				continue
+				
 			render_world_tl()
 			
 			// Find visible transparent block meshes
-			if (!block_vbuffer_transparent_render || !render_visible || (!app.place_tl_render && (placed || parent_is_placed)))
+			if (render_world_block_transparent = null || !block_vbuffer_transparent_render)
 				continue
 				
 			if (type = e_tl_type.PARTICLE_SPAWNER && !render_particles)
 				continue
 				
-			ds_list_add(transpblocks, id)
+			if (!transpblocks)
+			{
+				ds_list_clear(render_block_transparent_list)
+				transpblocks = true
+			}
+			
+			ds_list_add(render_block_transparent_list, id)
 		}
-
 	}
 
-	if (ds_list_size(transpblocks) = 0)
+	if (!transpblocks)
 		return 0
 	
 	// Render transparent blocks, turning off texture filtering if needed
@@ -57,8 +43,8 @@ function render_world_list(depthsign)
 	
 	render_world_block_transparent = true
 	
-	for (i = 0; i < ds_list_size(transpblocks); i++)
-		with (transpblocks[|i])
+	for (var i = 0; i < ds_list_size(render_block_transparent_list); i++)
+		with (render_block_transparent_list[|i])
 			render_world_tl()
 	
 	render_world_block_transparent = false

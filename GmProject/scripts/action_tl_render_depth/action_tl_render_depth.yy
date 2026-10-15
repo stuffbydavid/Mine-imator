@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"action_tl_depth",
+  "%Name":"action_tl_render_depth",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"action_tl_depth",
+  "name":"action_tl_render_depth",
   "parent":{
     "name":"Graphics",
     "path":"folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
