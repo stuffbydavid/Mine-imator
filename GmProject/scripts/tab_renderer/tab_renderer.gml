@@ -171,6 +171,13 @@ function tab_renderer()
 		draw_meter("render/shadows/blur_size", dx, dy, dw, round(project_render_shadows_blur_size * 100), 0, 400, 100, 1, tab.tbx_shadows_blur_size, action_project_render_shadows_blur_size)
 		tab_next()
 
+		if (renderer_edit = e_renderer.STANDARD || (renderer_edit = e_renderer.REALISTIC && !rendererset.shadows_jittered))
+		{
+			tab_control_switch()
+			draw_switch("render/shadows/smoother_blur", dx, dy, rendererset.shadows_smoother_blur, action_project_render_shadows_smoother_blur)
+			tab_next()
+		}
+
 		tab_collapse_end()
 	}
 

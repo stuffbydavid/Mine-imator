@@ -312,8 +312,8 @@ function shader_startup()
 		new_shader_uniform(e_uniform.LIGHT_SIZE)
 		new_shader_uniform(e_uniform.SHADOW_RADIUS)
 		new_shader_uniform(e_uniform.SHADOW_BLUR_QUALITY)
+		new_shader_uniform(e_uniform.SHADOW_SMOOTHER_BLUR)
 		new_shader_uniform(e_uniform.PCSS_KERNEL)
-		new_shader_uniform(e_uniform.SCREEN_SIZE)
 		new_shader_uniform(e_uniform.GAMMA)
 	}
 	
@@ -350,8 +350,8 @@ function shader_startup()
 		new_shader_uniform(e_uniform.LIGHT_SIZE)
 		new_shader_uniform(e_uniform.SHADOW_RADIUS)
 		new_shader_uniform(e_uniform.SHADOW_BLUR_QUALITY)
+		new_shader_uniform(e_uniform.SHADOW_SMOOTHER_BLUR)
 		new_shader_uniform(e_uniform.PCSS_KERNEL)
-		new_shader_uniform(e_uniform.SCREEN_SIZE)
 		new_shader_uniform(e_uniform.GAMMA)
 	}
 
@@ -555,11 +555,11 @@ function shader_startup()
 			new_shader_uniform(e_uniform.CASCADE_END_CLIP_SPACE)
 			new_shader_uniform(e_uniform.CASCADE_COUNT)
 			new_shader_uniform(e_uniform.SHADOW_BLUR_QUALITY)
+			new_shader_uniform(e_uniform.SHADOW_SMOOTHER_BLUR)
 			new_shader_uniform(e_uniform.PCSS_KERNEL)
 			new_shader_uniform(e_uniform.SUN_SHADOW_DISTANCE)
 			new_shader_uniform(e_uniform.SUN_SHADOW_SCALE)
 			new_shader_uniform(e_uniform.DEPTH_BUFFER_SIZE)
-			new_shader_uniform(e_uniform.SCREEN_SIZE)
 			new_shader_uniform(e_uniform.GAMMA)
 		}
 	}

@@ -4,23 +4,23 @@ void main() {}
 #region PCSS_PLANE_LIB
 #pragma shady: macro_begin PCSS_PLANE_LIB
 
-// Solve the depth change along a receiver-plane tangent
+// Find how depth changes along one direction on the surface
 float getPCSSAxisSlope(vec3 axis, vec3 tangent, vec3 depthAxis)
 {
 	float denom = dot(axis, tangent);
 	float scale = length(axis) * length(tangent);
-	// A collapsed axis has no usable slope
+	// No slope if either direction has zero length
 	if (scale == 0.0)
 		return 0.0;
 
-	// Limit the reciprocal near an edge-on receiver plane
+	// Keep the slope stable when the surface is almost edge-on
 	float minDenom = scale * 0.0001;
 	float inverse = denom / (denom * denom + minDenom * minDenom);
 
 	return dot(depthAxis, tangent) * inverse;
 }
 
-// Each tangent lies on the receiver plane and holds the other UV axis constant
+// Find how depth changes across the shadow map
 vec2 getPCSSDepthSlope(vec3 xAxis, vec3 yAxis, vec3 depthAxis, vec3 normal)
 {
 	return vec2(
@@ -29,24 +29,34 @@ vec2 getPCSSDepthSlope(vec3 xAxis, vec3 yAxis, vec3 depthAxis, vec3 normal)
 	);
 }
 
-// Orthographic shadow coordinates are linear in world position
+// Read the matrix consistently in GLSL and HLSL
+void getPCSSProjectionAxes(mat4 mat, out vec3 xAxis, out vec3 yAxis, out vec3 zAxis)
+{
+	vec3 xColumn = (mat * vec4(1.0, 0.0, 0.0, 0.0)).xyz;
+	vec3 yColumn = (mat * vec4(0.0, 1.0, 0.0, 0.0)).xyz;
+	vec3 zColumn = (mat * vec4(0.0, 0.0, 1.0, 0.0)).xyz;
+
+	xAxis = vec3(xColumn.x, yColumn.x, zColumn.x);
+	yAxis = vec3(xColumn.y, yColumn.y, zColumn.y);
+	zAxis = vec3(xColumn.z, yColumn.z, zColumn.z);
+}
+
+// Surface slope for sun shadows
 vec2 getPCSSOrthoSlope(mat4 mat, vec3 normal)
 {
-	vec3 xAxis = vec3(mat[0][0], mat[1][0], mat[2][0]);
-	vec3 yAxis = vec3(mat[0][1], mat[1][1], mat[2][1]);
-	vec3 depthAxis = vec3(mat[0][2], mat[1][2], mat[2][2]);
+	vec3 xAxis, yAxis, depthAxis;
+	getPCSSProjectionAxes(mat, xAxis, yAxis, depthAxis);
 
 	return getPCSSDepthSlope(xAxis, yAxis, depthAxis, normal);
 }
 
-// Perspective UV axes include the divide by light-space depth and flipped Y
+// Surface slope for spot shadows
 vec2 getPCSSSpotSlope(mat4 mat, vec3 pos, vec3 normal)
 {
-	vec3 xAxis = vec3(mat[0][0], mat[1][0], mat[2][0]);
-	vec3 yAxis = vec3(mat[0][1], mat[1][1], mat[2][1]);
-	vec3 zAxis = vec3(mat[0][2], mat[1][2], mat[2][2]);
+	vec3 xAxis, yAxis, zAxis;
+	getPCSSProjectionAxes(mat, xAxis, yAxis, zAxis);
 
-	// Differentiate projected UV analytically, without screen derivatives
+	// Adjust for perspective and the flipped Y axis
 	float depth = max(pos.z, 0.0001);
 	xAxis = (xAxis - zAxis * (pos.x / depth)) * (0.5 / depth);
 	yAxis = (yAxis - zAxis * (pos.y / depth)) * (-0.5 / depth);
@@ -54,12 +64,12 @@ vec2 getPCSSSpotSlope(mat4 mat, vec3 pos, vec3 normal)
 	return getPCSSDepthSlope(xAxis, yAxis, zAxis, normal);
 }
 
-// Intersect a point-light sample ray with the receiver plane
+// Find where the sample ray hits the surface
 float getPCSSRayDepth(vec3 direction, vec3 pos, vec3 normal, float fallback)
 {
 	float denom = dot(direction, normal);
 
-	// A nearly parallel ray cannot provide a stable intersection
+	// Use the original depth if the ray is almost parallel to the surface
 	if (abs(denom) < 0.0001)
 		return fallback;
 
@@ -77,8 +87,8 @@ float getPCSSRayDepth(vec3 direction, vec3 pos, vec3 normal, float fallback)
 #define PCSS_MAX_BLOCKER_SAMPLES 16
 #define PCSS_REFERENCE_SHADOW_SIZE 2048.0
 
-// Bounds store the lower texel center in xy and upper texel center in zw
-// Restrict the footprint to one map or one point-light atlas face
+// bounds.xy and bounds.zw hold the first and last texel centers
+// Keep all four samples inside the shadow map or cubemap face
 void getPCSSTexels(vec2 coord, vec2 size, vec2 low, vec2 high, out vec4 bounds, out vec2 blend)
 {
 	vec2 texel = clamp(coord * size - 0.5, low * size, high * size - 1.0);
@@ -90,14 +100,14 @@ void getPCSSTexels(vec2 coord, vec2 size, vec2 low, vec2 high, out vec4 bounds, 
 
 float blendPCSSVisibility(vec4 shadow, vec2 blend)
 {
-	// Compare depths first, then interpolate visibility across the two rows
+	// Blend visibility after testing each texel separately
 	float bottom = mix(shadow.x, shadow.y, blend.x);
 	float top = mix(shadow.z, shadow.w, blend.x);
 
 	return mix(bottom, top, blend.y);
 }
 
-// Get samples used to find blockers
+// Use half the filter samples for the blocker search
 int getPCSSBlockerSamples(int filterSamples)
 {
 	int blockerSamples = (filterSamples + 1) / 2;
@@ -111,38 +121,18 @@ int getPCSSBlockerSamples(int filterSamples)
 	return blockerSamples;
 }
 
-// Get a rotated disk sample
-vec2 getPCSSSampleOffset(int index, vec2 rotation)
-{
-	vec2 offset = uPCSSKernel[index];
-	return vec2(
-		offset.x * rotation.x - offset.y * rotation.y,
-		offset.x * rotation.y + offset.y * rotation.x
-	);
-}
-
-// Get rotation for a screen pixel
-vec2 getPCSSPixelRotation(vec4 clipPosition, vec2 screenSize)
-{
-	vec2 screenCoord = floor((clipPosition.xy / clipPosition.w * 0.5 + 0.5) * screenSize);
-	float noise = fract(52.9829189 * fract(dot(screenCoord, vec2(0.06711056, 0.00583715))));
-	float angle = noise * 6.28318531;
-	return vec2(cos(angle), sin(angle));
-}
-
-// Get receiver depth at a sample
+// Follow the surface slope when sampling nearby
 float getPCSSReceiverDepth(vec2 centerCoord, float centerDepth, vec2 sampleCoord, vec2 depthGradient)
 {
 	return centerDepth + dot(sampleCoord - centerCoord, depthGradient);
 }
 
-// Check if a sample blocks the light
 bool isPCSSBlocker(float receiverDepth, float sampleDepth, float bias)
 {
 	return (receiverDepth - bias) > sampleDepth;
 }
 
-// Convert the depth test to visibility
+// 0 means shadow, 1 means lit
 float getPCSSVisibility(float receiverDepth, float sampleDepth, float bias)
 {
 	return isPCSSBlocker(receiverDepth, sampleDepth, bias) ? 0.0 : 1.0;
