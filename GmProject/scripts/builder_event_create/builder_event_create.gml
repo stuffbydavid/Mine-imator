@@ -11,6 +11,7 @@ function builder_event_create()
 	sch_blockdata_ints = false
 	sch_legacy_blocks_array = null
 	sch_legacy_data_array = null
+	sch_legacy_add_array = null
 	sch_timeline_amount = 0
 	sch_tileentity_list = null
 	

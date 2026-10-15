@@ -122,6 +122,7 @@ namespace CppProject
 		IntType blockDataArray = self->sch_blockdata_array;
 		IntType legacyBlockArray = self->sch_legacy_blocks_array;
 		IntType legacyDataArray = self->sch_legacy_data_array;
+		IntType legacyAddArray = self->sch_legacy_add_array;
 
 		// Populate sections with schematic data
 		#pragma OPENMP_FOR(1) reduction(+:numTimelines)
@@ -161,7 +162,7 @@ namespace CppProject
 						paletteIndex = buffer->data[blockDataArray + bufferPos];
 
 					// Get block from instance id in schematic palette
-					if (paletteIndex > 0)
+					if (paletteIndex >= 0 && paletteIndex < paletteBlocks.Size())
 					{
 						block = ObjTypeOpt(obj_block, paletteBlocks[paletteIndex]);
 
@@ -172,8 +173,17 @@ namespace CppProject
 				else
 				{
 					// Get block from legacy id+data
-					uint8_t legacyId = buffer->data[legacyBlockArray + bufferPos];
-					if (legacyId > 0 && global::legacy_block_set[legacyId])
+					IntType legacyId = buffer->data[legacyBlockArray + bufferPos];
+					if (legacyAddArray != null_)
+					{
+						uint8_t high = buffer->data[legacyAddArray + bufferPos / 2];
+						if (bufferPos % 2)
+							legacyId += (high >> 4) << 8;
+						else
+							legacyId += (high & 15) << 8;
+					}
+
+					if (legacyId > 0 && legacyId < 256 && global::legacy_block_set[legacyId])
 					{
 						uint8_t legacyData = buffer->data[legacyDataArray + bufferPos] % 16;
 						block = ObjTypeOpt(obj_block, global::legacy_block_obj[legacyId][legacyData]);
@@ -271,6 +281,19 @@ namespace CppProject
 
 		self->build_multithreaded = null_;
 		self->build_transform = false;
+	}
+
+	void builder_set_block(ScopeAny self, IntType x, IntType y, IntType z, IntType blockId, IntType stateId, BoolType waterlogged)
+	{
+		WorldVec pos = { x, y, z };
+		Section* section = Builder::GetSection(pos);
+		BuilderState state = { (uint16_t)blockId, (uint16_t)stateId, waterlogged };
+
+		// Sparse structures leave unlisted positions as air
+		if (!section->builder.palette.Size())
+			section->AddBuilderState({ 0, 0, false });
+
+		section->builder.paletteIndices[section->GetBlockOffset(pos)] = section->AddBuilderState(state);
 	}
 
 	void builder_set_state_id(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)

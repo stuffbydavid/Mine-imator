@@ -52,6 +52,7 @@ function builder_generate()
 			neighborx = blockx
 			neighbory = blocky
 			neighborz = blockz
+			
 			switch (f)
 			{
 				case XP: neighborx = blockx + 1; break
@@ -73,6 +74,7 @@ function builder_generate()
 			block_face_min[f] = null
 			block_face_max[f] = null
 			block_face_min_depth[f] = null
+			
 			// Keep the top boundary open when removing scenery edges
 			if (build_edge[f] && !mc_builder.build_edges && f != ZP)
 			{

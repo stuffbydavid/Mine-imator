@@ -889,9 +889,25 @@ String Accessor::toCpp(ResolveScope* scope)
 			int arg = 0;
 			for (Expression* expr : this->callParameters)
 			{
+				bool createRef = (targetFunc != nullptr && arg < static_cast<int>(args.size()) && args[arg]->isReference) ||
+					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType());
+				if (createRef)
+				{
+					// Reference arguments must access the stored element rather than a Value copy
+					Expression* refExpr = expr;
+					while (refExpr->type == Type::Parenthesis)
+						refExpr = static_cast<ExpressionParenthesis*>(refExpr)->expr;
+					if (refExpr->type == Type::Accessor)
+					{
+						Accessor* refAcc = static_cast<Accessor*>(refExpr);
+						while (refAcc->nextInChain != nullptr)
+							refAcc = refAcc->nextInChain;
+						if (refAcc->arrayAccessors.size() > 0)
+							refAcc->markAsAssign(this);
+					}
+				}
 				String exprCpp = expr->toCpp(argumentScope);
-				if ((targetFunc != nullptr && arg < static_cast<int>(args.size()) && args[arg]->isReference) ||
-					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType())) // Use reference of expression
+				if (createRef)
 					exprCpp = "VarType::CreateRef(" + exprCpp + ")";
 
 				parCpp += (p++ > 0 ? ", " : "");

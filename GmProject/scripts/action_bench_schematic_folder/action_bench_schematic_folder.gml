@@ -36,15 +36,12 @@ function action_bench_schematic_folder(folder, update = true)
 		var dir = schematics_directory + folder + "/";
 		if (directory_exists_lib(dir))
 		{
-			var files = file_find(dir, ".schematic");
+			var files = file_find(dir, ".schematic;.schem;.nbt");
 			if (is_undefined(files))
 				files = []
 			
 			for (var i = 0; i < array_length(files); i++)
-				files[i] = filename_new_ext(filename_name(files[i]), "")
-			
-			for (var i = 0; i < array_length(files); i++)
-				sortlist_add(list, files[i])
+				sortlist_add(list, filename_name(files[i]))
 		}
 	}
 	
@@ -71,13 +68,14 @@ function action_bench_schematic_folder(folder, update = true)
 			if (schematic_folders[i] != folder)
 				continue
 			
-			var schematic = schematic_folders_default[i];
+			var sch = schematic_folders_default[i];
 			for (var s = 0; s < ds_list_size(list.display_list); s++)
 			{
-				if (list.display_list[|s] = schematic)
+				if (filename_new_ext(list.display_list[|s], "") = sch)
 				{
-					sortlist_view(list, schematic)
-					action_bench_schematic_select(schematic)
+					sch = list.display_list[|s]
+					sortlist_view(list, sch)
+					action_bench_schematic_select(sch)
 					
 					break
 				}

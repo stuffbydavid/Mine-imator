@@ -9,7 +9,10 @@ function builder_read_schematic(map)
 	}
 	
 	// Get format
-	builder_scenery_legacy = is_undefined(map[?"Palette"]) && (map[?"Blocks_NBT_type"] != e_nbt.TAG_COMPOUND)
+	builder_scenery_legacy = (is_undefined(map[?"Version"]) && is_undefined(map[?"Palette"]) && (map[?"Blocks_NBT_type"] != e_nbt.TAG_COMPOUND))
+	
+	sch_legacy_add_array = null
+	file_map = ""
 	
 	var blocksmap, sizekeys;
 	blocksmap = map
@@ -19,15 +22,15 @@ function builder_read_schematic(map)
 	for (var a = X; a <= Z; a++)
 	{
 		var size = map[?sizekeys[a]];
-		if (is_undefined(size))
+		if (!is_real(size))
 		{
 			log("Schematic error", "Size not fully defined")
 			return false
 		}
 		
-		if (size <= 0)
+		if (size <= 0 || size != floor(size) || size > 65535)
 		{
-			log("Schematic error", "Size cannot be 0")
+			log("Schematic error", "Size must be a valid integer")
 			return false
 		}
 		
@@ -40,16 +43,16 @@ function builder_read_schematic(map)
 	{
 		// Check version
 		var version = map[?"Version"];
-		if (is_undefined(version))
+		if (!is_real(version))
 		{
 			log("Schematic error", "Version not available")
 			return false
 		}
 		
 		log("Version", map[?"Version"])
-		if (version > 3)
+		if (version < 1 || version > 3 || version != floor(version))
 		{
-			log("Schematic error", "Unsupported format, version too high")
+			log("Schematic error", "Unsupported schematic version")
 			return false
 		}
 		
@@ -72,139 +75,55 @@ function builder_read_schematic(map)
 			return false
 		}
 		
-		// Create block & state ID lookup
-		for (var i = 0; i < ds_map_size(palettemap); i++)
-		{
-			sch_palette_blocks[i] = null
-			sch_palette_state_ids[i] = null
-			sch_palette_waterlogged[i] = false
-		}
+		// Remap sparse palette IDs to compact internal indices
+		var paletteindices, key, valid;
+		paletteindices = ds_int_map_create()
 		
-		var palettemax, key;
-		palettemax = 0
+		sch_palette_blocks = []
+		sch_palette_state_ids = []
+		sch_palette_waterlogged = []
+		
 		key = ds_map_find_first(palettemap)
+		valid = true
 		
 		while (!is_undefined(key))
 		{
 			if (!string_contains(key, "_NBT_"))
 			{
-				var index, bracketindex;
+				var index, slot, state;
 				index = palettemap[?key]
-				bracketindex = string_pos("[", key)
-				
-				if (index + 1 > palettemax)
-					palettemax = index + 1
-					
-				// Has properties
-				if (bracketindex > 0)
+				if (!is_real(index) || index < 0 || index != floor(index) || index > $7fffffff || ds_map_exists(paletteindices, index))
 				{
-					var mcid, varstr, block;
-					mcid = string_copy(key, 1, bracketindex - 1)
-					varstr = string_copy(key, bracketindex + 1, string_length(key) - 1 - bracketindex)
-					block = mc_assets.block_id_map[?mcid]
-					
-					if (!is_undefined(block))
-					{
-						var vars = [];
-						
-						// ID specific vars
-						if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?mcid]))
-							state_vars_add(vars, block.id_state_vars_map[?mcid])
-						
-						// Properties vars
-						state_vars_add(vars, string_get_state_vars(varstr))
-						
-						sch_palette_blocks[index] = block
-						sch_palette_state_ids[index] = block_get_state_id(block, vars)
-						
-						// Check waterlogged status 
-						if (state_vars_get_value(vars, "waterlogged") != "false") 
-							if (block.waterlogged || state_vars_get_value(vars, "waterlogged") = "true") 
-								sch_palette_waterlogged[index] = true 
-					}
+					valid = false
+					break
 				}
 				
-				// ID only
-				else if (!is_undefined(mc_assets.block_id_map[?key]))
-				{
-					var block = mc_assets.block_id_map[?key];
-					sch_palette_blocks[index] = block
-							
-					// ID specific vars
-					if (block.id_state_vars_map != null && is_array(block.id_state_vars_map[?key]))
-						sch_palette_state_ids[index] = block_get_state_id(block, block.id_state_vars_map[?key])
-					else
-						sch_palette_state_ids[index] = 0
-							
-					sch_palette_waterlogged[index] = block.waterlogged
-				}
+				slot = array_length(sch_palette_blocks)
+				paletteindices[?index] = slot
+				state = builder_read_block_state(key)
+				
+				sch_palette_blocks[slot] = state[0]
+				sch_palette_state_ids[slot] = state[1]
+				sch_palette_waterlogged[slot] = state[2]
 			}
-					
+			
 			key = ds_map_find_next(palettemap, key)
 		}
 		
-		// Get block array, version 3 renamed BlockData to Blocks.Data
-		var blockdatakey = (version >= 3 ? "Data" : "BlockData");
-		sch_blockdata_array = blocksmap[?blockdatakey]
-		if (is_undefined(sch_blockdata_array))
+		if (valid && ds_map_size(paletteindices) > 0)
 		{
-			log("Schematic error", "Block data array not found")
+			valid = builder_read_schematic_data(version, blocksmap, paletteindices, build_size[X] * build_size[Y] * build_size[Z])
+		}
+		else
+		{
+			log("Schematic error", "Invalid or empty palette")
+			valid = false
+		}
+		
+		ds_map_destroy(paletteindices)
+		
+		if (!valid)
 			return false
-		}
-		
-		sch_blockdata_ints = (blocksmap[?blockdatakey + "_NBT_type"] = e_nbt.TAG_INT_ARRAY)
-		debug("blockdataints", sch_blockdata_ints)
-		
-		// BlockData is an array of varints (Sponge Schematic specification)
-		// Currently broken
-		if (false && !sch_blockdata_ints && palettemax > 128)
-		{
-			var blockamount, basepos, readpos, endpos, writepos;
-			blockamount = build_size[X] * build_size[Y] * build_size[Z]
-			basepos = buffer_get_size(buffer_current)
-			readpos = sch_blockdata_array
-			endpos = sch_blockdata_array + blocksmap[?blockdatakey + "_NBT_length"]
-			writepos = basepos
-			
-			// Missing entries are left at zero, so a truncated array still loads
-			buffer_resize(buffer_current, basepos + blockamount * 4)
-			
-			for (var i = 0; i < blockamount; i++)
-			{
-				var value, mul, byte;
-				value = 0
-				mul = 1
-				byte = 128
-				
-				while (byte >= 128)
-				{
-					if (readpos >= endpos)
-					{
-						log("Schematic warning", "BlockData ends before the last block")
-						break
-					}
-					
-					byte = buffer_peek(buffer_current, readpos, buffer_u8)
-					readpos++
-					value += (byte mod 128) * mul
-					mul *= 128
-				}
-				
-				if (readpos >= endpos && byte >= 128)
-					break
-				
-				// Store as a big endian integer, matching the TAG_Int_Array layout
-				buffer_poke(buffer_current, writepos, buffer_u8, (value div 16777216) mod 256)
-				buffer_poke(buffer_current, writepos + 1, buffer_u8, (value div 65536) mod 256)
-				buffer_poke(buffer_current, writepos + 2, buffer_u8, (value div 256) mod 256)
-				buffer_poke(buffer_current, writepos + 3, buffer_u8, value mod 256)
-				writepos += 4
-			}
-			
-			log("Decoded varint BlockData", blockamount)
-			sch_blockdata_array = basepos
-			sch_blockdata_ints = true
-		}
 		
 		// Get map
 		var metadata = map[?"Metadata"];
@@ -228,6 +147,37 @@ function builder_read_schematic(map)
 			return false
 		}
 		
+		// Legacy high block IDs must not alias unrelated vanilla blocks
+		sch_legacy_add_array = map[?"AddBlocks"]
+		if (is_undefined(sch_legacy_add_array))
+			sch_legacy_add_array = null
+		
+		var blockamount, sourcesize;
+		blockamount = build_size[X] * build_size[Y] * build_size[Z]
+		sourcesize = buffer_get_size(buffer_current)
+		
+		if (map[?"Blocks_NBT_type"] != e_nbt.TAG_BYTE_ARRAY ||
+			map[?"Data_NBT_type"] != e_nbt.TAG_BYTE_ARRAY ||
+			map[?"Blocks_NBT_length"] != blockamount ||
+			map[?"Data_NBT_length"] != blockamount ||
+			sch_legacy_blocks_array + blockamount > sourcesize ||
+			sch_legacy_data_array + blockamount > sourcesize)
+		{
+			log("Schematic error", "Invalid legacy block/data arrays")
+			return false
+		}
+		
+		if (sch_legacy_add_array != null)
+		{
+			if (map[?"AddBlocks_NBT_type"] != e_nbt.TAG_BYTE_ARRAY ||
+				map[?"AddBlocks_NBT_length"] != ceil(blockamount / 2) ||
+				sch_legacy_add_array + ceil(blockamount / 2) > sourcesize)
+			{
+				log("Schematic error", "Invalid legacy AddBlocks array")
+				return false
+			}
+		}
+
 		// Get map
 		file_map = map[?"FromMap"]
 	}
@@ -237,8 +187,10 @@ function builder_read_schematic(map)
 		
 	// Version 2 renamed TileEntities to BlockEntities, version 3 moved it into Blocks
 	sch_tileentity_list = map[?"TileEntities"]
+	
 	if (!ds_list_valid(sch_tileentity_list))
 		sch_tileentity_list = map[?"BlockEntities"]
+	
 	if (!ds_list_valid(sch_tileentity_list))
 		sch_tileentity_list = blocksmap[?"BlockEntities"]
 	
