@@ -13,7 +13,6 @@ varying vec3 vTangent;
 varying vec2 vTexCoord;
 varying vec4 vCustom;
 varying vec4 vColor;
-varying vec4 vClipPosition;
 
 uniform vec4 uBlendColor;
 
@@ -35,5 +34,4 @@ void main()
 	vColor = uBlendColor * in_Colour;
 	
 	gl_Position = getClipPosition(vPosition);
-	vClipPosition = gl_Position;
 }

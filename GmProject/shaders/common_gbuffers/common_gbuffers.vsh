@@ -42,7 +42,6 @@ uniform vec2 uTextureOffset;
 	varying vec2 vDepthSlope0;
 	varying vec2 vDepthSlope1;
 	varying vec2 vDepthSlope2;
-	varying vec4 vClipPosition;
 	varying float vClipSpaceDepth;
 	#pragma shady: inline(common_shadows.PCSS_PLANE_LIB)
 #endif
@@ -56,7 +55,6 @@ uniform vec2 uTextureOffset;
 	gl_Position = getClipPosition(vPosition);
 	
 	#ifdef CPP_SUN_GBUFFERS
-		vClipPosition = gl_Position;
 		vClipSpaceDepth = gl_Position.z;
 	
 		vScreenCoord0 = uLightMatBiasMVP[0] * vec4(vPosition, 1.0);

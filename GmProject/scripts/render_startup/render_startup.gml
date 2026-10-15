@@ -230,6 +230,7 @@ function render_startup()
 	render_cascades = []
 	
 	project_render_shadows_jittered = false
+	project_render_shadows_smoother_blur = false
 	project_render_shadows_sun_cascades = 3
 	
 	render_shadowless_point_amount = 0

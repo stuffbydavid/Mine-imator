@@ -14,6 +14,7 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.dof_quality = objset.dof_quality &&
 			set.dof_realistic_blur = objset.dof_realistic_blur &&
 			set.shadows_blur_quality = objset.shadows_blur_quality &&
+			set.shadows_smoother_blur = objset.shadows_smoother_blur &&
 			set.shadows_sun_cascades = objset.shadows_sun_cascades &&
 			set.shadows_sun_buffer_size = objset.shadows_sun_buffer_size &&
 			set.shadows_spot_buffer_size = objset.shadows_spot_buffer_size &&
@@ -35,6 +36,7 @@ function render_preset_equals(obj, renderer, allsettings)
 			set.shadows = objset.shadows &&
 			set.dof_quality = objset.dof_quality &&
 			set.shadows_blur_quality = objset.shadows_blur_quality &&
+			set.shadows_smoother_blur = objset.shadows_smoother_blur &&
 			set.shadows_sun_cascades = objset.shadows_sun_cascades &&
 			set.shadows_sun_buffer_size = objset.shadows_sun_buffer_size &&
 			set.shadows_spot_buffer_size = objset.shadows_spot_buffer_size &&

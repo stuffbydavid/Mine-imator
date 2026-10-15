@@ -18,6 +18,7 @@ function render_preset_event_create()
 		dof_quality = 16
 		dof_realistic_blur = false
 		shadows_blur_quality = 20
+		shadows_smoother_blur = false
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512
@@ -37,6 +38,7 @@ function render_preset_event_create()
 		shadows = true
 		dof_quality = 16
 		shadows_blur_quality = 20
+		shadows_smoother_blur = false
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512

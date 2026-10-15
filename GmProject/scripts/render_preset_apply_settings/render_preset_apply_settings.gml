@@ -39,6 +39,7 @@ function render_preset_apply_settings(settings, renderer)
 			case "dof_quality": set.dof_quality = clamp(round(val), 8, 64); break
 			case "dof_realistic_blur": if (renderer = e_renderer.STANDARD) set.dof_realistic_blur = val; break
 			case "shadows_blur_quality": set.shadows_blur_quality = val; break
+			case "shadows_smoother_blur": set.shadows_smoother_blur = val; break
 			case "shadows_blur_size": standardset.shadows_blur_size = val; break
 			case "shadows_sun_cascades": set.shadows_sun_cascades = clamp(round(val), 1, 3); break
 			case "shadows_sun_buffer_size": set.shadows_sun_buffer_size = val; break

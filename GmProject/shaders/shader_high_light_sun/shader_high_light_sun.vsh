@@ -24,7 +24,6 @@ varying vec2 vDepthSlope2;
 varying float vClipSpaceDepth;
 varying vec4 vColor;
 varying vec4 vCustom;
-varying vec4 vClipPosition;
 
 uniform vec4 uBlendColor;
 
@@ -41,7 +40,6 @@ void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
 	gl_Position = getClipPosition(vPosition);
-	vClipPosition = gl_Position;
 	vClipSpaceDepth = gl_Position.z;
 	
 	vScreenCoord0 = uLightMatBiasMVP[0] * vec4(vPosition, 1.0);

@@ -8,6 +8,7 @@ function render_apply_settings(preset, renderer)
 		project_render_dof_quality = settings.dof_quality
 		project_render_dof_realistic_blur = settings.dof_realistic_blur
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
+		project_render_shadows_smoother_blur = settings.shadows_smoother_blur
 		project_render_shadows_jittered = false
 		project_render_shadows_sun_cascades = clamp(round(settings.shadows_sun_cascades), 1, 3)
 		project_render_shadows_sun_buffer_size = settings.shadows_sun_buffer_size
@@ -28,6 +29,7 @@ function render_apply_settings(preset, renderer)
 		project_render_dof_quality = settings.dof_quality
 		project_render_dof_realistic_blur = true
 		project_render_shadows_blur_quality = settings.shadows_blur_quality
+		project_render_shadows_smoother_blur = settings.shadows_smoother_blur
 		project_render_shadows_sun_cascades = clamp(round(settings.shadows_sun_cascades), 1, 3)
 		project_render_shadows_sun_buffer_size = settings.shadows_sun_buffer_size
 		project_render_shadows_spot_buffer_size = settings.shadows_spot_buffer_size
