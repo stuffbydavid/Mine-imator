@@ -43,7 +43,7 @@ function macros()
 	#macro render_presets				[ "performance.mirender", "balanced.mirender", "extreme.mirender" ]
 	#macro render_preset_default		"balanced.mirender"
 	#macro render_preset_default_name	"balanced"
-	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
+	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.litematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
 	#macro mc_file_directory			file_directory_get() + "Minecraft_unzip/"

@@ -1,6 +1,7 @@
-function builder_read_schematic_nbt(structuremap)
+function builder_read_nbt(structuremap)
 {
 	scenery_structure = true
+	
 	if (!ds_map_valid(structuremap))
 	{
 		log("Structure error", "Not a structure file")
@@ -158,9 +159,9 @@ function builder_read_schematic_nbt(structuremap)
 				// Use the same thread scope as schematic block entities
 				if (is_string(entity))
 				{
-					var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""));
-					if (script > -1)
-						script_execute(script, blocknbt)
+					var scr = asset_get_index("block_tile_entity_" + string_replace(string_lower(entity), "minecraft:", ""));
+					if (scr > -1)
+						script_execute(scr, blocknbt)
 				}
 			}
 		}

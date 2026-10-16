@@ -37,6 +37,7 @@ function action_lib_scenery_load(fn)
 			block_tex_normal = project_pack_res
 			
 			temp_update_display_name()
+			temp_update_rot_point()
 			
 			loaded = true
 			with (temp_animate())

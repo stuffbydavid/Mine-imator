@@ -48,7 +48,7 @@ function res_load_scenery()
 		
 				// Schematic/Structure file
 				var ext = filename_ext(fn);
-				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt")
+				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt" || ext = ".litematic")
 				{
 					log("Loading " + ext, fn)
 					debug_timer_start()
@@ -95,10 +95,14 @@ function res_load_scenery()
 							schematicmap = schematicmap[?"Schematic"]
 					}
 
+					// Read Litematic file
+					if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Regions"]))
+						openerr = !builder_read_litematic(schematicmap)
+					
 					// Structure palettes use lowercase lists rather than Sponge compounds
-					if (ds_map_valid(schematicmap) && ds_list_valid(schematicmap[?"size"]))
+					else if (ds_map_valid(schematicmap) && ds_list_valid(schematicmap[?"size"]))
 					{
-						openerr = !builder_read_schematic_nbt(schematicmap)
+						openerr = !builder_read_nbt(schematicmap)
 						if (openerr)
 							break
 					}

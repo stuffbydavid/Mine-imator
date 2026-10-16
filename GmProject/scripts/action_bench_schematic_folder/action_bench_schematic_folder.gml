@@ -36,7 +36,7 @@ function action_bench_schematic_folder(folder, update = true)
 		var dir = schematics_directory + folder + "/";
 		if (directory_exists_lib(dir))
 		{
-			var files = file_find(dir, ".schematic;.schem;.nbt");
+			var files = file_find(dir, ".schematic;.schem;.nbt;.litematic");
 			if (is_undefined(files))
 				files = []
 			
@@ -48,16 +48,16 @@ function action_bench_schematic_folder(folder, update = true)
 	if (update)
 		sortlist_update(list)
 	
-	if (folder = "project" && ds_list_size(list.display_list) > 0)
-	{
-		action_bench_schematic_select(list.display_list[|0])
-		return 0
-	}
-	
-	if (folder != "project" && is_string(selected) && ds_list_find_index(list.display_list, selected) >= 0)
+	if (selected != null && ds_list_find_index(list.display_list, selected) >= 0)
 	{
 		sortlist_view(list, selected)
 		action_bench_schematic_select(selected)
+		return 0
+	}
+	
+	if (folder = "project" && ds_list_size(list.display_list) > 0)
+	{
+		action_bench_schematic_select(list.display_list[|0])
 		return 0
 	}
 	

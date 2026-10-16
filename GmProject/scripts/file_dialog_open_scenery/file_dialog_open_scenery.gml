@@ -1,4 +1,4 @@
 function file_dialog_open_scenery()
 {
-	return file_dialog_open(text_get("file_dialog/open/scenery") + " (*.schematic; *.schem; *.nbt; *.blocks)|*.schematic;*.schem;*.nbt;*.blocks", "", schematics_directory, text_get("file_dialog/open/scenery_caption"))
+	return file_dialog_open(text_get("file_dialog/open/scenery") + " (*.schematic; *.schem; *.nbt; *.litematic; *.blocks)|*.schematic;*.schem;*.nbt;*.litematic;*.blocks", "", schematics_directory, text_get("file_dialog/open/scenery_caption"))
 }
