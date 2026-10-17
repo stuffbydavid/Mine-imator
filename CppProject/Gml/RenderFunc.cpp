@@ -12,6 +12,8 @@
 #include "Render/PrimitiveRenderer.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
+#include <cmath>
+
 namespace CppProject
 {
 	IntType gpu_get_blendmode()
@@ -577,7 +579,8 @@ namespace CppProject
 	void vertex_delete_buffer(IntType id)
 	{
 		if (VertexBuffer* buffer = FindVertexBuffer(id))
-			delete buffer;
+			if (--buffer->references == 0)
+				delete buffer;
 	}
 
 	void vertex_end(IntType buffer)
@@ -593,6 +596,123 @@ namespace CppProject
 
 		WARNING("Invalid model bend vertex buffer");
 		return false;
+	}
+
+	IntType vbuffer_merge(ArrType buffers, ArrType transforms)
+	{
+		if (buffers.Size() < 2 || buffers.Size() != transforms.Size())
+		{
+			WARNING("Invalid model mesh merge arrays");
+			return 0;
+		}
+
+		QVector<VertexBuffer*> sources;
+		QVector<IntType> sourceIds;
+		QVector<Matrix> matrices;
+		IntType numVertices = 0, numIndices = 0;
+		const Matrix identity = Matrix::Identity();
+		for (IntType b = 0; b < buffers.Size(); b++)
+		{
+			VertexBuffer* source = FindVertexBuffer(buffers.IntValue(b));
+			VarType transform = transforms.Value(b);
+			if (!source || !source->valid ||
+				(!transform.IsMatrix() && (!transform.IsArray() || transform.Arr().Size() != 16)))
+			{
+				WARNING("Invalid model mesh merge source or transform");
+				return 0;
+			}
+
+			Matrix matrix = VarGetMat(transform).matrix;
+			for (IntType i = 0; i < 16; i++)
+			{
+				if (!std::isfinite(matrix.m[i]))
+				{
+					WARNING("Non-finite model mesh merge transform");
+					return 0;
+				}
+				// Shape rotations and scales are already baked into their vertices
+				if ((i < 12 || i == 15) && matrix.m[i] != identity.m[i])
+					return 0;
+			}
+
+			// These are supported by the original path, not by translated geometry
+			if (source->modelBend.enabled || source->meshes.isEmpty())
+				return 0;
+
+			for (Mesh<>* mesh : source->meshes)
+			{
+				if (mesh->hasWind ||
+					mesh->vertexData.Size() != mesh->numVertices ||
+					mesh->indexData.Size() != mesh->numIndices ||
+					mesh->numVertices > MAX_MESH_INDICES - numVertices ||
+					mesh->numIndices > MAX_MESH_INDICES - numIndices)
+					return 0;
+
+				numVertices += mesh->numVertices;
+				numIndices += mesh->numIndices;
+			}
+			sources.append(source);
+			sourceIds.append(source->id);
+			matrices.append(matrix);
+		}
+
+		if (!numVertices || !numIndices)
+			return 0;
+
+		// Identical timeline instances share immutable geometry, not animation state
+		static QVector<IntType> cachedBuffers;
+		for (IntType b = 0; b < cachedBuffers.size(); b++)
+		{
+			VertexBuffer* cached = FindVertexBuffer(cachedBuffers[b]);
+			if (!cached)
+			{
+				cachedBuffers.removeAt(b--);
+				continue;
+			}
+			if (cached->mergeSources == sourceIds && cached->mergeTransforms == matrices)
+			{
+				cached->references++;
+				return cached->id;
+			}
+		}
+
+		VertexBuffer* merged = new VertexBuffer;
+		merged->mergeSources = sourceIds;
+		merged->mergeTransforms = matrices;
+		Mesh<>* mesh = new Mesh;
+		mesh->numVertices = numVertices;
+		mesh->numIndices = numIndices;
+		mesh->vertexData.Alloc(numVertices);
+		mesh->indexData.Alloc(numIndices);
+
+		IntType vertexOffset = 0, indexOffset = 0;
+		for (IntType b = 0; b < sources.size(); b++)
+		{
+			for (Mesh<>* source : sources[b]->meshes)
+			{
+				for (IntType v = 0; v < source->numVertices; v++)
+				{
+					Vertex vertex = source->vertexData.Value(v);
+					vertex.x += matrices[b].m[12];
+					vertex.y += matrices[b].m[13];
+					vertex.z += matrices[b].m[14];
+					vertex.SetIndex(0);
+					mesh->vertexData[vertexOffset + v] = vertex;
+				}
+				for (IntType i = 0; i < source->numIndices; i++)
+					mesh->indexData[indexOffset + i] = source->indexData.Value(i) + vertexOffset;
+
+				vertexOffset += source->numVertices;
+				indexOffset += source->numIndices;
+			}
+		}
+
+		mesh->bounds = Bounds(mesh->vertexData);
+		mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES);
+		merged->meshes.append(mesh);
+		merged->numIndices = numIndices;
+		cachedBuffers.append(merged->id);
+		return merged->id;
 	}
 
 	void vbuffer_set_model_bend(IntType buffer, VecType angles, MatrixType rotation, VecType pivot,

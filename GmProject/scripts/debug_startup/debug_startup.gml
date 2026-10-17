@@ -6,6 +6,9 @@ function debug_startup()
 	globalvar debug_schematics, debug_names, debug_saveid, debug_unused;
 	globalvar debug_check_assets, debug_realtime_views, debug_dark_theme;
 	globalvar debug_info, debug_info_corner, debug_indent, debug_timer;
+	globalvar debug_merge_model_meshes;
+
+	debug_merge_model_meshes = true
 
 	if (debug_mode)
 	{
@@ -48,6 +51,7 @@ function debug_startup()
 	// Benchmarking/testing settings, overwritten by program arguments
 	globalvar benchmark_mode, benchmark_exportmovie,
 			  benchmark_animate_total_time, benchmark_render_total_time, benchmark_surface_total_time, benchmark_export_total_time;
+	globalvar benchmark_merged_model_submissions, benchmark_merged_shape_submissions;
 	globalvar test_project, test_frame_start, test_frame_end, test_all_frames, test_renderer, test_render_settings, test_debug_pass, test_agent;
 			  
 	benchmark_mode = false
@@ -57,6 +61,8 @@ function debug_startup()
     benchmark_render_total_time = 0
     benchmark_surface_total_time = 0
     benchmark_export_total_time = 0
+	benchmark_merged_model_submissions = 0
+	benchmark_merged_shape_submissions = 0
 
     test_project = ""
 	test_frame_start = -1
@@ -86,6 +92,7 @@ function debug_startup()
 		switch (arg)
 		{
 			case "--benchmark_exportmovie": benchmark_exportmovie = true; break
+			case "--noModelMeshMerging": debug_merge_model_meshes = false; break
 			case "--test":
 			{
 				test_project = nextarg

@@ -38,6 +38,7 @@ function tl_update_render_res()
 			model_part_shape_tex_material = []
 			model_part_shape_tex_normal = []
 			model_part_shape_material_res = []
+			model_part_shape_render_matrix_part = null
 			
 			var shapetexnamemap, shapetexmatnamemap, shapetexnormnamemap;
 			shapetexnamemap = temp.model_shape_texture_name_map

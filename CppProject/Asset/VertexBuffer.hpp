@@ -54,6 +54,9 @@ namespace CppProject
 		QVector<Mesh<>*> meshes;
 		BoolType saveData = false; // Whether to discard data on CPU-side if it can't be used for batches
 		bool valid = true;
+		IntType references = 1;
+		QVector<IntType> mergeSources;
+		QVector<Matrix> mergeTransforms;
 
 		struct ModelBend
 		{
