@@ -9,7 +9,7 @@ namespace CppProject
 	// Wrapper for a GPU framebuffer.
 	struct FrameBuffer
 	{
-		FrameBuffer(BoolType depthBuffer = true, BoolType hdr = false) : depthBuffer(depthBuffer), hdr(hdr) {}
+		FrameBuffer(IntType format = 0, BoolType depthBuffer = true, BoolType depthOnly = false);
 		~FrameBuffer();
 
 		// Returns the color texture handle of the surface for reading.
@@ -27,25 +27,50 @@ namespace CppProject
 		// Copies the color or depth/stencil data to the given destination.
 		void CopyData(BoolType color, uchar* dst);
 
+		// Returns the latest completed pixel lookup while scheduling a new readback.
+		BoolType CopyColorPixelAsync(QPoint point, uchar* dst, IntType& completed, IntType& submitted);
+
+		// Resets asynchronous pixel readback state, freeing any resources or fences.
+		void ResetColorPixelAsync();
+
 		// Copies the color data to the given destination with 8 bits for RGBA.
 		void CopyColorData(uchar* dst);
 
 		// Returns the total size in bytes for a single pixel of color or depth/stencil data.
 		IntType GetPixelSize(BoolType color) const;
 
-		BoolType depthBuffer, hdr;
+		IntType format;
+		BoolType depthBuffer;
+		BoolType depthOnly;
 		QSize size = { 0, 0 };
 
-	#if API_D3D11
+		static constexpr IntType pixelReadbackCount = 3;
+		struct PixelReadback
+		{
+			BoolType pending = false;
+			IntType serial = 0;
+		#if OS_WINDOWS
+			ID3D11Texture2D* texture = nullptr;
+			ID3D11Query* query = nullptr;
+		#endif
+			GLuint pbo = 0;
+			GLsync fence = nullptr;
+		};
+		PixelReadback pixelReadbacks[pixelReadbackCount];
+		IntType pixelReadbackNext = 0, pixelReadbackSerial = 0, pixelReadbackCompleted = 0;
+		uchar pixelReadbackValue[16] = {};
+
+	#if OS_WINDOWS
+		DXGI_FORMAT d3dFormat = DXGI_FORMAT_UNKNOWN;
 		ID3D11Texture2D* d3dColorTex = nullptr;
 		ID3D11Texture2D* d3dDepthStencilTex = nullptr;
 		ID3D11DepthStencilView* d3dDSV = nullptr;
 		ID3D11RenderTargetView* d3dRTV = nullptr;
 		ID3D11ShaderResourceView* d3dSRV = nullptr;
 		IntType d3dSRVId = 0;
-	#else
+	#endif
+		GLuint glInternalFormat = 0, glFormat = 0, glType = 0;
 		GLuint glFboId = 0, glColorTexId = 0, glDepthStencilRboId = 0;
 		QOpenGLContext* fboContext = nullptr;
-	#endif
 	};
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_get_current",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_get_current",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

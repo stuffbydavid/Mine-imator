@@ -1,4 +1,4 @@
-# Usage: ./Setup.ps1 [Qt|OpenSSL|FFmpeg|Libzip|OpenAL|VisualStudio|CppGen|Release] [x64|x86]
+# Usage: .\Setup.ps1 [Qt|OpenSSL|FFmpeg|Libzip|OpenAL|VisualStudio|CppGen|Release] [x64|x86]
 #   Qt|OpenSSL|FFmpeg|Libzip|OpenAL:
 #       Unzips or downloads external libraries into DEV_DIR, then builds them
 #   VisualStudio:

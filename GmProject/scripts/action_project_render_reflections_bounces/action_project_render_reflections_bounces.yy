@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_reflections_bounces",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_reflections_bounces",
+  "parent":{
+    "name":"Reflections",
+    "path":"folders/Scripts/App/Actions/Project/Render/Reflections.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

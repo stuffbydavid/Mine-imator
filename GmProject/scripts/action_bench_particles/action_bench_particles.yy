@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_particles",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Bench",
-    "path": "folders/Scripts/App/Actions/Bench.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_particles",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_particles",
+  "parent":{
+    "name":"Particles",
+    "path":"folders/Scripts/App/Actions/Bench/Particles.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

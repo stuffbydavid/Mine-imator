@@ -1,4 +1,3 @@
-/// mod_fix(x, y)
 /// @arg x
 /// @arg y
 

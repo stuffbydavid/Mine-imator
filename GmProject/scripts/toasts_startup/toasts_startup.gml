@@ -1,5 +1,3 @@
-/// toast_startup()
-
 function toasts_startup()
 {
 	toast_list = ds_list_create()

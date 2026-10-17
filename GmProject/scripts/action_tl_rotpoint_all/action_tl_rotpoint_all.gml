@@ -1,6 +1,3 @@
-/// action_tl_rotpoint_all(point)
-/// @arg point
-
 function action_tl_rotpoint_all(point)
 {
 	if (history_undo)

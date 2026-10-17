@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_assets_build_block_texture_slot_maps",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_assets_build_block_texture_slot_maps",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Scripts/Minecraft/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

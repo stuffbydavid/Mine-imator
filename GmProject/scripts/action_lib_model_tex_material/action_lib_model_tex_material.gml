@@ -1,18 +1,15 @@
-/// action_lib_model_tex_material(resource)
-/// @arg resource
 /// @desc Sets the model texture of the given library item.
+/// @arg resource
 
 function action_lib_model_tex_material(res)
 {
-	var fn;
-	fn = ""
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		switch (res)
 		{
 			case e_option.BROWSE: // Load new
@@ -42,19 +39,15 @@ function action_lib_model_tex_material(res)
 	
 	with (temp_edit)
 	{
-		if (model_tex_material != null)
-			model_tex_material.count--
-		
 		model_tex_material = res
-		
-		if (model_tex_material != null)
-			model_tex_material.count++
 		
 		if (pattern_type != "")
 			array_add(pattern_update, temp_edit)
 		
 		temp_update_armor(temp_edit)
 	}
+	
+	project_update_counts()
 	
 	lib_preview.update = true
 }

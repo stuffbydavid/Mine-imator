@@ -1,5 +1,4 @@
 /// CppSeparate void clip_end()
-/// clip_end()
 
 function clip_end()
 {

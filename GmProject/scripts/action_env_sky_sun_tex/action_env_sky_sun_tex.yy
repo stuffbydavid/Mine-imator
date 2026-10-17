@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_sky_sun_tex",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_sky_sun_tex",
+  "parent":{
+    "name":"Sky",
+    "path":"folders/Scripts/App/Actions/Environment/Sky.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

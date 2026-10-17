@@ -1,26 +1,11 @@
-/// tl_update_values_progress(markerpos)
 /// @desc Updates the values.
 
 function tl_update_values_progress(markerpos)
 {
-	var kflength, kfprogress;
-	var progress = 0;
+	var kflength, kfprogress, progress;
+	progress = 0
 	
-	// Get regular progress
-	if (!app.timeline_seamless_repeat)
-	{
-		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-		{
-			kflength = (markerpos - keyframe_current.position)
-			kfprogress = (keyframe_next.position - keyframe_current.position)
-			
-			progress = kflength / kfprogress
-		}
-		
-		return progress
-	}
-	
-	// Calculate seamless looping by changing the 'next' keyframe
+	// Find the seamless loop region
 	var loopstart, loopend, seamlessloop;
 	if (app.timeline_region_start != null)
 	{
@@ -34,6 +19,18 @@ function tl_update_values_progress(markerpos)
 	}
 	
 	seamlessloop = (app.timeline_seamless_repeat && markerpos >= loopstart && markerpos < loopend)
+	if (!seamlessloop)
+	{
+		if (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
+		{
+			kflength = (markerpos - keyframe_current.position)
+			kfprogress = (keyframe_next.position - keyframe_current.position)
+
+			progress = kflength / kfprogress
+		}
+
+		return progress
+	}
 	
 	// Change keyframes so the animation is seamless
 	var kflistsize, lastkf, loopnext, loopprev;
@@ -85,15 +82,16 @@ function tl_update_values_progress(markerpos)
 	{
 		var range = keyframe_next.position - keyframe_current.position;
 		if (loopnext)
-			range += regionsize;
+			range += regionsize
+		
 		else if (loopprev)
 		{
-			markerpos += regionsize;
-			range += regionsize;
+			markerpos += regionsize
+			range += regionsize
 		}
 		
 		if (range != 0)
-			progress = (markerpos - keyframe_current.position) / range;
+			progress = (markerpos - keyframe_current.position) / range
 	}
 	else
 		keyframe_current = keyframe_next

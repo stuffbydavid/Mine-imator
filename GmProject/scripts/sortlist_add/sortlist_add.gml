@@ -1,7 +1,3 @@
-/// sortlist_add(sortlist, value, index)
-/// @arg sortlist
-/// @arg value
-/// @arg index
 /// @desc sortlist_update should be called after.
 
 function sortlist_add(sortlist, value, index = -1)

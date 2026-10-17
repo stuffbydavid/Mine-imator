@@ -1,4 +1,3 @@
-#if API_OPENGL
 #undef __glext_h_
 #include <qopenglext.h>
 
@@ -8,7 +7,7 @@
 
 namespace CppProject
 {
-	void Shader::LoadCode(QString vsCode, QString fsCode, BoolType useCache)
+	void Shader::LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache)
 	{
 		// Batching requires SSBO (GL 4.3+ only)
 		if (!gl43Supported)
@@ -16,9 +15,14 @@ namespace CppProject
 
 		// Free program and SSBO
 		deleteAndReset(program);
+
 		if (glSsboId)
 			GFX->glDeleteBuffers(1, &glSsboId);
+		
 		glSsboId = 0;
+
+		// Clear multi-view data
+		glPointEye = glPointProjection = glPointVertical = -1;
 
 		// Convert from GLES to GLSL for a given shader
 		auto processCode = [&](QString code, BoolType isVertex)
@@ -26,11 +30,14 @@ namespace CppProject
 			QString header = "";
 
 			// Move preprocessor declarations to header
+			const QStringList preprocessorExceptions = { "#if", "#endif", "#ifndef", "#ifdef" };
 			for (QString line : code.split("\n"))
 			{
-				if (line.startsWith("#"))
+				QString declaration = line.section(" ", 0, 0);
+
+				if (line.startsWith("#") && !preprocessorExceptions.contains(declaration))
 				{
-					header = line + "\n" + header;
+					header += line + "\n";
 					code.replace(line + "\n", "");
 				}
 			}
@@ -42,6 +49,7 @@ namespace CppProject
 				{
 					header += "layout(location = 0) out vec4 out_FragColor;\n";
 					code.replace("gl_FragColor", "out_FragColor");
+
 					numOutputs = 1;
 				}
 				else // Multiple rendertargets
@@ -55,6 +63,7 @@ namespace CppProject
 
 						header += "layout(location = " + outNumStr + ") out vec4 out_FragData" + outNumStr + ";\n";
 						code.replace(outData, "out_FragData" + outNumStr);
+
 						numOutputs++;
 					}
 				}
@@ -63,20 +72,27 @@ namespace CppProject
 			// Texture2D function to sample using UvRect uniform
 			if (code.contains("texture2D("))
 			{
-				QString setLod = "";
-				if (gl40Supported)
-					setLod = "\tvec2 uvLod = uvRect.xy + uv * uvRect.zw;\n"
-					"\tuvLod.y = 1.0 - uvLod.y;\n"
-					"\tlod = textureQueryLod(s, uvLod).y;\n";
 				header += "\n"
 					"vec4 _sampleUvRect(sampler2D s, vec4 uvRect, bool repeat, vec2 uv)\n"
 					"{\n"
-					"\tfloat lod = 0.0;\n" +
-					setLod +
+					"\tvec2 lodUv = uvRect.xy + uv * uvRect.zw;\n"
+					"\tlodUv.y = 1.0 - lodUv.y;\n"
+					"\tvec2 derivX = dFdx(lodUv);\n"
+					"\tvec2 derivY = dFdy(lodUv);\n"
 					"\tif (repeat) uv = mod(uv, vec2(1.0, 1.0));\n"
 					"\tuv = uvRect.xy + uv * uvRect.zw;\n"
 					"\tuv.y = 1.0 - uv.y;\n"
-					"\treturn textureLod(s, uv, lod);\n"
+					"\treturn textureGrad(s, uv, derivX, derivY);\n"
+					"}\n\n"
+                    "// Optimized depth lookup\n"
+					"vec4 _sampleDepth(sampler2D s, bool repeat, vec2 uv)\n"
+					"{\n"
+					"\tvec2 lodUv = vec2(uv.x, 1.0 - uv.y);\n"
+					"\tvec2 derivX = dFdx(lodUv);\n"
+					"\tvec2 derivY = dFdy(lodUv);\n"
+					"\tif (repeat) uv = mod(uv, vec2(1.0, 1.0));\n"
+					"\tuv.y = 1.0 - uv.y;\n"
+					"\treturn textureGrad(s, uv, derivX, derivY);\n"
 					"}\n\n";
 			}
 
@@ -91,6 +107,7 @@ namespace CppProject
 				code.replace("in vec4 in_Colour;\n", "");
 				code.replace("in vec4 in_Wave;\n", "");
 				code.replace("in vec3 in_Tangent;\n", "");
+
 				header += "in uint _aNormal;\n"
 					"in uint _aColor;\n"
 					"in uint _aData;\n"
@@ -107,7 +124,7 @@ namespace CppProject
 				if (isVertex)
 				{
 					code.replace("gl_Position = ", "_vObjIndex = _objIndex;\n\tgl_Position = ");
-					header += "flat out uint _vObjIndex;\nuint _objIndex = _aData >> 16;\n";
+					header += "flat out uint _vObjIndex;\nuint _objIndex = (_aData >> 16) + uint(gl_InstanceID);\n";
 				}
 				else
 					header += "flat in uint _vObjIndex;\n";
@@ -132,7 +149,7 @@ namespace CppProject
 		{
 			// Get maximum objects allowed
 			batchBufferObjectSize = ceil(batchBufferObjectSize / 16.0) * 16;
-			batchBufferMaxObjects = MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
+			batchBufferMaxObjects = OPENGL_MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
 			batchBufferSize = batchBufferMaxObjects * batchBufferObjectSize;
 
 			// Add SSBO for uniform data
@@ -151,6 +168,7 @@ namespace CppProject
 				QRegularExpression uniFind("\\b" + uni.name + "\\b");
 				QString uniReplVs = "_obj[_objIndex]." + uni.name;
 				QString uniReplFs = "_obj[_vObjIndex]." + uni.name;
+
 				vsCode = vsCode.replace(uniHeader, "");
 				fsCode = fsCode.replace(uniHeader, "");
 				vsCode = vsCode.replace(uniFind, uniReplVs);
@@ -171,6 +189,7 @@ namespace CppProject
 		{
 			AddUniform("_uUvRect", "vec4", true, true, numSamplers);
 			AddUniform("_uTexRepeat", "int", true, true, numSamplers);
+
 			defines += "uniform vec4[" + NumStr(numSamplers) + "] _uUvRect;\n";
 			defines += "uniform int[" + NumStr(numSamplers) + "] _uTexRepeat;\n";
 		}
@@ -179,55 +198,44 @@ namespace CppProject
 		vsCode = defines + vsCode;
 		fsCode = defines + fsCode;
 
-		program = new QOpenGLShaderProgram;
-		if (!program->addShaderFromSourceCode(QOpenGLShader::Vertex, vsCode))
+		if (!LoadPointOpenGL(vsCode, fsCode))
 		{
-			WARNING("Loading " + name + " vertex shader failed\n\t" + program->log());
-			deleteAndReset(program);
-			return;
-		}
+			if (!LoadProgramOpenGL(vsCode, fsCode))
+				return;
 
-		if (!program->addShaderFromSourceCode(QOpenGLShader::Fragment, fsCode))
-		{
-			WARNING("Loading " + name + " fragment shader failed\n\t" + program->log());
-			deleteAndReset(program);
-			return;
+		#if !RELEASE_MODE
+			SaveConvertedCode(vsCode, fsCode, "glsl");
+		#endif
 		}
-
+		
 		// Find uniform locations
-		if (program->bind())
+		for (IntType i = 0; i < numUniforms; i++)
+			if (uniforms[i].isStatic)
+				uniforms[i].glLocation = program->uniformLocation(uniforms[i].name);
+		
+		for (StringType name : samplerNameMap.keys())
+			samplerState[samplerNameMap[name]].glLocation = uniforms[uniformNameMap[name]].glLocation;
+		
+		for (IntType m = 0; m < 6; m++)
 		{
-			for (IntType i = 0; i < numUniforms; i++)
-				if (uniforms[i].isStatic)
-					uniforms[i].glLocation = program->uniformLocation(uniforms[i].name);
-
-			for (StringType name : samplerNameMap.keys())
-				samplerState[samplerNameMap[name]].glLocation = uniforms[uniformNameMap[name]].glLocation;
-
-			for (IntType m = 0; m < 6; m++)
-			{
-				QString name = matrixUniformName[m];
-				if (matrixState[m].active)
-					matrixState[m].uniform.glLocation = uniforms[uniformNameMap[name]].glLocation;
-			}
-		}
-		else
-		{
-			WARNING("Linking " + name + " shader failed\n\t" + program->log());
-			deleteAndReset(program);
-			return;
+			QString name = matrixUniformName[m];
+			if (matrixState[m].active)
+				matrixState[m].uniform.glLocation = uniforms[uniformNameMap[name]].glLocation;
 		}
 
 		// Store attribute locations
 		switch (vertexFormat)
 		{
 			case PRIMITIVE:
+			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
 				attributeLocation[1] = program->attributeLocation("in_Colour");
 				attributeLocation[2] = program->attributeLocation("in_TextureCoord");
 				break;
+			}
 
 			case VERTEX_BUFFER:
+			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
 				attributeLocation[1] = program->attributeLocation("_aNormal");
 				attributeLocation[2] = program->attributeLocation("_aColor");
@@ -235,11 +243,14 @@ namespace CppProject
 				attributeLocation[4] = program->attributeLocation("_aData");
 				attributeLocation[5] = program->attributeLocation("_aTangent");
 				break;
+			}
 
 			case WORLD:
+			{
 				attributeLocation[0] = program->attributeLocation("in_Pos");
 				attributeLocation[1] = program->attributeLocation("in_Data");
 				break;
+			}
 
 			default:
 				WARNING("Unknown vertex format");
@@ -264,5 +275,22 @@ namespace CppProject
 
 		program->release();
 	}
+
+	BoolType Shader::LoadProgramOpenGL(const QString& vsCode, const QString& fsCode, const QString& gsCode)
+	{
+		program = new QOpenGLShaderProgram;
+
+		if (!program->addShaderFromSourceCode(QOpenGLShader::Vertex, vsCode) ||
+			!program->addShaderFromSourceCode(QOpenGLShader::Fragment, fsCode) ||
+			(!gsCode.isEmpty() && !program->addShaderFromSourceCode(QOpenGLShader::Geometry, gsCode)) ||
+			!program->bind())
+		{
+			WARNING("Loading " + name + " shader failed\n\t" + program->log());
+			deleteAndReset(program);
+
+			return false;
+		}
+
+		return true;
+	}
 }
-#endif

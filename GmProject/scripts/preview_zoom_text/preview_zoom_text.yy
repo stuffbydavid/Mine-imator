@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"preview_zoom_text",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"preview_zoom_text",
+  "parent":{
+    "name":"Preview",
+    "path":"folders/Scripts/App/Interface/Components/Preview.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

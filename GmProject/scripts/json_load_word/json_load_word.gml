@@ -1,5 +1,3 @@
-/// json_load_word()
-
 function json_load_word()
 {
 	if (json_char = e_json_char.T)

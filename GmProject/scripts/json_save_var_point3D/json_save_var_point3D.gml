@@ -1,7 +1,3 @@
-/// json_save_var_point3D(name, value)
-/// @arg name
-/// @arg value
-
 function json_save_var_point3D(name, value)
 {
 	if (json_add_comma)

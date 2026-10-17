@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_tl_keyframes_scale",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_keyframes_scale",
+  "parent":{
+    "name":"Keyframes",
+    "path":"folders/Scripts/App/Actions/Timeline/Keyframes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

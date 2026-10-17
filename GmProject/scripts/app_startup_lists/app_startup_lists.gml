@@ -1,16 +1,17 @@
-/// app_startup_lists()
-
 function app_startup_lists()
 {
 	globalvar value_name_list, transition_list, transition_list_order;
-	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list;
-	globalvar videotemplate_list, videoquality_list;
+	globalvar camera_effect_name_list, camera_effect_value_range_list, camera_effect_legacy_name_list;
+	globalvar temp_type_name_list, tl_type_name_list, res_type_name_list, legacy_type_name_map;
+	globalvar videotemplate_list;
 	globalvar language_english_map, language_map;
 	globalvar camera_values_list, camera_values_copy, camera_use_default_list;
+	globalvar minecraft_block_sheet_size;
+	globalvar minecraft_block_animated_sheet_frame_count, minecraft_item_sheet_size, minecraft_item_place_target_map;
 	globalvar minecraft_pattern_list, minecraft_pattern_short_list, minecraft_sherd_map;
-	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list;
+	globalvar minecraft_armor_trim_pattern_list, minecraft_armor_trim_material_list, minecraft_armor_shape_index_map;
 	globalvar minecraft_map_color_array, minecraft_swatch_array, minecraft_swatch_color_map, minecraft_swatch_dyes;
-	globalvar biome_list, particle_template_list, particle_template_map;
+	globalvar biome_list, biome_color_name_list, biome_color_name_map, particle_template_list, particle_template_map;
 	globalvar blend_mode_list, blend_mode_map;
 	globalvar timeline_icon_list, timeline_icon_list_dark;
 	globalvar render_pass_list;
@@ -68,131 +69,129 @@ function app_startup_lists()
 		"LIGHT_SPOT_RADIUS",
 		"LIGHT_SPOT_SHARPNESS",
 		"CAM_FOV",
-		"CAM_BLADE_AMOUNT",
-		"CAM_BLADE_ANGLE",
-		"CAM_LIGHT_MANAGEMENT",
-		"CAM_TONEMAPPER",
-		"CAM_EXPOSURE",
-		"CAM_GAMMA",
-		"CAM_ROTATE",
-		"CAM_ROTATE_DISTANCE",
-		"CAM_ROTATE_ANGLE_XY",
-		"CAM_ROTATE_ANGLE_Z",
-		"CAM_SHAKE",
-		"CAM_SHAKE_MODE",
-		"CAM_SHAKE_STRENGTH_X",
-		"CAM_SHAKE_STRENGTH_Y",
-		"CAM_SHAKE_STRENGTH_Z",
-		"CAM_SHAKE_SPEED_X",
-		"CAM_SHAKE_SPEED_Y",
-		"CAM_SHAKE_SPEED_Z",
-		"CAM_DOF",
-		"CAM_DOF_DEPTH",
-		"CAM_DOF_RANGE",
-		"CAM_DOF_FADE_SIZE",
-		"CAM_DOF_BLUR_SIZE",
-		"CAM_DOF_BLUR_RATIO",
-		"CAM_DOF_BIAS",
-		"CAM_DOF_THRESHOLD",
-		"CAM_DOF_GAIN",
-		"CAM_DOF_FRINGE",
-		"CAM_DOF_FRINGE_ANGLE_RED",
-		"CAM_DOF_FRINGE_ANGLE_GREEN",
-		"CAM_DOF_FRINGE_ANGLE_BLUE",
-		"CAM_DOF_FRINGE_RED",
-		"CAM_DOF_FRINGE_GREEN",
-		"CAM_DOF_FRINGE_BLUE",
-		"CAM_BLOOM",
-		"CAM_BLOOM_THRESHOLD",
-		"CAM_BLOOM_INTENSITY",
-		"CAM_BLOOM_RADIUS",
-		"CAM_BLOOM_RATIO",
-		"CAM_BLOOM_BLEND",
-		"CAM_LENS_DIRT",
-		"CAM_LENS_DIRT_BLOOM",
-		"CAM_LENS_DIRT_GLOW",
-		"CAM_LENS_DIRT_RADIUS",
-		"CAM_LENS_DIRT_INTENSITY",
-		"CAM_LENS_DIRT_POWER",
-		"CAM_COLOR_CORRECTION",
-		"CAM_CONTRAST",
-		"CAM_BRIGHTNESS",
-		"CAM_SATURATION",
-		"CAM_VIBRANCE",
-		"CAM_COLOR_BURN",
-		"CAM_GRAIN",
-		"CAM_GRAIN_STRENGTH",
-		"CAM_GRAIN_SATURATION",
-		"CAM_GRAIN_SIZE",
-		"CAM_VIGNETTE",
-		"CAM_VIGNETTE_RADIUS",
-		"CAM_VIGNETTE_SOFTNESS",
-		"CAM_VIGNETTE_STRENGTH",
-		"CAM_VIGNETTE_COLOR",
-		"CAM_CA",
-		"CAM_CA_BLUR_AMOUNT",
-		"CAM_CA_DISTORT_CHANNELS",
-		"CAM_CA_RED_OFFSET",
-		"CAM_CA_GREEN_OFFSET",
-		"CAM_CA_BLUE_OFFSET",
-		"CAM_DISTORT",
-		"CAM_DISTORT_REPEAT",
-		"CAM_DISTORT_ZOOM_AMOUNT",
-		"CAM_DISTORT_AMOUNT",
 		"CAM_SIZE_USE_PROJECT",
 		"CAM_SIZE_KEEP_ASPECT_RATIO",
 		"CAM_WIDTH",
 		"CAM_HEIGHT",
-		"BG_IMAGE_SHOW",
-		"BG_IMAGE_ROTATION",
-		"BG_SKY_MOON_PHASE",
-		"BG_SKY_TIME",
-		"BG_SKY_ROTATION",
-		"BG_SUNLIGHT_STRENGTH",
-		"BG_SUNLIGHT_ANGLE",
-		"BG_SKY_SUN_ANGLE",
-		"BG_SKY_SUN_SCALE",
-		"BG_SKY_MOON_ANGLE",
-		"BG_SKY_MOON_SCALE",
-		"BG_TWILIGHT",
-		"BG_SKY_CLOUDS_SHOW",
-		"BG_SKY_CLOUDS_SPEED",
-		"BG_SKY_CLOUDS_HEIGHT",
-		"BG_SKY_CLOUDS_OFFSET",
-		"BG_GROUND_SHOW",
-		"BG_GROUND_SLOT",
-		"BG_BIOME",
-		"BG_SKY_COLOR",
-		"BG_SKY_CLOUDS_COLOR",
-		"BG_SUNLIGHT_COLOR",
-		"BG_AMBIENT_COLOR",
-		"BG_NIGHT_COLOR",
-		"BG_GRASS_COLOR",
-		"BG_FOLIAGE_COLOR",
-		"BG_WATER_COLOR",
-		"BG_LEAVES_OAK_COLOR",
-		"BG_LEAVES_SPRUCE_COLOR",
-		"BG_LEAVES_BIRCH_COLOR",
-		"BG_LEAVES_JUNGLE_COLOR",
-		"BG_LEAVES_ACACIA_COLOR",
-		"BG_LEAVES_DARK_OAK_COLOR",
-		"BG_LEAVES_MANGROVE_COLOR",
-		"BG_FOG_SHOW",
-		"BG_FOG_SKY",
-		"BG_FOG_CUSTOM_COLOR",
-		"BG_FOG_COLOR",
-		"BG_FOG_CUSTOM_OBJECT_COLOR",
-		"BG_FOG_OBJECT_COLOR",
-		"BG_FOG_DISTANCE",
-		"BG_FOG_SIZE",
-		"BG_FOG_HEIGHT",
-		"BG_WIND",
-		"BG_WIND_SPEED",
-		"BG_WIND_STRENGTH",
-		"BG_WIND_DIRECTION",
-		"BG_WIND_DIRECTIONAL_SPEED",
-		"BG_WIND_DIRECTIONAL_STRENGTH",
-		"BG_TEXTURE_ANI_SPEED",
+		"CAM_ROTATE",
+		"CAM_ROTATE_DISTANCE",
+		"CAM_ROTATE_ANGLE_XY",
+		"CAM_ROTATE_ANGLE_Z",
+		"CAM_FX_SHAKE_MODE",
+		"CAM_FX_SHAKE_STRENGTH_X",
+		"CAM_FX_SHAKE_STRENGTH_Y",
+		"CAM_FX_SHAKE_STRENGTH_Z",
+		"CAM_FX_SHAKE_SPEED_X",
+		"CAM_FX_SHAKE_SPEED_Y",
+		"CAM_FX_SHAKE_SPEED_Z",
+		"CAM_FX_DOF_DEPTH",
+		"CAM_FX_DOF_RANGE",
+		"CAM_FX_DOF_FADE_SIZE",
+		"CAM_FX_DOF_BLUR_SIZE",
+		"CAM_FX_DOF_BLUR_RATIO",
+		"CAM_FX_DOF_BIAS",
+		"CAM_FX_DOF_THRESHOLD",
+		"CAM_FX_DOF_GAIN",
+		"CAM_FX_DOF_FRINGE",
+		"CAM_FX_DOF_FRINGE_ANGLE_RED",
+		"CAM_FX_DOF_FRINGE_ANGLE_GREEN",
+		"CAM_FX_DOF_FRINGE_ANGLE_BLUE",
+		"CAM_FX_DOF_FRINGE_RED",
+		"CAM_FX_DOF_FRINGE_GREEN",
+		"CAM_FX_DOF_FRINGE_BLUE",
+		"CAM_FX_BLOOM_THRESHOLD",
+		"CAM_FX_BLOOM_TRANSITION",
+		"CAM_FX_BLOOM_INTENSITY",
+		"CAM_FX_BLOOM_RADIUS",
+		"CAM_FX_BLOOM_RATIO",
+		"CAM_FX_BLOOM_BLEND",
+		"CAM_FX_BLADE_AMOUNT",
+		"CAM_FX_BLADE_ANGLE",
+		"CAM_FX_BLADE_STRETCH",
+		"CAM_FX_LENS_DIRT_BLOOM",
+		"CAM_FX_LENS_DIRT_GLOW",
+		"CAM_FX_LENS_DIRT_RADIUS",
+		"CAM_FX_LENS_DIRT_INTENSITY",
+		"CAM_FX_LENS_DIRT_POWER",
+		"CAM_FX_GRAIN_STRENGTH",
+		"CAM_FX_GRAIN_SATURATION",
+		"CAM_FX_GRAIN_SIZE",
+		"CAM_FX_VIGNETTE_RADIUS",
+		"CAM_FX_VIGNETTE_SOFTNESS",
+		"CAM_FX_VIGNETTE_STRENGTH",
+		"CAM_FX_VIGNETTE_COLOR",
+		"CAM_FX_CA_BLUR_AMOUNT",
+		"CAM_FX_CA_DISTORT_CHANNELS",
+		"CAM_FX_CA_RED_OFFSET",
+		"CAM_FX_CA_GREEN_OFFSET",
+		"CAM_FX_CA_BLUE_OFFSET",
+		"CAM_FX_DISTORT_REPEAT",
+		"CAM_FX_DISTORT_ZOOM_AMOUNT",
+		"CAM_FX_DISTORT_AMOUNT",
+		"CAM_FX_TONEMAPPER",
+		"CAM_FX_EXPOSURE",
+		"CAM_FX_GAMMA",
+		"CAM_FX_CONTRAST",
+		"CAM_FX_BRIGHTNESS",
+		"CAM_FX_SATURATION",
+		"CAM_FX_VIBRANCE",
+		"CAM_FX_COLOR_BURN",
+		"ENV_IMAGE_SHOW",
+		"ENV_IMAGE_ROTATION",
+		"ENV_SKY_MOON_PHASE",
+		"ENV_SKY_TIME",
+		"ENV_SKY_ROTATION",
+		"ENV_SUNLIGHT_STRENGTH",
+		"ENV_SUNLIGHT_SPECULAR_STRENGTH",
+		"ENV_SUNLIGHT_ANGLE",
+		"ENV_SKY_SUN_ANGLE",
+		"ENV_SKY_SUN_SCALE",
+		"ENV_SKY_MOON_ANGLE",
+		"ENV_SKY_MOON_SCALE",
+		"ENV_TWILIGHT",
+		"ENV_SKY_CLOUDS_SHOW",
+		"ENV_SKY_CLOUDS_SPEED",
+		"ENV_SKY_CLOUDS_OFFSET_Y",
+		"ENV_SKY_CLOUDS_OFFSET_Z",
+		"ENV_GROUND_SHOW",
+		"ENV_GROUND_SLOT",
+		"ENV_BIOME",
+		"ENV_SKY_COLOR",
+		"ENV_SKY_CLOUDS_COLOR",
+		"ENV_SUNLIGHT_COLOR",
+		"ENV_AMBIENT_COLOR",
+		"ENV_NIGHT_SKY_COLOR",
+		"ENV_NIGHT_SKY_CLOUDS_COLOR",
+		"ENV_NIGHT_SKY_STARS_COLOR",
+		"ENV_NIGHT_COLOR",
+		"ENV_GRASS_COLOR",
+		"ENV_FOLIAGE_COLOR",
+		"ENV_DRY_FOLIAGE_COLOR",
+		"ENV_WATER_COLOR",
+		"ENV_LEAVES_OAK_COLOR",
+		"ENV_LEAVES_SPRUCE_COLOR",
+		"ENV_LEAVES_BIRCH_COLOR",
+		"ENV_LEAVES_JUNGLE_COLOR",
+		"ENV_LEAVES_ACACIA_COLOR",
+		"ENV_LEAVES_DARK_OAK_COLOR",
+		"ENV_LEAVES_MANGROVE_COLOR",
+		"ENV_FOG_SHOW",
+		"ENV_FOG_SKY",
+		"ENV_FOG_CUSTOM_COLOR",
+		"ENV_FOG_COLOR",
+		"ENV_FOG_CUSTOM_OBJECT_COLOR",
+		"ENV_FOG_OBJECT_COLOR",
+		"ENV_FOG_DISTANCE",
+		"ENV_FOG_SIZE",
+		"ENV_FOG_HEIGHT",
+		"ENV_WIND",
+		"ENV_WIND_SPEED",
+		"ENV_WIND_STRENGTH",
+		"ENV_WIND_DIRECTION",
+		"ENV_WIND_DIRECTIONAL_SPEED",
+		"ENV_WIND_DIRECTIONAL_STRENGTH",
+		"ENV_TEXTURE_ANI_SPEED",
+		"ENV_BRIGHTNESS",
 		"TEXTURE_OBJ",
 		"TEXTURE_MATERIAL_OBJ",
 		"TEXTURE_NORMAL_OBJ",
@@ -205,9 +204,11 @@ function app_startup_lists()
 		"TEXT_FONT",
 		"TEXT_HALIGN",
 		"TEXT_VALIGN",
-		"TEXT_AA",
+		"TEXT_CUSTOM_ALIGNMENT",
 		"TEXT_OUTLINE",
 		"TEXT_OUTLINE_COLOR",
+		"TEXT_OUTLINE_SIZE",
+		"TEXT_CUSTOM_OUTLINE",
 		"CUSTOM_ITEM_SLOT",
 		"ITEM_SLOT",
 		"ITEM_NAME",
@@ -241,7 +242,7 @@ function app_startup_lists()
 	
 	for (var i = 0; i < ds_list_size(camera_values_list); i++)
 	{
-		var valueid = e_value.CAM_FOV + i;
+		var valueid = camera_values_list[|i];
 		
 		if (tl_value_is_bool(valueid))
 			camera_use_default_list[|i] = false
@@ -251,34 +252,83 @@ function app_startup_lists()
 			camera_use_default_list[|i] = true
 	}
 	
+	// Camera effects
+	camera_effect_name_list = ds_list_create()
+	ds_list_add(camera_effect_name_list,
+		"fade",
+		"shake",
+		"dof",
+		"bloom",
+		"lens_dirt",
+		"grain",
+		"vignette",
+		"ca",
+		"distort",
+		"light_management",
+		"color_correction"
+	)
+	
+	camera_effect_value_range_list = ds_list_create()
+	ds_list_add(camera_effect_value_range_list,
+		[ e_value.MIX_COLOR, e_value.MIX_PERCENT ],
+		[ e_value.CAM_FX_SHAKE_MODE, e_value.CAM_FX_SHAKE_SPEED_Z ],
+		[ e_value.CAM_FX_DOF_DEPTH, e_value.CAM_FX_DOF_FRINGE_BLUE ],
+		[ e_value.CAM_FX_BLOOM_THRESHOLD, e_value.CAM_FX_BLOOM_BLEND ],
+		[ e_value.CAM_FX_LENS_DIRT_BLOOM, e_value.CAM_FX_LENS_DIRT_POWER ],
+		[ e_value.CAM_FX_GRAIN_STRENGTH, e_value.CAM_FX_GRAIN_SIZE ],
+		[ e_value.CAM_FX_VIGNETTE_RADIUS, e_value.CAM_FX_VIGNETTE_COLOR ],
+		[ e_value.CAM_FX_CA_BLUR_AMOUNT, e_value.CAM_FX_CA_BLUE_OFFSET ],
+		[ e_value.CAM_FX_DISTORT_REPEAT, e_value.CAM_FX_DISTORT_AMOUNT ],
+		[ e_value.CAM_FX_TONEMAPPER, e_value.CAM_FX_GAMMA ],
+		[ e_value.CAM_FX_CONTRAST, e_value.CAM_FX_COLOR_BURN ]
+	)
+	
+	camera_effect_legacy_name_list = ds_list_create()
+	ds_list_add(camera_effect_legacy_name_list,
+		"",
+		"CAM_SHAKE",
+		"CAM_DOF",
+		"CAM_BLOOM",
+		"CAM_LENS_DIRT",
+		"CAM_GRAIN",
+		"CAM_VIGNETTE",
+		"CAM_CA",
+		"CAM_DISTORT",
+		"CAM_LIGHT_MANAGEMENT",
+		"CAM_COLOR_CORRECTION"
+	)
+	
 	// Template types
 	temp_type_name_list = ds_list_create()
 	ds_list_add(temp_type_name_list,
-		"char",
-		"spblock",
-		"scenery",
+		"character",
+		"equipment",
+		"model",
+		"model_part",
 		"item",
+		"scenery",
 		"block",
-		"bodypart",
+		"special_block",
 		"particles",
 		"text",
 		"cube",
 		"cone",
 		"cylinder",
 		"sphere",
-		"surface",
-		"model"
+		"surface"
 	)
 	
 	// Timeline types
 	tl_type_name_list = ds_list_create()
 	ds_list_add(tl_type_name_list,
-		"char",
-		"spblock",
-		"scenery",
+		"character",
+		"equipment",
+		"model",
+		"model_part",
 		"item",
+		"scenery",
 		"block",
-		"bodypart",
+		"special_block",
 		"particles",
 		"text",
 		"cube",
@@ -286,37 +336,55 @@ function app_startup_lists()
 		"cylinder",
 		"sphere",
 		"surface",
-		"model",
 		"camera",
-		"spotlight",
-		"pointlight",
-		"folder",
-		"background",
+		"camera_effect",
 		"audio",
+		"point_light",
+		"spot_light",
 		"path",
-		"pathpoint",
-		"shape",
-		"lightsource"
+		"path_point",
+		"environment",
+		"structure",
+		"folder"
 	)
 	
 	// Resource types
 	res_type_name_list = ds_list_create()
 	ds_list_add(res_type_name_list,
 		"pack",
-		"packunzipped",
+		"pack_unzipped",
 		"skin",
-		"downloadskin",
-		"itemsheet",
-		"legacyblocksheet",
-		"blocksheet",
-		"scenery",
-		"fromworld",
-		"particlesheet",
-		"texture",
-		"font",
+		"downloaded_skin",
+		"model",
+		"item_sheet",
+		"from_world",
+		"schematic",
+		"block_sheet",
+		"legacy_block_sheet",
 		"sound",
-		"model"
+		"particle_sheet",
+		"font",
+		"texture"
 	)
+	
+	// Legacy type names
+	legacy_type_name_map = ds_map_create()
+	legacy_type_name_map[?"char"] = "character"
+	legacy_type_name_map[?"bodypart"] = "model_part"
+	legacy_type_name_map[?"modelpart"] = "model_part"
+	legacy_type_name_map[?"spblock"] = "special_block"
+	legacy_type_name_map[?"cameraeffect"] = "camera_effect"
+	legacy_type_name_map[?"pointlight"] = "point_light"
+	legacy_type_name_map[?"spotlight"] = "spot_light"
+	legacy_type_name_map[?"pathpoint"] = "path_point"
+	legacy_type_name_map[?"packunzipped"] = "pack_unzipped"
+	legacy_type_name_map[?"downloadskin"] = "downloaded_skin"
+	legacy_type_name_map[?"itemsheet"] = "item_sheet"
+	legacy_type_name_map[?"fromworld"] = "from_world"
+	legacy_type_name_map[?"blocksheet"] = "block_sheet"
+	legacy_type_name_map[?"legacyblocksheet"] = "legacy_block_sheet"
+	legacy_type_name_map[?"particlesheet"] = "particle_sheet"
+	legacy_type_name_map[?"background"] = "environment"
 	
 	// Transitions
 	transition_list = ds_list_create()
@@ -379,12 +447,12 @@ function app_startup_lists()
 	log("Make transitions")
 	transition_texture_map = new_transition_texture_map(36, 36, 6, true)
 	transition_texture_small_map = new_transition_texture_map(24, 24, 3, false)
-	log("Transitions OK")
 	
 	// Video templates
 	videotemplate_list = ds_list_create()
 	ds_list_add(videotemplate_list,
 		new_videotemplate("avatar", 512, 512),
+		new_videotemplate("vga", 640, 480),
 		new_videotemplate("hd_720p", 1280, 720),
 		new_videotemplate("fhd_1080p", 1920, 1080),
 		new_videotemplate("qhd_1440p", 2560, 1440),
@@ -395,31 +463,52 @@ function app_startup_lists()
 		new_videotemplate("uhd_4k_cinematic", 5120, 2160)
 	)
 	
-	// Video qualities
-	videoquality_list = ds_list_create()
-	ds_list_add(videoquality_list,
-		new_videoquality("best", 5000000),
-		new_videoquality("high", 2500000),
-		new_videoquality("medium", 1200000),
-		new_videoquality("low", 700000),
-		new_videoquality("verylow", 350000)
-	)
-	
 	// Language
 	language_english_map = ds_map_create()
 	language_map = ds_map_create()
 	
 	language_load(language_file, language_english_map)
 	ds_map_copy(language_map, language_english_map)
-	langauge_new(language_file)
+	language_new(language_file)
 	
 	// Biomes
 	biome_list = ds_list_create()
-	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_water, null))
+	ds_list_add(biome_list, new_biome("custom", 0, 0, true, c_plains_biome_grass, c_plains_biome_foliage, c_plains_biome_dry_foliage, c_plains_biome_water, null))
+	
+	biome_color_name_list = [
+		"grass_color", "foliage_color", "dry_foliage_color", "water_color",
+		"leaves_oak_color", "leaves_spruce_color", "leaves_birch_color", "leaves_jungle_color",
+		"leaves_acacia_color", "leaves_dark_oak_color", "leaves_mangrove_color"
+	]
+	
+	biome_color_name_map = ds_map_create()
+	for (var i = 0; i < e_biome_color.amount; i++)
+		biome_color_name_map[? biome_color_name_list[i]] = i
+	
+	biome_color_name_map[? "grass"] = e_biome_color.GRASS
+	biome_color_name_map[? "foliage"] = e_biome_color.FOLIAGE
+	biome_color_name_map[? "dry_foliage"] = e_biome_color.DRY_FOLIAGE
+	biome_color_name_map[? "water"] = e_biome_color.WATER
+	biome_color_name_map[? "oak_leaves"] = e_biome_color.LEAVES_OAK
+	biome_color_name_map[? "spruce_leaves"] = e_biome_color.LEAVES_SPRUCE
+	biome_color_name_map[? "birch_leaves"] = e_biome_color.LEAVES_BIRCH
+	biome_color_name_map[? "jungle_leaves"] = e_biome_color.LEAVES_JUNGLE
+	biome_color_name_map[? "acacia_leaves"] = e_biome_color.LEAVES_ACACIA
+	biome_color_name_map[? "dark_oak_leaves"] = e_biome_color.LEAVES_DARK_OAK
+	biome_color_name_map[? "mangrove_leaves"] = e_biome_color.LEAVES_MANGROVE
 	
 	// Particles
 	particle_template_list = ds_list_create()
 	particle_template_map = ds_map_create()
+	
+	minecraft_block_sheet_size = array_create(e_block_sheet.amount)
+	for (var size = 0; size < e_block_sheet.amount; size++)
+		minecraft_block_sheet_size[size] = vec2(0, 0)
+	minecraft_block_animated_sheet_frame_count = 0
+	minecraft_item_sheet_size = array_create(e_item_sheet.amount)
+	for (var size = 0; size < e_item_sheet.amount; size++)
+		minecraft_item_sheet_size[size] = vec2(0, 0)
+	minecraft_item_place_target_map = ds_map_create()
 	
 	minecraft_pattern_list = ds_list_create()
 	minecraft_pattern_short_list = ds_list_create()
@@ -427,6 +516,17 @@ function app_startup_lists()
 	
 	minecraft_armor_trim_pattern_list = ds_list_create()
 	minecraft_armor_trim_material_list = ds_list_create()
+	
+	minecraft_armor_shape_index_map = ds_map_create()
+	minecraft_armor_shape_index_map[? "helmet"] = 0
+	minecraft_armor_shape_index_map[? "helmet_baby"] = 0
+	minecraft_armor_shape_index_map[? "chestplate"] = 1
+	minecraft_armor_shape_index_map[? "chestplate_baby"] = 1
+	minecraft_armor_shape_index_map[? "leggings"] = 2
+	minecraft_armor_shape_index_map[? "leggings_baby"] = 2
+	minecraft_armor_shape_index_map[? "boots"] = 3
+	minecraft_armor_shape_index_map[? "boots_baby"] = 3
+	
 	minecraft_map_color_array = []
 	minecraft_swatch_array = []
 	minecraft_swatch_color_map = ds_map_create()
@@ -441,20 +541,22 @@ function app_startup_lists()
 	)
 	
 	blend_mode_map = ds_map_create()
-	ds_map_add(blend_mode_map, "normal", bm_normal)
-	ds_map_add(blend_mode_map, "add", bm_add)
-	ds_map_add(blend_mode_map, "subtract", bm_subtract)
-	ds_map_add(blend_mode_map, "multiply", array(bm_zero, bm_src_color))
-	ds_map_add(blend_mode_map, "screen", array(bm_one, bm_inv_src_color))
+	blend_mode_map[?"normal"] = bm_normal
+	blend_mode_map[?"add"] = bm_add
+	blend_mode_map[?"subtract"] = bm_subtract
+	blend_mode_map[?"multiply"] = [ bm_zero, bm_src_color ]
+	blend_mode_map[?"screen"] = [ bm_one, bm_inv_src_color ]
 	
 	// List of icons in sync with e_tl_type
 	/*
 		CHARACTER,
-		SPECIAL_BLOCK,
-		SCENERY,
+		EQUIPMENT,
+		MODEL,
+		MODEL_PART,
 		ITEM,
+		SCENERY,
 		BLOCK,
-		BODYPART,
+		SPECIAL_BLOCK,
 		PARTICLE_SPAWNER,
 		TEXT,
 		CUBE,
@@ -462,23 +564,27 @@ function app_startup_lists()
 		CYLINDER,
 		SPHERE,
 		SURFACE,
-		MODEL,
 		CAMERA,
-		SPOT_LIGHT,
+		AUDIO_TRACK,
 		POINT_LIGHT,
-		FOLDER,
-		BACKGROUND,
-		AUDIO
+		SPOT_LIGHT,
+		PATH,
+		PATH_POINT,
+		ENVIRONMENT,
+		STRUCTURE,
+		FOLDER
 	*/
 	
 	timeline_icon_list = ds_list_create()
 	ds_list_add(timeline_icon_list,
 		icons.CHARACTER,
-		icons.BLOCK_SPECIAL,
-		icons.SCENERY,
-		icons.ITEM,
-		icons.BLOCK,
+		icons.SHIELD,
+		icons.MODEL,
 		icons.PART,
+		icons.ITEM,
+		icons.SCENERY,
+		icons.BLOCK,
+		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
 		icons.CUBE,
@@ -486,55 +592,72 @@ function app_startup_lists()
 		icons.CYLINDER,
 		icons.SPHERE,
 		icons.PLANE,
-		icons.MODEL,
 		icons.CAMERA,
-		icons.LIGHT_SPOT,
-		icons.LIGHT_POINT,
-		icons.FOLDER,
-		icons.CLOUD,
+		icons.WAND,
 		icons.NOTE,
+		icons.LIGHT_POINT,
+		icons.LIGHT_SPOT,
 		icons.PATH,
-		icons.PATH_POINT
+		icons.PATH_POINT,
+		icons.CLOUD,
+		icons.SCENERY,
+		icons.FOLDER
 	)
 	
 	timeline_icon_list_dark = ds_list_create()
 	ds_list_add(timeline_icon_list_dark,
 		icons.CHARACTER,
-		icons.BLOCK_SPECIAL,
-		icons.SCENERY,
-		icons.ITEM,
-		icons.BLOCK,
+		icons.SHIELD,
+		icons.MODEL,
 		icons.PART,
+		icons.ITEM,
+		icons.SCENERY,
+		icons.BLOCK,
+		icons.BLOCK_SPECIAL,
 		icons.FIREWORKS,
 		icons.TEXT,
-		icons.CUBE__DARK,
-		icons.CONE__DARK,
-		icons.CYLINDER__DARK,
-		icons.SPHERE__DARK,
+		icons.CUBE_DARK,
+		icons.CONE_DARK,
+		icons.CYLINDER_DARK,
+		icons.SPHERE_DARK,
 		icons.PLANE,
-		icons.MODEL,
 		icons.CAMERA,
-		icons.LIGHT_SPOT,
-		icons.LIGHT_POINT,
-		icons.FOLDER,
-		icons.CLOUD,
+		icons.WAND,
 		icons.NOTE,
+		icons.LIGHT_POINT,
+		icons.LIGHT_SPOT,
 		icons.PATH,
-		icons.PATH_POINT
+		icons.PATH_POINT,
+		icons.CLOUD,
+		icons.SCENERY,
+		icons.FOLDER
 	)
 	
 	render_pass_list = ds_list_create()
 	ds_list_add(render_pass_list,
 		"combined",
+		"depth",
+		"normal",
+		"material",
 		"diffuse",
 		"specular",
 		"ao",
 		"shadows",
 		"indirect",
-		"indirectshadows",
+		"indirect_shadows",
 		"reflections",
-		"depth",
-		"normal",
-		"material"
+		"fog",
+		"mask",
+		"glow",
+		"subsurface",
+		"subsurface_range",
+		"emissive",
+		"roughness",
+		"metallic",
+		"fresnel",
+		"ssao_mask",
+		"bloom_threshold",
+		"bloom_blur",
+		"all"
 	)
 }

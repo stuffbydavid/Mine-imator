@@ -1,5 +1,3 @@
-/// app_update_work_camera()
-
 function app_update_work_camera()
 {
 	if (cam_work_jump)
@@ -10,11 +8,14 @@ function app_update_work_camera()
 	
 	if (window_busy = "")
 	{
-		if (tl_edit != null) 
+		if (tl_focus != null && !instance_exists(tl_focus))
+			tl_focus = (tl_edit != null && instance_exists(tl_edit)) ? tl_edit : null
+
+		if (tl_focus != null && tl_focus.value_type[e_value_type.TRANSFORM_POS])
 		{
-			cam_work_focus_tl = tl_edit
+			cam_work_focus_tl = tl_focus
 			
-			if (cam_work_focus_tl.world_pos_2d_error)
+			if (cam_work_focus_2d_error)
 				cam_work_focus_tl = null
 			
 			if (cam_work_focus_tl)
@@ -25,7 +26,7 @@ function app_update_work_camera()
 	}
 	
 	cam_work_zoom += (cam_work_zoom_goal - cam_work_zoom) / max(1, 3 / delta)
-	cam_work_zoom = clamp(cam_work_zoom, 1, project_render_distance)
+	//cam_work_zoom = clamp(cam_work_zoom, 1, project_render_distance)
 	
 	if (cam_work_focus_last[X] != cam_work_focus[X] || 
 		cam_work_focus_last[Y] != cam_work_focus[Y] || 

@@ -1,9 +1,8 @@
-/// bezier_curve_quad(p1, p2, p3, t)
-/// @arg p1
-/// @arg p2
-/// @arg p3
-/// @arg t
 /// @desc Returns result of a quadratic bezier curve.
+/// @arg point1
+/// @arg point2
+/// @arg point3
+/// @arg progress
 
 function bezier_curve_quad(p1, p2, p3, t)
 {

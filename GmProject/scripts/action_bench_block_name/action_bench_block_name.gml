@@ -1,37 +1,48 @@
-/// action_bench_block_name(block)
-/// @arg block
 /// @desc Sets the block name of the workbench settings.
 
-function action_bench_block_name(block)
+function action_bench_block_name(name)
 {
-	with (bench_settings)
+	var settings, list, search;
+	
+	if (place_build)
 	{
-		var s = string_lower(block_list.search_tbx.text);
-		
-		if (block_name = block && s = "")
+		settings = build_settings
+		list = build_tool.build_list
+	}
+	else
+	{
+		settings = bench_settings
+		list = bench_settings.block_list
+	}
+	
+	search = string_lower(list.search_tbx.text)
+	
+	with (settings)
+	{
+		if (block_name = name && search = "")
 			return 0
 		
-		block_name = block
+		block_name = name
 		block_state = array_copy_1d(mc_assets.block_name_map[?block_name].default_state)
 		
 		// Modify states for better search
-		if (s != "" && !string_contains(string_lower(minecraft_asset_get_name("block", mc_assets.block_name_map[?block].name)), s))
+		if (search != "" && !string_contains(string_lower(minecraft_asset_get_name("block", mc_assets.block_name_map[?name].name)), search))
 		{
-			var b, state, val;
-			b = mc_assets.block_name_map[?block]
+			var block = mc_assets.block_name_map[?name];
 			
 			for (var i = 0; i < array_length(block_state); i += 2)
 			{
-				var state = block_state[i];
-				var statelist = b.states_map[?state];
+				var state, statelist;
+				state = block_state[i]
+				statelist = block.states_map[?state]
 				
 				for (var j = 0; j < statelist.value_amount; j++)
 				{
-					val = statelist.value_name[j]
+					var value = statelist.value_name[j];
 					
-					if (string_contains(string_lower(minecraft_asset_get_name("blockstatevalue", val)), s))
+					if (string_contains(string_lower(minecraft_asset_get_name("block/state/value", value)), search))
 					{
-						state_vars_set_value(block_state, state, val)
+						state_vars_set_value(block_state, state, value)
 						break
 					}
 				}
@@ -40,6 +51,7 @@ function action_bench_block_name(block)
 		
 		temp_update_block()
 		
-		preview.update = true
+		if (preview != null)
+			preview.update = true
 	}
 }

@@ -1,4 +1,3 @@
-/// model_file_load_texture(name, resource)
 /// @arg name
 /// @arg resource
 

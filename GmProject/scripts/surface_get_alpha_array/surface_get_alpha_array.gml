@@ -1,6 +1,5 @@
-/// surface_get_alpha_array(surface)
-/// @arg surface
 /// @desc Returns an array with the alpha values of the given surface.
+/// @arg surface
 
 function surface_get_alpha_array(surf)
 {

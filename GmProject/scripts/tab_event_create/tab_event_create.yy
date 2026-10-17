@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Tab",
-    "path": "folders/Scripts/App/Interface/Components/Tab.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_event_create",
+  "parent":{
+    "name":"Tab",
+    "path":"folders/Scripts/App/Interface/Components/Tab.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

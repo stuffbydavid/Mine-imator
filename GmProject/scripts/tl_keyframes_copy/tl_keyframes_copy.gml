@@ -1,5 +1,3 @@
-/// tl_keyframes_copy()
-
 function tl_keyframes_copy()
 {
 	var minpos = null;

@@ -1,9 +1,8 @@
-/// ease_bezier_curve(p1, p2, p3, p4, t)
-/// @arg p1
-/// @arg p2
-/// @arg p3
-/// @arg p4
-/// @arg t
+/// @arg point1
+/// @arg point2
+/// @arg point3
+/// @arg point4
+/// @arg progress
 
 function ease_bezier_curve(p1, p2, p3, p4, t)
 {

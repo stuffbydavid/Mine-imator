@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_save_pack_cache",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_save_pack_cache",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

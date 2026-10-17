@@ -1,5 +1,3 @@
-/// keybinds_reset_default()
-
 function keybinds_reset_default()
 {
 	for (var i = 0; i < e_keybind.amount; i++)

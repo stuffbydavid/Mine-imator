@@ -1,106 +1,76 @@
-/// view_update_surface(view, camera)
 /// @arg view
 /// @arg camera
+/// @arg [buildedit]
 
-function view_update_surface(view, cam)
+function view_update_surface(view, cam, buildedit = false)
 {
+	//debug("view_update_surface", view, cam)
+	
+	view.update = false
+	view.update_gizmos = true
+	
 	render_view_current = view
+
+	app_update_cameras(view.renderer, false)
 	
 	// Render
-	render_lights = (view.quality != e_view_mode.FLAT)
+	renderer_current = view.renderer
+	render_lights = (view.renderer != e_renderer.QUICK || setting_quick_mode_shading)
 	render_particles = view.particles
-	render_effects = view.effects
-	render_quality = view.quality
-	render_watermark = (settings.show && settings.program.show && setting_watermark_custom && collapse_map[?"watermark"])
-	render_start(view.surface, cam, content_width, content_height)
+	render_effects = (view = view_second && view.effects)
+	render_background = !view.transparent_background
+	render_watermark = false
 	
-	if (view.quality = e_view_mode.RENDER)
+	// Reset samples if place mode changed
+	if (view.surface_place_active != view.place_output || (view.place_output && !surface_exists(view.surface_place_id)))
+		render_samples = -1
+	
+	render_start(view.surface, cam, view, content_width, content_height)
+	
+	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
+	{
 		render_high()
+		
+		// Update surfaces for placing/picking
+		if (!render_place)
+		{
+			if (view.surface_place_separate && surface_exists(view.surface_place_id))
+				surface_free(view.surface_place_id)
+			
+			view.surface_place_id = null
+			view.surface_place_separate = false
+		}
+		
+		view.surface_pick_depth_id = render_surface_depth
+		view.surface_pick_mask_id = render_surface_mask
+		
+		if (view.renderer = e_renderer.STANDARD || !render_samples_done)
+		{
+			view.surface_place_depth_near = depth_near
+			view.surface_place_depth_far = depth_far
+			view.surface_place_proj_matrix = matrix_multiply(proj_matrix, aa_matrix)
+			view.surface_place_view_matrix = array_copy_1d(view_matrix)
+		}
+	}
 	else
 		render_low()
-	
-	if (view.gizmos)
+
+	if (view = view_main && tl_focus != null && instance_exists(tl_focus))
 	{
-		// Selection
+		tl_focus.world_pos_2d = view_shape_project(tl_focus.world_pos)
+		cam_work_focus_2d_error = (point3D_project_error || tl_focus.world_pos_2d[X] < 0 || tl_focus.world_pos_2d[Y] < 0 || tl_focus.world_pos_2d[X] >= content_width || tl_focus.world_pos_2d[Y] >= content_height)
+	}
+	
+	// Selected objects
+	if (view.gizmos && !place_build)
+	{
 		if (tl_edit_amount > 0)
-			view.surface_select = render_select(e_render_mode.SELECT, view.surface_select)
+			view.surface_select = render_select_outline(e_render_mode.SELECT, view.surface_select)
 		
-		// Shapes and controls
-		if (surface_exists(render_target))
+		if (!view.transparent_background && surface_exists(render_target))
 		{
 			surface_set_target(render_target)
 			{
-				// Shapes
-				with (obj_timeline)
-				{
-					with (app)
-					{
-						var tl = other.id;
-						if (tl.hide || !tl.value_inherit[e_value.VISIBLE])
-							continue
-						
-						draw_set_color((tl.selected || tl.parent_is_selected) ? c_white : c_controls)
-						
-						if (tl.type = e_tl_type.SPOT_LIGHT)
-							view_shape_spotlight(tl)
-						else if (tl.type = e_tl_type.POINT_LIGHT)
-							view_shape_pointlight(tl)
-						else if (tl.type = e_tl_type.CAMERA && tl != cam)
-							view_shape_camera(tl)
-						else if (tl.type = e_temp_type.PARTICLE_SPAWNER)
-							view_shape_particles(tl)
-						else if (tl.type = e_tl_type.PATH)
-							view_shape_path(view, tl)
-						
-						if (dev_mode_show_bones && tl.selected && tl.type = e_tl_type.BODYPART && array_length(tl.part_joints_pos) > 0)
-						{
-							// Draw bones
-							for (var i = 0; i < 2; i++)
-								view_shape_bone(tl.part_joints_pos[i], point3D_distance(tl.part_joints_pos[i], tl.part_joints_pos[i + 1]), tl.part_joints_bone_matrix[i])
-						}
-					}
-				}
-				
-				// Controls
-				if (tl_edit != null && tl_edit != cam && view.gizmos)
-				{
-					var vis = tl_edit.render_visible;
-					
-					// Update 2D position
-					tl_edit.world_pos_2d = view_shape_project(tl_edit.world_pos)
-					tl_edit.world_pos_2d_error = (point3D_project_error || tl_edit.world_pos_2d[X] < 0 || tl_edit.world_pos_2d[Y] < 0 || tl_edit.world_pos_2d[X] >= content_width || tl_edit.world_pos_2d[Y] >= content_height)
-					
-					if (vis)
-					{
-						view_control_ratio = 1//max(1, (100 / content_height) * 1.25)
-						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_SCA] && (setting_tool_scale || setting_tool_transform))
-							view_control_scale(view)
-						
-						if (tl_edit.value_type[e_value_type.CAMERA] && tl_edit.value[e_value.CAM_ROTATE])
-							view_control_camera(view)
-						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_POS] && (setting_tool_move || setting_tool_transform))
-							view_control_move(view)
-						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_ROT] && (setting_tool_rotate || setting_tool_transform))
-							view_control_rotate(view)
-						
-						if (tl_edit.value_type[e_value_type.TRANSFORM_BEND] && setting_tool_bend)
-							view_control_bend(view)
-						
-						view.control_mouseon_last = view.control_mouseon
-						view.control_mouseon = null
-						
-						if (window_busy = "rendercontrol" && view_control_edit_view = view)
-							app_mouse_wrap(content_x, content_y, content_width, content_height)
-						
-						if (!tl_edit.world_pos_2d_error && tl_edit.value_type[e_value_type.TRANSFORM_POS])
-							draw_circle_ext(tl_edit.world_pos_2d[X] + 1, tl_edit.world_pos_2d[Y] + 1, 6, false, 64, c_white, 1)
-					}
-				}
-				
-				// Alpha fix
 				gpu_set_blendmode_ext(bm_src_color, bm_one)
 				draw_box(0, 0, render_width, render_height, false, c_black, 1)
 				gpu_set_blendmode(bm_normal)
@@ -110,10 +80,71 @@ function view_update_surface(view, cam)
 	}
 
 	// Placed objects
-	if (place_tl != null)
-		view.surface_select = render_select(e_render_mode.PLACE, view.surface_select)
+	var showplace;
+	if (place_build)
+		showplace = (content_mouseon || (build_structure != null && instance_exists(build_structure)))
+	else
+		showplace = (place_tl != null && (content_mouseon || place_content_mouseon = null || place_content_mouseon = "timeline"))
+	
+	if (showplace)
+	{
+		// Highlight target parent while placing
+		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
+			view.surface_select = render_select_outline(e_render_mode.PLACE_PARENT, view.surface_select)
+			
+		// Highlight selection
+		if (!place_build)
+			view.surface_select = render_select_outline(e_render_mode.PLACE_SELECT, view.surface_select)
+	}
 	
 	view.surface = render_done()
+	
+	// Save the view state
+	view.surface_cam_from = point3D_copy(cam_from)
+	view.surface_cam_to = point3D_copy(cam_to)
+	view.surface_cam_up = point3D_copy(cam_up)
+	view.surface_cam_fov = cam_fov
+	view.surface_cam_near = cam_near
+	view.surface_cam_far = cam_far
+	view.surface_cam_work_from = point3D_copy(cam_work_from)
+	view.surface_cam_work_angle = vec3(cam_work_angle_look_xy, cam_work_angle_look_z, cam_work_roll)
+	
+	view.surface_proj_matrix = array_copy_1d(proj_matrix)
+	view.surface_view_matrix = array_copy_1d(view_matrix)
+	view.surface_view_proj_matrix = array_copy_1d(view_proj_matrix)
+	
+	view.surface_place_active = view.place_output
+	view.surface_width = content_width
+	view.surface_height = content_height
+	view.surface_renderer = view.renderer
+	view.surface_camera_last = cam
+	view.surface_particles = view.particles
+	view.surface_effects = view.effects
+	view.surface_gizmos_enabled = view.gizmos
+	view.surface_transparent_background = view.transparent_background
+	
+	// Keep accumulating Realistic samples until the image is finished
+	if (view.renderer = e_renderer.REALISTIC && !render_samples_done)
+		view_changed(view)
+	
+	render_background = true
 	render_lights = true
 	render_particles = true
+	
+	if (buildedit)
+	{
+		// Pick the edited scene before drawing its new wireframe
+		view_place(view)
+		
+		app_update_place()
+		
+		if (build_first_person)
+			view.surface_place_async_id = null
+		
+		if (view.update)
+		{
+			render_samples = -1
+			view_update_surface(view, cam)
+		}
+	}
 }

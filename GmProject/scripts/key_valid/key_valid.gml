@@ -1,6 +1,3 @@
-/// key_valid(key)
-/// @arg key
-
 function key_valid(key)
 {
 	var keystr;

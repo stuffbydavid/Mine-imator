@@ -1,11 +1,8 @@
-/// context_menu_draw_level(i)
-/// @arg i
+/// @arg levelindex
 
-function context_menu_draw_level(argument0)
+function context_menu_draw_level(levelindex)
 {
-	var levelindex, level, alphaease, aniease;
-	levelindex = argument0
-	level = context_menu_level[|levelindex]
+	var level = context_menu_level[|levelindex];
 	context_menu_current = level
 	
 	// Animation
@@ -24,6 +21,7 @@ function context_menu_draw_level(argument0)
 			level.ani = 0
 	}
 	
+	var aniease, alphaease;
 	aniease = ease("easeoutexpo", level.ani)
 	alphaease = aniease
 	aniease = 1
@@ -58,10 +56,11 @@ function context_menu_draw_level(argument0)
 	draw_set_alpha(alphaease)
 	
 	draw_dropshadow(dx, dy, dw, dh, c_black, 1)
-	draw_box(dx, dy, dw, dh, false, c_level_top, 1)
+	draw_box(dx, dy, dw, dh, false, c_input_background, 1)
 	draw_outline(dx, dy, dw, dh, 1, c_border, a_border, true)
 	
-	if (level.ani < 1)
+	var clipped = level.ani < 1;
+	if (clipped)
 		clip_begin(dx, dy, dw, dh)
 	
 	// Adjust 
@@ -75,12 +74,13 @@ function context_menu_draw_level(argument0)
 		for (var i = 0; i < ds_list_size(level.level_list.item); i++)
 		{
 			var item = level.level_list.item[|i];
-			
 			if (item.divider)
 				dy += 8
 			
 			if (list_item_draw(item, dx, dy + 24 * i, dw, 24, false))
 			{
+				if (context_menu_name = "context_menu/value" || context_menu_name = "context_menu/category")
+					list_item_camera_effect_edit_type = context_menu_camera_effect_type_edit
 				item.context_menu_active = true
 				item.hovertime = 99999
 			}
@@ -97,6 +97,10 @@ function context_menu_draw_level(argument0)
 		if (script_execute(level.level_script, dx, dy, dw, dh))
 		{
 			draw_set_alpha(1)
+			
+			if (clipped)
+				clip_end()
+			
 			return 0
 		}
 		
@@ -107,7 +111,7 @@ function context_menu_draw_level(argument0)
 		}
 	}
 	
-	if (level.ani < 1)
+	if (clipped)
 		clip_end()
 	
 	draw_set_alpha(1)

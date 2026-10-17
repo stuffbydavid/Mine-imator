@@ -1,5 +1,3 @@
-/// action_res_export()
-
 function action_res_export()
 {
 	if (res_edit.type = e_res_type.PACK)
@@ -28,7 +26,12 @@ function action_res_export()
 		with (res_edit)
 		{
 			res_save()
-			file_rename_lib(save_folder + "/" + filename, fn)
+
+			// Never rename the source when exporting into the project folder
+			if (load_folder = save_folder)
+				file_copy_lib(load_folder + "/" + filename, fn)
+			else
+				file_rename_lib(save_folder + "/" + filename, fn)
 		}
 	}
 }

@@ -1,7 +1,4 @@
-/// action_tl_inherit_subsurface(enable)
-/// @arg enable
-
-function action_tl_inherit_subsurface(enable)
+function action_tl_inherit_subsurface(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_subsurface(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_subsurface, enable)
+				history_save_var(other.id, other.inherit_subsurface, enabled)
 			
-			inherit_subsurface = enable
+			inherit_subsurface = enabled
 			update_matrix = true
 		}
 	}

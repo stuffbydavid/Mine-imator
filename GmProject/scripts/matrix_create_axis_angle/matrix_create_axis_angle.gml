@@ -1,6 +1,3 @@
-/// matrix_create_axis_angle(axis, angle)
-/// @arg axis
-/// @arg angle
 /// @desc https://www.bloomenthal.com/JBloom/pdf/ref-frames.pdf
 
 function matrix_create_axis_angle(axis, angle)

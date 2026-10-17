@@ -1,4 +1,3 @@
-/// history_restore_tl_select()
 /// @desc Restores the previously selected timelines and keyframes.
 
 function history_restore_tl_select()
@@ -10,6 +9,7 @@ function history_restore_tl_select()
 		with (save_id_find(tl_sel_save_id[t]))
 		{
 			tl_select()
+			
 			for (var k = 0; k < other.tl_sel_kf_amount[t]; k++)
 				tl_keyframe_select(keyframe_list[|other.tl_sel_kf_index[t, k]])
 		}

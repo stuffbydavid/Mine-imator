@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "app_startup_interface_settings_menus",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Startup",
-    "path": "folders/Scripts/App/Interface/Startup.yy",
+  "$GMScript":"v1",
+  "%Name":"app_startup_interface_settings_menus",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_startup_interface_settings_menus",
+  "parent":{
+    "name":"Startup",
+    "path":"folders/Scripts/App/Interface/Startup.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

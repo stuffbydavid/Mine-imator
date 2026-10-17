@@ -92,6 +92,7 @@ namespace CppProject
 		VarType Value(IntType key) const override { return hash.value(key).value; }
 		Type GetType() const override { return HASH_INT; }
 	};
+
 	struct StringHashMap : HashMap<StringType>
 	{
 		StringHashMap() : HashMap(ID_StringHashMap) {}

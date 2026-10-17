@@ -1,14 +1,20 @@
-/// camera_control_move(camera, lockx, locky)
 /// @arg camera
 /// @arg lockx
 /// @arg locky
+/// @arg [lockmouse]
 
-function camera_control_move(cam, lockx, locky)
+function camera_control_move(cam, lockx, locky, lockmouse = true)
 {
-	var mx, my;
+	var movespeed, mx, my, elapsed;
+	movespeed = 3
+	elapsed = delta_time / (1000000 / 60)
 	mx = -((display_mouse_get_x() - lockx) / 8) * setting_look_sensitivity
 	my = -((display_mouse_get_y() - locky) / 8) * setting_look_sensitivity
-	display_mouse_set(lockx, locky)
+	
+	if (lockmouse)
+		display_mouse_set(lockx, locky)
+	
+	cam_work_moving = false
 	
 	if (!cam)
 	{
@@ -25,7 +31,7 @@ function camera_control_move(cam, lockx, locky)
 		}
 		
 		// Move
-		move = 4 * setting_move_speed * delta
+		move = movespeed * setting_move_speed * setting_move_speed_scroll * elapsed
 		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
 		if (keybinds[e_keybind.CAM_FAST].active)
@@ -36,14 +42,18 @@ function camera_control_move(cam, lockx, locky)
 		xd = 0
 		yd = 0
 		
+		cam_work_moving = (spd != 0)
+		
 		if (keybinds[e_keybind.CAM_RIGHT].active)
 		{
+			cam_work_moving = true
 			xd += -sin(degtorad(cam_work_angle_look_xy)) * move
 			yd += -cos(degtorad(cam_work_angle_look_xy)) * move
 		}
 		
 		if (keybinds[e_keybind.CAM_LEFT].active)
 		{
+			cam_work_moving = true
 			xd += sin(degtorad(cam_work_angle_look_xy)) * move
 			yd += cos(degtorad(cam_work_angle_look_xy)) * move
 		}
@@ -76,7 +86,7 @@ function camera_control_move(cam, lockx, locky)
 		var move, roll, spd, spdm, xd, yd, zd;
 		
 		// Move
-		move = 4 * setting_move_speed * delta
+		move = movespeed * setting_move_speed * setting_move_speed_scroll * elapsed
 		spd = (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		spdm = 1
 		if (keybinds[e_keybind.CAM_FAST].active)
@@ -87,14 +97,18 @@ function camera_control_move(cam, lockx, locky)
 		xd = 0
 		yd = 0
 		
+		cam_work_moving = (spd != 0)
+		
 		if (keybinds[e_keybind.CAM_RIGHT].active)
 		{
+			cam_work_moving = true
 			xd += -sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 			yd += -cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 		}
 		
 		if (keybinds[e_keybind.CAM_LEFT].active)
 		{
+			cam_work_moving = true
 			xd += sin(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 			yd += cos(degtorad(cam.value[e_value.ROT_Z] + 90)) * move
 		}
@@ -105,7 +119,7 @@ function camera_control_move(cam, lockx, locky)
 		zd += (-dsin(cam.value[e_value.ROT_X])) * (keybinds[e_keybind.CAM_FORWARD].active - keybinds[e_keybind.CAM_BACK].active) * move
 		
 		// Roll
-		roll = (keybinds[e_keybind.CAM_ROLL_FORWARD].active - keybinds[e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * delta
+		roll = (keybinds[e_keybind.CAM_ROLL_FORWARD].active - keybinds[e_keybind.CAM_ROLL_BACK].active) * 4 * spdm * elapsed
 		
 		// Set
 		tl_value_set_start(camera_control_move, true)

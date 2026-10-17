@@ -1,5 +1,4 @@
 /// CppSeparate MatrixType matrix_create(VecType, VecType, VecType)
-/// matrix_create(position, rotation, scale)
 /// @arg position
 /// @arg rotation
 /// @arg scale

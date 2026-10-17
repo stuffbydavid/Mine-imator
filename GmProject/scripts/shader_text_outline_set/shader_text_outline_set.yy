@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"shader_text_outline_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_text_outline_set",
+  "parent":{
+    "name":"Set",
+    "path":"folders/Scripts/Render/Shaders/Set.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

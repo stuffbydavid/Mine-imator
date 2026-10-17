@@ -98,8 +98,8 @@ namespace CppProject
 						tint = BlockStyle::WATER;
 
 					styleIndex = BlockStyle::Create(
-						model->preview_color_zp, model->preview_alpha_zp,
-						model->preview_color_yp, model->preview_alpha_yp,
+						model->preview_color[ZP], model->preview_alpha[ZP],
+						model->preview_color[YP], model->preview_alpha[YP],
 						tint
 					);
 				}
@@ -116,7 +116,6 @@ namespace CppProject
 		Preview::mcBlockIdStyleIndexMap["flowing_water"] = BlockStyle::Create(make_color_rgb(50, 60, 255), 0.4, -1, 1.0, BlockStyle::WATER);
 		Preview::mcBlockIdStyleIndexMap["lava"] =
 		Preview::mcBlockIdStyleIndexMap["flowing_lava"] = BlockStyle::Create(make_color_rgb(255, 100, 0), 1.0, -1, 1.0, BlockStyle::NONE, 26);
-
 
 		// Preview texture
 		BlockStyle::previewTexture = new Texture(BlockStyle::previewImage);
@@ -192,13 +191,15 @@ namespace CppProject
 		// Clear old regions
 		for (Region* region : World::regions)
 			delete region;
+		
 		World::regions.clear();
 
 		currentRegionsDir = QDir();
+
 		StringType::qThreadActive = false;
 	}
 
-	void World::GenerateBuilderSections(const WorldBox& box)
+	void World::GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic)
 	{
 		if (!box.active) // No selection
 			return;
@@ -206,24 +207,34 @@ namespace CppProject
 		// Allocate builder sections (Y and Z is flipped)
 		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
 		VecType size = box.GetSize();
-		builder->build_size_x = size.x;
-		builder->build_size_y = size.z;
-		builder->build_size_z = size.y;
+		builder->build_size[X_] = size.x;
+		builder->build_size[Y_] = size.z;
+		builder->build_size[Z_] = size.y;
 		Builder::offset = { box.start.x & SECTION_SIZEM1, box.start.z & SECTION_SIZEM1, box.start.y & SECTION_SIZEM1 };
+
 		builder_start(Scope<obj_builder>(builder));
 
 		// Load regions within box
+		if (schematic)
+			schematic->exportOnly = false;
+
 		debug_timer_start();
 		builder->sch_timeline_amount = 0;
 		builder->builder_scenery_legacy = false;
 
 		for (Region* region : regions)
 		{
-			region->Load(box);
+			region->Load(box, schematic);
+			
+			if (schematic && region->loadStatus == Region::LOAD_ERROR)
+				schematic->error = "Could not load region " + region->filename;
+			
 			if (region->legacy)
 				builder->builder_scenery_legacy = true;
+			
 			builder->sch_timeline_amount += region->numTimelines;
 		}
+
 		debug_timer_stop("Load world sections");
 
 		// Add missing sections with only air
@@ -252,13 +263,18 @@ namespace CppProject
 
 					for (BlockEntity& blockEntity : chunk->blockEntities)
 					{
-						self->build_pos_x = blockEntity.pos.x;
-						self->build_pos_y = blockEntity.pos.z; // Z and Y are flipped
-						self->build_pos_z = blockEntity.pos.y;
-						self->build_pos = self->build_pos_z * self->build_size_xy + self->build_pos_y * self->build_size_x + self->build_pos_x;
-						self->block_current = builder_get_block(self, self->build_pos_x, self->build_pos_y, self->build_pos_z);
-						self->block_state_id_current = builder_get_state_id(self, self->build_pos_x, self->build_pos_y, self->build_pos_z);
-						script_execute(self, { blockEntity.script->id, blockEntity.map->id });
+						self->build_pos[X_] = blockEntity.pos.x;
+						self->build_pos[Y_] = blockEntity.pos.z; // Z and Y are flipped
+						self->build_pos[Z_] = blockEntity.pos.y;
+						self->build_pos_index = blockEntity.pos.y * (IntType)self->build_size_xy + blockEntity.pos.z * self->build_size.Value(X_).ToInt() + blockEntity.pos.x;
+						self->block_current = builder_get_block(self, blockEntity.pos.x, blockEntity.pos.z, blockEntity.pos.y);
+						
+						if (self->block_current != null_)
+						{
+							self->block_state_id_current = builder_get_state_id(self, blockEntity.pos.x, blockEntity.pos.z, blockEntity.pos.y);
+							script_execute(self, { blockEntity.script->id, blockEntity.map->id });
+						}
+						
 						delete blockEntity.map;
 					}
 				}
@@ -281,10 +297,10 @@ namespace CppProject
 		try
 		{
 			NbtStream stream(bytesRaw, QHash<NbtType, QVector<StringType>>({
-				{ TAG_INT, { "version", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
+				{ TAG_INT, { "version", "DataVersion", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
 				{ TAG_STRING, { "LevelName", "Dimension" }},
 				{ TAG_LIST, { "Pos", "Rotation" }},
-				{ TAG_COMPOUND, { "Data", "Player", "spawn" } },
+				{ TAG_COMPOUND, { "Data", "Player", "spawn" }},
 				{ TAG_INT_ARRAY, { "pos" }}
 			}));
 			NbtCompound saveData(stream);
@@ -307,10 +323,13 @@ namespace CppProject
 					else
 						newName += info.name[i];
 				}
+
 				info.name = newName;
 			}
 
 			info.version = data->Int("version");
+			if (data->HasKey("DataVersion"))
+				info.dataVersion = data->Int("DataVersion");
 
 			if (data->HasKey("spawn"))
 			{
@@ -325,7 +344,8 @@ namespace CppProject
 
 			info.playerDim = "overworld";
 
-			auto loadPlayerData = [&info](NbtCompound* player) {
+			auto loadPlayerData = [&info](NbtCompound* player)
+			{
 				QVector<NbtDouble*> playerPos = player->List<NbtType::TAG_DOUBLE, NbtDouble>("Pos");
 				QVector<NbtFloat*> playerRot = player->List<NbtType::TAG_FLOAT, NbtFloat>("Rotation");
 				info.playerPos = { (RealType)playerPos[0]->value, (RealType)playerPos[1]->value, (RealType)playerPos[2]->value };
@@ -335,15 +355,17 @@ namespace CppProject
 					info.playerPos.y += 24.0 / 16.0;
 
 				if (player->GetType("Dimension") == TAG_STRING) // String dimension
-					info.playerDim = player->String("Dimension").Replaced("minecraft:", "").Replaced("the_", "");
+					info.playerDim = player->String("Dimension").Replaced("minecraft:", "");
 
 				else // Integer dimension
+				{
 					switch (player->Int("Dimension"))
 					{
-					case 0: info.playerDim = "overworld"; break;
-					case 1: info.playerDim = "end"; break;
-					case -1: info.playerDim = "nether"; break;
+						case 0:		info.playerDim = "overworld"; break;
+						case -1:	info.playerDim = "the_nether"; break;
+						case 1:		info.playerDim = "the_end"; break;
 					}
+				}
 
 				info.hasPlayer = true;
 			};
@@ -351,7 +373,6 @@ namespace CppProject
 			// Load player
 			if (data->HasKey("Player"))
 				loadPlayerData(data->Compound("Player"));
-
 			else
 			{
 				// Get player from newest <UUID>.dat file
@@ -375,10 +396,10 @@ namespace CppProject
 						{ TAG_STRING, { "Dimension" }},
 						{ TAG_LIST, { "Pos", "Rotation" }},
 					}));
+
 					NbtCompound playerData(playerStream);
 					loadPlayerData(&playerData);
 				}
-
 			}
 		}
 		catch (const QString& str)
@@ -410,16 +431,19 @@ namespace CppProject
 			filter = "*.mcr";
 			overworldDir.setNameFilters({ filter });
 		}
+
 		QDir netherDir(netherPath, filter);
 		QDir endDir(endPath, filter);
 
 		info.dimDir["overworld"] = overworldDir;
 		if (netherDir.exists() && !netherDir.isEmpty())
-			info.dimDir["nether"] = netherDir;
+			info.dimDir["the_nether"] = netherDir;
+
 		if (endDir.exists() && !endDir.isEmpty())
-			info.dimDir["end"] = endDir;
+			info.dimDir["the_end"] = endDir;
 
 		World::saves[dir] = info;
+
 		return true;
 	}
 
@@ -503,34 +527,22 @@ namespace CppProject
 		return changed;
 	}
 
-	WorldVec WorldVec::operator+(const WorldVec& vec) const
+	void World::ExportSchematic(const WorldBox& selection, const QString& filename)
 	{
-		return { x + vec.x, y + vec.y, z + vec.z };
-	}
+		ApplyFilter();
 
-	WorldVec WorldVec::operator-(const WorldVec& vec) const
-	{
-		return { x - vec.x, y - vec.y, z - vec.z };
-	}
+		SchematicExport schematic(selection, saves.value(global::_app->world_import_world_root).dataVersion);
+		
+		for (Region* source : regions)
+		{
+			// Temporary data leaves preview and builder caches untouched
+			std::unique_ptr<Region> region(new Region(source->filename));
+			region->Load(schematic.box, &schematic);
+			if (region->loadStatus == Region::LOAD_ERROR)
+				throw QString("Could not load region " + source->filename);
+		}
 
-	WorldVec WorldVec::operator*(const WorldVec& vec) const
-	{
-		return { x * vec.x, y * vec.y, z * vec.z };
-	}
-
-	WorldVec WorldVec::operator+(IntType in) const
-	{
-		return { x + in, y + in, z + in };
-	}
-
-	WorldVec WorldVec::operator-(IntType in) const
-	{
-		return { x - in, y - in, z - in };
-	}
-
-	WorldVec WorldVec::operator*(IntType in) const
-	{
-		return { x * in, y * in, z * in };
+		Gzip::WriteCompressed(schematic.Serialize(), filename);
 	}
 
 	WorldVec::operator VecType() const

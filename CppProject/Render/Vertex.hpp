@@ -48,6 +48,9 @@ namespace CppProject
 			   IntType color, RealType alpha,
 			   RealType u, RealType v,
 			   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface);
+		Vertex(RealType x, RealType y, RealType z, uint32_t packedNormal,
+			   IntType color, RealType alpha, RealType u, RealType v,
+			   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface);
 
 		// A flag in the first byte of the data int, up to 8 are allowed
 		enum Flag
@@ -62,6 +65,7 @@ namespace CppProject
 
 		// Sets the normal vector.
 		void SetNormal(RealType nx, RealType ny, RealType nz);
+		static uint32_t PackNormal(RealType nx, RealType ny, RealType nz);
 
 		// Sets the tangent vector.
 		void SetTangent(RealType tx, RealType ty, RealType tz);

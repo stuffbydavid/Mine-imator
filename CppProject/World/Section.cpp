@@ -22,6 +22,7 @@ namespace CppProject
 			// Check section box with given selection
 			WorldVec fullSize = WorldVec(SECTION_SIZE, SECTION_SIZE, SECTION_SIZE);
 			WorldVec worldPos = region->pos + chunk->regionPos + WorldVec(0, chunkIndex * SECTION_SIZE, 0);
+
 			if (!box.Intersects({ worldPos, worldPos + fullSize }))
 				return;
 
@@ -48,6 +49,7 @@ namespace CppProject
 			sectionY = builderPos.z >> 4;
 			sectionZ = builderPos.y >> 4;
 			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+
 			Builder::sections[sectionPos] = this;
 		}
 		else // Preview section
@@ -58,10 +60,10 @@ namespace CppProject
 			preview.regionPos = { chunk->regionPos.x, chunk->regionPos.y + chunkIndex * SECTION_SIZE, chunk->regionPos.z };
 
 			// Hide naturally occuring bedrock
-			preview.hideBedrock = (y <= 0 || (region->dimName == "nether" && y == 7));
+			preview.hideBedrock = (y <= 0 || (region->dimName == "the_nether" && y == 7));
 
 			// Enable section in GetPreviewState
-			IntType regionIndex = (chunkIndex << 10) + (chunk->z << 5) + chunk->x;
+			IntType regionIndex = chunkIndex * REGION_SECTIONS_XZ + chunk->z * REGION_SIZE_CHUNKS + chunk->x;
 			region->loadedSections[regionIndex] = this;
 			preview.singleBlockStyle = BlockStyle::airStyle;
 			preview.singleState = { false, false, false, 0 };
@@ -89,9 +91,10 @@ namespace CppProject
 					{
 						preview.hasLight = true;
 						const Heap<int8_t>& skyLightArray = nbt->ByteArray("SkyLight");
+
 						for (IntType i = 0; i < SECTION_SIZE3 / 2; i++)
 						{
-							IntType i2 = i << 1;
+							IntType i2 = i * 2;
 							preview.states[i2].value = skyLightArray.Value(i) & 15;
 							preview.states[i2 + 1].value = (skyLightArray.Value(i) >> 4) & 15;
 						}
@@ -102,9 +105,10 @@ namespace CppProject
 					{
 						preview.hasLight = true;
 						const Heap<int8_t>& blockLightArray = nbt->ByteArray("BlockLight");
+
 						for (IntType i = 0; i < SECTION_SIZE3 / 2; i++)
 						{
-							IntType i2 = i << 1;
+							IntType i2 = i * 2;
 							preview.states[i2].value += blockLightArray.Value(i) & 15;
 							preview.states[i2 + 1].value += (blockLightArray.Value(i) >> 4) & 15;
 						}
@@ -145,8 +149,8 @@ namespace CppProject
 			{
 				const Heap<int8_t>& blocksArray = nbt->ByteArray("Blocks");
 				const Heap<int8_t>& dataArray = nbt->ByteArray("Data");
-				const Heap<int8_t>& skyLightArray = nbt->ByteArray("SkyLight");
-				const Heap<int8_t>& blockLightArray = nbt->ByteArray("BlockLight");
+				const Heap<int8_t>* skyLightArray = nullptr;
+				const Heap<int8_t>* blockLightArray = nullptr;
 
 				// Pre Java 1.2 uses a single array for the chunk, so we add the section's y as offset
 				IntType offset = 0;
@@ -155,9 +159,13 @@ namespace CppProject
 				
 				if (dataType == PREVIEW) // Allocate data for preview
 				{
+					skyLightArray = &nbt->ByteArray("SkyLight");
+					blockLightArray = &nbt->ByteArray("BlockLight");
+
 					preview.states.Alloc(SECTION_SIZE3);
 					preview.blockStyleIndices.Alloc(SECTION_SIZE3);
 					preview.hasLight = true;
+
 					if (chunk->legacyBiomes.Size())
 						preview.biomeIndices.Alloc(SECTION_SIZE3);
 					else
@@ -168,10 +176,10 @@ namespace CppProject
 				for (uint8_t y = blockStart.y; y < blockEnd.y; y++)
 				for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
 				{
-					uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
+					uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
 					IntType arrayIndex;
 					if (format == Chunk::Format::PRE_JAVA_1_2)
-						arrayIndex = (x << 11) + (z << 7) + y + offset; // XZY order
+						arrayIndex = (x * SECTION_SIZE + z) * 128 + y + offset; // XZY order
 					else
 						arrayIndex = blockIndex; // YZX order
 
@@ -194,6 +202,7 @@ namespace CppProject
 							{
 								if (block->timeline)
 									chunk->numTimelines++;
+								
 								builder.paletteIndices[builderIndex] = AddBuilderState({
 									(uint16_t)block->block_id,
 									(uint16_t)global::legacy_block_state_id[legacyId][legacyData].ToInt(),
@@ -207,8 +216,8 @@ namespace CppProject
 					else // Preview
 					{
 						// Parse light
-						uint8_t skyLight = skyLightArray.Value(arrayIndexHalf);
-						uint8_t blockLight = blockLightArray.Value(arrayIndexHalf);
+						uint8_t skyLight = skyLightArray->Value(arrayIndexHalf);
+						uint8_t blockLight = blockLightArray->Value(arrayIndexHalf);
 						if (arrayIndex & 1) // Upper bits
 						{
 							skyLight >>= 4;
@@ -222,12 +231,13 @@ namespace CppProject
 
 						// Set biome
 						if (chunk->legacyBiomes.Size())
-							preview.biomeIndices[blockIndex] = chunk->legacyBiomes[(z << 4) + x];
+							preview.biomeIndices[blockIndex] = chunk->legacyBiomes[z * SECTION_SIZE + x];
 
 						// Parse block
 						if (uint16_t blockStyleIndex = Preview::filteredMcLegacyBlockIdStyleIndex[legacyId][legacyData]) // Non-air
 						{
 							preview.blockStyleIndices[blockIndex] = blockStyleIndex;
+							
 							PreviewState& state = BlockStyle::blockPreviewStates[blockStyleIndex];
 							BoolType solid = state.IsSolid();
 							if (!solid)
@@ -273,6 +283,8 @@ namespace CppProject
 		{
 			uint16_t styleIndex;
 			BoolType waterlogged;
+			uint8_t stateFlags = 0;
+			BoolType transparent = false;
 		};
 		FastVector<PreviewPaletteEntry> blockStylePalette;
 		StringType propertiesName, idName;
@@ -294,7 +306,9 @@ namespace CppProject
 		{
 			auto parsePaletteEntry = [&](StringType id, NbtCompound* entry = nullptr)
 			{
-				if (id == "air") { // Air blocks
+				id = id.Replaced("minecraft:", "");
+				if (id == "air") // Air blocks
+				{
 					blockStylePalette.Append({ 0, false });
 					return;
 				}
@@ -309,6 +323,7 @@ namespace CppProject
 				}
 
 				preview.hasBlocks = true;
+				
 				blockStylePalette.Append({
 					Preview::filteredMcBlockIdStyleIndexMap.value(id),
 					(waterlogged || World::filteredMcBlockIdWaterloggedMap.value(id, false))
@@ -316,16 +331,20 @@ namespace CppProject
 			};
 
 			NbtTag* paletteTag = nbt->value.value(paletteName);
-			if (paletteTag->type != TAG_LIST) {
+			if (paletteTag->type != TAG_LIST)
+			{
 				WARNING("Invalid section: Unexpected Palette tag type");
 				return;
 			}
 
 			NbtType paletteType = ((NbtList*)paletteTag)->listType;
-			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING) {
+			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING)
+			{
 				WARNING("Invalid section: Unexpected Palette tag list type");
 				return;
 			}
+
+			blockStylePalette.Alloc(((NbtList*)paletteTag)->value.Size());
 
 			// List of compounds
 			if (paletteType == TAG_COMPOUND)
@@ -348,6 +367,23 @@ namespace CppProject
 			}
 		}
 
+		// Resolve render flags once per palette entry, preserving each cell's light below
+		for (IntType p = 0; p < blockStylePalette.Size(); p++)
+		{
+			PreviewPaletteEntry& entry = blockStylePalette[p];
+			BoolType solid = false;
+			entry.transparent = entry.waterlogged;
+
+			if (entry.styleIndex)
+			{
+				const PreviewState& state = BlockStyle::blockPreviewStates[entry.styleIndex];
+				solid = state.IsSolid();
+				entry.transparent = !solid || (entry.waterlogged && !state.IsBlock());
+			}
+
+			entry.stateFlags = PreviewState(entry.styleIndex != 0, solid, entry.waterlogged, 0).value;
+		}
+
 		if (nbt->HasKey(dataName)) // Has array
 		{
 			preview.blockStyleIndices.Alloc(SECTION_SIZE3);
@@ -360,29 +396,17 @@ namespace CppProject
 				const PreviewPaletteEntry& entry = blockStylePalette.Value(index);
 				index = entry.styleIndex; // Palette index to style index
 
-				if (index) // Non-air
-				{
-					PreviewState& state = BlockStyle::blockPreviewStates[index];
-					BoolType solid = state.IsSolid();
-					if (!solid || (entry.waterlogged && !state.IsBlock()))
-						preview.hasTransparent = true;
-
-					preview.states[b] = { true, solid, entry.waterlogged, preview.states.Value(b).value };
-				}
-				else // Air
-				{
-					if (entry.waterlogged)
-						preview.hasTransparent = true;
-					preview.states[b] = { false, false, entry.waterlogged, preview.states.Value(b).value };
-				}
+				preview.hasTransparent |= entry.transparent;
+				PreviewState& state = preview.states[b];
+				state.value = entry.stateFlags | std::min((int)state.value, 15);
 			}
 		}
 		else if (blockStylePalette.Size() == 1) // Single block fills section
 		{
 			const PreviewPaletteEntry& entry = blockStylePalette.Value(0);
 			const PreviewState& state = BlockStyle::blockPreviewStates[entry.styleIndex];
-			preview.singleBlockStyle = BlockStyle::blockStyles[entry.styleIndex];
 
+			preview.singleBlockStyle = BlockStyle::blockStyles[entry.styleIndex];
 			preview.singleState = {
 				state.IsBlock(),
 				state.IsSolid(),
@@ -390,6 +414,7 @@ namespace CppProject
 				(uint8_t)(state.GetLight() + preview.states.Value(0).value)
 			};
 			preview.hasTransparent = (!state.IsSolid() || (entry.waterlogged && !state.IsBlock()));
+
 			preview.states.FreeData();
 		}
 		else if (blockStylePalette.Size() > 1)
@@ -405,14 +430,16 @@ namespace CppProject
 			// Parse biome palette
 			FastVector<uint16_t> biomePalette;
 			QVector<NbtString*> paletteStrings = biomesRoot->List<TAG_STRING, NbtString>("palette");
+
 			biomePalette.Alloc(paletteStrings.size());
 			for (NbtString* entry : paletteStrings)
-				biomePalette.Append(Preview::mcBiomeIdIndexMap.value(entry->value));
+				biomePalette.Append(Preview::mcBiomeIdIndexMap.value(entry->value.Replaced("minecraft:", "")));
 
 			if (biomesRoot->HasKey("data")) // Has array
 			{
 				preview.biomeIndices.Alloc(SECTION_SIZE3);
 				ParsePaletteIndices(biomesRoot->LongArray("data"), preview.biomeIndices, biomePalette.Size(), format);
+				
 				for (IntType b = 0; b < SECTION_SIZE3; b++) // From palette index to biome id
 					preview.biomeIndices[b] = biomePalette[preview.biomeIndices.Value(b)];
 
@@ -423,12 +450,13 @@ namespace CppProject
 		else if (chunk->legacyBiomes.Size()) // Legacy biomes
 		{
 			preview.biomeIndices.Alloc(SECTION_SIZE3);
+
 			for (uint8_t x = blockStart.x; x < blockEnd.x; x++)
 			for (uint8_t y = blockStart.y; y < blockEnd.y; y++)
 			for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
 			{
-				uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
-				preview.biomeIndices[blockIndex] = chunk->legacyBiomes[(z << 4) + x];
+				uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
+				preview.biomeIndices[blockIndex] = chunk->legacyBiomes[z * SECTION_SIZE + x];
 			}
 		}
 	}
@@ -436,6 +464,7 @@ namespace CppProject
 	void Section::ParseBlockPaletteBuilder(NbtCompound* nbt, StringType paletteName, StringType dataName, Chunk::Format format)
 	{
 		QVector<BoolType> paletteHasTimeline;
+		BoolType hasTimeline = false;
 		StringType propertiesName, idName;
 		bool emptyNames = false;
 		
@@ -456,6 +485,7 @@ namespace CppProject
 		{
 			auto parsePaletteEntry = [&](StringType id, NbtCompound* entry = nullptr)
 			{
+				id = id.Replaced("minecraft:", "");
 				if (id != "air") // Non air
 				{
 					if (obj_block* block = Builder::filteredMcBlockIdObjMap.value(id, nullptr))
@@ -474,10 +504,12 @@ namespace CppProject
 								{
 									StringType name = propIt.key();
 									StringType value = ((NbtString*)propIt.value())->value;
+									
 									IntType i = 0;
 									for (i = 0; i < vars.Size(); i += 2)
 										if (vars.Value(i) == name)
 											break;
+									
 									vars[i] = name;
 									vars[i + 1] = value;
 
@@ -487,12 +519,16 @@ namespace CppProject
 								}
 							}
 						}
+						else
+							state.waterlogged = block->waterlogged; // If block has "waterlogged: true"
 
 						if (vars.Size()) // Array to id
 							state.stateId = block_get_state_id(block->id, vars);
 
 						builder.palette.Append(state);
 						paletteHasTimeline.append(block->timeline);
+						hasTimeline = hasTimeline || block->timeline;
+						
 						return;
 					}
 				}
@@ -502,13 +538,15 @@ namespace CppProject
 			};
 
 			NbtTag* paletteTag = nbt->value.value(paletteName);
-			if (paletteTag->type != TAG_LIST) {
+			if (paletteTag->type != TAG_LIST)
+			{
 				WARNING("Invalid section: Unexpected Palette tag type");
 				return;
 			}
 
 			NbtType paletteType = ((NbtList*)paletteTag)->listType;
-			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING) {
+			if (paletteType != TAG_COMPOUND && paletteType != TAG_STRING)
+			{
 				WARNING("Invalid section: Unexpected Palette tag list type");
 				return;
 			}
@@ -517,6 +555,7 @@ namespace CppProject
 			if (paletteType == TAG_COMPOUND)
 			{
 				QVector<NbtCompound*> paletteComps = nbt->List<TAG_COMPOUND, NbtCompound>(paletteName);
+				
 				builder.palette.Alloc(paletteComps.size());
 				for (NbtCompound* entry : paletteComps)
 				{
@@ -526,10 +565,12 @@ namespace CppProject
 						parsePaletteEntry(entry->String(""), entry);
 				}
 			}
+
 			// List of strings
 			else
 			{
 				QVector<NbtString*> paletteStrings = nbt->List<TAG_STRING, NbtString>(paletteName);
+				
 				builder.palette.Alloc(paletteStrings.size());
 				for (NbtString* entry : paletteStrings)
 					parsePaletteEntry(entry->value);
@@ -543,7 +584,7 @@ namespace CppProject
 				ParsePaletteIndices(nbt->LongArray(dataName), builder.paletteIndices, builder.palette.Size(), format, 4);
 
 				// Count timelines
-				if (!paletteHasTimeline.isEmpty())
+				if (hasTimeline)
 					for (IntType b = 0; b < SECTION_SIZE3; b++)
 						if (paletteHasTimeline.value(builder.paletteIndices.Value(b)))
 							chunk->numTimelines++;
@@ -552,6 +593,7 @@ namespace CppProject
 			{
 				Heap<uint16_t> indices;
 				indices.Alloc(SECTION_SIZE3);
+				
 				ParsePaletteIndices(nbt->LongArray(dataName), indices, builder.palette.Size(), format, 4);
 
 				IntType b = 0;
@@ -559,12 +601,12 @@ namespace CppProject
 				for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
 				for (uint8_t x = blockStart.x; x < blockEnd.x; x++, b++) // ZYX order (Y and Z is flipped)
 				{
-					uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
+					uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
 					uint16_t paletteIndex = indices[blockIndex];
 					builder.paletteIndices[b] = paletteIndex;
 
 					// Count timelines
-					if (!paletteHasTimeline.isEmpty() && paletteHasTimeline.value(paletteIndex))
+					if (hasTimeline && paletteHasTimeline.value(paletteIndex))
 						chunk->numTimelines++;
 				}
 			}
@@ -575,82 +617,124 @@ namespace CppProject
 
 	void Section::GenerateFaces(Region::GenerateMode mode, const WorldVec& startPos, const WorldVec& endPos)
 	{
-		for (uint8_t x = startPos.x; x < endPos.x; x++)
+		BoolType uniform = !preview.blockStyleIndices.Size();
+		IntType waterIndex = -1;
+
+		// Match the array layout, visiting only boundary cells for uniform sections
 		for (uint8_t y = 0; y < SECTION_SIZE; y++)
 		for (uint8_t z = startPos.z; z < endPos.z; z++)
 		{
-			uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
-			IntType faceDataIndex = y * chunk->faceDataSizeXZ + (z - startPos.z) * chunk->faceDataSizeX + (x - startPos.x);
+			uint8_t startX = startPos.x, stepX = 1;
+			if (uniform && y > 0 && y < SECTION_SIZEM1 && z > 0 && z < SECTION_SIZEM1)
+			{
+				// Only the X boundary cells can contribute faces on these rows
+				if (startX > 0)
+					startX = SECTION_SIZEM1;
 
-			// Get current style
-			BlockStyle* style;
-			PreviewState state;
-			if (preview.blockStyleIndices.Size())
-			{
-				style = BlockStyle::blockStyles.Value(preview.blockStyleIndices.Value(blockIndex));
-				state = preview.states[blockIndex];
-			}
-			else
-			{
-				style = preview.singleBlockStyle;
-				state = preview.singleState;
-				if (x > 0 && y > 0 && z > 0 &&
-					x < SECTION_SIZEM1 && y < SECTION_SIZEM1 && z < SECTION_SIZEM1) // No need to process inside section
-					continue;
+				stepX = SECTION_SIZEM1;
 			}
 
-			// Waterlogged air as water
-			if (state.IsWaterlogged() && !state.IsBlock())
+			for (uint8_t x = startX; x < endPos.x; x += stepX)
 			{
-				IntType waterIndex = Preview::filteredMcBlockIdStyleIndexMap.value("water", 0);
-				style = BlockStyle::blockStyles.Value(waterIndex);
-				state = BlockStyle::blockPreviewStates.Value(waterIndex);
-			}
+				uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
 
-			// Skip air & bedrock
-			else if (!state.IsBlock() || (preview.hideBedrock && style == BlockStyle::bedrockStyle))
-				continue;
-
-			// Get mesh
-			Region::MeshType meshType = (state.IsSolid() ? Region::DEFAULT : Region::TRANSPARENT);
-			Chunk::Mesh& mesh = chunk->meshes[meshType];
-			Chunk::FaceData& faceData = mesh.faceData[chunkIndex][faceDataIndex];
-
-			// Find biome
-			uint16_t biomeIndex = 0;
-			if (style->tint)
-			{
-				if (preview.biomeIndices.Size())
-					biomeIndex = preview.biomeIndices.Value(blockIndex);
+				PreviewState state;
+				if (uniform)
+					state = preview.singleState;
 				else
-					biomeIndex = preview.singleBiomeIndex;
-			}
+					state = preview.states[blockIndex];
 
-			// Look at adjacent block render states
-			PreviewState states[Chunk::FaceDirectionAmount] =
-			{
-				GetPreviewState({ x + 1, y, z }, mode),
-				GetPreviewState({ x - 1, y, z }, mode),
-				GetPreviewState({ x, y + 1, z }, mode),
-				GetPreviewState({ x, y - 1, z }, mode),
-				GetPreviewState({ x, y, z + 1 }, mode),
-				GetPreviewState({ x, y, z - 1 }, mode)
-			};
-
-			// Store non-colliding faces in chunk mesh
-			for (uint8_t dir = 0; dir < Chunk::FaceDirectionAmount; dir++)
-			{
-				const PreviewState& dirState = states[dir];
-				if (dirState.IsSolid()) // Skip colliding faces
+				// Skip ordinary air before looking up its style
+				if (!state.IsBlock() && !state.IsWaterlogged())
 					continue;
 
-				if (!state.IsSolid() && ((dirState.IsBlock() && !dirState.IsSolid()) || dirState.IsWaterlogged()))  // Merge transparent blocks
+				BlockStyle* style;
+				// Waterlogged air as water
+				if (state.IsWaterlogged() && !state.IsBlock())
+				{
+					if (waterIndex < 0)
+						waterIndex = Preview::filteredMcBlockIdStyleIndexMap.value("water", 0);
+
+					style = BlockStyle::blockStyles.Value(waterIndex);
+					state = BlockStyle::blockPreviewStates.Value(waterIndex);
+				}
+				else
+				{
+					if (uniform)
+						style = preview.singleBlockStyle;
+					else
+						style = BlockStyle::blockStyles.Value(preview.blockStyleIndices.Value(blockIndex));
+
+					if (preview.hideBedrock && style == BlockStyle::bedrockStyle)
+						continue;
+				}
+
+				PreviewState states[Chunk::FaceDirectionAmount];
+				if (!uniform && x > 0 && x < SECTION_SIZEM1 && y > 0 && y < SECTION_SIZEM1 && z > 0 && z < SECTION_SIZEM1)
+				{
+					// Interior cells use direct offsets in the section array
+					states[Chunk::RIGHT] = preview.states[blockIndex + 1];
+					states[Chunk::LEFT] = preview.states[blockIndex - 1];
+					states[Chunk::TOP] = preview.states[blockIndex + SECTION_SIZE2];
+					states[Chunk::BOTTOM] = preview.states[blockIndex - SECTION_SIZE2];
+					states[Chunk::FRONT] = preview.states[blockIndex + SECTION_SIZE];
+					states[Chunk::BACK] = preview.states[blockIndex - SECTION_SIZE];
+				}
+				else
+				{
+					// Preserve region boundaries and uniform section lookup
+					states[Chunk::RIGHT] = GetPreviewState({ x + 1, y, z }, mode);
+					states[Chunk::LEFT] = GetPreviewState({ x - 1, y, z }, mode);
+					states[Chunk::TOP] = GetPreviewState({ x, y + 1, z }, mode);
+					states[Chunk::BOTTOM] = GetPreviewState({ x, y - 1, z }, mode);
+					states[Chunk::FRONT] = GetPreviewState({ x, y, z + 1 }, mode);
+					states[Chunk::BACK] = GetPreviewState({ x, y, z - 1 }, mode);
+				}
+
+				// Resolve visibility before biome and texture lookups
+				BoolType solid = state.IsSolid();
+				uint8_t directions = 0;
+				for (uint8_t dir = 0; dir < Chunk::FaceDirectionAmount; dir++)
+				{
+					const PreviewState& dirState = states[dir];
+					if (dirState.IsSolid()) // Skip colliding faces
+						continue;
+
+					if (!solid && ((dirState.IsBlock() && !dirState.IsSolid()) || dirState.IsWaterlogged())) // Merge transparent blocks
+						continue;
+
+					directions |= 1 << dir;
+				}
+
+				if (!directions)
 					continue;
 
-				// Store block data of face
-				uint16_t texPos = (dir == Chunk::FaceDirection::TOP ? style->topPos : style->sidePos) + biomeIndex; 
-				uint8_t light = std::max(state.GetLight(), blockFaceBaseLight[dir]) + std::min((dirState.GetLight()) * 2.5, 37.0);
-				faceData.blockData[dir] = (texPos << 6) | light;
+				uint16_t biomeIndex = 0;
+				if (style->tint)
+				{
+					if (preview.biomeIndices.Size())
+						biomeIndex = preview.biomeIndices.Value(blockIndex);
+					else
+						biomeIndex = preview.singleBiomeIndex;
+				}
+
+				Region::MeshType meshType = (solid ? Region::DEFAULT : Region::TRANSPARENT);
+				Chunk::Mesh& mesh = chunk->meshes[meshType];
+				IntType faceDataIndex = y * chunk->faceDataSizeXZ + (z - startPos.z) * chunk->faceDataSizeX + (x - startPos.x);
+				Chunk::FaceData& faceData = mesh.faceData[chunkIndex][faceDataIndex];
+				mesh.faceDirections[chunkIndex] |= directions;
+
+				for (uint8_t dir = 0; dir < Chunk::FaceDirectionAmount; dir++)
+				{
+					if (!(directions & (1 << dir)))
+						continue;
+
+					// Store block data of face
+					uint16_t texPos = (dir == Chunk::FaceDirection::TOP ? style->topPos : style->sidePos) + biomeIndex;
+					uint8_t light = std::max(state.GetLight(), blockFaceBaseLight[dir]) + std::min(states[dir].GetLight() * 2.5, 37.0);
+
+					faceData.blockData[dir] = (texPos << 6) | light;
+				}
 			}
 		}
 	}
@@ -680,8 +764,10 @@ namespace CppProject
 				if (paletteIndex >= paletteSize)
 					FATAL("paletteIndex out of bounds");
 			#endif
+				
 				if (blockIndex < SECTION_SIZE3)
 					paletteIndices[blockIndex++] = paletteIndex;
+				
 				curLong >>= bitsPerBlock - bitsRem;
 				bitsLeft -= bitsPerBlock - bitsRem;
 			}
@@ -693,11 +779,14 @@ namespace CppProject
 				if (paletteIndex >= paletteSize)
 					FATAL("paletteIndex out of bounds");
 			#endif
+				
 				if (blockIndex < SECTION_SIZE3)
 					paletteIndices[blockIndex++] = paletteIndex;
+				
 				curLong >>= bitsPerBlock;
 				bitsLeft -= bitsPerBlock;
 			}
+			
 			prevLong = curLong;
 			bitsRem = (format >= Chunk::Format::JAVA_1_16) ? 0 : bitsLeft; // Discard remaining bits in 1.16+
 		}
@@ -711,7 +800,7 @@ namespace CppProject
 			pos.z < 0 || pos.z > SECTION_SIZEM1)
 			return region->GetPreviewState(preview.regionPos + pos, mode);
 
-		uint16_t blockIndex = (pos.y << 8) + (pos.z << 4) + pos.x; // YZX order
+		uint16_t blockIndex = pos.y * SECTION_SIZE2 + pos.z * SECTION_SIZE + pos.x; // YZX order
 		if (preview.blockStyleIndices.Size())
 			return preview.states[blockIndex];
 		else
@@ -756,10 +845,10 @@ namespace CppProject
 
 	IntType Section::GetBlockOffset(const WorldVec& pos)
 	{
-		WorldVec posOffset = (pos + Builder::offset);
-		IntType blockX = (posOffset.x & SECTION_SIZEM1) - blockStart.x;
-		IntType blockY = (posOffset.y & SECTION_SIZEM1) - blockStart.z; // blockStart use Y up
-		IntType blockZ = (posOffset.z & SECTION_SIZEM1) - blockStart.y;
+		IntType blockX = ((pos.x + Builder::offset.x) & SECTION_SIZEM1) - blockStart.x;
+		IntType blockY = ((pos.y + Builder::offset.y) & SECTION_SIZEM1) - blockStart.z; // blockStart uses Y up
+		IntType blockZ = ((pos.z + Builder::offset.z) & SECTION_SIZEM1) - blockStart.y;
+		
 		return blockZ * builder.sizeXY + blockY * builder.size.x + blockX;
 	}
 
@@ -780,5 +869,16 @@ namespace CppProject
 	{
 		IntType offset = GetBlockOffset(pos);
 		return builder.renderModelIds[offset];
+	}
+
+	Section* Builder::GetSection(const WorldVec& pos)
+	{
+		IntType sectionX, sectionY, sectionZ, sectionPos;
+		sectionX = (pos.x + offset.x) >> 4;
+		sectionY = (pos.y + offset.y) >> 4;
+		sectionZ = (pos.z + offset.z) >> 4;
+		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+
+		return Builder::sections.Value(sectionPos);
 	}
 }

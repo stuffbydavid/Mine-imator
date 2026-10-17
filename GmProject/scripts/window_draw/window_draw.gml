@@ -1,8 +1,6 @@
-/// window_draw()
-
 function window_draw()
 {
-	// app_event_draw is executed once per window every step, check which window is current
+	// Check which window is current
 	switch (window_get_current())
 	{
 		case e_window.MAIN:
@@ -37,7 +35,7 @@ function window_draw()
 				toolbar_draw()
 				shortcut_bar_draw()
 				
-				if (menu_popup = null && popup)
+				if (menu_popup = null && popup_current)
 					menu_draw()
 				
 				window_draw_cover()
@@ -49,23 +47,25 @@ function window_draw()
 				shortcut_bar_draw()
 				bench_draw()
 				
-				if (menu_popup = null && popup)
+				if (menu_popup = null && popup_current)
 					menu_draw()
 				
 				window_draw_cover()
-				window_draw_timeline_move()
+				if (!window_exists(e_window.TIMELINE))
+					window_draw_timeline_move()
 			}
 			
 			window_draw_toasts()
 			popup_draw()
-			break;
+			break
 		}
 		
 		case e_window.VIEW_SECOND:
 		{
 			view_draw(view_second)
-			if (menu_popup = null && popup)
+			if (menu_popup = null && popup_current)
 				menu_draw()
+			
 			window_set_caption(view_second.title + " - Mine-imator")
 			break
 		}
@@ -75,18 +75,22 @@ function window_draw()
 			panel_window_obj.tab_list[0] = timeline
 			panel_window_obj.tab_list_amount = 1
 			panel_draw(panel_window_obj)
-			if (menu_popup = null && popup)
+			
+			window_draw_timeline_move()
+			if (menu_popup = null && popup_current)
 				menu_draw()
-			window_set_caption(text_get("tabtimeline") + " - Mine-imator")
+			
+			window_set_caption(text_get("tab/timeline") + " - Mine-imator")
 			break
 		}
 	}
 	
 	// Common to all windows
 	menu_settings_draw()
-	if (!(menu_popup = null && popup))
+	if (!(menu_popup = null && popup_current))
 		menu_draw()
 	context_menu_draw()
 	tip_draw()
 	debug_info_draw()
+	window_draw_pick()
 }

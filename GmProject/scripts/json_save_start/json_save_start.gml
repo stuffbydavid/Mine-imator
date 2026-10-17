@@ -1,6 +1,5 @@
-/// json_save_start(filename)
-/// @arg filename
 /// @desc Starts exporting formatted JSON to a text file.
+/// @arg filename
 
 function json_save_start(fn)
 {

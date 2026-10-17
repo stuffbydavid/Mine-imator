@@ -1,6 +1,3 @@
-/// action_tl_name(name)
-/// @arg name
-
 function action_tl_name(name)
 {
 	if (history_undo)
@@ -11,7 +8,7 @@ function action_tl_name(name)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.name = other.save_var_old_value[t]
+					self.name = other.save_var_old_value[t]
 					tl_update_display_name()
 				}
 			}
@@ -25,7 +22,7 @@ function action_tl_name(name)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.name = other.save_var_new_value[t]
+					self.name = other.save_var_new_value[t]
 					tl_update_display_name()
 				}
 			}
@@ -43,7 +40,7 @@ function action_tl_name(name)
 			with (hobj)
 				history_save_var(other.id, other.name, name)
 			
-			id.name = name
+			self.name = name
 			tl_update_display_name()
 		}
 	}

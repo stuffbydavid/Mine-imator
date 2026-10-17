@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"world_import_get_selection_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"world_import_get_selection_size",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Minecraft/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

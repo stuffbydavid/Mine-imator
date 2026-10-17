@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"program_args_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"program_args_get",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

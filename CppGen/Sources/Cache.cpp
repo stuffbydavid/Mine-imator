@@ -9,7 +9,7 @@ namespace CppGen
 namespace
 {
 constexpr std::uint32_t CacheMagic = 0x43475043; // CGPC
-constexpr std::uint32_t CacheVersion = 7;
+constexpr std::uint32_t CacheVersion = 9;
 constexpr std::uint64_t MaxCacheFileSize = 128ull * 1024 * 1024;
 constexpr std::uint32_t MaxCacheItems = 4 * 1024 * 1024;
 
@@ -1102,7 +1102,7 @@ bool Program::loadResolverCache(const String& cacheFile, const String& fingerpri
 	for (const String& file : modifiedGmlFiles)
 	{
 		const String filename = fsString(fsPath(file).filename());
-		if (filename == "macros.gml" || filename == "enums.gml")
+		if (filename == "macros.gml" || filename == "enums.gml" || File::readAllText(file).contains("globalvar "))
 			return false;
 	}
 

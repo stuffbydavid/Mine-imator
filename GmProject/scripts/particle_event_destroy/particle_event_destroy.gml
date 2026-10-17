@@ -1,4 +1,3 @@
-/// particle_event_destroy()
 /// @desc Destroy event of obj_particle.
 
 function particle_event_destroy()

@@ -1,10 +1,9 @@
-/// draw_checkbox(name, xx, yy, active, script, [tip])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
-/// @arg tip
+/// @arg [tip]
 
 function draw_checkbox(name, xx, yy, active, script, tip = "")
 {

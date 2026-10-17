@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "spline_make_frames",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Curve",
-    "path": "folders/Scripts/Utility/Math/Curve.yy",
+  "$GMScript":"v1",
+  "%Name":"spline_make_frames",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"spline_make_frames",
+  "parent":{
+    "name":"Curve",
+    "path":"folders/Scripts/Utility/Math/Curve.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

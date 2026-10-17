@@ -1,4 +1,3 @@
-/// draw_wheel(name, x, y, color, value, min, max, default, snap, textbox, script, [radius, sprite])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -10,20 +9,20 @@
 /// @arg snap
 /// @arg textbox
 /// @arg script
-/// @arg [radius
-/// @arg sprite]
+/// @arg [radius]
+/// @arg [sprite]
 
-function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tbx, script, rad = 24, sprite = undefined)
+function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tbx, script, rad = 24, spr = null)
 {
 	if (xx + rad < content_x || xx - rad > content_x + content_width || yy + rad < content_y || yy - rad > content_y + content_height)
 		return 0
 	
-	if (is_undefined(sprite))
-		sprite = spr_control_dial
+	if (spr = null)
+		spr = spr_control_dial
 	
 	var modval, capwid, text, labelx, labely, labelw, labeltextw;
 	
-	context_menu_area(xx - rad, yy - rad, rad * 2, rad * 2, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
+	context_menu_area(xx - rad, yy - rad, rad * 2, rad * 2, "context_menu/value", value, e_context_type.NUMBER, script, def)
 	
 	draw_set_font(font_label)
 	
@@ -40,12 +39,10 @@ function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tb
 	labely = yy + 36
 	
 	// Background
-	draw_image(sprite, 0, xx, yy, 1, 1, c_border, a_border)
+	draw_image(spr, 0, xx, yy, 1, 1, c_border, a_border)
 	
 	// Bar
-	gpu_set_tex_filter(true)
 	draw_image(spr_dial_dash, 0, xx, yy, .5, .5, color, 1, value + 45)
-	gpu_set_tex_filter(false)
 	
 	// Dragging
 	if (window_busy = name)
@@ -78,7 +75,7 @@ function draw_wheel(name, xx, yy, color, value, minval, maxval, def, snapval, tb
 		
 		if (mouse_left_pressed) // Start dragging
 		{
-			var newval = clamp(snap(value + angle_difference_fix(point_direction(xx, yy, mouse_x, mouse_y), value), snapval), minval, maxval)
+			var newval = clamp(snap(value + angle_difference_fix(point_direction(xx, yy, mouse_x, mouse_y), value), snapval), minval, maxval);
 			script_execute(script, newval - value, true)
 			window_focus = name
 			window_busy = name

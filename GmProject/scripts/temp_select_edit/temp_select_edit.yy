@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"temp_select_edit",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"temp_select_edit",
+  "parent":{
+    "name":"Template",
+    "path":"folders/Scripts/Project/Template.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

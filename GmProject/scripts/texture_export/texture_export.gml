@@ -1,4 +1,3 @@
-/// texture_export(texture, filename)
 /// @arg texture
 /// @arg filename
 

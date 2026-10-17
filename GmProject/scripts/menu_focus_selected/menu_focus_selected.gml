@@ -1,4 +1,3 @@
-/// menu_focus_selected()
 /// @desc Sets the scrollbar position to show the selected value.
 
 function menu_focus_selected()

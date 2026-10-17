@@ -1,6 +1,3 @@
-/// color_to_hex(color)
-/// @arg color
-
 function color_to_hex(color)
 {
 	var r, g, b, hex;

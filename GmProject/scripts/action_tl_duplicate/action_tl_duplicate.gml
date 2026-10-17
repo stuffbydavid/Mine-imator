@@ -1,5 +1,3 @@
-/// action_tl_duplicate()
-
 function action_tl_duplicate()
 {
 	if (history_undo)
@@ -63,6 +61,7 @@ function action_tl_duplicate()
 					continue
 				
 				tl_duplicate()
+				
 				root_copy = copy
 				with (root_copy)
 					tl_set_parent_root()
@@ -76,6 +75,7 @@ function action_tl_duplicate()
 					continue
 				
 				tl_duplicate()
+				
 				root_copy = copy
 				with (root_copy)
 					tl_set_parent_root()
@@ -97,5 +97,7 @@ function action_tl_duplicate()
 	
 	tl_update_list()
 	tl_update_matrix()
+	
 	app_update_tl_edit()
+	project_update_counts()
 }

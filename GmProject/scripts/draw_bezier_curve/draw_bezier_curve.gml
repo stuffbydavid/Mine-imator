@@ -1,9 +1,8 @@
-/// draw_bezier_curve(p1, p2, p3, p4, w, color, alpha)
-/// @arg p1
-/// @arg p2
-/// @arg p3
-/// @arg p4
-/// @arg w
+/// @arg point1
+/// @arg point2
+/// @arg point3
+/// @arg point4
+/// @arg width
 /// @arg color
 /// @arg alpha
 
@@ -16,7 +15,7 @@ function draw_bezier_curve(p1, p2, p3, p4, w, color, alpha)
 	draw_set_color(color)
 	draw_set_alpha(alpha)
 	
-	p = [0, 0]
+	p = [ 0, 0 ]
 	
 	for (var i = 0; i < 64; i++)
 	{

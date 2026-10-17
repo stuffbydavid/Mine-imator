@@ -1,4 +1,3 @@
-/// draw_gradient(x, y, width, height, color, alphalefttop, alpharighttop, alpharightbottom, alphaleftbottom)
 /// @arg x
 /// @arg y
 /// @arg width

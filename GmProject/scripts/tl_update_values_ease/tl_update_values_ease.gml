@@ -1,4 +1,3 @@
-/// tl_update_values_ease(valueid)
 /// @arg valueid
 
 function tl_update_values_ease(vid)
@@ -12,7 +11,7 @@ function tl_update_values_ease(vid)
 		nextval = keyframe_next_values[vid]
 		
 		if ((oldval = curval) && (oldval = nextval))
-			return 0
+			return false
 		
 		val = tl_value_interpolate(vid, keyframe_progress_ease, curval, nextval)
 	}
@@ -25,5 +24,8 @@ function tl_update_values_ease(vid)
 	{
 		update_matrix = true
 		value[vid] = val
+		return true
 	}
+	
+	return false
 }

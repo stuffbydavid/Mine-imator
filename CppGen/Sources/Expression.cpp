@@ -22,19 +22,26 @@ String Expression::toConditionCpp(ResolveScope* scope, bool)
 
 String Expression::toTernaryCpp(ResolveScope* scope, Expression* expr1, Expression* expr2, Expression* expr3)
 {
-	bool expr2TypeVarType = expr2->getResolvedCppType() == DataType::CppType::VarType;
-	bool expr3TypeVarType = expr3->getResolvedCppType() == DataType::CppType::VarType;
+	DataType::CppType expr2Type = expr2->getResolvedCppType();
+	DataType::CppType expr3Type = expr3->getResolvedCppType();
+	bool expr2TypeVarType = expr2Type == DataType::CppType::VarType;
+	bool expr3TypeVarType = expr3Type == DataType::CppType::VarType;
+	bool expr2Numeric = expr2Type == DataType::CppType::RealType || expr2Type == DataType::CppType::IntType || expr2Type == DataType::CppType::BoolType;
+	bool expr3Numeric = expr3Type == DataType::CppType::RealType || expr3Type == DataType::CppType::IntType || expr3Type == DataType::CppType::BoolType;
+	
+	// Different non-numeric branches need an explicit common variant type
+	bool variant = expr2TypeVarType || expr3TypeVarType || (expr2Type != expr3Type && !(expr2Numeric && expr3Numeric));
 
 	String cpp = expr1->toConditionCpp(scope, true) + " ? ";
 
-	if (expr3TypeVarType && !expr2TypeVarType) // Wrap expr2 in VarType() if expr3 is VarType
+	if (variant && !expr2TypeVarType)
 		cpp += "VarType(" + expr2->toCpp(scope) + ")";
 	else
 		cpp += expr2->toCpp(scope);
 
 	cpp += " : ";
 
-	if (expr2TypeVarType && !expr3TypeVarType) // Wrap expr3 in VarType() if expr2 is VarType
+	if (variant && !expr3TypeVarType)
 		cpp += "VarType(" + expr3->toCpp(scope) + ")";
 	else
 		cpp += expr3->toCpp(scope);
@@ -158,8 +165,8 @@ void BinaryOperation::resolve(ResolveScope* scope)
 	this->left->resolve(scope);
 	this->right->resolve(scope);
 
-	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr ||
-		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) //  &, |, <<, >>, both expressions must be integer
+	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr || this->op == Token::Type::BitwiseXor ||
+		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) // &, |, ^, <<, >> require integer operands
 	{
 		this->left->applyType(scope, DataType::scalar(DataType::Type::Integer));
 		this->right->applyType(scope, DataType::scalar(DataType::Type::Integer));
@@ -215,7 +222,8 @@ String BinaryOperation::toCpp(ResolveScope* scope)
 		this->op == Token::Type::ShiftLeft ||
 		this->op == Token::Type::ShiftRight ||
 		this->op == Token::Type::BitwiseAnd ||
-		this->op == Token::Type::BitwiseOr
+		this->op == Token::Type::BitwiseOr ||
+		this->op == Token::Type::BitwiseXor
 	);
 	if (opNeedInts) // Cast left to int
 		cpp += "(IntType)";
@@ -263,7 +271,7 @@ void TernaryCondition::resolve(ResolveScope* scope)
 	this->expr2->resolve(scope);
 	this->expr3->resolve(scope);
 
-	this->expr1->applyType(scope, DataType::scalar(DataType::Type::IntOrReal));
+	this->expr1->applyType(scope, DataType::scalar(DataType::Type::Bool));
 
 	// Both types should be the same
 	this->expr3->applyType(scope, *this->expr2->resolvedType);

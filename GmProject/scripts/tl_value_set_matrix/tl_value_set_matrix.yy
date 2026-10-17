@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_value_set_matrix",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_value_set_matrix",
+  "parent":{
+    "name":"Values",
+    "path":"folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

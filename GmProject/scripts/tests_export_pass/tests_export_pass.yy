@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tests_export_pass",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tests_export_pass",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Scripts/App/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

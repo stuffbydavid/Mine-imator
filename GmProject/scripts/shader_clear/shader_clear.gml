@@ -1,9 +1,10 @@
-/// shader_clear()
-
 function shader_clear()
 {
 	gpu_set_tex_mip_enable(mip_off)
-	texture_set_stage(0, 0)
+	
+	if (!is_cpp())
+		texture_set_stage(0, 0)
+	
 	shader_reset()
 	
 	shader_texture_surface = false
@@ -12,4 +13,5 @@ function shader_clear()
 	
 	shader_texture_width = 0
 	shader_texture_height = 0
+	shader_texture_binding = null
 }

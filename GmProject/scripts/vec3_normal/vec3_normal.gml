@@ -1,7 +1,6 @@
-/// vec3_normal(vector, angle)
+/// @desc Returns a normal vector based on given vector and angle.
 /// @arg vector
 /// @arg angle
-/// @desc Returns a normal vector based on given vector and angle.
 
 function vec3_normal(vec, angle)
 {
@@ -22,5 +21,5 @@ function vec3_normal(vec, angle)
 		return vec3_normalize(t)
 	}
 	else
-		return [lengthdir_x(1, angle), lengthdir_y(1, angle), 0]
+		return [ lengthdir_x(1, angle), lengthdir_y(1, angle), 0 ]
 }

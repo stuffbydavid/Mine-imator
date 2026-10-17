@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ray_plane_intersect",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ray_plane_intersect",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

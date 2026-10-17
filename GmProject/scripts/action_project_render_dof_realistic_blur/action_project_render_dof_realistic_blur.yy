@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_dof_realistic_blur",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_dof_realistic_blur",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/App/Actions/Project/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

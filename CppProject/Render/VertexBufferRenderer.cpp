@@ -15,29 +15,48 @@ namespace CppProject
 	void VertexBufferRenderer::Add(VertexBuffer* buffer)
 	{
 		// Empty
-		if (buffer->meshes.size() == 0)
+		if (!buffer->valid || buffer->meshes.size() == 0)
 			return;
 
 		Mesh<>* mesh = buffer->meshes[0];
+		bool instanced = (
+			GFX->shader->useBatching &&
+			GFX->shader->vertexFormat == Shader::VERTEX_BUFFER &&
+			buffer->meshes.size() == 1 &&
+			mesh->numIndices >= MAX_BATCH_INDICES
+		);
 
-		// Max triangles exceeded
-		if (currentBatch->numObjects && currentBatch->mesh.numIndices + mesh->numIndices >= MAX_BATCH_INDICES)
+		Bounds worldBounds;
+		worldBounds.AddBounds(mesh->bounds, GFX->matrixM);
+
+		if (instanced && !GFX->IsVisible(worldBounds))
+			return;
+
+		// Flush incompatible batches or combined meshes over the size limit
+		if (currentBatch->numObjects &&
+			(currentBatch->isInstanced != instanced ||
+			(instanced && currentBatch->objects[0] != buffer->id) ||
+			(!instanced && currentBatch->mesh.numIndices + mesh->numIndices >= MAX_BATCH_INDICES)))
+		{
 			SubmitBatch();
+		}
 
 		// Append new object
 		currentBatch->objects[currentBatch->numObjects] = buffer->id;
+		currentBatch->isInstanced = instanced;
 		currentBatch->matrixM[currentBatch->numObjects] = GFX->matrixM;
-		currentBatch->bounds.AddBounds(mesh->bounds, GFX->matrixM);
+		currentBatch->bounds.AddBounds(worldBounds);
 		currentBatch->mesh.numVertices += mesh->numVertices;
 		currentBatch->mesh.numIndices += mesh->numIndices;
 		currentBatch->numObjects++;
 
 		bool submit = GFX->shader->SubmitObject();
-		if (!GFX->shader->useBatching ||
-			submit ||
+		if (submit ||
 			currentBatch->numObjects >= MAX_BATCH_OBJECTS ||
-			currentBatch->mesh.numIndices >= MAX_BATCH_INDICES)
+			(!instanced && currentBatch->mesh.numIndices >= MAX_BATCH_INDICES))
+		{
 			SubmitBatch();
+		}
 	}
 
 	void VertexBufferRenderer::SubmitBatch()
@@ -52,11 +71,25 @@ namespace CppProject
 		{
 			VertexBuffer* buffer = FindVertexBuffer(currentBatch->objects[0]);
 			IntType calls = buffer->Submit(GFX->shader, currentBatch->matrixM[0]);
+
 			renderCalls += calls;
+
 			if (calls)
 				trianglesSubmitted += buffer->numIndices / 3;
 		}
-		else
+		else if (currentBatch->isInstanced)
+		{
+			// Re-use the same mesh for all visible instances
+			Mesh<>* mesh = FindVertexBuffer(currentBatch->objects[0])->meshes[0];
+			mesh->BeginUse();
+
+			GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices, currentBatch->numObjects);
+			mesh->EndUse();
+
+			renderCalls++;
+			trianglesSubmitted += mesh->numIndices / 3 * currentBatch->numObjects;
+		}
+		else if (GFX->IsVisible(currentBatch->bounds))
 		{
 			// Look for identical batches
 			for (Batch* frameBatch : activeBatches)
@@ -73,21 +106,19 @@ namespace CppProject
 			{
 				submitBatch = currentBatch;
 				submitBatch->CreateBuffers();
+
 				activeBatches.append(submitBatch);
 			}
 
-			// Render if within view
-			if (GFX->IsVisible(currentBatch->bounds))
-			{
-				submitBatch->mesh.BeginUse();
-				GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, submitBatch->mesh.numIndices);
-				submitBatch->mesh.EndUse();
-				renderCalls++;
-				trianglesSubmitted += submitBatch->mesh.numIndices / 3;
-			}
-			else
-				GFX->shader->ResetObjects();
+			submitBatch->mesh.BeginUse();
+			GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, submitBatch->mesh.numIndices);
+			submitBatch->mesh.EndUse();
+
+			renderCalls++;
+			trianglesSubmitted += submitBatch->mesh.numIndices / 3;
 		}
+		else
+			GFX->shader->ResetObjects();
 
 		// Mark as active
 		if (submitBatch)
@@ -146,7 +177,9 @@ namespace CppProject
 	void VertexBufferRenderer::Batch::Reset()
 	{
 		numObjects = 0;
+		isInstanced = false;
 		bounds.Reset();
+
 		mesh.numVertices = mesh.numIndices = 0;
 		mesh.FreeBuffers();
 	}
@@ -177,6 +210,7 @@ namespace CppProject
 		}
 
 		mesh.CreateBuffers();
+
 		VB->batchesCreated++;
 	}
 }

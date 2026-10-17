@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"simplex4d_lib",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"simplex4d_lib",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/App/DLL/Math.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

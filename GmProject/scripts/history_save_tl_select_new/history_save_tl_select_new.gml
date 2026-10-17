@@ -1,9 +1,9 @@
-/// history_save_tl_select_new()
 /// @desc Saves the newly selected timelines in the history object.
 
 function history_save_tl_select_new()
 {
 	tl_sel_new_amount = 0
+	
 	with (obj_timeline)
 	{
 		if (!selected)

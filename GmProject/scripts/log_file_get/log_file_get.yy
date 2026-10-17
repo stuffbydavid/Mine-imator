@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"log_file_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"log_file_get",
+  "parent":{
+    "name":"Directories",
+    "path":"folders/Scripts/App/Directories.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

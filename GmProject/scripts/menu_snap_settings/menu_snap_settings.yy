@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "menu_snap_settings",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "View",
-    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  "$GMScript":"v1",
+  "%Name":"menu_snap_settings",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"menu_snap_settings",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,5 +1,3 @@
-/// json_load_number()
-
 function json_load_number()
 {
 	var str, expart, ex;

@@ -1,15 +1,3 @@
-/// action_tl_frame_set_colors(alpha, rgbadd, rgbsub, rgbmul, hsbadd, hsbsub, hsbmul, mixcolor, glowcolor, mixpercent)
-/// @arg alpha
-/// @arg rgbadd
-/// @arg rgbsub
-/// @arg rgbmul
-/// @arg hsbadd
-/// @arg hsbsub
-/// @arg hsbmul
-/// @arg glowcolor
-/// @arg mixcolor
-/// @arg mixpercent
-
 function action_tl_frame_set_colors(alpha, rgbadd, rgbsub, rgbmul, hsbadd, hsbsub, hsbmul, glowcolor, mixcolor, mixpercent)
 {
 	tl_value_set_start(action_tl_frame_set_colors, false)

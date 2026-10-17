@@ -33,17 +33,48 @@ namespace CppProject
 
 	struct NbtStream
 	{
+		enum Context { GENERIC, CHUNK, SECTION, BLOCK_STATES, COMPLETE };
+
+		// Initialize the reader and consume the root compound header.
 		NbtStream(QByteArray& data, QHash<NbtType, QVector<StringType>> filter = {}, BoolType debug = false);
 
-		NbtTag* ReadTag(NbtType type);
+		// Allocate and read a tag payload using the given filtering context.
+		NbtTag* ReadTag(NbtType type, Context context = GENERIC);
+
+		// Skip a tag payload without constructing its tree.
 		void SkipTag(NbtType type);
 
+		// Advance by a byte count after checking the source bounds.
+		void SkipBytes(qint64 size);
+
+		// Read an element count and validate its minimum payload size.
+		int32_t ReadLength(int elementSize);
+
+		// Rewind selected sections for parsing, or skip them and return false.
+		BoolType SelectSection();
+
+		// Check a chunk field and assign the context for its contents.
+		BoolType KeepChunkTag(NbtType type, const QByteArray& name, Context context, Context& child) const;
+
+		// Read and decode a length-prefixed NBT string.
 		StringType ReadString();
+
+		// Read a length-prefixed string as a borrowed view of the source bytes.
+		QByteArray ReadStringBytes();
+
+		// Decode UTF-8 including Java's modified null and surrogate encodings.
+		static StringType DecodeString(const QByteArray& bytes);
+
+		// Skip a length-prefixed string without decoding it.
 		void SkipString();
 
 		QDataStream ds;
-		QHash<NbtType, QVector<StringType>> filter;
-		BoolType stringSkipMc = false, filterEnabled = true, debug = false;
+		const QByteArray& data;
+		QHash<NbtType, QVector<QByteArray>> filter;
+		BoolType filterEnabled = true, debug = false;
+		BoolType stripNamespace = true;
+		BoolType previewOnly = false;
+		IntType sectionMin = 0, sectionMax = 0;
 
 		static QHash<NbtType, IntType> nbtTypeSize;
 	};
@@ -57,55 +88,64 @@ namespace CppProject
 
 	struct NbtByte : NbtTag
 	{
+		NbtByte(int8_t value = 0) : NbtTag(TAG_BYTE), value(value) {}
 		NbtByte(NbtStream& stream);
 		int8_t value;
 	};
 
 	struct NbtShort : NbtTag
 	{
+		NbtShort(int16_t value = 0) : NbtTag(TAG_SHORT), value(value) {}
 		NbtShort(NbtStream& stream);
 		int16_t value;
 	};
 
 	struct NbtInt : NbtTag
 	{
+		NbtInt(int32_t value = 0) : NbtTag(TAG_INT), value(value) {}
 		NbtInt(NbtStream& stream);
 		int32_t value;
 	};
 
 	struct NbtLong : NbtTag
 	{
+		NbtLong(int64_t value = 0) : NbtTag(TAG_LONG), value(value) {}
 		NbtLong(NbtStream& stream);
 		int64_t value;
 	};
 
 	struct NbtFloat : NbtTag
 	{
+		NbtFloat(float value = 0) : NbtTag(TAG_FLOAT), value(value) {}
 		NbtFloat(NbtStream& stream);
 		float value;
 	};
 
 	struct NbtDouble : NbtTag
 	{
+		NbtDouble(double value = 0) : NbtTag(TAG_DOUBLE), value(value) {}
 		NbtDouble(NbtStream& stream);
 		double value;
 	};
 
 	struct NbtByteArray : NbtTag
 	{
+		NbtByteArray() : NbtTag(TAG_BYTE_ARRAY) {}
 		NbtByteArray(NbtStream& stream);
 		Heap<int8_t> value;
 	};
 
 	struct NbtString : NbtTag
 	{
+		NbtString(const StringType& value) : NbtTag(TAG_STRING), value(value) {}
 		NbtString(NbtStream& stream);
 		StringType value;
 	};
 
 	struct NbtList : NbtTag
 	{
-		NbtList(NbtStream& stream);
+		NbtList(NbtType listType) : NbtTag(TAG_LIST), listType(listType) {}
+		NbtList(NbtStream& stream, NbtStream::Context context = NbtStream::GENERIC);
 		~NbtList();
 		NbtType listType;
 		Heap<NbtTag*> value;
@@ -113,20 +153,29 @@ namespace CppProject
 
 	struct NbtIntArray : NbtTag
 	{
+		NbtIntArray() : NbtTag(TAG_INT_ARRAY) {}
 		NbtIntArray(NbtStream& stream);
 		Heap<int32_t> value;
 	};
 
 	struct NbtLongArray : NbtTag
 	{
+		NbtLongArray() : NbtTag(TAG_LONG_ARRAY) {}
 		NbtLongArray(NbtStream& stream);
 		Heap<int64_t> value;
 	};
 
 	struct NbtCompound : NbtTag
 	{
-		NbtCompound(NbtStream& stream);
+		NbtCompound() : NbtTag(TAG_COMPOUND) {}
+		NbtCompound(NbtStream& stream, NbtStream::Context context = NbtStream::GENERIC);
 		~NbtCompound();
+
+		// Convert the NBT compound to a GZip compressed byte array.
+		QByteArray Serialize(const QString& rootName = "") const;
+
+		// Write a serialized NBT compound to disk.
+		void WriteFile(const QString& filename, const QString& rootName = "") const;
 
 		// Compound value access
 		BoolType HasKey(const StringType& key) const { return value.contains(key); }
@@ -148,6 +197,7 @@ namespace CppProject
 			NbtTag* tag = value.value(key, nullptr);
 			if (!tag)
 				throw "Key " + (QString)key + " not found in compound";
+
 			if (tag->type != TAG_LIST)
 				throw "Unexpected type of key " + (QString)key + " compound: " + NumStr(tag->type);
 
@@ -161,6 +211,7 @@ namespace CppProject
 			QVector<ListStruct*> list;
 			for (IntType i = 0; i < tagList->value.Size(); i++)
 				list.append((ListStruct*)tagList->value[i]);
+			
 			return list;
 		}
 
@@ -170,8 +221,10 @@ namespace CppProject
 			NbtTag* tag = value.value(key, nullptr);
 			if (!tag)
 				throw "Key " + (QString)key + " not found in compound";
+
 			if (tag->type != TAG_COMPOUND)
 				throw "Unexpected type of key " + (QString)key + " compound: " + NumStr(tag->type);
+			
 			return (NbtCompound*)tag;
 		}
 
@@ -186,8 +239,10 @@ namespace CppProject
 			NbtTag* tag = value.value(key, nullptr);
 			if (!tag)
 				throw "Key " + (QString)key + " not found in compound";
+
 			if (tag->type != Et)
 				throw "Unexpected type of key " + (QString)key + " compound: " + NumStr(tag->type);
+			
 			return ((St*)tag)->value;
 		}
 	};

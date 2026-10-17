@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"project_load_legacy_environment",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_load_legacy_environment",
+  "parent":{
+    "name":"Legacy",
+    "path":"folders/Scripts/Project/Load/Legacy.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

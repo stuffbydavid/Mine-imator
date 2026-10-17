@@ -1,14 +1,11 @@
-/// action_lib_item_slot(slot)
-/// @arg slot
-
-function action_lib_item_slot(slot)
+function action_lib_item_slot(index)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_item_slot, temp_edit.item_slot, slot, false)
+		history_set_var(action_lib_item_slot, obj_edit.item_slot, index, false)
 	
-	with (temp_edit)
+	with (obj_edit)
 	{
-		item_slot = slot
+		item_slot = index
 		render_generate_item()
 	}
 	

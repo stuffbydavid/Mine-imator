@@ -1,4 +1,3 @@
-/// dec_to_hex(value, [length])
 /// @arg value
 /// @arg [length]
 

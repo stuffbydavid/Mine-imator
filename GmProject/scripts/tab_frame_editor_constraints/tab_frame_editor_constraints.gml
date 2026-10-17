@@ -1,5 +1,3 @@
-/// tab_frame_editor_constraints()
-
 function tab_frame_editor_constraints()
 {
 	// Follow path

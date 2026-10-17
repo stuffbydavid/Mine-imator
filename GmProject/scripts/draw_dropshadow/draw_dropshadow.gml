@@ -1,4 +1,3 @@
-/// draw_dropshadow(x, y, width, height, color, alpha)
 /// @arg x
 /// @arg y
 /// @arg width

@@ -1,16 +1,14 @@
-/// action_bench_block_tex(resource)
 /// @arg resource
 
 function action_bench_block_tex(res)
 {
-	var fn = "";
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_image_pack()
@@ -21,6 +19,7 @@ function action_bench_block_tex(res)
 			with (res)
 				res_load()
 		}
+		
 		history_set_res(action_bench_block_tex, fn, bench_settings.block_tex, res)
 	}
 	

@@ -1,7 +1,4 @@
-/// action_tl_wind_terrain(enable)
-/// @arg enable
-
-function action_tl_wind_terrain(enable)
+function action_tl_wind_terrain(enabled)
 {
 	if (history_undo)
 	{
@@ -27,9 +24,9 @@ function action_tl_wind_terrain(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.wind_terrain, enable)
+				history_save_var(other.id, other.wind_terrain, enabled)
 			
-			wind_terrain = enable
+			wind_terrain = enabled
 		}
 	}
 }

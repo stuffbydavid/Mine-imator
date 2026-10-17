@@ -1,7 +1,8 @@
-/// action_res_pack_load(filename)
 /// @arg filename
+/// @arg [unpacked]
+/// @arg [projectpack]
 
-function action_res_pack_load(fn)
+function action_res_pack_load(fn, unpacked = true, projectpack = false)
 {
 	if (history_undo)
 	{
@@ -16,8 +17,12 @@ function action_res_pack_load(fn)
 			fn = history_data.filename
 			res = new_res(fn, e_res_type.PACK)
 		}
-		else
+		else if (unpacked)
 			res = new_res(fn, e_res_type.PACK_UNZIPPED)
+		else
+			res = new_res(fn, e_res_type.PACK)
+		
+		fn = load_folder + "/" + res.filename
 		
 		res.loaded = true
 		with (res)
@@ -30,6 +35,9 @@ function action_res_pack_load(fn)
 				filename = fn
 				history_save_loaded()
 			}
+
+			if (projectpack || question(text_get("question/project_pack")))
+				action_project_pack(res)
 		}
 	}
 	

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "matrix_create_rotate_to",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Matrix",
-    "path": "folders/Scripts/Utility/Math/Matrix.yy",
+  "$GMScript":"v1",
+  "%Name":"matrix_create_rotate_to",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"matrix_create_rotate_to",
+  "parent":{
+    "name":"Matrix",
+    "path":"folders/Scripts/Utility/Math/Matrix.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

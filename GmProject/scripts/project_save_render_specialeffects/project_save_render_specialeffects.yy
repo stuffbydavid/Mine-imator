@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"project_save_render_specialeffects",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_save_render_specialeffects",
+  "parent":{
+    "name":"Save",
+    "path":"folders/Scripts/Project/Save.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

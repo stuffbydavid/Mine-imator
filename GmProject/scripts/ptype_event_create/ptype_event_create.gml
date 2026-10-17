@@ -1,4 +1,3 @@
-/// ptype_event_create()
 /// @desc Create event of obj_particle_type.
 
 function ptype_event_create()
@@ -9,14 +8,14 @@ function ptype_event_create()
 	
 	name = ""
 	temp = particle_template
-	text = text_get("particleeditortypetextsample")
+	text = text_get("particle_editor/type/text_sample")
 	spawn_rate = 0
 	sprite_vbuffer_amount = 0
 	sprite_vbuffer[0] = null
 	sprite_tex = null
 	sprite_tex_image = 0
 	sprite_template = "generic"
-	sprite_template_tex = mc_res
+	sprite_template_tex = project_pack_res
 	sprite_template_still_frame = false
 	sprite_template_random_frame = false
 	sprite_template_reverse = true
@@ -70,6 +69,7 @@ function ptype_event_create()
 	spd_mul_random_min = vec3(0.75)
 	spd_mul_random_max = vec3(0.9)
 	
+	rot_spawner_angle = false
 	rot = vec3(0)
 	rot_israndom = vec3(true)
 	rot_random_min = vec3(0)
@@ -135,8 +135,13 @@ function ptype_event_create()
 	orbit = false
 	
 	text_vbuffer = null
-	text_texture = null
+	text_texture = [ null, null ]
 	text_string = ""
 	text_res = null
 	text_3d = false
+	text_3d_prev = false
+	text_halign_prev = "center"
+	text_valign_prev = "center"
+	text_aa_prev = true
+	text_outline_size_prev = 3
 }

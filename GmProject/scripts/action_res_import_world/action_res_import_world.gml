@@ -1,7 +1,13 @@
-/// action_res_import_world(name, regionsdir, boxstart, boxend, filtermode, filterarray)
-/// @descImports a piece of a Minecraft world and returns the new resource created.
+/// @desc Imports a piece of a Minecraft world and returns the new resource created.
+/// @arg name
+/// @arg regionsdirectory
+/// @arg boxstart
+/// @arg boxend
+/// @arg filtermode
+/// @arg filterarray
+/// @arg extension
 
-function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode, filterarray)
+function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode, filterarray, ext)
 {
 	var res = null;
 	
@@ -12,7 +18,8 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode,
 	}
 	else
 	{
-		var hobj = null;
+		var hobj, fn, worldname;
+		hobj = null
 		if (history_redo)
 		{
 			name = history_data.name
@@ -21,27 +28,31 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode,
 			boxend = history_data.boxend
 			filtermode = history_data.filtermode
 			filterarray = history_data.filterarray
+			fn = history_data.fn
+			worldname = history_data.worldname
 		}
 		else
+		{
 			hobj = history_set(action_res_import_world)
-		
-		// Find other resources from same world for final name
-		var num = 1;
-		var worldname = filename_get_valid(name);
-		with (obj_resource)
-			if (string_pos(worldname, filename) == 1)
-				num++
-		
-		var fn = worldname + (num > 1 ? (" " + string(num)) : "");
-		res = new_res(fn, e_res_type.FROM_WORLD);
+
+			fn = res_get_world_filename(name, ext)
+			worldname = filename_new_ext(fn, "")
+		}
+
+		res = new_res(project_folder + "/" + fn, e_res_type.FROM_WORLD)
 		with (res)
 		{
 			loaded = true
+			scenery_size = point3D(boxend[Z] - boxstart[Z], boxend[X] - boxstart[X], boxend[Y] - boxstart[Y])
+			
 			world_regions_dir = regionsdir
+			world_name = worldname
+			world_reload = !app.history_redo
 			world_box_start = boxstart
 			world_box_end = boxend
 			world_filter_mode = filtermode
 			world_filter_array = filterarray
+			
 			res_load()
 		}
 		
@@ -53,10 +64,14 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filtermode,
 			self.boxend = boxend
 			self.filtermode = filtermode
 			self.filterarray = filterarray
+			self.fn = fn
+			self.worldname = worldname
+			
 			history_save_loaded()
 		}
 	}
 	
 	project_reset_loaded()
+	
 	return res
 }

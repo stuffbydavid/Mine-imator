@@ -35,13 +35,12 @@ namespace CppProject
 		Heap<uint32_t> indexData;
 		Bounds bounds;
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		ID3D11Buffer* d3dVertexBuffer = nullptr;
 		ID3D11Buffer* d3dIndexBuffer = nullptr;
-	#else
+	#endif
 		QOpenGLBuffer* glVertexBuffer = nullptr;
 		QOpenGLBuffer* glIndexBuffer = nullptr;
 		static QVector<QOpenGLBuffer*> deletedBuffers;
-	#endif
 	};
 }

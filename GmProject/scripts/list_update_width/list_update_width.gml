@@ -1,15 +1,11 @@
-/// list_update_width(list)
-/// @arg list
-/// @desc Calculates width of list's components and text
+/// @desc Calculates width of list's components and text.
 
 function list_update_width(list)
 {
-	var maxwidthleft, maxwidthright, width, item, togglewid;
+	var maxwidthleft, maxwidthright;
 	maxwidthleft = 0
 	maxwidthright = 0
-	width = 0
-	item = null
-	togglewid = 0
+	
 	list.toggled = false
 	
 	// Left side
@@ -17,6 +13,7 @@ function list_update_width(list)
 	
 	for (var i = 0; i < ds_list_size(list.item); i++)
 	{
+		var item, width;
 		item = list.item[|i]
 		width = 4 + item.indent
 		
@@ -46,6 +43,7 @@ function list_update_width(list)
 	
 	for (var i = 0; i < ds_list_size(list.item); i++)
 	{
+		var item, width;
 		item = list.item[|i]
 		width = 0
 		
@@ -74,5 +72,5 @@ function list_update_width(list)
 		maxwidthright = max(width, maxwidthright)
 	}
 	
-	list.width = (maxwidthleft + maxwidthright + togglewid)
+	list.width = maxwidthleft + maxwidthright
 }

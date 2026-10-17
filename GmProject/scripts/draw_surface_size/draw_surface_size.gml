@@ -1,4 +1,3 @@
-/// draw_surface_size(id, x, y, width, height)
 /// @arg surface
 /// @arg x
 /// @arg y

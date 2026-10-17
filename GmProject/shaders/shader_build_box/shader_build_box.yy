@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shader_build_box",
+  "name":"shader_build_box",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

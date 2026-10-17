@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"control_pos",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"control_pos",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

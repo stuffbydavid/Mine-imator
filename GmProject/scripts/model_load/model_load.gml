@@ -1,4 +1,3 @@
-/// model_load(map, directory)
 /// @arg map
 /// @arg directory
 
@@ -15,14 +14,15 @@ function model_load(map, dir)
 			return null
 		}
 		
-		if (dev_mode_debug_names && !text_exists("model" + name))
-			log("model/" + name + dev_mode_name_translation_message)
+		if (debug_names && !text_exists("model/" + name))
+			log("model/" + name + mc_unknown_asset_warning)
 		
 		// File
 		if (is_string(map[?"file"]))
 			file = model_file_load(dir + map[?"file"])
 		else
 			file = null
+		
 		
 		// Texture
 		if (is_string(map[?"texture"]))
@@ -41,6 +41,19 @@ function model_load(map, dir)
 		// Version
 		version = value_get_real(map[?"version"], 0)
 		
+		// Valid equipment
+		equipment_list = null
+		if (ds_list_valid(map[?"equipment"]))
+		{
+			equipment_list = ds_list_create()
+			ds_list_copy(equipment_list, map[?"equipment"])
+		}
+		
+		// Place target
+		place_target_map = null
+		if (ds_map_valid(map[?"place_target"]))
+			place_target_map = minecraft_assets_load_place_target(map[?"place_target"])
+		
 		// Pattern type
 		pattern_type = value_get_string(map[?"pattern_type"], "")
 		
@@ -52,8 +65,8 @@ function model_load(map, dir)
 			var curstate = ds_map_find_first(map[?"states"]);
 			while (!is_undefined(curstate))
 			{
-				if (dev_mode_debug_names && !text_exists("modelstate" + curstate))
-					log("model/state/" + curstate + dev_mode_name_translation_message)
+				if (debug_names && !text_exists("model/state/" + curstate))
+					log("model/state/" + curstate + mc_unknown_asset_warning)
 				
 				with (new_obj(obj_model_state))
 				{
@@ -77,8 +90,8 @@ function model_load(map, dir)
 						value_color_name_map[v] = null
 						value_pattern_type[v] = other.pattern_type
 						
-						if (dev_mode_debug_names && !text_exists("modelstatevalue" + value_name[v]))
-							log("model/state/value/" + value_name[v] + dev_mode_name_translation_message)
+						if (debug_names && !text_exists("model/state/value/" + value_name[v]))
+							log("model/state/value/" + value_name[v] + mc_unknown_asset_warning)
 						
 						// File
 						if (!is_undefined(curvalue[?"file"]))
@@ -123,18 +136,18 @@ function model_load(map, dir)
 							value_shape_texture_name_map[v] = shapetexnamemap
 							
 							// Material map
-							value_shape_texture_material_name_map = ds_map_create()
+							shapetexnamemap = ds_map_create()
 							shapetexnamemap[?""] = curvalue[?"shape_texture"]
 							value_shape_texture_material_name_map[v] = shapetexnamemap
 							
 							// Normal map
-							value_shape_tex_normal_name_map = ds_map_create()
+							shapetexnamemap = ds_map_create()
 							shapetexnamemap[?""] = curvalue[?"shape_texture"]
 							value_shape_tex_normal_name_map[v] = shapetexnamemap
 						}
 						else if (ds_map_valid(curvalue[?"shape_texture"]))
 						{
-							value_shape_texture_name_map[v] = ds_map_create();
+							value_shape_texture_name_map[v] = ds_map_create()
 							ds_map_merge(value_shape_texture_name_map[v], curvalue[?"shape_texture"], true)
 							
 							// Material map
@@ -182,7 +195,34 @@ function model_load(map, dir)
 		if (is_string(map[?"default_state"]))
 			default_state = string_get_state_vars(map[?"default_state"])
 		else
-			default_state = array()
+			default_state = []
+
+		// Model part list eligibility
+		var modelfile, state;
+		modelfile = file
+		if (states_map != null)
+		{
+			state = ds_map_find_first(states_map)
+			while (!is_undefined(state))
+			{
+				var value = state_vars_get_value(default_state, state);
+				if (value != "")
+				{
+					var statelist = states_map[?state];
+					for (var v = 0; v < statelist.value_amount; v++)
+					{
+						if (value = statelist.value_name[v])
+						{
+							if (statelist.value_file[v] != null)
+								modelfile = statelist.value_file[v]
+							break
+						}
+					}
+				}
+				state = ds_map_find_next(states_map, state)
+			}
+		}
+		model_part_available = (modelfile != null && ds_list_size(modelfile.file_part_list) > 1)
 		
 		return id
 	}

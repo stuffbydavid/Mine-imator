@@ -1,6 +1,3 @@
-/// action_tl_frame_text_font(object)
-/// @arg object
-
 function action_tl_frame_text_font(object)
 {
 	tl_value_set_start(action_tl_frame_text_font, false)

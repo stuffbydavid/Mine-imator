@@ -1,5 +1,4 @@
-/// render_update_item()
-/// @desc Updates item timelines
+/// @desc Updates item timelines.
 
 function render_update_item()
 {
@@ -35,6 +34,6 @@ function render_update_item()
 		if (norres = null)
 			norres = temp.item_tex_normal
 		
-		render_generate_item(slot, [res, matres, norres], temp.item_3d)
+		render_generate_item(slot, temp.item_3d, res, norres, matres)
 	}
 }
