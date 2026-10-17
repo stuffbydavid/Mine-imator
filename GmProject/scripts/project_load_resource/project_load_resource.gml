@@ -46,6 +46,10 @@ function project_load_resource(map)
 		
 		if (type = e_res_type.FROM_WORLD)
 		{
+			world_name = value_get_string(map[?"world_name"], filename)
+			if (load_format < e_project.FORMAT_210)
+				world_name = filename
+
 			world_regions_dir = value_get_string(map[?"world_regions_dir"])
 			world_box_start = value_get_point3D(map[?"world_box_start"])
 			world_box_end = value_get_point3D(map[?"world_box_end"])

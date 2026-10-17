@@ -1,7 +1,6 @@
 #include "NBT.hpp"
+#include "GZIP.hpp"
 #include "Generated/GmlFunc.hpp"
-
-#include <zlib.h>
 
 namespace CppProject
 {
@@ -127,22 +126,70 @@ namespace CppProject
 
 	StringType NbtStream::ReadString()
 	{
-		int16_t len;
+		quint16 len = 0;
 		ds >> len;
+		QByteArray bytes(len, '\0');
 
-		char* str = new char[len + 1];
-		ds.readRawData(str, len);
-		str[len] = '\0';
+		if (ds.status() != QDataStream::Ok || ds.readRawData(bytes.data(), len) != len)
+			throw QString("Truncated NBT string");
 
-		QString qStr = QString::fromUtf8(str, len);
-		delete[] str;
+		if (!bytes.contains(char(0xC0)) && !bytes.contains(char(0xED)))
+			return QString::fromUtf8(bytes);
 
-		return qStr;
+		// Preserve modified UTF-8 nulls and surrogate pairs in tile entity text
+		QString value;
+		value.reserve(bytes.size());
+		for (int i = 0; i < bytes.size();)
+		{
+			uint32_t code = uint8_t(bytes[i++]);
+			int extra = 0;
+			if (code >= 0xF0 && code < 0xF8)
+			{
+				code &= 0x07;
+				extra = 3;
+			}
+			else if (code >= 0xE0 && code < 0xF0)
+			{
+				code &= 0x0F;
+				extra = 2;
+			}
+			else if (code >= 0xC0 && code < 0xE0)
+			{
+				code &= 0x1F;
+				extra = 1;
+			}
+			else if (code >= 0x80)
+				throw QString("Invalid NBT string encoding");
+
+			if (i + extra > bytes.size())
+				throw QString("Truncated NBT string encoding");
+
+			for (int n = 0; n < extra; n++)
+			{
+				uint8_t next = bytes[i++];
+				if ((next & 0xC0) != 0x80)
+					throw QString("Invalid NBT string encoding");
+
+				code = (code << 6) | (next & 0x3F);
+			}
+
+			if (code > 0x10FFFF)
+				throw QString("Invalid NBT string code point");
+
+			if (code > 0xFFFF)
+			{
+				value.append(QChar(QChar::highSurrogate(code)));
+				value.append(QChar(QChar::lowSurrogate(code)));
+			}
+			else
+				value.append(QChar(ushort(code)));
+		}
+		return value;
 	}
 
 	void NbtStream::SkipString()
 	{
-		int16_t len;
+		quint16 len = 0;
 		ds >> len;
 		ds.skipRawData(len);
 	}
@@ -252,6 +299,9 @@ namespace CppProject
 		{
 			int8_t type;
 			stream.ds >> type;
+			if (stream.ds.status() != QDataStream::Ok)
+				throw QString("Truncated NBT compound");
+
 			if (!type)
 				break;
 
@@ -282,7 +332,9 @@ namespace CppProject
 			}
 
 			value[name] = stream.ReadTag((NbtType)type);
-			if (name == "Name" && type == TAG_STRING) // Remove "minecraft:" from "Name" string values
+
+			// Remove "minecraft:" from "Name" string values
+			if (stream.stripNamespace && name == "Name" && type == TAG_STRING)
 			{
 				NbtString* str = (NbtString*)value[name];
 
@@ -441,5 +493,166 @@ namespace CppProject
 
 		if (stream.debug)
 			DEBUG(NumStr(size) + " longs");
+	}
+
+	static void WriteNbtString(QDataStream& stream, const QString& value)
+	{
+		// Java NBT uses modified UTF-8, encoding UTF-16 surrogate pairs separately
+		QByteArray bytes;
+		for (QChar character : value)
+		{
+			ushort code = character.unicode();
+			if (code > 0 && code < 0x80)
+				bytes.append(char(code));
+			else if (code < 0x800)
+			{
+				bytes.append(char(0xC0 | (code >> 6)));
+				bytes.append(char(0x80 | (code & 0x3F)));
+			}
+			else
+			{
+				bytes.append(char(0xE0 | (code >> 12)));
+				bytes.append(char(0x80 | ((code >> 6) & 0x3F)));
+				bytes.append(char(0x80 | (code & 0x3F)));
+			}
+
+			if (bytes.size() > std::numeric_limits<quint16>::max())
+				throw QString("NBT string exceeds the length limit");
+		}
+
+		stream << quint16(bytes.size());
+		stream.writeRawData(bytes.constData(), bytes.size());
+	}
+
+	static void WriteNbtLength(QDataStream& stream, IntType size)
+	{
+		if (size < 0 || size > std::numeric_limits<qint32>::max())
+			throw QString("NBT array exceeds the length limit");
+
+		stream << qint32(size);
+	}
+
+	static void WriteNbtTag(QDataStream& stream, const NbtTag& tag)
+	{
+		switch (tag.type)
+		{
+			case TAG_BYTE:	stream << qint8(static_cast<const NbtByte&>(tag).value); break;
+			case TAG_SHORT: stream << qint16(static_cast<const NbtShort&>(tag).value); break;
+			case TAG_INT:	stream << qint32(static_cast<const NbtInt&>(tag).value); break;
+			case TAG_LONG:	stream << qint64(static_cast<const NbtLong&>(tag).value); break;
+
+			case TAG_FLOAT:
+			{
+				quint32 bits;
+				memcpy(&bits, &static_cast<const NbtFloat&>(tag).value, sizeof(bits));
+				stream << bits;
+				break;
+			}
+
+			case TAG_DOUBLE:
+			{
+				quint64 bits;
+				memcpy(&bits, &static_cast<const NbtDouble&>(tag).value, sizeof(bits));
+				stream << bits;
+				break;
+			}
+
+			case TAG_STRING:
+				WriteNbtString(stream, static_cast<const NbtString&>(tag).value);
+				break;
+
+			case TAG_BYTE_ARRAY:
+			{
+				const auto& value = static_cast<const NbtByteArray&>(tag).value;
+				WriteNbtLength(stream, value.Size());
+				stream.writeRawData(reinterpret_cast<const char*>(value.Data()), int(value.Size()));
+				break;
+			}
+
+			case TAG_INT_ARRAY:
+			{
+				const auto& value = static_cast<const NbtIntArray&>(tag).value;
+				WriteNbtLength(stream, value.Size());
+				for (IntType i = 0; i < value.Size(); i++)
+					stream << qint32(value.Value(i));
+				
+				break;
+			}
+
+			case TAG_LONG_ARRAY:
+			{
+				const auto& value = static_cast<const NbtLongArray&>(tag).value;
+				WriteNbtLength(stream, value.Size());
+				for (IntType i = 0; i < value.Size(); i++)
+					stream << qint64(value.Value(i));
+				
+				break;
+			}
+
+			case TAG_LIST:
+			{
+				const auto& list = static_cast<const NbtList&>(tag);
+				if (list.listType < TAG_END || list.listType >= TAG_AMOUNT || (list.listType == TAG_END && list.value.Size()))
+					throw QString("Invalid NBT list type");
+
+				stream << qint8(list.listType);
+				WriteNbtLength(stream, list.value.Size());
+
+				for (IntType i = 0; i < list.value.Size(); i++)
+				{
+					const NbtTag* item = list.value.Value(i);
+					if (!item || item->type != list.listType)
+						throw QString("Mismatched NBT list element");
+
+					WriteNbtTag(stream, *item);
+				}
+
+				break;
+			}
+
+			case TAG_COMPOUND:
+			{
+				const auto& value = static_cast<const NbtCompound&>(tag).value;
+				for (auto it = value.constBegin(); it != value.constEnd(); ++it)
+				{
+					const NbtTag* child = it.value();
+					if (!child || child->type <= TAG_END || child->type >= TAG_AMOUNT)
+						throw QString("Invalid NBT compound element");
+
+					stream << qint8(child->type);
+					
+					WriteNbtString(stream, it.key());
+					WriteNbtTag(stream, *child);
+				}
+				
+				stream << qint8(TAG_END);
+				
+				break;
+			}
+
+			default:
+				throw QString("Unknown NBT tag type");
+		}
+	}
+
+	void NbtCompound::WriteFile(const QString& filename, const QString& rootName) const
+	{
+		Gzip::WriteCompressed(Serialize(rootName), filename);
+	}
+
+	QByteArray NbtCompound::Serialize(const QString& rootName) const
+	{
+		QByteArray data;
+		QDataStream stream(&data, QIODevice::WriteOnly);
+		stream.setByteOrder(QDataStream::BigEndian);
+		stream << qint8(TAG_COMPOUND);
+
+		WriteNbtString(stream, rootName);
+		WriteNbtTag(stream, *this);
+
+		if (stream.status() != QDataStream::Ok)
+			throw QString("Could not serialize NBT data");
+
+		return data;
 	}
 }

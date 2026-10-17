@@ -46,10 +46,11 @@ namespace CppProject
 		global::_app->world_import_world_name = save.name;
 		global::_app->world_import_dimension = saveDim;
 
-		// Open world once currently loaded regions are done
 		World::preview->resetUpdate = update;
+		World::preview->exportFilename.clear();
 		Region::loader->active = false;
 
+		// Open world once currently loaded regions are done
 		QObject::connect(Region::loader, SIGNAL(UpdateDone()), World::preview, SLOT(Reset()));
 	}
 
@@ -97,19 +98,25 @@ namespace CppProject
 	void world_import_confirm()
 	{
 		// Confirm when region loading is done
-		if (World::preview->selection.active && Region::loader->active)
+		if (World::preview->selection.active && (Region::loader->active || !World::preview->exportFilename.isEmpty()))
 		{
+			World::preview->exportFilename.clear();
 			Region::loader->active = false;
+
 			QObject::connect(Region::loader, SIGNAL(UpdateDone()), World::preview, SLOT(Confirm()));
 		}
 	}
 
 	void world_import_cancel()
 	{
+		World::preview->selection.active = false;
+
 		// Unload world when region loading is done
-		if (global::_app->world_import_world_root != "" && Region::loader->active)
+		if (global::_app->world_import_world_root != "" && (Region::loader->active || !World::preview->exportFilename.isEmpty()))
 		{
+			World::preview->exportFilename.clear();
 			Region::loader->active = false;
+
 			QObject::connect(Region::loader, SIGNAL(UpdateDone()), World::preview, SLOT(Cancel()));
 		}
 
@@ -119,5 +126,34 @@ namespace CppProject
 	void world_import_update_surface(IntType x, IntType y, IntType width, IntType height, IntType confirmX, IntType confirmY, IntType confirmWidth, IntType confirmHeight)
 	{
 		World::preview->Update(FindSurface(global::_app->world_import_surface), QRect(x, y, width, height), QRect(confirmX, confirmY, confirmWidth, confirmHeight));
+	}
+
+	void world_import_export_schematic()
+	{
+		if (!World::preview->selection.active || !Region::loader->active || !World::preview->exportFilename.isEmpty())
+			return;
+
+		IntType dataVersion = World::saves.value(global::_app->world_import_world_root).dataVersion;
+		WorldBox box = World::preview->selection;
+		StringType ext = ".schem";
+		if (dataVersion < Chunk::JAVA_1_13)
+			ext = ".schematic";
+
+		QString fn = file_dialog_save_schematic(global::_app->world_import_world_name.Str() + ext, ext);
+		if (fn.isEmpty() || !Region::loader->active || !World::preview->exportFilename.isEmpty())
+			return;
+
+		if (!fn.endsWith(ext, Qt::CaseInsensitive))
+			fn += ext;
+
+		World::preview->exportFilename = fn;
+		World::preview->exportBox = box;
+		Region::loader->active = false;
+
+		// Export when region loading is done
+		QObject::connect(
+			Region::loader, &RegionLoader::UpdateDone, World::preview, &Preview::ExportSchematic,
+			Qt::ConnectionType(Qt::QueuedConnection | Qt::UniqueConnection)
+		);
 	}
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_res_open_world_folder",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_res_open_world_folder",
+  "parent":{
+    "name":"Resources",
+    "path":"folders/Scripts/App/Actions/Resources.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

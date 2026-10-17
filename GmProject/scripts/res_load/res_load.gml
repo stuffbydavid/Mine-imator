@@ -107,7 +107,7 @@ function res_load(reload = false)
 			
 			// Load from cached mesh
 			var cachefn = fn + ".meshcache";
-			if (!reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
+			if (!reload && !world_reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
 				break
 				
 			ready = false

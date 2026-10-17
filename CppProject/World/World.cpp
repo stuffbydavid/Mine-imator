@@ -117,7 +117,6 @@ namespace CppProject
 		Preview::mcBlockIdStyleIndexMap["lava"] =
 		Preview::mcBlockIdStyleIndexMap["flowing_lava"] = BlockStyle::Create(make_color_rgb(255, 100, 0), 1.0, -1, 1.0, BlockStyle::NONE, 26);
 
-
 		// Preview texture
 		BlockStyle::previewTexture = new Texture(BlockStyle::previewImage);
 
@@ -200,7 +199,7 @@ namespace CppProject
 		StringType::qThreadActive = false;
 	}
 
-	void World::GenerateBuilderSections(const WorldBox& box)
+	void World::GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic)
 	{
 		if (!box.active) // No selection
 			return;
@@ -216,15 +215,23 @@ namespace CppProject
 		builder_start(Scope<obj_builder>(builder));
 
 		// Load regions within box
+		if (schematic)
+			schematic->exportOnly = false;
+
 		debug_timer_start();
 		builder->sch_timeline_amount = 0;
 		builder->builder_scenery_legacy = false;
 
 		for (Region* region : regions)
 		{
-			region->Load(box);
+			region->Load(box, schematic);
+			
+			if (schematic && region->loadStatus == Region::LOAD_ERROR)
+				schematic->error = "Could not load region " + region->filename;
+			
 			if (region->legacy)
 				builder->builder_scenery_legacy = true;
+			
 			builder->sch_timeline_amount += region->numTimelines;
 		}
 
@@ -290,7 +297,7 @@ namespace CppProject
 		try
 		{
 			NbtStream stream(bytesRaw, QHash<NbtType, QVector<StringType>>({
-				{ TAG_INT, { "version", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
+				{ TAG_INT, { "version", "DataVersion", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
 				{ TAG_STRING, { "LevelName", "Dimension" }},
 				{ TAG_LIST, { "Pos", "Rotation" }},
 				{ TAG_COMPOUND, { "Data", "Player", "spawn" }},
@@ -321,6 +328,8 @@ namespace CppProject
 			}
 
 			info.version = data->Int("version");
+			if (data->HasKey("DataVersion"))
+				info.dataVersion = data->Int("DataVersion");
 
 			if (data->HasKey("spawn"))
 			{
@@ -516,6 +525,24 @@ namespace CppProject
 		}
 
 		return changed;
+	}
+
+	void World::ExportSchematic(const WorldBox& selection, const QString& filename)
+	{
+		ApplyFilter();
+
+		SchematicExport schematic(selection, saves.value(global::_app->world_import_world_root).dataVersion);
+		
+		for (Region* source : regions)
+		{
+			// Temporary data leaves preview and builder caches untouched
+			std::unique_ptr<Region> region(new Region(source->filename));
+			region->Load(schematic.box, &schematic);
+			if (region->loadStatus == Region::LOAD_ERROR)
+				throw QString("Could not load region " + source->filename);
+		}
+
+		Gzip::WriteCompressed(schematic.Serialize(), filename);
 	}
 
 	WorldVec WorldVec::operator+(const WorldVec& vec) const

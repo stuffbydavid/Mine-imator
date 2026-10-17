@@ -121,6 +121,8 @@ function shader_startup()
 	{
 		log("Shader compilation failed")
 		log("Try updating your graphics drivers", drivers_url_get())
+		
+		message_set_caption("Error")
 		if (show_question("Some shaders failed to compile.\nCheck that your graphics drivers are up-to-date and restart Mine-imator.\n\nOpen support article about updating graphics drivers?"))
 			open_url(drivers_url_get())
 		

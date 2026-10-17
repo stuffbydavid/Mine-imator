@@ -188,4 +188,62 @@ function tab_properties_resources_edit()
 		
 		tab_next()
 	}
+
+	if (res_edit.type = e_res_type.FROM_WORLD)
+	{
+		// Always use Minecraft's Y-up order, regardless of the editor setting
+		var captions = [ "x", "y", "z" ];
+
+		for (var bound = 0; bound < 2; bound++)
+		{
+			var name, pos, textboxes;
+			if (bound)
+			{
+				name = "resources/world_box_end"
+				pos = res_edit.world_box_end
+				textboxes = tab.resources.tbx_world_box_end
+			}
+			else
+			{
+				name = "resources/world_box_start"
+				pos = res_edit.world_box_start
+				textboxes = tab.resources.tbx_world_box_start
+			}
+
+			for (var a = X; a <= Z; a++)
+			{
+				var minval, maxval;
+				minval = -no_limit
+				maxval = no_limit
+				if (bound)
+					minval = res_edit.world_box_start[a] + 1
+				else
+					maxval = res_edit.world_box_end[a] - 1
+
+				textfield_group_add(name + "/" + captions[a], pos[a], pos[a], action_res_world_box, a + bound * 3, textboxes[a], null, 0.5, minval, maxval, "resources/world_box/" + captions[a])
+			}
+
+			tab_control_textfield_group(true)
+			draw_textfield_group(name, dx, dy, dw, 1, -no_limit, no_limit, 1, true, true, 3)
+			tab_next()
+		}
+		
+		dy += 8
+
+		tab_control_button_label()
+		
+		var buttonwidth, buttonx;
+		draw_set_font(font_button)
+		buttonwidth = max(string_width(text_get("resources/reload_from_world")), string_width(text_get("resources/open_world_folder"))) + 52
+		buttonwidth = min(buttonwidth, floor((dw - 8) / 2))
+		buttonx = dx + (dw - buttonwidth * 2 - 8) / 2
+
+		if (draw_button_label("resources/reload_from_world", buttonx, dy, buttonwidth, icons.REFRESH))
+			action_res_reload_world()
+
+		if (draw_button_label("resources/open_world_folder", buttonx + buttonwidth + 8, dy, buttonwidth, icons.FOLDER))
+			action_res_open_world_folder()
+
+		tab_next()
+	}
 }

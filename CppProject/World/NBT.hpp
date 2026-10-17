@@ -44,6 +44,7 @@ namespace CppProject
 		QDataStream ds;
 		QHash<NbtType, QVector<StringType>> filter;
 		BoolType filterEnabled = true, debug = false;
+		BoolType stripNamespace = true;
 
 		static QHash<NbtType, IntType> nbtTypeSize;
 	};
@@ -57,54 +58,63 @@ namespace CppProject
 
 	struct NbtByte : NbtTag
 	{
+		NbtByte(int8_t value = 0) : NbtTag(TAG_BYTE), value(value) {}
 		NbtByte(NbtStream& stream);
 		int8_t value;
 	};
 
 	struct NbtShort : NbtTag
 	{
+		NbtShort(int16_t value = 0) : NbtTag(TAG_SHORT), value(value) {}
 		NbtShort(NbtStream& stream);
 		int16_t value;
 	};
 
 	struct NbtInt : NbtTag
 	{
+		NbtInt(int32_t value = 0) : NbtTag(TAG_INT), value(value) {}
 		NbtInt(NbtStream& stream);
 		int32_t value;
 	};
 
 	struct NbtLong : NbtTag
 	{
+		NbtLong(int64_t value = 0) : NbtTag(TAG_LONG), value(value) {}
 		NbtLong(NbtStream& stream);
 		int64_t value;
 	};
 
 	struct NbtFloat : NbtTag
 	{
+		NbtFloat(float value = 0) : NbtTag(TAG_FLOAT), value(value) {}
 		NbtFloat(NbtStream& stream);
 		float value;
 	};
 
 	struct NbtDouble : NbtTag
 	{
+		NbtDouble(double value = 0) : NbtTag(TAG_DOUBLE), value(value) {}
 		NbtDouble(NbtStream& stream);
 		double value;
 	};
 
 	struct NbtByteArray : NbtTag
 	{
+		NbtByteArray() : NbtTag(TAG_BYTE_ARRAY) {}
 		NbtByteArray(NbtStream& stream);
 		Heap<int8_t> value;
 	};
 
 	struct NbtString : NbtTag
 	{
+		NbtString(const StringType& value) : NbtTag(TAG_STRING), value(value) {}
 		NbtString(NbtStream& stream);
 		StringType value;
 	};
 
 	struct NbtList : NbtTag
 	{
+		NbtList(NbtType listType) : NbtTag(TAG_LIST), listType(listType) {}
 		NbtList(NbtStream& stream);
 		~NbtList();
 		NbtType listType;
@@ -113,20 +123,29 @@ namespace CppProject
 
 	struct NbtIntArray : NbtTag
 	{
+		NbtIntArray() : NbtTag(TAG_INT_ARRAY) {}
 		NbtIntArray(NbtStream& stream);
 		Heap<int32_t> value;
 	};
 
 	struct NbtLongArray : NbtTag
 	{
+		NbtLongArray() : NbtTag(TAG_LONG_ARRAY) {}
 		NbtLongArray(NbtStream& stream);
 		Heap<int64_t> value;
 	};
 
 	struct NbtCompound : NbtTag
 	{
+		NbtCompound() : NbtTag(TAG_COMPOUND) {}
 		NbtCompound(NbtStream& stream);
 		~NbtCompound();
+
+		// Convert the NBT compound to a GZip compressed byte array.
+		QByteArray Serialize(const QString& rootName = "") const;
+
+		// Write a serialized NBT compound to disk.
+		void WriteFile(const QString& filename, const QString& rootName = "") const;
 
 		// Compound value access
 		BoolType HasKey(const StringType& key) const { return value.contains(key); }

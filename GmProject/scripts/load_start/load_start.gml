@@ -23,7 +23,11 @@ function load_start(object, script)
 	// Show resource name before the first loading frame
 	with (object)
 	{
-		other.popup_loading.caption = filename
+		if (type = e_res_type.FROM_WORLD)
+			other.popup_loading.caption = world_name
+		else
+			other.popup_loading.caption = filename
+
 		switch (type)
 		{
 			case e_res_type.SCHEMATIC:

@@ -727,7 +727,7 @@ namespace CppProject
 		// Get box
 		VecType boxStart = self->world_box_start;
 		VecType boxEnd = self->world_box_end;
-		if ((boxEnd - boxStart).GetLength() < 2)
+		if (boxEnd.x <= boxStart.x || boxEnd.y <= boxStart.y || boxEnd.z <= boxStart.z)
 		{
 			World::Close();
 			return false;
@@ -742,14 +742,35 @@ namespace CppProject
 		auto oldFilterList = filterList.vec;
 
 		global::_app->setting_world_import_filter_enabled = self->world_filter_array.Size() > 0;
+		global::_app->setting_world_import_filter_mode = self->world_filter_mode;
 		filterList.vec.clear();
 		for (IntType i = 0; i < self->world_filter_array.Size(); i++)
 			filterList.vec.append({ self->world_filter_array.Value(i), 0 });
 		
 		World::ApplyFilter();
 
-		// Generate sections for scenery builder
-		World::GenerateBuilderSections(box);
+		// Find level.dat above the dimension's region directory
+		QDir worldDir(self->world_regions_dir.Str());
+		while (!worldDir.exists("level.dat") && worldDir.cdUp()) {}
+
+		std::unique_ptr<SchematicExport> schematic;
+		try
+		{
+			if (!World::AddSave(worldDir.path()))
+				throw QString("Could not determine the world format");
+
+			IntType dataVersion = World::saves.value(worldDir.path()).dataVersion;
+			schematic.reset(new SchematicExport(box, dataVersion, true));
+		}
+		catch (const QString& error)
+		{
+			WARNING("Could not create schematic snapshot: " + error);
+		}
+
+		World::GenerateBuilderSections(box, schematic.get());
+
+		if (schematic)
+			schematic->SaveResource(self.object);
 
 		// Restore settings
 		global::_app->setting_world_import_filter_enabled = oldFilterEnabled;
@@ -827,24 +848,7 @@ namespace CppProject
 
 		tmr.Print("Write block mesh cache");
 
-		// Compress on a new thread
-		QThread* thread;
-		QString outName = filename.QStr();
-		QString tempName = (QString)file_directory_get() + QFileInfo(filename).fileName();
-		thread = QThread::create([outName, tempName, data]
-		{
-			Timer tmr;
-			QFile outFile(outName);
-			QFile tempFile(tempName);
-			AddPerms(tempFile);
-			Gzip::Compress(data, tempName);
-			AddPerms(outFile);
-			outFile.remove();
-			tempFile.copy(outName);
-			tempFile.remove();
-			tmr.Print("Compress block mesh cache");
-		});
-		thread->start();
+		Gzip::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 8);
 	}
 
 	BoolType res_load_block_cache(Scope<obj_resource> self, StringType filename)

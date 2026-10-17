@@ -1,10 +1,113 @@
 #include "GZIP.hpp"
+#include "AppHandler.hpp"
 #include "Heap.hpp"
+
+#include <QSaveFile>
 
 #include <zlib.h>
 
 namespace CppProject
 {
+	struct GzipWrite
+	{
+		QString filename, label, error;
+		BoolType reported = false;
+
+		void Report()
+		{
+			if (reported)
+				return;
+
+			reported = true;
+
+			if (!error.isEmpty())
+				WARNING("Could not save " + label + " " + filename + ": " + error);
+		}
+	};
+
+	void Gzip::WriteCompressed(const QByteArray& data, const QString& filename, int compressionLevel)
+	{
+		// Replace the destination only after the complete gzip stream is written
+		QSaveFile file(filename);
+		if (!file.open(QIODevice::WriteOnly))
+			throw file.errorString();
+
+		z_stream gzip = {};
+		if (deflateInit2(&gzip, compressionLevel, Z_DEFLATED, MAX_WBITS + 16, 8, Z_DEFAULT_STRATEGY) != Z_OK)
+			throw QString("Could not initialize gzip compression");
+
+		gzip.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(data.constData()));
+		gzip.avail_in = data.size();
+
+		char buffer[65536];
+		int result;
+		do
+		{
+			gzip.next_out = reinterpret_cast<Bytef*>(buffer);
+			gzip.avail_out = sizeof(buffer);
+
+			result = deflate(&gzip, Z_FINISH);
+			if (result != Z_OK && result != Z_STREAM_END)
+			{
+				deflateEnd(&gzip);
+				throw QString("Could not compress resource data");
+			}
+
+			qint64 size = sizeof(buffer) - gzip.avail_out;
+			if (file.write(buffer, size) != size)
+			{
+				deflateEnd(&gzip);
+				throw file.errorString();
+			}
+		}
+		while (result != Z_STREAM_END);
+
+		deflateEnd(&gzip);
+
+		if (!file.commit())
+			throw file.errorString();
+	}
+
+	void Gzip::WriteAsync(QByteArray data, const QString& filename, const QString& label, int compressionLevel)
+	{
+		QString path = QFileInfo(filename).absoluteFilePath();
+		QString threadName = "gzip:" + path;
+
+		// Finish earlier writes to this file before replacing it
+		for (QThread* thread : App->threads)
+			if (thread->objectName() == threadName)
+				thread->wait();
+
+		// Only bytes and Qt strings cross the worker boundary
+		auto job = std::make_shared<GzipWrite>();
+		job->filename = path;
+		job->label = label;
+
+		QThread* thread = QThread::create([job, data = std::move(data), compressionLevel]() mutable
+			{
+				try
+				{
+					WriteCompressed(data, job->filename, compressionLevel);
+				}
+				catch (const QString& error)
+				{
+					job->error = error;
+				}
+
+				data.clear();
+			}
+		);
+
+		// Report on the main thread, including when shutdown has stopped the event loop
+		auto report = [job] { job->Report(); };
+		QObject::connect(thread, &QThread::finished, App, report, Qt::QueuedConnection);
+		QObject::connect(thread, &QObject::destroyed, App, report);
+
+		thread->setObjectName(threadName);
+		App->threads.append(thread);
+		thread->start();
+	}
+
 	BoolType Gzip::Decompress(const QString& filename, QByteArray& dst)
 	{
 	#if OS_WINDOWS

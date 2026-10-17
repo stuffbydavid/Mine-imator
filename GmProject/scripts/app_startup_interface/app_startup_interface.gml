@@ -81,6 +81,7 @@ function app_startup_interface()
 		// Expired key
 		if (key_expired && !key_expired_dismissed)
 		{
+			message_set_caption("Error")
 			show_message(text_get("upgrade/expired_key"))
 			popup_show(popup_upgrade)
 		}

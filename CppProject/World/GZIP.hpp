@@ -6,6 +6,12 @@ namespace CppProject
 {
 	struct Gzip
 	{
+		// Write gzip-compressed bytes atomically.
+		static void WriteCompressed(const QByteArray& data, const QString& filename, int compressionLevel = -1);
+
+		// Start a compressed write tracked by the app, reporting failures on the main thread.
+		static void WriteAsync(QByteArray data, const QString& filename, const QString& label, int compressionLevel = -1);
+
 		// Decompress a file using GZIP and stores the result in the given byte array, returning whether successful.
 		static BoolType Decompress(const QString& src, QByteArray& dst);
 

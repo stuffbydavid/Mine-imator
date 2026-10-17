@@ -2,6 +2,7 @@
 #include "Generated/Scripts.hpp"
 #include "FastVector.hpp"
 #include "Render/Mesh.hpp"
+#include "NBT.hpp"
 
 #define PREVIEW_ZNEAR 1.0
 #define PREVIEW_ZFAR 10000.0
@@ -37,6 +38,7 @@ namespace CppProject
 	struct Chunk;
 	struct Map;
 	struct NbtCompound;
+	struct NbtList;
 	struct Preview;
 	struct Region;
 	struct RegionLoader;
@@ -168,11 +170,32 @@ namespace CppProject
 	struct SaveInfo
 	{
 		QString name;
-		IntType version;
+		IntType version, dataVersion = 0;
 		BoolType hasPlayer;
 		VecType spawnPos, playerPos, playerRot;
 		QString playerDim;
 		QHash<QString, QDir> dimDir;
+	};
+
+	// Collect source blocks before the scenery builder converts them
+	struct SchematicExport
+	{
+		SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible = false);
+		void AddChunk(Chunk& chunk);
+		QByteArray Serialize();
+		QString Extension() const;
+		void SaveResource(obj_resource* resource);
+
+		WorldBox box;
+		IntType dataVersion, skippedChunks = 0;
+		BoolType legacy, skipIncompatible;
+		BoolType exportOnly = true;
+		QString error;
+		NbtCompound root;
+		NbtCompound* schematic = nullptr;
+		NbtCompound* palette = nullptr;
+		NbtList* entities = nullptr;
+		Heap<uint32_t> indices;
 	};
 
 	// Handles regions in an opened world
@@ -188,13 +211,16 @@ namespace CppProject
 		static void Close();
 
 		// Generates a collection of builder sections from a box in the opened world,.
-		static void GenerateBuilderSections(const WorldBox& box);
+		static void GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic = nullptr);
 
 		// Adds a save from the given root directory, returns whether successful.
 		static BoolType AddSave(QString dir);
 
 		// Apply the selected block filter settings, returns whether the world needs reloading.
 		static BoolType ApplyFilter();
+
+		// Export the blocks and block entities inside the selected box
+		static void ExportSchematic(const WorldBox& box, const QString& filename);
 
 		// Block filter mode
 		enum FilterMode
@@ -224,6 +250,9 @@ namespace CppProject
 
 		// Cancel the world import.
 		void Cancel();
+
+		// Export a schematic file.
+		void ExportSchematic();
 
 	public:
 		Preview();
@@ -275,6 +304,8 @@ namespace CppProject
 		Mode mode = DEFAULT;
 		BoolType hasPlayer = false, resetUpdate = false;
 		QString dimension = "";
+		QString exportFilename;
+		WorldBox exportBox;
 
 		Matrix matrixV, matrixP, playerM, selectionM;
 		RealType camAngleXY, camAngleZ, camTargetDis;
@@ -327,7 +358,7 @@ namespace CppProject
 		~Region();
 
 		// Load the region chunks on a separate thread.
-		void Load(const WorldBox& box = WorldBox());
+		void Load(const WorldBox& box = WorldBox(), SchematicExport* schematic = nullptr);
 
 		// Returns the current loading progress as a value between 0-1.
 		RealType GetLoadProgress();
@@ -458,13 +489,13 @@ namespace CppProject
 		void UpdateLoadRegions();
 
 	public:
-		BoolType active = true;
+		std::atomic<BoolType> active{ true };
 	};
 
 	// A collection of sections
 	struct Chunk
 	{
-		Chunk(Region* region, QByteArray& data, const WorldBox& box);
+		Chunk(Region* region, QByteArray& data, const WorldBox& box, SchematicExport* schematic = nullptr);
 		~Chunk();
 
 		// Generate triangles to add to the region mesh.
@@ -478,6 +509,10 @@ namespace CppProject
 
 		// Free unused preview data.
 		void FreePreviewData();
+
+		// Copy original block states and block entities into a schematic.
+		void ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities);
+		void ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic);
 
 		// Block format
 		enum Format : int
@@ -515,7 +550,7 @@ namespace CppProject
 			uint32_t index;
 		};
 
-		IntType x, z, regionIndex = 0;
+		IntType x = 0, z = 0, regionIndex = 0;
 		WorldVec regionPos;
 		Region* region = nullptr;
 		Format format;
@@ -523,6 +558,8 @@ namespace CppProject
 		Heap<uint16_t> legacyBiomes;
 		BoolType leftEdge, rightEdge, backEdge, frontEdge;
 		BoolType error = false;
+		IntType dataVersion = 0;
+		NbtCompound* exportData = nullptr;
 		QVector<BlockEntity> blockEntities;
 		IntType numTimelines = 0;
 
@@ -556,7 +593,7 @@ namespace CppProject
 		void ParseBiomePalettePreview(NbtCompound* nbt, Chunk::Format format);
 
 		// Parse a long array of block/biome palette indices.
-		void ParsePaletteIndices(const Heap<int64_t>& dataArray, Heap<uint16_t>& paletteIndices, IntType paletteSize, Chunk::Format format, IntType minBits = 1);
+		static void ParsePaletteIndices(const Heap<int64_t>& dataArray, Heap<uint16_t>& paletteIndices, IntType paletteSize, Chunk::Format format, IntType minBits = 1);
 
 		// Generate the faces of a solid/transparent block in the section.
 		void GenerateFaces(Region::GenerateMode mode, const WorldVec& startPos, const WorldVec& endPos);

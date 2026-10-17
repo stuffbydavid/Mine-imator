@@ -11,7 +11,7 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	place_build = build
 	place_tl = tl
-	place_history = build ? null : history[0]
+	place_hobj = build ? null : history[0]
 	place_spawn = (build || spawn)
 	
 	place_pos = null

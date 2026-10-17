@@ -280,7 +280,7 @@ namespace CppProject
 		}
 
 		// Load application resources
-		App->LoadResources();
+		App->LoadAssets();
 	}
 
 #if OS_WINDOWS

@@ -20,7 +20,7 @@ namespace CppProject
 		{ { 1, 0, 0 }, { 0, 1, 0 } } // Back
 	};
 
-	Chunk::Chunk(Region* region, QByteArray& data, const WorldBox& box) : region(region)
+	Chunk::Chunk(Region* region, QByteArray& data, const WorldBox& box, SchematicExport* schematic) : region(region)
 	{
 		memset(sections, 0, sizeof(sections));
 
@@ -35,13 +35,23 @@ namespace CppProject
 				{ TAG_STRING, { "Name", "id", "Status", "" }},
 				{ TAG_INT, { "DataVersion", "xPos", "zPos" }},
 			});
+
+			if (schematic)
+			{
+				stream.filter.clear();
+				stream.stripNamespace = false;
+			}
+
 			NbtCompound chunkCompound(stream);
+
+			if (schematic && stream.ds.status() != QDataStream::Ok)
+				throw QString("Truncated chunk NBT");
 
 			// Get block format
 			format = region->anvilFormat ? JAVA_1_2 : PRE_JAVA_1_2;
 			if (chunkCompound.HasKey("DataVersion"))
 			{
-				IntType dataVersion = chunkCompound.Int("DataVersion");
+				dataVersion = chunkCompound.Int("DataVersion");
 
 				if (dataVersion >= JAVA_26_3)
 					format = JAVA_26_3; 
@@ -59,18 +69,26 @@ namespace CppProject
 			// Get region offset
 			x = ((IntType)chunkRoot->Int("xPos") & 31); // x % 32
 			z = ((IntType)chunkRoot->Int("zPos") & 31); // z % 32
+			regionIndex = z * REGION_SIZE_CHUNKS + x;
+
+			// Keep raw source data for export, applying block filters later
+			if (schematic)
+			{
+				exportData = new NbtCompound;
+				exportData->value.swap(chunkRoot->value);
+				return;
+			}
+
 
 			rightEdge = (x == REGION_SIZE_CHUNKS - 1);
 			leftEdge = (x == 0);
 			frontEdge = (z == REGION_SIZE_CHUNKS - 1);
 			backEdge = (z == 0);
 			
-			regionIndex = (z << 5) + x; // z * 32 + x
-
 			// Get region position in blocks
-			regionPos.x = x << 4; // x * 16
+			regionPos.x = x * SECTION_SIZE;
 			regionPos.y = CHUNK_HEIGHT_MIN;
-			regionPos.z = z << 4; // z * 16
+			regionPos.z = z * SECTION_SIZE;
 
 			// Check chunk box with given selection
 			WorldVec worldPos = region->pos + regionPos;
@@ -199,6 +217,8 @@ namespace CppProject
 
 	Chunk::~Chunk()
 	{
+		delete exportData;
+
 		// Erase sections not needed by the scenery builder
 		for (Section* section : sections)
 			if (section && section->dataType != Section::BUILDER)

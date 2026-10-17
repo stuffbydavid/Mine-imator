@@ -42,6 +42,7 @@ namespace CppProject
 	AppHandler::AppHandler(int& argc, char* argv[])
 	{
 		handler = this;
+
 		try
 		{
 			// Initialize string table
@@ -281,15 +282,26 @@ namespace CppProject
 
 	int AppHandler::Run()
 	{
-		return qApp->exec();
+		int result = qApp->exec();
+
+		// Wait for all threads to finish
+		for (QThread* thread : threads)
+		{
+			thread->wait();
+			delete thread;
+		}
+
+		threads.clear();
+
+		return result;
 	}
 
-	void AppHandler::LoadResources()
+	void AppHandler::LoadAssets()
 	{
 		if (prRenderer)
 			return;
 
-		DEBUG("Load resources");
+		DEBUG("Load assets");
 
 		// Create renderers
 		prRenderer = new PrimitiveRenderer;

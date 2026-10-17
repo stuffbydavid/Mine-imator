@@ -63,7 +63,7 @@ namespace CppProject
 			preview.hideBedrock = (y <= 0 || (region->dimName == "the_nether" && y == 7));
 
 			// Enable section in GetPreviewState
-			IntType regionIndex = (chunkIndex << 10) + (chunk->z << 5) + chunk->x;
+			IntType regionIndex = chunkIndex * REGION_SECTIONS_XZ + chunk->z * REGION_SIZE_CHUNKS + chunk->x;
 			region->loadedSections[regionIndex] = this;
 			preview.singleBlockStyle = BlockStyle::airStyle;
 			preview.singleState = { false, false, false, 0 };
@@ -94,7 +94,7 @@ namespace CppProject
 
 						for (IntType i = 0; i < SECTION_SIZE3 / 2; i++)
 						{
-							IntType i2 = i << 1;
+							IntType i2 = i * 2;
 							preview.states[i2].value = skyLightArray.Value(i) & 15;
 							preview.states[i2 + 1].value = (skyLightArray.Value(i) >> 4) & 15;
 						}
@@ -108,7 +108,7 @@ namespace CppProject
 
 						for (IntType i = 0; i < SECTION_SIZE3 / 2; i++)
 						{
-							IntType i2 = i << 1;
+							IntType i2 = i * 2;
 							preview.states[i2].value += blockLightArray.Value(i) & 15;
 							preview.states[i2 + 1].value += (blockLightArray.Value(i) >> 4) & 15;
 						}
@@ -173,10 +173,10 @@ namespace CppProject
 				for (uint8_t y = blockStart.y; y < blockEnd.y; y++)
 				for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
 				{
-					uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
+					uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
 					IntType arrayIndex;
 					if (format == Chunk::Format::PRE_JAVA_1_2)
-						arrayIndex = (x << 11) + (z << 7) + y + offset; // XZY order
+						arrayIndex = (x * SECTION_SIZE + z) * 128 + y + offset; // XZY order
 					else
 						arrayIndex = blockIndex; // YZX order
 
@@ -228,7 +228,7 @@ namespace CppProject
 
 						// Set biome
 						if (chunk->legacyBiomes.Size())
-							preview.biomeIndices[blockIndex] = chunk->legacyBiomes[(z << 4) + x];
+							preview.biomeIndices[blockIndex] = chunk->legacyBiomes[z * SECTION_SIZE + x];
 
 						// Parse block
 						if (uint16_t blockStyleIndex = Preview::filteredMcLegacyBlockIdStyleIndex[legacyId][legacyData]) // Non-air
@@ -444,8 +444,8 @@ namespace CppProject
 			for (uint8_t y = blockStart.y; y < blockEnd.y; y++)
 			for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
 			{
-				uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
-				preview.biomeIndices[blockIndex] = chunk->legacyBiomes[(z << 4) + x];
+				uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
+				preview.biomeIndices[blockIndex] = chunk->legacyBiomes[z * SECTION_SIZE + x];
 			}
 		}
 	}
@@ -588,7 +588,7 @@ namespace CppProject
 				for (uint8_t z = blockStart.z; z < blockEnd.z; z++)
 				for (uint8_t x = blockStart.x; x < blockEnd.x; x++, b++) // ZYX order (Y and Z is flipped)
 				{
-					uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
+					uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
 					uint16_t paletteIndex = indices[blockIndex];
 					builder.paletteIndices[b] = paletteIndex;
 
@@ -608,7 +608,7 @@ namespace CppProject
 		for (uint8_t y = 0; y < SECTION_SIZE; y++)
 		for (uint8_t z = startPos.z; z < endPos.z; z++)
 		{
-			uint16_t blockIndex = (y << 8) + (z << 4) + x; // YZX order
+			uint16_t blockIndex = y * SECTION_SIZE2 + z * SECTION_SIZE + x; // YZX order
 			IntType faceDataIndex = y * chunk->faceDataSizeXZ + (z - startPos.z) * chunk->faceDataSizeX + (x - startPos.x);
 
 			// Get current style
@@ -746,7 +746,7 @@ namespace CppProject
 			pos.z < 0 || pos.z > SECTION_SIZEM1)
 			return region->GetPreviewState(preview.regionPos + pos, mode);
 
-		uint16_t blockIndex = (pos.y << 8) + (pos.z << 4) + pos.x; // YZX order
+		uint16_t blockIndex = pos.y * SECTION_SIZE2 + pos.z * SECTION_SIZE + pos.x; // YZX order
 		if (preview.blockStyleIndices.Size())
 			return preview.states[blockIndex];
 		else

@@ -4,7 +4,7 @@
 
 function new_res(fn, type)
 {
-	var res, newfn, replaced, packfn;
+	var res, newfn, replaced, packfn, snapshot;
 	
 	if (filename_ext(fn) = ".zip" && type != e_res_type.PACK_UNZIPPED)
 		type = e_res_type.PACK
@@ -20,30 +20,47 @@ function new_res(fn, type)
 
 	res = null
 	replaced = false
+	snapshot = false
 	newfn = project_folder + "/" + filename_name(fn)
 	
 	// Check replace
 	with (obj_resource)
 	{
-		if (self.type = type && filename = filename_name(fn))
-		{
+		if (string_lower(filename) != string_lower(filename_name(fn)))
+			continue
+
+		if (self.type = type && res = null)
 			res = id
-			break
-		}
+
+		if (type = e_res_type.SCHEMATIC && self.type = e_res_type.FROM_WORLD)
+			snapshot = true
 	}
 	
 	var copied = false;
-	if (res != null) // Existing resource found
+	if (snapshot) // Keep world snapshots separate from imported schematics
+	{
+		res = null
+		copied = true
+	}
+	else if (res != null) // Existing resource found
 	{
 		if (question(text_get("question/replace", filename_name(fn))))
 			replaced = true
 		else
 		{
 			res = null
-			newfn = filename_get_unique(newfn)
 			copied = true
-			file_copy_lib(fn, newfn)
 		}
+	}
+
+	if (copied)
+	{
+		if (type = e_res_type.SCHEMATIC)
+			newfn = project_folder + "/" + res_get_world_filename(filename_new_ext(filename_name(fn), ""), filename_ext(fn))
+		else
+			newfn = filename_get_unique(newfn)
+
+		file_copy_lib(fn, newfn)
 	}
 	
 	// Add new

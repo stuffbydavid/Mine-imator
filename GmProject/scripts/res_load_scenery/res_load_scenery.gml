@@ -17,8 +17,11 @@ function res_load_scenery()
 		// Open file
 		case "open":
 		{
-			if (type = e_res_type.FROM_WORLD)
+			// Load from world when requested or when the schematic is unavailable
+			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
+				world_reload = false
+				
 				if (!res_load_scenery_world())
 				{
 					error("error/load_world")
@@ -162,7 +165,9 @@ function res_load_scenery()
 				{
 					popup_loading.text = text_get("load_scenery/blocks")
 					
-					if (mc_builder.file_map != "")
+					if (other.type = e_res_type.FROM_WORLD)
+						popup_loading.caption = other.world_name
+					else if (mc_builder.file_map != "")
 						popup_loading.caption = text_get("load_scenery/caption_piece_of", mc_builder.file_map)
 					else
 						popup_loading.caption = text_get("load_scenery/caption", other.filename)
@@ -349,7 +354,9 @@ function res_load_scenery()
 			ready = true
 
 			// Put map name in resource name
-			if (mc_builder.file_map != "")
+			if (type = e_res_type.FROM_WORLD)
+				res_update_display_name()
+			else if (mc_builder.file_map != "")
 				display_name = text_get("load_scenery/piece_of", mc_builder.file_map)
 				
 			// Save cached mesh
@@ -368,8 +375,16 @@ function res_load_scenery()
 			
 			// Update timelines
 			with (obj_timeline)
-				if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
+			{
+				if (type != e_tl_type.SCENERY || temp.scenery != other.id)
+					continue
+				
+				if (scenery_ground_hobj != null)
+					tl_replace_ground(scenery_ground_hobj)
+				
+				if (scenery_animate)
 					tl_animate_scenery()
+			}
 			
 			
 			with (app)

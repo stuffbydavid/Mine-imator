@@ -25,7 +25,7 @@ function window_draw_world_import()
 	
 	// Get selection status
 	var confirmx, confirmy, confirmw, confirmh;
-	hasselection = world_import_has_selection()
+	hasselection = (world_import_world_root != "" && world_import_has_selection())
 	confirmh = 64
 	
 	if (hasselection)
@@ -153,9 +153,16 @@ function window_draw_world_import()
 	if (draw_button_label("world_import/selection_large", dx, dy, null, null, e_button.SECONDARY, null, e_anchor.LEFT, !worldpicked))
 		world_import_set_selection("large")
 	
-	if (world_import_has_selection())
+	dx += dw + spacing
+	dw = 24
+	if (draw_button_icon("world_import/export", dx, content_y + 8, dw, dw, false, icons.ASSET_EXPORT, null, !worldpicked || !world_import_has_selection(), "world_import/export_tip"))
+		world_import_export_schematic()
+	
+	if (worldpicked && world_import_has_selection())
 	{
-		dx += dw + 20
+		dx += dw + 12
+		draw_divide_vertical(dx, content_y + 6, content_height - 12)
+		dx += 12
 		var size = world_import_get_selection_size();
 		draw_label(text_get("world_import/selection_size", size[X], size[Y], size[Z]), dx, content_y + content_height / 2, fa_left, fa_middle, c_text_main, a_text_main, font_value)
 	}
