@@ -4,7 +4,7 @@ uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uMaterialBuffer;
 uniform sampler2D uSceneBuffer;
-uniform sampler2D uMetallicBuffer;
+uniform sampler2D uMask;
 
 uniform vec4 uSkyColor;
 uniform vec4 uFogColor;
@@ -113,10 +113,14 @@ void main()
 		
 		// Metallic tint
 		if (originMatData.g > 0.0)
-			col.rgb *= mix(vec3(1.0), pow(texture2D(uMetallicBuffer, vTexCoord).rgb, vec3(uGamma)), originMatData.g);
+		{
+			vec4 litColor = texture2D(uMask, vTexCoord);
+			vec3 diffuseColor = litColor.a > 0.0001 ? litColor.rgb / litColor.a : vec3(0.0);
+			col.rgb *= mix(vec3(1.0), pow(diffuseColor, vec3(uGamma)), originMatData.g);
+		}
 		
 		// Fresnel
-		col.rgb *= originMatData.b;
+		col.rgb *= originMatData.b * texture2D(uMask, vTexCoord).a;
 	}
 	
 	gl_FragColor = vec4(col.rgb, 1.0);

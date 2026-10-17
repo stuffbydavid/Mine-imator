@@ -14,10 +14,11 @@ uniform vec3 uShadowPosition; // static
 uniform float uLightSpecular;
 uniform float uLightSize;
 
+uniform mat4 uShadowMatrix; // static
 uniform sampler2D uDepthBuffer; // static
+uniform float uDepthBufferSize; // static
 uniform int uShadowBlurQuality; // static
 uniform vec2 uPCSSKernel[64]; // static
-uniform vec2 uScreenSize; // static
 
 uniform vec3 uSSSRadius;
 
@@ -32,7 +33,6 @@ varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
 varying vec4 vCustom;
 varying vec4 vColor;
-varying vec4 vClipPosition;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_util.TBN_LIB)
@@ -41,69 +41,59 @@ varying vec4 vClipPosition;
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
-#pragma shady: inline(common_shadows.PCSS_LIB)
+#pragma shady: inline(common_pcss.PCSS_COMMON_LIB)
+#pragma shady: inline(common_shadows.PCSS_PLANE_LIB)
 
 float getSpotDepth(vec2 coord)
 {
 	return uLightNear + texture2D(uDepthBuffer, coord).r * (uLightFar - uLightNear);
 }
 
-float getSpotShadow(vec2 coord, float fragDepth, vec2 receiverDepthGradient, float bias, out float centerDepth)
+struct ShadowReceiver
+{
+	float depth;
+	float bias;
+	float localRadius;
+	float searchRadius;
+	float lightRadius;
+	float radiusScale;
+	float nearDepth;
+	bool perspective;
+
+	vec2 coord;
+	vec2 depthSlope;
+};
+
+float getShadowMapDepth(ShadowReceiver receiver, vec2 texelCoord)
+{
+	return getSpotDepth(texelCoord);
+}
+
+#pragma shady: inline(common_pcss.PCSS_PROJECTED_LIB)
+#pragma shady: inline(common_pcss.PCSS_FILTER_LIB)
+
+float getSpotShadow(vec2 coord, float fragDepth, vec2 depthSlope, float bias, out float centerDepth)
 {
 	centerDepth = getSpotDepth(coord);
-	
-	int quality = uShadowBlurQuality;
-	if (quality > PCSS_MAX_SAMPLES)
-		quality = PCSS_MAX_SAMPLES;
-	
-	if (quality <= 0 || uShadowRadius <= 0.0)
+	if (uShadowBlurQuality <= 0 || uShadowRadius <= 0.0)
 		return getPCSSVisibility(fragDepth, centerDepth, bias);
-	
-	vec2 rotation = getPCSSPixelRotation(vClipPosition, uScreenSize);
-	int blockerSamples = getPCSSBlockerSamples(quality);
-	float searchRadius = min(uShadowRadius / max(fragDepth, uLightNear), 64.0 / PCSS_REFERENCE_SHADOW_SIZE);
-	float blockerDepth = 0.0;
-	float blockers = 0.0;
-	
-	// Blocker search
-	for (int blockerIndex = 0; blockerIndex < PCSS_MAX_BLOCKER_SAMPLES; blockerIndex++)
-	{
-		if (blockerIndex >= blockerSamples)
-			break;
-		
-		vec2 sampleCoord = clamp(coord + getPCSSSampleOffset(blockerIndex, rotation) * searchRadius, vec2(0.0), vec2(1.0));
-		float sampleDepth = getSpotDepth(sampleCoord);
-		float receiverDepth = getPCSSReceiverDepth(coord, fragDepth, sampleCoord, receiverDepthGradient);
-		if (isPCSSBlocker(receiverDepth, sampleDepth, bias))
-		{
-			blockerDepth += sampleDepth;
-			blockers += 1.0;
-		}
-	}
-	
-	if (blockers == 0.0)
-		return 1.0;
-	
-	blockerDepth /= blockers;
-	
-	// Get penumbra for filter
-	float penumbra = uShadowRadius * max(fragDepth - blockerDepth - bias, 0.0) / max(blockerDepth, uLightNear); // Ignore the bias gap
-	float filterRadius = min(penumbra / max(fragDepth, uLightNear), 64.0 / PCSS_REFERENCE_SHADOW_SIZE);
-	float visibility = 0.0;
-	
-	// Filter shadow
-	for (int filterIndex = 0; filterIndex < PCSS_MAX_SAMPLES; filterIndex++)
-	{
-		if (filterIndex >= quality)
-			break;
-		
-		vec2 sampleCoord = clamp(coord + getPCSSSampleOffset(filterIndex, rotation) * filterRadius, vec2(0.0), vec2(1.0));
-		float sampleDepth = getSpotDepth(sampleCoord);
-		float receiverDepth = getPCSSReceiverDepth(coord, fragDepth, sampleCoord, receiverDepthGradient);
-		visibility += getPCSSVisibility(receiverDepth, sampleDepth, bias);
-	}
-	
-	return visibility / float(quality);
+
+	ShadowReceiver receiver;
+	receiver.depth = fragDepth;
+	receiver.bias = bias;
+	// Cover the full blur range
+	receiver.searchRadius = 64.0 / PCSS_REFERENCE_SHADOW_SIZE;
+	// Start the blocker search within half a texel
+	float localRadius = min(uShadowRadius / max(fragDepth, uLightNear), 0.5 / uDepthBufferSize);
+	receiver.localRadius = min(localRadius, receiver.searchRadius);
+	receiver.lightRadius = uShadowRadius;
+	receiver.radiusScale = 1.0 / max(fragDepth, uLightNear);
+	receiver.nearDepth = uLightNear;
+	receiver.perspective = true;
+	receiver.coord = coord;
+	receiver.depthSlope = depthSlope;
+
+	return getPCSSShadow(receiver, uShadowBlurQuality);
 }
 
 void main() 
@@ -116,7 +106,7 @@ void main()
 	vec3 lightCol = uLightColor.rgb * uLightStrength;
 	float shadowFragDepth = min(vShadowCoord.z, uLightFar);
 	vec2 shadowFragCoord = (vec2(vShadowCoord.x, -vShadowCoord.y) / max(vShadowCoord.z, 0.0001) + 1.0) * 0.5;
-	vec2 receiverDepthGradient = getPCSSReceiverDepthGradient(shadowFragCoord, shadowFragDepth);
+	vec2 depthSlope = getPCSSSpotSlope(uShadowMatrix, vShadowCoord.xyz, normalize(vNormal));
 	
 	handleAlphaDiscard(vPosition, baseColor);
 	
@@ -175,7 +165,7 @@ void main()
 					
 					// Shadow
 					float sampleDepth;
-					shadow = getSpotShadow(fragCoord, fragDepth, receiverDepthGradient, bias, sampleDepth);
+					shadow = getSpotShadow(fragCoord, fragDepth, depthSlope, bias, sampleDepth);
 					
 					// Subsurface translucency
 					if (sss > 0.0 && dif == 0.0)

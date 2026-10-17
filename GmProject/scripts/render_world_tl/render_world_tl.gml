@@ -126,25 +126,22 @@ function render_world_tl()
 		render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	}
 	
-	if (render_material_pass)
+	if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
 	{
-		if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
-		{
-			shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-			render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
-		}
-	
-		if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
-		{
-			shader_uniform_metallic = value_inherit[e_value.METALLIC]
-			render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
-		}
-	
-		if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
-		{
-			shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-			render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
-		}
+		shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+		render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+	}
+
+	if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+	{
+		shader_uniform_metallic = value_inherit[e_value.METALLIC]
+		render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+	}
+
+	if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+	{
+		shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+		render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
 	}
 	
 	if (wind != shader_uniform_wind)
@@ -159,18 +156,18 @@ function render_world_tl()
 		render_set_uniform(e_uniform.WIND_TERRAIN, shader_uniform_wind_terrain)
 	}
 	
-	var renderfog = (app.env_fog_show && fog && (render_mode != e_render_mode.COLOR || render_fog_combined));
+	var renderfog = (app.env_fog_show && fog);
 	if (renderfog != shader_uniform_fog)
 	{
 		shader_uniform_fog = renderfog
 		render_set_uniform_int(e_uniform.FOG_SHOW, shader_uniform_fog)
 	}
 	
-	if (render_material_pass && (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
+	if (value_inherit[e_value.SUBSURFACE] != shader_uniform_sss ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_RED] != shader_uniform_sss_red ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] != shader_uniform_sss_green ||
 		value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] != shader_uniform_sss_blue ||
-		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color))
+		value_inherit[e_value.SUBSURFACE_COLOR] != shader_uniform_sss_color)
 	{
 		shader_uniform_sss = value_inherit[e_value.SUBSURFACE]
 		shader_uniform_sss_red = value_inherit[e_value.SUBSURFACE_RADIUS_RED]
@@ -443,7 +440,7 @@ function render_world_tl()
 	
 	if (prevblend != null)
 	{
-		if (prevblend = bm_normal && (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS))
+		if (prevblend = bm_normal && (render_mode = e_render_mode.COLOR || render_mode = e_render_mode.COLOR_FOG || render_mode = e_render_mode.COLOR_FOG_LIGHTS || render_mode = e_render_mode.AUXILIARY))
 			gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
 		else
 			gpu_set_blendmode(prevblend)

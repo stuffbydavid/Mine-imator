@@ -17,7 +17,6 @@ uniform sampler2D uDepthBuffer; // static
 uniform float uDepthBufferSize; // static
 uniform int uShadowBlurQuality; // static
 uniform vec2 uPCSSKernel[64]; // static
-uniform vec2 uScreenSize; // static
 
 uniform vec3 uCameraPosition; // static
 uniform float uGamma;
@@ -30,7 +29,6 @@ varying vec3 vTangent;
 varying vec2 vTexCoord;
 varying vec4 vCustom;
 varying vec4 vColor;
-varying vec4 vClipPosition;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_util.TBN_LIB)
@@ -40,7 +38,8 @@ varying vec4 vClipPosition;
 #pragma shady: inline(common_material.SPECULAR_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
 #pragma shady: inline(common_constants.MATH)
-#pragma shady: inline(common_shadows.PCSS_LIB)
+#pragma shady: inline(common_pcss.PCSS_COMMON_LIB)
+#pragma shady: inline(common_shadows.PCSS_PLANE_LIB)
 
 vec2 getShadowMapCoord(vec3 look, vec3 toPoint)
 {
@@ -154,79 +153,115 @@ vec3 getPointSampleDirection(vec3 direction, vec3 tangent, vec3 bitangent, vec2 
 	return normalize(direction + (tangent * offset.x + bitangent * offset.y) * radius);
 }
 
-float getPointReceiverDepth(vec3 direction, vec3 receiverPosition, vec3 receiverNormal, float fallbackDepth)
+// Reconstruct the ray through a texel on the selected atlas face
+vec3 getPointTexelDirection(vec2 coord, vec2 low)
 {
-	float denominator = dot(direction, receiverNormal);
-	if (abs(denominator) < 0.0001)
-		return fallbackDepth;
-	
-	float depth = dot(receiverPosition, receiverNormal) / denominator;
-	return depth > 0.0 ? depth : fallbackDepth;
+	vec3 look;
+	if (low.y > 0.0)
+	{
+		// Bottom atlas row: Y-, Z+, Z-
+		if (low.x < 0.1)
+			look = vec3(0.0, -1.0, 0.0);
+		else if (low.x < 0.5)
+			look = vec3(0.0, -0.0001, 1.0);
+		else
+			look = vec3(0.0, -0.0001, -1.0);
+	}
+	else if (low.x < 0.1)
+		look = vec3(1.0, 0.0, 0.0);
+	else if (low.x < 0.5)
+		look = vec3(-1.0, 0.0, 0.0);
+	else
+		look = vec3(0.0, 1.0, 0.0);
+
+	// Match the basis used by getShadowMapCoord, including the Z-face tilt
+	look = normalize(look);
+	vec3 up = normalize(vec3(-look.z * look.x, -look.z * look.y, 1.0 - look.z * look.z));
+	vec3 right = cross(up, look);
+
+	// Convert atlas coordinates back to face coordinates before forming the ray
+	vec2 uv = (coord - low) * vec2(3.0, 2.0);
+	return normalize(look + right * (uv.x * 2.0 - 1.0) + up * (1.0 - uv.y * 2.0));
 }
+
+struct ShadowReceiver
+{
+	float depth;
+	float bias;
+	float localRadius;
+	float searchRadius;
+	float lightRadius;
+	float radiusScale;
+	float nearDepth;
+	bool perspective;
+
+	vec3 direction;
+	vec3 position;
+	vec3 normal;
+	vec3 tangent;
+	vec3 bitangent;
+};
+
+float getPointTexelDepth(vec2 coord)
+{
+	return uLightNear + (uLightFar - uLightNear) * texture2D(uDepthBuffer, coord).r;
+}
+
+float getShadowSampleDepth(ShadowReceiver receiver, vec2 offset, out float surfaceDepth)
+{
+	vec3 sampleDirection = getPointSampleDirection(receiver.direction, receiver.tangent, receiver.bitangent, offset, 1.0);
+	vec2 mapMin;
+	vec2 coord = getPointShadowMapCoord(sampleDirection, mapMin);
+	vec2 texelCoord = getShadowTexelCoord(coord, uDepthBufferSize * vec2(3.0, 2.0), mapMin, mapMin + vec2(1.0 / 3.0, 0.5));
+	vec3 ray = getPointTexelDirection(texelCoord, mapMin);
+	surfaceDepth = getPCSSRayDepth(ray, receiver.position, receiver.normal, receiver.depth);
+	return getPointTexelDepth(texelCoord);
+}
+
+void getShadowFilterTexels(ShadowReceiver receiver, vec2 offset, out vec4 bounds, out vec2 blend, out vec2 mapMin)
+{
+	vec3 sampleDirection = getPointSampleDirection(receiver.direction, receiver.tangent, receiver.bitangent, offset, 1.0);
+	vec2 coord = getPointShadowMapCoord(sampleDirection, mapMin);
+	getPCSSTexels(coord, uDepthBufferSize * vec2(3.0, 2.0), mapMin, mapMin + vec2(1.0 / 3.0, 0.5), bounds, blend);
+}
+
+float getShadowTexelVisibility(ShadowReceiver receiver, vec2 texelCoord, vec2 mapMin)
+{
+	vec3 ray = getPointTexelDirection(texelCoord, mapMin);
+	float depth = getPCSSRayDepth(ray, receiver.position, receiver.normal, receiver.depth);
+	return getPCSSVisibility(depth, getPointTexelDepth(texelCoord), receiver.bias);
+}
+
+#pragma shady: inline(common_pcss.PCSS_FILTER_LIB)
 
 float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, float bias, out float centerDepth)
 {
 	vec3 direction = toReceiver / max(fragDepth, 0.0001);
 	centerDepth = getPointDepth(direction);
-	
-	int quality = uShadowBlurQuality;
-	if (quality > PCSS_MAX_SAMPLES)
-		quality = PCSS_MAX_SAMPLES;
-	
-	if (quality <= 0 || uShadowRadius <= 0.0)
+	if (uShadowBlurQuality <= 0 || uShadowRadius <= 0.0)
 		return getPCSSVisibility(fragDepth, centerDepth, bias);
-	
+
 	vec3 reference = abs(direction.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0);
-	vec3 tangent = normalize(cross(reference, direction));
-	vec3 bitangent = cross(direction, tangent);
-	vec3 receiverPosition = toReceiver;
-	vec2 rotation = getPCSSPixelRotation(vClipPosition, uScreenSize);
-	int blockerSamples = getPCSSBlockerSamples(quality);
-	float searchRadius = min(uShadowRadius / max(fragDepth, uLightNear), 128.0 / PCSS_REFERENCE_SHADOW_SIZE);
-	float blockerDepth = 0.0;
-	float blockers = 0.0;
-	
-	// Blocker search
-	for (int blockerIndex = 0; blockerIndex < PCSS_MAX_BLOCKER_SAMPLES; blockerIndex++)
-	{
-		if (blockerIndex >= blockerSamples)
-			break;
-		
-		vec2 offset = getPCSSSampleOffset(blockerIndex, rotation);
-		vec3 sampleDirection = getPointSampleDirection(direction, tangent, bitangent, offset, searchRadius);
-		float sampleDepth = getPointDepth(sampleDirection);
-		float receiverDepth = getPointReceiverDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
-		if (isPCSSBlocker(receiverDepth, sampleDepth, bias))
-		{
-			blockerDepth += sampleDepth;
-			blockers += 1.0;
-		}
-	}
-	
-	if (blockers == 0.0)
-		return 1.0;
-	
-	blockerDepth /= blockers;
-	
-	// Get penumbra for filter
-	float penumbraRadius = uShadowRadius * max(fragDepth - blockerDepth - bias, 0.0) / max(blockerDepth, uLightNear); // Ignore the bias gap
-	float filterRadius = min(penumbraRadius / max(fragDepth, uLightNear), 128.0 / PCSS_REFERENCE_SHADOW_SIZE);
-	float visibility = 0.0;
-	
-	// Filter shadow
-	for (int filterIndex = 0; filterIndex < PCSS_MAX_SAMPLES; filterIndex++)
-	{
-		if (filterIndex >= quality)
-			break;
-		
-		vec2 offset = getPCSSSampleOffset(filterIndex, rotation);
-		vec3 sampleDirection = getPointSampleDirection(direction, tangent, bitangent, offset, filterRadius);
-		float sampleDepth = getPointDepth(sampleDirection);
-		float receiverDepth = getPointReceiverDepth(sampleDirection, receiverPosition, receiverNormal, fragDepth);
-		visibility += getPCSSVisibility(receiverDepth, sampleDepth, bias);
-	}
-	
-	return visibility / float(quality);
+
+	ShadowReceiver receiver;
+	receiver.depth = fragDepth;
+	receiver.bias = bias;
+	// Cover the full blur range
+	receiver.searchRadius = 128.0 / PCSS_REFERENCE_SHADOW_SIZE;
+	// Half a face texel in angular coordinates
+	float localRadius = min(uShadowRadius / max(fragDepth, uLightNear), 1.0 / uDepthBufferSize);
+	receiver.localRadius = min(localRadius, receiver.searchRadius);
+	receiver.lightRadius = uShadowRadius;
+	receiver.radiusScale = 1.0 / max(fragDepth, uLightNear);
+	receiver.nearDepth = uLightNear;
+	receiver.perspective = true;
+	receiver.direction = direction;
+	receiver.position = toReceiver;
+	receiver.normal = receiverNormal;
+	receiver.tangent = normalize(cross(reference, direction));
+	receiver.bitangent = cross(direction, receiver.tangent);
+
+	return getPCSSShadow(receiver, uShadowBlurQuality);
 }
 
 void main()
@@ -237,11 +272,7 @@ void main()
 	vec2 tex = vTexCoord;
 	vec4 baseColor = texture2D(uTexture, tex) * vColor;
 	vec3 lightCol = uLightColor.rgb * uLightStrength;
-	vec3 receiverNormal = cross(dFdx(vPosition), dFdy(vPosition));
-	float receiverNormalLength = length(receiverNormal);
-	receiverNormal = receiverNormalLength > 0.000001 ? receiverNormal / receiverNormalLength : normalize(vNormal);
-	if (dot(receiverNormal, vNormal) < 0.0)
-		receiverNormal *= -1.0;
+	vec3 receiverNormal = normalize(vNormal);
 	
 	handleAlphaDiscard(vPosition, baseColor);
 	

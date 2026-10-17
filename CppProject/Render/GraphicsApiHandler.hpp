@@ -126,8 +126,8 @@ namespace CppProject
 		// Apply a Direct3D blend state based on the current blending settings.
 		void ApplyBlendState();
 
-		// Sets independent alpha blending for the mask and optional fog overwrite target.
-		void SetMaskBlending(BoolType enabled, BoolType fog = false);
+		// Sets independent alpha blending for the mask and shared fog/emissive target
+		void SetMaskBlending(BoolType enabled, BoolType fog = false, BoolType unlit = false);
 
 		// Alpha-blends sunlight and overwrites G-buffer data, including the combined color layout.
 		void SetSunBlending(IntType index, BoolType enabled);
@@ -193,7 +193,7 @@ namespace CppProject
 		IntType blendDstFactor = 6; // bm_inv_src_alpha
 		IntType blendAlphaSrcFactor = 5;
 		IntType blendAlphaDstFactor = 6;
-		BoolType maskBlend = false, fogBlend = false;
+		BoolType maskBlend = false, fogBlend = false, maskUnlit = false;
 		IntType sunBlendIndex = 0;
 		BoolType sunBlendEnabled = false;
 		IntType targetAlphaBlendMask = 0, targetWriteDisableMask = 0;
@@ -224,7 +224,7 @@ namespace CppProject
 		{
 			IntType src, dst, srcAlpha, dstAlpha, writeMask;
 			IntType sunIndex;
-			BoolType enabled, maskBlend, fogBlend, sunEnabled;
+			BoolType enabled, maskBlend, fogBlend, maskUnlit, sunEnabled;
 			IntType targetAlphaBlendMask, targetWriteDisableMask;
 			ID3D11BlendState* state = nullptr;
 		};

@@ -689,14 +689,13 @@ namespace CppProject
 			glBlendFuncSeparate(glBlendMap[src], glBlendMap[dest],
 				glBlendMap[alphasrc], glBlendMap[alphadest]);
 			
-			// The lighting mask always uses ordinary alpha blending
+			// Exclude unlit geometry from lighting coverage
 			if (maskBlend)
 				Shader::gl43Core->glBlendFuncSeparatei(1,
-					GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, maskUnlit ? GL_ZERO : GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			
-			// Fog stores the frontmost object's value without blending
 			if (fogBlend)
-				Shader::gl43Core->glBlendFuncSeparatei(2, GL_ONE, GL_ZERO, GL_ONE, GL_ZERO);
+				Shader::gl43Core->glBlendFuncSeparatei(2, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			
 			ApplySunBlendState();
 			ApplyTargetBlendState();
@@ -716,7 +715,7 @@ namespace CppProject
 			if (previous.src == blendSrcFactor && previous.dst == blendDstFactor &&
 				previous.srcAlpha == blendAlphaSrcFactor && previous.dstAlpha == blendAlphaDstFactor &&
 				previous.enabled == blend && previous.writeMask == colorWriteMask &&
-				previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.sunIndex == sunBlendIndex &&
+				previous.maskBlend == maskBlend && previous.fogBlend == fogBlend && previous.maskUnlit == maskUnlit && previous.sunIndex == sunBlendIndex &&
 				previous.sunEnabled == sunBlendEnabled &&
 				previous.targetAlphaBlendMask == targetAlphaBlendMask && previous.targetWriteDisableMask == targetWriteDisableMask)
 			{
@@ -763,7 +762,7 @@ namespace CppProject
 				blendDesc.IndependentBlendEnable = TRUE;
 				targetDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
 				targetDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-				targetDesc.SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+				targetDesc.SrcBlendAlpha = maskUnlit ? D3D11_BLEND_ZERO : D3D11_BLEND_ONE;
 				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
 				blendDesc.RenderTarget[1] = targetDesc;
 			}
@@ -771,7 +770,11 @@ namespace CppProject
 			if (fogBlend)
 			{
 				blendDesc.IndependentBlendEnable = TRUE;
-				targetDesc.BlendEnable = FALSE;
+				targetDesc.BlendEnable = blend;
+				targetDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+				targetDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+				targetDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+				targetDesc.DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
 				blendDesc.RenderTarget[2] = targetDesc;
 			}
 
@@ -805,7 +808,7 @@ namespace CppProject
 
 			d3dBlendStates.append({
 				blendSrcFactor, blendDstFactor, blendAlphaSrcFactor, blendAlphaDstFactor,
-				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, sunBlendEnabled, targetAlphaBlendMask, targetWriteDisableMask, state
+				colorWriteMask, sunBlendIndex, blend, maskBlend, fogBlend, maskUnlit, sunBlendEnabled, targetAlphaBlendMask, targetWriteDisableMask, state
 			});
 		}
 
@@ -813,15 +816,16 @@ namespace CppProject
 #endif
 	}
 
-	void GraphicsApiHandler::SetMaskBlending(BoolType enabled, BoolType fog)
+	void GraphicsApiHandler::SetMaskBlending(BoolType enabled, BoolType fog, BoolType unlit)
 	{
-		if (maskBlend == enabled && fogBlend == fog)
+		if (maskBlend == enabled && fogBlend == fog && maskUnlit == unlit)
 			return;
 
 		SubmitBatch();
 
 		maskBlend = enabled;
 		fogBlend = fog;
+		maskUnlit = unlit;
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -832,14 +836,14 @@ namespace CppProject
 			Shader::gl43Core->glBlendFuncSeparatei(1,
 				enabled ? GL_SRC_ALPHA : glBlendMap[blendSrcFactor],
 				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendDstFactor],
-				enabled ? GL_SRC_ALPHA : glBlendMap[blendAlphaSrcFactor],
+				enabled ? (maskUnlit ? GL_ZERO : GL_ONE) : glBlendMap[blendAlphaSrcFactor],
 				enabled ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendAlphaDstFactor]);
 			
 			Shader::gl43Core->glBlendFuncSeparatei(2,
-				fog ? GL_ONE : glBlendMap[blendSrcFactor],
-				fog ? GL_ZERO : glBlendMap[blendDstFactor],
+				fog ? GL_SRC_ALPHA : glBlendMap[blendSrcFactor],
+				fog ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendDstFactor],
 				fog ? GL_ONE : glBlendMap[blendAlphaSrcFactor],
-				fog ? GL_ZERO : glBlendMap[blendAlphaDstFactor]);
+				fog ? GL_ONE_MINUS_SRC_ALPHA : glBlendMap[blendAlphaDstFactor]);
 			
 			ApplyTargetBlendState();
 			
