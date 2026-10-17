@@ -586,6 +586,24 @@ namespace CppProject
 			buf->Complete();
 	}
 
+	BoolType vbuffer_has_model_bend(IntType buffer)
+	{
+		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+			return buf->modelBend.enabled;
+
+		WARNING("Invalid model bend vertex buffer");
+		return false;
+	}
+
+	void vbuffer_set_model_bend(IntType buffer, VecType angles, MatrixType rotation, VecType pivot,
+		VecType axis, VecType range, VecType minimum, VecType maximum, VecType direction)
+	{
+		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+			buf->SetModelBend(angles, rotation.matrix, pivot, axis, range, minimum, maximum, direction);
+		else
+			WARNING("Invalid model bend vertex buffer");
+	}
+
 	void vertex_float3(IntType buffer, RealType x, RealType y, RealType z)
 	{
 		// Do nothing

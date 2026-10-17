@@ -33,7 +33,8 @@ uniform vec2 uTextureOffset;
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
-	vNormal = normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal);
+	vec3 modelNormal = getModelNormal(in_Normal, in_Position);
+	vNormal = normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * modelNormal);
 	vCustom = in_Wave;
 	
 	if (uIsSky > 0)
@@ -63,7 +64,7 @@ void main()
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
-	vPlaceNormal = in_Normal;
+	vPlaceNormal = modelNormal;
 	vPlaceDistance = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	
 	gl_Position = getClipPosition(vPosition);

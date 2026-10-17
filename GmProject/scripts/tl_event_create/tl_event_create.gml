@@ -50,6 +50,7 @@ function tl_event_create()
 	model_part_shape_render_matrix = []
 	model_part_shape_render_matrix_part = null
 	model_part_shape_vbuffer = []
+	model_part_shape_tex_normal = []
 	model_part_shape_hidden = []
 	
 	model_use_blend_color = false

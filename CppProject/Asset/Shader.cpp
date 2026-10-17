@@ -438,6 +438,8 @@ namespace CppProject
 			samplerRepeat[s] = GFX->texRepeat;
 		}
 
+		SubmitFloat(GetUniformIndex("uModelBendEnabled"), 0.0f);
+
 		// Reset matrices
 		for (IntType m = 0; m < 6; m++)
 			if (matrixState[m].active)

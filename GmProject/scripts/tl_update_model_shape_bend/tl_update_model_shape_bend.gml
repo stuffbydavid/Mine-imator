@@ -14,8 +14,8 @@ function tl_update_model_shape_bend()
 	if (model_part = null || model_part.bend_part = null || model_part.shape_list = null)
 		return 0
 	
-	// Clear old vbuffers
-	if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
+	// Preserve reusable GPU meshes when only the bend angles change
+	if (bend_model_part_last != model_part && model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	{
 		var key = ds_map_find_first(model_shape_vbuffer_map);
 		while (!is_undefined(key))
@@ -37,5 +37,5 @@ function tl_update_model_shape_bend()
 	
 	model_part_shape_render_matrix_part = null
 	
-	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)
+	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last, model_part_shape_tex_normal)
 }

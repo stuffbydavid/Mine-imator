@@ -2,6 +2,40 @@
 
 # Render test settings
 
+## GPU model bending
+
+The native renderer reuses segmented vertex buffers for smooth timeline block
+bends and updates per-object shader parameters instead of regenerating vertices
+when bend angles change. Position deformation is shared by color, depth, shadow, and
+selection shaders; lighting normals follow the same bend. Bounds conservatively
+enclose rotations around the bend pivot, so deformed meshes remain visible.
+
+Blocky single-axis bends, shapes with corner offsets, planes (including extruded
+planes), normal-mapped shapes, and shapes with height-limited vertex wind retain
+CPU deformation. Resource previews and particle templates retain CPU meshes.
+Changing normal-map availability or switching bend style rebuilds timeline meshes
+because deformation eligibility or segment topology can change. GameMaker
+continues to use CPU deformation.
+
+Common midpoint and endpoint rotations are cached as compact quaternions; other
+segment weights use shader-side easing and rotation. Unbent shapes keep their
+default buffers until bending starts, and existing GPU buffers survive crossings
+through zero.
+
+This moves work out of CPU animation updates, but adds GPU vertex work and
+per-object parameters. It does not guarantee faster exports, particularly with
+the realistic renderer's repeated passes. Profile an optimized build before
+drawing production-performance conclusions.
+
+For validation, animate bends through zero and positive/negative angles on all
+six bend sides, including rotated and mirrored shapes. Check smooth and blocky
+styles, normal maps, corner offsets, wind, shadows, selection, and frustum edges
+with all three renderers on DirectX and OpenGL. Compare against a CPU baseline;
+animated smooth blocks should retain their vertex-buffer IDs across angle
+updates rather than allocate/upload new geometry.
+
+## Test runner
+
 Use `--set "<settings>"` with Mine-imator's test runner (`--test "<.miproject>"`) in non-Release builds to override project render or camera settings. Separate settings in one test with commas:
 
 ```text

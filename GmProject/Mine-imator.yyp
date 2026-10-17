@@ -2966,6 +2966,8 @@
     {"id":{"name":"vbuffer_render","path":"scripts/vbuffer_render/vbuffer_render.yy",},},
     {"id":{"name":"vbuffer_set_save_data","path":"scripts/vbuffer_set_save_data/vbuffer_set_save_data.yy",},},
     {"id":{"name":"vbuffer_start","path":"scripts/vbuffer_start/vbuffer_start.yy",},},
+    {"id":{"name":"vbuffer_has_model_bend","path":"scripts/vbuffer_has_model_bend/vbuffer_has_model_bend.yy",},},
+    {"id":{"name":"vbuffer_set_model_bend","path":"scripts/vbuffer_set_model_bend/vbuffer_set_model_bend.yy",},},
     {"id":{"name":"vec2_add","path":"scripts/vec2_add/vec2_add.yy",},},
     {"id":{"name":"vec2_div","path":"scripts/vec2_div/vec2_div.yy",},},
     {"id":{"name":"vec2_dot","path":"scripts/vec2_dot/vec2_dot.yy",},},

@@ -42,6 +42,7 @@ namespace CppProject
 		}
 
 		// Append new object
+		buffer->SubmitModelBend(GFX->shader);
 		currentBatch->objects[currentBatch->numObjects] = buffer->id;
 		currentBatch->isInstanced = instanced;
 		currentBatch->matrixM[currentBatch->numObjects] = GFX->matrixM;
