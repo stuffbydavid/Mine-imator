@@ -545,36 +545,6 @@ namespace CppProject
 		Gzip::WriteCompressed(schematic.Serialize(), filename);
 	}
 
-	WorldVec WorldVec::operator+(const WorldVec& vec) const
-	{
-		return { x + vec.x, y + vec.y, z + vec.z };
-	}
-
-	WorldVec WorldVec::operator-(const WorldVec& vec) const
-	{
-		return { x - vec.x, y - vec.y, z - vec.z };
-	}
-
-	WorldVec WorldVec::operator*(const WorldVec& vec) const
-	{
-		return { x * vec.x, y * vec.y, z * vec.z };
-	}
-
-	WorldVec WorldVec::operator+(IntType in) const
-	{
-		return { x + in, y + in, z + in };
-	}
-
-	WorldVec WorldVec::operator-(IntType in) const
-	{
-		return { x - in, y - in, z - in };
-	}
-
-	WorldVec WorldVec::operator*(IntType in) const
-	{
-		return { x * in, y * in, z * in };
-	}
-
 	WorldVec::operator VecType() const
 	{
 		return { (RealType)x, (RealType)y, (RealType)z };

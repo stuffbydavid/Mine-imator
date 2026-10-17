@@ -90,9 +90,9 @@ namespace CppProject
 		if (size == "small")
 			World::preview->SetSelectionSize({ 50, 20, 50 });
 		else if (size == "medium")
-			World::preview->SetSelectionSize({ 200, 30, 200 });
+			World::preview->SetSelectionSize({ 300, 40, 300 });
 		else
-			World::preview->SetSelectionSize({ 400, 50, 400 });
+			World::preview->SetSelectionSize({ 500, 60, 500 });
 	}
 
 	void world_import_confirm()

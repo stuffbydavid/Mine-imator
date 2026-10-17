@@ -33,18 +33,48 @@ namespace CppProject
 
 	struct NbtStream
 	{
+		enum Context { GENERIC, CHUNK, SECTION, BLOCK_STATES, COMPLETE };
+
+		// Initialize the reader and consume the root compound header.
 		NbtStream(QByteArray& data, QHash<NbtType, QVector<StringType>> filter = {}, BoolType debug = false);
 
-		NbtTag* ReadTag(NbtType type);
+		// Allocate and read a tag payload using the given filtering context.
+		NbtTag* ReadTag(NbtType type, Context context = GENERIC);
+
+		// Skip a tag payload without constructing its tree.
 		void SkipTag(NbtType type);
 
+		// Advance by a byte count after checking the source bounds.
+		void SkipBytes(qint64 size);
+
+		// Read an element count and validate its minimum payload size.
+		int32_t ReadLength(int elementSize);
+
+		// Rewind selected sections for parsing, or skip them and return false.
+		BoolType SelectSection();
+
+		// Check a chunk field and assign the context for its contents.
+		BoolType KeepChunkTag(NbtType type, const QByteArray& name, Context context, Context& child) const;
+
+		// Read and decode a length-prefixed NBT string.
 		StringType ReadString();
+
+		// Read a length-prefixed string as a borrowed view of the source bytes.
+		QByteArray ReadStringBytes();
+
+		// Decode UTF-8 including Java's modified null and surrogate encodings.
+		static StringType DecodeString(const QByteArray& bytes);
+
+		// Skip a length-prefixed string without decoding it.
 		void SkipString();
 
 		QDataStream ds;
-		QHash<NbtType, QVector<StringType>> filter;
+		const QByteArray& data;
+		QHash<NbtType, QVector<QByteArray>> filter;
 		BoolType filterEnabled = true, debug = false;
 		BoolType stripNamespace = true;
+		BoolType previewOnly = false;
+		IntType sectionMin = 0, sectionMax = 0;
 
 		static QHash<NbtType, IntType> nbtTypeSize;
 	};
@@ -115,7 +145,7 @@ namespace CppProject
 	struct NbtList : NbtTag
 	{
 		NbtList(NbtType listType) : NbtTag(TAG_LIST), listType(listType) {}
-		NbtList(NbtStream& stream);
+		NbtList(NbtStream& stream, NbtStream::Context context = NbtStream::GENERIC);
 		~NbtList();
 		NbtType listType;
 		Heap<NbtTag*> value;
@@ -138,7 +168,7 @@ namespace CppProject
 	struct NbtCompound : NbtTag
 	{
 		NbtCompound() : NbtTag(TAG_COMPOUND) {}
-		NbtCompound(NbtStream& stream);
+		NbtCompound(NbtStream& stream, NbtStream::Context context = NbtStream::GENERIC);
 		~NbtCompound();
 
 		// Convert the NBT compound to a GZip compressed byte array.

@@ -50,7 +50,7 @@ function tab_properties_library_block(edittab)
 		tab_control_menu(ui_large_height)
 		draw_button_menu("library/block_tex_material", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_material, res_eval(temp_edit.block_tex_material).display_name, action_lib_block_tex_material, false, res_eval(temp_edit.block_tex_material).block_preview_texture, null)
 		tab_next()
-				
+		
 		// Normal texture
 		tab_control_menu(ui_large_height)
 		draw_button_menu("library/block_tex_normal", e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.block_tex_normal, res_eval(temp_edit.block_tex_normal).display_name, action_lib_block_tex_normal, false, res_eval(temp_edit.block_tex_normal).block_preview_texture, null)

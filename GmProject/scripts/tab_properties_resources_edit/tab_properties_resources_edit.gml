@@ -1,9 +1,27 @@
 function tab_properties_resources_edit()
 {
-	if (res_edit.type = e_res_type.SCHEMATIC)
+	if (res_edit.filename != "") // Filename
 	{
-		tab_control_checkbox()
-		draw_checkbox("resources/scenery_randomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resources/scenery_randomize_help")
+		var wid;
+		content_capwid = text_caption_width("resources/filename")
+		
+		// Model
+		tab_control(24)
+		
+		draw_set_font(font_label)
+		wid = string_width(text_get("resources/filename") + ":")
+		
+		tip_wrap = false
+		tip_set(string_remove_newline(project_folder + "/" + res_edit.filename), dx, dy, dw - wid, 24)
+		tip_wrap = true
+		
+		draw_label(text_get("resources/filename") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		
+		// Open in external program
+		if (draw_button_icon("resources/filename_open", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD, "tooltip/resource/open"))
+			open_url(project_folder + "/" + res_edit.filename)
+		
 		tab_next()
 	}
 	
@@ -144,7 +162,7 @@ function tab_properties_resources_edit()
 			(window_busy = "" && (busy = "resources/scenery_structure_integrity" || busy = "resources/scenery_structure_integrity/input/drag")))
 		{
 			with (res_edit)
-				res_load()
+				res_load(true)
 		}
 		
 		tab_control_checkbox()
@@ -164,28 +182,10 @@ function tab_properties_resources_edit()
 		tab_next()
 	}
 	
-	if (res_edit.filename != "") // Filename
+	if (res_edit.type = e_res_type.SCHEMATIC)
 	{
-		var wid;
-		content_capwid = text_caption_width("resources/file_name")
-		
-		// Model
-		tab_control(24)
-		
-		draw_set_font(font_label)
-		wid = string_width(text_get("resources/file_name") + ":")
-		
-		tip_wrap = false
-		tip_set(string_remove_newline(project_folder + "/" + res_edit.filename), dx, dy, dw - wid, 24)
-		tip_wrap = true
-		
-		draw_label(text_get("resources/file_name") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
-		
-		// Open in external program
-		if (draw_button_icon("resources/file_name_open", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD, "tooltip/resource/open"))
-			open_url(project_folder + "/" + res_edit.filename)
-		
+		tab_control_checkbox()
+		draw_checkbox("resources/scenery_randomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resources/scenery_randomize_help")
 		tab_next()
 	}
 
@@ -220,7 +220,7 @@ function tab_properties_resources_edit()
 				else
 					maxval = res_edit.world_box_end[a] - 1
 
-				textfield_group_add(name + "/" + captions[a], pos[a], pos[a], action_res_world_box, a + bound * 3, textboxes[a], null, 0.5, minval, maxval, "resources/world_box/" + captions[a])
+				textfield_group_add(name + "/" + captions[a], pos[a], pos[a], action_res_world_box, a + bound * 3, textboxes[a], null, 0.05, minval, maxval, "resources/world_box/" + captions[a])
 			}
 
 			tab_control_textfield_group(true)

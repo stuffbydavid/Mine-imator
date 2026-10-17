@@ -57,12 +57,12 @@ namespace CppProject
 		WorldVec(const VecType& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 		WorldVec(IntType x, IntType y, IntType z) : x(x), y(y), z(z) {}
 
-		WorldVec operator+(const WorldVec& vec) const;
-		WorldVec operator-(const WorldVec& vec) const;
-		WorldVec operator*(const WorldVec& vec) const;
-		WorldVec operator+(IntType in) const;
-		WorldVec operator-(IntType in) const;
-		WorldVec operator*(IntType in) const;
+		WorldVec operator+(const WorldVec& vec) const { return { x + vec.x, y + vec.y, z + vec.z }; }
+		WorldVec operator-(const WorldVec& vec) const { return { x - vec.x, y - vec.y, z - vec.z }; }
+		WorldVec operator*(const WorldVec& vec) const { return { x * vec.x, y * vec.y, z * vec.z }; }
+		WorldVec operator+(IntType in) const { return { x + in, y + in, z + in }; }
+		WorldVec operator-(IntType in) const { return { x - in, y - in, z - in }; }
+		WorldVec operator*(IntType in) const { return { x * in, y * in, z * in }; }
 		operator VecType() const;
 
 		IntType x, y, z;
@@ -505,7 +505,7 @@ namespace CppProject
 		enum FaceDirection : int;
 		struct Mesh;
 		struct FaceData;
-		void GenerateFaceTriangles(Mesh& mesh, FaceDirection dir, Heap<FaceData>& faceData, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos);
+		void GenerateFaceTriangles(Mesh& mesh, FaceDirection dir, const FaceData& face, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos);
 
 		// Free unused preview data.
 		void FreePreviewData();
@@ -565,8 +565,10 @@ namespace CppProject
 
 		struct Mesh
 		{
-			Heap<FaceData> faceData[CHUNK_SECTIONS];
-			Heap<VertexData> vertexData[CHUNK_SECTIONS];
+			// Non-owning views into worker scratch storage, only valid during generation
+			FaceData* faceData[CHUNK_SECTIONS] = {};
+			VertexData* vertexData[CHUNK_SECTIONS + 1] = {};
+			uint8_t faceDirections[CHUNK_SECTIONS] = {};
 			FastVector<WorldVertex> vertices;
 			FastVector<uint32_t> indices;
 			IntType vertexOffset, indexOffset; // Offset in region mesh

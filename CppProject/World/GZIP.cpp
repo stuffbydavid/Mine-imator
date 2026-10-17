@@ -12,6 +12,7 @@ namespace CppProject
 	{
 		QString filename, label, error;
 		BoolType reported = false;
+		double elapsed = 0;
 
 		void Report()
 		{
@@ -22,6 +23,8 @@ namespace CppProject
 
 			if (!error.isEmpty())
 				WARNING("Could not save " + label + " " + filename + ": " + error);
+			else
+				DEBUG(label + " compress/write: " + NumStr(elapsed) + "s (" + filename + ")");
 		}
 	};
 
@@ -87,7 +90,9 @@ namespace CppProject
 			{
 				try
 				{
+					Timer tmr;
 					WriteCompressed(data, job->filename, compressionLevel);
+					job->elapsed = tmr.Elapsed();
 				}
 				catch (const QString& error)
 				{
@@ -121,22 +126,23 @@ namespace CppProject
 			return false;
 		}
 
+		char buffer[65536];
 		while (true)
 		{
-			const IntType bufferSize = 1024;
-			IntType offset = dst.size();
-			dst.resize(dst.size() + bufferSize);
-			int bytesRead = gzread(gzIn, dst.data() + offset, bufferSize);
-			if (bytesRead < bufferSize)
+			int bytesRead = gzread(gzIn, buffer, sizeof(buffer));
+			if (bytesRead < 0 || bytesRead > std::numeric_limits<int>::max() - dst.size())
 			{
-				dst.resize(offset + bytesRead);
-				break;
+				gzclose(gzIn);
+				return false;
 			}
+
+			if (!bytesRead)
+				break;
+
+			dst.append(buffer, bytesRead);
 		}
 
-		gzclose(gzIn);
-
-		return true;
+		return gzclose(gzIn) == Z_OK;
 	}
 
 	BoolType Gzip::Decompress(const QString& src, const QString& dst)
@@ -160,20 +166,31 @@ namespace CppProject
 			return false;
 		}
 
-		char buf[1024];
-		while (int len = gzread(gzIn, buf, sizeof(buf)))
-			file.write(buf, len);
+		char buffer[65536];
+		while (true)
+		{
+			int bytesRead = gzread(gzIn, buffer, sizeof(buffer));
+			if (bytesRead < 0 || (bytesRead > 0 && file.write(buffer, bytesRead) != bytesRead))
+			{
+				gzclose(gzIn);
+				return false;
+			}
 
-		gzclose(gzIn);
+			if (!bytesRead)
+				break;
+		}
 
-		return true;
+		return gzclose(gzIn) == Z_OK;
 	}
 
 	BoolType Gzip::Decompress(const char* src, IntType size, QByteArray& dst)
 	{
-		dst.resize(size);
+		if (size <= 0 || size > std::numeric_limits<int>::max())
+			return false;
 
-		z_stream strm;
+		dst.resize(int(size));
+
+		z_stream strm = {};
 		strm.next_in = (Bytef*)src;
 		strm.avail_in = size;
 		strm.total_out = 0;
@@ -186,7 +203,16 @@ namespace CppProject
 		while (true)
 		{
 			if (strm.total_out >= (IntType)dst.size())
-				dst.resize(dst.size() + dst.size() / 2);
+			{
+				IntType nextSize = std::min(IntType(std::numeric_limits<int>::max()), IntType(dst.size()) + std::max(IntType(1), IntType(dst.size()) / 2));
+				if (nextSize <= dst.size())
+				{
+					inflateEnd(&strm);
+					return false;
+				}
+
+				dst.resize(int(nextSize));
+			}
 
 			strm.next_out = (Bytef*)(dst.data() + strm.total_out);
 			strm.avail_out = dst.size() - strm.total_out;
@@ -195,7 +221,10 @@ namespace CppProject
 			if (err == Z_STREAM_END)
 				break;
 			else if (err != Z_OK)
+			{
+				inflateEnd(&strm);
 				return false;
+			}
 		}
 
 		if (inflateEnd(&strm) != Z_OK)

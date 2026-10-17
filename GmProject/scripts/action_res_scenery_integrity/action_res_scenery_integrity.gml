@@ -6,7 +6,12 @@ function action_res_scenery_integrity(value, add)
 		value *= 100
 	
 	with (res_edit)
+	{
 		scenery_integrity = scenery_integrity * add + value / 100
+
+		if (history_undo || history_redo)
+			res_load(true)
+	}
 	
 	lib_preview.update = true
 }

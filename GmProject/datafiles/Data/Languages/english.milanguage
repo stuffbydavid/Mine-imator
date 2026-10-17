@@ -3859,6 +3859,7 @@
 	},
 	"resources": "RESOURCES",
 	"resources/": {
+		"filename": "Filename",
 		"pack/": {
 			"project": "Project resource pack",
 			"image": "Resource pack asset",
@@ -3928,8 +3929,7 @@
 		"scenery_structure_integrity_invert": "Invert integrity filter",
 		"material_format": "Material map format",
 		"material_format_labpbr": "LabPBR",
-		"material_format_seus": "OldPBR / SEUS",
-		"file_name": "Filename"
+		"material_format_seus": "OldPBR / SEUS"
 	},
 	"load_scenery/": {
 		"caption": "Importing %1",

@@ -100,25 +100,39 @@ namespace CppProject
 		if (legacy)
 			return root.Serialize("Schematic");
 
+		delete schematic->value.take("DataVersion");
 		schematic->value["DataVersion"] = new NbtInt(int32_t(dataVersion));
 
+		// Size the varint payload before writing directly into the NBT array
+		IntType dataSize = indices.Size();
+		for (IntType i = 0; i < indices.Size(); i++)
+		{
+			for (uint32_t index = indices[i]; index >= 0x80; index >>= 7)
+				dataSize++;
+		}
+
+		if (dataSize > std::numeric_limits<int32_t>::max())
+			throw QString("Schematic block data exceeds the NBT array size limit");
+
+		NbtCompound* blocks = schematic->Compound("Blocks");
+		delete blocks->value.take("Data");
+		NbtByteArray* blockData = new NbtByteArray;
+		blocks->value["Data"] = blockData;
+		blockData->value.Alloc(dataSize, false);
+
 		// X varies fastest, followed by Z, then Y
-		QByteArray data;
-		data.reserve(int(indices.Size()));
+		IntType offset = 0;
 		for (IntType i = 0; i < indices.Size(); i++)
 		{
 			uint32_t index = indices[i];
 			while (index >= 0x80)
 			{
-				data.append(char((index & 0x7F) | 0x80));
+				blockData->value[offset++] = int8_t((index & 0x7F) | 0x80);
 				index >>= 7;
 			}
-			data.append(char(index));
+			blockData->value[offset++] = int8_t(index);
 		}
 
-		NbtByteArray* blockData = new NbtByteArray;
-		schematic->Compound("Blocks")->value["Data"] = blockData;
-		blockData->value = data;
 		return root.Serialize();
 	}
 
@@ -290,6 +304,9 @@ namespace CppProject
 
 		if (exportData->HasKey(sectionsName))
 		{
+			Heap<uint16_t> localIndices;
+			QVector<uint32_t> remap;
+
 			for (NbtCompound* section : exportData->List<TAG_COMPOUND, NbtCompound>(sectionsName))
 			{
 				WorldVec pos = chunkPos + WorldVec(0, section->Byte("Y") * SECTION_SIZE, 0);
@@ -319,7 +336,8 @@ namespace CppProject
 				if (!sourcePalette->value.Size() || sourcePalette->value.Size() > SECTION_SIZE3)
 					throw QString("Invalid chunk block palette size");
 
-				QVector<uint32_t> remap;
+				remap.clear();
+				remap.reserve(int(sourcePalette->value.Size()));
 				for (IntType i = 0; i < sourcePalette->value.Size(); i++)
 				{
 					NbtTag* entry = sourcePalette->value[i];
@@ -391,8 +409,9 @@ namespace CppProject
 					remap.append(palette.Int(state));
 				}
 
-				Heap<uint16_t> localIndices(SECTION_SIZE3);
-				if (blocks->HasKey(dataName) && blocks->LongArray(dataName).Size())
+				// Single-entry palettes without packed data use index zero without scratch storage
+				BoolType hasIndices = blocks->HasKey(dataName) && blocks->LongArray(dataName).Size();
+				if (hasIndices)
 				{
 					const Heap<int64_t>& data = blocks->LongArray(dataName);
 					IntType bits = std::max(IntType(4), IntType(std::ceil(std::log2(remap.size()))));
@@ -402,6 +421,9 @@ namespace CppProject
 
 					if (data.Size() != longs)
 						throw QString("Invalid chunk block data length");
+
+					if (!localIndices.Size())
+						localIndices.Alloc(SECTION_SIZE3, false);
 
 					Section::ParsePaletteIndices(data, localIndices, remap.size(), format, 4);
 				}
@@ -414,7 +436,10 @@ namespace CppProject
 				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
 				{
 					IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
-					uint16_t index = localIndices[local];
+					uint16_t index = 0;
+					if (hasIndices)
+						index = localIndices[local];
+
 					if (index >= remap.size())
 						throw QString("Chunk block references a missing palette entry");
 

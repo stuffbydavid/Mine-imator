@@ -372,8 +372,8 @@ namespace CppProject
 			// Allocate new size
 			if (mData.changed)
 			{
-				mData.mesh.vertexData.Alloc(mData.numVertices);
-				mData.mesh.indexData.Alloc(mData.numIndices);
+				mData.mesh.vertexData.Alloc(mData.numVertices, false);
+				mData.mesh.indexData.Alloc(mData.numIndices, false);
 			}
 
 			// Copy chunk data to region mesh
@@ -392,10 +392,11 @@ namespace CppProject
 					chunkMesh.vertices.Clear();
 
 					// Indices
-					mData.mesh.indexData.Copy(chunkMesh.indices.heap, chunkMesh.indices.Size(), 0, chunkMesh.indexOffset);
-					if (chunkMesh.vertexOffset)
+					if (chunkMesh.vertexOffset == 0)
+						memcpy(mData.mesh.indexData.data + chunkMesh.indexOffset, chunkMesh.indices.Data(), chunkMesh.indices.SizeInBytes());
+					else
 						for (IntType i = 0; i < chunkMesh.indices.Size(); i++)
-							mData.mesh.indexData[chunkMesh.indexOffset + i] += chunkMesh.vertexOffset;
+							mData.mesh.indexData[chunkMesh.indexOffset + i] = chunkMesh.indices.Value(i) + chunkMesh.vertexOffset;
 					
 					chunkMesh.indices.Clear();
 				}
@@ -422,7 +423,16 @@ namespace CppProject
 		{
 			MeshData& mData = meshData[m];
 			if (!mData.changed)
+			{
+				// The final boundary pass may finish without adding geometry
+				if (generatedAmount == GenerateModeAmount)
+				{
+					mData.mesh.vertexData.FreeData();
+					mData.mesh.indexData.FreeData();
+				}
+
 				continue;
+			}
 
 			// Release old GPU buffers
 			if (mData.mesh.HasBuffers())

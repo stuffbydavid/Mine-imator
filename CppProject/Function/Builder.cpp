@@ -797,7 +797,37 @@ namespace CppProject
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->GetWriteBytes();
-		
+
+		auto freeCpuData = [&]
+		{
+			for (IntType d = 0; d < e_block_depth_amount; d++)
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
+				{
+					// Small buffers still need CPU data for batching, even without a cache
+					if (buf->numIndices <= MAX_BATCH_INDICES)
+						continue;
+
+					for (Mesh<>* mesh : buf->meshes)
+					{
+						mesh->vertexData.FreeData();
+						mesh->indexData.FreeData();
+					}
+				}
+			}
+		};
+
+		// Include the header and reserve once instead of growing a large serialization buffer
+		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
+		totalBytes += sizeof(uchar) + sizeof(quint16) + assetsVersion.size() + sizeof(qint64) * 3;
+		if (totalBytes > std::numeric_limits<int>::max())
+		{
+			WARNING("Block mesh cache exceeds the byte array size limit");
+			freeCpuData();
+			return;
+		}
+
 		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
 		if (mb > 50)
 		{
@@ -806,25 +836,16 @@ namespace CppProject
 
 			if (!res->scenery_cache_save)
 			{
-				// CPU data of meshes won't be needed
-				for (IntType d = 0; d < e_block_depth_amount; d++)
-				for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-				{
-					if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
-					{
-						for (Mesh<>* mesh : buf->meshes)
-						{
-							mesh->vertexData.FreeData();
-							mesh->indexData.FreeData();
-						}
-					}
-				}
+				// Release CPU data that is only retained for cache generation
+				freeCpuData();
 				return;
 			}
 		}
 
 		Timer tmr;
 		QByteArray data;
+		data.reserve((int)totalBytes);
+
 		QDataStream out(&data, QIODevice::WriteOnly);
 
 		// Save format
@@ -832,7 +853,6 @@ namespace CppProject
 		out << format;
 
 		// Save Minecraft assets version
-		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
 		out << (quint16)assetsVersion.size();
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
@@ -846,7 +866,13 @@ namespace CppProject
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->Write(out);
 
-		tmr.Print("Write block mesh cache");
+		tmr.Print("Serialize block mesh cache (" + filename.QStr() + ")");
+
+		if (out.status() != QDataStream::Ok || data.size() != totalBytes)
+		{
+			WARNING("Could not serialize block mesh cache");
+			return;
+		}
 
 		Gzip::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 8);
 	}

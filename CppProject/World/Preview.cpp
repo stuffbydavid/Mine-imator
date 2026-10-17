@@ -136,7 +136,10 @@ namespace CppProject
 		);
 
 		if (schematic)
+		{
 			schematic->SaveResource(ObjType(obj_resource, resId));
+			schematic.reset();
+		}
 
 		if (global::_app->world_import_add_tl) // Add template and timeline
 			action_res_scenery_animate(ScopeAny(global::_app->id), resId);
@@ -263,9 +266,8 @@ namespace CppProject
 			draw_rectangle(0, 0, rect.width(), rect.height(), false);
 			draw_set_alpha(1.0);
 
-			IntType loadPadding = 200;
-			IntType loadHeight = 20;
-			draw_loading_bar(ScopeAny(global::_app->id), loadPadding, rect.height() / 2 - loadHeight / 2, rect.width() - loadPadding * 2, loadHeight, progress, "");
+			IntType loadHeight = 8;
+			draw_loading_bar(ScopeAny(global::_app->id), 0, rect.height() - loadHeight, rect.width(), loadHeight, progress, "");
 			
 			surface_reset_target();
 
@@ -868,7 +870,7 @@ namespace CppProject
 			if (!global::point3D_project_error)
 			{
 				IntType loadingWidth = 300;
-				IntType loadingHeight = 15;
+				IntType loadingHeight = 8;
 
 				draw_loading_bar(ScopeAny(global::_app->id), loadingScreenPos.x - loadingWidth / 2, loadingScreenPos.y - loadingHeight / 2, loadingWidth, loadingHeight, progress, "");
 			}
