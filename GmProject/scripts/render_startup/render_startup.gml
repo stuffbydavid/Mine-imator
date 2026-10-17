@@ -23,6 +23,7 @@ function render_startup()
 			  render_place, render_place_pass, render_place_target, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
+	globalvar render_shake_cached, render_shake_time, render_shake_noise;
 	
 	// Update shader_reset_uniforms()
 	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
@@ -63,6 +64,9 @@ function render_startup()
 	render_camera = null
 	render_camera_effects = null
 	render_camera_effect_enabled = null
+	render_shake_cached = [ false, false, false ]
+	render_shake_time = vec3(0)
+	render_shake_noise = vec3(0)
 	
 	render_light_specular_strength = 0
 	render_light_realistic_falloff = false

@@ -536,6 +536,15 @@ add_custom_command(
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_OUTPUT_DIR}>"
 	VERBATIM
 )
+if(WIN32)
+	add_custom_command(
+		TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+			"${CMAKE_CURRENT_SOURCE_DIR}/launchWithOGL.ps1"
+			"${CMAKE_BINARY_DIR}/launchWithOGL.ps1"
+		VERBATIM
+	)
+endif()
 
 # Installation layout
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -558,6 +567,7 @@ install(DIRECTORY DESTINATION "Packs")
 
 if(WIN32)
 	install(FILES "${EXTERNAL_PLATFORM_DIR}/vcomp140.dll" DESTINATION ".")
+	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/launchWithOGL.ps1" DESTINATION ".")
 	install(DIRECTORY DESTINATION "Projects")
 elseif(APPLE)
 	install(FILES "${OPENMP_RUNTIME_LIBRARY}" DESTINATION "Data/Libraries" RENAME "libomp.dylib")

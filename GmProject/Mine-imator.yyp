@@ -2840,6 +2840,7 @@
     {"id":{"name":"tl_interval_settings_draw","path":"scripts/tl_interval_settings_draw/tl_interval_settings_draw.yy",},},
     {"id":{"name":"tl_jump","path":"scripts/tl_jump/tl_jump.yy",},},
     {"id":{"name":"tl_keyframe_add","path":"scripts/tl_keyframe_add/tl_keyframe_add.yy",},},
+    {"id":{"name":"tl_keyframe_find_index","path":"scripts/tl_keyframe_find_index/tl_keyframe_find_index.yy",},},
     {"id":{"name":"tl_keyframe_deselect","path":"scripts/tl_keyframe_deselect/tl_keyframe_deselect.yy",},},
     {"id":{"name":"tl_keyframe_length","path":"scripts/tl_keyframe_length/tl_keyframe_length.yy",},},
     {"id":{"name":"tl_keyframe_save","path":"scripts/tl_keyframe_save/tl_keyframe_save.yy",},},
