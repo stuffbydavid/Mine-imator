@@ -6,9 +6,23 @@ function tab_frame_editor_light()
 	draw_button_color("frame_editor/light/color", dx, dy, dw, tl_edit.value[e_value.LIGHT_COLOR], c_white, false, action_tl_frame_light_color)
 	tab_next()
 	
-	tab_control_dragger()
-	draw_dragger("frame_editor/light/size", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_SIZE], .05, 0, no_limit, 2, .05, tab.light.tbx_size, action_tl_frame_light_size)
-	tab_next()
+	if (tl_edit.type != e_tl_type.AREA_LIGHT)
+	{
+		tab_control_dragger()
+		draw_dragger("frame_editor/light/size", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_SIZE], .05, 0, no_limit, 2, .05, tab.light.tbx_size, action_tl_frame_light_size)
+		tab_next()
+	}
+
+	if (tab.light.has_area_light)
+	{
+		tab_control_dragger()
+		draw_dragger("frame_editor/light/area_width", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_AREA_WIDTH], .25, 0, no_limit, 32, .05, tab.light.tbx_area_width, action_tl_frame_light_area_width)
+		tab_next()
+
+		tab_control_dragger()
+		draw_dragger("frame_editor/light/area_height", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_AREA_HEIGHT], .25, 0, no_limit, 32, .05, tab.light.tbx_area_height, action_tl_frame_light_area_height)
+		tab_next()
+	}
 	
 	tab_control_dragger()
 	draw_dragger("frame_editor/light/range", dx, dy, dragger_width, tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_RANGE] / 100, 0, no_limit, 250, 0, tab.light.tbx_range, action_tl_frame_light_range)

@@ -39,8 +39,19 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     3. Changes to GML script files are automatically detected and converted to C++ during compilation
     4. **Note**: The converted `.cpp` files under `CppProject/Generated/` should not be manually edited!
     5. **Note**: Assets must still be added, removed, reorganized or renamed via the GameMaker IDE
-9. Generate Release build in `install\`
+9. Generate Release build in `install\Mine-imator\`
     * Run `.\Setup.ps1 Release`
+    * DirectX shader bytecode is checked against a SHA-256 fingerprint of the final
+      converted source, shader profile, and compiler flags. This includes shared
+      shader code and buffer layouts, preventing outdated caches from producing
+      a black viewport.
+    * Release prefers matching embedded caches. Missing or outdated shaders are
+      compiled once and saved under the user's local application cache
+      (`%LOCALAPPDATA%\Mine-imator\cache\Shaders\D3D11` on Windows), then reused
+      on subsequent launches. Changing a shader recompiles only affected stages.
+    * To avoid even first-launch compilation, launch a Debug or RelWithDebInfo
+      build after shader changes, then rebuild Release. The generated `.d3d`
+      files and their `.d3d.sha256` fingerprints are embedded automatically.
 
 ## Building Mine-imator (Mac OS Intel)
 1. Open terminal (⌘+Space and type terminal)
@@ -159,7 +170,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 1. Follow steps 1-5 for Windows 64-bit setup
 2. Set up external libraries and build Qt for Windows 32-bit
     * Run `.\Setup.ps1 Qt x86`
-3. Generate Release build in `install-Win32\`
+3. Generate Release build in `install-Win32\Mine-imator\`
     * Run `.\Setup.ps1 Release x86`
 
 ## Building Mine-imator (on Mac OS ARM for Intel)

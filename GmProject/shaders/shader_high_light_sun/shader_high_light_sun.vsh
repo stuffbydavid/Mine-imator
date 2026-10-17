@@ -43,8 +43,8 @@ void main()
 	vScreenCoord1 = uLightMatBiasMVP[1] * vec4(vPosition, 1.0);
 	vScreenCoord2 = uLightMatBiasMVP[2] * vec4(vPosition, 1.0);
 	
-	vNormal = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
-	vTangent = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
+	vNormal = inverse2(gm_Matrices[MATRIX_WORLD]) * getModelNormal(in_Normal, in_Position);
+	vTangent = (gm_Matrices[MATRIX_WORLD] * vec4(getModelNormal(in_Tangent, in_Position), 0.0)).xyz;
 	
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	vCustom = in_Wave;

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_update_model_shape_merge",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_update_model_shape_merge",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Timeline/Update.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_get_area_light_sample",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_get_area_light_sample",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

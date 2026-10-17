@@ -14,6 +14,9 @@ function app_update_animate()
 	
 	env_light_amount = 1
 	env_light_data[0] = 0
+	env_light_area_directions = [0, 0, 0]
+	env_light_area_u = [0, 0, 0]
+	env_light_area_v = [0, 0, 0]
 	env_sun_direction = vec3(0)
 	
 	project_path_tl_array = []
@@ -102,6 +105,19 @@ function app_update_animate()
 			if ((hide && !render_hidden) || !mode_visible[renderer_current])
 				continue
 			
+			var lightdirection, lightu, lightv;
+			lightdirection = vec3(0)
+			lightu = vec3(0)
+			lightv = vec3(0)
+			if (type = e_tl_type.AREA_LIGHT)
+			{
+				var lightmat = array_copy_1d(matrix);
+				matrix_remove_scale(lightmat)
+				lightdirection = vec3_normalize(vec3(lightmat[4], lightmat[5], lightmat[6]))
+				lightu = vec3_mul(vec3(lightmat[0], lightmat[1], lightmat[2]), max(0, value[e_value.LIGHT_AREA_WIDTH]) * 0.5)
+				lightv = vec3_mul(vec3(lightmat[8], lightmat[9], lightmat[10]), max(0, value[e_value.LIGHT_AREA_HEIGHT]) * 0.5)
+			}
+
 			app.env_light_data[app.env_light_amount * 8 + 0] = world_pos[X]
 			app.env_light_data[app.env_light_amount * 8 + 1] = world_pos[Y]
 			app.env_light_data[app.env_light_amount * 8 + 2] = world_pos[Z]
@@ -110,6 +126,15 @@ function app_update_animate()
 			app.env_light_data[app.env_light_amount * 8 + 5] = (color_get_green(value[e_value.LIGHT_COLOR]) / 255) * value[e_value.LIGHT_STRENGTH]
 			app.env_light_data[app.env_light_amount * 8 + 6] = (color_get_blue(value[e_value.LIGHT_COLOR]) / 255) * value[e_value.LIGHT_STRENGTH]
 			app.env_light_data[app.env_light_amount * 8 + 7] = 1
+			app.env_light_area_directions[app.env_light_amount * 3 + 0] = lightdirection[X]
+			app.env_light_area_directions[app.env_light_amount * 3 + 1] = lightdirection[Y]
+			app.env_light_area_directions[app.env_light_amount * 3 + 2] = lightdirection[Z]
+			app.env_light_area_u[app.env_light_amount * 3 + 0] = lightu[X]
+			app.env_light_area_u[app.env_light_amount * 3 + 1] = lightu[Y]
+			app.env_light_area_u[app.env_light_amount * 3 + 2] = lightu[Z]
+			app.env_light_area_v[app.env_light_amount * 3 + 0] = lightv[X]
+			app.env_light_area_v[app.env_light_amount * 3 + 1] = lightv[Y]
+			app.env_light_area_v[app.env_light_amount * 3 + 2] = lightv[Z]
 			app.env_light_amount++
 		}
 		

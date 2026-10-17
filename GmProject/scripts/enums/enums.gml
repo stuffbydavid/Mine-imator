@@ -192,6 +192,8 @@ function enums()
 		LIGHT_SIZE,
 		LIGHT_RANGE,
 		LIGHT_FADE_SIZE,
+		LIGHT_AREA_WIDTH,
+		LIGHT_AREA_HEIGHT,
 		LIGHT_SPOT_RADIUS,
 		LIGHT_SPOT_SHARPNESS,
 		CAM_FOV,
@@ -462,6 +464,7 @@ function enums()
 		ENVIRONMENT,
 		STRUCTURE,
 		FOLDER,
+		AREA_LIGHT,
 		amount
 	} // Update app_startup_lists() when adding types
 	
@@ -1102,6 +1105,10 @@ function enums()
 		IS_WATER,
 		KERNEL,
 		LIGHT_AMOUNT,
+		LIGHT_AREA_CENTER,
+		LIGHT_AREA_DIRECTIONS,
+		LIGHT_AREA_U,
+		LIGHT_AREA_V,
 		LIGHT_COLOR,
 		LIGHT_DATA,
 		LIGHT_DIRECTION,

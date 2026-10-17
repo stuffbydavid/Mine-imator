@@ -11,7 +11,6 @@ function action_project_render_bend_style(style)
 	// Force update timeline meshes
 	with (obj_timeline)
 	{
-		bend_rot_last = vec3(0)
-		tl_update_model_shape_bend()
+		tl_update_model_shape()
 	}
 }

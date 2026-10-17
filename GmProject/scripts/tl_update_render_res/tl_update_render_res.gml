@@ -32,10 +32,13 @@ function tl_update_render_res()
 			model_part_tex_normal_name = model_part_get_texture_normal_name(model_part, temp.model_texture_normal_name_map)
 			
 			// Look up shape textures
+			var oldnormals = model_part_shape_tex_normal;
+			var bendtextureschanged = array_length(oldnormals) != ds_list_size(model_part.shape_list);
 			model_part_shape_tex = []
 			model_part_shape_tex_material = []
 			model_part_shape_tex_normal = []
 			model_part_shape_material_res = []
+			model_part_shape_render_matrix_part = null
 			
 			var shapetexnamemap, shapetexmatnamemap, shapetexnormnamemap;
 			shapetexnamemap = temp.model_shape_texture_name_map
@@ -113,7 +116,13 @@ function tl_update_render_res()
 				}
 				else // No normal texture
 					model_part_shape_tex_normal[i] = null
+
+				if (i < array_length(oldnormals) && (oldnormals[i] = null) != (model_part_shape_tex_normal[i] = null))
+					bendtextureschanged = true
 			}
+
+			if (bendtextureschanged)
+				tl_update_model_shape()
 			
 			break
 		}

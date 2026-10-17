@@ -197,6 +197,9 @@ function tl_remove_clean()
 			block_vbuffer_destroy()
 	}
 		
+	if (model_part_merged_vbuffer != null)
+		vbuffer_destroy(model_part_merged_vbuffer)
+
 	if (model_shape_vbuffer_map != null)
 	{
 		var key = ds_map_find_first(model_shape_vbuffer_map);

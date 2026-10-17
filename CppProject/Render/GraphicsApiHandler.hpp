@@ -176,6 +176,10 @@ namespace CppProject
 		VecType frustum[6];
 		BoolType frustumUpdate = true;
 
+		// Current-pass scene occlusion
+		BoolType occlusionCulling = false;
+		BoolType occlusionPass = false;
+
 		// Multi-view rendering
 		BoolType pointMultiview = false;
 		Bounds pointBounds;

@@ -33,6 +33,10 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		mat = matrix_get(matrix_world)
 	else if (model_part_shape_render_matrix_part != part || array_length(model_part_shape_render_matrix) != shapecount)
 		tl_update_model_shape_render()
+
+	var merged = istl && model_part_merged_compatible && !wind && temp.model_name != "armor";
+	if (merged)
+		shapecount = 1
 	
 	render_blend_prev = null
 	render_alpha_prev = null
@@ -114,7 +118,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 		}
 		
 		if (istl)
-			vbuf = model_part_shape_vbuffer[s]
+			vbuf = (merged ? model_part_merged_vbuffer : model_part_shape_vbuffer[s])
 		else
 		{
 			if (shapevbuffermap = null)
@@ -314,6 +318,18 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 				render_set_uniform_color(e_uniform.MIX_COLOR, shape.color_mix, shape.color_mix_percent)
 		}
 		
+		if (merged)
+		{
+			matrix_set(matrix_world, matrix_render)
+			vertex_submit(vbuf, pr_trianglelist, -1)
+			if (benchmark_mode)
+			{
+				benchmark_merged_model_submissions++
+				benchmark_merged_shape_submissions += model_part_merged_count
+			}
+			continue
+		}
+
 		if (istl && !shape.item_bounce && !shape.face_camera && model_part_shape_render_matrix_part = part)
 		{
 			// Submit cached matrix without array conversion

@@ -33,26 +33,21 @@ function tl_update_values_progress(markerpos)
 	}
 	
 	// Change keyframes so the animation is seamless
-	var kflistsize, lastkf, loopnext, loopprev;
+	var kflistsize, loopnext, loopprev;
 	kflistsize = ds_list_size(keyframe_list)
-	lastkf = kflistsize - 1
 	loopnext = false
 	loopprev = false
 	
 	if (keyframe_next = keyframe_current || keyframe_next.position > loopend) // Continue into the first keyframe
 	{
 		// Get first keyframe in timeline region
-		for (var k = 0; k < kflistsize; k++)
+		var k = tl_keyframe_find_index(loopstart);
+		if (k < kflistsize)
 		{
 			var kf = keyframe_list[|k];
 			
-			if (kf.position < loopstart || kf.position > loopend)
-				continue
-			else
-			{
-				if (kf.position < keyframe_next.position)
-					keyframe_next = kf 
-			}
+			if (kf.position <= loopend && kf.position < keyframe_next.position)
+				keyframe_next = kf
 		}
 		
 		loopnext = true
@@ -60,17 +55,13 @@ function tl_update_values_progress(markerpos)
 	else if (keyframe_current = null || keyframe_current.position < loopstart) // Continue from last keyframe
 	{
 		// Get last keyframe in timeline region
-		for (var k = 0; k < kflistsize; k++)
+		var k = tl_keyframe_find_index(loopend, true) - 1;
+		if (k >= 0)
 		{
 			var kf = keyframe_list[|k];
-				
-			if (kf.position < loopstart || kf.position > loopend)
-				continue
-			else
-			{
-				if (keyframe_current = null || kf.position > keyframe_current.position)
-					keyframe_current = kf
-			}
+
+			if (kf.position >= loopstart && (keyframe_current = null || kf.position > keyframe_current.position))
+				keyframe_current = kf
 		}
 			
 		loopprev = true

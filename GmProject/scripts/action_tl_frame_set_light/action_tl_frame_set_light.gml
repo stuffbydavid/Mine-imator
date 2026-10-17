@@ -1,4 +1,4 @@
-function action_tl_frame_set_light(color, strength, specstrength, size, range, fadesize, spotradius, spotsharpness)
+function action_tl_frame_set_light(color, strength, specstrength, size, range, fadesize, spotradius, spotsharpness, areawidth, areaheight)
 {
 	tl_value_set_start(action_tl_frame_set_light, false)
 	tl_value_set(e_value.LIGHT_COLOR, color, false)
@@ -9,5 +9,7 @@ function action_tl_frame_set_light(color, strength, specstrength, size, range, f
 	tl_value_set(e_value.LIGHT_FADE_SIZE, fadesize, false)
 	tl_value_set(e_value.LIGHT_SPOT_RADIUS, spotradius, false)
 	tl_value_set(e_value.LIGHT_SPOT_SHARPNESS, spotsharpness, false)
+	tl_value_set(e_value.LIGHT_AREA_WIDTH, areawidth, false)
+	tl_value_set(e_value.LIGHT_AREA_HEIGHT, areaheight, false)
 	tl_value_set_done()
 }

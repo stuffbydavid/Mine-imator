@@ -755,7 +755,10 @@ function app_startup_interface_tabs()
 		with (light)
 		{
 			has_spotlight = false
+			has_area_light = false
 			tbx_size = new_textbox_decimals()
+			tbx_area_width = new_textbox_decimals()
+			tbx_area_height = new_textbox_decimals()
 			tbx_range = new_textbox_decimals()
 			tbx_strength = new_textbox_integer()
 			tbx_strength.suffix = "%"

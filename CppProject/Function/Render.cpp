@@ -12,6 +12,12 @@ namespace CppProject
 		GFX->UpdateFrustum();
 	}
 
+	void render_set_occlusion_culling(BoolType enabled)
+	{
+		GFX->SubmitBatch();
+		GFX->occlusionPass = enabled;
+	}
+
 	void render_set_viewport(IntType x, IntType y, IntType width, IntType height)
 	{
 		GFX->SubmitBatch();

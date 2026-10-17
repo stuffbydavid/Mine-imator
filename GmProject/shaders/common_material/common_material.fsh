@@ -320,6 +320,62 @@ float getLightAttenuation(float lightDistance, float lightRange, float fadeSize,
 #pragma shady: macro_end
 #endregion
 
+#region AREA_LIGHT_LIB
+#pragma shady: macro_begin AREA_LIGHT_LIB
+
+float getRectangleArea(vec3 axisU, vec3 axisV)
+{
+	return 4.0 * length(cross(axisU, axisV));
+}
+
+// Integrate N.L over the rectangle's solid angle, clipped to the receiver horizon
+float getRectangleIrradiance(vec3 position, vec3 normal, vec3 center, vec3 direction, vec3 axisU, vec3 axisV)
+{
+	if (dot(direction, position - center) <= 0.00001 || getRectangleArea(axisU, axisV) <= 0.00000001)
+		return 0.0;
+
+	vec3 corners[4];
+	corners[0] = center - axisU - axisV - position;
+	corners[1] = center + axisU - axisV - position;
+	corners[2] = center + axisU + axisV - position;
+	corners[3] = center - axisU + axisV - position;
+	vec3 clipped[5];
+	for (int initIndex = 0; initIndex < 5; initIndex++)
+		clipped[initIndex] = vec3(0.0);
+	int count = 0;
+	for (int cornerIndex = 0; cornerIndex < 4; cornerIndex++)
+	{
+		vec3 a = corners[cornerIndex];
+		vec3 b = corners[cornerIndex == 3 ? 0 : cornerIndex + 1];
+		float da = dot(normal, a);
+		float db = dot(normal, b);
+		if (da > 0.0)
+			clipped[count++] = a;
+		if ((da > 0.0) != (db > 0.0))
+			clipped[count++] = mix(a, b, da / (da - db));
+	}
+
+	if (count < 3)
+		return 0.0;
+
+	vec3 integral = vec3(0.0);
+	for (int edgeIndex = 0; edgeIndex < 5; edgeIndex++)
+	{
+		if (edgeIndex >= count)
+			break;
+		vec3 a = normalize(clipped[edgeIndex]);
+		vec3 b = normalize(clipped[edgeIndex + 1 == count ? 0 : edgeIndex + 1]);
+		vec3 edge = cross(a, b);
+		float sine = length(edge);
+		if (sine > 0.00000001)
+			integral += edge * (atan(sine, clamp(dot(a, b), -1.0, 1.0)) / sine);
+	}
+	return min(3.14159265359, 0.5 * abs(dot(normal, integral)));
+}
+
+#pragma shady: macro_end
+#endregion
+
 #region SSS_TRANSLUCENCY_LIB
 #pragma shady: macro_begin SSS_TRANSLUCENCY_LIB
 

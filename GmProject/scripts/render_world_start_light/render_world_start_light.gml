@@ -3,8 +3,9 @@
 /// @arg to
 /// @arg sampleoffset
 /// @arg timeline
+/// @arg areasample
 
-function render_world_start_light(from, to, offset, tl)
+function render_world_start_light(from, to, offset, tl, areasample = 0)
 {
 	render_light_from = from
 	render_light_to = to
@@ -17,8 +18,30 @@ function render_world_start_light(from, to, offset, tl)
 	render_light_size = tl.value[e_value.LIGHT_SIZE]
 	render_light_fade_size = tl.value[e_value.LIGHT_FADE_SIZE]
 	render_light_realistic_falloff = tl.realistic_falloff
+	render_light_area_direction = vec3(0)
+	render_light_area_center = from
+	render_light_area_u = vec3(0)
+	render_light_area_v = vec3(0)
+
+	if (tl.type = e_tl_type.AREA_LIGHT)
+	{
+		var mat, center;
+		mat = array_copy_1d(tl.matrix)
+		matrix_remove_scale(mat)
+		center = point3D_sub(tl_get_area_light_sample(tl, areasample), tl.world_pos)
+		render_light_from = point3D_add(from, center)
+		render_light_to = point3D_add(to, center)
+		render_light_offset = point3D_sub(offset, center)
+		render_light_area_direction = vec3_normalize(vec3(mat[4], mat[5], mat[6]))
+		render_light_area_u = vec3_mul(vec3(mat[0], mat[1], mat[2]), max(0, tl.value[e_value.LIGHT_AREA_WIDTH]) * 0.25)
+		render_light_area_v = vec3_mul(vec3(mat[8], mat[9], mat[10]), max(0, tl.value[e_value.LIGHT_AREA_HEIGHT]) * 0.25)
+		render_light_strength /= 4
+		if (!render_light_realistic_falloff)
+			render_light_specular_strength /= 4
+		render_light_size = 0
+	}
 	
-	if (tl.type = e_tl_type.POINT_LIGHT)
+	if (tl.type = e_tl_type.POINT_LIGHT || tl.type = e_tl_type.AREA_LIGHT)
 	{
 		render_light_fov = 90
 	}

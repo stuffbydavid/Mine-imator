@@ -35,6 +35,8 @@ function tl_value_default(valueid)
 		case e_value.LIGHT_SIZE: return 2
 		case e_value.LIGHT_RANGE: return 250
 		case e_value.LIGHT_FADE_SIZE: return 0.5
+		case e_value.LIGHT_AREA_WIDTH:
+		case e_value.LIGHT_AREA_HEIGHT: return 32
 		case e_value.LIGHT_SPOT_RADIUS: return 50
 		case e_value.LIGHT_SPOT_SHARPNESS: return 0.5
 		case e_value.CAM_FOV: return 45

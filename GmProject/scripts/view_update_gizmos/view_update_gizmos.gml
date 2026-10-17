@@ -57,7 +57,9 @@ function view_update_gizmos(view, cam)
 					
 						draw_set_color((tl.selected || tl.parent_is_selected) ? c_white : c_controls)
 					
-						if (tl.type = e_tl_type.SPOT_LIGHT)
+						if (tl.type = e_tl_type.AREA_LIGHT)
+							view_shape_area_light(tl)
+						else if (tl.type = e_tl_type.SPOT_LIGHT)
 							view_shape_spotlight(tl)
 						else if (tl.type = e_tl_type.POINT_LIGHT)
 							view_shape_pointlight(tl)

@@ -6,6 +6,105 @@ void main() {}
 
 #pragma shady: inline(common_constants.MATH)
 
+uniform float uModelBendEnabled;
+uniform vec3 uModelBendAngles;
+uniform mat4 uModelBendRotation;
+uniform vec4 uModelBendHalfRotation;
+uniform vec4 uModelBendFullRotation;
+uniform vec3 uModelBendPivot;
+uniform vec3 uModelBendAxis;
+uniform vec4 uModelBendRange;
+uniform vec3 uModelBendMinimum;
+uniform vec3 uModelBendMaximum;
+uniform vec3 uModelBendDirection;
+
+float getModelBendWeight(vec3 pos)
+{
+	float weight = clamp((dot(pos, uModelBendAxis) - uModelBendRange.y) / uModelBendRange.z, 0.0, 1.0);
+	return mix(weight, 1.0 - weight, uModelBendRange.w);
+}
+
+vec3 rotateModelBendCached(vec3 value, vec4 rotation)
+{
+	return value + 2.0 * cross(rotation.xyz, cross(rotation.xyz, value) + rotation.w * value);
+}
+
+vec3 rotateModelBend(vec3 value, float weight)
+{
+	// Compact cached rotations avoid trigonometry at common segment weights
+	if (weight == 0.0)
+		return value;
+	if (weight == 0.5)
+		return rotateModelBendCached(value, uModelBendHalfRotation);
+	if (weight == 1.0)
+		return rotateModelBendCached(value, uModelBendFullRotation);
+
+	float t = weight * 2.0;
+	float eased;
+	if (t < 1.0)
+		eased = 0.5 * t * t * t * t * t;
+	else
+	{
+		t -= 2.0;
+		eased = 0.5 * (t * t * t * t * t + 2.0);
+	}
+
+	vec3 angle = uModelBendAngles * vec3(eased, eased, weight);
+	if (angle.x != 0.0)
+		angle.x = clamp(angle.x, uModelBendMinimum.x, uModelBendMaximum.x);
+	if (angle.y != 0.0)
+		angle.y = clamp(angle.y, uModelBendMinimum.y, uModelBendMaximum.y);
+	if (angle.z != 0.0)
+		angle.z = clamp(angle.z, uModelBendMinimum.z, uModelBendMaximum.z);
+
+	// Match matrix_build's Y, X, Z rotation order and handedness
+	angle *= uModelBendDirection * (-PI / 180.0);
+	if (angle.y != 0.0)
+	{
+		float c = cos(angle.y);
+		float s = sin(angle.y);
+		value = vec3(c * value.x + s * value.z, value.y, -s * value.x + c * value.z);
+	}
+	if (angle.x != 0.0)
+	{
+		float c = cos(angle.x);
+		float s = sin(angle.x);
+		value = vec3(value.x, c * value.y - s * value.z, s * value.y + c * value.z);
+	}
+	if (angle.z != 0.0)
+	{
+		float c = cos(angle.z);
+		float s = sin(angle.z);
+		value = vec3(c * value.x - s * value.y, s * value.x + c * value.y, value.z);
+	}
+	return value;
+}
+
+vec3 getModelPosition(vec3 pos)
+{
+	if (uModelBendEnabled < 0.5)
+		return pos;
+
+	vec3 rotated = (uModelBendRotation * vec4(pos, 1.0)).xyz;
+	if (dot(abs(uModelBendAngles), vec3(1.0)) == 0.0)
+		return rotated;
+
+	float weight = getModelBendWeight(pos);
+	float scale = 1.0;
+	if (dot(pos, uModelBendAxis) > uModelBendRange.x)
+		scale += weight * 0.005;
+	return rotateModelBend(rotated - uModelBendPivot, weight) * scale + uModelBendPivot;
+}
+
+vec3 getModelNormal(vec3 normal, vec3 pos)
+{
+	if (uModelBendEnabled < 0.5)
+		return normal;
+
+	vec3 rotated = (uModelBendRotation * vec4(normal, 0.0)).xyz;
+	return normalize(rotateModelBend(rotated, getModelBendWeight(pos)));
+}
+
 // Wind
 uniform float uTime; // static
 uniform float uWindEnable;
@@ -41,6 +140,7 @@ vec3 getWindAngle(vec3 pos, vec4 inWave)
 
 vec3 getWorldPosition(vec3 pos, vec4 inWave)
 {
+	pos = getModelPosition(pos);
 	if (max((inWave.x + inWave.y) * uWindTerrain, uWindEnable) * uWindStrength > 0.0)
 		return (gm_Matrices[MATRIX_WORLD] * vec4(pos + getWind(uTime, pos, inWave), 1.0)).xyz + getWindAngle(pos, inWave);
 	else

@@ -300,6 +300,7 @@ endforeach()
 # Exclude compiled D3D bytecode from source tree
 file(GLOB_RECURSE D3D_SHADER_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
 	"${ASSET_SOURCE_DIR}/Shaders/*.d3d"
+	"${ASSET_SOURCE_DIR}/Shaders/*.d3d.sha256"
 )
 list(SORT D3D_SHADER_FILES)
 
@@ -435,7 +436,7 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:d3dcompiler>"
+		d3dcompiler
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
 		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"
@@ -536,6 +537,15 @@ add_custom_command(
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_OUTPUT_DIR}>"
 	VERBATIM
 )
+if(WIN32)
+	add_custom_command(
+		TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+			"${CMAKE_CURRENT_SOURCE_DIR}/launchWithOGL.ps1"
+			"${CMAKE_BINARY_DIR}/launchWithOGL.ps1"
+		VERBATIM
+	)
+endif()
 
 # Installation layout
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -549,7 +559,7 @@ install(TARGETS ${PROJECT_NAME}
 install(DIRECTORY
 	"${DATAFILES_SOURCE_DIR}/Data"
 	"${DATAFILES_SOURCE_DIR}/Particles"
-	"${DATAFILES_SOURCE_DIR}/Scenery"
+	"${DATAFILES_SOURCE_DIR}/Schematics"
 	DESTINATION "."
 	PATTERN "Libraries" EXCLUDE
 )
@@ -558,6 +568,7 @@ install(DIRECTORY DESTINATION "Packs")
 
 if(WIN32)
 	install(FILES "${EXTERNAL_PLATFORM_DIR}/vcomp140.dll" DESTINATION ".")
+	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/launchWithOGL.ps1" DESTINATION ".")
 	install(DIRECTORY DESTINATION "Projects")
 elseif(APPLE)
 	install(FILES "${OPENMP_RUNTIME_LIBRARY}" DESTINATION "Data/Libraries" RENAME "libomp.dylib")

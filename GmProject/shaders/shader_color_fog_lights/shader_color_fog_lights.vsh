@@ -13,6 +13,7 @@ uniform int uIsGround;
 uniform int uLightAmount; // static
 uniform vec3 uSunDirection; // static
 uniform vec4 uLightData[128]; // static
+uniform vec3 uLightAreaDirections[64]; // static
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -33,7 +34,8 @@ uniform vec2 uTextureOffset;
 void main()
 {
 	vPosition = getWorldPosition(in_Position, in_Wave);
-	vNormal = normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal);
+	vec3 modelNormal = getModelNormal(in_Normal, in_Position);
+	vNormal = normalize(inverse2(gm_Matrices[MATRIX_WORLD]) * modelNormal);
 	vCustom = in_Wave;
 	
 	if (uIsSky > 0)
@@ -44,10 +46,14 @@ void main()
 	{
 		vDiffuse = vec3(0.0);
 		int lights = (uIsGround > 0 ? 1 : uLightAmount);
+		if (lights > 64)
+			lights = 64;
 		for (int i = 0; i < lights; i++)
 		{
 			vec4 data1 = uLightData[i * 2];
 			vec4 data2 = uLightData[i * 2 + 1];
+			if (dot(uLightAreaDirections[i], uLightAreaDirections[i]) > 0.0)
+				continue;
 			vec3 lightPosition = data1.xyz;
 			float lightRange = data1.w, dis, att;
 			
@@ -63,7 +69,7 @@ void main()
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
-	vPlaceNormal = in_Normal;
+	vPlaceNormal = modelNormal;
 	vPlaceDistance = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	
 	gl_Position = getClipPosition(vPosition);

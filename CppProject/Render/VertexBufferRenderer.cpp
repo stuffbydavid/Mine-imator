@@ -42,10 +42,12 @@ namespace CppProject
 		}
 
 		// Append new object
+		buffer->SubmitModelBend(GFX->shader);
 		currentBatch->objects[currentBatch->numObjects] = buffer->id;
 		currentBatch->isInstanced = instanced;
 		currentBatch->matrixM[currentBatch->numObjects] = GFX->matrixM;
 		currentBatch->bounds.AddBounds(worldBounds);
+		currentBatch->occlusionSafe &= !GFX->shader->HasVertexWind(mesh->hasWind);
 		currentBatch->mesh.numVertices += mesh->numVertices;
 		currentBatch->mesh.numIndices += mesh->numIndices;
 		currentBatch->numObjects++;
@@ -81,10 +83,12 @@ namespace CppProject
 		{
 			// Re-use the same mesh for all visible instances
 			Mesh<>* mesh = FindVertexBuffer(currentBatch->objects[0])->meshes[0];
+			occlusion.Begin(currentBatch->bounds, mesh->numIndices * currentBatch->numObjects, currentBatch->occlusionSafe);
 			mesh->BeginUse();
 
 			GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices, currentBatch->numObjects);
 			mesh->EndUse();
+			occlusion.End();
 
 			renderCalls++;
 			trianglesSubmitted += mesh->numIndices / 3 * currentBatch->numObjects;
@@ -110,9 +114,11 @@ namespace CppProject
 				activeBatches.append(submitBatch);
 			}
 
+			occlusion.Begin(currentBatch->bounds, submitBatch->mesh.numIndices, currentBatch->occlusionSafe);
 			submitBatch->mesh.BeginUse();
 			GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, submitBatch->mesh.numIndices);
 			submitBatch->mesh.EndUse();
+			occlusion.End();
 
 			renderCalls++;
 			trianglesSubmitted += submitBatch->mesh.numIndices / 3;
@@ -134,6 +140,7 @@ namespace CppProject
 	void VertexBufferRenderer::EndFrame()
 	{
 		SubmitBatch();
+		occlusion.EndFrame();
 
 		// Free unused batches
 		for (IntType b = 0; b < activeBatches.size(); b++)
@@ -178,6 +185,7 @@ namespace CppProject
 	{
 		numObjects = 0;
 		isInstanced = false;
+		occlusionSafe = true;
 		bounds.Reset();
 
 		mesh.numVertices = mesh.numIndices = 0;

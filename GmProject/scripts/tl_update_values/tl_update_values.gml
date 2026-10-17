@@ -21,14 +21,15 @@ function tl_update_values()
 	keyframe_next_values = null
 	
 	// Find keyframes
-	for (var k = 0; k < ds_list_size(keyframe_list); k++)
-	{
-		keyframe_next = keyframe_list[|k]
-		if (keyframe_next.position > app.timeline_marker)
-			break
-		
-		keyframe_current = keyframe_next
-	}
+	var kfcount, kfindex;
+	kfcount = ds_list_size(keyframe_list)
+	kfindex = tl_keyframe_find_index(app.timeline_marker, true)
+
+	if (kfindex > 0)
+		keyframe_current = keyframe_list[|kfindex - 1]
+
+	if (kfcount > 0)
+		keyframe_next = keyframe_list[|min(kfindex, kfcount - 1)]
 	
 	keyframe_progress = tl_update_values_progress(app.timeline_marker)
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
@@ -101,7 +102,7 @@ function tl_update_values()
 	// Light
 	if (value_type[e_value_type.LIGHT])
 	{
-		for (var vid = e_value.LIGHT_COLOR; vid <= e_value.LIGHT_FADE_SIZE; vid++)
+		for (var vid = e_value.LIGHT_COLOR; vid <= e_value.LIGHT_AREA_HEIGHT; vid++)
 			tl_update_values_ease(vid)
 		
 		// Spotlight

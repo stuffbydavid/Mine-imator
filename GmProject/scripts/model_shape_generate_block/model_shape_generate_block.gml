@@ -1,6 +1,8 @@
 /// @desc Generates a block shape transformed by a bend vector.
+/// @arg bend
+/// @arg [gpu]
 
-function model_shape_generate_block(bend)
+function model_shape_generate_block(bend, gpu = false)
 {
 	// Block dimensions
 	var x1, x2, y1, y2, z1, z2, size, scalef;
@@ -10,7 +12,7 @@ function model_shape_generate_block(bend)
 	scalef = 0.005 // Used to combat Z-fighting
 	
 	// Find whether the shape is bent
-	var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
+	var isbent = (gpu || !vec3_equals(bend, vec3(0))) && bend_shape;
 	
 	// Axis to split up the block
 	var segaxis = Z;
@@ -229,7 +231,9 @@ function model_shape_generate_block(bend)
 
 	// Apply transform
 	var mat;
-	if (isbent) // Apply start bend
+	if (gpu)
+		mat = MAT_IDENTITY
+	else if (isbent) // Apply start bend
 	{
 		var startp, bendvec;
 		if (bendstart > 0) // Below bend, no angle
@@ -417,7 +421,9 @@ function model_shape_generate_block(bend)
 		}
 
 		// Apply transform
-		if (isbent) // Apply segment bend
+		if (gpu)
+			mat = MAT_IDENTITY
+		else if (isbent) // Apply segment bend
 		{
 			var segp, bendvec;
 			if (segpos < bendstart) // Below bend, no angle
