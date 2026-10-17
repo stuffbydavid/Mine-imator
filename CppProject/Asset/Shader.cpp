@@ -524,6 +524,13 @@ namespace CppProject
 		if (uni.type != FLOAT)
 			WARNING("Shader: Submitting float into " + uni.typeName + " uniform " + uni.name);
 
+		if (uni.name == "uWindEnable")
+			occlusionWindEnable = fl;
+		else if (uni.name == "uWindTerrain")
+			occlusionWindTerrain = fl;
+		else if (uni.name == "uWindStrength")
+			occlusionWindStrength = fl;
+
 		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, fl);
 		else
@@ -552,6 +559,8 @@ namespace CppProject
 
 		// Find number of floats
 		ArrType arr = arrOrMatrix.ToArr();
+		if (uni.name == "uAAMatrix")
+			occlusionAAMatrix = Matrix(arr);
 		IntType floatsNum = arr.Size();
 		if (arrOrMatrix.IsVec()) // Vector
 			floatsNum = std::min(tupleSize, arr.Size());
@@ -657,6 +666,9 @@ namespace CppProject
 		const UniformState& uni = uniforms[index];
 		if (uni.type != MAT4)
 			WARNING("Shader: Submitting matrix into " + uni.typeName + " uniform " + uni.name);
+
+		if (uni.name == "uAAMatrix")
+			occlusionAAMatrix = matrix;
 
 		float floats[4][4];
 		matrix.Copy(floats[0]);
@@ -1060,6 +1072,12 @@ namespace CppProject
 		// Reset to first object
 		memcpy(batchBufferData, batchBufferData + batchBufferObjectIndex * batchBufferObjectSize, batchBufferObjectSize);
 		batchBufferObjectIndex = 0;
+	}
+
+	BoolType Shader::HasVertexWind(BoolType terrainWind) const
+	{
+		return occlusionWindStrength != 0.0f &&
+			(occlusionWindEnable != 0.0f || (terrainWind && occlusionWindTerrain != 0.0f));
 	}
 
 	void Shader::WriteUniformValue(const UniformState& uniform, const void* data, IntType size)

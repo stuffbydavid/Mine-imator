@@ -2385,6 +2385,7 @@
     {"id":{"name":"render_set_culling","path":"scripts/render_set_culling/render_set_culling.yy",},},
     {"id":{"name":"render_set_mask_blend","path":"scripts/render_set_mask_blend/render_set_mask_blend.yy",},},
     {"id":{"name":"render_set_material_none","path":"scripts/render_set_material_none/render_set_material_none.yy",},},
+    {"id":{"name":"render_set_occlusion_culling","path":"scripts/render_set_occlusion_culling/render_set_occlusion_culling.yy",},},
     {"id":{"name":"render_set_material_textures_none","path":"scripts/render_set_material_textures_none/render_set_material_textures_none.yy",},},
     {"id":{"name":"render_set_projection_ortho","path":"scripts/render_set_projection_ortho/render_set_projection_ortho.yy",},},
     {"id":{"name":"render_set_projection","path":"scripts/render_set_projection/render_set_projection.yy",},},

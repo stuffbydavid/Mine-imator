@@ -34,6 +34,7 @@ namespace CppProject
 		Heap<V> vertexData;
 		Heap<uint32_t> indexData;
 		Bounds bounds;
+		BoolType hasWind = false;
 
 	#if OS_WINDOWS
 		ID3D11Buffer* d3dVertexBuffer = nullptr;

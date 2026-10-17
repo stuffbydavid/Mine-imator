@@ -2,6 +2,35 @@
 
 # Render test settings
 
+## Occlusion culling
+
+The native renderer uses current-pass GPU depth queries on DirectX 11 and OpenGL
+to conditionally draw scene meshes and instance batches. It tests an expanded
+screen-space bounding rectangle at the nearest depth of the world-space bounds,
+without writing color or depth. Queries never reuse visibility from an older
+camera position or animation frame. OpenGL draws normally if a query result is
+not ready; DirectX uses GPU predication without CPU readback.
+
+Culling is opt-in with `--occlusionCulling` for camera color, G-buffer and auxiliary passes.
+It applies across scene object types, but bypasses draws below 1,024 indices,
+wind-deformed batches, bounds crossing the near plane, and passes without normal
+depth testing. GPU model bends retain their conservative deformation bounds.
+Shadow, selection, picking, preview and multi-view passes are unchanged.
+Transparent geometry can be culled behind existing depth, but the proxy itself
+never becomes an occluder. No opaque depth prepass or draw reordering is added.
+The query pool is capped at 4,096 queries per application frame; further draws
+render normally until the pool is reset on the next frame.
+
+Use `--noOcclusionCulling` to disable queries for image and performance
+comparisons. Test all three renderers on DirectX and OpenGL, including animated
+occluders, camera cuts, near-plane intersections, transparency, wind, bends,
+AA jitter, instanced objects and off-screen shadow casters. Compare saved images
+with culling disabled. GPU-conditional draws still count as submitted draws in
+the existing CPU statistics; profile GPU timings to measure savings. Query
+overhead can outweigh savings in scenes with little hidden geometry. Initial
+Debug comparisons of the rendering fixture showed approximately 5-8% additional
+render time, so culling remains disabled by default pending optimized profiling.
+
 ## GPU model bending
 
 The native renderer reuses segmented vertex buffers for smooth timeline block

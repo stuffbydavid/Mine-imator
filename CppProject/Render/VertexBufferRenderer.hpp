@@ -2,6 +2,7 @@
 #include "Asset/Shader.hpp"
 #include "Asset/VertexBuffer.hpp"
 #include "Type/MatrixType.hpp"
+#include "OcclusionCulling.hpp"
 
 namespace CppProject
 {
@@ -43,12 +44,14 @@ namespace CppProject
 			Bounds bounds;
 			bool isInCurrentFrame = false;
 			bool isInstanced = false;
+			bool occlusionSafe = true;
 		};
 
 		Batch* currentBatch = nullptr;
 		Batch* submitBatch = nullptr;
 
 		QVector<Batch*> activeBatches;
+		OcclusionCulling occlusion;
 
 		IntType renderCalls = 0;
 		IntType batchesCreated = 0;

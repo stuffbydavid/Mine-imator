@@ -1,5 +1,7 @@
 #include "VertexBuffer.hpp"
+#include "AppHandler.hpp"
 #include "Shader.hpp"
+#include "Render/VertexBufferRenderer.hpp"
 
 #include <QIODevice>
 #include <QQuaternion>
@@ -92,9 +94,11 @@ namespace CppProject
 
 			if (GFX->IsVisible(worldBounds))
 			{
+				VB->occlusion.Begin(worldBounds, mesh->numIndices, !shader->HasVertexWind(mesh->hasWind));
 				mesh->BeginUse();
 				shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices);
 				mesh->EndUse();
+				VB->occlusion.End();
 
 				calls++;
 			}

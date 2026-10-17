@@ -21,6 +21,14 @@ function render_world(mode)
 		mode = e_render_mode.SCENE_TEST
 	)
 
+	render_set_occlusion_culling(
+		mode = e_render_mode.COLOR ||
+		mode = e_render_mode.COLOR_FOG ||
+		mode = e_render_mode.COLOR_FOG_LIGHTS ||
+		mode = e_render_mode.G_BUFFERS ||
+		mode = e_render_mode.AUXILIARY
+	)
+
 	if (render_place)
 	{
 		render_place_pass = (
@@ -83,6 +91,8 @@ function render_world(mode)
 
 	render_world_tl_reset()
 	
+	render_set_occlusion_culling(false)
+
 	with (render_shader_obj)
 		shader_clear()
 	

@@ -102,6 +102,11 @@ namespace CppProject
 		// Resets the current batch of objects, called when SubmitVertices is skipped for culling.
 		void ResetObjects();
 
+		// Whether the current object can move outside its mesh bounds in the vertex shader
+		BoolType HasVertexWind(BoolType terrainWind) const;
+		Matrix occlusionAAMatrix = Matrix::Identity();
+		float occlusionWindEnable = 0.0f, occlusionWindTerrain = 0.0f, occlusionWindStrength = 0.0f;
+
 		// Write a uniform value of the current object to the buffer.
 		struct UniformState;
 		void WriteUniformValue(const UniformState& uniform, const void* data, IntType size = 0);
