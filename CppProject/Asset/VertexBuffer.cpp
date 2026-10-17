@@ -9,7 +9,7 @@
 
 namespace CppProject
 {
-	VertexBuffer::VertexBuffer(QDataStream& stream) : VertexBuffer()
+	VertexBuffer::VertexBuffer(QDataStream& stream, BoolType legacyBlockAxes, RealType legacyBlockWidth) : VertexBuffer()
 	{
 		valid = false;
 
@@ -66,6 +66,24 @@ namespace CppProject
 				{
 					delete mesh;
 					return;
+				}
+			}
+
+			// Older scenery caches relied on a render-time block axis transform
+			if (legacyBlockAxes)
+			{
+				auto rotateDirection = [](uint32_t packed)
+				{
+					return ((packed >> 8) & 255) | ((255 - (packed & 255)) << 8) | (packed & 0xFFFF0000);
+				};
+				for (IntType i = 0; i < mesh->numVertices; i++)
+				{
+					Vertex& vertex = mesh->vertexData[i];
+					float oldX = vertex.x;
+					vertex.x = vertex.y;
+					vertex.y = legacyBlockWidth - oldX;
+					vertex.normal = rotateDirection(vertex.normal);
+					vertex.tangent = rotateDirection(vertex.tangent);
 				}
 			}
 
