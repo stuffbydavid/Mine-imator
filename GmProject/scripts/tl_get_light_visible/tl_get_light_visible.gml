@@ -6,6 +6,9 @@ function tl_get_light_visible(planes)
 	range = value[e_value.LIGHT_RANGE]
 	if (range <= 0)
 		return true
+
+	if (type = e_tl_type.AREA_LIGHT)
+		range += 0.5 * (abs(value[e_value.LIGHT_AREA_WIDTH]) + abs(value[e_value.LIGHT_AREA_HEIGHT]))
 	
 	dir = vec3(0)
 	rad = 0

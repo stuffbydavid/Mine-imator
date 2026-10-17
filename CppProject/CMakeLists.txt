@@ -300,6 +300,7 @@ endforeach()
 # Exclude compiled D3D bytecode from source tree
 file(GLOB_RECURSE D3D_SHADER_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
 	"${ASSET_SOURCE_DIR}/Shaders/*.d3d"
+	"${ASSET_SOURCE_DIR}/Shaders/*.d3d.sha256"
 )
 list(SORT D3D_SHADER_FILES)
 
@@ -435,7 +436,7 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:d3dcompiler>"
+		d3dcompiler
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
 		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"

@@ -41,6 +41,17 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     5. **Note**: Assets must still be added, removed, reorganized or renamed via the GameMaker IDE
 9. Generate Release build in `install\Mine-imator\`
     * Run `.\Setup.ps1 Release`
+    * DirectX shader bytecode is checked against a SHA-256 fingerprint of the final
+      converted source, shader profile, and compiler flags. This includes shared
+      shader code and buffer layouts, preventing outdated caches from producing
+      a black viewport.
+    * Release prefers matching embedded caches. Missing or outdated shaders are
+      compiled once and saved under the user's local application cache
+      (`%LOCALAPPDATA%\Mine-imator\cache\Shaders\D3D11` on Windows), then reused
+      on subsequent launches. Changing a shader recompiles only affected stages.
+    * To avoid even first-launch compilation, launch a Debug or RelWithDebInfo
+      build after shader changes, then rebuild Release. The generated `.d3d`
+      files and their `.d3d.sha256` fingerprints are embedded automatically.
 
 ## Building Mine-imator (Mac OS Intel)
 1. Open terminal (⌘+Space and type terminal)

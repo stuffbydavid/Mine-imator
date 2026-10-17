@@ -43,7 +43,7 @@ function action_group_reset()
 			break
 		
 		case e_context_group.LIGHT:
-			action_tl_frame_set_light(c_white, 1, 1, 2, 250, 0.5, 50, 0.5)
+			action_tl_frame_set_light(c_white, 1, 1, 2, 250, 0.5, 50, 0.5, 32, 32)
 			break
 		
 		case e_context_group.COLOR:

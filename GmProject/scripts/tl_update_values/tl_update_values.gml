@@ -102,7 +102,7 @@ function tl_update_values()
 	// Light
 	if (value_type[e_value_type.LIGHT])
 	{
-		for (var vid = e_value.LIGHT_COLOR; vid <= e_value.LIGHT_FADE_SIZE; vid++)
+		for (var vid = e_value.LIGHT_COLOR; vid <= e_value.LIGHT_AREA_HEIGHT; vid++)
 			tl_update_values_ease(vid)
 		
 		// Spotlight

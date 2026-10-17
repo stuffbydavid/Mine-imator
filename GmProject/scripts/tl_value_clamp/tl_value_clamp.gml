@@ -6,6 +6,9 @@ function tl_value_clamp(vid, val)
 	if (tl_value_is_texture(vid))
 		return val
 
+	if (vid = e_value.LIGHT_AREA_WIDTH || vid = e_value.LIGHT_AREA_HEIGHT)
+		return clamp(val, 0, no_limit)
+
 	if (app.setting_unlimited_values)
 	{
 		if (tl_value_is_string(vid) || tl_value_is_bool(vid) || tl_value_is_obj(vid))

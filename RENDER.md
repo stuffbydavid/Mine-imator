@@ -2,6 +2,34 @@
 
 # Render test settings
 
+## Rectangular area lights
+
+Area lights integrate diffuse lighting over the rectangular emitter's projected
+solid angle, clipped against the receiving surface's horizon. Quick rendering
+evaluates this per pixel and uses one light slot per rectangle. Standard and
+realistic rendering integrate each of the four rectangular quadrants analytically
+for diffuse lighting and use 4-by-4 Gauss-Legendre surface quadrature per quadrant
+for GGX specular lighting, concentrating integration points around the reflected
+GGX peak for smooth materials. Specular highlights remain a finite-quadrature
+approximation, not an LTC or ray-traced solution.
+
+The four shadow maps now estimate visibility for continuous emitting patches,
+rather than shading four point sources. Additional render samples jitter shadow
+positions within their quadrants; they do not move the emitting rectangles.
+Shadow boundaries remain sampled and converge with additional render samples.
+Range/fade is evaluated at the emitter center, consistently across its quadrants
+and both diffuse and specular lighting. Width or height zero disables emission.
+With realistic falloff, strength represents total output, so enlarging the
+rectangle spreads its energy over a larger surface. Realistic falloff uses the
+rectangle's finite solid angle instead of the point light's near-distance
+softening. Artistic falloff retains its center-distance brightness normalization.
+
+For validation, compare wide and tall rectangles, rotated/parented lights,
+front/back emission, receivers crossing the horizon, rough and smooth metals,
+zero dimensions, range/fade boundaries, shadows disabled, and soft-shadow
+convergence. Large flat receivers should no longer show four point-light pools.
+Test all three renderers with both DirectX and OpenGL.
+
 ## Occlusion culling
 
 The native renderer uses current-pass GPU depth queries on DirectX 11 and OpenGL

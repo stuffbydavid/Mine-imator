@@ -66,6 +66,8 @@ function app_startup_lists()
 		"LIGHT_SIZE",
 		"LIGHT_RANGE",
 		"LIGHT_FADE_SIZE",
+		"LIGHT_AREA_WIDTH",
+		"LIGHT_AREA_HEIGHT",
 		"LIGHT_SPOT_RADIUS",
 		"LIGHT_SPOT_SHARPNESS",
 		"CAM_FOV",
@@ -345,7 +347,8 @@ function app_startup_lists()
 		"path_point",
 		"environment",
 		"structure",
-		"folder"
+		"folder",
+		"area_light"
 	)
 	
 	// Resource types
@@ -601,7 +604,8 @@ function app_startup_lists()
 		icons.PATH_POINT,
 		icons.CLOUD,
 		icons.SCENERY,
-		icons.FOLDER
+		icons.FOLDER,
+		icons.PLANE
 	)
 	
 	timeline_icon_list_dark = ds_list_create()
@@ -630,7 +634,8 @@ function app_startup_lists()
 		icons.PATH_POINT,
 		icons.CLOUD,
 		icons.SCENERY,
-		icons.FOLDER
+		icons.FOLDER,
+		icons.PLANE
 	)
 	
 	render_pass_list = ds_list_create()

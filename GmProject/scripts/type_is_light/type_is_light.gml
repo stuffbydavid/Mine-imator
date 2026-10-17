@@ -1,4 +1,4 @@
 function type_is_light(type)
 {
-	return (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT)
+	return (type = e_tl_type.POINT_LIGHT || type = e_tl_type.SPOT_LIGHT || type = e_tl_type.AREA_LIGHT)
 }

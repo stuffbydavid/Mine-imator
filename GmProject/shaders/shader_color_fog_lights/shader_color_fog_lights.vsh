@@ -13,6 +13,7 @@ uniform int uIsGround;
 uniform int uLightAmount; // static
 uniform vec3 uSunDirection; // static
 uniform vec4 uLightData[128]; // static
+uniform vec3 uLightAreaDirections[64]; // static
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -45,10 +46,14 @@ void main()
 	{
 		vDiffuse = vec3(0.0);
 		int lights = (uIsGround > 0 ? 1 : uLightAmount);
+		if (lights > 64)
+			lights = 64;
 		for (int i = 0; i < lights; i++)
 		{
 			vec4 data1 = uLightData[i * 2];
 			vec4 data2 = uLightData[i * 2 + 1];
+			if (dot(uLightAreaDirections[i], uLightAreaDirections[i]) > 0.0)
+				continue;
 			vec3 lightPosition = data1.xyz;
 			float lightRange = data1.w, dis, att;
 			

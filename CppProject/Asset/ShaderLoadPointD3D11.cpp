@@ -34,33 +34,11 @@ namespace CppProject
 		Heap<char> data;
 	#if !RELEASE_MODE
 		QString cacheName = ASSETS_DIR "/Shaders/Compiled/" + name + ".gsh.d3d";
-		if (useCache && QFile::exists(cacheName))
-		{
-			QDateTime cacheModified = QFileInfo(cacheName).lastModified();
-			if (QFileInfo(__FILE__).lastModified() >= cacheModified)
-				useCache = false;
-
-			for (const QString& sourceName : sourceDependencies)
-				if (QFileInfo(sourceName).lastModified() >= cacheModified)
-					useCache = false;
-		}
-
-		if (!useCache || !QFile::exists(cacheName))
-		{
-			if (!CompileCodeD3D11(code, "gs_4_0", cacheName, data))
-				return fallback("Geometry compilation failed");
-		}
-		else
 	#else
 		QString cacheName = ":/Shaders/Compiled/" + name + ".gsh.d3d";
 	#endif
-		{
-			QFile file(cacheName);
-			if (!file.open(QFile::ReadOnly))
-				return fallback("Geometry cache unavailable");
-			
-			data = file.readAll();
-		}
+		if (!LoadCachedCodeD3D11(code, "gs_4_0", cacheName, data, useCache))
+			return fallback("Geometry compilation failed");
 
 		HRESULT result = D3DDevice->CreateGeometryShader(data.Data(), data.Size(), nullptr, &d3dPointShader);
 		if (FAILED(result))

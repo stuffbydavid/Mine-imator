@@ -37,9 +37,8 @@ namespace CppProject
 	#if OS_WINDOWS
 		void LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache);
 		QString LoadPointD3D11(const QString& varsDecl, BoolType useCache);
-	#if !RELEASE_MODE
+		BoolType LoadCachedCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst, BoolType useCache);
 		BoolType CompileCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst);
-	#endif
 	#endif
 
 		void LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache);

@@ -40,7 +40,8 @@ function action_group_copy()
 		case e_context_group.LIGHT:
 			arr = [ tl_edit.value[e_value.LIGHT_COLOR], tl_edit.value[e_value.LIGHT_STRENGTH], tl_edit.value[e_value.LIGHT_SPECULAR_STRENGTH],
 					tl_edit.value[e_value.LIGHT_SIZE], tl_edit.value[e_value.LIGHT_RANGE], tl_edit.value[e_value.LIGHT_FADE_SIZE],
-					tl_edit.value[e_value.LIGHT_SPOT_RADIUS], tl_edit.value[e_value.LIGHT_SPOT_SHARPNESS] ]
+					tl_edit.value[e_value.LIGHT_SPOT_RADIUS], tl_edit.value[e_value.LIGHT_SPOT_SHARPNESS],
+					tl_edit.value[e_value.LIGHT_AREA_WIDTH], tl_edit.value[e_value.LIGHT_AREA_HEIGHT] ]
 			break
 		
 		case e_context_group.COLOR:
