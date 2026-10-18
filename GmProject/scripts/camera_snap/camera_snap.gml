@@ -15,9 +15,10 @@ function camera_snap(dir)
 	cam_work_angle_goal_look_z = clamp(cam_work_angle_goal_look_z, -pitch_limit, pitch_limit)
 	
 	// Invert goal angle if identical to current angle
-	if (cam_work_angle_goal_look_xy = tempangle[X] && cam_work_angle_goal_look_z = tempangle[Y])
+	var errormargin = 0.05;
+	if (abs(cam_work_angle_goal_look_xy - tempangle[X]) <= errormargin && abs(cam_work_angle_goal_look_z - tempangle[Y]) <= errormargin)
 	{
-		cam_work_angle_goal_look_xy = mod_fix(cam_work_angle_goal_look_xy + 180, 360)
+		cam_work_angle_goal_look_xy = mod_fix(cam_work_angle_goal_look_xy + (is_cpp() ? 360 : 180), 360) + (is_cpp() ? -180 : 0)
 		cam_work_angle_goal_look_z = cam_work_angle_goal_look_z * -1
 	}
 	
