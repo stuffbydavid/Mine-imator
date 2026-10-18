@@ -32,6 +32,7 @@ function project_save_resource()
 		
 		if (type = e_res_type.FROM_WORLD)
 		{
+			json_save_var("world_name", json_string_encode(world_name))
 			json_save_var("world_regions_dir", json_string_encode(world_regions_dir))
 			json_save_var_point3D("world_box_start", world_box_start)
 			json_save_var_point3D("world_box_end", world_box_end)
@@ -45,7 +46,8 @@ function project_save_resource()
 		if (type = e_res_type.SOUND && minecraft_hash != "")
 			json_save_var("minecraft_hash", minecraft_hash)
 		
-		json_save_var("material_format", material_format)
+		if (material_format != e_material.FORMAT_LABPBR)
+			json_save_var("material_format", material_format)
 		
 		if (load_folder != save_folder)
 			res_save()

@@ -42,7 +42,16 @@ function action_bench_schematic_create_resource()
 		res.block_vbuffer = null
 		
 		file_copy_lib(res.scenery_source, app.project_folder + "/" + filename)
-		res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
+		
+		// Rebuild when scenery timeline setting differs
+		if (scenery_tl_add != res.scenery_tl_add)
+		{
+			load_folder = app.project_folder
+			save_folder = app.project_folder
+			res_load(true)
+		}
+		else
+			res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
 	}
 	
 	with (rescopy)

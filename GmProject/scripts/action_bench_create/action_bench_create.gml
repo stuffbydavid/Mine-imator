@@ -242,11 +242,12 @@ function action_bench_create(button = e_bench_button.CREATE)
 				var sceneryres = null;
 				if (history_redo)
 				{
+					replaceground = history_data.scenery_replace_ground
+					
 					if (history_data.scenery_res_save_obj != null)
 					{
 						sceneryres = history_restore_res(history_data.scenery_res_save_obj)
 						sceneryres.display_name = history_data.scenery_res_save_obj.display_name
-						replaceground = history_data.scenery_replace_ground
 						bench_settings.scenery = sceneryres
 					}
 					
@@ -256,17 +257,16 @@ function action_bench_create(button = e_bench_button.CREATE)
 					hobj.scenery_res_save_obj = null
 					sceneryres = action_bench_schematic_create_resource()
 					if (sceneryres != null)
-					{
 						hobj.scenery_res_save_obj = history_save_res(sceneryres)
-						
-						// Replace ground
-						if (setting_scenery_replace_ground &&
-							sceneryres.scenery_size[X] > scenery_large_threshold && sceneryres.scenery_size[Y] > scenery_large_threshold)
-						{
-							replaceground = true
-							hobj.scenery_replace_ground = true
-							hobj.scenery_ground_show = env_ground_show
-						}
+					
+					// Check the selected resource, including existing project scenery
+					var selectedres = bench_settings.scenery;
+					if (selectedres != null && setting_scenery_replace_ground &&
+						selectedres.scenery_size[X] > scenery_large_threshold && selectedres.scenery_size[Y] > scenery_large_threshold)
+					{
+						replaceground = true
+						hobj.scenery_replace_ground = true
+						hobj.scenery_ground_show = env_ground_show
 					}
 				}
 				

@@ -22,7 +22,7 @@ The repository root directory defaults to `../../`, while the GML specification 
 cd CppGen
 cmake -S . -B build -A x64
 cmake --build build --parallel --config Release
-build/CppGen.exe .. gml.json
+Win64/CppGen.exe .. gml.json
 ```
 ## Building CppGen  (Mac/Linux) (optional):
 ```

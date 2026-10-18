@@ -210,7 +210,7 @@ function app_update_place()
 	tl_update_matrix()
 		
 	// Update history defaults
-	with (place_history)
+	with (place_hobj)
 	{
 		tl_value_copy_vec3(e_value.POS_X, value_default, app.place_tl.value_default)
 		tl_value_copy_vec3(e_value.ROT_X, value_default, app.place_tl.value_default)

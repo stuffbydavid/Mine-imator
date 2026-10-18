@@ -1,8 +1,25 @@
 /// @desc Generate triangles from the block render models.
+/// CppGen ArrRef build_pos
+/// CppGen ArrRef build_size
+/// CppGen ArrRef build_edge
+/// CppGen ArrRef block_pos
+/// CppGen ArrRef block_face_full
+/// CppGen ArrRef block_face_min
+/// CppGen ArrRef block_face_max
+/// CppGen ArrRef block_face_min_depth
 
 function builder_generate()
 {
-	block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
+	// Read block coordinates once for this call
+	var blockx, blocky, blockz, sizex, sizey, sizez;
+	blockx = build_pos[X]
+	blocky = build_pos[Y]
+	blockz = build_pos[Z]
+	sizex = build_size[X]
+	sizey = build_size[Y]
+	sizez = build_size[Z]
+	
+	block_current = builder_get_block(blockx, blocky, blockz)
 	if (block_current = null)
 		return 0
 	
@@ -15,161 +32,72 @@ function builder_generate()
 		}
 	}
 	
-	build_edge_xp = (build_pos_x = build_size_x - 1)
-	build_edge_xn = (build_pos_x = 0)
-	build_edge_yp = (build_pos_y = build_size_y - 1)
-	build_edge_yn = (build_pos_y = 0)
-	build_edge_zp = (build_pos_z = build_size_z - 1)
-	build_edge_zn = (build_pos_z = 0)
+	// Check neighboring faces and selection boundaries for culling
+	build_edge[XP] = (blockx = sizex - 1)
+	build_edge[XN] = (blockx = 0)
+	build_edge[YP] = (blocky = sizey - 1)
+	build_edge[YN] = (blocky = 0)
+	build_edge[ZP] = (blockz = sizez - 1)
+	build_edge[ZN] = (blockz = 0)
 	
-	// Check edges for culling
-	
-	// X+
-	block_face_full_xp = false
-	block_face_min_depth_xp = null
-	if (build_edge_xp)
+	var solidfaces = 0;
+	for (var f = 0; f < block_faces; f++)
 	{
-		if (!mc_builder.build_edges)
+		var opposite, othermodel;
+		opposite = f ^ 1
+		othermodel = null
+		if (!build_edge[f])
 		{
-			block_face_full_xp = true
-			block_face_min_depth_xp = e_block_depth.DEPTH0
+			var neighborx, neighbory, neighborz;
+			neighborx = blockx
+			neighbory = blocky
+			neighborz = blockz
+			
+			switch (f)
+			{
+				case XP: neighborx = blockx + 1; break
+				case XN: neighborx = blockx - 1; break
+				case YP: neighbory = blocky + 1; break
+				case YN: neighbory = blocky - 1; break
+				case ZP: neighborz = blockz + 1; break
+				case ZN: neighborz = blockz - 1; break
+			}
+
+			othermodel = builder_get_render_model(neighborx, neighbory, neighborz)
 		}
-	}
-	else
-	{
-		var othermodel = builder_get_render_model(build_pos_x + 1, build_pos_y, build_pos_z);
 		if (othermodel != null)
+			builder_set_neighbor_face(othermodel, f, opposite)
+		else
 		{
-			block_face_full_xp = othermodel.face_full_xn
-			block_face_min_xp = othermodel.face_min_xn
-			block_face_max_xp = othermodel.face_max_xn
-			block_face_min_depth_xp = othermodel.face_min_depth_xn
+			// Initialize missing neighbors without clearing faces that will be copied
+			block_face_full[f] = false
+			block_face_min[f] = null
+			block_face_max[f] = null
+			block_face_min_depth[f] = null
+			
+			// Keep the top boundary open when removing scenery edges
+			if (build_edge[f] && !mc_builder.build_edges && f != ZP)
+			{
+				block_face_full[f] = true
+				block_face_min_depth[f] = e_block_depth.DEPTH0
+			}
 		}
+
+		if (block_face_min_depth[f] = e_block_depth.DEPTH0 && block_face_full[f])
+			solidfaces++
 	}
-	
-	// X-
-	block_face_full_xn = false
-	block_face_min_depth_xn = null
-	if (build_edge_xn)
-	{
-		if (!mc_builder.build_edges)
-		{
-			block_face_full_xn = true
-			block_face_min_depth_xn = e_block_depth.DEPTH0
-		}
-	}
-	else
-	{
-		var othermodel = builder_get_render_model(build_pos_x - 1, build_pos_y, build_pos_z);
-		if (othermodel != null)
-		{
-			block_face_full_xn = othermodel.face_full_xp
-			block_face_min_xn = othermodel.face_min_xp
-			block_face_max_xn = othermodel.face_max_xp
-			block_face_min_depth_xn = othermodel.face_min_depth_xp
-		}
-	}
-	
-	// Y+
-	block_face_full_yp = false
-	block_face_min_depth_yp = null
-	if (build_edge_yp)
-	{
-		if (!mc_builder.build_edges)
-		{
-			block_face_full_yp = true
-			block_face_min_depth_yp = e_block_depth.DEPTH0
-		}
-	}
-	else
-	{
-		var othermodel = builder_get_render_model(build_pos_x, build_pos_y + 1, build_pos_z);
-		if (othermodel != null)
-		{
-			block_face_full_yp = othermodel.face_full_yn
-			block_face_min_yp = othermodel.face_min_yn
-			block_face_max_yp = othermodel.face_max_yn
-			block_face_min_depth_yp = othermodel.face_min_depth_yn
-		}
-	}
-	
-	// Y-
-	block_face_full_yn = false
-	block_face_min_depth_yn = null
-	if (build_edge_yn)
-	{
-		if (!mc_builder.build_edges)
-		{
-			block_face_full_yn = true
-			block_face_min_depth_yn = e_block_depth.DEPTH0
-		}
-	}
-	else
-	{
-		var othermodel = builder_get_render_model(build_pos_x, build_pos_y - 1, build_pos_z);
-		if (othermodel != null)
-		{
-			block_face_full_yn = othermodel.face_full_yp
-			block_face_min_yn = othermodel.face_min_yp
-			block_face_max_yn = othermodel.face_max_yp
-			block_face_min_depth_yn = othermodel.face_min_depth_yp
-		}
-	}
-	
-	// Z+
-	block_face_full_zp = false
-	block_face_min_depth_zp = null
-	if (!build_edge_zp)
-	{
-		var othermodel = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z + 1);
-		if (othermodel != null)
-		{
-			block_face_full_zp = othermodel.face_full_zn
-			block_face_min_zp = othermodel.face_min_zn
-			block_face_max_zp = othermodel.face_max_zn
-			block_face_min_depth_zp = othermodel.face_min_depth_zn
-		}
-	}
-	
-	// Z-
-	block_face_full_zn = false
-	block_face_min_depth_zn = null
-	if (build_edge_zn)
-	{
-		if (!mc_builder.build_edges)
-		{
-			block_face_full_zn = true
-			block_face_min_depth_zn = e_block_depth.DEPTH0
-		}
-	}
-	else
-	{
-		var othermodel = builder_get_render_model(build_pos_x, build_pos_y, build_pos_z - 1);
-		if (othermodel != null)
-		{
-			block_face_full_zn = othermodel.face_full_zp
-			block_face_min_zn = othermodel.face_min_zp
-			block_face_max_zn = othermodel.face_max_zp
-			block_face_min_depth_zn = othermodel.face_min_depth_zp
-		}
-	}
-	
+
 	// Completely surrounded by solids, skip
-	if (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp &&
-		block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn &&
-		block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp &&
-		block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn &&
-		block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp &&
-		block_face_min_depth_zn = e_block_depth.DEPTH0 && block_face_full_zn)
+	if (solidfaces = block_faces)
 		return 0
 	
 	// Current state ID
-	block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
+	block_state_id_current = builder_get_state_id(blockx, blocky, blockz)
 	
 	// Block position
-	block_pos_x = build_pos_x * block_size
-	block_pos_y = build_pos_y * block_size
-	block_pos_z = build_pos_z * block_size
+	block_pos[X] = blockx * block_size
+	block_pos[Y] = blocky * block_size
+	block_pos[Z] = blockz * block_size
 	block_color = null
 	
 	// Run a block-specific script for generating a mesh if available
@@ -183,11 +111,11 @@ function builder_generate()
 		else
 		{
 			// Get modelindex (0 for air, <0 for multi-part, >0 for single)
-			var modelindex = builder_get_render_model_index(build_pos_x, build_pos_y, build_pos_z);
+			var modelindex = builder_get_render_model_index(blockx, blocky, blockz);
 			if (modelindex > 0)
 				model = modelindex
 			else if (modelindex < 0)
-				model = builder_get_render_model_multipart(build_pos_x, build_pos_y, build_pos_z, -modelindex)
+				model = builder_get_render_model_multipart(blockx, blocky, blockz, -modelindex)
 		}
 		
 		// Get single model
@@ -203,15 +131,10 @@ function builder_generate()
 			if ((singlemodel.random_offset && (build_size_total > 1)) || (singlemodel.random_offset_xy && (build_size_xy > 1)))
 			{
 				if (singlemodel.random_offset)
-				{
-					random_set_seed(build_pos_x * build_size_y * build_size_z + build_pos_y * build_size_z + build_pos_z)
-					block_pos_z += irandom_range(-3, 0)
-				}
-				else
-					random_set_seed(build_pos_x + build_size_x * build_pos_y)
+					block_pos[Z] += builder_irandom_range(-3, 0, Z)
 				
-				block_pos_x += irandom_range(-4, 4)
-				block_pos_y += irandom_range(-4, 4)
+				block_pos[X] += builder_irandom_range(-4, 4, X, singlemodel.random_offset)
+				block_pos[Y] += builder_irandom_range(-4, 4, Y, singlemodel.random_offset)
 			}
 		}
 		
@@ -219,7 +142,7 @@ function builder_generate()
 		block_vertex_emissive = null
 		block_vertex_wave = block_current.wind_axis
 		if (block_current.wind_zmin != null)
-			block_vertex_wave_zmin = block_pos_z + block_current.wind_zmin
+			block_vertex_wave_zmin = block_pos[Z] + block_current.wind_zmin
 		block_vertex_subsurface = block_current.subsurface
 		
 		// Generate render modelindex(s)
@@ -240,15 +163,15 @@ function builder_generate()
 	block_vertex_subsurface = 0
 	
 	// Waterlogged
-	if (builder_get_waterlogged(build_pos_x, build_pos_y, build_pos_z))
+	if (builder_get_waterlogged(blockx, blocky, blockz))
 	{
 		// Restore block position in case of offset
-		block_pos_x = build_pos_x * block_size
-		block_pos_y = build_pos_y * block_size
-		block_pos_z = build_pos_z * block_size
+		block_pos[X] = blockx * block_size
+		block_pos[Y] = blocky * block_size
+		block_pos[Z] = blockz * block_size
 		
 		block_current = mc_assets.block_name_map[?"water"]
-		block_generate_liquid(true)
+		builder_generate_liquid(true)
 		
 		block_vertex_wave = e_vertex_wave.NONE
 		block_vertex_wave_zmin = null

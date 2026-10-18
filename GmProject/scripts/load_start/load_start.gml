@@ -17,12 +17,17 @@ function load_start(object, script)
 		progress = 0
 		load_object = object
 		load_script = script
+		load_wait = false
 	}
 
 	// Show resource name before the first loading frame
 	with (object)
 	{
-		other.popup_loading.caption = filename
+		if (type = e_res_type.FROM_WORLD)
+			other.popup_loading.caption = world_name
+		else
+			other.popup_loading.caption = filename
+
 		switch (type)
 		{
 			case e_res_type.SCHEMATIC:

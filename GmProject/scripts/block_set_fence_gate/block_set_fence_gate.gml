@@ -12,17 +12,17 @@ function block_set_fence_gate()
 	if (facing = "east" || facing = "west")
 	{
 		// Check south for wall
-		if (!build_edge_yp)
+		if (!build_edge[YP])
 		{
-			block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z)
+			block = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z])
 			if (block != null && block.type = "wall")
 				inwall = "true"
 		}
 		
 		// Check north for wall
-		if (inwall = "false" && !build_edge_yn)
+		if (inwall = "false" && !build_edge[YN])
 		{
-			block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z)
+			block = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z])
 			if (block != null && block.type = "wall")
 				inwall = "true"
 		}
@@ -30,17 +30,17 @@ function block_set_fence_gate()
 	else if (facing = "south" || facing = "north")
 	{
 		// Check east for wall
-		if (!build_edge_xp)
+		if (!build_edge[XP])
 		{
-			block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z)
+			block = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z])
 			if (block != null && block.type = "wall")
 				inwall = "true"
 		}
 		
 		// Check west for wall
-		if (inwall = "false" && !build_edge_xn)
+		if (inwall = "false" && !build_edge[XN])
 		{
-			block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z)
+			block = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z])
 			if (block != null && block.type = "wall")
 				inwall = "true"
 		}

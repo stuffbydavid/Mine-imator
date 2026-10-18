@@ -30,7 +30,10 @@ function toolbar_draw()
 		content_capwid = string_width(text_get("toolbar/edit")) + 16
 		toolbar_draw_button("toolbar/edit", dx, dy, content_capwid)
 		dx += content_capwid + padding
-
+	}
+	
+	if (window_state = "" || window_state = "world_import")
+	{
 		// Export
 		content_capwid = string_width(text_get("toolbar/export")) + 16
 		toolbar_draw_button("toolbar/export", dx, dy, content_capwid)

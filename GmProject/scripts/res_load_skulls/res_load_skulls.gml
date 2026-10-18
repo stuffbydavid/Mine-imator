@@ -117,5 +117,9 @@ function res_load_skulls()
 			block_skull_texture_fail = false
 			block_skull_download_wait = false
 		}
+		
+		// Wait for the download callback or timeout
+		if (!nexttex)
+			app.popup_loading.load_wait = true
 	}
 }

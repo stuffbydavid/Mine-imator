@@ -103,6 +103,13 @@ namespace CppProject
 		return "";
 	}
 
+	void message_set_caption(StringType caption)
+	{
+		App->messageCaption = caption.QStr();
+		if (App->messageCaption.isEmpty())
+			App->messageCaption = "Mine-imator";
+	}
+
 	IntType show_message_ext(StringType title, StringType text, StringType button1, StringType button2, StringType button3)
 	{
 		QMessageBox msg;

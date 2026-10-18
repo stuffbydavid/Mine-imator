@@ -9,6 +9,7 @@ function res_copy(to)
 	to.scenery_tl_add = scenery_tl_add
 	to.scenery_download_skins = scenery_download_skins
 	to.world_regions_dir = world_regions_dir
+	to.world_name = world_name
 	to.world_box_start = world_box_start
 	to.world_box_end = world_box_end
 	to.world_filter_mode = world_filter_mode

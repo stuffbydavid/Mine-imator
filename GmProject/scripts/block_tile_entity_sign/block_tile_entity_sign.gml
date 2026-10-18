@@ -10,18 +10,18 @@ function block_tile_entity_sign(map)
 		// Front
 		colorname = value_get_string(frontmap[?"color"], "black")
 		glowing = value_get_real(frontmap[?"has_glowing_text"], 0)
-		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
-		mc_builder.block_text_front_glow_color_map[?build_pos] = minecraft_get_color("text_glow:outline_" + colorname)
-		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
-		mc_builder.block_text_front_map[?build_pos] = block_tile_entity_sign_text(frontmap)
+		mc_builder.block_text_front_color_map[?build_pos_index] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+		mc_builder.block_text_front_glow_color_map[?build_pos_index] = minecraft_get_color("text_glow:outline_" + colorname)
+		mc_builder.block_text_front_glowing_map[?build_pos_index] = glowing
+		mc_builder.block_text_front_map[?build_pos_index] = block_tile_entity_sign_text(frontmap)
 		
 		// Back
 		colorname = value_get_string(backmap[?"color"], "black")
 		glowing = value_get_real(backmap[?"has_glowing_text"], 0)
-		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
-		mc_builder.block_text_back_glow_color_map[?build_pos] = minecraft_get_color("text_glow:outline_" + colorname)
-		mc_builder.block_text_back_glowing_map[?build_pos] = glowing
-		mc_builder.block_text_back_map[?build_pos] = block_tile_entity_sign_text(backmap)
+		mc_builder.block_text_back_color_map[?build_pos_index] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+		mc_builder.block_text_back_glow_color_map[?build_pos_index] = minecraft_get_color("text_glow:outline_" + colorname)
+		mc_builder.block_text_back_glowing_map[?build_pos_index] = glowing
+		mc_builder.block_text_back_map[?build_pos_index] = block_tile_entity_sign_text(backmap)
 	}
 	else // Use legacy format if detected
 	{
@@ -61,9 +61,9 @@ function block_tile_entity_sign(map)
 			text += line
 		}
 		
-		mc_builder.block_text_front_map[?build_pos] = text
-		mc_builder.block_text_front_color_map[?build_pos] = color
-		mc_builder.block_text_front_glow_color_map[?build_pos] = glowcolor
-		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
+		mc_builder.block_text_front_map[?build_pos_index] = text
+		mc_builder.block_text_front_color_map[?build_pos_index] = color
+		mc_builder.block_text_front_glow_color_map[?build_pos_index] = glowcolor
+		mc_builder.block_text_front_glowing_map[?build_pos_index] = glowing
 	}
 }

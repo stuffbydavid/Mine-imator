@@ -14,7 +14,7 @@ function tip_draw()
 		return 0
 	}
 	
-	if (tip_final_x = -1)
+	if (tip_final_x = -1 || point_distance(tip_final_x, tip_final_y, tip_x, tip_y) > 100)
 	{
 		tip_final_x = tip_x
 		tip_final_y = tip_y

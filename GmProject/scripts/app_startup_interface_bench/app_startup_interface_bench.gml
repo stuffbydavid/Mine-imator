@@ -174,6 +174,7 @@ function app_startup_interface_bench()
 		
 		project_list = project_lib_list
 		project_selected = null
+		project_settings_type = null
 
 		for (var i = 0; i < ds_list_size(res_type_name_list); i++)
 		{

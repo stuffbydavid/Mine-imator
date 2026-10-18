@@ -43,7 +43,7 @@ function macros()
 	#macro render_presets				[ "performance.mirender", "balanced.mirender", "extreme.mirender" ]
 	#macro render_preset_default		"balanced.mirender"
 	#macro render_preset_default_name	"balanced"
-	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
+	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.litematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
 	#macro mc_file_directory			file_directory_get() + "Minecraft_unzip/"
@@ -201,7 +201,7 @@ function macros()
 	#macro schematic_folders			[ "Buildings", "Biomes", "Trees", "Structures", "Other" ]
 	#macro schematic_folders_default	[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
 	#macro scenery_large_threshold		300
-	#macro scenery_instant_threshold	20 * 1024 // 20kb
+	#macro scenery_instant_threshold	50 * 1024 // 50kb
 	#macro scenery_timeline_prompt		20
 	#macro scenery_timeline_limit		512
 	#macro sound_filters				[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
@@ -230,6 +230,7 @@ function macros()
 	#macro block_size					16
 	#macro block_half_size				8
 	#macro block_size_list				[ 16, 32, 64 ]
+	#macro block_faces					6
 	#macro item_size					16
 	#macro clip_far						30000
 	#macro clip_near					1
@@ -239,6 +240,12 @@ function macros()
 	#macro Y							1
 	#macro Z							2
 	#macro W							3
+	#macro XP							0
+	#macro XN							1
+	#macro YP							2
+	#macro YN							3
+	#macro ZP							4
+	#macro ZN							5
 	#macro MAT_X						12
 	#macro MAT_Y						13
 	#macro MAT_Z						14

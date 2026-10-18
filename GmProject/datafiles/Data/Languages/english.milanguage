@@ -368,6 +368,7 @@
 		"animated_multiple": "The selected objects have multiple keyframes.",
 		"animated_part": "A model part has multiple keyframes.",
 		"equip_armor": "Parent the armor to a character to equip it.",
+		"schematic_saved": "Schematic saved successfully!",
 		"close": "Close"
 	},
 	"error/": {
@@ -401,6 +402,8 @@
 		"load_schematic_caption": "Import schematic error",
 		"load_world": "Could not import from world, it might be deleted or moved to another location.",
 		"load_world_caption": "Import from world error",
+		"open_world_folder": "Could not open world folder, it might be deleted or moved to another location.",
+		"open_world_folder_caption": "Open world folder world error",
 		"load_structure": "Could not read the structure file. See the log for details.",
 		"load_structure_caption": "Import structure error",
 		"unzip_pack": "Could not unzip the pack.",
@@ -416,6 +419,9 @@
 		"upgrade_caption": "Upgrade error",
 		"download_skin_user": "The user \"%1\" does not exist.",
 		"download_skin_internet": "Could not download skin, check your internet connection.",
+		"export_schematic_old_chunks": "The selection contains pre-Java 1.13 chunks. Use Minecraft's Optimize World option to upgrade all chunks, then try again.",
+		"export_schematic_new_chunks": "The selection contains Java 1.13 chunks or newer and cannot be exported as a legacy schematic.",
+		"export_schematic_caption": "Export Schematic error",
 		"test": "The supplied project could not be loaded for testing.",
 		"test_caption": "Test error."
 	},
@@ -475,6 +481,8 @@
 			"movie_caption": "Save movie",
 			"image": "Images",
 			"image_caption": "Save image",
+			"schematic": "Schematic files",
+			"schematic_caption": "Save Minecraft Schematic",
 			"particles": "Particle files",
 			"particles_caption": "Save particle creator",
 			"object": "Object files",
@@ -534,7 +542,8 @@
 		"export": "Export",
 		"export/": {
 			"image": "Export image...",
-			"movie": "Export movie..."
+			"movie": "Export movie...",
+			"schematic": "Export schematic..."
 		},
 		"view": "View",
 		"view/": {
@@ -2250,6 +2259,7 @@
 		"selection_small": "Small",
 		"selection_medium": "Medium",
 		"selection_large": "Large",
+		"export_tip": "Export selection as Schematic",
 		"selection_size": "%1 x %2 x %3 selected",
 		"filter_active": "Blocks are filtered",
 		"confirm": "Import selection",
@@ -3852,6 +3862,7 @@
 	},
 	"resources": "RESOURCES",
 	"resources/": {
+		"filename": "Filename",
 		"pack/": {
 			"project": "Project resource pack",
 			"image": "Resource pack asset",
@@ -3904,6 +3915,15 @@
 		"item_sheet_size_grid": "Grid",
 		"item_sheet_size_columns": "Columns",
 		"item_sheet_size_rows": "Rows",
+		"world_box/": {
+			"x": "X",
+			"y": "Y",
+			"z": "Z"
+		},
+		"world_box_start": "Start block position",
+		"world_box_end": "End block position",
+		"reload_from_world": "Reload from world",
+		"open_world_folder": "Open world folder",
 		"scenery_randomize": "Randomize blocks",
 		"scenery_randomize_help": "Use random models and rotations for the scenery blocks.",
 		"scenery_structure_palette": "Palette",
@@ -3912,8 +3932,7 @@
 		"scenery_structure_integrity_invert": "Invert integrity filter",
 		"material_format": "Material map format",
 		"material_format_labpbr": "LabPBR",
-		"material_format_seus": "OldPBR / SEUS",
-		"file_name": "Filename"
+		"material_format_seus": "OldPBR / SEUS"
 	},
 	"load_scenery/": {
 		"caption": "Importing %1",

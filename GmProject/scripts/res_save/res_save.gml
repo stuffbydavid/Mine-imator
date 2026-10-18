@@ -2,7 +2,7 @@
 
 function res_save()
 {
-	if (type != e_res_type.FROM_WORLD)
+	if (load_folder != save_folder)
 		file_copy_lib(load_folder + "/" + filename, save_folder + "/" + filename)
 	
 	// Save model's own textures

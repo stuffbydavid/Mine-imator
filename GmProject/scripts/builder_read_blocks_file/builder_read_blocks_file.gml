@@ -6,10 +6,10 @@ function builder_read_blocks_file()
 	debug_timer_start()
 	
 	file_map = buffer_read_string_short_be()
-	build_size_y = buffer_read_short_be() // Derp
-	build_size_x = buffer_read_short_be()
-	build_size_z = buffer_read_short_be()
-	log("Size", string(build_size_x) + " x " + string(build_size_y) + " x " + string(build_size_z))
+	build_size[Y] = buffer_read_short_be() // Derp
+	build_size[X] = buffer_read_short_be()
+	build_size[Z] = buffer_read_short_be()
+	log("Size", string(build_size[X]) + " x " + string(build_size[Y]) + " x " + string(build_size[Z]))
 	
 	builder_start()
 	sch_timeline_amount = 0

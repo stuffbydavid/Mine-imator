@@ -107,7 +107,7 @@ function res_load(reload = false)
 			
 			// Load from cached mesh
 			var cachefn = fn + ".meshcache";
-			if (!reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
+			if (!reload && !world_reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
 				break
 				
 			ready = false
@@ -334,9 +334,7 @@ function res_load(reload = false)
 				block_vbuffer_start()
 				with (mc_builder)
 				{
-					build_size_x = 1
-					build_size_y = 1
-					build_size_z = 1
+					build_size = vec3(1)
 					build_randomize = other.scenery_randomize
 					build_transform = false
 					

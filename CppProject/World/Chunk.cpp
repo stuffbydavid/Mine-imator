@@ -3,6 +3,15 @@
 
 namespace CppProject
 {
+	template <typename T> static T* PreparePreviewData(Heap<T>& data, IntType size)
+	{
+		if (data.Size() < size)
+			data.Alloc(size, false);
+
+		memset(data.data, 0, size * sizeof(T));
+		return data.data;
+	}
+
 	WorldVec blockFaceOffset[Chunk::FaceDirectionAmount][4] = {
 		{ { 1, 0, 1 }, { 1, 0, 0 }, { 1, 1, 0 }, { 1, 1, 1 } }, // Right
 		{ { 0, 0, 0 }, { 0, 0, 1 }, { 0, 1, 1 }, { 0, 1, 0 } }, // Left
@@ -20,28 +29,47 @@ namespace CppProject
 		{ { 1, 0, 0 }, { 0, 1, 0 } } // Back
 	};
 
-	Chunk::Chunk(Region* region, QByteArray& data, const WorldBox& box) : region(region)
+	Chunk::Chunk(Region* region, QByteArray& data, const WorldBox& box, SchematicExport* schematic) : region(region)
 	{
 		memset(sections, 0, sizeof(sections));
 
 		try
 		{
-			NbtStream stream(data, {
-				{ TAG_BYTE, { "Y" } },
-				{ TAG_BYTE_ARRAY, { "SkyLight", "BlockLight", "Blocks", "Data", "Biomes", "Add" }},
-				{ TAG_COMPOUND, { "Level", "properties", "Properties", "block_states", "block_entities", "TileEntities", "biomes" }},
-				{ TAG_LIST, { "sections", "Sections", "palette", "Palette" }},
-				{ TAG_LONG_ARRAY, { "data", "BlockStates"}},
-				{ TAG_STRING, { "Name", "id", "Status", "" }},
-				{ TAG_INT, { "DataVersion", "xPos", "zPos" }},
-			});
-			NbtCompound chunkCompound(stream);
+			NbtStream stream(data);
+			stream.previewOnly = !box.active && !schematic;
+			if (stream.previewOnly)
+			{
+				stream.filter = {
+					{ TAG_BYTE, { "Y" } },
+					{ TAG_BYTE_ARRAY, { "SkyLight", "BlockLight", "Blocks", "Data", "Biomes", "Add" }},
+					{ TAG_COMPOUND, { "Level", "properties", "Properties", "block_states", "biomes" }},
+					{ TAG_LIST, { "sections", "Sections", "palette", "Palette" }},
+					{ TAG_LONG_ARRAY, { "data", "BlockStates"}},
+					{ TAG_STRING, { "Name", "id", "Status", "", "waterlogged" }},
+					{ TAG_INT, { "DataVersion", "xPos", "zPos" }},
+				};
+			}
+
+			if (schematic)
+				stream.stripNamespace = false;
+
+			if (box.active)
+			{
+				// Floor negative heights and exclude the selection's end boundary
+				stream.sectionMin = IntType(std::floor(RealType(box.start.y) / SECTION_SIZE));
+				stream.sectionMax = IntType(std::floor(RealType(box.end.y - 1) / SECTION_SIZE));
+			}
+
+			NbtCompound chunkCompound(stream, box.active ? NbtStream::CHUNK : NbtStream::GENERIC);
+
+			if (schematic && stream.ds.status() != QDataStream::Ok)
+				throw QString("Truncated chunk NBT");
 
 			// Get block format
 			format = region->anvilFormat ? JAVA_1_2 : PRE_JAVA_1_2;
 			if (chunkCompound.HasKey("DataVersion"))
 			{
-				IntType dataVersion = chunkCompound.Int("DataVersion");
+				dataVersion = chunkCompound.Int("DataVersion");
 
 				if (dataVersion >= JAVA_26_3)
 					format = JAVA_26_3; 
@@ -59,18 +87,26 @@ namespace CppProject
 			// Get region offset
 			x = ((IntType)chunkRoot->Int("xPos") & 31); // x % 32
 			z = ((IntType)chunkRoot->Int("zPos") & 31); // z % 32
+			regionIndex = z * REGION_SIZE_CHUNKS + x;
+
+			// Keep raw source data for export, applying block filters later
+			if (schematic)
+			{
+				exportData = new NbtCompound;
+				exportData->value.swap(chunkRoot->value);
+				return;
+			}
+
 
 			rightEdge = (x == REGION_SIZE_CHUNKS - 1);
 			leftEdge = (x == 0);
 			frontEdge = (z == REGION_SIZE_CHUNKS - 1);
 			backEdge = (z == 0);
 			
-			regionIndex = (z << 5) + x; // z * 32 + x
-
 			// Get region position in blocks
-			regionPos.x = x << 4; // x * 16
+			regionPos.x = x * SECTION_SIZE;
 			regionPos.y = CHUNK_HEIGHT_MIN;
-			regionPos.z = z << 4; // z * 16
+			regionPos.z = z * SECTION_SIZE;
 
 			// Check chunk box with given selection
 			WorldVec worldPos = region->pos + regionPos;
@@ -199,6 +235,8 @@ namespace CppProject
 
 	Chunk::~Chunk()
 	{
+		delete exportData;
+
 		// Erase sections not needed by the scenery builder
 		for (Section* section : sections)
 			if (section && section->dataType != Section::BUILDER)
@@ -316,22 +354,33 @@ namespace CppProject
 		vertexDataSizeXZ = vertexDataSizeX * (endPos.z + 1 - startPos.z);
 		vertexDataSizeTotal = vertexDataSizeXZ * SECTION_SIZE;
 
-		// Allocate face/vertex data for each section
+		// Reuse scratch storage per worker instead of retaining it in every loaded chunk
+		struct Scratch
+		{
+			Heap<FaceData> faceData[CHUNK_SECTIONS];
+			Heap<VertexData> vertexData[CHUNK_SECTIONS + 1];
+		};
+		static thread_local Scratch scratch[Region::MeshTypeAmount];
+
+		// Clear active sections, including the extra top boundary vertex slice
 		for (IntType m = 0; m < Region::MeshTypeAmount; m++)
 		{
+			Mesh& mesh = meshes[m];
+			memset(mesh.faceDirections, 0, sizeof(mesh.faceDirections));
+
 			for (IntType s = 0; s < CHUNK_SECTIONS; s++)
 			{
 				if (Section* section = sections[s])
 				{
 					if (section->preview.hasBlocks && (m != Region::TRANSPARENT || section->preview.hasTransparent))
 					{
-						meshes[m].faceData[s].Alloc(faceDataSizeTotal);
+						mesh.faceData[s] = PreparePreviewData(scratch[m].faceData[s], faceDataSizeTotal);
 
 						// Allocate vertex data for this section and next (to support Y=16 vertices outside section)
-						if (!meshes[m].vertexData[s].Size())
-							meshes[m].vertexData[s].Alloc(vertexDataSizeTotal);
-						
-						meshes[m].vertexData[s + 1].Alloc(vertexDataSizeTotal);
+						if (!mesh.vertexData[s])
+							mesh.vertexData[s] = PreparePreviewData(scratch[m].vertexData[s], vertexDataSizeTotal);
+
+						mesh.vertexData[s + 1] = PreparePreviewData(scratch[m].vertexData[s + 1], vertexDataSizeTotal);
 					}
 				}
 			}
@@ -345,61 +394,80 @@ namespace CppProject
 
 		for (Mesh& mesh : meshes)
 		{
-			mesh.vertices.Alloc(8192);
-			mesh.indices.Alloc(4096);
-
 			// Create triangles from faces
 			for (uint8_t s = 0; s < CHUNK_SECTIONS; s++)
 			{
 				uint16_t sy = s * SECTION_SIZE;
-				Heap<FaceData>& faceData = mesh.faceData[s];
+				FaceData* faceData = mesh.faceData[s];
 				
-				if (!faceData.Size())
+				uint8_t directions = mesh.faceDirections[s];
+				if (!directions)
 					continue;
 
 				// Right/Left face in XYZ order
-				for (uint8_t x = startPos.x; x < endPos.x; x++)
-				for (uint8_t y = 0; y < SECTION_SIZE; y++)
-				for (uint8_t z = startPos.z; z < endPos.z; z++)
+				if (directions & ((1 << RIGHT) | (1 << LEFT)))
 				{
-					GenerateFaceTriangles(mesh, RIGHT, faceData, x, sy + y, z, startPos, endPos);
-					GenerateFaceTriangles(mesh, LEFT, faceData, x, sy + y, z, startPos, endPos);
+					for (uint8_t x = startPos.x; x < endPos.x; x++)
+					for (uint8_t y = 0; y < SECTION_SIZE; y++)
+					for (uint8_t z = startPos.z; z < endPos.z; z++)
+					{
+						const FaceData& face = faceData[y * faceDataSizeXZ + (z - startPos.z) * faceDataSizeX + (x - startPos.x)];
+
+						if (face.blockData[RIGHT])
+							GenerateFaceTriangles(mesh, RIGHT, face, x, sy + y, z, startPos, endPos);
+
+						if (face.blockData[LEFT])
+							GenerateFaceTriangles(mesh, LEFT, face, x, sy + y, z, startPos, endPos);
+					}
 				}
 
 				// Top/Bottom face in YZX order
-				for (uint8_t y = 0; y < SECTION_SIZE; y++)
-				for (uint8_t z = startPos.z; z < endPos.z; z++)
-				for (uint8_t x = startPos.x; x < endPos.x; x++)
+				if (directions & ((1 << TOP) | (1 << BOTTOM)))
 				{
-					GenerateFaceTriangles(mesh, TOP, faceData, x, sy + y, z, startPos, endPos);
-					GenerateFaceTriangles(mesh, BOTTOM, faceData, x, sy + y, z, startPos, endPos);
+					for (uint8_t y = 0; y < SECTION_SIZE; y++)
+					for (uint8_t z = startPos.z; z < endPos.z; z++)
+					for (uint8_t x = startPos.x; x < endPos.x; x++)
+					{
+						const FaceData& face = faceData[y * faceDataSizeXZ + (z - startPos.z) * faceDataSizeX + (x - startPos.x)];
+
+						if (face.blockData[TOP])
+							GenerateFaceTriangles(mesh, TOP, face, x, sy + y, z, startPos, endPos);
+
+						if (face.blockData[BOTTOM])
+							GenerateFaceTriangles(mesh, BOTTOM, face, x, sy + y, z, startPos, endPos);
+					}
 				}
 
 				// Front/Back face in ZYX order
-				for (uint8_t z = startPos.z; z < endPos.z; z++)
-				for (uint8_t y = 0; y < SECTION_SIZE; y++)
-				for (uint8_t x = startPos.x; x < endPos.x; x++)
+				if (directions & ((1 << FRONT) | (1 << BACK)))
 				{
-					GenerateFaceTriangles(mesh, FRONT, faceData, x, sy + y, z, startPos, endPos);
-					GenerateFaceTriangles(mesh, BACK, faceData, x, sy + y, z, startPos, endPos);
+					for (uint8_t z = startPos.z; z < endPos.z; z++)
+					for (uint8_t y = 0; y < SECTION_SIZE; y++)
+					for (uint8_t x = startPos.x; x < endPos.x; x++)
+					{
+						const FaceData& face = faceData[y * faceDataSizeXZ + (z - startPos.z) * faceDataSizeX + (x - startPos.x)];
+
+						if (face.blockData[FRONT])
+							GenerateFaceTriangles(mesh, FRONT, face, x, sy + y, z, startPos, endPos);
+
+						if (face.blockData[BACK])
+							GenerateFaceTriangles(mesh, BACK, face, x, sy + y, z, startPos, endPos);
+					}
 				}
 			}
 
-			// Free data
-			for (uint8_t s = 0; s < CHUNK_SECTIONS; s++)
-			{
-				mesh.faceData[s].FreeData();
-				mesh.vertexData[s].FreeData();
-			}
+			// Release views before another chunk reuses the worker storage
+			for (FaceData*& data : mesh.faceData)
+				data = nullptr;
+
+			for (VertexData*& data : mesh.vertexData)
+				data = nullptr;
 		}
 	}
 
-	void Chunk::GenerateFaceTriangles(Mesh& mesh, Chunk::FaceDirection dir, Heap<FaceData>& faceData, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos)
+	void Chunk::GenerateFaceTriangles(Mesh& mesh, Chunk::FaceDirection dir, const FaceData& face, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos)
 	{
-		IntType faceDataIndex = (y & SECTION_SIZEM1) * faceDataSizeXZ + (z - startPos.z) * faceDataSizeX + (x - startPos.x);
-		const uint32_t& blockData = faceData.Value(faceDataIndex).blockData[dir];
-		if (!blockData)
-			return;
+		const uint32_t& blockData = face.blockData[dir];
 
 		// Make face as big as possible by merging with identical data
 		WorldVec faceOffset = { 0, 0, 0 };
@@ -413,7 +481,7 @@ namespace CppProject
 				return false;
 
 			uint8_t sectionIndex = pos.y / SECTION_SIZE;
-			if (!mesh.faceData[sectionIndex].Size()) // No faces in target section
+			if (!mesh.faceData[sectionIndex]) // No faces in target section
 				return false;
 
 			uint16_t faceDataIndex = (pos.y & SECTION_SIZEM1) * faceDataSizeXZ + (pos.z - startPos.z) * faceDataSizeX + (pos.x - startPos.x);
@@ -461,6 +529,13 @@ namespace CppProject
 			faceOffset = faceOffset + blockFaceMergeVec[dir][1];
 		}
 
+		// Reserve a full quad with geometric growth, without clearing append-only storage
+		if (mesh.vertices.heap.Size() < mesh.vertices.Size() + 4)
+			mesh.vertices.heap.Alloc(std::max(mesh.vertices.Size() + 4, std::max(IntType(256), mesh.vertices.heap.Size() * 2)), false);
+
+		if (mesh.indices.heap.Size() < mesh.indices.Size() + 6)
+			mesh.indices.heap.Alloc(std::max(mesh.indices.Size() + 6, std::max(IntType(384), mesh.indices.heap.Size() * 2)), false);
+
 		// Add vertices of face
 		uint32_t index[4];
 		WorldVec faceSize = faceOffset + 1;
@@ -484,12 +559,14 @@ namespace CppProject
 		}
 
 		// Add indices for two triangles
-		mesh.indices.Append(index[0]);
-		mesh.indices.Append(index[1]);
-		mesh.indices.Append(index[2]);
-		mesh.indices.Append(index[2]);
-		mesh.indices.Append(index[3]);
-		mesh.indices.Append(index[0]);
+		uint32_t* indices = mesh.indices.heap.data + mesh.indices.size;
+		indices[0] = index[0];
+		indices[1] = index[1];
+		indices[2] = index[2];
+		indices[3] = index[2];
+		indices[4] = index[3];
+		indices[5] = index[0];
+		mesh.indices.size += 6;
 	}
 
 	void Chunk::FreePreviewData()

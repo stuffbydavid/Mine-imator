@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"builder_read_schematic_nbt",
+  "%Name":"builder_add_face_real",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"builder_read_schematic_nbt",
+  "name":"builder_add_face_real",
   "parent":{
     "name":"Builder",
     "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",

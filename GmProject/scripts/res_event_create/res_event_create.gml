@@ -108,6 +108,8 @@ function res_event_create()
 	scenery_cache_save = null
 	scenery_size = vec3(0)
 	world_regions_dir = ""
+	world_name = ""
+	world_reload = false
 	world_box_start = null
 	world_box_end = null
 	world_filter_mode = 0

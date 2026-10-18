@@ -134,6 +134,9 @@ function app_startup_interface_tabs()
 			
 			tbx_scenery_integrity = new_textbox_integer()
 			tbx_scenery_integrity.suffix = "%"
+
+			tbx_world_box_start = [ new_textbox_ninteger(), new_textbox_ninteger(), new_textbox_ninteger() ]
+			tbx_world_box_end = [ new_textbox_ninteger(), new_textbox_ninteger(), new_textbox_ninteger() ]
 		}
 	}
 	

@@ -1,11 +1,24 @@
 /// @desc Sets the render model of the current block.
+/// CppGen ArrRef build_pos
+/// CppGen ArrRef build_size
+/// CppGen ArrRef build_edge
 
 function builder_set_model(ongeneration = false)
 {
-	block_current = builder_get_block(build_pos_x, build_pos_y, build_pos_z)
+	// Read block coordinates once for this call
+	var blockx, blocky, blockz, sizex, sizey, sizez;
+	blockx = build_pos[X]
+	blocky = build_pos[Y]
+	blockz = build_pos[Z]
+	sizex = build_size[X]
+	sizey = build_size[Y]
+	sizez = build_size[Z]
+	
+	block_current = builder_get_block(blockx, blocky, blockz)
 	if (block_current = null)
 		return 0
-	block_state_id_current = builder_get_state_id(build_pos_x, build_pos_y, build_pos_z)
+	
+	block_state_id_current = builder_get_state_id(blockx, blocky, blockz)
 	
 	var model, ret;
 	model = null
@@ -17,12 +30,12 @@ function builder_set_model(ongeneration = false)
 	{
 		if (!block_current.require_models || ongeneration)
 		{
-			build_edge_xp = (build_pos_x = build_size_x - 1)
-			build_edge_xn = (build_pos_x = 0)
-			build_edge_yp = (build_pos_y = build_size_y - 1)
-			build_edge_yn = (build_pos_y = 0)
-			build_edge_zp = (build_pos_z = build_size_z - 1)
-			build_edge_zn = (build_pos_z = 0)
+			build_edge[XP] = (blockx = sizex - 1)
+			build_edge[XN] = (blockx = 0)
+			build_edge[YP] = (blocky = sizey - 1)
+			build_edge[YN] = (blocky = 0)
+			build_edge[ZP] = (blockz = sizez - 1)
+			build_edge[ZN] = (blockz = 0)
 			
 			ret = script_execute(block_current.set_script)
 			if (ret != 0)
@@ -32,15 +45,15 @@ function builder_set_model(ongeneration = false)
 			ret = null
 	}
 
-	var tlvalid = (mc_builder.block_tl_add = null || mc_builder.block_tl_add) && block_current.timeline && block_tl_map != null && ret != null;
+	var tlvalid = ((mc_builder.block_tl_add = null || mc_builder.block_tl_add) && block_current.timeline && block_tl_map != null && ret != null);
 
 	// Has timeline
 	if (tlvalid && !block_current.model_double)
-		block_tl_map[?build_pos] = [ block_current, block_state_id_current ]
+		block_tl_map[?build_pos_index] = [ block_current, block_state_id_current ]
 	else
 	{
 		if (tlvalid && block_current.model_double)
-			block_tl_map[?build_pos] = [ block_current, block_state_id_current ]
+			block_tl_map[?build_pos_index] = [ block_current, block_state_id_current ]
 	
 		// Look for the render model of the current state
 		if (ret = 0 && block_current.state_id_model_obj != null)
@@ -58,7 +71,7 @@ function builder_set_model(ongeneration = false)
 				{
 					model = []
 					for (var i = 0; i < array_length(modelobj); i++)
-						array_add(model, block_get_render_model(modelobj[i], brightness, offset, offsetxy))
+						model[i] = block_get_render_model(modelobj[i], brightness, offset, offsetxy)
 				}
 				// Single model
 				else 
@@ -67,9 +80,9 @@ function builder_set_model(ongeneration = false)
 		}
 
 		if (is_array(model))
-			block_render_model_multipart_map[?build_pos] = model
+			block_render_model_multipart_map[?build_pos_index] = model
 		else if (model != null)
-			builder_set_render_model(build_pos_x, build_pos_y, build_pos_z, model)
+			builder_set_render_model(blockx, blocky, blockz, model)
 	}
 	
 	return model

@@ -142,7 +142,7 @@ function app_startup_window()
 	place_target_tl = null
 	place_target_tl_root = null
 	place_spawn = false
-	place_history = null
+	place_hobj = null
 	place_build = false
 	place_busy = "place"
 	place_pos = null

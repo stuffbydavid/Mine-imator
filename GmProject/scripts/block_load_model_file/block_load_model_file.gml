@@ -167,7 +167,7 @@ function block_load_model_file(fn, res = null)
 					
 					// Faces
 					var facesmap = elementmap[?"faces"];
-					for (var f = 0; f < e_dir.amount; f++)
+					for (var f = 0; f < block_faces; f++)
 					{
 						var curmap = facesmap[?dir_get_string(f)];
 						if (!is_undefined(curmap))

@@ -57,7 +57,7 @@ typedef bool BoolType;
 #include <QOpenGLBuffer>
 #include <QOpenGLContext>
 
-#define OPENMP_FOR omp parallel for schedule(dynamic)
+#define OPENMP_FOR(chunks) omp parallel for schedule(dynamic, chunks)
 #define OPENMP_MAX_THREADS 32
 
 #define DEGTORAD 0.0174533

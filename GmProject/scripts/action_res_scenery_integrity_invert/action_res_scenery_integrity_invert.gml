@@ -5,8 +5,8 @@ function action_res_scenery_integrity_invert(value)
 	
 	with (res_edit)
 	{
-		res_load(true)
 		scenery_integrity_invert = value
+		res_load(true)
 	}
 	
 	lib_preview.update = true

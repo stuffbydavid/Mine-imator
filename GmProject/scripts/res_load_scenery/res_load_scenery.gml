@@ -1,5 +1,8 @@
 /// @desc Creates vertex buffers from a schematic or blocks file.
 /// The process is split into three steps for opening, reading and generating.
+/// Force C++ generator to reduce types to int for OpenMP loops:
+/// CppGen int blockstartpos
+/// CppGen int blockendpos
 
 function res_load_scenery()
 {
@@ -14,14 +17,20 @@ function res_load_scenery()
 		// Open file
 		case "open":
 		{
-			if (type = e_res_type.FROM_WORLD)
+			// Load from world when requested or when the schematic is unavailable
+			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
+				world_reload = false
+				
 				if (!res_load_scenery_world())
 				{
 					error("error/load_world")
+					
 					with (app)
 						load_next()
+					
 					ready = true
+					
 					break
 				}
 			}
@@ -34,13 +43,15 @@ function res_load_scenery()
 					else
 						with (app)
 							load_next()
+					
 					ready = true
+					
 					return 0
 				}
 		
 				// Schematic/Structure file
 				var ext = filename_ext(fn);
-				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt")
+				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt" || ext = ".litematic")
 				{
 					log("Loading " + ext, fn)
 					debug_timer_start()
@@ -53,12 +64,15 @@ function res_load_scenery()
 					{
 						log("GZunzip error", "gzunzip")
 						error("error/load_schematic")
+						
 						if (scenery_instant)
 							load_stage = ""
 						else
 							with (app)
 								load_next()
+						
 						ready = true
+						
 						return 0
 					}
 			
@@ -75,17 +89,30 @@ function res_load_scenery()
 					if (debug_schematics)
 						nbt_debug_tag_compound("root", rootmap)
 					
-					// Parse blocks
-					if (ext = ".schematic" || ext = ".schem")
+					// Accept named, nested and unnamed schematic roots
+					var schematicmap = rootmap[?"Schematic"];
+					if (!ds_map_valid(schematicmap))
 					{
-						// Version 3 nests the schematic inside the unnamed root compound
-						var schematicmap = rootmap[?"Schematic"];
-						if (!ds_map_valid(schematicmap))
-						{
-							var unnamedmap = rootmap[?""];
-							if (ds_map_valid(unnamedmap))
-								schematicmap = unnamedmap[?"Schematic"]
-						}
+						schematicmap = rootmap[?""]
+						if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Schematic"]))
+							schematicmap = schematicmap[?"Schematic"]
+					}
+
+					// Read Litematic file
+					if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Regions"]))
+						openerr = !builder_read_litematic(schematicmap)
+					
+					// Structure palettes use lowercase lists rather than Sponge compounds
+					else if (ds_map_valid(schematicmap) && ds_list_valid(schematicmap[?"size"]))
+					{
+						openerr = !builder_read_nbt(schematicmap)
+						if (openerr)
+							break
+					}
+					else
+					{
+						scenery_structure = false
+						scenery_palette_size = 0
 						
 						with (mc_builder)
 						{
@@ -96,12 +123,6 @@ function res_load_scenery()
 							builder_read_schematic_blocks()
 							builder_read_schematic_tile_entities()
 						}
-					}
-					else // .nbt file (Structures)
-					{
-						openerr = !builder_read_schematic_nbt(rootmap[?""])
-						if (openerr)
-							break
 					}
 					
 					if (openerr)
@@ -135,6 +156,7 @@ function res_load_scenery()
 				for (var i = 0; i < ds_list_size(scenery_tl_list); i++)
 					with (scenery_tl_list[|i])
 						instance_destroy()
+				
 				ds_list_clear(scenery_tl_list)
 			}
 		
@@ -142,10 +164,14 @@ function res_load_scenery()
 				with (app)
 				{
 					popup_loading.text = text_get("load_scenery/blocks")
-					if (mc_builder.file_map != "")
+					
+					if (other.type = e_res_type.FROM_WORLD)
+						popup_loading.caption = other.world_name
+					else if (mc_builder.file_map != "")
 						popup_loading.caption = text_get("load_scenery/caption_piece_of", mc_builder.file_map)
 					else
 						popup_loading.caption = text_get("load_scenery/caption", other.filename)
+					
 					popup_loading.progress = 0.2
 				}
 		
@@ -157,6 +183,7 @@ function res_load_scenery()
 				else if (creator = app.bench_settings)
 				{
 					scenery_tl_add = true
+					
 					if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
 						scenery_tl_prompt_amount = mc_builder.sch_timeline_amount
 				}
@@ -169,10 +196,8 @@ function res_load_scenery()
 			mc_builder.block_skull_texture_count = ds_map_size(mc_builder.block_skull_texture_map)
 			mc_builder.block_skull_finish_count = 0
 			mc_builder.block_skull_fail_count = 0
-			mc_builder.build_pos_x = 0
-			mc_builder.build_pos_y = 0
-			mc_builder.build_pos_z = 0
-			mc_builder.build_pos = 0
+			mc_builder.build_pos = vec3(0)
+			mc_builder.build_pos_index = 0
 			mc_builder.block_tl_add = scenery_tl_add
 			mc_builder.block_tl_list = scenery_tl_list
 			mc_builder.build_randomize = scenery_randomize
@@ -195,13 +220,14 @@ function res_load_scenery()
 			{
 				builder_scenery = true
 				
-				var blockstartpos = build_pos;
-				var blockendpos = build_pos + maxblocks;
+				var blockstartpos = build_pos_index;
+				var blockendpos = build_pos_index + maxblocks;
 				if (blockendpos > build_size_total)
 					blockendpos = build_size_total
+				
 				builder_spawn_threads(thread_get_number())
 				
-				/// CppOnly #pragma OPENMP_FOR
+				/// CppOnly #pragma OPENMP_FOR(16)
 				for (var p = blockstartpos; p < blockendpos; p++)
 				{
 					with (thread_list[|thread_get_id()])
@@ -212,16 +238,17 @@ function res_load_scenery()
 				}
 				
 				builder_combine_threads()
-				build_pos = blockendpos
+				
+				build_pos_index = blockendpos
 				
 				builder_scenery = false
 			}
 		
 			if (!scenery_instant)
 				with (app)
-					popup_loading.progress = 0.2 + (0.2) * (mc_builder.build_pos / mc_builder.build_size_total)
+					popup_loading.progress = 0.2 + (0.2) * (mc_builder.build_pos_index / mc_builder.build_size_total)
 					
-			if (mc_builder.build_pos = mc_builder.build_size_total)
+			if (mc_builder.build_pos_index = mc_builder.build_size_total)
 			{
 				debug_timer_stop("res_load_scenery, Set models")
 				debug_timer_start()
@@ -230,8 +257,9 @@ function res_load_scenery()
 				block_vbuffer_start()
 		
 				load_stage = "model"
-				mc_builder.build_pos_z = 0
-				mc_builder.build_pos = 0
+				
+				mc_builder.build_pos[Z] = 0
+				mc_builder.build_pos_index = 0
 			
 				if (!scenery_instant)
 					with (app)
@@ -250,13 +278,13 @@ function res_load_scenery()
 				build_transform = true
 				build_multithreaded = true
 				
-				var blockstartpos = build_pos;
-				var blockendpos = build_pos + maxblocks;
+				var blockstartpos = build_pos_index;
+				var blockendpos = build_pos_index + maxblocks;
 				if (blockendpos > build_size_total)
 					blockendpos = build_size_total
 				builder_spawn_threads(thread_get_number())
 				
-				/// CppOnly #pragma OPENMP_FOR
+				/// CppOnly #pragma OPENMP_FOR(16)
 				for (var p = blockstartpos; p < blockendpos; p++)
 				{
 					with (thread_list[|thread_get_id()])
@@ -267,17 +295,18 @@ function res_load_scenery()
 				}
 				
 				builder_combine_threads()
-				build_pos = blockendpos
+				
+				build_pos_index = blockendpos
 				
 				builder_scenery = false
 			}
 		
 			if (!scenery_instant)
 				with (app)
-					popup_loading.progress = 0.4 + 0.5 * (mc_builder.build_pos / mc_builder.build_size_total)
+					popup_loading.progress = 0.4 + 0.5 * (mc_builder.build_pos_index / mc_builder.build_size_total)
 					
 			// All done
-			if (mc_builder.build_pos = mc_builder.build_size_total)
+			if (mc_builder.build_pos_index = mc_builder.build_size_total)
 				load_stage = "done"
 			
 			break
@@ -294,7 +323,9 @@ function res_load_scenery()
 						
 				build_transform = true
 				build_multithreaded = false
+				
 				builder_spawn_threads(1)
+				
 				with (thread_list[|0])
 				{
 					for (var p = 0; p < build_size_total; p++)
@@ -303,24 +334,29 @@ function res_load_scenery()
 						builder_generate()
 					}
 				}
+				
 				builder_combine_threads()
 			}
 				
 			debug_timer_stop("res_load_scenery, Generate models")
+			
 			block_vbuffer_done()
 			
 			with (mc_builder)
 			{
 				builder_done()
+				
 				block_tl_list = null
 				build_randomize = false
 			}
 			
-			scenery_size = vec3(mc_builder.build_size_y, mc_builder.build_size_x, mc_builder.build_size_z)
+			scenery_size = vec3(mc_builder.build_size[Y], mc_builder.build_size[X], mc_builder.build_size[Z])
 			ready = true
 
 			// Put map name in resource name
-			if (mc_builder.file_map != "")
+			if (type = e_res_type.FROM_WORLD)
+				res_update_display_name()
+			else if (mc_builder.file_map != "")
 				display_name = text_get("load_scenery/piece_of", mc_builder.file_map)
 				
 			// Save cached mesh
@@ -339,22 +375,34 @@ function res_load_scenery()
 			
 			// Update timelines
 			with (obj_timeline)
-				if (type = e_temp_type.SCENERY && temp.scenery = other.id && scenery_animate)
+			{
+				if (type != e_tl_type.SCENERY || temp.scenery != other.id)
+					continue
+				
+				if (scenery_ground_hobj != null)
+					tl_replace_ground(scenery_ground_hobj)
+				
+				if (scenery_animate)
 					tl_animate_scenery()
+			}
 			
 			
 			with (app)
 			{
 				tl_update_list()
 				tl_update_matrix()
+				
 				project_update_counts()
+				
 				lib_preview.update = true
 				res_preview.update = true
+				
 				bench_settings.preview.update = true
 				popup_loading.progress = 1
 			}
 			
 			load_stage = scenery_instant ? "" : "next"
+			
 			break
 		}
 		
@@ -363,6 +411,7 @@ function res_load_scenery()
 		{
 			with (app)
 				load_next()
+			
 			break
 		}
 	}
@@ -374,12 +423,15 @@ function res_load_scenery()
 	if (openerr)
 	{
 		error("error/load_schematic")
+		
 		buffer_delete(buffer_current)
+		
 		if (scenery_instant)
 			load_stage = ""
 		else
 			with (app)
 				load_next()
+		
 		ready = true
 	}
 

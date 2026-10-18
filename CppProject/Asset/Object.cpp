@@ -26,7 +26,7 @@
 namespace CppProject
 {
 	QHash<IntType, QVector<IntType>> Object::objectIdsMap;
-	QHash<IntType, QHash<IntType, Object::Member>> Object::memberMap;
+	QHash<IntType, Object::MemberTable> Object::memberMap;
 
 	BoolType Object::IsIndexed(IntType subAssetId)
 	{

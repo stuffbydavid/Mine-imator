@@ -39,7 +39,7 @@ namespace CppProject
 			mesh->numIndices = numInd;
 
 			// Read vertices
-			mesh->vertexData.Alloc(mesh->numVertices);
+			mesh->vertexData.Alloc(mesh->numVertices, false);
 			if (stream.readRawData((char*)mesh->vertexData.data, (int)vertexBytes) != vertexBytes)
 			{
 				WARNING("readRawData error");
@@ -48,7 +48,7 @@ namespace CppProject
 			}
 
 			// Read indices
-			mesh->indexData.Alloc(mesh->numIndices);
+			mesh->indexData.Alloc(mesh->numIndices, false);
 			if (stream.readRawData((char*)mesh->indexData.data, (int)indexBytes) != indexBytes)
 			{
 				WARNING("readRawData error");
@@ -67,12 +67,21 @@ namespace CppProject
 			}
 
 			// Create mesh buffers
+			numIndices += numInd;
 			mesh->bounds = Bounds(mesh->vertexData);
 			mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES);
 
 			meshes.append(mesh);
+		}
 
-			numIndices += numInd;
+		// Earlier meshes may have been retained before the batching limit was reached
+		if (numIndices > MAX_BATCH_INDICES)
+		{
+			for (Mesh<>* mesh : meshes)
+			{
+				mesh->vertexData.FreeData();
+				mesh->indexData.FreeData();
+			}
 		}
 
 		valid = true;
@@ -129,6 +138,15 @@ namespace CppProject
 		return thread.currentVertex;
 	}
 
+	void VertexBuffer::ThreadData::MeshData::Reserve(IntType addedVertices, IntType addedIndices)
+	{
+		// Double mesh capacity before appending a complete primitive
+		if (vertices.Size() + addedVertices > vertices.heap.Size())
+			vertices.heap.Alloc(std::max(vertices.Size() + addedVertices, std::max<IntType>(1024, vertices.heap.Size() * 2)), false);
+		if (indices.Size() + addedIndices > indices.heap.Size())
+			indices.heap.Alloc(std::max(indices.Size() + addedIndices, std::max<IntType>(1024, indices.heap.Size() * 2)), false);
+	}
+
 	void VertexBuffer::AddVertex(const Vertex& vertex, IntType threadId)
 	{
 		ThreadData& thread = threads[threadId];
@@ -140,12 +158,7 @@ namespace CppProject
 		else
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(1, 1);
 
 		// Check if already added in current face
 		IntType i = 0;
@@ -180,12 +193,7 @@ namespace CppProject
 		if (mesh->indices.Size() + 3 > MAX_MESH_INDICES)
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(3, 3);
 
 		// Create triangle
 		IntType vertOffset = mesh->vertices.Size();
@@ -212,12 +220,7 @@ namespace CppProject
 		if (mesh->indices.Size() + 6 > MAX_MESH_INDICES)
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(4, 6);
 
 		// Create face
 		IntType vertOffset = mesh->vertices.Size();
@@ -293,11 +296,11 @@ namespace CppProject
 		if (!meshes.size())
 			return;
 
-		// Allocate meshes
+		// Every element is filled by the thread copies below, so no clearing is needed
 		for (Mesh<>* mesh : meshes)
 		{
-			mesh->vertexData.Alloc(mesh->numVertices);
-			mesh->indexData.Alloc(mesh->numIndices);
+			mesh->vertexData.Alloc(mesh->numVertices, false);
+			mesh->indexData.Alloc(mesh->numIndices, false);
 			numIndices += mesh->numIndices;
 		}
 
@@ -335,7 +338,7 @@ namespace CppProject
 		// Copy mesh data from thread(s)
 		if (numThreads > 1)
 		{
-			#pragma OPENMP_FOR
+			#pragma omp parallel for schedule(static)
 			for (IntType t = 0; t < numThreads; t++)
 				processThread(t);
 		}
@@ -405,12 +408,13 @@ namespace CppProject
 		if (!valid)
 			return sizeof(qint64);
 
-		IntType bytes = 8; // 64 bits numMeshes
+		IntType bytes = sizeof(qint64); // numMeshes
 		for (Mesh<>* mesh : meshes)
-			bytes +=
-				8 + 8 + // 64 bits numVertices + 64 bit numIndices
-				mesh->numVertices * sizeof(Vertex) +
-				mesh->numIndices * sizeof(uint32_t);
+		{
+			bytes += sizeof(qint64) * 2; // numVertices + numIndices
+			if (mesh->numIndices > 0)
+				bytes += mesh->numVertices * sizeof(Vertex) + mesh->numIndices * sizeof(uint32_t);
+		}
 
 		return bytes;
 	}

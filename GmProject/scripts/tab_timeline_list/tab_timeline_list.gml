@@ -237,7 +237,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 		// Parent hovering item to selected timeline
 		if (itemhover && mouse_left_released && place_tl != null && place_tl != tl)
 		{
-			with (place_history)
+			with (place_hobj)
 			{
 				parent = tl
 				tl_value_set_vec3(e_value.POS_X, vec3(0), true)

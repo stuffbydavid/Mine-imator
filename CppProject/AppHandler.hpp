@@ -37,8 +37,8 @@ namespace CppProject
 		// Run QApplication instance.
 		int Run();
 
-		// Load app resourcs.
-		void LoadResources();
+		// Load app assets.
+		void LoadAssets();
 
 		// Create a new AppWindow containing an GLRenderer.
 		AppWindow* AddWindow(QRect rect = {}, IntType id = 0, AppWindow* from = nullptr);
@@ -55,7 +55,7 @@ namespace CppProject
 		// Sets whether a GML key is down.
 		void SetKeyDown(QKeyEvent* event, BoolType down);
 
-		// Sets whether a Windows key is down (right or left shift/alt/control)
+		// Sets whether a Windows key is down (right or left shift/alt/control).
 		void SetWinKeyDown(IntType key, BoolType down);
 
 		// Runs when a HTTP request progresses.
@@ -84,9 +84,10 @@ namespace CppProject
 			BoolType maximize = false;
 		};
 		QVector<AddedWindow> addedWindows;
+		QString messageCaption = "";
 
 		QBasicTimer stepTimer;
-		std::chrono::steady_clock::time_point stepDeadline;
+		std::chrono::steady_clock::time_point stepDeadline, loadDrawDeadline;
 		BoolType blocked = false;
 
 		Timer randomizeTimer;
@@ -110,6 +111,8 @@ namespace CppProject
 		ALCdevice* openALDevice = nullptr;
 		ALCcontext* openALContext = nullptr;
 		BoolType audioSupported = false;
+
+		QVector<QThread*> threads;
 
 		QHash<IntType, Qt::CursorShape> cursorMap;
 		QHash<IntType, IntType> keyMap;

@@ -12,7 +12,11 @@ function res_load_start()
 			with (app)
 			{
 				popup_loading.text = text_get("load_scenery/open")
-				popup_loading.caption = other.filename
+				if (other.type = e_res_type.FROM_WORLD)
+					popup_loading.caption = other.world_name
+				else
+					popup_loading.caption = other.filename
+
 				popup_loading.load_script = res_load_scenery
 			}
 			

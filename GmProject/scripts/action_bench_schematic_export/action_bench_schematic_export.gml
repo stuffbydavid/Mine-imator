@@ -1,18 +1,18 @@
 function action_bench_schematic_export()
 {
-	var schematic, source, filename;
-	schematic = bench_settings.schematic_selected
-	if (schematic = null)
+	var file, source, filename;
+	file = bench_settings.schematic_selected
+	if (file = null)
 		return 0
 	
-	if (is_string(schematic))
+	if (is_string(file))
 	{
-		filename = schematic + ".schematic"
+		filename = file
 		source = schematics_directory + bench_schematic_folder + "/" + filename
 	}
 	else
 	{
-		filename = schematic.filename
+		filename = file.filename
 		source = project_folder + "/" + filename
 	}
 	

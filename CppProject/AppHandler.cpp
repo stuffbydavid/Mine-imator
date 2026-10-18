@@ -42,6 +42,7 @@ namespace CppProject
 	AppHandler::AppHandler(int& argc, char* argv[])
 	{
 		handler = this;
+
 		try
 		{
 			// Initialize string table
@@ -281,15 +282,26 @@ namespace CppProject
 
 	int AppHandler::Run()
 	{
-		return qApp->exec();
+		int result = qApp->exec();
+
+		// Wait for all threads to finish
+		for (QThread* thread : threads)
+		{
+			thread->wait();
+			delete thread;
+		}
+
+		threads.clear();
+
+		return result;
 	}
 
-	void AppHandler::LoadResources()
+	void AppHandler::LoadAssets()
 	{
 		if (prRenderer)
 			return;
 
-		DEBUG("Load resources");
+		DEBUG("Load assets");
 
 		// Create renderers
 		prRenderer = new PrimitiveRenderer;
@@ -356,15 +368,22 @@ namespace CppProject
 	{
 		stepTimer.stop();
 		auto stepStart = std::chrono::steady_clock::now();
+		BoolType loading = (!headless && global::_app && load_active());
+		BoolType drawFrame = (!loading || stepStart >= loadDrawDeadline);
+		BoolType loadMore = false;
 
 		// Measure the full interval between update steps
-		gmlGlobal::delta_time = frameTimer.ElapsedMs() * 1000.0;
-		frameTimer.Reset();
+		if (drawFrame)
+		{
+			gmlGlobal::delta_time = frameTimer.ElapsedMs() * 1000.0;
+			frameTimer.Reset();
+			loadDrawDeadline = stepStart + std::chrono::milliseconds(33);
+		}
 		
 		Sound::UpdateLoads();
 
 		// Debug
-		if (keyboard_check_pressed(vk_f6) && !RELEASE_MODE)
+		if (drawFrame && keyboard_check_pressed(vk_f6) && !RELEASE_MODE)
 		{
 			move_all_to_texture_page();
 			TexturePage::Debug();
@@ -373,6 +392,8 @@ namespace CppProject
 		QVector<AppWindow*> activeWindows = windows;
 		if (headless)
 			activeWindows = { nullptr };
+		else if (!drawFrame)
+			activeWindows = { mainWindow };
 
 		// Loop through opened windows or a single headless render target
 		for (AppWindow* win : activeWindows)
@@ -406,7 +427,9 @@ namespace CppProject
 			GFX->surface = win ? win->GetSurface() : headlessSurface;
 			GFX->surface->BeginUse(win ? win->size() : QSize());
 
-			GFX->ClearDepth();
+			if (drawFrame)
+				GFX->ClearDepth();
+			
 			GFX->shader = PR->GetShader();
 			GFX->shader->BeginUse();
 
@@ -420,8 +443,15 @@ namespace CppProject
 					app_event_create(global::_app->id);
 				}
 
-				app_event_step(global::_app->id);
-				app_event_draw(global::_app->id);
+				// Load resources
+				if (loading && win == mainWindow)
+					loadMore = load_update();
+				
+				if (drawFrame)
+				{
+					app_event_step(global::_app->id);
+					app_event_draw(global::_app->id);
+				}
 			}
 			catch (AppEndRequest)
 			{
@@ -464,7 +494,7 @@ namespace CppProject
 			GFX->shader->EndUse();
 			GFX->surface->EndUse();
 
-			if (win)
+			if (win && drawFrame)
 			{
 				win->mouseWheel = 0;
 				win->mouseLastPos = win->mousePos;
@@ -476,10 +506,22 @@ namespace CppProject
 			}
 		}
 
-		VB->EndFrame();
+		if (drawFrame)
+			VB->EndFrame();
 
 		currentWindow = mainWindow;
 		blocked = false;
+
+		// Wait between loading batches
+		if (!drawFrame)
+		{
+			int delay = 0;
+			if (!loadMore && load_active())
+				delay = 33;
+			stepTimer.start(delay, Qt::PreciseTimer, this);
+			
+			return;
+		}
 
 		// Reset pressed & release key states
 		for (IntType key : keyStateMap.keys())
@@ -537,6 +579,17 @@ namespace CppProject
 
 		// Delete finished sounds
 		SoundInstance::CleanSounds();
+
+		// Loading throughput is independent of the normal frame limit
+		if (!headless && load_active())
+		{
+			int delay = 0;
+			if (!loadMore)
+				delay = 33;
+			stepTimer.start(delay, Qt::PreciseTimer, this);
+			
+			return;
+		}
 
 		// Wait only for the remaining frame budget, preserving fractional milliseconds
 		auto stepNow = std::chrono::steady_clock::now();

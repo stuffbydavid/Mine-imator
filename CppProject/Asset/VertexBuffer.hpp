@@ -54,6 +54,9 @@ namespace CppProject
 		{
 			struct MeshData
 			{
+				// Increase mesh capacity
+				void Reserve(IntType addedVertices, IntType addedIndices);
+
 				FastVector<Vertex> vertices;
 				FastVector<uint32_t> indices;
 				Mesh<>* targetMesh = nullptr;

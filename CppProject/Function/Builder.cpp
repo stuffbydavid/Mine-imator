@@ -24,9 +24,9 @@ namespace CppProject
 	{
 		// Get dimensions from given x/y/z size with offset
 		Builder::size = {
-			self->build_size_x,
-			self->build_size_y,
-			self->build_size_z
+			self->build_size.Value(X_).ToInt(),
+			self->build_size.Value(Y_).ToInt(),
+			self->build_size.Value(Z_).ToInt()
 		};
 		WorldVec sizeOffset = Builder::size + Builder::offset;
 		Builder::sectionsDim = {
@@ -43,18 +43,13 @@ namespace CppProject
 		if (!World::regions.size())
 		{
 			// Size of last section(s) in each axis
-			IntType lastSizeX = self->build_size_x % SECTION_SIZE;
-			IntType lastSizeY = self->build_size_y % SECTION_SIZE;
-			IntType lastSizeZ = self->build_size_z % SECTION_SIZE;
-
-			if (!lastSizeX)
-				lastSizeX = SECTION_SIZE;
-
-			if (!lastSizeY)
-				lastSizeY = SECTION_SIZE;
-
-			if (!lastSizeZ)
-				lastSizeZ = SECTION_SIZE;
+			IntType lastSize[3];
+			for (IntType a = X_; a <= Z_; a++)
+			{
+				lastSize[a] = self->build_size.Value(a).ToInt() % SECTION_SIZE;
+				if (!lastSize[a])
+					lastSize[a] = SECTION_SIZE;
+			}
 
 			// Check if single block
 			BuilderState singleEntry;
@@ -74,9 +69,9 @@ namespace CppProject
 					{ x * SECTION_SIZE,
 					  z * SECTION_SIZE,
 					  y * SECTION_SIZE },
-					{ (x < Builder::sectionsDim.x - 1) ? SECTION_SIZE : lastSizeX,
-					  (z < Builder::sectionsDim.z - 1) ? SECTION_SIZE : lastSizeZ,
-					  (y < Builder::sectionsDim.y - 1) ? SECTION_SIZE : lastSizeY }
+					{ (x < Builder::sectionsDim.x - 1) ? SECTION_SIZE : lastSize[X_],
+					  (z < Builder::sectionsDim.z - 1) ? SECTION_SIZE : lastSize[Z_],
+					  (y < Builder::sectionsDim.y - 1) ? SECTION_SIZE : lastSize[Y_] }
 				);
 
 				if (self->build_single_block != null_)
@@ -90,10 +85,12 @@ namespace CppProject
 	void builder_thread_set_pos(Scope<obj_builder_thread> self, IntType position)
 	{
 		// Separate function to make sure the integer mod/division are used
-		self->build_pos = position;
-		self->build_pos_x = self->build_pos % self->build_size_x;
-		self->build_pos_y = (self->build_pos / self->build_size_x) % self->build_size_y;
-		self->build_pos_z =self->build_pos / self->build_size_xy;
+		IntType width = self->build_size.IntValue(X_);
+		IntType height = self->build_size.IntValue(Y_);
+		self->build_pos_index = position;
+		self->build_pos[X_] = position % width;
+		self->build_pos[Y_] = (position / width) % height;
+		self->build_pos[Z_] = position / self->build_size_xy;
 	}
 
 	void builder_read_schematic_blocks(Scope<obj_builder> self)
@@ -117,17 +114,18 @@ namespace CppProject
 			for (IntType i = 0; i < size; i++)
 			{
 				paletteBlocks[i] = self->sch_palette_blocks[i];
-				paletteStateIds[i] = self->sch_palette_stateids[i];
+				paletteStateIds[i] = self->sch_palette_state_ids[i];
 				paletteWaterlogged[i] = self->sch_palette_waterlogged[i];
 			}
 		}
 
 		IntType blockDataArray = self->sch_blockdata_array;
-		IntType legacyBlockArray = self->sch_legacy_blocksarray;
-		IntType legacyDataArray = self->sch_legacy_dataarray;
+		IntType legacyBlockArray = self->sch_legacy_blocks_array;
+		IntType legacyDataArray = self->sch_legacy_data_array;
+		IntType legacyAddArray = self->sch_legacy_add_array;
 
 		// Populate sections with schematic data
-		#pragma OPENMP_FOR reduction(+:numTimelines)
+		#pragma OPENMP_FOR(1) reduction(+:numTimelines)
 		for (IntType s = 0; s < Builder::sections.Size(); s++)
 		{
 			Section* section = Builder::sections[s];
@@ -141,7 +139,7 @@ namespace CppProject
 				IntType bx = section->builder.pos.x + sx;
 				IntType by = section->builder.pos.y + sy;
 				IntType bz = section->builder.pos.z + sz;
-				IntType bufferPos = bz * self->build_size_xy + by * self->build_size_x + bx;
+				IntType bufferPos = bz * (IntType)self->build_size_xy + by * Builder::size.x + bx;
 
 				obj_block* block = nullptr;
 				BuilderState state;
@@ -164,7 +162,7 @@ namespace CppProject
 						paletteIndex = buffer->data[blockDataArray + bufferPos];
 
 					// Get block from instance id in schematic palette
-					if (paletteIndex > 0)
+					if (paletteIndex >= 0 && paletteIndex < paletteBlocks.Size())
 					{
 						block = ObjTypeOpt(obj_block, paletteBlocks[paletteIndex]);
 
@@ -175,11 +173,21 @@ namespace CppProject
 				else
 				{
 					// Get block from legacy id+data
-					uint8_t legacyId = buffer->data[legacyBlockArray + bufferPos];
-					if (legacyId > 0 && global::legacy_block_set[legacyId])
+					IntType legacyId = buffer->data[legacyBlockArray + bufferPos];
+					if (legacyAddArray != null_)
+					{
+						uint8_t high = buffer->data[legacyAddArray + bufferPos / 2];
+						if (bufferPos % 2)
+							legacyId += (high >> 4) << 8;
+						else
+							legacyId += (high & 15) << 8;
+					}
+
+					if (legacyId > 0 && legacyId < 256 && global::legacy_block_set[legacyId])
 					{
 						uint8_t legacyData = buffer->data[legacyDataArray + bufferPos] % 16;
 						block = ObjTypeOpt(obj_block, global::legacy_block_obj[legacyId][legacyData]);
+
 						state.stateId = global::legacy_block_state_id[legacyId][legacyData].ToInt();
 					}
 				}
@@ -209,15 +217,15 @@ namespace CppProject
 		debug_timer_start();
 
 		self->file_map = buffer_read_string_short_be();
-		self->build_size_y = buffer_read_short_be(); // Derp
-		self->build_size_x = buffer_read_short_be();
-		self->build_size_z = buffer_read_short_be();
+		self->build_size[Y_] = buffer_read_short_be(); // Derp
+		self->build_size[X_] = buffer_read_short_be();
+		self->build_size[Z_] = buffer_read_short_be();
 		IntType blockData = buffer->pos;
 
 		builder_start(self);
 
 		// Populate sections with legacy blocks
-		#pragma OPENMP_FOR reduction(+:numTimelines)
+		#pragma OPENMP_FOR(1) reduction(+:numTimelines)
 		for (IntType s = 0; s < Builder::sections.Size(); s++)
 		{
 			Section* section = Builder::sections[s];
@@ -231,7 +239,7 @@ namespace CppProject
 				IntType bx = section->builder.pos.x + sx;
 				IntType by = section->builder.pos.y + sy;
 				IntType bz = section->builder.pos.z + sz;
-				IntType bufferPos = bz * self->build_size_xy + by * self->build_size_x + bx;
+				IntType bufferPos = bz * (IntType)self->build_size_xy + by * Builder::size.x + bx;
 
 				obj_block* block = nullptr;
 				BuilderState state;
@@ -273,6 +281,19 @@ namespace CppProject
 
 		self->build_multithreaded = null_;
 		self->build_transform = false;
+	}
+
+	void builder_set_block(ScopeAny self, IntType x, IntType y, IntType z, IntType blockId, IntType stateId, BoolType waterlogged)
+	{
+		WorldVec pos = { x, y, z };
+		Section* section = Builder::GetSection(pos);
+		BuilderState state = { (uint16_t)blockId, (uint16_t)stateId, waterlogged };
+
+		// Sparse structures leave unlisted positions as air
+		if (!section->builder.palette.Size())
+			section->AddBuilderState({ 0, 0, false });
+
+		section->builder.paletteIndices[section->GetBlockOffset(pos)] = section->AddBuilderState(state);
 	}
 
 	void builder_set_state_id(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)
@@ -348,7 +369,27 @@ namespace CppProject
 		return Builder::GetSection({ x, y, z })->builder.renderModelMultipartIds.Value(index);
 	}
 
-	IntType block_get_render_model(VarType object, RealType emissive, BoolType offset, BoolType offsetXY)
+	IntType builder_irandom(ScopeAny self, IntType maximum, IntType salt, BoolType useZ)
+	{
+		// Match the GML coordinate hash using exact integer arithmetic
+		constexpr IntType modulus = 2147483647;
+		const ArrType& position = sArr(build_pos);
+		IntType seed = 17;
+		
+		for (IntType axis = X_; axis <= (useZ ? Z_ : Y_); axis++)
+			seed = (seed * 16807 + position.IntValue(axis) % modulus) % modulus;
+		
+		seed = (seed + salt % modulus) % modulus;
+		if (seed < 0)
+			seed += modulus;
+		
+		for (int i = 0; i < 3; i++)
+			seed = ((seed ^ (seed >> 13)) * 48271 + 1) % modulus;
+		
+		return seed % ((uint64_t)std::max<IntType>(0, maximum) + 1);
+	}
+
+	IntType block_get_render_model(ScopeAny self, VarType object, RealType emissive, BoolType offset, BoolType offsetXY)
 	{
 		const ArrType& models = idVar(object, model).Arr();
 		obj_block_render_model* model = nullptr;
@@ -358,7 +399,7 @@ namespace CppProject
 		{
 			// Pick a random model from the list
 			IntType totalWeight = idVar(object, total_weight).ToInt();
-			IntType rand = irandom(totalWeight - 1) + 1;
+			IntType rand = builder_irandom(self, totalWeight - 1, 0, true) + 1;
 			for (IntType m = 0; m < models.Size(); m++)
 			{
 				model = ObjType(obj_block_render_model, models.Value(m));
@@ -381,7 +422,157 @@ namespace CppProject
 		return 0;
 	}
 
-	static Vertex BuilderCreateVertex(Scope<obj_builder_thread> self, RealType x, RealType y, RealType z, RealType tx, RealType ty, RealType nx, RealType ny, RealType nz)
+	void builder_set_neighbor_face(Scope<obj_builder_thread> self, IntType modelId, IntType face, IntType opposite)
+	{
+		// Resolve the neighbor once for all four culling fields
+		obj_block_render_model* model = ObjType(obj_block_render_model, modelId);
+		BoolType full = model->face_full.BoolValue(opposite);
+		IntType depth = model->face_min_depth.IntValue(opposite);
+		self->block_face_full[face] = full;
+		self->block_face_min_depth[face] = depth;
+
+		// Bounds are only read when a partial face can cull geometry
+		if (!full && depth != null_)
+		{
+			self->block_face_min[face] = model->face_min.vec.Value(opposite);
+			self->block_face_max[face] = model->face_max.vec.Value(opposite);
+		}
+	}
+
+	static RealType BuilderComponent(const VarType& value, IntType axis)
+	{
+		// Read vectors and arrays without constructing a scalar variant
+		if (value.IsVec())
+		{
+			const VecType& vec = value.Vec();
+			if (axis < 0 || axis >= vec.size)
+				return 0;
+
+			switch (axis)
+			{
+				case X_: return vec.x;
+				case Y_: return vec.y;
+				case Z_: return vec.z;
+				default: return vec.w;
+			}
+		}
+		
+		if (value.IsArray())
+			return value.Arr().RealValue(axis);
+		
+		return value.Value(axis).ToReal();
+	}
+
+	void block_render_model_generate(Scope<obj_builder_thread> self, IntType modelId)
+	{
+		// Resolve objects once and keep element bounds in numeric locals
+		obj_block_render_model* model = ObjType(obj_block_render_model, modelId);
+		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
+		
+		RealType offset[3];
+		for (IntType a = X_; a <= Z_; a++)
+			offset[a] = self->block_pos.RealValue(a) + model->offset.RealValue(a);
+		
+		if (self->block_vertex_emissive == null_)
+			self->block_vertex_emissive = model->emissive;
+		
+		VarType minEmissive = self->block_vertex_emissive;
+		BoolType leaves = (self->block_current != null_ && idVar(self->block_current, type).Str() == "leaves");
+
+		// Corner bits select from/to on X, Y and Z in the GML face winding order
+		static constexpr int corners[6][4] = {
+			{ 7, 5, 1, 3 }, { 4, 6, 2, 0 }, { 6, 7, 3, 2 },
+			{ 5, 4, 0, 1 }, { 4, 5, 7, 6 }, { 2, 3, 1, 0 }
+		};
+
+		for (IntType e = 0; e < model->element_amount; e++)
+		{
+			obj_block_render_element* element = ObjType(obj_block_render_element, model->element.IntValue(e));
+			RealType bounds[2][3];
+			for (IntType a = X_; a <= Z_; a++)
+			{
+				bounds[0][a] = BuilderComponent(element->from, a);
+				bounds[1][a] = BuilderComponent(element->to, a);
+
+				if (!element->rotated)
+				{
+					bounds[0][a] += offset[a];
+					bounds[1][a] += offset[a];
+				}
+			}
+
+			VarType transform = null_;
+			if (element->rotated)
+				transform = matrix_multiply(element->matrix, matrix_build(offset[X_], offset[Y_], offset[Z_], 0, 0, 0, 1, 1, 1));
+			
+			self->block_vertex_emissive = std::max(minEmissive.ToReal(), element->light_emission.ToReal() / 15.0);
+			
+			for (IntType f = 0; f < block_faces; f++)
+			{
+				if (!element->face_render.BoolValue(f))
+					continue;
+
+				IntType depth = self->block_face_min_depth.IntValue(f);
+				if (element->face_edge.BoolValue(f) && depth != null_ && depth <= model->face_min_depth.IntValue(f) &&
+					!(leaves && depth > e_block_depth_DEPTH0))
+				{
+					IntType axis = Y_;
+					if (f < ZP)
+						axis = Z_;
+					
+					if (self->block_face_full.BoolValue(f) ||
+						(self->block_face_min.RealValue(f) <= BuilderComponent(element->from, axis) &&
+						 self->block_face_max.RealValue(f) >= BuilderComponent(element->to, axis)))
+						continue;
+				}
+
+				self->block_vertex_rgb = self->block_color;
+				if (self->block_color == null_)
+					self->block_vertex_rgb = element->face_texture_color.IntValue(f);
+				
+				IntType buffer = element->face_vbuffer.IntValue(f);
+				if (buffer == null_)
+					buffer = builder->vbuffer.IntValue(element->face_depth.IntValue(f) * e_block_vbuffer_amount + element->face_block_vbuffer.IntValue(f));
+				
+				self->block_vbuffer_current = buffer;
+
+				// Read UVs by reference rather than copying nested arrays
+				const ArrType& face = element->face_uv.vec.Value(f).Arr();
+				RealType positions[4][3], uv[4][2];
+				for (int v = 0; v < 4; v++)
+				{
+					for (int a = 0; a < 3; a++)
+						positions[v][a] = bounds[(corners[f][v] >> a) & 1][a];
+					
+					const VarType& texcoord = face.vec.Value(v);
+					uv[v][0] = BuilderComponent(texcoord, X_);
+					uv[v][1] = BuilderComponent(texcoord, Y_);
+				}
+				
+				builder_add_face_real(self,
+					positions[0][0], positions[0][1], positions[0][2],
+					positions[1][0], positions[1][1], positions[1][2],
+					positions[2][0], positions[2][1], positions[2][2],
+					positions[3][0], positions[3][1], positions[3][2],
+					uv[0][0], uv[0][1], uv[1][0], uv[1][1], uv[2][0], uv[2][1], uv[3][0], uv[3][1], transform
+				);
+			}
+
+			self->block_vertex_rgb = c_white;
+			self->block_vertex_emissive = minEmissive;
+		}
+	}
+
+	static uint32_t BuilderPackNormal(Scope<obj_builder_thread> self, RealType nx, RealType ny, RealType nz)
+	{
+		// Apply the timeline axes before normalizing
+		if (self->build_transform)
+			return Vertex::PackNormal(ny, -nx, nz);
+		
+		return Vertex::PackNormal(nx, ny, nz);
+	}
+
+	static Vertex BuilderCreateVertex(Scope<obj_builder_thread> self, RealType x, RealType y, RealType z, RealType tx, RealType ty, uint32_t normal)
 	{
 		BoolType wavexy, wavez;
 		wavexy = false;
@@ -407,16 +598,14 @@ namespace CppProject
 		// Bake the timeline block axes after model transforms
 		if (self->build_transform)
 		{
-			RealType oldX = x, oldNX = nx;
+			RealType oldX = x;
 			x = y;
-			y = self->build_size_x * block_size_ - oldX;
-			nx = ny;
-			ny = -oldNX;
+			y = self->build_size.RealValue(X_) * block_size_ - oldX;
 		}
 
 		return Vertex{
 			x, y, z,
-			nx, ny, nz,
+			normal,
 			self->block_vertex_rgb, self->block_vertex_alpha,
 			tx, ty,
 			wavexy, wavez, self->block_vertex_emissive, self->block_vertex_subsurface
@@ -424,6 +613,25 @@ namespace CppProject
 	}
 
 	void builder_add_face(Scope<obj_builder_thread> self,
+		VecType pos1, VecType pos2, VecType pos3, VecType pos4,
+		VecType tex1, VecType tex2, VecType tex3, VecType tex4, VarType transform)
+	{
+		builder_add_face_real(self,
+			pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z,
+			pos3.x, pos3.y, pos3.z, pos4.x, pos4.y, pos4.z,
+			tex1.x, tex1.y, tex2.x, tex2.y, tex3.x, tex3.y, tex4.x, tex4.y, transform);
+	}
+
+	void builder_add_triangle(Scope<obj_builder_thread> self,
+		VecType pos1, VecType pos2, VecType pos3,
+		VecType tex1, VecType tex2, VecType tex3, VarType transform)
+	{
+		builder_add_triangle_real(self,
+			pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z, pos3.x, pos3.y, pos3.z,
+			tex1.x, tex1.y, tex2.x, tex2.y, tex3.x, tex3.y, transform);
+	}
+
+	void builder_add_face_real(Scope<obj_builder_thread> self,
 		RealType x1, RealType y1, RealType z1,
 		RealType x2, RealType y2, RealType z2,
 		RealType x3, RealType y3, RealType z3,
@@ -452,18 +660,19 @@ namespace CppProject
 		RealType nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2);
 		RealType ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2);
 		RealType nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2);
+		uint32_t normal = BuilderPackNormal(self, nx, ny, nz);
 
 		// Add face
 		FindVertexBuffer(self->block_vbuffer_current)->AddFace(
-			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
-			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
-			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
-			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, nx, ny, nz),
+			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, normal),
+			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, normal),
+			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal),
+			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, normal),
 			self->threadid
 		);
 	}
 
-	void builder_add_triangle(Scope<obj_builder_thread> self,
+	void builder_add_triangle_real(Scope<obj_builder_thread> self,
 		RealType x1, RealType y1, RealType z1,
 		RealType x2, RealType y2, RealType z2,
 		RealType x3, RealType y3, RealType z3,
@@ -488,12 +697,13 @@ namespace CppProject
 		RealType nx = (z1 - z2) * (y3 - y2) - (y1 - y2) * (z3 - z2);
 		RealType ny = (x1 - x2) * (z3 - z2) - (z1 - z2) * (x3 - x2);
 		RealType nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2);
+		uint32_t normal = BuilderPackNormal(self, nx, ny, nz);
 
 		// Add triangle
 		FindVertexBuffer(self->block_vbuffer_current)->AddTriangle(
-			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, nx, ny, nz),
-			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, nx, ny, nz),
-			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, nx, ny, nz),
+			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, normal),
+			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, normal),
+			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal),
 			self->threadid
 		);
 	}
@@ -517,7 +727,7 @@ namespace CppProject
 		// Get box
 		VecType boxStart = self->world_box_start;
 		VecType boxEnd = self->world_box_end;
-		if ((boxEnd - boxStart).GetLength() < 2)
+		if (boxEnd.x <= boxStart.x || boxEnd.y <= boxStart.y || boxEnd.z <= boxStart.z)
 		{
 			World::Close();
 			return false;
@@ -532,14 +742,35 @@ namespace CppProject
 		auto oldFilterList = filterList.vec;
 
 		global::_app->setting_world_import_filter_enabled = self->world_filter_array.Size() > 0;
+		global::_app->setting_world_import_filter_mode = self->world_filter_mode;
 		filterList.vec.clear();
 		for (IntType i = 0; i < self->world_filter_array.Size(); i++)
 			filterList.vec.append({ self->world_filter_array.Value(i), 0 });
 		
 		World::ApplyFilter();
 
-		// Generate sections for scenery builder
-		World::GenerateBuilderSections(box);
+		// Find level.dat above the dimension's region directory
+		QDir worldDir(self->world_regions_dir.Str());
+		while (!worldDir.exists("level.dat") && worldDir.cdUp()) {}
+
+		std::unique_ptr<SchematicExport> schematic;
+		try
+		{
+			if (!World::AddSave(worldDir.path()))
+				throw QString("Could not determine the world format");
+
+			IntType dataVersion = World::saves.value(worldDir.path()).dataVersion;
+			schematic.reset(new SchematicExport(box, dataVersion, true));
+		}
+		catch (const QString& error)
+		{
+			WARNING("Could not create schematic snapshot: " + error);
+		}
+
+		World::GenerateBuilderSections(box, schematic.get());
+
+		if (schematic)
+			schematic->SaveResource(self.object);
 
 		// Restore settings
 		global::_app->setting_world_import_filter_enabled = oldFilterEnabled;
@@ -566,7 +797,37 @@ namespace CppProject
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->GetWriteBytes();
-		
+
+		auto freeCpuData = [&]
+		{
+			for (IntType d = 0; d < e_block_depth_amount; d++)
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
+				{
+					// Small buffers still need CPU data for batching, even without a cache
+					if (buf->numIndices <= MAX_BATCH_INDICES)
+						continue;
+
+					for (Mesh<>* mesh : buf->meshes)
+					{
+						mesh->vertexData.FreeData();
+						mesh->indexData.FreeData();
+					}
+				}
+			}
+		};
+
+		// Include the header and reserve once instead of growing a large serialization buffer
+		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
+		totalBytes += sizeof(uchar) + sizeof(quint16) + assetsVersion.size() + sizeof(qint64) * 3;
+		if (totalBytes > std::numeric_limits<int>::max())
+		{
+			WARNING("Block mesh cache exceeds the byte array size limit");
+			freeCpuData();
+			return;
+		}
+
 		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
 		if (mb > 50)
 		{
@@ -575,25 +836,16 @@ namespace CppProject
 
 			if (!res->scenery_cache_save)
 			{
-				// CPU data of meshes won't be needed
-				for (IntType d = 0; d < e_block_depth_amount; d++)
-				for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-				{
-					if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
-					{
-						for (Mesh<>* mesh : buf->meshes)
-						{
-							mesh->vertexData.FreeData();
-							mesh->indexData.FreeData();
-						}
-					}
-				}
+				// Release CPU data that is only retained for cache generation
+				freeCpuData();
 				return;
 			}
 		}
 
 		Timer tmr;
 		QByteArray data;
+		data.reserve((int)totalBytes);
+
 		QDataStream out(&data, QIODevice::WriteOnly);
 
 		// Save format
@@ -601,7 +853,6 @@ namespace CppProject
 		out << format;
 
 		// Save Minecraft assets version
-		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
 		out << (quint16)assetsVersion.size();
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
@@ -615,26 +866,15 @@ namespace CppProject
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->Write(out);
 
-		tmr.Print("Write block mesh cache");
+		tmr.Print("Serialize block mesh cache (" + filename.QStr() + ")");
 
-		// Compress on a new thread
-		QThread* thread;
-		QString outName = filename.QStr();
-		QString tempName = (QString)file_directory_get() + QFileInfo(filename).fileName();
-		thread = QThread::create([outName, tempName, data]
+		if (out.status() != QDataStream::Ok || data.size() != totalBytes)
 		{
-			Timer tmr;
-			QFile outFile(outName);
-			QFile tempFile(tempName);
-			AddPerms(tempFile);
-			Gzip::Compress(data, tempName);
-			AddPerms(outFile);
-			outFile.remove();
-			tempFile.copy(outName);
-			tempFile.remove();
-			tmr.Print("Compress block mesh cache");
-		});
-		thread->start();
+			WARNING("Could not serialize block mesh cache");
+			return;
+		}
+
+		Gzip::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 8);
 	}
 
 	BoolType res_load_block_cache(Scope<obj_resource> self, StringType filename)

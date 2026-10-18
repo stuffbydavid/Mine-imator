@@ -1,9 +1,27 @@
 function tab_properties_resources_edit()
 {
-	if (res_edit.type = e_res_type.SCHEMATIC)
+	if (res_edit.filename != "") // Filename
 	{
-		tab_control_checkbox()
-		draw_checkbox("resources/scenery_randomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resources/scenery_randomize_help")
+		var wid;
+		content_capwid = text_caption_width("resources/filename")
+		
+		// Model
+		tab_control(24)
+		
+		draw_set_font(font_label)
+		wid = string_width(text_get("resources/filename") + ":")
+		
+		tip_wrap = false
+		tip_set(string_remove_newline(project_folder + "/" + res_edit.filename), dx, dy, dw - wid, 24)
+		tip_wrap = true
+		
+		draw_label(text_get("resources/filename") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
+		
+		// Open in external program
+		if (draw_button_icon("resources/filename_open", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD, "tooltip/resource/open"))
+			open_url(project_folder + "/" + res_edit.filename)
+		
 		tab_next()
 	}
 	
@@ -144,7 +162,7 @@ function tab_properties_resources_edit()
 			(window_busy = "" && (busy = "resources/scenery_structure_integrity" || busy = "resources/scenery_structure_integrity/input/drag")))
 		{
 			with (res_edit)
-				res_load()
+				res_load(true)
 		}
 		
 		tab_control_checkbox()
@@ -164,28 +182,68 @@ function tab_properties_resources_edit()
 		tab_next()
 	}
 	
-	if (res_edit.filename != "") // Filename
+	if (res_edit.type = e_res_type.SCHEMATIC)
 	{
-		var wid;
-		content_capwid = text_caption_width("resources/file_name")
+		tab_control_checkbox()
+		draw_checkbox("resources/scenery_randomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resources/scenery_randomize_help")
+		tab_next()
+	}
+
+	if (res_edit.type = e_res_type.FROM_WORLD)
+	{
+		// Always use Minecraft's Y-up order, regardless of the editor setting
+		var captions = [ "x", "y", "z" ];
+
+		for (var bound = 0; bound < 2; bound++)
+		{
+			var name, pos, textboxes;
+			if (bound)
+			{
+				name = "resources/world_box_end"
+				pos = res_edit.world_box_end
+				textboxes = tab.resources.tbx_world_box_end
+			}
+			else
+			{
+				name = "resources/world_box_start"
+				pos = res_edit.world_box_start
+				textboxes = tab.resources.tbx_world_box_start
+			}
+
+			for (var a = X; a <= Z; a++)
+			{
+				var minval, maxval;
+				minval = -no_limit
+				maxval = no_limit
+				if (bound)
+					minval = res_edit.world_box_start[a] + 1
+				else
+					maxval = res_edit.world_box_end[a] - 1
+
+				textfield_group_add(name + "/" + captions[a], pos[a], pos[a], action_res_world_box, a + bound * 3, textboxes[a], null, 0.05, minval, maxval, "resources/world_box/" + captions[a])
+			}
+
+			tab_control_textfield_group(true)
+			draw_textfield_group(name, dx, dy, dw, 1, -no_limit, no_limit, 1, true, true, 3)
+			tab_next()
+		}
 		
-		// Model
-		tab_control(24)
+		dy += 8
+
+		tab_control_button_label()
 		
-		draw_set_font(font_label)
-		wid = string_width(text_get("resources/file_name") + ":")
-		
-		tip_wrap = false
-		tip_set(string_remove_newline(project_folder + "/" + res_edit.filename), dx, dy, dw - wid, 24)
-		tip_wrap = true
-		
-		draw_label(text_get("resources/file_name") + ":", dx, dy + 14, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-		draw_label(string_limit(string_remove_newline(res_edit.filename), dw - wid - 32), dx + wid + 8, dy + 14, fa_left, fa_middle, c_text_main, a_text_main, font_value)
-		
-		// Open in external program
-		if (draw_button_icon("resources/file_name_open", dx + dw - 24, dy, 24, 24, false, icons.EXTERNAL, null, res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD, "tooltip/resource/open"))
-			open_url(project_folder + "/" + res_edit.filename)
-		
+		var buttonwidth, buttonx;
+		draw_set_font(font_button)
+		buttonwidth = max(string_width(text_get("resources/reload_from_world")), string_width(text_get("resources/open_world_folder"))) + 52
+		buttonwidth = min(buttonwidth, floor((dw - 8) / 2))
+		buttonx = dx + (dw - buttonwidth * 2 - 8) / 2
+
+		if (draw_button_label("resources/reload_from_world", buttonx, dy, buttonwidth, icons.REFRESH))
+			action_res_reload_world()
+
+		if (draw_button_label("resources/open_world_folder", buttonx + buttonwidth + 8, dy, buttonwidth, icons.FOLDER))
+			action_res_open_world_folder()
+
 		tab_next()
 	}
 }

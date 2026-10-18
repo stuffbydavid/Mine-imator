@@ -60,6 +60,7 @@ function tl_event_create()
 	part_list = null
 	part_root = null
 	scenery_animate = false
+	scenery_ground_hobj = null
 	
 	camera_effect_type = e_cam_fx.FADE
 	camera_effect_value = null

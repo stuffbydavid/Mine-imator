@@ -1,8 +1,14 @@
 function bench_draw_settings_project()
 {
-	var list, selected;
+	var list, selected, restype, layoutchanged, mouseon;
 	list = bench_settings.project_list
 	selected = bench_settings.project_selected
+	restype = null
+	if (selected != null && selected.object_index = obj_resource)
+		restype = selected.type
+
+	layoutchanged = (restype != null && restype != bench_settings.project_settings_type)
+	mouseon = content_mouseon
 	
 	bench_create_disabled = (selected = null)
 	bench_edit_hidden = false
@@ -12,6 +18,13 @@ function bench_draw_settings_project()
 	tab_next()
 	
 	window_scroll_focus = string(list.scroll)
+
+	// Measure a new resource type without showing settings at the previous list height
+	if (layoutchanged)
+	{
+		gpu_set_colorwriteenable(false, false, false, false)
+		content_mouseon = false
+	}
 
 	tab_control(ui_large_height)
 	togglebutton_add("bench/project/library", null, bench_settings.project_lib_list, list = bench_settings.project_lib_list, action_bench_project_list)
@@ -54,7 +67,10 @@ function bench_draw_settings_project()
 	if (list = bench_settings.project_res_list || list = bench_settings.project_all_list)
 	{
 		var exportdisabled, replacedisabled, offset;
-		exportdisabled = (!res || selected.type = e_res_type.FROM_WORLD)
+		exportdisabled = !res
+		if (res && selected.type != e_res_type.PACK)
+			exportdisabled = !file_exists_lib(project_folder + "/" + selected.filename)
+
 		replacedisabled = (!res || selected.type = e_res_type.FROM_WORLD)
 		offset = (list = bench_settings.project_all_list) ? 56 : 28
 				
@@ -103,4 +119,11 @@ function bench_draw_settings_project()
 		bench_buttons_hidden = true
 	else if (list = bench_settings.project_all_list)
 		bench_buttons_hidden = (selected != null && selected.object_index = obj_resource)
+
+	bench_settings.project_settings_type = restype
+	if (layoutchanged)
+	{
+		gpu_set_colorwriteenable(true, true, true, true)
+		content_mouseon = mouseon
+	}
 }

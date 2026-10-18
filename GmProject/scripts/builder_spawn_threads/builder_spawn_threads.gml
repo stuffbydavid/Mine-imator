@@ -9,9 +9,9 @@ function builder_spawn_threads(number)
 		thread.block_obj = block_obj
 		thread.block_state_id = block_state_id
 		thread.block_waterlogged = block_waterlogged
-		thread.build_size_x = build_size_x
-		thread.build_size_y = build_size_y
-		thread.build_size_z = build_size_z
+		thread.build_size[X] = build_size[X]
+		thread.build_size[Y] = build_size[Y]
+		thread.build_size[Z] = build_size[Z]
 		thread.build_size_xy = build_size_xy
 		thread.build_size_total = build_size_total
 		thread.build_size_sqrt = build_size_sqrt

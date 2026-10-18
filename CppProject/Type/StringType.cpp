@@ -112,10 +112,16 @@ namespace CppProject
 			return;
 
 		Table* table = GetTable();
-		if (omp && table == &qThread->mainTable) // Can't write to main table on OpenMP thread
-			return;
-
 		IntType tableId = GetId();
+		if (qThread->ompActive && table == &qThread->mainTable)
+		{
+			// Keep shared string reference changes local to the current worker
+			if (tableId >= table->startId)
+				qThread->ompTable[omp_get_thread_num()].mainRefChanges[tableId] += num;
+			
+			return;
+		}
+
 		if (tableId >= table->startId)
 		{
 		#if STRINGTYPE_DEBUG
@@ -233,6 +239,12 @@ namespace CppProject
 		{
 			Table& table = qThread->ompTable[t];
 			table.Clean();
+
+			// Apply shared reference changes after all workers have finished
+			for (auto it = table.mainRefChanges.constBegin(); it != table.mainRefChanges.constEnd(); ++it)
+				qThread->mainTable.entries[it.key()].refs += it.value();
+			
+			table.mainRefChanges.clear();
 
 			for (IntType i = table.startId; i < table.nextId; i++)
 			{

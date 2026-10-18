@@ -7,7 +7,7 @@ function app_cancel_place()
 		tl_update_list()
 	}
 
-	with (place_history)
+	with (place_hobj)
 	{
 		tl_value_set_vec3(e_value.POS_X, vec3(0), true)
 		tl_value_set_vec3(e_value.ROT_X, vec3(0), true)
