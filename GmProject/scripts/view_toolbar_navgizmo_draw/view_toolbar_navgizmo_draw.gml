@@ -97,7 +97,7 @@ function view_toolbar_navgizmo_draw(view, xx, yy, buttons = null)
 	{
 		var bdir, pos2d;
 		bdir = buttons[i][dir][1]
-	    pos2d = [center[X] - ((dw / 2) - 8) * bdir[X], center[Y] - ((dw / 2) - 8) * bdir[Y]]
+	    pos2d = [round(center[X] - ((dw / 2) - 8) * bdir[X]), round(center[Y] - ((dw / 2) - 8) * bdir[Y])]
 		
 		// Draw bottom buttons behind background
 		//if (bdir[Z] <= 0 && tempz > 0)
@@ -106,8 +106,9 @@ function view_toolbar_navgizmo_draw(view, xx, yy, buttons = null)
 		
 		if (buttons[i][type] = e_button.PRIMARY)
 		{
+			var offset = (is_cpp() ? 0.001 : -1);
 			draw_set_color(buttons[i][color])
-			draw_line_width(center[X]-1, center[Y]-1, pos2d[X]-1, pos2d[Y]-1, 2)
+			draw_line_width(center[X]+offset, center[Y]+offset, pos2d[X]+offset, pos2d[Y]+offset, 2)
 			draw_set_color(c_white)
 		}
 		
