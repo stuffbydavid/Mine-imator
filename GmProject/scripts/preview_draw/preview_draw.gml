@@ -88,7 +88,7 @@ function preview_draw(preview, xx, yy, width, height)
 			if (!preview.xy_lock)
 			{
 				preview.zangle = preview.clickzangle - (mouse_click_y - mouse_y)
-				preview.zangle = clamp(preview.zangle, -89.9, 89.9)
+				preview.zangle = clamp(preview.zangle, -pitch_limit, pitch_limit)
 			}
 			
 			preview.update = true

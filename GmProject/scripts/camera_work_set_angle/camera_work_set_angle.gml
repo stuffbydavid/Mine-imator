@@ -2,7 +2,12 @@ function camera_work_set_angle()
 {
 	cam_work_angle_xy = point_direction(cam_work_focus[X], cam_work_focus[Y], cam_work_from[X], cam_work_from[Y])
 	cam_work_angle_z = point_zdirection(cam_work_focus[X], cam_work_focus[Y], cam_work_focus[Z], cam_work_from[X], cam_work_from[Y], cam_work_from[Z])
-	cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
+	cam_work_angle_z = clamp(cam_work_angle_z, -pitch_limit, pitch_limit)
+	
+	cam_work_angle_goal_xy = cam_work_angle_xy
+	cam_work_angle_goal_z = cam_work_angle_z
+	cam_work_angle_goal_look_xy = cam_work_angle_look_xy
+	cam_work_angle_goal_look_z = cam_work_angle_look_z
 	
 	cam_work_zoom = point3D_distance(cam_work_focus, cam_work_from)
 	cam_work_zoom_goal = cam_work_zoom

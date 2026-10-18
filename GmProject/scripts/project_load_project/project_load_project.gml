@@ -54,9 +54,13 @@ function project_load_project(map)
 		
 		cam_work_angle_look_xy = value_get_real(cammap[?"angle_look_xy"], cam_work_angle_xy)
 		cam_work_angle_look_z = value_get_real(cammap[?"angle_look_z"], -cam_work_angle_z)
+		cam_work_angle_goal_xy = cam_work_angle_xy
+		cam_work_angle_goal_z = cam_work_angle_z
+		cam_work_angle_goal_look_xy = cam_work_angle_look_xy
+		cam_work_angle_goal_look_z = cam_work_angle_look_z
 		
 		// Fix if value was saved outside of range in previous versions
-		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -pitch_limit, pitch_limit)
 		
 		camera_work_set_from()
 	}

@@ -29,6 +29,12 @@ function tip_draw()
 		
 		tip_arrow_final_x += (tip_arrow_x - tip_arrow_final_x) / max(1, 4 / delta)
 		tip_arrow_final_y += (tip_arrow_y - tip_arrow_final_y) / max(1, 4 / delta)
+		
+		if (tip_direction = "left" || tip_arrow)
+		{
+			tip_final_x = tip_x
+			tip_arrow_final_x = tip_arrow_x
+		}
 	}
 	
 	content_x = tip_final_x
@@ -43,8 +49,16 @@ function tip_draw()
 	
 	// Arrow
 	render_set_culling(false)
-	draw_image(spr_tooltip_arrow, tip_arrow * 2, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_input_background, 1, tip_right * 90)
-	draw_image(spr_tooltip_arrow, (tip_arrow * 2) + 1, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_border, a_border, tip_right * 90)
+	
+	var tipdir = 0;
+	switch (tip_direction)
+	{
+		case "right":	tipdir =  90;	break
+		case "left":	tipdir = -90;	break
+	}
+	
+	draw_image(spr_tooltip_arrow, tip_arrow * 2, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_input_background, 1, tipdir)
+	draw_image(spr_tooltip_arrow, (tip_arrow * 2) + 1, tip_arrow_final_x, tip_arrow_final_y, tip_arrow_xscale, tip_arrow_yscale, c_border, a_border, tipdir)
 	render_set_culling(true)
 	
 	// Text
