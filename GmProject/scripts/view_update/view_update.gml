@@ -141,8 +141,10 @@ function view_update(view, cam)
 		cam_work_focus_last = point3D_copy(cam_work_focus)
 		
 		camera_work_set_angle()
-		cam_work_angle_look_xy = cam_work_angle_xy
-		cam_work_angle_look_z = -cam_work_angle_z
+		//cam_work_angle_look_xy = cam_work_angle_xy
+		//cam_work_angle_look_z = -cam_work_angle_z
+		cam_work_angle_goal_look_xy = cam_work_angle_xy
+		cam_work_angle_goal_look_z = -cam_work_angle_z
 		cam_work_zoom_goal = 100
 		camera_work_set_from()
 		
@@ -169,7 +171,7 @@ function view_update(view, cam)
 	
 	if (window_focus = string(view))
 	{
-		if (!cam && (window_busy = "view/rotate_camera" || window_busy = "view/move_camera") && keybinds[e_keybind.CAM_RESET].pressed)
+		if (!cam && (window_busy = "view/rotate_camera" || window_busy = "view/move_camera" || window_busy = "view/move_camera_toggle") && keybinds[e_keybind.CAM_RESET].pressed)
 			setting_move_speed_scroll = 1
 
 		// Select or move camera
@@ -266,7 +268,7 @@ function view_update(view, cam)
 		}
 		
 		// Move camera
-		if (window_busy = "view/move_camera")
+		if (window_busy = "view/move_camera" || window_busy = "view/move_camera_toggle")
 		{
 			if (cam = null)
 				shortcut_bar_state = "camera_move"
@@ -298,8 +300,11 @@ function view_update(view, cam)
 				view_click_y = display_mouse_get_y()
 			}
 			
-			if (!mouse_right)
+			if ((!mouse_right && window_busy = "view/move_camera") || ((mouse_left_released || mouse_right_released) && window_busy = "view/move_camera_toggle"))
 			{
+				if (window_busy = "view/move_camera_toggle") // Prevent walknav button double-click
+					app_mouse_clear()
+				
 				camera_work_set_focus()
 				view_changed(view)
 				window_busy = (place_build || place_tl != null) ? place_busy : ""
@@ -312,8 +317,23 @@ function view_update(view, cam)
 		{
 			if (place_build && cam = null)
 				shortcut_bar_state = "viewport/build"
-
+			
+			mouse_cursor = cr_size_all
 			camera_control_pan(cam)
+			
+			if (!mouse_left)
+			{
+				camera_work_set_focus()
+				view_changed(view)
+				window_busy = (place_build || place_tl != null) ? place_busy : ""
+			}
+		}
+		
+		// Zoom camera
+		if (window_busy = "view/zoom_camera")
+		{
+			mouse_cursor = cr_size_ns
+			camera_control_zoom(cam)
 			
 			if (!mouse_left)
 			{

@@ -12,7 +12,7 @@ function debug_startup()
 		debug_project		 = file_directory_get() + "dev_project/dev_project.miproject"
 		debug_full			 = true
 		debug_advanced		 = true
-		debug_skip_blocks	 = false
+		debug_skip_blocks	 = true
 		debug_max_blocks	 = 10
 		debug_show_bones	 = false
 		debug_schematics	 = false
