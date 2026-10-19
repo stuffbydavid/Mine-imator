@@ -53,8 +53,8 @@ function builder_read_schematic_tile_entities()
 				
 				if (is_string(eid))
 				{
-					var script = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));
-					if (script > -1)
+					var scr = asset_get_index("block_tile_entity_" + string_replace(string_lower(eid), "minecraft:", ""));
+					if (scr > -1)
 					{
 						build_pos[X] = ex
 						build_pos[Y] = ey
@@ -66,7 +66,7 @@ function builder_read_schematic_tile_entities()
 							continue
 						
 						block_state_id_current = builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z])
-						script_execute(script, data)
+						script_execute(scr, data)
 					}
 				}
 			}

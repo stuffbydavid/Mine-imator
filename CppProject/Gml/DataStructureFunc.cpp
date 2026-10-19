@@ -234,6 +234,14 @@ namespace CppProject
 			delete map;
 	}
 
+	BoolType ds_map_empty(IntType id)
+	{
+		if (Map* map = FindMap(id))
+			return (map->GetSize() == 0);
+
+		return false;
+	}
+
 	BoolType ds_map_exists(IntType id, VarType key)
 	{
 		if (Map* map = FindMap(id))

@@ -2435,6 +2435,7 @@
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
+				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=sticky",
 				"rotation_point": [ 0, 8, 0 ],
@@ -2493,6 +2494,7 @@
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
+				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=normal",
 				"rotation_point": [ 0, 8, 0 ],
@@ -3206,6 +3208,7 @@
 			},
 			"default_state": "facing=west,type=legacy",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": {
 					"double=false": "variant=normal",
@@ -3304,6 +3307,7 @@
 			},
 			"default_state": "rotation=0,wood=oak",
 			"timeline": {
+				"type": "sign",
 				"model": "sign",
 				"model_state": {
 					"wood=oak": "wood=oak,variant=standing",
@@ -3406,6 +3410,7 @@
 			},
 			"default_state": "variant=oak,hinge=left,facing=west,open=false",
 			"timeline": {
+				"type": "door",
 				"rotation_point": [ 14.5, 0, 1.5 ],
 				"position": {
 					"location=north_west": [ 1.5, 0, 1.5 ],
@@ -3471,6 +3476,7 @@
 			},
 			"default_state": "facing=west,wood=oak",
 			"timeline": {
+				"type": "sign",
 				"model": "sign",
 				"model_state": {
 					"wood=oak": "wood=oak,variant=wall",
@@ -3538,6 +3544,7 @@
 			},
 			"default_state": "rotation=0,wood=oak,attached=false",
 			"timeline": {
+				"type": "sign",
 				"model": "hanging_sign",
 				"model_state": {
 					"wood=oak,attached=false": "wood=oak,variant=hanging",
@@ -3623,6 +3630,7 @@
 			},
 			"default_state": "facing=west,wood=oak",
 			"timeline": {
+				"type": "sign",
 				"model": "hanging_sign",
 				"model_state": {
 					"wood=oak": "wood=oak,variant=wall",
@@ -3686,6 +3694,7 @@
 			},
 			"default_state": "face=wall,facing=east,powered=false",
 			"timeline": {
+				"type": "lever",
 				"model": "lever",
 				"model_state": "",
 				"position": {
@@ -3738,6 +3747,7 @@
 			},
 			"default_state": "variant=stone,powered=false",
 			"timeline": {
+				"type": "pressure_plate",
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -3829,6 +3839,7 @@
 			},
 			"default_state": "variant=stone,face=floor,facing=west,powered=false",
 			"timeline": {
+				"type": "button",
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
 					"face=ceiling": [ 8, 16, 8 ],
@@ -4146,6 +4157,7 @@
 			},
 			"default_state": "variant=oak,facing=west,open=false,half=bottom",
 			"timeline": {
+				"type": "trapdoor",
 				"rotation_point": {
 					"facing=north": [ 8, 1.5, 14.5 ],
 					"facing=south": [ 8, 1.5, 1.5 ],
@@ -4427,6 +4439,7 @@
 			},
 			"default_state": "variant=oak,facing=west,open=false,in_wall=false",
 			"timeline": {
+				"type": "fence_gate",
 				"model": "fence_gate",
 				"model_state": {
 					"variant=oak": "variant=oak",
@@ -4521,6 +4534,7 @@
 			"name": "enchanting_table",
 			"file": "enchanting_table.json",
 			"timeline": {
+				"type": "enchanting_table",
 				"model": "book",
 				"model_double": true,
 				"rotation_point": [ 0, 3, 0 ],
@@ -4623,6 +4637,7 @@
 			},
 			"default_state": "facing=west",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": "variant=ender",
 				"position": [ 8, 0, 8 ],
@@ -4644,6 +4659,7 @@
 			},
 			"default_state": "facing=west,attached=false,powered=false",
 			"timeline": {
+				"type": "tripwire_hook",
 				"model": "tripwire_hook",
 				"position": {
 					"facing=north": [ 8, 0, 15 ],
@@ -4901,6 +4917,7 @@
 			},
 			"default_state": "rotation=0,character=human",
 			"timeline": {
+				"type": "mob_head",
 				"model": "mob_head",
 				"model_state": {
 					"character=skeleton": "character=skeleton",
@@ -4949,6 +4966,7 @@
 			},
 			"default_state": "facing=west,character=human",
 			"timeline": {
+				"type": "mob_head",
 				"model": "mob_head",
 				"model_state": {
 					"character=skeleton": "character=skeleton",
@@ -5009,6 +5027,7 @@
 			},
 			"default_state": "facing=west,type=legacy",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": {
 					"double=false": "variant=trapped",
@@ -5039,6 +5058,7 @@
 			},
 			"default_state": "variant=light,power=0",
 			"timeline": {
+				"type": "pressure_plate",
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -5266,6 +5286,7 @@
 			},
 			"default_state": "rotation=0,color=white",
 			"timeline": {
+				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=standing",
 				"pattern_type": "banner",
@@ -5334,6 +5355,7 @@
 			},
 			"default_state": "facing=west,color=white",
 			"timeline": {
+				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=wall",
 				"pattern_type": "banner",
@@ -5686,6 +5708,7 @@
 			},
 			"default_state": "color=none,facing=up",
 			"timeline": {
+				"type": "shulker_box",
 				"model": "shulker_box",
 				"position": {
 					"facing=north": [ 8, 8, 16 ],
@@ -5864,6 +5887,7 @@
 			},
 			"default_state": "open=false",
 			"timeline": {
+				"type": "conduit",
 				"model": "conduit",
 				"position": [ 8, 0, 8 ]
 			},
@@ -6249,6 +6273,7 @@
 			},
 			"default_state": "facing=west,attachment=floor",
 			"timeline": {
+				"type": "bell",
 				"model": "bell",
 				"model_double": true,
 				"position": [ 8, 13, 8 ],
@@ -6996,6 +7021,7 @@
 			},
 			"default_state": "variant=copper,type=single,facing=west",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": {
 					"variant=copper,double=false": "variant=copper",
@@ -7045,6 +7071,7 @@
 			},
 			"default_state": "variant=normal,facing=west",
 			"timeline": {
+				"type": "copper_golem_statue",
 				"model": "copper_golem",
 				"model_state": {
 					"variant=normal": "variant=normal,eyes=false",
@@ -7418,6 +7445,7 @@
 			},
 			"default_state": "facing=east",
 			"timeline": {
+				"type": "decorated_pot",
 				"model": "decorated_pot",
 				"position": [ 8, 0, 8 ],
 				"rotation": {

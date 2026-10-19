@@ -177,18 +177,27 @@ namespace CppProject
 		QHash<QString, QDir> dimDir;
 	};
 
-	// Collect source blocks before the scenery builder converts them
+	// Collect source blocks for .schem/.schematic export before mesh generation
 	struct SchematicExport
 	{
-		SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible = false);
+		// Initialize NBT data and storage for the selected box.
+		SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible = false, BoolType applyFilter = true);
+
+		// Copy compatible chunk blocks and block entities into the schematic.
 		void AddChunk(Chunk& chunk);
+
+		// Serialize the collected schematic as NBT.
 		QByteArray Serialize();
+
+		// Return the extension for the selected schematic format.
 		QString Extension() const;
+
+		// Serialize and asynchronously save a world resource snapshot.
 		void SaveResource(obj_resource* resource);
 
 		WorldBox box;
 		IntType dataVersion, skippedChunks = 0;
-		BoolType legacy, skipIncompatible;
+		BoolType legacy, skipIncompatible, applyFilter;
 		BoolType exportOnly = true;
 		QString error;
 		NbtCompound root;
@@ -210,8 +219,11 @@ namespace CppProject
 		// Closes the currently opened world.
 		static void Close();
 
-		// Generates a collection of builder sections from a box in the opened world,.
+		// Generate builder sections from a box in the opened world.
 		static void GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic = nullptr);
+
+		// Process block entities after filtering builder sections.
+		static void ProcessBuilderEntities();
 
 		// Adds a save from the given root directory, returns whether successful.
 		static BoolType AddSave(QString dir);
@@ -221,13 +233,6 @@ namespace CppProject
 
 		// Export the blocks and block entities inside the selected box
 		static void ExportSchematic(const WorldBox& box, const QString& filename);
-
-		// Block filter mode
-		enum FilterMode
-		{
-			REMOVE = 0,
-			KEEP = 1
-		};
 
 		static QDir currentRegionsDir;
 		static Preview* preview;
@@ -302,7 +307,7 @@ namespace CppProject
 		};
 
 		Mode mode = DEFAULT;
-		BoolType hasPlayer = false, resetUpdate = false;
+		BoolType hasPlayer = false, resetUpdate = false, filterActive = false;
 		QString dimension = "";
 		QString exportFilename;
 		WorldBox exportBox;
@@ -511,8 +516,8 @@ namespace CppProject
 		void FreePreviewData();
 
 		// Copy original block states and block entities into a schematic.
-		void ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities);
-		void ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic);
+		void ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities, BoolType applyFilter);
+		void ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic, BoolType applyFilter);
 
 		// Block format
 		enum Format : int
@@ -565,7 +570,6 @@ namespace CppProject
 
 		struct Mesh
 		{
-			// Non-owning views into worker scratch storage, only valid during generation
 			FaceData* faceData[CHUNK_SECTIONS] = {};
 			VertexData* vertexData[CHUNK_SECTIONS + 1] = {};
 			uint8_t faceDirections[CHUNK_SECTIONS] = {};

@@ -41,6 +41,29 @@ function minecraft_assets_load_startup_version()
 		log("Unsupported archive, format", format)
 		return false
 	}
+
+	// Collect timeline types before loading blocks
+	ds_list_clear(mc_assets.block_tl_type_list)
+	
+	var blockslist = load_assets_map[?"blocks"];
+	if (ds_list_valid(blockslist))
+	{
+		for (var i = 0; i < ds_list_size(blockslist); i++)
+		{
+			var blockmap, timelinemap, type;
+			blockmap = blockslist[|i]
+			if (!ds_map_valid(blockmap) || !is_string(blockmap[?"name"]))
+				continue
+
+			timelinemap = blockmap[?"timeline"]
+			if (!ds_map_valid(timelinemap))
+				continue
+
+			type = value_get_string(timelinemap[?"type"], blockmap[?"name"])
+			if (ds_list_find_index(mc_assets.block_tl_type_list, type) < 0)
+				ds_list_add(mc_assets.block_tl_type_list, type)
+		}
+	}
 	
 	// Check patch version
 	var patch = load_assets_map[?"patch"];

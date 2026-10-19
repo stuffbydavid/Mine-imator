@@ -14,7 +14,19 @@ function action_res_replace(fn = "")
 			if (fn = "")
 				return 0
 			
-			scenery_tl_add = null
+			// Reset scenery
+			if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
+			{
+				scenery_tl_set = false
+				scenery_tl_all_types = false
+				scenery_tl_types = []
+				
+				ds_map_clear(scenery_block_map)
+				ds_map_clear(scenery_tl_types_count_map)
+				
+				scenery_tl_types_count_ready = false
+			}
+			
 			filename = filename_name(fn)
 			
 			load_folder = filename_dir(fn)

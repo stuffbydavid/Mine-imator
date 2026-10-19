@@ -710,14 +710,20 @@ namespace CppProject
 
 	BoolType res_load_scenery_world(Scope<obj_resource> self)
 	{
+		BoolType snapshot = self->scenery_snapshot_save;
+		self->scenery_snapshot_save = true;
+
 		// Sections already generated
 		if (Builder::sections.Size())
 			return true;
 
+		// Missing world
 		if (!QDir(self->world_regions_dir.Str()).exists())
 			return false;
 
 		World::Open((QString)self->world_regions_dir.Str());
+
+		// Missing regions in dimension
 		if (!World::regions.count())
 		{
 			World::Close();
@@ -735,49 +741,39 @@ namespace CppProject
 
 		WorldBox box(WorldVec(boxStart.x, boxStart.y, boxStart.z), WorldVec(boxEnd.x, boxEnd.y, boxEnd.z));
 
-		// Apply resource filters
-		List& filterList = DsList(global::_app->setting_world_import_filter_list);
-		BoolType oldFilterEnabled = global::_app->setting_world_import_filter_enabled;
-		IntType oldFilterMode = global::_app->setting_world_import_filter_mode;
-		auto oldFilterList = filterList.vec;
-
-		global::_app->setting_world_import_filter_enabled = self->world_filter_array.Size() > 0;
-		global::_app->setting_world_import_filter_mode = self->world_filter_mode;
-		filterList.vec.clear();
-		for (IntType i = 0; i < self->world_filter_array.Size(); i++)
-			filterList.vec.append({ self->world_filter_array.Value(i), 0 });
-		
-		World::ApplyFilter();
-
 		// Find level.dat above the dimension's region directory
 		QDir worldDir(self->world_regions_dir.Str());
 		while (!worldDir.exists("level.dat") && worldDir.cdUp()) {}
 
+		// Extract DataVersion and create schematic exporter
 		std::unique_ptr<SchematicExport> schematic;
-		try
+		if (snapshot)
 		{
-			if (!World::AddSave(worldDir.path()))
-				throw QString("Could not determine the world format");
+			try
+			{
+				if (!World::AddSave(worldDir.path()))
+					throw QString("Could not determine the world format");
 
-			IntType dataVersion = World::saves.value(worldDir.path()).dataVersion;
-			schematic.reset(new SchematicExport(box, dataVersion, true));
-		}
-		catch (const QString& error)
-		{
-			WARNING("Could not create schematic snapshot: " + error);
+				IntType dataVersion = World::saves.value(worldDir.path()).dataVersion;
+				schematic.reset(new SchematicExport(box, dataVersion, true, false));
+			}
+			catch (const QString& error)
+			{
+				WARNING("Could not create schematic snapshot: " + error);
+			}
 		}
 
 		World::GenerateBuilderSections(box, schematic.get());
 
+		// Apply filter
+		res_load_scenery_filter_mask(self);
+		res_load_scenery_block_map(self);
+
+		World::ProcessBuilderEntities();
+
 		if (schematic)
 			schematic->SaveResource(self.object);
 
-		// Restore settings
-		global::_app->setting_world_import_filter_enabled = oldFilterEnabled;
-		global::_app->setting_world_import_filter_mode = oldFilterMode;
-		filterList.vec = oldFilterList;
-
-		World::ApplyFilter();
 		World::Close();
 
 		return true;

@@ -3,6 +3,8 @@
 function block_load_timeline(map, typemap)
 {
 	timeline = true
+	
+	tl_type = value_get_string(map[?"type"], name)
 		
 	// Model to use
 	if (is_string(map[?"model"]))

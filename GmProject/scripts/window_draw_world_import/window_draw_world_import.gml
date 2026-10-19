@@ -122,7 +122,7 @@ function window_draw_world_import()
 	
 	dx += dw + spacing
 	if (draw_button_icon("world_import/settings", dx, dy, dw, dw, false, icons.SETTINGS, null, false, "world_import/settings_tip"))
-		popup_show(world_import_settings_popup)
+		popup_show(popup_world_settings)
 	
 	dx += dw
 	
@@ -177,8 +177,8 @@ function window_draw_world_import()
 		if (draw_button_label("world_import/confirm", confirmx, confirmy, confirmw, null, e_button.BIG, null, e_anchor.LEFT))
 			world_import_confirm()
 	
-	// Filter enabled
-	if (worldpicked && setting_world_import_filter_enabled && ds_list_size(setting_world_import_filter_list) > 0)
+	// Applied preview filter
+	if (worldpicked && world_import_filter_active)
 	{
 		var filtertext = text_get("world_import/filter_active");
 		draw_label(filtertext, confirmx + confirmw / 2 + 1, confirmy + 80 + 1, fa_center, fa_top, c_black, 1, font_heading_big)

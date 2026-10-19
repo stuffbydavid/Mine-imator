@@ -7,7 +7,7 @@ function macros()
 	#macro mineimator_version_sub		""					// Mod name and version (e.g. "Community Build 1.0.0")
 	#macro mineimator_version_extra		"WIP"				// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
-	#macro mineimator_version_date		"2026.10.XX"
+	#macro mineimator_version_date		"2026.11.XX"
 	#macro minecraft_assets_version		"26.3"
 	
 	// File formats
@@ -203,7 +203,8 @@ function macros()
 	#macro scenery_large_threshold		300
 	#macro scenery_instant_threshold	50 * 1024 // 50kb
 	#macro scenery_timeline_prompt		20
-	#macro scenery_timeline_limit		512
+	#macro scenery_timeline_enabled		[ "chest", "sign", "door", "lever", "trapdoor", "fence_gate", "enchanting_table", "banner" ]
+	#macro scenery_timeline_warning		50
 	#macro sound_filters				[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
 	#macro music_filters				[ "game", "menu", "records", "other" ]
 	#macro default_sound				"Step / Grass 1"

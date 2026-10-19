@@ -1,4 +1,4 @@
 function world_import_go_to_position_posz(value, add)
 {
-	world_import_settings_gotoposition_z = value + (add ? world_import_settings_gotoposition_z : 0)
+	world_import_settings_go_to_position_z = value + (add ? world_import_settings_go_to_position_z : 0)
 }

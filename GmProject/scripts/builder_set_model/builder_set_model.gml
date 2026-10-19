@@ -45,7 +45,9 @@ function builder_set_model(ongeneration = false)
 			ret = null
 	}
 
-	var tlvalid = ((mc_builder.block_tl_add = null || mc_builder.block_tl_add) && block_current.timeline && block_tl_map != null && ret != null);
+	var tlvalid = (mc_builder.block_tl_add && block_current.timeline && block_tl_map != null && ret != null);
+	if (tlvalid && mc_builder.block_tl_types != null)
+		tlvalid = array_contains(mc_builder.block_tl_types, block_current.tl_type)
 
 	// Has timeline
 	if (tlvalid && !block_current.model_double)

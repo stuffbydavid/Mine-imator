@@ -309,14 +309,14 @@ function settings_load()
 			setting_main_window_maximized = mainwindowmap[?"maximized"]
 		}
 		
-		// World import
-		var worldimportmap = map[?"world_import"];
-		if (ds_map_valid(worldimportmap))
+		// World settings
+		var worldmap = map[?"world"];
+		if (ds_map_valid(worldmap))
 		{
-			setting_world_import_filter_enabled = value_get_real(worldimportmap[?"filter_enabled"], setting_world_import_filter_enabled)
-			setting_world_import_filter_mode = value_get_real(worldimportmap[?"filter_mode"], setting_world_import_filter_mode)
-			ds_list_merge(setting_world_import_filter_list, worldimportmap[?"filter_list"])
-			setting_world_import_unload_regions = value_get_real(worldimportmap[?"unload_regions"], setting_world_import_unload_regions)
+			setting_world_filter_enabled = value_get_real(worldmap[?"filter_enabled"], setting_world_filter_enabled)
+			setting_world_filter_mode = value_get_real(worldmap[?"filter_mode"], setting_world_filter_mode)
+			ds_list_merge(setting_world_filter_list, worldmap[?"filter_list"])
+			setting_world_unload_regions = value_get_real(worldmap[?"unload_regions"], setting_world_unload_regions)
 		}
 	}
 }

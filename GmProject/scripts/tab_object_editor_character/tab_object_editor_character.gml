@@ -100,13 +100,19 @@ function tab_object_editor_character()
 		if (draw_checkbox("model/state/" + state, dx, dy, obj_edit.model_state[i + 1] = "true", null))
 		{
 			menu_model_state = menu_model_state_current
-					
-			var script = (tab = build_tool) ? action_bench_model_state : ((obj_edit.type = e_temp_type.MODEL_PART) ? action_lib_model_part_model_state : action_lib_model_state);
+			
+			var scr;
+			if (tab = build_tool)
+				scr = action_bench_model_state
+			else if (obj_edit.type = e_temp_type.MODEL_PART)
+				scr = action_lib_model_part_model_state
+			else
+				scr = action_lib_model_state
 					
 			if (obj_edit.model_state[i + 1] = "true")
-				script_execute(script, "false")
+				script_execute(scr, "false")
 			else
-				script_execute(script, "true")
+				script_execute(scr, "true")
 		}
 				
 		tab_next()

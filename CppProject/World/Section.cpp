@@ -198,7 +198,8 @@ namespace CppProject
 						IntType builderIndex = (y - blockStart.y) * builder.sizeXY + (z - blockStart.z) * builder.size.x + (x - blockStart.x); // YZX order
 						if (legacyId > 0 && global::legacy_block_set[legacyId]) // Non-air
 						{
-							if (obj_block* block = Builder::filteredMcLegacyBlockIdObj[legacyId][legacyData])
+							StringType mcId = global::legacy_block_mc_id[legacyId][legacyData];
+							if (obj_block* block = Builder::mcBlockIdObjMap.value(mcId, nullptr))
 							{
 								if (block->timeline)
 									chunk->numTimelines++;
@@ -488,9 +489,9 @@ namespace CppProject
 				id = id.Replaced("minecraft:", "");
 				if (id != "air") // Non air
 				{
-					if (obj_block* block = Builder::filteredMcBlockIdObjMap.value(id, nullptr))
+					if (obj_block* block = Builder::mcBlockIdObjMap.value(id, nullptr))
 					{
-						BuilderState state = { (uint16_t)block->block_id, 0, World::filteredMcBlockIdWaterloggedMap.value(id, false) };
+						BuilderState state = { (uint16_t)block->block_id, 0, World::mcBlockIdWaterloggedMap.value(id, false) };
 						ArrType vars = Builder::mcBlockIdStateVarsMap.value(id, ArrType());
 
 						if (entry && entry->HasKey(propertiesName)) // Parse properties
@@ -514,7 +515,7 @@ namespace CppProject
 									vars[i + 1] = value;
 
 									// Waterlogged status
-									if (name == "waterlogged" && !World::waterRemoved)
+									if (name == "waterlogged")
 										state.waterlogged = (value == "true");
 								}
 							}

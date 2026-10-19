@@ -51,6 +51,9 @@ namespace CppProject
 		dimension = global::_app->world_import_dimension;
 		World::Open(save.dimDir[dimension]);
 
+		// Set filter status
+		filterActive = (filteredMcBlockIdStyleIndexMap != mcBlockIdStyleIndexMap || World::waterRemoved);
+
 		// Set up player parameters
 		hasPlayer = (save.hasPlayer && save.playerDim == dimension);
 		playerPos = save.playerPos;
@@ -107,7 +110,7 @@ namespace CppProject
 		std::unique_ptr<SchematicExport> schematic;
 		try
 		{
-			schematic.reset(new SchematicExport(selection, World::saves.value(global::_app->world_import_world_root).dataVersion, true));
+			schematic.reset(new SchematicExport(selection, World::saves.value(global::_app->world_import_world_root).dataVersion, true, false));
 		}
 		catch (const QString& error)
 		{
@@ -117,12 +120,9 @@ namespace CppProject
 		World::GenerateBuilderSections(selection, schematic.get());
 
 		ArrType filterArray;
-		if (global::_app->setting_world_import_filter_enabled)
-		{
-			const List& filterList = DsList(global::_app->setting_world_import_filter_list);
-			for (const List::ListValue& val : filterList.vec)
-				filterArray.Append(val.value);
-		}
+		const List& filterList = DsList(global::_app->setting_world_filter_list);
+		for (const List::ListValue& val : filterList.vec)
+			filterArray.Append(val.value);
 
 		// Add resource
 		IntType resId = action_res_import_world(ScopeAny(global::_app->id),
@@ -130,10 +130,16 @@ namespace CppProject
 			StringType(World::currentRegionsDir.path()),
 			(VecType)selection.start,
 			(VecType)selection.end,
-			global::_app->setting_world_import_filter_mode,
+			global::_app->setting_world_filter_enabled,
+			global::_app->setting_world_filter_mode,
 			filterArray,
 			schematic ? StringType(schematic->Extension()) : StringType(".schem")
 		);
+
+		res_load_scenery_filter_mask(Scope<obj_resource>(resId));
+		res_load_scenery_block_map(Scope<obj_resource>(resId));
+
+		World::ProcessBuilderEntities();
 
 		if (schematic)
 		{
@@ -156,8 +162,8 @@ namespace CppProject
 		}
 
 		World::Close();
-		selection.active = false;
 
+		selection.active = false;
 		dimension = "overworld";
 
 		global::_app->window_state = "";
@@ -258,6 +264,7 @@ namespace CppProject
 				openLoadRegions.clear();
 				progress = 1.0;
 				mode = DEFAULT;
+				global::_app->world_import_filter_active = filterActive;
 			}
 
 			// Loading bar
@@ -356,7 +363,7 @@ namespace CppProject
 
 				// Check unload
 				VecType regionMidPos = region->pos + WorldVec(REGION_SIZE / 2, 128, REGION_SIZE / 2);
-				if (global::_app->setting_world_import_unload_regions.ToBool() &&
+				if (global::_app->setting_world_unload_regions.ToBool() &&
 					(VecType(camPos.x, 128, camPos.z) - regionMidPos).GetLength() > PREVIEW_UNLOAD_DISTANCE &&
 					(VecType(camTarget.x, 128, camTarget.z) - regionMidPos).GetLength() > PREVIEW_UNLOAD_DISTANCE)
 				{

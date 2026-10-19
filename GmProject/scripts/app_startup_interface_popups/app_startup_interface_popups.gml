@@ -85,6 +85,83 @@ function app_startup_interface_popups()
 		tbx_sheet_height = new_textbox_integer()
 	}
 	
+	// Block settings
+	popup_block_settings = new_popup("block_settings", popup_block_settings_draw, 560, null, true, false, false, true)
+	with (popup_block_settings)
+	{
+		resource = null
+		during_load = false
+
+		create_tl = null
+		create_hobj = null
+		create_place = false
+
+		tl_all_types = false
+		tl_types = []
+		
+		tbx_scenery_integrity = new_textbox_integer()
+		tbx_scenery_integrity.suffix = "%"
+		
+		filter_enabled = false
+		filter_mode = e_block_filter.REMOVE
+
+		block_select = null
+		block_list = new_obj(obj_sortlist)
+		block_list.height_items = 6
+		block_list.can_deselect = true
+		block_list.script = action_block_settings_block_select
+
+		sortlist_column_add(block_list, "block_filter", 0)
+		sortlist_column_add(block_list, "block_count", 0.75)
+
+		filter_select = null
+		filter_list = new_obj(obj_sortlist)
+		filter_list.height_items = 6
+		filter_list.can_deselect = true
+		filter_list.script = action_block_settings_filter_select
+
+		sortlist_column_add(filter_list, "block_filter", 0)
+		sortlist_column_add(filter_list, "block_count", 0.75)
+	}
+
+	// World settings
+	popup_world_settings = new_popup("world_settings", popup_world_settings_draw, 560, null, true, false, false, true, action_world_settings_confirm)
+	with (popup_world_settings)
+	{
+		unload_regions = app.setting_world_unload_regions
+
+		filter_enabled = app.setting_world_filter_enabled
+		filter_mode = app.setting_world_filter_mode
+		filter_array = []
+		for (var i = 0; i < ds_list_size(app.setting_world_filter_list); i++)
+			array_add(filter_array, app.setting_world_filter_list[|i])
+
+		offset_y = filter_enabled ? 0 : -app.window_height * 0.3
+		
+		block_select = null
+		block_list = new_obj(obj_sortlist)
+		block_list.height_items = 8
+		block_list.can_deselect = true
+		block_list.script = action_block_settings_block_select
+
+		sortlist_column_add(block_list, "block_filter", 0)
+
+		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
+			if (!array_contains(filter_array, b)) // Not filtered
+				sortlist_add(block_list, b)
+
+		filter_select = null
+		filter_list = new_obj(obj_sortlist)
+		filter_list.height_items = 8
+		filter_list.can_deselect = true
+		filter_list.script = action_block_settings_filter_select
+
+		sortlist_column_add(filter_list, "block_filter", 0)
+
+		for (var i = 0; i < array_length(filter_array); i++) // Add indices from filter list
+			sortlist_add(filter_list, filter_array[i])
+	}
+
 	// Export movie
 	popup_exportmovie = new_popup("export_movie", popup_exportmovie_draw, 400, null, true)
 	with (popup_exportmovie)
