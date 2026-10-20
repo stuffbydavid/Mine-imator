@@ -31,9 +31,10 @@ function colorpicker_show(name, color, def, script, xx, yy, wid, hei)
 		
 	if (settings_menu_x < 0)
 		settings_menu_x = xx + wid + 8
-		
-	if (settings_menu_x + 192 > window_width)
-		settings_menu_x = window_width - 192
+	
+	var size = 256;
+	if (settings_menu_x + size > window_width)
+		settings_menu_x = window_width - size
 		
 	settings_menu_h_max = null
 	settings_menu_button_h = hei
