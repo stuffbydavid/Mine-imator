@@ -21,6 +21,13 @@ function render_world_text(vbuf, tex, facecamera, res, outline)
 		var sca = 8 / 48;
 		matrix_world_multiply_pre(matrix_build(0, 0, 0, 0, 0, 0, sca, 1, sca))
 	}
+
+	if (render_mode = e_render_mode.CLICK)
+	{
+		render_set_texture(null, spr_shape)
+		vbuffer_render(vbuf[0])
+		return 0
+	}
 	
 	render_set_texture(null, tex[0])
 	vbuffer_render(vbuf[0])

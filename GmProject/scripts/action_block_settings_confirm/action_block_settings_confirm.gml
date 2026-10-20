@@ -86,21 +86,22 @@ function action_block_settings_confirm()
 	}
 	else
 	{
-		if (popup.filter_enabled && popup.filter_mode = e_block_filter.REMOVE && array_length(popup.filter_array) = 0)
-			popup.filter_enabled = false
-
-		var integritychanged, palettechanged, randomizechanged, filterchanged;
+		var integritychanged, palettechanged, randomizechanged, filterenabled, filterchanged;
 		integritychanged = (res.scenery_integrity != popup.scenery_integrity)
 		palettechanged = (res.scenery_palette != popup.scenery_palette)
 		randomizechanged = (res.scenery_randomize != popup.scenery_randomize)
+		
+		filterenabled = popup.filter_enabled
+		if (filterenabled && popup.filter_mode = e_block_filter.REMOVE && array_length(popup.filter_array) = 0)
+			filterenabled = false
 		filterchanged = (
-			res.scenery_filter_enabled != popup.filter_enabled ||
+			res.scenery_filter_enabled != filterenabled ||
 			res.scenery_filter_mode != popup.filter_mode ||
 			!array_equals(res.scenery_filter_array, popup.filter_array)
 		)
 
 		if (tlchanged || integritychanged || palettechanged || randomizechanged || filterchanged)
-			action_res_block_settings(popup.tl_all_types, popup.tl_types, popup.scenery_integrity, popup.scenery_palette, popup.scenery_randomize, popup.filter_enabled, popup.filter_mode, popup.filter_array)
+			action_res_block_settings(popup.tl_all_types, popup.tl_types, popup.scenery_integrity, popup.scenery_palette, popup.scenery_randomize, filterenabled, popup.filter_mode, popup.filter_array)
 	}
 
 	if (popup_current = popup)

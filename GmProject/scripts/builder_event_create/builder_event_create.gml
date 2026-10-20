@@ -47,6 +47,7 @@ function builder_event_create()
 	block_tl_add = false
 	block_tl_types = null
 	block_tl_list = null
+	block_tl_count_map = null
 	
 	file_map = ""
 

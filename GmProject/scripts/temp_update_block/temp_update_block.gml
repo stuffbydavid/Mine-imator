@@ -21,6 +21,10 @@ function temp_update_block()
 		build_randomize = other.block_randomize
 		build_transform = true
 		
+		// Keep original local orientation
+		if (other.part_of != null && build_single_block != null && build_single_block.timeline)
+			build_transform = build_single_block.tl_build_transform
+		
 		builder_start()
 		builder_spawn_threads(1)
 		

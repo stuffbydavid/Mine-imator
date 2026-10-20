@@ -199,11 +199,11 @@ function res_load_scenery()
 					// Enable specific timelines only
 					for (var i = 0; i < array_length(scenery_timeline_enabled); i++)
 					{
-						var type, count;
-						type = scenery_timeline_enabled[i]
-						count = value_get_real(scenery_tl_types_count_map[?type], 0)
-						if (count > 0 && count <= 10)
-							array_add(scenery_tl_types, type)
+						var tltype, count;
+						tltype = scenery_timeline_enabled[i]
+						count = value_get_real(scenery_tl_types_count_map[?tltype], 0)
+						if (count > 0 && count <= scenery_timeline_enabled_max)
+							array_add(scenery_tl_types, tltype)
 					}
 					
 					// Show popup

@@ -46,8 +46,12 @@ function builder_set_model(ongeneration = false)
 	}
 
 	var tlvalid = (mc_builder.block_tl_add && block_current.timeline && block_tl_map != null && ret != null);
+	
 	if (tlvalid && mc_builder.block_tl_types != null)
 		tlvalid = array_contains(mc_builder.block_tl_types, block_current.tl_type)
+	
+	if (tlvalid && block_current.tl_type = "sign")
+		tlvalid = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]))
 
 	// Has timeline
 	if (tlvalid && !block_current.model_double)

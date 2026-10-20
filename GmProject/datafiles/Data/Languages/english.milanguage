@@ -693,6 +693,8 @@
 		"block": "Block",
 		"special_block": "Special block",
 		"special_block_model": "Block",
+		"front_text": "Front text",
+		"back_text": "Back text",
 		"special_block_tex": "Texture",
 		"special_block_tex_material": "Material map",
 		"special_block_tex_normal": "Normal map",
@@ -1456,7 +1458,6 @@
 		"wind_charge": "Wind Charge",
 		"armor": "Armor",
 		"armor_baby": "Baby Armor",
-		"cushion": "Cushion",
 		"part/": {
 			"body": "Body",
 			"right_arm": "Right arm",
@@ -1684,8 +1685,7 @@
 			"mushroom_3": "Mushroom 3",
 			"top_tentacles": "Top tentacles",
 			"bottom_tentacles": "Bottom tentacles",
-			"inner_tentacles": "Inner tentacles",
-			"cushion": "Cushion"
+			"inner_tentacles": "Inner tentacles"
 		},
 		"state/": {
 			"type": "Type",
@@ -2602,6 +2602,7 @@
 		"resin_block": "Block of Resin",
 		"firefly_bush": "Firefly Bush",
 		"dried_ghast": "Dried Ghast",
+		"cushion": "Cushion",
 		"state/": {
 			"variant": "Variant",
 			"snowy": "Snowy",

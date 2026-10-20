@@ -8,6 +8,8 @@ function res_load_scenery_block_map()
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
+	
+	mc_builder.block_tl_count_map = scenery_tl_types_count_map
 
 	with (mc_builder)
 	{
@@ -41,6 +43,10 @@ function res_load_scenery_block_map()
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], block.block_id, builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z]), false)
 
 				var counttl = block.timeline;
+				
+				// Sign counts are added when tile text is parsed
+				if (counttl && block.tl_type = "sign")
+					counttl = false
 				
 				// Upper door halves do not create timelines
 				if (counttl && block.tl_type = "door")

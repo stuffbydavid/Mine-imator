@@ -5,6 +5,7 @@ function block_load_timeline(map, typemap)
 	timeline = true
 	
 	tl_type = value_get_string(map[?"type"], name)
+	tl_build_transform = value_get_real(map[?"transform"], true)
 		
 	// Model to use
 	if (is_string(map[?"model"]))

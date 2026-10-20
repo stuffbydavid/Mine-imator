@@ -112,7 +112,7 @@ function app_startup_interface_popups()
 		block_list.script = action_block_settings_block_select
 
 		sortlist_column_add(block_list, "block_filter", 0)
-		sortlist_column_add(block_list, "block_count", 0.75)
+		sortlist_column_add(block_list, "block_count", 0.65)
 
 		filter_select = null
 		filter_list = new_obj(obj_sortlist)
@@ -121,7 +121,7 @@ function app_startup_interface_popups()
 		filter_list.script = action_block_settings_filter_select
 
 		sortlist_column_add(filter_list, "block_filter", 0)
-		sortlist_column_add(filter_list, "block_count", 0.75)
+		sortlist_column_add(filter_list, "block_count", 0.65)
 	}
 
 	// World settings

@@ -143,6 +143,19 @@ function app_startup_interface_bench()
 		tbx_text = new_textbox(false, 0, "")
 		tbx_text_outline_size = new_textbox_integer()
 		
+		sign_front_text = true
+		sign_back_text = false
+
+		text_vbuffer = [ null, null ]
+		text_texture = [ null, null ]
+		text_string = ""
+		text_res = null
+		text_3d_prev = false
+		text_halign_prev = "center"
+		text_valign_prev = "center"
+		text_aa_prev = false
+		text_outline_size_prev = 3
+		
 		particle_preset = ""
 		
 		type = e_temp_type.CHARACTER
