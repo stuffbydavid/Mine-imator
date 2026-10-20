@@ -1375,6 +1375,13 @@ function enums()
 		amount
 	}
 	
+	// Block filter
+	enum e_block_filter
+	{
+		REMOVE = 0,
+		KEEP = 1
+	}
+
 	// Vertex wave
 	enum e_vertex_wave
 	{

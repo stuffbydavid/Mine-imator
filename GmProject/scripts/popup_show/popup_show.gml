@@ -7,6 +7,7 @@ function popup_show(popup)
 	}
 	
 	popup_current = popup
+	popup_current.height_ready = false
 	
 	log("Show popup", popup_current.name)
 	

@@ -4,10 +4,6 @@ function action_bench_schematic_create_resource()
 	if (res = null || res.creator != bench_settings)
 		return null
 
-	var tladd = res.scenery_tl_add;
-	if (res.scenery_tl_prompt_amount > 0)
-		tladd = question(text_get("load_scenery/add_timelines", res.scenery_tl_prompt_amount))
-	
 	res_creator = app
 	
 	var rescopy = new_obj(obj_resource);
@@ -20,9 +16,6 @@ function action_bench_schematic_create_resource()
 		ready = res.ready
 		
 		scenery_size = res.scenery_size
-		scenery_structure = res.scenery_structure
-		scenery_palette_size = res.scenery_palette_size
-		scenery_tl_add = tladd
 		
 		if (ds_list_valid(res.scenery_tl_list))
 		{
@@ -43,15 +36,8 @@ function action_bench_schematic_create_resource()
 		
 		file_copy_lib(res.scenery_source, app.project_folder + "/" + filename)
 		
-		// Rebuild when scenery timeline setting differs
-		if (scenery_tl_add != res.scenery_tl_add)
-		{
-			load_folder = app.project_folder
-			save_folder = app.project_folder
-			res_load(true)
-		}
-		else
-			res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
+		res_update_display_name()
+		res_save_block_cache(app.project_folder + "/" + filename + ".meshcache")
 	}
 	
 	with (rescopy)

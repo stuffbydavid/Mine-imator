@@ -372,6 +372,7 @@
         "ds_map_create": { "return": "anymap", "args": [] },
         "ds_map_delete": { "return": "void", "args": [ "anymap", "unknown" ] },
         "ds_map_destroy": { "return": "void", "args": [ "anymap" ] },
+        "ds_map_empty": { "return": "bool", "args": [ "anymap" ] },
         "ds_map_exists": { "return": "bool", "args": [ "anymap", "unknown" ] },
         "ds_map_find_first": { "return": "unknown", "args": [ "anymap" ] },
         "ds_map_find_next": { "return": "unknown", "args": [ "anymap", "unknown" ] },

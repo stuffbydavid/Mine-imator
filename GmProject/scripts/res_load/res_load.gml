@@ -101,28 +101,51 @@ function res_load(reload = false)
 		case e_res_type.SCHEMATIC:
 		case e_res_type.FROM_WORLD:
 		{
+			res_update_display_name()
+
 			scenery_instant = false
 			if (type = e_res_type.SCHEMATIC && file_exists_lib(fn))
-				scenery_instant = file_get_size(fn) < scenery_instant_threshold
+				scenery_instant = (file_get_size(fn) < scenery_instant_threshold)
 			
 			// Load from cached mesh
-			var cachefn = fn + ".meshcache";
-			if (!reload && !world_reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
-				break
+			var cachefn, loadcache;
+			cachefn = fn + ".meshcache"
+			loadcache = true
+
+			// Missing cache
+			if (!file_exists_lib(cachefn))
+				loadcache = false
+
+			// Skip cache on manual reload
+			else if (reload || world_reload)
+				loadcache = false
 				
+			// Legacy .nbt without metadata
+			else if (file_exists_lib(fn) && filename_ext(fn) = ".nbt" && !scenery_structure)
+				loadcache = false
+
+			// Rebuild missing metadata from the source
+			else if (file_exists_lib(fn) && (ds_map_size(scenery_block_map) = 0 || !scenery_tl_types_count_ready))
+				loadcache = false
+
+			if (loadcache && res_load_block_cache(cachefn))
+				break
+
 			ready = false
 			if (scenery_instant)
 			{
 				load_stage = "open"
-				while (!ready && load_stage != "")
+				while (!ready && load_stage != "" && scenery_instant)
 					res_load_scenery()
 			}
 			else
+			{
 				with (app)
 				{
 					ds_priority_add(load_queue, other.id, 1)
 					load_start(other.id, res_load_start)
 				}
+			}
 			
 			break
 		}

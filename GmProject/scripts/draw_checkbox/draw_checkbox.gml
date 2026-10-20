@@ -4,11 +4,16 @@
 /// @arg active
 /// @arg script
 /// @arg [tip]
+/// @arg [label]
 
-function draw_checkbox(name, xx, yy, active, script, tip = "")
+function draw_checkbox(name, xx, yy, active, script, tip = "", label = null)
 {
 	var text, w, h, pressed;
-	text = text_get(name)
+	
+	if (label != null)
+		text = label
+	else
+		text = text_get(name)
 	
 	draw_set_font(font_label)
 	

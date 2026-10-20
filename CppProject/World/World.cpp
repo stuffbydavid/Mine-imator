@@ -247,7 +247,13 @@ namespace CppProject
 			}
 		}
 
-		// Process block entities
+	}
+
+	void World::ProcessBuilderEntities()
+	{
+		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
+
+		// Process block entities after the resource filter
 		builder_spawn_threads(Scope<obj_builder>(builder->id), 1);
 		withOne(obj_builder_thread, DsList(builder->thread_list).Value(0), noone)
 		{
@@ -451,21 +457,21 @@ namespace CppProject
 	{
 		QHash<StringType, uint16_t> newFilteredPreviewMap;
 		QHash<StringType, obj_block*> newFilteredBuilderMap;
-		BoolType filterEnabled = global::_app->setting_world_import_filter_enabled;
-		FilterMode filterMode = (FilterMode)global::_app->setting_world_import_filter_mode.ToInt();
+		BoolType filterEnabled = global::_app->setting_world_filter_enabled;
+		e_block_filter filterMode = (e_block_filter)global::_app->setting_world_filter_mode.ToInt();
 
 		if (filterEnabled)
 		{
-			waterRemoved = (filterMode == KEEP); // Water removed by default in keep mode
+			waterRemoved = (filterMode == e_block_filter_KEEP); // Water removed by default in keep mode
 
-			if (filterMode == REMOVE) // Copy unfiltered maps
+			if (filterMode == e_block_filter_REMOVE) // Copy unfiltered maps
 			{
 				newFilteredPreviewMap = Preview::mcBlockIdStyleIndexMap;
 				newFilteredBuilderMap = Builder::mcBlockIdObjMap;
 			}
 
 			// Iterate block list
-			const List& filterList = DsList(global::_app->setting_world_import_filter_list);
+			const List& filterList = DsList(global::_app->setting_world_filter_list);
 			const List& blockList = DsList(ObjType(obj_minecraft_assets, global::mc_assets)->block_list);
 			for (const List::ListValue& val : filterList.vec)
 			{
@@ -474,14 +480,14 @@ namespace CppProject
 				{
 					StringType mcId = block->mc_ids.Value(i);
 					if (mcId == "water")
-						World::waterRemoved = (filterMode == REMOVE);
+						World::waterRemoved = (filterMode == e_block_filter_REMOVE);
 
-					if (filterMode == REMOVE)
+					if (filterMode == e_block_filter_REMOVE)
 					{
 						newFilteredPreviewMap.remove(mcId);
 						newFilteredBuilderMap.remove(mcId);
 					}
-					else if (filterMode == KEEP)
+					else if (filterMode == e_block_filter_KEEP)
 					{
 						newFilteredPreviewMap[mcId] = Preview::mcBlockIdStyleIndexMap.value(mcId);
 						newFilteredBuilderMap[mcId] = Builder::mcBlockIdObjMap.value(mcId);

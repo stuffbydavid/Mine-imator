@@ -45,7 +45,9 @@ function builder_event_create()
 	
 	block_multithreaded_skip = false
 	block_tl_add = false
+	block_tl_types = null
 	block_tl_list = null
+	
 	file_map = ""
 
 	thread_list = ds_list_create()

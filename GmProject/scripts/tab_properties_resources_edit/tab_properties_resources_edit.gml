@@ -140,36 +140,6 @@ function tab_properties_resources_edit()
 		draw_textfield_group("resources/item_sheet_size_grid", dx, dy, dw, 0.1, 1, no_limit, 1, true)
 		tab_next()
 	}
-	else if (res_edit.scenery_structure)
-	{
-		if (res_edit.scenery_palette_size > 0)
-		{
-			tab_control_menu()
-			draw_button_menu("resources/scenery_structure_palette", e_menu.LIST, dx, dy, dw, 24, res_edit.scenery_palette, text_get("resources/scenery_structure_palette_number", res_edit.scenery_palette + 1), action_res_scenery_palette)
-			tab_next()
-		}
-		
-		var busy, focus;
-		busy = window_busy
-		focus = window_focus
-		
-		tab_control_meter()
-		draw_meter("resources/scenery_structure_integrity", dx, dy, dw, round(res_edit.scenery_integrity * 100), 0, 100, 100, 1, tab.resources.tbx_scenery_integrity, action_res_scenery_integrity)
-		tab_next()
-		
-		// Auto-update for user's convenience
-		if ((focus = string(tab.resources.tbx_scenery_integrity) && window_focus = "") ||
-			(window_busy = "" && (busy = "resources/scenery_structure_integrity" || busy = "resources/scenery_structure_integrity/input/drag")))
-		{
-			with (res_edit)
-				res_load(true)
-		}
-		
-		tab_control_checkbox()
-		draw_checkbox("resources/scenery_structure_integrity_invert", dx, dy, res_edit.scenery_integrity_invert, action_res_scenery_integrity_invert)
-		tab_next()
-	}
-	
 	// Material texture format
 	if ((res_edit.type = e_res_type.BLOCK_SHEET || res_edit.type = e_res_type.DOWNLOADED_SKIN || res_edit.type = e_res_type.ITEM_SHEET || res_edit.type = e_res_type.PACK
 		 || res_edit.type = e_res_type.PARTICLE_SHEET || res_edit.type = e_res_type.SKIN || res_edit.type = e_res_type.TEXTURE || res_edit.type = e_res_type.MODEL)
@@ -182,11 +152,18 @@ function tab_properties_resources_edit()
 		tab_next()
 	}
 	
-	if (res_edit.type = e_res_type.SCHEMATIC)
+	if (res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD)
 	{
-		tab_control_checkbox()
-		draw_checkbox("resources/scenery_randomize", dx, dy, res_edit.scenery_randomize, action_res_scenery_randomize, "resources/scenery_randomize_help")
+		tab_control_button_label()
+		if (draw_button_label("resources/block_settings", dx + dw / 2, dy, 180, icons.BLOCK, e_button.PRIMARY, null, e_anchor.CENTER, !res_edit.ready))
+			popup_block_settings_show(res_edit)
 		tab_next()
+
+		if (res_edit.scenery_filter_enabled && (res_edit.scenery_filter_mode = e_block_filter.KEEP || array_length(res_edit.scenery_filter_array) > 0))
+		{
+			dy += 4
+			draw_tooltip_label("resources/blocks_filtered", icons.WARNING_TRIANGLE, e_toast.WARNING, fa_center)
+		}
 	}
 
 	if (res_edit.type = e_res_type.FROM_WORLD)

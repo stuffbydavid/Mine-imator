@@ -12,6 +12,7 @@ function minecraft_assets_event_create()
 	block_name_map = ds_map_create()
 	block_id_map = ds_map_create()
 	block_liquid_slot_map = ds_map_create()
+	block_tl_type_list = ds_list_create()
 	
 	model_texture_list = ds_list_create()
 	

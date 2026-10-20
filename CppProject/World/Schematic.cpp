@@ -3,11 +3,12 @@
 
 namespace CppProject
 {
-	SchematicExport::SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible) :
+	SchematicExport::SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible, BoolType applyFilter) :
 		box(selection),
 		dataVersion(dataVersion),
 		legacy(dataVersion < Chunk::JAVA_1_13),
-		skipIncompatible(skipIncompatible)
+		skipIncompatible(skipIncompatible),
+		applyFilter(applyFilter)
 	{
 		if (!box.active)
 			throw QString("No world selection to export");
@@ -39,7 +40,7 @@ namespace CppProject
 		schematic->value["Height"] = new NbtShort(int16_t(size.y));
 		schematic->value["Length"] = new NbtShort(int16_t(size.z));
 
-		// Missing, filtered and incompatible chunks remain air
+		// Missing and incompatible chunks remain air
 		if (legacy)
 		{
 			schematic->value["Materials"] = new NbtString("Alpha");
@@ -74,19 +75,20 @@ namespace CppProject
 
 	void SchematicExport::AddChunk(Chunk& chunk)
 	{
-		if (skipIncompatible && legacy != (chunk.format < Chunk::JAVA_1_13))
+		BoolType legacyChunk = (chunk.format < Chunk::JAVA_1_13);
+		if (skipIncompatible && legacy != legacyChunk)
 		{
 			skippedChunks++;
 			return;
 		}
 
-		if (legacy)
-			chunk.ExportLegacySchematic(box, *schematic);
-		else
+		if (!legacy)
 		{
-			chunk.ExportSchematic(box, *palette, indices, *entities);
+			chunk.ExportSchematic(box, *palette, indices, *entities, applyFilter);
 			dataVersion = std::max(dataVersion, chunk.dataVersion);
 		}
+		else
+			chunk.ExportLegacySchematic(box, *schematic, applyFilter);
 	}
 
 	QByteArray SchematicExport::Serialize()
@@ -164,128 +166,7 @@ namespace CppProject
 		}
 	}
 
-	void Chunk::ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic)
-	{
-		if (!exportData)
-			return;
-
-		if (format >= JAVA_1_13)
-			throw text_get({ StringType("error/export_schematic_new_chunks") }).Str().QStr();
-
-		WorldVec size = box.end - box.start;
-		WorldVec chunkPos = region->pos + WorldVec(x * SECTION_SIZE, 0, z * SECTION_SIZE);
-		Heap<int8_t>& blocks = schematic.ByteArray("Blocks");
-		Heap<int8_t>& data = schematic.ByteArray("Data");
-		BoolType filterEnabled = global::_app->setting_world_import_filter_enabled;
-		World::FilterMode filterMode = (World::FilterMode)global::_app->setting_world_import_filter_mode.ToInt();
-
-		// Both legacy layouts use packed metadata, but pre-Anvil chunks have Y varying fastest
-		auto copyBlocks = [&](NbtCompound* source, const WorldVec& pos, IntType height)
-		{
-			if (!box.Intersects({ pos, pos + WorldVec(SECTION_SIZE, height, SECTION_SIZE) }))
-				return;
-
-			const Heap<int8_t>& sourceBlocks = source->ByteArray("Blocks");
-			const Heap<int8_t>& sourceData = source->ByteArray("Data");
-			const Heap<int8_t>* sourceAdd = nullptr;
-			if (source->HasKey("Add"))
-				sourceAdd = &source->ByteArray("Add");
-
-			IntType count = SECTION_SIZE2 * height;
-			if (sourceBlocks.Size() != count || sourceData.Size() != count / 2 ||
-				(sourceAdd && sourceAdd->Size() != count / 2))
-				throw QString("Invalid legacy chunk block data length");
-
-			for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + height, box.end.y); y++)
-			for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
-			for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
-			{
-				IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
-				if (format == PRE_JAVA_1_2)
-					local = ((x - pos.x) * SECTION_SIZE + z - pos.z) * height + y - pos.y;
-
-				IntType shift = (local % 2) * 4;
-				uint16_t id = uint8_t(sourceBlocks.Value(local));
-				uint8_t metadata = (uint8_t(sourceData.Value(local / 2)) >> shift) & 15;
-				if (sourceAdd)
-					id |= ((uint8_t(sourceAdd->Value(local / 2)) >> shift) & 15) << 8;
-
-				if (filterEnabled)
-				{
-					BoolType known = false, retained = false;
-					if (id < 256)
-					{
-						retained = Builder::filteredMcLegacyBlockIdObj[id][metadata] != nullptr;
-						if (!retained)
-						{
-							StringType mcId = global::legacy_block_mc_id[id][metadata];
-							known = Builder::mcBlockIdObjMap.contains(mcId);
-						}
-					}
-
-					// Unknown IDs survive remove mode, matching palette-based exports
-					if (!retained && (filterMode == World::KEEP || known))
-						continue;
-				}
-
-				IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
-				blocks[target] = int8_t(id & 255);
-				data[target] = metadata;
-
-				// MCEdit stores high block ID bits in an optional packed nibble array
-				if (id > 255)
-				{
-					if (!schematic.HasKey("AddBlocks"))
-					{
-						NbtByteArray* add = new NbtByteArray;
-						schematic.value["AddBlocks"] = add;
-						add->value.Alloc((blocks.Size() + 1) / 2);
-					}
-
-					schematic.ByteArray("AddBlocks")[target / 2] |= int8_t((id >> 8) << ((target % 2) * 4));
-				}
-			}
-		};
-
-		if (format == PRE_JAVA_1_2)
-			copyBlocks(exportData, chunkPos, 128);
-
-		else if (exportData->HasKey("Sections"))
-		{
-			for (NbtCompound* section : exportData->List<TAG_COMPOUND, NbtCompound>("Sections"))
-				copyBlocks(section, chunkPos + WorldVec(0, uint8_t(section->Byte("Y")) * SECTION_SIZE, 0), SECTION_SIZE);
-		}
-
-		if (!exportData->HasKey("TileEntities"))
-			return;
-
-		NbtList* entities = static_cast<NbtList*>(schematic.value.value("TileEntities"));
-		for (NbtCompound* entity : exportData->List<TAG_COMPOUND, NbtCompound>("TileEntities"))
-		{
-			WorldVec pos = { entity->Int("x"), entity->Int("y"), entity->Int("z") };
-			if (!box.Contains(pos))
-				continue;
-
-			IntType target = ((pos.y - box.start.y) * size.z + pos.z - box.start.z) * size.x + pos.x - box.start.x;
-			uint16_t id = uint8_t(blocks[target]);
-			if (schematic.HasKey("AddBlocks"))
-				id |= ((uint8_t(schematic.ByteArray("AddBlocks")[target / 2]) >> ((target % 2) * 4)) & 15) << 8;
-
-			if (filterEnabled && id == 0)
-				continue;
-
-			// Preserve the legacy payload and move its coordinates into selection space
-			NbtCompound* output = new NbtCompound;
-			entities->value.Alloc(entities->value.Size() + 1);
-			entities->value[entities->value.Size() - 1] = output;
-			output->value.swap(entity->value);
-			output->Int("x") = int32_t(pos.x - box.start.x);
-			output->Int("y") = int32_t(pos.y - box.start.y);
-			output->Int("z") = int32_t(pos.z - box.start.z);
-		}
-	}
-
-	void Chunk::ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities)
+	void Chunk::ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities, BoolType applyFilter)
 	{
 		if (!exportData)
 			return;
@@ -295,8 +176,8 @@ namespace CppProject
 
 		WorldVec size = box.end - box.start;
 		WorldVec chunkPos = region->pos + WorldVec(x * SECTION_SIZE, 0, z * SECTION_SIZE);
-		BoolType filterEnabled = global::_app->setting_world_import_filter_enabled;
-		World::FilterMode filterMode = (World::FilterMode)global::_app->setting_world_import_filter_mode.ToInt();
+		BoolType filterEnabled = (global::_app->setting_world_filter_enabled && applyFilter);
+		e_block_filter filterMode = (e_block_filter)global::_app->setting_world_filter_mode.ToInt();
 		StringType sectionsName = "Sections";
 
 		if (format >= JAVA_1_18)
@@ -337,7 +218,8 @@ namespace CppProject
 					throw QString("Invalid chunk block palette size");
 
 				remap.clear();
-				remap.reserve(int(sourcePalette->value.Size()));
+				remap.reserve((int)sourcePalette->value.Size());
+
 				for (IntType i = 0; i < sourcePalette->value.Size(); i++)
 				{
 					NbtTag* entry = sourcePalette->value[i];
@@ -384,7 +266,7 @@ namespace CppProject
 
 						// Reuse the importer filter, retaining unknown blocks in remove mode
 						if (!Builder::filteredMcBlockIdObjMap.contains(id) &&
-							(filterMode == World::KEEP || Builder::mcBlockIdObjMap.contains(id)))
+							(filterMode == e_block_filter_KEEP || Builder::mcBlockIdObjMap.contains(id)))
 							state = "minecraft:air";
 
 						else if (World::waterRemoved)
@@ -517,6 +399,127 @@ namespace CppProject
 			payload->value.swap(entity->value);
 			for (const char* name : { "id", "Id", "x", "y", "z", "Pos", "pos" })
 				delete payload->value.take(name);
+		}
+	}
+
+	void Chunk::ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic, BoolType applyFilter)
+	{
+		if (!exportData)
+			return;
+
+		if (format >= JAVA_1_13)
+			throw text_get({ StringType("error/export_schematic_new_chunks") }).Str().QStr();
+
+		WorldVec size = box.end - box.start;
+		WorldVec chunkPos = region->pos + WorldVec(x * SECTION_SIZE, 0, z * SECTION_SIZE);
+		Heap<int8_t>& blocks = schematic.ByteArray("Blocks");
+		Heap<int8_t>& data = schematic.ByteArray("Data");
+		BoolType filterEnabled = (global::_app->setting_world_filter_enabled && applyFilter);
+		e_block_filter filterMode = (e_block_filter)global::_app->setting_world_filter_mode.ToInt();
+
+		// Both legacy layouts use packed metadata, but pre-Anvil chunks have Y varying fastest
+		auto copyBlocks = [&](NbtCompound* source, const WorldVec& pos, IntType height)
+			{
+				if (!box.Intersects({ pos, pos + WorldVec(SECTION_SIZE, height, SECTION_SIZE) }))
+					return;
+
+				const Heap<int8_t>& sourceBlocks = source->ByteArray("Blocks");
+				const Heap<int8_t>& sourceData = source->ByteArray("Data");
+				const Heap<int8_t>* sourceAdd = nullptr;
+				if (source->HasKey("Add"))
+					sourceAdd = &source->ByteArray("Add");
+
+				IntType count = SECTION_SIZE2 * height;
+				if (sourceBlocks.Size() != count || sourceData.Size() != count / 2 ||
+					(sourceAdd && sourceAdd->Size() != count / 2))
+					throw QString("Invalid legacy chunk block data length");
+
+				for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + height, box.end.y); y++)
+				for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
+				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
+				{
+					IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
+					if (format == PRE_JAVA_1_2)
+						local = ((x - pos.x) * SECTION_SIZE + z - pos.z) * height + y - pos.y;
+
+					IntType shift = (local % 2) * 4;
+					uint16_t id = uint8_t(sourceBlocks.Value(local));
+					uint8_t metadata = (uint8_t(sourceData.Value(local / 2)) >> shift) & 15;
+					if (sourceAdd)
+						id |= ((uint8_t(sourceAdd->Value(local / 2)) >> shift) & 15) << 8;
+
+					if (filterEnabled)
+					{
+						BoolType known = false, retained = false;
+						if (id < 256)
+						{
+							retained = Builder::filteredMcLegacyBlockIdObj[id][metadata] != nullptr;
+							if (!retained)
+							{
+								StringType mcId = global::legacy_block_mc_id[id][metadata];
+								known = Builder::mcBlockIdObjMap.contains(mcId);
+							}
+						}
+
+						// Unknown IDs survive remove mode, matching palette-based exports
+						if (!retained && (filterMode == e_block_filter_KEEP || known))
+							continue;
+					}
+
+					IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
+					blocks[target] = int8_t(id & 255);
+					data[target] = metadata;
+
+					// MCEdit stores high block ID bits in an optional packed nibble array
+					if (id > 255)
+					{
+						if (!schematic.HasKey("AddBlocks"))
+						{
+							NbtByteArray* add = new NbtByteArray;
+							schematic.value["AddBlocks"] = add;
+							add->value.Alloc((blocks.Size() + 1) / 2);
+						}
+
+						schematic.ByteArray("AddBlocks")[target / 2] |= int8_t((id >> 8) << ((target % 2) * 4));
+					}
+				}
+			};
+
+		if (format == PRE_JAVA_1_2)
+			copyBlocks(exportData, chunkPos, 128);
+
+		else if (exportData->HasKey("Sections"))
+		{
+			for (NbtCompound* section : exportData->List<TAG_COMPOUND, NbtCompound>("Sections"))
+				copyBlocks(section, chunkPos + WorldVec(0, uint8_t(section->Byte("Y")) * SECTION_SIZE, 0), SECTION_SIZE);
+		}
+
+		if (!exportData->HasKey("TileEntities"))
+			return;
+
+		NbtList* entities = static_cast<NbtList*>(schematic.value.value("TileEntities"));
+		for (NbtCompound* entity : exportData->List<TAG_COMPOUND, NbtCompound>("TileEntities"))
+		{
+			WorldVec pos = { entity->Int("x"), entity->Int("y"), entity->Int("z") };
+			if (!box.Contains(pos))
+				continue;
+
+			IntType target = ((pos.y - box.start.y) * size.z + pos.z - box.start.z) * size.x + pos.x - box.start.x;
+			uint16_t id = uint8_t(blocks[target]);
+			if (schematic.HasKey("AddBlocks"))
+				id |= ((uint8_t(schematic.ByteArray("AddBlocks")[target / 2]) >> ((target % 2) * 4)) & 15) << 8;
+
+			if (filterEnabled && id == 0)
+				continue;
+
+			// Preserve the legacy payload and move its coordinates into selection space
+			NbtCompound* output = new NbtCompound;
+			entities->value.Alloc(entities->value.Size() + 1);
+			entities->value[entities->value.Size() - 1] = output;
+			output->value.swap(entity->value);
+			output->Int("x") = int32_t(pos.x - box.start.x);
+			output->Int("y") = int32_t(pos.y - box.start.y);
+			output->Int("z") = int32_t(pos.z - box.start.z);
 		}
 	}
 }

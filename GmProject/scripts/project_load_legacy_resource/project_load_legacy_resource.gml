@@ -49,7 +49,8 @@ function project_load_legacy_resource()
 			break
 		}
 		
-		scenery_tl_add = false
+		scenery_tl_set = true
+		scenery_tl_types = []
 		
 		res_add_lists()
 	}

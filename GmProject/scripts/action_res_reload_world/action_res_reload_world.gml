@@ -6,5 +6,6 @@ function action_res_reload_world()
 		return 0
 
 	res_edit.world_reload = true
+	
 	action_res_reload()
 }

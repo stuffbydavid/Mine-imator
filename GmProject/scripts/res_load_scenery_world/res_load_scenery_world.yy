@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"res_load_scenery_world",
   "parent":{
-    "name":"Resource",
-    "path":"folders/Scripts/Project/Resource.yy",
+    "name":"Load",
+    "path":"folders/Scripts/Project/Resource/Load.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

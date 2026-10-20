@@ -17,6 +17,8 @@ function res_load_scenery()
 		// Open file
 		case "open":
 		{
+			res_load_scenery_filter_mask()
+
 			// Load from world when requested or when the schematic is unavailable
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
@@ -121,6 +123,10 @@ function res_load_scenery()
 								break
 						
 							builder_read_schematic_blocks()
+							
+							with (other.id)
+								res_load_scenery_block_map()
+							
 							builder_read_schematic_tile_entities()
 						}
 					}
@@ -137,6 +143,8 @@ function res_load_scenery()
 					buffer_current = buffer_load_lib(fn)
 					with (mc_builder)
 						builder_read_blocks_file()
+
+					res_load_scenery_block_map()
 				}
 				
 				// Free file buffer
@@ -161,6 +169,7 @@ function res_load_scenery()
 			}
 		
 			if (!scenery_instant)
+			{
 				with (app)
 				{
 					popup_loading.text = text_get("load_scenery/blocks")
@@ -174,23 +183,47 @@ function res_load_scenery()
 					
 					popup_loading.progress = 0.2
 				}
-		
-			// A null value will peform a check if block timelines should be added
-			if (scenery_tl_add = null)
+			}
+			
+			// Set animation choices for new resources
+			if (!scenery_tl_set)
 			{
-				if (mc_builder.sch_timeline_amount > scenery_timeline_limit) // More than limit of timelines, always skip
-					scenery_tl_add = false
-				else if (creator = app.bench_settings)
+				scenery_tl_set = true
+				
+				// Enable all timelines for small scenery
+				scenery_tl_all_types = (mc_builder.sch_timeline_amount <= scenery_timeline_prompt)
+				scenery_tl_types = []
+				
+				if (!scenery_tl_all_types)
 				{
-					scenery_tl_add = true
+					// Enable specific timelines only
+					for (var i = 0; i < array_length(scenery_timeline_enabled); i++)
+					{
+						var type, count;
+						type = scenery_timeline_enabled[i]
+						count = value_get_real(scenery_tl_types_count_map[?type], 0)
+						if (count > 0 && count <= 10)
+							array_add(scenery_tl_types, type)
+					}
 					
-					if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
-						scenery_tl_prompt_amount = mc_builder.sch_timeline_amount
+					// Show popup
+					if (!ds_map_empty(scenery_tl_types_count_map) && creator != app.bench_settings)
+					{
+						if (scenery_instant)
+						{
+							scenery_instant = false
+							with (app)
+							{
+								ds_priority_add(load_queue, other.id, 1)
+								load_start(other.id, res_load_scenery)
+								popup_loading.progress = 0.2
+							}
+						}
+
+						with (app)
+							popup_block_settings_show(other.id, true)
+					}
 				}
-				else if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
-					scenery_tl_add = question(text_get("load_scenery/add_timelines", mc_builder.sch_timeline_amount))
-				else // Less, always add
-					scenery_tl_add = true
 			}
 		
 			mc_builder.block_skull_texture_count = ds_map_size(mc_builder.block_skull_texture_map)
@@ -198,7 +231,8 @@ function res_load_scenery()
 			mc_builder.block_skull_fail_count = 0
 			mc_builder.build_pos = vec3(0)
 			mc_builder.build_pos_index = 0
-			mc_builder.block_tl_add = scenery_tl_add
+			mc_builder.block_tl_add = (scenery_tl_all_types || array_length(scenery_tl_types) > 0)
+			mc_builder.block_tl_types = res_get_block_timeline_types()
 			mc_builder.block_tl_list = scenery_tl_list
 			mc_builder.build_randomize = scenery_randomize
 			
@@ -347,6 +381,7 @@ function res_load_scenery()
 				builder_done()
 				
 				block_tl_list = null
+				block_tl_types = null
 				build_randomize = false
 			}
 			
@@ -434,6 +469,4 @@ function res_load_scenery()
 		
 		ready = true
 	}
-
-
 }

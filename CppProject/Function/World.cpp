@@ -69,7 +69,7 @@ namespace CppProject
 		return World::preview->selection.GetSize();
 	}
 
-	void world_import_apply_settings(ScopeAny)
+	void world_import_apply_settings()
 	{
 		if (World::ApplyFilter()) // Reload world if needed (keep position)
 			world_import_select_world(ScopeAny(0), global::_app->world_import_world_root, global::_app->world_import_dimension, true);

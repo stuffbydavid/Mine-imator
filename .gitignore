@@ -2,6 +2,7 @@ build/
 build-*/
 output*/
 runs/
+feat/
 thumbnail.png
 *.backup*
 /install*/
