@@ -60,13 +60,23 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 			tip_x = xx + floor(tip_x - (tip_w / 2)) + (w/2)
 			tip_y = yy + floor(tip_y) + h + 6
 			
-			tip_right = false
 			tip_arrow = 0
 			tip_arrow_xscale = 1
+			tip_direction = ""
 			
-			if (tip_force_right)
+			if (tip_force = "left")
 			{
-				tip_right = true
+				tip_direction = "left"
+				tip_arrow_x = xx - 14
+				tip_arrow_y = yy + floor(h/2)
+				tip_arrow_yscale = 1
+				
+				tip_x = xx - (tip_w + 14)
+				tip_y = yy + floor(h/2 - tip_h/2)
+			}
+			else if (tip_force = "right")
+			{
+				tip_direction = "right"
 				tip_arrow_x = xx + w + 14
 				tip_arrow_y = yy + floor(h/2)
 				tip_arrow_yscale = 1

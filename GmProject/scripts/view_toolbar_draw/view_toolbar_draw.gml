@@ -43,7 +43,7 @@ function view_toolbar_draw(view, xx, yy)
 	xx += 4
 	yy += 4
 	
-	tip_force_right = true
+	tip_force = "right"
 	
 	// Select tool
 	if (setting_separate_tool_modes)
@@ -182,7 +182,7 @@ function view_toolbar_draw(view, xx, yy)
 		yy += 24 + padding
 	}
 	
-	tip_force_right = false
+	tip_force = ""
 	
 	view.toolbar_height = yy - starty
 	microani_prefix = ""

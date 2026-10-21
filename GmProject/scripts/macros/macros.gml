@@ -174,6 +174,7 @@ function macros()
 	#macro texture_page_res				1
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
+	#macro pitch_limit					89.9
 	#macro normal_buffer_scale			8
 	#macro surface_rg32float			8
 	#macro place_id_bits				21
