@@ -176,6 +176,8 @@ function builder_read_nbt(structuremap)
 		}
 		
 		builder_combine_threads()
+		
+		builder_read_entities(structuremap[?"entities"])
 	}
 	
 	debug_timer_stop("res_load_scenery, Parse blocks")

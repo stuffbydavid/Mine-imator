@@ -1,6 +1,8 @@
 #include "World.hpp"
 #include "GZIP.hpp"
 
+#include "Asset/DataStructure.hpp"
+
 namespace CppProject
 {
 	SchematicExport::SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible, BoolType applyFilter) :
@@ -14,6 +16,10 @@ namespace CppProject
 			throw QString("No world selection to export");
 
 		box.Adjust();
+
+		const Map& entityMap = DsMap(ObjType(obj_minecraft_assets, global::mc_assets)->entity_model_map);
+		for (auto it = entityMap.map.cbegin(); it != entityMap.map.cend(); ++it)
+			supportedEntityIds.insert(it.key());
 
 		WorldVec size = box.end - box.start;
 		IntType maxDimension = std::numeric_limits<uint16_t>::max();
@@ -60,6 +66,7 @@ namespace CppProject
 			NbtIntArray* offset = new NbtIntArray;
 			schematic->value["Offset"] = offset;
 			offset->value.Alloc(3);
+			schematic->value["Entities"] = new NbtList(TAG_COMPOUND);
 
 			NbtCompound* blocks = new NbtCompound;
 			palette = new NbtCompound;
@@ -89,6 +96,152 @@ namespace CppProject
 		}
 		else
 			chunk.ExportLegacySchematic(box, *schematic, applyFilter);
+
+		AddEntities(*chunk.exportData);
+	}
+
+	void SchematicExport::AddEntities(NbtCompound& chunk)
+	{
+		NbtCompound* source = &chunk;
+		if (chunk.HasKey("Level"))
+			source = chunk.Compound("Level");
+
+		StringType entitiesName = source->HasKey("Entities") ? "Entities" : "entities";
+		if (!source->HasKey(entitiesName))
+			return;
+
+		NbtList* outputList = static_cast<NbtList*>(schematic->value.value("Entities"));
+
+		for (NbtCompound* entity : source->List<TAG_COMPOUND, NbtCompound>(entitiesName))
+		{
+			if (entity->GetType("id") != TAG_STRING || entity->GetType("Pos") != TAG_LIST)
+				continue;
+
+			StringType id = entity->String("id");
+			if (!supportedEntityIds.contains(id.ToLower().Replaced("minecraft:", "")))
+				continue;
+
+			NbtList* sourcePos = static_cast<NbtList*>(entity->value.value("Pos"));
+			if (sourcePos->listType != TAG_DOUBLE)
+				continue;
+
+			QVector<NbtDouble*> pos = entity->List<TAG_DOUBLE, NbtDouble>("Pos");
+			if (pos.size() != 3)
+				continue;
+
+			WorldVec blockPos(std::floor(pos[0]->value), std::floor(pos[1]->value), std::floor(pos[2]->value));
+			if (!box.Contains(blockPos))
+				continue;
+
+			NbtCompound* output = new NbtCompound;
+			outputList->value.Alloc(outputList->value.Size() + 1);
+			outputList->value[outputList->value.Size() - 1] = output;
+
+			NbtList* localPos = new NbtList(TAG_DOUBLE);
+			localPos->value.Alloc(3);
+			localPos->value[0] = new NbtDouble(pos[0]->value - box.start.x);
+			localPos->value[1] = new NbtDouble(pos[1]->value - box.start.y);
+			localPos->value[2] = new NbtDouble(pos[2]->value - box.start.z);
+
+			output->value.swap(entity->value);
+			delete output->value.take("Pos");
+
+			if (output->GetType("block_pos") == TAG_INT_ARRAY)
+			{
+				Heap<int32_t>& anchor = output->IntArray("block_pos");
+				if (anchor.Size() == 3)
+				{
+					anchor[0] -= int32_t(box.start.x);
+					anchor[1] -= int32_t(box.start.y);
+					anchor[2] -= int32_t(box.start.z);
+				}
+			}
+
+			if (legacy)
+			{
+				output->value["Pos"] = localPos;
+				for (const char* axis : { "TileX", "TileY", "TileZ" })
+				{
+					if (output->GetType(axis) != TAG_INT)
+						continue;
+
+					IntType start = (axis[4] == 'X') ? box.start.x : ((axis[4] == 'Y') ? box.start.y : box.start.z);
+					output->Int(axis) -= int32_t(start);
+				}
+			}
+			else
+			{
+				delete output->value.take("id");
+
+				NbtCompound* payload = new NbtCompound;
+				payload->value.swap(output->value);
+				output->value["Id"] = new NbtString(id);
+				output->value["Pos"] = localPos;
+				output->value["Data"] = payload;
+			}
+		}
+	}
+
+	void SchematicExport::AddEntityRegion(const QString& filename, const WorldVec& regionPos, const BoolType* includedChunks)
+	{
+		QFile file(filename);
+		if (!file.exists())
+			return;
+
+		if (!file.open(QFile::ReadOnly))
+		{
+			WARNING("Could not open entity region " + filename);
+			return;
+		}
+
+		QByteArray region = file.readAll();
+		if (region.size() < 8192)
+			return;
+
+		const char* bytes = region.constData();
+		for (IntType i = 0; i < 1024; i++)
+		{
+			if (!includedChunks[i])
+				continue;
+
+			WorldVec chunkPos = regionPos + WorldVec((i & 31) * 16, box.start.y, (i >> 5) * 16);
+			if (!box.Intersects({ chunkPos, chunkPos + WorldVec(16, box.end.y - box.start.y, 16) }))
+				continue;
+
+			IntType offset =
+				(uint8_t(bytes[i * 4]) << 16) |
+				(uint8_t(bytes[i * 4 + 1]) << 8) |
+				uint8_t(bytes[i * 4 + 2]);
+			
+			offset *= 4096;
+
+			if (offset == 0 || offset > region.size() - 5)
+				continue;
+
+			IntType length =
+				(uint32_t(uint8_t(bytes[offset])) << 24) |
+				(uint32_t(uint8_t(bytes[offset + 1])) << 16) |
+				(uint32_t(uint8_t(bytes[offset + 2])) << 8) |
+				uint8_t(bytes[offset + 3]);
+
+			if (length <= 1 || length > region.size() - offset - 4)
+				continue;
+
+			QByteArray data;
+			if (!Gzip::Decompress(bytes + offset + 5, length - 1, data))
+				continue;
+
+			try
+			{
+				NbtStream stream(data);
+				NbtCompound chunk(stream);
+				AddEntities(chunk);
+			}
+			catch (const QString& error)
+			{
+				WARNING("Could not read entities in " + filename + ": " + error);
+			}
+		}
 	}
 
 	QByteArray SchematicExport::Serialize()

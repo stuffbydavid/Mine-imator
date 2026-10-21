@@ -126,11 +126,13 @@ function block_load(map, typemap)
 		}
 		
 		// Has timeline
-		var timelinemap = map[?"timeline"];
 		timeline = false
-		model_double = false
-		if (ds_map_valid(timelinemap))
-			block_load_timeline(timelinemap, typemap[?timelinemap])
+		tl_model_double = false
+		tl_hide_model = ""
+		
+		var tlmap = map[?"timeline"];
+		if (ds_map_valid(tlmap))
+			block_load_timeline(tlmap, typemap[?tlmap])
 
 		// Load default file
 		if (filename != "")
@@ -273,6 +275,9 @@ function block_load(map, typemap)
 				other.state_id_random_offset[sid] = curoffset
 				other.state_id_random_offset_xy[sid] = curoffsetxy
 			}
+
+			if (timeline && curfile = null)
+				mc_assets.block_tl_required_map[?tl_type] = true
 		}
 		
 		return id

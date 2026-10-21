@@ -193,6 +193,8 @@ function builder_read_schematic(map)
 	
 	if (!ds_list_valid(sch_tileentity_list))
 		sch_tileentity_list = blocksmap[?"BlockEntities"]
+
+	builder_read_entities(map[?"Entities"])
 	
 	return true
 }

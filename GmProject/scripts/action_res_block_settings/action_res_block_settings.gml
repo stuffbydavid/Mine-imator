@@ -80,5 +80,6 @@ function action_res_block_settings(tlalltypes, tltypes, integrity, palette, rand
 		res_load(true)
 	}
 
-	res_update_reload(hobj)
+	// Keep existing parts
+	res_update_reload(hobj, false)
 }

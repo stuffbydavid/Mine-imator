@@ -31,7 +31,7 @@ function block_load_variant_model(map, block)
 		uvlock = (map[?"uvlock"] = "true")
 
 	// Block timelines rotate the default model without UV lock
-	if (block.timeline && block.tl_model_name = "" && !block.model_double)
+	if (block.timeline && block.tl_model_name = "" && !block.tl_model_double)
 		uvlock = false
 		
 	// Weight

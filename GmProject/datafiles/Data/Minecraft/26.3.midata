@@ -1557,6 +1557,7 @@
 		},
 		{
 			"name": "painting",
+			"entity": "painting",
 			"states": {
 				"variant": [
 					{ "value": "painting_kebab", "file": "painting_1x1.mimodel", "shape_texture": { "painting": "painting/kebab" } },
@@ -1612,7 +1613,10 @@
 					{ "value": "painting_fire", "file": "painting_2x2.mimodel", "shape_texture": { "painting": "painting/fire" } }
 				]
 			},
-			"default_state": "variant=painting_kebab"
+			"default_state": "variant=painting_kebab",
+			"timeline": {
+				"type": "painting"
+			}
 		},
 		{
 			"name": "item_frame",
@@ -6319,6 +6323,7 @@
 				"type": "bell",
 				"model": "bell",
 				"model_double": true,
+				"hide_model": "minecraft:block_added/bell_body",
 				"position": [ 8, 13, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 0, 0 ],

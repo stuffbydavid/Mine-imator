@@ -1,4 +1,4 @@
-/// @desc Draw the per-resource animation and block filter controls.
+/// @desc Draw the per-resource timeline and block filter controls.
 
 function popup_block_settings_draw()
 {
@@ -19,16 +19,17 @@ function popup_block_settings_draw()
 		var checkedcount = 0;
 		for (var i = 0; i < array_length(popup.tl_available_types); i++)
 		{
-			var type, amount, selected, label;
+			var type, amount, selected, label, tip;
 			type = popup.tl_available_types[i]
 			amount = popup.tl_available_amounts[i]
 			label = popup.tl_available_labels[i]
+			tip = popup.tl_available_tips[i]
 
 			selected = (popup.tl_all_types || array_contains(popup.tl_types, type))
 			checkedcount += (selected ? amount : 0)
 			tab_control_checkbox()
 
-			if (draw_checkbox("block_settings/timeline/" + type, dx, dy, selected, null, "", label))
+			if (draw_checkbox("block_settings/timeline/" + type, dx, dy, selected, null, tip, label))
 				action_block_settings_tl_type(type)
 
 			tab_next()

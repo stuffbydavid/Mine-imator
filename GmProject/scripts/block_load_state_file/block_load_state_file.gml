@@ -161,6 +161,12 @@ function block_load_state_file(fn, block, state)
 				var mcase = multipartlist[|c];
 				with (new_obj(obj_block_load_multipart_case))
 				{
+					hide_model = false
+					
+					var apply = mcase[?"apply"];
+					if (ds_map_valid(apply))
+						hide_model = (apply[?"model"] = block.tl_hide_model)
+
 					// Condition
 					var whenmap = mcase[?"when"];
 					

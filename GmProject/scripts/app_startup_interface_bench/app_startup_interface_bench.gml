@@ -288,7 +288,7 @@ function app_startup_interface_bench()
 		sortlist_column_add(block_list, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
+			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
 				sortlist_add(block_list, mc_assets.block_list[|b].name)
 		
 		// Special block list

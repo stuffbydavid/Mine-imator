@@ -14,6 +14,7 @@ function builder_event_create()
 	sch_legacy_add_array = null
 	sch_timeline_amount = 0
 	sch_tileentity_list = null
+	sch_entities = []
 	
 	block_text_front_map = ds_map_create()
 	block_text_front_color_map = ds_map_create()

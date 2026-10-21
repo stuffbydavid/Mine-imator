@@ -198,8 +198,9 @@ function macros()
 	#macro schematic_folders_default		[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
 	#macro scenery_large_threshold			300
 	#macro scenery_instant_threshold		50 * 1024 // 50kb
+	#macro scenery_entity_tl_type_index		5
 	#macro scenery_timeline_prompt			20
-	#macro scenery_timeline_enabled			[ "chest", "sign", "door", "lever", "trapdoor", "fence_gate", "enchanting_table", "mob_head", "banner" ]
+	#macro scenery_timeline_enabled			[ "chest", "sign", "door", "lever", "trapdoor", "fence_gate", "enchanting_table", "mob_head", "banner", "painting" ]
 	#macro scenery_timeline_enabled_max		10
 	#macro scenery_timeline_warning			50
 	#macro sound_filters					[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]

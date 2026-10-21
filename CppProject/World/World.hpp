@@ -4,6 +4,8 @@
 #include "Render/Mesh.hpp"
 #include "NBT.hpp"
 
+#include <QSet>
+
 #define PREVIEW_ZNEAR 1.0
 #define PREVIEW_ZFAR 10000.0
 #define PREVIEW_ZOOM_MIN 1.0
@@ -186,6 +188,12 @@ namespace CppProject
 		// Copy compatible chunk blocks and block entities into the schematic.
 		void AddChunk(Chunk& chunk);
 
+		// Copy supported entities stored separately from terrain chunks
+		void AddEntityRegion(const QString& filename, const WorldVec& regionPos, const BoolType* includedChunks);
+
+		// Copy supported entities from a chunk's entity list
+		void AddEntities(NbtCompound& chunk);
+
 		// Serialize the collected schematic as NBT.
 		QByteArray Serialize();
 
@@ -204,6 +212,7 @@ namespace CppProject
 		NbtCompound* schematic = nullptr;
 		NbtCompound* palette = nullptr;
 		NbtList* entities = nullptr;
+		QSet<StringType> supportedEntityIds;
 		Heap<uint32_t> indices;
 	};
 
