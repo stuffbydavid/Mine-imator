@@ -2,6 +2,10 @@ uniform sampler2D uTexture; // static
 uniform int uIsSky;
 
 uniform vec3 uLightPosition; // static
+uniform vec3 uLightDirection; // static
+uniform vec3 uLightAreaCenter; // static
+uniform vec3 uLightAreaU; // static
+uniform vec3 uLightAreaV; // static
 uniform vec4 uLightColor; // static
 uniform float uLightStrength; // static
 uniform float uLightNear; // static
@@ -38,6 +42,7 @@ varying vec4 vClipPosition;
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_material.SPECULAR_LIB)
+#pragma shady: inline(common_material.AREA_LIGHT_LIB)
 #pragma shady: inline(common_material.SSS_TRANSLUCENCY_LIB)
 #pragma shady: inline(common_constants.MATH)
 #pragma shady: inline(common_shadows.PCSS_LIB)
@@ -229,6 +234,79 @@ float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, floa
 	return visibility / float(quality);
 }
 
+vec2 getAreaQuadrature(int index)
+{
+	if (index == 0)
+		return vec2(-0.8611363116, 0.3478548451);
+	if (index == 1)
+		return vec2(-0.3399810436, 0.6521451549);
+	if (index == 2)
+		return vec2(0.3399810436, 0.6521451549);
+	return vec2(0.8611363116, 0.3478548451);
+}
+
+float getAreaRadianceScale(float distance2)
+{
+	float att = getLightAttenuation(sqrt(distance2), uLightFar, uLightFadeSize, uLightRealisticFalloff);
+	// Rectangles already have finite irradiance at contact; remove the point-source softening
+	return att * (uLightRealisticFalloff > 0 ? distance2 + 256.0 : distance2);
+}
+
+vec2 getAreaSpecularQuadrature(int index, float focus, float width)
+{
+	vec2 q = getAreaQuadrature(index);
+	if (width <= 0.0 || abs(focus) > 1.5)
+		return q;
+
+	// Change variables around the reflected GGX peak so smooth metals do not miss the emitter
+	float lower = atan((-1.0 - focus) / width, 1.0);
+	float upper = atan((1.0 - focus) / width, 1.0);
+	float halfRange = (upper - lower) * 0.5;
+	float tangent = tan((lower + upper) * 0.5 + q.x * halfRange);
+	return vec2(focus + width * tangent, q.y * width * (1.0 + tangent * tangent) * halfRange);
+}
+
+vec3 getRectangleSpecular(vec3 normal, vec3 specularF0, float roughness, float radianceScale)
+{
+	if (dot(uLightDirection, vPosition - uLightPosition) <= 0.00001 || getRectangleArea(uLightAreaU, uLightAreaV) <= 0.00000001)
+		return vec3(0.0);
+
+	vec3 view = normalize(uCameraPosition - vPosition);
+	vec3 reflected = reflect(-view, normal);
+	float denominator = dot(reflected, uLightDirection);
+	vec2 focus = vec2(0.0);
+	vec2 width = vec2(0.0);
+	if (abs(denominator) > 0.0001)
+	{
+		float rayDistance = dot(uLightPosition - vPosition, uLightDirection) / denominator;
+		if (rayDistance > 0.0)
+		{
+			vec3 hit = vPosition + reflected * rayDistance - uLightPosition;
+			focus = vec2(dot(hit, uLightAreaU) / dot(uLightAreaU, uLightAreaU), dot(hit, uLightAreaV) / dot(uLightAreaV, uLightAreaV));
+			float alpha = max(roughness, MIN_PERCEPTUAL_ROUGHNESS);
+			float footprint = 2.0 * alpha * alpha * rayDistance / max(abs(denominator), 0.1);
+			width = footprint / vec2(length(uLightAreaU), length(uLightAreaV));
+		}
+	}
+
+	vec3 result = vec3(0.0);
+	for (int y = 0; y < 4; y++)
+	{
+		vec2 qy = getAreaSpecularQuadrature(y, focus.y, width.y);
+		for (int x = 0; x < 4; x++)
+		{
+			vec2 qx = getAreaSpecularQuadrature(x, focus.x, width.x);
+			vec3 delta = uLightPosition + uLightAreaU * qx.x + uLightAreaV * qy.x - vPosition;
+			float distance2 = max(dot(delta, delta), 0.00000001);
+			vec3 direction = delta / sqrt(distance2);
+			float geometry = max(dot(normal, direction), 0.0) * max(dot(uLightDirection, -direction), 0.0) / distance2;
+			result += getSpecular(normal, direction, uCameraPosition, vPosition, specularF0, roughness) *
+				(geometry * radianceScale * qx.y * qy.y * 0.25);
+		}
+	}
+	return result;
+}
+
 void main()
 {
 	vec3 light = vec3(0.0);
@@ -251,10 +329,43 @@ void main()
 		float roughness, metallic, emissive, F0, sss;
 		getMaterial(roughness, metallic, emissive, F0, sss);
 		vec3 normal = getMaterialNormal(vTexCoord, vPosition, getTBN(vNormal, vTangent));
-		vec3 lightDir = normalize(uLightPosition - vPosition);
+		vec3 lightVector = (dot(uLightDirection, uLightDirection) > 0.0 ? uLightAreaCenter : uLightPosition) - vPosition;
+		vec3 lightDir = lightVector / max(length(lightVector), 0.0001);
 		vec3 baseColorLinear = pow(baseColor.rgb, vec3(uGamma));
 		vec3 specularF0 = mix(vec3(F0), baseColorLinear, metallic);
 		vec3 F = getDirectFresnel(normal, lightDir, uCameraPosition, vPosition, specularF0);
+
+		if (dot(uLightDirection, uLightDirection) > 0.0)
+		{
+			float area = getRectangleArea(uLightAreaU, uLightAreaV);
+			float distance2 = dot(uLightAreaCenter - vPosition, uLightAreaCenter - vPosition);
+			float radianceScale = getAreaRadianceScale(distance2);
+			float radiance = radianceScale / max(area, 0.00000001);
+			float dif = getRectangleIrradiance(vPosition, normal, uLightPosition, uLightDirection, uLightAreaU, uLightAreaV) * radiance;
+			vec3 areaSpecular = uLightSpecular > 0.0 ? getRectangleSpecular(normal, specularF0, roughness, radianceScale) : vec3(0.0);
+			float shadow = 1.0;
+			vec3 subsurf = vec3(0.0);
+			if (dif > 0.0 || dot(areaSpecular, areaSpecular) > 0.0 || sss > 0.0)
+			{
+				float fragDepth = distance(vPosition, uShadowPosition);
+				float sampleDepth;
+				shadow = getPointShadow(vPosition - uShadowPosition, fragDepth, receiverNormal, 1.0, sampleDepth);
+				if (sss > 0.0 && dif == 0.0)
+				{
+					float backlight = getRectangleIrradiance(vPosition, -normal, uLightPosition, uLightDirection, uLightAreaU, uLightAreaV) * radiance;
+					subsurf = getSubsurfaceTranslucency(fragDepth, sampleDepth, uSSSRadius * sss) * backlight;
+				}
+			}
+			light = lightCol * dif * shadow;
+			if (sss > 0.0)
+				handleSubsurfaceHighlight(light, subsurf, normal, lightDir, lightCol, uCameraPosition, vPosition, sss, 1.0);
+			light *= (vec3(1.0) - F) * (1.0 - metallic);
+			float specularStrength = uLightSpecular * (uLightRealisticFalloff > 0 ? uLightStrength : 1.0);
+			spec = uLightColor.rgb * areaSpecular * shadow * specularStrength;
+			gl_FragData[0] = vec4(light, baseColor.a);
+			gl_FragData[1] = vec4(spec, baseColor.a);
+			return;
+		}
 		
 		float shadow = 1.0;
 		float att = 0.0;

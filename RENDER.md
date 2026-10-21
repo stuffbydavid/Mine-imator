@@ -2,6 +2,97 @@
 
 # Render test settings
 
+## Rectangular area lights
+
+Area lights integrate diffuse lighting over the rectangular emitter's projected
+solid angle, clipped against the receiving surface's horizon. Quick rendering
+evaluates this per pixel and uses one light slot per rectangle. Standard and
+realistic rendering integrate each of the four rectangular quadrants analytically
+for diffuse lighting and use 4-by-4 Gauss-Legendre surface quadrature per quadrant
+for GGX specular lighting, concentrating integration points around the reflected
+GGX peak for smooth materials. Specular highlights remain a finite-quadrature
+approximation, not an LTC or ray-traced solution.
+
+The four shadow maps now estimate visibility for continuous emitting patches,
+rather than shading four point sources. Additional render samples jitter shadow
+positions within their quadrants; they do not move the emitting rectangles.
+Shadow boundaries remain sampled and converge with additional render samples.
+Range/fade is evaluated at the emitter center, consistently across its quadrants
+and both diffuse and specular lighting. Width or height zero disables emission.
+With realistic falloff, strength represents total output, so enlarging the
+rectangle spreads its energy over a larger surface. Realistic falloff uses the
+rectangle's finite solid angle instead of the point light's near-distance
+softening. Artistic falloff retains its center-distance brightness normalization.
+
+For validation, compare wide and tall rectangles, rotated/parented lights,
+front/back emission, receivers crossing the horizon, rough and smooth metals,
+zero dimensions, range/fade boundaries, shadows disabled, and soft-shadow
+convergence. Large flat receivers should no longer show four point-light pools.
+Test all three renderers with both DirectX and OpenGL.
+
+## Occlusion culling
+
+The native renderer uses current-pass GPU depth queries on DirectX 11 and OpenGL
+to conditionally draw scene meshes and instance batches. It tests an expanded
+screen-space bounding rectangle at the nearest depth of the world-space bounds,
+without writing color or depth. Queries never reuse visibility from an older
+camera position or animation frame. OpenGL draws normally if a query result is
+not ready; DirectX uses GPU predication without CPU readback.
+
+Culling is opt-in with `--occlusionCulling` for camera color, G-buffer and auxiliary passes.
+It applies across scene object types, but bypasses draws below 1,024 indices,
+wind-deformed batches, bounds crossing the near plane, and passes without normal
+depth testing. GPU model bends retain their conservative deformation bounds.
+Shadow, selection, picking, preview and multi-view passes are unchanged.
+Transparent geometry can be culled behind existing depth, but the proxy itself
+never becomes an occluder. No opaque depth prepass or draw reordering is added.
+The query pool is capped at 4,096 queries per application frame; further draws
+render normally until the pool is reset on the next frame.
+
+Use `--noOcclusionCulling` to disable queries for image and performance
+comparisons. Test all three renderers on DirectX and OpenGL, including animated
+occluders, camera cuts, near-plane intersections, transparency, wind, bends,
+AA jitter, instanced objects and off-screen shadow casters. Compare saved images
+with culling disabled. GPU-conditional draws still count as submitted draws in
+the existing CPU statistics; profile GPU timings to measure savings. Query
+overhead can outweigh savings in scenes with little hidden geometry. Initial
+Debug comparisons of the rendering fixture showed approximately 5-8% additional
+render time, so culling remains disabled by default pending optimized profiling.
+
+## GPU model bending
+
+The native renderer reuses segmented vertex buffers for smooth timeline block
+bends and updates per-object shader parameters instead of regenerating vertices
+when bend angles change. Position deformation is shared by color, depth, shadow, and
+selection shaders; lighting normals follow the same bend. Bounds conservatively
+enclose rotations around the bend pivot, so deformed meshes remain visible.
+
+Blocky single-axis bends, shapes with corner offsets, planes (including extruded
+planes), normal-mapped shapes, and shapes with height-limited vertex wind retain
+CPU deformation. Resource previews and particle templates retain CPU meshes.
+Changing normal-map availability or switching bend style rebuilds timeline meshes
+because deformation eligibility or segment topology can change. GameMaker
+continues to use CPU deformation.
+
+Common midpoint and endpoint rotations are cached as compact quaternions; other
+segment weights use shader-side easing and rotation. Unbent shapes keep their
+default buffers until bending starts, and existing GPU buffers survive crossings
+through zero.
+
+This moves work out of CPU animation updates, but adds GPU vertex work and
+per-object parameters. It does not guarantee faster exports, particularly with
+the realistic renderer's repeated passes. Profile an optimized build before
+drawing production-performance conclusions.
+
+For validation, animate bends through zero and positive/negative angles on all
+six bend sides, including rotated and mirrored shapes. Check smooth and blocky
+styles, normal maps, corner offsets, wind, shadows, selection, and frustum edges
+with all three renderers on DirectX and OpenGL. Compare against a CPU baseline;
+animated smooth blocks should retain their vertex-buffer IDs across angle
+updates rather than allocate/upload new geometry.
+
+## Test runner
+
 Use `--set "<settings>"` with Mine-imator's test runner (`--test "<.miproject>"`) in non-Release builds to override project render or camera settings. Separate settings in one test with commas:
 
 ```text

@@ -37,9 +37,8 @@ namespace CppProject
 	#if OS_WINDOWS
 		void LoadCodeD3D11(QString vsCode, QString fsCode, BoolType useCache);
 		QString LoadPointD3D11(const QString& varsDecl, BoolType useCache);
-	#if !RELEASE_MODE
+		BoolType LoadCachedCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst, BoolType useCache);
 		BoolType CompileCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst);
-	#endif
 	#endif
 
 		void LoadCodeOpenGL(QString vsCode, QString fsCode, BoolType useCache);
@@ -101,6 +100,11 @@ namespace CppProject
 
 		// Resets the current batch of objects, called when SubmitVertices is skipped for culling.
 		void ResetObjects();
+
+		// Whether the current object can move outside its mesh bounds in the vertex shader
+		BoolType HasVertexWind(BoolType terrainWind) const;
+		Matrix occlusionAAMatrix = Matrix::Identity();
+		float occlusionWindEnable = 0.0f, occlusionWindTerrain = 0.0f, occlusionWindStrength = 0.0f;
 
 		// Write a uniform value of the current object to the buffer.
 		struct UniformState;

@@ -12,7 +12,8 @@ function render_startup()
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
 			  render_sun_matrix, render_sun_direction, render_sun_near, render_sun_far, render_sun_shadow_scale, render_light_offset, render_shadow_from,
-			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff;
+			  render_spot_matrix, render_light_specular_strength, render_light_size, render_light_realistic_falloff, render_light_area_direction,
+			  render_light_area_center, render_light_area_u, render_light_area_v;
 	
 	globalvar render_effects, render_fx_done, render_fx_list, render_fx_progress, render_camera_bloom, render_camera_dof,
 			  render_glow, render_glint, render_camera_ca, render_camera_distort, render_camera_cc, render_camera_grain,
@@ -23,6 +24,7 @@ function render_startup()
 			  render_place, render_place_pass, render_place_target, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
+	globalvar render_shake_cached, render_shake_time, render_shake_noise;
 	
 	// Update shader_reset_uniforms()
 	globalvar shader_uniform_color_ext, shader_uniform_rgb_add, shader_uniform_rgb_sub, shader_uniform_hsb_add,
@@ -63,6 +65,9 @@ function render_startup()
 	render_camera = null
 	render_camera_effects = null
 	render_camera_effect_enabled = null
+	render_shake_cached = [ false, false, false ]
+	render_shake_time = vec3(0)
+	render_shake_noise = vec3(0)
 	
 	render_light_specular_strength = 0
 	render_light_realistic_falloff = false

@@ -11,7 +11,7 @@ Mine-imator is a 3D movie maker based on the sandbox game Minecraft, with over 1
 
 Website and download: https://www.mineimator.com
 
-The software is written using GameMaker Language and converted to a separate C++ environment using a custom built GML parser (CppGen). The final executable is built for Windows, Mac OS and Linux using the Qt framework, DirectX/OpenGL rendering and various other libraries.
+The software is written using GameMaker Language and converted to a separate C++ environment using a custom built GML parser (CppGen). The final executable is built for Windows, Mac OS and Linux using the Qt framework, DirectX/OpenGL rendering and various other libraries.[^amd-opengl]
 
 ## GameMaker project
 You can open `GmProject/Mine-imator.yyp` directly in GameMaker-LTS2026 for development and debugging, but with the following restrictions:
@@ -27,3 +27,5 @@ You can open `GmProject/Mine-imator.yyp` directly in GameMaker-LTS2026 for devel
 You will see "Project Directory Modified" warnings when running due to the "Shady.gml" shader plugin, disable this via File > Preferences > General Settings > Turn on "Automatically reload changed files"
 
 To support all features you must prepare and compile the C++ project. For full build instructions, see `BUILD.md`.
+
+[^amd-opengl]: On Windows, launching Mine-imator with `--gfx OpenGL` (for example, `.\Mine-imator.exe --gfx OpenGL`) may work around rendering issues or GPU driver hangs on some modern AMD GPUs by using OpenGL instead of Direct3D.

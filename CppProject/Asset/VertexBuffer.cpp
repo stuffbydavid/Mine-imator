@@ -1,12 +1,15 @@
 #include "VertexBuffer.hpp"
+#include "AppHandler.hpp"
 #include "Shader.hpp"
+#include "Render/VertexBufferRenderer.hpp"
 
 #include <QIODevice>
+#include <QQuaternion>
 #include <limits>
 
 namespace CppProject
 {
-	VertexBuffer::VertexBuffer(QDataStream& stream) : VertexBuffer()
+	VertexBuffer::VertexBuffer(QDataStream& stream, BoolType legacyBlockAxes, RealType legacyBlockWidth) : VertexBuffer()
 	{
 		valid = false;
 
@@ -66,6 +69,24 @@ namespace CppProject
 				}
 			}
 
+			// Older scenery caches relied on a render-time block axis transform
+			if (legacyBlockAxes)
+			{
+				auto rotateDirection = [](uint32_t packed)
+				{
+					return ((packed >> 8) & 255) | ((255 - (packed & 255)) << 8) | (packed & 0xFFFF0000);
+				};
+				for (IntType i = 0; i < mesh->numVertices; i++)
+				{
+					Vertex& vertex = mesh->vertexData[i];
+					float oldX = vertex.x;
+					vertex.x = vertex.y;
+					vertex.y = legacyBlockWidth - oldX;
+					vertex.normal = rotateDirection(vertex.normal);
+					vertex.tangent = rotateDirection(vertex.tangent);
+				}
+			}
+
 			// Create mesh buffers
 			numIndices += numInd;
 			mesh->bounds = Bounds(mesh->vertexData);
@@ -100,9 +121,11 @@ namespace CppProject
 
 			if (GFX->IsVisible(worldBounds))
 			{
+				VB->occlusion.Begin(worldBounds, mesh->numIndices, !shader->HasVertexWind(mesh->hasWind));
 				mesh->BeginUse();
 				shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices);
 				mesh->EndUse();
+				VB->occlusion.End();
 
 				calls++;
 			}
@@ -111,6 +134,90 @@ namespace CppProject
 		}
 
 		return calls;
+	}
+
+	void VertexBuffer::SetModelBend(const VecType& angles, const Matrix& rotation, const VecType& pivot,
+		const VecType& axis, const VecType& range, const VecType& minimum,
+		const VecType& maximum, const VecType& direction)
+	{
+		if (!valid || meshes.isEmpty() || range.z <= 0.0)
+		{
+			WARNING("Invalid model bend buffer or range");
+			return;
+		}
+
+		if (!modelBend.enabled)
+		{
+			// Enclose every possible rotation around the bend pivot, including Z-fighting inflation
+			for (Mesh<>* mesh : meshes)
+			{
+				RealType radius = 0.0;
+				for (IntType corner = 0; corner < 8; corner++)
+				{
+					VecType point(
+						corner & 1 ? mesh->bounds.maxPoint.x : mesh->bounds.minPoint.x,
+						corner & 2 ? mesh->bounds.maxPoint.y : mesh->bounds.minPoint.y,
+						corner & 4 ? mesh->bounds.maxPoint.z : mesh->bounds.minPoint.z);
+					radius = std::max(radius, (rotation * point - pivot).GetLength() * 1.005);
+				}
+				VecType extent(radius, radius, radius);
+				mesh->bounds = Bounds(pivot - extent, pivot + extent);
+			}
+		}
+
+		modelBend.enabled = true;
+		modelBend.angles = angles;
+		modelBend.rotation = rotation;
+		modelBend.pivot = pivot;
+		modelBend.axis = axis;
+		modelBend.range = range;
+		modelBend.minimum = minimum;
+		modelBend.maximum = maximum;
+		modelBend.direction = direction;
+
+		auto bendRotation = [&](RealType weight)
+		{
+			auto limit = [](RealType angle, RealType minimum, RealType maximum, RealType direction)
+			{
+				return angle == 0.0 ? 0.0 : std::min(std::max(angle, minimum), maximum) * direction;
+			};
+			// Quintic easing equals the weight at the midpoint and endpoint
+			VecType angle(
+				limit(angles.x * weight, minimum.x, maximum.x, direction.x),
+				limit(angles.y * weight, minimum.y, maximum.y, direction.y),
+				limit(angles.z * weight, minimum.z, maximum.z, direction.z));
+			QQuaternion rotation = QQuaternion::fromAxisAndAngle(0, 0, 1, -angle.z) *
+				QQuaternion::fromAxisAndAngle(1, 0, 0, -angle.x) *
+				QQuaternion::fromAxisAndAngle(0, 1, 0, -angle.y);
+			return VecType(rotation.x(), rotation.y(), rotation.z(), rotation.scalar());
+		};
+		modelBend.halfRotation = bendRotation(0.5);
+		modelBend.fullRotation = bendRotation(1.0);
+	}
+
+	void VertexBuffer::SubmitModelBend(Shader* shader) const
+	{
+		IntType enabled = shader->GetUniformIndex("uModelBendEnabled");
+		if (modelBend.enabled && enabled < 0)
+			FATAL("Model bend vertex shader missing in " + shader->name);
+
+		shader->SubmitFloat(enabled, modelBend.enabled ? 1.0f : 0.0f);
+		if (!modelBend.enabled)
+			return;
+
+		shader->SubmitVec3(shader->GetUniformIndex("uModelBendAngles"), modelBend.angles);
+		shader->SubmitMat4(shader->GetUniformIndex("uModelBendRotation"), modelBend.rotation);
+		shader->SubmitVec4(shader->GetUniformIndex("uModelBendHalfRotation"),
+			modelBend.halfRotation.x, modelBend.halfRotation.y, modelBend.halfRotation.z, modelBend.halfRotation.w);
+		shader->SubmitVec4(shader->GetUniformIndex("uModelBendFullRotation"),
+			modelBend.fullRotation.x, modelBend.fullRotation.y, modelBend.fullRotation.z, modelBend.fullRotation.w);
+		shader->SubmitVec3(shader->GetUniformIndex("uModelBendPivot"), modelBend.pivot);
+		shader->SubmitVec3(shader->GetUniformIndex("uModelBendAxis"), modelBend.axis);
+		shader->SubmitVec4(shader->GetUniformIndex("uModelBendRange"),
+			modelBend.range.x, modelBend.range.y, modelBend.range.z, modelBend.range.w);
+		shader->SubmitVec3(shader->GetUniformIndex("uModelBendMinimum"), modelBend.minimum);
+		shader->SubmitVec3(shader->GetUniformIndex("uModelBendMaximum"), modelBend.maximum);
+		shader->SubmitVec3(shader->GetUniformIndex("uModelBendDirection"), modelBend.direction);
 	}
 
 	VertexBuffer::~VertexBuffer()

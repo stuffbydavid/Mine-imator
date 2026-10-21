@@ -121,7 +121,7 @@ function tests_run()
 	log("Test output folder", testdir)
 	 
 	var csv, csvfilename;
-	csv = "Frame,Renderer,Setting,Samples,Animate_ms,Total_ms,Render_ms,Surface_ms,Export_ms,Other_ms,render_world_calls,vertex_buffer_tris,vertex_buffer_submits\n"
+	csv = "Frame,Renderer,Setting,Samples,Animate_ms,Total_ms,Render_ms,Surface_ms,Export_ms,Other_ms,render_world_calls,vertex_buffer_tris,vertex_buffer_submits,merged_model_submissions,merged_shape_submissions\n"
 	csvfilename = testdir + "/benchmark_" + testname + ".csv"
 	
 	for (timeline_marker = framestart; timeline_marker <= min(timeline_length, frameend); timeline_marker++)
@@ -237,6 +237,8 @@ function tests_run()
 				benchmark_render_total_time = 0
 				benchmark_surface_total_time = 0
 				benchmark_export_total_time = 0
+				benchmark_merged_model_submissions = 0
+				benchmark_merged_shape_submissions = 0
 
 				var renderstarttime, exporttime, othertime;
 				renderstarttime = get_timer()
@@ -263,7 +265,9 @@ function tests_run()
 				csv += string_format(othertime / 1000, 0, 3) + ","
 				csv += string(render_world_count) + ","
 				csv += string(get_vbuffer_triangles()) + ","
-				csv += string(get_vbuffer_render_calls()) + "\n"
+				csv += string(get_vbuffer_render_calls()) + ","
+				csv += string(benchmark_merged_model_submissions) + ","
+				csv += string(benchmark_merged_shape_submissions) + "\n"
 			
 				log("Test image", export_filename, string_format(exporttime / 1000, 0, 3) + " msec")
 				if (renderer_current = e_renderer.REALISTIC) // != e_renderer.QUICK later on

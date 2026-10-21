@@ -4,11 +4,27 @@ function render_update_camera()
 	if (render_camera_effects != null && render_camera_effect_enabled[e_cam_fx.SHAKE] &&
 		(render_camera != null || (render_view_current = view_second && render_effects)))
 	{
-		shake = vec3(
-			simplex1d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_X]) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_X],
-			simplex2d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_Y], 1000) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_Y],
-			simplex2d_lib((app.timeline_marker/app.project_tempo) * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_Z], 2000) * render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_Z]
-		)
+		var shaketime = app.timeline_marker / app.project_tempo;
+		for (var axis = 0; axis < 3; axis++)
+		{
+			var strength = render_camera_effects[e_value.CAM_FX_SHAKE_STRENGTH_X + axis];
+			if (strength = 0)
+				continue
+
+			if (shake = null)
+				shake = vec3(0)
+
+			var noisetime = shaketime * render_camera_effects[e_value.CAM_FX_SHAKE_SPEED_X + axis];
+			// Cache noise inputs, not strength or camera identity, so live edits remain immediate
+			if (!render_shake_cached[axis] || render_shake_time[axis] != noisetime)
+			{
+				render_shake_noise[axis] = (axis = 0) ? simplex1d_lib(noisetime) : simplex2d_lib(noisetime, axis * 1000)
+				render_shake_time[axis] = noisetime
+				render_shake_cached[axis] = true
+			}
+
+			shake[axis] = render_shake_noise[axis] * strength
+		}
 	}
 
 	if (!render_camera) // Use work camera

@@ -2,6 +2,7 @@
 #include "AppHandler.hpp"
 #include "Vertex.hpp"
 #include "World/World.hpp"
+#include <type_traits>
 
 namespace CppProject
 {
@@ -16,6 +17,13 @@ namespace CppProject
 	{
 		if (!numVertices || !numIndices)
 			return;
+
+		if constexpr (std::is_same<V, Vertex>::value)
+		{
+			hasWind = false;
+			for (IntType i = 0; i < vertexData.Size(); i++)
+				hasWind |= (vertexData.Value(i).data & 3) != 0;
+		}
 
 #if OS_WINDOWS
 		if (IS_D3D11)

@@ -2,9 +2,16 @@
 #include "Shader.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/Vertex.hpp"
+#include <QCryptographicHash>
+#include <QSaveFile>
+#include <QStandardPaths>
+#include <d3dcompiler.h>
 
 namespace CppProject
 {
+    static constexpr UINT D3D_SHADER_COMPILE_FLAGS = D3DCOMPILE_PACK_MATRIX_COLUMN_MAJOR |
+        D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_OPTIMIZATION_LEVEL3;
+
     ID3D11InputLayout* Shader::d3dInputLayout[4] = { nullptr, nullptr, nullptr, nullptr };
 
     QMap<Shader::DataType, QString> Shader::dataTypeD3D11Map = {
@@ -413,49 +420,14 @@ namespace CppProject
         vsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ASSETS_DIR"/Shaders/Compiled/" + name + ".fsh.d3d";
 
-        if (useCache && QFile::exists(vsCacheName) && QFile::exists(fsCacheName))
-        {
-            QDateTime cacheModified = std::min(QFileInfo(vsCacheName).lastModified(), QFileInfo(fsCacheName).lastModified());
-            if (QFileInfo(__FILE__).lastModified() >= cacheModified ||
-                QFileInfo(QFileInfo(__FILE__).absolutePath() + "/Shader.cpp").lastModified() >= cacheModified)
-                useCache = false;
-           
-            for (const QString& sourceName : sourceDependencies)
-            {
-                if (QFileInfo(sourceName).lastModified() >= cacheModified)
-                {
-                    useCache = false;
-                    break;
-                }
-            }
-        }
     #else
         vsCacheName = ":/Shaders/Compiled/" + name + ".vsh.d3d";
         fsCacheName = ":/Shaders/Compiled/" + name + ".fsh.d3d";
     #endif
 
-        if (!useCache || !QFile::exists(vsCacheName) || !QFile::exists(fsCacheName))
-        {
-        #if !RELEASE_MODE
-            if (!CompileCodeD3D11(vsCode, "vs_4_0", vsCacheName, vsData) ||
-                !CompileCodeD3D11(fsCode, "ps_4_0", fsCacheName, fsData))
-                return;
-        #else
-            WARNING("No cache found for shader: " + name);
+        if (!LoadCachedCodeD3D11(vsCode, "vs_4_0", vsCacheName, vsData, useCache) ||
+            !LoadCachedCodeD3D11(fsCode, "ps_4_0", fsCacheName, fsData, useCache))
             return;
-        #endif
-        }
-        else
-        {
-            QFile vsFile(vsCacheName), fsFile(fsCacheName);
-            if (!vsFile.open(QFile::ReadOnly) || !fsFile.open(QFile::ReadOnly))
-            {
-                WARNING("Could not open shader cache for " + name);
-                return;
-            }
-            vsData = vsFile.readAll();
-            fsData = fsFile.readAll();
-        }
         D3DCheckError(D3DDevice->CreateVertexShader(vsData.Data(), vsData.Size(), nullptr, &d3dVertexShader));
         D3DCheckError(D3DDevice->CreatePixelShader(fsData.Data(), fsData.Size(), nullptr, &d3dPixelShader));
         
@@ -544,23 +516,88 @@ namespace CppProject
         }
 	}
 
-#if !RELEASE_MODE
+	BoolType Shader::LoadCachedCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst, BoolType useCache)
+	{
+        QByteArray fingerprint = QCryptographicHash::hash(
+            QByteArray::number(D3D_SHADER_COMPILE_FLAGS) + '\n' + target.toUtf8() + '\n' + code.toUtf8(),
+            QCryptographicHash::Sha256).toHex();
+
+        auto readCache = [&](const QString& path)
+        {
+            QFile fingerprintFile(path + ".sha256");
+            QFile bytecodeFile(path);
+            if (!fingerprintFile.exists() || !bytecodeFile.exists())
+                return false;
+
+            if (!fingerprintFile.open(QFile::ReadOnly))
+            {
+                WARNING("Could not read shader fingerprint " + path + ": " + fingerprintFile.errorString());
+                return false;
+            }
+            if (fingerprintFile.readAll() != fingerprint)
+                return false;
+
+            if (!bytecodeFile.open(QFile::ReadOnly))
+            {
+                WARNING("Could not read shader cache " + path + ": " + bytecodeFile.errorString());
+                return false;
+            }
+            QByteArray bytecode = bytecodeFile.readAll();
+            if (bytecodeFile.error() != QFileDevice::NoError || bytecode.isEmpty())
+            {
+                WARNING("Invalid shader cache " + path + ": " + bytecodeFile.errorString());
+                return false;
+            }
+            dst = bytecode;
+            return true;
+        };
+
+        if (useCache && readCache(cacheName))
+            return true;
+
+        QString outputName = cacheName;
+    #if RELEASE_MODE
+        QString cacheDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        if (cacheDirectory.isEmpty())
+        {
+            WARNING("No writable location for the DirectX shader cache");
+            return false;
+        }
+        cacheDirectory += "/Shaders/D3D11";
+        outputName = cacheDirectory + "/" + name + "." + target + "." + QString::fromLatin1(fingerprint) + ".d3d";
+        if (useCache && readCache(outputName))
+            return true;
+
+        if (!QDir().mkpath(cacheDirectory))
+        {
+            WARNING("Could not create DirectX shader cache directory: " + cacheDirectory);
+            return false;
+        }
+    #endif
+
+        DEBUG("Shader cache missing or outdated: " + name + " (" + target + "), recompiling");
+        if (!CompileCodeD3D11(code, target, outputName, dst))
+            return false;
+
+        QSaveFile fingerprintFile(outputName + ".sha256");
+        if (!fingerprintFile.open(QFile::WriteOnly) ||
+            fingerprintFile.write(fingerprint) != fingerprint.size() || !fingerprintFile.commit())
+        {
+            WARNING("Could not write shader fingerprint " + outputName + ": " + fingerprintFile.errorString());
+            return false;
+        }
+        return true;
+	}
+
 	BoolType Shader::CompileCodeD3D11(const QString& code, const QString& target, const QString& cacheName, Heap<char>& dst)
 	{
         ID3DBlob* data = nullptr;
         ID3DBlob* errMsgs = nullptr;
-        DWORD flags = D3DCOMPILE_PACK_MATRIX_COLUMN_MAJOR | D3DCOMPILE_ENABLE_STRICTNESS;
-    #if 0
-        flags |= D3DCOMPILE_DEBUG;
-    #else
-        flags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
-    #endif
-
-        std::string codeStd = code.toStdString();
+        QByteArray codeBytes = code.toUtf8();
         std::string targetStd = target.toStdString();
 
         DEBUG("Compiling " + name + " (" + target + ")");
-        if (FAILED(D3DCompile(codeStd.c_str(), code.length(), nullptr, nullptr, nullptr, "main", targetStd.c_str(), flags, 0, &data, &errMsgs)))
+        if (FAILED(D3DCompile(codeBytes.constData(), codeBytes.size(), nullptr, nullptr, nullptr, "main", targetStd.c_str(), D3D_SHADER_COMPILE_FLAGS, 0, &data, &errMsgs)))
         {
             QString errMsg = errMsgs ? QString::fromUtf8((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize()) : "No compiler diagnostics";
             WARNING("Compiling " + name + " (" + target + ") shader failed\n\t" + errMsg);
@@ -579,17 +616,15 @@ namespace CppProject
         data->Release();
 
         // Write to file
-        QFile file(cacheName);
-        AddPerms(file);
-        if (!file.open(QFile::WriteOnly))
+        QSaveFile file(cacheName);
+        if (!file.open(QFile::WriteOnly) ||
+            file.write(dst.Data(), dst.Size()) != dst.Size() || !file.commit())
         {
-            WARNING("Could not open file: " + file.errorString());
+            WARNING("Could not write shader cache " + cacheName + ": " + file.errorString());
             return false;
         }
-        file.write(dst.Data(), dst.Size());
 
         return true;
 	}
-#endif
 }
 #endif

@@ -21,4 +21,8 @@ function model_shape_update_color()
 		ds_map_add(model_color_map, key, color)
 		key = ds_map_find_next(model_color_name_map, key)
 	}
+
+	with (obj_timeline)
+		if (type = e_tl_type.MODEL_PART && temp = other.id)
+			model_part_shape_render_matrix_part = null
 }

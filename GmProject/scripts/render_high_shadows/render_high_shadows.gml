@@ -1,12 +1,13 @@
 function render_high_shadows()
 {
-	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, sundirect, samplestart, sampleend, lightlist, lightplanes, lightmat;
+	var resultsurftemp, specresultsurftemp, sampleoffset, sunout, sundirect, samplestart, sampleend, lightlist, lightplanes, lightmat, lightsamples;
 	sampleoffset = point3D(0)
 	sunout = (env_sunlight_color_final != c_black)
 	sundirect = (render_sun_combined && !render_glint)
 	samplestart = 0
 	sampleend = 0
 	lightlist = []
+	lightsamples = []
 	lightplanes = []
 	
 	// Get visible lights
@@ -53,7 +54,11 @@ function render_high_shadows()
 			continue
 		}
 		
-		lightlist = array_add(lightlist, id)
+		for (var s = 0; s < (type = e_tl_type.AREA_LIGHT ? 4 : 1); s++)
+		{
+			lightlist = array_add(lightlist, id)
+			lightsamples = array_add(lightsamples, s)
+		}
 	}
 	
 	render_shadow_cache_update(lightlist, sunout)
@@ -125,7 +130,10 @@ function render_high_shadows()
 			if (!value_inherit[e_value.VISIBLE] || hide || !mode_visible[renderer_current])
 				continue
 			
-			if (app.project_render_shadows_jittered && render_sample_current > 1)
+			sampleoffset = point3D(0)
+			if (type = e_tl_type.AREA_LIGHT)
+				sampleoffset = point3D_sub(tl_get_area_light_sample(id, lightsamples[i], render_sample_current > 1), world_pos)
+			else if (app.project_render_shadows_jittered && render_sample_current > 1)
 			{
 				var xyang, zang, dis;
 				xyang = random(360)
@@ -142,10 +150,10 @@ function render_high_shadows()
 			
 			#region Point light
 			
-			if (type = e_tl_type.POINT_LIGHT)
+			if (type = e_tl_type.POINT_LIGHT || type = e_tl_type.AREA_LIGHT)
 			{
 				// If shadowless, add to shadowless point light list and continue
-				if (!shadows)
+				if (!shadows && type = e_tl_type.POINT_LIGHT)
 				{
 					ds_list_add(render_shadowless_point_list, id)
 					continue
@@ -156,14 +164,16 @@ function render_high_shadows()
 				atlasy = 0
 				atlassize = app.project_render_shadows_point_buffer_size
 				
-				var pointkey = "point:" + save_id;
-				if (render_shadow_cache_enabled)
+				var pointkey, pointcache;
+				pointkey = (type = e_tl_type.AREA_LIGHT ? "area:" : "point:") + save_id
+				pointcache = render_shadow_cache_enabled
+				if (pointcache)
 					render_surface_point_atlas_buffer = render_shadow_cache_surface(pointkey, atlassize * 3, atlassize * 2)
 				else
 					render_surface_point_atlas_buffer = surface_require(render_surface_point_atlas_buffer, atlassize * 3, atlassize * 2, true, surface_r32float)
 				
 				var pointcached, pointdirect, multiview;
-				pointcached = (render_shadow_cache_enabled && ds_map_exists(render_shadow_cache_ready, pointkey))
+				pointcached = (pointcache && type != e_tl_type.AREA_LIGHT && ds_map_exists(render_shadow_cache_ready, pointkey))
 				pointdirect = is_cpp()
 				
 				if (!pointcached && !pointdirect)
@@ -199,12 +209,13 @@ function render_high_shadows()
 							draw_clear(c_white)
 						}
 						
-						render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id)
+						render_world_start_light(world_pos, point3D_add(world_pos, look), sampleoffset, id, lightsamples[i])
 						
 						// Enable multi-view rendering for a single depth render pass
-						multiview = (pointdirect && render_high_shadows_viewports(true, atlassize, render_proj_from, render_light_far));
+						multiview = (shadows && pointdirect && render_high_shadows_viewports(true, atlassize, render_proj_from, render_light_far));
 						
-						render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
+						if (shadows)
+							render_world(e_render_mode.HIGH_LIGHT_POINT_DEPTH)
 						render_world_done()
 						
 						if (multiview)
@@ -239,13 +250,13 @@ function render_high_shadows()
 					}
 				}
 				
-				if (render_shadow_cache_enabled && !pointcached)
+				if (pointcache && type != e_tl_type.AREA_LIGHT && !pointcached)
 					render_shadow_cache_ready[?pointkey] = true
 				
 				// Restore light uniforms when the atlas was reused
 				if (pointcached)
 				{
-					render_world_start_light(world_pos, point3D_add(world_pos, dir_get_vec3(e_dir.amount - 1)), sampleoffset, id)
+					render_world_start_light(world_pos, point3D_add(world_pos, dir_get_vec3(e_dir.amount - 1)), sampleoffset, id, lightsamples[i])
 					render_world_done()
 				}
 				

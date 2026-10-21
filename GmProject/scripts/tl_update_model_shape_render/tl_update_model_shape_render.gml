@@ -31,4 +31,40 @@ function tl_update_model_shape_render()
 				model_part_shape_render_matrix[s] = matrix_multiply(shape.matrix, matrix_render)
 		}
 	}
+
+	if (model_part_merged_dirty || model_part_merged_part != model_part ||
+		model_part_merged_count != ds_list_size(model_part.shape_list))
+		tl_update_model_shape_merge()
+
+	var shapecount = ds_list_size(model_part.shape_list);
+	model_part_merged_compatible = (model_part_merged_vbuffer != null &&
+		array_length(model_part_shape_tex) = shapecount &&
+		array_length(model_part_shape_tex_material) = shapecount &&
+		array_length(model_part_shape_tex_normal) = shapecount &&
+		array_length(model_part_shape_material_res) = shapecount)
+
+	if (!model_part_merged_compatible)
+		return 0
+
+	var colornamemap = temp.model_color_map;
+	var firstcolor = (colornamemap != null ? colornamemap[?model_part.shape_list[|0].description] : undefined);
+	for (var s = 0; s < shapecount; s++)
+	{
+		var shapecolor = (colornamemap != null ? colornamemap[?model_part.shape_list[|s].description] : undefined);
+		if (model_part_shape_hidden[s] ||
+			model_part_shape_tex[s] != model_part_shape_tex[0] ||
+			model_part_shape_tex_material[s] != model_part_shape_tex_material[0] ||
+			model_part_shape_tex_normal[s] != model_part_shape_tex_normal[0] ||
+			model_part_shape_material_res[s] != model_part_shape_material_res[0] ||
+			is_undefined(shapecolor) != is_undefined(firstcolor))
+		{
+			model_part_merged_compatible = false
+			break
+		}
+		if (!is_undefined(shapecolor) && shapecolor != firstcolor)
+		{
+			model_part_merged_compatible = false
+			break
+		}
+	}
 }

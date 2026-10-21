@@ -903,7 +903,10 @@ namespace CppProject
 		tmr.Print("Unzip block mesh cache");
 		BoolType decompressed = Gzip::Decompress(filename, data);
 		if (!decompressed)
+		{
+			WARNING("Cannot decompress block mesh cache: " + filename.QStr());
 			return false;
+		}
 
 		tmr.Reset();
 		QDataStream in(&data, QIODevice::ReadOnly);
@@ -911,64 +914,97 @@ namespace CppProject
 		// Check format
 		uchar format = 0;
 		in >> format;
-		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
+		BoolType versionFirst = (format == 0);
+		if (versionFirst)
+			in.device()->seek(0);
+		else if (in.status() != QDataStream::Ok || format < 2 || format > BLOCK_MESH_CACHE_FORMAT)
+		{
+			WARNING("Unsupported block mesh cache format: " + filename.QStr());
 			return false;
+		}
 
-		// Check Minecraft assets version
-		quint16 assetsVersionSize = 0;
-		in >> assetsVersionSize;
-		if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
-			return false;
+		// Format 2 predates the Minecraft assets version header
+		if (versionFirst || format >= 3)
+		{
+			quint16 assetsVersionSize = 0;
+			in >> assetsVersionSize;
+			if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
+			{
+				WARNING("Invalid block mesh cache assets header: " + filename.QStr());
+				return false;
+			}
 
-		QByteArray assetsVersion(assetsVersionSize, '\0');
-		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
-			|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
-			return false;
+			QByteArray assetsVersion(assetsVersionSize, '\0');
+			if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize)
+			{
+				WARNING("Truncated block mesh cache assets header: " + filename.QStr());
+				return false;
+			}
+
+			// Early format 3 writers placed the version before the format byte
+			if (versionFirst)
+			{
+				in >> format;
+				if (in.status() != QDataStream::Ok || format != 3)
+				{
+					WARNING("Unsupported block mesh cache format: " + filename.QStr());
+					return false;
+				}
+			}
+
+			if (assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
+			{
+				BoolType sourceExists = self->type == e_res_type_FROM_WORLD
+					? QDir(self->world_regions_dir.Str()).exists()
+					: QFileInfo(VarGetStr(global::load_folder).QStr() + "/" + VarGetStr(self->filename).QStr()).isFile();
+				if (sourceExists)
+				{
+					WARNING("Rebuilding block mesh cache for changed Minecraft assets: " + filename.QStr());
+					return false;
+				}
+				WARNING("Loading block mesh cache with different Minecraft assets because its source is missing: " + filename.QStr());
+			}
+		}
 
 		// Load size
 		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
 		in >> sizeX;
 		in >> sizeY;
 		in >> sizeZ;
-		if (in.status() != QDataStream::Ok)
+		if (in.status() != QDataStream::Ok || sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
+		{
+			WARNING("Invalid block mesh cache dimensions: " + filename.QStr());
 			return false;
+		}
 
 		// Load vertex buffers
 		QVector<VertexBuffer*> vbuffers;
 		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
 		ArrType activeDepths, activeBuffers;
 		BoolType valid = true;
+		BoolType legacyBlockAxes = format < 4;
 
-		for (IntType d = 0; d < e_block_depth_amount; d++)
+		while (!in.atEnd() && vbuffers.size() < e_block_depth_amount * e_block_vbuffer_amount)
 		{
-			activeDepths[d] = false;
-
-			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			auto vbuffer = new VertexBuffer(in, legacyBlockAxes, (RealType)sizeY * block_size_);
+			vbuffers.append(vbuffer);
+			if (!vbuffer->valid)
 			{
-				auto vbuffer = new VertexBuffer(in);
-				vbuffers.append(vbuffer);
-				
-				if (!vbuffer->valid)
-				{
-					valid = false;
-					break;
-				}
-
-				BoolType active = (vbuffer->numIndices > 0);
-				activeBuffers[d * e_block_vbuffer_amount + vb] = active;
-				if (active)
-					activeDepths[d] = true;
-			}
-
-			if (!valid)
+				valid = false;
 				break;
+			}
 		}
 
-		if (!valid)
+		// Format 2 used one static sheet, with or without a dry foliage buffer
+		IntType buffersPerDepth = vbuffers.size() / e_block_depth_amount;
+		BoolType singleSheet = format == 2 && (buffersPerDepth == 12 || buffersPerDepth == 13);
+		if (!valid || !in.atEnd() || vbuffers.size() % e_block_depth_amount != 0
+			|| (!singleSheet && buffersPerDepth != e_block_vbuffer_amount))
 		{
 			for (auto vbuffer : vbuffers)
 				delete vbuffer;
 			
+			WARNING("Invalid block mesh cache vertex buffers: " + filename.QStr());
 			return false;
 		}
 
@@ -976,13 +1012,34 @@ namespace CppProject
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
 
 		// Assign vertex buffers
-		IntType i = 0;
 		for (IntType d = 0; d < e_block_depth_amount; d++)
-		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 		{
-			IntType index = d * e_block_vbuffer_amount + vb;
-			vertex_delete_buffer(self->block_vbuffer[index]);
-			self->block_vbuffer[index] = vbuffers.at(i++)->id;
+			activeDepths[d] = false;
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				IntType source = vb;
+				if (singleSheet)
+				{
+					if (vb == e_block_vbuffer_STATIC32 || vb == e_block_vbuffer_STATIC64
+						|| (buffersPerDepth == 12 && vb == e_block_vbuffer_DRY_FOLIAGE))
+						source = -1;
+					else if (vb >= e_block_vbuffer_ANIMATED)
+					{
+						source -= 2;
+						if (buffersPerDepth == 12 && vb > e_block_vbuffer_DRY_FOLIAGE)
+							source--;
+					}
+				}
+
+				VertexBuffer* vbuffer = source < 0 ? new VertexBuffer() : vbuffers.at(d * buffersPerDepth + source);
+				IntType index = d * e_block_vbuffer_amount + vb;
+				vertex_delete_buffer(self->block_vbuffer[index]);
+				self->block_vbuffer[index] = vbuffer->id;
+				BoolType active = vbuffer->numIndices > 0;
+				activeBuffers[index] = active;
+				if (active)
+					activeDepths[d] = true;
+			}
 		}
 
 		self->block_vbuffer_active = activeBuffers;

@@ -18,11 +18,16 @@ namespace CppProject
 	struct VertexBuffer : Asset
 	{
 		VertexBuffer() : Asset(ID_VertexBuffer) {}
-		VertexBuffer(QDataStream& stream);
+		VertexBuffer(QDataStream& stream, BoolType legacyBlockAxes = false, RealType legacyBlockWidth = 0);
 		~VertexBuffer();
 
 		// Submit the vertex buffer to be rendered, returns the number of render calls made.
 		IntType Submit(Shader* shader, Matrix boundsTransform);
+
+		void SetModelBend(const VecType& angles, const Matrix& rotation, const VecType& pivot,
+			const VecType& axis, const VecType& range, const VecType& minimum,
+			const VecType& maximum, const VecType& direction);
+		void SubmitModelBend(Shader* shader) const;
 
 		// Returns a new or existing vertex for editing an element with an index.
 		Vertex& GetCurrentVertex(IntType elementIndex, IntType threadId = 0);
@@ -49,6 +54,17 @@ namespace CppProject
 		QVector<Mesh<>*> meshes;
 		BoolType saveData = false; // Whether to discard data on CPU-side if it can't be used for batches
 		bool valid = true;
+		IntType references = 1;
+		QVector<IntType> mergeSources;
+		QVector<Matrix> mergeTransforms;
+
+		struct ModelBend
+		{
+			bool enabled = false;
+			VecType angles, pivot, axis, range, minimum, maximum, direction;
+			Matrix rotation;
+			VecType halfRotation, fullRotation;
+		} modelBend;
 
 		struct ThreadData
 		{

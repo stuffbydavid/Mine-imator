@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_keyframe_find_index",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_keyframe_find_index",
+  "parent":{
+    "name":"Keyframes",
+    "path":"folders/Scripts/Project/Timeline/Keyframes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

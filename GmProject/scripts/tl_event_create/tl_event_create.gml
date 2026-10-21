@@ -50,7 +50,13 @@ function tl_event_create()
 	model_part_shape_render_matrix = []
 	model_part_shape_render_matrix_part = null
 	model_part_shape_vbuffer = []
+	model_part_shape_tex_normal = []
 	model_part_shape_hidden = []
+	model_part_merged_vbuffer = null
+	model_part_merged_dirty = true
+	model_part_merged_part = null
+	model_part_merged_count = 0
+	model_part_merged_compatible = false
 	
 	model_use_blend_color = false
 	model_blend_color = c_white

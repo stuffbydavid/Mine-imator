@@ -3,8 +3,9 @@
 /// @arg vertexbuffermap
 /// @arg alphamap
 /// @arg bend
+/// @arg [normaltextures]
 
-function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
+function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend, normaltextures = null)
 {
 	// Clamp
 	for (var i = X; i <= Z; i++)
@@ -19,10 +20,51 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 	{
 		with (part.shape_list[|s])
 		{
+			var oldvbuf = vbufmap[? id];
 			vbufmap[? id] = vbuffer_default
+
+			var sharpbend = app.project_bend_style = "blocky" && bend_size = null &&
+				((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) ||
+				(!bend_axis[X] && bend_axis[Y] && !bend_axis[Z]) ||
+				(!bend_axis[X] && !bend_axis[Y] && bend_axis[Z]));
+			var gpubend = is_cpp() && is_array(normaltextures) && s < array_length(normaltextures) &&
+				normaltextures[s] = null && type = "block" && bend_shape && bend_part != null &&
+				!sharpbend && !has_vertex_offsets && (bend_size = null || bend_size > 0) &&
+				(wind_wave = e_vertex_wave.NONE || (wind_wave_zmin = null && wind_wave_zmax = null));
+
+			if (gpubend && !isbent)
+				gpubend = !is_undefined(oldvbuf) && oldvbuf != null && vbuffer_has_model_bend(oldvbuf)
 			
 			// Generate new mesh if needed
-			if (type = "block" && bend_shape && isbent)
+			if (gpubend)
+			{
+				var vbuf = oldvbuf;
+				if (is_undefined(vbuf) || vbuf = null || !vbuffer_has_model_bend(vbuf))
+					vbuf = model_shape_generate_block(bend, true)
+
+				var axis, pivot, segaxis, invangle, bendsize, direction;
+				segaxis = Z
+				if (bend_part = e_part.LEFT || bend_part = e_part.RIGHT)
+					segaxis = X
+				else if (bend_part = e_part.BACK || bend_part = e_part.FRONT)
+					segaxis = Y
+
+				axis = vec3(0)
+				axis[segaxis] = 1
+				pivot = vec3(0)
+				pivot[segaxis] = bend_offset - position[segaxis]
+				invangle = bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT
+				bendsize = (bend_size = null ? (app.project_bend_style = "realistic" ? 4 : 1) : bend_size)
+				direction = vec3(bend_axis[X] * negate(bend_invert[X]),
+					bend_axis[Y] * negate(bend_invert[Y]), bend_axis[Z] * negate(bend_invert[Z]))
+
+				vbuffer_set_model_bend(vbuf, bend,
+					matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1),
+					pivot, axis, [from[segaxis], pivot[segaxis] - bendsize / 2, bendsize, invangle],
+					bend_direction_min, bend_direction_max, direction)
+				vbufmap[? id] = vbuf
+			}
+			else if (type = "block" && bend_shape && isbent)
 				vbufmap[? id] = model_shape_generate_block(bend)
 			else if (type = "plane")
 			{
@@ -34,6 +76,9 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 				else if (isbent && bend_shape)
 					vbufmap[? id] = model_shape_generate_plane(bend)
 			}
+
+			if (!is_undefined(oldvbuf) && oldvbuf != null && oldvbuf != vbuffer_default && oldvbuf != vbufmap[? id])
+				vbuffer_destroy(oldvbuf)
 		}
 	}
 }

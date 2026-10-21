@@ -32,7 +32,7 @@ function render_shadow_cache_update(lightlist, sunout)
 	{
 		var light, lightkey;
 		light = lightlist[i]
-		lightkey = (light.type = e_tl_type.POINT_LIGHT ? "point:" : "spot:") + light.save_id
+		lightkey = (light.type = e_tl_type.AREA_LIGHT ? "area:" : (light.type = e_tl_type.POINT_LIGHT ? "point:" : "spot:")) + light.save_id
 		activekeys[?lightkey] = true
 	}
 	

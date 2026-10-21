@@ -47,7 +47,9 @@ uniform vec2 uTextureOffset;
 #pragma shady: macro_begin GBUFFERS_VERTEX_LIB
 	vPosition = getWorldPosition(in_Position, in_Wave);
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	vPlaceNormal = in_Normal;
+	vec3 modelNormal = getModelNormal(in_Normal, in_Position);
+	vec3 modelTangent = getModelNormal(in_Tangent, in_Position);
+	vPlaceNormal = modelNormal;
 
 	gl_Position = getClipPosition(vPosition);
 	
@@ -66,10 +68,10 @@ uniform vec2 uTextureOffset;
 
 	// Transform normals by inverse transpose and tangents by the forward matrix
 	mat3 worldViewInv = inverse2(gm_Matrices[MATRIX_WORLD_VIEW]);
-	vNormalView = normalize(worldViewInv * in_Normal);
-	vTangentView = normalize((gm_Matrices[MATRIX_WORLD_VIEW] * vec4(in_Tangent, 0.0)).xyz);
-	vNormalWorld = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
-	vTangentWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
+	vNormalView = normalize(worldViewInv * modelNormal);
+	vTangentView = normalize((gm_Matrices[MATRIX_WORLD_VIEW] * vec4(modelTangent, 0.0)).xyz);
+	vNormalWorld = inverse2(gm_Matrices[MATRIX_WORLD]) * modelNormal;
+	vTangentWorld = (gm_Matrices[MATRIX_WORLD] * vec4(modelTangent, 0.0)).xyz;
 
 	// Color
 	vColor = uBlendColor * in_Colour;

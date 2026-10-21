@@ -27,7 +27,7 @@ void main()
 	vColor = in_Colour * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
-	vPlaceNormal = in_Normal;
+	vPlaceNormal = getModelNormal(in_Normal, in_Position);
 	vPlaceDistance = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
 	
 	gl_Position = getClipPosition(vPosition);

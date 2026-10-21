@@ -91,6 +91,9 @@ namespace CppProject
 
 			// Create graphics API handler
 			new GraphicsApiHandler;
+			GFX->occlusionCulling = args.contains("--occlusionCulling") && !args.contains("--noOcclusionCulling");
+			args.removeAll("--occlusionCulling");
+			args.removeAll("--noOcclusionCulling");
 
 			// Disable DPI scaling
 			QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);

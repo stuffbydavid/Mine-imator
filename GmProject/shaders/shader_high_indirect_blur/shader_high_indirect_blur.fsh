@@ -92,11 +92,12 @@ void main()
 		samplePos = vTexCoord + samplePos * blurScale;
 		
 		float sampleWeight = getNeighborSurfaceWeight(samplePos, centerPos, centerNormal);
-		if (sampleWeight < 0.001)
-			continue;
-		
-		color += texture2D(gm_BaseTexture, samplePos).rgb * sampleWeight;
-		weight += sampleWeight;
+		// A divergent continue here can hang AMD's Direct3D driver
+		if (sampleWeight >= 0.001)
+		{
+			color += texture2D(gm_BaseTexture, samplePos).rgb * sampleWeight;
+			weight += sampleWeight;
+		}
 	}
 	
 	color /= weight;

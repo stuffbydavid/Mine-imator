@@ -13,6 +13,12 @@ uniform float uExposure;
 uniform float uGamma;
 uniform float uNear; // static
 uniform float uFar; // static
+uniform int uIsGround;
+uniform int uLightAmount; // static
+uniform vec4 uLightData[128]; // static
+uniform vec3 uLightAreaDirections[64]; // static
+uniform vec3 uLightAreaU[64]; // static
+uniform vec3 uLightAreaV[64]; // static
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -25,6 +31,7 @@ varying float vPlaceDistance;
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
 #pragma shady: inline(common_material.FRESNEL_LIB)
+#pragma shady: inline(common_material.AREA_LIGHT_LIB)
 #pragma shady: inline(common_effect.EFFECT_GLINT_LIB)
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)
 #pragma shady: inline(common_color.COLOR_ADJUST_LIB)
@@ -63,6 +70,22 @@ void main()
 	if (!isSky)
 	{
 		dif = vDiffuse + uAmbientColor.rgb;
+		int lights = uIsGround > 0 ? 1 : uLightAmount;
+		for (int i = 1; i < 64; i++)
+		{
+			if (i >= lights)
+				break;
+			vec3 direction = uLightAreaDirections[i];
+			if (dot(direction, direction) == 0.0)
+				continue;
+			vec4 data = uLightData[i * 2];
+			vec3 delta = data.xyz - vPosition;
+			float distance2 = dot(delta, delta);
+			float att = max(0.0, 1.0 - sqrt(distance2) / max(data.w, 0.0001));
+			float area = getRectangleArea(uLightAreaU[i], uLightAreaV[i]);
+			float irradiance = getRectangleIrradiance(vPosition, normalize(vNormal), data.xyz, direction, uLightAreaU[i], uLightAreaV[i]);
+			dif += uLightData[i * 2 + 1].rgb * irradiance * att * distance2 / max(area, 0.00000001);
+		}
 		F = getFresnel(vNormal, mix(F0, 1.0, metallic), roughness, uCameraPosition, vPosition);
 	
 		dif *= (1.0 - F);
