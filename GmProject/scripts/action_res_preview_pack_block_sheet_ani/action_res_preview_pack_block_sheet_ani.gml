@@ -1,9 +1,6 @@
-/// action_res_preview_pack_block_sheet_ani(ani)
-/// @arg ani
-
-function action_res_preview_pack_block_sheet_ani(ani)
+function action_res_preview_pack_block_sheet_ani(enabled)
 {
-	res_preview.pack_block_sheet_ani = ani
-	res_preview.update = true
-	res_preview.reset_view = true
+	preview_edit.pack_block_sheet_ani = enabled
+	preview_edit.update = true
+	preview_edit.reset_view = true
 }

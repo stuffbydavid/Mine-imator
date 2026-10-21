@@ -1,5 +1,4 @@
-/// json_save_done()
-/// @desc Write generated string to file
+/// @desc Write generated string to file.
 
 function json_save_done()
 {

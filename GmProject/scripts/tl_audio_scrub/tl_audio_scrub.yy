@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_audio_scrub",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_audio_scrub",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

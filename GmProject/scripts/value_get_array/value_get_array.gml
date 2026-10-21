@@ -1,4 +1,3 @@
-/// value_get_array(value, [default])
 /// @arg value
 /// @arg [default]
 

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_place_tl_list_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_place_tl_list_update",
+  "parent":{
+    "name":"Place",
+    "path":"folders/Scripts/Render/Place.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

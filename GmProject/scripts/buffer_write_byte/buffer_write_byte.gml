@@ -1,6 +1,5 @@
-/// buffer_write_byte(value)
+/// @desc Writes a byte to the buffer.
 /// @arg value
-/// @desc Writes a byte to the buffer
 
 function buffer_write_byte(val)
 {

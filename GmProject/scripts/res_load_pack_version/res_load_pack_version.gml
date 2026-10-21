@@ -1,5 +1,4 @@
-/// res_load_pack_version()
-/// @desc Reads pack.mcmeta file from a resource pack for legacy support
+/// @desc Reads pack.mcmeta file from a resource pack for legacy support.
 
 function res_load_pack_version()
 {

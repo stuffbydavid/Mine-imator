@@ -1,4 +1,3 @@
-/// block_set_stairs()
 /// @desc Defines logic for connecting adjacent stairs.
 
 function block_set_stairs()
@@ -12,12 +11,12 @@ function block_set_stairs()
 	facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 	
 	// X+
-	if (!build_edge_xp && (facing = "east" || facing = "west"))
+	if (!build_edge[XP] && (facing = "east" || facing = "west"))
 	{
-		var block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z);
+		var block = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z]);
 		if (block != null && block.type = "stairs")
 		{
-			var stateid = builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z);
+			var stateid = builder_get_state_id(build_pos[X] + 1, build_pos[Y], build_pos[Z]);
 			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 			{
 				var otherfacing = block_get_state_id_value(block, stateid, "facing");
@@ -40,12 +39,12 @@ function block_set_stairs()
 	}
 	
 	// X-
-	if (!build_edge_xn && (facing = "east" || facing = "west"))
+	if (!build_edge[XN] && (facing = "east" || facing = "west"))
 	{
-		var block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z);
+		var block = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z]);
 		if (block != null && block.type = "stairs")
 		{
-			var stateid = builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z);
+			var stateid = builder_get_state_id(build_pos[X] - 1, build_pos[Y], build_pos[Z]);
 			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 			{
 				var otherfacing = block_get_state_id_value(block, stateid, "facing");
@@ -68,12 +67,12 @@ function block_set_stairs()
 	}
 	
 	// Y+
-	if (!build_edge_yp && (facing = "south" || facing = "north"))
+	if (!build_edge[YP] && (facing = "south" || facing = "north"))
 	{
-		var block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z);
+		var block = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z]);
 		if (block != null && block.type = "stairs")
 		{
-			var stateid = builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z);
+			var stateid = builder_get_state_id(build_pos[X], build_pos[Y] + 1, build_pos[Z]);
 			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 			{
 				var otherfacing = block_get_state_id_value(block, stateid, "facing");
@@ -96,12 +95,12 @@ function block_set_stairs()
 	}
 	
 	// Y-
-	if (!build_edge_yn && (facing = "south" || facing = "north"))
+	if (!build_edge[YN] && (facing = "south" || facing = "north"))
 	{
-		var block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z);
+		var block = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z]);
 		if (block != null && block.type = "stairs")
 		{
-			var stateid = builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z);
+			var stateid = builder_get_state_id(build_pos[X], build_pos[Y] - 1, build_pos[Z]);
 			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
 			{
 				var otherfacing = block_get_state_id_value(block, stateid, "facing");

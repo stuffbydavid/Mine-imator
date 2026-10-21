@@ -1,10 +1,7 @@
-/// action_lib_pc_type_bounding_box(box)
-/// @arg box
-
-function action_lib_pc_type_bounding_box(box)
+function action_lib_pc_type_bounding_box(enabled)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_pc_type_bounding_box, ptype_edit.bounding_box, box, false)
+		history_set_var(action_lib_pc_type_bounding_box, ptype_edit.bounding_box, enabled, false)
 	
-	ptype_edit.bounding_box = box
+	ptype_edit.bounding_box = enabled
 }

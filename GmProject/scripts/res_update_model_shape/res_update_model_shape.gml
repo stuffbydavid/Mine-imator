@@ -1,4 +1,3 @@
-/// res_update_model_shape()
 /// @desc Updates the meshes of the shapes in the resource model.
 
 function res_update_model_shape()
@@ -28,17 +27,17 @@ function res_update_model_shape()
 	{
 		// Create maps for 3D planes
 		if (model_shape_alpha_map = null)
-			model_shape_alpha_map = ds_map_create()
+			model_shape_alpha_map = ds_int_map_create()
 	}
 	
 	// Create map for shape ID->mesh
 	if (model_shape_vbuffer_map = null)
-		model_shape_vbuffer_map = ds_map_create()
+		model_shape_vbuffer_map = ds_int_map_create()
 	
 	// Get texture (default)
 	var res = id;
 	if (res.model_texture_map = null)
-		res = mc_res
+		res = res_eval(project_pack_res)
 	
 	// Go through non-hidden parts
 	for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)

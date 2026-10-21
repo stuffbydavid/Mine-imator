@@ -43,6 +43,7 @@ namespace CppProject
 			uint16_t nextPos = previewColors.size();
 			previewImage.setPixelColor(QPoint(nextPos % PREVIEW_TEXTURE_SIZE, nextPos / PREVIEW_TEXTURE_SIZE), color);
 			previewColors.append(color);
+
 			return nextPos++;
 		};
 
@@ -65,10 +66,11 @@ namespace CppProject
 				IntType tintColor = 0;
 				switch (tint)
 				{
-					case GRASS: tintColor = biome.grass; break;
-					case FOLIAGE: tintColor = biome.foliage; break;
-					case WATER: tintColor = biome.water; break;
+					case GRASS:		tintColor = biome.grass; break;
+					case FOLIAGE:	tintColor = biome.foliage; break;
+					case WATER:		tintColor = biome.water; break;
 				}
+
 				uint16_t biomePos = addBlockColor(color_multiply(colorTop, tintColor), alphaTop, false);
 				if (b == 0) // Select biome 0 as style
 					topPos = sidePos = biomePos;
@@ -78,6 +80,7 @@ namespace CppProject
 		{
 			if (colorTop >= 0)
 				topPos = addBlockColor(colorTop, alphaTop);
+
 			if (colorSide >= 0)
 				sidePos = addBlockColor(colorSide, alphaSide);
 
@@ -89,14 +92,17 @@ namespace CppProject
 
 		// Find existing block style
 		if (tint == NONE)
+		{
 			for (IntType i = blockStyles.Size() - 1; i > 0; i--)
 			{
 				BlockStyle* style = blockStyles.Value(i);
 				if (style->topPos == topPos && style->sidePos == sidePos && style->tint == tint)
 					return style->index;
 			}
+		}
 
 		// Create new
-		return (new BlockStyle(topPos, sidePos, ((colorTop >= 0 && alphaTop < 0.9) || (colorSide >= 0 && alphaSide < 0.9)), tint, light))->index;
+		BoolType isTransparent = ((colorTop >= 0 && alphaTop < 0.9) || (colorSide >= 0 && alphaSide < 0.9));
+		return (new BlockStyle(topPos, sidePos, isTransparent, tint, light))->index;
 	}
 }

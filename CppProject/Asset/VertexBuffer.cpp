@@ -1,46 +1,102 @@
 #include "VertexBuffer.hpp"
 #include "Shader.hpp"
 
+#include <QIODevice>
+#include <limits>
+
 namespace CppProject
 {
-	VertexBuffer::VertexBuffer(QDataStream& stream) : VertexBuffer()
+	VertexBuffer::VertexBuffer(QDataStream& stream, const std::function<void(Vertex&)>& vertexTransform) : VertexBuffer()
 	{
-		qint64 numMeshes;
+		valid = false;
+
+		qint64 numMeshes = 0;
 		stream >> numMeshes;
+		QIODevice* device = stream.device();
+		if (stream.status() != QDataStream::Ok || device == nullptr || numMeshes < 0 ||
+			numMeshes > device->bytesAvailable() / (sizeof(qint64) * 2))
+			return;
 
 		for (IntType m = 0; m < numMeshes; m++)
 		{
-			qint64 numVert, numInd;
+			qint64 numVert = 0, numInd = 0;
 			stream >> numVert;
 			stream >> numInd;
 
-			if (!numInd)
-				break;
+			// Validate mesh header
+			if (stream.status() != QDataStream::Ok || numVert <= 0 || numInd <= 0 ||
+				numVert > MAX_MESH_INDICES || numInd > MAX_MESH_INDICES || numInd % 3 != 0)
+				return;
+
+			qint64 vertexBytes = numVert * sizeof(Vertex);
+			qint64 indexBytes = numInd * sizeof(uint32_t);
+			if (vertexBytes > std::numeric_limits<int>::max() || indexBytes > std::numeric_limits<int>::max() ||
+				vertexBytes + indexBytes > device->bytesAvailable())
+				return;
 
 			Mesh<>* mesh = new Mesh;
 			mesh->numVertices = numVert;
 			mesh->numIndices = numInd;
 
 			// Read vertices
-			mesh->vertexData.Alloc(mesh->numVertices);
-			if (stream.readRawData((char*)mesh->vertexData.data, (int)mesh->numVertices * sizeof(Vertex)) <= 0)
+			mesh->vertexData.Alloc(mesh->numVertices, false);
+			if (stream.readRawData((char*)mesh->vertexData.data, (int)vertexBytes) != vertexBytes)
+			{
 				WARNING("readRawData error");
+				delete mesh;
+				return;
+			}
 
 			// Read indices
-			mesh->indexData.Alloc(mesh->numIndices);
-			if (stream.readRawData((char*)mesh->indexData.data, (int)mesh->numIndices * sizeof(uint32_t)) <= 0)
+			mesh->indexData.Alloc(mesh->numIndices, false);
+			if (stream.readRawData((char*)mesh->indexData.data, (int)indexBytes) != indexBytes)
+			{
 				WARNING("readRawData error");
+				delete mesh;
+				return;
+			}
+
+			// Validate mesh indices
+			for (IntType i = 0; i < mesh->numIndices; i++)
+			{
+				if (mesh->indexData[i] >= mesh->numVertices)
+				{
+					delete mesh;
+					return;
+				}
+			}
+
+			// Apply optional transform function
+			if (vertexTransform)
+				for (IntType i = 0; i < mesh->numVertices; i++)
+					vertexTransform(mesh->vertexData[i]);
 
 			// Create mesh buffers
+			numIndices += numInd;
 			mesh->bounds = Bounds(mesh->vertexData);
 			mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES);
+
 			meshes.append(mesh);
-			numIndices += numInd;
 		}
+
+		// Earlier meshes may have been retained before the batching limit was reached
+		if (numIndices > MAX_BATCH_INDICES)
+		{
+			for (Mesh<>* mesh : meshes)
+			{
+				mesh->vertexData.FreeData();
+				mesh->indexData.FreeData();
+			}
+		}
+
+		valid = true;
 	}
 
 	IntType VertexBuffer::Submit(Shader* shader, Matrix boundsTransform)
 	{
+		if (!valid)
+			return 0;
+
 		IntType calls = 0;
 		for (Mesh<>* mesh : meshes)
 		{
@@ -52,6 +108,7 @@ namespace CppProject
 				mesh->BeginUse();
 				shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices);
 				mesh->EndUse();
+
 				calls++;
 			}
 			else
@@ -82,7 +139,17 @@ namespace CppProject
 		}
 		
 		thread.elemAdded[elementIndex] = true;
+
 		return thread.currentVertex;
+	}
+
+	void VertexBuffer::ThreadData::MeshData::Reserve(IntType addedVertices, IntType addedIndices)
+	{
+		// Double mesh capacity before appending a complete primitive
+		if (vertices.Size() + addedVertices > vertices.heap.Size())
+			vertices.heap.Alloc(std::max(vertices.Size() + addedVertices, std::max<IntType>(1024, vertices.heap.Size() * 2)), false);
+		if (indices.Size() + addedIndices > indices.heap.Size())
+			indices.heap.Alloc(std::max(indices.Size() + addedIndices, std::max<IntType>(1024, indices.heap.Size() * 2)), false);
 	}
 
 	void VertexBuffer::AddVertex(const Vertex& vertex, IntType threadId)
@@ -96,12 +163,7 @@ namespace CppProject
 		else
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(1, 1);
 
 		// Check if already added in current face
 		IntType i = 0;
@@ -136,12 +198,7 @@ namespace CppProject
 		if (mesh->indices.Size() + 3 > MAX_MESH_INDICES)
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(3, 3);
 
 		// Create triangle
 		IntType vertOffset = mesh->vertices.Size();
@@ -168,12 +225,7 @@ namespace CppProject
 		if (mesh->indices.Size() + 6 > MAX_MESH_INDICES)
 			thread.meshes.append(mesh = new ThreadData::MeshData);
 
-		// Allocate data
-		if (!mesh->indices.Size())
-		{
-			mesh->indices.Alloc(1024);
-			mesh->vertices.Alloc(1024);
-		}
+		mesh->Reserve(4, 6);
 
 		// Create face
 		IntType vertOffset = mesh->vertices.Size();
@@ -230,6 +282,7 @@ namespace CppProject
 					threadMesh->targetIndexOffset = mesh->numIndices;
 					mesh->numVertices += threadMesh->vertices.Size();
 					mesh->numIndices += threadMesh->indices.Size();
+
 					break;
 				}
 
@@ -239,6 +292,7 @@ namespace CppProject
 					Mesh<>* mesh = threadMesh->targetMesh = new Mesh;
 					mesh->numVertices = threadMesh->vertices.Size();
 					mesh->numIndices = threadMesh->indices.Size();
+
 					meshes.append(mesh);
 				}
 			}
@@ -247,11 +301,11 @@ namespace CppProject
 		if (!meshes.size())
 			return;
 
-		// Allocate meshes
+		// Every element is filled by the thread copies below, so no clearing is needed
 		for (Mesh<>* mesh : meshes)
 		{
-			mesh->vertexData.Alloc(mesh->numVertices);
-			mesh->indexData.Alloc(mesh->numIndices);
+			mesh->vertexData.Alloc(mesh->numVertices, false);
+			mesh->indexData.Alloc(mesh->numIndices, false);
 			numIndices += mesh->numIndices;
 		}
 
@@ -289,7 +343,7 @@ namespace CppProject
 		// Copy mesh data from thread(s)
 		if (numThreads > 1)
 		{
-			#pragma OPENMP_FOR
+			#pragma omp parallel for schedule(static)
 			for (IntType t = 0; t < numThreads; t++)
 				processThread(t);
 		}
@@ -305,12 +359,16 @@ namespace CppProject
 				Vertex& v1 = mesh->vertexData[mesh->indexData.Value(i * 3)];
 				Vertex& v2 = mesh->vertexData[mesh->indexData.Value(i * 3 + 1)];
 				Vertex& v3 = mesh->vertexData[mesh->indexData.Value(i * 3 + 2)];
+
 				VecType edge1 = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
 				VecType edge2 = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
+
 				VecType deltaUv1 = { v2.u - v1.u, v2.v - v1.v };
 				VecType deltaUv2 = { v3.u - v1.u, v3.v - v1.v };
+
 				RealType f = 1.0 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
 				VecType t = ((edge1 * deltaUv2.y - edge2 * deltaUv1.y) * f).GetNormalized();
+
 				v1.SetTangent(t.x, t.y, t.z);
 				v2.SetTangent(t.x, t.y, t.z);
 				v3.SetTangent(t.x, t.y, t.z);
@@ -323,6 +381,12 @@ namespace CppProject
 
 	void VertexBuffer::Write(QDataStream& stream)
 	{
+		if (!valid)
+		{
+			stream << (qint64)0;
+			return;
+		}
+
 		stream << (qint64)meshes.size();
 
 		for (Mesh<>* mesh : meshes)
@@ -346,12 +410,16 @@ namespace CppProject
 
 	IntType VertexBuffer::GetWriteBytes() const
 	{
-		IntType bytes = 8; // 64 bits numMeshes
+		if (!valid)
+			return sizeof(qint64);
+
+		IntType bytes = sizeof(qint64); // numMeshes
 		for (Mesh<>* mesh : meshes)
-			bytes +=
-				8 + 8 + // 64 bits numVertices + 64 bit numIndices
-				mesh->numVertices * sizeof(Vertex) +
-				mesh->numIndices * sizeof(uint32_t);
+		{
+			bytes += sizeof(qint64) * 2; // numVertices + numIndices
+			if (mesh->numIndices > 0)
+				bytes += mesh->numVertices * sizeof(Vertex) + mesh->numIndices * sizeof(uint32_t);
+		}
 
 		return bytes;
 	}

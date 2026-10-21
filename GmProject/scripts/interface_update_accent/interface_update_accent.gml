@@ -1,5 +1,4 @@
-/// interface_update_accent()
-/// @desc Updates accent variant colors
+/// @desc Updates accent variant colors.
 
 function interface_update_accent()
 {

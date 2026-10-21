@@ -1,4 +1,3 @@
-/// find_videotemplate(width, height)
 /// @arg width
 /// @arg height
 

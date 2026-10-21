@@ -1,24 +1,39 @@
-/// temp_set_scenery(res, animate, [historyobject])
-/// @arg res
+/// @arg resource
 /// @arg animate
 /// @arg [historyobject]
+/// @arg [clearparts]
+/// @arg [parts]
 
-function temp_set_scenery(res, animate, hobj)
+function temp_set_scenery(res, animate, hobj = null, clearparts = true, parts = null)
 {
-	if (scenery != null)
-		scenery.count--
-	
+	var partroot = null;
+	if (parts != null)
+	{
+		if (array_length(parts) = 0)
+			return 0
+
+		partroot = parts[0].part_of
+	}
+
 	// Save and remove old timelines
 	with (obj_timeline)
 	{
-		if (temp != other.id || part_list = null)
+		if (temp != other.id || part_list = null || !clearparts || (partroot != null && id != partroot))
 			continue
 		
-		var root = id;
+		var root, oldparts;
+		root = id
+		oldparts = []
 		
 		// Go through parts
 		for (var p = 0; p < ds_list_size(part_list); p++)
 		{
+			var part = part_list[|p];
+			if (parts != null && !array_contains(parts, part))
+				continue
+
+			array_add(oldparts, part)
+
 			with (part_list[|p])
 			{
 				// Save non-part children
@@ -88,7 +103,7 @@ function temp_set_scenery(res, animate, hobj)
 							{
 								with (tree_list[|t])
 								{
-									if (part_of == null)
+									if (part_of = null)
 									{
 										tl_set_parent(root)
 										t--
@@ -103,33 +118,40 @@ function temp_set_scenery(res, animate, hobj)
 					part_save_obj[part_amount++] = history_save_tl(other.id)
 			}
 		}
+
+		if (array_length(oldparts) = 0)
+			continue
 		
 		// Destroy
-		while (ds_list_size(part_list) > 0)
-			tl_remove_clean(part_list[|0])
+		for (var p = 0; p < array_length(oldparts); p++)
+			with (oldparts[p])
+				tl_remove_clean()
 		
 		with (obj_timeline)
 			if (delete_ready)
 				instance_destroy()
 		
-		ds_list_clear(part_list)
 	}
+
+	if (parts != null)
+		return 0
 	
 	scenery = res
 	
 	if (scenery != null)
 	{
-		scenery.count++
-		
-		if (animate)
+		if (animate || !clearparts)
 		{
-			// Create new timelines
+			// Reconcile timelines after loading
 			with (obj_timeline)
 			{
 				if (temp != other.id)
 					continue
+
+				scenery_part_history = hobj
+				scenery_animate_create = animate
 				
-				if (temp.scenery.ready)
+				if (animate && temp.scenery.ready)
 					tl_animate_scenery()
 				else
 					scenery_animate = true
@@ -140,8 +162,12 @@ function temp_set_scenery(res, animate, hobj)
 		{
 			temp_update_display_name()
 			temp_update_rot_point()
+			
 			with (app)
+			{
+				tl_update_list()
 				tl_update_matrix()
+			}
 		}
 	}
 }

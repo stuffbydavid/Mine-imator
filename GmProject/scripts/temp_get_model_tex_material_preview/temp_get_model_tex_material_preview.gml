@@ -1,4 +1,3 @@
-/// temp_get_model_tex_material_preview(textureobject, part)
 /// @arg textureobject
 /// @arg part
 

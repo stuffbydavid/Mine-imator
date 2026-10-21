@@ -14,7 +14,7 @@ namespace CppProject
 	struct Font : Asset
 	{
 		Font() : Asset(ID_Font) {};
-		Font(StringType filename, IntType size, BoolType bold, BoolType italic, IntType first, IntType last);
+		Font(StringType filename, RealType size, BoolType bold, BoolType italic, IntType first, IntType last);
 		~Font();
 
 		// Returns the width of a single character when rendered.

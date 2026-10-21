@@ -1,5 +1,4 @@
-/// vbuffer_destroy(vbuffer)
-/// @arg vbuffer
+/// @arg vertexbuffer
 
 function vbuffer_destroy(vbuf)
 {

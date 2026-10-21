@@ -1,7 +1,3 @@
-/// action_tl_keyframe_create(timeline, position)
-/// @arg timeline
-/// @arg position
-
 function action_tl_keyframe_create(timeline, position)
 {
 	if (history_undo)
@@ -13,7 +9,10 @@ function action_tl_keyframe_create(timeline, position)
 		{
 			with (keyframe_list[|history_data.kf_index])
 				instance_destroy()
+			
+			animated = history_data.animated
 			tl_update_values()
+
 			update_matrix = true
 			tl_update_matrix()
 		}
@@ -31,11 +30,14 @@ function action_tl_keyframe_create(timeline, position)
 		{
 			tl = timeline
 			pos = position
+			
 			hobj = history_set(action_tl_keyframe_create)
 			with (hobj)
 			{
-				id.tl_save_id = save_id_get(tl)
-				id.position = pos
+				self.tl_save_id = save_id_get(tl)
+				self.position = pos
+				animated = tl.animated
+				
 				history_save_tl_select()
 			}
 		}
@@ -46,7 +48,10 @@ function action_tl_keyframe_create(timeline, position)
 		{
 			tl_select()
 			kf = tl_keyframe_add(pos)
+			
+			animated = true
 			update_matrix = true
+			
 			tl_update_matrix()
 		}
 		
@@ -54,6 +59,10 @@ function action_tl_keyframe_create(timeline, position)
 			hobj.kf_index = ds_list_find_index(tl.keyframe_list, kf)
 	}
 	
-	app_update_tl_edit()
 	tl_update_length()
+	if (setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated)
+		tl_update_list()
+
+	app_update_tl_edit()
+	project_update_counts()
 }

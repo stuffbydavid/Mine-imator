@@ -1,21 +1,19 @@
-/// menu_biome_init(menu)
-/// @arg menu
-
 function menu_biome_init(menu)
 {
 	list_init_start()
 	
-	var selectedbiome, biome;
-	selectedbiome = find_biome(menu.menu_value)
+	var selbiome = find_biome(menu.menu_value);
 	
 	// Extend variant list if needed
-	if (!menu_expose && selectedbiome.biome_base != null && menu.menu_ani = 0)
-		selectedbiome.biome_base.variants_extend = true
+	if (!menu_expose && selbiome.biome_base != null && menu.menu_ani = 0)
+		selbiome.biome_base.variants_extend = true
 	
 	// Add biomes with variants
 	for (var b = 0; b < ds_list_size(biome_list); b++)
 	{
-		biome = biome_list[|b]
+		var biome = biome_list[|b];
+		if (biome.dimension != env_dimension)
+			continue
 		
 		if (!(menu_expose && biome.group))
 			menu_add_item(biome.name, minecraft_asset_get_name("biome", biome.name))
@@ -23,7 +21,7 @@ function menu_biome_init(menu)
 		if (biome.biome_variants != null && ds_list_size(biome.biome_variants) > 0)
 		{
 			if (!menu_expose)
-				list_item_add_action(list_item_last, string(biome) + "extend", menu_item_set_extend, biome.variants_extend, biome, null, "left", biome.variants_extend ? "tooltiptlcollapse" : "tooltiptlexpand", spr_chevron_ani)
+				list_item_add_action(list_item_last, string(biome) + "extend", menu_item_set_extend, biome.variants_extend, biome, null, "left", biome.variants_extend ? "tooltip/tl/collapse" : "tooltip/tl/expand", spr_chevron_ani)
 			
 			if (biome.variants_extend || menu_expose)
 			{

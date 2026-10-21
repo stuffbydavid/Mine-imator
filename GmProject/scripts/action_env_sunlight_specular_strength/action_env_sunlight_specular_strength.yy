@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_sunlight_specular_strength",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_sunlight_specular_strength",
+  "parent":{
+    "name":"Environment",
+    "path":"folders/Scripts/App/Actions/Environment.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

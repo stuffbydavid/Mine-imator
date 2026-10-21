@@ -1,6 +1,3 @@
-/// action_lib_pc_type_text(text)
-/// @arg text
-
 function action_lib_pc_type_text(text)
 {
 	if (!history_undo && !history_redo)

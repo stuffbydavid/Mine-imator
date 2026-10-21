@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_surface_pool_save",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_surface_pool_save",
+  "parent":{
+    "name":"Pool",
+    "path":"folders/Scripts/Render/Pool.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

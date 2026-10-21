@@ -1,9 +1,8 @@
-/// lib_startup()
-
 function lib_startup()
 {
 	globalvar file_copy_temp;
 	file_copy_temp = false
+	
 	if (is_cpp())
 		return true
 		
@@ -28,6 +27,7 @@ function lib_startup()
 	globalvar lib_directory_create, lib_directory_exists, lib_directory_delete;
 	globalvar lib_movie_init, lib_movie_set, lib_movie_start, lib_movie_audio_file_decode, lib_movie_audio_file_add, lib_movie_audio_sound_add, lib_movie_frame, lib_movie_done;
 	globalvar lib_window_maximize, lib_window_set_focus;
+	globalvar lib_math_simplex1d, lib_math_simplex2d, lib_math_simplex3d, lib_math_simplex4d;
 	
 	// Window library
 	log("External library", pathwindow)
@@ -65,7 +65,10 @@ function lib_startup()
 	external_call(lib_movie_init)
 	
 	// Math library (windows.dll)
-	math_lib_startup(pathwindow)
+	lib_math_simplex1d = external_define(pathwindow, "simplex1D", dll_cdecl, ty_real, 1, ty_real)
+	lib_math_simplex2d = external_define(pathwindow, "simplex2D", dll_cdecl, ty_real, 2, ty_real, ty_real)
+	lib_math_simplex3d = external_define(pathwindow, "simplex3D", dll_cdecl, ty_real, 3, ty_real, ty_real, ty_real)
+	lib_math_simplex4d = external_define(pathwindow, "simplex4D", dll_cdecl, ty_real, 4, ty_real, ty_real, ty_real, ty_real)
 	
 	return true
 }

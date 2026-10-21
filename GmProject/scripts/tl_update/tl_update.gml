@@ -1,5 +1,3 @@
-/// tl_update()
-
 function tl_update()
 {
 	tl_update_value_types()
@@ -8,6 +6,8 @@ function tl_update()
 	tl_update_display_name()
 	tl_update_depth()
 	tl_update_model_shape()
+	
+	render_world_changed()
 	
 	if (type = e_tl_type.PARTICLE_SPAWNER)
 		particle_spawner_init()

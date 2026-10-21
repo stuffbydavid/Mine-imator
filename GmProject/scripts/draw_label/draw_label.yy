@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "draw_label",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Components",
-    "path": "folders/Scripts/App/Interface/Components.yy",
+  "$GMScript":"v1",
+  "%Name":"draw_label",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_label",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/App/Interface/Components.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

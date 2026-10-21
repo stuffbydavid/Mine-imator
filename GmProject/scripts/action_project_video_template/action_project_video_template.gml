@@ -1,7 +1,6 @@
-/// action_project_video_template(videotemplate)
 /// @arg videotemplate
 
-function action_project_video_template(argument0)
+function action_project_video_template(videotemp)
 {
 	if (history_undo)
 	{
@@ -11,17 +10,17 @@ function action_project_video_template(argument0)
 		return 0
 	}
 	else if (history_redo)
-		argument0 = history_data.newtemplate
+		videotemp = history_data.newtemplate
 	else
 	{
 		var hobj = history_set(action_project_video_template);
 		hobj.oldtemplate = project_video_template
-		hobj.newtemplate = argument0
+		hobj.newtemplate = videotemp
 		hobj.oldwidth = project_video_width
 		hobj.oldheight = project_video_height
 	}
 	
-	project_video_template = argument0
+	project_video_template = videotemp
 	if (project_video_template > 0)
 	{
 		project_video_width = project_video_template.width

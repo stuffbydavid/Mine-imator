@@ -1,14 +1,12 @@
-/// tab_settings_controls()
-
 function tab_settings_controls()
 {
 	tab_control(20)
-	draw_label(text_get("settingscontrolskeybinds") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label) 
+	draw_label(text_get("settings/controls/keybinds") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label)
 	tab_next()
 	
 	// File
 	tab_control_switch()
-	draw_button_collapse("file", collapse_map[?"file"], null, true, "settingscontrolsfile")
+	draw_button_collapse("file", collapse_map[?"file"], null, true, "settings/controls/file")
 	tab_next()
 	
 	if (collapse_map[?"file"])
@@ -27,7 +25,7 @@ function tab_settings_controls()
 	
 	// Edit
 	tab_control_switch()
-	draw_button_collapse("edit", collapse_map[?"edit"], null, true, "settingscontrolsedit")
+	draw_button_collapse("edit", collapse_map[?"edit"], null, true, "settings/controls/edit")
 	tab_next()
 	
 	if (collapse_map[?"edit"])
@@ -47,6 +45,8 @@ function tab_settings_controls()
 		draw_keybind(e_keybind.KEYFRAMES_CUT, dx, dy)
 		draw_keybind(e_keybind.KEYFRAMES_PASTE, dx, dy)
 		draw_keybind(e_keybind.KEYFRAMES_DELETE, dx, dy)
+		draw_keybind(e_keybind.KEYFRAMES_STRETCH, dx, dy)
+		draw_keybind(e_keybind.KEYFRAMES_SCALE, dx, dy)
 		dy += 8
 		
 		tab_collapse_end()
@@ -54,13 +54,15 @@ function tab_settings_controls()
 	
 	// Tools
 	tab_control_switch()
-	draw_button_collapse("tools", collapse_map[?"tools"], null, true, "settingscontrolstools")
+	draw_button_collapse("tools", collapse_map[?"tools"], null, true, "settings/controls/tools")
 	tab_next()
 	
 	if (collapse_map[?"tools"])
 	{
 		tab_collapse_start()
 		
+		draw_keybind(e_keybind.WORKBENCH, dx, dy)
+		draw_keybind(e_keybind.BUILD_TOOL, dx, dy)
 		draw_keybind(e_keybind.TOOL_SELECT, dx, dy)
 		draw_keybind(e_keybind.TOOL_MOVE, dx, dy)
 		draw_keybind(e_keybind.TOOL_ROTATE, dx, dy)
@@ -75,7 +77,7 @@ function tab_settings_controls()
 	
 	// Viewport
 	tab_control_switch()
-	draw_button_collapse("viewport", collapse_map[?"viewport"], null, true, "settingscontrolsviewport")
+	draw_button_collapse("viewport", collapse_map[?"viewport"], null, true, "settings/controls/viewport")
 	tab_next()
 	
 	if (collapse_map[?"viewport"])
@@ -83,9 +85,9 @@ function tab_settings_controls()
 		tab_collapse_start()
 		
 		draw_keybind(e_keybind.RENDER_MODE, dx, dy)
+		draw_keybind(e_keybind.SECONDARY_VIEW, dx, dy)
 		draw_keybind(e_keybind.PARTICLES_SPAWN, dx, dy)
 		draw_keybind(e_keybind.PARTICLES_CLEAR, dx, dy)
-		draw_keybind(e_keybind.SECONDARY_VIEW, dx, dy)
 		dy += 8
 		
 		tab_collapse_end()
@@ -93,7 +95,7 @@ function tab_settings_controls()
 	
 	// Timeline
 	tab_control_switch()
-	draw_button_collapse("timeline", collapse_map[?"timeline"], null, true, "settingscontrolstimeline")
+	draw_button_collapse("timeline", collapse_map[?"timeline"], null, true, "settings/controls/timeline")
 	tab_next()
 	
 	if (collapse_map[?"timeline"])
@@ -101,9 +103,12 @@ function tab_settings_controls()
 		tab_collapse_start()
 		
 		draw_keybind(e_keybind.PLAY, dx, dy)
+		draw_keybind(e_keybind.PLAY_STOP, dx, dy)
 		draw_keybind(e_keybind.PLAY_BEGINNING, dx, dy)
 		draw_keybind(e_keybind.MARKER_LEFT, dx, dy)
 		draw_keybind(e_keybind.MARKER_RIGHT, dx, dy)
+		draw_keybind(e_keybind.FRAME_PREVIOUS, dx, dy)
+		draw_keybind(e_keybind.FRAME_NEXT, dx, dy)
 		dy += 8
 		
 		tab_collapse_end()
@@ -111,7 +116,7 @@ function tab_settings_controls()
 	
 	// Camera
 	tab_control_switch()
-	draw_button_collapse("camera", collapse_map[?"camera"], null, true, "settingscontrolscamera")
+	draw_button_collapse("camera", collapse_map[?"camera"], null, true, "settings/controls/camera")
 	tab_next()
 	
 	if (collapse_map[?"camera"])
@@ -137,23 +142,23 @@ function tab_settings_controls()
 	}
 	
 	tab_control_dragger()
-	draw_dragger("settingsmovespeed", dx, dy, dragger_width, setting_move_speed, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_move_speed, action_setting_move_speed)
+	draw_dragger("settings/move_speed", dx, dy, dragger_width, setting_move_speed, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_move_speed, action_setting_move_speed)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("settingslooksensitivity", dx, dy, dragger_width, setting_look_sensitivity, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_look_sensitivity, action_setting_look_sensitivity)
+	draw_dragger("settings/look_sensitivity", dx, dy, dragger_width, setting_look_sensitivity, 0.01, 0, no_limit, 1, 0, tab.controls.tbx_look_sensitivity, action_setting_look_sensitivity)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("settingsfastmodifier", dx, dy, dragger_width, setting_fast_modifier, 0.01, 0, no_limit, 3, 0, tab.controls.tbx_fast_modifier, action_setting_fast_modifier)
+	draw_dragger("settings/fast_modifier", dx, dy, dragger_width, setting_fast_modifier, 0.01, 0, no_limit, 3, 0, tab.controls.tbx_fast_modifier, action_setting_fast_modifier)
 	tab_next()
 	
 	tab_control_dragger()
-	draw_dragger("settingsslowmodifier", dx, dy, dragger_width, setting_slow_modifier, 0.01, 0, no_limit, 0.25, 0, tab.controls.tbx_slow_modifier, action_setting_slow_modifier)
+	draw_dragger("settings/slow_modifier", dx, dy, dragger_width, setting_slow_modifier, 0.01, 0, no_limit, 0.25, 0, tab.controls.tbx_slow_modifier, action_setting_slow_modifier)
 	tab_next()
 	
 	// Restore controls
 	tab_control_button_label()
-	draw_button_label("settingscontrolsrestoredefaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, action_restore_controls, fa_middle)
+	draw_button_label("settings/controls/restore_defaults", dx + dw/2, dy, null, icons.RESET, e_button.PRIMARY, action_restore_controls, fa_middle)
 	tab_next()
 }

@@ -1,5 +1,3 @@
-/// json_load_string()
-
 function json_load_string()
 {
 	var str = "";
@@ -49,7 +47,7 @@ function json_load_string()
 			else if (json_char = e_json_char.U)
 			{
 				// Parse Hex ascii code
-				var hex = ""
+				var hex = "";
 				repeat (4)
 				{
 					if (buffer_is_eof())

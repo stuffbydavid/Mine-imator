@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"keybind_clear",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"keybind_clear",
+  "parent":{
+    "name":"Keybinds",
+    "path":"folders/Scripts/App/Keybinds.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

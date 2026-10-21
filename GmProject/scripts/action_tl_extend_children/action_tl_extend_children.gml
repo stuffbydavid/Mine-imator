@@ -1,5 +1,3 @@
-/// action_tl_extend_children()
-
 function action_tl_extend_children()
 {
 	if (history_undo)

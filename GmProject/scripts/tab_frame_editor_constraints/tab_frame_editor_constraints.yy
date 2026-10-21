@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_frame_editor_constraints",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Frame editor",
-    "path": "folders/Scripts/App/Interface/Tabs/Frame editor.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_frame_editor_constraints",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_frame_editor_constraints",
+  "parent":{
+    "name":"Frame editor",
+    "path":"folders/Scripts/App/Interface/Tabs/Frame editor.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

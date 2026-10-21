@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_textbox",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Textbox",
-    "path": "folders/Scripts/App/Interface/Components/Textbox.yy",
+  "$GMScript":"v1",
+  "%Name":"new_textbox",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_textbox",
+  "parent":{
+    "name":"Textbox",
+    "path":"folders/Scripts/App/Interface/Components/Textbox.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

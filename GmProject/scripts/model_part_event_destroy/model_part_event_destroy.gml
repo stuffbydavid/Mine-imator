@@ -1,5 +1,3 @@
-/// model_part_event_destroy()
-
 function model_part_event_destroy()
 {
 	if (shape_list != null)

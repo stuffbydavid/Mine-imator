@@ -1,5 +1,4 @@
-/// tl_update_recursive_select()
-/// @desc Recursively selects a timeline's children if they inherit their parent's selection
+/// @desc Recursively selects a timeline's children if they inherit their parent's selection.
 
 function tl_update_recursive_select()
 {

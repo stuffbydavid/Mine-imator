@@ -1,6 +1,3 @@
-/// tab_next([padding])
-/// @arg [padding]
-
 function tab_next(padding = true)
 {
 	if (tab_collapse)
@@ -11,14 +8,14 @@ function tab_next(padding = true)
 		tab_collapse = false
 	}
 	
-	if (tab_collumns)
+	if (tab_columns)
 	{
-		tab_collumns_index = mod_fix(tab_collumns_index + 1, tab_collumns_count)
+		tab_columns_index = mod_fix(tab_columns_index + 1, tab_columns_count)
 		
-		if (tab_collumns_index != 0)
+		if (tab_columns_index != 0)
 			return 0
 		
-		dx = tab_collumns_start_x
+		dx = tab_columns_start_x
 	}
 	
 	dy += tab_control_h + (8 * padding)

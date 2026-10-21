@@ -1,7 +1,4 @@
-/// action_tl_blendmode(enable)
-/// @arg enable
-
-function action_tl_blend_mode(enable)
+function action_tl_blend_mode(enabled)
 {
 	if (history_undo)
 	{
@@ -23,6 +20,6 @@ function action_tl_blend_mode(enable)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_blend_mode_tree(id, enable, hobj)
+				action_tl_blend_mode_tree(id, enabled, hobj)
 	}
 }

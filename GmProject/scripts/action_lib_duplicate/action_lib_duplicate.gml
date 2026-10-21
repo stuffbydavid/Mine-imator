@@ -1,4 +1,3 @@
-/// action_lib_duplicate()
 /// @desc Duplicates the library template.
 
 function action_lib_duplicate()
@@ -22,10 +21,15 @@ function action_lib_duplicate()
 		with (hobj)
 			temp_save_id = save_id_get(temp)
 		
-		sortlist_add(lib_list, temp)
+		with (temp)
+			temp_add_lists()
+		
 		temp_edit = temp
 	}
 	
-	tab_template_editor_update_ptype_list()
+	tab_object_editor_update_ptype_list()
+	
+	project_update_counts()
+	
 	lib_preview.update = true
 }

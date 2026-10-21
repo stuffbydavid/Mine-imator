@@ -1,4 +1,3 @@
-/// directory_create_lib(directory)
 /// @arg directory
 
 function directory_create_lib(dir)

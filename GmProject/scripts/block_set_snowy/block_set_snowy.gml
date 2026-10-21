@@ -1,4 +1,3 @@
-/// block_set_snowy()
 /// @desc Check for a snow block above the current block.
 
 function block_set_snowy()
@@ -8,9 +7,9 @@ function block_set_snowy()
 	
 	var snowy = "false";
 	
-	if (!build_edge_zp)
+	if (!build_edge[ZP])
 	{
-		var otherblock = builder_get_block(build_pos_x, build_pos_y, build_pos_z + 1);
+		var otherblock = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z] + 1);
 		if (otherblock != null && otherblock.type = "snow")
 			snowy = "true"
 	}

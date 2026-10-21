@@ -1,4 +1,3 @@
-/// history_restore_parts()
 /// @desc Restores old model parts.
 
 function history_restore_parts()

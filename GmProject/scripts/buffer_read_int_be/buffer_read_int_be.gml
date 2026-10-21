@@ -1,4 +1,3 @@
-/// buffer_read_int_be()
 /// @desc Reads a 4-byte big endian integer.
 
 function buffer_read_int_be()

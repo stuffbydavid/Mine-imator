@@ -1,5 +1,3 @@
-/// model_file_event_destroy()
-
 function model_file_event_destroy()
 {
 	if (part_list != null)

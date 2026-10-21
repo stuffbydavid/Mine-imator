@@ -1,6 +1,5 @@
-/// language_remove(filename)
+/// @desc Deletes the language object with a matching filename.
 /// @arg filename
-/// @desc Deletes language object with a matching filename
 
 function language_remove(fn)
 {
@@ -8,7 +7,7 @@ function language_remove(fn)
 
 	with (obj_language)
 	{
-		if (id.filename = filename)
+		if (self.filename = filename)
 		{
 			instance_destroy()
 			break

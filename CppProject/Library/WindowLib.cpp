@@ -1,6 +1,7 @@
 #include "Generated/Scripts.hpp"
 
 #include "AppHandler.hpp"
+#include "AppWindow.hpp"
 
 namespace CppProject
 {
@@ -15,5 +16,4 @@ namespace CppProject
 		// Unused
 		return 0;
 	}
-
 }

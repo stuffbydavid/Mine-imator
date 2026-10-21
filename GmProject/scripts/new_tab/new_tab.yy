@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_tab",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Tab",
-    "path": "folders/Scripts/App/Interface/Components/Tab.yy",
+  "$GMScript":"v1",
+  "%Name":"new_tab",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_tab",
+  "parent":{
+    "name":"Tab",
+    "path":"folders/Scripts/App/Interface/Components/Tab.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

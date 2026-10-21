@@ -1,11 +1,9 @@
-/// model_part_fill_shape_alpha_map(part, alphamap, resource, texturenamemap, shapetexnamemap)
+/// @desc Fills the given maps with alpha values for the 3D planes, with the given resource selected as a texture.
 /// @arg part
 /// @arg alphamap
 /// @arg resource
 /// @arg texturenamemap
 /// @arg shapetexnamemap
-/// @desc Fills the given maps with alpha values for the 3D planes,
-/// with the given resource selected as a texture.
 
 function model_part_fill_shape_alpha_map(part, alphamap, res, texnamemap, shapetexnamemap)
 {
@@ -49,7 +47,7 @@ function model_part_fill_shape_alpha_map(part, alphamap, res, texnamemap, shapet
 					samplesize = vec2(ceil(texsizeuv[X] * tw), ceil(texsizeuv[Y] * th))
 					
 					// Generate array with the alpha values of the texture
-					var surf = surface_create(samplesize[X], samplesize[Y])
+					var surf = surface_create(samplesize[X], samplesize[Y]);
 					draw_texture_start()
 					surface_set_target(surf)
 					{

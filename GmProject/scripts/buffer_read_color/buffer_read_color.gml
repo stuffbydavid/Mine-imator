@@ -1,8 +1,7 @@
-/// buffer_read_color(x, y, width)
+/// @desc Reads a color value from the selected buffer.
 /// @arg x
 /// @arg y
 /// @arg width
-/// @desc Reads a color value from the selected buffer
 
 function buffer_read_color(xx, yy, wid)
 {

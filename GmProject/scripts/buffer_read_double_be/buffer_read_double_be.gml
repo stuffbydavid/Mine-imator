@@ -1,4 +1,3 @@
-/// buffer_read_double_be()
 /// @desc Reads a big endian double from the buffer.
 
 function buffer_read_double_be()

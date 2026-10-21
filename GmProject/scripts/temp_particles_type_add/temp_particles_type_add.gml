@@ -1,4 +1,3 @@
-/// temp_particles_type_add()
 /// @desc Adds a new particle type to the template. Returns the new one.
 
 function temp_particles_type_add()
@@ -8,12 +7,10 @@ function temp_particles_type_add()
 	
 	ds_list_add(pc_type_list, ptype)
 	
-	ptype.name = text_get("particleeditortypedefault", string(ds_list_size(pc_type_list)))
+	ptype.name = text_get("particle_editor/type/default", string(ds_list_size(pc_type_list)))
 	ptype.spawn_rate = 1 / ds_list_size(pc_type_list)
-	ptype.sprite_tex = mc_res
-	ptype.sprite_tex.count++
-	ptype.sprite_template_tex = mc_res
-	ptype.sprite_template_tex.count++
+	ptype.sprite_tex = project_pack_res
+	ptype.sprite_template_tex = project_pack_res
 	
 	// Update models
 	with (ptype)

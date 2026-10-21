@@ -1,23 +1,6 @@
 function res_load_skulls()
 {
-	// Finished
-	if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !mc_builder.block_tl_add)
-	{
-		with (app)
-		{
-			popup_loading.text = text_get("loadsceneryblocks")
-			popup_loading.progress = 2 / 10
-		}
-				
-		load_stage = "blocks"
-				
-		if (mc_builder.block_skull_fail_count = 0)
-			scenery_download_skins = false
-				
-		return 0
-	}
-			
-	app.popup_loading.text = text_get("loadscenerydownload", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
+	app.popup_loading.text = text_get("load_scenery/download", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
 	
 	// Continue through texture list
 	with (mc_builder)
@@ -107,5 +90,9 @@ function res_load_skulls()
 			block_skull_texture_fail = false
 			block_skull_download_wait = false
 		}
+		
+		// Wait for the download callback or timeout
+		if (!nexttex)
+			app.popup_loading.load_wait = true
 	}
 }

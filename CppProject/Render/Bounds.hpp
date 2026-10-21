@@ -15,9 +15,6 @@ namespace CppProject
 		// Reset the bounds
 		void Reset() { empty = true; }
 
-		// Returns a list of 8 points for each corner of the bounds.
-		QVector<VecType> GetPoints() const;
-
 		// Adds the given point to the bounds.
 		void AddPoint(VecType point);
 
@@ -25,7 +22,7 @@ namespace CppProject
 		void AddBounds(const Bounds& bounds);
 
 		// Adds the given transformed bounds.
-		void AddBounds(const Bounds& bounds, Matrix transform);
+		void AddBounds(const Bounds& bounds, const Matrix& transform);
 
 		VecType minPoint, maxPoint;
 		BoolType empty = true;

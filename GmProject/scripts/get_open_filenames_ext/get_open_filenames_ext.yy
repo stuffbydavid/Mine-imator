@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"get_open_filenames_ext",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"get_open_filenames_ext",
+  "parent":{
+    "name":"File",
+    "path":"folders/Scripts/Utility/File.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"surface_create_ext2",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"surface_create_ext2",
+  "parent":{
+    "name":"Surface",
+    "path":"folders/Scripts/Utility/Surface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

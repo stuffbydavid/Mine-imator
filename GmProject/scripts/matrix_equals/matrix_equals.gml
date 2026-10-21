@@ -1,3 +1,6 @@
+/// @arg matrix1
+/// @arg matrix2
+
 function matrix_equals(a, b)
 {
 	for (var i = 0; i < 16; i++)

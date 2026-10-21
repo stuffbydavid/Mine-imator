@@ -1,5 +1,4 @@
-/// buffer_read_string_short_be()
-/// @desc Reads a string consisting of a big endian short, then that many utf - 8 characters.
+/// @desc Reads a string consisting of a 2-byte big endian short, then a number of UTF-8 characters.
 
 function buffer_read_string_short_be()
 {

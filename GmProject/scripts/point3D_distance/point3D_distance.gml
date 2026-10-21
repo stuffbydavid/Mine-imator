@@ -1,5 +1,4 @@
 /// CppSeparate RealType point3D_distance(VecType, VecType)
-/// point3D_distance(point1, point2)
 /// @arg point1
 /// @arg point2
 

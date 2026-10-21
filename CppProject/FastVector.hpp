@@ -20,6 +20,7 @@ namespace CppProject
 
 			heap.Copy(vec.heap, vec.size);
 			size = vec.size;
+			
 			return *this;
 		}
 
@@ -74,6 +75,7 @@ namespace CppProject
 		inline void Resize(IntType size)
 		{
 			Alloc(size);
+
 			this->size = size;
 		}
 
@@ -81,7 +83,9 @@ namespace CppProject
 		{
 			if (size >= heap.size)
 				heap.Alloc(std::max(IntType(1), (IntType)ceilf(heap.Size() * 1.25)));
+			
 			heap.data[size] = value;
+			
 			return size++;
 		}
 

@@ -1,6 +1,3 @@
-/// action_tl_frame_custom_seed(customseed)
-/// @arg customseed
-
 function action_tl_frame_custom_seed(customseed)
 {
 	tl_value_set_start(action_tl_frame_custom_seed, false)

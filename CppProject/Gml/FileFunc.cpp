@@ -36,7 +36,10 @@ namespace CppProject
 		if (wildCardIndex >= 0)
 			dir = dir.Left(wildCardIndex);
 
-		fileFindIt = new QDirIterator(dir, QDir::Files | QDir::NoDotAndDotDot);
+		QDir::Filters filters = QDir::NoDotAndDotDot;
+		filters |= (attr & 16) ? QDir::Dirs : QDir::Files;
+
+		fileFindIt = new QDirIterator(dir, filters);
 		if (fileFindIt->hasNext())
 			return filename_name(fileFindIt->next());
 
@@ -47,6 +50,7 @@ namespace CppProject
 	{
 		if (fileFindIt && fileFindIt->hasNext())
 			return filename_name(fileFindIt->next());
+		
 		return "";
 	}
 
@@ -65,6 +69,7 @@ namespace CppProject
 	{
 		if (TextFile* tFile = FindTextFile(id))
 			return tFile->IsEof();
+		
 		return false;
 	}
 
@@ -75,6 +80,7 @@ namespace CppProject
 			return (new TextFile(qFile, false))->id;
 		else
 			delete qFile;
+		
 		return -1;
 	}
 
@@ -85,6 +91,7 @@ namespace CppProject
 			return (new TextFile(qFile, true))->id;
 		else
 			delete qFile;
+		
 		return -1;
 	}
 
@@ -92,6 +99,7 @@ namespace CppProject
 	{
 		QFile* qFile = new QFile(file);
 		AddPerms(*qFile);
+		
 		if (qFile->open(QFile::WriteOnly | QFile::Text))
 			return (new TextFile(qFile, false))->id;
 		else
@@ -99,6 +107,7 @@ namespace CppProject
 			WARNING("Could not open file " + file.QStr() + ": " + qFile->errorString());
 			delete qFile;
 		}
+		
 		return -1;
 	}
 
@@ -106,6 +115,7 @@ namespace CppProject
 	{
 		if (TextFile* tFile = FindTextFile(id))
 			return tFile->ReadWord();
+		
 		return "";
 	}
 
@@ -113,6 +123,7 @@ namespace CppProject
 	{
 		if (TextFile* tFile = FindTextFile(id))
 			return tFile->ReadLine();
+		
 		return "";
 	}
 
@@ -121,6 +132,7 @@ namespace CppProject
 		if (TextFile* tFile = FindTextFile(id))
 			if (tFile->stream)
 				*tFile->stream << str;
+		
 		return 0;
 	}
 
@@ -129,6 +141,7 @@ namespace CppProject
 		if (TextFile* tFile = FindTextFile(id))
 			if (tFile->stream)
 				*tFile->stream << "\n";
+		
 		return 0;
 	}
 
@@ -148,6 +161,7 @@ namespace CppProject
 		QString suffix = QFileInfo(file).suffix();
 		if (suffix.isEmpty())
 			return "";
+		
 		return "." + suffix;
 	}
 
@@ -180,6 +194,7 @@ namespace CppProject
 
 			list.append(name + " (" + filter + ")");
 		}
+		
 		return list;
 	}
 
@@ -194,12 +209,14 @@ namespace CppProject
 
 		QString filter = strSplit.at(1);
 		filter.replace(";", " ");
+		
 		QStringList patterns = filter.split(QChar(' '), Qt::SkipEmptyParts);
 		for (const QString& pattern : patterns)
 		{
 			if (pattern.startsWith("*.") && pattern.size() > 2)
 				return pattern.mid(2);
 		}
+		
 		return "";
 	}
 
@@ -210,6 +227,7 @@ namespace CppProject
 		fd.setAcceptMode(QFileDialog::AcceptOpen);
 		fd.setFileMode(QFileDialog::ExistingFile);
 		fd.setNameFilters(GetFilenameFilterList(filter));
+
 		if (file != "")
 		{
 			if (!file.Contains("/") && !dir.IsEmpty())
@@ -218,13 +236,16 @@ namespace CppProject
 		}
 		else if (!dir.IsEmpty())
 			fd.setDirectory(dir);
+		
 		fd.setWindowTitle(caption);
+		
 		if (!App->ExecDialog(&fd))
 			return "";
 
 		QStringList files = fd.selectedFiles();
 		if (files.size() > 0)
 			return files[0];
+		
 		return "";
 	}
 
@@ -235,9 +256,11 @@ namespace CppProject
 		fd.setAcceptMode(QFileDialog::AcceptSave);
 		fd.setFileMode(QFileDialog::AnyFile);
 		fd.setNameFilters(GetFilenameFilterList(filter));
+		
 		QString defaultSuffix = GetFilenameFilterDefaultSuffix(filter);
 		if (!defaultSuffix.isEmpty())
 			fd.setDefaultSuffix(defaultSuffix);
+		
 		if (file != "")
 		{
 			if (!file.Contains("/") && !dir.IsEmpty())
@@ -246,6 +269,7 @@ namespace CppProject
 		}
 		else if (!dir.IsEmpty())
 			fd.setDirectory(dir);
+		
 		fd.setWindowTitle(caption);
 		if (!App->ExecDialog(&fd))
 			return "";
@@ -256,8 +280,10 @@ namespace CppProject
 			QString filename = files[0];
 			if (!defaultSuffix.isEmpty() && QFileInfo(filename).suffix().isEmpty())
 				filename += "." + defaultSuffix;
+			
 			return filename;
 		}
+		
 		return "";
 	}
 
@@ -269,6 +295,7 @@ namespace CppProject
 		IntHashMap* typeMap = FindSubAssetOpt(IntHashMap, Map, typeMapId);
 		QJsonParseError jsonError;
 		QJsonDocument loadDoc = QJsonDocument::fromJson(json.ToUtf8(), &jsonError);
+
 		if (jsonError.error)
 		{
 			global::json_error = jsonError.errorString() + " on line " + NumStr(json.Left(jsonError.offset).Count("\n"));
@@ -304,6 +331,7 @@ namespace CppProject
 			}
 
 			WARNING("Unknown QJsonValue");
+
 			return VarType();
 		};
 
@@ -321,6 +349,7 @@ namespace CppProject
 				else
 					list->vec.append({ loadValue(val, jsonType), 0 });
 			}
+
 			return list->id;
 		};
 
@@ -370,55 +399,5 @@ namespace CppProject
 	IntType json_decode(StringType json)
 	{
 		return json_load_from_string(json);
-	}
-
-	IntType json_load(VarArgs args)
-	{
-		QFile file(args[0].ToStr());
-		if (!file.open(QFile::ReadOnly))
-			return -1;
-		
-		IntType typeMap = 0;
-		if (args.Size() > 1)
-			typeMap = args[1];
-		return json_load_from_string(file.readAll(), typeMap);
-	}
-
-	StringType json_string_encode(StringType arg)
-	{
-		QString str = arg.QStr();
-		IntType newLen = 0;
-		for (QChar c : str)
-		{
-			if (c == '\n' || c == '\t' || c == '"' || c == '\\')
-				newLen += 2;
-			else if (c.unicode() > 127)
-				newLen += 5;
-			else
-				newLen++;
-		}
-
-		if (str.length() == newLen)
-			return arg;
-
-		QString nstr;
-		nstr.reserve(newLen);
-		for (QChar c : str)
-		{
-			if (c == '\n')
-				nstr += "\\n";
-			else if (c == '\t')
-				nstr += "\\t";
-			else if (c == '"')
-				nstr += "\\\"";
-			else if (c == '\\')
-				nstr += "\\\\";
-			else if (c.unicode() > 127)
-				nstr += "\\u" + QString("%1").arg(c.unicode(), 4, 16, QLatin1Char('0')).toLower();
-			else
-				nstr += c;
-		}
-
-		return nstr;
 	}
 }

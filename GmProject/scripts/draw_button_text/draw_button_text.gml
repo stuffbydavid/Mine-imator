@@ -1,31 +1,19 @@
-/// draw_button_text(text, x, y, script, value, [tip, [font]])
 /// @arg text
 /// @arg x
 /// @arg y
 /// @arg script
 /// @arg value
-/// @arg [tip
-/// @arg [font]]
+/// @arg [tip]
+/// @arg [font]
 
-function draw_button_text()
+function draw_button_text(text, xx, yy, script, value, tip = "", font = null)
 {
-	var text, xx, yy, script, value, tip, font, wid, hei, mouseon;
-	text = argument[0]
-	xx = argument[1]
-	yy = argument[2]
-	script = argument[3]
-	value = argument[4]
-	tip = ""
-	font = font_value
-	
-	if (argument_count > 5)
-		tip = argument[5]
-	
-	if (argument_count > 6)
-		font = argument[6]
+	if (font = null)
+		font = font_value
 	
 	draw_set_font(font)
 	
+	var wid, hei, mouseon;
 	wid = string_width(text)
 	hei = string_height(text)
 	mouseon = app_mouse_box(xx, yy - hei, wid, hei)

@@ -1,12 +1,11 @@
-/// tl_keyframe_add(position, [keyframe])
+/// @desc Adds a new keyframe (or existing, if submitted) to the timeline.
 /// @arg position
 /// @arg [keyframe]
-/// @desc Adds a new keyframe (or existing, if submitted) to the timeline.
 
 function tl_keyframe_add(pos, kf = null)
 {
 	var i;
-	
+
 	// Find index
 	for (i = 0; i < ds_list_size(keyframe_list); i++)
 	{
@@ -19,8 +18,10 @@ function tl_keyframe_add(pos, kf = null)
 				i++
 				pos++
 			}
+			
 			break
 		}
+		
 		if (keyframe_list[|i].position > pos)
 			break
 	}
@@ -37,13 +38,12 @@ function tl_keyframe_add(pos, kf = null)
 		for (var v = 0; v < e_value.amount; v++)
 			kf.value[v] = value[v] 
 		
-		if (kf.value[e_value.SOUND_OBJ] != null)
-			kf.value[e_value.SOUND_OBJ].count++
 	}
 	
 	kf.position = pos
 	kf.timeline = id
 	kf.sound_play_index = null
+	
 	ds_list_insert(keyframe_list, i, kf)
 	
 	keyframe_next = keyframe_current

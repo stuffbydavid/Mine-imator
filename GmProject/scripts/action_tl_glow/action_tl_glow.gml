@@ -1,7 +1,4 @@
-/// action_tl_glow(enable)
-/// @arg enable
-
-function action_tl_glow(enable)
+function action_tl_glow(enabled)
 {
 	if (history_undo)
 	{
@@ -23,6 +20,6 @@ function action_tl_glow(enable)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_glow_tree(id, enable, hobj)
+				action_tl_glow_tree(id, enabled, hobj)
 	}
 }

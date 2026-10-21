@@ -1,4 +1,3 @@
-/// percent(value, start, end, [clamp])
 /// @arg value
 /// @arg start
 /// @arg end

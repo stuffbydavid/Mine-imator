@@ -1,8 +1,7 @@
-/// model_file_matrix_map_create(modelfile, mat, hidelist)
-/// @arg modelfile
-/// @arg mat
-/// @arg hidelist
 /// @desc Creates a map for part matrices to use in the world.
+/// @arg modelfile
+/// @arg matrix
+/// @arg hidelist
 
 function model_file_matrix_map_create(modelfile, mat, hidelist)
 {

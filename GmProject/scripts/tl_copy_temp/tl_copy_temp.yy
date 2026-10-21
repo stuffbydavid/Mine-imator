@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_copy_temp",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_copy_temp",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

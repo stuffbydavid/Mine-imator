@@ -68,7 +68,9 @@ namespace CppProject
 			IntType newSize = std::max(this->size, dstOffset + size);
 			if (newSize > this->size)
 				Alloc(newSize);
+			
 			memcpy(data + dstOffset, heap.Data() + srcOffset, size * sizeof(T));
+			
 			this->size = newSize;
 		}
 
@@ -77,7 +79,9 @@ namespace CppProject
 			IntType newSize = std::max(this->size, dstOffset + size);
 			if (newSize > this->size)
 				Alloc(newSize);
+			
 			memcpy(data + dstOffset, byteArray.constData() + srcOffset, size * sizeof(T));
+			
 			this->size = newSize;
 		}
 
@@ -85,6 +89,7 @@ namespace CppProject
 		{
 			IntType sizeBytes = this->size * sizeof(T);
 			IntType newSizeBytes = size * sizeof(T);
+			
 			if (data)
 				data = (T*)realloc(data, newSizeBytes);
 			else
@@ -92,6 +97,7 @@ namespace CppProject
 
 			if (size > this->size && clear)
 				memset(data + this->size, 0, newSizeBytes - sizeBytes);
+			
 			this->size = size;
 		}
 
@@ -113,6 +119,7 @@ namespace CppProject
 		inline void FreeData()
 		{
 			free(data);
+			
 			data = nullptr;
 			size = 0;
 		}

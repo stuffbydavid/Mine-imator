@@ -1,21 +1,19 @@
-/// draw_outline(x, y, width, height, size, [color, alpha, [inline]])
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg size
-/// @arg [color
-/// @arg alpha
-/// @arg [inline]]
+/// @arg [color]
+/// @arg [alpha]
+/// @arg [inline]
 
-function draw_outline(xx, yy, ww, hh, size, incolor, inalpha, inline = false)
+function draw_outline(xx, yy, ww, hh, size, incolor = null, inalpha = 1, inline = false)
 {
 	var color, alpha;
-	
 	color = draw_get_color()
 	alpha = draw_get_alpha()
 	
-	if (!is_undefined(incolor))
+	if (incolor != null)
 	{
 		color = incolor
 		alpha *= inalpha

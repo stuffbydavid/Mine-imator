@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "popup_advanced_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Advanced",
-    "path": "folders/Scripts/App/Interface/Popups/Advanced.yy",
+  "$GMScript":"v1",
+  "%Name":"popup_advanced_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"popup_advanced_draw",
+  "parent":{
+    "name":"Advanced",
+    "path":"folders/Scripts/App/Interface/Popups/Advanced.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

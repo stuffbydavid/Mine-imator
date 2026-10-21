@@ -1,5 +1,3 @@
-/// project_load_template_update_model()
-
 function project_load_template_update_model()
 {
 	if (!is_undefined(mc_assets.model_name_map[?model_name]) && mc_assets.model_name_map[?model_name].version > model_version)
@@ -15,7 +13,7 @@ function project_load_template_update_model()
 		}
 		
 		// Update legacy model state values
-		if (legacy_model_state_values_map[?model_name] != undefined)
+		if (!is_undefined(legacy_model_state_values_map[?model_name]))
 		{
 			var legacymodelmap, statename;
 			legacymodelmap = legacy_model_state_values_map[?model_name]
@@ -24,7 +22,7 @@ function project_load_template_update_model()
 			{
 				statename = model_state[i]
 				
-				if (legacymodelmap[?statename] != undefined)
+				if (!is_undefined(legacymodelmap[?statename]))
 				{
 					var statemap, statevalue;
 					statemap = legacymodelmap[?statename]
@@ -39,13 +37,13 @@ function project_load_template_update_model()
 						{
 							var state = model_state[j];
 							
-							if (valmap[?state] != undefined)
+							if (!is_undefined(valmap[?state]))
 								model_state[j + 1] = valmap[?state]
 						}
 					}
 					else // Replace single value
 					{
-						if (statemap[?statevalue] != undefined)
+						if (!is_undefined(statemap[?statevalue]))
 							model_state[i + 1] = statemap[?statevalue]
 					}
 				}

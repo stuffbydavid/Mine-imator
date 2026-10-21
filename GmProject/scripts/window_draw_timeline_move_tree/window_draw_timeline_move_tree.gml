@@ -1,4 +1,3 @@
-/// window_draw_timeline_move_tree(parent)
 /// @arg parent
 
 function window_draw_timeline_move_tree(par)

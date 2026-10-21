@@ -1,8 +1,7 @@
-/// texture_split(texture, slotsx, slotsy)
+/// @desc Returns an array of texture pieces.
 /// @arg texture
 /// @arg slotsx
 /// @arg slotsy
-/// @desc Returns an array of texture pieces.
 
 function texture_split(tex, slotsx, slotsy)
 {

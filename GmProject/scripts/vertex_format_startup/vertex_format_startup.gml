@@ -1,5 +1,3 @@
-/// vertex_format_startup()
-
 function vertex_format_startup()
 {
 	globalvar vbuffer_current, vertex_format, vertex_wave, vertex_wave_zmin, vertex_wave_zmax, vertex_emissive, vertex_subsurface;

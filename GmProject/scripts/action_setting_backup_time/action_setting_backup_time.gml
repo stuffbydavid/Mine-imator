@@ -1,9 +1,5 @@
-/// action_setting_backup_time(value, add)
-/// @arg value
-/// @arg add
-
-function action_setting_backup_time(val, add)
+function action_setting_backup_time(value, add)
 {
-	setting_backup_time = setting_backup_time * add + val
+	setting_backup_time = setting_backup_time * add + value
 	project_reset_backup()
 }

@@ -1,4 +1,3 @@
-/// vec3_reflect(vector, normal)
 /// @arg vector
 /// @arg normal
 

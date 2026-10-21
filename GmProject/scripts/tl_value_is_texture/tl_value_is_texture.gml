@@ -1,4 +1,3 @@
-/// tl_value_is_texture(valueid)
 /// @arg valueid
 
 function tl_value_is_texture(vid)

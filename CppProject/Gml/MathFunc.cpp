@@ -113,6 +113,7 @@ namespace CppProject
 		RealType A2 = area(x1, y1, px, py, x3, y3);
 		RealType A3 = area(x1, y1, x2, y2, px, py);
 		RealType eps = 1e-4;
+
 		return (std::abs(A - (A1 + A2 + A3)) < eps);
 	}
 
@@ -135,8 +136,10 @@ namespace CppProject
 	{
 		if (rl > 0.0)
 			return 1.0;
+		
 		if (rl < 0.0)
 			return -1.0;
+		
 		return 0.0;
 	}
 
@@ -153,5 +156,10 @@ namespace CppProject
 	RealType sqrt(RealType rl)
 	{
 		return std::sqrt(rl);
+	}
+	
+	RealType tan(RealType rl)
+	{
+		return std::tan(rl);
 	}
 }

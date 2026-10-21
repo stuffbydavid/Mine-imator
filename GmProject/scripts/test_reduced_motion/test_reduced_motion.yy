@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test_reduced_motion",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test_reduced_motion",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

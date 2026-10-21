@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "texture_getpixel",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Texture",
-    "path": "folders/Scripts/Utility/Texture.yy",
+  "$GMScript":"v1",
+  "%Name":"texture_getpixel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"texture_getpixel",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Utility/Texture.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

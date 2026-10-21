@@ -1,11 +1,10 @@
 /// CppSeparate void res_load_audio(ScopeAny)
-/// res_load_audio()
 /// @desc Build peaks from raw audio data.
 
 function res_load_audio()
 {
-	var fname, prec;
-	fname = load_folder + "/" + filename
+	var fn, prec;
+	fn = load_folder + "/" + filename
 	prec = sample_rate / sample_avg_per_sec
 	
 	switch (load_stage)
@@ -21,25 +20,23 @@ function res_load_audio()
 			sound_buffer = null
 			sound_samples = 0
 			
-			if (!file_exists_lib(fname))
+			if (!file_exists_lib(fn))
 			{
-				with (app)
-					load_next()
+				load_stage = ""
 				return 0
 			}
 			
 			file_delete_lib(temp_file)
-			var ret = movie_audio_file_decode(fname, temp_file);
+			var ret = movie_audio_file_decode(fn, temp_file);
 			if (ret < 0)
 			{
 				log("Error loading audio", ret)
-				error("errorloadaudio")
-				with (app)
-					load_next()
+				error("error/load_audio")
+				load_stage = ""
 				return 0
 			}
 			
-			log("Loading audio", fname)
+			log("Loading audio", fn)
 			
 			// Can't process audio with growing buffer, convert to fixed size
 			var buffertemp = buffer_load(temp_file);
@@ -62,8 +59,6 @@ function res_load_audio()
 			load_stage = "read"
 			load_audio_sample = 0
 			
-			with (app)
-				popup_loading.progress = 1 / 5
 			break
 		}
 		
@@ -82,17 +77,12 @@ function res_load_audio()
 				if (load_audio_sample >= sound_samples)
 				{
 					ready = true
+					load_stage = ""
 					with (app)
-					{
 						tl_update_length()
-						load_next()
-					}
 					break
 				}
 			}
-			
-			with (app)
-				popup_loading.progress = (1 / 5) + (4 / 5) * (other.load_audio_sample / other.sound_samples)
 			
 			break
 		}

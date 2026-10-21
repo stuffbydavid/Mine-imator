@@ -1,4 +1,3 @@
-/// dir_get_vec3(direction)
 /// @arg direction
 
 function dir_get_vec3(dir)

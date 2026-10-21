@@ -1,5 +1,3 @@
-/// project_load_legacy_particles()
-
 function project_load_legacy_particles()
 {
 	pc_spawn_constant = buffer_read_byte()
@@ -16,7 +14,7 @@ function project_load_legacy_particles()
 	pc_spawn_region_path = null
 	pc_spawn_region_path_radius = 8
 	
-	var boxtype = array("none", "ground", "spawn", "custom");
+	var boxtype = [ "none", "ground", "spawn", "custom" ];
 	pc_bounding_box_type = boxtype[buffer_read_byte()]
 	if (load_format >= e_project.FORMAT_100_DEMO_4)
 		pc_bounding_box_ground_z = buffer_read_double()
