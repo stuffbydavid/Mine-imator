@@ -6,7 +6,7 @@
 
 namespace CppProject
 {
-	VertexBuffer::VertexBuffer(QDataStream& stream) : VertexBuffer()
+	VertexBuffer::VertexBuffer(QDataStream& stream, const std::function<void(Vertex&)>& vertexTransform) : VertexBuffer()
 	{
 		valid = false;
 
@@ -65,6 +65,11 @@ namespace CppProject
 					return;
 				}
 			}
+
+			// Apply optional transform function
+			if (vertexTransform)
+				for (IntType i = 0; i < mesh->numVertices; i++)
+					vertexTransform(mesh->vertexData[i]);
 
 			// Create mesh buffers
 			numIndices += numInd;

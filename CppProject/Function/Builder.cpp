@@ -9,7 +9,10 @@
 
 namespace CppProject
 {
-	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 4;
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 3;
+
+	// Format 2: 2.0.x, one 32x32 static sheet and untransformed block vertices
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT_LEGACY = 2;
 
 	Heap<Section*> Builder::sections;
 	WorldVec Builder::size, Builder::offset = { 0, 0, 0 }, Builder::sectionsDim;
@@ -58,7 +61,7 @@ namespace CppProject
 					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,
 					false
-			};
+				};
 
 			IntType s = 0;
 			for (IntType z = 0; z < Builder::sectionsDim.z; z++)
@@ -898,73 +901,130 @@ namespace CppProject
 	#endif
 
 		Timer tmr;
-		QByteArray data;
-
 		tmr.Print("Unzip block mesh cache");
+
+		QByteArray data;
 		BoolType decompressed = Gzip::Decompress(filename, data);
 		if (!decompressed)
 			return false;
 
 		tmr.Reset();
+
 		QDataStream in(&data, QIODevice::ReadOnly);
 
 		// Check format
 		uchar format = 0;
 		in >> format;
-		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
+		if (in.status() != QDataStream::Ok || (format != BLOCK_MESH_CACHE_FORMAT && format != BLOCK_MESH_CACHE_FORMAT_LEGACY))
 			return false;
 
-		// Check Minecraft assets version
-		quint16 assetsVersionSize = 0;
-		in >> assetsVersionSize;
-		if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
-			return false;
+		BoolType legacy = (format == BLOCK_MESH_CACHE_FORMAT_LEGACY);
+		if (!legacy)
+		{
+			// Check Minecraft assets version
+			quint16 assetsVersionSize = 0;
+			in >> assetsVersionSize;
+			if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
+				return false;
 
-		QByteArray assetsVersion(assetsVersionSize, '\0');
-		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
-			|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
-			return false;
+			QByteArray assetsVersion(assetsVersionSize, '\0');
+			if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
+				|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
+				return false;
+		}
 
 		// Load size
 		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
 		in >> sizeX;
 		in >> sizeY;
 		in >> sizeZ;
-		if (in.status() != QDataStream::Ok)
+		if (in.status() != QDataStream::Ok || sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
 			return false;
 
+		RealType staticUvScaleX = 1, staticUvScaleY = 1;
+		if (legacy)
+		{
+			VarType sheetSize = global::minecraft_block_sheet_size.Value(e_block_sheet_STATIC16);
+			const IntType legacySheetSize = 32;
+			staticUvScaleX = legacySheetSize / sheetSize.Value(X_).ToReal();
+			staticUvScaleY = legacySheetSize / sheetSize.Value(Y_).ToReal();
+		}
+
 		// Load vertex buffers
-		QVector<VertexBuffer*> vbuffers;
-		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
-		ArrType activeDepths, activeBuffers;
+		QVector<VertexBuffer*> vbuffers(e_block_depth_amount * e_block_vbuffer_amount, nullptr);
 		BoolType valid = true;
+		IntType buffersPerDepth = e_block_vbuffer_amount;
+
+		static constexpr IntType legacyBuffers[] = {
+			e_block_vbuffer_STATIC16,
+			e_block_vbuffer_ANIMATED,
+			e_block_vbuffer_GRASS,
+			e_block_vbuffer_FOLIAGE,
+			e_block_vbuffer_LEAVES_OAK,
+			e_block_vbuffer_LEAVES_SPRUCE,
+			e_block_vbuffer_LEAVES_BIRCH,
+			e_block_vbuffer_LEAVES_JUNGLE,
+			e_block_vbuffer_LEAVES_ACACIA,
+			e_block_vbuffer_LEAVES_DARK_OAK,
+			e_block_vbuffer_LEAVES_MANGROVE,
+			e_block_vbuffer_WATER
+		};
+		if (legacy)
+			buffersPerDepth = (IntType)(sizeof(legacyBuffers) / sizeof(legacyBuffers[0]));
 
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		{
-			activeDepths[d] = false;
-
-			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			for (IntType vb = 0; vb < buffersPerDepth; vb++)
 			{
-				auto vbuffer = new VertexBuffer(in);
-				vbuffers.append(vbuffer);
-				
+				VertexBuffer* vbuffer;
+				if (!legacy)
+				{
+					vbuffer = new VertexBuffer(in);
+					vbuffers[d * e_block_vbuffer_amount + vb] = vbuffer;
+				}
+				else
+				{
+					// Format 2 stored block vertices before the scenery axis transform
+					IntType target = legacyBuffers[vb];
+					RealType legacyBlockWidth = (RealType)sizeY * block_size_;
+					BoolType staticSheet = (target != e_block_vbuffer_ANIMATED && target != e_block_vbuffer_WATER);
+					RealType uvScaleX = (staticSheet ? staticUvScaleX : 1);
+					RealType uvScaleY = (staticSheet ? staticUvScaleY : 1);
+
+					auto vertexTransform = [legacyBlockWidth, uvScaleX, uvScaleY](Vertex& vertex)
+					{
+						auto rotateDirection = [](uint32_t packed)
+						{
+							return ((packed >> 8) & 255u) |
+								   ((255u - (packed & 255u)) << 8) |
+								   (packed & 0xFFFF0000u);
+						};
+
+						float oldX = vertex.x;
+						vertex.x = vertex.y;
+						vertex.y = legacyBlockWidth - oldX;
+						vertex.normal = rotateDirection(vertex.normal);
+						vertex.tangent = rotateDirection(vertex.tangent);
+						vertex.u *= uvScaleX;
+						vertex.v *= uvScaleY;
+					};
+
+					vbuffer = new VertexBuffer(in, vertexTransform);
+					vbuffers[d * e_block_vbuffer_amount + target] = vbuffer;
+				}
+
 				if (!vbuffer->valid)
 				{
 					valid = false;
 					break;
 				}
-
-				BoolType active = (vbuffer->numIndices > 0);
-				activeBuffers[d * e_block_vbuffer_amount + vb] = active;
-				if (active)
-					activeDepths[d] = true;
 			}
 
 			if (!valid)
 				break;
 		}
 
-		if (!valid)
+		if (!valid || !in.atEnd())
 		{
 			for (auto vbuffer : vbuffers)
 				delete vbuffer;
@@ -972,17 +1032,34 @@ namespace CppProject
 			return false;
 		}
 
+		ArrType activeDepths, activeBuffers;
+		for (IntType d = 0; d < e_block_depth_amount; d++)
+		{
+			activeDepths[d] = false;
+
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				IntType index = d * e_block_vbuffer_amount + vb;
+				if (vbuffers[index] == nullptr)
+					vbuffers[index] = new VertexBuffer();
+
+				BoolType active = vbuffers[index]->numIndices > 0;
+				activeBuffers[index] = active;
+				if (active)
+					activeDepths[d] = true;
+			}
+		}
+
 		// Set size
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
 
 		// Assign vertex buffers
-		IntType i = 0;
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 		{
 			IntType index = d * e_block_vbuffer_amount + vb;
 			vertex_delete_buffer(self->block_vbuffer[index]);
-			self->block_vbuffer[index] = vbuffers.at(i++)->id;
+			self->block_vbuffer[index] = vbuffers.at(index)->id;
 		}
 
 		self->block_vbuffer_active = activeBuffers;
