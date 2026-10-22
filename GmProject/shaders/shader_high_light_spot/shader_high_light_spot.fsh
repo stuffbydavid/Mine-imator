@@ -74,18 +74,21 @@ float getShadowMapDepth(ShadowReceiver receiver, vec2 texelCoord)
 
 float getSpotShadow(vec2 coord, float fragDepth, vec2 depthSlope, float bias, out float centerDepth)
 {
-	centerDepth = getSpotDepth(coord);
+	vec2 centerCoord = getShadowTexelCoord(coord, vec2(uDepthBufferSize), vec2(0.0), vec2(1.0));
+	centerDepth = getSpotDepth(centerCoord);
+	float surfaceDepth = getShadowPerspectiveDepth(coord, fragDepth, centerCoord, depthSlope);
 	if (uShadowBlurQuality <= 0 || uShadowRadius <= 0.0)
-		return getPCSSVisibility(fragDepth, centerDepth, bias);
+		return getPCSSVisibility(surfaceDepth, centerDepth, bias);
 
 	ShadowReceiver receiver;
 	receiver.depth = fragDepth;
 	receiver.bias = bias;
 	// Cover the full blur range
 	receiver.searchRadius = 64.0 / PCSS_REFERENCE_SHADOW_SIZE;
-	// Start the blocker search within half a texel
+	float minimumRadius = getShadowMinimumRadius(uShadowRadius, uLightSize * 0.5, max(fragDepth, uLightNear), uDepthBufferSize, receiver.searchRadius);
+	// Include the minimum blur footprint in the local blocker search
 	float localRadius = min(uShadowRadius / max(fragDepth, uLightNear), 0.5 / uDepthBufferSize);
-	receiver.localRadius = min(localRadius, receiver.searchRadius);
+	receiver.localRadius = min(max(localRadius, minimumRadius), receiver.searchRadius);
 	receiver.lightRadius = uShadowRadius;
 	receiver.radiusScale = 1.0 / max(fragDepth, uLightNear);
 	receiver.nearDepth = uLightNear;
@@ -93,7 +96,7 @@ float getSpotShadow(vec2 coord, float fragDepth, vec2 depthSlope, float bias, ou
 	receiver.coord = coord;
 	receiver.depthSlope = depthSlope;
 
-	return getPCSSShadow(receiver, uShadowBlurQuality);
+	return getPCSSShadow(receiver, uShadowBlurQuality, minimumRadius, centerDepth, surfaceDepth);
 }
 
 void main() 

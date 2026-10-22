@@ -18,7 +18,6 @@ function history_copy_render_settings(obj)
 	project_render_shadows_point_buffer_size = obj.project_render_shadows_point_buffer_size
 	project_render_shadows_transparent = obj.project_render_shadows_transparent
 	project_render_shadows_blur_quality = obj.project_render_shadows_blur_quality
-	project_render_shadows_smoother_blur = obj.project_render_shadows_smoother_blur
 	project_render_dof_quality = obj.project_render_dof_quality
 	project_render_dof_realistic_blur = obj.project_render_dof_realistic_blur
 	project_render_shadows_blur_size = obj.project_render_shadows_blur_size

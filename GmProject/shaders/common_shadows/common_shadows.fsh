@@ -87,26 +87,6 @@ float getPCSSRayDepth(vec3 direction, vec3 pos, vec3 normal, float fallback)
 #define PCSS_MAX_BLOCKER_SAMPLES 16
 #define PCSS_REFERENCE_SHADOW_SIZE 2048.0
 
-// bounds.xy and bounds.zw hold the first and last texel centers
-// Keep all four samples inside the shadow map or cubemap face
-void getPCSSTexels(vec2 coord, vec2 size, vec2 low, vec2 high, out vec4 bounds, out vec2 blend)
-{
-	vec2 texel = clamp(coord * size - 0.5, low * size, high * size - 1.0);
-	vec2 first = (floor(texel) + 0.5) / size;
-
-	bounds = vec4(first, min(first + 1.0 / size, high - 0.5 / size));
-	blend = fract(texel);
-}
-
-float blendPCSSVisibility(vec4 shadow, vec2 blend)
-{
-	// Blend visibility after testing each texel separately
-	float bottom = mix(shadow.x, shadow.y, blend.x);
-	float top = mix(shadow.z, shadow.w, blend.x);
-
-	return mix(bottom, top, blend.y);
-}
-
 // Use half the filter samples for the blocker search
 int getPCSSBlockerSamples(int filterSamples)
 {

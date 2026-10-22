@@ -18,7 +18,6 @@ function render_preset_event_create()
 		ssao_blur_passes = 2
 		shadows = true
 		shadows_blur_quality = 20
-		shadows_smoother_blur = false
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512
@@ -42,7 +41,6 @@ function render_preset_event_create()
 		ssao_blur_passes = 2
 		shadows = true
 		shadows_blur_quality = 20
-		shadows_smoother_blur = false
 		shadows_sun_cascades = 2
 		shadows_sun_buffer_size = 2048
 		shadows_spot_buffer_size = 512

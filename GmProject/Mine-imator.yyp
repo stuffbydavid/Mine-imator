@@ -986,7 +986,6 @@
     {"id":{"name":"action_project_render_shadows_blur_size","path":"scripts/action_project_render_shadows_blur_size/action_project_render_shadows_blur_size.yy",},},
     {"id":{"name":"action_project_render_shadows_jittered","path":"scripts/action_project_render_shadows_jittered/action_project_render_shadows_jittered.yy",},},
     {"id":{"name":"action_project_render_shadows_point_buffer_size","path":"scripts/action_project_render_shadows_point_buffer_size/action_project_render_shadows_point_buffer_size.yy",},},
-    {"id":{"name":"action_project_render_shadows_smoother_blur","path":"scripts/action_project_render_shadows_smoother_blur/action_project_render_shadows_smoother_blur.yy",},},
     {"id":{"name":"action_project_render_shadows_spot_buffer_size","path":"scripts/action_project_render_shadows_spot_buffer_size/action_project_render_shadows_spot_buffer_size.yy",},},
     {"id":{"name":"action_project_render_shadows_sun_buffer_size","path":"scripts/action_project_render_shadows_sun_buffer_size/action_project_render_shadows_sun_buffer_size.yy",},},
     {"id":{"name":"action_project_render_shadows_sun_cascades","path":"scripts/action_project_render_shadows_sun_cascades/action_project_render_shadows_sun_cascades.yy",},},

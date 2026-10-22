@@ -3180,7 +3180,6 @@
 			"spot_buffer_size": "Spot light buffer size",
 			"point_buffer_size": "Point light buffer size",
 			"blur_quality": "Blur quality",
-			"smoother_blur": "Smoother shadow blur",
 			"blur_size": "Blur size",
 			"jittered": "Jittered shadows",
 			"transparent": "Transparent shadows",
