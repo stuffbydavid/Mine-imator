@@ -17,8 +17,6 @@ function render_world_sky_clouds()
 	var res, twopass;
 	res = res_eval(env_sky_clouds_tex)
 	twopass = (render_mode != e_render_mode.G_BUFFERS || render_sun_combined)
-	if (render_mode = e_render_mode.AUXILIARY && !render_auxiliary_material && !render_glow)
-		twopass = false
 	
 	render_apply_res(res)
 	
@@ -65,8 +63,19 @@ function render_world_sky_clouds()
 		gpu_set_zfunc(cmpfunc_equal)
 	}
 	
+	var maskclouds = (render_mode = e_render_mode.COLOR && is_cpp() && render_mask_blend_is_supported());
+	if (maskclouds)
+		render_set_mask_blend(true, render_surface_mask, render_surface_fog, true)
+	else if (render_mode = e_render_mode.SCENE_TEST)
+		gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_zero, bm_inv_src_alpha)
+
 	for (var i = 0; i < array_length(env_sky_clouds_vbuffer_pos); i++)
 		vbuffer_render(env_sky_clouds_vbuffer, env_sky_clouds_vbuffer_pos[i], point3D(0, 0, 90))
+
+	if (maskclouds)
+		render_set_mask_blend(true, render_surface_mask, render_surface_fog)
+	else if (render_mode = e_render_mode.SCENE_TEST)
+		gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
 	
 	if (twopass)
 	{

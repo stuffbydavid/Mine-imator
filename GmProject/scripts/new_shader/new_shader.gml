@@ -30,6 +30,7 @@ function new_shader(name)
 		// Fog
 		new_shader_uniform(e_uniform.FOG_SHOW)
 		new_shader_uniform(e_uniform.FOG_COLOR)
+		new_shader_uniform(e_uniform.FOG_DENSITY)
 		new_shader_uniform(e_uniform.FOG_DISTANCE)
 		new_shader_uniform(e_uniform.FOG_SIZE)
 		new_shader_uniform(e_uniform.FOG_HEIGHT)

@@ -18,7 +18,6 @@ varying vec4 vScreenCoord;
 varying vec4 vShadowCoord;
 varying vec4 vCustom;
 varying vec4 vColor;
-varying vec4 vClipPosition;
 
 uniform vec4 uBlendColor;
 
@@ -42,5 +41,4 @@ void main()
 	vColor = uBlendColor * in_Colour;
 	
 	gl_Position = getClipPosition(vPosition);
-	vClipPosition = gl_Position;
 }

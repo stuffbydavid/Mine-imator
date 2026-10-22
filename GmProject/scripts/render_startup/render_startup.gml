@@ -296,7 +296,7 @@ function render_startup()
 	render_surface_sun_buffer = array_create(render_cascades_count, null)
 	
 	// Render modes
-	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass, render_fast_pass, render_material_pass;
+	globalvar render_mode, render_mode_shader_map, render_shader_obj, render_depth_pass, render_fast_pass;
 	render_mode = null
 	render_mode_shader_map = ds_int_map_create()
 	render_mode_shader_map[?e_render_mode.CLICK] = shader_replace
@@ -324,7 +324,6 @@ function render_startup()
 	render_shader_obj = null
 	render_fast_pass = false
 	render_depth_pass = false
-	render_material_pass = true
 	
 	// Load default render settings
 	globalvar render_default_settings;

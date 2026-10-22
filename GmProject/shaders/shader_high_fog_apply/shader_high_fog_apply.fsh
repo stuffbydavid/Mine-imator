@@ -7,7 +7,8 @@ varying vec2 vTexCoord;
 
 void main()
 {
-	float fog = texture2D(uFogBuffer, vTexCoord).r;
+	vec4 fogData = texture2D(uFogBuffer, vTexCoord);
+	float fog = fogData.a > 0.0001 ? fogData.r / fogData.a : 0.0;
 	vec4 color = texture2D(gm_BaseTexture, vTexCoord);
 	vec3 fogColor = pow(uFogColor.rgb, vec3(uGamma)) * uBackgroundBrightness;
 	if (color.a > 0.0001)

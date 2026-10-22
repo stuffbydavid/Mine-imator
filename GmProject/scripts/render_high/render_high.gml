@@ -13,11 +13,14 @@
 			A opacity
 		
 		render_surface_mask (rgba8unorm):
-			R lighting mask
-			A object opacity used for blending
+			RGB premultiplied color of lit scene objects
+			A coverage of lit scene objects, attenuated by unlit clouds
 		
-		render_surface_fog (r8unorm):
-			R fog strength, from clear to fully fogged
+		render_surface_fog (rgba16float):
+			R opacity-weighted fog strength
+			G opacity-weighted emissive strength
+			B unused
+			A coverage used to recover fog strength
 		
 		render_surface_depth (rg32float in C++, r32float/rgba32float while picking in GameMaker):
 			R camera depth
@@ -27,7 +30,7 @@
 		
 		render_surface_normal (rgba16float):
 			RGB packed surface direction relative to the camera
-			A emissive strength
+			A frontmost emissive strength for ambient occlusion only
 		
 		render_surface_material (rgba8unorm):
 			R roughness
@@ -78,12 +81,12 @@
 		Glow and light transmission images are only created when needed by rendering or debug output
 	
 	Combined layouts:
-		- COLOR writes diffuse, mask and optional fog
+		- COLOR writes diffuse, mask and shared fog/emissive
 		- G_BUFFERS writes depth, normal, material and optional glint
 		- Combined sunlight adds lighting color and highlights to G_BUFFERS
 		- With glint these go to temporary images, otherwise directly to shadows/specular
 		- The full COLOR combination writes diffuse, mask, fog, depth, normal, material, shadows and specular together
-		- AUXILIARY writes fog plus optional light transmission and glow
+		- AUXILIARY rebuilds fog/emissive plus optional light transmission and glow
 	
 	Standard optimizations (C++ only):
 		- render_fog_combined records fog alongside COLOR when no separate glow or light transmission data is needed

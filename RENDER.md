@@ -33,7 +33,7 @@ The ranges below are the ranges supported by the corresponding interface control
 | `ssao_always_visible` | Boolean | Apply SSAO to all diffuse lighting instead of ambient lighting only |
 | `shadows` | Boolean | Enable shadows |
 | `shadows_blur_quality` | Integer, 0-64 | Standard renderer shadow-blur quality |
-| `shadows_blur_size` | 0-4 | Shared shadow blur radius |
+| `shadows_blur_size` | 0-4 | Shared shadow blur multiplier |
 | `shadows_sun_cascades` | Integer, 1-5 | Number of separate sun shadow maps used to improve shadow detail over close and large distances. |
 | `shadows_sun_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Sun shadow-map resolution; 8192 is offered only when supported by the GPU |
 | `shadows_spot_buffer_size` | 256, 512, 1024, 2048, 4096, or 8192 | Spot-light shadow-map resolution; 8192 is offered only when supported by the GPU |

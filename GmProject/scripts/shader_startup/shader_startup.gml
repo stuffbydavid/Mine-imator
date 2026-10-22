@@ -161,7 +161,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_color_fog])
 	{
-		shader_startup_color_uniforms()
+		shader_startup_material_uniforms()
 		
 		new_shader_uniform(e_uniform.FOG_PASS)
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
@@ -221,7 +221,10 @@ function shader_startup()
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
 	
 	with (shader_map[?shader_replace_alpha])
+	{
+		shader_startup_color_uniforms()
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
+	}
 
 	var placeshaders = [
 		shader_color_fog,
@@ -325,7 +328,6 @@ function shader_startup()
 		new_shader_uniform(e_uniform.SHADOW_RADIUS)
 		new_shader_uniform(e_uniform.SHADOW_BLUR_QUALITY)
 		new_shader_uniform(e_uniform.PCSS_KERNEL)
-		new_shader_uniform(e_uniform.SCREEN_SIZE)
 		new_shader_uniform(e_uniform.GAMMA)
 	}
 	
@@ -349,6 +351,7 @@ function shader_startup()
 		new_shader_uniform(e_uniform.IS_SKY)
 		new_shader_uniform(e_uniform.LIGHT_MATRIX)
 		new_shader_uniform(e_uniform.SHADOW_MATRIX)
+		new_shader_uniform(e_uniform.DEPTH_BUFFER_SIZE)
 		new_shader_uniform(e_uniform.LIGHT_POSITION)
 		new_shader_uniform(e_uniform.LIGHT_COLOR)
 		new_shader_uniform(e_uniform.LIGHT_STRENGTH)
@@ -362,7 +365,6 @@ function shader_startup()
 		new_shader_uniform(e_uniform.SHADOW_RADIUS)
 		new_shader_uniform(e_uniform.SHADOW_BLUR_QUALITY)
 		new_shader_uniform(e_uniform.PCSS_KERNEL)
-		new_shader_uniform(e_uniform.SCREEN_SIZE)
 		new_shader_uniform(e_uniform.GAMMA)
 	}
 
@@ -475,13 +477,12 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_lighting_apply])
 	{
+		new_shader_sampler(e_sampler.NORMAL_BUFFER)
 		new_shader_sampler(e_sampler.SHADOWS)
 		new_shader_sampler(e_sampler.SSAO)
 		new_shader_sampler(e_sampler.SPECULAR)
 		new_shader_sampler(e_sampler.MASK)
-		new_shader_sampler(e_sampler.EMISSIVE)
 		new_shader_sampler(e_sampler.MATERIAL_BUFFER)
-		new_shader_sampler(e_sampler.DIFFUSE_BUFFER)
 		new_shader_sampler(e_sampler.FOG_BUFFER)
 		
 		new_shader_uniform(e_uniform.SHADOWS_ENABLED)
@@ -570,7 +571,7 @@ function shader_startup()
 			new_shader_uniform(e_uniform.PCSS_KERNEL)
 			new_shader_uniform(e_uniform.SUN_SHADOW_DISTANCE)
 			new_shader_uniform(e_uniform.SUN_SHADOW_SCALE)
-			new_shader_uniform(e_uniform.SCREEN_SIZE)
+			new_shader_uniform(e_uniform.DEPTH_BUFFER_SIZE)
 			new_shader_uniform(e_uniform.GAMMA)
 		}
 	}
@@ -588,7 +589,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_auxiliary_standard])
 	{
-		shader_startup_color_uniforms()
+		shader_startup_material_uniforms()
 		
 		new_shader_uniform(e_uniform.GLOW_PASS)
 		new_shader_uniform(e_uniform.GLOW_TEXTURE)
@@ -659,11 +660,11 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_reflections_resolve])
 	{
+		new_shader_sampler(e_sampler.MASK)
 		new_shader_sampler(e_sampler.DEPTH_BUFFER)
 		new_shader_sampler(e_sampler.NORMAL_BUFFER)
 		new_shader_sampler(e_sampler.MATERIAL_BUFFER)
 		new_shader_sampler(e_sampler.SCENE_BUFFER)
-		new_shader_sampler(e_sampler.METALLIC_BUFFER)
 		
 		new_shader_uniform(e_uniform.NEAR)
 		new_shader_uniform(e_uniform.FAR)
@@ -682,6 +683,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_indirect_resolve])
 	{
+		new_shader_sampler(e_sampler.MASK)
 		new_shader_sampler(e_sampler.DEPTH_BUFFER)
 		new_shader_sampler(e_sampler.NORMAL_BUFFER)
 		new_shader_sampler(e_sampler.MATERIAL_BUFFER)
@@ -698,7 +700,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_indirect_source])
 	{
-		new_shader_sampler(e_sampler.NORMAL_BUFFER)
+		new_shader_sampler(e_sampler.EMISSIVE)
 		new_shader_sampler(e_sampler.LIGHT_BUFFER)
 		new_shader_sampler(e_sampler.PREVIOUS_BUFFER)
 		
@@ -708,6 +710,7 @@ function shader_startup()
 	
 	with (shader_map[?shader_high_indirect_blur])
 	{
+		new_shader_sampler(e_sampler.MASK)
 		new_shader_sampler(e_sampler.DEPTH_BUFFER)
 		new_shader_sampler(e_sampler.NORMAL_BUFFER)
 		new_shader_sampler(e_sampler.NOISE_BUFFER)
