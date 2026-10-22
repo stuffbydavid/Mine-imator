@@ -2,9 +2,10 @@
 
 function res_load_scenery_block_map()
 {
-	var res, tlamount;
+	var res, tlamount, blockcounts;
 	res = id
 	tlamount = 0
+	blockcounts = array_create(array_length(block_objs), 0)
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
@@ -30,8 +31,7 @@ function res_load_scenery_block_map()
 				if (block = null)
 					continue
 
-				var key = string(block.block_id);
-				res.scenery_block_map[?key] = value_get_real(res.scenery_block_map[?key], 0) + 1
+				blockcounts[@block.block_id]++
 
 				if (block_get_filtered(res, block))
 				{
@@ -83,6 +83,10 @@ function res_load_scenery_block_map()
 
 		sch_timeline_amount = tlamount
 	}
+
+	for (var i = 0; i < array_length(blockcounts); i++)
+		if (blockcounts[i] > 0)
+			scenery_block_map[?string(i)] = blockcounts[i]
 
 	scenery_tl_types_count_ready = true
 }

@@ -1,6 +1,7 @@
 #include "World/World.hpp"
 
 #include "AppHandler.hpp"
+#include "Asset/DataStructure.hpp"
 #include "Asset/VertexBuffer.hpp"
 #include "Asset/Buffer.hpp"
 #include "World/GZIP.hpp"
@@ -94,6 +95,149 @@ namespace CppProject
 		self->build_pos[X_] = position % width;
 		self->build_pos[Y_] = (position / width) % height;
 		self->build_pos[Z_] = position / self->build_size_xy;
+	}
+
+	BoolType builder_read_schematic_data(Scope<obj_builder> self, IntType version, IntType mapId,
+		IntType paletteIndicesId, IntType blockAmount)
+	{
+		Map* map = FindMap(mapId);
+		Map* indicesMap = FindMap(paletteIndicesId);
+		Buffer* buffer = FindBuffer(global::buffer_current);
+		StringType key = (version >= 3 ? "Data" : "BlockData");
+
+		if (!map || !indicesMap || indicesMap->GetType() != Map::HASH_INT || !buffer)
+		{
+			log({ "Schematic error", "Block data array not found or has invalid type" });
+			return false;
+		}
+
+		VarType readPosValue = map->Value(key);
+		VarType lengthValue = map->Value(key + "_NBT_length");
+		VarType dataType = map->Value(key + "_NBT_type");
+		BoolType intArray = dataType == e_nbt_TAG_INT_ARRAY;
+
+		if (!readPosValue.IsAnyReal() || !lengthValue.IsAnyReal() ||
+			(!intArray && dataType != e_nbt_TAG_BYTE_ARRAY))
+		{
+			log({ "Schematic error", "Block data array not found or has invalid type" });
+			return false;
+		}
+
+		IntType readPos = readPosValue.ToInt();
+		IntType length = lengthValue.ToInt();
+		IntType sourceSize = buffer->data.Size();
+		IntType sourceStride = intArray ? 4 : 1;
+
+		if (readPos < 0 || readPos > sourceSize || length < blockAmount ||
+			length > (sourceSize - readPos) / sourceStride)
+		{
+			log({ "Schematic error", "Block data array is truncated" });
+			return false;
+		}
+
+		BoolType rawBytes = (version == 1 && !intArray && length == blockAmount);
+		IntHashMap* indices = static_cast<IntHashMap*>(indicesMap);
+		IntType paletteSize = indices->GetSize();
+		QVector<IntType> denseIndices(paletteSize, -1);
+		BoolType dense = true;
+
+		for (auto it = indices->hash.constBegin(); it != indices->hash.constEnd(); ++it)
+		{
+			if (it.key() < 0 || it.key() >= paletteSize || !it.value().value.IsAnyReal())
+			{
+				dense = false;
+				break;
+			}
+
+			denseIndices[it.key()] = it.value().value.ToInt();
+		}
+
+		IntType outputStride = paletteSize > 256 ? 4 : 1;
+		if (blockAmount < 0 || blockAmount > (std::numeric_limits<IntType>::max() - sourceSize) / outputStride)
+		{
+			log({ "Schematic error", "Block data array is truncated" });
+			return false;
+		}
+
+		self->sch_blockdata_ints = outputStride == 4;
+		self->sch_blockdata_array = sourceSize;
+		buffer->data.Alloc(sourceSize + blockAmount * outputStride, false);
+
+		uchar* data = buffer->data.data;
+		IntType endPos = readPos + length * sourceStride;
+		IntType writePos = sourceSize;
+
+		for (IntType i = 0; i < blockAmount; i++)
+		{
+			uint32_t value = 0;
+			if (intArray)
+			{
+				value = ((uint32_t)data[readPos] << 24) | ((uint32_t)data[readPos + 1] << 16) |
+					((uint32_t)data[readPos + 2] << 8) | data[readPos + 3];
+				readPos += 4;
+			}
+			else if (rawBytes)
+				value = data[readPos++];
+			else
+			{
+				for (IntType b = 0;; b++)
+				{
+					if (readPos >= endPos || b == 5)
+					{
+						log({ "Schematic error", "Truncated or oversized block varint" });
+						return false;
+					}
+
+					uchar byte = data[readPos++];
+					if (b == 4 && byte > 7)
+					{
+						log({ "Schematic error", "Block varint exceeds a non-negative integer" });
+						return false;
+					}
+
+					value |= (uint32_t)(byte & 127) << (b * 7);
+					if (byte < 128)
+						break;
+				}
+			}
+
+			IntType slot = -1;
+			if (dense)
+			{
+				if (value < (uint32_t)paletteSize)
+					slot = denseIndices[value];
+			}
+			else
+			{
+				auto it = indices->hash.constFind(value);
+				if (it != indices->hash.constEnd() && it.value().value.IsAnyReal())
+					slot = it.value().value.ToInt();
+			}
+
+			if (slot < 0 || slot >= paletteSize)
+			{
+				log({ "Schematic error", "Block data references a missing palette entry" });
+				return false;
+			}
+
+			if (outputStride == 4)
+			{
+				data[writePos++] = (uchar)(slot >> 24);
+				data[writePos++] = (uchar)(slot >> 16);
+				data[writePos++] = (uchar)(slot >> 8);
+				data[writePos++] = (uchar)slot;
+			}
+			else
+				data[writePos++] = (uchar)slot;
+		}
+
+		if (readPos != endPos)
+		{
+			log({ "Schematic error", "Block data contains more entries than the schematic size" });
+			return false;
+		}
+
+		return true;
 	}
 
 	void builder_read_schematic_blocks(Scope<obj_builder> self)
@@ -220,7 +364,7 @@ namespace CppProject
 		debug_timer_start();
 
 		self->file_map = buffer_read_string_short_be();
-		self->build_size[Y_] = buffer_read_short_be(); // Derp
+		self->build_size[Y_] = buffer_read_short_be();
 		self->build_size[X_] = buffer_read_short_be();
 		self->build_size[Z_] = buffer_read_short_be();
 		IntType blockData = buffer->pos;
