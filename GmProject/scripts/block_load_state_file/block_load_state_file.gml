@@ -5,6 +5,11 @@
 
 function block_load_state_file(fn, block, state)
 {
+	var name = fn;
+	fn = load_assets_dir + mc_blockstates_added_directory + name
+	if (!file_exists_lib(fn))
+		fn = load_assets_dir + mc_blockstates_directory + name
+
 	if (!file_exists_lib(fn))
 	{
 		log("Could not find state file", filename_name(fn))
@@ -134,13 +139,13 @@ function block_load_state_file(fn, block, state)
 					{
 						var modellist = variantsmap[?variant];
 						for (var i = 0; i < ds_list_size(modellist); i++)
-							if (!block_load_variant_model(modellist[|i], block.type))
+							if (!block_load_variant_model(modellist[|i], block))
 								return false
 					}
 					
 					// Single model
 					else
-						if (!block_load_variant_model(variantsmap[?variant], block.type))
+						if (!block_load_variant_model(variantsmap[?variant], block))
 							return null
 				}
 				
@@ -156,6 +161,12 @@ function block_load_state_file(fn, block, state)
 				var mcase = multipartlist[|c];
 				with (new_obj(obj_block_load_multipart_case))
 				{
+					hide_model = false
+					
+					var apply = mcase[?"apply"];
+					if (ds_map_valid(apply))
+						hide_model = (apply[?"model"] = block.tl_hide_model)
+
 					// Condition
 					var whenmap = mcase[?"when"];
 					
@@ -301,13 +312,13 @@ function block_load_state_file(fn, block, state)
 					{
 						var modellist = mcase[?"apply"];
 						for (var i = 0; i < ds_list_size(modellist); i++)
-							if (!block_load_variant_model(modellist[|i], block.type))
+							if (!block_load_variant_model(modellist[|i], block))
 								return false
 					}
 					
 					// Single model
 					else
-						if (!block_load_variant_model(mcase[?"apply"], block.type))
+						if (!block_load_variant_model(mcase[?"apply"], block))
 							return null
 				}
 			}

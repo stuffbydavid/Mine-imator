@@ -2,6 +2,9 @@
 #include "Generated/Scripts.hpp"
 #include "FastVector.hpp"
 #include "Render/Mesh.hpp"
+#include "NBT.hpp"
+
+#include <QSet>
 
 #define PREVIEW_ZNEAR 1.0
 #define PREVIEW_ZFAR 10000.0
@@ -37,6 +40,7 @@ namespace CppProject
 	struct Chunk;
 	struct Map;
 	struct NbtCompound;
+	struct NbtList;
 	struct Preview;
 	struct Region;
 	struct RegionLoader;
@@ -55,12 +59,12 @@ namespace CppProject
 		WorldVec(const VecType& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 		WorldVec(IntType x, IntType y, IntType z) : x(x), y(y), z(z) {}
 
-		WorldVec operator+(const WorldVec& vec) const;
-		WorldVec operator-(const WorldVec& vec) const;
-		WorldVec operator*(const WorldVec& vec) const;
-		WorldVec operator+(IntType in) const;
-		WorldVec operator-(IntType in) const;
-		WorldVec operator*(IntType in) const;
+		WorldVec operator+(const WorldVec& vec) const { return { x + vec.x, y + vec.y, z + vec.z }; }
+		WorldVec operator-(const WorldVec& vec) const { return { x - vec.x, y - vec.y, z - vec.z }; }
+		WorldVec operator*(const WorldVec& vec) const { return { x * vec.x, y * vec.y, z * vec.z }; }
+		WorldVec operator+(IntType in) const { return { x + in, y + in, z + in }; }
+		WorldVec operator-(IntType in) const { return { x - in, y - in, z - in }; }
+		WorldVec operator*(IntType in) const { return { x * in, y * in, z * in }; }
 		operator VecType() const;
 
 		IntType x, y, z;
@@ -168,11 +172,48 @@ namespace CppProject
 	struct SaveInfo
 	{
 		QString name;
-		IntType version;
+		IntType version, dataVersion = 0;
 		BoolType hasPlayer;
 		VecType spawnPos, playerPos, playerRot;
 		QString playerDim;
 		QHash<QString, QDir> dimDir;
+	};
+
+	// Collect source blocks for .schem/.schematic export before mesh generation
+	struct SchematicExport
+	{
+		// Initialize NBT data and storage for the selected box.
+		SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible = false, BoolType applyFilter = true);
+
+		// Copy compatible chunk blocks and block entities into the schematic.
+		void AddChunk(Chunk& chunk);
+
+		// Copy supported entities stored separately from terrain chunks
+		void AddEntityRegion(const QString& filename, const WorldVec& regionPos, const BoolType* includedChunks);
+
+		// Copy supported entities from a chunk's entity list
+		void AddEntities(NbtCompound& chunk);
+
+		// Serialize the collected schematic as NBT.
+		QByteArray Serialize();
+
+		// Return the extension for the selected schematic format.
+		QString Extension() const;
+
+		// Serialize and asynchronously save a world resource snapshot.
+		void SaveResource(obj_resource* resource);
+
+		WorldBox box;
+		IntType dataVersion, skippedChunks = 0;
+		BoolType legacy, skipIncompatible, applyFilter;
+		BoolType exportOnly = true;
+		QString error;
+		NbtCompound root;
+		NbtCompound* schematic = nullptr;
+		NbtCompound* palette = nullptr;
+		NbtList* entities = nullptr;
+		QSet<StringType> supportedEntityIds;
+		Heap<uint32_t> indices;
 	};
 
 	// Handles regions in an opened world
@@ -187,8 +228,11 @@ namespace CppProject
 		// Closes the currently opened world.
 		static void Close();
 
-		// Generates a collection of builder sections from a box in the opened world,.
-		static void GenerateBuilderSections(const WorldBox& box);
+		// Generate builder sections from a box in the opened world.
+		static void GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic = nullptr);
+
+		// Process block entities after filtering builder sections.
+		static void ProcessBuilderEntities();
 
 		// Adds a save from the given root directory, returns whether successful.
 		static BoolType AddSave(QString dir);
@@ -196,12 +240,8 @@ namespace CppProject
 		// Apply the selected block filter settings, returns whether the world needs reloading.
 		static BoolType ApplyFilter();
 
-		// Block filter mode
-		enum FilterMode
-		{
-			REMOVE = 0,
-			KEEP = 1
-		};
+		// Export the blocks and block entities inside the selected box
+		static void ExportSchematic(const WorldBox& box, const QString& filename);
 
 		static QDir currentRegionsDir;
 		static Preview* preview;
@@ -224,6 +264,9 @@ namespace CppProject
 
 		// Cancel the world import.
 		void Cancel();
+
+		// Export a schematic file.
+		void ExportSchematic();
 
 	public:
 		Preview();
@@ -273,8 +316,10 @@ namespace CppProject
 		};
 
 		Mode mode = DEFAULT;
-		BoolType hasPlayer = false, resetUpdate = false;
+		BoolType hasPlayer = false, resetUpdate = false, filterActive = false;
 		QString dimension = "";
+		QString exportFilename;
+		WorldBox exportBox;
 
 		Matrix matrixV, matrixP, playerM, selectionM;
 		RealType camAngleXY, camAngleZ, camTargetDis;
@@ -327,7 +372,7 @@ namespace CppProject
 		~Region();
 
 		// Load the region chunks on a separate thread.
-		void Load(const WorldBox& box = WorldBox());
+		void Load(const WorldBox& box = WorldBox(), SchematicExport* schematic = nullptr);
 
 		// Returns the current loading progress as a value between 0-1.
 		RealType GetLoadProgress();
@@ -458,13 +503,13 @@ namespace CppProject
 		void UpdateLoadRegions();
 
 	public:
-		BoolType active = true;
+		std::atomic<BoolType> active{ true };
 	};
 
 	// A collection of sections
 	struct Chunk
 	{
-		Chunk(Region* region, QByteArray& data, const WorldBox& box);
+		Chunk(Region* region, QByteArray& data, const WorldBox& box, SchematicExport* schematic = nullptr);
 		~Chunk();
 
 		// Generate triangles to add to the region mesh.
@@ -474,10 +519,14 @@ namespace CppProject
 		enum FaceDirection : int;
 		struct Mesh;
 		struct FaceData;
-		void GenerateFaceTriangles(Mesh& mesh, FaceDirection dir, Heap<FaceData>& faceData, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos);
+		void GenerateFaceTriangles(Mesh& mesh, FaceDirection dir, const FaceData& face, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos);
 
 		// Free unused preview data.
 		void FreePreviewData();
+
+		// Copy original block states and block entities into a schematic.
+		void ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities, BoolType applyFilter);
+		void ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic, BoolType applyFilter);
 
 		// Block format
 		enum Format : int
@@ -515,7 +564,7 @@ namespace CppProject
 			uint32_t index;
 		};
 
-		IntType x, z, regionIndex = 0;
+		IntType x = 0, z = 0, regionIndex = 0;
 		WorldVec regionPos;
 		Region* region = nullptr;
 		Format format;
@@ -523,13 +572,16 @@ namespace CppProject
 		Heap<uint16_t> legacyBiomes;
 		BoolType leftEdge, rightEdge, backEdge, frontEdge;
 		BoolType error = false;
+		IntType dataVersion = 0;
+		NbtCompound* exportData = nullptr;
 		QVector<BlockEntity> blockEntities;
 		IntType numTimelines = 0;
 
 		struct Mesh
 		{
-			Heap<FaceData> faceData[CHUNK_SECTIONS];
-			Heap<VertexData> vertexData[CHUNK_SECTIONS];
+			FaceData* faceData[CHUNK_SECTIONS] = {};
+			VertexData* vertexData[CHUNK_SECTIONS + 1] = {};
+			uint8_t faceDirections[CHUNK_SECTIONS] = {};
 			FastVector<WorldVertex> vertices;
 			FastVector<uint32_t> indices;
 			IntType vertexOffset, indexOffset; // Offset in region mesh
@@ -556,7 +608,7 @@ namespace CppProject
 		void ParseBiomePalettePreview(NbtCompound* nbt, Chunk::Format format);
 
 		// Parse a long array of block/biome palette indices.
-		void ParsePaletteIndices(const Heap<int64_t>& dataArray, Heap<uint16_t>& paletteIndices, IntType paletteSize, Chunk::Format format, IntType minBits = 1);
+		static void ParsePaletteIndices(const Heap<int64_t>& dataArray, Heap<uint16_t>& paletteIndices, IntType paletteSize, Chunk::Format format, IntType minBits = 1);
 
 		// Generate the faces of a solid/transparent block in the section.
 		void GenerateFaces(Region::GenerateMode mode, const WorldVec& startPos, const WorldVec& endPos);

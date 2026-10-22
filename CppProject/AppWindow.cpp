@@ -234,13 +234,15 @@ namespace CppProject
 				}
 			}
 
-			for (AppWindow* appWindow : App->windows)
+			QVector<AppWindow*> windows = App->windows;
+			for (AppWindow* appWindow : windows)
 			{
+				if (appWindow == this)
+					continue;
+
 				appWindow->id = 0;
 				appWindow->close();
 			}
-
-			delete App;
 		}
 		else
 		{

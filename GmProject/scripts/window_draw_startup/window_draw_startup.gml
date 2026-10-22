@@ -20,7 +20,7 @@ function window_draw_startup()
 	
 	// Version
 	var trial = (trial_version ? " " + text_get("startup/trial") : "");
-	draw_button_text(text_get("startup/version", mineimator_version_full + trial), (window_width / 2) + 259, floor((headersize/2) + (sprite_get_height(spr_logo)/2)) + 3, popup_switch, popup_about)
+	draw_button_text(text_get("startup/version", version_get() + trial), (window_width / 2) + 259, floor((headersize/2) + (sprite_get_height(spr_logo)/2)) + 3, popup_switch, popup_about)
 	
 	dy = headersize + 48
 	dw = min(window_width - 48, 1008)

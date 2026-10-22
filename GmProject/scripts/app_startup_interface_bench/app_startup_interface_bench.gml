@@ -143,6 +143,19 @@ function app_startup_interface_bench()
 		tbx_text = new_textbox(false, 0, "")
 		tbx_text_outline_size = new_textbox_integer()
 		
+		sign_front_text = true
+		sign_back_text = false
+
+		text_vbuffer = [ null, null ]
+		text_texture = [ null, null ]
+		text_string = ""
+		text_res = null
+		text_3d_prev = false
+		text_halign_prev = "center"
+		text_valign_prev = "center"
+		text_aa_prev = false
+		text_outline_size_prev = 3
+		
 		particle_preset = ""
 		
 		type = e_temp_type.CHARACTER
@@ -174,6 +187,7 @@ function app_startup_interface_bench()
 		
 		project_list = project_lib_list
 		project_selected = null
+		project_settings_type = null
 
 		for (var i = 0; i < ds_list_size(res_type_name_list); i++)
 		{
@@ -274,7 +288,7 @@ function app_startup_interface_bench()
 		sortlist_column_add(block_list, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
+			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
 				sortlist_add(block_list, mc_assets.block_list[|b].name)
 		
 		// Special block list

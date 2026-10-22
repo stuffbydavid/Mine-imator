@@ -1,8 +1,8 @@
-function action_bench_schematic_select(schematic)
+function action_bench_schematic_select(file)
 {
 	bench_clear()
 	
-	if (is_string(schematic))
+	if (is_string(file))
 	{
 		var folder, res;
 		folder = schematics_directory + bench_schematic_folder
@@ -14,7 +14,7 @@ function action_bench_schematic_select(schematic)
 		with (res)
 		{
 			type = e_res_type.SCHEMATIC
-			filename = schematic + ".schematic"
+			filename = file
 			scenery_source = folder + "/" + filename
 		}
 		
@@ -27,9 +27,9 @@ function action_bench_schematic_select(schematic)
 		bench_settings.scenery = res
 	}
 	else
-		bench_settings.scenery = schematic
+		bench_settings.scenery = file
 		
-	bench_settings.schematic_selected = schematic
+	bench_settings.schematic_selected = file
 	
 	with (bench_settings)
 	{

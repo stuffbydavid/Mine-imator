@@ -836,11 +836,12 @@ function list_init(name)
 			break
 		}
 		
-		// Resource pack preview skin
-		case "resources/scenery_structure_palette":
+		// Structure palette
+		case "block_settings/palette":
 		{
-			for (var p = 0; p < res_edit.scenery_palette_size; p++)
-				menu_add_item(p, text_get("resources/scenery_structure_palette_number", p + 1))
+			var sceneryres = popup_block_settings.resource;
+			for (var p = 0; p < sceneryres.scenery_palette_size; p++)
+				menu_add_item(p, text_get("block_settings/palette_number", p + 1))
 			
 			break
 		}

@@ -2,10 +2,60 @@
 
 function block_set_bed()
 {
-	if (builder_scenery && !builder_scenery_legacy)
-		return 0
+	var facing, part;
+	facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
+	part = block_get_state_id_value(block_current, block_state_id_current, "part")
 	
-	if (block_get_state_id_value(block_current, block_state_id_current, "part") = "foot")
+	// Patch legacy orientation and half
+	if (builder_scenery && builder_scenery_legacy)
+	{
+		var offsets, directions, color, matches, corrected;
+		offsets = [ [ 1, 0 ], [ -1, 0 ], [ 0, 1 ], [ 0, -1 ] ]
+		directions = [ "west", "east", "north", "south" ]
+		color = block_get_state_id_value(block_current, block_state_id_current, "color")
+		matches = 0
+		corrected = facing
+		
+		for (var d = XP; d <= YN; d++)
+		{
+			var xx, yy, state;
+			if (build_edge[d])
+				continue
+			
+			xx = build_pos[X] + offsets[d][X]
+			yy = build_pos[Y] + offsets[d][Y]
+			if (builder_get_block(xx, yy, build_pos[Z]) != block_current)
+				continue
+			
+			state = builder_get_state_id(xx, yy, build_pos[Z])
+			if (block_get_state_id_value(block_current, state, "part") = part || block_get_state_id_value(block_current, state, "color") != color)
+				continue
+			
+			corrected = directions[d]
+			if (part = "foot")
+				corrected = directions[d ^ 1]
+			
+			matches++
+			if (corrected = facing)
+				break
+		}
+		
+		if (matches = 1)
+			facing = corrected
+		
+		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "facing", facing)
+	}
+	
+	if (builder_scenery)
+	{
+		// Cull each half against its own neighbors, without the standalone bed's offset
+		var model = block_current.state_id_model_obj[block_state_id_current].model[0];
+		model.offset[X] = 0
+		model.offset[Y] = 0
+		return 0
+	}
+	
+	if (part = "foot")
 		return null
 	
 	// Pick models
@@ -13,7 +63,6 @@ function block_set_bed()
 	headmodel = block_current.state_id_model_obj[block_state_id_current].model[0]
 	footmodel = block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "part", "foot")].model[0]
 	
-	var facing = block_get_state_id_value(block_current, block_state_id_current, "facing");
 	if (facing = "north")
 		footmodel.offset[Y] = block_size
 	else if (facing = "south")

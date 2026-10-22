@@ -368,6 +368,7 @@
 		"animated_multiple": "The selected objects have multiple keyframes.",
 		"animated_part": "A model part has multiple keyframes.",
 		"equip_armor": "Parent the armor to a character to equip it.",
+		"schematic_saved": "Schematic saved successfully!",
 		"close": "Close"
 	},
 	"error/": {
@@ -401,6 +402,8 @@
 		"load_schematic_caption": "Import schematic error",
 		"load_world": "Could not import from world, it might be deleted or moved to another location.",
 		"load_world_caption": "Import from world error",
+		"open_world_folder": "Could not open world folder, it might be deleted or moved to another location.",
+		"open_world_folder_caption": "Open world folder error",
 		"load_structure": "Could not read the structure file. See the log for details.",
 		"load_structure_caption": "Import structure error",
 		"unzip_pack": "Could not unzip the pack.",
@@ -416,6 +419,9 @@
 		"upgrade_caption": "Upgrade error",
 		"download_skin_user": "The user \"%1\" does not exist.",
 		"download_skin_internet": "Could not download skin, check your internet connection.",
+		"export_schematic_old_chunks": "The selection contains pre-Java 1.13 chunks. Use Minecraft's Optimize World option to upgrade all chunks, then try again.",
+		"export_schematic_new_chunks": "The selection contains Java 1.13 chunks or newer and cannot be exported as a legacy schematic.",
+		"export_schematic_caption": "Export Schematic error",
 		"test": "The supplied project could not be loaded for testing.",
 		"test_caption": "Test error."
 	},
@@ -475,6 +481,8 @@
 			"movie_caption": "Save movie",
 			"image": "Images",
 			"image_caption": "Save image",
+			"schematic": "Schematic files",
+			"schematic_caption": "Save Minecraft Schematic",
 			"particles": "Particle files",
 			"particles_caption": "Save particle creator",
 			"object": "Object files",
@@ -534,7 +542,8 @@
 		"export": "Export",
 		"export/": {
 			"image": "Export image...",
-			"movie": "Export movie..."
+			"movie": "Export movie...",
+			"schematic": "Export schematic..."
 		},
 		"view": "View",
 		"view/": {
@@ -684,6 +693,8 @@
 		"block": "Block",
 		"special_block": "Special block",
 		"special_block_model": "Block",
+		"front_text": "Front text",
+		"back_text": "Back text",
 		"special_block_tex": "Texture",
 		"special_block_tex_material": "Material map",
 		"special_block_tex_normal": "Normal map",
@@ -1135,7 +1146,8 @@
 		"res_type": "Type",
 		"res_count": "Use count",
 		"particle_preset_name": "Name",
-		"block_filter": "Name"
+		"block_filter": "Name",
+		"block_count": "Count"
 	},
 	"list/": {
 		"search": "Search...",
@@ -1446,7 +1458,6 @@
 		"wind_charge": "Wind Charge",
 		"armor": "Armor",
 		"armor_baby": "Baby Armor",
-		"cushion": "Cushion",
 		"part/": {
 			"body": "Body",
 			"right_arm": "Right arm",
@@ -1674,8 +1685,7 @@
 			"mushroom_3": "Mushroom 3",
 			"top_tentacles": "Top tentacles",
 			"bottom_tentacles": "Bottom tentacles",
-			"inner_tentacles": "Inner tentacles",
-			"cushion": "Cushion"
+			"inner_tentacles": "Inner tentacles"
 		},
 		"state/": {
 			"type": "Type",
@@ -2247,6 +2257,7 @@
 		"selection_small": "Small",
 		"selection_medium": "Medium",
 		"selection_large": "Large",
+		"export_tip": "Export selection as Schematic",
 		"selection_size": "%1 x %2 x %3 selected",
 		"filter_active": "Blocks are filtered",
 		"confirm": "Import selection",
@@ -2254,15 +2265,31 @@
 	},
 	"world_settings/": {
 		"caption": "World settings",
+		"confirm": "Confirm",
+		"unload_regions": "Unload regions far away",
+		"unload_regions_tip": "Automatically unload regions to save on memory usage."
+	},
+	"block_settings/": {
+		"caption": "%1 settings",
+		"caption_filtered": "(filtered)",
+		"timeline_blocks": "Block timelines",
+		"timeline_blocks_tip": "Choose the blocks to add as separate timelines.",
+		"timeline_blocks_warning": "A large number of block timelines may decrease performance.",
+		"timeline_required_tip": "Required to appear in the scenery.",
+		"timeline_required_sign_tip": "Required for sign text.",
+		"integrity": "Integrity",
+		"palette": "Palette",
+		"palette_number": "Palette %1",
+		"randomize": "Enable random blocks",
+		"randomize_tip": "Use random models and rotations for certain blocks, such as grass and stone.",
 		"filter_enabled": "Enable block filter",
 		"filter_mode": "Filter mode",
+		"filter_tip": "Use the arrows to add or remove selected blocks from the filter list.",
 		"filter_remove": "Remove",
 		"filter_keep": "Keep",
-		"filter_blocks": "All blocks",
+		"filter_blocks": "Source blocks",
 		"filter_filtered": "Filtered blocks",
-		"unload_regions": "Unload regions far away",
-		"unload_regions_tip": "Automatically unload regions to save on memory usage.",
-		"filter_help": "Use the arrows to add or remove selected blocks from the filter list."
+		"confirm": "Confirm"
 	},
 	"block/": {
 		"stone": "Stone",
@@ -2413,6 +2440,7 @@
 		"barrier": "Barrier",
 		"light": "Light",
 		"standing_banner": "Standing Banner",
+		"banner": "Banner",
 		"wall_banner": "Wall Banner",
 		"prismarine": "Prismarine",
 		"sea_lantern": "Sea Lantern",
@@ -2576,6 +2604,8 @@
 		"resin_block": "Block of Resin",
 		"firefly_bush": "Firefly Bush",
 		"dried_ghast": "Dried Ghast",
+		"cushion": "Cushion",
+		"painting": "Painting",
 		"state/": {
 			"variant": "Variant",
 			"snowy": "Snowy",
@@ -3284,7 +3314,7 @@
 		"default_subsurface_radius": "Default subsurface",
 		"default_subsurface_radius_tip": "The subsurface radius used for foliage blocks, or objects with a LabPBR material map set.",
 		"water_reflections": "Default water material",
-		"water_reflections_help": "Override water blocks with a default reflective water material.",
+		"water_reflections_tip": "Override water blocks with a default reflective water material.",
 		"water_roughness": "Roughness",
 		"water_wave/": {
 			"strength": "Strength",
@@ -3337,8 +3367,8 @@
 		"pattern_editor": "Open pattern editor",
 		"armor_editor": "Open armor editor",
 		"model_part_unknown": "Unknown model part",
-		"randomize_blocks": "Randomize blocks",
-		"randomize_blocks_help": "Use random models and rotations for the block.",
+		"randomize_blocks": "Enable random blocks",
+		"randomize_blocks_tip": "Use random models and rotations for certain blocks, such as grass and stone.",
 		"repeat": "Repeat",
 		"center": "Center",
 		"repeat_x": "X",
@@ -3849,6 +3879,9 @@
 	},
 	"resources": "RESOURCES",
 	"resources/": {
+		"filename": "Filename",
+		"block_settings": "Block settings",
+		"blocks_filtered": "Blocks are filtered",
 		"pack/": {
 			"project": "Project resource pack",
 			"image": "Resource pack asset",
@@ -3901,16 +3934,18 @@
 		"item_sheet_size_grid": "Grid",
 		"item_sheet_size_columns": "Columns",
 		"item_sheet_size_rows": "Rows",
-		"scenery_randomize": "Randomize blocks",
-		"scenery_randomize_help": "Use random models and rotations for the scenery blocks.",
-		"scenery_structure_palette": "Palette",
-		"scenery_structure_palette_number": "Palette %1",
-		"scenery_structure_integrity": "Integrity",
-		"scenery_structure_integrity_invert": "Invert integrity filter",
+		"world_box/": {
+			"x": "X",
+			"y": "Y",
+			"z": "Z"
+		},
+		"world_box_start": "Start block position",
+		"world_box_end": "End block position",
+		"reload_from_world": "Reload from world",
+		"open_world_folder": "Open world folder",
 		"material_format": "Material map format",
 		"material_format_labpbr": "LabPBR",
-		"material_format_seus": "OldPBR / SEUS",
-		"file_name": "Filename"
+		"material_format_seus": "OldPBR / SEUS"
 	},
 	"load_scenery/": {
 		"caption": "Importing %1",
@@ -3920,7 +3955,6 @@
 		"download": "Downloading skins... (%1 / %2, %3 failed)",
 		"model": "Creating 3D model...",
 		"piece_of": "Piece of %1",
-		"add_timelines": "%1 blocks were found in the terrain that can be animated.\n\nDo you want to add these as individual timelines? (This could decrease performance)",
 		"save_cache": "Do you want to cache the 3D model of the scenery to instantly load it next time?\n\nThis will require at least %1 of space in the project folder."
 	},
 	"load_audio/": {
@@ -4060,7 +4094,7 @@
 			"bend": "Bend",
 			"rot_point": "Rotation point",
 			"pose": "Pose",
-			"pose_help": "Inherit the parent character or model's pose.",
+			"pose_tip": "Inherit the parent character or model's pose.",
 			"material": "MATERIAL",
 			"opacity": "Opacity",
 			"color": "Color",

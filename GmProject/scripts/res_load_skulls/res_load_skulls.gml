@@ -1,32 +1,5 @@
 function res_load_skulls()
 {
-	// Finished
-	if (ds_map_size(mc_builder.block_skull_texture_map) = 0 || !mc_builder.block_tl_add || scenery_instant)
-	{
-		if (scenery_instant)
-		{
-			var key = ds_map_find_first(mc_builder.block_skull_texture_map);
-			while (!is_undefined(key))
-			{
-				mc_builder.block_skull_res_map[?key] = null
-				key = ds_map_find_next(mc_builder.block_skull_texture_map, key)
-			}
-		}
-		if (!scenery_instant)
-			with (app)
-			{
-				popup_loading.text = text_get("load_scenery/blocks")
-				popup_loading.progress = 0.2
-			}
-				
-		load_stage = "blocks"
-				
-		if (mc_builder.block_skull_fail_count = 0)
-			scenery_download_skins = false
-				
-		return 0
-	}
-			
 	app.popup_loading.text = text_get("load_scenery/download", mc_builder.block_skull_finish_count, mc_builder.block_skull_texture_count, mc_builder.block_skull_fail_count)
 	
 	// Continue through texture list

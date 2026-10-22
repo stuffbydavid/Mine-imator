@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_get_block_timeline_types",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_get_block_timeline_types",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

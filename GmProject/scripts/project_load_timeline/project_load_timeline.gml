@@ -28,10 +28,13 @@ function project_load_timeline(map)
 		lock = value_get_real(map[?"lock"], lock)
 		ghost = value_get_real(map[?"ghost"], ghost)
 		
-		render_depth = value_get_real(map[?"render_depth"], value_get_real(map[?"depth"], render_depth))
-		
 		if (load_format >= e_project.FORMAT_210)
+		{
+			render_depth = value_get_real(map[?"render_depth"], render_depth)
 			render_depth_custom = value_get_real(map[?"render_depth_custom"], render_depth_custom)
+		}
+		else
+			render_depth = value_get_real(map[?"depth"], render_depth)
 		
 		if (type = e_tl_type.MODEL_PART)
 			model_part_name = value_get_string(map[?"model_part_name"], model_part_name)

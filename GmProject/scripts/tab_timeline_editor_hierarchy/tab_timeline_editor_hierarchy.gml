@@ -93,7 +93,7 @@ function tab_timeline_editor_hierarchy()
 			(par.type = e_tl_type.CHARACTER || par.type = e_tl_type.EQUIPMENT || par.type = e_tl_type.SPECIAL_BLOCK || par.type = e_tl_type.MODEL))
 		{
 			tab_control_checkbox()
-			draw_checkbox("timeline_editor/inherit/pose", dx, dy, tl_edit.inherit_pose, action_tl_inherit_pose, "timeline_editor/inherit/pose_help")
+			draw_checkbox("timeline_editor/inherit/pose", dx, dy, tl_edit.inherit_pose, action_tl_inherit_pose, "timeline_editor/inherit/pose_tip")
 			tab_next()
 		}
 			

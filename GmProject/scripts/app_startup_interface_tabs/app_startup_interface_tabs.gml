@@ -132,8 +132,8 @@ function app_startup_interface_tabs()
 			tbx_item_sheet_width = new_textbox_integer()
 			tbx_item_sheet_height = new_textbox_integer()
 			
-			tbx_scenery_integrity = new_textbox_integer()
-			tbx_scenery_integrity.suffix = "%"
+			tbx_world_box_start = [ new_textbox_ninteger(), new_textbox_ninteger(), new_textbox_ninteger() ]
+			tbx_world_box_end = [ new_textbox_ninteger(), new_textbox_ninteger(), new_textbox_ninteger() ]
 		}
 	}
 	
@@ -251,7 +251,7 @@ function app_startup_interface_tabs()
 		sortlist_column_add(block_list, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
+			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
 				sortlist_add(block_list, mc_assets.block_list[|b].name)
 		
 		// Special block list
@@ -487,7 +487,7 @@ function app_startup_interface_tabs()
 		sortlist_column_add(build_list, "build_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
-			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].model_double)
+			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
 				sortlist_add(build_list, [ false, mc_assets.block_list[|b].name ])
 
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)

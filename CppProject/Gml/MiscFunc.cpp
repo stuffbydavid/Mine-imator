@@ -336,6 +336,7 @@ namespace CppProject
 	void show_message(StringType text)
 	{
 		QMessageBox msg;
+		msg.setWindowTitle(App->messageCaption);
 		msg.setModal(true);
 		msg.setText(text);
 		msg.setFixedWidth(300);
@@ -361,6 +362,7 @@ namespace CppProject
 	BoolType show_question(StringType text)
 	{
 		QMessageBoxNoEsc msg;
+		msg.setWindowTitle(App->messageCaption);
 		msg.setModal(true);
 		msg.setText(text);
 		msg.setFixedWidth(300);

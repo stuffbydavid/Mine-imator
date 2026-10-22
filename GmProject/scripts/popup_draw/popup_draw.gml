@@ -7,8 +7,9 @@ function popup_draw()
 		
 		if (off != 0)
 		{
+			var oldheight = floor(popup_current.custom_height);
 			popup_current.custom_height += off
-			popup_current.offset_y += off/2
+			popup_current.offset_y += (floor(popup_current.custom_height) - oldheight) / 2
 		}
 	}
 	else if (popup_current != null)
@@ -63,10 +64,10 @@ function popup_draw()
 		popup_block_ani_ease = "easeincirc"
 	}
 	
-	draw_set_alpha(ease("easeoutcirc", popup_ani))
-	
 	if (window_busy = "popup/move")
 		draw_set_alpha(0.5)
+	else
+		draw_set_alpha(popup_current.height_ready ? ease("easeoutcirc", popup_ani) : 0)
 	
 	if (window_busy = "popup/" + popup_current.name)
 		window_busy = ""
@@ -75,11 +76,20 @@ function popup_draw()
 	var boxx, boxy, boxw, boxh, closex, closey;
 	boxw = popup_current.width
 	boxh = floor(popup_current.custom_height)
+
+	if (window_busy != "popup/move")
+	{
+		popup_current.offset_x = clamp(popup_current.offset_x, -(window_width - boxw) / 2, (window_width - boxw) / 2)
+		popup_current.offset_y = clamp(popup_current.offset_y, -(window_height - boxh) / 2, (window_height - boxh) / 2)
+	}
+
 	boxx = floor(popup_current.offset_x) + window_width / 2 - boxw / 2
-	boxy = floor(popup_current.offset_y) + window_height / 2 - boxh / 2
+	boxy = popup_current.offset_y + window_height / 2 - boxh / 2
 	
 	boxx = floor(boxx)
 	boxy = floor(boxy)
+	if (window_busy != "popup/move")
+		boxy = clamp(boxy, 0, max(0, window_height - boxh))
 	
 	popup_mouseon = app_mouse_box(boxx, boxy, boxw, boxh)
 	
@@ -93,6 +103,8 @@ function popup_draw()
 	draw_dropshadow(boxx, boxy, boxw, boxh, c_black, 1) 
 	draw_box(boxx, boxy, boxw, boxh, false, c_level_top, 1) 
 	draw_outline(boxx, boxy, boxw, boxh, 1, c_border, a_border, true) 
+
+	clip_begin(boxx, boxy, boxw, boxh)
 	
 	// Move
 	if (window_busy = "popup/click")
@@ -100,7 +112,7 @@ function popup_draw()
 		if (mouse_move > 10)
 		{
 			popup_move_offset_x = popup_current.offset_x
-			popup_move_offset_y = popup_current.offset_y
+			popup_move_offset_y = boxy + boxh / 2 - window_height / 2
 			window_busy = "popup/move"
 		}
 		else if (!mouse_left)
@@ -111,15 +123,11 @@ function popup_draw()
 	{
 		popup_current.offset_x = popup_move_offset_x + (mouse_x - mouse_click_x)
 		popup_current.offset_y = popup_move_offset_y + (mouse_y - mouse_click_y)
+		
 		if (!mouse_left)
 			window_busy = ""
 	}
-	else
-	{
-		popup_current.offset_x = clamp(popup_current.offset_x, -(window_width - boxw) / 2, (window_width - boxw) / 2)
-		popup_current.offset_y = clamp(popup_current.offset_y, -(window_height - boxh) / 2, (window_height - boxh) / 2)
-	}
-	
+
 	// Draw contents
 	dx = content_x
 	dy = content_y
@@ -181,6 +189,8 @@ function popup_draw()
 	}
 	else
 		popup_current.custom_height_goal = ceil((dy - dy_start) / 2) * 2
+
+	popup_current.height_ready = true
 	
 	if (popup_mouseon && mouse_cursor = cr_default && mouse_left_pressed)
 		window_busy = "popup/click"
@@ -188,5 +198,7 @@ function popup_draw()
 	if (window_busy = "" && popup_current.block)
 		window_busy = "popup/" + popup_current.name
 	
+	clip_end()
+
 	draw_set_alpha(1)
 }

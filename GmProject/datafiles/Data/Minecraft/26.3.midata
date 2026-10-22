@@ -1557,6 +1557,7 @@
 		},
 		{
 			"name": "painting",
+			"entity": "painting",
 			"states": {
 				"variant": [
 					{ "value": "painting_kebab", "file": "painting_1x1.mimodel", "shape_texture": { "painting": "painting/kebab" } },
@@ -1612,7 +1613,10 @@
 					{ "value": "painting_fire", "file": "painting_2x2.mimodel", "shape_texture": { "painting": "painting/fire" } }
 				]
 			},
-			"default_state": "variant=painting_kebab"
+			"default_state": "variant=painting_kebab",
+			"timeline": {
+				"type": "painting"
+			}
 		},
 		{
 			"name": "item_frame",
@@ -1644,31 +1648,6 @@
 				]
 			},
 			"default_state": "variant=standing"
-		},
-		{
-			"name": "cushion",
-			"file": "cushion.mimodel",
-			"states": {
-				"color": [
-					{ "value": "white", "texture": "entity/cushion/white_cushion" },
-					{ "value": "orange", "texture": "entity/cushion/orange_cushion" },
-					{ "value": "magenta", "texture": "entity/cushion/magenta_cushion" },
-					{ "value": "light_blue", "texture": "entity/cushion/light_blue_cushion" },
-					{ "value": "yellow", "texture": "entity/cushion/yellow_cushion" },
-					{ "value": "lime", "texture": "entity/cushion/lime_cushion" },
-					{ "value": "pink", "texture": "entity/cushion/pink_cushion" },
-					{ "value": "gray", "texture": "entity/cushion/gray_cushion" },
-					{ "value": "light_gray", "texture": "entity/cushion/light_gray_cushion" },
-					{ "value": "cyan", "texture": "entity/cushion/cyan_cushion" },
-					{ "value": "purple", "texture": "entity/cushion/purple_cushion" },
-					{ "value": "blue", "texture": "entity/cushion/blue_cushion" },
-					{ "value": "brown", "texture": "entity/cushion/brown_cushion" },
-					{ "value": "green", "texture": "entity/cushion/green_cushion" },
-					{ "value": "red", "texture": "entity/cushion/red_cushion" },
-					{ "value": "black", "texture": "entity/cushion/black_cushion" }
-				]
-			},
-			"default_state": "color=red"
 		},
 		{
 			"name": "armor_stand",
@@ -2429,12 +2408,14 @@
 		{
 			"name": "sticky_piston",
 			"file": "sticky_piston.json",
+			"type": "piston",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
 				"extended": [ "false", "true" ]
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
+				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=sticky",
 				"rotation_point": [ 0, 8, 0 ],
@@ -2487,12 +2468,14 @@
 		{
 			"name": "piston",
 			"file": "piston.json",
+			"type": "piston",
 			"states": {
 				"facing": [ "north", "south", "east", "west", "up", "down" ],
 				"extended": [ "false", "true" ]
 			},
 			"default_state": "facing=west,extended=false",
 			"timeline": {
+				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=normal",
 				"rotation_point": [ 0, 8, 0 ],
@@ -3198,18 +3181,23 @@
 		},
 		{
 			"name": "chest",
+			"file": "chest.json",
 			"type": "chest",
 			"states": {
 				"type": [ "single", "right", "left", "legacy" ],
 				"facing": [ "north", "south", "east", "west" ],
-				"double": [ "false", "true" ]
+				"double": [ "false", "true" ],
+				"variant": [ "normal", "christmas" ]
 			},
 			"default_state": "facing=west,type=legacy",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": {
-					"double=false": "variant=normal",
-					"double=true": "variant=normal_double"
+					"variant=normal,double=false": "variant=normal",
+					"variant=normal,double=true": "variant=normal_double",
+					"variant=christmas,double=false": "variant=christmas",
+					"variant=christmas,double=true": "variant=christmas_double"
 				},
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
@@ -3299,11 +3287,26 @@
 		{
 			"name": "sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "poplar", "bamboo", "crimson", "warped" ],
+				"wood": [
+					{ "value": "oak", "file": "oak_sign.json" },
+					{ "value": "spruce", "file": "spruce_sign.json" },
+					{ "value": "birch", "file": "birch_sign.json" },
+					{ "value": "jungle", "file": "jungle_sign.json" },
+					{ "value": "acacia", "file": "acacia_sign.json" },
+					{ "value": "dark_oak", "file": "dark_oak_sign.json" },
+					{ "value": "mangrove", "file": "mangrove_sign.json" },
+					{ "value": "cherry", "file": "cherry_sign.json" },
+					{ "value": "pale_oak", "file": "pale_oak_sign.json" },
+					{ "value": "poplar", "file": "poplar_sign.json" },
+					{ "value": "bamboo", "file": "bamboo_sign.json" },
+					{ "value": "crimson", "file": "crimson_sign.json" },
+					{ "value": "warped", "file": "warped_sign.json" }
+				],
 				"rotation": [ "8", "9", "10", "11", "12", "13", "14", "15", "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "rotation=0,wood=oak",
 			"timeline": {
+				"type": "sign",
 				"model": "sign",
 				"model_state": {
 					"wood=oak": "wood=oak,variant=standing",
@@ -3406,6 +3409,7 @@
 			},
 			"default_state": "variant=oak,hinge=left,facing=west,open=false",
 			"timeline": {
+				"type": "door",
 				"rotation_point": [ 14.5, 0, 1.5 ],
 				"position": {
 					"location=north_west": [ 1.5, 0, 1.5 ],
@@ -3466,11 +3470,26 @@
 		{
 			"name": "wall_sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "poplar", "bamboo", "crimson", "warped" ],
+				"wood": [
+					{ "value": "oak", "file": "oak_wall_sign.json" },
+					{ "value": "spruce", "file": "spruce_wall_sign.json" },
+					{ "value": "birch", "file": "birch_wall_sign.json" },
+					{ "value": "jungle", "file": "jungle_wall_sign.json" },
+					{ "value": "acacia", "file": "acacia_wall_sign.json" },
+					{ "value": "dark_oak", "file": "dark_oak_wall_sign.json" },
+					{ "value": "mangrove", "file": "mangrove_wall_sign.json" },
+					{ "value": "cherry", "file": "cherry_wall_sign.json" },
+					{ "value": "pale_oak", "file": "pale_oak_wall_sign.json" },
+					{ "value": "poplar", "file": "poplar_wall_sign.json" },
+					{ "value": "bamboo", "file": "bamboo_wall_sign.json" },
+					{ "value": "crimson", "file": "crimson_wall_sign.json" },
+					{ "value": "warped", "file": "warped_wall_sign.json" }
+				],
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west,wood=oak",
 			"timeline": {
+				"type": "sign",
 				"model": "sign",
 				"model_state": {
 					"wood=oak": "wood=oak,variant=wall",
@@ -3532,12 +3551,27 @@
 		{
 			"name": "hanging_sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "poplar", "bamboo", "crimson", "warped" ],
+				"wood": [
+					{ "value": "oak", "file": "oak_hanging_sign.json" },
+					{ "value": "spruce", "file": "spruce_hanging_sign.json" },
+					{ "value": "birch", "file": "birch_hanging_sign.json" },
+					{ "value": "jungle", "file": "jungle_hanging_sign.json" },
+					{ "value": "acacia", "file": "acacia_hanging_sign.json" },
+					{ "value": "dark_oak", "file": "dark_oak_hanging_sign.json" },
+					{ "value": "mangrove", "file": "mangrove_hanging_sign.json" },
+					{ "value": "cherry", "file": "cherry_hanging_sign.json" },
+					{ "value": "pale_oak", "file": "pale_oak_hanging_sign.json" },
+					{ "value": "poplar", "file": "poplar_hanging_sign.json" },
+					{ "value": "bamboo", "file": "bamboo_hanging_sign.json" },
+					{ "value": "crimson", "file": "crimson_hanging_sign.json" },
+					{ "value": "warped", "file": "warped_hanging_sign.json" }
+				],
 				"rotation": [ "8", "9", "10", "11", "12", "13", "14", "15", "0", "1", "2", "3", "4", "5", "6", "7" ],
 				"attached": [ "false", "true" ]
 			},
 			"default_state": "rotation=0,wood=oak,attached=false",
 			"timeline": {
+				"type": "sign",
 				"model": "hanging_sign",
 				"model_state": {
 					"wood=oak,attached=false": "wood=oak,variant=hanging",
@@ -3618,11 +3652,26 @@
 		{
 			"name": "wall_hanging_sign",
 			"states": {
-				"wood": [ "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "poplar", "bamboo", "crimson", "warped" ],
+				"wood": [
+					{ "value": "oak", "file": "oak_wall_hanging_sign.json" },
+					{ "value": "spruce", "file": "spruce_wall_hanging_sign.json" },
+					{ "value": "birch", "file": "birch_wall_hanging_sign.json" },
+					{ "value": "jungle", "file": "jungle_wall_hanging_sign.json" },
+					{ "value": "acacia", "file": "acacia_wall_hanging_sign.json" },
+					{ "value": "dark_oak", "file": "dark_oak_wall_hanging_sign.json" },
+					{ "value": "mangrove", "file": "mangrove_wall_hanging_sign.json" },
+					{ "value": "cherry", "file": "cherry_wall_hanging_sign.json" },
+					{ "value": "pale_oak", "file": "pale_oak_wall_hanging_sign.json" },
+					{ "value": "poplar", "file": "poplar_wall_hanging_sign.json" },
+					{ "value": "bamboo", "file": "bamboo_wall_hanging_sign.json" },
+					{ "value": "crimson", "file": "crimson_wall_hanging_sign.json" },
+					{ "value": "warped", "file": "warped_wall_hanging_sign.json" }
+				],
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west,wood=oak",
 			"timeline": {
+				"type": "sign",
 				"model": "hanging_sign",
 				"model_state": {
 					"wood=oak": "wood=oak,variant=wall",
@@ -3686,6 +3735,7 @@
 			},
 			"default_state": "face=wall,facing=east,powered=false",
 			"timeline": {
+				"type": "lever",
 				"model": "lever",
 				"model_state": "",
 				"position": {
@@ -3738,6 +3788,8 @@
 			},
 			"default_state": "variant=stone,powered=false",
 			"timeline": {
+				"type": "pressure_plate",
+				"transform": false,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -3829,6 +3881,7 @@
 			},
 			"default_state": "variant=stone,face=floor,facing=west,powered=false",
 			"timeline": {
+				"type": "button",
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
 					"face=ceiling": [ 8, 16, 8 ],
@@ -4146,6 +4199,8 @@
 			},
 			"default_state": "variant=oak,facing=west,open=false,half=bottom",
 			"timeline": {
+				"type": "trapdoor",
+				"transform": false,
 				"rotation_point": {
 					"facing=north": [ 8, 1.5, 14.5 ],
 					"facing=south": [ 8, 1.5, 1.5 ],
@@ -4427,6 +4482,7 @@
 			},
 			"default_state": "variant=oak,facing=west,open=false,in_wall=false",
 			"timeline": {
+				"type": "fence_gate",
 				"model": "fence_gate",
 				"model_state": {
 					"variant=oak": "variant=oak",
@@ -4521,6 +4577,7 @@
 			"name": "enchanting_table",
 			"file": "enchanting_table.json",
 			"timeline": {
+				"type": "enchanting_table",
 				"model": "book",
 				"model_double": true,
 				"rotation_point": [ 0, 3, 0 ],
@@ -4618,11 +4675,13 @@
 		},
 		{
 			"name": "ender_chest",
+			"file": "ender_chest.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": "variant=ender",
 				"position": [ 8, 0, 8 ],
@@ -4637,6 +4696,7 @@
 		},
 		{
 			"name": "tripwire_hook",
+			"file": "tripwire_hook.json",
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"attached": [ "false", "true" ],
@@ -4644,6 +4704,7 @@
 			},
 			"default_state": "facing=west,attached=false,powered=false",
 			"timeline": {
+				"type": "tripwire_hook",
 				"model": "tripwire_hook",
 				"position": {
 					"facing=north": [ 8, 0, 15 ],
@@ -4901,6 +4962,7 @@
 			},
 			"default_state": "rotation=0,character=human",
 			"timeline": {
+				"type": "mob_head",
 				"model": "mob_head",
 				"model_state": {
 					"character=skeleton": "character=skeleton",
@@ -4949,6 +5011,7 @@
 			},
 			"default_state": "facing=west,character=human",
 			"timeline": {
+				"type": "mob_head",
 				"model": "mob_head",
 				"model_state": {
 					"character=skeleton": "character=skeleton",
@@ -5001,6 +5064,7 @@
 		},
 		{
 			"name": "trapped_chest",
+			"file": "trapped_chest.json",
 			"type": "chest",
 			"states": {
 				"type": [ "single", "right", "left", "legacy" ],
@@ -5009,6 +5073,7 @@
 			},
 			"default_state": "facing=west,type=legacy",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": {
 					"double=false": "variant=trapped",
@@ -5039,6 +5104,8 @@
 			},
 			"default_state": "variant=light,power=0",
 			"timeline": {
+				"type": "pressure_plate",
+				"transform": false,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -5266,6 +5333,7 @@
 			},
 			"default_state": "rotation=0,color=white",
 			"timeline": {
+				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=standing",
 				"pattern_type": "banner",
@@ -5334,6 +5402,7 @@
 			},
 			"default_state": "facing=west,color=white",
 			"timeline": {
+				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=wall",
 				"pattern_type": "banner",
@@ -5686,6 +5755,7 @@
 			},
 			"default_state": "color=none,facing=up",
 			"timeline": {
+				"type": "shulker_box",
 				"model": "shulker_box",
 				"position": {
 					"facing=north": [ 8, 8, 16 ],
@@ -5864,6 +5934,7 @@
 			},
 			"default_state": "open=false",
 			"timeline": {
+				"type": "conduit",
 				"model": "conduit",
 				"position": [ 8, 0, 8 ]
 			},
@@ -6249,8 +6320,10 @@
 			},
 			"default_state": "facing=west,attachment=floor",
 			"timeline": {
+				"type": "bell",
 				"model": "bell",
 				"model_double": true,
+				"hide_model": "minecraft:block_added/bell_body",
 				"position": [ 8, 13, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 0, 0 ],
@@ -6987,6 +7060,7 @@
 		},
 		{
 			"name": "copper_chest",
+			"file": "copper_chest.json",
 			"type": "chest",
 			"states": {
 				"variant": [ "copper", "exposed_copper", "weathered_copper", "oxidized_copper", "waxed_copper", "waxed_exposed_copper", "waxed_weathered_copper", "waxed_oxidized_copper" ],
@@ -6996,6 +7070,7 @@
 			},
 			"default_state": "variant=copper,type=single,facing=west",
 			"timeline": {
+				"type": "chest",
 				"model": "chest",
 				"model_state": {
 					"variant=copper,double=false": "variant=copper",
@@ -7045,6 +7120,7 @@
 			},
 			"default_state": "variant=normal,facing=west",
 			"timeline": {
+				"type": "copper_golem_statue",
 				"model": "copper_golem",
 				"model_state": {
 					"variant=normal": "variant=normal,eyes=false",
@@ -7418,6 +7494,7 @@
 			},
 			"default_state": "facing=east",
 			"timeline": {
+				"type": "decorated_pot",
 				"model": "decorated_pot",
 				"position": [ 8, 0, 8 ],
 				"rotation": {
@@ -7576,6 +7653,14 @@
 			},
 			"default_state": "facing=west,hydration=0",
 			"id": "minecraft:dried_ghast"
+		},
+		{
+			"name": "cushion",
+			"file": "cushion.json",
+			"states": {
+				"color": [ "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black" ]
+			},
+			"default_state": "color=red"
 		}
 	],
 	"model_textures": [
@@ -7758,22 +7843,6 @@
 		"entity/creaking/creaking",
 		"entity/creaking/creaking_eyes",
 		"entity/creeper/creeper",
-		"entity/cushion/black_cushion",
-		"entity/cushion/blue_cushion",
-		"entity/cushion/brown_cushion",
-		"entity/cushion/cyan_cushion",
-		"entity/cushion/gray_cushion",
-		"entity/cushion/green_cushion",
-		"entity/cushion/light_blue_cushion",
-		"entity/cushion/light_gray_cushion",
-		"entity/cushion/lime_cushion",
-		"entity/cushion/magenta_cushion",
-		"entity/cushion/orange_cushion",
-		"entity/cushion/pink_cushion",
-		"entity/cushion/purple_cushion",
-		"entity/cushion/red_cushion",
-		"entity/cushion/white_cushion",
-		"entity/cushion/yellow_cushion",
 		"entity/decorated_pot/decorated_pot_base",
 		"entity/decorated_pot/decorated_pot_side",
 		"entity/decorated_pot/angler_pottery_pattern",
@@ -9682,12 +9751,34 @@
 		"block/yellow_poplar_leaves opaque",
 		"block/red_shrub"
 	],
-	"block_32_sheet_size": [ 16, 2 ],
+	"block_32_sheet_size": [ 16, 3 ],
 	"block_32_textures": [
-		"block/dried_ghast_hydration_0_tentacles",
-		"block/dried_ghast_hydration_1_tentacles",
-		"block/dried_ghast_hydration_2_tentacles",
-		"block/dried_ghast_hydration_3_tentacles",
+		"block/oak_sign",
+		"block/spruce_sign",
+		"block/birch_sign",
+		"block/jungle_sign",
+		"block/acacia_sign",
+		"block/dark_oak_sign",
+		"block/mangrove_sign",
+		"block/cherry_sign",
+		"block/pale_oak_sign",
+		"block/poplar_sign",
+		"block/bamboo_sign",
+		"block/crimson_sign",
+		"block/warped_sign",
+		"block/oak_hanging_sign",
+		"block/spruce_hanging_sign",
+		"block/birch_hanging_sign",
+		"block/jungle_hanging_sign",
+		"block/acacia_hanging_sign",
+		"block/dark_oak_hanging_sign",
+		"block/mangrove_hanging_sign",
+		"block/cherry_hanging_sign",
+		"block/pale_oak_hanging_sign",
+		"block/poplar_hanging_sign",
+		"block/bamboo_hanging_sign",
+		"block/crimson_hanging_sign",
+		"block/warped_hanging_sign",
 		"block/oak_shelf",
 		"block/spruce_shelf",
 		"block/birch_shelf",
@@ -9702,11 +9793,53 @@
 		"block/crimson_shelf",
 		"block/warped_shelf",
 		"block/shelf_mushroom_stage0",
-		"block/shelf_mushroom_stage1"
+		"block/shelf_mushroom_stage1",
+		"block/dried_ghast_hydration_0_tentacles",
+		"block/dried_ghast_hydration_1_tentacles",
+		"block/dried_ghast_hydration_2_tentacles",
+		"block/dried_ghast_hydration_3_tentacles"
 	],
-	"block_64_sheet_size": [ 8, 1 ],
+	"block_64_sheet_size": [ 8, 5 ],
 	"block_64_textures": [
-		"block/straw_bed"
+		"block/straw_bed",
+		"entity/chest/normal",
+		"entity/chest/normal_left",
+		"entity/chest/normal_right",
+		"entity/chest/christmas",
+		"entity/chest/christmas_left",
+		"entity/chest/christmas_right",
+		"entity/chest/ender",
+		"entity/chest/trapped",
+		"entity/chest/trapped_left",
+		"entity/chest/trapped_right",
+		"entity/chest/copper",
+		"entity/chest/copper_left",
+		"entity/chest/copper_right",
+		"entity/chest/copper_exposed",
+		"entity/chest/copper_exposed_left",
+		"entity/chest/copper_exposed_right",
+		"entity/chest/copper_weathered",
+		"entity/chest/copper_weathered_left",
+		"entity/chest/copper_weathered_right",
+		"entity/chest/copper_oxidized",
+		"entity/chest/copper_oxidized_left",
+		"entity/chest/copper_oxidized_right",
+		"entity/cushion/white_cushion",
+		"entity/cushion/orange_cushion",
+		"entity/cushion/magenta_cushion",
+		"entity/cushion/light_blue_cushion",
+		"entity/cushion/yellow_cushion",
+		"entity/cushion/lime_cushion",
+		"entity/cushion/pink_cushion",
+		"entity/cushion/gray_cushion",
+		"entity/cushion/light_gray_cushion",
+		"entity/cushion/cyan_cushion",
+		"entity/cushion/purple_cushion",
+		"entity/cushion/blue_cushion",
+		"entity/cushion/brown_cushion",
+		"entity/cushion/green_cushion",
+		"entity/cushion/red_cushion",
+		"entity/cushion/black_cushion"
 	],
 	"block_animated_sheet_size": [ 32, 2, 64 ],
 	"block_textures_animated": [

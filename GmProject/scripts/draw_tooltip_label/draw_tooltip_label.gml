@@ -1,16 +1,31 @@
-function draw_tooltip_label(text, icon, type)
+function draw_tooltip_label(text, icon, type, halign = fa_left)
 {
-	var color = setting_theme.toast_color[type];
+	var color, textx, iconx;
+	color = setting_theme.toast_color[type]
 	
 	draw_set_font(font_caption)
 	text = string_wrap(text_get(text), (dw - 32) + 4)
+	textx = dx + 32
+	iconx = dx + 12
+
+	if (halign = fa_center || halign = fa_right)
+	{
+		var groupwidth, groupx;
+		groupwidth = string_width(text) + (icon != null ? 28 : 0)
+		groupx = dx + (dw - groupwidth) / 2
+		if (halign = fa_right)
+			groupx = dx + dw - groupwidth - 4
+
+		textx = groupx + (icon != null ? 28 : 0)
+		iconx = groupx + 8
+	}
 	
 	// Undo previous component padding
 	dy -= 8
 	
 	tab_control(24 + string_count("\n", text) * 14)
 	if (icon != null)
-		draw_image(spr_icons, icon, dx + 12, dy + (tab_control_h/2), 1, 1, color, 1)
-	draw_label(text, dx + 32, dy + (tab_control_h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_caption)
+		draw_image(spr_icons, icon, iconx, dy + (tab_control_h/2), 1, 1, color, 1)
+	draw_label(text, textx, dy + (tab_control_h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary, font_caption)
 	tab_next()
 }

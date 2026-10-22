@@ -6,6 +6,7 @@ function builder_read_schematic_blocks()
 {
 	debug_timer_start()
 	builder_start()
+	
 	sch_timeline_amount = 0
 	
 	for (var b = 0; b < build_size_total; b++)
@@ -34,7 +35,7 @@ function builder_read_schematic_blocks()
 			else
 				bindex = buffer_peek(buffer_current, sch_blockdata_array + b, buffer_u8)
 									
-			if (bindex > 0)
+			if (bindex >= 0 && bindex < array_length(sch_palette_blocks))
 			{
 				block = sch_palette_blocks[bindex]
 				stateid = sch_palette_state_ids[bindex]
@@ -45,7 +46,13 @@ function builder_read_schematic_blocks()
 		{
 			// Read legacy block ID & data
 			var bid = buffer_peek(buffer_current, sch_legacy_blocks_array + b, buffer_u8);
-			if (bid > 0 && legacy_block_set[bid])
+			if (sch_legacy_add_array != null)
+			{
+				var high = buffer_peek(buffer_current, sch_legacy_add_array + (b div 2), buffer_u8);
+				bid += ((b mod 2 = 0 ? high mod 16 : high div 16) * 256)
+			}
+			
+			if (bid > 0 && bid < 256 && legacy_block_set[bid])
 			{
 				var bdata = buffer_peek(buffer_current, sch_legacy_data_array + b, buffer_u8) mod 16;
 				block = legacy_block_obj[bid, bdata]

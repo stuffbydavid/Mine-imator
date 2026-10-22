@@ -51,6 +51,9 @@ namespace CppProject
 		dimension = global::_app->world_import_dimension;
 		World::Open(save.dimDir[dimension]);
 
+		// Set filter status
+		filterActive = (filteredMcBlockIdStyleIndexMap != mcBlockIdStyleIndexMap || World::waterRemoved);
+
 		// Set up player parameters
 		hasPlayer = (save.hasPlayer && save.playerDim == dimension);
 		playerPos = save.playerPos;
@@ -103,15 +106,23 @@ namespace CppProject
 	{
 		Region::loader->disconnect();
 		Region::loader->active = false;
-		World::GenerateBuilderSections(selection);
+
+		std::unique_ptr<SchematicExport> schematic;
+		try
+		{
+			schematic.reset(new SchematicExport(selection, World::saves.value(global::_app->world_import_world_root).dataVersion, true, false));
+		}
+		catch (const QString& error)
+		{
+			WARNING("Could not create schematic snapshot: " + error);
+		}
+
+		World::GenerateBuilderSections(selection, schematic.get());
 
 		ArrType filterArray;
-		if (global::_app->setting_world_import_filter_enabled)
-		{
-			const List& filterList = DsList(global::_app->setting_world_import_filter_list);
-			for (const List::ListValue& val : filterList.vec)
-				filterArray.Append(val.value);
-		}
+		const List& filterList = DsList(global::_app->setting_world_filter_list);
+		for (const List::ListValue& val : filterList.vec)
+			filterArray.Append(val.value);
 
 		// Add resource
 		IntType resId = action_res_import_world(ScopeAny(global::_app->id),
@@ -119,9 +130,22 @@ namespace CppProject
 			StringType(World::currentRegionsDir.path()),
 			(VecType)selection.start,
 			(VecType)selection.end,
-			global::_app->setting_world_import_filter_mode,
-			filterArray
+			global::_app->setting_world_filter_enabled,
+			global::_app->setting_world_filter_mode,
+			filterArray,
+			schematic ? StringType(schematic->Extension()) : StringType(".schem")
 		);
+
+		res_load_scenery_filter_mask(Scope<obj_resource>(resId));
+		res_load_scenery_block_map(Scope<obj_resource>(resId));
+
+		World::ProcessBuilderEntities();
+
+		if (schematic)
+		{
+			schematic->SaveResource(ObjType(obj_resource, resId));
+			schematic.reset();
+		}
 
 		if (global::_app->world_import_add_tl) // Add template and timeline
 			action_res_scenery_animate(ScopeAny(global::_app->id), resId);
@@ -138,8 +162,8 @@ namespace CppProject
 		}
 
 		World::Close();
-		selection.active = false;
 
+		selection.active = false;
 		dimension = "overworld";
 
 		global::_app->window_state = "";
@@ -153,6 +177,39 @@ namespace CppProject
 		dimension = "overworld";
 
 		World::Close();
+	}
+
+	void Preview::ExportSchematic()
+	{
+		if (exportFilename.isEmpty())
+			return;
+
+		QObject::disconnect(Region::loader, &RegionLoader::UpdateDone, this, &Preview::ExportSchematic);
+
+		QString filename = exportFilename;
+		exportFilename.clear();
+
+		QString err;
+		try
+		{
+			World::ExportSchematic(exportBox, filename);
+		}
+		catch (const QString& message)
+		{
+			err = message;
+		}
+
+		// Keep the importer open and resume loading even if saving failed
+		Region::loader->active = true;
+		if (!err.isEmpty())
+		{
+			WARNING("Schematic export failed: " + err);
+
+			message_set_caption(text_get({ StringType("error/export_schematic_caption") }));
+			show_message(StringType("Could not export schematic:\n" + err));
+		}
+		else
+			toast_new(ScopeAny(global::_app->id), e_toast_POSITIVE, text_get({ StringType("alert/schematic_saved") }));
 	}
 
 	void Preview::Update(Surface* surface, QRect rect, QRect confirmRect)
@@ -207,6 +264,7 @@ namespace CppProject
 				openLoadRegions.clear();
 				progress = 1.0;
 				mode = DEFAULT;
+				global::_app->world_import_filter_active = filterActive;
 			}
 
 			// Loading bar
@@ -215,9 +273,8 @@ namespace CppProject
 			draw_rectangle(0, 0, rect.width(), rect.height(), false);
 			draw_set_alpha(1.0);
 
-			IntType loadPadding = 200;
-			IntType loadHeight = 20;
-			draw_loading_bar(ScopeAny(global::_app->id), loadPadding, rect.height() / 2 - loadHeight / 2, rect.width() - loadPadding * 2, loadHeight, progress, "");
+			IntType loadHeight = 8;
+			draw_loading_bar(ScopeAny(global::_app->id), 0, rect.height() - loadHeight, rect.width(), loadHeight, progress, "");
 			
 			surface_reset_target();
 
@@ -306,7 +363,7 @@ namespace CppProject
 
 				// Check unload
 				VecType regionMidPos = region->pos + WorldVec(REGION_SIZE / 2, 128, REGION_SIZE / 2);
-				if (global::_app->setting_world_import_unload_regions.ToBool() &&
+				if (global::_app->setting_world_unload_regions.ToBool() &&
 					(VecType(camPos.x, 128, camPos.z) - regionMidPos).GetLength() > PREVIEW_UNLOAD_DISTANCE &&
 					(VecType(camTarget.x, 128, camTarget.z) - regionMidPos).GetLength() > PREVIEW_UNLOAD_DISTANCE)
 				{
@@ -615,8 +672,8 @@ namespace CppProject
 
 						if (mouseLocked)
 						{
-							camAngleXY += (lockX - display_mouse_get_x()) * flyLookSensitivity * 0.25;
-							camAngleZ -= (lockY - display_mouse_get_y()) * flyLookSensitivity * 0.25;
+							camAngleXY += (lockX - display_mouse_get_x()) * flyLookSensitivity * 0.2;
+							camAngleZ -= (lockY - display_mouse_get_y()) * flyLookSensitivity * 0.2;
 							camAngleZ = std::clamp(camAngleZ, -89.9, 89.9);
 
 							UpdateCameraTarget();
@@ -820,7 +877,7 @@ namespace CppProject
 			if (!global::point3D_project_error)
 			{
 				IntType loadingWidth = 300;
-				IntType loadingHeight = 15;
+				IntType loadingHeight = 8;
 
 				draw_loading_bar(ScopeAny(global::_app->id), loadingScreenPos.x - loadingWidth / 2, loadingScreenPos.y - loadingHeight / 2, loadingWidth, loadingHeight, progress, "");
 			}

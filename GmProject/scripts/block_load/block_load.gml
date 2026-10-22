@@ -125,9 +125,18 @@ function block_load(map, typemap)
 			}
 		}
 		
+		// Has timeline
+		timeline = false
+		tl_model_double = false
+		tl_hide_model = ""
+		
+		var tlmap = map[?"timeline"];
+		if (ds_map_valid(tlmap))
+			block_load_timeline(tlmap, typemap[?tlmap])
+
 		// Load default file
 		if (filename != "")
-			file = block_load_state_file(load_assets_dir + mc_blockstates_directory + filename, id, [])
+			file = block_load_state_file(filename, id, [])
 		else
 			file = null
 		
@@ -175,13 +184,6 @@ function block_load(map, typemap)
 		else
 			require_models = false
 		
-		// Has timeline
-		var timelinemap = map[?"timeline"];
-		timeline = false
-		model_double = false
-		if (ds_map_valid(timelinemap))
-			block_load_timeline(timelinemap, typemap[?timelinemap])
-			
 		// Multi-threaded
 		if (is_bool(map[?"multithreaded"]))
 			multithreaded = map[?"multithreaded"]
@@ -241,7 +243,7 @@ function block_load(map, typemap)
 						if (value_filename[valid] != "")
 						{
 							if (value_file[valid] = null)
-								value_file[valid] = block_load_state_file(load_assets_dir + mc_blockstates_directory + value_filename[valid], other.id, [ name, value_name[valid] ])
+								value_file[valid] = block_load_state_file(value_filename[valid], other.id, [ name, value_name[valid] ])
 							curfile = value_file[valid]
 						}
 						
@@ -273,6 +275,9 @@ function block_load(map, typemap)
 				other.state_id_random_offset[sid] = curoffset
 				other.state_id_random_offset_xy[sid] = curoffsetxy
 			}
+
+			if (timeline && curfile = null)
+				mc_assets.block_tl_required_map[?tl_type] = true
 		}
 		
 		return id

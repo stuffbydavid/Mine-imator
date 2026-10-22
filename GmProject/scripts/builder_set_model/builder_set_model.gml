@@ -45,14 +45,20 @@ function builder_set_model(ongeneration = false)
 			ret = null
 	}
 
-	var tlvalid = ((mc_builder.block_tl_add = null || mc_builder.block_tl_add) && block_current.timeline && block_tl_map != null && ret != null);
+	var tlvalid = (mc_builder.block_tl_add && block_current.timeline && block_tl_map != null && ret != null);
+	
+	if (tlvalid && mc_builder.block_tl_types != null)
+		tlvalid = array_contains(mc_builder.block_tl_types, block_current.tl_type)
+	
+	if (tlvalid && block_current.tl_type = "sign")
+		tlvalid = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]))
 
 	// Has timeline
-	if (tlvalid && !block_current.model_double)
+	if (tlvalid && !block_current.tl_model_double)
 		block_tl_map[?build_pos_index] = [ block_current, block_state_id_current ]
 	else
 	{
-		if (tlvalid && block_current.model_double)
+		if (tlvalid && block_current.tl_model_double)
 			block_tl_map[?build_pos_index] = [ block_current, block_state_id_current ]
 	
 		// Look for the render model of the current state
@@ -71,7 +77,12 @@ function builder_set_model(ongeneration = false)
 				{
 					model = []
 					for (var i = 0; i < array_length(modelobj); i++)
-						model[i] = block_get_render_model(modelobj[i], brightness, offset, offsetxy)
+					{
+						if (tlvalid && modelobj[i].hide_model)
+							continue
+
+						array_add(model, block_get_render_model(modelobj[i], brightness, offset, offsetxy))
+					}
 				}
 				// Single model
 				else 

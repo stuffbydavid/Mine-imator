@@ -115,6 +115,8 @@ function popup_pattern_editor_draw()
 		popup_pattern_editor_draw_layer(dx, listy, listw, 48, -1, true)
 	
 	clip_end()
+	if (!is_cpp())
+		clip_begin(content_x, content_y, content_width, content_height)
 	
 	dy += 325 + 8
 	

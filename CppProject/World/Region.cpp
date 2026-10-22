@@ -75,10 +75,17 @@ namespace CppProject
 		unload = false;
 	}
 
-	void Region::Load(const WorldBox& box)
+	void Region::Load(const WorldBox& box, SchematicExport* schematic)
 	{
 		// Check region box with given selection
-		if (box.active && !box.Intersects({ pos + WorldVec(0, CHUNK_HEIGHT_MIN, 0), pos + WorldVec(REGION_SIZE, CHUNK_HEIGHT_MAX, REGION_SIZE) }))
+		WorldBox regionBox(pos + WorldVec(0, CHUNK_HEIGHT_MIN, 0), pos + WorldVec(REGION_SIZE, CHUNK_HEIGHT_MAX, REGION_SIZE));
+		if (schematic && schematic->exportOnly)
+		{
+			regionBox.start.y = box.start.y;
+			regionBox.end.y = box.end.y;
+		}
+
+		if (box.active && !box.Intersects(regionBox))
 			return;
 
 		Unload();
@@ -99,43 +106,77 @@ namespace CppProject
 		}
 
 		QByteArray data = file.readAll();
+		if (schematic && data.size() < 8192)
+		{
+			loadStatus = LOAD_ERROR;
+			return;
+		}
 
 		// Read chunk offsets
 		QVector<IntType> offsets;
 		uint16_t maxChunks = 32 * 32;
 		for (uint16_t i = 0; i < maxChunks; i++)
 		{
+			if (schematic)
+			{
+				WorldVec chunkPos = pos + WorldVec((i & 31) * SECTION_SIZE, box.start.y, (i >> 5) * SECTION_SIZE);
+				if (!box.Intersects({ chunkPos, chunkPos + WorldVec(SECTION_SIZE, box.end.y - box.start.y, SECTION_SIZE) }))
+					continue;
+			}
+
 			uint8_t b1, b2, b3;
 			b1 = data.at(i * 4 + 0);
 			b2 = data.at(i * 4 + 1);
 			b3 = data.at(i * 4 + 2);
-			IntType offset = ((b1 << 16) | (b2 << 8) | b3) << 12;
+			IntType offset = IntType((b1 << 16) | (b2 << 8) | b3) * 4096;
 			if (offset > 0)
 				offsets.append(offset);
 		}
 
 		numChunks = offsets.size();
+		QVector<QByteArray> exportChunks;
+		if (schematic)
+			exportChunks.resize(numChunks);
 
 		// Load chunks
 		IntType numTimelines = 0;
+		int loadErrors = 0;
 		Timer tmr;
 		thread_task_begin();
 
-		#pragma OPENMP_FOR(1) reduction(+:numTimelines)
+		#pragma OPENMP_FOR(1) reduction(+:numTimelines,loadErrors)
 		for (IntType i = 0; i < numChunks; i++)
 		{
 			IntType offset = offsets[i];
+			if (schematic && (offset > data.size() - 5))
+			{
+				loadErrors++;
+				continue;
+			}
+
 			uint8_t b1, b2, b3, b4;
 			b1 = data.at(offset + 0);
 			b2 = data.at(offset + 1);
 			b3 = data.at(offset + 2);
 			b4 = data.at(offset + 3);
 			IntType length = (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
+			if (schematic && (length <= 1 || length > data.size() - offset - 4))
+			{
+				loadErrors++;
+				continue;
+			}
 
 			QByteArray chunkData;
 			if (!Gzip::Decompress(data.constData() + offset + 5, length - 1, chunkData))
 			{
 				WARNING("Error decompressing chunk");
+				loadErrors++;
+				continue;
+			}
+
+			if (schematic && schematic->exportOnly)
+			{
+				exportChunks[i] = std::move(chunkData);
 				continue;
 			}
 
@@ -144,9 +185,78 @@ namespace CppProject
 			chunkStatus[chunk->regionIndex] = ChunkStatus::CHUNK_LOADED;
 
 			numTimelines += chunk->numTimelines;
+
+			// Reuse decompressed source bytes for the schematic after OpenMP
+			if (schematic)
+			{
+				if (chunk->error)
+					loadErrors++;
+				else
+					exportChunks[i] = std::move(chunkData);
+			}
 		}
 
 		thread_task_end();
+
+		if (schematic)
+		{
+			if (loadErrors)
+				schematic->error = "Could not read all selected chunks in " + filename;
+
+			// NBT hash keys must not survive the OpenMP string remapping
+			BoolType exportedChunks[REGION_CHUNKS] = {};
+			if (schematic->error.isEmpty())
+			{
+				try
+				{
+					for (QByteArray& chunkData : exportChunks)
+					{
+						if (chunkData.isEmpty())
+							continue;
+
+						Chunk chunk(this, chunkData, box, schematic);
+						if (chunk.error)
+							throw QString("Could not read chunk for schematic");
+
+						if (schematic->exportOnly)
+						{
+							if (chunkStatus[chunk.regionIndex] == ChunkStatus::CHUNK_LOADED)
+								throw QString("Duplicate chunk in " + filename);
+
+							chunkStatus[chunk.regionIndex] = ChunkStatus::CHUNK_LOADED;
+						}
+
+						schematic->AddChunk(chunk);
+						if (!schematic->skipIncompatible || schematic->legacy == (chunk.format < Chunk::JAVA_1_13))
+							exportedChunks[chunk.regionIndex] = true;
+						chunkData.clear();
+					}
+				}
+				catch (const QString& error)
+				{
+					schematic->error = error;
+				}
+			}
+
+			// Read entity region file
+			if (schematic->error.isEmpty())
+			{
+				QFileInfo regionFile(filename);
+				QString entitiesFile = QDir(regionFile.absolutePath()).filePath("../entities/" + regionFile.fileName());
+				schematic->AddEntityRegion(entitiesFile, pos, exportedChunks);
+			}
+
+			// Export-only loads do not need builder or preview data
+			if (schematic->exportOnly)
+			{
+				loadStatus = LOADED;
+
+				if (!schematic->error.isEmpty())
+					throw schematic->error;
+
+				return;
+			}
+		}
 
 		// Create block entity maps on main thread
 		for (Chunk* chunk : chunks)
@@ -276,8 +386,8 @@ namespace CppProject
 			// Allocate new size
 			if (mData.changed)
 			{
-				mData.mesh.vertexData.Alloc(mData.numVertices);
-				mData.mesh.indexData.Alloc(mData.numIndices);
+				mData.mesh.vertexData.Alloc(mData.numVertices, false);
+				mData.mesh.indexData.Alloc(mData.numIndices, false);
 			}
 
 			// Copy chunk data to region mesh
@@ -296,10 +406,11 @@ namespace CppProject
 					chunkMesh.vertices.Clear();
 
 					// Indices
-					mData.mesh.indexData.Copy(chunkMesh.indices.heap, chunkMesh.indices.Size(), 0, chunkMesh.indexOffset);
-					if (chunkMesh.vertexOffset)
+					if (chunkMesh.vertexOffset == 0)
+						memcpy(mData.mesh.indexData.data + chunkMesh.indexOffset, chunkMesh.indices.Data(), chunkMesh.indices.SizeInBytes());
+					else
 						for (IntType i = 0; i < chunkMesh.indices.Size(); i++)
-							mData.mesh.indexData[chunkMesh.indexOffset + i] += chunkMesh.vertexOffset;
+							mData.mesh.indexData[chunkMesh.indexOffset + i] = chunkMesh.indices.Value(i) + chunkMesh.vertexOffset;
 					
 					chunkMesh.indices.Clear();
 				}
@@ -326,7 +437,16 @@ namespace CppProject
 		{
 			MeshData& mData = meshData[m];
 			if (!mData.changed)
+			{
+				// The final boundary pass may finish without adding geometry
+				if (generatedAmount == GenerateModeAmount)
+				{
+					mData.mesh.vertexData.FreeData();
+					mData.mesh.indexData.FreeData();
+				}
+
 				continue;
+			}
 
 			// Release old GPU buffers
 			if (mData.mesh.HasBuffers())
@@ -455,13 +575,13 @@ namespace CppProject
 		}
 		
 		// Find section
-		uint16_t sectionIndex = (((pos.y >> 4) - CHUNK_SECTION_MIN) << 10) + ((pos.z >> 4) << 5) + (pos.x >> 4);
+		uint16_t sectionIndex = ((pos.y >> 4) - CHUNK_SECTION_MIN) * REGION_SECTIONS_XZ + (pos.z >> 4) * REGION_SIZE_CHUNKS + (pos.x >> 4);
 		Section* section = loadedSections[sectionIndex];
 		if (!section) // Not loaded
 			return { true, true, false, 0 }; // Solid
 
 		// Find style in section
-		uint16_t blockIndex = ((pos.y & SECTION_SIZEM1) << 8) + ((pos.z & SECTION_SIZEM1) << 4) + (pos.x & SECTION_SIZEM1); // YZX order
+		uint16_t blockIndex = (pos.y & SECTION_SIZEM1) * SECTION_SIZE2 + (pos.z & SECTION_SIZEM1) * SECTION_SIZE + (pos.x & SECTION_SIZEM1); // YZX order
 		if (section->preview.blockStyleIndices.Size())
 			return section->preview.states.Value(blockIndex);
 		else

@@ -11,8 +11,10 @@ function block_animate(root)
 		inherit_alpha = true
 		inherit_color = true
 		inherit_texture = true
+		
 		part_of = root
 		part_root = root
+		
 		ds_list_add(root.part_list, id)
 		tl_set_parent(root)
 		
@@ -23,6 +25,7 @@ function block_animate(root)
 			
 			model_name = other.model_name
 			model_state = array_copy_1d(other.model_state)
+			
 			tl_update_scenery_part()
 			
 			// Add model parts
@@ -47,8 +50,10 @@ function block_animate(root)
 			
 			block_name = other.block.name
 			block_state = array_copy_1d(other.block.default_state)
+			
 			if (is_string(other.variant))
 				state_vars_add(block_state, [ "variant", other.variant ])
+			
 			tl_update_scenery_part()
 			
 			texture_filtering = true
@@ -76,105 +81,30 @@ function block_animate(root)
 		
 		tl_update()
 		tl_update_values()
+		
 		animated = false
 		
 		// Add text
 		if (other.has_text)
 		{
-			var text, textpos, textrot, textscale, textcolor, textglowcolor, textemissive;
-			
 			if (part_list = null)
 				part_list = ds_list_create()
-			
+
+			var textparent = tl_part_find("sign");
+			if (textparent = null)
+				textparent = id
+
 			// Front
-			text = other.text_front
-			textpos = other.text_front_position
-			textrot = other.text_front_rotation
-			textscale = other.text_front_scale
-			textcolor = other.text_front_color
-			textglowcolor = other.text_front_glow_color
-			textemissive = other.text_front_emissive
-			
-			with (new_obj(obj_timeline))
-			{
-				type = e_tl_type.TEXT
-				temp = id
-				has_temp = false
-				animated = false
-				
-				// Set parent to other timeline
-				inherit_rot_point = true
-				part_of = other.id
-				ds_list_add(other.part_list, id)
-				tl_set_parent(other.id)
-				
-				value_default[e_value.TEXT] = text
-				value[e_value.TEXT] = text
-				tl_update_scenery_part()
-				
-				tl_value_set_vec3(e_value.POS_X, textpos, true)
-				tl_value_set_vec3(e_value.ROT_X, textrot, true)
-				tl_value_set_vec3(e_value.SCA_X, vec3(textscale), true)
-				value_default[e_value.RGB_MUL] = textcolor
-				value_default[e_value.EMISSIVE] = textemissive
-				
-				if (textemissive > 0)
-				{
-					value_default[e_value.TEXT_OUTLINE] = true
-					value_default[e_value.TEXT_OUTLINE_COLOR] = textglowcolor
-				}
-				
-				tl_update()
-				tl_update_values()
-			}
-			
+			block_animate_text(
+				other.text_front, other.text_front_position, other.text_front_rotation, other.text_front_scale,
+				other.text_front_color, other.text_front_glow_color, other.text_front_emissive, textparent
+			)
+
 			// Back
-			text = other.text_back
-			textpos = other.text_back_position
-			textrot = other.text_back_rotation
-			textscale = other.text_back_scale
-			textcolor = other.text_back_color
-			textglowcolor = other.text_back_glow_color
-			textemissive = other.text_back_emissive
-			
-			with (new_obj(obj_timeline))
-			{
-				type = e_tl_type.TEXT
-				temp = id
-				has_temp = false
-				animated = false
-				
-				// Set parent to other timeline
-				inherit_rot_point = true
-				part_of = other.id
-				ds_list_add(other.part_list, id)
-				tl_set_parent(other.id)
-				
-				value_default[e_value.TEXT] = text
-				value[e_value.TEXT] = text
-				tl_update_scenery_part()
-				
-				value_default[e_value.POS_X] = textpos[X]
-				value_default[e_value.POS_Y] = textpos[Y]
-				value_default[e_value.POS_Z] = textpos[Z]
-				value_default[e_value.ROT_X] = textrot[X]
-				value_default[e_value.ROT_Y] = textrot[Y]
-				value_default[e_value.ROT_Z] = textrot[Z]
-				value_default[e_value.SCA_X] = textscale
-				value_default[e_value.SCA_Y] = textscale
-				value_default[e_value.SCA_Z] = textscale
-				value_default[e_value.RGB_MUL] = textcolor
-				value_default[e_value.EMISSIVE] = textemissive
-				
-				if (textemissive > 0)
-				{
-					value_default[e_value.TEXT_OUTLINE] = true
-					value_default[e_value.TEXT_OUTLINE_COLOR] = textglowcolor
-				}
-				
-				tl_update()
-				tl_update_values()
-			}
+			block_animate_text(
+				other.text_back, other.text_back_position, other.text_back_rotation, other.text_back_scale,
+				other.text_back_color, other.text_back_glow_color, other.text_back_emissive, textparent
+			)
 		}
 		
 		// Pass in pattern data

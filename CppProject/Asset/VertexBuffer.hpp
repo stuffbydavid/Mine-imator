@@ -18,7 +18,7 @@ namespace CppProject
 	struct VertexBuffer : Asset
 	{
 		VertexBuffer() : Asset(ID_VertexBuffer) {}
-		VertexBuffer(QDataStream& stream);
+		VertexBuffer(QDataStream& stream, const std::function<void(Vertex&)>& vertexTransform = {});
 		~VertexBuffer();
 
 		// Submit the vertex buffer to be rendered, returns the number of render calls made.

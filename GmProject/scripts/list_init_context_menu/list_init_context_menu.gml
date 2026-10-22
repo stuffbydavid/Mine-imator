@@ -299,11 +299,20 @@ function list_init_context_menu(name)
 			break
 		}
 		
-		// Render menu
+		// Export menu
 		case "toolbar/export":
 		{
-			list_item_add(text_get("toolbar/export/image"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
-			list_item_add(text_get("toolbar/export/movie"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
+			if (window_state = "world_import")
+			{
+				list_item_add(text_get("toolbar/export/schematic"), null, "", null, icons.ASSET_EXPORT, null, world_import_export_schematic)
+				list_item_last.disabled = (world_import_world_root = "" || !world_import_has_selection())
+			}
+			else
+			{
+				list_item_add(text_get("toolbar/export/image"), null, "", null, icons.IMAGE_EXPORT, null, action_toolbar_export_image)
+				list_item_add(text_get("toolbar/export/movie"), null, "", null, icons.MOVIE_EXPORT, null, action_toolbar_export_movie)
+			}
+			
 			break
 		}
 		

@@ -30,7 +30,10 @@ extern "C" __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = US
 
 int main(int argc, char* argv[])
 {
-	return (new CppProject::AppHandler(argc, argv))->Run();
+	CppProject::AppHandler* app = new CppProject::AppHandler(argc, argv);
+	int result = app->Run();
+	delete app;
+	return result;
 }
 
 namespace CppProject
@@ -42,6 +45,7 @@ namespace CppProject
 	AppHandler::AppHandler(int& argc, char* argv[])
 	{
 		handler = this;
+
 		try
 		{
 			// Initialize string table
@@ -118,7 +122,7 @@ namespace CppProject
 				file_rename_lib(prevLog, prevLogDest);
 			}
 
-			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
+			DEBUG("Mine-imator version " + version_get() + " (" + mineimator_version_date + ")");
 
 		#if OS_WINDOWS
 		#ifdef _WIN64
@@ -281,15 +285,26 @@ namespace CppProject
 
 	int AppHandler::Run()
 	{
-		return qApp->exec();
+		int result = qApp->exec();
+
+		// Wait for all threads to finish
+		for (QThread* thread : threads)
+		{
+			thread->wait();
+			delete thread;
+		}
+
+		threads.clear();
+
+		return result;
 	}
 
-	void AppHandler::LoadResources()
+	void AppHandler::LoadAssets()
 	{
 		if (prRenderer)
 			return;
 
-		DEBUG("Load resources");
+		DEBUG("Load assets");
 
 		// Create renderers
 		prRenderer = new PrimitiveRenderer;

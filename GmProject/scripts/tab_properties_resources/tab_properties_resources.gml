@@ -16,7 +16,11 @@ function tab_properties_resources()
 	if (draw_button_icon("resources/new", dx, dy, 24, 24, false, icons.ASSET_IMPORT, null, false, "tooltip/resource/new"))
 		action_toolbar_import_asset()
 	
-	if (draw_button_icon("preview/export", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, (!res_edit || res_edit.type = e_res_type.FROM_WORLD), "tooltip/resource/save"))
+	var exportdisabled = !res_edit;
+	if (res_edit != null && res_edit.type != e_res_type.PACK)
+		exportdisabled = !file_exists_lib(project_folder + "/" + res_edit.filename)
+
+	if (draw_button_icon("preview/export", dx + 28, dy, 24, 24, false, icons.ASSET_EXPORT, null, exportdisabled, "tooltip/resource/save"))
 		action_res_export()
 	
 	if (draw_button_icon("resources/reload", dx + (28 * 2), dy, 24, 24, false, icons.REFRESH, null, (!res_edit || res_edit = mc_res), "tooltip/resource/reload"))

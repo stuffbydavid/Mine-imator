@@ -9,7 +9,10 @@
 
 namespace CppProject
 {
-	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 4;
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 3;
+
+	// Format 2: 2.0.x, one 32x32 static sheet and untransformed block vertices
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT_LEGACY = 2;
 
 	Heap<Section*> Builder::sections;
 	WorldVec Builder::size, Builder::offset = { 0, 0, 0 }, Builder::sectionsDim;
@@ -58,7 +61,7 @@ namespace CppProject
 					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,
 					false
-			};
+				};
 
 			IntType s = 0;
 			for (IntType z = 0; z < Builder::sectionsDim.z; z++)
@@ -122,6 +125,7 @@ namespace CppProject
 		IntType blockDataArray = self->sch_blockdata_array;
 		IntType legacyBlockArray = self->sch_legacy_blocks_array;
 		IntType legacyDataArray = self->sch_legacy_data_array;
+		IntType legacyAddArray = self->sch_legacy_add_array;
 
 		// Populate sections with schematic data
 		#pragma OPENMP_FOR(1) reduction(+:numTimelines)
@@ -161,7 +165,7 @@ namespace CppProject
 						paletteIndex = buffer->data[blockDataArray + bufferPos];
 
 					// Get block from instance id in schematic palette
-					if (paletteIndex > 0)
+					if (paletteIndex >= 0 && paletteIndex < paletteBlocks.Size())
 					{
 						block = ObjTypeOpt(obj_block, paletteBlocks[paletteIndex]);
 
@@ -172,8 +176,17 @@ namespace CppProject
 				else
 				{
 					// Get block from legacy id+data
-					uint8_t legacyId = buffer->data[legacyBlockArray + bufferPos];
-					if (legacyId > 0 && global::legacy_block_set[legacyId])
+					IntType legacyId = buffer->data[legacyBlockArray + bufferPos];
+					if (legacyAddArray != null_)
+					{
+						uint8_t high = buffer->data[legacyAddArray + bufferPos / 2];
+						if (bufferPos % 2)
+							legacyId += (high >> 4) << 8;
+						else
+							legacyId += (high & 15) << 8;
+					}
+
+					if (legacyId > 0 && legacyId < 256 && global::legacy_block_set[legacyId])
 					{
 						uint8_t legacyData = buffer->data[legacyDataArray + bufferPos] % 16;
 						block = ObjTypeOpt(obj_block, global::legacy_block_obj[legacyId][legacyData]);
@@ -271,6 +284,19 @@ namespace CppProject
 
 		self->build_multithreaded = null_;
 		self->build_transform = false;
+	}
+
+	void builder_set_block(ScopeAny self, IntType x, IntType y, IntType z, IntType blockId, IntType stateId, BoolType waterlogged)
+	{
+		WorldVec pos = { x, y, z };
+		Section* section = Builder::GetSection(pos);
+		BuilderState state = { (uint16_t)blockId, (uint16_t)stateId, waterlogged };
+
+		// Sparse structures leave unlisted positions as air
+		if (!section->builder.palette.Size())
+			section->AddBuilderState({ 0, 0, false });
+
+		section->builder.paletteIndices[section->GetBlockOffset(pos)] = section->AddBuilderState(state);
 	}
 
 	void builder_set_state_id(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)
@@ -687,14 +713,20 @@ namespace CppProject
 
 	BoolType res_load_scenery_world(Scope<obj_resource> self)
 	{
+		BoolType snapshot = self->scenery_snapshot_save;
+		self->scenery_snapshot_save = true;
+
 		// Sections already generated
 		if (Builder::sections.Size())
 			return true;
 
+		// Missing world
 		if (!QDir(self->world_regions_dir.Str()).exists())
 			return false;
 
 		World::Open((QString)self->world_regions_dir.Str());
+
+		// Missing regions in dimension
 		if (!World::regions.count())
 		{
 			World::Close();
@@ -704,7 +736,7 @@ namespace CppProject
 		// Get box
 		VecType boxStart = self->world_box_start;
 		VecType boxEnd = self->world_box_end;
-		if ((boxEnd - boxStart).GetLength() < 2)
+		if (boxEnd.x <= boxStart.x || boxEnd.y <= boxStart.y || boxEnd.z <= boxStart.z)
 		{
 			World::Close();
 			return false;
@@ -712,28 +744,57 @@ namespace CppProject
 
 		WorldBox box(WorldVec(boxStart.x, boxStart.y, boxStart.z), WorldVec(boxEnd.x, boxEnd.y, boxEnd.z));
 
-		// Apply resource filters
-		List& filterList = DsList(global::_app->setting_world_import_filter_list);
-		BoolType oldFilterEnabled = global::_app->setting_world_import_filter_enabled;
-		IntType oldFilterMode = global::_app->setting_world_import_filter_mode;
-		auto oldFilterList = filterList.vec;
+		// Find level.dat above the dimension's region directory
+		QDir worldDir(self->world_regions_dir.Str());
+		while (!worldDir.exists("level.dat") && worldDir.cdUp()) {}
 
-		global::_app->setting_world_import_filter_enabled = self->world_filter_array.Size() > 0;
-		filterList.vec.clear();
-		for (IntType i = 0; i < self->world_filter_array.Size(); i++)
-			filterList.vec.append({ self->world_filter_array.Value(i), 0 });
-		
-		World::ApplyFilter();
+		// Extract DataVersion and create schematic exporter
+		std::unique_ptr<SchematicExport> schematic;
+		if (snapshot)
+		{
+			try
+			{
+				if (!World::AddSave(worldDir.path()))
+					throw QString("Could not determine the world format");
 
-		// Generate sections for scenery builder
-		World::GenerateBuilderSections(box);
+				IntType dataVersion = World::saves.value(worldDir.path()).dataVersion;
+				schematic.reset(new SchematicExport(box, dataVersion, true, false));
+			}
+			catch (const QString& error)
+			{
+				WARNING("Could not create schematic snapshot: " + error);
+			}
+		}
 
-		// Restore settings
-		global::_app->setting_world_import_filter_enabled = oldFilterEnabled;
-		global::_app->setting_world_import_filter_mode = oldFilterMode;
-		filterList.vec = oldFilterList;
+		World::GenerateBuilderSections(box, schematic.get());
 
-		World::ApplyFilter();
+		// Apply filter
+		res_load_scenery_filter_mask(self);
+		res_load_scenery_block_map(self);
+
+		World::ProcessBuilderEntities();
+
+		if (schematic)
+		{
+			if (schematic->error.isEmpty())
+			{
+				// Read only entity data
+				NbtCompound entityRoot;
+				entityRoot.value["Entities"] = schematic->schematic->value.value("Entities");
+				
+				Map* entityMap = entityRoot.ToMap();
+				entityRoot.value.remove("Entities");
+				
+				script_execute(Scope<obj_builder>(ObjType(obj_builder, global::mc_builder)), {
+					asset_get_index("builder_read_entities"), entityMap->Value("Entities")
+				});
+
+				delete entityMap;
+			}
+
+			schematic->SaveResource(self.object);
+		}
+
 		World::Close();
 
 		return true;
@@ -753,7 +814,37 @@ namespace CppProject
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->GetWriteBytes();
-		
+
+		auto freeCpuData = [&]
+		{
+			for (IntType d = 0; d < e_block_depth_amount; d++)
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
+				{
+					// Small buffers still need CPU data for batching, even without a cache
+					if (buf->numIndices <= MAX_BATCH_INDICES)
+						continue;
+
+					for (Mesh<>* mesh : buf->meshes)
+					{
+						mesh->vertexData.FreeData();
+						mesh->indexData.FreeData();
+					}
+				}
+			}
+		};
+
+		// Include the header and reserve once instead of growing a large serialization buffer
+		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
+		totalBytes += sizeof(uchar) + sizeof(quint16) + assetsVersion.size() + sizeof(qint64) * 3;
+		if (totalBytes > std::numeric_limits<int>::max())
+		{
+			WARNING("Block mesh cache exceeds the byte array size limit");
+			freeCpuData();
+			return;
+		}
+
 		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
 		if (mb > 50)
 		{
@@ -762,25 +853,16 @@ namespace CppProject
 
 			if (!res->scenery_cache_save)
 			{
-				// CPU data of meshes won't be needed
-				for (IntType d = 0; d < e_block_depth_amount; d++)
-				for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-				{
-					if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
-					{
-						for (Mesh<>* mesh : buf->meshes)
-						{
-							mesh->vertexData.FreeData();
-							mesh->indexData.FreeData();
-						}
-					}
-				}
+				// Release CPU data that is only retained for cache generation
+				freeCpuData();
 				return;
 			}
 		}
 
 		Timer tmr;
 		QByteArray data;
+		data.reserve((int)totalBytes);
+
 		QDataStream out(&data, QIODevice::WriteOnly);
 
 		// Save format
@@ -788,7 +870,6 @@ namespace CppProject
 		out << format;
 
 		// Save Minecraft assets version
-		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
 		out << (quint16)assetsVersion.size();
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
@@ -802,26 +883,15 @@ namespace CppProject
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 			FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->Write(out);
 
-		tmr.Print("Write block mesh cache");
+		tmr.Print("Serialize block mesh cache (" + filename.QStr() + ")");
 
-		// Compress on a new thread
-		QThread* thread;
-		QString outName = filename.QStr();
-		QString tempName = (QString)file_directory_get() + QFileInfo(filename).fileName();
-		thread = QThread::create([outName, tempName, data]
+		if (out.status() != QDataStream::Ok || data.size() != totalBytes)
 		{
-			Timer tmr;
-			QFile outFile(outName);
-			QFile tempFile(tempName);
-			AddPerms(tempFile);
-			Gzip::Compress(data, tempName);
-			AddPerms(outFile);
-			outFile.remove();
-			tempFile.copy(outName);
-			tempFile.remove();
-			tmr.Print("Compress block mesh cache");
-		});
-		thread->start();
+			WARNING("Could not serialize block mesh cache");
+			return;
+		}
+
+		Gzip::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 8);
 	}
 
 	BoolType res_load_block_cache(Scope<obj_resource> self, StringType filename)
@@ -831,73 +901,130 @@ namespace CppProject
 	#endif
 
 		Timer tmr;
-		QByteArray data;
-
 		tmr.Print("Unzip block mesh cache");
+
+		QByteArray data;
 		BoolType decompressed = Gzip::Decompress(filename, data);
 		if (!decompressed)
 			return false;
 
 		tmr.Reset();
+
 		QDataStream in(&data, QIODevice::ReadOnly);
 
 		// Check format
 		uchar format = 0;
 		in >> format;
-		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
+		if (in.status() != QDataStream::Ok || (format != BLOCK_MESH_CACHE_FORMAT && format != BLOCK_MESH_CACHE_FORMAT_LEGACY))
 			return false;
 
-		// Check Minecraft assets version
-		quint16 assetsVersionSize = 0;
-		in >> assetsVersionSize;
-		if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
-			return false;
+		BoolType legacy = (format == BLOCK_MESH_CACHE_FORMAT_LEGACY);
+		if (!legacy)
+		{
+			// Check Minecraft assets version
+			quint16 assetsVersionSize = 0;
+			in >> assetsVersionSize;
+			if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
+				return false;
 
-		QByteArray assetsVersion(assetsVersionSize, '\0');
-		if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
-			|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
-			return false;
+			QByteArray assetsVersion(assetsVersionSize, '\0');
+			if (in.readRawData(assetsVersion.data(), assetsVersionSize) != assetsVersionSize
+				|| assetsVersion != VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8())
+				return false;
+		}
 
 		// Load size
 		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
 		in >> sizeX;
 		in >> sizeY;
 		in >> sizeZ;
-		if (in.status() != QDataStream::Ok)
+		if (in.status() != QDataStream::Ok || sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
 			return false;
 
+		RealType staticUvScaleX = 1, staticUvScaleY = 1;
+		if (legacy)
+		{
+			VarType sheetSize = global::minecraft_block_sheet_size.Value(e_block_sheet_STATIC16);
+			const IntType legacySheetSize = 32;
+			staticUvScaleX = legacySheetSize / sheetSize.Value(X_).ToReal();
+			staticUvScaleY = legacySheetSize / sheetSize.Value(Y_).ToReal();
+		}
+
 		// Load vertex buffers
-		QVector<VertexBuffer*> vbuffers;
-		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
-		ArrType activeDepths, activeBuffers;
+		QVector<VertexBuffer*> vbuffers(e_block_depth_amount * e_block_vbuffer_amount, nullptr);
 		BoolType valid = true;
+		IntType buffersPerDepth = e_block_vbuffer_amount;
+
+		static constexpr IntType legacyBuffers[] = {
+			e_block_vbuffer_STATIC16,
+			e_block_vbuffer_ANIMATED,
+			e_block_vbuffer_GRASS,
+			e_block_vbuffer_FOLIAGE,
+			e_block_vbuffer_LEAVES_OAK,
+			e_block_vbuffer_LEAVES_SPRUCE,
+			e_block_vbuffer_LEAVES_BIRCH,
+			e_block_vbuffer_LEAVES_JUNGLE,
+			e_block_vbuffer_LEAVES_ACACIA,
+			e_block_vbuffer_LEAVES_DARK_OAK,
+			e_block_vbuffer_LEAVES_MANGROVE,
+			e_block_vbuffer_WATER
+		};
+		if (legacy)
+			buffersPerDepth = (IntType)(sizeof(legacyBuffers) / sizeof(legacyBuffers[0]));
 
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		{
-			activeDepths[d] = false;
-
-			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			for (IntType vb = 0; vb < buffersPerDepth; vb++)
 			{
-				auto vbuffer = new VertexBuffer(in);
-				vbuffers.append(vbuffer);
-				
+				VertexBuffer* vbuffer;
+				if (!legacy)
+				{
+					vbuffer = new VertexBuffer(in);
+					vbuffers[d * e_block_vbuffer_amount + vb] = vbuffer;
+				}
+				else
+				{
+					// Format 2 stored block vertices before the scenery axis transform
+					IntType target = legacyBuffers[vb];
+					RealType legacyBlockWidth = (RealType)sizeY * block_size_;
+					BoolType staticSheet = (target != e_block_vbuffer_ANIMATED && target != e_block_vbuffer_WATER);
+					RealType uvScaleX = (staticSheet ? staticUvScaleX : 1);
+					RealType uvScaleY = (staticSheet ? staticUvScaleY : 1);
+
+					auto vertexTransform = [legacyBlockWidth, uvScaleX, uvScaleY](Vertex& vertex)
+					{
+						auto rotateDirection = [](uint32_t packed)
+						{
+							return ((packed >> 8) & 255u) |
+								   ((255u - (packed & 255u)) << 8) |
+								   (packed & 0xFFFF0000u);
+						};
+
+						float oldX = vertex.x;
+						vertex.x = vertex.y;
+						vertex.y = legacyBlockWidth - oldX;
+						vertex.normal = rotateDirection(vertex.normal);
+						vertex.tangent = rotateDirection(vertex.tangent);
+						vertex.u *= uvScaleX;
+						vertex.v *= uvScaleY;
+					};
+
+					vbuffer = new VertexBuffer(in, vertexTransform);
+					vbuffers[d * e_block_vbuffer_amount + target] = vbuffer;
+				}
+
 				if (!vbuffer->valid)
 				{
 					valid = false;
 					break;
 				}
-
-				BoolType active = (vbuffer->numIndices > 0);
-				activeBuffers[d * e_block_vbuffer_amount + vb] = active;
-				if (active)
-					activeDepths[d] = true;
 			}
 
 			if (!valid)
 				break;
 		}
 
-		if (!valid)
+		if (!valid || !in.atEnd())
 		{
 			for (auto vbuffer : vbuffers)
 				delete vbuffer;
@@ -905,17 +1032,34 @@ namespace CppProject
 			return false;
 		}
 
+		ArrType activeDepths, activeBuffers;
+		for (IntType d = 0; d < e_block_depth_amount; d++)
+		{
+			activeDepths[d] = false;
+
+			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			{
+				IntType index = d * e_block_vbuffer_amount + vb;
+				if (vbuffers[index] == nullptr)
+					vbuffers[index] = new VertexBuffer();
+
+				BoolType active = vbuffers[index]->numIndices > 0;
+				activeBuffers[index] = active;
+				if (active)
+					activeDepths[d] = true;
+			}
+		}
+
 		// Set size
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
 
 		// Assign vertex buffers
-		IntType i = 0;
 		for (IntType d = 0; d < e_block_depth_amount; d++)
 		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
 		{
 			IntType index = d * e_block_vbuffer_amount + vb;
 			vertex_delete_buffer(self->block_vbuffer[index]);
-			self->block_vbuffer[index] = vbuffers.at(i++)->id;
+			self->block_vbuffer[index] = vbuffers.at(index)->id;
 		}
 
 		self->block_vbuffer_active = activeBuffers;

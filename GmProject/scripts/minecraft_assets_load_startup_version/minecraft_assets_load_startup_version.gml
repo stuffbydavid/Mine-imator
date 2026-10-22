@@ -41,6 +41,50 @@ function minecraft_assets_load_startup_version()
 		log("Unsupported archive, format", format)
 		return false
 	}
+
+	// Collect timeline types before loading assets
+	ds_list_clear(mc_assets.block_tl_type_list)
+	ds_map_clear(mc_assets.block_tl_required_map)
+	
+	var blocklist = load_assets_map[?"blocks"];
+	if (ds_list_valid(blocklist))
+	{
+		for (var i = 0; i < ds_list_size(blocklist); i++)
+		{
+			var blockmap, tlmap, type;
+			blockmap = blocklist[|i]
+			if (!ds_map_valid(blockmap) || !is_string(blockmap[?"name"]))
+				continue
+
+			tlmap = blockmap[?"timeline"]
+			if (!ds_map_valid(tlmap))
+				continue
+
+			type = value_get_string(tlmap[?"type"], blockmap[?"name"])
+			if (ds_list_find_index(mc_assets.block_tl_type_list, type) < 0)
+				ds_list_add(mc_assets.block_tl_type_list, type)
+		}
+	}
+
+	var spblocklist = load_assets_map[?"special_blocks"];
+	if (ds_list_valid(spblocklist))
+	{
+		for (var i = 0; i < ds_list_size(spblocklist); i++)
+		{
+			var modelmap, tlmap, type;
+			modelmap = spblocklist[|i]
+			if (!ds_map_valid(modelmap) || !is_string(modelmap[?"entity"]))
+				continue
+
+			tlmap = modelmap[?"timeline"]
+			if (!ds_map_valid(tlmap))
+				continue
+
+			type = value_get_string(tlmap[?"type"], modelmap[?"name"])
+			if (ds_list_find_index(mc_assets.block_tl_type_list, type) < 0)
+				ds_list_add(mc_assets.block_tl_type_list, type)
+		}
+	}
 	
 	// Check patch version
 	var patch = load_assets_map[?"patch"];

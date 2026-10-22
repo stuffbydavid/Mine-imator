@@ -10,7 +10,7 @@ function app_stop_place(keep = false, clearmouse = true)
 		place_build = false
 		place_busy = "place"
 		place_tl = null
-		place_history = null
+		place_hobj = null
 		place_target_tl = null
 		place_target_tl_root = null
 		place_content_mouseon = null
@@ -35,7 +35,7 @@ function app_stop_place(keep = false, clearmouse = true)
 
 	// Save the final parent so redo restores the placed object correctly
 	var par = place_tl.parent;
-	with (place_history)
+	with (place_hobj)
 	{
 		parent = par
 		parent_save_id = save_id_get(par)
@@ -50,7 +50,7 @@ function app_stop_place(keep = false, clearmouse = true)
 
 	// Clear placement state
 	place_tl = null
-	place_history = null
+	place_hobj = null
 	place_content_mouseon = null
 	
 	window_busy = ""

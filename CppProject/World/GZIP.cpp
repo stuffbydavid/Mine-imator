@@ -1,10 +1,118 @@
 #include "GZIP.hpp"
+#include "AppHandler.hpp"
 #include "Heap.hpp"
+
+#include <QSaveFile>
 
 #include <zlib.h>
 
 namespace CppProject
 {
+	struct GzipWrite
+	{
+		QString filename, label, error;
+		BoolType reported = false;
+		double elapsed = 0;
+
+		void Report()
+		{
+			if (reported)
+				return;
+
+			reported = true;
+
+			if (!error.isEmpty())
+				WARNING("Could not save " + label + " " + filename + ": " + error);
+			else
+				DEBUG(label + " compress/write: " + NumStr(elapsed) + "s (" + filename + ")");
+		}
+	};
+
+	void Gzip::WriteCompressed(const QByteArray& data, const QString& filename, int compressionLevel)
+	{
+		// Replace the destination only after the complete gzip stream is written
+		QSaveFile file(filename);
+		if (!file.open(QIODevice::WriteOnly))
+			throw file.errorString();
+
+		z_stream gzip = {};
+		if (deflateInit2(&gzip, compressionLevel, Z_DEFLATED, MAX_WBITS + 16, 8, Z_DEFAULT_STRATEGY) != Z_OK)
+			throw QString("Could not initialize gzip compression");
+
+		gzip.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(data.constData()));
+		gzip.avail_in = data.size();
+
+		char buffer[65536];
+		int result;
+		do
+		{
+			gzip.next_out = reinterpret_cast<Bytef*>(buffer);
+			gzip.avail_out = sizeof(buffer);
+
+			result = deflate(&gzip, Z_FINISH);
+			if (result != Z_OK && result != Z_STREAM_END)
+			{
+				deflateEnd(&gzip);
+				throw QString("Could not compress resource data");
+			}
+
+			qint64 size = sizeof(buffer) - gzip.avail_out;
+			if (file.write(buffer, size) != size)
+			{
+				deflateEnd(&gzip);
+				throw file.errorString();
+			}
+		}
+		while (result != Z_STREAM_END);
+
+		deflateEnd(&gzip);
+
+		if (!file.commit())
+			throw file.errorString();
+	}
+
+	void Gzip::WriteAsync(QByteArray data, const QString& filename, const QString& label, int compressionLevel)
+	{
+		QString path = QFileInfo(filename).absoluteFilePath();
+		QString threadName = "gzip:" + path;
+
+		// Finish earlier writes to this file before replacing it
+		for (QThread* thread : App->threads)
+			if (thread->objectName() == threadName)
+				thread->wait();
+
+		// Only bytes and Qt strings cross the worker boundary
+		auto job = std::make_shared<GzipWrite>();
+		job->filename = path;
+		job->label = label;
+
+		QThread* thread = QThread::create([job, data = std::move(data), compressionLevel]() mutable
+			{
+				try
+				{
+					Timer tmr;
+					WriteCompressed(data, job->filename, compressionLevel);
+					job->elapsed = tmr.Elapsed();
+				}
+				catch (const QString& error)
+				{
+					job->error = error;
+				}
+
+				data.clear();
+			}
+		);
+
+		// Report on the main thread, including when shutdown has stopped the event loop
+		auto report = [job] { job->Report(); };
+		QObject::connect(thread, &QThread::finished, App, report, Qt::QueuedConnection);
+		QObject::connect(thread, &QObject::destroyed, App, report);
+
+		thread->setObjectName(threadName);
+		App->threads.append(thread);
+		thread->start();
+	}
+
 	BoolType Gzip::Decompress(const QString& filename, QByteArray& dst)
 	{
 	#if OS_WINDOWS
@@ -18,22 +126,23 @@ namespace CppProject
 			return false;
 		}
 
+		char buffer[65536];
 		while (true)
 		{
-			const IntType bufferSize = 1024;
-			IntType offset = dst.size();
-			dst.resize(dst.size() + bufferSize);
-			int bytesRead = gzread(gzIn, dst.data() + offset, bufferSize);
-			if (bytesRead < bufferSize)
+			int bytesRead = gzread(gzIn, buffer, sizeof(buffer));
+			if (bytesRead < 0 || bytesRead > std::numeric_limits<int>::max() - dst.size())
 			{
-				dst.resize(offset + bytesRead);
-				break;
+				gzclose(gzIn);
+				return false;
 			}
+
+			if (!bytesRead)
+				break;
+
+			dst.append(buffer, bytesRead);
 		}
 
-		gzclose(gzIn);
-
-		return true;
+		return gzclose(gzIn) == Z_OK;
 	}
 
 	BoolType Gzip::Decompress(const QString& src, const QString& dst)
@@ -57,20 +166,31 @@ namespace CppProject
 			return false;
 		}
 
-		char buf[1024];
-		while (int len = gzread(gzIn, buf, sizeof(buf)))
-			file.write(buf, len);
+		char buffer[65536];
+		while (true)
+		{
+			int bytesRead = gzread(gzIn, buffer, sizeof(buffer));
+			if (bytesRead < 0 || (bytesRead > 0 && file.write(buffer, bytesRead) != bytesRead))
+			{
+				gzclose(gzIn);
+				return false;
+			}
 
-		gzclose(gzIn);
+			if (!bytesRead)
+				break;
+		}
 
-		return true;
+		return gzclose(gzIn) == Z_OK;
 	}
 
 	BoolType Gzip::Decompress(const char* src, IntType size, QByteArray& dst)
 	{
-		dst.resize(size);
+		if (size <= 0 || size > std::numeric_limits<int>::max())
+			return false;
 
-		z_stream strm;
+		dst.resize(int(size));
+
+		z_stream strm = {};
 		strm.next_in = (Bytef*)src;
 		strm.avail_in = size;
 		strm.total_out = 0;
@@ -83,7 +203,16 @@ namespace CppProject
 		while (true)
 		{
 			if (strm.total_out >= (IntType)dst.size())
-				dst.resize(dst.size() + dst.size() / 2);
+			{
+				IntType nextSize = std::min(IntType(std::numeric_limits<int>::max()), IntType(dst.size()) + std::max(IntType(1), IntType(dst.size()) / 2));
+				if (nextSize <= dst.size())
+				{
+					inflateEnd(&strm);
+					return false;
+				}
+
+				dst.resize(int(nextSize));
+			}
 
 			strm.next_out = (Bytef*)(dst.data() + strm.total_out);
 			strm.avail_out = dst.size() - strm.total_out;
@@ -92,7 +221,10 @@ namespace CppProject
 			if (err == Z_STREAM_END)
 				break;
 			else if (err != Z_OK)
+			{
+				inflateEnd(&strm);
 				return false;
+			}
 		}
 
 		if (inflateEnd(&strm) != Z_OK)

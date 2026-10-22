@@ -117,7 +117,6 @@ namespace CppProject
 		Preview::mcBlockIdStyleIndexMap["lava"] =
 		Preview::mcBlockIdStyleIndexMap["flowing_lava"] = BlockStyle::Create(make_color_rgb(255, 100, 0), 1.0, -1, 1.0, BlockStyle::NONE, 26);
 
-
 		// Preview texture
 		BlockStyle::previewTexture = new Texture(BlockStyle::previewImage);
 
@@ -200,7 +199,7 @@ namespace CppProject
 		StringType::qThreadActive = false;
 	}
 
-	void World::GenerateBuilderSections(const WorldBox& box)
+	void World::GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic)
 	{
 		if (!box.active) // No selection
 			return;
@@ -216,15 +215,23 @@ namespace CppProject
 		builder_start(Scope<obj_builder>(builder));
 
 		// Load regions within box
+		if (schematic)
+			schematic->exportOnly = false;
+
 		debug_timer_start();
 		builder->sch_timeline_amount = 0;
 		builder->builder_scenery_legacy = false;
 
 		for (Region* region : regions)
 		{
-			region->Load(box);
+			region->Load(box, schematic);
+			
+			if (schematic && region->loadStatus == Region::LOAD_ERROR)
+				schematic->error = "Could not load region " + region->filename;
+			
 			if (region->legacy)
 				builder->builder_scenery_legacy = true;
+			
 			builder->sch_timeline_amount += region->numTimelines;
 		}
 
@@ -240,7 +247,13 @@ namespace CppProject
 			}
 		}
 
-		// Process block entities
+	}
+
+	void World::ProcessBuilderEntities()
+	{
+		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
+
+		// Process block entities after the resource filter
 		builder_spawn_threads(Scope<obj_builder>(builder->id), 1);
 		withOne(obj_builder_thread, DsList(builder->thread_list).Value(0), noone)
 		{
@@ -290,7 +303,7 @@ namespace CppProject
 		try
 		{
 			NbtStream stream(bytesRaw, QHash<NbtType, QVector<StringType>>({
-				{ TAG_INT, { "version", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
+				{ TAG_INT, { "version", "DataVersion", "Id", "SpawnX", "SpawnY", "SpawnZ", "Dimension" }},
 				{ TAG_STRING, { "LevelName", "Dimension" }},
 				{ TAG_LIST, { "Pos", "Rotation" }},
 				{ TAG_COMPOUND, { "Data", "Player", "spawn" }},
@@ -321,6 +334,8 @@ namespace CppProject
 			}
 
 			info.version = data->Int("version");
+			if (data->HasKey("DataVersion"))
+				info.dataVersion = data->Int("DataVersion");
 
 			if (data->HasKey("spawn"))
 			{
@@ -442,21 +457,21 @@ namespace CppProject
 	{
 		QHash<StringType, uint16_t> newFilteredPreviewMap;
 		QHash<StringType, obj_block*> newFilteredBuilderMap;
-		BoolType filterEnabled = global::_app->setting_world_import_filter_enabled;
-		FilterMode filterMode = (FilterMode)global::_app->setting_world_import_filter_mode.ToInt();
+		BoolType filterEnabled = global::_app->setting_world_filter_enabled;
+		e_block_filter filterMode = (e_block_filter)global::_app->setting_world_filter_mode.ToInt();
 
 		if (filterEnabled)
 		{
-			waterRemoved = (filterMode == KEEP); // Water removed by default in keep mode
+			waterRemoved = (filterMode == e_block_filter_KEEP); // Water removed by default in keep mode
 
-			if (filterMode == REMOVE) // Copy unfiltered maps
+			if (filterMode == e_block_filter_REMOVE) // Copy unfiltered maps
 			{
 				newFilteredPreviewMap = Preview::mcBlockIdStyleIndexMap;
 				newFilteredBuilderMap = Builder::mcBlockIdObjMap;
 			}
 
 			// Iterate block list
-			const List& filterList = DsList(global::_app->setting_world_import_filter_list);
+			const List& filterList = DsList(global::_app->setting_world_filter_list);
 			const List& blockList = DsList(ObjType(obj_minecraft_assets, global::mc_assets)->block_list);
 			for (const List::ListValue& val : filterList.vec)
 			{
@@ -465,14 +480,14 @@ namespace CppProject
 				{
 					StringType mcId = block->mc_ids.Value(i);
 					if (mcId == "water")
-						World::waterRemoved = (filterMode == REMOVE);
+						World::waterRemoved = (filterMode == e_block_filter_REMOVE);
 
-					if (filterMode == REMOVE)
+					if (filterMode == e_block_filter_REMOVE)
 					{
 						newFilteredPreviewMap.remove(mcId);
 						newFilteredBuilderMap.remove(mcId);
 					}
-					else if (filterMode == KEEP)
+					else if (filterMode == e_block_filter_KEEP)
 					{
 						newFilteredPreviewMap[mcId] = Preview::mcBlockIdStyleIndexMap.value(mcId);
 						newFilteredBuilderMap[mcId] = Builder::mcBlockIdObjMap.value(mcId);
@@ -518,34 +533,22 @@ namespace CppProject
 		return changed;
 	}
 
-	WorldVec WorldVec::operator+(const WorldVec& vec) const
+	void World::ExportSchematic(const WorldBox& selection, const QString& filename)
 	{
-		return { x + vec.x, y + vec.y, z + vec.z };
-	}
+		ApplyFilter();
 
-	WorldVec WorldVec::operator-(const WorldVec& vec) const
-	{
-		return { x - vec.x, y - vec.y, z - vec.z };
-	}
+		SchematicExport schematic(selection, saves.value(global::_app->world_import_world_root).dataVersion);
+		
+		for (Region* source : regions)
+		{
+			// Temporary data leaves preview and builder caches untouched
+			std::unique_ptr<Region> region(new Region(source->filename));
+			region->Load(schematic.box, &schematic);
+			if (region->loadStatus == Region::LOAD_ERROR)
+				throw QString("Could not load region " + source->filename);
+		}
 
-	WorldVec WorldVec::operator*(const WorldVec& vec) const
-	{
-		return { x * vec.x, y * vec.y, z * vec.z };
-	}
-
-	WorldVec WorldVec::operator+(IntType in) const
-	{
-		return { x + in, y + in, z + in };
-	}
-
-	WorldVec WorldVec::operator-(IntType in) const
-	{
-		return { x - in, y - in, z - in };
-	}
-
-	WorldVec WorldVec::operator*(IntType in) const
-	{
-		return { x * in, y * in, z * in };
+		Gzip::WriteCompressed(schematic.Serialize(), filename);
 	}
 
 	WorldVec::operator VecType() const

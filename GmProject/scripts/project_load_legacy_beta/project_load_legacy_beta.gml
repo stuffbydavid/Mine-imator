@@ -400,9 +400,12 @@ function project_load_legacy_beta(loadbackground)
 							
 							type = e_res_type.SCHEMATIC
 							filename = filename_name(load.lib_scenery_source[a])
-							scenery_tl_add = false
+							
+							scenery_tl_set = true
+							scenery_tl_types = []
 							
 							other.scenery = load_id
+							
 							res_add_lists()
 						}
 					}
@@ -413,11 +416,13 @@ function project_load_legacy_beta(loadbackground)
 						block_tex = project_pack_res
 					
 					load.lib_rotpoint[a] = point3D(load.lib_rotx[a, 2], load.lib_roty[a, 2], load.lib_rotz[a, 2])
+					
 					break
 				}
 			}
 			
 			load.lib_temp[a] = id
+			
 			temp_add_lists()
 		}
 	}

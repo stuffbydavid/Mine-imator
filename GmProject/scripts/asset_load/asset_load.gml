@@ -81,6 +81,7 @@ function asset_load(fn = "")
 		case ".schematic":
 		case ".schem":
 		case ".nbt":
+		case ".litematic":
 		case ".blocks":
 			log("Opening scenery", fn)
 			action_lib_scenery_load(fn)

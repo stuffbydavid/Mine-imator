@@ -498,7 +498,7 @@ function tab_renderer()
 
 	// Default water material
 	tab_control_switch()
-	draw_button_collapse("render/water_material", collapse_map[?"render/water_material"], action_project_render_water_reflections, project_render_water_reflections, "render/water_reflections", "render/water_reflections_help")
+	draw_button_collapse("render/water_material", collapse_map[?"render/water_material"], action_project_render_water_reflections, project_render_water_reflections, "render/water_reflections", "render/water_reflections_tip")
 	tab_next()
 
 	if (project_render_water_reflections && collapse_map[?"render/water_material"])

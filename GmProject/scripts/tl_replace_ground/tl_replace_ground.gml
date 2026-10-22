@@ -1,10 +1,28 @@
 /// @desc Scenery timeline takes the place of the ground.
+/// @arg [historyobject] Import history for checking the size after loading
 
-function tl_replace_ground()
+function tl_replace_ground(hobj = null)
 {
 	var scenery = temp.scenery;
 	if (!scenery)
 		return 0
+
+	if (hobj != null)
+	{
+		if (!scenery.ready)
+		{
+			scenery_ground_hobj = hobj
+			return 0
+		}
+
+		// Keep the import's setting and undo state when loading finishes later
+		hobj.scenery_replace_ground = (hobj.scenery_replace_ground &&
+			scenery.scenery_size[X] > scenery_large_threshold && scenery.scenery_size[Y] > scenery_large_threshold)
+		scenery_ground_hobj = null
+
+		if (!hobj.scenery_replace_ground)
+			return 0
+	}
 	
 	lock = true
 	animated = false

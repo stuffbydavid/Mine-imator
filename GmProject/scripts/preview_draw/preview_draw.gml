@@ -114,7 +114,7 @@ function preview_draw(preview, xx, yy, width, height)
 			}
 		}
 		
-		m = (1 - 0.25 * mouse_wheel * !preview.xy_lock)
+		m = (1 - 0.25 * mouse_wheel * !preview.xy_lock * !keyboard_check(vk_control))
 		if (m != 1)
 		{
 			preview.goalzoom = clamp(preview.goalzoom * m, 0.1, 100)

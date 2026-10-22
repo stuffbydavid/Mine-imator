@@ -98,30 +98,44 @@ function res_event_create()
 	particle_texture_uvs_map = null
 	particle_texture_pixeluvs_map = null
 	
-	block_vbuffer = null
-	block_vbuffer_active = null
-	block_vbuffer_depth_active = []
-	
-	scenery_tl_add = null
-	scenery_tl_prompt_amount = 0
-	scenery_tl_list = null
-	scenery_cache_save = null
-	scenery_size = vec3(0)
 	world_regions_dir = ""
+	world_name = ""
+	world_reload = false
 	world_box_start = null
 	world_box_end = null
-	world_filter_mode = 0
-	world_filter_array = []
+
+	scenery_size = vec3(0)
+	scenery_instant = false
+	scenery_source = ""
+	scenery_block_map = ds_map_create()
+	
+	scenery_tl_set = false
+	scenery_tl_list = null
+	scenery_tl_all_types = false
+	scenery_tl_types = []
+	scenery_tl_types_count_map = ds_map_create()
+	scenery_tl_types_count_ready = false
+	
+	scenery_filter_enabled = false
+	scenery_filter_mode = e_block_filter.REMOVE
+	scenery_filter_array = []
+	scenery_filter_mask = []
+	
 	scenery_download_skins = true
+	
+	scenery_cache_save = null
+	scenery_snapshot_save = true
+	
 	scenery_structure = false
 	scenery_integrity = 1
-	scenery_integrity_invert = false
 	scenery_palette = 0
 	scenery_palette_size = 0
 	scenery_randomize = true
-	scenery_instant = false
-	scenery_source = ""
 	
+	block_vbuffer = null
+	block_vbuffer_active = null
+	block_vbuffer_depth_active = []
+
 	texture = null
 	
 	font = null

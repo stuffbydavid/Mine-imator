@@ -37,8 +37,8 @@ namespace CppProject
 		// Run QApplication instance.
 		int Run();
 
-		// Load app resourcs.
-		void LoadResources();
+		// Load app assets.
+		void LoadAssets();
 
 		// Create a new AppWindow containing an GLRenderer.
 		AppWindow* AddWindow(QRect rect = {}, IntType id = 0, AppWindow* from = nullptr);
@@ -84,6 +84,7 @@ namespace CppProject
 			BoolType maximize = false;
 		};
 		QVector<AddedWindow> addedWindows;
+		QString messageCaption = "";
 
 		QBasicTimer stepTimer;
 		std::chrono::steady_clock::time_point stepDeadline, loadDrawDeadline;
@@ -110,6 +111,8 @@ namespace CppProject
 		ALCdevice* openALDevice = nullptr;
 		ALCcontext* openALContext = nullptr;
 		BoolType audioSupported = false;
+
+		QVector<QThread*> threads;
 
 		QHash<IntType, Qt::CursorShape> cursorMap;
 		QHash<IntType, IntType> keyMap;

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"res_save",
   "parent":{
-    "name":"Resource",
-    "path":"folders/Scripts/Project/Resource.yy",
+    "name":"Save",
+    "path":"folders/Scripts/Project/Resource/Save.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -12,11 +12,11 @@ function popup_about_draw()
 	draw_set_font(font_value)
 	
 	var width, textx;
-	content_text = text_get("about/version", mineimator_version_full) + text_get("about/release_date", mineimator_version_date)
+	content_text = text_get("about/version", version_get()) + text_get("about/release_date", mineimator_version_date)
 	width = string_width(content_text)
 	textx = floor(dx + dw/2 - width/2)
 	
-	var version = text_get("about/version", mineimator_version_full) + (trial_version ? " " + text_get("startup/trial") : "");
+	var version = text_get("about/version", version_get()) + (trial_version ? " " + text_get("startup/trial") : "");
 	draw_button_text(version, textx, dy + 98, open_url, link_website, link_website)
 	textx += string_width(version)
 	
