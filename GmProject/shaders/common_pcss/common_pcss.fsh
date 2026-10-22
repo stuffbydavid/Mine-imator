@@ -5,7 +5,15 @@ void main() {}
 
 #pragma shady: inline(common_shadows.PCSS_LIB)
 
-uniform float uShadowSmootherBlur; // static
+float getShadowMinimumRadius(float lightRadius, float sourceRadius, float receiverDepth, float bufferSize, float searchRadius)
+{
+	// Scale the footprint for the light projection and global blur amount
+	float blurScale = lightRadius / max(sourceRadius, 0.0001);
+	float minimumRadius = 2.0 * blurScale / min(bufferSize, PCSS_REFERENCE_SHADOW_SIZE);
+	// Small or distant light sources can still produce sharp shadows
+	float sourceFootprint = lightRadius / max(receiverDepth, 0.0001);
+	return min(minimumRadius, min(sourceFootprint, searchRadius));
+}
 
 vec2 getShadowTexelCoord(vec2 coord, vec2 size, vec2 mapMin, vec2 mapMax)
 {
@@ -39,85 +47,50 @@ float getShadowSampleDepth(ShadowReceiver receiver, vec2 offset, out float surfa
 	return getShadowMapDepth(receiver, texelCoord);
 }
 
-void getShadowFilterTexels(ShadowReceiver receiver, vec2 offset, out vec4 bounds, out vec2 blend, out vec2 mapMin)
-{
-	mapMin = vec2(0.0);
-	getPCSSTexels(receiver.coord + offset, vec2(uDepthBufferSize), mapMin, vec2(1.0), bounds, blend);
-}
-
-float getShadowTexelVisibility(ShadowReceiver receiver, vec2 texelCoord, vec2 mapMin)
-{
-	float depth = getShadowReceiverDepth(receiver, texelCoord);
-	return getPCSSVisibility(depth, getShadowMapDepth(receiver, texelCoord), receiver.bias);
-}
-
 #pragma shady: macro_end
 
 #pragma shady: macro_begin PCSS_FILTER_LIB
 
 // Each light supplies ShadowReceiver and its depth/texel lookups
+float getShadowBlockerDepth(ShadowReceiver receiver, float sampleDepth, float surfaceDepth)
+{
+	// Keep sampled depths comparable on sloped receivers
+	if (receiver.perspective)
+		return sampleDepth * receiver.depth / max(surfaceDepth, 0.0001);
+	return sampleDepth - (surfaceDepth - receiver.depth);
+}
+
 bool tryGetShadowBlockerDepth(ShadowReceiver receiver, vec2 offset, out float blockerDepth)
 {
 	float surfaceDepth;
 	float sampleDepth = getShadowSampleDepth(receiver, offset, surfaceDepth);
-	float depth = receiver.depth;
-
-	// Keep sampled depths comparable on sloped receivers
-	if (receiver.perspective)
-		blockerDepth = sampleDepth * depth / max(surfaceDepth, 0.0001);
-	else
-		blockerDepth = sampleDepth - (surfaceDepth - depth);
+	blockerDepth = getShadowBlockerDepth(receiver, sampleDepth, surfaceDepth);
 
 	return isPCSSBlocker(surfaceDepth, sampleDepth, receiver.bias);
 }
 
-void findShadowBlockers(ShadowReceiver receiver, float searchRadius, int samples, out float depthSum, out float blockers)
+float getShadowFilterRadius(ShadowReceiver receiver, float blockerDepth, float minimumRadius)
 {
-	depthSum = 0.0;
-	blockers = 0.0;
-	for (int i = 0; i < PCSS_MAX_BLOCKER_SAMPLES; i++)
-	{
-		if (i >= samples)
-			break;
+	// Bias should not increase blur
+	float separation = max(receiver.depth - blockerDepth - receiver.bias, 0.0);
+	float radius = receiver.lightRadius * separation;
+	if (receiver.perspective)
+		radius /= max(blockerDepth, receiver.nearDepth);
 
-		float blockerDepth;
-		vec2 offset = uPCSSKernel[i] * searchRadius;
-		if (tryGetShadowBlockerDepth(receiver, offset, blockerDepth))
-		{
-			depthSum += blockerDepth;
-			blockers += 1.0;
-		}
-	}
+	return clamp(radius * receiver.radiusScale, minimumRadius, receiver.searchRadius);
 }
 
-float getShadowFilteredVisibility(ShadowReceiver receiver, vec2 offset)
+float getShadowVisibility(ShadowReceiver receiver, vec2 offset)
 {
-	if (uShadowSmootherBlur <= 0.0)
-	{
-		float surfaceDepth;
-		float sampleDepth = getShadowSampleDepth(receiver, offset, surfaceDepth);
-		return getPCSSVisibility(surfaceDepth, sampleDepth, receiver.bias);
-	}
-
-	vec4 bounds;
-	vec2 blend, mapMin;
-	getShadowFilterTexels(receiver, offset, bounds, blend, mapMin);
-	// Narrow the transition when global blur is below 100%
-	blend = clamp((blend - 0.5) / uShadowSmootherBlur + 0.5, 0.0, 1.0);
-
-	vec4 visibility;
-	visibility.x = getShadowTexelVisibility(receiver, bounds.xy, mapMin);
-	visibility.y = getShadowTexelVisibility(receiver, bounds.zy, mapMin);
-	visibility.z = getShadowTexelVisibility(receiver, bounds.xw, mapMin);
-	visibility.w = getShadowTexelVisibility(receiver, bounds.zw, mapMin);
-
-	return blendPCSSVisibility(visibility, blend);
+	float surfaceDepth;
+	float sampleDepth = getShadowSampleDepth(receiver, offset, surfaceDepth);
+	return getPCSSVisibility(surfaceDepth, sampleDepth, receiver.bias);
 }
 
 float filterShadow(ShadowReceiver receiver, float radius, int samples)
 {
 	if (radius <= 0.0)
-		return getShadowFilteredVisibility(receiver, vec2(0.0));
+		return getShadowVisibility(receiver, vec2(0.0));
 
 	float visibility = 0.0;
 	for (int i = 0; i < PCSS_MAX_SAMPLES; i++)
@@ -126,38 +99,56 @@ float filterShadow(ShadowReceiver receiver, float radius, int samples)
 			break;
 
 		vec2 offset = uPCSSKernel[i] * radius;
-		visibility += getShadowFilteredVisibility(receiver, offset);
+		visibility += getShadowVisibility(receiver, offset);
 	}
 
 	return visibility / float(samples);
 }
 
-bool findShadowBlockerDepth(ShadowReceiver receiver, int samples, out float blockerDepth)
+bool findShadowBlockerDepth(
+	ShadowReceiver receiver, int samples, float minimumRadius,
+	float centerDepth, float surfaceDepth, out float blockerDepth
+)
 {
-	int localSamples = samples;
-	if (localSamples > 8)
-		localSamples = 8;
-	float localRadius = receiver.localRadius;
-	float searchRadius = receiver.searchRadius;
-
-	// Search nearby before widening the radius
-	float depthSum, blockers;
-	findShadowBlockers(receiver, localRadius, localSamples, depthSum, blockers);
-	float centerDepth;
-	if (tryGetShadowBlockerDepth(receiver, vec2(0.0), centerDepth))
+	float depthSum = 0.0;
+	float blockers = 0.0;
+	// Reuse the center lookup to retain thin shadows
+	if (isPCSSBlocker(surfaceDepth, centerDepth, receiver.bias))
 	{
-		depthSum += centerDepth;
-		blockers += 1.0;
+		depthSum = getShadowBlockerDepth(receiver, centerDepth, surfaceDepth);
+		blockers = 1.0;
 	}
 
-	// Fill the gap between small and large searches
-	if (blockers == 0.0 && searchRadius > localRadius * 2.0)
+	int localSamples = (samples + 1) / 2;
+	float searchRadius = receiver.localRadius;
+	float radiusGrowth = 1.0;
+	if (blockers == 0.0 && searchRadius > 0.0)
+		radiusGrowth = pow(max(receiver.searchRadius / searchRadius, 1.0), 1.0 / float(samples - localSamples));
+
+	// Share one sample budget between nearby search, wider search and refinement
+	for (int i = 0; i < PCSS_MAX_BLOCKER_SAMPLES; i++)
 	{
-		float midRadius = sqrt(localRadius * searchRadius);
-		findShadowBlockers(receiver, midRadius, samples, depthSum, blockers);
+		if (i >= samples)
+			break;
+
+		if (i >= localSamples)
+		{
+			searchRadius = min(searchRadius * radiusGrowth, receiver.searchRadius);
+			if (i == samples - 1 || searchRadius <= 0.0)
+				searchRadius = receiver.searchRadius;
+		}
+
+		float radius = searchRadius;
+		if (blockers > 0.0)
+			radius = getShadowFilterRadius(receiver, depthSum / blockers, minimumRadius);
+
+		float sampleDepth;
+		if (tryGetShadowBlockerDepth(receiver, uPCSSKernel[i] * radius, sampleDepth))
+		{
+			depthSum += sampleDepth;
+			blockers += 1.0;
+		}
 	}
-	if (blockers == 0.0 && searchRadius > localRadius)
-		findShadowBlockers(receiver, searchRadius, samples, depthSum, blockers);
 
 	if (blockers == 0.0)
 	{
@@ -169,34 +160,19 @@ bool findShadowBlockerDepth(ShadowReceiver receiver, int samples, out float bloc
 	return true;
 }
 
-float getShadowFilterRadius(ShadowReceiver receiver, float blockerDepth)
-{
-	// Bias should not increase blur
-	float separation = max(receiver.depth - blockerDepth - receiver.bias, 0.0);
-	float radius = receiver.lightRadius * separation;
-	if (receiver.perspective)
-		radius /= max(blockerDepth, receiver.nearDepth);
-
-	return clamp(radius * receiver.radiusScale, 0.0, receiver.searchRadius);
-}
-
-float getPCSSShadow(ShadowReceiver receiver, int quality)
+float getPCSSShadow(ShadowReceiver receiver, int quality, float minimumRadius, float centerDepth, float surfaceDepth)
 {
 	if (quality > PCSS_MAX_SAMPLES)
 		quality = PCSS_MAX_SAMPLES;
 	int samples = getPCSSBlockerSamples(quality);
 
 	float blockerDepth;
-	if (!findShadowBlockerDepth(receiver, samples, blockerDepth))
-		return getShadowFilteredVisibility(receiver, vec2(0.0));
+	if (!findShadowBlockerDepth(receiver, samples, minimumRadius, centerDepth, surfaceDepth, blockerDepth))
+		return getPCSSVisibility(surfaceDepth, centerDepth, receiver.bias);
 
-	float radius = getShadowFilterRadius(receiver, blockerDepth);
-
-	// Refine at the radius used by the filter
-	float refinedSum, refinedBlockers;
-	findShadowBlockers(receiver, radius, samples, refinedSum, refinedBlockers);
-	if (refinedBlockers > 0.0)
-		radius = getShadowFilterRadius(receiver, refinedSum / refinedBlockers);
+	float radius = getShadowFilterRadius(receiver, blockerDepth, minimumRadius);
+	if (radius <= 0.0)
+		return getPCSSVisibility(surfaceDepth, centerDepth, receiver.bias);
 
 	return filterShadow(receiver, radius, quality);
 }

@@ -134,20 +134,6 @@ vec2 getPointShadowMapCoord(vec3 direction, out vec2 bufferMin)
 	return getShadowMapCoord(look, direction) + bufferMin;
 }
 
-float getFilteredDepth(vec2 uv, vec2 uvMin)
-{
-	vec2 halfTexel = 0.5 / vec2(uDepthBufferSize * 3.0, uDepthBufferSize * 2.0);
-	vec2 uvMax = uvMin + vec2(1.0/3.0, 0.5);
-	return texture2D(uDepthBuffer, clamp(uv, uvMin + halfTexel, uvMax - halfTexel)).r;
-}
-
-float getPointDepth(vec3 direction)
-{
-	vec2 bufferMin;
-	vec2 coord = getPointShadowMapCoord(direction, bufferMin);
-	return uLightNear + (uLightFar - uLightNear) * getFilteredDepth(coord, bufferMin);
-}
-
 vec3 getPointSampleDirection(vec3 direction, vec3 tangent, vec3 bitangent, vec2 offset, float radius)
 {
 	return normalize(direction + (tangent * offset.x + bitangent * offset.y) * radius);
@@ -218,28 +204,19 @@ float getShadowSampleDepth(ShadowReceiver receiver, vec2 offset, out float surfa
 	return getPointTexelDepth(texelCoord);
 }
 
-void getShadowFilterTexels(ShadowReceiver receiver, vec2 offset, out vec4 bounds, out vec2 blend, out vec2 mapMin)
-{
-	vec3 sampleDirection = getPointSampleDirection(receiver.direction, receiver.tangent, receiver.bitangent, offset, 1.0);
-	vec2 coord = getPointShadowMapCoord(sampleDirection, mapMin);
-	getPCSSTexels(coord, uDepthBufferSize * vec2(3.0, 2.0), mapMin, mapMin + vec2(1.0 / 3.0, 0.5), bounds, blend);
-}
-
-float getShadowTexelVisibility(ShadowReceiver receiver, vec2 texelCoord, vec2 mapMin)
-{
-	vec3 ray = getPointTexelDirection(texelCoord, mapMin);
-	float depth = getPCSSRayDepth(ray, receiver.position, receiver.normal, receiver.depth);
-	return getPCSSVisibility(depth, getPointTexelDepth(texelCoord), receiver.bias);
-}
-
 #pragma shady: inline(common_pcss.PCSS_FILTER_LIB)
 
 float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, float bias, out float centerDepth)
 {
 	vec3 direction = toReceiver / max(fragDepth, 0.0001);
-	centerDepth = getPointDepth(direction);
+	vec2 mapMin;
+	vec2 coord = getPointShadowMapCoord(direction, mapMin);
+	vec2 centerCoord = getShadowTexelCoord(coord, uDepthBufferSize * vec2(3.0, 2.0), mapMin, mapMin + vec2(1.0 / 3.0, 0.5));
+	centerDepth = getPointTexelDepth(centerCoord);
+	vec3 ray = getPointTexelDirection(centerCoord, mapMin);
+	float surfaceDepth = getPCSSRayDepth(ray, toReceiver, receiverNormal, fragDepth);
 	if (uShadowBlurQuality <= 0 || uShadowRadius <= 0.0)
-		return getPCSSVisibility(fragDepth, centerDepth, bias);
+		return getPCSSVisibility(surfaceDepth, centerDepth, bias);
 
 	vec3 reference = abs(direction.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0);
 
@@ -248,9 +225,10 @@ float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, floa
 	receiver.bias = bias;
 	// Cover the full blur range
 	receiver.searchRadius = 128.0 / PCSS_REFERENCE_SHADOW_SIZE;
+	float minimumRadius = getShadowMinimumRadius(uShadowRadius, uLightSize * 0.5, max(fragDepth, uLightNear), uDepthBufferSize, receiver.searchRadius);
 	// Half a face texel in angular coordinates
 	float localRadius = min(uShadowRadius / max(fragDepth, uLightNear), 1.0 / uDepthBufferSize);
-	receiver.localRadius = min(localRadius, receiver.searchRadius);
+	receiver.localRadius = min(max(localRadius, minimumRadius), receiver.searchRadius);
 	receiver.lightRadius = uShadowRadius;
 	receiver.radiusScale = 1.0 / max(fragDepth, uLightNear);
 	receiver.nearDepth = uLightNear;
@@ -261,7 +239,7 @@ float getPointShadow(vec3 toReceiver, float fragDepth, vec3 receiverNormal, floa
 	receiver.tangent = normalize(cross(reference, direction));
 	receiver.bitangent = cross(direction, receiver.tangent);
 
-	return getPCSSShadow(receiver, uShadowBlurQuality);
+	return getPCSSShadow(receiver, uShadowBlurQuality, minimumRadius, centerDepth, surfaceDepth);
 }
 
 void main()

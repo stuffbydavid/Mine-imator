@@ -85,16 +85,26 @@ float getSunShadow(
 	out float centerDepth
 )
 {
-	centerDepth = getSunDepth(cascade, coord, depthRange);
+	// Match the unblurred lookup to the texels used by the blur filter
+	vec2 centerCoord = getShadowTexelCoord(coord, vec2(uDepthBufferSize), vec2(0.0), vec2(1.0));
+	centerDepth = getSunDepth(cascade, centerCoord, depthRange);
+	float surfaceDepth = getPCSSReceiverDepth(coord, fragDepth, centerCoord, depthSlope);
 	if (uShadowBlurQuality <= 0 || uSunShadowScale <= 0.000001)
-		return getPCSSVisibility(fragDepth, centerDepth, bias);
+		return getPCSSVisibility(surfaceDepth, centerDepth, bias);
 
 	float inverseWorldSize = 1.0 / max(uCascadeWorldSize[cascade], 0.0001);
+	// Scale the minimum blur footprint consistently across cascades
+	float blurSize = uSunShadowScale / max(uSunAngularRadius, 0.000001);
+	float filterWorldSize = uCascadeWorldSize[0];
+	if (uCascadeCount == 1)
+		filterWorldSize *= min(1.0, max(300.0, uSunShadowDistance * 0.1) / max(uSunShadowDistance, 0.0001));
+	float minimumRadius = blurSize * filterWorldSize / PCSS_REFERENCE_SHADOW_SIZE * inverseWorldSize;
+
 	ShadowReceiver receiver;
 	receiver.depth = fragDepth;
 	receiver.bias = bias;
-	receiver.searchRadius = uSunShadowScale * uSunShadowDistance * inverseWorldSize;
-	receiver.localRadius = min(receiver.searchRadius, 0.5 / uDepthBufferSize);
+	receiver.searchRadius = max(uSunShadowScale * uSunShadowDistance * inverseWorldSize, minimumRadius);
+	receiver.localRadius = min(receiver.searchRadius, max(minimumRadius, 0.5 / uDepthBufferSize));
 	receiver.lightRadius = uSunShadowScale;
 	receiver.radiusScale = inverseWorldSize;
 	receiver.nearDepth = 0.0;
@@ -104,7 +114,7 @@ float getSunShadow(
 	receiver.depthSlope = depthSlope;
 	receiver.depthRange = depthRange;
 
-	return getPCSSShadow(receiver, uShadowBlurQuality);
+	return getPCSSShadow(receiver, uShadowBlurQuality, minimumRadius, centerDepth, surfaceDepth);
 }
 
 void getSunLighting(

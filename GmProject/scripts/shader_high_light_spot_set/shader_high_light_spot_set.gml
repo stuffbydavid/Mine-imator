@@ -16,7 +16,6 @@ function shader_high_light_spot_set()
 	var shadowscale = 1 / max(2 * tan((render_light_fov / 57.2958) * .5), .0001);
 	render_set_uniform(e_uniform.SHADOW_RADIUS, render_light_size * .5 * app.project_render_shadows_blur_size * shadowscale)
 	render_set_uniform_int(e_uniform.SHADOW_BLUR_QUALITY, app.project_render_shadows_jittered ? 0 : app.project_render_shadows_blur_quality)
-	render_set_uniform(e_uniform.SHADOW_SMOOTHER_BLUR, app.project_render_shadows_smoother_blur ? clamp(app.project_render_shadows_blur_size, 0, 1) : 0)
 	render_set_uniform(e_uniform.PCSS_KERNEL, render_pcss_kernel_rotated)
 	render_set_uniform(e_uniform.GAMMA, render_gamma)
 	
@@ -28,5 +27,5 @@ function shader_high_light_spot_set()
 	
 	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_spot_buffer))
 	render_set_uniform(e_uniform.DEPTH_BUFFER_SIZE, app.project_render_shadows_spot_buffer_size)
-	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER], true)
+	gpu_set_texfilter_ext(sampler_handle[e_sampler.DEPTH_BUFFER], false)
 }

@@ -149,7 +149,6 @@ function shader_startup_uniforms()
 		"uSaturation",
 		"uScreenSize",
 		"uShadowBlurQuality",
-		"uShadowSmootherBlur",
 		"uShadowMatrix",
 		"uShadowPosition",
 		"uShadowRadius",
