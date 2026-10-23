@@ -3,6 +3,8 @@ function tl_update_ik(parts)
 	if (array_length(parts) = 0)
 		return 0
 	
+	var profile = debug_profiler_begin("Inverse kinematics");
+
 	// Recursivly update IK data, break if positions are done moving
 	repeat (2)
 	{
@@ -28,4 +30,5 @@ function tl_update_ik(parts)
 		if (!update)
 			break
 	}
+	debug_profiler_end("Inverse kinematics", profile)
 }

@@ -40,10 +40,10 @@ function app_event_step()
 		app_update_place()
 		app_update_keybinds()
 		app_update_keyboard()
+		var playbackprofile = (timeline_playing ? debug_profiler_begin("Animation playback") : 0);
 		app_update_play()
-		var profile = debug_profiler_begin("Animation");
 		app_update_animate()
-		debug_profiler_end("Animation", profile)
+		debug_profiler_end("Animation playback", playbackprofile)
 		app_update_previews()
 		app_update_backup()
 		app_update_recent()

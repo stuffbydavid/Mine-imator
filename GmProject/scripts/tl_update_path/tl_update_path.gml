@@ -3,6 +3,8 @@ function tl_update_path()
 	if (type != e_tl_type.PATH)
 		return 0
 	
+	var profile = debug_profiler_begin("Path updates");
+
 	path_update = false
 	
 	// Clear
@@ -51,6 +53,7 @@ function tl_update_path()
 		with (app)
 			tl_update_matrix(true)
 		
+		debug_profiler_end("Path updates", profile)
 		return 0
 	}
 	
@@ -85,6 +88,7 @@ function tl_update_path()
 	{
 		path_table[0] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 		path_table_matrix[0] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+		debug_profiler_end("Path updates", profile)
 		return 0
 	}
 	
@@ -129,4 +133,5 @@ function tl_update_path()
 			path_table_matrix[j][Z] = pos[Z]
 		}
 	}
+	debug_profiler_end("Path updates", profile)
 }

@@ -23,6 +23,8 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	if (start = -1)
 		return 0
 	
+	var profile = debug_profiler_begin("Timeline transforms");
+
 	for (var i = start; i < tlamount; i++)
 	{
 		var matrixtimeline = app.project_timeline_list[|i];
@@ -498,4 +500,5 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		
 		app.project_inherit_pose_array = []
 	}
+	debug_profiler_end("Timeline transforms", profile)
 }

@@ -9,7 +9,12 @@ namespace CppProject
 	// GUI-thread only CPU wall times, not asynchronous GPU execution times
 	struct Profiler
 	{
-		enum class Stage { FrameWork, Update, Draw, Submit, Present, Loading, Maintenance, Animation, SceneRender, Surface, Count };
+		enum class Stage
+		{
+			FrameWork, Update, Draw, Submit, Present, Loading, Maintenance, Animation, SceneRender, Surface,
+			Playback, PlaybackAdvance, PlaybackStart, Keyframes, Transforms, IK, Bends, MeshRebuild,
+			CpuMesh, GpuBend, ShapeCache, Paths, Particles, Count
+		};
 		static constexpr size_t StageCount = size_t(Stage::Count);
 		static constexpr size_t LiveFrames = 240;
 		static constexpr size_t CaptureFrames = 20000;

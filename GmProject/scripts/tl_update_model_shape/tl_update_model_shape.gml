@@ -2,6 +2,8 @@
 
 function tl_update_model_shape(clear = true)
 {
+	var profile = debug_profiler_begin("Model mesh rebuild");
+
 	model_part_shape_render_matrix_part = null
 	model_part_merged_dirty = true
 
@@ -29,7 +31,10 @@ function tl_update_model_shape(clear = true)
 	bend_model_part_last = model_part
 	
 	if (model_part = null)
+	{
+		debug_profiler_end("Model mesh rebuild", profile)
 		return 0
+	}
 	
 	if (model_part.has_3d_plane)
 	{
@@ -50,4 +55,5 @@ function tl_update_model_shape(clear = true)
 	
 	model_part_fill_shape_alpha_map(model_part, model_shape_alpha_map, res, temp.model_texture_name_map, temp.model_shape_texture_name_map)
 	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last, model_part_shape_tex_normal)
+	debug_profiler_end("Model mesh rebuild", profile)
 }

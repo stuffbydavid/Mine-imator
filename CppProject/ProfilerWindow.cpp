@@ -94,6 +94,8 @@ namespace CppProject
 		layout->addWidget(stages, 1);
 
 		auto explanation = new QLabel("CPU wall times, not GPU timings. Stage times are inclusive and overlap; do not add them. "
+			"Animation playback covers editor playback advance and animation updates. Means include inactive frames. "
+			"GPU bend preparation is CPU setup, not shader execution. "
 			"Frame interval includes timer waits and presentation. CPU frame work excludes timer waits. "
 			"OpenGL widget paint / swap normally occurs later, outside CPU frame work. "
 			"Loading-only callbacks are not sampled. Closing this window does not stop profiling or capture.", this);

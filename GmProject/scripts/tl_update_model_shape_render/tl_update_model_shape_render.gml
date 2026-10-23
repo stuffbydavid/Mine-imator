@@ -5,6 +5,8 @@ function tl_update_model_shape_render()
 	if (model_part = null || model_part.shape_list = null)
 		return 0
 	
+	var profile = debug_profiler_begin("Model shape cache");
+
 	var updatematrices = (model_part_shape_render_matrix_part != model_part ||
 		array_length(model_part_shape_render_matrix) != ds_list_size(model_part.shape_list));
 	
@@ -44,7 +46,10 @@ function tl_update_model_shape_render()
 		array_length(model_part_shape_material_res) = shapecount)
 
 	if (!model_part_merged_compatible)
+	{
+		debug_profiler_end("Model shape cache", profile)
 		return 0
+	}
 
 	var colornamemap = temp.model_color_map;
 	var firstcolor = (colornamemap != null ? colornamemap[?model_part.shape_list[|0].description] : undefined);
@@ -67,4 +72,5 @@ function tl_update_model_shape_render()
 			break
 		}
 	}
+	debug_profiler_end("Model shape cache", profile)
 }

@@ -12,6 +12,8 @@ function particle_spawner_update(spawner)
 		return 0
 	}
 	
+	var profile = debug_profiler_begin("Particle simulation");
+
 	var temp, realtime;
 	temp = (is_timeline ? self.temp : select)
 	realtime = (!is_timeline || (is_timeline && app.object_editor.show && obj_edit = temp)) && 
@@ -519,4 +521,5 @@ function particle_spawner_update(spawner)
 	
 	if (is_timeline && block_vbuffer_transparent_render && (!ds_list_valid(particle_list) || ds_list_size(particle_list) = 0))
 		block_vbuffer_transparent_render = false
+	debug_profiler_end("Particle simulation", profile)
 }

@@ -2,6 +2,8 @@
 
 function action_tl_play_start()
 {
+	var profile = debug_profiler_begin("Playback start");
+
 	tl_audio_scrub_end(true)
 	tl_audio_stop()
 	
@@ -44,4 +46,5 @@ function action_tl_play_start()
 			}
 		}
 	}
+	debug_profiler_end("Playback start", profile)
 }

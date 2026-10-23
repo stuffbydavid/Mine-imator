@@ -14,6 +14,8 @@ function tl_update_values()
 		return 0
 	}
 
+	var profile = debug_profiler_begin("Keyframe evaluation");
+
 	keyframe_prev = keyframe_current
 	keyframe_current = null
 	keyframe_next = null
@@ -208,4 +210,5 @@ function tl_update_values()
 		if (value[e_value.CLEAR])
 			particle_spawner_clear()
 	}
+	debug_profiler_end("Keyframe evaluation", profile)
 }

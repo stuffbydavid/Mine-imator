@@ -5,6 +5,8 @@ function app_update_animate()
 	if (timeline_move_obj != null)
 		return 0
 	
+	var profile = debug_profiler_begin("Animation");
+
 	// Go through timelines
 	var envobj, updatevalues, spawnerarr, starttime, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
@@ -300,4 +302,5 @@ function app_update_animate()
 		benchmark_animate_total_time += get_timer() - starttime
 	
 	history_resource_update = false
+	debug_profiler_end("Animation", profile)
 }

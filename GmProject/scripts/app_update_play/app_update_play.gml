@@ -3,6 +3,8 @@ function app_update_play()
 	if (!timeline_playing || window_busy = "timeline/marker")
 		return 0
 	
+	var profile = debug_profiler_begin("Playback advance");
+
 	timeline_marker = timeline_playing_start_marker + ((current_time - timeline_playing_start_time) / 1000) * project_tempo
 		
 	if (setting_timeline_frame_snap)
@@ -18,4 +20,5 @@ function app_update_play()
 		else if (timeline_marker >= timeline_length && timeline_length > 0)
 			action_tl_play_beginning()
 	}
+	debug_profiler_end("Playback advance", profile)
 }

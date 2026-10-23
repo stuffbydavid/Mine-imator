@@ -38,6 +38,7 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend, normal
 			// Generate new mesh if needed
 			if (gpubend)
 			{
+				var profile = debug_profiler_begin("GPU bend preparation");
 				var vbuf = oldvbuf;
 				if (is_undefined(vbuf) || vbuf = null || !vbuffer_has_model_bend(vbuf))
 					vbuf = model_shape_generate_block(bend, true)
@@ -63,18 +64,31 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend, normal
 					pivot, axis, [from[segaxis], pivot[segaxis] - bendsize / 2, bendsize, invangle],
 					bend_direction_min, bend_direction_max, direction)
 				vbufmap[? id] = vbuf
+				debug_profiler_end("GPU bend preparation", profile)
 			}
 			else if (type = "block" && bend_shape && isbent)
+			{
+				var profile = debug_profiler_begin("CPU mesh generation");
 				vbufmap[? id] = model_shape_generate_block(bend)
+				debug_profiler_end("CPU mesh generation", profile)
+			}
 			else if (type = "plane")
 			{
 				if (is3d)
 				{
 					if (ds_map_valid(alphamap))
+					{
+						var profile = debug_profiler_begin("CPU mesh generation");
 						vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[? id])
+						debug_profiler_end("CPU mesh generation", profile)
+					}
 				}
 				else if (isbent && bend_shape)
+				{
+					var profile = debug_profiler_begin("CPU mesh generation");
 					vbufmap[? id] = model_shape_generate_plane(bend)
+					debug_profiler_end("CPU mesh generation", profile)
+				}
 			}
 
 			if (!is_undefined(oldvbuf) && oldvbuf != null && oldvbuf != vbuffer_default && oldvbuf != vbufmap[? id])

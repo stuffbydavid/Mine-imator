@@ -14,6 +14,8 @@ function tl_update_model_shape_bend()
 	if (model_part = null || model_part.bend_part = null || model_part.shape_list = null)
 		return 0
 	
+	var profile = debug_profiler_begin("Bend updates");
+
 	// Preserve reusable GPU meshes when only the bend angles change
 	if (bend_model_part_last != model_part && model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	{
@@ -39,4 +41,5 @@ function tl_update_model_shape_bend()
 	model_part_merged_dirty = true
 	
 	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last, model_part_shape_tex_normal)
+	debug_profiler_end("Bend updates", profile)
 }

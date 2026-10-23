@@ -11,7 +11,15 @@ namespace CppProject
 
 	const char* Profiler::StageName(Stage stage)
 	{
-		static const char* names[] = { "CPU frame work", "Application update", "Application draw", "Batch submission", "Presentation dispatch / resize", "Queued loading", "Maintenance", "Animation", "Scene rendering", "Surface requests" };
+		static const char* names[] =
+		{
+			"CPU frame work", "Application update", "Application draw", "Batch submission", "Presentation dispatch / resize",
+			"Queued loading", "Maintenance", "Animation", "Scene rendering", "Surface requests",
+			"Animation playback", "Playback advance", "Playback start", "Keyframe evaluation", "Timeline transforms",
+			"Inverse kinematics", "Bend updates", "Model mesh rebuild", "CPU mesh generation", "GPU bend preparation",
+			"Model shape cache", "Path updates", "Particle simulation"
+		};
+		static_assert(sizeof(names) / sizeof(names[0]) == StageCount, "Profiler stage names must match the stage enum");
 		return names[size_t(stage)];
 	}
 
@@ -174,6 +182,9 @@ namespace CppProject
 		}
 		out << "Frame interval includes scheduling and waits; CPU frame work excludes the timer wait.\n"
 			<< "Stage times are inclusive and overlap. These are CPU wall times, not GPU timings.\n"
+			<< "Animation playback covers playback advance and animation updates while playing in the editor.\n"
+			<< "Stage means include inactive frames; calls/frame indicates how often work ran.\n"
+			<< "GPU bend preparation measures CPU mesh/uniform setup, not shader execution.\n"
 			<< "OpenGL widget painting normally happens later, outside the measured callback work.\n"
 			<< "Loading-only callbacks are not sampled.\n";
 		return report;
