@@ -5,6 +5,7 @@
 #include "Asset/Surface.hpp"
 #include "Generated/GmlFunc.hpp"
 #include "GraphicsApiHandler.hpp"
+#include "Profiler.hpp"
 
 namespace CppProject
 {
@@ -108,6 +109,7 @@ namespace CppProject
 		if (!vertices.Size() || !GFX->shader || !GFX->shader->IsLoaded())
 			return;
 
+		Profiler::Scope profile(Profiler::Stage::Submit);
 		IntType vertSize = vertices.Size() * sizeof(PrimitiveVertex);
 		IntType indSize = indices.Size() * sizeof(uint32_t);
 

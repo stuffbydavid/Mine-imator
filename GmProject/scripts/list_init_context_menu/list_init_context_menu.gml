@@ -329,6 +329,9 @@ function list_init_context_menu(name)
 			list_item_last.toggled = setting_show_shortcuts_bar
 			
 			list_item_add(text_get("toolbar/view/home"), null, "", null, icons.HOUSE, null, action_setting_home_screen, true)
+
+			if (is_cpp())
+				list_item_add("Performance / Benchmark", null, "Ctrl+F11", null, icons.CLOCK, null, debug_profiler_show, true)
 			
 			break
 		}

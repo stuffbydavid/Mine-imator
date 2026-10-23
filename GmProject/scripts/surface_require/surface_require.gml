@@ -7,6 +7,7 @@
 
 function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm, depthonly = false)
 {
+	var profile = debug_profiler_begin("Surface requests");
 	var starttime;
 	w = max(1, w)
 	h = max(1, h)
@@ -30,5 +31,6 @@ function surface_require(surf, w, h, depth = true, format = surface_rgba8unorm, 
 	if (benchmark_mode)
 		benchmark_surface_total_time += get_timer() - starttime
 	
+	debug_profiler_end("Surface requests", profile)
 	return surf
 }

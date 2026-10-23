@@ -13,5 +13,7 @@ function render_done()
 		benchmark_render_total_time += elapsed - surfaceelapsed
 	}
 	
+	debug_profiler_end("Scene rendering", render_profiler_scope)
+	render_profiler_scope = 0
 	return render_target
 }

@@ -6,6 +6,7 @@
 
 function render_start(target, camera, owner, wid = null, hei = null)
 {
+	render_profiler_scope = debug_profiler_begin("Scene rendering")
 	render_start_time = get_timer()
 	render_start_surface_time = benchmark_surface_total_time
 

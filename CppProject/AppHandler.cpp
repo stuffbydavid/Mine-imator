@@ -7,6 +7,7 @@
 #include "Asset/Surface.hpp"
 #include "ErrorDialog.hpp"
 #include "Generated/Scripts.hpp"
+#include "Profiler.hpp"
 #include "Render/GLWidget.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/PrimitiveRenderer.hpp"
@@ -362,6 +363,7 @@ namespace CppProject
 		BoolType loading = (!headless && global::_app && load_active());
 		BoolType drawFrame = (!loading || stepStart >= loadDrawDeadline);
 		BoolType loadMore = false;
+		Profiler::FrameScope profileFrame(drawFrame);
 
 		// Measure the full interval between update steps
 		if (drawFrame)
@@ -436,12 +438,21 @@ namespace CppProject
 
 				// Load resources
 				if (loading && win == mainWindow)
+				{
+					Profiler::Scope profile(Profiler::Stage::Loading);
 					loadMore = load_update();
+				}
 				
 				if (drawFrame)
 				{
-					app_event_step(global::_app->id);
-					app_event_draw(global::_app->id);
+					{
+						Profiler::Scope profile(Profiler::Stage::Update);
+						app_event_step(global::_app->id);
+					}
+					{
+						Profiler::Scope profile(Profiler::Stage::Draw);
+						app_event_draw(global::_app->id);
+					}
 				}
 			}
 			catch (AppEndRequest)
@@ -487,6 +498,7 @@ namespace CppProject
 
 			if (win && drawFrame)
 			{
+				Profiler::Scope profile(Profiler::Stage::Present);
 				win->mouseWheel = 0;
 				win->mouseLastPos = win->mousePos;
 				if (win->mouseUnlock)
@@ -551,6 +563,7 @@ namespace CppProject
 		// Update fps every second
 		if (fpsLastUpdate.msecsTo(QDateTime::currentDateTime()) > 1000)
 		{
+			Profiler::Scope profile(Profiler::Stage::Maintenance);
 			// Measure processing time directly, excluding the variable timer delay
 			double elapsedMs = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - stepStart).count();
 			if (elapsedMs > 0.0)
@@ -569,7 +582,10 @@ namespace CppProject
 		}
 
 		// Delete finished sounds
-		SoundInstance::CleanSounds();
+		{
+			Profiler::Scope profile(Profiler::Stage::Maintenance);
+			SoundInstance::CleanSounds();
+		}
 
 		// Loading throughput is independent of the normal frame limit
 		if (!headless && load_active())

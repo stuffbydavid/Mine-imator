@@ -19,7 +19,9 @@ function app_update_keyboard()
 	
 	if (keyboard_check_pressed(vk_f11))
 	{
-		if (keyboard_check(vk_shift))
+		if (keyboard_check(vk_control) && is_cpp())
+			debug_profiler_show()
+		else if (keyboard_check(vk_shift))
 			debug_info_corner = (debug_info_corner + 1) mod 4
 		else
 			debug_info = (debug_info + 1) mod 4

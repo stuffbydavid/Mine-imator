@@ -4,6 +4,7 @@
 #include "Asset/Shader.hpp"
 #include "Asset/VertexBuffer.hpp"
 #include "GraphicsApiHandler.hpp"
+#include "Profiler.hpp"
 
 namespace CppProject
 {
@@ -66,6 +67,7 @@ namespace CppProject
 		if (!currentBatch->numObjects || !GFX->shader || !GFX->shader->IsLoaded())
 			return;
 
+		Profiler::Scope profile(Profiler::Stage::Submit);
 		submitBatch = nullptr;
 
 		// Bind the only submitted vertex buffer if batching is disabled or max triangles was exceeded

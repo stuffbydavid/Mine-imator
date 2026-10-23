@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"debug_profiler_begin",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"debug_profiler_begin",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

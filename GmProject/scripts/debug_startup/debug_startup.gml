@@ -7,8 +7,10 @@ function debug_startup()
 	globalvar debug_check_assets, debug_realtime_views, debug_dark_theme;
 	globalvar debug_info, debug_info_corner, debug_indent, debug_timer;
 	globalvar debug_merge_model_meshes;
+	globalvar render_profiler_scope;
 
 	debug_merge_model_meshes = true
+	render_profiler_scope = 0
 
 	if (debug_mode)
 	{

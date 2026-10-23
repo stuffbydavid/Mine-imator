@@ -101,6 +101,8 @@ function debug_info_draw()
 			str += "[F9]: Open working directory" + " \n"
 			str += "[F10]: Open log file" + " \n"
 		}
+		if (is_cpp())
+			str += "[Ctrl+F11]: Performance / Benchmark" + " \n"
 		str += "[F11 to disable]"
 	}
 	
