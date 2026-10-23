@@ -2,15 +2,6 @@
 
 function tl_update_ik_calculate()
 {
-	var jointpos, jointlength, bend, bendmat, offset, offsetpos, nobend, endpos, haspole, polepos, mat;
-	jointpos = []
-	jointlength = []
-	offset = model_part.bend_end_offset
-	offsetpos = [ 0, 0, 0 ]
-	nobend = true
-	endpos = [ 0, 0, 0 ]
-	mat = matrix_parent_pre_ik
-	
 	// Do we need to update?
 	var targetupdate, poleupdate, matupdate, blendupdate;
 	targetupdate = false
@@ -43,6 +34,15 @@ function tl_update_ik_calculate()
 	ik_angle_offset_prev = value[e_value.IK_ANGLE_OFFSET]
 	ik_matrix_prev = matrix
 	
+	var jointpos, jointlength, bend, bendmat, offset, offsetpos, nobend, endpos, haspole, polepos, mat;
+	jointpos = []
+	jointlength = []
+	offset = model_part.bend_end_offset
+	offsetpos = [ 0, 0, 0 ]
+	nobend = true
+	endpos = [ 0, 0, 0 ]
+	mat = matrix_parent_pre_ik
+
 	// Offset pole target to ensure correct angle math
 	haspole = (value[e_value.IK_TARGET_ANGLE] != null && value[e_value.IK_TARGET] != null)
 	if (haspole)

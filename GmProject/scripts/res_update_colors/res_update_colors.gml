@@ -52,9 +52,8 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		color_biome_start_colors = null
 		color_biome_end_colors = null
 		
-		if (find_biome(biome) = null)
-			return 0
-		
-		color_list = res_biome_colors(biome)
+		var colors = res_biome_colors(biome);
+		if (colors != null)
+			color_list = colors
 	}
 }

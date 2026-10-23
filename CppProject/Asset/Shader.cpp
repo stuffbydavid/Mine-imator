@@ -162,6 +162,7 @@ namespace CppProject
 		batchBufferObjectSize = 0;
 		samplerNameMap.clear();
 		numSamplers = 0;
+		baseTextureSampler = -1;
 		useBaseTexture = false;
 
 		for (IntType s = 0; s < 32; s++)
@@ -1267,7 +1268,11 @@ namespace CppProject
 
 		// Add sampler
 		if (uni.type == SAMPLER2D)
+		{
+			if (name == "_uBaseTexture")
+				baseTextureSampler = numSamplers;
 			samplerNameMap[name] = numSamplers++;
+		}
 
 		// Add matrix
 		if (matrixUniformName.contains(name))
@@ -1283,13 +1288,17 @@ namespace CppProject
 	void Shader::CheckReload()
 	{
 	#if !RELEASE_MODE
+		QHash<QString, QFileInfo> fileInfoMap;
 		for (Shader* shader : allShaders)
 		{
 			BoolType reload = false;
 			QString changedFilename;
 			for (const QString& filename : shader->sourceDependencies)
 			{
-				QFileInfo fileInfo(filename);
+				auto fileIt = fileInfoMap.find(filename);
+				if (fileIt == fileInfoMap.end())
+					fileIt = fileInfoMap.insert(filename, QFileInfo(filename));
+				const QFileInfo& fileInfo = fileIt.value();
 				QDateTime lastModified = fileInfo.lastModified();
 				if (shader->lastUpdate.contains(filename))
 				{

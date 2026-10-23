@@ -40,7 +40,7 @@ namespace CppProject
 
 		// Submit texture
 		if (GFX->shader->useBaseTexture)
-			uvRect = GFX->shader->SubmitTexture("_uBaseTexture", texture, true);
+			uvRect = GFX->shader->SubmitTexture(GFX->shader->baseTextureSampler, texture, true);
 		else // UV transform is done in shader
 			uvRect = { 0.0, 0.0, 1.0, 1.0 };
 

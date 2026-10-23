@@ -222,6 +222,7 @@ namespace CppProject
 	#endif
 		QHash<StringType, IntType> samplerNameMap; // name->index in samplerState
 		IntType numSamplers = 0;
+		IntType baseTextureSampler = -1;
 		BoolType useBaseTexture = false;
 		BoolType depthOnly = false;
 		BoolType pointShader = false;

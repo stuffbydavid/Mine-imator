@@ -283,8 +283,9 @@ namespace CppProject
 	{
 		PR->Begin(pr_trianglelist, pageLoc ? pageLoc->id : texture->GetId(), transform);
 
-		FastVector<PrimitiveVertex>& vertices = stringDataMap[text].vertices;
-		FastVector<uint32_t>& indices = stringDataMap[text].indices;
+		StringData& data = stringDataMap[text];
+		FastVector<PrimitiveVertex>& vertices = data.vertices;
+		FastVector<uint32_t>& indices = data.indices;
 		if (vertices.Size() == 0)
 		{
 			IntType textLength = text.GetLength();
@@ -334,20 +335,22 @@ namespace CppProject
 			PR->vertices.Append(vertexCopy);
 		}
 
-		stringDataMap[text].isUsed = true;
+		data.isUsed = true;
 	}
 
 	void Font::CleanUnused()
 	{
 		for (Font* font : fonts)
 		{
-			QList<StringType> texts = font->stringDataMap.keys();
-			for (const StringType& text : texts)
+			for (auto it = font->stringDataMap.begin(); it != font->stringDataMap.end();)
 			{
-				if (!font->stringDataMap[text].isUsed)
-					font->stringDataMap.remove(text);
+				if (!it.value().isUsed)
+					it = font->stringDataMap.erase(it);
 				else
-					font->stringDataMap[text].isUsed = false;
+				{
+					it.value().isUsed = false;
+					++it;
+				}
 			}
 		}
 	}
