@@ -152,6 +152,7 @@ namespace CppProject
 		batchBufferSize = 0;
 		deleteAndReset(staticBufferData);
 		staticBufferSize = 0;
+		staticBufferChanged = true;
 
 		uniformNameMap.clear();
 		uniformLocationMap.clear();
@@ -462,7 +463,10 @@ namespace CppProject
 
 		// Clear static buffer
 		if (IS_D3D11)
+		{
 			memset(staticBufferData, 0, staticBufferSize);
+			staticBufferChanged = true;
+		}
 		
 		if (pointMultiviewUniform >= 0)
 			SubmitInt(pointMultiviewUniform, GFX->pointMultiview);
@@ -969,7 +973,11 @@ namespace CppProject
 			IntType numConstantBuffers = 0;
 			if (d3dStaticBuffer)
 			{
-				D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+				if (staticBufferChanged)
+				{
+					D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+					staticBufferChanged = false;
+				}
 				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
 			}
 
@@ -1088,7 +1096,12 @@ namespace CppProject
 
 		char* dst;
 		if (uniform.isStatic)
+		{
 			dst = staticBufferData;
+			if (!staticBufferChanged && memcmp(dst + uniform.bufferOffset, data, size) == 0)
+				return;
+			staticBufferChanged = true;
+		}
 		else
 			dst = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
 

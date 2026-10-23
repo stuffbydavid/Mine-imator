@@ -93,7 +93,7 @@ function tl_update_ik_calculate()
 		case e_part.BACK:	offsetpos = [ 0, -offset, 0 ]; break
 	}
 	
-	bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), matrix_multiply(model_part_get_bend_matrix(model_part, bend, point3D(0)), mat))
+	bendmat = matrix_multiply(matrix_create(offsetpos, vec3(0), vec3(1)), bendmat)
 	jointpos[2] = matrix_position(bendmat)
 	
 	// Only calculate IK if target is set

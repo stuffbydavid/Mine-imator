@@ -108,6 +108,28 @@ function particle_spawner_update(spawner)
 			}
 		}
 		
+		// These settings are shared by every particle in this simulation step
+		var att, attpath, attractorforce, directionalforce, vortexforce, boxstart, boxend, boxready;
+		att = null
+		attpath = false
+		attractorforce = 0
+		directionalforce = 0
+		vortexforce = 0
+		boxstart = null
+		boxend = null
+		boxready = false
+		if (is_timeline)
+		{
+			att = value[e_value.ATTRACTOR]
+			if (att != null)
+			{
+				attpath = (att.type = e_tl_type.PATH)
+				attractorforce = value[e_value.FORCE]
+				directionalforce = value[e_value.FORCE_DIRECTIONAL]
+				vortexforce = value[e_value.FORCE_VORTEX]
+			}
+		}
+
 		// Update particles
 		for (var i = 0; i < ds_list_size(particle_list); i++)
 		{
@@ -200,27 +222,20 @@ function particle_spawner_update(spawner)
 					}
 					
 					// Attractor
-					if (is_timeline && value[e_value.ATTRACTOR] != null)
+					if (att != null && !attpath)
 					{
-						var att = value[e_value.ATTRACTOR];
-						if (att.type != e_tl_type.PATH)
-						{
-							if (pt.type.orbit)
-								pt.spd[a] += (clamp(att.world_pos[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60)
-							else
-								pt.spd[a] += (clamp(att.world_pos[a] - world_pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60)
-						}
+						if (pt.type.orbit)
+							pt.spd[a] += (clamp(att.world_pos[a] - pt.pos[a], -attractorforce, attractorforce) / 60)
+						else
+							pt.spd[a] += (clamp(att.world_pos[a] - world_pos[a], -attractorforce, attractorforce) / 60)
 					}
 				}
 				
-				if (is_timeline && value[e_value.ATTRACTOR] != null && value[e_value.ATTRACTOR].type = e_tl_type.PATH)
+				if (attpath)
 				{
 					// Get nearest point in path table
-					var att, pointdata, pointpos, pointdis, curdis, curdata, curpos, points;
-					att = value[e_value.ATTRACTOR]
-					curdata = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+					var pointdata, pointpos, pointdis, curdis, curdata, curpos, points;
 					pointdata = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-					curpos = [ 0, 0, 0 ]
 					pointpos = [ 0, 0, 0 ]
 					pointdis = no_limit
 					points = array_length(att.path_table_matrix)
@@ -241,12 +256,6 @@ function particle_spawner_update(spawner)
 					}
 					
 					var v, d, p, t, n, b;
-					v = vec3(0)
-					d = vec3(0)
-					p = vec3(0)
-					t = vec3(0)
-					n = vec3(0)
-					b = vec3(0)
 					
 					// Direction to next point
 					t = vec3(pointdata[PATH_TANGENT_X], pointdata[PATH_TANGENT_Y], pointdata[PATH_TANGENT_Z])
@@ -263,9 +272,9 @@ function particle_spawner_update(spawner)
 					// Add forces
 					for (var a = X; a <= Z; a++)
 					{
-						pt.pos[a] += (clamp(p[a] - pt.pos[a], -value[e_value.FORCE], value[e_value.FORCE]) / 60)
-						pt.pos[a] += (t[a] * value[e_value.FORCE_DIRECTIONAL])
-						pt.pos[a] += (b[a] * value[e_value.FORCE_VORTEX])
+						pt.pos[a] += (clamp(p[a] - pt.pos[a], -attractorforce, attractorforce) / 60)
+						pt.pos[a] += (t[a] * directionalforce)
+						pt.pos[a] += (b[a] * vortexforce)
 					}
 				}
 				
@@ -332,10 +341,6 @@ function particle_spawner_update(spawner)
 					}
 					else
 					{
-						var boxstart, boxend;
-						boxstart = null
-						boxend = null
-						
 						// Spawn region
 						if (temp.pc_bounding_box_type = "spawn")
 						{
@@ -373,18 +378,26 @@ function particle_spawner_update(spawner)
 							}
 							else if (temp.pc_spawn_region_type = "cube")
 							{
-								for (var a = X; a <= Z; a++)
+								if (!boxready)
 								{
-									boxstart[a] = world_pos[a] - temp.pc_spawn_region_cube_size / 2
-									boxend[a] = world_pos[a] + temp.pc_spawn_region_cube_size / 2
+									for (var a = X; a <= Z; a++)
+									{
+										boxstart[a] = world_pos[a] - temp.pc_spawn_region_cube_size / 2
+										boxend[a] = world_pos[a] + temp.pc_spawn_region_cube_size / 2
+									}
+									boxready = true
 								}
 							}
 							else if (temp.pc_spawn_region_type = "box")
 							{
-								for (var a = X; a <= Z; a++)
+								if (!boxready)
 								{
-									boxstart[a] = world_pos[a] - temp.pc_spawn_region_box_size[a] / 2
-									boxend[a] = world_pos[a] + temp.pc_spawn_region_box_size[a] / 2
+									for (var a = X; a <= Z; a++)
+									{
+										boxstart[a] = world_pos[a] - temp.pc_spawn_region_box_size[a] / 2
+										boxend[a] = world_pos[a] + temp.pc_spawn_region_box_size[a] / 2
+									}
+									boxready = true
 								}
 							}
 							else if (temp.pc_spawn_region_type = "path" && temp.pc_spawn_region_path != null)
@@ -438,10 +451,14 @@ function particle_spawner_update(spawner)
 						// Box
 						else if (temp.pc_bounding_box_type = "custom") 
 						{
-							for (var a = X; a <= Z; a++)
+							if (!boxready)
 							{
-								boxstart[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_start[a]
-								boxend[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_end[a]
+								for (var a = X; a <= Z; a++)
+								{
+									boxstart[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_start[a]
+									boxend[a] = world_pos[a] * temp.pc_bounding_box_relative + temp.pc_bounding_box_custom_end[a]
+								}
+								boxready = true
 							}
 						}
 						

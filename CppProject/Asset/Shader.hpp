@@ -176,6 +176,7 @@ namespace CppProject
 		// Buffer info
 		char* batchBufferData = nullptr;
 		char* staticBufferData = nullptr;
+		BoolType staticBufferChanged = true;
 		IntType batchBufferSize = 0;
 		IntType staticBufferSize = 0;
 		IntType batchBufferObjectIndex = 0;

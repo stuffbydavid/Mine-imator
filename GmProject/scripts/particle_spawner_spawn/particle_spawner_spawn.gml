@@ -110,6 +110,10 @@ function particle_spawner_spawn(type)
 	// Animation
 	pt.anispeed = value_random(type.sprite_animation_speed, type.sprite_animation_speed_israndom, type.sprite_animation_speed_random_min, type.sprite_animation_speed_random_max)
 	
+	var spawnerangle = null;
+	if (is_timeline && type.rot_spawner_angle)
+		spawnerangle = matrix_angle(pt.creator.matrix_render)
+
 	for (var a = X; a <= Z; a++)
 	{
 		// Angle
@@ -135,8 +139,8 @@ function particle_spawner_spawn(type)
 				pt.rot_spd_mul[a] = sqrt(pt.rot_spd_mul[a])
 		
 		// Apply spawner's global rotation on top of existing particle rotation
-		if (is_timeline && type.rot_spawner_angle)
-			pt.rot[a] += radtodeg(matrix_angle(pt.creator.matrix_render)[a])
+		if (spawnerangle != null)
+			pt.rot[a] += radtodeg(spawnerangle[a])
 	}
 	
 	// Convert angle to vector

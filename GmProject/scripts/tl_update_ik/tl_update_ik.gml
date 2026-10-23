@@ -17,18 +17,19 @@ function tl_update_ik(parts)
 		
 		for (var i = 0; i < array_length(parts); i++)
 		{
-			with (parts[i])
+			if (parts[i] != null && parts[i].update_matrix)
 			{
-				if (update_matrix)
-				{
-					update = true
-					tl_update_matrix(false, false)
-				}
+				update = true
+				break
 			}
 		}
 		
 		if (!update)
 			break
+
+		// Resolve all dirty IK parts and their children in one parent-first pass
+		with (app)
+			tl_update_matrix(false, false)
 	}
 	debug_profiler_end("Inverse kinematics", profile)
 }
