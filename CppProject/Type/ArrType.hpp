@@ -18,6 +18,8 @@ namespace CppProject
 		BoolType operator==(const ArrType& arr) const; // arr == otherArr
 
 		VarType Value(IntType index) const;
+		// Borrowed value, valid until the array is modified or destroyed
+		const VarType& ValueRef(IntType index) const;
 		RealType RealValue(IntType index) const;
 		IntType IntValue(IntType index) const;
 		BoolType BoolValue(IntType index) const;

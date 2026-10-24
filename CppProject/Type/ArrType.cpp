@@ -67,6 +67,14 @@ namespace CppProject
 		return vec.Value(index);
 	}
 
+	const VarType& ArrType::ValueRef(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size()) // Invalid index, undefined
+			return VarArgs::outOfBounds;
+
+		return vec.Value(index);
+	}
+
 	RealType ArrType::RealValue(IntType index) const
 	{
 		if (index < 0 || index >= vec.Size())

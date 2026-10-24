@@ -1,3 +1,4 @@
+/// CppSeparate ArrType spline_get_point(RealType, const ArrType&, BoolType, BoolType, RealType = 0)
 /// @desc Calculates a 3D point on a 3D B-Spline curve given a list of points.
 /// @arg progress
 /// @arg points

@@ -7,8 +7,8 @@ function tl_update_values_ease(vid)
 	
 	if (keyframe_animate)
 	{
-		curval = keyframe_current_values[vid]
-		nextval = keyframe_next_values[vid]
+		curval = keyframe_current.value[vid]
+		nextval = keyframe_next.value[vid]
 		
 		if ((oldval = curval) && (oldval = nextval))
 			return false
@@ -16,7 +16,7 @@ function tl_update_values_ease(vid)
 		val = tl_value_interpolate(vid, keyframe_progress_ease, curval, nextval)
 	}
 	else if (keyframe_next)
-		val = keyframe_next_values[vid]
+		val = keyframe_next.value[vid]
 	else
 		val = value_default[vid]
 	

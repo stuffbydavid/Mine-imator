@@ -7,8 +7,6 @@ function tl_update_values()
 		keyframe_prev = null
 		keyframe_current = null
 		keyframe_next = null
-		keyframe_current_values = null
-		keyframe_next_values = null
 		keyframe_animate = false
 		
 		return 0
@@ -17,8 +15,6 @@ function tl_update_values()
 	keyframe_prev = keyframe_current
 	keyframe_current = null
 	keyframe_next = null
-	keyframe_current_values = null
-	keyframe_next_values = null
 	
 	// Find keyframes
 	for (var k = 0; k < ds_list_size(keyframe_list); k++)
@@ -32,13 +28,6 @@ function tl_update_values()
 	
 	keyframe_progress = tl_update_values_progress(app.timeline_marker)
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
-	
-	// Save 'value' arrays from keyframes to speed up easing
-	if (keyframe_current != null)
-		keyframe_current_values = keyframe_current.value
-	
-	if (keyframe_next != null)
-		keyframe_next_values = keyframe_next.value
 	
 	// Transition
 	keyframe_progress_ease = 0

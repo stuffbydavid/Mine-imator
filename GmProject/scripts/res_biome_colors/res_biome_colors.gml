@@ -1,4 +1,7 @@
-function res_biome_colors(biomename, values = null)
+/// @arg biome
+/// @arg [keyframe]
+
+function res_biome_colors(biomename, frame = null)
 {
 	var biome, grass, foliage, dryfoliage, water, spruce;
 	biome = find_biome(biomename)
@@ -7,20 +10,20 @@ function res_biome_colors(biomename, values = null)
 
 	if (biome.name = "custom")
 	{
-		if (values != null)
+		if (frame != null)
 		{
 			return [
-				values[e_value.ENV_GRASS_COLOR],
-				values[e_value.ENV_FOLIAGE_COLOR],
-				values[e_value.ENV_DRY_FOLIAGE_COLOR],
-				values[e_value.ENV_WATER_COLOR],
-				values[e_value.ENV_LEAVES_OAK_COLOR],
-				values[e_value.ENV_LEAVES_SPRUCE_COLOR],
-				values[e_value.ENV_LEAVES_BIRCH_COLOR],
-				values[e_value.ENV_LEAVES_JUNGLE_COLOR],
-				values[e_value.ENV_LEAVES_ACACIA_COLOR],
-				values[e_value.ENV_LEAVES_DARK_OAK_COLOR],
-				values[e_value.ENV_LEAVES_MANGROVE_COLOR]
+				frame.value[e_value.ENV_GRASS_COLOR],
+				frame.value[e_value.ENV_FOLIAGE_COLOR],
+				frame.value[e_value.ENV_DRY_FOLIAGE_COLOR],
+				frame.value[e_value.ENV_WATER_COLOR],
+				frame.value[e_value.ENV_LEAVES_OAK_COLOR],
+				frame.value[e_value.ENV_LEAVES_SPRUCE_COLOR],
+				frame.value[e_value.ENV_LEAVES_BIRCH_COLOR],
+				frame.value[e_value.ENV_LEAVES_JUNGLE_COLOR],
+				frame.value[e_value.ENV_LEAVES_ACACIA_COLOR],
+				frame.value[e_value.ENV_LEAVES_DARK_OAK_COLOR],
+				frame.value[e_value.ENV_LEAVES_MANGROVE_COLOR]
 			]
 		}
 

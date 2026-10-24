@@ -32,7 +32,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	if (!istl)
 		mat = matrix_get(matrix_world)
 	else if (model_part_shape_render_matrix_part != part || array_length(model_part_shape_render_matrix) != shapecount)
-		tl_update_model_shape_render()
+		tl_update_model_shape_render(true)
 	
 	render_blend_prev = null
 	render_alpha_prev = null

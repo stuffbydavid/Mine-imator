@@ -3,6 +3,7 @@
 function tl_update_model_shape(clear = true)
 {
 	model_part_shape_render_matrix_part = null
+	model_part_shape_data_dirty = true
 
 	// Clear old alpha arrays
 	if (model_shape_alpha_map != null)

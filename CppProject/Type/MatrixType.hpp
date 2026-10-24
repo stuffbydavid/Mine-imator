@@ -29,4 +29,8 @@ namespace CppProject
 		Matrix matrix;
 		VarType* mRef = nullptr; // References to matrix values
 	};
+
+	// Native mutation without allocating a variant reference wrapper
+	void matrix_remove_rotation(MatrixType& mat);
+	void matrix_remove_scale(MatrixType& mat);
 }
