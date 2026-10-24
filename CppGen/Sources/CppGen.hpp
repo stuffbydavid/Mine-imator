@@ -138,7 +138,6 @@ public:
 		IntMap,
 		StringMap,
 		Map,
-		Grid,
 		Stack,
 		Priority
 	};

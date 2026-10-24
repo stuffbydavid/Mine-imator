@@ -7,13 +7,10 @@ function builder_create_buffers()
 	block_state_id = buffer_create(build_size_total * 2, buffer_fixed, 2)
 	block_waterlogged = buffer_create(build_size_total, buffer_fixed, 1)
 	
-	build_size_sqrt = ceil(sqrt(build_size_total))
-	block_render_model = ds_grid_create(build_size_sqrt, build_size_sqrt)
+	block_render_model = array_create(build_size_total, 0)
 	
 	block_render_model_multipart = ds_list_create()
 	ds_list_add(block_render_model_multipart, []) // Air
-	
-	ds_grid_clear(block_render_model, 0)
 	
 	// Fill with single block
 	if (!is_undefined(build_single_block) && build_single_block != null)

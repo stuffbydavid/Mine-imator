@@ -219,15 +219,6 @@ void Accessor::resolve(ResolveScope* scope)
 						stackType.assign(*inputType, this->func, this->line);
 				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Stack, &stackType));
 			}
-			else if (this->name == STR(ds_grid_set)) // ds_grid_set(grid<typeof arg>, real, real, arg)
-				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Grid, inputTypes[3]));
-
-			else if (this->name == STR(ds_grid_get)) // ds_grid_get(grid<type>, x, y) returns type
-			{
-				DataType::Assignment* mapAss = inputTypes[0]->getFirstAssignment(DataType::Type::Grid);
-				if (mapAss != nullptr)
-					this->resolvedType->assign(*mapAss->containerStorage, this->func, this->line);
-			}
 			else if (this->name == STR(ds_list_copy) || this->name == STR(ds_map_copy)) // ds_x_copy(ds1, typeof ds1)
 				this->callParameters[0]->applyType(scope, *inputTypes[1]);
 
@@ -387,7 +378,7 @@ void Accessor::resolve(ResolveScope* scope)
 				ArrayAccessor* acc = this->arrayAccessors[i];
 				DataType::Type currentAccessorType = i == 0 ? accessorType : acc->type;
 				acc->expr->resolve(scope->outsideChain());
-				if (!DataType::isRawTypeMap(currentAccessorType)) // Array/list/grid accessors should be integers
+				if (!DataType::isRawTypeMap(currentAccessorType)) // Array/list accessors should be integers
 					acc->expr->applyType(scope->outsideChain(), DataType::scalar(DataType::Type::Integer));
 
 				if (this->resolvedType->isContainer()) // Get type from the current container
@@ -799,8 +790,6 @@ String Accessor::toCpp(ResolveScope* scope)
 						cpp = "DsList(" + cpp + ")";
 					else if (dsType == DataType::Type::AnyMap)
 						cpp = "DsMap(" + cpp + ")";
-					else if (dsType == DataType::Type::Grid)
-						cpp = "DsGrid(" + cpp + ")";
 				}
 
 				// Prefer .Value(index/key) const for read-only
@@ -956,8 +945,6 @@ String Accessor::toCpp(ResolveScope* scope)
 				cpp = "DsList(" + cpp + ")";
 			else if (acc->type == DataType::Type::AnyMap)
 				cpp = "DsMap(" + cpp + ")";
-			else if (acc->type == DataType::Type::Grid)
-				cpp = "DsGrid(" + cpp + ")";
 
 			String indexCpp = acc->expr->toCpp(argumentScope);
 			if (this->assignExpr == nullptr)

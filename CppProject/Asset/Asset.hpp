@@ -28,7 +28,6 @@
 // Array/Map access macros
 #define DsList(id) (*FindAssetReq(List, id))
 #define DsMap(id) (*FindAssetReq(Map, id))
-#define DsGrid(id) (*FindAssetReq(Grid, id))
 
 #define ID_Script 1
 #define ID_Sprite 2

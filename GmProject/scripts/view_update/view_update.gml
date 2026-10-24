@@ -80,6 +80,20 @@ function view_update(view, cam)
 	if (view.update_gizmos && !place_build)
 		view_update_gizmos(view, cam)
 
+	// Pick the block under the cursor before changing the build selection
+	if (place_build && mouse_middle_pressed && content_mouseon && window_busy = place_busy &&
+		(!build_first_person || view = view_main))
+	{
+		place_view_pos = null
+		view_place(view)
+		if (place_view_pos != null)
+		{
+			app_update_place()
+			if (action_build_pick())
+				view_changed(view)
+		}
+	}
+
 	// First-person build controls
 	if (place_build && build_first_person && view = view_main)
 	{

@@ -17,7 +17,6 @@ DataType::CppType cppTypeFor(DataType::Type rawType)
 		case DataType::Type::IntMap:
 		case DataType::Type::StringMap:
 		case DataType::Type::Map:
-		case DataType::Type::Grid:
 		case DataType::Type::Stack:
 		case DataType::Type::Priority: return DataType::CppType::IntType;
 		case DataType::Type::Bool: return DataType::CppType::BoolType;
@@ -133,9 +132,6 @@ DataType::DataType(StringId name)
 			break;
 		case STR(map):
 			rawType = Type::Map;
-			break;
-		case STR(grid):
-			rawType = Type::Grid;
 			break;
 		case STR(stack):
 			rawType = Type::Stack;
@@ -327,7 +323,6 @@ String DataType::typeName(Type rawType)
 		case Type::IntMap: return STR(IntMap);
 		case Type::StringMap: return STR(StringMap);
 		case Type::Map: return STR(Map);
-		case Type::Grid: return STR(Grid);
 		case Type::Stack: return STR(Stack);
 		case Type::Priority: return STR(Priority);
 	}

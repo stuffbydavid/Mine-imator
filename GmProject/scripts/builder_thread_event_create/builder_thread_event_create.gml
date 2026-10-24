@@ -32,7 +32,6 @@ function builder_thread_event_create()
 	build_size = vec3(0)
 	build_size_xy = 0
 	build_size_total = 0
-	build_size_sqrt = 0
 	
 	build_transform = false
 	build_edges = true
@@ -90,7 +89,7 @@ function builder_thread_event_create()
 	block_state_id_current = 0
 	block_color_index = 0
 
-	block_render_model = null
+	block_render_model = []
 	block_render_model_multipart_map = null
 
 	block_tl_map = null

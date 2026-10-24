@@ -781,7 +781,6 @@ Accessor* Function::parseAccessor()
 			case Token::Type::ArrayRef: isRef = true; break;
 			case Token::Type::BitwiseOr: arrAccType = DataType::Type::List; break;
 			case Token::Type::Ternary: arrAccType = DataType::Type::AnyMap; break;
-			case Token::Type::HashTag: arrAccType = DataType::Type::Grid; break;
 			default: break;
 		}
 		if (isRef || arrAccType != DataType::Type::Array)

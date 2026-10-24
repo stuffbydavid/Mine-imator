@@ -6,4 +6,10 @@ function block_mesh_event_destroy()
 		if (buffer != null)
 			vbuffer_destroy(buffer)
 	}
+
+	if (block_palette_buffer != null)
+		buffer_delete(block_palette_buffer)
+
+	if (block_grid_buffer != null)
+		buffer_delete(block_grid_buffer)
 }
