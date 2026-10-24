@@ -2919,6 +2919,7 @@
     {"id":{"name":"tl_update_value_types_show","path":"scripts/tl_update_value_types_show/tl_update_value_types_show.yy",},},
     {"id":{"name":"tl_update_value_types","path":"scripts/tl_update_value_types/tl_update_value_types.yy",},},
     {"id":{"name":"tl_update_transform","path":"scripts/tl_update_transform/tl_update_transform.yy",},},
+    {"id":{"name":"tl_update_values_batch","path":"scripts/tl_update_values_batch/tl_update_values_batch.yy",},},
     {"id":{"name":"tl_update_values_ease","path":"scripts/tl_update_values_ease/tl_update_values_ease.yy",},},
     {"id":{"name":"tl_update_values_progress","path":"scripts/tl_update_values_progress/tl_update_values_progress.yy",},},
     {"id":{"name":"tl_update_values","path":"scripts/tl_update_values/tl_update_values.yy",},},

@@ -1,4 +1,6 @@
 /// CppGen vec posebend
+/// CppGen int dirtyflags
+/// CppGen int childflags
 /// @desc Updates matrixes and positions.
 /// @arg [paths]
 /// @arg [updateik]
@@ -29,7 +31,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (curtl.tree_list[|t].inherit_pose)
 					array_add(app.project_inherit_pose_array, curtl.tree_list[|t])
 		
-		if (!curtl.update_matrix)
+		if (!curtl.update_matrix && curtl.update_value_flags = 0)
 			continue
 		
 		// Delay timeline update if we inherit pose
@@ -42,6 +44,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		if (usepaths && (curtl.type = e_tl_type.PATH || curtl.type = e_tl_type.PATH_POINT))
 		{
 			curtl.update_matrix = false
+			curtl.update_value_flags = 0
 			continue
 		}
 		
@@ -52,82 +55,107 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (type_is_visible(type) && type != e_tl_type.CAMERA && !type_is_light(type))
 				worldupdate = true
 			
-			var hasik, posebend;
+			var dirtyflags, transformupdate, appearanceupdate, bendupdate, hasik, posebend;
+			dirtyflags = (update_matrix ? e_tl_dirty.ALL : update_value_flags)
+			transformupdate = ((dirtyflags & e_tl_dirty.TRANSFORM) != 0)
+			appearanceupdate = ((dirtyflags & e_tl_dirty.APPEARANCE) != 0)
 			hasik = (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
-			posebend = tl_update_transform(usepaths, updatepose, hasik)
+			posebend = bend_pose_inherit
 			
-			if (type = e_tl_type.MODEL_PART)
-				model_part_shape_render_matrix_part = null
-			
-			// Scale for position controls
-			value_inherit[e_value.SCA_X] = 1
-			value_inherit[e_value.SCA_Y] = 1
-			value_inherit[e_value.SCA_Z] = 1
-			
-			var tl = id;
-			while (1)
+			if (transformupdate)
 			{
-				var par = tl.parent;
-				if (par = app)
-					break
+				posebend = tl_update_transform(usepaths, updatepose, hasik)
+				if (bend_pose_inherit[X] != posebend[X] || bend_pose_inherit[Y] != posebend[Y] || bend_pose_inherit[Z] != posebend[Z])
+				{
+					bend_pose_inherit = posebend
+					dirtyflags = dirtyflags | e_tl_dirty.BEND
+				}
+				if (type = e_tl_type.MODEL_PART)
+					model_part_shape_render_matrix_part = null
+			}
 			
-				value_inherit[e_value.SCA_X] *= par.value[e_value.SCA_X]
-				value_inherit[e_value.SCA_Y] *= par.value[e_value.SCA_Y]
-				value_inherit[e_value.SCA_Z] *= par.value[e_value.SCA_Z]
+			bendupdate = ((dirtyflags & e_tl_dirty.BEND) != 0)
+			
+			if ((dirtyflags & e_tl_dirty.SCALE) != 0)
+			{
+				// Scale for position controls
+				value_inherit[e_value.SCA_X] = 1
+				value_inherit[e_value.SCA_Y] = 1
+				value_inherit[e_value.SCA_Z] = 1
 				
-				if (!par.inherit_scale)
-					break
-				
-				tl = par
+				var tl = id;
+				while (1)
+				{
+					var par = tl.parent;
+					if (par = app)
+						break
+
+					value_inherit[e_value.SCA_X] *= par.value[e_value.SCA_X]
+					value_inherit[e_value.SCA_Y] *= par.value[e_value.SCA_Y]
+					value_inherit[e_value.SCA_Z] *= par.value[e_value.SCA_Z]
+
+					if (!par.inherit_scale)
+						break
+
+					tl = par
+				}
 			}
 			
 			// Inherit
-			var lastalpha, lasttex, ikblend
+			var lastalpha, lasttex, ikblend, tl
 			lastalpha = value_inherit[e_value.ALPHA];
 			lasttex = value_inherit[e_value.TEXTURE_OBJ]
 			ikblend = value[e_value.IK_BLEND] * hasik
-			value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
-			value_inherit[e_value.RGB_ADD] = value[e_value.RGB_ADD] // Added
-			value_inherit[e_value.RGB_SUB] = value[e_value.RGB_SUB] // Added
-			value_inherit[e_value.RGB_MUL] = value[e_value.RGB_MUL] // Multiplied
-			value_inherit[e_value.HSB_ADD] = value[e_value.HSB_ADD] // Added
-			value_inherit[e_value.HSB_SUB] = value[e_value.HSB_SUB] // Added
-			value_inherit[e_value.HSB_MUL] = value[e_value.HSB_MUL] // Multiplied
-			value_inherit[e_value.MIX_COLOR] = value[e_value.MIX_COLOR] // Added
-			value_inherit[e_value.GLOW_COLOR] = value[e_value.GLOW_COLOR] // Multiplied
-			value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
-			value_inherit[e_value.EMISSIVE] = value[e_value.EMISSIVE] // Added
-			value_inherit[e_value.METALLIC] = value[e_value.METALLIC] // Added
-			value_inherit[e_value.ROUGHNESS] = value[e_value.ROUGHNESS] // Added
-			value_inherit[e_value.SUBSURFACE] = value[e_value.SUBSURFACE] // Added
-			value_inherit[e_value.SUBSURFACE_RADIUS_RED] = value[e_value.SUBSURFACE_RADIUS_RED] // Multiplied
-			value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = value[e_value.SUBSURFACE_RADIUS_GREEN] // Multiplied
-			value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] = value[e_value.SUBSURFACE_RADIUS_BLUE] // Multiplied
-			value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
-			value_inherit[e_value.WIND_INFLUENCE] = value[e_value.WIND_INFLUENCE] // Multiplied
-			value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE]
-			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend) // Added
-			value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] * (1 - ikblend) // Added
-			value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] * (1 - ikblend) // Added
-			value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
-			value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = value[e_value.TEXTURE_MATERIAL_OBJ] // Overwritten
-			value_inherit[e_value.TEXTURE_NORMAL_OBJ] = value[e_value.TEXTURE_NORMAL_OBJ] // Overwritten
+			if (appearanceupdate)
+			{
+				value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
+				value_inherit[e_value.RGB_ADD] = value[e_value.RGB_ADD] // Added
+				value_inherit[e_value.RGB_SUB] = value[e_value.RGB_SUB] // Added
+				value_inherit[e_value.RGB_MUL] = value[e_value.RGB_MUL] // Multiplied
+				value_inherit[e_value.HSB_ADD] = value[e_value.HSB_ADD] // Added
+				value_inherit[e_value.HSB_SUB] = value[e_value.HSB_SUB] // Added
+				value_inherit[e_value.HSB_MUL] = value[e_value.HSB_MUL] // Multiplied
+				value_inherit[e_value.MIX_COLOR] = value[e_value.MIX_COLOR] // Added
+				value_inherit[e_value.GLOW_COLOR] = value[e_value.GLOW_COLOR] // Multiplied
+				value_inherit[e_value.MIX_PERCENT] = value[e_value.MIX_PERCENT] // Added
+				value_inherit[e_value.EMISSIVE] = value[e_value.EMISSIVE] // Added
+				value_inherit[e_value.METALLIC] = value[e_value.METALLIC] // Added
+				value_inherit[e_value.ROUGHNESS] = value[e_value.ROUGHNESS] // Added
+				value_inherit[e_value.SUBSURFACE] = value[e_value.SUBSURFACE] // Added
+				value_inherit[e_value.SUBSURFACE_RADIUS_RED] = value[e_value.SUBSURFACE_RADIUS_RED] // Multiplied
+				value_inherit[e_value.SUBSURFACE_RADIUS_GREEN] = value[e_value.SUBSURFACE_RADIUS_GREEN] // Multiplied
+				value_inherit[e_value.SUBSURFACE_RADIUS_BLUE] = value[e_value.SUBSURFACE_RADIUS_BLUE] // Multiplied
+				value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
+				value_inherit[e_value.WIND_INFLUENCE] = value[e_value.WIND_INFLUENCE] // Multiplied
+				value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE]
+				value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
+				value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = value[e_value.TEXTURE_MATERIAL_OBJ] // Overwritten
+				value_inherit[e_value.TEXTURE_NORMAL_OBJ] = value[e_value.TEXTURE_NORMAL_OBJ] // Overwritten
+			}
+			
+			if (bendupdate)
+			{
+				value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend) // Added
+				value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] * (1 - ikblend) // Added
+				value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] * (1 - ikblend) // Added
+			}
 			
 			var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
-			inhalpha = true
-			inhcolor = true
-			inhglowcolor = true
-			inhvis = true
-			inhbend = true
-			inhtex = true
-			inhsurf = true
-			inhsubsurf = true
-			
-			for (var j = X; j <= Z; j++)
-				value_inherit[e_value.BEND_ANGLE_X + j] += posebend[j]
+			inhalpha = appearanceupdate
+			inhcolor = appearanceupdate
+			inhglowcolor = appearanceupdate
+			inhvis = appearanceupdate
+			inhbend = bendupdate
+			inhtex = appearanceupdate
+			inhsurf = appearanceupdate
+			inhsubsurf = appearanceupdate
+
+			if (bendupdate)
+				for (var j = X; j <= Z; j++)
+					value_inherit[e_value.BEND_ANGLE_X + j] += posebend[j]
 			
 			tl = id
-			while (true)
+			while (appearanceupdate || bendupdate)
 			{
 				var par = tl.parent;
 				if (par = app)
@@ -222,26 +250,30 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (inhtex)
 					value_inherit[e_value.TEXTURE_OBJ] = par.value[e_value.TEXTURE_OBJ]
 				
-				value_inherit[e_value.WIND_INFLUENCE] *= par.value[e_value.WIND_INFLUENCE]
+				if (appearanceupdate)
+					value_inherit[e_value.WIND_INFLUENCE] *= par.value[e_value.WIND_INFLUENCE]
 				
 				tl = par
 			}
 			
-			if (lastalpha != value_inherit[e_value.ALPHA])
-				render_list_default_update = true
-			
-			colors_ext = (value_inherit[e_value.ALPHA] < 1 ||
-						  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
-						  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
-						  value_inherit[e_value.HSB_MUL] < c_white ||
-						  value_inherit[e_value.MIX_PERCENT] > 0 ||
-						  part_mixing_shapes)
+			if (appearanceupdate)
+			{
+				if (lastalpha != value_inherit[e_value.ALPHA])
+					render_list_default_update = true
+
+				colors_ext = (value_inherit[e_value.ALPHA] < 1 ||
+							  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
+							  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
+							  value_inherit[e_value.HSB_MUL] < c_white ||
+							  value_inherit[e_value.MIX_PERCENT] > 0 ||
+							  part_mixing_shapes)
+			}
 			
 			// Add bend angle from IK
-			if (hasik)
+			if (bendupdate && hasik)
 				value_inherit[e_value.BEND_ANGLE_X] += part_joint_bend_angle * ikblend
 			
-			if ((value_inherit[e_value.ALPHA] * 1000) != 0)
+			if ((appearanceupdate || bendupdate) && (value_inherit[e_value.ALPHA] * 1000) != 0)
 			{
 				// Update 3D planes if texture changed
 				if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && model_part != null && model_part.has_3d_plane)
@@ -252,7 +284,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Update objects following this path
-			if (type = e_tl_type.PATH)
+			if (transformupdate && type = e_tl_type.PATH)
 			{
 				with (obj_timeline)
 				{
@@ -262,14 +294,21 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Update path
-			if (type = e_tl_type.PATH_POINT && parent != app && parent.type = e_tl_type.PATH)
+			if (transformupdate && type = e_tl_type.PATH_POINT && parent != app && parent.type = e_tl_type.PATH)
 				parent.path_update = true
 			
-			if (update_matrix)
+			// Forward categories in timeline order, retaining the full path for structural edits
+			// Do not prune on effective parent values: clamping and texture precedence are order dependent
+			var childflags = dirtyflags & e_tl_dirty.INHERITED;
+			if (update_matrix || childflags != 0)
 			{
-				// Update children
 				for (var t = 0; t < ds_list_size(tree_list); t++)
-					tree_list[|t].update_matrix = true
+				{
+					if (update_matrix)
+						tree_list[|t].update_matrix = true
+					else
+						tree_list[|t].update_value_flags = tree_list[|t].update_value_flags | childflags
+				}
 			}
 			
 			// Update render resource
@@ -277,10 +316,12 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				tl_update_render_res()
 			
 			// Update shape matrices, vertex buffers and visibility
-			if (type = e_tl_type.MODEL_PART && model_part != null)
-				tl_update_model_shape_render(true)
+			if (type = e_tl_type.MODEL_PART && model_part != null &&
+				(transformupdate || model_part_shape_render_matrix_part != model_part))
+				tl_update_model_shape_render(appearanceupdate)
 			
 			update_matrix = false
+			update_value_flags = 0
 		}
 	}
 	

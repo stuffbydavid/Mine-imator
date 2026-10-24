@@ -1,3 +1,5 @@
+/// CppGen int update_value_flags
+/// CppGen vec bend_pose_inherit
 /// CppGen matrix transform_part_cache_matrix
 /// CppGen vec transform_local_pos
 /// CppGen vec transform_local_rot
@@ -210,6 +212,8 @@ function tl_event_create()
 	transform_part_cache_matrix = MAT_IDENTITY
 	
 	update_matrix = true
+	update_value_flags = 0
+	bend_pose_inherit = vec3(0)
 	bend_rot_last = vec3(0)
 	bend_model_part_last = null
 	
