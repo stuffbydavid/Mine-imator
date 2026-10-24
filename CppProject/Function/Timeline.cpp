@@ -1,7 +1,49 @@
 #include "Generated/Scripts.hpp"
+#include <QSet>
 
 namespace CppProject
 {
+	void tl_update_ik(VarType parts)
+	{
+		if (!parts.IsArray() || !parts.Arr().Size())
+			return;
+		const ArrType& ids = parts.Arr();
+		for (int pass = 0; pass < 2; pass++)
+		{
+			for (IntType i = 0; i < ids.Size(); i++)
+			{
+				obj_timeline* timeline = ObjTypeOpt(obj_timeline, ids.IntValue(i));
+				if (!timeline)
+					continue;
+				if (timeline->value.Arr().ValueRef(e_value_IK_TARGET) == null_ &&
+					!(global::debug_show_bones && timeline->selected) && timeline->ik_target_prev == null_ &&
+					!timeline->part_joints_matrix.Size() && !timeline->part_joints_pos.Size() && !timeline->part_joints_bone_matrix.Size())
+					continue;
+				tl_update_ik_calculate(Scope<obj_timeline>(timeline));
+			}
+
+			QSet<IntType> pending;
+			for (IntType i = 0; i < ids.Size(); i++)
+				if (obj_timeline* timeline = ObjTypeOpt(obj_timeline, ids.IntValue(i)))
+					if (timeline->update_matrix)
+						pending.insert(timeline->id);
+			if (pending.isEmpty())
+				break;
+
+			// Start at the earliest pending part so parents precede children regardless of creation order
+			const List& timelines = DsList(global::_app->project_timeline_list);
+			for (IntType i = 0; i < timelines.vec.size(); i++)
+			{
+				IntType id = timelines.Value(i).ToInt();
+				if (pending.contains(id))
+				{
+					tl_update_matrix(ScopeAny(id), false, false);
+					break;
+				}
+			}
+		}
+	}
+
 	static bool SameTransformVector(const VecType& a, const VecType& b)
 	{
 		return a.x == b.x && a.y == b.y && a.z == b.z;
