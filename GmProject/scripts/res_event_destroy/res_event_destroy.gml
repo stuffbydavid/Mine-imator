@@ -92,7 +92,7 @@ function res_event_destroy()
 	if (block_preview_texture != null)
 		texture_free(block_preview_texture)
 	
-	block_vbuffer_destroy()
+	block_meshes_destroy()
 	
 	// Free items
 	for (var size = 0; size < e_item_sheet.amount; size++)

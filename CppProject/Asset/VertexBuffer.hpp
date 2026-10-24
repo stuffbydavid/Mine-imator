@@ -18,7 +18,7 @@ namespace CppProject
 	struct VertexBuffer : Asset
 	{
 		VertexBuffer() : Asset(ID_VertexBuffer) {}
-		VertexBuffer(QDataStream& stream);
+		VertexBuffer(QDataStream& stream, BoolType batching = true);
 		~VertexBuffer();
 
 		// Submit the vertex buffer to be rendered, returns the number of render calls made.
@@ -36,8 +36,8 @@ namespace CppProject
 		// Adds a face with 4 vertices and generates 6 indices.
 		void AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId = 0);
 
-		// Allocates the meshes from the added vertices.
-		void Complete();
+		// Allocates the meshes from the added vertices, optionally updating tangents.
+		void Complete(BoolType updateTangents = true);
 
 		// Writes the vertex buffer data to the given stream.
 		void Write(QDataStream& stream);
@@ -47,7 +47,7 @@ namespace CppProject
 
 		IntType numIndices = 0;
 		QVector<Mesh<>*> meshes;
-		BoolType saveData = false; // Whether to discard data on CPU-side if it can't be used for batches
+		BoolType batching = true; // Whether the buffer can be combined or instanced with other submissions
 		bool valid = true;
 
 		struct ThreadData
@@ -64,7 +64,7 @@ namespace CppProject
 			};
 			QVector<MeshData*> meshes;
 			Vertex currentVertex;
-			BoolType elemAdded[5] = { false, false, false, false, false };
+			BoolType elemAdded[4] = { false, false, false, false };
 		} threads[OPENMP_MAX_THREADS];
 	};
 }

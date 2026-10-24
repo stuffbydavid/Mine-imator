@@ -33,5 +33,16 @@ function render_update_text()
 				text = select.text
 			render_generate_text(text, select.text_font, select.text_3d, select.text_halign, select.text_valign, select.text_aa, select.text_outline_size)
 		}
+
+		// Sign text
+		if (select = app.bench_settings && app.bench_tab = e_bench_tab.SPECIAL_BLOCK && (select.model_name = "sign" || select.model_name = "hanging_sign"))
+		{
+			if (select.sign_front_text)
+				with (select)
+					render_generate_text("Front text", project_pack_res, false, "center", "center", false, 3)
+
+			if (select.sign_back_text)
+				render_generate_text("Back text", project_pack_res, false, "center", "center", false, 3)
+		}
 	}
 }

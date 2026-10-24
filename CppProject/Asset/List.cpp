@@ -38,7 +38,7 @@ namespace CppProject
 			if (it->dsType == ds_type_list)
 				delete FindList(it->value.ToInt());
 			else if (it->dsType == ds_type_map)
-				delete FindList(it->value.ToInt());
+				delete FindMap(it->value.ToInt());
 		}
 
 		vec.clear();

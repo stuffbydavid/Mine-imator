@@ -139,6 +139,7 @@ namespace CppProject
 			GFX->SubmitBatch();
 
 			GFX->shader->samplerRepeat[s] = enabledInt;
+			GFX->shader->samplerUniformsChanged = true;
 		}
 
 		GFX->texRepeat = enabled;
@@ -153,6 +154,7 @@ namespace CppProject
 		GFX->SubmitBatch();
 
 		GFX->shader->samplerRepeat[sampler] = enabledInt;
+		GFX->shader->samplerUniformsChanged = true;
 	}
 
 	void gpu_set_tex_max_mip(IntType maxmip)
@@ -557,12 +559,6 @@ namespace CppProject
 		// Do nothing
 	}
 
-	void vertex_color(IntType buffer, IntType color, RealType alpha)
-	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			buf->GetCurrentVertex(2).SetColor(color, alpha);
-	}
-
 	IntType vertex_create_buffer()
 	{
 		return (new VertexBuffer)->id;
@@ -595,7 +591,7 @@ namespace CppProject
 	{
 		if (VertexBuffer* buf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(4);
+			Vertex& vertex = buf->GetCurrentVertex(3);
 			
 			if (x > 0.0)
 				vertex.EnableFlag(Vertex::WAVE_XY);
@@ -605,14 +601,11 @@ namespace CppProject
 			
 			vertex.SetEmissive(z);
 
-			if (w > 0.0)
+			vertex.SetColorIndex((uint8_t)((IntType)w / 2));
+
+			if (((IntType)w % 2) != 0)
 				vertex.EnableFlag(Vertex::SUBSURFACE);
 		}
-	}
-
-	void vertex_format_add_colour()
-	{
-		// Do nothing
 	}
 
 	void vertex_format_add_custom(IntType type, IntType usage)
@@ -686,7 +679,7 @@ namespace CppProject
 	{
 		if (VertexBuffer* buf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(3);
+			Vertex& vertex = buf->GetCurrentVertex(2);
 			vertex.u = u;
 			vertex.v = v;
 		}

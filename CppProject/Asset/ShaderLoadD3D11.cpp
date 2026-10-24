@@ -87,37 +87,33 @@ namespace CppProject
             case VERTEX_BUFFER:
             {
                 inputDecl += "\tfloat3 Position : A;\n";
-                inputDecl += "\tuint Normal : B;\n";
-                inputDecl += "\tuint Color : C;\n";
-                inputDecl += "\tfloat2 TextureCoord: D;\n";
-                inputDecl += "\tuint Data: E;\n";
-                inputDecl += "\tuint Tangent: F;\n";
+                inputDecl += "\tfloat2 TextureCoord: B;\n";
+                inputDecl += "\tuint Data1: C;\n";
+                inputDecl += "\tuint Data2: D;\n";
+                inputDecl += "\tuint Tangent: E;\n";
                 if (useBatching)
                     inputDecl += "\tuint InstanceID: SV_InstanceID;\n";
                 
                 attrsDecl += "\tfloat3 Position: A;\n";
-                attrsDecl += "\tfloat3 Normal: B;\n";
-                attrsDecl += "\tfloat4 Color: C;\n";
-                attrsDecl += "\tfloat2 TextureCoord: D;\n";
-                attrsDecl += "\tfloat4 Wave: E;\n";
-                attrsDecl += "\tfloat3 Tangent: F;\n";
+                attrsDecl += "\tfloat2 TextureCoord: B;\n";
+                attrsDecl += "\tfloat3 Normal: C;\n";
+                attrsDecl += "\tfloat4 Custom: D;\n";
+                attrsDecl += "\tfloat3 Tangent: E;\n";
                 varsDecl += "\tnointerpolation uint _vObjIndex: " + QString((char)('A' + varId++)) + ";\n";
 
                 setAttrs += "\n\t_attrs.Position = _input.Position;";
-                setAttrs += "\n\t_attrs.Normal = " UNPACK_VERTEX_NORMAL("_input.Normal") ";";
-                setAttrs += "\n\t_attrs.Color = " UNPACK_VERTEX_COLOR("_input.Color") ";";
                 setAttrs += "\n\t_attrs.TextureCoord = _input.TextureCoord;";
-                setAttrs += "\n\t_attrs.Wave = " UNPACK_VERTEX_WAVE("_input.Data") ";";
+                setAttrs += "\n\t_attrs.Normal = " UNPACK_VERTEX_NORMAL("_input.Data1") ";";
+                setAttrs += "\n\t_attrs.Custom = " UNPACK_VERTEX_CUSTOM("_input.Data2", "_input.Data1") ";";
                 setAttrs += "\n\t_attrs.Tangent = " UNPACK_VERTEX_NORMAL("_input.Tangent") ";";
-                setAttrs += "\n\t_vars._vObjIndex = _input.Data >> 16;";
+                setAttrs += "\n\t_vars._vObjIndex = _input.Data2 >> 16;";
                 if (useBatching)
                     setAttrs += "\n\t_vars._vObjIndex += _input.InstanceID;";
 
                 vsCode.replace(QRegularExpression("\\bin_Position\\b"), "_attrs.Position");
                 vsCode.replace(QRegularExpression("\\bin_Normal\\b"), "_attrs.Normal");
-                vsCode.replace(QRegularExpression("\\bin_Colour\\b"), "_attrs.Color");
                 vsCode.replace(QRegularExpression("\\bin_TextureCoord\\b"), "_attrs.TextureCoord");
-                vsCode.replace(QRegularExpression("\\bin_Wave\\b"), "_attrs.Wave");
+                vsCode.replace(QRegularExpression("\\bin_Custom\\b"), "_attrs.Custom");
                 vsCode.replace(QRegularExpression("\\bin_Tangent\\b"), "_attrs.Tangent");
 
                 break;
@@ -490,9 +486,8 @@ namespace CppProject
                 case VERTEX_BUFFER:
                 {
                     addElement(DXGI_FORMAT_R32G32B32_FLOAT, sizeof(float) * 3);
-                    addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
-                    addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32G32_FLOAT, sizeof(float) * 2);
+                    addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     break;

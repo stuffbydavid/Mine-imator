@@ -5,9 +5,8 @@ void main() {}
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
-attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec4 in_Wave;
+attribute vec4 in_Custom;
 attribute vec3 in_Tangent;
 
 uniform float uFar; // static
@@ -45,7 +44,7 @@ uniform vec2 uTextureOffset;
 
 #pragma shady: macro_end
 #pragma shady: macro_begin GBUFFERS_VERTEX_LIB
-	vPosition = getWorldPosition(in_Position, in_Wave);
+	vPosition = getWorldPosition(in_Position, in_Custom);
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	vPlaceNormal = in_Normal;
 
@@ -72,7 +71,7 @@ uniform vec2 uTextureOffset;
 	vTangentWorld = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
 
 	// Color
-	vColor = uBlendColor * in_Colour;
-	vCustom = in_Wave;
+	vColor = uBlendColor * getVertexColor(in_Custom);
+	vCustom = getVertexCustom(in_Custom);
 
 #pragma shady: macro_end

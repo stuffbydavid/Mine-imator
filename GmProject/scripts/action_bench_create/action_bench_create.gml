@@ -107,7 +107,12 @@ function action_bench_create(button = e_bench_button.CREATE)
 			bench_tab = history_data.bench_tab
 			history_restore_bench(history_data.bench_save_obj)
 			
-			if (tab = e_bench_tab.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
+			if (tab = e_bench_tab.SPECIAL_BLOCK)
+			{
+				bench_settings.sign_front_text = hobj.sign_front_text
+				bench_settings.sign_back_text = hobj.sign_back_text
+			}
+			else if (tab = e_bench_tab.PARTICLE_SPAWNER && history_data.particle_temp_save_id != "")
 			{
 				particletemp = save_id_find(history_data.particle_temp_save_id)
 				bench_settings.particle_preset = particletemp
@@ -128,7 +133,12 @@ function action_bench_create(button = e_bench_button.CREATE)
 			hobj.parent_save_id = save_id_get(app)
 			hobj.scenery_res_id = null
 			
-			if (tab = e_bench_tab.PARTICLE_SPAWNER)
+			if (tab = e_bench_tab.SPECIAL_BLOCK)
+			{
+				hobj.sign_front_text = bench_settings.sign_front_text
+				hobj.sign_back_text = bench_settings.sign_back_text
+			}
+			else if (tab = e_bench_tab.PARTICLE_SPAWNER)
 				particletemp = bench_settings.particle_preset_temp
 			
 			else if (tab = e_bench_tab.CAMERA_EFFECT)
@@ -176,6 +186,33 @@ function action_bench_create(button = e_bench_button.CREATE)
 			else
 				tl = new_tl(tltype)
 			
+			// Add sign text
+			if (tab = e_bench_tab.SPECIAL_BLOCK && (tl.model_name = "sign" || tl.model_name = "hanging_sign"))
+			{
+				var blockname = tl.model_name;
+				if (state_vars_get_value(tl.model_state, "variant") = "wall")
+					blockname = "wall_" + blockname
+
+				var signblock = mc_assets.block_name_map[?blockname];
+				if (!is_undefined(signblock) && signblock != null && signblock.tl_has_text)
+				{
+					with (tl)
+					{
+						var textparent = tl_part_find("sign");
+						if (textparent = null)
+							textparent = id
+
+						if (hobj.sign_front_text)
+							block_animate_text("Front text", signblock.tl_text_front_position,
+								signblock.tl_text_front_rotation, signblock.tl_text_front_scale, c_black, c_black, 0, textparent)
+
+						if (hobj.sign_back_text)
+							block_animate_text("Back text", signblock.tl_text_back_position,
+								signblock.tl_text_back_rotation, signblock.tl_text_back_scale, c_black, c_black, 0, textparent)
+					}
+				}
+			}
+				
 			// Create camera effect
 			if (tab = e_bench_tab.CAMERA_EFFECT)
 			{

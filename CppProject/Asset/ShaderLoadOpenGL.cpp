@@ -104,17 +104,14 @@ namespace CppProject
 			if (isVertex && vertexFormat == VERTEX_BUFFER)
 			{
 				code.replace("in vec3 in_Normal;\n", "");
-				code.replace("in vec4 in_Colour;\n", "");
-				code.replace("in vec4 in_Wave;\n", "");
+				code.replace("in vec4 in_Custom;\n", "");
 				code.replace("in vec3 in_Tangent;\n", "");
 
-				header += "in uint _aNormal;\n"
-					"in uint _aColor;\n"
-					"in uint _aData;\n"
+				header += "in uint _aData1;\n"
+					"in uint _aData2;\n"
 					"in uint _aTangent;\n"
-					"vec3 in_Normal = " UNPACK_VERTEX_NORMAL("_aNormal") ";\n"
-					"vec4 in_Colour = " UNPACK_VERTEX_COLOR("_aColor") ";\n"
-					"vec4 in_Wave = " UNPACK_VERTEX_WAVE("_aData") ";\n"
+					"vec3 in_Normal = " UNPACK_VERTEX_NORMAL("_aData1") ";\n"
+					"vec4 in_Custom = " UNPACK_VERTEX_CUSTOM("_aData2", "_aData1") ";\n"
 					"vec3 in_Tangent = " UNPACK_VERTEX_NORMAL("_aTangent") ";\n";
 			}
 
@@ -124,7 +121,7 @@ namespace CppProject
 				if (isVertex)
 				{
 					code.replace("gl_Position = ", "_vObjIndex = _objIndex;\n\tgl_Position = ");
-					header += "flat out uint _vObjIndex;\nuint _objIndex = (_aData >> 16) + uint(gl_InstanceID);\n";
+					header += "flat out uint _vObjIndex;\nuint _objIndex = (_aData2 >> 16) + uint(gl_InstanceID);\n";
 				}
 				else
 					header += "flat in uint _vObjIndex;\n";
@@ -237,11 +234,10 @@ namespace CppProject
 			case VERTEX_BUFFER:
 			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
-				attributeLocation[1] = program->attributeLocation("_aNormal");
-				attributeLocation[2] = program->attributeLocation("_aColor");
-				attributeLocation[3] = program->attributeLocation("in_TextureCoord");
-				attributeLocation[4] = program->attributeLocation("_aData");
-				attributeLocation[5] = program->attributeLocation("_aTangent");
+				attributeLocation[1] = program->attributeLocation("in_TextureCoord");
+				attributeLocation[2] = program->attributeLocation("_aData1");
+				attributeLocation[3] = program->attributeLocation("_aData2");
+				attributeLocation[4] = program->attributeLocation("_aTangent");
 				break;
 			}
 

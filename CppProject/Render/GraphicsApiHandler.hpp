@@ -58,6 +58,9 @@ namespace CppProject
 		// Submits the last batch of primitives/vertices to the GPU.
 		void SubmitBatch();
 
+		// Unbind sampled textures and invalidate cached bindings before changing render targets or textures.
+		void ResetTextureBindings();
+
 		// Returns the maximum width/height of an image or framebuffer.
 		IntType GetMaxSize();
 

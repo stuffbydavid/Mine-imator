@@ -1,6 +1,7 @@
 #include "World/World.hpp"
 
 #include "AppHandler.hpp"
+#include "Asset/DataStructure.hpp"
 #include "Asset/VertexBuffer.hpp"
 #include "Asset/Buffer.hpp"
 #include "World/GZIP.hpp"
@@ -9,7 +10,11 @@
 
 namespace CppProject
 {
-	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 4;
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 5;
+
+	// 2.0 mesh cache uses untransformed vertices and a 32x32 static block sheet
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT_LEGACY = 2;
+	static constexpr IntType BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE = 32;
 
 	Heap<Section*> Builder::sections;
 	WorldVec Builder::size, Builder::offset = { 0, 0, 0 }, Builder::sectionsDim;
@@ -58,7 +63,7 @@ namespace CppProject
 					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,
 					false
-			};
+				};
 
 			IntType s = 0;
 			for (IntType z = 0; z < Builder::sectionsDim.z; z++)
@@ -91,6 +96,159 @@ namespace CppProject
 		self->build_pos[X_] = position % width;
 		self->build_pos[Y_] = (position / width) % height;
 		self->build_pos[Z_] = position / self->build_size_xy;
+
+		if (self->block_meshes.Size())
+		{
+			IntType index =
+				((self->build_pos.IntValue(Z_) / block_mesh_size) * self->block_meshes_size.Value(Y_) +
+				(self->build_pos.IntValue(Y_) / block_mesh_size)) * self->block_meshes_size.Value(X_) +
+				(self->build_pos.IntValue(X_) / block_mesh_size);
+			
+			self->block_mesh = self->block_meshes.Value(index);
+		}
+	}
+
+	BoolType builder_read_schematic_data(Scope<obj_builder> self, IntType version, IntType mapId,
+		IntType paletteIndicesId, IntType blockAmount)
+	{
+		Map* map = FindMap(mapId);
+		Map* indicesMap = FindMap(paletteIndicesId);
+		Buffer* buffer = FindBuffer(global::buffer_current);
+		StringType key = (version >= 3 ? "Data" : "BlockData");
+
+		if (!map || !indicesMap || indicesMap->GetType() != Map::HASH_INT || !buffer)
+		{
+			log({ "Schematic error", "Block data array not found or has invalid type" });
+			return false;
+		}
+
+		VarType readPosValue = map->Value(key);
+		VarType lengthValue = map->Value(key + "_NBT_length");
+		VarType dataType = map->Value(key + "_NBT_type");
+		BoolType intArray = dataType == e_nbt_TAG_INT_ARRAY;
+
+		if (!readPosValue.IsAnyReal() || !lengthValue.IsAnyReal() ||
+			(!intArray && dataType != e_nbt_TAG_BYTE_ARRAY))
+		{
+			log({ "Schematic error", "Block data array not found or has invalid type" });
+			return false;
+		}
+
+		IntType readPos = readPosValue.ToInt();
+		IntType length = lengthValue.ToInt();
+		IntType sourceSize = buffer->data.Size();
+		IntType sourceStride = intArray ? 4 : 1;
+
+		if (readPos < 0 || readPos > sourceSize || length < blockAmount ||
+			length > (sourceSize - readPos) / sourceStride)
+		{
+			log({ "Schematic error", "Block data array is truncated" });
+			return false;
+		}
+
+		BoolType rawBytes = (version == 1 && !intArray && length == blockAmount);
+		IntHashMap* indices = static_cast<IntHashMap*>(indicesMap);
+		IntType paletteSize = indices->GetSize();
+		QVector<IntType> denseIndices(paletteSize, -1);
+		BoolType dense = true;
+
+		for (auto it = indices->hash.constBegin(); it != indices->hash.constEnd(); ++it)
+		{
+			if (it.key() < 0 || it.key() >= paletteSize || !it.value().value.IsAnyReal())
+			{
+				dense = false;
+				break;
+			}
+
+			denseIndices[it.key()] = it.value().value.ToInt();
+		}
+
+		IntType outputStride = paletteSize > 256 ? 4 : 1;
+		if (blockAmount < 0 || blockAmount > (std::numeric_limits<IntType>::max() - sourceSize) / outputStride)
+		{
+			log({ "Schematic error", "Block data array is truncated" });
+			return false;
+		}
+
+		self->sch_blockdata_ints = outputStride == 4;
+		self->sch_blockdata_array = sourceSize;
+		buffer->data.Alloc(sourceSize + blockAmount * outputStride, false);
+
+		uchar* data = buffer->data.data;
+		IntType endPos = readPos + length * sourceStride;
+		IntType writePos = sourceSize;
+
+		for (IntType i = 0; i < blockAmount; i++)
+		{
+			uint32_t value = 0;
+			if (intArray)
+			{
+				value = ((uint32_t)data[readPos] << 24) | ((uint32_t)data[readPos + 1] << 16) |
+					((uint32_t)data[readPos + 2] << 8) | data[readPos + 3];
+				readPos += 4;
+			}
+			else if (rawBytes)
+				value = data[readPos++];
+			else
+			{
+				for (IntType b = 0;; b++)
+				{
+					if (readPos >= endPos || b == 5)
+					{
+						log({ "Schematic error", "Truncated or oversized block varint" });
+						return false;
+					}
+
+					uchar byte = data[readPos++];
+					if (b == 4 && byte > 7)
+					{
+						log({ "Schematic error", "Block varint exceeds a non-negative integer" });
+						return false;
+					}
+
+					value |= (uint32_t)(byte & 127) << (b * 7);
+					if (byte < 128)
+						break;
+				}
+			}
+
+			IntType slot = -1;
+			if (dense)
+			{
+				if (value < (uint32_t)paletteSize)
+					slot = denseIndices[value];
+			}
+			else
+			{
+				auto it = indices->hash.constFind(value);
+				if (it != indices->hash.constEnd() && it.value().value.IsAnyReal())
+					slot = it.value().value.ToInt();
+			}
+
+			if (slot < 0 || slot >= paletteSize)
+			{
+				log({ "Schematic error", "Block data references a missing palette entry" });
+				return false;
+			}
+
+			if (outputStride == 4)
+			{
+				data[writePos++] = (uchar)(slot >> 24);
+				data[writePos++] = (uchar)(slot >> 16);
+				data[writePos++] = (uchar)(slot >> 8);
+				data[writePos++] = (uchar)slot;
+			}
+			else
+				data[writePos++] = (uchar)slot;
+		}
+
+		if (readPos != endPos)
+		{
+			log({ "Schematic error", "Block data contains more entries than the schematic size" });
+			return false;
+		}
+
+		return true;
 	}
 
 	void builder_read_schematic_blocks(Scope<obj_builder> self)
@@ -217,7 +375,7 @@ namespace CppProject
 		debug_timer_start();
 
 		self->file_map = buffer_read_string_short_be();
-		self->build_size[Y_] = buffer_read_short_be(); // Derp
+		self->build_size[Y_] = buffer_read_short_be();
 		self->build_size[X_] = buffer_read_short_be();
 		self->build_size[Z_] = buffer_read_short_be();
 		IntType blockData = buffer->pos;
@@ -280,6 +438,7 @@ namespace CppProject
 		Builder::offset = { 0, 0, 0 };
 
 		self->build_multithreaded = null_;
+		self->block_meshes = ArrType();
 		self->build_transform = false;
 	}
 
@@ -467,7 +626,6 @@ namespace CppProject
 	{
 		// Resolve objects once and keep element bounds in numeric locals
 		obj_block_render_model* model = ObjType(obj_block_render_model, modelId);
-		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
 		
 		RealType offset[3];
 		for (IntType a = X_; a <= Z_; a++)
@@ -526,15 +684,20 @@ namespace CppProject
 						continue;
 				}
 
-				self->block_vertex_rgb = self->block_color;
-				if (self->block_color == null_)
-					self->block_vertex_rgb = element->face_texture_color.IntValue(f);
+				self->block_vertex_color_index = self->block_color_index;
+
+				IntType vbuf = element->face_vbuffer.IntValue(f);
+				if (vbuf == null_)
+				{
+					IntType index = element->face_depth.IntValue(f) * e_block_vbuffer_amount + element->face_block_vbuffer.IntValue(f);
+					obj_block_mesh* blockMesh = ObjType(obj_block_mesh, self->block_mesh);
+					vbuf = blockMesh->block_vbuffer.IntValue(index);
+
+					if (!self->block_vertex_color_index)
+						self->block_vertex_color_index = element->face_color_index.IntValue(f);
+				}
 				
-				IntType buffer = element->face_vbuffer.IntValue(f);
-				if (buffer == null_)
-					buffer = builder->vbuffer.IntValue(element->face_depth.IntValue(f) * e_block_vbuffer_amount + element->face_block_vbuffer.IntValue(f));
-				
-				self->block_vbuffer_current = buffer;
+				self->block_vbuffer_current = vbuf;
 
 				// Read UVs by reference rather than copying nested arrays
 				const ArrType& face = element->face_uv.vec.Value(f).Arr();
@@ -558,7 +721,7 @@ namespace CppProject
 				);
 			}
 
-			self->block_vertex_rgb = c_white;
+			self->block_vertex_color_index = 0;
 			self->block_vertex_emissive = minEmissive;
 		}
 	}
@@ -604,11 +767,9 @@ namespace CppProject
 		}
 
 		return Vertex{
-			x, y, z,
-			normal,
-			self->block_vertex_rgb, self->block_vertex_alpha,
-			tx, ty,
-			wavexy, wavez, self->block_vertex_emissive, self->block_vertex_subsurface
+			x, y, z, tx, ty,
+			normal, (uint8_t)self->block_vertex_color_index.ToInt(),
+			wavexy, wavez, self->block_vertex_subsurface, self->block_vertex_emissive
 		};
 	}
 
@@ -772,7 +933,25 @@ namespace CppProject
 		World::ProcessBuilderEntities();
 
 		if (schematic)
+		{
+			if (schematic->error.isEmpty())
+			{
+				// Read only entity data
+				NbtCompound entityRoot;
+				entityRoot.value["Entities"] = schematic->schematic->value.value("Entities");
+				
+				Map* entityMap = entityRoot.ToMap();
+				entityRoot.value.remove("Entities");
+				
+				script_execute(Scope<obj_builder>(ObjType(obj_builder, global::mc_builder)), {
+					asset_get_index("builder_read_entities"), entityMap->Value("Entities")
+				});
+
+				delete entityMap;
+			}
+
 			schematic->SaveResource(self.object);
+		}
 
 		World::Close();
 
@@ -785,27 +964,56 @@ namespace CppProject
 		return;
 	#endif
 
-		// Find required size
 		obj_resource* res = self.object;
-		IntType totalBytes = 0;
+		if (!res->block_meshes.Size())
+			return;
+
+		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
+		qint64 totalBytes = sizeof(uchar) + sizeof(quint16) + assetsVersion.size() + sizeof(qint64) * 3 + sizeof(qint32) * 3;
 		RealType approxGzipRatio = 0.14;
 
-		for (IntType d = 0; d < e_block_depth_amount; d++)
-		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-			totalBytes += FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->GetWriteBytes();
+		for (IntType s = 0; s < res->block_meshes.Size(); s++)
+		{
+			totalBytes += sizeof(quint8);
+
+			obj_block_mesh* blockMesh = ObjTypeOpt(obj_block_mesh, res->block_meshes.Value(s));
+			if (!blockMesh)
+				continue;
+
+			totalBytes += sizeof(quint64);
+
+			for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
+			{
+				if (!blockMesh->block_vbuffer_active.BoolValue(i))
+					continue;
+
+				VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i));
+				if (!vbuf)
+					return;
+
+				totalBytes += vbuf->GetWriteBytes();
+			}
+		}
 
 		auto freeCpuData = [&]
 		{
-			for (IntType d = 0; d < e_block_depth_amount; d++)
-			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			for (IntType s = 0; s < res->block_meshes.Size(); s++)
 			{
-				if (VertexBuffer* buf = FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb)))
+				obj_block_mesh* blockMesh = ObjTypeOpt(obj_block_mesh, res->block_meshes.Value(s));
+				if (!blockMesh)
+					continue;
+
+				for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
 				{
-					// Small buffers still need CPU data for batching, even without a cache
-					if (buf->numIndices <= MAX_BATCH_INDICES)
+					VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i));
+					if (!vbuf)
 						continue;
 
-					for (Mesh<>* mesh : buf->meshes)
+					// Small buffers still need CPU data for batching, even without a cache
+					if (vbuf->batching && vbuf->numIndices <= MAX_BATCH_INDICES)
+						continue;
+
+					for (Mesh<>* mesh : vbuf->meshes)
 					{
 						mesh->vertexData.FreeData();
 						mesh->indexData.FreeData();
@@ -814,9 +1022,6 @@ namespace CppProject
 			}
 		};
 
-		// Include the header and reserve once instead of growing a large serialization buffer
-		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
-		totalBytes += sizeof(uchar) + sizeof(quint16) + assetsVersion.size() + sizeof(qint64) * 3;
 		if (totalBytes > std::numeric_limits<int>::max())
 		{
 			WARNING("Block mesh cache exceeds the byte array size limit");
@@ -856,11 +1061,28 @@ namespace CppProject
 		out << (qint64)res->scenery_size[X_];
 		out << (qint64)res->scenery_size[Y_];
 		out << (qint64)res->scenery_size[Z_];
+		out << (qint32)res->block_meshes_size.Value(X_);
+		out << (qint32)res->block_meshes_size.Value(Y_);
+		out << (qint32)res->block_meshes_size.Value(Z_);
 
-		// Write vertex buffers
-		for (IntType d = 0; d < e_block_depth_amount; d++)
-		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
-			FindVertexBuffer(res->block_vbuffer.Value(d * e_block_vbuffer_amount + vb))->Write(out);
+		// Write meshes and active buffers in XYZ order
+		for (IntType s = 0; s < res->block_meshes.Size(); s++)
+		{
+			obj_block_mesh* blockMesh = ObjTypeOpt(obj_block_mesh, res->block_meshes.Value(s));
+			out << quint8(blockMesh != nullptr);
+			if (!blockMesh)
+				continue;
+
+			quint64 mask = 0;
+			for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
+				if (blockMesh->block_vbuffer_active.BoolValue(i))
+					mask |= quint64(1) << i;
+
+			out << mask;
+			for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
+				if (mask & (quint64(1) << i))
+					FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i))->Write(out);
+		}
 
 		tmr.Print("Serialize block mesh cache (" + filename.QStr() + ")");
 
@@ -873,6 +1095,8 @@ namespace CppProject
 		Gzip::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 8);
 	}
 
+	static BoolType LoadLegacyBlockCache(Scope<obj_resource> self, QDataStream& in);
+
 	BoolType res_load_block_cache(Scope<obj_resource> self, StringType filename)
 	{
 	#if !BLOCK_MESH_CACHE_ENABLED
@@ -880,23 +1104,35 @@ namespace CppProject
 	#endif
 
 		Timer tmr;
-		QByteArray data;
-
 		tmr.Print("Unzip block mesh cache");
+
+		QByteArray data;
 		BoolType decompressed = Gzip::Decompress(filename, data);
 		if (!decompressed)
 			return false;
 
 		tmr.Reset();
+
 		QDataStream in(&data, QIODevice::ReadOnly);
 
-		// Check format
 		uchar format = 0;
 		in >> format;
+		if (in.status() != QDataStream::Ok)
+			return false;
+
+		// Legacy file
+		if (format == BLOCK_MESH_CACHE_FORMAT_LEGACY)
+		{
+			BoolType loaded = LoadLegacyBlockCache(self, in);
+			if (loaded)
+				tmr.Print("Load legacy block mesh cache");
+
+			return loaded;
+		}
+
 		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
 			return false;
 
-		// Check Minecraft assets version
 		quint16 assetsVersionSize = 0;
 		in >> assetsVersionSize;
 		if (in.status() != QDataStream::Ok || !assetsVersionSize || assetsVersionSize > 64)
@@ -909,69 +1145,430 @@ namespace CppProject
 
 		// Load size
 		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
+		qint32 dimX = 0, dimY = 0, dimZ = 0;
 		in >> sizeX;
 		in >> sizeY;
 		in >> sizeZ;
-		if (in.status() != QDataStream::Ok)
+		in >> dimX;
+		in >> dimY;
+		in >> dimZ;
+		if (in.status() != QDataStream::Ok || sizeX <= 0 || sizeY <= 0 || sizeZ <= 0 ||
+			sizeX > std::numeric_limits<qint32>::max() || sizeY > std::numeric_limits<qint32>::max() ||
+			sizeZ > std::numeric_limits<qint32>::max() ||
+			dimX != (sizeY + block_mesh_size - 1) / block_mesh_size ||
+			dimY != (sizeX + block_mesh_size - 1) / block_mesh_size ||
+			dimZ != (sizeZ + block_mesh_size - 1) / block_mesh_size)
 			return false;
 
-		// Load vertex buffers
-		QVector<VertexBuffer*> vbuffers;
-		vbuffers.reserve(e_block_depth_amount * e_block_vbuffer_amount);
-		ArrType activeDepths, activeBuffers;
+		qint64 meshCount = qint64(dimX) * dimY * dimZ;
+		if (meshCount > in.device()->bytesAvailable() || meshCount > std::numeric_limits<int>::max())
+			return false;
+
+		const IntType vbufCount = e_block_depth_amount * e_block_vbuffer_amount;
+		QVector<QVector<VertexBuffer*>> meshVbuffers((int)meshCount);
 		BoolType valid = true;
 
-		for (IntType d = 0; d < e_block_depth_amount; d++)
+		for (IntType s = 0; s < meshCount && valid; s++)
 		{
-			activeDepths[d] = false;
-
-			for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+			quint8 present = 0;
+			in >> present;
+			if (in.status() != QDataStream::Ok || present > 1)
 			{
-				auto vbuffer = new VertexBuffer(in);
-				vbuffers.append(vbuffer);
-				
-				if (!vbuffer->valid)
+				valid = false;
+				break;
+			}
+
+			if (!present)
+				continue;
+
+			quint64 mask = 0;
+			in >> mask;
+			if (in.status() != QDataStream::Ok || !mask || (mask >> vbufCount))
+			{
+				valid = false;
+				break;
+			}
+
+			meshVbuffers[s].resize(vbufCount);
+			for (IntType i = 0; i < vbufCount; i++)
+			{
+				if (!(mask & (quint64(1) << i)))
+					continue;
+
+				VertexBuffer* vbuf = new VertexBuffer(in, false);
+				meshVbuffers[s][i] = vbuf;
+				if (!vbuf->valid || !vbuf->numIndices)
+				{
+					valid = false;
+					break;
+				}
+			}
+		}
+
+		if (!valid || !in.atEnd())
+		{
+			for (const auto& vbuffers : meshVbuffers)
+				for (VertexBuffer* vbuf : vbuffers)
+					delete vbuf;
+			
+			return false;
+		}
+
+		block_meshes_destroy(self);
+
+		ArrType meshes;
+		BoolType transparent = false;
+
+		for (IntType s = 0; s < meshCount; s++)
+		{
+			meshes[s] = null_;
+			if (meshVbuffers[s].isEmpty())
+				continue;
+
+			obj_block_mesh* blockMesh = new obj_block_mesh;
+			ArrType buffers, active, depths;
+			for (IntType d = 0; d < e_block_depth_amount; d++)
+				depths[d] = false;
+
+			for (IntType i = 0; i < vbufCount; i++)
+			{
+				if (i % e_block_vbuffer_amount == 0)
+					blockMesh->block_vbuffer_render_offsets[i / e_block_vbuffer_amount] = blockMesh->block_vbuffer_render_order.Size();
+
+				VertexBuffer* vbuf = meshVbuffers[s][i];
+				buffers[i] = (vbuf ? vbuf->id : null_);
+				active[i] = (vbuf != nullptr);
+				if (vbuf)
+				{
+					IntType depth = i / e_block_vbuffer_amount;
+					depths[depth] = true;
+					if (depth != e_block_depth_DEPTH0)
+						transparent = true;
+
+					blockMesh->block_vbuffer_render_order.Append(i);
+				}
+			}
+
+			blockMesh->block_vbuffer = buffers;
+			blockMesh->block_vbuffer_active = active;
+			blockMesh->block_vbuffer_depth_active = depths;
+			blockMesh->block_vbuffer_render_offsets[e_block_depth_amount] = blockMesh->block_vbuffer_render_order.Size();
+
+			meshes[s] = blockMesh->id;
+		}
+
+		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
+		self->block_meshes_size = { (RealType)dimX, (RealType)dimY, (RealType)dimZ };
+		self->block_meshes = meshes;
+		self->block_meshes_transparent = transparent;
+
+		tmr.Print("Read block mesh cache");
+		
+		return true;
+	}
+
+	// Load 2.0 legacy .meshcache file.
+	static BoolType LoadLegacyBlockCache(Scope<obj_resource> self, QDataStream& in)
+	{
+		qint64 sizeX = 0, sizeY = 0, sizeZ = 0;
+		in >> sizeX;
+		in >> sizeY;
+		in >> sizeZ;
+		if (in.status() != QDataStream::Ok || sizeX <= 0 || sizeY <= 0 || sizeZ <= 0 ||
+			sizeX > std::numeric_limits<qint32>::max() || sizeY > std::numeric_limits<qint32>::max() ||
+			sizeZ > std::numeric_limits<qint32>::max())
+			return false;
+
+		const qint32 dimX = (sizeY + block_mesh_size - 1) / block_mesh_size;
+		const qint32 dimY = (sizeX + block_mesh_size - 1) / block_mesh_size;
+		const qint32 dimZ = (sizeZ + block_mesh_size - 1) / block_mesh_size;
+		const qint64 meshCount = qint64(dimX) * dimY * dimZ;
+		if (meshCount > std::numeric_limits<int>::max())
+			return false;
+
+		VarType sheetSize = global::minecraft_block_sheet_size.Value(e_block_sheet_STATIC16);
+		const RealType staticUvScaleX = BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE / sheetSize.Value(X_).ToReal();
+		const RealType staticUvScaleY = BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE / sheetSize.Value(Y_).ToReal();
+		const RealType legacyBlockWidth = (RealType)sizeY * block_size_;
+		const IntType vbufCount = e_block_depth_amount * e_block_vbuffer_amount;
+		QVector<QVector<VertexBuffer*>> meshVbuffers((int)meshCount);
+
+		// Format 2 stores RGBA before the UV coordinates
+		struct LegacyVertex
+		{
+			float x, y, z;
+			uint32_t normal, color;
+			float u, v;
+			uint32_t data, tangent;
+		};
+		static_assert(sizeof(LegacyVertex) == 36, "Unexpected legacy vertex layout");
+
+		QHash<uint32_t, uint8_t> colorIndices;
+		const ArrType& colors = ObjType(obj_resource, global::mc_res)->block_colors;
+		for (IntType i = e_biome_color_amount; i < colors.Size() / 4; i++)
+		{
+			// Biome colors use the legacy buffer type, cloud colors are not block tints
+			if (i >= e_color_palette_CLOUDS_TOP && i < e_color_palette_amount)
+				continue;
+
+			IntType offset = i * 4;
+			IntType color = make_color_rgb(
+				std::round(colors.RealValue(offset) * 255),
+				std::round(colors.RealValue(offset + 1) * 255),
+				std::round(colors.RealValue(offset + 2) * 255)
+			);
+			colorIndices[color] = i + 1;
+		}
+
+		struct LegacyBuffer
+		{
+			e_block_vbuffer buffer;
+			uint8_t colorIndex;
+		};
+		static const QVector<LegacyBuffer> legacyBuffers = {
+			{ e_block_vbuffer_STATIC16, 0 },
+			{ e_block_vbuffer_ANIMATED, 0 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_GRASS + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_FOLIAGE + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_OAK + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_SPRUCE + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_BIRCH + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_JUNGLE + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_ACACIA + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_DARK_OAK + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_MANGROVE + 1 },
+			{ e_block_vbuffer_WATER, 0 }
+		};
+		constexpr RealType meshStride = block_mesh_size * block_size_;
+
+		auto rotateDirection = [](uint32_t packed)
+		{
+			return ((packed >> 8) & 255u) |
+					((255u - (packed & 255u)) << 8) |
+					(packed & 0xFFFF0000u);
+		};
+
+		BoolType valid = true;
+		for (IntType d = 0; d < e_block_depth_amount && valid; d++)
+		for (IntType vb = 0; vb < legacyBuffers.size() && valid; vb++)
+		{
+			qint64 numMeshes = 0;
+			in >> numMeshes;
+			if (in.status() != QDataStream::Ok || numMeshes < 0 ||
+				numMeshes > in.device()->bytesAvailable() / (sizeof(qint64) * 2))
+			{
+				valid = false;
+				break;
+			}
+
+			const IntType target = d * e_block_vbuffer_amount + legacyBuffers[vb].buffer;
+			const BoolType staticSheet = legacyBuffers[vb].buffer == e_block_vbuffer_STATIC16;
+			for (qint64 m = 0; m < numMeshes && valid; m++)
+			{
+				qint64 numVert = 0, numInd = 0;
+				in >> numVert;
+				in >> numInd;
+				if (in.status() != QDataStream::Ok || numVert <= 0 || numInd <= 0 ||
+					numVert > MAX_MESH_INDICES || numInd > MAX_MESH_INDICES || numInd % 3 != 0)
 				{
 					valid = false;
 					break;
 				}
 
-				BoolType active = (vbuffer->numIndices > 0);
-				activeBuffers[d * e_block_vbuffer_amount + vb] = active;
-				if (active)
-					activeDepths[d] = true;
-			}
+				const qint64 vertexBytes = numVert * sizeof(LegacyVertex);
+				const qint64 indexBytes = numInd * sizeof(uint32_t);
+				if (vertexBytes > std::numeric_limits<int>::max() || indexBytes > std::numeric_limits<int>::max() ||
+					vertexBytes + indexBytes > in.device()->bytesAvailable())
+				{
+					valid = false;
+					break;
+				}
 
-			if (!valid)
-				break;
+				QVector<LegacyVertex> legacyVertices((int)numVert);
+				QVector<Vertex> vertices((int)numVert);
+				QVector<uint32_t> indices((int)numInd);
+				if (in.readRawData((char*)legacyVertices.data(), (int)vertexBytes) != vertexBytes ||
+					in.readRawData((char*)indices.data(), (int)indexBytes) != indexBytes)
+				{
+					valid = false;
+					break;
+				}
+
+				for (IntType v = 0; v < numVert; v++)
+				{
+					const LegacyVertex& old = legacyVertices[v];
+					Vertex& vertex = vertices[v];
+					vertex.x = old.x;
+					vertex.y = old.y;
+					vertex.z = old.z;
+					vertex.u = old.u;
+					vertex.v = old.v;
+					vertex.data1 = old.normal;
+					vertex.data2 = old.data;
+					vertex.tangent = old.tangent;
+
+					if (!std::isfinite(vertex.x) || !std::isfinite(vertex.y) || !std::isfinite(vertex.z))
+					{
+						valid = false;
+						break;
+					}
+
+					float oldX = vertex.x;
+					vertex.x = vertex.y;
+					vertex.y = legacyBlockWidth - oldX;
+					vertex.data1 = rotateDirection(vertex.data1);
+
+					uint8_t colorIndex = legacyBuffers[vb].colorIndex;
+					uint32_t color = old.color & 0x00FFFFFFu;
+					if (color != 0x00FFFFFFu)
+						colorIndex = colorIndices.value(color, colorIndex);
+
+					vertex.SetColorIndex(colorIndex);
+					vertex.tangent = rotateDirection(vertex.tangent);
+
+					if (staticSheet)
+					{
+						vertex.u *= staticUvScaleX;
+						vertex.v *= staticUvScaleY;
+					}
+				}
+
+				if (!valid)
+					break;
+
+				for (IntType i = 0; i < numInd && valid;)
+				{
+					BoolType quad = i + 5 < numInd && indices[i] == indices[i + 5] &&
+						indices[i + 2] == indices[i + 3];
+
+					const IntType count = quad ? 4 : 3;
+					uint32_t corners[4] = { indices[i], indices[i + 1], indices[i + 2], quad ? indices[i + 4] : 0 };
+					for (IntType c = 0; c < count; c++)
+						if (corners[c] >= numVert)
+							valid = false;
+
+					if (!valid)
+						break;
+
+					RealType pos[3] = { 0, 0, 0 };
+					for (IntType c = 0; c < count; c++)
+					{
+						const Vertex& vertex = vertices[corners[c]];
+						pos[X_] += vertex.x;
+						pos[Y_] += vertex.y;
+						pos[Z_] += vertex.z;
+					}
+
+					const uint32_t normal = vertices[corners[0]].data1;
+					const uint8_t packedNormal[3] = { uint8_t(normal), uint8_t(normal >> 8), uint8_t(normal >> 16) };
+					IntType axis = 0;
+					for (IntType a = 1; a < 3; a++)
+						if (std::abs((IntType)packedNormal[a] - 127) > std::abs((IntType)packedNormal[axis] - 127))
+							axis = a;
+
+					// Bias boundary faces toward the block behind their normal
+					pos[axis] -= (packedNormal[axis] > 127 ? 0.01 : -0.01) * count;
+
+					// Convert face centers back to builder axes for mesh indexing
+					const IntType sx = (IntType)std::clamp(std::floor((legacyBlockWidth - pos[Y_] / count) / meshStride), 0.0, (double)dimX - 1);
+					const IntType sy = (IntType)std::clamp(std::floor(pos[X_] / count / meshStride), 0.0, (double)dimY - 1);
+					const IntType sz = (IntType)std::clamp(std::floor(pos[Z_] / count / meshStride), 0.0, (double)dimZ - 1);
+					const IntType meshIndex = (sz * dimY + sy) * dimX + sx;
+
+					if (meshVbuffers[meshIndex].isEmpty())
+						meshVbuffers[meshIndex].resize(vbufCount);
+
+					VertexBuffer*& vbuf = meshVbuffers[meshIndex][target];
+					if (!vbuf)
+						vbuf = new VertexBuffer;
+
+					if (quad)
+						vbuf->AddFace(vertices[corners[0]], vertices[corners[1]], vertices[corners[2]], vertices[corners[3]]);
+					else
+						vbuf->AddTriangle(vertices[corners[0]], vertices[corners[1]], vertices[corners[2]]);
+
+					i += quad ? 6 : 3;
+				}
+			}
 		}
 
-		if (!valid)
+		if (!valid || !in.atEnd())
 		{
-			for (auto vbuffer : vbuffers)
-				delete vbuffer;
-			
+			// Free buffers
+			for (const auto& buffers : meshVbuffers)
+			for (VertexBuffer* vbuf : buffers)
+			{
+				if (!vbuf)
+					continue;
+
+				for (auto& thread : vbuf->threads)
+					for (auto* mesh : thread.meshes)
+						delete mesh;
+
+				delete vbuf;
+			}
+
 			return false;
 		}
 
-		// Set size
-		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
+		ArrType meshes;
+		BoolType transparent = false;
 
-		// Assign vertex buffers
-		IntType i = 0;
-		for (IntType d = 0; d < e_block_depth_amount; d++)
-		for (IntType vb = 0; vb < e_block_vbuffer_amount; vb++)
+		for (IntType s = 0; s < meshCount; s++)
 		{
-			IntType index = d * e_block_vbuffer_amount + vb;
-			vertex_delete_buffer(self->block_vbuffer[index]);
-			self->block_vbuffer[index] = vbuffers.at(i++)->id;
+			meshes[s] = null_;
+			if (meshVbuffers[s].isEmpty())
+				continue;
+
+			obj_block_mesh* blockMesh = new obj_block_mesh;
+			ArrType buffers, active, depths;
+			for (IntType d = 0; d < e_block_depth_amount; d++)
+				depths[d] = false;
+
+			for (IntType i = 0; i < vbufCount; i++)
+			{
+				if (i % e_block_vbuffer_amount == 0)
+					blockMesh->block_vbuffer_render_offsets[i / e_block_vbuffer_amount] = blockMesh->block_vbuffer_render_order.Size();
+
+				VertexBuffer* vbuf = meshVbuffers[s][i];
+				if (vbuf)
+				{
+					vbuf->Complete(false);
+					vbuf->batching = false;
+
+					for (Mesh<>* mesh : vbuf->meshes)
+					{
+						mesh->vertexData.FreeData();
+						mesh->indexData.FreeData();
+					}
+				}
+
+				buffers[i] = (vbuf ? vbuf->id : null_);
+				active[i] = (vbuf != nullptr);
+				if (vbuf)
+				{
+					IntType depth = i / e_block_vbuffer_amount;
+					depths[depth] = true;
+					blockMesh->block_vbuffer_render_order.Append(i);
+					if (depth != e_block_depth_DEPTH0)
+						transparent = true;
+				}
+			}
+
+			blockMesh->block_vbuffer = buffers;
+			blockMesh->block_vbuffer_active = active;
+			blockMesh->block_vbuffer_depth_active = depths;
+			blockMesh->block_vbuffer_render_offsets[e_block_depth_amount] = blockMesh->block_vbuffer_render_order.Size();
+			meshes[s] = blockMesh->id;
 		}
 
-		self->block_vbuffer_active = activeBuffers;
-		self->block_vbuffer_depth_active = activeDepths;
+		block_meshes_destroy(self);
 
-		tmr.Print("Read block mesh cache");
-		
+		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
+		self->block_meshes_size = { (RealType)dimX, (RealType)dimY, (RealType)dimZ };
+		self->block_meshes = meshes;
+		self->block_meshes_transparent = transparent;
+
 		return true;
 	}
 }

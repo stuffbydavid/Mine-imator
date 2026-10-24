@@ -37,6 +37,8 @@ namespace CppProject
 	{
 		if (!widgetRender)
 			return;
+
+		GFX->ResetTextureBindings();
 		
 		RealType scale = QApplication::desktop()->devicePixelRatio();
 		GFX->glViewport(0, 0, width() * scale, height() * scale);

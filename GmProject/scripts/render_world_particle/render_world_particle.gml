@@ -6,7 +6,7 @@ function render_world_particle()
 	temp = type.temp
 	
 	// Transparent block pass
-	if (render_world_block_transparent = true)
+	if (render_world_blocks_transparent = true)
 	{
 		if (temp = particle_sheet || temp = particle_template)
 			return 0
@@ -99,12 +99,12 @@ function render_world_particle()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model, res, project_pack_res, project_pack_res)
+					render_world_block_meshes(temp.model, res, project_pack_res, project_pack_res)
 					
 					with (temp)
 						res = temp_get_model_texobj(null)
 					
-					if (render_world_block_transparent != true)
+					if (render_world_blocks_transparent != true)
 						render_world_block_map(temp.model.model_block_map, res)
 					
 					break
@@ -141,7 +141,7 @@ function render_world_particle()
 			
 			case e_temp_type.BLOCK:
 			{
-				render_world_block(temp, temp.block_tex, project_pack_res, project_pack_res)
+				render_world_block_meshes(temp, temp.block_tex, project_pack_res, project_pack_res)
 				break
 			}
 			

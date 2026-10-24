@@ -88,7 +88,7 @@ function builder_thread_event_create()
 	block_current = null
 	block_state_id = null
 	block_state_id_current = 0
-	block_color = null
+	block_color_index = 0
 
 	block_render_model = null
 	block_render_model_multipart_map = null
@@ -96,13 +96,15 @@ function builder_thread_event_create()
 	block_tl_map = null
 	
 	block_vbuffer_current = null
+	block_meshes = []
+	block_mesh = null
+	block_meshes_size = vec3(1)
 	block_vertex_wave = e_vertex_wave.NONE
 	block_vertex_wave_zmin = null
 	block_vertex_wave_zmax = null
 	block_vertex_emissive = 0
 	block_vertex_subsurface = 0
-	block_vertex_rgb = c_white
-	block_vertex_alpha = 1
+	block_vertex_color_index = 0
 
 	builder_scenery = false
 	builder_scenery_legacy = false

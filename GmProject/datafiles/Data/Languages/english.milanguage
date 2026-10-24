@@ -47,10 +47,10 @@
 			"remove": "Remove template"
 		},
 		"schematic/": {
-			"import": "Import schematic",
-			"export": "Export schematic",
-			"open_folder": "Open schematic folder",
-			"reload_folder": "Reload schematic folder"
+			"import": "Import Schematic",
+			"export": "Export Schematic",
+			"open_folder": "Open Schematic folder",
+			"reload_folder": "Reload Schematic folder"
 		},
 		"sound/": {
 			"import": "Import sound",
@@ -398,8 +398,8 @@
 		"open_keyframes_caption": "Import asset error",
 		"load_model": "Could not load the model. See the log for details.",
 		"load_model_caption": "Load model error",
-		"load_schematic": "Could not read the schematic file. See the log for details.",
-		"load_schematic_caption": "Import schematic error",
+		"load_schematic": "Could not read the Schematic file. See the log for details.",
+		"load_schematic_caption": "Import Schematic error",
 		"load_world": "Could not import from world, it might be deleted or moved to another location.",
 		"load_world_caption": "Import from world error",
 		"open_world_folder": "Could not open world folder, it might be deleted or moved to another location.",
@@ -420,7 +420,7 @@
 		"download_skin_user": "The user \"%1\" does not exist.",
 		"download_skin_internet": "Could not download skin, check your internet connection.",
 		"export_schematic_old_chunks": "The selection contains pre-Java 1.13 chunks. Use Minecraft's Optimize World option to upgrade all chunks, then try again.",
-		"export_schematic_new_chunks": "The selection contains Java 1.13 chunks or newer and cannot be exported as a legacy schematic.",
+		"export_schematic_new_chunks": "The selection contains Java 1.13 chunks or newer and cannot be exported as a legacy Schematic.",
 		"export_schematic_caption": "Export Schematic error",
 		"test": "The supplied project could not be loaded for testing.",
 		"test_caption": "Test error."
@@ -543,7 +543,7 @@
 		"export/": {
 			"image": "Export image...",
 			"movie": "Export movie...",
-			"schematic": "Export schematic..."
+			"schematic": "Export Schematic..."
 		},
 		"view": "View",
 		"view/": {
@@ -693,6 +693,8 @@
 		"block": "Block",
 		"special_block": "Special block",
 		"special_block_model": "Block",
+		"front_text": "Front text",
+		"back_text": "Back text",
 		"special_block_tex": "Texture",
 		"special_block_tex_material": "Material map",
 		"special_block_tex_normal": "Normal map",
@@ -1456,7 +1458,6 @@
 		"wind_charge": "Wind Charge",
 		"armor": "Armor",
 		"armor_baby": "Baby Armor",
-		"cushion": "Cushion",
 		"part/": {
 			"body": "Body",
 			"right_arm": "Right arm",
@@ -1684,8 +1685,7 @@
 			"mushroom_3": "Mushroom 3",
 			"top_tentacles": "Top tentacles",
 			"bottom_tentacles": "Bottom tentacles",
-			"inner_tentacles": "Inner tentacles",
-			"cushion": "Cushion"
+			"inner_tentacles": "Inner tentacles"
 		},
 		"state/": {
 			"type": "Type",
@@ -2278,11 +2278,13 @@
 		"timeline_blocks": "Block timelines",
 		"timeline_blocks_tip": "Choose the blocks to add as separate timelines.",
 		"timeline_blocks_warning": "A large number of block timelines may decrease performance.",
+		"timeline_required_tip": "Required to appear in the scenery.",
+		"timeline_required_sign_tip": "Required for sign text.",
 		"integrity": "Integrity",
 		"palette": "Palette",
 		"palette_number": "Palette %1",
-		"randomize": "Randomize blocks",
-		"randomize_tip": "Use random models and rotations for certain scenery blocks.",
+		"randomize": "Enable random blocks",
+		"randomize_tip": "Use random models and rotations for certain blocks, such as grass and stone.",
 		"filter_enabled": "Enable block filter",
 		"filter_mode": "Filter mode",
 		"filter_tip": "Use the arrows to add or remove selected blocks from the filter list.",
@@ -2605,6 +2607,8 @@
 		"resin_block": "Block of Resin",
 		"firefly_bush": "Firefly Bush",
 		"dried_ghast": "Dried Ghast",
+		"cushion": "Cushion",
+		"painting": "Painting",
 		"state/": {
 			"variant": "Variant",
 			"snowy": "Snowy",
@@ -3366,8 +3370,8 @@
 		"pattern_editor": "Open pattern editor",
 		"armor_editor": "Open armor editor",
 		"model_part_unknown": "Unknown model part",
-		"randomize_blocks": "Randomize blocks",
-		"randomize_blocks_tip": "Use random models and rotations for the block.",
+		"randomize_blocks": "Enable random blocks",
+		"randomize_blocks_tip": "Use random models and rotations for certain blocks, such as grass and stone.",
 		"repeat": "Repeat",
 		"center": "Center",
 		"repeat_x": "X",

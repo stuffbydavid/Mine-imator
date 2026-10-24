@@ -2,9 +2,8 @@
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
-attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec4 in_Wave;
+attribute vec4 in_Custom;
 attribute vec3 in_Tangent;
 
 uniform float uNear; // static
@@ -25,11 +24,11 @@ uniform vec2 uTextureOffset;
 
 void main()
 {
-	vPosition = getWorldPosition(in_Position, in_Wave);
+	vPosition = getWorldPosition(in_Position, in_Custom);
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
 	gl_Position = getClipPosition(vPosition);
 	vDepth = gl_Position.z;
 	
-	vColor = uBlendColor * in_Colour;
+	vColor = uBlendColor * getVertexColor(in_Custom);
 }

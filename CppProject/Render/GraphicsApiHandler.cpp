@@ -345,6 +345,7 @@ namespace CppProject
 			}
 			
 			glCurrentVboId = App->headless ? glHeadlessVboId : AppWin->glWidget->glVboId;
+			ResetTextureBindings();
 			GL_CHECK_ERROR();
 			
 			return true;
@@ -378,6 +379,7 @@ namespace CppProject
 				return;
 
 			// Bind list and first submitted framebuffer DSV
+			ResetTextureBindings();
 			D3DContext->OMSetRenderTargets(d3dMrtRTVs.size(), d3dMrtRTVs.data(), d3dMrtDSV);
 
 			// Set viewport
@@ -971,6 +973,8 @@ namespace CppProject
 		SubmitBatch();
 
 		lodBias = bias;
+		if (shader)
+			shader->samplersChanged = true;
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -1004,6 +1008,8 @@ namespace CppProject
 
 		SubmitBatch();
 		maxMip = value;
+		if (shader)
+			shader->samplersChanged = true;
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -1242,6 +1248,20 @@ namespace CppProject
 	{
 		PR->SubmitBatch();
 		VB->SubmitBatch();
+	}
+
+	void GraphicsApiHandler::ResetTextureBindings()
+	{
+		if (shader)
+			shader->samplersChanged = true;
+
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			ID3D11ShaderResourceView* views[32] = {};
+			D3DContext->PSSetShaderResources(0, 32, views);
+		}
+	#endif
 	}
 
 	QColor GraphicsApiHandler::IntToQColor(IntType in, RealType alpha)

@@ -8,5 +8,9 @@ function toasts_startup()
 	toast_mouseon = false
 	toast_last = null
 	
-	http_alert_news = http_get(link_news)
+	var newsurl = link_news;
+	newsurl += "?version=" + mineimator_version
+	newsurl += "&platform=" + string(platform_get())
+	newsurl += "&os=" + string(os_get())
+	http_alert_news = http_get(newsurl)
 }

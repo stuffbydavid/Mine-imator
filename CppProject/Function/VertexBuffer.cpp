@@ -43,10 +43,10 @@ namespace CppProject
 		return num;
 	}
 
-	void vbuffer_set_save_data(IntType id, BoolType save)
+	void vbuffer_set_batching(IntType id, BoolType batching)
 	{
 		if (VertexBuffer* buf = FindVertexBuffer(id))
-			buf->saveData = save;
+			buf->batching = batching;
 	}
 
 	void submit_batch()

@@ -78,6 +78,7 @@ namespace CppProject
 				memcpy(data + rowSize * y, img.scanLine(img.height() - 1 - y), rowSize);
 
 			GFX->glGenTextures(1, &glTexId);
+			GFX->ResetTextureBindings();
 			GFX->glBindTexture(GL_TEXTURE_2D, glTexId);
 			GFX->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width(), img.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			GFX->glBindTexture(GL_TEXTURE_2D, 0);
@@ -90,6 +91,8 @@ namespace CppProject
 
 	Texture::~Texture()
 	{
+		GFX->ResetTextureBindings();
+
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
@@ -123,6 +126,7 @@ namespace CppProject
 			// Generate mipmaps if needed
 			if (d3dSRVId && GFX->mipMap && !hasMipMaps.contains(d3dSRVId))
 			{
+				GFX->ResetTextureBindings();
 				D3DContext->GenerateMips(d3dSRV);
 				hasMipMaps[d3dSRVId] = true;
 			}
@@ -135,6 +139,7 @@ namespace CppProject
 			// Generate mipmaps if needed
 			if (GFX->mipMap && !hasMipMaps.contains(glTexId))
 			{
+				GFX->ResetTextureBindings();
 				GFX->glBindTexture(GL_TEXTURE_2D, glTexId);
 				GFX->glGenerateMipmap(GL_TEXTURE_2D);
 				GFX->glBindTexture(GL_TEXTURE_2D, 0);

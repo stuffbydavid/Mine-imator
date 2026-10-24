@@ -81,22 +81,19 @@ namespace CppProject
 		}
 	}
 
-	Vertex::Vertex(RealType x, RealType y, RealType z,
-				   RealType nx, RealType ny, RealType nz,
-				   IntType color, RealType alpha,
-				   RealType u, RealType v,
-				   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface) :
-		Vertex(x, y, z, PackNormal(nx, ny, nz), color, alpha, u, v, waveXY, waveZ, emissive, subsurface)
+	Vertex::Vertex(RealType x, RealType y, RealType z, RealType u, RealType v,
+				   RealType nx, RealType ny, RealType nz, uint8_t colorIndex,
+				   BoolType waveXY, BoolType waveZ, BoolType subsurface, RealType emissive) :
+		Vertex(x, y, z, u, v, PackNormal(nx, ny, nz), colorIndex, waveXY, waveZ, subsurface, emissive)
 	{
 	}
 
-	Vertex::Vertex(RealType x, RealType y, RealType z, uint32_t packedNormal,
-				   IntType color, RealType alpha, RealType u, RealType v,
-				   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface) :
-		x(x), y(y), z(z), normal(packedNormal), u(u), v(v)
+	Vertex::Vertex(RealType x, RealType y, RealType z, RealType u, RealType v,
+				   uint32_t packedNormal, uint8_t colorIndex,
+				   BoolType waveXY, BoolType waveZ, BoolType subsurface, RealType emissive) :
+		x(x), y(y), z(z), u(u), v(v), data1(packedNormal)
 	{
-		SetTangent(0, 0, 0);
-		SetColor(color, alpha);
+		SetColorIndex(colorIndex);
 
 		if (waveXY)
 			EnableFlag(WAVE_XY);
@@ -104,23 +101,24 @@ namespace CppProject
 		if (waveZ)
 			EnableFlag(WAVE_Z);
 		
-		SetEmissive(emissive);
-		
 		if (subsurface)
 			EnableFlag(SUBSURFACE);
+
+		SetEmissive(emissive);
+		SetTangent(0, 0, 0);
 	}
 
 	bool Vertex::operator==(const Vertex& o) const
 	{
 		return (
 			x == o.x && y == o.y && z == o.z &&
-			normal == o.normal && u == o.u && v == o.v
+			u == o.u && v == o.v && data1 == o.data1
 		);
 	}
 
 	void Vertex::SetNormal(RealType nx, RealType ny, RealType nz)
 	{
-		normal = PackNormal(nx, ny, nz);
+		data1 = (data1 & 0xFF000000u) | PackNormal(nx, ny, nz);
 	}
 
 	uint32_t Vertex::PackNormal(RealType nx, RealType ny, RealType nz)
@@ -134,38 +132,37 @@ namespace CppProject
 		return (z8 << 16) | (y8 << 8) | x8;
 	}
 
+	void Vertex::SetColorIndex(uint8_t index)
+	{
+		data1 = (data1 & 0x00FFFFFFu) | (uint32_t(index) << 24);
+	}
+
+	void Vertex::EnableFlag(Vertex::Flag flag)
+	{
+		// Enable bit of flag in first byte
+		data2 |= 1 << ((IntType)flag);
+	}
+
+	void Vertex::SetEmissive(RealType emissive)
+	{
+		// Pack brightness from 0-255 in second byte
+		data2 |= (IntType)(emissive * 255) << 8;
+	}
+
+	void Vertex::SetObjectIndex(IntType index)
+	{
+		// Pack 16 bit index in 3rd and 4th byte
+		data2 |= index << 16;
+	}
+
 	void Vertex::SetTangent(RealType tx, RealType ty, RealType tz)
 	{
 		// Pack tangent xyz as 0-255 in integer
 		uint8_t x8 = ((tx + 1.0) / 2.0) * 255;
 		uint8_t y8 = ((ty + 1.0) / 2.0) * 255;
 		uint8_t z8 = ((tz + 1.0) / 2.0) * 255;
-		
+
 		tangent = (z8 << 16) | (y8 << 8) | x8;
-	}
-
-	void Vertex::SetColor(IntType rgb, RealType alpha)
-	{
-		// Pack color rgb and alpha from 0-255 in integer
-		color = rgb | ((uint8_t)(alpha * 255.0) << 24);
-	}
-
-	void Vertex::EnableFlag(Vertex::Flag flag)
-	{
-		// Enable bit of flag in first byte
-		data |= 1 << ((IntType)flag);
-	}
-
-	void Vertex::SetEmissive(RealType emissive)
-	{
-		// Pack brightness from 0-255 in second byte
-		data |= (IntType)(emissive * 255) << 8;
-	}
-
-	void Vertex::SetIndex(IntType index)
-	{
-		// Pack 16 bit index in 3rd and 4th byte
-		data |= index << 16;
 	}
 
 	void Vertex::SetAttributes()
@@ -173,26 +170,22 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			IntType aPosition = GFX->shader->attributeLocation[0];
-			IntType aNormal = GFX->shader->attributeLocation[1];
-			IntType aColor = GFX->shader->attributeLocation[2];
-			IntType aUv = GFX->shader->attributeLocation[3];
-			IntType aData = GFX->shader->attributeLocation[4];
-			IntType aTangent = GFX->shader->attributeLocation[5];
+			IntType aUv = GFX->shader->attributeLocation[1];
+			IntType aData1 = GFX->shader->attributeLocation[2];
+			IntType aData2 = GFX->shader->attributeLocation[3];
+			IntType aTangent = GFX->shader->attributeLocation[4];
 
 			if (aPosition > -1)
 				GFX->glEnableVertexAttribArray(aPosition);
 
-			if (aNormal > -1)
-				GFX->glEnableVertexAttribArray(aNormal);
-
-			if (aColor > -1)
-				GFX->glEnableVertexAttribArray(aColor);
-
 			if (aUv > -1)
 				GFX->glEnableVertexAttribArray(aUv);
 
-			if (aData > -1)
-				GFX->glEnableVertexAttribArray(aData);
+			if (aData1 > -1)
+				GFX->glEnableVertexAttribArray(aData1);
+
+			if (aData2 > -1)
+				GFX->glEnableVertexAttribArray(aData2);
 
 			if (aTangent > -1)
 				GFX->glEnableVertexAttribArray(aTangent);
@@ -204,20 +197,16 @@ namespace CppProject
 				GFX->glVertexAttribPointer(aPosition, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offset);
 			offset += 3 * sizeof(float);
 
-			if (aNormal > -1)
-				GFX->glVertexAttribIPointer(aNormal, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
-			offset += sizeof(uint32_t);
-
-			if (aColor > -1)
-				GFX->glVertexAttribIPointer(aColor, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
-			offset += sizeof(uint32_t);
-
 			if (aUv > -1)
 				GFX->glVertexAttribPointer(aUv, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offset);
 			offset += 2 * sizeof(float);
 
-			if (aData > -1)
-				GFX->glVertexAttribIPointer(aData, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
+			if (aData1 > -1)
+				GFX->glVertexAttribIPointer(aData1, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
+			offset += sizeof(uint32_t);
+
+			if (aData2 > -1)
+				GFX->glVertexAttribIPointer(aData2, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
 			offset += sizeof(uint32_t);
 
 			if (aTangent > -1)

@@ -285,6 +285,17 @@ function builder_read_litematic(map)
 
 		builder_combine_threads()
 
+		if (valid)
+		{
+			for (var r = 0; r < array_length(regions); r++)
+			{
+				var start = offsets[r];
+				builder_read_entities(regions[r][?"Entities"], vec3(
+					start[X] - minimum[X], start[Z] - minimum[Z], start[Y] - minimum[Y]
+				))
+			}
+		}
+
 		if (!valid)
 			builder_done()
 	}

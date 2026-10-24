@@ -21,10 +21,11 @@ function tl_copy_temp(src, dest)
 			dest.block_center_legacy = block_center_legacy
 			dest.block_center = block_center
 			dest.block_randomize = block_randomize
-			dest.block_vbuffer = block_vbuffer
-			dest.block_vbuffer_active = block_vbuffer_active
-			dest.block_vbuffer_depth_active = block_vbuffer_depth_active
-			block_vbuffer = null
+			dest.block_meshes = block_meshes
+			dest.block_meshes_size = block_meshes_size
+			dest.block_meshes_transparent = block_meshes_transparent
+			block_meshes = []
+			block_meshes_transparent = false
 		}
 		else if (type = e_tl_type.TEXT)
 		{

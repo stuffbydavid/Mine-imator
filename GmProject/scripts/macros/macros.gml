@@ -5,8 +5,7 @@ function macros()
 	// Versions
 	#macro mineimator_version			"2.1"				// Base Mine-imator version
 	#macro mineimator_version_sub		""					// Mod name and version (e.g. "Community Build 1.0.0")
-	#macro mineimator_version_extra		"Pre-Release 1"				// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
-	#macro mineimator_version_full		(mineimator_version + ((mineimator_version_sub != "") ? " " + mineimator_version_sub : "") + ((mineimator_version_extra != "") ? " (" + mineimator_version_extra + ")" : ""))
+	#macro mineimator_version_extra		"WIP"				// Additional suffix (e.g. "Alpha 1" or "Pre-Release 2")
 	#macro mineimator_version_date		"2026.11.XX"
 	#macro minecraft_assets_version		"26.3"
 	
@@ -27,56 +26,57 @@ function macros()
 	#macro splash_directory				data_directory + "Splashes/"
 	
 	// Files
-	#macro language_file				languages_directory + "english.milanguage"
-	#macro languages_file				data_directory + "languages.midata"
-	#macro legacy_file					data_directory + "legacy.midata"
-	#macro settings_file				user_directory_get() + "settings.midata"
-	#macro recent_file					user_directory_get() + "recent.midata"
-	#macro key_file						user_directory_get() + "key.midata"
-	#macro log_file						user_directory_get() + "log.txt"
-	#macro temp_file					file_directory_get() + "tmp.file"
-	#macro temp_image					file_directory_get() + "tmp.png"
-	#macro download_image_file			file_directory_get() + "download.png"
-	#macro unzip_directory				file_directory_get() + "unzip/"
-	#macro render_default				"performance"
-	#macro render_default_file			render_directory + render_default + ".mirender"
-	#macro render_presets				[ "performance.mirender", "balanced.mirender", "extreme.mirender" ]
-	#macro render_preset_default		"balanced.mirender"
-	#macro render_preset_default_name	"balanced"
-	#macro asset_exts					"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.litematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
+	#macro language_file					languages_directory + "english.milanguage"
+	#macro languages_file					data_directory + "languages.midata"
+	#macro legacy_file						data_directory + "legacy.midata"
+	#macro settings_file					user_directory_get() + "settings.midata"
+	#macro recent_file						user_directory_get() + "recent.midata"
+	#macro key_file							user_directory_get() + "key.midata"
+	#macro log_file							user_directory_get() + "log.txt"
+	#macro temp_file						file_directory_get() + "tmp.file"
+	#macro temp_image						file_directory_get() + "tmp.png"
+	#macro download_image_file				file_directory_get() + "download.png"
+	#macro unzip_directory					file_directory_get() + "unzip/"
+	#macro render_default					"performance"
+	#macro render_default_file				render_directory + render_default + ".mirender"
+	#macro render_presets					[ "performance.mirender", "balanced.mirender", "extreme.mirender" ]
+	#macro render_preset_default			"balanced.mirender"
+	#macro render_preset_default_name		"balanced"
+	#macro asset_exts						"*.miobject;*.miframes;*.zip;*.schematic;*.schem;*.litematic;*.miproject;*.miparticles;*.mimodel;*.png;*.jpg;*.json;*.ttf;*.mp3;*.wav;*.ogg;*.flac;*.wma;*.m4a;*.object;*.keyframes;*.particles;*.mproj;*.mani;*.blocks;*.nbt;*.dat;"
 	
 	// Minecraft structure
-	#macro mc_file_directory			file_directory_get() + "Minecraft_unzip/"
-	#macro mc_assets_directory			"assets/minecraft/"
-	#macro mc_models_directory			mc_assets_directory + "models/"
-	#macro mc_blockstates_directory		mc_assets_directory + "blockstates/"
-	#macro mc_textures_directory		mc_assets_directory + "textures/"
-	#macro mc_character_directory		mc_models_directory + "character/"
-	#macro mc_equipment_directory		mc_models_directory + "equipment/"
-	#macro mc_special_block_directory	mc_models_directory + "special_block/"
-	#macro mc_block_directory			mc_models_directory + "block/"
-	#macro mc_loops_directory			mc_character_directory + "loops/"
+	#macro mc_file_directory				file_directory_get() + "Minecraft_unzip/"
+	#macro mc_assets_directory				"assets/minecraft/"
+	#macro mc_models_directory				mc_assets_directory + "models/"
+	#macro mc_blockstates_directory			mc_assets_directory + "blockstates/"
+	#macro mc_blockstates_added_directory	mc_assets_directory + "blockstates_added/"
+	#macro mc_textures_directory			mc_assets_directory + "textures/"
+	#macro mc_character_directory			mc_models_directory + "character/"
+	#macro mc_equipment_directory			mc_models_directory + "equipment/"
+	#macro mc_special_block_directory		mc_models_directory + "special_block/"
+	#macro mc_block_directory				mc_models_directory + "block/"
+	#macro mc_loops_directory				mc_character_directory + "loops/"
 	
-	#macro mc_pack_image_file			"pack.png"
-	#macro mc_grass_image_file			mc_textures_directory + "colormap/grass.png"
-	#macro mc_foliage_image_file		mc_textures_directory + "colormap/foliage.png"
-	#macro mc_dry_foliage_image_file	mc_textures_directory + "colormap/dry_foliage.png"
-	#macro mc_particles_image_file		mc_textures_directory + "particle/particles.png"
-	#macro mc_explosion_image_file		mc_textures_directory + "entity/explosion.png"
-	#macro mc_sun_image_file			mc_textures_directory + "environment/celestial/sun.png"
-	#macro mc_moon_phases_directory		mc_textures_directory + "environment/celestial/moon/"
-	#macro mc_moon_phase_0_image_file	mc_moon_phases_directory + "full_moon.png"
-	#macro mc_moon_phase_1_image_file	mc_moon_phases_directory + "waning_gibbous.png"
-	#macro mc_moon_phase_2_image_file	mc_moon_phases_directory + "third_quarter.png"
-	#macro mc_moon_phase_3_image_file	mc_moon_phases_directory + "waning_crescent.png"
-	#macro mc_moon_phase_4_image_file	mc_moon_phases_directory + "new_moon.png"
-	#macro mc_moon_phase_5_image_file	mc_moon_phases_directory + "waxing_crescent.png"
-	#macro mc_moon_phase_6_image_file	mc_moon_phases_directory + "first_quarter.png"
-	#macro mc_moon_phase_7_image_file	mc_moon_phases_directory + "waxing_gibbous.png"
-	#macro mc_clouds_image_file			mc_textures_directory + "environment/clouds.png"
-	#macro mc_glint_armor_file			mc_textures_directory + "misc/enchanted_glint_armor.png"
-	#macro mc_glint_item_file			mc_textures_directory + "misc/enchanted_glint_item.png"
-	#macro mc_unknown_asset_warning		" is not defined in the translation, the key will be formatted"
+	#macro mc_pack_image_file				"pack.png"
+	#macro mc_grass_image_file				mc_textures_directory + "colormap/grass.png"
+	#macro mc_foliage_image_file			mc_textures_directory + "colormap/foliage.png"
+	#macro mc_dry_foliage_image_file		mc_textures_directory + "colormap/dry_foliage.png"
+	#macro mc_particles_image_file			mc_textures_directory + "particle/particles.png"
+	#macro mc_explosion_image_file			mc_textures_directory + "entity/explosion.png"
+	#macro mc_sun_image_file				mc_textures_directory + "environment/celestial/sun.png"
+	#macro mc_moon_phases_directory			mc_textures_directory + "environment/celestial/moon/"
+	#macro mc_moon_phase_0_image_file		mc_moon_phases_directory + "full_moon.png"
+	#macro mc_moon_phase_1_image_file		mc_moon_phases_directory + "waning_gibbous.png"
+	#macro mc_moon_phase_2_image_file		mc_moon_phases_directory + "third_quarter.png"
+	#macro mc_moon_phase_3_image_file		mc_moon_phases_directory + "waning_crescent.png"
+	#macro mc_moon_phase_4_image_file		mc_moon_phases_directory + "new_moon.png"
+	#macro mc_moon_phase_5_image_file		mc_moon_phases_directory + "waxing_crescent.png"
+	#macro mc_moon_phase_6_image_file		mc_moon_phases_directory + "first_quarter.png"
+	#macro mc_moon_phase_7_image_file		mc_moon_phases_directory + "waxing_gibbous.png"
+	#macro mc_clouds_image_file				mc_textures_directory + "environment/clouds.png"
+	#macro mc_glint_armor_file				mc_textures_directory + "misc/enchanted_glint_armor.png"
+	#macro mc_glint_item_file				mc_textures_directory + "misc/enchanted_glint_item.png"
+	#macro mc_unknown_asset_warning			" is not defined in the translation, the key will be formatted"
 	
 	// Links
 	#macro link_website					"https://www.mineimator.com"
@@ -85,7 +85,7 @@ function macros()
 	#macro link_upgrade					"https://www.mineimator.com/upgrade"
 	#macro link_assets					"https://www.mineimator.com/assets/"
 	#macro link_assets_versions			link_assets + "versions.midata"
-	#macro link_news					"https://www.mineimator.com/news.php?version=" + mineimator_version + "&platform=" + string(platform_get()) + "&os=" + os_get()
+	#macro link_news					"https://www.mineimator.com/news.php"
 	#macro link_skins					"https://www.mineimator.com/skin?username="
 	#macro link_forums					"https://www.mineimatorforums.com"
 	#macro link_forums_bugs				"https://www.mineimatorforums.com/index.php?/forum/51-issues-and-bugs/&do=add"
@@ -122,6 +122,10 @@ function macros()
 	#macro c_plains_biome_foliage_2		make_color_rgb(98, 168, 87)
 	#macro c_plains_biome_dry_foliage	make_color_rgb(163, 117, 70)
 	#macro c_plains_biome_water			make_color_rgb(63, 118, 228)
+	#macro c_pumpkin_stem				hex_to_color("80DF10")
+	#macro c_melon_stem					hex_to_color("80DF10")
+	#macro c_lily_pad					hex_to_color("208030")
+	#macro c_redstone					hex_to_color("FF0000")
 	#macro c_sunset_start				hex_to_color("B2353B")
 	#macro c_sunset_end					hex_to_color("C04E37")
 	#macro c_normal						make_color_rgb(127, 127, 255)
@@ -160,8 +164,8 @@ function macros()
 	#macro bench_list_percent			0.8
 	#macro bench_soundlist_percent		1
 	#macro list_minimum_items			7
-	#macro soundlist_minimum_items		9
 	#macro list_center_max				500
+	#macro soundlist_minimum_items		9
 	
 	// Values
 	#macro null							noone
@@ -180,82 +184,85 @@ function macros()
 	#macro place_dir_none				e_dir.amount
 
 	// Assets
-	#macro default_model				"human"
-	#macro default_model_part			"head"
-	#macro default_model_part_model		"armor"
-	#macro default_equipment			"armor"
-	#macro default_special_block		"chest"
-	#macro default_block				"grass_block"
-	#macro default_item					"item/diamond_sword"
-	#macro overworld_ground				"block/grass_block_top"
-	#macro overworld_biome				"plains"
-	#macro the_nether_biome				"nether_wastes"
-	#macro the_nether_ground			"block/netherrack"
-	#macro the_end_biome				"the_end"
-	#macro the_end_ground				"block/end_stone"
-	#macro fog_far						10000
-	#macro fog_near						3000
-	#macro fog_size						2000
-	#macro fog_height					1250
-	#macro armor_parts					[ "helmet", "chestplate", "leggings", "boots" ]
-	#macro schematic_folders			[ "Buildings", "Biomes", "Trees", "Structures", "Other" ]
-	#macro schematic_folders_default	[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
-	#macro scenery_large_threshold		300
-	#macro scenery_instant_threshold	50 * 1024 // 50kb
-	#macro scenery_timeline_prompt		20
-	#macro scenery_timeline_enabled		[ "chest", "sign", "door", "lever", "trapdoor", "fence_gate", "enchanting_table", "banner" ]
-	#macro scenery_timeline_warning		50
-	#macro sound_filters				[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
-	#macro music_filters				[ "game", "menu", "records", "other" ]
-	#macro default_sound				"Step / Grass 1"
-	#macro default_music				"Records / Cat"
-	#macro particle_folders				[ "Effects", "Weather" ]
-	#macro particle_folders_default		[ "Default", "Snow" ]
-	#macro default_text					"AaBbCc"
-	#macro light_shadows_threshold		10
-	#macro default_tonemapper			e_tonemapper.LOTTES
+	#macro default_model					"human"
+	#macro default_model_part				"head"
+	#macro default_model_part_model			"armor"
+	#macro default_equipment				"armor"
+	#macro default_special_block			"chest"
+	#macro default_block					"grass_block"
+	#macro default_item						"item/diamond_sword"
+	#macro overworld_ground					"block/grass_block_top"
+	#macro overworld_biome					"plains"
+	#macro the_nether_biome					"nether_wastes"
+	#macro the_nether_ground				"block/netherrack"
+	#macro the_end_biome					"the_end"
+	#macro the_end_ground					"block/end_stone"
+	#macro armor_parts						[ "helmet", "chestplate", "leggings", "boots" ]
+	#macro schematic_folders				[ "Buildings", "Biomes", "Trees", "Structures", "Other" ]
+	#macro schematic_folders_default		[ "House 1", "Forest", "Oak tree 1", "Dungeon", "Creek" ]
+	#macro scenery_large_threshold			300
+	#macro scenery_instant_threshold		50 * 1024 // 50kb
+	#macro scenery_entity_tl_type_index		5
+	#macro scenery_timeline_prompt			20
+	#macro scenery_timeline_enabled			[ "chest", "sign", "door", "lever", "trapdoor", "fence_gate", "enchanting_table", "mob_head", "banner", "painting" ]
+	#macro scenery_timeline_enabled_max		10
+	#macro scenery_timeline_warning			50
+	#macro sound_filters					[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]
+	#macro music_filters					[ "game", "menu", "records", "other" ]
+	#macro default_sound					"Step / Grass 1"
+	#macro default_music					"Records / Cat"
+	#macro particle_folders					[ "Effects", "Weather" ]
+	#macro particle_folders_default			[ "Default", "Snow" ]
+	#macro default_text						"AaBbCc"
+	#macro light_shadows_threshold			10
+	#macro default_tonemapper				e_tonemapper.LOTTES
 	
 	// Parenting actions for right/left arm
-	#macro item_parent_action			[ null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5) ]
-	#macro bow_parent_action_right		[ null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9) ]
-	#macro bow_parent_action_left		[ null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9) ]
-	#macro tool_parent_action			[ null, true, vec3(0, 2, 0), vec3(0, 145, 90), vec3(0.85) ]
-	#macro rod_parent_action			[ null, true, vec3(0, 2, -9), vec3(180, 145, 90), vec3(0.85) ]
-	#macro crossbow_parent_action_right	[ null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9) ]
-	#macro crossbow_parent_action_left	[ null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9) ]
-	#macro spear_parent_action			[ null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25) ]
-	#macro block_parent_action_right	[ null, true, vec3(0, 3.5, -9.5), vec3(-15, 15, 135), vec3(0.4) ]
-	#macro block_parent_action_left		[ null, true, vec3(0, 3.5, -9.5), vec3(15, 15, 45), vec3(0.4) ]
+	#macro item_parent_action				[ null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5) ]
+	#macro bow_parent_action_right			[ null, true, vec3(0.8, -6, 0.7), vec3(-183, -54, -85), vec3(0.9) ]
+	#macro bow_parent_action_left			[ null, true, vec3(-0.8, -6, 0.7), vec3(-177, -54, -95), vec3(0.9) ]
+	#macro tool_parent_action				[ null, true, vec3(0, 2, 0), vec3(0, 145, 90), vec3(0.85) ]
+	#macro rod_parent_action				[ null, true, vec3(0, 2, -9), vec3(180, 145, 90), vec3(0.85) ]
+	#macro crossbow_parent_action_right		[ null, true, vec3(4.25, 2, -5.5), vec3(-2, 120, 0), vec3(0.9) ]
+	#macro crossbow_parent_action_left		[ null, true, vec3(5.6, 2, -2.85), vec3(-2, 150, 0), vec3(0.9) ]
+	#macro spear_parent_action				[ null, true, vec3(0, -3, -11.5), vec3(0, 41, 90), vec3(1.25) ]
+	#macro block_parent_action_right		[ null, true, vec3(0, 3.5, -9.5), vec3(-15, 15, 135), vec3(0.4) ]
+	#macro block_parent_action_left			[ null, true, vec3(0, 3.5, -9.5), vec3(15, 15, 45), vec3(0.4) ]
 	
 	// World
-	#macro block_size					16
-	#macro block_half_size				8
-	#macro block_size_list				[ 16, 32, 64 ]
-	#macro block_faces					6
-	#macro item_size					16
-	#macro clip_far						30000
-	#macro clip_near					1
+	#macro block_size			16
+	#macro block_half_size		8
+	#macro block_size_list		[ 16, 32, 64 ]
+	#macro block_faces			6
+	#macro block_mesh_size		64
+	#macro item_size			16
+	#macro clip_far				30000
+	#macro clip_near			1
+	#macro fog_far				10000
+	#macro fog_near				3000
+	#macro fog_size				2000
+	#macro fog_height			1250
 	
 	// Vectors and matrices
-	#macro X							0
-	#macro Y							1
-	#macro Z							2
-	#macro W							3
-	#macro XP							0
-	#macro XN							1
-	#macro YP							2
-	#macro YN							3
-	#macro ZP							4
-	#macro ZN							5
-	#macro MAT_X						12
-	#macro MAT_Y						13
-	#macro MAT_Z						14
-	#macro PATH_SCALE					4
-	#macro PATH_TANGENT_X				5
-	#macro PATH_TANGENT_Y				6
-	#macro PATH_TANGENT_Z				7
-	#macro PATH_NORMAL_X				8
-	#macro PATH_NORMAL_Y				9
-	#macro PATH_NORMAL_Z				10
-	#macro MAT_IDENTITY					matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
+	#macro X					0
+	#macro Y					1
+	#macro Z					2
+	#macro W					3
+	#macro XP					0
+	#macro XN					1
+	#macro YP					2
+	#macro YN					3
+	#macro ZP					4
+	#macro ZN					5
+	#macro MAT_X				12
+	#macro MAT_Y				13
+	#macro MAT_Z				14
+	#macro PATH_SCALE			4
+	#macro PATH_TANGENT_X		5
+	#macro PATH_TANGENT_Y		6
+	#macro PATH_TANGENT_Z		7
+	#macro PATH_NORMAL_X		8
+	#macro PATH_NORMAL_Y		9
+	#macro PATH_NORMAL_Z		10
+	#macro MAT_IDENTITY			matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1)
 }

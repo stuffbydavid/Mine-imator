@@ -12,15 +12,14 @@ function builder_done()
 		ds_list_destroy(block_render_model_multipart)
 	}
 	
+	block_meshes = []
+	
 	build_multithreaded = null
 	build_transform = false
-	
-	vertex_rgb = c_white
-	vertex_alpha = 1
 	
 	vertex_wave = e_vertex_wave.NONE
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null
 	vertex_emissive = 0
-	vertex_subsurface = 0
+	vertex_subsurface_color_index = 0
 }

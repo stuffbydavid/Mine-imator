@@ -24,7 +24,6 @@ function tl_new_block(tltype, source, saved = false)
 			block_center_legacy = false
 			block_center = source.block_center
 			block_randomize = source.block_randomize
-			block_vbuffer = null
 			texture_filtering = true
 
 			if (saved)

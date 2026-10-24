@@ -70,13 +70,13 @@ function draw_checkbox(name, xx, yy, active, script, tip = "", label = null)
 	draw_box_hover(checkboxx, checkboxy, 16, 16, microani_arr[e_microani.PRESS])
 	
 	// Label
-	var shortlabel = string_limit(text, dw - 24);
+	var shortlabel = string_limit(text, dw - (tip != "" ? 48 : 24));
 	draw_label(shortlabel, xx + 24, yy + (h/2), fa_left, fa_middle, c_text_secondary, a_text_secondary)
 	
 	microani_update(mouseon, mouseclick, active)
 	
 	if (string_width(shortlabel) < dw - 28)
-		draw_help_circle(tip, xx + 24 + string_width(shortlabel) + 4, yy + (h/2) - 10, false)
+		draw_help_circle(tip, xx + 24 + string_width(shortlabel) + 4, yy + (h/2) - 10, false, name + "/help")
 	
 	// Press
 	if (pressed && mouse_left_released)

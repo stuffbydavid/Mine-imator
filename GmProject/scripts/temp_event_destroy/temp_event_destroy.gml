@@ -53,7 +53,7 @@ function temp_event_destroy()
 		vbuffer_destroy(item_vbuffer)
 	
 	if (type = e_temp_type.BLOCK || type = e_temp_type.SCENERY)
-		block_vbuffer_destroy()
+		block_meshes_destroy()
 	
 	if (type = e_temp_type.PARTICLE_SPAWNER)
 		temp_particles_type_clear()

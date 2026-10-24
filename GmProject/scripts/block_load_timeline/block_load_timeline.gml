@@ -5,6 +5,8 @@ function block_load_timeline(map, typemap)
 	timeline = true
 	
 	tl_type = value_get_string(map[?"type"], name)
+	tl_build_transform = value_get_real(map[?"transform"], true)
+	tl_hide_model = value_get_string(map[?"hide_model"], "")
 		
 	// Model to use
 	if (is_string(map[?"model"]))
@@ -54,7 +56,7 @@ function block_load_timeline(map, typemap)
 	
 	// Render block model with timeline model?
 	if (is_bool(map[?"model_double"]))
-		model_double = map[?"model_double"]
+		tl_model_double = map[?"model_double"]
 	
 	// Text
 	tl_has_text = false

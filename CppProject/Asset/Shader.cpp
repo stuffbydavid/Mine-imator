@@ -428,6 +428,8 @@ namespace CppProject
 		}
 
 		// Reset samplers
+		samplersChanged = true;
+		samplerUniformsChanged = true;
 		for (IntType s = 0; s < numSamplers; s++)
 		{
 			samplerState[s].changed = false;
@@ -460,6 +462,9 @@ namespace CppProject
 		// Clear static buffer
 		if (IS_D3D11)
 			memset(staticBufferData, 0, staticBufferSize);
+
+		staticBufferChanged = true;
+		objectBufferChanged = true;
 		
 		if (pointMultiviewUniform >= 0)
 			SubmitInt(pointMultiviewUniform, GFX->pointMultiview);
@@ -477,6 +482,8 @@ namespace CppProject
 	{
 		if (!IsLoaded())
 			return false;
+
+		GFX->ResetTextureBindings();
 
 		if (IS_OPENGL)
 		{
@@ -754,6 +761,8 @@ namespace CppProject
 		}
 
 		state.currentTexId = id;
+		if (samplerUvRect[sampler] != newUvRect)
+			samplerUniformsChanged = true;
 		samplerUvRect[sampler] = newUvRect;
 		
 		if (useBatching && objRectUniformIndex[sampler] >= 0)
@@ -809,6 +818,7 @@ namespace CppProject
 		memcpy(batchBufferData + batchBufferObjectIndex * batchBufferObjectSize,
 			   batchBufferData + (batchBufferObjectIndex - 1) * batchBufferObjectSize,
 			   batchBufferObjectSize);
+		objectBufferChanged = true;
 
 		return false;
 	}
@@ -859,6 +869,11 @@ namespace CppProject
 			numObjects++;
 		
 		IntType objectBytes = std::max<IntType>(1, numObjects) * batchBufferObjectSize;
+
+		for (IntType s = 0; s < numSamplers; s++)
+			if (samplerState[s].changed)
+				samplersChanged = true;
+
 		// Bind textures and submit samplers
 	#if OS_WINDOWS
 		ID3D11SamplerState* texSamplers[32] = {};
@@ -867,7 +882,7 @@ namespace CppProject
 		IntType glConfiguredTextures[32];
 		IntType glConfiguredTextureCount = 0;
 
-		for (IntType s = 0; s < numSamplers; s++)
+		for (IntType s = 0; samplersChanged && s < numSamplers; s++)
 		{
 			const SamplerState& state = samplerState[s];
 			if (state.currentTexId > -1)
@@ -929,18 +944,22 @@ namespace CppProject
 
 					program->setUniformValue(state.glLocation, (GLint)s);
 				}
-				samplerState[s].changed = false;
 			}
+
+			samplerState[s].changed = false;
 		}
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
-			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
-			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
+			if (samplersChanged)
+			{
+				D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+				D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
+			}
 
 			// Submit UvRects/repeat options
-			if (numSamplers > 0)
+			if (numSamplers > 0 && samplerUniformsChanged)
 			{
 				WriteUniformValue(uvRectUniform, samplerUvRect, numSamplers * sizeof(UvRect));
 
@@ -954,16 +973,26 @@ namespace CppProject
 			IntType numConstantBuffers = 0;
 			if (d3dStaticBuffer)
 			{
-				D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+				if (staticBufferChanged)
+				{
+					D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+					staticBufferChanged = false;
+				}
+
 				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
 			}
 
 			if (d3dObjectBuffer)
 			{
-				D3D11_MAPPED_SUBRESOURCE objectBufferRes = {};
-				D3DCheckError(D3DContext->Map(d3dObjectBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &objectBufferRes));
-				memcpy(objectBufferRes.pData, batchBufferData, objectBytes);
-				D3DContext->Unmap(d3dObjectBuffer, 0);
+				if (objectBufferChanged)
+				{
+					D3D11_MAPPED_SUBRESOURCE objectBufferRes = {};
+					D3DCheckError(D3DContext->Map(d3dObjectBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &objectBufferRes));
+					memcpy(objectBufferRes.pData, batchBufferData, objectBytes);
+					D3DContext->Unmap(d3dObjectBuffer, 0);
+					objectBufferChanged = false;
+				}
+
 				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
 				ResetObjects();
 			}
@@ -989,16 +1018,6 @@ namespace CppProject
 				D3DContext->DrawIndexedInstanced(numIndices, numInstances, 0, 0, 0);
 			else
 				D3DContext->DrawIndexed(numIndices, 0, 0);
-
-			// Reset input
-			for (IntType s = 0; s < numSamplers; s++)
-			{
-				texSamplers[s] = nullptr;
-				texSRVs[s] = nullptr;
-			}
-
-			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
-			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 		}
 	#endif
 		if (IS_OPENGL)
@@ -1012,7 +1031,7 @@ namespace CppProject
 			}
 
 			// Submit UvRects/repeat options
-			if (numSamplers > 0)
+			if (numSamplers > 0 && samplerUniformsChanged)
 			{
 				program->setUniformValueArray(uvRectUniform.glLocation, samplerUvRect, numSamplers);
 				program->setUniformValueArray(texRepeatUniform.glLocation, (GLint*)samplerRepeat, numSamplers);
@@ -1021,9 +1040,14 @@ namespace CppProject
 			// Submit SSBO
 			if (useBatching)
 			{
-				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
-				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, objectBytes, batchBufferData);
-				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+				if (objectBufferChanged)
+				{
+					GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
+					GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, objectBytes, batchBufferData);
+					GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+					objectBufferChanged = false;
+				}
+
 				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
 				GL_CHECK_ERROR();
 
@@ -1048,15 +1072,24 @@ namespace CppProject
 			
 			GL_CHECK_ERROR();
 		}
+
+		samplersChanged = false;
+		samplerUniformsChanged = false;
 	}
 
 	void Shader::ResetObjects()
 	{
-		if (!useBatching)
+		if (!useBatching || !batchBufferObjectIndex)
 			return;
 
 		// Reset to first object
-		memcpy(batchBufferData, batchBufferData + batchBufferObjectIndex * batchBufferObjectSize, batchBufferObjectSize);
+		const char* lastObject = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
+		if (memcmp(batchBufferData, lastObject, batchBufferObjectSize))
+		{
+			memcpy(batchBufferData, lastObject, batchBufferObjectSize);
+			objectBufferChanged = true;
+		}
+
 		batchBufferObjectIndex = 0;
 	}
 
@@ -1071,7 +1104,15 @@ namespace CppProject
 		else
 			dst = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
 
-		memcpy(dst + uniform.bufferOffset, data, size);
+		dst += uniform.bufferOffset;
+		if (memcmp(dst, data, size))
+		{
+			memcpy(dst, data, size);
+			if (uniform.isStatic)
+				staticBufferChanged = true;
+			else
+				objectBufferChanged = true;
+		}
 	}
 
 	void Shader::LoadCodeCommon(QString& code)

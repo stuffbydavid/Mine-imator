@@ -2,12 +2,20 @@
 
 function res_load_scenery_block_map()
 {
-	var res, tlamount;
+	var res, tlamount, blockcounts, meshwidth, meshheight;
 	res = id
 	tlamount = 0
+	blockcounts = array_create(array_length(block_objs), 0)
+	meshwidth = ceil(mc_builder.build_size[X] / block_mesh_size)
+	meshheight = ceil(mc_builder.build_size[Y] / block_mesh_size)
+
+	block_meshes_size = vec3(meshwidth, meshheight, ceil(mc_builder.build_size[Z] / block_mesh_size))
+	block_meshes_active = array_create(meshwidth * meshheight * block_meshes_size[Z], false)
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
+	
+	mc_builder.block_tl_count_map = scenery_tl_types_count_map
 
 	with (mc_builder)
 	{
@@ -28,8 +36,7 @@ function res_load_scenery_block_map()
 				if (block = null)
 					continue
 
-				var key = string(block.block_id);
-				res.scenery_block_map[?key] = value_get_real(res.scenery_block_map[?key], 0) + 1
+				blockcounts[@block.block_id]++
 
 				if (block_get_filtered(res, block))
 				{
@@ -37,10 +44,17 @@ function res_load_scenery_block_map()
 					continue
 				}
 
+				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshwidth, meshheight);
+				res.block_meshes_active[@meshindex] = true
+
 				if (!keepwater && builder_get_waterlogged(build_pos[X], build_pos[Y], build_pos[Z]))
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], block.block_id, builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z]), false)
 
 				var counttl = block.timeline;
+				
+				// Sign counts are added when tile text is parsed
+				if (counttl && block.tl_type = "sign")
+					counttl = false
 				
 				// Upper door halves do not create timelines
 				if (counttl && block.tl_type = "door")
@@ -77,6 +91,10 @@ function res_load_scenery_block_map()
 
 		sch_timeline_amount = tlamount
 	}
+
+	for (var i = 0; i < array_length(blockcounts); i++)
+		if (blockcounts[i] > 0)
+			scenery_block_map[?string(i)] = blockcounts[i]
 
 	scenery_tl_types_count_ready = true
 }

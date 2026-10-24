@@ -30,7 +30,10 @@ extern "C" __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = US
 
 int main(int argc, char* argv[])
 {
-	return (new CppProject::AppHandler(argc, argv))->Run();
+	CppProject::AppHandler* app = new CppProject::AppHandler(argc, argv);
+	int result = app->Run();
+	delete app;
+	return result;
 }
 
 namespace CppProject
@@ -119,7 +122,7 @@ namespace CppProject
 				file_rename_lib(prevLog, prevLogDest);
 			}
 
-			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
+			DEBUG("Mine-imator version " + version_get() + " (" + mineimator_version_date + ")");
 
 		#if OS_WINDOWS
 		#ifdef _WIN64

@@ -82,6 +82,7 @@ namespace CppProject
 		BoolType filterEnabled = true, debug = false;
 		BoolType stripNamespace = true;
 		BoolType previewOnly = false;
+		BoolType includeEntities = false;
 		IntType sectionMin = 0, sectionMax = 0;
 
 		static QHash<NbtType, IntType> nbtTypeSize;

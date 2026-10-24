@@ -24,6 +24,7 @@ function popup_block_settings_show(res, duringload = false, tl = null, hobj = nu
 		tl_available_types = []
 		tl_available_labels = []
 		tl_available_amounts = []
+		tl_available_tips = []
 		
 		scenery_integrity = res.scenery_integrity
 		scenery_palette = res.scenery_palette
@@ -33,22 +34,28 @@ function popup_block_settings_show(res, duringload = false, tl = null, hobj = nu
 		var maxlabelwid = 0;
 		for (var i = 0; i < ds_list_size(mc_assets.block_tl_type_list); i++)
 		{
-			var type, amount, label;
+			var type, amount, label, tip;
 			type = mc_assets.block_tl_type_list[|i]
 			amount = value_get_real(res.scenery_tl_types_count_map[?type], 0)
 			if (amount <= 0)
 				continue
 
 			label = minecraft_asset_get_name("block", type) + " (" + string(amount) + ")"
+			tip = ""
+			if (type = "sign")
+				tip = "block_settings/timeline_required_sign_tip"
+			else if (ds_map_exists(mc_assets.block_tl_required_map, type))
+				tip = "block_settings/timeline_required_tip"
 
 			array_add(tl_available_types, type)
 			array_add(tl_available_labels, label)
 			array_add(tl_available_amounts, amount)
+			array_add(tl_available_tips, tip)
 
-			maxlabelwid = max(maxlabelwid, string_width_font(label, app.font_label))
+			maxlabelwid = max(maxlabelwid, string_width_font(label, app.font_label) + (tip != "" ? 48 : 40))
 		}
 
-		tl_columns = (maxlabelwid + 40 > (width - 48) / 4) ? 3 : 4
+		tl_columns = (maxlabelwid > (width - 48) / 4) ? 3 : 4
 
 		filter_enabled = res.scenery_filter_enabled
 		filter_mode = res.scenery_filter_mode
