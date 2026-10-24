@@ -96,6 +96,9 @@ function builder_thread_event_create()
 	block_tl_map = null
 	
 	block_vbuffer_current = null
+	block_meshes = []
+	block_mesh = null
+	block_meshes_size = vec3(1)
 	block_vertex_wave = e_vertex_wave.NONE
 	block_vertex_wave_zmin = null
 	block_vertex_wave_zmax = null

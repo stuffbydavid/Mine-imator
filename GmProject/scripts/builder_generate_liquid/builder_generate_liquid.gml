@@ -375,7 +375,8 @@ function builder_generate_liquid(waterlogged = false)
 	}
 
 	// Generate side quads and the triangle above each one
-	block_vbuffer_current = mc_builder.vbuffer[@ dep * e_block_vbuffer.amount + vbuf]
+	var index = dep * e_block_vbuffer.amount + vbuf;
+	block_vbuffer_current = block_mesh.block_vbuffer[@index]
 	block_vertex_emissive = block_current.emissive
 	
 	for (var f = XP; f <= YN; f++)

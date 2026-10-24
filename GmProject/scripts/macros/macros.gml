@@ -230,6 +230,7 @@ function macros()
 	#macro block_half_size		8
 	#macro block_size_list		[ 16, 32, 64 ]
 	#macro block_faces			6
+	#macro block_mesh_size		64
 	#macro item_size			16
 	#macro clip_far				30000
 	#macro clip_near			1

@@ -2,10 +2,15 @@
 
 function res_load_scenery_block_map()
 {
-	var res, tlamount, blockcounts;
+	var res, tlamount, blockcounts, meshwidth, meshheight;
 	res = id
 	tlamount = 0
 	blockcounts = array_create(array_length(block_objs), 0)
+	meshwidth = ceil(mc_builder.build_size[X] / block_mesh_size)
+	meshheight = ceil(mc_builder.build_size[Y] / block_mesh_size)
+
+	block_meshes_size = vec3(meshwidth, meshheight, ceil(mc_builder.build_size[Z] / block_mesh_size))
+	block_meshes_active = array_create(meshwidth * meshheight * block_meshes_size[Z], false)
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
@@ -38,6 +43,9 @@ function res_load_scenery_block_map()
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], 0, 0, false)
 					continue
 				}
+
+				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshwidth, meshheight);
+				res.block_meshes_active[@meshindex] = true
 
 				if (!keepwater && builder_get_waterlogged(build_pos[X], build_pos[Y], build_pos[Z]))
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], block.block_id, builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z]), false)

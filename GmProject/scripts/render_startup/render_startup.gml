@@ -7,7 +7,7 @@ function render_startup()
 			  render_lights, render_particles, render_hidden,  render_background, render_watermark, render_blend_prev, render_alpha_prev, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
-			  render_active, render_repeat, render_start_time, render_start_surface_time, render_world_count, render_world_block_transparent, point3D_project_error;
+			  render_active, render_repeat, render_start_time, render_start_surface_time, render_world_count, render_world_blocks_transparent, point3D_project_error;
 	
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
@@ -194,7 +194,7 @@ function render_startup()
 	render_resolution_factors = [ 1, 0.5, 0.25, 0.125 ]
 	
 	render_world_count = 0
-	render_world_block_transparent = null
+	render_world_blocks_transparent = null
 
 	render_gamma = 1
 	

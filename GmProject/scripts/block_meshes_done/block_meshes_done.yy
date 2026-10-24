@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_get_block_res",
+  "%Name":"block_meshes_done",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_get_block_res",
+  "name":"block_meshes_done",
   "parent":{
-    "name":"Timeline",
-    "path":"folders/Scripts/Project/Timeline.yy",
+    "name":"Meshes",
+    "path":"folders/Scripts/Minecraft/Blocks/Meshes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

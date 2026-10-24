@@ -139,6 +139,7 @@ namespace CppProject
 			GFX->SubmitBatch();
 
 			GFX->shader->samplerRepeat[s] = enabledInt;
+			GFX->shader->samplerUniformsChanged = true;
 		}
 
 		GFX->texRepeat = enabled;
@@ -153,6 +154,7 @@ namespace CppProject
 		GFX->SubmitBatch();
 
 		GFX->shader->samplerRepeat[sampler] = enabledInt;
+		GFX->shader->samplerUniformsChanged = true;
 	}
 
 	void gpu_set_tex_max_mip(IntType maxmip)

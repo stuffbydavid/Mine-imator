@@ -176,6 +176,7 @@ namespace CppProject
 		IntType batchBufferObjectIndex = 0;
 		IntType batchBufferObjectSize = 0;
 		IntType batchBufferMaxObjects = 0;
+		BoolType staticBufferChanged = true, objectBufferChanged = true;
 
 		// Uniform info
 		QHash<StringType, IntType> uniformNameMap; // name->index in uniforms list
@@ -218,6 +219,7 @@ namespace CppProject
 		QHash<StringType, IntType> samplerNameMap; // name->index in samplerState
 		IntType numSamplers = 0;
 		BoolType useBaseTexture = false;
+		BoolType samplersChanged = true, samplerUniformsChanged = true;
 		BoolType depthOnly = false;
 		BoolType pointShader = false;
 		UniformState uvRectUniform;

@@ -122,6 +122,7 @@ namespace CppProject
 	FrameBuffer::~FrameBuffer()
 	{
 		ResetColorPixelAsync();
+		GFX->ResetTextureBindings();
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
@@ -176,6 +177,7 @@ namespace CppProject
 			this->size = size;
 
 			// Free resources
+			GFX->ResetTextureBindings();
 			releaseAndReset(d3dColorTex);
 			releaseAndReset(d3dDepthStencilTex);
 			releaseAndReset(d3dDSV);
@@ -306,6 +308,7 @@ namespace CppProject
 			this->size = size;
 
 			// Resize color and depth/stencil texture
+			GFX->ResetTextureBindings();
 			GFX->glBindTexture(GL_TEXTURE_2D, glColorTexId);
 			GFX->glTexImage2D(GL_TEXTURE_2D, 0, depthOnly ? GL_DEPTH_COMPONENT32F : glInternalFormat,
 				size.width(), size.height(), 0, depthOnly ? GL_DEPTH_COMPONENT : glFormat, depthOnly ? GL_FLOAT : glType, 0);
@@ -355,6 +358,8 @@ namespace CppProject
 
 	BoolType FrameBuffer::BeginUse()
 	{
+		GFX->ResetTextureBindings();
+
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{

@@ -50,7 +50,7 @@ function render_world(mode)
 		render_set_uniform_int(e_uniform.GLOW_PASS, render_glow)
 	
 	shader_check_uniform = true
-	render_world_block_transparent = (render_depth_pass ? null : false)
+	render_world_blocks_transparent = (render_depth_pass ? null : false)
 	
 	render_world_tl_reset()
 	
@@ -79,7 +79,7 @@ function render_world(mode)
 		render_world_list(render_depth_list_current[e_depth_list.POSITIVE])
 	}
 	
-	render_world_block_transparent = null
+	render_world_blocks_transparent = null
 
 	render_world_tl_reset()
 	

@@ -1356,7 +1356,6 @@ function enums()
 		STATIC16,
 		STATIC32,
 		STATIC64,
-		ANIMATED,
 		GRASS,
 		FOLIAGE,
 		DRY_FOLIAGE,
@@ -1367,6 +1366,7 @@ function enums()
 		LEAVES_ACACIA,
 		LEAVES_DARK_OAK,
 		LEAVES_MANGROVE,
+		ANIMATED,
 		WATER,
 		amount
 	}

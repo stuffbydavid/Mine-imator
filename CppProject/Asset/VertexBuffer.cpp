@@ -6,9 +6,10 @@
 
 namespace CppProject
 {
-	VertexBuffer::VertexBuffer(QDataStream& stream, const std::function<void(Vertex&)>& vertexTransform) : VertexBuffer()
+	VertexBuffer::VertexBuffer(QDataStream& stream, BoolType batching) : VertexBuffer()
 	{
 		valid = false;
+		this->batching = batching;
 
 		qint64 numMeshes = 0;
 		stream >> numMeshes;
@@ -66,15 +67,10 @@ namespace CppProject
 				}
 			}
 
-			// Apply optional transform function
-			if (vertexTransform)
-				for (IntType i = 0; i < mesh->numVertices; i++)
-					vertexTransform(mesh->vertexData[i]);
-
 			// Create mesh buffers
 			numIndices += numInd;
 			mesh->bounds = Bounds(mesh->vertexData);
-			mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES);
+			mesh->CreateBuffers(!batching || numIndices > MAX_BATCH_INDICES);
 
 			meshes.append(mesh);
 		}
@@ -241,7 +237,7 @@ namespace CppProject
 		mesh->vertices.Append(v4);
 	}
 
-	void VertexBuffer::Complete()
+	void VertexBuffer::Complete(BoolType updateTangents)
 	{
 		if (meshes.size())
 		{
@@ -354,28 +350,31 @@ namespace CppProject
 		for (Mesh<>* mesh : meshes)
 		{
 			// Calculate tangent vector for each triangle
-			for (IntType i = 0; i < mesh->numIndices / 3; i++)
+			if (updateTangents)
 			{
-				Vertex& v1 = mesh->vertexData[mesh->indexData.Value(i * 3)];
-				Vertex& v2 = mesh->vertexData[mesh->indexData.Value(i * 3 + 1)];
-				Vertex& v3 = mesh->vertexData[mesh->indexData.Value(i * 3 + 2)];
+				for (IntType i = 0; i < mesh->numIndices / 3; i++)
+				{
+					Vertex& v1 = mesh->vertexData[mesh->indexData.Value(i * 3)];
+					Vertex& v2 = mesh->vertexData[mesh->indexData.Value(i * 3 + 1)];
+					Vertex& v3 = mesh->vertexData[mesh->indexData.Value(i * 3 + 2)];
 
-				VecType edge1 = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
-				VecType edge2 = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
+					VecType edge1 = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
+					VecType edge2 = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
 
-				VecType deltaUv1 = { v2.u - v1.u, v2.v - v1.v };
-				VecType deltaUv2 = { v3.u - v1.u, v3.v - v1.v };
+					VecType deltaUv1 = { v2.u - v1.u, v2.v - v1.v };
+					VecType deltaUv2 = { v3.u - v1.u, v3.v - v1.v };
 
-				RealType f = 1.0 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
-				VecType t = ((edge1 * deltaUv2.y - edge2 * deltaUv1.y) * f).GetNormalized();
+					RealType f = 1.0 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
+					VecType t = ((edge1 * deltaUv2.y - edge2 * deltaUv1.y) * f).GetNormalized();
 
-				v1.SetTangent(t.x, t.y, t.z);
-				v2.SetTangent(t.x, t.y, t.z);
-				v3.SetTangent(t.x, t.y, t.z);
+					v1.SetTangent(t.x, t.y, t.z);
+					v2.SetTangent(t.x, t.y, t.z);
+					v3.SetTangent(t.x, t.y, t.z);
+				}
 			}
 
 			mesh->bounds = Bounds(mesh->vertexData);
-			mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES && !saveData); // Release CPU data that can't be batched
+			mesh->CreateBuffers(batching && numIndices > MAX_BATCH_INDICES); // Keep non-batched data until cache serialization
 		}
 	}
 
@@ -399,7 +398,7 @@ namespace CppProject
 				stream.writeRawData((const char*)mesh->vertexData.Data(), (int)mesh->numVertices * sizeof(Vertex));
 				stream.writeRawData((const char*)mesh->indexData.Data(), (int)mesh->numIndices * sizeof(uint32_t));
 
-				if (numIndices > MAX_BATCH_INDICES) // Release CPU data of scenery that can't be batched
+				if (!batching || numIndices > MAX_BATCH_INDICES) // Release CPU data that won't be used for batching
 				{
 					mesh->vertexData.FreeData();
 					mesh->indexData.FreeData();

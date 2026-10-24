@@ -1,53 +1,60 @@
-/// @desc Returns the block mesh resource for a timeline or its particles
+// @desc Update block transparency render flag for a timeline.
 
-function tl_get_block_res()
+function tl_update_render_blocks_transparent()
 {
+	if (array_length(block_meshes) > 0)
+	{
+		render_blocks_transparent = block_meshes_transparent
+		return 0
+	}
+	
+	render_blocks_transparent = false
+
+	var obj = null;
 	switch (type)
 	{
 		case e_tl_type.BLOCK:
-			return temp
-		
-		case e_tl_type.SCENERY:
-			return temp.scenery
-		
-		case e_tl_type.MODEL:
-		{
-			if (temp.model != null && temp.model.model_format = e_model_format.BLOCK)
-				return temp.model
-			
+			obj = temp
 			break
-		}
-		
+
+		case e_tl_type.SCENERY:
+			obj = temp.scenery
+			break
+
+		case e_tl_type.MODEL:
+			if (temp.model != null && temp.model.model_format = e_model_format.BLOCK)
+				obj = temp.model
+			break
+
 		case e_tl_type.PARTICLE_SPAWNER:
 		{
 			if (ds_list_valid(temp.pc_type_list))
 			{
 				for (var p = 0; p < ds_list_size(temp.pc_type_list); p++)
 				{
-					var ptype, ptemp, res;
+					var ptype, ptemp;
 					ptype = temp.pc_type_list[|p]
 					ptemp = ptype.temp
-					res = null
-					
+					obj = null
+
 					if (ptemp = particle_sheet || ptemp = particle_template)
 						continue
 
 					if (ptemp.type = e_temp_type.BLOCK)
-						res = ptemp
+						obj = ptemp
 					else if (ptemp.type = e_temp_type.SCENERY)
-						res = ptemp.scenery
+						obj = ptemp.scenery
 					else if (ptemp.type = e_temp_type.MODEL && ptemp.model != null && ptemp.model.model_format = e_model_format.BLOCK)
-						res = ptemp.model
+						obj = ptemp.model
 
-					if (res != null && res.block_vbuffer != null &&
-						(res.block_vbuffer_depth_active[e_block_depth.DEPTH1] || res.block_vbuffer_depth_active[e_block_depth.DEPTH2]))
-						return res
+					if (obj != null && obj.block_meshes_transparent)
+						break
 				}
 			}
-			
 			break
 		}
 	}
-	
-	return null
+
+	if (obj != null)
+		render_blocks_transparent = obj.block_meshes_transparent
 }

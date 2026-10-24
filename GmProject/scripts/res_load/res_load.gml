@@ -6,7 +6,8 @@ function res_load(reload = false)
 	fn = load_folder + "/" + filename
 	res = id
 	
-	debug("Loading " + res_type_name_list[|type], fn)
+	if (type != e_res_type.SCHEMATIC)
+		debug("Loading " + res_type_name_list[|type], fn)
 	
 	// Load from file
 	switch (type)
@@ -129,7 +130,12 @@ function res_load(reload = false)
 				loadcache = false
 
 			if (loadcache && res_load_block_cache(cachefn))
+			{
+				if (type = e_res_type.SCHEMATIC)
+					debug("Loaded schematic cache", cachefn)
+
 				break
+			}
 
 			ready = false
 			if (scenery_instant)
@@ -338,8 +344,6 @@ function res_load(reload = false)
 			{
 				model_format = e_model_format.BLOCK
 				model_file = null
-				block_vbuffer = null
-				
 				// Load model file
 				var blockmodel = block_load_model_file(fn, id);
 				if (blockmodel = null)
@@ -354,7 +358,8 @@ function res_load(reload = false)
 				var rendermodel = block_load_render_model(blockmodel, vec3(0), false, false, 0, id);
 				
 				// Generate triangles from render model
-				block_vbuffer_start()
+				block_meshes_size = vec3(1)
+				block_meshes_start()
 				with (mc_builder)
 				{
 					build_size = vec3(1)
@@ -373,7 +378,7 @@ function res_load(reload = false)
 					
 					build_randomize = false
 				}
-				block_vbuffer_done()
+				block_meshes_done()
 				
 				// Freeze block vbuffer map
 				var key = ds_map_find_first(model_block_map);

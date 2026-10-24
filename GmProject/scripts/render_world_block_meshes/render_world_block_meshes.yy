@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_world_block",
+  "%Name":"render_world_block_meshes",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_world_block",
+  "name":"render_world_block_meshes",
   "parent":{
     "name":"World",
     "path":"folders/Scripts/Render/World.yy",

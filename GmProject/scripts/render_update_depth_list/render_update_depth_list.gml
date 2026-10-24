@@ -6,9 +6,16 @@ function render_update_depth_list(owner)
 		ds_list_clear(render_list_default)
 		ds_list_clear(render_list_custom)
 		
+		for (var pass = 0; pass < 2; pass++)
 		for (var i = 0; i < ds_list_size(project_timeline_list); i++)
 		{
-			var tl = project_timeline_list[|i];
+			var tl, tlscenery;
+			tl = project_timeline_list[|i]
+			
+			// Scenery is last in render list to optimize batching
+			tlscenery = (tl.type = e_tl_type.SCENERY || tl.type = e_tl_type.STRUCTURE)
+			if (tlscenery != (pass = 1))
+				continue
 			
 			if ((tl.render_depth_custom_current && tl.render_depth_current = 0) ||
 				(!tl.render_depth_custom_current && tl.value_inherit[e_value.ALPHA] >= 1))

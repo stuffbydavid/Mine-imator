@@ -18,6 +18,19 @@ namespace CppProject
 		if (!buffer->valid || buffer->meshes.size() == 0)
 			return;
 
+		if (!buffer->batching)
+		{
+			SubmitBatch();
+
+			// Submit vertex buffer directly
+			IntType calls = buffer->Submit(GFX->shader, GFX->matrixM);
+			renderCalls += calls;
+			if (calls)
+				trianglesSubmitted += buffer->numIndices / 3;
+
+			return;
+		}
+
 		Mesh<>* mesh = buffer->meshes[0];
 		bool instanced = (
 			GFX->shader->useBatching &&

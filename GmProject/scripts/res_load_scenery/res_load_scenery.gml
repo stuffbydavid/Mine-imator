@@ -357,7 +357,7 @@ function res_load_scenery()
 				debug_timer_start()
 			
 				// Prepare vbuffers
-				block_vbuffer_start()
+				block_meshes_start()
 		
 				load_stage = "model"
 				
@@ -443,7 +443,7 @@ function res_load_scenery()
 				
 			debug_timer_stop("res_load_scenery, Generate models")
 			
-			block_vbuffer_done()
+			block_meshes_done()
 			
 			with (mc_builder)
 			{

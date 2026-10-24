@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_update_block_render",
+  "%Name":"tl_update_render_blocks_transparent",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_update_block_render",
+  "name":"tl_update_render_blocks_transparent",
   "parent":{
     "name":"Update",
     "path":"folders/Scripts/Project/Timeline/Update.yy",

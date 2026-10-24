@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"vbuffer_set_save_data",
+  "%Name":"vbuffer_set_batching",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"vbuffer_set_save_data",
+  "name":"vbuffer_set_batching",
   "parent":{
     "name":"Vertex buffer",
     "path":"folders/Scripts/Utility/Vertex/Vertex buffer.yy",

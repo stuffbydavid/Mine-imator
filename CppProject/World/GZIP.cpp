@@ -11,12 +11,12 @@ namespace CppProject
 	struct GzipWrite
 	{
 		QString filename, label, error;
-		BoolType reported = false;
+		BoolType reported = false, cancelled = false;
 		double elapsed = 0;
 
 		void Report()
 		{
-			if (reported)
+			if (reported || cancelled)
 				return;
 
 			reported = true;
@@ -30,6 +30,10 @@ namespace CppProject
 
 	void Gzip::WriteCompressed(const QByteArray& data, const QString& filename, int compressionLevel)
 	{
+		QThread* thread = QThread::currentThread();
+		if (thread->isInterruptionRequested())
+			return;
+
 		// Replace the destination only after the complete gzip stream is written
 		QSaveFile file(filename);
 		if (!file.open(QIODevice::WriteOnly))
@@ -40,16 +44,29 @@ namespace CppProject
 			throw QString("Could not initialize gzip compression");
 
 		gzip.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(data.constData()));
-		gzip.avail_in = data.size();
 
 		char buffer[65536];
+		int remaining = data.size();
 		int result;
 		do
 		{
+			if (thread->isInterruptionRequested())
+			{
+				deflateEnd(&gzip);
+				return;
+			}
+
+			// Limit input as well as output so compressible data can be cancelled promptly
+			if (!gzip.avail_in)
+			{
+				gzip.avail_in = std::min(remaining, (int)sizeof(buffer));
+				remaining -= gzip.avail_in;
+			}
+
 			gzip.next_out = reinterpret_cast<Bytef*>(buffer);
 			gzip.avail_out = sizeof(buffer);
 
-			result = deflate(&gzip, Z_FINISH);
+			result = deflate(&gzip, remaining ? Z_NO_FLUSH : Z_FINISH);
 			if (result != Z_OK && result != Z_STREAM_END)
 			{
 				deflateEnd(&gzip);
@@ -67,6 +84,9 @@ namespace CppProject
 
 		deflateEnd(&gzip);
 
+		if (thread->isInterruptionRequested())
+			return;
+
 		if (!file.commit())
 			throw file.errorString();
 	}
@@ -76,10 +96,15 @@ namespace CppProject
 		QString path = QFileInfo(filename).absoluteFilePath();
 		QString threadName = "gzip:" + path;
 
-		// Finish earlier writes to this file before replacing it
+		// Cancel earlier writes and wait only for their current chunk and cleanup
 		for (QThread* thread : App->threads)
+		{
 			if (thread->objectName() == threadName)
+			{
+				thread->requestInterruption();
 				thread->wait();
+			}
+		}
 
 		// Only bytes and Qt strings cross the worker boundary
 		auto job = std::make_shared<GzipWrite>();
@@ -87,21 +112,21 @@ namespace CppProject
 		job->label = label;
 
 		QThread* thread = QThread::create([job, data = std::move(data), compressionLevel]() mutable
+		{
+			try
 			{
-				try
-				{
-					Timer tmr;
-					WriteCompressed(data, job->filename, compressionLevel);
-					job->elapsed = tmr.Elapsed();
-				}
-				catch (const QString& error)
-				{
-					job->error = error;
-				}
-
-				data.clear();
+				Timer tmr;
+				WriteCompressed(data, job->filename, compressionLevel);
+				job->elapsed = tmr.Elapsed();
 			}
-		);
+			catch (const QString& error)
+			{
+				job->error = error;
+			}
+
+			job->cancelled = QThread::currentThread()->isInterruptionRequested();
+			data.clear();
+		});
 
 		// Report on the main thread, including when shutdown has stopped the event loop
 		auto report = [job] { job->Report(); };

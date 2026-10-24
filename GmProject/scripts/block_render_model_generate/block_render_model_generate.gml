@@ -59,7 +59,10 @@ function block_render_model_generate(model)
 
 			block_vbuffer_current = el.face_vbuffer[f]
 			if (block_vbuffer_current = null)
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth[f] * e_block_vbuffer.amount + el.face_block_vbuffer[f]]
+			{
+				var index = el.face_depth[f] * e_block_vbuffer.amount + el.face_block_vbuffer[f];
+				block_vbuffer_current = block_mesh.block_vbuffer[@index]
+			}
 
 			// Read the four UV coordinates once per face
 			var uv0, uv1, uv2, uv3;

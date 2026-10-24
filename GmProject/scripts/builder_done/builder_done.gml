@@ -12,6 +12,8 @@ function builder_done()
 		ds_list_destroy(block_render_model_multipart)
 	}
 	
+	block_meshes = []
+	
 	build_multithreaded = null
 	build_transform = false
 	
