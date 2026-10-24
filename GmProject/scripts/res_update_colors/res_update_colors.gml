@@ -24,8 +24,8 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 			color_biome_start_name != biome || color_biome_end_name != nextbiome ||
 			color_biome_start_frame != startframe || color_biome_end_frame != endframe)
 		{
-			color_biome_start_colors = res_biome_colors(biome, app.timeline_environment.keyframe_current_values)
-			color_biome_end_colors = res_biome_colors(nextbiome, app.timeline_environment.keyframe_next_values)
+			color_biome_start_colors = res_biome_colors(biome, startframe)
+			color_biome_end_colors = res_biome_colors(nextbiome, endframe)
 			color_biome_start_name = biome
 			color_biome_end_name = nextbiome
 			color_biome_start_frame = startframe
@@ -34,10 +34,10 @@ function res_update_colors(biome = "", nextbiome = "", mix = 0)
 		else
 		{
 			if (biome = "custom")
-				color_biome_start_colors = res_biome_colors(biome, app.timeline_environment.keyframe_current_values)
+				color_biome_start_colors = res_biome_colors(biome, startframe)
 			
 			if (nextbiome = "custom")
-				color_biome_end_colors = res_biome_colors(nextbiome, app.timeline_environment.keyframe_next_values)
+				color_biome_end_colors = res_biome_colors(nextbiome, endframe)
 		}
 		
 		if (color_biome_start_colors = null || color_biome_end_colors = null)

@@ -1,6 +1,7 @@
 #include "Mesh.hpp"
 #include "AppHandler.hpp"
 #include "Vertex.hpp"
+#include "Asset/Shader.hpp"
 #include "World/World.hpp"
 
 namespace CppProject
@@ -17,6 +18,22 @@ namespace CppProject
 		if (!numVertices || !numIndices)
 			return;
 
+		// Keep the full CPU records for batch construction, compact only the uploaded stream
+		Heap<CompactBendVertex> compactData;
+		compactBendData = bendData.Size() != 0;
+		if (compactBendData)
+		{
+			compactData.Alloc(bendData.Size(), false);
+			for (IntType i = 0; i < bendData.Size(); i++)
+				if (!bendData.Value(i).Compact(compactData[i]))
+				{
+					compactBendData = false;
+					break;
+				}
+		}
+		const void* bendBytes = compactBendData ? (const void*)compactData.Data() : (const void*)bendData.Data();
+		IntType bendSize = compactBendData ? compactData.SizeInBytes() : bendData.SizeInBytes();
+
 #if OS_WINDOWS
 		if (IS_D3D11)
 		{
@@ -28,6 +45,13 @@ namespace CppProject
 
 			D3D11_SUBRESOURCE_DATA vBufferData = { vertexData.Data(), 0, 0 };
 			D3DCheckError(D3DDevice->CreateBuffer(&vBufferDesc, &vBufferData, &d3dVertexBuffer));
+
+			if (bendData.Size())
+			{
+				vBufferDesc.ByteWidth = bendSize;
+				vBufferData.pSysMem = bendBytes;
+				D3DCheckError(D3DDevice->CreateBuffer(&vBufferDesc, &vBufferData, &d3dBendBuffer));
+			}
 
 			D3D11_BUFFER_DESC iBufferDesc = {};
 			iBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
@@ -47,6 +71,15 @@ namespace CppProject
 			glVertexBuffer->allocate(vertexData.Data(), vertexData.SizeInBytes());
 			glVertexBuffer->release();
 
+			if (bendData.Size())
+			{
+				glBendBuffer = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+				glBendBuffer->create();
+				glBendBuffer->bind();
+				glBendBuffer->allocate(bendBytes, bendSize);
+				glBendBuffer->release();
+			}
+
 			glIndexBuffer = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 			glIndexBuffer->create();
 			glIndexBuffer->bind();
@@ -59,6 +92,7 @@ namespace CppProject
 		{
 			vertexData.FreeData();
 			indexData.FreeData();
+			bendData.FreeData();
 		}
 	}
 
@@ -76,11 +110,15 @@ namespace CppProject
 
 	template<typename V> void Mesh<V>::FreeBuffers(BoolType freeCpuData)
 	{
+		compactBendData = false;
+		if (freeCpuData)
+			bendData.FreeData();
 #if OS_WINDOWS
 		if (IS_D3D11)
 		{
 			releaseAndReset(d3dVertexBuffer);
 			releaseAndReset(d3dIndexBuffer);
+			releaseAndReset(d3dBendBuffer);
 		}
 #endif
 		if (IS_OPENGL)
@@ -90,6 +128,9 @@ namespace CppProject
 				// Buffers can't be deleted mid-rendering on Mac OS, so it's done in CleanBuffers()
 				deletedBuffers.append(glVertexBuffer);
 				deletedBuffers.append(glIndexBuffer);
+				if (glBendBuffer)
+					deletedBuffers.append(glBendBuffer);
+				glBendBuffer = nullptr;
 				glVertexBuffer = nullptr;
 				glIndexBuffer = nullptr;
 			}
@@ -110,6 +151,9 @@ namespace CppProject
 		{
 			UINT stride = sizeof(V), offset = 0;
 			D3DContext->IASetVertexBuffers(0, 1, &d3dVertexBuffer, &stride, &offset);
+			GFX->shader->compactBendInput = compactBendData;
+			UINT bendStride = compactBendData ? sizeof(CompactBendVertex) : sizeof(BendVertex);
+			D3DContext->IASetVertexBuffers(1, 1, &d3dBendBuffer, &bendStride, &offset);
 			D3DContext->IASetIndexBuffer(d3dIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 			return;
 		}
@@ -118,6 +162,30 @@ namespace CppProject
 		{
 			glVertexBuffer->bind();
 			glIndexBuffer->bind();
+			if (GFX->shader->vertexFormat == Shader::VERTEX_BUFFER)
+			{
+				if (glBendBuffer)
+					glBendBuffer->bind();
+				for (int i = 0; i < 4; i++)
+				{
+					IntType location = GFX->shader->attributeLocation[6 + i];
+					if (location < 0)
+						continue;
+					if (glBendBuffer)
+					{
+						GFX->glEnableVertexAttribArray(location);
+						IntType components = compactBendData && i == 3 ? 2 : 4;
+						IntType stride = compactBendData ? sizeof(CompactBendVertex) : sizeof(BendVertex);
+						GFX->glVertexAttribPointer(location, components, GL_FLOAT, false, stride, (void*)(size_t)(i * 4 * sizeof(float)));
+					}
+					else
+					{
+						GFX->glDisableVertexAttribArray(location);
+						GFX->shader->program->setAttributeValue(location, 0.f, 0.f, 0.f, 0.f);
+					}
+				}
+				glVertexBuffer->bind();
+			}
 		}
 	}
 

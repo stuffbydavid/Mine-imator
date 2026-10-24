@@ -229,9 +229,9 @@ function app_update_animate()
 		
 		env_biome_next = env_biome
 		
-		if (envobj.keyframe_animate && env_biome != envobj.keyframe_next_values[e_value.ENV_BIOME])
+		if (envobj.keyframe_animate && env_biome != envobj.keyframe_next.value[e_value.ENV_BIOME])
 		{
-			env_biome_next = envobj.keyframe_next_values[e_value.ENV_BIOME]
+			env_biome_next = envobj.keyframe_next.value[e_value.ENV_BIOME]
 			env_biome_mix = clamp(envobj.keyframe_progress_ease, 0, 1)
 			
 			with (obj_resource)

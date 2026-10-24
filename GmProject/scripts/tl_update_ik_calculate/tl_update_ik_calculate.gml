@@ -2,6 +2,29 @@
 
 function tl_update_ik_calculate()
 {
+	// Targetless joint data is only consumed by the selected-part bone display
+	if (value[e_value.IK_TARGET] = null && !(debug_show_bones && selected))
+	{
+		var hadtarget = ik_target_prev != null;
+		if (hadtarget || array_length(part_joints_matrix) > 0 || array_length(part_joints_pos) > 0 || array_length(part_joints_bone_matrix) > 0)
+		{
+			part_joints_pos = []
+			part_joints_matrix = []
+			part_joints_bone_matrix = []
+			part_joint_bend_angle = 0
+			ik_target_prev = null
+			ik_target_angle_prev = null
+			ik_target_pos = [ 0, 0, 0 ]
+			ik_target_angle_pos = [ 0, 0, 0 ]
+			ik_matrix_prev = null
+			ik_blend_prev = value[e_value.IK_BLEND]
+			ik_angle_offset_prev = value[e_value.IK_ANGLE_OFFSET]
+		}
+		if (hadtarget)
+			update_matrix = true
+		return 0
+	}
+
 	var jointpos, jointlength, bend, bendmat, offset, offsetpos, nobend, endpos, haspole, polepos, mat;
 	jointpos = []
 	jointlength = []
@@ -15,7 +38,7 @@ function tl_update_ik_calculate()
 	var targetupdate, poleupdate, matupdate, blendupdate;
 	targetupdate = false
 	poleupdate = false
-	matupdate = false
+	matupdate = (array_length(part_joints_pos) = 0)
 	blendupdate = false
 	
 	if (value[e_value.IK_TARGET] != null && ik_target_pos != null)
@@ -32,7 +55,7 @@ function tl_update_ik_calculate()
 	ik_target_angle_prev = value[e_value.IK_TARGET_ANGLE]
 	
 	if (ik_matrix_prev != null)
-		matupdate = !array_equals(ik_matrix_prev, matrix)
+		matupdate = (matupdate || !array_equals(ik_matrix_prev, matrix))
 	
 	blendupdate = (ik_blend_prev != value[e_value.IK_BLEND])
 	ik_blend_prev = value[e_value.IK_BLEND]
@@ -257,7 +280,8 @@ function tl_update_ik_calculate()
 	part_joint_bend_angle = radtodeg(arccos(vec3_dot(ab, bc)))
 	
 	// Update matrix
-	update_matrix = true
+	if (value[e_value.IK_TARGET] != null || targetupdate)
+		update_matrix = true
 	
 	return 0
 }

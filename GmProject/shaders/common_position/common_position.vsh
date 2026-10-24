@@ -5,6 +5,7 @@ void main() {}
 #pragma shady: macro_begin WORLD_POSITION_LIB
 
 #pragma shady: inline(common_constants.MATH)
+#pragma shady: inline(common_bend.BEND_LIB)
 
 // Wind
 uniform float uTime; // static

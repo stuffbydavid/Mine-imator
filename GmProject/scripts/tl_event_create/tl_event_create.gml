@@ -1,3 +1,14 @@
+/// CppGen int update_value_flags
+/// CppGen vec bend_pose_inherit
+/// CppGen matrix transform_part_cache_matrix
+/// CppGen vec transform_local_pos
+/// CppGen vec transform_local_rot
+/// CppGen vec transform_local_scale
+/// CppGen vec transform_part_cache_pos
+/// CppGen vec transform_part_cache_rot
+/// CppGen matrix matrix_render
+/// CppGen matrix matrix_parent
+/// CppGen matrix matrix_parent_pre_ik
 /// @desc Create event of a timeline.
 
 function tl_event_create()
@@ -49,6 +60,8 @@ function tl_event_create()
 	
 	model_part_shape_render_matrix = []
 	model_part_shape_render_matrix_part = null
+	model_part_shape_cache_part = null
+	model_part_shape_data_dirty = true
 	model_part_shape_vbuffer = []
 	model_part_shape_hidden = []
 	
@@ -96,8 +109,6 @@ function tl_event_create()
 	keyframe_select_amount = 0
 	keyframe_progress = 0
 	keyframe_animate = false
-	keyframe_current_values = null
-	keyframe_next_values = null
 	
 	world_pos = point3D(0)
 	world_pos_rotate = point3D(0)
@@ -190,10 +201,22 @@ function tl_event_create()
 	matrix_parent = MAT_IDENTITY
 	matrix_parent_pre_ik = MAT_IDENTITY
 	matrix_local = MAT_IDENTITY
+	transform_local_cache_valid = false
+	transform_local_pos = vec3(0)
+	transform_local_rot = vec3(0)
+	transform_local_scale = vec3(1)
+	transform_part_cache_valid = false
+	transform_part_cache_id = null
+	transform_part_cache_pos = vec3(0)
+	transform_part_cache_rot = vec3(0)
+	transform_part_cache_matrix = MAT_IDENTITY
 	
 	update_matrix = true
+	update_value_flags = 0
+	bend_pose_inherit = vec3(0)
 	bend_rot_last = vec3(0)
 	bend_model_part_last = null
+	bend_style_last = ""
 	
 	// Only used if the timeline is a banner special block in scenery
 	pattern_type = ""

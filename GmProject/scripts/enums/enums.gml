@@ -107,6 +107,18 @@ function enums()
 		LATEST				= 5
 	}
 	
+	// Evaluated timeline value dependencies
+	enum e_tl_dirty
+	{
+		LOCAL = 1,
+		TRANSFORM = 2,
+		SCALE = 4,
+		BEND = 8,
+		APPEARANCE = 16,
+		INHERITED = 30,
+		ALL = 31
+	}
+
 	// Value types
 	enum e_value_type
 	{

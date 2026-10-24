@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"vbuffer_add_triangle_bend",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vbuffer_add_triangle_bend",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

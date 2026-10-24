@@ -1,3 +1,4 @@
+/// CppSeparate VarType tl_value_interpolate(IntType, const VarType&, const VarType&, const VarType&)
 /// @arg valueid
 /// @arg percent
 /// @arg valuestart

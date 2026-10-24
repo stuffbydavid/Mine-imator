@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"model_shape_bend_configure",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_shape_bend_configure",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

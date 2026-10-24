@@ -6,6 +6,7 @@
 namespace CppProject
 {
     ID3D11InputLayout* Shader::d3dInputLayout[4] = { nullptr, nullptr, nullptr, nullptr };
+    ID3D11InputLayout* Shader::d3dCompactBendInputLayout = nullptr;
 
     QMap<Shader::DataType, QString> Shader::dataTypeD3D11Map = {
         { Shader::INT, "int" },
@@ -92,6 +93,8 @@ namespace CppProject
                 inputDecl += "\tfloat2 TextureCoord: D;\n";
                 inputDecl += "\tuint Data: E;\n";
                 inputDecl += "\tuint Tangent: F;\n";
+                for (int i = 0; i < 4; i++)
+                    inputDecl += "\tfloat4 Bend" + NumStr(i) + " : " + QString((char)('G' + i)) + ";\n";
                 if (useBatching)
                     inputDecl += "\tuint InstanceID: SV_InstanceID;\n";
                 
@@ -110,8 +113,11 @@ namespace CppProject
                 setAttrs += "\n\t_attrs.Wave = " UNPACK_VERTEX_WAVE("_input.Data") ";";
                 setAttrs += "\n\t_attrs.Tangent = " UNPACK_VERTEX_NORMAL("_input.Tangent") ";";
                 setAttrs += "\n\t_vars._vObjIndex = _input.Data >> 16;";
+
                 if (useBatching)
                     setAttrs += "\n\t_vars._vObjIndex += _input.InstanceID;";
+                if (vsCode.contains("void applyBend("))
+                    setAttrs += "\n\tapplyBend(_attrs.Position, _attrs.Normal, _attrs.Tangent, _attrs.Wave, _input.Bend0, _input.Bend1, _input.Bend2, _input.Bend3);";
 
                 vsCode.replace(QRegularExpression("\\bin_Position\\b"), "_attrs.Position");
                 vsCode.replace(QRegularExpression("\\bin_Normal\\b"), "_attrs.Normal");
@@ -495,6 +501,17 @@ namespace CppProject
                     addElement(DXGI_FORMAT_R32G32_FLOAT, sizeof(float) * 2);
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
+                    for (int i = 0; i < 4; i++)
+                    {
+                        QByteArray name = QString((char)('G' + i)).toLocal8Bit();
+                        D3D11_INPUT_ELEMENT_DESC el = {};
+                        el.SemanticName = new char[2]{ name[0], 0 };
+                        el.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+                        el.InputSlot = 1;
+                        el.AlignedByteOffset = i * 4 * sizeof(float);
+                        el.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+                        elements.append(el);
+                    }
                     break;
                 }
 
@@ -507,8 +524,13 @@ namespace CppProject
             }
 
             D3DCheckError(D3DDevice->CreateInputLayout(elements.data(), elements.size(), vsData.Data(), vsData.Size(), &d3dInputLayout[vertexFormat]));
+            if (vertexFormat == VERTEX_BUFFER)
+            {
+                elements.last().Format = DXGI_FORMAT_R32G32_FLOAT;
+                D3DCheckError(D3DDevice->CreateInputLayout(elements.data(), elements.size(), vsData.Data(), vsData.Size(), &d3dCompactBendInputLayout));
+            }
             for (D3D11_INPUT_ELEMENT_DESC& el : elements)
-                delete el.SemanticName;
+                delete[] el.SemanticName;
         }
 
         // Create constant buffers
