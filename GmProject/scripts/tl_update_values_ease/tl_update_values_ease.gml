@@ -30,7 +30,7 @@ function tl_update_values_ease(vid)
 			if (vid >= e_value.SCA_X && vid <= e_value.SCA_Z)
 				dirtyflags = dirtyflags | e_tl_dirty.SCALE
 			else if (vid >= e_value.BEND_ANGLE_LEGACY)
-				dirtyflags = dirtyflags | e_tl_dirty.BEND
+				dirtyflags = e_tl_dirty.BEND
 		}
 		else if (vid >= e_value.PATH_OBJ && vid <= e_value.IK_ANGLE_OFFSET)
 		{

@@ -239,6 +239,10 @@ namespace CppProject
 		if (IS_OPENGL)
 			LoadCodeOpenGL(vsCode, fsCode, useCache);
 
+		const char* bendNames[7] = { "uBendSettings", "uBendAngle", "uBendPivot", "uBendMin", "uBendMax", "uBendDirection", "uBendWind" };
+		for (int i = 0; i < 7; i++)
+			bendUniforms[i] = GetUniformIndex(bendNames[i]);
+
 		// Store texture uniforms
 		if (numSamplers > 0)
 		{
@@ -982,7 +986,7 @@ namespace CppProject
 				case POINT_LIST:		topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
 			}
 
-			D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
+			D3DContext->IASetInputLayout(vertexFormat == VERTEX_BUFFER && compactBendInput ? d3dCompactBendInputLayout : d3dInputLayout[vertexFormat]);
 			D3DContext->IASetPrimitiveTopology(topo);
 
 			if (numInstances > 1)

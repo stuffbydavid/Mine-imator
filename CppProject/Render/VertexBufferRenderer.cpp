@@ -14,6 +14,14 @@ namespace CppProject
 
 	void VertexBufferRenderer::Add(VertexBuffer* buffer)
 	{
+		// Offset faces need their original triangulation for zero-bend UV interpolation
+		if (buffer->bend.zeroBuffer && buffer->bend.zeroPose)
+		{
+			VertexBuffer* zeroBuffer = FindVertexBuffer(buffer->bend.zeroBuffer);
+			if (zeroBuffer && zeroBuffer->valid && zeroBuffer->meshes.size())
+				buffer = zeroBuffer;
+		}
+
 		// Empty
 		if (!buffer->valid || buffer->meshes.size() == 0)
 			return;
@@ -39,6 +47,21 @@ namespace CppProject
 			(!instanced && currentBatch->mesh.numIndices + mesh->numIndices >= MAX_BATCH_INDICES)))
 		{
 			SubmitBatch();
+		}
+
+		Shader* shader = GFX->shader;
+		if (shader->bendUniforms[0] >= 0)
+		{
+			shader->SubmitVec4(shader->bendUniforms[0], buffer->bend.enabled ? buffer->bend.kind : 0, buffer->bend.sharpAxis, 0, 0);
+			if (buffer->bend.enabled)
+			{
+				shader->SubmitVec3(shader->bendUniforms[1], buffer->bend.angle);
+				shader->SubmitVec3(shader->bendUniforms[2], buffer->bend.pivot);
+				shader->SubmitVec3(shader->bendUniforms[3], buffer->bend.minimum);
+				shader->SubmitVec3(shader->bendUniforms[4], buffer->bend.maximum);
+				shader->SubmitVec3(shader->bendUniforms[5], buffer->bend.direction);
+				shader->SubmitVec3(shader->bendUniforms[6], buffer->bend.wind);
+			}
 		}
 
 		// Append new object
@@ -188,6 +211,11 @@ namespace CppProject
 	{
 		mesh.vertexData.Alloc(mesh.numVertices);
 		mesh.indexData.Alloc(mesh.numIndices);
+		bool hasBends = false;
+		for (IntType i = 0; i < numObjects; i++)
+			hasBends |= FindVertexBuffer(objects[i])->bend.enabled;
+		if (hasBends)
+			mesh.bendData.Alloc(mesh.numVertices);
 
 		IntType vertexOffset = 0, indexOffset = 0;
 		for (IntType objIndex = 0; objIndex < numObjects; objIndex++)
@@ -200,6 +228,9 @@ namespace CppProject
 			memcpy(&mesh.vertexData[vertexOffset], objMesh->vertexData.Data(), objMesh->numVertices * sizeof(Vertex));
 			for (IntType v = 0; v < objMesh->numVertices; v++)
 				mesh.vertexData[vertexOffset + v].SetIndex(objIndex);
+
+			if (hasBends && objMesh->bendData.Size())
+				memcpy(&mesh.bendData[vertexOffset], objMesh->bendData.Data(), objMesh->numVertices * sizeof(BendVertex));
 
 			// Copy indices and apply vertex offset
 			for (IntType i = 0; i < objMesh->numIndices; i++)

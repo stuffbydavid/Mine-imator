@@ -60,6 +60,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			transformupdate = ((dirtyflags & e_tl_dirty.TRANSFORM) != 0)
 			appearanceupdate = ((dirtyflags & e_tl_dirty.APPEARANCE) != 0)
 			hasik = (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
+			// IK still needs the original rigid-transform path when bend controls change
+			if (hasik && (dirtyflags & e_tl_dirty.BEND) != 0)
+				transformupdate = true
 			posebend = bend_pose_inherit
 			
 			if (transformupdate)
@@ -96,7 +99,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 
 					if (!par.inherit_scale)
 						break
-
+					
 					tl = par
 				}
 			}
@@ -300,6 +303,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			// Forward categories in timeline order, retaining the full path for structural edits
 			// Do not prune on effective parent values: clamping and texture precedence are order dependent
 			var childflags = dirtyflags & e_tl_dirty.INHERITED;
+			// Keep dependent children conservative, including bend locks and their descendants
+			if (bendupdate)
+				childflags = childflags | e_tl_dirty.TRANSFORM
 			if (update_matrix || childflags != 0)
 			{
 				for (var t = 0; t < ds_list_size(tree_list); t++)

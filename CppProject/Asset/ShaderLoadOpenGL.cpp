@@ -103,6 +103,12 @@ namespace CppProject
 			// Convert attributes (vertex)
 			if (isVertex && vertexFormat == VERTEX_BUFFER)
 			{
+				if (code.contains("void applyBend("))
+				{
+					code.replace("in vec3 in_Position;", "in vec3 _aPosition;\nvec3 in_Position;");
+					header += "in vec4 _aBend0;\nin vec4 _aBend1;\nin vec4 _aBend2;\nin vec4 _aBend3;\n";
+					code.replace(QRegularExpression("void main\\(\\)\\s*\\{"), "void main()\n{\n\tin_Position = _aPosition;\n\tapplyBend(in_Position, in_Normal, in_Tangent, in_Wave, _aBend0, _aBend1, _aBend2, _aBend3);\n");
+				}
 				code.replace("in vec3 in_Normal;\n", "");
 				code.replace("in vec4 in_Colour;\n", "");
 				code.replace("in vec4 in_Wave;\n", "");
@@ -237,6 +243,10 @@ namespace CppProject
 			case VERTEX_BUFFER:
 			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
+				if (attributeLocation[0] < 0)
+					attributeLocation[0] = program->attributeLocation("_aPosition");
+				for (int i = 0; i < 4; i++)
+					attributeLocation[6 + i] = program->attributeLocation("_aBend" + NumStr(i));
 				attributeLocation[1] = program->attributeLocation("_aNormal");
 				attributeLocation[2] = program->attributeLocation("_aColor");
 				attributeLocation[3] = program->attributeLocation("in_TextureCoord");

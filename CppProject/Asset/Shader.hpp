@@ -149,7 +149,8 @@ namespace CppProject
 		QString name, vsName, fsName;
 		QHash<QString, QDateTime> lastUpdate;
 		QSet<QString> sourceDependencies;
-		IntType attributeLocation[6], numOutputs = 0;
+		IntType attributeLocation[10], numOutputs = 0;
+		IntType bendUniforms[7] = { -1, -1, -1, -1, -1, -1, -1 };
 
 	#if OS_WINDOWS
 		ID3D11VertexShader* d3dVertexShader = nullptr;
@@ -159,6 +160,8 @@ namespace CppProject
 		ID3D11Buffer* d3dObjectBuffer = nullptr;
 		ID3D11Buffer* d3dStaticBuffer = nullptr;
 		static ID3D11InputLayout* d3dInputLayout[4];
+		static ID3D11InputLayout* d3dCompactBendInputLayout;
+		BoolType compactBendInput = false;
 	#endif
 		QOpenGLShaderProgram* program = nullptr;
 		IntType glPointEye = -1, glPointProjection = -1, glPointVertical = -1;

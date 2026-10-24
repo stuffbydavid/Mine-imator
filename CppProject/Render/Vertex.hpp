@@ -20,6 +20,49 @@
 
 namespace CppProject
 {
+	// Two shared weights preserve float precision while removing two redundant floats
+	struct CompactBendVertex
+	{
+		float data[4], a[4], b[4], c[2];
+	};
+	static_assert(sizeof(CompactBendVertex) == 56, "Compact bend vertex layout must occupy 56 bytes");
+
+	struct BendVertex
+	{
+		float data[4] = {}; // Weight, normal mode, two UV tangent coefficients
+		float a[4] = {}, b[4] = {}, c[4] = {}; // Other triangle/quad points and their weights
+
+		bool Compact(CompactBendVertex& dst) const
+		{
+			if (!(data[1] >= -4 && data[1] <= 4) || data[1] != (int)data[1])
+				return false;
+			float secondWeight = data[0];
+			const float weights[3] = { a[3], b[3], c[3] };
+			int selectors = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				if (weights[i] == data[0])
+					continue;
+				if (secondWeight == data[0])
+					secondWeight = weights[i];
+				else if (weights[i] != secondWeight)
+					return false;
+				selectors |= 1 << i;
+			}
+			std::copy(data, data + 4, dst.data);
+			std::copy(a, a + 3, dst.a);
+			std::copy(b, b + 3, dst.b);
+			// The tag identifies this layout without a new per-object uniform
+			dst.data[1] = 256 + (data[1] + 4) + selectors * 16;
+			dst.a[3] = secondWeight;
+			dst.b[3] = c[0];
+			dst.c[0] = c[1];
+			dst.c[1] = c[2];
+			return true;
+		}
+	};
+	static_assert(sizeof(BendVertex) == 64, "Bend vertex attributes must occupy four vec4 slots");
+
 	// A vertex in a primitive 2D shape.
 	struct PrimitiveVertex
 	{

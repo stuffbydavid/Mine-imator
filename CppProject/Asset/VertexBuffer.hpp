@@ -32,6 +32,18 @@ namespace CppProject
 
 		// Adds a triangle with 3 vertices and generates 3 indices.
 		void AddTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, IntType threadId = 0);
+		void AddBendTriangle(const Vertex* vertices, const BendVertex* bends);
+
+		struct BendState
+		{
+			bool enabled = false;
+			IntType zeroBuffer = 0; // Borrowed from the model shape, never owned by this buffer
+			bool zeroPose = true;
+			VecType pivot, minimum, maximum, direction, angle, wind;
+			RealType kind = 0, sharpAxis = -1;
+			VecType quad[4];
+			bool hasQuad = false;
+		} bend;
 
 		// Adds a face with 4 vertices and generates 6 indices.
 		void AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId = 0);
@@ -59,6 +71,7 @@ namespace CppProject
 
 				FastVector<Vertex> vertices;
 				FastVector<uint32_t> indices;
+				FastVector<BendVertex> bends;
 				Mesh<>* targetMesh = nullptr;
 				IntType targetVertexOffset = 0, targetIndexOffset = 0;
 			};

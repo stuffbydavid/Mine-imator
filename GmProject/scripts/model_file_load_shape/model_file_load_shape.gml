@@ -255,15 +255,15 @@ function model_file_load_shape(map, res)
 				wind_wave_zmax = windmap[?"ymax"]
 		}
 		
-		// Generate default mesh
+		// Preserve coarse offset faces for the original zero-bend UV interpolation
 		if (type = "block")
 		{
-			vbuffer_default = model_shape_generate_block(vec3(0))
+			vbuffer_default = model_shape_generate_block(vec3(0), !has_vertex_offsets)
 			if (other.name = "head" && player_head_vbuffer = null) // Set player head model for world importer
 				player_head_vbuffer = vbuffer_default
 		}
 		else if (type = "plane")
-			vbuffer_default = model_shape_generate_plane(vec3(0))
+			vbuffer_default = model_shape_generate_plane(vec3(0), !has_vertex_offsets)
 		else
 		{
 			vbuffer_default = null

@@ -216,6 +216,7 @@ function tl_event_create()
 	bend_pose_inherit = vec3(0)
 	bend_rot_last = vec3(0)
 	bend_model_part_last = null
+	bend_style_last = ""
 	
 	// Only used if the timeline is a banner special block in scenery
 	pattern_type = ""

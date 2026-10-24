@@ -210,6 +210,16 @@ namespace CppProject
 		mesh->vertices.Append(v3);
 	}
 
+	void VertexBuffer::AddBendTriangle(const Vertex* vertices, const BendVertex* bends)
+	{
+		AddTriangle(vertices[0], vertices[1], vertices[2]);
+		ThreadData::MeshData* mesh = threads[0].meshes.last();
+		if (mesh->bends.Size() + 3 > mesh->bends.heap.Size())
+			mesh->bends.heap.Alloc(std::max<IntType>(1024, std::max(mesh->bends.Size() + 3, mesh->bends.heap.Size() * 2)), false);
+		for (int i = 0; i < 3; i++)
+			mesh->bends.Append(bends[i]);
+	}
+
 	void VertexBuffer::AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId)
 	{
 		ThreadData& thread = threads[threadId];
@@ -306,6 +316,8 @@ namespace CppProject
 		{
 			mesh->vertexData.Alloc(mesh->numVertices, false);
 			mesh->indexData.Alloc(mesh->numIndices, false);
+			if (bend.enabled)
+				mesh->bendData.Alloc(mesh->numVertices, false);
 			numIndices += mesh->numIndices;
 		}
 
@@ -320,6 +332,9 @@ namespace CppProject
 				memcpy(mesh->vertexData.data + threadMesh->targetVertexOffset,
 					threadMesh->vertices.Data(),
 					threadMesh->vertices.SizeInBytes());
+
+				if (bend.enabled)
+					memcpy(mesh->bendData.data + threadMesh->targetVertexOffset, threadMesh->bends.Data(), threadMesh->bends.SizeInBytes());
 
 				// Copy indices
 				if (threadMesh->targetVertexOffset == 0)
@@ -375,6 +390,18 @@ namespace CppProject
 			}
 
 			mesh->bounds = Bounds(mesh->vertexData);
+			if (bend.enabled)
+			{
+				// A sphere about the pivot encloses every rotation and the maximum pinch/anti-Z-fighting scale
+				RealType radius = 0;
+				for (IntType i = 0; i < mesh->numVertices; i++)
+				{
+					const Vertex& v = mesh->vertexData.Value(i);
+					radius = std::max(radius, (VecType(v.x, v.y, v.z) - bend.pivot).GetLength());
+				}
+				radius *= 1.406;
+				mesh->bounds = Bounds(bend.pivot - VecType(radius, radius, radius), bend.pivot + VecType(radius, radius, radius));
+			}
 			mesh->CreateBuffers(numIndices > MAX_BATCH_INDICES && !saveData); // Release CPU data that can't be batched
 		}
 	}

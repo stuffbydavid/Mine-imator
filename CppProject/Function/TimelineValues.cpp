@@ -123,7 +123,7 @@ namespace CppProject
 			if (vid >= e_value_SCA_X && vid <= e_value_SCA_Z)
 				return e_tl_dirty_TRANSFORM | e_tl_dirty_SCALE;
 			if (vid >= e_value_BEND_ANGLE_LEGACY)
-				return e_tl_dirty_TRANSFORM | e_tl_dirty_BEND;
+				return e_tl_dirty_BEND;
 			return e_tl_dirty_TRANSFORM;
 		}
 		if (vid >= e_value_PATH_OBJ && vid <= e_value_IK_ANGLE_OFFSET)

@@ -27,6 +27,7 @@ function tl_update_model_shape(clear = true)
 						 value_inherit[e_value.BEND_ANGLE_Y],
 						 value_inherit[e_value.BEND_ANGLE_Z])
 	bend_model_part_last = model_part
+	bend_style_last = app.project_bend_style
 	
 	if (model_part = null)
 		return 0
