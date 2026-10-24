@@ -64,7 +64,7 @@ namespace CppProject
 			};
 			QVector<MeshData*> meshes;
 			Vertex currentVertex;
-			BoolType elemAdded[5] = { false, false, false, false, false };
+			BoolType elemAdded[4] = { false, false, false, false };
 		} threads[OPENMP_MAX_THREADS];
 	};
 }

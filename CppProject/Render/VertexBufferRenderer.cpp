@@ -212,7 +212,7 @@ namespace CppProject
 			// Copy vertices and assign object index
 			memcpy(&mesh.vertexData[vertexOffset], objMesh->vertexData.Data(), objMesh->numVertices * sizeof(Vertex));
 			for (IntType v = 0; v < objMesh->numVertices; v++)
-				mesh.vertexData[vertexOffset + v].SetIndex(objIndex);
+				mesh.vertexData[vertexOffset + v].SetObjectIndex(objIndex);
 
 			// Copy indices and apply vertex offset
 			for (IntType i = 0; i < objMesh->numIndices; i++)

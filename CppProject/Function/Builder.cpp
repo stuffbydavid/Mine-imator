@@ -684,16 +684,17 @@ namespace CppProject
 						continue;
 				}
 
-				self->block_vertex_rgb = self->block_color;
-				if (self->block_color == null_)
-					self->block_vertex_rgb = element->face_texture_color.IntValue(f);
-				
+				self->block_vertex_color_index = self->block_color_index;
+
 				IntType vbuf = element->face_vbuffer.IntValue(f);
 				if (vbuf == null_)
 				{
 					IntType index = element->face_depth.IntValue(f) * e_block_vbuffer_amount + element->face_block_vbuffer.IntValue(f);
 					obj_block_mesh* blockMesh = ObjType(obj_block_mesh, self->block_mesh);
-					vbuf = blockMesh->block_vbuffer.Value(index);
+					vbuf = blockMesh->block_vbuffer.IntValue(index);
+
+					if (!self->block_vertex_color_index)
+						self->block_vertex_color_index = element->face_color_index.IntValue(f);
 				}
 				
 				self->block_vbuffer_current = vbuf;
@@ -720,7 +721,7 @@ namespace CppProject
 				);
 			}
 
-			self->block_vertex_rgb = c_white;
+			self->block_vertex_color_index = 0;
 			self->block_vertex_emissive = minEmissive;
 		}
 	}
@@ -766,11 +767,9 @@ namespace CppProject
 		}
 
 		return Vertex{
-			x, y, z,
-			normal,
-			self->block_vertex_rgb, self->block_vertex_alpha,
-			tx, ty,
-			wavexy, wavez, self->block_vertex_emissive, self->block_vertex_subsurface
+			x, y, z, tx, ty,
+			normal, (uint8_t)self->block_vertex_color_index.ToInt(),
+			wavexy, wavez, self->block_vertex_subsurface, self->block_vertex_emissive
 		};
 	}
 
@@ -985,10 +984,10 @@ namespace CppProject
 
 			for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
 			{
-				if (!blockMesh->block_vbuffer_active.Value(i))
+				if (!blockMesh->block_vbuffer_active.BoolValue(i))
 					continue;
 
-				VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.Value(i));
+				VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i));
 				if (!vbuf)
 					return;
 
@@ -1006,7 +1005,7 @@ namespace CppProject
 
 				for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
 				{
-					VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.Value(i));
+					VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i));
 					if (!vbuf)
 						continue;
 
@@ -1076,13 +1075,13 @@ namespace CppProject
 
 			quint64 mask = 0;
 			for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
-				if (blockMesh->block_vbuffer_active.Value(i))
+				if (blockMesh->block_vbuffer_active.BoolValue(i))
 					mask |= quint64(1) << i;
 
 			out << mask;
 			for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
 				if (mask & (quint64(1) << i))
-					FindVertexBuffer(blockMesh->block_vbuffer.Value(i))->Write(out);
+					FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i))->Write(out);
 		}
 
 		tmr.Print("Serialize block mesh cache (" + filename.QStr() + ")");
@@ -1233,6 +1232,9 @@ namespace CppProject
 
 			for (IntType i = 0; i < vbufCount; i++)
 			{
+				if (i % e_block_vbuffer_amount == 0)
+					blockMesh->block_vbuffer_render_offsets[i / e_block_vbuffer_amount] = blockMesh->block_vbuffer_render_order.Size();
+
 				VertexBuffer* vbuf = meshVbuffers[s][i];
 				buffers[i] = (vbuf ? vbuf->id : null_);
 				active[i] = (vbuf != nullptr);
@@ -1242,12 +1244,16 @@ namespace CppProject
 					depths[depth] = true;
 					if (depth != e_block_depth_DEPTH0)
 						transparent = true;
+
+					blockMesh->block_vbuffer_render_order.Append(i);
 				}
 			}
 
 			blockMesh->block_vbuffer = buffers;
 			blockMesh->block_vbuffer_active = active;
 			blockMesh->block_vbuffer_depth_active = depths;
+			blockMesh->block_vbuffer_render_offsets[e_block_depth_amount] = blockMesh->block_vbuffer_render_order.Size();
+
 			meshes[s] = blockMesh->id;
 		}
 
@@ -1287,19 +1293,51 @@ namespace CppProject
 		const IntType vbufCount = e_block_depth_amount * e_block_vbuffer_amount;
 		QVector<QVector<VertexBuffer*>> meshVbuffers((int)meshCount);
 
-		static QVector<e_block_vbuffer> legacyBuffers = {
-			e_block_vbuffer_STATIC16,
-			e_block_vbuffer_ANIMATED,
-			e_block_vbuffer_GRASS,
-			e_block_vbuffer_FOLIAGE,
-			e_block_vbuffer_LEAVES_OAK,
-			e_block_vbuffer_LEAVES_SPRUCE,
-			e_block_vbuffer_LEAVES_BIRCH,
-			e_block_vbuffer_LEAVES_JUNGLE,
-			e_block_vbuffer_LEAVES_ACACIA,
-			e_block_vbuffer_LEAVES_DARK_OAK,
-			e_block_vbuffer_LEAVES_MANGROVE,
-			e_block_vbuffer_WATER
+		// Format 2 stores RGBA before the UV coordinates
+		struct LegacyVertex
+		{
+			float x, y, z;
+			uint32_t normal, color;
+			float u, v;
+			uint32_t data, tangent;
+		};
+		static_assert(sizeof(LegacyVertex) == 36, "Unexpected legacy vertex layout");
+
+		QHash<uint32_t, uint8_t> colorIndices;
+		const ArrType& colors = ObjType(obj_resource, global::mc_res)->block_colors;
+		for (IntType i = e_biome_color_amount; i < colors.Size() / 4; i++)
+		{
+			// Biome colors use the legacy buffer type, cloud colors are not block tints
+			if (i >= e_color_palette_CLOUDS_TOP && i < e_color_palette_amount)
+				continue;
+
+			IntType offset = i * 4;
+			IntType color = make_color_rgb(
+				std::round(colors.RealValue(offset) * 255),
+				std::round(colors.RealValue(offset + 1) * 255),
+				std::round(colors.RealValue(offset + 2) * 255)
+			);
+			colorIndices[color] = i + 1;
+		}
+
+		struct LegacyBuffer
+		{
+			e_block_vbuffer buffer;
+			uint8_t colorIndex;
+		};
+		static const QVector<LegacyBuffer> legacyBuffers = {
+			{ e_block_vbuffer_STATIC16, 0 },
+			{ e_block_vbuffer_ANIMATED, 0 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_GRASS + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_FOLIAGE + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_OAK + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_SPRUCE + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_BIRCH + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_JUNGLE + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_ACACIA + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_DARK_OAK + 1 },
+			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_MANGROVE + 1 },
+			{ e_block_vbuffer_WATER, 0 }
 		};
 		constexpr RealType meshStride = block_mesh_size * block_size_;
 
@@ -1323,8 +1361,8 @@ namespace CppProject
 				break;
 			}
 
-			const IntType target = d * e_block_vbuffer_amount + legacyBuffers[vb];
-			const BoolType staticSheet = legacyBuffers[vb] != e_block_vbuffer_ANIMATED && legacyBuffers[vb] != e_block_vbuffer_WATER;
+			const IntType target = d * e_block_vbuffer_amount + legacyBuffers[vb].buffer;
+			const BoolType staticSheet = legacyBuffers[vb].buffer == e_block_vbuffer_STATIC16;
 			for (qint64 m = 0; m < numMeshes && valid; m++)
 			{
 				qint64 numVert = 0, numInd = 0;
@@ -1337,7 +1375,7 @@ namespace CppProject
 					break;
 				}
 
-				const qint64 vertexBytes = numVert * sizeof(Vertex);
+				const qint64 vertexBytes = numVert * sizeof(LegacyVertex);
 				const qint64 indexBytes = numInd * sizeof(uint32_t);
 				if (vertexBytes > std::numeric_limits<int>::max() || indexBytes > std::numeric_limits<int>::max() ||
 					vertexBytes + indexBytes > in.device()->bytesAvailable())
@@ -1346,17 +1384,29 @@ namespace CppProject
 					break;
 				}
 
+				QVector<LegacyVertex> legacyVertices((int)numVert);
 				QVector<Vertex> vertices((int)numVert);
 				QVector<uint32_t> indices((int)numInd);
-				if (in.readRawData((char*)vertices.data(), (int)vertexBytes) != vertexBytes ||
+				if (in.readRawData((char*)legacyVertices.data(), (int)vertexBytes) != vertexBytes ||
 					in.readRawData((char*)indices.data(), (int)indexBytes) != indexBytes)
 				{
 					valid = false;
 					break;
 				}
 
-				for (Vertex& vertex : vertices)
+				for (IntType v = 0; v < numVert; v++)
 				{
+					const LegacyVertex& old = legacyVertices[v];
+					Vertex& vertex = vertices[v];
+					vertex.x = old.x;
+					vertex.y = old.y;
+					vertex.z = old.z;
+					vertex.u = old.u;
+					vertex.v = old.v;
+					vertex.data1 = old.normal;
+					vertex.data2 = old.data;
+					vertex.tangent = old.tangent;
+
 					if (!std::isfinite(vertex.x) || !std::isfinite(vertex.y) || !std::isfinite(vertex.z))
 					{
 						valid = false;
@@ -1366,7 +1416,14 @@ namespace CppProject
 					float oldX = vertex.x;
 					vertex.x = vertex.y;
 					vertex.y = legacyBlockWidth - oldX;
-					vertex.normal = rotateDirection(vertex.normal);
+					vertex.data1 = rotateDirection(vertex.data1);
+
+					uint8_t colorIndex = legacyBuffers[vb].colorIndex;
+					uint32_t color = old.color & 0x00FFFFFFu;
+					if (color != 0x00FFFFFFu)
+						colorIndex = colorIndices.value(color, colorIndex);
+
+					vertex.SetColorIndex(colorIndex);
 					vertex.tangent = rotateDirection(vertex.tangent);
 
 					if (staticSheet)
@@ -1402,7 +1459,7 @@ namespace CppProject
 						pos[Z_] += vertex.z;
 					}
 
-					const uint32_t normal = vertices[corners[0]].normal;
+					const uint32_t normal = vertices[corners[0]].data1;
 					const uint8_t packedNormal[3] = { uint8_t(normal), uint8_t(normal >> 8), uint8_t(normal >> 16) };
 					IntType axis = 0;
 					for (IntType a = 1; a < 3; a++)
@@ -1470,6 +1527,9 @@ namespace CppProject
 
 			for (IntType i = 0; i < vbufCount; i++)
 			{
+				if (i % e_block_vbuffer_amount == 0)
+					blockMesh->block_vbuffer_render_offsets[i / e_block_vbuffer_amount] = blockMesh->block_vbuffer_render_order.Size();
+
 				VertexBuffer* vbuf = meshVbuffers[s][i];
 				if (vbuf)
 				{
@@ -1489,6 +1549,7 @@ namespace CppProject
 				{
 					IntType depth = i / e_block_vbuffer_amount;
 					depths[depth] = true;
+					blockMesh->block_vbuffer_render_order.Append(i);
 					if (depth != e_block_depth_DEPTH0)
 						transparent = true;
 				}
@@ -1497,6 +1558,7 @@ namespace CppProject
 			blockMesh->block_vbuffer = buffers;
 			blockMesh->block_vbuffer_active = active;
 			blockMesh->block_vbuffer_depth_active = depths;
+			blockMesh->block_vbuffer_render_offsets[e_block_depth_amount] = blockMesh->block_vbuffer_render_order.Size();
 			meshes[s] = blockMesh->id;
 		}
 

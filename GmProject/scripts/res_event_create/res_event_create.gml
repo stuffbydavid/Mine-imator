@@ -76,6 +76,8 @@ function res_event_create()
 	color_biome_start_colors = null
 	color_biome_end_colors = null
 	color_list = []
+	block_colors = []
+	block_colors_fast = []
 	
 	sun_texture = null
 	moon_textures = [ null, null, null, null, null, null, null, null ]

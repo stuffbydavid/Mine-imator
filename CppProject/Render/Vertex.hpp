@@ -7,16 +7,11 @@
 			"float(" attr " & uint(255)), " \
 			"float((" attr " >> uint(8)) & uint(255)), " \
 			"float((" attr " >> uint(16)) & uint(255))) / 127.0 - vec3(1.0)"
-#define UNPACK_VERTEX_COLOR(attr) "vec4(" \
-			"float(" attr " & uint(255)), " \
-			"float((" attr " >> uint(8)) & uint(255)), " \
-			"float((" attr " >> uint(16)) & uint(255)), " \
-			"float((" attr " >> uint(24)) & uint(255))) / 255.0"
-#define UNPACK_VERTEX_WAVE(attr) "vec4(" \
+#define UNPACK_VERTEX_CUSTOM(attr, data1) "vec4(" \
 			"float(" attr " & uint(1)), " \
 			"float((" attr " & uint(2)) >> uint(1)), " \
 			"float((" attr " >> uint(8)) & uint(255)) / 255.0, " \
-			"float((" attr " & uint(4)) >> uint(2)))"
+			"float((" attr " & uint(4)) >> uint(2)) + float(" data1 " >> uint(24)) * 2.0)"
 
 namespace CppProject
 {
@@ -43,16 +38,14 @@ namespace CppProject
 	struct Vertex
 	{
 		Vertex() {}
-		Vertex(RealType x, RealType y, RealType z,
-			   RealType nx, RealType ny, RealType nz,
-			   IntType color, RealType alpha,
-			   RealType u, RealType v,
-			   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface);
-		Vertex(RealType x, RealType y, RealType z, uint32_t packedNormal,
-			   IntType color, RealType alpha, RealType u, RealType v,
-			   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface);
+		Vertex(RealType x, RealType y, RealType z, RealType u, RealType v,
+			   RealType nx, RealType ny, RealType nz, uint8_t colorIndex,
+			   BoolType waveXY, BoolType waveZ, BoolType subsurface, RealType emissive);
+		Vertex(RealType x, RealType y, RealType z, RealType u, RealType v,
+			   uint32_t packedNormal, uint8_t colorIndex,
+			   BoolType waveXY, BoolType waveZ, BoolType subsurface, RealType emissive);
 
-		// A flag in the first byte of the data int, up to 8 are allowed
+		// A flag in the first byte of the data2 int, up to 8 are allowed.
 		enum Flag
 		{
 			WAVE_XY = 0,
@@ -60,36 +53,34 @@ namespace CppProject
 			SUBSURFACE = 2
 		};
 
-		// Compare with a previously added vertex for index buffer generation
+		// Compare with a previously added vertex for index buffer generation.
 		bool operator==(const Vertex& o) const;
 
 		// Sets the normal vector.
 		void SetNormal(RealType nx, RealType ny, RealType nz);
 		static uint32_t PackNormal(RealType nx, RealType ny, RealType nz);
 
-		// Sets the tangent vector.
-		void SetTangent(RealType tx, RealType ty, RealType tz);
+		// Set the color index, with zero meaning no tint.
+		void SetColorIndex(uint8_t index);
 
-		// Set the color
-		void SetColor(IntType color, RealType alpha);
-
-		// Enable a flag
+		// Enables a flag.
 		void EnableFlag(Flag flag);
 
-		// Set emissive value
+		// Set emissive value.
 		void SetEmissive(RealType emissive);
 
-		// Set the object index
-		void SetIndex(IntType index);
+		// Set the object index.
+		void SetObjectIndex(IntType index);
+
+		// Sets the tangent vector.
+		void SetTangent(RealType tx, RealType ty, RealType tz);
 
 		// Set shader attributes.
 		static void SetAttributes();
 
-		float x, y, z; // 0
-		uint32_t normal; // 1
-		uint32_t color; // 2
-		float u, v; // 3
-		uint32_t data = 0; // 4
-		uint32_t tangent = 0;
+		float x = 0, y = 0, z = 0, u = 0, v = 0;
+
+		// data1: normal xyz and color index, data2: flags, emissive and object index
+		uint32_t data1 = 0, data2 = 0, tangent = 0;
 	};
 }

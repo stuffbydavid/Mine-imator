@@ -20,7 +20,7 @@ function debug_startup()
 		debug_saveid		 = false
 		debug_unused		 = false
 		debug_check_assets	 = true
-		debug_realtime_views = true //false
+		debug_realtime_views = false
 		debug_dark_theme	 = true
 		debug_info			 = 1
 	}

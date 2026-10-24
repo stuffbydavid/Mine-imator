@@ -164,12 +164,26 @@ function minecraft_assets_load()
 				
 				ds_map_copy(block_texture_color_map, blocktexturescolormap)
 				
-				// Convert from hex
+				// Reserve indices for custom colors from block_textures_color
+				ds_list_clear(block_texture_color_list)
 				var key = ds_map_find_first(block_texture_color_map);
 				while (!is_undefined(key))
 				{
 					if (string_char_at(block_texture_color_map[?key], 1) = "#")
 						block_texture_color_map[?key] = hex_to_color(block_texture_color_map[?key])
+
+					var col = block_texture_color_map[?key];
+					if (is_real(col) && ds_list_find_index(block_texture_color_list, col) = -1)
+					{
+						if (e_color_palette.amount + ds_list_size(block_texture_color_list) >= 255)
+						{
+							log("Too many block texture colors")
+							return false
+						}
+
+						ds_list_add(block_texture_color_list, col)
+					}
+
 					key = ds_map_find_next(block_texture_color_map, key)
 				}
 				

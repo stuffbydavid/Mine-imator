@@ -12,12 +12,15 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 	resdif = res_eval(resdif)
 	render_apply_res(resdif)
 
-	var materials, hasmat, hasnorm;
-	materials = (!render_fast_pass && render_material_pass)
+	// Submit color palette
+	var colorres = (resdif.type = e_res_type.PACK ? resdif : mc_res);
+	render_set_uniform(e_uniform.BLOCK_COLORS, render_fast_pass ? colorres.block_colors_fast : colorres.block_colors)
+
+	var hasmat, hasnorm;
 	hasmat = false
 	hasnorm = false
-	
-	if (materials)
+
+	if (!render_fast_pass && render_material_pass)
 	{
 		resmat = res_eval(resmat)
 		resnorm = res_eval(resnorm)
@@ -25,22 +28,21 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 		hasnorm = (resnorm.type != e_res_type.PACK || resnorm.pack_has_normals)
 	}
 
-	var texlast, matlast, normlast, formatlast, colorlast, waterlast, vblast;
-	var roughbase, metalbase, emissivebase, roughlast, metallast, emissivelast, frame, filterprev;
+	// Cache submissions across all meshes using the same resources
+	var texlast, matlast, normlast, formatlast, colorlast, waterlast;
+	var roughlast, metallast, emissivelast, framelast, meshcount, vbufprev, filterprev;
 	texlast = null
 	matlast = null
 	normlast = null
 	formatlast = null
 	colorlast = null
 	waterlast = null
-	vblast = null
 	roughlast = null
 	metallast = null
 	emissivelast = null
-	roughbase = shader_uniform_roughness
-	metalbase = shader_uniform_metallic
-	emissivebase = shader_uniform_emissive
-	frame = null
+	framelast = null
+	meshcount = array_length(obj.block_meshes)
+	vbufprev = null
 	filterprev = null
 
 	// Keep opaque and transparent submissions in separate mip-filter passes
@@ -58,169 +60,167 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 			gpu_set_tex_mip_bias(-16)
 		}
 
-		for (var s = 0; s < array_length(obj.block_meshes); s++)
+		for (var s = 0; s < meshcount; s++)
 		{
 			var mesh = obj.block_meshes[s];
-			if (mesh = null || !mesh.block_vbuffer_depth_active[@d])
+			if (mesh = null)
 				continue
 
-			for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
+			with (mesh)
 			{
-				var index = d * e_block_vbuffer.amount + vb;
-				if (!mesh.block_vbuffer_active[@index])
-					continue
+				// Visit only populated buffers, preserving mesh order within each pass
+				var first, last;
+				first = block_vbuffer_render_offsets[@d]
+				last = block_vbuffer_render_offsets[@d + 1]
 
-				var water, animated, tex, texmat, texnorm, matformat, col;
-				water = (vb = e_block_vbuffer.WATER)
-				if (water && render_fast_pass && render_depth_pass && render_mode != e_render_mode.DEPTH)
-					continue
-
-				if (vblast != vb)
+				for (var i = first; i < last; i++)
 				{
-					var roughness, metallic, emissive, waterreflections;
-					roughness = roughbase
-					metallic = metalbase
-					emissive = emissivebase
-					waterreflections = water && app.project_render_water_reflections
-
-					animated = (vb = e_block_vbuffer.ANIMATED || water)
-					texmat = 0
-					texnorm = 0
-					col = shader_blend_color
+					var index, vb, water;
+					index = block_vbuffer_render_order[@i]
+					vb = index mod e_block_vbuffer.amount
+					water = (vb = e_block_vbuffer.WATER)
 					
-					if (animated)
-					{
-						if (frame = null)
-							frame = block_texture_get_frame()
+					if (water && render_fast_pass && render_depth_pass && render_mode != e_render_mode.DEPTH)
+						continue
 
-						if (resdif.block_sheet_animated_diffuse)
-							tex = resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame]
-						else
-							tex = mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
-						
-						if (hasmat && resmat.block_sheet_animated_material)
-							texmat = resmat.block_sheet_texture_material[e_block_sheet.ANIMATED][frame]
-						
-						if (hasnorm && resnorm.block_sheet_animated_normal)
-							texnorm = resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED][frame]
-						
-						if (!hasmat || !resmat.block_sheet_animated_material)
+					if (vbufprev != vb)
+					{
+						var tex, texmat, texnorm, col, roughness, metallic, emissive, waterreflections;
+						texmat = 0
+						texnorm = 0
+						col = shader_blend_color
+						roughness = shader_uniform_roughness
+						metallic = shader_uniform_metallic
+						emissive = shader_uniform_emissive
+						waterreflections = (water && app.project_render_water_reflections)
+
+						if (vb = e_block_vbuffer.ANIMATED || water)
 						{
-							roughness = 1
-							metallic = 0
-							emissive = 0
-						}
-					}
-					else
-					{
-						var sheet = e_block_sheet.STATIC16;
-						if (vb = e_block_vbuffer.STATIC32)
-							sheet = e_block_sheet.STATIC32
-						else if (vb = e_block_vbuffer.STATIC64)
-							sheet = e_block_sheet.STATIC64
+							if (framelast = null)
+								framelast = block_texture_get_frame()
 
-						tex = resdif.block_sheet_texture[sheet]
-						
-						if (tex = null)
-							tex = mc_res.block_sheet_texture[sheet]
-						
-						if (hasmat)
-							texmat = resmat.block_sheet_texture_material[sheet]
-						
-						if (hasnorm)
-							texnorm = resnorm.block_sheet_texture_normal[sheet]
-					}
+							var frame = framelast;
 
-					if (!render_fast_pass)
-					{
-						if (water)
-						{
-							col = color_multiply(col, resdif.color_list[@e_biome_color.WATER])
-							
-							if (waterreflections)
+							if (resdif.block_sheet_animated_diffuse)
+								tex = resdif.block_sheet_texture[e_block_sheet.ANIMATED][frame]
+							else
+								tex = mc_res.block_sheet_texture[e_block_sheet.ANIMATED][frame]
+
+							if (hasmat && resmat.block_sheet_animated_material)
+								texmat = resmat.block_sheet_texture_material[e_block_sheet.ANIMATED][frame]
+
+							if (hasnorm && resnorm.block_sheet_animated_normal)
+								texnorm = resnorm.block_sheet_texture_normal[e_block_sheet.ANIMATED][frame]
+
+							if (!hasmat || !resmat.block_sheet_animated_material)
 							{
-								texmat = 0
-								texnorm = 0
-								roughness = app.project_render_water_roughness
+								roughness = 1
 								metallic = 0
 								emissive = 0
 							}
 						}
-						else if (vb >= e_block_vbuffer.GRASS && vb <= e_block_vbuffer.LEAVES_MANGROVE)
+						else
 						{
-							var colorindex = vb - e_block_vbuffer.GRASS;
-							if (colorindex >= e_biome_color.WATER)
-								colorindex++
-							
-							col = color_multiply(col, resdif.color_list[@colorindex])
+							var sheet = e_block_sheet.STATIC16;
+							if (vb = e_block_vbuffer.STATIC32)
+								sheet = e_block_sheet.STATIC32
+							else if (vb = e_block_vbuffer.STATIC64)
+								sheet = e_block_sheet.STATIC64
+
+							tex = resdif.block_sheet_texture[sheet]
+
+							if (tex = null)
+								tex = mc_res.block_sheet_texture[sheet]
+
+							if (hasmat)
+								texmat = resmat.block_sheet_texture_material[sheet]
+
+							if (hasnorm)
+								texnorm = resnorm.block_sheet_texture_normal[sheet]
 						}
 
-						if (texmat = null)
-							texmat = 0
-						
-						if (texnorm = null)
-							texnorm = 0
-						
-						matformat = texmat != 0 ? resmat.material_format : e_material.FORMAT_NONE
-						if (formatlast != matformat)
+						if (!render_fast_pass)
 						{
-							render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
-							formatlast = matformat
-						}
-						
-						if (matlast != texmat)
-						{
-							render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
-							matlast = texmat
-						}
-						
-						if (normlast != texnorm)
-						{
-							render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
-							normlast = texnorm
-						}
-						
-						if (colorlast != col)
-						{
-							render_set_uniform_color(e_uniform.BLEND_COLOR, col, shader_blend_alpha)
-							colorlast = col
-						}
-						
-						if (waterlast != waterreflections)
-						{
-							render_set_uniform_int(e_uniform.IS_WATER, waterreflections)
-							waterlast = waterreflections
-						}
-						
-						if (roughlast != roughness)
-						{
-							render_set_uniform(e_uniform.ROUGHNESS, roughness)
-							roughlast = roughness
+							if (water)
+							{
+								col = color_multiply(col, resdif.color_list[@e_biome_color.WATER])
+
+								if (waterreflections)
+								{
+									texmat = 0
+									texnorm = 0
+									roughness = app.project_render_water_roughness
+									metallic = 0
+									emissive = 0
+								}
+							}
+
+							if (texmat = null)
+								texmat = 0
+
+							if (texnorm = null)
+								texnorm = 0
+
+							var matformat = texmat != 0 ? resmat.material_format : e_material.FORMAT_NONE;
+							if (formatlast != matformat)
+							{
+								render_set_uniform_int(e_uniform.MATERIAL_FORMAT, matformat)
+								formatlast = matformat
+							}
+
+							if (matlast != texmat)
+							{
+								render_set_texture(resmat, texmat, e_texture_channel.MATERIAL)
+								matlast = texmat
+							}
+
+							if (normlast != texnorm)
+							{
+								render_set_texture(resnorm, texnorm, e_texture_channel.NORMAL)
+								normlast = texnorm
+							}
+
+							if (colorlast != col)
+							{
+								render_set_uniform_color(e_uniform.BLEND_COLOR, col, shader_blend_alpha)
+								colorlast = col
+							}
+
+							if (waterlast != waterreflections)
+							{
+								render_set_uniform_int(e_uniform.IS_WATER, waterreflections)
+								waterlast = waterreflections
+							}
+
+							if (roughlast != roughness)
+							{
+								render_set_uniform(e_uniform.ROUGHNESS, roughness)
+								roughlast = roughness
+							}
+
+							if (metallast != metallic)
+							{
+								render_set_uniform(e_uniform.METALLIC, metallic)
+								metallast = metallic
+							}
+
+							if (emissivelast != emissive)
+							{
+								render_set_uniform(e_uniform.EMISSIVE, emissive)
+								emissivelast = emissive
+							}
 						}
 
-						if (metallast != metallic)
+						if (texlast != tex)
 						{
-							render_set_uniform(e_uniform.METALLIC, metallic)
-							metallast = metallic
+							render_set_texture(resdif, tex)
+							texlast = tex
 						}
-
-						if (emissivelast != emissive)
-						{
-							render_set_uniform(e_uniform.EMISSIVE, emissive)
-							emissivelast = emissive
-						}
+						vbufprev = vb
 					}
 
-					if (texlast != tex)
-					{
-						render_set_texture(resdif, tex)
-						texlast = tex
-					}
-					
-					vblast = vb
+					vertex_submit(block_vbuffer[@index], pr_trianglelist, -1)
 				}
-				
-				vbuffer_render(mesh.block_vbuffer[@index])
 			}
 		}
 	}
@@ -229,9 +229,9 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 	{
 		render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 		render_set_uniform_int(e_uniform.IS_WATER, 0)
-		render_set_uniform(e_uniform.ROUGHNESS, roughbase)
-		render_set_uniform(e_uniform.METALLIC, metalbase)
-		render_set_uniform(e_uniform.EMISSIVE, emissivebase)
+		render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+		render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+		render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
 	}
 	
 	if (filterprev != null)

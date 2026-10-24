@@ -8,8 +8,17 @@ function render_world_sky_clouds()
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.COLOR)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
 
+	submit_batch()
+
+	// Cloud colors and alpha use the shared vertex palette
+	render_set_uniform(e_uniform.BLOCK_COLORS, render_fast_pass ? mc_res.block_colors_fast : mc_res.block_colors)
+
 	if (render_fast_pass)
-		return render_world_sky_clouds_fast()
+	{
+		var result = render_world_sky_clouds_fast();
+		submit_batch()
+		return result
+	}
 	
 	if (render_mode = e_render_mode.G_BUFFERS || (render_mode = e_render_mode.COLOR && render_color_combined))
 		render_set_uniform(e_uniform.SSAO, 0)
@@ -76,6 +85,7 @@ function render_world_sky_clouds()
 	}
 	
 	// Reset
+	submit_batch()
 	if (render_place_pass)
 		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.SCENE)
 	

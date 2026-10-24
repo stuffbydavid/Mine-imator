@@ -14,6 +14,13 @@ function block_texture_get_blend(texname, res)
 	if (is_undefined(colorid))
 		return c_white
 	
+	switch (colorid)
+	{
+		case e_color_palette.PUMPKIN_STEM: return c_pumpkin_stem
+		case e_color_palette.MELON_STEM: return c_melon_stem
+		case e_color_palette.LILY_PAD: return c_lily_pad
+	}
+
 	res = res_eval(res)
 	return res.color_list[@ colorid]
 }

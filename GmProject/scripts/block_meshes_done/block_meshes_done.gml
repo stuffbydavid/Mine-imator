@@ -9,36 +9,50 @@ function block_meshes_done()
 			continue
 
 		var hasmesh = false;
-		for (var d = 0; d < e_block_depth.amount; d++)
-		for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
+		with (mesh)
 		{
-			var index = d * e_block_vbuffer.amount + vb;
-			vertex_end(mesh.block_vbuffer[@index])
-			mesh.block_vbuffer[@index] = vbuffer_generate_tangents(mesh.block_vbuffer[@index])
-			vertex_freeze(mesh.block_vbuffer[@index])
+			block_vbuffer_render_order = []
 
-			var active = !vbuffer_is_empty(mesh.block_vbuffer[@index]);
-			mesh.block_vbuffer_active[@index] = active
-			if (active)
+			for (var d = 0; d < e_block_depth.amount; d++)
 			{
-				hasmesh = true
-				mesh.block_vbuffer_depth_active[@d] = true
-				
-				if (d != e_block_depth.DEPTH0)
-					block_meshes_transparent = true
+				block_vbuffer_render_offsets[@d] = array_length(block_vbuffer_render_order)
+				block_vbuffer_depth_active[@d] = false
+
+				for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
+				{
+					var index = d * e_block_vbuffer.amount + vb;
+					vertex_end(block_vbuffer[@index])
+					block_vbuffer[@index] = vbuffer_generate_tangents(block_vbuffer[@index])
+					vertex_freeze(block_vbuffer[@index])
+
+					var active = !vbuffer_is_empty(block_vbuffer[@index]);
+					block_vbuffer_active[@index] = active
+					if (active)
+					{
+						hasmesh = true
+						block_vbuffer_depth_active[@d] = true
+						block_vbuffer_render_order[@array_length(block_vbuffer_render_order)] = index
+					}
+					else
+					{
+						vbuffer_destroy(block_vbuffer[@index])
+						block_vbuffer[@index] = null
+					}
+				}
 			}
-			else
-			{
-				vbuffer_destroy(mesh.block_vbuffer[@index])
-				mesh.block_vbuffer[@index] = null
-			}
+
+			block_vbuffer_render_offsets[@e_block_depth.amount] = array_length(block_vbuffer_render_order)
 		}
+
+		if (mesh.block_vbuffer_depth_active[@e_block_depth.DEPTH1] ||
+			mesh.block_vbuffer_depth_active[@e_block_depth.DEPTH2])
+			block_meshes_transparent = true
 
 		if (!hasmesh)
 		{
 			with (mesh)
 				instance_destroy()
-			
+
 			block_meshes[@s] = null
 		}
 	}

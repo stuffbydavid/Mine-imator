@@ -127,7 +127,7 @@ namespace CppProject
 		// Begin new vertex
 		if (thread.elemAdded[elementIndex])
 		{
-			for (IntType el = 0; el < 5; el++)
+			for (IntType el = 0; el < 4; el++)
 				thread.elemAdded[el] = false;
 
 			AddVertex(thread.currentVertex, threadId);
@@ -252,7 +252,7 @@ namespace CppProject
 			ThreadData& thread = threads[t];
 
 			// Complete current vertex
-			for (IntType el = 0; el < 5; el++)
+			for (IntType el = 0; el < 4; el++)
 			{
 				if (thread.elemAdded[el])
 				{

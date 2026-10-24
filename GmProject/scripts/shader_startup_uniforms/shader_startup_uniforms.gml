@@ -16,6 +16,7 @@ function shader_startup_uniforms()
 		"uBladeRounding",
 		"uBladeStretch",
 		"uBlendColor",
+		"uBlockColors",
 		"uBlurAmount",
 		"uBlurRatio",
 		"uBlurSize",

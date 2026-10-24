@@ -52,14 +52,14 @@ function block_render_model_generate(model)
 			if (!el.face_render[f] || block_render_model_generate_face_cull(model, el, f))
 				continue
 
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color[f]
-			else
-				block_vertex_rgb = block_color
-
 			block_vbuffer_current = el.face_vbuffer[f]
+			block_vertex_color_index = block_color_index
+			
 			if (block_vbuffer_current = null)
 			{
+				if (block_vertex_color_index = 0)
+					block_vertex_color_index = el.face_color_index[f]
+				
 				var index = el.face_depth[f] * e_block_vbuffer.amount + el.face_block_vbuffer[f];
 				block_vbuffer_current = block_mesh.block_vbuffer[@index]
 			}
@@ -135,7 +135,7 @@ function block_render_model_generate(model)
 			}
 		}
 
-		block_vertex_rgb = c_white
+		block_vertex_color_index = 0
 		block_vertex_emissive = minemissive
 		
 		instance_deactivate_object(el)
