@@ -23,7 +23,6 @@ varying vec3 vNormalWorld;
 varying vec3 vTangentWorld;
 varying vec4 vColor;
 varying vec4 vCustom;
-varying vec3 vPlaceNormal;
 
 // Texture
 uniform vec2 uTextureOffset;
@@ -46,7 +45,6 @@ uniform vec2 uTextureOffset;
 #pragma shady: macro_begin GBUFFERS_VERTEX_LIB
 	vPosition = getWorldPosition(in_Position, in_Custom);
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	vPlaceNormal = in_Normal;
 
 	gl_Position = getClipPosition(vPosition);
 	

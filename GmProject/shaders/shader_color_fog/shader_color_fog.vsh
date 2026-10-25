@@ -9,8 +9,6 @@ attribute vec3 in_Tangent;
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying vec3 vPlaceNormal;
-varying float vPlaceDistance;
 
 uniform vec4 uBlendColor;
 
@@ -25,9 +23,6 @@ void main()
 	vPosition = getWorldPosition(in_Position, in_Custom);
 	vColor = getVertexColor(in_Custom) * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	
-	vPlaceNormal = in_Normal;
-	vPlaceDistance = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
-	
+
 	gl_Position = getClipPosition(vPosition);
 }

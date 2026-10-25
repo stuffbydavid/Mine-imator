@@ -118,6 +118,62 @@ namespace CppProject
 		}
 	}
 
+	void Texture::UpdateRegion(const QImage& image, QRect rect)
+	{
+		rect = rect.intersected(image.rect());
+		if (rect.isEmpty())
+			return;
+
+		// Submit geometry using the old pixels before modifying the texture
+		GFX->SubmitBatch();
+		GFX->ResetTextureBindings();
+
+	#if OS_WINDOWS
+		if (IS_D3D11 && d3dTex)
+		{
+			D3D11_TEXTURE2D_DESC desc;
+			d3dTex->GetDesc(&desc);
+
+			// Oversized source images were scaled when the texture was created
+			QImage scaled;
+			const QImage* source = &image;
+			if (desc.Width != image.width() || desc.Height != image.height())
+			{
+				scaled = image.scaled(desc.Width, desc.Height);
+				source = &scaled;
+				rect = scaled.rect();
+			}
+
+			D3D11_BOX box = {};
+			box.left = rect.x();
+			box.top = rect.y();
+			box.right = rect.x() + rect.width();
+			box.bottom = rect.y() + rect.height();
+			box.back = 1;
+
+			const uchar* pixels = source->constScanLine(rect.y()) + rect.x() * 4;
+			D3DContext->UpdateSubresource(d3dTex, 0, &box, pixels, source->bytesPerLine(), 0);
+			hasMipMaps.remove(d3dSRVId);
+		}
+	#endif
+		if (IS_OPENGL && glTexId)
+		{
+			// Match the vertically flipped storage used when creating the texture
+			QImage pixels = image.copy(rect).mirrored();
+			GLint alignment;
+			GFX->glGetIntegerv(GL_UNPACK_ALIGNMENT, &alignment);
+			GFX->glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+			GFX->glBindTexture(GL_TEXTURE_2D, glTexId);
+			GFX->glTexSubImage2D(GL_TEXTURE_2D, 0, rect.x(), image.height() - rect.y() - rect.height(),
+				rect.width(), rect.height(), GL_RGBA, GL_UNSIGNED_BYTE, pixels.constBits());
+			GFX->glBindTexture(GL_TEXTURE_2D, 0);
+			GFX->glPixelStorei(GL_UNPACK_ALIGNMENT, alignment);
+			hasMipMaps.remove(glTexId);
+
+			GL_CHECK_ERROR();
+		}
+	}
+
 	IntType Texture::GetId()
 	{
 	#if OS_WINDOWS

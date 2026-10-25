@@ -248,7 +248,6 @@ function tl_event_create()
 	place_target = false
 	parent_is_placed = false
 	parent_is_place_target = false
-	render_place_id = 0
 	
 	// Path
 	path_update = false

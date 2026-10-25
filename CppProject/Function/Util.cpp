@@ -46,6 +46,41 @@ namespace CppProject
 #endif
 	}
 
+	RealType ease_bezier_curve(VecType p1, VecType p2, VecType p3, VecType p4, RealType t)
+	{
+		if (t == 0.0 || t == 1.0)
+			return t;
+
+		// Evaluate one axis without allocating intermediate point arrays
+		auto curve = [](RealType a, RealType b, RealType c, RealType d, RealType progress)
+		{
+			RealType ab = a + (b - a) * progress;
+			RealType bc = b + (c - b) * progress;
+			RealType cd = c + (d - c) * progress;
+			RealType abc = ab + (bc - ab) * progress;
+			RealType bcd = bc + (cd - bc) * progress;
+
+			return abc + (bcd - abc) * progress;
+		};
+
+		// Keep the GML search tolerance and iteration limit
+		RealType lower = 0.0, upper = 1.0, progress = 0.5;
+		RealType x = curve(p1.x, p2.x, p3.x, p4.x, progress);
+
+		for (IntType i = 0; i < 10 && std::abs(t - x) >= 0.001; i++)
+		{
+			if (t > x)
+				lower = progress;
+			else
+				upper = progress;
+
+			progress = (upper + lower) / 2.0;
+			x = curve(p1.x, p2.x, p3.x, p4.x, progress);
+		}
+
+		return curve(p1.y, p2.y, p3.y, p4.y, progress);
+	}
+
 	ArrType program_args_get()
 	{
 		ArrType args;

@@ -10,41 +10,12 @@ namespace CppProject
 		return (new Surface({ (int)width, (int)height }, format, depthBuffer, depthOnly))->id;
 	}
 
-	ArrType surface_getpixel_async(IntType id, IntType x, IntType y)
-	{
-		if (Surface* surface = FindSurface(id))
-		{
-			GFX->SubmitBatch();
-
-			IntType completed, submitted;
-			VecType pixel = surface->GetColorFloatAsync(QPoint(x, y), completed, submitted);
-
-			return ArrType::From({ pixel.x, pixel.y, pixel.z, pixel.w, completed, submitted });
-		}
-
-		return ArrType::From({ 1, 0, 0, 1, 0, 0 });
-	}
-
 	BoolType surface_get_depth_enabled(IntType id)
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->frameBuffer->depthBuffer;
 		
 		return false;
-	}
-
-	void surface_clear_depth_cache(IntType id)
-	{
-		if (Surface* surf = FindSurface(id))
-			surf->ClearDepthCache();
-	}
-
-	RealType surface_get_depth(IntType id, IntType x, IntType y)
-	{
-		if (Surface* surf = FindSurface(id))
-			return surf->GetDepth(QPoint(x, y));
-		
-		return 0.0;
 	}
 
 	IntType surface_get_max_size()

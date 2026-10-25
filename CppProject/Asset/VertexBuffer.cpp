@@ -3,6 +3,12 @@
 #include "Shader.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
+#undef slots
+#undef emit
+#define TINYBVH_IMPLEMENTATION
+#include "tinybvh/tiny_bvh.h"
+#undef TINYBVH_IMPLEMENTATION
+
 #include <QIODevice>
 
 namespace CppProject
@@ -51,6 +57,8 @@ namespace CppProject
 
 		completed = true;
 		valid = true;
+
+		BuildBVH();
 	}
 
 	VertexBuffer::~VertexBuffer()
@@ -273,6 +281,20 @@ namespace CppProject
 		bounds = Bounds(vertexData);
 
 		CreateBuffers(false);
+
+		BuildBVH();
+	}
+
+	void VertexBuffer::BuildBVH()
+	{
+		if (!valid || !completed || numIndices < 3)
+		{
+			bvh = tinybvh::BVH();
+			return;
+		}
+
+		tinybvh::bvhvec4slice vertices((const tinybvh::bvhvec4*)vertexData.Data(), (uint32_t)numVertices, sizeof(Vertex));
+		bvh.Build(vertices, indexData.Data(), (uint32_t)(numIndices / 3));
 	}
 
 	void VertexBuffer::Write(QDataStream& stream)

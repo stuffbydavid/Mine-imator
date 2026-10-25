@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"render_place_end",
+  "%Name":"world_raycast_object",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"render_place_end",
+  "name":"world_raycast_object",
   "parent":{
-    "name":"Place",
-    "path":"folders/Scripts/Render/Place.yy",
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

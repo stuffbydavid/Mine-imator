@@ -131,7 +131,6 @@ namespace CppProject
 		}
 
 		locations.clear();
-		deleteAndReset(texture);
 
 		if (image.isNull())
 			return;
@@ -139,6 +138,10 @@ namespace CppProject
 		// Reset the allocator and reserve the default white pixel
 		image.fill(Qt::transparent);
 		memset(image.bits(), 255, 4);
+
+		if (texture)
+			texture->UpdateRegion(image, image.rect());
+
 		freeRegion = QRegion(0, 0, size, size) - QRegion(0, 0, 1, 1);
 		defaultLocation = new TexturePageLocation(
 			this,
@@ -211,14 +214,11 @@ namespace CppProject
 			return;
 
 		// Clear released pixels so deleted textures do not remain in page dumps or mipmaps
-		if (texture)
-		{
-			GFX->SubmitBatch();
-			deleteAndReset(texture);
-		}
-
 		for (int y = allocatedRect.top(); y <= allocatedRect.bottom(); y++)
 			memset(image.scanLine(y) + allocatedRect.x() * 4, 0, allocatedRect.width() * 4);
+
+		if (texture)
+			texture->UpdateRegion(image, allocatedRect);
 		
 		freeRegion |= QRegion(allocatedRect);
 	}
@@ -266,13 +266,6 @@ namespace CppProject
 			return nullptr;
 		}
 
-		// Finish queued draws before rebuilding the modified page's GPU texture
-		if (page->texture)
-		{
-			GFX->SubmitBatch();
-			deleteAndReset(page->texture);
-		}
-
 		// Copy the image and duplicate its edge pixels into the gutter
 		for (int y = -PAGE_GUTTER; y < image.height() + PAGE_GUTTER; y++)
 		{
@@ -282,6 +275,9 @@ namespace CppProject
 			memcpy(dstRow + rect.x() * 4, srcRow, image.width() * 4);
 			memcpy(dstRow + (rect.x() + image.width()) * 4, srcRow + (image.width() - 1) * 4, 4);
 		}
+
+		if (page->texture)
+			page->texture->UpdateRegion(page->image, rect.adjusted(-PAGE_GUTTER, -PAGE_GUTTER, PAGE_GUTTER, PAGE_GUTTER));
 
 		return new TexturePageLocation(
 			page,

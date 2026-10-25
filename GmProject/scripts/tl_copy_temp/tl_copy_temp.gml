@@ -24,6 +24,7 @@ function tl_copy_temp(src, dest)
 			dest.block_meshes = block_meshes
 			dest.block_meshes_size = block_meshes_size
 			dest.block_meshes_transparent = block_meshes_transparent
+			
 			block_meshes = []
 			block_meshes_transparent = false
 		}
@@ -33,6 +34,7 @@ function tl_copy_temp(src, dest)
 			dest.text_3d = text_3d
 			dest.text_face_camera = text_face_camera
 			dest.text_aa = text_aa
+			
 			if (object_index = obj_timeline)
 			{
 				dest.text_outline = value[e_value.TEXT_OUTLINE]

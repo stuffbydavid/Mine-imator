@@ -161,8 +161,8 @@ namespace CppProject
 				ssboDef += "\t\t" + uni.typeName + " " + uni.name + ";\n";
 
 				// Remove uniform from header and add array accesor with vertex index
-				QRegularExpression uniHeader("uniform " + uni.typeName + " " + uni.name + ";(.*?)\n");
-				QRegularExpression uniFind("\\b" + uni.name + "\\b");
+				QRegularExpression uniHeader = GetRegex("uniform " + uni.typeName + " " + uni.name + ";(.*?)\n");
+				QRegularExpression uniFind = GetRegex("\\b" + uni.name + "\\b");
 				QString uniReplVs = "_obj[_objIndex]." + uni.name;
 				QString uniReplFs = "_obj[_vObjIndex]." + uni.name;
 

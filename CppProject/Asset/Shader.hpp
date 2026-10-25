@@ -7,6 +7,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions_4_3_Core>
 #include <QMatrix4x4>
+#include <QRegularExpression>
 #include <QVector>
 #include <QVector4D>
 
@@ -47,6 +48,10 @@ namespace CppProject
 		BoolType LoadProgramOpenGL(const QString& vsCode, const QString& fsCode, const QString& gsCode = "");
 
 		void LoadCodeCommon(QString& code);
+
+		// Reuse compiled patterns across shaders and stages.
+		static QRegularExpression GetRegex(const QString& pattern,
+			QRegularExpression::PatternOptions options = QRegularExpression::NoPatternOption);
 
 		// Load HLSL/GLSL geometry shader code.
 		QString LoadGeometryCode(const QString& extension);

@@ -191,7 +191,7 @@ namespace CppProject
 		// Prints the total elapsed time in seconds along with a prefix.
 		void Print(QString prefix)
 		{
-			DEBUG(prefix + ": " + NumStr(Elapsed()) + "s");
+			DEBUG(prefix + ": " + NumStr(ElapsedMs()) + "ms");
 		}
 
 		std::chrono::time_point<std::chrono::high_resolution_clock> start;

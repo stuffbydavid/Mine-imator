@@ -45,30 +45,16 @@ function view_event_create()
 	surface_proj_matrix = array_copy_1d(MAT_IDENTITY)
 	surface_view_matrix = array_copy_1d(MAT_IDENTITY)
 	surface_view_proj_matrix = array_copy_1d(MAT_IDENTITY)
+	surface_proj_matrix_inverse = array_copy_1d(MAT_IDENTITY)
+	surface_view_matrix_inverse = array_copy_1d(MAT_IDENTITY)
 	surface_mouse_x = 0
 	surface_mouse_y = 0
 	surface_mouseon = false
 	surface_control_edit = null
 	
-	surface_place_id = null
-	surface_place_async_id = null
-	surface_place_async_list = array_create(8)
-	surface_place_separate = false
-	surface_place_tl_list = [ 0 ]
-	surface_place_tl_list_id = -1
-	surface_place_depth_near = 0
-	surface_place_depth_far = 0
-	surface_place_proj_matrix = array_copy_1d(MAT_IDENTITY)
-	surface_place_view_matrix = array_copy_1d(MAT_IDENTITY)
-	surface_place_active = false
-	
-	surface_pick_depth_id = null
-	surface_pick_mask_id = null
-	
 	mouseon = false
 	control_mouseon = null
 	control_mouseon_last = null
-	place_output = false
 	render = false
 	transparent_background = false
 	

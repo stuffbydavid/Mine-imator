@@ -79,7 +79,7 @@ function action_lib_animate(place = false)
 			}
 		}
 
-		if (place && !history_redo && setting_place_new && !keyboard_check(vk_shift) &&
+		if (is_cpp() && place && !history_redo && setting_place_new && !keyboard_check(vk_shift) &&
 			(tl.type != e_tl_type.SCENERY || tl.temp.scenery != null) &&
 			(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
 			!sceneryreplaceground &&

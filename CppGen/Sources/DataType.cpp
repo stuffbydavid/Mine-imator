@@ -489,23 +489,37 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 
 			// Assign container
 			if ((ass.rawType == Type::Array || ass.rawType >= Type::List) &&
-				inputAss.containerStorage != nullptr && containerLevel < maxContainerLevel)
+				inputAss.containerStorage != nullptr)
 			{
-				// Assignment copies share their container until one is mutated.
-				// This preserves value semantics without deep-copying every resolver
-				// temporary and reset.
-				if (ass.containerStorage == nullptr || ass.containerStorage.use_count() != 1)
+				// Keep deeper elements dynamic instead of retaining a stale inferred type
+				if (containerLevel >= maxContainerLevel)
 				{
-					ass.containerStorage = ass.containerStorage != nullptr
-						? std::make_shared<DataType>(*ass.containerStorage)
-						: std::make_shared<DataType>();
+					if (ass.containerStorage == nullptr || ass.containerStorage->assignments.size() != 1 ||
+						ass.containerStorage->assignments[0].rawType != Type::Variant)
+					{
+						ass.containerStorage = std::make_shared<DataType>(Type::Variant);
+						changed = true;
+						ass.func = func;
+						ass.line = line;
+					}
 				}
-
-				if (ass.containerStorage->assign(*inputAss.containerStorage, func, line, containerLevel + 1))
+				else
 				{
-					changed = true;
-					ass.func = func;
-					ass.line = line;
+					// Assignment copies share their container until one is mutated
+					// This preserves value semantics without deep-copying every resolver temporary and reset
+					if (ass.containerStorage == nullptr || ass.containerStorage.use_count() != 1)
+					{
+						ass.containerStorage = ass.containerStorage != nullptr
+							? std::make_shared<DataType>(*ass.containerStorage)
+							: std::make_shared<DataType>();
+					}
+
+					if (ass.containerStorage->assign(*inputAss.containerStorage, func, line, containerLevel + 1))
+					{
+						changed = true;
+						ass.func = func;
+						ass.line = line;
+					}
 				}
 			}
 

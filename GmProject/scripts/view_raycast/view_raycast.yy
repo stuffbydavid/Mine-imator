@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"surface_get_depth",
+  "%Name":"view_raycast",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"surface_get_depth",
+  "name":"view_raycast",
   "parent":{
-    "name":"Surface",
-    "path":"folders/Scripts/Utility/Surface.yy",
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

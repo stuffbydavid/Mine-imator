@@ -25,9 +25,6 @@ namespace CppProject
 		// Returns the floating point channels of a surface pixel, optionally the result is cached for multiple calls.
 		VecType GetColorFloat(QPoint point, BoolType cache = true);
 
-		// Returns the last completed asyncronous lookup of a single pixel while scheduling a new readback.
-		VecType GetColorFloatAsync(QPoint point, IntType& completed, IntType& submitted);
-
 		// Clears the color cache created in GetColor().
 		void ClearColorCache();
 

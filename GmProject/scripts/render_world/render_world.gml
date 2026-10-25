@@ -21,18 +21,6 @@ function render_world(mode)
 		mode = e_render_mode.SCENE_TEST
 	)
 
-	if (render_place)
-	{
-		render_place_pass = (
-			mode = e_render_mode.COLOR_FOG ||
-			mode = e_render_mode.COLOR_FOG_LIGHTS ||
-			mode = e_render_mode.G_BUFFERS ||
-			(mode = e_render_mode.COLOR && render_color_combined)
-		)
-	}
-	else
-		render_place_pass = false
-
 	// Select shader object
 	if (mode = e_render_mode.COLOR && render_color_combined)
 		render_shader_obj = shader_map[?shader_high_gbuffers_color]
@@ -54,6 +42,11 @@ function render_world(mode)
 	
 	render_world_tl_reset()
 	
+	// Record only scene color submissions for raycasting, including the transparent block list
+	if ((render_world_bounds_owner = app.view_main || render_world_bounds_owner = app.view_second) &&
+		(mode = e_render_mode.COLOR || mode = e_render_mode.COLOR_FOG || mode = e_render_mode.COLOR_FOG_LIGHTS))
+		world_raycast_begin(render_world_bounds_owner)
+
 	// Placed parent
 	if (mode = e_render_mode.PLACE_PARENT)
 		render_world_list(render_place_parent_list)
@@ -79,6 +72,8 @@ function render_world(mode)
 		render_world_list(render_depth_list_current[e_depth_list.POSITIVE])
 	}
 	
+	world_raycast_end()
+
 	render_world_blocks_transparent = null
 
 	render_world_tl_reset()
@@ -92,6 +87,5 @@ function render_world(mode)
 	shader_check_uniform = false
 	render_fast_pass = false
 	render_depth_pass = false
-	render_place_pass = false
 	render_world_count++
 }

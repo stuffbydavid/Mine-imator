@@ -23,6 +23,7 @@ namespace CppProject
 	struct Font;
 	struct Object;
 	struct PrimitiveRenderer;
+	struct Raycast;
 	struct Shader;
 	struct Surface;
 	struct VertexBuffer;
@@ -70,6 +71,7 @@ namespace CppProject
 		Surface* headlessSurface = nullptr;
 		PrimitiveRenderer* prRenderer = nullptr;
 		VertexBufferRenderer* vbRenderer = nullptr;
+		Raycast* worldRaycast = nullptr;
 		
 		QVector<QString> args;
 		AppWindow* mainWindow = nullptr;

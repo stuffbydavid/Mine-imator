@@ -2,14 +2,8 @@
 
 function render_world_tl()
 {
-	// Place mode
-	if (placed || parent_is_placed)
-	{
-		// GM cannot mask the pick target without also hiding this G-buffer draw
-		if (!is_cpp() && render_place_pass && render_mode = e_render_mode.G_BUFFERS)
-			return 0
-	}
-		
+	world_raycast_set_object(id)
+
 	// Transparent block pass
 	if (render_world_blocks_transparent = true &&
 		type != e_tl_type.SCENERY &&
@@ -268,22 +262,6 @@ function render_world_tl()
 		}
 	}
 	
-	// Place mode
-	if (render_place_pass)
-	{
-		var placetype = type_is_block(type) ? e_place_type.BLOCK : e_place_type.SCENE;
-		if (placed || parent_is_placed)
-		{
-			// Disable write for place data MRT
-			render_set_target_write(render_place_target, false)
-			
-			placetype = e_place_type.PLACED
-		}
-
-		render_set_uniform_int(e_uniform.PLACE_ID, render_place_id)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, placetype)
-	}
-
 	// Render
 	if (type != e_tl_type.PARTICLE_SPAWNER)
 	{
@@ -451,7 +429,4 @@ function render_world_tl()
 
 	if (glowonlycombined)
 		gpu_set_zwriteenable(true)
-
-	if (render_place_pass && (placed || parent_is_placed))
-		render_set_target_write(render_place_target, true)
 }

@@ -67,7 +67,6 @@ namespace CppProject
 			case surface_r16float:		channels = 1; half = true; break;
 			case surface_rgba16float:	channels = 4; half = true; break;
 			case surface_r32float:		channels = 1; break;
-			case surface_rg32float:		channels = 2; break;
 			case surface_rgba32float:	channels = 4; break;
 		}
 
@@ -110,25 +109,6 @@ namespace CppProject
 			colorFloatData.clear();
 		
 		return { values[0], values[1], values[2], values[3] };
-	}
-
-	VecType Surface::GetColorFloatAsync(QPoint point, IntType& completed, IntType& submitted)
-	{
-		if (frameBuffer->format != surface_rg32float)
-		{
-			completed = submitted = 0;
-			return { 1, 0, 0, 1 };
-		}
-
-		uchar pixel[16] = {};
-		if (!frameBuffer->CopyColorPixelAsync(point, pixel, completed, submitted))
-			return { 1, 0, 0, 1 };
-
-		float depth, packed;
-		memcpy(&depth, pixel, sizeof(float));
-		memcpy(&packed, pixel + sizeof(float), sizeof(float));
-
-		return { depth, packed, 0, 1 };
 	}
 
 	void Surface::ClearColorCache()

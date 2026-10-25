@@ -10,6 +10,7 @@
 #include "Render/GLWidget.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/PrimitiveRenderer.hpp"
+#include "Render/Raycast.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
 namespace CppProject
@@ -449,7 +450,6 @@ namespace CppProject
 				case surface_r16float:
 				case surface_rgba16float:
 				case surface_r32float:
-				case surface_rg32float:
 				case surface_rgba32float:
 					return (ArrType)surf->GetColorFloat(QPoint(x, y));
 			}
@@ -672,7 +672,10 @@ namespace CppProject
 	void vertex_submit(IntType buffer, IntType primitive, IntType texture)
 	{
 		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		{
+			App->worldRaycast->Add(*buf, GFX->matrixM);
 			VB->Add(buf);
+		}
 	}
 
 	void vertex_texcoord(IntType buffer, RealType u, RealType v)

@@ -3,6 +3,22 @@
 #include "FastVector.hpp"
 #include "Render/Mesh.hpp"
 
+// Suppress tinybvh's MSVC notices
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma push_macro("_Pragma")
+#undef _Pragma
+#define _Pragma(...)
+#endif
+
+#pragma push_macro("WARNING")
+#undef WARNING
+#include "tinybvh/tiny_bvh.h"
+#pragma pop_macro("WARNING")
+
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma pop_macro("_Pragma")
+#endif
+
 #include <QDataStream>
 
 namespace CppProject
@@ -36,6 +52,9 @@ namespace CppProject
 		// Allocates the mesh from the added vertices, optionally updating tangents.
 		void Complete(BoolType updateTangents = true);
 
+		// Builds a raycasting acceleration BVH using the geometry.
+		void BuildBVH();
+
 		// Writes the vertex buffer data to the given stream.
 		void Write(QDataStream& stream);
 
@@ -45,6 +64,7 @@ namespace CppProject
 		BoolType batching = true; // Allow batching of the vertex buffer
 		bool valid = true;
 		bool completed = false;
+		tinybvh::BVH bvh;
 
 		struct ThreadData
 		{

@@ -1,3 +1,4 @@
+/// CppSeparate void vertex_add(VecType, VecType, VecType)
 /// @arg position
 /// @arg normal
 /// @arg texcoord

@@ -9,7 +9,6 @@ function render_surface_pool_load(pool)
 	render_surface_specular_base = pool.surface_specular_base
 
 	render_surface_depth = pool.surface_depth
-	render_surface_depth_format = pool.surface_depth_format
 	render_surface_depth_low = pool.surface_depth_low
 	render_surface_normal = pool.surface_normal
 	render_surface_material = pool.surface_material

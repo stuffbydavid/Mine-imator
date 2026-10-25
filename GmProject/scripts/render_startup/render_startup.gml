@@ -19,8 +19,7 @@ function render_startup()
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_resolution_factors, render_pass,
 			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material,
-			  render_fog_combined, render_sun_combined, render_color_combined,
-			  render_place, render_place_pass, render_place_target, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
+			  render_fog_combined, render_sun_combined, render_color_combined, render_place_parent_list;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	
@@ -91,12 +90,6 @@ function render_startup()
 	render_indirect = false
 	render_auxiliary = false
 	
-	render_place = false
-	render_place_pass = false
-	render_place_target = 0
-	render_place_view = null
-	render_place_tl_list = null
-	render_place_tl_list_id = 0
 	render_place_parent_list = ds_list_create()
 	
 	render_auxiliary_material = false
@@ -138,7 +131,7 @@ function render_startup()
 	
 	// Surfaces for rendering
 	globalvar render_surface_pool_list, render_surface_pool_current,
-			  render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_format, render_surface_depth_low, render_surface_normal,
+			  render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_low, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow,
 			  render_surface_indirect_raydata, render_surface_reflections_raydata,
@@ -165,7 +158,6 @@ function render_startup()
 	}
 	
 	render_surface_depth = null
-	render_surface_depth_format = null
 	render_surface_depth_low = null
 	render_surface_normal = null
 	render_surface_material = null
