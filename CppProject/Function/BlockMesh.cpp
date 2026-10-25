@@ -178,53 +178,20 @@ namespace CppProject
 			}
 		}
 
-		BoolType cancel = false;
 		if (totalBytes > std::numeric_limits<int>::max())
 		{
 			WARNING("Block mesh cache exceeds the byte array size limit");
-			cancel = true;
-		}
-		else
-		{
-			IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
-			if (mb > 50)
-			{
-				if (res->scenery_cache_save == null_)
-					res->scenery_cache_save = question(text_get({ "load_scenery/save_cache", string(mb) + StringType("MB") }));
-
-				if (!res->scenery_cache_save)
-					cancel = true;
-			}
-		}
-
-		if (cancel)
-		{
-			// Release CPU data that is only retained for cache generation
-			for (IntType s = 0; s < res->block_meshes.Size(); s++)
-			{
-				obj_block_mesh* blockMesh = ObjTypeOpt(obj_block_mesh, res->block_meshes.Value(s));
-				if (!blockMesh)
-					continue;
-
-				for (IntType i = 0; i < e_block_depth_amount * e_block_vbuffer_amount; i++)
-				{
-					VertexBuffer* vbuf = FindVertexBuffer(blockMesh->block_vbuffer.IntValue(i));
-					if (!vbuf)
-						continue;
-
-					// Small buffers still need CPU data for batching, even without a cache
-					if (vbuf->batching && vbuf->numIndices <= MAX_BATCH_INDICES)
-						continue;
-
-					for (Mesh<>* mesh : vbuf->meshes)
-					{
-						mesh->vertexData.FreeData();
-						mesh->indexData.FreeData();
-					}
-				}
-			}
-
 			return;
+		}
+		
+		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
+		if (mb > 50)
+		{
+			if (res->scenery_cache_save == null_)
+				res->scenery_cache_save = question(text_get({ "load_scenery/save_cache", string(mb) + StringType("MB") }));
+
+			if (!res->scenery_cache_save)
+				return;
 		}
 
 		Timer tmr;
@@ -380,7 +347,7 @@ namespace CppProject
 				if (!(mask & (quint64(1) << i)))
 					continue;
 
-				VertexBuffer* vbuf = new VertexBuffer(in, false);
+				VertexBuffer* vbuf = new VertexBuffer(in);
 				meshVbuffers[s][i] = vbuf;
 				if (!vbuf->valid || !vbuf->numIndices)
 				{
@@ -553,8 +520,7 @@ namespace CppProject
 				qint64 numVert = 0, numInd = 0;
 				in >> numVert;
 				in >> numInd;
-				if (in.status() != QDataStream::Ok || numVert <= 0 || numInd <= 0 ||
-					numVert > MAX_MESH_INDICES || numInd > MAX_MESH_INDICES || numInd % 3 != 0)
+				if (in.status() != QDataStream::Ok || numVert <= 0 || numInd <= 0 || numInd % 3 != 0)
 				{
 					valid = false;
 					break;
@@ -686,10 +652,6 @@ namespace CppProject
 				if (!vbuf)
 					continue;
 
-				for (auto& thread : vbuf->threads)
-					for (auto* mesh : thread.meshes)
-						delete mesh;
-
 				delete vbuf;
 			}
 
@@ -717,16 +679,7 @@ namespace CppProject
 
 				VertexBuffer* vbuf = meshVbuffers[s][i];
 				if (vbuf)
-				{
 					vbuf->Complete(false);
-					vbuf->batching = false;
-
-					for (Mesh<>* mesh : vbuf->meshes)
-					{
-						mesh->vertexData.FreeData();
-						mesh->indexData.FreeData();
-					}
-				}
 
 				buffers[i] = (vbuf ? vbuf->id : null_);
 				active[i] = (vbuf != nullptr);

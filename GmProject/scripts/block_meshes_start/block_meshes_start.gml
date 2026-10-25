@@ -8,6 +8,7 @@ function block_meshes_start(keepblocks = false)
 		block_meshes = array_create(count, null)
 	}
 
+	var batching = true;
 	for (var s = 0; s < count; s++)
 	{
 		if (is_array(block_meshes_active) && !block_meshes_active[s])
@@ -25,7 +26,7 @@ function block_meshes_start(keepblocks = false)
 		{
 			var index = d * e_block_vbuffer.amount + vb;
 			mesh.block_vbuffer[@index] = vbuffer_start()
-			vbuffer_set_batching(mesh.block_vbuffer[@index], false)
+			vbuffer_set_batching(mesh.block_vbuffer[@index], batching)
 		}
 	}
 
