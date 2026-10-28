@@ -53,7 +53,7 @@ function sortlist_column_get(slist, value, col)
 		case "block_count":
 		{
 			var block = mc_assets.block_list[|value];
-			return value_get_real(popup_block_settings.resource.scenery_block_map[?string(block.block_id)], 0)
+			return value_get_real(popup_block_settings.resource.scenery_block_map[?block.name], 0)
 		}
 		
 		case "scenery_name":

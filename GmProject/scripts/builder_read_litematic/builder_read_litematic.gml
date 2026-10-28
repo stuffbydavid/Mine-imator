@@ -125,7 +125,7 @@ function builder_read_litematic(map, blocksonly = false)
 		}
 	}
 
-	// GM block buffers use two bytes per cell and signed buffer offsets
+	// GM block buffers use two bytes per block and signed buffer offsets
 	if (totalsize[X] * totalsize[Y] * totalsize[Z] >= power(2, 30))
 	{
 		log("Litematic error", "Enclosing volume exceeds builder limits")

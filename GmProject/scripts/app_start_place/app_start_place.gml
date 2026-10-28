@@ -17,6 +17,7 @@ function app_start_place(build, tl = null, spawn = false)
 	place_pos = null
 	place_rot = vec3(0)
 	place_sca = vec3(1)
+	place_block_pos = null
 		
 	place_view_pos = null
 	place_view_air = false

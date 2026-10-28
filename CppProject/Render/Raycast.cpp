@@ -47,7 +47,7 @@ namespace CppProject
 			}
 
 			VertexBuffer* buffer = FindVertexBuffer(entry.buffer);
-			if (!buffer || !buffer->valid || buffer->bounds.empty || !buffer->bvh.triCount)
+			if (!buffer || !buffer->valid || !buffer->completed || buffer->bounds.empty || !buffer->bvh.triCount)
 				continue;
 
 			// Reject singular transforms before transforming the ray into mesh space
@@ -75,9 +75,11 @@ namespace CppProject
 				RealType nearDistance = (lower - start) / step, farDistance = (upper - start) / step;
 				if (nearDistance > farDistance)
 					std::swap(nearDistance, farDistance);
+				
 				first = std::max(first, nearDistance);
 				last = std::min(last, farDistance);
 			}
+
 			if (first > last)
 				continue;
 
@@ -86,6 +88,10 @@ namespace CppProject
 			tinybvh::Ray ray(
 				tinybvh::bvhvec3((float)localOrigin.x, (float)localOrigin.y, (float)localOrigin.z),
 				tinybvh::bvhvec3((float)localDirection.x, (float)localDirection.y, (float)localDirection.z), maxDistance);
+			
+			// tinybvh cullBackfaces modification
+			ray.cullBackfaces = true;
+
 			buffer->bvh.Intersect(ray);
 			if (ray.hit.t >= maxDistance)
 				continue;
@@ -101,6 +107,7 @@ namespace CppProject
 			VecType normal = VecType::CrossProduct(edge1, edge2).GetNormalized();
 			if (VecType::DotProduct(normal, vertexNormal) < 0)
 				normal = -normal;
+			
 			IntType axis = 0;
 			if (std::abs(normal.y) > std::abs(normal.x))
 				axis = 1;

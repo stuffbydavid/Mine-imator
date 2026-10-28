@@ -151,6 +151,7 @@ function project_load_timeline(map)
 				}
 			}
 		}
+		
 		else if (type = e_tl_type.BLOCK && !has_temp)
 		{
 			var directblockmap = map[?"block"];
@@ -168,11 +169,70 @@ function project_load_timeline(map)
 				block_center = value_get_real(directblockmap[?"center"], false)
 			}
 		}
+		
 		else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
 		{
 			text_font = value_get_save_id(map[?"text_font"], project_pack_res)
 			text_3d = value_get_real(map[?"text_3d"], false)
 			text_face_camera = value_get_real(map[?"text_face_camera"], false)
+		}
+
+		// Added blocks
+		if (type = e_tl_type.SCENERY)
+		{
+			var palette, blocks;
+			palette = map[?"blocks_added_palette"]
+			blocks = map[?"blocks_added"]
+
+			if (ds_list_valid(palette) && ds_list_valid(blocks))
+			{
+				blocks_added_palette = []
+				blocks_added = []
+
+				for (var i = 0; i < ds_list_size(palette); i++)
+				{
+					var entry, block, vars, stateid;
+					entry = palette[|i]
+					block = null
+					vars = []
+					stateid = 0
+
+					if (ds_list_valid(entry) && ds_list_size(entry) > 0)
+					{
+						block = mc_assets.block_name_map[?entry[|0]]
+						for (var s = 1; s < ds_list_size(entry); s++)
+						{
+							if (!is_string(entry[|s]))
+								continue
+
+							var prop = string_get_state_vars(entry[|s]);
+							if (is_array(prop))
+								state_vars_add(vars, prop)
+						}
+					}
+
+					if (is_undefined(block))
+						block = null
+
+					if (block != null)
+						stateid = block_get_state_id(block, vars)
+
+					array_add(blocks_added_palette, [ block != null ? block.block_id : 0, stateid ], false)
+				}
+
+				for (var i = 0; i < ds_list_size(blocks); i++)
+				{
+					var entry = blocks[|i];
+					if (!ds_list_valid(entry) || ds_list_size(entry) != 2)
+						continue
+
+					var pos, index;
+					pos = value_get_point3D(entry[|0])
+					index = value_get_real(entry[|1], -1)
+					if (pos != null && index >= 0 && index < array_length(blocks_added_palette) && index = floor(index))
+						array_add(blocks_added, [ pos, index ], false)
+				}
+			}
 		}
 		
 		var partslist = map[?"parts"];

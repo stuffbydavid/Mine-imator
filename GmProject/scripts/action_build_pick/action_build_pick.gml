@@ -3,35 +3,50 @@ function action_build_pick()
 	if (!app.place_build || app.place_target_tl = null || !instance_exists(app.place_target_tl))
 		return false
 
-	var target, special, pickname, pickstate;
+	var target, pickname, pickstate, pickspblock;
 	target = app.place_target_tl
-	special = false
 	pickname = ""
 	pickstate = []
+	pickspblock = false
 
 	// Pick the special block owning the rendered part
 	if (target.type = e_tl_type.MODEL_PART && target.part_of != null)
 		target = target.part_of
-
-	if (target.type = e_tl_type.SPECIAL_BLOCK)
+	
+	if (target.type = e_tl_type.SCENERY)
 	{
-		special = true
-		pickname = target.temp.model_name
-		pickstate = array_copy_1d(target.temp.model_state)
-	}
-	else if (target.type = e_tl_type.BLOCK)
-	{
-		pickname = target.temp.block_name
-		pickstate = array_copy_1d(target.temp.block_state)
-	}
-	else if (target.type = e_tl_type.SCENERY)
-	{
-		if (app.build_box_render != app.build_box)
+		if (app.place_block_pos = null)
 			return false
 
-		var data, block, stateid;
+		var data, block, stateid, res, needblocks;
+		res = target.temp.scenery
+		if (res = null || !res.ready)
+			return false
+
+		// Check for missing block palette/grid
+		needblocks = (array_length(res.block_meshes) = 0)
+		for (var s = 0; s < array_length(res.block_meshes); s++)
+		{
+			var mesh = res.block_meshes[s];
+			if (mesh != null && (mesh.block_palette_buffer = null || mesh.block_grid_buffer = null))
+				needblocks = true
+		}
+
+		// Load blocks only from source Schematic with no mesh generation
+		if (needblocks)
+		{
+			with (res)
+			{
+				if (!res_load_scenery_file(app.project_folder + "/" + filename, true))
+				{
+					error("error/load_schematic")
+					return false
+				}
+			}
+		}
+
 		with (target)
-			data = block_meshes_get_block(matrix_position(app.build_box_matrix))
+			data = block_meshes_get_block(app.place_block_pos[X], app.place_block_pos[Y], app.place_block_pos[Z])
 		
 		block = block_objs[data[0]]
 		stateid = data[1]
@@ -42,11 +57,12 @@ function action_build_pick()
 		pickname = block.name
 		pickstate = block_get_state_id_state_vars(block, stateid)
 
-		// Match the build list's special-block entry
+		// Match the build list's special block entry
 		if (block.timeline && block.tl_model_name != "" && !block.tl_model_double)
 		{
-			special = true
 			pickname = block.tl_model_name
+			pickspblock = true
+			
 			if (block.tl_has_model_state)
 			{
 				pickstate = []
@@ -65,15 +81,26 @@ function action_build_pick()
 			}
 		}
 	}
+	else if (target.type = e_tl_type.BLOCK)
+	{
+		pickname = target.temp.block_name
+		pickstate = array_copy_1d(target.temp.block_state)
+	}
+	else if (target.type = e_tl_type.SPECIAL_BLOCK)
+	{
+		pickname = target.temp.model_name
+		pickstate = array_copy_1d(target.temp.model_state)
+		pickspblock = true
+	}
 	else
 		return false
 
-	// Find list entry
+	// Find entry in build list and scroll to it
 	var list = app.build_tool.build_list;
 	for (var i = 0; i < ds_list_size(list.list); i++)
 	{
 		var value = list.list[|i];
-		if (value[0] != special || value[1] != pickname)
+		if (value[0] != pickspblock || value[1] != pickname)
 			continue
 
 		if (list.search_tbx.text != "")
@@ -84,9 +111,10 @@ function action_build_pick()
 		}
 
 		action_build_select(value)
+		
 		with (app.build_settings)
 		{
-			if (special)
+			if (pickspblock)
 			{
 				model_state = pickstate
 				temp_update_model()
@@ -101,6 +129,7 @@ function action_build_pick()
 		}
 
 		sortlist_view(list, value, false)
+		
 		return true
 	}
 

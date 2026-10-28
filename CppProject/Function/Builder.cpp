@@ -51,7 +51,7 @@ namespace CppProject
 			BuilderState singleEntry;
 			if (self->build_single_block != null_ && !is_undefined(self->build_single_block))
 				singleEntry = {
-					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
+					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id.ToInt(),
 					(uint16_t)self->build_single_stateid,
 					false
 				};
@@ -343,7 +343,7 @@ namespace CppProject
 
 				if (block)
 				{
-					state.blockId = block->block_id;
+					state.blockId = (uint16_t)block->block_id.ToInt();
 					if (block->timeline)
 						numTimelines++;
 				}
@@ -405,7 +405,7 @@ namespace CppProject
 
 				if (block)
 				{
-					state.blockId = block->block_id;
+					state.blockId = (uint16_t)block->block_id.ToInt();
 					if (block->timeline)
 						numTimelines++;
 				}
@@ -449,7 +449,11 @@ namespace CppProject
 	void builder_set_state_id(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)
 	{
 		WorldVec pos = { x, y, z };
-		Builder::GetSection(pos)->GetBuilderState(pos).stateId = val;
+		Section* section = Builder::GetSection(pos);
+		BuilderState state = section->GetBuilderState(pos);
+		state.stateId = val;
+
+		section->builder.paletteIndices[section->GetBlockOffset(pos)] = section->AddBuilderState(state);
 	}
 
 	void builder_set_render_model(Scope<obj_builder_thread> self, IntType x, IntType y, IntType z, IntType val)
@@ -539,6 +543,23 @@ namespace CppProject
 		return seed % ((uint64_t)std::max<IntType>(0, maximum) + 1);
 	}
 
+	BoolType block_get_filtered(IntType resId, IntType blockObjId)
+	{
+		obj_block* block = ObjTypeOpt(obj_block, blockObjId);
+		if (!block)
+			return true;
+
+		obj_resource* res = ObjType(obj_resource, resId);
+		if (!res->scenery_filter_enabled)
+			return false;
+
+		IntType blockId = block->block_id;
+		const ArrType& mask = res->scenery_filter_mask;
+		BoolType filtered = (blockId >= 0 && blockId < mask.Size() && !mask.BoolValue(blockId));
+
+		return res->scenery_filter_mode == e_block_filter_REMOVE ? !filtered : filtered;
+	}
+
 	IntType block_get_render_model(ScopeAny self, VarType object, RealType emissive, BoolType offset, BoolType offsetXY)
 	{
 		const ArrType& models = idVar(object, model).Arr();
@@ -572,8 +593,11 @@ namespace CppProject
 		return 0;
 	}
 
-	void builder_set_neighbor_face(Scope<obj_builder_thread> self, IntType modelId, IntType face, IntType opposite)
+	void builder_set_neighbor_face(Scope<obj_builder_thread> self, IntType modelId, IntType face)
 	{
+		// Flip face with XOR
+		IntType opposite = face ^ 1;
+
 		// Resolve the neighbor once for all four culling fields
 		obj_block_render_model* model = ObjType(obj_block_render_model, modelId);
 		BoolType full = model->face_full.BoolValue(opposite);
@@ -814,14 +838,24 @@ namespace CppProject
 		RealType nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2);
 		uint32_t normal = BuilderPackNormal(self, nx, ny, nz);
 
-		// Add face
-		FindVertexBuffer(self->block_vbuffer_current)->AddFace(
+		Vertex vertices[] = {
 			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, normal),
 			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, normal),
 			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal),
-			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, normal),
-			self->threadid
-		);
+			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, normal)
+		};
+		VertexBuffer* buffer = FindVertexBuffer(self->block_vbuffer_current);
+
+		// Add mode
+		if (!self->build_remove)
+			buffer->AddFace(vertices[0], vertices[1], vertices[2], vertices[3], self->threadid);
+		
+		// Remove mode
+		else
+		{
+			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2]);
+			buffer->RemoveTriangle(vertices[2], vertices[3], vertices[0]);
+		}
 	}
 
 	void builder_add_triangle_real(Scope<obj_builder_thread> self,
@@ -851,13 +885,20 @@ namespace CppProject
 		RealType nz = (y1 - y2) * (x3 - x2) - (x1 - x2) * (y3 - y2);
 		uint32_t normal = BuilderPackNormal(self, nx, ny, nz);
 
-		// Add triangle
-		FindVertexBuffer(self->block_vbuffer_current)->AddTriangle(
+		Vertex vertices[] = {
 			BuilderCreateVertex(self, x1, y1, z1, tx1, ty1, normal),
 			BuilderCreateVertex(self, x2, y2, z2, tx2, ty2, normal),
-			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal),
-			self->threadid
-		);
+			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal)
+		};
+		VertexBuffer* buffer = FindVertexBuffer(self->block_vbuffer_current);
+
+		// Add mode
+		if (!self->build_remove)
+			buffer->AddTriangle(vertices[0], vertices[1], vertices[2], self->threadid);
+		
+		// Remove mode
+		else
+			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2]);
 	}
 
 	BoolType res_load_scenery_world(Scope<obj_resource> self)

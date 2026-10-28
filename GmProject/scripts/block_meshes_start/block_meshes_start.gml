@@ -6,12 +6,13 @@ function block_meshes_start(keepblocks = false)
 	{
 		block_meshes_destroy()
 		block_meshes = array_create(count, null)
+		block_meshes_active = array_create(count, true)
 	}
 
 	var batching = true;
 	for (var s = 0; s < count; s++)
 	{
-		if (is_array(block_meshes_active) && !block_meshes_active[s])
+		if (!block_meshes_active[s])
 			continue
 
 		var mesh = block_meshes[s];
@@ -30,7 +31,6 @@ function block_meshes_start(keepblocks = false)
 		}
 	}
 
-	block_meshes_active = null
 	mc_builder.block_meshes = block_meshes
 	mc_builder.block_meshes_size = block_meshes_size
 }

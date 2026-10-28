@@ -1,5 +1,6 @@
-/// @desc Scenery timeline takes the place of the ground.
-/// @arg [historyobject] Import history for checking the size after loading
+/// @desc The scenery timeline takes the place of the ground. A pending history
+/// object can be supplied for checking the size after loading against the threshold.
+/// @arg [historyobject]
 
 function tl_replace_ground(hobj = null)
 {

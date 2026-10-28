@@ -569,6 +569,7 @@ TEMPLATED struct ALIGNED( 64 ) Ray
 	ALIGNED( 16 ) Vec3 O; uint32_t mask = RAY_MASK_INTERSECT_ALL;
 	ALIGNED( 16 ) Vec3 D; Index instIdx = 0;
 	ALIGNED( 16 ) Vec3 rD;
+	bool cullBackfaces = false; // Mine-imator extension
 	// a packed 16-byte hit record starts on a 16-byte boundary
 	alignas(bvh_packed_inst<Index> ? 16 : alignof(Intersection<Float, Index>)) Intersection<Float, Index> hit;
 };
@@ -7674,6 +7675,12 @@ TEMPLATED Float BVHBase<Float, Index>::SA( const Vec3& aabbMin, const Vec3& aabb
 // TriHit: the ray/triangle test shared by IntersectTri and TriOccludes. A hit is in [0, ray.hit.t).
 TEMPLATED bool BVHBase<Float, Index>::TriHit( const Ray& ray, const Slice& verts, const Index i0, const Index i1, const Index i2, Float& tHit, Float& uHit, Float& vHit ) const
 {
+	if (ray.cullBackfaces)
+	{
+		const Vertex v0 = verts[i0];
+		const Vec3 e1 = verts[i1] - v0, e2 = verts[i2] - v0;
+		if (tinybvh_dot( tinybvh_cross( e1, e2 ), ray.D ) >= 0) return false;
+	}
 #ifdef WATERTIGHT_TRITEST
 	// Woop et al.'s Watertight intersection algorithm.
 	// PART 1 - Precalculations

@@ -34,7 +34,10 @@ function builder_thread_event_create()
 	build_size_total = 0
 	
 	build_transform = false
+	build_edit = false
+	build_remove = false
 	build_edges = true
+	
 	build_single_block = null
 	build_single_stateid = 0
 	build_multithreaded = null

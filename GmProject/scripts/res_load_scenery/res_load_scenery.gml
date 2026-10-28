@@ -386,6 +386,9 @@ function res_load_scenery()
 			{
 				if (type != e_tl_type.SCENERY || temp.scenery != other.id)
 					continue
+
+				if (array_length(blocks_added) > 0 || array_length(block_meshes_edit) > 0)
+					tl_update_block_meshes()
 				
 				if (scenery_ground_hobj != null)
 					tl_replace_ground(scenery_ground_hobj)

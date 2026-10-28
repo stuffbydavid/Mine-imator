@@ -13,6 +13,42 @@
 
 namespace CppProject
 {
+	static BoolType SameTriangleVertex(const Vertex& a, const Vertex& b)
+	{
+		// Ignore derived tangents and runtime animation/emissive flags when matching model geometry
+		return (a.x == b.x && a.y == b.y && a.z == b.z && a.u == b.u && a.v == b.v && a.data1 == b.data1);
+	}
+
+	static BoolType SameTriangle(const Vertex* triangle, const Vertex& v1, const Vertex& v2, const Vertex& v3)
+	{
+		return SameTriangleVertex(triangle[0], v1) &&
+			   SameTriangleVertex(triangle[1], v2) &&
+			   SameTriangleVertex(triangle[2], v3);
+	}
+
+	static quint64 TriangleHash(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+	{
+		quint64 hash = 0;
+		const Vertex* vertices[] = { &v1, &v2, &v3 };
+		for (const Vertex* vertex : vertices)
+		{
+			quint64 part = 14695981039346656037ull;
+			float components[] = { vertex->x, vertex->y, vertex->z, vertex->u, vertex->v };
+			for (float value : components)
+			{
+				uint32_t bits = 0;
+				if (value != 0) // Normalize negative zero to match float equality
+					memcpy(&bits, &value, sizeof(bits));
+				
+				part = (part ^ bits) * 1099511628211ull;
+			}
+			
+			hash += (part ^ vertex->data1) * 1099511628211ull;
+		}
+
+		return hash;
+	}
+
 	VertexBuffer::VertexBuffer(QDataStream& stream, BoolType batching) : VertexBuffer()
 	{
 		valid = false;
@@ -69,7 +105,7 @@ namespace CppProject
 
 	IntType VertexBuffer::Submit(Shader* shader, Matrix boundsTransform)
 	{
-		if (!valid || !numIndices || !HasBuffers())
+		if (!valid || !completed || !numIndices || !HasBuffers())
 			return 0;
 
 		Bounds worldBounds;
@@ -155,6 +191,36 @@ namespace CppProject
 		thread.vertices.Append(v1);
 		thread.vertices.Append(v2);
 		thread.vertices.Append(v3);
+	}
+
+	void VertexBuffer::RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+	{
+		if (!valid || !numIndices)
+			return;
+
+		if (triangleRemovals.isEmpty())
+		{
+			if (App && VB)
+				VB->Invalidate(id);
+
+			completed = false;
+		}
+
+		QVector<TriangleRemoval>& matches = triangleRemovals[TriangleHash(v1, v2, v3)];
+		for (TriangleRemoval& match : matches)
+		{
+			if (SameTriangle(match.vertices, v1, v2, v3))
+			{
+				match.count++;
+				return;
+			}
+		}
+
+		matches.append(TriangleRemoval{ { v1, v2, v3 }, 1 });
+
+		triangleRemovalBounds.AddPoint({ v1.x, v1.y, v1.z });
+		triangleRemovalBounds.AddPoint({ v2.x, v2.y, v2.z });
+		triangleRemovalBounds.AddPoint({ v3.x, v3.y, v3.z });
 	}
 
 	void VertexBuffer::AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId)
@@ -254,35 +320,37 @@ namespace CppProject
 		else
 			processThread(0);
 
-		// Calculate tangent vector for each triangle
 		if (updateTangents)
-		{
-			for (IntType i = 0; i < numIndices / 3; i++)
-			{
-				Vertex& v1 = vertexData[indexData.Value(i * 3)];
-				Vertex& v2 = vertexData[indexData.Value(i * 3 + 1)];
-				Vertex& v3 = vertexData[indexData.Value(i * 3 + 2)];
-
-				VecType edge1 = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
-				VecType edge2 = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
-
-				VecType deltaUv1 = { v2.u - v1.u, v2.v - v1.v };
-				VecType deltaUv2 = { v3.u - v1.u, v3.v - v1.v };
-
-				RealType f = 1.0 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
-				VecType t = ((edge1 * deltaUv2.y - edge2 * deltaUv1.y) * f).GetNormalized();
-
-				v1.SetTangent(t.x, t.y, t.z);
-				v2.SetTangent(t.x, t.y, t.z);
-				v3.SetTangent(t.x, t.y, t.z);
-			}
-		}
+			UpdateTangents();
 
 		bounds = Bounds(vertexData);
 
 		CreateBuffers(false);
 
 		BuildBVH();
+	}
+
+	void VertexBuffer::UpdateTangents(IntType firstIndex)
+	{
+		for (IntType i = firstIndex / 3; i < numIndices / 3; i++)
+		{
+			Vertex& v1 = vertexData[indexData.Value(i * 3)];
+			Vertex& v2 = vertexData[indexData.Value(i * 3 + 1)];
+			Vertex& v3 = vertexData[indexData.Value(i * 3 + 2)];
+
+			VecType edge1 = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
+			VecType edge2 = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
+
+			VecType deltaUv1 = { v2.u - v1.u, v2.v - v1.v };
+			VecType deltaUv2 = { v3.u - v1.u, v3.v - v1.v };
+
+			RealType f = 1.0 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
+			VecType t = ((edge1 * deltaUv2.y - edge2 * deltaUv1.y) * f).GetNormalized();
+
+			v1.SetTangent(t.x, t.y, t.z);
+			v2.SetTangent(t.x, t.y, t.z);
+			v3.SetTangent(t.x, t.y, t.z);
+		}
 	}
 
 	void VertexBuffer::BuildBVH()
@@ -321,5 +389,147 @@ namespace CppProject
 			bytes += numVertices * sizeof(Vertex) + numIndices * sizeof(uint32_t);
 
 		return bytes;
+	}
+
+	VertexBuffer* VertexBuffer::Copy() const
+	{
+		if (!valid || !completed)
+			return nullptr;
+
+		VertexBuffer* copy = new VertexBuffer;
+		copy->batching = batching;
+		copy->numVertices = numVertices;
+		copy->numIndices = numIndices;
+		copy->bounds = bounds;
+		if (numVertices)
+			copy->vertexData.Copy(vertexData, numVertices);
+		if (numIndices)
+			copy->indexData.Copy(indexData, numIndices);
+
+		return copy;
+	}
+
+	void VertexBuffer::UpdateBuffers()
+	{
+		if (!valid)
+			return;
+
+		if (App && VB)
+			VB->Invalidate(id);
+
+		// Match only retained triangles, before appending their replacements
+		ApplyTriangleRemovals();
+
+		// Append regenerated primitives without uploading an intermediate buffer
+		IntType firstIndex = numIndices;
+		for (ThreadData& thread : threads)
+		{
+			if (!thread.indices.Size())
+				continue;
+
+			vertexData.Alloc(numVertices + thread.vertices.Size(), false);
+			indexData.Alloc(numIndices + thread.indices.Size(), false);
+			memcpy(vertexData.data + numVertices, thread.vertices.Data(), thread.vertices.SizeInBytes());
+			for (IntType i = 0; i < thread.indices.Size(); i++)
+				indexData[numIndices + i] = numVertices + thread.indices.Value(i);
+
+			numVertices += thread.vertices.Size();
+			numIndices += thread.indices.Size();
+			thread.vertices.Clear();
+			thread.indices.Clear();
+		}
+
+		UpdateTangents(firstIndex);
+
+		bounds.Reset();
+		for (IntType i = 0; i < numIndices; i++)
+		{
+			const Vertex& vertex = vertexData[indexData[i]];
+			bounds.AddPoint({ vertex.x, vertex.y, vertex.z });
+		}
+
+		Mesh<Vertex>::UpdateBuffers();
+		completed = true;
+
+		BuildBVH();
+	}
+
+	void VertexBuffer::ApplyTriangleRemovals()
+	{
+		if (triangleRemovals.isEmpty())
+			return;
+
+		// Keep complete triangles in their original order
+		IntType keptIndices = 0;
+		for (IntType i = 0; i < numIndices; i += 3)
+		{
+			const Vertex& v1 = vertexData[indexData[i]];
+			const Vertex& v2 = vertexData[indexData[i + 1]];
+			const Vertex& v3 = vertexData[indexData[i + 2]];
+			BoolType remove = false;
+
+			// Bounds only reject distant candidates while deletion always requires an exact triangle match
+			if (triangleRemovalBounds.ContainsPoint({ v1.x, v1.y, v1.z }))
+			{
+				auto found = triangleRemovals.find(TriangleHash(v1, v2, v3));
+				if (found != triangleRemovals.end())
+				{
+					for (TriangleRemoval& match : found.value())
+					{
+						if (match.count > 0 && SameTriangle(match.vertices, v1, v2, v3))
+						{
+							match.count--;
+							remove = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (remove)
+				continue;
+
+			for (IntType v = 0; v < 3; v++)
+				indexData[keptIndices++] = indexData[i + v];
+		}
+
+		triangleRemovals.clear();
+		triangleRemovalBounds.Reset();
+
+		if (keptIndices == numIndices)
+			return;
+
+		numIndices = keptIndices;
+		bounds.Reset();
+
+		if (!numIndices)
+		{
+			numVertices = 0;
+			vertexData.FreeData();
+			indexData.FreeData();
+			return;
+		}
+
+		// Compact unused vertices and remap shared indices
+		Heap<uint32_t> remap(numVertices);
+		for (IntType i = 0; i < numIndices; i++)
+			remap[indexData[i]] = 1;
+
+		IntType keptVertices = 0;
+		for (IntType i = 0; i < numVertices; i++)
+		{
+			if (!remap[i])
+				continue;
+
+			remap[i] = keptVertices;
+			vertexData[keptVertices++] = vertexData[i];
+		}
+
+		for (IntType i = 0; i < numIndices; i++)
+			indexData[i] = remap[indexData[i]];
+
+		numVertices = keptVertices;
+		vertexData.Alloc(numVertices, false);
+		indexData.Alloc(numIndices, false);
 	}
 }

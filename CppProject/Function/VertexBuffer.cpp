@@ -109,6 +109,21 @@ namespace CppProject
 			buf->batching = batching;
 	}
 
+	IntType vbuffer_copy(IntType id)
+	{
+		if (VertexBuffer* buffer = FindVertexBuffer(id))
+			if (VertexBuffer* copy = buffer->Copy())
+				return copy->id;
+
+		return null_;
+	}
+
+	void vbuffer_update(IntType id)
+	{
+		if (VertexBuffer* buffer = FindVertexBuffer(id))
+			buffer->UpdateBuffers();
+	}
+
 	void submit_batch()
 	{
 		GFX->SubmitBatch();

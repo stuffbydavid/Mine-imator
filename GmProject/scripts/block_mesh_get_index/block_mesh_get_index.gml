@@ -1,4 +1,5 @@
-/// @desc Returns the array index of a mesh containing the given block
+/// CppSeparate IntType block_mesh_get_index(IntType, IntType, IntType, IntType, IntType)
+/// @desc Returns the array index of a block mesh containing the given block.
 /// @arg x
 /// @arg y
 /// @arg z

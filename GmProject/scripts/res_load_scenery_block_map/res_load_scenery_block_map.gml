@@ -1,4 +1,4 @@
-/// @desc Count source blocks and apply the resource filter to builder cells.
+/// @desc Count source blocks and apply the resource filter to builder blocks.
 
 function res_load_scenery_block_map(blocksonly = false)
 {
@@ -100,7 +100,7 @@ function res_load_scenery_block_map(blocksonly = false)
 
 	for (var i = 0; i < array_length(blockcounts); i++)
 		if (blockcounts[i] > 0)
-			scenery_block_map[?string(i)] = blockcounts[i]
+			scenery_block_map[?block_objs[i].name] = blockcounts[i]
 
 	scenery_tl_types_count_ready = true
 

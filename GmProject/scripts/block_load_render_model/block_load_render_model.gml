@@ -86,6 +86,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		
 		// Add elements
 		element_amount = 0
+		
+		// Flag vertex buffers used
+		block_vbuffer_used = array_create(e_block_depth.amount * e_block_vbuffer.amount, false)
+		
 		if (elementmodel != null)
 		{
 			element = array_create(elementmodel.element_amount, 0)
@@ -118,9 +122,11 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						facenewdir[@f] = f
 					
 					light_emission = elem.light_emission
+					
 					rotated = elem.rotated
 					if (rotated)
 						matrix = matrix_multiply(elem.matrix, rotmat)
+					
 					else if (rot[X] > 0 || rot[Z] > 0)
 					{
 						var facerot = rot;
@@ -673,6 +679,17 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							}
 						}
 					}
+
+					// Flag the buffers used by the model
+					for (var f = 0; f < block_faces; f++)
+					{
+						if (face_render[f] && face_vbuffer[f] = null)
+						{
+							var bufferindex = face_depth[f] * e_block_vbuffer.amount + face_block_vbuffer[f];
+							other.block_vbuffer_used[@bufferindex] = true
+						}
+					}
+					
 					other.element[@other.element_amount++] = id
 				}
 			}

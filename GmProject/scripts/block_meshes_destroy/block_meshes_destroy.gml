@@ -6,5 +6,6 @@ function block_meshes_destroy()
 				instance_destroy()
 
 	block_meshes = []
+	block_meshes_active = []
 	block_meshes_transparent = false
 }

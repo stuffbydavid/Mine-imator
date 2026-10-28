@@ -11,23 +11,26 @@ function app_update_place_scenery()
 	inversetransform = matrix_inverse_ext(worldtransform)
 	localpos = point3D_mul_matrix(place_pos, inversetransform)
 	
-	// Find local cell and face
-	var cell, sourceface;
-	cell = vec3(
+	// Find local block position and face
+	var blockpos, sourceface;
+	blockpos = vec3(
 		floor((localpos[X] - place_view_normal[X]) / block_size),
 		floor((localpos[Y] - place_view_normal[Y]) / block_size),
 		floor((localpos[Z] - place_view_normal[Z]) / block_size)
 	)
 	sourceface = point3D_mul_matrix(vec3(
-		(cell[X] + 0.5) * block_size + place_view_normal[X] * block_half_size,
-		(cell[Y] + 0.5) * block_size + place_view_normal[Y] * block_half_size,
-		(cell[Z] + 0.5) * block_size + place_view_normal[Z] * block_half_size
+		(blockpos[X] + 0.5) * block_size + place_view_normal[X] * block_half_size,
+		(blockpos[Y] + 0.5) * block_size + place_view_normal[Y] * block_half_size,
+		(blockpos[Z] + 0.5) * block_size + place_view_normal[Z] * block_half_size
 	), worldtransform)
+
+	if (place_build)
+		place_block_pos = array_copy_1d(blockpos)
 
 	// Assign wireframe box transform
 	if (place_build)
 	{
-		var boxcenter = vec3_mul(vec3_add(cell, 0.5), block_size);
+		var boxcenter = vec3_mul(vec3_add(blockpos, 0.5), block_size);
 		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3(1)), worldtransform)
 		build_box_render = build_box
 	}
@@ -60,7 +63,7 @@ function app_update_place_scenery()
 		else
 			targetmax = vec3_mul(place_tl.temp.scenery.scenery_size, targetrepeat)
 
-		// Anchor a local cell to the clicked cell
+		// Anchor a local block position to the clicked block position
 		targetface = vec3(0)
 		for (var axis = X; axis <= Z; axis++)
 		{
@@ -80,8 +83,8 @@ function app_update_place_scenery()
 	}
 	else
 		place_pos = point3D_mul_matrix(vec3(
-			(cell[X] + 0.5 + place_view_normal[X]) * block_size,
-			(cell[Y] + 0.5 + place_view_normal[Y]) * block_size,
-			(cell[Z] + place_view_normal[Z]) * block_size
+			(blockpos[X] + 0.5 + place_view_normal[X]) * block_size,
+			(blockpos[Y] + 0.5 + place_view_normal[Y]) * block_size,
+			(blockpos[Z] + place_view_normal[Z]) * block_size
 		), worldtransform)
 }

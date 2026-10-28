@@ -62,6 +62,57 @@ namespace CppProject
 		}
 	}
 
+	template<typename V> void Mesh<V>::UpdateBuffers()
+	{
+		if (!numVertices || !numIndices)
+		{
+			FreeBuffers(false);
+			return;
+		}
+
+		if (!HasBuffers())
+		{
+			CreateBuffers(false);
+			return;
+		}
+
+#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3D11_BUFFER_DESC vertexDesc, indexDesc;
+			d3dVertexBuffer->GetDesc(&vertexDesc);
+			d3dIndexBuffer->GetDesc(&indexDesc);
+
+			// Reallocate when editing changes the buffer sizes
+			if (vertexDesc.ByteWidth != vertexData.SizeInBytes() || indexDesc.ByteWidth != indexData.SizeInBytes())
+			{
+				FreeBuffers(false);
+				CreateBuffers(false);
+				return;
+			}
+
+			D3DContext->UpdateSubresource(d3dVertexBuffer, 0, nullptr, vertexData.Data(), 0, 0);
+			D3DContext->UpdateSubresource(d3dIndexBuffer, 0, nullptr, indexData.Data(), 0, 0);
+		}
+#endif
+		if (IS_OPENGL)
+		{
+			glVertexBuffer->bind();
+			if (glVertexBuffer->size() != vertexData.SizeInBytes())
+				glVertexBuffer->allocate(vertexData.Data(), vertexData.SizeInBytes());
+			else
+				glVertexBuffer->write(0, vertexData.Data(), vertexData.SizeInBytes());
+			glVertexBuffer->release();
+
+			glIndexBuffer->bind();
+			if (glIndexBuffer->size() != indexData.SizeInBytes())
+				glIndexBuffer->allocate(indexData.Data(), indexData.SizeInBytes());
+			else
+				glIndexBuffer->write(0, indexData.Data(), indexData.SizeInBytes());
+			glIndexBuffer->release();
+		}
+	}
+
 	template<typename V> BoolType Mesh<V>::HasBuffers() const
 	{
 #if OS_WINDOWS

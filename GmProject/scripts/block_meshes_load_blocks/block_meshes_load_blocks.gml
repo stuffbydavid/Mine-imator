@@ -26,6 +26,7 @@ function block_meshes_load_blocks(blocksonly = false)
 	{
 		block_meshes_destroy()
 		block_meshes = array_create(count, null)
+		block_meshes_active = array_create(count, false)
 
 		if (blocksonly)
 			scenery_size = vec3(size[Y], size[X], size[Z])
@@ -56,7 +57,7 @@ function block_meshes_load_blocks(blocksonly = false)
 				min(block_mesh_size, size[Y] - start[Y]),
 				min(block_mesh_size, size[Z] - start[Z])
 			)
-			active = block_mesh_load_blocks(start)
+			active = block_mesh_load_blocks(start[X], start[Y], start[Z])
 		}
 
 		if (!active && array_length(mesh.block_vbuffer_render_order) = 0)
@@ -65,6 +66,7 @@ function block_meshes_load_blocks(blocksonly = false)
 				instance_destroy()
 
 			block_meshes[@s] = null
+			block_meshes_active[@s] = false
 		}
 	}
 	

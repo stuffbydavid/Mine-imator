@@ -24,6 +24,7 @@ function app_update_place()
 		
 			place_target_tl = null
 			place_view_pos = null
+			place_block_pos = null
 		}
 	}
 	
@@ -42,6 +43,8 @@ function app_update_place()
 	place_target_tl_root = null
 	place_pos = place_view_pos
 	place_rot = vec3(0)
+	place_block_pos = null
+	
 	build_box_render = null
 		
 	if (!place_view_air)

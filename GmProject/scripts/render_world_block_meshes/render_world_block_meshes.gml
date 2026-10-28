@@ -3,8 +3,10 @@
 /// @arg diffuse
 /// @arg normal
 /// @arg material
+/// @arg [meshoffset]
+/// @arg [meshcount]
 
-function render_world_block_meshes(obj, resdif, resnorm, resmat)
+function render_world_block_meshes(obj, resdif, resnorm, resmat, meshoffset = 0, meshcount = null)
 {
 	if (array_length(obj.block_meshes) = 0)
 		return 0
@@ -30,7 +32,7 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 
 	// Cache submissions across all meshes using the same resources
 	var texlast, matlast, normlast, formatlast, colorlast, waterlast;
-	var roughlast, metallast, emissivelast, framelast, meshcount, vbufprev, filterprev;
+	var roughlast, metallast, emissivelast, framelast, vbufprev, filterprev, meshend, mesheditcount;
 	texlast = null
 	matlast = null
 	normlast = null
@@ -41,10 +43,18 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 	metallast = null
 	emissivelast = null
 	framelast = null
-	meshcount = array_length(obj.block_meshes)
 	vbufprev = null
 	filterprev = null
-
+	
+	meshend = array_length(obj.block_meshes)
+	if (meshcount != null)
+		meshend = min(meshend, meshoffset + meshcount)
+	
+	if (obj.object_index = obj_timeline)
+		mesheditcount = array_length(obj.block_meshes_edit)
+	else
+		mesheditcount = 0
+	
 	// Keep opaque and transparent submissions in separate mip-filter passes
 	for (var d = 0; d < e_block_depth.amount; d++)
 	{
@@ -53,6 +63,7 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 			(d != e_block_depth.DEPTH0 && render_world_blocks_transparent = false)))
 			continue
 
+		// Disable texture filtering for transparent blocks
 		if (d = e_block_depth.DEPTH1 && render_world_blocks_transparent = null &&
 			!render_fast_pass && shader_texture_filter_mipmap && !app.project_render_transparent_block_texture_filtering)
 		{
@@ -60,9 +71,19 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 			gpu_set_tex_mip_bias(-16)
 		}
 
-		for (var s = 0; s < meshcount; s++)
+		for (var s = meshoffset; s < meshend; s++)
 		{
-			var mesh = obj.block_meshes[s];
+			var source, mesh;
+			source = obj.block_meshes[s]
+			mesh = null
+			
+			// Edited meshes cache the render order of both source and override buffers
+			if (s < mesheditcount)
+				mesh = obj.block_meshes_edit[s]
+			
+			if (mesh = null)
+				mesh = source
+				
 			if (mesh = null)
 				continue
 
@@ -216,10 +237,16 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat)
 							render_set_texture(resdif, tex)
 							texlast = tex
 						}
+						
 						vbufprev = vb
 					}
 
-					vertex_submit(block_vbuffer[@index], pr_trianglelist, -1)
+					var vbuf = block_vbuffer[@index];
+					
+					if (vbuf = null && source != null)
+						vbuf = source.block_vbuffer[@index]
+					
+					vertex_submit(vbuf, pr_trianglelist, -1)
 				}
 			}
 		}
