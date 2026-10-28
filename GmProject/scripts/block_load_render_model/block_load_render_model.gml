@@ -74,13 +74,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		weight = wei
 		
 		// For culling
-		for (var f = 0; f < block_faces; f++)
-		{
-			face_full[f] = false
-			face_min[f] = null
-			face_max[f] = null
-			face_min_depth[f] = null
-		}
+		face_full = array_create(block_faces, false)
+		face_min = array_create(block_faces, null)
+		face_max = array_create(block_faces, null)
+		face_min_depth = array_create(block_faces, null)
 		
 		// For the world importer
 		preview_color = array_create(block_faces, null)
@@ -89,8 +86,14 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		
 		// Add elements
 		element_amount = 0
+		
+		// Flag vertex buffers used
+		block_vbuffer_used = array_create(e_block_depth.amount * e_block_vbuffer.amount, false)
+		
 		if (elementmodel != null)
 		{
+			element = array_create(elementmodel.element_amount, 0)
+
 			for (var e = 0; e < elementmodel.element_amount; e++)
 			{
 				var elem = elementmodel.element[e];
@@ -100,19 +103,30 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 				{
 					from = elem.from
 					to = elem.to
+
+					// Allocate face arrays before filling rotated face indices
+					face_render = array_create(block_faces, false)
+					face_uv = array_create(block_faces, 0)
+					face_color_index = array_create(block_faces, 0)
+					face_depth = array_create(block_faces, 0)
+					face_block_vbuffer = array_create(block_faces, 0)
+					face_vbuffer = array_create(block_faces, 0)
+					face_edge = array_create(block_faces, false)
 					
 					// Set face rotations and rotated directions
 					var facenewdir, faceuvrot;
+					facenewdir = array_create(block_faces, 0)
+					faceuvrot = array_create(block_faces, 0)
+
 					for (var f = 0; f < block_faces; f++)
-					{
-						facenewdir[f] = f
-						faceuvrot[f] = 0
-					}
+						facenewdir[@f] = f
 					
 					light_emission = elem.light_emission
+					
 					rotated = elem.rotated
 					if (rotated)
 						matrix = matrix_multiply(elem.matrix, rotmat)
+					
 					else if (rot[X] > 0 || rot[Z] > 0)
 					{
 						var facerot = rot;
@@ -217,6 +231,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_render[nd] = elem.face_render[f]
 						if (!face_render[nd])
 							continue
+
+						face_uv[@nd] = array_create(4, 0)
 						
 						var facerot = elem.face_rotation[f];
 						if (!uvlock)
@@ -663,7 +679,18 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							}
 						}
 					}
-					other.element[other.element_amount++] = id
+
+					// Flag the buffers used by the model
+					for (var f = 0; f < block_faces; f++)
+					{
+						if (face_render[f] && face_vbuffer[f] = null)
+						{
+							var bufferindex = face_depth[f] * e_block_vbuffer.amount + face_block_vbuffer[f];
+							other.block_vbuffer_used[@bufferindex] = true
+						}
+					}
+					
+					other.element[@other.element_amount++] = id
 				}
 			}
 		}

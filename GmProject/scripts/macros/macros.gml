@@ -179,9 +179,6 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
-	#macro surface_rg32float			8
-	#macro place_id_bits				21
-	#macro place_dir_none				e_dir.amount
 
 	// Assets
 	#macro default_model					"human"
@@ -242,6 +239,8 @@ function macros()
 	#macro fog_near				3000
 	#macro fog_size				2000
 	#macro fog_height			1250
+	#macro place_far			2000
+	#macro build_far			1000
 	
 	// Vectors and matrices
 	#macro X					0

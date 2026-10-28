@@ -23,5 +23,5 @@ function builder_add_render_model_multi_part(xx, yy, zz, arr)
 		ds_list_add(mc_builder.block_render_model_multipart, arr)
 	}
 	
-	builder_set_render_model(xx, yy, zz, -index) // negative number to use multipart grid
+	builder_set_render_model(xx, yy, zz, -index) // Negative number to use multipart list
 }

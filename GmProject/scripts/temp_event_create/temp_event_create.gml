@@ -85,7 +85,7 @@ function temp_event_create()
 	
 	block_meshes = []
 	block_meshes_size = vec3(1)
-	block_meshes_active = null
+	block_meshes_active = []
 	block_meshes_transparent = false
 	
 	scenery = null

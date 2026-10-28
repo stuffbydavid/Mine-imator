@@ -21,6 +21,9 @@ function block_meshes_done()
 				for (var vb = 0; vb < e_block_vbuffer.amount; vb++)
 				{
 					var index = d * e_block_vbuffer.amount + vb;
+					if (block_vbuffer[@index] = null)
+						continue
+
 					vertex_end(block_vbuffer[@index])
 					block_vbuffer[@index] = vbuffer_generate_tangents(block_vbuffer[@index])
 					vertex_freeze(block_vbuffer[@index])
@@ -48,12 +51,13 @@ function block_meshes_done()
 			mesh.block_vbuffer_depth_active[@e_block_depth.DEPTH2])
 			block_meshes_transparent = true
 
-		if (!hasmesh)
+		if (!hasmesh && mesh.block_grid_buffer = null)
 		{
 			with (mesh)
 				instance_destroy()
 
 			block_meshes[@s] = null
+			block_meshes_active[@s] = false
 		}
 	}
 

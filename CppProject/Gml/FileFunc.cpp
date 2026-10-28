@@ -357,17 +357,20 @@ namespace CppProject
 		{
 			StringHashMap* map = new StringHashMap;
 			StringHashMap* mapTypes = nullptr;
+			map->hash.reserve(obj.size());
 
 			// Store types
 			if (typeMap)
 			{
 				mapTypes = new StringHashMap;
+				mapTypes->hash.reserve(obj.size());
 				typeMap->hash[map->id] = { mapTypes->id, ds_type_map };
 			}
 
-			for (StringType key : obj.keys())
+			for (auto it = obj.constBegin(); it != obj.constEnd(); ++it)
 			{
-				const QJsonValue& val = obj.value(key);
+				StringType key = it.key();
+				const QJsonValue val = it.value();
 				e_json_type jsonType;
 
 				if (val.isArray())

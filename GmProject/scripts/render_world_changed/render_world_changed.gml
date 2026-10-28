@@ -4,7 +4,6 @@
 function render_world_changed()
 {
 	render_world_id++
-	render_place_tl_list = null
 	
 	app.render_list_update = true
 	

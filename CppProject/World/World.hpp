@@ -59,6 +59,7 @@ namespace CppProject
 		WorldVec(const VecType& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 		WorldVec(IntType x, IntType y, IntType z) : x(x), y(y), z(z) {}
 
+		bool operator==(const WorldVec& vec) const { return x == vec.x && y == vec.y && z == vec.z; }
 		WorldVec operator+(const WorldVec& vec) const { return { x + vec.x, y + vec.y, z + vec.z }; }
 		WorldVec operator-(const WorldVec& vec) const { return { x - vec.x, y - vec.y, z - vec.z }; }
 		WorldVec operator*(const WorldVec& vec) const { return { x * vec.x, y * vec.y, z * vec.z }; }

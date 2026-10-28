@@ -43,9 +43,7 @@ function builder_generate()
 	var solidfaces = 0;
 	for (var f = 0; f < block_faces; f++)
 	{
-		var opposite, othermodel;
-		opposite = f ^ 1
-		othermodel = null
+		var othermodel = null;
 		if (!build_edge[f])
 		{
 			var neighborx, neighbory, neighborz;
@@ -65,8 +63,9 @@ function builder_generate()
 
 			othermodel = builder_get_render_model(neighborx, neighbory, neighborz)
 		}
+		
 		if (othermodel != null)
-			builder_set_neighbor_face(othermodel, f, opposite)
+			builder_set_neighbor_face(othermodel, f)
 		else
 		{
 			// Initialize missing neighbors without clearing faces that will be copied

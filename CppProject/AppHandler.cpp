@@ -10,6 +10,7 @@
 #include "Render/GLWidget.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/PrimitiveRenderer.hpp"
+#include "Render/Raycast.hpp"
 #include "Render/TexturePage.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
@@ -18,6 +19,7 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QNetworkInterface>
+#include <QSslConfiguration>
 #include <QStyle>
 #include <QTimer>
 
@@ -98,6 +100,14 @@ namespace CppProject
 			// Create application
 			new QApplication(argc, argv);
 			QCoreApplication::setApplicationName(PROJECT_NAME);
+
+			// Initialize HTTPS certificates while startup loads the application assets
+			QThread* sslThread = QThread::create([]
+			{
+				QSslConfiguration::defaultConfiguration();
+			});
+			threads.append(sslThread);
+			sslThread->start();
 
 			// Set working directory
 		#if RELEASE_MODE
@@ -309,6 +319,7 @@ namespace CppProject
 		// Create renderers
 		prRenderer = new PrimitiveRenderer;
 		vbRenderer = new VertexBufferRenderer;
+		worldRaycast = new Raycast;
 
 		// Reserve UI and resource texture pages before loading assets
 		texture_page_set_current(texture_page_create());

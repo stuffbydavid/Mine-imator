@@ -61,9 +61,13 @@ function tl_event_create()
 	part_root = null
 	
 	block_meshes = []
+	block_meshes_edit = []
 	block_meshes_size = vec3(1)
-	block_meshes_active = null
+	block_meshes_active = []
 	block_meshes_transparent = false
+	
+	blocks_added_palette = []
+	blocks_added = []
 	
 	scenery_animate = false
 	scenery_animate_create = true
@@ -248,7 +252,6 @@ function tl_event_create()
 	place_target = false
 	parent_is_placed = false
 	parent_is_place_target = false
-	render_place_id = 0
 	
 	// Path
 	path_update = false

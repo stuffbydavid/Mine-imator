@@ -1,3 +1,4 @@
+/// CppSeparate void vbuffer_add_triangle(VecType, VecType, VecType, VecType, VecType, VecType, VarType normal1 = null_, VarType normal2 = null_, VarType normal3 = null_, BoolType invert = false, VarType matrix = null_)
 /// @desc Adds a triangle to the current vertex buffer.
 
 function vbuffer_add_triangle(pos1, pos2, pos3, tex1, tex2, tex3, normal1 = null, normal2 = null, normal3 = null, invert = false, matrix = null)

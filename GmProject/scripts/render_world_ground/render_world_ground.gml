@@ -10,9 +10,8 @@ function render_world_ground()
 	
 	if (render_fast_pass)
 		return render_world_ground_fast()
-		
-	if (render_place_pass)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.BLOCK)
+
+	world_raycast_set_object(0)
 
 	var materialres, normalres, res, hasmat, hasnorm;
 	materialres = res_eval(env_ground_tex_material)
@@ -84,11 +83,10 @@ function render_world_ground()
 	
 	vbuffer_render(env_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16 * groundscale, block_size / 16 * groundscale, 1))
 	
+	world_raycast_set_object(noone)
+
 	// Reset
 	render_set_uniform_int(e_uniform.IS_GROUND, 0)
-	
-	if (render_place_pass)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.SCENE)
 	
 	if (iswater)
 	{

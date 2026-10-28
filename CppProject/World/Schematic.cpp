@@ -465,7 +465,7 @@ namespace CppProject
 				else if (remap.size() != 1)
 					throw QString("Missing chunk block data");
 
-				// Copy only cells inside the selection, using Minecraft's Y-up ordering
+				// Copy only blocks inside the selection, using Minecraft's Y-up ordering
 				for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + SECTION_SIZE, box.end.y); y++)
 				for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
 				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)

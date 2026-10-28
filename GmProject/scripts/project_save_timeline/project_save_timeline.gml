@@ -92,12 +92,51 @@ function project_save_timeline()
 				json_save_array_done()
 			}
 		}
+
+		// Added blocks
+		if (type = e_tl_type.SCENERY && array_length(blocks_added) > 0)
+		{
+			json_save_array_start("blocks_added_palette")
+
+				for (var i = 0; i < array_length(blocks_added_palette); i++)
+				{
+					var entry, block, paletteentry, vars;
+					entry = blocks_added_palette[i]
+					block = block_objs[entry[0]]
+					paletteentry = [ block != null ? block.name : "air" ]
+
+					if (block != null)
+					{
+						vars = block_get_state_id_state_vars(block, entry[1])
+						for (var s = 0; s < array_length(vars); s += 2)
+							array_add(paletteentry, vars[s] + "=" + vars[s + 1])
+					}
+
+					json_save_array_value(paletteentry)
+				}
+
+			json_save_array_done()
+
+			json_save_array_start("blocks_added")
+
+				for (var i = 0; i < array_length(blocks_added); i++)
+				{
+					var entry, pos;
+					entry = blocks_added[i]
+					pos = entry[0]
+					json_save_array_value([ vec3(pos[X], pos[Z], pos[Y]), entry[1] ])
+				}
+
+			json_save_array_done()
+		}
 		
 		if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
 		{
 			json_save_object_start("block")
+			
 				json_save_var("name", block_name)
 				json_save_var_state_vars("state", block_state)
+				
 				if (part_of = null && !has_temp)
 				{
 					json_save_var_save_id("tex", block_tex)
@@ -108,6 +147,7 @@ function project_save_timeline()
 					json_save_var_point3D("repeat", block_repeat)
 					json_save_var_bool("center", block_center)
 				}
+			
 			json_save_object_done()
 		}
 
@@ -143,6 +183,7 @@ function project_save_timeline()
 			json_save_var_save_id("parent", parent)
 		else
 			json_save_var_save_id("parent", app)
+		
 		json_save_var("parent_tree_index", ds_list_find_index(parent.tree_list, id))
 		
 		if (value_type[e_value_type.HIERARCHY])

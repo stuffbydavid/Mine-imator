@@ -18,33 +18,6 @@ namespace CppProject
 		return false;
 	}
 
-	void ds_grid_clear(IntType id, VarType value)
-	{
-		// Unused
-	}
-
-	IntType ds_grid_create(IntType, IntType)
-	{
-		// Unused
-		return 0;
-	}
-
-	void ds_grid_destroy(IntType id)
-	{
-		// Unused
-	}
-
-	VarType ds_grid_get(IntType id, IntType x, IntType y)
-	{
-		// Unused
-		return VarType();
-	}
-
-	void ds_grid_set(IntType id, IntType x, IntType y, VarType value)
-	{
-		// Unused
-	}
-
 	void ds_list_add(VarArgs args)
 	{
 		if (args.Size() < 2)

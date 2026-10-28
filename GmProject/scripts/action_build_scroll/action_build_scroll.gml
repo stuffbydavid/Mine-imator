@@ -16,5 +16,6 @@ function action_build_scroll()
 	value = list.display_list[|newindex]
 	
 	action_build_select(value)
+	
 	sortlist_view(list, value, false)
 }

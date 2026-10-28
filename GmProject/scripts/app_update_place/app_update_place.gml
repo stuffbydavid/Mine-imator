@@ -24,6 +24,7 @@ function app_update_place()
 		
 			place_target_tl = null
 			place_view_pos = null
+			place_block_pos = null
 		}
 	}
 	
@@ -42,10 +43,9 @@ function app_update_place()
 	place_target_tl_root = null
 	place_pos = place_view_pos
 	place_rot = vec3(0)
+	place_block_pos = null
+	
 	build_box_render = null
-		
-	if (!place_build)
-		action_tl_lock_tree(place_tl, false, null)
 		
 	if (!place_view_air)
 	{
@@ -187,6 +187,7 @@ function app_update_place()
 	}
 
 	// Update timeline and parent to compatible objects
+	action_tl_lock_tree(place_tl, false, null)
 	tl_value_set_matrix(place_tl, matrix_create(place_pos, place_rot, place_sca), place_spawn)
 	place_tl.update_matrix = true
 		

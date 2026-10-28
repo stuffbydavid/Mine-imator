@@ -9,9 +9,11 @@ function builder_read_blocks_file()
 	build_size[Y] = buffer_read_short_be()
 	build_size[X] = buffer_read_short_be()
 	build_size[Z] = buffer_read_short_be()
+	
 	log("Size", string(build_size[X]) + " x " + string(build_size[Y]) + " x " + string(build_size[Z]))
 	
 	builder_start()
+	
 	sch_timeline_amount = 0
 	
 	repeat (build_size_total)

@@ -85,6 +85,20 @@ function tl_copy(to)
 	to.path_shape_tex_length = path_shape_tex_length
 	
 	to.camera_effect_type = camera_effect_type
+
+	if (type = e_tl_type.SCENERY)
+	{
+		to.blocks_added_palette = []
+		for (var i = 0; i < array_length(blocks_added_palette); i++)
+			array_add(to.blocks_added_palette, array_copy_1d(blocks_added_palette[i]), false)
+
+		to.blocks_added = []
+		for (var i = 0; i < array_length(blocks_added); i++)
+		{
+			var entry = blocks_added[i];
+			array_add(to.blocks_added, [ array_copy_1d(entry[0]), entry[1] ], false)
+		}
+	}
 	
 	if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
 	{

@@ -1,16 +1,22 @@
-/// @desc Count source blocks and apply the resource filter to builder cells.
+/// @desc Count source blocks and apply the resource filter to builder blocks.
 
-function res_load_scenery_block_map()
+function res_load_scenery_block_map(blocksonly = false)
 {
+	// Keep the decoded source before applying filters
+	if (!block_meshes_load_blocks(blocksonly))
+		return false
+
+	if (blocksonly)
+		return true
+
 	var res, tlamount, blockcounts, meshwidth, meshheight;
 	res = id
 	tlamount = 0
 	blockcounts = array_create(array_length(block_objs), 0)
-	meshwidth = ceil(mc_builder.build_size[X] / block_mesh_size)
-	meshheight = ceil(mc_builder.build_size[Y] / block_mesh_size)
+	meshwidth = block_meshes_size[X]
+	meshheight = block_meshes_size[Y]
 
-	block_meshes_size = vec3(meshwidth, meshheight, ceil(mc_builder.build_size[Z] / block_mesh_size))
-	block_meshes_active = array_create(meshwidth * meshheight * block_meshes_size[Z], false)
+	block_meshes_active = array_create(array_length(block_meshes), false)
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
@@ -94,7 +100,9 @@ function res_load_scenery_block_map()
 
 	for (var i = 0; i < array_length(blockcounts); i++)
 		if (blockcounts[i] > 0)
-			scenery_block_map[?string(i)] = blockcounts[i]
+			scenery_block_map[?block_objs[i].name] = blockcounts[i]
 
 	scenery_tl_types_count_ready = true
+
+	return true
 }

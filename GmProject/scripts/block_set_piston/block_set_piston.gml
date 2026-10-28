@@ -2,6 +2,9 @@ function block_set_piston()
 {
 	var staticmodel = (!mc_builder.block_tl_add || block_tl_map = null);
 
+	if (build_edit && !staticmodel)
+		staticmodel = (block_tl_map[?build_pos_index] != block_current.block_id)
+
 	if (mc_builder.block_tl_types != null && !array_contains(mc_builder.block_tl_types, block_current.tl_type))
 		staticmodel = true
 

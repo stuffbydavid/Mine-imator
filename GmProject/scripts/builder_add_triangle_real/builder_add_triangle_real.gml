@@ -2,6 +2,9 @@
 
 function builder_add_triangle_real(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1, tx2, ty2, tx3, ty3, matrix)
 {
+	if (build_remove)
+		return 0
+
 	vbuffer_current = block_vbuffer_current
 	vertex_wave = block_vertex_wave
 	vertex_wave_zmin = block_vertex_wave_zmin

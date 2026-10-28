@@ -9,8 +9,17 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 {
 	if (!scenery.ready)
 		return 0
+
+	var meshobj, meshcount;
+	meshobj = scenery
+	meshcount = array_length(scenery.block_meshes)
+	if (object_index = obj_timeline && type = e_tl_type.SCENERY && array_length(block_meshes_edit) > 0)
+		meshobj = id
 	
-	if (repeatenable) // Repeat
+	if (!repeatenable)
+		render_world_block_meshes(meshobj, resdif, resnorm, resmat, 0, meshcount)
+	
+	else // Repeat
 	{
 		var mat, reppos, defrot, defscale;
 		mat = matrix_get(matrix_world)
@@ -24,7 +33,12 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 		{
 			var pos = vec3_mul(scenery.scenery_size, point3D_mul(reppos, block_size));
 			matrix_set(matrix_world, matrix_multiply(matrix_create(pos, defrot, defscale), mat))
-			render_world_block_meshes(scenery, resdif, resnorm, resmat)
+			
+			var offset = 0;
+			if (meshobj != scenery)
+				offset = ((reppos[Z] * rep[Y] + reppos[Y]) * rep[X] + reppos[X]) * meshcount
+			
+			render_world_block_meshes(meshobj, resdif, resnorm, resmat, offset, meshcount)
 
 			if (self.object_index != obj_preview && !render_fast_pass)
 			{
@@ -48,6 +62,4 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 			}
 		}
 	}
-	else
-		render_world_block_meshes(scenery, resdif, resnorm, resmat)
 }

@@ -25,6 +25,7 @@ namespace CppProject
 	{
 		ArrType arr;
 		IntType size = args[0].ToInt();
+		arr.vec.Alloc(size);
 
 		if (args.Size() == 2) // Initialize with value
 		{

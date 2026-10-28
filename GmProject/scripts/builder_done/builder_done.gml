@@ -8,10 +8,14 @@ function builder_done()
 		buffer_delete(block_obj)
 		buffer_delete(block_state_id)
 		buffer_delete(block_waterlogged)
-		ds_grid_destroy(block_render_model)
 		ds_list_destroy(block_render_model_multipart)
+
+		block_obj = null
+		block_state_id = null
+		block_waterlogged = null
 	}
 	
+	block_render_model = []
 	block_meshes = []
 	
 	build_multithreaded = null

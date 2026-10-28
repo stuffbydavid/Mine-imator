@@ -8,6 +8,8 @@ function render_world_sky_clouds()
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.COLOR)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
 
+	world_raycast_set_object(noone)
+
 	submit_batch()
 
 	// Cloud colors and alpha use the shared vertex palette
@@ -40,10 +42,6 @@ function render_world_sky_clouds()
 	render_set_uniform(e_uniform.ROUGHNESS, 1)
 	render_set_uniform(e_uniform.EMISSIVE, 0)
 	render_set_uniform(e_uniform.LIGHT_SPECULAR, 0)
-	
-	// Place mode
-	if (render_place_pass)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.CLOUDS)
 	
 	// Texture
 	if (res.type = e_res_type.PACK)
@@ -86,9 +84,6 @@ function render_world_sky_clouds()
 	
 	// Reset
 	submit_batch()
-	if (render_place_pass)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.SCENE)
-	
 	render_set_uniform_int(e_uniform.IS_SKY, 0)
 	render_set_uniform(e_uniform.LIGHT_SPECULAR, render_light_specular_strength)
 	

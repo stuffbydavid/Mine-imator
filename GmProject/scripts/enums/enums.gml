@@ -1099,9 +1099,6 @@ function enums()
 		HSB_SUB,
 		INDIRECT_ENABLED,
 		INDIRECT_STRENGTH,
-		PLACE_ID,
-		PLACE_TYPE,
-		RENDER_PLACE,
 		IS_GROUND,
 		IS_SKY,
 		IS_WATER,
@@ -1219,13 +1216,15 @@ function enums()
 		amount
 	}
 	
-	// Place type
-	enum e_place_type
+	// Raycast intersection result
+	enum e_raycast
 	{
-		SCENE,
-		PLACED,
-		BLOCK,
-		CLOUDS
+		HIT,
+		DEPTH,
+		POSITION,
+		NORMAL,
+		FACE,
+		OBJECT
 	}
 	
 	// Anti-aliasing

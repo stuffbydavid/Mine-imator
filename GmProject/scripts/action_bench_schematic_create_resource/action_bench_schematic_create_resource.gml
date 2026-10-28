@@ -29,10 +29,12 @@ function action_bench_schematic_create_resource()
 		}
 		
 		block_meshes = res.block_meshes
+		block_meshes_active = res.block_meshes_active
 		block_meshes_size = res.block_meshes_size
 		block_meshes_transparent = res.block_meshes_transparent
 		
 		res.block_meshes = []
+		res.block_meshes_active = []
 		res.block_meshes_transparent = false
 		
 		file_copy_lib(res.scenery_source, app.project_folder + "/" + filename)

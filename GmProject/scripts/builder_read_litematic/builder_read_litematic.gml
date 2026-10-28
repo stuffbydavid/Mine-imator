@@ -1,6 +1,6 @@
 /// @desc Read and flatten Litematic regions before mesh generation.
 
-function builder_read_litematic(map)
+function builder_read_litematic(map, blocksonly = false)
 {
 	if (!ds_map_valid(map))
 		return false
@@ -125,7 +125,7 @@ function builder_read_litematic(map)
 		}
 	}
 
-	// GM block buffers use two bytes per cell and signed buffer offsets
+	// GM block buffers use two bytes per block and signed buffer offsets
 	if (totalsize[X] * totalsize[Y] * totalsize[Z] >= power(2, 30))
 	{
 		log("Litematic error", "Enclosing volume exceeds builder limits")
@@ -196,10 +196,10 @@ function builder_read_litematic(map)
 
 			if (valid)
 				with (res)
-					res_load_scenery_block_map()
+					valid = res_load_scenery_block_map(blocksonly)
 
 			// Apply tile entities only after all regions have been flattened
-			for (var r = 0; r < array_length(regions) && valid; r++)
+			for (var r = 0; r < array_length(regions) && valid && !blocksonly; r++)
 			{
 				var region, start, size, entities;
 				region = regions[r]
@@ -285,7 +285,7 @@ function builder_read_litematic(map)
 
 		builder_combine_threads()
 
-		if (valid)
+		if (valid && !blocksonly)
 		{
 			for (var r = 0; r < array_length(regions); r++)
 			{

@@ -11,6 +11,14 @@ namespace CppProject
 		}
 	}
 
+	BoolType Bounds::ContainsPoint(VecType point) const
+	{
+		return (!empty &&
+			point.x >= minPoint.x && point.x <= maxPoint.x &&
+			point.y >= minPoint.y && point.y <= maxPoint.y &&
+			point.z >= minPoint.z && point.z <= maxPoint.z);
+	}
+
 	void Bounds::AddPoint(VecType point)
 	{
 		if (empty)

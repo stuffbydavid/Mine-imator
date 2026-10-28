@@ -162,6 +162,10 @@ function temp_set_scenery(res, animate, hobj = null, clearparts = true, parts = 
 		{
 			temp_update_display_name()
 			temp_update_rot_point()
+
+			with (obj_timeline)
+				if (temp = other.id && type = e_tl_type.SCENERY && (array_length(blocks_added) > 0 || array_length(block_meshes_edit) > 0))
+					tl_update_block_meshes()
 			
 			with (app)
 			{

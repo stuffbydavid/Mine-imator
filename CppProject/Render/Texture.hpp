@@ -11,6 +11,9 @@ namespace CppProject
 		Texture(const QImage& img);
 		~Texture();
 
+		// Uploads a changed rectangle from the full texture image and invalidates mipmaps.
+		void UpdateRegion(const QImage& image, QRect rect);
+
 		// Returns the unique ID of the texture and generate mipmaps if enabled.
 		IntType GetId();
 

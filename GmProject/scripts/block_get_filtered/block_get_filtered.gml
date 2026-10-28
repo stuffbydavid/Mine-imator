@@ -1,3 +1,4 @@
+/// CppSeparate BoolType block_get_filtered(IntType, IntType)
 /// @desc Check a block against a prepared resource filter, returning whether it should be removed.
 /// @arg resource
 /// @arg block

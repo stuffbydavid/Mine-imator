@@ -19,8 +19,6 @@ varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
 varying vec4 vCustom;
-varying vec3 vPlaceNormal;
-varying float vPlaceDistance;
 
 // Texture
 uniform vec2 uTextureOffset;
@@ -61,9 +59,6 @@ void main()
 	
 	vColor = getVertexColor(in_Custom) * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	
-	vPlaceNormal = in_Normal;
-	vPlaceDistance = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
-	
+
 	gl_Position = getClipPosition(vPosition);
 }

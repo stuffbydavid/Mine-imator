@@ -1,3 +1,4 @@
+/// CppSeparate RealType ease_bezier_curve(VecType, VecType, VecType, VecType, RealType)
 /// @arg point1
 /// @arg point2
 /// @arg point3
