@@ -4,7 +4,7 @@ function block_set_colored_bars()
 {
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0
-	if (!builder_scenery && build_size[X] = 1 && build_size[Y] = 1)
+	if (!builder_scenery && build_size_xy = 1)
 		return 0
 	
 	var color = block_get_state_id_value(block_current, block_state_id_current, "color");

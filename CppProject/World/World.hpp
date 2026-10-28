@@ -60,6 +60,8 @@ namespace CppProject
 		WorldVec(IntType x, IntType y, IntType z) : x(x), y(y), z(z) {}
 
 		bool operator==(const WorldVec& vec) const { return x == vec.x && y == vec.y && z == vec.z; }
+		IntType& operator[](IntType axis) { return axis == X_ ? x : (axis == Y_ ? y : z); }
+		const IntType& operator[](IntType axis) const { return axis == X_ ? x : (axis == Y_ ? y : z); }
 		WorldVec operator+(const WorldVec& vec) const { return { x + vec.x, y + vec.y, z + vec.z }; }
 		WorldVec operator-(const WorldVec& vec) const { return { x - vec.x, y - vec.y, z - vec.z }; }
 		WorldVec operator*(const WorldVec& vec) const { return { x * vec.x, y * vec.y, z * vec.z }; }
@@ -683,7 +685,7 @@ namespace CppProject
 		static Section* GetSection(const WorldVec& pos);
 
 		static Heap<Section*> sections;
-		static WorldVec size, offset, sectionsDim;
+		static WorldVec size, offset, sectionsNum;
 		static IntType sectionsXY;
 		static QHash<StringType, obj_block*> mcBlockIdObjMap, filteredMcBlockIdObjMap;
 		static QHash<StringType, ArrType> mcBlockIdStateVarsMap;

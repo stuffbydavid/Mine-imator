@@ -65,7 +65,7 @@ function action_build_place(airblock = false)
 	{
 		var prevblock;
 		with (target)
-			prevblock = tl_add_block(blockpos[X], blockpos[Y], blockpos[Z], blockdata[0], blockdata[1])
+			prevblock = tl_update_block_meshes(blockpos, blockdata[0], blockdata[1])
 		
 		if (prevblock = null)
 			return false
@@ -79,6 +79,13 @@ function action_build_place(airblock = false)
 			hobj.previous_block = prevblock
 			hobj.block_id = blockdata[0]
 			hobj.state_id = blockdata[1]
+
+			// Focus on block
+			tl_focus = null
+			cam_work_focus_tl = null
+			cam_work_focus = point3D_mul_matrix(
+				vec3_mul(vec3_add(place_block_pos, 0.5), block_size), target.matrix_render
+			)
 		}
 
 		place_pos = null

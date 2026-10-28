@@ -32,7 +32,7 @@ function block_meshes_load_blocks(blocksonly = false)
 			scenery_size = vec3(size[Y], size[X], size[Z])
 	}
 
-	block_meshes_size = meshnum
+	block_meshes_num = meshnum
 
 	for (var s = 0; s < count; s++)
 	{

@@ -11,7 +11,7 @@ function builder_thread_set_pos(position)
 
 	if (array_length(block_meshes) > 0)
 	{
-		var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], block_meshes_size[X], block_meshes_size[Y]);
+		var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], block_meshes_num[X], block_meshes_num[Y]);
 		block_mesh = block_meshes[meshindex]
 	}
 }

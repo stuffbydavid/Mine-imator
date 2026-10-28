@@ -6,9 +6,9 @@ function block_render_model_generate(model)
 	instance_activate_object(model)
 	
 	var offx, offy, offz;
-	offx = block_pos[X] + model.offset[X]
-	offy = block_pos[Y] + model.offset[Y]
-	offz = block_pos[Z] + model.offset[Z]
+	offx = block_model_pos[X] + model.offset[X]
+	offy = block_model_pos[Y] + model.offset[Y]
+	offz = block_model_pos[Z] + model.offset[Z]
 
 	// Set emissive
 	if (block_vertex_emissive = null)

@@ -84,7 +84,7 @@ function temp_event_create()
 	block_randomize = true
 	
 	block_meshes = []
-	block_meshes_size = vec3(1)
+	block_meshes_num = vec3(1)
 	block_meshes_active = []
 	block_meshes_transparent = false
 	

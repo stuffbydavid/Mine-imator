@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_add_block",
+  "%Name":"tl_get_bounds",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_add_block",
+  "name":"tl_get_bounds",
   "parent":{
     "name":"Timeline",
     "path":"folders/Scripts/Project/Timeline.yy",

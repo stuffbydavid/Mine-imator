@@ -63,7 +63,29 @@ function view_update_surface(view, cam, buildedit = false)
 	{
 		// Highlight target parent while placing
 		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
-			view.surface_select = render_select_outline(e_render_mode.PLACE_PARENT, view.surface_select)
+		{
+			// Hide scenery highlighting when camera is within bounds
+			var bounds, inside;
+			bounds = null
+			
+			with (place_target_tl_root)
+				if (type = e_tl_type.SCENERY)
+					bounds = tl_get_bounds()
+
+			inside = (bounds != null)
+			if (inside)
+			{
+				var minpos, maxpos;
+				minpos = bounds[0]
+				maxpos = bounds[1]
+				for (var a = X; a <= Z; a++)
+					if (cam_from[a] < minpos[a] || cam_from[a] > maxpos[a])
+						inside = false
+			}
+
+			if (!inside)
+				view.surface_select = render_select_outline(e_render_mode.PLACE_PARENT, view.surface_select)
+		}
 			
 		// Highlight selection
 		if (!place_build)

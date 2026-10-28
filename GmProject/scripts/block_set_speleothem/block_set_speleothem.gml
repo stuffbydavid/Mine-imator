@@ -3,7 +3,17 @@ function block_set_speleothem()
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0
 	
-	if (!builder_scenery && build_size[Z] = 1)
+	var minz, maxz;
+	minz = 0
+	maxz = build_size[Z]
+	
+	if (build_edit)
+	{
+		minz = build_min_pos[Z]
+		maxz = build_max_pos[Z]
+	}
+
+	if (!builder_scenery && maxz - minz = 1)
 		return 0
 	
 	var thicknessprev, dir, size, sizeoffset, thickness;
@@ -13,7 +23,7 @@ function block_set_speleothem()
 		return 0
 	
 	dir = block_get_state_id_value(block_current, block_state_id_current, "vertical_direction")
-	size = (dir = "up" ? (build_size[Z] - 1) - build_pos[Z] : build_pos[Z])
+	size = (dir = "up" ? (maxz - 1) - build_pos[Z] : build_pos[Z] - minz)
 	sizeoffset = size
 	
 	if (thicknessprev = "frustum")
@@ -27,7 +37,7 @@ function block_set_speleothem()
 		thickness = thicknessprev
 	else if (sizeoffset = 1)
 		thickness = "frustum"
-	else if (size >= (build_size[Z] - 1))
+	else if (size >= maxz - minz - 1)
 		thickness = "base"
 	else
 		thickness = "middle"
