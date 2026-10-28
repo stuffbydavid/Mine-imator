@@ -143,7 +143,13 @@ namespace CppProject
 
 	void tl_update_values_batch(Scope<obj_timeline> self, BoolType transitions)
 	{
-		// Borrow only for this call: keyframe edits, seeks and seamless-loop changes need no cache invalidation
+		const bool reuse = self->keyframe_value_cache_reuse;
+		ArrType& changing = self->keyframe_value_cache_channels;
+
+		if (reuse && (transitions || changing.Size() == 0))
+			return;
+
+		// Borrow endpoint values only for this call
 		ArrType& values = self->value.Arr();
 		obj_keyframe* current = self->keyframe_animate ? ObjType(obj_keyframe, self->keyframe_current) : nullptr;
 		obj_keyframe* next = self->keyframe_next > 0 ? ObjType(obj_keyframe, self->keyframe_next) : nullptr;
@@ -165,6 +171,8 @@ namespace CppProject
 			{
 				const VarType& currentValue = ReadTimelineValue(*currentValues, vid);
 				const VarType& nextValue = ReadTimelineValue(*nextValues, vid);
+				if (!reuse && !transitions && currentValue != nextValue)
+					changing.Append(vid);
 				if (oldValue == currentValue && oldValue == nextValue)
 					return;
 				assign(vid, oldValue, tl_value_interpolate(vid, self->keyframe_progress_ease, currentValue, nextValue));
@@ -175,6 +183,12 @@ namespace CppProject
 				assign(vid, oldValue, source);
 			}
 		};
+		if (reuse)
+		{
+			for (IntType i = 0; i < changing.Size(); i++)
+				evaluate(changing.IntValue(i));
+			return;
+		}
 		auto range = [&](IntType first, IntType last)
 		{
 			for (IntType vid = first; vid <= last; vid++)

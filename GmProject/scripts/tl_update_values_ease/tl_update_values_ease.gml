@@ -1,6 +1,6 @@
 /// @arg valueid
 
-function tl_update_values_ease(vid)
+function tl_update_values_ease(vid, cachechannel = false)
 {
 	var oldval, curval, nextval, val;
 	oldval = value[vid]
@@ -10,6 +10,9 @@ function tl_update_values_ease(vid)
 		curval = keyframe_current.value[vid]
 		nextval = keyframe_next.value[vid]
 		
+		if (cachechannel && curval != nextval)
+			keyframe_value_cache_channels[@array_length(keyframe_value_cache_channels)] = vid
+
 		if ((oldval = curval) && (oldval = nextval))
 			return false
 		

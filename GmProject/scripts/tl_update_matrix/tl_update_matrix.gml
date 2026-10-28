@@ -60,19 +60,22 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			transformupdate = ((dirtyflags & e_tl_dirty.TRANSFORM) != 0)
 			appearanceupdate = ((dirtyflags & e_tl_dirty.APPEARANCE) != 0)
 			hasik = (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
-			// IK still needs the original rigid-transform path when bend controls change
+
 			if (hasik && (dirtyflags & e_tl_dirty.BEND) != 0)
 				transformupdate = true
+			
 			posebend = bend_pose_inherit
 			
 			if (transformupdate)
 			{
 				posebend = tl_update_transform(usepaths, updatepose, hasik)
+				
 				if (bend_pose_inherit[X] != posebend[X] || bend_pose_inherit[Y] != posebend[Y] || bend_pose_inherit[Z] != posebend[Z])
 				{
 					bend_pose_inherit = posebend
 					dirtyflags = dirtyflags | e_tl_dirty.BEND
 				}
+
 				if (type = e_tl_type.MODEL_PART)
 					model_part_shape_render_matrix_part = null
 			}
@@ -158,36 +161,39 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 					value_inherit[e_value.BEND_ANGLE_X + j] += posebend[j]
 			
 			tl = id
-			while (appearanceupdate || bendupdate)
+			
+			while (appearanceupdate || (inhbend && tl.inherit_bend))
 			{
 				var par = tl.parent;
 				if (par = app)
 					break
 				
-				if (!tl.inherit_alpha)
-					inhalpha = false
-				
-				if (!tl.inherit_color)
-					inhcolor = false
-				
-				if (!tl.inherit_glow_color)
-					inhglowcolor = false
-				
-				if (!tl.inherit_visibility)
-					inhvis = false
+				if (appearanceupdate)
+				{
+					if (!tl.inherit_alpha)
+						inhalpha = false
+
+					if (!tl.inherit_color)
+						inhcolor = false
+
+					if (!tl.inherit_glow_color)
+						inhglowcolor = false
+
+					if (!tl.inherit_visibility)
+						inhvis = false
+
+					if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] > 0)
+						inhtex = false
+
+					if (!tl.inherit_surface || tl.value[e_value.TEXTURE_MATERIAL_OBJ] > 0)
+						inhsurf = false
+
+					if (!tl.inherit_subsurface)
+						inhsubsurf = false
+				}
 				
 				if (!tl.inherit_bend)
 					inhbend = false
-				
-				if (!tl.inherit_texture || tl.value[e_value.TEXTURE_OBJ] > 0)
-					inhtex = false
-				
-				if (!tl.inherit_surface || tl.value[e_value.TEXTURE_MATERIAL_OBJ] > 0)
-					inhsurf = false
-				
-				if (!tl.inherit_subsurface)
-					inhsubsurf = false
-				
 				if (inhalpha)
 					value_inherit[e_value.ALPHA] *= par.value[e_value.ALPHA]
 				
@@ -313,7 +319,14 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 					if (update_matrix)
 						tree_list[|t].update_matrix = true
 					else
-						tree_list[|t].update_value_flags = tree_list[|t].update_value_flags | childflags
+					{
+						var flags = childflags;
+
+						if (!tree_list[|t].inherit_bend && (flags & e_tl_dirty.BEND) != 0)
+							flags -= e_tl_dirty.BEND
+						
+						tree_list[|t].update_value_flags = tree_list[|t].update_value_flags | flags
+					}
 				}
 			}
 			

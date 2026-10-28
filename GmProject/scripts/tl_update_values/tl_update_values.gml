@@ -8,6 +8,7 @@ function tl_update_values()
 		keyframe_current = null
 		keyframe_next = null
 		keyframe_animate = false
+		keyframe_value_cache_valid = false
 		
 		return 0
 	}
@@ -39,6 +40,14 @@ function tl_update_values()
 	keyframe_progress = tl_update_values_progress(app.timeline_marker)
 	keyframe_animate = (keyframe_current && keyframe_next && keyframe_current != keyframe_next)
 	
+	var cachevalues = (app.timeline_playing && app.window_busy = "" && !app.history_resource_update);
+	keyframe_value_cache_reuse = (cachevalues && keyframe_value_cache_valid && !update_matrix &&
+		keyframe_value_cache_current = keyframe_current && keyframe_value_cache_next = keyframe_next &&
+		keyframe_value_cache_animate = keyframe_animate && keyframe_value_cache_start = app.timeline_playing_start_time)
+	
+	if (!keyframe_value_cache_reuse)
+		keyframe_value_cache_channels = []
+
 	// Transition
 	keyframe_progress_ease = 0
 	tl_update_values_batch(true)
@@ -52,6 +61,11 @@ function tl_update_values()
 	
 	// Evaluate enabled channels in one native batch
 	tl_update_values_batch(false)
+	keyframe_value_cache_valid = cachevalues
+	keyframe_value_cache_current = keyframe_current
+	keyframe_value_cache_next = keyframe_next
+	keyframe_value_cache_animate = keyframe_animate
+	keyframe_value_cache_start = app.timeline_playing_start_time
 	
 	// Play sounds
 	if (type = e_tl_type.AUDIO_TRACK && !hide && app.timeline_marker > app.timeline_marker_previous && app.timeline_playing && app.window_busy != "timeline/marker")

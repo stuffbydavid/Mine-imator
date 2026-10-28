@@ -4,6 +4,8 @@
 
 function tl_keyframe_add(pos, kf = null)
 {
+	keyframe_value_cache_valid = false
+
 	var i;
 
 	// Find index

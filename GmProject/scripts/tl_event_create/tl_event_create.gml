@@ -109,6 +109,13 @@ function tl_event_create()
 	keyframe_select_amount = 0
 	keyframe_progress = 0
 	keyframe_animate = false
+	keyframe_value_cache_valid = false
+	keyframe_value_cache_reuse = false
+	keyframe_value_cache_current = null
+	keyframe_value_cache_next = null
+	keyframe_value_cache_animate = false
+	keyframe_value_cache_start = null
+	keyframe_value_cache_channels = []
 	
 	world_pos = point3D(0)
 	world_pos_rotate = point3D(0)
