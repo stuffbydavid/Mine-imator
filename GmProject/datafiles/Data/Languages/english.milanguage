@@ -748,7 +748,7 @@
 		"create": "Create",
 		"create_edit": "Create & edit",
 		"world_tip_1": "Select a region of your Minecraft world to use in the project.",
-		"world_tip_2": "When the region is modified in-game, press \"Reload resource\" under Resources to apply the changes.",
+		"world_tip_2": "When the region is modified in-game, press \"Reload from world\" under Resources to apply the changes.",
 		"sound_tip": "Install Minecraft Java Edition to browse sounds and music from the game.",
 		"audio_track_tip": "An empty audio track that can play imported sounds from Minecraft or from files such as .mp3 and .wav.",
 		"point_light_tip": "Point lights shine in all directions, like a lightbulb.",

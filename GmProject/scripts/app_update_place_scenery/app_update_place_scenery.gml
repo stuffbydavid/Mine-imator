@@ -6,23 +6,38 @@ function app_update_place_scenery()
 	if (!type_is_block(place_target_tl_root.type))
 		return 0
 
-	var worldtransform, inversetransform, localpos;
+	var worldtransform, blockpos, boxmin, boxmax;
 	worldtransform = place_target_tl.matrix_render
-	inversetransform = matrix_inverse_ext(worldtransform)
-	localpos = point3D_mul_matrix(place_pos, inversetransform)
-	
-	// Find local block position and face
-	var blockpos, sourceface;
-	blockpos = vec3(
-		floor((localpos[X] - place_view_normal[X]) / block_size),
-		floor((localpos[Y] - place_view_normal[Y]) / block_size),
-		floor((localpos[Z] - place_view_normal[Z]) / block_size)
-	)
-	sourceface = point3D_mul_matrix(vec3(
-		(blockpos[X] + 0.5) * block_size + place_view_normal[X] * block_half_size,
-		(blockpos[Y] + 0.5) * block_size + place_view_normal[Y] * block_half_size,
-		(blockpos[Z] + 0.5) * block_size + place_view_normal[Z] * block_half_size
-	), worldtransform)
+
+	// Find local block position in scenery
+	if (place_view_block_pos != null)
+		blockpos = place_view_block_pos
+	else
+	{
+		var localpos = point3D_mul_matrix(place_pos, matrix_inverse_ext(worldtransform));
+		blockpos = vec3(
+			floor((localpos[X] - place_view_normal[X]) / block_size),
+			floor((localpos[Y] - place_view_normal[Y]) / block_size),
+			floor((localpos[Z] - place_view_normal[Z]) / block_size)
+		)
+	}
+
+	if (place_view_block_bounds != null)
+	{
+		boxmin = place_view_block_bounds[0]
+		boxmax = place_view_block_bounds[1]
+	}
+	else
+	{
+		boxmin = vec3_mul(blockpos, block_size)
+		boxmax = vec3_add(boxmin, block_size)	
+	}
+
+	var boxcenter, boxsize, facepos, sourceface;
+	boxcenter = vec3_mul(vec3_add(boxmin, boxmax), 0.5)
+	boxsize = vec3_sub(boxmax, boxmin)
+	facepos = vec3_add(boxcenter, vec3_mul(vec3_mul(place_view_normal, boxsize), 0.5))
+	sourceface = point3D_mul_matrix(facepos, worldtransform)
 
 	if (place_build)
 		place_block_pos = array_copy_1d(blockpos)
@@ -30,9 +45,25 @@ function app_update_place_scenery()
 	// Assign wireframe box transform
 	if (place_build)
 	{
-		var boxcenter = vec3_mul(vec3_add(blockpos, 0.5), block_size);
-		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3(1)), worldtransform)
+		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3_div(boxsize, block_size)), worldtransform)
 		build_box_render = build_box
+
+		// Select bounds of special block, including transformed parts
+		if (place_target_tl_root.type = e_tl_type.SPECIAL_BLOCK)
+		{
+			var bounds = null;
+			with (place_target_tl_root)
+				bounds = tl_get_bounds(true)
+
+			if (bounds != null)
+			{
+				boxcenter = vec3_mul(vec3_add(bounds[0], bounds[1]), 0.5)
+				boxsize = vec3_sub(bounds[1], bounds[0])
+				build_box_matrix = matrix_create(boxcenter, vec3(0), vec3_div(boxsize, block_size))
+			}
+			else
+				build_box_render = null
+		}
 	}
 	
 	// Set rotation
@@ -82,9 +113,9 @@ function app_update_place_scenery()
 		place_pos = point3D_sub(sourceface, point3D_mul_matrix(targetface, targetmatrix))
 	}
 	else
-		place_pos = point3D_mul_matrix(vec3(
-			(blockpos[X] + 0.5 + place_view_normal[X]) * block_size,
-			(blockpos[Y] + 0.5 + place_view_normal[Y]) * block_size,
-			(blockpos[Z] + place_view_normal[Z]) * block_size
-		), worldtransform)
+	{
+		var targetoffset = vec3_mul(place_view_normal, block_half_size);
+		targetoffset[Z] -= block_half_size
+		place_pos = point3D_mul_matrix(vec3_add(facepos, targetoffset), worldtransform)
+	}
 }

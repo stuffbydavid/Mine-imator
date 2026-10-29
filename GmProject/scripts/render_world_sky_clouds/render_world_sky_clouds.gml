@@ -8,7 +8,7 @@ function render_world_sky_clouds()
 	if (render_mode = e_render_mode.SCENE_TEST || render_mode = e_render_mode.COLOR)
 		render_set_uniform_color(e_uniform.REPLACE_COLOR, c_black, 1)
 
-	world_raycast_set_object(noone)
+	world_raycast_set_tl(noone)
 
 	submit_batch()
 

@@ -20,6 +20,8 @@ function app_start_place(build, tl = null, spawn = false)
 	place_block_pos = null
 		
 	place_view_pos = null
+	place_view_block_pos = null
+	place_view_block_bounds = null
 	place_view_air = false
 	place_view_tl = 0
 	place_view_normal = vec3(0, 1, 0)

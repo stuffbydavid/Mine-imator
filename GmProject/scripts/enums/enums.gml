@@ -1054,6 +1054,7 @@ function enums()
 		DEFAULT_SUBSURFACE,
 		DEPTH,
 		DEPTH_BUFFER_SIZE,
+		DEPTH_TEST,
 		DIRECTION,
 		DISTORT_AMOUNT,
 		DISTORT_CHANNELS,
@@ -1220,7 +1221,9 @@ function enums()
 		POSITION,
 		NORMAL,
 		FACE,
-		OBJECT
+		OBJECT,
+		BLOCK_POS,
+		BLOCK_BOUNDS
 	}
 	
 	// Anti-aliasing

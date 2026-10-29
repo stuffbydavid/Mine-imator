@@ -6,6 +6,11 @@ uniform mat4 uTAAMatrix;
 uniform vec2 uViewportSize;
 uniform float uLineLength;
 uniform vec3 uCameraPosition;
+uniform float uNear;
+uniform float uFar;
+
+varying vec4 vClipPosition;
+varying float vDepth;
 
 void main()
 {
@@ -27,6 +32,9 @@ void main()
 	worldPosition += toEye * (0.25 / max(length(toEye), 0.0001));
 	
 	float lineWidth = 2.5;
-	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * (gm_Matrices[MATRIX_VIEW] * vec4(worldPosition, 1.0));
+	vec4 viewPosition = gm_Matrices[MATRIX_VIEW] * vec4(worldPosition, 1.0);
+	gl_Position = uTAAMatrix * gm_Matrices[MATRIX_PROJECTION] * viewPosition;
 	gl_Position.xy += perpendicular * (lineWidth / uViewportSize) * gl_Position.w * (in_TextureCoord.y * 2.0 - 1.0);
+	vClipPosition = gl_Position;
+	vDepth = (viewPosition.z - uNear) / (uFar - uNear);
 }

@@ -206,6 +206,18 @@ function render_high()
 		finalsurf = render_fx(finalsurf, true, true, true)
 		finalsurf = render_high_tonemap(finalsurf)
 
+		// Draw the wireframe after lighting and reflections using scene depth
+		if (app.place_build && !render_pass)
+		{
+			surface_set_target(finalsurf)
+			{
+				render_world_start(depth_far)
+				render_world_build_box(true)
+				render_world_done()
+			}
+			surface_reset_target()
+		}
+
 		// Finish the combined tile before assembling the all-passes grid
 		if (render_pass = e_render_pass.ALL)
 		{

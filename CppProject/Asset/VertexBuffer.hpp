@@ -1,6 +1,7 @@
 #pragma once
 #include "Asset.hpp"
 #include "FastVector.hpp"
+#include "Render/BlockPos.hpp"
 #include "Render/Mesh.hpp"
 
 // Suppress tinybvh's MSVC notices
@@ -25,7 +26,7 @@ namespace CppProject
 {
 	struct Shader;
 
-	// Vertex buffer asset with per-thread generation data and retained CPU geometry
+	// Vertex buffer asset with per-thread generation data and retained CPU triangle geometry.
 	struct VertexBuffer : Asset, Mesh<Vertex>
 	{
 		VertexBuffer() : Asset(ID_VertexBuffer) {}
@@ -44,13 +45,22 @@ namespace CppProject
 		void AddVertex(const Vertex& vertex, IntType threadId = 0);
 
 		// Adds a triangle with 3 vertices and generates 3 indices.
-		void AddTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, IntType threadId = 0);
+		void AddTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, IntType threadId = 0, BlockPos blockPos = {});
 
 		// Queue a matching triangle for removal.
-		void RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3);
+		void RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, BlockPos blockPos = {});
 
 		// Adds a face with 4 vertices and generates 6 indices.
-		void AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId = 0);
+		void AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId = 0, BlockPos blockPos = {});
+
+		// Returns a triangle's original block position in the vertex buffer's local render axes.
+		BlockPos GetTriangleBlockPos(IntType index) const;
+
+		// Fits a block box to its source triangles, allowing the upper cell for double blocks.
+		Bounds FitBounds(const VecType& blockPos) const;
+
+		// Collects bounds and exposed face directions for a block in the vertex buffer.
+		void AddBlockBounds(const BlockPos& blockPos, BlockBounds& bounds) const;
 
 		// Allocates the mesh from the added vertices, optionally updating tangents.
 		void Complete(BoolType updateTangents = true);
@@ -79,28 +89,46 @@ namespace CppProject
 		tinybvh::BVH bvh;
 
 	private:
+		struct ThreadData;
+
+		// Removes queued triangles in one scan and compacts the retained geometry.
+		void ApplyTriangleRemovals();
+
+		// Allocates packed block positions and rebases them to the vertex buffer origin.
+		void PrepareBlockPositions(IntType existingTriangles, IntType totalTriangles);
+
+		// Packs a thread's block positions into the vertex buffer.
+		void CopyBlockPositions(ThreadData& thread, IntType triangleOffset);
+
 		struct ThreadData
 		{
 			// Increase capacity before appending a complete primitive.
 			void Reserve(IntType addedVertices, IntType addedIndices);
 
+			// Records the source block position for the added triangles.
+			void AddBlockPos(BlockPos pos, IntType addedTriangles);
+
 			FastVector<Vertex> vertices;
 			FastVector<uint32_t> indices;
+			FastVector<BlockPos> blockPositions;
+			BlockPos blockPosMin;
 			IntType targetVertexOffset = 0, targetIndexOffset = 0;
 			Vertex currentVertex;
 			BoolType elemAdded[4] = { false, false, false, false };
+
 		} threads[OPENMP_MAX_THREADS];
 
 		struct TriangleRemoval
 		{
 			Vertex vertices[3];
+			BlockPos blockPos;
 			IntType count = 1;
 		};
 
-		// Removes queued triangles in one scan and compacts the retained geometry.
-		void ApplyTriangleRemovals();
-
 		QHash<quint64, QVector<TriangleRemoval>> triangleRemovals;
 		Bounds triangleRemovalBounds;
+
+		BlockPos blockPosOrigin;
+		Heap<uint32_t> triangleBlockPos;
 	};
 }

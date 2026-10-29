@@ -1,4 +1,5 @@
 #include "Bounds.hpp"
+#include "BlockPos.hpp"
 
 namespace CppProject
 {
@@ -17,6 +18,62 @@ namespace CppProject
 			point.x >= minPoint.x && point.x <= maxPoint.x &&
 			point.y >= minPoint.y && point.y <= maxPoint.y &&
 			point.z >= minPoint.z && point.z <= maxPoint.z);
+	}
+
+	BoolType Bounds::Intersects(const Bounds& bounds) const
+	{
+		return !empty && !bounds.empty &&
+			minPoint.x <= bounds.maxPoint.x && maxPoint.x >= bounds.minPoint.x &&
+			minPoint.y <= bounds.maxPoint.y && maxPoint.y >= bounds.minPoint.y &&
+			minPoint.z <= bounds.maxPoint.z && maxPoint.z >= bounds.minPoint.z;
+	}
+
+	BoolType Bounds::IntersectRay(const VecType& origin, const VecType& direction, RealType& distance, IntType* face) const
+	{
+		if (empty)
+			return false;
+
+		RealType first = -std::numeric_limits<RealType>::infinity();
+		RealType last = distance;
+		IntType entryFace = -1;
+
+		// Clip the ray interval against each axis
+		for (IntType axis = 0; axis < 3; axis++)
+		{
+			RealType start = origin.Value(axis).ToReal(), step = direction.Value(axis).ToReal();
+			RealType lower = minPoint.Value(axis).ToReal(), upper = maxPoint.Value(axis).ToReal();
+			if (step == 0)
+			{
+				if (start < lower || start > upper)
+					return false;
+				continue;
+			}
+
+			RealType nearDistance = (lower - start) / step, farDistance = (upper - start) / step;
+			if (nearDistance > farDistance)
+				std::swap(nearDistance, farDistance);
+			
+			if (nearDistance > first)
+			{
+				first = nearDistance;
+				entryFace = axis * 2 + (step > 0 ? 1 : 0);
+			}
+			
+			last = std::min(last, farDistance);
+			if (first > last)
+				return false;
+		}
+
+		if (last < 0)
+			return false;
+
+		distance = first;
+		
+		// Store entry face index in bounds
+		if (face)
+			*face = entryFace;
+		
+		return true;
 	}
 
 	void Bounds::AddPoint(VecType point)
@@ -81,5 +138,44 @@ namespace CppProject
 
 		AddPoint({ worldCenter.x - worldExtents.x, worldCenter.y - worldExtents.y, worldCenter.z - worldExtents.z });
 		AddPoint({ worldCenter.x + worldExtents.x, worldCenter.y + worldExtents.y, worldCenter.z + worldExtents.z });
+	}
+
+	BlockBounds::BlockBounds(const BlockPos& blockPos) : blockBounds(blockPos.GetBounds())
+	{}
+
+	Bounds BlockBounds::Fit(RealType minSize) const
+	{
+		Bounds fitted = triangleBounds;
+		if (fitted.empty)
+			return fitted;
+
+		for (IntType axis = 0; axis < 3; axis++)
+		{
+			RealType minLimit = blockBounds.minPoint.Value(axis).ToReal();
+			RealType maxLimit = blockBounds.maxPoint.Value(axis).ToReal();
+			RealType& lower = fitted.minPoint.Real(axis);
+			RealType& upper = fitted.maxPoint.Real(axis);
+
+			// Clamp triangle bounds to the allowed block area
+			lower = std::max(lower, minLimit);
+			upper = std::min(upper, maxLimit);
+
+			// Extend behind an exposed face when the opposite face was culled
+			uint8_t axisFaces = (faces >> (axis * 2)) & 3;
+			if (axisFaces == 1)
+				lower = minLimit;
+			else if (axisFaces == 2)
+				upper = maxLimit;
+
+			// Apply the minimum X/Y size around the fitted center
+			if (axis != 2 && upper - lower < minSize)
+			{
+				RealType center = (lower + upper) * 0.5;
+				lower = center - minSize * 0.5;
+				upper = center + minSize * 0.5;
+			}
+		}
+
+		return fitted;
 	}
 }

@@ -132,6 +132,14 @@ function shader_startup()
 	}
 	
 	// Set special uniforms
+	with (shader_map[?shader_build_box])
+	{
+		new_shader_sampler(e_sampler.DEPTH_BUFFER)
+		new_shader_uniform(e_uniform.DEPTH_TEST)
+		new_shader_uniform(e_uniform.NEAR)
+		new_shader_uniform(e_uniform.FAR)
+	}
+
 	with (shader_map[?shader_outline])
 	{
 		new_shader_uniform(e_uniform.TEX_SIZE)

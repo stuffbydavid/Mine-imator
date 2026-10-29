@@ -3,6 +3,8 @@
 #include "Shader.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
+#include "Generated/Scripts.hpp"
+
 #undef slots
 #undef emit
 #define TINYBVH_IMPLEMENTATION
@@ -60,7 +62,7 @@ namespace CppProject
 
 		// Validate counts before calculating byte sizes
 		QIODevice* device = stream.device();
-		if (stream.status() != QDataStream::Ok || device == nullptr || numVert < 0 || numInd < 0)
+		if (stream.status() != QDataStream::Ok || device == nullptr || numVert < 0 || numInd < 0 || numInd % 3 != 0)
 			return;
 
 		qint64 vertexBytes = numVert * sizeof(Vertex);
@@ -83,6 +85,26 @@ namespace CppProject
 			for (IntType i = 0; i < numInd; i++)
 				if (indexData[i] >= numVert)
 					return;
+
+			quint8 hasBlockPositions = 0;
+			stream >> hasBlockPositions;
+			if (stream.status() != QDataStream::Ok || hasBlockPositions > 1)
+				return;
+
+			if (hasBlockPositions)
+			{
+				qint32 xx = 0, yy = 0, zz = 0;
+				stream >> xx >> yy >> zz;
+				blockPosOrigin = { xx, yy, zz };
+
+				qint64 bytes = numInd / 3 * sizeof(uint32_t);
+				if (stream.status() != QDataStream::Ok || bytes > device->bytesAvailable())
+					return;
+
+				triangleBlockPos.Alloc(numInd / 3, false);
+				if (stream.readRawData((char*)triangleBlockPos.data, (int)bytes) != bytes)
+					return;
+			}
 
 			numVertices = numVert;
 			numIndices = numInd;
@@ -143,16 +165,6 @@ namespace CppProject
 		return thread.currentVertex;
 	}
 
-	void VertexBuffer::ThreadData::Reserve(IntType addedVertices, IntType addedIndices)
-	{
-		// Double mesh capacity before appending a complete primitive
-		if (vertices.Size() + addedVertices > vertices.heap.Size())
-			vertices.heap.Alloc(std::max(vertices.Size() + addedVertices, std::max<IntType>(1024, vertices.heap.Size() * 2)), false);
-		
-		if (indices.Size() + addedIndices > indices.heap.Size())
-			indices.heap.Alloc(std::max(indices.Size() + addedIndices, std::max<IntType>(1024, indices.heap.Size() * 2)), false);
-	}
-
 	void VertexBuffer::AddVertex(const Vertex& vertex, IntType threadId)
 	{
 		ThreadData& thread = threads[threadId];
@@ -169,15 +181,22 @@ namespace CppProject
 			if (thread.vertices.Value(v) == vertex)
 			{
 				thread.indices.Append(v);
+				
+				if (thread.indices.Size() % 3 == 0)
+					thread.AddBlockPos({}, 1);
+				
 				return;
 			}
 		}
 
 		thread.indices.Append(thread.vertices.Size());
 		thread.vertices.Append(vertex);
+
+		if (thread.indices.Size() % 3 == 0)
+			thread.AddBlockPos({}, 1);
 	}
 
-	void VertexBuffer::AddTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, IntType threadId)
+	void VertexBuffer::AddTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, IntType threadId, BlockPos blockPos)
 	{
 		ThreadData& thread = threads[threadId];
 
@@ -191,9 +210,10 @@ namespace CppProject
 		thread.vertices.Append(v1);
 		thread.vertices.Append(v2);
 		thread.vertices.Append(v3);
+		thread.AddBlockPos(blockPos, 1);
 	}
 
-	void VertexBuffer::RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+	void VertexBuffer::RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, BlockPos blockPos)
 	{
 		if (!valid || !numIndices)
 			return;
@@ -209,21 +229,21 @@ namespace CppProject
 		QVector<TriangleRemoval>& matches = triangleRemovals[TriangleHash(v1, v2, v3)];
 		for (TriangleRemoval& match : matches)
 		{
-			if (SameTriangle(match.vertices, v1, v2, v3))
+			if (match.blockPos == blockPos && SameTriangle(match.vertices, v1, v2, v3))
 			{
 				match.count++;
 				return;
 			}
 		}
 
-		matches.append(TriangleRemoval{ { v1, v2, v3 }, 1 });
+		matches.append(TriangleRemoval{ { v1, v2, v3 }, blockPos, 1 });
 
 		triangleRemovalBounds.AddPoint({ v1.x, v1.y, v1.z });
 		triangleRemovalBounds.AddPoint({ v2.x, v2.y, v2.z });
 		triangleRemovalBounds.AddPoint({ v3.x, v3.y, v3.z });
 	}
 
-	void VertexBuffer::AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId)
+	void VertexBuffer::AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId, BlockPos blockPos)
 	{
 		ThreadData& thread = threads[threadId];
 
@@ -241,6 +261,64 @@ namespace CppProject
 		thread.vertices.Append(v2);
 		thread.vertices.Append(v3);
 		thread.vertices.Append(v4);
+		thread.AddBlockPos(blockPos, 2);
+	}
+
+	BlockPos VertexBuffer::GetTriangleBlockPos(IntType index) const
+	{
+		if (!triangleBlockPos.Size())
+			return {};
+
+		// Decode the triangle's block position relative to this vertex buffer's origin
+		return { triangleBlockPos.Value(index), blockPosOrigin };
+	}
+
+	Bounds VertexBuffer::FitBounds(const VecType& blockPos) const
+	{
+		BlockPos pos(blockPos);
+		BlockBounds bounds(pos);
+
+		AddBlockBounds(pos, bounds);
+
+		return bounds.Fit();
+	}
+
+	void VertexBuffer::AddBlockBounds(const BlockPos& blockPos, BlockBounds& bounds) const
+	{
+		Bounds& blockBounds = bounds.blockBounds;
+
+		for (IntType i = 0; i < numIndices; i += 3)
+		{
+			BlockPos pos = GetTriangleBlockPos(i / 3);
+			if (pos.IsValid() && !(pos == blockPos))
+				continue;
+
+			if (pos.doubleBlock)
+				blockBounds.AddBounds(pos.GetBounds());
+
+			Bounds triangleBounds;
+			for (IntType v = 0; v < 3; v++)
+			{
+				const Vertex& vertex = vertexData.Value(indexData.Value(i + v));
+				triangleBounds.AddPoint({ vertex.x, vertex.y, vertex.z });
+			}
+
+			if (!triangleBounds.Intersects(blockBounds))
+				continue;
+
+			bounds.triangleBounds.AddBounds(triangleBounds);
+
+			// Unpack normal
+			uint32_t normal = vertexData.Value(indexData.Value(i)).data1;
+			for (IntType axis = 0; axis < 3; axis++)
+			{
+				uint8_t component = (normal >> (axis * 8)) & 255;
+				if (component > 128)
+					bounds.faces |= 1 << (axis * 2);
+				else if (component < 127)
+					bounds.faces |= 1 << (axis * 2 + 1);
+			}
+		}
 	}
 
 	void VertexBuffer::Complete(BoolType updateTangents)
@@ -253,6 +331,7 @@ namespace CppProject
 
 		// Assign each thread a non-overlapping range in the final mesh
 		IntType numThreads = 0;
+		IntType existingTriangles = numIndices / 3;
 		for (IntType t = 0; t < OPENMP_MAX_THREADS; t++)
 		{
 			ThreadData& thread = threads[t];
@@ -293,6 +372,8 @@ namespace CppProject
 		vertexData.Alloc(numVertices, false);
 		indexData.Alloc(numIndices, false);
 
+		PrepareBlockPositions(existingTriangles, numIndices / 3);
+
 		auto processThread = [&](IntType t)
 		{
 			ThreadData& thread = threads[t];
@@ -306,6 +387,8 @@ namespace CppProject
 			else
 				for (IntType i = 0; i < thread.indices.Size(); i++)
 					indexData[thread.targetIndexOffset + i] = thread.indices.Value(i) + thread.targetVertexOffset;
+
+			CopyBlockPositions(thread, thread.targetIndexOffset / 3);
 
 			thread.vertices.Clear();
 			thread.indices.Clear();
@@ -380,13 +463,23 @@ namespace CppProject
 
 		stream.writeRawData((const char*)vertexData.Data(), (int)(numVertices * sizeof(Vertex)));
 		stream.writeRawData((const char*)indexData.Data(), (int)(numIndices * sizeof(uint32_t)));
+		stream << quint8(triangleBlockPos.Size() > 0);
+		if (triangleBlockPos.Size())
+		{
+			stream << qint32(blockPosOrigin.x) << qint32(blockPosOrigin.y) << qint32(blockPosOrigin.z);
+			stream.writeRawData((const char*)triangleBlockPos.Data(), (int)triangleBlockPos.SizeInBytes());
+		}
 	}
 
 	IntType VertexBuffer::GetWriteBytes() const
 	{
 		IntType bytes = sizeof(qint64) * 2; // numVertices + numIndices
 		if (valid && numIndices > 0)
-			bytes += numVertices * sizeof(Vertex) + numIndices * sizeof(uint32_t);
+		{
+			bytes += numVertices * sizeof(Vertex) + numIndices * sizeof(uint32_t) + sizeof(quint8);
+			if (triangleBlockPos.Size())
+				bytes += sizeof(qint32) * 3 + triangleBlockPos.SizeInBytes();
+		}
 
 		return bytes;
 	}
@@ -401,8 +494,14 @@ namespace CppProject
 		copy->numVertices = numVertices;
 		copy->numIndices = numIndices;
 		copy->bounds = bounds;
+		copy->blockPosOrigin = blockPosOrigin;
+		
+		if (triangleBlockPos.Size())
+			copy->triangleBlockPos.Copy(triangleBlockPos, triangleBlockPos.Size());
+		
 		if (numVertices)
 			copy->vertexData.Copy(vertexData, numVertices);
+		
 		if (numIndices)
 			copy->indexData.Copy(indexData, numIndices);
 
@@ -422,6 +521,12 @@ namespace CppProject
 
 		// Append regenerated primitives without uploading an intermediate buffer
 		IntType firstIndex = numIndices;
+		IntType totalIndices = numIndices;
+		for (const ThreadData& thread : threads)
+			totalIndices += thread.indices.Size();
+
+		PrepareBlockPositions(numIndices / 3, totalIndices / 3);
+
 		for (ThreadData& thread : threads)
 		{
 			if (!thread.indices.Size())
@@ -430,11 +535,15 @@ namespace CppProject
 			vertexData.Alloc(numVertices + thread.vertices.Size(), false);
 			indexData.Alloc(numIndices + thread.indices.Size(), false);
 			memcpy(vertexData.data + numVertices, thread.vertices.Data(), thread.vertices.SizeInBytes());
+			
 			for (IntType i = 0; i < thread.indices.Size(); i++)
 				indexData[numIndices + i] = numVertices + thread.indices.Value(i);
 
+			CopyBlockPositions(thread, numIndices / 3);
+
 			numVertices += thread.vertices.Size();
 			numIndices += thread.indices.Size();
+
 			thread.vertices.Clear();
 			thread.indices.Clear();
 		}
@@ -466,6 +575,7 @@ namespace CppProject
 			const Vertex& v1 = vertexData[indexData[i]];
 			const Vertex& v2 = vertexData[indexData[i + 1]];
 			const Vertex& v3 = vertexData[indexData[i + 2]];
+			BlockPos blockPos = GetTriangleBlockPos(i / 3);
 			BoolType remove = false;
 
 			// Bounds only reject distant candidates while deletion always requires an exact triangle match
@@ -476,7 +586,8 @@ namespace CppProject
 				{
 					for (TriangleRemoval& match : found.value())
 					{
-						if (match.count > 0 && SameTriangle(match.vertices, v1, v2, v3))
+						BoolType sameBlockPos = (!blockPos.IsValid() || !match.blockPos.IsValid() || match.blockPos == blockPos);
+						if (sameBlockPos && match.count > 0 && SameTriangle(match.vertices, v1, v2, v3))
 						{
 							match.count--;
 							remove = true;
@@ -489,6 +600,9 @@ namespace CppProject
 			if (remove)
 				continue;
 
+			if (triangleBlockPos.Size())
+				triangleBlockPos[keptIndices / 3] = triangleBlockPos.Value(i / 3);
+			
 			for (IntType v = 0; v < 3; v++)
 				indexData[keptIndices++] = indexData[i + v];
 		}
@@ -499,8 +613,11 @@ namespace CppProject
 		if (keptIndices == numIndices)
 			return;
 
-		numIndices = keptIndices;
 		bounds.Reset();
+
+		numIndices = keptIndices;
+		if (triangleBlockPos.Size())
+			triangleBlockPos.Alloc(numIndices / 3, false);
 
 		if (!numIndices)
 		{
@@ -531,5 +648,80 @@ namespace CppProject
 		numVertices = keptVertices;
 		vertexData.Alloc(numVertices, false);
 		indexData.Alloc(numIndices, false);
+	}
+
+	void VertexBuffer::PrepareBlockPositions(IntType existingTriangles, IntType totalTriangles)
+	{
+		BlockPos oldOrigin = blockPosOrigin;
+		if (!existingTriangles)
+			blockPosOrigin = {};
+
+		// Find a shared origin across all generation threads
+		for (const ThreadData& thread : threads)
+			blockPosOrigin.AddPos(thread.blockPosMin);
+
+		if (!blockPosOrigin.IsValid())
+		{
+			triangleBlockPos.FreeData();
+			return;
+		}
+
+		IntType oldSize = triangleBlockPos.Size();
+		triangleBlockPos.Alloc(totalTriangles, false);
+
+		// Repack existing triangles if the origin moved
+		for (IntType i = 0; i < existingTriangles; i++)
+		{
+			if (i >= oldSize)
+				triangleBlockPos[i] = BlockPos::NO_BLOCK_POS;
+			else if (!(oldOrigin == blockPosOrigin))
+				triangleBlockPos[i] = BlockPos(triangleBlockPos.Value(i), oldOrigin).Pack(blockPosOrigin);
+		}
+	}
+
+	void VertexBuffer::CopyBlockPositions(ThreadData& thread, IntType triangleOffset)
+	{
+		if (!triangleBlockPos.Size())
+			return;
+
+		// Pack source positions into the combined vertex buffer's triangle range
+		for (IntType i = 0; i < thread.indices.Size() / 3; i++)
+		{
+			uint32_t packed = BlockPos::NO_BLOCK_POS;
+			if (i < thread.blockPositions.Size())
+				packed = thread.blockPositions.Value(i).Pack(blockPosOrigin);
+
+			triangleBlockPos[triangleOffset + i] = packed;
+		}
+
+		thread.blockPositions.Clear();
+		thread.blockPosMin = {};
+	}
+
+	void VertexBuffer::ThreadData::Reserve(IntType addedVertices, IntType addedIndices)
+	{
+		// Double mesh capacity before appending a complete primitive
+		if (vertices.Size() + addedVertices > vertices.heap.Size())
+			vertices.heap.Alloc(std::max(vertices.Size() + addedVertices, std::max<IntType>(1024, vertices.heap.Size() * 2)), false);
+		
+		if (indices.Size() + addedIndices > indices.heap.Size())
+			indices.heap.Alloc(std::max(indices.Size() + addedIndices, std::max<IntType>(1024, indices.heap.Size() * 2)), false);
+	}
+
+	void VertexBuffer::ThreadData::AddBlockPos(BlockPos pos, IntType addedTriangles)
+	{
+		if (!pos.IsValid() && !blockPositions.Size())
+			return;
+
+		blockPositions.Alloc(indices.heap.Size() / 3);
+
+		// Align positions with triangles added without block metadata
+		while (blockPositions.Size() < indices.Size() / 3 - addedTriangles)
+			blockPositions.Append({});
+
+		for (IntType i = 0; i < addedTriangles; i++)
+			blockPositions.Append(pos);
+
+		blockPosMin.AddPos(pos);
 	}
 }

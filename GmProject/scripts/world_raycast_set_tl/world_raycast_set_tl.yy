@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"world_raycast_object",
+  "%Name":"world_raycast_set_tl",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"world_raycast_object",
+  "name":"world_raycast_set_tl",
   "parent":{
     "name":"Render",
     "path":"folders/Scripts/Render.yy",

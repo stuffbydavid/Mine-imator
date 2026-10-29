@@ -11,6 +11,7 @@
 /// CppGen array<bool> block_face_full
 /// CppGen array<int> block_face_min_depth
 /// CppGen array<real> block_model_pos
+/// CppGen bool block_model_double
 /// CppGen array<bool> liquid_match
 /// CppGen array<bool> liquid_solid
 /// CppGen array<int> liquid_waterlogged
@@ -59,6 +60,7 @@ function builder_thread_event_create()
 	block_face_max = array_create(block_faces, null)
 
 	block_model_pos = vec3(0)
+	block_model_double = false
 	
 	liquid_match = array_create(block_faces, false)
 	liquid_solid = array_create(block_faces, false)

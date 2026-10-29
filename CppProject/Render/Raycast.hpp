@@ -1,42 +1,52 @@
 #pragma once
 #include "Matrix.hpp"
+#include "Bounds.hpp"
 #include "Type/VecType.hpp"
 
 namespace CppProject
 {
 	struct VertexBuffer;
 
-	// Retains a flat list of source geometry and transforms for each world view.
+	// Performs a raycast against rendered world objects in a given view.
 	struct Raycast
 	{
-		struct Entry
+		// A rendered object with a vertex buffer, world transform and timeline id (0 for ground).
+		struct WorldObject
 		{
-			IntType buffer, object;
+			IntType vbufId, tlId;
 			Matrix transform;
 		};
 
+		// A registered hit in the world.
 		struct Hit
 		{
 			BoolType found = false;
 			RealType distance = 0;
 			VecType position, normal;
-			IntType face = -1, object = 0;
+			BoolType hasBlockPos = false;
+			VecType blockPos;
+			Bounds blockBounds;
+			IntType face = -1, tlId = 0;
 		};
 
-		// Replaces the geometry list when the view's color pass is rendered.
+		// Replaces the world objects recorded for the view's color pass.
 		void Begin(IntType view);
 
 		// Stops recording before overlays and other render passes.
 		void End();
 
-		// Records source geometry before batching changes its object indices.
-		void Add(const VertexBuffer& buffer, const Matrix& transform);
+		// Records a world object using the current timeline id.
+		void AddObject(const VertexBuffer& vbuf, const Matrix& transform);
 
-		// Finds the nearest triangle using each vertex buffer's BVH.
-		Hit Cast(IntType view, const VecType& origin, const VecType& direction, RealType distance, BoolType placing) const;
+		// Finds the nearest hit in the world along the ray.
+		Hit Cast(IntType view, const VecType& origin, const VecType& direction, RealType distance, BoolType placing, BoolType build);
 
-		IntType object = -1;
-		QHash<IntType, QVector<Entry>> views;
-		QVector<Entry>* current = nullptr;
+		IntType tlId = -1;
+		QHash<IntType, QVector<WorldObject>> viewObjects;
+		QVector<WorldObject>* objects = nullptr;
+
+	private:
+		IntType buildBoxesWorldId = -1; // Retains one fitted hit per view until the scene changes
+		QHash<IntType, Hit> buildBoxes;
 	};
 }

@@ -2,7 +2,7 @@
 
 function render_world_tl()
 {
-	world_raycast_set_object(id)
+	world_raycast_set_tl(id)
 
 	// Transparent block pass
 	if (render_world_blocks_transparent = true &&

@@ -9,7 +9,7 @@
 
 namespace CppProject
 {
-	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 5;
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 6;
 
 	// 2.0 mesh cache uses untransformed vertices and a 32x32 static block sheet
 	static constexpr uchar BLOCK_MESH_CACHE_FORMAT_LEGACY = 2;

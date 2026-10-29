@@ -4,6 +4,7 @@
 #include "Asset/DataStructure.hpp"
 #include "Asset/VertexBuffer.hpp"
 #include "Asset/Buffer.hpp"
+#include "Render/BlockPos.hpp"
 
 namespace CppProject
 {
@@ -645,6 +646,9 @@ namespace CppProject
 		RealType offset[3];
 		for (IntType a = X_; a <= Z_; a++)
 			offset[a] = self->block_model_pos.RealValue(a) + model->offset.RealValue(a);
+
+		// Double-block model
+		self->block_model_double = (model->offset.RealValue(Z_) >= block_size_);
 		
 		if (self->block_vertex_emissive == null_)
 			self->block_vertex_emissive = model->emissive;
@@ -739,6 +743,8 @@ namespace CppProject
 			self->block_vertex_color_index = 0;
 			self->block_vertex_emissive = minEmissive;
 		}
+
+		self->block_model_double = false;
 	}
 
 	static uint32_t BuilderPackNormal(Scope<obj_builder_thread> self, RealType nx, RealType ny, RealType nz)
@@ -748,6 +754,23 @@ namespace CppProject
 			return Vertex::PackNormal(ny, -nx, nz);
 		
 		return Vertex::PackNormal(nx, ny, nz);
+	}
+
+	static BlockPos BuilderGetBlockPos(Scope<obj_builder_thread> self)
+	{
+		// Retrieves the current block position to store in vertex buffer triangles
+		BlockPos pos(
+			(int32_t)self->build_pos.IntValue(X_),
+			(int32_t)self->build_pos.IntValue(Y_),
+			(int32_t)self->build_pos.IntValue(Z_)
+		);
+
+		if (self->build_transform)
+			pos = { pos.y, (int32_t)self->build_size.IntValue(X_) - 1 - pos.x, pos.z };
+
+		pos.doubleBlock = self->block_model_double;
+		
+		return pos;
 	}
 
 	static Vertex BuilderCreateVertex(Scope<obj_builder_thread> self, RealType x, RealType y, RealType z, RealType tx, RealType ty, uint32_t normal)
@@ -845,16 +868,17 @@ namespace CppProject
 			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, normal)
 		};
 		VertexBuffer* buffer = FindVertexBuffer(self->block_vbuffer_current);
+		BlockPos blockPos = BuilderGetBlockPos(self);
 
 		// Add mode
 		if (!self->build_remove)
-			buffer->AddFace(vertices[0], vertices[1], vertices[2], vertices[3], self->threadid);
+			buffer->AddFace(vertices[0], vertices[1], vertices[2], vertices[3], self->threadid, blockPos);
 		
 		// Remove mode
 		else
 		{
-			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2]);
-			buffer->RemoveTriangle(vertices[2], vertices[3], vertices[0]);
+			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2], blockPos);
+			buffer->RemoveTriangle(vertices[2], vertices[3], vertices[0], blockPos);
 		}
 	}
 
@@ -891,14 +915,15 @@ namespace CppProject
 			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal)
 		};
 		VertexBuffer* buffer = FindVertexBuffer(self->block_vbuffer_current);
+		BlockPos blockPos = BuilderGetBlockPos(self);
 
 		// Add mode
 		if (!self->build_remove)
-			buffer->AddTriangle(vertices[0], vertices[1], vertices[2], self->threadid);
+			buffer->AddTriangle(vertices[0], vertices[1], vertices[2], self->threadid, blockPos);
 		
 		// Remove mode
 		else
-			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2]);
+			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2], blockPos);
 	}
 
 	BoolType res_load_scenery_world(Scope<obj_resource> self)

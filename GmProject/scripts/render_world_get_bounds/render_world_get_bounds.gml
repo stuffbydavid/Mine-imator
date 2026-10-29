@@ -1,4 +1,4 @@
-/// @desc Returns scene bounds as two points.
+/// @desc Returns quick scene bounds as two points.
 
 function render_world_get_bounds()
 {
@@ -28,12 +28,11 @@ function render_world_get_bounds()
 		}
 		else
 		{
-			minpos[@ X] = min(minpos[X], lower[X])
-			minpos[@ Y] = min(minpos[Y], lower[Y])
-			minpos[@ Z] = min(minpos[Z], lower[Z])
-			maxpos[@ X] = max(maxpos[X], upper[X])
-			maxpos[@ Y] = max(maxpos[Y], upper[Y])
-			maxpos[@ Z] = max(maxpos[Z], upper[Z])
+			for (var a = X; a <= Z; a++)
+			{
+				minpos[@a] = min(minpos[a], lower[a])
+				maxpos[@a] = max(maxpos[a], upper[a])
+			}
 		}
 	}
 	

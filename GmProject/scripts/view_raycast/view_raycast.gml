@@ -3,8 +3,9 @@
 /// @arg x
 /// @arg y
 /// @arg [placing]
+/// @arg [build]
 
-function view_raycast(view, xx, yy, placing = false)
+function view_raycast(view, xx, yy, placing = false, build = false)
 {
 	// Unproject near and far points, supporting perspective and orthographic views
 	var tx, ty, nearpos, farpos, viewray, origin, endpoint, dir, dis, result;
@@ -22,9 +23,9 @@ function view_raycast(view, xx, yy, placing = false)
 	dir = vec3_normalize(dir)
 
 	if (placing)
-		dis = min(dis, place_build ? build_far : place_far)
+		dis = min(dis, build ? build_far : place_far)
 
-	result = world_raycast(view, origin, dir, dis, placing)
+	result = world_raycast(view, origin, dir, dis, placing, build)
 
 	// DOF uses camera-space depth rather than distance along the mouse ray
 	if (!placing)
