@@ -4,7 +4,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"for_version": "2.1-pre1",
-		"last_change": "2026.10.01"
+		"last_change": "2026.10.17"
 	},
 	"particle/": {
 		"type/": {
@@ -124,6 +124,14 @@
 			"intervals_hide": "Hide intervals",
 			"pop_out": "Open in new window",
 			"pop_in": "Close timeline window"
+		},
+		"nav/": {
+			"walk": "Toggle walk navigation",
+			"zoom": "Zoom",
+			"pan": "Pan",
+			"snap_x": "Snap view to X axis",
+			"snap_y": "Snap view to Y axis",
+			"snap_z": "Snap view to Z axis"
 		},
 		"custom_accent_color": "Custom accent color",
 		"edit_keybind": "Edit keybind",

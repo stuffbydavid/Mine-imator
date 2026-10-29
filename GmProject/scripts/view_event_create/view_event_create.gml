@@ -65,4 +65,9 @@ function view_event_create()
 	toolbar_mouseon = false
 	toolbar_alpha = 1
 	toolbar_alpha_goal = toolbar_alpha
+	
+	toolbar_nav_height = 0
+	toolbar_nav_mouseon = false
+	toolbar_nav_alpha = 1
+	toolbar_nav_alpha_goal = toolbar_alpha
 }
