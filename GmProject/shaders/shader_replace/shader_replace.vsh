@@ -2,9 +2,8 @@
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
-attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec4 in_Wave;
+attribute vec4 in_Custom;
 attribute vec3 in_Tangent;
 
 varying vec2 vTexCoord;
@@ -17,7 +16,7 @@ uniform vec2 uTextureOffset;
 
 void main()
 {
-	vec3 pos = getWorldPosition(in_Position, in_Wave);
+	vec3 pos = getWorldPosition(in_Position, in_Custom);
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	
 	gl_Position = getClipPosition(pos);

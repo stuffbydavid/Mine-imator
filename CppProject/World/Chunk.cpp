@@ -36,7 +36,9 @@ namespace CppProject
 		try
 		{
 			NbtStream stream(data);
-			stream.previewOnly = !box.active && !schematic;
+			stream.previewOnly = (!box.active && !schematic);
+			stream.includeEntities = (schematic != nullptr);
+
 			if (stream.previewOnly)
 			{
 				stream.filter = {

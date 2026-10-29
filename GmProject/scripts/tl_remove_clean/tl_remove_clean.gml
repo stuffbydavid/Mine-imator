@@ -194,9 +194,20 @@ function tl_remove_clean()
 				texture_free(pattern_skin)
 		}
 		else if (type = e_tl_type.BLOCK)
-			block_vbuffer_destroy()
+			block_meshes_destroy()
 	}
 		
+	// Clear edited scenery
+	for (var s = 0; s < array_length(block_meshes_edit); s++)
+		if (block_meshes_edit[s] != null)
+			with (block_meshes_edit[s])
+				instance_destroy()
+	
+	block_meshes_edit = []
+	
+	blocks_added_palette = []
+	blocks_added = []
+
 	if (model_shape_vbuffer_map != null)
 	{
 		var key = ds_map_find_first(model_shape_vbuffer_map);

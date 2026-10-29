@@ -90,16 +90,20 @@ function block_animate(root)
 			if (part_list = null)
 				part_list = ds_list_create()
 
+			var textparent = tl_part_find("sign");
+			if (textparent = null)
+				textparent = id
+
 			// Front
 			block_animate_text(
 				other.text_front, other.text_front_position, other.text_front_rotation, other.text_front_scale,
-				other.text_front_color, other.text_front_glow_color, other.text_front_emissive
+				other.text_front_color, other.text_front_glow_color, other.text_front_emissive, textparent
 			)
 
 			// Back
 			block_animate_text(
 				other.text_back, other.text_back_position, other.text_back_rotation, other.text_back_scale,
-				other.text_back_color, other.text_back_glow_color, other.text_back_emissive
+				other.text_back_color, other.text_back_glow_color, other.text_back_emissive, textparent
 			)
 		}
 		

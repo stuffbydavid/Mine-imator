@@ -22,21 +22,22 @@ function minecraft_assets_reload()
 	with (mc_assets)
 	{
 		ds_map_clear(model_name_map)
+		ds_map_clear(entity_model_map)
 		ds_list_clear(char_list)
 		ds_list_clear(special_block_list)
 		ds_list_clear(equipment_list)
 		
 		// Characters
-		var characterslist = map[?"characters"];
-		if (!ds_list_valid(characterslist))
+		var charlist = map[?"characters"];
+		if (!ds_list_valid(charlist))
 		{
 			log("No character list found")
 			break
 		}
 		
-		for (var i = 0; i < ds_list_size(characterslist); i++)
+		for (var i = 0; i < ds_list_size(charlist); i++)
 		{
-			var model = model_load(characterslist[|i], load_assets_dir + mc_character_directory);
+			var model = model_load(charlist[|i], load_assets_dir + mc_character_directory);
 			if (!model) // Something went wrong!
 			{
 				log("Could not load model")
@@ -67,16 +68,17 @@ function minecraft_assets_reload()
 		}
 		
 		// Special blocks
-		var specialblockslist = map[?"special_blocks"];
-		if (!ds_list_valid(specialblockslist))
+		var spblocklist = map[?"special_blocks"];
+		if (!ds_list_valid(spblocklist))
 		{
 			log("No special block list found")
 			break
 		}
 		
-		for (var i = 0; i < ds_list_size(specialblockslist); i++)
+		for (var i = 0; i < ds_list_size(spblocklist); i++)
 		{
-			var model = model_load(specialblockslist[|i], load_assets_dir + mc_special_block_directory);
+			var model, entity;
+			model = model_load(spblocklist[|i], load_assets_dir + mc_special_block_directory)
 			if (!model) // Something went wrong!
 			{
 				log("Could not load model")
@@ -86,6 +88,10 @@ function minecraft_assets_reload()
 			model_name_map[?model.name] = model
 			
 			ds_list_add(special_block_list, model)
+
+			entity = spblocklist[|i][?"entity"]
+			if (is_string(entity))
+				entity_model_map[?string_lower(string_replace(entity, "minecraft:", ""))] = model
 		}
 		
 		// Item place targets

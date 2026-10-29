@@ -77,14 +77,16 @@ function temp_event_create()
 	block_tex_material = project_pack_res
 	block_tex_normal = project_pack_res
 	
-	block_vbuffer = null
-	block_vbuffer_active = null
-	block_vbuffer_depth_active = []
 	block_repeat_enable = false
 	block_repeat = vec3(1)
 	block_center_legacy = false
 	block_center = false
 	block_randomize = true
+	
+	block_meshes = []
+	block_meshes_num = vec3(1)
+	block_meshes_active = []
+	block_meshes_transparent = false
 	
 	scenery = null
 	

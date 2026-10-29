@@ -2,7 +2,7 @@
 /// CppGen ArrRef build_pos
 /// CppGen ArrRef build_neighbor
 /// CppGen ArrRef build_edge
-/// CppGen ArrRef block_pos
+/// CppGen ArrRef block_model_pos
 /// CppGen ArrRef block_face_full
 /// CppGen ArrRef block_face_min_depth
 /// CppGen ArrRef liquid_match
@@ -127,6 +127,10 @@ function builder_generate_liquid(waterlogged = false)
 	slot = mc_assets.block_liquid_slot_map[?block_current.name]
 	dep = mc_res.block_sheet_ani_depth_list[|slot]
 	vbuf = (block_current.name = "water" ? e_block_vbuffer.WATER : e_block_vbuffer.ANIMATED)
+
+	if (vbuf = e_block_vbuffer.WATER)
+		dep = e_block_depth.DEPTH2
+
 	sheetwidth = minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
 	
 	liquid_slot_still_pos[X] = (slot mod sheetwidth) * block_size
@@ -150,12 +154,9 @@ function builder_generate_liquid(waterlogged = false)
 	if (app.project_render_liquid_animation)
 	{
 		block_vertex_wave = e_vertex_wave.Z_ONLY
-		block_vertex_wave_zmin = (liquid_match[ZN] ? null : block_pos[Z])
+		block_vertex_wave_zmin = (liquid_match[ZN] ? null : block_model_pos[Z])
 	}
 	
-	block_vertex_rgb = c_white
-	block_vertex_alpha = 1
-
 	// Falling liquid fills the block
 	if (level div 8 || liquid_match[ZP])
 	{
@@ -334,9 +335,9 @@ function builder_generate_liquid(waterlogged = false)
 	// Position the mesh and inset waterlogged sides
 	for (var a = X; a <= Y; a++)
 	{
-		liquid_from[a] = block_pos[a]
-		liquid_to[a] = block_pos[a] + block_size
-		liquid_mid[a] = block_pos[a] + block_half_size
+		liquid_from[a] = block_model_pos[a]
+		liquid_to[a] = block_model_pos[a] + block_size
+		liquid_mid[a] = block_model_pos[a] + block_half_size
 		
 		if (waterlogged)
 		{
@@ -348,7 +349,7 @@ function builder_generate_liquid(waterlogged = false)
 		}
 	}
 	
-	liquid_from[Z] = floor(block_pos[Z])
+	liquid_from[Z] = floor(block_model_pos[Z])
 	liquid_to[Z] = liquid_from[Z] + minz
 	liquid_mid[Z] = liquid_from[Z] + averagez
 	
@@ -375,7 +376,8 @@ function builder_generate_liquid(waterlogged = false)
 	}
 
 	// Generate side quads and the triangle above each one
-	block_vbuffer_current = mc_builder.vbuffer[@ dep * e_block_vbuffer.amount + vbuf]
+	var index = dep * e_block_vbuffer.amount + vbuf;
+	block_vbuffer_current = block_mesh.block_vbuffer[@index]
 	block_vertex_emissive = block_current.emissive
 	
 	for (var f = XP; f <= YN; f++)
@@ -425,6 +427,4 @@ function builder_generate_liquid(waterlogged = false)
 		)
 	}
 	
-	block_vertex_rgb = c_white
-	block_vertex_alpha = 1
 }

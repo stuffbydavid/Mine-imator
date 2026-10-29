@@ -16,6 +16,7 @@ function new_popup(name, script, wid, hei, block, custom = false, revert = false
 		self.script = script
 		width = wid
 		height = hei
+		height_ready = (height != null)
 
 		self.block = block
 		self.custom = custom

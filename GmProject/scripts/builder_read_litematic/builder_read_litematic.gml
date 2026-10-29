@@ -1,6 +1,6 @@
 /// @desc Read and flatten Litematic regions before mesh generation.
 
-function builder_read_litematic(map)
+function builder_read_litematic(map, blocksonly = false)
 {
 	if (!ds_map_valid(map))
 		return false
@@ -125,7 +125,7 @@ function builder_read_litematic(map)
 		}
 	}
 
-	// GM block buffers use two bytes per cell and signed buffer offsets
+	// GM block buffers use two bytes per block and signed buffer offsets
 	if (totalsize[X] * totalsize[Y] * totalsize[Z] >= power(2, 30))
 	{
 		log("Litematic error", "Enclosing volume exceeds builder limits")
@@ -136,9 +136,9 @@ function builder_read_litematic(map)
 	scenery_palette_size = 0
 	mc_builder.build_size = totalsize
 
-	var valid, timelineamount;
+	var valid, res;
 	valid = true
-	timelineamount = 0
+	res = id
 
 	with (mc_builder)
 	{
@@ -170,7 +170,7 @@ function builder_read_litematic(map)
 
 				for (var p = 0; p < volume; p++)
 				{
-					var index, state, previous;
+					var index, state;
 					index = builder_read_litematic_index(offset, bits, p)
 					if (index >= array_length(palette))
 					{
@@ -184,24 +184,22 @@ function builder_read_litematic(map)
 					build_pos[Y] = start[Y] - minimum[Y] + (p div size[X]) mod size[Y]
 					build_pos[Z] = start[Z] - minimum[Z] + p div (size[X] * size[Y])
 
-					previous = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z])
-					if (previous != null && previous.timeline)
-						timelineamount--
-
 					block_current = state[0]
 					if (block_current = null)
 						builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], 0, 0, false)
 					else
 					{
 						builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], block_current.block_id, state[1], state[2])
-						if (block_current.timeline)
-							timelineamount++
 					}
 				}
 			}
 
+			if (valid)
+				with (res)
+					valid = res_load_scenery_block_map(blocksonly)
+
 			// Apply tile entities only after all regions have been flattened
-			for (var r = 0; r < array_length(regions) && valid; r++)
+			for (var r = 0; r < array_length(regions) && valid && !blocksonly; r++)
 			{
 				var region, start, size, entities;
 				region = regions[r]
@@ -287,7 +285,16 @@ function builder_read_litematic(map)
 
 		builder_combine_threads()
 
-		sch_timeline_amount = timelineamount
+		if (valid && !blocksonly)
+		{
+			for (var r = 0; r < array_length(regions); r++)
+			{
+				var start = offsets[r];
+				builder_read_entities(regions[r][?"Entities"], vec3(
+					start[X] - minimum[X], start[Z] - minimum[Z], start[Y] - minimum[Y]
+				))
+			}
+		}
 
 		if (!valid)
 			builder_done()

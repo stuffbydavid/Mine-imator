@@ -50,7 +50,7 @@ function render_world_tl_fast()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp, render_res_diffuse, null, null)
+					render_world_block_meshes(temp, render_res_diffuse, null, null)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res_diffuse, project_pack_res, project_pack_res, temp.block_repeat_enable, temp.block_repeat)
 				
@@ -96,12 +96,12 @@ function render_world_tl_fast()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model, res, null, null)
+					render_world_block_meshes(temp.model, res, null, null)
 					
 					with (temp)
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 					
-					if (render_world_block_transparent != true)
+					if (render_world_blocks_transparent != true)
 						render_world_block_map(temp.model.model_block_map, res)
 				}
 				

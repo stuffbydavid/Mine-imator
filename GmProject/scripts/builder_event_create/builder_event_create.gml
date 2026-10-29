@@ -14,6 +14,7 @@ function builder_event_create()
 	sch_legacy_add_array = null
 	sch_timeline_amount = 0
 	sch_tileentity_list = null
+	sch_entities = []
 	
 	block_text_front_map = ds_map_create()
 	block_text_front_color_map = ds_map_create()
@@ -45,7 +46,10 @@ function builder_event_create()
 	
 	block_multithreaded_skip = false
 	block_tl_add = false
+	block_tl_types = null
 	block_tl_list = null
+	block_tl_count_map = null
+	
 	file_map = ""
 
 	thread_list = ds_list_create()

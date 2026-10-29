@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"world_raycast_object",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"world_raycast_object",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

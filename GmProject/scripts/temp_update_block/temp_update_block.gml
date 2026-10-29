@@ -2,7 +2,12 @@
 
 function temp_update_block()
 {
-	block_vbuffer_start()
+	if (block_repeat_enable)
+		block_meshes_num = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
+	else
+		block_meshes_num = vec3(1)
+
+	block_meshes_start()
 
 	with (mc_builder)
 	{
@@ -20,6 +25,10 @@ function temp_update_block()
 		
 		build_randomize = other.block_randomize
 		build_transform = true
+		
+		// Keep original local orientation
+		if (other.part_of != null && build_single_block != null && build_single_block.timeline)
+			build_transform = build_single_block.tl_build_transform
 		
 		builder_start()
 		builder_spawn_threads(1)
@@ -57,9 +66,9 @@ function temp_update_block()
 		build_single_stateid = 0
 	}
 
-	block_vbuffer_done()
+	block_meshes_done()
 	
 	with (obj_timeline)
 		if (temp = other.id)
-			tl_update_block_render()
+			tl_update_render_blocks_transparent()
 }

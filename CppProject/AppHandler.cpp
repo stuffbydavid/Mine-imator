@@ -10,6 +10,7 @@
 #include "Render/GLWidget.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/PrimitiveRenderer.hpp"
+#include "Render/Raycast.hpp"
 #include "Render/TexturePage.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
@@ -18,6 +19,7 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QNetworkInterface>
+#include <QSslConfiguration>
 #include <QStyle>
 #include <QTimer>
 
@@ -30,7 +32,10 @@ extern "C" __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = US
 
 int main(int argc, char* argv[])
 {
-	return (new CppProject::AppHandler(argc, argv))->Run();
+	CppProject::AppHandler* app = new CppProject::AppHandler(argc, argv);
+	int result = app->Run();
+	delete app;
+	return result;
 }
 
 namespace CppProject
@@ -96,6 +101,14 @@ namespace CppProject
 			new QApplication(argc, argv);
 			QCoreApplication::setApplicationName(PROJECT_NAME);
 
+			// Initialize HTTPS certificates while startup loads the application assets
+			QThread* sslThread = QThread::create([]
+			{
+				QSslConfiguration::defaultConfiguration();
+			});
+			threads.append(sslThread);
+			sslThread->start();
+
 			// Set working directory
 		#if RELEASE_MODE
 			gmlGlobal::working_directory = QCoreApplication::applicationDirPath() + "/";
@@ -119,7 +132,7 @@ namespace CppProject
 				file_rename_lib(prevLog, prevLogDest);
 			}
 
-			DEBUG("Mine-imator version " + mineimator_version_full + " (" + mineimator_version_date + ")");
+			DEBUG("Mine-imator version " + version_get() + " (" + mineimator_version_date + ")");
 
 		#if OS_WINDOWS
 		#ifdef _WIN64
@@ -306,6 +319,7 @@ namespace CppProject
 		// Create renderers
 		prRenderer = new PrimitiveRenderer;
 		vbRenderer = new VertexBufferRenderer;
+		worldRaycast = new Raycast;
 
 		// Reserve UI and resource texture pages before loading assets
 		texture_page_set_current(texture_page_create());

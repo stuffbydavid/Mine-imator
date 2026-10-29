@@ -27,30 +27,21 @@ function minecraft_game_startup()
 		var filename = versionsdir + folder + "/" + folder + ".json";
 		if (file_exists_lib(filename))
 		{
-			var map = json_load(filename);
-			if (ds_map_valid(map))
+			var assetid = minecraft_game_asset_id_get(filename);
+			if (assetid != "")
 			{
-				var assetindex = map[?"assetIndex"];
-				if (ds_map_valid(assetindex))
+				// Asset IDs are assumed to increase for new Minecraft versions
+				var assetideval = eval(assetid, 0);
+				if (assetideval > latestid)
 				{
-					var assetid = assetindex[?"id"];
-					if (is_string(assetid) && assetid != "")
+					var assetsfile = minecraft_java_directory_get() + "/assets/indexes/" + assetid + ".json";
+					if (file_exists_lib(assetsfile))
 					{
-						// Asset IDs are assumed to increase for new Minecraft versions
-						var assetideval = eval(assetid, 0);
-						if (assetideval > latestid)
-						{
-							var assetsfile = minecraft_java_directory_get() + "/assets/indexes/" + assetid + ".json";
-							if (file_exists_lib(assetsfile))
-							{
-								minecraft_game_assets_latest = assetsfile
-								minecraft_game_found = true
-								latestid = assetideval
-							}
-						}
+						minecraft_game_assets_latest = assetsfile
+						minecraft_game_found = true
+						latestid = assetideval
 					}
 				}
-				ds_map_destroy(map)
 			}
 		}
 

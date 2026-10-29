@@ -1,5 +1,11 @@
 /// CppSeparate void builder_set_block(ScopeAny, IntType, IntType, IntType, IntType, IntType, BoolType)
-/// @desc Write a structure block to GM buffers or C++ sections
+/// @desc Write a block to GM buffers or C++ sections.
+/// @arg x
+/// @arg y
+/// @arg z
+/// @arg blockid
+/// @arg stateid
+/// @arg waterlogged
 
 function builder_set_block(xx, yy, zz, blockid, stateid, waterlogged)
 {

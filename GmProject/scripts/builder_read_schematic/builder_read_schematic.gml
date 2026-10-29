@@ -1,4 +1,4 @@
-/// @desc Read a .schematic file, returns whether successful.
+/// @desc Read a Sponge .schem or legacy .schematic file, returns whether successful.
 
 function builder_read_schematic(map)
 {
@@ -193,6 +193,8 @@ function builder_read_schematic(map)
 	
 	if (!ds_list_valid(sch_tileentity_list))
 		sch_tileentity_list = blocksmap[?"BlockEntities"]
+
+	builder_read_entities(map[?"Entities"])
 	
 	return true
 }

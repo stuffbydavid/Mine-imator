@@ -7,7 +7,7 @@ function block_set_bed()
 	part = block_get_state_id_value(block_current, block_state_id_current, "part")
 	
 	// Patch legacy orientation and half
-	if (builder_scenery && builder_scenery_legacy)
+	if ((builder_scenery || build_edit) && builder_scenery_legacy)
 	{
 		var offsets, directions, color, matches, corrected;
 		offsets = [ [ 1, 0 ], [ -1, 0 ], [ 0, 1 ], [ 0, -1 ] ]
@@ -46,7 +46,7 @@ function block_set_bed()
 		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "facing", facing)
 	}
 	
-	if (builder_scenery)
+	if (builder_scenery || build_edit)
 	{
 		// Cull each half against its own neighbors, without the standalone bed's offset
 		var model = block_current.state_id_model_obj[block_state_id_current].model[0];

@@ -24,7 +24,7 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 	if (texalpha = null)
 		texalpha = 1
 		
-	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch;
+	var flip, mouseon, cap, menuactive, menuhide, menuid, nameid, showsearch, clipitem;
 	
 	// Caption
 	if (menu_model_current != null)
@@ -166,13 +166,14 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		item.thumbnail_alpha = texalpha
 	}
 	
-	if (current_microani.goal_ease != 0.5)
+	clipitem = (current_microani.goal_ease != 0.5 && !shader_clip_active)
+	if (clipitem)
 		clip_begin(xx, yy, wid, hei)
 	
 	list_item_draw(item, xx, yy + floor(((current_microani.goal_ease * 2) - 1) * 12), wid, hei, false, null, null, false)
 	instance_destroy(item)
 	
-	if (current_microani.goal_ease != 0.5)
+	if (clipitem)
 		clip_end()
 	
 	// Search tbx

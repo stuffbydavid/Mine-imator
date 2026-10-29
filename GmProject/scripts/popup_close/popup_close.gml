@@ -1,5 +1,11 @@
 function popup_close()
 {
+	if (popup_current = popup_block_settings)
+	{
+		action_block_settings_confirm()
+		return 0
+	}
+
 	if (popup_current = popup_modelbench)
 		popup_modelbench.not_now = true
 	

@@ -6,7 +6,8 @@ function res_load(reload = false)
 	fn = load_folder + "/" + filename
 	res = id
 	
-	debug("Loading " + res_type_name_list[|type], fn)
+	if (type != e_res_type.SCHEMATIC)
+		debug("Loading " + res_type_name_list[|type], fn)
 	
 	// Load from file
 	switch (type)
@@ -101,28 +102,56 @@ function res_load(reload = false)
 		case e_res_type.SCHEMATIC:
 		case e_res_type.FROM_WORLD:
 		{
+			res_update_display_name()
+
 			scenery_instant = false
 			if (type = e_res_type.SCHEMATIC && file_exists_lib(fn))
-				scenery_instant = file_get_size(fn) < scenery_instant_threshold
+				scenery_instant = (file_get_size(fn) < scenery_instant_threshold)
 			
 			// Load from cached mesh
-			var cachefn = fn + ".meshcache";
-			if (!reload && !world_reload && file_exists_lib(cachefn) && res_load_block_cache(cachefn))
-				break
+			var cachefn, loadcache;
+			cachefn = fn + ".meshcache"
+			loadcache = true
+
+			// Missing cache
+			if (!file_exists_lib(cachefn))
+				loadcache = false
+
+			// Skip cache on manual reload
+			else if (reload || world_reload)
+				loadcache = false
 				
+			// Legacy .nbt without metadata
+			else if (file_exists_lib(fn) && filename_ext(fn) = ".nbt" && !scenery_structure)
+				loadcache = false
+
+			// Rebuild missing metadata from the source
+			else if (file_exists_lib(fn) && (ds_map_size(scenery_block_map) = 0 || !scenery_tl_types_count_ready))
+				loadcache = false
+
+			if (loadcache && res_load_block_cache(cachefn))
+			{
+				if (type = e_res_type.SCHEMATIC)
+					debug("Loaded schematic cache", cachefn)
+
+				break
+			}
+
 			ready = false
 			if (scenery_instant)
 			{
 				load_stage = "open"
-				while (!ready && load_stage != "")
+				while (!ready && load_stage != "" && scenery_instant)
 					res_load_scenery()
 			}
 			else
+			{
 				with (app)
 				{
 					ds_priority_add(load_queue, other.id, 1)
 					load_start(other.id, res_load_start)
 				}
+			}
 			
 			break
 		}
@@ -315,8 +344,6 @@ function res_load(reload = false)
 			{
 				model_format = e_model_format.BLOCK
 				model_file = null
-				block_vbuffer = null
-				
 				// Load model file
 				var blockmodel = block_load_model_file(fn, id);
 				if (blockmodel = null)
@@ -331,7 +358,8 @@ function res_load(reload = false)
 				var rendermodel = block_load_render_model(blockmodel, vec3(0), false, false, 0, id);
 				
 				// Generate triangles from render model
-				block_vbuffer_start()
+				block_meshes_num = vec3(1)
+				block_meshes_start()
 				with (mc_builder)
 				{
 					build_size = vec3(1)
@@ -350,7 +378,7 @@ function res_load(reload = false)
 					
 					build_randomize = false
 				}
-				block_vbuffer_done()
+				block_meshes_done()
 				
 				// Freeze block vbuffer map
 				var key = ds_map_find_first(model_block_map);

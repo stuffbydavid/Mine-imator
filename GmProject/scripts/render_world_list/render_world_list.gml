@@ -16,7 +16,7 @@ function render_world_list(list)
 			render_world_tl()
 			
 			// Find visible transparent block meshes
-			if (render_world_block_transparent = null || !block_vbuffer_transparent_render)
+			if (render_world_blocks_transparent = null || !render_blocks_transparent)
 				continue
 				
 			if (type = e_tl_type.PARTICLE_SPAWNER && !render_particles)
@@ -41,13 +41,13 @@ function render_world_list(list)
 	if (app.project_render_texture_filtering && !app.project_render_transparent_block_texture_filtering)
 		gpu_set_tex_mip_bias(-16)
 	
-	render_world_block_transparent = true
+	render_world_blocks_transparent = true
 	
 	for (var i = 0; i < ds_list_size(render_block_transparent_list); i++)
 		with (render_block_transparent_list[|i])
 			render_world_tl()
 	
-	render_world_block_transparent = false
+	render_world_blocks_transparent = false
 	
 	gpu_set_tex_mip_bias(filterprev)
 }

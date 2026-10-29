@@ -1,4 +1,4 @@
-/// CppSeparate void world_import_apply_settings(ScopeAny)
+/// CppSeparate void world_import_apply_settings()
 /// @desc Applies the world settings after closing the popup.
 
 function world_import_apply_settings()

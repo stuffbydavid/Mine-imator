@@ -164,12 +164,26 @@ function minecraft_assets_load()
 				
 				ds_map_copy(block_texture_color_map, blocktexturescolormap)
 				
-				// Convert from hex
+				// Reserve indices for custom colors from block_textures_color
+				ds_list_clear(block_texture_color_list)
 				var key = ds_map_find_first(block_texture_color_map);
 				while (!is_undefined(key))
 				{
 					if (string_char_at(block_texture_color_map[?key], 1) = "#")
 						block_texture_color_map[?key] = hex_to_color(block_texture_color_map[?key])
+
+					var col = block_texture_color_map[?key];
+					if (is_real(col) && ds_list_find_index(block_texture_color_list, col) = -1)
+					{
+						if (e_color_palette.amount + ds_list_size(block_texture_color_list) >= 255)
+						{
+							log("Too many block texture colors")
+							return false
+						}
+
+						ds_list_add(block_texture_color_list, col)
+					}
+
 					key = ds_map_find_next(block_texture_color_map, key)
 				}
 				
@@ -401,17 +415,17 @@ function minecraft_assets_load()
 			case "models":
 			{
 				// Characters
-				var characterslist = load_assets_map[?"characters"];
-				if (!ds_list_valid(characterslist))
+				var charlist = load_assets_map[?"characters"];
+				if (!ds_list_valid(charlist))
 				{
 					log("No character list found")
 					return false
 				}
 				
 				debug_timer_start()
-				for (var i = 0; i < ds_list_size(characterslist); i++)
+				for (var i = 0; i < ds_list_size(charlist); i++)
 				{
-					var model = model_load(characterslist[|i], load_assets_dir + mc_character_directory);
+					var model = model_load(charlist[|i], load_assets_dir + mc_character_directory);
 					if (!model) // Something went wrong!
 					{
 						log("Could not load model")
@@ -445,17 +459,18 @@ function minecraft_assets_load()
 				}
 				
 				// Special blocks
-				var specialblockslist = load_assets_map[?"special_blocks"];
-				if (!ds_list_valid(specialblockslist))
+				var spblocklist = load_assets_map[?"special_blocks"];
+				if (!ds_list_valid(spblocklist))
 				{
 					log("No special block list found")
 					return false
 				}
 				
 				debug_timer_start()
-				for (var i = 0; i < ds_list_size(specialblockslist); i++)
+				for (var i = 0; i < ds_list_size(spblocklist); i++)
 				{
-					var model = model_load(specialblockslist[|i], load_assets_dir + mc_special_block_directory);
+					var model, entity;
+					model = model_load(spblocklist[|i], load_assets_dir + mc_special_block_directory)
 					if (!model) // Something went wrong!
 					{
 						log("Could not load model")
@@ -465,6 +480,10 @@ function minecraft_assets_load()
 					model_name_map[?model.name] = model
 					
 					ds_list_add(special_block_list, model)
+
+					entity = spblocklist[|i][?"entity"]
+					if (is_string(entity))
+						entity_model_map[?string_lower(string_replace(entity, "minecraft:", ""))] = model
 				}
 				debug_timer_stop("Load special blocks")
 				
@@ -478,8 +497,8 @@ function minecraft_assets_load()
 			case "blocks":
 			{
 				// Blocks
-				var blockslist = load_assets_map[?"blocks"];
-				if (!ds_list_valid(blockslist))
+				var blocklist = load_assets_map[?"blocks"];
+				if (!ds_list_valid(blocklist))
 				{
 					log("No block list found")
 					return false
@@ -487,14 +506,14 @@ function minecraft_assets_load()
 				
 				repeat (20)
 				{
-					if (load_assets_block_index = ds_list_size(blockslist))
+					if (load_assets_block_index = ds_list_size(blocklist))
 					{
 						load_assets_stage = "done"
 						break
 					}
 					
 					var blockmap, block;
-					blockmap = blockslist[|load_assets_block_index]
+					blockmap = blocklist[|load_assets_block_index]
 					block = block_load(blockmap, load_assets_type_map)
 					if (!block)
 					{
@@ -510,14 +529,14 @@ function minecraft_assets_load()
 					load_assets_block_index++
 				}
 				
-				load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blockslist))
+				load_assets_progress = 0.6 + 0.4 * (load_assets_block_index / ds_list_size(blocklist))
 				
 				if (debug_skip_blocks && load_assets_block_index >= debug_max_blocks)
 					load_assets_stage = "done"
 				
 				// Skip to the last 10 blocks to debug newer blocks
 				//if (debug_skip_blocks && load_assets_stage != "done")
-				//	load_assets_block_index = (ds_list_size(blockslist) - 10)
+				//	load_assets_block_index = (ds_list_size(blocklist) - 10)
 				
 				if (load_assets_stage = "done")
 				{

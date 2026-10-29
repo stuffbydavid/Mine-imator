@@ -4,8 +4,6 @@
 #include "Asset/Font.hpp"
 #include "Render/PrimitiveRenderer.hpp"
 
-#include <QRegularExpression>
-
 namespace CppProject
 {
 	StringType string_char_at(StringType str, IntType index)
@@ -39,7 +37,17 @@ namespace CppProject
 
 	StringType string_digits(StringType str)
 	{
-		return str.Replaced(QRegularExpression("[^\\d]"), "");
+		const QString text = str.QStr();
+		QString digits;
+		digits.reserve(text.length());
+
+		for (QChar character : text)
+		{
+			if (character >= QLatin1Char('0') && character <= QLatin1Char('9'))
+				digits.append(character);
+		}
+
+		return digits;
 	}
 
 	StringType string_format(RealType val, IntType tot, IntType dec)

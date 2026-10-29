@@ -2,16 +2,12 @@
 
 function block_set_redstone_wire()
 {
-	var pow, powreal, red;
+	var pow, powval;
 	pow = block_get_state_id_value(block_current, block_state_id_current, "power")
-	powreal = string_get_real(pow) / 15
-	if (powreal = 0)
-		red = 0.3
-	else
-		red = 0.6 * powreal + 0.4
-	
-	block_color = make_color_rgb(red * 255, 0, 0)
-	block_vertex_emissive = powreal
+	powval = clamp(string_get_real(pow), 0, 15)
+
+	block_color_index = e_color_palette.REDSTONE + powval + 1
+	block_vertex_emissive = powval / 15
 	
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0

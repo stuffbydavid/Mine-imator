@@ -6,10 +6,8 @@
 
 function res_load_scenery()
 {
-	var fn, openerr, rootmap, maxblocks;
+	var fn, maxblocks;
 	fn = load_folder + "/" + filename
-	openerr = false
-	rootmap = null
 	maxblocks = 20000 * thread_get_number()
 
 	switch (load_stage)
@@ -17,135 +15,51 @@ function res_load_scenery()
 		// Open file
 		case "open":
 		{
+			var err = false;
+			res_load_scenery_filter_mask()
+			
+			mc_builder.sch_entities = []
+
 			// Load from world when requested or when the schematic is unavailable
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
 				world_reload = false
+				scenery_instant = false
 				
 				if (!res_load_scenery_world())
 				{
 					error("error/load_world")
-					
-					with (app)
-						load_next()
-					
-					ready = true
-					
-					break
+					err = true
 				}
 			}
 			else
 			{
 				if (!file_exists_lib(fn))
-				{
-					if (scenery_instant)
-						load_stage = ""
-					else
-						with (app)
-							load_next()
-					
-					ready = true
-					
-					return 0
-				}
-		
-				// Schematic/Structure file
-				var ext = filename_ext(fn);
-				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt" || ext = ".litematic")
-				{
-					log("Loading " + ext, fn)
-					debug_timer_start()
-		
-					// GZunzip
-					file_delete_lib(temp_file)
-					gzunzip(fn, temp_file)
-			
-					if (!file_exists_lib(temp_file))
-					{
-						log("GZunzip error", "gzunzip")
-						error("error/load_schematic")
-						
-						if (scenery_instant)
-							load_stage = ""
-						else
-							with (app)
-								load_next()
-						
-						ready = true
-						
-						return 0
-					}
-			
-					buffer_current = buffer_load(temp_file)
-					openerr = true
-		
-					// Read NBT structure
-					rootmap = nbt_read_tag_compound()
-					if (rootmap = null)
-						break
-				
-					debug_timer_stop("res_load_scenery, Parse NBT")
-			
-					if (debug_schematics)
-						nbt_debug_tag_compound("root", rootmap)
-					
-					// Accept named, nested and unnamed schematic roots
-					var schematicmap = rootmap[?"Schematic"];
-					if (!ds_map_valid(schematicmap))
-					{
-						schematicmap = rootmap[?""]
-						if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Schematic"]))
-							schematicmap = schematicmap[?"Schematic"]
-					}
+					err = true
 
-					// Read Litematic file
-					if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Regions"]))
-						openerr = !builder_read_litematic(schematicmap)
-					
-					// Structure palettes use lowercase lists rather than Sponge compounds
-					else if (ds_map_valid(schematicmap) && ds_list_valid(schematicmap[?"size"]))
-					{
-						openerr = !builder_read_nbt(schematicmap)
-						if (openerr)
-							break
-					}
-					else
-					{
-						scenery_structure = false
-						scenery_palette_size = 0
-						
-						with (mc_builder)
-						{
-							openerr = !builder_read_schematic(schematicmap)
-							if (openerr)
-								break
-						
-							builder_read_schematic_blocks()
-							builder_read_schematic_tile_entities()
-						}
-					}
-					
-					if (openerr)
-						break
-				}
-		
-				// .blocks file (legacy)
-				else 
+				// Load from valid schematic/blocks file
+				else if (!res_load_scenery_file(fn))
 				{
-					log("Loading .blocks", fn)
-			
-					buffer_current = buffer_load_lib(fn)
-					with (mc_builder)
-						builder_read_blocks_file()
+					error("error/load_schematic")
+					err = true
 				}
-				
-				// Free file buffer
-				buffer_delete(buffer_current)
+			}
+			
+			// Error
+			if (err)
+			{
+				if (scenery_instant)
+					load_stage = ""
+				else
+					with (app)
+						load_next()
+		
+				ready = true
+				return 0
 			}
 		
 			debug_timer_start()
 
-			openerr = false
 			load_stage = "download"
 		
 			// Clear old timelines
@@ -159,8 +73,19 @@ function res_load_scenery()
 				
 				ds_list_clear(scenery_tl_list)
 			}
+
+			for (var i = 0; i < array_length(mc_builder.sch_entities); i++)
+			{
+				var entitytype = mc_builder.sch_entities[i][scenery_entity_tl_type_index];
+				if (entitytype = "")
+					continue
+
+				scenery_tl_types_count_map[?entitytype] = value_get_real(scenery_tl_types_count_map[?entitytype], 0) + 1
+				mc_builder.sch_timeline_amount++
+			}
 		
 			if (!scenery_instant)
+			{
 				with (app)
 				{
 					popup_loading.text = text_get("load_scenery/blocks")
@@ -174,23 +99,47 @@ function res_load_scenery()
 					
 					popup_loading.progress = 0.2
 				}
-		
-			// A null value will peform a check if block timelines should be added
-			if (scenery_tl_add = null)
+			}
+			
+			// Set animation choices for new resources
+			if (!scenery_tl_set)
 			{
-				if (mc_builder.sch_timeline_amount > scenery_timeline_limit) // More than limit of timelines, always skip
-					scenery_tl_add = false
-				else if (creator = app.bench_settings)
+				scenery_tl_set = true
+				
+				// Enable all timelines for small scenery
+				scenery_tl_all_types = (mc_builder.sch_timeline_amount <= scenery_timeline_prompt)
+				scenery_tl_types = []
+				
+				if (!scenery_tl_all_types)
 				{
-					scenery_tl_add = true
+					// Enable specific timelines only
+					for (var i = 0; i < array_length(scenery_timeline_enabled); i++)
+					{
+						var tltype, count;
+						tltype = scenery_timeline_enabled[i]
+						count = value_get_real(scenery_tl_types_count_map[?tltype], 0)
+						if (count > 0 && count <= scenery_timeline_enabled_max)
+							array_add(scenery_tl_types, tltype)
+					}
 					
-					if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
-						scenery_tl_prompt_amount = mc_builder.sch_timeline_amount
+					// Show popup
+					if (!ds_map_empty(scenery_tl_types_count_map) && creator != app.bench_settings)
+					{
+						if (scenery_instant)
+						{
+							scenery_instant = false
+							with (app)
+							{
+								ds_priority_add(load_queue, other.id, 1)
+								load_start(other.id, res_load_scenery)
+								popup_loading.progress = 0.2
+							}
+						}
+
+						with (app)
+							popup_block_settings_show(other.id, true)
+					}
 				}
-				else if (mc_builder.sch_timeline_amount > scenery_timeline_prompt) // Ask the user about timelines
-					scenery_tl_add = question(text_get("load_scenery/add_timelines", mc_builder.sch_timeline_amount))
-				else // Less, always add
-					scenery_tl_add = true
 			}
 		
 			mc_builder.block_skull_texture_count = ds_map_size(mc_builder.block_skull_texture_map)
@@ -198,17 +147,75 @@ function res_load_scenery()
 			mc_builder.block_skull_fail_count = 0
 			mc_builder.build_pos = vec3(0)
 			mc_builder.build_pos_index = 0
-			mc_builder.block_tl_add = scenery_tl_add
+			mc_builder.block_tl_add = (scenery_tl_all_types || array_length(scenery_tl_types) > 0)
+			mc_builder.block_tl_types = res_get_block_timeline_types()
 			mc_builder.block_tl_list = scenery_tl_list
 			mc_builder.build_randomize = scenery_randomize
-			
+
 			break
 		}
-		
+
 		// Download skins for custom skulls
 		case "download":
 		{
-			res_load_skulls()
+			if (ds_map_size(mc_builder.block_skull_texture_map) > 0 && mc_builder.block_tl_add && !scenery_instant)
+			{
+				res_load_skulls()
+				break
+			}
+
+			// Finish download stage
+			if (scenery_instant)
+			{
+				var key = ds_map_find_first(mc_builder.block_skull_texture_map);
+				while (!is_undefined(key))
+				{
+					mc_builder.block_skull_res_map[?key] = null
+					key = ds_map_find_next(mc_builder.block_skull_texture_map, key)
+				}
+			}
+			else
+			{
+				with (app)
+				{
+					popup_loading.text = text_get("load_scenery/blocks")
+					popup_loading.progress = 0.2
+				}
+			}
+
+			load_stage = "blocks"
+
+			if (mc_builder.block_skull_fail_count = 0)
+				scenery_download_skins = false
+
+			// Create entity timelines
+			with (mc_builder)
+			{
+				for (var i = 0; i < array_length(sch_entities); i++)
+				{
+					var entity = sch_entities[i];
+					if (entity[scenery_entity_tl_type_index] = "" || !block_tl_add)
+						continue
+
+					if (block_tl_types != null && !array_contains(block_tl_types, entity[scenery_entity_tl_type_index]))
+						continue
+
+					with (new_obj(obj_block_tl))
+					{
+						model_name = entity[0]
+						model_state = entity[1]
+						position = vec3(entity[2][X] * block_size, entity[2][Y] * block_size, entity[2][Z] * block_size)
+						rotation = entity[3]
+						rot_point = entity[4]
+						texture = null
+						has_text = false
+						pattern_type = ""
+
+						ds_list_add(other.block_tl_list, id)
+					}
+				}
+			}
+
 			break
 		}
 		
@@ -254,7 +261,7 @@ function res_load_scenery()
 				debug_timer_start()
 			
 				// Prepare vbuffers
-				block_vbuffer_start()
+				block_meshes_start(true)
 		
 				load_stage = "model"
 				
@@ -340,13 +347,14 @@ function res_load_scenery()
 				
 			debug_timer_stop("res_load_scenery, Generate models")
 			
-			block_vbuffer_done()
+			block_meshes_done()
 			
 			with (mc_builder)
 			{
 				builder_done()
 				
 				block_tl_list = null
+				block_tl_types = null
 				build_randomize = false
 			}
 			
@@ -378,6 +386,9 @@ function res_load_scenery()
 			{
 				if (type != e_tl_type.SCENERY || temp.scenery != other.id)
 					continue
+
+				if (array_length(blocks_added) > 0 || array_length(block_meshes_edit) > 0)
+					tl_update_block_meshes()
 				
 				if (scenery_ground_hobj != null)
 					tl_replace_ground(scenery_ground_hobj)
@@ -415,25 +426,4 @@ function res_load_scenery()
 			break
 		}
 	}
-
-	if (rootmap != null)
-		ds_map_destroy(rootmap)
-
-	// Schematic error
-	if (openerr)
-	{
-		error("error/load_schematic")
-		
-		buffer_delete(buffer_current)
-		
-		if (scenery_instant)
-			load_stage = ""
-		else
-			with (app)
-				load_next()
-		
-		ready = true
-	}
-
-
 }

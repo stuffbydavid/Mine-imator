@@ -4,7 +4,9 @@ function builder_start()
 	build_size_xy = build_size[X] * build_size[Y]
 	build_size_total = build_size_xy * build_size[Z]
 	build_edges = !(app.setting_scenery_remove_edges && (build_size[X] > scenery_large_threshold && build_size[Y] > scenery_large_threshold) && build_single_block = null)
+	
 	block_tl_add = false
+	block_tl_count_map = null
 	block_multithreaded_skip = false
 	
 	ds_map_clear(block_text_front_map)

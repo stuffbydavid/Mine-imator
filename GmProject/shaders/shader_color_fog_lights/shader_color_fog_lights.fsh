@@ -11,8 +11,6 @@ uniform vec3 uCameraPosition; // static
 uniform int uTonemapper;
 uniform float uExposure;
 uniform float uGamma;
-uniform float uNear; // static
-uniform float uFar; // static
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -20,7 +18,6 @@ varying vec4 vColor;
 varying vec2 vTexCoord;
 varying vec3 vDiffuse;
 varying vec4 vCustom;
-varying float vPlaceDistance;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
@@ -29,28 +26,17 @@ varying float vPlaceDistance;
 #pragma shady: inline(common_effect.EFFECT_FOG_LIB)
 #pragma shady: inline(common_color.COLOR_ADJUST_LIB)
 #pragma shady: inline(common_color.TONEMAP_LIB)
-#pragma shady: inline(common_place.PLACE_LIB)
 
 void main()
 {
 	gl_FragData[0] = vec4(0.0);
-	gl_FragData[1] = vec4(0.0);
 	
 	vec2 tex = vTexCoord;
 	vec4 baseColor = vColor * texture2D(uTexture, tex); // Get base
 	
-	if (uRenderPlace > 0)
-	{
-		// Ignore transparent texels on non-block objects
-		if (uPlaceType == PLACE_TYPE_SCENE && baseColor.a < 0.05)
-			discard;
-		
-		gl_FragData[1] = getPlaceOutput(vPlaceDistance, uNear, uFar);
-	}
-	
 	bool isSky = vDiffuse.r < 0.0;
 	
-	if (baseColor.a == 0.0 && (uRenderPlace == 0 || uPlaceType != PLACE_TYPE_BLOCK))
+	if (baseColor.a == 0.0)
 		discard;
 	
 	// Get material data
@@ -93,8 +79,7 @@ void main()
 	col.rgb = mix(col.rgb, uFogColor.rgb, fog); // Mix fog
 	col.a = baseColor.a;
 	
-	if (uRenderPlace == 0 || uPlaceType == PLACE_TYPE_PLACED || uPlaceType == PLACE_TYPE_CLOUDS)
-		handleAlphaDiscard(vPosition, col);
+	handleAlphaDiscard(vPosition, col);
 	
 	gl_FragData[0] = col;
 }

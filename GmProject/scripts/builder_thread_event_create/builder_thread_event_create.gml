@@ -1,4 +1,6 @@
 /// CppGen array<int> build_size
+/// CppGen array<int> build_min_pos
+/// CppGen array<int> build_max_pos
 /// CppGen int build_size_xy
 /// CppGen int build_size_total
 /// CppGen int build_single_stateid
@@ -8,7 +10,7 @@
 /// CppGen array<bool> build_edge
 /// CppGen array<bool> block_face_full
 /// CppGen array<int> block_face_min_depth
-/// CppGen array<real> block_pos
+/// CppGen array<real> block_model_pos
 /// CppGen array<bool> liquid_match
 /// CppGen array<bool> liquid_solid
 /// CppGen array<int> liquid_waterlogged
@@ -30,16 +32,20 @@ function builder_thread_event_create()
 	threadid = 0
 	
 	build_size = vec3(0)
+	build_min_pos = vec3(0)
+	build_max_pos = vec3(0)
 	build_size_xy = 0
 	build_size_total = 0
-	build_size_sqrt = 0
 	
+	build_randomize = false
 	build_transform = false
 	build_edges = true
+	build_edit = false
+	build_remove = false
+	
 	build_single_block = null
 	build_single_stateid = 0
 	build_multithreaded = null
-	build_randomize = false
 	
 	build_pos_index = 0
 	build_pos = vec3(0)
@@ -52,7 +58,7 @@ function builder_thread_event_create()
 	block_face_min = array_create(block_faces, null)
 	block_face_max = array_create(block_faces, null)
 
-	block_pos = vec3(0)
+	block_model_pos = vec3(0)
 	
 	liquid_match = array_create(block_faces, false)
 	liquid_solid = array_create(block_faces, false)
@@ -88,21 +94,23 @@ function builder_thread_event_create()
 	block_current = null
 	block_state_id = null
 	block_state_id_current = 0
-	block_color = null
+	block_color_index = 0
 
-	block_render_model = null
+	block_render_model = []
 	block_render_model_multipart_map = null
 
 	block_tl_map = null
 	
 	block_vbuffer_current = null
+	block_meshes = []
+	block_mesh = null
+	block_meshes_num = vec3(1)
 	block_vertex_wave = e_vertex_wave.NONE
 	block_vertex_wave_zmin = null
 	block_vertex_wave_zmax = null
 	block_vertex_emissive = 0
 	block_vertex_subsurface = 0
-	block_vertex_rgb = c_white
-	block_vertex_alpha = 1
+	block_vertex_color_index = 0
 
 	builder_scenery = false
 	builder_scenery_legacy = false

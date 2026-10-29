@@ -2,9 +2,16 @@
 
 function block_set_chest()
 {
-	var type, double;
+	var type, double, staticmodel;
 	type = block_get_state_id_value(block_current, block_state_id_current, "type")
 	double = "false"
+	staticmodel = (!mc_builder.block_tl_add || block_tl_map = null)
+
+	if (build_edit && !staticmodel)
+		staticmodel = (block_tl_map[?build_pos_index] != block_current.block_id)
+
+	if (mc_builder.block_tl_types != null && !array_contains(mc_builder.block_tl_types, block_current.tl_type))
+		staticmodel = true
 	
 	if (builder_scenery && builder_scenery_legacy)
 		type = "legacy"
@@ -13,7 +20,15 @@ function block_set_chest()
 	{
 		case "single":	break
 		case "right":	double = "true"; break
-		case "left":	return null
+		case "left":
+		{
+			if (!staticmodel)
+				return null
+
+			double = "true"
+			break
+		}
+		
 		case "legacy":
 		{
 			if (block_current.name = "ender_chest")
@@ -155,13 +170,27 @@ function block_set_chest()
 				}
 			}
 			
-			if (discardblock = block_current) // Discard
-				return null
-			
-			if (connectblock = block_current) // Connect
+			if (discardblock = block_current)
+			{
+				if (!staticmodel)
+					return null
+
+				type = "left"
 				double = "true"
+			}
+			else if (connectblock = block_current)
+			{
+				type = "right"
+				double = "true"
+			}
 			else
+			{
+				type = "single"
 				double = "false"
+			}
+
+			if (staticmodel)
+				block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "type", type)
 		}
 	}
 	

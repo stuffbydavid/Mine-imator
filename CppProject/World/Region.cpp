@@ -198,50 +198,64 @@ namespace CppProject
 
 		thread_task_end();
 
-		if (schematic && loadErrors)
-			schematic->error = "Could not read all selected chunks in " + filename;
-
-		// NBT hash keys must not survive the OpenMP string remapping
-		if (schematic && schematic->error.isEmpty())
+		if (schematic)
 		{
-			try
+			if (loadErrors)
+				schematic->error = "Could not read all selected chunks in " + filename;
+
+			// NBT hash keys must not survive the OpenMP string remapping
+			BoolType exportedChunks[REGION_CHUNKS] = {};
+			if (schematic->error.isEmpty())
 			{
-				for (QByteArray& chunkData : exportChunks)
+				try
 				{
-					if (chunkData.isEmpty())
-						continue;
-
-					Chunk chunk(this, chunkData, box, schematic);
-					if (chunk.error)
-						throw QString("Could not read chunk for schematic");
-
-					if (schematic->exportOnly)
+					for (QByteArray& chunkData : exportChunks)
 					{
-						if (chunkStatus[chunk.regionIndex] == ChunkStatus::CHUNK_LOADED)
-							throw QString("Duplicate chunk in " + filename);
+						if (chunkData.isEmpty())
+							continue;
 
-						chunkStatus[chunk.regionIndex] = ChunkStatus::CHUNK_LOADED;
+						Chunk chunk(this, chunkData, box, schematic);
+						if (chunk.error)
+							throw QString("Could not read chunk for schematic");
+
+						if (schematic->exportOnly)
+						{
+							if (chunkStatus[chunk.regionIndex] == ChunkStatus::CHUNK_LOADED)
+								throw QString("Duplicate chunk in " + filename);
+
+							chunkStatus[chunk.regionIndex] = ChunkStatus::CHUNK_LOADED;
+						}
+
+						schematic->AddChunk(chunk);
+						if (!schematic->skipIncompatible || schematic->legacy == (chunk.format < Chunk::JAVA_1_13))
+							exportedChunks[chunk.regionIndex] = true;
+						chunkData.clear();
 					}
-
-					schematic->AddChunk(chunk);
-					chunkData.clear();
+				}
+				catch (const QString& error)
+				{
+					schematic->error = error;
 				}
 			}
-			catch (const QString& error)
+
+			// Read entity region file
+			if (schematic->error.isEmpty())
 			{
-				schematic->error = error;
+				QFileInfo regionFile(filename);
+				QString entitiesFile = QDir(regionFile.absolutePath()).filePath("../entities/" + regionFile.fileName());
+				schematic->AddEntityRegion(entitiesFile, pos, exportedChunks);
 			}
-		}
 
-		// Export-only loads do not need builder or preview data
-		if (schematic && schematic->exportOnly)
-		{
-			loadStatus = LOADED;
+			// Export-only loads do not need builder or preview data
+			if (schematic->exportOnly)
+			{
+				loadStatus = LOADED;
 
-			if (!schematic->error.isEmpty())
-				throw schematic->error;
+				if (!schematic->error.isEmpty())
+					throw schematic->error;
 
-			return;
+				return;
+			}
 		}
 
 		// Create block entity maps on main thread

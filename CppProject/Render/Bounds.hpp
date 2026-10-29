@@ -15,6 +15,9 @@ namespace CppProject
 		// Reset the bounds
 		void Reset() { empty = true; }
 
+		// Checks whether the point is inside or on the bounds
+		BoolType ContainsPoint(VecType point) const;
+
 		// Adds the given point to the bounds.
 		void AddPoint(VecType point);
 

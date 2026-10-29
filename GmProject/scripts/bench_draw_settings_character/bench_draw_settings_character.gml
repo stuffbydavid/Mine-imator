@@ -149,6 +149,29 @@ function bench_draw_settings_character()
 	menu_filter = ""
 	menu_filter_normal = ""
 
+	if (bench_tab = e_bench_tab.SPECIAL_BLOCK && (bench_settings.model_name = "sign" || bench_settings.model_name = "hanging_sign"))
+	{
+		tab_set_columns(true, 2)
+
+		tab_control(ui_small_height)
+		if (draw_checkbox("bench/front_text", dx, dy, bench_settings.sign_front_text, null))
+		{
+			bench_settings.sign_front_text = !bench_settings.sign_front_text
+			bench_settings.preview.update = true
+		}
+		tab_next()
+
+		tab_control(ui_small_height)
+		if (draw_checkbox("bench/back_text", dx, dy, bench_settings.sign_back_text, null))
+		{
+			bench_settings.sign_back_text = !bench_settings.sign_back_text
+			bench_settings.preview.update = true
+		}
+		tab_next()
+
+		tab_set_columns(false)
+	}
+
 	// Model part
 	if (bench_tab = e_bench_tab.MODEL_PART && bench_settings.model_file != null)
 	{

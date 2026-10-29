@@ -94,6 +94,7 @@ namespace CppProject
 			return (type == TAG_INT && (name == "DataVersion" || name == "xPos" || name == "zPos")) ||
 				(type == TAG_STRING && name == "Status") ||
 				(type == TAG_LIST && (name == "block_entities" || name == "TileEntities")) ||
+				(includeEntities && type == TAG_LIST && (name == "Entities" || name == "entities")) ||
 				(type == TAG_BYTE_ARRAY && (name == "Blocks" || name == "Data" || name == "Add"));
 		}
 

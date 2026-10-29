@@ -61,7 +61,7 @@ function tab_properties_library_block(edittab)
 	if (temp_edit.type = e_temp_type.BLOCK)
 	{
 		tab_control_checkbox()
-		draw_checkbox("library/randomize_blocks", dx, dy, temp_edit.block_randomize, action_lib_block_randomize, "library/randomize_blocks_help")
+		draw_checkbox("library/randomize_blocks", dx, dy, temp_edit.block_randomize, action_lib_block_randomize, "library/randomize_blocks_tip")
 		tab_next()
 	}
 	

@@ -19,6 +19,7 @@ You can open `GmProject/Mine-imator.yyp` directly in GameMaker-LTS2026 for devel
 * Limitations with `sprite_add` and grayscale/tRNS chunks in transparent PNGs, affecting certain blocks, item and cloud textures found in Minecraft resource packs
 * Slower overall performance
 * No Minecraft world importer
+* No build/placement mode
 * No cached scenery loading
 * No drag-n-drop support for files into Mine-imator
 * No multi-window support for secondary views

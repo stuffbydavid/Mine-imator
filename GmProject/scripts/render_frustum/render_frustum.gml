@@ -4,6 +4,7 @@ function frustum() constructor
 {
 	active = true
 	vbuffer = null
+	blend_color = c_white
 	corners = array_create(8, vec4(0))
 	
 	near = 0
@@ -67,30 +68,32 @@ function frustum() constructor
 		if (vbuffer != null)
 			vbuffer_destroy(vbuffer)
 		
+		blend_color = color
+
 		// Generate mesh
 		vertex_emissive = 1
-		vertex_alpha = 0.5
 		
 		vbuffer_start()
 		
-		vertex_rgb = color_multiply(color, c_dkgrey)
 		add_triangle(0, 4, 5); add_triangle(5, 1, 0); // X-
 		
-		vertex_rgb = color_multiply(color, c_ltgrey)
 		add_triangle(7, 3, 2); add_triangle(2, 6, 7); // X+
 		
-		vertex_rgb = color_multiply(color, c_grey)
 		add_triangle(2, 1, 5); add_triangle(5, 6, 2); // Y-
 		add_triangle(7, 4, 0); add_triangle(0, 3, 7); // Y+
 		
-		vertex_rgb = color
 		add_triangle(0, 1, 2); add_triangle(2, 3, 0); // Z-
 		add_triangle(4, 7, 6); add_triangle(6, 5, 4); // Z+
 		
 		vbuffer = vbuffer_done()
 		
 		vertex_emissive = 0
-		vertex_alpha = 1
-		vertex_rgb = c_white
+	}
+
+	static draw = function()
+	{
+		render_set_uniform_color(e_uniform.BLEND_COLOR, blend_color, 0.5)
+		vbuffer_render(vbuffer)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 	}
 }

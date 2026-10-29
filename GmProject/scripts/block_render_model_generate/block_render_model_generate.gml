@@ -6,9 +6,9 @@ function block_render_model_generate(model)
 	instance_activate_object(model)
 	
 	var offx, offy, offz;
-	offx = block_pos[X] + model.offset[X]
-	offy = block_pos[Y] + model.offset[Y]
-	offz = block_pos[Z] + model.offset[Z]
+	offx = block_model_pos[X] + model.offset[X]
+	offy = block_model_pos[Y] + model.offset[Y]
+	offz = block_model_pos[Z] + model.offset[Z]
 
 	// Set emissive
 	if (block_vertex_emissive = null)
@@ -52,14 +52,17 @@ function block_render_model_generate(model)
 			if (!el.face_render[f] || block_render_model_generate_face_cull(model, el, f))
 				continue
 
-			if (block_color = null)
-				block_vertex_rgb = el.face_texture_color[f]
-			else
-				block_vertex_rgb = block_color
-
 			block_vbuffer_current = el.face_vbuffer[f]
+			block_vertex_color_index = block_color_index
+			
 			if (block_vbuffer_current = null)
-				block_vbuffer_current = mc_builder.vbuffer[@ el.face_depth[f] * e_block_vbuffer.amount + el.face_block_vbuffer[f]]
+			{
+				if (block_vertex_color_index = 0)
+					block_vertex_color_index = el.face_color_index[f]
+				
+				var index = el.face_depth[f] * e_block_vbuffer.amount + el.face_block_vbuffer[f];
+				block_vbuffer_current = block_mesh.block_vbuffer[@index]
+			}
 
 			// Read the four UV coordinates once per face
 			var uv0, uv1, uv2, uv3;
@@ -132,7 +135,7 @@ function block_render_model_generate(model)
 			}
 		}
 
-		block_vertex_rgb = c_white
+		block_vertex_color_index = 0
 		block_vertex_emissive = minemissive
 		
 		instance_deactivate_object(el)

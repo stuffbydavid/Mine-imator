@@ -25,16 +25,13 @@ function action_build_remove()
 			if (target = null || !instance_exists(target))
 				return false
 
-			// Scenery block removal
-			if (target.type = e_tl_type.SCENERY)
-			{
-				toast_new(e_toast.INFO, "Deleting scenery blocks coming soon")
-				return false
-			}
-
 			// Use the special block owning the rendered model part
 			if (target.type = e_tl_type.MODEL_PART && target.part_of != null)
 				target = target.part_of
+
+			// Replace a block with air in an existing block mesh
+			if (target.type = e_tl_type.SCENERY)
+				return action_build_place(true)
 
 			// Only blocks
 			if (target.type != e_tl_type.BLOCK && target.type != e_tl_type.SPECIAL_BLOCK)
@@ -62,6 +59,7 @@ function action_build_remove()
 						var part = child.tree_list[|c];
 						if (part.type != e_tl_type.MODEL_PART || part.part_of != target)
     						return false
+						
 						array_add(children, part)
 					}
 				}
@@ -76,11 +74,13 @@ function action_build_remove()
 			hobj = history_set(action_build_remove)
 			hobj.remove_save_id = remove.save_id
 			hobj.remove_save_obj = history_save_tl(remove)
-			hobj.build_structure_removed = remove = build_structure
+			hobj.build_structure_removed = (remove = build_structure)
+			
 		}
 
 		place_target_tl = null
 
+		// Reset structure setting to Create new
 		if (remove = build_structure)
 			action_build_structure(null, false)
 
@@ -97,6 +97,8 @@ function action_build_remove()
 
 	place_pos = null
 	place_view_pos = null
+	place_block_pos = null
+	
 	build_box_render = null
 	
 	view_changed()

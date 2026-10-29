@@ -1,9 +1,12 @@
 /// @desc Create a sign text timeline.
 
-function block_animate_text(text, textpos, textrot, textscale, textcolor, textglowcolor, textemissive)
+function block_animate_text(text, textpos, textrot, textscale, textcolor, textglowcolor, textemissive, textparent)
 {
 	if (string_replace_all(string_remove_newline(text), " ", "") = "")
 		return 0
+
+	if (textparent.type = e_tl_type.MODEL_PART)
+		textpos = point3D_sub(textpos, textparent.model_part.position)
 
 	with (new_obj(obj_timeline))
 	{
@@ -12,11 +15,11 @@ function block_animate_text(text, textpos, textrot, textscale, textcolor, textgl
 		has_temp = false
 		animated = false
 
-		// Set parent to the sign timeline
+		// Keep text in the block's part list while parenting it to the sign part
 		inherit_rot_point = true
 		part_of = other.id
 		ds_list_add(other.part_list, id)
-		tl_set_parent(other.id)
+		tl_set_parent(textparent)
 
 		value_default[e_value.TEXT] = text
 		value[e_value.TEXT] = text

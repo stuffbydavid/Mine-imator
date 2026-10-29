@@ -21,37 +21,10 @@ function view_update_surface(view, cam, buildedit = false)
 	render_background = !view.transparent_background
 	render_watermark = false
 	
-	// Reset samples if place mode changed
-	if (view.surface_place_active != view.place_output || (view.place_output && !surface_exists(view.surface_place_id)))
-		render_samples = -1
-	
 	render_start(view.surface, cam, view, content_width, content_height)
 	
 	if (view.renderer = e_renderer.REALISTIC || view.renderer = e_renderer.STANDARD)
-	{
 		render_high()
-		
-		// Update surfaces for placing/picking
-		if (!render_place)
-		{
-			if (view.surface_place_separate && surface_exists(view.surface_place_id))
-				surface_free(view.surface_place_id)
-			
-			view.surface_place_id = null
-			view.surface_place_separate = false
-		}
-		
-		view.surface_pick_depth_id = render_surface_depth
-		view.surface_pick_mask_id = render_surface_mask
-		
-		if (view.renderer = e_renderer.STANDARD || !render_samples_done)
-		{
-			view.surface_place_depth_near = depth_near
-			view.surface_place_depth_far = depth_far
-			view.surface_place_proj_matrix = matrix_multiply(proj_matrix, aa_matrix)
-			view.surface_place_view_matrix = array_copy_1d(view_matrix)
-		}
-	}
 	else
 		render_low()
 
@@ -90,7 +63,29 @@ function view_update_surface(view, cam, buildedit = false)
 	{
 		// Highlight target parent while placing
 		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
-			view.surface_select = render_select_outline(e_render_mode.PLACE_PARENT, view.surface_select)
+		{
+			// Hide scenery highlighting when camera is within bounds
+			var bounds, inside;
+			bounds = null
+			
+			with (place_target_tl_root)
+				if (type = e_tl_type.SCENERY)
+					bounds = tl_get_bounds()
+
+			inside = (bounds != null)
+			if (inside)
+			{
+				var minpos, maxpos;
+				minpos = bounds[0]
+				maxpos = bounds[1]
+				for (var a = X; a <= Z; a++)
+					if (cam_from[a] < minpos[a] || cam_from[a] > maxpos[a])
+						inside = false
+			}
+
+			if (!inside)
+				view.surface_select = render_select_outline(e_render_mode.PLACE_PARENT, view.surface_select)
+		}
 			
 		// Highlight selection
 		if (!place_build)
@@ -112,8 +107,9 @@ function view_update_surface(view, cam, buildedit = false)
 	view.surface_proj_matrix = array_copy_1d(proj_matrix)
 	view.surface_view_matrix = array_copy_1d(view_matrix)
 	view.surface_view_proj_matrix = array_copy_1d(view_proj_matrix)
+	view.surface_proj_matrix_inverse = matrix_inverse_ext(view.surface_proj_matrix)
+	view.surface_view_matrix_inverse = matrix_inverse_ext(view.surface_view_matrix)
 	
-	view.surface_place_active = view.place_output
 	view.surface_width = content_width
 	view.surface_height = content_height
 	view.surface_renderer = view.renderer
@@ -137,9 +133,6 @@ function view_update_surface(view, cam, buildedit = false)
 		view_place(view)
 		
 		app_update_place()
-		
-		if (build_first_person)
-			view.surface_place_async_id = null
 		
 		if (view.update)
 		{

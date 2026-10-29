@@ -23,6 +23,14 @@ namespace CppProject
 	bool Shader::saveConverted = false;
 	TexturePage* Shader::currentPage = nullptr;
 
+	struct ShadySource
+	{
+		QHash<QString, QString> macros;
+		QSet<QString> duplicates, unfinished;
+	};
+	static QHash<QString, ShadySource> shadySources;
+	static QHash<int, QHash<QString, QRegularExpression>> shaderPatterns;
+
 	QMap<QString, Shader::DataType> Shader::dataTypeNameMap = {
 		{ "int", Shader::INT },
 		{ "float", Shader::FLOAT },
@@ -121,8 +129,25 @@ namespace CppProject
 		}
 	}
 
+	QRegularExpression Shader::GetRegex(const QString& pattern, QRegularExpression::PatternOptions options)
+	{
+		auto& patterns = shaderPatterns[(int)options];
+		auto it = patterns.find(pattern);
+		if (it == patterns.end())
+			it = patterns.insert(pattern, QRegularExpression(pattern, options));
+
+		return it.value();
+	}
+
 	void Shader::Load(BoolType useCache)
 	{
+		// Reload macro sources as well as compiled code after a shader edit
+		if (!useCache)
+		{
+			shadySources.clear();
+			shaderPatterns.clear();
+		}
+
 		sourceDependencies.clear();
 		vsName = "/Shaders/" + name + ".vsh";
 		fsName = "/Shaders/" + name + ".fsh";
@@ -214,7 +239,7 @@ namespace CppProject
 		// Depth output only
 		depthOnly = fsCode.contains("#define CPP_DEPTH_ONLY");
 		if (depthOnly)
-			fsCode.remove(QRegularExpression("#ifndef CPP_DEPTH_ONLY[\\s\\S]*?#endif"));
+			fsCode.remove(GetRegex("#ifndef CPP_DEPTH_ONLY[\\s\\S]*?#endif"));
 
 		// Point light shader
 		pointShader = vsCode.contains("#define CPP_POINT_MULTIVIEW");
@@ -250,12 +275,13 @@ namespace CppProject
 	BoolType Shader::ExpandShadyInline(QString& code, QString extension, QStringList includeStack)
 	{
 		// GameMaker editor regions are not standard GLSL/HLSL preprocessor directives
-		code.remove(QRegularExpression(
+		static const QRegularExpression regionRegex(
 			"^[ \\t]*#[ \\t]*(?:region(?:[ \\t]+[^\\r\\n]*)?|endregion)[ \\t]*(?:\\r?\\n|$)",
 			QRegularExpression::MultilineOption
-		));
+		);
+		code.remove(regionRegex);
 
-		QRegularExpression inlineRegex(
+		static const QRegularExpression inlineRegex(
 			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*inline\\([ \\t]*(\\w+)\\.(\\w+)[ \\t]*\\)"
 			"[ \\t]*(?://[^\\r\\n]*)?(?:\\r?\\n|$)",
 			QRegularExpression::MultilineOption
@@ -298,68 +324,85 @@ namespace CppProject
 		filename = ":/Shaders/" + shaderName + extension;
 	#endif
 
-		QFile file(filename);
-		if (!file.open(QFile::ReadOnly | QFile::Text))
+		// Cache unexpanded bodies so callers still collect dependencies and detect include cycles
+		if (!shadySources.contains(filename))
 		{
-			WARNING("Shader: Shady inline source not found: " + filename);
-			return false;
+			QFile file(filename);
+			if (!file.open(QFile::ReadOnly | QFile::Text))
+			{
+				WARNING("Shader: Shady inline source not found: " + filename);
+				return false;
+			}
+
+			static const QRegularExpression beginRegex(
+				"^[ \t]*#pragma[ \t]+shady:[ \t]*macro_begin[ \t]+(\\w+)[ \t]*$"
+			);
+			static const QRegularExpression endRegex(
+				"^[ \t]*#pragma[ \t]+shady:[ \t]*macro_end[ \t]*$"
+			);
+
+			ShadySource source;
+			QStringList names, bodies;
+			QSet<QString> seen;
+			const QStringList lines = QTextStream(&file).readAll().replace("\r\n", "\n").split('\n');
+			for (const QString& line : lines)
+			{
+				if (line.contains("macro_begin"))
+				{
+					QRegularExpressionMatch match = beginRegex.match(line);
+					if (match.hasMatch())
+					{
+						QString macro = match.captured(1);
+						if (seen.contains(macro))
+							source.duplicates.insert(macro);
+						seen.insert(macro);
+						names.append(macro);
+						bodies.append("");
+						continue;
+					}
+				}
+
+				if (line.contains("macro_end") && endRegex.match(line).hasMatch())
+				{
+					if (!names.isEmpty())
+					{
+						QString body = bodies.takeLast();
+						source.macros.insert(names.takeLast(), body.isEmpty() ? "\n" : body);
+					}
+					continue;
+				}
+
+				for (QString& body : bodies)
+					body += line + "\n";
+			}
+
+			for (const QString& macro : names)
+				source.unfinished.insert(macro);
+			shadySources.insert(filename, source);
 		}
 
 		sourceDependencies.insert(filename);
-		QStringList lines = QTextStream(&file).readAll().split(QRegularExpression("\\r?\\n"));
-		QRegularExpression beginRegex(
-			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*macro_begin[ \\t]+(\\w+)[ \\t]*$"
-		);
-		QRegularExpression endRegex(
-			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*macro_end[ \\t]*$"
-		);
-
-		IntType beginLine = -1;
-		for (IntType line = 0; line < lines.size(); line++)
+		const ShadySource& source = shadySources[filename];
+		if (source.duplicates.contains(macroName))
 		{
-			QRegularExpressionMatch beginMatch = beginRegex.match(lines[line]);
-			if (beginMatch.hasMatch() && beginMatch.captured(1) == macroName)
-			{
-				if (beginLine > -1)
-				{
-					WARNING("Shader: Duplicate Shady macro " + includeId);
-					return false;
-				}
-				beginLine = line;
-			}
+			WARNING("Shader: Duplicate Shady macro " + includeId);
+			return false;
+		}
+		if (source.unfinished.contains(macroName))
+		{
+			WARNING("Shader: Shady macro_end missing for " + includeId);
+			return false;
 		}
 
-		if (beginLine < 0)
+		auto macro = source.macros.constFind(macroName);
+		if (macro == source.macros.constEnd())
 		{
 			WARNING("Shader: Shady macro not found: " + includeId);
 			return false;
 		}
 
-		IntType depth = 1;
-		QStringList macroLines;
-		for (IntType line = beginLine + 1; line < lines.size(); line++)
-		{
-			if (beginRegex.match(lines[line]).hasMatch())
-			{
-				depth++;
-				continue;
-			}
-			else if (endRegex.match(lines[line]).hasMatch())
-			{
-				depth--;
-				if (depth == 0)
-				{
-					code = macroLines.join("\n") + "\n";
-					return ExpandShadyInline(code, extension, includeStack);
-				}
-				continue;
-			}
-
-			macroLines.append(lines[line]);
-		}
-
-		WARNING("Shader: Shady macro_end missing for " + includeId);
-		return false;
+		code = macro.value();
+		return ExpandShadyInline(code, extension, includeStack);
 	}
 
 	QString Shader::LoadGeometryCode(const QString& extension)
@@ -428,6 +471,8 @@ namespace CppProject
 		}
 
 		// Reset samplers
+		samplersChanged = true;
+		samplerUniformsChanged = true;
 		for (IntType s = 0; s < numSamplers; s++)
 		{
 			samplerState[s].changed = false;
@@ -460,6 +505,9 @@ namespace CppProject
 		// Clear static buffer
 		if (IS_D3D11)
 			memset(staticBufferData, 0, staticBufferSize);
+
+		staticBufferChanged = true;
+		objectBufferChanged = true;
 		
 		if (pointMultiviewUniform >= 0)
 			SubmitInt(pointMultiviewUniform, GFX->pointMultiview);
@@ -477,6 +525,8 @@ namespace CppProject
 	{
 		if (!IsLoaded())
 			return false;
+
+		GFX->ResetTextureBindings();
 
 		if (IS_OPENGL)
 		{
@@ -754,6 +804,8 @@ namespace CppProject
 		}
 
 		state.currentTexId = id;
+		if (samplerUvRect[sampler] != newUvRect)
+			samplerUniformsChanged = true;
 		samplerUvRect[sampler] = newUvRect;
 		
 		if (useBatching && objRectUniformIndex[sampler] >= 0)
@@ -809,6 +861,7 @@ namespace CppProject
 		memcpy(batchBufferData + batchBufferObjectIndex * batchBufferObjectSize,
 			   batchBufferData + (batchBufferObjectIndex - 1) * batchBufferObjectSize,
 			   batchBufferObjectSize);
+		objectBufferChanged = true;
 
 		return false;
 	}
@@ -859,6 +912,11 @@ namespace CppProject
 			numObjects++;
 		
 		IntType objectBytes = std::max<IntType>(1, numObjects) * batchBufferObjectSize;
+
+		for (IntType s = 0; s < numSamplers; s++)
+			if (samplerState[s].changed)
+				samplersChanged = true;
+
 		// Bind textures and submit samplers
 	#if OS_WINDOWS
 		ID3D11SamplerState* texSamplers[32] = {};
@@ -867,7 +925,7 @@ namespace CppProject
 		IntType glConfiguredTextures[32];
 		IntType glConfiguredTextureCount = 0;
 
-		for (IntType s = 0; s < numSamplers; s++)
+		for (IntType s = 0; samplersChanged && s < numSamplers; s++)
 		{
 			const SamplerState& state = samplerState[s];
 			if (state.currentTexId > -1)
@@ -929,18 +987,22 @@ namespace CppProject
 
 					program->setUniformValue(state.glLocation, (GLint)s);
 				}
-				samplerState[s].changed = false;
 			}
+
+			samplerState[s].changed = false;
 		}
 
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
-			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
-			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
+			if (samplersChanged)
+			{
+				D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+				D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
+			}
 
 			// Submit UvRects/repeat options
-			if (numSamplers > 0)
+			if (numSamplers > 0 && samplerUniformsChanged)
 			{
 				WriteUniformValue(uvRectUniform, samplerUvRect, numSamplers * sizeof(UvRect));
 
@@ -954,16 +1016,26 @@ namespace CppProject
 			IntType numConstantBuffers = 0;
 			if (d3dStaticBuffer)
 			{
-				D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+				if (staticBufferChanged)
+				{
+					D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+					staticBufferChanged = false;
+				}
+
 				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
 			}
 
 			if (d3dObjectBuffer)
 			{
-				D3D11_MAPPED_SUBRESOURCE objectBufferRes = {};
-				D3DCheckError(D3DContext->Map(d3dObjectBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &objectBufferRes));
-				memcpy(objectBufferRes.pData, batchBufferData, objectBytes);
-				D3DContext->Unmap(d3dObjectBuffer, 0);
+				if (objectBufferChanged)
+				{
+					D3D11_MAPPED_SUBRESOURCE objectBufferRes = {};
+					D3DCheckError(D3DContext->Map(d3dObjectBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &objectBufferRes));
+					memcpy(objectBufferRes.pData, batchBufferData, objectBytes);
+					D3DContext->Unmap(d3dObjectBuffer, 0);
+					objectBufferChanged = false;
+				}
+
 				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
 				ResetObjects();
 			}
@@ -989,16 +1061,6 @@ namespace CppProject
 				D3DContext->DrawIndexedInstanced(numIndices, numInstances, 0, 0, 0);
 			else
 				D3DContext->DrawIndexed(numIndices, 0, 0);
-
-			// Reset input
-			for (IntType s = 0; s < numSamplers; s++)
-			{
-				texSamplers[s] = nullptr;
-				texSRVs[s] = nullptr;
-			}
-
-			D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
-			D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
 		}
 	#endif
 		if (IS_OPENGL)
@@ -1012,7 +1074,7 @@ namespace CppProject
 			}
 
 			// Submit UvRects/repeat options
-			if (numSamplers > 0)
+			if (numSamplers > 0 && samplerUniformsChanged)
 			{
 				program->setUniformValueArray(uvRectUniform.glLocation, samplerUvRect, numSamplers);
 				program->setUniformValueArray(texRepeatUniform.glLocation, (GLint*)samplerRepeat, numSamplers);
@@ -1021,9 +1083,14 @@ namespace CppProject
 			// Submit SSBO
 			if (useBatching)
 			{
-				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
-				GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, objectBytes, batchBufferData);
-				GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+				if (objectBufferChanged)
+				{
+					GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
+					GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, objectBytes, batchBufferData);
+					GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+					objectBufferChanged = false;
+				}
+
 				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
 				GL_CHECK_ERROR();
 
@@ -1048,15 +1115,24 @@ namespace CppProject
 			
 			GL_CHECK_ERROR();
 		}
+
+		samplersChanged = false;
+		samplerUniformsChanged = false;
 	}
 
 	void Shader::ResetObjects()
 	{
-		if (!useBatching)
+		if (!useBatching || !batchBufferObjectIndex)
 			return;
 
 		// Reset to first object
-		memcpy(batchBufferData, batchBufferData + batchBufferObjectIndex * batchBufferObjectSize, batchBufferObjectSize);
+		const char* lastObject = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
+		if (memcmp(batchBufferData, lastObject, batchBufferObjectSize))
+		{
+			memcpy(batchBufferData, lastObject, batchBufferObjectSize);
+			objectBufferChanged = true;
+		}
+
 		batchBufferObjectIndex = 0;
 	}
 
@@ -1071,7 +1147,15 @@ namespace CppProject
 		else
 			dst = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
 
-		memcpy(dst + uniform.bufferOffset, data, size);
+		dst += uniform.bufferOffset;
+		if (memcmp(dst, data, size))
+		{
+			memcpy(dst, data, size);
+			if (uniform.isStatic)
+				staticBufferChanged = true;
+			else
+				objectBufferChanged = true;
+		}
 	}
 
 	void Shader::LoadCodeCommon(QString& code)
@@ -1099,13 +1183,13 @@ namespace CppProject
 			if (IS_OPENGL)
 				matrixRepl = "(_uMatrixV * _uMatrixM)";
 			
-			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), matrixRepl);
+			code.replace(GetRegex("\\b_uMatrixMV\\b"), matrixRepl);
 		}
 
 		// Add uniforms for required matrices
 		for (IntType m = 0; m < 6; m++)
 		{
-			if (code.indexOf(QRegularExpression("\\b" + matrixUniformName[m] + "\\b")) > -1)
+			if (code.indexOf(GetRegex("\\b" + matrixUniformName[m] + "\\b")) > -1)
 			{
 				BoolType isStatic = true;
 				if (useBatching)
@@ -1116,7 +1200,7 @@ namespace CppProject
 		}
 
 		// Replace constants with its value in arrays
-		auto defIt = QRegularExpression("#define (.*?) (.*?)\n").globalMatch(code);
+		auto defIt = GetRegex("#define (.*?) (.*?)\n").globalMatch(code);
 		while (defIt.hasNext())
 		{
 			QRegularExpressionMatch match = defIt.next();
@@ -1126,7 +1210,7 @@ namespace CppProject
 		}
 
 		// Find uniforms and samplers
-		auto uniIt = QRegularExpression("^[ \\t]*uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
+		auto uniIt = GetRegex("^[ \\t]*uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
 		while (uniIt.hasNext())
 		{
 			QRegularExpressionMatch match = uniIt.next();
@@ -1137,7 +1221,7 @@ namespace CppProject
 				BoolType isArray = (match.captured(3) != "");
 				IntType arrayMaxSize = 1;
 				if (isArray)
-					arrayMaxSize = match.captured(3).replace(QRegularExpression("\\[|\\]"), "").toInt();
+					arrayMaxSize = match.captured(3).replace(GetRegex("\\[|\\]"), "").toInt();
 				
 				BoolType isStatic = (match.captured(5) != "");
 				AddUniform(name, typeName, isStatic, isArray, arrayMaxSize);
@@ -1154,7 +1238,7 @@ namespace CppProject
 		}
 
 		// Add uvRect to texture2D calls
-		auto texIt = QRegularExpression("texture2D\\((.*?),").globalMatch(code);
+		auto texIt = GetRegex("texture2D\\((.*?),").globalMatch(code);
 		while (texIt.hasNext())
 		{
 			QRegularExpressionMatch match = texIt.next();

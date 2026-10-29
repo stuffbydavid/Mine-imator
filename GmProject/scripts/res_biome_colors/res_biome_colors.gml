@@ -42,5 +42,6 @@ function res_biome_colors(biomename, values = null)
 
 	water = biome.color_water
 	spruce = hex_to_color("62A857")
+	
 	return [ grass, foliage, dryfoliage, water, foliage, spruce, spruce, foliage, foliage, foliage, foliage ]
 }

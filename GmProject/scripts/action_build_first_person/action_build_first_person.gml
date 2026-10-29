@@ -21,7 +21,6 @@ function action_build_first_person(enabled)
 		place_busy = "first_person"
 		window_busy = place_busy
 		window_focus = string(view_main)
-		view_main.surface_place_async_id = null
 		
 		// Save mouse position
 		build_first_person_mouse_previous_x = display_mouse_get_x()

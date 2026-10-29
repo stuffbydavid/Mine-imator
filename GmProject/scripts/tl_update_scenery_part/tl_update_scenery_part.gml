@@ -11,6 +11,7 @@ function tl_update_scenery_part()
 			model_tex_material = project_pack_res
 			model_tex_normal = project_pack_res
 		}
+		
 		temp_update_model()
 		temp_update_model_timeline_parts()
 	}
@@ -23,10 +24,9 @@ function tl_update_scenery_part()
 			block_tex_normal = project_pack_res
 			block_repeat_enable = false
 			block_repeat = vec3(1)
-		}
-		block_vbuffer = null
-		if (part_of != null || has_temp)
 			block_randomize = true
+		}
+		
 		temp_update_block()
 	}
 	else if (type = e_tl_type.TEXT)

@@ -7,6 +7,8 @@
 
 namespace CppProject
 {
+	static constexpr IntType MAX_BATCH_CACHE_BYTES = 256 * 1024 * 1024;
+
 	VertexBufferRenderer::VertexBufferRenderer()
 	{
 		currentBatch = new Batch;
@@ -15,39 +17,50 @@ namespace CppProject
 	void VertexBufferRenderer::Add(VertexBuffer* buffer)
 	{
 		// Empty
-		if (!buffer->valid || buffer->meshes.size() == 0)
+		if (!buffer->valid || !buffer->completed || !buffer->numIndices)
 			return;
 
-		Mesh<>* mesh = buffer->meshes[0];
+		if (!buffer->batching)
+		{
+			SubmitBatch();
+
+			// Submit vertex buffer directly
+			IntType calls = buffer->Submit(GFX->shader, GFX->matrixM);
+			renderCalls += calls;
+			if (calls)
+				trianglesSubmitted += buffer->numIndices / 3;
+
+			return;
+		}
+
 		bool instanced = (
 			GFX->shader->useBatching &&
 			GFX->shader->vertexFormat == Shader::VERTEX_BUFFER &&
-			buffer->meshes.size() == 1 &&
-			mesh->numIndices >= MAX_BATCH_INDICES
+			buffer->numIndices >= MAX_BATCH_INDICES
 		);
 
-		Bounds worldBounds;
-		worldBounds.AddBounds(mesh->bounds, GFX->matrixM);
-
-		if (instanced && !GFX->IsVisible(worldBounds))
-			return;
-
-		// Flush incompatible batches or combined meshes over the size limit
+		// Keep batch boundaries stable even when the next large buffer is culled
 		if (currentBatch->numObjects &&
 			(currentBatch->isInstanced != instanced ||
 			(instanced && currentBatch->objects[0] != buffer->id) ||
-			(!instanced && currentBatch->mesh.numIndices + mesh->numIndices >= MAX_BATCH_INDICES)))
+			(!instanced && currentBatch->mesh.numIndices + buffer->numIndices >= MAX_BATCH_INDICES)))
 		{
 			SubmitBatch();
 		}
+
+		Bounds worldBounds;
+		worldBounds.AddBounds(buffer->bounds, GFX->matrixM);
+
+		if (instanced && !GFX->IsVisible(worldBounds))
+			return;
 
 		// Append new object
 		currentBatch->objects[currentBatch->numObjects] = buffer->id;
 		currentBatch->isInstanced = instanced;
 		currentBatch->matrixM[currentBatch->numObjects] = GFX->matrixM;
 		currentBatch->bounds.AddBounds(worldBounds);
-		currentBatch->mesh.numVertices += mesh->numVertices;
-		currentBatch->mesh.numIndices += mesh->numIndices;
+		currentBatch->mesh.numVertices += buffer->numVertices;
+		currentBatch->mesh.numIndices += buffer->numIndices;
 		currentBatch->numObjects++;
 
 		bool submit = GFX->shader->SubmitObject();
@@ -80,7 +93,7 @@ namespace CppProject
 		else if (currentBatch->isInstanced)
 		{
 			// Re-use the same mesh for all visible instances
-			Mesh<>* mesh = FindVertexBuffer(currentBatch->objects[0])->meshes[0];
+			Mesh<>* mesh = FindVertexBuffer(currentBatch->objects[0]);
 			mesh->BeginUse();
 
 			GFX->shader->SubmitVertices(Shader::TRIANGLE_LIST, mesh->numIndices, currentBatch->numObjects);
@@ -92,11 +105,16 @@ namespace CppProject
 		else if (GFX->IsVisible(currentBatch->bounds))
 		{
 			// Look for identical batches
-			for (Batch* frameBatch : activeBatches)
+			for (IntType b = 0; b < activeBatches.size(); b++)
 			{
+				Batch* frameBatch = activeBatches[b];
 				if (*currentBatch == *frameBatch)
 				{
 					submitBatch = frameBatch;
+
+					// Keep the most recently used batches at the end
+					activeBatches.removeAt(b);
+					activeBatches.append(frameBatch);
 					break;
 				}
 			}
@@ -108,6 +126,7 @@ namespace CppProject
 				submitBatch->CreateBuffers();
 
 				activeBatches.append(submitBatch);
+				cacheBytes += submitBatch->GetSizeBytes();
 			}
 
 			submitBatch->mesh.BeginUse();
@@ -135,12 +154,16 @@ namespace CppProject
 	{
 		SubmitBatch();
 
-		// Free unused batches
+		// Retain batches across idle viewport frames and evict the oldest unused entries first
 		for (IntType b = 0; b < activeBatches.size(); b++)
 		{
 			Batch* batch = activeBatches[b];
-			if (!batch->isInCurrentFrame)
+			if (!batch->isInCurrentFrame && cacheBytes > MAX_BATCH_CACHE_BYTES)
 			{
+				cacheBytes -= batch->GetSizeBytes();
+				if (submitBatch == batch)
+					submitBatch = nullptr;
+
 				delete batch;
 				activeBatches.removeAt(b--);
 			}
@@ -153,6 +176,28 @@ namespace CppProject
 
 		if (batchesCopied)
 			batchesCopied = 0;
+	}
+
+	void VertexBufferRenderer::Invalidate(IntType buffer)
+	{
+		// Submit queued geometry while the source buffer is still valid
+		if (std::find(currentBatch->objects, currentBatch->objects + currentBatch->numObjects, buffer) !=
+			currentBatch->objects + currentBatch->numObjects)
+			SubmitBatch();
+
+		for (IntType b = 0; b < activeBatches.size(); b++)
+		{
+			Batch* batch = activeBatches[b];
+			if (std::find(batch->objects, batch->objects + batch->numObjects, buffer) == batch->objects + batch->numObjects)
+				continue;
+
+			cacheBytes -= batch->GetSizeBytes();
+			if (submitBatch == batch)
+				submitBatch = nullptr;
+
+			delete batch;
+			activeBatches.removeAt(b--);
+		}
 	}
 
 	VertexBufferRenderer::Batch::~Batch()
@@ -192,14 +237,14 @@ namespace CppProject
 		IntType vertexOffset = 0, indexOffset = 0;
 		for (IntType objIndex = 0; objIndex < numObjects; objIndex++)
 		{
-			Mesh<>* objMesh = FindVertexBuffer(objects[objIndex])->meshes[0];
+			Mesh<>* objMesh = FindVertexBuffer(objects[objIndex]);
 			if (!objMesh->vertexData.Size())
 				continue;
 
 			// Copy vertices and assign object index
 			memcpy(&mesh.vertexData[vertexOffset], objMesh->vertexData.Data(), objMesh->numVertices * sizeof(Vertex));
 			for (IntType v = 0; v < objMesh->numVertices; v++)
-				mesh.vertexData[vertexOffset + v].SetIndex(objIndex);
+				mesh.vertexData[vertexOffset + v].SetObjectIndex(objIndex);
 
 			// Copy indices and apply vertex offset
 			for (IntType i = 0; i < objMesh->numIndices; i++)
@@ -212,5 +257,10 @@ namespace CppProject
 		mesh.CreateBuffers();
 
 		VB->batchesCreated++;
+	}
+
+	IntType VertexBufferRenderer::Batch::GetSizeBytes() const
+	{
+		return sizeof(Batch) + mesh.numVertices * sizeof(Vertex) + mesh.numIndices * sizeof(uint32_t);
 	}
 }

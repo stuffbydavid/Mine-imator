@@ -5,9 +5,8 @@
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
-attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec4 in_Wave;
+attribute vec4 in_Custom;
 attribute vec3 in_Tangent;
 
 varying vec3 vPosition;
@@ -24,9 +23,9 @@ uniform vec2 uTextureOffset;
 
 void main()
 {
-	vPosition = getWorldPosition(in_Position, in_Wave);
+	vPosition = getWorldPosition(in_Position, in_Custom);
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	vColor = uBlendColor * in_Colour;
+	vColor = uBlendColor * getVertexColor(in_Custom);
 	
 	/// CppOnly if (_pointMultiview > 0) {
 	/// CppOnly gl_Position = vec4(0.0, 0.0, 0.0, 1.0);

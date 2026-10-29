@@ -1029,6 +1029,7 @@ function enums()
 		BLADE_ROUNDING,
 		BLADE_STRETCH,
 		BLEND_COLOR,
+		BLOCK_COLORS,
 		BLUR_AMOUNT,
 		BLUR_RATIO,
 		BLUR_SIZE,
@@ -1094,9 +1095,6 @@ function enums()
 		HSB_SUB,
 		INDIRECT_ENABLED,
 		INDIRECT_STRENGTH,
-		PLACE_ID,
-		PLACE_TYPE,
-		RENDER_PLACE,
 		IS_GROUND,
 		IS_SKY,
 		IS_WATER,
@@ -1214,13 +1212,15 @@ function enums()
 		amount
 	}
 	
-	// Place type
-	enum e_place_type
+	// Raycast intersection result
+	enum e_raycast
 	{
-		SCENE,
-		PLACED,
-		BLOCK,
-		CLOUDS
+		HIT,
+		DEPTH,
+		POSITION,
+		NORMAL,
+		FACE,
+		OBJECT
 	}
 	
 	// Anti-aliasing
@@ -1357,20 +1357,17 @@ function enums()
 		STATIC32,
 		STATIC64,
 		ANIMATED,
-		GRASS,
-		FOLIAGE,
-		DRY_FOLIAGE,
-		LEAVES_OAK,
-		LEAVES_SPRUCE,
-		LEAVES_BIRCH,
-		LEAVES_JUNGLE,
-		LEAVES_ACACIA,
-		LEAVES_DARK_OAK,
-		LEAVES_MANGROVE,
 		WATER,
 		amount
 	}
 	
+	// Block filter
+	enum e_block_filter
+	{
+		REMOVE = 0,
+		KEEP = 1
+	}
+
 	// Vertex wave
 	enum e_vertex_wave
 	{
@@ -1519,6 +1516,21 @@ function enums()
 		amount
 	}
 	
+	// Shader palette entries
+	enum e_color_palette
+	{
+		PUMPKIN_STEM = e_biome_color.amount,
+		MELON_STEM,
+		LILY_PAD,
+		REDSTONE,
+		CLOUDS_TOP = e_color_palette.REDSTONE + 16,
+		CLOUDS_SIDES_DARK,
+		CLOUDS_SIDES_LIGHT,
+		CLOUDS_BOTTOM,
+		CLOUDS_FADED,
+		amount
+	}
+
 	// Material map format
 	enum e_material
 	{

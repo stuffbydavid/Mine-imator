@@ -92,7 +92,7 @@ function res_event_destroy()
 	if (block_preview_texture != null)
 		texture_free(block_preview_texture)
 	
-	block_vbuffer_destroy()
+	block_meshes_destroy()
 	
 	// Free items
 	for (var size = 0; size < e_item_sheet.amount; size++)
@@ -171,11 +171,18 @@ function res_event_destroy()
 		file_delete_lib(file_directory_get() + filename)
 	
 	// Free blocks
+	if (ds_map_valid(scenery_block_map))
+		ds_map_destroy(scenery_block_map)
+	
+	if (ds_map_valid(scenery_tl_types_count_map))
+		ds_map_destroy(scenery_tl_types_count_map)
+
 	if (scenery_tl_list != null)
 	{
 		for (var i = 0; i < ds_list_size(scenery_tl_list); i++)
 			with (scenery_tl_list[|i])
 				instance_destroy()
+		
 		ds_list_destroy(scenery_tl_list)
 	}
 	
@@ -187,6 +194,7 @@ function res_event_destroy()
 			vbuffer_destroy(model_block_map[?key])
 			key = ds_map_find_next(model_block_map, key)
 		}
+		
 		ds_map_destroy(model_block_map)
 	}
 	

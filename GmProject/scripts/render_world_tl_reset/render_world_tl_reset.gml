@@ -111,22 +111,6 @@ function render_world_tl_reset()
 	// Glint
 	render_set_uniform_int(e_uniform.GLINT_ENABLED, 0)
 	
-	// Place data
-	if (render_place_pass)
-	{
-		render_set_uniform_int(e_uniform.RENDER_PLACE, 1)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, e_place_type.SCENE)
-		render_set_uniform_int(e_uniform.PLACE_ID, 0)
-		
-		if (renderer_current = e_renderer.QUICK)
-		{
-			render_set_uniform(e_uniform.NEAR, depth_near)
-			render_set_uniform(e_uniform.FAR, depth_far)
-		}
-	}
-	else
-		render_set_uniform_int(e_uniform.RENDER_PLACE, 0)
-	
 	render_blend_prev = null
 	render_alpha_prev = null
 }

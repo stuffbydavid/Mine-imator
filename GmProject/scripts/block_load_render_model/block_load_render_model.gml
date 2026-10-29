@@ -74,13 +74,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		weight = wei
 		
 		// For culling
-		for (var f = 0; f < block_faces; f++)
-		{
-			face_full[f] = false
-			face_min[f] = null
-			face_max[f] = null
-			face_min_depth[f] = null
-		}
+		face_full = array_create(block_faces, false)
+		face_min = array_create(block_faces, null)
+		face_max = array_create(block_faces, null)
+		face_min_depth = array_create(block_faces, null)
 		
 		// For the world importer
 		preview_color = array_create(block_faces, null)
@@ -89,8 +86,14 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 		
 		// Add elements
 		element_amount = 0
+		
+		// Flag vertex buffers used
+		block_vbuffer_used = array_create(e_block_depth.amount * e_block_vbuffer.amount, false)
+		
 		if (elementmodel != null)
 		{
+			element = array_create(elementmodel.element_amount, 0)
+
 			for (var e = 0; e < elementmodel.element_amount; e++)
 			{
 				var elem = elementmodel.element[e];
@@ -100,19 +103,30 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 				{
 					from = elem.from
 					to = elem.to
+
+					// Allocate face arrays before filling rotated face indices
+					face_render = array_create(block_faces, false)
+					face_uv = array_create(block_faces, 0)
+					face_color_index = array_create(block_faces, 0)
+					face_depth = array_create(block_faces, 0)
+					face_block_vbuffer = array_create(block_faces, 0)
+					face_vbuffer = array_create(block_faces, 0)
+					face_edge = array_create(block_faces, false)
 					
 					// Set face rotations and rotated directions
 					var facenewdir, faceuvrot;
+					facenewdir = array_create(block_faces, 0)
+					faceuvrot = array_create(block_faces, 0)
+
 					for (var f = 0; f < block_faces; f++)
-					{
-						facenewdir[f] = f
-						faceuvrot[f] = 0
-					}
+						facenewdir[@f] = f
 					
 					light_emission = elem.light_emission
+					
 					rotated = elem.rotated
 					if (rotated)
 						matrix = matrix_multiply(elem.matrix, rotmat)
+					
 					else if (rot[X] > 0 || rot[Z] > 0)
 					{
 						var facerot = rot;
@@ -217,6 +231,8 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						face_render[nd] = elem.face_render[f]
 						if (!face_render[nd])
 							continue
+
+						face_uv[@nd] = array_create(4, 0)
 						
 						var facerot = elem.face_rotation[f];
 						if (!uvlock)
@@ -269,46 +285,58 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							switch (nd)
 							{
 								case XP:
+								{
 									face_uv[nd, 0] = point2D(block_size - to[Y], block_size - to[Z])
 									face_uv[nd, 1] = point2D(block_size - from[Y], block_size - to[Z])
 									face_uv[nd, 2] = point2D(block_size - from[Y], block_size - from[Z])
 									face_uv[nd, 3] = point2D(block_size - to[Y], block_size - from[Z])
 									break
+								}
 								
 								case XN:
+								{
 									face_uv[nd, 0] = point2D(from[Y], block_size - to[Z])
 									face_uv[nd, 1] = point2D(to[Y], block_size - to[Z])
 									face_uv[nd, 2] = point2D(to[Y], block_size - from[Z])
 									face_uv[nd, 3] = point2D(from[Y], block_size - from[Z])
 									break
+								}
 								
 								case YP:
+								{
 									face_uv[nd, 0] = point2D(from[X], block_size - to[Z])
 									face_uv[nd, 1] = point2D(to[X], block_size - to[Z])
 									face_uv[nd, 2] = point2D(to[X], block_size - from[Z])
 									face_uv[nd, 3] = point2D(from[X], block_size - from[Z])
 									break
+								}
 								
 								case YN:
+								{
 									face_uv[nd, 0] = point2D(block_size - to[X], block_size - to[Z])
 									face_uv[nd, 1] = point2D(block_size - from[X], block_size - to[Z])
 									face_uv[nd, 2] = point2D(block_size - from[X], block_size - from[Z])
 									face_uv[nd, 3] = point2D(block_size - to[X], block_size - from[Z])
 									break
+								}
 								
 								case ZP:
+								{
 									face_uv[nd, 0] = point2D(from[X], from[Y])
 									face_uv[nd, 1] = point2D(to[X], from[Y])
 									face_uv[nd, 2] = point2D(to[X], to[Y])
 									face_uv[nd, 3] = point2D(from[X], to[Y])
 									break
+								}
 								
 								case ZN:
+								{
 									face_uv[nd, 0] = point2D(from[X], block_size - to[Y])
 									face_uv[nd, 1] = point2D(to[X], block_size - to[Y])
 									face_uv[nd, 2] = point2D(to[X], block_size - from[Y])
 									face_uv[nd, 3] = point2D(from[X], block_size - from[Y])
 									break
+								}
 							}
 							
 							// Shift UVs anti-clockwise by face rotation
@@ -369,7 +397,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 						}
 						
 						// Texture color
-						face_texture_color[nd] = -1
+						face_color_index[nd] = 0
 						
 						// Check texture with resource
 						if (res != null && res.model_texture_map != null && !is_undefined(res.model_texture_map[?texname]))
@@ -377,6 +405,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							face_depth[nd] = e_block_depth.DEPTH2
 							face_block_vbuffer[nd] = null
 							face_vbuffer[nd] = res.model_block_map[?texname]
+							
 							if (is_undefined(face_vbuffer[nd]))
 							{
 								face_vbuffer[nd] = vbuffer_start()
@@ -416,7 +445,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								// Check color
 								var col = mc_assets.block_texture_color_map[?texname];
 								if (!is_undefined(col) && col = "water")
+								{
+									face_depth[nd] = e_block_depth.DEPTH2
 									face_block_vbuffer[nd] = e_block_vbuffer.WATER
+								}
 								
 								sheetwidth = minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
 								sheetheight = minecraft_block_sheet_size[e_block_sheet.ANIMATED][Y]
@@ -426,6 +458,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							{
 								face_depth[nd] = mc_res.block_sheet_depth_list[|slot]
 								face_block_vbuffer[nd] = e_block_vbuffer.STATIC16
+								
 								sheetwidth = minecraft_block_sheet_size[e_block_sheet.STATIC16][X]
 								sheetheight = minecraft_block_sheet_size[e_block_sheet.STATIC16][Y]
 								sheetblocksize = block_size
@@ -435,23 +468,12 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								if (!is_undefined(col))
 								{
 									if (is_real(col))
-										face_texture_color[nd] = col
+										face_color_index[nd] = e_color_palette.amount + ds_list_find_index(mc_assets.block_texture_color_list, col) + 1
 									else
 									{
-										switch (col)
-										{
-											case "grass":			face_block_vbuffer[nd] = e_block_vbuffer.GRASS;				break
-											case "foliage":			face_block_vbuffer[nd] = e_block_vbuffer.FOLIAGE;			break
-											case "dry_foliage":		face_block_vbuffer[nd] = e_block_vbuffer.DRY_FOLIAGE;		break
-											
-											case "oak_leaves":		face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_OAK;		break
-											case "spruce_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_SPRUCE;		break
-											case "birch_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_BIRCH;		break
-											case "jungle_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_JUNGLE;		break
-											case "acacia_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_ACACIA;		break
-											case "dark_oak_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_DARK_OAK;	break
-											case "mangrove_leaves":	face_block_vbuffer[nd] = e_block_vbuffer.LEAVES_MANGROVE;	break
-										}	
+										var colorindex = biome_color_name_map[?col];
+										if (!is_undefined(colorindex) && colorindex != e_biome_color.WATER)
+											face_color_index[nd] = colorindex + 1
 									}
 								}
 							}
@@ -462,6 +484,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								face_block_vbuffer[nd] = (texturepage = e_block_sheet.STATIC32
 									? e_block_vbuffer.STATIC32
 									: e_block_vbuffer.STATIC64)
+								
 								sheetwidth = minecraft_block_sheet_size[texturepage][X]
 								sheetheight = minecraft_block_sheet_size[texturepage][Y]
 								sheetblocksize = block_size_list[texturepage]
@@ -487,7 +510,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									else
 										buffer_current = load_assets_block_preview_buffer[texturepage]
 									
-									var px, py, alpha, col;
+									var px, py, alpha;
 									px = slot mod sheetwidth
 									py = slot div sheetwidth
 									
@@ -505,40 +528,46 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 									// Not transparent
 									if (alpha > 0)
 									{
+										var col;
 										if ((nd = ZP && colz = -1) || (nd = YP && coly = -1))
 											col = buffer_read_color(px, py, sheetwidth)
 										else
 											col = (nd = ZP ? colz : coly)
 										
-										if (face_texture_color[nd] > -1)
-											col = color_multiply(col, face_texture_color[nd])
-										else
+										var rescol, colstr, tintindex;
+										rescol = null
+										colstr = ""
+										
+										tintindex = face_color_index[nd] - 1
+										if (face_block_vbuffer[nd] = e_block_vbuffer.WATER)
+											tintindex = e_biome_color.WATER
+
+										if (tintindex >= e_color_palette.amount)
+											rescol = mc_assets.block_texture_color_list[|tintindex - e_color_palette.amount]
+
+										switch (tintindex)
 										{
-											var rescol, colstr;
-											rescol = null
-											colstr = ""
-											switch (face_block_vbuffer[nd])
-											{
-												case e_block_vbuffer.GRASS:				colstr = "grass";						break
-												case e_block_vbuffer.FOLIAGE:			colstr = "foliage";						break
-												case e_block_vbuffer.DRY_FOLIAGE:		colstr = "dry_foliage";					break
-												case e_block_vbuffer.WATER:				colstr = "water";						break
-												
-												case e_block_vbuffer.LEAVES_SPRUCE:		rescol = mc_res.color_list[@ e_biome_color.LEAVES_SPRUCE];	break
-												case e_block_vbuffer.LEAVES_BIRCH:		rescol = mc_res.color_list[@ e_biome_color.LEAVES_BIRCH];	break
-												case e_block_vbuffer.LEAVES_OAK:
-												case e_block_vbuffer.LEAVES_JUNGLE:
-												case e_block_vbuffer.LEAVES_ACACIA:
-												case e_block_vbuffer.LEAVES_DARK_OAK:
-												case e_block_vbuffer.LEAVES_MANGROVE:	colstr = "foliage";						break
-											}
-											
-											if (rescol != null)
-												col = color_multiply(rescol, col)
-											
-											other.preview_tint = colstr
+
+											case e_biome_color.GRASS:				colstr = "grass"; break
+											case e_biome_color.FOLIAGE:				colstr = "foliage"; break
+											case e_biome_color.DRY_FOLIAGE:			colstr = "dry_foliage"; break
+											case e_biome_color.WATER:				colstr = "water"; break
+											case e_biome_color.LEAVES_SPRUCE:		rescol = mc_res.color_list[@ e_biome_color.LEAVES_SPRUCE]; break
+											case e_biome_color.LEAVES_BIRCH:		rescol = mc_res.color_list[@ e_biome_color.LEAVES_BIRCH]; break
+											case e_biome_color.LEAVES_OAK:
+											case e_biome_color.LEAVES_JUNGLE:
+											case e_biome_color.LEAVES_ACACIA:
+											case e_biome_color.LEAVES_DARK_OAK:
+											case e_biome_color.LEAVES_MANGROVE:		colstr = "foliage";	break
+											case e_color_palette.PUMPKIN_STEM:		rescol = c_pumpkin_stem; break
+											case e_color_palette.MELON_STEM:		rescol = c_melon_stem; break
+											case e_color_palette.LILY_PAD:			rescol = c_lily_pad; break
 										}
 										
+										if (rescol != null)
+											col = color_multiply(rescol, col)
+										
+										other.preview_tint = colstr
 										other.preview_color[nd] = col
 										other.preview_alpha[nd] = alpha
 									}
@@ -650,11 +679,24 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							}
 						}
 					}
-					other.element[other.element_amount++] = id
+
+					// Flag the buffers used by the model
+					for (var f = 0; f < block_faces; f++)
+					{
+						if (face_render[f] && face_vbuffer[f] = null)
+						{
+							var bufferindex = face_depth[f] * e_block_vbuffer.amount + face_block_vbuffer[f];
+							other.block_vbuffer_used[@bufferindex] = true
+						}
+					}
+					
+					other.element[@other.element_amount++] = id
 				}
 			}
 		}
+		
 		ds_map_destroy(texturemap)
+		
 		return id
 	}
 }

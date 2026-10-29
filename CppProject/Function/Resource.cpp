@@ -10,13 +10,14 @@
 #include <QCryptographicHash>
 #include <QDataStream>
 #include <QSaveFile>
+#include <QtGui/private/qpnghandler_p.h>
 
 #define ZIP_STATIC
 #include <zip.h>
 
 namespace CppProject
 {
-	static constexpr uchar PACK_CACHE_FORMAT = 5;
+	static constexpr uchar PACK_CACHE_FORMAT = 1;
 	static constexpr qint64 PACK_CACHE_MAX_IMAGE_BYTES = 512LL * 1024 * 1024;
 	static constexpr qint32 PACK_CACHE_MAX_RECORDS = 100000;
 
@@ -141,7 +142,15 @@ namespace CppProject
 		if (!image.isNull())
 		{
 			QBuffer buffer(&png);
-			if (!buffer.open(QIODevice::WriteOnly) || !image.save(&buffer, "PNG"))
+			if (!buffer.open(QIODevice::WriteOnly))
+				return false;
+
+			// Preserve QImageWriter defaults without image plugin discovery
+			QPngHandler writer;
+			writer.setDevice(&buffer);
+			writer.setOption(QImageIOHandler::Quality, -1);
+			writer.setOption(QImageIOHandler::CompressionRatio, -1);
+			if (!writer.write(image))
 				return false;
 		}
 
@@ -167,8 +176,14 @@ namespace CppProject
 		if (in.readRawData(png.data(), (int)size) != size)
 			return false;
 
+		QBuffer buffer(&png);
+		if (!buffer.open(QIODevice::ReadOnly))
+			return false;
+
+		QPngHandler reader;
+		reader.setDevice(&buffer);
 		QImage image;
-		if (!image.loadFromData(png, "PNG"))
+		if (!reader.read(&image))
 			return false;
 
 		auto sprite = new Sprite(image, {});

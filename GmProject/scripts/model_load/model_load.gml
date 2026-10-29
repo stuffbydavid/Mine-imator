@@ -16,6 +16,14 @@ function model_load(map, dir)
 		
 		if (debug_names && !text_exists("model/" + name))
 			log("model/" + name + mc_unknown_asset_warning)
+
+		var tlmap = map[?"timeline"];
+		entity_tl_type = ""
+		if (is_string(map[?"entity"]) && ds_map_valid(tlmap))
+		{
+			entity_tl_type = value_get_string(tlmap[?"type"], name)
+			mc_assets.block_tl_required_map[?entity_tl_type] = true
+		}
 		
 		// File
 		if (is_string(map[?"file"]))

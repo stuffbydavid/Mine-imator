@@ -33,7 +33,15 @@ namespace CppProject
 
 	struct NbtStream
 	{
-		enum Context { GENERIC, CHUNK, SECTION, BLOCK_STATES, COMPLETE };
+		// Current context for NBT traversal.
+		enum Context
+		{
+			GENERIC,
+			CHUNK,
+			SECTION,
+			BLOCK_STATES,
+			COMPLETE
+		};
 
 		// Initialize the reader and consume the root compound header.
 		NbtStream(QByteArray& data, QHash<NbtType, QVector<StringType>> filter = {}, BoolType debug = false);
@@ -53,7 +61,7 @@ namespace CppProject
 		// Rewind selected sections for parsing, or skip them and return false.
 		BoolType SelectSection();
 
-		// Check a chunk field and assign the context for its contents.
+		// Check a chunk field and assign the context for its contents, returning whether it should be parsed.
 		BoolType KeepChunkTag(NbtType type, const QByteArray& name, Context context, Context& child) const;
 
 		// Read and decode a length-prefixed NBT string.
@@ -74,6 +82,7 @@ namespace CppProject
 		BoolType filterEnabled = true, debug = false;
 		BoolType stripNamespace = true;
 		BoolType previewOnly = false;
+		BoolType includeEntities = false;
 		IntType sectionMin = 0, sectionMax = 0;
 
 		static QHash<NbtType, IntType> nbtTypeSize;

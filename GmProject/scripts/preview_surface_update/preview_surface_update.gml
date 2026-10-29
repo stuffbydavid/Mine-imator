@@ -172,6 +172,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 			render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
 			render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
 			render_set_material_none()
+			
 			render_set_uniform(e_uniform.SSS, 0)
 			render_set_uniform_vec3(e_uniform.SSS_RADIUS, 1, 1, 1)
 			render_set_uniform_color(e_uniform.SSS_COLOR, c_white, 1)
@@ -210,14 +211,14 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					case e_res_type.SCHEMATIC:
 					case e_res_type.FROM_WORLD:
 						if (select.ready)
-							render_world_block(select, mc_res, project_pack_res, project_pack_res)
+							render_world_scenery(select, mc_res, project_pack_res, project_pack_res, false, vec3(1))
 						break
 							
 					case e_res_type.MODEL:
 					{
 						if (select.model_format = e_model_format.BLOCK)
 						{
-							render_world_block(select, mc_res, project_pack_res, project_pack_res)
+							render_world_block_meshes(select, mc_res, project_pack_res, project_pack_res)
 							render_world_block_map(select.model_block_map, select)
 						}
 						else if (select.model_file != null)
@@ -249,7 +250,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 							if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 								res = mc_res
 							
-							render_world_block(select.model, res, project_pack_res, project_pack_res)
+							render_world_block_meshes(select.model, res, project_pack_res, project_pack_res)
 									
 							with (select)
 								res = temp_get_model_texobj(null)
@@ -272,7 +273,67 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 								
 						var matmap = model_file_matrix_map_create(select.model_file, matrix_get(matrix_world), select.model_hide_list);
 						render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map, matmap)
+
+						// Render sign text
+						if (select = app.bench_settings && app.bench_tab = e_bench_tab.SPECIAL_BLOCK &&
+							(select.model_name = "sign" || select.model_name = "hanging_sign") &&
+							(select.sign_front_text || select.sign_back_text) && ds_map_exists(matmap, "sign"))
+						{
+							var blockname, signblock, signpart;
+							blockname = select.model_name
+							if (state_vars_get_value(select.model_state, "variant") = "wall")
+								blockname = "wall_" + blockname
+
+							signblock = mc_assets.block_name_map[?blockname]
+							signpart = null
+							for (var p = 0; p < ds_list_size(select.model_file.file_part_list); p++)
+							{
+								if (select.model_file.file_part_list[|p].name = "sign")
+								{
+									signpart = select.model_file.file_part_list[|p]
+									break
+								}
+							}
+
+							if (!is_undefined(signblock) && signblock != null && signblock.tl_has_text && signpart != null)
+							{
+								var oldmat, oldcolor, oldemissive;
+								oldmat = matrix_get(matrix_world)
+								oldcolor = shader_blend_color
+								oldemissive = shader_uniform_emissive
+								
+								render_set_material_textures_none()
+								render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
+								render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
+								render_set_uniform_color(e_uniform.BLEND_COLOR, c_black, shader_blend_alpha)
+								render_set_uniform(e_uniform.EMISSIVE, 0)
+
+								for (var side = 0; side < 2; side++)
+								{
+									var enabled, vbuf, tex, pos, rot, sca;
+									enabled = (side = 0 ? select.sign_front_text : select.sign_back_text)
+									vbuf = (side = 0 ? select.text_vbuffer : text_vbuffer)
+									tex = (side = 0 ? select.text_texture : text_texture)
+									if (!enabled || vbuf[0] = null)
+										continue
+
+									pos = (side = 0 ? signblock.tl_text_front_position : signblock.tl_text_back_position)
+									rot = (side = 0 ? signblock.tl_text_front_rotation : signblock.tl_text_back_rotation)
+									sca = (side = 0 ? signblock.tl_text_front_scale : signblock.tl_text_back_scale)
+									pos = point3D_sub(pos, signpart.position)
+
+									matrix_set(matrix_world, matrix_multiply(matrix_create(pos, rot, vec3(sca)), matmap[?"sign"]))
+									render_world_text(vbuf, tex, false, project_pack_res, null)
+								}
+
+								matrix_set(matrix_world, oldmat)
+								render_set_uniform_color(e_uniform.BLEND_COLOR, oldcolor, shader_blend_alpha)
+								render_set_uniform(e_uniform.EMISSIVE, oldemissive)
+							}
+						}
+
 						ds_map_destroy(matmap)
+						
 						break
 					}
 							
@@ -286,7 +347,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						break
 							
 					case e_temp_type.BLOCK:
-						render_world_block(select, select.block_tex, project_pack_res, project_pack_res)
+						render_world_block_meshes(select, select.block_tex, project_pack_res, project_pack_res)
 						break
 							
 					case e_temp_type.MODEL_PART:
