@@ -14,7 +14,6 @@ function builder_spawn_threads(number)
 		thread.build_size[Z] = build_size[Z]
 		thread.build_size_xy = build_size_xy
 		thread.build_size_total = build_size_total
-		thread.build_size_sqrt = build_size_sqrt
 		thread.build_transform = build_transform
 		thread.block_render_model = block_render_model
 		thread.block_render_model_multipart_map = ds_int_map_create()
@@ -22,6 +21,8 @@ function builder_spawn_threads(number)
 		
 		thread.builder_scenery = builder_scenery
 		thread.builder_scenery_legacy = builder_scenery_legacy
+		thread.block_meshes = block_meshes
+		thread.block_meshes_size = block_meshes_size
 		
 		if (block_tl_list != null)
 			thread.block_tl_map = ds_int_map_create()

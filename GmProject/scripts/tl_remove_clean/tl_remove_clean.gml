@@ -194,7 +194,7 @@ function tl_remove_clean()
 				texture_free(pattern_skin)
 		}
 		else if (type = e_tl_type.BLOCK)
-			block_vbuffer_destroy()
+			block_meshes_destroy()
 	}
 		
 	if (model_shape_vbuffer_map != null)

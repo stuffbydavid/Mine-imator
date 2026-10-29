@@ -76,6 +76,8 @@ function res_event_create()
 	color_biome_start_colors = null
 	color_biome_end_colors = null
 	color_list = []
+	block_colors = []
+	block_colors_fast = []
 	
 	sun_texture = null
 	moon_textures = [ null, null, null, null, null, null, null, null ]
@@ -98,6 +100,11 @@ function res_event_create()
 	particle_texture_uvs_map = null
 	particle_texture_pixeluvs_map = null
 	
+	block_meshes = []
+	block_meshes_size = vec3(1)
+	block_meshes_active = null
+	block_meshes_transparent = false
+
 	world_regions_dir = ""
 	world_name = ""
 	world_reload = false
@@ -132,10 +139,6 @@ function res_event_create()
 	scenery_palette_size = 0
 	scenery_randomize = true
 	
-	block_vbuffer = null
-	block_vbuffer_active = null
-	block_vbuffer_depth_active = []
-
 	texture = null
 	
 	font = null

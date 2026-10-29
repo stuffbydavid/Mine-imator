@@ -1,3 +1,4 @@
+/// CppSeparate BoolType builder_read_schematic_data(Scope<obj_builder>, IntType, IntType, IntType, IntType)
 /// @desc Decode and validate palette indices before mesh generation.
 
 function builder_read_schematic_data(version, map, paletteindices, blockamount)

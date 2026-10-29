@@ -5,9 +5,35 @@
 #include "Shader.hpp"
 #include "Surface.hpp"
 
+#include <QtGui/private/qpnghandler_p.h>
+
 namespace CppProject
 {
 	QVector<Sprite*> Sprite::allSprites;
+
+	static QImage LoadImage(const QString& filename)
+	{
+		QFile file(filename);
+		if (!file.open(QIODevice::ReadOnly))
+			return QImage();
+
+		// Decode PNGs directly without image plugin discovery
+		if (QPngHandler::canRead(&file))
+		{
+			QPngHandler reader;
+			reader.setDevice(&file);
+
+			QImage image;
+			if (reader.read(&image))
+				return image;
+
+			return QImage();
+		}
+
+		// Keep format detection for other supported image types
+		file.close();
+		return QImage(filename);
+	}
 
 	Sprite::Sprite(Sprite* other) : Asset(ID_Sprite)
 	{
@@ -36,10 +62,13 @@ namespace CppProject
 		allSprites.append(this);
 		this->origin = origin;
 
+		const QString prefix = ":/Sprites/" + name + "_frame_";
+		frames.reserve(numFrames);
 		for (int f = 0; f < numFrames; f++)
 		{
-			QImage image(":/Sprites/" + name + "_frame_" + NumStr(f) + ".png");
+			QImage image = LoadImage(prefix + QString::number(f) + ".png");
 			image.convertTo(QImage::Format_RGBA8888);
+
 			size = image.size();
 			frames.append(new Frame(image, true));
 		}
@@ -60,7 +89,7 @@ namespace CppProject
 		allSprites.append(this);
 		this->origin = origin;
 
-		QImage image(filename);
+		QImage image = LoadImage(filename);
 		image.convertTo(QImage::Format_RGBA8888);
 		size = image.size();
 		frames.append(new Frame(image, false));

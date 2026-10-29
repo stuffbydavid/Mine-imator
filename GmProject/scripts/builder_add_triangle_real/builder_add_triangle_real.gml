@@ -7,8 +7,7 @@ function builder_add_triangle_real(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1,
 	vertex_wave_zmin = block_vertex_wave_zmin
 	vertex_wave_zmax = block_vertex_wave_zmax
 	vertex_emissive = block_vertex_emissive
-	vertex_subsurface = block_vertex_subsurface
-	vertex_rgb = block_vertex_rgb
+	vertex_subsurface_color_index = block_vertex_subsurface + block_vertex_color_index * 2
 	
 	if (build_transform)
 	{
@@ -45,4 +44,6 @@ function builder_add_triangle_real(x1, y1, z1, x2, y2, z2, x3, y3, z3, tx1, ty1,
 		tx3, ty3,
 		false, matrix
 	)
+
+	vertex_subsurface_color_index = block_vertex_subsurface
 }

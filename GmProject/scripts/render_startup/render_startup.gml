@@ -7,7 +7,7 @@ function render_startup()
 			  render_lights, render_particles, render_hidden,  render_background, render_watermark, render_blend_prev, render_alpha_prev, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
-			  render_active, render_repeat, render_start_time, render_start_surface_time, render_world_count, render_world_block_transparent, point3D_project_error;
+			  render_active, render_repeat, render_start_time, render_start_surface_time, render_world_count, render_world_blocks_transparent, point3D_project_error;
 	
 	globalvar render_light_from, render_light_to, render_light_near, render_light_far, render_light_fov,
 			  render_light_color, render_light_strength, render_light_fade_size, render_light_spot_sharpness, render_shadow_matrix,
@@ -19,8 +19,7 @@ function render_startup()
 			  render_camera_vignette, render_overlay, render_camera_lens_dirt, render_camera_lens_dirt_bloom, render_camera_lens_dirt_glow,
 			  render_ssao, render_shadows, render_indirect, render_reflections, render_resolution_factors, render_pass,
 			  render_tonemapper, render_tonemapper_names, render_exposure, render_gamma, render_auxiliary, render_auxiliary_material,
-			  render_fog_combined, render_sun_combined, render_color_combined,
-			  render_place, render_place_pass, render_place_target, render_place_view, render_place_tl_list, render_place_parent_list, render_place_tl_list_id;
+			  render_fog_combined, render_sun_combined, render_color_combined, render_place_parent_list;
 	
 	globalvar render_matrix, render_samples, render_sample_current, render_samples_done, render_target_size, render_use_samples;
 	
@@ -91,12 +90,6 @@ function render_startup()
 	render_indirect = false
 	render_auxiliary = false
 	
-	render_place = false
-	render_place_pass = false
-	render_place_target = 0
-	render_place_view = null
-	render_place_tl_list = null
-	render_place_tl_list_id = 0
 	render_place_parent_list = ds_list_create()
 	
 	render_auxiliary_material = false
@@ -138,7 +131,7 @@ function render_startup()
 	
 	// Surfaces for rendering
 	globalvar render_surface_pool_list, render_surface_pool_current,
-			  render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_format, render_surface_depth_low, render_surface_normal,
+			  render_target, render_surface, render_surface_hdr, render_surface_hdr_post, render_surface_blur, render_surface_blur_temp, render_surface_depth, render_surface_depth_low, render_surface_normal,
 			  render_surface_diffuse, render_surface_material, render_surface_shadows, render_surface_specular, render_surface_lens,
 			  render_surface_mask, render_surface_fog, render_surface_sss, render_surface_sss_range, render_surface_glow,
 			  render_surface_indirect_raydata, render_surface_reflections_raydata,
@@ -165,7 +158,6 @@ function render_startup()
 	}
 	
 	render_surface_depth = null
-	render_surface_depth_format = null
 	render_surface_depth_low = null
 	render_surface_normal = null
 	render_surface_material = null
@@ -194,7 +186,7 @@ function render_startup()
 	render_resolution_factors = [ 1, 0.5, 0.25, 0.125 ]
 	
 	render_world_count = 0
-	render_world_block_transparent = null
+	render_world_blocks_transparent = null
 
 	render_gamma = 1
 	

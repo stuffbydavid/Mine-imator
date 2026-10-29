@@ -28,7 +28,6 @@ varying vec4 vCustom;
 #pragma shady: inline(common_material.FRESNEL_LIB)
 #pragma shady: inline(common_effect.EFFECT_GLINT_LIB)
 #pragma shady: inline(common_util.NORMAL_BUFFER_LIB)
-#pragma shady: inline(common_place.PLACE_LIB)
 
 void getGbuffers(
 	out vec4 baseColor, out vec3 normalWorld,
@@ -40,14 +39,7 @@ void getGbuffers(
 	vec2 tex = vTexCoord;
 	baseColor = vColor * texture2D(uTexture, tex);
 
-	// Keep solid block targeting and ignore transparent non-block texels
-	if (uRenderPlace > 0 && (uPlaceType == PLACE_TYPE_SCENE || uPlaceType == PLACE_TYPE_BLOCK))
-	{
-		if (uPlaceType == PLACE_TYPE_SCENE && baseColor.a < 0.05)
-			discard;
-	}
-	else
-		handleAlphaDiscard(vPosition, baseColor);
+	handleAlphaDiscard(vPosition, baseColor);
 
 	// Material
 	float emissive;
@@ -72,10 +64,6 @@ void getGbuffers(
 		F = 0.0;
 
 	depth = vec4(vDepth, 0.0, 0.0, 1.0);
-	
-	// Pack place info into depth surface's G channel
-	if (uRenderPlace > 0)
-		depth.g = getPlaceIndex();
 	
 	normal = vec4(packNormal(normalView).rgb, emissive);
 	material = vec4(roughness, metallic, F, uSSAO);

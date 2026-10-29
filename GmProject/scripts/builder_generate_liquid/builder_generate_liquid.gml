@@ -127,6 +127,10 @@ function builder_generate_liquid(waterlogged = false)
 	slot = mc_assets.block_liquid_slot_map[?block_current.name]
 	dep = mc_res.block_sheet_ani_depth_list[|slot]
 	vbuf = (block_current.name = "water" ? e_block_vbuffer.WATER : e_block_vbuffer.ANIMATED)
+
+	if (vbuf = e_block_vbuffer.WATER)
+		dep = e_block_depth.DEPTH2
+
 	sheetwidth = minecraft_block_sheet_size[e_block_sheet.ANIMATED][X]
 	
 	liquid_slot_still_pos[X] = (slot mod sheetwidth) * block_size
@@ -153,9 +157,6 @@ function builder_generate_liquid(waterlogged = false)
 		block_vertex_wave_zmin = (liquid_match[ZN] ? null : block_pos[Z])
 	}
 	
-	block_vertex_rgb = c_white
-	block_vertex_alpha = 1
-
 	// Falling liquid fills the block
 	if (level div 8 || liquid_match[ZP])
 	{
@@ -375,7 +376,8 @@ function builder_generate_liquid(waterlogged = false)
 	}
 
 	// Generate side quads and the triangle above each one
-	block_vbuffer_current = mc_builder.vbuffer[@ dep * e_block_vbuffer.amount + vbuf]
+	var index = dep * e_block_vbuffer.amount + vbuf;
+	block_vbuffer_current = block_mesh.block_vbuffer[@index]
 	block_vertex_emissive = block_current.emissive
 	
 	for (var f = XP; f <= YN; f++)
@@ -425,6 +427,4 @@ function builder_generate_liquid(waterlogged = false)
 		)
 	}
 	
-	block_vertex_rgb = c_white
-	block_vertex_alpha = 1
 }

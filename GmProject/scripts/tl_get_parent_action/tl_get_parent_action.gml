@@ -67,9 +67,17 @@ function tl_get_parent_action(newparent)
 	
 	// Equipment model parts attach to matching model parts
 	if (type = e_tl_type.MODEL_PART && model_part_name != "" &&
-		newparent.type = e_tl_type.MODEL_PART && newparent.model_part != null &&
-		newparent.model_part_name = model_part_name)
-		return [ newparent, true, vec3(0), vec3(0), vec3(1), true ]
+		newparent.type = e_tl_type.MODEL_PART && newparent.model_part != null)
+	{
+		// Helmets attach to the head beneath the hat layer
+		if (model_part_name = "head" && newparent.model_part_name = "hat" &&
+			newparent.parent != null && newparent.parent != app &&
+			newparent.parent.type = e_tl_type.MODEL_PART && newparent.parent.model_part_name = "head")
+			newparent = newparent.parent
+
+		if (newparent.model_part_name = model_part_name)
+			return [ newparent, true, vec3(0), vec3(0), vec3(1), true ]
+	}
 
 	// Unmapped objects attach to lower arm halves of characters/models
 	if (newparent.type = e_tl_type.MODEL_PART && newparent.part_of != null && newparent.model_part != null &&

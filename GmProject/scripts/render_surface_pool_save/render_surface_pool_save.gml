@@ -13,7 +13,6 @@ function render_surface_pool_save()
 	pool.surface_specular_base = render_surface_specular_base
 
 	pool.surface_depth = render_surface_depth
-	pool.surface_depth_format = render_surface_depth_format
 	pool.surface_depth_low = render_surface_depth_low
 	pool.surface_normal = render_surface_normal
 	pool.surface_material = render_surface_material

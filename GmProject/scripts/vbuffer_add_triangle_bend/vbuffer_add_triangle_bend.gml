@@ -7,8 +7,8 @@ function vbuffer_add_triangle_bend(pos1, pos2, pos3, tex1, tex2, tex3, normal1 =
 		var zmax = vertex_wave_zmax = null ? 1000000000000000000000000000000.0 : real(vertex_wave_zmax);
 		vertex_bend_triangle(vbuffer_current, pos1, pos2, pos3,
 			vec2(tex1[X], tex1[Y]), vec2(tex2[X], tex2[Y]), vec2(tex3[X], tex3[Y]),
-			normal1, normal2, normal3, invert, vertex_rgb, vertex_alpha, vertex_emissive,
-			vertex_wave, zmin, zmax, vertex_subsurface)
+			normal1, normal2, normal3, invert, c_white, 1, vertex_emissive,
+			vertex_wave, zmin, zmax, vertex_subsurface_color_index)
 	}
 	else
 		vbuffer_add_triangle(pos1, pos2, pos3, tex1, tex2, tex3, normal1, normal2, normal3, invert)

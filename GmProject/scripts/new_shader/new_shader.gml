@@ -16,6 +16,7 @@ function new_shader(name)
 		new_shader_uniform(e_uniform.TEXTURE_SIZE)
 		new_shader_uniform(e_uniform.TEXTURE_OFFSET)
 		new_shader_uniform(e_uniform.BLEND_COLOR)
+		new_shader_uniform(e_uniform.BLOCK_COLORS)
 		
 		// Wind
 		new_shader_uniform(e_uniform.TIME)

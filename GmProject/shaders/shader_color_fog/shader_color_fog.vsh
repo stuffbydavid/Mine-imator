@@ -2,16 +2,13 @@
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
-attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec4 in_Wave;
+attribute vec4 in_Custom;
 attribute vec3 in_Tangent;
 
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
-varying vec3 vPlaceNormal;
-varying float vPlaceDistance;
 
 uniform vec4 uBlendColor;
 
@@ -23,12 +20,9 @@ uniform vec2 uTextureOffset;
 
 void main()
 {
-	vPosition = getWorldPosition(in_Position, in_Wave);
-	vColor = in_Colour * uBlendColor;
+	vPosition = getWorldPosition(in_Position, in_Custom);
+	vColor = getVertexColor(in_Custom) * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
-	
-	vPlaceNormal = in_Normal;
-	vPlaceDistance = (gm_Matrices[MATRIX_VIEW] * vec4(vPosition, 1.0)).z;
-	
+
 	gl_Position = getClipPosition(vPosition);
 }

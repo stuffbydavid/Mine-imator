@@ -1,5 +1,8 @@
 #include "Generated/Scripts.hpp"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+
 namespace CppProject
 {
 	IntType json_load_from_string(StringType json, IntType typeMapId = 0);
@@ -15,6 +18,26 @@ namespace CppProject
 			typeMap = args[1];
 		
 		return json_load_from_string(file.readAll(), typeMap);
+	}
+
+	StringType minecraft_game_asset_id_get(StringType filename)
+	{
+		QFile file(filename);
+		if (!file.open(QFile::ReadOnly))
+			return "";
+
+		// Only extract the asset index, without creating GML maps for the manifest
+		QByteArray json = file.readAll();
+		QJsonParseError error;
+		QJsonDocument document = QJsonDocument::fromJson(json, &error);
+		if (error.error)
+		{
+			global::json_error = error.errorString() + " on line " + NumStr(json.left(error.offset).count('\n'));
+			DEBUG("JSON error: " + global::json_error);
+			return "";
+		}
+
+		return document.object().value("assetIndex").toObject().value("id").toString();
 	}
 
 	StringType json_string_encode(StringType arg)

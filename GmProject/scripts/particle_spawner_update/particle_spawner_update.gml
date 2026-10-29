@@ -6,8 +6,9 @@ function particle_spawner_update(spawner)
 	{
 		spawn_laststep = spawn_currentstep
 		
-		if (is_timeline && block_vbuffer_transparent_render && (!ds_list_valid(particle_list) || ds_list_size(particle_list) = 0))
-			block_vbuffer_transparent_render = false
+		// Disable transparency flag with no particles
+		if (is_timeline && render_blocks_transparent && (!ds_list_valid(particle_list) || ds_list_size(particle_list) = 0))
+			render_blocks_transparent = false
 		
 		return 0
 	}
@@ -517,6 +518,7 @@ function particle_spawner_update(spawner)
 	
 	spawn_laststep = spawn_currentstep
 	
-	if (is_timeline && block_vbuffer_transparent_render && (!ds_list_valid(particle_list) || ds_list_size(particle_list) = 0))
-		block_vbuffer_transparent_render = false
+	// Disable transparency flag with no particles
+	if (is_timeline && render_blocks_transparent && (!ds_list_valid(particle_list) || ds_list_size(particle_list) = 0))
+		render_blocks_transparent = false
 }

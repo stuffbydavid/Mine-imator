@@ -96,8 +96,8 @@ namespace CppProject
 			int j = (i + 1) % 3;
 			int k = (i + 2) % 3;
 			VecType p = Position(points[i]);
-			vertices[i] = Vertex(p.x, p.y, p.z, normals[i].x, normals[i].y, normals[i].z,
-				(IntType)color, alpha, uvs[i].x, uvs[i].y, wave == 2, wave != 0, emissive, subsurface != 0);
+			vertices[i] = Vertex(p.x, p.y, p.z, uvs[i].x, uvs[i].y, normals[i].x, normals[i].y, normals[i].z,
+				(uint8_t)((IntType)subsurface / 2), wave == 2, wave != 0, ((IntType)subsurface % 2) != 0, emissive);
 			BendVertex& bend = bends[i];
 			bend.data[0] = points[i].w;
 			bend.data[1] = flat ? 1 : 0;

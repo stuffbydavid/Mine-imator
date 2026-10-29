@@ -33,9 +33,6 @@ function vbuffer_generate_tangents(vbuffer)
 			buffer_read(vertexdata, buffer_f32)
 			buffer_read(vertexdata, buffer_f32)
 			
-			// Color + Alpha
-			buffer_read(vertexdata, buffer_u32)
-			
 			// UV
 			uv[j][X] = buffer_read(vertexdata, buffer_f32)
 			uv[j][Y] = buffer_read(vertexdata, buffer_f32)

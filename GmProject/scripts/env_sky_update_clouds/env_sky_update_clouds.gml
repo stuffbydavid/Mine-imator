@@ -2,7 +2,7 @@
 
 function env_sky_update_clouds()
 {
-	var res, tex, texwid, texhei, texsize, hei, topalpha, cloudsize, col, colsidesdark, colsideslight, coltop, colbottom;
+	var res, tex, texwid, texhei, texsize, hei, cloudsize;
 	res = res_eval(env_sky_clouds_tex)
 	
 	if (!res.ready)
@@ -13,24 +13,31 @@ function env_sky_update_clouds()
 	texhei = texture_height(tex)
 	texsize = max(texwid, texhei)
 	hei = 0
+
+	// Store cloud shading in the shared color index, including the faded alpha endpoints
+	var faded, darkindex, lightindex, topindex, bottomindex, subsurface;
+	faded = (env_sky_clouds_mode = "faded")
 	
-	if (env_sky_clouds_mode = "faded")
+	if (faded)
 	{
-		// Story Mode in-game tint: make_color_rgb(216, 230, 255)
-		colsidesdark = c_white
-		colsideslight = c_white
-		coltop = c_white
-		colbottom = c_white
-		topalpha = 0
+		darkindex = 0
+		lightindex = 0
+		topindex = e_color_palette.CLOUDS_FADED + 1
+		bottomindex = 0
 	}
 	else
 	{
-		colsidesdark = c_clouds_sidesdark
-		colsideslight = c_clouds_sideslight
-		coltop = c_clouds_top
-		colbottom = c_clouds_bottom
-		topalpha = 1
+		darkindex = e_color_palette.CLOUDS_SIDES_DARK + 1
+		lightindex = e_color_palette.CLOUDS_SIDES_LIGHT + 1
+		topindex = e_color_palette.CLOUDS_TOP + 1
+
+		if (env_sky_clouds_mode = "flat")
+			bottomindex = topindex
+		else
+			bottomindex = e_color_palette.CLOUDS_BOTTOM + 1
 	}
+
+	subsurface = vertex_subsurface_color_index
 	
 	// Clean up
 	if (env_sky_clouds_vbuffer)
@@ -85,64 +92,84 @@ function env_sky_update_clouds()
 				
 				if (!hascolor[(xx + 1) mod texwid, yy])
 				{
-					vertex_rgb = colsidesdark
-					vertex_alpha = 1
+					vertex_subsurface_color_index = darkindex * 2
+					
 					vertex_add_real(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty)
 					
-					vertex_alpha = topalpha
+					if (faded)
+						vertex_subsurface_color_index = topindex * 2
+					else
+						vertex_subsurface_color_index = darkindex * 2
+					
 					vertex_add_real(vx + blockw, vy + blockh, hei, 1, 0, 0, tx, ty + ph)
 					vertex_add_real(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph)
 					vertex_add_real(vx + blockw, vy, hei, 1, 0, 0, tx + pw, ty + ph)
 					
-					vertex_alpha = 1
+					vertex_subsurface_color_index = darkindex * 2
+					
 					vertex_add_real(vx + blockw, vy, 0, 1, 0, 0, tx + pw, ty)
 					vertex_add_real(vx + blockw, vy + blockh, 0, 1, 0, 0, tx, ty)
 				}
 				
 				if (!hascolor[mod_fix(xx - 1, texwid), yy])
 				{
-					vertex_rgb = colsidesdark
-					vertex_alpha = 1
+					vertex_subsurface_color_index = darkindex * 2
+					
 					vertex_add_real(vx, vy, 0, -1, 0, 0, tx, ty)
 					
-					vertex_alpha = topalpha
+					if (faded)
+						vertex_subsurface_color_index = topindex * 2
+					else
+						vertex_subsurface_color_index = darkindex * 2
+					
 					vertex_add_real(vx, vy, hei, -1, 0, 0, tx, ty + ph)
 					vertex_add_real(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph)
 					vertex_add_real(vx, vy + blockh, hei, -1, 0, 0, tx + pw, ty + ph)
 					
-					vertex_alpha = 1
+					vertex_subsurface_color_index = darkindex * 2
+					
 					vertex_add_real(vx, vy + blockh, 0, -1, 0, 0, tx + pw, ty)
 					vertex_add_real(vx, vy, 0, -1, 0, 0, tx, ty)
 				}
 				
 				if (!hascolor[xx, (yy + 1) mod texhei])
 				{
-					vertex_rgb = colsideslight
-					vertex_alpha = 1
+					vertex_subsurface_color_index = lightindex * 2
+					
 					vertex_add_real(vx, vy + blockh, 0, 0, 1, 0, tx, ty)
 					
-					vertex_alpha = topalpha
+					if (faded)
+						vertex_subsurface_color_index = topindex * 2
+					else
+						vertex_subsurface_color_index = lightindex * 2
+					
 					vertex_add_real(vx, vy + blockh, hei, 0, 1, 0, tx, ty + ph)
 					vertex_add_real(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph)
 					vertex_add_real(vx + blockw, vy + blockh, hei, 0, 1, 0, tx + pw, ty + ph)
 					
-					vertex_alpha = 1
+					vertex_subsurface_color_index = lightindex * 2
+					
 					vertex_add_real(vx + blockw, vy + blockh, 0, 0, 1, 0, tx + pw, ty)
 					vertex_add_real(vx, vy + blockh, 0, 0, 1, 0, tx, ty)
 				}
 				
 				if (!hascolor[xx, mod_fix(yy - 1, texhei)])
 				{
-					vertex_rgb = colsideslight
-					vertex_alpha = 1
+					vertex_subsurface_color_index = lightindex * 2
+					
 					vertex_add_real(vx + blockw, vy, 0, 0, -1, 0, tx, ty)
 					
-					vertex_alpha = topalpha
+					if (faded)
+						vertex_subsurface_color_index = topindex * 2
+					else
+						vertex_subsurface_color_index = lightindex * 2
+					
 					vertex_add_real(vx + blockw, vy, hei, 0, -1, 0, tx, ty + ph)
 					vertex_add_real(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph)
 					vertex_add_real(vx, vy, hei, 0, -1, 0, tx + pw, ty + ph)
 					
-					vertex_alpha = 1
+					vertex_subsurface_color_index = lightindex * 2
+					
 					vertex_add_real(vx, vy, 0, 0, -1, 0, tx + pw, ty)
 					vertex_add_real(vx + blockw, vy, 0, 0, -1, 0, tx, ty)
 				}
@@ -150,10 +177,7 @@ function env_sky_update_clouds()
 		}
 	}
 	
-	col = (env_sky_clouds_mode = "flat" ? coltop : colbottom)
-	
-	vertex_rgb = col
-	vertex_alpha = 1
+	vertex_subsurface_color_index = bottomindex * 2
 	
 	vertex_add_real(0, 0, 0, 0, 0, -1, 0, 0)
 	vertex_add_real(0, cloudsize, 0, 0, 0, -1, 0, 1)
@@ -162,10 +186,9 @@ function env_sky_update_clouds()
 	vertex_add_real(cloudsize, 0, 0, 0, 0, -1, 1, 0)
 	vertex_add_real(0, 0, 0, 0, 0, -1, 0, 0)
 	
-	if (topalpha > 0)
+	if (env_sky_clouds_mode != "faded")
 	{
-		vertex_rgb = coltop
-		vertex_alpha = topalpha
+		vertex_subsurface_color_index = topindex * 2
 		
 		vertex_add_real(0, 0, hei, 0, 0, 1, 0, 0)
 		vertex_add_real(cloudsize, 0, hei, 0, 0, 1, 1, 0)
@@ -173,10 +196,9 @@ function env_sky_update_clouds()
 		vertex_add_real(cloudsize, cloudsize, hei, 0, 0, 1, 1, 1)
 		vertex_add_real(0, cloudsize, hei, 0, 0, 1, 0, 1)
 		vertex_add_real(0, 0, hei, 0, 0, 1, 0, 0)
-	
-		vertex_rgb = c_white
-		vertex_alpha = 1
 	}
 	
 	vbuffer_done()
+	
+	vertex_subsurface_color_index = subsurface
 }

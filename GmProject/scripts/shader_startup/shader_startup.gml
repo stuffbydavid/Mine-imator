@@ -223,29 +223,6 @@ function shader_startup()
 	with (shader_map[?shader_replace_alpha])
 		new_shader_uniform(e_uniform.REPLACE_COLOR)
 
-	var placeshaders = [
-		shader_color_fog,
-		shader_color_fog_lights,
-		shader_high_gbuffers,
-		shader_high_gbuffers_sun,
-		shader_high_gbuffers_color
-	];
-	for (var s = 0; s < array_length(placeshaders); s++)
-	{
-		with (shader_map[?placeshaders[s]])
-		{
-			new_shader_uniform(e_uniform.PLACE_ID)
-			new_shader_uniform(e_uniform.PLACE_TYPE)
-			new_shader_uniform(e_uniform.RENDER_PLACE)
-			
-			if (s < 2)
-			{
-				new_shader_uniform(e_uniform.NEAR)
-				new_shader_uniform(e_uniform.FAR)
-			}
-		}
-	}
-	
 	with (shader_map[?shader_high_dof])
 	{
 		new_shader_sampler(e_sampler.BLUR_BUFFER)

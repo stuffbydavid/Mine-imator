@@ -114,7 +114,7 @@ function app_update_animate()
 		}
 		
 		// Block rendering
-		tl_update_block_render()
+		tl_update_render_blocks_transparent()
 	}
 	
 	if (updatevalues)

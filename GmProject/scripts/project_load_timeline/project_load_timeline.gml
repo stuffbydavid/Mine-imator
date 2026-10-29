@@ -166,7 +166,6 @@ function project_load_timeline(map)
 				block_repeat = value_get_point3D(directblockmap[?"repeat"], vec3(1))
 				block_center_legacy = false
 				block_center = value_get_real(directblockmap[?"center"], false)
-				block_vbuffer = null
 			}
 		}
 		else if (type = e_tl_type.TEXT && !has_temp && part_of = null)

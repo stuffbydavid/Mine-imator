@@ -92,8 +92,9 @@ function action_bench_create(button = e_bench_button.CREATE)
 		replaceground = false
 		particletemp = null
 		camfxtype = e_cam_fx.FADE
-		startplacing = ((setting_place_new && !keyboard_check(vk_shift)) ||
-						(tab = e_bench_tab.BLOCK && button = e_bench_button.CREATE))
+		
+		if (is_cpp()) // Placing requires CPU raycast
+			startplacing = ((setting_place_new && !keyboard_check(vk_shift)) || (tab = e_bench_tab.BLOCK && button = e_bench_button.CREATE))
 		
 		if (history_redo)
 		{

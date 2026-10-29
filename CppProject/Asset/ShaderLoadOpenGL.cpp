@@ -18,7 +18,7 @@ namespace CppProject
 
 		if (glSsboId)
 			GFX->glDeleteBuffers(1, &glSsboId);
-		
+
 		glSsboId = 0;
 
 		// Clear multi-view data
@@ -107,20 +107,17 @@ namespace CppProject
 				{
 					code.replace("in vec3 in_Position;", "in vec3 _aPosition;\nvec3 in_Position;");
 					header += "in vec4 _aBend0;\nin vec4 _aBend1;\nin vec4 _aBend2;\nin vec4 _aBend3;\n";
-					code.replace(QRegularExpression("void main\\(\\)\\s*\\{"), "void main()\n{\n\tin_Position = _aPosition;\n\tapplyBend(in_Position, in_Normal, in_Tangent, in_Wave, _aBend0, _aBend1, _aBend2, _aBend3);\n");
+					code.replace(QRegularExpression("void main\\(\\)\\s*\\{"), "void main()\n{\n\tin_Position = _aPosition;\n\tapplyBend(in_Position, in_Normal, in_Tangent, in_Custom, _aBend0, _aBend1, _aBend2, _aBend3);\n");
 				}
 				code.replace("in vec3 in_Normal;\n", "");
-				code.replace("in vec4 in_Colour;\n", "");
-				code.replace("in vec4 in_Wave;\n", "");
+				code.replace("in vec4 in_Custom;\n", "");
 				code.replace("in vec3 in_Tangent;\n", "");
 
-				header += "in uint _aNormal;\n"
-					"in uint _aColor;\n"
-					"in uint _aData;\n"
+				header += "in uint _aData1;\n"
+					"in uint _aData2;\n"
 					"in uint _aTangent;\n"
-					"vec3 in_Normal = " UNPACK_VERTEX_NORMAL("_aNormal") ";\n"
-					"vec4 in_Colour = " UNPACK_VERTEX_COLOR("_aColor") ";\n"
-					"vec4 in_Wave = " UNPACK_VERTEX_WAVE("_aData") ";\n"
+					"vec3 in_Normal = " UNPACK_VERTEX_NORMAL("_aData1") ";\n"
+					"vec4 in_Custom = " UNPACK_VERTEX_CUSTOM("_aData2", "_aData1") ";\n"
 					"vec3 in_Tangent = " UNPACK_VERTEX_NORMAL("_aTangent") ";\n";
 			}
 
@@ -130,7 +127,7 @@ namespace CppProject
 				if (isVertex)
 				{
 					code.replace("gl_Position = ", "_vObjIndex = _objIndex;\n\tgl_Position = ");
-					header += "flat out uint _vObjIndex;\nuint _objIndex = (_aData >> 16) + uint(gl_InstanceID);\n";
+					header += "flat out uint _vObjIndex;\nuint _objIndex = (_aData2 >> 16) + uint(gl_InstanceID);\n";
 				}
 				else
 					header += "flat in uint _vObjIndex;\n";
@@ -170,8 +167,8 @@ namespace CppProject
 				ssboDef += "\t\t" + uni.typeName + " " + uni.name + ";\n";
 
 				// Remove uniform from header and add array accesor with vertex index
-				QRegularExpression uniHeader("uniform " + uni.typeName + " " + uni.name + ";(.*?)\n");
-				QRegularExpression uniFind("\\b" + uni.name + "\\b");
+				QRegularExpression uniHeader = GetRegex("uniform " + uni.typeName + " " + uni.name + ";(.*?)\n");
+				QRegularExpression uniFind = GetRegex("\\b" + uni.name + "\\b");
 				QString uniReplVs = "_obj[_objIndex]." + uni.name;
 				QString uniReplFs = "_obj[_vObjIndex]." + uni.name;
 
@@ -213,15 +210,15 @@ namespace CppProject
 			SaveConvertedCode(vsCode, fsCode, "glsl");
 		#endif
 		}
-		
+
 		// Find uniform locations
 		for (IntType i = 0; i < numUniforms; i++)
 			if (uniforms[i].isStatic)
 				uniforms[i].glLocation = program->uniformLocation(uniforms[i].name);
-		
+
 		for (StringType name : samplerNameMap.keys())
 			samplerState[samplerNameMap[name]].glLocation = uniforms[uniformNameMap[name]].glLocation;
-		
+
 		for (IntType m = 0; m < 6; m++)
 		{
 			QString name = matrixUniformName[m];
@@ -245,13 +242,12 @@ namespace CppProject
 				attributeLocation[0] = program->attributeLocation("in_Position");
 				if (attributeLocation[0] < 0)
 					attributeLocation[0] = program->attributeLocation("_aPosition");
+				attributeLocation[1] = program->attributeLocation("in_TextureCoord");
+				attributeLocation[2] = program->attributeLocation("_aData1");
+				attributeLocation[3] = program->attributeLocation("_aData2");
+				attributeLocation[4] = program->attributeLocation("_aTangent");
 				for (int i = 0; i < 4; i++)
-					attributeLocation[6 + i] = program->attributeLocation("_aBend" + NumStr(i));
-				attributeLocation[1] = program->attributeLocation("_aNormal");
-				attributeLocation[2] = program->attributeLocation("_aColor");
-				attributeLocation[3] = program->attributeLocation("in_TextureCoord");
-				attributeLocation[4] = program->attributeLocation("_aData");
-				attributeLocation[5] = program->attributeLocation("_aTangent");
+					attributeLocation[5 + i] = program->attributeLocation("_aBend" + NumStr(i));
 				break;
 			}
 

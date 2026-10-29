@@ -73,6 +73,11 @@ function tl_event_create()
 	part_list = null
 	part_root = null
 	
+	block_meshes = []
+	block_meshes_size = vec3(1)
+	block_meshes_active = null
+	block_meshes_transparent = false
+	
 	scenery_animate = false
 	scenery_animate_create = true
 	scenery_part_history = null
@@ -121,6 +126,7 @@ function tl_event_create()
 	world_pos_rotate = point3D(0)
 	world_pos_2d = point2D(0, 0)
 	world_pos_2d_error = false
+	
 	colors_ext = false
 	part_mixing_shapes = false
 	
@@ -184,6 +190,7 @@ function tl_event_create()
 	render_world_bounds_id = -1
 	render_world_visible = []
 	render_world_visible_count = 0
+	render_blocks_transparent = false
 	
 	texture_blur = false
 	texture_filtering = false
@@ -266,16 +273,11 @@ function tl_event_create()
 	tex_obj_material_prev = -5
 	tex_obj_normal = null
 	tex_obj_normal_prev = -5
-	
-	block_vbuffer_active = null
-	block_vbuffer_depth_active = []
-	block_vbuffer_transparent_render = false
 
 	placed = false
 	place_target = false
 	parent_is_placed = false
 	parent_is_place_target = false
-	render_place_id = 0
 	
 	// Path
 	path_update = false

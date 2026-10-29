@@ -247,14 +247,27 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	else
 		dy += 5
 	
+	// Column layout is shared by all visible rows
+	var columnx, columnwidth, dw;
+	columnx = array_create(slist.columns)
+	columnwidth = array_create(slist.columns)
+	dw = w - 12 * slist.scroll.needed
+
+	for (var c = 0; c < slist.columns; c++)
+	{
+		columnx[@c] = xx + floor(slist.column_x[c] * w) + 8
+		columnwidth[@c] = slist.column_w[c] - 8
+		if (c = slist.columns - 1 && slist.scroll.needed)
+			columnwidth[@c] -= 12
+	}
+
 	for (var i = floor(slist.scroll.value / itemh); i < ds_list_size(slist.display_list); i++)
 	{
 		if (dy >= yy + h)
 			break
 		
-		var value, dw, selected, mouseon, visibley, visiblehei;
+		var value, selected, mouseon, visibley, visiblehei;
 		value = slist.display_list[|i]
-		dw = w - 12 * slist.scroll.needed
 		selected = (select = value)
 		visibley = max(dy, listy)
 		visiblehei = min(dy + itemh, yy + h) - visibley
@@ -273,10 +286,8 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 		for (var c = 0; c < slist.columns; c++)
 		{
 			var dx, text, wid, islast;
-			dx = xx + floor(slist.column_x[c] * w) + 8
-			wid = slist.column_w[c] - 8
-			if (c = slist.columns - 1 && slist.scroll.needed)
-				wid -= 12
+			dx = columnx[c]
+			wid = columnwidth[c]
 			
 			islast = (c = slist.columns - 1) && (c != 0)
 			

@@ -496,6 +496,9 @@ function app_startup_lists()
 	biome_color_name_map[? "acacia_leaves"] = e_biome_color.LEAVES_ACACIA
 	biome_color_name_map[? "dark_oak_leaves"] = e_biome_color.LEAVES_DARK_OAK
 	biome_color_name_map[? "mangrove_leaves"] = e_biome_color.LEAVES_MANGROVE
+	biome_color_name_map[? "pumpkin_stem"] = e_color_palette.PUMPKIN_STEM
+	biome_color_name_map[? "melon_stem"] = e_color_palette.MELON_STEM
+	biome_color_name_map[? "lily_pad"] = e_color_palette.LILY_PAD
 	
 	// Particles
 	particle_template_list = ds_list_create()

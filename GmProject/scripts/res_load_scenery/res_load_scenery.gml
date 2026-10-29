@@ -6,10 +6,8 @@
 
 function res_load_scenery()
 {
-	var fn, openerr, rootmap, maxblocks;
+	var fn, maxblocks;
 	fn = load_folder + "/" + filename
-	openerr = false
-	rootmap = null
 	maxblocks = 20000 * thread_get_number()
 
 	switch (load_stage)
@@ -17,6 +15,7 @@ function res_load_scenery()
 		// Open file
 		case "open":
 		{
+			var err = false;
 			res_load_scenery_filter_mask()
 			
 			mc_builder.sch_entities = []
@@ -25,137 +24,42 @@ function res_load_scenery()
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
 				world_reload = false
+				scenery_instant = false
 				
 				if (!res_load_scenery_world())
 				{
 					error("error/load_world")
-					
-					with (app)
-						load_next()
-					
-					ready = true
-					
-					break
+					err = true
 				}
 			}
 			else
 			{
 				if (!file_exists_lib(fn))
-				{
-					if (scenery_instant)
-						load_stage = ""
-					else
-						with (app)
-							load_next()
-					
-					ready = true
-					
-					return 0
-				}
-		
-				// Schematic/Structure file
-				var ext = filename_ext(fn);
-				if (ext = ".schematic" || ext = ".schem" || ext = ".nbt" || ext = ".litematic")
-				{
-					log("Loading " + ext, fn)
-					debug_timer_start()
-		
-					// GZunzip
-					file_delete_lib(temp_file)
-					gzunzip(fn, temp_file)
-			
-					if (!file_exists_lib(temp_file))
-					{
-						log("GZunzip error", "gzunzip")
-						error("error/load_schematic")
-						
-						if (scenery_instant)
-							load_stage = ""
-						else
-							with (app)
-								load_next()
-						
-						ready = true
-						
-						return 0
-					}
-			
-					buffer_current = buffer_load(temp_file)
-					openerr = true
-		
-					// Read NBT structure
-					rootmap = nbt_read_tag_compound()
-					if (rootmap = null)
-						break
-				
-					debug_timer_stop("res_load_scenery, Parse NBT")
-			
-					if (debug_schematics)
-						nbt_debug_tag_compound("root", rootmap)
-					
-					// Accept named, nested and unnamed schematic roots
-					var schematicmap = rootmap[?"Schematic"];
-					if (!ds_map_valid(schematicmap))
-					{
-						schematicmap = rootmap[?""]
-						if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Schematic"]))
-							schematicmap = schematicmap[?"Schematic"]
-					}
+					err = true
 
-					// Read Litematic file
-					if (ds_map_valid(schematicmap) && ds_map_valid(schematicmap[?"Regions"]))
-						openerr = !builder_read_litematic(schematicmap)
-					
-					// Structure palettes use lowercase lists rather than Sponge compounds
-					else if (ds_map_valid(schematicmap) && ds_list_valid(schematicmap[?"size"]))
-					{
-						openerr = !builder_read_nbt(schematicmap)
-						if (openerr)
-							break
-					}
-					else
-					{
-						scenery_structure = false
-						scenery_palette_size = 0
-						
-						with (mc_builder)
-						{
-							openerr = !builder_read_schematic(schematicmap)
-							if (openerr)
-								break
-						
-							builder_read_schematic_blocks()
-							
-							with (other.id)
-								res_load_scenery_block_map()
-							
-							builder_read_schematic_tile_entities()
-						}
-					}
-					
-					if (openerr)
-						break
-				}
-		
-				// .blocks file (legacy)
-				else 
+				// Load from valid schematic/blocks file
+				else if (!res_load_scenery_file(fn))
 				{
-					log("Loading .blocks", fn)
-			
-					buffer_current = buffer_load_lib(fn)
-					with (mc_builder)
-						builder_read_blocks_file()
-
-					res_load_scenery_block_map()
+					error("error/load_schematic")
+					err = true
 				}
-				
-				// Free file buffer
-				buffer_delete(buffer_current)
+			}
+			
+			// Error
+			if (err)
+			{
+				if (scenery_instant)
+					load_stage = ""
+				else
+					with (app)
+						load_next()
+		
+				ready = true
+				return 0
 			}
 		
 			debug_timer_start()
 
-			openerr = false
 			load_stage = "download"
 		
 			// Clear old timelines
@@ -357,7 +261,7 @@ function res_load_scenery()
 				debug_timer_start()
 			
 				// Prepare vbuffers
-				block_vbuffer_start()
+				block_meshes_start(true)
 		
 				load_stage = "model"
 				
@@ -443,7 +347,7 @@ function res_load_scenery()
 				
 			debug_timer_stop("res_load_scenery, Generate models")
 			
-			block_vbuffer_done()
+			block_meshes_done()
 			
 			with (mc_builder)
 			{
@@ -518,24 +422,5 @@ function res_load_scenery()
 			
 			break
 		}
-	}
-
-	if (rootmap != null)
-		ds_map_destroy(rootmap)
-
-	// Schematic error
-	if (openerr)
-	{
-		error("error/load_schematic")
-		
-		buffer_delete(buffer_current)
-		
-		if (scenery_instant)
-			load_stage = ""
-		else
-			with (app)
-				load_next()
-		
-		ready = true
 	}
 }

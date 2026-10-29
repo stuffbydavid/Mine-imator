@@ -2,7 +2,7 @@
 
 function render_high_create_gbuffers()
 {
-	var needglow, needsss, maskdepth, depthformat;
+	var needglow, needsss, maskdepth;
 	needglow = (render_glow || render_pass = e_render_pass.ALL || render_pass = e_render_pass.GLOW)
 	needsss = (render_auxiliary_material || render_pass = e_render_pass.ALL || render_pass = e_render_pass.SUBSURFACE || render_pass = e_render_pass.SUBSURFACE_RANGE)
 	maskdepth = !render_mask_blend_is_supported()
@@ -60,26 +60,10 @@ function render_high_create_gbuffers()
 	if (!render_gbuffers_cache_enabled)
 		render_gbuffers_cache_ready = false
 	
-	// Determine depth format, place/build mode need a G component for object ID+face index
-	if (is_cpp())
-		depthformat = surface_rg32float
-	else
-		depthformat = (render_place ? surface_rgba32float : surface_r32float)
-	
-	if (render_surface_depth_format != depthformat)
-	{
-		if (surface_exists(render_surface_depth))
-			surface_free(render_surface_depth)
-		
-		render_surface_depth = null
-		render_surface_depth_format = depthformat
-		render_gbuffers_cache_ready = false
-	}
-
 	render_surface_diffuse	= surface_require(render_surface_diffuse, render_width, render_height)
 	render_surface_mask		= surface_require(render_surface_mask, render_width, render_height, maskdepth)
 	render_surface_material = surface_require(render_surface_material, render_width, render_height, false)
-	render_surface_depth	= surface_require(render_surface_depth, render_width, render_height, true, depthformat)
+	render_surface_depth	= surface_require(render_surface_depth, render_width, render_height, true, surface_r32float)
 	render_surface_specular = surface_require(render_surface_specular, render_width, render_height, false, surface_rgba16float)
 	render_surface_normal	= surface_require(render_surface_normal, render_width, render_height, false, surface_rgba16float)
 
@@ -130,11 +114,6 @@ function render_high_create_gbuffers()
 			if (render_color_combined)
 				render_color_combined = render_high_set_color_gbuffers(render_surface_depth, render_surface_normal, render_surface_material, render_surface_shadows, render_surface_specular)
 
-			if (render_color_combined)
-				render_place_begin(render_surface_depth)
-			
-			// Combined color writes depth to MRT 3
-			render_place_target = (render_color_combined ? 3 : 0)
 			render_world(e_render_mode.COLOR)
 
 			if (render_color_combined)
@@ -142,9 +121,6 @@ function render_high_create_gbuffers()
 			
 			if (combinedmask)
 				render_set_mask_blend(false, render_surface_mask)
-			
-			if (render_color_combined)
-				render_place_end()
 			
 			if (app.place_build)
 				render_world_build_box()
@@ -230,10 +206,8 @@ function render_high_create_gbuffers()
 				}
 			
 				render_world_start(depth_far)
-				render_place_begin(render_surface_depth)
 				render_world(e_render_mode.G_BUFFERS)
 				render_world_done()
-				render_place_end()
 			
 				if (render_sun_combined)
 					render_high_set_sun_blend(sunindex, false)

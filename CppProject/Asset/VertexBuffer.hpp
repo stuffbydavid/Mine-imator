@@ -3,22 +3,35 @@
 #include "FastVector.hpp"
 #include "Render/Mesh.hpp"
 
-#include <QDataStream>
+// Suppress tinybvh's MSVC notices
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma push_macro("_Pragma")
+#undef _Pragma
+#define _Pragma(...)
+#endif
 
-#define MAX_MESH_INDICES 10000000
-#define MAX_BATCH_OBJECTS 1024
-#define MAX_BATCH_TRIANGLES 20000
-#define MAX_BATCH_INDICES MAX_BATCH_TRIANGLES * 3
+#pragma push_macro("WARNING")
+#undef WARNING
+#include "tinybvh/tiny_bvh.h"
+#pragma pop_macro("WARNING")
+
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma pop_macro("_Pragma")
+#endif
+
+#include <QDataStream>
 
 namespace CppProject
 {
 	struct Shader;
 
-	// Thread-safe vertex buffer asset, huge buffers are split up into several meshes upon creation.
-	struct VertexBuffer : Asset
+	// Vertex buffer asset with per-thread generation data and retained CPU geometry
+	struct VertexBuffer : Asset, Mesh<Vertex>
 	{
 		VertexBuffer() : Asset(ID_VertexBuffer) {}
-		VertexBuffer(QDataStream& stream, const std::function<void(Vertex&)>& vertexTransform = {});
+		VertexBuffer(QDataStream& stream, BoolType batching = true);
+		VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator=(const VertexBuffer&) = delete;
 		~VertexBuffer();
 
 		// Submit the vertex buffer to be rendered, returns the number of render calls made.
@@ -48,8 +61,11 @@ namespace CppProject
 		// Adds a face with 4 vertices and generates 6 indices.
 		void AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId = 0);
 
-		// Allocates the meshes from the added vertices.
-		void Complete();
+		// Allocates the mesh from the added vertices, optionally updating tangents.
+		void Complete(BoolType updateTangents = true);
+
+		// Builds a raycasting acceleration BVH using the geometry.
+		void BuildBVH();
 
 		// Writes the vertex buffer data to the given stream.
 		void Write(QDataStream& stream);
@@ -57,27 +73,22 @@ namespace CppProject
 		// Returns the required size in bytes for writing to a stream.
 		IntType GetWriteBytes() const;
 
-		IntType numIndices = 0;
-		QVector<Mesh<>*> meshes;
-		BoolType saveData = false; // Whether to discard data on CPU-side if it can't be used for batches
+		BoolType batching = true; // Allow batching of the vertex buffer
 		bool valid = true;
+		bool completed = false;
+		tinybvh::BVH bvh;
 
 		struct ThreadData
 		{
-			struct MeshData
-			{
-				// Increase mesh capacity
-				void Reserve(IntType addedVertices, IntType addedIndices);
+			// Increase capacity before appending a complete primitive.
+			void Reserve(IntType addedVertices, IntType addedIndices);
 
-				FastVector<Vertex> vertices;
-				FastVector<uint32_t> indices;
-				FastVector<BendVertex> bends;
-				Mesh<>* targetMesh = nullptr;
-				IntType targetVertexOffset = 0, targetIndexOffset = 0;
-			};
-			QVector<MeshData*> meshes;
+			FastVector<Vertex> vertices;
+			FastVector<uint32_t> indices;
+			FastVector<BendVertex> bends;
+			IntType targetVertexOffset = 0, targetIndexOffset = 0;
 			Vertex currentVertex;
-			BoolType elemAdded[5] = { false, false, false, false, false };
+			BoolType elemAdded[4] = { false, false, false, false };
 		} threads[OPENMP_MAX_THREADS];
 	};
 }

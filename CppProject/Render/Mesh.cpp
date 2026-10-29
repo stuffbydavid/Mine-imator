@@ -168,7 +168,7 @@ namespace CppProject
 					glBendBuffer->bind();
 				for (int i = 0; i < 4; i++)
 				{
-					IntType location = GFX->shader->attributeLocation[6 + i];
+					IntType location = GFX->shader->attributeLocation[5 + i];
 					if (location < 0)
 						continue;
 					if (glBendBuffer)

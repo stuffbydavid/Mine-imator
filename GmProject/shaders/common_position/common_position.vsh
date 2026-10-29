@@ -7,6 +7,29 @@ void main() {}
 #pragma shady: inline(common_constants.MATH)
 #pragma shady: inline(common_bend.BEND_LIB)
 
+uniform vec4 uBlockColors[255]; // static
+
+vec4 getVertexColor(vec4 custom)
+{
+	// Custom W component is packed subsurface flag and 1-based color index
+	int colorIndex = int(floor(custom.w / 2.0));
+	
+	// Color table lookup
+	if (colorIndex > 0)
+		return uBlockColors[colorIndex - 1];
+
+	// Zero is untinted
+	return vec4(1.0);
+}
+
+vec4 getVertexCustom(vec4 custom)
+{
+	// X/Y: wind flags
+	// Z: emissive
+	// W: subsurface flag
+	return vec4(custom.xyz, mod(custom.w, 2.0));
+}
+
 // Wind
 uniform float uTime; // static
 uniform float uWindEnable;
@@ -24,26 +47,26 @@ float getNoise(float v)
 	return cos(v * PI) * cos(v * 3.0 * PI) * cos(v * 5.0 * PI) * cos(v * 7.0 * PI) + sin(v * 5.0 * PI) * 0.1;
 }
 
-vec3 getWind(float time, vec3 pos, vec4 inWave)
+vec3 getWind(float time, vec3 pos, vec4 inCustom)
 {
 	return vec3(
-		sin((time + pos.x * 10.0 + pos.y + pos.z) * (uWindSpeed / 5.0)) * max(inWave.x * uWindTerrain, uWindEnable) * uWindStrength,
-		sin((time + pos.x + pos.y * 10.0 + pos.z) * (uWindSpeed / 7.5)) * max(inWave.x * uWindTerrain, uWindEnable) * uWindStrength,
-		sin((time + pos.x + pos.y + pos.z * 10.0) * (uWindSpeed / 10.0)) * max(inWave.y * uWindTerrain, uWindEnable) * uWindStrength
+		sin((time + pos.x * 10.0 + pos.y + pos.z) * (uWindSpeed / 5.0)) * max(inCustom.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((time + pos.x + pos.y * 10.0 + pos.z) * (uWindSpeed / 7.5)) * max(inCustom.x * uWindTerrain, uWindEnable) * uWindStrength,
+		sin((time + pos.x + pos.y + pos.z * 10.0) * (uWindSpeed / 10.0)) * max(inCustom.y * uWindTerrain, uWindEnable) * uWindStrength
 	);
 }
 
-vec3 getWindAngle(vec3 pos, vec4 inWave)
+vec3 getWindAngle(vec3 pos, vec4 inCustom)
 {
 	float strength = dot(pos.xy/16.0, uWindDirection) / dot(uWindDirection, uWindDirection);
 	float diroff = getNoise(((uWindDirectionalSpeed - (strength / 3.0) - (pos.z/64.0)) * .075));
-	return vec3(uWindDirection * diroff, 0.0) * (1.0 - step(max(inWave.x * uWindTerrain, uWindEnable), 0.0)) * uWindDirectionalStrength;
+	return vec3(uWindDirection * diroff, 0.0) * (1.0 - step(max(inCustom.x * uWindTerrain, uWindEnable), 0.0)) * uWindDirectionalStrength;
 }
 
-vec3 getWorldPosition(vec3 pos, vec4 inWave)
+vec3 getWorldPosition(vec3 pos, vec4 inCustom)
 {
-	if (max((inWave.x + inWave.y) * uWindTerrain, uWindEnable) * uWindStrength > 0.0)
-		return (gm_Matrices[MATRIX_WORLD] * vec4(pos + getWind(uTime, pos, inWave), 1.0)).xyz + getWindAngle(pos, inWave);
+	if (max((inCustom.x + inCustom.y) * uWindTerrain, uWindEnable) * uWindStrength > 0.0)
+		return (gm_Matrices[MATRIX_WORLD] * vec4(pos + getWind(uTime, pos, inCustom), 1.0)).xyz + getWindAngle(pos, inCustom);
 	else
 		return (gm_Matrices[MATRIX_WORLD] * vec4(pos, 1.0)).xyz;
 }

@@ -122,6 +122,10 @@ function macros()
 	#macro c_plains_biome_foliage_2		make_color_rgb(98, 168, 87)
 	#macro c_plains_biome_dry_foliage	make_color_rgb(163, 117, 70)
 	#macro c_plains_biome_water			make_color_rgb(63, 118, 228)
+	#macro c_pumpkin_stem				hex_to_color("80DF10")
+	#macro c_melon_stem					hex_to_color("80DF10")
+	#macro c_lily_pad					hex_to_color("208030")
+	#macro c_redstone					hex_to_color("FF0000")
 	#macro c_sunset_start				hex_to_color("B2353B")
 	#macro c_sunset_end					hex_to_color("C04E37")
 	#macro c_normal						make_color_rgb(127, 127, 255)
@@ -175,9 +179,6 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
-	#macro surface_rg32float			8
-	#macro place_id_bits				21
-	#macro place_dir_none				e_dir.amount
 
 	// Assets
 	#macro default_model					"human"
@@ -230,6 +231,7 @@ function macros()
 	#macro block_half_size		8
 	#macro block_size_list		[ 16, 32, 64 ]
 	#macro block_faces			6
+	#macro block_mesh_size		64
 	#macro item_size			16
 	#macro clip_far				30000
 	#macro clip_near			1
@@ -237,6 +239,8 @@ function macros()
 	#macro fog_near				3000
 	#macro fog_size				2000
 	#macro fog_height			1250
+	#macro place_far			2000
+	#macro build_far			1000
 	
 	// Vectors and matrices
 	#macro X					0

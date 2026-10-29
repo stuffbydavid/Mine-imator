@@ -98,7 +98,7 @@ function builder_generate()
 	block_pos[X] = blockx * block_size
 	block_pos[Y] = blocky * block_size
 	block_pos[Z] = blockz * block_size
-	block_color = null
+	block_color_index = 0
 	
 	// Run a block-specific script for generating a mesh if available
 	if (block_current.generate_script > -1)

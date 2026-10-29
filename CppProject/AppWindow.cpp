@@ -147,6 +147,7 @@ namespace CppProject
 	#if OS_WINDOWS
 		if (IS_D3D11)
 		{
+			GFX->ResetTextureBindings();
 			D3DContext->OMSetRenderTargets(1, &d3dRTV, nullptr);
 			D3D11_VIEWPORT viewport = { 0, 0, (float)width(), (float)height(), 0.0, 1.0 };
 			D3DContext->RSSetViewports(1, &viewport);

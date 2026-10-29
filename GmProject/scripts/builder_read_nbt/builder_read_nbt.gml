@@ -1,4 +1,4 @@
-function builder_read_nbt(structuremap)
+function builder_read_nbt(structuremap, blocksonly = false)
 {
 	scenery_structure = true
 	
@@ -91,9 +91,10 @@ function builder_read_nbt(structuremap)
 		}
 	}
 
-	var integrityamount, res;
+	var integrityamount, res, valid;
 	integrityamount = scenery_integrity
 	res = id
+	valid = true
 	
 	with (mc_builder)
 	{
@@ -145,9 +146,9 @@ function builder_read_nbt(structuremap)
 			}
 
 			with (res)
-				res_load_scenery_block_map()
+				valid = res_load_scenery_block_map(blocksonly)
 
-			for (var i = 0; i < ds_list_size(blocklist); i++)
+			for (var i = 0; i < ds_list_size(blocklist) && valid && !blocksonly; i++)
 			{
 				var blockmap, pos, blocknbt, entity;
 				blockmap = blocklist[|i]
@@ -177,10 +178,11 @@ function builder_read_nbt(structuremap)
 		
 		builder_combine_threads()
 		
-		builder_read_entities(structuremap[?"entities"])
+		if (valid && !blocksonly)
+			builder_read_entities(structuremap[?"entities"])
 	}
 	
 	debug_timer_stop("res_load_scenery, Parse blocks")
 	
-	return true
+	return valid
 }

@@ -2,16 +2,10 @@
 
 function render_world_tl()
 {
-	// Place mode
-	if (placed || parent_is_placed)
-	{
-		// GM cannot mask the pick target without also hiding this G-buffer draw
-		if (!is_cpp() && render_place_pass && render_mode = e_render_mode.G_BUFFERS)
-			return 0
-	}
-		
+	world_raycast_set_object(id)
+
 	// Transparent block pass
-	if (render_world_block_transparent = true &&
+	if (render_world_blocks_transparent = true &&
 		type != e_tl_type.SCENERY &&
 		type != e_tl_type.BLOCK &&
 		type != e_tl_type.MODEL &&
@@ -54,7 +48,7 @@ function render_world_tl()
 		type = e_tl_type.CAMERA ||
 		type_is_light(type))
 	{
-		if (render_mode = e_render_mode.CLICK && render_world_block_transparent != true)
+		if (render_mode = e_render_mode.CLICK && render_world_blocks_transparent != true)
 		{
 			render_set_texture(null, spr_shape)
 			vbuffer_render(render_click_box, world_pos)
@@ -268,22 +262,6 @@ function render_world_tl()
 		}
 	}
 	
-	// Place mode
-	if (render_place_pass)
-	{
-		var placetype = type_is_block(type) ? e_place_type.BLOCK : e_place_type.SCENE;
-		if (placed || parent_is_placed)
-		{
-			// Disable write for place data MRT
-			render_set_target_write(render_place_target, false)
-			
-			placetype = e_place_type.PLACED
-		}
-
-		render_set_uniform_int(e_uniform.PLACE_ID, render_place_id)
-		render_set_uniform_int(e_uniform.PLACE_TYPE, placetype)
-	}
-
 	// Render
 	if (type != e_tl_type.PARTICLE_SPAWNER)
 	{
@@ -313,7 +291,7 @@ function render_world_tl()
 			case e_tl_type.BLOCK:
 			{
 				if (type = e_tl_type.BLOCK)
-					render_world_block(temp, render_res_diffuse, render_res_normal, render_res_material)
+					render_world_block_meshes(temp, render_res_diffuse, render_res_normal, render_res_material)
 				else if (temp.scenery)
 					render_world_scenery(temp.scenery, render_res_diffuse, render_res_normal, render_res_material, temp.block_repeat_enable, temp.block_repeat)
 				
@@ -358,12 +336,12 @@ function render_world_tl()
 					if (res = null || res.block_sheet_texture[e_block_sheet.STATIC16] = null)
 						res = mc_res
 					
-					render_world_block(temp.model, res, project_pack_res, project_pack_res)
+					render_world_block_meshes(temp.model, res, project_pack_res, project_pack_res)
 					
 					with (temp)
 						res = temp_get_model_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 					
-					if (render_world_block_transparent != true)
+					if (render_world_blocks_transparent != true)
 						render_world_block_map(temp.model.model_block_map, res)
 				}
 				
@@ -451,7 +429,4 @@ function render_world_tl()
 
 	if (glowonlycombined)
 		gpu_set_zwriteenable(true)
-
-	if (render_place_pass && (placed || parent_is_placed))
-		render_set_target_write(render_place_target, true)
 }

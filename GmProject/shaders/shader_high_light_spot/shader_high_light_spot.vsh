@@ -2,9 +2,8 @@
 
 attribute vec3 in_Position;
 attribute vec3 in_Normal;
-attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
-attribute vec4 in_Wave;
+attribute vec4 in_Custom;
 attribute vec3 in_Tangent;
 
 uniform mat4 uLightMatrix; // static
@@ -31,15 +30,15 @@ uniform vec2 uTextureOffset;
 
 void main()
 {
-	vPosition = getWorldPosition(in_Position, in_Wave);
+	vPosition = getWorldPosition(in_Position, in_Custom);
 	vNormal = inverse2(gm_Matrices[MATRIX_WORLD]) * in_Normal;
 	vTangent = (gm_Matrices[MATRIX_WORLD] * vec4(in_Tangent, 0.0)).xyz;
 	
 	vTexCoord = in_TextureCoord + uTextureOffset;
 	vScreenCoord = uLightMatrix * vec4(vPosition, 1.0);
 	vShadowCoord = uShadowMatrix * vec4(vPosition, 1.0);
-	vCustom = in_Wave;
-	vColor = uBlendColor * in_Colour;
+	vCustom = getVertexCustom(in_Custom);
+	vColor = uBlendColor * getVertexColor(in_Custom);
 	
 	gl_Position = getClipPosition(vPosition);
 	vClipPosition = gl_Position;

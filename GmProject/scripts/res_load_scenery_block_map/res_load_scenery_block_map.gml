@@ -1,10 +1,22 @@
 /// @desc Count source blocks and apply the resource filter to builder cells.
 
-function res_load_scenery_block_map()
+function res_load_scenery_block_map(blocksonly = false)
 {
-	var res, tlamount;
+	// Keep the decoded source before applying filters
+	if (!block_meshes_load_blocks(blocksonly))
+		return false
+
+	if (blocksonly)
+		return true
+
+	var res, tlamount, blockcounts, meshwidth, meshheight;
 	res = id
 	tlamount = 0
+	blockcounts = array_create(array_length(block_objs), 0)
+	meshwidth = block_meshes_size[X]
+	meshheight = block_meshes_size[Y]
+
+	block_meshes_active = array_create(array_length(block_meshes), false)
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
@@ -30,14 +42,16 @@ function res_load_scenery_block_map()
 				if (block = null)
 					continue
 
-				var key = string(block.block_id);
-				res.scenery_block_map[?key] = value_get_real(res.scenery_block_map[?key], 0) + 1
+				blockcounts[@block.block_id]++
 
 				if (block_get_filtered(res, block))
 				{
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], 0, 0, false)
 					continue
 				}
+
+				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshwidth, meshheight);
+				res.block_meshes_active[@meshindex] = true
 
 				if (!keepwater && builder_get_waterlogged(build_pos[X], build_pos[Y], build_pos[Z]))
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], block.block_id, builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z]), false)
@@ -84,5 +98,11 @@ function res_load_scenery_block_map()
 		sch_timeline_amount = tlamount
 	}
 
+	for (var i = 0; i < array_length(blockcounts); i++)
+		if (blockcounts[i] > 0)
+			scenery_block_map[?string(i)] = blockcounts[i]
+
 	scenery_tl_types_count_ready = true
+
+	return true
 }
