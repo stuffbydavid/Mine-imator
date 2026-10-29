@@ -86,9 +86,9 @@ namespace CppProject
 		out << (qint64)res->scenery_size[X_];
 		out << (qint64)res->scenery_size[Y_];
 		out << (qint64)res->scenery_size[Z_];
-		out << (qint32)res->block_meshes_size.Value(X_);
-		out << (qint32)res->block_meshes_size.Value(Y_);
-		out << (qint32)res->block_meshes_size.Value(Z_);
+		out << (qint32)res->block_meshes_num.Value(X_);
+		out << (qint32)res->block_meshes_num.Value(Y_);
+		out << (qint32)res->block_meshes_num.Value(Z_);
 
 		// Write meshes and active buffers in XYZ order
 		for (IntType s = 0; s < res->block_meshes.Size(); s++)
@@ -286,7 +286,7 @@ namespace CppProject
 		}
 
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
-		self->block_meshes_size = ArrType::From({ (RealType)dimX, (RealType)dimY, (RealType)dimZ });
+		self->block_meshes_num = ArrType::From({ (RealType)dimX, (RealType)dimY, (RealType)dimZ });
 		self->block_meshes = meshes;
 		self->block_meshes_active = meshActive;
 		self->block_meshes_transparent = transparent;
@@ -582,7 +582,7 @@ namespace CppProject
 		block_meshes_destroy(self);
 
 		self->scenery_size = { (RealType)sizeX, (RealType)sizeY, (RealType)sizeZ };
-		self->block_meshes_size = ArrType::From({ (RealType)dimX, (RealType)dimY, (RealType)dimZ });
+		self->block_meshes_num = ArrType::From({ (RealType)dimX, (RealType)dimY, (RealType)dimZ });
 		self->block_meshes = meshes;
 		self->block_meshes_active = meshActive;
 		self->block_meshes_transparent = transparent;

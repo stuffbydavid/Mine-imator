@@ -11,55 +11,29 @@ function render_world_get_bounds()
 	{
 		if (!render_visible || type = e_tl_type.CAMERA || type_is_light(type))
 			continue
-			
-		var halfwidth, halflength, halfheight, center, extent;
-		halfwidth = block_size * 0.5
-		halflength = halfwidth
-		halfheight = halfwidth
-		center = point3D(world_pos[X], world_pos[Y], world_pos[Z])
 
-		if (type = e_tl_type.SCENERY)
-		{
-			var res, rep;
-			res = (temp != null ? temp.scenery : null)
-			if (res = null || !res.ready)
-				continue
+		var bounds, lower, upper;
+		bounds = tl_get_bounds()
+		if (bounds = null)
+			continue
 
-			rep = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
-				
-			// Scenery rendering swaps the original width and length
-			halfwidth = (res.scenery_size[Y] + res.scenery_size[X] * max(0, ceil(rep[X]) - 1)) * block_size * 0.5
-			halflength = (res.scenery_size[X] + res.scenery_size[Y] * max(0, ceil(rep[Y]) - 1)) * block_size * 0.5
-			halfheight = res.scenery_size[Z] * max(1, ceil(rep[Z])) * block_size * 0.5
-			center = point3D(
-				matrix_render[@ 12] + matrix_render[@ 0] * halfwidth + matrix_render[@ 4] * halflength,
-				matrix_render[@ 13] + matrix_render[@ 1] * halfwidth + matrix_render[@ 5] * halflength,
-				matrix_render[@ 14] + matrix_render[@ 2] * halfwidth + matrix_render[@ 6] * halflength + matrix_render[@ 10] * halfheight
-			)
-		}
-				
-		// Project the footprint onto XY
-		extent = point3D(
-			abs(matrix_render[@ 0]) * halfwidth + abs(matrix_render[@ 4]) * halflength,
-			abs(matrix_render[@ 1]) * halfwidth + abs(matrix_render[@ 5]) * halflength,
-			abs(matrix_render[@ 2]) * halfwidth + abs(matrix_render[@ 6]) * halflength + abs(matrix_render[@ 10]) * halfheight
-		)
-				
+		lower = bounds[0]
+		upper = bounds[1]
+
 		if (empty)
 		{
-			minpos = point3D_sub(center, extent)
-			maxpos = point3D_add(center, extent)
-
+			minpos = point3D_copy(lower)
+			maxpos = point3D_copy(upper)
 			empty = false
 		}
 		else
 		{
-			minpos[@ X] = min(minpos[X], center[X] - extent[X])
-			minpos[@ Y] = min(minpos[Y], center[Y] - extent[Y])
-			minpos[@ Z] = min(minpos[Z], center[Z] - extent[Z])
-			maxpos[@ X] = max(maxpos[X], center[X] + extent[X])
-			maxpos[@ Y] = max(maxpos[Y], center[Y] + extent[Y])
-			maxpos[@ Z] = max(maxpos[Z], center[Z] + extent[Z])
+			minpos[@ X] = min(minpos[X], lower[X])
+			minpos[@ Y] = min(minpos[Y], lower[Y])
+			minpos[@ Z] = min(minpos[Z], lower[Z])
+			maxpos[@ X] = max(maxpos[X], upper[X])
+			maxpos[@ Y] = max(maxpos[Y], upper[Y])
+			maxpos[@ Z] = max(maxpos[Z], upper[Z])
 		}
 	}
 	

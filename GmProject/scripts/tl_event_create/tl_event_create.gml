@@ -62,7 +62,10 @@ function tl_event_create()
 	
 	block_meshes = []
 	block_meshes_edit = []
-	block_meshes_size = vec3(1)
+	block_meshes_num = vec3(1)
+	block_meshes_offset = vec3(0)
+	block_meshes_min_pos = vec3(0)
+	block_meshes_max_pos = vec3(0)
 	block_meshes_active = []
 	block_meshes_transparent = false
 	

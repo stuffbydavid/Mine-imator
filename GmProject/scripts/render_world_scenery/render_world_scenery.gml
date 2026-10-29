@@ -14,7 +14,10 @@ function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, re
 	meshobj = scenery
 	meshcount = array_length(scenery.block_meshes)
 	if (object_index = obj_timeline && type = e_tl_type.SCENERY && array_length(block_meshes_edit) > 0)
+	{
 		meshobj = id
+		meshcount = block_meshes_num[X] * block_meshes_num[Y] * block_meshes_num[Z]
+	}
 	
 	if (!repeatenable)
 		render_world_block_meshes(meshobj, resdif, resnorm, resmat, 0, meshcount)

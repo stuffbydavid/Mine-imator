@@ -6,13 +6,26 @@
 function builder_set_model(ongeneration = false)
 {
 	// Read block coordinates once for this call
-	var blockx, blocky, blockz, sizex, sizey, sizez;
+	var blockx, blocky, blockz, minx, miny, minz, sizex, sizey, sizez;
 	blockx = build_pos[X]
 	blocky = build_pos[Y]
 	blockz = build_pos[Z]
 	sizex = build_size[X]
 	sizey = build_size[Y]
 	sizez = build_size[Z]
+	minx = 0
+	miny = 0
+	minz = 0
+
+	if (build_edit)
+	{
+		minx = build_min_pos[X]
+		miny = build_min_pos[Y]
+		minz = build_min_pos[Z]
+		sizex = build_max_pos[X]
+		sizey = build_max_pos[Y]
+		sizez = build_max_pos[Z]
+	}
 	
 	block_current = builder_get_block(blockx, blocky, blockz)
 	if (block_current = null)
@@ -31,11 +44,11 @@ function builder_set_model(ongeneration = false)
 		if (!block_current.require_models || ongeneration)
 		{
 			build_edge[XP] = (blockx = sizex - 1)
-			build_edge[XN] = (blockx = 0)
+			build_edge[XN] = (blockx = minx)
 			build_edge[YP] = (blocky = sizey - 1)
-			build_edge[YN] = (blocky = 0)
+			build_edge[YN] = (blocky = miny)
 			build_edge[ZP] = (blockz = sizez - 1)
-			build_edge[ZN] = (blockz = 0)
+			build_edge[ZN] = (blockz = minz)
 
 			if (build_edit)
 			{

@@ -2,7 +2,7 @@
 /// CppGen ArrRef build_pos
 /// CppGen ArrRef build_size
 /// CppGen ArrRef build_edge
-/// CppGen ArrRef block_pos
+/// CppGen ArrRef block_model_pos
 /// CppGen ArrRef block_face_full
 /// CppGen ArrRef block_face_min
 /// CppGen ArrRef block_face_max
@@ -11,13 +11,26 @@
 function builder_generate()
 {
 	// Read block coordinates once for this call
-	var blockx, blocky, blockz, sizex, sizey, sizez;
+	var blockx, blocky, blockz, minx, miny, minz, sizex, sizey, sizez;
 	blockx = build_pos[X]
 	blocky = build_pos[Y]
 	blockz = build_pos[Z]
 	sizex = build_size[X]
 	sizey = build_size[Y]
 	sizez = build_size[Z]
+	minx = 0
+	miny = 0
+	minz = 0
+
+	if (build_edit)
+	{
+		minx = build_min_pos[X]
+		miny = build_min_pos[Y]
+		minz = build_min_pos[Z]
+		sizex = build_max_pos[X]
+		sizey = build_max_pos[Y]
+		sizez = build_max_pos[Z]
+	}
 	
 	block_current = builder_get_block(blockx, blocky, blockz)
 	if (block_current = null)
@@ -34,11 +47,11 @@ function builder_generate()
 	
 	// Check neighboring faces and selection boundaries for culling
 	build_edge[XP] = (blockx = sizex - 1)
-	build_edge[XN] = (blockx = 0)
+	build_edge[XN] = (blockx = minx)
 	build_edge[YP] = (blocky = sizey - 1)
-	build_edge[YN] = (blocky = 0)
+	build_edge[YN] = (blocky = miny)
 	build_edge[ZP] = (blockz = sizez - 1)
-	build_edge[ZN] = (blockz = 0)
+	build_edge[ZN] = (blockz = minz)
 	
 	var solidfaces = 0;
 	for (var f = 0; f < block_faces; f++)
@@ -94,9 +107,9 @@ function builder_generate()
 	block_state_id_current = builder_get_state_id(blockx, blocky, blockz)
 	
 	// Block position
-	block_pos[X] = blockx * block_size
-	block_pos[Y] = blocky * block_size
-	block_pos[Z] = blockz * block_size
+	block_model_pos[X] = blockx * block_size
+	block_model_pos[Y] = blocky * block_size
+	block_model_pos[Z] = blockz * block_size
 	block_color_index = 0
 	
 	// Run a block-specific script for generating a mesh if available
@@ -130,10 +143,10 @@ function builder_generate()
 			if ((singlemodel.random_offset && (build_size_total > 1)) || (singlemodel.random_offset_xy && (build_size_xy > 1)))
 			{
 				if (singlemodel.random_offset)
-					block_pos[Z] += builder_irandom_range(-3, 0, Z)
+					block_model_pos[Z] += builder_irandom_range(-3, 0, Z)
 				
-				block_pos[X] += builder_irandom_range(-4, 4, X, singlemodel.random_offset)
-				block_pos[Y] += builder_irandom_range(-4, 4, Y, singlemodel.random_offset)
+				block_model_pos[X] += builder_irandom_range(-4, 4, X, singlemodel.random_offset)
+				block_model_pos[Y] += builder_irandom_range(-4, 4, Y, singlemodel.random_offset)
 			}
 		}
 		
@@ -141,7 +154,7 @@ function builder_generate()
 		block_vertex_emissive = null
 		block_vertex_wave = block_current.wind_axis
 		if (block_current.wind_zmin != null)
-			block_vertex_wave_zmin = block_pos[Z] + block_current.wind_zmin
+			block_vertex_wave_zmin = block_model_pos[Z] + block_current.wind_zmin
 		block_vertex_subsurface = block_current.subsurface
 		
 		// Generate render modelindex(s)
@@ -165,9 +178,9 @@ function builder_generate()
 	if (builder_get_waterlogged(blockx, blocky, blockz))
 	{
 		// Restore block position in case of offset
-		block_pos[X] = blockx * block_size
-		block_pos[Y] = blocky * block_size
-		block_pos[Z] = blockz * block_size
+		block_model_pos[X] = blockx * block_size
+		block_model_pos[Y] = blocky * block_size
+		block_model_pos[Z] = blockz * block_size
 		
 		block_current = mc_assets.block_name_map[?"water"]
 		builder_generate_liquid(true)

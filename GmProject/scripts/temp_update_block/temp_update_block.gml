@@ -3,9 +3,9 @@
 function temp_update_block()
 {
 	if (block_repeat_enable)
-		block_meshes_size = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
+		block_meshes_num = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
 	else
-		block_meshes_size = vec3(1)
+		block_meshes_num = vec3(1)
 
 	block_meshes_start()
 

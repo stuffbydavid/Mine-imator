@@ -6,15 +6,15 @@ function block_set_tall_vine_up(variable, value)
 	{
 		var downblock = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z] - 1);
 		if (downblock = null || downblock.wind_axis = e_vertex_wave.NONE)
-			block_vertex_wave_zmin = block_pos[Z]
+			block_vertex_wave_zmin = block_model_pos[Z]
 	}
 	else
-		block_vertex_wave_zmin = block_pos[Z]
+		block_vertex_wave_zmin = block_model_pos[Z]
 	
 	if ((builder_scenery && !builder_scenery_legacy) || block_get_state_id_value(block_current, block_state_id_current, variable) = value)
 		return 0
 	
-	if (build_pos[Z] != (build_size[Z] - 1))
+	if (!build_edge[ZP])
 		block_state_id_current = block_get_state_id(block_current, [ variable, value ])
 	
 	return 0

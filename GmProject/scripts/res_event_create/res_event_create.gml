@@ -101,7 +101,7 @@ function res_event_create()
 	particle_texture_pixeluvs_map = null
 	
 	block_meshes = []
-	block_meshes_size = vec3(1)
+	block_meshes_num = vec3(1)
 	block_meshes_active = []
 	block_meshes_transparent = false
 

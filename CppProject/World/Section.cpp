@@ -48,7 +48,7 @@ namespace CppProject
 			sectionX = builderPos.x >> 4;
 			sectionY = builderPos.z >> 4;
 			sectionZ = builderPos.y >> 4;
-			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsNum.x + sectionX;
 
 			Builder::sections[sectionPos] = this;
 		}
@@ -878,7 +878,7 @@ namespace CppProject
 		sectionX = (pos.x + offset.x) >> 4;
 		sectionY = (pos.y + offset.y) >> 4;
 		sectionZ = (pos.z + offset.z) >> 4;
-		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsNum.x + sectionX;
 
 		return Builder::sections.Value(sectionPos);
 	}

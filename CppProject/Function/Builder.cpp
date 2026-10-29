@@ -8,7 +8,7 @@
 namespace CppProject
 {
 	Heap<Section*> Builder::sections;
-	WorldVec Builder::size, Builder::offset = { 0, 0, 0 }, Builder::sectionsDim;
+	WorldVec Builder::size, Builder::offset = { 0, 0, 0 }, Builder::sectionsNum;
 	IntType Builder::sectionsXY;
 	QHash<StringType, obj_block*> Builder::mcBlockIdObjMap, Builder::filteredMcBlockIdObjMap;
 	QHash<StringType, ArrType> Builder::mcBlockIdStateVarsMap;
@@ -25,14 +25,14 @@ namespace CppProject
 			self->build_size.Value(Z_).ToInt()
 		};
 		WorldVec sizeOffset = Builder::size + Builder::offset;
-		Builder::sectionsDim = {
+		Builder::sectionsNum = {
 			(IntType)ceilf((RealType)sizeOffset.x / SECTION_SIZE),
 			(IntType)ceilf((RealType)sizeOffset.y / SECTION_SIZE),
 			(IntType)ceilf((RealType)sizeOffset.z / SECTION_SIZE)
 		};
 
-		Builder::sectionsXY = Builder::sectionsDim.x * Builder::sectionsDim.y;
-		IntType sectionsTotal = Builder::sectionsDim.x * Builder::sectionsDim.y * Builder::sectionsDim.z;
+		Builder::sectionsXY = Builder::sectionsNum.x * Builder::sectionsNum.y;
+		IntType sectionsTotal = Builder::sectionsNum.x * Builder::sectionsNum.y * Builder::sectionsNum.z;
 		Builder::sections.Alloc(sectionsTotal);
 
 		// Add empty sections if no world is loaded
@@ -57,17 +57,17 @@ namespace CppProject
 				};
 
 			IntType s = 0;
-			for (IntType z = 0; z < Builder::sectionsDim.z; z++)
-			for (IntType y = 0; y < Builder::sectionsDim.y; y++)
-			for (IntType x = 0; x < Builder::sectionsDim.x; x++, s++)
+			for (IntType z = 0; z < Builder::sectionsNum.z; z++)
+			for (IntType y = 0; y < Builder::sectionsNum.y; y++)
+			for (IntType x = 0; x < Builder::sectionsNum.x; x++, s++)
 			{
 				Section* section = new Section(
 					{ x * SECTION_SIZE,
 					  z * SECTION_SIZE,
 					  y * SECTION_SIZE },
-					{ (x < Builder::sectionsDim.x - 1) ? SECTION_SIZE : lastSize[X_],
-					  (z < Builder::sectionsDim.z - 1) ? SECTION_SIZE : lastSize[Z_],
-					  (y < Builder::sectionsDim.y - 1) ? SECTION_SIZE : lastSize[Y_] }
+					{ (x < Builder::sectionsNum.x - 1) ? SECTION_SIZE : lastSize[X_],
+					  (z < Builder::sectionsNum.z - 1) ? SECTION_SIZE : lastSize[Z_],
+					  (y < Builder::sectionsNum.y - 1) ? SECTION_SIZE : lastSize[Y_] }
 				);
 
 				if (self->build_single_block != null_)
@@ -91,8 +91,8 @@ namespace CppProject
 		if (self->block_meshes.Size())
 		{
 			IntType index =
-				((self->build_pos.IntValue(Z_) / block_mesh_size) * self->block_meshes_size.Value(Y_) +
-				(self->build_pos.IntValue(Y_) / block_mesh_size)) * self->block_meshes_size.Value(X_) +
+				((self->build_pos.IntValue(Z_) / block_mesh_size) * self->block_meshes_num.Value(Y_) +
+				(self->build_pos.IntValue(Y_) / block_mesh_size)) * self->block_meshes_num.Value(X_) +
 				(self->build_pos.IntValue(X_) / block_mesh_size);
 			
 			self->block_mesh = self->block_meshes.Value(index);
@@ -644,7 +644,7 @@ namespace CppProject
 		
 		RealType offset[3];
 		for (IntType a = X_; a <= Z_; a++)
-			offset[a] = self->block_pos.RealValue(a) + model->offset.RealValue(a);
+			offset[a] = self->block_model_pos.RealValue(a) + model->offset.RealValue(a);
 		
 		if (self->block_vertex_emissive == null_)
 			self->block_vertex_emissive = model->emissive;

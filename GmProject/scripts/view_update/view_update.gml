@@ -147,7 +147,9 @@ function view_update(view, cam)
 	
 	// Jump to object or build structure
 	var focustl = place_build ? build_structure : tl_edit;
-	if ((window_busy = "" && content_mouseon) && focustl != null && instance_exists(focustl) && focustl.value_type[e_value_type.TRANSFORM_POS] && focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
+	if ((window_busy = "" && content_mouseon) &&
+		focustl != null && instance_exists(focustl) && focustl.value_type[e_value_type.TRANSFORM_POS] &&
+		focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
 	{
 		tl_focus = focustl
 		cam_work_focus = focustl.world_pos
