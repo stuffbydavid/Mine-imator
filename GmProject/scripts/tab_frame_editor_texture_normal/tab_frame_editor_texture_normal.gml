@@ -5,7 +5,7 @@ function tab_frame_editor_texture_normal()
 	tex = null
 	
 	// Get material texture
-	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && tl_edit.temp != null)
+	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && (tl_edit.temp != null || tl_edit.type = e_tl_type.STRUCTURE))
 	{
 		switch (tl_edit.type)
 		{
@@ -32,11 +32,19 @@ function tab_frame_editor_texture_normal()
 			
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
+			case e_tl_type.STRUCTURE:
 			{
 				content_name = "frame_editor/block_tex_normal"
-				with (tl_edit.temp)
+				
+				var texsource = tl_edit.temp;
+				if (tl_edit.type = e_tl_type.STRUCTURE)
+					texsource = tl_edit
+
+				with (texsource)
 					texobj = temp_get_block_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
+				
 				tex = texobj.block_preview_texture
+				
 				break
 			}
 			
@@ -48,8 +56,8 @@ function tab_frame_editor_texture_normal()
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_normal
-				texobj = res_eval(texobj)
 				
+				texobj = res_eval(texobj)
 				tex = texobj.block_preview_texture
 				
 				if (tex = null)
@@ -59,18 +67,18 @@ function tab_frame_editor_texture_normal()
 			}
 			
 			case e_tl_type.TEXT:
-			{
 				break // Text doesn't use textures
-			}
 			
 			default: // Shapes
 			{
 				content_name = "frame_editor/shape_tex_normal"
+				
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 				
 				if (texobj != null) // Don't preview cameras
 					tex = texobj.texture
+				
 				break
 			}
 		}

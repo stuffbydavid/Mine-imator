@@ -35,6 +35,7 @@ function block_animate(root)
 				for (var p = 0; p < ds_list_size(model_file.file_part_list); p++)
 				{
 					var partl = tl_new_part(model_file.file_part_list[|p]);
+					partl.animated = array_contains(other.animated_parts, partl.model_part_name)
 					partl.part_root = root
 					ds_list_add(part_list, partl)
 				}
@@ -82,7 +83,7 @@ function block_animate(root)
 		tl_update()
 		tl_update_values()
 		
-		animated = false
+		animated = other.animated
 		
 		// Add text
 		if (other.has_text)

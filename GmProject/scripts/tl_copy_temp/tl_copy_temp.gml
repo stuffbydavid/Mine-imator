@@ -115,5 +115,7 @@ function tl_copy_temp(src, dest)
 		
 		self.temp = dest
 		has_temp = (dest.object_index = obj_template)
+
+		tl_update_value_types()
 	}
 }

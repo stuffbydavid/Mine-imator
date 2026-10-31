@@ -18,7 +18,8 @@ function tl_update_render_blocks_transparent()
 			break
 
 		case e_tl_type.SCENERY:
-			obj = temp.scenery
+			if (temp != null)
+				obj = temp.scenery
 			break
 
 		case e_tl_type.MODEL:

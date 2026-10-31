@@ -105,7 +105,9 @@ function tl_get_parent_action(newparent)
 		targetsize = vec3(1)
 		
 		// Scale down by number of blocks in longest direction
-		if (type = e_tl_type.SCENERY && temp != null && temp.scenery != null)
+		if (type = e_tl_type.STRUCTURE)
+			targetsize = vec3_sub(block_meshes_max_pos, block_meshes_min_pos)
+		else if (type = e_tl_type.SCENERY && temp != null && temp.scenery != null)
 		{
 			var targetrepeat = vec3(1);
 			if (temp.block_repeat_enable)

@@ -10,6 +10,7 @@ function render_world_tl()
 
 	// Transparent block pass
 	if (render_world_blocks_transparent = true &&
+		type != e_tl_type.STRUCTURE &&
 		type != e_tl_type.SCENERY &&
 		type != e_tl_type.BLOCK &&
 		type != e_tl_type.MODEL &&
@@ -272,7 +273,7 @@ function render_world_tl()
 		matrix_set(matrix_world, matrix_render)
 		
 		// Reset material textures for other timelines
-		if (type != e_tl_type.SCENERY && type != e_tl_type.BLOCK && type != e_tl_type.MODEL_PART)
+		if (!type_is_structure(type) && type != e_tl_type.BLOCK && type != e_tl_type.MODEL_PART)
 		{
 			render_set_material_textures_none()
 			render_set_uniform_int(e_uniform.MATERIAL_FORMAT, e_material.FORMAT_NONE)
@@ -291,14 +292,16 @@ function render_world_tl()
 				break
 			}
 			
+			case e_tl_type.STRUCTURE:
 			case e_tl_type.SCENERY:
+			{
+				render_world_scenery(null, render_res_diffuse, render_res_normal, render_res_material)
+				break
+			}
+
 			case e_tl_type.BLOCK:
 			{
-				if (type = e_tl_type.BLOCK)
-					render_world_block_meshes(temp, render_res_diffuse, render_res_normal, render_res_material)
-				else if (temp.scenery)
-					render_world_scenery(temp.scenery, render_res_diffuse, render_res_normal, render_res_material, temp.block_repeat_enable, temp.block_repeat)
-				
+				render_world_block_meshes(temp, render_res_diffuse, render_res_normal, render_res_material)
 				break
 			}
 			

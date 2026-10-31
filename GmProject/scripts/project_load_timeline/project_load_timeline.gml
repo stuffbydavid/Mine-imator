@@ -182,6 +182,13 @@ function project_load_timeline(map)
 			text_face_camera = value_get_real(map[?"text_face_camera"], false)
 		}
 
+		if (type = e_tl_type.STRUCTURE)
+		{
+			block_tex = value_get_save_id(map[?"block_tex"], project_pack_res)
+			block_tex_material = value_get_save_id(map[?"block_tex_material"], project_pack_res)
+			block_tex_normal = value_get_save_id(map[?"block_tex_normal"], project_pack_res)
+		}
+
 		// Map legacy block
 		if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
 		{
@@ -190,8 +197,8 @@ function project_load_timeline(map)
 			block_state = blockdata[1]
 		}
 
-		// Added blocks to scenery
-		if (type = e_tl_type.SCENERY)
+		// Added blocks to structures and scenery
+		if (type_is_structure(type))
 		{
 			var palette, blocks;
 			palette = map[?"blocks_added_palette"]

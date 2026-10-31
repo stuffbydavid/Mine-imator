@@ -7,6 +7,8 @@ function block_load_timeline(map, typemap)
 	tl_type = value_get_string(map[?"type"], name)
 	tl_build_transform = value_get_real(map[?"transform"], true)
 	tl_hide_model = value_get_string(map[?"hide_model"], "")
+	tl_animated = value_get_real(map[?"animated"], false)
+	tl_animated_parts = value_get_array(map[?"animated_parts"], [])
 		
 	// Model to use
 	if (is_string(map[?"model"]))

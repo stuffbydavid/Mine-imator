@@ -41,7 +41,7 @@ namespace CppProject
 		}
 
 		if (!root ||
-			(root->type != e_tl_type_SCENERY && root->type != e_tl_type_BLOCK) ||
+			(!type_is_structure(root->type) && root->type != e_tl_type_BLOCK) ||
 			tl->matrix_render.matrix.GetDeterminant() == 0)
 			return nullptr;
 

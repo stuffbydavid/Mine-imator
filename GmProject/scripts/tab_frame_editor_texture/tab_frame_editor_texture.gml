@@ -7,7 +7,7 @@ function tab_frame_editor_texture()
 	tex = null
 	content_name = ""
 	
-	if (tl_edit.temp != null)
+	if (tl_edit.temp != null || tl_edit.type = e_tl_type.STRUCTURE)
 	{
 		switch (tl_edit.type)
 		{
@@ -34,11 +34,19 @@ function tab_frame_editor_texture()
 			
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
+			case e_tl_type.STRUCTURE:
 			{
 				content_name = "frame_editor/block_tex"
-				with (tl_edit.temp)
+				
+				var texsource = tl_edit.temp;
+				if (tl_edit.type = e_tl_type.STRUCTURE)
+					texsource = tl_edit
+
+				with (texsource)
 					texobj = temp_get_block_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
+				
 				tex = texobj.block_preview_texture
+				
 				break
 			}
 			
@@ -50,8 +58,8 @@ function tab_frame_editor_texture()
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex
-				texobj = res_eval(texobj)
 				
+				texobj = res_eval(texobj)
 				tex = texobj.block_preview_texture
 				
 				if (tex = null)
@@ -66,6 +74,7 @@ function tab_frame_editor_texture()
 			default: // Shapes
 			{
 				content_name = "frame_editor/shape_tex"
+				
 				with (tl_edit.temp)
 					texobj = temp_get_shape_texobj(tl_edit.value[e_value.TEXTURE_OBJ])
 				
@@ -88,13 +97,6 @@ function tab_frame_editor_texture()
 		else
 			tex = texobj.texture
 	}
-	else if (tl_edit.type = e_tl_type.STRUCTURE)
-	{
-		content_name = "frame_editor/block_tex"
-		texobj = tl_edit.value[e_value.TEXTURE_OBJ]
-		texobj = res_eval(texobj)
-		tex = texobj.block_preview_texture
-	}
 	
 	if (content_name = "")
 		return 0
@@ -105,7 +107,7 @@ function tab_frame_editor_texture()
 	else
 		content_text = text_get("list/none")
 	
-	if (tl_edit.value[e_value.TEXTURE_OBJ] = null || (tl_edit.type != e_tl_type.STRUCTURE && tl_edit.value[e_value.TEXTURE_OBJ] = project_pack_res))
+	if (tl_edit.value[e_value.TEXTURE_OBJ] = null || tl_edit.value[e_value.TEXTURE_OBJ] = project_pack_res)
 		content_text = text_get("list/default", content_text)
 	
 	tab_control_menu(ui_large_height)

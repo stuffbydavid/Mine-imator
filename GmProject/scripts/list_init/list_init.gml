@@ -1098,26 +1098,25 @@ function list_init(name)
 		case "frame_editor/block_tex_material":
 		case "frame_editor/block_tex_normal":
 		{	
-			var texsource, texobj;
+			var temp, texsource, texobj;
+			temp = tl_edit.temp
+			if (tl_edit.type = e_tl_type.STRUCTURE)
+				temp = tl_edit
 			
 			// Default
-			if (tl_edit.type = e_tl_type.STRUCTURE)
-				texsource = null
-			else if (name = "frame_editor/block_tex_material")
-				texsource = tl_edit.temp.block_tex_material
+			if (name = "frame_editor/block_tex_material")
+				texsource = temp.block_tex_material
 			else if (name = "frame_editor/block_tex_normal")
-				texsource = tl_edit.temp.block_tex_normal
+				texsource = temp.block_tex_normal
 			else if (name = "frame_editor/block_tex")
-				texsource = tl_edit.temp.block_tex
+				texsource = temp.block_tex
 			
 			texobj = res_eval(texsource)
 			
 			// Animatable block in scenery
 			if (tl_edit.type = e_tl_type.BLOCK && tl_edit.block_timeline)
 			{
-				var temp = tl_edit.part_of.temp;
-
-				with (temp)
+				with (tl_edit.part_of.temp)
 				{
 					if (name = "frame_editor/block_tex_material")
 					{

@@ -106,14 +106,24 @@ function tl_get_bounds(modelbounds = false)
 			break
 		}
 		
+		case e_tl_type.STRUCTURE:
 		case e_tl_type.SCENERY:
 		{
 			var res, rep, offset, blockmin, blockmax;
-			res = (temp != null ? temp.scenery : null)
-			if (res = null || !res.ready)
-				return null
+			res = null
+			rep = vec3(1)
+			
+			if (type = e_tl_type.SCENERY)
+			{
+				if (temp != null)
+					res = temp.scenery
 
-			rep = temp.block_repeat_enable ? temp.block_repeat : vec3(1)
+				if (res = null || !res.ready)
+					return null
+
+				if (temp.block_repeat_enable)
+					rep = temp.block_repeat
+			}
 
 			if (array_length(block_meshes_edit) > 0)
 			{
@@ -122,6 +132,9 @@ function tl_get_bounds(modelbounds = false)
 			}
 			else
 			{
+				if (res = null)
+					return null
+
 				blockmin = vec3(0)
 				blockmax = vec3(
 					res.scenery_size[X] * max(1, ceil(rep[X])),

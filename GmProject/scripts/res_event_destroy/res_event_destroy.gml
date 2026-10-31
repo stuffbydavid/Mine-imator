@@ -369,7 +369,7 @@ function res_event_destroy()
 		if (glint_tex = other.id)
 			glint_tex = project_pack_res
 
-		if (part_of = null && !has_temp && type = e_tl_type.SPECIAL_BLOCK)
+		if (has_model_tex && part_of = null)
 		{
 			if (model_tex = other.id)
 				model_tex = project_pack_res
@@ -380,7 +380,7 @@ function res_event_destroy()
 			if (model_tex_normal = other.id)
 				model_tex_normal = project_pack_res
 		}
-		else if (part_of = null && !has_temp && type = e_tl_type.BLOCK)
+		else if (has_block_tex && part_of = null)
 		{
 			if (block_tex = other.id)
 				block_tex = project_pack_res

@@ -30,7 +30,7 @@ function action_build_remove()
 				target = target.part_of
 
 			// Replace a block with air in an existing block mesh
-			if (target.type = e_tl_type.SCENERY)
+			if (type_is_structure(target.type))
 				return action_build_place(true)
 
 			// Only blocks
@@ -68,7 +68,8 @@ function action_build_remove()
 			// Remove an empty structure together with its final block
 			structure = target.parent
 			remove = target
-			if (structure != app && structure.type = e_tl_type.STRUCTURE && ds_list_size(structure.tree_list) = 1 && structure.tree_list[|0] = target)
+			if (structure != app && structure.type = e_tl_type.STRUCTURE && array_length(structure.blocks_added) = 0 &&
+				ds_list_size(structure.tree_list) = 1 && structure.tree_list[|0] = target)
 				remove = structure
 
 			hobj = history_set(action_build_remove)

@@ -2420,6 +2420,7 @@
 				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=sticky",
+				"animated_parts": [ "extension" ],
 				"rotation_point": [ 0, 8, 0 ],
 				"position": [ 8, 8, 8 ],
 				"rotation": {
@@ -2480,6 +2481,7 @@
 				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=normal",
+				"animated_parts": [ "extension" ],
 				"rotation_point": [ 0, 8, 0 ],
 				"position": [ 8, 8, 8 ],
 				"rotation": {
@@ -3193,6 +3195,7 @@
 					"variant=christmas,double=false": "variant=christmas",
 					"variant=christmas,double=true": "variant=christmas_double"
 				},
+				"animated_parts": [ "top" ],
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
 				},
@@ -3404,6 +3407,7 @@
 			"default_state": "variant=oak,hinge=left,facing=west,open=false",
 			"timeline": {
 				"type": "door",
+				"animated": true,
 				"rotation_point": [ 14.5, 0, 1.5 ],
 				"position": {
 					"location=north_west": [ 1.5, 0, 1.5 ],
@@ -3732,6 +3736,7 @@
 				"type": "lever",
 				"model": "lever",
 				"model_state": "",
+				"animated_parts": [ "handle" ],
 				"position": {
 					"face=wall,facing=north": [ 8, 8, 16 ],
 					"face=wall,facing=south": [ 8, 8, 0 ],
@@ -3784,6 +3789,7 @@
 			"timeline": {
 				"type": "pressure_plate",
 				"transform": false,
+				"animated": true,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -3867,6 +3873,7 @@
 			"default_state": "variant=stone,face=floor,facing=west,powered=false",
 			"timeline": {
 				"type": "button",
+				"animated": true,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
 					"face=ceiling": [ 8, 16, 8 ],
@@ -4186,6 +4193,7 @@
 			"timeline": {
 				"type": "trapdoor",
 				"transform": false,
+				"animated": true,
 				"rotation_point": {
 					"facing=north": [ 8, 1.5, 14.5 ],
 					"facing=south": [ 8, 1.5, 1.5 ],
@@ -4484,6 +4492,7 @@
 					"variant=crimson": "variant=crimson",
 					"variant=warped": "variant=warped"
 				},
+				"animated_parts": [ "right_door", "left_door" ],
 				"position": {
 					"in_wall=false": [ 8, 0, 8 ],
 					"in_wall=true": [ 8, -3, 8 ]
@@ -4565,6 +4574,7 @@
 				"type": "enchanting_table",
 				"model": "book",
 				"model_double": true,
+				"animated_parts": [ "book", "book_right_half", "book_right_leaf", "book_left_half", "book_left_leaf" ],
 				"rotation_point": [ 0, 3, 0 ],
 				"position": [ 8, 20, 8 ],
 				"rotation": [ 15, 0, 0 ]
@@ -4669,6 +4679,7 @@
 				"type": "chest",
 				"model": "chest",
 				"model_state": "variant=ender",
+				"animated_parts": [ "top" ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],
@@ -4691,6 +4702,7 @@
 			"timeline": {
 				"type": "tripwire_hook",
 				"model": "tripwire_hook",
+				"animated_parts": [ "handle", "hook" ],
 				"position": {
 					"facing=north": [ 8, 0, 15 ],
 					"facing=south": [ 8, 0, 1 ],
@@ -5064,6 +5076,7 @@
 					"double=false": "variant=trapped",
 					"double=true": "variant=trapped_double"
 				},
+				"animated_parts": [ "top" ],
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
 				},
@@ -5091,6 +5104,7 @@
 			"timeline": {
 				"type": "pressure_plate",
 				"transform": false,
+				"animated": true,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -5321,6 +5335,7 @@
 				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=standing",
+				"animated_parts": [ "banner" ],
 				"pattern_type": "banner",
 				"position": [ 8, 0, 8 ],
 				"rotation": {
@@ -5390,6 +5405,7 @@
 				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=wall",
+				"animated_parts": [ "banner" ],
 				"pattern_type": "banner",
 				"position": [ 8, -8, 8 ],
 				"rotation": {
@@ -5742,6 +5758,7 @@
 			"timeline": {
 				"type": "shulker_box",
 				"model": "shulker_box",
+				"animated_parts": [ "top_shell" ],
 				"position": {
 					"facing=north": [ 8, 8, 16 ],
 					"facing=south": [ 8, 8, 0 ],
@@ -7065,6 +7082,7 @@
 					"variant=waxed_oxidized_copper,double=false": "variant=copper_oxidized",
 					"variant=waxed_oxidized_copper,double=true": "variant=copper_oxidized_double"
 				},
+				"animated_parts": [ "top" ],
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
 				},

@@ -4011,8 +4011,6 @@
 			"offset": "Interval offset"
 		},
 		"filter_tags": "Filter out tags",
-		"hide_structure_blocks": "Hide structure blocks",
-		"hide_structure_blocks_tip": "Hide blocks from the list with \"Animated\" turned off and parented to structures or scenery.",
 		"hide_nonanimated": "Hide non-animated timelines",
 		"hide_nonanimated_tip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hide_ghosts": "Hide ghost timelines",

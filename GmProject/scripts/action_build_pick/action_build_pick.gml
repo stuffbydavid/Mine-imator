@@ -13,23 +13,31 @@ function action_build_pick()
 	if (target.type = e_tl_type.MODEL_PART && target.part_of != null)
 		target = target.part_of
 	
-	if (target.type = e_tl_type.SCENERY)
+	if (type_is_structure(target.type))
 	{
 		if (app.place_block_pos = null)
 			return false
 
-		var data, block, stateid, res, needblocks;
-		res = target.temp.scenery
-		if (res = null || !res.ready)
+		var res, data, block, stateid, needblocks;
+		res = null
+		needblocks = false
+		
+		if (target.type = e_tl_type.SCENERY && target.temp != null)
+			res = target.temp.scenery
+		
+		if (res != null && !res.ready)
 			return false
 
 		// Check for missing block palette/grid
-		needblocks = (array_length(res.block_meshes) = 0)
-		for (var s = 0; s < array_length(res.block_meshes); s++)
+		if (res != null)
 		{
-			var mesh = res.block_meshes[s];
-			if (mesh != null && (mesh.block_palette_buffer = null || mesh.block_grid_buffer = null))
-				needblocks = true
+			needblocks = (array_length(res.block_meshes) = 0)
+			for (var s = 0; s < array_length(res.block_meshes); s++)
+			{
+				var mesh = res.block_meshes[s];
+				if (mesh != null && (mesh.block_palette_buffer = null || mesh.block_grid_buffer = null))
+					needblocks = true
+			}
 		}
 
 		// Load blocks only from source Schematic with no mesh generation

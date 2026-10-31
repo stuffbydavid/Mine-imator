@@ -110,8 +110,16 @@ function project_save_timeline()
 			}
 		}
 
+		// Structure texture
+		if (type = e_tl_type.STRUCTURE)
+		{
+			json_save_var_save_id("block_tex", block_tex)
+			json_save_var_save_id("block_tex_material", block_tex_material)
+			json_save_var_save_id("block_tex_normal", block_tex_normal)
+		}
+
 		// Added blocks
-		if (type = e_tl_type.SCENERY && array_length(blocks_added) > 0)
+		if (type_is_structure(type) && array_length(blocks_added) > 0)
 		{
 			json_save_array_start("blocks_added_palette")
 

@@ -6,13 +6,13 @@ function tl_find_save_ids()
 	part_root = save_id_find(part_root)
 	glint_tex = save_id_find(glint_tex)
 
-	if (type = e_tl_type.BLOCK && part_of = null && !has_temp)
+	if (has_block_tex && part_of = null)
 	{
 		block_tex = save_id_find(block_tex)
 		block_tex_material = save_id_find(block_tex_material)
 		block_tex_normal = save_id_find(block_tex_normal)
 	}
-	else if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp)
+	else if (has_model_tex && part_of = null)
 	{
 		model_tex = save_id_find(model_tex)
 		model_tex_material = save_id_find(model_tex_material)

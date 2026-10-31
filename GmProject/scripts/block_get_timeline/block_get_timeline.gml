@@ -7,6 +7,8 @@ function block_get_timeline(block, stateid)
 		self.block = block
 		model_name = block.tl_model_name
 		model_state = []
+		animated = block.tl_animated
+		animated_parts = block.tl_animated_parts
 		
 		if (model_name != "")
 		{
