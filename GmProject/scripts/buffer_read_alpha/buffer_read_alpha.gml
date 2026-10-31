@@ -1,8 +1,7 @@
-/// buffer_read_alpha(x, y, width)
+/// @desc Reads an alpha value from the selected color buffer.
 /// @arg x
 /// @arg y
 /// @arg width
-/// @desc Reads an alpha value from the selected color buffer
 
 function buffer_read_alpha(xx, yy, wid)
 {

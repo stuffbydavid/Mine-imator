@@ -1,4 +1,3 @@
-/// hex_to_dec(value)
 /// @arg value
 
 function hex_to_dec(hex)

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_mouse_is_active",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_mouse_is_active",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

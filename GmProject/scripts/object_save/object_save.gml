@@ -1,4 +1,3 @@
-/// object_save()
 /// @desc Saves selected timelines.
 
 function object_save()

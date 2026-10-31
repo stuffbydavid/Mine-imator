@@ -1,169 +1,68 @@
-/// block_set_redstone_wire()
-/// @desc Connect to other redstone wires, or powered blocks facing the opposite direction
+/// @desc Connect to other redstone wires, or powered blocks facing the opposite direction.
 
 function block_set_redstone_wire()
 {
-	var pow, powreal, red;
+	var pow, powval;
 	pow = block_get_state_id_value(block_current, block_state_id_current, "power")
-	powreal = string_get_real(pow) / 15
-	if (powreal = 0)
-		red = 0.3
-	else
-		red = 0.6 * powreal + 0.4
-	
-	block_color = make_color_rgb(red * 255, 0, 0)
-	block_vertex_emissive = powreal
-	
+	powval = clamp(string_get_real(pow), 0, 15)
+
+	block_color_index = e_color_palette.REDSTONE + powval + 1
+	block_vertex_emissive = powval / 15
+
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0
-	
+
 	if (!builder_scenery && build_size_total = 1)
 		return 0
-	
-	var east, west, south, north;
-	east = "none"
-	west = "none"
-	south = "none"
-	north = "none"
-	
-	// X+
-	if (!build_edge_xp)
+
+	var connect = array_create(4, "none");
+
+	for (var d = XP; d <= YN; d++)
 	{
-		var block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z); // Check side
+		if (build_edge[d])
+			continue
+
+		var pos, block;
+		pos = vec3_add(build_pos, dir_get_vec3(d))
+		block = builder_get_block(pos[X], pos[Y], pos[Z])
+
+		// Check side
 		if (block != null)
 		{
-			// Connect to other redstone wire
 			if (block = block_current || block.type = "redstone_connect")
-				east = "side"
+				connect[d] = "side"
 			else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
 			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z), "facing");
-				if (facing = "east" || facing = "west")
-					east = "side"
+				var facing = block_get_state_id_value(block, builder_get_state_id(pos[X], pos[Y], pos[Z]), "facing");
+				if (facing = dir_names[d] || facing = dir_names[d ^ 1])
+					connect[d] = "side"
 			}
 		}
-		
-		if (east = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
+
+		// Check up
+		if (connect[d] = "none" && !build_edge[ZP] && !(block_face_min_depth[ZP] = e_block_depth.DEPTH0 && block_face_full[ZP]))
 		{
-			block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z + 1)
+			block = builder_get_block(pos[X], pos[Y], pos[Z] + 1)
 			if (block = block_current)
-				east = "up"
+				connect[d] = "up"
 		}
-		
-		if (east = "none" && !build_edge_zn && !(block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)) // Check down
+
+		// Check down
+		if (connect[d] = "none" && !build_edge[ZN] && !(block_face_min_depth[d] = e_block_depth.DEPTH0 && block_face_full[d]))
 		{
-			block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z - 1)
+			block = builder_get_block(pos[X], pos[Y], pos[Z] - 1)
 			if (block = block_current)
-				east = "side"
+				connect[d] = "side"
 		}
 	}
-	
-	// X-
-	if (!build_edge_xn)
-	{
-		var block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z); // Check side
-		if (block != null)
-		{
-			// Connect to other redstone wire
-			if (block = block_current || block.type = "redstone_connect")
-				west = "side"
-			else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
-			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z), "facing");
-				if (facing = "east" || facing = "west")
-					west = "side"
-			}
-		}
-		
-		if (west = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
-		{
-			block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z + 1)
-			if (block = block_current)
-				west = "up"
-		}
-		
-		if (west = "none" && !build_edge_zn && !(block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)) // Check down
-		{
-			block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z - 1)
-			if (block = block_current)
-				west = "side"
-		}
-	}
-	
-	// Y+
-	if (!build_edge_yp)
-	{
-		var block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z); // Check side
-		if (block != null)
-		{
-			// Connect to other redstone wire
-			if (block = block_current || block.type = "redstone_connect")
-				south = "side"
-			else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
-			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z), "facing");
-				if (facing = "south" || facing = "north")
-					south = "side"
-			}
-		}
-		
-		if (south = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
-		{
-			block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z + 1)
-			if (block = block_current)
-				south = "up"
-		}
-		
-		if (south = "none" && !build_edge_zn && !(block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)) // Check down
-		{ 
-			block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z - 1)
-			if (block = block_current)
-				south = "side"
-		}
-	}
-	
-	// Y-
-	if (!build_edge_yn)
-	{
-		var block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z); // Check side
-		if (block != null)
-		{
-			// Connect to other redstone wire
-			if (block = block_current || block.type = "redstone_connect")
-				north = "side"
-			else if (block.type = "redstone_repeater" || block.type = "redstone_comparator")
-			{
-				var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z), "facing");
-				if (facing = "south" || facing = "north")
-					north = "side"
-			}
-		}
-		
-		if (north = "none" && !build_edge_zp && !(block_face_min_depth_zp = e_block_depth.DEPTH0 && block_face_full_zp)) // Check up
-		{
-			block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z + 1)
-			if (block = block_current)
-				north = "up"
-		}
-		
-		if (north = "none" && !build_edge_zn && !(block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)) // Check down
-		{
-			block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z - 1)
-			if (block = block_current)
-				north = "side"
-		}
-	}
-	
+
 	// Not connected, set to cross shape
-	if (east = "none" && west = "none" && south = "none" && north = "none")
-	{
-		east = "side"
-		west = "side"
-		south = "side"
-		north = "side"
-	}
-	
-	block_state_id_current = block_get_state_id(block_current, array("east", east, "west", west, "south", south, "north", north, "power", pow))
-	
+	if (!array_contains(connect, "side") && !array_contains(connect, "up"))
+		connect = array_create(4, "side")
+
+	block_state_id_current = block_get_state_id(block_current, [
+		"east", connect[XP], "west", connect[XN], "south", connect[YP], "north", connect[YN], "power", pow
+	])
+
 	return 0
 }

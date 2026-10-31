@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_add_pack_res_texture",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_add_pack_res_texture",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Resource/Load.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,5 +1,3 @@
-/// action_tl_deselect_all()
-
 function action_tl_deselect_all()
 {
 	if (history_undo)

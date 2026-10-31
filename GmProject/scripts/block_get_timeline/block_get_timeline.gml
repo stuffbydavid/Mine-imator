@@ -1,16 +1,12 @@
-/// block_get_timeline(block, stateid)
-/// @arg block
-/// @arg stateid
-
 function block_get_timeline(block, stateid)
 {
-	var pos = build_pos;
+	var pos = build_pos_index;
 	
 	with (new_obj(obj_block_tl))
 	{
-		id.block = block
+		self.block = block
 		model_name = block.tl_model_name
-		model_state = array()
+		model_state = []
 		
 		if (model_name != "")
 		{
@@ -31,7 +27,7 @@ function block_get_timeline(block, stateid)
 			}
 			
 			// Unique case with decorated pot
-			if (mc_builder.block_decorated_pot_sherds_map[?pos] != undefined)
+			if (!is_undefined(mc_builder.block_decorated_pot_sherds_map[?pos]))
 				model_state = array_copy_1d(mc_builder.block_decorated_pot_sherds_map[?pos])
 		}
 		
@@ -82,13 +78,13 @@ function block_get_timeline(block, stateid)
 			if (is_undefined(banner_color))
 			{
 				banner_color = c_white
-				banner_patterns = array()
-				banner_pattern_colors = array()
+				banner_patterns = []
+				banner_pattern_colors = []
 			}
 		}
 		
 		// Skull resource
-		if (mc_builder.block_skull_map[?pos] != undefined)
+		if (!is_undefined(mc_builder.block_skull_map[?pos]))
 		{
 			var userid = mc_builder.block_skull_map[?pos];
 			texture = mc_builder.block_skull_res_map[?userid]
@@ -134,9 +130,9 @@ function block_get_timeline(block, stateid)
 		}
 		
 		// Add current position in terrain
-		position[X] += other.build_pos_x * block_size
-		position[Y] += other.build_pos_y * block_size
-		position[Z] += other.build_pos_z * block_size
+		position[X] += other.build_pos[X] * block_size
+		position[Y] += other.build_pos[Y] * block_size
+		position[Z] += other.build_pos[Z] * block_size
 		
 		// Get variant
 		variant = block_get_state_id_value(block, stateid, "variant")

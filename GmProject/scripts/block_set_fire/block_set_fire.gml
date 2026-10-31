@@ -1,55 +1,30 @@
-/// block_set_fire()
 /// @desc Locates non-air blocks.
 
 function block_set_fire()
 {
 	if (!builder_scenery_legacy)
 		return 0
-	
-	var east, west, south, north, up, variant;
-	east = "false"
-	west = "false"
-	south = "false"
-	north = "false"
-	up = "false"
+
+	var connect, variant;
+	connect = array_create(5, "false")
 	variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
-	
-	if (!build_edge_xp)
+
+	for (var d = XP; d <= ZP; d++)
 	{
-		var block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z);
+		if (build_edge[d])
+			continue
+
+		var pos, block;
+		pos = vec3_add(build_pos, dir_get_vec3(d))
+		block = builder_get_block(pos[X], pos[Y], pos[Z])
+
 		if (block != null && block != block_current)
-			east = "true"
+			connect[d] = "true"
 	}
-	
-	if (!build_edge_xn)
-	{
-		var block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z);
-		if (block != null && block != block_current)
-			west = "true"
-	}
-	
-	if (!build_edge_yp)
-	{
-		var block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z);
-		if (block != null && block != block_current)
-			south = "true"
-	}
-	
-	if (!build_edge_yn)
-	{
-		var block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z);
-		if (block != null && block != block_current)
-			north = "true"
-	}
-	
-	if (!build_edge_zp)
-	{
-		var block = builder_get_block(build_pos_x, build_pos_y, build_pos_z + 1);
-		if (block != null && block != block_current)
-			up = "true"
-	}
-	
-	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", east, "west", west, "south", south, "north", north, "up", up))
-	
+
+	block_state_id_current = block_get_state_id(block_current, [
+		"variant", variant, "east", connect[XP], "west", connect[XN], "south", connect[YP], "north", connect[YN], "up", connect[ZP]
+	])
+
 	return 0
 }

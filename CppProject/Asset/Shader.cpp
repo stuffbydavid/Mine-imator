@@ -1,5 +1,6 @@
 #include "Shader.hpp"
 
+#include "Generated/Scripts.hpp"
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
 #include "Render/GLWidget.hpp"
@@ -10,19 +11,26 @@
 #include "Type/ArrType.hpp"
 #include "World/World.hpp"
 
-#include <QProcess>
-
-#if API_OPENGL
 #undef __glext_h_
 #include <qopenglext.h>
 
+#define ENABLE_OPENGL_40 1
 #define ENABLE_OPENGL_43 1
-#endif
 
 namespace CppProject
 {
 	QVector<Shader*> Shader::allShaders;
+	bool Shader::saveConverted = false;
 	TexturePage* Shader::currentPage = nullptr;
+
+	struct ShadySource
+	{
+		QHash<QString, QString> macros;
+		QSet<QString> duplicates, unfinished;
+	};
+	static QHash<QString, ShadySource> shadySources;
+	static QHash<int, QHash<QString, QRegularExpression>> shaderPatterns;
+
 	QMap<QString, Shader::DataType> Shader::dataTypeNameMap = {
 		{ "int", Shader::INT },
 		{ "float", Shader::FLOAT },
@@ -58,68 +66,93 @@ namespace CppProject
 		"gm_Matrices[MATRIX_PROJECTION]"
 	};
 
-#if API_OPENGL
 	QString Shader::glslVersion = "150 core"; // 3.2
 	BoolType Shader::gl40Supported = false;
 	BoolType Shader::gl43Supported = false;
 	QOpenGLFunctions_4_3_Core* Shader::gl43Core = nullptr;
-#endif
 
 	Shader::Shader(QString name, IntType subAssetId) : Asset(ID_Shader, subAssetId, name)
 	{
 		allShaders.append(this);
+
 		this->name = name;
+
 		Load();
 	}
 
 	Shader::Shader(QString name, VertexFormat format, BoolType useBatching) : Asset(ID_Shader)
 	{
 		allShaders.append(this);
+
 		this->name = name;
 		this->vertexFormat = format;
 		this->useBatching = useBatching;
+
 		Load();
 	}
 
 	void Shader::Init()
 	{
-	#if API_OPENGL
-		// Try compiling with a GLSL 4.0 feature (textureQueryLod) and GLSL 4.3 feature (SSBOs) to determine support
-		QString gl43shader = "#version 430\nlayout(std430, binding = 2) buffer _ssbo { struct { int a; } _obj[1024]; };\nvoid main() {}";
-		QString gl40shader = "#version 400\nuniform sampler2D _sampler;\nout vec2 _lod;\nvoid main() { _lod = textureQueryLod(_sampler, vec2(0.0, 0.0)); }";
-
-		QtMessageHandler oldHandler = qInstallMessageHandler(
-			[](QtMsgType type, const QMessageLogContext& ctx, const QString& msg){}
-		);
-		GraphicsApiHandler::glEnableLogger = false;
-		QOpenGLShader sh(QOpenGLShader::Vertex);
-		if (sh.compileSourceCode(gl40shader))
+		if (IS_OPENGL)
 		{
-			gl40Supported = true;
-			glslVersion = "400";
+			// Try compiling with a GLSL 4.0 feature (textureQueryLod) and GLSL 4.3 feature (SSBOs) to determine support
+			QString gl43shader = "#version 430\nlayout(std430, binding = 2) buffer _ssbo { struct { int a; } _obj[1024]; };\nvoid main() {}";
+			QString gl40shader = "#version 400\nuniform sampler2D _sampler;\nout vec2 _lod;\nvoid main() { _lod = textureQueryLod(_sampler, vec2(0.0, 0.0)); }";
 
-			if (ENABLE_OPENGL_43 && sh.compileSourceCode(gl43shader))
+			QtMessageHandler oldHandler = qInstallMessageHandler(
+				[](QtMsgType type, const QMessageLogContext& ctx, const QString& msg) {}
+			);
+			GraphicsApiHandler::glEnableLogger = false;
+
+			QOpenGLShader sh(QOpenGLShader::Vertex);
+			if (ENABLE_OPENGL_40 && sh.compileSourceCode(gl40shader))
 			{
-				gl43Supported = true;
-				gl43Core = new QOpenGLFunctions_4_3_Core;
-				if (!gl43Core->initializeOpenGLFunctions())
-					FATAL("Could not initialize OpenGL 4.3");
-				glslVersion = "430";
-			}
-		}
-		GraphicsApiHandler::glEnableLogger = true;
-		qInstallMessageHandler(oldHandler);
+				gl40Supported = true;
+				glslVersion = "400";
 
-		DEBUG("GLSL version " + glslVersion);
-	#endif
+				if (ENABLE_OPENGL_43 && sh.compileSourceCode(gl43shader))
+				{
+					gl43Supported = true;
+					gl43Core = new QOpenGLFunctions_4_3_Core;
+
+					if (!gl43Core->initializeOpenGLFunctions())
+						FATAL("Could not initialize OpenGL 4.3");
+
+					glslVersion = "430";
+				}
+			}
+
+			GraphicsApiHandler::glEnableLogger = true;
+			qInstallMessageHandler(oldHandler);
+
+			DEBUG("GLSL version " + glslVersion);
+		}
+	}
+
+	QRegularExpression Shader::GetRegex(const QString& pattern, QRegularExpression::PatternOptions options)
+	{
+		auto& patterns = shaderPatterns[(int)options];
+		auto it = patterns.find(pattern);
+		if (it == patterns.end())
+			it = patterns.insert(pattern, QRegularExpression(pattern, options));
+
+		return it.value();
 	}
 
 	void Shader::Load(BoolType useCache)
 	{
+		// Reload macro sources as well as compiled code after a shader edit
+		if (!useCache)
+		{
+			shadySources.clear();
+			shaderPatterns.clear();
+		}
+
+		sourceDependencies.clear();
 		vsName = "/Shaders/" + name + ".vsh";
 		fsName = "/Shaders/" + name + ".fsh";
 
-	#if DEBUG_MODE
+	#if !RELEASE_MODE // Load from filesystem
 		QString gmVsName = GM_SHADERS_DIR "/" + name + "/" + name + ".vsh";
 		QString gmFsName = GM_SHADERS_DIR "/" + name + "/" + name + ".fsh";
 		if (QFile::exists(gmVsName) && QFile::exists(gmFsName))
@@ -144,17 +177,28 @@ namespace CppProject
 		batchBufferSize = 0;
 		deleteAndReset(staticBufferData);
 		staticBufferSize = 0;
+
 		uniformNameMap.clear();
 		uniformLocationMap.clear();
 		uniforms.clear();
 		numUniforms = 0;
+		pointMultiviewUniform = -1;
+
 		batchBufferObjectSize = 0;
 		samplerNameMap.clear();
 		numSamplers = 0;
 		useBaseTexture = false;
-		objRectUniformIndex = -1;
+
+		for (IntType s = 0; s < 32; s++)
+		{
+			objRectUniformIndex[s] = -1;
+			samplerPassUv[s] = false;
+			samplerDepthUv[s] = false;
+		}
+
 		for (IntType m = 0; m < 6; m++)
 			matrixState[m] = MatrixState();
+
 		numOutputs = 0;
 
 		// Vertex shader
@@ -176,6 +220,29 @@ namespace CppProject
 		// Read code
 		QString vsCode = QTextStream(&vsFile).readAll();
 		QString fsCode = QTextStream(&fsFile).readAll();
+		sourceDependencies.insert(vsName);
+		sourceDependencies.insert(fsName);
+
+		// Macro library shaders are included by other shaders and have no runnable entry point
+		if (vsCode.contains("#pragma shady: skip_compilation") ||
+			fsCode.contains("#pragma shady: skip_compilation"))
+			return;
+
+		// Expand Shady named macro includes before parsing and converting the shader
+		if (!ExpandShadyInline(vsCode, ".vsh") || !ExpandShadyInline(fsCode, ".fsh"))
+			return;
+
+		// Expose code in CppOnly comments
+		vsCode.replace("/// CppOnly ", "");
+		fsCode.replace("/// CppOnly ", "");
+
+		// Depth output only
+		depthOnly = fsCode.contains("#define CPP_DEPTH_ONLY");
+		if (depthOnly)
+			fsCode.remove(GetRegex("#ifndef CPP_DEPTH_ONLY[\\s\\S]*?#endif"));
+
+		// Point light shader
+		pointShader = vsCode.contains("#define CPP_POINT_MULTIVIEW");
 
 		// Find vertex format
 		if (vertexFormat == UNKNOWN)
@@ -189,8 +256,13 @@ namespace CppProject
 				vertexFormat = PRIMITIVE;
 		}
 
-		// Parse GLES code to HLSL/GLSL depending on API used
-		LoadCode(vsCode, fsCode, useCache);
+		// Parse GLES code to the selected runtime backend.
+	#ifdef OS_WINDOWS
+		if (IS_D3D11)
+			LoadCodeD3D11(vsCode, fsCode, useCache);
+	#endif
+		if (IS_OPENGL)
+			LoadCodeOpenGL(vsCode, fsCode, useCache);
 
 		// Store texture uniforms
 		if (numSamplers > 0)
@@ -200,13 +272,170 @@ namespace CppProject
 		}
 	}
 
+	BoolType Shader::ExpandShadyInline(QString& code, QString extension, QStringList includeStack)
+	{
+		// GameMaker editor regions are not standard GLSL/HLSL preprocessor directives
+		static const QRegularExpression regionRegex(
+			"^[ \\t]*#[ \\t]*(?:region(?:[ \\t]+[^\\r\\n]*)?|endregion)[ \\t]*(?:\\r?\\n|$)",
+			QRegularExpression::MultilineOption
+		);
+		code.remove(regionRegex);
+
+		static const QRegularExpression inlineRegex(
+			"^[ \\t]*#pragma[ \\t]+shady:[ \\t]*inline\\([ \\t]*(\\w+)\\.(\\w+)[ \\t]*\\)"
+			"[ \\t]*(?://[^\\r\\n]*)?(?:\\r?\\n|$)",
+			QRegularExpression::MultilineOption
+		);
+
+		while (true)
+		{
+			QRegularExpressionMatch match = inlineRegex.match(code);
+			if (!match.hasMatch())
+				return true;
+
+			QString expanded;
+			if (!LoadShadyMacro(match.captured(1), match.captured(2), extension, expanded, includeStack))
+				return false;
+
+			code.replace(match.capturedStart(), match.capturedLength(), expanded);
+		}
+	}
+
+	BoolType Shader::LoadShadyMacro(QString shaderName, QString macroName, QString extension,
+		QString& code, QStringList includeStack)
+	{
+		QString includeId = shaderName + extension + "." + macroName;
+		if (includeStack.contains(includeId))
+		{
+			includeStack.append(includeId);
+			WARNING("Shader: Circular Shady inline in " + name + ": " + includeStack.join(" -> "));
+			return false;
+		}
+		includeStack.append(includeId);
+
+		QString filename;
+	#if !RELEASE_MODE
+		QString gmFilename = GM_SHADERS_DIR "/" + shaderName + "/" + shaderName + extension;
+		if (QFile::exists(gmFilename))
+			filename = gmFilename;
+		else
+			filename = ASSETS_DIR "/Shaders/" + shaderName + extension;
+	#else
+		filename = ":/Shaders/" + shaderName + extension;
+	#endif
+
+		// Cache unexpanded bodies so callers still collect dependencies and detect include cycles
+		if (!shadySources.contains(filename))
+		{
+			QFile file(filename);
+			if (!file.open(QFile::ReadOnly | QFile::Text))
+			{
+				WARNING("Shader: Shady inline source not found: " + filename);
+				return false;
+			}
+
+			static const QRegularExpression beginRegex(
+				"^[ \t]*#pragma[ \t]+shady:[ \t]*macro_begin[ \t]+(\\w+)[ \t]*$"
+			);
+			static const QRegularExpression endRegex(
+				"^[ \t]*#pragma[ \t]+shady:[ \t]*macro_end[ \t]*$"
+			);
+
+			ShadySource source;
+			QStringList names, bodies;
+			QSet<QString> seen;
+			const QStringList lines = QTextStream(&file).readAll().replace("\r\n", "\n").split('\n');
+			for (const QString& line : lines)
+			{
+				if (line.contains("macro_begin"))
+				{
+					QRegularExpressionMatch match = beginRegex.match(line);
+					if (match.hasMatch())
+					{
+						QString macro = match.captured(1);
+						if (seen.contains(macro))
+							source.duplicates.insert(macro);
+						seen.insert(macro);
+						names.append(macro);
+						bodies.append("");
+						continue;
+					}
+				}
+
+				if (line.contains("macro_end") && endRegex.match(line).hasMatch())
+				{
+					if (!names.isEmpty())
+					{
+						QString body = bodies.takeLast();
+						source.macros.insert(names.takeLast(), body.isEmpty() ? "\n" : body);
+					}
+					continue;
+				}
+
+				for (QString& body : bodies)
+					body += line + "\n";
+			}
+
+			for (const QString& macro : names)
+				source.unfinished.insert(macro);
+			shadySources.insert(filename, source);
+		}
+
+		sourceDependencies.insert(filename);
+		const ShadySource& source = shadySources[filename];
+		if (source.duplicates.contains(macroName))
+		{
+			WARNING("Shader: Duplicate Shady macro " + includeId);
+			return false;
+		}
+		if (source.unfinished.contains(macroName))
+		{
+			WARNING("Shader: Shady macro_end missing for " + includeId);
+			return false;
+		}
+
+		auto macro = source.macros.constFind(macroName);
+		if (macro == source.macros.constEnd())
+		{
+			WARNING("Shader: Shady macro not found: " + includeId);
+			return false;
+		}
+
+		code = macro.value();
+		return ExpandShadyInline(code, extension, includeStack);
+	}
+
+	QString Shader::LoadGeometryCode(const QString& extension)
+	{
+		QString filename = "/Shaders/" + name + ".gsh." + extension;
+	#if !RELEASE_MODE
+		filename = ASSETS_DIR + filename;
+	#else
+		filename = ":" + filename;
+	#endif
+
+		sourceDependencies.insert(filename);
+
+		QFile file(filename);
+		if (!file.open(QFile::ReadOnly | QFile::Text))
+		{
+			WARNING("Shader: " + filename + " not found");
+			return "";
+		}
+
+		return QTextStream(&file).readAll();
+	}
+
 	BoolType Shader::IsLoaded() const
 	{
-	#if API_D3D11
-		return d3dVertexShader && d3dPixelShader;
-	#else
-		return program;
+	#if OS_WINDOWS
+		if (IS_D3D11)
+			return d3dVertexShader && d3dPixelShader;
 	#endif
+		if (IS_OPENGL)
+			return program;
+
+		return false;
 	}
 
 	bool Shader::BeginUse()
@@ -214,15 +443,36 @@ namespace CppProject
 		if (!IsLoaded())
 			return false;
 
-	#if API_D3D11
-		D3DContext->VSSetShader(d3dVertexShader, 0, 0);
-		D3DContext->PSSetShader(d3dPixelShader, 0, 0);
-	#else
-		if (!program->bind())
-			return false;
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3DContext->VSSetShader(d3dVertexShader, 0, 0);
+			D3DContext->PSSetShader(d3dPixelShader, 0, 0);
+			D3DContext->GSSetShader(GFX->pointMultiview ? d3dPointShader : nullptr, 0, 0);
+
+			if (GFX->pointMultiview && d3dPointBuffer)
+			{
+				D3DContext->UpdateSubresource(d3dPointBuffer, 0, nullptr, GFX->pointParameters, 0, 0);
+				D3DContext->GSSetConstantBuffers(0, 1, &d3dPointBuffer);
+			}
+		}
 	#endif
+		if (IS_OPENGL)
+		{
+			if (!program->bind())
+				return false;
+
+			if (GFX->pointMultiview && glPointProjection >= 0)
+			{
+				GFX->glUniform4fv(glPointEye, 1, GFX->pointParameters);
+				GFX->glUniform4fv(glPointProjection, 1, GFX->pointParameters + 4);
+				GFX->glUniform4fv(glPointVertical, 1, GFX->pointParameters + 8);
+			}
+		}
 
 		// Reset samplers
+		samplersChanged = true;
+		samplerUniformsChanged = true;
 		for (IntType s = 0; s < numSamplers; s++)
 		{
 			samplerState[s].changed = false;
@@ -240,24 +490,33 @@ namespace CppProject
 
 		if (useBatching)
 		{
-			// Clear batch buffer
-			memset(batchBufferData, 0, batchBufferSize);
+			// Later object records inherit the initialized first record
+			memset(batchBufferData, 0, batchBufferObjectSize);
 			batchBufferObjectIndex = 0;
 
-		#if API_OPENGL
-			// Bind SSBO
-			gl43Core->glShaderStorageBlockBinding(program->programId(), glSsboBlockIndex, 2);
-			GL_CHECK_ERROR();
-		#endif
+			if (IS_OPENGL)
+			{
+				// Bind SSBO
+				gl43Core->glShaderStorageBlockBinding(program->programId(), glSsboBlockIndex, 2);
+				GL_CHECK_ERROR();
+			}
 		}
 
-	#if API_D3D11
 		// Clear static buffer
-		memset(staticBufferData, 0, staticBufferSize);
-	#else
-		GFX->glBindVertexArray(GFX->glCurrentVboId);
-		GL_CHECK_ERROR();
-	#endif
+		if (IS_D3D11)
+			memset(staticBufferData, 0, staticBufferSize);
+
+		staticBufferChanged = true;
+		objectBufferChanged = true;
+		
+		if (pointMultiviewUniform >= 0)
+			SubmitInt(pointMultiviewUniform, GFX->pointMultiview);
+		
+		if (IS_OPENGL)
+		{
+			GFX->glBindVertexArray(GFX->glCurrentVboId);
+			GL_CHECK_ERROR();
+		}
 
 		return true;
 	}
@@ -267,12 +526,15 @@ namespace CppProject
 		if (!IsLoaded())
 			return false;
 
-	#if API_D3D11
-	#else
-		program->release();
-		GFX->glBindVertexArray(0);
-		GL_CHECK_ERROR();
-	#endif
+		GFX->ResetTextureBindings();
+
+		if (IS_OPENGL)
+		{
+			program->release();
+			GFX->glBindVertexArray(0);
+			GL_CHECK_ERROR();
+		}
+
 		return true;
 	}
 
@@ -290,12 +552,10 @@ namespace CppProject
 		if (uni.type != INT)
 			WARNING("Shader: Submitting int into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, in);
 		else
-	#endif
-		WriteUniformValue(uni, &in);
+			WriteUniformValue(uni, &in);
 	}
 
 	void Shader::SubmitFloat(IntType index, float fl)
@@ -312,12 +572,10 @@ namespace CppProject
 		if (uni.type != FLOAT)
 			WARNING("Shader: Submitting float into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, fl);
 		else
-	#endif
-		WriteUniformValue(uni, &fl);
+			WriteUniformValue(uni, &fl);
 	}
 
 	void Shader::SubmitFloatArray(IntType index, VarType& arrOrMatrix)
@@ -349,31 +607,37 @@ namespace CppProject
 			floatsNum = uni.arrayMaxSize * tupleSize;
 
 		// Create float array from VarTypes to submit
-		float* floats = new float[floatsNum];
+		floatData.resize(floatsNum);
+		floatData.fill(0.0f);
+
+		float* floats = floatData.data();
 		IntType i = 0, arrIndex = 0;
 		while (i < floatsNum && arrIndex < arr.Size())
 		{
 			floats[i++] = arr.Value(arrIndex++).Real();
 
-		#if API_D3D11
-			// Pad so each element is 4 floats
-			switch (uni.type)
+			if (IS_D3D11)
 			{
-				case INT:
-				case FLOAT: i += 3; break; // 1 float/ints written, skip 3
-				case VEC2: if (i % 4 == 2) i += 2; break; // 2 floats written, skip 2
-				case VEC3: if (i % 4 == 3) i++; break; // 3 floats written, skip 1
+				// Pad so each element is 4 floats
+				switch (uni.type)
+				{
+					case INT:
+					case FLOAT:	i += 3; break; // 1 float/ints written, skip 3
+					case VEC2:	if (i % 4 == 2) i += 2; break; // 2 floats written, skip 2
+					case VEC3:	if (i % 4 == 3) i++; break; // 3 floats written, skip 1
+				}
 			}
-		#endif
 		}
 
-	#if API_OPENGL
-		if (uni.isStatic)
-			program->setUniformValueArray(uni.glLocation, floats, floatsNum / tupleSize, tupleSize);
+		if (IS_OPENGL && uni.isStatic)
+		{
+			if (uni.type == MAT4)
+				GFX->glUniformMatrix4fv(uni.glLocation, floatsNum / tupleSize, GL_FALSE, floats);
+			else
+				program->setUniformValueArray(uni.glLocation, floats, floatsNum / tupleSize, tupleSize);
+		}
 		else
-	#endif
-		WriteUniformValue(uni, floats, floatsNum * sizeof(float));
-		delete[] floats;
+			WriteUniformValue(uni, floats, uni.totalBufferSize);
 	}
 
 	void Shader::SubmitVec2(IntType index, float x, float y)
@@ -385,14 +649,12 @@ namespace CppProject
 		if (uni.type != VEC2)
 			WARNING("Shader: Submitting vec2 into " + uni.typeName + " uniform " + uni.name);
 
-		if (uni.name == "uTexScale") // set uTexScale to 1
+		if (uni.forceTexScale) // set uTexScale to 1
 			x = y = 1.0;
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, x, y);
 		else
-	#endif
 		{
 			float dat[2] = { x, y };
 			WriteUniformValue(uni, dat);
@@ -408,11 +670,9 @@ namespace CppProject
 		if (uni.type != VEC3)
 			WARNING("Shader: Submitting vec3 into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, x, y, z);
 		else
-	#endif
 		{
 			float dat[3] = { x, y, z };
 			WriteUniformValue(uni, dat);
@@ -428,11 +688,9 @@ namespace CppProject
 		if (uni.type != VEC4)
 			WARNING("Shader: Submitting vec4 into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, x, y, z, w);
 		else
-	#endif
 		{
 			float dat[4] = { x, y, z, w };
 			WriteUniformValue(uni, dat);
@@ -451,11 +709,9 @@ namespace CppProject
 		float floats[4][4];
 		matrix.Copy(floats[0]);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 			program->setUniformValue(uni.glLocation, floats);
 		else
-	#endif
 			WriteUniformValue(uni, floats);
 	}
 
@@ -468,24 +724,27 @@ namespace CppProject
 		if (uni.type != MAT4)
 			WARNING("Shader: Submitting matrix into " + uni.typeName + " uniform " + uni.name);
 
-	#if API_OPENGL
-		if (uni.isStatic)
+		if (IS_OPENGL && uni.isStatic)
 		{
+			matrixData.resize(arr.Size());
+
 			float floats[16];
-			QVector<QMatrix4x4> mat(arr.Size());
 			for (IntType m = 0; m < arr.Size(); m++)
 			{
 				arr.Value(m).Mat().matrix.Copy(floats);
-				mat[m] = QMatrix4x4(floats).transposed();
+				matrixData[m] = QMatrix4x4(floats).transposed();
 			}
-			program->setUniformValueArray(uni.glLocation, mat.data(), mat.size());
+			
+			program->setUniformValueArray(uni.glLocation, matrixData.data(), matrixData.size());
 		}
 		else
-	#endif
 		{
-			float* floats = new float[arr.Size() * 16];
+			floatData.resize(arr.Size() * 16);
+			
+			float* floats = floatData.data();
 			for (IntType m = 0; m < arr.Size(); m++)
 				arr.Value(m).Mat().matrix.Copy(&floats[m * 16]);
+			
 			WriteUniformValue(uni, floats);
 		}
 	}
@@ -502,7 +761,8 @@ namespace CppProject
 
 		if (sampler < 0 || sampler >= numSamplers || sampler >= 32)
 		{
-			WARNING("Shader: Sampler index out of range: " + NumStr(sampler));
+			if (id > 0)
+				WARNING("Shader: Sampler index out of range: " + NumStr(sampler));
 			return UvRect();
 		}
 
@@ -510,6 +770,9 @@ namespace CppProject
 
 		if (id <= 0) // Default blank pixel from texture page
 		{
+			if (!currentPage || !currentPage->defaultLocation)
+				return UvRect();
+
 			id = currentPage->GetTexture()->GetId();
 			uvRect = currentPage->defaultLocation->uvRect;
 		}
@@ -522,27 +785,31 @@ namespace CppProject
 		else // OpenGL texture
 			uvRect = { 0.0, 0.0, 1.0, 1.0 }; // Keep UVs
 
-		// Bind new id to sampler
-		SamplerState& state = samplerState[sampler];
-		if (state.currentTexId != id)
-		{
-			if (state.currentTexId > -1)
-				GFX->SubmitBatch();
+		QVector4D newUvRect = getUvRect ?
+			QVector4D(0.f, 0.f, 1.f, 1.f) :
+			QVector4D(uvRect.x, uvRect.y, uvRect.w, uvRect.h);
 
+		// Bind new texture state to sampler
+		SamplerState& state = samplerState[sampler];
+		BoolType textureChanged = state.currentTexId != id;
+		BoolType uvRectChanged = ((!useBatching || samplerPassUv[sampler]) && samplerUvRect[sampler] != newUvRect);
+		
+		if (state.currentTexId > -1 && (textureChanged || uvRectChanged))
+			GFX->SubmitBatch();
+
+		if (textureChanged)
+		{
 			state.mipMap = GFX->mipMap;
 			state.changed = true;
 		}
 
 		state.currentTexId = id;
-
-		if (getUvRect) // UV transform is done on CPU
-			this->samplerUvRect[sampler] = { 0.f, 0.f, 1.f, 1.f };
-		else // UV transform is done in shader
-		{
-			this->samplerUvRect[sampler] = { (float)uvRect.x, (float)uvRect.y, (float)uvRect.w, (float)uvRect.h };
-			if (useBatching && sampler == 0) // First sampler uses object UV Rect
-				SubmitVec4(objRectUniformIndex, uvRect.x, uvRect.y, uvRect.w, uvRect.h);
-		}
+		if (samplerUvRect[sampler] != newUvRect)
+			samplerUniformsChanged = true;
+		samplerUvRect[sampler] = newUvRect;
+		
+		if (useBatching && objRectUniformIndex[sampler] >= 0)
+			SubmitVec4(objRectUniformIndex[sampler], newUvRect.x(), newUvRect.y(), newUvRect.z(), newUvRect.w());
 
 		return uvRect;
 	}
@@ -594,11 +861,12 @@ namespace CppProject
 		memcpy(batchBufferData + batchBufferObjectIndex * batchBufferObjectSize,
 			   batchBufferData + (batchBufferObjectIndex - 1) * batchBufferObjectSize,
 			   batchBufferObjectSize);
+		objectBufferChanged = true;
 
 		return false;
 	}
 
-	void Shader::SubmitVertices(RenderMode mode, IntType numIndices)
+	void Shader::SubmitVertices(RenderMode mode, IntType numIndices, IntType numInstances)
 	{
 		if (!IsLoaded())
 			return;
@@ -627,165 +895,244 @@ namespace CppProject
 			{
 				float floats[4][4];
 				state.current.Copy(floats[0]);
-			#if API_D3D11
-				WriteUniformValue(state.uniform, floats);
-			#else
-				program->setUniformValue(state.uniform.glLocation, floats);
-			#endif
+
+				if (IS_D3D11)
+					WriteUniformValue(state.uniform, floats);
+
+				if (IS_OPENGL)
+					program->setUniformValue(state.uniform.glLocation, floats);
+
 				state.changed = false;
 			}
 		}
 
-		// Bind textures and submit samplers
-	#if API_D3D11
-		QVector<ID3D11SamplerState*> texSamplers(numSamplers);
-		QVector<ID3D11ShaderResourceView*> texSRVs(numSamplers);
-	#endif
+		// Upload the populated prefix instead of the entire object buffer
+		IntType numObjects = batchBufferObjectIndex;
+		if (batchBufferObjectIndex == batchBufferMaxObjects - 1)
+			numObjects++;
+		
+		IntType objectBytes = std::max<IntType>(1, numObjects) * batchBufferObjectSize;
+
 		for (IntType s = 0; s < numSamplers; s++)
+			if (samplerState[s].changed)
+				samplersChanged = true;
+
+		// Bind textures and submit samplers
+	#if OS_WINDOWS
+		ID3D11SamplerState* texSamplers[32] = {};
+		ID3D11ShaderResourceView* texSRVs[32] = {};
+	#endif
+		IntType glConfiguredTextures[32];
+		IntType glConfiguredTextureCount = 0;
+
+		for (IntType s = 0; samplersChanged && s < numSamplers; s++)
 		{
 			const SamplerState& state = samplerState[s];
 			if (state.currentTexId > -1)
 			{
-			#if API_D3D11
-				BoolType magFilter = state.filter;
-				BoolType mipFilter = false;
-				if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
-					mipFilter = true;
+			#if OS_WINDOWS
+				if (IS_D3D11)
+				{
+					BoolType magFilter = state.filter;
+					BoolType mipFilter = false;
+					if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
+						mipFilter = true;
 
-				D3D11_FILTER filter;
-				if (mipFilter && magFilter)
-					filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
-				else if (!mipFilter && magFilter)
-					filter = D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
-				else if (mipFilter && !magFilter)
-					filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
-				else
-					filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+					D3D11_FILTER filter;
+					if (mipFilter && magFilter)
+						filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
+					else if (!mipFilter && magFilter)
+						filter = D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
+					else if (mipFilter && !magFilter)
+						filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
+					else
+						filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 
-				texSamplers[s] = GFX->d3dSamplerStateMap.value(filter);
-				texSRVs[s] = Texture::d3dIdSRVMap.value(state.currentTexId);
-			#else
-				GLenum magFilter = state.filter ? GL_LINEAR : GL_NEAREST;
-				GLenum minFilter = magFilter;
-				if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
-					minFilter = GL_NEAREST_MIPMAP_LINEAR;
+					texSamplers[s] = GFX->d3dSamplerStateMap.value({ filter, GFX->lodBias });
+					texSRVs[s] = Texture::d3dIdSRVMap.value(state.currentTexId);
+				}
+			#endif
+				if (IS_OPENGL)
+				{
+					GLenum magFilter = state.filter ? GL_LINEAR : GL_NEAREST;
+					GLenum minFilter = magFilter;
+					if (Texture::hasMipMaps.value(state.currentTexId, false) && state.mipMap)
+						minFilter = GL_NEAREST_MIPMAP_LINEAR;
 
-				GFX->glActiveTexture(GL_TEXTURE0 + s);
-				GFX->glBindTexture(GL_TEXTURE_2D, state.currentTexId);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-				GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
+					GFX->glActiveTexture(GL_TEXTURE0 + s);
+					GFX->glBindTexture(GL_TEXTURE_2D, state.currentTexId);
+
+					// OpenGL 3.2 stores sampling parameters on the texture object, not its texture unit
+					BoolType textureConfigured = false;
+					for (IntType i = 0; i < glConfiguredTextureCount; i++)
+					{
+						if (glConfiguredTextures[i] == state.currentTexId)
+						{
+							textureConfigured = true;
+							break;
+						}
+					}
+
+					if (!textureConfigured)
+					{
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+						GFX->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+						GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, GFX->lodBias);
+						GFX->glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, GFX->maxMip);
+						glConfiguredTextures[glConfiguredTextureCount++] = state.currentTexId;
+					}
+					GL_CHECK_ERROR();
+
+					program->setUniformValue(state.glLocation, (GLint)s);
+				}
+			}
+
+			samplerState[s].changed = false;
+		}
+
+	#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			if (samplersChanged)
+			{
+				D3DContext->PSSetSamplers(0, numSamplers, texSamplers);
+				D3DContext->PSSetShaderResources(0, numSamplers, texSRVs);
+			}
+
+			// Submit UvRects/repeat options
+			if (numSamplers > 0 && samplerUniformsChanged)
+			{
+				WriteUniformValue(uvRectUniform, samplerUvRect, numSamplers * sizeof(UvRect));
+
+				for (IntType i = 0; i < numSamplers; i++)
+					samplerRepeatData[i * 4] = samplerRepeat[i];
+				WriteUniformValue(texRepeatUniform, samplerRepeatData, samplerRepeatDataSize * sizeof(int32_t));
+			}
+
+			// Update and submit constant buffers
+			ID3D11Buffer* cBuffers[2];
+			IntType numConstantBuffers = 0;
+			if (d3dStaticBuffer)
+			{
+				if (staticBufferChanged)
+				{
+					D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
+					staticBufferChanged = false;
+				}
+
+				cBuffers[numConstantBuffers++] = d3dStaticBuffer;
+			}
+
+			if (d3dObjectBuffer)
+			{
+				if (objectBufferChanged)
+				{
+					D3D11_MAPPED_SUBRESOURCE objectBufferRes = {};
+					D3DCheckError(D3DContext->Map(d3dObjectBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &objectBufferRes));
+					memcpy(objectBufferRes.pData, batchBufferData, objectBytes);
+					D3DContext->Unmap(d3dObjectBuffer, 0);
+					objectBufferChanged = false;
+				}
+
+				cBuffers[numConstantBuffers++] = d3dObjectBuffer;
+				ResetObjects();
+			}
+
+			D3DContext->VSSetConstantBuffers(0, numConstantBuffers, cBuffers);
+			D3DContext->PSSetConstantBuffers(0, numConstantBuffers, cBuffers);
+
+			// Submit vertices
+			D3D_PRIMITIVE_TOPOLOGY topo = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
+			switch (mode)
+			{
+				case TRIANGLE_LIST:		topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
+				case TRIANGLE_STRIP:	topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP; break;
+				case LINE_LIST:			topo = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
+				case LINE_STRIP:		topo = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP; break;
+				case POINT_LIST:		topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
+			}
+
+			D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
+			D3DContext->IASetPrimitiveTopology(topo);
+
+			if (numInstances > 1)
+				D3DContext->DrawIndexedInstanced(numIndices, numInstances, 0, 0, 0);
+			else
+				D3DContext->DrawIndexed(numIndices, 0, 0);
+		}
+	#endif
+		if (IS_OPENGL)
+		{
+			// Set up attributes
+			switch (vertexFormat)
+			{
+				case PRIMITIVE:		PrimitiveVertex::SetAttributes(); break;
+				case VERTEX_BUFFER:	Vertex::SetAttributes(); break;
+				case WORLD:			WorldVertex::SetAttributes(); break;
+			}
+
+			// Submit UvRects/repeat options
+			if (numSamplers > 0 && samplerUniformsChanged)
+			{
+				program->setUniformValueArray(uvRectUniform.glLocation, samplerUvRect, numSamplers);
+				program->setUniformValueArray(texRepeatUniform.glLocation, (GLint*)samplerRepeat, numSamplers);
+			}
+
+			// Submit SSBO
+			if (useBatching)
+			{
+				if (objectBufferChanged)
+				{
+					GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
+					GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, objectBytes, batchBufferData);
+					GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+					objectBufferChanged = false;
+				}
+
+				GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
 				GL_CHECK_ERROR();
 
-				program->setUniformValue(state.glLocation, (GLint)s);
-			#endif
-				samplerState[s].changed = false;
+				ResetObjects();
 			}
-		}
 
-	#if API_D3D11
-		D3DContext->PSSetSamplers(0, numSamplers, texSamplers.data());
-		D3DContext->PSSetShaderResources(0, numSamplers, texSRVs.data());
+			// Submit vertices
+			GLenum modeEnum = 0;
+			switch (mode)
+			{
+				case TRIANGLE_LIST:		modeEnum = GL_TRIANGLES; break;
+				case TRIANGLE_STRIP:	modeEnum = GL_TRIANGLE_STRIP; break;
+				case LINE_LIST:			modeEnum = GL_LINES; break;
+				case LINE_STRIP:		modeEnum = GL_LINE_STRIP; break;
+				case POINT_LIST:		modeEnum = GL_POINTS; break;
+			}
 
-		// Submit UvRects/repeat options
-		if (numSamplers > 0)
-		{
-			WriteUniformValue(uvRectUniform, samplerUvRect, numSamplers * sizeof(UvRect));
-
-			for (IntType i = 0; i < numSamplers; i++)
-				samplerRepeatData[i * 4] = samplerRepeat[i];
-			WriteUniformValue(texRepeatUniform, samplerRepeatData, samplerRepeatDataSize * sizeof(int32_t));
-		}
-
-		// Update and submit constant buffers
-		QVector<ID3D11Buffer*> cBuffers;
-		if (d3dStaticBuffer)
-		{
-			D3DContext->UpdateSubresource(d3dStaticBuffer, 0, nullptr, staticBufferData, 0, 0);
-			cBuffers.append(d3dStaticBuffer);
-		}
-		if (d3dObjectBuffer)
-		{
-			D3DContext->UpdateSubresource(d3dObjectBuffer, 0, nullptr, batchBufferData, 0, 0);
-			cBuffers.append(d3dObjectBuffer);
-			ResetObjects();
-		}
-		D3DContext->VSSetConstantBuffers(0, cBuffers.size(), cBuffers.data());
-		D3DContext->PSSetConstantBuffers(0, cBuffers.size(), cBuffers.data());
-
-		// Submit vertices
-		D3D_PRIMITIVE_TOPOLOGY topo = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
-		switch (mode)
-		{
-			case TRIANGLE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
-			case TRIANGLE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP; break;
-			case LINE_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
-			case LINE_STRIP: topo = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP; break;
-			case POINT_LIST: topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
-		}
-		D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
-		D3DContext->IASetPrimitiveTopology(topo);
-		D3DContext->DrawIndexed(numIndices, 0, 0);
-
-		// Reset input
-		for (IntType s = 0; s < numSamplers; s++)
-		{
-			texSamplers[s] = nullptr;
-			texSRVs[s] = nullptr;
-		}
-		D3DContext->PSSetSamplers(0, texSamplers.size(), texSamplers.data());
-		D3DContext->PSSetShaderResources(0, texSRVs.size(), texSRVs.data());
-	#else
-		// Set up attributes
-		switch (vertexFormat)
-		{
-			case PRIMITIVE: PrimitiveVertex::SetAttributes(); break;
-			case VERTEX_BUFFER: Vertex::SetAttributes(); break;
-			case WORLD: WorldVertex::SetAttributes(); break;
-		}
-
-		// Submit UvRects/repeat options
-		if (numSamplers > 0)
-		{
-			program->setUniformValueArray(uvRectUniform.glLocation, samplerUvRect, numSamplers);
-			program->setUniformValueArray(texRepeatUniform.glLocation, (GLint*)samplerRepeat, numSamplers);
-		}
-
-		// Submit SSBO
-		if (useBatching)
-		{
-			GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, glSsboId);
-			GFX->glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, batchBufferObjectIndex * batchBufferObjectSize, batchBufferData);
-			GFX->glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-			GFX->glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, glSsboId);
+			if (numInstances > 1)
+				GFX->glDrawElementsInstanced(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0, (GLsizei)numInstances);
+			else
+				GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
+			
 			GL_CHECK_ERROR();
-			ResetObjects();
 		}
 
-		// Submit vertices
-		GLenum modeEnum = 0;
-		switch (mode)
-		{
-			case TRIANGLE_LIST: modeEnum = GL_TRIANGLES; break;
-			case TRIANGLE_STRIP: modeEnum = GL_TRIANGLE_STRIP; break;
-			case LINE_LIST: modeEnum = GL_LINES; break;
-			case LINE_STRIP: modeEnum = GL_LINE_STRIP; break;
-			case POINT_LIST: modeEnum = GL_POINTS; break;
-		}
-		GFX->glDrawElements(modeEnum, (GLsizei)numIndices, GL_UNSIGNED_INT, 0);
-		GL_CHECK_ERROR();
-	#endif
+		samplersChanged = false;
+		samplerUniformsChanged = false;
 	}
 
 	void Shader::ResetObjects()
 	{
-		if (!useBatching)
+		if (!useBatching || !batchBufferObjectIndex)
 			return;
 
 		// Reset to first object
-		memcpy(batchBufferData, batchBufferData + batchBufferObjectIndex * batchBufferObjectSize, batchBufferObjectSize);
+		const char* lastObject = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
+		if (memcmp(batchBufferData, lastObject, batchBufferObjectSize))
+		{
+			memcpy(batchBufferData, lastObject, batchBufferObjectSize);
+			objectBufferChanged = true;
+		}
+
 		batchBufferObjectIndex = 0;
 	}
 
@@ -800,7 +1147,15 @@ namespace CppProject
 		else
 			dst = batchBufferData + batchBufferObjectIndex * batchBufferObjectSize;
 
-		memcpy(dst + uniform.bufferOffset, data, size);
+		dst += uniform.bufferOffset;
+		if (memcmp(dst, data, size))
+		{
+			memcpy(dst, data, size);
+			if (uniform.isStatic)
+				staticBufferChanged = true;
+			else
+				objectBufferChanged = true;
+		}
 	}
 
 	void Shader::LoadCodeCommon(QString& code)
@@ -821,27 +1176,31 @@ namespace CppProject
 		// Break apart World*View matrix
 		if (useBatching)
 		{
-		#if API_D3D11
-			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), "mul(_uMatrixV, _uMatrixM)");
-		#else
-			code.replace(QRegularExpression("\\b_uMatrixMV\\b"), "(_uMatrixV * _uMatrixM)");
-		#endif
+			QString matrixRepl = "";
+			if (IS_D3D11)
+				matrixRepl = "mul(_uMatrixV, _uMatrixM)";
+
+			if (IS_OPENGL)
+				matrixRepl = "(_uMatrixV * _uMatrixM)";
+			
+			code.replace(GetRegex("\\b_uMatrixMV\\b"), matrixRepl);
 		}
 
 		// Add uniforms for required matrices
 		for (IntType m = 0; m < 6; m++)
 		{
-			if (code.indexOf(QRegularExpression("\\b" + matrixUniformName[m] + "\\b")) > -1)
+			if (code.indexOf(GetRegex("\\b" + matrixUniformName[m] + "\\b")) > -1)
 			{
 				BoolType isStatic = true;
 				if (useBatching)
 					isStatic = (m != MatrixId::M && m != MatrixId::MVP); // Per-object M and MVP
+				
 				code = "uniform mat4 " + matrixUniformName[m] + ";" + (isStatic ? " // Static" : "") + "\n" + code;
 			}
 		}
 
 		// Replace constants with its value in arrays
-		auto defIt = QRegularExpression("#define (.*?) (.*?)\n").globalMatch(code);
+		auto defIt = GetRegex("#define (.*?) (.*?)\n").globalMatch(code);
 		while (defIt.hasNext())
 		{
 			QRegularExpressionMatch match = defIt.next();
@@ -851,7 +1210,7 @@ namespace CppProject
 		}
 
 		// Find uniforms and samplers
-		auto uniIt = QRegularExpression("^uniform (\\w*) (.*?)(\\[.*?\\])?;(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?$", QRegularExpression::MultilineOption).globalMatch(code);
+		auto uniIt = GetRegex("^[ \\t]*uniform (\\w*) (.*?)(\\[.*?\\])?;\\s*(( \\/\\/ (s|S)tatic)|( \\/\\/.*))?\\s*$", QRegularExpression::MultilineOption).globalMatch(code);
 		while (uniIt.hasNext())
 		{
 			QRegularExpressionMatch match = uniIt.next();
@@ -862,43 +1221,60 @@ namespace CppProject
 				BoolType isArray = (match.captured(3) != "");
 				IntType arrayMaxSize = 1;
 				if (isArray)
-					arrayMaxSize = match.captured(3).replace(QRegularExpression("\\[|\\]"), "").toInt();
+					arrayMaxSize = match.captured(3).replace(GetRegex("\\[|\\]"), "").toInt();
+				
 				BoolType isStatic = (match.captured(5) != "");
 				AddUniform(name, typeName, isStatic, isArray, arrayMaxSize);
 			}
 
-			#if API_D3D11 // Erase uniforms in HLSL, replaced by Cbuffer
+			if (match.captured(1) == "sampler2D" && match.captured(0).contains("pass_uv"))
+				samplerPassUv[samplerNameMap[name]] = true;
+			
+			if (match.captured(1) == "sampler2D" && match.captured(0).contains("depth_uv"))
+				samplerDepthUv[samplerNameMap[name]] = true;
+
+			if (IS_D3D11) // Erase uniforms in HLSL, replaced by Cbuffer
 				code.replace(match.captured(0) + "\n", "");
-			#endif
 		}
 
 		// Add uvRect to texture2D calls
-		auto texIt = QRegularExpression("texture2D\\((.*?),").globalMatch(code);
+		auto texIt = GetRegex("texture2D\\((.*?),").globalMatch(code);
 		while (texIt.hasNext())
 		{
 			QRegularExpressionMatch match = texIt.next();
 			QString name = match.captured(1);
 			if (samplerNameMap.contains(name))
 			{
-				code.replace("texture2D(" + name + ",",
-					"_sampleUvRect(" + name + ", "
-				#if API_D3D11
-					+ name + "_s, "
-				#endif
-					"_uUvRect[" + NumStr(samplerNameMap[name]) + "], "
-					"_uTexRepeat[" + NumStr(samplerNameMap[name]) + "] > 0,"
-				);
+				IntType sampler = samplerNameMap[name];
+				QString samplerArgs = (samplerDepthUv[sampler] ? "_sampleDepth(" : "_sampleUvRect(") + name + ", ";
+				if (IS_D3D11)
+					samplerArgs += name + "_s, ";
+				
+				if (!samplerDepthUv[sampler])
+					samplerArgs += "_uUvRect[" + NumStr(sampler) + "], ";
+				
+				samplerArgs += "_uTexRepeat[" + NumStr(sampler) + "] > 0,";
+				
+				code.replace("texture2D(" + name + ",", samplerArgs);
 			}
 			else
 				WARNING("Shader: Sampler " + name + " not defined in texture2D call");
 		}
 
-		// Object UvRect required when base sampler is used
+		// Atlas textures vary per object, render targets keep pass-wide UV rectangles
 		if (useBatching && numSamplers > 0)
 		{
-			if (objRectUniformIndex < 0)
-				objRectUniformIndex = AddUniform("_objUvRect", "vec4", false);
-			code.replace("_uUvRect[0]", "_objUvRect");
+			for (IntType s = 0; s < numSamplers; s++)
+			{
+				if (samplerPassUv[s])
+					continue;
+
+				QString name = "_objUvRect" + NumStr(s);
+				if (objRectUniformIndex[s] < 0)
+					objRectUniformIndex[s] = AddUniform(name, "vec4", false);
+				
+				code.replace("_uUvRect[" + NumStr(s) + "]", name);
+			}
 		}
 	}
 
@@ -910,10 +1286,11 @@ namespace CppProject
 		uni.type = dataTypeNameMap[uni.typeName];
 		uni.isStatic = (isStatic || isArray || uni.type == DataType::SAMPLER2D || !useBatching); // Always static for arrays, samplers and when batching disabled
 		uni.isArray = isArray;
+		uni.forceTexScale = (name == "uTexScale");
 		uni.arrayMaxSize = arrayMaxSize;
 		uni.bufferSize = dataTypeSizeMap[uni.type];
 
-		if (API_D3D11 && isArray) // Each array element takes up 16 bytes in HLSL (except last)
+		if (IS_D3D11 && isArray) // Each array element takes up 16 bytes in HLSL (except last)
 		{
 			uni.bufferSize = (uni.type == DataType::MAT4 ? dataTypeSizeMap[MAT4] : dataTypeSizeMap[VEC4]);
 			uni.totalBufferSize = uni.bufferSize * (uni.arrayMaxSize - 1) + dataTypeSizeMap[uni.type];
@@ -927,17 +1304,22 @@ namespace CppProject
 			// Get size variable to increase (entire buffer or per object)
 			IntType* bufferSize = uni.isStatic ? &staticBufferSize : &batchBufferObjectSize;
 
-		#if API_D3D11
-			IntType alignment = 4;
-			IntType groupRemainingBytes = 16 - (*bufferSize % 16); // Align into groups of 16 bytes
-			if (uni.bufferSize > groupRemainingBytes)
-				alignment = 16;
-		#else
 			// Find alignment in bytes
 			IntType alignment = uni.bufferSize;
-			if (uni.type == VEC3) // vec3 alignment is same as vec4
-				alignment = 16;
-		#endif
+			if (IS_D3D11)
+			{
+				alignment = 4;
+
+				// Align into groups of 16 bytes
+				IntType groupRemainingBytes = 16 - (*bufferSize % 16);
+				if (uni.bufferSize > groupRemainingBytes)
+					alignment = 16;
+			}
+			if (IS_OPENGL)
+			{
+				if (uni.type == VEC3 || uni.type == MAT4) // std430 vec3 and matrix columns align to 16 bytes
+					alignment = 16;
+			}
 
 			// Snap to alignment and increase buffer size (entire buffer or per object)
 			uni.bufferOffset = std::ceil((RealType)*bufferSize / alignment) * alignment;
@@ -945,7 +1327,7 @@ namespace CppProject
 		}
 
 		uniformNameMap[name] = numUniforms;
-		uniforms[numUniforms] = uni;
+		uniforms.append(uni);
 
 		// Add sampler
 		if (uni.type == SAMPLER2D)
@@ -958,15 +1340,18 @@ namespace CppProject
 			matrixState[matrixId].active = true;
 			matrixState[matrixId].uniform = uni;
 		}
+
 		return numUniforms++;
 	}
 
 	void Shader::CheckReload()
 	{
-	#ifdef ASSETS_DIR
+	#if !RELEASE_MODE
 		for (Shader* shader : allShaders)
 		{
-			for (const QString& filename : { shader->vsName, shader->fsName })
+			BoolType reload = false;
+			QString changedFilename;
+			for (const QString& filename : shader->sourceDependencies)
 			{
 				QFileInfo fileInfo(filename);
 				QDateTime lastModified = fileInfo.lastModified();
@@ -975,16 +1360,84 @@ namespace CppProject
 					if (fileInfo.size() == 0 ||
 						shader->lastUpdate[filename] == lastModified)
 						continue;
-
-					GFX->StartOffScreenRender();
-					shader->Load(false);
-
-					if (shader->IsLoaded())
-						DEBUG("Reloaded " + filename);
+					
+					reload = true;
+					changedFilename = filename;
 				}
 				shader->lastUpdate[filename] = lastModified;
+			}
+
+			if (reload)
+			{
+				GFX->StartOffScreenRender();
+				shader->Load(false);
+
+				if (shader->IsLoaded())
+				{
+					for (IntType id : Object::GetAll(ID_obj_shader))
+					{
+						if (obj_shader* obj = ObjTypeOpt(obj_shader, id); obj && obj->shader == shader->id)
+							shader_reload_handles(Scope<obj_shader>(obj));
+					}
+
+					DEBUG("Reloaded " + changedFilename);
+				}
 			}
 		}
 	#endif
 	}
+
+#if !RELEASE_MODE
+	void Shader::SaveConvertedCode(const QString& vsCode, const QString& fsCode, const QString& extension, const QString& gsCode)
+	{
+		if (!saveConverted)
+			return;
+
+		QString directory = (QString)gmlGlobal::working_directory + "ShaderConverted";
+		if (!QDir().mkpath(directory))
+		{
+			WARNING("Could not create converted shader directory: " + directory);
+			return;
+		}
+
+		int stages= 2;
+		if (!gsCode.isEmpty())
+			stages = 3;
+
+		for (int stage = 0; stage < stages; stage++)
+		{
+			QString suffix;
+			QByteArray data;
+
+			if (stage == 0)
+			{
+				suffix = ".vsh.";
+				data = vsCode.toUtf8();
+			}
+			else if (stage == 1)
+			{
+				suffix = ".fsh.";
+				data = fsCode.toUtf8();
+			}
+			else
+			{
+				suffix = ".gsh.";
+				data = gsCode.toUtf8();
+			}
+
+			QString filename = directory + "/" + name + suffix + extension;
+			QFile file(filename);
+
+			AddPerms(file);
+			if (!file.open(QFile::WriteOnly | QFile::Truncate))
+			{
+				WARNING("Could not open converted shader " + filename + ": " + file.errorString());
+				continue;
+			}
+
+			if (file.write(data) != data.size() || !file.flush())
+				WARNING("Could not write converted shader " + filename + ": " + file.errorString());
+		}
+	}
+#endif
 }

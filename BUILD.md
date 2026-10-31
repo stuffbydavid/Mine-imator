@@ -81,6 +81,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     1. Run `./Setup.sh FFmpeg`
     2. Run `./Setup.sh Libzip`
     3. Run `./Setup.sh OpenAL`
+    4. Run `./Setup.sh Zstd`
 4. Follow steps 5-7 for Mac OS Intel setup
 
 ## Building Mine-imator (Linux)
@@ -126,12 +127,14 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     2. Run `.\Setup.ps1 FFmpeg`
     3. Run `.\Setup.ps1 Libzip` (requires Qt)
     4. Run `.\Setup.ps1 OpenAL`
+    5. Run `.\Setup.ps1 Zstd`
 5. Build libraries for Windows 32-bit
     1. Run `.\Setup.ps1 Qt x86`
     2. Run `.\Setup.ps1 OpenSSL x86`
     3. Run `.\Setup.ps1 FFmpeg x86`
     4. Run `.\Setup.ps1 Libzip x86`
     5. Run `.\Setup.ps1 OpenAL x86`
+    6. Run `.\Setup.ps1 Zstd x86`
 6. Libraries are copied into `CppProject\External\Win32` and `CppProject\External\Win64`
 
 ## Building libraries (Mac OS Intel/ARM) (optional)
@@ -141,7 +144,8 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 4. Run `./Setup.sh FFmpeg`
 5. Run `./Setup.sh Libzip` (requires Qt)
 6. Run `./Setup.sh OpenAL`
-7. Libraries are copied into `CppProject/External/Mac`
+7. Run `./Setup.sh Zstd`
+8. Libraries are copied into `CppProject/External/Mac`
 
 ## Building libraries (Linux) (optional)
 1. Open terminal
@@ -153,7 +157,8 @@ To change the third-party source code location, set the `DEV_DIR` environment va
 4. Run `./Setup.sh FFmpeg`
 5. Run `./Setup.sh Libzip` (requires Qt)
 6. Run `./Setup.sh OpenAL`
-7. Libraries are copied into `CppProject/External/Linux`
+7. Run `./Setup.sh Zstd`
+8. Libraries are copied into `CppProject/External/Linux`
 
 ## Building Mine-imator (on Windows 64-bit for 32-bit)
 1. Follow steps 1-5 for Windows 64-bit setup
@@ -172,6 +177,7 @@ To change the third-party source code location, set the `DEV_DIR` environment va
     2. Run `./Setup.sh FFmpeg x86_64`
     3. Run `./Setup.sh Libzip x86_64`
     4. Run `./Setup.sh OpenAL x86_64`
+    5. Run `./Setup.sh Zstd x86_64`
 5. Generate Release build in `install/`
     * Run `./Setup.sh Release x86_64`
 

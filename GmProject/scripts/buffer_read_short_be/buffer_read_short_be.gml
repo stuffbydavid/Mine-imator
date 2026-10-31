@@ -1,5 +1,4 @@
-/// buffer_read_short_be()
-/// @desc Reads a 2 byte big endian short integer.
+/// @desc Reads a 2-byte big endian short integer.
 
 function buffer_read_short_be()
 {

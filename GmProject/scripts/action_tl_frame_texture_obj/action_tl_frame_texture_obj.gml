@@ -1,6 +1,3 @@
-/// action_tl_frame_texture_obj(object)
-/// @arg object
-
 function action_tl_frame_texture_obj(object)
 {
 	tl_value_set_start(action_tl_frame_texture_obj, false)

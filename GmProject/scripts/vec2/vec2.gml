@@ -1,14 +1,13 @@
 /// CppSeparate VecType vec2(VarType x, VarType y = VarType())
-/// vec2(x, y)
 /// @arg x
-/// @arg y
+/// @arg [y]
 
 function vec2(xx, yy = undefined)
 {
 	gml_pragma("forceinline")
 	
-	if (yy = undefined)
-		return [xx, xx]
+	if (is_undefined(yy))
+		return [ xx, xx ]
 	else
-		return [xx, yy]
+		return [ xx, yy ]
 }

@@ -99,6 +99,7 @@ String Token::toCpp(Type type)
 	case Type::ShiftRight: return ">>";
 	case Type::BitwiseOr: return "|";
 	case Type::BitwiseAnd: return "&";
+	case Type::BitwiseXor: return "^";
 	case Type::HashTag: return "#";
 	case Type::ArrayRef: return "@";
 	default: return "";

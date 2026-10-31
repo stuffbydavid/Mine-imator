@@ -1,4 +1,4 @@
-/// action_view_camera(cam)
+/// @arg camera
 
 function action_view_camera(cam)
 {

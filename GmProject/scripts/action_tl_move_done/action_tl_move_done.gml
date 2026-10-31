@@ -1,4 +1,3 @@
-/// action_tl_move_done(parent, position)
 /// @arg parent
 /// @arg position
 
@@ -17,6 +16,7 @@ function action_tl_move_done(par, pos)
 		ds_list_destroy(tree_list)
 		instance_destroy()
 	}
+	
 	timeline_move_obj = null
 	
 	window_busy = ""

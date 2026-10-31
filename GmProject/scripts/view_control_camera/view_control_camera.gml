@@ -1,6 +1,3 @@
-/// view_control_camera(view)
-/// @arg view
-
 function view_control_camera(view)
 {
 	var len, xyang, zang;
@@ -13,6 +10,7 @@ function view_control_camera(view)
 		xyang[MAT_X] = world_pos_rotate[X]
 		xyang[MAT_Y] = world_pos_rotate[Y]
 		xyang[MAT_Z] = world_pos_rotate[Z]
+		
 		matrix_remove_scale(xyang)
 	}
 	
@@ -23,7 +21,7 @@ function view_control_camera(view)
 	view_control_move_axis(view, e_view_control.ROT_DISTANCE, e_value.CAM_ROTATE_DISTANCE, c_control_magenta, tl_edit.world_pos, tl_edit.world_pos_rotate, false)
 	
 	// Is dragging
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && (view_control_edit = e_view_control.ROT_ANGLE_XY || view_control_edit = e_view_control.ROT_ANGLE_Z))
+	if (window_busy = "render/control" && view_control_edit_view = view && (view_control_edit = e_view_control.ROT_ANGLE_XY || view_control_edit = e_view_control.ROT_ANGLE_Z))
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -93,12 +91,12 @@ function view_control_camera(view)
 		}
 	}
 	
-	if (window_busy = "rendercontrol" && view_control_edit = e_view_control.ROT_DISTANCE)
+	if (window_busy = "render/control" && view_control_edit = e_view_control.ROT_DISTANCE)
 	{
 		mouse_cursor = cr_handpoint
 		
 		// Move
-		var veclen = vec2_length(view_control_vec)
+		var veclen = vec2_length(view_control_vec);
 		if (veclen > 0 && !mouse_still)
 		{
 			var vecmouse, vecdot, move, snapval, newval, dis;

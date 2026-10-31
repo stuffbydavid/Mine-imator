@@ -1,14 +1,14 @@
-/// draw_button_color(name, x, y, w, color, default, hsvmode, script)
 /// @arg name
 /// @arg x
 /// @arg y
-/// @arg w
+/// @arg width
 /// @arg color
 /// @arg default
 /// @arg hsvmode
 /// @arg script
+/// @arg [samerow]
 
-function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
+function draw_button_color(name, xx, yy, w, color, def, hsvmode, script, samerow = false)
 {
 	var textx, textw, buttonx, buttonw, mini, h, mouseon, mouseclick, active, click;
 	textx = xx
@@ -20,7 +20,7 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 		buttonx = xx
 		buttonw = w
 	}
-	else if (!app.panel_compact && tab_collumns_count > 1)
+	else if (!samerow && !app.panel_compact && tab_columns_count > 1)
 	{
 		buttonx = xx
 		buttonw = w
@@ -35,14 +35,14 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 		textw = floor(w/2) - 8
 	}
 	
-	active = (settings_menu_name = "colorpicker" && colorpicker.value_name = name)
+	active = (settings_menu_name = "colorpicker" && colorpicker.value_name = name && colorpicker.camera_effect_edit_type = camera_effect_type_edit)
 	mouseon = app_mouse_box(buttonx, yy, buttonw, h) && content_mouseon
 	mouseclick = mouseon && mouse_left
 	
 	if (mouseon)
 		mouse_cursor = cr_handpoint
 	
-	click = context_menu_area(xx, yy, w, h, "contextmenuvalue", color, e_context_type.COLOR, script, def)
+	click = context_menu_area(xx, yy, w, h, "context_menu/value", color, e_context_type.COLOR, script, def)
 	microani_set(name, script, mouseon, mouseclick, active, false, 1, true)
 	
 	// Draw button
@@ -83,13 +83,13 @@ function draw_button_color(name, xx, yy, w, color, def, hsvmode, script)
 		
 		draw_set_font(font_label)
 		
-		if (!app.panel_compact && tab_collumns_count > 1)
+		if (!samerow && !app.panel_compact && tab_columns_count > 1)
 			draw_label(string_limit(text_get(name), textw - 8), xx, yy - (label_height + 8), fa_left, fa_top, labelcolor, labelalpha)
 		else
 			draw_label(string_limit(text_get(name), textw - 8), xx, yy + h/2, fa_left, fa_center, labelcolor, labelalpha)
 	}
 	
-	microani_update(mouseon, mouseclick, active || (mouseon && mouse_left), false)
+	microani_update(mouseon, mouseclick, active || (mouseon && mouse_left), false, true)
 	
 	if (mouseon && mouse_left_released)
 	{

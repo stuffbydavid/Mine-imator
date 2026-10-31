@@ -1,5 +1,3 @@
-/// action_tl_play_stop()
-
 function action_tl_play_stop()
 {
 	if (timeline_playing)

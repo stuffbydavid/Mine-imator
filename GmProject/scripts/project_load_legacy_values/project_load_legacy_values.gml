@@ -1,4 +1,3 @@
-/// project_load_legacy_values(timeline)
 /// @arg timeline
 
 function project_load_legacy_values(tl)
@@ -67,11 +66,15 @@ function project_load_legacy_values(tl)
 	
 	if (tl.value_type[e_value_type.CAMERA])
 	{
+		legacy_camera_effect_enabled = array_create(e_cam_fx.amount, false)
+		legacy_camera_effect_enabled[e_cam_fx.FADE] = (value[e_value.ALPHA] < 1 || value[e_value.MIX_PERCENT] > 0)
+		
 		if (load_format >= e_project.FORMAT_100_DEMO_4)
 		{
 			value[e_value.CAM_FOV] = buffer_read_double()
 			if (load_format != e_project.FORMAT_106_2)
 				/*value[e_value.CAM_RATIO] = */buffer_read_double()
+			
 			value[e_value.CAM_ROTATE] = buffer_read_byte()
 			value[e_value.CAM_ROTATE_DISTANCE] = buffer_read_double()
 			value[e_value.CAM_ROTATE_ANGLE_XY] = buffer_read_double()
@@ -84,10 +87,11 @@ function project_load_legacy_values(tl)
 			buffer_read_double()
 			value[e_value.CAM_FOV] = buffer_read_double()
 		}
-		value[e_value.CAM_DOF] = buffer_read_byte()
-		value[e_value.CAM_DOF_DEPTH] = buffer_read_double()
-		value[e_value.CAM_DOF_RANGE] = buffer_read_double()
-		value[e_value.CAM_DOF_FADE_SIZE] = buffer_read_double()
+		
+		legacy_camera_effect_enabled[e_cam_fx.DOF] = buffer_read_byte()
+		value[e_value.CAM_FX_DOF_DEPTH] = buffer_read_double()
+		value[e_value.CAM_FX_DOF_RANGE] = buffer_read_double()
+		value[e_value.CAM_FX_DOF_FADE_SIZE] = buffer_read_double()
 		
 		if (load_format = e_project.FORMAT_106_2)
 		{
@@ -97,45 +101,47 @@ function project_load_legacy_values(tl)
 			value[e_value.CAM_SIZE_KEEP_ASPECT_RATIO] = buffer_read_byte()
 		}
 		
-		//Bloom
+		// Bloom
 		if (load_format = e_project.FORMAT_CB_102)
 		{
-			value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM
-			value[e_value.CAM_BLOOM_THRESHOLD] = buffer_read_double() // CAMBLOOMTHRE
-			value[e_value.CAM_BLOOM_INTENSITY] = buffer_read_double() // CAMBLOOMOFFS
+			legacy_camera_effect_enabled[e_cam_fx.BLOOM] = buffer_read_byte() // CAMBLOOM
+			value[e_value.CAM_FX_BLOOM_THRESHOLD] = buffer_read_double() // CAMBLOOMTHRE
+			value[e_value.CAM_FX_BLOOM_INTENSITY] = buffer_read_double() // CAMBLOOMOFFS
 			
-			value[e_value.CAM_BLOOM_THRESHOLD] = ((value[e_value.CAM_BLOOM_THRESHOLD]-1)*-1)*100
-			value[e_value.CAM_BLOOM_INTENSITY] = ((value[e_value.CAM_BLOOM_INTENSITY]-1)*-1)*100
+			value[e_value.CAM_FX_BLOOM_THRESHOLD] = ((value[e_value.CAM_FX_BLOOM_THRESHOLD]-1)*-1)*100
+			value[e_value.CAM_FX_BLOOM_INTENSITY] = ((value[e_value.CAM_FX_BLOOM_INTENSITY]-1)*-1)*100
 		}
 		
-		//Bloom
+		// Bloom
 		if (load_format >= e_project.FORMAT_CB_103)
 		{
-			value[e_value.CAM_BLOOM] = buffer_read_byte() // CAMBLOOM
-			value[e_value.CAM_BLOOM_THRESHOLD] = buffer_read_int() / 100 // CAMBLOOMTHRE
-			value[e_value.CAM_BLOOM_INTENSITY] = buffer_read_int() / 100 // CAMBLOOMOFFS
+			legacy_camera_effect_enabled[e_cam_fx.BLOOM] = buffer_read_byte() // CAMBLOOM
+			value[e_value.CAM_FX_BLOOM_THRESHOLD] = buffer_read_int() / 100 // CAMBLOOMTHRE
+			value[e_value.CAM_FX_BLOOM_INTENSITY] = buffer_read_int() / 100 // CAMBLOOMOFFS
 		}
 	}
 	
-	if (tl.value_type[e_value_type.BACKGROUND])
+	if (tl.value_type[e_value_type.ENVIRONMENT])
 	{
-		value[e_value.BG_SKY_MOON_PHASE] = buffer_read_byte()
-		value[e_value.BG_SKY_TIME] = buffer_read_double()
-		value[e_value.BG_SKY_ROTATION] = buffer_read_double()
-		value[e_value.BG_SKY_CLOUDS_SPEED] = buffer_read_double()
-		value[e_value.BG_SKY_COLOR] = buffer_read_int()
-		value[e_value.BG_SKY_CLOUDS_COLOR] = buffer_read_int()
-		value[e_value.BG_SUNLIGHT_COLOR] = buffer_read_int()
-		value[e_value.BG_AMBIENT_COLOR] = buffer_read_int()
-		value[e_value.BG_NIGHT_COLOR] = buffer_read_int()
-		value[e_value.BG_FOG_COLOR] = buffer_read_int()
-		value[e_value.BG_FOG_DISTANCE] = buffer_read_double()
-		value[e_value.BG_FOG_SIZE] = buffer_read_double()
+		value[e_value.ENV_SKY_MOON_PHASE] = buffer_read_byte()
+		value[e_value.ENV_SKY_TIME] = buffer_read_double()
+		value[e_value.ENV_SKY_ROTATION] = buffer_read_double()
+		value[e_value.ENV_SKY_CLOUDS_SPEED] = buffer_read_double()
+		value[e_value.ENV_SKY_COLOR] = buffer_read_int()
+		value[e_value.ENV_SKY_CLOUDS_COLOR] = buffer_read_int()
+		value[e_value.ENV_SUNLIGHT_COLOR] = buffer_read_int()
+		value[e_value.ENV_AMBIENT_COLOR] = buffer_read_int()
+		value[e_value.ENV_NIGHT_COLOR] = buffer_read_int()
+		value[e_value.ENV_FOG_COLOR] = buffer_read_int()
+		value[e_value.ENV_FOG_DISTANCE] = buffer_read_double()
+		value[e_value.ENV_FOG_SIZE] = buffer_read_double()
+		
 		if (load_format >= e_project.FORMAT_100_DEBUG)
-			value[e_value.BG_FOG_HEIGHT] = buffer_read_double()
-		value[e_value.BG_WIND_SPEED] = buffer_read_double()
-		value[e_value.BG_WIND_STRENGTH] = buffer_read_double()
-		value[e_value.BG_TEXTURE_ANI_SPEED] = buffer_read_double()
+			value[e_value.ENV_FOG_HEIGHT] = buffer_read_double()
+		
+		value[e_value.ENV_WIND_SPEED] = buffer_read_double()
+		value[e_value.ENV_WIND_STRENGTH] = buffer_read_double()
+		value[e_value.ENV_TEXTURE_ANI_SPEED] = buffer_read_double()
 		
 		if (load_format >= e_project.FORMAT_CB_100)
 		{

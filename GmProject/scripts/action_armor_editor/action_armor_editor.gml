@@ -1,6 +1,3 @@
-/// action_armor_editor(value)
-/// @arg value
-
 function action_armor_editor(value)
 {
 	var armor, temp;
@@ -51,6 +48,7 @@ function action_armor_editor(value)
 		armor_array = armor
 	
 	array_add(armor_update, temp)
+	
 	lib_preview.update = true
 	bench_settings.preview.update = true
 }

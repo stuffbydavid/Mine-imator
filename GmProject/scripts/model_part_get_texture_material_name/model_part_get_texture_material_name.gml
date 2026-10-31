@@ -1,14 +1,9 @@
-/// model_part_get_texture_material_name(part, map)
-/// @arg part
-/// @arg map
-
 function model_part_get_texture_material_name(part, map)
 {
-	var key;
-	
 	if (part = null)
 		return map[?""]
 	
+	var key;
 	if (part.object_index = obj_model_part)
 		key = part.name
 	else // Root

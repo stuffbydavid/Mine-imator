@@ -1,6 +1,3 @@
-/// action_lib_pc_type_color(value)
-/// @arg value
-
 function action_lib_pc_type_color(color)
 {
 	if (!history_undo && !history_redo)

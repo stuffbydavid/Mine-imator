@@ -1,7 +1,4 @@
-/// action_tl_inherit_bend(enable)
-/// @arg enable
-
-function action_tl_inherit_bend(enable)
+function action_tl_inherit_bend(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_bend(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_bend, enable)
+				history_save_var(other.id, other.inherit_bend, enabled)
 			
-			inherit_bend = enable
+			inherit_bend = enabled
 			update_matrix = true
 		}
 	}

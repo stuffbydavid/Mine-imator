@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_project_pack",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_project_pack",
+  "parent":{
+    "name":"Program",
+    "path":"folders/Scripts/App/Actions/Settings/Program.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

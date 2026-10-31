@@ -1,7 +1,4 @@
-/// action_tl_inherit_alpha(enable)
-/// @arg enable
-
-function action_tl_inherit_alpha(enable)
+function action_tl_inherit_alpha(enabled)
 {
 	if (history_undo)
 	{
@@ -13,6 +10,7 @@ function action_tl_inherit_alpha(enable)
 				{
 					inherit_alpha = other.save_var_old_value[t]
 					update_matrix = true
+					tl_update_depth()
 				}
 			}
 		}
@@ -27,6 +25,7 @@ function action_tl_inherit_alpha(enable)
 				{
 					inherit_alpha = other.save_var_new_value[t]
 					update_matrix = true
+					tl_update_depth()
 				}
 			}
 		}
@@ -41,10 +40,11 @@ function action_tl_inherit_alpha(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_alpha, enable)
+				history_save_var(other.id, other.inherit_alpha, enabled)
 			
-			inherit_alpha = enable
+			inherit_alpha = enabled
 			update_matrix = true
+			tl_update_depth()
 		}
 	}
 	

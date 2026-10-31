@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_watermark_custom",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Watermark",
-    "path": "folders/Scripts/App/Actions/Settings/Program/Watermark.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_watermark_custom",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_watermark_custom",
+  "parent":{
+    "name":"Watermark",
+    "path":"folders/Scripts/App/Actions/Settings/Program/Watermark.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

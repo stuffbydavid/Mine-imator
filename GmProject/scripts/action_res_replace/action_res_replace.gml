@@ -1,7 +1,6 @@
-/// action_res_replace([filename])
 /// @arg [filename]
 
-function action_res_replace()
+function action_res_replace(fn = "")
 {
 	var hobj = null;
 
@@ -9,18 +8,30 @@ function action_res_replace()
 	{
 		with (res_edit)
 		{
-			if (argument_count = 0)
+			if (fn = "")
 				fn = res_load_browse()
-			else
-				fn = argument[0]
 			
 			if (fn = "")
 				return 0
 			
-			scenery_tl_add = null
+			// Reset scenery
+			if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
+			{
+				scenery_tl_set = false
+				scenery_tl_all_types = false
+				scenery_tl_types = []
+				
+				ds_map_clear(scenery_block_map)
+				ds_map_clear(scenery_tl_types_count_map)
+				
+				scenery_tl_types_count_ready = false
+			}
+			
 			filename = filename_name(fn)
+			
 			load_folder = filename_dir(fn)
 			save_folder = app.project_folder
+			
 			if (type = e_res_type.DOWNLOADED_SKIN)
 				type = e_res_type.SKIN
 			
@@ -32,6 +43,7 @@ function action_res_replace()
 		{
 			part_amount = 0
 			part_child_amount = 0
+			
 			history_save_tl_select()
 		}
 		
@@ -41,9 +53,11 @@ function action_res_replace()
 	with (obj_template)
 	{
 		if (scenery = res_edit)
-			temp_set_scenery(scenery, !app.history_undo, hobj)
+			temp_set_scenery(scenery, !history_undo, hobj)
+		
 		else if (item_tex = res_edit)
 			render_generate_item()
+		
 		else if (model = res_edit)
 		{
 			temp_update_model()
@@ -65,6 +79,7 @@ function action_res_replace()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+	project_update_counts()
 	
 	lib_preview.update = true
 	res_preview.update = true

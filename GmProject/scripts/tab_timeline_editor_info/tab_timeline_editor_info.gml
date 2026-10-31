@@ -1,32 +1,67 @@
-/// tab_properties_info()
-
 function tab_timeline_editor_info()
 {
-	// Name
-	tab_control_textfield()
-	tab.info.tbx_name.text = tl_edit.name
-	draw_textfield("timelineeditorname", dx, dy, dw, 24, tab.info.tbx_name, action_tl_name, string_remove_newline(tl_edit.display_name), "top")
+	// Type and template
+	var typename, create, labeloffset, button, buttonwid;
+	typename = string_remove_newline(tl_edit.type_name)
+	create = false
+	button = ""
+	labeloffset = 0
+	buttonwid = 0
+
+	if (tl_edit.type < e_temp_type.amount && (tl_edit.has_temp ||
+		(tl_edit.part_root = null && !type_is_templated(tl_edit.type))))
+	{
+		tab_control(36)
+		create = !tl_edit.has_temp
+		button = "timeline_editor/" + (create ? "create" : "edit") + "_template"
+
+		draw_set_font(font_button)
+		buttonwid = string_width(text_get(button)) + 24
+		labeloffset = 4
+	}
+	else
+		tab_control(28)
+
+	draw_label_value(dx, dy + labeloffset, max(0, dw - buttonwid - (buttonwid > 0 ? 8 : 0)), ui_small_height, text_get("timeline_editor/type"), typename)
+	
+	if (button != "" && draw_button_label(button, dx + dw, dy, null, null, create ? e_button.SECONDARY : e_button.PRIMARY, null, e_anchor.RIGHT))
+	{
+		if (create)
+			action_tl_create_temp()
+		else
+			with (tl_edit.part_root = null ? tl_edit.temp : tl_edit.part_root.temp)
+				temp_select_edit(true)
+	}
+	
 	tab_next()
 	
-	if (tl_edit.type = e_temp_type.TEXT)
+	// Effect
+	if (tl_edit.type = e_tl_type.CAMERA_EFFECT)
 	{
-		// Text
-		tab_control_textfield(true, 76)
-		tab.info.tbx_text.text = tl_edit.text
-		draw_textfield("timelineeditortext", dx, dy, dw, 76, tab.info.tbx_text, action_tl_text, "", "top")
+		tab_control_menu()
+		draw_button_menu("timeline_editor/effect", e_menu.LIST, dx, dy, dw, 24, tl_edit.camera_effect_type, text_get("frame_editor/camera_effect/" + camera_effect_name_list[|tl_edit.camera_effect_type]), action_tl_camera_effect_type)
 		tab_next()
 	}
 	
-	// Type
-	tab_control(ui_small_height)
-	draw_label_value(dx, dy, dw, ui_small_height, text_get("timelineeditortype"), string_remove_newline(tl_edit.type_name))
+	// Name
+	tab_control_textfield()
+	tab.info.tbx_name.text = tl_edit.name
+	draw_textfield("timeline_editor/name", dx, dy, dw, 24, tab.info.tbx_name, action_tl_name, string_remove_newline(tl_edit.display_name), "top")
 	tab_next()
+	
+	// Animated
+	if (tl_edit.type != e_tl_type.AUDIO_TRACK)
+	{
+		tab_control_checkbox()
+		draw_switch("timeline_editor/animated", dx, dy, tl_edit.animated, action_tl_animated)
+		tab_next()
+	}
 	
 	// Rotation point (Advanced mode only)
 	if (tl_edit.value_type[e_value_type.ROT_POINT] && setting_advanced_mode)
 	{
 		tab_control_switch()
-		draw_switch("timelineeditorrotpointcustom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)
+		draw_switch("timeline_editor/rot_point/custom", dx, dy, tl_edit.rot_point_custom, action_tl_rotpoint_custom)
 		tab_next()
 		
 		if (tl_edit.rot_point_custom)
@@ -37,21 +72,21 @@ function tab_timeline_editor_info()
 			if (tl_edit.part_of = null && tl_edit.temp != null)
 				def = tl_edit.temp.rot_point
 			else
-				def = point3D(0, 0, 0)
+				def = point3D(0)
 			
 			axis_edit = X
-			textfield_group_add("timelineeditorrotpointx", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_x)
+			textfield_group_add("timeline_editor/rot_point/x", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_x)
 			
 			axis_edit = (setting_z_is_up ? Y : Z)
-			textfield_group_add("timelineeditorrotpointy", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_y)
+			textfield_group_add("timeline_editor/rot_point/y", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_y)
 			
 			axis_edit = (setting_z_is_up ? Z : Y)
-			textfield_group_add("timelineeditorrotpointz", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_z)
+			textfield_group_add("timeline_editor/rot_point/z", tl_edit.rot_point[axis_edit], def[axis_edit], action_tl_rotpoint, axis_edit, tab.info.tbx_rot_point_z)
 			
 			context_menu_group_temp = e_context_group.ROT_POINT
 			
-			tab_control_textfield_group(false)
-			draw_textfield_group("timelineeditorrotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false, true, 1)
+			tab_control_textfield_group()
+			draw_textfield_group("timeline_editor/rotpoint", dx, dy, dw, mul, -no_limit, no_limit, snapval, false, true, 1)
 			tab_next()
 			
 			context_menu_group_temp = null

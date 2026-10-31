@@ -1,7 +1,10 @@
-/// project_save_timeline()
-
 function project_save_timeline()
 {
+	// Export scenery parts independently when their scenery is not saved
+	var partof = part_of;
+	if (partof != null && !partof.save)
+		partof = null
+
 	json_save_object_start()
 
 		json_save_var("id", save_id)
@@ -9,73 +12,175 @@ function project_save_timeline()
 		json_save_var("name", json_string_encode(name))
 		
 		json_save_var_save_id("temp", temp)
+		json_save_var_bool("has_temp", has_temp)
+		json_save_var_bool("animated", animated)
 		json_save_var_nullable("color_tag", color_tag)
 		json_save_var_bool("hide", hide)
 		json_save_var_bool("lock", lock)
 		json_save_var_bool("ghost", ghost)
-		json_save_var("depth", depth)
+		json_save_var("render_depth", render_depth)
+		json_save_var_bool("render_depth_custom", render_depth_custom)
 		
-		if (type = e_temp_type.BODYPART)
+		if (type = e_tl_type.MODEL_PART)
 			json_save_var("model_part_name", json_string_encode(model_part_name))
 		
-		if (type = e_temp_type.TEXT)
-			json_save_var("text", json_string_encode(text))
-		
-		if (part_of != null)
+		if (type = e_tl_type.TEXT)
 		{
-			if (type = e_temp_type.SPECIAL_BLOCK)
+			json_save_var_bool("text_template_settings", true)
+			if (partof = null && !has_temp)
 			{
-				json_save_object_start("model")
-					json_save_var("name", model_name)
-					json_save_var_state_vars("state", model_state)
-				json_save_object_done()
-			}
-			else if (type = e_temp_type.BLOCK)
-			{
-				json_save_object_start("block")
-					json_save_var("name", block_name)
-					json_save_var_state_vars("state", block_state)
-				json_save_object_done()
-			}
-			
-			json_save_var_save_id("part_of", part_of)
-			
-			if (part_root != null)
-				json_save_var_save_id("part_root", part_root)
-			
-			// Pattern values
-			if (pattern_type != "" && pattern_base_color != null)
-			{
-				json_save_var("pattern_type", pattern_type)
-				
-				var color = ds_map_find_key(minecraft_swatch_dyes.map, pattern_base_color);
-				if (color != undefined)
-					json_save_var("pattern_base_color", color)
-				else
-					json_save_var("pattern_base_color", "white")
-				
-				if (array_length(pattern_pattern_list) > 0)
-				{
-					json_save_array_start("pattern_pattern_list")
-					
-						for (var p = 0; p < array_length(pattern_pattern_list); p++)
-							json_save_array_value(pattern_pattern_list[p])
-					
-					json_save_array_done()
-				}
-				
-				if (array_length(pattern_color_list) > 0)
-				{
-					json_save_array_start("pattern_color_list")
-					
-						for (var c = 0; c < array_length(pattern_color_list); c++)
-							json_save_array_value(ds_map_find_key(minecraft_swatch_dyes.map, pattern_color_list[c]))
-					
-					json_save_array_done()
-				}
+				json_save_var_save_id("text_font", text_font)
+				json_save_var_bool("text_3d", text_3d)
+				json_save_var_bool("text_face_camera", text_face_camera)
+				json_save_var_bool("text_aa", text_aa)
 			}
 		}
 		
+		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
+			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
+		{
+			if (partof = null && !has_temp)
+			{
+				var tex, material, normal;
+				tex = model_tex
+				material = model_tex_material
+				normal = model_tex_normal
+
+				if (block_timeline)
+				{
+					tex = temp_get_model_texobj(null)
+					material = temp_get_model_tex_material_obj(null)
+					normal = temp_get_model_tex_normal_obj(null)
+				}
+
+				json_save_var_save_id("model_tex", tex)
+				json_save_var_save_id("model_tex_material", material)
+				json_save_var_save_id("model_tex_normal", normal)
+				json_save_var_bool("model_use_blend_color", model_use_blend_color)
+				json_save_var_color("model_blend_color", model_blend_color)
+			}
+
+			json_save_object_start("model")
+				json_save_var("name", model_name)
+				json_save_var_state_vars("state", model_state)
+			json_save_object_done()
+		}
+
+		if (type = e_tl_type.CAMERA_EFFECT)
+			json_save_var("camera_effect_type", camera_effect_type)
+		
+		if (partof != null)
+		{
+			json_save_var_save_id("part_of", partof)
+			
+			if (part_root != null && part_root.save)
+				json_save_var_save_id("part_root", part_root)
+		}
+
+		// Pattern values
+		if ((part_of != null || (type = e_tl_type.SPECIAL_BLOCK && !has_temp)) &&
+			pattern_type != "" && pattern_base_color != null)
+		{
+			json_save_var("pattern_type", pattern_type)
+			
+			var color = ds_map_find_key(minecraft_swatch_dyes.map, pattern_base_color);
+			if (!is_undefined(color))
+				json_save_var("pattern_base_color", color)
+			else
+				json_save_var("pattern_base_color", "white")
+
+			if (array_length(pattern_pattern_list) > 0)
+			{
+				json_save_array_start("pattern_pattern_list")
+				
+					for (var p = 0; p < array_length(pattern_pattern_list); p++)
+						json_save_array_value(pattern_pattern_list[p])
+				
+				json_save_array_done()
+			}
+
+			if (array_length(pattern_color_list) > 0)
+			{
+				json_save_array_start("pattern_color_list")
+
+					for (var c = 0; c < array_length(pattern_color_list); c++)
+						json_save_array_value(ds_map_find_key(minecraft_swatch_dyes.map, pattern_color_list[c]))
+				
+				json_save_array_done()
+			}
+		}
+
+		// Added blocks
+		if (type = e_tl_type.SCENERY && array_length(blocks_added) > 0)
+		{
+			json_save_array_start("blocks_added_palette")
+
+				for (var i = 0; i < array_length(blocks_added_palette); i++)
+				{
+					var entry, block, paletteentry, vars;
+					entry = blocks_added_palette[i]
+					block = block_objs[entry[0]]
+					paletteentry = [ block != null ? block.name : "air" ]
+
+					if (block != null)
+					{
+						vars = block_get_state_id_state_vars(block, entry[1])
+						for (var s = 0; s < array_length(vars); s += 2)
+							array_add(paletteentry, vars[s] + "=" + vars[s + 1])
+					}
+
+					json_save_array_value(paletteentry)
+				}
+
+			json_save_array_done()
+
+			json_save_array_start("blocks_added")
+
+				for (var i = 0; i < array_length(blocks_added); i++)
+				{
+					var entry, pos;
+					entry = blocks_added[i]
+					pos = entry[0]
+					json_save_array_value([ vec3(pos[X], pos[Z], pos[Y]), entry[1] ])
+				}
+
+			json_save_array_done()
+		}
+		
+		if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
+		{
+			json_save_object_start("block")
+			
+				json_save_var("name", block_name)
+				json_save_var_state_vars("state", block_state)
+				
+				if (partof = null && !has_temp)
+				{
+					var tex, material, normal;
+					tex = block_tex
+					material = block_tex_material
+					normal = block_tex_normal
+
+					if (block_timeline)
+					{
+						tex = temp_get_block_texobj(null)
+						material = temp_get_block_tex_material_obj(null)
+						normal = temp_get_block_tex_normal_obj(null)
+					}
+
+					json_save_var_save_id("tex", tex)
+					json_save_var_save_id("tex_material", material)
+					json_save_var_save_id("tex_normal", normal)
+					json_save_var_bool("randomize", block_randomize)
+					json_save_var_bool("transform", block_transform)
+					json_save_var_bool("repeat_enable", block_repeat_enable)
+					json_save_var_point3D("repeat", block_repeat)
+					json_save_var_bool("center", block_center)
+				}
+			
+			json_save_object_done()
+		}
+
 		if (part_list != null)
 		{
 			json_save_array_start("parts")
@@ -87,6 +192,8 @@ function project_save_timeline()
 		}
 		
 		project_save_values("default_values", value_default, app.value_default)
+		if (!animated)
+			project_save_values("current_values", value, value_default)
 		
 		json_save_object_start("keyframes")
 			
@@ -106,6 +213,7 @@ function project_save_timeline()
 			json_save_var_save_id("parent", parent)
 		else
 			json_save_var_save_id("parent", app)
+		
 		json_save_var("parent_tree_index", ds_list_find_index(parent.tree_list, id))
 		
 		if (value_type[e_value_type.HIERARCHY])
@@ -141,47 +249,54 @@ function project_save_timeline()
 		
 		if (value_type[e_value_type.APPEARANCE])
 		{
-			json_save_var_bool("backfaces", backfaces)
-			json_save_var_bool("texture_blur", texture_blur)
-			json_save_var_bool("texture_filtering", texture_filtering)
-			json_save_var_bool("shadows", shadows)
-			json_save_var_bool("ssao", ssao)
-			json_save_var_bool("glow", glow)
-			json_save_var_bool("glow_texture", glow_texture)
-			json_save_var_bool("only_render_glow", only_render_glow)
+			json_save_var_bool("glint_enabled", glint_enabled)
 			json_save_var("glint_mode", glint_mode)
 			json_save_var("glint_scale", glint_scale)
 			json_save_var("glint_speed", glint_speed)
 			json_save_var("glint_strength", glint_strength)
 			json_save_var_save_id("glint_tex", glint_tex)
-			json_save_var_bool("fog", fog)
 			
-			if (type = e_temp_type.SCENERY || type = e_temp_type.BLOCK || type = e_temp_type.PARTICLE_SPAWNER || type = e_temp_type.TEXT || type_is_shape(type))
+			json_save_var_bool("glow", glow)
+			json_save_var_bool("glow_texture", glow_texture)
+			json_save_var_bool("only_render_glow", only_render_glow)
+			
+			json_save_var_bool("texture_blur", texture_blur)
+			json_save_var_bool("texture_filtering", texture_filtering)
+			json_save_var_bool("shadows", shadows)
+			
+			if (type_is_light(type))
+				json_save_var_bool("realistic_falloff", realistic_falloff)
+			
+			json_save_var_bool("ssao", ssao)
+			json_save_var_bool("fog", fog)
+			json_save_var_bool("backfaces", backfaces)
+			
+			if (type_has_wind(type))
 			{
 				json_save_var_bool("wind", wind)
 				json_save_var_bool("wind_terrain", wind_terrain)
 			}
 			
-			json_save_var_bool("hq_hiding", hq_hiding)
-			json_save_var_bool("lq_hiding", lq_hiding)
 			json_save_var("blend_mode", blend_mode)
 			json_save_var("alpha_mode", alpha_mode)
+			
+			json_save_var("mode_visible", mode_visible)
 		}
 		
 		if (value_type[e_value_type.PATH])
 		{
 			json_save_object_start("path")
-				json_save_var_bool("smooth", path_smooth)
 				json_save_var_bool("closed", path_closed)
+				json_save_var_bool("smooth", path_smooth)
 				json_save_var("detail", path_detail)
-				json_save_var_bool("shape_generate", path_shape_generate)
+				json_save_var("shape", path_shape)
 				json_save_var("shape_radius", path_shape_radius)
-				json_save_var("shape_tex_length", path_shape_tex_length)
 				json_save_var_bool("shape_invert", path_shape_invert)
-				json_save_var_bool("shape_tube", path_shape_tube)
-				json_save_var("shape_detail", path_shape_detail)
 				json_save_var_bool("shape_smooth_segments", path_shape_smooth_segments)
 				json_save_var_bool("shape_smooth_ring", path_shape_smooth_ring)
+				json_save_var("shape_detail", path_shape_detail)
+				json_save_var_bool("shape_tex_mapped", path_shape_tex_mapped)
+				json_save_var("shape_tex_length", path_shape_tex_length)
 			json_save_object_done()
 		}
 		

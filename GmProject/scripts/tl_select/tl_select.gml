@@ -1,14 +1,16 @@
-/// tl_select()
-
 function tl_select()
 {
 	if (selected)
 		return 0
 	
 	selected = true
+	obj_edit = has_temp ? temp : id
 	
 	tl_edit_amount++
 	tl_edit = id
+	tl_focus = id
 	
 	tl_update_parent_is_selected()
+	
+	view_changed()
 }

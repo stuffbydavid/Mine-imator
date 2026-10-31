@@ -1,13 +1,3 @@
-/// action_tl_frame_set_light(color, strength, specstrength, size, range, fadesize, spotradius, spotsharpness)
-/// @arg color
-/// @arg strength
-/// @arg specstrength
-/// @arg size
-/// @arg range
-/// @arg fadesize
-/// @arg spotradius
-/// @arg spotsharpness
-
 function action_tl_frame_set_light(color, strength, specstrength, size, range, fadesize, spotradius, spotsharpness)
 {
 	tl_value_set_start(action_tl_frame_set_light, false)

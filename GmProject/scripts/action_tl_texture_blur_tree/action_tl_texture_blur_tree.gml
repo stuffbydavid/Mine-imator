@@ -1,4 +1,3 @@
-/// action_tl_texture_blur_tree(timeline, newvalue, historyobject)
 /// @arg timeline
 /// @arg newvalue
 /// @arg historyobject

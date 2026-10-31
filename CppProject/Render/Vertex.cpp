@@ -37,6 +37,7 @@ namespace CppProject
 			x = pntT.x();
 			y = pntT.y();
 		}
+
 		this->depth = depth;
 
 		u = uvRect.x + u * uvRect.w;
@@ -45,73 +46,113 @@ namespace CppProject
 
 	void PrimitiveVertex::SetAttributes()
 	{
-	#if API_OPENGL
-		QOpenGLShaderProgram* prog = GFX->shader->program;
+		if (IS_OPENGL)
+		{
+			QOpenGLShaderProgram* prog = GFX->shader->program;
 
-		IntType aPosition = GFX->shader->attributeLocation[0];
-		IntType aColor = GFX->shader->attributeLocation[1];
-		IntType aUv = GFX->shader->attributeLocation[2];
+			IntType aPosition = GFX->shader->attributeLocation[0];
+			IntType aColor = GFX->shader->attributeLocation[1];
+			IntType aUv = GFX->shader->attributeLocation[2];
 
-		if (aPosition > -1)
-			prog->enableAttributeArray(aPosition);
-		if (aColor > -1)
-			prog->enableAttributeArray(aColor);
-		if (aUv > -1)
-			prog->enableAttributeArray(aUv);
-		GL_CHECK_ERROR();
+			if (aPosition > -1)
+				prog->enableAttributeArray(aPosition);
 
-		IntType offset = 0;
-		if (aPosition > -1)
-			prog->setAttributeBuffer(aPosition, GL_FLOAT, offset, 3, sizeof(PrimitiveVertex));
-		offset += 3 * sizeof(float);
+			if (aColor > -1)
+				prog->enableAttributeArray(aColor);
 
-		if (aColor > -1)
-			prog->setAttributeBuffer(aColor, GL_FLOAT, offset, 4, sizeof(PrimitiveVertex));
-		offset += 4 * sizeof(float);
+			if (aUv > -1)
+				prog->enableAttributeArray(aUv);
+			
+			GL_CHECK_ERROR();
 
-		if (aUv > -1)
-			prog->setAttributeBuffer(aUv, GL_FLOAT, offset, 2, sizeof(PrimitiveVertex));
+			IntType offset = 0;
+			if (aPosition > -1)
+				prog->setAttributeBuffer(aPosition, GL_FLOAT, offset, 3, sizeof(PrimitiveVertex));
+			offset += 3 * sizeof(float);
 
-		GL_CHECK_ERROR();
-	#endif
+			if (aColor > -1)
+				prog->setAttributeBuffer(aColor, GL_FLOAT, offset, 4, sizeof(PrimitiveVertex));
+			offset += 4 * sizeof(float);
+
+			if (aUv > -1)
+				prog->setAttributeBuffer(aUv, GL_FLOAT, offset, 2, sizeof(PrimitiveVertex));
+
+			GL_CHECK_ERROR();
+		}
 	}
 
-	Vertex::Vertex(RealType x, RealType y, RealType z,
-				   RealType nx, RealType ny, RealType nz,
-				   IntType color, RealType alpha,
-				   RealType u, RealType v,
-				   BoolType waveXY, BoolType waveZ, RealType emissive, BoolType subsurface) :
-		x(x), y(y), z(z), u(u), v(v)
+	Vertex::Vertex(RealType x, RealType y, RealType z, RealType u, RealType v,
+				   RealType nx, RealType ny, RealType nz, uint8_t colorIndex,
+				   BoolType waveXY, BoolType waveZ, BoolType subsurface, RealType emissive) :
+		Vertex(x, y, z, u, v, PackNormal(nx, ny, nz), colorIndex, waveXY, waveZ, subsurface, emissive)
 	{
-		SetNormal(nx, ny, nz);
-		SetTangent(0, 0, 0);
-		SetColor(color, alpha);
+	}
+
+	Vertex::Vertex(RealType x, RealType y, RealType z, RealType u, RealType v,
+				   uint32_t packedNormal, uint8_t colorIndex,
+				   BoolType waveXY, BoolType waveZ, BoolType subsurface, RealType emissive) :
+		x(x), y(y), z(z), u(u), v(v), data1(packedNormal)
+	{
+		SetColorIndex(colorIndex);
 
 		if (waveXY)
 			EnableFlag(WAVE_XY);
+		
 		if (waveZ)
 			EnableFlag(WAVE_Z);
-		SetEmissive(emissive);
+		
 		if (subsurface)
 			EnableFlag(SUBSURFACE);
+
+		SetEmissive(emissive);
+		SetTangent(0, 0, 0);
 	}
 
 	bool Vertex::operator==(const Vertex& o) const
 	{
 		return (
 			x == o.x && y == o.y && z == o.z &&
-			normal == o.normal && u == o.u && v == o.v
+			u == o.u && v == o.v && data1 == o.data1
 		);
 	}
 
 	void Vertex::SetNormal(RealType nx, RealType ny, RealType nz)
+	{
+		data1 = (data1 & 0xFF000000u) | PackNormal(nx, ny, nz);
+	}
+
+	uint32_t Vertex::PackNormal(RealType nx, RealType ny, RealType nz)
 	{
 		// Pack normal xyz as 0-255 in integer
 		VecType normalized = VecType(nx, ny, nz).GetNormalized();
 		uint8_t x8 = ((normalized.x + 1.0) / 2.0) * 255;
 		uint8_t y8 = ((normalized.y + 1.0) / 2.0) * 255;
 		uint8_t z8 = ((normalized.z + 1.0) / 2.0) * 255;
-		normal = (z8 << 16) | (y8 << 8) | x8;
+		
+		return (z8 << 16) | (y8 << 8) | x8;
+	}
+
+	void Vertex::SetColorIndex(uint8_t index)
+	{
+		data1 = (data1 & 0x00FFFFFFu) | (uint32_t(index) << 24);
+	}
+
+	void Vertex::EnableFlag(Vertex::Flag flag)
+	{
+		// Enable bit of flag in first byte
+		data2 |= 1 << ((IntType)flag);
+	}
+
+	void Vertex::SetEmissive(RealType emissive)
+	{
+		// Pack brightness from 0-255 in second byte
+		data2 |= (IntType)(emissive * 255) << 8;
+	}
+
+	void Vertex::SetObjectIndex(IntType index)
+	{
+		// Pack 16 bit index in 3rd and 4th byte
+		data2 |= index << 16;
 	}
 
 	void Vertex::SetTangent(RealType tx, RealType ty, RealType tz)
@@ -120,82 +161,58 @@ namespace CppProject
 		uint8_t x8 = ((tx + 1.0) / 2.0) * 255;
 		uint8_t y8 = ((ty + 1.0) / 2.0) * 255;
 		uint8_t z8 = ((tz + 1.0) / 2.0) * 255;
+
 		tangent = (z8 << 16) | (y8 << 8) | x8;
-	}
-
-	void Vertex::SetColor(IntType rgb, RealType alpha)
-	{
-		// Pack color rgb and alpha from 0-255 in integer
-		color = rgb | ((uint8_t)(alpha * 255.0) << 24);
-	}
-
-	void Vertex::EnableFlag(Vertex::Flag flag)
-	{
-		// Enable bit of flag in first byte
-		data |= 1 << ((IntType)flag);
-	}
-
-	void Vertex::SetEmissive(RealType emissive)
-	{
-		// Pack brightness from 0-255 in second byte
-		data |= (IntType)(emissive * 255) << 8;
-	}
-
-	void Vertex::SetIndex(IntType index)
-	{
-		// Pack 16 bit index in 3rd and 4th byte
-		data |= index << 16;
 	}
 
 	void Vertex::SetAttributes()
 	{
-	#if API_OPENGL
-		IntType aPosition = GFX->shader->attributeLocation[0];
-		IntType aNormal = GFX->shader->attributeLocation[1];
-		IntType aColor = GFX->shader->attributeLocation[2];
-		IntType aUv = GFX->shader->attributeLocation[3];
-		IntType aData = GFX->shader->attributeLocation[4];
-		IntType aTangent = GFX->shader->attributeLocation[5];
+		if (IS_OPENGL)
+		{
+			IntType aPosition = GFX->shader->attributeLocation[0];
+			IntType aUv = GFX->shader->attributeLocation[1];
+			IntType aData1 = GFX->shader->attributeLocation[2];
+			IntType aData2 = GFX->shader->attributeLocation[3];
+			IntType aTangent = GFX->shader->attributeLocation[4];
 
-		if (aPosition > -1)
-			GFX->glEnableVertexAttribArray(aPosition);
-		if (aNormal > -1)
-			GFX->glEnableVertexAttribArray(aNormal);
-		if (aColor > -1)
-			GFX->glEnableVertexAttribArray(aColor);
-		if (aUv > -1)
-			GFX->glEnableVertexAttribArray(aUv);
-		if (aData > -1)
-			GFX->glEnableVertexAttribArray(aData);
-		if (aTangent > -1)
-			GFX->glEnableVertexAttribArray(aTangent);
-		GL_CHECK_ERROR();
-		
-		IntType offset = 0;
-		if (aPosition > -1)
-			GFX->glVertexAttribPointer(aPosition, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offset);
-		offset += 3 * sizeof(float);
+			if (aPosition > -1)
+				GFX->glEnableVertexAttribArray(aPosition);
 
-		if (aNormal > -1)
-			GFX->glVertexAttribIPointer(aNormal, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
-		offset += sizeof(uint32_t);
+			if (aUv > -1)
+				GFX->glEnableVertexAttribArray(aUv);
 
-		if (aColor > -1)
-			GFX->glVertexAttribIPointer(aColor, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
-		offset += sizeof(uint32_t);
+			if (aData1 > -1)
+				GFX->glEnableVertexAttribArray(aData1);
 
-		if (aUv > -1)
-			GFX->glVertexAttribPointer(aUv, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offset);
-		offset += 2 * sizeof(float);
+			if (aData2 > -1)
+				GFX->glEnableVertexAttribArray(aData2);
 
-		if (aData > -1)
-			GFX->glVertexAttribIPointer(aData, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
-		offset += sizeof(uint32_t);
+			if (aTangent > -1)
+				GFX->glEnableVertexAttribArray(aTangent);
+			
+			GL_CHECK_ERROR();
 
-		if (aTangent > -1)
-			GFX->glVertexAttribIPointer(aTangent, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
+			IntType offset = 0;
+			if (aPosition > -1)
+				GFX->glVertexAttribPointer(aPosition, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offset);
+			offset += 3 * sizeof(float);
 
-		GL_CHECK_ERROR();
-	#endif
+			if (aUv > -1)
+				GFX->glVertexAttribPointer(aUv, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offset);
+			offset += 2 * sizeof(float);
+
+			if (aData1 > -1)
+				GFX->glVertexAttribIPointer(aData1, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
+			offset += sizeof(uint32_t);
+
+			if (aData2 > -1)
+				GFX->glVertexAttribIPointer(aData2, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
+			offset += sizeof(uint32_t);
+
+			if (aTangent > -1)
+				GFX->glVertexAttribIPointer(aTangent, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offset);
+
+			GL_CHECK_ERROR();
+		}
 	}
 }

@@ -1,14 +1,12 @@
-/// view_shape_cube_draw(mat, position, size)
-/// @arg mat
+/// @arg matrix
 /// @arg position
 /// @arg size
 
 function view_shape_cube_draw(mat, position, size)
 {
 	var top1, top2, top3, top4;
-	var bottom1, bottom2, bottom3, bottom4;
-	
 	var top1mat, top2mat, top3mat, top4mat;
+	var bottom1, bottom2, bottom3, bottom4;
 	var bottom1mat, bottom2mat, bottom3mat, bottom4mat;
 	
 	// Top 3D points
@@ -33,39 +31,39 @@ function view_shape_cube_draw(mat, position, size)
 	bottom3mat = point3D_mul_matrix(bottom3, mat)
 	bottom4mat = point3D_mul_matrix(bottom4, mat)
 	
-	// Project to 2D
-	var top12D, top22D, top32D, top42D;
-	var bottom12D, bottom22D, bottom32D, bottom42D;
+	// Project to 2d
+	var top12d, top22d, top32d, top42d;
+	var bottom12d, bottom22d, bottom32d, bottom42d;
 	
-	top12D = view_shape_project(top1mat)
+	top12d = view_shape_project(top1mat)
 	if (point3D_project_error)
 		return 0
 	
-	top22D = view_shape_project(top2mat)
+	top22d = view_shape_project(top2mat)
 	if (point3D_project_error)
 		return 0
 	
-	top32D = view_shape_project(top3mat)
+	top32d = view_shape_project(top3mat)
 	if (point3D_project_error)
 		return 0
 	
-	top42D = view_shape_project(top4mat)
+	top42d = view_shape_project(top4mat)
 	if (point3D_project_error)
 		return 0
 	
-	bottom12D = view_shape_project(bottom1mat)
+	bottom12d = view_shape_project(bottom1mat)
 	if (point3D_project_error)
 		return 0
 	
-	bottom22D = view_shape_project(bottom2mat)
+	bottom22d = view_shape_project(bottom2mat)
 	if (point3D_project_error)
 		return 0
 	
-	bottom32D = view_shape_project(bottom3mat)
+	bottom32d = view_shape_project(bottom3mat)
 	if (point3D_project_error)
 		return 0
 	
-	bottom42D = view_shape_project(bottom4mat)
+	bottom42d = view_shape_project(bottom4mat)
 	if (point3D_project_error)
 		return 0
 	
@@ -74,24 +72,24 @@ function view_shape_cube_draw(mat, position, size)
 	draw_primitive_begin(pr_trianglelist)
 	
 	// Top
-	view_shape_triangle_draw(top12D, top22D, top32D)
-	view_shape_triangle_draw(top22D, top32D, top42D)
+	view_shape_triangle_draw(top12d, top22d, top32d)
+	view_shape_triangle_draw(top22d, top32d, top42d)
 	
 	// Bottom
-	view_shape_triangle_draw(bottom12D, bottom22D, bottom32D)
-	view_shape_triangle_draw(bottom22D, bottom32D, bottom42D)
+	view_shape_triangle_draw(bottom12d, bottom22d, bottom32d)
+	view_shape_triangle_draw(bottom22d, bottom32d, bottom42d)
 	
 	// Front
-	view_shape_triangle_draw(top12D, top22D, bottom12D)
-	view_shape_triangle_draw(top22D, bottom12D, bottom22D)
+	view_shape_triangle_draw(top12d, top22d, bottom12d)
+	view_shape_triangle_draw(top22d, bottom12d, bottom22d)
 	
 	// Back
-	view_shape_triangle_draw(top32D, top42D, bottom32D)
-	view_shape_triangle_draw(top42D, bottom32D, bottom42D)
+	view_shape_triangle_draw(top32d, top42d, bottom32d)
+	view_shape_triangle_draw(top42d, bottom32d, bottom42d)
 	
 	// Left(Right not need if fully opaque)
-	view_shape_triangle_draw(top12D, top32D, bottom12D)
-	view_shape_triangle_draw(top32D, bottom12D, bottom32D)
+	view_shape_triangle_draw(top12d, top32d, bottom12d)
+	view_shape_triangle_draw(top32d, bottom12d, bottom32d)
 	
 	draw_primitive_end()
 	render_set_culling(true)

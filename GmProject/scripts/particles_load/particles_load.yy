@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "particles_load",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Load",
-    "path": "folders/Scripts/Project/Load.yy",
+  "$GMScript":"v1",
+  "%Name":"particles_load",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"particles_load",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Load.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

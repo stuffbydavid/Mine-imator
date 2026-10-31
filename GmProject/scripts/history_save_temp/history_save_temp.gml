@@ -1,6 +1,5 @@
-/// history_save_temp(template)
-/// @arg template
 /// @desc Saves a template into memory.
+/// @arg template
 
 function history_save_temp(temp)
 {
@@ -28,7 +27,7 @@ function history_save_temp(temp)
 		usage_ptype_temp_amount = 0
 		with (obj_particle_type)
 		{
-			if (id.temp != temp)
+			if (self.temp != temp)
 				continue
 			
 			save.usage_ptype_temp_save_id[save.usage_ptype_temp_amount] = save_id

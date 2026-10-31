@@ -1,8 +1,3 @@
-/// new_tab(location, show, [header, [window]])
-/// @arg location
-/// @arg show
-/// @arg [header
-/// @arg [window]]
 /// @desc Creates a new tab and sets its parameters.
 
 function new_tab(location, show, header = null, window = e_window.MAIN)

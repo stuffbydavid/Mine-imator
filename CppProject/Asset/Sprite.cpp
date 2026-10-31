@@ -5,9 +5,35 @@
 #include "Shader.hpp"
 #include "Surface.hpp"
 
+#include <QtGui/private/qpnghandler_p.h>
+
 namespace CppProject
 {
 	QVector<Sprite*> Sprite::allSprites;
+
+	static QImage LoadImage(const QString& filename)
+	{
+		QFile file(filename);
+		if (!file.open(QIODevice::ReadOnly))
+			return QImage();
+
+		// Decode PNGs directly without image plugin discovery
+		if (QPngHandler::canRead(&file))
+		{
+			QPngHandler reader;
+			reader.setDevice(&file);
+
+			QImage image;
+			if (reader.read(&image))
+				return image;
+
+			return QImage();
+		}
+
+		// Keep format detection for other supported image types
+		file.close();
+		return QImage(filename);
+	}
 
 	Sprite::Sprite(Sprite* other) : Asset(ID_Sprite)
 	{
@@ -19,7 +45,10 @@ namespace CppProject
 		{
 			QImage copy;
 			if (frame->pageLoc)
-				copy = frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+			{
+				if (frame->pageLoc->page)
+					copy = frame->pageLoc->page->image.copy(frame->pageLoc->rect);
+			}
 			else
 				copy = frame->image.copy();
 
@@ -33,13 +62,26 @@ namespace CppProject
 		allSprites.append(this);
 		this->origin = origin;
 
+		const QString prefix = ":/Sprites/" + name + "_frame_";
+		frames.reserve(numFrames);
 		for (int f = 0; f < numFrames; f++)
 		{
-			QImage image(":/Sprites/" + name + "_frame_" + NumStr(f) + ".png");
+			QImage image = LoadImage(prefix + QString::number(f) + ".png");
 			image.convertTo(QImage::Format_RGBA8888);
+
 			size = image.size();
 			frames.append(new Frame(image, true));
 		}
+	}
+
+	Sprite::Sprite(QImage image, QPoint origin) : Asset(ID_Sprite)
+	{
+		allSprites.append(this);
+		this->origin = origin;
+
+		image.convertTo(QImage::Format_RGBA8888);
+		size = image.size();
+		frames.append(new Frame(image, false));
 	}
 
 	Sprite::Sprite(const StringType& filename, QPoint origin) : Asset(ID_Sprite)
@@ -47,7 +89,7 @@ namespace CppProject
 		allSprites.append(this);
 		this->origin = origin;
 
-		QImage image(filename);
+		QImage image = LoadImage(filename);
 		image.convertTo(QImage::Format_RGBA8888);
 		size = image.size();
 		frames.append(new Frame(image, false));
@@ -56,7 +98,7 @@ namespace CppProject
 	Sprite::Sprite(Surface* surface, QPoint origin) : Asset(ID_Sprite)
 	{
 		allSprites.append(this);
-		useTexturePage = false;
+		useTexturePage = (TexturePage::currentPageIndex > 1);
 		this->origin = origin;
 		size = surface->size;
 
@@ -66,7 +108,7 @@ namespace CppProject
 	Sprite::Sprite(Surface* surface, QRect rect, QPoint origin) : Asset(ID_Sprite)
 	{
 		allSprites.append(this);
-		useTexturePage = false;
+		useTexturePage = (TexturePage::currentPageIndex > 1);
 		this->origin = origin;
 		size = surface->size;
 
@@ -99,17 +141,23 @@ namespace CppProject
 
 		Frame* frame = frames[index];
 		if (frame->pageLoc) // Pixel from texture page
-			return frame->pageLoc->page->image.pixelColor(frame->pageLoc->rect.topLeft() + point);
+		{
+			if (frame->pageLoc->page)
+				return frame->pageLoc->page->image.pixelColor(frame->pageLoc->rect.topLeft() + point);
+			else
+				return Qt::transparent;
+		}
 		else // Pixel from image
 			return frame->image.pixelColor(point);
 	}
 
 	Sprite::Frame::Frame(QImage image, bool toPage) : image(image)
 	{
+		texturePageIndex = TexturePage::currentPageIndex;
 		if (toPage)
 		{
 			// Check if image is supported for a texture page
-			if (pageLoc = TexturePage::Add(image))
+			if (pageLoc = TexturePage::Add(image, texturePageIndex))
 				this->image = QImage();
 		}
 	}
@@ -130,6 +178,7 @@ namespace CppProject
 		{
 			if (!texture)
 				texture = new Texture(image);
+			
 			return texture->GetId();
 		}
 
@@ -141,12 +190,12 @@ namespace CppProject
 		if (pageLoc) // Already on texture page
 			return false;
 
-		if (pageLoc = TexturePage::Add(image))
+		if (pageLoc = TexturePage::Add(image, texturePageIndex))
 		{
 			deleteAndReset(texture);
 			image = QImage(); // Free image
 		}
 
-		return true;
+		return (pageLoc != nullptr);
 	}
 }

@@ -17,7 +17,6 @@ DataType::CppType cppTypeFor(DataType::Type rawType)
 		case DataType::Type::IntMap:
 		case DataType::Type::StringMap:
 		case DataType::Type::Map:
-		case DataType::Type::Grid:
 		case DataType::Type::Stack:
 		case DataType::Type::Priority: return DataType::CppType::IntType;
 		case DataType::Type::Bool: return DataType::CppType::BoolType;
@@ -133,9 +132,6 @@ DataType::DataType(StringId name)
 			break;
 		case STR(map):
 			rawType = Type::Map;
-			break;
-		case STR(grid):
-			rawType = Type::Grid;
 			break;
 		case STR(stack):
 			rawType = Type::Stack;
@@ -327,7 +323,6 @@ String DataType::typeName(Type rawType)
 		case Type::IntMap: return STR(IntMap);
 		case Type::StringMap: return STR(StringMap);
 		case Type::Map: return STR(Map);
-		case Type::Grid: return STR(Grid);
 		case Type::Stack: return STR(Stack);
 		case Type::Priority: return STR(Priority);
 	}
@@ -436,7 +431,12 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 				(ass.rawTypeArray && inputAss.rawTypeArray)) // Both array
 			{
 				addNew = false;
-				if (inputRawType > ass.rawType) // Overwrite if larger
+				// A dynamic array cannot be narrowed to a fixed-size vector or matrix
+				if (ass.rawTypeArray && inputAss.rawTypeArray &&
+					(ass.rawType == Type::Array || inputRawType == Type::Array))
+					inputRawType = Type::Array;
+				if (inputRawType != ass.rawType &&
+					(inputRawType > ass.rawType || inputRawType == Type::Array))
 				{
 					ass.rawType = inputRawType;
 					ass.rawTypeReal = inputAss.rawTypeReal;
@@ -489,23 +489,37 @@ bool DataType::assign(const DataType& inputType, Function* func, int line, int c
 
 			// Assign container
 			if ((ass.rawType == Type::Array || ass.rawType >= Type::List) &&
-				inputAss.containerStorage != nullptr && containerLevel < maxContainerLevel)
+				inputAss.containerStorage != nullptr)
 			{
-				// Assignment copies share their container until one is mutated.
-				// This preserves value semantics without deep-copying every resolver
-				// temporary and reset.
-				if (ass.containerStorage == nullptr || ass.containerStorage.use_count() != 1)
+				// Keep deeper elements dynamic instead of retaining a stale inferred type
+				if (containerLevel >= maxContainerLevel)
 				{
-					ass.containerStorage = ass.containerStorage != nullptr
-						? std::make_shared<DataType>(*ass.containerStorage)
-						: std::make_shared<DataType>();
+					if (ass.containerStorage == nullptr || ass.containerStorage->assignments.size() != 1 ||
+						ass.containerStorage->assignments[0].rawType != Type::Variant)
+					{
+						ass.containerStorage = std::make_shared<DataType>(Type::Variant);
+						changed = true;
+						ass.func = func;
+						ass.line = line;
+					}
 				}
-
-				if (ass.containerStorage->assign(*inputAss.containerStorage, func, line, containerLevel + 1))
+				else
 				{
-					changed = true;
-					ass.func = func;
-					ass.line = line;
+					// Assignment copies share their container until one is mutated
+					// This preserves value semantics without deep-copying every resolver temporary and reset
+					if (ass.containerStorage == nullptr || ass.containerStorage.use_count() != 1)
+					{
+						ass.containerStorage = ass.containerStorage != nullptr
+							? std::make_shared<DataType>(*ass.containerStorage)
+							: std::make_shared<DataType>();
+					}
+
+					if (ass.containerStorage->assign(*inputAss.containerStorage, func, line, containerLevel + 1))
+					{
+						changed = true;
+						ass.func = func;
+						ass.line = line;
+					}
 				}
 			}
 

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"zip_is_resource_pack",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"zip_is_resource_pack",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

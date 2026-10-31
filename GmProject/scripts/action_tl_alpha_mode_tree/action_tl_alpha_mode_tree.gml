@@ -1,4 +1,3 @@
-/// action_tl_alpha_mode_tree(timeline, newvalue, historyobject)
 /// @arg timeline
 /// @arg newvalue
 /// @arg historyobject

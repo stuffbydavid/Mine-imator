@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "history_set_var",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Set",
-    "path": "folders/Scripts/App/History/Set.yy",
+  "$GMScript":"v1",
+  "%Name":"history_set_var",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"history_set_var",
+  "parent":{
+    "name":"Set",
+    "path":"folders/Scripts/App/History/Set.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

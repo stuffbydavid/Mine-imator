@@ -1,10 +1,9 @@
-/// draw_box_hover(x, y, width, height, alpha)
+/// @desc Drawing separate full boxes for each side because drawing primitive outlines isn't consistent on all GPUs.
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 /// @arg alpha
-/// @desc Drawing separate full boxes for each side because drawing primitive outlines isn't consistent on all computers
 
 function draw_box_hover(xx, yy, width, height, inalpha)
 {
@@ -16,10 +15,10 @@ function draw_box_hover(xx, yy, width, height, inalpha)
 	if (alpha = 0)
 		return 0
 	
-	var t = percent(argument[4], 0, .75);
+	var t = percent(inalpha, 0, .75);
 	draw_outline(xx, yy, width, height, 1, color, alpha * t)
 	
-	t = percent(argument[4], .25, 1);
+	t = percent(inalpha, .25, 1)
 	draw_outline(xx - 1, yy - 1, width + 2, height + 2, 1, color, alpha * t)
 	
 	/*

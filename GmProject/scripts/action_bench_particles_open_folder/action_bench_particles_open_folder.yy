@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_bench_particles_open_folder",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_particles_open_folder",
+  "parent":{
+    "name":"Particles",
+    "path":"folders/Scripts/App/Actions/Bench/Particles.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,17 +1,14 @@
-/// model_file_matrix_map_add_part(part, mat, map, hidelist)
 /// @arg part
-/// @arg mat
+/// @arg matrix
 /// @arg map
 /// @arg hidelist
 
 function model_file_matrix_map_add_part(part, mat, map, hidelist)
 {
-	var partmat;
-	
 	if (hidelist != null && ds_list_find_index(hidelist, part.name) > -1)
 		return 0
 	
-	partmat = matrix_multiply(part.default_matrix, mat)
+	var partmat = matrix_multiply(part.default_matrix, mat);
 	ds_map_add(map, part.name, partmat)
 	
 	if (part.part_list != null)

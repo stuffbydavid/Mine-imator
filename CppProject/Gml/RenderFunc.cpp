@@ -1,4 +1,5 @@
 #include "Generated/GmlFunc.hpp"
+#include "Generated/Scripts.hpp"
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
@@ -9,6 +10,7 @@
 #include "Render/GLWidget.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/PrimitiveRenderer.hpp"
+#include "Render/Raycast.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
 namespace CppProject
@@ -17,8 +19,10 @@ namespace CppProject
 	{
 		if (GFX->blendSrcFactor == bm_src_alpha && GFX->blendDstFactor == bm_one)
 			return bm_add;
+		
 		if (GFX->blendSrcFactor == bm_zero && GFX->blendDstFactor == bm_inv_src_color)
 			return bm_subtract;
+		
 		if (GFX->blendSrcFactor == bm_src_alpha && GFX->blendDstFactor == bm_inv_src_color)
 			return bm_max;
 
@@ -62,7 +66,12 @@ namespace CppProject
 
 	void gpu_set_blendenable(BoolType enabled)
 	{
-		// Blending always enabled
+		GFX->SetBlending(enabled);
+	}
+
+	void gpu_set_colorwriteenable(BoolType red, BoolType green, BoolType blue, BoolType alpha)
+	{
+		GFX->SetColorWrite(red, green, blue, alpha);
 	}
 
 	void gpu_set_blendmode_ext_sepalpha(IntType src, IntType dest, IntType alphasrc, IntType alphadest)
@@ -79,10 +88,10 @@ namespace CppProject
 	{
 		switch (mode)
 		{
-			case bm_normal: gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_alpha); break;
-			case bm_add: gpu_set_blendmode_ext(bm_src_alpha, bm_one); break;
-			case bm_subtract: gpu_set_blendmode_ext(bm_zero, bm_inv_src_color); break;
-			case bm_max: gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_color); break;
+			case bm_normal:		gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_alpha); break;
+			case bm_add:		gpu_set_blendmode_ext(bm_src_alpha, bm_one); break;
+			case bm_subtract:	gpu_set_blendmode_ext(bm_zero, bm_inv_src_color); break;
+			case bm_max:		gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_color); break;
 		}
 	}
 
@@ -100,6 +109,7 @@ namespace CppProject
 				continue;
 
 			GFX->SubmitBatch();
+
 			state.filter = enabled;
 			state.changed = true;
 		}
@@ -114,6 +124,7 @@ namespace CppProject
 			return;
 
 		GFX->SubmitBatch();
+
 		state.filter = enabled;
 		state.changed = true;
 	}
@@ -127,7 +138,9 @@ namespace CppProject
 				continue;
 
 			GFX->SubmitBatch();
+
 			GFX->shader->samplerRepeat[s] = enabledInt;
+			GFX->shader->samplerUniformsChanged = true;
 		}
 
 		GFX->texRepeat = enabled;
@@ -140,12 +153,14 @@ namespace CppProject
 			return;
 
 		GFX->SubmitBatch();
+
 		GFX->shader->samplerRepeat[sampler] = enabledInt;
+		GFX->shader->samplerUniformsChanged = true;
 	}
 
 	void gpu_set_tex_max_mip(IntType maxmip)
 	{
-		// Do nothing
+		GFX->SetMaxMip(maxmip);
 	}
 
 	void gpu_set_tex_mip_bias(IntType bias)
@@ -163,10 +178,15 @@ namespace CppProject
 			return;
 
 		GFX->SubmitBatch();
+
 		GFX->mipMap = enabled;
 
 		for (IntType s = 0; s < GFX->shader->numSamplers; s++)
-			GFX->shader->samplerState[s].changed = true;
+		{
+			Shader::SamplerState& state = GFX->shader->samplerState[s];
+			state.mipMap = enabled;
+			state.changed = true;
+		}
 	}
 
 	void gpu_set_tex_mip_filter_ext(IntType sampler, IntType filter)
@@ -197,6 +217,11 @@ namespace CppProject
 	void gpu_set_ztestenable(BoolType enabled)
 	{
 		GFX->SetDepthTest(enabled);
+	}
+
+	void gpu_set_zfunc(IntType func)
+	{
+		GFX->SetDepthFunc(func);
 	}
 
 	void gpu_set_zwriteenable(BoolType enabled)
@@ -250,10 +275,11 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case matrix_world: return GFX->matrixM;
-			case matrix_view: return GFX->matrixV;
-			case matrix_projection: return GFX->matrixP;
+			case matrix_world:		return GFX->matrixM;
+			case matrix_view:		return GFX->matrixV;
+			case matrix_projection:	return GFX->matrixP;
 		}
+
 		return MatrixType();
 	}
 
@@ -272,6 +298,7 @@ namespace CppProject
 			mat.matrix.m[9] *= -1;
 			mat.matrix.m[13] *= -1;
 		}
+
 		GFX->SetMatrix(type, mat.matrix);
 	}
 
@@ -284,6 +311,7 @@ namespace CppProject
 	{
 		if (Shader* shader = FindShader(id))
 			return shader->GetSamplerIndex(name);
+		
 		return -1;
 	}
 
@@ -291,6 +319,7 @@ namespace CppProject
 	{
 		if (Shader* shader = FindShader(id))
 			return shader->GetUniformIndex(name);
+		
 		return -1;
 	}
 
@@ -298,6 +327,7 @@ namespace CppProject
 	{
 		if (Shader* shader = FindShader(id))
 			return shader->IsLoaded();
+		
 		return false;
 	}
 
@@ -307,6 +337,7 @@ namespace CppProject
 			WARNING("shader_reset on default shader");
 
 		GFX->SubmitBatch();
+
 		GFX->shader->EndUse();
 		GFX->shader = PR->GetShader();
 		GFX->shader->BeginUse();
@@ -337,6 +368,7 @@ namespace CppProject
 		if (Shader* shader = FindShader(id))
 		{
 			GFX->SubmitBatch();
+
 			GFX->shader->EndUse();
 			GFX->shader = shader;
 			GFX->shader->BeginUse();
@@ -356,19 +388,17 @@ namespace CppProject
 	void surface_copy(IntType dest, IntType x, IntType y, IntType src)
 	{
 		surface_set_target(dest);
+
 		draw_clear_alpha(0, 0);
 		draw_surface(src, x, y);
+
 		surface_reset_target();
 	}
 
-	IntType surface_create(IntType width, IntType height)
+	IntType surface_create(VarArgs args)
 	{
-		return (new Surface({ (int)width, (int)height }))->id;
-	}
-
-	IntType surface_create_ext2(IntType width, IntType height, BoolType depthBuffer, BoolType hdr)
-	{
-		return (new Surface({ (int)width, (int)height }, depthBuffer, hdr))->id;
+		IntType format = args.Size() > 2 ? args[2].ToInt() : surface_rgba8unorm;
+		return (new Surface({ (int)args[0].ToInt(), (int)args[1].ToInt() }, format))->id;
 	}
 
 	BoolType surface_exists(IntType id)
@@ -389,6 +419,7 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->size.height();
+		
 		return -1;
 	}
 
@@ -396,6 +427,7 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->frameBuffer->GetColorTexId();
+		
 		return -1;
 	}
 
@@ -403,40 +435,53 @@ namespace CppProject
 	{
 		if (Surface* surf = FindSurface(id))
 			return surf->size.width();
+		
 		return -1;
 	}
 
-	IntType surface_getpixel(IntType id, IntType x, IntType y)
+	VarType surface_getpixel(IntType id, IntType x, IntType y)
 	{
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
-			return GFX->QColorToInt(surf->GetColor(QPoint(x, y), false));
+
+			switch (surf->frameBuffer->format)
+			{
+				case surface_r16float:
+				case surface_rgba16float:
+				case surface_r32float:
+				case surface_rgba32float:
+					return (ArrType)surf->GetColorFloat(QPoint(x, y));
+			}
+
+			return GFX->QColorToInt(surf->GetColor(QPoint(x, y)));
 		}
+		
 		return -1;
 	}
 
-	void surface_clear_depth_cache(IntType id)
+	IntType surface_getpixel_ext(IntType id, IntType x, IntType y)
 	{
 		if (Surface* surf = FindSurface(id))
-			surf->ClearDepthCache();
+		{
+			GFX->SubmitBatch();
+			QColor color = surf->GetColor(QPoint(x, y));
+
+			return GFX->QColorToInt(color) | ((IntType)color.alpha() << 24);
+		}
+
+		return -1;
 	}
 
-	RealType surface_get_depth(IntType id, IntType x, IntType y)
+	IntType surface_get_target()
 	{
-		if (Surface* surf = FindSurface(id))
-			return surf->GetDepth(QPoint(x, y));
-		return 0.0;
-	}
-
-	IntType surface_get_max_size()
-	{
-		return GFX->GetMaxSize();
+		return (GFX->surface == AppWin->GetSurface() ? -1 : GFX->surface->id);
 	}
 
 	void surface_reset_target()
 	{
-		if (GFX->surface == AppWin->GetSurface())
+		Surface* defaultSurface = App->headless ? App->headlessSurface : AppWin->GetSurface();
+		if (GFX->surface == defaultSurface)
 		{
 			WARNING("Invalid surface_reset_target");
 			return;
@@ -444,9 +489,12 @@ namespace CppProject
 
 		GFX->SubmitBatch();
 		GFX->ResetMRT();
+
 		GFX->surface->EndUse();
-		GFX->surface = AppWin->GetSurface();
+		GFX->surface = defaultSurface;
 		GFX->surface->BeginUse();
+
+		GFX->ClipResume();
 	}
 
 	void surface_resize(IntType id, IntType width, IntType height)
@@ -471,6 +519,7 @@ namespace CppProject
 		
 		if (Surface* surf = FindSurface(id))
 		{
+			surf->ClearColorCache();
 			GFX->SetMRTIndex(index, surf->frameBuffer);
 			return 1;
 		}
@@ -483,32 +532,31 @@ namespace CppProject
 		if (Surface* surf = FindSurface(id))
 		{
 			GFX->SubmitBatch();
-			GFX->ClipEnd();
+
+			GFX->ClipSuspend();
 			GFX->ResetMRT();
+
 			GFX->surface->EndUse();
 			GFX->surface = surf;
+
 			if (GFX->surface->BeginUse())
 				return 1;
 		}
+		
 		WARNING("surface_set_target failed for id " + NumStr(id));
+
 		return -1;
 	}
 
 	void texture_set_stage(IntType stage, IntType tex)
 	{
-		if (tex > 0 && GFX->shader->IsLoaded())
+		if (GFX->shader->IsLoaded())
 			GFX->shader->SubmitTexture(stage, tex);
 	}
 
 	void vertex_begin(IntType buffer, IntType format)
 	{
 		// Do nothing
-	}
-
-	void vertex_color(IntType buffer, IntType color, RealType alpha)
-	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			buf->GetCurrentVertex(2).SetColor(color, alpha);
 	}
 
 	IntType vertex_create_buffer()
@@ -524,14 +572,14 @@ namespace CppProject
 
 	void vertex_delete_buffer(IntType id)
 	{
-		if (VertexBuffer* buffer = FindVertexBuffer(id))
-			delete buffer;
+		if (VertexBuffer* vbuf = FindVertexBuffer(id))
+			delete vbuf;
 	}
 
 	void vertex_end(IntType buffer)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			buf->Complete();
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+			vbuf->Complete();
 	}
 
 	void vertex_float3(IntType buffer, RealType x, RealType y, RealType z)
@@ -541,22 +589,23 @@ namespace CppProject
 
 	void vertex_float4(IntType buffer, RealType x, RealType y, RealType z, RealType w)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(4);
+			Vertex& vertex = vbuf->GetCurrentVertex(3);
+			
 			if (x > 0.0)
 				vertex.EnableFlag(Vertex::WAVE_XY);
+			
 			if (y > 0.0)
 				vertex.EnableFlag(Vertex::WAVE_Z);
+			
 			vertex.SetEmissive(z);
-			if (w > 0.0)
+
+			vertex.SetColorIndex((uint8_t)((IntType)w / 2));
+
+			if (((IntType)w % 2) != 0)
 				vertex.EnableFlag(Vertex::SUBSURFACE);
 		}
-	}
-
-	void vertex_format_add_colour()
-	{
-		// Do nothing
 	}
 
 	void vertex_format_add_custom(IntType type, IntType usage)
@@ -597,22 +646,23 @@ namespace CppProject
 
 	IntType vertex_get_number(IntType buffer)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			return buf->numIndices;
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+			return vbuf->numIndices;
+		
 		return 0;
 	}
 
 	void vertex_normal(IntType buffer, RealType nx, RealType ny, RealType nz)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			buf->GetCurrentVertex(1).SetNormal(nx, ny, nz);
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+			vbuf->GetCurrentVertex(1).SetNormal(nx, ny, nz);
 	}
 
 	void vertex_position_3d(IntType buffer, RealType x, RealType y, RealType z)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(0);
+			Vertex& vertex = vbuf->GetCurrentVertex(0);
 			vertex.x = x;
 			vertex.y = y;
 			vertex.z = z;
@@ -621,103 +671,21 @@ namespace CppProject
 
 	void vertex_submit(IntType buffer, IntType primitive, IntType texture)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			VB->Add(buf);
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+		{
+			App->worldRaycast->AddObject(*vbuf, GFX->matrixM);
+			VB->Add(vbuf);
+		}
 	}
 
 	void vertex_texcoord(IntType buffer, RealType u, RealType v)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(3);
+			Vertex& vertex = vbuf->GetCurrentVertex(2);
 			vertex.u = u;
 			vertex.v = v;
 		}
 	}
 
-	IntType get_vertex_buffer_triangles()
-	{
-		IntType num = VB->trianglesSubmitted;
-		VB->trianglesSubmitted = 0;
-		return num;
-	}
-
-	IntType get_vertex_buffer_render_calls()
-	{
-		IntType num = VB->renderCalls;
-		VB->renderCalls = 0;
-		return num;
-	}
-
-	IntType get_primitive_lines()
-	{
-		IntType num = PR->linesSubmitted;
-		PR->linesSubmitted = 0;
-		return num;
-	}
-
-	IntType get_primitive_triangles()
-	{
-		IntType num = PR->trianglesSubmitted;
-		PR->trianglesSubmitted = 0;
-		return num;
-	}
-
-	IntType get_primitive_render_calls()
-	{
-		IntType num = PR->renderCalls;
-		PR->renderCalls = 0;
-		return num;
-	}
-
-	void vertex_buffer_set_save_data(IntType id, BoolType save)
-	{
-		if (VertexBuffer* buf = FindVertexBuffer(id))
-			buf->saveData = save;
-	}
-
-	void submit_batch()
-	{
-		GFX->SubmitBatch();
-	}
-
-	void shader_submit_int(IntType index, IntType value)
-	{
-		GFX->shader->SubmitInt(index, value);
-	}
-
-	void shader_submit_float(IntType index, RealType value)
-	{
-		GFX->shader->SubmitFloat(index, value);
-	}
-
-	void shader_submit_vec2(IntType index, RealType x, RealType y)
-	{
-		GFX->shader->SubmitVec2(index, x, y);
-	}
-
-	void shader_submit_vec3(IntType index, RealType x, RealType y, RealType z)
-	{
-		GFX->shader->SubmitVec3(index, x, y, z);
-	}
-
-	void shader_submit_vec4(IntType index, RealType x, RealType y, RealType z, RealType w)
-	{
-		GFX->shader->SubmitVec4(index, x, y, z, w);
-	}
-
-	void shader_submit_float_array(IntType index, VarType array)
-	{
-		GFX->shader->SubmitFloatArray(index, array);
-	}
-
-	void shader_submit_mat4_array(IntType index, ArrType array)
-	{
-		GFX->shader->SubmitMat4Array(index, array);
-	}
-
-	void update_frustum()
-	{
-		GFX->UpdateFrustum();
-	}
 }

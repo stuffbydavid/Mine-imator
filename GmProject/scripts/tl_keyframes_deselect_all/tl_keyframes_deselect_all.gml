@@ -1,4 +1,3 @@
-/// tl_keyframes_deselect_all()
 /// @desc Deselects all keyframes.
 
 function tl_keyframes_deselect_all()

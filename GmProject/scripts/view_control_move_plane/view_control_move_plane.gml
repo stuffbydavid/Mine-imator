@@ -1,9 +1,8 @@
-/// view_control_move_plane(view, control, axes, color, mat, normal, corner1, corner2, corner3, corner4)
 /// @arg view
 /// @arg control
 /// @arg axes
 /// @arg color
-/// @arg mat
+/// @arg matrix
 /// @arg normal
 /// @arg corner1
 /// @arg corner2
@@ -26,30 +25,30 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 	}
 	
 	// Corner 1
-	var corner13D, corner12D;
-	corner13D = point3D_mul_matrix(corner1, mat)
-	corner12D = view_shape_project(corner13D)
+	var corner13d, corner12d;
+	corner13d = point3D_mul_matrix(corner1, mat)
+	corner12d = view_shape_project(corner13d)
 	if (point3D_project_error)
 		return 0
 	
 	// Corner 2
-	var corner23D, corner22D;
-	corner23D = point3D_mul_matrix(corner2, mat)
-	corner22D = view_shape_project(corner23D)
+	var corner23d, corner22d;
+	corner23d = point3D_mul_matrix(corner2, mat)
+	corner22d = view_shape_project(corner23d)
 	if (point3D_project_error)
 		return 0
 	
 	// Corner 3
-	var corner33D, corner32D;
-	corner33D = point3D_mul_matrix(corner3, mat)
-	corner32D = view_shape_project(corner33D)
+	var corner33d, corner32d;
+	corner33d = point3D_mul_matrix(corner3, mat)
+	corner32d = view_shape_project(corner33d)
 	if (point3D_project_error)
 		return 0
 	
 	// Corner 4
-	var corner43D, corner42D;
-	corner43D = point3D_mul_matrix(corner4, mat)
-	corner42D = view_shape_project(corner43D)
+	var corner43d, corner42d;
+	corner43d = point3D_mul_matrix(corner4, mat)
+	corner42d = view_shape_project(corner43d)
 	if (point3D_project_error)
 		return 0
 	
@@ -59,16 +58,16 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 	
 	var alpha = percent(abs(vec3_dot(normal, vec3_normalize(point3D_sub(cam_from, matrix_position(mat))))), .1, .2);
 	
-	if (window_busy = "rendercontrol" && view_control_edit = control || !setting_fade_gizmos)
+	if (window_busy = "render/control" && view_control_edit = control || !setting_fade_gizmos)
 		alpha = 1
 	
-	if (alpha = 0 || (window_busy = "rendercontrol" && view_control_edit != control))
+	if (alpha = 0 || (window_busy = "render/control" && view_control_edit != control))
 		return 0
 	
 	draw_set_alpha(alpha)
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != control || view_control_edit_view != view)
 		{
@@ -92,7 +91,7 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_edit = control
 			view_control_edit_view = view
 			
@@ -124,25 +123,25 @@ function view_control_move_plane(view, control, axes, color, mat, normal, corner
 		draw_set_color(color)
 	
 	// Draw outline
-	view_shape_line_draw(corner12D, corner22D)
-	view_shape_line_draw(corner22D, corner32D)
-	view_shape_line_draw(corner32D, corner42D)
-	view_shape_line_draw(corner42D, corner12D)
+	view_shape_line_draw(corner12d, corner22d)
+	view_shape_line_draw(corner22d, corner32d)
+	view_shape_line_draw(corner32d, corner42d)
+	view_shape_line_draw(corner42d, corner12d)
 	
 	// Draw square
 	draw_set_alpha(.35)
 	
 	render_set_culling(false)
 	draw_primitive_begin(pr_trianglelist)
-	view_shape_triangle_draw(corner12D, corner22D, corner32D)
-	view_shape_triangle_draw(corner32D, corner42D, corner12D)
+	view_shape_triangle_draw(corner12d, corner22d, corner32d)
+	view_shape_triangle_draw(corner32d, corner42d, corner12d)
 	draw_primitive_end()
 	render_set_culling(true)
 	
 	draw_set_color(c_white)
 	draw_set_alpha(1)
 	
-	if ((point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12D[X], corner12D[Y], corner22D[X], corner22D[Y], corner32D[X], corner32D[Y]) || 
-		point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12D[X], corner12D[Y], corner42D[X], corner42D[Y], corner32D[X], corner32D[Y])) && place_tl = null && content_mouseon)
+	if ((point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12d[X], corner12d[Y], corner22d[X], corner22d[Y], corner32d[X], corner32d[Y]) || 
+		point_in_triangle(mouse_x - content_x, mouse_y - content_y, corner12d[X], corner12d[Y], corner42d[X], corner42d[Y], corner32d[X], corner32d[Y])) && place_tl = null && content_mouseon)
 		view.control_mouseon = control
 }

@@ -1,5 +1,6 @@
 /// CppSeparate void builder_done(Scope<obj_builder>)
-/// Clean-up builder data
+/// @desc Clean-up builder data.
+
 function builder_done()
 {
 	if (block_obj != null)
@@ -7,17 +8,22 @@ function builder_done()
 		buffer_delete(block_obj)
 		buffer_delete(block_state_id)
 		buffer_delete(block_waterlogged)
-		ds_grid_destroy(block_render_model)
 		ds_list_destroy(block_render_model_multipart)
+
+		block_obj = null
+		block_state_id = null
+		block_waterlogged = null
 	}
-	build_multithreaded = null
 	
-	vertex_rgb = c_white
-	vertex_alpha = 1
+	block_render_model = []
+	block_meshes = []
+	
+	build_multithreaded = null
+	build_transform = false
 	
 	vertex_wave = e_vertex_wave.NONE
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null
 	vertex_emissive = 0
-	vertex_subsurface = 0
+	vertex_subsurface_color_index = 0
 }

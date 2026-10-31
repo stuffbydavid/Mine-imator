@@ -1,17 +1,13 @@
-/// action_tl_marker_pos()
-
 function action_tl_marker_pos()
 {
-	var marker;
-	
 	if (history_undo)
 	{
-		marker = save_id_find(history_data.marker_save_id)
+		var marker = save_id_find(history_data.marker_save_id);
 		marker.pos = history_data.marker_pos_prev
 	}
 	else
 	{
-		var hobj;
+		var marker, hobj;
 		
 		if (!history_redo)
 		{

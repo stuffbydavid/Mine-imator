@@ -1,7 +1,6 @@
-/// temp_particles_update_spawn_rate(ptype, value)
-/// @arg ptype
-/// @arg value
 /// @desc Updates after adding a % of spawn rate to the given particle type in the template.
+/// @arg particletype
+/// @arg value
 
 function temp_particles_update_spawn_rate(ptype, val)
 {

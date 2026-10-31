@@ -1,4 +1,3 @@
-/// temp_particles_init()
 /// @desc Initializes particle creator variables.
 
 function temp_particles_init()

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_pick_depth",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_pick_depth",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,5 +1,3 @@
-/// json_load_value()
-
 function json_load_value()
 {
 	if (json_char = e_json_char.CURLY_BEGIN)

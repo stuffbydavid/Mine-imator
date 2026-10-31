@@ -1,7 +1,6 @@
-/// model_file_load_shape(map, resource)
+/// @desc Adds a shape from the given map (JSON object).
 /// @arg map
 /// @arg resource
-/// @desc Adds a shape from the given map (JSON object)
 
 function model_file_load_shape(map, res)
 {
@@ -73,7 +72,7 @@ function model_file_load_shape(map, res)
 					texture_material_inherit = other.texture_material_inherit
 				
 				if (texture_normal_name != "")
-					model_file_load_tex_normal(texture_normal_name, res)
+					model_file_load_texture_normal(texture_normal_name, res)
 				else
 					texture_normal_inherit = other.texture_normal_inherit
 			}
@@ -86,6 +85,9 @@ function model_file_load_shape(map, res)
 			texture_size = value_get_point2D(map[?"texture_size"])
 			var size = max(texture_size[X], texture_size[Y]);
 			texture_size = vec2(size, size) // Make square
+			
+			texture_scroll_speed = value_get_real(map[?"texture_scroll_speed"], 0)
+			texture_scroll_direction = value_get_real(map[?"texture_scroll_direction"], 0)
 		}
 		else
 		{
@@ -97,6 +99,8 @@ function model_file_load_shape(map, res)
 			texture_material_inherit = other.texture_material_inherit
 			texture_normal_inherit = other.texture_normal_inherit
 			texture_size = texture_inherit.texture_size
+			texture_scroll_speed = texture_inherit.texture_scroll_speed
+			texture_scroll_direction = texture_inherit.texture_scroll_direction
 		}
 		
 		// Color (optional)
@@ -186,7 +190,7 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Position (optional)
-		position_noscale = value_get_point3D(map[?"position"], point3D(0, 0, 0))
+		position_noscale = value_get_point3D(map[?"position"], point3D(0))
 		position = point3D_mul(position_noscale, other.scale)
 		
 		// Rotation (optional)
@@ -198,6 +202,16 @@ function model_file_load_shape(map, res)
 		from = point3D_mul(point3D_sub(from_noscale, inflate), scale)
 		to = point3D_mul(point3D_add(to_noscale, inflate), scale)
 		
+		// Vertex offsets (optional, Modelbench: Community Build compatibility)
+		vertex_offsets = array_create(8)
+		has_vertex_offsets = false
+		for (var i = 0; i < array_length(vertex_offsets); i++)
+		{
+			var offset = value_get_point3D(map[?"vert" + string(i + 1)], vec3(0))
+			vertex_offsets[i] = vec3_mul(offset, scale)
+			has_vertex_offsets = has_vertex_offsets || !vec3_equals(offset, vec3(0))
+		}
+
 		// Locked shape
 		locked = value_get_real(map[?"locked"], false)
 		
@@ -258,15 +272,52 @@ function model_file_load_shape(map, res)
 		}
 		
 		// Update bounds
-		var boundsmat = matrix_create(position, rotation, vec3(1))
-		var startpos = point3D_mul_matrix(from, boundsmat);
-		var endpos = point3D_mul_matrix(to, boundsmat);
-		bounds_start[X] = min(startpos[X], endpos[X])
-		bounds_start[Y] = min(startpos[Y], endpos[Y])
-		bounds_start[Z] = min(startpos[Z], endpos[Z])
-		bounds_end[X]	= max(startpos[X], endpos[X])
-		bounds_end[Y]	= max(startpos[Y], endpos[Y])
-		bounds_end[Z]	= max(startpos[Z], endpos[Z])
+		var boundsmat, corners;
+		boundsmat = matrix_create(position, rotation, vec3(1))
+		
+		if (type = "plane")
+		{
+			corners = [
+				point3D(from[X], from[Y], from[Z]),
+				point3D(to[X], from[Y], from[Z]),
+				point3D(from[X], from[Y], to[Z]),
+				point3D(to[X], from[Y], to[Z])
+			]
+			
+			if (is3d)
+				for (var j = 0; j < 4; j++)
+					corners[j + 4] = point3D(corners[j][X], to[Y], corners[j][Z])
+		}
+		else
+		{
+			corners = [
+				point3D(from[X], to[Y], from[Z]),
+				point3D(to[X], to[Y], from[Z]),
+				point3D(to[X], from[Y], from[Z]),
+				point3D(from[X], from[Y], from[Z]),
+				point3D(from[X], to[Y], to[Z]),
+				point3D(to[X], to[Y], to[Z]),
+				point3D(to[X], from[Y], to[Z]),
+				point3D(from[X], from[Y], to[Z])
+			]
+		}
+
+		bounds_start = point3D_mul_matrix(vec3_add(corners[0], vertex_offsets[0]), boundsmat)
+		bounds_end = point3D_copy(bounds_start)
+		
+		for (var j = 1; j < array_length(corners); j++)
+		{
+			var corner, offsetindex;
+			offsetindex = (type = "plane" ? (j mod 4) : j)
+			corner = point3D_mul_matrix(vec3_add(corners[j], vertex_offsets[offsetindex]), boundsmat)
+			
+			for (var axis = X; axis <= Z; axis++)
+			{
+				bounds_start[axis] = min(bounds_start[axis], corner[axis])
+				bounds_end[axis] = max(bounds_end[axis], corner[axis])
+			}
+		}
+
 		other.bounds_start[X] = min(other.bounds_start[X], bounds_start[X])
 		other.bounds_start[Y] = min(other.bounds_start[Y], bounds_start[Y])
 		other.bounds_start[Z] = min(other.bounds_start[Z], bounds_start[Z])

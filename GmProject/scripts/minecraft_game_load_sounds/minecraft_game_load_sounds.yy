@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_game_load_sounds",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_game_load_sounds",
+  "parent":{
+    "name":"Minecraft",
+    "path":"folders/Scripts/Minecraft.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

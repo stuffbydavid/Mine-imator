@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"alpha_ease",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"alpha_ease",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

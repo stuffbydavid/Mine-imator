@@ -1,5 +1,3 @@
-/// context_menu_draw()
-
 function context_menu_draw()
 {
 	if (context_menu_level_amount = 0 || context_menu_window != window_get_current())
@@ -44,9 +42,9 @@ function context_menu_draw()
 			continue
 		
 		if (id = other.context_menu_mouseon_item)
-			hovertime += test_reduced_motion(6, (60 / room_speed))
+			hovertime += test_reduced_motion(6, (60 / game_get_speed(gamespeed_fps)))
 		else
-			hovertime -= test_reduced_motion(6, (60 / room_speed))
+			hovertime -= test_reduced_motion(6, (60 / game_get_speed(gamespeed_fps)))
 		
 		hovertime = clamp(hovertime, 0, 6)
 		
@@ -90,5 +88,5 @@ function context_menu_draw()
 	}
 	
 	if (window_busy = "" && context_menu_name != "")
-		window_busy = "contextmenu"
+		window_busy = "context_menu"
 }

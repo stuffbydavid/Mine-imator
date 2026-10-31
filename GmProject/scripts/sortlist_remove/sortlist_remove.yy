@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "sortlist_remove",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Sortlist",
-    "path": "folders/Scripts/App/Interface/Components/Sortlist.yy",
+  "$GMScript":"v1",
+  "%Name":"sortlist_remove",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sortlist_remove",
+  "parent":{
+    "name":"Sortlist",
+    "path":"folders/Scripts/App/Interface/Components/Sortlist.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

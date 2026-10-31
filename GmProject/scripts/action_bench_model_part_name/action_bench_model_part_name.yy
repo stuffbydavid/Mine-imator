@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_bench_model_part_name",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Model",
-    "path": "folders/Scripts/App/Actions/Bench/Model.yy",
+  "$GMScript":"v1",
+  "%Name":"action_bench_model_part_name",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_model_part_name",
+  "parent":{
+    "name":"Model",
+    "path":"folders/Scripts/App/Actions/Bench/Model.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-# Usage: ./Setup.sh [Qt|FFmpeg|Libzip|OpenAL|Xcode|CppGen|Release] [x86_64|arm64]
-#   Qt|FFmpeg|Libzip|OpenAL:
+# Usage: ./Setup.sh [Qt|FFmpeg|Libzip|OpenAL|Zstd|Xcode|CppGen|Release] [x86_64|arm64]
+#   Qt|FFmpeg|Libzip|OpenAL|Zstd:
 #       Unzips or downloads external libraries into DEV_DIR, then builds them
 #   Xcode:
 #       For Mac OS, generates and opens an Xcode project file
@@ -21,16 +21,16 @@ if [ -z "${DEV_DIR:-}" ]; then
 fi
 
 if [ "$#" -gt 2 ]; then
-    echo "Usage: $0 [Qt|FFmpeg|Libzip|OpenAL|Xcode|CppGen|Release] [x86_64|arm64]" >&2
+    echo "Usage: $0 [Qt|FFmpeg|Libzip|OpenAL|Zstd|Xcode|CppGen|Release] [x86_64|arm64]" >&2
     exit 1
 fi
 
 action="${1:-Qt}" # Qt is the default action
 action_key=$(printf '%s' "$action" | tr '[:upper:]' '[:lower:]')
 case "$action_key" in
-    qt|ffmpeg|libzip|openal|xcode|cppgen|release) ;;
+    qt|ffmpeg|libzip|openal|zstd|xcode|cppgen|release) ;;
     *)
-        echo "Unknown action '$action'. Use Qt, FFmpeg, Libzip, OpenAL, Xcode, CppGen or Release." >&2
+        echo "Unknown action '$action'. Use Qt, FFmpeg, Libzip, OpenAL, Zstd, Xcode, CppGen or Release." >&2
         exit 1
         ;;
 esac
@@ -82,6 +82,7 @@ ffmpeg_version="5.1.10"
 x264_revision="0480cb05"
 libzip_version="1.11.4"
 openal_version="1.24.3"
+zstd_version="1.5.7"
 
 mkdir -p "$DEV_DIR"
 dev_directory=$(cd "$DEV_DIR" && pwd -P)
@@ -93,6 +94,7 @@ ffmpeg_directory="$dev_directory/FFmpeg/ffmpeg-$ffmpeg_version"
 x264_directory="$dev_directory/x264/x264-master"
 libzip_directory="$dev_directory/Libzip/libzip-$libzip_version"
 openal_directory="$dev_directory/OpenAL/openal-soft-$openal_version"
+zstd_directory="$dev_directory/Zstd/zstd-$zstd_version"
 
 require_command() {
     if ! command -v "$1" >/dev/null 2>&1; then
@@ -148,7 +150,7 @@ ensure_source_archive() {
         source_library_key=$(printf '%s' "$source_library" | tr '[:upper:]' '[:lower:]')
         case "$source_library_key" in
             ffmpeg) source_names="ffmpeg x264" ;;
-            libzip|openal) source_names=$source_library_key ;;
+            libzip|openal|zstd) source_names=$source_library_key ;;
             *)
                 echo "Unknown source library: $source_library" >&2
                 exit 1
@@ -181,10 +183,16 @@ ensure_source_archive() {
                     target_directory=$openal_directory
                     source_marker=CMakeLists.txt
                     ;;
+                zstd)
+                    archive_name="zstd-$zstd_version.tar.gz"
+                    destination_parent="$dev_directory/Zstd"
+                    target_directory=$zstd_directory
+                    source_marker=build/cmake/CMakeLists.txt
+                    ;;
             esac
 
             case "$target_directory" in
-                "$ffmpeg_directory"|"$x264_directory"|"$libzip_directory"|"$openal_directory") ;;
+                "$ffmpeg_directory"|"$x264_directory"|"$libzip_directory"|"$openal_directory"|"$zstd_directory") ;;
                 *)
                     echo "Unexpected source directory request: $target_directory" >&2
                     exit 1
@@ -340,6 +348,7 @@ build_ffmpeg() {
         --enable-libx264 \
         --enable-gpl \
         --pkg-config-flags=--static
+    
     if [ "$platform" = "macos" ]; then
         set -- "$@" \
             --arch="$ffmpeg_arch" \
@@ -356,8 +365,10 @@ build_ffmpeg() {
     )
 
     copy_built_file "$x264_install_directory/lib/libx264.a" "$external_lib_directory"
+    
     for library in libavcodec.a libavformat.a libavutil.a libswresample.a libswscale.a; do
         copy_built_file "$ffmpeg_install_directory/lib/$library" "$external_lib_directory"
+    
     done
 }
 
@@ -381,11 +392,13 @@ build_libzip() {
         -DENABLE_BZIP2=OFF -DENABLE_LZMA=OFF -DENABLE_ZSTD=OFF \
         -DBUILD_DOC=OFF -DBUILD_EXAMPLES=OFF -DBUILD_OSSFUZZ=OFF -DBUILD_REGRESS=OFF \
         -DBUILD_SHARED_LIBS=OFF -DBUILD_TOOLS=OFF -DHAVE_ARC4RANDOM=OFF
+    
     if [ "$platform" = "macos" ]; then
         set -- "$@" \
             "-DCMAKE_OSX_DEPLOYMENT_TARGET=$macos_deployment_target" \
             "-DCMAKE_OSX_ARCHITECTURES=$macos_arch"
     fi
+    
     cmake "$@"
     cmake --build "$build_directory" --parallel "$jobs"
     copy_built_file "$build_directory/lib/libzip.a" "$external_lib_directory"
@@ -405,14 +418,42 @@ build_openal() {
         -DCMAKE_BUILD_TYPE=Release -DLIBTYPE=STATIC \
         -DALSOFT_EXAMPLES=OFF -DALSOFT_UTILS=OFF -DALSOFT_EAX=OFF \
         -DALSOFT_EMBED_HRTF_DATA=OFF
+    
     if [ "$platform" = "macos" ]; then
         set -- "$@" \
             "-DCMAKE_OSX_DEPLOYMENT_TARGET=$macos_deployment_target" \
             "-DCMAKE_OSX_ARCHITECTURES=$macos_arch"
     fi
+
     cmake "$@"
     cmake --build "$build_directory" --parallel "$jobs"
     copy_built_file "$build_directory/libopenal.a" "$external_lib_directory"
+}
+
+build_zstd() {
+    require_command cmake
+    build_directory="$zstd_directory/build-cmake"
+    install_directory="$zstd_directory/install"
+
+    set -- \
+        -S "$zstd_directory/build/cmake" -B "$build_directory" -G "Unix Makefiles" \
+        -DCMAKE_BUILD_TYPE=Release "-DCMAKE_INSTALL_PREFIX=$install_directory" \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DZSTD_BUILD_STATIC=ON -DZSTD_BUILD_SHARED=OFF \
+        -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_CONTRIB=OFF \
+        -DZSTD_MULTITHREAD_SUPPORT=OFF -DZSTD_LEGACY_SUPPORT=OFF
+    
+    if [ "$platform" = "macos" ]; then
+        set -- "$@" \
+            "-DCMAKE_OSX_DEPLOYMENT_TARGET=$macos_deployment_target" \
+            "-DCMAKE_OSX_ARCHITECTURES=$macos_arch"
+    fi
+
+    cmake "$@"
+    cmake --build "$build_directory" --parallel "$jobs"
+    cmake --install "$build_directory"
+    
+    copy_built_file "$install_directory/lib/libzstd.a" "$external_lib_directory"
 }
 
 build_qt() {
@@ -483,7 +524,7 @@ build_qt() {
 case "$action_key" in
     qt)
         ensure_generated_sources
-        ensure_source_archive FFmpeg OpenAL Libzip
+        ensure_source_archive FFmpeg OpenAL Libzip Zstd
         build_qt
         ;;
     ffmpeg)
@@ -497,6 +538,10 @@ case "$action_key" in
     openal)
         ensure_source_archive OpenAL
         build_openal
+        ;;
+    zstd)
+        ensure_source_archive Zstd
+        build_zstd
         ;;
     xcode)
         if [ "$platform" = "linux" ]; then

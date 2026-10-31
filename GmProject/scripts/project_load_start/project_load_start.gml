@@ -1,6 +1,5 @@
-/// project_load_start(filename)
+/// @desc Checks whether the format is correct.
 /// @arg filename
-/// @desc Checks whether the format is correct
 
 function project_load_start(fn)
 {
@@ -9,7 +8,7 @@ function project_load_start(fn)
 	if (!ds_map_valid(map))
 	{
 		log("Could not parse JSON file", fn)
-		error("errorfilecorrupted")
+		error("error/file_corrupted")
 		return null
 	}
 	
@@ -17,18 +16,18 @@ function project_load_start(fn)
 	if (!is_real(map[?"format"]))
 	{
 		log("Missing parameter \"format\"")
-		error("errorfilecorrupted")
+		error("error/file_corrupted")
 		ds_map_destroy(map)
 		return null
 	}
 	
-	load_format = map[?"format"];
+	load_format = map[?"format"]
 	
 	// Check format too new
 	if (load_format > project_format)
 	{
 		log("Too new project, format", load_format)
-		error("erroropenprojectnewer")
+		error("error/open_project_newer")
 		ds_map_destroy(map)
 		return null
 	}
@@ -37,7 +36,7 @@ function project_load_start(fn)
 	else if (load_format < e_project.FORMAT_110_PRE_1)
 	{
 		log("Invalid format", load_format)
-		error("errorfilecorrupted")
+		error("error/file_corrupted")
 		ds_map_destroy(map)
 		return null
 	}

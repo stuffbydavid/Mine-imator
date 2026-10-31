@@ -1,4 +1,3 @@
-/// temp_particles_type_clear()
 /// @desc Clears all particle types from the template.
 
 function temp_particles_type_clear()

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "list_update_width",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Lists",
-    "path": "folders/Scripts/App/Interface/Components/Lists.yy",
+  "$GMScript":"v1",
+  "%Name":"list_update_width",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"list_update_width",
+  "parent":{
+    "name":"Lists",
+    "path":"folders/Scripts/App/Interface/Components/Lists.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
