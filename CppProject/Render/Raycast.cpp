@@ -78,7 +78,7 @@ namespace CppProject
 				vbuf->AddBlockBounds(blockPos, bounds);
 		}
 
-		// Fit with minimum XY size of 4
+		// Fit with minimum size of 4 on X/Y and 1 on Z
 		Bounds fitted = bounds.Fit(4);
 
 		hit.blockBounds = BlockPos(hit.blockPos).GetBounds();

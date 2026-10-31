@@ -24,6 +24,7 @@ function tl_copy(to)
 	to.model_part = model_part
 	to.model_part_name = model_part_name
 	to.part_of = part_of
+	to.part_root = part_root
 	
 	to.inherit_position = inherit_position
 	to.inherit_rotation = inherit_rotation

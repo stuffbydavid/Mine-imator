@@ -2,6 +2,9 @@
 
 function block_set_double_plant()
 {
+	if (build_get_connect)
+		return block_set_tall_block()
+
 	if (block_get_state_id_value(block_current, block_state_id_current, "half") = "upper")
 		return null
 	

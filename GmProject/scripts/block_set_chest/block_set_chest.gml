@@ -2,10 +2,11 @@
 
 function block_set_chest()
 {
-	var type, double, staticmodel;
+	var type, double, staticmodel, facing;
 	type = block_get_state_id_value(block_current, block_state_id_current, "type")
+	facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 	double = "false"
-	staticmodel = (!mc_builder.block_tl_add || block_tl_map = null)
+	staticmodel = (build_get_connect || !mc_builder.block_tl_add || block_tl_map = null)
 
 	if (build_edit && !staticmodel)
 		staticmodel = (block_tl_map[?build_pos_index] != block_current.block_id)
@@ -13,7 +14,12 @@ function block_set_chest()
 	if (mc_builder.block_tl_types != null && !array_contains(mc_builder.block_tl_types, block_current.tl_type))
 		staticmodel = true
 	
-	if (builder_scenery && builder_scenery_legacy)
+	// Resolve source chests during both removal and regeneration
+	var legacy = (builder_scenery && builder_scenery_legacy);
+	if (build_edit && builder_scenery_legacy && block_tl_map != null)
+		legacy = (block_tl_map[?build_pos_index] = block_current.block_id)
+
+	if (legacy)
 		type = "legacy"
 	
 	switch (type)
@@ -35,13 +41,12 @@ function block_set_chest()
 				break
 				
 			// Determine type from adjacent chest
-			var connectblock, discardblock, facing;
+			var connectblock, discardblock;
 			connectblock = null
 			discardblock = null
-			facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 			
 			// Patch legacy orientation
-			if (builder_scenery && builder_scenery_legacy)
+			if (legacy)
 			{
 				var directions, offsets, neighbors, pair, origin, paired, blocked, face;
 				directions = [ "east", "west", "south", "north" ]
@@ -193,7 +198,43 @@ function block_set_chest()
 				block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "type", type)
 		}
 	}
-	
+
+	// Find connected block position
+	if (build_get_connect)
+	{
+		if (double != "true" || block_current.name = "ender_chest")
+			return null
+
+		var offset = vec3(0);
+		switch (facing)
+		{
+			case "north": offset[X] = -1; break
+			case "south": offset[X] = 1; break
+			case "east":  offset[Y] = -1; break
+			case "west":  offset[Y] = 1; break
+			default: return null
+		}
+		if (type = "left")
+			offset = vec3_mul(offset, -1)
+
+		var pos, state, othertype;
+		pos = vec3_add(build_pos, offset)
+		if (builder_get_block(pos[X], pos[Y], pos[Z]) != block_current)
+			return null
+
+		state = builder_get_state_id(pos[X], pos[Y], pos[Z])
+		othertype = block_get_state_id_value(block_current, state, "type")
+		if ((othertype = "single" && !legacy) ||
+			block_get_state_id_value(block_current, state, "variant") != block_get_state_id_value(block_current, block_state_id_current, "variant"))
+			return null
+
+		if (!legacy && othertype != "legacy" &&
+			(othertype != (type = "left" ? "right" : "left") || block_get_state_id_value(block_current, state, "facing") != facing))
+			return null
+
+		return pos
+	}
+
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "double", double)
 	
 	return 0

@@ -458,12 +458,15 @@ namespace CppProject
 
 		stream << (qint64)numVertices;
 		stream << (qint64)numIndices;
+
 		if (!numIndices)
 			return;
 
 		stream.writeRawData((const char*)vertexData.Data(), (int)(numVertices * sizeof(Vertex)));
 		stream.writeRawData((const char*)indexData.Data(), (int)(numIndices * sizeof(uint32_t)));
+
 		stream << quint8(triangleBlockPos.Size() > 0);
+
 		if (triangleBlockPos.Size())
 		{
 			stream << qint32(blockPosOrigin.x) << qint32(blockPosOrigin.y) << qint32(blockPosOrigin.z);

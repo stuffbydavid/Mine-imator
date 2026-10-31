@@ -124,6 +124,8 @@ function project_load_timeline(map)
 				}
 			}
 		}
+		
+		// Block part
 		else if (part_of != null && type = e_tl_type.BLOCK)
 		{
 			var blockmap = map[?"block"];
@@ -152,6 +154,7 @@ function project_load_timeline(map)
 			}
 		}
 		
+		// Block without template
 		else if (type = e_tl_type.BLOCK && !has_temp)
 		{
 			var directblockmap = map[?"block"];
@@ -170,6 +173,7 @@ function project_load_timeline(map)
 			}
 		}
 		
+		// Text
 		else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
 		{
 			text_font = value_get_save_id(map[?"text_font"], project_pack_res)
@@ -177,7 +181,15 @@ function project_load_timeline(map)
 			text_face_camera = value_get_real(map[?"text_face_camera"], false)
 		}
 
-		// Added blocks
+		// Map legacy block
+		if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
+		{
+			var blockdata = block_get_name_state(block_name, block_state);
+			block_name = blockdata[0]
+			block_state = blockdata[1]
+		}
+
+		// Added blocks to scenery
 		if (type = e_tl_type.SCENERY)
 		{
 			var palette, blocks;
@@ -199,7 +211,6 @@ function project_load_timeline(map)
 
 					if (ds_list_valid(entry) && ds_list_size(entry) > 0)
 					{
-						block = mc_assets.block_name_map[?entry[|0]]
 						for (var s = 1; s < ds_list_size(entry); s++)
 						{
 							if (!is_string(entry[|s]))
@@ -209,6 +220,11 @@ function project_load_timeline(map)
 							if (is_array(prop))
 								state_vars_add(vars, prop)
 						}
+
+						// Map legacy block
+						var blockdata = block_get_name_state(entry[|0], vars);
+						block = mc_assets.block_name_map[?blockdata[0]]
+						vars = blockdata[1]
 					}
 
 					if (is_undefined(block))
@@ -229,6 +245,7 @@ function project_load_timeline(map)
 					var pos, index;
 					pos = value_get_point3D(entry[|0])
 					index = value_get_real(entry[|1], -1)
+					
 					if (pos != null && index >= 0 && index < array_length(blocks_added_palette) && index = floor(index))
 						array_add(blocks_added, [ pos, index ], false)
 				}

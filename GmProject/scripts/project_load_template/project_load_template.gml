@@ -191,27 +191,13 @@ function project_load_template(map)
 					block_name = value_get_string(blockmap[?"name"], block_name)
 					block_state = value_get_state_vars(blockmap[?"state"])
 					
-					// Update legacy block name
-					if (!is_undefined(legacy_block_names_map[?block_name]))
-						block_name = legacy_block_names_map[?block_name]
-					
-					// Update legacy block states
-					if (!is_undefined(legacy_block_states_map[?block_name]))
-					{
-						var legacyblockmap, statename;
-						legacyblockmap = legacy_block_states_map[?block_name]
-					
-						for (var i = 0; i < array_length(block_state); i += 2)
-						{
-							statename = block_state[i]
-					
-							// Replace state name
-							if (!is_undefined(legacyblockmap[?statename]))
-								block_state[i] = legacyblockmap[?statename]
-						}
-					}
-					
-					project_load_template_update_block()
+					// Map legacy block
+					var blockdata = block_get_name_state(block_name, block_state);
+					block_name = blockdata[0]
+					block_state = blockdata[1]
+
+					if (!is_undefined(mc_assets.block_name_map[?block_name]))
+						load_update_tree = true
 				}
 				
 				block_tex = value_get_save_id(blockmap[?"tex"], block_tex)

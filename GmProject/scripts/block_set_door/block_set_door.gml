@@ -2,6 +2,9 @@
 
 function block_set_door()
 {
+	if (build_get_connect)
+		return block_set_tall_block()
+
 	if (block_get_state_id_value(block_current, block_state_id_current, "half") = "upper")
 		return null
 	
@@ -120,6 +123,10 @@ function block_set_door()
 	if (open = "true")
 		dir = facing
 		
+	// Reset timeline positioning states before selecting block models
+	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "location", "north_west")
+	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "direction", "north")
+
 	var bottommodel, topmodel;
 	bottommodel = block_current.state_id_model_obj[block_state_id_current]
 	topmodel = block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "half", "upper")]
@@ -130,6 +137,7 @@ function block_set_door()
 	bottommodel = bottommodel.model[0]
 	topmodel = topmodel.model[0]
 
+	bottommodel.offset[Z] = 0
 	topmodel.offset[Z] = block_size
 
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "location", location)

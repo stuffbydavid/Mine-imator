@@ -43,6 +43,7 @@ function builder_thread_event_create()
 	build_edges = true
 	build_edit = false
 	build_remove = false
+	build_get_connect = false
 	
 	build_single_block = null
 	build_single_stateid = 0

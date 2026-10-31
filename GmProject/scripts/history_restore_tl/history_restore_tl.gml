@@ -64,10 +64,25 @@ function history_restore_tl(save, tl = null)
 		
 		// Restore parts
 		if (save.part_amount > 0)
-			part_list = ds_list_create()
+		{
+			if (part_list = null)
+				part_list = ds_list_create()
+			else
+				ds_list_clear(part_list)
+		}
 		
 		for (var p = 0; p < save.part_amount; p++)
 			ds_list_add(part_list, save_id_find(save.part_save_id[p]))
+
+		// Restore individually deleted scenery blocks to their part list
+		if (part_of != null && part_of.type = e_tl_type.SCENERY)
+		{
+			if (part_of.part_list = null)
+				part_of.part_list = ds_list_create()
+			
+			if (ds_list_find_index(part_of.part_list, id) < 0)
+				ds_list_add(part_of.part_list, id)
+		}
 		
 		// Restore references
 		for (var s = 0; s < save.usage_temp_shape_tex_amount; s++)

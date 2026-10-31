@@ -20,6 +20,9 @@ function action_tl_select(tl)
 		if (history_redo)
 		{
 			tl = save_id_find(history_data.tl_save_id)
+			if (tl = null)
+				return 0
+
 			shift = history_data.shift
 		}
 		else

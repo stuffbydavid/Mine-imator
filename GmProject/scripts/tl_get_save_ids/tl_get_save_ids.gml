@@ -3,6 +3,7 @@ function tl_get_save_ids()
 	temp = save_id_get(temp)
 	parent = save_id_get(parent)
 	part_of = save_id_get(part_of)
+	part_root = save_id_get(part_root)
 	glint_tex = save_id_get(glint_tex)
 
 	if (type = e_tl_type.BLOCK && part_of = null && !has_temp)

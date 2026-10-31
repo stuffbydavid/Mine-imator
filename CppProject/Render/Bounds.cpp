@@ -167,8 +167,18 @@ namespace CppProject
 			else if (axisFaces == 2)
 				upper = maxLimit;
 
-			// Apply the minimum X/Y size around the fitted center
-			if (axis != 2 && upper - lower < minSize)
+			// Anchor the minimum height to the bottom of the cell
+			if (axis == 2)
+			{
+				if (upper - lower < 1)
+				{
+					lower = minLimit;
+					upper = lower + 1;
+				}
+			}
+
+			// Center the minimum X/Y size around the fitted bounds
+			else if (upper - lower < minSize)
 			{
 				RealType center = (lower + upper) * 0.5;
 				lower = center - minSize * 0.5;

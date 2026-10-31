@@ -2044,13 +2044,15 @@
 			"states": {
 				"variant": [
 					{ "value": "gold_ore", "file": "gold_ore.json" },
-					{ "value": "deepslate_gold_ore", "file": "deepslate_gold_ore.json" }
+					{ "value": "deepslate_gold_ore", "file": "deepslate_gold_ore.json" },
+					{ "value": "nether_gold_ore", "file": "nether_gold_ore.json" }
 				]
 			},
 			"default_state": "variant=gold_ore",
 			"id": {
 				"minecraft:gold_ore": "variant=gold_ore",
-				"minecraft:deepslate_gold_ore": "variant=deepslate_gold_ore"
+				"minecraft:deepslate_gold_ore": "variant=deepslate_gold_ore",
+				"minecraft:nether_gold_ore": "variant=nether_gold_ore"
 			}
 		},
 		{
@@ -2907,42 +2909,34 @@
 		},
 		{
 			"name": "obsidian",
-			"file": "obsidian.json",
-			"id": "minecraft:obsidian"
-		},
-		{
-			"name": "torch",
 			"states": {
 				"variant": [
-					{ "value": "normal", "file": "torch.json" },
-					{ "value": "soul_torch", "file": "soul_torch.json" },
-					{ "value": "copper_torch", "file": "copper_torch.json" }
+					{ "value": "obsidian", "file": "obsidian.json" },
+					{ "value": "crying_obsidian", "file": "crying_obsidian.json" }
 				]
 			},
-			"default_state": "variant=normal",
-			"emissive": 0.75,
+			"default_state": "variant=obsidian",
 			"id": {
-				"minecraft:torch": "variant=normal",
-				"minecraft:soul_torch": "variant=soul_torch",
-				"minecraft:copper_torch": "variant=copper_torch"
+				"minecraft:obsidian": "variant=obsidian",
+				"minecraft:crying_obsidian": "variant=crying_obsidian"
 			}
 		},
 		{
-			"name": "wall_torch",
+			"name": "torch",
+			"file": "torch.json",
 			"states": {
-				"variant": [
-					{ "value": "normal", "file": "wall_torch.json" },
-					{ "value": "soul_torch", "file": "soul_wall_torch.json" },
-					{ "value": "copper_torch", "file": "copper_wall_torch.json" }
-				],
-				"facing": [ "north", "south", "east", "west" ]
+				"variant": [ "normal", "soul_torch", "copper_torch" ],
+				"facing": [ "up", "north", "south", "east", "west" ]
 			},
-			"default_state": "facing=east,variant=normal",
+			"default_state": "variant=normal,facing=up",
 			"emissive": 0.75,
 			"id": {
-				"minecraft:wall_torch": "variant=normal",
-				"minecraft:soul_wall_torch": "variant=soul_torch",
-				"minecraft:copper_wall_torch": "variant=copper_torch"
+				"minecraft:torch": "variant=normal,facing=up",
+				"minecraft:soul_torch": "variant=soul_torch,facing=up",
+				"minecraft:copper_torch": "variant=copper_torch,facing=up",
+				"minecraft:wall_torch": "variant=normal,facing=east",
+				"minecraft:soul_wall_torch": "variant=soul_torch,facing=east",
+				"minecraft:copper_wall_torch": "variant=copper_torch,facing=east"
 			}
 		},
 		{
@@ -3836,23 +3830,14 @@
 				"lit": [
 					{ "value": "true", "emissive": 0.75 },
 					{ "value": "false" }
-				]
-			},
-			"default_state": "lit=true",
-			"id": "minecraft:redstone_torch"
-		},
-		{
-			"name": "redstone_wall_torch",
-			"file": "redstone_wall_torch.json",
-			"states": {
-				"lit": [
-					{ "value": "true", "emissive": 0.75 },
-					{ "value": "false" }
 				],
-				"facing": [ "north", "east", "south", "west" ]
+				"facing": [ "up", "north", "south", "east", "west" ]
 			},
-			"default_state": "lit=true,facing=east",
-			"id": "minecraft:redstone_wall_torch"
+			"default_state": "lit=true,facing=up",
+			"id": {
+				"minecraft:redstone_torch": "facing=up",
+				"minecraft:redstone_wall_torch": "facing=east"
+			}
 		},
 		{
 			"name": "button",
@@ -6606,16 +6591,6 @@
 			"name": "soul_soil",
 			"file": "soul_soil.json",
 			"id": "minecraft:soul_soil"
-		},
-		{
-			"name": "nether_gold_ore",
-			"file": "nether_gold_ore.json",
-			"id": "minecraft:nether_gold_ore"
-		},
-		{
-			"name": "crying_obsidian",
-			"file": "crying_obsidian.json",
-			"id": "minecraft:crying_obsidian"
 		},
 		{
 			"name": "respawn_anchor",

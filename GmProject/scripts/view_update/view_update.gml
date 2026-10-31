@@ -146,19 +146,47 @@ function view_update(view, cam)
 	}
 	
 	// Jump to object or build structure
-	var focustl = place_build ? build_structure : tl_edit;
-	if ((window_busy = "" && content_mouseon) &&
+	var focustl, focusview;
+	focustl = place_build ? build_structure : tl_edit
+	focusview = view_main
+	if (view_second.show && (view_second.mouseon || view_main.surface_camera_last != view_camera_work))
+		focusview = view_second
+
+	if (window_state = "" && window_busy = "" && !textbox_isediting && view = focusview &&
 		focustl != null && instance_exists(focustl) && focustl.value_type[e_value_type.TRANSFORM_POS] &&
 		focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
 	{
 		tl_focus = focustl
-		cam_work_focus = focustl.world_pos
+		cam_work_angle_xy = cam_work_angle_look_xy
+		cam_work_angle_z = -cam_work_angle_look_z
+		
+		var bounds = null;
+		with (focustl)
+			bounds = tl_get_bounds(true)
+
+		if (bounds != null)
+		{
+			cam_work_focus = vec3_mul(vec3_add(bounds[0], bounds[1]), 0.5)
+			
+			// Project the bounds onto the view axes
+			var halfsize, viewmat, fovtan, aspect;
+			halfsize = vec3_mul(vec3_sub(bounds[1], bounds[0]), 0.5)
+			viewmat = array_copy_1d(view.surface_view_matrix)
+			for (var i = 0; i < 12; i++)
+				viewmat[@i] = abs(viewmat[@i])
+
+			halfsize = vec3_mul_matrix(halfsize, viewmat)
+			fovtan = tan(degtorad(45 * 0.5))
+			aspect = content_width / content_height
+
+			// Fit width and height while keeping the nearest face in view
+			cam_work_zoom_goal = (halfsize[Z] + max(halfsize[X] / (fovtan * aspect), halfsize[Y] / fovtan, clip_near)) * 1.25
+		}
+		else
+			cam_work_focus = focustl.world_pos
+
 		cam_work_focus_last = point3D_copy(cam_work_focus)
 		
-		camera_work_set_angle()
-		cam_work_angle_look_xy = cam_work_angle_xy
-		cam_work_angle_look_z = -cam_work_angle_z
-		cam_work_zoom_goal = 100
 		camera_work_set_from()
 		
 		cam_work_jump = true

@@ -125,6 +125,29 @@ function block_load(map, typemap)
 			}
 		}
 		
+		// Block's states describe two connected halves
+		has_connect = false
+		if (states_map != null)
+		{
+			var connectstates = [
+				[ "half", "lower", "upper" ],
+				[ "part", "head", "foot" ],
+				[ "type", "left", "right" ]
+			];
+			for (var i = 0; i < array_length(connectstates); i++)
+			{
+				var connectstate, state;
+				connectstate = connectstates[i]
+				state = states_map[?connectstate[0]]
+				
+				if (!is_undefined(state) && ds_map_exists(state.value_map, connectstate[1]) && ds_map_exists(state.value_map, connectstate[2]))
+				{
+					has_connect = true
+					break
+				}
+			}
+		}
+
 		// Has timeline
 		timeline = false
 		tl_model_double = false

@@ -30,6 +30,7 @@ function res_load_scenery_file(fn, blocksonly = false)
 
 		scenery_structure = false
 		scenery_palette_size = 0
+		
 		valid = res_load_scenery_block_map(blocksonly)
 
 		if (blocksonly || !valid)

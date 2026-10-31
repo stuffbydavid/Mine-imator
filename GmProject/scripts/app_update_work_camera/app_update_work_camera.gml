@@ -19,7 +19,17 @@ function app_update_work_camera()
 				cam_work_focus_tl = null
 			
 			if (cam_work_focus_tl)
-				cam_work_focus = point3D_copy(cam_work_focus_tl.world_pos)
+			{
+				var bounds = null;
+				with (cam_work_focus_tl)
+					bounds = tl_get_bounds(true)
+
+				// Focus on center of object bounds
+				if (bounds != null)
+					cam_work_focus = vec3_mul(vec3_add(bounds[0], bounds[1]), 0.5)
+				else
+					cam_work_focus = point3D_copy(cam_work_focus_tl.world_pos)
+			}
 		}
 		else
 			cam_work_focus_tl = null

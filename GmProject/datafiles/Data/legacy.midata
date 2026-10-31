@@ -4479,7 +4479,11 @@
 		"grass_path": "dirt_path",
 		"target_block": "target",
 		"jigsaw_block": "jigsaw",
-		"iron_bars": "bars"
+		"iron_bars": "bars",
+		"wall_torch": "torch",
+		"redstone_wall_torch": "redstone_torch",
+		"nether_gold_ore": { "name": "gold_ore", "state": "variant=nether_gold_ore" },
+		"crying_obsidian": { "name": "obsidian", "state": "variant=crying_obsidian" }
 	},
 	"legacy_block_states":
 	{

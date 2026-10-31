@@ -16,7 +16,7 @@ function action_build_place(airblock = false)
 				return false
 
 			blockpos = hobj.block_pos
-			blockdata = history_undo ? hobj.previous_block : [ hobj.block_id, hobj.state_id ]
+			blockdata = [ hobj.block_id, hobj.state_id ]
 		}
 	}
 	else
@@ -60,14 +60,19 @@ function action_build_place(airblock = false)
 		}
 	}
 
-	// Scenery edits replace one block without creating or deleting timelines
+	// Scenery edits update block meshes without creating or deleting timelines
 	if (target != null && target.type = e_tl_type.SCENERY)
 	{
-		var prevblock;
+		var prevblocks;
 		with (target)
-			prevblock = tl_update_block_meshes(blockpos, blockdata[0], blockdata[1])
+		{
+			if (history_undo)
+				prevblocks = tl_update_block_meshes(blockpos, 0, 0, hobj.previous_blocks)
+			else
+				prevblocks = tl_update_block_meshes(blockpos, blockdata[0], blockdata[1])
+		}
 		
-		if (prevblock = null)
+		if (prevblocks = null)
 			return false
 
 		if (hobj = null)
@@ -76,7 +81,7 @@ function action_build_place(airblock = false)
 			hobj.scenery_block = true
 			hobj.target_save_id = target.save_id
 			hobj.block_pos = blockpos
-			hobj.previous_block = prevblock
+			hobj.previous_blocks = prevblocks
 			hobj.block_id = blockdata[0]
 			hobj.state_id = blockdata[1]
 
