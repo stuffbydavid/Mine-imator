@@ -179,6 +179,7 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
+	#macro dir_names					[ "east", "west", "south", "north", "up", "down" ]
 
 	// Assets
 	#macro default_model					"human"

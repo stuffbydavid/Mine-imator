@@ -57,8 +57,8 @@ function action_build_remove()
 					for (var c = 0; c < ds_list_size(child.tree_list); c++)
 					{
 						var part = child.tree_list[|c];
-						if (part.type != e_tl_type.MODEL_PART || part.part_of != target)
-    						return false
+						if (part.part_of != target || (part.type != e_tl_type.MODEL_PART && part.type != e_tl_type.TEXT))
+							return false
 						
 						array_add(children, part)
 					}

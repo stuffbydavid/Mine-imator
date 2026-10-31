@@ -1,7 +1,7 @@
 #include "Generated/Scripts.hpp"
 
 #include "Asset/VertexBuffer.hpp"
-#include "World/GZIP.hpp"
+#include "Compress.hpp"
 
 #include <QDataStream>
 
@@ -9,7 +9,7 @@
 
 namespace CppProject
 {
-	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 6;
+	static constexpr uchar BLOCK_MESH_CACHE_FORMAT = 7;
 
 	// 2.0 mesh cache uses untransformed vertices and a 32x32 static block sheet
 	static constexpr uchar BLOCK_MESH_CACHE_FORMAT_LEGACY = 2;
@@ -27,7 +27,6 @@ namespace CppProject
 
 		QByteArray assetsVersion = VarGetStr(global::_app->setting_minecraft_assets_version).QStr().toUtf8();
 		qint64 totalBytes = sizeof(uchar) + sizeof(quint16) + assetsVersion.size() + sizeof(qint64) * 3 + sizeof(qint32) * 3;
-		RealType approxGzipRatio = 0.14;
 
 		for (IntType s = 0; s < res->block_meshes.Size(); s++)
 		{
@@ -57,16 +56,6 @@ namespace CppProject
 			WARNING("Block mesh cache exceeds the byte array size limit");
 			return;
 		}
-		
-		IntType mb = ceil((totalBytes / 1000000.0) * approxGzipRatio);
-		if (mb > 50)
-		{
-			if (res->scenery_cache_save == null_)
-				res->scenery_cache_save = question(text_get({ "load_scenery/save_cache", string(mb) + StringType("MB") }));
-
-			if (!res->scenery_cache_save)
-				return;
-		}
 
 		Timer tmr;
 		QByteArray data;
@@ -83,9 +72,9 @@ namespace CppProject
 		out.writeRawData(assetsVersion.constData(), assetsVersion.size());
 
 		// Save size
-		out << (qint64)res->scenery_size[X_];
-		out << (qint64)res->scenery_size[Y_];
-		out << (qint64)res->scenery_size[Z_];
+		out << (qint64)res->scenery_size.Value(X_).ToInt();
+		out << (qint64)res->scenery_size.Value(Y_).ToInt();
+		out << (qint64)res->scenery_size.Value(Z_).ToInt();
 		out << (qint32)res->block_meshes_num.Value(X_);
 		out << (qint32)res->block_meshes_num.Value(Y_);
 		out << (qint32)res->block_meshes_num.Value(Z_);
@@ -118,7 +107,7 @@ namespace CppProject
 			return;
 		}
 
-		Gzip::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 8);
+		Zstd::WriteAsync(std::move(data), filename.QStr(), "Block mesh cache", 3);
 	}
 
 	static BoolType LoadLegacyBlockCache(Scope<obj_resource> self, QDataStream& in);
@@ -130,10 +119,17 @@ namespace CppProject
 	#endif
 
 		Timer tmr;
-		tmr.Print("Unzip block mesh cache");
+		tmr.Print("Decompress block mesh cache");
+
+		QFile file(filename.QStr());
+		if (!file.open(QIODevice::ReadOnly))
+			return false;
+
+		BoolType legacy = file.peek(2) == QByteArray::fromHex("1f8b");
+		file.close();
 
 		QByteArray data;
-		BoolType decompressed = Gzip::Decompress(filename, data);
+		BoolType decompressed = legacy ? Gzip::Decompress(filename, data) : Zstd::Decompress(filename.QStr(), data);
 		if (!decompressed)
 			return false;
 
@@ -147,7 +143,7 @@ namespace CppProject
 			return false;
 
 		// Legacy file
-		if (format == BLOCK_MESH_CACHE_FORMAT_LEGACY)
+		if (legacy && format == BLOCK_MESH_CACHE_FORMAT_LEGACY)
 		{
 			BoolType loaded = LoadLegacyBlockCache(self, in);
 			if (loaded)
@@ -156,7 +152,7 @@ namespace CppProject
 			return loaded;
 		}
 
-		if (in.status() != QDataStream::Ok || format != BLOCK_MESH_CACHE_FORMAT)
+		if (in.status() != QDataStream::Ok || legacy || format != BLOCK_MESH_CACHE_FORMAT)
 			return false;
 
 		quint16 assetsVersionSize = 0;

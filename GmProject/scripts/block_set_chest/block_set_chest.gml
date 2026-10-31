@@ -48,8 +48,7 @@ function block_set_chest()
 			// Patch legacy orientation
 			if (legacy)
 			{
-				var directions, offsets, neighbors, pair, origin, paired, blocked, face;
-				directions = [ "east", "west", "south", "north" ]
+				var offsets, neighbors, pair, origin, paired, blocked, face;
 				offsets = [ [ 1, 0 ], [ -1, 0 ], [ 0, 1 ], [ 0, -1 ] ]
 				neighbors = 0
 				pair = null
@@ -119,11 +118,11 @@ function block_set_chest()
 				
 				face = XP
 				for (var d = XP; d <= YN; d++)
-					if (directions[d] = facing)
+					if (dir_names[d] = facing)
 						face = d
 				
 				if (blocked[face] && !blocked[face ^ 1])
-					facing = directions[face ^ 1]
+					facing = dir_names[face ^ 1]
 				
 				block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "facing", facing)
 			}
@@ -214,6 +213,7 @@ function block_set_chest()
 			case "west":  offset[Y] = 1; break
 			default: return null
 		}
+		
 		if (type = "left")
 			offset = vec3_mul(offset, -1)
 

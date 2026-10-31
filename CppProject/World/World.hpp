@@ -234,8 +234,8 @@ namespace CppProject
 		// Generate builder sections from a box in the opened world.
 		static void GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic = nullptr);
 
-		// Process block entities after filtering builder sections.
-		static void ProcessBuilderEntities();
+		// Process supported entities after filtering builder sections.
+		static void ProcessBuilderEntities(SchematicExport* schematic = nullptr);
 
 		// Adds a save from the given root directory, returns whether successful.
 		static BoolType AddSave(QString dir);

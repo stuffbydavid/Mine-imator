@@ -3,7 +3,7 @@
 #include "AppHandler.hpp"
 #include "Asset/Script.hpp"
 #include "Asset/Sprite.hpp"
-#include "GZIP.hpp"
+#include "Compress.hpp"
 #include "NBT.hpp"
 #include "Render/GraphicsApiHandler.hpp"
 #include "Render/Texture.hpp"
@@ -212,6 +212,7 @@ namespace CppProject
 		builder->build_size[Z_] = size.y;
 		Builder::offset = { box.start.x & SECTION_SIZEM1, box.start.z & SECTION_SIZEM1, box.start.y & SECTION_SIZEM1 };
 
+		builder->sch_entities = ArrType();
 		builder_start(Scope<obj_builder>(builder));
 
 		// Load regions within box
@@ -249,7 +250,7 @@ namespace CppProject
 
 	}
 
-	void World::ProcessBuilderEntities()
+	void World::ProcessBuilderEntities(SchematicExport* schematic)
 	{
 		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
 
@@ -287,6 +288,22 @@ namespace CppProject
 			}
 		}
 		builder_combine_threads(Scope<obj_builder>(builder->id));
+
+		if (schematic && schematic->error.isEmpty())
+		{
+			// Read only entity data from the snapshot
+			NbtCompound entityRoot;
+			entityRoot.value["Entities"] = schematic->schematic->value.value("Entities");
+
+			Map* entityMap = entityRoot.ToMap();
+			entityRoot.value.remove("Entities");
+
+			script_execute(Scope<obj_builder>(builder), {
+				asset_get_index("builder_read_entities"), entityMap->Value("Entities")
+			});
+
+			delete entityMap;
+		}
 	}
 
 	BoolType World::AddSave(QString dir)

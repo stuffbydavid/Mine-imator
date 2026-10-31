@@ -28,8 +28,8 @@ function block_set_door()
 			opposite = facing
 			switch (facing)
 			{
-				case "east": opposite = "west"; break
-				case "west": opposite = "east"; break
+				case "east":  opposite = "west"; break
+				case "west":  opposite = "east"; break
 				case "south": opposite = "north"; break
 				case "north": opposite = "south"; break
 			}

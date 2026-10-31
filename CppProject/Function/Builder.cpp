@@ -987,28 +987,10 @@ namespace CppProject
 		res_load_scenery_filter_mask(self);
 		res_load_scenery_block_map(self);
 
-		World::ProcessBuilderEntities();
+		World::ProcessBuilderEntities(schematic.get());
 
 		if (schematic)
-		{
-			if (schematic->error.isEmpty())
-			{
-				// Read only entity data
-				NbtCompound entityRoot;
-				entityRoot.value["Entities"] = schematic->schematic->value.value("Entities");
-				
-				Map* entityMap = entityRoot.ToMap();
-				entityRoot.value.remove("Entities");
-				
-				script_execute(Scope<obj_builder>(ObjType(obj_builder, global::mc_builder)), {
-					asset_get_index("builder_read_entities"), entityMap->Value("Entities")
-				});
-
-				delete entityMap;
-			}
-
 			schematic->SaveResource(self.object);
-		}
 
 		World::Close();
 

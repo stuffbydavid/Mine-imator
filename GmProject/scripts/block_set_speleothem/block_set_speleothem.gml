@@ -23,7 +23,10 @@ function block_set_speleothem()
 		return 0
 	
 	dir = block_get_state_id_value(block_current, block_state_id_current, "vertical_direction")
-	size = (dir = "up" ? (maxz - 1) - build_pos[Z] : build_pos[Z] - minz)
+	if (dir = "up")
+		size = (maxz - 1) - build_pos[Z]
+	else
+		size = build_pos[Z] - minz
 	sizeoffset = size
 	
 	if (thicknessprev = "frustum")

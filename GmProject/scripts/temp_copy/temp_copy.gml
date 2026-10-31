@@ -75,6 +75,7 @@ function temp_copy(to, copypatternskin = true)
 			to.block_repeat = array_copy_1d(block_repeat)
 			to.block_center = block_center
 			to.block_randomize = block_randomize
+			to.block_transform = block_transform
 			
 			if (type = e_temp_type.SCENERY) 
 				to.scenery = scenery

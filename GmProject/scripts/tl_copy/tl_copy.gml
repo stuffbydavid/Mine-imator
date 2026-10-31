@@ -105,7 +105,7 @@ function tl_copy(to)
 	{
 		to.block_name = block_name
 		to.block_state = array_copy_1d(block_state)
-		if (part_of = null && !has_temp)
+		if (!has_temp)
 		{
 			to.block_tex = block_tex
 			to.block_tex_material = block_tex_material
@@ -115,6 +115,7 @@ function tl_copy(to)
 			to.block_center_legacy = block_center_legacy
 			to.block_center = block_center
 			to.block_randomize = block_randomize
+			to.block_transform = block_transform
 		}
 	}
 	else if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null && part_of != "") ||
@@ -122,7 +123,7 @@ function tl_copy(to)
 	{
 		to.model_name = model_name
 		to.model_state = array_copy_1d(model_state)
-		if (part_of = null && !has_temp)
+		if (!has_temp)
 		{
 			to.model_tex = model_tex
 			to.model_tex_material = model_tex_material
@@ -132,7 +133,7 @@ function tl_copy(to)
 			to.model_blend_color_default = model_blend_color_default
 		}
 	}
-	else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
+	else if (type = e_tl_type.TEXT && !has_temp)
 	{
 		to.text_font = text_font
 		to.text_3d = text_3d

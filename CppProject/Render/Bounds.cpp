@@ -177,12 +177,13 @@ namespace CppProject
 				}
 			}
 
-			// Center the minimum X/Y size around the fitted bounds
+			// Center the minimum X/Y size while staying inside the cell
 			else if (upper - lower < minSize)
 			{
 				RealType center = (lower + upper) * 0.5;
-				lower = center - minSize * 0.5;
-				upper = center + minSize * 0.5;
+				RealType size = std::min(minSize, maxLimit - minLimit);
+				lower = std::clamp(center - size * 0.5, minLimit, maxLimit - size);
+				upper = lower + size;
 			}
 		}
 

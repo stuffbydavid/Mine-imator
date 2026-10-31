@@ -18,8 +18,6 @@ function res_load_scenery()
 			var err = false;
 			res_load_scenery_filter_mask()
 			
-			mc_builder.sch_entities = []
-
 			// Load from world when requested or when the schematic is unavailable
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{

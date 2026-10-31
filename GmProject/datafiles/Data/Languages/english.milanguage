@@ -3955,8 +3955,7 @@
 		"blocks": "Reading blocks...",
 		"download": "Downloading skins... (%1 / %2, %3 failed)",
 		"model": "Creating 3D model...",
-		"piece_of": "Piece of %1",
-		"save_cache": "Do you want to cache the 3D model of the scenery to instantly load it next time?\n\nThis will require at least %1 of space in the project folder."
+		"piece_of": "Piece of %1"
 	},
 	"load_audio/": {
 		"read": "Reading audio..."

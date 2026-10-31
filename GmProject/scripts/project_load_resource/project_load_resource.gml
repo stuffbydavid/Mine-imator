@@ -89,7 +89,6 @@ function project_load_resource(map)
 			scenery_filter_enabled = value_get_real(map[?"scenery_filter_enabled"], array_length(scenery_filter_array) > 0)
 			
 			scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
-			scenery_cache_save = value_get_real(map[?"scenery_cache_save"], scenery_cache_save)
 		}
 		
 		if (type = e_res_type.SCHEMATIC)

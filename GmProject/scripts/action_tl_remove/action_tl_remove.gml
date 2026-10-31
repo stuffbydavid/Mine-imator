@@ -43,7 +43,7 @@ function action_tl_remove()
 		if (contexttl = null || contexttl.selected)
 		{
 			with (obj_timeline)
-				if (selected && !delete_ready && (part_of = null || part_of.type = e_tl_type.SCENERY))
+				if (selected && !delete_ready && (part_of = null || block_timeline))
 					tl_remove_clean()
 			
 			tl_deselect_all()
@@ -51,7 +51,7 @@ function action_tl_remove()
 		else
 		{
 			with (contexttl)
-				if (!delete_ready && (part_of = null || part_of.type = e_tl_type.SCENERY))
+				if (!delete_ready && (part_of = null || block_timeline))
 					tl_remove_clean()
 		}
 		

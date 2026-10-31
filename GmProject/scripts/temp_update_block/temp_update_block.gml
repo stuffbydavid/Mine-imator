@@ -24,11 +24,17 @@ function temp_update_block()
 			build_size = vec3(1)
 		
 		build_randomize = other.block_randomize
-		build_transform = true
+		build_transform = other.block_transform
 		
-		// Keep original local orientation
-		if (other.part_of != null && build_single_block != null && build_single_block.timeline)
-			build_transform = build_single_block.tl_build_transform
+		// Keep the source orientation when generating scenery parts
+		if (other.part_of != null)
+		{
+			build_transform = true
+			if (build_single_block != null && build_single_block.timeline)
+				build_transform = build_single_block.tl_build_transform
+
+			other.block_transform = build_transform
+		}
 		
 		builder_start()
 		builder_spawn_threads(1)

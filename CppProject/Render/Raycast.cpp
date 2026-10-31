@@ -183,7 +183,7 @@ namespace CppProject
 			}
 
 			VertexBuffer* vbuf = FindVertexBuffer(object.vbufId);
-			if (!vbuf || !vbuf->valid || !vbuf->completed || vbuf->bounds.empty || !vbuf->bvh.triCount)
+			if (!vbuf || !vbuf->valid || !vbuf->completed || vbuf->bounds.empty || vbuf->numIndices < 3)
 				continue;
 
 			// Reject singular transforms before transforming the ray into mesh space
@@ -200,6 +200,10 @@ namespace CppProject
 			if (!vbuf->bounds.IntersectRay(localOrigin, localDirection, boundsDistance))
 				continue;
 
+			// Build on first use after a bounds hit
+			if (!vbuf->bvh.triCount)
+				vbuf->BuildBVH();
+
 			// tinybvh preserves the unnormalized local direction and world-space distance
 			tinybvh::Ray ray(
 				tinybvh::bvhvec3((float)localOrigin.x, (float)localOrigin.y, (float)localOrigin.z),
@@ -211,6 +215,7 @@ namespace CppProject
 			ray.cullBackfaces = true;
 
 			vbuf->bvh.Intersect(ray);
+
 			if (ray.hit.t >= (float)hit.distance)
 				continue;
 

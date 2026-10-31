@@ -4,126 +4,65 @@ function block_set_stairs()
 {
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0
-	
-	var shape, half, facing;
+
+	var shape, half, facing, leftfacings, rightfacings, facingdir;
 	shape = "straight"
 	half = block_get_state_id_value(block_current, block_state_id_current, "half")
 	facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
-	
-	// X+
-	if (!build_edge[XP] && (facing = "east" || facing = "west"))
+	leftfacings = [ "north", "south", "east", "west" ]
+	rightfacings = [ "south", "north", "west", "east" ]
+	facingdir = -1
+
+	for (var d = XP; d <= YN; d++)
 	{
-		var block = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z]);
-		if (block != null && block.type = "stairs")
+		if (facing = dir_names[d])
 		{
-			var stateid = builder_get_state_id(build_pos[X] + 1, build_pos[Y], build_pos[Z]);
-			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
-			{
-				var otherfacing = block_get_state_id_value(block, stateid, "facing");
-				if (facing = "east")
-				{
-					if (otherfacing = "south")
-						shape = "outer_right"
-					else if (otherfacing = "north")
-						shape = "outer_left"
-				}
-				else // West
-				{
-					if (otherfacing = "south")
-						shape = "inner_left"
-					else if (otherfacing = "north")
-						shape = "inner_right"
-				}
-			}
+			facingdir = d
+			break
 		}
 	}
-	
-	// X-
-	if (!build_edge[XN] && (facing = "east" || facing = "west"))
+
+	if (facingdir < 0)
+		return 0
+
+	// Check positive then negative neighbors so negative corners take priority
+	var firstdir = XP;
+	if (facingdir >= YP)
+		firstdir = YP
+
+	for (var d = firstdir; d < firstdir + 2; d++)
 	{
-		var block = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z]);
-		if (block != null && block.type = "stairs")
-		{
-			var stateid = builder_get_state_id(build_pos[X] - 1, build_pos[Y], build_pos[Z]);
-			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
-			{
-				var otherfacing = block_get_state_id_value(block, stateid, "facing");
-				if (facing = "east")
-				{
-					if (otherfacing = "south")
-						shape = "inner_right"
-					else if (otherfacing = "north")
-						shape = "inner_left"
-				}
-				else // West
-				{
-					if (otherfacing = "south")
-						shape = "outer_left"
-					else if (otherfacing = "north")
-						shape = "outer_right"
-				}
-			}
-		}
+		if (build_edge[d])
+			continue
+
+		var pos, block;
+		pos = vec3_add(build_pos, dir_get_vec3(d))
+		block = builder_get_block(pos[X], pos[Y], pos[Z])
+		if (block = null || block.type != "stairs")
+			continue
+
+		var stateid = builder_get_state_id(pos[X], pos[Y], pos[Z]);
+		if (block_get_state_id_value(block, stateid, "half") != half)
+			continue
+
+		var otherfacing, corner, turn;
+		otherfacing = block_get_state_id_value(block, stateid, "facing")
+		if (otherfacing = leftfacings[facingdir])
+			turn = "left"
+		else if (otherfacing = rightfacings[facingdir])
+			turn = "right"
+		else
+			continue
+
+		corner = "inner"
+		if (d = facingdir)
+			corner = "outer"
+
+		shape = corner + "_" + turn
 	}
-	
-	// Y+
-	if (!build_edge[YP] && (facing = "south" || facing = "north"))
-	{
-		var block = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z]);
-		if (block != null && block.type = "stairs")
-		{
-			var stateid = builder_get_state_id(build_pos[X], build_pos[Y] + 1, build_pos[Z]);
-			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
-			{
-				var otherfacing = block_get_state_id_value(block, stateid, "facing");
-				if (facing = "south")
-				{
-					if (otherfacing = "east")
-						shape = "outer_left"
-					else if (otherfacing = "west")
-						shape = "outer_right"
-				}
-				else // North
-				{
-					if (otherfacing = "east")
-						shape = "inner_right"
-					else if (otherfacing = "west")
-						shape = "inner_left"
-				}
-			}
-		}
-	}
-	
-	// Y-
-	if (!build_edge[YN] && (facing = "south" || facing = "north"))
-	{
-		var block = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z]);
-		if (block != null && block.type = "stairs")
-		{
-			var stateid = builder_get_state_id(build_pos[X], build_pos[Y] - 1, build_pos[Z]);
-			if (block_get_state_id_value(block, stateid, "half") = half) // Same half
-			{
-				var otherfacing = block_get_state_id_value(block, stateid, "facing");
-				if (facing = "south")
-				{
-					if (otherfacing = "east")
-						shape = "inner_left"
-					else if (otherfacing = "west")
-						shape = "inner_right"
-				}
-				else // North
-				{
-					if (otherfacing = "east")
-						shape = "outer_right"
-					else if (otherfacing = "west")
-						shape = "outer_left"
-				}
-			}
-		}
-	}
-	
+
 	if (shape != "straight")
 		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "shape", shape)
-	
+
 	return 0
 }

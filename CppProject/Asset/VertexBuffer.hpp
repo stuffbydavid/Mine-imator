@@ -71,7 +71,7 @@ namespace CppProject
 		// Builds a raycasting acceleration BVH using the geometry.
 		void BuildBVH();
 
-		// Writes the vertex buffer data to the given stream.
+		// Writes the vertex buffer arrays as byte planes for compression.
 		void Write(QDataStream& stream);
 
 		// Returns the required size in bytes for writing to a stream.
@@ -80,7 +80,7 @@ namespace CppProject
 		// Creates a copy of the vertex buffer data without allocating GPU buffers.
 		VertexBuffer* Copy() const;
 
-		// Uploads edited geometry and rebuilds bounds, cached batches and the raycasting BVH.
+		// Uploads edited geometry, updates bounds and invalidates cached batches and the BVH.
 		void UpdateBuffers();
 
 		BoolType batching = true; // Allow batching of the vertex buffer

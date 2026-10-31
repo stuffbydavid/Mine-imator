@@ -166,6 +166,7 @@ function project_load_timeline(map)
 				block_tex_material = value_get_save_id(directblockmap[?"tex_material"], project_pack_res)
 				block_tex_normal = value_get_save_id(directblockmap[?"tex_normal"], project_pack_res)
 				block_randomize = value_get_real(directblockmap[?"randomize"], true)
+				block_transform = value_get_real(directblockmap[?"transform"], block_transform)
 				block_repeat_enable = value_get_real(directblockmap[?"repeat_enable"], false)
 				block_repeat = value_get_point3D(directblockmap[?"repeat"], vec3(1))
 				block_center_legacy = false

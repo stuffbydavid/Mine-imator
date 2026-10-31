@@ -68,9 +68,6 @@ function project_save_resource()
 			json_save_array_done()
 
 			json_save_var_bool("scenery_download_skins", scenery_download_skins)
-
-			if (scenery_cache_save != null)
-				json_save_var_bool("scenery_cache_save", scenery_cache_save)
 		}
 		
 		if (type = e_res_type.SCHEMATIC)

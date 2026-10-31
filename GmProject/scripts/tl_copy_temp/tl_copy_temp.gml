@@ -21,6 +21,7 @@ function tl_copy_temp(src, dest)
 			dest.block_center_legacy = block_center_legacy
 			dest.block_center = block_center
 			dest.block_randomize = block_randomize
+			dest.block_transform = block_transform
 			dest.block_meshes = block_meshes
 			dest.block_meshes_num = block_meshes_num
 			dest.block_meshes_active = block_meshes_active

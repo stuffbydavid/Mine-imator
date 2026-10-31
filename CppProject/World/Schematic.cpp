@@ -1,5 +1,5 @@
 #include "World.hpp"
-#include "GZIP.hpp"
+#include "Compress.hpp"
 
 #include "Asset/DataStructure.hpp"
 

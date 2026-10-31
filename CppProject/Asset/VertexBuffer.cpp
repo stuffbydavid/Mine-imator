@@ -1,5 +1,6 @@
 #include "VertexBuffer.hpp"
 #include "AppHandler.hpp"
+#include "Compress.hpp"
 #include "Shader.hpp"
 #include "Render/VertexBufferRenderer.hpp"
 
@@ -75,8 +76,8 @@ namespace CppProject
 			// Read vertices and indices before creating GPU buffers
 			vertexData.Alloc(numVert, false);
 			indexData.Alloc(numInd, false);
-			if (stream.readRawData((char*)vertexData.data, (int)vertexBytes) != vertexBytes ||
-				stream.readRawData((char*)indexData.data, (int)indexBytes) != indexBytes)
+			if (!ReadShuffledArray(stream, vertexData.data, numVert, sizeof(Vertex)) ||
+				!ReadShuffledArray(stream, indexData.data, numInd, sizeof(uint32_t)))
 			{
 				WARNING("readRawData error");
 				return;
@@ -102,7 +103,7 @@ namespace CppProject
 					return;
 
 				triangleBlockPos.Alloc(numInd / 3, false);
-				if (stream.readRawData((char*)triangleBlockPos.data, (int)bytes) != bytes)
+				if (!ReadShuffledArray(stream, triangleBlockPos.data, numInd / 3, sizeof(uint32_t)))
 					return;
 			}
 
@@ -115,8 +116,6 @@ namespace CppProject
 
 		completed = true;
 		valid = true;
-
-		BuildBVH();
 	}
 
 	VertexBuffer::~VertexBuffer()
@@ -286,6 +285,14 @@ namespace CppProject
 	void VertexBuffer::AddBlockBounds(const BlockPos& blockPos, BlockBounds& bounds) const
 	{
 		Bounds& blockBounds = bounds.blockBounds;
+		Bounds allowedBounds = blockBounds;
+
+		// Retain upper-cell candidates until triangle metadata resolves double blocks
+		if (triangleBlockPos.Size() && !blockPos.doubleBlock)
+			allowedBounds.maxPoint.z += block_size_;
+
+		if (!this->bounds.Intersects(allowedBounds))
+			return;
 
 		for (IntType i = 0; i < numIndices; i += 3)
 		{
@@ -328,6 +335,8 @@ namespace CppProject
 			WARNING("Buffer already completed");
 			return;
 		}
+
+		bvh = tinybvh::BVH();
 
 		// Assign each thread a non-overlapping range in the final mesh
 		IntType numThreads = 0;
@@ -409,8 +418,6 @@ namespace CppProject
 		bounds = Bounds(vertexData);
 
 		CreateBuffers(false);
-
-		BuildBVH();
 	}
 
 	void VertexBuffer::UpdateTangents(IntType firstIndex)
@@ -462,15 +469,15 @@ namespace CppProject
 		if (!numIndices)
 			return;
 
-		stream.writeRawData((const char*)vertexData.Data(), (int)(numVertices * sizeof(Vertex)));
-		stream.writeRawData((const char*)indexData.Data(), (int)(numIndices * sizeof(uint32_t)));
+		WriteShuffledArray(stream, vertexData.Data(), numVertices, sizeof(Vertex));
+		WriteShuffledArray(stream, indexData.Data(), numIndices, sizeof(uint32_t));
 
 		stream << quint8(triangleBlockPos.Size() > 0);
 
 		if (triangleBlockPos.Size())
 		{
 			stream << qint32(blockPosOrigin.x) << qint32(blockPosOrigin.y) << qint32(blockPosOrigin.z);
-			stream.writeRawData((const char*)triangleBlockPos.Data(), (int)triangleBlockPos.SizeInBytes());
+			WriteShuffledArray(stream, triangleBlockPos.Data(), triangleBlockPos.Size(), sizeof(uint32_t));
 		}
 	}
 
@@ -519,6 +526,8 @@ namespace CppProject
 		if (App && VB)
 			VB->Invalidate(id);
 
+		bvh = tinybvh::BVH();
+
 		// Match only retained triangles, before appending their replacements
 		ApplyTriangleRemovals();
 
@@ -553,17 +562,10 @@ namespace CppProject
 
 		UpdateTangents(firstIndex);
 
-		bounds.Reset();
-		for (IntType i = 0; i < numIndices; i++)
-		{
-			const Vertex& vertex = vertexData[indexData[i]];
-			bounds.AddPoint({ vertex.x, vertex.y, vertex.z });
-		}
+		bounds = Bounds(vertexData);
 
 		Mesh<Vertex>::UpdateBuffers();
 		completed = true;
-
-		BuildBVH();
 	}
 
 	void VertexBuffer::ApplyTriangleRemovals()
@@ -670,16 +672,16 @@ namespace CppProject
 		}
 
 		IntType oldSize = triangleBlockPos.Size();
-		triangleBlockPos.Alloc(totalTriangles, false);
+		if (oldSize != totalTriangles)
+			triangleBlockPos.Alloc(totalTriangles, false);
 
 		// Repack existing triangles if the origin moved
-		for (IntType i = 0; i < existingTriangles; i++)
-		{
-			if (i >= oldSize)
-				triangleBlockPos[i] = BlockPos::NO_BLOCK_POS;
-			else if (!(oldOrigin == blockPosOrigin))
+		if (!(oldOrigin == blockPosOrigin))
+			for (IntType i = 0; i < std::min(oldSize, existingTriangles); i++)
 				triangleBlockPos[i] = BlockPos(triangleBlockPos.Value(i), oldOrigin).Pack(blockPosOrigin);
-		}
+
+		for (IntType i = oldSize; i < existingTriangles; i++)
+			triangleBlockPos[i] = BlockPos::NO_BLOCK_POS;
 	}
 
 	void VertexBuffer::CopyBlockPositions(ThreadData& thread, IntType triangleOffset)

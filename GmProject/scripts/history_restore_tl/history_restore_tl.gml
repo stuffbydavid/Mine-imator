@@ -75,7 +75,7 @@ function history_restore_tl(save, tl = null)
 			ds_list_add(part_list, save_id_find(save.part_save_id[p]))
 
 		// Restore individually deleted scenery blocks to their part list
-		if (part_of != null && part_of.type = e_tl_type.SCENERY)
+		if (block_timeline)
 		{
 			if (part_of.part_list = null)
 				part_of.part_list = ds_list_create()

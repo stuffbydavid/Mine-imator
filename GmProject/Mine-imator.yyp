@@ -1626,7 +1626,6 @@
     {"id":{"name":"block_set_door","path":"scripts/block_set_door/block_set_door.yy",},},
     {"id":{"name":"block_set_double_plant","path":"scripts/block_set_double_plant/block_set_double_plant.yy",},},
     {"id":{"name":"block_set_fence_gate","path":"scripts/block_set_fence_gate/block_set_fence_gate.yy",},},
-    {"id":{"name":"block_set_fence_nether","path":"scripts/block_set_fence_nether/block_set_fence_nether.yy",},},
     {"id":{"name":"block_set_fence","path":"scripts/block_set_fence/block_set_fence.yy",},},
     {"id":{"name":"block_set_fire","path":"scripts/block_set_fire/block_set_fire.yy",},},
     {"id":{"name":"block_set_kelp","path":"scripts/block_set_kelp/block_set_kelp.yy",},},

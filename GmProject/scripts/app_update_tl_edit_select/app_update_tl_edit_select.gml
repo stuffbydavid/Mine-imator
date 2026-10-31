@@ -53,8 +53,8 @@ function app_update_tl_edit_select()
 		if (!selected)
 			continue
 		
-		// Enable duplicate, remove and export settings?
-		if (part_of = null)
+		// Enable duplicate, delete and export settings
+		if (part_of = null || block_timeline)
 			app.timeline_settings = true
 		
 		if (keyframe_select != null)

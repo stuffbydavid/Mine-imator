@@ -59,6 +59,8 @@ function tl_event_create()
 	part_of = null
 	part_list = null
 	part_root = null
+	block_timeline = false
+	block_transform = true
 	
 	block_meshes = []
 	block_meshes_edit = []

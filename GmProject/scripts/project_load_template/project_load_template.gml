@@ -214,6 +214,7 @@ function project_load_template(map)
 				}
 				
 				block_randomize = value_get_real(blockmap[?"randomize"], block_randomize)
+				block_transform = value_get_real(blockmap[?"transform"], block_transform)
 				block_repeat_enable = value_get_real(blockmap[?"repeat_enable"], block_repeat_enable)
 				block_repeat = value_get_point3D(blockmap[?"repeat"], block_repeat)
 				block_center = value_get_real(blockmap[?"center"], load_format < e_project.FORMAT_210)

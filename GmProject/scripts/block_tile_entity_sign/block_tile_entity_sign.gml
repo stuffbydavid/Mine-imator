@@ -78,7 +78,7 @@ function block_tile_entity_sign(map)
 	}
 
 	var hastext = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]));
-	if (hastext != prevtext)
+	if (mc_builder.block_tl_count_map != null && hastext != prevtext)
 	{
 		var count = value_get_real(mc_builder.block_tl_count_map[?"sign"], 0) + (hastext ? 1 : -1);
 		if (count > 0)

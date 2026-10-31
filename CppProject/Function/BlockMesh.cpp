@@ -6,6 +6,9 @@
 
 namespace CppProject
 {
+	static constexpr IntType BLOCK_AREA_RADIUS = 2;
+	static constexpr IntType BLOCK_AREA_SIZE = BLOCK_AREA_RADIUS * 2 + 1;
+
 	static BuilderState BlockMeshesGetBlock(obj_timeline* self, IntType xx, IntType yy, IntType zz, BoolType source)
 	{
 		BuilderState state;
@@ -112,6 +115,40 @@ namespace CppProject
 		return state;
 	}
 
+	static QVector<BuilderState> BlockMeshesReadArea(obj_timeline* self, const WorldVec& pos, BoolType source)
+	{
+		// Read a 5x5x5 block area in builder axis order
+		QVector<BuilderState> blocks;
+		blocks.reserve(BLOCK_AREA_SIZE * BLOCK_AREA_SIZE * BLOCK_AREA_SIZE);
+
+		for (IntType dz = -BLOCK_AREA_RADIUS; dz <= BLOCK_AREA_RADIUS; dz++)
+		for (IntType dy = -BLOCK_AREA_RADIUS; dy <= BLOCK_AREA_RADIUS; dy++)
+		for (IntType dx = -BLOCK_AREA_RADIUS; dx <= BLOCK_AREA_RADIUS; dx++)
+		{
+			WorldVec blockPos = pos + WorldVec(dy, -dx, dz);
+			blocks.append(BlockMeshesGetBlock(self, blockPos.x, blockPos.y, blockPos.z, source));
+		}
+
+		return blocks;
+	}
+
+	static Section* BlockMeshesCreateSection(const WorldVec& offset)
+	{
+		// Keep the local block area in one builder section
+		Builder::size = { SECTION_SIZE, SECTION_SIZE, SECTION_SIZE };
+		Builder::offset = offset;
+		Builder::sectionsNum = { 1, 1, 1 };
+		Builder::sectionsXY = 1;
+		if (Builder::sections.Size() != 1)
+			Builder::sections.Alloc(1, false);
+
+		Section* section = new Section({ 0, 0, 0 }, { SECTION_SIZE, SECTION_SIZE, SECTION_SIZE });
+		section->AddBuilderState({ 0, 0, false });
+		Builder::sections[0] = section;
+
+		return section;
+	}
+
 	static BoolType BlockMeshesGetConnectedBlock(obj_timeline* self, const WorldVec& pos, BuilderState state, BoolType legacy, WorldVec& connectedPos)
 	{
 		if (!state.blockId)
@@ -122,32 +159,24 @@ namespace CppProject
 		if (script < 0)
 			return false;
 
-		// Let the block's script resolve its connected block in a small source neighborhood
-		Builder::size = { SECTION_SIZE, SECTION_SIZE, SECTION_SIZE };
-		Builder::offset = { 0, 0, 0 };
-		Builder::sectionsNum = { 1, 1, 1 };
-		Builder::sectionsXY = 1;
-		Builder::sections.Alloc(1, false);
+		// Let the block's script resolve its connected block in a small source area
+		std::unique_ptr<Section> section(BlockMeshesCreateSection({ 0, 0, 0 }));
+		const QVector<BuilderState> blocks = BlockMeshesReadArea(self, pos, false);
+		IntType index = 0;
 
-		std::unique_ptr<Section> section(new Section({ 0, 0, 0 }, { SECTION_SIZE, SECTION_SIZE, SECTION_SIZE }));
-		section->AddBuilderState({ 0, 0, false });
-		Builder::sections[0] = section.get();
-
-		for (IntType zz = 0; zz < 5; zz++)
-		for (IntType yy = 0; yy < 5; yy++)
-		for (IntType xx = 0; xx < 5; xx++)
+		for (IntType zz = 0; zz < BLOCK_AREA_SIZE; zz++)
+		for (IntType yy = 0; yy < BLOCK_AREA_SIZE; yy++)
+		for (IntType xx = 0; xx < BLOCK_AREA_SIZE; xx++, index++)
 		{
-			WorldVec localPos = pos + WorldVec(yy - 2, 2 - xx, zz - 2);
-			BuilderState block = BlockMeshesGetBlock(self, localPos.x, localPos.y, localPos.z, false);
-			section->builder.paletteIndices[section->GetBlockOffset({ xx, yy, zz })] = section->AddBuilderState(block);
+			section->builder.paletteIndices[section->GetBlockOffset({ xx, yy, zz })] = section->AddBuilderState(blocks[index]);
 		}
 
 		std::unique_ptr<obj_builder_thread> thread(new obj_builder_thread);
-		thread->build_size = ArrType::From({ 5, 5, 5 });
+		thread->build_size = ArrType::From({ BLOCK_AREA_SIZE, BLOCK_AREA_SIZE, BLOCK_AREA_SIZE });
 		thread->build_max_pos = thread->build_size;
-		thread->build_size_xy = 25;
-		thread->build_size_total = 125;
-		thread->build_pos = ArrType::From({ 2, 2, 2 });
+		thread->build_size_xy = BLOCK_AREA_SIZE * BLOCK_AREA_SIZE;
+		thread->build_size_total = thread->build_size_xy * BLOCK_AREA_SIZE;
+		thread->build_pos = ArrType::From({ BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS });
 		thread->build_edit = true;
 		thread->build_get_connect = true;
 
@@ -165,7 +194,7 @@ namespace CppProject
 		if (!connected.IsVec())
 			return false;
 
-		WorldVec offset = WorldVec(connected.ToVec()) - WorldVec(2, 2, 2);
+		WorldVec offset = WorldVec(connected.ToVec()) - WorldVec(BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS);
 		connectedPos = pos + WorldVec(offset.y, -offset.x, offset.z);
 
 		return true;
@@ -477,12 +506,6 @@ namespace CppProject
 		QHash<IntType, quint64> updatedVbuffers;
 		QVector<ArrType> addedBlocksChanged;
 
-		// Reuse a small section of blocks regardless of the edited block's coordinates
-		Builder::size = { SECTION_SIZE, SECTION_SIZE, SECTION_SIZE };
-		Builder::sectionsNum = { 1, 1, 1 };
-		Builder::sectionsXY = 1;
-		Builder::sections.Alloc(1, false);
-
 		std::unique_ptr<Section> section;
 
 		for (const WorldVec& blockPos : blockPosList)
@@ -494,7 +517,7 @@ namespace CppProject
 			WorldVec repeatOrigin = repeatPos * size;
 			WorldVec localPos = blockPos - repeatOrigin;
 			WorldVec buildBlockPos = { size.y - 1 - localPos.y, localPos.x, localPos.z };
-			Builder::offset = WorldVec(4, 4, 4) - buildBlockPos;
+			WorldVec buildOffset = WorldVec(BLOCK_AREA_SIZE - 1, BLOCK_AREA_SIZE - 1, BLOCK_AREA_SIZE - 1) - buildBlockPos;
 
 			WorldVec meshPos = WorldVec(
 				BlockMeshesGetAxisIndex(localPos.x, size.x),
@@ -516,6 +539,10 @@ namespace CppProject
 			
 			// Mask of affected vertex buffers
 			quint64 usedVbuffers = 0;
+
+			// Both passes read the same source and current blocks
+			const QVector<BuilderState> sourceBlocks = BlockMeshesReadArea(self.object, blockPos, true);
+			const QVector<BuilderState> currentBlocks = BlockMeshesReadArea(self.object, blockPos, false);
 
 			// Remove triangles, then regenerate new geometry
 			for (IntType pass = 0; pass < 2; pass++)
@@ -554,27 +581,27 @@ namespace CppProject
 				thread->build_size_xy = buildSize.x * buildSize.y;
 				thread->build_size_total = thread->build_size_xy * buildSize.z;
 
-				// Replace the previous section with an empty block neighborhood
-				section.reset(new Section({ 0, 0, 0 }, { SECTION_SIZE, SECTION_SIZE, SECTION_SIZE }));
-				section->AddBuilderState({ 0, 0, false });
-				Builder::sections[0] = section.get();
+				// Start each pass with independent palette and model data
+				section.reset(BlockMeshesCreateSection(buildOffset));
 
 				// Fill ordinary builder sections, retaining air and waterlogged palette entries
-				for (IntType dz = -2; dz <= 2; dz++)
-				for (IntType dy = -2; dy <= 2; dy++)
-				for (IntType dx = -2; dx <= 2; dx++)
+				IntType areaIndex = 0;
+				for (IntType dz = -BLOCK_AREA_RADIUS; dz <= BLOCK_AREA_RADIUS; dz++)
+				for (IntType dy = -BLOCK_AREA_RADIUS; dy <= BLOCK_AREA_RADIUS; dy++)
+				for (IntType dx = -BLOCK_AREA_RADIUS; dx <= BLOCK_AREA_RADIUS; dx++, areaIndex++)
 				{
 					WorldVec localBlockPos = blockPos + WorldVec(dy, -dx, dz);
 					if (!repeatBounds.Contains(localBlockPos))
 						continue;
 
 					WorldVec bp = buildBlockPos + WorldVec(dx, dy, dz);
-					BuilderState state = BlockMeshesGetBlock(self.object, localBlockPos.x, localBlockPos.y, localBlockPos.z, removePass && rebuild);
+					BuilderState state = currentBlocks[areaIndex];
+					if (removePass && rebuild)
+						state = sourceBlocks[areaIndex];
 
 					// Retain source IDs for animated block exclusion
-					BuilderState original = BlockMeshesGetBlock(self.object, localBlockPos.x, localBlockPos.y, localBlockPos.z, true);
 					IntType buildIndex = BlockMeshesGetBuildIndex(bp, sourceBuildSize);
-					ds_map_add(thread->block_tl_map, buildIndex, (IntType)original.blockId);
+					ds_map_add(thread->block_tl_map, buildIndex, (IntType)sourceBlocks[areaIndex].blockId);
 
 					// Edited block
 					if (addPass)
@@ -602,7 +629,6 @@ namespace CppProject
 				for (IntType dy = -1; dy <= 1; dy++)
 				for (IntType dx = -1; dx <= 1; dx++)
 				{
-					BoolType resolveStage = (stage == 0);
 					BoolType genStage = (stage == 1);
 
 					WorldVec bp = buildBlockPos + WorldVec(dx, dy, dz);

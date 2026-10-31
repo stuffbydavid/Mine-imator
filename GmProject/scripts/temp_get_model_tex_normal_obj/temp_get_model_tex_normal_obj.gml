@@ -11,7 +11,7 @@ function temp_get_model_tex_normal_obj(texobj)
 		(texobj.model_texture = null && texobj.model_texture_normal_map = null)) // Not a valid model texture, use the library setting
 	{
 		// Animatable block in scenery, use scenery's library setting(If it's a pack)
-		if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK && part_of != null && part_of.type = e_tl_type.SCENERY)
+		if (object_index = obj_timeline && type = e_tl_type.SPECIAL_BLOCK && block_timeline)
 		{
 			with (part_of)
 			{

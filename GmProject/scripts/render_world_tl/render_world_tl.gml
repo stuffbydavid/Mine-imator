@@ -2,7 +2,11 @@
 
 function render_world_tl()
 {
-	world_raycast_set_tl(id)
+	// Set raycast timeline
+	if (type != e_tl_type.TEXT)
+		world_raycast_set_tl(id)
+	else
+		world_raycast_set_tl(noone)
 
 	// Transparent block pass
 	if (render_world_blocks_transparent = true &&

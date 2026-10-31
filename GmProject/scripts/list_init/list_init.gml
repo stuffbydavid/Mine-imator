@@ -1113,33 +1113,30 @@ function list_init(name)
 			texobj = res_eval(texsource)
 			
 			// Animatable block in scenery
-			if (tl_edit.type = e_tl_type.BLOCK && tl_edit.part_of != null)
+			if (tl_edit.type = e_tl_type.BLOCK && tl_edit.block_timeline)
 			{
-				if (tl_edit.part_of.type = e_tl_type.SCENERY)
+				var temp = tl_edit.part_of.temp;
+
+				with (temp)
 				{
-					var temp = tl_edit.part_of.temp;
-					
-					with (temp)
+					if (name = "frame_editor/block_tex_material")
 					{
-						if (name = "frame_editor/block_tex_material")
-						{
-							if (res_eval(block_tex_material).type = e_res_type.PACK || res_eval(block_tex_material).type = e_res_type.BLOCK_SHEET)
-								texsource = block_tex_material
-						}
-						else if (name = "frame_editor/block_tex_normal")
-						{
-							if (res_eval(block_tex_normal).type = e_res_type.PACK || res_eval(block_tex_normal).type = e_res_type.BLOCK_SHEET)
-								texsource = block_tex_normal
-						}
-						else if (name = "frame_editor/block_tex")
-						{
-							if (res_eval(block_tex).type = e_res_type.PACK || res_eval(block_tex).type = e_res_type.BLOCK_SHEET)
-								texsource = block_tex
-						}
+						if (res_eval(block_tex_material).type = e_res_type.PACK || res_eval(block_tex_material).type = e_res_type.BLOCK_SHEET)
+							texsource = block_tex_material
 					}
-					
-					texobj = res_eval(texsource)
+					else if (name = "frame_editor/block_tex_normal")
+					{
+						if (res_eval(block_tex_normal).type = e_res_type.PACK || res_eval(block_tex_normal).type = e_res_type.BLOCK_SHEET)
+							texsource = block_tex_normal
+					}
+					else if (name = "frame_editor/block_tex")
+					{
+						if (res_eval(block_tex).type = e_res_type.PACK || res_eval(block_tex).type = e_res_type.BLOCK_SHEET)
+							texsource = block_tex
+					}
 				}
+
+				texobj = res_eval(texsource)
 			}
 			
 			menu_add_item(texsource, text_get("list/default", texobj.display_name), texobj.block_preview_texture)

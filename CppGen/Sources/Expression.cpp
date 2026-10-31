@@ -24,29 +24,23 @@ String Expression::toTernaryCpp(ResolveScope* scope, Expression* expr1, Expressi
 {
 	DataType::CppType expr2Type = expr2->getResolvedCppType();
 	DataType::CppType expr3Type = expr3->getResolvedCppType();
-	bool expr2TypeVarType = expr2Type == DataType::CppType::VarType;
-	bool expr3TypeVarType = expr3Type == DataType::CppType::VarType;
 	bool expr2Numeric = expr2Type == DataType::CppType::RealType || expr2Type == DataType::CppType::IntType || expr2Type == DataType::CppType::BoolType;
 	bool expr3Numeric = expr3Type == DataType::CppType::RealType || expr3Type == DataType::CppType::IntType || expr3Type == DataType::CppType::BoolType;
-	
-	// Different non-numeric branches need an explicit common variant type
-	bool variant = expr2TypeVarType || expr3TypeVarType || (expr2Type != expr3Type && !(expr2Numeric && expr3Numeric));
 
-	String cpp = expr1->toConditionCpp(scope, true) + " ? ";
+	DataType commonType;
+	commonType.cppType = expr2Type;
+	if (expr2Type != expr3Type)
+	{
+		if (expr2Numeric && expr3Numeric)
+			commonType.cppType = (expr2Type == DataType::CppType::RealType || expr3Type == DataType::CppType::RealType)
+				? DataType::CppType::RealType : DataType::CppType::IntType;
+		else
+			commonType.cppType = DataType::CppType::VarType;
+	}
 
-	if (variant && !expr2TypeVarType)
-		cpp += "VarType(" + expr2->toCpp(scope) + ")";
-	else
-		cpp += expr2->toCpp(scope);
-
-	cpp += " : ";
-
-	if (variant && !expr3TypeVarType)
-		cpp += "VarType(" + expr3->toCpp(scope) + ")";
-	else
-		cpp += expr3->toCpp(scope);
-
-	return cpp;
+	// Cast both branches since emitted expressions can differ from their inferred types
+	String cast = commonType.toCpp();
+	return expr1->toConditionCpp(scope, true) + " ? " + cast + "(" + expr2->toCpp(scope) + ") : " + cast + "(" + expr3->toCpp(scope) + ")";
 }
 
 String Expression::toExpressionArrayCpp(ResolveScope* scope, List<Expression*> expressions)

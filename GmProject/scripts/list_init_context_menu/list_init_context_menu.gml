@@ -120,13 +120,14 @@ function list_init_context_menu(name)
 			list_item_last.disabled = context_menu_value = null
 			
 			list_item_add(text_get("context_menu/tl/duplicate"), null, text_control_name(keybinds[e_keybind.TIMELINE_DUPLICATE].keybind), null, icons.DUPLICATE, null, action_tl_duplicate, true)
-			list_item_last.disabled = (context_menu_value = null || context_menu_value.part_of != null)
+			list_item_last.disabled = (context_menu_value = null || (context_menu_value.part_of != null && !context_menu_value.block_timeline))
 			
 			list_item_add(text_get("context_menu/tl/delete"), null, text_control_name(keybinds[e_keybind.TIMELINE_DELETE].keybind), null, icons.DELETE, null, action_tl_remove)
-			list_item_last.disabled = (context_menu_value = null || (context_menu_value.part_of != null && context_menu_value.part_of.type != e_tl_type.SCENERY))
+			list_item_last.disabled = (context_menu_value = null || (context_menu_value.part_of != null && !context_menu_value.block_timeline))
 			
 			list_item_add(text_get("context_menu/tl/export"), null, "", null, icons.ASSET_EXPORT, null, object_save)
-			list_item_last.disabled = (context_menu_value = null || (!context_menu_value.selected && context_menu_value.part_of != null)) ? true : !timeline_settings
+			list_item_last.disabled = (context_menu_value = null || (context_menu_value.selected ? !timeline_settings :
+				(context_menu_value.part_of != null && !context_menu_value.block_timeline)))
 			
 			list_item_add(text_get("context_menu/tl/select_all"), null, text_control_name(keybinds[e_keybind.TIMELINE_SELECT].keybind), null, icons.SELECT_ALL, null, action_tl_select_all, true)
 			list_item_add(text_get("context_menu/tl/expand_all"), null, "", null, icons.MAXIMIZE, null, action_tl_extend_all)
