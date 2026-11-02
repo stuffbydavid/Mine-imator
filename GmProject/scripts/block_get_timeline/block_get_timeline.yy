@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"block_get_timeline",
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Scripts/Minecraft/Blocks.yy",
+    "name":"Timeline",
+    "path":"folders/Scripts/Minecraft/Blocks/Timeline.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

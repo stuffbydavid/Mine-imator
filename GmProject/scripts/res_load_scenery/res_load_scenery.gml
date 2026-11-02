@@ -204,6 +204,8 @@ function res_load_scenery()
 						model_state = entity[1]
 						animated = false
 						animated_parts = []
+						block_build_name = ""
+						block_build_state = []
 						position = vec3(entity[2][X] * block_size, entity[2][Y] * block_size, entity[2][Z] * block_size)
 						rotation = entity[3]
 						rot_point = entity[4]

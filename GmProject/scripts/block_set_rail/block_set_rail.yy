@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"dir_get_string",
+  "%Name":"block_set_rail",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"dir_get_string",
+  "name":"block_set_rail",
   "parent":{
-    "name":"Direction",
-    "path":"folders/Scripts/Utility/Direction.yy",
+    "name":"Types",
+    "path":"folders/Scripts/Minecraft/Blocks/Types.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

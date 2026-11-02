@@ -123,7 +123,7 @@ namespace CppProject
 	Raycast::Hit Raycast::Cast(IntType view, const VecType& origin, const VecType& direction, RealType distance, BoolType placing, BoolType build)
 	{
 		Hit hit;
-		hit.face = e_dir_amount;
+		hit.face = -1;
 		hit.distance = distance;
 		hit.position = origin + direction * distance;
 

@@ -1,5 +1,5 @@
 /// CppSeparate void builder_read_blocks_file(Scope<obj_builder>)
-/// @desc Reads a legacy .blocks file.
+/// @desc Reads a legacy Mine-imator .blocks file.
 
 function builder_read_blocks_file()
 {

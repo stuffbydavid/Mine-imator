@@ -6,12 +6,15 @@ function block_animate(root)
 		temp = id
 		has_temp = false
 		
-		// Set to be a part of scenery
 		inherit_rot_point = true
 		inherit_alpha = true
 		inherit_color = true
 		inherit_texture = true
 		
+		block_build_name = other.block_build_name
+		block_build_state = array_copy_1d(other.block_build_state)
+		
+		// Set to be a part of scenery
 		part_of = root
 		part_root = root
 		
@@ -50,7 +53,7 @@ function block_animate(root)
 			type = e_tl_type.BLOCK
 			
 			block_name = other.block.name
-			block_state = array_copy_1d(other.block.default_state)
+			block_state = array_copy_1d(other.render_state)
 			
 			if (is_string(other.variant))
 				state_vars_add(block_state, [ "variant", other.variant ])
@@ -84,6 +87,10 @@ function block_animate(root)
 		tl_update_values()
 		
 		animated = other.animated
+		
+		// Apply per-part transform from default state
+		if (block_build_name != "" && type = e_tl_type.SPECIAL_BLOCK)
+			tl_apply_block_parts(other.block, block_get_state_id(other.block, block_build_state))
 		
 		// Add text
 		if (other.has_text)

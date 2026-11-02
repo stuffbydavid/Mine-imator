@@ -18,41 +18,12 @@ function action_build_pick()
 		if (app.place_block_pos = null)
 			return false
 
-		var res, data, block, stateid, needblocks;
-		res = null
-		needblocks = false
-		
-		if (target.type = e_tl_type.SCENERY && target.temp != null)
-			res = target.temp.scenery
-		
-		if (res != null && !res.ready)
-			return false
+		// Block data is needed from source file
+		with (target)
+			if (!tl_load_blocks())
+				return false
 
-		// Check for missing block palette/grid
-		if (res != null)
-		{
-			needblocks = (array_length(res.block_meshes) = 0)
-			for (var s = 0; s < array_length(res.block_meshes); s++)
-			{
-				var mesh = res.block_meshes[s];
-				if (mesh != null && (mesh.block_palette_buffer = null || mesh.block_grid_buffer = null))
-					needblocks = true
-			}
-		}
-
-		// Load blocks only from source Schematic with no mesh generation
-		if (needblocks)
-		{
-			with (res)
-			{
-				if (!res_load_scenery_file(app.project_folder + "/" + filename, true))
-				{
-					error("error/load_schematic")
-					return false
-				}
-			}
-		}
-
+		var data, block, stateid;
 		with (target)
 			data = block_meshes_get_block(app.place_block_pos[X], app.place_block_pos[Y], app.place_block_pos[Z])
 		

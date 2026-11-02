@@ -2,14 +2,14 @@
 
 function block_set_door()
 {
-	if (build_get_connect)
+	if (builder_mode = e_builder_mode.GET_CONNECT)
 		return block_set_tall_block()
 
 	if (block_get_state_id_value(block_current, block_state_id_current, "half") = "upper")
 		return null
 	
 	// Fetch hinge value from upper half
-	var hinge, facing, open, location, dir;
+	var hinge, facing, open;
 	hinge = block_get_state_id_value(block_current, block_state_id_current, "hinge")
 	facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 	open = block_get_state_id_value(block_current, block_state_id_current, "open")
@@ -94,35 +94,13 @@ function block_set_door()
 	
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "hinge", hinge)
 	
-	// Set values for position/rotation
-	if (facing = "east")
+	var resolved = block_get_door_state(block_current, block_state_id_current);
+	if (builder_mode = e_builder_mode.RESOLVE_STATE)
 	{
-		location = (hinge = "right" ? "south_west" : "north_west")
-		if (open = "false")
-			dir = (hinge = "right" ? "north" : "south")
-	}
-	else if (facing = "west")
-	{
-		location = (hinge = "right" ? "north_east" : "south_east")
-		if (open = "false")
-			dir = (hinge = "right" ? "south" : "north")
-	}
-	else if (facing = "south")
-	{
-		location = (hinge = "right" ? "north_west" : "north_east")
-		if (open = "false")
-			dir = (hinge = "right" ? "east" : "west")
-	}
-	else if (facing = "north")
-	{
-		location = (hinge = "right" ? "south_east" : "south_west")
-		if (open = "false")
-			dir = (hinge = "right" ? "west" : "east")
+		block_state_id_current = resolved
+		return 0
 	}
 	
-	if (open = "true")
-		dir = facing
-		
 	// Reset timeline positioning states before selecting block models
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "location", "north_west")
 	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "direction", "north")
@@ -140,8 +118,7 @@ function block_set_door()
 	bottommodel.offset[Z] = 0
 	topmodel.offset[Z] = block_size
 
-	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "location", location)
-	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "direction", dir)
+	block_state_id_current = resolved
 	
 	return [ bottommodel.rendermodel_id, topmodel.rendermodel_id ]
 }

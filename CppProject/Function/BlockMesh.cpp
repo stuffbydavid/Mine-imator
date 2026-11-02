@@ -9,6 +9,20 @@ namespace CppProject
 	static constexpr IntType BLOCK_AREA_RADIUS = 2;
 	static constexpr IntType BLOCK_AREA_SIZE = BLOCK_AREA_RADIUS * 2 + 1;
 
+	static IntType BlockMeshesGetAddedIndex(obj_timeline* self, const WorldVec& pos)
+	{
+		// Find the latest override at this block position
+		for (IntType i = self->blocks_added.Size() - 1; i >= 0; i--)
+		{
+			const ArrType& entry = self->blocks_added.vec.Value(i).Arr();
+			const VecType blockPos = entry.vec.Value(0).ToVec();
+			if (blockPos.x == pos.x && blockPos.y == pos.y && blockPos.z == pos.z)
+				return i;
+		}
+
+		return -1;
+	}
+
 	static BuilderState BlockMeshesGetBlock(obj_timeline* self, IntType xx, IntType yy, IntType zz, BoolType source)
 	{
 		BuilderState state;
@@ -23,32 +37,26 @@ namespace CppProject
 			return state;
 
 		// Look up added block at position
-		BoolType edited = false;
+		IntType addedIndex = -1;
 		if (!source)
+			addedIndex = BlockMeshesGetAddedIndex(self, { xx, yy, zz });
+
+		// Read the override while retaining the source waterlogging below
+		BoolType edited = (addedIndex >= 0);
+		if (edited)
 		{
-			for (IntType i = self->blocks_added.Size() - 1; i >= 0; i--)
-			{
-				const ArrType& entry = self->blocks_added.vec.Value(i).Arr();
-				const VecType blockPos = entry.vec.Value(0).ToVec();
-				if (blockPos.x != xx || blockPos.y != yy || blockPos.z != zz)
-					continue;
+			const ArrType& entry = self->blocks_added.vec.Value(addedIndex).Arr();
+			IntType paletteIndex = entry.IntValue(1);
+			if (paletteIndex < 0 || paletteIndex >= self->blocks_added_palette.Size())
+				return state;
 
-				IntType paletteIndex = entry.IntValue(1);
-				if (paletteIndex < 0 || paletteIndex >= self->blocks_added_palette.Size())
-					return state;
+			const ArrType& palette = self->blocks_added_palette.vec.Value(paletteIndex).Arr();
+			state.blockId = palette.IntValue(0);
+			state.stateId = palette.IntValue(1);
 
-				const ArrType& palette = self->blocks_added_palette.vec.Value(paletteIndex).Arr();
-				state.blockId = palette.IntValue(0);
-				state.stateId = palette.IntValue(1);
-				edited = true;
-
-				// Removed block (air)
-				if (!state.blockId)
-					return state;
-
-				// Continue to find waterlogged state
-				break;
-			}
+			// Removed block (air)
+			if (!state.blockId)
+				return state;
 		}
 
 		// No source blocks available without a resource
@@ -166,53 +174,69 @@ namespace CppProject
 		return section;
 	}
 
-	static BoolType BlockMeshesGetConnectedBlock(obj_timeline* self, const WorldVec& pos, BuilderState state, BoolType legacy, WorldVec& connectedPos)
+	static BoolType BlockMeshesGetArea(obj_timeline* self, const WorldVec& pos, IntType mode, BoolType legacy, BuilderState& state, WorldVec& connectedPos)
 	{
 		if (!state.blockId)
 			return false;
 
+		// Overrides already contain resolved states
+		if (legacy && mode == e_builder_mode_RESOLVE_STATE && BlockMeshesGetAddedIndex(self, pos) >= 0)
+			return true;
+
+		// Find the state script for this block
 		obj_block* block = ObjType(obj_block, global::block_objs.Value(state.blockId));
 		IntType script = block->set_script;
 		if (script < 0)
 			return false;
 
-		// The block's script resolves its connected block in a small source area
+		BuilderState source = BlockMeshesGetBlock(self, pos.x, pos.y, pos.z, true);
+
+		// Run the block's state script against a small source area
 		std::unique_ptr<Section> section(BlockMeshesCreateSection({ 0, 0, 0 }));
 		const QVector<BuilderState> blocks = BlockMeshesReadArea(self, pos, false);
 		IntType index = 0;
 
+		// Copy the local block area into the temporary section
 		for (IntType zz = 0; zz < BLOCK_AREA_SIZE; zz++)
 		for (IntType yy = 0; yy < BLOCK_AREA_SIZE; yy++)
 		for (IntType xx = 0; xx < BLOCK_AREA_SIZE; xx++, index++)
-		{
 			section->builder.paletteIndices[section->GetBlockOffset({ xx, yy, zz })] = section->AddBuilderState(blocks[index]);
-		}
 
+		// Configure an isolated state or connection query
 		std::unique_ptr<obj_builder_thread> thread(new obj_builder_thread);
+		thread->builder_mode = mode;
+		thread->builder_scenery = (state.blockId == source.blockId);
+		thread->builder_scenery_legacy = legacy;
+
 		thread->build_size = ArrType::From({ BLOCK_AREA_SIZE, BLOCK_AREA_SIZE, BLOCK_AREA_SIZE });
 		thread->build_max_pos = thread->build_size;
 		thread->build_size_xy = BLOCK_AREA_SIZE * BLOCK_AREA_SIZE;
 		thread->build_size_total = thread->build_size_xy * BLOCK_AREA_SIZE;
 		thread->build_pos = ArrType::From({ BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS });
 		thread->build_edit = true;
-		thread->build_get_connect = true;
 
-		BuilderState source = BlockMeshesGetBlock(self, pos.x, pos.y, pos.z, true);
-		thread->builder_scenery = (state.blockId == source.blockId);
-		thread->builder_scenery_legacy = legacy;
 		thread->block_current = block->id;
 		thread->block_state_id_current = state.stateId;
 
-		VarType connected = script_execute(Scope<obj_builder_thread>(thread.get(), self->id), { script });
+		// Run the script and retain any resolved state
+		VarType result = script_execute(Scope<obj_builder_thread>(thread.get(), self->id), { script });
+		if (mode == e_builder_mode_RESOLVE_STATE)
+			state.stateId = (uint16_t)thread->block_state_id_current.ToInt();
 
+		// Release temporary builder data before returning the result
 		section.reset();
 		Builder::sections.FreeData();
+		Builder::offset = { 0, 0, 0 };
 
-		if (!connected.IsVec())
-			return false;
+		if (mode == e_builder_mode_GET_CONNECT)
+		{
+			// Get connected block position from script
+			if (!result.IsVec())
+				return false;
 
-		WorldVec offset = WorldVec(connected.ToVec()) - WorldVec(BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS);
-		connectedPos = pos + WorldVec(offset.y, -offset.x, offset.z);
+			WorldVec offset = WorldVec(result.ToVec()) - WorldVec(BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS, BLOCK_AREA_RADIUS);
+			connectedPos = pos + WorldVec(offset.y, -offset.x, offset.z);
+		}
 
 		return true;
 	}
@@ -261,13 +285,21 @@ namespace CppProject
 		return ((zz / block_mesh_size) * meshesy + yy / block_mesh_size) * meshesx + xx / block_mesh_size;
 	}
 
-	ArrType block_meshes_get_block(Scope<obj_timeline> self, IntType xx, IntType yy, IntType zz, BoolType source)
+	ArrType block_meshes_get_block(Scope<obj_timeline> self, IntType xx, IntType yy, IntType zz, BoolType source, BoolType resolve)
 	{
 		BuilderState state = BlockMeshesGetBlock(self.object, xx, yy, zz, source);
+
+		// Resolve neighboring state data only when explicitly requested
+		if (resolve && !source)
+		{
+			WorldVec connectedPos;
+			BlockMeshesGetArea(self.object, { xx, yy, zz }, e_builder_mode_RESOLVE_STATE, true, state, connectedPos);
+		}
+
 		return ArrType::From({ (IntType)state.blockId, (IntType)state.stateId, state.waterlogged });
 	}
 
-	VarType tl_update_block_meshes(Scope<obj_timeline> self, VarType pos, IntType blockId, IntType stateId, VarType restoreBlocks)
+	VarType tl_update_block_meshes(Scope<obj_timeline> self, VarType pos, IntType blockId, IntType stateId, VarType restoreBlocks, BoolType replace)
 	{
 		struct BlockEdit
 		{
@@ -286,8 +318,6 @@ namespace CppProject
 
 		// A block position is supplied to add/replace a block
 		BoolType adding = pos.IsContainer();
-		BoolType restoring = restoreBlocks.IsArray();
-		BuilderState editState = { (uint16_t)blockId, (uint16_t)stateId, false };
 		QVector<BlockEdit> blockEdits;
 		WorldVec editBlockPos;
 		if (adding)
@@ -297,6 +327,7 @@ namespace CppProject
 		BoolType keepWater = true;
 		WorldVec size, sourceMeshNum;
 
+		// Repeat setting
 		WorldVec repeat = { 1, 1, 1 };
 		if (temp && temp->block_repeat_enable)
 			repeat = temp->block_repeat.ToVec();
@@ -353,20 +384,12 @@ namespace CppProject
 		WorldVec totalSize = size * repeat;
 		WorldVec sourceBuildSize = { size.y, size.x, size.z };
 
-		// Check current blocks
+		// Prepare the requested edits before updating any meshes
 		if (adding)
 		{
-			BuilderState previous = BlockMeshesGetBlock(self.object, editBlockPos.x, editBlockPos.y, editBlockPos.z, false);
-			if (blockId)
-				editState.waterlogged = BlockMeshesGetBlock(self.object, editBlockPos.x, editBlockPos.y, editBlockPos.z, true).waterlogged;
-
-			// No change
-			if (!restoring && previous.blockId == editState.blockId && previous.stateId == editState.stateId && previous.waterlogged == editState.waterlogged)
-				return null_;
-
-			if (restoring)
+			if (restoreBlocks.IsArray())
 			{
-				// Restore all saved states together without removing connected blocks again
+				// Apply all supplied states together before resolving neighbors
 				for (IntType i = 0; i < restoreBlocks.Arr().Size(); i++)
 				{
 					const ArrType& entry = restoreBlocks.Arr().vec.Value(i).Arr();
@@ -380,16 +403,48 @@ namespace CppProject
 			}
 			else
 			{
-				blockEdits.append({ editBlockPos, editState });
-				WorldVec connectedPos;
+				// A single edit retains waterlogging from the source block
+				BuilderState editState = { (uint16_t)blockId, (uint16_t)stateId, false };
+				if (blockId)
+					editState.waterlogged = BlockMeshesGetBlock(self.object, editBlockPos.x, editBlockPos.y, editBlockPos.z, true).waterlogged;
 
-				// Find connected block
-				if (previous.blockId && ObjType(obj_block, global::block_objs.Value(previous.blockId))->has_connect &&
-					BlockMeshesGetConnectedBlock(self.object, editBlockPos, previous, legacy, connectedPos))
-					blockEdits.append({ connectedPos, { 0, 0, false } });
+				blockEdits.append({ editBlockPos, editState });
+			}
+
+			// Skip unchanged edits before rebuilding meshes or recording history
+			BoolType unchanged = std::all_of(blockEdits.cbegin(), blockEdits.cend(), [&](const BlockEdit& edit)
+			{
+				BuilderState previous = BlockMeshesGetBlock(self.object, edit.pos.x, edit.pos.y, edit.pos.z, false);
+				return (previous.blockId == edit.state.blockId &&
+						previous.stateId == edit.state.stateId &&
+						previous.waterlogged == edit.state.waterlogged);
+			});
+			if (unchanged)
+				return null_;
+
+			// Replacing a double block also clears its other half, unless both are included in the edit
+			if (!restoreBlocks.IsArray() || replace)
+			{
+				IntType editCount = blockEdits.size();
+				for (IntType i = 0; i < editCount; i++)
+				{
+					WorldVec blockPos = blockEdits[i].pos;
+					BuilderState old = BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, false);
+					WorldVec connectedPos;
+					if (!old.blockId ||
+						!ObjType(obj_block, global::block_objs.Value(old.blockId))->has_connect ||
+						!BlockMeshesGetArea(self.object, blockPos, e_builder_mode_GET_CONNECT, legacy, old, connectedPos))
+						continue;
+
+					BoolType supplied = std::any_of(blockEdits.cbegin(), blockEdits.cend(),
+						[&](const BlockEdit& edit) { return edit.pos == connectedPos; });
+					if (!supplied)
+						blockEdits.append({ connectedPos, { 0, 0, false } });
+				}
 			}
 		}
 
+		// Reuse the allocated mesh bounds or rebuild from the source bounds
 		QVector<WorldVec> blocksAdded;
 		WorldVec oldMeshOffset = { 0, 0, 0 };
 		WorldVec meshesAfterSource = { 0, 0, 0 };
@@ -415,6 +470,7 @@ namespace CppProject
 				blocksAdded.append((WorldVec)self->blocks_added.Value(i).Arr().Value(0));
 		}
 
+		// Include requested edits when extending the allocation
 		for (const BlockEdit& edit : blockEdits)
 			blocksAdded.append(edit.pos);
 
@@ -529,6 +585,7 @@ namespace CppProject
 			}
 		}
 
+		// Apply generation settings shared by all affected blocks
 		obj_builder* builder = ObjType(obj_builder, global::mc_builder);
 		builder->build_randomize = true;
 		builder->build_multithreaded = null_;
@@ -545,12 +602,14 @@ namespace CppProject
 
 		const IntType bufferCount = e_block_depth_amount * e_block_vbuffer_amount;
 		QHash<IntType, quint64> updatedVbuffers;
-		QVector<ArrType> addedBlocksChanged;
+		QVector<BlockEdit> addedBlocksChanged;
 
 		std::unique_ptr<Section> section;
 
+		// Rebuild each affected block against its local neighbors
 		for (const WorldVec& blockPos : blockPosList)
 		{
+			// Locate the block within its repeated source
 			WorldVec repeatPos = { blockPos.x / size.x, blockPos.y / size.y, blockPos.z / size.z };
 			for (IntType a = X_; a <= Z_; a++)
 				repeatPos[a] = qBound<IntType>(0, repeatPos[a], repeat[a] - 1);
@@ -560,6 +619,7 @@ namespace CppProject
 			WorldVec buildBlockPos = { size.y - 1 - localPos.y, localPos.x, localPos.z };
 			WorldVec buildOffset = WorldVec(BLOCK_AREA_SIZE - 1, BLOCK_AREA_SIZE - 1, BLOCK_AREA_SIZE - 1) - buildBlockPos;
 
+			// Locate the mesh containing this block
 			WorldVec meshPos = WorldVec(
 				BlockMeshesGetAxisIndex(localPos.x, size.x),
 				BlockMeshesGetAxisIndex(localPos.y, size.y, true),
@@ -585,19 +645,27 @@ namespace CppProject
 			const QVector<BuilderState> sourceBlocks = BlockMeshesReadArea(self.object, blockPos, true);
 			const QVector<BuilderState> currentBlocks = BlockMeshesReadArea(self.object, blockPos, false);
 
-			// Remove triangles, then regenerate new geometry
-			for (IntType pass = 0; pass < 2; pass++)
+			// Both passes write to the same edit mesh
+			obj_block_mesh* source = ObjTypeOpt(obj_block_mesh, self->block_meshes.Value(index));
+			obj_block_mesh* mesh = ObjTypeOpt(obj_block_mesh, self->block_meshes_edit.Value(index));
+			if (!mesh)
 			{
-				BoolType removePass = (pass == 0);
-				BoolType addPass = (pass == 1);
-				thread->build_remove = removePass;
-				thread->builder_scenery = removePass;
+				mesh = new obj_block_mesh;
+				self->block_meshes_edit[index] = mesh->id;
+			}
+			thread->block_mesh = mesh->id;
+
+			// Remove triangles, then regenerate new geometry
+			for (IntType mode : { e_builder_mode_REMOVE, e_builder_mode_GENERATE })
+			{
+				thread->builder_mode = mode;
+				thread->builder_scenery = (mode == e_builder_mode_REMOVE);
 				ds_map_clear(thread->block_tl_map);
 
 				// Remove geometry with its previous bounds, then generate with the expanded bounds
 				WorldVec passMin = allocMin;
 				WorldVec passMax = allocMax;
-				if (removePass)
+				if (mode == e_builder_mode_REMOVE)
 				{
 					passMin = oldAllocMin;
 					passMax = oldAllocMax;
@@ -637,15 +705,15 @@ namespace CppProject
 
 					WorldVec bp = buildBlockPos + WorldVec(dx, dy, dz);
 					BuilderState state = currentBlocks[areaIndex];
-					if (removePass && rebuild)
+					if (mode == e_builder_mode_REMOVE && rebuild)
 						state = sourceBlocks[areaIndex];
 
 					// Retain source IDs for animated block exclusion
 					IntType buildIndex = BlockMeshesGetBuildIndex(bp, sourceBuildSize);
 					ds_map_add(thread->block_tl_map, buildIndex, (IntType)sourceBlocks[areaIndex].blockId);
 
-					// Edited block
-					if (addPass)
+					// Apply new states only when generating replacement geometry
+					if (mode == e_builder_mode_GENERATE)
 					{
 						auto found = std::find_if(blockEdits.cbegin(), blockEdits.cend(),
 							[&](const BlockEdit& edit) { return edit.pos == localBlockPos; }
@@ -680,6 +748,7 @@ namespace CppProject
 					builder_set_model(scope, genStage);
 				}
 
+				// Return to the center block after resolving neighbor models
 				thread->build_pos = ArrType::From({ buildBlockPos.x, buildBlockPos.y, buildBlockPos.z });
 				thread->build_pos_index = BlockMeshesGetBuildIndex(buildBlockPos, sourceBuildSize);
 
@@ -690,6 +759,7 @@ namespace CppProject
 				else if (modelIndex < 0)
 					models = builder_get_render_model_multipart(buildBlockPos.x, buildBlockPos.y, buildBlockPos.z, -modelIndex);
 				
+				// Collect the material buffers used by the block's models
 				for (IntType m = 0; m < models.Size(); m++)
 				{
 					obj_block_render_model* model = ObjType(obj_block_render_model, global::block_rendermodels.Value(models.IntValue(m)));
@@ -711,16 +781,6 @@ namespace CppProject
 					usedVbuffers |= quint64(1) << (depth * e_block_vbuffer_amount + e_block_vbuffer_ANIMATED);
 				}
 
-				obj_block_mesh* source = ObjTypeOpt(obj_block_mesh, self->block_meshes.Value(index));
-				obj_block_mesh* mesh = ObjTypeOpt(obj_block_mesh, self->block_meshes_edit.Value(index));
-				if (!mesh)
-				{
-					mesh = new obj_block_mesh;
-					self->block_meshes_edit[index] = mesh->id;
-				}
-
-				thread->block_mesh = mesh->id;
-
 				updatedVbuffers[index] |= usedVbuffers;
 
 				// Copy only affected buffers; null buffers continue to use the source
@@ -730,7 +790,7 @@ namespace CppProject
 						continue;
 
 					VertexBuffer* vbuf;
-					if (source&& source->block_vbuffer.Value(vb) != null_)
+					if (source && source->block_vbuffer.Value(vb) != null_)
 						vbuf = FindVertexBuffer(source->block_vbuffer.IntValue(vb))->Copy();
 					else
 						vbuf = new VertexBuffer;
@@ -738,18 +798,21 @@ namespace CppProject
 					mesh->block_vbuffer[vb] = vbuf->id;
 				}
 
+				// Emit or remove triangles for the current block
 				builder_generate(scope);
 
-				if (addPass)
+				// Keep resolved states for history and saved overrides
+				if (mode == e_builder_mode_GENERATE)
 				{
 					state = Builder::GetSection(buildBlockPos)->GetBuilderState(buildBlockPos);
-					addedBlocksChanged.append(ArrType::From({ (VecType)blockPos, (IntType)state.blockId, (IntType)state.stateId }));
+					addedBlocksChanged.append({ blockPos, state });
 				}
 			}
 
 			ds_map_destroy(thread->block_tl_map);
 		}
 
+		// Release the temporary sections after processing all blocks
 		section.reset();
 		Builder::sections.FreeData();
 		Builder::offset = { 0, 0, 0 };
@@ -801,6 +864,7 @@ namespace CppProject
 			mesh->block_vbuffer_render_offsets[e_block_depth_amount] = mesh->block_vbuffer_render_order.Size();
 		}
 
+		// Index existing palette entries before applying resolved states
 		QHash<quint64, IntType> paletteIndices;
 		for (IntType i = 0; i < self->blocks_added_palette.Size(); i++)
 		{
@@ -809,21 +873,25 @@ namespace CppProject
 			paletteIndices.insert(key, i);
 		}
 
+		// Save previous states and update block overrides
 		ArrType prevBlocks;
-		for (const ArrType& changedBlock : addedBlocksChanged)
+		for (const BlockEdit& changedBlock : addedBlocksChanged)
 		{
-			WorldVec blockPos = changedBlock.Value(0).ToVec();
+			const WorldVec& blockPos = changedBlock.pos;
 			BuilderState original = BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, false);
 			BoolType selected = std::any_of(blockEdits.cbegin(), blockEdits.cend(), [&blockPos](const BlockEdit& edit) { return edit.pos == blockPos; });
 			
-			if (!selected && (changedBlock.IntValue(1) != original.blockId || changedBlock.IntValue(2) == original.stateId))
+			// Ignore unchanged neighbors and neighbors replaced by another block type
+			if (!selected && (changedBlock.state.blockId != original.blockId || changedBlock.state.stateId == original.stateId))
 				continue;
 
+			// Retain the original state for undo
 			if (adding)
 				prevBlocks.Append(ArrType::From({ (VecType)blockPos, (IntType)original.blockId, (IntType)original.stateId }));
 
-			IntType blockId = changedBlock.IntValue(1);
-			IntType stateId = changedBlock.IntValue(2);
+			// Reuse or append the resolved palette entry
+			IntType blockId = changedBlock.state.blockId;
+			IntType stateId = changedBlock.state.stateId;
 			quint64 key = quint64(blockId) | (quint64(stateId) << 16);
 			auto found = paletteIndices.constFind(key);
 			IntType paletteIndex;
@@ -837,23 +905,13 @@ namespace CppProject
 			else
 				paletteIndex = found.value();
 
-			ArrType& blocksAdded = self->blocks_added;
-			IntType addedIndex = -1;
-			for (IntType i = 0; i < blocksAdded.Size(); i++)
-			{
-				WorldVec savedPos = blocksAdded.Value(i).Arr().Value(0).ToVec();
-				if (savedPos == blockPos)
-				{
-					addedIndex = i;
-					break;
-				}
-			}
-
+			// Replace the existing override or append a new one
+			IntType addedIndex = BlockMeshesGetAddedIndex(self.object, blockPos);
 			ArrType entry = ArrType::From({ (VecType)blockPos, paletteIndex });
 			if (addedIndex < 0)
-				blocksAdded.Append(entry);
+				self->blocks_added.Append(entry);
 			else
-				blocksAdded[addedIndex] = entry;
+				self->blocks_added[addedIndex] = entry;
 		}
 
 		// Retain referenced palette entries and remap block indices
@@ -863,12 +921,14 @@ namespace CppProject
 		WorldVec blockMax = { 0, 0, 0 };
 		BoolType boundsSet = false;
 
+		// Start visible bounds with the complete source scenery
 		if (res)
 		{
 			boundsSet = true;
 			blockMax = totalSize;
 		}
 
+		// Compact overrides and expand visible bounds around non-air blocks
 		for (IntType i = 0; i < self->blocks_added.Size(); i++)
 		{
 			const ArrType& entry = self->blocks_added.vec.Value(i).Arr();
@@ -911,6 +971,7 @@ namespace CppProject
 			}
 		}
 
+		// Save the compact palette, overrides and visible bounds
 		self->blocks_added_palette = compactPalette;
 		self->blocks_added = compactBlocks;
 

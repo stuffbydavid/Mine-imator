@@ -41,7 +41,7 @@ function builder_set_model(ongeneration = false)
 	// or returns a render model/array of render models to use.
 	if (block_current.set_script > -1)
 	{
-		if (!block_current.require_models || ongeneration)
+		if (!block_current.require_models || ongeneration || builder_mode = e_builder_mode.GET_CONNECT || builder_mode = e_builder_mode.RESOLVE_STATE)
 		{
 			build_edge[XP] = (blockx = sizex - 1)
 			build_edge[XN] = (blockx = minx)
@@ -78,6 +78,9 @@ function builder_set_model(ongeneration = false)
 		else
 			ret = null
 	}
+
+	if (builder_mode = e_builder_mode.GET_CONNECT || builder_mode = e_builder_mode.RESOLVE_STATE)
+		return ret
 
 	var tlvalid = (mc_builder.block_tl_add && block_current.timeline && block_tl_map != null && ret != null);
 
@@ -143,7 +146,7 @@ function builder_set_model(ongeneration = false)
 	}
 	
 	// Retain resolved connection states in the local edit palette
-	if (build_edit && !build_remove && ongeneration)
+	if (build_edit && builder_mode = e_builder_mode.GENERATE && ongeneration)
 		builder_set_state_id(blockx, blocky, blockz, block_state_id_current)
 
 	return model

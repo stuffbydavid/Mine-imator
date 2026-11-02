@@ -2,22 +2,18 @@
 
 function block_set_tall_block()
 {
-	var half, pos, state;
-	half = block_get_state_id_value(block_current, block_state_id_current, "half")
-	pos = array_copy_1d(build_pos)
-
-	if (half = "lower")
-		pos[Z]++
-	else if (half = "upper")
-		pos[Z]--
-	else
+	var connected, pos, state;
+	connected = block_get_connect(block_current, block_state_id_current)
+	if (connected = null)
 		return null
 
+	// Validate the existing block at the connected position
+	pos = vec3_add(build_pos, connected[0])
 	if (builder_get_block(pos[X], pos[Y], pos[Z]) != block_current)
 		return null
 
 	state = builder_get_state_id(pos[X], pos[Y], pos[Z])
-	if (block_get_state_id_value(block_current, state, "half") != (half = "lower" ? "upper" : "lower"))
+	if (block_get_state_id_value(block_current, state, "half") != block_get_state_id_value(block_current, connected[1], "half"))
 		return null
 
 	// Legacy plant upper halves do not reliably store the lower half's variant
@@ -25,5 +21,5 @@ function block_set_tall_block()
 		block_get_state_id_value(block_current, state, "variant") != block_get_state_id_value(block_current, block_state_id_current, "variant"))
 		return null
 
-	return vec3(pos[X], pos[Y], pos[Z])
+	return pos
 }

@@ -31,6 +31,10 @@
 function builder_thread_event_create()
 {
 	threadid = 0
+
+	builder_mode = e_builder_mode.GENERATE
+	builder_scenery = false
+	builder_scenery_legacy = false
 	
 	build_size = vec3(0)
 	build_min_pos = vec3(0)
@@ -42,8 +46,6 @@ function builder_thread_event_create()
 	build_transform = false
 	build_edges = true
 	build_edit = false
-	build_remove = false
-	build_get_connect = false
 	
 	build_single_block = null
 	build_single_stateid = 0
@@ -114,7 +116,4 @@ function builder_thread_event_create()
 	block_vertex_emissive = 0
 	block_vertex_subsurface = 0
 	block_vertex_color_index = 0
-
-	builder_scenery = false
-	builder_scenery_legacy = false
 }

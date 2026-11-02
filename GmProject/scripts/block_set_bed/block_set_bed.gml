@@ -46,32 +46,26 @@ function block_set_bed()
 		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "facing", facing)
 	}
 	
-	// Offset from the head to the foot
-	var offset = vec3(0);
-	switch (facing)
-	{
-		case "north": offset[Y] = 1; break
-		case "south": offset[Y] = -1; break
-		case "east":  offset[X] = -1; break
-		case "west":  offset[X] = 1; break
-		default:	  return null
-	}
+	if (builder_mode = e_builder_mode.RESOLVE_STATE)
+		return 0
+
+	// Use the same half offset for connection checks and standalone geometry
+	var connected, offset;
+	connected = block_get_connect(block_current, block_state_id_current)
+	if (connected = null)
+		return null
+	offset = connected[0]
 
 	// Find connected block position
-	if (build_get_connect)
+	if (builder_mode = e_builder_mode.GET_CONNECT)
 	{
-		if (part = "foot")
-			offset = vec3_mul(offset, -1)
-		else if (part != "head")
-			return null
-
 		var pos, state;
 		pos = vec3_add(build_pos, offset)
 		if (builder_get_block(pos[X], pos[Y], pos[Z]) != block_current)
 			return null
 
 		state = builder_get_state_id(pos[X], pos[Y], pos[Z])
-		if (block_get_state_id_value(block_current, state, "part") != (part = "head" ? "foot" : "head") ||
+		if (block_get_state_id_value(block_current, state, "part") != block_get_state_id_value(block_current, connected[1], "part") ||
 			block_get_state_id_value(block_current, state, "color") != block_get_state_id_value(block_current, block_state_id_current, "color"))
 			return null
 
@@ -96,7 +90,7 @@ function block_set_bed()
 	// Pick models
 	var headmodel, footmodel;
 	headmodel = block_current.state_id_model_obj[block_state_id_current].model[0]
-	footmodel = block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "part", "foot")].model[0]
+	footmodel = block_current.state_id_model_obj[connected[1]].model[0]
 	
 	footmodel.offset[X] = offset[X] * block_size
 	footmodel.offset[Y] = offset[Y] * block_size

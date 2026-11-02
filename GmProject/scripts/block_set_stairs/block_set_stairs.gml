@@ -61,8 +61,7 @@ function block_set_stairs()
 		shape = corner + "_" + turn
 	}
 
-	if (shape != "straight")
-		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "shape", shape)
+	block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "shape", shape)
 
 	return 0
 }

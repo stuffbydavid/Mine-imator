@@ -1,11 +1,20 @@
-/// @desc Returns the timeline's world bounds as two points, or null if unavailable.
+/// @desc Returns the timeline model's bounds as two points, or null if unavailable.
+/// @arg [modelbounds]
+/// @arg [transform]
 
-function tl_get_bounds(modelbounds = false)
+function tl_get_bounds(modelbounds = false, transform = null)
 {
-	var halfsize, center, extent, boundslist;
+	var halfsize, center, extent, boundslist, boundsmatrix;
 	halfsize = vec3(block_half_size)
 	center = world_pos
 	boundslist = null
+	boundsmatrix = matrix_render
+
+	if (transform != null)
+	{
+		boundsmatrix = matrix_multiply(boundsmatrix, transform)
+		center = point3D_mul_matrix(center, transform)
+	}
 
 	switch (type)
 	{
@@ -26,7 +35,7 @@ function tl_get_bounds(modelbounds = false)
 				{
 					var partbounds = null;
 					with (part_list[|p])
-						partbounds = tl_get_bounds(true)
+						partbounds = tl_get_bounds(true, transform)
 
 					array_add(boundslist, partbounds, false)
 				}
@@ -45,7 +54,7 @@ function tl_get_bounds(modelbounds = false)
 					for (var v = 0; v < array_length(mesh.block_vbuffer_render_order); v++)
 					{
 						var index = mesh.block_vbuffer_render_order[v];
-						array_add(boundslist, vbuffer_get_bounds(mesh.block_vbuffer[index], matrix_render), false)
+						array_add(boundslist, vbuffer_get_bounds(mesh.block_vbuffer[index], boundsmatrix), false)
 					}
 				}
 
@@ -54,7 +63,7 @@ function tl_get_bounds(modelbounds = false)
 					var key = ds_map_find_first(model.model_block_map);
 					while (!is_undefined(key))
 					{
-						array_add(boundslist, vbuffer_get_bounds(model.model_block_map[?key], matrix_render), false)
+						array_add(boundslist, vbuffer_get_bounds(model.model_block_map[?key], boundsmatrix), false)
 						key = ds_map_find_next(model.model_block_map, key)
 					}
 				}
@@ -99,6 +108,9 @@ function tl_get_bounds(modelbounds = false)
 					mat = matrix_multiply(shape.matrix, matrix_render)
 					mat = render_world_get_item_transform(mat, shape.face_camera, shape.item_bounce, false, false, false, false)
 				}
+
+				if (transform != null)
+					mat = matrix_multiply(mat, transform)
 
 				array_add(boundslist, vbuffer_get_bounds(vbuf, mat), false)
 			}
@@ -145,7 +157,7 @@ function tl_get_bounds(modelbounds = false)
 
 			halfsize = vec3_mul(vec3_sub(blockmax, blockmin), block_half_size)
 			offset = vec3_mul(blockmin, block_size)
-			center = point3D_mul_matrix(vec3_add(halfsize, offset), matrix_render)
+			center = point3D_mul_matrix(vec3_add(halfsize, offset), boundsmatrix)
 			
 			break
 		}
@@ -187,8 +199,8 @@ function tl_get_bounds(modelbounds = false)
 			return null
 	}
 
-	// Project the size onto the world axes
-	var extentmatrix = array_copy_1d(matrix_render);
+	// Project the size onto the bounds axes
+	var extentmatrix = array_copy_1d(boundsmatrix);
 	for (var i = 0; i < 12; i++)
 		extentmatrix[@i] = abs(extentmatrix[@i])
 

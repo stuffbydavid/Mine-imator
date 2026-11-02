@@ -15,7 +15,10 @@ function block_set_redstone_wire()
 	if (!builder_scenery && build_size_total = 1)
 		return 0
 
-	var connect = array_create(4, "none");
+	var connect, connectcount, connectdir;
+	connect = array_create(4, "none")
+	connectcount = 0
+	connectdir = XP
 
 	for (var d = XP; d <= YN; d++)
 	{
@@ -54,11 +57,21 @@ function block_set_redstone_wire()
 			if (block = block_current)
 				connect[d] = "side"
 		}
+
+		if (connect[d] != "none")
+		{
+			connectcount++
+			connectdir = d
+		}
 	}
 
 	// Not connected, set to cross shape
-	if (!array_contains(connect, "side") && !array_contains(connect, "up"))
+	if (connectcount = 0)
 		connect = array_create(4, "side")
+
+	// Extend a single connection into a full straight line
+	else if (connectcount = 1)
+		connect[connectdir ^ 1] = "side"
 
 	block_state_id_current = block_get_state_id(block_current, [
 		"east", connect[XP], "west", connect[XN], "south", connect[YP], "north", connect[YN], "power", pow

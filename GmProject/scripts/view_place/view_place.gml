@@ -14,10 +14,14 @@ function view_place(view)
 	place_view_air = !hit[e_raycast.HIT]
 	place_view_block_pos = hit[e_raycast.BLOCK_POS]
 	place_view_block_bounds = hit[e_raycast.BLOCK_BOUNDS]
+	place_view_world_normal = hit[e_raycast.NORMAL]
+	place_view_direction = vec3_mul_matrix(vec3(0, 0, 1), view.surface_view_matrix_inverse)
 
 	// GM build placement uses the origin without CPU ray casting
 	if (!is_cpp() && place_build)
 		place_view_pos = vec3(0)
+
+	place_view_hit_pos = point3D_copy(place_view_pos)
 
 	// Scenery placement snaps using the face in the source mesh's local axes
 	place_view_normal = dir_get_vec3(hit[e_raycast.FACE])

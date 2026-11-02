@@ -43,15 +43,25 @@ function tl_new_block(tltype, source, saved = false)
 		{
 			model_name = source.model_name
 			model_state = array_copy_1d(source.model_state)
-			model_tex = source.model_tex
-			model_tex_material = source.model_tex_material
-			model_tex_normal = source.model_tex_normal
-			model_use_blend_color = source.model_use_blend_color
-			model_blend_color = source.model_blend_color
-			model_blend_color_default = source.model_blend_color_default
-			pattern_base_color = source.pattern_base_color
-			pattern_pattern_list = array_copy_1d(source.pattern_pattern_list)
-			pattern_color_list = array_copy_1d(source.pattern_color_list)
+			
+			if (source.type = e_temp_type.BLOCK)
+			{
+				model_tex = source.block_tex
+				model_tex_material = source.block_tex_material
+				model_tex_normal = source.block_tex_normal
+			}
+			else
+			{
+				model_tex = source.model_tex
+				model_tex_material = source.model_tex_material
+				model_tex_normal = source.model_tex_normal
+				model_use_blend_color = source.model_use_blend_color
+				model_blend_color = source.model_blend_color
+				model_blend_color_default = source.model_blend_color_default
+				pattern_base_color = source.pattern_base_color
+				pattern_pattern_list = array_copy_1d(source.pattern_pattern_list)
+				pattern_color_list = array_copy_1d(source.pattern_color_list)
+			}
 
 			if (saved)
 			{
@@ -61,6 +71,7 @@ function tl_new_block(tltype, source, saved = false)
 			}
 
 			tl_update_scenery_part()
+			
 			part_list = ds_list_create()
 			if (model_file != null)
 			{
@@ -70,6 +81,7 @@ function tl_new_block(tltype, source, saved = false)
 					if (model_hide_list = null || ds_list_find_index(model_hide_list, part.name) = -1)
 						ds_list_add(part_list, tl_new_part(part))
 				}
+				
 				tl_update_part_list(model_file, id)
 			}
 		}

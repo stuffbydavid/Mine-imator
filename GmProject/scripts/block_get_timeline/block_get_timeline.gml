@@ -1,3 +1,7 @@
+/// @desc Returns an object with block timeline data.
+/// @arg block
+/// @arg stateid
+
 function block_get_timeline(block, stateid)
 {
 	var pos = build_pos_index;
@@ -5,29 +9,20 @@ function block_get_timeline(block, stateid)
 	with (new_obj(obj_block_tl))
 	{
 		self.block = block
+		
+		block_build_name = block.name
+		block_build_state = block_get_state_id_state_vars(block, stateid)
+		
+		render_state = block_get_timeline_render_state(block, stateid)
+		
 		model_name = block.tl_model_name
-		model_state = []
+		model_state = block_get_timeline_model_state(block, stateid)
+		
 		animated = block.tl_animated
 		animated_parts = block.tl_animated_parts
 		
 		if (model_name != "")
 		{
-			if (!block.tl_has_model_state)
-				model_state = block_get_state_id_state_vars(block, stateid) // Copy block state if not specified
-			else if (block.tl_model_state_amount = 0)
-				model_state = array_copy_1d(block.tl_model_state)
-			
-			// Find model state from block state
-			for (var i = 0; i < block.tl_model_state_amount; i++)
-			{
-				var curstate = block.tl_model_state[i];
-				if (array_contains(curstate.state_id, stateid)) // Found matching state
-				{
-					model_state = array_copy_1d(curstate.value)
-					break
-				}
-			}
-			
 			// Unique case with decorated pot
 			if (!is_undefined(mc_builder.block_decorated_pot_sherds_map[?pos]))
 				model_state = array_copy_1d(mc_builder.block_decorated_pot_sherds_map[?pos])
@@ -94,47 +89,12 @@ function block_get_timeline(block, stateid)
 		else
 			texture = null
 		
-		rot_point = block.tl_rot_point
-		position = block.tl_position
-		rotation = block.tl_rotation
-		
-		// Find rotation point from state
-		for (var i = 0; i < block.tl_rot_point_state_amount; i++)
-		{
-			var curstate = block.tl_rot_point_state[i];
-			if (array_contains(curstate.state_id, stateid)) // Found matching state
-			{
-				rot_point = curstate.value
-				break
-			}
-		}
-		
-		// Find position from state
-		for (var i = 0; i < block.tl_position_state_amount; i++)
-		{
-			var curstate = block.tl_position_state[i];
-			if (array_contains(curstate.state_id, stateid)) // Found matching state
-			{
-				position = curstate.value
-				break
-			}
-		}
-		
-		// Find rotation point from state
-		for (var i = 0; i < block.tl_rotation_state_amount; i++)
-		{
-			var curstate = block.tl_rotation_state[i];
-			if (array_contains(curstate.state_id, stateid)) // Found matching state
-			{
-				rotation = curstate.value
-				break
-			}
-		}
+		rot_point = block_get_timeline_rot_point(block, stateid)
+		position = block_get_timeline_position(block, stateid)
+		rotation = block_get_timeline_rotation(block, stateid)
 		
 		// Add current position in terrain
-		position[X] += other.build_pos[X] * block_size
-		position[Y] += other.build_pos[Y] * block_size
-		position[Z] += other.build_pos[Z] * block_size
+		position = vec3_add(position, vec3_mul(other.build_pos, block_size))
 		
 		// Get variant
 		variant = block_get_state_id_value(block, stateid, "variant")

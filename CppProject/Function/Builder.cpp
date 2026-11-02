@@ -52,7 +52,7 @@ namespace CppProject
 			BuilderState singleEntry;
 			if (self->build_single_block != null_ && !is_undefined(self->build_single_block))
 				singleEntry = {
-					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id.ToInt(),
+					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,
 					false
 				};
@@ -344,7 +344,7 @@ namespace CppProject
 
 				if (block)
 				{
-					state.blockId = (uint16_t)block->block_id.ToInt();
+					state.blockId = (uint16_t)block->block_id;
 					if (block->timeline)
 						numTimelines++;
 				}
@@ -406,7 +406,7 @@ namespace CppProject
 
 				if (block)
 				{
-					state.blockId = (uint16_t)block->block_id.ToInt();
+					state.blockId = (uint16_t)block->block_id;
 					if (block->timeline)
 						numTimelines++;
 				}
@@ -871,11 +871,11 @@ namespace CppProject
 		BlockPos blockPos = BuilderGetBlockPos(self);
 
 		// Add mode
-		if (!self->build_remove)
+		if (self->builder_mode == e_builder_mode_GENERATE)
 			buffer->AddFace(vertices[0], vertices[1], vertices[2], vertices[3], self->threadid, blockPos);
 		
 		// Remove mode
-		else
+		else if (self->builder_mode == e_builder_mode_REMOVE)
 		{
 			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2], blockPos);
 			buffer->RemoveTriangle(vertices[2], vertices[3], vertices[0], blockPos);
@@ -918,11 +918,11 @@ namespace CppProject
 		BlockPos blockPos = BuilderGetBlockPos(self);
 
 		// Add mode
-		if (!self->build_remove)
+		if (self->builder_mode == e_builder_mode_GENERATE)
 			buffer->AddTriangle(vertices[0], vertices[1], vertices[2], self->threadid, blockPos);
 		
 		// Remove mode
-		else
+		else if (self->builder_mode == e_builder_mode_REMOVE)
 			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2], blockPos);
 	}
 

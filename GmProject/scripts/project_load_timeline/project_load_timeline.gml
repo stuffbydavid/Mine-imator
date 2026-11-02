@@ -55,6 +55,16 @@ function project_load_timeline(map)
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
 		
+		block_build_name = value_get_string(map[?"block_build_name"], "")
+		block_build_state = value_get_state_vars(map[?"block_build_state"])
+		
+		if (block_build_name != "")
+		{
+			var builddata = block_get_name_state(block_build_name, block_build_state);
+			block_build_name = builddata[0]
+			block_build_state = builddata[1]
+		}
+		
 		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
 			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
 		{

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"block_set_tall_vine_up",
+  "%Name":"block_set_tall_vine",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"block_set_tall_vine_up",
+  "name":"block_set_tall_vine",
   "parent":{
     "name":"Template",
     "path":"folders/Scripts/Minecraft/Blocks/Types/Template.yy",

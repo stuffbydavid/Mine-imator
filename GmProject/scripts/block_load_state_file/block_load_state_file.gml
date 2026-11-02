@@ -251,6 +251,7 @@ function block_load_state_file(fn, block, state)
 									other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
 							}
 						}
+						
 						// Single condition
 						else
 						{
@@ -328,6 +329,7 @@ function block_load_state_file(fn, block, state)
 		
 		//ds_map_destroy(map) // Error
 		ds_map_destroy(jsontypemap)
+		
 		return id
 	}
 }

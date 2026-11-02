@@ -10,6 +10,9 @@
 
 function builder_generate()
 {
+	if (builder_mode != e_builder_mode.GENERATE && builder_mode != e_builder_mode.REMOVE)
+		return 0
+
 	// Read block coordinates once for this call
 	var blockx, blocky, blockz, minx, miny, minz, sizex, sizey, sizez;
 	blockx = build_pos[X]

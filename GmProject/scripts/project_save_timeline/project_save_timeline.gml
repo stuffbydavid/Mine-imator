@@ -77,6 +77,12 @@ function project_save_timeline()
 				json_save_var_save_id("part_root", part_root)
 		}
 
+		if (block_build_name != "")
+		{
+			json_save_var("block_build_name", block_build_name)
+			json_save_var_state_vars("block_build_state", block_build_state)
+		}
+		
 		// Pattern values
 		if ((part_of != null || (type = e_tl_type.SPECIAL_BLOCK && !has_temp)) &&
 			pattern_type != "" && pattern_base_color != null)

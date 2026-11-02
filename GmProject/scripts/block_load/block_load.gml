@@ -30,7 +30,7 @@ function block_load(map, typemap)
 			set_script = null
 			generate_script = null
 		}
-		
+
 		// File
 		if (is_string(map[?"file"]))
 			filename = map[?"file"]
@@ -152,6 +152,10 @@ function block_load(map, typemap)
 		timeline = false
 		tl_model_double = false
 		tl_hide_model = ""
+		tl_position = vec3(block_half_size, block_half_size, 0)
+		tl_position_state_amount = 0
+		tl_offset = vec3(0)
+		tl_offset_state_amount = 0
 		
 		var tlmap = map[?"timeline"];
 		if (ds_map_valid(tlmap))
@@ -234,6 +238,13 @@ function block_load(map, typemap)
 				key = ds_map_find_next(idmap, key)
 			}
 		}
+		
+		// Build placement
+		build_map = map[?"build"]
+		if (!ds_map_valid(build_map))
+			build_map = null
+		else // Retain build_map in memory
+			ds_map_delete(map, "build")
 		
 		// Pre-calculate the block variant to pick for each (numerical) state ID
 		state_id_model_obj = null

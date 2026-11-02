@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"tl_replace_ground",
   "parent":{
-    "name":"Timeline",
-    "path":"folders/Scripts/Project/Timeline.yy",
+    "name":"Blocks",
+    "path":"folders/Scripts/Project/Timeline/Blocks.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -17,6 +17,7 @@ function res_load_scenery_file(fn, blocksonly = false)
 
 	debug_timer_start()
 
+	// Legacy Mine-imator .blocks file
 	if (ext = ".blocks")
 	{
 		buffer_current = buffer_load_lib(fn)

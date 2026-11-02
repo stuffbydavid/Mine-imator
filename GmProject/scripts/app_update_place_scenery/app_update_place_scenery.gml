@@ -48,18 +48,18 @@ function app_update_place_scenery()
 		build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3_div(boxsize, block_size)), worldtransform)
 		build_box_render = build_box
 
-		// Select bounds of special block, including transformed parts
+		// Fit special block bounds in its local space, including transformed parts
 		if (place_target_tl_root.type = e_tl_type.SPECIAL_BLOCK)
 		{
 			var bounds = null;
 			with (place_target_tl_root)
-				bounds = tl_get_bounds(true)
+				bounds = tl_get_bounds(true, matrix_inverse_ext(matrix_render))
 
 			if (bounds != null)
 			{
 				boxcenter = vec3_mul(vec3_add(bounds[0], bounds[1]), 0.5)
 				boxsize = vec3_sub(bounds[1], bounds[0])
-				build_box_matrix = matrix_create(boxcenter, vec3(0), vec3_div(boxsize, block_size))
+				build_box_matrix = matrix_multiply(matrix_create(boxcenter, vec3(0), vec3_div(boxsize, block_size)), place_target_tl_root.matrix_render)
 			}
 			else
 				build_box_render = null

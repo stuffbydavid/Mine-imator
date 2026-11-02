@@ -1286,18 +1286,6 @@ function enums()
 		IMPORT_ITEM_SHEET_DONE	= -14
 	}
 	
-	// Directions
-	enum e_dir
-	{
-		EAST,
-		WEST,
-		SOUTH,
-		NORTH,
-		UP,
-		DOWN,
-		amount
-	}
-	
 	// Parts
 	enum e_part
 	{
@@ -1342,6 +1330,15 @@ function enums()
 		ANIMATED,
 		amount,
 		static_amount = 3
+	}
+
+	// Builder operation
+	enum e_builder_mode
+	{
+		GENERATE,
+		REMOVE,
+		GET_CONNECT,
+		RESOLVE_STATE
 	}
 	
 	// Buffer depth

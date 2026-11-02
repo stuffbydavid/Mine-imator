@@ -6,7 +6,7 @@ function block_set_chest()
 	type = block_get_state_id_value(block_current, block_state_id_current, "type")
 	facing = block_get_state_id_value(block_current, block_state_id_current, "facing")
 	double = "false"
-	staticmodel = (build_get_connect || !mc_builder.block_tl_add || block_tl_map = null)
+	staticmodel = (builder_mode = e_builder_mode.GET_CONNECT || builder_mode = e_builder_mode.RESOLVE_STATE || !mc_builder.block_tl_add || block_tl_map = null)
 
 	if (build_edit && !staticmodel)
 		staticmodel = (block_tl_map[?build_pos_index] != block_current.block_id)
@@ -127,50 +127,23 @@ function block_set_chest()
 				block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "facing", facing)
 			}
 			
-			switch (facing)
+			var connected = block_get_connect(block_current, block_set_state_id_value(block_current, block_state_id_current, "type", "right"));
+			if (connected != null)
 			{
-				case "east":
-				{
-					if (!build_edge[YN])
-						connectblock = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z])
-					
-					if (!build_edge[YP])
-						discardblock = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z])
-					
-					break
-				}
+				var offset, dir, pos;
+				offset = connected[0]
+				dir = vec3_get_dir(offset)
 				
-				case "west":
+				if (!build_edge[dir])
 				{
-					if (!build_edge[YP])
-						connectblock = builder_get_block(build_pos[X], build_pos[Y] + 1, build_pos[Z])
-					
-					if (!build_edge[YN])
-						discardblock = builder_get_block(build_pos[X], build_pos[Y] - 1, build_pos[Z])
-					
-					break
+					pos = vec3_add(build_pos, offset)
+					connectblock = builder_get_block(pos[X], pos[Y], pos[Z])
 				}
-				
-				case "south":
+
+				if (!build_edge[dir ^ 1])
 				{
-					if (!build_edge[XP])
-						connectblock = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z])
-					
-					if (!build_edge[XN])
-						discardblock = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z])
-					
-					break
-				}
-				
-				case "north":
-				{
-					if (!build_edge[XN])
-						connectblock = builder_get_block(build_pos[X] - 1, build_pos[Y], build_pos[Z])
-					
-					if (!build_edge[XP])
-						discardblock = builder_get_block(build_pos[X] + 1, build_pos[Y], build_pos[Z])
-					
-					break
+					pos = vec3_sub(build_pos, offset)
+					discardblock = builder_get_block(pos[X], pos[Y], pos[Z])
 				}
 			}
 			
@@ -199,26 +172,17 @@ function block_set_chest()
 	}
 
 	// Find connected block position
-	if (build_get_connect)
+	if (builder_mode = e_builder_mode.GET_CONNECT)
 	{
 		if (double != "true" || block_current.name = "ender_chest")
 			return null
 
-		var offset = vec3(0);
-		switch (facing)
-		{
-			case "north": offset[X] = -1; break
-			case "south": offset[X] = 1; break
-			case "east":  offset[Y] = -1; break
-			case "west":  offset[Y] = 1; break
-			default: return null
-		}
-		
-		if (type = "left")
-			offset = vec3_mul(offset, -1)
+		var connected = block_get_connect(block_current, block_state_id_current);
+		if (connected = null)
+			return null
 
 		var pos, state, othertype;
-		pos = vec3_add(build_pos, offset)
+		pos = vec3_add(build_pos, connected[0])
 		if (builder_get_block(pos[X], pos[Y], pos[Z]) != block_current)
 			return null
 
@@ -229,7 +193,7 @@ function block_set_chest()
 			return null
 
 		if (!legacy && othertype != "legacy" &&
-			(othertype != (type = "left" ? "right" : "left") || block_get_state_id_value(block_current, state, "facing") != facing))
+			(othertype != block_get_state_id_value(block_current, connected[1], "type") || block_get_state_id_value(block_current, state, "facing") != facing))
 			return null
 
 		return pos

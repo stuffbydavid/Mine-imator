@@ -17,16 +17,20 @@ function tl_copy(to)
 	to.lock_bend = lock_bend
 	to.part_mixing_shapes = part_mixing_shapes
 	to.parent = parent
+	to.tree_extend = tree_extend
+	
 	if (object_index = obj_timeline)
 		to.parent_tree_index = ds_list_find_index(parent.tree_list, id)
 	else // History object (copy)
 		to.parent_tree_index = parent_tree_index
-	to.tree_extend = tree_extend
 	
 	to.model_part = model_part
 	to.model_part_name = model_part_name
 	to.part_of = part_of
 	to.part_root = part_root
+	
+	to.block_build_name = block_build_name
+	to.block_build_state = array_copy_1d(block_build_state)
 	
 	to.inherit_position = inherit_position
 	to.inherit_rotation = inherit_rotation
