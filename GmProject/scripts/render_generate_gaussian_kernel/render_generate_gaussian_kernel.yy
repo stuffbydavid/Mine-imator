@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_generate_gaussian_kernel",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Render",
-    "path": "folders/Scripts/Render.yy",
+  "$GMScript":"v1",
+  "%Name":"render_generate_gaussian_kernel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_generate_gaussian_kernel",
+  "parent":{
+    "name":"Sampling",
+    "path":"folders/Scripts/Render/Sampling.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

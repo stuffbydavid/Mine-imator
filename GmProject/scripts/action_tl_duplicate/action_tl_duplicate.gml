@@ -1,5 +1,3 @@
-/// action_tl_duplicate()
-
 function action_tl_duplicate()
 {
 	if (history_undo)
@@ -59,10 +57,11 @@ function action_tl_duplicate()
 		{
 			with (obj_timeline)
 			{
-				if (!selected || part_of != null || copy != null || parent_is_selected)
+				if (!selected || (part_of != null && !block_timeline) || copy != null || parent_is_selected)
 					continue
 				
 				tl_duplicate()
+				
 				root_copy = copy
 				with (root_copy)
 					tl_set_parent_root()
@@ -72,10 +71,11 @@ function action_tl_duplicate()
 		{
 			with (contexttl)
 			{
-				if (part_of != null || copy != null || parent_is_selected)
+				if ((part_of != null && !block_timeline) || copy != null || parent_is_selected)
 					continue
 				
 				tl_duplicate()
+				
 				root_copy = copy
 				with (root_copy)
 					tl_set_parent_root()
@@ -97,5 +97,7 @@ function action_tl_duplicate()
 	
 	tl_update_list()
 	tl_update_matrix()
+	
 	app_update_tl_edit()
+	project_update_counts()
 }

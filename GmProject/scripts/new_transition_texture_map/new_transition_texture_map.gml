@@ -1,4 +1,3 @@
-/// new_transition_texture_map(width, height, padding, center)
 /// @arg width
 /// @arg height
 /// @arg padding
@@ -30,8 +29,8 @@ function new_transition_texture_map(w, h, padding, center)
 				var xx = d / quality;
 				if (transition_list[|t] = "bezier")
 				{
-					prevp = ease_bezier_curve([0, 0], [1, 0], [0, 1], [1, 1], xx - 1 / wp)
-					p = ease_bezier_curve([0, 0], [1, 0], [0, 1], [1, 1], xx)
+					prevp = ease_bezier_curve([ 0, 0 ], [ 1, 0 ], [ 0, 1 ], [ 1, 1 ], xx - 1 / wp)
+					p = ease_bezier_curve([ 0, 0 ], [ 1, 0 ], [ 0, 1 ], [ 1, 1 ], xx)
 				}
 				else
 				{
@@ -58,7 +57,7 @@ function new_transition_texture_map(w, h, padding, center)
 		surface_reset_target()
 		gpu_set_tex_filter(false)
 		
-		map[?transition_list[|t]] = texture_surface(surfaa)
+		map[?transition_list[|t]] = texture_surface(surfaa, false)
 		
 		if (center)
 			sprite_set_offset(map[?transition_list[|t]], w/2, h/2)

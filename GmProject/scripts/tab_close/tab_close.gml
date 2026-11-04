@@ -1,10 +1,6 @@
-/// tab_close(tab)
-/// @arg tab
-
 function tab_close(tab)
 {
-	var panel;
-	panel = tab.panel
+	var panel = tab.panel;
 	
 	if (!tab.show)
 		return 0
@@ -13,6 +9,9 @@ function tab_close(tab)
 		settings_save()
 	
 	panel_tab_list_remove(panel, tab)
+	
 	tab.show = false
+	tab.raised = false
+	
 	tab_move = null
 }

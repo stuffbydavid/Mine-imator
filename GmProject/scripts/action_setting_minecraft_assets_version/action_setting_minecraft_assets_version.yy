@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_minecraft_assets_version",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Program",
-    "path": "folders/Scripts/App/Actions/Settings/Program.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_minecraft_assets_version",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_minecraft_assets_version",
+  "parent":{
+    "name":"Program",
+    "path":"folders/Scripts/App/Actions/Settings/Program.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

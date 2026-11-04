@@ -1,10 +1,6 @@
-/// action_tl_frame_ik_blend(val, add)
-/// @arg val
-/// @arg add
-
-function action_tl_frame_ik_blend(val, add)
+function action_tl_frame_ik_blend(value, add)
 {
 	tl_value_set_start(action_tl_frame_ik_blend, true)
-	tl_value_set(e_value.IK_BLEND, val / 100, add)
+	tl_value_set(e_value.IK_BLEND, value / 100, add)
 	tl_value_set_done()
 }

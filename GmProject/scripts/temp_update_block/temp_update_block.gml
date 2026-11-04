@@ -1,8 +1,13 @@
-/// temp_update_block()
 /// @desc Updates the block vbuffers of the given template.
-function temp_update_block() {
 
-	block_vbuffer_start()
+function temp_update_block()
+{
+	if (block_repeat_enable)
+		block_meshes_num = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
+	else
+		block_meshes_num = vec3(1)
+
+	block_meshes_start()
 
 	with (mc_builder)
 	{
@@ -11,21 +16,29 @@ function temp_update_block() {
 		
 		if (other.block_repeat_enable)
 		{
-			build_size_x = other.block_repeat[Y]
-			build_size_y = other.block_repeat[X]
-			build_size_z = other.block_repeat[Z]
+			build_size[X] = other.block_repeat[Y]
+			build_size[Y] = other.block_repeat[X]
+			build_size[Z] = other.block_repeat[Z]
 		}
 		else
-		{
-			build_size_x = 1
-			build_size_y = 1
-			build_size_z = 1
-		}
+			build_size = vec3(1)
 		
 		build_randomize = other.block_randomize
+		build_transform = other.block_transform
+		
+		// Keep the source orientation when generating scenery parts
+		if (other.part_of != null)
+		{
+			build_transform = true
+			if (build_single_block != null && build_single_block.timeline)
+				build_transform = build_single_block.tl_build_transform
+
+			other.block_transform = build_transform
+		}
 		
 		builder_start()
 		builder_spawn_threads(1)
+		
 		with (thread_list[|0])
 		{
 			// Set models
@@ -35,8 +48,11 @@ function temp_update_block() {
 				builder_set_model()
 			}
 		}
+		
 		builder_combine_threads()
+		
 		builder_spawn_threads(1)
+		
 		with (thread_list[|0])
 		{
 			// Generate
@@ -46,15 +62,19 @@ function temp_update_block() {
 				builder_generate()
 			}
 		}
+		
 		builder_combine_threads()
+		
 		builder_done()
 		
 		build_randomize = false
-		
 		build_single_block = null
 		build_single_stateid = 0
 	}
 
-	block_vbuffer_done()
-
+	block_meshes_done()
+	
+	with (obj_timeline)
+		if (temp = other.id)
+			tl_update_render_blocks_transparent()
 }

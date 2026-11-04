@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_minecraft_map",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Minecraft",
-    "path": "folders/Scripts/Minecraft.yy",
+  "$GMScript":"v1",
+  "%Name":"new_minecraft_map",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_minecraft_map",
+  "parent":{
+    "name":"Minecraft",
+    "path":"folders/Scripts/Minecraft.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

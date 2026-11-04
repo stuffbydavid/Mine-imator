@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"clip_is_active",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"clip_is_active",
+  "parent":{
+    "name":"Scissor",
+    "path":"folders/Scripts/Utility/Scissor.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

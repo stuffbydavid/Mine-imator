@@ -1,18 +1,21 @@
-/// draw_help_circle(text, x, y, disabled)
 /// @arg text
 /// @arg x
 /// @arg y
 /// @arg disabled
+/// @arg [animationname]
 
-function draw_help_circle(text, xx, yy, disabled)
+function draw_help_circle(text, xx, yy, disabled, aniname = "")
 {
 	if (text = "")
 		return 0
+
+	if (aniname = "")
+		aniname = text
 	
 	var mouseon, color, alpha; 
 	mouseon = app_mouse_box(xx, yy, 20, 20) && content_mouseon && !disabled
 	
-	microani_set(text, null, mouseon, false, false)
+	microani_set(aniname, null, mouseon, false, false)
 	color = merge_color(c_text_tertiary, c_text_secondary, microani_arr[e_microani.HOVER])
 	alpha = lerp(a_text_tertiary, a_text_secondary, microani_arr[e_microani.HOVER]) * lerp(1, .5, microani_arr[e_microani.DISABLED])
 	

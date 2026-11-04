@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_value_reset",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Value",
-    "path": "folders/Scripts/App/Actions/Context menu/Value.yy",
+  "$GMScript":"v1",
+  "%Name":"action_value_reset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_value_reset",
+  "parent":{
+    "name":"Value",
+    "path":"folders/Scripts/App/Actions/Context menu/Value.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

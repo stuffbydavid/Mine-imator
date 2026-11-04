@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "vec2_normalize",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Vector",
-    "path": "folders/Scripts/Utility/Math/Vector.yy",
+  "$GMScript":"v1",
+  "%Name":"vec2_normalize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vec2_normalize",
+  "parent":{
+    "name":"Vector",
+    "path":"folders/Scripts/Utility/Math/Vector.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

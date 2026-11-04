@@ -1,4 +1,3 @@
-/// json_file_convert_unicode(source, destination)
 /// @arg source
 /// @arg destination
 

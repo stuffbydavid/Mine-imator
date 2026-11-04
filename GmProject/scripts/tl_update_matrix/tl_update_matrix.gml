@@ -1,15 +1,14 @@
-/// tl_update_matrix([paths, updateik, updatepose])
-/// @arg [paths
-/// @arg updateik
-/// @arg updatepose]
 /// @desc Updates matrixes and positions.
+/// @arg [paths]
+/// @arg [updateik]
+/// @arg [updatepose]
 
 function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
-	var start, curtl, tlamount, bend, pos, rot, sca, par, matrixnoscale, hasik, lasttex, ikblend, posebend;
-	var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
+	var tlamount, viewupdate, worldupdate, start;
 	tlamount = ds_list_size(app.project_timeline_list)
-	posebend = [0, 0, 0]
+	viewupdate = false
+	worldupdate = false
 	
 	if (object_index = obj_timeline)
 		start = ds_list_find_index(app.project_timeline_list, id)
@@ -21,10 +20,10 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	
 	for (var i = start; i < tlamount; i++)
 	{
-		curtl = app.project_timeline_list[|i]
+		var curtl = app.project_timeline_list[|i];
 		
 		// Update children
-		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
+		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.EQUIPMENT || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
 			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
 				if (curtl.tree_list[|t].inherit_pose)
 					array_add(app.project_inherit_pose_array, curtl.tree_list[|t])
@@ -47,6 +46,11 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		
 		with (curtl)
 		{
+			viewupdate = true
+			
+			if (type_is_visible(type) && type != e_tl_type.CAMERA && !type_is_light(type))
+				worldupdate = true
+			
 			// Get parent matrix
 			if (parent != app)
 			{
@@ -56,10 +60,14 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 					matrix_parent = array_copy_1d(parent.matrix)
 				
 				// Parent is a body part and we're locked to bended half
-				if (parent.type = e_tl_type.BODYPART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
+				if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
 				{
-					bend = vec3(parent.value_inherit[e_value.BEND_ANGLE_X], parent.value_inherit[e_value.BEND_ANGLE_Y], parent.value_inherit[e_value.BEND_ANGLE_Z]);
-					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0, 0, 0)), matrix_parent)
+					var bend = vec3(
+						parent.value_inherit[e_value.BEND_ANGLE_X],
+						parent.value_inherit[e_value.BEND_ANGLE_Y],
+						parent.value_inherit[e_value.BEND_ANGLE_Z]
+					);
+					matrix_parent = matrix_multiply(model_part_get_bend_matrix(parent.model_part, bend, point3D(0)), matrix_parent)
 				}
 			}
 			else
@@ -80,8 +88,8 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 					// Make rotation matrix and add path position
 					var n, t;
-					n = vec3_normalize([curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z]])
-					t = vec3_normalize([curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z]])
+					n = vec3_normalize([ curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z] ])
+					t = vec3_normalize([ curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z] ])
 				
 					mat = matrix_create_rotate_to(t, n)
 				
@@ -104,15 +112,16 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Add body part position and rotation
-			if (type = e_tl_type.BODYPART && model_part != null)
+			if (type = e_tl_type.MODEL_PART && model_part != null)
 			{
 				if (part_of != null)
 					matrix_parent = matrix_multiply(matrix_create(model_part.position, model_part.rotation, vec3(1)), matrix_parent)
 				else
-					matrix_parent = matrix_multiply(matrix_create(point3D(0, 0, 0), model_part.rotation, vec3(1)), matrix_parent)
+					matrix_parent = matrix_multiply(matrix_create(point3D(0), model_part.rotation, vec3(1)), matrix_parent)
 			}
 			
 			// Create main matrix
+			var pos, rot, sca, hasik;
 			pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
 			rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
 			sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
@@ -126,7 +135,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (!inherit_rotation)
 			{
 				matrix_remove_rotation(matrix)
-				matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
+				matrix = matrix_multiply(matrix_create(point3D(0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
 			}
 			
 			// Get current matrix for IK
@@ -137,13 +146,12 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				matrix = matrix_multiply(part_joints_matrix[0], matrix)
 			
 			// Check body part model timeline is "Inherit pose" is enabled, look at parent of root model and search for matching body parts to inherit from
-			posebend = [0, 0, 0]
-			
+			var posebend = [ 0, 0, 0 ];
 			if (updatepose && part_of != null && part_of.inherit_pose && part_of.parent != app)
 			{
 				var posetl = null;
 				with (part_of.parent)
-					posetl = tl_part_find(other.model_part_name);
+					posetl = tl_part_find(other.model_part_name)
 				
 				if (posetl != null)
 				{
@@ -164,20 +172,19 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (scale_resize || !inherit_scale || type = e_tl_type.PARTICLE_SPAWNER)
 			{
 				// Get actual scale
-				tl = id
-				
+				var tl = id;
 				while (true)
 				{
-					par = tl.parent;
+					var par = tl.parent;
 					if (!tl.inherit_scale || par = app)
 						break
+					
 					sca = vec3_mul(sca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
 					tl = par
 				}
 				
 				// Remove scale
-				var parmat;
-				
+				var parmat, matrixnoscale;
 				matrix_remove_scale(matrix_parent)
 				parmat = array_copy_1d(matrix_parent)
 				
@@ -185,7 +192,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (!inherit_rotation)
 					matrix_remove_rotation(parmat)
 				
-				matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), parmat);
+				matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), parmat)
 				
 				if (hasik)
 					matrixnoscale = matrix_multiply(part_joints_matrix[0], matrixnoscale)
@@ -195,9 +202,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				// Re-add calculated or own scale
 				if (inherit_scale)
-					matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), sca), matrix)
+					matrix = matrix_multiply(matrix_create(point3D(0), vec3(0), sca), matrix)
 				else
-					matrix = matrix_multiply(matrix_create(point3D(0, 0, 0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
+					matrix = matrix_multiply(matrix_create(point3D(0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
 			}
 			
 			// Replace position
@@ -224,15 +231,18 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			// Add rotation point
 			matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point_render, -1), vec3(0), vec3(1)), matrix)
 			
+			if (type = e_tl_type.MODEL_PART)
+				model_part_shape_render_matrix_part = null
+			
 			// Scale for position controls
 			value_inherit[e_value.SCA_X] = 1
 			value_inherit[e_value.SCA_Y] = 1
 			value_inherit[e_value.SCA_Z] = 1
-			tl = id
 			
+			var tl = id;
 			while (1)
 			{
-				par = tl.parent
+				var par = tl.parent;
 				if (par = app)
 					break
 			
@@ -242,10 +252,13 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				if (!par.inherit_scale)
 					break
+				
 				tl = par
 			}
 			
 			// Inherit
+			var lastalpha, lasttex, ikblend
+			lastalpha = value_inherit[e_value.ALPHA];
 			lasttex = value_inherit[e_value.TEXTURE_OBJ]
 			ikblend = value[e_value.IK_BLEND] * hasik
 			value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
@@ -268,13 +281,14 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			value_inherit[e_value.SUBSURFACE_COLOR] = value[e_value.SUBSURFACE_COLOR] // Multiplied
 			value_inherit[e_value.WIND_INFLUENCE] = value[e_value.WIND_INFLUENCE] // Multiplied
 			value_inherit[e_value.VISIBLE] = value[e_value.VISIBLE]
-			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend)// Added
+			value_inherit[e_value.BEND_ANGLE_X] = value[e_value.BEND_ANGLE_X] * (1 - ikblend) // Added
 			value_inherit[e_value.BEND_ANGLE_Y] = value[e_value.BEND_ANGLE_Y] * (1 - ikblend) // Added
 			value_inherit[e_value.BEND_ANGLE_Z] = value[e_value.BEND_ANGLE_Z] * (1 - ikblend) // Added
 			value_inherit[e_value.TEXTURE_OBJ] = value[e_value.TEXTURE_OBJ] // Overwritten
 			value_inherit[e_value.TEXTURE_MATERIAL_OBJ] = value[e_value.TEXTURE_MATERIAL_OBJ] // Overwritten
 			value_inherit[e_value.TEXTURE_NORMAL_OBJ] = value[e_value.TEXTURE_NORMAL_OBJ] // Overwritten
 			
+			var inhalpha, inhcolor, inhglowcolor, inhvis, inhbend, inhtex, inhsurf, inhsubsurf;
 			inhalpha = true
 			inhcolor = true
 			inhglowcolor = true
@@ -283,14 +297,14 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			inhtex = true
 			inhsurf = true
 			inhsubsurf = true
-			tl = id
 			
 			for (var j = X; j <= Z; j++)
 				value_inherit[e_value.BEND_ANGLE_X + j] += posebend[j]
 			
+			tl = id
 			while (true)
 			{
-				par = tl.parent;
+				var par = tl.parent;
 				if (par = app)
 					break
 				
@@ -388,6 +402,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				tl = par
 			}
 			
+			if (lastalpha != value_inherit[e_value.ALPHA])
+				render_list_default_update = true
+			
 			colors_ext = (value_inherit[e_value.ALPHA] < 1 ||
 						  value_inherit[e_value.RGB_ADD] - value_inherit[e_value.RGB_SUB] != c_black ||
 						  value_inherit[e_value.HSB_ADD] - value_inherit[e_value.HSB_SUB] != c_black ||
@@ -431,15 +448,26 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			}
 			
 			// Update render resource
-			if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && tl_get_visible())
-				render_update_tl_resource()
+			if (lasttex != value_inherit[e_value.TEXTURE_OBJ] && tl_get_render_visible())
+				tl_update_render_res()
+			
+			// Update shape matrices, vertex buffers and visibility
+			if (type = e_tl_type.MODEL_PART && model_part != null)
+				tl_update_model_shape_render()
 			
 			update_matrix = false
 		}
 	}
 	
+	// Update view buffers for accurate object placing
+	if (worldupdate)
+		render_world_changed()
+	else if (viewupdate)
+		view_changed()
+	
 	update_matrix = false
 	
+	// Inverse kinematics
 	if (updateik)
 	{
 		if (app.project_ik_part_array = null)

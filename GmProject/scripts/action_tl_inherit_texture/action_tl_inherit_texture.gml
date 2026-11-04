@@ -1,7 +1,4 @@
-/// action_tl_inherit_texture(enable)
-/// @arg enable
-
-function action_tl_inherit_texture(enable)
+function action_tl_inherit_texture(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_texture(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_texture, enable)
+				history_save_var(other.id, other.inherit_texture, enabled)
 			
-			inherit_texture = enable
+			inherit_texture = enabled
 			update_matrix = true
 		}
 	}

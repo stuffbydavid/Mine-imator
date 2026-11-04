@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"world_import_export_schematic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"world_import_export_schematic",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Minecraft/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

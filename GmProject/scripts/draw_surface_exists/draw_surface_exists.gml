@@ -1,4 +1,3 @@
-/// draw_surface_exists(surface, x, y)
 /// @arg surface
 /// @arg x
 /// @arg y

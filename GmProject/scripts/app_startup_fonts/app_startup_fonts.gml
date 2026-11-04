@@ -1,5 +1,3 @@
-/// app_startup_fonts()
-
 function app_startup_fonts()
 {
 	font_subheading = font_add(fonts_directory + "rubik_medium.ttf", 8.5, false, false, 32, 1024)

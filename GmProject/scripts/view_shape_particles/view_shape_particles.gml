@@ -1,4 +1,3 @@
-/// view_shape_particles(timeline)
 /// @arg timeline
 
 function view_shape_particles(tl)
@@ -7,7 +6,7 @@ function view_shape_particles(tl)
 	
 	view_shape_box(point3D_add(tl.world_pos, vec3(-3)), point3D_add(tl.world_pos, vec3(3)))
 	
-	if (temp = temp_edit && template_editor.show)
+	if (temp = obj_edit && object_editor.show)
 	{
 		if (temp.pc_spawn_region_use)
 		{

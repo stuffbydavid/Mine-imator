@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_fx_refresh",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_fx_refresh",
+  "parent":{
+    "name":"Effects",
+    "path":"folders/Scripts/Render/Effects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

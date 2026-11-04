@@ -1,4 +1,3 @@
-/// string_limit_ext(string, width, height)
 /// @arg string
 /// @arg width
 /// @arg height

@@ -1,4 +1,3 @@
-/// context_menu_add_level(name, x, y, [item])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -61,10 +60,11 @@ function context_menu_add_level(name, xx, yy, item = null)
 	// Creating base level
 	if (!toolbar_menu_active && context_menu_level_amount = 0)
 	{
-		level.level_y -= 4;
+		level.level_y -= 4
 		
-		var offset = 0;
-		var found = false;
+		var offset, found;
+		offset = 0
+		found = false
 		
 		// Same as last menu, look for last item and adjust Y
 		if (context_menu_find_script != null && context_menu_name = context_menu_name_last)

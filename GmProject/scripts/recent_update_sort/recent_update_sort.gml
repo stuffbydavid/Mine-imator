@@ -1,13 +1,11 @@
-/// recent_update_sort(list)
-/// @arg list
-/// @desc Sorts a list of models based on the sort mode
+/// @desc Sorts a list of recent projects based on the sort mode.
 
 function recent_update_sort(list)
 {
 	var listsize, ascend, datesort, datalist, prevlist, newlist;
 	listsize = ds_list_size(list)
-	ascend = (recent_sort_mode = e_recent_sort.date_newest || recent_sort_mode = e_recent_sort.name_az)
-	datesort = (recent_sort_mode = e_recent_sort.date_newest || recent_sort_mode = e_recent_sort.date_oldest)
+	ascend = (recent_sort_mode = e_recent_sort.DATE_NEWEST || recent_sort_mode = e_recent_sort.NAME_A_Z)
+	datesort = (recent_sort_mode = e_recent_sort.DATE_NEWEST || recent_sort_mode = e_recent_sort.DATE_OLDEST)
 	datalist = ds_list_create()
 	prevlist = ds_list_create()
 	newlist = ds_list_create()

@@ -1,7 +1,6 @@
-/// history_save_part_usage_tl(tl, hobj)
-/// @arg tl
-/// @arg hobj
 /// @desc Saves usage of the model part in values like particle attraction, IK targets, etc.
+/// @arg timeline
+/// @arg historyobject
 
 function history_save_part_usage_tl(tl, hobj)
 {
@@ -73,4 +72,3 @@ function history_save_part_usage_tl(tl, hobj)
 	
 	return used
 }
-

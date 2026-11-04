@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_project_render_pass",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Render",
-    "path": "folders/Scripts/App/Actions/Project/Render.yy",
+  "$GMScript":"v1",
+  "%Name":"action_project_render_pass",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_pass",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/App/Actions/Project/Render.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

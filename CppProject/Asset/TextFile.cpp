@@ -30,7 +30,9 @@ namespace CppProject
 
 		StringType line = lines[currentLine++];
 		lineWords = line.Split(' ');
+
 		currentWord = 0;
+
 		return line;
 	}
 

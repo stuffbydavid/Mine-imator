@@ -1,7 +1,4 @@
-/// action_tl_inherit_select(enable)
-/// @arg enable
-
-function action_tl_inherit_select(enable)
+function action_tl_inherit_select(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_select(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_select, enable)
+				history_save_var(other.id, other.inherit_select, enabled)
 			
-			inherit_select = enable
+			inherit_select = enabled
 			update_matrix = true
 		}
 	}

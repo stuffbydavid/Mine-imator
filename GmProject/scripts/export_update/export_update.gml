@@ -1,4 +1,4 @@
-/// export_update()
+/// @desc Renders and encodes a number of samples and completed frames and returns whether exporting continues.
 
 function export_update()
 {
@@ -10,121 +10,172 @@ function export_update()
 	if (export_escape_time > 0 && current_time - export_escape_time > 1000)
 	{
 		export_escape_time = 0
-		if (question(text_get("questionstoprender")))
+		window_taskbar_progress_state_set(e_window_taskbar_state.PAUSED)
+		
+		if (question(text_get("question/stop_render")))
 		{
 			if (window_state = "export_movie")
-				export_done_movie(true)
+				export_done_movie()
 			else if (window_state = "export_image")
 			{
-				surface_save_lib(export_surface, export_filename)
+				surface_save_lib(export_surface, export_filename, !render_background)
 				export_done_image()
 			}
 			
-			return 0
+			return false
 		}
 	}
 	
-	// Update movie
+	window_taskbar_progress_state_set(e_window_taskbar_state.NORMAL)
+	
+	// Render settings
 	if (window_state = "export_movie")
 	{
-		if (render_samples = -1)
+		render_active = "movie"
+		renderer_current = exportmovie_renderer
+	}
+	else
+	{
+		render_active = "image"
+		renderer_current = popup_exportimage.renderer
+	}
+	render_lights = (renderer_current != e_renderer.QUICK || setting_quick_mode_shading)
+	render_effects = true
+	
+	// Process a number frames until a step has elapsed (1/fps seconds)
+	var starttime = current_time;
+	while (current_time - starttime < 1000 / game_get_speed(gamespeed_fps))
+	{
+		if (window_state = "export_movie" && exportmovie_format = "png")
+			render_start(export_surface, timeline_camera, render_active)
+		else
+			render_start(export_surface, timeline_camera, render_active, project_video_width, project_video_height)
+	
+		if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)
+			render_high()
+		else
 		{
+			render_low()
+			render_samples_done = true
+		}
+	
+		export_surface = render_done()
+		
+		export_sample++
+		if (renderer_current = e_renderer.REALISTIC)
+		{
+			export_sample_rate_count++
+			
+			var sampleelapsed = get_timer() - export_sample_rate_start;
+			if (sampleelapsed >= 1000000)
+			{
+				export_samples_per_second = export_sample_rate_count * 1000000 / sampleelapsed
+				export_sample_rate_start = get_timer()
+				export_sample_rate_count = 0
+			}
+		}
+	
+		if (renderer_current = e_renderer.STANDARD || (renderer_current = e_renderer.REALISTIC && render_samples = app.project_render_samples))
+			render_samples_done = true
+	
+		if (!render_samples_done)
+			continue
+	
+		render_active = null
+		render_samples = -1
+	
+		// Save movie frame
+		if (window_state = "export_movie")
+		{
+			if (exportmovie_format = "png")
+			{
+				// Save image
+				var totalframes, totallen, numstr;
+				totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.framespersecond)
+				totallen = string_length(string(totalframes))
+				numstr = string(exportmovie_frame + 1)
+				numstr = string_repeat("0", (totallen - string_length(numstr))) + numstr
+				
+				surface_save_lib(export_surface, filename_new_ext(export_filename, "") + "_" + numstr + ".png", !render_background)
+			}
+			else
+			{
+				// Save to movie
+				if (!is_cpp())
+				{
+					buffer_get_surface(exportmovie_buffer, export_surface, 0)
+					buffer_save(exportmovie_buffer, temp_file)
+				}
+		
+				var exportstart, err;
+				exportstart = get_timer()
+				err = movie_frame(temp_file)
+				
+				benchmark_export_total_time += get_timer() - exportstart
+				
+				if (benchmark_exportmovie)
+				{
+					exportmovie_benchmark_csv += string(exportmovie_frame) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_animate_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_render_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_surface_total_time / 1000, 0, 3) + ","
+					exportmovie_benchmark_csv += string_format(benchmark_export_total_time / 1000, 0, 3) + "\n"
+					benchmark_animate_total_time = 0
+					benchmark_render_total_time = 0
+					benchmark_surface_total_time = 0
+					benchmark_export_total_time = 0
+				}
+				
+				if (err < 0)
+				{
+					export_done_movie()
+					window_flash()
+					window_beep()
+					
+					log("Error when adding frame, error code", err)
+					error("error/export_movie")
+					
+					return false
+				}
+			}
+	
+			// Advance
+			exportmovie_frame++
+			exportmovie_frame_last_time = get_timer()
+			current_step += round(60 / popup_exportmovie.framespersecond)
+			
 			// Update marker
 			timeline_marker = exportmovie_marker_start + (exportmovie_frame / popup_exportmovie.framespersecond) * project_tempo
-			if (timeline_marker > exportmovie_marker_end)
+			if (timeline_marker >= exportmovie_marker_end)
 			{
 				export_done_movie()
-				return 0
+				
+				window_flash()
+				window_beep()
+				
+				return false
 			}
 			
 			// Update animations
 			app_update_animate()
 		}
-	}
 	
-	if (window_state = "export_image")
-		app_update_cameras(popup_exportimage.high_quality, false)
-	
-	// Render
-	if (window_state = "export_movie")
-	{
-		render_active = "movie"
-		render_quality = (exportmovie_high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
-	}
-	else
-	{
-		render_active = "image"
-		render_quality = (popup_exportimage.high_quality ? e_view_mode.RENDER : e_view_mode.SHADED)
-	}
-	
-	if (window_state = "export_movie" && exportmovie_format = "png")
-		render_start(export_surface, timeline_camera)
-	else
-		render_start(export_surface, timeline_camera, project_video_width, project_video_height)
-	
-	if (render_quality = e_view_mode.RENDER)
-		render_high()
-	else
-	{
-		render_low()
-		render_samples_done = true
-	}
-	
-	export_surface = render_done()
-	
-	export_sample++
-	
-	if (render_quality = e_view_mode.RENDER && render_samples = app.project_render_samples)
-		render_samples_done = true
-	
-	if (!render_samples_done)
-		return 1
-	
-	render_active = null
-	render_samples = -1
-	
-	// Save movie frame
-	if (window_state = "export_movie")
-	{
-		if (exportmovie_format = "png")
+		// Save image
+		else if (window_state = "export_image")
 		{
-			// Save image
-			var totalframes = ceil(((exportmovie_marker_end - exportmovie_marker_start) / project_tempo) * popup_exportmovie.framespersecond);
-			var totallen = string_length(string(totalframes));
-			var numstr = string(exportmovie_frame + 1);
-			numstr = string_repeat("0", (totallen - string_length(numstr))) + numstr
-			surface_save_lib(export_surface, filename_new_ext(export_filename, "") + "_" + numstr + ".png")
+			var exportstart = get_timer();
+			surface_save_lib(export_surface, export_filename, !render_background)
+			if (benchmark_mode)
+				benchmark_export_total_time += get_timer() - exportstart
+			
+			export_done_image()
+			
+			window_flash()
+			window_beep()
+			
+			return false
 		}
-		else
-		{
-			// Save to movie
-			if (!is_cpp())
-			{
-				buffer_get_surface(exportmovie_buffer, export_surface, 0)
-				buffer_save(exportmovie_buffer, temp_file)
-			}
-		
-			var err = movie_frame(temp_file);
-			if (err < 0)
-			{
-				export_done_movie()
-				log("Error when adding frame, error code", err)
-				error("errorexportmovie")
-				return 0
-			}
-		}
-	
-		// Advance
-		exportmovie_frame++
-		current_step += round(60 / popup_exportmovie.framespersecond)
 	}
 	
-	// Save image
-	if (window_state = "export_image")
-	{
-		surface_save_lib(export_surface, export_filename)
-		export_done_image()
-	}
-	
-	return 1
+	return true
 }

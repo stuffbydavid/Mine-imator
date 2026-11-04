@@ -1,7 +1,4 @@
-/// action_tl_ssao(enable)
-/// @arg enable
-
-function action_tl_ssao(enable)
+function action_tl_ssao(enabled)
 {
 	if (history_undo)
 	{
@@ -20,8 +17,9 @@ function action_tl_ssao(enable)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_ssao, false);
+		
 		with (obj_timeline)
 			if (selected)
-				action_tl_ssao_tree(id, enable, hobj)
+				action_tl_ssao_tree(id, enabled, hobj)
 	}
 }

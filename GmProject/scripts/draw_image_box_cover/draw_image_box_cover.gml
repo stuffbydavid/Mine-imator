@@ -1,19 +1,18 @@
-/// draw_image_box_cover(sprite, x, y, width, height)
 /// @arg sprite
 /// @arg x
 /// @arg y
 /// @arg width
 /// @arg height
 
-function draw_image_box_cover(sprite, xx, yy, w, h)
+function draw_image_box_cover(spr, xx, yy, w, h)
 {
 	var sw, sh, scale;
 	
-	if (!sprite_exists(sprite))
+	if (!sprite_exists(spr))
 		return 0
 	
-	sw = sprite_get_width(sprite)
-	sh = sprite_get_height(sprite)
+	sw = sprite_get_width(spr)
+	sh = sprite_get_height(spr)
 	
 	if (sw / sh < w / h)
 	{
@@ -33,5 +32,5 @@ function draw_image_box_cover(sprite, xx, yy, w, h)
 	w = ceil(w)
 	h = ceil(h)
 	
-	draw_image(sprite, 0, xx, yy, scale, scale)
+	draw_image(spr, 0, xx, yy, scale, scale)
 }

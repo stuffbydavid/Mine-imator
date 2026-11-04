@@ -1,4 +1,3 @@
-/// movie_frame(filename)
 /// @arg filename
 
 function movie_frame(fn)

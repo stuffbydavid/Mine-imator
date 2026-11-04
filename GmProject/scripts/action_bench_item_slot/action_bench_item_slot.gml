@@ -1,6 +1,3 @@
-/// action_bench_item_slot(index)
-/// @arg index
-
 function action_bench_item_slot(index)
 {
 	with (bench_settings)

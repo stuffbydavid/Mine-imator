@@ -12,14 +12,14 @@ namespace CppProject
 		// Assign empty value
 		switch (type)
 		{
-			case UNDEFINED_t: SetUndefined(); break;
-			case REAL_t: SetReal(); break;
-			case INTEGER_t: SetInt(); break;
-			case BOOLEAN_t: SetBool(); break;
-			case STRING_t: SetStr(); break;
-			case VECTOR_t: SetVec(VecType()); break;
-			case MATRIX_t: SetMat(MatrixType()); break;
-			case ARRAY_t: SetArr(ArrType()); break;
+			case UNDEFINED_t:	SetUndefined(); break;
+			case REAL_t:		SetReal(); break;
+			case INTEGER_t:		SetInt(); break;
+			case BOOLEAN_t:		SetBool(); break;
+			case STRING_t:		SetStr(); break;
+			case VECTOR_t:		SetVec(VecType()); break;
+			case MATRIX_t:		SetMat(MatrixType()); break;
+			case ARRAY_t:		SetArr(ArrType()); break;
 		}
 	}
 
@@ -36,12 +36,14 @@ namespace CppProject
 		switch (type)
 		{
 			case VECTOR_t:
+			{
 				if (index > 4) // Convert to array
 					return Arr()[index];
 				else
 					return Vec()[index];
-			case MATRIX_t: return Mat()[index];
-			case ARRAY_t: return Arr()[index];
+			}
+			case MATRIX_t:	return Mat()[index];
+			case ARRAY_t:	return Arr()[index];
 		}
 
 		return *this;
@@ -51,13 +53,14 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case UNDEFINED_t: return 0;
-			case BOOLEAN_t: return Bool() ? -1 : 1;
-			case REAL_t: return -Real();
-			case INTEGER_t: return -Int();
+			case UNDEFINED_t:	return 0;
+			case BOOLEAN_t:		return Bool() ? -1 : 1;
+			case REAL_t:		return -Real();
+			case INTEGER_t:		return -Int();
 			default:
 				WARNING("-Variant: Invalid type " + TypeName(type));
 		}
+
 		return 0;
 	}
 
@@ -86,6 +89,7 @@ namespace CppProject
 	{
 		if (IsRealRef())
 			return *rlRef;
+
 		if (IsVariantRef())
 			return vRef->Real();
 
@@ -145,6 +149,7 @@ namespace CppProject
 	{
 		if (IsMatrixRef())
 			return *matRef;
+
 		if (IsVariantRef())
 			return vRef->Mat();
 
@@ -160,6 +165,7 @@ namespace CppProject
 	{
 		if (IsArrayRef())
 			return *arrRef;
+
 		if (IsVariantRef())
 			return vRef->Arr();
 
@@ -177,12 +183,13 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case VECTOR_t: return Vec()[index];
-			case MATRIX_t: return Mat()[index];
-			case ARRAY_t: return Arr()[index];
+			case VECTOR_t:	return Vec()[index];
+			case MATRIX_t:	return Mat()[index];
+			case ARRAY_t:	return Arr()[index];
 			default:
 				FATAL("Variant: Ref() on invalid type " + TypeName(type));
 		}
+
 		return *this;
 	}
 
@@ -190,12 +197,13 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case VECTOR_t: return Vec().Value(index);
-			case MATRIX_t: return Mat().Value(index);
-			case ARRAY_t: return Arr().Value(index);
+			case VECTOR_t:	return Vec().Value(index);
+			case MATRIX_t:	return Mat().Value(index);
+			case ARRAY_t:	return Arr().Value(index);
 			default:
 				FATAL("Variant: Value() const on invalid type " + TypeName(type));
 		}
+
 		return *this;
 	}
 
@@ -203,6 +211,7 @@ namespace CppProject
 	{
 		if (IsRealRef())
 			return *rlRef;
+
 		if (IsVariantRef())
 			return vRef->Real();
 
@@ -260,6 +269,7 @@ namespace CppProject
 	{
 		if (IsVariantRef())
 			return vRef->Mat();
+
 		if (IsMatrixRef())
 			return *matRef;
 
@@ -273,6 +283,7 @@ namespace CppProject
 	{
 		if (IsArrayRef())
 			return *arrRef;
+
 		if (IsVariantRef())
 			return vRef->Arr();
 
@@ -286,15 +297,16 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case UNDEFINED_t: return 0.0;
-			case REAL_t: return rl;
-			case REAL_REF_t: return *rlRef;
-			case INTEGER_t: return (RealType)in;
-			case BOOLEAN_t: return bl ? 1.0 : 0.0;
-			case VARIANT_REF_t: return vRef->ToReal();
+			case UNDEFINED_t:	return 0.0;
+			case REAL_t:		return rl;
+			case REAL_REF_t:	return *rlRef;
+			case INTEGER_t:		return (RealType)in;
+			case BOOLEAN_t:		return bl ? 1.0 : 0.0;
+			case VARIANT_REF_t:	return vRef->ToReal();
 			default:
 				WARNING("Variant: ToReal() invalid type " + TypeName(lastAssigned));
 		}
+
 		return 0.0;
 	}
 
@@ -302,15 +314,16 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case UNDEFINED_t: return 0;
-			case REAL_t: return (IntType)rl;
-			case REAL_REF_t: return (IntType)*rlRef;
-			case INTEGER_t: return in;
-			case BOOLEAN_t: return bl ? 1 : 0;
-			case VARIANT_REF_t: return vRef->ToInt();
+			case UNDEFINED_t:	return 0;
+			case REAL_t:		return (IntType)rl;
+			case REAL_REF_t:	return (IntType)*rlRef;
+			case INTEGER_t:		return in;
+			case BOOLEAN_t:		return bl ? 1 : 0;
+			case VARIANT_REF_t:	return vRef->ToInt();
 			default:
 				WARNING("Variant: ToInt() invalid type " + TypeName(lastAssigned));
 		}
+
 		return 0;
 	}
 
@@ -318,20 +331,23 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case UNDEFINED_t: return false;
-			case REAL_t: return rl > 0.0;
-			case REAL_REF_t: return *rlRef > 0.0;
-			case INTEGER_t: return in > 0;
-			case BOOLEAN_t: return bl;
-			case VARIANT_REF_t: return vRef->ToBool();
+			case UNDEFINED_t:	return false;
+			case REAL_t:		return rl > 0.0;
+			case REAL_REF_t:	return *rlRef > 0.0;
+			case INTEGER_t:		return in > 0;
+			case BOOLEAN_t:		return bl;
+			case VARIANT_REF_t:	return vRef->ToBool();
 			case STRING_t:
+			{
 				if (str == "true")
 					return true;
 				else if (str == "false")
 					return false;
+			}
 			default:
 				WARNING("Variant: ToBool() invalid type " + TypeName(lastAssigned));
 		}
+
 		return false;
 	}
 
@@ -340,18 +356,18 @@ namespace CppProject
 		IntType containerSize = 0;
 		switch (lastAssigned)
 		{
-			case UNDEFINED_t: return "undefined";
+			case UNDEFINED_t:	return "undefined";
 			case REAL_t:
-			case REAL_REF_t: return NumStr(Real(), 2);
-			case INTEGER_t: return NumStr(Int(), 2);
-			case BOOLEAN_t: return Bool() ? "1" : "0";
-			case STRING_t: return str;
-			case VECTOR_t: containerSize = vec->size; break;
+			case REAL_REF_t:	return NumStr(Real(), 2);
+			case INTEGER_t:		return NumStr(Int(), 2);
+			case BOOLEAN_t:		return Bool() ? "1" : "0";
+			case STRING_t:		return str;
+			case VECTOR_t:		containerSize = vec->size; break;
 			case MATRIX_t:
-			case MATRIX_REF_t: containerSize = 16; break;
+			case MATRIX_REF_t:	containerSize = 16; break;
 			case ARRAY_t:
-			case ARRAY_REF_t: containerSize = Arr().Size(); break;
-			case VARIANT_REF_t: return vRef->ToStr();
+			case ARRAY_REF_t:	containerSize = Arr().Size(); break;
+			case VARIANT_REF_t:	return vRef->ToStr();
 		}
 
 		if (containerSize > 0)
@@ -359,8 +375,10 @@ namespace CppProject
 			StringType contStr = "";
 			for (IntType i = 0; i < containerSize; i++)
 				contStr += (i > 0 ? ", " : "") + Value(i).Str();
+			
 			return "[ " + contStr + " ]";
 		}
+
 		return "";
 	}
 
@@ -368,10 +386,10 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case VECTOR_t: return *vec;
-			case ARRAY_t: return *arr; // array->vector
-			case ARRAY_REF_t: return *arrRef; // array->vector
-			case VARIANT_REF_t: return vRef->ToVec();
+			case VECTOR_t:		return *vec;
+			case ARRAY_t:		return *arr; // array->vector
+			case ARRAY_REF_t:	return *arrRef; // array->vector
+			case VARIANT_REF_t:	return vRef->ToVec();
 			default:
 				WARNING("Variant: ToVec() invalid type " + TypeName(lastAssigned));
 		}
@@ -383,11 +401,11 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case MATRIX_t: return *mat;
-			case MATRIX_REF_t: return *matRef;
-			case ARRAY_t: return *arr; // array->matrix
-			case ARRAY_REF_t: return *arrRef; // array->matrix
-			case VARIANT_REF_t: return vRef->ToMat();
+			case MATRIX_t:		return *mat;
+			case MATRIX_REF_t:	return *matRef;
+			case ARRAY_t:		return *arr; // array->matrix
+			case ARRAY_REF_t:	return *arrRef; // array->matrix
+			case VARIANT_REF_t:	return vRef->ToMat();
 			default:
 				WARNING("Variant: ToMat() invalid type " + TypeName(lastAssigned));
 		}
@@ -399,13 +417,13 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case UNDEFINED_t: return ArrType();
-			case VECTOR_t: return *vec; // vector->array
-			case MATRIX_t: return *mat; // matrix->array
-			case MATRIX_REF_t: return *matRef; // matrix->array
-			case ARRAY_t: return *arr;
-			case ARRAY_REF_t: return *arrRef;
-			case VARIANT_REF_t: return vRef->ToArr();
+			case UNDEFINED_t:	return ArrType();
+			case VECTOR_t:		return *vec; // vector->array
+			case MATRIX_t:		return *mat; // matrix->array
+			case MATRIX_REF_t:	return *matRef; // matrix->array
+			case ARRAY_t:		return *arr;
+			case ARRAY_REF_t:	return *arrRef;
+			case VARIANT_REF_t:	return vRef->ToArr();
 			default:
 				WARNING("Variant: ToArr() invalid type " + TypeName(lastAssigned));
 		}
@@ -415,10 +433,13 @@ namespace CppProject
 
 	void VarType::SetVar(const VarType& var, BoolType copyRefValue)
 	{
+		if (this == &var)
+			return;
+		
 		switch (var.lastAssigned)
 		{
-			case UNDEFINED_t: SetUndefined(); break;
-			case REAL_t: SetReal(var.rl); break;
+			case UNDEFINED_t:	SetUndefined(); break;
+			case REAL_t:		SetReal(var.rl); break;
 			case REAL_REF_t:
 			{
 				if (copyRefValue)
@@ -431,11 +452,11 @@ namespace CppProject
 				}
 				break;
 			}
-			case INTEGER_t: SetInt(var.in); break;
-			case BOOLEAN_t: SetBool(var.bl); break;
-			case STRING_t: SetStr(var.str); break;
-			case VECTOR_t: SetVec(*var.vec); break;
-			case MATRIX_t: SetMat(*var.mat); break;
+			case INTEGER_t:		SetInt(var.in); break;
+			case BOOLEAN_t:		SetBool(var.bl); break;
+			case STRING_t:		SetStr(var.str); break;
+			case VECTOR_t:		SetVec(*var.vec); break;
+			case MATRIX_t:		SetMat(*var.mat); break;
 			case MATRIX_REF_t:
 			{
 				if (copyRefValue)
@@ -448,7 +469,7 @@ namespace CppProject
 				}
 				break;
 			}
-			case ARRAY_t: SetArr(*var.arr); break;
+			case ARRAY_t:		SetArr(*var.arr); break;
 			case ARRAY_REF_t:
 			{
 				if (copyRefValue)
@@ -525,6 +546,7 @@ namespace CppProject
 			FreeData();
 			memset(&this->str, 0, sizeof(StringType));
 		}
+
 		this->str = str;
 		type = lastAssigned = STRING_t;
 	}
@@ -538,6 +560,7 @@ namespace CppProject
 		}
 		else
 			*this->vec = vec;
+		
 		type = lastAssigned = VECTOR_t;
 	}
 
@@ -550,6 +573,7 @@ namespace CppProject
 		}
 		else
 			*this->mat = mat;
+		
 		type = lastAssigned = MATRIX_t;
 	}
 
@@ -562,6 +586,7 @@ namespace CppProject
 		}
 		else
 			*this->arr = arr;
+		
 		type = lastAssigned = ARRAY_t;
 	}
 
@@ -605,10 +630,10 @@ namespace CppProject
 	{
 		switch (lastAssigned)
 		{
-			case STRING_t: str.Clear(); break;
-			case VECTOR_t: delete vec; break;
-			case MATRIX_t: delete mat; break;
-			case ARRAY_t: delete arr; break;
+			case STRING_t:	str.Clear(); break;
+			case VECTOR_t:	delete vec; break;
+			case MATRIX_t:	delete mat; break;
+			case ARRAY_t:	delete arr; break;
 		}
 	}
 
@@ -633,8 +658,10 @@ namespace CppProject
 		{
 			if (arg == value && index >= offset)
 				return index - offset;
+			
 			index++;
 		}
+
 		return -1;
 	}
 }

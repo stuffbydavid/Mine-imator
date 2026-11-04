@@ -1,60 +1,45 @@
-/// block_tile_entity_sign(map)
-/// @arg map
-
-function block_tile_entity_sign_text(map)
-{
-	var messagemap = value_get_array(map[?"messages"], "")
-	var text = "";
-	
-	for (var i = 0; i < 4; i++)
-	{
-		var line = "";
-		var textmap = json_decode(messagemap[i]);
-			
-		if (ds_map_valid(textmap))
-		{
-			if (is_string(textmap[?"text"]))
-				line = textmap[?"text"]
-				
-			ds_map_destroy(textmap)
-		}
-			
-		if (line = "")
-			line = " "
-			
-		if (i > 0)
-			text += "\n"
-		text += line
-	}
-	
-	return text;
-}
-
 function block_tile_entity_sign(map)
 {
-	var frontmap = map[?"front_text"];
-	var backmap = map[?"back_text"];
-	
-	var text, colorname, color, glowcolor, glowing;
+	if (!block_current.timeline || block_current.tl_type != "sign")
+		return 0
+
+	var prevtext, frontmap, backmap, text, colorname, color, glowcolor, glowing;
+	prevtext = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]))
+	ds_map_delete(mc_builder.block_text_front_map, build_pos_index)
+	ds_map_delete(mc_builder.block_text_back_map, build_pos_index)
+
+	frontmap = map[?"front_text"]
+	backmap = map[?"back_text"]
 	
 	// 1.20+
 	if (ds_map_valid(frontmap))
 	{
 		// Front
-		colorname = value_get_string(frontmap[?"color"], "black")
-		glowing = value_get_real(frontmap[?"has_glowing_text"], 0)
-		mc_builder.block_text_front_color_map[?build_pos] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
-		mc_builder.block_text_front_glow_color_map[?build_pos] = minecraft_get_color("text_glow:outline_" + colorname)
-		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
-		mc_builder.block_text_front_map[?build_pos] = block_tile_entity_sign_text(frontmap)
+		text = block_tile_entity_sign_text(frontmap)
+		if (string_replace_all(string_remove_newline(text), " ", "") != "")
+		{
+			colorname = value_get_string(frontmap[?"color"], "black")
+			glowing = value_get_real(frontmap[?"has_glowing_text"], 0)
+			mc_builder.block_text_front_color_map[?build_pos_index] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+			mc_builder.block_text_front_glow_color_map[?build_pos_index] = minecraft_get_color("text_glow:outline_" + colorname)
+			mc_builder.block_text_front_glowing_map[?build_pos_index] = glowing
+			mc_builder.block_text_front_map[?build_pos_index] = text
+		}
 		
 		// Back
-		colorname = value_get_string(backmap[?"color"], "black")
-		glowing = value_get_real(backmap[?"has_glowing_text"], 0)
-		mc_builder.block_text_back_color_map[?build_pos] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
-		mc_builder.block_text_back_glow_color_map[?build_pos] = minecraft_get_color("text_glow:outline_" + colorname)
-		mc_builder.block_text_back_glowing_map[?build_pos] = glowing
-		mc_builder.block_text_back_map[?build_pos] = block_tile_entity_sign_text(backmap)
+		if (ds_map_valid(backmap))
+		{
+			text = block_tile_entity_sign_text(backmap)
+			if (string_replace_all(string_remove_newline(text), " ", "") != "")
+			{
+				colorname = value_get_string(backmap[?"color"], "black")
+				glowing = value_get_real(backmap[?"has_glowing_text"], 0)
+				mc_builder.block_text_back_color_map[?build_pos_index] = (glowing ? minecraft_get_color("text_glow:" + colorname) : minecraft_get_color("dye:" + colorname))
+				mc_builder.block_text_back_glow_color_map[?build_pos_index] = minecraft_get_color("text_glow:outline_" + colorname)
+				mc_builder.block_text_back_glowing_map[?build_pos_index] = glowing
+				mc_builder.block_text_back_map[?build_pos_index] = text
+			}
+		}
 	}
 	else // Use legacy format if detected
 	{
@@ -68,23 +53,12 @@ function block_tile_entity_sign(map)
 		{
 			var line = map[?"Text" + string(i + 1)];
 			if (!is_string(line))
-				return 0
-			
-			var textmap = json_decode(line);
-			if (ds_map_valid(textmap))
 			{
-				if (ds_list_valid(textmap[?"extra"]) && ds_list_size(textmap[?"extra"]) > 0)
-				{
-					var extramap = ds_list_find_value(textmap[?"extra"], 0);
-					if (ds_map_valid(extramap) && is_string(extramap[?"text"]))
-						textmap = extramap;
-				}
-				
-				if (is_string(textmap[?"text"]))
-					line = textmap[?"text"]
-				
-				ds_map_destroy(textmap)
+				text = ""
+				break
 			}
+			
+			line = block_tile_entity_sign_component(line, true)
 			
 			if (line = "")
 				line = " "
@@ -94,9 +68,24 @@ function block_tile_entity_sign(map)
 			text += line
 		}
 		
-		mc_builder.block_text_front_map[?build_pos] = text
-		mc_builder.block_text_front_color_map[?build_pos] = color
-		mc_builder.block_text_front_glow_color_map[?build_pos] = glowcolor
-		mc_builder.block_text_front_glowing_map[?build_pos] = glowing
+		if (string_replace_all(string_remove_newline(text), " ", "") != "")
+		{
+			mc_builder.block_text_front_map[?build_pos_index] = text
+			mc_builder.block_text_front_color_map[?build_pos_index] = color
+			mc_builder.block_text_front_glow_color_map[?build_pos_index] = glowcolor
+			mc_builder.block_text_front_glowing_map[?build_pos_index] = glowing
+		}
+	}
+
+	var hastext = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]));
+	if (mc_builder.block_tl_count_map != null && hastext != prevtext)
+	{
+		var count = value_get_real(mc_builder.block_tl_count_map[?"sign"], 0) + (hastext ? 1 : -1);
+		if (count > 0)
+			mc_builder.block_tl_count_map[?"sign"] = count
+		else
+			ds_map_delete(mc_builder.block_tl_count_map, "sign")
+
+		mc_builder.sch_timeline_amount += (hastext ? 1 : -1)
 	}
 }

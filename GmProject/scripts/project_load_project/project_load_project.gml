@@ -1,6 +1,3 @@
-/// project_load_project(map)
-/// @arg map
-
 function project_load_project(map)
 {
 	if (!ds_map_valid(map))
@@ -14,16 +11,12 @@ function project_load_project(map)
 	project_video_template = find_videotemplate(project_video_width, project_video_height)
 	project_video_keep_aspect_ratio = value_get_real(map[?"video_keep_aspect_ratio"], project_video_keep_aspect_ratio)
 	
-	project_render_settings = value_get_string(map[?"render_settings"], project_render_settings)
 	project_tempo = value_get_real(map[?"tempo"], project_tempo)
-	project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
 	project_grid_columns = value_get_real(map[?"grid_columns"], project_grid_columns)
-	view_main.camera = value_get_save_id(map[?"view_main_camera"], -4)
-	view_second.camera = value_get_save_id(map[?"view_second_camera"], -5)
-	
-	// If render settings file doesn't exists, set to custom
-	if (project_render_settings != "" && !file_exists_lib(render_directory + project_render_settings + ".mirender"))
-		project_render_settings = ""
+	project_grid_rows = value_get_real(map[?"grid_rows"], project_grid_rows)
+	project_pack = value_get_save_id(map[?"pack"], mc_res)
+	view_main.camera = value_get_save_id(map[?"view_main_camera"], view_camera_work)
+	view_second.camera = value_get_save_id(map[?"view_second_camera"], view_camera_active)
 	
 	var tlmap = map[?"timeline"];
 	if (ds_map_valid(tlmap))
@@ -59,8 +52,8 @@ function project_load_project(map)
 		cam_work_zoom = value_get_real(cammap[?"zoom"], cam_work_zoom)
 		cam_work_zoom_goal = cam_work_zoom
 		
-		cam_work_angle_look_xy = cam_work_angle_xy
-		cam_work_angle_look_z = -cam_work_angle_z
+		cam_work_angle_look_xy = value_get_real(cammap[?"angle_look_xy"], cam_work_angle_xy)
+		cam_work_angle_look_z = value_get_real(cammap[?"angle_look_z"], -cam_work_angle_z)
 		
 		// Fix if value was saved outside of range in previous versions
 		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)

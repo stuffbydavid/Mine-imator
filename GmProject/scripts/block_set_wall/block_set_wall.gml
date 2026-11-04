@@ -1,118 +1,70 @@
-/// block_set_wall()
-
 function block_set_wall()
 {
 	if (builder_scenery && !builder_scenery_legacy)
 		return 0
-	if (!builder_scenery && build_size_x = 1 && build_size_y = 1)
+
+	if (!builder_scenery && build_size_xy = 1)
 		return 0
-	
-	var east, west, south, north, variant, states, tall, i;
-	east = 0
-	west = 0
-	south = 0
-	north = 0
+
+	var connect, variant, states, tall;
+	connect = array_create(4, 0)
 	variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
-	states = array("none", "low", "tall")
+	states = [ "none", "low", "tall" ]
 	tall = false
-	i = 0
-	
-	// Z+
-	if (!build_edge_zp)
+
+	// Check above
+	if (!build_edge[ZP])
 	{
-		var block = builder_get_block(build_pos_x, build_pos_y, build_pos_z + 1);
-		if (block != null)
-		{
-			if (block.type = block_current.type || (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)) // Same walls
-				tall = true
-		}
+		var pos, block;
+		pos = vec3_add(build_pos, dir_get_vec3(ZP))
+		block = builder_get_block(pos[X], pos[Y], pos[Z])
+		if (block != null && (block.type = block_current.type || (block_face_min_depth[XP] = e_block_depth.DEPTH0 && block_face_full[XP])))
+			tall = true
 	}
-	
-	repeat (2)
+
+	for (var i = 0; i < 2; i++)
 	{
-		// X+
-		if (!build_edge_xp && (i = 0 || (i = 1 && east)))
+		for (var d = XP; d <= YN; d++)
 		{
-			var block = builder_get_block(build_pos_x + 1, build_pos_y, build_pos_z + i);
-			if (block != null)
+			if (build_edge[d] || (i > 0 && connect[d] = 0))
+				continue
+
+			var pos, block;
+			pos = vec3_add(build_pos, dir_get_vec3(d))
+			pos[Z] += i
+			block = builder_get_block(pos[X], pos[Y], pos[Z])
+			if (block = null)
+				continue
+
+			// Same walls and solid faces
+			if (block.type = block_current.type || (block_face_min_depth[d] = e_block_depth.DEPTH0 && block_face_full[d]))
+				connect[d]++
+			
+			// Fence gates
+			else if (block.type = "fence_gate")
 			{
-				if (block.type = block_current.type || (block_face_min_depth_xp = e_block_depth.DEPTH0 && block_face_full_xp)) // Same walls
-					east++
-				else if (block.type = "fence_gate") // Fence gates
-				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x + 1, build_pos_y, build_pos_z + i), "facing")
-					if (facing != "east" && facing != "west")
-						east++
-				}
+				var facing = block_get_state_id_value(block, builder_get_state_id(pos[X], pos[Y], pos[Z]), "facing");
+				if (facing != dir_names[d] && facing != dir_names[d ^ 1])
+					connect[d]++
 			}
 		}
-		
-		// X-
-		if (!build_edge_xn && (i = 0 || (i = 1 && west)))
-		{
-			var block = builder_get_block(build_pos_x - 1, build_pos_y, build_pos_z + i);
-			if (block != null)
-			{
-				if (block.type = block_current.type || (block_face_min_depth_xn = e_block_depth.DEPTH0 && block_face_full_xn)) // Same walls
-					west++
-				else if (block.type = "fence_gate") // Fence gates
-				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x - 1, build_pos_y, build_pos_z + i), "facing")
-					if (facing != "east" && facing != "west")
-						west++
-				}
-			}
-		}
-		
-		// Y+
-		if (!build_edge_yp && (i = 0 || (i = 1 && south)))
-		{
-			var block = builder_get_block(build_pos_x, build_pos_y + 1, build_pos_z + i);
-			if (block != null)
-			{
-				if (block.type = block_current.type || (block_face_min_depth_yp = e_block_depth.DEPTH0 && block_face_full_yp)) // Same walls
-					south++
-				else if (block.type = "fence_gate") // Fence gates
-				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y + 1, build_pos_z + i), "facing")
-					if (facing != "south" && facing != "north")
-						south++
-				}
-			}
-		}
-		
-		// Y-
-		if (!build_edge_yn && (i = 0 || (i = 1 && north)))
-		{
-			var block = builder_get_block(build_pos_x, build_pos_y - 1, build_pos_z + i);
-			if (block != null)
-			{
-				if (block.type = block_current.type || (block_face_min_depth_yn = e_block_depth.DEPTH0 && block_face_full_yn)) // Same fences/walls
-					north++
-				else if (block.type = "fence_gate") // Fence gates
-				{
-					var facing = block_get_state_id_value(block, builder_get_state_id(build_pos_x, build_pos_y - 1, build_pos_z + i), "facing")
-					if (facing != "south" && facing != "north")
-						north++
-				}
-			}
-		}
-		
+
 		if (!tall)
 			break
-		else
-			i++
 	}
-	
+
 	// Determine if the middle piece should be rendered
 	var up;
-	if ((east > 0 && west > 0 && south = 0 && north = 0) ||
-		(east = 0 && west = 0 && south > 0 && north > 0))
+	if ((connect[XP] > 0 && connect[XN] > 0 && connect[YP] = 0 && connect[YN] = 0) ||
+		(connect[XP] = 0 && connect[XN] = 0 && connect[YP] > 0 && connect[YN] > 0))
 		up = "false"
 	else
 		up = "true"
-	
-	block_state_id_current = block_get_state_id(block_current, array("variant", variant, "east", states[east], "west", states[west], "south", states[south], "north", states[north], "up", up))
-	
+
+	block_state_id_current = block_get_state_id(block_current, [
+		"variant", variant, "east", states[connect[XP]], "west", states[connect[XN]],
+		"south", states[connect[YP]], "north", states[connect[YN]], "up", up
+	])
+
 	return 0
 }

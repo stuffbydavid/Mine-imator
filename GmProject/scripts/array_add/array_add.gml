@@ -1,5 +1,4 @@
 /// CppSeparate ArrType array_add(VarType, VarType, BoolType merge = true)
-/// array_add(array, values, [merge])
 /// @arg array
 /// @arg value
 /// @arg [merge]
@@ -7,7 +6,7 @@
 function array_add(arr, val, merge = true)
 {
 	if (!is_array(arr))
-		arr = array()
+		arr = []
 	
 	if (is_array(val) && merge)
 	{

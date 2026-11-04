@@ -1,4 +1,3 @@
-/// history_destroy_loaded()
 /// @desc Destroy the loaded objects.
 
 function history_destroy_loaded()
@@ -9,6 +8,7 @@ function history_destroy_loaded()
 		{
 			if (object_index = obj_resource && copied)
 				file_delete_lib(app.project_folder + "/" + filename)
+			
 			instance_destroy()
 		}
 	}

@@ -1,7 +1,3 @@
-/// nbt_debug_tag_compound(name, map)
-/// @arg name
-/// @arg map
-
 function nbt_debug_tag_compound(name, map)
 {
 	var key = ds_map_find_first(map);

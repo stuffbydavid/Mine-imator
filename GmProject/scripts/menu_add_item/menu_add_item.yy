@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "menu_add_item",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Menu",
-    "path": "folders/Scripts/App/Interface/Components/Menu.yy",
+  "$GMScript":"v1",
+  "%Name":"menu_add_item",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"menu_add_item",
+  "parent":{
+    "name":"Menu",
+    "path":"folders/Scripts/App/Interface/Components/Menu.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

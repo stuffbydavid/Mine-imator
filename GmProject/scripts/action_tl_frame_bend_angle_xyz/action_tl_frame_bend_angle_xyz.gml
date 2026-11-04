@@ -1,6 +1,3 @@
-/// action_tl_frame_bend_angle_xyz(bend)
-/// @arg bend
-
 function action_tl_frame_bend_angle_xyz(bend)
 {
 	tl_value_set_start(action_tl_frame_bend_angle_xyz, false)

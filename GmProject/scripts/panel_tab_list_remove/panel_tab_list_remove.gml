@@ -1,7 +1,3 @@
-/// panel_tab_list_remove(panel, tab)
-/// @arg panel
-/// @arg tab
-
 function panel_tab_list_remove(panel, tab)
 {
 	var pos;

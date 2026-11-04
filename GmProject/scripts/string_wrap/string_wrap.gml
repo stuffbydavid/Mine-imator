@@ -1,10 +1,10 @@
-/// string_word_wrap(string, width)
 /// @arg string
 /// @arg width
 
 function string_wrap(str, wid)
 {
 	var pos, insertpos, linewid;
+	wid = max(8, wid)
 	pos = 1
 	insertpos = -1
 	linewid = 0
@@ -22,7 +22,7 @@ function string_wrap(str, wid)
 		{
 			if (insertpos = -1)
 			{
-				str = string_insert("\n", str,pos)
+				str = string_insert("\n", str, pos)
 				linewid = 0
 			}
 			else

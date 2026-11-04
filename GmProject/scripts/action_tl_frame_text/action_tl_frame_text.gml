@@ -1,6 +1,3 @@
-/// action_tl_frame_text(text)
-/// @arg text
-
 function action_tl_frame_text(text)
 {
 	tl_value_set_start(action_tl_frame_text, true)

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_path_offset_get_position",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Path",
-    "path": "folders/Scripts/Project/Timeline/Path.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_path_offset_get_position",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_path_offset_get_position",
+  "parent":{
+    "name":"Path",
+    "path":"folders/Scripts/Project/Timeline/Path.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

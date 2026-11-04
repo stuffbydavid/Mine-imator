@@ -1,6 +1,5 @@
-/// unzip_asset(filename)
-/// @arg filename
 /// @desc Unzips the archive with the given filename and looks for valid files inside.
+/// @arg filename
 
 function unzip_asset(fn)
 {

@@ -1,6 +1,3 @@
-/// action_tl_path_shape_invert(invert)
-/// @arg invert
-
 function action_tl_path_shape_invert(invert)
 {
 	if (history_undo)
@@ -11,7 +8,7 @@ function action_tl_path_shape_invert(invert)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_invert = other.save_var_old_value[t]
+					self.path_shape_invert = other.save_var_old_value[t]
 					path_update = true
 				}
 			}
@@ -25,7 +22,7 @@ function action_tl_path_shape_invert(invert)
 			{
 				with (save_id_find(save_var_save_id[t]))
 				{
-					id.path_shape_invert = other.save_var_new_value[t]
+					self.path_shape_invert = other.save_var_new_value[t]
 					path_update = true
 				}
 			}
@@ -43,7 +40,7 @@ function action_tl_path_shape_invert(invert)
 			with (hobj)
 				history_save_var(other.id, other.path_shape_invert, invert)
 			
-			id.path_shape_invert = invert
+			self.path_shape_invert = invert
 			path_update = true
 		}
 	}

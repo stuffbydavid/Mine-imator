@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_mouse_get_permission",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_mouse_get_permission",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

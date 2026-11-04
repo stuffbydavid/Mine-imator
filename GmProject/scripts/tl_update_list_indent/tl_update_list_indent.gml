@@ -1,4 +1,3 @@
-/// tl_update_list_indent(level)
 /// @arg level
 
 function tl_update_list_indent(tllevel)

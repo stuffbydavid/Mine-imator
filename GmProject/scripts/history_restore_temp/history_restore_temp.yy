@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "history_restore_temp",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Restore",
-    "path": "folders/Scripts/App/History/Restore.yy",
+  "$GMScript":"v1",
+  "%Name":"history_restore_temp",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"history_restore_temp",
+  "parent":{
+    "name":"Restore",
+    "path":"folders/Scripts/App/History/Restore.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

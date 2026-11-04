@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_update_reload",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_update_reload",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Resource/Update.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

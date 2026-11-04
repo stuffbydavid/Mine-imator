@@ -1,5 +1,3 @@
-/// project_load_legacy_project()
-
 function project_load_legacy_project()
 {
 	project_name = buffer_read_string_int()

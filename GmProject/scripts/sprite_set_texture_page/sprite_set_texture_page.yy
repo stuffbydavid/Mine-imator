@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sprite_set_texture_page",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sprite_set_texture_page",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Utility/Texture.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

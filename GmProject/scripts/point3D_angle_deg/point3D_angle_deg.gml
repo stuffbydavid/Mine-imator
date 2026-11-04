@@ -1,7 +1,4 @@
-/// point3D_angle_deg(from, to)
-/// @arg from
-/// @arg to
-/// @desc Returns angle in degrees between from and to
+/// @desc Returns angle in degrees between from and to.
 
 function point3D_angle_deg(from, to)
 {

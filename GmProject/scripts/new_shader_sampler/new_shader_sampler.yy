@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "new_shader_sampler",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Shaders",
-    "path": "folders/Scripts/Render/Shaders.yy",
+  "$GMScript":"v1",
+  "%Name":"new_shader_sampler",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_shader_sampler",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Scripts/Render/Shaders.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

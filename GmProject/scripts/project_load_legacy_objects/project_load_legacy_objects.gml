@@ -1,5 +1,3 @@
-/// project_load_legacy_objects()
-
 function project_load_legacy_objects()
 {
 	// Templates

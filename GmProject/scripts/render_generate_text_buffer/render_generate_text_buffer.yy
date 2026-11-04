@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_generate_text_buffer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_generate_text_buffer",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/Render/Text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

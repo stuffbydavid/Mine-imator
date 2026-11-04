@@ -1,4 +1,3 @@
-/// save_id_create()
 /// @desc Creates a new unique save ID.
 
 function save_id_create()

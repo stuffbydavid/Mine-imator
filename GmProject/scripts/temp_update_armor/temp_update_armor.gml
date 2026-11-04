@@ -1,5 +1,4 @@
-/// temp_update_armor(temp)
-/// @arg temp
+/// @arg template
 
 function temp_update_armor(temp)
 {

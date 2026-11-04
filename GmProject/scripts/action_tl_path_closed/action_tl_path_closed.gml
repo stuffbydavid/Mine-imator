@@ -1,7 +1,4 @@
-/// action_tl_path_closed(enable)
-/// @arg enable
-
-function action_tl_path_closed(enable)
+function action_tl_path_closed(enabled)
 {
 	if (history_undo)
 	{
@@ -37,6 +34,6 @@ function action_tl_path_closed(enable)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_path_closed_tree(id, enable, hobj)
+				action_tl_path_closed_tree(id, enabled, hobj)
 	}
 }

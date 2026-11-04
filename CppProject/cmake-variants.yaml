@@ -1,0 +1,18 @@
+buildType:
+  default: debug
+  choices:
+    debug:
+      short: Debug
+      buildType: Debug
+    debugBenchmarks:
+      short: DebugBenchmarks
+      buildType: DebugBenchmarks
+    relWithDebInfo:
+      short: RelWithDebInfo
+      buildType: RelWithDebInfo
+    runBenchmarks:
+      short: RunBenchmarks
+      buildType: RunBenchmarks
+    release:
+      short: Release
+      buildType: Release

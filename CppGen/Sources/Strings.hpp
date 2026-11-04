@@ -89,7 +89,6 @@ namespace CppGen
 	ADD(intmap) \
 	ADD(stringmap) \
 	ADD(map) \
-	ADD(grid) \
 	ADD(stack) \
 	ADD(priority) \
 	ADD(Unknown) \
@@ -110,7 +109,6 @@ namespace CppGen
 	ADD(IntMap) \
 	ADD(StringMap) \
 	ADD(Map) \
-	ADD(Grid) \
 	ADD(Stack) \
 	ADD(Priority) \
 	ADD(save_id_find) \
@@ -129,8 +127,6 @@ namespace CppGen
 	ADD(ds_map_find_value) \
 	ADD(ds_map_add) \
 	ADD(ds_stack_push) \
-	ADD(ds_grid_set) \
-	ADD(ds_grid_get) \
 	ADD(ds_list_copy) \
 	ADD(ds_map_copy) \
 	ADD(shader_set_uniform_f) \

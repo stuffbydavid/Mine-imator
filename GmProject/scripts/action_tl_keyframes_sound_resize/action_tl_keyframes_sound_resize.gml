@@ -1,5 +1,3 @@
-/// action_tl_keyframes_sound_resize()
-
 function action_tl_keyframes_sound_resize()
 {
 	var movex = timeline_mouse_pos - timeline_sound_resize_mouse_pos;

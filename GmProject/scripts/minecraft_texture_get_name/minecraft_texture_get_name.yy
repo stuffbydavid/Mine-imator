@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_texture_get_name",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_texture_get_name",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Scripts/Minecraft/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

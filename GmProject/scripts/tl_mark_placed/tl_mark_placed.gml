@@ -1,0 +1,15 @@
+/// @desc Marks a timeline as currently placing so it's ignored during depth/normal pass.
+
+function tl_mark_placed(active)
+{
+	placed = active
+	
+	for (var t = 0; t < ds_list_size(tree_list); t++)
+	{
+		with (tree_list[|t])
+		{
+			parent_is_placed = active
+			tl_mark_placed(active)
+		}
+	}
+}

@@ -1,4 +1,3 @@
-/// action_res_sound_load(filename)
 /// @arg filename
 
 function action_res_sound_load(fn)
@@ -31,4 +30,5 @@ function action_res_sound_load(fn)
 	}
 	
 	project_reset_loaded()
+	project_update_counts()
 }

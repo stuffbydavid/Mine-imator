@@ -1,12 +1,10 @@
-/// app_update_keybinds()
-
 function app_update_keybinds()
 {
-	var obj, check, navclear;
-	navclear = false
+	var navclear = false;
 	
 	for (var i = 0; i < e_keybind.amount; i++)
 	{
+		var obj, check;
 		obj = keybinds[i]
 		
 		check = keybind_check(obj, "keyboard_check")
@@ -27,7 +25,7 @@ function app_update_keybinds()
 	{
 		for (var i = 0; i < e_keybind.amount; i++)
 		{
-			obj = keybinds[i]
+			var obj = keybinds[i];
 		
 			if (!obj.navigation)
 			{

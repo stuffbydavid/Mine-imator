@@ -1,4 +1,3 @@
-/// snap(value, x)
 /// @arg value
 /// @arg x
 

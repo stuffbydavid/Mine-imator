@@ -1,4 +1,3 @@
-/// action_bench_shape_tex_material(resource)
 /// @arg resource
 
 function action_bench_shape_tex_material(res)
@@ -13,7 +12,7 @@ function action_bench_shape_tex_material(res)
 		
 		if (res = e_option.BROWSE)
 		{
-			var fn = file_dialog_open_image();
+			fn = file_dialog_open_image()
 			if (!file_exists_lib(fn))
 				return 0
 			

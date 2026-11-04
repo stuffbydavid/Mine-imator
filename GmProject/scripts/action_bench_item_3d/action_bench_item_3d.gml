@@ -1,11 +1,8 @@
-/// action_bench_item_3d(enable)
-/// @arg enable
-
-function action_bench_item_3d(enable)
+function action_bench_item_3d(enabled)
 {
 	with (bench_settings)
 	{
-		item_3d = enable
+		item_3d = enabled
 		render_generate_item()
 	}
 	

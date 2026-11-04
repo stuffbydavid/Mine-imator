@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"control_test_point",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"control_test_point",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/View/Control.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

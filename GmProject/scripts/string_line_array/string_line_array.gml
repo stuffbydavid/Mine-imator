@@ -1,6 +1,5 @@
-/// string_line_array(string)
+/// @desc Returns an array of lines in a string.
 /// @arg string
-/// @desc Returns an array of lines in a string
 
 function string_line_array(str)
 {

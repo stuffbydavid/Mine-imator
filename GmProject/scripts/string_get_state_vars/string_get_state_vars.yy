@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "string_get_state_vars",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "States",
-    "path": "folders/Scripts/Minecraft/States.yy",
+  "$GMScript":"v1",
+  "%Name":"string_get_state_vars",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"string_get_state_vars",
+  "parent":{
+    "name":"States",
+    "path":"folders/Scripts/Minecraft/States.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

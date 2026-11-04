@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_bench_project_list",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_bench_project_list",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/App/Actions/Bench/Project.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_biome",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_biome",
+  "parent":{
+    "name":"Biome",
+    "path":"folders/Scripts/App/Actions/Environment/Biome.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

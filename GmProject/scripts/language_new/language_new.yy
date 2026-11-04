@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"language_new",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"language_new",
+  "parent":{
+    "name":"Language",
+    "path":"folders/Scripts/App/Interface/Language.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

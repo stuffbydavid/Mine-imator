@@ -18,6 +18,7 @@ namespace CppProject
 
 		QBoxLayout* mainLayout = new QVBoxLayout;
 		mainLayout->setSpacing(12);
+
 		QTextEdit* textArea = new QTextEdit;
 		textArea->setReadOnly(true);
 		textArea->setStyleSheet("font-family: Consolas;");
@@ -31,6 +32,7 @@ namespace CppProject
 		QLabel* text1 = new QLabel("Please report the error on the Mine-imator forums along with the log file contents and instructions how to recreate the error message. If the issue occurs with a certain project file, please upload the project folder as well and include a link to it in your topic.");
 		text1->setWordWrap(true);
 		mainLayout->addWidget(text1);
+		
 		QLayout* buttonLayout = new QHBoxLayout;
 		QPushButton* button1 = new QPushButton("View log");
 		QPushButton* button2 = new QPushButton("Visit forums");
@@ -38,9 +40,10 @@ namespace CppProject
 		button1->setFixedHeight(50);
 		button2->setFixedHeight(50);
 		button3->setFixedHeight(50);
-		button1->connect(button1, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)log_file); });
+		button1->connect(button1, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)log_file_get()); });
 		button2->connect(button2, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)link_forums_bugs); });
 		button3->connect(button3, &QPushButton::released, [&]() { QDesktopServices::openUrl((QString)link_forums_upload); });
+		
 		buttonLayout->addWidget(button1);
 		buttonLayout->addWidget(button2);
 		buttonLayout->addWidget(button3);

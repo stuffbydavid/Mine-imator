@@ -1,4 +1,3 @@
-/// view_toolbar_draw(view, x, y)
 /// @arg view
 /// @arg x
 /// @arg y
@@ -50,7 +49,8 @@ function view_toolbar_draw(view, xx, yy)
 	if (setting_separate_tool_modes)
 	{
 		tip_set_keybind(e_keybind.TOOL_SELECT)
-		if (draw_button_icon("viewtoolselect", xx, yy, 24, 24, setting_tool_select, icons.SELECT, null, false, "viewtoolselecttip"))
+		
+		if (draw_button_icon("view/tool/select", xx, yy, 24, 24, setting_tool_select, icons.SELECT, null, false, "view/tool/select_tip"))
 		{
 			action_tools_disable_all()
 			setting_tool_select = true
@@ -61,7 +61,7 @@ function view_toolbar_draw(view, xx, yy)
 	// Position tool
 	tip_set_keybind(e_keybind.TOOL_MOVE)
 	
-	if (draw_button_icon("viewtoolmove", xx, yy, 24, 24, setting_tool_move, icons.MOVE, null, false, "viewtoolmovetip"))
+	if (draw_button_icon("view/tool/move", xx, yy, 24, 24, setting_tool_move, icons.MOVE, null, false, "view/tool/move_tip"))
 	{
 		if (setting_separate_tool_modes)
 		{
@@ -79,7 +79,7 @@ function view_toolbar_draw(view, xx, yy)
 	// Rotation tool
 	tip_set_keybind(e_keybind.TOOL_ROTATE)
 	
-	if (draw_button_icon("viewtoolrotate", xx, yy, 24, 24, setting_tool_rotate, icons.ROTATE, null, false, "viewtoolrotatetip"))
+	if (draw_button_icon("view/tool/rotate", xx, yy, 24, 24, setting_tool_rotate, icons.ROTATE, null, false, "view/tool/rotate_tip"))
 	{
 		if (setting_separate_tool_modes)
 		{
@@ -98,7 +98,8 @@ function view_toolbar_draw(view, xx, yy)
 	if (setting_separate_tool_modes)
 	{
 		tip_set_keybind(e_keybind.TOOL_SCALE)
-		if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
+		
+		if (draw_button_icon("view/tool/scale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "view/tool/scale_tip"))
 		{
 			if (setting_separate_tool_modes)
 			{
@@ -123,7 +124,7 @@ function view_toolbar_draw(view, xx, yy)
 	// Bend tool
 	tip_set_keybind(e_keybind.TOOL_BEND)
 	
-	if (draw_button_icon("viewtoolbend", xx, yy, 24, 24, setting_tool_bend, icons.BEND, null, false, "viewtoolbendtip"))
+	if (draw_button_icon("view/tool/bend", xx, yy, 24, 24, setting_tool_bend, icons.BEND, null, false, "view/tool/bend_tip"))
 	{
 		if (setting_separate_tool_modes)
 		{
@@ -142,7 +143,8 @@ function view_toolbar_draw(view, xx, yy)
 	if (setting_separate_tool_modes)
 	{
 		tip_set_keybind(e_keybind.TOOL_TRANSFORM)
-		if (draw_button_icon("viewtooltransform", xx, yy, 24, 24, setting_tool_transform, icons.MULTITRANSFORM, null, false, "viewtooltransformtip"))
+		
+		if (draw_button_icon("view/tool/transform", xx, yy, 24, 24, setting_tool_transform, icons.MULTITRANSFORM, null, false, "view/tool/transform_tip"))
 		{
 			action_tools_disable_all()
 			setting_tool_transform = true
@@ -157,7 +159,8 @@ function view_toolbar_draw(view, xx, yy)
 		yy += 1 + padding
 		
 		tip_set_keybind(e_keybind.TOOL_SCALE)
-		if (draw_button_icon("viewtoolscale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "viewtoolscaletip"))
+		
+		if (draw_button_icon("view/tool/scale", xx, yy, 24, 24, setting_tool_scale, icons.SCALE, null, false, "view/tool/scale_tip"))
 		{
 			if (setting_separate_tool_modes)
 			{

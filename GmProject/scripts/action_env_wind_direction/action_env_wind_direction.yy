@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_wind_direction",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_wind_direction",
+  "parent":{
+    "name":"Wind",
+    "path":"folders/Scripts/App/Actions/Environment/Wind.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

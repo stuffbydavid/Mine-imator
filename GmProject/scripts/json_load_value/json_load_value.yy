@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "json_load_value",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Load",
-    "path": "folders/Scripts/Utility/File/JSON/Load.yy",
+  "$GMScript":"v1",
+  "%Name":"json_load_value",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"json_load_value",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Utility/File/JSON/Load.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

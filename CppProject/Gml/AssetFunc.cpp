@@ -46,8 +46,8 @@ namespace CppProject
 		if (Object::objectIdsMap.contains(id)) // Sub-asset id
 			return !Object::objectIdsMap.value(id).isEmpty();
 
-		else // Instance id
-			return (ObjOpt(id) != nullptr);
+		// Instance id
+		return (ObjOpt(id) != nullptr);
 	}
 
 	IntType instance_number(VarType subAssetId)
@@ -64,13 +64,15 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return (new SpriteFont(spr, string_map, sep))->id;
+		
 		return -1;
 	}
 
-	IntType font_add(StringType name, IntType size, BoolType bold, BoolType italic, IntType first, IntType last)
+	IntType font_add(StringType name, RealType size, BoolType bold, BoolType italic, IntType first, IntType last)
 	{
 		if (QFile::exists(name))
 			return (new Font(name, size, bold, italic, first, last))->id;
+		
 		return -1;
 	}
 
@@ -110,6 +112,7 @@ namespace CppProject
 	{
 		if (QFile::exists(file))
 			return (new Sprite(file, { (int)xorig, (int)yorig }))->id;
+		
 		return -1;
 	}
 
@@ -123,19 +126,24 @@ namespace CppProject
 			else
 				return (new Sprite(surf, { (int)xorig, (int)yorig }))->id;
 		}
+		
 		return -1;
 	}
 
 	void sprite_delete(IntType id)
 	{
 		if (Sprite* spr = FindSprite(id))
+		{
+			GFX->SubmitBatch();
 			delete spr;
+		}
 	}
 
 	IntType sprite_duplicate(IntType id)
 	{
 		if (Sprite* spr = FindSprite(id))
 			return (new Sprite(spr))->id;
+		
 		return -1;
 	}
 
@@ -148,6 +156,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return spr->size.height();
+		
 		return -1;
 	}
 
@@ -155,6 +164,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return spr->frames.size();
+		
 		return -1;
 	}
 
@@ -162,8 +172,10 @@ namespace CppProject
 	{
 		if (id == 0)
 			return -1;
+		
 		if (Sprite* spr = FindSprite(id))
 				return spr->GetTexture(subimg);
+		
 		return -1;
 	}
 
@@ -171,6 +183,7 @@ namespace CppProject
 	{
 		if (Sprite* spr = FindSprite(id))
 			return spr->size.width();
+		
 		return -1;
 	}
 
@@ -180,26 +193,4 @@ namespace CppProject
 			spr->origin = { (int)x, (int)y };
 	}
 
-	IntType texture_sprite(IntType spr)
-	{
-		return spr;
-	}
-
-	void sprite_set_texture_page(IntType id, BoolType enabled)
-	{
-		if (Sprite* spr = FindSprite(id))
-			spr->useTexturePage = enabled;
-	}
-
-	void move_all_to_texture_page()
-	{
-		Timer tmr;
-		IntType num = 0;
-		for (Sprite* spr : Sprite::allSprites)
-			if (spr->useTexturePage)
-				for (Sprite::Frame* frame : spr->frames)
-					num += frame->MoveToTexturePage() ? 1 : 0;
-
-		tmr.Print("Moved " + NumStr(num) + " sprites to texture pages");
-	}
 }

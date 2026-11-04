@@ -51,6 +51,6 @@ namespace CppProject
 		}
 
 		// 0,0,1,1 rect is passed to the shader, the vertices will have pre-transformed UVs
-		pageLoc = new TexturePageLocation(page, QRect(0, 0, page->size, page->size), { 0.0, 0.0, 1.0, 1.0 });
+		pageLoc = new TexturePageLocation(page, QRect(0, 0, page->size, page->size), {}, { 0.0, 0.0, 1.0, 1.0 });
 	}
 }

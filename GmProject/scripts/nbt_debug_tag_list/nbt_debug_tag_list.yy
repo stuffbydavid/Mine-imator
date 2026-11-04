@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "nbt_debug_tag_list",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "NBT",
-    "path": "folders/Scripts/Minecraft/NBT.yy",
+  "$GMScript":"v1",
+  "%Name":"nbt_debug_tag_list",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"nbt_debug_tag_list",
+  "parent":{
+    "name":"NBT",
+    "path":"folders/Scripts/Minecraft/NBT.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

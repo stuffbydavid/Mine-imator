@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"textbox_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"textbox_update",
+  "parent":{
+    "name":"Textbox",
+    "path":"folders/Scripts/App/Interface/Components/Textbox.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

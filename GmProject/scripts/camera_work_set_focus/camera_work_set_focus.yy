@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "camera_work_set_focus",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Camera",
-    "path": "folders/Scripts/App/Camera.yy",
+  "$GMScript":"v1",
+  "%Name":"camera_work_set_focus",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"camera_work_set_focus",
+  "parent":{
+    "name":"Camera",
+    "path":"folders/Scripts/App/Camera.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

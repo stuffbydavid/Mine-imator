@@ -1,11 +1,8 @@
-/// action_tl_marker_new()
-
 function action_tl_marker_new()
 {
 	if (history_undo)
-	{
 		instance_destroy(save_id_find(history_data.marker_save_id))
-	}
+	
 	else
 	{
 		var hobj, marker;
@@ -29,9 +26,12 @@ function action_tl_marker_new()
 		else
 		{
 			marker = new_obj(obj_marker)
-			marker.pos = history_data.marker_pos
-			marker.color = history_data.marker_color
-			marker.name = history_data.marker_name
+			with (marker)
+			{
+				pos = history_data.marker_pos
+				color = history_data.marker_color
+				name = history_data.marker_name
+			}
 		}
 		
 		ds_list_add(timeline_marker_list, marker)

@@ -1,8 +1,4 @@
-/// action_tl_rotpoint(value, add)
-/// @arg value
-/// @arg add
-
-function action_tl_rotpoint(val, add)
+function action_tl_rotpoint(value, add)
 {
 	if (history_undo)
 	{
@@ -42,9 +38,9 @@ function action_tl_rotpoint(val, add)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.rot_point[axis_edit], other.rot_point[axis_edit] * add + val)
+				history_save_var(other.id, other.rot_point[axis_edit], other.rot_point[axis_edit] * add + value)
 			
-			rot_point[axis_edit] = rot_point[axis_edit] * add + val
+			rot_point[axis_edit] = rot_point[axis_edit] * add + value
 			tl_update_rot_point()
 		}
 	}

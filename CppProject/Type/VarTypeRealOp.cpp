@@ -32,9 +32,9 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: Real() += rl; break;
-			case INTEGER_t: SetReal(Int() + rl); break; // Convert to real
-			case BOOLEAN_t: SetReal(ToInt() + rl); break; // Convert to real
+			case REAL_t:		Real() += rl; break;
+			case INTEGER_t:		SetReal(Int() + rl); break; // Convert to real
+			case BOOLEAN_t:		SetReal(ToInt() + rl); break; // Convert to real
 			default:
 				WARNING("Variant += Real: Invalid left type " + TypeName(type));
 		}
@@ -44,9 +44,9 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: Real() *= rl; break;
-			case INTEGER_t: SetReal(Int() * rl); break; // Convert to real
-			case BOOLEAN_t: SetReal(ToInt() * rl); break; // Convert to real
+			case REAL_t:		Real() *= rl; break;
+			case INTEGER_t:		SetReal(Int() * rl); break; // Convert to real
+			case BOOLEAN_t:		SetReal(ToInt() * rl); break; // Convert to real
 			default:
 				WARNING("Variant *= Real: Invalid left type " + TypeName(type));
 		}
@@ -67,9 +67,9 @@ namespace CppProject
 
 		switch (type)
 		{
-			case REAL_t: Real() /= rl; break;
-			case INTEGER_t: SetReal(Int() / rl); break; // Convert to real
-			case BOOLEAN_t: SetReal(ToInt() / rl); break; // Convert to real
+			case REAL_t:		Real() /= rl; break;
+			case INTEGER_t:		SetReal(Int() / rl); break; // Convert to real
+			case BOOLEAN_t:		SetReal(ToInt() / rl); break; // Convert to real
 			default:
 				WARNING("Variant /= Real: Invalid left type " + TypeName(type));
 		}

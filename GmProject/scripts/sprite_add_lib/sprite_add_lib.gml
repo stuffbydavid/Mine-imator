@@ -1,28 +1,18 @@
-/// sprite_add_lib(filename, [xorg, yorg])
 /// @arg filename
-/// @arg [xorgin
-/// @arg yorgin]
+/// @arg [originx]
+/// @arg [originy]
 
-function sprite_add_lib()
+function sprite_add_lib(fn, originx = 0, originy = 0)
 {
-	var origin_x, origin_y;
-	origin_x = 0
-	origin_y = 0
-	
-	if (argument_count > 1)
-	{
-		origin_x = argument[1]
-		origin_y = argument[2]
-	}
-	
 	if (file_copy_temp)
 	{
 		var ext, tmpfile;
-		ext = filename_ext(argument[0])
+		ext = filename_ext(fn)
 		tmpfile = filename_new_ext(temp_file, ext)
-		file_copy_lib(argument[0], tmpfile)
-		return sprite_add(tmpfile, 1, false, false, origin_x, origin_y);
+		file_copy_lib(fn, tmpfile)
+		
+		return sprite_add(tmpfile, 1, false, false, originx, originy)
 	}
 	else
-		return sprite_add(argument[0], 1, false, false, origin_x, origin_y)
+		return sprite_add(fn, 1, false, false, originx, originy)
 }

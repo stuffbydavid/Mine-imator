@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tab_renderer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_renderer",
+  "parent":{
+    "name":"Renderer",
+    "path":"folders/Scripts/App/Interface/Tabs/Renderer.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

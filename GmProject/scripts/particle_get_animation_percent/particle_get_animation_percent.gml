@@ -1,4 +1,3 @@
-/// particle_get_animation_percent(step, starttime, startframe, endframe, speed, onend)
 /// @arg step
 /// @arg starttime
 /// @arg startframe

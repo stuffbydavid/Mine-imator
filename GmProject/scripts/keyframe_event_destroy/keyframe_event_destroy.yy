@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "keyframe_event_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Keyframes",
-    "path": "folders/Scripts/Project/Timeline/Keyframes.yy",
+  "$GMScript":"v1",
+  "%Name":"keyframe_event_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"keyframe_event_destroy",
+  "parent":{
+    "name":"Keyframes",
+    "path":"folders/Scripts/Project/Timeline/Keyframes.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

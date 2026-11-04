@@ -1,5 +1,4 @@
-/// buffer_read_long_be()
-/// @desc Reads a 8 byte big endian integer.
+/// @desc Reads a 8-byte big endian integer.
 
 function buffer_read_long_be()
 {

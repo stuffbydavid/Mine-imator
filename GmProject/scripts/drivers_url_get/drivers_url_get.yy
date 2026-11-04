@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"drivers_url_get",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"drivers_url_get",
+  "parent":{
+    "name":"Directories",
+    "path":"folders/Scripts/App/Directories.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

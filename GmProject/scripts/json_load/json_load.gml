@@ -1,19 +1,13 @@
 /// CppSeparate IntType json_load(VarArgs)
-/// json_load(filename, [typemap])
+/// @desc Loads a JSON file and stores the structure in a new map.
+/// An existing map can be supplied in the second parameter that will be filled with the types of object fields.
 /// @arg filename
 /// @arg [typemap]
-/// @desc Loads a JSON file and stores the structure in a new map.
-/// An existing map can be supplied in the second parameter
-/// that will be filled with the types of object fields.
 
-function json_load()
+function json_load(fn, typemap = null)
 {
-	buffer_current = buffer_load_lib(argument[0])
-	
-	if (argument_count > 1)
-		json_type_map = argument[1]
-	else
-		json_type_map = null
+	buffer_current = buffer_load_lib(fn)
+	json_type_map = typemap
 	
 	json_column = 0
 	json_line = 1

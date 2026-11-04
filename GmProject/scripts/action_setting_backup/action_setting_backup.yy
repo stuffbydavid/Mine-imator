@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_backup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Program",
-    "path": "folders/Scripts/App/Actions/Settings/Program.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_backup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_backup",
+  "parent":{
+    "name":"Program",
+    "path":"folders/Scripts/App/Actions/Settings/Program.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

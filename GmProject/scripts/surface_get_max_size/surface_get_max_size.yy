@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"surface_get_max_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"surface_get_max_size",
+  "parent":{
+    "name":"Surface",
+    "path":"folders/Scripts/Utility/Surface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

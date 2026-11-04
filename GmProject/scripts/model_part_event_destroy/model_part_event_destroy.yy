@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "model_part_event_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Models",
-    "path": "folders/Scripts/Minecraft/Models.yy",
+  "$GMScript":"v1",
+  "%Name":"model_part_event_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_part_event_destroy",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_update_item",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Item",
-    "path": "folders/Scripts/Render/Item.yy",
+  "$GMScript":"v1",
+  "%Name":"render_update_item",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_update_item",
+  "parent":{
+    "name":"Item",
+    "path":"folders/Scripts/Render/Item.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

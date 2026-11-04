@@ -1,4 +1,3 @@
-/// smoothstep(x)
 /// @arg x
 
 function smoothstep(xx)

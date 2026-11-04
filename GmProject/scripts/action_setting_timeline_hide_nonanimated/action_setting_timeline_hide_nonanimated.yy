@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_timeline_hide_nonanimated",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_timeline_hide_nonanimated",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Actions/Settings/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

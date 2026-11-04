@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_event_closed",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_event_closed",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

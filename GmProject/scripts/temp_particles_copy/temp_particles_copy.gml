@@ -1,5 +1,4 @@
-/// temp_particles_copy(to)
-/// @arg to
+/// @arg destination
 
 function temp_particles_copy(to)
 {

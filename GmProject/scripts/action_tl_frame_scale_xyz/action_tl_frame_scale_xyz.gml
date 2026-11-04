@@ -1,6 +1,3 @@
-/// action_tl_frame_scale_xyz(value)
-/// @arg value
-
 function action_tl_frame_scale_xyz(value)
 {
 	tl_value_set_start(action_tl_frame_scale_xyz, false)

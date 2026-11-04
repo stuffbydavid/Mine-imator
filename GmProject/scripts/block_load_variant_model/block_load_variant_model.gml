@@ -1,7 +1,4 @@
-/// block_load_variant_model(map, type)
-/// @arg type
-
-function block_load_variant_model(map, type)
+function block_load_variant_model(map, block)
 {
 	if (is_undefined(map[?"model"]))
 	{
@@ -23,6 +20,8 @@ function block_load_variant_model(map, type)
 		rot[X] = clamp(snap(map[?"x"], 90), 0, 270)
 	if (!is_undefined(map[?"y"]))
 		rot[Z] = clamp(snap(map[?"y"], 90), 0, 270)
+	if (!is_undefined(map[?"z"]))
+		rot[Y] = clamp(snap(map[?"z"], 90), 0, 270)
 	
 	// UV lock
 	var uvlock = false;
@@ -30,6 +29,10 @@ function block_load_variant_model(map, type)
 		uvlock = map[?"uvlock"]
 	else if (is_string(map[?"uvlock"]))
 		uvlock = (map[?"uvlock"] = "true")
+
+	// Block timelines rotate the default model without UV lock
+	if (block.timeline && block.tl_model_name = "" && !block.tl_model_double)
+		uvlock = false
 		
 	// Weight
 	var weight = 1;
@@ -42,7 +45,7 @@ function block_load_variant_model(map, type)
 	// Create model for rendering
 	model[model_amount] = block_load_render_model(blockmodel, rot, uvlock, false, weight)
 	
-	if (type = "leaves") // For "Opaque leaves" setting
+	if (block.type = "leaves") // For "Opaque leaves" setting
 		model[model_amount].opaque = block_load_render_model(blockmodel, rot, uvlock, true, weight)
 	
 	model_amount++

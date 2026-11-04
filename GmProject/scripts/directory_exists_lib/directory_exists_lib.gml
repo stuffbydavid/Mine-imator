@@ -1,4 +1,3 @@
-/// directory_exists_lib(directory)
 /// @arg directory
 
 function directory_exists_lib(dir)

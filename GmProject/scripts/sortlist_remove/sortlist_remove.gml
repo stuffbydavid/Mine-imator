@@ -1,21 +1,19 @@
-/// sortlist_remove(sortlist, value)
+/// @desc Removes the given value from the sortlist.
 /// @arg sortlist
 /// @arg value
-/// @desc Removes the given value from the sortlist
 
-function sortlist_remove(sl, value)
+function sortlist_remove(slist, value)
 {
-	var index = ds_list_find_index(sl.list, value);
-	
+	var index = ds_list_find_index(slist.list, value);
 	if (index < 0)
 		return null
 	
-	ds_list_delete(sl.list, index)
-	ds_list_delete(sl.display_list, ds_list_find_index(sl.display_list, value))
+	ds_list_delete(slist.list, index)
+	ds_list_delete(slist.display_list, ds_list_find_index(slist.display_list, value))
 	
-	index = min(ds_list_size(sl.list) - 1, index)
+	index = min(ds_list_size(slist.list) - 1, index)
 	if (index < 0)
 		return null
 	
-	return sl.list[|index]
+	return slist.list[|index]
 }

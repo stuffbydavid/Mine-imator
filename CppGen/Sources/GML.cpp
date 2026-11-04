@@ -133,6 +133,7 @@ void GML::parseGMLScript(String file)
 	bool isLineComment = false;
 	bool isCppSeparate = false;
 	String cppSeparateHeader = "";
+	List<StringId> arrRefs;
 	const int gmlLength = static_cast<int>(gml.size());
 
 	// Iterate characters and find tokens
@@ -161,16 +162,55 @@ void GML::parseGMLScript(String file)
 		}
 
 		// Check comment begin
-		if (currentChar == '/')
+		if (currentChar == '/' && !isLineComment && !isMultilineComment)
 		{
 			if (nextChar == '/')
 			{
 				isLineComment = true;
 
-				// Check for CppSeparate/CppOnly
 				String cppSep = "/// CppSeparate";
 				String cppOnly = "/// CppOnly";
+				String cppGen = "/// CppGen";
 
+				// Read CppGen directive for type overrides
+				if (gml.substring(pos, cppGen.size()) == cppGen)
+				{
+					int end = gml.indexOf("\n", pos);
+					if (end < 0)
+						end = gmlLength;
+					
+					List<String> words = gml.substring(pos + cppGen.size() + 1, end - pos - (cppGen.size() + 1)).replace("\t", " ").trim().split(' ');
+					if (words.size() != 2)
+					{
+						Console::writeLine("FATAL ERROR: Expected /// CppGen <type> <name> in {0}:{1}", file, line);
+						std::exit(1);
+					}
+					
+					StringId name = words[1];
+					if (words[0] == "ArrRef")
+					{
+						if (!arrRefs.contains(name))
+							arrRefs.add(name);
+					}
+					else
+					{
+						DataType* type = makeObject<DataType>(StringId(words[0]));
+						if (type->cppType == DataType::CppType::Void || words[0] == "unknown" ||
+							(Program::varTypeOverride.containsKey(name) && Program::varTypeOverride[name]->toString() != type->toString()))
+						{
+							Console::writeLine("FATAL ERROR: Invalid or conflicting CppGen type override for {0} in {1}:{2}", name, file, line);
+							std::exit(1);
+						}
+
+						if (!Program::varTypeOverride.containsKey(name))
+							Program::varTypeOverride.add(name, type);
+					}
+					
+					pos = end;
+					continue;
+				}
+
+				// Check for CppSeparate/CppOnly
 				if (pos + cppSep.size() > gml.size())
 				{
 					pos++;
@@ -251,6 +291,43 @@ void GML::parseGMLScript(String file)
 			tokenType = Token::Type::ID;
 			tokenLength = end - pos;
 			tokenValue = gml.substring(pos, tokenLength);
+		}
+		else if (currentChar == '$' ||
+			(currentChar == '0' && pos + 1 < gmlLength && (gml[pos + 1] == 'x' || gml[pos + 1] == 'X')))
+		{
+			int start = pos + (currentChar == '$' ? 1 : 2);
+			int end = start;
+			while (end < gmlLength)
+			{
+				char character = gml[end];
+				if (!((character >= '0' && character <= '9') ||
+					(character >= 'a' && character <= 'f') ||
+					(character >= 'A' && character <= 'F')))
+					break;
+				
+				end++;
+			}
+			
+			unsigned long long value = 0;
+			auto result = std::from_chars(gml.data() + start, gml.data() + end, value, 16);
+			bool invalidSuffix = end < gmlLength && (gml[end] == '_' ||
+				(gml[end] >= 'a' && gml[end] <= 'z') ||
+				(gml[end] >= 'A' && gml[end] <= 'Z'));
+			
+			if (result.ec != std::errc() || invalidSuffix)
+			{
+				Console::writeLine("FATAL ERROR in {0}:", file);
+				Console::writeLine("  Invalid hexadecimal literal at line {0}, {1}", line, pos - linePos);
+				std::exit(1);
+			}
+
+			// Normalize to decimal for numeric resolution and real-valued C++ output
+			tokenType = Token::Type::Number;
+			tokenLength = end - pos;
+			if (value <= (unsigned long long)std::numeric_limits<long long>::max())
+				tokenValue = std::to_string(value);
+			else
+				tokenValue = "-" + std::to_string(~value + 1);
 		}
 		else if (isDigit)
 		{
@@ -337,6 +414,7 @@ void GML::parseGMLScript(String file)
 				case '!': tokenType = nextChar == '=' ? Token::Type::NotEqual : Token::Type::Inverse; break;
 				case '&': tokenType = nextChar == '&' ? Token::Type::And : Token::Type::BitwiseAnd; break;
 				case '|': tokenType = nextChar == '|' ? Token::Type::Or : Token::Type::BitwiseOr; break;
+				case '^': tokenType = Token::Type::BitwiseXor; break;
 				case '>': tokenType = nextChar == '>' ? Token::Type::ShiftRight : (nextChar == '=' ? Token::Type::LargerEq : Token::Type::Larger); break;
 				case '<': tokenType = nextChar == '>' ? Token::Type::NotEqual : (nextChar == '<' ? Token::Type::ShiftLeft : (nextChar == '=' ? Token::Type::LessEq : Token::Type::Less)); break;
 				case '+': tokenType = nextChar == '+' ? Token::Type::AddShort : (nextChar == '=' ? Token::Type::AddLong : Token::Type::Add); break;
@@ -390,6 +468,13 @@ void GML::parseGMLScript(String file)
 				{
 					currentFunction = makeObject<Function>("", gml, isCppSeparate, cppSeparateHeader);
 					currentFunction->sourceFile = file;
+					currentFunction->arrRefs = arrRefs;
+					arrRefs.clear();
+					if (isCppSeparate && currentFunction->arrRefs.size() > 0)
+					{
+						Console::writeLine("FATAL ERROR: ArrRef cannot be used with CppSeparate in {0}", file);
+						std::exit(1);
+					}
 					isCppSeparate = false;
 				}
 

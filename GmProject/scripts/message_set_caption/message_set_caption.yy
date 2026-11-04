@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"message_set_caption",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"message_set_caption",
+  "parent":{
+    "name":"Dialogues",
+    "path":"folders/Scripts/App/Dialogues.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

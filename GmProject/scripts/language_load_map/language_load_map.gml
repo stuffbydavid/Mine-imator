@@ -1,23 +1,20 @@
-/// language_load_map(prefix, source, destination)
+/// @desc Reads a decoded JSON map of keys into the destination map.
 /// @arg prefix
 /// @arg source
 /// @arg destination
-/// @desc Reads a decoded JSON map of keys into the destination map.
 
-function language_load_map(pre, smap, dmap)
+function language_load_map(prefix, smap, dmap)
 {
-	var key;
-	
 	if (!ds_map_valid(smap))
 		return 0
 	
-	key = ds_map_find_first(smap)
+	var key = ds_map_find_first(smap);
 	while (!is_undefined(key))
 	{
 		if (string_contains(key, "/"))
-			language_load_map(pre + string_replace(key, "/", ""), smap[?key], dmap)
+			language_load_map(prefix + key, smap[?key], dmap)
 		else
-			dmap[?pre + key] = smap[?key]
+			dmap[?prefix + key] = smap[?key]
 		
 		key = ds_map_find_next(smap, key)
 	}

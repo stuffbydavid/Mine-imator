@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_control_dragger",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Control",
-    "path": "folders/Scripts/App/Interface/Components/Tab/Control.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_control_dragger",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_control_dragger",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Scripts/App/Interface/Components/Tab/Control.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

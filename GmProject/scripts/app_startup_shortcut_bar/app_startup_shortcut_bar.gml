@@ -1,5 +1,3 @@
-/// app_startup_shortcut_bar()
-
 function app_startup_shortcut_bar()
 {
 	shortcut_bar_list = ds_list_create()

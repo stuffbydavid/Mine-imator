@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"eval_solve",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"eval_solve",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

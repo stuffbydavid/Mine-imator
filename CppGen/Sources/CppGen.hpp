@@ -96,6 +96,7 @@ public:
 		ShiftRight, // >>
 		BitwiseOr, // |
 		BitwiseAnd, // &
+		BitwiseXor, // ^
 		HashTag, // #
 		ArrayRef, // @
 		CppOnly,
@@ -137,7 +138,6 @@ public:
 		IntMap,
 		StringMap,
 		Map,
-		Grid,
 		Stack,
 		Priority
 	};
@@ -608,6 +608,9 @@ public:
 
 	Accessor(StringId name, List<ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line);
 
+	// Gets the C++ type for reading from a numeric array.
+	DataType::CppType numericArrayReadType();
+
 	// Marks the accessor as an assignment.
 	void markAsAssign(Expression* expr);
 
@@ -931,6 +934,7 @@ public:
 	bool varArgs = false;
 	List<Variable*> vars = List<Variable*>();
 	List<StringId> varArgsRequiredNames = List<StringId>();
+	List<StringId> arrRefs;
 	StatementList* statements{};
 	Object* structObject = nullptr;
 	List<String> cppLinesBegin = List<String>();

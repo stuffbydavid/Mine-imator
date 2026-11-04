@@ -1,11 +1,4 @@
 /// CppSeparate MatrixType matrix_create_ortho(RealType, RealType, RealType, RealType, RealType, RealType)
-/// matrix_create_ortho(left, right, bottom, top, near, far)
-/// @arg left
-/// @arg right
-/// @arg bottom
-/// @arg top
-/// @arg near
-/// @arg far
 
 function matrix_create_ortho(left, right, bottom, top, near, far)
 {
@@ -14,5 +7,5 @@ function matrix_create_ortho(left, right, bottom, top, near, far)
 				0, 0, -2 / (far - near), -(far + near) / (far - near),
 				0, 0, 0, 1 ];
 	
-	return matrix_transpose(mat);
+	return matrix_transpose(mat)
 }

@@ -1,4 +1,3 @@
-/// tl_keyframe_select(keyframe)
 /// @arg keyframe
 
 function tl_keyframe_select(kf)
