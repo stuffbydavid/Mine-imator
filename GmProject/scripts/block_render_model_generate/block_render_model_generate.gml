@@ -3,6 +3,10 @@
 
 function block_render_model_generate(model)
 {
+	// Fully hidden timeline cells retain their models for neighbor connection rules
+	if (block_current != null && block_current.tl_mesh && block_current.tl_hide_model = "" && block_get_state_id_value(block_current, block_state_id_current, "visible") = "false")
+		return 0
+
 	instance_activate_object(model)
 	
 	var offx, offy, offz;

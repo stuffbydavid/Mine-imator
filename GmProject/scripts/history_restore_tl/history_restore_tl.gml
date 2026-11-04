@@ -57,6 +57,7 @@ function history_restore_tl(save, tl = null)
 		tl_update_scenery_part()
 		tl_update()
 		tl_update_values()
+		tl_update_build_block(false, save.block_build_waterlogged)
 		
 		// Restore tree recursively
 		for (var t = 0; t < save.tree_amount; t++)

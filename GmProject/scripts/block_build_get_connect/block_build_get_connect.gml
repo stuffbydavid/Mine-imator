@@ -22,6 +22,15 @@ function block_build_get_connect(block, stateid, blockpos)
 		var minage = value_get_real(block.build_map[?"double_age"], 0);
 		if (minage > 0 && real(block_get_state_id_value(block, stateid, "age")) < minage)
 			return connect
+
+		// Big dripleaf resolves the lower leaf to a stem during mesh generation
+		if (block.type = "big_dripleaf")
+		{
+			if (block_get_state_id_value(block, stateid, "type") = "big_dripleaf")
+				array_add(connect, [ vec3_add(blockpos, vec3(0, 0, 1)), block.block_id, stateid ], false)
+
+			return connect
+		}
 	}
 	else if (double != "facing")
 		return connect

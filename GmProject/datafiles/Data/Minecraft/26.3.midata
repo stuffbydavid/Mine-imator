@@ -2294,6 +2294,9 @@
 			"id": {
 				"minecraft:sponge": "wet=false",
 				"minecraft:wet_sponge": "wet=true"
+			},
+			"build": {
+				"use": "wet"
 			}
 		},
 		{
@@ -2426,7 +2429,8 @@
 			"default_state": "powered=false,shape=east_west",
 			"id": "minecraft:powered_rail",
 			"build": {
-				"place": "rail"
+				"place": "rail",
+				"use": "powered"
 			}
 		},
 		{
@@ -2440,7 +2444,8 @@
 			"default_state": "powered=false,shape=east_west",
 			"id": "minecraft:detector_rail",
 			"build": {
-				"place": "rail"
+				"place": "rail",
+				"use": "powered"
 			}
 		},
 		{
@@ -2470,7 +2475,7 @@
 							"position": [
 								0,
 								0,
-								-16
+								16
 							]
 						}
 					}
@@ -2552,7 +2557,7 @@
 							"position": [
 								0,
 								0,
-								-16
+								16
 							]
 						}
 					}
@@ -2691,7 +2696,8 @@
 			"id": "minecraft:shelf_mushroom",
 			"build": {
 				"facing": "hit_face",
-				"hit_faces": [ "east", "west", "south", "north" ]
+				"hit_faces": [ "east", "west", "south", "north" ],
+				"use": "age"
 			}
 		},
 		{
@@ -2952,7 +2958,8 @@
 			"default_state": "facing=west,slot_0_occupied=false,slot_1_occupied=false,slot_2_occupied=false,slot_3_occupied=false,slot_4_occupied=false,slot_5_occupied=false",
 			"id": "minecraft:chiseled_bookshelf",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"use_book_slot": true
 			}
 		},
 		{
@@ -3057,6 +3064,9 @@
 			"id": {
 				"minecraft:fire": "variant=normal",
 				"minecraft:soul_fire": "variant=soul_fire"
+			},
+			"build": {
+				"directions": "hit_face_inverted"
 			}
 		},
 		{
@@ -3328,7 +3338,11 @@
 				"west": [ "none", "side", "up" ]
 			},
 			"default_state": "power=0,north=side,south=side,east=side,west=side",
-			"id": "minecraft:redstone_wire"
+			"id": "minecraft:redstone_wire",
+			"build": {
+				"use": "power",
+				"update": "adjacent"
+			}
 		},
 		{
 			"name": "diamond_ore",
@@ -3378,7 +3392,10 @@
 				"moisture": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "moisture=0",
-			"id": "minecraft:farmland"
+			"id": "minecraft:farmland",
+			"build": {
+				"use": "moisture"
+			}
 		},
 		{
 			"name": "furnace",
@@ -3599,7 +3616,8 @@
 			"default_state": "shape=east_west",
 			"id": "minecraft:rail",
 			"build": {
-				"place": "rail"
+				"place": "rail",
+				"update": "adjacent"
 			}
 		},
 		{
@@ -3996,6 +4014,9 @@
 				"minecraft:crimson_pressure_plate": "variant=crimson",
 				"minecraft:warped_pressure_plate": "variant=warped",
 				"minecraft:polished_blackstone_pressure_plate": "variant=polished_blackstone"
+			},
+			"build": {
+				"use": "powered"
 			}
 		},
 		{
@@ -4014,6 +4035,9 @@
 			"id": {
 				"minecraft:redstone_ore": "variant=redstone_ore",
 				"minecraft:deepslate_redstone_ore": "variant=deepslate_redstone_ore"
+			},
+			"build": {
+				"use": "lit"
 			}
 		},
 		{
@@ -4033,7 +4057,8 @@
 			},
 			"build": {
 				"facing": "hit_face",
-				"hit_faces": [ "east", "west", "south", "north", "up" ]
+				"hit_faces": [ "east", "west", "south", "north", "up" ],
+				"use": "lit"
 			}
 		},
 		{
@@ -4120,7 +4145,10 @@
 				"layers": [ "1", "2", "3", "4", "5", "6", "7", "8" ]
 			},
 			"default_state": "layers=1",
-			"id": "minecraft:snow"
+			"id": "minecraft:snow",
+			"build": {
+				"use": "layers"
+			}
 		},
 		{
 			"name": "ice",
@@ -4258,7 +4286,8 @@
 				"minecraft:jack_o_lantern": "lit=true"
 			},
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"use": "lit"
 			}
 		},
 		{
@@ -4469,7 +4498,8 @@
 				"minecraft:waxed_oxidized_copper_trapdoor": "variant=waxed_oxidized_copper"
 			},
 			"build": {
-				"facing": "view_inverted",
+				"facing": "hit_face",
+				"facing_fallback": "view_inverted",
 				"half": "hit",
 				"use": "open"
 			}
@@ -4642,7 +4672,7 @@
 			"subsurface": 1,
 			"id": "minecraft:attached_pumpkin_stem",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view"
 			}
 		},
 		{
@@ -4672,7 +4702,7 @@
 			"default_state": "facing=west",
 			"id": "minecraft:attached_melon_stem",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view"
 			}
 		},
 		{
@@ -4738,6 +4768,7 @@
 					"variant=crimson": "variant=crimson",
 					"variant=warped": "variant=warped"
 				},
+				"mesh": true,
 				"animated_parts": [ "right_door", "left_door" ],
 				"parts": {
 					"right_door": {
@@ -4861,6 +4892,7 @@
 			"timeline": {
 				"type": "enchanting_table",
 				"model": "book",
+				"facing": "view_inverted",
 				"model_double": true,
 				"animated_parts": [ "book", "book_right_half", "book_right_leaf", "book_left_half", "book_left_leaf" ],
 				"rotation_point": [ 0, 3, 0 ],
@@ -4879,7 +4911,19 @@
 				"has_bottle_2": [ "false", "true" ]
 			},
 			"default_state": "has_bottle_0=true,has_bottle_1=true,has_bottle_2=true",
-			"id": "minecraft:brewing_stand"
+			"id": "minecraft:brewing_stand",
+			"build": {
+				"use": [
+					"has_bottle_0=false,has_bottle_1=false,has_bottle_2=false",
+					"has_bottle_0=true,has_bottle_1=false,has_bottle_2=false",
+					"has_bottle_0=false,has_bottle_1=true,has_bottle_2=false",
+					"has_bottle_0=true,has_bottle_1=true,has_bottle_2=false",
+					"has_bottle_0=false,has_bottle_1=false,has_bottle_2=true",
+					"has_bottle_0=true,has_bottle_1=false,has_bottle_2=true",
+					"has_bottle_0=false,has_bottle_1=true,has_bottle_2=true",
+					"has_bottle_0=true,has_bottle_1=true,has_bottle_2=true"
+				]
+			}
 		},
 		{
 			"name": "cauldron",
@@ -4904,7 +4948,11 @@
 					"contents=empty",
 					"contents=water,level=1",
 					"contents=water,level=2",
-					"contents=water,level=3"
+					"contents=water,level=3",
+					"contents=lava",
+					"contents=powder_snow,level=1",
+					"contents=powder_snow,level=2",
+					"contents=powder_snow,level=3"
 				]
 			}
 		},
@@ -4942,7 +4990,10 @@
 				]
 			},
 			"default_state": "lit=false",
-			"id": "minecraft:redstone_lamp"
+			"id": "minecraft:redstone_lamp",
+			"build": {
+				"use": "lit"
+			}
 		},
 		{
 			"name": "cocoa",
@@ -5417,7 +5468,8 @@
 				"minecraft:damaged_anvil": "damage=2"
 			},
 			"build": {
-				"facing": "view_clockwise"
+				"facing": "view_clockwise",
+				"use": "damage"
 			}
 		},
 		{
@@ -5571,7 +5623,8 @@
 			"default_state": "powered=false,shape=east_west",
 			"id": "minecraft:activator_rail",
 			"build": {
-				"place": "rail"
+				"place": "rail",
+				"use": "powered"
 			}
 		},
 		{
@@ -5792,7 +5845,7 @@
 				"model_state": "variant=wall",
 				"animated_parts": [ "banner" ],
 				"pattern_type": "banner",
-				"position": [ 8, -8, 8 ],
+				"position": [ 8, -6, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],
 					"facing=south": [ 0, 0, 0 ],
@@ -6003,7 +6056,10 @@
 				"age": [ "0", "1", "2", "3", "4", "5" ]
 			},
 			"default_state": "age=0",
-			"id": "minecraft:chorus_flower"
+			"id": "minecraft:chorus_flower",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "purpur_block",
@@ -6121,7 +6177,10 @@
 				"age": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "age=0",
-			"id": "minecraft:frosted_ice"
+			"id": "minecraft:frosted_ice",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "magma_block",
@@ -6170,7 +6229,8 @@
 			"default_state": "facing=west,powered=false",
 			"id": "minecraft:observer",
 			"build": {
-				"facing": "view"
+				"facing": "view",
+				"use": "powered"
 			}
 		},
 		{
@@ -6725,7 +6785,8 @@
 			"default_state": "facing=west,lit=false",
 			"id": "minecraft:smoker",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"use": "lit"
 			}
 		},
 		{
@@ -6738,7 +6799,8 @@
 			"default_state": "facing=west,lit=false",
 			"id": "minecraft:blast_furnace",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"use": "lit"
 			}
 		},
 		{
@@ -6809,6 +6871,8 @@
 		{
 			"name": "bell",
 			"file": "bell.json",
+			"type": "bell",
+			"require_models": true,
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"attachment": [ "floor", "ceiling", "single_wall", "double_wall" ]
@@ -6818,6 +6882,7 @@
 				"type": "bell",
 				"model": "bell",
 				"model_double": true,
+				"mesh": true,
 				"hide_model": "minecraft:block_added/bell_body",
 				"position": [ 8, 13, 8 ],
 				"rotation": {
@@ -6919,7 +6984,10 @@
 				"mode": [ "load", "corner", "save", "data" ]
 			},
 			"default_state": "mode=load",
-			"id": "minecraft:structure_block"
+			"id": "minecraft:structure_block",
+			"build": {
+				"use": "mode"
+			}
 		},
 		{
 			"name": "jigsaw",
@@ -7028,10 +7096,6 @@
 			"id": {
 				"minecraft:weeping_vines_plant": "variant=weeping_vines_plant",
 				"minecraft:weeping_vines": "variant=weeping_vines"
-			},
-			"build": {
-				"support": "above",
-				"support_same": true
 			}
 		},
 		{
@@ -7091,10 +7155,6 @@
 			"id": {
 				"minecraft:twisting_vines_plant": "variant=twisting_vines_plant",
 				"minecraft:twisting_vines": "variant=twisting_vines"
-			},
-			"build": {
-				"support": "below",
-				"support_same": true
 			}
 		},
 		{
@@ -7145,7 +7205,10 @@
 				"charges": [ "0", "1", "2", "3", "4" ]
 			},
 			"default_state": "charges=0",
-			"id": "minecraft:respawn_anchor"
+			"id": "minecraft:respawn_anchor",
+			"build": {
+				"use": "charges"
+			}
 		},
 		{
 			"name": "lodestone",
@@ -7255,7 +7318,16 @@
 				"minecraft:black_candle": "color=black"
 			},
 			"build": {
-				"use": "candles"
+				"use": [
+					"candles=1,lit=false",
+					"candles=2,lit=false",
+					"candles=3,lit=false",
+					"candles=4,lit=false",
+					"candles=1,lit=true",
+					"candles=2,lit=true",
+					"candles=3,lit=true",
+					"candles=4,lit=true"
+				]
 			}
 		},
 		{
@@ -7366,7 +7438,7 @@
 			"id": "minecraft:sulfur_spike",
 			"build": {
 				"place": "vertical",
-				"set": "thickness=tip"
+				"update": "vertical"
 			}
 		},
 		{
@@ -7392,7 +7464,10 @@
 				"sculk_sensor_phase": [ "inactive", "active", "cooldown" ]
 			},
 			"default_state": "sculk_sensor_phase=inactive",
-			"id": "minecraft:sculk_sensor"
+			"id": "minecraft:sculk_sensor",
+			"build": {
+				"use": "sculk_sensor_phase"
+			}
 		},
 		{
 			"name": "calibrated_sculk_sensor",
@@ -7402,7 +7477,10 @@
 				"sculk_sensor_phase": [ "inactive", "active", "cooldown" ]
 			},
 			"default_state": "facing=east,sculk_sensor_phase=inactive",
-			"id": "minecraft:calibrated_sculk_sensor"
+			"id": "minecraft:calibrated_sculk_sensor",
+			"build": {
+				"use": "sculk_sensor_phase"
+			}
 		},
 		{
 			"name": "sculk",
@@ -7447,7 +7525,10 @@
 				"can_summon": [ "false", "true" ]
 			},
 			"default_state": "can_summon=true",
-			"id": "minecraft:sculk_shrieker"
+			"id": "minecraft:sculk_shrieker",
+			"build": {
+				"use": "can_summon"
+			}
 		},
 		{
 			"name": "copper_ore",
@@ -7730,7 +7811,8 @@
 				"minecraft:waxed_oxidized_lightning_rod": "variant=waxed_oxidized_lightning_rod"
 			},
 			"build": {
-				"facing": "hit_face"
+				"facing": "hit_face",
+				"use": "powered"
 			}
 		},
 		{
@@ -7746,7 +7828,7 @@
 			"id": "minecraft:pointed_dripstone",
 			"build": {
 				"place": "vertical",
-				"set": "thickness=tip"
+				"update": "vertical"
 			}
 		},
 		{
@@ -7795,10 +7877,6 @@
 			"id": {
 				"minecraft:cave_vines_plant": "type=cave_vines_plant",
 				"minecraft:cave_vines": "type=cave_vines"
-			},
-			"build": {
-				"support": "above",
-				"support_same": true
 			}
 		},
 		{
@@ -7904,7 +7982,8 @@
 				"minecraft:big_dripleaf_stem": "type=big_dripleaf_stem"
 			},
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"double": "up"
 			}
 		},
 		{
@@ -7934,10 +8013,7 @@
 			"file": "hanging_roots.json",
 			"subsurface": 1,
 			"random_offset_xz": true,
-			"id": "minecraft:hanging_roots",
-			"build": {
-				"support": "above"
-			}
+			"id": "minecraft:hanging_roots"
 		},
 		{
 			"name": "deepslate",
@@ -7993,7 +8069,10 @@
 			},
 			"default_state": "hanging=false,age=0",
 			"random_offset_xz": true,
-			"id": "minecraft:mangrove_propagule"
+			"id": "minecraft:mangrove_propagule",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "mangrove_roots",
@@ -8066,7 +8145,10 @@
 				"dusted": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "dusted=0",
-			"id": "minecraft:suspicious_sand"
+			"id": "minecraft:suspicious_sand",
+			"build": {
+				"use": "dusted"
+			}
 		},
 		{
 			"name": "suspicious_gravel",
@@ -8075,7 +8157,10 @@
 				"dusted": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "dusted=0",
-			"id": "minecraft:suspicious_gravel"
+			"id": "minecraft:suspicious_gravel",
+			"build": {
+				"use": "dusted"
+			}
 		},
 		{
 			"name": "sniffer_egg",
@@ -8084,7 +8169,10 @@
 				"hatch": [ "0", "1", "2" ]
 			},
 			"default_state": "hatch=0",
-			"id": "minecraft:sniffer_egg"
+			"id": "minecraft:sniffer_egg",
+			"build": {
+				"use": "hatch"
+			}
 		},
 		{
 			"name": "decorated_pot",
@@ -8138,7 +8226,10 @@
 				"ominous": [ "false", "true" ]
 			},
 			"default_state": "trial_spawner_state=inactive,ominous=false",
-			"id": "minecraft:trial_spawner"
+			"id": "minecraft:trial_spawner",
+			"build": {
+				"use": "trial_spawner_state"
+			}
 		},
 		{
 			"name": "vault",
@@ -8156,7 +8247,8 @@
 			"default_state": "facing=west,vault_state=inactive,ominous=false",
 			"id": "minecraft:vault",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"use": "vault_state"
 			}
 		},
 		{
@@ -8195,11 +8287,7 @@
 			"wind": {
 				"axis": "all"
 			},
-			"id": "minecraft:pale_hanging_moss",
-			"build": {
-				"support": "above",
-				"support_same": true
-			}
+			"id": "minecraft:pale_hanging_moss"
 		},
 		{
 			"name": "creaking_heart",
@@ -8215,7 +8303,8 @@
 			"default_state": "axis=y,creaking_heart_state=uprooted",
 			"id": "minecraft:creaking_heart",
 			"build": {
-				"axis": "hit_face"
+				"axis": "hit_face",
+				"use": "creaking_heart_state"
 			}
 		},
 		{
@@ -8273,7 +8362,8 @@
 			"default_state": "facing=west,hydration=0",
 			"id": "minecraft:dried_ghast",
 			"build": {
-				"facing": "view_inverted"
+				"facing": "view_inverted",
+				"use": "hydration"
 			}
 		},
 		{

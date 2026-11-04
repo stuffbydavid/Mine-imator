@@ -66,6 +66,7 @@ function tl_set_build_state(block, stateid)
 
 			rot_point_custom = true
 			rot_point = block_get_timeline_rot_point(block, stateid)
+			
 			tl_update_rot_point()
 
 			// Apply the state transform relative to this copy's current placement
@@ -77,6 +78,9 @@ function tl_set_build_state(block, stateid)
 
 		block_build_name = block.name
 		block_build_state = block_get_state_id_state_vars(block, stateid)
+		
+		tl_update_build_block()
+		
 		update_matrix = true
 	}
 }

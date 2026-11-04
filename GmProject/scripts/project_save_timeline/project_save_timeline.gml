@@ -141,6 +141,9 @@ function project_save_timeline()
 						vars = block_get_state_id_state_vars(block, entry[1])
 						for (var s = 0; s < array_length(vars); s += 2)
 							array_add(paletteentry, vars[s] + "=" + vars[s + 1])
+
+						if (entry[2])
+							array_add(paletteentry, "waterlogged=true")
 					}
 
 					json_save_array_value(paletteentry)

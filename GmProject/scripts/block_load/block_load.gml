@@ -55,6 +55,24 @@ function block_load(map, typemap)
 		else
 			random_offset_xy = false
 		
+		// Retained timeline cells use an internal visibility state
+		var tlmap = map[?"timeline"];
+		tl_mesh = (ds_map_valid(tlmap) && value_get_real(tlmap[?"mesh"], false))
+		if (tl_mesh)
+		{
+			var states, visibility;
+			states = map[?"states"]
+			if (!ds_map_valid(states))
+			{
+				states = ds_map_create()
+				ds_map_add_map(map, "states", states)
+			}
+
+			visibility = ds_list_create()
+			ds_list_add(visibility, "true", "false")
+			ds_map_add_list(states, "visible", visibility)
+		}
+
 		// Read states and their possible values
 		states_map = null
 		state_id_amount = 1
@@ -65,7 +83,7 @@ function block_load(map, typemap)
 			var curstate = ds_map_find_first(map[?"states"]);
 			while (!is_undefined(curstate))
 			{
-				if (debug_names && !text_exists("block/state/" + curstate))
+				if (debug_names && curstate != "visible" && !text_exists("block/state/" + curstate))
 					log("block/state/" + curstate + mc_unknown_asset_warning)
 				
 				with (new_obj(obj_block_state))
@@ -157,7 +175,6 @@ function block_load(map, typemap)
 		tl_offset = vec3(0)
 		tl_offset_state_amount = 0
 		
-		var tlmap = map[?"timeline"];
 		if (ds_map_valid(tlmap))
 			block_load_timeline(tlmap, typemap[?tlmap])
 
@@ -245,6 +262,11 @@ function block_load(map, typemap)
 			build_map = null
 		else // Retain build_map in memory
 			ds_map_delete(map, "build")
+
+		// Build updates
+		build_update = ""
+		if (build_map != null)
+			build_update = value_get_string(build_map[?"update"], "")
 		
 		// Pre-calculate the block variant to pick for each (numerical) state ID
 		state_id_model_obj = null
@@ -296,11 +318,16 @@ function block_load(map, typemap)
 			}
 			
 			state_id_model_obj[sid] = null
+
+			// Internal visibility does not select a different model
+			var modelstate = sid;
+			if (tl_mesh)
+				modelstate = block_set_state_id_value(id, sid, "visible", "true")
 			
 			// Open selected file and look for variant or array of multipart cases
 			with (curfile)
 			{
-				var variant = state_id_map[?sid];
+				var variant = state_id_map[?modelstate];
 				if (is_undefined(variant))
 					variant = state_id_map[?0] // Only "normal" is available
 				
@@ -310,8 +337,32 @@ function block_load(map, typemap)
 				other.state_id_random_offset_xy[sid] = curoffsetxy
 			}
 
-			if (timeline && curfile = null)
-				mc_assets.block_tl_required_map[?tl_type] = true
+			// Missing or empty block models require the timeline version
+			if (timeline && !ds_map_exists(mc_assets.block_tl_required_map, tl_type))
+			{
+				var modelvariants, hasmesh;
+				modelvariants = state_id_model_obj[sid]
+				if (!is_array(modelvariants))
+					modelvariants = [ modelvariants ]
+
+				hasmesh = false
+				for (var i = 0; i < array_length(modelvariants) && !hasmesh; i++)
+				{
+					var modelvariant = modelvariants[i];
+					if (is_undefined(modelvariant) || modelvariant = null)
+						continue
+
+					for (var m = 0; m < modelvariant.model_amount; m++)
+						if (modelvariant.model[m].element_amount > 0)
+						{
+							hasmesh = true
+							break
+						}
+				}
+
+				if (!hasmesh)
+					mc_assets.block_tl_required_map[?tl_type] = true
+			}
 		}
 		
 		return id

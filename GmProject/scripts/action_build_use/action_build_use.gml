@@ -4,8 +4,9 @@
 
 function action_build_use(selected = null, placeonly = false)
 {
-	var hobj, target;
+	var hobj, target, focuspos;
 	hobj = null
+	focuspos = null
 	
 	if (history_undo || history_redo)
 	{
@@ -131,13 +132,21 @@ function action_build_use(selected = null, placeonly = false)
 		if (interaction = null)
 			return null
 
+		// Retain the clicked block's world position before applying the new state
+		focuspos = matrix_position(target.matrix)
+		if (!timeline)
+			focuspos = point3D_mul_matrix(vec3_mul(vec3_add(blockpos, 0.5), block_size), target.matrix_render)
+
 		blockpos = interaction[0]
 		stateid = interaction[1]
 		result = interaction[2]
 
 		// Consumed interactions must not fall through to placement
 		if (result[0] = data[0] && result[1] = stateid)
+		{
+			camera_work_set_focus(focuspos)
 			return true
+		}
 		
 		// Air block removes
 		if (timeline && result[0] = 0)
@@ -197,7 +206,10 @@ function action_build_use(selected = null, placeonly = false)
 				prev = tl_update_block_meshes(blockpos, 0, 0, changes)
 			
 			if (prev = null)
+			{
+				camera_work_set_focus(focuspos)
 				return true
+			}
 
 			hobj = history_set(action_build_use)
 			hobj.block_pos = blockpos
@@ -209,7 +221,7 @@ function action_build_use(selected = null, placeonly = false)
 				var pos, next;
 				pos = prev[i][0]
 				next = block_build_get_block(target, pos)
-				array_add(hobj.new_blocks, [ array_copy_1d(pos), next[0], next[1] ], false)
+				array_add(hobj.new_blocks, [ array_copy_1d(pos), next[0], next[1], next[2] ], false)
 			}
 		}
 		
@@ -243,6 +255,9 @@ function action_build_use(selected = null, placeonly = false)
 	
 	app_update_tl_edit()
 	project_update_counts()
+
+	if (focuspos != null)
+		camera_work_set_focus(focuspos)
 	
 	view_changed()
 

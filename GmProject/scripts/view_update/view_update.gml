@@ -148,6 +148,12 @@ function view_update(view, cam)
 	// Jump to object or build structure
 	var focustl, focusview;
 	focustl = place_build ? build_structure : tl_edit
+	
+	// Focus on structure block
+	if (place_build && tl_edit != null && instance_exists(tl_edit) && tl_edit.parent = build_structure &&
+		(tl_edit.type = e_tl_type.BLOCK || tl_edit.type = e_tl_type.SPECIAL_BLOCK))
+		focustl = tl_edit
+
 	focusview = view_main
 	if (view_second.show && (view_second.mouseon || view_main.surface_camera_last != view_camera_work))
 		focusview = view_second
@@ -185,6 +191,7 @@ function view_update(view, cam)
 		else
 			cam_work_focus = focustl.world_pos
 
+		cam_work_zoom_goal = max(block_size, cam_work_zoom_goal)
 		cam_work_focus_last = point3D_copy(cam_work_focus)
 		
 		camera_work_set_from()

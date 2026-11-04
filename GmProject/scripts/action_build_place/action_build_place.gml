@@ -210,11 +210,11 @@ function action_build_place(airblock = false)
 		{
 			var pos, data;
 			pos = prevblocks[i][0]
-			data = [ 0, 0 ]
+			data = [ 0, 0, false ]
 			with (target)
 				data = block_meshes_get_block(pos[X], pos[Y], pos[Z])
 			
-			array_add(hobj.new_blocks, [ array_copy_1d(pos), data[0], data[1] ], false)
+			array_add(hobj.new_blocks, [ array_copy_1d(pos), data[0], data[1], data[2] ], false)
 		}
 		
 		hobj.mesh_save_obj = null
@@ -224,14 +224,8 @@ function action_build_place(airblock = false)
 			with (hobj)
 				mesh_save_obj = history_save_tl(target)
 
-		// Focus on the clicked block when available
-		var focuspos = blockpos;
-		if (target = place_target_tl && place_block_pos != null)
-			focuspos = place_block_pos
-
-		cam_work_focus = point3D_mul_matrix(vec3_mul(vec3_add(focuspos, 0.5), block_size), target.matrix_render)
-		cam_work_focus_tl = null
-		tl_focus = null
+		// Focus on the placed or removed block in world space
+		camera_work_set_focus(point3D_mul_matrix(vec3_mul(vec3_add(blockpos, 0.5), block_size), target.matrix_render))
 	}
 
 	if (hobj.mesh_save_obj != null)

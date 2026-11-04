@@ -5,6 +5,10 @@
 
 function block_set_tall_vine(variable, value, dir)
 {
+	// Clear wind limits left by neighboring model resolution
+	block_vertex_wave_zmin = null
+	block_vertex_wave_zmax = null
+
 	// Anchor wind opposite the growth direction
 	var offset, support;
 	offset = dir_get_vec3(dir)

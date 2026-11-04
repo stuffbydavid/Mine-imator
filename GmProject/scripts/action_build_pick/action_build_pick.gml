@@ -33,6 +33,9 @@ function action_build_pick()
 		if (block = null)
 			return false
 
+		if (block.tl_mesh)
+			stateid = block_set_state_id_value(block, stateid, "visible", "true")
+
 		pickname = block.name
 		pickstate = block_get_state_id_state_vars(block, stateid)
 
@@ -108,6 +111,14 @@ function action_build_pick()
 		}
 
 		sortlist_view(list, value, false)
+
+		// Focus on the picked block in world space
+		var focuspos = matrix_position(target.matrix);
+		if (type_is_structure(target.type))
+			focuspos = point3D_mul_matrix(vec3_mul(vec3_add(app.place_block_pos, 0.5), block_size), target.matrix_render)
+
+		with (app)
+			camera_work_set_focus(focuspos)
 		
 		return true
 	}

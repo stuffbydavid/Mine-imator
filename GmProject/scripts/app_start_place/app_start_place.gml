@@ -38,9 +38,20 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	if (build)
 	{
-		var structure = null;
-		if (tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
-			structure = tl_edit
+		// Find the nearest structure containing the current timeline selection
+		var structure, selected;
+		structure = null
+		selected = tl_edit
+		while (selected != null && selected != app && instance_exists(selected))
+		{
+			if (type_is_structure(selected.type))
+			{
+				structure = selected
+				break
+			}
+
+			selected = selected.parent
+		}
 
 		action_build_structure(structure, false)
 

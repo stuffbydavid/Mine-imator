@@ -1,4 +1,4 @@
-/// @desc Connects to other fences with the same material, fence gates and solid adjacent faces.
+/// @desc Connects compatible fences, fence gates and solid adjacent faces.
 
 function block_set_fence()
 {
@@ -8,9 +8,10 @@ function block_set_fence()
 	if (!builder_scenery && build_size_xy = 1)
 		return 0
 
-	var connect, variant;
+	var connect, variant, nether;
 	connect = array_create(4, "false")
 	variant = block_get_state_id_value(block_current, block_state_id_current, "variant")
+	nether = (variant = "nether_brick")
 
 	for (var d = XP; d <= YN; d++)
 	{
@@ -23,8 +24,18 @@ function block_set_fence()
 		if (block = null)
 			continue
 
-		// Same fences and solid faces
-		if (block.type = block_current.type || (block_face_min_depth[d] = e_block_depth.DEPTH0 && block_face_full[d]))
+		// Nether brick fences only connect to other nether brick fences
+		if (block.type = block_current.type)
+		{
+			var stateid, othernether;
+			stateid = builder_get_state_id(pos[X], pos[Y], pos[Z])
+			othernether = (block_get_state_id_value(block, stateid, "variant") = "nether_brick")
+			if (nether = othernether)
+				connect[d] = "true"
+		}
+
+		// Solid faces
+		else if (block_face_min_depth[d] = e_block_depth.DEPTH0 && block_face_full[d])
 			connect[d] = "true"
 		
 		// Fence gates

@@ -119,10 +119,15 @@ function builder_set_model(ongeneration = false)
 				// Multipart
 				if (is_array(modelobj))
 				{
+					// Retained timeline cells hide only the model replaced by the timeline
+					var hidemodel = tlvalid;
+					if (block_current.tl_mesh && block_get_state_id_value(block_current, block_state_id_current, "visible") = "false")
+						hidemodel = true
+
 					model = []
 					for (var i = 0; i < array_length(modelobj); i++)
 					{
-						if (tlvalid && modelobj[i].hide_model)
+						if (hidemodel && modelobj[i].hide_model)
 							continue
 
 						array_add(model, block_get_render_model(modelobj[i], brightness, offset, offsetxy))

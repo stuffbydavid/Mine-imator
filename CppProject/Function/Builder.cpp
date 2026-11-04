@@ -640,12 +640,22 @@ namespace CppProject
 
 	void block_render_model_generate(Scope<obj_builder_thread> self, IntType modelId)
 	{
+		// Fully hidden timeline cells retain their models for neighbor connection rules
+		obj_block* block = ObjTypeOpt(obj_block, self->block_current);
+		if (block && block->tl_mesh && block->tl_hide_model == "" && block_get_state_id_value(block->id, self->block_state_id_current, "visible") == "false")
+			return;
+
 		// Resolve objects once and keep element bounds in numeric locals
 		obj_block_render_model* model = ObjType(obj_block_render_model, modelId);
 		
 		RealType offset[3];
 		for (IntType a = X_; a <= Z_; a++)
 			offset[a] = self->block_model_pos.RealValue(a) + model->offset.RealValue(a);
+
+		BoolType offsetModel = (
+			model->offset.RealValue(X_) != 0 ||
+			model->offset.RealValue(Y_) != 0 ||
+			model->offset.RealValue(Z_) != 0);
 
 		// Double-block model
 		self->block_model_double = (model->offset.RealValue(Z_) >= block_size_);
@@ -689,8 +699,12 @@ namespace CppProject
 				if (!element->face_render.BoolValue(f))
 					continue;
 
+				// Shifted models cannot use the source block's cached culling faces
+				if (offsetModel && block_render_model_generate_face_cull(self, modelId, element->id, f))
+					continue;
+
 				IntType depth = self->block_face_min_depth.IntValue(f);
-				if (element->face_edge.BoolValue(f) && depth != null_ && depth <= model->face_min_depth.IntValue(f) &&
+				if (!offsetModel && element->face_edge.BoolValue(f) && depth != null_ && depth <= model->face_min_depth.IntValue(f) &&
 					!(leaves && depth > e_block_depth_DEPTH0))
 				{
 					IntType axis = Y_;

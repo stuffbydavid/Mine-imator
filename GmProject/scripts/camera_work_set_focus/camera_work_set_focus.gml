@@ -1,8 +1,20 @@
-function camera_work_set_focus()
+/// @arg [position]
+
+function camera_work_set_focus(pos = null)
 {
-	cam_work_focus[X] = cam_work_from[X] + lengthdir_x(cam_work_zoom, cam_work_angle_look_xy + 180) * lengthdir_x(1, cam_work_angle_look_z)
-	cam_work_focus[Y] = cam_work_from[Y] + lengthdir_y(cam_work_zoom, cam_work_angle_look_xy + 180) * lengthdir_x(1, cam_work_angle_look_z)
-	cam_work_focus[Z] = cam_work_from[Z] + lengthdir_z(cam_work_zoom, cam_work_angle_look_z)
+	// Explicit world positions release the focus from any selected timeline
+	if (pos != null)
+	{
+		cam_work_focus = point3D_copy(pos)
+		cam_work_focus_tl = null
+		tl_focus = null
+	}
+	else
+	{
+		cam_work_focus[X] = cam_work_from[X] + lengthdir_x(cam_work_zoom, cam_work_angle_look_xy + 180) * lengthdir_x(1, cam_work_angle_look_z)
+		cam_work_focus[Y] = cam_work_from[Y] + lengthdir_y(cam_work_zoom, cam_work_angle_look_xy + 180) * lengthdir_x(1, cam_work_angle_look_z)
+		cam_work_focus[Z] = cam_work_from[Z] + lengthdir_z(cam_work_zoom, cam_work_angle_look_z)
+	}
 	
 	if (vec3_equals(cam_work_from, cam_work_focus))
 		cam_work_focus = vec3_add(cam_work_focus, 0.0001)

@@ -81,15 +81,18 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 		// Create a destination structure
 		if (target = null)
 		{
-			var origin = place_pos;
-			if (transform != null)
-				origin = matrix_position(transform)
+			// Align the structure's grid origin with the first object's placement cell
+			if (transform = null)
+			{
+				transform = matrix_create(place_pos, place_rot, place_sca)
+				var origin = point3D_mul_matrix(vec3(-block_half_size, -block_half_size, 0), transform);
+				transform = matrix_create(origin, place_rot, place_sca)
+			}
 			
-			target = tl_new_structure(origin)
+			target = tl_new_structure(matrix_position(transform))
 			
-			if (transform != null)
-				with (target)
-					tl_value_set_matrix(id, transform)
+			with (target)
+				tl_value_set_matrix(id, transform)
 			
 			created = true
 			
@@ -137,7 +140,8 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 					source.model_state = block_get_timeline_model_state(block, blockdata[1])
 				}
 				
-				placemat = matrix_multiply(block_get_timeline_matrix(block, blockdata[1], blockpos), transform)
+				var viewdir = vec3_mul_matrix(place_view_direction, matrix_inverse_ext(transform));
+				placemat = matrix_multiply(block_get_timeline_matrix(block, blockdata[1], blockpos, viewdir), transform)
 			}
 			else
 			{
@@ -147,12 +151,17 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 				placemat = matrix_multiply(matrix_create(vec3_add(vec3_mul(blockpos, block_size), offset), vec3(0), vec3(1)), transform)
 			}
 
-			// Keep the block mesh alongside an additional timeline model
-			if (block.timeline && block.tl_model_double)
+			// Keep source data for retained cells and blocks with an additional timeline model
+			if (block.timeline && (block.tl_model_double || block.tl_mesh))
 			{
-				var prev = null;
+				var prev, meshstate;
+				prev = null
+				meshstate = blockdata[1]
+				if (block.tl_mesh)
+					meshstate = block_set_state_id_value(block, meshstate, "visible", "false")
+
 				with (target)
-					prev = tl_update_block_meshes(blockpos, blockdata[0], blockdata[1], null, true)
+					prev = tl_update_block_meshes(blockpos, blockdata[0], meshstate, null, true)
 
 				// Save mesh changes separately unless the whole structure will be saved
 				if (prev != null && !created)
@@ -166,11 +175,11 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 					{
 						var pos, data;
 						pos = prev[i][0];
-						data = [ 0, 0 ];
+						data = [ 0, 0, false ];
 						with (target)
 							data = block_meshes_get_block(pos[X], pos[Y], pos[Z])
 						
-						array_add(hobj.new_mesh_blocks, [ array_copy_1d(pos), data[0], data[1] ], false)
+						array_add(hobj.new_mesh_blocks, [ array_copy_1d(pos), data[0], data[1], data[2] ], false)
 					}
 				}
 			}
@@ -215,9 +224,11 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 		// Select the destination structure and focus on the placed object
 		action_build_structure(target, false)
 		
-		tl_focus = tl
-		cam_work_focus = matrix_position(placemat)
-		cam_work_focus_tl = null
+		var focuspos = matrix_position(placemat);
+		if (blockpos != null)
+			focuspos = point3D_mul_matrix(vec3_mul(vec3_add(blockpos, 0.5), block_size), transform)
+
+		camera_work_set_focus(focuspos)
 
 		// Save the whole structure when placement created it
 		var save = tl;

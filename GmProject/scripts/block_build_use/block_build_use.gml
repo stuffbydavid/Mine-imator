@@ -88,6 +88,49 @@ function block_build_use(block, stateid, target, blockpos, selected = null, plac
 
 	var use = block.build_map[?"use"];
 	
+	// Toggle book slot
+	if (value_get_real(block.build_map[?"use_book_slot"], false))
+	{
+		// Convert the hit position and normal to the block's local axes
+		var hitpos, hitnormal, hitblockpos;
+		hitpos = point3D_mul_matrix(place_view_hit_pos, matrix_inverse_ext(target.matrix_render))
+		hitnormal = vec3_mul_matrix(place_view_world_normal, matrix_transpose(target.matrix_render))
+		hitblockpos = blockpos
+		if (hitblockpos = null)
+			hitblockpos = place_view_block_pos
+
+		if (hitblockpos != null)
+			hitpos = vec3_sub(hitpos, vec3_mul(hitblockpos, block_size))
+
+		if (blockpos != null || target.temp.block_transform)
+		{
+			hitpos = vec3(block_size - hitpos[Y], hitpos[X], hitpos[Z])
+			hitnormal = vec3(-hitnormal[Y], hitnormal[X], hitnormal[Z])
+		}
+
+		// Other faces fall through to ordinary placement
+		var face = vec3_get_dir(hitnormal);
+		if (dir_names[face] != block_get_state_id_value(block, stateid, "facing"))
+			return null
+
+		// Measure left to right as seen from the front of the shelf
+		var right, horizontal, slot;
+		right = dir_get_vec3(face)
+		right = vec3(right[Y], -right[X], 0)
+		horizontal = vec3_dot(vec3_sub(hitpos, vec3(block_half_size)), right) + block_half_size
+
+		// Split columns at 5 and 11 pixels, with the upper row first
+		slot = 0
+		if (horizontal >= 5)
+			slot++
+		if (horizontal >= 11)
+			slot++
+		if (hitpos[Z] < block_half_size)
+			slot += 3
+
+		use = "slot_" + string(slot) + "_occupied"
+	}
+	
 	// Toggle values
 	if (is_string(use))
 	{
@@ -129,6 +172,6 @@ function block_build_use(block, stateid, target, blockpos, selected = null, plac
 		
 		return [ blockpos, previous, [ block.block_id, block_get_state_id(block, vars) ] ]
 	}
-
+	
 	return null
 }

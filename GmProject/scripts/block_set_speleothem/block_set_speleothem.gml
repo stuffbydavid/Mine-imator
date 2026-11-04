@@ -1,51 +1,70 @@
+/// @desc Returns the automatic spike model while preserving the selected thickness.
+
 function block_set_speleothem()
 {
-	if (builder_scenery && !builder_scenery_legacy)
+	if (!build_edit && builder_scenery && !builder_scenery_legacy)
 		return 0
-	
+
+	// Preserve thickness values explicitly selected by the user
+	if (block_get_state_id_value(block_current, block_state_id_current, "thickness") != "tip")
+		return 0
+
 	var minz, maxz;
 	minz = 0
 	maxz = build_size[Z]
-	
 	if (build_edit)
 	{
 		minz = build_min_pos[Z]
 		maxz = build_max_pos[Z]
 	}
 
-	if (!builder_scenery && maxz - minz = 1)
-		return 0
-	
-	var thicknessprev, dir, size, sizeoffset, thickness;
-	thicknessprev = block_get_state_id_value(block_current, block_state_id_current, "thickness")
-	
-	if (thicknessprev = "base")
-		return 0
-	
+	// Count up to two consecutive spikes toward the tip
+	var dir, step, count;
 	dir = block_get_state_id_value(block_current, block_state_id_current, "vertical_direction")
-	if (dir = "up")
-		size = (maxz - 1) - build_pos[Z]
-	else
-		size = build_pos[Z] - minz
-	sizeoffset = size
-	
-	if (thicknessprev = "frustum")
-		sizeoffset += 1
-	else if (thicknessprev = "middle")
-		sizeoffset += 2
-	else if (thicknessprev = "base")
-		sizeoffset += 3
-	
-	if (sizeoffset = 0)
-		thickness = thicknessprev
-	else if (sizeoffset = 1)
-		thickness = "frustum"
-	else if (size >= maxz - minz - 1)
-		thickness = "base"
-	else
+	step = 1
+	if (dir = "down")
+		step = -1
+
+	count = 0
+	for (var distance = 1; distance <= 2; distance++)
+	{
+		var zz = build_pos[Z] + step * distance;
+		if (zz < minz || zz >= maxz || builder_get_block(build_pos[X], build_pos[Y], zz) != block_current)
+			break
+
+		var stateid = builder_get_state_id(build_pos[X], build_pos[Y], zz);
+		if (block_get_state_id_value(block_current, stateid, "vertical_direction") != dir)
+			break
+
+		count++
+	}
+
+	// One or more spikes beyond this block make it a middle section
+	var thickness = "tip";
+	if (count > 0)
 		thickness = "middle"
-	
-	block_state_id_current = block_get_state_id(block_current, [ "vertical_direction", dir, "thickness", thickness ])
-	
-	return 0
+
+	// A non-spike support makes the start of a stack of at least three the base
+	if (count = 2)
+	{
+		var zz = build_pos[Z] - step;
+		if (zz >= minz && zz < maxz)
+		{
+			var support = builder_get_block(build_pos[X], build_pos[Y], zz);
+			if (support != null && support != block_current)
+				thickness = "base"
+		}
+	}
+
+	if (thickness = "tip")
+		return 0
+
+	// Keep tip in the block data so subsequent edits can resolve the shape again
+	var modelstate = block_set_state_id_value(block_current, block_state_id_current, "thickness", thickness);
+	return block_get_render_model(
+		block_current.state_id_model_obj[modelstate],
+		block_current.state_id_emissive[modelstate],
+		block_current.state_id_random_offset[modelstate],
+		block_current.state_id_random_offset_xy[modelstate]
+	)
 }

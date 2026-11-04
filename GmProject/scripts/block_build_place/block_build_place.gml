@@ -107,28 +107,53 @@ function block_build_place(block, stateid, target, blockpos, transform)
 		else if (block.build_map[?"place"] = "ladder" && face >= ZP)
 			facing = viewdir ^ 1
 		
-		// facing_fallback supplies a direction name when the hit face is unsupported
+		// facing_fallback supplies a direction when the hit face is unsupported
 		else if (!array_contains(dirs, dir_names[facing]))
 		{
 			var fallback = value_get_string(block.build_map[?"facing_fallback"], "");
 			if (fallback = "")
 				return null
 			
-			for (var d = XP; d <= ZN; d++)
-				if (dir_names[d] = fallback)
-					facing = d
+			// view_inverted faces toward the viewer on unsupported faces
+			if (fallback = "view_inverted")
+				facing = vec3_get_dir(vec3_mul(look, -1), dirs)
+			else
+				for (var d = XP; d <= ZN; d++)
+					if (dir_names[d] = fallback)
+						facing = d
 		}
 
 		stateid = block_set_state_id_value(block, stateid, "facing", dir_names[facing])
 	}
 
+	// directions=hit_face_inverted enables the attachment toward the clicked block
+	if (block.build_map[?"directions"] = "hit_face_inverted")
+	{
+		// Keep the existing directions unless the top face resets them
+		var old = [ 0, 0 ];
+		if (face != ZP)
+			old = block_build_get_block(target, blockpos)
+
+		for (var d = XP; d <= ZN; d++)
+		{
+			var value = "false";
+			if (old[0] = block.block_id)
+				value = block_get_state_id_value(block, old[1], dir_names[d])
+
+			stateid = block_set_state_id_value(block, stateid, dir_names[d], value)
+		}
+
+		if (face != ZP)
+			stateid = block_set_state_id_value(block, stateid, dir_names[face ^ 1], "true")
+	}
+
 	// axis=hit_face uses the surface axis
-	// axis=view uses the horizontal viewing axis
+	// axis=view turns the horizontal viewing axis by 90 degrees clockwise
 	if (block.build_map[?"axis"] = "hit_face" || block.build_map[?"axis"] = "view")
 	{
 		var axis = face div 2;
 		if (block.build_map[?"axis"] = "view")
-			axis = viewdir div 2
+			axis = 1 - (viewdir div 2)
 		
 		// Convert builder axes to Minecraft axis names
 		var axes = [ "x", "z", "y" ];
@@ -170,25 +195,7 @@ function block_build_place(block, stateid, target, blockpos, transform)
 		stateid = block_set_state_id_value(block, stateid, "rotation", string((rotation mod 16 + 16) mod 16))
 	}
 
-	// support=above or below requires a supporting block on that side
-	var support = value_get_string(block.build_map[?"support"], "");
-	if (support = "above" || support = "below")
-	{
-		var supportdir, same;
-		supportdir = ZP
-		if (support = "below")
-			supportdir = ZN
-		
-		// support_same=true also accepts the same block without a full support face
-		same = null
-		if (value_get_real(block.build_map[?"support_same"], false))
-			same = block
-		
-		if (!block_build_supported(target, blockpos, supportdir, same))
-			return null
-	}
-
-	// place selects additional block-specific rules; an omitted value skips them
+	// place selects additional block-specific rules when provided
 	var placement = value_get_string(block.build_map[?"place"], "");
 	switch (placement)
 	{
@@ -234,6 +241,24 @@ function block_build_place(block, stateid, target, blockpos, transform)
 			else if ((leftblock[0] = 0) = (rightblock[0] = 0) && vec3_dot(vec3_sub(hit, vec3(0.5)), right) > 0)
 				hinge = "right"
 
+			// Put the hinge opposite the neighboring door's position
+			var neighbors = [ leftblock, rightblock ];
+			for (var i = 0; i < array_length(neighbors); i++)
+			{
+				var neighbor = neighbors[i];
+				if (neighbor[0] != block.block_id ||
+					block_get_state_id_value(block, neighbor[1], "half") != "lower" ||
+					block_get_state_id_value(block, neighbor[1], "facing") != dir_names[facing] ||
+					block_get_state_id_value(block, neighbor[1], "variant") != block_get_state_id_value(block, stateid, "variant"))
+					continue
+
+				hinge = "left"
+				if (i = 0)
+					hinge = "right"
+				
+				break
+			}
+
 			stateid = block_set_state_id_value(block, stateid, "hinge", hinge)
 			
 			break
@@ -245,6 +270,25 @@ function block_build_place(block, stateid, target, blockpos, transform)
 			if (face >= ZP)
 			{
 				facing = viewdir ^ 1
+
+				// Continue the ladder below when placing on its top face
+				if (face = ZP)
+				{
+					var below = block_build_get_block(target, vec3_sub(blockpos, vec3(0, 0, 1)));
+					if (below[0] = block.block_id)
+					{
+						var belowfacing = block_get_state_id_value(block, below[1], "facing");
+						for (var d = XP; d <= YN; d++)
+						{
+							if (dir_names[d] = belowfacing)
+							{
+								facing = d
+								break
+							}
+						}
+					}
+				}
+
 				if (!block_build_supported(target, blockpos, facing ^ 1))
 					return null
 				
@@ -286,10 +330,10 @@ function block_build_place(block, stateid, target, blockpos, transform)
 
 		case "wall_hanging_sign":
 		{
-			// Choose the sign's facing from the clicked horizontal axis
-			facing = YP
+			// Keep the support bar along the clicked horizontal axis
+			facing = XP
 			if (face <= XN)
-				facing = XP
+				facing = YP
 			
 			stateid = block_set_state_id_value(block, stateid, "facing", dir_names[facing])
 			
@@ -298,6 +342,11 @@ function block_build_place(block, stateid, target, blockpos, transform)
 
 		case "rail":
 		{
+			// Rails cannot stack on another rail
+			var below = block_build_get_block(target, vec3_sub(blockpos, vec3(0, 0, 1)));
+			if (below[0] != 0 && block_objs[below[0]].type = "rail")
+				return null
+
 			// Set the rail along the horizontal view axis before connection updates
 			var shape = "north_south";
 			if (viewdir <= XN)
@@ -329,7 +378,7 @@ function block_build_place(block, stateid, target, blockpos, transform)
 				for (var d = XP; d <= ZN; d++)
 					stateid = block_set_state_id_value(block, stateid, dir_names[d], "false")
 
-			// Enable each declared direction that has a supporting neighboring face
+			// Enable each declared direction that has a neighboring support
 			var attached = false;
 			for (var d = XP; d <= ZN; d++)
 			{
@@ -366,6 +415,8 @@ function block_build_place(block, stateid, target, blockpos, transform)
 				attachment = "ceiling"
 			else if (face < ZP)
 			{
+				// Point the wall attachment toward the clicked support
+				stateid = block_set_state_id_value(block, stateid, "facing", dir_names[face ^ 1])
 				attachment = "single_wall"
 				if (block_build_supported(target, blockpos, face))
 					attachment = "double_wall"
@@ -378,7 +429,7 @@ function block_build_place(block, stateid, target, blockpos, transform)
 
 		case "lantern":
 		{
-			// Top-face hits place a standing lantern; other hits require support above
+			// Standing lanterns use top-face hits and other placements need support above
 			if (face != ZP && !block_build_supported(target, blockpos, ZP))
 				return null
 			
@@ -410,18 +461,20 @@ function block_build_place(block, stateid, target, blockpos, transform)
 		case "jigsaw":
 		case "crafter":
 		{
-			// Horizontal hits use face_up, vertical hits combine the face and view axes
-			var orientation;
-			if (face < ZP)
-				orientation = dir_names[face] + "_up"
-			else if (placement = "jigsaw") // Jigsaw and crafter use reversed orientation schemes
-				orientation = dir_names[face] + "_" + dir_names[viewdir ^ 1]
+			// Jigsaws follow the hit face and crafters face against the viewing axis
+			var orientation, frontdir, topdir;
+			frontdir = vec3_get_dir(look) ^ 1
+			topdir = viewdir
+			if (placement = "jigsaw")
+			{
+				frontdir = face
+				topdir = viewdir ^ 1
+			}
+
+			if (frontdir < ZP)
+				orientation = dir_names[frontdir] + "_up"
 			else
-				orientation = dir_names[viewdir ^ 1] + "_" + dir_names[face]
-			
-			var orientations = block.states_map[?"orientation"];
-			if (!ds_map_exists(orientations.value_map, orientation))
-				orientation = dir_names[face] + "_" + dir_names[viewdir ^ 1]
+				orientation = dir_names[frontdir] + "_" + dir_names[topdir]
 			
 			stateid = block_set_state_id_value(block, stateid, "orientation", orientation)
 			

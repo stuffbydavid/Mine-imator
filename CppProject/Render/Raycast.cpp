@@ -68,6 +68,14 @@ namespace CppProject
 
 		// Combine block bounds across vertex buffers in the timeline
 		BlockBounds bounds(blockPos);
+		BoolType connectedBlock = false;
+		if (tl->type == e_tl_type_BLOCK)
+		{
+			VarType block = FindMap(ObjType(obj_minecraft_assets, global::mc_assets)->block_name_map)->Value(idVar(tl->temp, block_name));
+			if (!is_undefined(block) && block != null_)
+				connectedBlock = ObjType(obj_block, block)->has_connect;
+		}
+
 		for (const Raycast::WorldObject& object : objects)
 		{
 			if (object.tlId != sourceObject.tlId || object.transform != sourceObject.transform)
@@ -75,7 +83,13 @@ namespace CppProject
 
 			VertexBuffer* vbuf = FindVertexBuffer(object.vbufId);
 			if (vbuf && vbuf->valid && vbuf->completed)
+			{
+				// Include the full model when connected halves form one timeline
+				if (connectedBlock)
+					bounds.blockBounds.AddBounds(vbuf->bounds);
+
 				vbuf->AddBlockBounds(blockPos, bounds);
+			}
 		}
 
 		// Fit with minimum size of 4 on X/Y and 1 on Z

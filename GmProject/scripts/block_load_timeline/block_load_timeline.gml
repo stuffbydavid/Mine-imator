@@ -5,6 +5,7 @@ function block_load_timeline(map, typemap)
 	timeline = (ds_map_size(map) > 1 || !ds_map_exists(map, "offset"))
 	
 	tl_type = value_get_string(map[?"type"], name)
+	tl_facing = value_get_string(map[?"facing"], "")
 	tl_build_transform = value_get_real(map[?"transform"], true)
 	tl_hide_model = value_get_string(map[?"hide_model"], "")
 		

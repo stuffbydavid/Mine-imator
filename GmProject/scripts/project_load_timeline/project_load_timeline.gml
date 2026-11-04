@@ -251,7 +251,7 @@ function project_load_timeline(map)
 					if (block != null)
 						stateid = block_get_state_id(block, vars)
 
-					array_add(blocks_added_palette, [ block != null ? block.block_id : 0, stateid ], false)
+					array_add(blocks_added_palette, [ block != null ? block.block_id : 0, stateid, state_vars_get_value(vars, "waterlogged") = "true" ], false)
 				}
 
 				for (var i = 0; i < ds_list_size(blocks); i++)

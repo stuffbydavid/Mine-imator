@@ -49,7 +49,7 @@ function block_build_supported(target, blockpos, dir, sameblock = null)
 	if (supportblock = sameblock)
 		return true
 	
-	// Other blocks need culling models describing their solid faces
+	// Other blocks need render models describing their boundary faces
 	if (supportblock.state_id_model_obj = null)
 		return false
 
@@ -69,7 +69,7 @@ function block_build_supported(target, blockpos, dir, sameblock = null)
 		for (var m = 0; m < modelvariant.model_amount; m++)
 		{
 			var model = modelvariant.model[m];
-			if (model.face_full[supportface] && model.face_min_depth[supportface] = e_block_depth.DEPTH0)
+			if (model.face_full[supportface])
 				return true
 		}
 	}
