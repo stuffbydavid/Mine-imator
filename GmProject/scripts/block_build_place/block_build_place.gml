@@ -378,23 +378,12 @@ function block_build_place(block, stateid, target, blockpos, transform)
 				for (var d = XP; d <= ZN; d++)
 					stateid = block_set_state_id_value(block, stateid, dir_names[d], "false")
 
-			// Enable each declared direction that has a neighboring support
-			var attached = false;
-			for (var d = XP; d <= ZN; d++)
-			{
-				if (is_undefined(block.states_map[?dir_names[d]]))
-					continue
-				
-				if (block_build_supported(target, blockpos, d))
-				{
-					stateid = block_set_state_id_value(block, stateid, dir_names[d], "true")
-					attached = true
-				}
-			}
-			
-			// Reject placement when no face can attach
-			if (!attached)
-				return null
+			// Select the clicked face, falling back to a wall face for blocks without a floor face
+			var attachdir = face ^ 1;
+			if (is_undefined(block.states_map[?dir_names[attachdir]]))
+				attachdir = viewdir
+
+			stateid = block_set_state_id_value(block, stateid, dir_names[attachdir], "true")
 			
 			break
 		}

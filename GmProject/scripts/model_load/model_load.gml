@@ -62,6 +62,12 @@ function model_load(map, dir)
 		if (ds_map_valid(map[?"place_target"]))
 			place_target_map = minecraft_assets_load_place_target(map[?"place_target"])
 		
+		// Build placement facing
+		var buildmap = map[?"build"];
+		build_facing = ""
+		if (ds_map_valid(buildmap))
+			build_facing = value_get_string(buildmap[?"facing"], "")
+
 		// Pattern type
 		pattern_type = value_get_string(map[?"pattern_type"], "")
 		

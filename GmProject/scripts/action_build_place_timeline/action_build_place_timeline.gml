@@ -185,6 +185,19 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 			}
 		}
 
+		// Apply facing rules to special models without block data
+		else if (tltype = e_tl_type.SPECIAL_BLOCK)
+		{
+			var model = mc_assets.model_name_map[?source.model_name];
+			if (!is_undefined(model) && model.build_facing = "view_inverted")
+			{
+				var look, angle;
+				look = vec3_mul_matrix(place_view_direction, matrix_inverse_ext(placemat))
+				angle = 90 + snap(point_direction(0, 0, -look[X], -look[Y]), 90)
+				placemat = matrix_multiply(matrix_create(vec3(0), vec3(0, 0, angle), vec3(1)), placemat)
+			}
+		}
+
 		// Create the timeline and attach it to the destination structure
 		tl = tl_new_block(tltype, source, true)
 		with (tl)
