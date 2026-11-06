@@ -12,6 +12,8 @@ function tl_event_create()
 	display_name = ""
 	temp = null
 	has_temp = false
+	has_block_tex = false
+	has_model_tex = false
 	animated = true
 	
 	color_tag = null
@@ -59,6 +61,14 @@ function tl_event_create()
 	part_of = null
 	part_list = null
 	part_root = null
+	
+	block_timeline = false
+	block_transform = true
+	block_build_name = ""
+	block_build_state = []
+	block_tex = project_pack_res
+	block_tex_material = project_pack_res
+	block_tex_normal = project_pack_res
 	
 	block_meshes = []
 	block_meshes_edit = []

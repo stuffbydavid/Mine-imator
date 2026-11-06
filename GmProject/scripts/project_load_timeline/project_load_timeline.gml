@@ -55,6 +55,16 @@ function project_load_timeline(map)
 		
 		part_of = value_get_save_id(map[?"part_of"], part_of)
 		
+		block_build_name = value_get_string(map[?"block_build_name"], "")
+		block_build_state = value_get_state_vars(map[?"block_build_state"])
+		
+		if (block_build_name != "")
+		{
+			var builddata = block_get_name_state(block_build_name, block_build_state);
+			block_build_name = builddata[0]
+			block_build_state = builddata[1]
+		}
+		
 		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
 			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
 		{
@@ -124,6 +134,8 @@ function project_load_timeline(map)
 				}
 			}
 		}
+		
+		// Block part
 		else if (part_of != null && type = e_tl_type.BLOCK)
 		{
 			var blockmap = map[?"block"];
@@ -152,6 +164,7 @@ function project_load_timeline(map)
 			}
 		}
 		
+		// Block without template
 		else if (type = e_tl_type.BLOCK && !has_temp)
 		{
 			var directblockmap = map[?"block"];
@@ -163,6 +176,7 @@ function project_load_timeline(map)
 				block_tex_material = value_get_save_id(directblockmap[?"tex_material"], project_pack_res)
 				block_tex_normal = value_get_save_id(directblockmap[?"tex_normal"], project_pack_res)
 				block_randomize = value_get_real(directblockmap[?"randomize"], true)
+				block_transform = value_get_real(directblockmap[?"transform"], block_transform)
 				block_repeat_enable = value_get_real(directblockmap[?"repeat_enable"], false)
 				block_repeat = value_get_point3D(directblockmap[?"repeat"], vec3(1))
 				block_center_legacy = false
@@ -170,6 +184,7 @@ function project_load_timeline(map)
 			}
 		}
 		
+		// Text
 		else if (type = e_tl_type.TEXT && !has_temp && part_of = null)
 		{
 			text_font = value_get_save_id(map[?"text_font"], project_pack_res)
@@ -177,8 +192,23 @@ function project_load_timeline(map)
 			text_face_camera = value_get_real(map[?"text_face_camera"], false)
 		}
 
-		// Added blocks
-		if (type = e_tl_type.SCENERY)
+		if (type = e_tl_type.STRUCTURE)
+		{
+			block_tex = value_get_save_id(map[?"block_tex"], project_pack_res)
+			block_tex_material = value_get_save_id(map[?"block_tex_material"], project_pack_res)
+			block_tex_normal = value_get_save_id(map[?"block_tex_normal"], project_pack_res)
+		}
+
+		// Map legacy block
+		if (type = e_tl_type.BLOCK && (part_of != null || !has_temp))
+		{
+			var blockdata = block_get_name_state(block_name, block_state);
+			block_name = blockdata[0]
+			block_state = blockdata[1]
+		}
+
+		// Added blocks to structures and scenery
+		if (type_is_structure(type))
 		{
 			var palette, blocks;
 			palette = map[?"blocks_added_palette"]
@@ -199,7 +229,6 @@ function project_load_timeline(map)
 
 					if (ds_list_valid(entry) && ds_list_size(entry) > 0)
 					{
-						block = mc_assets.block_name_map[?entry[|0]]
 						for (var s = 1; s < ds_list_size(entry); s++)
 						{
 							if (!is_string(entry[|s]))
@@ -209,6 +238,11 @@ function project_load_timeline(map)
 							if (is_array(prop))
 								state_vars_add(vars, prop)
 						}
+
+						// Map legacy block
+						var blockdata = block_get_name_state(entry[|0], vars);
+						block = mc_assets.block_name_map[?blockdata[0]]
+						vars = blockdata[1]
 					}
 
 					if (is_undefined(block))
@@ -217,7 +251,7 @@ function project_load_timeline(map)
 					if (block != null)
 						stateid = block_get_state_id(block, vars)
 
-					array_add(blocks_added_palette, [ block != null ? block.block_id : 0, stateid ], false)
+					array_add(blocks_added_palette, [ block != null ? block.block_id : 0, stateid, state_vars_get_value(vars, "waterlogged") = "true" ], false)
 				}
 
 				for (var i = 0; i < ds_list_size(blocks); i++)
@@ -229,6 +263,7 @@ function project_load_timeline(map)
 					var pos, index;
 					pos = value_get_point3D(entry[|0])
 					index = value_get_real(entry[|1], -1)
+					
 					if (pos != null && index >= 0 && index < array_length(blocks_added_palette) && index = floor(index))
 						array_add(blocks_added, [ pos, index ], false)
 				}

@@ -20,9 +20,14 @@ function app_start_place(build, tl = null, spawn = false)
 	place_block_pos = null
 		
 	place_view_pos = null
+	place_view_hit_pos = vec3(0)
+	place_view_block_pos = null
+	place_view_block_bounds = null
 	place_view_air = false
 	place_view_tl = 0
 	place_view_normal = vec3(0, 1, 0)
+	place_view_world_normal = vec3(0, 0, 1)
+	place_view_direction = vec3(0, 1, 0)
 	
 	place_target_tl = null
 	place_target_tl_root = null
@@ -33,9 +38,20 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	if (build)
 	{
-		var structure = null;
-		if (tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
-			structure = tl_edit
+		// Find the nearest structure containing the current timeline selection
+		var structure, selected;
+		structure = null
+		selected = tl_edit
+		while (selected != null && selected != app && instance_exists(selected))
+		{
+			if (type_is_structure(selected.type))
+			{
+				structure = selected
+				break
+			}
+
+			selected = selected.parent
+		}
 
 		action_build_structure(structure, false)
 

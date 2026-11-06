@@ -82,6 +82,7 @@ function temp_event_create()
 	block_center_legacy = false
 	block_center = false
 	block_randomize = true
+	block_transform = true
 	
 	block_meshes = []
 	block_meshes_num = vec3(1)

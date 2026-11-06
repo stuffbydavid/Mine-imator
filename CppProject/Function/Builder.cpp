@@ -4,6 +4,7 @@
 #include "Asset/DataStructure.hpp"
 #include "Asset/VertexBuffer.hpp"
 #include "Asset/Buffer.hpp"
+#include "Render/BlockPos.hpp"
 
 namespace CppProject
 {
@@ -51,7 +52,7 @@ namespace CppProject
 			BuilderState singleEntry;
 			if (self->build_single_block != null_ && !is_undefined(self->build_single_block))
 				singleEntry = {
-					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id.ToInt(),
+					(uint16_t)ObjType(obj_block, self->build_single_block)->block_id,
 					(uint16_t)self->build_single_stateid,
 					false
 				};
@@ -343,7 +344,7 @@ namespace CppProject
 
 				if (block)
 				{
-					state.blockId = (uint16_t)block->block_id.ToInt();
+					state.blockId = (uint16_t)block->block_id;
 					if (block->timeline)
 						numTimelines++;
 				}
@@ -405,7 +406,7 @@ namespace CppProject
 
 				if (block)
 				{
-					state.blockId = (uint16_t)block->block_id.ToInt();
+					state.blockId = (uint16_t)block->block_id;
 					if (block->timeline)
 						numTimelines++;
 				}
@@ -639,12 +640,25 @@ namespace CppProject
 
 	void block_render_model_generate(Scope<obj_builder_thread> self, IntType modelId)
 	{
+		// Fully hidden timeline cells retain their models for neighbor connection rules
+		obj_block* block = ObjTypeOpt(obj_block, self->block_current);
+		if (block && block->tl_mesh && block->tl_hide_model == "" && block_get_state_id_value(block->id, self->block_state_id_current, "visible") == "false")
+			return;
+
 		// Resolve objects once and keep element bounds in numeric locals
 		obj_block_render_model* model = ObjType(obj_block_render_model, modelId);
 		
 		RealType offset[3];
 		for (IntType a = X_; a <= Z_; a++)
 			offset[a] = self->block_model_pos.RealValue(a) + model->offset.RealValue(a);
+
+		BoolType offsetModel = (
+			model->offset.RealValue(X_) != 0 ||
+			model->offset.RealValue(Y_) != 0 ||
+			model->offset.RealValue(Z_) != 0);
+
+		// Double-block model
+		self->block_model_double = (model->offset.RealValue(Z_) >= block_size_);
 		
 		if (self->block_vertex_emissive == null_)
 			self->block_vertex_emissive = model->emissive;
@@ -685,8 +699,12 @@ namespace CppProject
 				if (!element->face_render.BoolValue(f))
 					continue;
 
+				// Shifted models cannot use the source block's cached culling faces
+				if (offsetModel && block_render_model_generate_face_cull(self, modelId, element->id, f))
+					continue;
+
 				IntType depth = self->block_face_min_depth.IntValue(f);
-				if (element->face_edge.BoolValue(f) && depth != null_ && depth <= model->face_min_depth.IntValue(f) &&
+				if (!offsetModel && element->face_edge.BoolValue(f) && depth != null_ && depth <= model->face_min_depth.IntValue(f) &&
 					!(leaves && depth > e_block_depth_DEPTH0))
 				{
 					IntType axis = Y_;
@@ -739,6 +757,8 @@ namespace CppProject
 			self->block_vertex_color_index = 0;
 			self->block_vertex_emissive = minEmissive;
 		}
+
+		self->block_model_double = false;
 	}
 
 	static uint32_t BuilderPackNormal(Scope<obj_builder_thread> self, RealType nx, RealType ny, RealType nz)
@@ -748,6 +768,23 @@ namespace CppProject
 			return Vertex::PackNormal(ny, -nx, nz);
 		
 		return Vertex::PackNormal(nx, ny, nz);
+	}
+
+	static BlockPos BuilderGetBlockPos(Scope<obj_builder_thread> self)
+	{
+		// Retrieves the current block position to store in vertex buffer triangles
+		BlockPos pos(
+			(int32_t)self->build_pos.IntValue(X_),
+			(int32_t)self->build_pos.IntValue(Y_),
+			(int32_t)self->build_pos.IntValue(Z_)
+		);
+
+		if (self->build_transform)
+			pos = { pos.y, (int32_t)self->build_size.IntValue(X_) - 1 - pos.x, pos.z };
+
+		pos.doubleBlock = self->block_model_double;
+		
+		return pos;
 	}
 
 	static Vertex BuilderCreateVertex(Scope<obj_builder_thread> self, RealType x, RealType y, RealType z, RealType tx, RealType ty, uint32_t normal)
@@ -845,16 +882,17 @@ namespace CppProject
 			BuilderCreateVertex(self, x4, y4, z4, tx4, ty4, normal)
 		};
 		VertexBuffer* buffer = FindVertexBuffer(self->block_vbuffer_current);
+		BlockPos blockPos = BuilderGetBlockPos(self);
 
 		// Add mode
-		if (!self->build_remove)
-			buffer->AddFace(vertices[0], vertices[1], vertices[2], vertices[3], self->threadid);
+		if (self->builder_mode == e_builder_mode_GENERATE)
+			buffer->AddFace(vertices[0], vertices[1], vertices[2], vertices[3], self->threadid, blockPos);
 		
 		// Remove mode
-		else
+		else if (self->builder_mode == e_builder_mode_REMOVE)
 		{
-			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2]);
-			buffer->RemoveTriangle(vertices[2], vertices[3], vertices[0]);
+			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2], blockPos);
+			buffer->RemoveTriangle(vertices[2], vertices[3], vertices[0], blockPos);
 		}
 	}
 
@@ -891,14 +929,15 @@ namespace CppProject
 			BuilderCreateVertex(self, x3, y3, z3, tx3, ty3, normal)
 		};
 		VertexBuffer* buffer = FindVertexBuffer(self->block_vbuffer_current);
+		BlockPos blockPos = BuilderGetBlockPos(self);
 
 		// Add mode
-		if (!self->build_remove)
-			buffer->AddTriangle(vertices[0], vertices[1], vertices[2], self->threadid);
+		if (self->builder_mode == e_builder_mode_GENERATE)
+			buffer->AddTriangle(vertices[0], vertices[1], vertices[2], self->threadid, blockPos);
 		
 		// Remove mode
-		else
-			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2]);
+		else if (self->builder_mode == e_builder_mode_REMOVE)
+			buffer->RemoveTriangle(vertices[0], vertices[1], vertices[2], blockPos);
 	}
 
 	BoolType res_load_scenery_world(Scope<obj_resource> self)
@@ -962,28 +1001,10 @@ namespace CppProject
 		res_load_scenery_filter_mask(self);
 		res_load_scenery_block_map(self);
 
-		World::ProcessBuilderEntities();
+		World::ProcessBuilderEntities(schematic.get());
 
 		if (schematic)
-		{
-			if (schematic->error.isEmpty())
-			{
-				// Read only entity data
-				NbtCompound entityRoot;
-				entityRoot.value["Entities"] = schematic->schematic->value.value("Entities");
-				
-				Map* entityMap = entityRoot.ToMap();
-				entityRoot.value.remove("Entities");
-				
-				script_execute(Scope<obj_builder>(ObjType(obj_builder, global::mc_builder)), {
-					asset_get_index("builder_read_entities"), entityMap->Value("Entities")
-				});
-
-				delete entityMap;
-			}
-
 			schematic->SaveResource(self.object);
-		}
 
 		World::Close();
 

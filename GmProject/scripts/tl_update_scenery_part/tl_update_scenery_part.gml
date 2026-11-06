@@ -1,5 +1,7 @@
 function tl_update_scenery_part()
 {
+	block_timeline = (part_of != null && part_of.type = e_tl_type.SCENERY)
+
 	if (part_of = null && !((type = e_tl_type.BLOCK || type = e_tl_type.SPECIAL_BLOCK) && !has_temp))
 		return 0
 	

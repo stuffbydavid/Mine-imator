@@ -208,6 +208,8 @@ function tl_remove_clean()
 	blocks_added_palette = []
 	blocks_added = []
 
+	tl_update_build_block(true)
+	
 	if (model_shape_vbuffer_map != null)
 	{
 		var key = ds_map_find_first(model_shape_vbuffer_map);

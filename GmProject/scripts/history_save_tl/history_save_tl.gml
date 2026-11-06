@@ -8,6 +8,31 @@ function history_save_tl(tl)
 	
 	with (tl)
 		tl_copy(save)
+
+	save.block_build_waterlogged = null
+	
+	with (tl)
+	{
+		// Save waterlogging from the timeline's hidden block in its parent structure
+		if (!block_timeline && block_build_name != "" && parent != app && type_is_structure(parent.type))
+		{
+			var block = mc_assets.block_name_map[?block_build_name];
+			if (!is_undefined(block) && block != null && block.tl_mesh)
+			{
+				var stateid, anchor, pos, data;
+				stateid = block_get_state_id(block, block_build_state)
+				anchor = block_get_timeline_position(block, stateid)
+				pos = vec3_sub(tl_value_get_vec3(e_value.POS_X), vec3(anchor[Y], block_size - anchor[X], anchor[Z]))
+				pos = vec3(floor(pos[X] / block_size + 0.001), floor(pos[Y] / block_size + 0.001), floor(pos[Z] / block_size + 0.001))
+				
+				with (parent)
+					data = block_meshes_get_block(pos[X], pos[Y], pos[Z])
+
+				if (data[0] = block.block_id && block_get_state_id_value(block, data[1], "visible") = "false")
+					save.block_build_waterlogged = data[2]
+			}
+		}
+	}
 	
 	with (save)
 	{

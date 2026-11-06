@@ -46,14 +46,16 @@ function render_world_tl_fast()
 				break
 			}
 
+			case e_tl_type.STRUCTURE:
 			case e_tl_type.SCENERY:
+			{
+				render_world_scenery(null, render_res_diffuse, null, null)
+				break
+			}
+
 			case e_tl_type.BLOCK:
 			{
-				if (type = e_tl_type.BLOCK)
-					render_world_block_meshes(temp, render_res_diffuse, null, null)
-				else if (temp.scenery)
-					render_world_scenery(temp.scenery, render_res_diffuse, project_pack_res, project_pack_res, temp.block_repeat_enable, temp.block_repeat)
-				
+				render_world_block_meshes(temp, render_res_diffuse, null, null)
 				break
 			}
 

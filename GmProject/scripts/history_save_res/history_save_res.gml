@@ -227,40 +227,46 @@ function history_save_res(res)
 			save.usage_tl_glint_tex_amount++
 		}
 
-		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex = res)
+		if (has_model_tex && part_of = null)
 		{
-			save.usage_model_tex_save_id[save.usage_model_tex_amount] = save_id
-			save.usage_model_tex_amount++
+			if (model_tex = res)
+			{
+				save.usage_model_tex_save_id[save.usage_model_tex_amount] = save_id
+				save.usage_model_tex_amount++
+			}
+
+			if (model_tex_material = res)
+			{
+				save.usage_model_tex_material_save_id[save.usage_model_tex_material_amount] = save_id
+				save.usage_model_tex_material_amount++
+			}
+
+			if (model_tex_normal = res)
+			{
+				save.usage_model_tex_normal_save_id[save.usage_model_tex_normal_amount] = save_id
+				save.usage_model_tex_normal_amount++
+			}
 		}
 
-		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex_material = res)
+		if (has_block_tex && part_of = null)
 		{
-			save.usage_model_tex_material_save_id[save.usage_model_tex_material_amount] = save_id
-			save.usage_model_tex_material_amount++
-		}
+			if (block_tex = res)
+			{
+				save.usage_tl_block_tex_save_id[save.usage_tl_block_tex_amount] = save_id
+				save.usage_tl_block_tex_amount++
+			}
 
-		if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp && model_tex_normal = res)
-		{
-			save.usage_model_tex_normal_save_id[save.usage_model_tex_normal_amount] = save_id
-			save.usage_model_tex_normal_amount++
-		}
+			if (block_tex_material = res)
+			{
+				save.usage_tl_block_tex_material_save_id[save.usage_tl_block_tex_material_amount] = save_id
+				save.usage_tl_block_tex_material_amount++
+			}
 
-		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex = res)
-		{
-			save.usage_tl_block_tex_save_id[save.usage_tl_block_tex_amount] = save_id
-			save.usage_tl_block_tex_amount++
-		}
-
-		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex_material = res)
-		{
-			save.usage_tl_block_tex_material_save_id[save.usage_tl_block_tex_material_amount] = save_id
-			save.usage_tl_block_tex_material_amount++
-		}
-
-		if (type = e_tl_type.BLOCK && part_of = null && !has_temp && block_tex_normal = res)
-		{
-			save.usage_tl_block_tex_normal_save_id[save.usage_tl_block_tex_normal_amount] = save_id
-			save.usage_tl_block_tex_normal_amount++
+			if (block_tex_normal = res)
+			{
+				save.usage_tl_block_tex_normal_save_id[save.usage_tl_block_tex_normal_amount] = save_id
+				save.usage_tl_block_tex_normal_amount++
+			}
 		}
 	}
 	

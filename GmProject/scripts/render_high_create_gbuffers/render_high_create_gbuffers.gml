@@ -122,9 +122,6 @@ function render_high_create_gbuffers()
 			if (combinedmask)
 				render_set_mask_blend(false, render_surface_mask)
 			
-			if (app.place_build)
-				render_world_build_box()
-			
 			render_world_done()
 
 			if (render_background)

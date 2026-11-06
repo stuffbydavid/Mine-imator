@@ -391,6 +391,10 @@ StringId DataType::getUniqueReferenceId()
 	bool isSet = false;
 	for (Assignment& ass : this->assignments)
 	{
+		// Dynamic values can contain objects outside the inferred references
+		if (ass.rawType == Type::Variant)
+			return STR(any);
+
 		if (ass.rawType == Type::Reference)
 		{
 			if (isSet) // Multiple assignments found containing references, exit "any"

@@ -179,6 +179,7 @@ function macros()
 	#macro texture_page_res_threshold	512
 	#macro no_limit						100000000
 	#macro normal_buffer_scale			8
+	#macro dir_names					[ "east", "west", "south", "north", "up", "down" ]
 
 	// Assets
 	#macro default_model					"human"
@@ -201,7 +202,7 @@ function macros()
 	#macro scenery_instant_threshold		50 * 1024 // 50kb
 	#macro scenery_entity_tl_type_index		5
 	#macro scenery_timeline_prompt			20
-	#macro scenery_timeline_enabled			[ "chest", "sign", "door", "lever", "trapdoor", "fence_gate", "enchanting_table", "mob_head", "banner", "painting" ]
+	#macro scenery_timeline_enabled			[ "chest", "sign", "door", "lever", "fence_gate", "enchanting_table", "mob_head", "banner", "painting" ]
 	#macro scenery_timeline_enabled_max		10
 	#macro scenery_timeline_warning			50
 	#macro sound_filters					[ "ambient", "block", "damage", "dig", "enchant", "entity", "event", "fire", "fireworks", "item", "liquid", "minecart", "mob", "note", "portal", "random", "step", "tile", "ui", "other" ]

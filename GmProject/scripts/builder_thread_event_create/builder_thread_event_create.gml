@@ -11,6 +11,7 @@
 /// CppGen array<bool> block_face_full
 /// CppGen array<int> block_face_min_depth
 /// CppGen array<real> block_model_pos
+/// CppGen bool block_model_double
 /// CppGen array<bool> liquid_match
 /// CppGen array<bool> liquid_solid
 /// CppGen array<int> liquid_waterlogged
@@ -30,6 +31,10 @@
 function builder_thread_event_create()
 {
 	threadid = 0
+
+	builder_mode = e_builder_mode.GENERATE
+	builder_scenery = false
+	builder_scenery_legacy = false
 	
 	build_size = vec3(0)
 	build_min_pos = vec3(0)
@@ -41,7 +46,6 @@ function builder_thread_event_create()
 	build_transform = false
 	build_edges = true
 	build_edit = false
-	build_remove = false
 	
 	build_single_block = null
 	build_single_stateid = 0
@@ -59,6 +63,7 @@ function builder_thread_event_create()
 	block_face_max = array_create(block_faces, null)
 
 	block_model_pos = vec3(0)
+	block_model_double = false
 	
 	liquid_match = array_create(block_faces, false)
 	liquid_solid = array_create(block_faces, false)
@@ -111,7 +116,4 @@ function builder_thread_event_create()
 	block_vertex_emissive = 0
 	block_vertex_subsurface = 0
 	block_vertex_color_index = 0
-
-	builder_scenery = false
-	builder_scenery_legacy = false
 }

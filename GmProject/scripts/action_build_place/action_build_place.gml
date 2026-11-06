@@ -2,310 +2,246 @@
 
 function action_build_place(airblock = false)
 {
-	var hobj, target, blockpos, blockdata;
+	var hobj, target, blockpos, blockdata, blocktl, created, block, changes;
 	hobj = null
 	target = null
+	created = false
+	block = null
+	changes = null
 
+	// Restore the target and edits by the original action
 	if (history_undo || history_redo)
 	{
 		hobj = history_data
-		if (hobj.scenery_block)
-		{
-			target = save_id_find(hobj.target_save_id)
-			if (target = null)
-				return false
+		target = save_id_find(hobj.target_save_id)
+		if (target = null && !(history_redo && hobj.mesh_save_obj != null))
+			return false
 
-			blockpos = hobj.block_pos
-			blockdata = history_undo ? hobj.previous_block : [ hobj.block_id, hobj.state_id ]
-		}
+		blockpos = hobj.block_pos
+		changes = hobj.new_blocks
 	}
 	else
 	{
 		if (!airblock && (!place_build || place_pos = null))
 			return false
 
-		// Select target
+		// Find target on cursor
 		if (place_target_tl != null && instance_exists(place_target_tl))
 			target = place_target_tl
 
-		// Scenery editing
-		if (target != null && target.type = e_tl_type.SCENERY)
+		blockdata = [ 0, 0 ]
+		if (airblock)
 		{
-			if (place_block_pos = null || !is_cpp())
+			// Removal replaces the hit block with air
+			if (target = null || !type_is_structure(target.type) || place_block_pos = null)
 				return false
 
 			blockpos = array_copy_1d(place_block_pos)
-			blockdata = [ 0, 0 ]
-			
-			if (!airblock)
+		}
+		else
+		{
+			// Resolve the selected block or special model to block data
+			if (build_type = e_tl_type.BLOCK)
 			{
-				// Shift block position by target normal
-				blockpos = vec3_add(blockpos, place_view_normal)
+				block = mc_assets.block_name_map[?build_settings.block_name]
+				if (is_undefined(block) || block = null)
+					return false
+				
+				blockdata = [ block.block_id, block_get_state_id(block, build_settings.block_state) ]
+			}
+			else
+				blockdata = block_get_from_timeline(build_settings.model_name, build_settings.model_state)
 
-				// New block
+			// Interactions take precedence over placement, independently of the selected block
+			var used = action_build_use(blockdata, keyboard_check(vk_shift));
+			if (used != null)
+				return used
+
+			// Models without block data always use timeline placement
+			if (blockdata = null)
+				return action_build_place_timeline()
+
+			// Respect an explicitly selected destination structure
+			if (target != null && type_is_structure(target.type) && build_structure_custom && target != build_structure)
+			{
+				var par = target.parent;
+				while (par != null && par != app && par != build_structure)
+					par = par.parent
+				
+				if (par != build_structure)
+					target = null
+			}
+			
+			if (target = null || !type_is_structure(target.type))
+			{
+				target = build_structure
+				
+				if (target != null && !instance_exists(target))
+					target = null
+			}
+
+			var transform, origin;
+			if (target = null)
+			{
+				// Anchor a new structure so its first block occupies the origin cell
+				var rotpoint = vec3(block_half_size, block_half_size, 0);
 				if (build_type = e_tl_type.BLOCK)
-				{
-					var block = mc_assets.block_name_map[?build_settings.block_name];
-					if (is_undefined(block) || block = null)
+					rotpoint = build_settings.rot_point
+				
+				transform = matrix_create(place_pos, place_rot, place_sca)
+				origin = point3D_mul_matrix(vec3_mul(rotpoint, -1), transform)
+				transform = matrix_create(origin, place_rot, place_sca)
+				blockpos = vec3(0)
+			}
+			else
+			{
+				// Find the destination cell in the existing structure's local space
+				transform = target.matrix_render
+				
+				with (target)
+					if (!tl_load_blocks())
 						return false
 
-					blockdata = [ block.block_id, block_get_state_id(block, build_settings.block_state) ]
-				}
+				if (target = place_target_tl && place_block_pos != null)
+					blockpos = vec3_add(place_block_pos, place_view_normal)
 				else
-					blockdata = block_get_from_timeline(build_settings.model_name, build_settings.model_state)
-
-				if (blockdata = null)
-					return false
+				{
+					var localpos = point3D_mul_matrix(place_pos, matrix_inverse_ext(transform));
+					blockpos = vec3(floor(localpos[X] / block_size), floor(localpos[Y] / block_size), floor(localpos[Z] / block_size))
+				}
 			}
-		}
-	}
 
-	// Scenery edits replace one block without creating or deleting timelines
-	if (target != null && target.type = e_tl_type.SCENERY)
-	{
-		var prevblock;
-		with (target)
-			prevblock = tl_update_block_meshes(blockpos, blockdata[0], blockdata[1])
-		
-		if (prevblock = null)
-			return false
+			// Resolve placement state and any connected block changes
+			block = block_objs[blockdata[0]]
+			changes = block_build_place(block, blockdata[1], target, blockpos, transform)
+			if (changes = null)
+				return false
 
-		if (hobj = null)
-		{
-			hobj = history_set(action_build_place)
-			hobj.scenery_block = true
-			hobj.target_save_id = target.save_id
-			hobj.block_pos = blockpos
-			hobj.previous_block = prevblock
-			hobj.block_id = blockdata[0]
-			hobj.state_id = blockdata[1]
+			// Use the resolved block when choosing mesh or timeline placement
+			blockpos = changes[0][0]
+			blockdata = [ changes[0][1], changes[0][2] ]
+			block = block_objs[blockdata[0]]
+			blocktl = (block.timeline && array_contains(scenery_timeline_enabled, block.tl_type))
+			
+			// Ctrl swaps the default unless the block requires a timeline
+			if (keyboard_check(vk_control))
+				blocktl = !blocktl
+			
+			if (block.timeline && ds_map_exists(mc_assets.block_tl_required_map, block.tl_type))
+				blocktl = true
 
-			// Focus on block
-			tl_focus = null
-			cam_work_focus_tl = null
-			cam_work_focus = point3D_mul_matrix(
-				vec3_mul(vec3_add(place_block_pos, 0.5), block_size), target.matrix_render
-			)
-		}
+			if (blocktl)
+				return action_build_place_timeline(blockdata, target, blockpos, transform)
 
-		place_pos = null
-		place_view_pos = null
-		build_box_render = null
-		place_block_pos = null
-		
-		render_world_changed()
-		
-		return true
-	}
-	
-	if (airblock)
-		return false
-
-	var tl, placetarget, placeparent;
-	placetarget = null
-	placeparent = null
-
-	// Suspend the active parent highlight during undo and redo
-	if (place_build && hobj != null)
-	{
-		placetarget = place_target_tl
-		placeparent = place_target_tl_root
-		
-		if (placeparent != null && instance_exists(placeparent))
-			with (placeparent)
-				tl_mark_place_target(false)
-		
-		place_target_tl = null
-		place_target_tl_root = null
-	}
-
-	if (history_undo)
-	{
-		tl = save_id_find(history_data.spawn_save_id)
-		if (tl != null)
-			with (tl)
-				tl_remove_clean()
-
-		if (history_data.structure_save_id != "")
-		{
-			var structure = save_id_find(history_data.structure_save_id);
-			if (structure != null)
+			// Block mesh editing unavailable in GameMaker
+			if (!is_cpp())
+				return false
+			
+			if (target = null)
 			{
-				if (build_structure = structure)
-					action_build_structure(null, false)
+				// Create the structure before applying its first mesh edit
+				target = tl_new_structure(origin)
+				with (target)
+					tl_value_set_matrix(id, transform)
 				
-				with (structure)
-					tl_remove_clean()
+				created = true
+				
+				tl_update_list()
+				tl_update_matrix()
+				
+				action_build_structure(target)
 			}
 		}
+	}
+
+	var prevblocks;
+	if (history_undo && hobj.mesh_save_obj != null)
+	{
+		// Undo the whole structure when this action created it
+		if (build_structure = target)
+			action_build_structure(null, false)
+
+		with (target)
+			tl_remove_clean()
 
 		with (obj_timeline)
 			if (delete_ready)
 				instance_destroy()
+
+		place_target_tl = null
+		if (place_target_tl_root != null && !instance_exists(place_target_tl_root))
+			place_target_tl_root = null
+	}
+	else if (history_redo && hobj.mesh_save_obj != null)
+	{
+		// Restore the structure and its saved mesh edits together
+		target = history_restore_tl(hobj.mesh_save_obj)
+		if (target.parent = app)
+			action_build_structure(target, false)
 	}
 	else
 	{
-		if (history_redo)
+		// Apply the new edit or redo the block states
+		with (target)
 		{
-			// Recreate the placed block from its saved build settings
-			if (hobj.structure_save_id != "")
-			{
-				var structure = new_tl(e_tl_type.STRUCTURE);
-				structure.animated = false
-				structure.save_id = hobj.structure_save_id
-				structure.name = hobj.structure_name
-				
-				with (structure)
-				{
-					tl_value_set_vec3(e_value.POS_X, hobj.structure_pos)
-					tl_value_set_vec3(e_value.POS_X, hobj.structure_pos, true)
-					tl_update_display_name()
-				}
-					
-				if (place_build)
-					action_build_structure(structure, false)
-			}
-			
-			tl = tl_new_block(hobj.build_type, hobj.build_save_obj, true)
-			with (tl)
-			{
-				var parent = save_id_find(hobj.parent_save_id);
-				if (parent = null)
-					parent = app
-				
-				tl_set_parent(parent)
-				tl_value_copy_vec3(e_value.POS_X, value_default, hobj.value_default)
-				tl_value_copy_vec3(e_value.ROT_X, value_default, hobj.value_default)
-				tl_value_copy_vec3(e_value.SCA_X, value_default, hobj.value_default)
-				tl_value_copy_vec3(e_value.POS_X, value, value_default)
-				tl_value_copy_vec3(e_value.ROT_X, value, value_default)
-				tl_value_copy_vec3(e_value.SCA_X, value, value_default)
-			}
+			if (history_undo)
+				prevblocks = tl_update_block_meshes(blockpos, 0, 0, hobj.old_blocks)
+			else if (history_redo)
+				prevblocks = tl_update_block_meshes(blockpos, 0, 0, changes)
+			else
+				prevblocks = tl_update_block_meshes(blockpos, blockdata[0], blockdata[1], changes, !airblock)
 		}
-		else
-		{
-			// Save the build selection independently of the workbench
-			hobj = history_set(action_build_place)
-			hobj.scenery_block = false
-			hobj.build_type = build_type
-			hobj.build_save_obj = history_save_bench(build_settings)
-			hobj.build_save_obj.hobj = hobj
-			hobj.value_default = []
-			hobj.structure_save_id = ""
 
-			var targetparent, action;
-			targetparent = app
-			action = null
-			
-			if (place_target_tl != null && instance_exists(place_target_tl))
-				with (build_settings)
-					action = tl_get_place_parent_action(app.place_target_tl)
-			
-			if (is_array(action) && array_length(action) > e_parent_action.TARGET)
-				targetparent = action[e_parent_action.TARGET]
-			
-			if (targetparent = null)
-				targetparent = app
-			if (targetparent != app && type_is_structure(targetparent.type) && build_structure_custom)
-				targetparent = app
-
-			if (targetparent != app && type_is_structure(targetparent.type))
-				action_build_structure(targetparent, false)
-			
-			else if (targetparent = app)
-			{
-				if (build_structure != null && !instance_exists(build_structure))
-					action_build_structure(null)
-				
-				if (build_structure != null)
-					targetparent = build_structure
-				else
-				{
-					hobj.structure_pos = array_copy_1d(place_pos)
-					hobj.structure_pos = vec3_snap(hobj.structure_pos, transform_snap)
-					
-					var structure = tl_new_structure(hobj.structure_pos)
-					hobj.structure_save_id = structure.save_id
-					hobj.structure_name = structure.name
-					action_build_structure(structure)
-					
-					targetparent = structure
-				}
-			}
-
-			tl = tl_new_block(build_type, build_settings)
-
-			with (tl)
-			{
-				// Apply the same parent action as a dragged placement
-				var pos, rot, sca;
-				pos = vec3_snap(app.place_pos, transform_snap)
-				rot = vec3_snap(app.place_rot, transform_snap)
-				sca = vec3_snap(app.place_sca, transform_snap)
-				
-				tl_value_set_matrix(id, matrix_create(pos, rot, sca), true)
-				update_matrix = true
-				
-				tl_set_parent(targetparent, -1, true)
-				
-				if (hobj.structure_save_id != "")
-				{
-					tl_value_set_vec3(e_value.POS_X, vec3(0))
-					tl_value_set_vec3(e_value.POS_X, vec3(0), true)
-				}
-			}
-
-			hobj.spawn_save_id = tl.save_id
-			hobj.parent_save_id = save_id_get(tl.parent)
-			with (hobj)
-			{
-				tl_value_copy_vec3(e_value.POS_X, value_default, tl.value_default)
-				tl_value_copy_vec3(e_value.ROT_X, value_default, tl.value_default)
-				tl_value_copy_vec3(e_value.SCA_X, value_default, tl.value_default)
-			}
-			tl_focus = tl
-		}
-		
-		with (tl)
-		{
-			tl_update_parent_is_selected()
-			
-			if (self.parent != app && type_is_structure(self.parent.type) && (self.parent.place_target || self.parent.parent_is_place_target))
-				tl_mark_place_target(true)
-		}
-		
-		log("Created", tl_type_name_list[|tl.type])
+		if (prevblocks = null)
+			return false
 	}
 
-	tl_update_list()
-	tl_update_matrix()
-	
-	if (history_undo)
-		app_update_tl_edit()
-	
-	project_update_counts()
-	
-	lib_preview.update = true
-
-	if (place_build)
+	// Record both states for every affected block
+	if (hobj = null)
 	{
-		// Restore the hover target and refresh placement surfaces
-		if (placetarget != null && placeparent != null && instance_exists(placetarget) && instance_exists(placeparent))
+		hobj = history_set(action_build_place)
+		hobj.target_save_id = target.save_id
+		hobj.block_pos = blockpos
+		hobj.old_blocks = prevblocks
+		hobj.new_blocks = []
+		
+		// Capture resolved states after neighboring block updates
+		for (var i = 0; i < array_length(prevblocks); i++)
 		{
-			place_target_tl = placetarget
-			place_target_tl_root = placeparent
+			var pos, data;
+			pos = prevblocks[i][0]
+			data = [ 0, 0, false ]
+			with (target)
+				data = block_meshes_get_block(pos[X], pos[Y], pos[Z])
 			
-			with (placeparent)
-				tl_mark_place_target(true)
+			array_add(hobj.new_blocks, [ array_copy_1d(pos), data[0], data[1], data[2] ], false)
 		}
-		else if (place_target_tl_root = null && build_structure != null && instance_exists(build_structure))
-			action_build_structure(build_structure)
 		
-		place_pos = null
-		place_view_pos = null
-		
-		view_changed()
+		hobj.mesh_save_obj = null
+
+		// Save newly created structures
+		if (created)
+			with (hobj)
+				mesh_save_obj = history_save_tl(target)
+
+		// Focus on the placed or removed block in world space
+		camera_work_set_focus(point3D_mul_matrix(vec3_mul(vec3_add(blockpos, 0.5), block_size), target.matrix_render))
 	}
-	
+
+	if (hobj.mesh_save_obj != null)
+	{
+		tl_update_list()
+		tl_update_matrix()
+		project_update_counts()
+	}
+
+	// Clear the placement preview until the next hit update
+	place_pos = null
+	place_view_pos = null
+	build_box_render = null
+	place_block_pos = null
+
+	render_world_changed()
+
 	return true
 }

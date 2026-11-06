@@ -205,7 +205,7 @@ namespace CppProject
 									chunk->numTimelines++;
 								
 								builder.paletteIndices[builderIndex] = AddBuilderState({
-									(uint16_t)block->block_id.ToInt(),
+									(uint16_t)block->block_id,
 									(uint16_t)global::legacy_block_state_id[legacyId][legacyData].ToInt(),
 									false
 								});
@@ -491,7 +491,7 @@ namespace CppProject
 				{
 					if (obj_block* block = Builder::mcBlockIdObjMap.value(id, nullptr))
 					{
-						BuilderState state = { (uint16_t)block->block_id.ToInt(), 0, World::mcBlockIdWaterloggedMap.value(id, false) };
+						BuilderState state = { (uint16_t)block->block_id, 0, World::mcBlockIdWaterloggedMap.value(id, false) };
 						ArrType vars = Builder::mcBlockIdStateVarsMap.value(id, ArrType());
 
 						if (entry && entry->HasKey(propertiesName)) // Parse properties

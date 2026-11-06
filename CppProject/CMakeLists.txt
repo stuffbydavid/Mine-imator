@@ -79,6 +79,7 @@ set(QT_SOURCE_DIR "${QT_BASE_DIR}/qt5")
 set(LIBZIP_SOURCE_DIR "${DEV_DIR}/Libzip/libzip-1.11.4")
 set(FFMPEG_SOURCE_DIR "${DEV_DIR}/FFmpeg/ffmpeg-5.1.10")
 set(OPENAL_SOURCE_DIR "${DEV_DIR}/OpenAL/openal-soft-1.24.3")
+set(ZSTD_SOURCE_DIR "${DEV_DIR}/Zstd/zstd-1.5.7")
 
 set(ASSET_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Asset")
 set(GM_SHADERS_DIR "${REPO_DIR}/GmProject/shaders")
@@ -384,6 +385,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_CURRENT_SOURCE_DIR}/External/Sources"
 	"${LIBZIP_SOURCE_DIR}/lib"
 	"${OPENAL_SOURCE_DIR}/include"
+	"${ZSTD_SOURCE_DIR}/lib"
 	"${QT_SOURCE_DIR}/qtbase/src/3rdparty/freetype/include"
 )
 
@@ -423,6 +425,7 @@ if(WIN32)
 	target_link_libraries(${PROJECT_NAME} PRIVATE
 		"${EXTERNAL_PLATFORM_DIR}/zip.lib"
 		"${EXTERNAL_PLATFORM_DIR}/OpenAL32.lib"
+		"${EXTERNAL_PLATFORM_DIR}/zstd_static.lib"
 		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
 		"${EXTERNAL_PLATFORM_DIR}/libswresample.a"
@@ -474,6 +477,7 @@ else()
 	target_link_libraries(${PROJECT_NAME} PRIVATE
 		"${EXTERNAL_PLATFORM_DIR}/libzip.a"
 		"${EXTERNAL_PLATFORM_DIR}/libopenal.a"
+		"${EXTERNAL_PLATFORM_DIR}/libzstd.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
 		"${EXTERNAL_PLATFORM_DIR}/libswresample.a"
@@ -550,7 +554,7 @@ install(TARGETS ${PROJECT_NAME}
 install(DIRECTORY
 	"${DATAFILES_SOURCE_DIR}/Data"
 	"${DATAFILES_SOURCE_DIR}/Particles"
-	"${DATAFILES_SOURCE_DIR}/Scenery"
+	"${DATAFILES_SOURCE_DIR}/Schematics"
 	DESTINATION "."
 	PATTERN "Libraries" EXCLUDE
 )

@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-#include "GZIP.hpp"
+#include "Compress.hpp"
 #include "NBT.hpp"
 #include "Render/Mesh.hpp"
 

@@ -2050,13 +2050,15 @@
 			"states": {
 				"variant": [
 					{ "value": "gold_ore", "file": "gold_ore.json" },
-					{ "value": "deepslate_gold_ore", "file": "deepslate_gold_ore.json" }
+					{ "value": "deepslate_gold_ore", "file": "deepslate_gold_ore.json" },
+					{ "value": "nether_gold_ore", "file": "nether_gold_ore.json" }
 				]
 			},
 			"default_state": "variant=gold_ore",
 			"id": {
 				"minecraft:gold_ore": "variant=gold_ore",
-				"minecraft:deepslate_gold_ore": "variant=deepslate_gold_ore"
+				"minecraft:deepslate_gold_ore": "variant=deepslate_gold_ore",
+				"minecraft:nether_gold_ore": "variant=nether_gold_ore"
 			}
 		},
 		{
@@ -2122,6 +2124,9 @@
 				"minecraft:bamboo_block": "variant=bamboo_block",
 				"minecraft:crimson_stem": "variant=crimson_stem",
 				"minecraft:warped_stem": "variant=warped_stem"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -2159,6 +2164,9 @@
 				"minecraft:stripped_bamboo_block": "variant=bamboo_block",
 				"minecraft:stripped_crimson_stem": "variant=crimson_stem",
 				"minecraft:stripped_warped_stem": "variant=warped_stem"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -2194,6 +2202,9 @@
 				"minecraft:poplar_wood": "variant=poplar",
 				"minecraft:crimson_hyphae": "variant=crimson_hyphae",
 				"minecraft:warped_hyphae": "variant=warped_hyphae"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -2229,6 +2240,9 @@
 				"minecraft:stripped_poplar_wood": "variant=poplar",
 				"minecraft:stripped_crimson_hyphae": "variant=crimson_hyphae",
 				"minecraft:stripped_warped_hyphae": "variant=warped_hyphae"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -2286,6 +2300,9 @@
 			"id": {
 				"minecraft:sponge": "wet=false",
 				"minecraft:wet_sponge": "wet=true"
+			},
+			"build": {
+				"use": "wet"
 			}
 		},
 		{
@@ -2319,7 +2336,10 @@
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:dispenser"
+			"id": "minecraft:dispenser",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "sandstone",
@@ -2389,27 +2409,50 @@
 				"minecraft:red_bed": "color=red",
 				"minecraft:black_bed": "color=black",
 				"minecraft:straw_bed": "color=straw_bed"
+			},
+			"timeline": {
+				"offset": {
+					"facing=north": [ 0, 0, -16 ],
+					"facing=south": [ 0, 0, 16 ],
+					"facing=east": [ 16, 0, 0 ],
+					"facing=west": [ -16, 0, 0 ]
+				}
+			},
+			"build": {
+				"facing": "view",
+				"set": "part=foot",
+				"double": "facing"
 			}
 		},
 		{
 			"name": "powered_rail",
+			"type": "rail",
 			"file": "powered_rail.json",
 			"states": {
 				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
 			"default_state": "powered=false,shape=east_west",
-			"id": "minecraft:powered_rail"
+			"id": "minecraft:powered_rail",
+			"build": {
+				"place": "rail",
+				"use": "powered"
+			}
 		},
 		{
 			"name": "detector_rail",
+			"type": "rail",
 			"file": "detector_rail.json",
 			"states": {
 				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
 			"default_state": "powered=false,shape=east_west",
-			"id": "minecraft:detector_rail"
+			"id": "minecraft:detector_rail",
+			"build": {
+				"place": "rail",
+				"use": "powered"
+			}
 		},
 		{
 			"name": "sticky_piston",
@@ -2424,6 +2467,25 @@
 				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=sticky",
+				"animated_parts": [ "extension" ],
+				"parts": {
+					"extension": {
+						"extended=false": {
+							"position": [
+								0,
+								0,
+								0
+							]
+						},
+						"extended=true": {
+							"position": [
+								0,
+								0,
+								16
+							]
+						}
+					}
+				},
 				"rotation_point": [ 0, 8, 0 ],
 				"position": [ 8, 8, 8 ],
 				"rotation": {
@@ -2435,7 +2497,10 @@
 					"facing=up": [ -90, 0, 0 ]
 				}
 			},
-			"id": "minecraft:sticky_piston"
+			"id": "minecraft:sticky_piston",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "cobweb",
@@ -2484,6 +2549,25 @@
 				"type": "piston",
 				"model": "piston",
 				"model_state": "variant=normal",
+				"animated_parts": [ "extension" ],
+				"parts": {
+					"extension": {
+						"extended=false": {
+							"position": [
+								0,
+								0,
+								0
+							]
+						},
+						"extended=true": {
+							"position": [
+								0,
+								0,
+								16
+							]
+						}
+					}
+				},
 				"rotation_point": [ 0, 8, 0 ],
 				"position": [ 8, 8, 8 ],
 				"rotation": {
@@ -2495,7 +2579,10 @@
 					"facing=up": [ -90, 0, 0 ]
 				}
 			},
-			"id": "minecraft:piston"
+			"id": "minecraft:piston",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "wool",
@@ -2612,7 +2699,12 @@
 			},
 			"default_state": "facing=west,age=0",
 			"subsurface": 1,
-			"id": "minecraft:shelf_mushroom"
+			"id": "minecraft:shelf_mushroom",
+			"build": {
+				"facing": "hit_face",
+				"hit_faces": [ "east", "west", "south", "north" ],
+				"use": "age"
+			}
 		},
 		{
 			"name": "gold_block",
@@ -2835,6 +2927,11 @@
 				"minecraft:green_concrete_slab": "variant=green_concrete",
 				"minecraft:red_concrete_slab": "variant=red_concrete",
 				"minecraft:black_concrete_slab": "variant=black_concrete"
+			},
+			"build": {
+				"half": "hit",
+				"half_state": "type",
+				"place": "slab"
 			}
 		},
 		{
@@ -2865,7 +2962,11 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west,slot_0_occupied=false,slot_1_occupied=false,slot_2_occupied=false,slot_3_occupied=false,slot_4_occupied=false,slot_5_occupied=false",
-			"id": "minecraft:chiseled_bookshelf"
+			"id": "minecraft:chiseled_bookshelf",
+			"build": {
+				"facing": "view_inverted",
+				"use_book_slot": true
+			}
 		},
 		{
 			"name": "shelf",
@@ -2904,6 +3005,9 @@
 				"minecraft:bamboo_shelf": "variant=bamboo",
 				"minecraft:crimson_shelf": "variant=crimson",
 				"minecraft:warped_shelf": "variant=warped"
+			},
+			"build": {
+				"facing": "view_inverted"
 			}
 		},
 		{
@@ -2913,42 +3017,38 @@
 		},
 		{
 			"name": "obsidian",
-			"file": "obsidian.json",
-			"id": "minecraft:obsidian"
-		},
-		{
-			"name": "torch",
 			"states": {
 				"variant": [
-					{ "value": "normal", "file": "torch.json" },
-					{ "value": "soul_torch", "file": "soul_torch.json" },
-					{ "value": "copper_torch", "file": "copper_torch.json" }
+					{ "value": "obsidian", "file": "obsidian.json" },
+					{ "value": "crying_obsidian", "file": "crying_obsidian.json" }
 				]
 			},
-			"default_state": "variant=normal",
-			"emissive": 0.75,
+			"default_state": "variant=obsidian",
 			"id": {
-				"minecraft:torch": "variant=normal",
-				"minecraft:soul_torch": "variant=soul_torch",
-				"minecraft:copper_torch": "variant=copper_torch"
+				"minecraft:obsidian": "variant=obsidian",
+				"minecraft:crying_obsidian": "variant=crying_obsidian"
 			}
 		},
 		{
-			"name": "wall_torch",
+			"name": "torch",
+			"file": "torch.json",
 			"states": {
-				"variant": [
-					{ "value": "normal", "file": "wall_torch.json" },
-					{ "value": "soul_torch", "file": "soul_wall_torch.json" },
-					{ "value": "copper_torch", "file": "copper_wall_torch.json" }
-				],
-				"facing": [ "north", "south", "east", "west" ]
+				"variant": [ "normal", "soul_torch", "copper_torch" ],
+				"facing": [ "up", "north", "south", "east", "west" ]
 			},
-			"default_state": "facing=east,variant=normal",
+			"default_state": "variant=normal,facing=up",
 			"emissive": 0.75,
 			"id": {
-				"minecraft:wall_torch": "variant=normal",
-				"minecraft:soul_wall_torch": "variant=soul_torch",
-				"minecraft:copper_wall_torch": "variant=copper_torch"
+				"minecraft:torch": "variant=normal,facing=up",
+				"minecraft:soul_torch": "variant=soul_torch,facing=up",
+				"minecraft:copper_torch": "variant=copper_torch,facing=up",
+				"minecraft:wall_torch": "variant=normal,facing=east",
+				"minecraft:soul_wall_torch": "variant=soul_torch,facing=east",
+				"minecraft:copper_wall_torch": "variant=copper_torch,facing=east"
+			},
+			"build": {
+				"facing": "hit_face",
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -2970,6 +3070,9 @@
 			"id": {
 				"minecraft:fire": "variant=normal",
 				"minecraft:soul_fire": "variant=soul_fire"
+			},
+			"build": {
+				"directions": "hit_face_inverted"
 			}
 		},
 		{
@@ -3183,6 +3286,11 @@
 				"minecraft:green_concrete_stairs": "variant=green_concrete",
 				"minecraft:red_concrete_stairs": "variant=red_concrete",
 				"minecraft:black_concrete_stairs": "variant=black_concrete"
+			},
+			"build": {
+				"facing": "view",
+				"half": "hit",
+				"set": "shape=straight"
 			}
 		},
 		{
@@ -3205,6 +3313,7 @@
 					"variant=christmas,double=false": "variant=christmas",
 					"variant=christmas,double=true": "variant=christmas_double"
 				},
+				"animated_parts": [ "top" ],
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
 				},
@@ -3216,7 +3325,11 @@
 					"facing=west": [ 0, -90, 0 ]
 				}
 			},
-			"id": "minecraft:chest"
+			"id": "minecraft:chest",
+			"build": {
+				"facing": "view_inverted",
+				"set": "type=single,double=false"
+			}
 		},
 		{
 			"name": "redstone_wire",
@@ -3231,7 +3344,11 @@
 				"west": [ "none", "side", "up" ]
 			},
 			"default_state": "power=0,north=side,south=side,east=side,west=side",
-			"id": "minecraft:redstone_wire"
+			"id": "minecraft:redstone_wire",
+			"build": {
+				"use": "power",
+				"update": "adjacent"
+			}
 		},
 		{
 			"name": "diamond_ore",
@@ -3269,7 +3386,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:wheat"
+			"id": "minecraft:wheat",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "farmland",
@@ -3278,7 +3398,10 @@
 				"moisture": [ "0", "1", "2", "3", "4", "5", "6", "7" ]
 			},
 			"default_state": "moisture=0",
-			"id": "minecraft:farmland"
+			"id": "minecraft:farmland",
+			"build": {
+				"use": "moisture"
+			}
 		},
 		{
 			"name": "furnace",
@@ -3288,7 +3411,11 @@
 				"lit": [ "false", "true" ]
 			},
 			"default_state": "facing=west,lit=false",
-			"id": "minecraft:furnace"
+			"id": "minecraft:furnace",
+			"build": {
+				"facing": "view_inverted",
+				"use": "lit"
+			}
 		},
 		{
 			"name": "sign",
@@ -3376,6 +3503,15 @@
 				"minecraft:bamboo_sign": "wood=bamboo",
 				"minecraft:crimson_sign": "wood=crimson",
 				"minecraft:warped_sign": "wood=warped"
+			},
+			"build": {
+				"face_blocks": {
+					"up": "sign",
+					"side": "wall_sign"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ],
+				"rotation": "view",
+				"rotation_zero": "south"
 			}
 		},
 		{
@@ -3416,6 +3552,7 @@
 			"default_state": "variant=oak,hinge=left,facing=west,open=false",
 			"timeline": {
 				"type": "door",
+				"animated": true,
 				"rotation_point": [ 14.5, 0, 1.5 ],
 				"position": {
 					"location=north_west": [ 1.5, 0, 1.5 ],
@@ -3453,6 +3590,13 @@
 				"minecraft:waxed_exposed_copper_door": "variant=waxed_exposed_copper",
 				"minecraft:waxed_weathered_copper_door": "variant=waxed_weathered_copper",
 				"minecraft:waxed_oxidized_copper_door": "variant=waxed_oxidized_copper"
+			},
+			"build": {
+				"facing": "view",
+				"set": "half=lower",
+				"double": "up",
+				"place": "door",
+				"use": "open"
 			}
 		},
 		{
@@ -3462,16 +3606,25 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:ladder"
+			"id": "minecraft:ladder",
+			"build": {
+				"facing": "hit_face",
+				"place": "ladder"
+			}
 		},
 		{
 			"name": "rail",
+			"type": "rail",
 			"file": "rail.json",
 			"states": {
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west", "north_west", "north_east", "south_east", "south_west" ]
 			},
 			"default_state": "shape=east_west",
-			"id": "minecraft:rail"
+			"id": "minecraft:rail",
+			"build": {
+				"place": "rail",
+				"update": "adjacent"
+			}
 		},
 		{
 			"name": "wall_sign",
@@ -3552,6 +3705,14 @@
 				"minecraft:bamboo_wall_sign": "wood=bamboo",
 				"minecraft:crimson_wall_sign": "wood=crimson",
 				"minecraft:warped_wall_sign": "wood=warped"
+			},
+			"build": {
+				"facing": "hit_face",
+				"face_blocks": {
+					"up": "sign",
+					"side": "wall_sign"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -3653,6 +3814,16 @@
 				"minecraft:bamboo_hanging_sign": "wood=bamboo",
 				"minecraft:crimson_hanging_sign": "wood=crimson",
 				"minecraft:warped_hanging_sign": "wood=warped"
+			},
+			"build": {
+				"face_blocks": {
+					"down": "hanging_sign",
+					"side": "wall_hanging_sign"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "down" ],
+				"rotation": "view",
+				"rotation_zero": "south",
+				"place": "hanging_sign"
 			}
 		},
 		{
@@ -3728,6 +3899,15 @@
 				"minecraft:bamboo_wall_hanging_sign": "wood=bamboo",
 				"minecraft:crimson_wall_hanging_sign": "wood=crimson",
 				"minecraft:warped_wall_hanging_sign": "wood=warped"
+			},
+			"build": {
+				"face_blocks": {
+					"down": "hanging_sign",
+					"side": "wall_hanging_sign"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "down" ],
+				"facing": "hit_face",
+				"place": "wall_hanging_sign"
 			}
 		},
 		{
@@ -3744,6 +3924,25 @@
 				"type": "lever",
 				"model": "lever",
 				"model_state": "",
+				"animated_parts": [ "handle" ],
+				"parts": {
+					"handle": {
+						"powered=false": {
+							"rotation": [
+								0,
+								0,
+								0
+							]
+						},
+						"powered=true": {
+							"rotation": [
+								90,
+								0,
+								0
+							]
+						}
+					}
+				},
 				"position": {
 					"face=wall,facing=north": [ 8, 8, 16 ],
 					"face=wall,facing=south": [ 8, 8, 0 ],
@@ -3767,7 +3966,12 @@
 					"face=ceiling,facing=west": [ 180, 90, 0 ]
 				}
 			},
-			"id": "minecraft:lever"
+			"id": "minecraft:lever",
+			"build": {
+				"facing": "hit_face",
+				"face": "hit_face",
+				"use": "powered"
+			}
 		},
 		{
 			"name": "pressure_plate",
@@ -3796,6 +4000,7 @@
 			"timeline": {
 				"type": "pressure_plate",
 				"transform": false,
+				"animated": true,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -3815,6 +4020,9 @@
 				"minecraft:crimson_pressure_plate": "variant=crimson",
 				"minecraft:warped_pressure_plate": "variant=warped",
 				"minecraft:polished_blackstone_pressure_plate": "variant=polished_blackstone"
+			},
+			"build": {
+				"use": "powered"
 			}
 		},
 		{
@@ -3833,6 +4041,9 @@
 			"id": {
 				"minecraft:redstone_ore": "variant=redstone_ore",
 				"minecraft:deepslate_redstone_ore": "variant=deepslate_redstone_ore"
+			},
+			"build": {
+				"use": "lit"
 			}
 		},
 		{
@@ -3842,23 +4053,19 @@
 				"lit": [
 					{ "value": "true", "emissive": 0.75 },
 					{ "value": "false" }
-				]
-			},
-			"default_state": "lit=true",
-			"id": "minecraft:redstone_torch"
-		},
-		{
-			"name": "redstone_wall_torch",
-			"file": "redstone_wall_torch.json",
-			"states": {
-				"lit": [
-					{ "value": "true", "emissive": 0.75 },
-					{ "value": "false" }
 				],
-				"facing": [ "north", "east", "south", "west" ]
+				"facing": [ "up", "north", "south", "east", "west" ]
 			},
-			"default_state": "lit=true,facing=east",
-			"id": "minecraft:redstone_wall_torch"
+			"default_state": "lit=true,facing=up",
+			"id": {
+				"minecraft:redstone_torch": "facing=up",
+				"minecraft:redstone_wall_torch": "facing=east"
+			},
+			"build": {
+				"facing": "hit_face",
+				"hit_faces": [ "east", "west", "south", "north", "up" ],
+				"use": "lit"
+			}
 		},
 		{
 			"name": "button",
@@ -3888,6 +4095,7 @@
 			"default_state": "variant=stone,face=floor,facing=west,powered=false",
 			"timeline": {
 				"type": "button",
+				"animated": true,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": {
 					"face=ceiling": [ 8, 16, 8 ],
@@ -3928,6 +4136,11 @@
 				"minecraft:crimson_button": "variant=crimson",
 				"minecraft:warped_button": "variant=warped",
 				"minecraft:polished_blackstone_button": "variant=polished_blackstone"
+			},
+			"build": {
+				"facing": "hit_face",
+				"face": "hit_face",
+				"use": "powered"
 			}
 		},
 		{
@@ -3938,12 +4151,26 @@
 				"layers": [ "1", "2", "3", "4", "5", "6", "7", "8" ]
 			},
 			"default_state": "layers=1",
-			"id": "minecraft:snow"
+			"id": "minecraft:snow",
+			"build": {
+				"use": "layers"
+			}
 		},
 		{
 			"name": "ice",
-			"file": "ice.json",
-			"id": "minecraft:ice"
+			"states": {
+				"variant": [
+					{ "value": "ice", "file": "ice.json" },
+					{ "value": "packed_ice", "file": "packed_ice.json" },
+					{ "value": "blue_ice", "file": "blue_ice.json" }
+				]
+			},
+			"default_state": "variant=ice",
+			"id": {
+				"minecraft:ice": "variant=ice",
+				"minecraft:packed_ice": "variant=packed_ice",
+				"minecraft:blue_ice": "variant=blue_ice"
+			}
 		},
 		{
 			"name": "snow_block",
@@ -4045,7 +4272,10 @@
 			},
 			"default_state": "axis=z",
 			"emissive": 0.5,
-			"id": "minecraft:nether_portal"
+			"id": "minecraft:nether_portal",
+			"build": {
+				"axis": "view"
+			}
 		},
 		{
 			"name": "jack_o_lantern",
@@ -4060,6 +4290,10 @@
 			"id": {
 				"minecraft:carved_pumpkin": "lit=false",
 				"minecraft:jack_o_lantern": "lit=true"
+			},
+			"build": {
+				"facing": "view_inverted",
+				"use": "lit"
 			}
 		},
 		{
@@ -4111,6 +4345,12 @@
 				"minecraft:green_candle_cake": "candle=green",
 				"minecraft:red_candle_cake": "candle=red",
 				"minecraft:black_candle_cake": "candle=black"
+			},
+			"build": {
+				"use": "bites",
+				"use_remove": true,
+				"use_with": "candle",
+				"use_clear": "candle=none"
 			}
 		},
 		{
@@ -4127,7 +4367,11 @@
 				"locked": [ "false", "true" ]
 			},
 			"default_state": "powered=false,facing=west,delay=1,locked=false",
-			"id": "minecraft:repeater"
+			"id": "minecraft:repeater",
+			"build": {
+				"facing": "view_inverted",
+				"use": "delay"
+			}
 		},
 		{
 			"name": "stained_glass",
@@ -4207,6 +4451,7 @@
 			"timeline": {
 				"type": "trapdoor",
 				"transform": false,
+				"animated": true,
 				"rotation_point": {
 					"facing=north": [ 8, 1.5, 14.5 ],
 					"facing=south": [ 8, 1.5, 1.5 ],
@@ -4257,6 +4502,12 @@
 				"minecraft:waxed_exposed_copper_trapdoor": "variant=waxed_exposed_copper",
 				"minecraft:waxed_weathered_copper_trapdoor": "variant=waxed_weathered_copper",
 				"minecraft:waxed_oxidized_copper_trapdoor": "variant=waxed_oxidized_copper"
+			},
+			"build": {
+				"facing": "hit_face",
+				"facing_fallback": "view_inverted",
+				"half": "hit",
+				"use": "open"
 			}
 		},
 		{
@@ -4300,6 +4551,9 @@
 				"minecraft:infested_cracked_stone_bricks": "variant=cracked_stone_bricks",
 				"minecraft:infested_chiseled_stone_bricks": "variant=chiseled_stone_bricks",
 				"minecraft:infested_deepslate": "variant=deepslate"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -4409,7 +4663,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:pumpkin_stem"
+			"id": "minecraft:pumpkin_stem",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "attached_pumpkin_stem",
@@ -4419,7 +4676,10 @@
 			},
 			"default_state": "facing=west",
 			"subsurface": 1,
-			"id": "minecraft:attached_pumpkin_stem"
+			"id": "minecraft:attached_pumpkin_stem",
+			"build": {
+				"facing": "view"
+			}
 		},
 		{
 			"name": "melon_stem",
@@ -4433,7 +4693,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:melon_stem"
+			"id": "minecraft:melon_stem",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "attached_melon_stem",
@@ -4443,7 +4706,10 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:attached_melon_stem"
+			"id": "minecraft:attached_melon_stem",
+			"build": {
+				"facing": "view"
+			}
 		},
 		{
 			"name": "vine",
@@ -4461,7 +4727,10 @@
 			"wind": {
 				"axis": "all"
 			},
-			"id": "minecraft:vine"
+			"id": "minecraft:vine",
+			"build": {
+				"place": "attach"
+			}
 		},
 		{
 			"name": "fence_gate",
@@ -4505,6 +4774,42 @@
 					"variant=crimson": "variant=crimson",
 					"variant=warped": "variant=warped"
 				},
+				"mesh": true,
+				"animated_parts": [ "right_door", "left_door" ],
+				"parts": {
+					"right_door": {
+						"open=false": {
+							"rotation": [
+								0,
+								0,
+								0
+							]
+						},
+						"open=true": {
+							"rotation": [
+								0,
+								-90,
+								0
+							]
+						}
+					},
+					"left_door": {
+						"open=false": {
+							"rotation": [
+								0,
+								0,
+								0
+							]
+						},
+						"open=true": {
+							"rotation": [
+								0,
+								90,
+								0
+							]
+						}
+					}
+				},
 				"position": {
 					"in_wall=false": [ 8, 0, 8 ],
 					"in_wall=true": [ 8, -3, 8 ]
@@ -4530,6 +4835,11 @@
 				"minecraft:bamboo_fence_gate": "variant=bamboo",
 				"minecraft:crimson_fence_gate": "variant=crimson",
 				"minecraft:warped_fence_gate": "variant=warped"
+			},
+			"build": {
+				"facing": "view_inverted",
+				"place": "fence_gate",
+				"use": "open"
 			}
 		},
 		{
@@ -4577,7 +4887,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:nether_wart"
+			"id": "minecraft:nether_wart",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "enchanting_table",
@@ -4585,7 +4898,9 @@
 			"timeline": {
 				"type": "enchanting_table",
 				"model": "book",
+				"facing": "view_inverted",
 				"model_double": true,
+				"animated_parts": [ "book", "book_right_half", "book_right_leaf", "book_left_half", "book_left_leaf" ],
 				"rotation_point": [ 0, 3, 0 ],
 				"position": [ 8, 20, 8 ],
 				"rotation": [ 15, 0, 0 ]
@@ -4602,7 +4917,19 @@
 				"has_bottle_2": [ "false", "true" ]
 			},
 			"default_state": "has_bottle_0=true,has_bottle_1=true,has_bottle_2=true",
-			"id": "minecraft:brewing_stand"
+			"id": "minecraft:brewing_stand",
+			"build": {
+				"use": [
+					"has_bottle_0=false,has_bottle_1=false,has_bottle_2=false",
+					"has_bottle_0=true,has_bottle_1=false,has_bottle_2=false",
+					"has_bottle_0=false,has_bottle_1=true,has_bottle_2=false",
+					"has_bottle_0=true,has_bottle_1=true,has_bottle_2=false",
+					"has_bottle_0=false,has_bottle_1=false,has_bottle_2=true",
+					"has_bottle_0=true,has_bottle_1=false,has_bottle_2=true",
+					"has_bottle_0=false,has_bottle_1=true,has_bottle_2=true",
+					"has_bottle_0=true,has_bottle_1=true,has_bottle_2=true"
+				]
+			}
 		},
 		{
 			"name": "cauldron",
@@ -4615,12 +4942,24 @@
 				],
 				"level": [ "1", "2", "3" ]
 			},
-			"default_state": "contents=empty,level=3",
+			"default_state": "contents=empty",
 			"id": {
 				"minecraft:cauldron": "contents=empty",
 				"minecraft:water_cauldron": "contents=water",
 				"minecraft:lava_cauldron": "contents=lava",
 				"minecraft:powder_snow_cauldron": "contents=powder_snow"
+			},
+			"build": {
+				"use": [
+					"contents=empty",
+					"contents=water,level=1",
+					"contents=water,level=2",
+					"contents=water,level=3",
+					"contents=lava",
+					"contents=powder_snow,level=1",
+					"contents=powder_snow,level=2",
+					"contents=powder_snow,level=3"
+				]
 			}
 		},
 		{
@@ -4631,7 +4970,11 @@
 				"eye": [ "false", "true" ]
 			},
 			"default_state": "facing=west,eye=false",
-			"id": "minecraft:end_portal_frame"
+			"id": "minecraft:end_portal_frame",
+			"build": {
+				"facing": "view_inverted",
+				"use": "eye"
+			}
 		},
 		{
 			"name": "end_stone",
@@ -4653,7 +4996,10 @@
 				]
 			},
 			"default_state": "lit=false",
-			"id": "minecraft:redstone_lamp"
+			"id": "minecraft:redstone_lamp",
+			"build": {
+				"use": "lit"
+			}
 		},
 		{
 			"name": "cocoa",
@@ -4663,7 +5009,11 @@
 				"age": [ "0", "1", "2" ]
 			},
 			"default_state": "facing=east,age=0",
-			"id": "minecraft:cocoa"
+			"id": "minecraft:cocoa",
+			"build": {
+				"facing": "view_inverted",
+				"use": "age"
+			}
 		},
 		{
 			"name": "emerald_ore",
@@ -4690,6 +5040,7 @@
 				"type": "chest",
 				"model": "chest",
 				"model_state": "variant=ender",
+				"animated_parts": [ "top" ],
 				"position": [ 8, 0, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],
@@ -4698,7 +5049,10 @@
 					"facing=west": [ 0, -90, 0 ]
 				}
 			},
-			"id": "minecraft:ender_chest"
+			"id": "minecraft:ender_chest",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "tripwire_hook",
@@ -4712,6 +5066,25 @@
 			"timeline": {
 				"type": "tripwire_hook",
 				"model": "tripwire_hook",
+				"animated_parts": [ "handle", "hook" ],
+				"parts": {
+					"handle": {
+						"attached=false": {
+							"rotation": [
+								0,
+								0,
+								0
+							]
+						},
+						"attached=true": {
+							"rotation": [
+								-45,
+								0,
+								0
+							]
+						}
+					}
+				},
 				"position": {
 					"facing=north": [ 8, 0, 15 ],
 					"facing=south": [ 8, 0, 1 ],
@@ -4725,7 +5098,11 @@
 					"facing=west": [ 0, 270, 0 ]
 				}
 			},
-			"id": "minecraft:tripwire_hook"
+			"id": "minecraft:tripwire_hook",
+			"build": {
+				"facing": "hit_face",
+				"use": "attached"
+			}
 		},
 		{
 			"name": "tripwire",
@@ -4754,7 +5131,10 @@
 				"conditional": [ "false", "true" ]
 			},
 			"default_state": "facing=west,conditional=false",
-			"id": "minecraft:command_block"
+			"id": "minecraft:command_block",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "beacon",
@@ -4930,6 +5310,9 @@
 				"minecraft:potted_azalea_bush": "contents=azalea",
 				"minecraft:potted_flowering_azalea_bush": "contents=flowering_azalea",
 				"minecraft:potted_golden_dandelion": "contents=golden_dandelion"
+			},
+			"build": {
+				"use_with": "contents"
 			}
 		},
 		{
@@ -4944,7 +5327,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:carrots"
+			"id": "minecraft:carrots",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "potatoes",
@@ -4958,7 +5344,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:potatoes"
+			"id": "minecraft:potatoes",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "mob_head",
@@ -5007,6 +5396,15 @@
 				"minecraft:creeper_head": "character=creeper",
 				"minecraft:piglin_head": "character=piglin",
 				"minecraft:dragon_head": "character=dragon"
+			},
+			"build": {
+				"face_blocks": {
+					"up": "mob_head",
+					"side": "mob_wall_head"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ],
+				"rotation": "view",
+				"rotation_zero": "north"
 			}
 		},
 		{
@@ -5049,6 +5447,14 @@
 				"minecraft:creeper_wall_head": "character=creeper",
 				"minecraft:piglin_wall_head": "character=piglin",
 				"minecraft:dragon_wall_head": "character=dragon"
+			},
+			"build": {
+				"facing": "hit_face",
+				"face_blocks": {
+					"up": "mob_head",
+					"side": "mob_wall_head"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -5066,6 +5472,10 @@
 				"minecraft:anvil": "damage=0",
 				"minecraft:chipped_anvil": "damage=1",
 				"minecraft:damaged_anvil": "damage=2"
+			},
+			"build": {
+				"facing": "view_clockwise",
+				"use": "damage"
 			}
 		},
 		{
@@ -5085,6 +5495,7 @@
 					"double=false": "variant=trapped",
 					"double=true": "variant=trapped_double"
 				},
+				"animated_parts": [ "top" ],
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
 				},
@@ -5096,7 +5507,11 @@
 					"facing=west": [ 0, -90, 0 ]
 				}
 			},
-			"id": "minecraft:trapped_chest"
+			"id": "minecraft:trapped_chest",
+			"build": {
+				"facing": "view_inverted",
+				"set": "type=single,double=false"
+			}
 		},
 		{
 			"name": "weighted_pressure_plate",
@@ -5112,6 +5527,7 @@
 			"timeline": {
 				"type": "pressure_plate",
 				"transform": false,
+				"animated": true,
 				"rotation_point": [ 8, 0, 8 ],
 				"position": [ 8, 0, 8 ]
 			},
@@ -5136,7 +5552,11 @@
 				]
 			},
 			"default_state": "facing=west,mode=compare,powered=false",
-			"id": "minecraft:comparator"
+			"id": "minecraft:comparator",
+			"build": {
+				"facing": "view_inverted",
+				"use": "mode"
+			}
 		},
 		{
 			"name": "daylight_detector",
@@ -5146,7 +5566,10 @@
 				"power": [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ]
 			},
 			"default_state": "inverted=false,power=0",
-			"id": "minecraft:daylight_detector"
+			"id": "minecraft:daylight_detector",
+			"build": {
+				"use": "inverted"
+			}
 		},
 		{
 			"name": "redstone_block",
@@ -5165,7 +5588,11 @@
 				"facing": [ "down", "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=down",
-			"id": "minecraft:hopper"
+			"id": "minecraft:hopper",
+			"build": {
+				"facing": "hit_face_inverted",
+				"facing_fallback": "down"
+			}
 		},
 		{
 			"name": "quartz_block",
@@ -5186,17 +5613,25 @@
 				"minecraft:quartz_pillar": "variant=pillar",
 				"minecraft:smooth_quartz": "variant=smooth",
 				"minecraft:quartz_bricks": "variant=bricks"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
 			"name": "activator_rail",
+			"type": "rail",
 			"file": "activator_rail.json",
 			"states": {
 				"powered": [ "false", "true" ],
 				"shape": [ "north_south", "east_west", "ascending_north", "ascending_south", "ascending_east", "ascending_west" ]
 			},
 			"default_state": "powered=false,shape=east_west",
-			"id": "minecraft:activator_rail"
+			"id": "minecraft:activator_rail",
+			"build": {
+				"place": "rail",
+				"use": "powered"
+			}
 		},
 		{
 			"name": "dropper",
@@ -5205,7 +5640,10 @@
 				"facing": [ "north", "south", "east", "west", "up", "down" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:dropper"
+			"id": "minecraft:dropper",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "colored_terracotta",
@@ -5304,16 +5742,6 @@
 			"id": "minecraft:slime_block"
 		},
 		{
-			"name": "barrier",
-			"file": "barrier.json",
-			"id": "minecraft:barrier"
-		},
-		{
-			"name": "light",
-			"file": "light.json",
-			"id": "minecraft:light"
-		},
-		{
 			"name": "standing_banner",
 			"type": "banners",
 			"states": {
@@ -5342,6 +5770,7 @@
 				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=standing",
+				"animated_parts": [ "banner" ],
 				"pattern_type": "banner",
 				"position": [ 8, 0, 8 ],
 				"rotation": {
@@ -5380,6 +5809,15 @@
 				"minecraft:green_banner": "color=green",
 				"minecraft:red_banner": "color=red",
 				"minecraft:black_banner": "color=black"
+			},
+			"build": {
+				"face_blocks": {
+					"up": "standing_banner",
+					"side": "wall_banner"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ],
+				"rotation": "view",
+				"rotation_zero": "south"
 			}
 		},
 		{
@@ -5411,8 +5849,9 @@
 				"type": "banner",
 				"model": "banner",
 				"model_state": "variant=wall",
+				"animated_parts": [ "banner" ],
 				"pattern_type": "banner",
-				"position": [ 8, -8, 8 ],
+				"position": [ 8, -6, 8 ],
 				"rotation": {
 					"facing=north": [ 0, 180, 0 ],
 					"facing=south": [ 0, 0, 0 ],
@@ -5437,6 +5876,14 @@
 				"minecraft:green_wall_banner": "color=green",
 				"minecraft:red_wall_banner": "color=red",
 				"minecraft:black_wall_banner": "color=black"
+			},
+			"build": {
+				"facing": "hit_face",
+				"face_blocks": {
+					"up": "standing_banner",
+					"side": "wall_banner"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -5468,7 +5915,10 @@
 				"axis": [ "y", "x", "z" ]
 			},
 			"default_state": "axis=y",
-			"id": "minecraft:hay_block"
+			"id": "minecraft:hay_block",
+			"build": {
+				"axis": "hit_face"
+			}
 		},
 		{
 			"name": "carpet",
@@ -5523,11 +5973,6 @@
 			"id": "minecraft:coal_block"
 		},
 		{
-			"name": "packed_ice",
-			"file": "packed_ice.json",
-			"id": "minecraft:packed_ice"
-		},
-		{
 			"name": "double_plant",
 			"type": "double_plant",
 			"states": {
@@ -5557,6 +6002,10 @@
 				"minecraft:rose_bush": "variant=rose_bush",
 				"minecraft:peony": "variant=peony",
 				"minecraft:pitcher_plant": "variant=pitcher_plant"
+			},
+			"build": {
+				"set": "half=lower",
+				"double": "up"
 			}
 		},
 		{
@@ -5585,7 +6034,10 @@
 			},
 			"default_state": "facing=up",
 			"emissive": 0.75,
-			"id": "minecraft:end_rod"
+			"id": "minecraft:end_rod",
+			"build": {
+				"facing": "hit_face"
+			}
 		},
 		{
 			"name": "chorus_plant",
@@ -5610,7 +6062,10 @@
 				"age": [ "0", "1", "2", "3", "4", "5" ]
 			},
 			"default_state": "age=0",
-			"id": "minecraft:chorus_flower"
+			"id": "minecraft:chorus_flower",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "purpur_block",
@@ -5624,7 +6079,10 @@
 				"axis": [ "y", "x", "z" ]
 			},
 			"default_state": "axis=y",
-			"id": "minecraft:purpur_pillar"
+			"id": "minecraft:purpur_pillar",
+			"build": {
+				"axis": "hit_face"
+			}
 		},
 		{
 			"name": "end_stone_bricks",
@@ -5643,7 +6101,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:torchflower_crop"
+			"id": "minecraft:torchflower_crop",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "pitcher_crop",
@@ -5659,7 +6120,13 @@
 				"axis": "all",
 				"ymin": 5
 			},
-			"id": "minecraft:pitcher_crop"
+			"id": "minecraft:pitcher_crop",
+			"build": {
+				"set": "half=lower",
+				"double": "up",
+				"double_age": 3,
+				"use": "age"
+			}
 		},
 		{
 			"name": "beetroots",
@@ -5673,7 +6140,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:beetroots"
+			"id": "minecraft:beetroots",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "dirt_path",
@@ -5688,7 +6158,10 @@
 				"conditional": [ "false", "true" ]
 			},
 			"default_state": "facing=west,conditional=false",
-			"id": "minecraft:repeating_command_block"
+			"id": "minecraft:repeating_command_block",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "chain_command_block",
@@ -5698,7 +6171,10 @@
 				"conditional": [ "false", "true" ]
 			},
 			"default_state": "facing=west,conditional=false",
-			"id": "minecraft:chain_command_block"
+			"id": "minecraft:chain_command_block",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "frosted_ice",
@@ -5707,7 +6183,10 @@
 				"age": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "age=0",
-			"id": "minecraft:frosted_ice"
+			"id": "minecraft:frosted_ice",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "magma_block",
@@ -5741,7 +6220,10 @@
 				"axis": [ "y", "x", "z" ]
 			},
 			"default_state": "axis=y",
-			"id": "minecraft:bone_block"
+			"id": "minecraft:bone_block",
+			"build": {
+				"axis": "hit_face"
+			}
 		},
 		{
 			"name": "observer",
@@ -5751,7 +6233,11 @@
 				"powered": [ "false", "true" ]
 			},
 			"default_state": "facing=west,powered=false",
-			"id": "minecraft:observer"
+			"id": "minecraft:observer",
+			"build": {
+				"facing": "view",
+				"use": "powered"
+			}
 		},
 		{
 			"name": "shulker_box",
@@ -5763,6 +6249,7 @@
 			"timeline": {
 				"type": "shulker_box",
 				"model": "shulker_box",
+				"animated_parts": [ "top_shell" ],
 				"position": {
 					"facing=north": [ 8, 8, 16 ],
 					"facing=south": [ 8, 8, 0 ],
@@ -5841,6 +6328,9 @@
 				"minecraft:green_glazed_terracotta": "color=green",
 				"minecraft:red_glazed_terracotta": "color=red",
 				"minecraft:black_glazed_terracotta": "color=black"
+			},
+			"build": {
+				"facing": "view_inverted"
 			}
 		},
 		{
@@ -5928,11 +6418,6 @@
 			}
 		},
 		{
-			"name": "blue_ice",
-			"file": "blue_ice.json",
-			"id": "minecraft:blue_ice"
-		},
-		{
 			"name": "conduit",
 			"waterlogged": true,
 			"states": {
@@ -5956,7 +6441,10 @@
 			},
 			"default_state": "pickles=1,waterlogged=false",
 			"emissive": 0.5,
-			"id": "minecraft:sea_pickle"
+			"id": "minecraft:sea_pickle",
+			"build": {
+				"use": "pickles"
+			}
 		},
 		{
 			"name": "turtle_egg",
@@ -5966,7 +6454,10 @@
 				"hatch": [ "0", "1", "2" ]
 			},
 			"default_state": "eggs=1,hatch=0",
-			"id": "minecraft:turtle_egg"
+			"id": "minecraft:turtle_egg",
+			"build": {
+				"use": "eggs"
+			}
 		},
 		{
 			"name": "bubble_column",
@@ -5998,7 +6489,11 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:tall_seagrass"
+			"id": "minecraft:tall_seagrass",
+			"build": {
+				"set": "half=lower",
+				"double": "up"
+			}
 		},
 		{
 			"name": "kelp",
@@ -6068,6 +6563,13 @@
 				"minecraft:bubble_coral_fan": "variant=bubble",
 				"minecraft:fire_coral_fan": "variant=fire",
 				"minecraft:horn_coral_fan": "variant=horn"
+			},
+			"build": {
+				"face_blocks": {
+					"up": "coral_fan",
+					"side": "coral_wall_fan"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -6091,6 +6593,14 @@
 				"minecraft:bubble_coral_wall_fan": "variant=bubble",
 				"minecraft:fire_coral_wall_fan": "variant=fire",
 				"minecraft:horn_coral_wall_fan": "variant=horn"
+			},
+			"build": {
+				"facing": "hit_face",
+				"face_blocks": {
+					"up": "coral_fan",
+					"side": "coral_wall_fan"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -6155,6 +6665,13 @@
 				"minecraft:dead_bubble_coral_fan": "variant=bubble",
 				"minecraft:dead_fire_coral_fan": "variant=fire",
 				"minecraft:dead_horn_coral_fan": "variant=horn"
+			},
+			"build": {
+				"face_blocks": {
+					"up": "dead_coral_fan",
+					"side": "dead_coral_wall_fan"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -6178,6 +6695,14 @@
 				"minecraft:dead_bubble_coral_wall_fan": "variant=bubble",
 				"minecraft:dead_fire_coral_wall_fan": "variant=fire",
 				"minecraft:dead_horn_coral_wall_fan": "variant=horn"
+			},
+			"build": {
+				"facing": "hit_face",
+				"face_blocks": {
+					"up": "dead_coral_fan",
+					"side": "dead_coral_wall_fan"
+				},
+				"hit_faces": [ "east", "west", "south", "north", "up" ]
 			}
 		},
 		{
@@ -6219,12 +6744,16 @@
 		},
 		{
 			"name": "scaffolding",
+			"type": "scaffolding",
 			"file": "scaffolding.json",
 			"states": {
 				"bottom": [ "false", "true" ]
 			},
 			"default_state": "bottom=false",
-			"id": "minecraft:scaffolding"
+			"id": "minecraft:scaffolding",
+			"build": {
+				"place": "scaffolding"
+			}
 		},
 		{
 			"name": "loom",
@@ -6233,7 +6762,10 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:loom"
+			"id": "minecraft:loom",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "barrel",
@@ -6243,7 +6775,11 @@
 				"open": [ "false", "true" ]
 			},
 			"default_state": "facing=up,open=false",
-			"id": "minecraft:barrel"
+			"id": "minecraft:barrel",
+			"build": {
+				"facing": "view_inverted",
+				"use": "open"
+			}
 		},
 		{
 			"name": "smoker",
@@ -6253,7 +6789,11 @@
 				"lit": [ "false", "true" ]
 			},
 			"default_state": "facing=west,lit=false",
-			"id": "minecraft:smoker"
+			"id": "minecraft:smoker",
+			"build": {
+				"facing": "view_inverted",
+				"use": "lit"
+			}
 		},
 		{
 			"name": "blast_furnace",
@@ -6263,7 +6803,11 @@
 				"lit": [ "false", "true" ]
 			},
 			"default_state": "facing=west,lit=false",
-			"id": "minecraft:blast_furnace"
+			"id": "minecraft:blast_furnace",
+			"build": {
+				"facing": "view_inverted",
+				"use": "lit"
+			}
 		},
 		{
 			"name": "cartography_table",
@@ -6283,7 +6827,11 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west,face=floor",
-			"id": "minecraft:grindstone"
+			"id": "minecraft:grindstone",
+			"build": {
+				"facing": "hit_face",
+				"face": "hit_face"
+			}
 		},
 		{
 			"name": "smithing_table",
@@ -6297,7 +6845,10 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:stonecutter"
+			"id": "minecraft:stonecutter",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "lectern",
@@ -6306,7 +6857,10 @@
 				"facing": [ "north", "south", "east", "west" ]
 			},
 			"default_state": "facing=west",
-			"id": "minecraft:lectern"
+			"id": "minecraft:lectern",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "composter",
@@ -6315,11 +6869,16 @@
 				"level": [ "0", "1", "2", "3", "4", "5", "6", "7", "8" ]
 			},
 			"default_state": "level=0",
-			"id": "minecraft:composter"
+			"id": "minecraft:composter",
+			"build": {
+				"use": "level"
+			}
 		},
 		{
 			"name": "bell",
 			"file": "bell.json",
+			"type": "bell",
+			"require_models": true,
 			"states": {
 				"facing": [ "north", "south", "east", "west" ],
 				"attachment": [ "floor", "ceiling", "single_wall", "double_wall" ]
@@ -6329,6 +6888,7 @@
 				"type": "bell",
 				"model": "bell",
 				"model_double": true,
+				"mesh": true,
 				"hide_model": "minecraft:block_added/bell_body",
 				"position": [ 8, 13, 8 ],
 				"rotation": {
@@ -6338,7 +6898,11 @@
 					"facing=west": [ 0, 90, 0 ]
 				}
 			},
-			"id": "minecraft:bell"
+			"id": "minecraft:bell",
+			"build": {
+				"facing": "view",
+				"place": "bell"
+			}
 		},
 		{
 			"name": "lantern",
@@ -6370,6 +6934,9 @@
 				"minecraft:waxed_exposed_copper_lantern": "variant=waxed_exposed_copper_lantern",
 				"minecraft:waxed_weathered_copper_lantern": "variant=waxed_weathered_copper_lantern",
 				"minecraft:waxed_oxidized_copper_lantern": "variant=waxed_oxidized_copper_lantern"
+			},
+			"build": {
+				"place": "lantern"
 			}
 		},
 		{
@@ -6393,6 +6960,10 @@
 			"id": {
 				"minecraft:campfire": "variant=normal",
 				"minecraft:soul_campfire": "variant=soul_campfire"
+			},
+			"build": {
+				"facing": "view",
+				"use": "lit"
 			}
 		},
 		{
@@ -6407,7 +6978,10 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:sweet_berry_bush"
+			"id": "minecraft:sweet_berry_bush",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "structure_block",
@@ -6416,7 +6990,10 @@
 				"mode": [ "load", "corner", "save", "data" ]
 			},
 			"default_state": "mode=load",
-			"id": "minecraft:structure_block"
+			"id": "minecraft:structure_block",
+			"build": {
+				"use": "mode"
+			}
 		},
 		{
 			"name": "jigsaw",
@@ -6425,7 +7002,10 @@
 				"orientation": [ "north_up", "south_up", "east_up", "west_up", "up_north", "up_south", "up_east", "up_west", "down_north", "down_south", "down_east", "down_west" ]
 			},
 			"default_state": "orientation=west_up",
-			"id": "minecraft:jigsaw"
+			"id": "minecraft:jigsaw",
+			"build": {
+				"place": "jigsaw"
+			}
 		},
 		{
 			"name": "test_block",
@@ -6449,7 +7029,11 @@
 				"honey_level": [ "0", "1", "2", "3", "4", "5" ]
 			},
 			"default_state": "facing=west,honey_level=0",
-			"id": "minecraft:bee_nest"
+			"id": "minecraft:bee_nest",
+			"build": {
+				"facing": "view_inverted",
+				"use": "honey_level"
+			}
 		},
 		{
 			"name": "beehive",
@@ -6459,7 +7043,11 @@
 				"honey_level": [ "0", "1", "2", "3", "4", "5" ]
 			},
 			"default_state": "facing=west,honey_level=0",
-			"id": "minecraft:beehive"
+			"id": "minecraft:beehive",
+			"build": {
+				"facing": "view_inverted",
+				"use": "honey_level"
+			}
 		},
 		{
 			"name": "honey_block",
@@ -6596,6 +7184,9 @@
 				"minecraft:basalt": "variant=normal",
 				"minecraft:polished_basalt": "variant=polished_basalt",
 				"minecraft:smooth_basalt": "variant=smooth_basalt"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -6614,23 +7205,16 @@
 			"id": "minecraft:soul_soil"
 		},
 		{
-			"name": "nether_gold_ore",
-			"file": "nether_gold_ore.json",
-			"id": "minecraft:nether_gold_ore"
-		},
-		{
-			"name": "crying_obsidian",
-			"file": "crying_obsidian.json",
-			"id": "minecraft:crying_obsidian"
-		},
-		{
 			"name": "respawn_anchor",
 			"file": "respawn_anchor.json",
 			"states": {
 				"charges": [ "0", "1", "2", "3", "4" ]
 			},
 			"default_state": "charges=0",
-			"id": "minecraft:respawn_anchor"
+			"id": "minecraft:respawn_anchor",
+			"build": {
+				"use": "charges"
+			}
 		},
 		{
 			"name": "lodestone",
@@ -6686,6 +7270,9 @@
 				"minecraft:waxed_exposed_copper_chain": "variant=waxed_exposed_copper_chain",
 				"minecraft:waxed_weathered_copper_chain": "variant=waxed_weathered_copper_chain",
 				"minecraft:waxed_oxidized_copper_chain": "variant=waxed_oxidized_copper_chain"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -6735,6 +7322,18 @@
 				"minecraft:green_candle": "color=green",
 				"minecraft:red_candle": "color=red",
 				"minecraft:black_candle": "color=black"
+			},
+			"build": {
+				"use": [
+					"candles=1,lit=false",
+					"candles=2,lit=false",
+					"candles=3,lit=false",
+					"candles=4,lit=false",
+					"candles=1,lit=true",
+					"candles=2,lit=true",
+					"candles=3,lit=true",
+					"candles=4,lit=true"
+				]
 			}
 		},
 		{
@@ -6769,6 +7368,9 @@
 				"minecraft:medium_amethyst_bud": "variant=medium",
 				"minecraft:large_amethyst_bud": "variant=large",
 				"minecraft:amethyst_cluster": "variant=cluster"
+			},
+			"build": {
+				"facing": "hit_face"
 			}
 		},
 		{
@@ -6839,7 +7441,11 @@
 			},
 			"default_state": "thickness=tip,vertical_direction=up",
 			"random_offset_xz": true,
-			"id": "minecraft:sulfur_spike"
+			"id": "minecraft:sulfur_spike",
+			"build": {
+				"place": "vertical",
+				"update": "vertical"
+			}
 		},
 		{
 			"name": "calcite",
@@ -6864,7 +7470,10 @@
 				"sculk_sensor_phase": [ "inactive", "active", "cooldown" ]
 			},
 			"default_state": "sculk_sensor_phase=inactive",
-			"id": "minecraft:sculk_sensor"
+			"id": "minecraft:sculk_sensor",
+			"build": {
+				"use": "sculk_sensor_phase"
+			}
 		},
 		{
 			"name": "calibrated_sculk_sensor",
@@ -6874,7 +7483,10 @@
 				"sculk_sensor_phase": [ "inactive", "active", "cooldown" ]
 			},
 			"default_state": "facing=east,sculk_sensor_phase=inactive",
-			"id": "minecraft:calibrated_sculk_sensor"
+			"id": "minecraft:calibrated_sculk_sensor",
+			"build": {
+				"use": "sculk_sensor_phase"
+			}
 		},
 		{
 			"name": "sculk",
@@ -6894,7 +7506,10 @@
 			},
 			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
 			"subsurface": 1,
-			"id": "minecraft:sculk_vein"
+			"id": "minecraft:sculk_vein",
+			"build": {
+				"place": "attach"
+			}
 		},
 		{
 			"name": "sculk_catalyst",
@@ -6904,7 +7519,10 @@
 			},
 			"default_state": "bloom=false",
 			"emissive": 0.25,
-			"id": "minecraft:sculk_catalyst"
+			"id": "minecraft:sculk_catalyst",
+			"build": {
+				"use": "bloom"
+			}
 		},
 		{
 			"name": "sculk_shrieker",
@@ -6913,7 +7531,10 @@
 				"can_summon": [ "false", "true" ]
 			},
 			"default_state": "can_summon=true",
-			"id": "minecraft:sculk_shrieker"
+			"id": "minecraft:sculk_shrieker",
+			"build": {
+				"use": "can_summon"
+			}
 		},
 		{
 			"name": "copper_ore",
@@ -7062,6 +7683,9 @@
 				"minecraft:waxed_exposed_copper_bulb": "variant=waxed_exposed_copper_bulb",
 				"minecraft:waxed_weathered_copper_bulb": "variant=waxed_weathered_copper_bulb",
 				"minecraft:waxed_oxidized_copper_bulb": "variant=waxed_oxidized_copper_bulb"
+			},
+			"build": {
+				"use": "lit"
 			}
 		},
 		{
@@ -7096,6 +7720,7 @@
 					"variant=waxed_oxidized_copper,double=false": "variant=copper_oxidized",
 					"variant=waxed_oxidized_copper,double=true": "variant=copper_oxidized_double"
 				},
+				"animated_parts": [ "top" ],
 				"rotation_point": {
 					"double=true": [ -8, 0, 0 ]
 				},
@@ -7116,6 +7741,10 @@
 				"minecraft:waxed_exposed_copper_chest": "variant=waxed_exposed_copper",
 				"minecraft:waxed_weathered_copper_chest": "variant=waxed_weathered_copper",
 				"minecraft:waxed_oxidized_copper_chest": "variant=waxed_oxidized_copper"
+			},
+			"build": {
+				"facing": "view_inverted",
+				"set": "type=single,double=false"
 			}
 		},
 		{
@@ -7155,6 +7784,9 @@
 				"minecraft:waxed_exposed_copper_golem_statue": "variant=waxed_exposed",
 				"minecraft:waxed_weathered_copper_golem_statue": "variant=waxed_weathered",
 				"minecraft:waxed_oxidized_copper_golem_statue": "variant=waxed_oxidized"
+			},
+			"build": {
+				"facing": "view_inverted"
 			}
 		},
 		{
@@ -7183,6 +7815,10 @@
 				"minecraft:waxed_exposed_lightning_rod": "variant=waxed_exposed_lightning_rod",
 				"minecraft:waxed_weathered_lightning_rod": "variant=waxed_weathered_lightning_rod",
 				"minecraft:waxed_oxidized_lightning_rod": "variant=waxed_oxidized_lightning_rod"
+			},
+			"build": {
+				"facing": "hit_face",
+				"use": "powered"
 			}
 		},
 		{
@@ -7195,7 +7831,11 @@
 			},
 			"default_state": "thickness=tip,vertical_direction=up",
 			"random_offset_xz": true,
-			"id": "minecraft:pointed_dripstone"
+			"id": "minecraft:pointed_dripstone",
+			"build": {
+				"place": "vertical",
+				"update": "vertical"
+			}
 		},
 		{
 			"name": "dripstone_block",
@@ -7216,7 +7856,10 @@
 			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
 			"emissive": 0.25,
 			"subsurface": 1,
-			"id": "minecraft:glow_lichen"
+			"id": "minecraft:glow_lichen",
+			"build": {
+				"place": "attach"
+			}
 		},
 		{
 			"name": "cave_vines",
@@ -7245,7 +7888,10 @@
 		{
 			"name": "spore_blossom",
 			"file": "spore_blossom.json",
-			"id": "minecraft:spore_blossom"
+			"id": "minecraft:spore_blossom",
+			"build": {
+				"hit_faces": [ "down" ]
+			}
 		},
 		{
 			"name": "azalea",
@@ -7275,7 +7921,11 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:pink_petals"
+			"id": "minecraft:pink_petals",
+			"build": {
+				"facing": "view_inverted",
+				"use": "flower_amount"
+			}
 		},
 		{
 			"name": "wildflowers",
@@ -7290,7 +7940,11 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:wildflowers"
+			"id": "minecraft:wildflowers",
+			"build": {
+				"facing": "view_inverted",
+				"use": "flower_amount"
+			}
 		},
 		{
 			"name": "leaf_litter",
@@ -7301,7 +7955,11 @@
 			},
 			"default_state": "facing=west,segment_amount=4",
 			"subsurface": 1,
-			"id": "minecraft:leaf_litter"
+			"id": "minecraft:leaf_litter",
+			"build": {
+				"facing": "view_inverted",
+				"use": "segment_amount"
+			}
 		},
 		{
 			"name": "moss_carpet",
@@ -7328,6 +7986,10 @@
 			"id": {
 				"minecraft:big_dripleaf": "type=big_dripleaf",
 				"minecraft:big_dripleaf_stem": "type=big_dripleaf_stem"
+			},
+			"build": {
+				"facing": "view_inverted",
+				"double": "up"
 			}
 		},
 		{
@@ -7345,7 +8007,12 @@
 				"axis": "all",
 				"ymin": 0
 			},
-			"id": "minecraft:small_dripleaf"
+			"id": "minecraft:small_dripleaf",
+			"build": {
+				"facing": "view_inverted",
+				"set": "half=lower",
+				"double": "up"
+			}
 		},
 		{
 			"name": "hanging_roots",
@@ -7379,6 +8046,9 @@
 				"minecraft:deepslate_tiles": "variant=deepslate_tiles",
 				"minecraft:cracked_deepslate_tiles": "variant=cracked_deepslate_tiles",
 				"minecraft:chiseled_deepslate": "variant=chiseled_deepslate"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -7405,7 +8075,10 @@
 			},
 			"default_state": "hanging=false,age=0",
 			"random_offset_xz": true,
-			"id": "minecraft:mangrove_propagule"
+			"id": "minecraft:mangrove_propagule",
+			"build": {
+				"use": "age"
+			}
 		},
 		{
 			"name": "mangrove_roots",
@@ -7420,7 +8093,10 @@
 				"axis": [ "y", "x", "z" ]
 			},
 			"default_state": "axis=y",
-			"id": "minecraft:muddy_mangrove_roots"
+			"id": "minecraft:muddy_mangrove_roots",
+			"build": {
+				"axis": "hit_face"
+			}
 		},
 		{
 			"name": "mud",
@@ -7453,6 +8129,9 @@
 				"minecraft:ochre_froglight": "variant=ochre",
 				"minecraft:pearlescent_froglight": "variant=pearlescent",
 				"minecraft:verdant_froglight": "variant=verdant"
+			},
+			"build": {
+				"axis": "hit_face"
 			}
 		},
 		{
@@ -7472,7 +8151,10 @@
 				"dusted": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "dusted=0",
-			"id": "minecraft:suspicious_sand"
+			"id": "minecraft:suspicious_sand",
+			"build": {
+				"use": "dusted"
+			}
 		},
 		{
 			"name": "suspicious_gravel",
@@ -7481,7 +8163,10 @@
 				"dusted": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "dusted=0",
-			"id": "minecraft:suspicious_gravel"
+			"id": "minecraft:suspicious_gravel",
+			"build": {
+				"use": "dusted"
+			}
 		},
 		{
 			"name": "sniffer_egg",
@@ -7490,7 +8175,10 @@
 				"hatch": [ "0", "1", "2" ]
 			},
 			"default_state": "hatch=0",
-			"id": "minecraft:sniffer_egg"
+			"id": "minecraft:sniffer_egg",
+			"build": {
+				"use": "hatch"
+			}
 		},
 		{
 			"name": "decorated_pot",
@@ -7510,7 +8198,10 @@
 					"facing=west": [ 0, -90, 0 ]
 				}
 			},
-			"id": "minecraft:decorated_pot"
+			"id": "minecraft:decorated_pot",
+			"build": {
+				"facing": "view"
+			}
 		},
 		{
 			"name": "crafter",
@@ -7521,7 +8212,10 @@
 				"crafting": [ "false", "true" ]
 			},
 			"default_state": "orientation=west_up,triggered=false,crafting=false",
-			"id": "minecraft:crafter"
+			"id": "minecraft:crafter",
+			"build": {
+				"place": "crafter"
+			}
 		},
 		{
 			"name": "trial_spawner",
@@ -7538,7 +8232,10 @@
 				"ominous": [ "false", "true" ]
 			},
 			"default_state": "trial_spawner_state=inactive,ominous=false",
-			"id": "minecraft:trial_spawner"
+			"id": "minecraft:trial_spawner",
+			"build": {
+				"use": "trial_spawner_state"
+			}
 		},
 		{
 			"name": "vault",
@@ -7554,7 +8251,11 @@
 				"ominous": [ "false", "true" ]
 			},
 			"default_state": "facing=west,vault_state=inactive,ominous=false",
-			"id": "minecraft:vault"
+			"id": "minecraft:vault",
+			"build": {
+				"facing": "view_inverted",
+				"use": "vault_state"
+			}
 		},
 		{
 			"name": "heavy_core",
@@ -7606,7 +8307,11 @@
 				]
 			},
 			"default_state": "axis=y,creaking_heart_state=uprooted",
-			"id": "minecraft:creaking_heart"
+			"id": "minecraft:creaking_heart",
+			"build": {
+				"axis": "hit_face",
+				"use": "creaking_heart_state"
+			}
 		},
 		{
 			"name": "resin_clump",
@@ -7621,7 +8326,10 @@
 			},
 			"default_state": "north=false,south=false,east=true,west=false,up=false,down=false",
 			"subsurface": 1,
-			"id": "minecraft:resin_clump"
+			"id": "minecraft:resin_clump",
+			"build": {
+				"place": "attach"
+			}
 		},
 		{
 			"name": "resin_block",
@@ -7658,7 +8366,11 @@
 				"hydration": [ "0", "1", "2", "3" ]
 			},
 			"default_state": "facing=west,hydration=0",
-			"id": "minecraft:dried_ghast"
+			"id": "minecraft:dried_ghast",
+			"build": {
+				"facing": "view_inverted",
+				"use": "hydration"
+			}
 		},
 		{
 			"name": "cushion",

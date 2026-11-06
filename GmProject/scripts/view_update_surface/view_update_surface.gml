@@ -64,14 +64,22 @@ function view_update_surface(view, cam, buildedit = false)
 		// Highlight target parent while placing
 		if (place_target_tl_root != null && instance_exists(place_target_tl_root))
 		{
-			// Hide scenery highlighting when camera is within bounds
+			// Hide large scenery highlighting when camera is within bounds
 			var bounds, inside;
 			bounds = null
 			
 			with (place_target_tl_root)
-				if (type = e_tl_type.SCENERY)
-					bounds = tl_get_bounds()
-
+			{
+				if (type = e_tl_type.SCENERY && temp != null)
+				{
+					var res = temp.scenery;
+					if (res != null && res.ready &&
+						res.scenery_size[X] > scenery_large_threshold * 0.5 &&
+						res.scenery_size[Y] > scenery_large_threshold * 0.5)
+						bounds = tl_get_bounds()
+				}
+			}
+			
 			inside = (bounds != null)
 			if (inside)
 			{

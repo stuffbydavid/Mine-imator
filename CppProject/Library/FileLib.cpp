@@ -1,5 +1,5 @@
 #include "Generated/Scripts.hpp"
-#include "World/GZIP.hpp"
+#include "Compress.hpp"
 
 #include <QDesktopServices>
 #include <QTextStream>

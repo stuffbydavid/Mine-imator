@@ -129,8 +129,6 @@ function res_event_create()
 	scenery_filter_mask = []
 	
 	scenery_download_skins = true
-	
-	scenery_cache_save = null
 	scenery_snapshot_save = true
 	
 	scenery_structure = false

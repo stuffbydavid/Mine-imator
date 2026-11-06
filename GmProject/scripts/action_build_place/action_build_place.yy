@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_build_place",
   "parent":{
-    "name":"Build",
-    "path":"folders/Scripts/App/Actions/Build.yy",
+    "name":"Build tool",
+    "path":"folders/Scripts/App/Actions/Build tool.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

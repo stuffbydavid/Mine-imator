@@ -572,14 +572,14 @@ namespace CppProject
 
 	void vertex_delete_buffer(IntType id)
 	{
-		if (VertexBuffer* buffer = FindVertexBuffer(id))
-			delete buffer;
+		if (VertexBuffer* vbuf = FindVertexBuffer(id))
+			delete vbuf;
 	}
 
 	void vertex_end(IntType buffer)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			buf->Complete();
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+			vbuf->Complete();
 	}
 
 	void vertex_float3(IntType buffer, RealType x, RealType y, RealType z)
@@ -589,9 +589,9 @@ namespace CppProject
 
 	void vertex_float4(IntType buffer, RealType x, RealType y, RealType z, RealType w)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(3);
+			Vertex& vertex = vbuf->GetCurrentVertex(3);
 			
 			if (x > 0.0)
 				vertex.EnableFlag(Vertex::WAVE_XY);
@@ -646,23 +646,23 @@ namespace CppProject
 
 	IntType vertex_get_number(IntType buffer)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			return buf->numIndices;
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+			return vbuf->numIndices;
 		
 		return 0;
 	}
 
 	void vertex_normal(IntType buffer, RealType nx, RealType ny, RealType nz)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
-			buf->GetCurrentVertex(1).SetNormal(nx, ny, nz);
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
+			vbuf->GetCurrentVertex(1).SetNormal(nx, ny, nz);
 	}
 
 	void vertex_position_3d(IntType buffer, RealType x, RealType y, RealType z)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(0);
+			Vertex& vertex = vbuf->GetCurrentVertex(0);
 			vertex.x = x;
 			vertex.y = y;
 			vertex.z = z;
@@ -671,18 +671,18 @@ namespace CppProject
 
 	void vertex_submit(IntType buffer, IntType primitive, IntType texture)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			App->worldRaycast->Add(*buf, GFX->matrixM);
-			VB->Add(buf);
+			App->worldRaycast->AddObject(*vbuf, GFX->matrixM);
+			VB->Add(vbuf);
 		}
 	}
 
 	void vertex_texcoord(IntType buffer, RealType u, RealType v)
 	{
-		if (VertexBuffer* buf = FindVertexBuffer(buffer))
+		if (VertexBuffer* vbuf = FindVertexBuffer(buffer))
 		{
-			Vertex& vertex = buf->GetCurrentVertex(2);
+			Vertex& vertex = vbuf->GetCurrentVertex(2);
 			vertex.u = u;
 			vertex.v = v;
 		}
