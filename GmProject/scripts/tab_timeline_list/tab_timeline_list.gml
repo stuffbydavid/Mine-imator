@@ -38,7 +38,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 	if (setting_advanced_mode)
 	{
 		if (draw_button_icon("timeline/filter", listx + 8, bary + 4, 24, 24,
-			setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated ||setting_timeline_hide_ghosts || 
+			setting_timeline_hide_nonanimated || setting_timeline_hide_ghosts ||
 			!array_equals(timeline_hide_color_tag, array_create(array_length(timeline_hide_color_tag), false)),
 			icons.FILTER, null, false, "tooltip/tl/filter"))
 		{

@@ -14,10 +14,7 @@ function tl_update_list_filter(tl)
 	// Non-animated timeline filter (can still be clicked)
 	if (render_mode != e_render_mode.CLICK || !shader_check_uniform)
 	{
-		var parentstructure = (tl.parent != null && tl.parent.object_index = obj_timeline && type_is_structure(tl.parent.type));
-		if (!tl.animated && !tl.child_is_animated &&
-			(app.setting_timeline_hide_nonanimated ||
-			 (app.setting_timeline_hide_structure_blocks && tl.type = e_tl_type.BLOCK && parentstructure)))
+		if (app.setting_timeline_hide_nonanimated && !tl.animated && !tl.child_is_animated)
 			return false
 	}
 

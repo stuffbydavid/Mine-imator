@@ -4,12 +4,12 @@ function dir_get_vec3(dir)
 {
 	switch (dir)
 	{
-		case e_dir.EAST:	return vec3(1, 0, 0)
-		case e_dir.WEST:	return vec3(-1, 0, 0)
-		case e_dir.SOUTH:	return vec3(0, 1, 0)
-		case e_dir.NORTH:	return vec3(0, -1, 0)
-		case e_dir.UP:		return vec3(0, 0, 1)
-		case e_dir.DOWN:	return vec3(0, 0, -1)
+		case XP: return vec3(1, 0, 0)
+		case XN: return vec3(-1, 0, 0)
+		case YP: return vec3(0, 1, 0)
+		case YN: return vec3(0, -1, 0)
+		case ZP: return vec3(0, 0, 1)
+		case ZN: return vec3(0, 0, -1)
 	}
 	
 	return vec3(0, 0, 0)

@@ -13,38 +13,17 @@ function action_build_pick()
 	if (target.type = e_tl_type.MODEL_PART && target.part_of != null)
 		target = target.part_of
 	
-	if (target.type = e_tl_type.SCENERY)
+	if (type_is_structure(target.type))
 	{
 		if (app.place_block_pos = null)
 			return false
 
-		var data, block, stateid, res, needblocks;
-		res = target.temp.scenery
-		if (res = null || !res.ready)
-			return false
+		// Block data is needed from source file
+		with (target)
+			if (!tl_load_blocks())
+				return false
 
-		// Check for missing block palette/grid
-		needblocks = (array_length(res.block_meshes) = 0)
-		for (var s = 0; s < array_length(res.block_meshes); s++)
-		{
-			var mesh = res.block_meshes[s];
-			if (mesh != null && (mesh.block_palette_buffer = null || mesh.block_grid_buffer = null))
-				needblocks = true
-		}
-
-		// Load blocks only from source Schematic with no mesh generation
-		if (needblocks)
-		{
-			with (res)
-			{
-				if (!res_load_scenery_file(app.project_folder + "/" + filename, true))
-				{
-					error("error/load_schematic")
-					return false
-				}
-			}
-		}
-
+		var data, block, stateid;
 		with (target)
 			data = block_meshes_get_block(app.place_block_pos[X], app.place_block_pos[Y], app.place_block_pos[Z])
 		
@@ -53,6 +32,9 @@ function action_build_pick()
 		
 		if (block = null)
 			return false
+
+		if (block.tl_mesh)
+			stateid = block_set_state_id_value(block, stateid, "visible", "true")
 
 		pickname = block.name
 		pickstate = block_get_state_id_state_vars(block, stateid)
@@ -129,6 +111,14 @@ function action_build_pick()
 		}
 
 		sortlist_view(list, value, false)
+
+		// Focus on the picked block in world space
+		var focuspos = matrix_position(target.matrix);
+		if (type_is_structure(target.type))
+			focuspos = point3D_mul_matrix(vec3_mul(vec3_add(app.place_block_pos, 0.5), block_size), target.matrix_render)
+
+		with (app)
+			camera_work_set_focus(focuspos)
 		
 		return true
 	}

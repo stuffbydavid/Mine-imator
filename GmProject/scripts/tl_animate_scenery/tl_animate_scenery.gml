@@ -1,6 +1,9 @@
 function tl_animate_scenery()
 {
-	var list = temp.scenery.scenery_tl_list;
+	var list, hobj;
+	list = temp.scenery.scenery_tl_list
+	hobj = scenery_part_history
+
 	if (ds_list_valid(list))
 	{
 		if (part_list = null)
@@ -12,24 +15,15 @@ function tl_animate_scenery()
 
 		for (var p = 0; p < ds_list_size(part_list); p++)
 		{
-			var part, match;
+			var part, match, posmatch;
 			part = part_list[|p]
 			match = -1
+			posmatch = -1
 
 			for (var i = 0; i < ds_list_size(list); i++)
 			{
 				var source = list[|i];
-				if (part.type = e_tl_type.BLOCK)
-				{
-					if (source.model_name != "" || source.block.name != part.block_name)
-						continue
-				}
-				else if (part.type = e_tl_type.SPECIAL_BLOCK)
-				{
-					if (source.model_name != part.model_name)
-						continue
-				}
-				else
+				if (part.type != e_tl_type.BLOCK && part.type != e_tl_type.SPECIAL_BLOCK)
 					continue
 
 				if (used[i])
@@ -44,10 +38,25 @@ function tl_animate_scenery()
 					abs(part.value_default[e_value.POS_Y] - yy) < 0.01 &&
 					abs(part.value_default[e_value.POS_Z] - zz) < 0.01)
 				{
+					// Keep a changed block matched to its original position
+					if (posmatch < 0)
+						posmatch = i
+
+					if (part.type = e_tl_type.BLOCK)
+					{
+						if (source.model_name != "" || source.block.name != part.block_name)
+							continue
+					}
+					else if (source.model_name != part.model_name)
+						continue
+
 					match = i
 					break
 				}
 			}
+
+			if (match < 0)
+				match = posmatch
 
 			if (match < 0)
 				array_add(parts, part)
@@ -57,16 +66,42 @@ function tl_animate_scenery()
 
 		if (array_length(parts) > 0)
 		{
-			var hobj = scenery_part_history;
+			var savehobj = hobj;
+			if (savehobj = history_data)
+				savehobj = null
+
 			with (temp)
-				temp_set_scenery(scenery, false, hobj, true, parts)
+				temp_set_scenery(scenery, false, savehobj, true, parts)
 		}
 
 		if (scenery_animate_create)
+		{
 			for (var i = 0; i < ds_list_size(list); i++)
-				if (!used[i])
-					with (list[|i])
-						block_animate(other.id)
+			{
+				if (used[i])
+					continue
+					
+				// Leave missing timelines when their option stayed enabled
+				if (hobj != null && hobj.script = action_res_block_settings)
+				{
+					var source, tltype;
+					source = list[|i]
+					tltype = ""
+					
+					if (source.model_name != "")
+						tltype = mc_assets.model_name_map[?source.model_name].entity_tl_type
+					
+					if (tltype = "")
+						tltype = source.block.tl_type
+
+					if (hobj.old_tl_all_types || array_contains(hobj.old_tl_types, tltype))
+						continue
+				}
+
+				with (list[|i])
+					block_animate(other.id)
+			}
+		}
 	}
 
 	if (placed)

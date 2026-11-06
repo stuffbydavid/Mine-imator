@@ -41,6 +41,7 @@ function shader_startup_uniforms()
 		"uDefaultSubsurface",
 		"uDepth",
 		"uDepthBufferSize",
+		"uDepthTest",
 		"uDirection",
 		"uDistortAmount",
 		"uDistortChannels",

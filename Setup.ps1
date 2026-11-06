@@ -1,5 +1,5 @@
-# Usage: .\Setup.ps1 [Qt|OpenSSL|FFmpeg|Libzip|OpenAL|VisualStudio|CppGen|Release] [x64|x86]
-#   Qt|OpenSSL|FFmpeg|Libzip|OpenAL:
+# Usage: .\Setup.ps1 [Qt|OpenSSL|FFmpeg|Libzip|OpenAL|Zstd|VisualStudio|CppGen|Release] [x64|x86]
+#   Qt|OpenSSL|FFmpeg|Libzip|OpenAL|Zstd:
 #       Unzips or downloads external libraries into DEV_DIR, then builds them
 #   VisualStudio:
 #       Generates and opens a Visual Studio 2022/2026 solution
@@ -29,9 +29,9 @@ if (-not $env:DEV_DIR) {
 }
 
 $actionKey = $Action.ToLowerInvariant()
-$validActions = @("qt", "openssl", "ffmpeg", "libzip", "openal", "visualstudio", "cppgen", "release")
+$validActions = @("qt", "openssl", "ffmpeg", "libzip", "openal", "zstd", "visualstudio", "cppgen", "release")
 if ($actionKey -notin $validActions) {
-    throw "Unknown action '$Action'. Use Qt, OpenSSL, FFmpeg, Libzip, OpenAL, VisualStudio, CppGen or Release."
+    throw "Unknown action '$Action'. Use Qt, OpenSSL, FFmpeg, Libzip, OpenAL, Zstd, VisualStudio, CppGen or Release."
 }
 
 $architectureKey = $Architecture.ToLowerInvariant()
@@ -67,6 +67,7 @@ $ffmpegVersion = "5.1.10"
 $x264Revision = "0480cb05"
 $libzipVersion = "1.11.4"
 $openAlVersion = "1.24.3"
+$zstdVersion = "1.5.7"
 $openSslVersion = "3.0.21"
 $jomVersion = "1.1.7"
 
@@ -95,7 +96,8 @@ function Get-SafeSourceTarget {
         "x264\x264-master",
         "Libzip\libzip-$libzipVersion",
         "OpenAL\openal-soft-$openAlVersion",
-        "OpenSSL\openssl-$openSslVersion"
+        "OpenSSL\openssl-$openSslVersion",
+        "Zstd\zstd-$zstdVersion"
     )
     if ($allowedRelativePaths -notcontains $RelativePath) {
         throw "Unexpected source directory request: $RelativePath"
@@ -158,6 +160,14 @@ function Ensure-SourceArchive {
                     Destination = Join-Path $devDirectory "OpenAL"
                     RelativePath = "OpenAL\openal-soft-$openAlVersion"
                     Marker = "CMakeLists.txt"
+                }
+            }
+            "zstd" {
+                @{
+                    Archive = "zstd-$zstdVersion.tar.gz"
+                    Destination = Join-Path $devDirectory "Zstd"
+                    RelativePath = "Zstd\zstd-$zstdVersion"
+                    Marker = "build\cmake\CMakeLists.txt"
                 }
             }
             default { throw "Unknown source library: $library" }
@@ -478,6 +488,39 @@ function Build-OpenAL {
     Copy-BuiltFile -Source (Join-Path $buildDirectory "Release\OpenAL32.lib")
 }
 
+function Build-Zstd {
+    $zstdDirectory = Get-SafeSourceTarget -RelativePath "Zstd\zstd-$zstdVersion"
+    $buildDirectory = Join-Path $zstdDirectory "build-msvc${architectureSuffix}"
+    $installDirectory = Join-Path $zstdDirectory "install${architectureSuffix}"
+
+    Import-VisualStudioEnvironment -TargetArchitecture $architectureKey
+
+    & $cmake `
+        -S (Join-Path $zstdDirectory "build\cmake") -B $buildDirectory `
+        -G $cmakeGenerator -A $cmakeArchitecture `
+        "-DCMAKE_INSTALL_PREFIX=$installDirectory" -DCMAKE_INSTALL_LIBDIR=lib `
+        -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded `
+        -DZSTD_USE_STATIC_RUNTIME=ON -DZSTD_BUILD_STATIC=ON -DZSTD_BUILD_SHARED=OFF `
+        -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF -DZSTD_BUILD_CONTRIB=OFF `
+        -DZSTD_MULTITHREAD_SUPPORT=OFF -DZSTD_LEGACY_SUPPORT=OFF
+    
+    if ($LASTEXITCODE -ne 0) {
+        throw "Zstd configuration failed for $($cmakeArchitecture)."
+    }
+
+    & $cmake --build $buildDirectory --parallel $jobs --config Release
+    if ($LASTEXITCODE -ne 0) {
+        throw "Zstd build failed for $($cmakeArchitecture)."
+    }
+
+    & $cmake --install $buildDirectory --config Release
+    if ($LASTEXITCODE -ne 0) {
+        throw "Zstd installation failed for $($cmakeArchitecture)."
+    }
+
+    Copy-BuiltFile -Source (Join-Path $installDirectory "lib\zstd_static.lib")
+}
+
 function Invoke-OpenSSLTarget {
     param(
         [Parameter(Mandatory = $true)][string] $BuildTarget
@@ -662,7 +705,7 @@ function Build-Qt {
 switch ($actionKey) {
     "qt" {
         Ensure-GeneratedSources
-        Ensure-SourceArchive "OpenSSL" "FFmpeg" "OpenAL" "Libzip"
+        Ensure-SourceArchive "OpenSSL" "FFmpeg" "OpenAL" "Libzip" "Zstd"
         Build-Qt
     }
     "openssl" {
@@ -680,6 +723,10 @@ switch ($actionKey) {
     "openal" {
         Ensure-SourceArchive "OpenAL"
         Build-OpenAL
+    }
+    "zstd" {
+        Ensure-SourceArchive "Zstd"
+        Build-Zstd
     }
     "visualstudio" {
         Ensure-GeneratedSources

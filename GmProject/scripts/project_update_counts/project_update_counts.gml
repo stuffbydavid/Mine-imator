@@ -84,7 +84,7 @@ function project_update_counts()
 			glint_tex
 		];
 		
-		if (type = e_tl_type.BLOCK && part_of = null && !has_temp)
+		if (has_block_tex && part_of = null)
 		{
 			array_add(refs, block_tex)
 			
@@ -94,7 +94,7 @@ function project_update_counts()
 				array_add(refs, block_tex_normal)
 			}
 		}
-		else if (type = e_tl_type.SPECIAL_BLOCK && part_of = null && !has_temp)
+		else if (has_model_tex && part_of = null)
 		{
 			array_add(refs, model_tex)
 			

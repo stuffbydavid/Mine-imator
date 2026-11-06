@@ -199,7 +199,7 @@ function builder_read_litematic(map, blocksonly = false)
 					valid = res_load_scenery_block_map(blocksonly)
 
 			// Apply tile entities only after all regions have been flattened
-			for (var r = 0; r < array_length(regions) && valid && !blocksonly; r++)
+			for (var r = 0; r < array_length(regions) && valid; r++)
 			{
 				var region, start, size, entities;
 				region = regions[r]
@@ -275,6 +275,9 @@ function builder_read_litematic(map, blocksonly = false)
 
 					block_current = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z])
 					if (block_current = null)
+						continue
+
+					if (blocksonly && block_current.tl_type != "sign")
 						continue
 
 					block_state_id_current = builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z])

@@ -22,7 +22,7 @@ function builder_spawn_threads(number)
 		thread.builder_scenery = builder_scenery
 		thread.builder_scenery_legacy = builder_scenery_legacy
 		thread.block_meshes = block_meshes
-		thread.block_meshes_size = block_meshes_size
+		thread.block_meshes_num = block_meshes_num
 		
 		if (block_tl_list != null)
 			thread.block_tl_map = ds_int_map_create()

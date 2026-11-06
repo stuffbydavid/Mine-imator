@@ -10,6 +10,7 @@ function tl_new_part(part)
 		model_part_name = part.name
 		
 		part_of = other.id
+		part_root = other.part_root
 		inherit_rot_point = true
 		inherit_alpha = true
 		inherit_color = true

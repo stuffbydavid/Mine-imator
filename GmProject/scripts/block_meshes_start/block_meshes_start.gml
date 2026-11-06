@@ -1,6 +1,6 @@
 function block_meshes_start(keepblocks = false)
 {
-	var count = block_meshes_size[X] * block_meshes_size[Y] * block_meshes_size[Z];
+	var count = block_meshes_num[X] * block_meshes_num[Y] * block_meshes_num[Z];
 	
 	if (!keepblocks)
 	{
@@ -32,5 +32,5 @@ function block_meshes_start(keepblocks = false)
 	}
 
 	mc_builder.block_meshes = block_meshes
-	mc_builder.block_meshes_size = block_meshes_size
+	mc_builder.block_meshes_num = block_meshes_num
 }

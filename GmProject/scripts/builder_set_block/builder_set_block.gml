@@ -1,5 +1,5 @@
 /// CppSeparate void builder_set_block(ScopeAny, IntType, IntType, IntType, IntType, IntType, BoolType)
-/// @desc Write a structure block to GM buffers or C++ sections.
+/// @desc Write a block to GM buffers or C++ sections.
 /// @arg x
 /// @arg y
 /// @arg z

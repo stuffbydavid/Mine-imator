@@ -10,7 +10,10 @@ function tl_get_render_visible()
 	
 	if (type = e_tl_type.MODEL && (temp.model = null || temp.model.model_format = e_model_format.MIMODEL))
 		return false
-		
+
+	if (type = e_tl_type.STRUCTURE && array_length(blocks_added) = 0)
+		return false
+	
 	if (type = e_tl_type.PARTICLE_SPAWNER && !render_particles)
 		return false
 	

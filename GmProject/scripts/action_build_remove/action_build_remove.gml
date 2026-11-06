@@ -1,6 +1,7 @@
 function action_build_remove()
 {
-	var hobj, target, remove, structure;
+	var hobj, target, remove, structure, focuspos;
+	focuspos = null
 
 	if (history_undo)
 	{
@@ -30,7 +31,7 @@ function action_build_remove()
 				target = target.part_of
 
 			// Replace a block with air in an existing block mesh
-			if (target.type = e_tl_type.SCENERY)
+			if (type_is_structure(target.type))
 				return action_build_place(true)
 
 			// Only blocks
@@ -57,25 +58,43 @@ function action_build_remove()
 					for (var c = 0; c < ds_list_size(child.tree_list); c++)
 					{
 						var part = child.tree_list[|c];
-						if (part.type != e_tl_type.MODEL_PART || part.part_of != target)
-    						return false
+						if (part.part_of != target || (part.type != e_tl_type.MODEL_PART && part.type != e_tl_type.TEXT))
+							return false
 						
 						array_add(children, part)
 					}
 				}
 			}
 
+			// Clear retained block data before checking whether the structure is empty
+			var previous = null;
+			with (target)
+				previous = tl_update_build_block(true)
+
 			// Remove an empty structure together with its final block
 			structure = target.parent
 			remove = target
-			if (structure != app && structure.type = e_tl_type.STRUCTURE && ds_list_size(structure.tree_list) = 1 && structure.tree_list[|0] = target)
+			if (structure != app && structure.type = e_tl_type.STRUCTURE && array_length(structure.blocks_added) = 0 &&
+				ds_list_size(structure.tree_list) = 1 && structure.tree_list[|0] = target)
 				remove = structure
 
 			hobj = history_set(action_build_remove)
 			hobj.remove_save_id = remove.save_id
 			hobj.remove_save_obj = history_save_tl(remove)
 			hobj.build_structure_removed = (remove = build_structure)
-			
+
+			// Capture waterlogging before the retained cell was cleared
+			if (is_array(previous) && array_length(previous) > 0)
+			{
+				var savedblock = hobj.remove_save_obj;
+				if (remove != target)
+					savedblock = savedblock.tree_save_obj[0]
+
+				savedblock.block_build_waterlogged = previous[0][3]
+			}
+
+			// Retain the removed block's world position before deleting its timeline
+			focuspos = matrix_position(target.matrix)
 		}
 
 		place_target_tl = null
@@ -110,6 +129,9 @@ function action_build_remove()
 	app_update_tl_edit()
 	
 	project_update_counts()
+
+	if (focuspos != null)
+		camera_work_set_focus(focuspos)
 	
 	return true
 }

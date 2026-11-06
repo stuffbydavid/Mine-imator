@@ -46,6 +46,35 @@ function block_set_bed()
 		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "facing", facing)
 	}
 	
+	if (builder_mode = e_builder_mode.RESOLVE_STATE)
+		return 0
+
+	// Use the same half offset for connection checks and standalone geometry
+	var connected, offset;
+	connected = block_get_connect(block_current, block_state_id_current)
+	if (connected = null)
+		return null
+	offset = connected[0]
+
+	// Find connected block position
+	if (builder_mode = e_builder_mode.GET_CONNECT)
+	{
+		var pos, state;
+		pos = vec3_add(build_pos, offset)
+		if (builder_get_block(pos[X], pos[Y], pos[Z]) != block_current)
+			return null
+
+		state = builder_get_state_id(pos[X], pos[Y], pos[Z])
+		if (block_get_state_id_value(block_current, state, "part") != block_get_state_id_value(block_current, connected[1], "part") ||
+			block_get_state_id_value(block_current, state, "color") != block_get_state_id_value(block_current, block_state_id_current, "color"))
+			return null
+
+		if (!builder_scenery_legacy && block_get_state_id_value(block_current, state, "facing") != facing)
+			return null
+
+		return pos
+	}
+
 	if (builder_scenery || build_edit)
 	{
 		// Cull each half against its own neighbors, without the standalone bed's offset
@@ -61,16 +90,10 @@ function block_set_bed()
 	// Pick models
 	var headmodel, footmodel;
 	headmodel = block_current.state_id_model_obj[block_state_id_current].model[0]
-	footmodel = block_current.state_id_model_obj[block_set_state_id_value(block_current, block_state_id_current, "part", "foot")].model[0]
+	footmodel = block_current.state_id_model_obj[connected[1]].model[0]
 	
-	if (facing = "north")
-		footmodel.offset[Y] = block_size
-	else if (facing = "south")
-		footmodel.offset[Y] = -block_size
-	else if (facing = "east")
-		footmodel.offset[X] = -block_size
-	else if (facing = "west")
-		footmodel.offset[X] = block_size
+	footmodel.offset[X] = offset[X] * block_size
+	footmodel.offset[Y] = offset[Y] * block_size
 	
 	return [ headmodel.rendermodel_id, footmodel.rendermodel_id ]
 }

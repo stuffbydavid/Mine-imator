@@ -9,12 +9,12 @@ function res_load_scenery_block_map(blocksonly = false)
 	if (blocksonly)
 		return true
 
-	var res, tlamount, blockcounts, meshwidth, meshheight;
+	var res, tlamount, blockcounts, meshesx, meshesy;
 	res = id
 	tlamount = 0
 	blockcounts = array_create(array_length(block_objs), 0)
-	meshwidth = block_meshes_size[X]
-	meshheight = block_meshes_size[Y]
+	meshesx = block_meshes_num[X]
+	meshesy = block_meshes_num[Y]
 
 	block_meshes_active = array_create(array_length(block_meshes), false)
 
@@ -50,7 +50,7 @@ function res_load_scenery_block_map(blocksonly = false)
 					continue
 				}
 
-				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshwidth, meshheight);
+				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshesx, meshesy);
 				res.block_meshes_active[@meshindex] = true
 
 				if (!keepwater && builder_get_waterlogged(build_pos[X], build_pos[Y], build_pos[Z]))

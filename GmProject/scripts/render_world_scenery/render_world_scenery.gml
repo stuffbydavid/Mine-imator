@@ -1,20 +1,42 @@
+/// @desc Renders a schematic source or the current structure's meshes.
 /// @arg scenery
 /// @arg diffuse
 /// @arg normal
 /// @arg material
-/// @arg repeatenable
-/// @arg repeat
+/// @arg [repeatenable]
+/// @arg [repeat]
 
-function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable, rep)
+function render_world_scenery(scenery, resdif, resnorm, resmat, repeatenable = null, rep = null)
 {
-	if (!scenery.ready)
+	if (scenery = null && object_index = obj_timeline)
+	{
+		if (type = e_tl_type.STRUCTURE)
+		{
+			render_world_block_meshes(id, resdif, resnorm, resmat)
+			return 0
+		}
+
+		if (type = e_tl_type.SCENERY && temp != null)
+			scenery = temp.scenery
+	}
+
+	if (scenery = null || !scenery.ready)
 		return 0
+
+	if (repeatenable = null)
+	{
+		repeatenable = temp.block_repeat_enable
+		rep = temp.block_repeat
+	}
 
 	var meshobj, meshcount;
 	meshobj = scenery
 	meshcount = array_length(scenery.block_meshes)
 	if (object_index = obj_timeline && type = e_tl_type.SCENERY && array_length(block_meshes_edit) > 0)
+	{
 		meshobj = id
+		meshcount = block_meshes_num[X] * block_meshes_num[Y] * block_meshes_num[Z]
+	}
 	
 	if (!repeatenable)
 		render_world_block_meshes(meshobj, resdif, resnorm, resmat, 0, meshcount)

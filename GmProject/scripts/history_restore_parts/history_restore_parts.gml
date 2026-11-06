@@ -6,7 +6,8 @@ function history_restore_parts()
 	for (var t = 0; t < part_amount; t++)
 	{
 		var tl = history_restore_tl(part_save_obj[t]);
-		ds_list_add(tl.part_of.part_list, tl)
+		if (ds_list_find_index(tl.part_of.part_list, tl) < 0)
+			ds_list_add(tl.part_of.part_list, tl)
 	}
 	
 	// Restore child positions in tree

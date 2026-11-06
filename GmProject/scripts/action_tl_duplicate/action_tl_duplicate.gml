@@ -57,7 +57,7 @@ function action_tl_duplicate()
 		{
 			with (obj_timeline)
 			{
-				if (!selected || part_of != null || copy != null || parent_is_selected)
+				if (!selected || (part_of != null && !block_timeline) || copy != null || parent_is_selected)
 					continue
 				
 				tl_duplicate()
@@ -71,7 +71,7 @@ function action_tl_duplicate()
 		{
 			with (contexttl)
 			{
-				if (part_of != null || copy != null || parent_is_selected)
+				if ((part_of != null && !block_timeline) || copy != null || parent_is_selected)
 					continue
 				
 				tl_duplicate()

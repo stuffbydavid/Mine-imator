@@ -1,4 +1,5 @@
 /// @desc Create an empty structure at a position with an unique name.
+/// @arg position
 
 function tl_new_structure(pos)
 {
@@ -26,6 +27,12 @@ function tl_new_structure(pos)
 		}
 		
 		animated = false
+
+		texture_filtering = true
+		inherit_rot_point = true
+		inherit_alpha = true
+		inherit_color = true
+		inherit_texture = true
 		
 		tl_value_set_vec3(e_value.POS_X, pos)
 		tl_value_set_vec3(e_value.POS_X, pos, true)

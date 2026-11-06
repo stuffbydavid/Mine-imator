@@ -18,16 +18,19 @@ function block_animate_text(text, textpos, textrot, textscale, textcolor, textgl
 		// Keep text in the block's part list while parenting it to the sign part
 		inherit_rot_point = true
 		part_of = other.id
+		
 		ds_list_add(other.part_list, id)
 		tl_set_parent(textparent)
 
 		value_default[e_value.TEXT] = text
 		value[e_value.TEXT] = text
+		
 		tl_update_scenery_part()
 
 		tl_value_set_vec3(e_value.POS_X, textpos, true)
 		tl_value_set_vec3(e_value.ROT_X, textrot, true)
 		tl_value_set_vec3(e_value.SCA_X, vec3(textscale), true)
+		
 		value_default[e_value.RGB_MUL] = textcolor
 		value_default[e_value.EMISSIVE] = textemissive
 

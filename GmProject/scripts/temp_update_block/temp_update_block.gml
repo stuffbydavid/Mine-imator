@@ -3,9 +3,9 @@
 function temp_update_block()
 {
 	if (block_repeat_enable)
-		block_meshes_size = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
+		block_meshes_num = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
 	else
-		block_meshes_size = vec3(1)
+		block_meshes_num = vec3(1)
 
 	block_meshes_start()
 
@@ -24,11 +24,17 @@ function temp_update_block()
 			build_size = vec3(1)
 		
 		build_randomize = other.block_randomize
-		build_transform = true
+		build_transform = other.block_transform
 		
-		// Keep original local orientation
-		if (other.part_of != null && build_single_block != null && build_single_block.timeline)
-			build_transform = build_single_block.tl_build_transform
+		// Keep the source orientation when generating scenery parts
+		if (other.part_of != null)
+		{
+			build_transform = true
+			if (build_single_block != null && build_single_block.timeline)
+				build_transform = build_single_block.tl_build_transform
+
+			other.block_transform = build_transform
+		}
 		
 		builder_start()
 		builder_spawn_threads(1)

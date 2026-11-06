@@ -21,9 +21,10 @@ function tl_copy_temp(src, dest)
 			dest.block_center_legacy = block_center_legacy
 			dest.block_center = block_center
 			dest.block_randomize = block_randomize
+			dest.block_transform = block_transform
 			dest.block_meshes = block_meshes
+			dest.block_meshes_num = block_meshes_num
 			dest.block_meshes_active = block_meshes_active
-			dest.block_meshes_size = block_meshes_size
 			dest.block_meshes_transparent = block_meshes_transparent
 			
 			block_meshes = []
@@ -114,5 +115,7 @@ function tl_copy_temp(src, dest)
 		
 		self.temp = dest
 		has_temp = (dest.object_index = obj_template)
+
+		tl_update_value_types()
 	}
 }

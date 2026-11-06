@@ -358,7 +358,7 @@ function res_load(reload = false)
 				var rendermodel = block_load_render_model(blockmodel, vec3(0), false, false, 0, id);
 				
 				// Generate triangles from render model
-				block_meshes_size = vec3(1)
+				block_meshes_num = vec3(1)
 				block_meshes_start()
 				with (mc_builder)
 				{

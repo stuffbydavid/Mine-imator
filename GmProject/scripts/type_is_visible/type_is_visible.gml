@@ -7,6 +7,5 @@ function type_is_visible(type)
 			type != e_tl_type.AUDIO_TRACK &&
 			type != e_tl_type.PATH_POINT &&
 			type != e_tl_type.ENVIRONMENT &&
-			type != e_tl_type.STRUCTURE &&
 			type != e_tl_type.FOLDER)
 }

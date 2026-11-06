@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"dir_get_vec3",
   "parent":{
-    "name":"Direction",
-    "path":"folders/Scripts/Utility/Direction.yy",
+    "name":"Utility",
+    "path":"folders/Scripts/Utility.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

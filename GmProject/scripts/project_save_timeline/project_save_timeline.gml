@@ -1,5 +1,10 @@
 function project_save_timeline()
 {
+	// Export scenery parts independently when their scenery is not saved
+	var partof = part_of;
+	if (partof != null && !partof.save)
+		partof = null
+
 	json_save_object_start()
 
 		json_save_var("id", save_id)
@@ -22,7 +27,7 @@ function project_save_timeline()
 		if (type = e_tl_type.TEXT)
 		{
 			json_save_var_bool("text_template_settings", true)
-			if (part_of = null && !has_temp)
+			if (partof = null && !has_temp)
 			{
 				json_save_var_save_id("text_font", text_font)
 				json_save_var_bool("text_3d", text_3d)
@@ -34,11 +39,23 @@ function project_save_timeline()
 		if (((type = e_tl_type.EQUIPMENT || type = e_tl_type.SPECIAL_BLOCK) && part_of != null) ||
 			(type = e_tl_type.SPECIAL_BLOCK && !has_temp))
 		{
-			if (part_of = null && !has_temp)
+			if (partof = null && !has_temp)
 			{
-				json_save_var_save_id("model_tex", model_tex)
-				json_save_var_save_id("model_tex_material", model_tex_material)
-				json_save_var_save_id("model_tex_normal", model_tex_normal)
+				var tex, material, normal;
+				tex = model_tex
+				material = model_tex_material
+				normal = model_tex_normal
+
+				if (block_timeline)
+				{
+					tex = temp_get_model_texobj(null)
+					material = temp_get_model_tex_material_obj(null)
+					normal = temp_get_model_tex_normal_obj(null)
+				}
+
+				json_save_var_save_id("model_tex", tex)
+				json_save_var_save_id("model_tex_material", material)
+				json_save_var_save_id("model_tex_normal", normal)
 				json_save_var_bool("model_use_blend_color", model_use_blend_color)
 				json_save_var_color("model_blend_color", model_blend_color)
 			}
@@ -52,14 +69,20 @@ function project_save_timeline()
 		if (type = e_tl_type.CAMERA_EFFECT)
 			json_save_var("camera_effect_type", camera_effect_type)
 		
-		if (part_of != null)
+		if (partof != null)
 		{
-			json_save_var_save_id("part_of", part_of)
+			json_save_var_save_id("part_of", partof)
 			
-			if (part_root != null)
+			if (part_root != null && part_root.save)
 				json_save_var_save_id("part_root", part_root)
 		}
 
+		if (block_build_name != "")
+		{
+			json_save_var("block_build_name", block_build_name)
+			json_save_var_state_vars("block_build_state", block_build_state)
+		}
+		
 		// Pattern values
 		if ((part_of != null || (type = e_tl_type.SPECIAL_BLOCK && !has_temp)) &&
 			pattern_type != "" && pattern_base_color != null)
@@ -93,8 +116,16 @@ function project_save_timeline()
 			}
 		}
 
+		// Structure texture
+		if (type = e_tl_type.STRUCTURE)
+		{
+			json_save_var_save_id("block_tex", block_tex)
+			json_save_var_save_id("block_tex_material", block_tex_material)
+			json_save_var_save_id("block_tex_normal", block_tex_normal)
+		}
+
 		// Added blocks
-		if (type = e_tl_type.SCENERY && array_length(blocks_added) > 0)
+		if (type_is_structure(type) && array_length(blocks_added) > 0)
 		{
 			json_save_array_start("blocks_added_palette")
 
@@ -110,6 +141,9 @@ function project_save_timeline()
 						vars = block_get_state_id_state_vars(block, entry[1])
 						for (var s = 0; s < array_length(vars); s += 2)
 							array_add(paletteentry, vars[s] + "=" + vars[s + 1])
+
+						if (entry[2])
+							array_add(paletteentry, "waterlogged=true")
 					}
 
 					json_save_array_value(paletteentry)
@@ -137,12 +171,25 @@ function project_save_timeline()
 				json_save_var("name", block_name)
 				json_save_var_state_vars("state", block_state)
 				
-				if (part_of = null && !has_temp)
+				if (partof = null && !has_temp)
 				{
-					json_save_var_save_id("tex", block_tex)
-					json_save_var_save_id("tex_material", block_tex_material)
-					json_save_var_save_id("tex_normal", block_tex_normal)
+					var tex, material, normal;
+					tex = block_tex
+					material = block_tex_material
+					normal = block_tex_normal
+
+					if (block_timeline)
+					{
+						tex = temp_get_block_texobj(null)
+						material = temp_get_block_tex_material_obj(null)
+						normal = temp_get_block_tex_normal_obj(null)
+					}
+
+					json_save_var_save_id("tex", tex)
+					json_save_var_save_id("tex_material", material)
+					json_save_var_save_id("tex_normal", normal)
 					json_save_var_bool("randomize", block_randomize)
+					json_save_var_bool("transform", block_transform)
 					json_save_var_bool("repeat_enable", block_repeat_enable)
 					json_save_var_point3D("repeat", block_repeat)
 					json_save_var_bool("center", block_center)

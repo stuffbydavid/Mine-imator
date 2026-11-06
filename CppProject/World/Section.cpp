@@ -48,7 +48,7 @@ namespace CppProject
 			sectionX = builderPos.x >> 4;
 			sectionY = builderPos.z >> 4;
 			sectionZ = builderPos.y >> 4;
-			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsNum.x + sectionX;
 
 			Builder::sections[sectionPos] = this;
 		}
@@ -205,7 +205,7 @@ namespace CppProject
 									chunk->numTimelines++;
 								
 								builder.paletteIndices[builderIndex] = AddBuilderState({
-									(uint16_t)block->block_id.ToInt(),
+									(uint16_t)block->block_id,
 									(uint16_t)global::legacy_block_state_id[legacyId][legacyData].ToInt(),
 									false
 								});
@@ -491,7 +491,7 @@ namespace CppProject
 				{
 					if (obj_block* block = Builder::mcBlockIdObjMap.value(id, nullptr))
 					{
-						BuilderState state = { (uint16_t)block->block_id.ToInt(), 0, World::mcBlockIdWaterloggedMap.value(id, false) };
+						BuilderState state = { (uint16_t)block->block_id, 0, World::mcBlockIdWaterloggedMap.value(id, false) };
 						ArrType vars = Builder::mcBlockIdStateVarsMap.value(id, ArrType());
 
 						if (entry && entry->HasKey(propertiesName)) // Parse properties
@@ -878,7 +878,7 @@ namespace CppProject
 		sectionX = (pos.x + offset.x) >> 4;
 		sectionY = (pos.y + offset.y) >> 4;
 		sectionZ = (pos.z + offset.z) >> 4;
-		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsNum.x + sectionX;
 
 		return Builder::sections.Value(sectionPos);
 	}

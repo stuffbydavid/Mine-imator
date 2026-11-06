@@ -10,10 +10,10 @@ namespace CppProject
 {
 	void vertex_add(VecType pos, VecType normal, VecType texcoord)
 	{
-		IntType buffer = global::vbuffer_current;
-		vertex_position_3d(buffer, pos.x, pos.y, pos.z);
-		vertex_normal(buffer, normal.x, normal.y, normal.z);
-		vertex_texcoord(buffer, texcoord.x, texcoord.y);
+		IntType vbuf = global::vbuffer_current;
+		vertex_position_3d(vbuf, pos.x, pos.y, pos.z);
+		vertex_normal(vbuf, normal.x, normal.y, normal.z);
+		vertex_texcoord(vbuf, texcoord.x, texcoord.y);
 
 		vertex_add_wave(pos.z);
 	}
@@ -111,17 +111,43 @@ namespace CppProject
 
 	IntType vbuffer_copy(IntType id)
 	{
-		if (VertexBuffer* buffer = FindVertexBuffer(id))
-			if (VertexBuffer* copy = buffer->Copy())
+		if (VertexBuffer* vbuf = FindVertexBuffer(id))
+			if (VertexBuffer* copy = vbuf->Copy())
 				return copy->id;
+
+		return null_;
+	}
+
+	VarType vbuffer_get_bounds(IntType id, MatrixType transform)
+	{
+		VertexBuffer* vbuf = FindVertexBuffer(id);
+		if (!vbuf || !vbuf->valid || !vbuf->completed || !vbuf->numIndices || vbuf->bounds.empty)
+			return null_;
+
+		// Project the cached local bounds into the requested space
+		Bounds bounds;
+		bounds.AddBounds(vbuf->bounds, transform.matrix);
+
+		return ArrType::From({ bounds.minPoint, bounds.maxPoint });
+	}
+
+	VarType vbuffer_fit_bounds(IntType id, VecType blockPos)
+	{
+		if (VertexBuffer* vbuf = FindVertexBuffer(id))
+		{
+			// Fit only triangles recorded for the requested block position
+			Bounds bounds = vbuf->FitBounds(blockPos);
+			if (!bounds.empty)
+				return ArrType::From({ bounds.minPoint, bounds.maxPoint });
+		}
 
 		return null_;
 	}
 
 	void vbuffer_update(IntType id)
 	{
-		if (VertexBuffer* buffer = FindVertexBuffer(id))
-			buffer->UpdateBuffers();
+		if (VertexBuffer* vbuf = FindVertexBuffer(id))
+			vbuf->UpdateBuffers();
 	}
 
 	void submit_batch()

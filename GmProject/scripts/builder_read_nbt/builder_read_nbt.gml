@@ -148,7 +148,7 @@ function builder_read_nbt(structuremap, blocksonly = false)
 			with (res)
 				valid = res_load_scenery_block_map(blocksonly)
 
-			for (var i = 0; i < ds_list_size(blocklist) && valid && !blocksonly; i++)
+			for (var i = 0; i < ds_list_size(blocklist) && valid; i++)
 			{
 				var blockmap, pos, blocknbt, entity;
 				blockmap = blocklist[|i]
@@ -167,6 +167,9 @@ function builder_read_nbt(structuremap, blocksonly = false)
 				build_pos_index = build_pos[Z] * build_size_xy + build_pos[Y] * build_size[X] + build_pos[X]
 				block_current = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z])
 				if (block_current = null)
+					continue
+
+				if (blocksonly && block_current.tl_type != "sign")
 					continue
 
 				block_state_id_current = builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z])

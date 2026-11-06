@@ -1,4 +1,4 @@
-function builder_read_schematic_tile_entities()
+function builder_read_schematic_tile_entities(blocksonly = false)
 {
 	// Tile entities
 	if (ds_list_valid(sch_tileentity_list))
@@ -63,6 +63,10 @@ function builder_read_schematic_tile_entities()
 						
 						block_current = builder_get_block(build_pos[X], build_pos[Y], build_pos[Z])
 						if (block_current = null)
+							continue
+
+						// Sign text determines whether source geometry belongs to a timeline
+						if (blocksonly && block_current.tl_type != "sign")
 							continue
 						
 						block_state_id_current = builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z])

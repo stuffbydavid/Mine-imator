@@ -18,8 +18,6 @@ function res_load_scenery()
 			var err = false;
 			res_load_scenery_filter_mask()
 			
-			mc_builder.sch_entities = []
-
 			// Load from world when requested or when the schematic is unavailable
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
@@ -204,6 +202,10 @@ function res_load_scenery()
 					{
 						model_name = entity[0]
 						model_state = entity[1]
+						animated = false
+						animated_parts = []
+						block_build_name = ""
+						block_build_state = []
 						position = vec3(entity[2][X] * block_size, entity[2][Y] * block_size, entity[2][Z] * block_size)
 						rotation = entity[3]
 						rot_point = entity[4]

@@ -748,7 +748,7 @@
 		"create": "Create",
 		"create_edit": "Create & edit",
 		"world_tip_1": "Select a region of your Minecraft world to use in the project.",
-		"world_tip_2": "When the region is modified in-game, press \"Reload resource\" under Resources to apply the changes.",
+		"world_tip_2": "When the region is modified in-game, press \"Reload from world\" under Resources to apply the changes.",
 		"sound_tip": "Install Minecraft Java Edition to browse sounds and music from the game.",
 		"audio_track_tip": "An empty audio track that can play imported sounds from Minecraft or from files such as .mp3 and .wav.",
 		"point_light_tip": "Point lights shine in all directions, like a lightbulb.",
@@ -2448,7 +2448,6 @@
 		"carpet": "Carpet",
 		"terracotta": "Terracotta",
 		"coal_block": "Block of Coal",
-		"packed_ice": "Packed Ice",
 		"double_plant": "Double Plant",
 		"red_sandstone": "Red Sandstone",
 		"end_rod": "End Rod",
@@ -2473,7 +2472,6 @@
 		"glazed_terracotta": "Glazed Terracotta",
 		"concrete": "Concrete",
 		"concrete_powder": "Concrete Powder",
-		"blue_ice": "Blue Ice",
 		"conduit": "Conduit",
 		"sea_pickle": "Sea Pickle",
 		"turtle_egg": "Turtle Egg",
@@ -2531,7 +2529,6 @@
 		"netherite_block": "Block of Netherite",
 		"soul_soil": "Soul Soil",
 		"nether_gold_ore": "Nether Gold Ore",
-		"crying_obsidian": "Crying Obsidian",
 		"respawn_anchor": "Respawn Anchor",
 		"lodestone": "Lodestone",
 		"blackstone": "Blackstone",
@@ -2814,6 +2811,11 @@
 				"left": "Left",
 				"unconnected": "Unconnected",
 				"center": "Center",
+				"obsidian": "Obsidian",
+				"crying_obsidian": "Crying Obsidian",
+				"ice": "Ice",
+				"packed_ice": "Packed Ice",
+				"blue_ice": "Blue Ice",
 				"normal": "Normal",
 				"soul_torch": "Soul Torch",
 				"copper_torch": "Copper Torch",
@@ -3954,8 +3956,7 @@
 		"blocks": "Reading blocks...",
 		"download": "Downloading skins... (%1 / %2, %3 failed)",
 		"model": "Creating 3D model...",
-		"piece_of": "Piece of %1",
-		"save_cache": "Do you want to cache the 3D model of the scenery to instantly load it next time?\n\nThis will require at least %1 of space in the project folder."
+		"piece_of": "Piece of %1"
 	},
 	"load_audio/": {
 		"read": "Reading audio..."
@@ -4011,8 +4012,6 @@
 			"offset": "Interval offset"
 		},
 		"filter_tags": "Filter out tags",
-		"hide_structure_blocks": "Hide structure blocks",
-		"hide_structure_blocks_tip": "Hide blocks from the list with \"Animated\" turned off and parented to structures or scenery.",
 		"hide_nonanimated": "Hide non-animated timelines",
 		"hide_nonanimated_tip": "Hide timelines from the list with \"Animated\" turned off.",
 		"hide_ghosts": "Hide ghost timelines",

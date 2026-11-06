@@ -2,6 +2,9 @@
 
 function tl_update_value_types()
 {
+	has_block_tex = (type = e_tl_type.STRUCTURE || (type = e_tl_type.BLOCK && !has_temp))
+	has_model_tex = (type = e_tl_type.SPECIAL_BLOCK && !has_temp)
+
 	for (var v = 0; v < e_value_type.amount; v++)
 		value_type[v] = false
 	
