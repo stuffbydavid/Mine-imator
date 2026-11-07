@@ -240,6 +240,35 @@ namespace CppProject
 		Gzip::WriteCompressed(Serialize(), filename);
 	}
 
+	ArrType SchematicExport::GetTimelineData() const
+	{
+		ArrType timelines, hidden;
+		QSet<obj_timeline*> included;
+		for (const Block& block : parts)
+		{
+			obj_block* object = ObjType(obj_block, global::block_objs.Value(block.state.blockId));
+			if (!object->timeline)
+			{
+				ArrType source = block_meshes_get_block(Scope<obj_timeline>(timeline), block.pos.x, block.pos.y, block.pos.z);
+				obj_block* sourceBlock = ObjTypeOpt(obj_block, global::block_objs.Value(source.IntValue(0)));
+				BoolType waterlogged = keepWater && (source.BoolValue(2) || (sourceBlock && sourceBlock->name == StringType("water"))) &&
+					(!resource || !sourceBlock || !block_get_filtered(resource->id, sourceBlock->id));
+				hidden.Append(ArrType::From({ block.pos - bounds.minPoint, waterlogged ? 1 : 0 }));
+			}
+
+			if (!included.contains(block.timeline))
+			{
+				included.insert(block.timeline);
+				timelines.Append(block.timeline->save_id);
+			}
+		}
+
+		for (const Painting& painting : paintings)
+			timelines.Append(painting.timeline->save_id);
+
+		return ArrType::From({ bounds.minPoint * block_size_, timelines, hidden });
+	}
+
 	void SchematicExport::SaveResource(obj_resource* resource)
 	{
 		try
@@ -430,7 +459,7 @@ namespace CppProject
 					(grid->data[gridBytes + p / 8] & (1 << (p % 8))) != 0
 				};
 				obj_block* block = state.blockId ? ObjTypeOpt(obj_block, global::block_objs.Value(state.blockId)) : nullptr;
-				BoolType connected = (resource->scenery_legacy && block && block->has_connect && !block_get_filtered(resource->id, block->id));
+				BoolType connected = (resource->scenery_legacy && block && block->set_script >= 0 && !block_get_filtered(resource->id, block->id));
 				resolve.append(connected);
 				remap.append(connected ? 0 : GetPaletteIndex(state));
 			}
@@ -462,11 +491,7 @@ namespace CppProject
 					uint32_t value = remap[index];
 
 					if (resolve[index])
-					{
-						// Legacy doors and double chests share state across neighboring blocks
-						ArrType state = block_meshes_get_block(Scope<obj_timeline>(timeline), target.x, target.y, target.z, false, true);
-						value = GetPaletteIndex({ uint16_t(state.IntValue(0)), uint16_t(state.IntValue(1)), state.BoolValue(2) });
-					}
+						value = GetPaletteIndex(GetResourceState(target));
 
 					indices[GetOffset(target)] = value;
 				}
@@ -1004,6 +1029,26 @@ namespace CppProject
 
 	QVector<SchematicExport::Block> SchematicExport::GetConnectedBlocks(obj_block* block, IntType state)
 	{
+		// Resolve missing connected halves using the timeline's model state
+		if (block->tl_has_model_state && block->has_connect && !block_get_connect(block->id, state).IsArray())
+		{
+			VarType mapped = block_get_from_timeline(block->tl_model_name, block_get_timeline_model_state(block->id, state));
+			if (mapped.IsArray() && mapped.Arr().IntValue(0) == block->block_id)
+			{
+				IntType modelState = mapped.Arr().IntValue(1);
+				VarType connected = block_get_connect(block->id, modelState);
+				ArrType vars = block_get_state_id_state_vars(block->id, state);
+				
+				for (IntType i = 0; i + 1 < vars.Size(); i += 2)
+				{
+					VarType value = block_get_state_id_value(block->id, modelState, vars.Value(i));
+					if (vars.Value(i + 1) == StringType("legacy") ||
+						(connected.IsArray() && value != block_get_state_id_value(block->id, connected.Arr().IntValue(1), vars.Value(i))))
+						state = block_set_state_id_value(block->id, state, vars.Value(i), value);
+				}
+			}
+		}
+
 		QVector<Block> connectedBlocks;
 		ArrType connected = block_build_get_connect(block->id, state, VecType(0, 0, 0));
 		for (IntType i = 0; i < connected.Size(); i++)
@@ -1016,6 +1061,33 @@ namespace CppProject
 		}
 
 		return connectedBlocks;
+	}
+
+	BuilderState SchematicExport::GetResourceState(const WorldVec& pos)
+	{
+		// Resolve block states that depend on adjacent blocks
+		ArrType data = block_meshes_get_block(Scope<obj_timeline>(timeline), pos.x, pos.y, pos.z, false, true);
+		BuilderState state = { uint16_t(data.IntValue(0)), uint16_t(data.IntValue(1)), data.BoolValue(2) };
+		obj_block* block = state.blockId ? ObjTypeOpt(obj_block, global::block_objs.Value(state.blockId)) : nullptr;
+
+		// Legacy upper halves may store incomplete facing, hinge or variant values
+		if (!block || block_get_state_id_value(block->id, state.stateId, StringType("half")) != StringType("upper"))
+			return state;
+
+		VarType connected = block_get_connect(block->id, state.stateId);
+		if (!connected.IsArray())
+			return state;
+
+		VecType offset = connected.Arr().Value(0).ToVec();
+		WorldVec lower = pos + WorldVec(offset.y, -offset.x, offset.z);
+		ArrType lowerState = block_meshes_get_block(Scope<obj_timeline>(timeline), lower.x, lower.y, lower.z, false, true);
+
+		// Copy the resolved lower state while keeping the upper half and its waterlogging
+		if (lowerState.IntValue(0) == state.blockId &&
+			block_get_state_id_value(block->id, lowerState.IntValue(1), StringType("half")) == StringType("lower"))
+			state.stateId = uint16_t(block_set_state_id_value(block->id, lowerState.IntValue(1), StringType("half"), StringType("upper")).ToInt());
+
+		return state;
 	}
 
 	NbtCompound* SchematicExport::GetSignText(obj_timeline* sign, BoolType back)

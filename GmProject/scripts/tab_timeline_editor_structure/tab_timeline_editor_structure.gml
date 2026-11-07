@@ -13,13 +13,8 @@ function tab_timeline_editor_structure()
 		action_tl_export_schematic()
 	setx -= 28
 
-	draw_button_icon("timeline_editor/create_template", setx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "timeline_editor/create_template_" + typename + "_tip")
-	setx -= 28
-
-	draw_button_icon("timeline_editor/paste_blocks", setx, dy, 24, 24, false, icons.PASTE, null, false, "timeline_editor/paste_blocks_tip")
-	setx -= 28
-
-	draw_button_icon("timeline_editor/copy_blocks", setx, dy, 24, 24, false, icons.COPY, null, false, "timeline_editor/copy_blocks_tip")
+	if (draw_button_icon("timeline_editor/create_template", setx, dy, 24, 24, false, icons.ASSET_ADD, null, false, "timeline_editor/create_template_" + typename + "_tip"))
+		action_tl_create_scenery_temp()
 	setx -= 28
 
 	if (scenery)

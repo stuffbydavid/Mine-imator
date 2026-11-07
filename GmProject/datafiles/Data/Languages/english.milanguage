@@ -4054,8 +4054,6 @@
 		"blocks_modified": "Blocks modified",
 		"blocks": "Blocks",
 		"restore_blocks_tip": "Restore changes",
-		"copy_blocks_tip": "Copy blocks",
-		"paste_blocks_tip": "Paste blocks",
 		"create_template_scenery_tip": "Create a new template from the modified scenery",
 		"create_template_structure_tip": "Create a new scenery template from the structure",
 		"export_schematic_scenery_tip": "Export modified scenery as Schematic",

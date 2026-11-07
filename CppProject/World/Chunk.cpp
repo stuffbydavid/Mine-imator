@@ -737,20 +737,20 @@ namespace CppProject
 
 				// Copy only blocks inside the selection, using Minecraft's Y-up ordering
 				for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + SECTION_SIZE, box.end.y); y++)
-					for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
-						for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
-						{
-							IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
-							uint16_t index = 0;
-							if (hasIndices)
-								index = localIndices[local];
+				for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
+				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
+				{
+					IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
+					uint16_t index = 0;
+					if (hasIndices)
+						index = localIndices[local];
 
-							if (index >= remap.size())
-								throw QString("Chunk block references a missing palette entry");
+					if (index >= remap.size())
+						throw QString("Chunk block references a missing palette entry");
 
-							IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
-							indices[target] = remap[index];
-						}
+					IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
+					indices[target] = remap[index];
+				}
 			}
 		}
 
@@ -858,54 +858,54 @@ namespace CppProject
 					throw QString("Invalid legacy chunk block data length");
 
 				for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + height, box.end.y); y++)
-					for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
-						for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
+				for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
+				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
+				{
+					IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
+					if (format == PRE_JAVA_1_2)
+						local = ((x - pos.x) * SECTION_SIZE + z - pos.z) * height + y - pos.y;
+
+					IntType shift = (local % 2) * 4;
+					uint16_t id = uint8_t(sourceBlocks.Value(local));
+					uint8_t metadata = (uint8_t(sourceData.Value(local / 2)) >> shift) & 15;
+					if (sourceAdd)
+						id |= ((uint8_t(sourceAdd->Value(local / 2)) >> shift) & 15) << 8;
+
+					if (filterEnabled)
+					{
+						BoolType known = false, retained = false;
+						if (id < 256)
 						{
-							IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
-							if (format == PRE_JAVA_1_2)
-								local = ((x - pos.x) * SECTION_SIZE + z - pos.z) * height + y - pos.y;
-
-							IntType shift = (local % 2) * 4;
-							uint16_t id = uint8_t(sourceBlocks.Value(local));
-							uint8_t metadata = (uint8_t(sourceData.Value(local / 2)) >> shift) & 15;
-							if (sourceAdd)
-								id |= ((uint8_t(sourceAdd->Value(local / 2)) >> shift) & 15) << 8;
-
-							if (filterEnabled)
+							retained = Builder::filteredMcLegacyBlockIdObj[id][metadata] != nullptr;
+							if (!retained)
 							{
-								BoolType known = false, retained = false;
-								if (id < 256)
-								{
-									retained = Builder::filteredMcLegacyBlockIdObj[id][metadata] != nullptr;
-									if (!retained)
-									{
-										StringType mcId = global::legacy_block_mc_id[id][metadata];
-										known = Builder::mcBlockIdObjMap.contains(mcId);
-									}
-								}
-
-								// Unknown IDs survive remove mode, matching palette-based exports
-								if (!retained && (filterMode == e_block_filter_KEEP || known))
-									continue;
-							}
-
-							IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
-							blocks[target] = int8_t(id & 255);
-							data[target] = metadata;
-
-							// MCEdit stores high block ID bits in an optional packed nibble array
-							if (id > 255)
-							{
-								if (!schematic.HasKey("AddBlocks"))
-								{
-									NbtByteArray* add = new NbtByteArray;
-									schematic.value["AddBlocks"] = add;
-									add->value.Alloc((blocks.Size() + 1) / 2);
-								}
-
-								schematic.ByteArray("AddBlocks")[target / 2] |= int8_t((id >> 8) << ((target % 2) * 4));
+								StringType mcId = global::legacy_block_mc_id[id][metadata];
+								known = Builder::mcBlockIdObjMap.contains(mcId);
 							}
 						}
+
+						// Unknown IDs survive remove mode, matching palette-based exports
+						if (!retained && (filterMode == e_block_filter_KEEP || known))
+							continue;
+					}
+
+					IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
+					blocks[target] = int8_t(id & 255);
+					data[target] = metadata;
+
+					// MCEdit stores high block ID bits in an optional packed nibble array
+					if (id > 255)
+					{
+						if (!schematic.HasKey("AddBlocks"))
+						{
+							NbtByteArray* add = new NbtByteArray;
+							schematic.value["AddBlocks"] = add;
+							add->value.Alloc((blocks.Size() + 1) / 2);
+						}
+
+						schematic.ByteArray("AddBlocks")[target / 2] |= int8_t((id >> 8) << ((target % 2) * 4));
+					}
+				}
 			};
 
 		if (format == PRE_JAVA_1_2)

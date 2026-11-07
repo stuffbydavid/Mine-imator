@@ -2,7 +2,6 @@
 #include "Common.hpp"
 
 #include <QRegion>
-#include <QSet>
 
 #define PAGE_SIZE 4096
 

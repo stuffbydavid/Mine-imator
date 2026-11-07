@@ -1544,11 +1544,17 @@
 					{ "value": "true", "shape_hide": [ "boat", "raft" ] }
 				]
 			},
-			"default_state": "wood=oak,chest=false"
+			"default_state": "wood=oak,chest=false",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "minecart",
-			"file": "minecart.mimodel"
+			"file": "minecart.mimodel",
+			"build": {
+				"facing": "view_inverted"
+			}
 		},
 		{
 			"name": "tripwire_hook",

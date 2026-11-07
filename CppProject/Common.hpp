@@ -18,6 +18,7 @@
 #include <QMap>
 #include <QPoint>
 #include <QRegularExpression>
+#include <QSet>
 #include <QSize>
 #include <QStack>
 #include <QString>

@@ -366,6 +366,13 @@ function block_build_place(block, stateid, target, blockpos, transform)
 				var clicked = block_build_get_block(target, place_block_pos);
 				if (clicked[0] = block.block_id)
 				{
+					// Vines extend downwards with the same wall faces
+					if (block.type = "vine" && face = ZN)
+					{
+						stateid = block_set_state_id_value(block, clicked[1], "up", "false")
+						break
+					}
+
 					blockpos = array_copy_1d(place_block_pos)
 					old = clicked
 				}

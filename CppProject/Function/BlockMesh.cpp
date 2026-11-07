@@ -5,8 +5,6 @@
 #include "World/Schematic.hpp"
 #include "World/World.hpp"
 
-#include <QSet>
-
 namespace CppProject
 {
 	static constexpr IntType BLOCK_BOX_RADIUS = 2;
@@ -34,6 +32,16 @@ namespace CppProject
 		return -1;
 	}
 
+	static BuilderState BlockMeshesGetAddedState(obj_timeline* self, const ArrType& entry)
+	{
+		IntType paletteIndex = entry.IntValue(1);
+		if (paletteIndex < 0 || paletteIndex >= self->blocks_added_palette.Size())
+			return {};
+
+		const ArrType& palette = self->blocks_added_palette.vec.Value(paletteIndex).Arr();
+		return { uint16_t(palette.IntValue(0)), uint16_t(palette.IntValue(1)), palette.BoolValue(2) };
+	}
+
 	static BuilderState BlockMeshesGetBlock(obj_timeline* self, IntType xx, IntType yy, IntType zz, BoolType source)
 	{
 		BuilderState state;
@@ -54,18 +62,7 @@ namespace CppProject
 
 		// Read the complete edited state
 		if (addedIndex >= 0)
-		{
-			const ArrType& entry = self->blocks_added.vec.Value(addedIndex).Arr();
-			IntType paletteIndex = entry.IntValue(1);
-			if (paletteIndex < 0 || paletteIndex >= self->blocks_added_palette.Size())
-				return state;
-
-			const ArrType& palette = self->blocks_added_palette.vec.Value(paletteIndex).Arr();
-			state.blockId = palette.IntValue(0);
-			state.stateId = palette.IntValue(1);
-			state.waterlogged = palette.BoolValue(2);
-			return state;
-		}
+			return BlockMeshesGetAddedState(self, self->blocks_added.vec.Value(addedIndex).Arr());
 
 		// No source blocks available without a resource
 		if (!res)
@@ -156,7 +153,25 @@ namespace CppProject
 		for (IntType dx = -BLOCK_BOX_RADIUS; dx <= BLOCK_BOX_RADIUS; dx++)
 		{
 			WorldVec blockPos = pos + WorldVec(dy, -dx, dz);
-			blocks.append(BlockMeshesGetBlock(self, blockPos.x, blockPos.y, blockPos.z, source));
+			blocks.append(BlockMeshesGetBlock(self, blockPos.x, blockPos.y, blockPos.z, true));
+		}
+
+		if (source)
+			return blocks;
+
+		// Overlay edits once per box, keeping the latest entry at each position
+		for (IntType i = 0; i < self->blocks_added.Size(); i++)
+		{
+			const ArrType& entry = self->blocks_added.vec.Value(i).Arr();
+			VecType addedPos = entry.vec.Value(0).ToVec();
+			WorldVec offset = WorldVec(addedPos) - pos;
+			if (offset.x < -BLOCK_BOX_RADIUS || offset.x > BLOCK_BOX_RADIUS ||
+				offset.y < -BLOCK_BOX_RADIUS || offset.y > BLOCK_BOX_RADIUS ||
+				offset.z < -BLOCK_BOX_RADIUS || offset.z > BLOCK_BOX_RADIUS)
+				continue;
+
+			IntType index = ((offset.z + BLOCK_BOX_RADIUS) * BLOCK_BOX_SIZE + offset.x + BLOCK_BOX_RADIUS) * BLOCK_BOX_SIZE - offset.y + BLOCK_BOX_RADIUS;
+			blocks[index] = BlockMeshesGetAddedState(self, entry);
 		}
 
 		return blocks;
@@ -195,6 +210,8 @@ namespace CppProject
 			return false;
 
 		BuilderState source = BlockMeshesGetBlock(self, pos.x, pos.y, pos.z, true);
+		obj_template* temp = ObjTypeOpt(obj_template, self->temp);
+		obj_resource* res = temp ? ObjTypeOpt(obj_resource, temp->scenery) : nullptr;
 
 		// Run the block's state script against a small source box
 		std::unique_ptr<Section> section(BlockMeshesCreateSection({ 0, 0, 0 }));
@@ -205,7 +222,13 @@ namespace CppProject
 		for (IntType zz = 0; zz < BLOCK_BOX_SIZE; zz++)
 		for (IntType yy = 0; yy < BLOCK_BOX_SIZE; yy++)
 		for (IntType xx = 0; xx < BLOCK_BOX_SIZE; xx++, index++)
-			section->builder.paletteIndices[section->GetBlockOffset({ xx, yy, zz })] = section->AddBuilderState(blocks[index]);
+		{
+			BuilderState boxState = blocks[index];
+			if (res && res->scenery_filter_enabled && boxState.blockId && block_get_filtered(res->id, global::block_objs.Value(boxState.blockId)))
+				boxState = {};
+
+			section->builder.paletteIndices[section->GetBlockOffset({ xx, yy, zz })] = section->AddBuilderState(boxState);
+		}
 
 		// Configure an isolated state or connection query
 		std::unique_ptr<obj_builder_thread> thread(new obj_builder_thread);
@@ -222,6 +245,27 @@ namespace CppProject
 
 		thread->block_current = block->id;
 		thread->block_state_id_current = state.stateId;
+
+		// State scripts need the original adjacent faces for solid connections
+		for (IntType face = XP; face <= ZN; face++)
+		{
+			VecType offset = dir_get_vec3(face);
+			WorldVec otherPos = WorldVec(BLOCK_BOX_RADIUS, BLOCK_BOX_RADIUS, BLOCK_BOX_RADIUS) + WorldVec(offset);
+			BuilderState otherState = section->GetBuilderState(otherPos);
+			obj_block* otherBlock = otherState.blockId ? ObjTypeOpt(obj_block, global::block_objs.Value(otherState.blockId)) : nullptr;
+			if (!otherBlock || !otherBlock->state_id_model_obj.IsArray())
+				continue;
+
+			VarType value = otherBlock->state_id_model_obj.Arr().Value(otherState.stateId);
+			if (value.IsArray() || value.IsUndefined() || value == null_)
+				continue;
+
+			Object* model = ObjOpt(value);
+			if (!model || model->GetIntRef(M_model_amount) == 0)
+				continue;
+
+			builder_set_neighbor_face(Scope<obj_builder_thread>(thread.get(), self->id), model->GetVarRef(M_model).Arr().IntValue(0), face);
+		}
 
 		// Run the script and retain any resolved state
 		VarType result = script_execute(Scope<obj_builder_thread>(thread.get(), self->id), { script });
@@ -429,11 +473,13 @@ namespace CppProject
 		return active;
 	}
 
-	void tl_export_schematic(Scope<obj_timeline> self, StringType filename)
+	ArrType tl_export_schematic(Scope<obj_timeline> self, StringType filename)
 	{
 		try
 		{
-			SchematicExport(self.object).Save(filename);
+			SchematicExport schematic(self.object);
+			schematic.Save(filename);
+			return schematic.GetTimelineData();
 		}
 		catch (const QString& error)
 		{
@@ -441,6 +487,8 @@ namespace CppProject
 			message_set_caption(text_get({ StringType("error/export_schematic_caption") }));
 			show_message(StringType("Could not export schematic:\n" + error));
 		}
+
+		return ArrType();
 	}
 
 	VarType tl_update_block_meshes(Scope<obj_timeline> self, VarType pos, IntType blockId, IntType stateId, VarType restoreBlocks, BoolType replace)
@@ -879,7 +927,6 @@ namespace CppProject
 			for (IntType mode : { e_builder_mode_REMOVE, e_builder_mode_GENERATE })
 			{
 				thread->builder_mode = mode;
-				thread->builder_scenery = (mode == e_builder_mode_REMOVE);
 				ds_map_clear(thread->block_tl_map);
 
 				// Remove geometry with its previous bounds, then generate with the expanded bounds
@@ -964,6 +1011,11 @@ namespace CppProject
 					thread->build_pos = ArrType::From({ bp.x, bp.y, bp.z });
 					thread->build_pos_index = BlockMeshesGetBuildIndex(bp, sourceBuildSize);
 
+					// Reconstruct imported and edited models using their original generation rules
+					WorldVec modelPos = blockPos + WorldVec(dy, -dx, dz);
+					thread->builder_scenery = (mode == e_builder_mode_REMOVE &&
+						(rebuild || BlockMeshesGetAddedIndex(self.object, modelPos) < 0));
+
 					builder_set_render_model(scope, bp.x, bp.y, bp.z, 0);
 					builder_set_model(scope, genStage);
 				}
@@ -971,6 +1023,8 @@ namespace CppProject
 				// Return to the center block after resolving neighbor models
 				thread->build_pos = ArrType::From({ buildBlockPos.x, buildBlockPos.y, buildBlockPos.z });
 				thread->build_pos_index = BlockMeshesGetBuildIndex(buildBlockPos, sourceBuildSize);
+				thread->builder_scenery = (mode == e_builder_mode_REMOVE &&
+					(rebuild || BlockMeshesGetAddedIndex(self.object, blockPos) < 0));
 
 				IntType modelIndex = builder_get_render_model_index(scope, buildBlockPos.x, buildBlockPos.y, buildBlockPos.z);
 				ArrType models;
@@ -1209,6 +1263,15 @@ namespace CppProject
 			if (!self->blocks_added_palette.vec.Value(oldIndex).Arr().IntValue(0))
 			{
 				WorldVec blockPos = entry.Value(0).ToVec();
+
+				// Keep deletions in source repeats that may be enabled again
+				if (res && blockPos.x >= 0 && blockPos.y >= 0 && blockPos.z >= 0)
+				{
+					blockPos.x %= size.x;
+					blockPos.y %= size.y;
+					blockPos.z %= size.z;
+				}
+
 				if (!BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, true).blockId)
 					continue;
 			}

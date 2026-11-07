@@ -25,6 +25,9 @@ namespace CppProject
 		// Serialize and save a Schematic file.
 		void Save(const QString& filename);
 
+		// Return the local origin, exported timeline save IDs and hidden mesh cells.
+		ArrType GetTimelineData() const;
+
 		// Serialize and asynchronously save a world resource snapshot.
 		void SaveResource(obj_resource* resource);
 
@@ -66,7 +69,7 @@ namespace CppProject
 		// Add supported entities from the timeline into the Schematic.
 		void AddEntities();
 
-		// Copy entities from a chunk's entity list
+		// Copy entities from a chunk's entity list.
 		void AddEntities(NbtCompound& chunk);
 
 		// Returns the offset of a block position relative to the Schematic origin.
@@ -77,6 +80,9 @@ namespace CppProject
 
 		// Returns a list of connected blocks for a given block and state.
 		QVector<Block> GetConnectedBlocks(obj_block* block, IntType state);
+
+		// Resolve legacy source states and copy shared properties to upper halves.
+		BuilderState GetResourceState(const WorldVec& pos);
 
 		// Parse the front or back text from a given sign timeline.
 		NbtCompound* GetSignText(obj_timeline* sign, BoolType back);

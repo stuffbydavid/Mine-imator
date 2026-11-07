@@ -2,6 +2,15 @@
 
 function temp_update_block()
 {
+	if (type = e_temp_type.SCENERY)
+	{
+		with (obj_timeline)
+			if (temp = other.id && (array_length(blocks_added) > 0 || array_length(block_meshes_edit) > 0))
+				tl_update_block_meshes()
+
+		return 0
+	}
+
 	if (block_repeat_enable)
 		block_meshes_num = vec3(ceil(block_repeat[Y] / block_mesh_size), ceil(block_repeat[X] / block_mesh_size), ceil(block_repeat[Z] / block_mesh_size))
 	else

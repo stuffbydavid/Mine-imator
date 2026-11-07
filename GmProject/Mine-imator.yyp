@@ -1148,6 +1148,7 @@
     {"id":{"name":"action_tl_collapse_children","path":"scripts/action_tl_collapse_children/action_tl_collapse_children.yy",},},
     {"id":{"name":"action_tl_color_tag_remove","path":"scripts/action_tl_color_tag_remove/action_tl_color_tag_remove.yy",},},
     {"id":{"name":"action_tl_color_tag","path":"scripts/action_tl_color_tag/action_tl_color_tag.yy",},},
+    {"id":{"name":"action_tl_create_scenery_temp","path":"scripts/action_tl_create_scenery_temp/action_tl_create_scenery_temp.yy",},},
     {"id":{"name":"action_tl_create_temp","path":"scripts/action_tl_create_temp/action_tl_create_temp.yy",},},
     {"id":{"name":"action_tl_deselect_all","path":"scripts/action_tl_deselect_all/action_tl_deselect_all.yy",},},
     {"id":{"name":"action_tl_deselect","path":"scripts/action_tl_deselect/action_tl_deselect.yy",},},
