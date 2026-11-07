@@ -20,6 +20,7 @@ function res_copy(to)
 	
 	if (object_index = obj_resource && to.object_index = obj_resource)
 	{
+		to.scenery_legacy = scenery_legacy
 		ds_map_copy(to.scenery_block_map, scenery_block_map)
 		ds_map_copy(to.scenery_tl_types_count_map, scenery_tl_types_count_map)
 		to.scenery_tl_types_count_ready = scenery_tl_types_count_ready

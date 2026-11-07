@@ -34,8 +34,7 @@ function block_build_use(block, stateid, target, blockpos, selected = null, plac
 		{
 			if (type = e_tl_type.SCENERY && temp != null && temp.scenery != null)
 			{
-				var ext = filename_ext(temp.scenery.filename);
-				if (ext = ".schematic" || ext = ".blocks")
+				if (temp.scenery.scenery_legacy)
 				{
 					var resolved = block_meshes_get_block(blockpos[X], blockpos[Y], blockpos[Z], false, true);
 					if (resolved[0] = block.block_id)

@@ -43,6 +43,9 @@ function project_load_resource(map)
 		{
 			scenery_size = value_get_point3D(map[?"scenery_size"], vec3(0, 0, 0))
 			
+			var ext = filename_ext(filename);
+			scenery_legacy = (ext = ".schematic" || ext = ".blocks")
+			
 			if (load_format >= e_project.FORMAT_210)
 			{
 				var tltypeslist = map[?"scenery_tl_types"];

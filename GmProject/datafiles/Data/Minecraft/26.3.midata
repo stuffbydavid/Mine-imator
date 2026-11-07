@@ -2613,6 +2613,21 @@
 			}
 		},
 		{
+			"name": "piston_head",
+			"file": "piston_head.json",
+			"type": "piston_head",
+			"states": {
+				"facing": [ "north", "south", "east", "west", "up", "down" ],
+				"type": [ "normal", "sticky" ],
+				"short": [ "false", "true" ]
+			},
+			"default_state": "facing=west,type=normal,short=false",
+			"id": "minecraft:piston_head",
+			"build": {
+				"facing": "view_inverted"
+			}
+		},
+		{
 			"name": "wool",
 			"states": {
 				"color": [
@@ -3336,10 +3351,10 @@
 				"type": "chest",
 				"model": "chest",
 				"model_state": {
-					"variant=normal,double=false": "variant=normal",
-					"variant=normal,double=true": "variant=normal_double",
-					"variant=christmas,double=false": "variant=christmas",
-					"variant=christmas,double=true": "variant=christmas_double"
+					"variant=normal,double=false": { "value": "variant=normal", "block_state": "type=single,double=false" },
+					"variant=normal,double=true": { "value": "variant=normal_double", "block_state": "type=right,double=true" },
+					"variant=christmas,double=false": { "value": "variant=christmas", "block_state": "type=single,double=false" },
+					"variant=christmas,double=true": { "value": "variant=christmas_double", "block_state": "type=right,double=true" }
 				},
 				"animated_parts": [ "top" ],
 				"rotation_point": {
@@ -3356,7 +3371,8 @@
 			"id": "minecraft:chest",
 			"build": {
 				"facing": "view_inverted",
-				"set": "type=single,double=false"
+				"set": "type=single,double=false",
+				"double": "facing"
 			}
 		},
 		{
@@ -5523,8 +5539,8 @@
 				"type": "chest",
 				"model": "chest",
 				"model_state": {
-					"double=false": "variant=trapped",
-					"double=true": "variant=trapped_double"
+					"double=false": { "value": "variant=trapped", "block_state": "type=single,double=false" },
+					"double=true": { "value": "variant=trapped_double", "block_state": "type=right,double=true" }
 				},
 				"animated_parts": [ "top" ],
 				"rotation_point": {
@@ -5541,7 +5557,8 @@
 			"id": "minecraft:trapped_chest",
 			"build": {
 				"facing": "view_inverted",
-				"set": "type=single,double=false"
+				"set": "type=single,double=false",
+				"double": "facing"
 			}
 		},
 		{
@@ -7734,22 +7751,22 @@
 				"type": "chest",
 				"model": "chest",
 				"model_state": {
-					"variant=copper,double=false": "variant=copper",
-					"variant=copper,double=true": "variant=copper_double",
-					"variant=exposed_copper,double=false": "variant=copper_exposed",
-					"variant=exposed_copper,double=true": "variant=copper_exposed_double",
-					"variant=weathered_copper,double=false": "variant=copper_weathered",
-					"variant=weathered_copper,double=true": "variant=copper_weathered_double",
-					"variant=oxidized_copper,double=false": "variant=copper_oxidized",
-					"variant=oxidized_copper,double=true": "variant=copper_oxidized_double",
-					"variant=waxed_copper,double=false": "variant=copper",
-					"variant=waxed_copper,double=true": "variant=copper_double",
-					"variant=waxed_exposed_copper,double=false": "variant=copper_exposed",
-					"variant=waxed_exposed_copper,double=true": "variant=copper_exposed_double",
-					"variant=waxed_weathered_copper,double=false": "variant=copper_weathered",
-					"variant=waxed_weathered_copper,double=true": "variant=copper_weathered_double",
-					"variant=waxed_oxidized_copper,double=false": "variant=copper_oxidized",
-					"variant=waxed_oxidized_copper,double=true": "variant=copper_oxidized_double"
+					"variant=copper,double=false": { "value": "variant=copper", "block_state": "type=single,double=false" },
+					"variant=copper,double=true": { "value": "variant=copper_double", "block_state": "type=right,double=true" },
+					"variant=exposed_copper,double=false": { "value": "variant=copper_exposed", "block_state": "type=single,double=false" },
+					"variant=exposed_copper,double=true": { "value": "variant=copper_exposed_double", "block_state": "type=right,double=true" },
+					"variant=weathered_copper,double=false": { "value": "variant=copper_weathered", "block_state": "type=single,double=false" },
+					"variant=weathered_copper,double=true": { "value": "variant=copper_weathered_double", "block_state": "type=right,double=true" },
+					"variant=oxidized_copper,double=false": { "value": "variant=copper_oxidized", "block_state": "type=single,double=false" },
+					"variant=oxidized_copper,double=true": { "value": "variant=copper_oxidized_double", "block_state": "type=right,double=true" },
+					"variant=waxed_copper,double=false": { "value": "variant=copper", "block_state": "type=single,double=false" },
+					"variant=waxed_copper,double=true": { "value": "variant=copper_double", "block_state": "type=right,double=true" },
+					"variant=waxed_exposed_copper,double=false": { "value": "variant=copper_exposed", "block_state": "type=single,double=false" },
+					"variant=waxed_exposed_copper,double=true": { "value": "variant=copper_exposed_double", "block_state": "type=right,double=true" },
+					"variant=waxed_weathered_copper,double=false": { "value": "variant=copper_weathered", "block_state": "type=single,double=false" },
+					"variant=waxed_weathered_copper,double=true": { "value": "variant=copper_weathered_double", "block_state": "type=right,double=true" },
+					"variant=waxed_oxidized_copper,double=false": { "value": "variant=copper_oxidized", "block_state": "type=single,double=false" },
+					"variant=waxed_oxidized_copper,double=true": { "value": "variant=copper_oxidized_double", "block_state": "type=right,double=true" }
 				},
 				"animated_parts": [ "top" ],
 				"rotation_point": {
@@ -7775,7 +7792,8 @@
 			},
 			"build": {
 				"facing": "view_inverted",
-				"set": "type=single,double=false"
+				"set": "type=single,double=false",
+				"double": "facing"
 			}
 		},
 		{
@@ -8411,6 +8429,18 @@
 			},
 			"default_state": "color=red"
 		}
+	],
+	"blocks_snowy": [
+		"minecraft:grass_block",
+		"minecraft:podzol",
+		"minecraft:mycelium"
+	],
+	"blocks_waterlogged": [
+		"minecraft:kelp",
+		"minecraft:kelp_plant",
+		"minecraft:seagrass",
+		"minecraft:tall_seagrass",
+		"minecraft:bubble_column"
 	],
 	"model_textures": [
 		"entity/allay/allay",
@@ -13181,7 +13211,7 @@
 		"minecraft:mourner_pottery_sherd": "mourner",
 		"minecraft:plenty_pottery_sherd": "plenty",
 		"minecraft:prize_pottery_sherd": "prize",
-		"minecraft:scrape_pottery_sherd": "sheaf",
+		"minecraft:scrape_pottery_sherd": "scrape",
 		"minecraft:sheaf_pottery_sherd": "sheaf",
 		"minecraft:shelter_pottery_sherd": "shelter",
 		"minecraft:skull_pottery_sherd": "skull",

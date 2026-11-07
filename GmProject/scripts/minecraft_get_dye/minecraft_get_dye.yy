@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"block_set_piston",
+  "%Name":"minecraft_get_dye",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"block_set_piston",
+  "name":"minecraft_get_dye",
   "parent":{
-    "name":"Types",
-    "path":"folders/Scripts/Minecraft/Blocks/Types.yy",
+    "name":"Color",
+    "path":"folders/Scripts/Minecraft/Color.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

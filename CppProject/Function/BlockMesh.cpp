@@ -2,7 +2,10 @@
 
 #include "Asset/Buffer.hpp"
 #include "Asset/VertexBuffer.hpp"
+#include "World/Schematic.hpp"
 #include "World/World.hpp"
+
+#include <QSet>
 
 namespace CppProject
 {
@@ -282,11 +285,6 @@ namespace CppProject
 		return -1 - Builder::GetSection(pos)->GetBlockOffset(pos);
 	}
 
-	IntType block_mesh_get_index(IntType xx, IntType yy, IntType zz, IntType meshesx, IntType meshesy)
-	{
-		return ((zz / block_mesh_size) * meshesy + yy / block_mesh_size) * meshesx + xx / block_mesh_size;
-	}
-
 	ArrType block_meshes_get_block(Scope<obj_timeline> self, IntType xx, IntType yy, IntType zz, BoolType source, BoolType resolve)
 	{
 		BuilderState state = BlockMeshesGetBlock(self.object, xx, yy, zz, source);
@@ -299,6 +297,150 @@ namespace CppProject
 		}
 
 		return ArrType::From({ (IntType)state.blockId, (IntType)state.stateId, state.waterlogged });
+	}
+
+	IntType block_mesh_get_index(IntType xx, IntType yy, IntType zz, IntType meshesx, IntType meshesy)
+	{
+		return ((zz / block_mesh_size) * meshesy + yy / block_mesh_size) * meshesx + xx / block_mesh_size;
+	}
+
+	BoolType block_mesh_load_blocks(Scope<obj_block_mesh> self, IntType originx, IntType originy, IntType originz)
+	{
+		// Clear previous block data
+		if (self->block_palette_buffer != null_)
+			buffer_delete(self->block_palette_buffer);
+
+		if (self->block_grid_buffer != null_)
+			buffer_delete(self->block_grid_buffer);
+
+		WorldVec size = {
+			self->block_grid_size.Value(X_).ToInt(),
+			self->block_grid_size.Value(Y_).ToInt(),
+			self->block_grid_size.Value(Z_).ToInt()
+		};
+
+		// Keep temporary indices until the complete palette determines their bit width
+		IntType sizeTotal = size.x * size.y * size.z;
+		Heap<uint32_t> indices(sizeTotal);
+		QVector<quint64> entries;
+		QHash<quint64, uint32_t> palette;
+		QHash<Section*, QVector<int>> sectionMappings;
+		BoolType active = false;
+		IntType blockPos = 0;
+
+		// Visit blocks in XYZ order, with X varying fastest
+		for (IntType zz = 0; zz < size.z; zz++)
+		for (IntType yy = 0; yy < size.y; yy++)
+		for (IntType xx = 0; xx < size.x;)
+		{
+			WorldVec pos = { originx + xx, originy + yy, originz + zz };
+			Section* section = Builder::GetSection(pos);
+
+			// Cache section-to-mesh palette mappings to avoid hashing every block
+			auto mapping = sectionMappings.find(section);
+			if (mapping == sectionMappings.end())
+				mapping = sectionMappings.insert(section, QVector<int>(qMax(1, (int)section->builder.palette.Size()), -1));
+
+			// Stop at the section boundary, accounting for an unaligned world selection
+			IntType run = qMin(size.x - xx, SECTION_SIZE - ((pos.x + Builder::offset.x) & SECTION_SIZEM1));
+			IntType offset = section->GetBlockOffset(pos);
+			for (IntType i = 0; i < run; i++, blockPos++)
+			{
+				// Empty and single-entry sections do not need an index lookup
+				int sourceIndex = 0;
+				if (section->builder.palette.Size() > 1)
+					sourceIndex = section->builder.paletteIndices[offset + i];
+
+				int& index = mapping.value()[sourceIndex];
+				if (index < 0)
+				{
+					BuilderState state;
+					if (section->builder.palette.Size())
+						state = section->builder.palette[sourceIndex];
+
+					// Ignore unused state values on air blocks
+					if (!state.blockId)
+						state.stateId = 0;
+
+					// Waterlogged and dry blocks need separate palette entries
+					quint64 key = quint64(state.blockId) | (quint64(state.stateId) << 16) | (quint64(state.waterlogged) << 32);
+					auto found = palette.constFind(key);
+					if (found == palette.constEnd())
+					{
+						index = entries.size();
+						entries.append(key);
+						palette.insert(key, index);
+					}
+					else
+						index = found.value();
+
+					active |= (state.blockId != 0 || state.waterlogged);
+				}
+
+				indices[blockPos] = index;
+			}
+
+			xx += run;
+		}
+
+		// Use the minimum number of bits needed to address the palette
+		int bits = 0;
+		while ((1u << bits) < (uint32_t)entries.size())
+			bits++;
+
+		// Reserve whole bytes for the grid followed by one waterlogged bit per entry
+		IntType gridBytes = (sizeTotal * bits + 7) / 8;
+		Buffer* paletteBuffer = new Buffer(entries.size() * 4, false, 1);
+		Buffer* gridBuffer = new Buffer(gridBytes + (entries.size() + 7) / 8, false, 1);
+		self->block_palette_buffer = paletteBuffer->id;
+		self->block_grid_buffer = gridBuffer->id;
+
+		// Write each block/state pair as four little-endian bytes
+		for (int i = 0; i < entries.size(); i++)
+		{
+			quint64 entry = entries[i];
+			for (int b = 0; b < 4; b++)
+				paletteBuffer->data[i * 4 + b] = (uchar)(entry >> (b * 8));
+
+			// Store the waterlogged flag separately from the four-byte palette entry
+			if (entry >> 32)
+				gridBuffer->data[gridBytes + i / 8] |= 1 << (i % 8);
+		}
+
+		// Pack indices consecutively, including those that cross byte boundaries
+		for (IntType p = 0; p < sizeTotal && bits > 0; p++)
+		{
+			uint32_t value = indices[p];
+			IntType bitPos = p * bits;
+			int remaining = bits;
+
+			// Fill the available bits in each byte before advancing
+			while (remaining > 0)
+			{
+				int shift = bitPos % 8;
+				int take = qMin(remaining, 8 - shift);
+				gridBuffer->data[bitPos / 8] |= (value & ((1u << take) - 1)) << shift;
+				value >>= take;
+				bitPos += take;
+				remaining -= take;
+			}
+		}
+
+		return active;
+	}
+
+	void tl_export_schematic(Scope<obj_timeline> self, StringType filename)
+	{
+		try
+		{
+			SchematicExport(self.object).Save(filename);
+		}
+		catch (const QString& error)
+		{
+			WARNING("Could not export schematic: " + error);
+			message_set_caption(text_get({ StringType("error/export_schematic_caption") }));
+			show_message(StringType("Could not export schematic:\n" + error));
+		}
 	}
 
 	VarType tl_update_block_meshes(Scope<obj_timeline> self, VarType pos, IntType blockId, IntType stateId, VarType restoreBlocks, BoolType replace)
@@ -342,8 +484,6 @@ namespace CppProject
 		// Load scenery resource settings and source blocks
 		if (res)
 		{
-			StringType ext = filename_ext(res->filename);
-			legacy = (ext == ".schematic" || ext == ".blocks");
 			keepWater = !block_get_filtered(res->id, FindMap(ObjType(obj_minecraft_assets, global::mc_assets)->block_name_map)->Value("water"));
 			size = res->scenery_size.ToVec();
 
@@ -368,6 +508,8 @@ namespace CppProject
 
 			if (!meshCount)
 				return null_;
+
+			legacy = res->scenery_legacy;
 
 			// Timeline meshes use scenery axes instead of builder axes
 			sourceMeshNum = {
@@ -584,30 +726,77 @@ namespace CppProject
 		WorldBox bounds(allocMin, allocMax);
 		WorldVec boundsSize = allocMax - allocMin;
 
-		for (const WorldVec& addedPos : blocksAdded)
-		for (IntType f = -1; f < block_faces; f++)
+		// Liquid blocks require additional block updates
+		auto hasLiquid = [](const BuilderState& state)
 		{
-			WorldVec blockPos = addedPos;
+			obj_block* block = ObjTypeOpt(obj_block, global::block_objs.Value(state.blockId));
+			return state.waterlogged || (block && block->type == StringType("liquid"));
+		};
 
-			// Find neighbor block
-			switch (f)
+		QVector<WorldVec> liquidEdits;
+		for (const BlockEdit& edit : blockEdits)
+			if (hasLiquid(edit.state))
+				liquidEdits.append(edit.pos);
+
+		for (const WorldVec& addedPos : blocksAdded)
+		{
+			BoolType liquid = std::find(liquidEdits.cbegin(), liquidEdits.cend(), addedPos) != liquidEdits.cend();
+
+			for (IntType f = -1; f < block_faces; f++)
 			{
-				case XP: blockPos.x++; break;
-				case XN: blockPos.x--; break;
-				case YP: blockPos.y++; break;
-				case YN: blockPos.y--; break;
-				case ZP: blockPos.z++; break;
-				case ZN: blockPos.z--; break;
+				WorldVec blockPos = addedPos;
+
+				// Find neighbor block
+				switch (f)
+				{
+					case XP: blockPos.x++; break;
+					case XN: blockPos.x--; break;
+					case YP: blockPos.y++; break;
+					case YN: blockPos.y--; break;
+					case ZP: blockPos.z++; break;
+					case ZN: blockPos.z--; break;
+				}
+
+				if (!bounds.Contains(blockPos))
+					continue;
+
+				if (!liquid)
+					liquid = hasLiquid(BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, false));
+
+				// Avoid duplicate entries by hashing position
+				WorldVec offsetPos = blockPos - allocMin;
+				IntType key = (offsetPos.z * boundsSize.y + offsetPos.y) * boundsSize.x + offsetPos.x;
+				if (!blockPosKeys.contains(key))
+				{
+					blockPosKeys.insert(key);
+					blockPosList.append(blockPos);
+				}
 			}
 
-			if (!bounds.Contains(blockPos))
+			if (!liquid)
 				continue;
 
-			// Avoid duplicate entries by hashing position
-			WorldVec offsetPos = blockPos - allocMin;
-			IntType key = (offsetPos.z * boundsSize.y + offsetPos.y) * boundsSize.x + offsetPos.x;
-			if (!blockPosKeys.contains(key))
+			// Liquid corner heights also depend on diagonal blocks and neighboring layers
+			for (IntType dz = -1; dz <= 1; dz++)
+			for (IntType dy = -1; dy <= 1; dy++)
+			for (IntType dx = -1; dx <= 1; dx++)
 			{
+				if (std::abs(dx) + std::abs(dy) + std::abs(dz) <= 1)
+					continue;
+
+				WorldVec blockPos = addedPos + WorldVec(dx, dy, dz);
+				if (!bounds.Contains(blockPos))
+					continue;
+
+				WorldVec offsetPos = blockPos - allocMin;
+				IntType key = (offsetPos.z * boundsSize.y + offsetPos.y) * boundsSize.x + offsetPos.x;
+				if (blockPosKeys.contains(key))
+					continue;
+
+				BuilderState state = BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, false);
+				if (!hasLiquid(state))
+					continue;
+
 				blockPosKeys.insert(key);
 				blockPosList.append(blockPos);
 			}
@@ -1066,130 +1255,5 @@ namespace CppProject
 			return prevBlocks;
 
 		return null_;
-	}
-
-	BoolType block_mesh_load_blocks(Scope<obj_block_mesh> self, IntType originx, IntType originy, IntType originz)
-	{
-		// Clear previous block data
-		if (self->block_palette_buffer != null_)
-			buffer_delete(self->block_palette_buffer);
-
-		if (self->block_grid_buffer != null_)
-			buffer_delete(self->block_grid_buffer);
-
-		WorldVec size = {
-			self->block_grid_size.Value(X_).ToInt(),
-			self->block_grid_size.Value(Y_).ToInt(),
-			self->block_grid_size.Value(Z_).ToInt()
-		};
-
-		// Keep temporary indices until the complete palette determines their bit width
-		IntType sizeTotal = size.x * size.y * size.z;
-		Heap<uint32_t> indices(sizeTotal);
-		QVector<quint64> entries;
-		QHash<quint64, uint32_t> palette;
-		QHash<Section*, QVector<int>> sectionMappings;
-		BoolType active = false;
-		IntType blockPos = 0;
-
-		// Visit blocks in XYZ order, with X varying fastest
-		for (IntType zz = 0; zz < size.z; zz++)
-		for (IntType yy = 0; yy < size.y; yy++)
-		for (IntType xx = 0; xx < size.x;)
-		{
-			WorldVec pos = { originx + xx, originy + yy, originz + zz };
-			Section* section = Builder::GetSection(pos);
-
-			// Cache section-to-mesh palette mappings to avoid hashing every block
-			auto mapping = sectionMappings.find(section);
-			if (mapping == sectionMappings.end())
-				mapping = sectionMappings.insert(section, QVector<int>(qMax(1, (int)section->builder.palette.Size()), -1));
-
-			// Stop at the section boundary, accounting for an unaligned world selection
-			IntType run = qMin(size.x - xx, SECTION_SIZE - ((pos.x + Builder::offset.x) & SECTION_SIZEM1));
-			IntType offset = section->GetBlockOffset(pos);
-			for (IntType i = 0; i < run; i++, blockPos++)
-			{
-				// Empty and single-entry sections do not need an index lookup
-				int sourceIndex = 0;
-				if (section->builder.palette.Size() > 1)
-					sourceIndex = section->builder.paletteIndices[offset + i];
-
-				int& index = mapping.value()[sourceIndex];
-				if (index < 0)
-				{
-					BuilderState state;
-					if (section->builder.palette.Size())
-						state = section->builder.palette[sourceIndex];
-
-					// Ignore unused state values on air blocks
-					if (!state.blockId)
-						state.stateId = 0;
-
-					// Waterlogged and dry blocks need separate palette entries
-					quint64 key = quint64(state.blockId) | (quint64(state.stateId) << 16) | (quint64(state.waterlogged) << 32);
-					auto found = palette.constFind(key);
-					if (found == palette.constEnd())
-					{
-						index = entries.size();
-						entries.append(key);
-						palette.insert(key, index);
-					}
-					else
-						index = found.value();
-
-					active |= (state.blockId != 0 || state.waterlogged);
-				}
-
-				indices[blockPos] = index;
-			}
-
-			xx += run;
-		}
-
-		// Use the minimum number of bits needed to address the palette
-		int bits = 0;
-		while ((1u << bits) < (uint32_t)entries.size())
-			bits++;
-
-		// Reserve whole bytes for the grid followed by one waterlogged bit per entry
-		IntType gridBytes = (sizeTotal * bits + 7) / 8;
-		Buffer* paletteBuffer = new Buffer(entries.size() * 4, false, 1);
-		Buffer* gridBuffer = new Buffer(gridBytes + (entries.size() + 7) / 8, false, 1);
-		self->block_palette_buffer = paletteBuffer->id;
-		self->block_grid_buffer = gridBuffer->id;
-
-		// Write each block/state pair as four little-endian bytes
-		for (int i = 0; i < entries.size(); i++)
-		{
-			quint64 entry = entries[i];
-			for (int b = 0; b < 4; b++)
-				paletteBuffer->data[i * 4 + b] = (uchar)(entry >> (b * 8));
-
-			// Store the waterlogged flag separately from the four-byte palette entry
-			if (entry >> 32)
-				gridBuffer->data[gridBytes + i / 8] |= 1 << (i % 8);
-		}
-
-		// Pack indices consecutively, including those that cross byte boundaries
-		for (IntType p = 0; p < sizeTotal && bits > 0; p++)
-		{
-			uint32_t value = indices[p];
-			IntType bitPos = p * bits;
-			int remaining = bits;
-
-			// Fill the available bits in each byte before advancing
-			while (remaining > 0)
-			{
-				int shift = bitPos % 8;
-				int take = qMin(remaining, 8 - shift);
-				gridBuffer->data[bitPos / 8] |= (value & ((1u << take) - 1)) << shift;
-				value >>= take;
-				bitPos += take;
-				remaining -= take;
-			}
-		}
-
-		return active;
 	}
 }

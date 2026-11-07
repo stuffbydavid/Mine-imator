@@ -1,10 +1,72 @@
-#include "World.hpp"
+#include "Schematic.hpp"
 #include "Compress.hpp"
 
 #include "Asset/DataStructure.hpp"
+#include "Asset/Buffer.hpp"
 
 namespace CppProject
 {
+	static QString SchematicGetDirection(const QString& name, const Matrix& transform)
+	{
+		const ArrType names = dir_names;
+		IntType index = names.Find(StringType(name));
+		if (index < 0)
+			return name;
+
+		// Convert between builder and scenery axes around the transform
+		VecType dir = dir_get_vec3(index);
+		dir = transform * VecType(dir.y, -dir.x, dir.z);
+		return names.Value(vec3_get_dir(VecType(-dir.y, dir.x, dir.z), names)).Str();
+	}
+
+	static uint16_t SchematicGetTransformState(obj_block* block, IntType state, const Matrix& transform)
+	{
+		ArrType vars = block_get_state_id_state_vars(block->id, state);
+		ArrType output = vars;
+
+		// Convert a transform matrix to a predefined block state
+		for (IntType i = 0; i + 1 < vars.Size(); i += 2)
+		{
+			QString name = vars.Value(i).Str(), value = vars.Value(i + 1).Str();
+			QString newValue = value;
+
+			if (name == "facing")
+				newValue = SchematicGetDirection(value, transform);
+			
+			else if (name == "axis")
+			{
+				QString dir = SchematicGetDirection(value == "x" ? "east" : (value == "y" ? "up" : "south"), transform);
+				if (dir == "east" || dir == "west")
+					newValue = "x";
+				else if (dir == "up" || dir == "down")
+					newValue = "y";
+				else
+					newValue = "z";
+			}
+			else if (name == "rotation")
+			{
+				RealType angle = value.toInt() * 22.5 * DEGTORAD;
+				VecType dir = transform * VecType(std::cos(angle), std::sin(angle), 0);
+				int rot = int(std::round(std::atan2(dir.y, dir.x) * RADTODEG / 22.5));
+				newValue = QString::number((rot % 16 + 16) % 16);
+			}
+			else if (name == "orientation")
+			{
+				QStringList dirs = value.split('_');
+				for (QString& dir : dirs)
+					dir = SchematicGetDirection(dir, transform);
+				newValue = dirs.join('_');
+			}
+			else if (name == "north" || name == "south" || name == "east" || name == "west")
+				output[i] = StringType(SchematicGetDirection(name, transform));
+
+			output[i + 1] = StringType(newValue);
+		}
+
+		return (uint16_t)block_get_state_id(block->id, output);
+	}
+
+	// Create Schematic from world data provided via AddChunk/AddEntityRegion
 	SchematicExport::SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible, BoolType applyFilter) :
 		box(selection),
 		dataVersion(dataVersion),
@@ -12,72 +74,83 @@ namespace CppProject
 		skipIncompatible(skipIncompatible),
 		applyFilter(applyFilter)
 	{
-		if (!box.active)
-			throw QString("No world selection to export");
+		Initialize();
+	}
 
-		box.Adjust();
+	// Create Schematic from scenery/structure timelines and their modified blocks
+	SchematicExport::SchematicExport(obj_timeline* timeline) :
+		dataVersion(Chunk::JAVA_26_3),
+		legacy(false),
+		skipIncompatible(false),
+		applyFilter(false),
+		timeline(timeline),
+		inverse(Matrix(timeline->matrix_render).GetInversed())
+	{
+		// Parse template repeat setting and scenery resource
+		if (timeline->type == e_tl_type_SCENERY)
+		{
+			obj_template* temp = ObjTypeOpt(obj_template, timeline->temp);
+			resource = temp ? ObjTypeOpt(obj_resource, temp->scenery) : nullptr;
+			if (!resource || !tl_load_blocks(ScopeAny(timeline->id)))
+				throw QString("Could not load the scenery source blocks");
 
-		const Map& entityMap = DsMap(ObjType(obj_minecraft_assets, global::mc_assets)->entity_model_map);
-		for (auto it = entityMap.map.cbegin(); it != entityMap.map.cend(); ++it)
-			supportedEntityIds.insert(it.key());
+			res_load_scenery_filter_mask(ScopeAny(resource->id));
+			keepWater = !block_get_filtered(resource->id, FindMap(ObjType(obj_minecraft_assets, global::mc_assets)->block_name_map)->Value("water"));
 
-		WorldVec size = box.end - box.start;
-		IntType maxDimension = std::numeric_limits<uint16_t>::max();
+			sourceSize = resource->scenery_size.ToVec();
+			if (temp->block_repeat_enable)
+				repeat = temp->block_repeat.ToVec();
+
+			if (sourceSize.x <= 0 || sourceSize.y <= 0 || sourceSize.z <= 0 ||
+				repeat.x <= 0 || repeat.y <= 0 || repeat.z <= 0)
+				throw QString("Invalid scenery dimensions");
+
+			VecType size(sourceSize.x * repeat.x, sourceSize.y * repeat.y, sourceSize.z * repeat.z);
+			bounds.AddBounds({ VecType(0, 0, 0), size });
+		}
+
+		// Parse manually added blocks
+		for (IntType i = 0; i < timeline->blocks_added.Size(); i++)
+		{
+			const ArrType& entry = timeline->blocks_added.vec.Value(i).Arr();
+			IntType index = entry.IntValue(1);
+			if (index < 0 || index >= timeline->blocks_added_palette.Size())
+				throw QString("Invalid added block palette index");
+
+			const ArrType& state = timeline->blocks_added_palette.vec.Value(index).Arr();
+			Block addedBlock = {
+				entry.Value(0).ToVec(),
+				{ uint16_t(state.IntValue(0)), uint16_t(state.IntValue(1)), state.BoolValue(2) }
+			};
+			
+			addedBlocks.append(addedBlock);
+			if (addedBlock.state.blockId || addedBlock.state.waterlogged)
+				bounds.AddBounds({ addedBlock.pos, addedBlock.pos + VecType(1, 1, 1) });
+		}
+
+		AddTimeline(timeline);
+
+		if (bounds.empty)
+			throw QString("No supported blocks to export");
+
+		Initialize();
+		AddResource();
+
+		for (const Block& block : addedBlocks)
+			AddBlock(block);
+
+		for (const Block& block : parts)
+			AddBlock(block);
+
+		AddEntities();
+	}
+
+	QString SchematicExport::Extension() const
+	{
 		if (legacy)
-			maxDimension = std::numeric_limits<int16_t>::max();
+			return ".schematic";
 
-		if (size.x <= 0 || size.y <= 0 || size.z <= 0 ||
-			size.x > maxDimension || size.y > maxDimension || size.z > maxDimension)
-			throw QString("Selection dimensions exceed the schematic format limits");
-
-		IntType volume = size.x * size.y * size.z;
-		if (volume > std::numeric_limits<int32_t>::max())
-			throw QString("Selection volume exceeds the schematic format limits");
-
-		schematic = &root;
-		if (!legacy)
-		{
-			schematic = new NbtCompound;
-			root.value["Schematic"] = schematic;
-			schematic->value["Version"] = new NbtInt(3);
-		}
-
-		schematic->value["Width"] = new NbtShort(int16_t(size.x));
-		schematic->value["Height"] = new NbtShort(int16_t(size.y));
-		schematic->value["Length"] = new NbtShort(int16_t(size.z));
-
-		// Missing and incompatible chunks remain air
-		if (legacy)
-		{
-			schematic->value["Materials"] = new NbtString("Alpha");
-			schematic->value["Entities"] = new NbtList(TAG_COMPOUND);
-			schematic->value["TileEntities"] = new NbtList(TAG_COMPOUND);
-
-			NbtByteArray* blocks = new NbtByteArray;
-			NbtByteArray* data = new NbtByteArray;
-			schematic->value["Blocks"] = blocks;
-			schematic->value["Data"] = data;
-
-			blocks->value.Alloc(volume);
-			data->value.Alloc(volume);
-		}
-		else
-		{
-			NbtIntArray* offset = new NbtIntArray;
-			schematic->value["Offset"] = offset;
-			offset->value.Alloc(3);
-			schematic->value["Entities"] = new NbtList(TAG_COMPOUND);
-
-			NbtCompound* blocks = new NbtCompound;
-			palette = new NbtCompound;
-			entities = new NbtList(TAG_COMPOUND);
-			schematic->value["Blocks"] = blocks;
-			blocks->value["Palette"] = palette;
-			blocks->value["BlockEntities"] = entities;
-			palette->value["minecraft:air"] = new NbtInt(0);
-
-			indices.Alloc(volume);
-		}
+		return ".schem";
 	}
 
 	void SchematicExport::AddChunk(Chunk& chunk)
@@ -98,88 +171,6 @@ namespace CppProject
 			chunk.ExportLegacySchematic(box, *schematic, applyFilter);
 
 		AddEntities(*chunk.exportData);
-	}
-
-	void SchematicExport::AddEntities(NbtCompound& chunk)
-	{
-		NbtCompound* source = &chunk;
-		if (chunk.HasKey("Level"))
-			source = chunk.Compound("Level");
-
-		StringType entitiesName = source->HasKey("Entities") ? "Entities" : "entities";
-		if (!source->HasKey(entitiesName))
-			return;
-
-		NbtList* outputList = static_cast<NbtList*>(schematic->value.value("Entities"));
-
-		for (NbtCompound* entity : source->List<TAG_COMPOUND, NbtCompound>(entitiesName))
-		{
-			if (entity->GetType("id") != TAG_STRING || entity->GetType("Pos") != TAG_LIST)
-				continue;
-
-			StringType id = entity->String("id");
-			if (!supportedEntityIds.contains(id.ToLower().Replaced("minecraft:", "")))
-				continue;
-
-			NbtList* sourcePos = static_cast<NbtList*>(entity->value.value("Pos"));
-			if (sourcePos->listType != TAG_DOUBLE)
-				continue;
-
-			QVector<NbtDouble*> pos = entity->List<TAG_DOUBLE, NbtDouble>("Pos");
-			if (pos.size() != 3)
-				continue;
-
-			WorldVec blockPos(std::floor(pos[0]->value), std::floor(pos[1]->value), std::floor(pos[2]->value));
-			if (!box.Contains(blockPos))
-				continue;
-
-			NbtCompound* output = new NbtCompound;
-			outputList->value.Alloc(outputList->value.Size() + 1);
-			outputList->value[outputList->value.Size() - 1] = output;
-
-			NbtList* localPos = new NbtList(TAG_DOUBLE);
-			localPos->value.Alloc(3);
-			localPos->value[0] = new NbtDouble(pos[0]->value - box.start.x);
-			localPos->value[1] = new NbtDouble(pos[1]->value - box.start.y);
-			localPos->value[2] = new NbtDouble(pos[2]->value - box.start.z);
-
-			output->value.swap(entity->value);
-			delete output->value.take("Pos");
-
-			if (output->GetType("block_pos") == TAG_INT_ARRAY)
-			{
-				Heap<int32_t>& anchor = output->IntArray("block_pos");
-				if (anchor.Size() == 3)
-				{
-					anchor[0] -= int32_t(box.start.x);
-					anchor[1] -= int32_t(box.start.y);
-					anchor[2] -= int32_t(box.start.z);
-				}
-			}
-
-			if (legacy)
-			{
-				output->value["Pos"] = localPos;
-				for (const char* axis : { "TileX", "TileY", "TileZ" })
-				{
-					if (output->GetType(axis) != TAG_INT)
-						continue;
-
-					IntType start = (axis[4] == 'X') ? box.start.x : ((axis[4] == 'Y') ? box.start.y : box.start.z);
-					output->Int(axis) -= int32_t(start);
-				}
-			}
-			else
-			{
-				delete output->value.take("id");
-
-				NbtCompound* payload = new NbtCompound;
-				payload->value.swap(output->value);
-				output->value["Id"] = new NbtString(id);
-				output->value["Pos"] = localPos;
-				output->value["Data"] = payload;
-			}
-		}
 	}
 
 	void SchematicExport::AddEntityRegion(const QString& filename, const WorldVec& regionPos, const BoolType* includedChunks)
@@ -212,7 +203,7 @@ namespace CppProject
 				(uint8_t(bytes[i * 4]) << 16) |
 				(uint8_t(bytes[i * 4 + 1]) << 8) |
 				uint8_t(bytes[i * 4 + 2]);
-			
+
 			offset *= 4096;
 
 			if (offset == 0 || offset > region.size() - 5)
@@ -244,6 +235,115 @@ namespace CppProject
 		}
 	}
 
+	void SchematicExport::Save(const QString& filename)
+	{
+		Gzip::WriteCompressed(Serialize(), filename);
+	}
+
+	void SchematicExport::SaveResource(obj_resource* resource)
+	{
+		try
+		{
+			QByteArray data = Serialize();
+			QString folder = global::_app->project_folder.Str();
+			QString filename = StringType(res_get_world_filename(ScopeAny(global::_app->id), resource->world_name, Extension(), resource->id)).QStr();
+			resource->filename = filename;
+
+			Gzip::WriteAsync(std::move(data), QDir(folder).filePath(filename), "schematic");
+		}
+		catch (const QString& error)
+		{
+			WARNING("Could not save schematic snapshot: " + error);
+
+			message_set_caption(text_get({ StringType("error/export_schematic_caption") }));
+			show_message(StringType("Could not save schematic:\n" + error));
+		}
+	}
+
+	void SchematicExport::Initialize()
+	{
+		if (!timeline)
+		{
+			if (!box.active)
+				throw QString("No world selection to export");
+
+			box.Adjust();
+		}
+
+		WorldVec size;
+		if (timeline)
+		{
+			WorldVec localSize = bounds.maxPoint - bounds.minPoint;
+			size = { localSize.y, localSize.z, localSize.x };
+		}
+		else
+			size = box.end - box.start;
+
+		IntType maxDim;
+		if (!legacy)
+			maxDim = std::numeric_limits<uint16_t>::max();
+		else
+			maxDim = std::numeric_limits<int16_t>::max();
+
+		if (size.x <= 0 || size.y <= 0 || size.z <= 0 ||
+			size.x > maxDim || size.y > maxDim || size.z > maxDim)
+			throw QString("Selection dimensions exceed the schematic format limits");
+
+		IntType volume = size.x * size.y * size.z;
+		if (volume > std::numeric_limits<int32_t>::max())
+			throw QString("Selection volume exceeds the schematic format limits");
+
+		if (timeline)
+			box = { { 0, 0, 0 }, size };
+
+		schematic = &root;
+		if (!legacy)
+		{
+			schematic = new NbtCompound;
+			root.value["Schematic"] = schematic;
+			schematic->value["Version"] = new NbtInt(3);
+		}
+
+		schematic->value["Width"] = new NbtShort(int16_t(size.x));
+		schematic->value["Height"] = new NbtShort(int16_t(size.y));
+		schematic->value["Length"] = new NbtShort(int16_t(size.z));
+
+		// Missing and incompatible chunks remain air
+		if (!legacy)
+		{
+			NbtIntArray* offset = new NbtIntArray;
+			schematic->value["Offset"] = offset;
+			offset->value.Alloc(3);
+
+			palette = new NbtCompound;
+			palette->value["minecraft:air"] = new NbtInt(0);
+
+			NbtCompound* blocks = new NbtCompound;
+			schematic->value["Blocks"] = blocks;
+			blocks->value["Palette"] = palette;
+			indices.Alloc(volume);
+
+			entities = new NbtList(TAG_COMPOUND);
+			blocks->value["BlockEntities"] = entities;
+			schematic->value["Entities"] = new NbtList(TAG_COMPOUND);
+		}
+		else
+		{
+			schematic->value["Materials"] = new NbtString("Alpha");
+
+			NbtByteArray* blocks = new NbtByteArray;
+			NbtByteArray* data = new NbtByteArray;
+			schematic->value["Blocks"] = blocks;
+			schematic->value["Data"] = data;
+
+			blocks->value.Alloc(volume);
+			data->value.Alloc(volume);
+
+			schematic->value["Entities"] = new NbtList(TAG_COMPOUND);
+			schematic->value["TileEntities"] = new NbtList(TAG_COMPOUND);
+		}
+	}
+
 	QByteArray SchematicExport::Serialize()
 	{
 		if (!error.isEmpty())
@@ -271,6 +371,7 @@ namespace CppProject
 
 		NbtCompound* blocks = schematic->Compound("Blocks");
 		delete blocks->value.take("Data");
+
 		NbtByteArray* blockData = new NbtByteArray;
 		blocks->value["Data"] = blockData;
 		blockData->value.Alloc(dataSize, false);
@@ -291,388 +392,676 @@ namespace CppProject
 		return root.Serialize();
 	}
 
-	QString SchematicExport::Extension() const
+	void SchematicExport::AddResource()
 	{
-		if (legacy)
-			return ".schematic";
-
-		return ".schem";
-	}
-
-	void SchematicExport::SaveResource(obj_resource* resource)
-	{
-		try
-		{
-			QByteArray data = Serialize();
-			QString folder = global::_app->project_folder.Str();
-			QString filename = StringType(res_get_world_filename(ScopeAny(global::_app->id), resource->world_name, Extension(), resource->id)).QStr();
-			resource->filename = filename;
-
-			Gzip::WriteAsync(std::move(data), QDir(folder).filePath(filename), "schematic");
-		}
-		catch (const QString& error)
-		{
-			WARNING("Could not save schematic snapshot: " + error);
-
-			message_set_caption(text_get({ StringType("error/export_schematic_caption") }));
-			show_message(StringType("Could not save schematic:\n" + error));
-		}
-	}
-
-	void Chunk::ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities, BoolType applyFilter)
-	{
-		if (!exportData)
+		if (!resource)
 			return;
 
-		if (format < JAVA_1_13)
-			throw text_get({ StringType("error/export_schematic_old_chunks") }).Str().QStr();
-
-		WorldVec size = box.end - box.start;
-		WorldVec chunkPos = region->pos + WorldVec(x * SECTION_SIZE, 0, z * SECTION_SIZE);
-		BoolType filterEnabled = (global::_app->setting_world_filter_enabled && applyFilter);
-		e_block_filter filterMode = (e_block_filter)global::_app->setting_world_filter_mode.ToInt();
-		StringType sectionsName = "Sections";
-
-		if (format >= JAVA_1_18)
-			sectionsName = "sections";
-
-		if (exportData->HasKey(sectionsName))
+		// Add source blocks from the grid of block meshes in the resource
+		for (IntType m = 0; m < resource->block_meshes.Size(); m++)
 		{
-			Heap<uint16_t> localIndices;
+			obj_block_mesh* mesh = ObjTypeOpt(obj_block_mesh, resource->block_meshes.Value(m));
+			if (!mesh)
+				continue;
+
+			Buffer* entries = FindBuffer(mesh->block_palette_buffer);
+			Buffer* grid = FindBuffer(mesh->block_grid_buffer);
+			if (!entries || !grid || !entries->data.Size() || entries->data.Size() % 4)
+				throw QString("Missing or invalid source block data");
+
+			WorldVec size = mesh->block_grid_size;
+			IntType count = entries->data.Size() / 4, total = size.x * size.y * size.z;
+			int bits = 0;
+			while ((quint64(1) << bits) < quint64(count))
+				bits++;
+			
+			IntType gridBytes = (total * bits + 7) / 8;
+			if (count > total || gridBytes + (count + 7) / 8 > grid->data.Size())
+				throw QString("Invalid source block grid");
+
 			QVector<uint32_t> remap;
-
-			for (NbtCompound* section : exportData->List<TAG_COMPOUND, NbtCompound>(sectionsName))
+			QVector<BoolType> resolve;
+			for (IntType p = 0; p < count; p++)
 			{
-				WorldVec pos = chunkPos + WorldVec(0, section->Byte("Y") * SECTION_SIZE, 0);
-				if (!box.Intersects({ pos, pos + WorldVec(SECTION_SIZE, SECTION_SIZE, SECTION_SIZE) }))
-					continue;
+				const uchar* entry = entries->data.Data() + p * 4;
+				BuilderState state = {
+					uint16_t(entry[0] | (entry[1] << 8)),
+					uint16_t(entry[2] | (entry[3] << 8)),
+					(grid->data[gridBytes + p / 8] & (1 << (p % 8))) != 0
+				};
+				obj_block* block = state.blockId ? ObjTypeOpt(obj_block, global::block_objs.Value(state.blockId)) : nullptr;
+				BoolType connected = (resource->scenery_legacy && block && block->has_connect && !block_get_filtered(resource->id, block->id));
+				resolve.append(connected);
+				remap.append(connected ? 0 : GetPaletteIndex(state));
+			}
 
-				NbtCompound* blocks = section;
-				StringType paletteName = "Palette", dataName = "BlockStates";
-				if (format >= JAVA_1_18)
+			WorldVec meshNum = resource->block_meshes_num;
+			WorldVec origin = {
+				(m % meshNum.x) * block_mesh_size,
+				((m / meshNum.x) % meshNum.y) * block_mesh_size,
+				(m / (meshNum.x * meshNum.y)) * block_mesh_size
+			};
+			for (IntType p = 0; p < total; p++)
+			{
+				IntType bit = p * bits;
+				quint64 packed = 0;
+				for (int b = 0; b < (bit % 8 + bits + 7) / 8; b++)
+					packed |= quint64(grid->data[bit / 8 + b]) << (b * 8);
+				
+				IntType index = (packed >> (bit % 8)) & ((quint64(1) << bits) - 1);
+				if (index >= count)
+					throw QString("Invalid source block palette index");
+
+				WorldVec source = origin + WorldVec(p % size.x, (p / size.x) % size.y, p / (size.x * size.y));
+				WorldVec pos = { source.y, sourceSize.y - 1 - source.x, source.z };
+				for (IntType z = 0; z < repeat.z; z++)
+				for (IntType y = 0; y < repeat.y; y++)
+				for (IntType x = 0; x < repeat.x; x++)
 				{
-					if (!section->HasKey("block_states"))
-						continue;
+					WorldVec target = pos + sourceSize * WorldVec(x, y, z);
+					uint32_t value = remap[index];
 
-					blocks = section->Compound("block_states");
-					paletteName = "palette";
-					dataName = "data";
-				}
-
-				if (!blocks->HasKey(paletteName))
-					continue;
-
-				// Keep original identifiers and all properties, including unknown blocks
-				if (blocks->GetType(paletteName) != TAG_LIST)
-					throw QString("Invalid chunk block palette");
-
-				NbtList* sourcePalette = static_cast<NbtList*>(blocks->value.value(paletteName));
-				if (!sourcePalette->value.Size() || sourcePalette->value.Size() > SECTION_SIZE3)
-					throw QString("Invalid chunk block palette size");
-
-				remap.clear();
-				remap.reserve((int)sourcePalette->value.Size());
-
-				for (IntType i = 0; i < sourcePalette->value.Size(); i++)
-				{
-					NbtTag* entry = sourcePalette->value[i];
-					QString state;
-					if (entry->type == TAG_STRING)
-						state = static_cast<NbtString*>(entry)->value;
-
-					else if (entry->type == TAG_COMPOUND)
+					if (resolve[index])
 					{
-						NbtCompound* compound = static_cast<NbtCompound*>(entry);
-						StringType idName = "Name", propertiesName = "Properties";
-						if (format >= JAVA_26_3)
-						{
-							idName = "id";
-							propertiesName = "properties";
-							if (!compound->HasKey(idName))
-								idName = "";
-						}
-						state = compound->String(idName);
-
-						if (compound->HasKey(propertiesName))
-						{
-							NbtCompound* properties = compound->Compound(propertiesName);
-							QStringList values;
-							for (auto it = properties->value.constBegin(); it != properties->value.constEnd(); ++it)
-								values.append(QString(it.key()) + "=" + QString(properties->String(it.key())));
-
-							values.sort();
-							if (!values.isEmpty())
-								state += "[" + values.join(",") + "]";
-						}
-					}
-					else
-						throw QString("Invalid chunk block palette entry");
-
-					if (!state.contains(':'))
-						state.prepend("minecraft:");
-
-					if (filterEnabled)
-					{
-						StringType id = state.section('[', 0, 0);
-						if (id.StartsWith("minecraft:"))
-							id = id.Mid(MINECRAFT_ID_LENGTH);
-
-						// Reuse the importer filter, retaining unknown blocks in remove mode
-						if (!Builder::filteredMcBlockIdObjMap.contains(id) &&
-							(filterMode == e_block_filter_KEEP || Builder::mcBlockIdObjMap.contains(id)))
-							state = "minecraft:air";
-
-						else if (World::waterRemoved)
-						{
-							int start = state.indexOf('[');
-							if (start >= 0)
-							{
-								QStringList properties = state.mid(start + 1, state.size() - start - 2).split(',');
-								int waterlogged = properties.indexOf("waterlogged=true");
-								if (waterlogged >= 0)
-								{
-									properties[waterlogged] = "waterlogged=false";
-									state = state.left(start + 1) + properties.join(",") + "]";
-								}
-							}
-						}
+						// Legacy doors and double chests share state across neighboring blocks
+						ArrType state = block_meshes_get_block(Scope<obj_timeline>(timeline), target.x, target.y, target.z, false, true);
+						value = GetPaletteIndex({ uint16_t(state.IntValue(0)), uint16_t(state.IntValue(1)), state.BoolValue(2) });
 					}
 
-					if (!palette.HasKey(state))
-						palette.value[state] = new NbtInt(palette.value.size());
-
-					remap.append(palette.Int(state));
-				}
-
-				// Single-entry palettes without packed data use index zero without scratch storage
-				BoolType hasIndices = blocks->HasKey(dataName) && blocks->LongArray(dataName).Size();
-				if (hasIndices)
-				{
-					const Heap<int64_t>& data = blocks->LongArray(dataName);
-					IntType bits = std::max(IntType(4), IntType(std::ceil(std::log2(remap.size()))));
-					IntType longs = (SECTION_SIZE3 * bits + 63) / 64;
-					if (format >= JAVA_1_16)
-						longs = (SECTION_SIZE3 + 64 / bits - 1) / (64 / bits);
-
-					if (data.Size() != longs)
-						throw QString("Invalid chunk block data length");
-
-					if (!localIndices.Size())
-						localIndices.Alloc(SECTION_SIZE3, false);
-
-					Section::ParsePaletteIndices(data, localIndices, remap.size(), format, 4);
-				}
-				else if (remap.size() != 1)
-					throw QString("Missing chunk block data");
-
-				// Copy only blocks inside the selection, using Minecraft's Y-up ordering
-				for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + SECTION_SIZE, box.end.y); y++)
-				for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
-				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
-				{
-					IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
-					uint16_t index = 0;
-					if (hasIndices)
-						index = localIndices[local];
-
-					if (index >= remap.size())
-						throw QString("Chunk block references a missing palette entry");
-
-					IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
-					indices[target] = remap[index];
+					indices[GetOffset(target)] = value;
 				}
 			}
 		}
 
-		StringType entitiesName = "block_entities";
-		if (exportData->HasKey("TileEntities"))
-			entitiesName = "TileEntities";
-
-		if (!exportData->HasKey(entitiesName))
+		// Timeline parts replace their source blocks even after moving or deletion
+		List* sources = FindList(resource->scenery_tl_list);
+		if (!sources)
 			return;
 
-		// Copy Tile entities, offset by box selection start
-		for (NbtCompound* entity : exportData->List<TAG_COMPOUND, NbtCompound>(entitiesName))
+		for (const List::ListValue& value : sources->vec)
 		{
-			WorldVec pos;
-			if (entity->HasKey("x"))
-				pos = { entity->Int("x"), entity->Int("y"), entity->Int("z") };
-			else
+			obj_block_tl* blockTl = ObjType(obj_block_tl, value.value);
+			obj_block* block = ObjTypeOpt(obj_block, blockTl->block);
+			if (!block || block->tl_model_double)
+				continue;
+
+			IntType state = block_get_state_id(block->id, blockTl->block_build_state);
+			VecType pos = (blockTl->position.ToVec() - block_get_timeline_position(block->id, state)) / block_size_;
+			WorldVec origin = { IntType(std::round(pos.y)), sourceSize.y - 1 - IntType(std::round(pos.x)), IntType(std::round(pos.z)) };
+			
+			for (const Block& connectedBlocks : GetConnectedBlocks(block, state))
+			for (IntType z = 0; z < repeat.z; z++)
+			for (IntType y = 0; y < repeat.y; y++)
+			for (IntType x = 0; x < repeat.x; x++)
 			{
-				StringType posName = "Pos";
-				if (entity->HasKey("pos"))
-					posName = "pos";
+				// Copy block, keeping source waterlogged flag
+				WorldVec target = VecType(origin) + connectedBlocks.pos + VecType(sourceSize * WorldVec(x, y, z));
+				ArrType meshBlock = block_meshes_get_block(Scope<obj_timeline>(timeline), target.x, target.y, target.z);
+				AddBlock({ VecType(target), { 0, 0, keepWater && meshBlock.BoolValue(2) } });
+			}
+		}
+	}
 
-				if (entity->GetType(posName) == TAG_INT_ARRAY)
+	void SchematicExport::AddTimeline(obj_timeline* parent)
+	{
+		List* children = FindList(parent->tree_list);
+		if (!children)
+			return;
+
+		for (const List::ListValue& child : children->vec)
+		{
+			obj_timeline* part = ObjTypeOpt(obj_timeline, child.value);
+			if (!part || part->delete_ready)
+				continue;
+
+			if (part->type == e_tl_type_BLOCK || part->type == e_tl_type_SPECIAL_BLOCK)
+			{
+				Object* temp = ObjOpt(part->temp);
+				if (!temp)
+					temp = part;
+				
+				obj_model* model = nullptr;
+				if (part->type == e_tl_type_SPECIAL_BLOCK)
 				{
-					const auto& values = entity->IntArray(posName);
-					if (values.Size() != 3)
-						throw QString("Invalid block entity position");
-
-					pos = { values.Value(0), values.Value(1), values.Value(2) };
+					obj_minecraft_assets* assets = ObjType(obj_minecraft_assets, global::mc_assets);
+					Map* models = FindMap(assets->model_name_map);
+					model = ObjTypeOpt(obj_model, models->Value(temp->GetVarRef(M_model_name)));
 				}
+
+				// Painting
+				if (model && model->entity_tl_type == "painting")
+				{
+					Matrix transform = Matrix(part->matrix_render) * inverse;
+					VecType origin = VecType(transform.m[12], transform.m[13], transform.m[14]) / block_size_;
+					VecType direction = transform * VecType(1, 0, 0);
+					IntType facing = (IntType(std::round(std::atan2(direction.y, direction.x) * RADTODEG / 90)) + 5) % 4;
+					obj_model_file* file = ObjTypeOpt(obj_model_file, temp->GetVarRef(M_model_file));
+					VecType extent = file ? VecType(file->bounds_parts_end) - VecType(file->bounds_parts_start) : VecType(block_size_, block_size_, block_size_);
+					IntType width = std::max(IntType(1), IntType(std::round(extent.x / block_size_)));
+					IntType height = std::max(IntType(1), IntType(std::round(extent.z / block_size_)));
+					VecType pos(std::round(origin.x * 2) / 2, std::round(origin.y * 2) / 2, std::round(origin.z) + height / 2.0);
+
+					switch (facing)
+					{
+						case 0: pos.x += 1.0 / 32; break;
+						case 1: pos.y += 1.0 / 32; break;
+						case 2: pos.x -= 1.0 / 32; break;
+						case 3: pos.y -= 1.0 / 32; break;
+					}
+
+					paintings.append({ part, pos, facing, width, height });
+
+					VecType blockPos(std::floor(pos.x), std::ceil(pos.y) - 1, std::floor(pos.z));
+					bounds.AddBounds({ blockPos, blockPos + VecType(1, 1, 1) });
+				}
+
+				// Block timeline
 				else
 				{
-					auto values = entity->List<TAG_INT, NbtInt>(posName);
-					if (values.size() != 3)
-						throw QString("Invalid block entity position");
+					VarType data = tl_get_build_block(ScopeAny(part->id));
+					if (!data.IsArray())
+						continue;
 
-					pos = { values[0]->value, values[1]->value, values[2]->value };
+					IntType state = data.Arr().IntValue(1);
+					obj_block* block = ObjType(obj_block, global::block_objs.Value(data.Arr().IntValue(0)));
+					VecType pos = block_get_timeline_position(block->id, state);
+
+					Matrix base = Matrix::Translation(pos.y, block_size_ - pos.x, pos.z);
+					VecType rotpoint(block_half_size, block_half_size, 0);
+					if (block->timeline)
+					{
+						base = Matrix(block_get_timeline_matrix(block->id, state));
+						rotpoint = block_get_timeline_rot_point(block->id, state);
+					}
+					base = Matrix::Translation(-rotpoint) * base;
+
+					Matrix transform = base.GetInversed() * Matrix(part->matrix_render) * inverse;
+					WorldVec repeat = { 1, 1, 1 };
+					if (part->type == e_tl_type_BLOCK && temp->GetVarRef(M_block_repeat_enable))
+						repeat = temp->GetVarRef(M_block_repeat).ToVec();
+
+					// Transform block centers, retaining the nearest Minecraft orientation
+					for (IntType z = 0; z < repeat.z; z++)
+					for (IntType y = 0; y < repeat.y; y++)
+					for (IntType x = 0; x < repeat.x; x++)
+					for (Block addedBlock : GetConnectedBlocks(block, state))
+					{
+						VecType center = (addedBlock.pos + VecType(x + 0.5, y + 0.5, z + 0.5)) * block_size_;
+						VecType transformed = transform * VecType(center.x, center.y, center.z, 1);
+						addedBlock.pos = {
+							std::floor(transformed.x / block_size_ + 0.000001),
+							std::floor(transformed.y / block_size_ + 0.000001),
+							std::floor(transformed.z / block_size_ + 0.000001)
+						};
+
+						obj_block* connectedBlock = ObjType(obj_block, global::block_objs.Value(addedBlock.state.blockId));
+						addedBlock.state.stateId = SchematicGetTransformState(connectedBlock, addedBlock.state.stateId, transform);
+						addedBlock.timeline = part;
+
+						if (connectedBlock->tl_type == "banner")
+							addedBlock.state.stateId = uint16_t(block_set_state_id_value(connectedBlock->id, addedBlock.state.stateId, StringType("color"), minecraft_get_dye(temp->GetVarRef(M_pattern_base_color))).ToInt());
+
+						parts.append(addedBlock);
+						bounds.AddBounds({ addedBlock.pos, addedBlock.pos + VecType(1, 1, 1) });
+					}
 				}
 			}
 
-			if (!box.Contains(pos))
-				continue;
-
-			// Filter by the block at this position, not the block entity's type
-			IntType target = ((pos.y - box.start.y) * size.z + pos.z - box.start.z) * size.x + pos.x - box.start.x;
-			if (filterEnabled && indices[target] == 0)
-				continue;
-
-			StringType idName = "id";
-			if (!entity->HasKey(idName))
-				idName = "Id";
-
-			StringType id = entity->String(idName);
-			NbtCompound* output = new NbtCompound;
-			entities.value.Alloc(entities.value.Size() + 1);
-			entities.value[entities.value.Size() - 1] = output;
-			output->value["Id"] = new NbtString(id);
-
-			NbtIntArray* position = new NbtIntArray;
-			output->value["Pos"] = position;
-			position->value.Alloc(3);
-			position->value[0] = pos.x - box.start.x;
-			position->value[1] = pos.y - box.start.y;
-			position->value[2] = pos.z - box.start.z;
-
-			// Transfer the complete payload without copying or losing NBT tag types
-			NbtCompound* payload = new NbtCompound;
-			output->value["Data"] = payload;
-			payload->value.swap(entity->value);
-			for (const char* name : { "id", "Id", "x", "y", "z", "Pos", "pos" })
-				delete payload->value.take(name);
+			AddTimeline(part);
 		}
 	}
 
-	void Chunk::ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic, BoolType applyFilter)
+	void SchematicExport::AddBlock(const Block& block)
 	{
-		if (!exportData)
+		IntType offset = GetOffset(block.pos);
+		if (offset < 0)
 			return;
 
-		if (format >= JAVA_1_13)
-			throw text_get({ StringType("error/export_schematic_new_chunks") }).Str().QStr();
-
-		WorldVec size = box.end - box.start;
-		WorldVec chunkPos = region->pos + WorldVec(x * SECTION_SIZE, 0, z * SECTION_SIZE);
-		Heap<int8_t>& blocks = schematic.ByteArray("Blocks");
-		Heap<int8_t>& data = schematic.ByteArray("Data");
-		BoolType filterEnabled = (global::_app->setting_world_filter_enabled && applyFilter);
-		e_block_filter filterMode = (e_block_filter)global::_app->setting_world_filter_mode.ToInt();
-
-		// Both legacy layouts use packed metadata, but pre-Anvil chunks have Y varying fastest
-		auto copyBlocks = [&](NbtCompound* source, const WorldVec& pos, IntType height)
-			{
-				if (!box.Intersects({ pos, pos + WorldVec(SECTION_SIZE, height, SECTION_SIZE) }))
-					return;
-
-				const Heap<int8_t>& sourceBlocks = source->ByteArray("Blocks");
-				const Heap<int8_t>& sourceData = source->ByteArray("Data");
-				const Heap<int8_t>* sourceAdd = nullptr;
-				if (source->HasKey("Add"))
-					sourceAdd = &source->ByteArray("Add");
-
-				IntType count = SECTION_SIZE2 * height;
-				if (sourceBlocks.Size() != count || sourceData.Size() != count / 2 ||
-					(sourceAdd && sourceAdd->Size() != count / 2))
-					throw QString("Invalid legacy chunk block data length");
-
-				for (IntType y = std::max(pos.y, box.start.y); y < std::min(pos.y + height, box.end.y); y++)
-				for (IntType z = std::max(pos.z, box.start.z); z < std::min(pos.z + SECTION_SIZE, box.end.z); z++)
-				for (IntType x = std::max(pos.x, box.start.x); x < std::min(pos.x + SECTION_SIZE, box.end.x); x++)
-				{
-					IntType local = (y - pos.y) * SECTION_SIZE2 + (z - pos.z) * SECTION_SIZE + x - pos.x;
-					if (format == PRE_JAVA_1_2)
-						local = ((x - pos.x) * SECTION_SIZE + z - pos.z) * height + y - pos.y;
-
-					IntType shift = (local % 2) * 4;
-					uint16_t id = uint8_t(sourceBlocks.Value(local));
-					uint8_t metadata = (uint8_t(sourceData.Value(local / 2)) >> shift) & 15;
-					if (sourceAdd)
-						id |= ((uint8_t(sourceAdd->Value(local / 2)) >> shift) & 15) << 8;
-
-					if (filterEnabled)
-					{
-						BoolType known = false, retained = false;
-						if (id < 256)
-						{
-							retained = Builder::filteredMcLegacyBlockIdObj[id][metadata] != nullptr;
-							if (!retained)
-							{
-								StringType mcId = global::legacy_block_mc_id[id][metadata];
-								known = Builder::mcBlockIdObjMap.contains(mcId);
-							}
-						}
-
-						// Unknown IDs survive remove mode, matching palette-based exports
-						if (!retained && (filterMode == e_block_filter_KEEP || known))
-							continue;
-					}
-
-					IntType target = ((y - box.start.y) * size.z + z - box.start.z) * size.x + x - box.start.x;
-					blocks[target] = int8_t(id & 255);
-					data[target] = metadata;
-
-					// MCEdit stores high block ID bits in an optional packed nibble array
-					if (id > 255)
-					{
-						if (!schematic.HasKey("AddBlocks"))
-						{
-							NbtByteArray* add = new NbtByteArray;
-							schematic.value["AddBlocks"] = add;
-							add->value.Alloc((blocks.Size() + 1) / 2);
-						}
-
-						schematic.ByteArray("AddBlocks")[target / 2] |= int8_t((id >> 8) << ((target % 2) * 4));
-					}
-				}
-			};
-
-		if (format == PRE_JAVA_1_2)
-			copyBlocks(exportData, chunkPos, 128);
-
-		else if (exportData->HasKey("Sections"))
+		BuilderState state = block.state;
+		if (block.timeline)
 		{
-			for (NbtCompound* section : exportData->List<TAG_COMPOUND, NbtCompound>("Sections"))
-				copyBlocks(section, chunkPos + WorldVec(0, uint8_t(section->Byte("Y")) * SECTION_SIZE, 0), SECTION_SIZE);
+			// Preserve waterlogged flag
+			WorldVec pos = block.pos;
+			ArrType meshBlock = block_meshes_get_block(Scope<obj_timeline>(timeline), pos.x, pos.y, pos.z);
+			obj_block* meshBlockObj = ObjTypeOpt(obj_block, global::block_objs.Value(meshBlock.IntValue(0)));
+			state.waterlogged = keepWater &&
+				(meshBlock.BoolValue(2) || (meshBlockObj && meshBlockObj->name == StringType("water"))) &&
+				(!resource || !meshBlockObj || !block_get_filtered(resource->id, meshBlockObj->id));
+
+			indices[offset] = GetPaletteIndex(state, false);
+		}
+		else
+			indices[offset] = GetPaletteIndex(state, true);
+
+		addedBlockMap.remove(offset);
+		if (block.timeline)
+			addedBlockMap.insert(offset, block);
+	}
+
+	void SchematicExport::AddEntities()
+	{
+		NbtList* blockEntities = static_cast<NbtList*>(schematic->Compound("Blocks")->value.value("BlockEntities"));
+		NbtList* entities = static_cast<NbtList*>(schematic->value.value("Entities"));
+
+		// Add signs, banners and decorated pots
+		for (const Block& addedBlock : addedBlockMap)
+		{
+			obj_timeline* part = addedBlock.timeline;
+			obj_block* block = ObjType(obj_block, global::block_objs.Value(addedBlock.state.blockId));
+			if (block->tl_type != "sign" && block->tl_type != "banner" && block->name != "decorated_pot")
+				continue;
+
+			Object* temp = ObjOpt(part->temp);
+			if (!temp)
+				temp = part;
+
+			NbtCompound* entity = new NbtCompound;
+			IntType index = blockEntities->value.Size();
+			blockEntities->value.Alloc(index + 1);
+			blockEntities->value[index] = entity;
+
+			NbtIntArray* pos = new NbtIntArray;
+			pos->value.Alloc(3);
+			pos->value[0] = int32_t(bounds.maxPoint.y - 1 - addedBlock.pos.y);
+			pos->value[1] = int32_t(addedBlock.pos.z - bounds.minPoint.z);
+			pos->value[2] = int32_t(addedBlock.pos.x - bounds.minPoint.x);
+			entity->value["Pos"] = pos;
+
+			NbtCompound* data = new NbtCompound;
+			entity->value["Data"] = data;
+
+			if (block->tl_type == "sign")
+			{
+				entity->value["Id"] = new NbtString(block->name.Str().Contains("hanging") ? "minecraft:hanging_sign" : "minecraft:sign");
+				data->value["front_text"] = GetSignText(part, false);
+				data->value["back_text"] = GetSignText(part, true);
+			}
+			else if (block->tl_type == "banner")
+			{
+				entity->value["Id"] = new NbtString("minecraft:banner");
+
+				const ArrType& patternList = temp->GetArrRef(M_pattern_pattern_list);
+				const ArrType& colorList = temp->GetArrRef(M_pattern_color_list);
+				NbtList* patterns = new NbtList(TAG_COMPOUND);
+				IntType count = std::min(patternList.Size(), colorList.Size());
+				data->value["patterns"] = patterns;
+				patterns->value.Alloc(count);
+				
+				for (IntType i = 0; i < count; i++)
+				{
+					NbtCompound* pattern = new NbtCompound;
+					StringType name = patternList.Value(i).Str();
+					patterns->value[i] = pattern;
+					pattern->value["pattern"] = new NbtString(name.Contains(":") ? name : StringType("minecraft:") + name);
+					pattern->value["color"] = new NbtString(minecraft_get_dye(colorList.IntValue(i)));
+				}
+			}
+			else if (block->name == "decorated_pot")
+			{
+				entity->value["Id"] = new NbtString("minecraft:decorated_pot");
+
+				NbtList* sherds = new NbtList(TAG_STRING);
+				data->value["sherds"] = sherds;
+				sherds->value.Alloc(4);
+
+				VarType modelState = temp->GetVarRef(M_model_state);
+				Map* names = FindMap(global::minecraft_sherd_map);
+				const char* sides[] = { "sherd_front", "sherd_left", "sherd_right", "sherd_back" };
+				for (int side = 0; side < 4; side++)
+				{
+					VarType value = state_vars_get_value(modelState, StringType(sides[side]));
+					StringType item = "minecraft:brick";
+
+					for (VarType key = names->GetFirstKey(); !key.IsUndefined(); key = names->GetNextKey(key))
+					{
+						if (names->Value(key) == value)
+						{
+							item = key.Str();
+							break;
+						}
+					}
+
+					sherds->value[side] = new NbtString(item);
+				}
+			}
 		}
 
-		if (!exportData->HasKey("TileEntities"))
+		// Add paintings
+		for (const Painting& painting : paintings)
+		{
+			Object* settings = ObjOpt(painting.timeline->temp);
+			if (!settings)
+				settings = painting.timeline;
+			
+			VarType variant = state_vars_get_value(settings->GetVarRef(M_model_state), StringType("variant"));
+			if (!variant.IsString())
+				continue;
+
+			IntType facing = painting.facing;
+			RealType x = bounds.maxPoint.y - painting.pos.y;
+			RealType y = painting.pos.z - bounds.minPoint.z;
+			RealType z = painting.pos.x - bounds.minPoint.x;
+
+			NbtCompound* entity = new NbtCompound;
+			IntType index = entities->value.Size();
+			entities->value.Alloc(index + 1);
+			entities->value[index] = entity;
+			entity->value["Id"] = new NbtString("minecraft:painting");
+
+			NbtList* pos = new NbtList(TAG_DOUBLE);
+			entity->value["Pos"] = pos;
+			pos->value.Alloc(3);
+			pos->value[0] = new NbtDouble(x);
+			pos->value[1] = new NbtDouble(y);
+			pos->value[2] = new NbtDouble(z);
+
+			NbtCompound* data = new NbtCompound;
+			entity->value["Data"] = data;
+
+			QString name = variant.Str();
+			name.remove(QRegularExpression("^painting_"));
+			data->value["variant"] = new NbtString(name.contains(':') ? name : "minecraft:" + name);
+			data->value["facing"] = new NbtByte(facing);
+
+			NbtIntArray* blockPos = new NbtIntArray;
+			data->value["block_pos"] = blockPos;
+			blockPos->value.Alloc(3);
+
+			RealType offset = (painting.width % 2 == 0 ? 0.5 : 0);
+			blockPos->value[0] = int32_t(std::floor(x + (facing == 0 ? -offset : (facing == 2 ? offset : 0))));
+			blockPos->value[1] = int32_t(std::floor(y - (painting.height % 2 == 0 ? 0.5 : 0)));
+			blockPos->value[2] = int32_t(std::floor(z + (facing == 1 ? -offset : (facing == 3 ? offset : 0))));
+		}
+	}
+
+	void SchematicExport::AddEntities(NbtCompound& chunk)
+	{
+		NbtCompound* source = &chunk;
+		if (chunk.HasKey("Level"))
+			source = chunk.Compound("Level");
+
+		StringType entitiesName = source->HasKey("Entities") ? "Entities" : "entities";
+		if (!source->HasKey(entitiesName))
 			return;
 
-		NbtList* entities = static_cast<NbtList*>(schematic.value.value("TileEntities"));
-		for (NbtCompound* entity : exportData->List<TAG_COMPOUND, NbtCompound>("TileEntities"))
+		NbtList* entities = static_cast<NbtList*>(schematic->value.value("Entities"));
+
+		for (NbtCompound* entity : source->List<TAG_COMPOUND, NbtCompound>(entitiesName))
 		{
-			WorldVec pos = { entity->Int("x"), entity->Int("y"), entity->Int("z") };
-			if (!box.Contains(pos))
+			if (entity->GetType("id") != TAG_STRING || entity->GetType("Pos") != TAG_LIST)
 				continue;
 
-			IntType target = ((pos.y - box.start.y) * size.z + pos.z - box.start.z) * size.x + pos.x - box.start.x;
-			uint16_t id = uint8_t(blocks[target]);
-			if (schematic.HasKey("AddBlocks"))
-				id |= ((uint8_t(schematic.ByteArray("AddBlocks")[target / 2]) >> ((target % 2) * 4)) & 15) << 8;
+			StringType id = entity->String("id");
 
-			if (filterEnabled && id == 0)
+			// Filter unsupported entities when creating a resource snapshot
+			StringType name = id.ToLower().Replaced("minecraft:", "");
+			if (!exportOnly && !DsMap(ObjType(obj_minecraft_assets, global::mc_assets)->entity_model_map).Contains(name))
 				continue;
 
-			// Preserve the legacy payload and move its coordinates into selection space
+			NbtList* sourcePos = static_cast<NbtList*>(entity->value.value("Pos"));
+			if (sourcePos->listType != TAG_DOUBLE)
+				continue;
+
+			QVector<NbtDouble*> pos = entity->List<TAG_DOUBLE, NbtDouble>("Pos");
+			if (pos.size() != 3)
+				continue;
+
+			WorldVec blockPos(std::floor(pos[0]->value), std::floor(pos[1]->value), std::floor(pos[2]->value));
+			if (!box.Contains(blockPos))
+				continue;
+
 			NbtCompound* output = new NbtCompound;
 			entities->value.Alloc(entities->value.Size() + 1);
 			entities->value[entities->value.Size() - 1] = output;
+
+			NbtList* localPos = new NbtList(TAG_DOUBLE);
+			localPos->value.Alloc(3);
+			localPos->value[0] = new NbtDouble(pos[0]->value - box.start.x);
+			localPos->value[1] = new NbtDouble(pos[1]->value - box.start.y);
+			localPos->value[2] = new NbtDouble(pos[2]->value - box.start.z);
+
 			output->value.swap(entity->value);
-			output->Int("x") = int32_t(pos.x - box.start.x);
-			output->Int("y") = int32_t(pos.y - box.start.y);
-			output->Int("z") = int32_t(pos.z - box.start.z);
+			delete output->value.take("Pos");
+
+			if (output->GetType("block_pos") == TAG_INT_ARRAY)
+			{
+				Heap<int32_t>& anchor = output->IntArray("block_pos");
+				if (anchor.Size() == 3)
+				{
+					anchor[0] -= int32_t(box.start.x);
+					anchor[1] -= int32_t(box.start.y);
+					anchor[2] -= int32_t(box.start.z);
+				}
+			}
+
+			if (!legacy)
+			{
+				delete output->value.take("id");
+
+				NbtCompound* payload = new NbtCompound;
+				payload->value.swap(output->value);
+				output->value["Id"] = new NbtString(id);
+				output->value["Pos"] = localPos;
+				output->value["Data"] = payload;
+			}
+			else
+			{
+				output->value["Pos"] = localPos;
+
+				for (const char* axis : { "TileX", "TileY", "TileZ" })
+				{
+					if (output->GetType(axis) != TAG_INT)
+						continue;
+
+					IntType start;
+					if (axis[4] == 'X')
+						start = box.start.x;
+					else if (axis[4] == 'Y')
+						start = box.start.y;
+					else
+						start = box.start.z;
+					
+					output->Int(axis) -= int32_t(start);
+				}
+			}
 		}
+	}
+
+	IntType SchematicExport::GetOffset(const VecType& pos) const
+	{
+		VecType blockPos = pos - bounds.minPoint;
+		WorldVec size = bounds.maxPoint - bounds.minPoint;
+
+		if (blockPos.x < 0 || blockPos.y < 0 || blockPos.z < 0 ||
+			blockPos.x >= size.x || blockPos.y >= size.y || blockPos.z >= size.z)
+			return -1;
+
+		return (blockPos.z * size.x + blockPos.x) * size.y + size.y - 1 - blockPos.y;
+	}
+
+	uint32_t SchematicExport::GetPaletteIndex(BuilderState state, BoolType filter)
+	{
+		// Apply resource block filter settings
+		if (filter && resource)
+		{
+			if (state.blockId && block_get_filtered(resource->id, global::block_objs.Value(state.blockId)))
+				state = {};
+
+			if (!keepWater)
+				state.waterlogged = false;
+		}
+
+		quint64 key = quint64(state.blockId) | (quint64(state.stateId) << 16) | (quint64(state.waterlogged) << 32);
+		auto cached = paletteIndices.constFind(key);
+		if (cached != paletteIndices.constEnd())
+			return cached.value();
+
+		QString name = state.waterlogged ? "minecraft:water" : "minecraft:air";
+		QStringList properties;
+
+		obj_block* block = state.blockId ? ObjTypeOpt(obj_block, global::block_objs.Value(state.blockId)) : nullptr;
+
+		// Skip blocks marked as invisible by block timelines
+		if (block && block->tl_mesh && block_get_state_id_value(block->id, state.stateId, StringType("visible")) == StringType("false"))
+			block = nullptr;
+
+		// Find Minecraft ID
+		if (block && block->mc_ids.Size())
+		{
+			obj_minecraft_assets* assets = ObjType(obj_minecraft_assets, global::mc_assets);
+			Map* idStateVarsMap = FindMap(block->id_state_vars_map);
+			ArrType selectors;
+			int best = -1;
+			const ArrType dirNames = dir_names;
+
+			for (IntType i = 0; i < block->mc_ids.Size(); i++)
+			{
+				StringType curId = block->mc_ids.Value(i).Str();
+				if (!curId.Contains(":"))
+					curId = StringType("minecraft:") + curId;
+
+				ArrType vars;
+				if (idStateVarsMap)
+				{
+					VarType match = idStateVarsMap->Value(curId);
+					if (!match.IsArray() && match != null_)
+						continue;
+
+					// Empty identifier selectors are stored as null
+					if (match.IsArray())
+						vars = match.Arr();
+
+					// Horizontal facing selectors supply an importer default
+					IntType facing = vars.Find(StringType("facing"));
+					if (facing > -1)
+					{
+						IntType index = dirNames.Find(vars.Value(facing + 1));
+						if (index >= XP && index <= YN)
+							vars[facing + 1] = ArrType::From({ dirNames.Value(XP), dirNames.Value(XN), dirNames.Value(YP), dirNames.Value(YN) });
+					}
+
+					if (!state_vars_match_state_id(vars, block->id, state.stateId))
+						continue;
+				}
+
+				// Prefer current identifiers over legacy aliases of the same state
+				int score = int(vars.Size());
+				if (block->mc_ids.Value(i).Str() == block->name)
+					score++;
+
+				if (file_exists_lib(global::load_assets_startup_dir + mc_blockstates_directory + block->mc_ids.Value(i).Str() + ".json"))
+					score += 1024;
+
+				if (score > best)
+				{
+					best = score;
+					name = curId;
+					selectors = vars;
+				}
+			}
+
+			// Export block properties excluding internal states and identifier selectors
+			ArrType vars = block_get_state_id_state_vars(block->id, state.stateId);
+			for (IntType i = 0; best >= 0 && i + 1 < vars.Size(); i += 2)
+			{
+				QString property = vars.Value(i).Str();
+				BoolType facing = property == "facing" && state_vars_get_value(selectors, vars.Value(i)).IsArray();
+				if (property == "visible" || property == "double" || property == "variant" || property == "waterlogged" ||
+					(property == "snowy" && ds_list_find_index(assets->block_snowy_list, StringType(name)) < 0) ||
+					(block->type == "door" && (property == "location" || property == "direction")) ||
+					(!facing && state_vars_get_value(selectors, vars.Value(i)) != null_))
+					continue;
+
+				properties.append(property + "=" + vars.Value(i + 1).Str().QStr());
+			}
+
+			// Preserve wet/dry overrides without adding properties to water-only blocks
+			if (best >= 0 && ds_list_find_index(assets->block_waterlogged_list, StringType(name)) < 0 &&
+				(state.waterlogged != block->waterlogged || !block_get_state_id_value(block->id, state.stateId, StringType("waterlogged")).IsUndefined()))
+				properties.append(state.waterlogged ? "waterlogged=true" : "waterlogged=false");
+		}
+
+		// Construct final palette entry
+		properties.sort();
+		if (!properties.isEmpty())
+			name += "[" + properties.join(',') + "]";
+
+		// Insert into palette or fetch existing index
+		StringType entry(name);
+		uint32_t index;
+		if (palette->HasKey(entry))
+			index = palette->Int(entry);
+		else
+		{
+			index = palette->value.size();
+			palette->value[entry] = new NbtInt(index);
+		}
+
+		paletteIndices.insert(key, index);
+
+		return index;
+	}
+
+	QVector<SchematicExport::Block> SchematicExport::GetConnectedBlocks(obj_block* block, IntType state)
+	{
+		QVector<Block> connectedBlocks;
+		ArrType connected = block_build_get_connect(block->id, state, VecType(0, 0, 0));
+		for (IntType i = 0; i < connected.Size(); i++)
+		{
+			const ArrType& blockData = connected.vec.Value(i).Arr();
+			connectedBlocks.append({
+				blockData.Value(0).ToVec(),
+				{ uint16_t(blockData.IntValue(1)), uint16_t(blockData.IntValue(2)), false }
+			});
+		}
+
+		return connectedBlocks;
+	}
+
+	NbtCompound* SchematicExport::GetSignText(obj_timeline* sign, BoolType back)
+	{
+		QString text;
+		IntType color = 0;
+		BoolType glowing = false;
+		Matrix signInverse = Matrix(sign->matrix_render).GetInversed();
+
+		List* children = FindList(sign->part_list);
+		if (children)
+		{
+			for (const List::ListValue& child : children->vec)
+			{
+				obj_timeline* tl = ObjType(obj_timeline, child.value);
+				if (tl->type != e_tl_type_TEXT)
+					continue;
+
+				Matrix relative = Matrix(tl->matrix_render) * signInverse;
+				VecType normal = relative * VecType(0, 1, 0);
+				if ((normal.y < 0) == back)
+				{
+					text = tl->value[e_value_TEXT].Str();
+					color = tl->value[e_value_RGB_MUL];
+					glowing = tl->value[e_value_EMISSIVE].ToReal() > 0;
+					break;
+				}
+			}
+		}
+
+		NbtCompound* data = new NbtCompound;
+		NbtList* messages = new NbtList(TAG_COMPOUND);
+		data->value["messages"] = messages;
+		messages->value.Alloc(4);
+
+		QStringList lines = text.split('\n');
+		for (int i = 0; i < 4; i++)
+		{
+			NbtCompound* component = new NbtCompound;
+			component->value["text"] = new NbtString(lines.value(i));
+			messages->value[i] = component;
+		}
+
+		data->value["color"] = new NbtString(minecraft_get_dye(color, glowing));
+		data->value["has_glowing_text"] = new NbtByte(glowing);
+
+		return data;
 	}
 }

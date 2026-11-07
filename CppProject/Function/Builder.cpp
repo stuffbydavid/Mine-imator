@@ -1,4 +1,5 @@
 #include "World/World.hpp"
+#include "World/Schematic.hpp"
 
 #include "AppHandler.hpp"
 #include "Asset/DataStructure.hpp"

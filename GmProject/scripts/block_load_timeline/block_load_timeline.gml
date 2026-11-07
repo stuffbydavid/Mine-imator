@@ -29,10 +29,20 @@ function block_load_timeline(map, typemap)
 			var key = ds_map_find_first(map[?"model_state"]);
 			while (!is_undefined(key))
 			{
+				var modelvalue, blockstate;
+				modelvalue = ds_map_find_value(map[?"model_state"], key)
+				blockstate = []
+				if (ds_map_valid(modelvalue))
+				{
+					if (is_string(modelvalue[?"block_state"]))
+						blockstate = string_get_state_vars(modelvalue[?"block_state"])
+					modelvalue = modelvalue[?"value"]
+				}
+
 				with (new_obj(obj_block_tl_state))
 				{
 					vars = string_get_state_vars(key)
-					value = string_get_state_vars(ds_map_find_value(map[?"model_state"], key))
+					value = string_get_state_vars(modelvalue)
 					
 					// Apply to matching state IDs
 					state_id = []
@@ -40,6 +50,21 @@ function block_load_timeline(map, typemap)
 						if (state_vars_match_state_id(vars, other.id, i))
 							state_id = array_add(state_id, i)
 					
+					// Choose the default block state for model-to-block lookups
+					state_id_default = 0
+					if (array_length(state_id) > 0)
+					{
+						state_id_default = state_id[0]
+						for (var i = 0; i < array_length(state_id); i++)
+						{
+							if (state_vars_match_state_id(blockstate, other.id, state_id[i]))
+							{
+								state_id_default = state_id[i]
+								break
+							}
+						}
+					}
+
 					other.tl_model_state[other.tl_model_state_amount++] = id
 				}
 				

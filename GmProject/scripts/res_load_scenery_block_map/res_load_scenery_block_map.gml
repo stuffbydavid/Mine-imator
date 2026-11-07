@@ -6,6 +6,8 @@ function res_load_scenery_block_map(blocksonly = false)
 	if (!block_meshes_load_blocks(blocksonly))
 		return false
 
+	scenery_legacy = mc_builder.builder_scenery_legacy
+
 	if (blocksonly)
 		return true
 

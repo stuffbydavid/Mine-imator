@@ -154,8 +154,12 @@ function tab_properties_resources_edit()
 	
 	if (res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD)
 	{
+		var settingswid;
+		draw_set_font(font_button)
+		settingswid = string_width(text_get("resources/block_settings")) + 60
+	
 		tab_control_button_label()
-		if (draw_button_label("resources/block_settings", dx + dw / 2, dy, 180, icons.BLOCK, e_button.PRIMARY, null, e_anchor.CENTER, !res_edit.ready))
+		if (draw_button_label("resources/block_settings", dx + dw / 2, dy, settingswid, icons.BLOCK, e_button.PRIMARY, null, e_anchor.CENTER, !res_edit.ready))
 			popup_block_settings_show(res_edit)
 		tab_next()
 

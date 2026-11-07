@@ -15,6 +15,8 @@ function minecraft_assets_event_create()
 	block_liquid_slot_map = ds_map_create()
 	block_tl_type_list = ds_list_create()
 	block_tl_required_map = ds_map_create()
+	block_snowy_list = ds_list_create()
+	block_waterlogged_list = ds_list_create()
 	
 	model_texture_list = ds_list_create()
 	

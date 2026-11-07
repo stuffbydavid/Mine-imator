@@ -113,6 +113,7 @@ function res_event_create()
 
 	scenery_size = vec3(0)
 	scenery_instant = false
+	scenery_legacy = false
 	scenery_source = ""
 	scenery_block_map = ds_map_create()
 	
