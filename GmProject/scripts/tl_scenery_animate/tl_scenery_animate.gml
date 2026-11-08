@@ -1,4 +1,6 @@
-function tl_animate_scenery()
+/// @arg [removeparts]
+
+function tl_scenery_animate(removeparts = true)
 {
 	var list, hobj;
 	list = temp.scenery.scenery_tl_list
@@ -64,7 +66,7 @@ function tl_animate_scenery()
 				used[match] = true
 		}
 
-		if (array_length(parts) > 0)
+		if (removeparts && array_length(parts) > 0)
 		{
 			var savehobj = hobj;
 			if (savehobj = history_data)

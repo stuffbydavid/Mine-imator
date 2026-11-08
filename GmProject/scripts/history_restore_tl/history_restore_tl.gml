@@ -1,8 +1,9 @@
 /// @desc Restores a saved timeline from memory.
 /// @arg save
 /// @arg [timeline]
+/// @arg [buildblock]
 
-function history_restore_tl(save, tl = null)
+function history_restore_tl(save, tl = null, buildblock = true)
 {
 	if (tl = null)
 		tl = new_obj(obj_timeline)
@@ -57,11 +58,12 @@ function history_restore_tl(save, tl = null)
 		tl_update_scenery_part()
 		tl_update()
 		tl_update_values()
-		tl_update_build_block(false, save.block_build_waterlogged)
+		if (buildblock)
+			tl_update_block_build(false, save.block_build_waterlogged)
 		
 		// Restore tree recursively
 		for (var t = 0; t < save.tree_amount; t++)
-			history_restore_tl(save.tree_save_obj[t])
+			history_restore_tl(save.tree_save_obj[t], null, false)
 		
 		// Restore parts
 		if (save.part_amount > 0)

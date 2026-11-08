@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_animate_scenery",
+  "%Name":"tl_get_block_build",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_animate_scenery",
+  "name":"tl_get_block_build",
   "parent":{
     "name":"Blocks",
     "path":"folders/Scripts/Project/Timeline/Blocks.yy",

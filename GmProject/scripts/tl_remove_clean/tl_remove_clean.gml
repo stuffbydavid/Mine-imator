@@ -208,7 +208,7 @@ function tl_remove_clean()
 	blocks_added_palette = []
 	blocks_added = []
 
-	tl_update_build_block(true)
+	tl_update_block_build(true)
 	
 	if (model_shape_vbuffer_map != null)
 	{

@@ -152,7 +152,7 @@ function temp_set_scenery(res, animate, hobj = null, clearparts = true, parts = 
 				scenery_animate_create = animate
 				
 				if (animate && temp.scenery.ready)
-					tl_animate_scenery()
+					tl_scenery_animate()
 				else
 					scenery_animate = true
 			}

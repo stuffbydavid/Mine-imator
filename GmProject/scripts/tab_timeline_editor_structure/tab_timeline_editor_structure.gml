@@ -1,7 +1,8 @@
 function tab_timeline_editor_structure()
 {
-	var scenery, typename, setx, dividew;
+	var scenery, typename, setx, dividew, res;
 	scenery = (tl_edit.type = e_tl_type.SCENERY)
+	res = (scenery && tl_edit.temp != null ? tl_edit.temp.scenery : null)
 	typename = (scenery ? "scenery" : "structure")
 	dividew = content_width - floor(tab.scroll.needed * 12)
 
@@ -19,7 +20,8 @@ function tab_timeline_editor_structure()
 
 	if (scenery)
 	{
-		draw_button_icon("timeline_editor/restore_blocks", setx, dy, 24, 24, false, icons.RESET, null, false, "timeline_editor/restore_blocks_tip")
+		if (draw_button_icon("timeline_editor/restore_blocks", setx, dy, 24, 24, false, icons.RESET, null, res = null || !res.ready, "timeline_editor/restore_blocks_tip"))
+			action_tl_restore_blocks()
 		setx -= 28
 	}
 
@@ -62,7 +64,6 @@ function tab_timeline_editor_structure()
 		}
 
 		buttonx = (stacked ? dx + (dw - settingswid) / 2 : buttonx + editwid + 8)
-		var res = (tl_edit.temp != null ? tl_edit.temp.scenery : null);
 		if (draw_button_label("timeline_editor/block_settings", buttonx, dy, settingswid, icons.BLOCK, e_button.PRIMARY, null, e_anchor.LEFT, res = null || !res.ready))
 		{
 			action_res_list(res)

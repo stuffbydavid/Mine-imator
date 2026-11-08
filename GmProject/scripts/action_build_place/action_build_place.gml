@@ -99,7 +99,7 @@ function action_build_place(airblock = false)
 				transform = target.matrix_render
 				
 				with (target)
-					if (!tl_load_blocks())
+					if (!tl_scenery_load_blocks())
 						return false
 
 				if (target = place_target_tl && place_block_pos != null)

@@ -2,7 +2,7 @@
 /// @arg block
 /// @arg stateid
 
-function tl_apply_block_parts(block, stateid)
+function tl_scenery_apply_block_parts(block, stateid)
 {
 	// Skip models without parts or state-dependent part transforms
 	if (part_list = null || block.tl_parts = null)
@@ -36,11 +36,13 @@ function tl_apply_block_parts(block, stateid)
 						tl_value_set_vec3(e_value.POS_X, pos)
 						tl_value_set_vec3(e_value.POS_X, pos, true)
 					}
+					
 					if (ds_list_valid(transform[?"rotation"]))
 					{
 						tl_value_set_vec3(e_value.ROT_X, rot)
 						tl_value_set_vec3(e_value.ROT_X, rot, true)
 					}
+					
 					update_matrix = true
 				}
 				

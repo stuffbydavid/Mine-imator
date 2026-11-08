@@ -2,7 +2,7 @@
 /// @arg block
 /// @arg stateid
 
-function tl_set_build_state(block, stateid)
+function tl_set_block_build(block, stateid)
 {
 	if (block.type = "door")
 		stateid = block_get_door_state(block, stateid)
@@ -73,13 +73,13 @@ function tl_set_build_state(block, stateid)
 			var transform = block_get_timeline_matrix(block, stateid);
 			tl_value_set_matrix(id, matrix_multiply(matrix_multiply(transform, matrix_inverse_ext(oldtransform)), worldtransform))
 			if (type = e_tl_type.SPECIAL_BLOCK)
-				tl_apply_block_parts(block, stateid)
+				tl_scenery_apply_block_parts(block, stateid)
 		}
 
 		block_build_name = block.name
 		block_build_state = block_get_state_id_state_vars(block, stateid)
 		
-		tl_update_build_block()
+		tl_update_block_build()
 		
 		update_matrix = true
 	}

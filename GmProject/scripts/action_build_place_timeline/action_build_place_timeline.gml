@@ -225,7 +225,7 @@ function action_build_place_timeline(blockdata = null, target = null, blockpos =
 						for (var p = 0; p < ds_list_size(part_list); p++)
 							part_list[|p].animated = array_contains(block.tl_animated_parts, part_list[|p].model_part_name)
 						
-						tl_apply_block_parts(block, blockdata[1])
+						tl_scenery_apply_block_parts(block, blockdata[1])
 					}
 				}
 			}

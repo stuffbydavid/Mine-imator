@@ -668,8 +668,8 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 						action_tl_deselect(timeline_select)
 					else
 					{
-						if (place_build && type_is_structure(timeline_select.type))
-							action_build_structure(timeline_select, true)
+						if (place_build)
+							action_build_structure_select(timeline_select)
 						
 						app_update_tl_edit()
 					}

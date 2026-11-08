@@ -2,7 +2,7 @@
 /// @arg [remove]
 /// @arg [waterlogged]
 
-function tl_update_build_block(remove = false, waterlogged = null)
+function tl_update_block_build(remove = false, waterlogged = null)
 {
 	if (block_timeline || block_build_name = "" || parent = app || !type_is_structure(parent.type))
 		return null

@@ -2,7 +2,7 @@
 /// object can be supplied for checking the size after loading against the threshold.
 /// @arg [historyobject]
 
-function tl_replace_ground(hobj = null)
+function tl_scenery_replace_ground(hobj = null)
 {
 	var scenery = temp.scenery;
 	if (!scenery)
@@ -44,5 +44,6 @@ function tl_replace_ground(hobj = null)
 		rot_point = vec3_mul(scenery.scenery_size, block_half_size)
 	
 	tl_update_rot_point()
+	
 	app.env_ground_show = false
 }

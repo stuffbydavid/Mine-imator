@@ -169,6 +169,18 @@ function res_load_scenery()
 				while (!is_undefined(key))
 				{
 					mc_builder.block_skull_res_map[?key] = null
+
+					// Reuse loaded skins without waiting for downloads
+					var skinfile = skins_directory_get() + key + ".png";
+					with (obj_resource)
+					{
+						if (type = e_res_type.DOWNLOADED_SKIN && filename = skinfile)
+						{
+							mc_builder.block_skull_res_map[?key] = id
+							break
+						}
+					}
+
 					key = ds_map_find_next(mc_builder.block_skull_texture_map, key)
 				}
 			}
@@ -393,10 +405,10 @@ function res_load_scenery()
 					tl_update_block_meshes()
 				
 				if (scenery_ground_hobj != null)
-					tl_replace_ground(scenery_ground_hobj)
+					tl_scenery_replace_ground(scenery_ground_hobj)
 				
 				if (scenery_animate)
-					tl_animate_scenery()
+					tl_scenery_animate()
 			}
 			
 			

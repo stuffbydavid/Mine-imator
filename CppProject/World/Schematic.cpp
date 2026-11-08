@@ -91,7 +91,7 @@ namespace CppProject
 		{
 			obj_template* temp = ObjTypeOpt(obj_template, timeline->temp);
 			resource = temp ? ObjTypeOpt(obj_resource, temp->scenery) : nullptr;
-			if (!resource || !tl_load_blocks(ScopeAny(timeline->id)))
+			if (!resource || !tl_scenery_load_blocks(ScopeAny(timeline->id)))
 				throw QString("Could not load the scenery source blocks");
 
 			res_load_scenery_filter_mask(ScopeAny(resource->id));
@@ -583,7 +583,7 @@ namespace CppProject
 				// Block timeline
 				else
 				{
-					VarType data = tl_get_build_block(ScopeAny(part->id));
+					VarType data = tl_get_block_build(ScopeAny(part->id));
 					if (!data.IsArray())
 						continue;
 

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"tl_apply_block_parts",
+  "%Name":"tl_scenery_replace_ground",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"tl_apply_block_parts",
+  "name":"tl_scenery_replace_ground",
   "parent":{
     "name":"Blocks",
     "path":"folders/Scripts/Project/Timeline/Blocks.yy",

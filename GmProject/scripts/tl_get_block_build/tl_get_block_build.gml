@@ -1,6 +1,6 @@
 /// @desc Returns current block data without retaining stale model or variant selections.
 
-function tl_get_build_block()
+function tl_get_block_build()
 {
 	if (type != e_tl_type.BLOCK && type != e_tl_type.SPECIAL_BLOCK)
 		return null

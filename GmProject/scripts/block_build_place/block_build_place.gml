@@ -288,12 +288,13 @@ function block_build_place(block, stateid, target, blockpos, transform)
 						}
 					}
 				}
-
-				if (!block_build_supported(target, blockpos, facing ^ 1))
-					return null
-				
-				stateid = block_set_state_id_value(block, stateid, "facing", dir_names[facing])
 			}
+
+			// Every ladder needs a supporting wall, including placement on side faces
+			if (!block_build_supported(target, blockpos, facing ^ 1))
+				return null
+
+			stateid = block_set_state_id_value(block, stateid, "facing", dir_names[facing])
 			
 			break
 		}

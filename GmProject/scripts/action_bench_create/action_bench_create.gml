@@ -396,7 +396,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 					
 					if (replaceground)
 						with (tl)
-							tl_replace_ground()
+							tl_scenery_replace_ground()
 					
 					temp_add_lists()
 				}
