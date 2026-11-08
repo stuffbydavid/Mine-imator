@@ -1625,6 +1625,9 @@
 			"default_state": "variant=painting_kebab",
 			"timeline": {
 				"type": "painting"
+			},
+			"build": {
+				"facing": "hit_face"
 			}
 		},
 		{
@@ -1640,7 +1643,10 @@
 					{ "value": "map", "file": "item_frame_map.mimodel" }
 				]
 			},
-			"default_state": "variant=item_frame,type=normal"
+			"default_state": "variant=item_frame,type=normal",
+			"build": {
+				"facing": "hit_face"
+			}
 		},
 		{
 			"name": "end_crystal",

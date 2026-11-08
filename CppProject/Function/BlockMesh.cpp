@@ -1259,21 +1259,18 @@ namespace CppProject
 			const ArrType& entry = self->blocks_added.vec.Value(i).Arr();
 			IntType oldIndex = entry.IntValue(1);
 
-			// Drop air overrides when the source is already air
+			// Keep out-of-bounds edits for later world selection or repeat changes
 			if (!self->blocks_added_palette.vec.Value(oldIndex).Arr().IntValue(0))
 			{
 				WorldVec blockPos = entry.Value(0).ToVec();
 
-				// Keep deletions in source repeats that may be enabled again
-				if (res && blockPos.x >= 0 && blockPos.y >= 0 && blockPos.z >= 0)
+				if (!res || (blockPos.x >= 0 && blockPos.y >= 0 && blockPos.z >= 0 &&
+					blockPos.x < totalSize.x && blockPos.y < totalSize.y && blockPos.z < totalSize.z))
 				{
-					blockPos.x %= size.x;
-					blockPos.y %= size.y;
-					blockPos.z %= size.z;
+					// Drop air overrides when the source is already air
+					if (!BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, true).blockId)
+						continue;
 				}
-
-				if (!BlockMeshesGetBlock(self.object, blockPos.x, blockPos.y, blockPos.z, true).blockId)
-					continue;
 			}
 
 			IntType& newIndex = paletteRemap[oldIndex];

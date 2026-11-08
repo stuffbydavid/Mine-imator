@@ -13,6 +13,8 @@ function res_copy(to)
 	to.world_name = world_name
 	to.world_box_start = world_box_start
 	to.world_box_end = world_box_end
+	to.world_box_start_load = world_box_start_load
+	to.world_box_end_load = world_box_end_load
 	
 	to.scenery_tl_set = scenery_tl_set
 	to.scenery_tl_all_types = scenery_tl_all_types

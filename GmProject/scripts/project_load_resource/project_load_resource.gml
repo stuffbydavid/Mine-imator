@@ -37,6 +37,8 @@ function project_load_resource(map)
 			world_regions_dir = value_get_string(map[?"world_regions_dir"])
 			world_box_start = value_get_point3D(map[?"world_box_start"])
 			world_box_end = value_get_point3D(map[?"world_box_end"])
+			world_box_start_load = array_copy_1d(world_box_start)
+			world_box_end_load = array_copy_1d(world_box_end)
 		}
 		
 		if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)

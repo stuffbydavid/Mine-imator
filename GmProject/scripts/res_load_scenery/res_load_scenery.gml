@@ -21,7 +21,6 @@ function res_load_scenery()
 			// Load from world when requested or when the schematic is unavailable
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
-				world_reload = false
 				scenery_instant = false
 				
 				if (!res_load_scenery_world())
@@ -29,6 +28,8 @@ function res_load_scenery()
 					error("error/load_world")
 					err = true
 				}
+
+				world_reload = false
 			}
 			else
 			{
