@@ -55,7 +55,7 @@ function action_lib_scenery_load(fn)
 				loaded = true
 				
 				// Wait for queued imports to provide the scenery dimensions
-				tl_replace_ground(hobj)
+				tl_scenery_replace_ground(hobj)
 			}
 				
 			temp_add_lists()

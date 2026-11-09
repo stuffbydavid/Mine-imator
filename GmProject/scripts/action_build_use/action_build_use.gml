@@ -113,7 +113,7 @@ function action_build_use(selected = null, placeonly = false)
 				return null
 			
 			with (target)
-				if (!tl_load_blocks())
+				if (!tl_scenery_load_blocks())
 					return false
 
 			blockpos = array_copy_1d(place_block_pos)
@@ -121,7 +121,7 @@ function action_build_use(selected = null, placeonly = false)
 		}
 		else
 			with (target)
-				data = tl_get_build_block()
+				data = tl_get_block_build()
 
 		if (data = null || data[0] = 0)
 			return null
@@ -171,7 +171,7 @@ function action_build_use(selected = null, placeonly = false)
 			{
 				block_build_name = block.name
 				block_build_state = block_get_state_id_state_vars(block, stateid)
-				tl_set_build_state(block, result[1])
+				tl_set_block_build(block, result[1])
 			}
 			
 			with (hobj)

@@ -3,8 +3,7 @@ function block_tile_entity_sign(map)
 	if (!block_current.timeline || block_current.tl_type != "sign")
 		return 0
 
-	var prevtext, frontmap, backmap, text, colorname, color, glowcolor, glowing;
-	prevtext = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]))
+	var frontmap, backmap, text, colorname, color, glowcolor, glowing;
 	ds_map_delete(mc_builder.block_text_front_map, build_pos_index)
 	ds_map_delete(mc_builder.block_text_back_map, build_pos_index)
 
@@ -75,17 +74,5 @@ function block_tile_entity_sign(map)
 			mc_builder.block_text_front_glow_color_map[?build_pos_index] = glowcolor
 			mc_builder.block_text_front_glowing_map[?build_pos_index] = glowing
 		}
-	}
-
-	var hastext = (!is_undefined(mc_builder.block_text_front_map[?build_pos_index]) || !is_undefined(mc_builder.block_text_back_map[?build_pos_index]));
-	if (mc_builder.block_tl_count_map != null && hastext != prevtext)
-	{
-		var count = value_get_real(mc_builder.block_tl_count_map[?"sign"], 0) + (hastext ? 1 : -1);
-		if (count > 0)
-			mc_builder.block_tl_count_map[?"sign"] = count
-		else
-			ds_map_delete(mc_builder.block_tl_count_map, "sign")
-
-		mc_builder.sch_timeline_amount += (hastext ? 1 : -1)
 	}
 }

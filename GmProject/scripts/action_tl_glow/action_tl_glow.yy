@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"action_tl_glow",
   "parent":{
-    "name":"Graphics",
-    "path":"folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+    "name":"Appearance",
+    "path":"folders/Scripts/App/Actions/Timeline/Timeline editor/Appearance.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

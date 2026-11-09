@@ -110,9 +110,12 @@ function res_event_create()
 	world_reload = false
 	world_box_start = null
 	world_box_end = null
+	world_box_start_load = null
+	world_box_end_load = null
 
 	scenery_size = vec3(0)
 	scenery_instant = false
+	scenery_legacy = false
 	scenery_source = ""
 	scenery_block_map = ds_map_create()
 	

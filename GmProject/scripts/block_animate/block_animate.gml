@@ -90,7 +90,7 @@ function block_animate(root)
 		
 		// Apply per-part transform from default state
 		if (block_build_name != "" && type = e_tl_type.SPECIAL_BLOCK)
-			tl_apply_block_parts(other.block, block_get_state_id(other.block, block_build_state))
+			tl_scenery_apply_block_parts(other.block, block_get_state_id(other.block, block_build_state))
 		
 		// Add text
 		if (other.has_text)

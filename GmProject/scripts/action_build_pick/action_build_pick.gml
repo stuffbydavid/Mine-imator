@@ -20,7 +20,7 @@ function action_build_pick()
 
 		// Block data is needed from source file
 		with (target)
-			if (!tl_load_blocks())
+			if (!tl_scenery_load_blocks())
 				return false
 
 		var data, block, stateid;

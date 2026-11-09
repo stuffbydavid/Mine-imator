@@ -24,7 +24,7 @@ function block_build_get_block(target, blockpos)
 
 		var current = null;
 		with (tl)
-			current = tl_get_build_block()
+			current = tl_get_block_build()
 		
 		if (current = null)
 			continue

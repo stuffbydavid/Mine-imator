@@ -288,12 +288,13 @@ function block_build_place(block, stateid, target, blockpos, transform)
 						}
 					}
 				}
-
-				if (!block_build_supported(target, blockpos, facing ^ 1))
-					return null
-				
-				stateid = block_set_state_id_value(block, stateid, "facing", dir_names[facing])
 			}
+
+			// Every ladder needs a supporting wall, including placement on side faces
+			if (!block_build_supported(target, blockpos, facing ^ 1))
+				return null
+
+			stateid = block_set_state_id_value(block, stateid, "facing", dir_names[facing])
 			
 			break
 		}
@@ -366,6 +367,13 @@ function block_build_place(block, stateid, target, blockpos, transform)
 				var clicked = block_build_get_block(target, place_block_pos);
 				if (clicked[0] = block.block_id)
 				{
+					// Vines extend downwards with the same wall faces
+					if (block.type = "vine" && face = ZN)
+					{
+						stateid = block_set_state_id_value(block, clicked[1], "up", "false")
+						break
+					}
+
 					blockpos = array_copy_1d(place_block_pos)
 					old = clicked
 				}
@@ -378,23 +386,12 @@ function block_build_place(block, stateid, target, blockpos, transform)
 				for (var d = XP; d <= ZN; d++)
 					stateid = block_set_state_id_value(block, stateid, dir_names[d], "false")
 
-			// Enable each declared direction that has a neighboring support
-			var attached = false;
-			for (var d = XP; d <= ZN; d++)
-			{
-				if (is_undefined(block.states_map[?dir_names[d]]))
-					continue
-				
-				if (block_build_supported(target, blockpos, d))
-				{
-					stateid = block_set_state_id_value(block, stateid, dir_names[d], "true")
-					attached = true
-				}
-			}
-			
-			// Reject placement when no face can attach
-			if (!attached)
-				return null
+			// Select the clicked face, falling back to a wall face for blocks without a floor face
+			var attachdir = face ^ 1;
+			if (is_undefined(block.states_map[?dir_names[attachdir]]))
+				attachdir = viewdir
+
+			stateid = block_set_state_id_value(block, stateid, dir_names[attachdir], "true")
 			
 			break
 		}

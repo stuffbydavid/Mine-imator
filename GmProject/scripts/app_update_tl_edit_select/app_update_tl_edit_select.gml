@@ -24,6 +24,7 @@ function app_update_tl_edit_select()
 	with (timeline_editor)
 	{
 		appearance.enabled = false
+		structure.enabled = false
 		block.enabled = false
 		audio.enabled = false
 		path.enabled = false
@@ -145,6 +146,22 @@ function app_update_tl_edit_select()
 		if (value_type[e_value_type.APPEARANCE])
 			app.timeline_editor.appearance.enabled = true
 		
+		if (type_is_structure(type))
+		{
+			app.timeline_editor.structure.enabled = true
+
+			if (type = e_tl_type.SCENERY)
+			{
+				app.timeline_editor.structure.name = "timeline_editor/scenery"
+				app.timeline_editor.structure.icon = icons.SCENERY
+			}
+			else
+			{
+				app.timeline_editor.structure.name = "timeline_editor/structure"
+				app.timeline_editor.structure.icon = icons.BLOCK
+			}
+		}
+
 		if (value_type[e_value_type.BLOCK])
 			app.timeline_editor.block.enabled = true
 

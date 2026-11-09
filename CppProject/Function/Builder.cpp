@@ -1,4 +1,5 @@
 #include "World/World.hpp"
+#include "World/Schematic.hpp"
 
 #include "AppHandler.hpp"
 #include "Asset/DataStructure.hpp"
@@ -965,6 +966,12 @@ namespace CppProject
 		// Get box
 		VecType boxStart = self->world_box_start;
 		VecType boxEnd = self->world_box_end;
+		if (self->world_reload)
+		{
+			boxStart = self->world_box_start_load;
+			boxEnd = self->world_box_end_load;
+		}
+
 		if (boxEnd.x <= boxStart.x || boxEnd.y <= boxStart.y || boxEnd.z <= boxStart.z)
 		{
 			World::Close();
@@ -1007,6 +1014,10 @@ namespace CppProject
 			schematic->SaveResource(self.object);
 
 		World::Close();
+
+		// Align edits with the reloaded selection
+		if (self->world_reload)
+			res_load_scenery_world_adjust(self);
 
 		return true;
 	}

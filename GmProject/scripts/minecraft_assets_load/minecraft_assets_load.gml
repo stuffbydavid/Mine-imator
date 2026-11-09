@@ -299,6 +299,18 @@ function minecraft_assets_load()
 			// Misc. assets
 			case "misc":
 			{	
+				// Snowy surfaces and water-only blocks
+				var snowylist, waterloggedlist;
+				snowylist = load_assets_map[?"blocks_snowy"]
+				waterloggedlist = load_assets_map[?"blocks_waterlogged"]
+				ds_list_clear(block_snowy_list)
+				ds_list_clear(block_waterlogged_list)
+
+				if (ds_list_valid(snowylist))
+					ds_list_copy(block_snowy_list, snowylist)
+				if (ds_list_valid(waterloggedlist))
+					ds_list_copy(block_waterlogged_list, waterloggedlist)
+
 				// Pattern designs
 				var patternlist = load_assets_map[?"patterns"];
 				if (!ds_list_valid(patternlist))

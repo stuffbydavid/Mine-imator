@@ -319,10 +319,16 @@ function block_load(map, typemap)
 			
 			state_id_model_obj[sid] = null
 
-			// Internal visibility does not select a different model
+			// Internal visibility and door placement states do not select different models
 			var modelstate = sid;
 			if (tl_mesh)
 				modelstate = block_set_state_id_value(id, sid, "visible", "true")
+			
+			if (type = "door")
+			{
+				modelstate = block_set_state_id_value(id, modelstate, "location", "north_west")
+				modelstate = block_set_state_id_value(id, modelstate, "direction", "north")
+			}
 			
 			// Open selected file and look for variant or array of multipart cases
 			with (curfile)

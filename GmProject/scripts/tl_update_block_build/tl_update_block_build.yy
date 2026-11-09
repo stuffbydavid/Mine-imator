@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_update_block_build",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_update_block_build",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Timeline/Update.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

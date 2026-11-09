@@ -31,7 +31,7 @@ function res_update_reload(hobj = null, clearparts = true)
 		if (!clearparts)
 			with (obj_timeline)
 				if (scenery_animate && temp != null && temp.scenery = res_edit && temp.scenery.ready)
-					tl_animate_scenery()
+					tl_scenery_animate()
 	}
 
 	tl_update_length()

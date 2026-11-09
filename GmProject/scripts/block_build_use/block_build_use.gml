@@ -34,8 +34,7 @@ function block_build_use(block, stateid, target, blockpos, selected = null, plac
 		{
 			if (type = e_tl_type.SCENERY && temp != null && temp.scenery != null)
 			{
-				var ext = filename_ext(temp.scenery.filename);
-				if (ext = ".schematic" || ext = ".blocks")
+				if (temp.scenery.scenery_legacy)
 				{
 					var resolved = block_meshes_get_block(blockpos[X], blockpos[Y], blockpos[Z], false, true);
 					if (resolved[0] = block.block_id)
@@ -73,7 +72,11 @@ function block_build_use(block, stateid, target, blockpos, selected = null, plac
 		
 		// Use candle on cake
 		if (usewith = "candle" && selblock.name = "candle" && block_get_state_id_value(block, stateid, "bites") = "0")
-			return [ blockpos, previous, [ block.block_id, block_set_state_id_value(block, stateid, "candle", block_get_state_id_value(selblock, selstate, "color")) ] ]
+		{
+			var candlecolor = block_get_state_id_value(selblock, selstate, "color");
+			if (block_get_state_id_value(block, stateid, "candle") != candlecolor)
+				return [ blockpos, previous, [ block.block_id, block_set_state_id_value(block, stateid, "candle", candlecolor) ] ]
+		}
 
 		// Use flower on flower pot
 		if (usewith = "contents")
@@ -84,6 +87,13 @@ function block_build_use(block, stateid, target, blockpos, selected = null, plac
 			if (ds_map_exists(states.value_map, contents))
 				return [ blockpos, previous, [ block.block_id, block_set_state_id_value(block, stateid, "contents", contents) ] ]
 		}
+	}
+
+	// Toggle cake lit state
+	if (usewith = "candle" && block_get_state_id_value(block, stateid, "candle") != "none")
+	{
+		var lit = (block_get_state_id_value(block, stateid, "lit") = "true" ? "false" : "true");
+		return [ blockpos, previous, [ block.block_id, block_set_state_id_value(block, stateid, "lit", lit) ] ]
 	}
 
 	var use = block.build_map[?"use"];

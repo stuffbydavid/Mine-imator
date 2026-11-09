@@ -4,8 +4,6 @@
 #include "Render/Mesh.hpp"
 #include "NBT.hpp"
 
-#include <QSet>
-
 #define PREVIEW_ZNEAR 1.0
 #define PREVIEW_ZFAR 10000.0
 #define PREVIEW_ZOOM_MIN 1.0
@@ -44,6 +42,7 @@ namespace CppProject
 	struct Preview;
 	struct Region;
 	struct RegionLoader;
+	struct SchematicExport;
 	struct Script;
 	struct Section;
 	struct Shader;
@@ -180,43 +179,6 @@ namespace CppProject
 		VecType spawnPos, playerPos, playerRot;
 		QString playerDim;
 		QHash<QString, QDir> dimDir;
-	};
-
-	// Collect source blocks for .schem/.schematic export before mesh generation
-	struct SchematicExport
-	{
-		// Initialize NBT data and storage for the selected box.
-		SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible = false, BoolType applyFilter = true);
-
-		// Copy compatible chunk blocks and block entities into the schematic.
-		void AddChunk(Chunk& chunk);
-
-		// Copy supported entities stored separately from terrain chunks
-		void AddEntityRegion(const QString& filename, const WorldVec& regionPos, const BoolType* includedChunks);
-
-		// Copy supported entities from a chunk's entity list
-		void AddEntities(NbtCompound& chunk);
-
-		// Serialize the collected schematic as NBT.
-		QByteArray Serialize();
-
-		// Return the extension for the selected schematic format.
-		QString Extension() const;
-
-		// Serialize and asynchronously save a world resource snapshot.
-		void SaveResource(obj_resource* resource);
-
-		WorldBox box;
-		IntType dataVersion, skippedChunks = 0;
-		BoolType legacy, skipIncompatible, applyFilter;
-		BoolType exportOnly = true;
-		QString error;
-		NbtCompound root;
-		NbtCompound* schematic = nullptr;
-		NbtCompound* palette = nullptr;
-		NbtList* entities = nullptr;
-		QSet<StringType> supportedEntityIds;
-		Heap<uint32_t> indices;
 	};
 
 	// Handles regions in an opened world

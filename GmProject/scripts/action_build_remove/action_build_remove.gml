@@ -69,7 +69,7 @@ function action_build_remove()
 			// Clear retained block data before checking whether the structure is empty
 			var previous = null;
 			with (target)
-				previous = tl_update_build_block(true)
+				previous = tl_update_block_build(true)
 
 			// Remove an empty structure together with its final block
 			structure = target.parent

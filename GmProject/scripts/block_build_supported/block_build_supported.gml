@@ -33,7 +33,7 @@ function block_build_supported(target, blockpos, dir, sameblock = null)
 			
 			var hitdata = null;
 			with (hittl)
-				hitdata = tl_get_build_block()
+				hitdata = tl_get_block_build()
 			
 			if (hitdata != null)
 				supportdata = hitdata

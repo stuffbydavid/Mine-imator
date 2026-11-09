@@ -26,7 +26,7 @@ function block_get_from_timeline(modelname, modelstate)
 					continue
 
 				vars = state.value
-				stateid = state.state_id[0]
+				stateid = state.state_id_default
 			}
 
 			// Compare named values independently of their order

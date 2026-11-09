@@ -537,7 +537,10 @@ function app_startup_interface_tabs()
 			tbx_rot_point_y = new_textbox_ndecimals()
 			tbx_rot_point_z = new_textbox_ndecimals()
 		}
-		
+
+		// Structure and scenery
+		structure = tab_add_category("timeline_editor/structure", icons.BLOCK, tab_timeline_editor_structure, true)
+
 		// Block
 		block = tab_add_category("timeline_editor/block", icons.BLOCK_SMALL, tab_timeline_editor_block, true)
 		with (block)

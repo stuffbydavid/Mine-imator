@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "Schematic.hpp"
 
 #include "Compress.hpp"
 #include "NBT.hpp"

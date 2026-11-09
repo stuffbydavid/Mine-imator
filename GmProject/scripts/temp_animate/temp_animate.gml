@@ -67,7 +67,7 @@ function temp_animate()
 				if (temp.scenery != null)
 				{
 					if (temp.scenery.ready)
-						tl_animate_scenery()
+						tl_scenery_animate()
 					else
 						scenery_animate = true
 				}

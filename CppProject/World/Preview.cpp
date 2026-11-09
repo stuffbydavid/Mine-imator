@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "Schematic.hpp"
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"

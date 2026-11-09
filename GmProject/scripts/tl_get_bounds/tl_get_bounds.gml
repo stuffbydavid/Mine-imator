@@ -21,6 +21,7 @@ function tl_get_bounds(modelbounds = false, transform = null)
 		case e_tl_type.CHARACTER:
 		case e_tl_type.EQUIPMENT:
 		case e_tl_type.MODEL:
+		case e_tl_type.BLOCK:
 		case e_tl_type.SPECIAL_BLOCK:
 		{
 			if (!modelbounds)
@@ -41,13 +42,18 @@ function tl_get_bounds(modelbounds = false, transform = null)
 				}
 			}
 
-			// Imported block models render their buffers directly without child parts
-			if (type = e_tl_type.MODEL && temp != null && temp.model != null && temp.model.model_format = e_model_format.BLOCK)
+			// Blocks and imported block models render their buffers directly
+			var meshobj = null;
+			if (type = e_tl_type.BLOCK && temp != null)
+				meshobj = temp
+			else if (type = e_tl_type.MODEL && temp != null && temp.model != null && temp.model.model_format = e_model_format.BLOCK)
+				meshobj = temp.model
+
+			if (meshobj != null)
 			{
-				var model = temp.model;
-				for (var m = 0; m < array_length(model.block_meshes); m++)
+				for (var m = 0; m < array_length(meshobj.block_meshes); m++)
 				{
-					var mesh = model.block_meshes[m];
+					var mesh = meshobj.block_meshes[m];
 					if (mesh = null)
 						continue
 
@@ -58,13 +64,13 @@ function tl_get_bounds(modelbounds = false, transform = null)
 					}
 				}
 
-				if (model.model_block_map != null)
+				if (type = e_tl_type.MODEL && meshobj.model_block_map != null)
 				{
-					var key = ds_map_find_first(model.model_block_map);
+					var key = ds_map_find_first(meshobj.model_block_map);
 					while (!is_undefined(key))
 					{
-						array_add(boundslist, vbuffer_get_bounds(model.model_block_map[?key], boundsmatrix), false)
-						key = ds_map_find_next(model.model_block_map, key)
+						array_add(boundslist, vbuffer_get_bounds(meshobj.model_block_map[?key], boundsmatrix), false)
+						key = ds_map_find_next(meshobj.model_block_map, key)
 					}
 				}
 			}

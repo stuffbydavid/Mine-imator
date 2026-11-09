@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "Schematic.hpp"
 
 #include "AppHandler.hpp"
 #include "Asset/Script.hpp"
@@ -565,7 +566,7 @@ namespace CppProject
 				throw QString("Could not load region " + source->filename);
 		}
 
-		Gzip::WriteCompressed(schematic.Serialize(), filename);
+		schematic.Save(filename);
 	}
 
 	WorldVec::operator VecType() const

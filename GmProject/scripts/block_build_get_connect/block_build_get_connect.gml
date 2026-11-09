@@ -9,8 +9,35 @@ function block_build_get_connect(block, stateid, blockpos)
 	if (block.type = "door")
 		stateid = block_get_door_state(block, stateid)
 
-	// Check for valid build data
 	var connect = [ [ blockpos, block.block_id, stateid ] ];
+
+	// Extended pistons also occupy the head cell in front of their base
+	if (block.type = "piston" && block_get_state_id_value(block, stateid, "extended") = "true")
+	{
+		var head = mc_assets.block_name_map[?"piston_head"];
+		if (is_undefined(head))
+			return connect
+
+		var facing, headstate, dirs;
+		facing = block_get_state_id_value(block, stateid, "facing")
+		headstate = block_get_state_id(head, [ "facing", facing, "type", block.name = "sticky_piston" ? "sticky" : "normal", "short", "false" ])
+		dirs = dir_names
+
+		for (var d = XP; d <= ZN; d++)
+		{
+			if (dirs[d] != facing)
+				continue
+
+			var offset = dir_get_vec3(d);
+			offset = vec3(offset[Y], -offset[X], offset[Z])
+			array_add(connect, [ vec3_add(blockpos, offset), head.block_id, headstate ], false)
+			break
+		}
+
+		return connect
+	}
+
+	// Check for valid build data
 	if (block.build_map = null)
 		return connect
 

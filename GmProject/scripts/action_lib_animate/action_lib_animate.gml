@@ -50,7 +50,7 @@ function action_lib_animate(place = false)
 		
 		if (sceneryreplaceground)
 			with (tl)
-				tl_replace_ground()
+				tl_scenery_replace_ground()
 
 		with (hobj)
 			tl_save_id = save_id_get(tl)

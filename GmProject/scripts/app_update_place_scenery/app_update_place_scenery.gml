@@ -73,6 +73,45 @@ function app_update_place_scenery()
 	worldangle = matrix_angle(worldrotation)
 	place_rot = vec3(radtodeg(worldangle[X]), radtodeg(worldangle[Y]), radtodeg(worldangle[Z]))
 
+	// Mount special models against the clicked surface
+	if (place_build && build_type = e_tl_type.SPECIAL_BLOCK && build_settings.model_file != null)
+	{
+		var model = mc_assets.model_name_map[?build_settings.model_name];
+		if (!is_undefined(model) && model.build_facing = "hit_face")
+		{
+			// Turn the model's front toward the hit face
+			var rotation = vec3(0);
+			if (place_view_normal[Z] != 0)
+				rotation[X] = -place_view_normal[Z] * 90
+			else
+				rotation[Z] = 90 + point_direction(0, 0, place_view_normal[X], place_view_normal[Y])
+
+			var mountmatrix = matrix_multiply(matrix_create(vec3(0), rotation, vec3(1)), matrix_create(vec3(0), place_rot, vec3(1)));
+			worldangle = matrix_angle(mountmatrix)
+			place_rot = vec3(radtodeg(worldangle[X]), radtodeg(worldangle[Y]), radtodeg(worldangle[Z]))
+
+			// Fit the model's back to the hit block face
+			var file, backcenter, size;
+			file = build_settings.model_file
+			backcenter = vec3(
+				(file.bounds_parts_start[X] + file.bounds_parts_end[X]) / 2,
+				file.bounds_parts_start[Y],
+				(file.bounds_parts_start[Z] + file.bounds_parts_end[Z]) / 2
+			)
+
+			// Keep even-sized models aligned with the block grid
+			size = vec3_snap(vec3_div(vec3_sub(file.bounds_parts_end, file.bounds_parts_start), block_size), 0.001)
+			if (size[X] > 0 && size[X] mod 2 = 0)
+				backcenter[X] -= block_half_size
+			if (size[Z] > 0 && size[Z] mod 2 = 0)
+				backcenter[Z] -= block_half_size
+
+			mountmatrix = matrix_create(vec3(0), place_rot, place_sca)
+			place_pos = vec3_sub(sourceface, vec3_mul_matrix(backcenter, mountmatrix))
+			return 0
+		}
+	}
+
 	// Adjust final position by size/repeat setting of placed block or scenery
 	if ((place_build && build_type = e_tl_type.BLOCK) ||
 		(!place_build && (place_tl.type = e_tl_type.BLOCK || (place_tl.type = e_tl_type.SCENERY && place_tl.temp.scenery != null))))
