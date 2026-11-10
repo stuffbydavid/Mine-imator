@@ -1149,6 +1149,7 @@
     {"id":{"name":"action_setting_watermark_reset","path":"scripts/action_setting_watermark_reset/action_setting_watermark_reset.yy",},},
     {"id":{"name":"action_setting_watermark_scale","path":"scripts/action_setting_watermark_scale/action_setting_watermark_scale.yy",},},
     {"id":{"name":"action_setting_watermark_valign","path":"scripts/action_setting_watermark_valign/action_setting_watermark_valign.yy",},},
+    {"id":{"name":"action_setting_work_camera_fov","path":"scripts/action_setting_work_camera_fov/action_setting_work_camera_fov.yy",},},
     {"id":{"name":"action_setting_z_is_up","path":"scripts/action_setting_z_is_up/action_setting_z_is_up.yy",},},
     {"id":{"name":"action_textbox_copy","path":"scripts/action_textbox_copy/action_textbox_copy.yy",},},
     {"id":{"name":"action_textbox_cut","path":"scripts/action_textbox_cut/action_textbox_cut.yy",},},

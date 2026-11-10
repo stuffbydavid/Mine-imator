@@ -897,6 +897,11 @@ function app_startup_interface_tabs()
 		
 		// Interface
 		interface = tab_add_category("settings/interface", icons.BRUSH_SMALL, tab_settings_interface, false)
+		with (interface)
+		{
+			tbx_work_camera_fov = new_textbox_decimals()
+			tbx_work_camera_fov.suffix = "°"
+		}
 		
 		// Controls
 		controls = tab_add_category("settings/controls", icons.KEYBOARD_SMALL, tab_settings_controls, false)

@@ -12,6 +12,7 @@ function tl_value_spawn()
 			app.cam_work_roll,
 			app.cam_work_angle_look_xy - 90
 		))
+		value[e_value.CAM_FOV] = app.setting_work_camera_fov
 	}
 	
 	// Model part values

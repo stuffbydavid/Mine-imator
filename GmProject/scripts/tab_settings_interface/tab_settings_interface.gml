@@ -1,8 +1,12 @@
 function tab_settings_interface()
 {
-	dy += label_height + 6
-	draw_label(text_get("settings/appearance"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
-	dy += 8
+	var dividew = content_width - floor(tab.scroll.needed * 12);
+	
+	#region APPEARANCE
+
+	tab_control(16)
+	draw_label(text_get("settings/appearance"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+	tab_next()
 	
 	// Color theme
 	tab_control_togglebutton(2)
@@ -83,9 +87,14 @@ function tab_settings_interface()
 	draw_switch("settings/reduced_motion", dx, dy, setting_reduced_motion, action_setting_reduced_motion)
 	tab_next()
 	
-	dy += label_height + 6
-	draw_label(text_get("settings/timeline"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
-	dy += 8
+	#region TIMELINE
+
+	draw_divide(content_x, dy, dividew)
+	dy += 12
+
+	tab_control(16)
+	draw_label(text_get("settings/timeline"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+	tab_next()
 	
 	// Timeline
 	tab_control_switch()
@@ -104,9 +113,14 @@ function tab_settings_interface()
 	draw_switch("settings/timeline/audio_scrub", dx, dy, setting_timeline_audio_scrub, action_setting_timeline_audio_scrub, "settings/timeline/audio_scrub_tip")
 	tab_next()
 	
-	dy += label_height + 6
-	draw_label(text_get("settings/tools"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
-	dy += 8
+	#region TOOLS
+
+	draw_divide(content_x, dy, dividew)
+	dy += 12
+
+	tab_control(16)
+	draw_label(text_get("settings/tools"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+	tab_next()
 	
 	// Z is up
 	tab_control_switch()
@@ -118,9 +132,19 @@ function tab_settings_interface()
 	draw_switch("settings/separate_tool_modes", dx, dy, setting_separate_tool_modes, action_setting_separate_tool_modes, "settings/separate_tool_modes_tip")
 	tab_next()
 	
-	dy += label_height + 6
-	draw_label(text_get("settings/viewport"), dx, dy, fa_left, fa_bottom, c_text_tertiary, a_text_tertiary, font_label)
-	dy += 8
+	#region VIEWPORT
+
+	draw_divide(content_x, dy, dividew)
+	dy += 12
+
+	tab_control(16)
+	draw_label(text_get("settings/viewport"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+	tab_next()
+		
+	// Work camera FOV
+	tab_control_dragger()
+	draw_dragger("settings/work_camera_fov", dx, dy, dragger_width, setting_work_camera_fov, 1, 5, 135, 45, 1, tab.interface.tbx_work_camera_fov, action_setting_work_camera_fov)
+	tab_next()
 	
 	// Quick mode shading
 	tab_control_switch()

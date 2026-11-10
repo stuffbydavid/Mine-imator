@@ -4594,7 +4594,7 @@
 		"scenery_replace_ground": "Large scenery replaces ground",
 		"scenery_replace_ground_tip": "Large scenery will replace the ground and become locked in the timeline.",
 		"interface": "INTERFACE",
-		"appearance": "Appearance",
+		"appearance": "APPEARANCE",
 		"theme": "Theme",
 		"theme/": {
 			"classic": "Classic",
@@ -4607,7 +4607,7 @@
 		"compact": "Compact panels",
 		"compact_timeline": "Compact timeline list",
 		"reduced_motion": "Reduced motion",
-		"timeline": "Timeline",
+		"timeline": "TIMELINE",
 		"timeline/": {
 			"auto_scroll": "Auto-scroll when playing animation",
 			"select_jump": "Jump to selected object in timeline list",
@@ -4616,8 +4616,9 @@
 			"audio_scrub": "Audio scrubbing",
 			"audio_scrub_tip": "Audio gets played back when the marker is dragged over an audio track."
 		},
-		"tools": "Tools",
-		"viewport": "Viewport",
+		"tools": "TOOLS",
+		"viewport": "VIEWPORT",
+		"work_camera_fov": "Work camera FOV",
 		"quick_mode_shading": "Quick mode shading",
 		"quick_mode_aa": "Quick mode anti-aliasing",
 		"z_is_up": "Z is up",
