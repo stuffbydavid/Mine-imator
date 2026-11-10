@@ -509,7 +509,9 @@
 			"states": {
 				"variant": [
 					{ "value": "evoker", "file": "evoker.mimodel" },
-					{ "value": "vindicator", "file": "vindicator.mimodel" }
+					{ "value": "vindicator", "file": "vindicator.mimodel" },
+					{ "value": "pillager", "file": "pillager.mimodel" },
+					{ "value": "illusioner", "file": "illusioner.mimodel" }
 				]
 			},
 			"default_state": "variant=evoker"
@@ -853,10 +855,6 @@
 		{
 			"name": "ravager",
 			"file": "ravager.mimodel"
-		},
-		{
-			"name": "pillager",
-			"file": "pillager.mimodel"
 		},
 		{
 			"name": "wandering_trader",
@@ -5808,6 +5806,16 @@
 			"id": "minecraft:slime_block"
 		},
 		{
+			"name": "barrier",
+			"file": "barrier.json",
+			"id": "minecraft:barrier"
+		},
+		{
+			"name": "light",
+			"file": "light.json",
+			"id": "minecraft:light"
+		},
+		{
 			"name": "standing_banner",
 			"type": "banners",
 			"states": {
@@ -10747,6 +10755,7 @@
 		"poplar_sapling.json": { "colorY": "#4C9484" },
 		"gold_ore.json": { "colorY": "#BDB664" },
 		"deepslate_gold_ore.json": { "colorY": "#A69F4D" },
+		"nether_gold_ore.json": { "colorY": "#B08B39" },
 		"iron_ore.json": { "colorY": "#99897D" },
 		"deepslate_iron_ore.json": { "colorY": "#806F64" },
 		"coal_ore.json": { "colorY": "#5C5C5C" },
@@ -10800,6 +10809,59 @@
 		"diamond_ore.json": { "colorY": "#50AAAD" },
 		"deepslate_diamond_ore.json": { "colorY": "#379093" },
 		"wheat.json": { "colorY": "#CDB159" },
+		"oak_sign.json": { "colorY": null },
+		"spruce_sign.json": { "colorY": null },
+		"birch_sign.json": { "colorY": null },
+		"jungle_sign.json": { "colorY": null },
+		"acacia_sign.json": { "colorY": null },
+		"dark_oak_sign.json": { "colorY": null },
+		"mangrove_sign.json": { "colorY": null },
+		"cherry_sign.json": { "colorY": null },
+		"pale_oak_sign.json": { "colorY": null },
+		"poplar_sign.json": { "colorY": null },
+		"bamboo_sign.json": { "colorY": null },
+		"crimson_sign.json": { "colorY": null },
+		"warped_sign.json": { "colorY": null },
+		"oak_wall_sign.json": { "colorY": null },
+		"spruce_wall_sign.json": { "colorY": null },
+		"birch_wall_sign.json": { "colorY": null },
+		"jungle_wall_sign.json": { "colorY": null },
+		"acacia_wall_sign.json": { "colorY": null },
+		"dark_oak_wall_sign.json": { "colorY": null },
+		"mangrove_wall_sign.json": { "colorY": null },
+		"cherry_wall_sign.json": { "colorY": null },
+		"pale_oak_wall_sign.json": { "colorY": null },
+		"poplar_wall_sign.json": { "colorY": null },
+		"bamboo_wall_sign.json": { "colorY": null },
+		"crimson_wall_sign.json": { "colorY": null },
+		"warped_wall_sign.json": { "colorY": null },
+		"oak_hanging_sign.json": { "colorY": null },
+		"spruce_hanging_sign.json": { "colorY": null },
+		"birch_hanging_sign.json": { "colorY": null },
+		"jungle_hanging_sign.json": { "colorY": null },
+		"acacia_hanging_sign.json": { "colorY": null },
+		"dark_oak_hanging_sign.json": { "colorY": null },
+		"mangrove_hanging_sign.json": { "colorY": null },
+		"cherry_hanging_sign.json": { "colorY": null },
+		"pale_oak_hanging_sign.json": { "colorY": null },
+		"poplar_hanging_sign.json": { "colorY": null },
+		"bamboo_hanging_sign.json": { "colorY": null },
+		"crimson_hanging_sign.json": { "colorY": null },
+		"warped_hanging_sign.json": { "colorY": null },
+		"oak_wall_hanging_sign.json": { "colorY": null },
+		"spruce_wall_hanging_sign.json": { "colorY": null },
+		"birch_wall_hanging_sign.json": { "colorY": null },
+		"jungle_wall_hanging_sign.json": { "colorY": null },
+		"acacia_wall_hanging_sign.json": { "colorY": null },
+		"dark_oak_wall_hanging_sign.json": { "colorY": null },
+		"mangrove_wall_hanging_sign.json": { "colorY": null },
+		"cherry_wall_hanging_sign.json": { "colorY": null },
+		"pale_oak_wall_hanging_sign.json": { "colorY": null },
+		"poplar_wall_hanging_sign.json": { "colorY": null },
+		"bamboo_wall_hanging_sign.json": { "colorY": null },
+		"crimson_wall_hanging_sign.json": { "colorY": null },
+		"warped_wall_hanging_sign.json": { "colorY": null },
+		"lever.json": { "colorY": null },
 		"acacia_door.json": { "colorY": "#BA683B" },
 		"rail.json": { "colorY": null },
 		"redstone_ore.json": { "colorY": "#BF3F3F" },
@@ -10864,6 +10926,7 @@
 		"end_portal_frame.json": { "colorY": "#427367", "colorZ": "#DFE2A4" },
 		"emerald_ore.json": { "colorY": "#4DA463", "colorZ": "#4DA463" },
 		"deepslate_emerald_ore.json": { "colorY": "#4DA463", "colorZ": "#338B4A" },
+		"tripwire_hook.json": { "colorY": null },
 		"flower_pot.json": { "colorY": "#78553A", "colorZ": "#834939" },
 		"potted_poppy.json": { "colorY": "#C32A21", "colorZ": "#834939" },
 		"potted_dandelion.json": { "colorY": "#FBD33F", "colorZ": "#834939" },
@@ -10946,7 +11009,6 @@
 		"warped_roots.json": { "colorY": "#167E86" },
 		"twisting_vines_plant.json": { "colorY": "#119B85" },
 		"twisting_vines.json": { "colorY": "#119B85" },
-		"nether_gold_ore.json": { "colorY": "#B08B39" },
 		"gilded_blackstone.json": { "colorY": "#968D40" },
 		"copper_ore.json": { "colorY": "#AF7865" },
 		"deepslate_copper_ore.json": { "colorY": "#98624E" },
@@ -13006,7 +13068,7 @@
 				{ "name": "fire_resistance", "value": "#FF9900" },
 				{ "name": "swiftness", "value": "#33EBFF" },
 				{ "name": "slowness", "value": "#8BAFE0" },
-				{ "name": "turtle_master", "value": "#8B80E3" },
+				{ "name": "turtle_master", "value": "#8D85E6" },
 				{ "name": "water_breathing", "value": "#98DAC0" },
 				{ "name": "healing", "value": "#F82423" },
 				{ "name": "harming", "value": "#A9656A" },

@@ -29,10 +29,10 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 	}
 	
 	// Create matrix for rotation
-	if (rot[X] > 0 || rot[Z] > 0)
+	if (rot[X] > 0 || rot[Y] > 0 || rot[Z] > 0)
 	{
 		rotmat = matrix_create(point3D(-block_half_size, -block_half_size, -block_half_size), vec3(0), vec3(1))
-		rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_half_size, block_half_size, block_half_size), vec3(-rot[X], 0, -rot[Z]), vec3(1)))
+		rotmat = matrix_multiply(rotmat, matrix_create(point3D(block_half_size, block_half_size, block_half_size), vec3(-rot[X], -rot[Y], -rot[Z]), vec3(1)))
 	}
 	else
 		rotmat = MAT_IDENTITY
@@ -127,7 +127,7 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 					if (rotated)
 						matrix = matrix_multiply(elem.matrix, rotmat)
 					
-					else if (rot[X] > 0 || rot[Z] > 0)
+					else if (rot[X] > 0 || rot[Y] > 0 || rot[Z] > 0)
 					{
 						var facerot = rot;
 						
@@ -170,6 +170,15 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 							facenewdir[YP] = facenewdir[XN]
 							facenewdir[XN] = facenewdir[YN]
 							facenewdir[YN] = eastrotdir
+						}
+						
+						repeat (facerot[Y] / 90)
+						{
+							var northrotdir = facenewdir[ZP];
+							facenewdir[ZP] = facenewdir[XP]
+							facenewdir[XP] = facenewdir[ZN]
+							facenewdir[ZN] = facenewdir[XN]
+							facenewdir[XN] = northrotdir
 						}
 						
 						repeat (facerot[X] / 90)
@@ -219,6 +228,47 @@ function block_load_render_model(model, rot, uvlock, opaque, wei, res = null)
 								faceuvrot[facenewdir[ZN]] = 180
 								faceuvrot[ZP] = 180 + facerot[Z]
 								faceuvrot[ZN] = -facerot[Z]
+								break
+							}
+						}
+						
+						switch (facerot[Y])
+						{
+							case 0:
+							{
+								break
+							}
+							
+							case 90:
+							{
+								faceuvrot[facenewdir[XP]] = 90
+								faceuvrot[facenewdir[XN]] = 90
+								faceuvrot[YP] = facerot[Y]
+								faceuvrot[YN] = -facerot[Y]
+								faceuvrot[facenewdir[ZP]] = 90
+								faceuvrot[facenewdir[ZN]] = 90
+								break
+							}
+							
+							case 180:
+							{
+								faceuvrot[XP] = 180
+								faceuvrot[XN] = 180
+								faceuvrot[YP] = facerot[Y]
+								faceuvrot[YN] = -facerot[Y]
+								faceuvrot[ZP] = 180
+								faceuvrot[ZN] = 180
+								break
+							}
+							
+							case 270:
+							{
+								faceuvrot[facenewdir[XP]] = -90
+								faceuvrot[facenewdir[XN]] = -90
+								faceuvrot[YP] = facerot[Y]
+								faceuvrot[YN] = -facerot[Y]
+								faceuvrot[facenewdir[ZP]] = -90
+								faceuvrot[facenewdir[ZN]] = -90
 								break
 							}
 						}

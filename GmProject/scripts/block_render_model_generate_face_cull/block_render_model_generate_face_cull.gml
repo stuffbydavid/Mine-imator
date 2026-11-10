@@ -8,8 +8,8 @@ function block_render_model_generate_face_cull(model, el, culldir)
 	if (!el.face_edge[culldir])
 		return false
 
-	var depth, full, lower, upper;
-	depth = block_face_min_depth[culldir]
+	var mindepth, full, lower, upper;
+	mindepth = block_face_min_depth[culldir]
 	full = block_face_full[culldir]
 	lower = block_face_min[culldir]
 	upper = block_face_max[culldir]
@@ -39,16 +39,16 @@ function block_render_model_generate_face_cull(model, el, culldir)
 			return false
 
 		var opposite = culldir ^ 1;
-		depth = neighbor.face_min_depth[opposite]
+		mindepth = neighbor.face_min_depth[opposite]
 		full = neighbor.face_full[opposite]
 		lower = neighbor.face_min[opposite]
 		upper = neighbor.face_max[opposite]
 	}
 
-	if (depth = null || depth > model.face_min_depth[culldir])
+	if (mindepth = null || mindepth > model.face_min_depth[culldir])
 		return false
 	
-	if (block_current != null && block_current.type = "leaves" && depth > e_block_depth.DEPTH0)
+	if (block_current != null && block_current.type = "leaves" && mindepth > e_block_depth.DEPTH0)
 		return false
 
 	var axis = (culldir < ZP ? Z : Y);
