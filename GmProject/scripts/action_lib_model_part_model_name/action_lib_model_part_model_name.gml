@@ -1,18 +1,27 @@
 /// @desc Changes the character body part model.
+/// @arg name
+/// @arg [state]
 
-function action_lib_model_part_model_name(name)
+function action_lib_model_part_model_name(name, state = null)
 {
-	var state;
-	
 	if (!history_undo && !history_redo)
 	{
-		with (history_set_var(action_lib_model_part_model_name, obj_edit.model_name, name, false))
-			self.state = array_copy_1d(obj_edit.model_state)
+		if (state = null)
+			state = array_copy_1d(mc_assets.model_name_map[?name].default_state)
 		
-		state = mc_assets.model_name_map[?name].default_state
+		if (obj_edit.model_name = name && array_equals(obj_edit.model_state, state))
+			return 0
+
+		asset_picker_state_map[?mc_assets.model_name_map[?name]] = array_copy_1d(state)
+		
+		with (history_set_var(action_lib_model_part_model_name, obj_edit.model_name, name, false))
+		{
+			old_state = array_copy_1d(obj_edit.model_state)
+			new_state = array_copy_1d(state)
+		}
 	}
 	else
-		state = history_data.state
+		state = history_undo ? history_data.old_state : history_data.new_state
 	
 	with (obj_edit)
 	{

@@ -78,39 +78,23 @@ function action_build_pick()
 		return false
 
 	// Find entry in build list and scroll to it
-	var list = app.build_tool.build_list;
-	for (var i = 0; i < ds_list_size(list.list); i++)
+	var picker = app.build_tool.build_picker;
+	for (var i = 0; i < ds_list_size(picker.list); i++)
 	{
-		var value = list.list[|i];
+		var value = picker.list[|i];
 		if (value[0] != pickspblock || value[1] != pickname)
 			continue
 
-		if (list.search_tbx.text != "")
+		if (picker.search_tbx.text != "")
 		{
-			list.search_tbx.text = ""
-			list.search = false
-			sortlist_update(list)
+			picker.search_tbx.text = ""
+			picker.search = false
+			sortlist_update(picker)
 		}
 
-		action_build_select(value)
-		
-		with (app.build_settings)
-		{
-			if (pickspblock)
-			{
-				model_state = pickstate
-				temp_update_model()
-				temp_update_model_shape()
-			}
-			else
-			{
-				block_state = pickstate
-				temp_update_block()
-				temp_update_rot_point()
-			}
-		}
+		action_build_select(value, pickstate)
 
-		sortlist_view(list, value, false)
+		asset_picker_view(app.build_tool.build_picker, value, false)
 
 		// Focus on the picked block in world space
 		var focuspos = matrix_position(target.matrix);

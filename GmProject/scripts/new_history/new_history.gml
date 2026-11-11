@@ -22,6 +22,7 @@ function new_history(script)
 		save_save_id_seed = save_id_seed
 		
 		particle_temp_save_id = ""
+		model_part_save = []
 		scenery_replace_ground = false
 		scenery_ground_show = true
 		project_pack_default = false

@@ -66,6 +66,7 @@ function app_start_place(build, tl = null, spawn = false)
 				block_tex = project_pack_res
 				block_tex_material = project_pack_res
 				block_tex_normal = project_pack_res
+				
 				temp_update_rot_point()
 			}
 			else
@@ -75,20 +76,22 @@ function app_start_place(build, tl = null, spawn = false)
 				model_tex = project_pack_res
 				model_tex_material = project_pack_res
 				model_tex_normal = project_pack_res
+				
 				temp_update_model()
 				temp_update_model_shape()
 			}
 		}
 		
 		// Find block selection
-		var special, buildname;
+		var picker, special, buildname;
+		picker = build_tool.build_picker
 		special = (build_type = e_tl_type.SPECIAL_BLOCK)
 		buildname = special ? build_settings.model_name : build_settings.block_name
-		
+
 		build_tool.build_selected = null
-		for (var b = 0; b < ds_list_size(build_tool.build_list.list); b++)
+		for (var b = 0; b < ds_list_size(picker.list); b++)
 		{
-			var value = build_tool.build_list.list[|b];
+			var value = picker.list[|b];
 			if (value[0] = special && value[1] = buildname)
 			{
 				build_tool.build_selected = value
@@ -96,18 +99,17 @@ function app_start_place(build, tl = null, spawn = false)
 			}
 		}
 		
-		if (build_tool.build_selected != null && ds_list_find_index(build_tool.build_list.display_list, build_tool.build_selected) < 0)
+		if (build_tool.build_selected != null && ds_list_find_index(picker.display_list, build_tool.build_selected) < 0)
 		{
-			build_tool.build_list.search_tbx.text = ""
-			build_tool.build_list.search = false
-			sortlist_update(build_tool.build_list)
+			picker.search_tbx.text = ""
+			picker.search = false
+			sortlist_update(picker)
 		}
-		build_tool.build_list.center_on_draw = (build_tool.build_selected != null)
+		
+		picker.center_on_draw = (build_tool.build_selected != null)
 		
 		place_tl_parent = app
 		place_tl_parent_index = -1
-		
-		obj_edit = build_settings
 		
 		tab_close(object_editor)
 		tab_show(build_tool, true)

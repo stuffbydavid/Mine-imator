@@ -21,8 +21,6 @@ function app_stop_place(keep = false, clearmouse = true)
 		view_changed()
 		
 		tab_close(build_tool)
-		if (obj_edit = build_settings)
-			obj_edit = null
 		
 		if (clearmouse)
 			mouse_clear(mb_left)

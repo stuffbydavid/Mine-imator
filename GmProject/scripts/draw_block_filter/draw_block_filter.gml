@@ -1,6 +1,6 @@
 /// @desc Draws a two-list block filter editor for the current popup.
 
-function draw_block_settings_filter()
+function draw_block_filter()
 {
 	var popup, blocklist, filterlist;
 	popup = popup_current

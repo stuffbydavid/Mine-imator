@@ -39,8 +39,8 @@ function bench_music_update()
 					
 					note_age = 0.0
 					note_lifetime = 60.0
-					x = app.bench_settings.posx - 51 + lengthdir_x(distance, dir)
-					y = app.bench_settings.posy + 43 + lengthdir_y(distance, dir)
+					x = app.bench_x - 51 + lengthdir_x(distance, dir)
+					y = app.bench_y + 43 + lengthdir_y(distance, dir)
 					note_speed_x = lengthdir_x(random_range(.2, .5), dir)
 					note_speed_y = lengthdir_y(random_range(.2, .5), dir)
 					note_scale = random_range(1.5, 2.5)

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"draw_block_settings_filter",
+  "%Name":"draw_list_header",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"draw_block_settings_filter",
+  "name":"draw_list_header",
   "parent":{
     "name":"Components",
     "path":"folders/Scripts/App/Interface/Components.yy",

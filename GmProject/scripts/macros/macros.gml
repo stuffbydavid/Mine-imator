@@ -161,10 +161,12 @@ function macros()
 	#macro bench_max_width				800
 	#macro bench_initial_width			604
 	#macro bench_initial_height			345
-	#macro bench_list_percent			0.8
-	#macro bench_soundlist_percent		1
+	#macro bench_header_height			144
+	#macro bench_footer_height			56
+	#macro list_header_height			32
 	#macro list_minimum_items			7
 	#macro list_center_max				500
+	#macro schematic_list_minimum_items	9
 	#macro soundlist_minimum_items		9
 	
 	// Values
@@ -214,6 +216,7 @@ function macros()
 	#macro default_text						"AaBbCc"
 	#macro light_shadows_threshold			10
 	#macro default_tonemapper				e_tonemapper.LOTTES
+	#macro default_gamma					2.2
 	
 	// Parenting actions for right/left arm
 	#macro item_parent_action				[ null, true, vec3(0, 0.7, -5), vec3(-90, -90, -90), vec3(0.5) ]

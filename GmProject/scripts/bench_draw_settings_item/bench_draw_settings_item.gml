@@ -52,24 +52,20 @@ function bench_draw_settings_item()
 			slots = [ res.item_sheet_size[X] * res.item_sheet_size[Y] ]
 		}
 		
-		var listh, minimum, fixed, availableheight, referenceheight;
-		minimum = list_minimum_items * ui_small_height
-		fixed = bench_settings.height_fixed[bench_tab]
-		availableheight = max(0, bench_settings.height - fixed)
-		referenceheight = max(0, bench_settings.height - bench_settings.height_fixed_base[bench_tab])
-		listh = fixed > 0 ? min(availableheight, max(minimum, referenceheight)) : minimum
+		var settingsh, pickerh;
+		settingsh = 8 + 2 * (ui_small_height + 8) + 4
+		settingsh += (ui_large_height + 8) * (1 + 2 * project_render_material_maps)
+		pickerh = bench_get_list_height(settingsh)
 		
-		bench_settings.list_height = listh
-		bench_settings.list_minimum_height = minimum
+		draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, pickerh, bench_settings.item_scroll, action_bench_item_slot, mc_assets.item_texture_list, null, action_bench_create)
 		
-		draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, listh, bench_settings.item_scroll, action_bench_item_slot, mc_assets.item_texture_list, null, action_bench_create)
-		dy += listh + 8
+		dy += pickerh + 8
 	}
 	else
 		dy += 32
 
 	// Settings
-	var sx = dx_start;
+	var startdx = dx_start;
 
 	dx_start = dx
 	tab_set_columns(true, 2)
@@ -91,7 +87,7 @@ function bench_draw_settings_item()
 	tab_next()
 
 	tab_set_columns(false)
-	dx_start = sx
+	dx_start = startdx
 
 	// Image
 	var tex = res.block_preview_texture;

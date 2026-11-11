@@ -230,76 +230,80 @@ function app_startup_interface_tabs()
 	
 	with (object_editor)
 	{
-		// Character list
-		char_list = new_obj(obj_sortlist)
-		char_list.script = action_lib_model_name
-		char_list.script_search = sortlist_search_model
+		// Character picker
+		char_picker = new_obj(obj_asset_picker)
+		char_picker.asset_picker_model = true
+		char_picker.script = action_lib_model_name
+		char_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(char_list, "character_name", 0)
+		sortlist_column_add(char_picker, "character_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
-			sortlist_add(char_list, mc_assets.char_list[|c].name)
+			sortlist_add(char_picker, mc_assets.char_list[|c].name)
 		
 		// Item
 		item_scroll = new_obj(obj_scrollbar)
 		
 		// Block
-		block_list = new_obj(obj_sortlist)
-		block_list.script = action_lib_block_name
-		block_list.script_search = sortlist_search_block
+		block_picker = new_obj(obj_asset_picker)
+		block_picker.script = action_lib_block_name
+		block_picker.script_search = sortlist_search_block
 		
-		sortlist_column_add(block_list, "block_name", 0)
+		sortlist_column_add(block_picker, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
-				sortlist_add(block_list, mc_assets.block_list[|b].name)
+				sortlist_add(block_picker, mc_assets.block_list[|b].name)
 		
-		// Special block list
-		special_block_list = new_obj(obj_sortlist)
-		special_block_list.script = action_lib_model_name
-		special_block_list.script_search = sortlist_search_model
+		// Special block picker
+		special_block_picker = new_obj(obj_asset_picker)
+		special_block_picker.asset_picker_model = true
+		special_block_picker.script = action_lib_model_name
+		special_block_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(special_block_list, "special_block_name", 0)
+		sortlist_column_add(special_block_picker, "special_block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
-			sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
+			sortlist_add(special_block_picker, mc_assets.special_block_list[|b].name)
 		
-		// Equipment list
-		equipment_list = new_obj(obj_sortlist)
-		equipment_list.script = action_lib_model_name
-		equipment_list.script_search = sortlist_search_model
+		// Equipment picker
+		equipment_picker = new_obj(obj_asset_picker)
+		equipment_picker.asset_picker_model = true
+		equipment_picker.script = action_lib_model_name
+		equipment_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(equipment_list, "special_block_name", 0)
+		sortlist_column_add(equipment_picker, "special_block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.equipment_list); b++)
-			sortlist_add(equipment_list, mc_assets.equipment_list[|b].name)
+			sortlist_add(equipment_picker, mc_assets.equipment_list[|b].name)
 		
-		// Model part list
-		model_part_model_list = new_obj(obj_sortlist)
-		model_part_model_list.script = action_lib_model_part_model_name
-		model_part_model_list.script_search = sortlist_search_model
+		// Model part picker
+		model_part_model_picker = new_obj(obj_asset_picker)
+		model_part_model_picker.asset_picker_model = true
+		model_part_model_picker.script = action_lib_model_part_model_name
+		model_part_model_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(model_part_model_list, "model_part_model_name", 0)
+		sortlist_column_add(model_part_model_picker, "model_part_model_name", 0)
 		
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 		{
 			var model = mc_assets.equipment_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
 		{
 			var model = mc_assets.char_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
 		{
 			var model = mc_assets.special_block_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		// Particle editor
@@ -478,22 +482,22 @@ function app_startup_interface_tabs()
 	
 	with (build_tool)
 	{
-		build_list = new_obj(obj_sortlist)
-		build_list.script = action_build_select
-		build_list.script_search = sortlist_search_build
-		build_list.header_show = true
-		build_list.column_sort = 0
+		build_picker = new_obj(obj_asset_picker)
+		build_picker.script = action_build_select
+		build_picker.script_search = sortlist_search_build
+		build_picker.header_show = true
+		build_picker.column_sort = 0
 		
-		sortlist_column_add(build_list, "build_name", 0)
+		sortlist_column_add(build_picker, "build_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
-				sortlist_add(build_list, [ false, mc_assets.block_list[|b].name ])
+				sortlist_add(build_picker, [ false, mc_assets.block_list[|b].name ])
 
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
-			sortlist_add(build_list, [ true, mc_assets.special_block_list[|b].name ])
+			sortlist_add(build_picker, [ true, mc_assets.special_block_list[|b].name ])
 		
-		sortlist_update(build_list)
+		sortlist_update(build_picker)
 		
 		build_selected = null
 	}

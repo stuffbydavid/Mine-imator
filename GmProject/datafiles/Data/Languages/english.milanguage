@@ -3423,8 +3423,10 @@
 		"model_tex_normal": "Normal map"
 	},
 	"template_editor/": {
+		"model": "Model",
 		"equipment": "Equipment",
-		"model_part": "Model part"
+		"model_part": "Model part",
+		"block": "Block"
 	},
 	"particle_editor/": {
 		"count": "Particles",

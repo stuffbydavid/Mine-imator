@@ -12,7 +12,10 @@ function action_bench_model_state(value)
 				return 0
 			
 			for (var i = 0; i < array_length(armor_parts); i++)
+			{
 				state_vars_set_value(model_state, armor_parts[i], value)
+				asset_picker_set_state(armor_parts[i], value)
+			}
 			
 			app.menu_model_armor_variant = false
 		}
@@ -22,6 +25,7 @@ function action_bench_model_state(value)
 				return 0
 			
 			state_vars_set_value(model_state, state, value)
+			asset_picker_set_state(state, value)
 		}
 		
 		temp_update_model()

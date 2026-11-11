@@ -19,6 +19,9 @@ function action_lib_block_state(value)
 	{
 		state_vars_set_value(block_state, state, value)
 		
+		asset_picker_state_map[?mc_assets.block_name_map[?block_name]] = array_copy_1d(block_state)
+		asset_picker_set_state(state, value)
+		
 		temp_update_block()
 		temp_update_display_name()
 	}

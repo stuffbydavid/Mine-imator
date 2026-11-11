@@ -61,8 +61,8 @@ function draw_texture_picker(select, texlist, slots, sheetsizes, xx, yy, wid, he
 		scroll.search_slots = searchslots
 	}
 
-	yy += 32
-	hei -= 32
+	yy += list_header_height
+	hei -= list_header_height
 	if (hei <= 0)
 		return 0
 	

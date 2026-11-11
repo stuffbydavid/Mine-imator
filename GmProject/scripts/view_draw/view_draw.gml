@@ -579,8 +579,8 @@ function view_draw(view)
 		benchrot = sin(bench_rotate_ani * pi * 5) * (1 - abs(bench_rotate_ani * 2 - 1)) * 10
 		benchempty = (instance_number(obj_timeline) = 0 && instance_number(obj_template) = 0)
 		
-		bench_settings.posx = benchx + 86 + 8
-		bench_settings.posy = benchy
+		bench_x = benchx + 86 + 8
+		bench_y = benchy
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(true)

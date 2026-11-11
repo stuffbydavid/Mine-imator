@@ -27,23 +27,23 @@ function bench_draw()
 		if (window_busy = "bench" || window_busy = "bench/resize_width" || window_busy = "bench/resize_height" || window_busy = "bench/resize_corner")
 			window_busy = ""
 		
-		bench_settings.height = 0
-		bench_settings.height_goal = bench_settings.height_min + bench_height_add
+		bench_height = 0
+		bench_height_goal = bench_height_min + bench_height_add
 		
 		return 0
 	}
 	else
-		bench_settings.height = min(bench_settings.height_goal, max(0, window_height - bench_settings.posy - 32))
+		bench_height = min(bench_height_goal, max(0, window_height - bench_y - 32))
 	
 	if (window_busy = "bench")
 		window_busy = ""
 	
 	var ani = ease(func, bench_show_ani);
 	
-	content_x = bench_settings.posx - (8 - (8 * ani))
-	content_y = bench_settings.posy
+	content_x = bench_x - (8 - (8 * ani))
+	content_y = bench_y
 	content_width = bench_width
-	content_height = bench_settings.height
+	content_height = bench_height
 	content_mouseon = !popup_mouseon
 	
 	dx = content_x
@@ -57,7 +57,7 @@ function bench_draw()
 	{
 		mouse_cursor = cr_size_nwse
 		bench_width = clamp(bench_resize_width + mouse_x - mouse_click_x, bench_min_width, bench_max_width)
-		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_settings.height_min, max(bench_settings.height_min, window_height - content_y - 40)) - bench_settings.height_min
+		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_height_min, max(bench_height_min, window_height - content_y - 40)) - bench_height_min
 		if (!mouse_left)
 		{
 			window_busy = ""
@@ -71,7 +71,7 @@ function bench_draw()
 		{
 			window_busy = "bench/resize_corner"
 			bench_resize_width = bench_width
-			bench_resize_height = bench_settings.height
+			bench_resize_height = bench_height
 		}
 	}
 
@@ -100,7 +100,7 @@ function bench_draw()
 	if (window_busy = "bench/resize_height")
 	{
 		mouse_cursor = cr_size_ns
-		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_settings.height_min, max(bench_settings.height_min, window_height - content_y - 40)) - bench_settings.height_min
+		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_height_min, max(bench_height_min, window_height - content_y - 40)) - bench_height_min
 		if (!mouse_left)
 		{
 			window_busy = ""
@@ -113,7 +113,7 @@ function bench_draw()
 		if (mouse_left_pressed)
 		{
 			window_busy = "bench/resize_height"
-			bench_resize_height = bench_settings.height
+			bench_resize_height = bench_height
 		}
 	}
 
@@ -137,9 +137,9 @@ function bench_draw()
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 	
 	// Draw workbench
-	var sdx, sdy, ymax;
-	sdx = dx
-	sdy = dy
+	var startdx, startdy, maxdy;
+	startdx = dx
+	startdy = dy
 	
 	dy += 8
 	
@@ -172,43 +172,31 @@ function bench_draw()
 			dy += 9
 		}
 	}
+	
 	dy += 8
 	
-	ymax = dy
+	maxdy = dy
 	
-	dy = sdy + 12
+	dy = startdy + 12
 	dx += 192 + 12
 	dw = (content_width - 192) - 24
-	
-	bench_settings.list_height = 0
-	bench_settings.list_minimum_height = 0
 	
 	bench_draw_settings(dx, dy, dw, dh)
 	
 	if (window_scroll_focus != "" && window_focus = window_scroll_focus && window_focus != string(bench_settings.item_scroll))
-		bench_settings.list_focus = window_focus
+		bench_list_focus = window_focus
 	
-	var settingsheight, minimumheight, maximumheight;
-	settingsheight = dy - sdy
+	var minheight, maxheight;
+	minheight = max(bench_height_min, maxdy - startdy)
+	maxheight = max(0, window_height - startdy - 32)
+	bench_height_min = min(minheight, maxheight)
 	
-	if (bench_settings.list_height > 0)
-	{
-		bench_settings.height_fixed[bench_tab] = settingsheight - bench_settings.list_height
-		if (bench_settings.height_fixed_base[bench_tab] = 0)
-			bench_settings.height_fixed_base[bench_tab] = bench_settings.height_fixed[bench_tab]
-		
-		settingsheight = bench_settings.height_fixed[bench_tab] + bench_settings.list_minimum_height
-	}
+	maxdy = max(dy, maxdy)
+	dy = maxdy
 	
-	minimumheight = max(settingsheight, ymax - sdy)
-	maximumheight = max(0, window_height - sdy - 32)
-	bench_settings.height_min = min(minimumheight, maximumheight)
+	draw_divide_vertical(startdx + 193, startdy, bench_height)
 	
-	ymax = max(dy, ymax)
-	dy = ymax
-	
-	draw_divide_vertical(sdx + 193, sdy, bench_settings.height)
-	bench_settings.height_goal = clamp(bench_settings.height_min + bench_height_add, bench_settings.height_min, maximumheight)
+	bench_height_goal = clamp(bench_height_min + bench_height_add, bench_height_min, maxheight)
 	
 	draw_set_alpha(1)
 	

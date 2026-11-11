@@ -57,6 +57,9 @@ function action_lib_model_state(value)
 			
 		state_vars_set_value(model_state, state, value)
 		
+		asset_picker_state_map[?mc_assets.model_name_map[?model_name]] = array_copy_1d(model_state)
+		asset_picker_set_state(state, value)
+		
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
 		temp_update_model_shape()

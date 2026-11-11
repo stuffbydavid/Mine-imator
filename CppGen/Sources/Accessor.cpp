@@ -93,8 +93,7 @@ void Accessor::resolve(ResolveScope* scope)
 				userFunction != this->func)
 				userFunction->sameScopeFunctions.add(this->func);
 
-			if (!Program::hotReloading || Program::hotReloadTargets.contains(userFunction))
-				userFunction->resolve(ResolveScope(*scope, this->func->name, this->line), inputTypes, this->func, this->line);
+			userFunction->resolve(ResolveScope(*scope, this->func->name, this->line), inputTypes, this->func, this->line);
 
 			if (scope->location->level == 0 && userFunction->hasInstanceVars)
 				this->func->assignFunctionScope(userFunction, this->func, this->line);
@@ -254,7 +253,7 @@ void Accessor::resolve(ResolveScope* scope)
 
 	else if (userFunction != nullptr) // Function* reference
 	{
-		if (Accessor::resolveFunctionReferences && (!Program::hotReloading || Program::hotReloadTargets.contains(userFunction))) // Resolve after first pass in any scope
+		if (Accessor::resolveFunctionReferences) // Resolve after first pass in any scope
 		{
 			userFunction->assignScope(STR(any), this->func, this->line);
 			userFunction->resolve(ResolveScope(ResolveScope(STR(any)), this->func->name, this->line), nullptr, this->func, this->line);

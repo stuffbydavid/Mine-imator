@@ -441,6 +441,9 @@ function res_event_destroy()
 				action_bench_sound_source("project")
 	}
 	
+	// Clear block picker textures
+	res_clear_asset_picker_textures()
+
 	// Free texture page
 	res_clear_pack_res_textures()
 	

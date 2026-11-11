@@ -1,21 +1,21 @@
 function action_build_scroll()
 {
-	var list, count, index, newindex, value;
-	list = build_tool.build_list
-	count = ds_list_size(list.display_list)
+	var picker, count, index, newindex, value;
+	picker = build_tool.build_picker
+	count = ds_list_size(picker.display_list)
 	
 	if (count = 0)
 		return 0
 
-	index = ds_list_find_index(list.display_list, build_tool.build_selected)
+	index = ds_list_find_index(picker.display_list, build_tool.build_selected)
 	if (index < 0)
 		index = mouse_wheel > 0 ? -1 : 0
 	
 	newindex = index + sign(mouse_wheel)
 	newindex = mod_fix(newindex, count)
-	value = list.display_list[|newindex]
+	value = picker.display_list[|newindex]
 	
 	action_build_select(value)
 	
-	sortlist_view(list, value, false)
+	asset_picker_view(build_tool.build_picker, value, false)
 }

@@ -690,6 +690,7 @@ function enums()
 		GIMBAL,
 		GOOSE,
 		GRID,
+		GRID_VIEW,
 		GROUP,
 		HAMMER,
 		HEART,

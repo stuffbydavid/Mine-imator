@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"bench_list_height",
+  "%Name":"bench_get_list_height",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"bench_list_height",
+  "name":"bench_get_list_height",
   "parent":{
     "name":"Bench",
     "path":"folders/Scripts/App/Interface/Bench.yy",

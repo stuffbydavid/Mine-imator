@@ -26,35 +26,54 @@ function tab_build_tool()
 		}
 	}
 	
-	dy = optiony + 40
-	dh -= 132
-
-	draw_label(text_get("build_tool/selected"), dx, dy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary, font_label)
-	dy += 32
-
-	// Re-use object editor block list
-	var prevobj, listtop;
-	prevobj = obj_edit
-	listtop = dy
-	obj_edit = build_settings
-	tab_object_editor_block()
-	
-	// List and state widgets have the same bottom edge
-	dy = listtop + dh + 8
-	obj_edit = prevobj
+	dy = optiony + 44
 
 	// Structure
 	var structurevalue, structuretext, structurecapwidth;
 	structurevalue = build_structure
 	if (structurevalue != null && !instance_exists(structurevalue))
 		structurevalue = null
-	
+
 	structuretext = text_get("build_tool/create_new")
 	if (structurevalue != null)
 		structuretext = structurevalue.display_name
-	
+
 	draw_set_font(font_label)
 	structurecapwidth = string_width(text_get("build_tool/structure")) + 8
-	
+
 	draw_button_menu("build_tool/structure", e_menu.LIST, dx, dy, dw, 24, structurevalue, structuretext, action_build_structure_select, false, null, null, "", null, null, structurecapwidth)
+	dy += 32
+
+	// Block/special block picker
+	var picker, pickerh, settingsy, res, states, asset, script;
+	res = project_pack_res
+	if (structurevalue != null)
+		res = structurevalue.render_res_diffuse
+
+	picker = tab.build_picker
+	if (build_settings.type = e_temp_type.SPECIAL_BLOCK)
+	{
+		states = build_settings.model_state
+		asset = mc_assets.model_name_map[?build_settings.model_name]
+		script = action_bench_model_state
+	}
+	else
+	{
+		states = build_settings.block_state
+		asset = mc_assets.block_name_map[?build_settings.block_name]
+		script = action_bench_block_state
+	}
+	
+	settingsy = max(dy + 8, optiony + dh - 20 - minecraft_asset_get_state_settings_height(asset))
+	pickerh = settingsy - dy - 8
+
+	draw_asset_picker(res, picker, tab.build_selected, states, dx, dy, dw, pickerh)
+	dy = settingsy
+
+	// State settings
+	content_capwid = 0
+	dy += draw_state_settings(asset, states, picker, script, dx, dy, dw)
+	
+	if (content_mouseon)
+		window_scroll_focus = string(picker.scroll)
 }

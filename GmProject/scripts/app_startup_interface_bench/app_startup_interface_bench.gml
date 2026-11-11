@@ -10,10 +10,20 @@ function app_startup_interface_bench()
 	bench_show_ani_type = ""
 	bench_show_ani = 0
 	bench_settings_ani = 0
+	
+	bench_x = 0
+	bench_y = 0
 	bench_width = setting_bench_width
+	bench_height = 0
 	bench_height_add = setting_bench_height - bench_initial_height
+	bench_height_goal = bench_initial_height
+	bench_height_min = bench_initial_height
 	bench_resize_width = bench_width
 	bench_resize_height = bench_initial_height
+	
+	bench_list_height = 0
+	bench_list_height_min = 0
+	bench_list_focus = ""
 	
 	bench_schematic_folder = schematic_folders[0]
 	bench_music_mode = false
@@ -92,20 +102,6 @@ function app_startup_interface_bench()
 	bench_settings = new_obj(obj_bench_settings)
 	with (bench_settings)
 	{
-		type = null
-		posx = 0
-		posy = 0
-		
-		// Size
-		height = 0
-		height_goal = bench_initial_height
-		height_min = bench_initial_height
-		height_fixed = array_create(e_bench_tab.amount, 0)
-		height_fixed_base = array_create(e_bench_tab.amount, 0)
-		list_height = 0
-		list_minimum_height = 0
-		list_focus = ""
-		
 		// Default settings
 		temp_event_create()
 		
@@ -169,17 +165,14 @@ function app_startup_interface_bench()
 		// Project lists
 		project_lib_list = new_obj(obj_sortlist)
 		project_lib_list.script = action_bench_project_select
-		project_lib_list.height_percent = bench_list_percent
 		project_lib_list.filter_type_list = temp_type_name_list
 		
 		project_res_list = new_obj(obj_sortlist)
 		project_res_list.script = action_bench_project_select
-		project_res_list.height_percent = bench_list_percent
 		project_res_list.filter_type_list = res_type_name_list
 		
 		project_all_list = new_obj(obj_sortlist)
 		project_all_list.script = action_bench_project_select
-		project_all_list.height_percent = bench_list_percent
 		project_all_list.filter_type_list = ds_list_create()
 
 		for (var i = 0; i < ds_list_size(temp_type_name_list); i++)
@@ -188,6 +181,7 @@ function app_startup_interface_bench()
 		project_list = project_lib_list
 		project_selected = null
 		project_settings_type = null
+		project_settings_height = 0
 
 		for (var i = 0; i < ds_list_size(res_type_name_list); i++)
 		{
@@ -207,59 +201,59 @@ function app_startup_interface_bench()
 		sortlist_column_add(project_all_list, "project_type", 0.35)
 		sortlist_column_add(project_all_list, "project_count", 0.65)
 		
-		// Character list
-		char_list = new_obj(obj_sortlist)
-		char_list.script = action_bench_model_name
-		char_list.script_search = sortlist_search_model
-		char_list.script_select_click = action_bench_create
-		char_list.height_percent = bench_list_percent
+		// Character picker
+		char_picker = new_obj(obj_asset_picker)
+		char_picker.asset_picker_model = true
+		char_picker.script = action_bench_model_name
+		char_picker.script_search = sortlist_search_model
+		char_picker.script_select_click = action_bench_create
 		
-		sortlist_column_add(char_list, "character_name", 0)
+		sortlist_column_add(char_picker, "character_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
-			sortlist_add(char_list, mc_assets.char_list[|c].name)
+			sortlist_add(char_picker, mc_assets.char_list[|c].name)
 
-		// Equipment list
-		equipment_list = new_obj(obj_sortlist)
-		equipment_list.script = action_bench_model_name
-		equipment_list.script_search = sortlist_search_model
-		equipment_list.script_select_click = action_bench_create
-		equipment_list.header_show = false
-		equipment_list.height_items = ds_list_size(mc_assets.equipment_list)
+		// Equipment picker
+		equipment_picker = new_obj(obj_asset_picker)
+		equipment_picker.asset_picker_model = true
+		equipment_picker.script = action_bench_model_name
+		equipment_picker.script_search = sortlist_search_model
+		equipment_picker.script_select_click = action_bench_create
+		equipment_picker.height_items = ds_list_size(mc_assets.equipment_list)
 		
-		sortlist_column_add(equipment_list, "special_block_name", 0)
+		sortlist_column_add(equipment_picker, "special_block_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.equipment_list); c++)
-			sortlist_add(equipment_list, mc_assets.equipment_list[|c].name)
+			sortlist_add(equipment_picker, mc_assets.equipment_list[|c].name)
 		
-		// Model part list
-		model_part_model_list = new_obj(obj_sortlist)
-		model_part_model_list.script = action_bench_model_name
-		model_part_model_list.script_search = sortlist_search_model
-		model_part_model_list.script_select_click = action_bench_create
-		model_part_model_list.height_percent = bench_list_percent
+		// Model part picker
+		model_part_model_picker = new_obj(obj_asset_picker)
+		model_part_model_picker.asset_picker_model = true
+		model_part_model_picker.script = action_bench_model_name
+		model_part_model_picker.script_search = sortlist_search_model
+		model_part_model_picker.script_select_click = action_bench_create
 		
-		sortlist_column_add(model_part_model_list, "model_part_model_name", 0)
+		sortlist_column_add(model_part_model_picker, "model_part_model_name", 0)
 		
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 		{
 			var model = mc_assets.equipment_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
 		{
 			var model = mc_assets.char_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
 		{
 			var model = mc_assets.special_block_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		// Item list
@@ -270,7 +264,7 @@ function app_startup_interface_bench()
 		schematic_list.script = action_bench_schematic_select
 		schematic_list.script_select_click = action_bench_create
 		schematic_list.header_show = false
-		schematic_list.height_percent = 0.9
+		schematic_list.height_items = schematic_list_minimum_items
 		
 		sortlist_column_add(schematic_list, "schematic_name", 0)
 		
@@ -278,36 +272,34 @@ function app_startup_interface_bench()
 		schematic_list.sort_asc = false
 		schematic_selected = null
 	
-		// Block list
-		block_list = new_obj(obj_sortlist)
-		block_list.script = action_bench_block_name
-		block_list.script_search = sortlist_search_block
-		block_list.script_select_click = action_bench_create
-		block_list.height_percent = bench_list_percent
+		// Block picker
+		block_picker = new_obj(obj_asset_picker)
+		block_picker.script = action_bench_block_name
+		block_picker.script_search = sortlist_search_block
+		block_picker.script_select_click = action_bench_create
 		
-		sortlist_column_add(block_list, "block_name", 0)
+		sortlist_column_add(block_picker, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
-				sortlist_add(block_list, mc_assets.block_list[|b].name)
+				sortlist_add(block_picker, mc_assets.block_list[|b].name)
 		
-		// Special block list
-		special_block_list = new_obj(obj_sortlist)
-		special_block_list.script = action_bench_model_name
-		special_block_list.script_search = sortlist_search_model
-		special_block_list.script_select_click = action_bench_create
-		special_block_list.height_percent = bench_list_percent
+		// Special block picker
+		special_block_picker = new_obj(obj_asset_picker)
+		special_block_picker.asset_picker_model = true
+		special_block_picker.script = action_bench_model_name
+		special_block_picker.script_search = sortlist_search_model
+		special_block_picker.script_select_click = action_bench_create
 		
-		sortlist_column_add(special_block_list, "special_block_name", 0)
+		sortlist_column_add(special_block_picker, "special_block_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.special_block_list); c++)
-			sortlist_add(special_block_list, mc_assets.special_block_list[|c].name)
+			sortlist_add(special_block_picker, mc_assets.special_block_list[|c].name)
 			
 		// Sound lists
 		sounds_list = new_obj(obj_soundlist)
 		sounds_list.source = "sounds"
 		sounds_list.script = action_bench_sound
-		sounds_list.height_percent = bench_soundlist_percent
 		
 		music_list = new_obj(obj_soundlist)
 		music_list.source = "music"
@@ -330,7 +322,6 @@ function app_startup_interface_bench()
 		particle_preset_list = new_obj(obj_sortlist)
 		particle_preset_list.script = action_bench_particles_select
 		particle_preset_list.header_show = false
-		particle_preset_list.height_percent = bench_list_percent
 		
 		sortlist_column_add(particle_preset_list, "particle_preset_name", 0)
 		

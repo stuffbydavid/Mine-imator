@@ -1,14 +1,13 @@
 function bench_draw_settings_character()
 {
-	var labeltext, list, part, texcap, texmatcap, texnormcap;
+	var labeltext, picker, texcap, texmatcap, texnormcap;
 	
 	switch (bench_tab)
 	{
 		case e_bench_tab.CHARACTER:
 		{
 			labeltext = text_get("bench/model")
-			list = bench_settings.char_list
-			part = bench_settings.model_file
+			picker = bench_settings.char_picker
 			texcap = "bench/skin"
 			texmatcap = "bench/skin_material"
 			texnormcap = "bench/skin_normal"
@@ -19,8 +18,7 @@ function bench_draw_settings_character()
 		case e_bench_tab.EQUIPMENT:
 		{
 			labeltext = text_get("bench/equipment")
-			list = bench_settings.equipment_list
-			part = bench_settings.model_file
+			picker = bench_settings.equipment_picker
 			texcap = "bench/equipment_tex"
 			texmatcap = "bench/equipment_tex_material"
 			texnormcap = "bench/equipment_tex_normal"
@@ -31,8 +29,7 @@ function bench_draw_settings_character()
 		case e_bench_tab.SPECIAL_BLOCK:
 		{
 			labeltext = text_get("bench/special_block")
-			list = bench_settings.special_block_list
-			part = bench_settings.model_file
+			picker = bench_settings.special_block_picker
 			texcap = "bench/special_block_tex"
 			texmatcap = "bench/special_block_tex_material"
 			texnormcap = "bench/special_block_tex_normal"
@@ -43,8 +40,7 @@ function bench_draw_settings_character()
 		case e_bench_tab.MODEL_PART:
 		{
 			labeltext = text_get("bench/model")
-			list = bench_settings.model_part_model_list
-			part = bench_settings.model_part
+			picker = bench_settings.model_part_model_picker
 			texcap = "bench/model_part_skin"
 			texmatcap = "bench/model_part_skin_material"
 			texnormcap = "bench/model_part_skin_normal"
@@ -53,103 +49,61 @@ function bench_draw_settings_character()
 		}
 	}
 
-	// List
-	tab_control(bench_list_height(list))
-	sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.model_name, false, labeltext)
-	tab_next()
-	
-	menu_filter = list.search_tbx.text
-	menu_filter_normal = sortlist_column_get(list, bench_settings.model_name, 0)
+	// Picker and states
+	var asset, states, armor, signtext, modelpart, blendcolor, dyed, pattern, partname, part, settingsh, pickerh;
+	asset = mc_assets.model_name_map[?bench_settings.model_name]
+	states = bench_settings.model_state
+	armor = (asset.name = "armor")
+	signtext = (bench_tab = e_bench_tab.SPECIAL_BLOCK && (asset.name = "sign" || asset.name = "hanging_sign"))
+	modelpart = (bench_tab = e_bench_tab.MODEL_PART && bench_settings.model_file != null)
+	dyed = state_vars_get_value(states, "dyed")
+	blendcolor = (bench_settings.model_use_blend_color && (dyed = null || dyed = "true"))
+	pattern = (bench_settings.pattern_type != "")
+	partname = bench_settings.model_part_name
+	part = (bench_tab = e_bench_tab.MODEL_PART) ? bench_settings.model_part : bench_settings.model_file
 
-	// States
-	var model, statelen;
-	model = mc_assets.model_name_map[?bench_settings.model_name]
-	statelen = array_length(bench_settings.model_state)
-	
-	if (bench_settings.model_name = "armor")
-		content_capwid = max(content_capwid, text_caption_width("bench/armor_variant"))
+	// Calculate settings height
+	settingsh = 8 + minecraft_asset_get_state_settings_height(asset)
+	settingsh += (ui_large_height + 8) * (1 + 2 * project_render_material_maps)
 
-	for (var i = 0; i < statelen; i += 2)
+	if (armor)
 	{
-		var state = bench_settings.model_state[i];
-		if (bench_settings.model_name = "armor" && array_contains(armor_parts, state))
-			continue
+		// The workbench combines the four armor material fields
+		for (var i = 0; i < array_length(asset.default_state); i += 2)
+			if (asset.default_state[i] != "helmet" && array_contains(armor_parts, asset.default_state[i]))
+				settingsh -= 32
 		
-		content_capwid = max(content_capwid, text_caption_width(minecraft_asset_get_name("model/state", state)))
+		settingsh += 40
 	}
 
-	// Checkboxes
-	tab_set_columns(true, 2)
-
-	for (var i = 0; i < statelen; i += 2)
-	{
-		if (bench_settings.model_state[i + 1] != "true" && bench_settings.model_state[i + 1] != "false")
-			continue
-
-		var state = bench_settings.model_state[i];
-		menu_model_current = model
-		menu_model_state_current = model.states_map[?state]
-
-		tab_control(ui_small_height)
-
-		if (draw_checkbox("model/state/" + state, dx, dy, bench_settings.model_state[i + 1] = "true", null))
-		{
-			menu_model_state = menu_model_state_current
-
-			if (bench_settings.model_state[i + 1] = "true")
-				action_bench_model_state("false")
-			else
-				action_bench_model_state("true")
-		}
-
-		tab_next()
-	}
-
-	tab_set_columns(false)
-
-	// Menus
-	for (var i = 0; i < statelen; i += 2)
-	{
-		if (bench_settings.model_state[i + 1] = "true" || bench_settings.model_state[i + 1] = "false")
-			continue
-
-		var state = bench_settings.model_state[i];
-		if (bench_settings.model_name = "armor" && array_contains(armor_parts, state))
-		{
-			if (state != "helmet")
-				continue
-			
-			var variant = state_vars_get_value(bench_settings.model_state, "helmet");
-			if (state_vars_get_value(bench_settings.model_state, "chestplate") != variant ||
-				state_vars_get_value(bench_settings.model_state, "leggings") != variant ||
-				state_vars_get_value(bench_settings.model_state, "boots") != variant)
-				variant = "multiple"
-			
-			menu_model_current = null
-			menu_model_state_current = model.states_map[?"helmet"]
-			menu_model_armor_variant = true
-			
-			draw_button_menu("bench/armor_variant", e_menu.LIST, dx, dy, dw, 24, variant, variant = "multiple" ? text_get("list/multiple") : minecraft_asset_get_name("model/state/value", variant), action_bench_model_state, false, null, null, "", null, null, content_capwid)
-			if (!keyboard_check(vk_control) || mouse_wheel = 0)
-				menu_model_armor_variant = false
-			
-			dy += 32
-			
-			continue
-		}
+	if (signtext)
+		settingsh += ui_small_height + 8
+	if (modelpart)
+		settingsh += 32
+	if (blendcolor)
+		settingsh += ui_small_height + 8
+	if (pattern)
+		settingsh += 40
 		
-		menu_model_current = model
-		menu_model_state_current = model.states_map[?state]
+	settingsh = max(bench_settings_height_min, settingsh)
 
-		draw_button_menu(state, e_menu.LIST, dx, dy, dw, 24, bench_settings.model_state[i + 1], minecraft_asset_get_name("model/state/value", bench_settings.model_state[i + 1]), action_bench_model_state, false, null, null, "", null, null, content_capwid)
+	pickerh = bench_get_list_height(settingsh)
+	draw_asset_picker(bench_settings.model_tex, picker, asset.name, states, dx, dy, dw, pickerh, labeltext)
+	
+	dy += pickerh + 8
+
+	// Model part
+	if (modelpart)
+	{
+		var text = minecraft_asset_get_name("model/part", bench_settings.model_part_name);
+		draw_button_menu("bench/model_part", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, text, action_bench_model_part_name, false, null, null, "", null, null, content_capwid)
 		dy += 32
 	}
+	
+	dy += draw_state_settings(asset, states, picker, action_bench_model_state, dx, dy, dw, armor)
 
-	menu_model_current = null
-	menu_filter = ""
-	menu_filter_normal = ""
-
-	if (bench_tab = e_bench_tab.SPECIAL_BLOCK && (bench_settings.model_name = "sign" || bench_settings.model_name = "hanging_sign"))
+	// Sign options
+	if (signtext)
 	{
 		tab_set_columns(true, 2)
 
@@ -172,11 +126,16 @@ function bench_draw_settings_character()
 		tab_set_columns(false)
 	}
 
-	// Model part
-	if (bench_tab = e_bench_tab.MODEL_PART && bench_settings.model_file != null)
+	// Model blend color
+	if (blendcolor)
 	{
-		draw_button_menu("bench/model_part", e_menu.LIST, dx, dy, dw, 24, bench_settings.model_part_name, minecraft_asset_get_name("model/part", bench_settings.model_part_name), action_bench_model_part_name, false, null, null, "", null, null, content_capwid)
-		dy += 32
+		panel_compact = true
+
+		tab_control_color()
+		draw_button_color("bench/model_color", dx, dy, dw, bench_settings.model_blend_color, bench_settings.model_blend_color_default, false, action_bench_model_blend_color)
+		tab_next()
+
+		panel_compact = false
 	}
 
 	// Skin
@@ -207,20 +166,8 @@ function bench_draw_settings_character()
 		dy += (ui_large_height + 8)
 	}
 
-	// Model blend color
-	if (bench_settings.model_use_blend_color)
-	{
-		panel_compact = true
-
-		tab_control_color()
-		draw_button_color("bench/model_color", dx, dy, dw, bench_settings.model_blend_color, bench_settings.model_blend_color_default, false, action_bench_model_blend_color)
-		tab_next()
-
-		panel_compact = false
-	}
-
 	// Pattern editor
-	if (bench_settings.pattern_type != "")
+	if (pattern)
 	{
 		tab_control_button_label()
 
@@ -234,7 +181,7 @@ function bench_draw_settings_character()
 	}
 
 	// Armor editor
-	if (bench_settings.model_name = "armor")
+	if (armor)
 	{
 		tab_control_button_label()
 
@@ -247,5 +194,5 @@ function bench_draw_settings_character()
 			current_microani.active.value = true
 	}
 
-	window_scroll_focus = string(list.scroll)
+	window_scroll_focus = string(picker.scroll)
 }

@@ -8,7 +8,7 @@ function popup_world_settings_draw()
 	tab_next()
 	
 	// Filter settings
-	draw_block_settings_filter()
+	draw_block_filter()
 
 	dy += 12
 

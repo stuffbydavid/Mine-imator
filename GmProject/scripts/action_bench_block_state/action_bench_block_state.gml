@@ -10,6 +10,7 @@ function action_bench_block_state(value)
 			return 0
 		
 		state_vars_set_value(block_state, state, value)
+		asset_picker_set_state(state, value)
 		
 		temp_update_block()
 		
