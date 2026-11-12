@@ -344,6 +344,9 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		}
 	}
 	
+	if (viewupdate)
+		app.project_matrix_update_id++
+
 	// Update view buffers for accurate object placing
 	if (worldupdate)
 		render_world_changed()

@@ -6,8 +6,9 @@ function app_update_animate()
 		return 0
 	
 	// Go through timelines
-	var envobj, updatevalues, spawnerarr, starttime, biomeani;
+	var envobj, updatevalues, updatepaths, spawnerarr, starttime, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
+	updatepaths = (updatevalues || history_resource_update || project_path_update_id != project_matrix_update_id)
 	biomeani = (env_biome_next != env_biome)
 	spawnerarr = []
 	starttime = get_timer()
@@ -65,7 +66,11 @@ function app_update_animate()
 		
 		// Get timelines that use paths
 		if (value[e_value.PATH_OBJ] != null)
+		{
 			array_add(app.project_use_path_tl_array, id)
+			if (update_matrix || update_value_flags != 0)
+				updatepaths = true
+		}
 		
 		// Get timelines that use IK (Uses "End offset", bend on "Lower", and only on "X" axis)
 		if (tl_supports_ik())
@@ -127,19 +132,24 @@ function app_update_animate()
 		{
 			if (path_update)
 			{
+				updatepaths = true
 				tl_update_path()
 				path_update = false
 			}
 		}
 	}
 	
-	// Update timelines with path transform
-	for (var i = 0; i < array_length(project_use_path_tl_array); i++)
-		project_use_path_tl_array[i].update_matrix = true
-	
-	if (array_length(project_use_path_tl_array) > 0)
+	// Keep stationary followers cached instead of invalidating the viewport every step
+	if (array_length(project_use_path_tl_array) > 0 &&
+		(updatepaths || project_path_update_id != project_matrix_update_id))
+	{
+		for (var i = 0; i < array_length(project_use_path_tl_array); i++)
+			project_use_path_tl_array[i].update_matrix = true
+
 		with (app)
 			tl_update_matrix(true)
+	}
+	project_path_update_id = project_matrix_update_id
 
 	// Spawn particles
 	for (var i = 0; i < array_length(spawnerarr); i++)
