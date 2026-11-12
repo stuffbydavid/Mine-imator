@@ -105,6 +105,8 @@ function app_startup_interface_bench()
 		// Default settings
 		temp_event_create()
 		
+		state_picker = new_obj(obj_picker)
+		
 		model_name = default_model
 		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
 		model_part_name = default_model_part
@@ -202,7 +204,7 @@ function app_startup_interface_bench()
 		sortlist_column_add(project_all_list, "project_count", 0.65)
 		
 		// Character picker
-		char_picker = new_obj(obj_asset_picker)
+		char_picker = new_obj(obj_picker)
 		char_picker.asset_picker_model = true
 		char_picker.script = action_bench_model_name
 		char_picker.script_search = sortlist_search_model
@@ -214,7 +216,7 @@ function app_startup_interface_bench()
 			sortlist_add(char_picker, mc_assets.char_list[|c].name)
 
 		// Equipment picker
-		equipment_picker = new_obj(obj_asset_picker)
+		equipment_picker = new_obj(obj_picker)
 		equipment_picker.asset_picker_model = true
 		equipment_picker.script = action_bench_model_name
 		equipment_picker.script_search = sortlist_search_model
@@ -227,7 +229,7 @@ function app_startup_interface_bench()
 			sortlist_add(equipment_picker, mc_assets.equipment_list[|c].name)
 		
 		// Model part picker
-		model_part_model_picker = new_obj(obj_asset_picker)
+		model_part_model_picker = new_obj(obj_picker)
 		model_part_model_picker.asset_picker_model = true
 		model_part_model_picker.script = action_bench_model_name
 		model_part_model_picker.script_search = sortlist_search_model
@@ -257,7 +259,7 @@ function app_startup_interface_bench()
 		}
 		
 		// Item list
-		item_scroll = new_obj(obj_scrollbar)
+		item_picker = new_obj(obj_picker)
 			
 		// Schematic list
 		schematic_list = new_obj(obj_sortlist)
@@ -273,7 +275,7 @@ function app_startup_interface_bench()
 		schematic_selected = null
 	
 		// Block picker
-		block_picker = new_obj(obj_asset_picker)
+		block_picker = new_obj(obj_picker)
 		block_picker.script = action_bench_block_name
 		block_picker.script_search = sortlist_search_block
 		block_picker.script_select_click = action_bench_create
@@ -285,7 +287,7 @@ function app_startup_interface_bench()
 				sortlist_add(block_picker, mc_assets.block_list[|b].name)
 		
 		// Special block picker
-		special_block_picker = new_obj(obj_asset_picker)
+		special_block_picker = new_obj(obj_picker)
 		special_block_picker.asset_picker_model = true
 		special_block_picker.script = action_bench_model_name
 		special_block_picker.script_search = sortlist_search_model

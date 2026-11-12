@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"draw_state_settings_picker",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_state_settings_picker",
+  "parent":{
+    "name":"Picker",
+    "path":"folders/Scripts/App/Interface/Components/Picker.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

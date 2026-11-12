@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"asset_picker_view",
   "parent":{
-    "name":"Asset picker",
-    "path":"folders/Scripts/App/Interface/Components/Asset picker.yy",
+    "name":"Picker",
+    "path":"folders/Scripts/App/Interface/Components/Picker.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

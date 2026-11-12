@@ -64,16 +64,18 @@ function tab_build_tool()
 		script = action_bench_block_state
 	}
 	
-	settingsy = max(dy + 8, optiony + dh - 20 - minecraft_asset_get_state_settings_height(asset))
+	state_settings_load(asset, true, states, dw, picker.grid_view)
+	settingsy = max(dy + 8, optiony + dh - 20 - state_settings_height)
+	
 	pickerh = settingsy - dy - 8
-
-	draw_asset_picker(res, picker, tab.build_selected, states, dx, dy, dw, pickerh)
+	draw_asset_picker(picker, res, tab.build_selected, states, dx, dy, dw, pickerh, text_get("bench/block"))
+	
 	dy = settingsy
-
-	// State settings
-	content_capwid = 0
-	dy += draw_state_settings(asset, states, picker, script, dx, dy, dw)
 	
 	if (content_mouseon)
 		window_scroll_focus = string(picker.scroll)
+
+	// State settings
+	content_capwid = 0
+	dy += draw_state_settings(picker.search_tbx.text, script, dx, dy, dw, res, tab.state_picker)
 }

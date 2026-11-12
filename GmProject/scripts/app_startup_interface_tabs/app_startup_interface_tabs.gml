@@ -222,7 +222,7 @@ function app_startup_interface_tabs()
 	ground_editor = new_tab(setting_ground_editor_location, false)
 	ground_editor.script = tab_ground_editor
 	with (ground_editor)
-		ground_scroll = new_obj(obj_scrollbar)
+		ground_picker = new_obj(obj_picker)
 	
 	// Object editor
 	object_editor = new_tab(setting_object_editor_location, false)
@@ -231,7 +231,7 @@ function app_startup_interface_tabs()
 	with (object_editor)
 	{
 		// Character picker
-		char_picker = new_obj(obj_asset_picker)
+		char_picker = new_obj(obj_picker)
 		char_picker.asset_picker_model = true
 		char_picker.script = action_lib_model_name
 		char_picker.script_search = sortlist_search_model
@@ -242,10 +242,10 @@ function app_startup_interface_tabs()
 			sortlist_add(char_picker, mc_assets.char_list[|c].name)
 		
 		// Item
-		item_scroll = new_obj(obj_scrollbar)
+		item_picker = new_obj(obj_picker)
 		
 		// Block
-		block_picker = new_obj(obj_asset_picker)
+		block_picker = new_obj(obj_picker)
 		block_picker.script = action_lib_block_name
 		block_picker.script_search = sortlist_search_block
 		
@@ -256,7 +256,7 @@ function app_startup_interface_tabs()
 				sortlist_add(block_picker, mc_assets.block_list[|b].name)
 		
 		// Special block picker
-		special_block_picker = new_obj(obj_asset_picker)
+		special_block_picker = new_obj(obj_picker)
 		special_block_picker.asset_picker_model = true
 		special_block_picker.script = action_lib_model_name
 		special_block_picker.script_search = sortlist_search_model
@@ -267,7 +267,7 @@ function app_startup_interface_tabs()
 			sortlist_add(special_block_picker, mc_assets.special_block_list[|b].name)
 		
 		// Equipment picker
-		equipment_picker = new_obj(obj_asset_picker)
+		equipment_picker = new_obj(obj_picker)
 		equipment_picker.asset_picker_model = true
 		equipment_picker.script = action_lib_model_name
 		equipment_picker.script_search = sortlist_search_model
@@ -278,7 +278,7 @@ function app_startup_interface_tabs()
 			sortlist_add(equipment_picker, mc_assets.equipment_list[|b].name)
 		
 		// Model part picker
-		model_part_model_picker = new_obj(obj_asset_picker)
+		model_part_model_picker = new_obj(obj_picker)
 		model_part_model_picker.asset_picker_model = true
 		model_part_model_picker.script = action_lib_model_part_model_name
 		model_part_model_picker.script_search = sortlist_search_model
@@ -305,6 +305,9 @@ function app_startup_interface_tabs()
 			if (model.model_part_available)
 				sortlist_add(model_part_model_picker, model.name)
 		}
+		
+		// State picker
+		state_picker = new_obj(obj_picker)
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()
@@ -482,11 +485,10 @@ function app_startup_interface_tabs()
 	
 	with (build_tool)
 	{
-		build_picker = new_obj(obj_asset_picker)
+		build_picker = new_obj(obj_picker)
 		build_picker.script = action_build_select
 		build_picker.script_search = sortlist_search_build
 		build_picker.header_show = true
-		build_picker.column_sort = 0
 		
 		sortlist_column_add(build_picker, "build_name", 0)
 		
@@ -500,6 +502,8 @@ function app_startup_interface_tabs()
 		sortlist_update(build_picker)
 		
 		build_selected = null
+		
+		state_picker = new_obj(obj_picker)
 	}
 
 	ptype_list = object_editor.type_list
@@ -593,7 +597,7 @@ function app_startup_interface_tabs()
 		item = tab_add_category("frame_editor/item", icons.ITEM_SMALL, tab_frame_editor_item, false)
 		with (item)
 		{
-			item_scroll = new_obj(obj_scrollbar)
+			item_picker = new_obj(obj_picker)
 			item_slot = new_textbox_integer()
 		}
 		

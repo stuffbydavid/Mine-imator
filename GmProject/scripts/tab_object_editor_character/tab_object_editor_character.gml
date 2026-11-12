@@ -1,33 +1,29 @@
 function tab_object_editor_character()
 {
-	var labeltext, picker;
+	var picker;
 	content_capwid = 0
 			
 	switch (obj_edit.type)
 	{
 		case e_temp_type.CHARACTER:
 		{
-			labeltext = text_get("template_editor/model")
 			picker = tab.char_picker
 			break
 		}
 		case e_temp_type.EQUIPMENT:
 		{
-			labeltext = text_get("template_editor/equipment")
 			picker = tab.equipment_picker
 			break
 		}
 		
 		case e_temp_type.SPECIAL_BLOCK:
 		{
-			labeltext = text_get("template_editor/block")
 			picker = tab.special_block_picker
 			break
 		}
 		
 		case e_temp_type.MODEL_PART:
 		{
-			labeltext = text_get("template_editor/model")
 			picker = tab.model_part_model_picker
 			content_capwid = text_caption_width("template_editor/model_part")
 			break
@@ -40,19 +36,21 @@ function tab_object_editor_character()
 	asset = mc_assets.model_name_map[?selected]
 	states = obj_edit.model_state
 	partname = obj_edit.model_part_name
+
 	if (obj_edit.type = e_temp_type.MODEL_PART)
 		script = action_lib_model_part_model_state
 	else
 		script = action_lib_model_state
 	
-	statesh = minecraft_asset_get_state_settings_height(asset)
+	state_settings_load(asset, false, states, dw, picker.grid_view)
+	statesh = state_settings_height
 	if (obj_edit.type = e_temp_type.MODEL_PART)
 		statesh += 32
 	
 	pickerh = max(0, dh - statesh - 8)
 	
 	// Model picker
-	draw_asset_picker(obj_edit.model_tex, picker, selected, states, dx, dy, dw, pickerh)
+	draw_asset_picker(picker, obj_edit.model_tex, selected, states, dx, dy, dw, pickerh)
 
 	dy += pickerh + 8
 	
@@ -64,8 +62,8 @@ function tab_object_editor_character()
 	}
 
 	// State settings
-	dy += draw_state_settings(asset, states, picker, script, dx, dy, dw)
-
 	if (content_mouseon)
 		window_scroll_focus = string(picker.scroll)
+
+	dy += draw_state_settings(picker.search_tbx.text, script, dx, dy, dw, obj_edit.model_tex, tab.state_picker)
 }

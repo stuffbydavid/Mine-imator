@@ -14,7 +14,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "", st
 	var itemh, headerh, headermouseon, dy, listy, listhei, scrolloffset, ispicker;
 	var searchfocused, searchunfocused, searchcleared, sortchanged;
 
-	ispicker = (slist.object_index = obj_asset_picker)
+	ispicker = (slist.object_index = obj_picker)
 	itemh = ui_small_height
 	headerh = slist.header_show ? (ui_small_height + 8) : 0
 	sortchanged = false

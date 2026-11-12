@@ -148,13 +148,16 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					
 			prevcamzoom /= zoom
 					
-			var projfromprev = proj_from;
+			var projfromprev, camfromprev;
+			projfromprev = proj_from
+			camfromprev = cam_from
 					
 			proj_from = point3D(
 				lengthdir_x(prevcamzoom, xyangle) * lengthdir_x(1, zangle),
 				lengthdir_y(prevcamzoom, xyangle) * lengthdir_x(1, zangle),
 				lengthdir_z(prevcamzoom, zangle)
 			)
+			cam_from = proj_from
 			render_ratio = width / height
 		
 			gpu_set_ztestenable(true)
@@ -231,7 +234,10 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						var res;
 						with (select)
 							res = temp_get_model_texobj(null)
-								
+
+						if (select.model_name = "cape" || select.model_name = "elytra")
+							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), matrix_create(vec3(0), vec3(0, 0, 180), vec3(1))))
+
 						var matmap = model_file_matrix_map_create(select.model_file, matrix_get(matrix_world), select.model_hide_list);
 						render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map, matmap)
 
@@ -357,6 +363,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 			camera_apply(cam_window)
 					
 			proj_from = projfromprev
+			cam_from = camfromprev
 		}
 		else
 		{

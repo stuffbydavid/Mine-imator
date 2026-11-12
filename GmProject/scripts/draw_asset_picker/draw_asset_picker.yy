@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"draw_asset_picker",
   "parent":{
-    "name":"Asset picker",
-    "path":"folders/Scripts/App/Interface/Components/Asset picker.yy",
+    "name":"Picker",
+    "path":"folders/Scripts/App/Interface/Components/Picker.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

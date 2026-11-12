@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"model_set_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_set_state",
+  "parent":{
+    "name":"Models",
+    "path":"folders/Scripts/Minecraft/Models.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

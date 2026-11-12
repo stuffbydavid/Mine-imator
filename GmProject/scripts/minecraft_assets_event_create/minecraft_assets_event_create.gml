@@ -17,6 +17,9 @@ function minecraft_assets_event_create()
 	block_tl_required_map = ds_map_create()
 	block_snowy_list = ds_list_create()
 	block_waterlogged_list = ds_list_create()
+	block_timeline_enabled_list = ds_list_create()
+	
+	state_picker_list = ds_list_create()
 	
 	model_texture_list = ds_list_create()
 	

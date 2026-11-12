@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"draw_state_settings",
   "parent":{
-    "name":"Components",
-    "path":"folders/Scripts/App/Interface/Components.yy",
+    "name":"State settings",
+    "path":"folders/Scripts/App/Interface/Components/State settings.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

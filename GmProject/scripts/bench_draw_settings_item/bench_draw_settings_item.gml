@@ -57,7 +57,7 @@ function bench_draw_settings_item()
 		settingsh += (ui_large_height + 8) * (1 + 2 * project_render_material_maps)
 		pickerh = bench_get_list_height(settingsh)
 		
-		draw_texture_picker(bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, pickerh, bench_settings.item_scroll, action_bench_item_slot, mc_assets.item_texture_list, null, action_bench_create)
+		draw_texture_picker(bench_settings.item_picker, bench_settings.item_slot, textures, slots, sheetsizes, dx, dy, dw, pickerh, action_bench_item_slot, mc_assets.item_texture_list, null, action_bench_create)
 		
 		dy += pickerh + 8
 	}
@@ -116,7 +116,6 @@ function bench_draw_settings_item()
 		draw_button_menu("bench/item_tex_normal", e_menu.LIST, dx, dy, dw, ui_large_height, bench_settings.item_tex_normal, res_eval(bench_settings.item_tex_normal).display_name, action_bench_item_tex_normal, false, res_eval(bench_settings.item_tex_normal).block_preview_texture, null, "", null, null, content_capwid)
 		dy += (ui_large_height + 8)
 	}
-	dy += 4
 
-	window_scroll_focus = string(bench_settings.item_scroll)
+	window_scroll_focus = string(bench_settings.item_picker.scroll)
 }

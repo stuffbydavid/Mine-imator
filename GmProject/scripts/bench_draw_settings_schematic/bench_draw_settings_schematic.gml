@@ -4,7 +4,7 @@ function bench_draw_settings_schematic()
 	var settingsh, listh;
 	settingsh = ui_large_height * 2 + 48
 	settingsh += (ui_large_height + 8) * (1 + 2 * project_render_material_maps)
-	listh = bench_get_list_height(settingsh, list_header_height + 12 + schematic_list_minimum_items * ui_small_height)
+	listh = bench_get_list_height(settingsh, schematic_list_minimum_items)
 	
 	tab_control(listh)
 	sortlist_draw(bench_settings.schematic_list, dx, dy, dw, tab_control_h, bench_settings.schematic_selected, false, text_get("bench/schematic"))

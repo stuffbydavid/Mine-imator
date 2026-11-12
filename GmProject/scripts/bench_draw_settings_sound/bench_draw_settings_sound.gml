@@ -15,7 +15,7 @@ function bench_draw_settings_sound()
 		draw_set_font(oldfont)
 	}
 	
-	listh = bench_get_list_height(settingsh, list_header_height + 4 + soundlist_minimum_items * ui_small_height)
+	listh = bench_get_list_height(settingsh, soundlist_minimum_items)
 	tab_control(listh)
 	soundlist_draw(bench_settings.sound_list_current, dx, dy, dw, tab_control_h, text_get("bench/" + (bench_settings.sound_list_current.source = "music" ? "music" : "sound")))
 	tab_next()

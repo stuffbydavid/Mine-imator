@@ -112,10 +112,10 @@ function res_load_scenery()
 				if (!scenery_tl_all_types)
 				{
 					// Enable specific timelines only
-					for (var i = 0; i < array_length(scenery_timeline_enabled); i++)
+					for (var i = 0; i < ds_list_size(mc_assets.block_timeline_enabled_list); i++)
 					{
 						var tltype, count;
-						tltype = scenery_timeline_enabled[i]
+						tltype = mc_assets.block_timeline_enabled_list[|i]
 						count = value_get_real(scenery_tl_types_count_map[?tltype], 0)
 						if (count > 0 && count <= scenery_timeline_enabled_max)
 							array_add(scenery_tl_types, tltype)

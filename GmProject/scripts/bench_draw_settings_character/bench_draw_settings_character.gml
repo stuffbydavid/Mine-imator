@@ -11,7 +11,6 @@ function bench_draw_settings_character()
 			texcap = "bench/skin"
 			texmatcap = "bench/skin_material"
 			texnormcap = "bench/skin_normal"
-			content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
 			break
 		}
 		
@@ -22,7 +21,6 @@ function bench_draw_settings_character()
 			texcap = "bench/equipment_tex"
 			texmatcap = "bench/equipment_tex_material"
 			texnormcap = "bench/equipment_tex_normal"
-			content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
 			break
 		}
 		
@@ -33,7 +31,6 @@ function bench_draw_settings_character()
 			texcap = "bench/special_block_tex"
 			texmatcap = "bench/special_block_tex_material"
 			texnormcap = "bench/special_block_tex_normal"
-			content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
 			break
 		}
 		
@@ -44,38 +41,34 @@ function bench_draw_settings_character()
 			texcap = "bench/model_part_skin"
 			texmatcap = "bench/model_part_skin_material"
 			texnormcap = "bench/model_part_skin_normal"
-			content_capwid = text_caption_width("bench/model_part", texcap, texmatcap, texnormcap)
 			break
 		}
 	}
 
-	// Picker and states
-	var asset, states, armor, signtext, modelpart, blendcolor, dyed, pattern, partname, part, settingsh, pickerh;
+	content_capwid = text_caption_width(texcap, texmatcap, texnormcap)
+	if (bench_tab = e_bench_tab.MODEL_PART)
+		content_capwid = max(content_capwid, text_caption_width("bench/model_part"))
+
+	// Picker
+	var asset, states, armor, signtext, modelpart, blendcolor, dyed, pattern, part, settingsh, pickerh;
 	asset = mc_assets.model_name_map[?bench_settings.model_name]
 	states = bench_settings.model_state
+
 	armor = (asset.name = "armor")
 	signtext = (bench_tab = e_bench_tab.SPECIAL_BLOCK && (asset.name = "sign" || asset.name = "hanging_sign"))
 	modelpart = (bench_tab = e_bench_tab.MODEL_PART && bench_settings.model_file != null)
 	dyed = state_vars_get_value(states, "dyed")
 	blendcolor = (bench_settings.model_use_blend_color && (dyed = null || dyed = "true"))
 	pattern = (bench_settings.pattern_type != "")
-	partname = bench_settings.model_part_name
 	part = (bench_tab = e_bench_tab.MODEL_PART) ? bench_settings.model_part : bench_settings.model_file
 
 	// Calculate settings height
-	settingsh = 8 + minecraft_asset_get_state_settings_height(asset)
+	state_settings_load(asset, false, states, dw, picker.grid_view, 2)
+	settingsh = 8 + state_settings_height
 	settingsh += (ui_large_height + 8) * (1 + 2 * project_render_material_maps)
 
 	if (armor)
-	{
-		// The workbench combines the four armor material fields
-		for (var i = 0; i < array_length(asset.default_state); i += 2)
-			if (asset.default_state[i] != "helmet" && array_contains(armor_parts, asset.default_state[i]))
-				settingsh -= 32
-		
 		settingsh += 40
-	}
-
 	if (signtext)
 		settingsh += ui_small_height + 8
 	if (modelpart)
@@ -88,8 +81,8 @@ function bench_draw_settings_character()
 	settingsh = max(bench_settings_height_min, settingsh)
 
 	pickerh = bench_get_list_height(settingsh)
-	draw_asset_picker(bench_settings.model_tex, picker, asset.name, states, dx, dy, dw, pickerh, labeltext)
-	
+	draw_asset_picker(picker, bench_settings.model_tex, asset.name, states, dx, dy, dw, pickerh, labeltext)
+
 	dy += pickerh + 8
 
 	// Model part
@@ -100,7 +93,10 @@ function bench_draw_settings_character()
 		dy += 32
 	}
 	
-	dy += draw_state_settings(asset, states, picker, action_bench_model_state, dx, dy, dw, armor)
+	window_scroll_focus = string(picker.scroll)
+	
+	// State settings
+	dy += draw_state_settings(picker.search_tbx.text, action_bench_model_state, dx, dy, dw, bench_settings.model_tex, bench_settings.state_picker)
 
 	// Sign options
 	if (signtext)
@@ -193,6 +189,4 @@ function bench_draw_settings_character()
 		if (popup_current = popup_armor_editor)
 			current_microani.active.value = true
 	}
-
-	window_scroll_focus = string(picker.scroll)
 }

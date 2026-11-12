@@ -6,8 +6,9 @@
 /// @arg height
 /// @arg [filter]
 /// @arg [name]
+/// @arg [value]
 
-function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "")
+function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "", value = null)
 {
 	list.search_changed = false
 
@@ -20,11 +21,11 @@ function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "")
 	}
 
 	var searchx, searchwid, ispicker;
-	ispicker = (list.object_index = obj_asset_picker)
-	searchwid = max(1, wid - (ispicker ? 32 : 0))
+	ispicker = (list.object_index = obj_picker)
+	searchwid = max(1, wid - (ispicker ? 28 : 0))
 	if (filter || name != "")
 		searchwid = min(144, searchwid)
-	searchx = xx + wid - (ispicker ? 32 : 0) - searchwid
+	searchx = xx + wid - (ispicker ? 28 : 0) - searchwid
 
 	// Filter menu
 	if (filter)
@@ -46,8 +47,16 @@ function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "")
 	// Label and search box, including its clear button
 	if (name != "")
 	{
-		draw_set_font(font_label)
-		draw_label(string_limit(name, max(0, searchx - xx - (filter ? 32 : 0) - 8 - (list.search_tbx.text != "" ? 28 : 0))), xx + (filter ? 32 : 0), yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		var namex, namewid;
+		namex = xx + (filter ? 32 : 0)
+		namewid = max(0, searchx - namex - 8 - (list.search_tbx.text != "" ? 28 : 0))
+		if (value != null)
+			draw_label_value(namex, yy, namewid, 24, name, value)
+		else
+		{
+			draw_set_font(font_label)
+			draw_label(string_limit(name, namewid), namex, yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+		}
 	}
 
 	list.search_changed = draw_searchbox("list/search" + string(list), searchx, yy, searchwid, list.search_tbx, !filter && name = "")
@@ -60,7 +69,7 @@ function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "")
 	}
 
 	// Switch between grid and list
-	if (ispicker && draw_button_icon("list/view" + string(list), xx + wid - 24, yy, 24, 24, false, list.grid_view ? icons.COMPACT : icons.GRID_VIEW))
+	if (ispicker && draw_button_icon("list/view" + string(list), xx + wid - 24, yy, 24, 24, false, list.grid_view ? icons.COMPACT : icons.GRID_VIEW, null, false, list.grid_view ? "tooltip/list_view" : "tooltip/grid_view"))
 	{
 		list.grid_view = !list.grid_view
 		list.view_value = null

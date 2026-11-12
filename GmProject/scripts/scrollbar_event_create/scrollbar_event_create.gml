@@ -14,13 +14,6 @@ function scrollbar_event_create()
 	atend = false
 	zoomable = false
 	
-	search = false
-	search_tbx = new_textbox(true, 0, "")
-	search_slots = null
-	
-	picker_tip_slot = -1
-	picker_tip_time = 0
-	
 	mouseon = false
 	mousenear = new value_animation()
 }

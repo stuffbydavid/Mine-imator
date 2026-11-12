@@ -94,6 +94,7 @@ function action_build_pick()
 
 		action_build_select(value, pickstate)
 
+		tab_show(app.build_tool, true)
 		asset_picker_view(app.build_tool.build_picker, value, false)
 
 		// Focus on the picked block in world space

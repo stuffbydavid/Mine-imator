@@ -89,6 +89,9 @@ function res_get_asset_picker_texture(asset, state = [])
 	var model, modelmat, modelres;
 	model = asset_picker_preview
 	modelmat = MAT_IDENTITY
+	if (ismodel && (asset.name = "cape" || asset.name = "elytra"))
+		modelmat = matrix_create(vec3(0), vec3(0, 0, 180), vec3(1))
+
 	modelres = (type = e_res_type.PACK ? id : mc_res)
 	if (ismodel && (model_texture_map != null || model_texture != null))
 		modelres = id

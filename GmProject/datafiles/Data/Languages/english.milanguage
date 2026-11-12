@@ -40,6 +40,8 @@
 		"paste_key": "Paste key",
 		"filter_list": "Filter list",
 		"clear_search": "Clear search",
+		"list_view": "Switch to list view",
+		"grid_view": "Switch to grid view",
 		"template/": {
 			"new": "New template",
 			"animate": "Create timeline from template",
@@ -4001,7 +4003,8 @@
 		"exit": "Exit build tool",
 		"selected": "Selected",
 		"structure": "Structure",
-		"create_new": "Create new"
+		"create_new": "Create new",
+		"use_tip": "Set by right clicking the block without Shift."
 	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",

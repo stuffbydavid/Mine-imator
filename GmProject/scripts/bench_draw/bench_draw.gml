@@ -137,9 +137,10 @@ function bench_draw()
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 	
 	// Draw workbench
-	var startdx, startdy, maxdy;
+	var startdx, startdy, maxdy, oldminhei;
 	startdx = dx
 	startdy = dy
+	oldminhei = bench_height_min
 	
 	dy += 8
 	
@@ -183,13 +184,16 @@ function bench_draw()
 	
 	bench_draw_settings(dx, dy, dw, dh)
 	
-	if (window_scroll_focus != "" && window_focus = window_scroll_focus && window_focus != string(bench_settings.item_scroll))
+	if (window_scroll_focus != "" && window_focus = window_scroll_focus && window_focus != string(bench_settings.item_picker.scroll))
 		bench_list_focus = window_focus
 	
 	var minheight, maxheight;
 	minheight = max(bench_height_min, maxdy - startdy)
 	maxheight = max(0, window_height - startdy - 32)
 	bench_height_min = min(minheight, maxheight)
+
+	// Keep the bench size when the minimum settings height changes
+	bench_height_add = max(0, bench_height_add + oldminhei - bench_height_min)
 	
 	maxdy = max(dy, maxdy)
 	dy = maxdy

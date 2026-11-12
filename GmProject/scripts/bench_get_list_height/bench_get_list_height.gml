@@ -1,21 +1,23 @@
 /// @desc Returns the workbench selector height after reserving space for settings.
 /// @arg [settingsheight]
-/// @arg [minimumheight]
+/// @arg [minimumitems]
 
-function bench_get_list_height(settingshei = null, minhei = null)
+function bench_get_list_height(settingshei = null, minitems = null)
 {
-	var footerh;
-	if (minhei = null)
-		minhei = list_header_height + list_minimum_items * ui_small_height
+	var footerh, minh;
+	if (minitems = null)
+		minitems = list_minimum_items
 	
-	footerh = bench_buttons_hidden ? 24 : bench_footer_height
-	bench_list_height_min = minhei
-	bench_list_height = minhei
+	footerh = bench_buttons_hidden ? 24 : bench_footer_height + 4
+	minh = list_header_height + 12 + max(68 * 3, minitems * ui_small_height)
+	
+	bench_list_height_min = minh
+	bench_list_height = minh
 	
 	if (settingshei = null)
-		return minhei
+		return minh
 
-	bench_list_height = max(minhei, content_y + content_height - dy - footerh - settingshei)
+	bench_list_height = max(minh, content_y + content_height - dy - footerh - settingshei)
 	
 	return bench_list_height
 }

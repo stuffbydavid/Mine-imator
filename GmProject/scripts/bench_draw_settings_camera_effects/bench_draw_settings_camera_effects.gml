@@ -11,7 +11,7 @@ function bench_draw_settings_camera_effects()
 		list.scroll.value_goal = 0
 	}
 	
-	var listh = bench_get_list_height(bench_settings_height_min);
+	var listh = bench_get_list_height(128);
 	tab_control(listh)
 	sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.camera_effect_type, false, text_get("bench/effect"))
 	tab_next()

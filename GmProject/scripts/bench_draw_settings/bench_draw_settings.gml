@@ -103,7 +103,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench_tab.SHAPE:				bench_draw_settings_shape(); break
 	}
 
-	footerh = bench_buttons_hidden ? 24 : bench_footer_height
+	footerh = bench_buttons_hidden ? 24 : bench_footer_height + 8
 	bench_height_min = dy - by + footerh - max(0, bench_list_height - bench_list_height_min)
 
 	menu_bench = false
@@ -115,8 +115,6 @@ function bench_draw_settings(bx, by, bw, bh)
 	if (bench_buttons_hidden)
 		return 0
 
-	dy += 44
-	
 	// Edit
 	var wid = (bench_edit_hidden ? dw : dw/2 - 4);
 	if (!bench_edit_hidden)

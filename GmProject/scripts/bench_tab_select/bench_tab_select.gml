@@ -229,7 +229,7 @@ function bench_tab_select(tab, key = false)
 		if (sortvalue = null)
 			sortvalue = bench_settings.model_name
 
-		if (sortlist.object_index = obj_asset_picker)
+		if (sortlist.object_index = obj_picker)
 			asset_picker_view(sortlist, sortvalue)
 		else
 			sortlist_view(sortlist, sortvalue)
