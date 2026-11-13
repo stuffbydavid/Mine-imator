@@ -3,8 +3,6 @@ function render_world(mode)
 	// Choose shader
 	render_mode = mode
 
-	render_material_pass = (mode != e_render_mode.AUXILIARY || render_auxiliary_material)
-	
 	render_depth_pass = (
 		mode = e_render_mode.DEPTH ||
 		mode = e_render_mode.HIGH_LIGHT_SUN_DEPTH ||
@@ -12,13 +10,13 @@ function render_world(mode)
 		mode = e_render_mode.HIGH_LIGHT_POINT_DEPTH
 	)
 	
+	// Scene tests need full color and fog setup for the premultiplied lighting mask
 	render_fast_pass = (
 		render_depth_pass ||
 		mode = e_render_mode.CLICK ||
 		mode = e_render_mode.SELECT ||
 		mode = e_render_mode.PLACE_SELECT ||
-		mode = e_render_mode.PLACE_PARENT ||
-		mode = e_render_mode.SCENE_TEST
+		mode = e_render_mode.PLACE_PARENT
 	)
 
 	// Select shader object
@@ -26,7 +24,7 @@ function render_world(mode)
 		render_shader_obj = shader_map[?shader_high_gbuffers_color]
 	else if (mode = e_render_mode.G_BUFFERS && render_sun_combined)
 		render_shader_obj = shader_map[?shader_high_gbuffers_sun]
-	else if (!render_material_pass)
+	else if (mode = e_render_mode.AUXILIARY && !render_auxiliary_material)
 		render_shader_obj = shader_map[?shader_high_auxiliary_standard]
 	else
 		render_shader_obj = shader_map[?render_mode_shader_map[?mode]]
@@ -34,7 +32,7 @@ function render_world(mode)
 	with (render_shader_obj)
 		shader_use()
 	
-	if (!render_material_pass)
+	if (mode = e_render_mode.AUXILIARY && !render_auxiliary_material)
 		render_set_uniform_int(e_uniform.GLOW_PASS, render_glow)
 	
 	shader_check_uniform = true

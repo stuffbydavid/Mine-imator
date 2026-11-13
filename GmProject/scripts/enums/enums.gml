@@ -1070,6 +1070,7 @@ function enums()
 		FOG,
 		FOG_APPLY,
 		FOG_COLOR,
+		FOG_DENSITY,
 		FOG_DISTANCE,
 		FOG_ENABLED,
 		FOG_HEIGHT,

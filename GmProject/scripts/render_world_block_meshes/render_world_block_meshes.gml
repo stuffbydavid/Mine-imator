@@ -22,7 +22,7 @@ function render_world_block_meshes(obj, resdif, resnorm, resmat, meshoffset = 0,
 	hasmat = false
 	hasnorm = false
 
-	if (!render_fast_pass && render_material_pass)
+	if (!render_fast_pass)
 	{
 		resmat = res_eval(resmat)
 		resnorm = res_eval(resnorm)

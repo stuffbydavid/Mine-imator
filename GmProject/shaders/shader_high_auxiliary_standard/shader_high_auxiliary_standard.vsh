@@ -7,6 +7,7 @@ attribute vec3 in_Tangent;
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
+varying vec4 vCustom;
 
 uniform vec4 uBlendColor;
 uniform vec2 uTextureOffset;
@@ -19,5 +20,6 @@ void main()
 	vPosition = getWorldPosition(in_Position, in_Custom);
 	vColor = getVertexColor(in_Custom) * uBlendColor;
 	vTexCoord = in_TextureCoord + uTextureOffset;
+	vCustom = getVertexCustom(in_Custom);
 	gl_Position = getClipPosition(vPosition);
 }

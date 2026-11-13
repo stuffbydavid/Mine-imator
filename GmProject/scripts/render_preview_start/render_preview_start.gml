@@ -3,7 +3,7 @@
 function render_preview_start()
 {
 	render_mode = e_render_mode.PREVIEW
-	render_material_pass = true
+	render_fast_pass = false
 	render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
 	with (render_shader_obj)
 		shader_use()
