@@ -3,9 +3,12 @@
 
 function view_update_gizmos(view, cam)
 {
-	var prevcolor, prevalpha;
+	var prevcolor, prevalpha, prevmouseon;
 	prevcolor = draw_get_color()
 	prevalpha = draw_get_alpha()
+	prevmouseon = content_mouseon
+	if (view.navgizmo_mouseon)
+		content_mouseon = false
 	
 	view.update_gizmos = false
 	view.surface_control_edit = view_control_edit
@@ -166,5 +169,6 @@ function view_update_gizmos(view, cam)
 	view.surface_tool_transform = setting_tool_transform
 	view.surface_mouse_x = mouse_x - content_x
 	view.surface_mouse_y = mouse_y - content_y
-	view.surface_mouseon = content_mouseon
+	view.surface_mouseon = prevmouseon
+	content_mouseon = prevmouseon
 }

@@ -10,6 +10,9 @@ function view_update(view, cam)
 	
 	if (cam)
 		editcamobj = (place_tl = null && !place_build && !cam.lock)
+
+	if (mouse_left_pressed || mouse_right_pressed)
+		view.navgizmo_dragged = false
 		
 	// Real-time view setting
 	if (debug_realtime_views)
@@ -55,6 +58,9 @@ function view_update(view, cam)
 		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)));
 	
 	// Update gizmos
+	if (view.navgizmo_mouseon)
+		view.control_mouseon_last = null
+
 	if (!surface_exists(view.surface_gizmos) ||
 		view.surface_tool_move != setting_tool_move || view.surface_tool_rotate != setting_tool_rotate ||
 		view.surface_tool_scale != setting_tool_scale || view.surface_tool_bend != setting_tool_bend ||
@@ -78,7 +84,7 @@ function view_update(view, cam)
 		view_update_gizmos(view, cam)
 
 	// Pick the block under the cursor before changing the build selection
-	if (place_build && mouse_middle_pressed && content_mouseon && window_busy = place_busy &&
+	if (place_build && mouse_middle_pressed && content_mouseon && !view.navgizmo_mouseon && window_busy = place_busy &&
 		(!build_first_person || view = view_main))
 	{
 		place_view_pos = null
@@ -165,6 +171,10 @@ function view_update(view, cam)
 		tl_focus = focustl
 		cam_work_angle_xy = cam_work_angle_look_xy
 		cam_work_angle_z = -cam_work_angle_look_z
+		cam_work_angle_goal_xy = cam_work_angle_xy
+		cam_work_angle_goal_z = cam_work_angle_z
+		cam_work_angle_goal_look_xy = cam_work_angle_look_xy
+		cam_work_angle_goal_look_z = cam_work_angle_look_z
 		
 		var bounds = null;
 		with (focustl)
@@ -237,6 +247,7 @@ function view_update(view, cam)
 				view_click_x = display_mouse_get_x()
 				view_click_y = display_mouse_get_y()
 				window_busy = "view/move_camera"
+				view.navgizmo_dragged = true
 				
 				if (cam)
 					action_tl_select_single(cam)
@@ -247,6 +258,7 @@ function view_update(view, cam)
 				{
 					window_busy = "view/pan_camera"
 					window_focus = string(view)
+					view.navgizmo_dragged = true
 					
 					if (cam)
 						action_tl_select_single(cam)
@@ -256,6 +268,7 @@ function view_update(view, cam)
 					view_click_x = display_mouse_get_x()
 					view_click_y = display_mouse_get_y()
 					window_busy = "view/rotate_camera"
+					view.navgizmo_dragged = true
 					
 					if (cam)
 						action_tl_select_single(cam)
@@ -267,7 +280,9 @@ function view_update(view, cam)
 				if (place_build)
 				{
 					window_busy = place_busy
-					if (view_click_right)
+					if (view.navgizmo_mouseon)
+						place_target_tl = null
+					else if (view_click_right)
 					{
 						if (place_pos != null)
 							buildedited = action_build_place()
@@ -277,7 +292,8 @@ function view_update(view, cam)
 				}
 				else if (place_tl = null)
 				{
-					view_click(view, cam, view_click_right)
+					if (!view.navgizmo_mouseon)
+						view_click(view, cam, view_click_right)
 					window_busy = ""
 				}
 				else // Stop placing
@@ -362,7 +378,8 @@ function view_update(view, cam)
 		{
 			if (place_build && cam = null)
 				shortcut_bar_state = "viewport/build"
-
+			
+			mouse_cursor = cr_size_all
 			camera_control_pan(cam)
 			
 			if (!mouse_left)
