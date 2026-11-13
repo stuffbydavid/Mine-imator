@@ -12,6 +12,7 @@ uniform int uFogPass; // static
 varying vec3 vPosition;
 varying vec4 vColor;
 varying vec2 vTexCoord;
+varying vec4 vCustom;
 
 #pragma shady: inline(common_material.MATERIAL_LIB)
 #pragma shady: inline(common_material.ALPHA_DISCARD_LIB)
