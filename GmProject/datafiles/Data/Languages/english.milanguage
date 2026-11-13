@@ -128,9 +128,6 @@
 			"pop_in": "Close timeline window"
 		},
 		"nav/": {
-			"walk": "Toggle walk navigation",
-			"zoom": "Zoom",
-			"pan": "Pan",
 			"snap_x": "Snap view to X axis",
 			"snap_y": "Snap view to Y axis",
 			"snap_z": "Snap view to Z axis"

@@ -10,6 +10,9 @@ function view_update(view, cam)
 	
 	if (cam)
 		editcamobj = (place_tl = null && !place_build && !cam.lock)
+
+	if (mouse_left_pressed || mouse_right_pressed)
+		view.navgizmo_dragged = false
 		
 	// Real-time view setting
 	if (debug_realtime_views)
@@ -55,6 +58,9 @@ function view_update(view, cam)
 		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)));
 	
 	// Update gizmos
+	if (view.navgizmo_mouseon)
+		view.control_mouseon_last = null
+
 	if (!surface_exists(view.surface_gizmos) ||
 		view.surface_tool_move != setting_tool_move || view.surface_tool_rotate != setting_tool_rotate ||
 		view.surface_tool_scale != setting_tool_scale || view.surface_tool_bend != setting_tool_bend ||
@@ -78,7 +84,7 @@ function view_update(view, cam)
 		view_update_gizmos(view, cam)
 
 	// Pick the block under the cursor before changing the build selection
-	if (place_build && mouse_middle_pressed && content_mouseon && window_busy = place_busy &&
+	if (place_build && mouse_middle_pressed && content_mouseon && !view.navgizmo_mouseon && window_busy = place_busy &&
 		(!build_first_person || view = view_main))
 	{
 		place_view_pos = null
@@ -163,8 +169,12 @@ function view_update(view, cam)
 		focustl != cam && !cam && keybinds[e_keybind.CAM_VIEW_TIMELINE].pressed)
 	{
 		tl_focus = focustl
-		cam_work_angle_goal_look_xy = cam_work_angle_xy
-		cam_work_angle_goal_look_z = -cam_work_angle_z
+		cam_work_angle_xy = cam_work_angle_look_xy
+		cam_work_angle_z = -cam_work_angle_look_z
+		cam_work_angle_goal_xy = cam_work_angle_xy
+		cam_work_angle_goal_z = cam_work_angle_z
+		cam_work_angle_goal_look_xy = cam_work_angle_look_xy
+		cam_work_angle_goal_look_z = cam_work_angle_look_z
 		
 		var bounds = null;
 		with (focustl)
@@ -219,7 +229,7 @@ function view_update(view, cam)
 	
 	if (window_focus = string(view))
 	{
-		if (!cam && (window_busy = "view/rotate_camera" || window_busy = "view/move_camera" || window_busy = "view/move_camera_toggle") && keybinds[e_keybind.CAM_RESET].pressed)
+		if (!cam && (window_busy = "view/rotate_camera" || window_busy = "view/move_camera") && keybinds[e_keybind.CAM_RESET].pressed)
 			setting_move_speed_scroll = 1
 
 		// Select or move camera
@@ -237,6 +247,7 @@ function view_update(view, cam)
 				view_click_x = display_mouse_get_x()
 				view_click_y = display_mouse_get_y()
 				window_busy = "view/move_camera"
+				view.navgizmo_dragged = true
 				
 				if (cam)
 					action_tl_select_single(cam)
@@ -247,6 +258,7 @@ function view_update(view, cam)
 				{
 					window_busy = "view/pan_camera"
 					window_focus = string(view)
+					view.navgizmo_dragged = true
 					
 					if (cam)
 						action_tl_select_single(cam)
@@ -256,6 +268,7 @@ function view_update(view, cam)
 					view_click_x = display_mouse_get_x()
 					view_click_y = display_mouse_get_y()
 					window_busy = "view/rotate_camera"
+					view.navgizmo_dragged = true
 					
 					if (cam)
 						action_tl_select_single(cam)
@@ -267,7 +280,9 @@ function view_update(view, cam)
 				if (place_build)
 				{
 					window_busy = place_busy
-					if (view_click_right)
+					if (view.navgizmo_mouseon)
+						place_target_tl = null
+					else if (view_click_right)
 					{
 						if (place_pos != null)
 							buildedited = action_build_place()
@@ -277,7 +292,8 @@ function view_update(view, cam)
 				}
 				else if (place_tl = null)
 				{
-					view_click(view, cam, view_click_right)
+					if (!view.navgizmo_mouseon)
+						view_click(view, cam, view_click_right)
 					window_busy = ""
 				}
 				else // Stop placing
@@ -316,7 +332,7 @@ function view_update(view, cam)
 		}
 		
 		// Move camera
-		if (window_busy = "view/move_camera" || window_busy = "view/move_camera_toggle")
+		if (window_busy = "view/move_camera")
 		{
 			if (cam = null)
 				shortcut_bar_state = "camera_move"
@@ -348,11 +364,8 @@ function view_update(view, cam)
 				view_click_y = display_mouse_get_y()
 			}
 			
-			if ((!mouse_right && window_busy = "view/move_camera") || ((mouse_left_released || mouse_right_released) && window_busy = "view/move_camera_toggle"))
+			if (!mouse_right)
 			{
-				if (window_busy = "view/move_camera_toggle") // Prevent walknav button double-click
-					app_mouse_clear()
-				
 				camera_work_set_focus()
 				view_changed(view)
 				window_busy = (place_build || place_tl != null) ? place_busy : ""
@@ -368,20 +381,6 @@ function view_update(view, cam)
 			
 			mouse_cursor = cr_size_all
 			camera_control_pan(cam)
-			
-			if (!mouse_left)
-			{
-				camera_work_set_focus()
-				view_changed(view)
-				window_busy = (place_build || place_tl != null) ? place_busy : ""
-			}
-		}
-		
-		// Zoom camera
-		if (window_busy = "view/zoom_camera")
-		{
-			mouse_cursor = cr_size_ns
-			camera_control_zoom(cam)
 			
 			if (!mouse_left)
 			{

@@ -6,6 +6,7 @@ function view_draw(view)
 	var cam, camname;
 	var captionx, captiony, captionw, captionh;
 	var boxx, boxy, boxw, boxh;
+	var navgizmox, navgizmoy;
 	var padding, dx, dy;
 	var location, split, mouseonresizesplit, mouseonresizehor, mouseonresizever;
 	
@@ -480,14 +481,32 @@ function view_draw(view)
 		content_height = ceil(content_height)
 		content_mouseon = false
 		
-		if (!view.toolbar_mouseon && !view.toolbar_nav_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		var viewbusy;
+		viewbusy = (window_busy = "pick_depth") ? window_busy : place_busy
+		if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) = 1)
+			viewbusy = window_busy
+
+		navgizmox = boxx + boxw - (86 + 8)
+		navgizmoy = boxy + captionh + 8
+		view.navgizmo_mouseon = (view = view_main && !(view_second.show && view_second.mouseon) &&
+			!popup_mouseon && !toast_mouseon && !context_menu_mouseon &&
+			mouse_x >= navgizmox && mouse_x < navgizmox + 86 && mouse_y >= navgizmoy && mouse_y < navgizmoy + 86)
+
+		if (place_build && view.navgizmo_mouseon)
 		{
-			var viewbusy = (window_busy = "pick_depth") ? window_busy : place_busy;
-			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) = 1)
-				viewbusy = window_busy
+			if (build_box_render != null)
+			{
+				build_box_render = null
+				view_changed(view)
+			}
 			
-			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
+			place_pos = null
+			place_view_pos = null
+			place_target_tl = null
 		}
+
+		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
 		
 		if (content_mouseon)
 		{
@@ -621,9 +640,9 @@ function view_draw(view)
 			else
 				bench_click_ani_goal = 1
 			
-			tip_force = "right"
+			tip_force_right = true
 			tip_set(text_get("view/bench_tip"), benchx, benchy, 86, 86, false)
-			tip_force = ""
+			tip_force_right = false
 			
 			if (mouse_left_pressed)
 			{
@@ -666,11 +685,8 @@ function view_draw(view)
 		// Draw toolbar
 		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8 + 86 + 12)
 		
-		// Draw nav toolbar
-		view_toolbar_nav_draw(view, boxx + boxw - (32 + 8), boxy + captionh + 8 + 86 + 12)
-		
 		// Navigation gizmo
-		view_toolbar_navgizmo_draw(view, boxx + boxw - (86 + 8), benchy)
+		view_toolbar_navgizmo_draw(view, navgizmox, navgizmoy)
 	}
 	
 	// Moving / Resizing

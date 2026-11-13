@@ -54,20 +54,12 @@ function app_update_micro_animations()
 	with (obj_view)
 	{
 		if (app.setting_reduced_motion)
-		{
 			toolbar_alpha = toolbar_alpha_goal
-			toolbar_nav_alpha = toolbar_nav_alpha_goal
-		}
 		else
-		{
 			toolbar_alpha += (toolbar_alpha_goal - toolbar_alpha) / max(1, 4 / delta)
-			toolbar_nav_alpha += (toolbar_nav_alpha_goal - toolbar_nav_alpha) / max(1, 4 / delta)
-		}
 		
 		if (toolbar_alpha > .97 && toolbar_alpha_goal = 1)
 			toolbar_alpha = 1
-		if (toolbar_nav_alpha > .97 && toolbar_nav_alpha_goal = 1)
-			toolbar_nav_alpha = 1
 	}
 	
 	// Component animations

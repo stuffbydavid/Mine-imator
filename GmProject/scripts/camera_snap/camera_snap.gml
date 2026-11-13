@@ -2,45 +2,29 @@
 
 function camera_snap(dir)
 {
-	var tempangle = [cam_work_angle_goal_look_xy, cam_work_angle_goal_look_z];
-	cam_work_angle_goal_look_xy = point_direction(cam_work_focus[X], cam_work_focus[Y],
-			cam_work_focus[X] + dir[X],
-			cam_work_focus[Y] + dir[Y]
-	)
-	cam_work_angle_goal_look_z = -point_zdirection(cam_work_focus[X], cam_work_focus[Y], cam_work_focus[Z],
-			cam_work_focus[X] + dir[X],
-			cam_work_focus[Y] + dir[Y],
-			cam_work_focus[Z] + dir[Z]
-	)
-	cam_work_angle_goal_look_z = clamp(cam_work_angle_goal_look_z, -pitch_limit, pitch_limit)
+	var xy, z;
+	z = clamp(-point_zdirection(0, 0, 0, dir[X], dir[Y], dir[Z]), -pitch_limit, pitch_limit)
 	
-	// Invert goal angle if identical to current angle
-	var errormargin = 0.05;
-	if (abs(cam_work_angle_goal_look_xy - tempangle[X]) <= errormargin && abs(cam_work_angle_goal_look_z - tempangle[Y]) <= errormargin)
-	{
-		cam_work_angle_goal_look_xy = mod_fix(cam_work_angle_goal_look_xy + (is_cpp() ? 360 : 180), 360) + (is_cpp() ? -180 : 0)
-		cam_work_angle_goal_look_z = cam_work_angle_goal_look_z * -1
-	}
-	
-	// Set XY angle to 0 for Z (up/down) axis
 	if (dir[X] = 0 && dir[Y] = 0)
-		cam_work_angle_goal_look_xy = 0
-	
-	// Fix smooth rotation when goal value wraps around
-	// hacky C++ fix: [0 - 360] -> [-180 - 180]
-	if (cam_work_angle_goal_look_xy <= (is_cpp() ? -90 : 90) && tempangle[X] >= (is_cpp() ? 90 : 270))
 	{
-		cam_work_angle_xy -= 360
-		cam_work_angle_look_xy -= 360
-	}
-	else if (cam_work_angle_goal_look_xy >= (is_cpp() ? 90 : 270) && tempangle[X] <= (is_cpp() ? -90 : 90))
-	{
-		cam_work_angle_xy += 360
-		cam_work_angle_look_xy += 360
+		cam_work_angle_goal_xy = cam_work_angle_xy
+		cam_work_angle_goal_z = -z
+		cam_work_angle_goal_look_xy = cam_work_angle_look_xy
+		cam_work_angle_goal_look_z = z
+		return 0
 	}
 	
-	cam_work_angle_goal_xy = cam_work_angle_goal_look_xy
-	cam_work_angle_goal_z = -cam_work_angle_goal_look_z
+	xy = point_direction(0, 0, dir[X], dir[Y])
 	
-	camera_work_set_from()
+	// Clicking the same axis again looks from its opposite side
+	if (abs(angle_difference_fix(xy, cam_work_angle_goal_look_xy)) < 0.05 && abs(z - cam_work_angle_goal_look_z) < 0.05)
+	{
+		xy += 180
+		z = -z
+	}
+	
+	cam_work_angle_goal_xy = cam_work_angle_xy + angle_difference_fix(xy, cam_work_angle_xy)
+	cam_work_angle_goal_z = -z
+	cam_work_angle_goal_look_xy = cam_work_angle_look_xy + angle_difference_fix(xy, cam_work_angle_look_xy)
+	cam_work_angle_goal_look_z = z
 }

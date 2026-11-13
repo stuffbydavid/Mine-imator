@@ -1,6 +1,6 @@
 function view_place(view)
 {
-	if (window_busy != place_busy || !content_mouseon)
+	if (window_busy != place_busy || !content_mouseon || view.navgizmo_mouseon)
 		return 0
 
 	place_content_mouseon = null

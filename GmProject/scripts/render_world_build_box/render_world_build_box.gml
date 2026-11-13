@@ -4,7 +4,7 @@
 function render_world_build_box(scenedepth = false)
 {
 	var movingview, prevshader;
-	movingview = (window_busy = "view/rotate_camera" || window_busy = "view/move_camera" || window_busy = "view/move_camera_toggle" || window_busy = "view/pan_camera")
+	movingview = (window_busy = "view/rotate_camera" || window_busy = "view/move_camera" || window_busy = "view/pan_camera")
 	if (window_state != "" || build_box_render = null || !content_mouseon || movingview)
 		return 0
 	
