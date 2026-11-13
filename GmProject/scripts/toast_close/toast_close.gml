@@ -1,6 +1,3 @@
-/// toast_close(toast)
-/// @arg alert
-
 function toast_close(toast)
 {
 	if (toast.iid > 0)

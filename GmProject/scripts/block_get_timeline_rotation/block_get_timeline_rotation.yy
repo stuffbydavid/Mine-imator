@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_get_timeline_rotation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_get_timeline_rotation",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Minecraft/Blocks/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

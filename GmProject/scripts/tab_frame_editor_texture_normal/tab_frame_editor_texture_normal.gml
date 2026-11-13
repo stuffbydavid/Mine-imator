@@ -1,30 +1,24 @@
-/// tab_frame_editor_tex_normal()
-
-function tab_frame_editor_tex_normal()
+function tab_frame_editor_texture_normal()
 {
-	if (!tl_edit.value_type[e_value_type.MATERIAL_TEXTURE])
-		return 0
-	
-	var texobj, name, tex;
+	var tex, texobj;
+	content_name = ""
 	tex = null
-	name = ""
 	
-	if (tl_edit.temp = null)
-		return 0
-	
-	if (tl_edit.temp != null)
+	// Get material texture
+	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && (tl_edit.temp != null || tl_edit.type = e_tl_type.STRUCTURE))
 	{
 		switch (tl_edit.type)
 		{
 			case e_tl_type.CHARACTER:
+			case e_tl_type.EQUIPMENT:
 			case e_tl_type.SPECIAL_BLOCK:
 			case e_tl_type.MODEL:
-			case e_tl_type.BODYPART:
+			case e_tl_type.MODEL_PART:
 			{
-				name = "frameeditor" + tl_type_name_list[|tl_edit.type] + "texnormal"
+				content_name = "frame_editor/" + tl_type_name_list[|tl_edit.type] + "_tex_normal"
 				
 				var modelfile = tl_edit.temp.model_file;
-				if (tl_edit.type = e_temp_type.BODYPART)
+				if (tl_edit.type = e_temp_type.MODEL_PART)
 					modelfile = tl_edit.model_part
 				
 				with (tl_edit.temp)
@@ -38,26 +32,32 @@ function tab_frame_editor_tex_normal()
 			
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
+			case e_tl_type.STRUCTURE:
 			{
-				name = "frameeditorblocktexnormal"
-				with (tl_edit.temp)
+				content_name = "frame_editor/block_tex_normal"
+				
+				var texsource = tl_edit.temp;
+				if (tl_edit.type = e_tl_type.STRUCTURE)
+					texsource = tl_edit
+
+				with (texsource)
 					texobj = temp_get_block_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
+				
 				tex = texobj.block_preview_texture
+				
 				break
 			}
 			
 			case e_tl_type.ITEM:
 			{
-				name = "frameeditoritemtexnormal"
+				content_name = "frame_editor/item_tex_normal"
 				
-				texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ];
+				texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_normal
 				
-				if (!res_is_ready(texobj))
-					texobj = mc_res
-				
+				texobj = res_eval(texobj)
 				tex = texobj.block_preview_texture
 				
 				if (tex = null)
@@ -67,49 +67,47 @@ function tab_frame_editor_tex_normal()
 			}
 			
 			case e_tl_type.TEXT:
-			{
 				break // Text doesn't use textures
-			}
 			
 			default: // Shapes
 			{
-				name = "frameeditorshapetexnormal"
+				content_name = "frame_editor/shape_tex_normal"
+				
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_normal_obj(tl_edit.value[e_value.TEXTURE_NORMAL_OBJ])
 				
 				if (texobj != null) // Don't preview cameras
 					tex = texobj.texture
+				
 				break
 			}
 		}
 	}
-	
-	// Paths don't use templates
-	if (tl_edit.type = e_tl_type.PATH)
+	else if (tl_edit.type = e_tl_type.PATH)
 	{
-		name = "frameeditorshapetexnormal"
+		// Paths don't use templates
+		content_name = "frame_editor/shape_tex_normal"
 		texobj = tl_edit.value[e_value.TEXTURE_NORMAL_OBJ]
 		
-		if (texobj = null)
-			tex = spr_default_normal
-		else
+		if (texobj != null)
 			tex = texobj.texture
 	}
+	else
+		return 0
 	
-	if (name = "")
+	if (content_name = "")
 		return 0
 	
 	// Text to display
-	var text;
 	if (texobj != null)
-		text = texobj.display_name
+		content_text = texobj.display_name
 	else
-		text = text_get("listnone")
+		content_text = text_get("list/none")
 	
-	if (tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = null)
-		text = text_get("listdefault", text)
+	if (tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = null || tl_edit.value[e_value.TEXTURE_NORMAL_OBJ] = project_pack_res)
+		content_text = text_get("list/default", content_text)
 	
 	tab_control_menu(ui_large_height)
-	draw_button_menu(name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_NORMAL_OBJ], text, action_tl_frame_texture_normal_obj, false, tex)
+	draw_button_menu(content_name, e_menu.LIST, dx, dy, dw, ui_large_height, tl_edit.value[e_value.TEXTURE_NORMAL_OBJ], content_text, action_tl_frame_texture_normal_obj, false, tex)
 	tab_next()
 }

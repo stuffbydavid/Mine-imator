@@ -10,6 +10,9 @@ namespace CppProject
 
 	ArrType& ArrType::operator=(const ArrType& other) // arr = otherArr
 	{
+		if (this == &other)
+			return *this;
+		
 		if (!vec.Size() && !other.Size())
 			return *this;
 
@@ -18,6 +21,7 @@ namespace CppProject
 
 		vec.Clear();
 		vec.Alloc(other.Size());
+
 		for (IntType i = 0; i < other.vec.Size(); i++)
 			vec.Append(other.vec.Value(i));
 
@@ -30,10 +34,12 @@ namespace CppProject
 		if (index < 0) // Invalid index
 			FATAL("ArrType []: Invalid index " + NumStr(index));
 	#endif
+
 		IntType sz = Size();
 		if (index >= sz) // Resize vector and add reals
 		{
 			vec.Alloc(index);
+
 			for (IntType i = sz; i <= index; i++)
 				vec.Append(0.0);
 		}
@@ -61,9 +67,52 @@ namespace CppProject
 		return vec.Value(index);
 	}
 
+	RealType ArrType::RealValue(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size())
+			return VarArgs::outOfBounds.ToReal();
+
+		return vec.Value(index).ToReal();
+	}
+
+	IntType ArrType::IntValue(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size())
+			return VarArgs::outOfBounds.ToInt();
+
+		return vec.Value(index).ToInt();
+	}
+
+	BoolType ArrType::BoolValue(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size())
+			return VarArgs::outOfBounds.ToBool();
+
+		return vec.Value(index).ToBool();
+	}
+
+	VarType ArrType::Shift()
+	{
+		if (!vec.Size())
+			return VarArgs::outOfBounds;
+
+		VarType first = vec.Value(0);
+		IntType lastPos = vec.Size() - 1;
+		for (IntType i = 0; i < lastPos; i++)
+			vec[i] = vec[i + 1];
+
+		vec[lastPos].FreeData();
+		vec.heap.Erase(lastPos);
+
+		vec.size--;
+
+		return first;
+	}
+
 	void ArrType::Append(const ArrType& arr, IntType startIndex)
 	{
 		vec.Alloc(vec.Size() + arr.Size());
+
 		for (IntType i = startIndex; i < arr.Size(); i++)
 			vec.Append(arr.Value(i));
 	}
@@ -81,8 +130,10 @@ namespace CppProject
 	{
 		ArrType arr;
 		arr.vec.Alloc(vArgs.Size());
+
 		for (IntType i = 0; i < vArgs.Size(); i++)
 			arr.vec.Append(vArgs[i]);
+
 		return arr;
 	}
 
@@ -96,11 +147,6 @@ namespace CppProject
 			value.Debug();
 		}
 		Printer::indent--;
-	}
-
-	ArrType array(VarArgs args)
-	{
-		return ArrType::From(args);
 	}
 
 	ArrType array_add(VarType arrRef, VarType vals, BoolType merge)
@@ -122,6 +168,7 @@ namespace CppProject
 	{
 		if (var.IsInt())
 			return ArrType();
+
 		return var.ToArr();
 	}
 
@@ -131,6 +178,7 @@ namespace CppProject
 		for (IntType i = 0; i < arr.Size(); i++)
 			for (IntType j = 0; j < arr[i].Arr().Size(); j++)
 				newArr[i][j] = arr[i][j];
+
 		return newArr;
 	}
 }

@@ -1,4 +1,3 @@
-/// value_get_point2D(value, [default])
 /// @arg value
 /// @arg [default]
 

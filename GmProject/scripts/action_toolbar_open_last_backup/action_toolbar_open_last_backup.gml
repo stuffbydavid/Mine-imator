@@ -1,5 +1,3 @@
-/// action_toolbar_open_last_backup()
-
 function action_toolbar_open_last_backup()
 {
 	var fn = project_folder + "/" + filename_name(project_folder) + ".backup1";

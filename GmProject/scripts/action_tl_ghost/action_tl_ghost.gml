@@ -1,7 +1,6 @@
-/// action_tl_ghost(timeline)
 /// @arg timeline
 
-function action_tl_ghost(timeline)
+function action_tl_ghost(tl)
 {
 	if (history_undo)
 	{
@@ -20,6 +19,6 @@ function action_tl_ghost(timeline)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_ghost, false);
-		action_tl_ghost_tree(timeline, !timeline.ghost, hobj)
+		action_tl_ghost_tree(tl, !tl.ghost, hobj)
 	}
 }

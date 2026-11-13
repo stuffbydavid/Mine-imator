@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"builder_get_render_model_multipart",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"builder_get_render_model_multipart",
+  "parent":{
+    "name":"Builder",
+    "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

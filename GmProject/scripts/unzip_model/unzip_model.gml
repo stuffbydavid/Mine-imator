@@ -1,6 +1,5 @@
-/// unzip_model(filename)
-/// @arg filename
 /// @desc Unzips the archive with the given filename and looks for valid models inside.
+/// @arg filename
 
 function unzip_model(fn)
 {

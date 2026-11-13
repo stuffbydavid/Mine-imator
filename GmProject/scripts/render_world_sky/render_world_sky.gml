@@ -1,4 +1,3 @@
-/// render_world_sky()
 /// @desc Draws the sky or custom background as either a skybox or skysphere.
 
 function render_world_sky()
@@ -8,7 +7,7 @@ function render_world_sky()
 	
 	var hashprev = render_alpha_hash;
 	render_alpha_hash = false
-	render_set_uniform_int("uAlphaHash", render_alpha_hash)
+	render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 	
 	// Choose shader
 	render_shader_obj = shader_map[?shader_blend]
@@ -19,101 +18,115 @@ function render_world_sky()
 	gpu_set_zwriteenable(false)
 	
 	// Image
-	if (background_image_show && background_image != null && background_image_type != "image")
+	if (env_background_image_show && env_background_image != null && env_background_image_type != "image")
 	{
 		var vbuf;
 		
-		if (background_image_type = "sphere") // Sphere
+		if (env_background_image_type = "sphere") // Sphere
 		{
-			if (!background_image_sphere_vbuffer)
-				background_image_sphere_vbuffer = vbuffer_create_sphere(1, point2D(1, 0), point2D(0, 1), 32, true)
-			 vbuf = background_image_sphere_vbuffer
+			if (!env_background_image_sphere_vbuffer)
+				env_background_image_sphere_vbuffer = vbuffer_create_sphere(1, point2D(1, 0), point2D(0, 1), 32, true, true)
+			 vbuf = env_background_image_sphere_vbuffer
 		}
-		else if (background_image_type = "box") // Box
+		else if (env_background_image_type = "box") // Box
 		{
-			if (background_image_box_mapped)
+			if (env_background_image_box_mapped)
 			{
-				if (!background_image_cube_mapped_vbuffer)
-					background_image_cube_mapped_vbuffer = vbuffer_create_cube(1, point2D(0, 0), point2D(1, 1), -1, 1, true, true)
-				vbuf = background_image_cube_mapped_vbuffer
+				if (!env_background_image_cube_mapped_vbuffer)
+					env_background_image_cube_mapped_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(1, 1), -1, 1, true, true)
+				vbuf = env_background_image_cube_mapped_vbuffer
 			}
 			else
 			{
-				if (!background_image_cube_vbuffer)
-					background_image_cube_vbuffer = vbuffer_create_cube(1, point2D(1, 0), point2D(0, 1), 1, 1, true, false)
-				vbuf = background_image_cube_vbuffer
+				if (!env_background_image_cube_vbuffer)
+					env_background_image_cube_vbuffer = vbuffer_create_cube(0.75, point2D(1, 0), point2D(0, 1), 1, 1, true, false)
+				vbuf = env_background_image_cube_vbuffer
 			}
 		}
 		
-		render_set_uniform_color("uBlendColor", c_white, 1)
-		render_set_texture(background_image.texture)
-		vbuffer_render(vbuf, cam_from, point3D(0, 0, background_image_rotation), vec3(dis))
+		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, 1)
+		render_set_texture(env_background_image, env_background_image.texture)
+		vbuffer_render(vbuf, cam_from, point3D(0, 0, env_background_image_rotation), vec3(dis))
 	}
 	
 	// Fog
-	if (background_fog_show && background_fog_sky)
+	if (env_fog_show && env_fog_sky)
 	{
-		if (background_fog_vbuffer = null)
-			background_fog_vbuffer = vbuffer_create_sphere(1, point2D(0, 0), point2D(1, 1), 16, true)
+		if (env_fog_vbuffer = null)
+			env_fog_vbuffer = vbuffer_create_sphere(1, point2D(0, 0), point2D(1, 1), 16, true, true)
 		
 		gpu_set_texrepeat(false)
 		
 		shader_texture_filter_linear = false
-		render_set_uniform_color("uBlendColor", background_fog_color_final, 1)
-		render_set_texture(background_fog_texture)
-		vbuffer_render(background_fog_vbuffer, cam_from, vec3(0), vec3(dis, dis, dis * ((background_fog_height / 1000) + ((background_fog_height / 1000) * max(background_sunrise_alpha, background_sunset_alpha)))))
+		render_set_uniform_color(e_uniform.BLEND_COLOR, env_fog_color_final, 1)
+		render_set_texture(null, spr_fog)
+		
+		// Fog sphere radius cannot exceed render distance
+		var fogscalemath, fogscalexy, fogscalez;
+		fogscalemath = ((env_fog_height / 1000) + ((env_fog_height / 1000) * max(env_sunrise_alpha, env_sunset_alpha)))
+		fogscalexy = fogscalemath < 1 ? dis : dis / fogscalemath
+		fogscalez = fogscalemath > 1 ? dis : dis * fogscalemath
+		vbuffer_render(env_fog_vbuffer, cam_from, vec3(0), vec3(fogscalexy, fogscalexy, fogscalez))
+		
 		//shader_texture_filter_linear = false
 		
 		gpu_set_texrepeat(true)
 	}
 	
 	// Sky
-	if (!background_image_show)
+	if (!env_background_image_show)
 	{
-		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], -background_sky_time, 0, background_sky_rotation, 1, 1, 1);
-		var vis;
-		
-		// Stars
-		if (background_night_alpha > 0)
-		{
-			if (background_sky_stars_vbuffer = null)
-				background_sky_stars_vbuffer = vbuffer_create_cube(0.8, point2D(0, 0), point2D(2, 2), false, false, true, false)
-			
-			render_set_uniform_color("uBlendColor", c_white, 0.4 * background_night_alpha)
-			render_set_texture(background_sky_stars_texture)
-			vbuffer_render_matrix(background_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
-		}
+		var skymat = matrix_build(cam_from[X], cam_from[Y], cam_from[Z], env_sky_time, 0, env_sky_rotation, 1, 1, 1);
 		
 		gpu_set_blendmode(bm_add)
 		
+		// Stars
+		if (env_night_alpha > 0)
+		{
+			if (env_sky_stars_vbuffer = null)
+				env_sky_stars_vbuffer = vbuffer_create_cube(0.75, point2D(0, 0), point2D(2, 2), false, false, true, false)
+			
+			render_set_uniform_color(e_uniform.BLEND_COLOR, env_night_sky_stars_color, env_night_alpha)
+			render_set_texture(null, spr_stars)
+			vbuffer_render_matrix(env_sky_stars_vbuffer, matrix_multiply(matrix_build(0, 0, 0, 0, 0, 0, dis, dis, dis), skymat))
+		}
+		
 		// Sun
-		vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, 1)), -0.15, 0)
+		var vis = percent(vec3_dot(env_sun_direction, vec3(0, 0, 1)), -0.15, 0);
 		
-		if (background_sky_sun_moon_vbuffer = null)
-			background_sky_sun_moon_vbuffer = vbuffer_create_surface(1, point2D(0, 0), point2D(1, 1), false)
+		if (env_sky_sun_moon_vbuffer = null)
+			env_sky_sun_moon_vbuffer = vbuffer_create_surface(1, point2D(0, 0), point2D(1, 1), false)
 		
-		render_set_uniform_color("uBlendColor", c_white, vis)
-		if (background_sky_sun_tex.type = e_res_type.PACK)
-			render_set_texture(background_sky_sun_tex.sun_texture)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, vis)
+		
+		var sunres = res_eval(env_sky_sun_tex);
+		render_apply_res(sunres)
+		
+		if (sunres.type = e_res_type.PACK)
+			render_set_texture(sunres, sunres.sun_texture)
 		else
-			render_set_texture(background_sky_sun_tex.texture)
+			render_set_texture(sunres, sunres.texture)
 			
 		var sca = (dis / 15000) * 1850;
-		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, min(dis * 0.7, max(0, (dis * 0.7) / background_sky_sun_scale)), 90, 0, 0 + background_sky_sun_angle, sca * min(1, background_sky_sun_scale), sca * min(1, background_sky_sun_scale), sca), skymat))
+		vbuffer_render_matrix(env_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, min(dis * 0.7, max(0, (dis * 0.7) / env_sky_sun_scale)), 90, 0, 0 + env_sky_sun_angle, sca * min(1, env_sky_sun_scale), sca * min(1, env_sky_sun_scale), sca), skymat))
 		
 		// Moon
-		vis = percent(vec3_dot(background_sun_direction, vec3(0, 0, -1)), -0.15, 0)
+		vis = percent(vec3_dot(env_sun_direction, vec3(0, 0, -1)), -0.15, 0)
 		
-		render_set_uniform_color("uBlendColor", c_white, vis)
-		if (background_sky_moon_tex.type = e_res_type.PACK && background_sky_moon_tex.ready)
+		render_set_uniform_color(e_uniform.BLEND_COLOR, c_white, vis)
+		
+		var moonres = res_eval(env_sky_moon_tex);
+		render_apply_res(moonres)
+		
+		if (moonres.type = e_res_type.PACK && moonres.ready)
 		{
-			var phase = background_sky_moon_phase;
-			render_set_texture(background_sky_moon_tex.moon_texture[phase])
+			var phase = env_sky_moon_phase;
+			render_set_texture(moonres, moonres.moon_textures[phase])
 		}
 		else
-			render_set_texture(background_sky_moon_tex.texture)
+			render_set_texture(moonres, moonres.texture)
 			
-		vbuffer_render_matrix(background_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, max(-dis * 0.7, min(0, (-dis * 0.7) / background_sky_moon_scale)), -90, 0, 0 - background_sky_moon_angle, sca * min(1, background_sky_moon_scale), sca * min(1, background_sky_moon_scale), sca), skymat))
+		vbuffer_render_matrix(env_sky_sun_moon_vbuffer, matrix_multiply(matrix_build(0, 0, max(-dis * 0.7, min(0, (-dis * 0.7) / env_sky_moon_scale)), -90, 0, 0 - env_sky_moon_angle, sca * min(1, env_sky_moon_scale), sca * min(1, env_sky_moon_scale), sca), skymat))
 		
 		gpu_set_blendmode(bm_normal)
 	}
@@ -124,5 +137,5 @@ function render_world_sky()
 	gpu_set_zwriteenable(true)
 	
 	render_alpha_hash = hashprev
-	render_set_uniform_int("uAlphaHash", render_alpha_hash)
+	render_set_uniform_int(e_uniform.ALPHA_HASH, render_alpha_hash)
 }

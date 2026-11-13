@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_event_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Timeline",
-    "path": "folders/Scripts/Project/Timeline.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_event_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_event_destroy",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/Project/Timeline.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

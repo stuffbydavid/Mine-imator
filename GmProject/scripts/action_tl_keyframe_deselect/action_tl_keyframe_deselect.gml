@@ -1,7 +1,3 @@
-/// action_tl_keyframe_deselect(timeline, keyframe)
-/// @arg timeline
-/// @arg keyframe
-
 function action_tl_keyframe_deselect(timeline, keyframe)
 {
 	if (history_undo)

@@ -1,4 +1,3 @@
-/// action_tl_select_area(starttimeline, endtimeline)
 /// @arg starttimeline
 /// @arg endtimeline
 

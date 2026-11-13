@@ -1,4 +1,3 @@
-/// matrix_world_multiply_pre(matrix)
 /// @arg matrix
 
 function matrix_world_multiply_pre(mat)

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_pass_capture",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_pass_capture",
+  "parent":{
+    "name":"Passes",
+    "path":"folders/Scripts/Render/Passes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

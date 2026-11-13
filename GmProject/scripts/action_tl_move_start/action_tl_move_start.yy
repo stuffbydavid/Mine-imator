@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_move_start",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Move",
-    "path": "folders/Scripts/App/Actions/Timeline/Move.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_move_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_move_start",
+  "parent":{
+    "name":"Move",
+    "path":"folders/Scripts/App/Actions/Timeline/Move.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

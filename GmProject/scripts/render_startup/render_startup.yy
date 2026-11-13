@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "render_startup",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Render",
-    "path": "folders/Scripts/Render.yy",
+  "$GMScript":"v1",
+  "%Name":"render_startup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_startup",
+  "parent":{
+    "name":"Render",
+    "path":"folders/Scripts/Render.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

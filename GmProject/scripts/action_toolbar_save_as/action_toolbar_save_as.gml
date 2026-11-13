@@ -1,5 +1,3 @@
-/// action_toolbar_save_as()
-
 function action_toolbar_save_as()
 {
 	popup_saveas_clear()

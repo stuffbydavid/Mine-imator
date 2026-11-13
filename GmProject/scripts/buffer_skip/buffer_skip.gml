@@ -1,6 +1,4 @@
-/// buffer_skip(bytes)
-/// @arg bytes
-/// @desc Skips some bytes.
+/// @desc Skips a number of bytes.
 
 function buffer_skip(bytes)
 {

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_draw_pick",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_draw_pick",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Interface/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

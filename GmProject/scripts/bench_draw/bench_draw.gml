@@ -1,20 +1,16 @@
-/// bench_draw()
-
 function bench_draw()
 {
 	if (bench_show_ani_type = "" && bench_show_ani = 0)
 		return 0
 	
-	var func, ani;
-	var sdx, sdy, ymax;
-	
 	// Animate
-	func = ""
+	var func  = "";
 	if (bench_show_ani_type = "show")
 	{
 		bench_show_ani = test_reduced_motion(1, min(1, bench_show_ani + 0.1 * delta))
 		if (bench_show_ani = 1)
 			bench_show_ani_type = ""
+		
 		func = "easeoutcirc"
 	}
 	else if (bench_show_ani_type = "hide")
@@ -22,39 +18,113 @@ function bench_draw()
 		bench_show_ani = test_reduced_motion(0, max(0, bench_show_ani - 0.1 * delta))
 		if (bench_show_ani = 0)
 			bench_show_ani_type = ""
+		
 		func = "easeincirc"
 	}
 	
 	if (bench_show_ani = 0)
 	{
-		if (window_busy = "bench")
+		if (window_busy = "bench" || window_busy = "bench/resize_width" || window_busy = "bench/resize_height" || window_busy = "bench/resize_corner")
 			window_busy = ""
 		
-		bench_settings.height = 0
-		bench_settings.height_goal = bench_height
+		bench_height = 0
+		bench_height_goal = bench_height_min + bench_height_add
+		
 		return 0
 	}
 	else
-		bench_settings.height = bench_settings.height_goal;//(bench_settings.height_goal - bench_settings.height) / max(1, 3 / delta)
+		bench_height = min(bench_height_goal, max(0, window_height - bench_y - 32))
 	
 	if (window_busy = "bench")
 		window_busy = ""
 	
-	ani = ease(func, bench_show_ani)
-	content_x = bench_settings.posx - (8 - (8 * ani))
-	content_y = bench_settings.posy
-	content_width = 534
-	content_height = bench_settings.height
+	var ani = ease(func, bench_show_ani);
+	
+	content_x = bench_x - (8 - (8 * ani))
+	content_y = bench_y
+	content_width = bench_width
+	content_height = bench_height
 	content_mouseon = !popup_mouseon
 	
 	dx = content_x
 	dy = content_y
 	dw = content_width
 	dh = content_height
-	
+
+	// Resize bench corner
+	var mousecorner = content_mouseon && app_mouse_box(content_x + content_width - 8, content_y + content_height - 8, 8, 8);
+	if (window_busy = "bench/resize_corner")
+	{
+		mouse_cursor = cr_size_nwse
+		bench_width = clamp(bench_resize_width + mouse_x - mouse_click_x, bench_min_width, bench_max_width)
+		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_height_min, max(bench_height_min, window_height - content_y - 40)) - bench_height_min
+		if (!mouse_left)
+		{
+			window_busy = ""
+			app_mouse_clear()
+		}
+	}
+	else if (window_busy = "" && mousecorner)
+	{
+		mouse_cursor = cr_size_nwse
+		if (mouse_left_pressed)
+		{
+			window_busy = "bench/resize_corner"
+			bench_resize_width = bench_width
+			bench_resize_height = bench_height
+		}
+	}
+
+	// Resize bench width
+	if (window_busy = "bench/resize_width")
+	{
+		mouse_cursor = cr_size_we
+		bench_width = clamp(bench_resize_width + mouse_x - mouse_click_x, bench_min_width, bench_max_width)
+		if (!mouse_left)
+		{
+			window_busy = ""
+			app_mouse_clear()
+		}
+	}
+	else if (window_busy = "" && content_mouseon && !mousecorner && app_mouse_box(content_x + content_width - 8, content_y, 8, content_height))
+	{
+		mouse_cursor = cr_size_we
+		if (mouse_left_pressed)
+		{
+			window_busy = "bench/resize_width"
+			bench_resize_width = bench_width
+		}
+	}
+
+	// Resize bench height
+	if (window_busy = "bench/resize_height")
+	{
+		mouse_cursor = cr_size_ns
+		bench_height_add = clamp(bench_resize_height + mouse_y - mouse_click_y, bench_height_min, max(bench_height_min, window_height - content_y - 40)) - bench_height_min
+		if (!mouse_left)
+		{
+			window_busy = ""
+			app_mouse_clear()
+		}
+	}
+	else if (window_busy = "" && content_mouseon && !mousecorner && app_mouse_box(content_x, content_y + content_height - 6, content_width, 6))
+	{
+		mouse_cursor = cr_size_ns
+		if (mouse_left_pressed)
+		{
+			window_busy = "bench/resize_height"
+			bench_resize_height = bench_height
+		}
+	}
+
 	// Hide bench
 	if (!app_mouse_box(content_x, content_y, content_width, content_height) && mouse_left_pressed && window_busy = "") 
 	{
+		if (bench_tab = e_bench_tab.SOUND && bench_settings.sound_list_current.source = "music" && audio_exists(bench_settings.music_play_index) && audio_is_playing(bench_settings.music_play_index))
+			bench_music_mode = true
+
+		bench_sound_stop()
+		
 		bench_show_ani_type = "hide"
 		window_focus = ""
 		
@@ -66,60 +136,74 @@ function bench_draw()
 	draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border, true)
 	
-	clip_begin(content_x - 4, content_y - 4, content_width + 8, content_height + 8)
-	
 	// Draw workbench
-	sdx = dx
-	sdy = dy
+	var startdx, startdy, maxdy, oldminhei;
+	startdx = dx
+	startdy = dy
+	oldminhei = bench_height_min
 	
 	dy += 8
 	
 	// Left, asset types
-	var types, divides, lefth, skipasset;
+	var types, divides, lefth;
 	types = 13
 	divides = 4
 	lefth = (types * 32) + (divides * 9)
-	for (var i = 0; i < ds_list_size(bench_type_list.item); i++)
+	
+	for (var i = 0; i < ds_list_size(bench_tab_list.item); i++)
 	{
+		var item, skipasset;
+		item = bench_tab_list.item[|i]
 		skipasset = false
 		
-		if (!setting_advanced_mode)
-		{
-			if (bench_type_list.item[|i].name = "typemodel" || bench_type_list.item[|i].name = "typebackground")
-				skipasset = true
-		}
+		// Advanced mode check
+		if (!setting_advanced_mode && array_contains(bench_advanced_tabs, item.value))
+			skipasset = true
 		
 		if (!skipasset)
 		{
-			list_item_draw(bench_type_list.item[|i], dx, dy, 192, window_compact ? 28 : 32, (bench_settings.type = bench_type_list.item[|i].value), 0, 5)
+			list_item_draw(item, dx, dy, 192, window_compact ? 28 : 32, bench_tab = item.value, 0, 5)
 			dy += (window_compact ? 28 : 32)
 		}
 		
-		if (i = 2 || i = 6 || i = 9)
+		// Separator check
+		if (item.value = e_bench_tab.MODEL_PART || item.value = e_bench_tab.SPECIAL_BLOCK || item.value = e_bench_tab.TEXT)
 		{
 			draw_divide(dx + 5, dy + 4, 184)
 			dy += 9
 		}
 	}
+	
 	dy += 8
 	
-	ymax = dy
+	maxdy = dy
 	
-	dy = sdy + 12
+	dy = startdy + 12
 	dx += 192 + 12
 	dw = (content_width - 192) - 24
 	
 	bench_draw_settings(dx, dy, dw, dh)
 	
-	ymax = max(dy, ymax)
-	dy = ymax
+	if (window_scroll_focus != "" && window_focus = window_scroll_focus && window_focus != string(bench_settings.item_picker.scroll))
+		bench_list_focus = window_focus
 	
-	draw_divide_vertical(sdx + 193, sdy, bench_settings.height)
-	bench_settings.height_goal = dy - sdy
+	var minheight, maxheight;
+	minheight = max(bench_height_min, maxdy - startdy)
+	maxheight = max(0, window_height - startdy - 32)
+	bench_height_min = min(minheight, maxheight)
+
+	// Keep the bench size when the minimum settings height changes
+	bench_height_add = max(0, bench_height_add + oldminhei - bench_height_min)
 	
-	clip_end()
+	maxdy = max(dy, maxdy)
+	dy = maxdy
+	
+	draw_divide_vertical(startdx + 193, startdy, bench_height)
+	
+	bench_height_goal = clamp(bench_height_min + bench_height_add, bench_height_min, maxheight)
+	
 	draw_set_alpha(1)
 	
-	if (window_busy = "" && bench_show_ani_type != "hide")
+	if (window_state = "" && window_busy = "" && bench_show_ani_type != "hide")
 		window_busy = "bench"
 }

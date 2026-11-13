@@ -1,6 +1,3 @@
-/// action_setting_program_mode(advanced)
-/// @arg advanced
-
 function action_setting_program_mode(advanced)
 {
 	if (advanced && trial_version)

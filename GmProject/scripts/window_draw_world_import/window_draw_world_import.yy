@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_draw_world_import",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_draw_world_import",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Interface/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,3 +1,13 @@
-build*/
+build/
+build-*/
+output*/
+runs/
+feat/
+thumbnail.png
+*.backup*
 /install*/
+/CppGen/build*/
 /CppProject/Generated/
+*.fsh_mod
+*.vsh_mod
+*.resource_order

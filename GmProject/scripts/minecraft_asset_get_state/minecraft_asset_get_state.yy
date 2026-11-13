@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_asset_get_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_asset_get_state",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Scripts/Minecraft/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

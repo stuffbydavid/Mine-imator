@@ -1,7 +1,4 @@
-/// state_vars_set_value(vars, name, value)
-/// @arg vars
-/// @arg name
-/// @arg value
+/// @desc Sets a single value in the array of name-value pairs.
 
 function state_vars_set_value(vars, name, value)
 {

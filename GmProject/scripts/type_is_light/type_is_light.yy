@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"type_is_light",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"type_is_light",
+  "parent":{
+    "name":"Type",
+    "path":"folders/Scripts/Project/Timeline/Type.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

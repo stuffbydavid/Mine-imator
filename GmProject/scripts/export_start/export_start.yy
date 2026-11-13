@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"export_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"export_start",
+  "parent":{
+    "name":"Export",
+    "path":"folders/Scripts/App/Export.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

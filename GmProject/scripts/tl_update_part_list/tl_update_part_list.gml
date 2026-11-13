@@ -1,7 +1,6 @@
-/// tl_update_part_list(part, parent)
+/// @desc Sets the model parts and hierarchy of the timelines.
 /// @arg part
 /// @arg parent
-/// @desc Sets the model parts and hierarchy of the timelines.
 
 function tl_update_part_list(part, par)
 {

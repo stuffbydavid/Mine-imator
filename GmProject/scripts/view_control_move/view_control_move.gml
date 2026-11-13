@@ -1,6 +1,3 @@
-/// view_control_move(view)
-/// @arg view
-
 function view_control_move(view)
 {
 	var len, arrowstart, arrowend, mat;
@@ -19,6 +16,7 @@ function view_control_move(view)
 		mat[MAT_X] = matrix[MAT_X]
 		mat[MAT_Y] = matrix[MAT_Y]
 		mat[MAT_Z] = matrix[MAT_Z]
+		
 		matrix_remove_scale(mat)
 	}
 	
@@ -38,7 +36,7 @@ function view_control_move(view)
 	view_control_move_plane(view, e_view_control.POS_YZ, point3D(0, 1, 1), c_control_red, mat, vec3(1, 0, 0), point3D(0, ps, ps), point3D(0, pe, ps), point3D(0, pe, pe), point3D(0, ps, pe)) // YZ
 	
 	// Dragging plane
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_XY && view_control_edit <= e_view_control.POS_PAN)
+	if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_XY && view_control_edit <= e_view_control.POS_PAN)
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -46,10 +44,10 @@ function view_control_move(view)
 		if (!mouse_still)
 		{
 			var move, pos, snapval;
-			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
+			move = ray_plane_intersect(cam_from, view_control_ray_dir, view_control_plane_origin, view_control_plane_normal)
 			move = point3D_sub(move, view_control_plane_origin)
-			move = vec3_mul_matrix(move, matrix_inverse(mat))
-			pos = point3D(0, 0, 0)
+			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
+			pos = point3D(0)
 			snapval = (dragger_snap ? setting_snap_size_position : snap_min)
 			
 			for (var i = X; i <= Z; i++)
@@ -97,12 +95,12 @@ function view_control_move(view)
 			view_control_plane = false
 		}
 	}
-	else if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_X && view_control_edit <= e_view_control.POS_Z) // Dragging axis arrow
+	else if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.POS_X && view_control_edit <= e_view_control.POS_Z) // Dragging axis arrow
 	{
 		mouse_cursor = cr_handpoint
 		
 		// Move
-		var veclen = vec2_length(view_control_vec)
+		var veclen = vec2_length(view_control_vec);
 		if (veclen > 0 && !mouse_still)
 		{
 			var vecmouse, vecdot, move, snapval, newval;
@@ -126,7 +124,6 @@ function view_control_move(view)
 				move[i] /= tl_edit.value_inherit[e_value.SCA_X + axis_edit]
 				
 				newval[i] = view_control_value[i] + move[i]
-				
 				newval[i] = tl_value_clamp(e_value.POS_X + i, newval[i])
 				
 				if ((setting_snap_absolute && move[i] != 0) || !dragger_snap)
@@ -153,50 +150,4 @@ function view_control_move(view)
 			view_control_move_distance = 0
 		}
 	}
-}
-
-// Returns true if position is closer to camera than selected object
-function control_test_point(pos, tlpos, bias)
-{
-	var camdir = point3D_add(cam_from, vec3_mul(vec3_normalize(point3D_sub(cam_from, tlpos)), project_render_distance));
-	var worlddis = clamp(vec3_dot(vec3_sub(tlpos, cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
-	var pointdis = clamp(vec3_dot(vec3_sub(pos,   cam_from), vec3_sub(camdir, cam_from)) / vec3_length(vec3_sub(camdir, cam_from)), -no_limit, no_limit);
-	
-	return (pointdis + bias < worlddis)
-}
-
-function control_pos(s, e, axis, mat, retstart)
-{
-	var startpos = vec3(0); startpos[axis] = s;
-	var endpos = vec3(0); endpos[axis] = e;
-	
-	if (view_control_edit = null)
-	{
-		var endpos3d = vec3(0);
-		endpos3d[axis] = point3D_distance(cam_from, tl_edit.world_pos) * view_3d_control_size * view_control_ratio
-		endpos3d = point3D_mul_matrix(endpos3d, mat)
-		
-		if (control_test_point(endpos3d, tl_edit.world_pos, 0) && setting_gizmos_face_camera)
-		{
-			startpos = vec3_mul(startpos, -1)
-			endpos = vec3_mul(endpos, -1)
-		
-			view_control_move_flip_axis[axis] = true
-		}
-		else
-			view_control_move_flip_axis[axis] = false
-	}
-	else
-	{
-		if (view_control_move_flip_axis[axis])
-		{
-			startpos = vec3_mul(startpos, -1)
-			endpos = vec3_mul(endpos, -1)
-		}
-	}
-	
-	if (retstart)
-		return point3D_mul_matrix(startpos, mat)
-	else
-		return point3D_mul_matrix(endpos, mat)
 }

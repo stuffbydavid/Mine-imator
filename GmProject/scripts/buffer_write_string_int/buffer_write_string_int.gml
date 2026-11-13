@@ -1,6 +1,5 @@
-/// buffer_write_string_int(string)
-/// @arg string
 /// @desc Writes a string to the buffer, beginning with an integer telling the length in bytes.
+/// @arg string
 
 function buffer_write_string_int(str)
 {

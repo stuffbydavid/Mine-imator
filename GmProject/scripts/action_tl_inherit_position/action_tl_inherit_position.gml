@@ -1,7 +1,4 @@
-/// action_tl_inherit_position(enable)
-/// @arg enable
-
-function action_tl_inherit_position(enable)
+function action_tl_inherit_position(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_position(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_position, enable)
+				history_save_var(other.id, other.inherit_position, enabled)
 			
-			inherit_position = enable
+			inherit_position = enabled
 			update_matrix = true
 		}
 	}

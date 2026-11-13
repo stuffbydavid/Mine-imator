@@ -1,7 +1,3 @@
-/// state_vars_match_state_id(vars, block, stateid)
-/// @arg vars
-/// @arg block
-/// @arg stateid
 /// @desc Returns whether the collection of variables matches the given state ID.
 
 function state_vars_match_state_id(vars, block, stateid)

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"load_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"load_update",
+  "parent":{
+    "name":"Loading",
+    "path":"folders/Scripts/App/Loading.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

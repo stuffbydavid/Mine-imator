@@ -1,4 +1,3 @@
-/// json_save_array(array, size)
 /// @arg array
 /// @arg size
 

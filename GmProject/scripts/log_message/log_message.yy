@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"log_message",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"log_message",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

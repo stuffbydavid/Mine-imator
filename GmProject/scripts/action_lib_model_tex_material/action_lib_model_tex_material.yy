@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_model_tex_material",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Model",
-    "path": "folders/Scripts/App/Actions/Library/Model.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_model_tex_material",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_model_tex_material",
+  "parent":{
+    "name":"Model",
+    "path":"folders/Scripts/App/Actions/Library/Model.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

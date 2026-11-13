@@ -1,5 +1,4 @@
-/// textfield_group_reset()
-/// @desc Resets added textfields for groups
+/// @desc Resets added textfields for groups.
 
 function textfield_group_reset()
 {

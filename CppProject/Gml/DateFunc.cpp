@@ -6,7 +6,7 @@
 
 namespace CppProject
 {
-	QDateTime GmDateTimeToQ(RealType time)
+	static QDateTime GmDateTimeToQ(RealType time)
 	{
 		QDateTime newTime = QDateTime(QDate(1899, 12, 30), QTime(0, 0, 0), Qt::UTC);
 		newTime = newTime.addDays(std::floor(time));
@@ -53,6 +53,11 @@ namespace CppProject
 	RealType date_get_year(RealType time)
 	{
 		return GmDateTimeToQ(time).date().year();
+	}
+
+	RealType date_month_span(RealType start, RealType end)
+	{
+		return (end - start) / 30.4375;
 	}
 
 	RealType date_hour_span(RealType start, RealType end)

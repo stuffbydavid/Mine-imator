@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_block_name",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Block",
-    "path": "folders/Scripts/App/Actions/Library/Block.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_block_name",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_block_name",
+  "parent":{
+    "name":"Block",
+    "path":"folders/Scripts/App/Actions/Library/Block.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

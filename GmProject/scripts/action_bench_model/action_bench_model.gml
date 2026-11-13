@@ -1,17 +1,15 @@
-/// action_bench_model(resource)
-/// @arg resource
 /// @desc Sets the model of the workbench.
+/// @arg resource
 
 function action_bench_model(res)
 {
-	var fn = "";
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		if (res = e_option.BROWSE)
 		{
 			fn = file_dialog_open_model()
@@ -44,6 +42,7 @@ function action_bench_model(res)
 	with (bench_settings)
 	{
 		model = res
+		
 		temp_update_model()
 		temp_update_model_shape()
 		

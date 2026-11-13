@@ -1,7 +1,4 @@
-/// action_tl_inherit_surface(enable)
-/// @arg enable
-
-function action_tl_inherit_surface(enable)
+function action_tl_inherit_surface(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_surface(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_surface, enable)
+				history_save_var(other.id, other.inherit_surface, enabled)
 			
-			inherit_surface = enable
+			inherit_surface = enabled
 			update_matrix = true
 		}
 	}

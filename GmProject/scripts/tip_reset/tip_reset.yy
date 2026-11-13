@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tip_reset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tip_reset",
+  "parent":{
+    "name":"Tips",
+    "path":"folders/Scripts/App/Interface/Components/Tips.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

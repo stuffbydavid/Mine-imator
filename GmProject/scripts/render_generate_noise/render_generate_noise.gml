@@ -1,8 +1,7 @@
-/// render_generate_noise(width, height, [surface, [normal]])
 /// @arg width
 /// @arg height
-/// @arg [surface
-/// @arg [normal]]
+/// @arg [surface]
+/// @arg [normal]
 
 function render_generate_noise(w, h, surf = null, normal = false)
 {

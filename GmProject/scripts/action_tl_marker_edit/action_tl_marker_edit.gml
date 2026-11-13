@@ -1,7 +1,3 @@
-/// action_tl_marker_edit(name, color)
-/// @arg name
-/// @arg color
-
 function action_tl_marker_edit(name, color)
 {
 	if (history_undo)
@@ -14,7 +10,7 @@ function action_tl_marker_edit(name, color)
 	}
 	else
 	{
-		var hobj, marker;
+		var marker, hobj;
 	
 		// Combine with creation action
 		if (history_amount > 0 && (history[0].script = action_tl_marker_new) && (history[0].marker_save_id = save_id_get(timeline_marker_edit)))
@@ -54,6 +50,7 @@ function action_tl_marker_edit(name, color)
 					marker_color_new = color
 				}
 			}
+			
 			marker.name = hobj.marker_name_new
 			marker.color = hobj.marker_color_new
 		}

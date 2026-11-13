@@ -34,6 +34,12 @@ StringId Function::getScope()
 	if (this->structObject != nullptr)
 		return this->structObject->name;
 
+	if (this->isCppSeparate && this->cppSeparateHeader.contains("(Scope<"))
+	{
+		int start = this->cppSeparateHeader.indexOf("(Scope<") + 7;
+		int end = this->cppSeparateHeader.indexOf(">", start);
+		return StringId(this->cppSeparateHeader.substring(start, end - start));
+	}
 
 	if (this->scopeAssignments.size() == 0)
 		return this->hasInstanceVars ? STR(any) : STR(global);
@@ -68,6 +74,9 @@ bool Function::assignScope(StringId scope, Function* func, int line, bool foundI
 			return false;
 
 	this->scopeAssignments.add(makeObject<ScopeAssignment>(scope, func, line));
+	if (Program::hotReloading)
+		Program::hotReloadSignaturesChanged = true;
+
 	return true;
 }
 
@@ -124,6 +133,44 @@ bool Function::writeCppImplementation()
 	if (this->implWritten)
 		return false;
 	this->implWritten = true;
+
+	// Cache only declared instance arrays and leave nested with scopes independent
+	for (StringId member : this->arrRefs)
+	{
+		StringId scope = getScope();
+		Variable* var = Program::findVariable(scope, member, this, Statement::Location(), 0);
+		bool valid = scope != STR(global) && this->structObject == nullptr;
+		if (var != nullptr)
+			valid = valid && var->scope != STR(global) && var->scope != this->name && var->type->cppType == DataType::CppType::ArrType;
+		else
+		{
+			bool found = false;
+			for (Object* obj : Program::objects.values)
+			{
+				if (obj->instanceVars.containsKey(member))
+				{
+					found = true;
+					valid = valid && obj->instanceVars[member]->type->cppType == DataType::CppType::ArrType;
+				}
+			}
+			valid = (valid && found && scope == STR(any));
+		}
+		
+		String cached = "_cppArrRef_" + CodeObject::nameToCpp(member);
+		for (Variable* local : this->vars)
+			if (local->name == member || CodeObject::nameToCpp(local->name) == cached)
+				valid = false;
+		
+		if (!valid)
+		{
+			Console::writeLine("FATAL ERROR: ArrRef {0} must name an unshadowed instance ArrType in {1} ({2})", member, this->name, this->sourceFile);
+			std::exit(1);
+		}
+		
+		String access = scope == STR(any) ? "sArr(" + CodeObject::nameToCpp(member) + ")" :
+			(scope == STR(app) ? "global::_app->" : "self->") + CodeObject::nameToCpp(member);
+		this->cppLinesBegin.add("ArrType& " + cached + " = " + access + ";");
+	}
 
 	// Name
 	if (this->isConstructor)
@@ -182,7 +229,7 @@ String Function::toExecuteCpp()
 
 	// Create scope with ids
 	StringId scope = getScope();
-	if (this->structObject == nullptr && scope != STR(global) && scope != STR(app))
+	if (this->structObject == nullptr && scope != STR(global) && (scope != STR(app) || this->isCppSeparate))
 	{
 		cpp += "Scope";
 		if (scope == STR(any))
@@ -234,7 +281,22 @@ void Function::resolve(ResolveScope* scope, const NullableList<DataType*>& input
 	// Resolve arguments with given input
 	bool argsChanged = false, scopeChanged = false;
 	if (this->args != nullptr)
-		argsChanged = this->args->resolve(scope, this->name, inputPars) && !scope->isCalled(this->name);
+	{
+		argsChanged = this->args->resolve(scope, this->name, inputPars);
+		if (Program::hotReloading && argsChanged)
+			Program::hotReloadSignaturesChanged = true;
+
+		argsChanged = argsChanged && !scope->isCalled(this->name);
+	}
+
+	// Update cached signatures without resolving unchanged bodies
+	if (Program::hotReloading && !Program::hotReloadTargets.contains(this))
+	{
+		if (this->hasInstanceVars)
+			assignScope(scope->current, func, line);
+
+		return;
+	}
 
 	if (this->isTraversed && this->hasInstanceVars) // Assign new scope
 		scopeChanged = assignScope(scope->current, func, line);
@@ -257,7 +319,11 @@ void Function::resolve(ResolveScope* scope, const NullableList<DataType*>& input
 void Function::assignReturnType(const DataType& type, Function* func, int line)
 {
 	if (this->cppSeparateReturnType == nullptr)
-		this->returnType->assign(type, func, line);
+	{
+		const bool changed = this->returnType->assign(type, func, line);
+		if (Program::hotReloading && changed)
+			Program::hotReloadSignaturesChanged = true;
+	}
 }
 
 DataType* Function::getReturnType()
@@ -558,9 +624,15 @@ Statement* Function::parseStatement()
 			{
 				// return expr/;
 				nextToken(Token::Type::ID);
-				if (peekToken() == Token::Type::Terminator)
+				bool voidReturn = peekToken() == Token::Type::Terminator || peekToken() == Token::Type::RightBrace ||
+					(peekToken() == Token::Type::HashTag || peekToken() == Token::Type::CppOnly) ||
+					(peekToken() == Token::Type::ID && GML::keywords.contains(this->currentToken->value) &&
+					 !GML::variables.containsKey(this->currentToken->value) && this->currentToken->value != STR(new) &&
+					 this->currentToken->value != STR(id) && this->currentToken->value != STR(other));
+				if (voidReturn)
 				{
-					nextToken(Token::Type::Terminator);
+					if (peekToken() == Token::Type::Terminator)
+						nextToken(Token::Type::Terminator);
 					this->returnStatement = makeObject<ReturnStatement>(nullptr, line);
 				}
 				else
@@ -731,7 +803,6 @@ Accessor* Function::parseAccessor()
 			case Token::Type::ArrayRef: isRef = true; break;
 			case Token::Type::BitwiseOr: arrAccType = DataType::Type::List; break;
 			case Token::Type::Ternary: arrAccType = DataType::Type::AnyMap; break;
-			case Token::Type::HashTag: arrAccType = DataType::Type::Grid; break;
 			default: break;
 		}
 		if (isRef || arrAccType != DataType::Type::Array)
@@ -837,7 +908,7 @@ Expression* Function::parseExprMulDiv()
 {
 	Expression* expr = parseExprModInvNegate();
 	if (peekToken() == Token::Type::Mul || peekToken() == Token::Type::Div || peekToken() == Token::Type::DivInt ||
-		peekToken() == Token::Type::BitwiseAnd || peekToken() == Token::Type::BitwiseOr ||
+		peekToken() == Token::Type::BitwiseAnd || peekToken() == Token::Type::BitwiseOr || peekToken() == Token::Type::BitwiseXor ||
 		peekToken() == Token::Type::ShiftLeft || peekToken() == Token::Type::ShiftRight)
 	{
 		Token::Type parsedOperation = this->lastPeeked;

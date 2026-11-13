@@ -1,4 +1,3 @@
-#if API_OPENGL
 #include "GLWidget.hpp"
 
 #include "AppHandler.hpp"
@@ -38,6 +37,8 @@ namespace CppProject
 	{
 		if (!widgetRender)
 			return;
+
+		GFX->ResetTextureBindings();
 		
 		RealType scale = QApplication::desktop()->devicePixelRatio();
 		GFX->glViewport(0, 0, width() * scale, height() * scale);
@@ -58,6 +59,7 @@ namespace CppProject
 		draw_clear_alpha(0, 0.0);
 		gpu_set_texfilter(false);
 		draw_surface_ext(GFX->surface->id, 0, 0, App->scale, App->scale, 0.0, -1, 1.0);
+
 		GFX->SubmitBatch();
 		
 		GFX->SetCulling(true);
@@ -67,4 +69,3 @@ namespace CppProject
 			GFX->shader->EndUse();
 	}
 }
-#endif

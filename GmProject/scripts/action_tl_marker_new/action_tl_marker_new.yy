@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_marker_new",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Marker",
-    "path": "folders/Scripts/App/Actions/Timeline/Marker.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_marker_new",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_marker_new",
+  "parent":{
+    "name":"Marker",
+    "path":"folders/Scripts/App/Actions/Timeline/Marker.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

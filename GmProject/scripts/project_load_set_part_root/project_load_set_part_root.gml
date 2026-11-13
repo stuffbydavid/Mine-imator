@@ -1,6 +1,3 @@
-/// project_load_set_part_root(part_root)
-/// @arg part_root
-
 function project_load_set_part_root(part_root)
 {
 	for (var i = 0; i < ds_list_size(tree_list); i++)

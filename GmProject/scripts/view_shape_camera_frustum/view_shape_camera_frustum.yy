@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_shape_camera_frustum",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_shape_camera_frustum",
+  "parent":{
+    "name":"Shape",
+    "path":"folders/Scripts/App/Interface/Components/View/Shape.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "save_id_find",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Project",
-    "path": "folders/Scripts/Project.yy",
+  "$GMScript":"v1",
+  "%Name":"save_id_find",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"save_id_find",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

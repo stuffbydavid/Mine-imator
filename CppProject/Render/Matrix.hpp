@@ -26,6 +26,7 @@ namespace CppProject
 		VecType operator*(const VecType& vec) const; // mat * vec
 
 		void SetToIdentity();
+		RealType GetDeterminant() const;
 		Matrix GetInversed() const;
 		Matrix GetTransposed() const;
 		VecType GetScale() const;

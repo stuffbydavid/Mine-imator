@@ -1,7 +1,4 @@
-/// action_tl_inherit_color(enable)
-/// @arg enable
-
-function action_tl_inherit_color(enable)
+function action_tl_inherit_color(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_color(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_color, enable)
+				history_save_var(other.id, other.inherit_color, enabled)
 			
-			inherit_color = enable
+			inherit_color = enabled
 			update_matrix = true
 		}
 	}

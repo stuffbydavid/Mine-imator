@@ -1,21 +1,9 @@
-/// list_item_add_action(item, name, script, active, value, icon, side, [tip, sprite])
-/// @arg item
-/// @arg name
-/// @arg script
-/// @arg active
-/// @arg value
-/// @arg icon
-/// @arg side
-/// @arg [tip
-/// @arg sprite]
-
 function list_item_add_action(item, name, script, active, value, icon, side, tip = undefined, sprite = null)
 {
 	if (is_undefined(tip))
 		tip = name
 	
 	var list;
-	
 	with (item)
 	{
 		if (side = "right")

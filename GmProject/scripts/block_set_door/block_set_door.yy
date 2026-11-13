@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "block_set_door",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Types",
-    "path": "folders/Scripts/Minecraft/Blocks/Types.yy",
+  "$GMScript":"v1",
+  "%Name":"block_set_door",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_set_door",
+  "parent":{
+    "name":"Types",
+    "path":"folders/Scripts/Minecraft/Blocks/Types.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

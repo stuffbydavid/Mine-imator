@@ -1,8 +1,4 @@
-/// json_save_var_bool(name, value)
-/// @arg name
-/// @arg value
-
-function json_save_var_bool(name, val)
+function json_save_var_bool(name, value)
 {
 	if (json_add_comma)
 		buffer_write_byte(e_json_char.COMMA)
@@ -21,7 +17,7 @@ function json_save_var_bool(name, val)
 	buffer_write_byte(e_json_char.SPACE)
 	
 	// Value
-	buffer_write_string(val ? "true" : "false")
+	buffer_write_string(value ? "true" : "false")
 	
 	json_add_comma = true
 }

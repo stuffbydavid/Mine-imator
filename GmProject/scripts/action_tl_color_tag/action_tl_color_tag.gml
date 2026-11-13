@@ -1,5 +1,3 @@
-/// action_tl_color_tag(color)
-
 function action_tl_color_tag(color)
 {
 	if (history_undo)

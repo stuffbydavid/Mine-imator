@@ -1,5 +1,3 @@
-/// action_tl_keyframe_next()
-
 function action_tl_keyframe_next()
 {
 	var pos = no_limit;

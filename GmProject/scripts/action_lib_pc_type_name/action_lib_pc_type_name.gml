@@ -1,6 +1,3 @@
-/// action_lib_pc_type_name(name)
-/// @arg name
-
 function action_lib_pc_type_name(name)
 {
 	if (!history_undo && !history_redo)

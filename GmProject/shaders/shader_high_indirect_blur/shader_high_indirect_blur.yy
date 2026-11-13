@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shader_high_indirect_blur",
-  "type": 1,
-  "parent": {
-    "name": "Indirect",
-    "path": "folders/Shaders/High quality/Indirect.yy",
+  "$GMShader":"",
+  "%Name":"shader_high_indirect_blur",
+  "name":"shader_high_indirect_blur",
+  "parent":{
+    "name":"Indirect",
+    "path":"folders/Shaders/High quality/Indirect.yy",
   },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

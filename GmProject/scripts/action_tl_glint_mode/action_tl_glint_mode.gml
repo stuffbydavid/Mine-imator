@@ -1,6 +1,3 @@
-/// action_tl_glint_mode(mode)
-/// @arg mode
-
 function action_tl_glint_mode(mode)
 {
 	if (history_undo)
@@ -20,6 +17,7 @@ function action_tl_glint_mode(mode)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_glint_mode, false);
+		
 		with (obj_timeline)
 			if (selected)
 				action_tl_glint_mode_tree(id, mode, hobj)

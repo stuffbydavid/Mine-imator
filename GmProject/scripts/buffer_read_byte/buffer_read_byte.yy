@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "buffer_read_byte",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Read",
-    "path": "folders/Scripts/Utility/File/Buffer/Read.yy",
+  "$GMScript":"v1",
+  "%Name":"buffer_read_byte",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"buffer_read_byte",
+  "parent":{
+    "name":"Read",
+    "path":"folders/Scripts/Utility/File/Buffer/Read.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

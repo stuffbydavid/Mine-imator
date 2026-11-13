@@ -1,16 +1,13 @@
-/// legacy_startup()
 /// @desc Load various lookup tables from the legacy.midata file for loading old formats.
 
 function legacy_startup()
 {
-	log("Loading legacy file")
-	
 	globalvar legacy_model_id_05_map, legacy_model_id_06_map, legacy_model_id_100_demo_map;
 	globalvar legacy_model_part_map, legacy_model_name_map;
 	globalvar legacy_block_set, legacy_block_id, legacy_block_obj, legacy_block_state_vars, legacy_block_state_id, legacy_block_mc_id;
 	globalvar legacy_block_texture_name_map, legacy_block_05_texture_list, legacy_block_07_demo_texture_list, legacy_block_100_texture_list;
 	globalvar legacy_item_texture_name_map;
-	globalvar legacy_biomes_map, legacy_biomes_ids_map, biomes_ids_map, legacy_model_names_map, legacy_model_states_map, legacy_model_state_values_map, legacy_block_names_map, legacy_particles_map;
+	globalvar legacy_biomes_map, legacy_biomes_ids_map, biomes_ids_map, legacy_model_names_map, legacy_model_states_map, legacy_model_state_values_map, legacy_block_names_map, legacy_block_states_map, legacy_block_state_values_map, legacy_particles_map;
 	
 	var map = json_load(legacy_file);
 	if (!ds_map_valid(map))
@@ -18,6 +15,7 @@ function legacy_startup()
 		log("Error loading legacy.midata")
 		return false
 	}
+	log("Loading legacy file", legacy_file)
 	
 	// Models
 	legacy_model_id_05_map = map[?"legacy_model_id_05"]
@@ -63,7 +61,7 @@ function legacy_startup()
 	}
 	
 	biomes_ids_map = ds_int_map_create()
-	key = ds_map_find_first(map[?"biome_ids"]);
+	key = ds_map_find_first(map[?"biome_ids"])
 	while (!is_undefined(key))
 	{
 		biomes_ids_map[?string_get_real(key)] = ds_map_find_value(map[?"biome_ids"], key)
@@ -80,6 +78,11 @@ function legacy_startup()
 	
 	// Block names
 	legacy_block_names_map = map[?"legacy_block_names"]
+	
+	// Block states
+	legacy_block_states_map = map[?"legacy_block_states"]
+	
+	legacy_block_state_values_map = map[?"legacy_block_state_values"]
 	
 	// Particles
 	legacy_particles_map = map[?"legacy_particles"]

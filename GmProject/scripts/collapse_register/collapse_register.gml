@@ -1,7 +1,4 @@
-/// collapse_register(name)
-/// @arg name
-
-function collapse_register(name)
+function collapse_register(name, open = false)
 {
-	collapse_map[?name] = false
+	collapse_map[?name] = open
 }

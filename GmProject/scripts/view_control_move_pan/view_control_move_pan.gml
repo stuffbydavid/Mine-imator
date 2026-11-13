@@ -1,14 +1,10 @@
-/// view_control_move_pan(view, radius)
-/// @arg view
-/// @arg radius
-
 function view_control_move_pan(view, radius)
 {
-	var pos2D, end2D, radius2D, normal;
-	pos2D = view_shape_project(tl_edit.world_pos)
-	end2D = view_shape_project(point3D_add(tl_edit.world_pos, point3D(0, 0, radius)))
+	var pos2d, end2d, radius2d, normal;
+	pos2d = view_shape_project(tl_edit.world_pos)
+	end2d = view_shape_project(point3D_add(tl_edit.world_pos, point3D(0, 0, radius)))
 	
-	radius2D = ((radius / point3D_distance(tl_edit.world_pos, cam_from)) * content_height) / (cam_fov / 60)
+	radius2d = ((radius / point3D_distance(tl_edit.world_pos, cam_from)) * content_height) / (cam_fov / 60)
 	
 	if (point3D_project_error)
 		return 0
@@ -16,7 +12,7 @@ function view_control_move_pan(view, radius)
 	normal = vec3_normalize(point3D_sub(cam_from, tl_edit.world_pos))
 	
 	// Check state
-	if (window_busy = "rendercontrol")
+	if (window_busy = "render/control")
 	{
 		if (view_control_edit != e_view_control.POS_PAN || view_control_edit_view != view)
 			return 0
@@ -34,7 +30,7 @@ function view_control_move_pan(view, radius)
 		// Left click
 		if (mouse_left_pressed)
 		{
-			window_busy = "rendercontrol"
+			window_busy = "render/control"
 			view_control_edit = e_view_control.POS_PAN
 			view_control_edit_view = view
 			
@@ -62,6 +58,6 @@ function view_control_move_pan(view, radius)
 	
 	draw_set_alpha(1)
 	
-	if (place_tl = null && content_mouseon && (point_distance(pos2D[X], pos2D[Y], mouse_x - content_x, mouse_y - content_y) < radius2D))
+	if (place_tl = null && content_mouseon && (point_distance(pos2d[X], pos2d[Y], mouse_x - content_x, mouse_y - content_y) < radius2d))
 		view.control_mouseon = e_view_control.POS_PAN
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"app_startup_interface_world_import",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_startup_interface_world_import",
+  "parent":{
+    "name":"Startup",
+    "path":"folders/Scripts/App/Interface/Startup.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

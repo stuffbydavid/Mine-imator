@@ -1,5 +1,3 @@
-/// action_tl_keyframes_sound_resize_done()
-
 function action_tl_keyframes_sound_resize_done()
 {
 	with (obj_timeline)
@@ -26,6 +24,7 @@ function action_tl_keyframes_sound_resize_done()
 							other.kf_resize_new_index[a]--
 					
 					ds_list_delete_value(timeline.keyframe_list, id)
+					
 					timeline.update_values = true
 				}
 			}
@@ -52,6 +51,7 @@ function action_tl_keyframes_sound_resize_done()
 							other.kf_resize_old_index[a]--
 					
 					ds_list_delete_value(timeline.keyframe_list, id)
+					
 					timeline.update_values = true
 				}
 			}
@@ -75,9 +75,11 @@ function action_tl_keyframes_sound_resize_done()
 				other.kf_resize_new_pos[other.kf_resize_amount] = position
 				other.kf_resize_new_start[other.kf_resize_amount] = value[e_value.SOUND_START]
 				other.kf_resize_amount++
+				
 				timeline.update_values = true
 			}
 		}
+		
 		window_busy = ""
 	}
 	

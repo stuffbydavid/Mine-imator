@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_fx_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_fx_start",
+  "parent":{
+    "name":"Effects",
+    "path":"folders/Scripts/Render/Effects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,7 +1,8 @@
-/// action_tl_path_point_add()
-
 function action_tl_path_point_add()
 {
+	var hobj, tl;
+	hobj = null
+		
 	if (history_undo)
 	{
 		with (history_data)
@@ -19,9 +20,6 @@ function action_tl_path_point_add()
 	}
 	else
 	{
-		var hobj, tl;
-		hobj = null
-		
 		if (!history_redo)
 			hobj = history_set(action_tl_path_point_add)
 	}
@@ -57,4 +55,5 @@ function action_tl_path_point_add()
 	app_update_tl_edit()
 	tl_update_list()
 	tl_update_matrix()
+	project_update_counts()
 }

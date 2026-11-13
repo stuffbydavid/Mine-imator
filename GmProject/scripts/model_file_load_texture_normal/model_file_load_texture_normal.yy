@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "model_file_load_texture_normal",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Load",
-    "path": "folders/Scripts/Minecraft/Models/Load.yy",
+  "$GMScript":"v1",
+  "%Name":"model_file_load_texture_normal",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"model_file_load_texture_normal",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Minecraft/Models/Load.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

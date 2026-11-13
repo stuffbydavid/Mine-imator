@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_quick_mode_aa",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_quick_mode_aa",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Actions/Settings/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

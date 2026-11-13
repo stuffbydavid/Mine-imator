@@ -1,17 +1,14 @@
-/// vbuffer_create_path(path, [small])
-/// @arg path
-/// @arg [small]
-
 function vbuffer_create_path(path, small = false)
 {
-	var points, radius, detail, closed, rail, texlength, invert;
+	var points, closed, rail, radius, invert, detail, mapped, texlength;
 	points = path.path_table
-	radius = path.path_shape_radius
-	detail = path.path_shape_detail
 	closed = path.path_closed
-	rail = !path.path_shape_tube
-	texlength = path.path_shape_tex_length
+	rail = path.path_shape = "flat"
+	radius = path.path_shape_radius
 	invert = path.path_shape_invert
+	detail = path.path_shape_detail
+	mapped = path.path_shape_tex_mapped
+	texlength = path.path_shape_tex_length
 	
 	// Create mesh for clicking path(for selection) where a shape isn't set to be used in timeline
 	if (small)
@@ -30,8 +27,8 @@ function vbuffer_create_path(path, small = false)
 	for (var i = 0; i < array_length(points); i++)
 	{
 		p = points[i]
-		frames[i] = matrix_create_rotate_to([p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z]],
-											[p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z]])
+		frames[i] = matrix_create_rotate_to([ p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z] ],
+											[ p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z] ])
 	}
 	
 	var p1, p2, p3, p4;
@@ -54,7 +51,7 @@ function vbuffer_create_path(path, small = false)
 		else
 			jp = .5 // Left side of rail
 		
-		ringp = [cos(jp * pi * 2), 0, -sin(jp * pi * 2)]
+		ringp = [ cos(jp * pi * 2), 0, -sin(jp * pi * 2) ]
 		
 		plength = length
 		length += point3D_distance(points[i], points[i + 1])
@@ -81,7 +78,7 @@ function vbuffer_create_path(path, small = false)
 			else
 				j = 0 // Right side of rail
 			
-			ringp = [cos(j * pi * 2), 0, -sin(j * pi * 2)]
+			ringp = [ cos(j * pi * 2), 0, -sin(j * pi * 2) ]
 			
 			// Next segment
 			n2 = vec3_normalize(vec3_mul_matrix(ringp, frames[i]))
@@ -98,9 +95,9 @@ function vbuffer_create_path(path, small = false)
 				t3 = vec2(0, length / texlength)
 				t4 = vec2(1, length / texlength)
 				
-				n1 = [frames[i][8], frames[i][9], frames[i][10]]
+				n1 = [ frames[i][8], frames[i][9], frames[i][10] ]
 				n2 = n1
-				n3 = [frames[i + 1][8], frames[i + 1][9], frames[i + 1][10]]
+				n3 = [ frames[i + 1][8], frames[i + 1][9], frames[i + 1][10] ]
 				n4 = n3
 			}
 			else
@@ -111,10 +108,13 @@ function vbuffer_create_path(path, small = false)
 				t4 = vec2(j, length / texlength)
 			}
 			
-			t1[X] /= 3
-			t2[X] /= 3
-			t3[X] /= 3
-			t4[X] /= 3
+			if (mapped)
+			{
+				t1[X] /= 3
+				t2[X] /= 3
+				t3[X] /= 3
+				t4[X] /= 3
+			}
 			
 			nn1 = n1
 			nn2 = n2
@@ -160,8 +160,8 @@ function vbuffer_create_path(path, small = false)
 				
 			if (invert)
 			{
-				vbuffer_add_triangle(p2, p1, p4, t4, t1, t2, nn2, nn1, nn4)
-				vbuffer_add_triangle(p1, p3, p4, t4, t3, t1, nn1, nn3, nn4)
+				vbuffer_add_triangle(p2, p1, p4, t2, t1, t4, nn2, nn1, nn4)
+				vbuffer_add_triangle(p1, p3, p4, t1, t3, t4, nn1, nn3, nn4)
 			}
 			else
 			{
@@ -175,19 +175,22 @@ function vbuffer_create_path(path, small = false)
 			// Fill ends of tube
 			if (!closed)
 			{
-				t1 = [(cos((jp + .25) * pi * 2) + 1)/2, (sin((jp + .25) * pi * 2) + 1)/2]
-				t2 = [(cos((j + .25) * pi * 2) + 1)/2, (sin((j + .25) * pi * 2) + 1)/2]
-				t3 = [.5, .5]
+				t1 = [ (cos((jp + .25) * pi * 2) + 1)/2, (sin((jp + .25) * pi * 2) + 1)/2 ]
+				t2 = [ (cos((j + .25) * pi * 2) + 1)/2, (sin((j + .25) * pi * 2) + 1)/2 ]
+				t3 = [ .5, .5 ]
 				
-				t1[X] = (t1[X] / 3) + (1/3)
-				t2[X] = (t2[X] / 3) + (1/3)
-				t3[X] = (t3[X] / 3) + (1/3)
+				if (mapped)
+				{
+					t1[X] = (t1[X] / 3) + (1/3)
+					t2[X] = (t2[X] / 3) + (1/3)
+					t3[X] = (t3[X] / 3) + (1/3)
+				}
 				
 				// Beginning
 				if (i = 0)
 				{
 					if (invert)
-						vbuffer_add_triangle(p2, points[i], p1, t1, t3, t2)
+						vbuffer_add_triangle(p2, points[i], p1, t2, t3, t1)
 					else
 						vbuffer_add_triangle(p1, points[i], p2, t1, t3, t2)
 				}
@@ -195,12 +198,15 @@ function vbuffer_create_path(path, small = false)
 				// End
 				if (i = (array_length(points) - 2))
 				{
-					t1[X] += (1/3)
-					t2[X] += (1/3)
-					t3[X] += (1/3)
+					if (mapped)
+					{
+						t1[X] += (1/3)
+						t2[X] += (1/3)
+						t3[X] += (1/3)
+					}
 					
 					if (invert)
-						vbuffer_add_triangle(p3, points[i + 1], p4, t2, t3, t1)
+						vbuffer_add_triangle(p3, points[i + 1], p4, t1, t3, t2)
 					else
 						vbuffer_add_triangle(p4, points[i + 1], p3, t2, t3, t1)
 				}
@@ -211,7 +217,7 @@ function vbuffer_create_path(path, small = false)
 			n1 = n2
 			n3 = n4
 		}
-		
+	
 	}
 	
 	return vbuffer_done()

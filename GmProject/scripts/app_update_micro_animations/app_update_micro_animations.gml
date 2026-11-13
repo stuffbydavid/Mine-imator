@@ -1,9 +1,30 @@
-/// app_update_micro_animations()
-
 function app_update_micro_animations()
 {
-	var constantspeed;
-	constantspeed = 0.1
+	var constantspeed = 0.1;
+	
+	// Work camera angle
+	if (window_state = "")
+	{
+		if (cam_work_angle_xy != cam_work_angle_goal_xy)
+			cam_work_angle_xy += (cam_work_angle_goal_xy - cam_work_angle_xy) / max(1, 4 / delta)
+		if (abs(cam_work_angle_goal_xy - cam_work_angle_xy) < 0.0001)
+			cam_work_angle_xy = cam_work_angle_goal_xy
+		
+		if (cam_work_angle_z != cam_work_angle_goal_z)
+			cam_work_angle_z += (cam_work_angle_goal_z - cam_work_angle_z) / max(1, 4 / delta)
+		if (abs(cam_work_angle_goal_z - cam_work_angle_z) < 0.0001)
+			cam_work_angle_z = cam_work_angle_goal_z
+		
+		if (cam_work_angle_look_xy != cam_work_angle_goal_look_xy)
+			cam_work_angle_look_xy += (cam_work_angle_goal_look_xy - cam_work_angle_look_xy) / max(1, 4 / delta)
+		if (abs(cam_work_angle_goal_look_xy - cam_work_angle_look_xy) < 0.0001)
+			cam_work_angle_look_xy = cam_work_angle_goal_look_xy
+		
+		if (cam_work_angle_look_z != cam_work_angle_goal_look_z)
+			cam_work_angle_look_z += (cam_work_angle_goal_look_z - cam_work_angle_look_z) / max(1, 4 / delta)
+		if (abs(cam_work_angle_goal_look_z - cam_work_angle_look_z) < 0.0001)
+			cam_work_angle_look_z = cam_work_angle_goal_look_z
+	}
 	
 	// Timeline zoom
 	if (window_state = "")
@@ -11,8 +32,8 @@ function app_update_micro_animations()
 		if (timeline_zoom != timeline_zoom_goal)
 		{
 			timeline_zoom += (timeline_zoom_goal - timeline_zoom) / max(1, 4 / delta)
-			timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
 			timeline.hor_scroll.value_goal = max(0, timeline.hor_scroll.value_goal)
+			timeline.hor_scroll.value = max(0, timeline.hor_scroll.value)
 		}
 		
 		if (abs(timeline_zoom_goal - timeline_zoom) < 0.0001)

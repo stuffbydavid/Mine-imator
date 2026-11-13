@@ -7,7 +7,9 @@
 
 namespace CppProject
 {
-	FastVector<VecType*> VecType::refList;
+	VecType::ThreadData* VecType::appThreadData = nullptr;
+	VecType::ThreadData* VecType::ompThreadData = nullptr;
+	QHash<QThread*, VecType::ThreadData*> VecType::qThreadData;
 
 	VecType::~VecType()
 	{
@@ -23,6 +25,7 @@ namespace CppProject
 	{
 		size = std::clamp(arr.Size(), IntType(2), IntType(4));
 		z = w = 0.0;
+
 		for (IntType i = 0; i < size; i++)
 			*(&x + i) = arr.Value(i);
 	}
@@ -39,6 +42,7 @@ namespace CppProject
 		z = vec.z;
 		w = vec.w;
 		size = vec.size;
+
 		return *this;
 	}
 
@@ -67,6 +71,7 @@ namespace CppProject
 		x += vec.x;
 		y += vec.y;
 		z += vec.z;
+
 		if (size > 3)
 			w += vec.w;
 	}
@@ -76,6 +81,7 @@ namespace CppProject
 		x -= vec.x;
 		y -= vec.y;
 		z -= vec.z;
+
 		if (size > 3)
 			w -= vec.w;
 	}
@@ -85,6 +91,7 @@ namespace CppProject
 		x *= rl;
 		y *= rl;
 		z *= rl;
+
 		if (size > 3)
 			w *= rl;
 	}
@@ -94,6 +101,7 @@ namespace CppProject
 		x /= rl;
 		y /= rl;
 		z /= rl;
+
 		if (size > 3)
 			w /= rl;
 	}
@@ -102,12 +110,14 @@ namespace CppProject
 	{
 		ArrType arr;
 		arr.vec.Alloc(size);
+		
 		if (size == 2)
 			arr.vec = { x, y };
 		else if (size == 3)
 			arr.vec = { x, y, z };
 		else
 			arr.vec = { x, y, z, w };
+		
 		return arr;
 	}
 
@@ -127,6 +137,7 @@ namespace CppProject
 			FATAL("VecType: [] with index outside of range: " + NumStr(i));
 	#endif
 		CreateRef();
+		
 		return ref[i];
 	}
 
@@ -134,6 +145,7 @@ namespace CppProject
 	{
 		if (i < 0 || i >= size)
 			return 0;
+		
 		return *(&x + i);
 	}
 
@@ -147,6 +159,7 @@ namespace CppProject
 		RealType len = GetLength();
 		if (len > 0.0)
 			return { x / len, y / len, z / len, w / len };
+		
 		return *this;
 	}
 
@@ -178,7 +191,17 @@ namespace CppProject
 		for (IntType j = 0; j < size; j++)
 			ref[j].SetVar(VarType::CreateRef(*(&x + j)), false);
 
-		refHeapIndex = refList.Append(this);
+		refThread = GetCurrentThreadData();
+		if (refThread)
+		{
+			if (refThread->ompActive)
+			{
+				refOmpIndex = omp_get_thread_num();
+				refHeapIndex = refThread->ompRefList[refOmpIndex].Append(this);
+			}
+			else
+				refHeapIndex = refThread->refList.Append(this);
+		}
 	}
 
 	void VecType::FreeData()
@@ -187,16 +210,97 @@ namespace CppProject
 			return;
 
 		deleteArrayAndReset(ref);
-		refList.Remove(refHeapIndex);
+		
+		if (refThread)
+		{
+			FastVector<VecType*>& list = refOmpIndex >= 0 ? refThread->ompRefList[refOmpIndex] : refThread->refList;
+			if (refHeapIndex >= 0 && refHeapIndex < list.Size() && list[refHeapIndex] == this)
+				list[refHeapIndex] = nullptr;
+		}
+		
+		refHeapIndex = -1;
+		refOmpIndex = -1;
+		refThread = nullptr;
 	}
 
 	void VecType::CleanHeapData()
 	{
-		for (IntType i = 0; i < refList.Size(); i++)
-			if (VecType* hVec = refList[i])
-				hVec->FreeData();
+		ThreadData* thread = GetCurrentThreadData();
+		if (!thread || thread->ompActive)
+			return;
+
+		for (IntType i = 0; i < thread->refList.Size(); i++)
+		{
+			if (VecType* hVec = thread->refList[i])
+			{
+				deleteArrayAndReset(hVec->ref);
+				hVec->refHeapIndex = -1;
+				hVec->refThread = nullptr;
+			}
+		}
+
+		thread->refList.Clear();
+	}
+
+	void VecType::BeginOmp()
+	{
+		ThreadData* thread = GetCurrentThreadData();
+		if (!thread)
+			return;
+
+		IntType numThreads = std::min(IntType(OPENMP_MAX_THREADS), IntType(omp_get_max_threads()));
+		for (IntType t = 0; t < numThreads; t++)
+			thread->ompRefList[t].Reset();
+
+		thread->ompActive = true;
+
+		ompThreadData = thread;
+	}
+
+	void VecType::EndOmp()
+	{
+		ThreadData* thread = GetCurrentThreadData();
+		if (!thread || !thread->ompActive)
+			return;
+
+		IntType numThreads = std::min(IntType(OPENMP_MAX_THREADS), IntType(omp_get_max_threads()));
+		for (IntType t = 0; t < numThreads; t++)
+		{
+			FastVector<VecType*>& list = thread->ompRefList[t];
+			for (IntType i = 0; i < list.Size(); i++)
+			{
+				VecType* vec = list[i];
+				if (!vec)
+					continue;
+
+				vec->refHeapIndex = thread->refList.Append(vec);
+				vec->refOmpIndex = -1;
+			}
+
+			list.Reset();
+		}
+
+		thread->ompActive = false;
+
+		if (ompThreadData == thread)
+			ompThreadData = nullptr;
+	}
+
+	VecType::ThreadData* VecType::GetCurrentThreadData()
+	{
+		if (omp_get_num_threads() > 1 && ompThreadData)
+			return ompThreadData;
 		
-		refList.Clear();
+		return qThreadData.value(QThread::currentThread(), appThreadData);
+	}
+
+	void VecType::AddQThread(QThread* thread)
+	{
+		ThreadData* data = new ThreadData;
+		qThreadData[thread] = data;
+		
+		if (!appThreadData)
+			appThreadData = data;
 	}
 
 	VecType point2D(RealType x, RealType y)
@@ -430,6 +534,7 @@ namespace CppProject
 		RealType len = vec3_length(v);
 		if (len == 0.0)
 			return v;
+		
 		return { v.x / len, v.y / len, v.z / len };
 	}
 

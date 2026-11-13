@@ -1,5 +1,3 @@
-/// json_save_object_done()
-
 function json_save_object_done()
 {
 	buffer_write_byte(e_json_char.RETURN)

@@ -1,5 +1,3 @@
-/// app_startup_interface_views()
-
 function app_startup_interface_views()
 {
 	view_area_x = 0
@@ -9,6 +7,7 @@ function app_startup_interface_views()
 	
 	view_click_x = 0
 	view_click_y = 0
+	view_click_right = false
 	
 	view_resize_width = 0
 	view_resize_height = 0
@@ -31,9 +30,10 @@ function app_startup_interface_views()
 	view_main.gizmos = setting_view_main_gizmos
 	view_main.effects = setting_view_main_effects
 	view_main.particles = setting_view_main_particles
+	view_main.transparent_background = setting_view_main_transparent_background
 	view_main.location = setting_view_main_location
-	view_main.quality = e_view_mode.SHADED
-	view_main.camera = -4
+	view_main.renderer = e_renderer.STANDARD
+	view_main.camera = view_camera_work
 	view_main.title = ""
 	
 	view_second = new_obj(obj_view)
@@ -44,19 +44,17 @@ function app_startup_interface_views()
 	view_second.gizmos = setting_view_second_gizmos
 	view_second.effects = setting_view_second_effects
 	view_second.particles = setting_view_second_particles
+	view_second.transparent_background = setting_view_second_transparent_background
 	view_second.location = setting_view_second_location
 	view_second.location_last = view_second.location
 	view_second.width = setting_view_second_width
 	view_second.height = setting_view_second_height
-	view_second.quality = e_view_mode.SHADED
-	view_second.camera = -5
+	view_second.renderer = e_renderer.STANDARD
+	view_second.camera = view_camera_active
 	view_second.title = ""
 	
 	view_glow_ani = 0
 	view_glow_location_prev = ""
-	
-	view_render = false
-	view_render_real_time = true
 	
 	view_control_ratio = 1
 	view_control_edit = null
@@ -76,5 +74,5 @@ function app_startup_interface_views()
 	view_control_plane_normal = vec3(0)
 	view_control_plane_origin = vec3(0)
 	view_control_plane = false
-	view_control_move_flip_axis = [false, false, false]
+	view_control_move_flip_axis = [ false, false, false ]
 }

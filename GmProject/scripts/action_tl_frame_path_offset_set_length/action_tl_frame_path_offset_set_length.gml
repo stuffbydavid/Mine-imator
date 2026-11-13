@@ -1,5 +1,3 @@
-/// action_tl_frame_path_offset_set_length()
-
 function action_tl_frame_path_offset_set_length()
 {
 	var path = tl_edit.value[e_value.PATH_OBJ];

@@ -1,9 +1,8 @@
-/// model_part_fill_shape_vbuffer_map(part, vbuffermap, alphamap, bend)
+/// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by a rotation vector.
 /// @arg part
-/// @arg vbuffermap
+/// @arg vertexbuffermap
 /// @arg alphamap
 /// @arg bend
-/// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by a rotation vector.
 
 function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 {

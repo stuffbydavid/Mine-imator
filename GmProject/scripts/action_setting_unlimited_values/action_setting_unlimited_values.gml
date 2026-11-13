@@ -1,13 +1,10 @@
-/// action_setting_unlimited_values(unlimited_values)
-/// @arg unlimited_values
-
-function action_setting_unlimited_values(unlimited_values)
+function action_setting_unlimited_values(enabled)
 {
-	if (unlimited_values)
+	if (enabled)
 	{
-		if (!question(text_get("questionunlimitedvalues")))
+		if (!question(text_get("question/unlimited_values")))
 			return 0
 	}
 	
-	setting_unlimited_values = unlimited_values
+	setting_unlimited_values = enabled
 }

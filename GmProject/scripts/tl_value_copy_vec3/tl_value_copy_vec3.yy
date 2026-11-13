@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_value_copy_vec3",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_value_copy_vec3",
+  "parent":{
+    "name":"Values",
+    "path":"folders/Scripts/Project/Timeline/Values.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

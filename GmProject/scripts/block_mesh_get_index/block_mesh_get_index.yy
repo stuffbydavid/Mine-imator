@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_mesh_get_index",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_mesh_get_index",
+  "parent":{
+    "name":"Meshes",
+    "path":"folders/Scripts/Minecraft/Blocks/Meshes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

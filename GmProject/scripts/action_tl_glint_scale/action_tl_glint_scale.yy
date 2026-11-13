@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_glint_scale",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Graphics",
-    "path": "folders/Scripts/App/Actions/Timeline/Timeline editor/Graphics.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_glint_scale",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_glint_scale",
+  "parent":{
+    "name":"Appearance",
+    "path":"folders/Scripts/App/Actions/Timeline/Timeline editor/Appearance.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

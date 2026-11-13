@@ -1,7 +1,4 @@
-/// action_tl_inherit_visibility(enable)
-/// @arg enable
-
-function action_tl_inherit_visibility(enable)
+function action_tl_inherit_visibility(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_inherit_visibility(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.inherit_visibility, enable)
+				history_save_var(other.id, other.inherit_visibility, enabled)
 			
-			inherit_visibility = enable
+			inherit_visibility = enabled
 			update_matrix = true
 		}
 	}

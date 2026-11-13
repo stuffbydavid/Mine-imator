@@ -1,4 +1,3 @@
-/// project_load_legacy_beta_value_id(type, id)
 /// @arg type
 /// @arg valueid
 
@@ -30,10 +29,12 @@ function project_load_legacy_beta_value_id(type, vid)
 			case 0: return e_value.ALPHA
 			case 1: return e_value.MIX_PERCENT
 			case 2:
+			{
 				if (type = e_tl_type.POINT_LIGHT)
 					return e_value.LIGHT_RANGE
+				
 				return e_value.MIX_COLOR
-			
+			}
 			case 3: return e_value.SCA_X
 			case 4: return e_value.SCA_Y
 			case 5: return e_value.SCA_Z

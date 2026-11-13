@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_res_reload_world",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_res_reload_world",
+  "parent":{
+    "name":"Resources",
+    "path":"folders/Scripts/App/Actions/Resources.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,3 @@
-/// project_save_values(name, array, defaultarray)
 /// @arg name
 /// @arg array
 /// @arg defaultarray

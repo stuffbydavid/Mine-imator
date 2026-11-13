@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_get_dye",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_get_dye",
+  "parent":{
+    "name":"Color",
+    "path":"folders/Scripts/Minecraft/Color.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

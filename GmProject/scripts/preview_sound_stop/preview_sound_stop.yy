@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"preview_sound_stop",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"preview_sound_stop",
+  "parent":{
+    "name":"Preview",
+    "path":"folders/Scripts/App/Interface/Components/Preview.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

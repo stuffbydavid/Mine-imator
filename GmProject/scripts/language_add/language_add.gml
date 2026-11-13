@@ -1,10 +1,8 @@
-/// language_add()
-/// @desc Loads language file from filepath and registers data
+/// @desc Loads language file from filepath and registers data.
 
 function language_add()
 {
 	var fn = file_dialog_open_language();
-	
 	if (fn = "")
 		return 0
 	
@@ -19,7 +17,7 @@ function language_add()
 	
 	// New/edit language object
 	language_remove(filename_name(fn))
-	langauge_new(fn)
+	language_new(fn)
 	
 	languages_save()
 }

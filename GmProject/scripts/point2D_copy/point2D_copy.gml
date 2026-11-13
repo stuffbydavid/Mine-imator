@@ -1,5 +1,4 @@
 /// CppSeparate VecType point2D_copy(VecType)
-/// point2D_copy(point)
 /// @arg point
 
 function point2D_copy(p)

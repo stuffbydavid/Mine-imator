@@ -1,4 +1,3 @@
-/// value_get_point3D(value, [default])
 /// @arg value
 /// @arg [default]
 

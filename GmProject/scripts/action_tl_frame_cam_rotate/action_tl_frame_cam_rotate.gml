@@ -1,6 +1,3 @@
-/// action_tl_frame_cam_rotate(rotate)
-/// @arg rotate
-
 function action_tl_frame_cam_rotate(rotate)
 {
 	tl_value_set_start(action_tl_frame_cam_rotate, false)

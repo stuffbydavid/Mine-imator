@@ -1,4 +1,3 @@
-/// action_lib_remove()
 /// @desc Removes the template from the library.
 
 function action_lib_remove()
@@ -18,8 +17,7 @@ function action_lib_remove()
 	}
 	else
 	{
-		var hobj, index;
-		hobj = null
+		var hobj = null;
 		
 		if (!history_redo)
 		{
@@ -96,7 +94,7 @@ function action_lib_remove()
 			instance_destroy()
 	}
 	
-	tab_template_editor_update_ptype_list()
+	tab_object_editor_update_ptype_list()
 	
 	project_ik_part_array = null
 	
@@ -105,6 +103,8 @@ function action_lib_remove()
 	tl_update_matrix()
 	
 	app_update_tl_edit()
+	
+	project_update_counts()
 	
 	lib_preview.update = true
 }

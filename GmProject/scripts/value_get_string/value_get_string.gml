@@ -1,4 +1,3 @@
-/// value_get_string(value, [default])
 /// @arg value
 /// @arg [default]
 

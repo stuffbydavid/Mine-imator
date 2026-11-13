@@ -1,4 +1,3 @@
-/// draw_circle_ext(x, y, radius, outline, detail, color, alpha)
 /// @arg x
 /// @arg y
 /// @arg radius

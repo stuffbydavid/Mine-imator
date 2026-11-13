@@ -1,4 +1,3 @@
-/// action_tl_select_keyframes(timeline)
 /// @arg timeline
 
 function action_tl_select_keyframes(tl)
@@ -10,11 +9,9 @@ function action_tl_select_keyframes(tl)
 	}
 	else
 	{
-		var shift;
-		
 		if (history_redo)
 		{
-			shift = history_data.shift
+			var shift = history_data.shift;
 			
 			if (!shift)
 				tl_deselect_all()
@@ -32,13 +29,15 @@ function action_tl_select_keyframes(tl)
 		}
 		else
 		{
-			var hobj = history_set(action_tl_select_keyframes);
-			
+			var hobj, shift;
+			hobj = history_set(action_tl_select_keyframes)
 			shift = keyboard_check(vk_shift)
+			
 			with (hobj)
 			{
 				tl_amount = 0
-				id.shift = shift
+				self.shift = shift
+				
 				history_save_tl_select()
 			}
 			

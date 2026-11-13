@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"vertex_add_wave",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vertex_add_wave",
+  "parent":{
+    "name":"Vertex",
+    "path":"folders/Scripts/Utility/Vertex.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

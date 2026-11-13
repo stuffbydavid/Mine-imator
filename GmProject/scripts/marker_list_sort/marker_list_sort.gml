@@ -1,5 +1,3 @@
-/// marker_list_sort()
-
 function marker_list_sort()
 {
 	var newlist = ds_list_create();

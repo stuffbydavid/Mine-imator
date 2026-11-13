@@ -1,4 +1,3 @@
-/// keyframes_save()
 /// @desc Export the selected keyframes. All selected keyframes must be of the same timeline/model.
 
 function keyframes_save()
@@ -7,6 +6,7 @@ function keyframes_save()
 	var ismodel, tllast;
 	ismodel = false
 	tllast = null
+	
 	with (obj_keyframe)
 	{
 		if (!selected)

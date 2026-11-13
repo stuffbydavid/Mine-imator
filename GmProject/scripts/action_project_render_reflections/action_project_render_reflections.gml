@@ -1,11 +1,10 @@
-/// action_project_render_reflections(enable)
-/// @arg enable
-
-function action_project_render_reflections(enable)
+function action_project_render_reflections(enabled)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_reflections, project_render_reflections, enable, 1)
+	action_project_render_preset_edit_locked()
 	
-	project_render_reflections = enable
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_reflections, render_preset_edit.renderer[renderer_edit].reflections, enabled, true)
+	
+	render_preset_edit.renderer[renderer_edit].reflections = enabled
 	render_samples = -1
 }

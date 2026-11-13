@@ -1,11 +1,10 @@
-/// action_lib_model_name(name)
-/// @arg name
 /// @desc Changes the character model.
+/// @arg name
+/// @arg [state]
 
-function action_lib_model_name(name)
+function action_lib_model_name(name, state = null)
 {
-	var state, hobj;
-	hobj = null
+	var hobj = null;
 	
 	if (history_undo)
 	{
@@ -16,24 +15,38 @@ function action_lib_model_name(name)
 	else
 	{
 		if (history_redo)
+		{
 			name = history_data.new_name
+			state = history_data.new_state
+		}
 		else
 		{
+			if (state = null)
+				state = array_copy_1d(mc_assets.model_name_map[?name].default_state)
+			
+			if (obj_edit.model_name = name && array_equals(obj_edit.model_state, state))
+				return 0
+
+			asset_picker_state_map[?mc_assets.model_name_map[?name]] = array_copy_1d(state)
+			
 			hobj = history_set(action_lib_model_name)
 			with (hobj)
 			{
-				old_name = temp_edit.model_name
-				old_state = array_copy_1d(temp_edit.model_state)
+				old_name = obj_edit.model_name
+				old_state = array_copy_1d(obj_edit.model_state)
 				new_name = name
+				new_state = array_copy_1d(state)
+				
 				tl_amount = 0
 				part_child_amount = 0
+				
 				history_save_tl_select()
 			}
 			
-			// Find affected timelines (TODO: timeline info of unused parts is not saved and will be LOST)
+			// Find affected timelines
 			with (obj_timeline)
 			{
-				if (temp != temp_edit || part_list = null)
+				if (temp != obj_edit || part_list = null)
 					continue
 				
 				with (hobj)
@@ -48,26 +61,23 @@ function action_lib_model_name(name)
 				}
 			}
 		}
-		
-		state = mc_assets.model_name_map[?name].default_state
 	}
 	
-	tl_deselect_all()
-	
-	with (temp_edit)
+	with (obj_edit)
 	{
+		if (object_index != obj_timeline)
+			tl_deselect_all()
+			
 		model_name = name
 		model_state = array_copy_1d(state)
+		
 		temp_update_model()
 		temp_update_model_timeline_tree(hobj)
 		temp_update_model_shape()
 		temp_update_display_name()
-		model_shape_update_color()
 		
-		if (pattern_type != "")
-			array_add(pattern_update, id)
-		
-		temp_update_armor(id)
+		if (object_index = obj_timeline && id != app.place_tl)
+			tl_select_single()
 	}
 	
 	if (history_undo)
@@ -112,6 +122,7 @@ function action_lib_model_name(name)
 	}
 	
 	app_update_tl_edit()
+	
 	tl_update_list()
 	tl_update_matrix()
 	

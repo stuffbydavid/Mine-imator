@@ -1,4 +1,3 @@
-/// draw_radiobutton(name, x, y, value, active, script)
 /// @arg name
 /// @arg x
 /// @arg y
@@ -9,7 +8,7 @@
 function draw_radiobutton(name, xx, yy, value, active, script)
 {
 	var text, w, h, pressed;
-	text = text_get(argument0)
+	text = text_get(name)
 	
 	draw_set_font(font_label)
 	

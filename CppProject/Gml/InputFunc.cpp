@@ -12,8 +12,8 @@ namespace CppProject
 			key == vk_rcontrol || key == vk_lcontrol ||
 			key == vk_rshift || key == vk_lshift)
 			return App->keyStateMap[key].down;
-		else
 	#endif
+		
 		return App->keyStateMap[key].down;
 	}
 
@@ -39,22 +39,24 @@ namespace CppProject
 
 	BoolType mouse_check_button(IntType button)
 	{
-		return AppWin->mouseDown[button];
+		return AppWin && AppWin->mouseDown[button];
 	}
 
 	BoolType mouse_clear(IntType button)
 	{
-		AppWin->mouseDown[button] = false;
+		if (AppWin)
+			AppWin->mouseDown[button] = false;
+		
 		return false;
 	}
 
 	BoolType mouse_wheel_down()
 	{
-		return (AppWin->mouseWheel < 0);
+		return AppWin && AppWin->mouseWheel < 0;
 	}
 
 	BoolType mouse_wheel_up()
 	{
-		return (AppWin->mouseWheel > 0);
+		return AppWin && AppWin->mouseWheel > 0;
 	}
 }

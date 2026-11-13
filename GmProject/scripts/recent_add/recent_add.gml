@@ -1,4 +1,3 @@
-/// recent_add()
 /// @desc Adds the opened project to the top of the recent list.
 
 function recent_add()
@@ -28,7 +27,7 @@ function recent_add()
 	var thumbnailfn, surf;
 	thumbnailfn = project_folder + "/thumbnail.png"
 	surf = null
-	render_start(surf, null, recent_thumbnail_width, recent_thumbnail_height)
+	render_start(surf, null, "recent", recent_thumbnail_width, recent_thumbnail_height)
 	render_low()
 	surf = render_done()
 	surface_save_lib(surf, thumbnailfn)
@@ -44,11 +43,14 @@ function recent_add()
 		name = app.project_name
 		author = app.project_author
 		description = app.project_description
-		thumbnail = texture_create(thumbnailfn)
+		
+		texture_page_reset()
+		thumbnail = texture_create(thumbnailfn, false)
 		
 		filename = app.project_file
 		last_opened = date_current_datetime()
 		pinned = false
+		
 		ds_list_insert(app.recent_list, 0, id)
 	}
 	

@@ -1,5 +1,3 @@
-/// window_draw_cover()
-
 function window_draw_cover()
 {
 	if (popup_block_ani > 0)

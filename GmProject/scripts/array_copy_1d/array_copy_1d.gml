@@ -1,5 +1,4 @@
 /// CppSeparate ArrType array_copy_1d(VarType)
-/// array_copy_1d(array)
 /// @arg array
 
 function array_copy_1d(arr)

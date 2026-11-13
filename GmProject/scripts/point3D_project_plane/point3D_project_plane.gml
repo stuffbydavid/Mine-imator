@@ -1,9 +1,8 @@
-/// point3D_project_plane(pos, planepos, normal)
-/// @arg pos
-/// @arg planepos
-/// @arg normal
+/// @arg point
+/// @arg planeorigin
+/// @arg planenormal
 
-function point3D_project_plane(pos, planepos, n)
+function point3D_project_plane(pnt, planepos, planenormal)
 {
-	return point3D_sub(pos, vec3_mul(n, (vec3_dot(n, pos) + -vec3_dot(n, planepos))))
+	return point3D_sub(pnt, vec3_mul(planenormal, (vec3_dot(planenormal, pnt) + -vec3_dot(planenormal, planepos))))
 }

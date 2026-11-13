@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tab_get_title",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Tabs",
-    "path": "folders/Scripts/App/Interface/Tabs.yy",
+  "$GMScript":"v1",
+  "%Name":"tab_get_title",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_get_title",
+  "parent":{
+    "name":"Tabs",
+    "path":"folders/Scripts/App/Interface/Tabs.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

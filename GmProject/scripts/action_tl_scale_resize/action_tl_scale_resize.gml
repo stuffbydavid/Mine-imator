@@ -1,7 +1,4 @@
-/// action_tl_scale_resize(enable)
-/// @arg enable
-
-function action_tl_scale_resize(enable)
+function action_tl_scale_resize(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_scale_resize(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.scale_resize, enable)
+				history_save_var(other.id, other.scale_resize, enabled)
 			
-			scale_resize = enable
+			scale_resize = enabled
 			update_matrix = true
 		}
 	}

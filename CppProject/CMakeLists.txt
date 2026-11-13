@@ -1,12 +1,23 @@
 cmake_minimum_required(VERSION 3.18)
 
 # Toolchain-affecting settings established before project()
-if(CMAKE_HOST_WIN32)
-	set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release" CACHE STRING "Supported build configurations" FORCE)
-	cmake_policy(SET CMP0091 NEW)
+set(PROJECT_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release")
+if(CMAKE_GENERATOR MATCHES "^Visual Studio")
+	set(PROJECT_CONFIGURATION_TYPES "Debug;DebugGL;RelWithDebInfo;RelWithDebInfoGL;Release")
+endif()
+get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(IS_MULTI_CONFIG)
+	set(CMAKE_CONFIGURATION_TYPES "${PROJECT_CONFIGURATION_TYPES}" CACHE STRING "Supported build configurations" FORCE)
+else()
+	if(NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+		set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+	endif()
+	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "${PROJECT_CONFIGURATION_TYPES}")
 endif()
 
-if(CMAKE_HOST_APPLE)
+if(CMAKE_HOST_WIN32)
+	cmake_policy(SET CMP0091 NEW)
+elseif(CMAKE_HOST_APPLE)
 	if(CMAKE_GENERATOR STREQUAL "Xcode")
 		set(CMAKE_SUPPRESS_REGENERATION ON)
 	endif()
@@ -34,9 +45,7 @@ if(CMAKE_HOST_APPLE)
 	endif()
 	set(CMAKE_OSX_DEPLOYMENT_TARGET "${CMAKE_OSX_DEPLOYMENT_TARGET}"
 		CACHE STRING "Minimum supported macOS version" FORCE)
-endif()
-
-if(CMAKE_HOST_UNIX AND NOT CMAKE_HOST_APPLE)
+else()
 	set(CMAKE_C_COMPILER "/usr/bin/clang" CACHE FILEPATH "Linux C compiler" FORCE)
 	set(CMAKE_CXX_COMPILER "/usr/bin/clang++" CACHE FILEPATH "Linux C++ compiler" FORCE)
 endif()
@@ -70,6 +79,7 @@ set(QT_SOURCE_DIR "${QT_BASE_DIR}/qt5")
 set(LIBZIP_SOURCE_DIR "${DEV_DIR}/Libzip/libzip-1.11.4")
 set(FFMPEG_SOURCE_DIR "${DEV_DIR}/FFmpeg/ffmpeg-5.1.10")
 set(OPENAL_SOURCE_DIR "${DEV_DIR}/OpenAL/openal-soft-1.24.3")
+set(ZSTD_SOURCE_DIR "${DEV_DIR}/Zstd/zstd-1.5.7")
 
 set(ASSET_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Asset")
 set(GM_SHADERS_DIR "${REPO_DIR}/GmProject/shaders")
@@ -133,6 +143,10 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_CXX_FLAGS}"
 	CACHE STRING "C++ flags for RelWithDebInfo" FORCE)
 set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${RELWITHDEBINFO_LINKER_FLAGS}"
 	CACHE STRING "Executable linker flags for RelWithDebInfo" FORCE)
+if(CMAKE_GENERATOR MATCHES "^Visual Studio")
+	set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGGL "Release;")
+	set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFOGL "Release;")
+endif()
 
 # Find Qt package
 find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
@@ -140,7 +154,6 @@ find_package(Qt5 5.15.19 EXACT CONFIG REQUIRED COMPONENTS Widgets Gui Network
 	NO_DEFAULT_PATH)
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "QtGenerated")
 set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER "CMakePredefinedTargets")
-set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC OFF)
 set(CMAKE_AUTOUIC OFF)
 
@@ -272,6 +285,8 @@ add_gm_manifest_entries("Scripts" CPPGEN_SCRIPT_ENTRIES
 file(GLOB_RECURSE ASSET_SHADER_SOURCE_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
 	"${ASSET_SOURCE_DIR}/Shaders/*.vsh"
 	"${ASSET_SOURCE_DIR}/Shaders/*.fsh"
+	"${ASSET_SOURCE_DIR}/Shaders/*.gsh.hlsl"
+	"${ASSET_SOURCE_DIR}/Shaders/*.gsh.glsl"
 )
 list(SORT ASSET_SHADER_SOURCE_FILES)
 set(SHADER_FILES)
@@ -347,6 +362,15 @@ add_executable(${PROJECT_NAME}
 	${APP_ICON_RESOURCE}
 )
 
+# World.hpp declares Qt objects for signals and slots
+set_property(TARGET ${PROJECT_NAME} PROPERTY AUTOMOC OFF)
+qt5_wrap_cpp(WORLD_MOC_SOURCES
+	"${CMAKE_CURRENT_SOURCE_DIR}/World/World.hpp"
+	TARGET ${PROJECT_NAME}
+)
+target_sources(${PROJECT_NAME} PRIVATE ${WORLD_MOC_SOURCES})
+source_group("QtGenerated" FILES ${WORLD_MOC_SOURCES})
+
 set_source_files_properties("${CPPGEN_BUILD_STAMP}" PROPERTIES GENERATED TRUE HEADER_FILE_ONLY TRUE)
 target_sources(${PROJECT_NAME} PRIVATE "${CPPGEN_BUILD_STAMP}")
 
@@ -361,6 +385,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_CURRENT_SOURCE_DIR}/External/Sources"
 	"${LIBZIP_SOURCE_DIR}/lib"
 	"${OPENAL_SOURCE_DIR}/include"
+	"${ZSTD_SOURCE_DIR}/lib"
 	"${QT_SOURCE_DIR}/qtbase/src/3rdparty/freetype/include"
 )
 
@@ -380,6 +405,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 	"PROJECT_NAME=\"${PROJECT_NAME}\""
 	"ASSETS_DIR=\"${ASSET_SOURCE_DIR}\""
 	"GM_SHADERS_DIR=\"${GM_SHADERS_DIR}\""
+	"DEBUG_MODE=$<IF:$<CONFIG:Debug>,1,0>"
+	"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
+	"OPTIMIZED=$<IF:$<OR:$<CONFIG:RelWithDebInfo>,$<CONFIG:Release>>,1,0>"
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	OpenMP::OpenMP_CXX
@@ -387,19 +415,17 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 if(WIN32)
 	message(STATUS "Windows platform (${WINDOWS_ARCH})")
+	set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 	# Qt and the bundled static libraries are built against the static MSVC CRT
 	set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
 	target_compile_options(${PROJECT_NAME} PRIVATE /MP /bigobj)
 	target_compile_definitions(${PROJECT_NAME} PRIVATE OS_WINDOWS)
-	target_compile_definitions(${PROJECT_NAME} PRIVATE
-		"DEBUG_MODE=$<IF:$<CONFIG:Debug>,1,0>"
-		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
-	)
 
 	target_link_libraries(${PROJECT_NAME} PRIVATE
 		"${EXTERNAL_PLATFORM_DIR}/zip.lib"
 		"${EXTERNAL_PLATFORM_DIR}/OpenAL32.lib"
+		"${EXTERNAL_PLATFORM_DIR}/zstd_static.lib"
 		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
 		"${EXTERNAL_PLATFORM_DIR}/libswresample.a"
@@ -412,16 +438,27 @@ if(WIN32)
 		strmiids
 		Avrt
 		d3d11
-		"$<$<CONFIG:Debug>:d3dcompiler>"
+		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:d3dcompiler>"
 	)
 	target_link_options(${PROJECT_NAME} PRIVATE
 		"$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:/IGNORE:4099>"
 	)
-
+	
+	# Toggle console
 	set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE "$<CONFIG:Release>")
+
+	# Set working directories
 	set_property(TARGET ${PROJECT_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
 	set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
-	set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+
+	# GL configurations only launch an existing Debug or RelWithDebInfo executable
+	if(CMAKE_GENERATOR MATCHES "^Visual Studio")
+		set_target_properties(${PROJECT_NAME} PROPERTIES
+			VS_GLOBAL_ForceImportAfterCppTargets "${CMAKE_CURRENT_SOURCE_DIR}/LaunchGL.targets"
+			VS_DEBUGGER_COMMAND "$<$<CONFIG:DebugGL>:${CMAKE_BINARY_DIR}/Debug/${PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}>$<$<CONFIG:RelWithDebInfoGL>:${CMAKE_BINARY_DIR}/RelWithDebInfo/${PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}>"
+			VS_DEBUGGER_COMMAND_ARGUMENTS "$<$<OR:$<CONFIG:DebugGL>,$<CONFIG:RelWithDebInfoGL>>:--gfx gl>"
+		)
+	endif()
 else()
 	target_compile_options(${PROJECT_NAME} PRIVATE
 		-Wall
@@ -433,17 +470,14 @@ else()
 		-Wno-unknown-pragmas
 		${CLANG21_WARNING_SUPPRESSIONS}
 	)
-	target_compile_definitions(${PROJECT_NAME} PRIVATE
-		OS_UNIX
-		"DEBUG_MODE=$<IF:$<CONFIG:Release>,0,1>"
-		"RELEASE_MODE=$<IF:$<CONFIG:Release>,1,0>"
-	)
+	target_compile_definitions(${PROJECT_NAME} PRIVATE OS_UNIX)
 
 	# Static-library order matters to GNU-family linkers: dependants precede the
 	# archives that satisfy them
 	target_link_libraries(${PROJECT_NAME} PRIVATE
 		"${EXTERNAL_PLATFORM_DIR}/libzip.a"
 		"${EXTERNAL_PLATFORM_DIR}/libopenal.a"
+		"${EXTERNAL_PLATFORM_DIR}/libzstd.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavformat.a"
 		"${EXTERNAL_PLATFORM_DIR}/libavcodec.a"
 		"${EXTERNAL_PLATFORM_DIR}/libswresample.a"
@@ -466,10 +500,12 @@ else()
 		find_library(ICONV_LIBRARY iconv REQUIRED)
 		find_library(AUDIO_TOOLBOX_FRAMEWORK AudioToolbox REQUIRED)
 		find_library(CORE_AUDIO_FRAMEWORK CoreAudio REQUIRED)
+		find_library(CORE_GRAPHICS_FRAMEWORK CoreGraphics REQUIRED)
 		target_link_libraries(${PROJECT_NAME} PRIVATE
 			${ICONV_LIBRARY}
 			${AUDIO_TOOLBOX_FRAMEWORK}
 			${CORE_AUDIO_FRAMEWORK}
+			${CORE_GRAPHICS_FRAMEWORK}
 		)
 
 		message(STATUS "OpenMP runtime = ${OPENMP_RUNTIME_LIBRARY}")
@@ -485,6 +521,7 @@ endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	Qt5::Widgets
 	Qt5::Gui
+	Qt5::GuiPrivate
 	Qt5::Network
 )
 
@@ -502,8 +539,6 @@ add_custom_command(
 		"$<IF:$<CONFIG:Release>,echo,copy_directory>"
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_SOURCE_DIR}>"
 		"$<$<NOT:$<CONFIG:Release>>:${DATAFILES_OUTPUT_DIR}>"
-	COMMAND "${CMAKE_COMMAND}" -E remove_directory
-		"${DATAFILES_OUTPUT_DIR}/Data/Minecraft/Patched"
 	VERBATIM
 )
 
@@ -522,9 +557,9 @@ install(DIRECTORY
 	"${DATAFILES_SOURCE_DIR}/Schematics"
 	DESTINATION "."
 	PATTERN "Libraries" EXCLUDE
-	PATTERN "Patched" EXCLUDE
 )
 install(DIRECTORY DESTINATION "Skins")
+install(DIRECTORY DESTINATION "Packs")
 
 if(WIN32)
 	install(FILES "${EXTERNAL_PLATFORM_DIR}/vcomp140.dll" DESTINATION ".")

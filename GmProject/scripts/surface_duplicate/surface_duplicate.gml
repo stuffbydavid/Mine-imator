@@ -1,5 +1,4 @@
-/// surface_duplicate(surf, [scale])
-/// @arg surf
+/// @arg surface
 /// @arg [scale]
 
 function surface_duplicate(surf, scale = 1)

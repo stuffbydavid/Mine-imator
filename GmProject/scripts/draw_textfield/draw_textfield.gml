@@ -1,4 +1,3 @@
-/// draw_textfield(name, x, y, width, height, textbox, script, [placeholder, [labelpos, [error]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -6,35 +5,43 @@
 /// @arg height
 /// @arg textbox
 /// @arg script
-/// @arg [placeholder
-/// @arg [labelpos
-/// @arg [error]]]
+/// @arg [placeholder]
+/// @arg [labelpos]
+/// @arg [error]
 
 function draw_textfield(name, xx, yy, w, h, textbox, script, placeholder = "", labelpos = "top", err = false)
 {
-	var capwidth, fieldy;
-	
+	var capwidth, fieldy, totalheight, update;
 	capwidth = 0
 	fieldy = yy
+	totalheight = h
 	
 	draw_set_font(font_label)
 	
 	if (labelpos = "top")
+	{
 		fieldy += (label_height + 8)
+		totalheight += (label_height + 8)
+	}
+	else if (labelpos = "benchtop")
+	{
+		fieldy += 32
+		totalheight += 32
+	}
 	else if (labelpos = "none")
 		capwidth = 0
 	else
 		capwidth = string_width(text_get(name)) + 8
 	
-	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
+	if (xx + w < content_x || xx > content_x + content_width || yy + totalheight < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
-			ds_list_add(textbox_list, [textbox, content_tab, yy, content_y, content_height])
+			ds_list_add(textbox_list, [ textbox, content_tab, yy, content_y, content_height ])
 		
 		return 0
 	}
 	
-	var update = draw_inputbox(name, xx + capwidth, fieldy, w - capwidth, h, placeholder, textbox, script, false, err)
+	update = draw_inputbox(name, xx + capwidth, fieldy, w - capwidth, h, placeholder, textbox, script, false, err)
 	
 	// Use microanimation from inputbox to determine color
 	draw_set_font(font_label)
@@ -51,7 +58,9 @@ function draw_textfield(name, xx, yy, w, h, textbox, script, placeholder = "", l
 		labelalpha = 1
 	}
 	
-	if (labelpos = "top")
+	if (labelpos = "benchtop")
+		draw_label(string_limit(text_get(name), w), xx, yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
+	else if (labelpos = "top")
 		draw_label(string_limit(text_get(name), dw), xx, yy - 3, fa_left, fa_top, labelcolor, labelalpha)
 	else if (labelpos != "none")
 		draw_label(text_get(name), xx, yy + h/2, fa_left, fa_middle, labelcolor, labelalpha)

@@ -1,8 +1,4 @@
-/// action_tl_glint_scale(value, add)
-/// @arg value
-/// @arg add
-
-function action_tl_glint_scale(val, add)
+function action_tl_glint_scale(value, add)
 {
 	if (history_undo)
 	{
@@ -25,6 +21,6 @@ function action_tl_glint_scale(val, add)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_glint_scale_tree(id, val, add, hobj)
+				action_tl_glint_scale_tree(id, value, add, hobj)
 	}
 }

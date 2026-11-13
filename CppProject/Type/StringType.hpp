@@ -60,6 +60,7 @@ namespace CppProject
 		inline BoolType EndsWith(const StringType& subStr) const { return QStr().endsWith(subStr); }
 		inline IntType Count(const StringType& subStr) const { return QStr().count(subStr); }
 		inline IntType IndexOf(const StringType& subStr) const { return QStr().indexOf(subStr); }
+		inline IntType LastIndexOf(const StringType& subStr) const { return QStr().lastIndexOf(subStr); }
 
 		// Return modified string
 		inline StringType Removed(IntType pos, IntType n) const { return QStr().remove(pos, n); }
@@ -116,6 +117,7 @@ namespace CppProject
 			QHash<IntType, TableEntry> entries; // Map string id to entry
 			QHash<QString, IntType> idMap; // Map QString to id
 			QHash<IntType, IntType> mainIdMap; // String id on thread table to main table id
+			QHash<IntType, IntType> mainRefChanges; // Main table reference changes during OpenMP work
 			IntType nextId = 0;
 			IntType startId = 0;
 		};

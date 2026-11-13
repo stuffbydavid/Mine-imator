@@ -1,7 +1,6 @@
-/// action_setting_gizmos_face_camera(yes)
-/// @arg yes
-
-function action_setting_gizmos_face_camera(yes)
+function action_setting_gizmos_face_camera(enabled)
 {
-	setting_gizmos_face_camera = yes
+	setting_gizmos_face_camera = enabled
+	
+	view_changed()
 }

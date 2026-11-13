@@ -1,5 +1,4 @@
-/// buffer_read_short()
-/// @desc Reads a 2 byte short integer.
+/// @desc Reads a 2-byte short integer.
 
 function buffer_read_short()
 {

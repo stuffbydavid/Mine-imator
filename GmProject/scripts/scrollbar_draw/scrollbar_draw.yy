@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scrollbar_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Scrollbar",
-    "path": "folders/Scripts/App/Interface/Components/Scrollbar.yy",
+  "$GMScript":"v1",
+  "%Name":"scrollbar_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrollbar_draw",
+  "parent":{
+    "name":"Scrollbar",
+    "path":"folders/Scripts/App/Interface/Components/Scrollbar.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

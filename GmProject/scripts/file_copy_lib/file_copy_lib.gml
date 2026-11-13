@@ -1,4 +1,3 @@
-/// file_copy_lib(source, destination)
 /// @arg source
 /// @arg destination
 

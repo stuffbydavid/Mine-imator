@@ -1,4 +1,3 @@
-/// tl_update_rot_point()
 /// @desc Updates the rotation point of the given timeline if no custom has been set.
 
 function tl_update_rot_point()

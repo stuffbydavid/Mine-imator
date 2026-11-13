@@ -1,15 +1,14 @@
-/// font_add_lib(filename, size, bold, italic, [aa])
 /// @arg filename
 /// @arg size
 /// @arg bold
 /// @arg italic
-/// @arg [aa]
+/// @arg [antialiasing]
 
-function font_add_lib(fname, size, bold, italic, aa = true)
+function font_add_lib(fn, size, bold, italic, aa = true)
 {
-	var tmpfile = file_directory + "tmp.ttf"
+	var tmpfile = file_directory_get() + "tmp.ttf";
 	
-	file_copy_lib(fname, tmpfile)
+	file_copy_lib(fn, tmpfile)
 	
 	if (file_exists_lib(tmpfile))
 	{
