@@ -73,7 +73,7 @@ namespace CppProject
 		}
 	}
 
-	BoolType Section::Load(NbtCompound* nbt, Chunk::Format format)
+	BoolType Section::Load(NbtCompound* nbt, Chunk::Format format, NbtCompound* below)
 	{
 		if (dataType == NONE)
 			return true;
@@ -149,6 +149,9 @@ namespace CppProject
 			{
 				const Heap<int8_t>& blocksArray = nbt->ByteArray("Blocks");
 				const Heap<int8_t>& dataArray = nbt->ByteArray("Data");
+				IntType expectedSize = format == Chunk::PRE_JAVA_1_2 ? 32768 : SECTION_SIZE3;
+				if (blocksArray.Size() != expectedSize || dataArray.Size() != expectedSize / 2)
+					throw QString("Invalid legacy section block data length");
 				const Heap<int8_t>* skyLightArray = nullptr;
 				const Heap<int8_t>* blockLightArray = nullptr;
 
@@ -193,9 +196,35 @@ namespace CppProject
 					else // Lower bits
 						legacyData &= 15;
 
+					// Upper halves store facing bits, not the plant species
+					if (legacyId == 175 && (legacyData & 8))
+					{
+						const Heap<int8_t>* lowerBlocks = &blocksArray;
+						const Heap<int8_t>* lowerData = &dataArray;
+						IntType lowerIndex = arrayIndex - (format == Chunk::PRE_JAVA_1_2 ? 1 : SECTION_SIZE2);
+						if (format == Chunk::PRE_JAVA_1_2 && y + offset == 0)
+							lowerIndex = -1;
+						else if (lowerIndex < 0 && below)
+						{
+							lowerBlocks = &below->ByteArray("Blocks");
+							lowerData = &below->ByteArray("Data");
+							if (lowerBlocks->Size() != SECTION_SIZE3 || lowerData->Size() != SECTION_SIZE3 / 2)
+								throw QString("Invalid legacy section below plant");
+							lowerIndex += SECTION_SIZE3;
+						}
+
+						uint8_t lowerMetadata = lowerIndex >= 0 ?
+							(uint8_t(lowerData->Value(lowerIndex / 2)) >> ((lowerIndex & 1) * 4)) & 15 : 15;
+						if (lowerIndex >= 0 && uint8_t(lowerBlocks->Value(lowerIndex)) == 175 && lowerMetadata < 6)
+							legacyData = 8 | lowerMetadata;
+						else
+							legacyId = 0;
+					}
+
 					if (dataType == BUILDER) // Legacy id+data to block and state id
 					{
 						IntType builderIndex = (y - blockStart.y) * builder.sizeXY + (z - blockStart.z) * builder.size.x + (x - blockStart.x); // YZX order
+						BuilderState state;
 						if (legacyId > 0 && global::legacy_block_set[legacyId]) // Non-air
 						{
 							StringType mcId = global::legacy_block_mc_id[legacyId][legacyData];
@@ -204,15 +233,14 @@ namespace CppProject
 								if (block->timeline)
 									chunk->numTimelines++;
 								
-								builder.paletteIndices[builderIndex] = AddBuilderState({
+								state = {
 									(uint16_t)block->block_id,
 									(uint16_t)global::legacy_block_state_id[legacyId][legacyData].ToInt(),
 									false
-								});
+								};
 							}
 						}
-						else // Air
-							builder.paletteIndices[builderIndex] = AddBuilderState({ 0, 0, false });
+						builder.paletteIndices[builderIndex] = AddBuilderState(state);
 					}
 					else // Preview
 					{

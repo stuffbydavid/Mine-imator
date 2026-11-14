@@ -58,7 +58,8 @@ namespace CppProject
 			if (box.active)
 			{
 				// Floor negative heights and exclude the selection's end boundary
-				stream.sectionMin = IntType(std::floor(RealType(box.start.y) / SECTION_SIZE));
+				// Retain the section below for legacy double-plant upper halves
+				stream.sectionMin = IntType(std::floor(RealType(box.start.y) / SECTION_SIZE)) - 1;
 				stream.sectionMax = IntType(std::floor(RealType(box.end.y - 1) / SECTION_SIZE));
 			}
 
@@ -146,6 +147,11 @@ namespace CppProject
 					return;
 
 				QVector<NbtCompound*> sectionsList = chunkRoot->List<TAG_COMPOUND, NbtCompound>(sectionsName);
+				QHash<IntType, NbtCompound*> legacySections;
+				if (format == JAVA_1_2)
+					for (NbtCompound* comp : sectionsList)
+						legacySections[comp->Byte("Y")] = comp;
+
 				for (NbtCompound* comp : sectionsList)
 				{
 					IntType y = comp->Byte("Y");
@@ -155,7 +161,7 @@ namespace CppProject
 					Section* section = new Section(this, y, box);
 					sections[section->chunkIndex] = section;
 					
-					if (!section->Load(comp, format))
+					if (!section->Load(comp, format, legacySections.value(y - 1, nullptr)))
 					{
 						error = true;
 						return;
