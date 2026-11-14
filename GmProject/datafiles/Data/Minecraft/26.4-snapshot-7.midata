@@ -5036,7 +5036,7 @@
 				],
 				"level": [ "1", "2", "3" ]
 			},
-			"default_state": "contents=empty",
+			"default_state": "contents=empty,level=3",
 			"id": {
 				"minecraft:cauldron": "contents=empty",
 				"minecraft:water_cauldron": "contents=water",
