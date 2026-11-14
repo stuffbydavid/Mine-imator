@@ -4,6 +4,7 @@
 #include "AppHandler.hpp"
 
 #include <QDirIterator>
+#include <QCryptographicHash>
 #include <QFileDialog>
 #include <QJsonParseError>
 #include <QJsonObject>
@@ -21,6 +22,16 @@ namespace CppProject
 	BoolType file_exists(StringType file)
 	{
 		return lib_file_exists(file);
+	}
+
+	StringType sha1_file(StringType filename)
+	{
+		QFile file(filename);
+		QCryptographicHash hash(QCryptographicHash::Sha1);
+		if (!file.open(QIODevice::ReadOnly) || !hash.addData(&file))
+			throw QString("Could not hash file " + filename.QStr() + ": " + file.errorString());
+
+		return QString::fromLatin1(hash.result().toHex());
 	}
 
 	void file_find_close()
