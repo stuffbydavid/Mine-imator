@@ -4203,6 +4203,7 @@
 	},
 	"legacy_model_names":
 	{
+		"pillager": { "name": "illager", "state": "variant=pillager" },
 		"fangs": "evoker_fangs",
 		"zombie_pigman": "piglin",
 		"enchantment_table": "book",

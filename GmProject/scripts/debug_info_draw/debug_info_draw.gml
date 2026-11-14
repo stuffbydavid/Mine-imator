@@ -101,7 +101,7 @@ function debug_info_draw()
 			str += "[F9]: Open working directory" + " \n"
 			str += "[F10]: Open log file" + " \n"
 		}
-		str += "[F11 to disable]"
+		str += "[F11 to toggle]"
 	}
 	
 	var w, h, xx, yy, tx, ty, mouseon;

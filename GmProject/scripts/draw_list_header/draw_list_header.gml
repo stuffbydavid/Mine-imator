@@ -69,7 +69,7 @@ function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "", valu
 	}
 
 	// Switch between grid and list
-	if (ispicker && draw_button_icon("list/view" + string(list), xx + wid - 24, yy, 24, 24, false, list.grid_view ? icons.COMPACT : icons.GRID_VIEW, null, false, list.grid_view ? "tooltip/list_view" : "tooltip/grid_view"))
+	if (ispicker && draw_button_icon("list/view" + string(list), xx + wid - 24, yy, 24, 24, false, list.grid_view ? icons.VIEW_LIST : icons.VIEW_GRID, null, false, list.grid_view ? "tooltip/view_list" : "tooltip/view_grid"))
 	{
 		list.grid_view = !list.grid_view
 		list.view_value = null
