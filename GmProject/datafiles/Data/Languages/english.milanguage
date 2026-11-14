@@ -4,7 +4,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"for_version": "2.1-pre1",
-		"last_change": "2026.11.09"
+		"last_change": "2026.11.13"
 	},
 	"particle/": {
 		"type/": {
@@ -40,6 +40,8 @@
 		"paste_key": "Paste key",
 		"filter_list": "Filter list",
 		"clear_search": "Clear search",
+		"view_list": "Switch to list view",
+		"view_grid": "Switch to grid view",
 		"template/": {
 			"new": "New template",
 			"animate": "Create timeline from template",
@@ -125,12 +127,17 @@
 			"pop_out": "Open in new window",
 			"pop_in": "Close timeline window"
 		},
+		"nav/": {
+			"snap_x": "Snap view to X axis",
+			"snap_y": "Snap view to Y axis",
+			"snap_z": "Snap view to Z axis"
+		},
 		"custom_accent_color": "Custom accent color",
 		"edit_keybind": "Edit keybind",
 		"language_add": "Add language",
 		"language_folder": "Open languages folder",
-		"view_list": "List view",
-		"view_grid": "Grid view",
+		"view_list": "Switch to list view",
+		"view_grid": "Switch to grid view",
 		"experimental": "This setting is experimental and is not fully supported.",
 		"settings/": {
 			"reset": "Reset settings",
@@ -3447,8 +3454,10 @@
 		"model_tex_normal": "Normal map"
 	},
 	"template_editor/": {
+		"model": "Model",
 		"equipment": "Equipment",
-		"model_part": "Model part"
+		"model_part": "Model part",
+		"block": "Block"
 	},
 	"particle_editor/": {
 		"count": "Particles",
@@ -4024,7 +4033,8 @@
 		"exit": "Exit build tool",
 		"selected": "Selected",
 		"structure": "Structure",
-		"create_new": "Create new"
+		"create_new": "Create new",
+		"use_tip": "Set by right clicking the block without Shift."
 	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",

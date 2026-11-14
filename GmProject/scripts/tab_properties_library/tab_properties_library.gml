@@ -41,16 +41,13 @@ function tab_properties_library()
 		case e_temp_type.CHARACTER:
 		case e_temp_type.EQUIPMENT:
 		case e_temp_type.SPECIAL_BLOCK:
+		case e_temp_type.MODEL_PART:
 			tab_properties_library_character()
 			break
 		
 		case e_temp_type.MODEL:
 			tab_properties_library_model()
 			break	
-		
-		case e_temp_type.MODEL_PART:
-			tab_properties_library_model_part()
-			break
 		
 		case e_temp_type.ITEM:
 			tab_properties_library_item()

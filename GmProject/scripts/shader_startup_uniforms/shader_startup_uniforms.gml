@@ -56,6 +56,7 @@ function shader_startup_uniforms()
 		"uFog",
 		"uFogApply",
 		"uFogColor",
+		"uFogDensity",
 		"uFogDistance",
 		"uFogEnabled",
 		"uFogHeight",

@@ -17,20 +17,18 @@ void main()
 		vec3 normalWorld, light, spec;
 		float roughness, metallic, F0, sss;
 		
-		vec2 gradient0 = getPCSSReceiverDepthGradient(vScreenCoord0.xy, vScreenCoord0.z);
-		vec2 gradient1 = getPCSSReceiverDepthGradient(vScreenCoord1.xy, vScreenCoord1.z);
-		vec2 gradient2 = getPCSSReceiverDepthGradient(vScreenCoord2.xy, vScreenCoord2.z);
-		
 		getGbuffers(baseColor, normalWorld, roughness, metallic, F0, sss, depth, normal, material, glint);
-		getSunLighting(baseColor, normalWorld, roughness, metallic, F0, sss, gradient0, gradient1, gradient2, light, spec);
+		getSunLighting(baseColor, normalWorld, roughness, metallic, F0, sss, light, spec);
 		
 		gl_FragData[0] = baseColor;
 		
 		if (uColorsExt > 0)
 			applyColorTransform(gl_FragData[0], true);
 		
-		gl_FragData[1] = vec4(uReplaceColor.rgb, baseColor.a);
-		gl_FragData[2] = vec4(vec3(getFog(vPosition, uCameraPosition)), 1.0);
+		float fog = getFog(vPosition, uCameraPosition);
+		gl_FragData[0].rgb = mix(gl_FragData[0].rgb, uFogColor.rgb, fog);
+		gl_FragData[1] = vec4(gl_FragData[0].rgb * uReplaceColor.rgb, baseColor.a);
+		gl_FragData[2] = vec4(fog, normal.a * uReplaceColor.r, 0.0, baseColor.a);
 		gl_FragData[3] = depth;
 		gl_FragData[4] = normal;
 		gl_FragData[5] = material;

@@ -7,92 +7,35 @@
 /// @arg select
 /// @arg [filter]
 /// @arg [name]
+/// @arg [state]
 
-function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
+function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "", state = null)
 {
-	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
-	{
-		if (textbox_jump)
-			ds_list_add(textbox_list, [ slist.search_tbx, content_tab, yy, content_y, content_height ])
-		
-		return 0
-	}
-	
-	var searchx, searchw, itemh, headerh, headermouseon, dy, listy, listhei, scrolloffset;
+	var itemh, headerh, headermouseon, dy, listy, listhei, scrolloffset, ispicker;
 	var searchfocused, searchunfocused, searchcleared, sortchanged;
-	
-	if (filter || name != "")
-	{
-		searchx = xx + w - 144
-		searchw = 144
-	}
-	else
-	{
-		searchx = xx
-		searchw = w
-	}
-	searchcleared = false
-	sortchanged = false
-	
-	// Item height
-	itemh = ui_small_height
-	
-	// Column header height
-	headerh = slist.header_show ? (ui_small_height + 8) : 0
-	
-	// Draw filter
-	if (filter)
-	{
-		if (draw_button_icon("list/filter" + string(slist), xx, yy, 24, 24, !ds_list_empty(slist.filter_list), icons.FILTER, null, false, "tooltip/filter_list"))
-		{
-			menu_settings_set(xx, yy, "list/filter" + string(slist), 24)
-			settings_menu_script = sortlist_filters_draw
-			settings_menu_sortlist = slist
-			settings_menu_h_max = 256
-			settings_menu_scroll.value = slist.filter_scroll
-			settings_menu_scroll.value_goal = slist.filter_scroll
-		}
-		
-		if ((settings_menu_name = "list/filter" + string(slist)) && settings_menu_ani_type != "hide")
-			current_microani.active.value = true
-	}
-	
-	// Name
-	if (name != "")
-	{
-		draw_set_font(font_label)
-		draw_label(string_limit(name, w - 144 - (filter ? 32 : 0)), xx + (filter ? 32 : 0), yy + 12, fa_left, fa_middle, c_text_secondary, a_text_secondary)
-	}
 
-		if (draw_searchbox("list/search" + string(slist), searchx, yy, searchw, slist.search_tbx, !filter && name = ""))
-	{
-		searchcleared = slist.search && (slist.search_tbx.text = "")
-		slist.scroll.value = 0
-		slist.scroll.value_goal = 0
-		
-		slist.search = (slist.search_tbx.text != "")
-		sortlist_update(slist)
-		
-		if (string_length(slist.search_tbx.text) > 1)
-		{
-			if (slist = bench_settings.block_list)
-				action_bench_block_name(bench_settings.block_name)
-			else if (slist = bench_settings.char_list || slist = bench_settings.special_block_list || slist = bench_settings.equipment_list || slist = bench_settings.model_part_model_list)
-				action_bench_model_name(bench_settings.model_name)
-		}
-	}
-	
+	ispicker = (slist.object_index = obj_picker)
+	itemh = ui_small_height
+	headerh = slist.header_show ? (ui_small_height + 8) : 0
+	sortchanged = false
+
+	// Header
+	if (!draw_list_header(slist, xx, yy, w, h, filter, name))
+		return select
+
+	searchcleared = slist.search_changed && !slist.search
 	searchfocused = (window_focus = string(slist.search_tbx))
 	searchunfocused = slist.search_focused && !searchfocused
 	slist.search_focused = searchfocused
 
-	h -= 32
-	yy += 32
+	h -= list_header_height
+	yy += list_header_height
 	
 	if (h < headerh)
-		return 0
+		return select
 	
-	headermouseon = app_mouse_box(xx, yy, w, headerh) && content_mouseon
+	headermouseon = (app_mouse_box(xx, yy, w, headerh) && content_mouseon)
+	
 	if (!slist.header_show)
 	{
 		slist.column_x[0] = 0
@@ -183,7 +126,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	listy = dy
 	listhei = yy + h - listy
 	if (listhei <= 0)
-		return 0
+		return select
 	
 	slist.view_height = listhei
 	slist.items_visible = max(1, floor(listhei / itemh))
@@ -202,7 +145,7 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
 	
-	if (slist.center_on_draw)
+	if (slist.center_on_draw && (!ispicker || !slist.grid_view))
 	{
 		var centerindex = ds_list_find_index(slist.display_list, select);
 		if (centerindex >= 0)
@@ -308,14 +251,40 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 			mouse_cursor = cr_handpoint
 			if (mouse_left_released)
 			{
+				var vars = null;
+				if (ispicker)
+				{
+					var asset, search;
+					if (is_array(value))
+						asset = value[0] ? mc_assets.model_name_map[?value[1]] : mc_assets.block_name_map[?value[1]]
+					else
+						asset = slist.asset_picker_model ? mc_assets.model_name_map[?value] : mc_assets.block_name_map[?value]
+
+					search = string_lower(slist.search_tbx.text)
+					vars = asset_picker_get_state(asset, search)
+					if (selected && is_array(state) && search = "")
+						vars = minecraft_asset_get_state(asset, state)
+				}
+
 				if (selected && window_focus = string(slist.scroll) && slist.script_select_click != null)
 				{
+					if (ispicker)
+						script_execute(slist.script, value, vars)
 					script_execute(slist.script_select_click)
 					if (slist.script_select_click = action_bench_create)
 						bench_show_ani_type = "hide"
 				}
 				else if (slist.can_deselect && selected)
+				{
 					script_execute(slist.script, null)
+					if (ispicker)
+						select = null
+				}
+				else if (ispicker)
+				{
+					script_execute(slist.script, value, vars)
+					select = value
+				}
 				else
 					script_execute(slist.script, value)
 				app_mouse_clear()
@@ -335,4 +304,5 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "")
 	slist.scroll.snap_value = 0
 	slist.scroll.wheel_speed = itemh * 4
 	scrollbar_draw(slist.scroll, e_scroll.VERTICAL, xx + w - 12, listy, listhei, ds_list_size(slist.display_list) * itemh + 8)
+	return select
 }

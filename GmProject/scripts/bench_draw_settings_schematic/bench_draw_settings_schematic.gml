@@ -1,9 +1,15 @@
 function bench_draw_settings_schematic()
 {
 	// Schematic
-	tab_control(bench_list_height(bench_settings.schematic_list))
+	var settingsh, listh;
+	settingsh = ui_large_height * 2 + 48
+	settingsh += (ui_large_height + 8) * (1 + 2 * project_render_material_maps)
+	listh = bench_get_list_height(settingsh, schematic_list_minimum_items)
+	
+	tab_control(listh)
 	sortlist_draw(bench_settings.schematic_list, dx, dy, dw, tab_control_h, bench_settings.schematic_selected, false, text_get("bench/schematic"))
 	tab_next()
+	
 	dy -= 4
 
 	// Schematics folder
@@ -15,6 +21,7 @@ function bench_draw_settings_schematic()
 	}
 	togglebutton_add("bench/schematic/project", null, "project", bench_schematic_folder = "project", action_bench_schematic_folder)
 	draw_togglebutton("bench/schematic", dx, dy, true, false)
+	
 	dy += ui_large_height * 2 + 6
 
 	// Import schematic

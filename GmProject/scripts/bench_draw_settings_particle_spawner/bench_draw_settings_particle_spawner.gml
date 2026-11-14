@@ -5,9 +5,11 @@ function bench_draw_settings_particle_spawner()
 	bench_edit_button = e_bench_button.CREATE_AND_EDIT
 
 	// Particles
-	tab_control(bench_list_height(bench_settings.particle_preset_list))
+	var listh = bench_get_list_height(ui_large_height + 56);
+	tab_control(listh)
 	sortlist_draw(bench_settings.particle_preset_list, dx, dy, dw, tab_control_h, bench_settings.particle_preset, false, text_get("bench/particle_preset"))
 	tab_next()
+	
 	dy -= 4
 
 	// Particles folder
@@ -19,6 +21,7 @@ function bench_draw_settings_particle_spawner()
 	}
 	togglebutton_add("bench/particles/project", null, "project", bench_particle_preset_folder = "project", action_bench_particles_folder)
 	draw_togglebutton("bench/particle_preset", dx, dy, true, false)
+	
 	dy += ui_large_height + 6
 
 	tab_control(24)

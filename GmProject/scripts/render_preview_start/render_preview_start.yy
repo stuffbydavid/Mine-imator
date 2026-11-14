@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_preview_start",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_preview_start",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Render/Texture.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

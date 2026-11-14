@@ -65,4 +65,6 @@ function view_event_create()
 	toolbar_mouseon = false
 	toolbar_alpha = 1
 	toolbar_alpha_goal = toolbar_alpha
+	navgizmo_mouseon = false
+	navgizmo_dragged = false
 }

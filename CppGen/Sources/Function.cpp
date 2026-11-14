@@ -74,6 +74,9 @@ bool Function::assignScope(StringId scope, Function* func, int line, bool foundI
 			return false;
 
 	this->scopeAssignments.add(makeObject<ScopeAssignment>(scope, func, line));
+	if (Program::hotReloading)
+		Program::hotReloadSignaturesChanged = true;
+
 	return true;
 }
 
@@ -278,7 +281,22 @@ void Function::resolve(ResolveScope* scope, const NullableList<DataType*>& input
 	// Resolve arguments with given input
 	bool argsChanged = false, scopeChanged = false;
 	if (this->args != nullptr)
-		argsChanged = this->args->resolve(scope, this->name, inputPars) && !scope->isCalled(this->name);
+	{
+		argsChanged = this->args->resolve(scope, this->name, inputPars);
+		if (Program::hotReloading && argsChanged)
+			Program::hotReloadSignaturesChanged = true;
+
+		argsChanged = argsChanged && !scope->isCalled(this->name);
+	}
+
+	// Update cached signatures without resolving unchanged bodies
+	if (Program::hotReloading && !Program::hotReloadTargets.contains(this))
+	{
+		if (this->hasInstanceVars)
+			assignScope(scope->current, func, line);
+
+		return;
+	}
 
 	if (this->isTraversed && this->hasInstanceVars) // Assign new scope
 		scopeChanged = assignScope(scope->current, func, line);
@@ -301,7 +319,11 @@ void Function::resolve(ResolveScope* scope, const NullableList<DataType*>& input
 void Function::assignReturnType(const DataType& type, Function* func, int line)
 {
 	if (this->cppSeparateReturnType == nullptr)
-		this->returnType->assign(type, func, line);
+	{
+		const bool changed = this->returnType->assign(type, func, line);
+		if (Program::hotReloading && changed)
+			Program::hotReloadSignaturesChanged = true;
+	}
 }
 
 DataType* Function::getReturnType()

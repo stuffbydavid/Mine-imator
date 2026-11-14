@@ -40,11 +40,10 @@ function bench_tab_select(tab, key = false)
 			{
 				type = e_temp_type.CHARACTER
 				
-				if (ds_list_find_index(char_list.list, model_name) < 0)
-				{
+				if (ds_list_find_index(char_picker.list, model_name) < 0)
 					model_name = default_model
-					model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
-				}
+				
+				model_state = asset_picker_get_state(mc_assets.model_name_map[?model_name])
 			
 				model_tex = project_pack_res
 				model_tex_material = project_pack_res
@@ -60,11 +59,10 @@ function bench_tab_select(tab, key = false)
 			{
 				type = e_temp_type.EQUIPMENT
 				
-				if (ds_list_find_index(equipment_list.list, model_name) < 0)
-				{
+				if (ds_list_find_index(equipment_picker.list, model_name) < 0)
 					model_name = default_equipment
-					model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
-				}
+				
+				model_state = asset_picker_get_state(mc_assets.model_name_map[?model_name])
 				
 				model_tex = project_pack_res
 				model_tex_material = project_pack_res
@@ -80,11 +78,10 @@ function bench_tab_select(tab, key = false)
 			{
 				type = e_temp_type.SPECIAL_BLOCK
 				
-				if (ds_list_find_index(special_block_list.list, model_name) < 0)
-				{
+				if (ds_list_find_index(special_block_picker.list, model_name) < 0)
 					model_name = default_special_block
-					model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
-				}
+				
+				model_state = asset_picker_get_state(mc_assets.model_name_map[?model_name])
 			
 				model_tex = project_pack_res
 				model_tex_material = project_pack_res
@@ -101,7 +98,7 @@ function bench_tab_select(tab, key = false)
 				type = e_temp_type.MODEL_PART
 				
 				model_name = default_model_part_model
-				model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
+				model_state = asset_picker_get_state(mc_assets.model_name_map[?model_name])
 				model_tex = project_pack_res
 				model_tex_material = project_pack_res
 				model_tex_normal = project_pack_res
@@ -116,6 +113,7 @@ function bench_tab_select(tab, key = false)
 			case e_bench_tab.BLOCK:
 			{
 				type = e_temp_type.BLOCK
+				block_state = asset_picker_get_state(mc_assets.block_name_map[?block_name])
 				temp_update_block()
 				break
 			}
@@ -192,14 +190,14 @@ function bench_tab_select(tab, key = false)
 	
 	switch (tab)
 	{
-		case e_bench_tab.CHARACTER: 		sortlist = bench_settings.char_list; break
-		case e_bench_tab.EQUIPMENT: 		sortlist = bench_settings.equipment_list; break
-		case e_bench_tab.SPECIAL_BLOCK: 	sortlist = bench_settings.special_block_list; break
-		case e_bench_tab.MODEL_PART: 		sortlist = bench_settings.model_part_model_list; break
+		case e_bench_tab.CHARACTER: 		sortlist = bench_settings.char_picker; break
+		case e_bench_tab.EQUIPMENT: 		sortlist = bench_settings.equipment_picker; break
+		case e_bench_tab.SPECIAL_BLOCK: 	sortlist = bench_settings.special_block_picker; break
+		case e_bench_tab.MODEL_PART: 		sortlist = bench_settings.model_part_model_picker; break
 		
 		case e_bench_tab.BLOCK:
 		{
-			sortlist = bench_settings.block_list
+			sortlist = bench_settings.block_picker
 			sortvalue = bench_settings.block_name
 			break
 		}
@@ -231,7 +229,10 @@ function bench_tab_select(tab, key = false)
 		if (sortvalue = null)
 			sortvalue = bench_settings.model_name
 
-		sortlist_view(sortlist, sortvalue)
+		if (sortlist.object_index = obj_picker)
+			asset_picker_view(sortlist, sortvalue)
+		else
+			sortlist_view(sortlist, sortvalue)
 		window_scroll_focus = string(sortlist.scroll)
 	}
 	

@@ -1,57 +1,37 @@
-function action_bench_model_name(name)
+function action_bench_model_name(name, state = null)
 {
-	var settings, list, search;
+	var settings, picker, search;
 	
 	if (place_build)
 	{
 		settings = build_settings
-		list = build_tool.build_list
+		picker = build_tool.build_picker
 	}
 	else
 	{
 		settings = bench_settings
 		switch (settings.type)
 		{
-			case e_temp_type.CHARACTER:		list = settings.char_list; break
-			case e_temp_type.EQUIPMENT:		list = settings.equipment_list; break
-			case e_temp_type.SPECIAL_BLOCK: list = settings.special_block_list; break
-			case e_temp_type.MODEL_PART:	list = settings.special_block_list; break
+			case e_temp_type.CHARACTER:		picker = settings.char_picker; break
+			case e_temp_type.EQUIPMENT:		picker = settings.equipment_picker; break
+			case e_temp_type.SPECIAL_BLOCK: picker = settings.special_block_picker; break
+			case e_temp_type.MODEL_PART:	picker = settings.model_part_model_picker; break
 		}
 	}
 	
-	search = string_lower(list.search_tbx.text)
+	search = string_lower(picker.search_tbx.text)
+	if (state = null)
+		state = asset_picker_get_state(mc_assets.model_name_map[?name], search)
+	
+	asset_picker_state_map[?mc_assets.model_name_map[?name]] = array_copy_1d(state)
 	
 	with (settings)
 	{
-		if (model_name = name && search = "")
+		if (model_name = name && array_equals(model_state, state))
 			return 0
 		
 		model_name = name
-		model_state = array_copy_1d(mc_assets.model_name_map[?model_name].default_state)
-		
-		// Modify states for better search
-		if (search != "" && !string_contains(string_lower(minecraft_asset_get_name("model", model_name)), search))
-		{
-			var model = mc_assets.model_name_map[?name];
-			
-			for (var i = 0; i < array_length(model_state); i += 2)
-			{
-				var state, statelist;
-				state = model_state[i]
-				statelist = model.states_map[?state]
-				
-				for (var j = 0; j < statelist.value_amount; j++)
-				{
-					var value = statelist.value_name[j];
-					
-					if (string_contains(string_lower(minecraft_asset_get_name("model/state/value", value)), search))
-					{
-						state_vars_set_value(model_state, state, value)
-						break
-					}
-				}
-			}
-		}
+		model_state = array_copy_1d(state)
 		
 		temp_update_model()
 		

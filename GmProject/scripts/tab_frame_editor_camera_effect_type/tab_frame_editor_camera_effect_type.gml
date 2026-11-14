@@ -507,7 +507,7 @@ function tab_frame_editor_camera_effect_type(fxtype)
 				tab_next()
 				
 				tab_control_dragger()
-				draw_dragger(nameprefix + "light_management/gamma", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_GAMMA], 0.01, 0, no_limit, 2.2, 0.01, tab.camera_effects.tbx_gamma, action_tl_frame_cam_fx_gamma)
+				draw_dragger(nameprefix + "light_management/gamma", dx, dy, dragger_width, tl_edit.value[e_value.CAM_FX_GAMMA], 0.01, 0, no_limit, default_gamma, 0.01, tab.camera_effects.tbx_gamma, action_tl_frame_cam_fx_gamma)
 				tab_next()
 				
 				tab_collapse_end()

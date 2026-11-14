@@ -8468,6 +8468,28 @@
 		"minecraft:tall_seagrass",
 		"minecraft:bubble_column"
 	],
+	"blocks_timeline_enabled": [
+		"chest",
+		"sign",
+		"door",
+		"lever",
+		"fence_gate",
+		"enchanting_table",
+		"mob_head",
+		"banner",
+		"painting"
+	],
+	"state_picker": [
+		"wool_color",
+		"profession",
+		"size",
+		"character",
+		"wood",
+		"color",
+		"contents",
+		"variant",
+		"type"
+	],
 	"model_textures": [
 		"entity/allay/allay",
 		"entity/armadillo/armadillo",

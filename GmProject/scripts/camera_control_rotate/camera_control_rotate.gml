@@ -15,11 +15,17 @@ function camera_control_rotate(cam, lockx, locky, lockmouse = true)
 	{
 		cam_work_angle_xy += mx
 		cam_work_angle_z += my
-		cam_work_angle_z = clamp(cam_work_angle_z, -89.9, 89.9)
+		cam_work_angle_z = clamp(cam_work_angle_z, -pitch_limit, pitch_limit)
 		
 		cam_work_angle_look_xy += mx
 		cam_work_angle_look_z -= my
-		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -pitch_limit, pitch_limit)
+		
+		cam_work_angle_goal_xy = cam_work_angle_xy
+		cam_work_angle_goal_z = cam_work_angle_z
+		cam_work_angle_goal_look_xy = cam_work_angle_look_xy
+		cam_work_angle_goal_look_z = cam_work_angle_look_z
+		
 		camera_work_set_from()
 		
 		if (keybinds[e_keybind.CAM_RESET].pressed)

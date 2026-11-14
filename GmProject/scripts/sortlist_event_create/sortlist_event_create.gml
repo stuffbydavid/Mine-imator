@@ -25,6 +25,7 @@ function sortlist_event_create()
 	sort_asc = false
 	
 	search = false
+	search_changed = false
 	search_focused = false
 	search_tbx = new_textbox(true, 0, "")
 	

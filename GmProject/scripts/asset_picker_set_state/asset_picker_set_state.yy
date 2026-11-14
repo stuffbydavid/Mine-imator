@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"asset_picker_set_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"asset_picker_set_state",
+  "parent":{
+    "name":"Picker",
+    "path":"folders/Scripts/App/Interface/Components/Picker.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

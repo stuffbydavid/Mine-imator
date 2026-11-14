@@ -148,60 +148,24 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 					
 			prevcamzoom /= zoom
 					
-			var projfromprev = proj_from;
+			var projfromprev, camfromprev;
+			projfromprev = proj_from
+			camfromprev = cam_from
 					
 			proj_from = point3D(
 				lengthdir_x(prevcamzoom, xyangle) * lengthdir_x(1, zangle),
 				lengthdir_y(prevcamzoom, xyangle) * lengthdir_x(1, zangle),
 				lengthdir_z(prevcamzoom, zangle)
 			)
+			cam_from = proj_from
 			render_ratio = width / height
 		
 			gpu_set_ztestenable(true)
 			camera_apply(cam_render)
 			render_set_projection(proj_from, vec3(0, 0, 0), vec3(0, 0, 1), fov, render_ratio, 1, 32000)
 			
-			render_mode = e_render_mode.PREVIEW
-			render_material_pass = true
-			render_shader_obj = shader_map[?render_mode_shader_map[?render_mode]]
-			with (render_shader_obj)
-				shader_use()
+			render_preview_start()
 			
-			// Preview uniforms
-			render_set_uniform_int(e_uniform.ALPHA_HASH, 0)
-			render_set_uniform_color(e_uniform.BLEND_COLOR, shader_blend_color, shader_blend_alpha)
-			render_set_uniform_vec2(e_uniform.TEXTURE_OFFSET, 0, 0)
-			render_set_material_none()
-			
-			render_set_uniform(e_uniform.SSS, 0)
-			render_set_uniform_vec3(e_uniform.SSS_RADIUS, 1, 1, 1)
-			render_set_uniform_color(e_uniform.SSS_COLOR, c_white, 1)
-			render_set_uniform_int(e_uniform.GLINT_ENABLED, 0)
-
-			render_set_uniform_vec3(e_uniform.SUN_DIRECTION, 0.408, 0.408, 0.816)
-			render_set_uniform_int(e_uniform.LIGHT_AMOUNT, 1)
-			render_set_uniform(e_uniform.LIGHT_DATA, [ 0, 0, 0, 0, 1, 1, 1, 0 ])
-			render_set_uniform_color(e_uniform.AMBIENT_COLOR, c_ambient, 1)
-			render_set_uniform_color(e_uniform.FALLBACK_COLOR, c_white, 1)
-						
-			render_set_uniform_int(e_uniform.FOG_SHOW, 0)
-			render_set_uniform_int(e_uniform.IS_SKY, 0)
-			render_set_uniform_int(e_uniform.IS_GROUND, 0)
-			render_set_uniform(e_uniform.WIND_ENABLE, 0)
-			render_set_uniform(e_uniform.WIND_TERRAIN, 0)
-
-			render_set_uniform_int(e_uniform.TONEMAPPER, 0)
-			render_set_uniform(e_uniform.EXPOSURE, 1)
-			render_set_uniform(e_uniform.GAMMA, 2.2)
-
-			render_set_uniform_int(e_uniform.COLORS_EXT, 1)
-			render_set_uniform_color(e_uniform.RGB_ADD, tl_value_default(e_value.RGB_ADD), 1)
-			render_set_uniform_color(e_uniform.RGB_SUB, tl_value_default(e_value.RGB_SUB), 1)
-			render_set_uniform_color(e_uniform.HSB_ADD, tl_value_default(e_value.HSB_ADD), 1)
-			render_set_uniform_color(e_uniform.HSB_SUB, tl_value_default(e_value.HSB_SUB), 1)
-			render_set_uniform_color(e_uniform.HSB_MUL, tl_value_default(e_value.HSB_MUL), 1)
-			render_set_uniform_color(e_uniform.MIX_COLOR, tl_value_default(e_value.MIX_COLOR), tl_value_default(e_value.MIX_PERCENT))
-					
 			matrix_set(matrix_world, matrix_create(off, vec3(0), vec3(1)))
 					
 			if (select.object_index = obj_resource) // Resource
@@ -270,7 +234,10 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 						var res;
 						with (select)
 							res = temp_get_model_texobj(null)
-								
+
+						if (select.model_name = "cape" || select.model_name = "elytra")
+							matrix_set(matrix_world, matrix_multiply(matrix_get(matrix_world), matrix_create(vec3(0), vec3(0, 0, 180), vec3(1))))
+
 						var matmap = model_file_matrix_map_create(select.model_file, matrix_get(matrix_world), select.model_hide_list);
 						render_world_model_file_parts(select.model_file, res, select.model_texture_name_map, select.model_hide_list, select.model_shape_vbuffer_map, select.model_color_map, select.model_shape_hide_list, select.model_shape_texture_name_map, matmap)
 
@@ -396,6 +363,7 @@ function preview_surface_update(xx, yy, width, height, is3d, mouseon, isplaying)
 			camera_apply(cam_window)
 					
 			proj_from = projfromprev
+			cam_from = camfromprev
 		}
 		else
 		{

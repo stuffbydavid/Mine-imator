@@ -3,6 +3,18 @@
 
 function temp_update_model_timeline_tree(hobj = null)
 {
+	// Restore deleted parts before matching them to the old model
+	if (history_undo)
+	{
+		var tempsaveid = save_id_get(id);
+		for (var p = 0; p < array_length(history_data.model_part_save); p++)
+		{
+			var save = history_data.model_part_save[p];
+			if (save.temp = tempsaveid && save_id_find(save.save_id) = null)
+				history_restore_tl(save, null, false)
+		}
+	}
+
 	with (obj_timeline)
 	{
 		if (temp != other.id || part_list = null)
@@ -91,6 +103,19 @@ function temp_update_model_timeline_tree(hobj = null)
 						
 						if (unused)
 						{
+							// Save removed parts without depending on the old hierarchy or model file
+							if (hobj != null && !history_undo && !history_redo)
+							{
+								with (hobj)
+								{
+									var save = history_save_tl(other.id);
+									save.parent = save.part_of
+									save.parent_tree_index = 0
+									save.model_part = null
+									array_add(model_part_save, save)
+								}
+							}
+
 							p--
 							tl_remove_clean()
 							continue

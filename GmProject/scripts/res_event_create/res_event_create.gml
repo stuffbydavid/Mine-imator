@@ -65,6 +65,8 @@ function res_event_create()
 	block_sheet_ani_depth_list = null
 	block_preview_texture = null
 	
+	asset_picker_texture_map = null
+	
 	colormap_grass_texture = null
 	colormap_foliage_texture = null
 	colormap_dry_foliage_texture = null

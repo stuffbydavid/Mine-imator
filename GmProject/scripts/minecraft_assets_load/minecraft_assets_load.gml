@@ -311,6 +311,18 @@ function minecraft_assets_load()
 				if (ds_list_valid(waterloggedlist))
 					ds_list_copy(block_waterlogged_list, waterloggedlist)
 
+				// State pickers and default block timelines
+				var timelinelist, pickerlist;
+				timelinelist = load_assets_map[?"blocks_timeline_enabled"]
+				pickerlist = load_assets_map[?"state_picker"]
+				ds_list_clear(block_timeline_enabled_list)
+				ds_list_clear(state_picker_list)
+
+				if (ds_list_valid(timelinelist))
+					ds_list_copy(block_timeline_enabled_list, timelinelist)
+				if (ds_list_valid(pickerlist))
+					ds_list_copy(state_picker_list, pickerlist)
+
 				// Pattern designs
 				var patternlist = load_assets_map[?"patterns"];
 				if (!ds_list_valid(patternlist))

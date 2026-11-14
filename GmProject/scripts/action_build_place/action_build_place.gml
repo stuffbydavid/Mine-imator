@@ -121,7 +121,7 @@ function action_build_place(airblock = false)
 			blockpos = changes[0][0]
 			blockdata = [ changes[0][1], changes[0][2] ]
 			block = block_objs[blockdata[0]]
-			blocktl = (block.timeline && array_contains(scenery_timeline_enabled, block.tl_type))
+			blocktl = (block.timeline && ds_list_find_index(mc_assets.block_timeline_enabled_list, block.tl_type) >= 0)
 			
 			// Ctrl swaps the default unless the block requires a timeline
 			if (keyboard_check(vk_control))

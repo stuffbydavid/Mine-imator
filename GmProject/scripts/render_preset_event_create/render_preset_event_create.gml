@@ -83,7 +83,7 @@ function render_preset_event_create()
 	glint_strength = 1
 	tonemapper = e_tonemapper.NONE
 	exposure = 1
-	gamma = 2.2
+	gamma = default_gamma
 
 	// Graphics settings
 	render_distance = clip_far

@@ -9,6 +9,8 @@ function res_load(reload = false)
 	if (type != e_res_type.SCHEMATIC)
 		debug("Loading " + res_type_name_list[|type], fn)
 	
+	res_clear_asset_picker_textures()
+
 	// Load from file
 	switch (type)
 	{

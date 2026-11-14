@@ -119,7 +119,7 @@ function panel_draw_content()
 	{
 		// Scrollbar
 		if (content_direction = e_scroll.VERTICAL)
-			scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + 32)
+			scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + (tab.script ? 20 : 32))
 		else
 			scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
 	}

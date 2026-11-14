@@ -16,7 +16,9 @@ function camera_work_reset()
 	cam_work_moving = false
 	
 	cam_work_angle_look_xy = cam_work_angle_xy
+	cam_work_angle_goal_look_xy = cam_work_angle_look_xy
 	cam_work_angle_look_z = -cam_work_angle_z
+	cam_work_angle_goal_look_z = cam_work_angle_look_z
 	cam_work_angle_look_off_xy = 0
 	cam_work_angle_look_off_z = 0
 	

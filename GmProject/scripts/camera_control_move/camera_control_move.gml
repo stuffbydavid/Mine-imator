@@ -22,7 +22,7 @@ function camera_control_move(cam, lockx, locky, lockmouse = true)
 		
 		cam_work_angle_look_xy += mx
 		cam_work_angle_look_z += my
-		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -89.9, 89.9)
+		cam_work_angle_look_z = clamp(cam_work_angle_look_z, -pitch_limit, pitch_limit)
 		
 		if (!cam_work_focus_tl && (mx != 0 || my != 0))
 		{
