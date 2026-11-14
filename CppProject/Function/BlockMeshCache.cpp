@@ -148,6 +148,8 @@ namespace CppProject
 			BoolType loaded = LoadLegacyBlockCache(self, in);
 			if (loaded)
 				tmr.Print("Load legacy block mesh cache");
+			else
+				WARNING("Could not load legacy block mesh cache " + filename.QStr());
 
 			return loaded;
 		}
@@ -311,13 +313,6 @@ namespace CppProject
 		if (meshCount > std::numeric_limits<int>::max())
 			return false;
 
-		VarType sheetSize = global::minecraft_block_sheet_size.Value(e_block_sheet_STATIC16);
-		const RealType staticUvScaleX = BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE / sheetSize.Value(X_).ToReal();
-		const RealType staticUvScaleY = BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE / sheetSize.Value(Y_).ToReal();
-		const RealType legacyBlockWidth = (RealType)sizeY * block_size_;
-		const IntType vbufCount = e_block_depth_amount * e_block_vbuffer_amount;
-		QVector<QVector<VertexBuffer*>> meshVbuffers((int)meshCount);
-
 		// Format 2 stores RGBA before the UV coordinates
 		struct LegacyVertex
 		{
@@ -327,6 +322,113 @@ namespace CppProject
 			uint32_t data, tangent;
 		};
 		static_assert(sizeof(LegacyVertex) == 36, "Unexpected legacy vertex layout");
+
+		struct SheetVotes
+		{
+			IntType square = 0, tall = 0;
+		};
+		QVector<SheetVotes> sheetVotes;
+
+		// Simply Upscaled adds dry foliage without changing the format number
+		const qint64 buffersStart = in.device()->pos();
+		IntType serializedBuffers = 0;
+		while (!in.atEnd())
+		{
+			qint64 numMeshes = 0;
+			in >> numMeshes;
+			if (in.status() != QDataStream::Ok || ++serializedBuffers > e_block_depth_amount * 13 ||
+				numMeshes < 0 || numMeshes > in.device()->bytesAvailable() / (sizeof(qint64) * 2))
+				return false;
+
+			SheetVotes votes;
+			for (qint64 m = 0; m < numMeshes; m++)
+			{
+				qint64 numVert = 0, numInd = 0;
+				in >> numVert >> numInd;
+				if (in.status() != QDataStream::Ok || numVert <= 0 || numInd <= 0 || numInd % 3 != 0 ||
+					numVert > std::numeric_limits<int>::max() / sizeof(LegacyVertex) ||
+					numInd > std::numeric_limits<int>::max() / sizeof(uint32_t))
+					return false;
+
+				const qint64 bytes = numVert * sizeof(LegacyVertex) + numInd * sizeof(uint32_t);
+				if (bytes > in.device()->bytesAvailable())
+					return false;
+
+				const qint64 meshEnd = in.device()->pos() + bytes;
+				LegacyVertex sample[1024];
+				const int sampleCount = (int)std::min(numVert, qint64(1024));
+				const int sampleBytes = sampleCount * sizeof(LegacyVertex);
+				if (in.readRawData((char*)sample, sampleBytes) != sampleBytes)
+					return false;
+
+				// Complete cube faces have a one-tile UV span in both directions
+				for (int v = 0; v + 3 < sampleCount; v += 4)
+				{
+					float lo[5] = { sample[v].x, sample[v].y, sample[v].z, sample[v].u, sample[v].v };
+					float hi[5] = { lo[0], lo[1], lo[2], lo[3], lo[4] };
+					for (int c = 1; c < 4; c++)
+					{
+						const LegacyVertex& vertex = sample[v + c];
+						const float values[5] = { vertex.x, vertex.y, vertex.z, vertex.u, vertex.v };
+						for (int a = 0; a < 5; a++)
+						{
+							if (!std::isfinite(values[a]) || !std::isfinite(lo[a]))
+								return false;
+							lo[a] = std::min(lo[a], values[a]);
+							hi[a] = std::max(hi[a], values[a]);
+						}
+					}
+
+					int fullAxes = 0, flatAxes = 0;
+					for (int a = 0; a < 3; a++)
+					{
+						fullAxes += std::abs(hi[a] - lo[a] - block_size_) < 0.001;
+						flatAxes += std::abs(hi[a] - lo[a]) < 0.001;
+					}
+					if (fullAxes != 2 || flatAxes != 1 ||
+						std::abs(hi[3] - lo[3] - 1.0 / BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE) > 0.00003)
+						continue;
+
+					const float height = hi[4] - lo[4];
+					votes.square += std::abs(height - 1.0 / 32) < 0.00003;
+					votes.tall += std::abs(height - 1.0 / 48) < 0.00003;
+				}
+				if (!in.device()->seek(meshEnd))
+					return false;
+			}
+			sheetVotes.append(votes);
+		}
+
+		if ((serializedBuffers != e_block_depth_amount * 12 && serializedBuffers != e_block_depth_amount * 13) ||
+			!in.device()->seek(buffersStart))
+			return false;
+
+		IntType legacySheetHeight = BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE;
+		if (serializedBuffers == e_block_depth_amount * 13)
+		{
+			SheetVotes votes;
+			for (IntType d = 0; d < e_block_depth_amount; d++)
+			for (IntType vb = 0; vb < 12; vb++)
+			{
+				if (vb == 1) // Animated textures use a separate atlas
+					continue;
+				votes.square += sheetVotes[d * 13 + vb].square;
+				votes.tall += sheetVotes[d * 13 + vb].tall;
+			}
+			if ((!votes.square && !votes.tall) || (votes.square && votes.tall))
+			{
+				WARNING("Could not determine Simply Upscaled block mesh cache atlas dimensions");
+				return false;
+			}
+			legacySheetHeight = votes.tall ? 48 : 32;
+		}
+
+		VarType sheetSize = global::minecraft_block_sheet_size.Value(e_block_sheet_STATIC16);
+		const RealType staticUvScaleX = BLOCK_MESH_CACHE_LEGACY_SHEET_SIZE / sheetSize.Value(X_).ToReal();
+		const RealType staticUvScaleY = legacySheetHeight / sheetSize.Value(Y_).ToReal();
+		const RealType legacyBlockWidth = (RealType)sizeY * block_size_;
+		const IntType vbufCount = e_block_depth_amount * e_block_vbuffer_amount;
+		QVector<QVector<VertexBuffer*>> meshVbuffers((int)meshCount);
 
 		QHash<uint32_t, uint8_t> colorIndices;
 		const ArrType& colors = ObjType(obj_resource, global::mc_res)->block_colors;
@@ -350,7 +452,7 @@ namespace CppProject
 			e_block_vbuffer buffer;
 			uint8_t colorIndex;
 		};
-		static const QVector<LegacyBuffer> legacyBuffers = {
+		QVector<LegacyBuffer> legacyBuffers = {
 			{ e_block_vbuffer_STATIC16, 0 },
 			{ e_block_vbuffer_ANIMATED, 0 },
 			{ e_block_vbuffer_STATIC16, e_biome_color_GRASS + 1 },
@@ -364,6 +466,8 @@ namespace CppProject
 			{ e_block_vbuffer_STATIC16, e_biome_color_LEAVES_MANGROVE + 1 },
 			{ e_block_vbuffer_WATER, 0 }
 		};
+		if (serializedBuffers == e_block_depth_amount * 13)
+			legacyBuffers.insert(4, { e_block_vbuffer_STATIC16, e_biome_color_DRY_FOLIAGE + 1 });
 		constexpr RealType meshStride = block_mesh_size * block_size_;
 
 		auto rotateDirection = [](uint32_t packed)
