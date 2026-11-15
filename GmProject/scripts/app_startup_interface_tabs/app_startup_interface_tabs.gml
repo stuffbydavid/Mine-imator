@@ -558,6 +558,9 @@ function app_startup_interface_tabs()
 			tbx_repeat_z = new_textbox_integer()
 		}
 
+		// Camera
+		camera = tab_add_category("timeline_editor/camera", icons.CAMERA_SMALL, tab_timeline_editor_camera, true)
+		
 		// Audio
 		audio = tab_add_category("timeline_editor/audio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
 		

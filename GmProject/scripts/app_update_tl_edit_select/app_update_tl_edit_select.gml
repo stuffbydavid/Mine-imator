@@ -26,6 +26,7 @@ function app_update_tl_edit_select()
 		appearance.enabled = false
 		structure.enabled = false
 		block.enabled = false
+		camera.enabled = false
 		audio.enabled = false
 		path.enabled = false
 	}
@@ -165,6 +166,9 @@ function app_update_tl_edit_select()
 		if (value_type[e_value_type.BLOCK])
 			app.timeline_editor.block.enabled = true
 
+		if (value_type[e_value_type.CAMERA])
+			app.timeline_editor.camera.enabled = true
+		
 		if (value_type[e_value_type.AUDIO])
 			app.timeline_editor.audio.enabled = true
 		

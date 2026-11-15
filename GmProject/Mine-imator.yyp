@@ -2811,6 +2811,7 @@
     {"id":{"name":"tab_timeline_editor_appearance","path":"scripts/tab_timeline_editor_appearance/tab_timeline_editor_appearance.yy",},},
     {"id":{"name":"tab_timeline_editor_audio","path":"scripts/tab_timeline_editor_audio/tab_timeline_editor_audio.yy",},},
     {"id":{"name":"tab_timeline_editor_block","path":"scripts/tab_timeline_editor_block/tab_timeline_editor_block.yy",},},
+    {"id":{"name":"tab_timeline_editor_camera","path":"scripts/tab_timeline_editor_camera/tab_timeline_editor_camera.yy",},},
     {"id":{"name":"tab_timeline_editor_hierarchy","path":"scripts/tab_timeline_editor_hierarchy/tab_timeline_editor_hierarchy.yy",},},
     {"id":{"name":"tab_timeline_editor_info","path":"scripts/tab_timeline_editor_info/tab_timeline_editor_info.yy",},},
     {"id":{"name":"tab_timeline_editor_path","path":"scripts/tab_timeline_editor_path/tab_timeline_editor_path.yy",},},
