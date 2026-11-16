@@ -43,10 +43,10 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_bench_tab.WORLD:				subimg = 0; break
 			case e_bench_tab.CAMERA:			subimg = 1; break
 			case e_bench_tab.AUDIO_TRACK:		subimg = 2; break
-			case e_bench_tab.CAMERA_EFFECT:		subimg = 3 + bench_settings.camera_effect_type; break
-			case e_bench_tab.LIGHT_SOURCE:		subimg = (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 14 : 15; break
-			case e_bench_tab.PATH:				subimg = 16; break
-			case e_bench_tab.ENVIRONMENT:		subimg = 17; break
+			case e_bench_tab.CAMERA_EFFECT:		subimg = 3 + 1 + bench_settings.camera_effect_type; break
+			case e_bench_tab.LIGHT_SOURCE:		subimg = (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 15 : 16; break
+			case e_bench_tab.PATH:				subimg = 17; break
+			case e_bench_tab.ENVIRONMENT:		subimg = 18; break
 		}
 		
 		var sprwid = sprite_get_width(spr_bench_example);

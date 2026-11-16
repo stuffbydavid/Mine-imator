@@ -129,7 +129,7 @@ function res_get_asset_picker_texture(asset, state = [])
 			if (pattern_type != "" && modelres.model_texture_map != null)
 			{
 				var color = state_vars_get_value(vars, "color");
-				if (color = "")
+				if (color = null || color = "")
 					color = "white"
 				
 				pattern_skin = minecraft_update_pattern_generate(model_name, minecraft_get_color("dye:" + color), [], [], modelres)

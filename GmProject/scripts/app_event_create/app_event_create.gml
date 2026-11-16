@@ -7,7 +7,7 @@ function app_event_create()
 	gml_release_mode(true)
 	objects_indexed()
 	
-	// Developent settings and arguments
+	// Development settings and arguments
 	debug_startup()
 	
 	// Ensure deterministic behavior for tests
