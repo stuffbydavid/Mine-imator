@@ -73,6 +73,10 @@
 		"play": "Play",
 		"stop": "Stop",
 		"pause": "Pause",
+		"camera_effect/": {
+			"show": "Show effect",
+			"hide": "Hide effect"
+		},
 		"particles/": {
 			"spawn": "Spawn particles",
 			"clear": "Clear particles",

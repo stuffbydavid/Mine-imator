@@ -5,9 +5,9 @@
 /// @arg width
 /// @arg height
 
-function preview_draw(preview, xx, yy, width, height)
+function preview_draw(preview, xx, yy, width, height, background = true)
 {
-	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton, triggerkey;
+	var is3d, mouseon, playbutton, isplaying, setplaytime, particlebutton, effectbutton, triggerkey;
 	
 	if (xx + width < content_x || xx > content_x + content_width || yy + height < content_y || yy > content_y + content_height)
 		return 0
@@ -20,7 +20,8 @@ function preview_draw(preview, xx, yy, width, height)
 	preview.view_height = height
 	
 	// Background
-	draw_box(xx, yy, width, height, false, c_level_bottom, 1)
+	if (background)
+		draw_box(xx, yy, width, height, false, c_level_bottom, 1)
 	
 	if (!instance_exists(preview.select))
 	{
@@ -31,10 +32,16 @@ function preview_draw(preview, xx, yy, width, height)
 	
 	// Particle button
 	if (preview.select.object_index = obj_bench_settings)
+	{
 		particlebutton = (bench_tab = e_bench_tab.PARTICLE_SPAWNER && preview.select.particle_preset != null)
+		effectbutton = (bench_tab = e_bench_tab.CAMERA_EFFECT)
+	}
 	else
+	{
 		particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
-
+		effectbutton = false
+	}
+	
 	// Determine 3D/2D view
 	if (preview.select.object_index = obj_resource)
 	{
@@ -49,8 +56,9 @@ function preview_draw(preview, xx, yy, width, height)
 		is3d = true
 	}
 	
-	if ((particlebutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)) ||
-		(playbutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)))
+	if (app_mouse_box(xx + 4, yy + height - 44, 36, 36) &&
+		particlebutton || playbutton || effectbutton
+	)
 		mouseon = false
 	
 	// Update audio hover
@@ -177,10 +185,17 @@ function preview_draw(preview, xx, yy, width, height)
 	}
 	
 	// Button background
-	if (particlebutton || playbutton)
+	if (particlebutton || playbutton || effectbutton)
 	{
 		draw_box(xx + 8, yy + height - 40, 32, 32, false, c_level_middle, 1)
 		draw_outline(xx + 8, yy + height - 40, 32, 32, 1, c_border, a_border, true)
+	}
+	
+	// Camera effects button
+	if (effectbutton)
+	{
+		if (draw_button_icon("preview/show" + string(preview), xx + 12, yy + height - 36, 24, 24, preview.camera_effect_show, icons.WAND, null, false, preview.camera_effect_show ? "tooltip/camera_effect/hide" : "tooltip/camera_effect/show"))
+			preview.camera_effect_show = !preview.camera_effect_show
 	}
 	
 	// Particle button
