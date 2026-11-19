@@ -14,6 +14,8 @@ function project_save_project()
 		
 		json_save_var("grid_columns", project_grid_columns)
 		json_save_var("grid_rows", project_grid_rows)
+
+		json_save_var("time_elapsed", project_time_elapsed)
 		
 		if (project_pack != mc_res)
 			json_save_var("pack", save_id_get(project_pack))

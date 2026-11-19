@@ -4,7 +4,7 @@
 		"locale": "en-US",
 		"translator": "David, Nimi, mbanders",
 		"for_version": "2.1-pre1",
-		"last_change": "2026.11.14"
+		"last_change": "2026.11.18"
 	},
 	"particle/": {
 		"type/": {
@@ -3212,7 +3212,8 @@
 		"tempo_tip": "The amount of frames that make a second in the animation.",
 		"pack": "Resource pack",
 		"edit_render_settings": "Edit render settings",
-		"edit_render_settings_tip": "Configure renderer quality, special effects, graphics, and material appearance."
+		"edit_render_settings_tip": "Configure renderer quality, special effects, graphics, and material appearance.",
+		"time_elapsed": "Time elapsed"
 	},
 	"render": "RENDER SETTINGS",
 	"render/": {
@@ -4659,7 +4660,7 @@
 		"interface_scale": "Custom scale",
 		"controls": "CONTROLS",
 		"controls/": {
-			"keybinds": "Keybinds",
+			"keybinds": "KEYBINDS",
 			"file": "File",
 			"edit": "Edit",
 			"tools": "Tools",
