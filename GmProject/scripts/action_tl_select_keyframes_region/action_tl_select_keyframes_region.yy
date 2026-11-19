@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_select_keyframes_region",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Select",
-    "path": "folders/Scripts/App/Actions/Timeline/Select.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_select_keyframes_region",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_select_keyframes_region",
+  "parent":{
+    "name":"Select",
+    "path":"folders/Scripts/App/Actions/Timeline/Select.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

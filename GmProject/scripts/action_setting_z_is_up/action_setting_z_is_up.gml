@@ -1,7 +1,6 @@
-/// action_setting_z_is_up(yes)
-/// @arg yes
-
-function action_setting_z_is_up(yes)
+function action_setting_z_is_up(enabled)
 {
-	setting_z_is_up = yes
+	setting_z_is_up = enabled
+	
+	view_changed()
 }

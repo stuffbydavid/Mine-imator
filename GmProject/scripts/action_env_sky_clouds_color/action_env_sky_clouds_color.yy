@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_env_sky_clouds_color",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_env_sky_clouds_color",
+  "parent":{
+    "name":"Clouds",
+    "path":"folders/Scripts/App/Actions/Environment/Clouds.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

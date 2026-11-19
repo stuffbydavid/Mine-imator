@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "popup_welcome_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Welcome",
-    "path": "folders/Scripts/App/Interface/Popups/Welcome.yy",
+  "$GMScript":"v1",
+  "%Name":"popup_welcome_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"popup_welcome_draw",
+  "parent":{
+    "name":"Welcome",
+    "path":"folders/Scripts/App/Interface/Popups/Welcome.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

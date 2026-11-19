@@ -1,4 +1,3 @@
-/// history_restore_keyframes()
 /// @desc Restores the saved keyframes.
 
 function history_restore_keyframes()

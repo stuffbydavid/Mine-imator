@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "point2D",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Point",
-    "path": "folders/Scripts/Utility/Math/Point.yy",
+  "$GMScript":"v1",
+  "%Name":"point2D",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"point2D",
+  "parent":{
+    "name":"Point",
+    "path":"folders/Scripts/Utility/Math/Point.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"vertex_add_real",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vertex_add_real",
+  "parent":{
+    "name":"Vertex",
+    "path":"folders/Scripts/Utility/Vertex.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

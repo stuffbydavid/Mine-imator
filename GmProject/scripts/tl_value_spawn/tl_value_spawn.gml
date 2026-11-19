@@ -1,5 +1,3 @@
-/// tl_value_spawn()
-
 function tl_value_spawn()
 {
 	// Cameras copy the work camera
@@ -8,23 +6,21 @@ function tl_value_spawn()
 		if (!app.setting_spawn_cameras)
 			return 0
 		
-		value[e_value.POS_X] = app.cam_work_from[X]
-		value[e_value.POS_Y] = app.cam_work_from[Y]
-		value[e_value.POS_Z] = app.cam_work_from[Z]
-		value[e_value.ROT_X] = -app.cam_work_angle_look_z
-		value[e_value.ROT_Y] = app.cam_work_roll
-		value[e_value.ROT_Z] = app.cam_work_angle_look_xy - 90
+		tl_value_set_vec3(e_value.POS_X, app.cam_work_from)
+		tl_value_set_vec3(e_value.ROT_X, vec3(
+			-app.cam_work_angle_look_z,
+			app.cam_work_roll,
+			app.cam_work_angle_look_xy - 90
+		))
 	}
 	
 	// Model part values
-	else if (type = e_tl_type.BODYPART && model_part != null)
+	else if (type = e_tl_type.MODEL_PART && model_part != null)
 	{
 		// Bending
 		if (model_part.bend_part != null)
 		{
-			value[e_value.BEND_ANGLE_X] = model_part.bend_default_angle[X]
-			value[e_value.BEND_ANGLE_Y] = model_part.bend_default_angle[Y]
-			value[e_value.BEND_ANGLE_Z] = model_part.bend_default_angle[Z]
+			tl_value_set_vec3(e_value.BEND_ANGLE_X, model_part.bend_default_angle)
 			inherit_bend = model_part.bend_inherit
 		}
 		
@@ -33,15 +29,19 @@ function tl_value_spawn()
 	}
 	
 	// Background objects inherit current settings
-	else if (type = e_tl_type.BACKGROUND)
+	else if (type = e_tl_type.ENVIRONMENT)
 	{
-		for (var v = e_value.BG_SKY_MOON_PHASE; v <= e_value.BG_TEXTURE_ANI_SPEED; v++)
+		for (var v = e_value.ENV_SKY_MOON_PHASE; v <= e_value.ENV_BRIGHTNESS; v++)
 			value[v] = tl_value_default(v)
 	}
 	
 	// Disable SSAO on particles by default
 	if (type = e_tl_type.PARTICLE_SPAWNER)
 		ssao = false
+
+	// Root items use a smaller default scale
+	if (type = e_tl_type.ITEM && parent = app)
+		tl_value_set_vec3(e_value.SCA_X, vec3(0.5))
 	
 	// Set rotation point to template's by default
 	if (temp != null)
@@ -53,4 +53,19 @@ function tl_value_spawn()
 	// Set defaults
 	for (var v = 0; v < e_value.amount; v++)
 		value_default[v] = value[v]
+	
+	// Align scenery to the block grid
+	if (type = e_tl_type.SCENERY && temp.scenery != null && (temp.scenery.ready || temp.scenery.type = e_res_type.FROM_WORLD))
+	{
+		if (temp.scenery.scenery_size[X] > 0 && temp.scenery.scenery_size[X] mod 2 = 1)
+		{
+			value_default[e_value.POS_X] += block_half_size
+			value[e_value.POS_X] = value_default[e_value.POS_X]
+		}
+		if (temp.scenery.scenery_size[Y] > 0 && temp.scenery.scenery_size[Y] mod 2 = 1)
+		{
+			value_default[e_value.POS_Y] += block_half_size
+			value[e_value.POS_Y] = value_default[e_value.POS_Y]
+		}
+	}
 }

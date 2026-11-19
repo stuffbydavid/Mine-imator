@@ -1,5 +1,3 @@
-/// panel_draw_content()
-
 function panel_draw_content()
 {
 	var minw, minh, maxh, dividew;
@@ -54,8 +52,8 @@ function panel_draw_content()
 		{
 			if (tab.category[c].enabled)
 			{
-				// Advanced mode only tabs
-				if (!setting_advanced_mode && (tab.category[c] = frame_editor.text || tab.category[c] = frame_editor.item ||tab.category[c] = timeline_editor.appearance))
+				// Advanced mode only
+				if (!setting_advanced_mode && tab.category[c] = frame_editor.item)
 					continue
 				
 				cat[catamount] = tab.category[c]
@@ -82,7 +80,7 @@ function panel_draw_content()
 		for (var col = 0; col < columns; col++)
 		{
 			// Number of categories in this column
-			var cats = max(1, round(catamount / columns)) 
+			var cats = max(1, round(catamount / columns));
 			if (col = columns - 1)
 				cats = catamount - c
 			
@@ -121,7 +119,7 @@ function panel_draw_content()
 	{
 		// Scrollbar
 		if (content_direction = e_scroll.VERTICAL)
-			scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + 32)
+			scrollbar_draw(tab.scroll, e_scroll.VERTICAL, content_x + dividew, content_y, content_height, maxh + (tab.script ? 20 : 32))
 		else
 			scrollbar_draw(tab.scroll, e_scroll.HORIZONTAL, content_x, content_y + content_height - 35, content_width, dx + dw - content_x + tab.scroll.value + 15)
 	}

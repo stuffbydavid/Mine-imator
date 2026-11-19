@@ -1,5 +1,4 @@
 /// CppSeparate BoolType vec3_equals(VecType, VecType)
-/// vec3_equals(vec1, vec2)
 /// @arg vec1
 /// @arg vec2
 

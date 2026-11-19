@@ -1,8 +1,10 @@
-/// popup_armor_editor_show(obj)
-/// @arg obj
+/// @arg object
 
 function popup_armor_editor_show(obj)
 {
+	if (obj != bench_settings)
+		obj_edit = obj
+
 	with (popup_armor_editor)
 	{
 		with (preview)

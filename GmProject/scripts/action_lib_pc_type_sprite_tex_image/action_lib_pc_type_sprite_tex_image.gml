@@ -1,6 +1,3 @@
-/// action_lib_pc_type_sprite_tex_image(image)
-/// @arg image
-
 function action_lib_pc_type_sprite_tex_image(image)
 {
 	if (!history_undo && !history_redo)
@@ -12,5 +9,5 @@ function action_lib_pc_type_sprite_tex_image(image)
 		ptype_update_sprite_vbuffers()
 	}
 	
-	tab_template_editor_particles_preview_restart()
+	tab_object_editor_particles_preview_restart()
 }

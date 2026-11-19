@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "panel_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Panel",
-    "path": "folders/Scripts/App/Interface/Components/Panel.yy",
+  "$GMScript":"v1",
+  "%Name":"panel_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"panel_event_create",
+  "parent":{
+    "name":"Panel",
+    "path":"folders/Scripts/App/Interface/Components/Panel.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

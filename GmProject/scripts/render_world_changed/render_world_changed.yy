@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_world_changed",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_world_changed",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Render/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

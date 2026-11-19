@@ -1,8 +1,4 @@
-/// json_save_var_nullable(name, value)
-/// @arg name
-/// @arg value
-
-function json_save_var_nullable(name, val)
+function json_save_var_nullable(name, value)
 {
 	if (json_add_comma)
 		buffer_write_byte(e_json_char.COMMA)
@@ -21,10 +17,10 @@ function json_save_var_nullable(name, val)
 	buffer_write_byte(e_json_char.SPACE)
 	
 	// Value
-	if (val = null)
+	if (value = null)
 		json_save_value("null")
 	else
-		json_save_value(val)
+		json_save_value(value)
 	
 	json_add_comma = true
 }

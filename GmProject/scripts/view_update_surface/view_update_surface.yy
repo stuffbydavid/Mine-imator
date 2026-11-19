@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "view_update_surface",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "View",
-    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  "$GMScript":"v1",
+  "%Name":"view_update_surface",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_update_surface",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

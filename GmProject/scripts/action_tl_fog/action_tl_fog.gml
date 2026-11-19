@@ -1,7 +1,4 @@
-/// action_tl_fog(enable)
-/// @arg enable
-
-function action_tl_fog(enable)
+function action_tl_fog(enabled)
 {
 	if (history_undo)
 	{
@@ -23,6 +20,6 @@ function action_tl_fog(enable)
 	
 		with (obj_timeline)
 			if (selected)
-				action_tl_fog_tree(id, enable, hobj)
+				action_tl_fog_tree(id, enabled, hobj)
 	}
 }

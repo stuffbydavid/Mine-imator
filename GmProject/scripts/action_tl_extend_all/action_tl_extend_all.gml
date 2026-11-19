@@ -1,5 +1,3 @@
-/// action_tl_extend_all()
-
 function action_tl_extend_all()
 {
 	if (history_undo)

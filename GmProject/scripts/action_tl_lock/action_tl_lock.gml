@@ -1,7 +1,6 @@
-/// action_tl_lock(timeline)
 /// @arg timeline
 
-function action_tl_lock(timeline)
+function action_tl_lock(tl)
 {
 	if (history_undo)
 	{
@@ -20,6 +19,6 @@ function action_tl_lock(timeline)
 	else
 	{
 		var hobj = history_save_var_start(action_tl_lock, false);
-		action_tl_lock_tree(timeline, !timeline.lock, hobj)
+		action_tl_lock_tree(tl, !tl.lock, hobj)
 	}
 }

@@ -1,7 +1,6 @@
-/// debug_timer_stop(message)
 /// @arg message
 
-function debug_timer_stop(str)
+function debug_timer_stop(msg)
 {
-	debug(str, string(current_time - debug_timer) + " msec")
+	debug(msg, string(current_time - debug_timer) + " msec")
 }

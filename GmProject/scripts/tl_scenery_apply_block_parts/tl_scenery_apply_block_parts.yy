@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_scenery_apply_block_parts",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_scenery_apply_block_parts",
+  "parent":{
+    "name":"Blocks",
+    "path":"folders/Scripts/Project/Timeline/Blocks.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

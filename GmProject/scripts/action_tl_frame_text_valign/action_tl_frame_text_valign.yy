@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_tl_frame_text_valign",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Text",
-    "path": "folders/Scripts/App/Actions/Timeline/Frame editor/Text.yy",
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_text_valign",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_text_valign",
+  "parent":{
+    "name":"Text",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Text.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,5 +1,3 @@
-/// camera_work_set_from()
-
 function camera_work_set_from()
 {
 	cam_work_from[X] = cam_work_focus[X] + lengthdir_x(cam_work_zoom, cam_work_angle_xy) * lengthdir_x(1, cam_work_angle_z)

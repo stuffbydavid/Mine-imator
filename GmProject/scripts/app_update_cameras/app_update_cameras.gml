@@ -1,14 +1,7 @@
-/// app_update_cameras(highquality, movie)
-/// @arg highquality
-/// @arg movie
 /// @desc Updates surface of all required cameras.
 
-function app_update_cameras(highquality, movie)
+function app_update_cameras(renderer, movie)
 {
-	// Only main view is visible and not real time rendering, no need to update
-	if (!view_second.show && view_render && !view_render_real_time && window_state != "export_movie" && window_state != "export_image" && !movie)
-		return 0
-	
 	with (obj_timeline)
 	{
 		if (!render_visible || !type_is_shape(type))
@@ -38,24 +31,32 @@ function app_update_cameras(highquality, movie)
 		if (type != e_tl_type.CAMERA || !cam_surf_required)
 			continue
 		
+		/*
 		// Only update surface if needed
-		if (highquality && render_samples > -1 && surface_exists(cam_surf))
+		if (renderer = e_renderer.REALISTIC && render_samples > -1 && surface_exists(cam_surf))
 		{
 			cam_surf_required = false
 			continue
 		}
-		
-		render_samples = -1
+		*/
 		
 		// Render
 		with (app)
 		{
-			render_start(other.cam_surf_tmp, other.id)
-			if (highquality)
+			var preveffects = render_effects;
+			renderer_current = renderer
+			render_effects = true
+			render_start(other.cam_surf_tmp, other.id, other.id)
+			
+			render_use_samples = false
+			
+			if (renderer_current = e_renderer.REALISTIC || renderer_current = e_renderer.STANDARD)
 				render_high()
 			else
 				render_low()
+			
 			other.cam_surf_tmp = render_done()
+			render_effects = preveffects
 		}
 		
 		// Re-use the same two surfaces

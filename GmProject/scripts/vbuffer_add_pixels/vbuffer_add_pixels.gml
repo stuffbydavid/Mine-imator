@@ -1,31 +1,18 @@
-/// vbuffer_add_pixels(alphaarray, position, [height, texpos, texsize, texpixelsize, scale])
 /// @arg alphaarray
 /// @arg position
-/// @arg [height
-/// @arg texpos
-/// @arg texsize
-/// @arg texpixelsize
-/// @arg scale]
+/// @arg [height]
+/// @arg [texpos]
+/// @arg [texsize]
+/// @arg [texpixelsize]
+/// @arg [scale]
 
-function vbuffer_add_pixels()
+function vbuffer_add_pixels(alphaarr, pos, height = null, texpos = null, texsize = null, texpixelsize = null, scale = null)
 {
-	var alpha, pos, height, texpos, texsize, texpixelsize, scale, mat;
-	var samplesizex, samplesizey;
-	alpha = argument[0]
-	pos = argument[1]
+	var mat, samplesizex, samplesizey;
+	samplesizex = array_length(alphaarr)
+	samplesizey = array_length(alphaarr[0])
 	
-	samplesizex = array_length(alpha)
-	samplesizey = array_length(alpha[0])
-	
-	if (argument_count > 2)
-	{
-		height = argument[2]
-		texpos = argument[3]
-		texsize = argument[4]
-		texpixelsize = argument[5]
-		scale = argument[6]
-	}
-	else
+	if (height = null)
 	{
 		height = samplesizey
 		texpos = vec2(0, 0)
@@ -65,7 +52,7 @@ function vbuffer_add_pixels()
 				pzs = sizeendy
 			
 			// Transparent pixel found, continue
-			if (alpha[@ xx, yy] < 1)
+			if (alphaarr[@ xx, yy] < 1)
 			{
 				pz -= pzs
 				continue
@@ -73,10 +60,10 @@ function vbuffer_add_pixels()
 			
 			// Calculate which faces to add, continue if none are visible
 			var wface, eface, aface, bface;
-			wface = (xx = 0 || alpha[@ xx - 1, yy] < 1)
-			eface = (xx = ceil(texsize[X]) - 1 || alpha[@ xx + 1, yy] < 1)
-			aface = (yy = 0 || alpha[@ xx, yy - 1] < 1)
-			bface = (yy = ceil(texsize[Y]) - 1 || alpha[@ xx, yy + 1] < 1)
+			wface = (xx = 0 || alphaarr[@ xx - 1, yy] < 1)
+			eface = (xx = ceil(texsize[X]) - 1 || alphaarr[@ xx + 1, yy] < 1)
+			aface = (yy = 0 || alphaarr[@ xx, yy - 1] < 1)
+			bface = (yy = ceil(texsize[Y]) - 1 || alphaarr[@ xx, yy + 1] < 1)
 			
 			if (!eface && !wface && !aface && !bface)
 			{

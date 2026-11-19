@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"shader_submit_vec4",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"shader_submit_vec4",
+  "parent":{
+    "name":"Submit",
+    "path":"folders/Scripts/Render/Shaders/Submit.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

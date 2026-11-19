@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "keyframe_update_item_name",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Keyframes",
-    "path": "folders/Scripts/Project/Timeline/Keyframes.yy",
+  "$GMScript":"v1",
+  "%Name":"keyframe_update_item_name",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"keyframe_update_item_name",
+  "parent":{
+    "name":"Keyframes",
+    "path":"folders/Scripts/Project/Timeline/Keyframes.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

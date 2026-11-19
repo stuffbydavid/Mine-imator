@@ -29,19 +29,18 @@ namespace CppProject
 		Shader::RenderMode renderMode = Shader::NO_MODE;
 		FastVector<PrimitiveVertex> vertices;
 		FastVector<uint32_t> indices;
-		UvRect uvRect;
+		UvRect uvRect{};
 		QTransform transform;
 		IntType beginIndex = 0;
 		IntType currentIndex = 0;
 		RealType depth = 0.0;
 
-	#if API_D3D11
+	#if OS_WINDOWS
 		ID3D11Buffer* d3dVertexBuffer = nullptr;
 		ID3D11Buffer* d3dIndexBuffer = nullptr;
-	#else
+	#endif
 		QOpenGLBuffer* glVertexBuffer = nullptr;
 		QOpenGLBuffer* glIndexBuffer = nullptr;
-	#endif
 		IntType vertexBufferSize = 0, indexBufferSize = 0;
 
 		QColor color = Qt::black;

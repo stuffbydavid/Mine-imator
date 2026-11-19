@@ -1,18 +1,16 @@
-/// draw_button_swatch(x, y, wid, hei, name, color)
 /// @arg x
 /// @arg y
-/// @arg wid
-/// @arg hei
+/// @arg width
+/// @arg height
 /// @arg name
 /// @arg color
 
 function draw_button_swatch(xx, yy, wid, hei, name, color)
 {
-	var mouseon, mouseclick;
-	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 		return 0
 	
+	var mouseon, mouseclick;
 	mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
 	mouseclick = mouseon && mouse_left
 	

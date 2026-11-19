@@ -1,11 +1,7 @@
-/// action_lib_pc_type_bounce_factor(value, add)
-/// @arg value
-/// @arg add
-
-function action_lib_pc_type_bounce_factor(val, add)
+function action_lib_pc_type_bounce_factor(value, add)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_pc_type_bounce_factor, ptype_edit.bounce_factor, ptype_edit.bounce_factor * add + val, true)
+		history_set_var(action_lib_pc_type_bounce_factor, ptype_edit.bounce_factor, ptype_edit.bounce_factor * add + value, true)
 	
-	ptype_edit.bounce_factor = ptype_edit.bounce_factor * add + val
+	ptype_edit.bounce_factor = ptype_edit.bounce_factor * add + value
 }

@@ -1,6 +1,5 @@
-/// buffer_write_float_be(value)
+/// @desc Writes a big endian float to the buffer.
 /// @arg value
-/// @desc Writes a big endian float to the buffer
 
 function buffer_write_float_be(val)
 {

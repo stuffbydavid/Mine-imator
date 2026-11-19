@@ -1,14 +1,4 @@
-/// microani_set(name, script, hover, click, active, [disabled, [speed, [custom, [goalval]]]])
-/// @arg name
-/// @arg script
-/// @arg hover
-/// @arg click
-/// @arg active
-/// @arg [disabled
-/// @arg [speed
-/// @arg [custom
-/// @arg [goalval]]]]
-/// @desc Sets the global micro animation
+/// @desc Sets the global micro animation.
 
 function microani_set(name, script, hover, click, active, disabled = false, spd = 1.5, custom = false, goalval = 0)
 {
@@ -17,7 +7,7 @@ function microani_set(name, script, hover, click, active, disabled = false, spd 
 	animation = microanis[?aniname]
 	
 	// Create micro animation object if it doesn't already exist
-	if (animation = undefined)
+	if (is_undefined(animation))
 	{
 		animation = new micro_animation(aniname)
 		animation.active.init(active)

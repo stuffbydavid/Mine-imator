@@ -1,6 +1,3 @@
-/// action_tl_frame_text_valign(valign)
-/// @arg valign
-
 function action_tl_frame_text_valign(valign)
 {
 	tl_value_set_start(action_tl_frame_text_valign, true)

@@ -1,4 +1,3 @@
-/// value_get_color(value, [default])
 /// @arg value
 /// @arg [default]
 

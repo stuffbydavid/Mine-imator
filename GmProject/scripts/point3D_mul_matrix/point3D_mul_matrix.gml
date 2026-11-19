@@ -1,5 +1,4 @@
 /// CppSeparate VecType point3D_mul_matrix(VecType, MatrixType)
-/// point3D_mul_matrix(point, matrix)
 /// @arg point
 /// @arg matrix
 

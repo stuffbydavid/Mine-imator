@@ -1,5 +1,3 @@
-/// project_load_legacy_work_camera()
-
 function project_load_legacy_work_camera()
 {
 	cam_work_focus[X] = buffer_read_double()

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_entity_painting",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_entity_painting",
+  "parent":{
+    "name":"Entity",
+    "path":"folders/Scripts/Minecraft/Blocks/Entity.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

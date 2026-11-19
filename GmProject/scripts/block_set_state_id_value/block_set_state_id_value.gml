@@ -1,18 +1,15 @@
-/// block_set_state_id_value(block, stateid, name, value)
+/// @desc Sets a value in the given state, returns the new state ID.
 /// @arg block
 /// @arg stateid
 /// @arg name
 /// @arg value
-/// @desc Sets a value in the given state, returns the new state ID
 
 function block_set_state_id_value(block, stateid, name, val)
 {
-	var state;
-	
-	if (block == null || block.states_map = null)
+	if (block = null || block.states_map = null)
 		return stateid
 	
-	state = block.states_map[?name]
+	var state = block.states_map[?name];
 	if (is_undefined(state))
 		return stateid
 	

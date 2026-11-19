@@ -1,7 +1,4 @@
-/// action_tl_lock_bend(enable)
-/// @arg enable
-
-function action_tl_lock_bend(enable)
+function action_tl_lock_bend(enabled)
 {
 	if (history_undo)
 	{
@@ -41,9 +38,9 @@ function action_tl_lock_bend(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.lock_bend, enable)
+				history_save_var(other.id, other.lock_bend, enabled)
 			
-			lock_bend = enable
+			lock_bend = enabled
 			update_matrix = true
 		}
 	}

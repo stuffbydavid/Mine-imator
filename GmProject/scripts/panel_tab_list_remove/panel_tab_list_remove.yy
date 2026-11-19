@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "panel_tab_list_remove",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Panel",
-    "path": "folders/Scripts/App/Interface/Components/Panel.yy",
+  "$GMScript":"v1",
+  "%Name":"panel_tab_list_remove",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"panel_tab_list_remove",
+  "parent":{
+    "name":"Panel",
+    "path":"folders/Scripts/App/Interface/Components/Panel.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

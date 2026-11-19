@@ -12,6 +12,7 @@ namespace CppProject
 	{
 		Sprite(Sprite* other);
 		Sprite(QString name, IntType subAssetId, int numFrames, QPoint origin);
+		Sprite(QImage image, QPoint origin);
 		Sprite(const StringType& filename, QPoint origin);
 		Sprite(Surface* surface, QPoint origin);
 		Sprite(Surface* surface, QRect rect, QPoint origin);
@@ -35,6 +36,7 @@ namespace CppProject
 			QImage image;
 			TexturePageLocation* pageLoc = nullptr;
 			Texture* texture = nullptr;
+			IntType texturePageIndex = -1;
 		};
 
 		QSize size = { 0, 0 };

@@ -1,5 +1,4 @@
-/// temp_update_armor(temp)
-/// @arg temp
+/// @arg template
 
 function temp_update_armor(temp)
 {
@@ -26,5 +25,6 @@ function temp_update_armor(temp)
 			temp.armor_array[12] = type
 	}
 	
-	array_add(armor_update, temp)
+	if (temp != asset_picker_preview)
+		array_add(armor_update, temp)
 }

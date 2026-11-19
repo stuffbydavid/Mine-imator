@@ -1,5 +1,4 @@
-/// buffer_read_int()
-/// @desc Reads a 4 byte integer.
+/// @desc Reads a 4-byte integer.
 
 function buffer_read_int()
 {

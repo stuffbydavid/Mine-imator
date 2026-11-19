@@ -1,4 +1,3 @@
-/// negate(bool)
 /// @arg bool
 
 function negate(val)

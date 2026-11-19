@@ -1,5 +1,3 @@
-/// action_tl_keyframes_cut()
-
 function action_tl_keyframes_cut()
 {
 	if (history_undo)
@@ -19,6 +17,7 @@ function action_tl_keyframes_cut()
 				history_save_keyframes()
 				history_save_tl_select()
 			}
+			
 			tl_keyframes_copy()
 		}
 	
@@ -27,8 +26,10 @@ function action_tl_keyframes_cut()
 	
 	with (obj_timeline)
 		tl_update_values()
+	
 	tl_update_matrix()
 	tl_update_length()
 	
 	app_update_tl_edit()
+	project_update_counts()
 }

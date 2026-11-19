@@ -1,4 +1,3 @@
-/// string_format_snakecase(string)
 /// @arg string
 
 function string_format_snakecase(str)

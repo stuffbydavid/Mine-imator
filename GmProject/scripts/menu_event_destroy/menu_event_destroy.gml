@@ -1,5 +1,3 @@
-/// menu_event_destroy()
-
 function menu_event_destroy()
 {
 	if (menu_list != null)

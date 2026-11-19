@@ -1,6 +1,3 @@
-/// action_tl_frame_light_color(color)
-/// @arg color
-
 function action_tl_frame_light_color(color)
 {
 	tl_value_set_start(action_tl_frame_light_color, true)

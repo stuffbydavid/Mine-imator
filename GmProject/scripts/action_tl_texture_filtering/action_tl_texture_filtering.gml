@@ -1,7 +1,4 @@
-/// action_tl_texture_filtering(enable)
-/// @arg enable
-
-function action_tl_texture_filtering(enable)
+function action_tl_texture_filtering(enabled)
 {
 	if (history_undo)
 	{
@@ -23,6 +20,6 @@ function action_tl_texture_filtering(enable)
 		
 		with (obj_timeline)
 			if (selected)
-				action_tl_texture_filtering_tree(id, enable, hobj)
+				action_tl_texture_filtering_tree(id, enabled, hobj)
 	}
 }

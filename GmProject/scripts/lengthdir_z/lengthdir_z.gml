@@ -1,4 +1,3 @@
-/// lengthdir_z(length, direction)
 /// @arg length
 /// @arg direction
 

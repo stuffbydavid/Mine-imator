@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "app_startup_lists",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "App",
-    "path": "folders/Scripts/App.yy",
+  "$GMScript":"v1",
+  "%Name":"app_startup_lists",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_startup_lists",
+  "parent":{
+    "name":"App",
+    "path":"folders/Scripts/App.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,4 +1,3 @@
-/// temp_update_model_timeline_parts()
 /// @desc Sets the model parts of affected timelines.
 
 function temp_update_model_timeline_parts()

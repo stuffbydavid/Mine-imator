@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_get_place_parent_action",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_get_place_parent_action",
+  "parent":{
+    "name":"Parent",
+    "path":"folders/Scripts/Project/Timeline/Parent.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

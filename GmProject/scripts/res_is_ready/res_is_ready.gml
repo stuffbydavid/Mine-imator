@@ -1,5 +1,4 @@
-/// res_is_ready(res)
-/// @arg res
+/// @arg resource
 
 function res_is_ready(res)
 {

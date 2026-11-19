@@ -1,5 +1,3 @@
-/// temp_update_model_color()
-
 function temp_update_model_color()
 {
 	if (object_index = obj_timeline)

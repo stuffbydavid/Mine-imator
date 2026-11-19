@@ -1,4 +1,3 @@
-/// directory_delete_lib(directory)
 /// @arg directory
 
 function directory_delete_lib(dir)

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_overlay_view_controls",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_overlay_view_controls",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Actions/Settings/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

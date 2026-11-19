@@ -1,8 +1,3 @@
-/// uv_rotate(uv, angle, offset)
-/// @arg uv
-/// @arg angle
-/// @arg offset
-
 function uv_rotate(uv, angle, offset)
 {
 	var rotmat, pnt;

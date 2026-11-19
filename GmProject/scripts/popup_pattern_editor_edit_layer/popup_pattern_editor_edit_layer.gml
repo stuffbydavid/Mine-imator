@@ -1,8 +1,6 @@
-/// popup_pattern_editor_edit_layer()
-
 function popup_pattern_editor_edit_layer()
 {
-	draw_label(text_get("patterneditorcolors"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+	draw_label(text_get("pattern_editor/colors"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 	dy += 18
 	
 	var colorsx, size;
@@ -11,7 +9,7 @@ function popup_pattern_editor_edit_layer()
 	
 	for (var c = 0; c < array_length(minecraft_swatch_dyes.colors); c++)
 	{
-		if (draw_button_swatch(colorsx, dy, 20, 20, "swatch" + minecraft_swatch_dyes.name + minecraft_swatch_dyes.color_names[c], minecraft_swatch_dyes.colors[c]))
+		if (draw_button_swatch(colorsx, dy, 20, 20, "swatch/" + minecraft_swatch_dyes.name + "/" + minecraft_swatch_dyes.color_names[c], minecraft_swatch_dyes.colors[c]))
 		{
 			if (popup_pattern_editor.layer_edit = -1)
 				popup_pattern_editor.pattern_edit_preview.pattern_base_color = minecraft_swatch_dyes.colors[c]
@@ -35,7 +33,7 @@ function popup_pattern_editor_edit_layer()
 	if (popup_pattern_editor.layer_edit != -1)
 	{
 		dy += 8
-		draw_label(text_get("patterneditorpatterns"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
+		draw_label(text_get("pattern_editor/patterns"), dx, dy + 4, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 		dy += 18
 		
 		var patternsx, patternsy;
@@ -46,7 +44,7 @@ function popup_pattern_editor_edit_layer()
 		for (; p < ds_list_size(minecraft_pattern_list); p++)
 		{
 			var active = (popup_pattern_editor.pattern_list_edit[|popup_pattern_editor.layer_edit] = minecraft_pattern_list[|p]);
-			if (draw_button_icon("patterneditorpatterns" + string(p), patternsx, dy, 20, 40, active, null, null, false, "patterneditorpatterns" + minecraft_pattern_list[|p], popup_pattern_editor.pattern_sprites[p]))
+			if (draw_button_icon("pattern_editor/patterns/" + string(p), patternsx, dy, 20, 40, active, null, null, false, "pattern_editor/patterns/" + minecraft_pattern_list[|p], popup_pattern_editor.pattern_sprites[p]))
 			{
 				popup_pattern_editor.pattern_list_edit[|popup_pattern_editor.layer_edit] = minecraft_pattern_list[|p]
 				popup_pattern_editor.update = true

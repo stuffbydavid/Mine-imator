@@ -1,4 +1,3 @@
-/// sprite_save_lib(sprite, subimage, filename)
 /// @arg sprite
 /// @arg subimage
 /// @arg filename

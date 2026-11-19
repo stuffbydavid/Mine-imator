@@ -1,12 +1,8 @@
-/// history_redo_res()
-
 function history_redo_res()
 {
-	var res;
-	
 	if (history_data.filename != "" && !history_data.replaced)
 	{
-		res = new_res(history_data.filename, history_data.type)
+		var res = new_res(history_data.filename, history_data.type);
 		res.save_id = history_data.new_res_save_id
 		
 		if (history_data.type = e_res_type.SKIN)
@@ -18,9 +14,9 @@ function history_redo_res()
 		
 		with (res)
 			res_load()
+			
+		return res
 	}
 	else
-		res = save_id_find(history_data.new_res_save_id)
-	
-	return res
+		return save_id_find(history_data.new_res_save_id)
 }

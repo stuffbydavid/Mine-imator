@@ -1,5 +1,3 @@
-/// action_tl_keyframes_move_done()
-
 function action_tl_keyframes_move_done()
 {
 	if (history_undo)
@@ -53,6 +51,7 @@ function action_tl_keyframes_move_done()
 		with (history_set(action_tl_keyframes_move_done))
 		{
 			kf_move_amount = 0
+			
 			with (obj_keyframe)
 			{
 				if (!selected)
@@ -68,6 +67,7 @@ function action_tl_keyframes_move_done()
 		}
 		
 		window_busy = ""
+		timeline_move_kf_stretch = false
 	}
 	
 	if (history_undo || history_redo)

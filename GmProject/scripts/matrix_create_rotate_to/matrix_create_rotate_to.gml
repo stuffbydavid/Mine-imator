@@ -1,7 +1,4 @@
-/// matrix_create_rotate_to(tangent, normal)
-/// @arg tangent
-/// @arg normal
-/// @desc Returns a TBN coordinate frame for rotation
+/// @desc Returns a TBN coordinate frame for rotation.
 
 function matrix_create_rotate_to(tangent, normal)
 {

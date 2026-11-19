@@ -1,4 +1,3 @@
-/// draw_divide_vertical(x, y, height)
 /// @arg x
 /// @arg y
 /// @arg height

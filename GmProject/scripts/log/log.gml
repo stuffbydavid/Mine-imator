@@ -1,9 +1,9 @@
-/// log(string, [ values...])
-/// @desc Prints values to the log file
+/// @desc Prints values to the log file.
 /// @arg string
 /// @arg [values...]
-function log() {
 
+function log()
+{
 	var cap, valstr;
 	cap = string(argument[0])
 	valstr = ""
@@ -23,5 +23,4 @@ function log() {
 	log_message(cap + valstr)
 
 	return 1
-
 }

@@ -1,4 +1,3 @@
-/// draw_pattern(x, y, width, height)
 /// @arg x
 /// @arg y
 /// @arg width
@@ -7,7 +6,7 @@
 function draw_pattern(xx, yy, w, h)
 {
 	var ypos, pattern;
-	pattern = (setting_theme = theme_light ? 0 : 1)
+	pattern = (setting_theme.dark ? 1 : 0)
 	
 	// Left
 	ypos = yy

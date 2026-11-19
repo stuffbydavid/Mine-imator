@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_tl_frame_cam_fx_clrcor_color_burn",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_tl_frame_cam_fx_clrcor_color_burn",
+  "parent":{
+    "name":"Color correction",
+    "path":"folders/Scripts/App/Actions/Timeline/Frame editor/Camera effects/Color correction.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

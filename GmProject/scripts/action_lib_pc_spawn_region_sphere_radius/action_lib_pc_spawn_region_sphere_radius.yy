@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_pc_spawn_region_sphere_radius",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Spawn region",
-    "path": "folders/Scripts/App/Actions/Library/Particle editor/Spawn region.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_pc_spawn_region_sphere_radius",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_pc_spawn_region_sphere_radius",
+  "parent":{
+    "name":"Spawn region",
+    "path":"folders/Scripts/App/Actions/Library/Particle editor/Spawn region.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

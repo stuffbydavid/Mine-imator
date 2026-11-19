@@ -1,4 +1,3 @@
-/// value_get_real(value, [default])
 /// @arg value
 /// @arg [default]
 

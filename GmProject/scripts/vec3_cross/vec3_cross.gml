@@ -1,5 +1,4 @@
 /// CppSeparate VecType vec3_cross(VecType, VecType)
-/// vec3_cross(vector1, vector2)
 /// @arg vector1
 /// @arg vector2
 

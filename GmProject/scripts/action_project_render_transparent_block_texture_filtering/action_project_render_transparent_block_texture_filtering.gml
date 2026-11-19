@@ -1,11 +1,8 @@
-/// action_project_render_transparent_block_texture_filtering(filtering)
-/// @arg filtering
-
-function action_project_render_transparent_block_texture_filtering(filtering)
+function action_project_render_transparent_block_texture_filtering(enabled)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_transparent_block_texture_filtering, project_render_transparent_block_texture_filtering, filtering, 1)
+		history_set_var(action_project_render_transparent_block_texture_filtering, project_render_transparent_block_texture_filtering, enabled, true)
 	
-	project_render_transparent_block_texture_filtering = filtering
+	project_render_transparent_block_texture_filtering = enabled
 	render_samples = -1
 }

@@ -1,4 +1,3 @@
-/// draw_divide(x, y, width)
 /// @arg x
 /// @arg y
 /// @arg width

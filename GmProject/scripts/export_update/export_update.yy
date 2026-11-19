@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "export_update",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Export",
-    "path": "folders/Scripts/App/Export.yy",
+  "$GMScript":"v1",
+  "%Name":"export_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"export_update",
+  "parent":{
+    "name":"Export",
+    "path":"folders/Scripts/App/Export.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

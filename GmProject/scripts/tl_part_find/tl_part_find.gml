@@ -1,6 +1,3 @@
-/// tl_part_find(name)
-/// @arg name
-
 function tl_part_find(name)
 {
 	if (part_list != null)

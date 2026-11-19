@@ -1,6 +1,3 @@
-/// json_load_object(root)
-/// @arg root
-
 function json_load_object(root)
 {
 	var map = ds_map_create();

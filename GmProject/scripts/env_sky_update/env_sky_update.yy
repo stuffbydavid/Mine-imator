@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"env_sky_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"env_sky_update",
+  "parent":{
+    "name":"Environment",
+    "path":"folders/Scripts/App/Environment.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,3 @@
-/// tl_update_parent_is_selected()
 /// @desc Updates parent_is_selected variable for self and children.
 
 function tl_update_parent_is_selected()

@@ -2,8 +2,6 @@
 
 #include "Generated/GmlFunc.hpp"
 
-#define KEY_EXIST_CHECK !RELEASE_MODE
-
 namespace CppProject
 {
 	template struct HashMap<IntType>;
@@ -51,6 +49,7 @@ namespace CppProject
 				return VarType(hashIt.key());
 			}
 		}
+
 		return VarType();
 	}
 
@@ -73,10 +72,12 @@ namespace CppProject
 				hashIt.next();
 				if (foundKey)
 					return VarType(hashIt.key());
+
 				if (hashIt.key() == (T)key)
 					foundKey = true;
 			}
 		}
+
 		return VarType();
 	}
 

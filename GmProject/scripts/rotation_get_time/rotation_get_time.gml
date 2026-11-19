@@ -1,6 +1,4 @@
-/// rotation_get_time(rotation)
-/// @arg rotation
-/// @desc Returns time of day string
+/// @desc Returns time of day string.
 
 function rotation_get_time(rotation)
 {

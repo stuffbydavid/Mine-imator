@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_lib_block_center",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_block_center",
+  "parent":{
+    "name":"Block",
+    "path":"folders/Scripts/App/Actions/Library/Block.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

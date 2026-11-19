@@ -1,4 +1,3 @@
-#if API_OPENGL
 #pragma once
 
 #include "Matrix.hpp"
@@ -27,4 +26,3 @@ namespace CppProject
 		GLuint glVboId = 0;
 	};
 }
-#endif

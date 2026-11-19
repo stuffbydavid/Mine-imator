@@ -44,10 +44,10 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: Real() += in; break;
-			case INTEGER_t: Int() += in; break;
-			case BOOLEAN_t: SetInt(ToInt() + in); break; // Convert to int
-			default: SetInt(in); break;
+			case REAL_t:		Real() += in; break;
+			case INTEGER_t:		Int() += in; break;
+			case BOOLEAN_t:		SetInt(ToInt() + in); break; // Convert to int
+			default:			SetInt(in); break;
 		}
 	}
 
@@ -63,9 +63,9 @@ namespace CppProject
 	{
 		switch (type)
 		{
-			case REAL_t: Real() *= in; break;
-			case INTEGER_t: Int() *= in; break;
-			case BOOLEAN_t: SetInt(ToInt() * in); break; // Convert to int
+			case REAL_t:		Real() *= in; break;
+			case INTEGER_t:		Int() *= in; break;
+			case BOOLEAN_t:		SetInt(ToInt() * in); break; // Convert to int
 			default:
 				WARNING("Variant *= Integer: Invalid left type " + TypeName(type));
 		}

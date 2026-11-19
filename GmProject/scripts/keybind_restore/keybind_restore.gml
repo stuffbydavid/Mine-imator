@@ -1,10 +1,6 @@
-/// keybind_restore(keybindID, [group])
-/// @arg keybindID
-/// @arg [group]
-
-function keybind_restore(keybindID, group = false)
+function keybind_restore(keybindid, group = false)
 {
-	var obj = keybinds[keybindID]
+	var obj = keybinds[keybindid];
 	obj.keybind = obj.keybind_default
 	
 	if (!group)

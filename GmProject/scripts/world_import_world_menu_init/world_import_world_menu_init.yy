@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"world_import_world_menu_init",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"world_import_world_menu_init",
+  "parent":{
+    "name":"World",
+    "path":"folders/Scripts/Minecraft/World.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

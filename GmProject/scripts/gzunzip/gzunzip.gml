@@ -1,4 +1,3 @@
-/// gzunzip(source, destination)
 /// @arg source
 /// @arg destination
 

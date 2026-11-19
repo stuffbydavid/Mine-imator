@@ -1,5 +1,4 @@
-/// action_setting_language_load(fn)
-/// @arg fn
+/// @arg filename
 
 function action_setting_language_load(fn)
 {
@@ -16,7 +15,7 @@ function action_setting_language_load(fn)
 		tl_update_type_name()
 	
 	with (obj_popup)
-		caption = text_get(name + "caption")
+		caption = text_get(name + "/caption")
 	
 	settings_save()
 }

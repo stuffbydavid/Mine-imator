@@ -1,4 +1,3 @@
-/// history_save_loaded()
 /// @desc Stores the newly loaded objects.
 
 function history_save_loaded()

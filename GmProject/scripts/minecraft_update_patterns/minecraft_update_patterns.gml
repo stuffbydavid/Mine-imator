@@ -1,9 +1,8 @@
-/// minecraft_update_patterns()
-
 function minecraft_update_patterns()
 {
 	// Update pattern designs for templates
-	if (pattern_update != null && window_busy != "popup" + popup_loading.name)
+	if (pattern_update != null && (!is_array(pattern_update) || array_length(pattern_update) > 0) &&
+		window_busy != "popup/" + popup_loading.name)
 	{
 		var obj = pattern_update;
 		
@@ -16,7 +15,7 @@ function minecraft_update_patterns()
 				with (obj)
 				{
 					if (sprite_exists(pattern_skin))
-						sprite_delete(pattern_skin)
+						texture_free(pattern_skin)
 					
 					var res;
 					with (obj)
@@ -34,7 +33,7 @@ function minecraft_update_patterns()
 			with (obj)
 			{
 				if (sprite_exists(pattern_skin))
-					sprite_delete(pattern_skin)
+					texture_free(pattern_skin)
 				
 				var res;
 				with (obj)
@@ -48,5 +47,6 @@ function minecraft_update_patterns()
 		}
 		
 		pattern_update = []
+		view_changed()
 	}
 }

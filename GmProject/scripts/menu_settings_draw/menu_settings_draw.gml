@@ -1,5 +1,3 @@
-/// menu_settings_draw()
-
 function menu_settings_draw()
 {
 	if (settings_menu_window != window_get_current())
@@ -17,9 +15,12 @@ function menu_settings_draw()
 			settings_menu_ani = 0
 			settings_menu_name = ""
 			settings_menu_ani_type = ""
+			
 			window_busy = settings_menu_busy_prev
+			
 			context_menu_close()
 			list_destroy(settings_menu_list)
+			
 			return 0
 		}
 	}
@@ -55,7 +56,7 @@ function menu_settings_draw()
 	content_y = round(content_y)
 	
 	// Prepare window state
-	if (window_busy = "settingsmenu" && settings_menu_ani_type = "" && settings_menu_ani = 1)
+	if (window_busy = "settings/menu" && settings_menu_ani_type = "" && settings_menu_ani = 1)
 		window_busy = ""
 	
 	content_mouseon = app_mouse_box(content_x, content_y, content_width, content_height)
@@ -73,7 +74,7 @@ function menu_settings_draw()
 		draw_set_alpha(settingsmenuease)
 	
 	draw_dropshadow(content_x, content_y, content_width, content_height, c_black, settingsmenuease)
-	draw_box(content_x, content_y, content_width, content_height, false, c_level_top, 1)
+	draw_box(content_x, content_y, content_width, content_height, false, c_input_background, 1)
 	draw_outline(content_x, content_y, content_width, content_height, 1, c_border, a_border * settingsmenuease, true)
 	
 	if (settings_menu_script)
@@ -118,7 +119,7 @@ function menu_settings_draw()
 	// Draw arrow
 	if (settings_menu_primary)
 	{
-		draw_image(spr_tooltip_arrow, 0, settings_menu_x, content_y, 1, 1, c_level_middle, settingsmenuease)
+		draw_image(spr_tooltip_arrow, 0, settings_menu_x, content_y, 1, 1, c_input_background, settingsmenuease)
 	
 		// Highlight arrow with top item
 		if (settings_menu_amount > 0 && settings_menu_list.item[|0].hover)
@@ -147,7 +148,7 @@ function menu_settings_draw()
 			{
 				settings_menu_ani = 1
 				settings_menu_ani_type = "hide"
-				window_busy = "settingsmenu"
+				window_busy = "settings/menu"
 				window_focus = ""
 				
 				context_menu_close()
@@ -159,7 +160,7 @@ function menu_settings_draw()
 			{
 				settings_menu_ani = 1
 				settings_menu_ani_type = "hide"
-				window_busy = "settingsmenu"
+				window_busy = "settings/menu"
 				window_focus = ""
 				
 				context_menu_close()
@@ -170,5 +171,5 @@ function menu_settings_draw()
 	settings_menu_steps++
 	
 	if (window_busy = "" && settings_menu_ani_type != "hide")
-		window_busy = "settingsmenu"
+		window_busy = "settings/menu"
 }

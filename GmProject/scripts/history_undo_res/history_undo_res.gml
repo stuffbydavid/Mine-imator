@@ -1,5 +1,3 @@
-/// history_undo_res()
-
 function history_undo_res()
 {
 	if (history_data.filename != "" && (!history_data.replaced || history_data.copied))

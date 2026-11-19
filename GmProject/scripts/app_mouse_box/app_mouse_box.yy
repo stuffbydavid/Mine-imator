@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "app_mouse_box",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "App",
-    "path": "folders/Scripts/App.yy",
+  "$GMScript":"v1",
+  "%Name":"app_mouse_box",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_mouse_box",
+  "parent":{
+    "name":"App",
+    "path":"folders/Scripts/App.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

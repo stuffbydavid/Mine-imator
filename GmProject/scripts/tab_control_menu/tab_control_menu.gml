@@ -1,12 +1,7 @@
-/// tab_control_menu([size])
-/// @arg [size]
+/// @arg [height]
 
-function tab_control_menu()
+function tab_control_menu(height = 24)
 {
-	var label = ((window_compact && !app.panel_compact) ? 0 : label_height + 8);
-	
-	if (argument_count > 0)
-		tab_control(label + argument[0])
-	else
-		tab_control(label + 24)
+	var labelheight = ((window_compact && !app.panel_compact) ? 0 : label_height + 8);
+	tab_control(labelheight + height)
 }

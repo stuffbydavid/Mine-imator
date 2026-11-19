@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_keyframes_stretch",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_keyframes_stretch",
+  "parent":{
+    "name":"Keyframes",
+    "path":"folders/Scripts/Project/Timeline/Keyframes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

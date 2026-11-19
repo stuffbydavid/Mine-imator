@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "debug_ds_map",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Debug",
-    "path": "folders/Scripts/App/Debug.yy",
+  "$GMScript":"v1",
+  "%Name":"debug_ds_map",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"debug_ds_map",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Scripts/App/Debug.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

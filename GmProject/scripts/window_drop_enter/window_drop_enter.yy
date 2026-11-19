@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_drop_enter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_drop_enter",
+  "parent":{
+    "name":"Window",
+    "path":"folders/Scripts/App/Window.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,3 @@
-/// value_random(value, israndom, randommin, randommax)
 /// @arg value
 /// @arg israndom
 /// @arg randommin

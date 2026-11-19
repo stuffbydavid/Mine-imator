@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"env_ground_update_texture_normal",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"env_ground_update_texture_normal",
+  "parent":{
+    "name":"Environment",
+    "path":"folders/Scripts/App/Environment.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

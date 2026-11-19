@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"project_update_counts",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_update_counts",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,5 +1,3 @@
-/// vbuffer_start()
-
 function vbuffer_start()
 {
 	vbuffer_current = vertex_create_buffer()
@@ -7,7 +5,7 @@ function vbuffer_start()
 	
 	if (!is_cpp())
 		repeat (3) // Workaround vertex error
-			vertex_add(0, 0, 0, 0, 0, 0, 0, 0)
+			vertex_add_real(0, 0, 0, 0, 0, 0, 0, 0)
 	
 	return vbuffer_current
 }

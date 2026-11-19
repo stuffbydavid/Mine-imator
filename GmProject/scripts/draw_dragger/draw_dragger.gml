@@ -1,4 +1,3 @@
-/// draw_dragger(name, x, y, width, value, multiplier, min, max, default, snap, textbox, script, [captionwidth, [showcaption, [disabled, [tip]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -11,14 +10,14 @@
 /// @arg snap
 /// @arg textbox
 /// @arg script
-/// @arg [captionwidth
-/// @arg [showcaption
-/// @arg [disabled
-/// @arg [tip]]]]
+/// @arg [captionwidth]
+/// @arg [showcaption]
+/// @arg [disabled]
+/// @arg [tip]
 
 function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapval, tbx, script, capwidth = null, showcaption = true, disabled = false, tip = "")
 {
-	var caption, hei, fieldx, dragmouseon;
+	var hei, caption, fieldx, dragmouseon;
 	
 	hei = ui_small_height
 	
@@ -37,13 +36,13 @@ function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapva
 	if (xx + wid + capwidth < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
 		if (textbox_jump)
-			ds_list_add(textbox_list, [tbx, content_tab, yy, content_y, content_height])
+			ds_list_add(textbox_list, [ tbx, content_tab, yy, content_y, content_height ])
 		
 		return 0
 	}
 	
 	if (!disabled)
-		context_menu_area(xx, yy, wid + capwidth, hei, "contextmenuvalue", value, e_context_type.NUMBER, script, def)
+		context_menu_area(xx, yy, wid + capwidth, hei, "context_menu/value", value, e_context_type.NUMBER, script, def)
 	
 	fieldx = xx + capwidth
 	
@@ -74,13 +73,13 @@ function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapva
 		else if (mouse_dx != 0)
 		{
 			dragger_drag_value = value
-			window_busy = name + "drag" // Start dragging
+			window_busy = name + "/drag" // Start dragging
 			window_focus = ""
 		}
 	}
 	
 	// Is dragging
-	if (window_busy = name + "drag")
+	if (window_busy = name + "/drag")
 	{
 		mouse_cursor = cr_none
 		dragger_drag_value += (mouse_x - mouse_click_x) * mul * dragger_multiplier
@@ -89,9 +88,9 @@ function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapva
 		var d;
 		
 		if (app.setting_unlimited_values)
-			d = snap(dragger_drag_value, snapval) - value;
+			d = snap(dragger_drag_value, snapval) - value
 		else
-			d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - value;
+			d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - value
 		
 		if (d <> 0)
 		{
@@ -121,7 +120,7 @@ function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapva
 		draw_box(fieldx, yy, wid * perc, hei, false, c_accent_hover, a_accent_overlay)
 	}
 	
-	if (window_busy = name + "drag")
+	if (window_busy = name + "/drag")
 		current_microani.active.value = true
 	
 	// Set cursor
@@ -147,6 +146,6 @@ function draw_dragger(name, xx, yy, wid, value, mul, minval, maxval, def, snapva
 	}
 	
 	// Idle
-	if (window_busy != name + "drag" && window_busy != name + "press" && window_focus != string(tbx))
+	if (window_busy != name + "/drag" && window_busy != name + "/press" && window_focus != string(tbx))
 		tbx.text = string_decimals(value)
 }

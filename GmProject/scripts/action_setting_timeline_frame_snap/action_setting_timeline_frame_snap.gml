@@ -1,7 +1,4 @@
-/// action_setting_timeline_frame_snap(enable)
-/// @arg enable
-
-function action_setting_timeline_frame_snap(enable)
+function action_setting_timeline_frame_snap(enabled)
 {
-	setting_timeline_frame_snap = enable
+	setting_timeline_frame_snap = enabled
 }

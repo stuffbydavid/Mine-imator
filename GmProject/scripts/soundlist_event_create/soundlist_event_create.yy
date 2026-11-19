@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"soundlist_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"soundlist_event_create",
+  "parent":{
+    "name":"Soundlist",
+    "path":"folders/Scripts/App/Interface/Components/Soundlist.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

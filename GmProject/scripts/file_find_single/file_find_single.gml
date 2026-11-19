@@ -1,4 +1,3 @@
-/// file_find_single(directory, extensions)
 /// @arg directory
 /// @arg extensions
 
