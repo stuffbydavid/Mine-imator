@@ -393,9 +393,15 @@ namespace CppProject
 
 	void AppWindow::wheelEvent(QWheelEvent* event)
 	{
-		if (event->angleDelta().y() < 0)
+		int delta = event->angleDelta().y();
+
+		// Qt reports Alt+wheel on the horizontal axis on Windows
+		if (delta == 0)
+			delta = event->angleDelta().x();
+
+		if (delta < 0)
 			mouseWheel = -1;
-		else if (event->angleDelta().y() > 0)
+		else if (delta > 0)
 			mouseWheel = 1;
 		else
 			mouseWheel = 0;

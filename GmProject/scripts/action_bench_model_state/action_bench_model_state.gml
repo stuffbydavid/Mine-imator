@@ -26,4 +26,7 @@ function action_bench_model_state(value)
 			with (preview)
 				update = true
 	}
+
+	if (place_build)
+		view_build_hotbar_update()
 }

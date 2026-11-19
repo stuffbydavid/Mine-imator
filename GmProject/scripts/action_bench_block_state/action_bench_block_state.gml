@@ -17,4 +17,7 @@ function action_bench_block_state(value)
 		if (preview != null)
 			preview.update = true
 	}
+
+	if (place_build)
+		view_build_hotbar_update()
 }

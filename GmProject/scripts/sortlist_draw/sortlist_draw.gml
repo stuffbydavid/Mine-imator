@@ -28,8 +28,8 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "", st
 	searchunfocused = slist.search_focused && !searchfocused
 	slist.search_focused = searchfocused
 
-	h -= list_header_height
-	yy += list_header_height
+	h -= list_header_height * slist.search_show
+	yy += list_header_height * slist.search_show
 	
 	if (h < headerh)
 		return select

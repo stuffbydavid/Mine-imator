@@ -111,6 +111,9 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		
 		animation.fade.value = 1
 	}
+
+	if (type != e_menu.LIST_SEAMLESS && tip != "")
+		microani_set(nameid, null, false, false, false, false, 1.5, false, 0.5)
 	
 	if (menuactive)
 	{
@@ -166,11 +169,11 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		item.thumbnail_alpha = texalpha
 	}
 	
-	clipitem = (current_microani.goal_ease != 0.5 && !shader_clip_active)
+	clipitem = (animation.goal_ease != 0.5 && !shader_clip_active)
 	if (clipitem)
 		clip_begin(xx, yy, wid, hei)
 	
-	list_item_draw(item, xx, yy + floor(((current_microani.goal_ease * 2) - 1) * 12), wid, hei, false, null, null, false)
+	list_item_draw(item, xx, yy + floor(((animation.goal_ease * 2) - 1) * 12), wid, hei, false, null, null, false)
 	instance_destroy(item)
 	
 	if (clipitem)
@@ -240,6 +243,7 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 	// Disabled overlay
 	draw_box(xx, yy, wid, hei, false, c_overlay, a_overlay * microani_arr[e_microani.DISABLED])
 	
+	current_microani = animation
 	microani_update(mouseon, mouseon && mouse_left, (menuactive && !menuhide), disabled, ((menuactive && !menuhide) ? !flip : flip), 0.5)
 	
 	// Ctrl + Scroll
@@ -304,8 +308,8 @@ function draw_button_menu(name, type, xx, yy, wid, hei, value, text, script, dis
 		
 		list_item_camera_effect_edit_type = camera_effect_type_edit
 		
-		current_microani.holding.init(1)
-		current_microani.goal_ease = ((mouse_wheel) + 1) * .5
+		animation.holding.init(1)
+		animation.goal_ease = ((mouse_wheel) + 1) * .5
 		
 		list_destroy(list)
 		instance_destroy(m)

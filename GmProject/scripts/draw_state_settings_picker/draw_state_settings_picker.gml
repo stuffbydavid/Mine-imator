@@ -64,11 +64,8 @@ function draw_state_settings_picker(picker, element, script, xx, yy, wid, res)
 	last = clamp(ceil((scroll.value + viewhei) / slotsize) * columns, 0, count)
 
 	// Generate only the visible images before drawing the clipped grid
-	var textures, prevalpha, prevcolor, prevfont;
+	var textures;
 	textures = []
-	prevalpha = draw_get_alpha()
-	prevcolor = draw_get_color()
-	prevfont = draw_get_font()
 	
 	res = res_eval(res)
 	for (var i = first; i < last; i++)
@@ -89,10 +86,6 @@ function draw_state_settings_picker(picker, element, script, xx, yy, wid, res)
 		textures[i - first] = tex
 	}
 	
-	draw_set_alpha(prevalpha)
-	draw_set_color(prevcolor)
-	draw_set_font(prevfont)
-
 	draw_box(xx + 1, yy + 1, wid - 2, hei - 2, false, c_input_background)
 	draw_outline(xx, yy, wid, hei, 1, window_focus = string(scroll) ? c_accent : c_border, window_focus = string(scroll) ? 1 : a_border, true)
 

@@ -108,6 +108,9 @@ function app_start_place(build, tl = null, spawn = false)
 		
 		picker.center_on_draw = (build_tool.build_selected != null)
 		
+		if (build_tool.build_selected != null)
+			view_build_hotbar_update(build_tool.build_selected)
+		
 		place_tl_parent = app
 		place_tl_parent_index = -1
 		

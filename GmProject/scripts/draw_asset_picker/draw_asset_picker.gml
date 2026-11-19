@@ -77,15 +77,12 @@ function draw_asset_picker(picker, res, select, state, xx, yy, wid, hei, name = 
 	picker.scroll.value_goal = clamp(picker.scroll.value_goal, 0, maxscroll)
 
 	// Resolve visible states and generate thumbnails
-	var first, last, textures, states, search, prevalpha, prevcolor, prevfont;
+	var first, last, textures, states, search;
 	first = clamp(floor(picker.scroll.value / slotsize) * columns, 0, count)
 	last = clamp(ceil((picker.scroll.value + hei - 2) / slotsize) * columns, 0, count)
 	textures = []
 	states = []
 	search = string_lower(picker.search_tbx.text)
-	prevalpha = draw_get_alpha()
-	prevcolor = draw_get_color()
-	prevfont = draw_get_font()
 	res = res_eval(res)
 	
 	for (var i = first; i < last; i++)
@@ -107,10 +104,6 @@ function draw_asset_picker(picker, res, select, state, xx, yy, wid, hei, name = 
 		states[i - first] = vars
 	}
 	
-	draw_set_alpha(prevalpha)
-	draw_set_color(prevcolor)
-	draw_set_font(prevfont)
-
 	// Preserve the surrounding clip while drawing the picker
 	draw_box(xx + 1, yy + 1, wid - 2, hei - 2, false, c_input_background)
 	draw_outline(xx, yy, wid, hei, 1, window_focus = string(picker.scroll) ? c_accent : c_border, window_focus = string(picker.scroll) ? 1 : a_border, true)

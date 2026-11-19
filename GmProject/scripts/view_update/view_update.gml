@@ -58,7 +58,7 @@ function view_update(view, cam)
 		(view.surface_mouse_x != mouse_x - content_x || view.surface_mouse_y != mouse_y - content_y)));
 	
 	// Update gizmos
-	if (view.navgizmo_mouseon)
+	if (view.overlay_mouseon)
 		view.control_mouseon_last = null
 
 	if (!surface_exists(view.surface_gizmos) ||
@@ -84,7 +84,7 @@ function view_update(view, cam)
 		view_update_gizmos(view, cam)
 
 	// Pick the block under the cursor before changing the build selection
-	if (place_build && mouse_middle_pressed && content_mouseon && !view.navgizmo_mouseon && window_busy = place_busy &&
+	if (place_build && mouse_middle_pressed && content_mouseon && !view.overlay_mouseon && window_busy = place_busy &&
 		(!build_first_person || view = view_main))
 	{
 		place_view_pos = null
@@ -108,9 +108,6 @@ function view_update(view, cam)
 		
 		camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y)
 		
-		if (mouse_wheel <> 0)
-			action_build_scroll()
-
 		if (mouse_left_pressed)
 			buildedited = action_build_remove()
 		
@@ -280,7 +277,8 @@ function view_update(view, cam)
 				if (place_build)
 				{
 					window_busy = place_busy
-					if (view.navgizmo_mouseon)
+
+					if (view.overlay_mouseon)
 						place_target_tl = null
 					else if (view_click_right)
 					{
@@ -292,8 +290,9 @@ function view_update(view, cam)
 				}
 				else if (place_tl = null)
 				{
-					if (!view.navgizmo_mouseon)
+					if (!view.overlay_mouseon)
 						view_click(view, cam, view_click_right)
+
 					window_busy = ""
 				}
 				else // Stop placing

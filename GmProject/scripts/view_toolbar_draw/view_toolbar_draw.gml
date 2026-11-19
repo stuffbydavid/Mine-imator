@@ -1,10 +1,10 @@
 /// @arg view
-/// @arg x
-/// @arg y
 
-function view_toolbar_draw(view, xx, yy)
+function view_toolbar_draw(view)
 {
-	var width, height, starty, padding;
+	var xx, yy, width, height, starty, padding;
+	xx = content_x + 8
+	yy = content_y + 8 + 86 + 12
 	width = 32
 	height = view.toolbar_height
 	starty = yy
@@ -36,9 +36,7 @@ function view_toolbar_draw(view, xx, yy)
 	
 	draw_set_alpha(view.toolbar_alpha)
 	
-	draw_dropshadow(xx, yy, width, height, c_black, 1)
-	draw_box(xx, yy, width, height, false, c_level_top, 1)
-	draw_outline(xx, yy, width, height, 1, c_border, a_border, true)
+	draw_box(xx, yy, width, height, false, c_toolbar, a_toolbar)
 	
 	xx += 4
 	yy += 4
@@ -55,6 +53,7 @@ function view_toolbar_draw(view, xx, yy)
 			action_tools_disable_all()
 			setting_tool_select = true
 		}
+		
 		yy += 24 + padding
 	}
 	
@@ -74,6 +73,7 @@ function view_toolbar_draw(view, xx, yy)
 			setting_tool_scale = false
 		}
 	}
+	
 	yy += 24 + padding
 	
 	// Rotation tool
@@ -92,6 +92,7 @@ function view_toolbar_draw(view, xx, yy)
 			setting_tool_scale = false
 		}
 	}
+	
 	yy += 24 + padding
 	
 	// Scale tool (separate tool modes)
@@ -118,6 +119,7 @@ function view_toolbar_draw(view, xx, yy)
 				}
 			}
 		}
+		
 		yy += 24 + padding
 	}
 	
@@ -137,6 +139,7 @@ function view_toolbar_draw(view, xx, yy)
 			setting_tool_scale = false
 		}
 	}
+	
 	yy += 24 + padding
 	
 	// Transform tool
@@ -149,6 +152,7 @@ function view_toolbar_draw(view, xx, yy)
 			action_tools_disable_all()
 			setting_tool_transform = true
 		}
+		
 		yy += 24 + padding
 	}
 	
@@ -156,6 +160,7 @@ function view_toolbar_draw(view, xx, yy)
 	if (!setting_separate_tool_modes)
 	{
 		draw_divide(xx, yy, 24)
+		
 		yy += 1 + padding
 		
 		tip_set_keybind(e_keybind.TOOL_SCALE)
@@ -179,6 +184,7 @@ function view_toolbar_draw(view, xx, yy)
 				}
 			}
 		}
+		
 		yy += 24 + padding
 	}
 	

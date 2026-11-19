@@ -58,7 +58,7 @@ function res_get_asset_picker_texture(asset, state = [])
 	if (!is_undefined(tex) && sprite_exists(tex))
 		return tex
 
-	var oldworld, oldview, oldproj, oldfrom, oldcamfrom, oldpack, oldclip;
+	var oldworld, oldview, oldproj, oldfrom, oldcamfrom, oldpack, oldclip, oldalpha, oldcolor;
 	oldworld = matrix_get(matrix_world)
 	oldview = matrix_get(matrix_view)
 	oldproj = matrix_get(matrix_projection)
@@ -66,6 +66,8 @@ function res_get_asset_picker_texture(asset, state = [])
 	oldcamfrom = cam_from
 	oldpack = render_pack_current
 	oldclip = shader_clip_active
+	oldalpha = draw_get_alpha()
+	oldcolor = draw_get_color()
 
 	// Undo the native projection flip before restoring through matrix_set
 	if (is_cpp())
@@ -129,7 +131,7 @@ function res_get_asset_picker_texture(asset, state = [])
 			if (pattern_type != "" && modelres.model_texture_map != null)
 			{
 				var color = state_vars_get_value(vars, "color");
-				if (color = "")
+				if (color = null || color = "")
 					color = "white"
 				
 				pattern_skin = minecraft_update_pattern_generate(model_name, minecraft_get_color("dye:" + color), [], [], modelres)
@@ -268,11 +270,18 @@ function res_get_asset_picker_texture(asset, state = [])
 		gpu_set_zwriteenable(true)
 		draw_clear_alpha(c_black, 0)
 		gpu_set_ztestenable(true)
-		
 		gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_inv_src_alpha)
+		
 		matrix_set(matrix_world, matrix_create(vec3_mul(center, -1), vec3(0), vec3(1)))
 		matrix_set(matrix_view, matrix_create_lookat(from, vec3(0), vec3(0, 0, 1)))
-		matrix_set(matrix_projection, matrix_create_ortho(-fit / 2, fit / 2, fit / 2, -fit / 2, dis * 2, -dis * 2))
+		
+		var proj = matrix_create_ortho(-fit / 2, fit / 2, fit / 2, -fit / 2, dis * 2, -dis * 2);
+		
+		// GameMaker: Match the projection Y flip applied by the native matrix setter
+		if (!is_cpp())
+			proj = matrix_multiply(proj, matrix_create(vec3(0), vec3(0), vec3(1, -1, 1)))
+
+		matrix_set(matrix_projection, proj)
 		
 		render_update_frustum()
 		proj_from = from
@@ -357,12 +366,14 @@ function res_get_asset_picker_texture(asset, state = [])
 	
 	proj_from = oldfrom
 	cam_from = oldcamfrom
+	render_pack_current = oldpack
+	shader_clip_active = oldclip
 	
 	gpu_set_ztestenable(false)
 	gpu_set_blendmode(bm_normal)
 	
-	render_pack_current = oldpack
-	shader_clip_active = oldclip
+	draw_set_alpha(oldalpha)
+	draw_set_color(oldcolor)
 	
 	return tex
 }

@@ -14,11 +14,14 @@ function draw_list_header(list, xx, yy, wid, hei, filter = true, name = "", valu
 
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
-		if (textbox_jump)
+		if (textbox_jump && list.search_show)
 			ds_list_add(textbox_list, [list.search_tbx, content_tab, yy, content_y, content_height])
 		
 		return false
 	}
+
+	if (!list.search_show)
+		return true
 
 	var searchx, searchwid, ispicker;
 	ispicker = (list.object_index = obj_picker)

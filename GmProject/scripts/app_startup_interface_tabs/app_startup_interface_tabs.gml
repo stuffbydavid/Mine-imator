@@ -479,8 +479,10 @@ function app_startup_interface_tabs()
 		tbx_type_bounce_factor = new_textbox_decimals()
 	}
 
-	// Build mode editor
-	build_tool = new_tab(setting_build_mode_location, false)
+	ptype_list = object_editor.type_list
+
+	// Build tool settings
+	build_tool = new_tab(setting_build_tool_location, false)
 	build_tool.script = tab_build_tool
 	
 	with (build_tool)
@@ -505,8 +507,46 @@ function app_startup_interface_tabs()
 		
 		state_picker = new_obj(obj_picker)
 	}
+	
+	// Build hotbar settings
+	build_hotbars = new_tab(setting_build_hotbars_location, false)
 
-	ptype_list = object_editor.type_list
+	with (build_hotbars)
+	{
+		tab_add_category("build_hotbars", icons.ASSET_LIST, tab_build_hotbars, true)
+
+		list = new_obj(obj_sortlist)
+		list.search_show = false
+		list.height_items = 7
+		list.script = action_build_hotbars_list
+		list.can_deselect = false
+		selected = 0
+
+		sortlist_column_add(list, "hotbar_name", 0)
+		sortlist_column_add(list, "hotbar_slots", 0.8)
+
+		tbx_name = new_textbox(1, 0, "")
+
+		// Initial hotbars
+		for (var h = 0; h < 8; h++)
+		{
+			var hotbar = new_obj(obj_build_hotbar);
+			hotbar.name = "Hotbar " + string(h + 1)
+			hotbar.blocks = []
+
+			for (var i = 0; i < ds_list_size(mc_assets.block_list) && array_length(hotbar.blocks) < 10; i++)
+			{
+				var hotbarblock = mc_assets.block_list[|i];
+				if (hotbarblock.timeline && hotbarblock.tl_model_name != "" && !hotbarblock.tl_model_double)
+					continue
+
+				array_add(hotbar.blocks, [ false, hotbarblock.name, array_copy_1d(hotbarblock.default_state) ], false)
+			}
+
+			sortlist_add(list, hotbar)
+		}
+		sortlist_update(list)
+	}
 	
 	// Timeline
 	timeline = new_tab("bottom", true, null, e_window.TIMELINE)

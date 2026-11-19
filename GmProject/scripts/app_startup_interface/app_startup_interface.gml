@@ -17,11 +17,12 @@ function app_startup_interface()
 	app_startup_interface_world_import()
 	app_startup_interface_context_menu()
 	
-	togglebutton_reset()
+	togglebutton_group = []
+	togglebutton_columns = null
+	textfield_group = []
 	
 	textbox_startup()
 	history_startup()
-	textfield_group_reset()
 	
 	env_ground_startup()
 	env_sky_startup()

@@ -5,5 +5,5 @@
 
 function vbuffer_get_bounds(vbuf, mat)
 {
-	return null
+	return [ vec3(0), vec3(block_size) ]
 }

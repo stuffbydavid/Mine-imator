@@ -6,6 +6,7 @@ function sortlist_event_create()
 	display_list = ds_list_create()
 	
 	header_show = true
+	search_show = true
 	height_items = list_minimum_items
 	height_percent = 0
 	items_visible = list_minimum_items

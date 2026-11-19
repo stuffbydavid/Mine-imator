@@ -1,6 +1,6 @@
 /// @desc Handle workbench shortcuts.
 
-function bench_update_keyboard()
+function app_update_keyboard_bench()
 {
 	if (window_state != "" || textbox_isediting)
 		return 0

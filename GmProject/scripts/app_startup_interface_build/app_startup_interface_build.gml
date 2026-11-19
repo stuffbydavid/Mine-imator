@@ -27,6 +27,8 @@ function app_startup_interface_build()
 		preview = null
 	}
 	
+	build_hotbar_slot = 0
+
 	build_box = null
 	build_box_top = null
 	build_box_render = null

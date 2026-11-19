@@ -13,6 +13,9 @@ function tab_get_title(tab)
 	
 	else if (tab = build_tool)
 		return text_get("tab/build_tool")
+
+	else if (tab = build_hotbars)
+		return text_get("tab/build_hotbars")
 	
 	else if (tab = object_editor)
 	{

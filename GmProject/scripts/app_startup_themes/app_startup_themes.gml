@@ -8,6 +8,7 @@ function app_startup_themes()
 	globalvar c_text_main, a_text_main, c_text_secondary, a_text_secondary, c_text_tertiary, a_text_tertiary;
 	globalvar c_border, a_border, c_overlay, a_overlay, a_dark_overlay;
 	globalvar c_level_top, c_level_middle, c_level_bottom, c_input_background, c_button_text, a_button_text;
+	globalvar c_toolbar, a_toolbar;
 	globalvar c_info, c_success, c_warning, c_error, c_axisred, c_axisgreen, c_axisblue, c_axiscyan, c_axisyellow, c_axismagenta;
 	//globalvar c_viewport_top, c_viewport_bottom, c_bend;
 	globalvar c_control_red, c_control_green, c_control_blue, c_control_cyan, c_control_yellow, c_control_magenta, c_control_white;
@@ -28,6 +29,7 @@ function app_startup_themes()
 	
 	a_border = .15
 	a_overlay = .05
+	a_toolbar = .5
 	
 	#region Classic theme
 	
@@ -67,6 +69,7 @@ function app_startup_themes()
 		level_middle = merge_color(mi1mid, lightmid, perc)
 		level_bottom = merge_color(mi1bot, lightbot, perc)
 		input_background = merge_color(level_top, c_white, 0.25)
+		toolbar = merge_color(level_top, c_black, .5)
 		
 		var lighttext = make_color_hsv(140, 89, 20);
 		var mi1text = make_color_hsv(73, 5, 6);
@@ -125,6 +128,7 @@ function app_startup_themes()
 		level_middle = make_color_hsv(145, 5, 241)
 		level_bottom = make_color_hsv(139, 12, 226)
 		input_background = level_top
+		toolbar = merge_color(level_top, c_black, .5)
 		
 		text_main = make_color_hsv(140, 89, 20)
 		text_secondary = text_main
@@ -175,6 +179,7 @@ function app_startup_themes()
 		level_middle = make_color_hsv(142, 75, 61)
 		level_bottom = make_color_hsv(142, 109, 42)
 		input_background = level_top
+		toolbar = merge_color(level_top, c_black, .5)
 		//viewport_top = make_color_hsv(142, 75, 61)
 		//viewport_bottom = make_color_hsv(141, 32, 150)
 		
@@ -229,6 +234,7 @@ function app_startup_themes()
 		level_middle = make_color_hsv(0, 0, 16 + valinc)
 		level_bottom = make_color_hsv(0, 0, 5 + valinc)
 		input_background = level_top
+		toolbar = merge_color(level_top, c_black, .5)
 		//viewport_top = make_color_hsv(0, 0, 72)
 		//viewport_bottom = make_color_hsv(0, 0, 43)
 		

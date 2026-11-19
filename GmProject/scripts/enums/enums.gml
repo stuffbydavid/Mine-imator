@@ -1262,6 +1262,34 @@ function enums()
 		LABEL
 	}
 	
+	// Toggle button data
+	enum e_togglebutton
+	{
+		NAME,
+		ICON,
+		VALUE,
+		ACTIVE,
+		SCRIPT,
+		AXIS,
+		TEXT
+	}
+
+	// Textfield group data
+	enum e_textfield_group
+	{
+		NAME,
+		VALUE,
+		DEFAULT,
+		SCRIPT,
+		AXIS,
+		TEXTBOX,
+		ICON,
+		MUL,
+		MIN,
+		MAX,
+		CAPTION
+	}
+
 	// Input box types
 	enum e_inputbox
 	{

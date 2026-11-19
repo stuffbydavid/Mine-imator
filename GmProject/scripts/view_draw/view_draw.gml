@@ -6,7 +6,6 @@ function view_draw(view)
 	var cam, camname;
 	var captionx, captiony, captionw, captionh;
 	var boxx, boxy, boxw, boxh;
-	var navgizmox, navgizmoy;
 	var padding, dx, dy;
 	var location, split, mouseonresizesplit, mouseonresizehor, mouseonresizever;
 	
@@ -480,19 +479,14 @@ function view_draw(view)
 		content_width = ceil(content_width)
 		content_height = ceil(content_height)
 		content_mouseon = false
+		view.overlay_mouseon = (view.toolbar_mouseon || view.navgizmo_mouseon || view.hotbar_mouseon)
 		
 		var viewbusy;
 		viewbusy = (window_busy = "pick_depth") ? window_busy : place_busy
 		if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) = 1)
 			viewbusy = window_busy
 
-		navgizmox = boxx + boxw - (86 + 8)
-		navgizmoy = boxy + captionh + 8
-		view.navgizmo_mouseon = (view = view_main && !(view_second.show && view_second.mouseon) &&
-			!popup_mouseon && !toast_mouseon && !context_menu_mouseon &&
-			mouse_x >= navgizmox && mouse_x < navgizmox + 86 && mouse_y >= navgizmoy && mouse_y < navgizmoy + 86)
-
-		if (place_build && view.navgizmo_mouseon)
+		if (place_build && view.overlay_mouseon)
 		{
 			if (build_box_render != null)
 			{
@@ -505,7 +499,8 @@ function view_draw(view)
 			place_target_tl = null
 		}
 
-		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		// Allow camera dragging over the navigation gizmo
+		if (!view.toolbar_mouseon && !view.hotbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
 			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
 		
 		if (content_mouseon)
@@ -683,10 +678,13 @@ function view_draw(view)
 		bench_rotate_ani = max(0, bench_rotate_ani - 0.01 * delta)
 		
 		// Draw toolbar
-		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8 + 86 + 12)
+		view_toolbar_draw(view)
 		
 		// Navigation gizmo
-		view_toolbar_navgizmo_draw(view, navgizmox, navgizmoy)
+		view_navgizmo_draw(view)
+		
+		// Build hotbar
+		view_build_hotbar_draw(view)
 	}
 	
 	// Moving / Resizing

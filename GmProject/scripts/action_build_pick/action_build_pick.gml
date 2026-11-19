@@ -92,7 +92,33 @@ function action_build_pick()
 			sortlist_update(picker)
 		}
 
-		action_build_select(value, pickstate)
+		// Reuse a matching slot, including implicit default state values
+		var asset, states, blocks, pickslot;
+		if (pickspblock)
+			asset = mc_assets.model_name_map[?pickname]
+		else
+			asset = mc_assets.block_name_map[?pickname]
+		states = minecraft_asset_get_state(asset, pickstate)
+		blocks = app.build_hotbars.list.list[|app.build_hotbars.selected].blocks
+		pickslot = -1
+		
+		for (var slot = 0; slot < array_length(blocks); slot++)
+		{
+			var entry = blocks[slot];
+			if (entry[0] != pickspblock || entry[1] != pickname)
+				continue
+
+			if (array_equals(states, minecraft_asset_get_state(asset, entry[2])))
+			{
+				pickslot = slot
+				break
+			}
+		}
+
+		if (pickslot >= 0)
+			action_build_hotbar_select(pickslot)
+		else
+			action_build_select(value, pickstate)
 
 		tab_show(app.build_tool, true)
 		asset_picker_view(app.build_tool.build_picker, value, false)

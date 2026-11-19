@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"view_toolbar_navgizmo_draw",
+  "%Name":"view_navgizmo_draw",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"view_toolbar_navgizmo_draw",
+  "name":"view_navgizmo_draw",
   "parent":{
     "name":"View",
     "path":"folders/Scripts/App/Interface/Components/View.yy",

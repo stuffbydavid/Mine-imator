@@ -25,72 +25,12 @@ function app_update_keyboard()
 			debug_info = (debug_info + 1) mod 4
 	}
 
-	// First-person build shortcuts
-	if (place_build && build_first_person)
-	{
-		if (keyboard_check_pressed(ord("T")) && !cam_work_moving)
-		{
-			action_build_search()
-			return 0
-		}
-		
-		if (keybinds[e_keybind.BUILD_TOOL].pressed)
-		{
-			action_toolbar_build_mode()
-			return 0
-		}
-		
-		if (keybinds[e_keybind.UNDO].pressed)
-			action_toolbar_undo()
-		
-		if (keybinds[e_keybind.REDO].pressed)
-			action_toolbar_redo()
-		
-		if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("F")))
-		{
-			action_build_first_person(false)
-			return 0
-		}
-		
+	// Build shortcuts
+	if (app_update_keyboard_build())
 		return 0
-	}
-
-	// Build mode shortcuts
-	if (place_build && !textbox_isediting && window_busy = "")
-	{
-		if (keyboard_check(vk_control) && mouse_wheel <> 0 && !menu_button_mouseon)
-			action_build_scroll()
-
-		if (keyboard_check_pressed(ord("F")))
-		{
-			action_build_first_person(true)
-			return 0
-		}
-
-		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_TOOL].pressed)
-		{
-			action_toolbar_build_mode()
-			return 0
-		}
-		
-		if (!keyboard_check(vk_control) && !keyboard_check(vk_alt))
-		{
-			if (keyboard_check_pressed(ord("S")))
-			{
-				action_build_structure(null, true)
-				return 0
-			}
-		
-			if (keyboard_check_pressed(ord("T")))
-			{
-				action_build_search()
-				return 0
-			}
-		}
-	}
 
 	// Workbench shortcuts
-	bench_update_keyboard()
+	app_update_keyboard_bench()
 	
 	if (window_state = "" && (window_busy = "" || settings_menu_name = "colorpicker") && !textbox_isediting)
 	{

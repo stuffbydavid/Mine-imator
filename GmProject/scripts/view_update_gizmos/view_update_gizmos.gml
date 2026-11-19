@@ -7,7 +7,8 @@ function view_update_gizmos(view, cam)
 	prevcolor = draw_get_color()
 	prevalpha = draw_get_alpha()
 	prevmouseon = content_mouseon
-	if (view.navgizmo_mouseon)
+	
+	if (view.overlay_mouseon)
 		content_mouseon = false
 	
 	view.update_gizmos = false

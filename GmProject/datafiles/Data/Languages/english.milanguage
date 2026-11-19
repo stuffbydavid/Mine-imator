@@ -132,6 +132,17 @@
 			"snap_y": "Snap view to Y axis",
 			"snap_z": "Snap view to Z axis"
 		},
+		"hotbar/": {
+			"create_hotbar": "Create hotbar",
+			"duplicate_hotbar": "Duplicate hotbar",
+			"remove_hotbar": "Remove hotbar",
+			"create_slot": "Create slot",
+			"remove_slot": "Remove slot",
+			"reset_hotbar": "Reset hotbar",
+			"previous_hotbar": "Previous hotbar",
+			"next_hotbar": "Next hotbar",
+			"hotbar_settings": "Hotbar settings"
+		},
 		"custom_accent_color": "Custom accent color",
 		"edit_keybind": "Edit keybind",
 		"language_add": "Add language",
@@ -1066,6 +1077,7 @@
 		"renderer": "%1 renderer",
 		"timeline": "Timeline",
 		"build_tool": "Build tool",
+		"build_hotbars": "Hotbars",
 		"character_model": "Character model for %1",
 		"equipment": "Equipment for %1",
 		"block": "Block for %1",
@@ -1154,7 +1166,9 @@
 		"res_count": "Use count",
 		"particle_preset_name": "Name",
 		"block_filter": "Name",
-		"block_count": "Count"
+		"block_count": "Count",
+		"hotbar_name": "Name",
+		"hotbar_slots": "Slots"
 	},
 	"list/": {
 		"search": "Search...",
@@ -4010,6 +4024,11 @@
 		"structure": "Structure",
 		"create_new": "Create new",
 		"use_tip": "Set by right clicking the block without Shift."
+	},
+	"build_hotbars": "Hotbars",
+	"build_hotbars/": {
+		"default_name": "Hotbar",
+		"name": "Name"
 	},
 	"timeline/": {
 		"empty": "Nothing here yet! Click the workbench to get started.",

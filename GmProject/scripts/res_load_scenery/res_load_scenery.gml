@@ -60,6 +60,24 @@ function res_load_scenery()
 			debug_timer_start()
 
 			load_stage = "download"
+
+			// Count signs with text on either side
+			var signcount, oldcount, key;
+			signcount = ds_map_size(mc_builder.block_text_front_map)
+			key = ds_map_find_first(mc_builder.block_text_back_map)
+			while (!is_undefined(key))
+			{
+				if (!ds_map_exists(mc_builder.block_text_front_map, key))
+					signcount++
+				key = ds_map_find_next(mc_builder.block_text_back_map, key)
+			}
+
+			oldcount = value_get_real(scenery_tl_types_count_map[?"sign"], 0)
+			mc_builder.sch_timeline_amount += signcount - oldcount
+			if (signcount > 0)
+				scenery_tl_types_count_map[?"sign"] = signcount
+			else
+				ds_map_delete(scenery_tl_types_count_map, "sign")
 		
 			// Clear old timelines
 			if (scenery_tl_list = null)

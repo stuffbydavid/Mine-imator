@@ -23,6 +23,8 @@ function action_build_select(value, state = null)
 			temp_update_rot_point()
 	}
 
+	view_build_hotbar_update(value)
+
 	place_pos = null
 	place_view_pos = null
 }
