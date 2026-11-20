@@ -528,6 +528,7 @@
         "shader_set_uniform_f": { "return": "void", "varArgs": true },
         "shader_set_uniform_i_array": { "return": "void", "args": [ "int", "array<int>" ] },
         "shader_set_uniform_i": { "return": "void", "varArgs": true },
+        "sha1_file": { "return": "string", "args": [ "string" ] },
         "shader_set": { "return": "void", "args": [ "int" ] },
         "shaders_are_supported": { "return": "bool", "args": [] },
         "show_debug_message": { "return": "void", "args": [ "string" ] },

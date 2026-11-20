@@ -564,7 +564,7 @@ namespace CppProject
 		~Section();
 
 		// Load the section blocks and biomes from the given NBT structure, returning whether successful.
-		BoolType Load(NbtCompound* nbt, Chunk::Format format);
+		BoolType Load(NbtCompound* nbt, Chunk::Format format, NbtCompound* below = nullptr);
 
 		// Parse block palette for the preview.
 		void ParseBlockPalettePreview(NbtCompound* nbt, StringType paletteName, StringType dataName, Chunk::Format format);

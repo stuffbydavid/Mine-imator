@@ -3097,9 +3097,9 @@
 				"minecraft:torch": "variant=normal,facing=up",
 				"minecraft:soul_torch": "variant=soul_torch,facing=up",
 				"minecraft:copper_torch": "variant=copper_torch,facing=up",
-				"minecraft:wall_torch": "variant=normal,facing=east",
-				"minecraft:soul_wall_torch": "variant=soul_torch,facing=east",
-				"minecraft:copper_wall_torch": "variant=copper_torch,facing=east"
+				"minecraft:wall_torch": "variant=normal,facing=north",
+				"minecraft:soul_wall_torch": "variant=soul_torch,facing=north",
+				"minecraft:copper_wall_torch": "variant=copper_torch,facing=north"
 			},
 			"build": {
 				"facing": "hit_face",
@@ -4118,7 +4118,7 @@
 			"default_state": "lit=true,facing=up",
 			"id": {
 				"minecraft:redstone_torch": "facing=up",
-				"minecraft:redstone_wall_torch": "facing=east"
+				"minecraft:redstone_wall_torch": "facing=north"
 			},
 			"build": {
 				"facing": "hit_face",

@@ -344,17 +344,22 @@
 		},
 		"17": {
 			"data": {
-				"0x1+0x2": {
-					"0": "id=minecraft:oak_log",
-					"1": "id=minecraft:spruce_log",
-					"2": "id=minecraft:birch_log",
-					"3": "id=minecraft:jungle_log"
-				},
-				"0x4+0x8": {
-					"0": "axis=y",
-					"1": "axis=x",
-					"2": "axis=z"
-				}
+				"0": "id=minecraft:oak_log,axis=y",
+				"1": "id=minecraft:spruce_log,axis=y",
+				"2": "id=minecraft:birch_log,axis=y",
+				"3": "id=minecraft:jungle_log,axis=y",
+				"4": "id=minecraft:oak_log,axis=x",
+				"5": "id=minecraft:spruce_log,axis=x",
+				"6": "id=minecraft:birch_log,axis=x",
+				"7": "id=minecraft:jungle_log,axis=x",
+				"8": "id=minecraft:oak_log,axis=z",
+				"9": "id=minecraft:spruce_log,axis=z",
+				"10": "id=minecraft:birch_log,axis=z",
+				"11": "id=minecraft:jungle_log,axis=z",
+				"12": "id=minecraft:oak_wood,axis=y",
+				"13": "id=minecraft:spruce_wood,axis=y",
+				"14": "id=minecraft:birch_wood,axis=y",
+				"15": "id=minecraft:jungle_wood,axis=y"
 			}
 		},
 		"18": {
@@ -1812,15 +1817,14 @@
 		},
 		"162": {
 			"data": {
-				"0x1+0x2":{
-					"0": "id=minecraft:acacia_log",
-					"1": "id=minecraft:dark_oak_log"
-				},
-				"0x4+0x8": {
-					"0": "axis=y",
-					"1": "axis=x",
-					"2": "axis=z"
-				}
+				"0": "id=minecraft:acacia_log,axis=y",
+				"1": "id=minecraft:dark_oak_log,axis=y",
+				"4": "id=minecraft:acacia_log,axis=x",
+				"5": "id=minecraft:dark_oak_log,axis=x",
+				"8": "id=minecraft:acacia_log,axis=z",
+				"9": "id=minecraft:dark_oak_log,axis=z",
+				"12": "id=minecraft:acacia_wood,axis=y",
+				"13": "id=minecraft:dark_oak_wood,axis=y"
 			}
 		},
 		"163": {
@@ -1928,12 +1932,14 @@
 					"0": "half=lower",
 					"1": "half=upper"
 				},
-				"0": "id=minecraft:sunflower",
-				"1": "id=minecraft:lilac",
-				"2": "id=minecraft:tall_grass",
-				"3": "id=minecraft:large_fern",
-				"4": "id=minecraft:rose_bush",
-				"5": "id=minecraft:peony"
+				"0x1+0x2+0x4": {
+					"0": "id=minecraft:sunflower",
+					"1": "id=minecraft:lilac",
+					"2": "id=minecraft:tall_grass",
+					"3": "id=minecraft:large_fern",
+					"4": "id=minecraft:rose_bush",
+					"5": "id=minecraft:peony"
+				}
 			}
 		},
 		"176": {

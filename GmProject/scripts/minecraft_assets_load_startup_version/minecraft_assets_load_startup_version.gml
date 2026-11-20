@@ -91,7 +91,8 @@ function minecraft_assets_load_startup_version()
 	if (!is_real(patch))
 		patch = 1
 	
-	load_assets_startup_dir = mc_file_directory + version + (patch > 1 ? "_" + string(patch) : "") + "/"
+	// Do not reuse extracted models from a different archive with the same version
+	load_assets_startup_dir = mc_file_directory + version + (patch > 1 ? "_" + string(patch) : "") + "_" + sha1_file(load_assets_zip_file) + "/"
 	load_assets_dir = load_assets_startup_dir
 	load_assets_state_file_map = ds_map_create() // filename -> model
 	load_assets_model_file_map = ds_map_create() // filename -> model
