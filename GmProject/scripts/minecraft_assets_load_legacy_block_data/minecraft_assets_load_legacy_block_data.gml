@@ -5,10 +5,28 @@
 
 function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 {
-	var key = ds_map_find_first(map);
+	var keys, key, overrides;
+	keys = []
+	key = ds_map_find_first(map)
+	overrides = []
 	
 	while (!is_undefined(key))
 	{
+		if (string_pos("0x", key) = 1)
+			array_add(keys, key)
+		else
+			array_add(overrides, key)
+		
+		key = ds_map_find_next(map, key)
+	}
+	
+	// Apply exact metadata overrides after the bitmask fields
+	array_add(keys, overrides)
+
+	for (var k = 0; k < array_length(keys); k++)
+	{
+		key = keys[k]
+		
 		switch (key)
 		{
 			// Bitmask
@@ -88,7 +106,5 @@ function minecraft_assets_load_legacy_block_data(curid, map, bitmask, bitbase)
 				break	
 			}
 		}
-		
-		key = ds_map_find_next(map, key)
 	}
 }

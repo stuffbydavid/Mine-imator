@@ -354,7 +354,11 @@
 					"0": "axis=y",
 					"1": "axis=x",
 					"2": "axis=z"
-				}
+				},
+				"12": "id=minecraft:oak_wood,axis=y",
+				"13": "id=minecraft:spruce_wood,axis=y",
+				"14": "id=minecraft:birch_wood,axis=y",
+				"15": "id=minecraft:jungle_wood,axis=y"
 			}
 		},
 		"18": {
@@ -1820,7 +1824,9 @@
 					"0": "axis=y",
 					"1": "axis=x",
 					"2": "axis=z"
-				}
+				},
+				"12": "id=minecraft:acacia_wood,axis=y",
+				"13": "id=minecraft:dark_oak_wood,axis=y"
 			}
 		},
 		"163": {
