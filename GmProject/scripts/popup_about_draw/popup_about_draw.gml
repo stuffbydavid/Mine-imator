@@ -102,9 +102,12 @@ function popup_about_draw()
 	
 	var list = [
 		"9redwoods",
+		"Achilleus",
 		"Alpha Toostrr",
 		"AnxiousCynic",
 		"Cade [CaZaKoJa]",
+		"Chrisation",
+		"ForestWolf99",
 		"Hozq",
 		"Jnick",
 		"Jossamations",
@@ -123,7 +126,7 @@ function popup_about_draw()
 		draw_label(list[i], dx, dy, fa_left, fa_bottom, c_text_secondary, a_text_secondary, font_label)
 		dy += 19
 		
-		if (i = 7)
+		if (i = 8)
 		{
 			dx += 130 + 24
 			dy = content_y + 176 + 12 + 26

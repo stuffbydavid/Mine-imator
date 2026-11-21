@@ -6,7 +6,9 @@ function block_set_speleothem()
 		return 0
 
 	// Preserve thickness values explicitly selected by the user
-	if (block_get_state_id_value(block_current, block_state_id_current, "thickness") != "tip")
+	if (block_get_state_id_value(block_current, block_state_id_current, "thickness") != "tip" &&
+		block_get_state_id_value(block_current, block_state_id_current, "thickness") != "tip_merge"
+	)
 		return 0
 
 	var minz, maxz;
@@ -38,14 +40,16 @@ function block_set_speleothem()
 
 		count++
 	}
-
+	
 	// One or more spikes beyond this block make it a middle section
-	var thickness = "tip";
-	if (count > 0)
+	var thickness = block_get_state_id_value(block_current, block_state_id_current, "thickness");
+	if (count > 1)
 		thickness = "middle"
+	else if (count > 0)
+		thickness = "frustum"
 
 	// A non-spike support makes the start of a stack of at least three the base
-	if (count = 2)
+	if (count >= 2)
 	{
 		var zz = build_pos[Z] - step;
 		if (zz >= minz && zz < maxz)
@@ -56,7 +60,7 @@ function block_set_speleothem()
 		}
 	}
 
-	if (thickness = "tip")
+	if (thickness = "tip" || thickness = "tip_merge")
 		return 0
 
 	// Keep tip in the block data so subsequent edits can resolve the shape again

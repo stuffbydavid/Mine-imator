@@ -53,6 +53,7 @@ function settings_startup()
 	setting_z_is_up = false
 	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true
+	setting_work_camera_fov = 45
 	setting_gizmos_face_camera = true
 	setting_fade_gizmos = true
 	setting_camera_lock_mouse = true

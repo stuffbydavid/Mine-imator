@@ -34,7 +34,7 @@ function view_shape_camera_frustum(tl)
 	mat = array_copy_1d(tempmat)
 	matrix_remove_scale(mat)
 	
-	ratio = (tl.value[e_value.CAM_WIDTH] / tl.value[e_value.CAM_HEIGHT])
+	ratio = tl.value[e_value.CAM_SIZE_USE_PROJECT] ? (project_video_width / project_video_height) : (tl.value[e_value.CAM_WIDTH] / tl.value[e_value.CAM_HEIGHT])
 	fovtan = tan(degtorad(tl.value[e_value.CAM_FOV] * 0.5)) // Multiply this by distance
 		
 	// DOF visualizer

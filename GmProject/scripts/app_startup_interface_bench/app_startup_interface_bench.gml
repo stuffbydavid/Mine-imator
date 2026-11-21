@@ -84,7 +84,8 @@ function app_startup_interface_bench()
 		e_bench_tab.SHAPE,
 		e_bench_tab.TEXT,
 		e_bench_tab.SOUND,
-		e_bench_tab.PARTICLE_SPAWNER
+		e_bench_tab.PARTICLE_SPAWNER,
+		e_bench_tab.CAMERA_EFFECT
 	]
 	
 	// Example

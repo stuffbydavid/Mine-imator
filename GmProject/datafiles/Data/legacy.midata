@@ -4203,8 +4203,10 @@
 	},
 	"legacy_model_names":
 	{
+		"pillager": { "name": "illager", "state": "variant=pillager" },
 		"fangs": "evoker_fangs",
 		"zombie_pigman": "piglin",
+		"tadpole": { "name": "frog", "state": "variant=tadpole" },
 		"enchantment_table": "book",
 		"ender_crystal": "end_crystal",
 		"dragon_head": "mob_head"
@@ -4475,26 +4477,93 @@
 	},
 	"legacy_block_names":
 	{
-		"cobblestone_wall": "wall",
-		"grass_path": "dirt_path",
-		"target_block": "target",
-		"jigsaw_block": "jigsaw",
-		"iron_bars": "bars",
 		"wall_torch": "torch",
 		"redstone_wall_torch": "redstone_torch",
-		"nether_gold_ore": { "name": "gold_ore", "state": "variant=nether_gold_ore" },
-		"crying_obsidian": { "name": "obsidian", "state": "variant=crying_obsidian" },
+		"iron_bars": "bars",
+		"cobblestone_wall": "wall",
+		"grass_path": "dirt_path",
+		"jigsaw_block": "jigsaw",
+		"target_block": "target",
+		"mossy_cobblestone": { "name": "cobblestone", "state": "variant=mossy_cobblestone" },
 		"packed_ice": { "name": "ice", "state": "variant=packed_ice" },
-		"blue_ice": { "name": "ice", "state": "variant=blue_ice" }
+		"blue_ice": { "name": "ice", "state": "variant=blue_ice" },
+		"repeating_command_block": { "name": "command_block", "state": "variant=repeating_command_block" },
+		"chain_command_block": { "name": "command_block", "state": "variant=chain_command_block" },
+		"red_nether_bricks": { "name": "nether_bricks", "state": "variant=red_nether_bricks" },
+		"nether_gold_ore": { "name": "gold_ore", "state": "variant=nether_gold_ore" },
+		"crying_obsidian": { "name": "obsidian", "state": "variant=crying_obsidian" }
 	},
 	"legacy_block_states":
 	{
+		"sponge": {
+			"wet": "variant"
+		}
 	},
 	"legacy_block_state_values":
 	{
 		"grass": {
 			"type": {
 				"grass": "short_grass"
+			}
+		},
+		"sponge": {
+			"variant": {
+				"false": "sponge",
+				"true": "wet_sponge"
+			}
+		},
+		"torch": {
+			"variant": {
+				"normal": "torch"
+			}
+		},
+		"fire": {
+			"variant": {
+				"normal": "fire"
+			}
+		},
+		"stone_bricks": {
+			"variant": {
+				"stone": "stone_bricks",
+				"mossy": "mossy_stone_bricks",
+				"cracked": "cracked_stone_bricks",
+				"chiseled": "chiseled_stone_bricks"
+			}
+		},
+		"nether_bricks": {
+			"variant": {
+				"normal": "nether_bricks",
+				"cracked": "cracked_nether_bricks",
+				"chiseled": "chiseled_nether_bricks"
+			}
+		},
+		"quartz_block": {
+			"variant": {
+				"default": "quartz_block",
+				"chiseled": "chiseled_quartz_block",
+				"pillar": "quartz_pillar",
+				"smooth": "smooth_quartz",
+				"bricks": "quartz_bricks"
+			}
+		},
+		"lantern": {
+			"variant": {
+				"normal": "lantern"
+			}
+		},
+		"campfire": {
+			"variant": {
+				"normal": "campfire"
+			}
+		},
+		"basalt": {
+			"variant": {
+				"normal": "basalt"
+			}
+		},
+		"blackstone": {
+			"variant": {
+				"normal": "blackstone"
 			}
 		}
 	},

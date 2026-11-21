@@ -32,7 +32,7 @@ function render_update_camera()
 			cy * xx - cx * yy * zz,
 			cx * (xx * xx + yy * yy)
 		)
-		cam_fov = 45
+		cam_fov = setting_work_camera_fov
 
 		if (shake != null)
 		{
