@@ -1,7 +1,7 @@
 function tab_settings_controls()
 {
-	tab_control(20)
-	draw_label(text_get("settings/controls/keybinds") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label)
+	tab_control(16)
+	draw_label(text_get("settings/controls/keybinds"), dx, dy + 8, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_subheading)
 	tab_next()
 	
 	// File

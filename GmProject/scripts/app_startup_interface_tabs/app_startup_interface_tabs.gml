@@ -590,7 +590,7 @@ function app_startup_interface_tabs()
 		structure = tab_add_category("timeline_editor/structure", icons.BLOCK, tab_timeline_editor_structure, true)
 
 		// Block
-		block = tab_add_category("timeline_editor/block", icons.BLOCK, tab_timeline_editor_block, true)
+		block = tab_add_category("timeline_editor/block", icons.BLOCK_SMALL, tab_timeline_editor_block, true)
 		with (block)
 		{
 			tbx_repeat_x = new_textbox_integer()
@@ -598,6 +598,9 @@ function app_startup_interface_tabs()
 			tbx_repeat_z = new_textbox_integer()
 		}
 
+		// Camera
+		camera = tab_add_category("timeline_editor/camera", icons.CAMERA_SMALL, tab_timeline_editor_camera, true)
+		
 		// Audio
 		audio = tab_add_category("timeline_editor/audio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
 		
@@ -662,7 +665,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Camera effects
-		camera_effects = tab_add_category("frame_editor/camera_effect", icons.WAND, tab_frame_editor_camera_effects, false)
+		camera_effects = tab_add_category("frame_editor/camera_effect", icons.WAND_SMALL, tab_frame_editor_camera_effects, false)
 		with (camera_effects)
 		{
 			tbx_mix_percent = new_textbox_integer()
@@ -945,6 +948,11 @@ function app_startup_interface_tabs()
 		
 		// Interface
 		interface = tab_add_category("settings/interface", icons.BRUSH_SMALL, tab_settings_interface, false)
+		with (interface)
+		{
+			tbx_work_camera_fov = new_textbox_decimals()
+			tbx_work_camera_fov.suffix = "°"
+		}
 		
 		// Controls
 		controls = tab_add_category("settings/controls", icons.KEYBOARD_SMALL, tab_settings_controls, false)

@@ -46,7 +46,22 @@ function project_load_template(map)
 				
 				// Update legacy model name 
 				if (!is_undefined(legacy_model_names_map[?model_name]))
-					model_name = legacy_model_names_map[?model_name]
+				{
+					var legacyname = legacy_model_names_map[?model_name];
+					
+					if (is_string(legacyname))
+						model_name = legacy_model_names_map[?model_name]
+					else if (ds_map_valid(legacyname))
+					{
+						model_name = legacy_model_names_map[?model_name][?"name"]
+						if (is_string(legacyname[?"state"]))
+						{
+							var statesprev = model_state;
+							model_state = string_get_state_vars(legacyname[?"state"])
+							state_vars_add(model_state, statesprev)
+						}
+					}
+				}
 				
 				// Update legacy model states
 				if (!is_undefined(legacy_model_states_map[?model_name]))

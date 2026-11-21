@@ -18,6 +18,9 @@ function project_load_project(map)
 	view_main.camera = value_get_save_id(map[?"view_main_camera"], view_camera_work)
 	view_second.camera = value_get_save_id(map[?"view_second_camera"], view_camera_active)
 	
+	project_time_elapsed = value_get_real(map[?"time_elapsed"], 0)
+	project_time_elapsed_start = [current_time - project_time_elapsed, 0]
+	
 	var tlmap = map[?"timeline"];
 	if (ds_map_valid(tlmap))
 	{
