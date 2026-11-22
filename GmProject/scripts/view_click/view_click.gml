@@ -6,6 +6,11 @@ function view_click(view, cam, ctrl = false)
 {
 	var surf = surface_create(content_width, content_height);
 	
+	// Create selection meshes for paths without a shape
+	with (obj_timeline)
+		if (type = e_tl_type.PATH && path_shape = "none" && path_select_vbuffer = null && array_length(path_table) > 1)
+			path_select_vbuffer = vbuffer_create_path(id, true)
+	
 	render_camera = cam
 	render_ratio = content_width / content_height
 	

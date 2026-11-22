@@ -39,10 +39,13 @@ function tl_update_path()
 	}
 	
 	// Update timelines
-	with (obj_timeline)
+	for (var i = 0; i < array_length(app.project_use_path_tl_array); i++)
 	{
-		if (value[e_value.PATH_OBJ] = other.id)
-			update_matrix = true
+		with (app.project_use_path_tl_array[i])
+		{
+			if (value[e_value.PATH_OBJ] = other.id)
+				path_follow_update = true
+		}
 	}
 	
 	// Not enough points
@@ -112,10 +115,9 @@ function tl_update_path()
 	// Generate tangent/normal values in points
 	spline_make_frames(path_table, path_closed, path_smooth)
 	
+	// The selection mesh is created on demand when clicking
 	if (path_shape != "none")
 		path_vbuffer = vbuffer_create_path(id)
-	else
-		path_select_vbuffer = vbuffer_create_path(id, true)
 	
 	if (matrix != 0)
 	{

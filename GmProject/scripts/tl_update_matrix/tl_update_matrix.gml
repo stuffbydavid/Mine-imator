@@ -25,6 +25,13 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 	{
 		var curtl = app.project_timeline_list[|i];
 		
+		// Re-evaluate followers along their path when they or their path changed
+		if (usepaths && curtl.path_follow_update)
+		{
+			curtl.path_follow_update = false
+			curtl.update_value_flags = curtl.update_value_flags | e_tl_dirty.TRANSFORM
+		}
+		
 		// Update children
 		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.EQUIPMENT || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
 			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
@@ -295,12 +302,19 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			// Update objects following this path
 			if (transformupdate && type = e_tl_type.PATH)
 			{
-				with (obj_timeline)
+				for (var f = 0; f < array_length(app.project_use_path_tl_array); f++)
 				{
-					if (value[e_value.PATH_OBJ] = other.id)
-						update_matrix = true
+					with (app.project_use_path_tl_array[f])
+					{
+						if (value[e_value.PATH_OBJ] = other.id)
+							path_follow_update = true
+					}
 				}
 			}
+			
+			// Followers evaluated without their path are evaluated again in the path pass
+			if (!usepaths && value[e_value.PATH_OBJ] != null)
+				path_follow_update = true
 			
 			// Update path
 			if (transformupdate && type = e_tl_type.PATH_POINT && parent != app && parent.type = e_tl_type.PATH)

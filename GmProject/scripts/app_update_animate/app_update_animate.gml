@@ -68,7 +68,7 @@ function app_update_animate()
 		if (value[e_value.PATH_OBJ] != null)
 		{
 			array_add(app.project_use_path_tl_array, id)
-			if (update_matrix || update_value_flags != 0)
+			if (update_matrix || update_value_flags != 0 || path_follow_update)
 				updatepaths = true
 		}
 		
@@ -143,8 +143,10 @@ function app_update_animate()
 	if (array_length(project_use_path_tl_array) > 0 &&
 		(updatepaths || project_path_update_id != project_matrix_update_id))
 	{
-		for (var i = 0; i < array_length(project_use_path_tl_array); i++)
-			project_use_path_tl_array[i].update_matrix = true
+		// Changed followers and followers of changed paths are flagged already, refresh all after loading or resource changes
+		if (project_path_update_id = null || history_resource_update)
+			for (var i = 0; i < array_length(project_use_path_tl_array); i++)
+				project_use_path_tl_array[i].path_follow_update = true
 
 		with (app)
 			tl_update_matrix(true)
