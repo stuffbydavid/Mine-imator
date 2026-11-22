@@ -1,4 +1,10 @@
 /// CppGen matrix transformmatrix
+/// CppGen vec transformpos
+/// CppGen vec transformrot
+/// CppGen vec transformsca
+/// CppGen vec transformpartpos
+/// CppGen vec transformpartrot
+/// CppGen matrix transformnoscale
 /// @desc Evaluates timeline transforms and returns inherited pose bending
 /// @arg usepaths
 /// @arg updatepose
@@ -68,20 +74,20 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	// Add body part position and rotation
 	if (type = e_tl_type.MODEL_PART && model_part != null)
 	{
-		var partpos, partrot, partchanged;
-		partpos = point3D(0)
+		var transformpartpos, transformpartrot, partchanged;
+		transformpartpos = point3D(0)
 		if (part_of != null)
-			partpos = point3D(model_part.position[X], model_part.position[Y], model_part.position[Z])
-		partrot = point3D(model_part.rotation[X], model_part.rotation[Y], model_part.rotation[Z])
+			transformpartpos = point3D(model_part.position[X], model_part.position[Y], model_part.position[Z])
+		transformpartrot = point3D(model_part.rotation[X], model_part.rotation[Y], model_part.rotation[Z])
 		partchanged = (!transform_part_cache_valid || transform_part_cache_id != model_part)
 		for (var j = X; j <= Z; j++)
-			if (partpos[j] != transform_part_cache_pos[j] || partrot[j] != transform_part_cache_rot[j])
+			if (transformpartpos[j] != transform_part_cache_pos[j] || transformpartrot[j] != transform_part_cache_rot[j])
 				partchanged = true
 		if (partchanged)
 		{
-			transform_part_cache_matrix = matrix_create(partpos, partrot, vec3(1))
-			transform_part_cache_pos = partpos
-			transform_part_cache_rot = partrot
+			transform_part_cache_matrix = matrix_create(transformpartpos, transformpartrot, vec3(1))
+			transform_part_cache_pos = transformpartpos
+			transform_part_cache_rot = transformpartrot
 			transform_part_cache_id = model_part
 			transform_part_cache_valid = true
 		}
@@ -89,21 +95,21 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	}
 	
 	// Create main matrix
-	var pos, rot, sca;
-	pos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
-	rot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
-	sca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
+	var transformpos, transformrot, transformsca;
+	transformpos = point3D(value[e_value.POS_X], value[e_value.POS_Y], value[e_value.POS_Z])
+	transformrot = vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z])
+	transformsca = vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])
 	
 	var localchanged = !transform_local_cache_valid;
 	for (var j = X; j <= Z; j++)
-		if (pos[j] != transform_local_pos[j] || rot[j] != transform_local_rot[j] || sca[j] != transform_local_scale[j])
+		if (transformpos[j] != transform_local_pos[j] || transformrot[j] != transform_local_rot[j] || transformsca[j] != transform_local_scale[j])
 			localchanged = true
 	if (localchanged)
 	{
-		matrix_local = matrix_create(pos, rot, sca)
-		transform_local_pos = pos
-		transform_local_rot = rot
-		transform_local_scale = sca
+		matrix_local = matrix_create(transformpos, transformrot, transformsca)
+		transform_local_pos = transformpos
+		transform_local_rot = transformrot
+		transform_local_scale = transformsca
 		transform_local_cache_valid = true
 	}
 	var transformmatrix = matrix_multiply(matrix_local, matrix_parent);
@@ -112,7 +118,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	if (!inherit_rotation)
 	{
 		matrix_remove_rotation(transformmatrix)
-		transformmatrix = matrix_multiply(matrix_create(point3D(0), rot, vec3(1)), transformmatrix)
+		transformmatrix = matrix_multiply(matrix_create(point3D(0), transformrot, vec3(1)), transformmatrix)
 	}
 	
 	// Get current matrix for IK
@@ -156,30 +162,30 @@ function tl_update_transform(usepaths, updatepose, hasik)
 			if (!tl.inherit_scale || par = app)
 				break
 			
-			sca = vec3_mul(sca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
+			transformsca = vec3_mul(transformsca, vec3(par.value[e_value.SCA_X], par.value[e_value.SCA_Y], par.value[e_value.SCA_Z]))
 			tl = par
 		}
 		
 		// Remove scale
-		var parmat, matrixnoscale;
+		var transformparmat, transformnoscale;
 		matrix_remove_scale(matrix_parent)
-		parmat = matrix_copy(matrix_parent)
+		transformparmat = matrix_copy(matrix_parent)
 		
 		// Remove rotation
 		if (!inherit_rotation)
-			matrix_remove_rotation(parmat)
+			matrix_remove_rotation(transformparmat)
 		
-		matrixnoscale = matrix_multiply(matrix_create(pos, rot, vec3(1)), parmat)
+		transformnoscale = matrix_multiply(matrix_create(transformpos, transformrot, vec3(1)), transformparmat)
 		
 		if (hasik)
-			matrixnoscale = matrix_multiply(part_joints_matrix[0], matrixnoscale)
+			transformnoscale = matrix_multiply(part_joints_matrix[0], transformnoscale)
 		
 		for (var p = 0; p < 11; p++)
-			transformmatrix[p] = matrixnoscale[p]
+			transformmatrix[p] = transformnoscale[p]
 		
 		// Re-add calculated or own scale
 		if (inherit_scale)
-			transformmatrix = matrix_multiply(matrix_create(point3D(0), vec3(0), sca), transformmatrix)
+			transformmatrix = matrix_multiply(matrix_create(point3D(0), vec3(0), transformsca), transformmatrix)
 		else
 			transformmatrix = matrix_multiply(matrix_create(point3D(0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), transformmatrix)
 	}
