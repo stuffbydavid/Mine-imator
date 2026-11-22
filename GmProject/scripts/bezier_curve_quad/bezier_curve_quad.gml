@@ -1,3 +1,6 @@
+/// CppGen ConstRef p1
+/// CppGen ConstRef p2
+/// CppGen ConstRef p3
 /// @desc Returns result of a quadratic bezier curve.
 /// @arg point1
 /// @arg point2

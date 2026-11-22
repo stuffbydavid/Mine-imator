@@ -192,6 +192,9 @@ int Program::main(int argc, char** argv)
 	std::sort(overrides.begin(), overrides.end());
 	for (const String& entry : overrides)
 		cacheFingerprint += "\nCppGen " + entry;
+	for (Function* function : Program::functions.values)
+		for (StringId arg : function->constRefArgs)
+			cacheFingerprint += "\nConstRef " + String(function->name) + " " + String(arg);
 
 	timer.restart();
 	List<String> modifiedGmlFiles;

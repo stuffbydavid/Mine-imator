@@ -9,6 +9,10 @@
 /// CppGen matrix matrix_render
 /// CppGen matrix matrix_parent
 /// CppGen matrix matrix_parent_pre_ik
+/// CppGen matrix matrix_local
+/// CppGen array model_part_shape_render_matrix
+/// CppGen array model_part_shape_vbuffer
+/// CppGen array model_part_shape_hidden
 /// @desc Create event of a timeline.
 
 function tl_event_create()

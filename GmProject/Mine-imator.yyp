@@ -2048,6 +2048,7 @@
     {"id":{"name":"matrix_create","path":"scripts/matrix_create/matrix_create.yy",},},
     {"id":{"name":"matrix_equals","path":"scripts/matrix_equals/matrix_equals.yy",},},
     {"id":{"name":"matrix_inverse_ext","path":"scripts/matrix_inverse_ext/matrix_inverse_ext.yy",},},
+    {"id":{"name":"matrix_copy","path":"scripts/matrix_copy/matrix_copy.yy",},},
     {"id":{"name":"matrix_position","path":"scripts/matrix_position/matrix_position.yy",},},
     {"id":{"name":"matrix_remove_rotation","path":"scripts/matrix_remove_rotation/matrix_remove_rotation.yy",},},
     {"id":{"name":"matrix_remove_scale","path":"scripts/matrix_remove_scale/matrix_remove_scale.yy",},},

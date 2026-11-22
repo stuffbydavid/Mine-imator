@@ -172,7 +172,7 @@ namespace CppProject
 		return (arrRef.Arr().Find(val) > -1);
 	}
 
-	ArrType array_copy_1d(VarType var)
+	ArrType array_copy_1d(const VarType& var)
 	{
 		if (var.IsInt())
 			return ArrType();

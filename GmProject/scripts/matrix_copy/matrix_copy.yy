@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"matrix_copy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"matrix_copy",
+  "parent":{
+    "name":"Matrix",
+    "path":"folders/Scripts/Utility/Math/Matrix.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

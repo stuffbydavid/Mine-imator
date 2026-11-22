@@ -118,6 +118,11 @@ namespace CppProject
 		return { mat.matrix.m[MAT_X], mat.matrix.m[MAT_Y], mat.matrix.m[MAT_Z] };
 	}
 
+	MatrixType matrix_copy(const MatrixType& mat)
+	{
+		return mat;
+	}
+
 	void matrix_remove_rotation(MatrixType& mat)
 	{
 		Matrix& glMat = mat.matrix;

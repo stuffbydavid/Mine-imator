@@ -1,30 +1,30 @@
-/// CppSeparate void tl_update_ik(VarType)
+/// CppGen ConstRef ikparts
+/// CppGen array<int> ikparts
 /// @desc Updates active IK and bone previews, then applies pending transforms in timeline order
 
-function tl_update_ik(parts)
+function tl_update_ik(ikparts)
 {
-	if (array_length(parts) = 0)
+	var partcount = array_length(ikparts);
+	if (partcount = 0)
 		return 0
 	
-	// Recursivly update IK data, break if positions are done moving
+	// Apply pending transforms before reevaluating IK
 	repeat (2)
 	{
-		var update = false;
-		
-		for (var i = 0; i < array_length(parts); i++)
-			if (parts[i] != null)
-				with (parts[i])
+		for (var i = 0; i < partcount; i++)
+			with (ikparts[i])
+				if (value[e_value.IK_TARGET] != null || (debug_show_bones && selected) || ik_target_prev != null ||
+					array_length(part_joints_matrix) > 0 || array_length(part_joints_pos) > 0 || array_length(part_joints_bone_matrix) > 0)
 					tl_update_ik_calculate()
 		
 		var first = null;
 		var firstindex = ds_list_size(app.project_timeline_list);
-		for (var i = 0; i < array_length(parts); i++)
+		for (var i = 0; i < partcount; i++)
 		{
-			with (parts[i])
+			with (ikparts[i])
 			{
 				if (update_matrix)
 				{
-					update = true
 					var index = ds_list_find_index(app.project_timeline_list, id);
 					if (index >= 0 && index < firstindex)
 					{
@@ -34,11 +34,10 @@ function tl_update_ik(parts)
 				}
 			}
 		}
-		if (first != null)
-			with (first)
-				tl_update_matrix(false, false)
-		
-		if (!update)
+		if (first = null)
 			break
+
+		with (first)
+			tl_update_matrix(false, false)
 	}
 }

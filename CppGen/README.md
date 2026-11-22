@@ -3,6 +3,12 @@ CppGen is a tool used by the build system that converts the GameMaker scripts an
 
 Note that this software is not general-purpose and won't work outside the Mine-imator project.
 
+## Read-only arguments
+
+Add `/// CppGen ConstRef argument_name` before a generated GML function to pass an ordinary read-only argument by const reference in C++. Use one directive per argument. For example, `spline_get_point` uses `ConstRef` to sample a path without copying the entire control-point array. Element reads can also borrow from the array, so keep it valid throughout the call.
+
+The Windows build uses the checked-in `Win64/CppGen.exe`. Rebuild it using the Release configuration below when changing generator behavior. Older binaries reject the `ConstRef` directive.
+
 ## GML specification
 If you use new GameMaker features, you must update `gml.json`:
 * New constants are added to `"constants"`.

@@ -1,4 +1,5 @@
-/// CppSeparate ArrType spline_get_point(RealType, const ArrType&, BoolType, BoolType, RealType = 0)
+/// CppGen array splinecontrols
+/// CppGen ConstRef splinecontrols
 /// @desc Calculates a 3D point on a 3D B-Spline curve given a list of points.
 /// @arg progress
 /// @arg points
@@ -6,7 +7,7 @@
 /// @arg smooth
 /// @arg [amount]
 
-function spline_get_point(t, points, closed, smooth, amount = 0)
+function spline_get_point(t, splinecontrols, closed, smooth, amount = 0)
 {
 	var p0, p1, p2, seg, curvet;
 	
@@ -18,7 +19,7 @@ function spline_get_point(t, points, closed, smooth, amount = 0)
 	curvet = percent(t, p0, p2)
 	
 	if (amount = 0)
-		amount = array_length(points)
+		amount = array_length(splinecontrols)
 	
 	if (closed)
 	{
@@ -33,7 +34,7 @@ function spline_get_point(t, points, closed, smooth, amount = 0)
 		p2 = max(0, min(p2, amount - 1))
 	}
 	
-	if (amount = array_length(points))
+	if (amount = array_length(splinecontrols))
 		curvet = percent(t, p0, p2)
 	
 	// Before/after open path
@@ -44,30 +45,30 @@ function spline_get_point(t, points, closed, smooth, amount = 0)
 		if (t <= 0)
 		{
 			i = 0
-			pos = vec3_add(points[i], vec3_mul(vec3_normalize(vec3_sub(points[i], points[i + 1])), abs(t)))
+			pos = vec3_add(splinecontrols[i], vec3_mul(vec3_normalize(vec3_sub(splinecontrols[i], splinecontrols[i + 1])), abs(t)))
 		}
 		else
 		{
-			i = array_length(points) - 1
-			pos = vec3_add(points[i], vec3_mul([ points[i - 1][PATH_TANGENT_X], points[i - 1][PATH_TANGENT_Y], points[i - 1][PATH_TANGENT_Z] ], abs(t - i)))
+			i = array_length(splinecontrols) - 1
+			var tangent = point3D(splinecontrols[i - 1][PATH_TANGENT_X], splinecontrols[i - 1][PATH_TANGENT_Y], splinecontrols[i - 1][PATH_TANGENT_Z]);
+			pos = vec3_add(splinecontrols[i], vec3_mul(tangent, abs(t - i)))
 		}
 		
-		point = array_copy_1d(points[i])
+		point = array_copy_1d(splinecontrols[i])
 		point[X] = pos[X]
 		point[Y] = pos[Y]
 		point[Z] = pos[Z]
-		point[PATH_TANGENT_X] = point[PATH_TANGENT_X] // Convert to VarType
 		
 		return point
 	}
 	
 	if (smooth)
-		return bezier_curve_quad(points[p0], points[p1], points[p2], curvet)
+		return bezier_curve_quad(splinecontrols[p0], splinecontrols[p1], splinecontrols[p2], curvet)
 	else
 	{
 		if (curvet < 0.5)
-			return point_lerp(points[p0], points[p1], curvet * 2)
+			return point_lerp(splinecontrols[p0], splinecontrols[p1], curvet * 2)
 		else
-			return point_lerp(points[p1], points[p2], (curvet - 0.5) * 2)
+			return point_lerp(splinecontrols[p1], splinecontrols[p2], (curvet - 0.5) * 2)
 	}	
 }

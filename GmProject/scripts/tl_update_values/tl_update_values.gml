@@ -59,7 +59,7 @@ function tl_update_values()
 	else
 		keyframe_progress_ease = ease(keyframe_transition, keyframe_progress)
 	
-	// Evaluate enabled channels in one native batch
+	// Evaluate enabled channels
 	tl_update_values_batch(false)
 	keyframe_value_cache_valid = cachevalues
 	keyframe_value_cache_current = keyframe_current

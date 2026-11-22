@@ -613,6 +613,7 @@ String Accessor::toCpp(ResolveScope* scope)
 	String parCpp = "";
 	bool parenthesis = true;
 	String accessorFunc = "";
+	bool borrowArray = false;
 
 	if (GML::constants.containsKey(this->name) || GML::keywords.contains(this->name) || this->name == STR(argument) || this->name == STR(argument_count)) // GML* Keyword
 		cpp += nameToCpp(this->name);
@@ -720,6 +721,8 @@ String Accessor::toCpp(ResolveScope* scope)
 			else if (var->scope == this->func->name || (thisPtrValid && var->scope == this->func->structObject->name)) // Instance (with same scope)
 			{
 				cpp += nameToCpp(this->name);
+				borrowArray = var->line == 0 && this->func->constRefArgs.contains(this->name) &&
+					this->writtenType->cppType == DataType::CppType::ArrType && this->assignExpr == nullptr;
 				if (var->isReference) // Get array/vector/matrix reference
 				{
 					if (this->assignExpr != nullptr) // arr[@i] = x
@@ -808,6 +811,8 @@ String Accessor::toCpp(ResolveScope* scope)
 						default: break;
 					}
 				}
+				if (accessorFunc == "Value" && dsType == DataType::Type::Array && borrowArray)
+					accessorFunc = "ValueRef";
 			}
 		}
 	}
@@ -878,6 +883,17 @@ String Accessor::toCpp(ResolveScope* scope)
 			int arg = 0;
 			for (Expression* expr : this->callParameters)
 			{
+				// Const array arguments can report their size without a mutable reference wrapper
+				if (this->name == STR(array_length) && expr->type == Type::Accessor)
+				{
+					Accessor* array = static_cast<Accessor*>(expr);
+					Variable* var = Program::findVariable(argumentScope.current, array->name, this->func, *argumentScope.location, this->line);
+					if (array->nextInChain == nullptr && array->callParameters == nullptr && array->arrayAccessors.empty() &&
+						var != nullptr && var->scope == this->func->name && var->line == 0 &&
+						var->type->cppType == DataType::CppType::ArrType && this->func->constRefArgs.contains(array->name))
+						return array->toCpp(argumentScope) + ".Size()";
+				}
+
 				bool createRef = (targetFunc != nullptr && arg < static_cast<int>(args.size()) && args[arg]->isReference) ||
 					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType());
 				if (createRef)
@@ -934,7 +950,9 @@ String Accessor::toCpp(ResolveScope* scope)
 			if (acc->type == DataType::Type::Array)
 			{
 				// Copy the final read value instead of retaining a vector component reference
-				if (this->assignExpr == nullptr && acc == this->arrayAccessors[this->arrayAccessors.size() - 1])
+				if (borrowArray && acc == this->arrayAccessors[0])
+					cpp += ".ValueRef(" + acc->expr->toCpp(argumentScope) + ")";
+				else if (this->assignExpr == nullptr && acc == this->arrayAccessors[this->arrayAccessors.size() - 1])
 					cpp += ".Value(" + acc->expr->toCpp(argumentScope) + ")";
 				else
 					cpp += "[" + acc->expr->toCpp(argumentScope) + "]";

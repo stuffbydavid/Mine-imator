@@ -1,5 +1,4 @@
-/// CppSeparate void tl_update_values_batch(Scope<obj_timeline>, BoolType)
-/// @desc Evaluates enabled channels, with a native fast path for unchanged values
+/// @desc Evaluates enabled channels and reuses the changing channels within a keyframe interval
 /// @arg [transitions]
 
 function tl_update_values_batch(transitions = false)
@@ -101,7 +100,7 @@ function tl_update_values_batch(transitions = false)
 				tl_update_values_ease(vid, true)
 
 		if (camera_effect_type = e_cam_fx.LENS_DIRT)
-			tl_update_values_ease(e_value.TEXTURE_OBJ)
+			tl_update_values_ease(e_value.TEXTURE_OBJ, true)
 	}
 
 	// Background

@@ -935,6 +935,7 @@ public:
 	List<Variable*> vars = List<Variable*>();
 	List<StringId> varArgsRequiredNames = List<StringId>();
 	List<StringId> arrRefs;
+	List<StringId> constRefArgs;
 	StatementList* statements{};
 	Object* structObject = nullptr;
 	List<String> cppLinesBegin = List<String>();

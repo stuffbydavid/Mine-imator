@@ -198,7 +198,11 @@ void DeclarationList::writeCpp(ResolveScope* scope, WriteFormat format, String e
 		{
 			if (i > 0)
 				CodeWriter::write(", ");
-			CodeWriter::write(varTypes[i]->toCpp() + " " + nameToCpp(decl->name));
+			if (this->func->constRefArgs.contains(decl->name))
+				CodeWriter::write("const " + varTypes[i]->toCpp() + "& ");
+			else
+				CodeWriter::write(varTypes[i]->toCpp() + " ");
+			CodeWriter::write(nameToCpp(decl->name));
 			if (decl->expr != nullptr && format != WriteFormat::ArgsImpl) // Expression
 				CodeWriter::write(" = " + decl->expr->toCpp(scope));
 			i++;

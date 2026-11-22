@@ -1,4 +1,4 @@
-/// CppSeparate VecType tl_update_transform(Scope<obj_timeline>, BoolType, BoolType, BoolType)
+/// CppGen matrix transformmatrix
 /// @desc Evaluates timeline transforms and returns inherited pose bending
 /// @arg usepaths
 /// @arg updatepose
@@ -10,9 +10,9 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	if (parent != app)
 	{
 		if (inherit_rot_point)
-			matrix_parent = array_copy_1d(parent.matrix_render)
+			matrix_parent = matrix_copy(parent.matrix_render)
 		else
-			matrix_parent = array_copy_1d(parent.matrix)
+			matrix_parent = matrix_copy(parent.matrix)
 		
 		// Parent is a body part and we're locked to bended half
 		if (parent.type = e_tl_type.MODEL_PART && lock_bend && parent.model_part != null && parent.model_part.bend_part != null)
@@ -34,26 +34,25 @@ function tl_update_transform(usepaths, updatepose, hasik)
 		var path = value[e_value.PATH_OBJ];
 		if (path != null && array_length(path.path_table) > 0)
 		{
-			var offset, angle, curpos, mat;
+			var offset, curpos, mat;
 			offset = value[e_value.PATH_OFFSET]
-			angle = 0
 		
 			// Get current position
 			curpos = tl_path_offset_get_position(path, offset)
 		
 			// Make rotation matrix and add path position
 			var n, t;
-			n = vec3_normalize([ curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z] ])
-			t = vec3_normalize([ curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z] ])
+			n = vec3_normalize(vec3(curpos[PATH_NORMAL_X], curpos[PATH_NORMAL_Y], curpos[PATH_NORMAL_Z]))
+			t = vec3_normalize(vec3(curpos[PATH_TANGENT_X], curpos[PATH_TANGENT_Y], curpos[PATH_TANGENT_Z]))
 		
 			mat = matrix_create_rotate_to(t, n)
 		
 			// If path is closed, check if object is before/after ends
 			if (!path.path_closed)
 			{
-				if (value[e_value.PATH_OFFSET] <= 0)
+				if (offset <= 0)
 					curpos = tl_path_offset_get_position(path, 0)
-				else if (value[e_value.PATH_OFFSET] >= path.path_length)
+				else if (offset >= path.path_length)
 					curpos = tl_path_offset_get_position(path, path.path_length)
 			}
 		
@@ -70,8 +69,10 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	if (type = e_tl_type.MODEL_PART && model_part != null)
 	{
 		var partpos, partrot, partchanged;
-		partpos = (part_of != null ? model_part.position : point3D(0))
-		partrot = model_part.rotation
+		partpos = point3D(0)
+		if (part_of != null)
+			partpos = point3D(model_part.position[X], model_part.position[Y], model_part.position[Z])
+		partrot = point3D(model_part.rotation[X], model_part.rotation[Y], model_part.rotation[Z])
 		partchanged = (!transform_part_cache_valid || transform_part_cache_id != model_part)
 		for (var j = X; j <= Z; j++)
 			if (partpos[j] != transform_part_cache_pos[j] || partrot[j] != transform_part_cache_rot[j])
@@ -79,8 +80,8 @@ function tl_update_transform(usepaths, updatepose, hasik)
 		if (partchanged)
 		{
 			transform_part_cache_matrix = matrix_create(partpos, partrot, vec3(1))
-			transform_part_cache_pos = array_copy_1d(partpos)
-			transform_part_cache_rot = array_copy_1d(partrot)
+			transform_part_cache_pos = partpos
+			transform_part_cache_rot = partrot
 			transform_part_cache_id = model_part
 			transform_part_cache_valid = true
 		}
@@ -100,26 +101,26 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	if (localchanged)
 	{
 		matrix_local = matrix_create(pos, rot, sca)
-		transform_local_pos = array_copy_1d(pos)
-		transform_local_rot = array_copy_1d(rot)
-		transform_local_scale = array_copy_1d(sca)
+		transform_local_pos = pos
+		transform_local_rot = rot
+		transform_local_scale = sca
 		transform_local_cache_valid = true
 	}
-	matrix = matrix_multiply(matrix_local, matrix_parent)
+	var transformmatrix = matrix_multiply(matrix_local, matrix_parent);
 	
 	// Remove old rotation and re-add own
 	if (!inherit_rotation)
 	{
-		matrix_remove_rotation(matrix)
-		matrix = matrix_multiply(matrix_create(point3D(0), vec3(value[e_value.ROT_X], value[e_value.ROT_Y], value[e_value.ROT_Z]), vec3(1)), matrix)
+		matrix_remove_rotation(transformmatrix)
+		transformmatrix = matrix_multiply(matrix_create(point3D(0), rot, vec3(1)), transformmatrix)
 	}
 	
 	// Get current matrix for IK
-	matrix_parent_pre_ik = array_copy_1d(matrix)
+	matrix_parent_pre_ik = matrix_copy(transformmatrix)
 	
 	// Add IK orientation
 	if (hasik)
-		matrix = matrix_multiply(part_joints_matrix[0], matrix)
+		transformmatrix = matrix_multiply(part_joints_matrix[0], transformmatrix)
 	
 	// Check body part model timeline is "Inherit pose" is enabled, look at parent of root model and search for matching body parts to inherit from
 	var posebend = vec3(0);
@@ -132,7 +133,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 		if (posetl != null)
 		{
 			// Local orientation
-			matrix = matrix_multiply(posetl.matrix_local, matrix)
+			transformmatrix = matrix_multiply(posetl.matrix_local, transformmatrix)
 			
 			// Bend
 			for (var j = X; j <= Z; j++)
@@ -140,7 +141,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 			
 			// IK
 			if (array_length(posetl.part_joints_matrix) > 0 && posetl.value[e_value.IK_TARGET] != null)
-				matrix = matrix_multiply(posetl.part_joints_matrix[0], matrix)
+				transformmatrix = matrix_multiply(posetl.part_joints_matrix[0], transformmatrix)
 		}
 	}
 	
@@ -162,7 +163,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 		// Remove scale
 		var parmat, matrixnoscale;
 		matrix_remove_scale(matrix_parent)
-		parmat = array_copy_1d(matrix_parent)
+		parmat = matrix_copy(matrix_parent)
 		
 		// Remove rotation
 		if (!inherit_rotation)
@@ -174,38 +175,39 @@ function tl_update_transform(usepaths, updatepose, hasik)
 			matrixnoscale = matrix_multiply(part_joints_matrix[0], matrixnoscale)
 		
 		for (var p = 0; p < 11; p++)
-			matrix[p] = matrixnoscale[p]
+			transformmatrix[p] = matrixnoscale[p]
 		
 		// Re-add calculated or own scale
 		if (inherit_scale)
-			matrix = matrix_multiply(matrix_create(point3D(0), vec3(0), sca), matrix)
+			transformmatrix = matrix_multiply(matrix_create(point3D(0), vec3(0), sca), transformmatrix)
 		else
-			matrix = matrix_multiply(matrix_create(point3D(0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), matrix) 
+			transformmatrix = matrix_multiply(matrix_create(point3D(0), vec3(0), vec3(value[e_value.SCA_X], value[e_value.SCA_Y], value[e_value.SCA_Z])), transformmatrix)
 	}
 	
 	// Replace position
 	if (!inherit_position)
 	{
 		matrix_remove_rotation(matrix_parent)
-		matrix[MAT_X] = value[e_value.POS_X]
-		matrix[MAT_Y] = value[e_value.POS_Y]
-		matrix[MAT_Z] = value[e_value.POS_Z]
+		transformmatrix[MAT_X] = value[e_value.POS_X]
+		transformmatrix[MAT_Y] = value[e_value.POS_Y]
+		transformmatrix[MAT_Z] = value[e_value.POS_Z]
 	}
 	
 	// Create rotation point
 	if (type = e_tl_type.CAMERA && value[e_value.CAM_ROTATE])
 	{
-		world_pos_rotate = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
-		matrix[MAT_X] += lengthdir_x(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
-		matrix[MAT_Y] += lengthdir_y(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
-		matrix[MAT_Z] += lengthdir_z(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_Z])
+		world_pos_rotate = matrix_position(transformmatrix)
+		transformmatrix[MAT_X] += lengthdir_x(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
+		transformmatrix[MAT_Y] += lengthdir_y(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_XY] + 90) * lengthdir_x(1, value[e_value.CAM_ROTATE_ANGLE_Z])
+		transformmatrix[MAT_Z] += lengthdir_z(value[e_value.CAM_ROTATE_DISTANCE], value[e_value.CAM_ROTATE_ANGLE_Z])
 	}
 	
 	// Set world position
-	world_pos = point3D(matrix[MAT_X], matrix[MAT_Y], matrix[MAT_Z])
+	world_pos = matrix_position(transformmatrix)
+	matrix = transformmatrix
 	
 	// Add rotation point
-	matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point_render, -1), vec3(0), vec3(1)), matrix)
+	matrix_render = matrix_multiply(matrix_create(point3D_mul(rot_point_render, -1), vec3(0), vec3(1)), transformmatrix)
 	
 	return posebend
 }
