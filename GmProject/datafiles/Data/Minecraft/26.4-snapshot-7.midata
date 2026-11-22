@@ -13109,6 +13109,14 @@
 						"sky": "#78A7FF"
 					},
 					{
+						"name": "ice_caves",
+						"ground": "block/packed_ice",
+						"foliage": [ 255, 255 ],
+						"water": "#14559B",
+						"fog": "#14559B",
+						"sky": "#7FA1FF"
+					},
+					{
 						"name": "deep_dark",
 						"ground": "block/deepslate_top",
 						"sky": "#78A7FF"

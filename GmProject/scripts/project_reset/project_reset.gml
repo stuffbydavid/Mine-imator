@@ -31,9 +31,6 @@ function project_reset()
 	project_description = ""
 	project_pack = mc_res
 	
-	project_time_elapsed = 0
-	project_time_elapsed_start = [current_time, 0]
-	
 	project_video_width = 1280
 	project_video_height = 720
 	project_video_template = find_videotemplate(project_video_width, project_video_height)

@@ -9,8 +9,9 @@
 /// @arg [disabled]
 /// @arg [tip]
 /// @arg [sprite]
+/// @arg [background]
 
-function draw_button_icon(name, xx, yy, wid, hei, value, icon, script = null, disabled = false, tip = "", spr = null)
+function draw_button_icon(name, xx, yy, wid, hei, value, icon, script = null, disabled = false, tip = "", spr = null, background = false)
 {
 	if (spr = null)
 		spr = spr_icons
@@ -20,6 +21,12 @@ function draw_button_icon(name, xx, yy, wid, hei, value, icon, script = null, di
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 		return 0
+
+	if (background)
+	{
+		draw_box(xx - 4, yy - 4, wid + 8, hei + 8, false, c_level_middle, 1)
+		draw_outline(xx - 4, yy - 4, wid + 8, hei + 8, 1, c_border, a_border, true)
+	}
 	
 	var mouseon, animated, image;
 	mouseon = (content_mouseon && !disabled && app_mouse_box(xx, yy, wid, hei))

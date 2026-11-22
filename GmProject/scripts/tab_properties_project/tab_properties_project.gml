@@ -84,10 +84,4 @@ function tab_properties_project()
 	tab_control_switch()
 	draw_edit_button("project/edit_render_settings", dx, dy, renderer_settings.show, tab_toggle, renderer_settings, "project/edit_render_settings_tip")
 	tab_next()
-	
-	// Time elapsed
-	tab_control(20)
-	draw_label(text_get("project/time_elapsed") + ":", dx, dy + 10, fa_left, fa_middle, c_text_tertiary, a_text_tertiary, font_label)
-	draw_label(string_time(project_time_elapsed, false, project_time_elapsed < 0), dx + dw, dy + 10, fa_right, fa_middle, project_time_elapsed > 0 ? c_text_secondary : c_error, project_time_elapsed > 0 ? a_text_secondary : a_text_main, project_time_elapsed > 0 ? font_value : font_label)
-	tab_next()
 }

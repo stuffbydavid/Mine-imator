@@ -370,8 +370,6 @@
     {"$GMIncludedFile":"","%Name":"file.dll","CopyToMask":-1,"filePath":"datafiles/Data/Libraries","name":"file.dll","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"movie.dll","CopyToMask":-1,"filePath":"datafiles/Data/Libraries","name":"movie.dll","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"window.dll","CopyToMask":-1,"filePath":"datafiles/Data/Libraries","name":"window.dll","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"26.3.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","name":"26.3.midata","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"26.3.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","name":"26.3.zip","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"26.4-snapshot-7.midata","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","name":"26.4-snapshot-7.midata","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"26.4-snapshot-7.zip","CopyToMask":-1,"filePath":"datafiles/Data/Minecraft","name":"26.4-snapshot-7.zip","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"balanced.mirender","CopyToMask":-1,"filePath":"datafiles/Data/Render","name":"balanced.mirender","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -556,7 +554,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2026.0.0.16",
+    "IDEVersion":"2026.1.0.27",
   },
   "name":"Mine-imator",
   "resources":[

@@ -37,8 +37,6 @@ function preview_event_create()
 	particle_spawner_init()
 	particle_spawn_active = true
 	
-	camera_effect_show = true
-	
 	text_vbuffer = [ null, null ]
 	text_texture = [ null, null ]
 	text_string = ""

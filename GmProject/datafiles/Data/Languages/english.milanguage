@@ -3226,8 +3226,7 @@
 		"tempo_tip": "The amount of frames that make a second in the animation.",
 		"pack": "Resource pack",
 		"edit_render_settings": "Edit render settings",
-		"edit_render_settings_tip": "Configure renderer quality, special effects, graphics, and material appearance.",
-		"time_elapsed": "Time elapsed"
+		"edit_render_settings_tip": "Configure renderer quality, special effects, graphics, and material appearance."
 	},
 	"render": "RENDER SETTINGS",
 	"render/": {
@@ -3932,6 +3931,7 @@
 		"dripstone_caves": "Dripstone Caves",
 		"lush_caves": "Lush Caves",
 		"sulfur_caves": "Sulfur Caves",
+		"ice_caves": "Ice Caves",
 		"deep_dark": "Deep Dark",
 		"mountains": "Mountains",
 		"meadow": "Meadow",

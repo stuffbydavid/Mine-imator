@@ -57,10 +57,5 @@ function app_event_step()
 		app_update_minecraft_resources()
 		
 		current_step += 60 / game_get_speed(gamespeed_fps)
-		
-		// Don't increase project timer while rendering or tabbed out
-		//if (!window_has_focus() || window_state = "export_movie" || window_state = "export_image")
-		//	project_time_elapsed_start[1] += current_time - project_time_elapsed_start[0] - project_time_elapsed_start[1] - project_time_elapsed
-		project_time_elapsed = current_time - project_time_elapsed_start[0] - project_time_elapsed_start[1]
 	}
 }

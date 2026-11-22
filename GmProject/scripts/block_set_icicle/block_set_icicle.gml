@@ -1,11 +1,10 @@
 function block_set_icicle()
 {
-	// TODO: fix attached state for build tool
-	
 	if (!build_edit && builder_scenery && !builder_scenery_legacy)
 		return 0
 	
-	if (block_get_state_id_value(block_current, block_state_id_current, "attached") = "true")
+	// Preserve the selected attachment state when editing blocks
+	if (!build_edit && block_get_state_id_value(block_current, block_state_id_current, "attached") = "true")
 	{
 		// Remove "attached" from all blocks
 		block_state_id_current = block_set_state_id_value(block_current, block_state_id_current, "attached", "false")

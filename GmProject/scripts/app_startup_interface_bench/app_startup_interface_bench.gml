@@ -84,8 +84,7 @@ function app_startup_interface_bench()
 		e_bench_tab.SHAPE,
 		e_bench_tab.TEXT,
 		e_bench_tab.SOUND,
-		e_bench_tab.PARTICLE_SPAWNER,
-		e_bench_tab.CAMERA_EFFECT
+		e_bench_tab.PARTICLE_SPAWNER
 	]
 	
 	// Example
@@ -334,6 +333,7 @@ function app_startup_interface_bench()
 		
 		// Camera effects
 		camera_effect_type = e_cam_fx.FADE
+		camera_effect_show = true
 		camera_effect_camera = app
 		
 		camera_effect_list_simple = new_obj(obj_sortlist)

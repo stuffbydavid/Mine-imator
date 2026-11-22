@@ -27,7 +27,12 @@ function bench_draw_settings(bx, by, bw, bh)
 	
 	startdy = dy
 	
-	// Example image and Preview are both used at once for the camera effect tab (slightly hacky, oh well)
+	// Preview
+	if (array_contains(bench_tab_preview, bench_tab))
+	{
+		preview_draw(bench_settings.preview, dx, dy, dw, bench_header_height)
+		dy += bench_header_height + 8
+	}
 	
 	// Example image
 	if (array_contains(bench_tab_example, bench_tab))
@@ -38,7 +43,7 @@ function bench_draw_settings(bx, by, bw, bh)
 			case e_bench_tab.WORLD:				subimg = e_bench_example.WORLD; break
 			case e_bench_tab.CAMERA:			subimg = e_bench_example.CAMERA; break
 			case e_bench_tab.AUDIO_TRACK:		subimg = e_bench_example.AUDIO_TRACK; break
-			case e_bench_tab.CAMERA_EFFECT:		subimg = e_bench_example.CAMERA_EFFECT + (bench_settings.preview.camera_effect_show ? 1 + bench_settings.camera_effect_type : 0); break
+			case e_bench_tab.CAMERA_EFFECT:		subimg = e_bench_example.CAMERA_EFFECT + (bench_settings.camera_effect_show ? 1 + bench_settings.camera_effect_type : 0); break
 			case e_bench_tab.LIGHT_SOURCE:		subimg = (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? e_bench_example.POINT_LIGHT : e_bench_example.SPOT_LIGHT; break
 			case e_bench_tab.PATH:				subimg = e_bench_example.PATH; break
 			case e_bench_tab.ENVIRONMENT:		subimg = e_bench_example.ENVIRONMENT; break
@@ -53,15 +58,7 @@ function bench_draw_settings(bx, by, bw, bh)
 		else
 			draw_sprite(spr_bench_example, subimg, floor(dx + (dw - sprwid) / 2), dy)
 		
-		if (!array_contains(bench_tab_preview, bench_tab))
-			dy += bench_header_height + 16
-	}
-	
-	// Preview
-	if (array_contains(bench_tab_preview, bench_tab))
-	{
-		preview_draw(bench_settings.preview, dx, dy, dw, bench_header_height, bench_tab != e_bench_tab.CAMERA_EFFECT)
-		dy += bench_header_height + (array_contains(bench_tab_example, bench_tab) ? 16 : 8)
+		dy += bench_header_height + 16
 	}
 
 	menu_bench = true

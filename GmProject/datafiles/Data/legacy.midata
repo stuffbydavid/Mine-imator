@@ -1930,16 +1930,18 @@
 		},
 		"175": {
 			"data": {
+				"0x1+0x2+0x4": {
+					"0": "id=minecraft:sunflower",
+					"1": "id=minecraft:lilac",
+					"2": "id=minecraft:tall_grass",
+					"3": "id=minecraft:large_fern",
+					"4": "id=minecraft:rose_bush",
+					"5": "id=minecraft:peony"
+				},
 				"0x8": {
 					"0": "half=lower",
 					"1": "half=upper"
-				},
-				"0": "id=minecraft:sunflower",
-				"1": "id=minecraft:lilac",
-				"2": "id=minecraft:tall_grass",
-				"3": "id=minecraft:large_fern",
-				"4": "id=minecraft:rose_bush",
-				"5": "id=minecraft:peony"
+				}
 			}
 		},
 		"176": {

@@ -1,6 +1,10 @@
 function bench_draw_settings_camera_effects()
 {
 	dy -= 8
+
+	// Toggle the example effect
+	if (draw_button_icon("bench/camera_effect/show", dx + 12, dy - 44, 24, 24, bench_settings.camera_effect_show, icons.WAND, null, false, bench_settings.camera_effect_show ? "tooltip/camera_effect/hide" : "tooltip/camera_effect/show", null, true))
+		bench_settings.camera_effect_show = !bench_settings.camera_effect_show
 	
 	// Effect list
 	var list = setting_advanced_mode ? bench_settings.camera_effect_list_advanced : bench_settings.camera_effect_list_simple;
