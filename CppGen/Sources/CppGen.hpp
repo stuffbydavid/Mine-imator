@@ -600,6 +600,7 @@ public:
 	Expression* assignExpr = nullptr;
 	bool needLtZero = false;
 	bool appToId = true;
+	bool borrowArgument = false;
 	inline static bool resolveUnknownMapTypes = false;
 	inline static bool resolveUnknownScope = false;
 	inline static bool resolveFunctionReferences = false;

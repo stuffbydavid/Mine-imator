@@ -498,6 +498,107 @@ bool Accessor::applyType(ResolveScope* scope, const DataType& inputType)
 	return changed;
 }
 
+// Returns whether a C++ argument is a non-variant value or const reference, initialized by copying from a borrowed array element
+static bool cppArgIsTypedValue(std::string type)
+{
+	size_t defaultPos = type.find('=');
+	if (defaultPos != std::string::npos)
+		type = type.substr(0, defaultPos);
+
+	if (type.find("VarType") != std::string::npos || type.find("VarArgs") != std::string::npos || type.find("ArrType") != std::string::npos)
+		return false;
+
+	if (type.find('&') != std::string::npos && type.find("const") == std::string::npos)
+		return false;
+
+	for (const char* typed : { "RealType", "IntType", "BoolType", "StringType", "VecType", "MatrixType" })
+		if (type.find(typed) != std::string::npos)
+			return true;
+
+	return false;
+}
+
+// Returns whether argument arg of a call receives a typed copy, so an array element argument can be read with ValueRef()
+static bool argumentIsTypedValue(Function* targetFunc, GML::FunctionSignature* funcSign, const List<Variable*>& args, int arg)
+{
+	if (funcSign != nullptr)
+	{
+		if (funcSign->varArgs || arg >= static_cast<int>(funcSign->argTypes.size()))
+			return false;
+
+		switch (funcSign->argTypes[arg]->cppType)
+		{
+			case DataType::CppType::RealType:
+			case DataType::CppType::IntType:
+			case DataType::CppType::BoolType:
+			case DataType::CppType::StringType:
+			case DataType::CppType::VecType:
+			case DataType::CppType::MatrixType:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	if (targetFunc == nullptr || targetFunc->varArgs)
+		return false;
+
+	// Separate C++ implementations declare their own signature, which may differ from the GML argument types
+	if (targetFunc->isCppSeparate)
+	{
+		const std::string& header = targetFunc->cppSeparateHeader;
+		size_t start = header.find('('), end = header.rfind(')');
+		if (start == std::string::npos || end == std::string::npos || end <= start)
+			return false;
+
+		std::vector<std::string> headerArgs;
+		std::string current;
+		int depth = 0;
+		for (size_t i = start + 1; i < end; i++)
+		{
+			char c = header[i];
+			if (c == '(' || c == '<')
+				depth++;
+			else if (c == ')' || c == '>')
+				depth--;
+
+			if (c == ',' && depth == 0)
+			{
+				headerArgs.push_back(current);
+				current.clear();
+			}
+			else
+				current += c;
+		}
+		if (current.find_first_not_of(" 	") != std::string::npos)
+			headerArgs.push_back(current);
+
+		if (!headerArgs.empty() && headerArgs[0].find("Scope") != std::string::npos)
+			headerArgs.erase(headerArgs.begin());
+
+		if (arg >= static_cast<int>(headerArgs.size()))
+			return false;
+
+		return cppArgIsTypedValue(headerArgs[arg]);
+	}
+
+	if (arg >= static_cast<int>(args.size()) || args[arg]->isReference)
+		return false;
+
+	switch (args[arg]->type->cppType)
+	{
+		case DataType::CppType::RealType:
+		case DataType::CppType::IntType:
+		case DataType::CppType::BoolType:
+		case DataType::CppType::StringType:
+		case DataType::CppType::VecType:
+		case DataType::CppType::MatrixType:
+			return true;
+		default:
+			return false;
+	}
+}
+
 String Accessor::toCpp(ResolveScope* scope)
 {
 	String cpp = "";
@@ -811,7 +912,7 @@ String Accessor::toCpp(ResolveScope* scope)
 						default: break;
 					}
 				}
-				if (accessorFunc == "Value" && dsType == DataType::Type::Array && borrowArray)
+				if (accessorFunc == "Value" && dsType == DataType::Type::Array && (borrowArray || (this->borrowArgument && this->writtenType->cppType == DataType::CppType::ArrType)))
 					accessorFunc = "ValueRef";
 			}
 		}
@@ -909,6 +1010,21 @@ String Accessor::toCpp(ResolveScope* scope)
 							refAcc = refAcc->nextInChain;
 						if (refAcc->arrayAccessors.size() > 0)
 							refAcc->markAsAssign(this);
+					}
+				}
+				else if (argumentIsTypedValue(targetFunc, funcSign, args, arg))
+				{
+					// Typed arguments are converted from the borrowed element before the call, avoiding a variant copy
+					Expression* valueExpr = expr;
+					while (valueExpr->type == Type::Parenthesis)
+						valueExpr = static_cast<ExpressionParenthesis*>(valueExpr)->expr;
+					if (valueExpr->type == Type::Accessor)
+					{
+						Accessor* valueAcc = static_cast<Accessor*>(valueExpr);
+						while (valueAcc->nextInChain != nullptr)
+							valueAcc = valueAcc->nextInChain;
+						if (valueAcc->arrayAccessors.size() == 1 && valueAcc->callParameters == nullptr && valueAcc->assignExpr == nullptr)
+							valueAcc->borrowArgument = true;
 					}
 				}
 				String exprCpp = expr->toCpp(argumentScope);
