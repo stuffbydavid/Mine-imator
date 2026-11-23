@@ -11,7 +11,7 @@ function render_world_ground()
 	if (render_fast_pass)
 		return render_world_ground_fast()
 
-	world_raycast_set_object(0)
+	world_raycast_set_tl(0)
 
 	var materialres, normalres, res, hasmat, hasnorm;
 	materialres = res_eval(env_ground_tex_material)
@@ -34,7 +34,7 @@ function render_world_ground()
 	render_set_uniform_color(e_uniform.BLEND_COLOR, blend, 1)
 	render_set_uniform_color(e_uniform.GLOW_COLOR, c_black, 1)
 	render_set_uniform_int(e_uniform.GLOW_TEXTURE, 0)
-	render_set_uniform_int(e_uniform.FOG_SHOW, app.env_fog_show && (render_mode != e_render_mode.COLOR || render_fog_combined))
+	render_set_uniform_int(e_uniform.FOG_SHOW, app.env_fog_show)
 	render_set_uniform_int(e_uniform.IS_WATER, iswater && app.project_render_water_reflections)
 	render_set_uniform_int(e_uniform.MATERIAL_FORMAT, hasmat ? materialres.material_format : e_material.FORMAT_NONE)
 	
@@ -83,7 +83,7 @@ function render_world_ground()
 	
 	vbuffer_render(env_ground_vbuffer, point3D(xo, yo, 0), point3D(0, 0, 90), point3D(block_size / 16 * groundscale, block_size / 16 * groundscale, 1))
 	
-	world_raycast_set_object(noone)
+	world_raycast_set_tl(noone)
 
 	// Reset
 	render_set_uniform_int(e_uniform.IS_GROUND, 0)

@@ -58,8 +58,8 @@ function soundlist_draw(slist, xx, yy, w, h, name = "")
 				slist.scroll.value = clamp(scrollvalue, slist.scroll.value_goal - list_center_max, slist.scroll.value_goal + list_center_max)
 	}
 
-	yy += 32
-	h -= 32
+	yy += list_header_height
+	h -= list_header_height
 	itemh = ui_small_height
 	listhei = h - 4
 	if (listhei <= 0)

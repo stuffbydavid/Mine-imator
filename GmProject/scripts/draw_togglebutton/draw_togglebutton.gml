@@ -12,10 +12,12 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 	
 	h = ui_large_height + (label_height + 8)
 	w = dw
+	buttoncount = array_length(togglebutton_group)
 	
-	if (xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
+	if (buttoncount = 0 || xx + w < content_x || xx > content_x + content_width || yy + h < content_y || yy > content_y + content_height)
 	{
-		togglebutton_reset()
+		togglebutton_group = []
+		togglebutton_columns = null
 		return 0
 	}
 	
@@ -31,7 +33,6 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 	buttony = yy
 	buttonh = ui_large_height
 	
-	buttoncount = array_length(togglebutton_name)
 	if (buttoncount > 3)
 		buttoncols = togglebutton_columns > 0 ? togglebutton_columns : 2
 	else
@@ -66,9 +67,10 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 	buttony = yy
 	
 	// Draw combo buttons
-	var boxwid;
+	var boxwid, button;
 	for (var i = 0; i < buttoncount; i++)
 	{	
+		button = togglebutton_group[i]
 		boxwid = buttonsize
 		
 		if (i = buttoncount - 1 && buttonrows > 1 && buttoncount % 2 = 1)
@@ -83,7 +85,7 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 		if (mouseon)
 			mouse_cursor = cr_handpoint
 		
-		microani_set(name + togglebutton_name[i], null, mouseon, mouseon && mouse_left, togglebutton_active[i])
+		microani_set(name + button[e_togglebutton.NAME], null, mouseon, mouseon && mouse_left, button[e_togglebutton.ACTIVE])
 		
 		// Draw base button
 		var focus, backcolor, backalpha, linecolor, linealpha, contentcolor, contentalpha;
@@ -107,10 +109,10 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 		draw_box(buttonx, buttony, boxwid, buttonh, false, backcolor, backalpha)
 		
 		var icon, buttonname, totalwidth, startx;
-		icon = togglebutton_icon[i]
+		icon = button[e_togglebutton.ICON]
 		
 		draw_set_font(font_button)
-		buttonname = string_limit((labels ? string(togglebutton_text[i]) : ""), boxwid - 16)
+		buttonname = string_limit((labels ? string(button[e_togglebutton.TEXT]) : ""), boxwid - 16)
 		totalwidth = (labels ? string_width(buttonname) : 0) + (icon = null ? 0 : 24 + 8)
 		startx = floor(buttonx + (boxwid/2) - (totalwidth/2))
 		
@@ -140,16 +142,16 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 		
 		draw_box_hover(buttonx, buttony, boxwid, buttonh, microani_arr[e_microani.PRESS])
 		
-		microani_update(mouseon && !mouse_left, mouseon && mouse_left, togglebutton_active[i])
+		microani_update(mouseon && !mouse_left, mouseon && mouse_left, button[e_togglebutton.ACTIVE])
 		
 		// Execute script with value
 		if (mouseon && mouse_left_released)
 		{
-			if (togglebutton_script[i] != null)
+			if (button[e_togglebutton.SCRIPT] != null)
 			{
-				script = togglebutton_script[i]
-				scriptvalue = togglebutton_value[i]
-				axis = togglebutton_axis[i]
+				script = button[e_togglebutton.SCRIPT]
+				scriptvalue = button[e_togglebutton.VALUE]
+				axis = button[e_togglebutton.AXIS]
 			}
 		}
 		
@@ -178,5 +180,6 @@ function draw_togglebutton(name, xx, yy, labels = true, showcaption = true)
 	}
 	
 	// Clear togglebutton options
-	togglebutton_reset()
+	togglebutton_group = []
+	togglebutton_columns = null
 }

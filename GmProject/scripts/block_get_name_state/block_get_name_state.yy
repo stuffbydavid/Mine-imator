@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_get_name_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_get_name_state",
+  "parent":{
+    "name":"Blocks",
+    "path":"folders/Scripts/Minecraft/Blocks.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

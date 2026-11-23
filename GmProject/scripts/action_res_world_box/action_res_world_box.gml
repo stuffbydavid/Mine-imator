@@ -6,17 +6,17 @@ function action_res_world_box(value, add = false)
 	axis = axis_edit mod 3
 
 	if (axis_edit < 3)
-		oldval = res_edit.world_box_start[axis]
+		oldval = res_edit.world_box_start_load[axis]
 	else
-		oldval = res_edit.world_box_end[axis]
+		oldval = res_edit.world_box_end_load[axis]
 
 	if (add && !history_undo && !history_redo)
 		value += oldval
 
 	if (axis_edit < 3)
-		value = min(round(value), res_edit.world_box_end[axis] - 1)
+		value = min(round(value), res_edit.world_box_end_load[axis] - 1)
 	else
-		value = max(round(value), res_edit.world_box_start[axis] + 1)
+		value = max(round(value), res_edit.world_box_start_load[axis] + 1)
 
 	if (!history_undo && !history_redo)
 	{
@@ -28,7 +28,7 @@ function action_res_world_box(value, add = false)
 	}
 
 	if (axis_edit < 3)
-		res_edit.world_box_start[axis] = value
+		res_edit.world_box_start_load[axis] = value
 	else
-		res_edit.world_box_end[axis] = value
+		res_edit.world_box_end_load[axis] = value
 }

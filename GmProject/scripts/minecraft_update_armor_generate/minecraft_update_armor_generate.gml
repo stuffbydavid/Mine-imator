@@ -11,6 +11,8 @@ function minecraft_update_armor_generate(model, data, res = null)
 	if (res = null || !res_is_ready(res) || (res.type != e_res_type.PACK && res.type != e_res_type.PACK_UNZIPPED))
 		res = mc_res
 	
+	draw_set_alpha(1)
+
 	for (var i = 0; i < 4; i++)
 	{
 		var piece = i * 4;

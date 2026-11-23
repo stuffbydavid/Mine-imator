@@ -1,5 +1,5 @@
 #include "NBT.hpp"
-#include "GZIP.hpp"
+#include "Compress.hpp"
 #include "Generated/GmlFunc.hpp"
 
 #include <QtEndian>
@@ -624,7 +624,7 @@ namespace CppProject
 			throw QString("Truncated NBT long array");
 
 		for (int32_t i = 0; i < size; i++)
-			value[i] = qFromBigEndian(value[i]);
+			value[i] = qFromBigEndian<qint64>(value[i]);
 
 		if (stream.debug)
 			DEBUG(NumStr(size) + " longs");

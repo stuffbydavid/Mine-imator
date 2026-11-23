@@ -2,6 +2,12 @@
 
 function block_set_double_plant()
 {
+	if (builder_mode = e_builder_mode.GET_CONNECT)
+		return block_set_tall_block()
+
+	if (builder_mode = e_builder_mode.RESOLVE_STATE)
+		return 0
+
 	if (block_get_state_id_value(block_current, block_state_id_current, "half") = "upper")
 		return null
 	

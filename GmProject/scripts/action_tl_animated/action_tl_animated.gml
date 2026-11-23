@@ -182,7 +182,7 @@ function action_tl_animated(enabled)
 		tl_update_length()
 		tl_update_matrix()
 		
-		if (setting_timeline_hide_structure_blocks || setting_timeline_hide_nonanimated)
+		if (setting_timeline_hide_nonanimated)
 			tl_update_list()
 
 		app_update_tl_edit()

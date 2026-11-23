@@ -34,7 +34,7 @@ function preview_draw(preview, xx, yy, width, height)
 		particlebutton = (bench_tab = e_bench_tab.PARTICLE_SPAWNER && preview.select.particle_preset != null)
 	else
 		particlebutton = (preview.select.object_index != obj_resource && preview.select.type = e_temp_type.PARTICLE_SPAWNER)
-
+	
 	// Determine 3D/2D view
 	if (preview.select.object_index = obj_resource)
 	{
@@ -49,8 +49,7 @@ function preview_draw(preview, xx, yy, width, height)
 		is3d = true
 	}
 	
-	if ((particlebutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)) ||
-		(playbutton && app_mouse_box(xx + 4, yy + height - 44, 36, 36)))
+	if ((particlebutton || playbutton) && app_mouse_box(xx + 4, yy + height - 44, 36, 36))
 		mouseon = false
 	
 	// Update audio hover
@@ -88,7 +87,7 @@ function preview_draw(preview, xx, yy, width, height)
 			if (!preview.xy_lock)
 			{
 				preview.zangle = preview.clickzangle - (mouse_click_y - mouse_y)
-				preview.zangle = clamp(preview.zangle, -89.9, 89.9)
+				preview.zangle = clamp(preview.zangle, -pitch_limit, pitch_limit)
 			}
 			
 			preview.update = true
@@ -176,19 +175,12 @@ function preview_draw(preview, xx, yy, width, height)
 		gpu_set_blendmode(bm_normal)
 	}
 	
-	// Button background
-	if (particlebutton || playbutton)
-	{
-		draw_box(xx + 8, yy + height - 40, 32, 32, false, c_level_middle, 1)
-		draw_outline(xx + 8, yy + height - 40, 32, 32, 1, c_border, a_border, true)
-	}
-	
 	// Particle button
 	if (particlebutton)
 	{
 		if (preview.select.pc_spawn_constant)
 		{
-			if (draw_button_icon("preview/spawn" + string(preview), xx + 12, yy + height - 36, 24, 24, preview.particle_spawn_active, icons.PARTICLES, null, false, "tooltip/particles/spawn") || triggerkey)
+			if (draw_button_icon("preview/spawn" + string(preview), xx + 12, yy + height - 36, 24, 24, preview.particle_spawn_active, icons.PARTICLES, null, false, "tooltip/particles/spawn", null, true) || triggerkey)
 			{
 				preview.particle_spawn_active = !preview.particle_spawn_active
 				with (preview)
@@ -200,7 +192,7 @@ function preview_draw(preview, xx, yy, width, height)
 		}
 		else
 		{
-			if (draw_button_icon("preview/spawn" + string(preview), xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltip/particles/spawn") || triggerkey)
+			if (draw_button_icon("preview/spawn" + string(preview), xx + 12, yy + height - 36, 24, 24, false, icons.PARTICLES, null, false, "tooltip/particles/spawn", null, true) || triggerkey)
 				preview.fire = true
 		}
 	}
@@ -208,7 +200,7 @@ function preview_draw(preview, xx, yy, width, height)
 	// Play button
 	if (playbutton)
 	{
-		if (draw_button_icon("preview/play" + string(preview), xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltip/stop" : "tooltip/play") || triggerkey)
+		if (draw_button_icon("preview/play" + string(preview), xx + 12, yy + height - 36, 24, 24, false, isplaying ? icons.STOP : icons.PLAY, null, false, isplaying ? "tooltip/stop" : "tooltip/play", null, true) || triggerkey)
 		{
 			if (isplaying)
 			{

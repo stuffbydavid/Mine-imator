@@ -184,10 +184,10 @@ function render_high_shadows()
 						draw_clear(c_white)
 					}
 					
-					for (var d = e_dir.EAST; d < e_dir.amount; d++)
+					for (var d = XP; d <= ZN; d++)
 					{
 						var look = dir_get_vec3(d);
-						if (d = e_dir.DOWN || d = e_dir.UP)
+						if (d = ZP || d = ZN)
 							look[Y] -= 0.0001
 					
 						if (pointdirect)
@@ -245,7 +245,7 @@ function render_high_shadows()
 				// Restore light uniforms when the atlas was reused
 				if (pointcached)
 				{
-					render_world_start_light(world_pos, point3D_add(world_pos, dir_get_vec3(e_dir.amount - 1)), sampleoffset, id)
+					render_world_start_light(world_pos, point3D_add(world_pos, dir_get_vec3(ZN)), sampleoffset, id)
 					render_world_done()
 				}
 				

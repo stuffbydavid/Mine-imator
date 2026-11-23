@@ -2,8 +2,12 @@ function bench_draw_settings_shape()
 {
 	content_capwid = text_caption_width("bench/shape_tex", "bench/shape_tex_material", "bench/shape_tex_normal")
 	
-	tab_control(bench_list_height(bench_settings.shape_list))
-	sortlist_draw(bench_settings.shape_list, dx, dy, dw, tab_control_h, bench_settings.shape_type, false, text_get("bench/shape_type"))
+	var shape, listh;
+	shape = bench_settings.shape_type
+	listh = bench_get_list_height()
+	
+	tab_control(listh)
+	sortlist_draw(bench_settings.shape_list, dx, dy, dw, tab_control_h, shape, false, text_get("bench/shape_type"))
 	tab_next()
 
 	// Texture
@@ -45,9 +49,9 @@ function bench_draw_settings_shape()
 	}
 
 	// Is mapped
-	if (bench_settings.shape_type = e_shape_type.CUBE || 
-		bench_settings.shape_type = e_shape_type.CYLINDER || 
-		bench_settings.shape_type = e_shape_type.CONE)
+	if (shape = e_shape_type.CUBE ||
+		shape = e_shape_type.CYLINDER ||
+		shape = e_shape_type.CONE)
 	{
 		// Advanced mode only
 		if (setting_advanced_mode)
@@ -63,7 +67,7 @@ function bench_draw_settings_shape()
 				tab_control_button_label()
 				draw_checkbox("bench/shape_tex_map", dx, dy + 4, bench_settings.shape_tex_mapped, action_bench_shape_tex_map, "bench/shape_tex_map_tip")
 				if (draw_button_label("bench/shape_tex_save_map", dx + dw, dy, exportwid, icons.TEXTURE_EXPORT, e_button.SECONDARY, null, e_anchor.RIGHT))
-					action_lib_shape_save_map(e_temp_type.CUBE + bench_settings.shape_type)
+					action_lib_shape_save_map(e_temp_type.CUBE + shape)
 				tab_next()
 			}
 			else
@@ -74,12 +78,12 @@ function bench_draw_settings_shape()
 
 				tab_control_button_label()
 				if (draw_button_label("bench/shape_tex_save_map", dx, dy, dw, icons.TEXTURE_EXPORT, e_button.SECONDARY))
-					action_lib_shape_save_map(e_temp_type.CUBE + bench_settings.shape_type)
+					action_lib_shape_save_map(e_temp_type.CUBE + shape)
 				tab_next()
 			}
 		}
 	}
-	else if (bench_settings.shape_type = e_shape_type.SURFACE)
+	else if (shape = e_shape_type.SURFACE)
 	{
 		tab_control_checkbox()
 		draw_checkbox("bench/shape_face_camera", dx, dy, bench_settings.shape_face_camera, action_bench_shape_face_camera)

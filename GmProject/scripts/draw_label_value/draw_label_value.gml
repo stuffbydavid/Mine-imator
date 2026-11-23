@@ -16,7 +16,7 @@ function draw_label_value(xx, yy, w, h, caption, value, vertical = false)
 	draw_set_font(font_label)
 	caption = string_limit(caption, w)
 	capwid = string_width(caption)
-	valuex = xx + capwid
+	valuex = xx + capwid + 2
 	
 	if (vertical)
 		draw_label(caption, xx, yy + 18, fa_left, fa_bottom, c_text_secondary, a_text_secondary)
@@ -33,6 +33,7 @@ function draw_label_value(xx, yy, w, h, caption, value, vertical = false)
 		value = string_limit(value, w)
 		if (valuewid > valuew)
 			tip_set(valuefull, xx, yy + 18, valuew, 18)
+		
 		draw_label(value, xx, yy + 36, fa_left, fa_bottom, c_text_main, a_text_main)
 	}
 	else
@@ -41,6 +42,7 @@ function draw_label_value(xx, yy, w, h, caption, value, vertical = false)
 		value = string_limit(value, valuew)
 		if (valuewid > valuew)
 			tip_set(valuefull, valuex, yy, valuew, h)
-		draw_label(value, xx + capwid, yy + h/2, fa_left, fa_middle, c_text_main, a_text_main)
+		
+		draw_label(value, valuex, yy + h/2, fa_left, fa_middle, c_text_main, a_text_main)
 	}
 }

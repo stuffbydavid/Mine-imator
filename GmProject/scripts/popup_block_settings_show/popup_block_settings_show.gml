@@ -86,7 +86,7 @@ function popup_block_settings_show(res, duringload = false, tl = null, hobj = nu
 		{
 			var block, amount;
 			block = mc_assets.block_list[|i]
-			amount = value_get_real(res.scenery_block_map[?string(block.block_id)], 0)
+			amount = value_get_real(res.scenery_block_map[?block.name], 0)
 
 			if (array_contains(filter_array, i))
 				sortlist_add(filter_list, i)

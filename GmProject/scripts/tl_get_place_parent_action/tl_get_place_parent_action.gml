@@ -10,11 +10,11 @@ function tl_get_place_parent_action(target)
 	if (!type_is_block(block.type))
 		return tl_get_parent_action(target)
 
-	// A directly hit scenery is itself a valid parent
-	if (block.type = e_tl_type.SCENERY)
+	// A directly hit structure is itself a valid parent
+	if (type_is_structure(block.type))
 		return [ block ]
 
-	// Use the nearest structure or scenery above the hit block
+	// Use the nearest structure above the hit block
 	var parent = block.parent;
 	while (parent != null && parent != app)
 	{

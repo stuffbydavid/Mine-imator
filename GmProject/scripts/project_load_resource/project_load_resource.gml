@@ -37,11 +37,16 @@ function project_load_resource(map)
 			world_regions_dir = value_get_string(map[?"world_regions_dir"])
 			world_box_start = value_get_point3D(map[?"world_box_start"])
 			world_box_end = value_get_point3D(map[?"world_box_end"])
+			world_box_start_load = array_copy_1d(world_box_start)
+			world_box_end_load = array_copy_1d(world_box_end)
 		}
 		
 		if (type = e_res_type.SCHEMATIC || type = e_res_type.FROM_WORLD)
 		{
 			scenery_size = value_get_point3D(map[?"scenery_size"], vec3(0, 0, 0))
+			
+			var ext = filename_ext(filename);
+			scenery_legacy = (ext = ".schematic" || ext = ".blocks")
 			
 			if (load_format >= e_project.FORMAT_210)
 			{
@@ -89,7 +94,6 @@ function project_load_resource(map)
 			scenery_filter_enabled = value_get_real(map[?"scenery_filter_enabled"], array_length(scenery_filter_array) > 0)
 			
 			scenery_download_skins = value_get_real(map[?"scenery_download_skins"], false)
-			scenery_cache_save = value_get_real(map[?"scenery_cache_save"], scenery_cache_save)
 		}
 		
 		if (type = e_res_type.SCHEMATIC)

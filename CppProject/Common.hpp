@@ -18,6 +18,7 @@
 #include <QMap>
 #include <QPoint>
 #include <QRegularExpression>
+#include <QSet>
 #include <QSize>
 #include <QStack>
 #include <QString>
@@ -60,8 +61,8 @@ typedef bool BoolType;
 #define OPENMP_FOR(chunks) omp parallel for schedule(dynamic, chunks)
 #define OPENMP_MAX_THREADS 32
 
-#define DEGTORAD 0.0174533
-#define RADTODEG 57.2957958
+#define DEGTORAD 0.017453292519943295
+#define RADTODEG 57.29577951308232
 
 namespace CppProject
 {

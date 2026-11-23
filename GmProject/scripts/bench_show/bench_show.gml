@@ -13,8 +13,8 @@ function bench_show()
 	bench_settings_ani = 1
 	bench_settings.preview.update = true
 	
-	if (bench_settings.list_focus != "")
-		window_focus = bench_settings.list_focus
+	if (bench_list_focus != "")
+		window_focus = bench_list_focus
 		
 	// Refresh schematic project folder
 	if (bench_tab = e_bench_tab.SCHEMATIC && bench_schematic_folder = "project")

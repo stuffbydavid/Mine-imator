@@ -118,10 +118,15 @@ function tl_update_render_res()
 			break
 		}
 		
+		case e_tl_type.STRUCTURE:
 		case e_tl_type.SCENERY:
 		case e_tl_type.BLOCK:
 		{
-			with (temp)
+			var texsource = temp;
+			if (type = e_tl_type.STRUCTURE)
+				texsource = id
+
+			with (texsource)
 			{
 				diffuseres = temp_get_block_texobj(other.value_inherit[e_value.TEXTURE_OBJ])
 				materialres = temp_get_block_tex_material_obj(other.value_inherit[e_value.TEXTURE_MATERIAL_OBJ])

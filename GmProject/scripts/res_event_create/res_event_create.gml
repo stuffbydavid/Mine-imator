@@ -65,6 +65,8 @@ function res_event_create()
 	block_sheet_ani_depth_list = null
 	block_preview_texture = null
 	
+	asset_picker_texture_map = null
+	
 	colormap_grass_texture = null
 	colormap_foliage_texture = null
 	colormap_dry_foliage_texture = null
@@ -101,8 +103,8 @@ function res_event_create()
 	particle_texture_pixeluvs_map = null
 	
 	block_meshes = []
-	block_meshes_size = vec3(1)
-	block_meshes_active = null
+	block_meshes_num = vec3(1)
+	block_meshes_active = []
 	block_meshes_transparent = false
 
 	world_regions_dir = ""
@@ -110,9 +112,12 @@ function res_event_create()
 	world_reload = false
 	world_box_start = null
 	world_box_end = null
+	world_box_start_load = null
+	world_box_end_load = null
 
 	scenery_size = vec3(0)
 	scenery_instant = false
+	scenery_legacy = false
 	scenery_source = ""
 	scenery_block_map = ds_map_create()
 	
@@ -129,8 +134,6 @@ function res_event_create()
 	scenery_filter_mask = []
 	
 	scenery_download_skins = true
-	
-	scenery_cache_save = null
 	scenery_snapshot_save = true
 	
 	scenery_structure = false

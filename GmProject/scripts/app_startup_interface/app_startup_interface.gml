@@ -1,10 +1,12 @@
 function app_startup_interface()
 {
 	app_startup_shortcut_bar()
+	
 	app_startup_interface_bench()
 	app_startup_interface_build()
 	app_startup_interface_timeline()
 	app_startup_interface_export()
+	app_startup_interface_asset_picker()
 	app_startup_interface_menus()
 	app_startup_interface_settings_menus()
 	app_startup_interface_popups()
@@ -15,11 +17,12 @@ function app_startup_interface()
 	app_startup_interface_world_import()
 	app_startup_interface_context_menu()
 	
-	togglebutton_reset()
+	togglebutton_group = []
+	togglebutton_columns = null
+	textfield_group = []
 	
 	textbox_startup()
 	history_startup()
-	textfield_group_reset()
 	
 	env_ground_startup()
 	env_sky_startup()

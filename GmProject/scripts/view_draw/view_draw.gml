@@ -479,15 +479,29 @@ function view_draw(view)
 		content_width = ceil(content_width)
 		content_height = ceil(content_height)
 		content_mouseon = false
+		view.overlay_mouseon = (view.toolbar_mouseon || view.navgizmo_mouseon || view.hotbar_mouseon)
 		
-		if (!view.toolbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+		var viewbusy;
+		viewbusy = (window_busy = "pick_depth") ? window_busy : place_busy
+		if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) = 1)
+			viewbusy = window_busy
+
+		if (place_build && view.overlay_mouseon)
 		{
-			var viewbusy = (window_busy = "pick_depth") ? window_busy : place_busy;
-			if ((place_tl != null || place_build) && window_focus = string(view) && string_pos("view", window_busy) = 1)
-				viewbusy = window_busy
+			if (build_box_render != null)
+			{
+				build_box_render = null
+				view_changed(view)
+			}
 			
-			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
+			place_pos = null
+			place_view_pos = null
+			place_target_tl = null
 		}
+
+		// Allow camera dragging over the navigation gizmo
+		if (!view.toolbar_mouseon && !view.hotbar_mouseon && !popup_mouseon && !toast_mouseon && !context_menu_mouseon)
+			content_mouseon = (app_mouse_box(content_x, content_y, content_width, content_height, viewbusy) && view.mouseon)
 		
 		if (content_mouseon)
 		{
@@ -579,8 +593,8 @@ function view_draw(view)
 		benchrot = sin(bench_rotate_ani * pi * 5) * (1 - abs(bench_rotate_ani * 2 - 1)) * 10
 		benchempty = (instance_number(obj_timeline) = 0 && instance_number(obj_template) = 0)
 		
-		bench_settings.posx = benchx + 86 + 8
-		bench_settings.posy = benchy
+		bench_x = benchx + 86 + 8
+		bench_y = benchy
 		
 		if (benchrot <> 0 || benchscale < 1)
 			gpu_set_tex_filter(true)
@@ -664,7 +678,13 @@ function view_draw(view)
 		bench_rotate_ani = max(0, bench_rotate_ani - 0.01 * delta)
 		
 		// Draw toolbar
-		view_toolbar_draw(view, boxx + 8, boxy + captionh + 8 + 86 + 12)
+		view_toolbar_draw(view)
+		
+		// Navigation gizmo
+		view_navgizmo_draw(view)
+		
+		// Build hotbar
+		view_build_hotbar_draw(view)
 	}
 	
 	// Moving / Resizing

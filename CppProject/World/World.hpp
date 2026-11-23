@@ -4,8 +4,6 @@
 #include "Render/Mesh.hpp"
 #include "NBT.hpp"
 
-#include <QSet>
-
 #define PREVIEW_ZNEAR 1.0
 #define PREVIEW_ZFAR 10000.0
 #define PREVIEW_ZOOM_MIN 1.0
@@ -44,6 +42,7 @@ namespace CppProject
 	struct Preview;
 	struct Region;
 	struct RegionLoader;
+	struct SchematicExport;
 	struct Script;
 	struct Section;
 	struct Shader;
@@ -59,6 +58,9 @@ namespace CppProject
 		WorldVec(const VecType& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 		WorldVec(IntType x, IntType y, IntType z) : x(x), y(y), z(z) {}
 
+		bool operator==(const WorldVec& vec) const { return x == vec.x && y == vec.y && z == vec.z; }
+		IntType& operator[](IntType axis) { return axis == X_ ? x : (axis == Y_ ? y : z); }
+		const IntType& operator[](IntType axis) const { return axis == X_ ? x : (axis == Y_ ? y : z); }
 		WorldVec operator+(const WorldVec& vec) const { return { x + vec.x, y + vec.y, z + vec.z }; }
 		WorldVec operator-(const WorldVec& vec) const { return { x - vec.x, y - vec.y, z - vec.z }; }
 		WorldVec operator*(const WorldVec& vec) const { return { x * vec.x, y * vec.y, z * vec.z }; }
@@ -179,43 +181,6 @@ namespace CppProject
 		QHash<QString, QDir> dimDir;
 	};
 
-	// Collect source blocks for .schem/.schematic export before mesh generation
-	struct SchematicExport
-	{
-		// Initialize NBT data and storage for the selected box.
-		SchematicExport(const WorldBox& selection, IntType dataVersion, BoolType skipIncompatible = false, BoolType applyFilter = true);
-
-		// Copy compatible chunk blocks and block entities into the schematic.
-		void AddChunk(Chunk& chunk);
-
-		// Copy supported entities stored separately from terrain chunks
-		void AddEntityRegion(const QString& filename, const WorldVec& regionPos, const BoolType* includedChunks);
-
-		// Copy supported entities from a chunk's entity list
-		void AddEntities(NbtCompound& chunk);
-
-		// Serialize the collected schematic as NBT.
-		QByteArray Serialize();
-
-		// Return the extension for the selected schematic format.
-		QString Extension() const;
-
-		// Serialize and asynchronously save a world resource snapshot.
-		void SaveResource(obj_resource* resource);
-
-		WorldBox box;
-		IntType dataVersion, skippedChunks = 0;
-		BoolType legacy, skipIncompatible, applyFilter;
-		BoolType exportOnly = true;
-		QString error;
-		NbtCompound root;
-		NbtCompound* schematic = nullptr;
-		NbtCompound* palette = nullptr;
-		NbtList* entities = nullptr;
-		QSet<StringType> supportedEntityIds;
-		Heap<uint32_t> indices;
-	};
-
 	// Handles regions in an opened world
 	struct World
 	{
@@ -231,8 +196,8 @@ namespace CppProject
 		// Generate builder sections from a box in the opened world.
 		static void GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic = nullptr);
 
-		// Process block entities after filtering builder sections.
-		static void ProcessBuilderEntities();
+		// Process supported entities after filtering builder sections.
+		static void ProcessBuilderEntities(SchematicExport* schematic = nullptr);
 
 		// Adds a save from the given root directory, returns whether successful.
 		static BoolType AddSave(QString dir);
@@ -682,7 +647,7 @@ namespace CppProject
 		static Section* GetSection(const WorldVec& pos);
 
 		static Heap<Section*> sections;
-		static WorldVec size, offset, sectionsDim;
+		static WorldVec size, offset, sectionsNum;
 		static IntType sectionsXY;
 		static QHash<StringType, obj_block*> mcBlockIdObjMap, filteredMcBlockIdObjMap;
 		static QHash<StringType, ArrType> mcBlockIdStateVarsMap;

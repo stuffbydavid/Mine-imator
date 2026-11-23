@@ -148,6 +148,9 @@ function app_startup_window()
 	place_pos = null
 	place_rot = vec3(0)
 	place_sca = vec3(1)
+	place_block_pos = null
+	place_view_block_pos = null
+	place_view_block_bounds = null
 	place_content_mouseon = null
 	
 	// Compact

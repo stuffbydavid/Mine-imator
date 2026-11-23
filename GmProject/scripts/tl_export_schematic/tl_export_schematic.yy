@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_export_schematic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_export_schematic",
+  "parent":{
+    "name":"Blocks",
+    "path":"folders/Scripts/Project/Timeline/Blocks.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,4 @@
 function block_set_sulfur_spike()
 {
-	block_set_speleothem()
+	return block_set_speleothem()
 }

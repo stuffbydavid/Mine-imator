@@ -154,8 +154,12 @@ function tab_properties_resources_edit()
 	
 	if (res_edit.type = e_res_type.SCHEMATIC || res_edit.type = e_res_type.FROM_WORLD)
 	{
+		var settingswid;
+		draw_set_font(font_button)
+		settingswid = string_width(text_get("resources/block_settings")) + 60
+	
 		tab_control_button_label()
-		if (draw_button_label("resources/block_settings", dx + dw / 2, dy, 180, icons.BLOCK, e_button.PRIMARY, null, e_anchor.CENTER, !res_edit.ready))
+		if (draw_button_label("resources/block_settings", dx + dw / 2, dy, settingswid, icons.BLOCK, e_button.PRIMARY, null, e_anchor.CENTER, !res_edit.ready))
 			popup_block_settings_show(res_edit)
 		tab_next()
 
@@ -177,13 +181,13 @@ function tab_properties_resources_edit()
 			if (bound)
 			{
 				name = "resources/world_box_end"
-				pos = res_edit.world_box_end
+				pos = res_edit.world_box_end_load
 				textboxes = tab.resources.tbx_world_box_end
 			}
 			else
 			{
 				name = "resources/world_box_start"
-				pos = res_edit.world_box_start
+				pos = res_edit.world_box_start_load
 				textboxes = tab.resources.tbx_world_box_start
 			}
 
@@ -193,9 +197,9 @@ function tab_properties_resources_edit()
 				minval = -no_limit
 				maxval = no_limit
 				if (bound)
-					minval = res_edit.world_box_start[a] + 1
+					minval = res_edit.world_box_start_load[a] + 1
 				else
-					maxval = res_edit.world_box_end[a] - 1
+					maxval = res_edit.world_box_end_load[a] - 1
 
 				textfield_group_add(name + "/" + captions[a], pos[a], pos[a], action_res_world_box, a + bound * 3, textboxes[a], null, 0.05, minval, maxval, "resources/world_box/" + captions[a])
 			}

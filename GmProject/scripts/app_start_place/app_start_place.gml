@@ -17,11 +17,17 @@ function app_start_place(build, tl = null, spawn = false)
 	place_pos = null
 	place_rot = vec3(0)
 	place_sca = vec3(1)
+	place_block_pos = null
 		
 	place_view_pos = null
+	place_view_hit_pos = vec3(0)
+	place_view_block_pos = null
+	place_view_block_bounds = null
 	place_view_air = false
 	place_view_tl = 0
 	place_view_normal = vec3(0, 1, 0)
+	place_view_world_normal = vec3(0, 0, 1)
+	place_view_direction = vec3(0, 1, 0)
 	
 	place_target_tl = null
 	place_target_tl_root = null
@@ -32,9 +38,20 @@ function app_start_place(build, tl = null, spawn = false)
 	
 	if (build)
 	{
-		var structure = null;
-		if (tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
-			structure = tl_edit
+		// Find the nearest structure containing the current timeline selection
+		var structure, selected;
+		structure = null
+		selected = tl_edit
+		while (selected != null && selected != app && instance_exists(selected))
+		{
+			if (type_is_structure(selected.type))
+			{
+				structure = selected
+				break
+			}
+
+			selected = selected.parent
+		}
 
 		action_build_structure(structure, false)
 
@@ -49,6 +66,7 @@ function app_start_place(build, tl = null, spawn = false)
 				block_tex = project_pack_res
 				block_tex_material = project_pack_res
 				block_tex_normal = project_pack_res
+				
 				temp_update_rot_point()
 			}
 			else
@@ -58,20 +76,22 @@ function app_start_place(build, tl = null, spawn = false)
 				model_tex = project_pack_res
 				model_tex_material = project_pack_res
 				model_tex_normal = project_pack_res
+				
 				temp_update_model()
 				temp_update_model_shape()
 			}
 		}
 		
 		// Find block selection
-		var special, buildname;
+		var picker, special, buildname;
+		picker = build_tool.build_picker
 		special = (build_type = e_tl_type.SPECIAL_BLOCK)
 		buildname = special ? build_settings.model_name : build_settings.block_name
-		
+
 		build_tool.build_selected = null
-		for (var b = 0; b < ds_list_size(build_tool.build_list.list); b++)
+		for (var b = 0; b < ds_list_size(picker.list); b++)
 		{
-			var value = build_tool.build_list.list[|b];
+			var value = picker.list[|b];
 			if (value[0] = special && value[1] = buildname)
 			{
 				build_tool.build_selected = value
@@ -79,18 +99,20 @@ function app_start_place(build, tl = null, spawn = false)
 			}
 		}
 		
-		if (build_tool.build_selected != null && ds_list_find_index(build_tool.build_list.display_list, build_tool.build_selected) < 0)
+		if (build_tool.build_selected != null && ds_list_find_index(picker.display_list, build_tool.build_selected) < 0)
 		{
-			build_tool.build_list.search_tbx.text = ""
-			build_tool.build_list.search = false
-			sortlist_update(build_tool.build_list)
+			picker.search_tbx.text = ""
+			picker.search = false
+			sortlist_update(picker)
 		}
-		build_tool.build_list.center_on_draw = (build_tool.build_selected != null)
+		
+		picker.center_on_draw = (build_tool.build_selected != null)
+		
+		if (build_tool.build_selected != null)
+			view_build_hotbar_update(build_tool.build_selected)
 		
 		place_tl_parent = app
 		place_tl_parent_index = -1
-		
-		obj_edit = build_settings
 		
 		tab_close(object_editor)
 		tab_show(build_tool, true)

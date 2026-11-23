@@ -20,6 +20,7 @@ function action_res_block_settings(tlalltypes, tltypes, integrity, palette, rand
 			}
 			else
 			{
+				hobj = id
 				tlalltypes = new_tl_all_types
 				tltypes = new_tl_types
 				integrity = new_integrity

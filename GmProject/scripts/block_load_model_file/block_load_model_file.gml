@@ -169,7 +169,7 @@ function block_load_model_file(fn, res = null)
 					var facesmap = elementmap[?"faces"];
 					for (var f = 0; f < block_faces; f++)
 					{
-						var curmap = facesmap[?dir_get_string(f)];
+						var curmap = facesmap[?dir_names[f]];
 						if (!is_undefined(curmap))
 						{
 							face_render[f] = true

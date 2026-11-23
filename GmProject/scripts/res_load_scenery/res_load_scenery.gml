@@ -18,12 +18,9 @@ function res_load_scenery()
 			var err = false;
 			res_load_scenery_filter_mask()
 			
-			mc_builder.sch_entities = []
-
 			// Load from world when requested or when the schematic is unavailable
 			if (type = e_res_type.FROM_WORLD && (world_reload || !file_exists_lib(fn)))
 			{
-				world_reload = false
 				scenery_instant = false
 				
 				if (!res_load_scenery_world())
@@ -31,6 +28,8 @@ function res_load_scenery()
 					error("error/load_world")
 					err = true
 				}
+
+				world_reload = false
 			}
 			else
 			{
@@ -61,6 +60,24 @@ function res_load_scenery()
 			debug_timer_start()
 
 			load_stage = "download"
+
+			// Count signs with text on either side
+			var signcount, oldcount, key;
+			signcount = ds_map_size(mc_builder.block_text_front_map)
+			key = ds_map_find_first(mc_builder.block_text_back_map)
+			while (!is_undefined(key))
+			{
+				if (!ds_map_exists(mc_builder.block_text_front_map, key))
+					signcount++
+				key = ds_map_find_next(mc_builder.block_text_back_map, key)
+			}
+
+			oldcount = value_get_real(scenery_tl_types_count_map[?"sign"], 0)
+			mc_builder.sch_timeline_amount += signcount - oldcount
+			if (signcount > 0)
+				scenery_tl_types_count_map[?"sign"] = signcount
+			else
+				ds_map_delete(scenery_tl_types_count_map, "sign")
 		
 			// Clear old timelines
 			if (scenery_tl_list = null)
@@ -113,10 +130,10 @@ function res_load_scenery()
 				if (!scenery_tl_all_types)
 				{
 					// Enable specific timelines only
-					for (var i = 0; i < array_length(scenery_timeline_enabled); i++)
+					for (var i = 0; i < ds_list_size(mc_assets.block_timeline_enabled_list); i++)
 					{
 						var tltype, count;
-						tltype = scenery_timeline_enabled[i]
+						tltype = mc_assets.block_timeline_enabled_list[|i]
 						count = value_get_real(scenery_tl_types_count_map[?tltype], 0)
 						if (count > 0 && count <= scenery_timeline_enabled_max)
 							array_add(scenery_tl_types, tltype)
@@ -171,6 +188,18 @@ function res_load_scenery()
 				while (!is_undefined(key))
 				{
 					mc_builder.block_skull_res_map[?key] = null
+
+					// Reuse loaded skins without waiting for downloads
+					var skinfile = skins_directory_get() + key + ".png";
+					with (obj_resource)
+					{
+						if (type = e_res_type.DOWNLOADED_SKIN && filename = skinfile)
+						{
+							mc_builder.block_skull_res_map[?key] = id
+							break
+						}
+					}
+
 					key = ds_map_find_next(mc_builder.block_skull_texture_map, key)
 				}
 			}
@@ -204,6 +233,10 @@ function res_load_scenery()
 					{
 						model_name = entity[0]
 						model_state = entity[1]
+						animated = false
+						animated_parts = []
+						block_build_name = ""
+						block_build_state = []
 						position = vec3(entity[2][X] * block_size, entity[2][Y] * block_size, entity[2][Z] * block_size)
 						rotation = entity[3]
 						rot_point = entity[4]
@@ -386,12 +419,15 @@ function res_load_scenery()
 			{
 				if (type != e_tl_type.SCENERY || temp.scenery != other.id)
 					continue
+
+				if (array_length(blocks_added) > 0 || array_length(block_meshes_edit) > 0)
+					tl_update_block_meshes()
 				
 				if (scenery_ground_hobj != null)
-					tl_replace_ground(scenery_ground_hobj)
+					tl_scenery_replace_ground(scenery_ground_hobj)
 				
 				if (scenery_animate)
-					tl_animate_scenery()
+					tl_scenery_animate()
 			}
 			
 			

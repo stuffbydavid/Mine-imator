@@ -20,6 +20,9 @@ function action_tl_select(tl)
 		if (history_redo)
 		{
 			tl = save_id_find(history_data.tl_save_id)
+			if (tl = null)
+				return 0
+
 			shift = history_data.shift
 		}
 		else
@@ -66,12 +69,8 @@ function action_tl_select(tl)
 	app_update_tl_edit()
 	
 	// Pick as structure for build tool
-	if (place_build && tl_edit != null && instance_exists(tl_edit) && type_is_structure(tl_edit.type))
-	{
-		action_build_structure(tl_edit, true)
-		place_target_tl = null
-		place_view_pos = null
-	}
+	if (place_build && tl_edit != null && instance_exists(tl_edit))
+		action_build_structure_select(tl_edit)
 
 	tl_update_list()
 }

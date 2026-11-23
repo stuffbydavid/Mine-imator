@@ -332,7 +332,7 @@ function tab_renderer()
 
 		// Gamma
 		tab_control_dragger()
-		draw_dragger("render/gamma", dx, dy, dragger_width, project_render_gamma, 0.01, 0, no_limit, 2.2, 0.01, tab.tbx_gamma, action_project_render_gamma)
+		draw_dragger("render/gamma", dx, dy, dragger_width, project_render_gamma, 0.01, 0, no_limit, default_gamma, 0.01, tab.tbx_gamma, action_project_render_gamma)
 		tab_next()
 
 		tab_collapse_end()

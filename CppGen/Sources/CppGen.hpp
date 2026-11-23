@@ -1183,6 +1183,7 @@ public:
 	inline static List<String> syntaxErrors = List<String>();
 	inline static bool mergeUnknownVars = false;
 	inline static bool hotReloading = false;
+	inline static bool hotReloadSignaturesChanged = false;
 	inline static List<Function*> hotReloadTargets = List<Function*>();
 	static OrderedMap<DataType*> varTypeOverride;
 

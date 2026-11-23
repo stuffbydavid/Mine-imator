@@ -3,7 +3,7 @@ function tl_filter_draw()
 	draw_set_font(font_label)
 	
 	var switchwid, colorwid, px;
-	switchwid = max(text_max_width("timeline/hide_structure_blocks"), text_max_width("timeline/hide_nonanimated"), text_max_width("timeline/hide_ghosts")) + 64
+	switchwid = max(text_max_width("timeline/hide_nonanimated"), text_max_width("timeline/hide_ghosts")) + 64
 	colorwid = max(text_max_width("timeline/filter_tags"), (24 * 9) - 4)
 	
 	// Color tags
@@ -37,11 +37,6 @@ function tl_filter_draw()
 			}
 		}
 	}
-	tab_next()
-
-	// Hide structure blocks
-	tab_control_switch()
-	draw_switch("timeline/hide_structure_blocks", dx, dy, setting_timeline_hide_structure_blocks, action_setting_timeline_hide_structure_blocks, "timeline/hide_structure_blocks_tip")
 	tab_next()
 
 	// Hide non-animated timelines

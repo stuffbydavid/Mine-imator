@@ -31,9 +31,9 @@ function tab_ground_editor()
 		for (var sheet = 0; sheet < e_block_sheet.amount; sheet++)
 			slots[sheet] = ds_list_size(slotlists[sheet])
 
-		draw_texture_picker(env_ground_slot, textures, slots, minecraft_block_sheet_size, dx, dy, dw, dh, tab.ground_scroll, action_env_ground_slot, slotlists, res, null, true)
+		draw_texture_picker(tab.ground_picker, env_ground_slot, textures, slots, minecraft_block_sheet_size, dx, dy, dw, dh, action_env_ground_slot, slotlists, res, null, true)
 		
 		if (content_mouseon)
-			window_scroll_focus = string(tab.ground_scroll)
+			window_scroll_focus = string(tab.ground_picker.scroll)
 	}
 }

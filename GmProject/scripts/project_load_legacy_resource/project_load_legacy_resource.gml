@@ -49,6 +49,7 @@ function project_load_legacy_resource()
 			break
 		}
 		
+		scenery_legacy = (type = e_res_type.SCHEMATIC)
 		scenery_tl_set = true
 		scenery_tl_types = []
 		

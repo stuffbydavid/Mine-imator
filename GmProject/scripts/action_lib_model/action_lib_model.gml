@@ -49,7 +49,7 @@ function action_lib_model(res)
 			history_save_tl_select()
 		}
 		
-		// Find affected timelines (TODO: timeline info of unused parts is not saved and will be LOST)
+		// Find affected timelines
 		with (obj_timeline)
 		{
 			if (temp != temp_edit || part_list = null)

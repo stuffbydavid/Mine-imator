@@ -410,6 +410,7 @@ function enums()
 		CHROMATIC_ABERRATION,
 		DISTORT,
 		LIGHT_MANAGEMENT,
+		COLOR_CORRECTION,
 		POINT_LIGHT,
 		SPOT_LIGHT,
 		PATH,
@@ -574,6 +575,7 @@ function enums()
 		BETA,
 		BIRTHDAY,
 		BLOCK,
+		BLOCK_SMALL,
 		BLOCK_SPECIAL,
 		BOLD,
 		BOUNDARY_BOX,
@@ -833,6 +835,7 @@ function enums()
 		POST_RECENTS,
 		PROGRAM_SETTINGS,
 		PUPPETRY,
+		PUZZLE,
 		QUALITY,
 		QUOTE,
 		RANDOMIZE,
@@ -892,11 +895,13 @@ function enums()
 		SPLIT_CORNER,
 		SPLIT_HORIZONTAL,
 		SPLIT_VERTICAL,
+		SQUIRCLE,
 		STAR,
 		STOP,
 		STOPWATCH,
 		STRIKETHROUGH,
 		SUN,
+		SWAP,
 		TAG,
 		TAG_ADD,
 		TAG_REMOVE,
@@ -937,6 +942,7 @@ function enums()
 		WALK,
 		WALK_CYCLE,
 		WAND,
+		WAND_SMALL,
 		WARNING_CIRCLE,
 		WARNING_DIAMOND,
 		WARNING_TRIANGLE,
@@ -1066,6 +1072,7 @@ function enums()
 		DEFAULT_SUBSURFACE,
 		DEPTH,
 		DEPTH_BUFFER_SIZE,
+		DEPTH_TEST,
 		DIRECTION,
 		DISTORT_AMOUNT,
 		DISTORT_CHANNELS,
@@ -1080,6 +1087,7 @@ function enums()
 		FOG,
 		FOG_APPLY,
 		FOG_COLOR,
+		FOG_DENSITY,
 		FOG_DISTANCE,
 		FOG_ENABLED,
 		FOG_HEIGHT,
@@ -1232,7 +1240,9 @@ function enums()
 		POSITION,
 		NORMAL,
 		FACE,
-		OBJECT
+		OBJECT,
+		BLOCK_POS,
+		BLOCK_BOUNDS
 	}
 	
 	// Anti-aliasing
@@ -1269,6 +1279,34 @@ function enums()
 		LABEL
 	}
 	
+	// Toggle button data
+	enum e_togglebutton
+	{
+		NAME,
+		ICON,
+		VALUE,
+		ACTIVE,
+		SCRIPT,
+		AXIS,
+		TEXT
+	}
+
+	// Textfield group data
+	enum e_textfield_group
+	{
+		NAME,
+		VALUE,
+		DEFAULT,
+		SCRIPT,
+		AXIS,
+		TEXTBOX,
+		ICON,
+		MUL,
+		MIN,
+		MAX,
+		CAPTION
+	}
+
 	// Input box types
 	enum e_inputbox
 	{
@@ -1293,18 +1331,6 @@ function enums()
 		DOWNLOAD_SKIN			= -12,
 		DOWNLOAD_SKIN_DONE		= -13,
 		IMPORT_ITEM_SHEET_DONE	= -14
-	}
-	
-	// Directions
-	enum e_dir
-	{
-		EAST,
-		WEST,
-		SOUTH,
-		NORTH,
-		UP,
-		DOWN,
-		amount
 	}
 	
 	// Parts
@@ -1351,6 +1377,15 @@ function enums()
 		ANIMATED,
 		amount,
 		static_amount = 3
+	}
+
+	// Builder operation
+	enum e_builder_mode
+	{
+		GENERATE,
+		REMOVE,
+		GET_CONNECT,
+		RESOLVE_STATE
 	}
 	
 	// Buffer depth

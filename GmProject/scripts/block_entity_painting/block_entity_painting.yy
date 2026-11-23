@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"block_entity_painting",
   "parent":{
-    "name":"Builder",
-    "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",
+    "name":"Entity",
+    "path":"folders/Scripts/Minecraft/Blocks/Entity.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

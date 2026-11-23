@@ -7,14 +7,6 @@ function sortlist_column_get(slist, value, col)
 {
 	switch (slist.column_name[col])
 	{
-		case "build_name":
-		{
-			if (value[0])
-				return minecraft_asset_get_name("model", value[1])
-			
-			return minecraft_asset_get_name("block", value[1])
-		}
-		
 		case "lib_name":
 		{
 			if (debug_saveid)
@@ -53,7 +45,7 @@ function sortlist_column_get(slist, value, col)
 		case "block_count":
 		{
 			var block = mc_assets.block_list[|value];
-			return value_get_real(popup_block_settings.resource.scenery_block_map[?string(block.block_id)], 0)
+			return value_get_real(popup_block_settings.resource.scenery_block_map[?block.name], 0)
 		}
 		
 		case "scenery_name":
@@ -128,5 +120,19 @@ function sortlist_column_get(slist, value, col)
 			var fn = filename_new_ext(filename_name(value), "");
 			return text_exists("bench/particles/" + fn) ? text_get("bench/particles/" + fn) : fn
 		}
+		
+		case "build_name":
+		{
+			if (value[0])
+				return minecraft_asset_get_name("model", value[1])
+			
+			return minecraft_asset_get_name("block", value[1])
+		}
+		
+		case "hotbar_name":
+			return value.name
+
+		case "hotbar_slots":
+			return array_length(value.blocks)
 	}
 }

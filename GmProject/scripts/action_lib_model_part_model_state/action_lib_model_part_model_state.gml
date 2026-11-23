@@ -1,23 +1,26 @@
 function action_lib_model_part_model_state(value)
 {
-	var state;
+	var states;
 	
 	if (!history_undo && !history_redo)
 	{
-		state = menu_model_state.name
-		
-		with (history_set_var(action_lib_model_part_model_state, state_vars_get_value(obj_edit.model_state, state), value, false))
-			self.state = state
+		states = model_set_state(obj_edit.model_state, menu_model_state.name, value)
+		if (states = null)
+			return 0
+
+		history_set_var(action_lib_model_part_model_state, array_copy_1d(obj_edit.model_state), states, false)
+		value = states
 	}
-	else
-		state = history_data.state
 	
+	for (var i = 0; i < array_length(value); i += 2)
+		if (state_vars_get_value(obj_edit.model_state, value[i]) != value[i + 1])
+			asset_picker_set_state(value[i], value[i + 1])
+
+	asset_picker_state_map[?mc_assets.model_name_map[?obj_edit.model_name]] = array_copy_1d(value)
+
 	with (obj_edit)
 	{
-		if (state_vars_get_value(model_state, state) = value)
-			return 0
-		
-		state_vars_set_value(model_state, state, value)
+		model_state = array_copy_1d(value)
 		
 		temp_update_model()
 		temp_update_model_part()

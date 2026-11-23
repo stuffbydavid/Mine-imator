@@ -4,12 +4,35 @@ function tl_duplicate()
 {
 	copy = new_obj(obj_timeline)
 	tl_copy(copy)
+
+	// Keep scenery texture defaults during manual copy
+	if (block_timeline && !has_temp && part_of.copy = null)
+	{
+		if (type = e_tl_type.BLOCK)
+		{
+			copy.block_tex = temp_get_block_texobj(null)
+			copy.block_tex_material = temp_get_block_tex_material_obj(null)
+			copy.block_tex_normal = temp_get_block_tex_normal_obj(null)
+		}
+		else if (type = e_tl_type.SPECIAL_BLOCK)
+		{
+			copy.model_tex = temp_get_model_texobj(null)
+			copy.model_tex_material = temp_get_model_tex_material_obj(null)
+			copy.model_tex_normal = temp_get_model_tex_normal_obj(null)
+		}
+	}
 	
 	with (copy)
 	{
 		root_copy = null
 		copy = null
-		glint_tex = other.glint_tex
+
+		// Keep ownership within the duplicated hierarchy
+		if (part_of != null)
+			part_of = part_of.copy
+
+		if (part_root != null)
+			part_root = part_root.copy
 		
 		if (!has_temp && temp != null)
 		{

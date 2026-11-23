@@ -1,19 +1,33 @@
 function bench_draw_settings_project()
 {
-	var list, selected, restype, layoutchanged, mouseon;
+	var list, selected, mouseon, restype, layoutchanged;
 	list = bench_settings.project_list
 	selected = bench_settings.project_selected
+	mouseon = content_mouseon
+	
 	restype = null
 	if (selected != null && selected.object_index = obj_resource)
 		restype = selected.type
 
 	layoutchanged = (restype != null && restype != bench_settings.project_settings_type)
-	mouseon = content_mouseon
+	if (layoutchanged)
+		bench_settings.project_settings_height = 0
 	
 	bench_create_disabled = (selected = null)
 	bench_edit_hidden = false
 
-	tab_control(bench_list_height(list))
+	// Hide edit/create options before allocating the list height
+	if (list = bench_settings.project_res_list)
+		bench_buttons_hidden = true
+	else if (list = bench_settings.project_all_list)
+		bench_buttons_hidden = (selected != null && selected.object_index = obj_resource)
+
+	// List
+	var listh, settingsy;
+	listh = bench_get_list_height(max(bench_settings_height_min, bench_settings.project_settings_height))
+	settingsy = dy + listh
+	
+	tab_control(listh)
 	sortlist_draw(list, dx, dy, dw, tab_control_h, selected, true, text_get("type/project"))
 	tab_next()
 	
@@ -101,26 +115,24 @@ function bench_draw_settings_project()
 				action_lib_remove()
 			else if (res)
 				action_res_remove()
+			
 			selected = null
 		}
 	}
 			
 	tab_next()
 
-	// res editor
+	// Resource settings
 	if (selected != null && selected.object_index = obj_resource)
 	{
 		preview_edit = bench_settings.preview
 		tab_properties_resources_edit()
 	}
 
-	// Hide edit/create options for resources
-	if (list = bench_settings.project_res_list)
-		bench_buttons_hidden = true
-	else if (list = bench_settings.project_all_list)
-		bench_buttons_hidden = (selected != null && selected.object_index = obj_resource)
-
 	bench_settings.project_settings_type = restype
+	bench_settings.project_settings_height = max(bench_settings_height_min, dy - settingsy)
+	dy = settingsy + bench_settings.project_settings_height
+	
 	if (layoutchanged)
 	{
 		gpu_set_colorwriteenable(true, true, true, true)

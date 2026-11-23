@@ -59,6 +59,8 @@ function action_res_import_world(name, regionsdir, boxstart, boxend, filterenabl
 			world_reload = !app.history_redo
 			world_box_start = boxstart
 			world_box_end = boxend
+			world_box_start_load = array_copy_1d(boxstart)
+			world_box_end_load = array_copy_1d(boxend)
 			
 			res_load()
 		}

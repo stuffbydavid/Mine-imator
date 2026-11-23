@@ -9,6 +9,8 @@ function res_load(reload = false)
 	if (type != e_res_type.SCHEMATIC)
 		debug("Loading " + res_type_name_list[|type], fn)
 	
+	res_clear_asset_picker_textures()
+
 	// Load from file
 	switch (type)
 	{
@@ -358,7 +360,7 @@ function res_load(reload = false)
 				var rendermodel = block_load_render_model(blockmodel, vec3(0), false, false, 0, id);
 				
 				// Generate triangles from render model
-				block_meshes_size = vec3(1)
+				block_meshes_num = vec3(1)
 				block_meshes_start()
 				with (mc_builder)
 				{

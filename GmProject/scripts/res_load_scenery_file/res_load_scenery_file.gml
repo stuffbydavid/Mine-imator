@@ -17,6 +17,7 @@ function res_load_scenery_file(fn, blocksonly = false)
 
 	debug_timer_start()
 
+	// Legacy Mine-imator .blocks file
 	if (ext = ".blocks")
 	{
 		buffer_current = buffer_load_lib(fn)
@@ -30,6 +31,7 @@ function res_load_scenery_file(fn, blocksonly = false)
 
 		scenery_structure = false
 		scenery_palette_size = 0
+		
 		valid = res_load_scenery_block_map(blocksonly)
 
 		if (blocksonly || !valid)
@@ -98,8 +100,8 @@ function res_load_scenery_file(fn, blocksonly = false)
 			with (other.id)
 				valid = res_load_scenery_block_map(blocksonly)
 
-			if (valid && !blocksonly)
-				builder_read_schematic_tile_entities()
+			if (valid)
+				builder_read_schematic_tile_entities(blocksonly)
 		}
 	}
 

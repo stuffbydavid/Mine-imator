@@ -19,23 +19,14 @@ function render_world_item(vbuf, resdif, resnorm, resmat, sheet, is3d, facecamer
 	resnorm = res_eval(resnorm)
 	resmat = res_eval(resmat)
 	
-	// Material pass
-	if (render_material_pass)
-	{
-		texmat = ((resmat.type = e_res_type.PACK && !resmat.pack_has_materials) ? 0 : resmat.item_sheet_texture_material[sheet])
-		texnorm = ((resnorm.type = e_res_type.PACK && !resnorm.pack_has_normals) ? 0 : resnorm.item_sheet_texture_normal[sheet])
-		
-		if (texmat = null && resmat.type != e_res_type.PACK)
-			texmat = resmat.texture
-	
-		if (texnorm = null && resnorm.type != e_res_type.PACK)
-			texnorm = resnorm.texture
-	}
-	else
-	{
-		texmat = 0
-		texnorm = 0
-	}
+	texmat = ((resmat.type = e_res_type.PACK && !resmat.pack_has_materials) ? 0 : resmat.item_sheet_texture_material[sheet])
+	texnorm = ((resnorm.type = e_res_type.PACK && !resnorm.pack_has_normals) ? 0 : resnorm.item_sheet_texture_normal[sheet])
+
+	if (texmat = null && resmat.type != e_res_type.PACK)
+		texmat = resmat.texture
+
+	if (texnorm = null && resnorm.type != e_res_type.PACK)
+		texnorm = resnorm.texture
 	
 	render_apply_res(resdif)
 	

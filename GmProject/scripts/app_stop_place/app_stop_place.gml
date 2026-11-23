@@ -13,6 +13,7 @@ function app_stop_place(keep = false, clearmouse = true)
 		place_hobj = null
 		place_target_tl = null
 		place_target_tl_root = null
+		place_block_pos = null
 		place_content_mouseon = null
 		
 		window_busy = ""
@@ -20,8 +21,7 @@ function app_stop_place(keep = false, clearmouse = true)
 		view_changed()
 		
 		tab_close(build_tool)
-		if (obj_edit = build_settings)
-			obj_edit = null
+		tab_close(build_hotbars)
 		
 		if (clearmouse)
 			mouse_clear(mb_left)

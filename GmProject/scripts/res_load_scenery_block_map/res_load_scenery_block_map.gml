@@ -1,4 +1,4 @@
-/// @desc Count source blocks and apply the resource filter to builder cells.
+/// @desc Count source blocks and apply the resource filter to builder blocks.
 
 function res_load_scenery_block_map(blocksonly = false)
 {
@@ -6,22 +6,22 @@ function res_load_scenery_block_map(blocksonly = false)
 	if (!block_meshes_load_blocks(blocksonly))
 		return false
 
+	scenery_legacy = mc_builder.builder_scenery_legacy
+
 	if (blocksonly)
 		return true
 
-	var res, tlamount, blockcounts, meshwidth, meshheight;
+	var res, tlamount, blockcounts, meshesx, meshesy;
 	res = id
 	tlamount = 0
 	blockcounts = array_create(array_length(block_objs), 0)
-	meshwidth = block_meshes_size[X]
-	meshheight = block_meshes_size[Y]
+	meshesx = block_meshes_num[X]
+	meshesy = block_meshes_num[Y]
 
 	block_meshes_active = array_create(array_length(block_meshes), false)
 
 	ds_map_clear(scenery_block_map)
 	ds_map_clear(scenery_tl_types_count_map)
-	
-	mc_builder.block_tl_count_map = scenery_tl_types_count_map
 
 	with (mc_builder)
 	{
@@ -50,17 +50,13 @@ function res_load_scenery_block_map(blocksonly = false)
 					continue
 				}
 
-				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshwidth, meshheight);
+				var meshindex = block_mesh_get_index(build_pos[X], build_pos[Y], build_pos[Z], meshesx, meshesy);
 				res.block_meshes_active[@meshindex] = true
 
 				if (!keepwater && builder_get_waterlogged(build_pos[X], build_pos[Y], build_pos[Z]))
 					builder_set_block(build_pos[X], build_pos[Y], build_pos[Z], block.block_id, builder_get_state_id(build_pos[X], build_pos[Y], build_pos[Z]), false)
 
 				var counttl = block.timeline;
-				
-				// Sign counts are added when tile text is parsed
-				if (counttl && block.tl_type = "sign")
-					counttl = false
 				
 				// Upper door halves do not create timelines
 				if (counttl && block.tl_type = "door")
@@ -100,7 +96,7 @@ function res_load_scenery_block_map(blocksonly = false)
 
 	for (var i = 0; i < array_length(blockcounts); i++)
 		if (blockcounts[i] > 0)
-			scenery_block_map[?string(i)] = blockcounts[i]
+			scenery_block_map[?block_objs[i].name] = blockcounts[i]
 
 	scenery_tl_types_count_ready = true
 

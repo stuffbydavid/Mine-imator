@@ -1,6 +1,10 @@
 function bench_draw_settings_camera_effects()
 {
 	dy -= 8
+
+	// Toggle the example effect
+	if (draw_button_icon("bench/camera_effect/show", dx + 12, dy - 44, 24, 24, bench_settings.camera_effect_show, icons.WAND, null, false, bench_settings.camera_effect_show ? "tooltip/camera_effect/hide" : "tooltip/camera_effect/show", null, true))
+		bench_settings.camera_effect_show = !bench_settings.camera_effect_show
 	
 	// Effect list
 	var list = setting_advanced_mode ? bench_settings.camera_effect_list_advanced : bench_settings.camera_effect_list_simple;
@@ -11,7 +15,8 @@ function bench_draw_settings_camera_effects()
 		list.scroll.value_goal = 0
 	}
 	
-	tab_control(bench_list_height(list))
+	var listh = bench_get_list_height(128);
+	tab_control(listh)
 	sortlist_draw(list, dx, dy, dw, tab_control_h, bench_settings.camera_effect_type, false, text_get("bench/effect"))
 	tab_next()
 
@@ -32,5 +37,6 @@ function bench_draw_settings_camera_effects()
 	var tipname = "frame_editor/camera_effect/" + camera_effect_name_list[|bench_settings.camera_effect_type] + "/tip";
 	if (bench_settings.camera_effect_type = e_cam_fx.FADE)
 		tipname = "frame_editor/camera_effect/fade_tip"
+	
 	draw_tooltip_label(tipname, icons.INFO, e_toast.INFO)
 }

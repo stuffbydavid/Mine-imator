@@ -42,7 +42,7 @@ void main()
 		glowColor.rgb = uGlowColor.rgb;
 
 	glowColor.rgb = pow(max(glowColor.rgb, vec3(0.0)), vec3(uGamma));
-	glowColor.rgb *= vec3(1.0 - getFog(vPosition, uCameraPosition));
+	glowColor.rgb *= vec3(1.0 - getFogAtDensity(vPosition, uCameraPosition, 1.0));
 	
 	if (uOnlyRenderGlow == 1)
 	{
@@ -52,7 +52,7 @@ void main()
 	}
 	else
 	{
-		gl_FragData[0] = vec4(vec3(getFog(vPosition, uCameraPosition)), 1.0); // Fog
+		gl_FragData[0] = vec4(getFog(vPosition, uCameraPosition), emissive, 0.0, baseColor.a); // Fog and emissive
 		gl_FragData[1] = vec4(clamp(sss, 0.0, 256.0), 0.0, 0.0, 1.0); // SSS
 		gl_FragData[2] = vec4(uSSSRadius, 1.0); // SSS RGB Channel Radius
 	}

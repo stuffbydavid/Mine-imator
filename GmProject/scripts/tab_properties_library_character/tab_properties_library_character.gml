@@ -2,17 +2,61 @@
 
 function tab_properties_library_character()
 {
+	var modelcap, modeltext, texcap, texmatcap, texnormcap;
+	modeltext = ""
+	if (temp_edit.model_file != null)
+		modeltext = minecraft_asset_get_name("model", temp_edit.model_file.name)
+
 	switch (temp_edit.type)
 	{
-		case e_temp_type.CHARACTER: content_text = "library/character_model"; break
-		case e_temp_type.EQUIPMENT: content_text = "library/equipment_model"; break
-		case e_temp_type.SPECIAL_BLOCK: content_text = "library/special_block_model"; break
-		default: return 0
+		case e_temp_type.CHARACTER:
+		{
+			modelcap = "library/character_model"
+			texcap = "library/skin"
+			texmatcap = "library/skin_material"
+			texnormcap = "library/skin_normal"
+			break
+		}
+
+		case e_temp_type.EQUIPMENT:
+		{
+			modelcap = "library/equipment_model"
+			texcap = "library/equipment_tex"
+			texmatcap = "library/equipment_tex_material"
+			texnormcap = "library/equipment_tex_normal"
+			break
+		}
+
+		case e_temp_type.SPECIAL_BLOCK:
+		{
+			modelcap = "library/special_block_model"
+			texcap = "library/special_block_tex"
+			texmatcap = "library/special_block_tex_material"
+			texnormcap = "library/special_block_tex_normal"
+			break
+		}
+
+		case e_temp_type.MODEL_PART:
+		{
+			modelcap = "type/model_part"
+			texcap = "library/model_part_skin"
+			texmatcap = "library/model_part_skin_material"
+			texnormcap = "library/model_part_skin_normal"
+			if (temp_edit.model_file != null)
+				modeltext = text_get("library/model_part_of", minecraft_asset_get_name("model/part", temp_edit.model_part_name), minecraft_asset_get_name("model", temp_edit.model_name))
+			else
+				modeltext = text_get("library/model_part_unknown")
+			
+			break
+		}
+
+		default:
+			return 0
 	}
 	
 	// Model
 	tab_control(24)
-	draw_label_value(dx, dy, dw - 32, 24, text_get(content_text), temp_edit.model_file != null ? string(minecraft_asset_get_name("model", temp_edit.model_file.name)) : "")
+	draw_label_value(dx, dy, dw - 32, 24, text_get(modelcap), modeltext)
 			
 	// Change
 	if (draw_button_icon("library/character_model_change", dx + dw - 24, dy, 24, 24, object_editor.raised && obj_edit = temp_edit, icons.PENCIL, null, false, "tooltip/change_model"))
@@ -62,7 +106,7 @@ function tab_properties_library_character()
 		tex = res_get_model_texture(model_part_get_texture_name(temp_edit.model_file, temp_edit.model_texture_name_map))
 			
 	tab_control_menu(ui_large_height)
-	draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "library/equipment_tex" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "library/special_block_tex" : "library/skin")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, res_eval(temp_edit.model_tex).display_name, action_lib_model_tex, false, tex, null)
+	draw_button_menu(texcap, e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex, res_eval(temp_edit.model_tex).display_name, action_lib_model_tex, false, tex, null)
 	tab_next()
 			
 	if (project_render_material_maps)
@@ -73,7 +117,7 @@ function tab_properties_library_character()
 			tex = res_get_model_texture_material(model_part_get_texture_material_name(temp_edit.model_file, temp_edit.model_texture_material_name_map))
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "library/equipment_tex_material" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "library/special_block_tex_material" : "library/skin_material")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, res_eval(temp_edit.model_tex_material).display_name, action_lib_model_tex_material, false, tex, null)
+		draw_button_menu(texmatcap, e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_material, res_eval(temp_edit.model_tex_material).display_name, action_lib_model_tex_material, false, tex, null)
 		tab_next()
 			
 		// Skin (Normal map)
@@ -82,12 +126,13 @@ function tab_properties_library_character()
 			tex = res_get_model_texture_normal(model_part_get_texture_normal_name(temp_edit.model_file, temp_edit.model_texture_normal_name_map))
 			
 		tab_control_menu(ui_large_height)
-		draw_button_menu((temp_edit.type = e_temp_type.EQUIPMENT ? "library/equipment_tex_normal" : (temp_edit.type = e_temp_type.SPECIAL_BLOCK ? "library/special_block_tex_normal" : "library/skin_normal")), e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, res_eval(temp_edit.model_tex_normal).display_name, action_lib_model_tex_normal, false, tex, null)
+		draw_button_menu(texnormcap, e_menu.LIST, dx, dy, dw, ui_large_height, temp_edit.model_tex_normal, res_eval(temp_edit.model_tex_normal).display_name, action_lib_model_tex_normal, false, tex, null)
 		tab_next()
 	}
 			
 	// Model blend color
-	if (temp_edit.model_use_blend_color)
+	var dyed = state_vars_get_value(temp_edit.model_state, "dyed");
+	if (temp_edit.model_use_blend_color && (dyed = null || dyed = "true"))
 	{
 		tab_control_color()
 		draw_button_color("library/model_color", dx, dy, dw, temp_edit.model_blend_color, temp_edit.model_blend_color_default, false, action_lib_model_blend_color)

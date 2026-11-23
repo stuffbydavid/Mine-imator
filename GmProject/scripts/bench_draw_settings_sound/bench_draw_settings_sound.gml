@@ -1,8 +1,25 @@
 function bench_draw_settings_sound()
 {
-	tab_control(bench_list_height(bench_settings.sound_list_current))
+	var settingsh, listh;
+	settingsh = 64 + ui_small_height
+	if (!window_compact || app.panel_compact)
+		settingsh += label_height + 8
+	
+	if (minecraft_game_found)
+		settingsh += ui_large_height + 6
+	else
+	{
+		var oldfont = draw_get_font();
+		draw_set_font(font_caption)
+		settingsh += 24 + 14 * string_count("\n", string_wrap(text_get("bench/sound_tip"), dw - 28))
+		draw_set_font(oldfont)
+	}
+	
+	listh = bench_get_list_height(settingsh, soundlist_minimum_items)
+	tab_control(listh)
 	soundlist_draw(bench_settings.sound_list_current, dx, dy, dw, tab_control_h, text_get("bench/" + (bench_settings.sound_list_current.source = "music" ? "music" : "sound")))
 	tab_next()
+	
 	dy -= 4
 
 	if (minecraft_game_found)

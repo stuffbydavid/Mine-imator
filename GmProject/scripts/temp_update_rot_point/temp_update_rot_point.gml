@@ -4,12 +4,13 @@ function temp_update_rot_point()
 {
 	rot_point = point3D(0)
 
-	var rep, size, centerready, isblock;
+	var rep, size, basesize, centerready, isblock;
 	isblock = (type = e_temp_type.BLOCK || type = e_temp_type.SCENERY)
 	rep = vec3(1)
 	if (isblock && block_repeat_enable && block_center)
 		rep = block_repeat
 	size = vec3(1)
+	basesize = vec3(1)
 	centerready = true
 
 	switch (type)
@@ -21,7 +22,8 @@ function temp_update_rot_point()
 				centerready = false
 				break
 			}
-			size = vec3(rep[X] * scenery.scenery_size[X], rep[Y] * scenery.scenery_size[Y], rep[Z] * scenery.scenery_size[Z])
+			basesize = scenery.scenery_size
+			size = vec3(rep[X] * basesize[X], rep[Y] * basesize[Y], rep[Z] * basesize[Z])
 
 			if (!block_center)
 			{
@@ -67,16 +69,16 @@ function temp_update_rot_point()
 		}
 	}
 
-	// Block offset to keep Minecraft grid alignment
+	// Align additional repeats with the source grid
 	var offset = point3D(0);
 	if (isblock && block_center && centerready)
 	{
-		if (size[X] mod 2 = 0)
+		if (size[X] mod 2 = 0 && basesize[X] mod 2 != 0)
 		{
 			rot_point[X] -= block_half_size
 			offset[X] = -block_half_size
 		}
-		if (size[Y] mod 2 = 0)
+		if (size[Y] mod 2 = 0 && basesize[Y] mod 2 != 0)
 		{
 			rot_point[Y] -= block_half_size
 			offset[Y] = -block_half_size

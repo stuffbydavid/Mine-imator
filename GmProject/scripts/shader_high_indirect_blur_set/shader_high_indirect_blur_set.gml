@@ -1,5 +1,8 @@
 function shader_high_indirect_blur_set()
 {
+	texture_set_stage(sampler_handle[e_sampler.MASK], surface_get_texture(render_surface_mask))
+	gpu_set_texrepeat_ext(sampler_handle[e_sampler.MASK], false)
+
 	texture_set_stage(sampler_handle[e_sampler.DEPTH_BUFFER], surface_get_texture(render_surface_depth))
 	gpu_set_texrepeat_ext(sampler_handle[e_sampler.DEPTH_BUFFER], false)
 	

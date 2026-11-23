@@ -6,7 +6,7 @@ function tab_frame_editor_texture_material()
 	sliders = false
 	
 	// Get material texture
-	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && tl_edit.temp != null)
+	if (tl_edit.value_type[e_value_type.MATERIAL_TEXTURE] && (tl_edit.temp != null || tl_edit.type = e_tl_type.STRUCTURE))
 	{	
 		switch (tl_edit.type)
 		{
@@ -36,9 +36,15 @@ function tab_frame_editor_texture_material()
 			
 			case e_tl_type.BLOCK:
 			case e_tl_type.SCENERY:
+			case e_tl_type.STRUCTURE:
 			{
 				content_name = "frame_editor/block_tex_material"
-				with (tl_edit.temp)
+				
+				var texsource = tl_edit.temp;
+				if (tl_edit.type = e_tl_type.STRUCTURE)
+					texsource = tl_edit
+
+				with (texsource)
 					texobj = temp_get_block_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				
 				tex = texobj.block_preview_texture
@@ -57,8 +63,8 @@ function tab_frame_editor_texture_material()
 				
 				if (texobj = null)
 					texobj = tl_edit.temp.item_tex_material
-				texobj = res_eval(texobj)
 				
+				texobj = res_eval(texobj)
 				tex = texobj.block_preview_texture
 				
 				if (tex = null)
@@ -79,6 +85,7 @@ function tab_frame_editor_texture_material()
 			default: // Shapes
 			{
 				content_name = "frame_editor/shape_tex_material"
+				
 				with (tl_edit.temp)
 					texobj = temp_get_shape_tex_material_obj(tl_edit.value[e_value.TEXTURE_MATERIAL_OBJ])
 				

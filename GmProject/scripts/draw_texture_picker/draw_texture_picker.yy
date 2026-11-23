@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"draw_texture_picker",
   "parent":{
-    "name":"Components",
-    "path":"folders/Scripts/App/Interface/Components.yy",
+    "name":"Picker",
+    "path":"folders/Scripts/App/Interface/Components/Picker.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

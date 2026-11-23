@@ -6,6 +6,7 @@ varying vec2 vTexCoord;
 uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uNoiseBuffer;
+uniform sampler2D uMask;
 uniform vec2 uScreenSize;
 uniform vec2 uPixelCheck;
 
@@ -92,14 +93,16 @@ void main()
 		samplePos = vTexCoord + samplePos * blurScale;
 		
 		float sampleWeight = getNeighborSurfaceWeight(samplePos, centerPos, centerNormal);
-		if (sampleWeight < 0.001)
-			continue;
 		
-		color += texture2D(gm_BaseTexture, samplePos).rgb * sampleWeight;
-		weight += sampleWeight;
+		// A divergent continue here can hang AMD's Direct3D driver
+		if (sampleWeight >= 0.001)
+		{
+			color += texture2D(gm_BaseTexture, samplePos).rgb * sampleWeight;
+			weight += sampleWeight;
+		}
 	}
 	
 	color /= weight;
 	
-	gl_FragColor = vec4(color, 1.0);
+	gl_FragColor = vec4(color, texture2D(uMask, vTexCoord).a);
 }

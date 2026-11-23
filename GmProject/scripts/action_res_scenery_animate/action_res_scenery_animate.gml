@@ -52,7 +52,7 @@ function action_res_scenery_animate(res)
 			{
 				loaded = true
 				if (sceneryreplaceground)
-					tl_replace_ground()
+					tl_scenery_replace_ground()
 			}
 			
 			temp_add_lists()

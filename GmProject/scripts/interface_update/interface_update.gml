@@ -8,6 +8,7 @@ function interface_update()
 		c_level_middle = color_ease(c_level_middle, level_middle)
 		c_level_bottom = color_ease(c_level_bottom, level_bottom)
 		c_input_background = color_ease(c_input_background, input_background)
+		c_toolbar = color_ease(c_toolbar, toolbar)
 		//c_viewport_top = color_ease(c_viewport_top, viewport_top)
 		//c_viewport_bottom = color_ease(c_viewport_bottom, viewport_bottom)
 		

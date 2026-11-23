@@ -70,7 +70,7 @@ function popup_block_settings_draw()
 		}
 
 		// Filter settings
-		draw_block_settings_filter()
+		draw_block_filter()
 	}
 
 	dy += 12

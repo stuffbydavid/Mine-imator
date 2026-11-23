@@ -761,7 +761,13 @@ void Program::resolveProject()
 
 int Program::hotReloadFunctions(const List<String>& modifiedGmlFiles)
 {
+	std::unordered_map<const Variable*, DataType::CppType> previousMemberTypes;
+	for (Object* object : Program::objects.values)
+		for (Variable* variable : object->instanceVars.values)
+			previousMemberTypes.emplace(variable, variable->type->cppType);
+
 	Program::hotReloading = true;
+	Program::hotReloadSignaturesChanged = false;
 	Program::hotReloadTargets.clear();
 	for (Function* function : Program::functions.values)
 		if (function->sourceFile != "" && modifiedGmlFiles.contains(function->sourceFile))
@@ -789,6 +795,30 @@ int Program::hotReloadFunctions(const List<String>& modifiedGmlFiles)
 	}
 	Program::hotReloadTargets.clear();
 	Program::hotReloading = false;
+
+	// Signature changes affect cached callers and callees
+	if (Program::hotReloadSignaturesChanged)
+	{
+		Console::writeLine("Function signatures changed, resolving project");
+		resolveProject();
+		return reloaded;
+	}
+
+	// Member type changes also affect cached functions and unknown-scope accessors
+	for (Object* object : Program::objects.values)
+	{
+		for (Variable* variable : object->instanceVars.values)
+		{
+			auto previous = previousMemberTypes.find(variable);
+			if (previous == previousMemberTypes.end() || previous->second != variable->type->cppType)
+			{
+				Console::writeLine("Instance member types changed, resolving project");
+				resolveProject();
+				return reloaded;
+			}
+		}
+	}
+
 	return reloaded;
 }
 

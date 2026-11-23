@@ -7,6 +7,6 @@ function action_build_search()
 	
 	textbox_lastfocus = -1
 	
-	window_focus = string(build_tool.build_list.search_tbx)
+	window_focus = string(build_tool.build_picker.search_tbx)
 	textbox_input = ""
 }

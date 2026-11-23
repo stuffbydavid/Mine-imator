@@ -13,6 +13,8 @@ function res_copy(to)
 	to.world_name = world_name
 	to.world_box_start = world_box_start
 	to.world_box_end = world_box_end
+	to.world_box_start_load = world_box_start_load
+	to.world_box_end_load = world_box_end_load
 	
 	to.scenery_tl_set = scenery_tl_set
 	to.scenery_tl_all_types = scenery_tl_all_types
@@ -20,6 +22,7 @@ function res_copy(to)
 	
 	if (object_index = obj_resource && to.object_index = obj_resource)
 	{
+		to.scenery_legacy = scenery_legacy
 		ds_map_copy(to.scenery_block_map, scenery_block_map)
 		ds_map_copy(to.scenery_tl_types_count_map, scenery_tl_types_count_map)
 		to.scenery_tl_types_count_ready = scenery_tl_types_count_ready

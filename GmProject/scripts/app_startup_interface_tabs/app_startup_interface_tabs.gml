@@ -222,7 +222,7 @@ function app_startup_interface_tabs()
 	ground_editor = new_tab(setting_ground_editor_location, false)
 	ground_editor.script = tab_ground_editor
 	with (ground_editor)
-		ground_scroll = new_obj(obj_scrollbar)
+		ground_picker = new_obj(obj_picker)
 	
 	// Object editor
 	object_editor = new_tab(setting_object_editor_location, false)
@@ -230,77 +230,84 @@ function app_startup_interface_tabs()
 	
 	with (object_editor)
 	{
-		// Character list
-		char_list = new_obj(obj_sortlist)
-		char_list.script = action_lib_model_name
-		char_list.script_search = sortlist_search_model
+		// Character picker
+		char_picker = new_obj(obj_picker)
+		char_picker.asset_picker_model = true
+		char_picker.script = action_lib_model_name
+		char_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(char_list, "character_name", 0)
+		sortlist_column_add(char_picker, "character_name", 0)
 		
 		for (var c = 0; c < ds_list_size(mc_assets.char_list); c++)
-			sortlist_add(char_list, mc_assets.char_list[|c].name)
+			sortlist_add(char_picker, mc_assets.char_list[|c].name)
 		
 		// Item
-		item_scroll = new_obj(obj_scrollbar)
+		item_picker = new_obj(obj_picker)
 		
 		// Block
-		block_list = new_obj(obj_sortlist)
-		block_list.script = action_lib_block_name
-		block_list.script_search = sortlist_search_block
+		block_picker = new_obj(obj_picker)
+		block_picker.script = action_lib_block_name
+		block_picker.script_search = sortlist_search_block
 		
-		sortlist_column_add(block_list, "block_name", 0)
+		sortlist_column_add(block_picker, "block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
-				sortlist_add(block_list, mc_assets.block_list[|b].name)
+				sortlist_add(block_picker, mc_assets.block_list[|b].name)
 		
-		// Special block list
-		special_block_list = new_obj(obj_sortlist)
-		special_block_list.script = action_lib_model_name
-		special_block_list.script_search = sortlist_search_model
+		// Special block picker
+		special_block_picker = new_obj(obj_picker)
+		special_block_picker.asset_picker_model = true
+		special_block_picker.script = action_lib_model_name
+		special_block_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(special_block_list, "special_block_name", 0)
+		sortlist_column_add(special_block_picker, "special_block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
-			sortlist_add(special_block_list, mc_assets.special_block_list[|b].name)
+			sortlist_add(special_block_picker, mc_assets.special_block_list[|b].name)
 		
-		// Equipment list
-		equipment_list = new_obj(obj_sortlist)
-		equipment_list.script = action_lib_model_name
-		equipment_list.script_search = sortlist_search_model
+		// Equipment picker
+		equipment_picker = new_obj(obj_picker)
+		equipment_picker.asset_picker_model = true
+		equipment_picker.script = action_lib_model_name
+		equipment_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(equipment_list, "special_block_name", 0)
+		sortlist_column_add(equipment_picker, "special_block_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.equipment_list); b++)
-			sortlist_add(equipment_list, mc_assets.equipment_list[|b].name)
+			sortlist_add(equipment_picker, mc_assets.equipment_list[|b].name)
 		
-		// Model part list
-		model_part_model_list = new_obj(obj_sortlist)
-		model_part_model_list.script = action_lib_model_part_model_name
-		model_part_model_list.script_search = sortlist_search_model
+		// Model part picker
+		model_part_model_picker = new_obj(obj_picker)
+		model_part_model_picker.asset_picker_model = true
+		model_part_model_picker.script = action_lib_model_part_model_name
+		model_part_model_picker.script_search = sortlist_search_model
 		
-		sortlist_column_add(model_part_model_list, "model_part_model_name", 0)
+		sortlist_column_add(model_part_model_picker, "model_part_model_name", 0)
 		
 		for (var m = 0; m < ds_list_size(mc_assets.equipment_list); m++)
 		{
 			var model = mc_assets.equipment_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		for (var m = 0; m < ds_list_size(mc_assets.char_list); m++)
 		{
 			var model = mc_assets.char_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
 		
 		for (var m = 0; m < ds_list_size(mc_assets.special_block_list); m++)
 		{
 			var model = mc_assets.special_block_list[|m];
 			if (model.model_part_available)
-				sortlist_add(model_part_model_list, model.name)
+				sortlist_add(model_part_model_picker, model.name)
 		}
+		
+		// State picker
+		state_picker = new_obj(obj_picker)
 		
 		// Particle editor
 		tbx_spawn_amount = new_textbox_integer()
@@ -472,33 +479,74 @@ function app_startup_interface_tabs()
 		tbx_type_bounce_factor = new_textbox_decimals()
 	}
 
-	// Build mode editor
-	build_tool = new_tab(setting_build_mode_location, false)
+	ptype_list = object_editor.type_list
+
+	// Build tool settings
+	build_tool = new_tab(setting_build_tool_location, false)
 	build_tool.script = tab_build_tool
 	
 	with (build_tool)
 	{
-		build_list = new_obj(obj_sortlist)
-		build_list.script = action_build_select
-		build_list.script_search = sortlist_search_build
-		build_list.header_show = true
-		build_list.column_sort = 0
+		build_picker = new_obj(obj_picker)
+		build_picker.script = action_build_select
+		build_picker.script_search = sortlist_search_build
+		build_picker.header_show = true
 		
-		sortlist_column_add(build_list, "build_name", 0)
+		sortlist_column_add(build_picker, "build_name", 0)
 		
 		for (var b = 0; b < ds_list_size(mc_assets.block_list); b++)
 			if (!mc_assets.block_list[|b].timeline || mc_assets.block_list[|b].tl_model_name = "" || mc_assets.block_list[|b].tl_model_double)
-				sortlist_add(build_list, [ false, mc_assets.block_list[|b].name ])
+				sortlist_add(build_picker, [ false, mc_assets.block_list[|b].name ])
 
 		for (var b = 0; b < ds_list_size(mc_assets.special_block_list); b++)
-			sortlist_add(build_list, [ true, mc_assets.special_block_list[|b].name ])
+			sortlist_add(build_picker, [ true, mc_assets.special_block_list[|b].name ])
 		
-		sortlist_update(build_list)
+		sortlist_update(build_picker)
 		
 		build_selected = null
+		
+		state_picker = new_obj(obj_picker)
 	}
+	
+	// Build hotbar settings
+	build_hotbars = new_tab(setting_build_hotbars_location, false)
 
-	ptype_list = object_editor.type_list
+	with (build_hotbars)
+	{
+		tab_add_category("build_hotbars", icons.ASSET_LIST, tab_build_hotbars, true)
+
+		list = new_obj(obj_sortlist)
+		list.search_show = false
+		list.height_items = 7
+		list.script = action_build_hotbars_list
+		list.can_deselect = false
+		selected = 0
+
+		sortlist_column_add(list, "hotbar_name", 0)
+		sortlist_column_add(list, "hotbar_slots", 0.8)
+
+		tbx_name = new_textbox(1, 0, "")
+
+		// Initial hotbars
+		for (var h = 0; h < 8; h++)
+		{
+			var hotbar = new_obj(obj_build_hotbar);
+			hotbar.name = "Hotbar " + string(h + 1)
+			hotbar.blocks = []
+
+			for (var i = 0; i < ds_list_size(mc_assets.block_list) && array_length(hotbar.blocks) < 10; i++)
+			{
+				var hotbarblock = mc_assets.block_list[|i];
+				if (hotbarblock.timeline && hotbarblock.tl_model_name != "" && !hotbarblock.tl_model_double)
+					continue
+
+				array_add(hotbar.blocks, [ false, hotbarblock.name, array_copy_1d(hotbarblock.default_state) ], false)
+			}
+
+			sortlist_add(list, hotbar)
+		}
+		sortlist_update(list)
+	}
 	
 	// Timeline
 	timeline = new_tab("bottom", true, null, e_window.TIMELINE)
@@ -537,9 +585,12 @@ function app_startup_interface_tabs()
 			tbx_rot_point_y = new_textbox_ndecimals()
 			tbx_rot_point_z = new_textbox_ndecimals()
 		}
-		
+
+		// Structure and scenery
+		structure = tab_add_category("timeline_editor/structure", icons.BLOCK, tab_timeline_editor_structure, true)
+
 		// Block
-		block = tab_add_category("timeline_editor/block", icons.BLOCK, tab_timeline_editor_block, true)
+		block = tab_add_category("timeline_editor/block", icons.BLOCK_SMALL, tab_timeline_editor_block, true)
 		with (block)
 		{
 			tbx_repeat_x = new_textbox_integer()
@@ -547,6 +598,9 @@ function app_startup_interface_tabs()
 			tbx_repeat_z = new_textbox_integer()
 		}
 
+		// Camera
+		camera = tab_add_category("timeline_editor/camera", icons.CAMERA_SMALL, tab_timeline_editor_camera, true)
+		
 		// Audio
 		audio = tab_add_category("timeline_editor/audio", icons.NOTE_SMALL, tab_timeline_editor_audio, true)
 		
@@ -586,7 +640,7 @@ function app_startup_interface_tabs()
 		item = tab_add_category("frame_editor/item", icons.ITEM_SMALL, tab_frame_editor_item, false)
 		with (item)
 		{
-			item_scroll = new_obj(obj_scrollbar)
+			item_picker = new_obj(obj_picker)
 			item_slot = new_textbox_integer()
 		}
 		
@@ -611,7 +665,7 @@ function app_startup_interface_tabs()
 		}
 		
 		// Camera effects
-		camera_effects = tab_add_category("frame_editor/camera_effect", icons.WAND, tab_frame_editor_camera_effects, false)
+		camera_effects = tab_add_category("frame_editor/camera_effect", icons.WAND_SMALL, tab_frame_editor_camera_effects, false)
 		with (camera_effects)
 		{
 			tbx_mix_percent = new_textbox_integer()
@@ -894,6 +948,11 @@ function app_startup_interface_tabs()
 		
 		// Interface
 		interface = tab_add_category("settings/interface", icons.BRUSH_SMALL, tab_settings_interface, false)
+		with (interface)
+		{
+			tbx_work_camera_fov = new_textbox_decimals()
+			tbx_work_camera_fov.suffix = "°"
+		}
 		
 		// Controls
 		controls = tab_add_category("settings/controls", icons.KEYBOARD_SMALL, tab_settings_controls, false)

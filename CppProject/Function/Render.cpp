@@ -52,14 +52,14 @@ namespace CppProject
 		return true;
 	}
 
-	BoolType render_set_mask_blend(BoolType enabled, IntType mask, IntType fog)
+	BoolType render_set_mask_blend(BoolType enabled, IntType mask, IntType fog, BoolType unlit)
 	{
 		if (!render_mask_blend_is_supported())
 			return false;
 
 		GFX->SubmitBatch();
 
-		if (enabled)
+		if (enabled && !GFX->maskBlend)
 		{
 			Surface* surf = FindSurface(mask);
 			Surface* fogSurf = (fog != noone ? FindSurface(fog) : nullptr);
@@ -67,21 +67,21 @@ namespace CppProject
 				return false;
 
 			surf->ClearColorCache();
-			GFX->SetMRTIndex(1, surf->frameBuffer, QColor(0, 0, 0, 255));
+			GFX->SetMRTIndex(1, surf->frameBuffer, QColor(0, 0, 0, 0));
 
 			if (fogSurf)
 			{
 				fogSurf->ClearColorCache();
-				GFX->SetMRTIndex(2, fogSurf->frameBuffer, QColor(0, 0, 0, 255));
+				GFX->SetMRTIndex(2, fogSurf->frameBuffer, QColor(0, 0, 0, 0));
 			}
 		}
-		else
+		else if (!enabled)
 		{
 			GFX->ResetMRT();
 			GFX->surface->frameBuffer->BeginUse();
 		}
 
-		GFX->SetMaskBlending(enabled, enabled && fog != noone);
+		GFX->SetMaskBlending(enabled, enabled && fog != noone, enabled && unlit);
 
 		return true;
 	}

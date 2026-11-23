@@ -17,6 +17,8 @@ void main()
 		color.rgb = vec3(color.a);
 	else if (uChannel == 5)
 		color.rgb = pow(max(color.rgb, vec3(0.0)) / (vec3(1.0) + max(color.rgb, vec3(0.0))), vec3(1.0 / 2.2));
+	else if (uChannel == 6)
+		color.rgb = vec3(color.a > 0.0001 ? color.r / color.a : 0.0);
 	
 	gl_FragColor = vec4(color.rgb * vColor.rgb, 1.0);
 }

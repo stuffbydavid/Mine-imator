@@ -40,7 +40,7 @@ function tl_value_default(valueid)
 		case e_value.CAM_FOV: return 45
 		case e_value.CAM_FX_TONEMAPPER: return default_tonemapper
 		case e_value.CAM_FX_EXPOSURE: return 1
-		case e_value.CAM_FX_GAMMA: return 2.2
+		case e_value.CAM_FX_GAMMA: return default_gamma
 		case e_value.CAM_FX_BLADE_AMOUNT:
 		case e_value.CAM_FX_BLADE_ANGLE:
 		case e_value.CAM_FX_BLADE_STRETCH: return 0

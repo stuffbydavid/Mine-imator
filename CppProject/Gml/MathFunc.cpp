@@ -88,7 +88,8 @@ namespace CppProject
 
 	RealType point_direction(RealType x1, RealType y1, RealType x2, RealType y2)
 	{
-		return -RADTODEG * std::atan2(y2 - y1, x2 - x1);
+		RealType angle = -RADTODEG * std::atan2(y2 - y1, x2 - x1);
+		return angle < 0 ? angle + 360.0 : angle;
 	}
 
 	RealType point_distance_3d(RealType x1, RealType y1, RealType z1, RealType x2, RealType y2, RealType z2)

@@ -6,6 +6,7 @@ function res_load_pack_block_preview_buffers()
 	tex = null
 	surf = null
 	frames = null
+	
 	draw_texture_start()
 	
 	// Create static sheet previews
@@ -30,6 +31,7 @@ function res_load_pack_block_preview_buffers()
 		
 		load_assets_block_preview_buffer[size] = buffer_create(minecraft_block_sheet_size[size][X] * minecraft_block_sheet_size[size][Y] * 4, buffer_fixed, 4)
 		buffer_get_surface(load_assets_block_preview_buffer[size], surf, 0)
+		
 		surface_free(surf)
 	}
 	
@@ -50,8 +52,11 @@ function res_load_pack_block_preview_buffers()
 		
 		load_assets_block_preview_ani_buffer = buffer_create(minecraft_block_sheet_size[e_block_sheet.ANIMATED][X] * minecraft_block_sheet_size[e_block_sheet.ANIMATED][Y] * 4, buffer_fixed, 4)
 		buffer_get_surface(load_assets_block_preview_ani_buffer, surf, 0)
+		
 		surface_free(surf)
 	}
+	
 	draw_texture_done()
+	
 	return 0
 }

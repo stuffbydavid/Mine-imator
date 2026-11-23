@@ -8,9 +8,8 @@ function tab_object_editor()
 	}
 	
 	// Modify draw area
-	if (obj_edit.type != e_temp_type.PARTICLE_SPAWNER)
-		dh -= 28
-	
+	dh -= 20
+
 	switch (obj_edit.type)
 	{
 		case e_temp_type.CHARACTER:

@@ -57,6 +57,7 @@ function block_meshes_done()
 				instance_destroy()
 
 			block_meshes[@s] = null
+			block_meshes_active[@s] = false
 		}
 	}
 

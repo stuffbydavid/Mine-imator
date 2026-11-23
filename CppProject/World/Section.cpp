@@ -48,7 +48,7 @@ namespace CppProject
 			sectionX = builderPos.x >> 4;
 			sectionY = builderPos.z >> 4;
 			sectionZ = builderPos.y >> 4;
-			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+			sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsNum.x + sectionX;
 
 			Builder::sections[sectionPos] = this;
 		}
@@ -368,7 +368,7 @@ namespace CppProject
 			}
 		}
 
-		// Resolve render flags once per palette entry, preserving each cell's light below
+		// Resolve render flags once per palette entry, preserving each block's light below
 		for (IntType p = 0; p < blockStylePalette.Size(); p++)
 		{
 			PreviewPaletteEntry& entry = blockStylePalette[p];
@@ -621,14 +621,14 @@ namespace CppProject
 		BoolType uniform = !preview.blockStyleIndices.Size();
 		IntType waterIndex = -1;
 
-		// Match the array layout, visiting only boundary cells for uniform sections
+		// Match the array layout, visiting only boundary blocks for uniform sections
 		for (uint8_t y = 0; y < SECTION_SIZE; y++)
 		for (uint8_t z = startPos.z; z < endPos.z; z++)
 		{
 			uint8_t startX = startPos.x, stepX = 1;
 			if (uniform && y > 0 && y < SECTION_SIZEM1 && z > 0 && z < SECTION_SIZEM1)
 			{
-				// Only the X boundary cells can contribute faces on these rows
+				// Only the X boundary blocks can contribute faces on these rows
 				if (startX > 0)
 					startX = SECTION_SIZEM1;
 
@@ -673,7 +673,7 @@ namespace CppProject
 				PreviewState states[Chunk::FaceDirectionAmount];
 				if (!uniform && x > 0 && x < SECTION_SIZEM1 && y > 0 && y < SECTION_SIZEM1 && z > 0 && z < SECTION_SIZEM1)
 				{
-					// Interior cells use direct offsets in the section array
+					// Interior blocks use direct offsets in the section array
 					states[Chunk::RIGHT] = preview.states[blockIndex + 1];
 					states[Chunk::LEFT] = preview.states[blockIndex - 1];
 					states[Chunk::TOP] = preview.states[blockIndex + SECTION_SIZE2];
@@ -878,7 +878,7 @@ namespace CppProject
 		sectionX = (pos.x + offset.x) >> 4;
 		sectionY = (pos.y + offset.y) >> 4;
 		sectionZ = (pos.z + offset.z) >> 4;
-		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsDim.x + sectionX;
+		sectionPos = sectionZ * Builder::sectionsXY + sectionY * Builder::sectionsNum.x + sectionX;
 
 		return Builder::sections.Value(sectionPos);
 	}

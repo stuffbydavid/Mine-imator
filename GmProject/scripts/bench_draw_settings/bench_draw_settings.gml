@@ -14,8 +14,7 @@ function bench_draw_settings(bx, by, bw, bh)
 	content_width = dw
 	content_height = dh
 	
-	var headerhei, prevalpha, aniease, sy;
-	headerhei = 144
+	var prevalpha, aniease, startdy, footerh;
 	prevalpha = draw_get_alpha()
 	
 	bench_settings_ani += test_reduced_motion(1, (0.09 * delta))
@@ -26,13 +25,13 @@ function bench_draw_settings(bx, by, bw, bh)
 	
 	dx += -16 + (16 * aniease)
 	
-	sy = dy
+	startdy = dy
 	
 	// Preview
 	if (array_contains(bench_tab_preview, bench_tab))
 	{
-		preview_draw(bench_settings.preview, dx, dy, dw, headerhei)
-		dy += headerhei + 8
+		preview_draw(bench_settings.preview, dx, dy, dw, bench_header_height)
+		dy += bench_header_height + 8
 	}
 	
 	// Example image
@@ -41,13 +40,13 @@ function bench_draw_settings(bx, by, bw, bh)
 		var subimg = 0;
 		switch (bench_tab)
 		{
-			case e_bench_tab.WORLD:				subimg = 0; break
-			case e_bench_tab.CAMERA:			subimg = 1; break
-			case e_bench_tab.AUDIO_TRACK:		subimg = 2; break
-			case e_bench_tab.CAMERA_EFFECT:		subimg = 3 + bench_settings.camera_effect_type; break
-			case e_bench_tab.LIGHT_SOURCE:		subimg = (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? 14 : 15; break
-			case e_bench_tab.PATH:				subimg = 16; break
-			case e_bench_tab.ENVIRONMENT:		subimg = 17; break
+			case e_bench_tab.WORLD:				subimg = e_bench_example.WORLD; break
+			case e_bench_tab.CAMERA:			subimg = e_bench_example.CAMERA; break
+			case e_bench_tab.AUDIO_TRACK:		subimg = e_bench_example.AUDIO_TRACK; break
+			case e_bench_tab.CAMERA_EFFECT:		subimg = e_bench_example.CAMERA_EFFECT + (bench_settings.camera_effect_show ? 1 + bench_settings.camera_effect_type : 0); break
+			case e_bench_tab.LIGHT_SOURCE:		subimg = (bench_settings.light_type = e_tl_type.POINT_LIGHT) ? e_bench_example.POINT_LIGHT : e_bench_example.SPOT_LIGHT; break
+			case e_bench_tab.PATH:				subimg = e_bench_example.PATH; break
+			case e_bench_tab.ENVIRONMENT:		subimg = e_bench_example.ENVIRONMENT; break
 		}
 		
 		var sprwid = sprite_get_width(spr_bench_example);
@@ -58,8 +57,8 @@ function bench_draw_settings(bx, by, bw, bh)
 		}
 		else
 			draw_sprite(spr_bench_example, subimg, floor(dx + (dw - sprwid) / 2), dy)
-
-		dy += headerhei + 16
+		
+		dy += bench_header_height + 16
 	}
 
 	menu_bench = true
@@ -76,6 +75,10 @@ function bench_draw_settings(bx, by, bw, bh)
 	bench_edit_icon = icons.PENCIL
 	bench_edit_button = e_bench_button.EDIT
 
+	bench_list_height = 0
+	bench_list_height_min = 0
+	bench_settings_height_min = ui_large_height * (setting_advanced_mode ? 4 : 3)
+	
 	switch (bench_tab)
 	{
 		case e_bench_tab.PROJECT:			bench_draw_settings_project(); break
@@ -99,22 +102,24 @@ function bench_draw_settings(bx, by, bw, bh)
 		case e_bench_tab.ENVIRONMENT:		bench_draw_settings_environment(); break
 		case e_bench_tab.SHAPE:				bench_draw_settings_shape(); break
 	}
-	
+
+	footerh = bench_buttons_hidden ? 24 : bench_footer_height + 8
+	bench_height_min = dy - by + footerh - max(0, bench_list_height - bench_list_height_min)
+
 	menu_bench = false
 	
 	draw_set_alpha(prevalpha)
 	
 	dx = bx
-	dy += 44
 	
 	if (bench_buttons_hidden)
 		return 0
-	
+
 	// Edit
 	var wid = (bench_edit_hidden ? dw : dw/2 - 4);
 	if (!bench_edit_hidden)
 	{
-		if (draw_button_label(bench_edit_name, dx, sy + dh - 56, wid, bench_edit_icon, e_button.SECONDARY, null, e_anchor.LEFT, bench_create_disabled))
+		if (draw_button_label(bench_edit_name, dx, startdy + dh - bench_footer_height, wid, bench_edit_icon, e_button.SECONDARY, null, e_anchor.LEFT, bench_create_disabled))
 		{
 			action_bench_create(bench_edit_button)
 			bench_show_ani_type = "hide"
@@ -122,7 +127,7 @@ function bench_draw_settings(bx, by, bw, bh)
 	}
 	
 	// Create
-	if (draw_button_label(bench_create_name, bench_edit_hidden ? dx : (dx + wid + 8), sy + dh - 56, wid, bench_create_icon, e_button.PRIMARY, null, e_anchor.LEFT, bench_create_disabled))
+	if (draw_button_label(bench_create_name, bench_edit_hidden ? dx : (dx + wid + 8), startdy + dh - bench_footer_height, wid, bench_create_icon, e_button.PRIMARY, null, e_anchor.LEFT, bench_create_disabled))
 	{
 		action_bench_create(bench_create_button)
 		bench_show_ani_type = "hide"

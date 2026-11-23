@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"new_tl",
   "parent":{
-    "name":"Timeline",
-    "path":"folders/Scripts/Project/Timeline.yy",
+    "name":"New",
+    "path":"folders/Scripts/Project/Timeline/New.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

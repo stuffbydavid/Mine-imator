@@ -2,7 +2,7 @@
 /// CppGen ArrRef build_pos
 /// CppGen ArrRef build_neighbor
 /// CppGen ArrRef build_edge
-/// CppGen ArrRef block_pos
+/// CppGen ArrRef block_model_pos
 /// CppGen ArrRef block_face_full
 /// CppGen ArrRef block_face_min_depth
 /// CppGen ArrRef liquid_match
@@ -154,7 +154,7 @@ function builder_generate_liquid(waterlogged = false)
 	if (app.project_render_liquid_animation)
 	{
 		block_vertex_wave = e_vertex_wave.Z_ONLY
-		block_vertex_wave_zmin = (liquid_match[ZN] ? null : block_pos[Z])
+		block_vertex_wave_zmin = (liquid_match[ZN] ? null : block_model_pos[Z])
 	}
 	
 	// Falling liquid fills the block
@@ -335,9 +335,9 @@ function builder_generate_liquid(waterlogged = false)
 	// Position the mesh and inset waterlogged sides
 	for (var a = X; a <= Y; a++)
 	{
-		liquid_from[a] = block_pos[a]
-		liquid_to[a] = block_pos[a] + block_size
-		liquid_mid[a] = block_pos[a] + block_half_size
+		liquid_from[a] = block_model_pos[a]
+		liquid_to[a] = block_model_pos[a] + block_size
+		liquid_mid[a] = block_model_pos[a] + block_half_size
 		
 		if (waterlogged)
 		{
@@ -349,7 +349,7 @@ function builder_generate_liquid(waterlogged = false)
 		}
 	}
 	
-	liquid_from[Z] = floor(block_pos[Z])
+	liquid_from[Z] = floor(block_model_pos[Z])
 	liquid_to[Z] = liquid_from[Z] + minz
 	liquid_mid[Z] = liquid_from[Z] + averagez
 	

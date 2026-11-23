@@ -1,8 +1,10 @@
-/// CppSeparate void builder_set_neighbor_face(Scope<obj_builder_thread>, IntType, IntType, IntType)
-/// @desc Copy the opposing neighbor face for culling.
+/// CppSeparate void builder_set_neighbor_face(Scope<obj_builder_thread>, IntType, IntType)
+/// @desc Check the opposing face of a given model for culling.
 
-function builder_set_neighbor_face(model, face, opposite)
+function builder_set_neighbor_face(model, face)
 {
+	var opposite = face ^ 1;
+	
 	block_face_full[face] = model.face_full[opposite]
 	block_face_min_depth[face] = model.face_min_depth[opposite]
 	

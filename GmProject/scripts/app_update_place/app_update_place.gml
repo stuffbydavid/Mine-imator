@@ -24,13 +24,14 @@ function app_update_place()
 		
 			place_target_tl = null
 			place_view_pos = null
+			place_block_pos = null
 		}
 	}
 	
 	if (place_view_pos = null)
 		return 0
 	
-	// Update placed object or build wireframe box with place data from the previous render
+	// Update placed object or wireframe using the adjusted placement hit
 	var oldpos, oldrot, oldtlroot, oldboxmat, oldboxrender;
 	oldpos = place_pos != null ? point3D_copy(place_pos) : null
 	oldrot = point3D_copy(place_rot)
@@ -42,6 +43,8 @@ function app_update_place()
 	place_target_tl_root = null
 	place_pos = place_view_pos
 	place_rot = vec3(0)
+	place_block_pos = null
+	
 	build_box_render = null
 		
 	if (!place_view_air)
@@ -56,12 +59,13 @@ function app_update_place()
 			if (place_target_tl.type = e_tl_type.MODEL_PART && place_target_tl.part_of != null)
 				place_target_tl_root = place_target_tl.part_of
 					
-			// Adjust position/rotation by scenery
+			// Snap placement to the target's block grid
 			app_update_place_scenery()
 
-			// Find parent actions in build mode
+			// Build placement
 			if (place_build)
 			{
+				// Find parent actions
 				var action = null;
 				with (build_settings)
 					action = tl_get_place_parent_action(app.place_target_tl)
@@ -104,10 +108,13 @@ function app_update_place()
 			place_pos[Y] = snap(place_pos[Y] - rotpoint[Y], block_size) + rotpoint[Y]
 			place_pos[Z] = 0
 				
-			var boxpos = array_copy_1d(place_pos);
-			boxpos[Z] -= block_half_size
-			build_box_matrix = matrix_create(boxpos, vec3(0), vec3(1))
-			build_box_render = build_box_top
+			if (place_build)
+			{
+				var boxpos = array_copy_1d(place_pos);
+				boxpos[Z] -= block_half_size
+				build_box_matrix = matrix_create(boxpos, vec3(0), vec3(1))
+				build_box_render = build_box_top
+			}
 		}
 	}
 		

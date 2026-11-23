@@ -4,6 +4,7 @@ uniform sampler2D uDepthBuffer;
 uniform sampler2D uNormalBuffer;
 uniform sampler2D uMaterialBuffer;
 uniform sampler2D uSourceBuffer;
+uniform sampler2D uMask;
 
 uniform vec2 uRayDataSize;
 uniform float uStrength;
@@ -80,5 +81,5 @@ void main()
 		}
 	}
 	
-	gl_FragColor = vec4(light, 1.0);
+	gl_FragColor = vec4(light, texture2D(uMask, vTexCoord).a);
 }

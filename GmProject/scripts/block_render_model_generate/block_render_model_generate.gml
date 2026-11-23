@@ -3,12 +3,16 @@
 
 function block_render_model_generate(model)
 {
+	// Fully hidden timeline cells retain their models for neighbor connection rules
+	if (block_current != null && block_current.tl_mesh && block_current.tl_hide_model = "" && block_get_state_id_value(block_current, block_state_id_current, "visible") = "false")
+		return 0
+
 	instance_activate_object(model)
 	
 	var offx, offy, offz;
-	offx = block_pos[X] + model.offset[X]
-	offy = block_pos[Y] + model.offset[Y]
-	offz = block_pos[Z] + model.offset[Z]
+	offx = block_model_pos[X] + model.offset[X]
+	offy = block_model_pos[Y] + model.offset[Y]
+	offz = block_model_pos[Z] + model.offset[Z]
 
 	// Set emissive
 	if (block_vertex_emissive = null)

@@ -47,13 +47,13 @@ function settings_startup()
 	setting_timeline_compact = false
 	setting_timeline_show_markers = true
 	setting_timeline_select_jump = true
-	setting_timeline_hide_structure_blocks = true
 	setting_timeline_hide_nonanimated = false
 	setting_timeline_hide_ghosts = false
 	setting_timeline_frame_snap = false
 	setting_z_is_up = false
 	setting_separate_tool_modes = false
 	setting_show_shortcuts_bar = true
+	setting_work_camera_fov = 45
 	setting_gizmos_face_camera = true
 	setting_fade_gizmos = true
 	setting_camera_lock_mouse = true
@@ -75,7 +75,8 @@ function settings_startup()
 	setting_renderer_settings_location = "right_secondary"
 	setting_ground_editor_location = "right_secondary"
 	setting_object_editor_location = "right_secondary"
-	setting_build_mode_location = "right_secondary"
+	setting_build_tool_location = "right_secondary"
+	setting_build_hotbars_location = "right_secondary"
 	setting_timeline_editor_location = "right"
 	setting_frame_editor_location = "right_secondary"
 	setting_settings_location = "right_secondary"

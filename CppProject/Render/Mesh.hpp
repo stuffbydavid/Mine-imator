@@ -14,6 +14,9 @@ namespace CppProject
 		// Create buffers from the stored vertex/index data, optionally releasing the data on the CPU side.
 		void CreateBuffers(BoolType freeCpuData = true);
 
+		// Upload modified buffers to the GPU.
+		void UpdateBuffers();
+
 		// Returns whether the GPU buffers are loaded.
 		BoolType HasBuffers() const;
 

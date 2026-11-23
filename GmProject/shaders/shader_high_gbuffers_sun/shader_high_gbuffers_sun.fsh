@@ -12,12 +12,6 @@ void main()
 	vec3 normalWorld;
 	float roughness, metallic, F0, sss;
 	
-	#ifdef CPP_SUN_GBUFFERS
-		vec2 gradient0 = getPCSSReceiverDepthGradient(vScreenCoord0.xy, vScreenCoord0.z);
-		vec2 gradient1 = getPCSSReceiverDepthGradient(vScreenCoord1.xy, vScreenCoord1.z);
-		vec2 gradient2 = getPCSSReceiverDepthGradient(vScreenCoord2.xy, vScreenCoord2.z);
-	#endif
-	
 	getGbuffers(baseColor, normalWorld, roughness, metallic, F0, sss, depth, normal, material, glint);
 	
 	gl_FragData[0] = depth;
@@ -27,7 +21,7 @@ void main()
 	
 	#ifdef CPP_SUN_GBUFFERS
 		vec3 light, spec;
-		getSunLighting(baseColor, normalWorld, roughness, metallic, F0, sss, gradient0, gradient1, gradient2, light, spec);
+		getSunLighting(baseColor, normalWorld, roughness, metallic, F0, sss, light, spec);
 		
 		if (uGlintPass > 0)
 		{

@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "Schematic.hpp"
 
 #include "AppHandler.hpp"
 #include "AppWindow.hpp"
@@ -139,7 +140,7 @@ namespace CppProject
 		res_load_scenery_filter_mask(Scope<obj_resource>(resId));
 		res_load_scenery_block_map(Scope<obj_resource>(resId));
 
-		World::ProcessBuilderEntities();
+		World::ProcessBuilderEntities(schematic.get());
 
 		if (schematic)
 		{

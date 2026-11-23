@@ -26,6 +26,7 @@ function tab_timeline_editor_path()
 	if (tl_edit.path_shape != "none")
 	{
 		tab_collapse_start()
+		dy += 12
 		
 		tab_control_dragger()
 		draw_dragger("timeline_editor/path/shape/radius", dx, dy, dragger_width, tl_edit.path_shape_radius, 0.1, 0.01, no_limit, 8, 0.01, tab.path.tbx_radius, action_tl_path_shape_radius)

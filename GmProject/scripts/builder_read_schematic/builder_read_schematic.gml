@@ -1,4 +1,4 @@
-/// @desc Read a .schematic file, returns whether successful.
+/// @desc Read a Sponge .schem or legacy .schematic file, returns whether successful.
 
 function builder_read_schematic(map)
 {
