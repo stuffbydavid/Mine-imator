@@ -66,6 +66,10 @@ function render_world_tl()
 	if (render_res_diffuse != null && render_res_diffuse.object_index = obj_resource)
 		render_apply_res(render_res_diffuse)
 	
+	// Model parts without shapes draw nothing, skip their uniforms
+	if (type = e_tl_type.MODEL_PART && (model_part = null || render_res_diffuse = null || model_part.shape_list = null))
+		return 0
+	
 	render_set_culling(!backfaces)
 	
 	shader_blend_color = render_fast_pass ? c_white : value_inherit[e_value.RGB_MUL]

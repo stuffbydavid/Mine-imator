@@ -7,7 +7,8 @@
 
 function render_generate_item(slot = null, is3d = null, resdif = null, resnorm = null, resmat = null)
 {
-	var res;
+	var res, cached;
+	cached = false
 	if (slot = null)
 	{
 		slot = item_slot
@@ -31,15 +32,12 @@ function render_generate_item(slot = null, is3d = null, resdif = null, resnorm =
 		item_3d = is3d
 		item_custom_slot = value[e_value.CUSTOM_ITEM_SLOT]
 		res = item_res
+		
+		// Timeline buffers are shared through the item buffer cache
+		cached = true
 	}
 
 	res = res_eval(res)
-	
-	// Create vertex buffer
-	if (item_vbuffer)
-		vbuffer_destroy(item_vbuffer)
-	
-	item_vbuffer = vbuffer_start()
 	
 	// Calculate texture position and size
 	var texsize, texpos, slotpos, slotsize, slottexsize, slottex, sheet, sheetsize, sheettex;
@@ -57,6 +55,25 @@ function render_generate_item(slot = null, is3d = null, resdif = null, resnorm =
 	item_sheet = sheet
 	sheetsize = (res.type = e_res_type.PACK) ? minecraft_item_sheet_size[sheet] : res.item_sheet_size
 	sheettex = res.item_sheet_texture[sheet]
+	
+	// The mesh only depends on the texture, sheet size, slot and 3D setting (texture IDs are never reused)
+	var cachekey = "";
+	if (cached)
+	{
+		cachekey = string(sheettex != null ? sheettex : res.texture) + "_" + string(sheetsize[X]) + "_" + string(sheetsize[Y]) + "_" + string(slot) + "_" + (is3d ? "1" : "0")
+		
+		if (ds_map_exists(render_item_vbuffer_map, cachekey))
+		{
+			item_vbuffer = render_item_vbuffer_map[?cachekey]
+			return 0
+		}
+	}
+	
+	// Create vertex buffer, cached buffers are owned by the cache
+	if (item_vbuffer && !cached)
+		vbuffer_destroy(item_vbuffer)
+	
+	item_vbuffer = vbuffer_start()
 	
 	if (sheettex != null)
 	{
@@ -151,4 +168,7 @@ function render_generate_item(slot = null, is3d = null, resdif = null, resnorm =
 	}
 	
 	vbuffer_done()
+	
+	if (cached)
+		render_item_vbuffer_map[?cachekey] = item_vbuffer
 }

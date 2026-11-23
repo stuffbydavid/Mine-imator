@@ -14,13 +14,7 @@ function render_update_item()
 		norres = value[e_value.TEXTURE_NORMAL_OBJ]
 		
 		if (!value[e_value.CUSTOM_ITEM_SLOT] && res = null)
-		{
-			if (item_vbuffer)
-			{
-				vbuffer_destroy(item_vbuffer)
-				item_vbuffer = null
-			}
-		}
+			item_vbuffer = null
 		
 		if (!value[e_value.CUSTOM_ITEM_SLOT])
 			slot = temp.item_slot

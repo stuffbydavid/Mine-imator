@@ -1,7 +1,5 @@
 function render_high_ssao()
 {
-	render_ssao_kernel = render_generate_sample_kernel(12)
-	
 	// Calculate SSAO
 	render_surface[0] = surface_require(render_surface[0], render_width, render_height)
 	surface_set_target(render_surface[0])

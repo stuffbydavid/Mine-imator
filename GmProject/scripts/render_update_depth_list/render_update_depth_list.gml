@@ -64,33 +64,51 @@ function render_update_depth_list(owner)
 			// Insert objects with a custom value
 			if (tl.render_depth_custom_current)
 			{
-				var index, list, pos;
+				var index, list, pos, lo, hi;
 				index = (tl.render_depth_current < 0) ? 0 : 1
 				list = render_depth_list[index]
 			
-				pos = 0
-				while (pos < customcount[index] && list[|pos].render_depth_current <= tl.render_depth_current)
-					pos++
-			
-				ds_list_insert(list, pos, tl)
+				// The list is sorted by depth, so keep halving the range to find where to insert
+				// Entries with the same depth stay in the order they were added
+				lo = 0
+				hi = customcount[index]
+				while (lo < hi)
+				{
+					pos = (lo + hi) div 2
+					if (list[|pos].render_depth_current <= tl.render_depth_current)
+						lo = pos + 1
+					else
+						hi = pos
+				}
+				
+				ds_list_insert(list, lo, tl)
 				customcount[index]++
 			}
 		
 			// Sort transparent objects by camera distance
 			else
 			{
-				var list, pos;
+				var list, pos, lo, hi;
 				list = render_depth_list[e_depth_list.POSITIVE]
 				tl.render_sort_distance =
 					sqr(tl.world_pos[X] - cam_from[X]) +
 					sqr(tl.world_pos[Y] - cam_from[Y]) +
 					sqr(tl.world_pos[Z] - cam_from[Z])
 			
-				pos = customcount[e_depth_list.POSITIVE]
-				while (pos < ds_list_size(list) && list[|pos].render_sort_distance >= tl.render_sort_distance)
-					pos++
-			
-				ds_list_insert(list, pos, tl)
+				// Transparent entries are sorted from far to near, so keep halving the range to find where to insert
+				// Entries with the same distance stay in the order they were added
+				lo = customcount[e_depth_list.POSITIVE]
+				hi = ds_list_size(list)
+				while (lo < hi)
+				{
+					pos = (lo + hi) div 2
+					if (list[|pos].render_sort_distance >= tl.render_sort_distance)
+						lo = pos + 1
+					else
+						hi = pos
+				}
+				
+				ds_list_insert(list, lo, tl)
 			}
 		}
 	
