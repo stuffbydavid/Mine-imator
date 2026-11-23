@@ -43,7 +43,7 @@ function render_shadow_cache_update(lightlist, sunout)
 	while (!is_undefined(cachekey))
 	{
 		if (!ds_map_exists(activekeys, cachekey))
-			removekeys = array_add(removekeys, cachekey)
+			removekeys[array_length(removekeys)] = cachekey
 		
 		cachekey = ds_map_find_next(render_shadow_cache, cachekey)
 	}

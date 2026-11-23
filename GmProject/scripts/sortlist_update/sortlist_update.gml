@@ -81,9 +81,9 @@ function sortlist_update(slist)
 			else if (slist.column_sort = null)
 			{
 				if (match >= 2)
-					array_add(namelist, value, false)
+					namelist[array_length(namelist)] = value
 				else
-					array_add(variantlist, value, false)
+					variantlist[array_length(variantlist)] = value
 			}
 		}
 		

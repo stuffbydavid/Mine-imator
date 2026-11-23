@@ -36,7 +36,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		if (updateik && !updatepose && (curtl.type = e_tl_type.CHARACTER || curtl.type = e_tl_type.EQUIPMENT || curtl.type = e_tl_type.SPECIAL_BLOCK || curtl.type = e_tl_type.MODEL))
 			for (var t = 0; t < ds_list_size(curtl.tree_list); t++)
 				if (curtl.tree_list[|t].inherit_pose)
-					array_add(app.project_inherit_pose_array, curtl.tree_list[|t])
+					app.project_inherit_pose_array[array_length(app.project_inherit_pose_array)] = curtl.tree_list[|t]
 		
 		if (!curtl.update_matrix && curtl.update_value_flags = 0)
 			continue
@@ -377,7 +377,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			app.project_ik_part_array = []
 			with (obj_timeline)
 				if (tl_supports_ik())
-					array_add(app.project_ik_part_array, id)
+					app.project_ik_part_array[array_length(app.project_ik_part_array)] = id
 		}
 		
 		tl_update_ik(app.project_ik_part_array)

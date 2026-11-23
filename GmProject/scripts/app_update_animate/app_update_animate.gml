@@ -62,19 +62,19 @@ function app_update_animate()
 		
 		// Get path timelines
 		if (type = e_tl_type.PATH)
-			array_add(app.project_path_tl_array, id)
+			app.project_path_tl_array[array_length(app.project_path_tl_array)] = id
 		
 		// Get timelines that use paths
 		if (value[e_value.PATH_OBJ] != null)
 		{
-			array_add(app.project_use_path_tl_array, id)
+			app.project_use_path_tl_array[array_length(app.project_use_path_tl_array)] = id
 			if (update_matrix || update_value_flags != 0 || path_follow_update)
 				updatepaths = true
 		}
 		
 		// Get timelines that use IK (Uses "End offset", bend on "Lower", and only on "X" axis)
 		if (tl_supports_ik())
-			array_add(app.project_ik_part_array, id)
+			app.project_ik_part_array[array_length(app.project_ik_part_array)] = id
 		
 		// Update camera zoom
 		if (type = e_tl_type.CAMERA)
@@ -98,7 +98,7 @@ function app_update_animate()
 		
 		// Update spawner
 		if (type = e_temp_type.PARTICLE_SPAWNER)
-			array_add(spawnerarr, id)
+			spawnerarr[array_length(spawnerarr)] = id
 		
 		// Add light
 		if (type_is_light(type) && value_inherit[e_value.VISIBLE])

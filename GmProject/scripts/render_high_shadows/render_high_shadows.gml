@@ -53,7 +53,7 @@ function render_high_shadows()
 			continue
 		}
 		
-		lightlist = array_add(lightlist, id)
+		lightlist[array_length(lightlist)] = id
 	}
 	
 	render_shadow_cache_update(lightlist, sunout)

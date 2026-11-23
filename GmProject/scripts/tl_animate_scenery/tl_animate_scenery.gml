@@ -50,7 +50,7 @@ function tl_animate_scenery()
 			}
 
 			if (match < 0)
-				array_add(parts, part)
+				parts[array_length(parts)] = part
 			else
 				used[match] = true
 		}
