@@ -6,7 +6,7 @@ function render_shadow_cache_free()
 	
 	while (!is_undefined(key))
 	{
-		keys[array_length(keys)] = key
+		array_push(keys, key)
 		key = ds_map_find_next(render_shadow_cache, key)
 	}
 	

@@ -177,6 +177,12 @@ void Accessor::resolve(ResolveScope* scope)
 				if (this->callParameters[0]->type == Type::Accessor)
 					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
 			}
+			else if (this->name == STR(array_push)) // array_push(array<typeof arg>, arg)
+			{
+				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Array, inputTypes[1]));
+				if (this->callParameters[0]->type == Type::Accessor)
+					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
+			}
 
 			else if (this->name == STR(choose) || this->name == STR(max) || this->name == STR(min)) // choose/min/max(arg0, arg1...) returns typeof args
 			{
@@ -980,6 +986,32 @@ String Accessor::toCpp(ResolveScope* scope)
 				}
 			}
 
+			bool isArrayPush = (this->name == STR(array_push) && this->callParameters.size() == 2);
+			bool isArrayAdd = (this->name == STR(array_add) && this->callParameters.size() >= 2);
+			if ((isArrayPush || isArrayAdd) && this->nextInChain == nullptr && this->arrayAccessors.empty())
+			{
+				Expression* arrExpr = this->callParameters[0];
+				Expression* valExpr = this->callParameters[1];
+				bool directAppend = isArrayPush ||
+					(this->callParameters.size() >= 3 && this->callParameters[2]->isFalseLiteral()) ||
+					(this->callParameters.size() == 2 &&
+					 valExpr->resolvedType->cppType != DataType::CppType::ArrType &&
+					 valExpr->resolvedType->cppType != DataType::CppType::VarType);
+
+				if (directAppend &&
+					(arrExpr->resolvedType->cppType == DataType::CppType::ArrType ||
+					 arrExpr->resolvedType->cppType == DataType::CppType::VarType))
+				{
+					if (Accessor* refAcc = arrExpr->unwrapTailAccessor(); refAcc != nullptr && refAcc->arrayAccessors.size() > 0)
+						refAcc->markAsAssign(this);
+					String arrCpp = arrExpr->toCpp(argumentScope);
+					String valCpp = valExpr->toCpp(argumentScope);
+					if (arrExpr->resolvedType->cppType == DataType::CppType::ArrType)
+						return arrCpp + ".Append(" + valCpp + ")";
+					return arrCpp + ".Arr().Append(" + valCpp + ")";
+				}
+			}
+
 			int arg = 0;
 			for (Expression* expr : this->callParameters)
 			{
@@ -995,36 +1027,20 @@ String Accessor::toCpp(ResolveScope* scope)
 				}
 
 				bool createRef = (targetFunc != nullptr && arg < static_cast<int>(args.size()) && args[arg]->isReference) ||
-					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType());
+					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType()) ||
+					(this->name == STR(array_push) && arg == 0);
 				if (createRef)
 				{
 					// Reference arguments must access the stored element rather than a Value copy
-					Expression* refExpr = expr;
-					while (refExpr->type == Type::Parenthesis)
-						refExpr = static_cast<ExpressionParenthesis*>(refExpr)->expr;
-					if (refExpr->type == Type::Accessor)
-					{
-						Accessor* refAcc = static_cast<Accessor*>(refExpr);
-						while (refAcc->nextInChain != nullptr)
-							refAcc = refAcc->nextInChain;
-						if (refAcc->arrayAccessors.size() > 0)
-							refAcc->markAsAssign(this);
-					}
+					if (Accessor* refAcc = expr->unwrapTailAccessor(); refAcc != nullptr && refAcc->arrayAccessors.size() > 0)
+						refAcc->markAsAssign(this);
 				}
 				else if (argumentIsTypedValue(targetFunc, funcSign, args, arg))
 				{
 					// Typed arguments are converted from the borrowed element before the call, avoiding a variant copy
-					Expression* valueExpr = expr;
-					while (valueExpr->type == Type::Parenthesis)
-						valueExpr = static_cast<ExpressionParenthesis*>(valueExpr)->expr;
-					if (valueExpr->type == Type::Accessor)
-					{
-						Accessor* valueAcc = static_cast<Accessor*>(valueExpr);
-						while (valueAcc->nextInChain != nullptr)
-							valueAcc = valueAcc->nextInChain;
-						if (valueAcc->arrayAccessors.size() == 1 && valueAcc->callParameters == nullptr && valueAcc->assignExpr == nullptr)
-							valueAcc->borrowArgument = true;
-					}
+					if (Accessor* valueAcc = expr->unwrapTailAccessor();
+						valueAcc != nullptr && valueAcc->arrayAccessors.size() == 1 && valueAcc->callParameters == nullptr && valueAcc->assignExpr == nullptr)
+						valueAcc->borrowArgument = true;
 				}
 				String exprCpp = expr->toCpp(argumentScope);
 				if (createRef)

@@ -11,7 +11,7 @@ function tl_update_values_ease(vid, cachechannel = false)
 		nextval = keyframe_next.value[vid]
 		
 		if (cachechannel && curval != nextval)
-			keyframe_value_cache_channels[@array_length(keyframe_value_cache_channels)] = vid
+			array_push(keyframe_value_cache_channels, vid)
 
 		if ((oldval = curval) && (oldval = nextval))
 			return false

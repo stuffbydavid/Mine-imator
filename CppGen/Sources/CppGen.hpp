@@ -488,6 +488,12 @@ public:
 
 	// Returns the resolved type as a C++ type
 	DataType::CppType getResolvedCppType();
+
+	// Unwraps parentheses and returns the tail accessor in a chain, or nullptr
+	Accessor* unwrapTailAccessor();
+
+	// Returns whether the expression is the literal false
+	bool isFalseLiteral();
 };
 
 // An expression in parenthesis

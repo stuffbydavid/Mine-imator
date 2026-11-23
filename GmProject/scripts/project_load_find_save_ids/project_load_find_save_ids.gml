@@ -219,7 +219,7 @@ function project_load_find_save_ids(isproject = false)
 			parent.tree_array = []
 		
 		if (parent_tree_index < 0)
-			parent.tree_array[array_length(parent.tree_array)] = id
+			array_push(parent.tree_array, id)
 		else
 			parent.tree_array[parent_tree_index] = id
 	}

@@ -7,8 +7,8 @@ function tl_update_list_indent(tllevel)
 	if (parent_filter != app)
 	{
 		level_display = array_copy_1d(parent_filter.level_display)
-		level_display[array_length(level_display)] = true
-		
+		array_push(level_display, true)
+
 		// Check if grandparent trees ended, cut off connection display
 		if (parent_filter.parent_filter != app)
 		{

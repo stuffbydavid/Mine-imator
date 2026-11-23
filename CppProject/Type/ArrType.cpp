@@ -157,14 +157,12 @@ namespace CppProject
 		Printer::indent--;
 	}
 
-	ArrType array_add(VarType arrRef, VarType vals, BoolType merge)
+	void array_add(VarType arrRef, const VarType& vals, BoolType merge)
 	{
 		if (vals.IsArray() && merge)
 			arrRef.Arr().Append(vals.Arr(), 0);
 		else
 			arrRef.Arr().Append(vals);
-
-		return arrRef;
 	}
 
 	BoolType array_contains(VarType arrRef, VarType val)

@@ -136,7 +136,7 @@ function block_animate(root)
 			}
 			
 			// Update
-			pattern_update[array_length(pattern_update)] = id
+			array_push(pattern_update, id)
 		}
 	}
 }

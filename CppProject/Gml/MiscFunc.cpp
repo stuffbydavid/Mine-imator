@@ -51,6 +51,11 @@ namespace CppProject
 		return arrRef.Arr().Size();
 	}
 
+	void array_push(VarType arrRef, VarType val)
+	{
+		arrRef.Arr().Append(val);
+	}
+
 	VarType array_shift(VarType arrRef)
 	{
 		return arrRef.Arr().Shift();

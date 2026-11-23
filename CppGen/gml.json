@@ -236,6 +236,7 @@
         "array_create": { "return": "array", "varArgs": true },
         "array_equals": { "return": "int", "args": [ "variant", "variant" ], "varCreateRef": true },
         "array_length": { "return": "int", "args": [ "variant" ], "varCreateRef": true },
+        "array_push": { "return": "void", "args": [ "variant", "variant" ] },
         "array_shift": { "return": "unknown", "args": [ "variant" ], "varCreateRef": true },
         "asset_get_index": { "return": "unknown", "args": [ "string" ] },
         "audio_create_buffer_sound": { "return": "int", "args": [ "int", "int", "int", "int", "int", "int" ] },

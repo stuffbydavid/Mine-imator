@@ -110,17 +110,17 @@ void Function::writeCppArguments(DeclarationList::WriteFormat format)
 
 void Function::writeCppHeader()
 {
-	for (StringId name : this->constRefArgs)
+	for (StringId argName : this->constRefArgs)
 	{
 		bool found = false;
 		if (!this->isCppSeparate && !this->varArgs && this->args != nullptr)
 			for (Declaration* arg : this->args->declarations)
-				if (arg->name == name && !arg->isReference)
+				if (arg->name == argName && !arg->isReference)
 					found = true;
 
 		if (!found)
 		{
-			Console::writeLine("FATAL ERROR: ConstRef {0} must name an ordinary argument of a generated function in {1}", name, this->sourceFile);
+			Console::writeLine("FATAL ERROR: ConstRef {0} must name an ordinary argument of a generated function in {1}", argName, this->sourceFile);
 			std::exit(1);
 		}
 	}

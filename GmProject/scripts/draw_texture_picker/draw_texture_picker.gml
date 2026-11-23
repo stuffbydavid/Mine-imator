@@ -55,7 +55,7 @@ function draw_texture_picker(picker, select, texlist, slots, sheetsizes, xx, yy,
 				{
 					var slotname = string_lower(names[|slot]);
 					if (string_pos(searchtext, slotname) > 0 || string_pos(searchid, slotname) > 0)
-						searchslots[array_length(searchslots)] = slotoffset + slot
+						array_push(searchslots, slotoffset + slot)
 				}
 			}
 			slotoffset += slots[sheet]

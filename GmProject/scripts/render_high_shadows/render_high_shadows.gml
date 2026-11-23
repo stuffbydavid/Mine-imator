@@ -52,10 +52,10 @@ function render_high_shadows()
 			
 			continue
 		}
-		
-		lightlist[array_length(lightlist)] = id
+
+		array_push(lightlist, id)
 	}
-	
+
 	render_shadow_cache_update(lightlist, sunout)
 
 	// Initialize targets

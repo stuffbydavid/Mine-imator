@@ -201,8 +201,15 @@ function block_load_state_file(fn, block, state)
 								
 								// Apply to matching state IDs
 								for (var i = 0; i < block.state_id_amount; i++)
+								{
 									if (state_vars_match_state_id(condvars, block, i))
-										other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+									{
+										if (!is_array(other.state_id_map[?i]))
+											other.state_id_map[?i] = []
+										
+										array_add(other.state_id_map[?i], id)
+									}
+								}
 							}
 						}
 						else if (ds_list_valid(andlist)) // AND, all of multiple sets of conditions must match
@@ -230,7 +237,7 @@ function block_load_state_file(fn, block, state)
 									cond = ds_map_find_next(curcondmap, cond)
 								}
 								
-								condarr = array_add(condarr, condvars, false)
+								array_add(condarr, condvars, false)
 							}
 							
 							// Apply to matching state IDs
@@ -248,7 +255,12 @@ function block_load_state_file(fn, block, state)
 								}
 								
 								if (match)
-									other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+								{
+									if (!is_array(other.state_id_map[?i]))
+										other.state_id_map[?i] = []
+									
+									array_add(other.state_id_map[?i], id)
+								}
 							}
 						}
 						
@@ -278,7 +290,10 @@ function block_load_state_file(fn, block, state)
 							{
 								if (state_vars_match_state_id(condvars, block, i))
 								{
-									other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+									if (!is_array(other.state_id_map[?i]))
+										other.state_id_map[?i] = []
+									
+									array_add(other.state_id_map[?i], id)
 									
 									if (firststate)
 									{
@@ -294,7 +309,10 @@ function block_load_state_file(fn, block, state)
 						// Always applies
 						for (var i = 0; i < block.state_id_amount; i++)
 						{
-							other.state_id_map[?i] = array_add(other.state_id_map[?i], id)
+							if (!is_array(other.state_id_map[?i]))
+								other.state_id_map[?i] = []
+							
+							array_add(other.state_id_map[?i], id)
 							
 							if (firststate)
 							{

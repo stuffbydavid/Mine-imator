@@ -34,7 +34,7 @@ function block_meshes_done()
 					{
 						hasmesh = true
 						block_vbuffer_depth_active[@d] = true
-						block_vbuffer_render_order[@array_length(block_vbuffer_render_order)] = index
+						array_push(block_vbuffer_render_order, index)
 					}
 					else
 					{

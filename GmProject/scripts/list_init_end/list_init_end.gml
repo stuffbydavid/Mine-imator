@@ -36,9 +36,9 @@ function list_init_end()
 				if (filtersort)
 				{
 					if (string_contains(name, string_lower(menu_filter)))
-						varmatchlist[array_length(varmatchlist)] = list.item[|i]
+						array_push(varmatchlist, list.item[|i])
 					else
-						nomatchlist[array_length(nomatchlist)] = list.item[|i]
+						array_push(nomatchlist, list.item[|i])
 				}
 				else if (!string_contains(name, string_lower(menu_filter)))
 				{

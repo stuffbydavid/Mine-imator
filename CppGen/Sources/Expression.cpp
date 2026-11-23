@@ -75,6 +75,27 @@ DataType::CppType Expression::getResolvedCppType()
 	return this->resolvedTypeCpp != DataType::CppType::Void ? this->resolvedTypeCpp : this->resolvedType->cppType;
 }
 
+Accessor* Expression::unwrapTailAccessor()
+{
+	Expression* expr = this;
+	while (expr->type == Type::Parenthesis)
+		expr = static_cast<ExpressionParenthesis*>(expr)->expr;
+	if (expr->type != Type::Accessor)
+		return nullptr;
+	Accessor* acc = static_cast<Accessor*>(expr);
+	while (acc->nextInChain != nullptr)
+		acc = acc->nextInChain;
+	return acc;
+}
+
+bool Expression::isFalseLiteral()
+{
+	if (this->type != Type::Accessor)
+		return false;
+	Accessor* acc = static_cast<Accessor*>(this);
+	return acc->nextInChain == nullptr && acc->callParameters == nullptr && acc->arrayAccessors.empty() && String(acc->name) == "false";
+}
+
 ExpressionParenthesis::ExpressionParenthesis(Expression* expr, int line) : Expression(line)
 {
 	this->expr = expr;

@@ -61,7 +61,7 @@ function tl_scenery_animate(removeparts = true)
 				match = posmatch
 
 			if (match < 0)
-				parts[array_length(parts)] = part
+				array_push(parts, part)
 			else
 				used[match] = true
 		}
