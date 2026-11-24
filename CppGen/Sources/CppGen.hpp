@@ -497,6 +497,12 @@ public:
 
 	// Returns whether evaluating the expression may call a function
 	bool containsCall();
+
+	// Adds the names of all accessors in the expression
+	void collectNames(List<StringId>& names);
+
+	// Reads an assigned array element by reference when the target can't alias or modify the array
+	static void borrowAssignedValue(Expression* value, Expression* target, StringId targetName);
 };
 
 // An expression in parenthesis

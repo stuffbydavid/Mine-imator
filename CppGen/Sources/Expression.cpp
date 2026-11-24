@@ -134,6 +134,60 @@ static void borrowOperand(Expression* operand, Expression* other, bool sequenced
 		acc->borrowArgument = true;
 }
 
+void Expression::collectNames(List<StringId>& names)
+{
+	switch (this->type)
+	{
+		case Type::Accessor:
+		{
+			for (Accessor* acc = static_cast<Accessor*>(this); acc != nullptr; acc = acc->nextInChain)
+			{
+				names.add(acc->name);
+				for (Accessor::ArrayAccessor* arr : acc->arrayAccessors)
+					if (arr->expr != nullptr)
+						arr->expr->collectNames(names);
+			}
+			break;
+		}
+		case Type::Parenthesis: static_cast<ExpressionParenthesis*>(this)->expr->collectNames(names); break;
+		case Type::UnaryOperation: static_cast<UnaryOperation*>(this)->expr->collectNames(names); break;
+		case Type::BinaryOperation:
+			static_cast<BinaryOperation*>(this)->left->collectNames(names);
+			static_cast<BinaryOperation*>(this)->right->collectNames(names);
+			break;
+		case Type::TernaryCondition:
+		{
+			TernaryCondition* tern = static_cast<TernaryCondition*>(this);
+			tern->expr1->collectNames(names);
+			tern->expr2->collectNames(names);
+			tern->expr3->collectNames(names);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+void Expression::borrowAssignedValue(Expression* value, Expression* target, StringId targetName)
+{
+	if (value->type != Type::Accessor || value->containsCall() || (target != nullptr && target->containsCall()))
+		return;
+
+	// The target must not share any name with the value, since assigning could free or resize the array
+	List<StringId> valueNames, targetNames;
+	value->collectNames(valueNames);
+	if (target != nullptr)
+		target->collectNames(targetNames);
+	else
+		targetNames.add(targetName);
+
+	for (const StringId& name : targetNames)
+		if (valueNames.contains(name))
+			return;
+
+	borrowOperand(value, value, true);
+}
+
 bool Expression::isFalseLiteral()
 {
 	if (this->type != Type::Accessor)

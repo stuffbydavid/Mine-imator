@@ -167,7 +167,12 @@ void DeclarationList::writeCpp(ResolveScope* scope, WriteFormat format, String e
 
 						CodeWriter::write(nameToCpp(decl->name));
 						if (decl->expr != nullptr)
+						{
+							// Typed locals convert from a borrowed element, variants are copied either way
+							if (typeCpp != "VarType" && typeCpp != "StringType")
+								Expression::borrowAssignedValue(decl->expr, nullptr, decl->name);
 							CodeWriter::write(" = " + decl->expr->toCpp(scope));
+						}
 					}
 					jj++;
 				}
@@ -449,6 +454,10 @@ void AssignStatement::resolve(ResolveScope* scope)
 
 void AssignStatement::writeCpp(ResolveScope* scope)
 {
+	// String targets convert with .Str(), which needs a mutable value
+	if (this->expr != nullptr && this->target->writtenType->cppType != DataType::CppType::StringType)
+		Expression::borrowAssignedValue(this->expr, this->target, StringId());
+
 	CodeWriter::write(this->target->toCpp(scope));
 	if (this->expr != nullptr)
 	{
