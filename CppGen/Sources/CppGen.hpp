@@ -494,6 +494,9 @@ public:
 
 	// Returns whether the expression is the literal false
 	bool isFalseLiteral();
+
+	// Returns whether evaluating the expression may call a function
+	bool containsCall();
 };
 
 // An expression in parenthesis
