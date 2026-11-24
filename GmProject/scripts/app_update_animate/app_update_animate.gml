@@ -6,8 +6,9 @@ function app_update_animate()
 		return 0
 	
 	// Go through timelines
-	var envobj, updatevalues, spawnerarr, starttime, biomeani;
+	var envobj, updatevalues, updatepaths, spawnerarr, starttime, biomeani;
 	updatevalues = (timeline_marker_previous != timeline_marker)
+	updatepaths = (updatevalues || history_resource_update || project_path_update_id != project_matrix_update_id)
 	biomeani = (env_biome_next != env_biome)
 	spawnerarr = []
 	starttime = get_timer()
@@ -61,15 +62,19 @@ function app_update_animate()
 		
 		// Get path timelines
 		if (type = e_tl_type.PATH)
-			array_add(app.project_path_tl_array, id)
-		
+			array_push(app.project_path_tl_array, id)
+
 		// Get timelines that use paths
 		if (value[e_value.PATH_OBJ] != null)
-			array_add(app.project_use_path_tl_array, id)
-		
+		{
+			array_push(app.project_use_path_tl_array, id)
+			if (update_matrix || update_value_flags != 0 || path_follow_update)
+				updatepaths = true
+		}
+
 		// Get timelines that use IK (Uses "End offset", bend on "Lower", and only on "X" axis)
 		if (tl_supports_ik())
-			array_add(app.project_ik_part_array, id)
+			array_push(app.project_ik_part_array, id)
 		
 		// Update camera zoom
 		if (type = e_tl_type.CAMERA)
@@ -93,8 +98,8 @@ function app_update_animate()
 		
 		// Update spawner
 		if (type = e_temp_type.PARTICLE_SPAWNER)
-			array_add(spawnerarr, id)
-		
+			array_push(spawnerarr, id)
+
 		// Add light
 		if (type_is_light(type) && value_inherit[e_value.VISIBLE])
 		{
@@ -127,19 +132,27 @@ function app_update_animate()
 		{
 			if (path_update)
 			{
+				updatepaths = true
 				tl_update_path()
 				path_update = false
 			}
 		}
 	}
 	
-	// Update timelines with path transform
-	for (var i = 0; i < array_length(project_use_path_tl_array); i++)
-		project_use_path_tl_array[i].update_matrix = true
-	
-	if (array_length(project_use_path_tl_array) > 0)
+	// Keep stationary followers cached instead of invalidating the viewport every step
+	if (array_length(project_use_path_tl_array) > 0 &&
+		(updatepaths || project_path_update_id != project_matrix_update_id))
+	{
+		// Changed followers and followers of changed paths are flagged already, refresh all after loading or resource changes
+		if (project_path_update_id = null || history_resource_update)
+			for (var i = 0; i < array_length(project_use_path_tl_array); i++)
+				project_use_path_tl_array[i].path_follow_update = true
+
 		with (app)
 			tl_update_matrix(true)
+	}
+	
+	project_path_update_id = project_matrix_update_id
 
 	// Spawn particles
 	for (var i = 0; i < array_length(spawnerarr); i++)
@@ -229,9 +242,9 @@ function app_update_animate()
 		
 		env_biome_next = env_biome
 		
-		if (envobj.keyframe_animate && env_biome != envobj.keyframe_next_values[e_value.ENV_BIOME])
+		if (envobj.keyframe_animate && env_biome != envobj.keyframe_next.value[e_value.ENV_BIOME])
 		{
-			env_biome_next = envobj.keyframe_next_values[e_value.ENV_BIOME]
+			env_biome_next = envobj.keyframe_next.value[e_value.ENV_BIOME]
 			env_biome_mix = clamp(envobj.keyframe_progress_ease, 0, 1)
 			
 			with (obj_resource)

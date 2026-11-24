@@ -36,7 +36,7 @@ function view_toolbar_draw(view)
 	
 	draw_set_alpha(view.toolbar_alpha)
 	
-	draw_box(xx, yy, width, height, false, c_toolbar, a_toolbar)
+	draw_box(xx, yy, width, height, false, c_level_top, 1)
 	
 	xx += 4
 	yy += 4

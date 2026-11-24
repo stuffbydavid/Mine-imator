@@ -32,7 +32,7 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	if (!istl)
 		mat = matrix_get(matrix_world)
 	else if (model_part_shape_render_matrix_part != part || array_length(model_part_shape_render_matrix) != shapecount)
-		tl_update_model_shape_render()
+		tl_update_model_shape_render(true)
 	
 	render_blend_prev = null
 	render_alpha_prev = null
@@ -41,6 +41,16 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 	prevx = 0
 	prevy = 0
 	offsetset = false
+	
+	// Skip resubmitting textures and material settings shared by consecutive shapes
+	var materialset, formatlast, materiallast, normallast, diffuseset, diffuselast, diffusereslast;
+	materialset = false
+	formatlast = null
+	materiallast = null
+	normallast = null
+	diffuseset = false
+	diffuselast = null
+	diffusereslast = null
 	
 	var patterntex, custompattern;
 	patterntex = null
@@ -158,57 +168,78 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			
 			if (!render_fast_pass)
 			{
-				render_set_uniform_int(e_uniform.MATERIAL_FORMAT, model_part_shape_material_res[s])
-
-				if (model_part_shape_tex_material[s] = null)
+				var format, texmaterial, texnormal;
+				format = model_part_shape_material_res[s]
+				texmaterial = model_part_shape_tex_material[s]
+				texnormal = model_part_shape_tex_normal[s]
+				
+				if (!materialset || format != formatlast)
 				{
-					render_set_texture(null, 0, e_texture_channel.MATERIAL)
-
-					if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
-					{
-						shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
-						render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
-					}
-
-					if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
-					{
-						shader_uniform_metallic = value_inherit[e_value.METALLIC]
-						render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
-					}
-
-					if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
-					{
-						shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
-						render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
-					}
-				}
-				else
-				{
-					render_set_texture(render_res_material, model_part_shape_tex_material[s], e_texture_channel.MATERIAL)
-
-					if (shader_uniform_metallic != 1)
-					{
-						shader_uniform_metallic = 0
-						render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
-					}
-
-					if (shader_uniform_roughness != 0)
-					{
-						shader_uniform_roughness = 0
-						render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
-					}
-
-					if (shader_uniform_emissive != 1)
-					{
-						shader_uniform_emissive = 0
-						render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
-					}
+					render_set_uniform_int(e_uniform.MATERIAL_FORMAT, format)
+					formatlast = format
 				}
 				
-				if (model_part_shape_tex_normal[s] = null)
-					render_set_texture(null, 0, e_texture_channel.NORMAL)
-				else
-					render_set_texture(render_res_normal, model_part_shape_tex_normal[s], e_texture_channel.NORMAL)
+				if (!materialset || texmaterial != materiallast)
+				{
+					if (texmaterial = null)
+					{
+						render_set_texture(null, 0, e_texture_channel.MATERIAL)
+						
+						if (value_inherit[e_value.EMISSIVE] != shader_uniform_emissive)
+						{
+							shader_uniform_emissive = value_inherit[e_value.EMISSIVE]
+							render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+						}
+						
+						if (value_inherit[e_value.METALLIC] != shader_uniform_metallic)
+						{
+							shader_uniform_metallic = value_inherit[e_value.METALLIC]
+							render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+						}
+						
+						if (value_inherit[e_value.ROUGHNESS] != shader_uniform_roughness)
+						{
+							shader_uniform_roughness = value_inherit[e_value.ROUGHNESS]
+							render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+						}
+					}
+					else
+					{
+						render_set_texture(render_res_material, texmaterial, e_texture_channel.MATERIAL)
+						
+						if (shader_uniform_metallic != 1)
+						{
+							shader_uniform_metallic = 0
+							render_set_uniform(e_uniform.METALLIC, shader_uniform_metallic)
+						}
+						
+						if (shader_uniform_roughness != 0)
+						{
+							shader_uniform_roughness = 0
+							render_set_uniform(e_uniform.ROUGHNESS, shader_uniform_roughness)
+						}
+						
+						if (shader_uniform_emissive != 1)
+						{
+							shader_uniform_emissive = 0
+							render_set_uniform(e_uniform.EMISSIVE, shader_uniform_emissive)
+						}
+					}
+					
+					materiallast = texmaterial
+				}
+				
+				if (!materialset || texnormal != normallast)
+				{
+					if (texnormal = null)
+						render_set_texture(null, 0, e_texture_channel.NORMAL)
+					else
+						render_set_texture(render_res_normal, texnormal, e_texture_channel.NORMAL)
+					
+					normallast = texnormal
+				}
+				
+				materialset = true
 			}
 		}
 		else
@@ -265,7 +296,13 @@ function render_world_model_part(part, res, texnamemap, shapevbuffermap, colorna
 			}
 		}
 		
-		render_set_texture(texres, tex)
+		if (!diffuseset || tex != diffuselast || texres != diffusereslast)
+		{
+			render_set_texture(texres, tex)
+			diffuselast = tex
+			diffusereslast = texres
+			diffuseset = true
+		}
 		
 		// Blend color
 		var blendcolor, alpha;

@@ -50,21 +50,24 @@ namespace CppProject
 
 		// Gets a member reference in the object, if it doesn't exist in the struct it is dynamically created as
 		// VarType with a given type. An exception is thrown if it exists in another type than expected (in struct or map).
-		RealType& GetRealRef(IntType memberId);
-		IntType& GetIntRef(IntType memberId);
-		BoolType& GetBoolRef(IntType memberId);
-		StringType& GetStrRef(IntType memberId);
-		VecType& GetVecRef(IntType memberId);
-		MatrixType& GetMatRef(IntType memberId);
-		ArrType& GetArrRef(IntType memberId);
-		VarType& GetVarRef(IntType memberId);
+		inline RealType& GetRealRef(IntType memberId) { return GetRef<RealType, REAL_t>(memberId); }
+		inline IntType& GetIntRef(IntType memberId) { return GetRef<IntType, INTEGER_t>(memberId); }
+		inline BoolType& GetBoolRef(IntType memberId) { return GetRef<BoolType, BOOLEAN_t>(memberId); }
+		inline StringType& GetStrRef(IntType memberId) { return GetRef<StringType, STRING_t>(memberId); }
+		inline VecType& GetVecRef(IntType memberId) { return GetRef<VecType, VECTOR_t>(memberId); }
+		inline MatrixType& GetMatRef(IntType memberId) { return GetRef<MatrixType, MATRIX_t>(memberId); }
+		inline ArrType& GetArrRef(IntType memberId) { return GetRef<ArrType, ARRAY_t>(memberId); }
+		inline VarType& GetVarRef(IntType memberId) { return GetRef<VarType, VARIANT_t>(memberId); }
 		function<VarType(VarArgs)>& GetInstanceFunc(IntType funcId);
 
 		// Type and memory offset of a member relative to the "this" pointer.
 		struct Member
 		{
 			Type type = UNDEFINED_t;
-			long long memoryOffset = 0;
+			int32_t memoryOffset = 0;
+
+			Member() = default;
+			Member(Type type, long long memoryOffset) : type(type), memoryOffset(int32_t(memoryOffset)) {}
 		};
 
 		// Grow during registration and use direct indexing during script execution.
@@ -97,6 +100,25 @@ namespace CppProject
 
 	protected:
 		Object(QString name, IntType subAssetId);
+
+		// Struct members are resolved inline, other members and type errors are handled by GetRefSlow
+		template <typename T, Type enumType> inline T& GetRef(IntType memberId)
+		{
+			if (!memMap)
+				memMap = &memberMap[subAssetId];
+
+			if (static_cast<size_t>(memberId) < static_cast<size_t>(memMap->members.size()))
+			{
+				const Member& mem = memMap->members.constData()[memberId];
+				if (mem.type == enumType)
+					return *reinterpret_cast<T*>(reinterpret_cast<char*>(this) + mem.memoryOffset);
+			}
+
+			return *static_cast<T*>(GetRefSlow(memberId, enumType));
+		}
+
+		void* GetRefSlow(IntType memberId, Type enumType);
+
 		const MemberTable* memMap = nullptr;
 		QHash<IntType, function<VarType(VarArgs)>>* funcMap = nullptr;
 		QHash<IntType, VarType> dynamicMemberMap; // Maps member ids to VarTypes that are created in runtime

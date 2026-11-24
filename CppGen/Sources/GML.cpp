@@ -134,6 +134,7 @@ void GML::parseGMLScript(String file)
 	bool isCppSeparate = false;
 	String cppSeparateHeader = "";
 	List<StringId> arrRefs;
+	List<StringId> constRefArgs;
 	const int gmlLength = static_cast<int>(gml.size());
 
 	// Iterate characters and find tokens
@@ -192,6 +193,8 @@ void GML::parseGMLScript(String file)
 						if (!arrRefs.contains(name))
 							arrRefs.add(name);
 					}
+					else if (words[0] == "ConstRef")
+						constRefArgs.add(name);
 					else
 					{
 						DataType* type = makeObject<DataType>(StringId(words[0]));
@@ -469,7 +472,9 @@ void GML::parseGMLScript(String file)
 					currentFunction = makeObject<Function>("", gml, isCppSeparate, cppSeparateHeader);
 					currentFunction->sourceFile = file;
 					currentFunction->arrRefs = arrRefs;
+					currentFunction->constRefArgs = constRefArgs;
 					arrRefs.clear();
+					constRefArgs.clear();
 					if (isCppSeparate && currentFunction->arrRefs.size() > 0)
 					{
 						Console::writeLine("FATAL ERROR: ArrRef cannot be used with CppSeparate in {0}", file);

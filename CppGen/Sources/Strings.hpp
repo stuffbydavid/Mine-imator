@@ -118,6 +118,7 @@ namespace CppGen
 	ADD(test) \
 	ADD(array_create) \
 	ADD(array_length) \
+	ADD(array_push) \
 	ADD(choose) \
 	ADD(max) \
 	ADD(min) \

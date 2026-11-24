@@ -18,6 +18,7 @@ namespace CppProject
 		VecType(const ArrType& arr); // vec(arr)
 
 		VecType& operator=(const VecType& v); // vec = otherVec
+		BoolType operator==(const VecType& v) const { return x == v.x && y == v.y && z == v.z && w == v.w; }
 		VecType operator-() const; // -vec
 		VecType operator+(const VecType& v) const; // vec + otherVec
 		VecType operator-(const VecType& v) const; // vec - otherVec

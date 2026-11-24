@@ -177,6 +177,12 @@ void Accessor::resolve(ResolveScope* scope)
 				if (this->callParameters[0]->type == Type::Accessor)
 					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
 			}
+			else if (this->name == STR(array_push)) // array_push(array<typeof arg>, arg)
+			{
+				this->callParameters[0]->applyType(scope, DataType(DataType::Type::Array, inputTypes[1]));
+				if (this->callParameters[0]->type == Type::Accessor)
+					static_cast<Accessor*>(this->callParameters[0])->markAsAssign(this);
+			}
 
 			else if (this->name == STR(choose) || this->name == STR(max) || this->name == STR(min)) // choose/min/max(arg0, arg1...) returns typeof args
 			{
@@ -497,6 +503,107 @@ bool Accessor::applyType(ResolveScope* scope, const DataType& inputType)
 	return changed;
 }
 
+// Returns whether a C++ argument is a non-variant value or const reference, initialized by copying from a borrowed array element
+static bool cppArgIsTypedValue(std::string type)
+{
+	size_t defaultPos = type.find('=');
+	if (defaultPos != std::string::npos)
+		type = type.substr(0, defaultPos);
+
+	if (type.find("VarType") != std::string::npos || type.find("VarArgs") != std::string::npos || type.find("ArrType") != std::string::npos)
+		return false;
+
+	if (type.find('&') != std::string::npos && type.find("const") == std::string::npos)
+		return false;
+
+	for (const char* typed : { "RealType", "IntType", "BoolType", "StringType", "VecType", "MatrixType" })
+		if (type.find(typed) != std::string::npos)
+			return true;
+
+	return false;
+}
+
+// Returns whether argument arg of a call receives a typed copy, so an array element argument can be read with ValueRef()
+static bool argumentIsTypedValue(Function* targetFunc, GML::FunctionSignature* funcSign, const List<Variable*>& args, int arg)
+{
+	if (funcSign != nullptr)
+	{
+		if (funcSign->varArgs || arg >= static_cast<int>(funcSign->argTypes.size()))
+			return false;
+
+		switch (funcSign->argTypes[arg]->cppType)
+		{
+			case DataType::CppType::RealType:
+			case DataType::CppType::IntType:
+			case DataType::CppType::BoolType:
+			case DataType::CppType::StringType:
+			case DataType::CppType::VecType:
+			case DataType::CppType::MatrixType:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	if (targetFunc == nullptr || targetFunc->varArgs)
+		return false;
+
+	// Separate C++ implementations declare their own signature, which may differ from the GML argument types
+	if (targetFunc->isCppSeparate)
+	{
+		const std::string& header = targetFunc->cppSeparateHeader;
+		size_t start = header.find('('), end = header.rfind(')');
+		if (start == std::string::npos || end == std::string::npos || end <= start)
+			return false;
+
+		std::vector<std::string> headerArgs;
+		std::string current;
+		int depth = 0;
+		for (size_t i = start + 1; i < end; i++)
+		{
+			char c = header[i];
+			if (c == '(' || c == '<')
+				depth++;
+			else if (c == ')' || c == '>')
+				depth--;
+
+			if (c == ',' && depth == 0)
+			{
+				headerArgs.push_back(current);
+				current.clear();
+			}
+			else
+				current += c;
+		}
+		if (current.find_first_not_of(" 	") != std::string::npos)
+			headerArgs.push_back(current);
+
+		if (!headerArgs.empty() && headerArgs[0].find("Scope") != std::string::npos)
+			headerArgs.erase(headerArgs.begin());
+
+		if (arg >= static_cast<int>(headerArgs.size()))
+			return false;
+
+		return cppArgIsTypedValue(headerArgs[arg]);
+	}
+
+	if (arg >= static_cast<int>(args.size()) || args[arg]->isReference)
+		return false;
+
+	switch (args[arg]->type->cppType)
+	{
+		case DataType::CppType::RealType:
+		case DataType::CppType::IntType:
+		case DataType::CppType::BoolType:
+		case DataType::CppType::StringType:
+		case DataType::CppType::VecType:
+		case DataType::CppType::MatrixType:
+			return true;
+		default:
+			return false;
+	}
+}
+
 String Accessor::toCpp(ResolveScope* scope)
 {
 	String cpp = "";
@@ -612,6 +719,7 @@ String Accessor::toCpp(ResolveScope* scope)
 	String parCpp = "";
 	bool parenthesis = true;
 	String accessorFunc = "";
+	bool borrowArray = false;
 
 	if (GML::constants.containsKey(this->name) || GML::keywords.contains(this->name) || this->name == STR(argument) || this->name == STR(argument_count)) // GML* Keyword
 		cpp += nameToCpp(this->name);
@@ -719,6 +827,8 @@ String Accessor::toCpp(ResolveScope* scope)
 			else if (var->scope == this->func->name || (thisPtrValid && var->scope == this->func->structObject->name)) // Instance (with same scope)
 			{
 				cpp += nameToCpp(this->name);
+				borrowArray = var->line == 0 && this->func->constRefArgs.contains(this->name) &&
+					this->writtenType->cppType == DataType::CppType::ArrType && this->assignExpr == nullptr;
 				if (var->isReference) // Get array/vector/matrix reference
 				{
 					if (this->assignExpr != nullptr) // arr[@i] = x
@@ -807,6 +917,8 @@ String Accessor::toCpp(ResolveScope* scope)
 						default: break;
 					}
 				}
+				if (accessorFunc == "Value" && dsType == DataType::Type::Array && (borrowArray || (this->borrowArgument && this->writtenType->cppType == DataType::CppType::ArrType)))
+					accessorFunc = "ValueRef";
 			}
 		}
 	}
@@ -874,25 +986,61 @@ String Accessor::toCpp(ResolveScope* scope)
 				}
 			}
 
+			bool isArrayPush = (this->name == STR(array_push) && this->callParameters.size() == 2);
+			bool isArrayAdd = (this->name == STR(array_add) && this->callParameters.size() >= 2);
+			if ((isArrayPush || isArrayAdd) && this->nextInChain == nullptr && this->arrayAccessors.empty())
+			{
+				Expression* arrExpr = this->callParameters[0];
+				Expression* valExpr = this->callParameters[1];
+				bool directAppend = isArrayPush ||
+					(this->callParameters.size() >= 3 && this->callParameters[2]->isFalseLiteral()) ||
+					(this->callParameters.size() == 2 &&
+					 valExpr->resolvedType->cppType != DataType::CppType::ArrType &&
+					 valExpr->resolvedType->cppType != DataType::CppType::VarType);
+
+				if (directAppend &&
+					(arrExpr->resolvedType->cppType == DataType::CppType::ArrType ||
+					 arrExpr->resolvedType->cppType == DataType::CppType::VarType))
+				{
+					if (Accessor* refAcc = arrExpr->unwrapTailAccessor(); refAcc != nullptr && refAcc->arrayAccessors.size() > 0)
+						refAcc->markAsAssign(this);
+					String arrCpp = arrExpr->toCpp(argumentScope);
+					String valCpp = valExpr->toCpp(argumentScope);
+					if (arrExpr->resolvedType->cppType == DataType::CppType::ArrType)
+						return arrCpp + ".Append(" + valCpp + ")";
+					return arrCpp + ".Arr().Append(" + valCpp + ")";
+				}
+			}
+
 			int arg = 0;
 			for (Expression* expr : this->callParameters)
 			{
+				// Const array arguments can report their size without a mutable reference wrapper
+				if (this->name == STR(array_length) && expr->type == Type::Accessor)
+				{
+					Accessor* array = static_cast<Accessor*>(expr);
+					Variable* var = Program::findVariable(argumentScope.current, array->name, this->func, *argumentScope.location, this->line);
+					if (array->nextInChain == nullptr && array->callParameters == nullptr && array->arrayAccessors.empty() &&
+						var != nullptr && var->scope == this->func->name && var->line == 0 &&
+						var->type->cppType == DataType::CppType::ArrType && this->func->constRefArgs.contains(array->name))
+						return array->toCpp(argumentScope) + ".Size()";
+				}
+
 				bool createRef = (targetFunc != nullptr && arg < static_cast<int>(args.size()) && args[arg]->isReference) ||
-					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType());
+					(funcSign != nullptr && funcSign->varCreateRef && arg < static_cast<int>(funcSign->argTypes.size()) && funcSign->argTypes[arg]->isCppVarType()) ||
+					(this->name == STR(array_push) && arg == 0);
 				if (createRef)
 				{
 					// Reference arguments must access the stored element rather than a Value copy
-					Expression* refExpr = expr;
-					while (refExpr->type == Type::Parenthesis)
-						refExpr = static_cast<ExpressionParenthesis*>(refExpr)->expr;
-					if (refExpr->type == Type::Accessor)
-					{
-						Accessor* refAcc = static_cast<Accessor*>(refExpr);
-						while (refAcc->nextInChain != nullptr)
-							refAcc = refAcc->nextInChain;
-						if (refAcc->arrayAccessors.size() > 0)
-							refAcc->markAsAssign(this);
-					}
+					if (Accessor* refAcc = expr->unwrapTailAccessor(); refAcc != nullptr && refAcc->arrayAccessors.size() > 0)
+						refAcc->markAsAssign(this);
+				}
+				else if (argumentIsTypedValue(targetFunc, funcSign, args, arg))
+				{
+					// Typed arguments are converted from the borrowed element before the call, avoiding a variant copy
+					if (Accessor* valueAcc = expr->unwrapTailAccessor();
+						valueAcc != nullptr && valueAcc->arrayAccessors.size() == 1 && valueAcc->callParameters == nullptr && valueAcc->assignExpr == nullptr)
+						valueAcc->borrowArgument = true;
 				}
 				String exprCpp = expr->toCpp(argumentScope);
 				if (createRef)
@@ -933,7 +1081,9 @@ String Accessor::toCpp(ResolveScope* scope)
 			if (acc->type == DataType::Type::Array)
 			{
 				// Copy the final read value instead of retaining a vector component reference
-				if (this->assignExpr == nullptr && acc == this->arrayAccessors[this->arrayAccessors.size() - 1])
+				if (borrowArray && acc == this->arrayAccessors[0])
+					cpp += ".ValueRef(" + acc->expr->toCpp(argumentScope) + ")";
+				else if (this->assignExpr == nullptr && acc == this->arrayAccessors[this->arrayAccessors.size() - 1])
 					cpp += ".Value(" + acc->expr->toCpp(argumentScope) + ")";
 				else
 					cpp += "[" + acc->expr->toCpp(argumentScope) + "]";

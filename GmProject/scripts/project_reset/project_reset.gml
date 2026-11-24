@@ -78,6 +78,14 @@ function project_reset()
 	with (obj_timeline)
 		instance_destroy()
 	
+	var key = ds_map_find_first(render_item_vbuffer_map);
+	while (!is_undefined(key))
+	{
+		vbuffer_destroy(render_item_vbuffer_map[?key])
+		key = ds_map_find_next(render_item_vbuffer_map, key)
+	}
+	ds_map_clear(render_item_vbuffer_map)
+	
 	with (obj_resource)
 		if (id != mc_res && id != musicres)
 			instance_destroy()

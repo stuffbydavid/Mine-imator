@@ -488,6 +488,21 @@ public:
 
 	// Returns the resolved type as a C++ type
 	DataType::CppType getResolvedCppType();
+
+	// Unwraps parentheses and returns the tail accessor in a chain, or nullptr
+	Accessor* unwrapTailAccessor();
+
+	// Returns whether the expression is the literal false
+	bool isFalseLiteral();
+
+	// Returns whether evaluating the expression may call a function
+	bool containsCall();
+
+	// Adds the names of all accessors in the expression
+	void collectNames(List<StringId>& names);
+
+	// Reads an assigned array element by reference when the target can't alias or modify the array
+	static void borrowAssignedValue(Expression* value, Expression* target, StringId targetName);
 };
 
 // An expression in parenthesis
@@ -600,6 +615,7 @@ public:
 	Expression* assignExpr = nullptr;
 	bool needLtZero = false;
 	bool appToId = true;
+	bool borrowArgument = false;
 	inline static bool resolveUnknownMapTypes = false;
 	inline static bool resolveUnknownScope = false;
 	inline static bool resolveFunctionReferences = false;
@@ -935,6 +951,7 @@ public:
 	List<Variable*> vars = List<Variable*>();
 	List<StringId> varArgsRequiredNames = List<StringId>();
 	List<StringId> arrRefs;
+	List<StringId> constRefArgs;
 	StatementList* statements{};
 	Object* structObject = nullptr;
 	List<String> cppLinesBegin = List<String>();

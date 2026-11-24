@@ -2,10 +2,14 @@
 /// @arg percent
 /// @arg valuestart
 /// @arg valueend
+/// CppGen variant valuestart
+/// CppGen variant valueend
+/// CppGen ConstRef valuestart
+/// CppGen ConstRef valueend
 
-function tl_value_interpolate(vid, p, val1, val2)
+function tl_value_interpolate(valueid, p, valuestart, valueend)
 {
-	switch (vid)
+	switch (valueid)
 	{
 		case e_value.RGB_ADD:
 		case e_value.RGB_SUB:
@@ -41,11 +45,11 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.ENV_LEAVES_MANGROVE_COLOR:
 		case e_value.ENV_FOG_COLOR:
 		case e_value.ENV_FOG_OBJECT_COLOR:
-		case e_value.TEXT_OUTLINE_COLOR: return merge_color(val1, val2, clamp(p, 0, 1)) // Color mix
+		case e_value.TEXT_OUTLINE_COLOR: return merge_color(valuestart, valueend, clamp(p, 0, 1)) // Color mix
 		case e_value.CAM_WIDTH:
 		case e_value.CAM_HEIGHT:
 		case e_value.CAM_FX_BLADE_AMOUNT:
-		case e_value.ITEM_SLOT: return floor(val1 + p * (val2 - val1)) // No decimals
+		case e_value.ITEM_SLOT: return floor(valuestart + p * (valueend - valuestart)) // No decimals
 		case e_value.SPAWN:
 		case e_value.FREEZE:
 		case e_value.CLEAR:
@@ -95,8 +99,8 @@ function tl_value_interpolate(vid, p, val1, val2)
 		case e_value.EASE_IN_X:
 		case e_value.EASE_IN_Y:
 		case e_value.EASE_OUT_X:
-		case e_value.EASE_OUT_Y: return val1 // No interpolation
+		case e_value.EASE_OUT_Y: return valuestart // No interpolation
 	}
 	
-	return val1 + p * (val2 - val1)
+	return valuestart + p * (valueend - valuestart)
 }

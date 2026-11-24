@@ -1,4 +1,4 @@
-/// CppSeparate ArrType array_add(VarType, VarType, BoolType merge = true)
+/// CppSeparate void array_add(VarType, const VarType&, BoolType merge = true)
 /// @arg array
 /// @arg value
 /// @arg [merge]
@@ -15,6 +15,4 @@ function array_add(arr, val, merge = true)
 	}
 	else
 		arr[@array_length(arr)] = val
-	
-	return arr
 }

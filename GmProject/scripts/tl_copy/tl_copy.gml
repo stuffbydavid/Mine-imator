@@ -2,6 +2,8 @@
 
 function tl_copy(to)
 {
+	to.keyframe_value_cache_valid = false
+
 	to.type = type
 	to.name = name
 	to.temp = temp

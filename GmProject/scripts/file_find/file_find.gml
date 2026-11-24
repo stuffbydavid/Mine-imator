@@ -11,7 +11,7 @@ function file_find(dir, exts)
 	while (f != "")
 	{
 		if (string_contains(exts, filename_ext(f)))
-			ret[array_length(ret)] = dir + f
+			array_push(ret, dir + f)
 		f = file_find_next()
 	}
 	file_find_close()

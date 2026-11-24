@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"vertex_bend_configure",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vertex_bend_configure",
+  "parent":{
+    "name":"Vertex",
+    "path":"folders/Scripts/Utility/Vertex.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -91,9 +91,11 @@ namespace CppProject
                 inputDecl += "\tuint Data1: C;\n";
                 inputDecl += "\tuint Data2: D;\n";
                 inputDecl += "\tuint Tangent: E;\n";
+                for (int i = 0; i < 4; i++)
+                    inputDecl += "\tfloat4 Bend" + NumStr(i) + " : " + QString((char)('F' + i)) + ";\n";
                 if (useBatching)
                     inputDecl += "\tuint InstanceID: SV_InstanceID;\n";
-                
+
                 attrsDecl += "\tfloat3 Position: A;\n";
                 attrsDecl += "\tfloat2 TextureCoord: B;\n";
                 attrsDecl += "\tfloat3 Normal: C;\n";
@@ -109,6 +111,8 @@ namespace CppProject
                 setAttrs += "\n\t_vars._vObjIndex = _input.Data2 >> 16;";
                 if (useBatching)
                     setAttrs += "\n\t_vars._vObjIndex += _input.InstanceID;";
+                if (vsCode.contains("void applyBend("))
+                    setAttrs += "\n\tapplyBend(_attrs.Position, _attrs.Normal, _attrs.Tangent, _attrs.Custom, _input.Bend0, _input.Bend1, _input.Bend2, _input.Bend3);";
 
                 vsCode.replace(GetRegex("\\bin_Position\\b"), "_attrs.Position");
                 vsCode.replace(GetRegex("\\bin_Normal\\b"), "_attrs.Normal");
@@ -226,7 +230,7 @@ namespace CppProject
             {
                 mat.replace("[", "\\[");
                 mat.replace("]", "\\]");
-                
+
                 auto mulIt = GetRegex("((" + mat + ")|([a-zA-Z0-9]+\\((.*?, )?" + mat + "\\)))( *\\* *)(.*?);").globalMatch(code);
                 while (mulIt.hasNext())
                 {
@@ -263,7 +267,7 @@ namespace CppProject
                 QString typeName = match.captured(1);
                 QString name = match.captured(2);
                 QString args = match.captured(3);
-               
+
                 if (name == "main")
                     continue;
 
@@ -368,7 +372,7 @@ namespace CppProject
             // Get maximum objects allowed
             batchBufferObjectSize = ceil(batchBufferObjectSize / 16.0) * 16;
             batchBufferMaxObjects = D3D11_MAX_BATCH_BUFFER_SIZE / batchBufferObjectSize;
-            
+
             bufferDecl = "cbuffer ObjectBuffer : register(b" + NumStr(bufId++) + ")\n" + bufferDecl + "\t} _obj[" + NumStr(batchBufferMaxObjects) + "];\n}\n";
         }
         else
@@ -419,7 +423,7 @@ namespace CppProject
             if (QFileInfo(__FILE__).lastModified() >= cacheModified ||
                 QFileInfo(QFileInfo(__FILE__).absolutePath() + "/Shader.cpp").lastModified() >= cacheModified)
                 useCache = false;
-           
+
             for (const QString& sourceName : sourceDependencies)
             {
                 if (QFileInfo(sourceName).lastModified() >= cacheModified)
@@ -458,7 +462,7 @@ namespace CppProject
         }
         D3DCheckError(D3DDevice->CreateVertexShader(vsData.Data(), vsData.Size(), nullptr, &d3dVertexShader));
         D3DCheckError(D3DDevice->CreatePixelShader(fsData.Data(), fsData.Size(), nullptr, &d3dPixelShader));
-        
+
         QString gsCode = LoadPointD3D11(varsDecl, useCache);
 
     #if !RELEASE_MODE
@@ -494,6 +498,17 @@ namespace CppProject
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
                     addElement(DXGI_FORMAT_R32_UINT, sizeof(uint32_t));
+                    for (int i = 0; i < 4; i++)
+                    {
+                        QByteArray name = QString((char)('F' + i)).toLocal8Bit();
+                        D3D11_INPUT_ELEMENT_DESC el = {};
+                        el.SemanticName = new char[2]{ name[0], 0 };
+                        el.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+                        el.InputSlot = 1;
+                        el.AlignedByteOffset = i * 4 * sizeof(float);
+                        el.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+                        elements.append(el);
+                    }
                     break;
                 }
 
@@ -507,7 +522,7 @@ namespace CppProject
 
             D3DCheckError(D3DDevice->CreateInputLayout(elements.data(), elements.size(), vsData.Data(), vsData.Size(), &d3dInputLayout[vertexFormat]));
             for (D3D11_INPUT_ELEMENT_DESC& el : elements)
-                delete el.SemanticName;
+                delete[] el.SemanticName;
         }
 
         // Create constant buffers

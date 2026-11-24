@@ -48,7 +48,7 @@ function block_load_timeline(map, typemap)
 					state_id = []
 					for (var i = 0; i < other.state_id_amount; i++)
 						if (state_vars_match_state_id(vars, other.id, i))
-							state_id = array_add(state_id, i)
+							array_add(state_id, i)
 					
 					// Choose the default block state for model-to-block lookups
 					state_id_default = 0

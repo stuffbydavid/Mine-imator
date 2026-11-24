@@ -72,7 +72,7 @@ function tl_audio_scrub(markerpos)
 				audio_resume_sound(playindex)
 
 				// Store the sound instance and its maximum volume for the fade update.
-				sounds[array_length(sounds)] = [playindex, value[e_value.SOUND_VOLUME]]
+				array_push(sounds, [ playindex, value[e_value.SOUND_VOLUME] ])
 			}
 		}
 	}

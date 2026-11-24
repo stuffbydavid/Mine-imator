@@ -26,4 +26,7 @@ function project_startup()
 	tl_focus = null
 	
 	project_bend_style = "blocky"
+
+	project_matrix_update_id = 0
+	project_path_update_id = null
 }

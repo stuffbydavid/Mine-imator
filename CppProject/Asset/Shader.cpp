@@ -264,6 +264,10 @@ namespace CppProject
 		if (IS_OPENGL)
 			LoadCodeOpenGL(vsCode, fsCode, useCache);
 
+		const char* bendNames[7] = { "uBendSettings", "uBendAngle", "uBendPivot", "uBendMin", "uBendMax", "uBendDirection", "uBendWind" };
+		for (int i = 0; i < 7; i++)
+			bendUniforms[i] = GetUniformIndex(bendNames[i]);
+
 		// Store texture uniforms
 		if (numSamplers > 0)
 		{
@@ -515,6 +519,20 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			GFX->glBindVertexArray(GFX->glCurrentVboId);
+
+			if (vertexFormat == VERTEX_BUFFER)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					IntType location = attributeLocation[5 + i];
+					if (location < 0)
+						continue;
+
+					GFX->glDisableVertexAttribArray(location);
+					program->setAttributeValue(location, 0.f, 0.f, 0.f, 0.f);
+				}
+			}
+
 			GL_CHECK_ERROR();
 		}
 

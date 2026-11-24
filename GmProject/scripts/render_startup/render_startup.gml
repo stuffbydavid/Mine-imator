@@ -3,7 +3,7 @@ function render_startup()
 	globalvar renderer_current, renderer_name_list, renderer_edit;
 	
 	globalvar render_view_current, render_width, render_height, render_ratio, render_pack_current, render_camera, render_camera_effects, render_camera_effect_enabled,
-			  render_prev_color, render_prev_alpha, render_click_box, render_list_default, render_list_default_update, render_list_custom, render_depth_list_current, render_block_transparent_list,
+			  render_prev_color, render_prev_alpha, render_click_box, render_list_default, render_list_default_update, render_list_custom, render_depth_list_current, render_block_transparent_list, render_item_vbuffer_map,
 			  render_lights, render_particles, render_hidden,  render_background, render_watermark, render_blend_prev, render_alpha_prev, 
 			  proj_from, proj_matrix, view_matrix, view_proj_matrix, light_proj_matrix, light_view_matrix,
 			  light_view_proj_matrix, spot_proj_matrix, spot_view_matrix, spot_view_proj_matrix, proj_depth_near, proj_depth_far, render_proj_from,
@@ -105,6 +105,8 @@ function render_startup()
 	
 	render_depth_list_current = null
 	render_block_transparent_list = ds_list_create()
+	
+	render_item_vbuffer_map = ds_map_create()
 	
 	render_lights = true
 	render_particles = true

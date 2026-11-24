@@ -75,6 +75,127 @@ DataType::CppType Expression::getResolvedCppType()
 	return this->resolvedTypeCpp != DataType::CppType::Void ? this->resolvedTypeCpp : this->resolvedType->cppType;
 }
 
+Accessor* Expression::unwrapTailAccessor()
+{
+	Expression* expr = this;
+	while (expr->type == Type::Parenthesis)
+		expr = static_cast<ExpressionParenthesis*>(expr)->expr;
+	if (expr->type != Type::Accessor)
+		return nullptr;
+	Accessor* acc = static_cast<Accessor*>(expr);
+	while (acc->nextInChain != nullptr)
+		acc = acc->nextInChain;
+	return acc;
+}
+
+bool Expression::containsCall()
+{
+	switch (this->type)
+	{
+		case Type::Accessor:
+		{
+			for (Accessor* acc = static_cast<Accessor*>(this); acc != nullptr; acc = acc->nextInChain)
+			{
+				if (acc->callParameters != nullptr)
+					return true;
+				for (Accessor::ArrayAccessor* arr : acc->arrayAccessors)
+					if (arr->expr != nullptr && arr->expr->containsCall())
+						return true;
+			}
+			return false;
+		}
+		case Type::Parenthesis:
+			return static_cast<ExpressionParenthesis*>(this)->expr->containsCall();
+		case Type::UnaryOperation:
+			return static_cast<UnaryOperation*>(this)->expr->containsCall();
+		case Type::BinaryOperation:
+			return static_cast<BinaryOperation*>(this)->left->containsCall() || static_cast<BinaryOperation*>(this)->right->containsCall();
+		case Type::TernaryCondition:
+		{
+			TernaryCondition* tern = static_cast<TernaryCondition*>(this);
+			return tern->expr1->containsCall() || tern->expr2->containsCall() || tern->expr3->containsCall();
+		}
+		case Type::Value:
+			return false;
+		default: // Array literals and new expressions allocate
+			return true;
+	}
+}
+
+// Reads an array element operand by reference when nothing evaluated alongside it can modify the array
+static void borrowOperand(Expression* operand, Expression* other, bool sequenced)
+{
+	if (!sequenced && other->containsCall())
+		return;
+
+	Accessor* acc = operand->unwrapTailAccessor();
+	if (acc != nullptr && acc->arrayAccessors.size() == 1 && acc->callParameters == nullptr &&
+		acc->assignExpr == nullptr && acc->addSubOp == Token::Type::Unknown)
+		acc->borrowArgument = true;
+}
+
+void Expression::collectNames(List<StringId>& names)
+{
+	switch (this->type)
+	{
+		case Type::Accessor:
+		{
+			for (Accessor* acc = static_cast<Accessor*>(this); acc != nullptr; acc = acc->nextInChain)
+			{
+				names.add(acc->name);
+				for (Accessor::ArrayAccessor* arr : acc->arrayAccessors)
+					if (arr->expr != nullptr)
+						arr->expr->collectNames(names);
+			}
+			break;
+		}
+		case Type::Parenthesis: static_cast<ExpressionParenthesis*>(this)->expr->collectNames(names); break;
+		case Type::UnaryOperation: static_cast<UnaryOperation*>(this)->expr->collectNames(names); break;
+		case Type::BinaryOperation:
+			static_cast<BinaryOperation*>(this)->left->collectNames(names);
+			static_cast<BinaryOperation*>(this)->right->collectNames(names);
+			break;
+		case Type::TernaryCondition:
+		{
+			TernaryCondition* tern = static_cast<TernaryCondition*>(this);
+			tern->expr1->collectNames(names);
+			tern->expr2->collectNames(names);
+			tern->expr3->collectNames(names);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+void Expression::borrowAssignedValue(Expression* value, Expression* target, StringId targetName)
+{
+	if (value->type != Type::Accessor || value->containsCall() || (target != nullptr && target->containsCall()))
+		return;
+
+	// The target must not share any name with the value, since assigning could free or resize the array
+	List<StringId> valueNames, targetNames;
+	value->collectNames(valueNames);
+	if (target != nullptr)
+		target->collectNames(targetNames);
+	else
+		targetNames.add(targetName);
+
+	for (const StringId& name : targetNames)
+		if (valueNames.contains(name))
+			return;
+
+	borrowOperand(value, value, true);
+}
+
+bool Expression::isFalseLiteral()
+{
+	if (this->type != Type::Accessor)
+		return false;
+	Accessor* acc = static_cast<Accessor*>(this);
+	return acc->nextInChain == nullptr && acc->callParameters == nullptr && acc->arrayAccessors.empty() && String(acc->name) == "false";
+}
+
 ExpressionParenthesis::ExpressionParenthesis(Expression* expr, int line) : Expression(line)
 {
 	this->expr = expr;
@@ -210,6 +331,11 @@ String BinaryOperation::toCpp(ResolveScope* scope)
 		if (((Accessor*)this->right)->name == STR(object_index))
 			((Accessor*)this->left)->appToId = false;
 	}
+
+	// And/Or convert each side to a condition before evaluating the next
+	bool sequenced = (this->op == Token::Type::And || this->op == Token::Type::Or);
+	borrowOperand(this->left, this->right, sequenced);
+	borrowOperand(this->right, this->left, sequenced);
 
 	String cpp = "";
 	bool opNeedInts = (

@@ -139,7 +139,9 @@ namespace CppProject
 		}
 
 		BeginUse();
+		bendBuffer.Begin(shader, glVertexBuffer);
 		shader->SubmitVertices(Shader::TRIANGLE_LIST, numIndices);
+		bendBuffer.End(shader);
 		EndUse();
 
 		return 1;
@@ -158,7 +160,7 @@ namespace CppProject
 			AddVertex(thread.currentVertex, threadId);
 			thread.currentVertex = Vertex();
 		}
-		
+
 		thread.elemAdded[elementIndex] = true;
 
 		return thread.currentVertex;
@@ -210,6 +212,18 @@ namespace CppProject
 		thread.vertices.Append(v2);
 		thread.vertices.Append(v3);
 		thread.AddBlockPos(blockPos, 1);
+	}
+
+	void VertexBuffer::AddBendTriangle(const Vertex* vertices, const BendVertex* bends)
+	{
+		AddTriangle(vertices[0], vertices[1], vertices[2]);
+		
+		ThreadData& thread = threads[0];
+		if (thread.bends.Size() + 3 > thread.bends.heap.Size())
+			thread.bends.heap.Alloc(std::max<IntType>(1024, std::max(thread.bends.Size() + 3, thread.bends.heap.Size() * 2)), false);
+		
+		for (int i = 0; i < 3; i++)
+			thread.bends.Append(bends[i]);
 	}
 
 	void VertexBuffer::RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, BlockPos blockPos)
@@ -370,6 +384,7 @@ namespace CppProject
 
 		// Keep allocation sizes compatible with GPU buffers and cache serialization
 		if (numVertices > std::numeric_limits<int>::max() / sizeof(Vertex) ||
+			(bend.enabled && numVertices > std::numeric_limits<int>::max() / sizeof(BendVertex)) ||
 			numIndices > std::numeric_limits<int>::max() / sizeof(uint32_t))
 		{
 			valid = false;
@@ -380,6 +395,8 @@ namespace CppProject
 		// Every element is filled by the thread copies below
 		vertexData.Alloc(numVertices, false);
 		indexData.Alloc(numIndices, false);
+		if (bend.enabled)
+			bendData.Alloc(numVertices, false);
 
 		PrepareBlockPositions(existingTriangles, numIndices / 3);
 
@@ -397,6 +414,10 @@ namespace CppProject
 				for (IntType i = 0; i < thread.indices.Size(); i++)
 					indexData[thread.targetIndexOffset + i] = thread.indices.Value(i) + thread.targetVertexOffset;
 
+			if (bend.enabled)
+				memcpy(bendData.data + thread.targetVertexOffset, thread.bends.Data(), thread.bends.SizeInBytes());
+			
+			thread.bends.Clear();
 			CopyBlockPositions(thread, thread.targetIndexOffset / 3);
 
 			thread.vertices.Clear();
@@ -417,7 +438,23 @@ namespace CppProject
 
 		bounds = Bounds(vertexData);
 
+		if (bend.enabled)
+		{
+			// Enclose every bend rotation and the maximum pinch/anti-Z-fighting scale
+			RealType radius = 0;
+			for (IntType i = 0; i < numVertices; i++)
+			{
+				const Vertex& v = vertexData.Value(i);
+				radius = std::max(radius, (VecType(v.x, v.y, v.z) - bend.pivot).GetLength());
+			}
+			radius *= 1.406;
+
+			bounds = Bounds(bend.pivot - VecType(radius, radius, radius), bend.pivot + VecType(radius, radius, radius));
+		}
+
 		CreateBuffers(false);
+
+		bendBuffer.Create(bendData);
 	}
 
 	void VertexBuffer::UpdateTangents(IntType firstIndex)
@@ -566,6 +603,108 @@ namespace CppProject
 
 		Mesh<Vertex>::UpdateBuffers();
 		completed = true;
+	}
+
+	void VertexBuffer::BendBuffer::Create(const Heap<BendVertex>& data)
+	{
+		Free();
+
+		if (!data.Size())
+			return;
+
+#if OS_WINDOWS
+		if (IS_D3D11)
+		{
+			D3D11_BUFFER_DESC desc = {};
+			desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+			desc.ByteWidth = data.SizeInBytes();
+			desc.Usage = D3D11_USAGE_DEFAULT;
+			D3D11_SUBRESOURCE_DATA subData = { data.Data(), 0, 0 };
+			D3DCheckError(D3DDevice->CreateBuffer(&desc, &subData, &d3dBuffer));
+		}
+#endif
+		if (IS_OPENGL)
+		{
+			glBuffer = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+			glBuffer->create();
+			glBuffer->bind();
+			glBuffer->allocate(data.Data(), data.SizeInBytes());
+			glBuffer->release();
+		}
+	}
+
+	void VertexBuffer::BendBuffer::Free()
+	{
+#if OS_WINDOWS
+		if (IS_D3D11)
+			releaseAndReset(d3dBuffer);
+#endif
+		if (IS_OPENGL && glBuffer)
+		{
+			Mesh<Vertex>::deletedBuffers.append(glBuffer);
+			glBuffer = nullptr;
+		}
+	}
+
+	void VertexBuffer::BendBuffer::Begin(Shader* shader, QOpenGLBuffer* glVertexBuffer)
+	{
+#if OS_WINDOWS
+		if (IS_D3D11 && d3dBuffer)
+		{
+			UINT bendStride = sizeof(BendVertex), offset = 0;
+			D3DContext->IASetVertexBuffers(1, 1, &d3dBuffer, &bendStride, &offset);
+		}
+#endif
+		if (IS_OPENGL && glBuffer && shader->vertexFormat == Shader::VERTEX_BUFFER)
+		{
+			glBuffer->bind();
+
+			for (int i = 0; i < 4; i++)
+			{
+				IntType location = shader->attributeLocation[5 + i];
+				if (location < 0)
+					continue;
+
+				GFX->glEnableVertexAttribArray(location);
+				GFX->glVertexAttribPointer(location, 4, GL_FLOAT, false, sizeof(BendVertex), (void*)(size_t)(i * 4 * sizeof(float)));
+			}
+
+			glVertexBuffer->bind();
+		}
+	}
+
+	void VertexBuffer::BendBuffer::End(Shader* shader)
+	{
+#if OS_WINDOWS
+		if (IS_D3D11 && d3dBuffer)
+		{
+			ID3D11Buffer* nullBuf = nullptr;
+			UINT zero = 0;
+			D3DContext->IASetVertexBuffers(1, 1, &nullBuf, &zero, &zero);
+			return;
+		}
+#endif
+		if (IS_OPENGL && glBuffer && shader->vertexFormat == Shader::VERTEX_BUFFER)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				IntType location = shader->attributeLocation[5 + i];
+				if (location < 0)
+					continue;
+
+				GFX->glDisableVertexAttribArray(location);
+				shader->program->setAttributeValue(location, 0.f, 0.f, 0.f, 0.f);
+			}
+		}
+	}
+
+	BoolType VertexBuffer::BendBuffer::HasBuffer() const
+	{
+#if OS_WINDOWS
+		if (IS_D3D11)
+			return d3dBuffer != nullptr;
+#endif
+		return glBuffer != nullptr;
 	}
 
 	void VertexBuffer::ApplyTriangleRemovals()

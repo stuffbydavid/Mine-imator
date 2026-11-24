@@ -162,7 +162,6 @@ namespace CppProject
 			UINT stride = sizeof(V), offset = 0;
 			D3DContext->IASetVertexBuffers(0, 1, &d3dVertexBuffer, &stride, &offset);
 			D3DContext->IASetIndexBuffer(d3dIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-			return;
 		}
 #endif
 		if (IS_OPENGL)

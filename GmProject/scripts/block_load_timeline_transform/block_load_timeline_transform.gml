@@ -23,9 +23,9 @@ function block_load_timeline_transform(data, datatype, def)
 				state_id = []
 				for (var i = 0; i < other.state_id_amount; i++)
 					if (state_vars_match_state_id(vars, other.id, i))
-						state_id = array_add(state_id, i)
+						array_add(state_id, i)
 
-				states = array_add(states, id, false)
+				array_add(states, id, false)
 			}
 
 			key = ds_map_find_next(data, key)

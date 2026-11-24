@@ -154,7 +154,8 @@ namespace CppProject
 		QString name, vsName, fsName;
 		QHash<QString, QDateTime> lastUpdate;
 		QSet<QString> sourceDependencies;
-		IntType attributeLocation[5], numOutputs = 0;
+		IntType attributeLocation[9], numOutputs = 0;
+		IntType bendUniforms[7] = { -1, -1, -1, -1, -1, -1, -1 };
 
 	#if OS_WINDOWS
 		ID3D11VertexShader* d3dVertexShader = nullptr;

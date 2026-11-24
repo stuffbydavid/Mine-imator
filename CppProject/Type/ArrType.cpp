@@ -67,6 +67,14 @@ namespace CppProject
 		return vec.Value(index);
 	}
 
+	const VarType& ArrType::ValueRef(IntType index) const
+	{
+		if (index < 0 || index >= vec.Size()) // Invalid index, undefined
+			return VarArgs::outOfBounds;
+
+		return vec.Value(index);
+	}
+
 	RealType ArrType::RealValue(IntType index) const
 	{
 		if (index < 0 || index >= vec.Size())
@@ -149,14 +157,12 @@ namespace CppProject
 		Printer::indent--;
 	}
 
-	ArrType array_add(VarType arrRef, VarType vals, BoolType merge)
+	void array_add(VarType arrRef, const VarType& vals, BoolType merge)
 	{
 		if (vals.IsArray() && merge)
 			arrRef.Arr().Append(vals.Arr(), 0);
 		else
 			arrRef.Arr().Append(vals);
-
-		return arrRef;
 	}
 
 	BoolType array_contains(VarType arrRef, VarType val)
@@ -164,7 +170,7 @@ namespace CppProject
 		return (arrRef.Arr().Find(val) > -1);
 	}
 
-	ArrType array_copy_1d(VarType var)
+	ArrType array_copy_1d(const VarType& var)
 	{
 		if (var.IsInt())
 			return ArrType();

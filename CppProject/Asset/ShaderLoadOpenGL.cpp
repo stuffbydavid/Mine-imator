@@ -18,7 +18,7 @@ namespace CppProject
 
 		if (glSsboId)
 			GFX->glDeleteBuffers(1, &glSsboId);
-		
+
 		glSsboId = 0;
 
 		// Clear multi-view data
@@ -103,6 +103,13 @@ namespace CppProject
 			// Convert attributes (vertex)
 			if (isVertex && vertexFormat == VERTEX_BUFFER)
 			{
+				if (code.contains("void applyBend("))
+				{
+					code.replace("in vec3 in_Position;", "in vec3 _aPosition;\nvec3 in_Position;");
+					header += "in vec4 _aBend0;\nin vec4 _aBend1;\nin vec4 _aBend2;\nin vec4 _aBend3;\n";
+					code.replace(QRegularExpression("void main\\(\\)\\s*\\{"), "void main()\n{\n\tin_Position = _aPosition;\n\tapplyBend(in_Position, in_Normal, in_Tangent, in_Custom, _aBend0, _aBend1, _aBend2, _aBend3);\n");
+				}
+
 				code.replace("in vec3 in_Normal;\n", "");
 				code.replace("in vec4 in_Custom;\n", "");
 				code.replace("in vec3 in_Tangent;\n", "");
@@ -204,15 +211,15 @@ namespace CppProject
 			SaveConvertedCode(vsCode, fsCode, "glsl");
 		#endif
 		}
-		
+
 		// Find uniform locations
 		for (IntType i = 0; i < numUniforms; i++)
 			if (uniforms[i].isStatic)
 				uniforms[i].glLocation = program->uniformLocation(uniforms[i].name);
-		
+
 		for (StringType name : samplerNameMap.keys())
 			samplerState[samplerNameMap[name]].glLocation = uniforms[uniformNameMap[name]].glLocation;
-		
+
 		for (IntType m = 0; m < 6; m++)
 		{
 			QString name = matrixUniformName[m];
@@ -234,10 +241,17 @@ namespace CppProject
 			case VERTEX_BUFFER:
 			{
 				attributeLocation[0] = program->attributeLocation("in_Position");
+				if (attributeLocation[0] < 0)
+					attributeLocation[0] = program->attributeLocation("_aPosition");
+				
 				attributeLocation[1] = program->attributeLocation("in_TextureCoord");
 				attributeLocation[2] = program->attributeLocation("_aData1");
 				attributeLocation[3] = program->attributeLocation("_aData2");
 				attributeLocation[4] = program->attributeLocation("_aTangent");
+
+				for (int i = 0; i < 4; i++)
+					attributeLocation[5 + i] = program->attributeLocation("_aBend" + NumStr(i));
+				
 				break;
 			}
 
