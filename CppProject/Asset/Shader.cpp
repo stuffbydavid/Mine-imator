@@ -519,6 +519,20 @@ namespace CppProject
 		if (IS_OPENGL)
 		{
 			GFX->glBindVertexArray(GFX->glCurrentVboId);
+
+			if (vertexFormat == VERTEX_BUFFER)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					IntType location = attributeLocation[5 + i];
+					if (location < 0)
+						continue;
+
+					GFX->glDisableVertexAttribArray(location);
+					program->setAttributeValue(location, 0.f, 0.f, 0.f, 0.f);
+				}
+			}
+
 			GL_CHECK_ERROR();
 		}
 
@@ -1058,7 +1072,7 @@ namespace CppProject
 				case POINT_LIST:		topo = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
 			}
 
-			D3DContext->IASetInputLayout(vertexFormat == VERTEX_BUFFER && compactBendInput ? d3dCompactBendInputLayout : d3dInputLayout[vertexFormat]);
+			D3DContext->IASetInputLayout(d3dInputLayout[vertexFormat]);
 			D3DContext->IASetPrimitiveTopology(topo);
 
 			if (numInstances > 1)

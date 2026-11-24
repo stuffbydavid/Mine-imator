@@ -1,11 +1,11 @@
-/// CppGen variant valuestart
-/// CppGen variant valueend
-/// CppGen ConstRef valuestart
-/// CppGen ConstRef valueend
 /// @arg valueid
 /// @arg percent
 /// @arg valuestart
 /// @arg valueend
+/// CppGen variant valuestart
+/// CppGen variant valueend
+/// CppGen ConstRef valuestart
+/// CppGen ConstRef valueend
 
 function tl_value_interpolate(valueid, p, valuestart, valueend)
 {

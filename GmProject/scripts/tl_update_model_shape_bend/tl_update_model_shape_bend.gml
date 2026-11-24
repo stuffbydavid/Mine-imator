@@ -23,7 +23,9 @@ function tl_update_model_shape_bend()
 			vertex_bend_update(model_shape_vbuffer_map[? key], bend)
 			key = ds_map_find_next(model_shape_vbuffer_map, key)
 		}
+		
 		bend_rot_last = bend
+		
 		return 0
 	}
 
@@ -50,7 +52,7 @@ function tl_update_model_shape_bend()
 	bend_style_last = app.project_bend_style
 	
 	model_part_shape_render_matrix_part = null
-	model_part_shape_data_dirty = true
+	model_part_shape_data_update = true
 	
 	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)
 }

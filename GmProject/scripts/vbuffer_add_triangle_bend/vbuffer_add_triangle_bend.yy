@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"vbuffer_add_triangle_bend",
   "parent":{
-    "name":"Models",
-    "path":"folders/Scripts/Minecraft/Models.yy",
+    "name":"Vertex buffer",
+    "path":"folders/Scripts/Utility/Vertex/Vertex buffer.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

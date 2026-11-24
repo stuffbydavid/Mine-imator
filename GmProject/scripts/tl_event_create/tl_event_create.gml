@@ -1,3 +1,4 @@
+/// @desc Create event of a timeline.
 /// CppGen int update_value_flags
 /// CppGen vec bend_pose_inherit
 /// CppGen matrix transform_part_cache_matrix
@@ -13,7 +14,6 @@
 /// CppGen array model_part_shape_render_matrix
 /// CppGen array model_part_shape_vbuffer
 /// CppGen array model_part_shape_hidden
-/// @desc Create event of a timeline.
 
 function tl_event_create()
 {
@@ -67,7 +67,7 @@ function tl_event_create()
 	model_part_shape_render_matrix = []
 	model_part_shape_render_matrix_part = null
 	model_part_shape_cache_part = null
-	model_part_shape_data_dirty = true
+	model_part_shape_data_update = true
 	model_part_shape_vbuffer = []
 	model_part_shape_hidden = []
 	

@@ -20,8 +20,10 @@ function tl_update_ik_calculate()
 			ik_blend_prev = value[e_value.IK_BLEND]
 			ik_angle_offset_prev = value[e_value.IK_ANGLE_OFFSET]
 		}
+		
 		if (hadtarget)
 			update_matrix = true
+		
 		return 0
 	}
 

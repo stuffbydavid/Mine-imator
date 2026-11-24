@@ -1,11 +1,11 @@
-/// CppGen ConstRef p1
-/// CppGen ConstRef p2
-/// CppGen ConstRef p3
 /// @desc Returns result of a quadratic bezier curve.
 /// @arg point1
 /// @arg point2
 /// @arg point3
 /// @arg progress
+/// CppGen ConstRef p1
+/// CppGen ConstRef p2
+/// CppGen ConstRef p3
 
 function bezier_curve_quad(p1, p2, p3, t)
 {

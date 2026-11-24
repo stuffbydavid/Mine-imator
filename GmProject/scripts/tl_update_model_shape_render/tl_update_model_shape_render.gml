@@ -1,22 +1,22 @@
+/// @desc Caches model meshes, hidden shapes and view-independent shape matrices for this timeline.
 /// CppGen ArrRef model_part_shape_render_matrix
 /// CppGen ArrRef model_part_shape_vbuffer
 /// CppGen ArrRef model_part_shape_hidden
-/// @desc Caches model meshes, hidden shapes and view-independent shape matrices for this timeline
-/// @arg [refreshinfo]
 
 function tl_update_model_shape_render(refreshinfo = true)
 {
 	if (model_part = null || model_part.shape_list = null)
 		return 0
 
-	var shapes = model_part.shape_list;
-	var shapecount = ds_list_size(shapes);
-	var rebuild = (model_part_shape_cache_part != model_part ||
+	var shapes, shapecount, rebuild, updatematrices, updateinfo;
+	shapes = model_part.shape_list
+	shapecount = ds_list_size(shapes)
+	rebuild = (model_part_shape_cache_part != model_part ||
 		array_length(model_part_shape_render_matrix) != shapecount ||
 		array_length(model_part_shape_vbuffer) != shapecount ||
-		array_length(model_part_shape_hidden) != shapecount);
-	var updatematrices = (rebuild || model_part_shape_render_matrix_part != model_part);
-	var updateinfo = (rebuild || refreshinfo || model_part_shape_data_dirty);
+		array_length(model_part_shape_hidden) != shapecount)
+	updatematrices = (rebuild || model_part_shape_render_matrix_part != model_part)
+	updateinfo = (rebuild || refreshinfo || model_part_shape_data_update)
 
 	if (rebuild)
 	{
@@ -57,5 +57,5 @@ function tl_update_model_shape_render(refreshinfo = true)
 	}
 
 	model_part_shape_render_matrix_part = model_part
-	model_part_shape_data_dirty = false
+	model_part_shape_data_update = false
 }

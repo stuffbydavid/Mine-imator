@@ -108,7 +108,7 @@ function enums()
 	}
 	
 	// Evaluated timeline value dependencies
-	enum e_tl_dirty
+	enum e_tl_update
 	{
 		LOCAL = 1,
 		TRANSFORM = 2,

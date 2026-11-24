@@ -1,3 +1,7 @@
+/// @desc Evaluates timeline transforms and returns inherited pose bending.
+/// @arg usepaths
+/// @arg updatepose
+/// @arg hasik
 /// CppGen matrix transformmatrix
 /// CppGen vec transformpos
 /// CppGen vec transformrot
@@ -5,10 +9,6 @@
 /// CppGen vec transformpartpos
 /// CppGen vec transformpartrot
 /// CppGen matrix transformnoscale
-/// @desc Evaluates timeline transforms and returns inherited pose bending
-/// @arg usepaths
-/// @arg updatepose
-/// @arg hasik
 
 function tl_update_transform(usepaths, updatepose, hasik)
 {
@@ -78,11 +78,14 @@ function tl_update_transform(usepaths, updatepose, hasik)
 		transformpartpos = point3D(0)
 		if (part_of != null)
 			transformpartpos = point3D(model_part.position[X], model_part.position[Y], model_part.position[Z])
+		
 		transformpartrot = point3D(model_part.rotation[X], model_part.rotation[Y], model_part.rotation[Z])
+		
 		partchanged = (!transform_part_cache_valid || transform_part_cache_id != model_part)
 		for (var j = X; j <= Z; j++)
 			if (transformpartpos[j] != transform_part_cache_pos[j] || transformpartrot[j] != transform_part_cache_rot[j])
 				partchanged = true
+		
 		if (partchanged)
 		{
 			transform_part_cache_matrix = matrix_create(transformpartpos, transformpartrot, vec3(1))
@@ -91,6 +94,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 			transform_part_cache_id = model_part
 			transform_part_cache_valid = true
 		}
+		
 		matrix_parent = matrix_multiply(transform_part_cache_matrix, matrix_parent)
 	}
 	
@@ -104,6 +108,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 	for (var j = X; j <= Z; j++)
 		if (transformpos[j] != transform_local_pos[j] || transformrot[j] != transform_local_rot[j] || transformsca[j] != transform_local_scale[j])
 			localchanged = true
+	
 	if (localchanged)
 	{
 		matrix_local = matrix_create(transformpos, transformrot, transformsca)
@@ -112,6 +117,7 @@ function tl_update_transform(usepaths, updatepose, hasik)
 		transform_local_scale = transformsca
 		transform_local_cache_valid = true
 	}
+	
 	var transformmatrix = matrix_multiply(matrix_local, matrix_parent);
 	
 	// Remove old rotation and re-add own

@@ -81,6 +81,24 @@ namespace CppProject
 		return curve(p1.y, p2.y, p3.y, p4.y, progress);
 	}
 
+	ArrType point_lerp(const VarType& start, const VarType& end, RealType amount)
+	{
+		IntType count = 0;
+		if (start.IsArray())
+			count = start.Arr().Size();
+		else if (start.IsVec())
+			count = start.Vec().size;
+		else if (start.IsMatrix())
+			count = 16;
+
+		ArrType result;
+		result.vec.Alloc(count);
+		for (IntType i = 0; i < count; i++)
+			result.Append(lerp(start.Value(i), end.Value(i), amount));
+
+		return result;
+	}
+
 	ArrType program_args_get()
 	{
 		ArrType args;

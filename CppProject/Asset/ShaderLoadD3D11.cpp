@@ -6,7 +6,6 @@
 namespace CppProject
 {
     ID3D11InputLayout* Shader::d3dInputLayout[4] = { nullptr, nullptr, nullptr, nullptr };
-    ID3D11InputLayout* Shader::d3dCompactBendInputLayout = nullptr;
 
     QMap<Shader::DataType, QString> Shader::dataTypeD3D11Map = {
         { Shader::INT, "int" },
@@ -522,11 +521,6 @@ namespace CppProject
             }
 
             D3DCheckError(D3DDevice->CreateInputLayout(elements.data(), elements.size(), vsData.Data(), vsData.Size(), &d3dInputLayout[vertexFormat]));
-            if (vertexFormat == VERTEX_BUFFER)
-            {
-                elements.last().Format = DXGI_FORMAT_R32G32_FLOAT;
-                D3DCheckError(D3DDevice->CreateInputLayout(elements.data(), elements.size(), vsData.Data(), vsData.Size(), &d3dCompactBendInputLayout));
-            }
             for (D3D11_INPUT_ELEMENT_DESC& el : elements)
                 delete[] el.SemanticName;
         }

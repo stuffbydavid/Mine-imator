@@ -50,18 +50,9 @@ namespace CppProject
 		// Queue a matching triangle for removal.
 		void RemoveTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3, BlockPos blockPos = {});
 
+		// Adds a triangle with 3 vertices and accompanying GPU bend vertex data
+		struct BendVertex;
 		void AddBendTriangle(const Vertex* vertices, const BendVertex* bends);
-
-		struct BendState
-		{
-			bool enabled = false;
-			IntType zeroBuffer = 0; // Borrowed from the model shape, never owned by this buffer
-			bool zeroPose = true;
-			VecType pivot, minimum, maximum, direction, angle, wind;
-			RealType kind = 0, sharpAxis = -1;
-			VecType quad[4];
-			bool hasQuad = false;
-		} bend;
 
 		// Adds a face with 4 vertices and generates 6 indices.
 		void AddFace(const Vertex& v1, const Vertex& v2, const Vertex& v3, const Vertex& v4, IntType threadId = 0, BlockPos blockPos = {});
@@ -100,6 +91,57 @@ namespace CppProject
 		bool valid = true;
 		bool completed = false;
 		tinybvh::BVH bvh;
+
+		// Per-buffer GPU bending parameters and pose state
+		struct BendState
+		{
+			bool enabled = false;
+			IntType zeroBuffer = 0; // Borrowed from the model shape, never owned by this buffer
+			bool zeroPose = true;
+			VecType pivot, minimum, maximum, direction, angle, wind;
+			RealType kind = 0, sharpAxis = -1;
+			VecType quad[4];
+			bool hasQuad = false;
+		} bend;
+
+		// GPU vertex data for bendable vertex buffers
+		struct BendVertex
+		{
+			float data[4] = {}; // Weight, normal mode, two UV tangent coefficients
+			float a[4] = {}, b[4] = {}, c[4] = {}; // Other triangle/quad points and their weights
+		};
+
+		// GPU buffer storing per-vertex bend attributes
+		struct BendBuffer
+		{
+			BendBuffer() = default;
+			BendBuffer(const BendBuffer&) = delete;
+			BendBuffer& operator=(const BendBuffer&) = delete;
+			~BendBuffer() { Free(); }
+
+			// Uploads bend vertex data to a GPU buffer.
+			void Create(const Heap<BendVertex>& data);
+
+			// Frees GPU bend buffer resources.
+			void Free();
+
+			// Binds the GPU bend buffer and vertex attributes for rendering.
+			void Begin(Shader* shader, QOpenGLBuffer* glVertexBuffer);
+
+			// Unbinds the GPU bend buffer and disables bend vertex attributes.
+			void End(Shader* shader);
+
+			// Returns whether a GPU bend buffer is allocated.
+			BoolType HasBuffer() const;
+
+		#if OS_WINDOWS
+			ID3D11Buffer* d3dBuffer = nullptr;
+		#endif
+			QOpenGLBuffer* glBuffer = nullptr;
+		};
+
+		Heap<BendVertex> bendData;
+		BendBuffer bendBuffer;
 
 	private:
 		struct ThreadData;

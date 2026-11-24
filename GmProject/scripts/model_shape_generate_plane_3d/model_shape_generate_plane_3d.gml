@@ -15,8 +15,9 @@ function model_shape_generate_plane_3d(bend, alphaarr)
 	scalef = 0.005 // Used to combat Z-fighting
 	
 	// Find whether the shape is bent
-	var gpubend = is_cpp() && bend_shape && bend_part != null;
-	var isbent = gpubend || (!vec3_equals(bend, vec3(0)) && bend_shape);
+	var gpubend, isbent;
+	gpubend = (is_cpp() && bend_shape && bend_part != null)
+	isbent = (gpubend || (!vec3_equals(bend, vec3(0)) && bend_shape))
 	
 	// Axis to split up the plane
 	var segouteraxis, seginneraxis, arrouteraxis, arrinneraxis;
@@ -73,14 +74,15 @@ function model_shape_generate_plane_3d(bend, alphaarr)
 	var restmatrix = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1);
 
 	// Precalculate points
-	var y1p, y2p;
-	var segouterpos = 0;
-	var inflateouter = (inflate[X] / samplesize[arrouteraxis]) * 2;
-	var inflateinner = (inflate[X] / samplesize[arrinneraxis]) * 2;
+	var y1p, y2p, segouterpos, inflateouter, inflateinner;
+	segouterpos = 0
+	inflateouter = (inflate[X] / samplesize[arrouteraxis]) * 2
+	inflateinner = (inflate[X] / samplesize[arrinneraxis]) * 2
 	for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 	{
-		var seginnerpos = 0;
-		var seginnersize = 1;
+		var seginnerpos, seginnersize;
+		seginnerpos = 0
+		seginnersize = 1
 		for (var inner = 0; inner <= samplesize[arrinneraxis]; inner++)
 		{
 			var p1, p2;
@@ -361,5 +363,6 @@ function model_shape_generate_plane_3d(bend, alphaarr)
 	var vbuf = vbuffer_done();
 	if (gpubend)
 		vertex_bend_update(vbuf, bend)
+	
 	return vbuf
 }

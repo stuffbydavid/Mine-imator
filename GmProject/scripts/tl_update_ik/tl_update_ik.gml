@@ -1,6 +1,6 @@
+/// @desc Updates active IK and bone previews, then applies pending transforms in timeline order.
 /// CppGen ConstRef ikparts
 /// CppGen array<int> ikparts
-/// @desc Updates active IK and bone previews, then applies pending transforms in timeline order
 
 function tl_update_ik(ikparts)
 {
@@ -17,8 +17,10 @@ function tl_update_ik(ikparts)
 					array_length(part_joints_matrix) > 0 || array_length(part_joints_pos) > 0 || array_length(part_joints_bone_matrix) > 0)
 					tl_update_ik_calculate()
 		
-		var first = null;
-		var firstindex = ds_list_size(app.project_timeline_list);
+		var first, firstindex;
+		first = null
+		firstindex = ds_list_size(app.project_timeline_list)
+		
 		for (var i = 0; i < partcount; i++)
 		{
 			with (ikparts[i])
@@ -34,6 +36,7 @@ function tl_update_ik(ikparts)
 				}
 			}
 		}
+		
 		if (first = null)
 			break
 

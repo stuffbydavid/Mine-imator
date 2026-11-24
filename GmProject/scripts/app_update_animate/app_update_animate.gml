@@ -151,6 +151,7 @@ function app_update_animate()
 		with (app)
 			tl_update_matrix(true)
 	}
+	
 	project_path_update_id = project_matrix_update_id
 
 	// Spawn particles

@@ -1,3 +1,4 @@
+/// @desc Creates the shape mesh of a path from its sampled points, called by the path.
 /// CppGen ArrRef path_table
 /// CppGen matrix pathframea
 /// CppGen matrix pathframeb
@@ -7,9 +8,6 @@
 /// CppGen vec pathuv2
 /// CppGen vec pathuv3
 /// CppGen vec pathuv4
-/// @desc Creates the shape mesh of a path from its sampled points, called by the path.
-/// @arg path
-/// @arg [small]
 
 function vbuffer_create_path(path, small = false)
 {

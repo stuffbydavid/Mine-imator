@@ -26,34 +26,37 @@ function tl_update_values_ease(vid, cachechannel = false)
 	if (oldval != val)
 	{
 		// Keep explicit update_matrix callers as conservative full invalidations
-		var dirtyflags = e_tl_dirty.LOCAL;
+		var updateflags = e_tl_update.LOCAL;
 		if (vid >= e_value.POS_X && vid <= e_value.BEND_ANGLE_Z)
 		{
-			dirtyflags = e_tl_dirty.TRANSFORM
+			updateflags = e_tl_update.TRANSFORM
 			if (vid >= e_value.SCA_X && vid <= e_value.SCA_Z)
-				dirtyflags = dirtyflags | e_tl_dirty.SCALE
+				updateflags = updateflags | e_tl_update.SCALE
 			else if (vid >= e_value.BEND_ANGLE_LEGACY)
-				dirtyflags = e_tl_dirty.BEND
+				updateflags = e_tl_update.BEND
 		}
 		else if (vid >= e_value.PATH_OBJ && vid <= e_value.IK_ANGLE_OFFSET)
 		{
-			dirtyflags = e_tl_dirty.TRANSFORM
+			updateflags = e_tl_update.TRANSFORM
 			if (vid >= e_value.IK_TARGET)
-				dirtyflags = dirtyflags | e_tl_dirty.BEND
+				updateflags = updateflags | e_tl_update.BEND
 		}
 		else if (vid >= e_value.CAM_ROTATE && vid <= e_value.CAM_ROTATE_ANGLE_Z)
-			dirtyflags = e_tl_dirty.TRANSFORM
+			updateflags = e_tl_update.TRANSFORM
+		
 		else if ((vid >= e_value.ALPHA && vid <= e_value.WIND_INFLUENCE) ||
 				 (vid >= e_value.TEXTURE_OBJ && vid <= e_value.TEXTURE_NORMAL_OBJ) || vid = e_value.VISIBLE)
-			dirtyflags = e_tl_dirty.APPEARANCE
+			updateflags = e_tl_update.APPEARANCE
+		
 		else if (!((vid >= e_value.SPAWN && vid <= e_value.CAM_HEIGHT) ||
 				   (vid >= e_value.CAM_FX_SHAKE_MODE && vid <= e_value.ENV_BRIGHTNESS) ||
 				   (vid >= e_value.SOUND_OBJ && vid <= e_value.ITEM_NAME) ||
 				   (vid >= e_value.TRANSITION && vid <= e_value.EASE_OUT_Y)))
-			dirtyflags = e_tl_dirty.ALL
+			updateflags = e_tl_update.ALL
 
-		update_value_flags = update_value_flags | dirtyflags
+		update_value_flags = update_value_flags | updateflags
 		value[vid] = val
+		
 		return true
 	}
 	

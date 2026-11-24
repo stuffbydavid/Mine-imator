@@ -1,4 +1,4 @@
-/// @desc Evaluates enabled channels and reuses the changing channels within a keyframe interval
+/// @desc Evaluates enabled channels and reuses the changing channels within a keyframe interval.
 /// @arg [transitions]
 
 function tl_update_values_batch(transitions = false)

@@ -1,11 +1,11 @@
-/// CppGen array splinecontrols
-/// CppGen ConstRef splinecontrols
 /// @desc Calculates a 3D point on a 3D B-Spline curve given a list of points.
 /// @arg progress
 /// @arg points
 /// @arg closed
 /// @arg smooth
 /// @arg [amount]
+/// CppGen array splinecontrols
+/// CppGen ConstRef splinecontrols
 
 function spline_get_point(t, splinecontrols, closed, smooth, amount = 0)
 {

@@ -165,8 +165,6 @@ namespace CppProject
 		ID3D11Buffer* d3dObjectBuffer = nullptr;
 		ID3D11Buffer* d3dStaticBuffer = nullptr;
 		static ID3D11InputLayout* d3dInputLayout[4];
-		static ID3D11InputLayout* d3dCompactBendInputLayout;
-		BoolType compactBendInput = false;
 	#endif
 		QOpenGLShaderProgram* program = nullptr;
 		IntType glPointEye = -1, glPointProjection = -1, glPointVertical = -1;

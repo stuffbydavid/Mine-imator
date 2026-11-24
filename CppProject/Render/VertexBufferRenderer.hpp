@@ -50,6 +50,7 @@ namespace CppProject
 			Matrix matrixM[MAX_BATCH_OBJECTS];
 			IntType numObjects = 0;
 			Mesh<> mesh;
+			VertexBuffer::BendBuffer bendBuffer;
 			Bounds bounds;
 			bool isInCurrentFrame = false;
 			bool isInstanced = false;

@@ -40,13 +40,9 @@ function tl_update_path()
 	
 	// Update timelines
 	for (var i = 0; i < array_length(app.project_use_path_tl_array); i++)
-	{
 		with (app.project_use_path_tl_array[i])
-		{
 			if (value[e_value.PATH_OBJ] = other.id)
 				path_follow_update = true
-		}
-	}
 	
 	// Not enough points
 	if (ds_list_size(path_points_list) < 2)
@@ -64,8 +60,8 @@ function tl_update_path()
 	splinepoints = spline_subdivide(ds_list_create_array(path_points_list), path_closed)
 	
 	// Calculate distance between points
-	var pointsdistance = [];
-	var sampleprev, sample;
+	var pointsdistance, sampleprev, sample;
+	pointsdistance = []
 	path_length = 0
 	
 	for (var i = 0; i < array_length(splinepoints); i++)
@@ -95,9 +91,10 @@ function tl_update_path()
 	var t = 0;
 	for (var i = 0; i < detail; i++)
 	{
-		var length = (i/(detail - 1)) * path_length;
+		var length, j;
+		length = (i/(detail - 1)) * path_length
+		j = 0
 		
-		var j = 0;
 		while (length > pointsdistance[j] && length > 0.01)
 		{
 			length -= pointsdistance[j]
@@ -109,6 +106,7 @@ function tl_update_path()
 		
 		path_table[t] = spline_get_point(j + (length / pointsdistance[j]), splinepoints, path_closed, path_smooth, 0)
 		path_table_matrix[t] = path_table[t]
+		
 		t++
 	}
 	
@@ -122,6 +120,7 @@ function tl_update_path()
 	if (matrix != 0)
 	{
 		path_table_matrix = []
+		
 		for (var j = 0; j < array_length(path_table); j++)
 		{
 			var pos = point3D_mul_matrix(path_table[j], matrix);

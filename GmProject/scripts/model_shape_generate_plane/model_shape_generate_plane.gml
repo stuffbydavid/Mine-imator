@@ -1,5 +1,5 @@
-/// CppGen vec planebend
 /// @desc Generates a plane shape transformed by a bend vector.
+/// CppGen vec planebend
 
 function model_shape_generate_plane(planebend, usegpu = true)
 {
@@ -10,8 +10,9 @@ function model_shape_generate_plane(planebend, usegpu = true)
 	size = point3D_sub(to, from)
 	
 	// Find whether the shape is bent
-	var gpubend = usegpu && is_cpp() && bend_shape && bend_part != null;
-	var isbent = gpubend || (!vec3_equals(planebend, vec3(0)) && bend_shape);
+	var gpubend, isbent;
+	gpubend = (usegpu && is_cpp() && bend_shape && bend_part != null)
+	isbent = (gpubend || (!vec3_equals(planebend, vec3(0)) && bend_shape))
 	
 	// Axis to split up the plane
 	var segaxis = Z;
@@ -56,8 +57,7 @@ function model_shape_generate_plane(planebend, usegpu = true)
 	}
 	
 	// Start position and bounds
-	var detail;
-	var sharpbend, bendsize, bendstart, bendend, bendsegsize, invangle;
+	var sharpbend, bendsize, detail, bendstart, bendend, bendsegsize, invangle;
 	sharpbend = app.project_bend_style = "blocky" && bend_size = null && ((bend_axis[X] && !bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && bend_axis[Y] && !bend_axis[Z]) || (!bend_axis[X] && !bend_axis[Y] && bend_axis[Z]))
 	bendsize = (bend_size = null ? (app.project_bend_style = "realistic" ? 4 : 1) : bend_size)
 	detail = (sharpbend ? 2 : real(max(bendsize, 2)))
@@ -68,17 +68,16 @@ function model_shape_generate_plane(planebend, usegpu = true)
 	bendsegsize = bendsize / detail
 	invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 
-	var segextent = size[segaxis];
-	var segfrom = from[segaxis];
-	var mirrorfactor = negate(texture_mirror);
-	var smoothnormals = !sharpbend && !has_vertex_offsets;
-	var offsetnormals = !sharpbend && has_vertex_offsets;
-	var basen1 = vec3(0, 1, 0);
-	var basen2 = vec3(0, -1, 0);
+	var segextent, segfrom, mirrorfactor, smoothnormals, offsetnormals, basen1, basen2;
+	segextent = size[segaxis]
+	segfrom = from[segaxis]
+	mirrorfactor = negate(texture_mirror)
+	smoothnormals = !sharpbend && !has_vertex_offsets
+	offsetnormals = !sharpbend && has_vertex_offsets
+	basen1 = vec3(0, 1, 0)
+	basen2 = vec3(0, -1, 0)
 	
-	var p1, p2, n1, n2;
-	var texp1;
-	
+	var p1, p2, n1, n2, texp1;
 	if (segaxis = X)
 	{
 		bendstart = (bend_offset - (position[X] + x1)) - bendsize / 2
@@ -111,6 +110,7 @@ function model_shape_generate_plane(planebend, usegpu = true)
 		delta1 = vec3_sub(vertex_offsets[2], offset1)
 		delta2 = vec3_sub(vertex_offsets[3], offset2)
 	}
+	
 	p1 = vec3_add(p1, offset1)
 	p2 = vec3_add(p2, offset2)
 
@@ -144,10 +144,13 @@ function model_shape_generate_plane(planebend, usegpu = true)
 				pinchaxis = Y
 			else if (vec3_equals(bend_axis, vec3(false, false, true)))
 				pinchaxis = Z
+			
 			pinchangle = abs(planebend[pinchaxis])
 			if (pinchangle > 90)
 				pinchangle -= (pinchangle - 90) * 2
+			
 			pinchfactor = clamp(percent(pinchangle, 0, 90), 0, 1)
+			
 			startpinch = (startp <= 0.5 ? startp * 2 : (1 - startp) * 2)
 			startpinch *= pinchfactor
 			startpinch = ease("easeincubic", startpinch) / 2.5
@@ -161,11 +164,13 @@ function model_shape_generate_plane(planebend, usegpu = true)
 	
 	p1 = point3D_mul_matrix(p1, mat)
 	p2 = point3D_mul_matrix(p2, mat)
+	
 	if (gpubend)
 	{
 		p1 = model_shape_bend_point(p1, 0, bendstart, bendsize, invangle, true)
 		p2 = model_shape_bend_point(p2, 0, bendstart, bendsize, invangle, true)
 	}
+	
 	if (smoothnormals)
 	{
 		n1 = vec3_normalize(vec3_mul_matrix(basen1, mat))
@@ -189,10 +194,7 @@ function model_shape_generate_plane(planebend, usegpu = true)
 	var segpos = 0;
 	while (segpos < segextent)
 	{
-		var segsize;
-		var np1, np2;
-		var nn1, nn2;
-		var ntexp1;
+		var segsize, np1, np2, nn1, nn2, ntexp1;
 		
 		// Find segment size
 		if (!isbent || segpos >= bendend) // No/Above bend
@@ -261,13 +263,16 @@ function model_shape_generate_plane(planebend, usegpu = true)
 			// Segment pinching was disabled in the original plane generator
 			mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3(1))
 		}
+		
 		np1 = point3D_mul_matrix(np1, mat)
 		np2 = point3D_mul_matrix(np2, mat)
+		
 		if (gpubend)
 		{
 			np1 = model_shape_bend_point(np1, segpos, bendstart, bendsize, invangle)
 			np2 = model_shape_bend_point(np2, segpos, bendstart, bendsize, invangle)
 		}
+		
 		if (smoothnormals)
 		{
 			nn1 = vec3_normalize(vec3_mul_matrix(basen1, mat))
@@ -290,12 +295,14 @@ function model_shape_generate_plane(planebend, usegpu = true)
 
 			nn1 = vec3_normalize(vec3_add(normal1, normal2))
 			nn2 = vec3_mul(nn1, -1)
+			
 			if (gpubend)
 			{
 				// Retain front/back orientation even when the rest quad has zero area
 				nn1 = vec4(nn1[X], nn1[Y], nn1[Z], 1)
 				nn2 = vec4(nn2[X], nn2[Y], nn2[Z], -1)
 			}
+			
 			n1 = nn1
 			n2 = nn2
 		}
@@ -371,5 +378,6 @@ function model_shape_generate_plane(planebend, usegpu = true)
 	var vbuf = vbuffer_done();
 	if (gpubend)
 		vertex_bend_update(vbuf, planebend)
+	
 	return vbuf
 }

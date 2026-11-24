@@ -36,18 +36,14 @@ namespace CppProject
 		IntType numIndices = 0;
 		Heap<V> vertexData;
 		Heap<uint32_t> indexData;
-		Heap<BendVertex> bendData;
-		BoolType compactBendData = false;
 		Bounds bounds;
 
 	#if OS_WINDOWS
 		ID3D11Buffer* d3dVertexBuffer = nullptr;
 		ID3D11Buffer* d3dIndexBuffer = nullptr;
-		ID3D11Buffer* d3dBendBuffer = nullptr;
 	#endif
 		QOpenGLBuffer* glVertexBuffer = nullptr;
 		QOpenGLBuffer* glIndexBuffer = nullptr;
-		QOpenGLBuffer* glBendBuffer = nullptr;
 		static QVector<QOpenGLBuffer*> deletedBuffers;
 	};
 }

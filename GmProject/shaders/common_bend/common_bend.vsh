@@ -75,7 +75,7 @@ vec3 bendPoint(vec4 restPoint)
 	return bendRotate(restPoint.xyz - uBendPivot, angle) * scale + uBendPivot;
 }
 
-void applyBendFull(inout vec3 position, inout vec3 normal, inout vec3 tangent, inout vec4 wave, vec4 data, vec4 pointA, vec4 pointB, vec4 pointC)
+void applyBend(inout vec3 position, inout vec3 normal, inout vec3 tangent, inout vec4 wave, vec4 data, vec4 pointA, vec4 pointB, vec4 pointC)
 {
 	if (uBendSettings.x < 0.5)
 		return;
@@ -105,84 +105,6 @@ void applyBendFull(inout vec3 position, inout vec3 normal, inout vec3 tangent, i
 					area = cross(a, b) + cross(b, c);
 			}
 			normal = bendNormalize(area) * (data.y < 0.0 ? -1.0 : 1.0);
-		}
-		tangent = bendNormalize(a * data.z + b * data.w);
-	}
-	if (position.z <= uBendWind.y || position.z >= uBendWind.z)
-		wave.xy = vec2(0.0);
-}
-
-void bendPrepare(float weight, out vec3 sine, out vec3 cosine, out vec3 scale)
-{
-	vec3 angle;
-	bendTransform(weight, angle, scale);
-	sine = sin(-angle * 0.017453292519943295);
-	cosine = cos(-angle * 0.017453292519943295);
-}
-
-vec3 bendRotatePrepared(vec3 value, vec3 sine, vec3 cosine)
-{
-	value = vec3(cosine.y * value.x + sine.y * value.z, value.y, -sine.y * value.x + cosine.y * value.z);
-	value = vec3(value.x, cosine.x * value.y - sine.x * value.z, sine.x * value.y + cosine.x * value.z);
-	return vec3(cosine.z * value.x - sine.z * value.y, sine.z * value.x + cosine.z * value.y, value.z);
-}
-
-vec3 bendApplyPrepared(vec3 value, float selector, vec3 sine0, vec3 cosine0, vec3 scale0, vec3 sine1, vec3 cosine1, vec3 scale1)
-{
-	vec3 sine = selector < 0.5 ? sine0 : sine1;
-	vec3 cosine = selector < 0.5 ? cosine0 : cosine1;
-	vec3 scale = selector < 0.5 ? scale0 : scale1;
-	return bendRotatePrepared(value, sine, cosine) * scale;
-}
-
-void applyBend(inout vec3 position, inout vec3 normal, inout vec3 tangent, inout vec4 wave, vec4 data, vec4 pointA, vec4 pointB, vec4 pointC)
-{
-	if (data.y < 256.0)
-	{
-		applyBendFull(position, normal, tangent, wave, data, pointA, pointB, pointC);
-		return;
-	}
-	if (uBendSettings.x < 0.5)
-		return;
-	if (max(max(abs(uBendAngle.x), abs(uBendAngle.y)), abs(uBendAngle.z)) >= 0.0001)
-	{
-		// Compact records share two exact weights across the vertex and its neighbors
-		float tag = data.y - 256.0;
-		float normalMode = mod(tag, 16.0) - 4.0;
-		float selectorA = mod(floor(tag / 16.0), 2.0);
-		float selectorB = mod(floor(tag / 32.0), 2.0);
-		float selectorC = mod(floor(tag / 64.0), 2.0);
-		vec3 valueC = vec3(pointB.w, pointC.x, pointC.y);
-		vec3 sine0, cosine0, scale0, sine1, cosine1, scale1;
-		bendPrepare(data.x, sine0, cosine0, scale0);
-		if (pointA.w == data.x)
-		{
-			sine1 = sine0;
-			cosine1 = cosine0;
-			scale1 = scale0;
-		}
-		else
-			bendPrepare(pointA.w, sine1, cosine1, scale1);
-
-		position = bendRotatePrepared(position - uBendPivot, sine0, cosine0) * scale0 + uBendPivot;
-		vec3 a = bendApplyPrepared(pointA.xyz - uBendPivot, selectorA, sine0, cosine0, scale0, sine1, cosine1, scale1) + uBendPivot - position;
-		vec3 b = bendApplyPrepared(pointB.xyz - uBendPivot, selectorB, sine0, cosine0, scale0, sine1, cosine1, scale1) + uBendPivot - position;
-		if (abs(normalMode) < 0.5)
-			normal = bendNormalize(bendApplyPrepared(valueC, selectorC, sine0, cosine0, scale0, sine1, cosine1, scale1));
-		else
-		{
-			vec3 area = cross(a, b);
-			if (abs(normalMode) > 1.5)
-			{
-				vec3 c = bendApplyPrepared(valueC - uBendPivot, selectorC, sine0, cosine0, scale0, sine1, cosine1, scale1) + uBendPivot - position;
-				if (abs(normalMode) < 2.5)
-					area = cross(c, a) + cross(a, b);
-				else if (abs(normalMode) < 3.5)
-					area = cross(a, c) + cross(c, b);
-				else
-					area = cross(a, b) + cross(b, c);
-			}
-			normal = bendNormalize(area) * (normalMode < 0.0 ? -1.0 : 1.0);
 		}
 		tangent = bendNormalize(a * data.z + b * data.w);
 	}

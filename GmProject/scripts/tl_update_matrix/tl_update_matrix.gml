@@ -1,10 +1,10 @@
-/// CppGen vec posebend
-/// CppGen int dirtyflags
-/// CppGen int childflags
 /// @desc Updates matrixes and positions.
 /// @arg [paths]
 /// @arg [updateik]
 /// @arg [updatepose]
+/// CppGen vec posebend
+/// CppGen int updateflags
+/// CppGen int childflags
 
 function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 {
@@ -29,7 +29,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 		if (usepaths && curtl.path_follow_update)
 		{
 			curtl.path_follow_update = false
-			curtl.update_value_flags = curtl.update_value_flags | e_tl_dirty.TRANSFORM
+			curtl.update_value_flags = curtl.update_value_flags | e_tl_update.TRANSFORM
 		}
 		
 		// Update children
@@ -62,13 +62,13 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			if (type_is_visible(type) && type != e_tl_type.CAMERA && !type_is_light(type))
 				worldupdate = true
 			
-			var dirtyflags, transformupdate, appearanceupdate, bendupdate, hasik, posebend;
-			dirtyflags = (update_matrix ? e_tl_dirty.ALL : update_value_flags)
-			transformupdate = ((dirtyflags & e_tl_dirty.TRANSFORM) != 0)
-			appearanceupdate = ((dirtyflags & e_tl_dirty.APPEARANCE) != 0)
+			var updateflags, transformupdate, appearanceupdate, bendupdate, hasik, posebend;
+			updateflags = (update_matrix ? e_tl_update.ALL : update_value_flags)
+			transformupdate = ((updateflags & e_tl_update.TRANSFORM) != 0)
+			appearanceupdate = ((updateflags & e_tl_update.APPEARANCE) != 0)
 			hasik = (array_length(part_joints_matrix) > 0 && value[e_value.IK_TARGET] != null)
 
-			if (hasik && (dirtyflags & e_tl_dirty.BEND) != 0)
+			if (hasik && (updateflags & e_tl_update.BEND) != 0)
 				transformupdate = true
 			
 			posebend = bend_pose_inherit
@@ -80,16 +80,16 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				if (bend_pose_inherit[X] != posebend[X] || bend_pose_inherit[Y] != posebend[Y] || bend_pose_inherit[Z] != posebend[Z])
 				{
 					bend_pose_inherit = posebend
-					dirtyflags = dirtyflags | e_tl_dirty.BEND
+					updateflags = updateflags | e_tl_update.BEND
 				}
 
 				if (type = e_tl_type.MODEL_PART)
 					model_part_shape_render_matrix_part = null
 			}
 			
-			bendupdate = ((dirtyflags & e_tl_dirty.BEND) != 0)
+			bendupdate = ((updateflags & e_tl_update.BEND) != 0)
 			
-			if ((dirtyflags & e_tl_dirty.SCALE) != 0)
+			if ((updateflags & e_tl_update.SCALE) != 0)
 			{
 				// Scale for position controls
 				value_inherit[e_value.SCA_X] = 1
@@ -119,6 +119,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			lastalpha = value_inherit[e_value.ALPHA];
 			lasttex = value_inherit[e_value.TEXTURE_OBJ]
 			ikblend = value[e_value.IK_BLEND] * hasik
+			
 			if (appearanceupdate)
 			{
 				value_inherit[e_value.ALPHA] = value[e_value.ALPHA] // Multiplied
@@ -201,6 +202,7 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 				
 				if (!tl.inherit_bend)
 					inhbend = false
+				
 				if (inhalpha)
 					value_inherit[e_value.ALPHA] *= par.value[e_value.ALPHA]
 				
@@ -322,10 +324,12 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 			
 			// Forward categories in timeline order, retaining the full path for structural edits
 			// Do not prune on effective parent values: clamping and texture precedence are order dependent
-			var childflags = dirtyflags & e_tl_dirty.INHERITED;
+			var childflags = updateflags & e_tl_update.INHERITED;
+			
 			// Keep dependent children conservative, including bend locks and their descendants
 			if (bendupdate)
-				childflags = childflags | e_tl_dirty.TRANSFORM
+				childflags = childflags | e_tl_update.TRANSFORM
+			
 			if (update_matrix || childflags != 0)
 			{
 				for (var t = 0; t < ds_list_size(tree_list); t++)
@@ -336,8 +340,8 @@ function tl_update_matrix(usepaths = false, updateik = true, updatepose = false)
 					{
 						var flags = childflags;
 
-						if (!tree_list[|t].inherit_bend && (flags & e_tl_dirty.BEND) != 0)
-							flags -= e_tl_dirty.BEND
+						if (!tree_list[|t].inherit_bend && (flags & e_tl_update.BEND) != 0)
+							flags -= e_tl_update.BEND
 						
 						tree_list[|t].update_value_flags = tree_list[|t].update_value_flags | flags
 					}

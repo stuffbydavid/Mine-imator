@@ -1,5 +1,5 @@
-/// CppGen vec blockbend
 /// @desc Generates a block shape transformed by a bend vector.
+/// CppGen vec blockbend
 
 function model_shape_generate_block(blockbend, usegpu = true)
 {
@@ -11,8 +11,9 @@ function model_shape_generate_block(blockbend, usegpu = true)
 	scalef = 0.005 // Used to combat Z-fighting
 	
 	// Find whether the shape is bent
-	var gpubend = usegpu && is_cpp() && bend_shape && bend_part != null;
-	var isbent = gpubend || (!vec3_equals(blockbend, vec3(0)) && bend_shape);
+	var gpubend, isbent;
+	gpubend = (usegpu && is_cpp() && bend_shape && bend_part != null)
+	isbent = (gpubend || (!vec3_equals(blockbend, vec3(0)) && bend_shape))
 	
 	// Axis to split up the block
 	var segaxis = Z;
@@ -120,11 +121,11 @@ function model_shape_generate_block(blockbend, usegpu = true)
 	bendsegsize = bendsize / detail
 	invangle = (bend_part = e_part.LOWER || bend_part = e_part.BACK || bend_part = e_part.LEFT)
 
-	var flatnormals = sharpbend || has_vertex_offsets;
-	var segextent = size[segaxis];
-	var segfrom = from[segaxis];
-	var mirrorfactor = negate(texture_mirror);
-	var pinchaxis, pinchfactor;
+	var flatnormals, segextent, segfrom, mirrorfactor, pinchaxis, pinchfactor;
+	flatnormals = sharpbend || has_vertex_offsets
+	segextent = size[segaxis]
+	segfrom = from[segaxis]
+	mirrorfactor = negate(texture_mirror)
 	if (sharpbend && isbent && !gpubend)
 	{
 		if (vec3_equals(bend_axis, vec3(true, false, false)))
@@ -662,5 +663,6 @@ function model_shape_generate_block(blockbend, usegpu = true)
 	var vbuf = vbuffer_done();
 	if (gpubend)
 		vertex_bend_update(vbuf, blockbend)
+	
 	return vbuf
 }
