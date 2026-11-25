@@ -46,13 +46,14 @@ function app_startup_keybinds()
 	// Tools
 	keybind_register("tool/workbench", e_keybind.WORKBENCH, keybind_new(vk_tab))
 	keybind_register("tool/build", e_keybind.BUILD_TOOL, keybind_new("B"))
+	keybind_register("tool/build_first_person", e_keybind.BUILD_FIRST_PERSON, keybind_new("F"))
 	keybind_register("tool/select", e_keybind.TOOL_SELECT, keybind_new("W"))
 	keybind_register("tool/move", e_keybind.TOOL_MOVE, keybind_new("G"))
 	keybind_register("tool/rotate", e_keybind.TOOL_ROTATE, keybind_new("R"))
 	keybind_register("tool/scale", e_keybind.TOOL_SCALE, keybind_new("S"))
 	keybind_register("tool/bend", e_keybind.TOOL_BEND, keybind_new("N"))
 	keybind_register("tool/transform", e_keybind.TOOL_TRANSFORM, keybind_new("T"))
-	keybind_register("snap", e_keybind.SNAP, keybind_new("F"))
+	keybind_register("snap", e_keybind.SNAP, keybind_new("Q"))
 	
 	// Navigation
 	keybind_register("camera/forward", e_keybind.CAM_FORWARD, keybind_new("W"), true)

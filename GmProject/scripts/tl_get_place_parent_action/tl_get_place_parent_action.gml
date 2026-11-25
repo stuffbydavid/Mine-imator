@@ -8,7 +8,12 @@ function tl_get_place_parent_action(target)
 		block = block.part_of
 	
 	if (!type_is_block(block.type))
+	{
+		if (app.place_build)
+			return null
+
 		return tl_get_parent_action(target)
+	}
 
 	// A directly hit structure is itself a valid parent
 	if (type_is_structure(block.type))

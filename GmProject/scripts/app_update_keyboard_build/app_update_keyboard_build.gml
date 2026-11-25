@@ -84,9 +84,12 @@ function app_update_keyboard_build()
 		if (keybinds[e_keybind.REDO].pressed)
 			action_toolbar_redo()
 		
-		if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("F")))
+		if (keyboard_check_pressed(vk_escape) || keybinds[e_keybind.BUILD_FIRST_PERSON].pressed)
 		{
-			action_build_first_person(false)
+			if (build_first_person_exit)
+				action_toolbar_build_mode()
+			else
+				action_build_first_person(false)
 			return true
 		}
 		
@@ -96,7 +99,7 @@ function app_update_keyboard_build()
 	// Build mode shortcuts
 	if (!textbox_isediting && window_busy = "")
 	{
-		if (keyboard_check_pressed(ord("F")))
+		if (keybinds[e_keybind.BUILD_FIRST_PERSON].pressed)
 		{
 			action_build_first_person(true)
 			return true

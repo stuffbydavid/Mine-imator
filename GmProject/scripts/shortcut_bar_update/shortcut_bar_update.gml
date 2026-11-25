@@ -32,7 +32,7 @@ function shortcut_bar_update()
 			shortcut_bar_add(null, e_mouse.SCROLL, "view/zoom")
 			shortcut_bar_add(null, e_mouse.DRAG_RIGHT, "view/walk")
 			shortcut_bar_add(keybind_new("S"), null, "build/reset_structure")
-			shortcut_bar_add(keybind_new("F"), null, "build/first_person")
+			shortcut_bar_add(keybinds[e_keybind.BUILD_FIRST_PERSON].keybind, null, "build/first_person")
 		}
 
 		if (shortcut_bar_state = "camera_move" || shortcut_bar_state = "tl_camera_move" || shortcut_bar_state = "first_person")

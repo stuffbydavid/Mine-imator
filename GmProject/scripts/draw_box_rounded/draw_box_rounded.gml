@@ -83,7 +83,7 @@ function draw_box_rounded(xx, yy, w, h, incolor = null, inalpha = 1, roundleftto
 	if (roundleftbottom)
 		draw_image(roundsprite, 0, xx + roundsize, yy + h-roundsize, 1, 1, draw_get_color(), 1, -270)
 	
-	if (!is_undefined(incolor))
+	if (incolor != null)
 	{
 		draw_set_color(oldcolor)
 		draw_set_alpha(oldalpha)

@@ -934,23 +934,29 @@ function view_draw(view)
 		barwid = min(200, content_width - 32)
 		barhei = 18
 		
+		if (view = view_main && place_build && view.hotbar_x != null)
+			barwid = min(barwid, view.hotbar_x - barx - 16)
+
+		draw_set_font(font_caption)
+
 		if (barwid > 0)
 		{
-			var fillwid, infotext;
+			var fillwid, infotext, showtext;
 			fillwid = floor(barwid * clamp(max(1, render_samples) / max(1, project_render_samples), 0, 1))
 			infotext = text_get("view/render_progress", max(1, render_samples), project_render_samples);
+			showtext = (string_width(infotext) + 8 <= barwid)
 			
 			draw_box(barx, bary, barwid, barhei, false, c_level_bottom, 1)
 			draw_box(barx, bary, fillwid, barhei, false, c_accent, 1)
 			
-			if (fillwid > 0)
+			if (showtext && fillwid > 0)
 			{
 				clip_begin(barx, bary, fillwid, barhei)
 				draw_label(infotext, barx + barwid / 2, bary + barhei / 2, fa_center, fa_middle, setting_theme.dark ? c_level_bottom : c_white, 1, font_caption)
 				clip_end()
 			}
 			
-			if (fillwid < barwid)
+			if (showtext && fillwid < barwid)
 			{
 				clip_begin(barx + fillwid, bary, barwid - fillwid, barhei)
 				draw_label(infotext, barx + barwid / 2, bary + barhei / 2, fa_center, fa_middle, c_text_main, 1, font_caption)
@@ -962,8 +968,11 @@ function view_draw(view)
 		{
 			infotext = text_get("view/render_pass", text_get("view/renderer/pass/" + render_pass_list[|project_render_pass]))
 			
-			draw_label(infotext, barx + 1, bary - 3, fa_left, fa_bottom, c_black, .75, font_caption)
-			draw_label(infotext, barx, bary - 4, fa_left, fa_bottom, c_white, 1, font_caption)
+			if (string_width(infotext) <= barwid)
+			{
+				draw_label(infotext, barx + 1, bary - 3, fa_left, fa_bottom, c_black, .75, font_caption)
+				draw_label(infotext, barx, bary - 4, fa_left, fa_bottom, c_white, 1, font_caption)
+			}
 		}
 	}
 	

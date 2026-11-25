@@ -709,6 +709,7 @@
     {"id":{"name":"action_build_hotbar_save","path":"scripts/action_build_hotbar_save/action_build_hotbar_save.yy",},},
     {"id":{"name":"action_build_hotbar_scroll","path":"scripts/action_build_hotbar_scroll/action_build_hotbar_scroll.yy",},},
     {"id":{"name":"action_build_hotbar_select","path":"scripts/action_build_hotbar_select/action_build_hotbar_select.yy",},},
+    {"id":{"name":"action_build_hotbar_slots","path":"scripts/action_build_hotbar_slots/action_build_hotbar_slots.yy",},},
     {"id":{"name":"action_build_hotbars_list","path":"scripts/action_build_hotbars_list/action_build_hotbars_list.yy",},},
     {"id":{"name":"action_build_pick","path":"scripts/action_build_pick/action_build_pick.yy",},},
     {"id":{"name":"action_build_place_timeline","path":"scripts/action_build_place_timeline/action_build_place_timeline.yy",},},

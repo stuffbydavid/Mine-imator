@@ -110,7 +110,9 @@ function app_start_place(build, tl = null, spawn = false)
 		
 		if (build_tool.build_selected != null)
 			view_build_hotbar_update(build_tool.build_selected)
-		
+
+		build_hotbar_hide = true
+
 		place_tl_parent = app
 		place_tl_parent_index = -1
 		

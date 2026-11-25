@@ -7,6 +7,8 @@ function app_startup_interface_build()
 	
 	build_first_person = false
 	build_first_person_second = false
+	build_first_person_exit = false
+	build_first_person_lock = false
 	build_first_person_move_speed_scroll = 1
 	build_first_person_mouse_x = 0
 	build_first_person_mouse_y = 0
@@ -26,8 +28,9 @@ function app_startup_interface_build()
 		temp_update_rot_point()
 		preview = null
 	}
-	
+
 	build_hotbar_slot = 0
+	build_hotbar_hide = false
 
 	build_box = null
 	build_box_top = null

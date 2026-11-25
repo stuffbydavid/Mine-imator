@@ -151,8 +151,6 @@
 		"edit_keybind": "Edit keybind",
 		"language_add": "Add language",
 		"language_folder": "Open languages folder",
-		"view_list": "Switch to list view",
-		"view_grid": "Switch to grid view",
 		"experimental": "This setting is experimental and is not fully supported.",
 		"settings/": {
 			"reset": "Reset settings",
@@ -988,12 +986,14 @@
 	"view/": {
 		"bench_tip": "Open workbench",
 		"tool/": {
+			"build_tip": "Build tool",
 			"select_tip": "Select tool",
 			"move_tip": "Move tool",
 			"rotate_tip": "Rotate tool",
 			"scale_tip": "Scale tool",
 			"bend_tip": "Bend tool",
-			"transform_tip": "Transform tool"
+			"transform_tip": "Transform tool",
+			"first_person_tip": "First-person mode"
 		},
 		"renderer/": {
 			"quick": "Quick mode",
@@ -3048,7 +3048,6 @@
 				"tube": "Tube",
 				"brain": "Brain",
 				"bubble": "Bubble",
-				"fire": "Fire",
 				"horn": "Horn",
 				"small": "Small",
 				"large": "Large",
@@ -4057,7 +4056,8 @@
 	},
 	"build_tool/": {
 		"first_person": "First-person mode",
-		"first_person_tip": "Press Escape or F to cancel first-person mode.",
+		"first_person_tip": "Press Escape or %1 to cancel first-person mode.",
+		"first_person_tip_escape": "Press Escape to cancel first-person mode.",
 		"exit": "Exit build tool",
 		"selected": "Selected",
 		"structure": "Structure",
@@ -4718,6 +4718,7 @@
 			"tool/": {
 				"workbench": "Open workbench",
 				"build": "Build tool",
+				"build_first_person": "Build tool first-person mode",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",

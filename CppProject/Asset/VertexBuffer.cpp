@@ -449,6 +449,7 @@ namespace CppProject
 			}
 			radius *= 1.406;
 
+			bend.zeroPoseBounds = bounds;
 			bounds = Bounds(bend.pivot - VecType(radius, radius, radius), bend.pivot + VecType(radius, radius, radius));
 		}
 

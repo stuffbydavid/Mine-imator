@@ -106,7 +106,16 @@ function view_update(view, cam)
 		mouse_cursor = cr_none
 		shortcut_bar_state = "first_person"
 		
-		camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y)
+		// Lock cursor
+		if (build_first_person_lock)
+			camera_control_move(cam, build_first_person_mouse_x, build_first_person_mouse_y, false)
+		else
+			window_mouse_set_permission(true)
+
+		window_mouse_set(floor(view_area_x + view_area_width / 2), floor(view_area_y + view_area_height / 2))
+		build_first_person_mouse_x = display_mouse_get_x()
+		build_first_person_mouse_y = display_mouse_get_y()
+		build_first_person_lock = true
 		
 		if (mouse_left_pressed)
 			buildedited = action_build_remove()

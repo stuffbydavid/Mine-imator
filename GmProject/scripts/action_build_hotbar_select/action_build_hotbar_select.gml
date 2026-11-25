@@ -17,6 +17,7 @@ function action_build_hotbar_select(slot)
 			continue
 
 		build_hotbar_slot = slot
+		view_main.hotbar_slot = -1
 		
 		action_build_select(value, block[2])
 		

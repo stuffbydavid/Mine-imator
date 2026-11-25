@@ -133,6 +133,8 @@ function res_load(reload = false)
 
 			if (loadcache && res_load_block_cache(cachefn))
 			{
+				res_load_scenery_filter_mask()
+
 				if (type = e_res_type.SCHEMATIC)
 					debug("Loaded schematic cache", cachefn)
 

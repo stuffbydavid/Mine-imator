@@ -1,10 +1,13 @@
-function draw_tooltip_label(text, icon, type, halign = fa_left)
+function draw_tooltip_label(name, icon, type, halign = fa_left, text = "")
 {
 	var color, textx, iconx;
 	color = setting_theme.toast_color[type]
 	
+	if (text = "")
+		text = text_get(name)
+	
 	draw_set_font(font_caption)
-	text = string_wrap(text_get(text), (dw - 32) + 4)
+	text = string_wrap(text, (dw - 32) + 4)
 	textx = dx + 32
 	iconx = dx + 12
 

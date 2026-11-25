@@ -3,6 +3,7 @@ build-*/
 output*/
 runs/
 feat/
+CopilotSnapshots/
 thumbnail.png
 *.backup*
 /install*/

@@ -262,6 +262,9 @@ function settings_load()
 
 			if (is_undefined(controlsmap[?"tool/build"]) && array_equals(keybinds[e_keybind.TOOL_BEND].keybind, keybind_new("B")))
 				keybinds[e_keybind.TOOL_BEND].keybind = keybind_new("B", false, true)
+
+			if (is_undefined(controlsmap[?"tool/build_first_person"]) && array_equals(keybinds[e_keybind.SNAP].keybind, keybind_new("F")))
+				keybinds[e_keybind.SNAP].keybind = keybind_new("Q")
 			
 			setting_move_speed = value_get_real(controlsmap[?"move_speed"], setting_move_speed)
 			setting_look_sensitivity = value_get_real(controlsmap[?"look_sensitivity"], setting_look_sensitivity)

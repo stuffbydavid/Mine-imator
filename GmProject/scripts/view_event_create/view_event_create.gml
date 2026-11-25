@@ -69,6 +69,12 @@ function view_event_create()
 	navgizmo_mouseon = false
 	navgizmo_dragged = false
 	
+	hotbar_x = null
+	hotbar_offset = 0
+	hotbar_offset_goal = 0
+	hotbar_scroll_direction = 0
+	hotbar_selected = null
+	hotbar_slot = -1
 	hotbar_mouseon = false
 	
 	overlay_mouseon = false

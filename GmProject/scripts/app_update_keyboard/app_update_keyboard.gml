@@ -58,6 +58,13 @@ function app_update_keyboard()
 		if (keybinds[e_keybind.BUILD_TOOL].pressed)
 			action_toolbar_build_mode()
 		
+		if (keybinds[e_keybind.BUILD_FIRST_PERSON].pressed)
+		{
+			action_toolbar_build_mode()
+			action_build_first_person(true, true)
+			return 0
+		}
+		
 		if (keybinds[e_keybind.PLAY].pressed)
 			action_tl_play()
 		

@@ -11,7 +11,11 @@ function tab_build_tool()
 	if (build_first_person)
 	{
 		dy += 10
-		draw_tooltip_label("build_tool/first_person_tip", icons.INFO, e_toast.INFO)
+		var fpkey = keybinds[e_keybind.BUILD_FIRST_PERSON].keybind;
+		if (fpkey[e_keybind_key.CHAR] != vk_nokey)
+			draw_tooltip_label("build_tool/first_person_tip", icons.INFO, e_toast.INFO, fa_left, text_get("build_tool/first_person_tip", text_control_name(fpkey)))
+		else
+			draw_tooltip_label("build_tool/first_person_tip_escape", icons.INFO, e_toast.INFO)
 	}
 	else
 	{

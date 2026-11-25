@@ -98,6 +98,7 @@ namespace CppProject
 			bool enabled = false;
 			IntType zeroBuffer = 0; // Borrowed from the model shape, never owned by this buffer
 			bool zeroPose = true;
+			Bounds zeroPoseBounds;
 			VecType pivot, minimum, maximum, direction, angle, wind;
 			RealType kind = 0, sharpAxis = -1;
 			VecType quad[4];
