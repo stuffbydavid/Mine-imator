@@ -1,4 +1,3 @@
-/// json_load_char()
 /// @desc Loads the next JSON character, skips whitespaces.
 
 function json_load_char()

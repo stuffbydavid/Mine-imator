@@ -1,5 +1,3 @@
-/// tl_update_path()
-
 function tl_update_path()
 {
 	if (type != e_tl_type.PATH)
@@ -30,15 +28,21 @@ function tl_update_path()
 		var tl = tree_list[|i];
 		
 		if (tl.type = e_tl_type.PATH_POINT)
-			ds_list_add(path_points_list, [tl.value[e_value.POS_X], tl.value[e_value.POS_Y], tl.value[e_value.POS_Z], tl.value[e_value.PATH_POINT_ANGLE], tl.value[e_value.PATH_POINT_SCALE], 0, 0, 0, 0, 0, 0])
+			ds_list_add(path_points_list, [
+				tl.value[e_value.POS_X],
+				tl.value[e_value.POS_Y],
+				tl.value[e_value.POS_Z],
+				tl.value[e_value.PATH_POINT_ANGLE],
+				tl.value[e_value.PATH_POINT_SCALE],
+				0, 0, 0, 0, 0, 0
+			])
 	}
 	
 	// Update timelines
-	with (obj_timeline)
-	{
-		if (value[e_value.PATH_OBJ] = other.id)
-			update_matrix = true
-	}
+	for (var i = 0; i < array_length(app.project_use_path_tl_array); i++)
+		with (app.project_use_path_tl_array[i])
+			if (value[e_value.PATH_OBJ] = other.id)
+				path_follow_update = true
 	
 	// Not enough points
 	if (ds_list_size(path_points_list) < 2)
@@ -56,30 +60,30 @@ function tl_update_path()
 	splinepoints = spline_subdivide(ds_list_create_array(path_points_list), path_closed)
 	
 	// Calculate distance between points
-	var points_distance = [];
-	var sampleprev, sample;
+	var pointsdistance, sampleprev, sample;
+	pointsdistance = []
 	path_length = 0
 	
 	for (var i = 0; i < array_length(splinepoints); i++)
 	{
 		sampleprev = spline_get_point(i, splinepoints, path_closed, path_smooth, 0)
-		points_distance[i] = 0
+		pointsdistance[i] = 0
 		
 		for (var j = 0; j <= 1; j += 0.05)
 		{
 			sample = spline_get_point(i + j, splinepoints, path_closed, path_smooth, 0)
-			points_distance[i] += point3D_distance(sampleprev, sample)
+			pointsdistance[i] += point3D_distance(sampleprev, sample)
 			sampleprev = sample
 		}
 		
-		points_distance[i] = max(0.001, points_distance[i])
-		path_length += points_distance[i]
+		pointsdistance[i] = max(0.001, pointsdistance[i])
+		path_length += pointsdistance[i]
 	}
 	
 	if (path_length = 0)
 	{
-		path_table[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-		path_table_matrix[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+		path_table[0] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+		path_table_matrix[0] = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 		return 0
 	}
 	
@@ -87,34 +91,36 @@ function tl_update_path()
 	var t = 0;
 	for (var i = 0; i < detail; i++)
 	{
-		var length = (i/(detail - 1)) * path_length;
+		var length, j;
+		length = (i/(detail - 1)) * path_length
+		j = 0
 		
-		var j = 0;
-		while (length > points_distance[j] && length > 0.01)
+		while (length > pointsdistance[j] && length > 0.01)
 		{
-			length -= points_distance[j]
+			length -= pointsdistance[j]
 			j++
 		}
 		
-		if (points_distance[j] = 0)
+		if (pointsdistance[j] = 0)
 			continue
 		
-		path_table[t] = spline_get_point(j + (length / points_distance[j]), splinepoints, path_closed, path_smooth, 0)
+		path_table[t] = spline_get_point(j + (length / pointsdistance[j]), splinepoints, path_closed, path_smooth, 0)
 		path_table_matrix[t] = path_table[t]
+		
 		t++
 	}
 	
 	// Generate tangent/normal values in points
 	spline_make_frames(path_table, path_closed, path_smooth)
 	
-	if (path_shape_generate)
+	// The selection mesh is created on demand when clicking
+	if (path_shape != "none")
 		path_vbuffer = vbuffer_create_path(id)
-	else
-		path_select_vbuffer = vbuffer_create_path(id, true)
 	
 	if (matrix != 0)
 	{
 		path_table_matrix = []
+		
 		for (var j = 0; j < array_length(path_table); j++)
 		{
 			var pos = point3D_mul_matrix(path_table[j], matrix);

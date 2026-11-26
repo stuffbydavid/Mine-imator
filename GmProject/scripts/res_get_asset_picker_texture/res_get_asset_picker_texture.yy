@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"res_get_asset_picker_texture",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"res_get_asset_picker_texture",
+  "parent":{
+    "name":"Resource",
+    "path":"folders/Scripts/Project/Resource.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

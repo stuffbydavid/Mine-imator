@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_set_material_none",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_set_material_none",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/Render/Texture.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

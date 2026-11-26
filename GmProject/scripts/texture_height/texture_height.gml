@@ -1,4 +1,3 @@
-/// texture_height(texture)
 /// @arg texture
 
 function texture_height(tex)

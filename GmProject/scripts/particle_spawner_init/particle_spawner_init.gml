@@ -1,4 +1,3 @@
-/// particle_spawner_init()
 /// @desc Creates the variables necessary for spawning particles.
 
 function particle_spawner_init()
@@ -9,6 +8,7 @@ function particle_spawner_init()
 	spawn_currentstep = current_step
 	spawn_laststep = current_step
 	spawn_active = true
+	
 	fire = false
 	single_fire_count = 0
 	

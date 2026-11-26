@@ -1,14 +1,13 @@
 /// CppSeparate MatrixType matrix_transpose(MatrixType)
-/// matrix_transpose(matrix)
-/// @matrix
+/// @arg matrix
 
 function matrix_transpose(mat)
 {
-	var trans;
+	var trmat;
 	
 	for (var i = 0; i < 4; i++)
 		for (var j = 0; j < 4; j++)
-			trans[i * 4 + j] = mat[j * 4 + i];
+			trmat[i * 4 + j] = mat[j * 4 + i]
 	
-	return trans
+	return trmat
 }

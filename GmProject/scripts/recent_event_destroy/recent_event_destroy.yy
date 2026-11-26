@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "recent_event_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Recent",
-    "path": "folders/Scripts/App/Recent.yy",
+  "$GMScript":"v1",
+  "%Name":"recent_event_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"recent_event_destroy",
+  "parent":{
+    "name":"Recent",
+    "path":"folders/Scripts/App/Recent.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

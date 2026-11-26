@@ -1,11 +1,10 @@
-/// model_shape_generate_plane_3d(bend, alphaarray)
+/// @desc Generates a 3D plane shape from an array of alpha values, transformed by a bend vector.
 /// @arg bend
 /// @arg alphaarray
-/// @desc Generates a 3D plane shape from an array of alpha values, transformed by a bend vector.
 
-function model_shape_generate_plane_3d(bend, alpha)
+function model_shape_generate_plane_3d(bend, alphaarr)
 {
-	if (!is_array(alpha))
+	if (!is_array(alphaarr))
 		return null
 	
 	// Plane dimensions
@@ -16,7 +15,9 @@ function model_shape_generate_plane_3d(bend, alpha)
 	scalef = 0.005 // Used to combat Z-fighting
 	
 	// Find whether the shape is bent
-	var isbent = !vec3_equals(bend, vec3(0)) && bend_shape;
+	var gpubend, isbent;
+	gpubend = (is_cpp() && bend_shape && bend_part != null)
+	isbent = (gpubend || (!vec3_equals(bend, vec3(0)) && bend_shape))
 	
 	// Axis to split up the plane
 	var segouteraxis, seginneraxis, arrouteraxis, arrinneraxis;
@@ -48,7 +49,7 @@ function model_shape_generate_plane_3d(bend, alpha)
 	var texsize, texuv, samplesize, texscale, texsizescale, ptexsize;
 	texsize = point3D_sub(to_noscale, from_noscale)
 	texuv = vec2_div(uv, texture_size)
-	samplesize = vec2(array_length(alpha), array_length(alpha[0]))
+	samplesize = vec2(array_length(alphaarr), array_length(alphaarr[0]))
 	texscale = vec2(ceil(texsize[X]) / samplesize[X], ceil(texsize[Z]) / samplesize[Y])
 	texsizescale = vec2_div(texture_size, texscale)
 	ptexsize = vec2_div(vec2(1 - 1 / 256), texsizescale)
@@ -70,15 +71,18 @@ function model_shape_generate_plane_3d(bend, alpha)
 		bendend = (bend_offset - (position[X] + x1)) + bendsize / 2
 	}
 	
+	var restmatrix = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1);
+
 	// Precalculate points
-	var y1p, y2p;
-	var segouterpos = 0;
-	var inflateouter = (inflate[X] / samplesize[arrouteraxis]) * 2;
-	var inflateinner = (inflate[X] / samplesize[arrinneraxis]) * 2;
+	var y1p, y2p, segouterpos, inflateouter, inflateinner;
+	segouterpos = 0
+	inflateouter = (inflate[X] / samplesize[arrouteraxis]) * 2
+	inflateinner = (inflate[X] / samplesize[arrinneraxis]) * 2
 	for (var outer = 0; outer <= samplesize[arrouteraxis]; outer++)
 	{
-		var seginnerpos = 0;
-		var seginnersize = 1;
+		var seginnerpos, seginnersize;
+		seginnerpos = 0
+		seginnersize = 1
 		for (var inner = 0; inner <= samplesize[arrinneraxis]; inner++)
 		{
 			var p1, p2;
@@ -93,9 +97,23 @@ function model_shape_generate_plane_3d(bend, alpha)
 				p2 = point3D(x1 + segouterpos, y2, z1 + seginnerpos)
 			}
 			
+			if (has_vertex_offsets)
+			{
+				// Interpolate the plane's four offsets on both extrusion faces before bending
+				var offsetx, offsetz, offsetlow, offsethigh, offset;
+				offsetx = size[X] != 0 ? (p1[X] - x1) / size[X] : 0
+				offsetz = size[Z] != 0 ? (p1[Z] - z1) / size[Z] : 0
+				offsetlow = vec3_add(vertex_offsets[0], vec3_mul(vec3_sub(vertex_offsets[1], vertex_offsets[0]), offsetx))
+				offsethigh = vec3_add(vertex_offsets[2], vec3_mul(vec3_sub(vertex_offsets[3], vertex_offsets[2]), offsetx))
+				offset = vec3_add(offsetlow, vec3_mul(vec3_sub(offsethigh, offsetlow), offsetz))
+				
+				p1 = vec3_add(p1, offset)
+				p2 = vec3_add(p2, offset)
+			}
+			
 			// Apply transform
 			var mat;
-			if (isbent) // Apply segment bending
+			if (isbent && !gpubend) // Apply segment bending
 			{
 				var segp, bendvec;
 				if (seginnerpos < bendstart) // No/below bend, no angle
@@ -124,16 +142,21 @@ function model_shape_generate_plane_3d(bend, alpha)
 				mat = model_part_get_bend_matrix(id, bendvec, vec3(0), vec3_add(vec3_add(vec3(1), bendscale), vec3(segp * scalef)))
 			}
 			else // Apply rotation only
-				mat = matrix_build(0, 0, 0, rotation[X], rotation[Y], rotation[Z], 1, 1, 1)
+				mat = restmatrix
 			
 			p1 = point3D_mul_matrix(p1, mat)
 			p2 = point3D_mul_matrix(p2, mat)
+			if (gpubend)
+			{
+				p1 = model_shape_bend_point(p1, seginnerpos, bendstart, bendsize, invangle)
+				p2 = model_shape_bend_point(p2, seginnerpos, bendstart, bendsize, invangle)
+			}
 			
 			y1p[outer, inner] = p1
 			y2p[outer, inner] = p2
 			
 			// Pixel size
-			seginnersize = 1;
+			seginnersize = 1
 			if (arrinneraxis = X)
 			{
 				if (inner = (texture_mirror ? 0 : samplesize[X] - 1) && frac(texsize[X]) > 0)
@@ -164,6 +187,8 @@ function model_shape_generate_plane_3d(bend, alpha)
 	
 	// Create triangles
 	vbuffer_start()
+	if (gpubend)
+		model_shape_bend_configure(3, sharpbend)
 	
 	vertex_emissive = color_emissive
 	vertex_wave = wind_wave
@@ -193,15 +218,15 @@ function model_shape_generate_plane_3d(bend, alpha)
 				ax = samplesize[X] - 1 - ax
 			
 			// Transparent pixel found, continue
-			if (alpha[@ ax, ay] < 1)
+			if (alphaarr[@ ax, ay] < 1)
 				continue
 			
 			// Calculate which faces to add, continue if none are visible
 			var wface, eface, aface, bface;
-			wface = (ax = 0 || alpha[@ ax - 1, ay] < 1)
-			eface = (ax = samplesize[X] - 1 || alpha[@ ax + 1, ay] < 1)
-			aface = (ay = 0 || alpha[@ ax, ay - 1] < 1)
-			bface = (ay = samplesize[Y] - 1 || alpha[@ ax, ay + 1] < 1)
+			wface = (ax = 0 || alphaarr[@ ax - 1, ay] < 1)
+			eface = (ax = samplesize[X] - 1 || alphaarr[@ ax + 1, ay] < 1)
+			aface = (ay = 0 || alphaarr[@ ax, ay - 1] < 1)
+			bface = (ay = samplesize[Y] - 1 || alphaarr[@ ax, ay + 1] < 1)
 			
 			// Switch east/west face when mirrored
 			if (texture_mirror)
@@ -235,43 +260,43 @@ function model_shape_generate_plane_3d(bend, alpha)
 				// East face
 				if (eface)
 				{
-					vbuffer_add_triangle(np2, np1, np4, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(np4, np3, np2, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(np2, np1, np4, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(np4, np3, np2, t3, t4, t1, null, null, null, invert)
 				}
 				
 				// West face
 				if (wface)
 				{
-					vbuffer_add_triangle(p1, p2, p3, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p3, p4, p1, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(p1, p2, p3, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(p3, p4, p1, t3, t4, t1, null, null, null, invert)
 				}
 				
 				// South face
 				if (!hide_front)
 				{
-					vbuffer_add_triangle(p2, np2, np3, t2, t1, t4, null, null, null, invert)
-					vbuffer_add_triangle(np3, p3, p2, t4, t3, t2, null, null, null, invert)
+					vbuffer_add_triangle_bend(p2, np2, np3, t2, t1, t4, null, null, null, invert)
+					vbuffer_add_triangle_bend(np3, p3, p2, t4, t3, t2, null, null, null, invert)
 				}
 				
 				// North face
 				if (!hide_back)
 				{
-					vbuffer_add_triangle(np1, p1, p4, t2, t1, t4, null, null, null, invert)
-					vbuffer_add_triangle(p4, np4, np1, t4, t3, t2, null, null, null, invert)
+					vbuffer_add_triangle_bend(np1, p1, p4, t2, t1, t4, null, null, null, invert)
+					vbuffer_add_triangle_bend(p4, np4, np1, t4, t3, t2, null, null, null, invert)
 				}
 				
 				// Above face
 				if (aface)
 				{
-					vbuffer_add_triangle(p1, np1, np2, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(np2, p2, p1, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(p1, np1, np2, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(np2, p2, p1, t3, t4, t1, null, null, null, invert)
 				}
 				
 				// Below face
 				if (bface)
 				{
-					vbuffer_add_triangle(p3, np3, np4, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(np4, p4, p3, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(p3, np3, np4, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(np4, p4, p3, t3, t4, t1, null, null, null, invert)
 				}
 			}
 			else
@@ -288,43 +313,43 @@ function model_shape_generate_plane_3d(bend, alpha)
 				// East face
 				if (eface)
 				{
-					vbuffer_add_triangle(np3, np2, p2, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p2, p3, np3, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(np3, np2, p2, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(p2, p3, np3, t3, t4, t1, null, null, null, invert)
 				}
 				
 				// West face
 				if (wface)
 				{
-					vbuffer_add_triangle(np1, np4, p4, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p4, p1, np1, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(np1, np4, p4, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(p4, p1, np1, t3, t4, t1, null, null, null, invert)
 				}
 				
 				// South face
 				if (!hide_front)
 				{
-					vbuffer_add_triangle(np4, np3, p3, t2, t1, t4, null, null, null, invert)
-					vbuffer_add_triangle(p3, p4, np4, t4, t3, t2, null, null, null, invert)
+					vbuffer_add_triangle_bend(np4, np3, p3, t2, t1, t4, null, null, null, invert)
+					vbuffer_add_triangle_bend(p3, p4, np4, t4, t3, t2, null, null, null, invert)
 				}
 				
 				// North face
 				if (!hide_back)
 				{
-					vbuffer_add_triangle(np2, np1, p1, t2, t1, t4, null, null, null, invert)
-					vbuffer_add_triangle(p1, p2, np2, t4, t3, t2, null, null, null, invert)
+					vbuffer_add_triangle_bend(np2, np1, p1, t2, t1, t4, null, null, null, invert)
+					vbuffer_add_triangle_bend(p1, p2, np2, t4, t3, t2, null, null, null, invert)
 				}
 				
 				// Above face
 				if (aface)
 				{
-					vbuffer_add_triangle(np1, np2, np3, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(np3, np4, np1, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(np1, np2, np3, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(np3, np4, np1, t3, t4, t1, null, null, null, invert)
 				}
 				
 				// Below face
 				if (bface)
 				{
-					vbuffer_add_triangle(p4, p3, p2, t1, t2, t3, null, null, null, invert)
-					vbuffer_add_triangle(p2, p1, p4, t3, t4, t1, null, null, null, invert)
+					vbuffer_add_triangle_bend(p4, p3, p2, t1, t2, t3, null, null, null, invert)
+					vbuffer_add_triangle_bend(p2, p1, p4, t3, t4, t1, null, null, null, invert)
 				}
 			}
 		}
@@ -335,5 +360,9 @@ function model_shape_generate_plane_3d(bend, alpha)
 	vertex_wave_zmin = null
 	vertex_wave_zmax = null
 	
-	return vbuffer_done()
+	var vbuf = vbuffer_done();
+	if (gpubend)
+		vertex_bend_update(vbuf, bend)
+	
+	return vbuf
 }

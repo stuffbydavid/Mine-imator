@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "list_destroy",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Lists",
-    "path": "folders/Scripts/App/Interface/Components/Lists.yy",
+  "$GMScript":"v1",
+  "%Name":"list_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"list_destroy",
+  "parent":{
+    "name":"Lists",
+    "path":"folders/Scripts/App/Interface/Components/Lists.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

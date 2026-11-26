@@ -1,5 +1,5 @@
-/// builder_combine_threads()
-/// Combines the results of all the threads
+/// @desc Combines the results of all the threads.
+
 function builder_combine_threads()
 {
 	for (var t = 0; t < ds_list_size(thread_list); t++)
@@ -28,14 +28,18 @@ function builder_combine_threads()
 			while (!is_undefined(key))
 			{
 				builder_thread_set_pos(key)
-				builder_add_render_model_multi_part(build_pos_x, build_pos_y, build_pos_z, block_render_model_multipart_map[?key])
+				builder_add_render_model_multi_part(build_pos[X], build_pos[Y], build_pos[Z], block_render_model_multipart_map[?key])
 				key = ds_map_find_next(block_render_model_multipart_map, key)
 			}
+			
 			ds_map_destroy(block_render_model_multipart_map)
+			
 			instance_destroy()
 		}
 	}
+	
 	if (ds_list_size(thread_list) > 1)
 		thread_task_end()
+	
 	ds_list_clear(thread_list)
 }

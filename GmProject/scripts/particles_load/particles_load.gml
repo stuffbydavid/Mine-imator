@@ -1,12 +1,11 @@
-/// particles_load(filename, template)
+/// @desc Loads a particle spawner file into the given template.
 /// @arg filename
 /// @arg template
-/// @desc Loads a particle spawner file into the given template.
+/// @arg [newtemplate]
 
-function particles_load(fn, temp)
+function particles_load(fn, temp, newtemp = false)
 {
-	var hobj;
-	hobj = null
+	var hobj = null;
 	
 	if (history_undo)
 	{
@@ -15,25 +14,38 @@ function particles_load(fn, temp)
 			temp_particles_type_clear()
 		
 		with (history_data)
-		{
 			history_destroy_loaded()
-			temp_particles_copy(temp)
-		}
-	
-		with (temp)
+
+		if (history_data.new_temp)
 		{
-			for (var t = 0; t < history_data.pc_type_amount; t++)
-				history_restore_ptype(history_data.pc_type_save_obj[t], id)
-			temp_particles_restart()
+			with (temp)
+				instance_destroy()
+		}
+		else
+		{
+			with (history_data)
+			{
+				temp_particles_copy(temp)
+				with (temp)
+				{
+					for (var t = 0; t < other.pc_type_amount; t++)
+						history_restore_ptype(other.pc_type_save_obj[t], id)
+					temp_particles_restart()
+				}
+			}
 		}
 	
-		tab_template_editor_update_ptype_list()
+		tab_object_editor_update_ptype_list()
+		project_update_counts()
 		return 0
 	}
 	else if (history_redo)
 	{
 		fn = history_data.filename
-		temp = save_id_find(history_data.temp_save_id)
+		if (history_data.new_temp)
+			temp = history_restore_temp(history_data.temp_save_obj)
+		else
+			temp = save_id_find(history_data.temp_save_id)
 	}
 	
 	if (filename_ext(fn) = ".zip") // Unzip
@@ -47,7 +59,7 @@ function particles_load(fn, temp)
 		
 		if (!file_exists_lib(fn))
 		{
-			error("erroropenparticleszip")
+			error("error/open_particles_zip")
 			return 0
 		}
 	}
@@ -62,7 +74,10 @@ function particles_load(fn, temp)
 		with (hobj)
 		{
 			filename = fn
-			id.temp_save_id = save_id_get(temp)
+			self.temp_save_id = save_id_get(temp)
+			new_temp = newtemp
+			if (newtemp)
+				temp_save_obj = history_save_temp(temp)
 		}
 		
 		with (temp)
@@ -137,7 +152,8 @@ function particles_load(fn, temp)
 	
 	project_reset_loaded()
 	
-	tab_template_editor_update_ptype_list()
+	tab_object_editor_update_ptype_list()
+	project_update_counts()
 	
 	log("Particles loaded")
 }

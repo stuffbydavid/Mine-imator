@@ -1,23 +1,5 @@
 #include "Object.hpp"
-
-#define GetRefImpl(rawType, enumType, varTypeFunc) \
-	if (!memMap) \
-		memMap = &memberMap[subAssetId]; \
-	const Member& mem = memMap->value(memberId); \
-	if (mem.type != UNDEFINED_t) /* Get member from struct memory */ \
-	{ \
-		if (mem.type != enumType) \
-			GetRefError(enumType, mem.type); \
-		return *(rawType*)((long long)this + (long long)mem.memoryOffset); \
-	} \
-	else /* Create/get member from dynamic map */ \
-	{ \
-		VarType& dynMem = dynamicMemberMap[memberId]; \
-		Type dynType = dynMem.GetType(); \
-		if (dynType != UNDEFINED_t && dynType != enumType && enumType != VARIANT_t) \
-			GetRefError(enumType, dynType); \
-		return dynMem.varTypeFunc(); \
-	}
+#include "Generated/Scripts.hpp"
 
 #define GetRefError(expected, actual) \
 	FATAL("Unexpected variable type (expected " + TypeName(expected) + ", actual: " + TypeName(actual) + ")");
@@ -25,57 +7,58 @@
 namespace CppProject
 {
 	QHash<IntType, QVector<IntType>> Object::objectIdsMap;
-	QHash<IntType, QHash<IntType, Object::Member>> Object::memberMap;
+	QHash<IntType, Object::MemberTable> Object::memberMap;
+
+	BoolType Object::IsIndexed(IntType subAssetId)
+	{
+		return global::objects_indexed_array.Find(subAssetId) >= 0;
+	}
 
 	Object::Object(QString name, IntType subAssetId) :
 		Asset(ID_Object, subAssetId, name)
 	{
-		objectIdsMap[subAssetId].insert(0, id);
+		if (IsIndexed(subAssetId))
+			objectIdsMap[subAssetId].append(id);
 	};
 
 	Object::~Object()
 	{
-		objectIdsMap[subAssetId].removeOne(id);
+		if (IsIndexed(subAssetId))
+			objectIdsMap[subAssetId].removeOne(id);
 	}
 
-	RealType& Object::GetRealRef(IntType memberId)
+	void* Object::GetRefSlow(IntType memberId, Type enumType)
 	{
-		GetRefImpl(RealType, REAL_t, Real);
-	}
+		if (!memMap)
+			memMap = &memberMap[subAssetId];
 
-	IntType& Object::GetIntRef(IntType memberId)
-	{
-		GetRefImpl(IntType, INTEGER_t, Int);
-	}
+		// Struct member of another type
+		const Member mem = memMap->value(memberId);
+		if (mem.type != UNDEFINED_t)
+		{
+			if (mem.type != enumType)
+				GetRefError(enumType, mem.type);
 
-	BoolType& Object::GetBoolRef(IntType memberId)
-	{
-		GetRefImpl(BoolType, BOOLEAN_t, Bool);
-	}
+			return reinterpret_cast<char*>(this) + mem.memoryOffset;
+		}
 
-	StringType& Object::GetStrRef(IntType memberId)
-	{
-		GetRefImpl(StringType, STRING_t, Str);
-	}
+		// Create/get member from dynamic map
+		VarType& dynMem = dynamicMemberMap[memberId];
+		Type dynType = dynMem.GetType();
+		if (dynType != UNDEFINED_t && dynType != enumType && enumType != VARIANT_t)
+			GetRefError(enumType, dynType);
 
-	VecType& Object::GetVecRef(IntType memberId)
-	{
-		GetRefImpl(VecType, VECTOR_t, Vec);
-	}
-
-	MatrixType& Object::GetMatRef(IntType memberId)
-	{
-		GetRefImpl(MatrixType, MATRIX_t, Mat);
-	}
-
-	ArrType& Object::GetArrRef(IntType memberId)
-	{
-		GetRefImpl(ArrType, ARRAY_t, Arr);
-	}
-
-	VarType& Object::GetVarRef(IntType memberId)
-	{
-		GetRefImpl(VarType, VARIANT_t, Var);
+		switch (enumType)
+		{
+			case REAL_t: return &dynMem.Real();
+			case INTEGER_t: return &dynMem.Int();
+			case BOOLEAN_t: return &dynMem.Bool();
+			case STRING_t: return &dynMem.Str();
+			case VECTOR_t: return &dynMem.Vec();
+			case MATRIX_t: return &dynMem.Mat();
+			case ARRAY_t: return &dynMem.Arr();
+			default: return &dynMem.Var();
+		}
 	}
 
 	function<VarType(VarArgs)>& Object::GetInstanceFunc(IntType funcId)

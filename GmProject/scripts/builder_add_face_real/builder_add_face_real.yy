@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"builder_add_face_real",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"builder_add_face_real",
+  "parent":{
+    "name":"Builder",
+    "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

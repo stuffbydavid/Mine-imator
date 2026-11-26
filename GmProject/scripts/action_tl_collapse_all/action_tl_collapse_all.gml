@@ -1,5 +1,3 @@
-/// action_tl_collapse_all()
-
 function action_tl_collapse_all()
 {
 	if (history_undo)

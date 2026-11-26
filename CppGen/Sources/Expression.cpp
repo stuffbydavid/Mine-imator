@@ -22,24 +22,25 @@ String Expression::toConditionCpp(ResolveScope* scope, bool)
 
 String Expression::toTernaryCpp(ResolveScope* scope, Expression* expr1, Expression* expr2, Expression* expr3)
 {
-	bool expr2TypeVarType = expr2->getResolvedCppType() == DataType::CppType::VarType;
-	bool expr3TypeVarType = expr3->getResolvedCppType() == DataType::CppType::VarType;
+	DataType::CppType expr2Type = expr2->getResolvedCppType();
+	DataType::CppType expr3Type = expr3->getResolvedCppType();
+	bool expr2Numeric = expr2Type == DataType::CppType::RealType || expr2Type == DataType::CppType::IntType || expr2Type == DataType::CppType::BoolType;
+	bool expr3Numeric = expr3Type == DataType::CppType::RealType || expr3Type == DataType::CppType::IntType || expr3Type == DataType::CppType::BoolType;
 
-	String cpp = expr1->toConditionCpp(scope, true) + " ? ";
+	DataType commonType;
+	commonType.cppType = expr2Type;
+	if (expr2Type != expr3Type)
+	{
+		if (expr2Numeric && expr3Numeric)
+			commonType.cppType = (expr2Type == DataType::CppType::RealType || expr3Type == DataType::CppType::RealType)
+				? DataType::CppType::RealType : DataType::CppType::IntType;
+		else
+			commonType.cppType = DataType::CppType::VarType;
+	}
 
-	if (expr3TypeVarType && !expr2TypeVarType) // Wrap expr2 in VarType() if expr3 is VarType
-		cpp += "VarType(" + expr2->toCpp(scope) + ")";
-	else
-		cpp += expr2->toCpp(scope);
-
-	cpp += " : ";
-
-	if (expr2TypeVarType && !expr3TypeVarType) // Wrap expr3 in VarType() if expr2 is VarType
-		cpp += "VarType(" + expr3->toCpp(scope) + ")";
-	else
-		cpp += expr3->toCpp(scope);
-
-	return cpp;
+	// Cast both branches since emitted expressions can differ from their inferred types
+	String cast = commonType.toCpp();
+	return expr1->toConditionCpp(scope, true) + " ? " + cast + "(" + expr2->toCpp(scope) + ") : " + cast + "(" + expr3->toCpp(scope) + ")";
 }
 
 String Expression::toExpressionArrayCpp(ResolveScope* scope, List<Expression*> expressions)
@@ -72,6 +73,127 @@ StringId Expression::getAccessorName()
 DataType::CppType Expression::getResolvedCppType()
 {
 	return this->resolvedTypeCpp != DataType::CppType::Void ? this->resolvedTypeCpp : this->resolvedType->cppType;
+}
+
+Accessor* Expression::unwrapTailAccessor()
+{
+	Expression* expr = this;
+	while (expr->type == Type::Parenthesis)
+		expr = static_cast<ExpressionParenthesis*>(expr)->expr;
+	if (expr->type != Type::Accessor)
+		return nullptr;
+	Accessor* acc = static_cast<Accessor*>(expr);
+	while (acc->nextInChain != nullptr)
+		acc = acc->nextInChain;
+	return acc;
+}
+
+bool Expression::containsCall()
+{
+	switch (this->type)
+	{
+		case Type::Accessor:
+		{
+			for (Accessor* acc = static_cast<Accessor*>(this); acc != nullptr; acc = acc->nextInChain)
+			{
+				if (acc->callParameters != nullptr)
+					return true;
+				for (Accessor::ArrayAccessor* arr : acc->arrayAccessors)
+					if (arr->expr != nullptr && arr->expr->containsCall())
+						return true;
+			}
+			return false;
+		}
+		case Type::Parenthesis:
+			return static_cast<ExpressionParenthesis*>(this)->expr->containsCall();
+		case Type::UnaryOperation:
+			return static_cast<UnaryOperation*>(this)->expr->containsCall();
+		case Type::BinaryOperation:
+			return static_cast<BinaryOperation*>(this)->left->containsCall() || static_cast<BinaryOperation*>(this)->right->containsCall();
+		case Type::TernaryCondition:
+		{
+			TernaryCondition* tern = static_cast<TernaryCondition*>(this);
+			return tern->expr1->containsCall() || tern->expr2->containsCall() || tern->expr3->containsCall();
+		}
+		case Type::Value:
+			return false;
+		default: // Array literals and new expressions allocate
+			return true;
+	}
+}
+
+// Reads an array element operand by reference when nothing evaluated alongside it can modify the array
+static void borrowOperand(Expression* operand, Expression* other, bool sequenced)
+{
+	if (!sequenced && other->containsCall())
+		return;
+
+	Accessor* acc = operand->unwrapTailAccessor();
+	if (acc != nullptr && acc->arrayAccessors.size() == 1 && acc->callParameters == nullptr &&
+		acc->assignExpr == nullptr && acc->addSubOp == Token::Type::Unknown)
+		acc->borrowArgument = true;
+}
+
+void Expression::collectNames(List<StringId>& names)
+{
+	switch (this->type)
+	{
+		case Type::Accessor:
+		{
+			for (Accessor* acc = static_cast<Accessor*>(this); acc != nullptr; acc = acc->nextInChain)
+			{
+				names.add(acc->name);
+				for (Accessor::ArrayAccessor* arr : acc->arrayAccessors)
+					if (arr->expr != nullptr)
+						arr->expr->collectNames(names);
+			}
+			break;
+		}
+		case Type::Parenthesis: static_cast<ExpressionParenthesis*>(this)->expr->collectNames(names); break;
+		case Type::UnaryOperation: static_cast<UnaryOperation*>(this)->expr->collectNames(names); break;
+		case Type::BinaryOperation:
+			static_cast<BinaryOperation*>(this)->left->collectNames(names);
+			static_cast<BinaryOperation*>(this)->right->collectNames(names);
+			break;
+		case Type::TernaryCondition:
+		{
+			TernaryCondition* tern = static_cast<TernaryCondition*>(this);
+			tern->expr1->collectNames(names);
+			tern->expr2->collectNames(names);
+			tern->expr3->collectNames(names);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+void Expression::borrowAssignedValue(Expression* value, Expression* target, StringId targetName)
+{
+	if (value->type != Type::Accessor || value->containsCall() || (target != nullptr && target->containsCall()))
+		return;
+
+	// The target must not share any name with the value, since assigning could free or resize the array
+	List<StringId> valueNames, targetNames;
+	value->collectNames(valueNames);
+	if (target != nullptr)
+		target->collectNames(targetNames);
+	else
+		targetNames.add(targetName);
+
+	for (const StringId& name : targetNames)
+		if (valueNames.contains(name))
+			return;
+
+	borrowOperand(value, value, true);
+}
+
+bool Expression::isFalseLiteral()
+{
+	if (this->type != Type::Accessor)
+		return false;
+	Accessor* acc = static_cast<Accessor*>(this);
+	return acc->nextInChain == nullptr && acc->callParameters == nullptr && acc->arrayAccessors.empty() && String(acc->name) == "false";
 }
 
 ExpressionParenthesis::ExpressionParenthesis(Expression* expr, int line) : Expression(line)
@@ -158,8 +280,8 @@ void BinaryOperation::resolve(ResolveScope* scope)
 	this->left->resolve(scope);
 	this->right->resolve(scope);
 
-	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr ||
-		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) //  &, |, <<, >>, both expressions must be integer
+	if (this->op == Token::Type::BitwiseAnd || this->op == Token::Type::BitwiseOr || this->op == Token::Type::BitwiseXor ||
+		this->op == Token::Type::ShiftLeft || this->op == Token::Type::ShiftRight) // &, |, ^, <<, >> require integer operands
 	{
 		this->left->applyType(scope, DataType::scalar(DataType::Type::Integer));
 		this->right->applyType(scope, DataType::scalar(DataType::Type::Integer));
@@ -210,12 +332,18 @@ String BinaryOperation::toCpp(ResolveScope* scope)
 			((Accessor*)this->left)->appToId = false;
 	}
 
+	// And/Or convert each side to a condition before evaluating the next
+	bool sequenced = (this->op == Token::Type::And || this->op == Token::Type::Or);
+	borrowOperand(this->left, this->right, sequenced);
+	borrowOperand(this->right, this->left, sequenced);
+
 	String cpp = "";
 	bool opNeedInts = (
 		this->op == Token::Type::ShiftLeft ||
 		this->op == Token::Type::ShiftRight ||
 		this->op == Token::Type::BitwiseAnd ||
-		this->op == Token::Type::BitwiseOr
+		this->op == Token::Type::BitwiseOr ||
+		this->op == Token::Type::BitwiseXor
 	);
 	if (opNeedInts) // Cast left to int
 		cpp += "(IntType)";
@@ -263,7 +391,7 @@ void TernaryCondition::resolve(ResolveScope* scope)
 	this->expr2->resolve(scope);
 	this->expr3->resolve(scope);
 
-	this->expr1->applyType(scope, DataType::scalar(DataType::Type::IntOrReal));
+	this->expr1->applyType(scope, DataType::scalar(DataType::Type::Bool));
 
 	// Both types should be the same
 	this->expr3->applyType(scope, *this->expr2->resolvedType);

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "vec3_cross",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Vector",
-    "path": "folders/Scripts/Utility/Math/Vector.yy",
+  "$GMScript":"v1",
+  "%Name":"vec3_cross",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vec3_cross",
+  "parent":{
+    "name":"Vector",
+    "path":"folders/Scripts/Utility/Math/Vector.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

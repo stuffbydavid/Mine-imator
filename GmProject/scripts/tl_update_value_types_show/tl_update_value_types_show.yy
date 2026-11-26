@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "tl_update_value_types_show",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Update",
-    "path": "folders/Scripts/Project/Timeline/Update.yy",
+  "$GMScript":"v1",
+  "%Name":"tl_update_value_types_show",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_update_value_types_show",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/Project/Timeline/Update.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

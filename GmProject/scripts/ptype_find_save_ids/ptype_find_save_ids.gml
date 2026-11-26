@@ -1,5 +1,3 @@
-/// ptype_find_save_ids()
-
 function ptype_find_save_ids()
 {
 	creator = save_id_find(creator)

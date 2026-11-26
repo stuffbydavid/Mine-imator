@@ -1,17 +1,23 @@
-/// export_done_image()
-
 function export_done_image()
 {
 	render_free()
 	
 	surface_free(export_surface)
+	
 	export_surface = null
 	window_state = ""
+	
+	window_taskbar_progress_state_set()
 	
 	render_watermark = false
 	render_background = true
 	render_hidden = false
 	
-	toast_new(e_toast.POSITIVE, text_get("alertexportimage"))
-	toast_add_action("alertexportimageview", popup_open_url, export_filename)
+	if (benchmark_mode)
+		return 0
+
+	// Alert user
+	toast_new(e_toast.POSITIVE, text_get("alert/export_image"))
+	toast_add_action("alert/export_image_view", open_url, export_filename)
+	toast_last.dismiss_time = 10
 }

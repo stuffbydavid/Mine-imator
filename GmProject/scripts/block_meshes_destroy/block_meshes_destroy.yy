@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_meshes_destroy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_meshes_destroy",
+  "parent":{
+    "name":"Meshes",
+    "path":"folders/Scripts/Minecraft/Blocks/Meshes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

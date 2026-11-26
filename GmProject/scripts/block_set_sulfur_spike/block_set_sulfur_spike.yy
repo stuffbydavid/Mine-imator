@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_set_sulfur_spike",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_set_sulfur_spike",
+  "parent":{
+    "name":"Types",
+    "path":"folders/Scripts/Minecraft/Blocks/Types.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

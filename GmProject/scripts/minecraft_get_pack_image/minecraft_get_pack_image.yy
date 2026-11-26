@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"minecraft_get_pack_image",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"minecraft_get_pack_image",
+  "parent":{
+    "name":"Minecraft",
+    "path":"folders/Scripts/Minecraft.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

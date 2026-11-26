@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "buffer_is_eof",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Buffer",
-    "path": "folders/Scripts/Utility/File/Buffer.yy",
+  "$GMScript":"v1",
+  "%Name":"buffer_is_eof",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"buffer_is_eof",
+  "parent":{
+    "name":"Buffer",
+    "path":"folders/Scripts/Utility/File/Buffer.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,9 +1,6 @@
-/// action_res_preview_pack_image(image)
-/// @arg image
-
 function action_res_preview_pack_image(image)
 {
-	res_preview.pack_image = image
-	res_preview.update = true
-	res_preview.reset_view = true
+	preview_edit.pack_image = image
+	preview_edit.update = true
+	preview_edit.reset_view = true
 }

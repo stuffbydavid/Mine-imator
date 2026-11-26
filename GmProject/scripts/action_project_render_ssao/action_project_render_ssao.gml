@@ -1,10 +1,11 @@
-/// action_project_render_ssao(enable)
-/// @arg enable
-
-function action_project_render_ssao(enable)
+function action_project_render_ssao(enabled)
 {
-	if (!history_undo && !history_redo)
-		history_set_var(action_project_render_ssao, project_render_ssao, enable, 1)
+	action_project_render_preset_edit_locked()
 	
-	project_render_ssao = enable
+	var settings = render_preset_edit.renderer[renderer_edit];
+	
+	if (!history_undo && !history_redo)
+		history_set_var(action_project_render_ssao, settings.ssao, enabled, true)
+	
+	settings.ssao = enabled
 }

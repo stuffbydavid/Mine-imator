@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "unzip_asset",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Load",
-    "path": "folders/Scripts/Project/Load.yy",
+  "$GMScript":"v1",
+  "%Name":"unzip_asset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"unzip_asset",
+  "parent":{
+    "name":"Load",
+    "path":"folders/Scripts/Project/Load.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

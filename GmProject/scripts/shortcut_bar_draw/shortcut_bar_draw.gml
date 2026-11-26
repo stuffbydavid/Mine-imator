@@ -1,5 +1,3 @@
-/// draw_shortcut_bar()
-
 function shortcut_bar_draw()
 {
 	if (!setting_show_shortcuts_bar)

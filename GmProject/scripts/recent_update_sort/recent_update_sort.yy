@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "recent_update_sort",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Recent",
-    "path": "folders/Scripts/App/Recent.yy",
+  "$GMScript":"v1",
+  "%Name":"recent_update_sort",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"recent_update_sort",
+  "parent":{
+    "name":"Recent",
+    "path":"folders/Scripts/App/Recent.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

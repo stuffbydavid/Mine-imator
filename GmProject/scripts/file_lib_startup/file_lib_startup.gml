@@ -1,8 +1,10 @@
-/// file_lib_startup()
-
 function file_lib_startup()
 {
 	globalvar buffer_current;
+	
+	// Skip in C++
+	if (!is_cpp())
+		return true
 	
 	// Define directories
 	log("working_directory", working_directory)
@@ -16,7 +18,7 @@ function file_lib_startup()
 	// Write access
 	var surf, tmpfile1, tmpfile2;
 	surf = surface_create(32, 32)
-	tmpfile1 = file_directory + "tmp.png" // Can I write to file bundle?
+	tmpfile1 = file_directory_get() + "tmp.png" // Can I write to file bundle?
 	tmpfile2 = data_directory + "tmp.png" // Can I copy to installation folder?
 	
 	log("Trying to save files")
@@ -44,8 +46,8 @@ function file_lib_startup()
 	log("surface_save OK")
 	
 	var tex1, tex2;
-	tex1 = texture_create(tmpfile1) // Can I load textures from file bundle?
-	tex2 = texture_create(tmpfile2) // Can I load textures from installation folder?
+	tex1 = texture_create(tmpfile1, false) // Can I load textures from file bundle?
+	tex2 = texture_create(tmpfile2, false) // Can I load textures from installation folder?
 	
 	if (tex1 < 0 || texture_width(tex1) != 32 || texture_height(tex1) != 32)
 	{

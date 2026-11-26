@@ -1,4 +1,3 @@
-/// halton(index, x)
 /// @arg index
 /// @arg x
 

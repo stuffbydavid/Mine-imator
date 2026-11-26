@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_pc_type_sprite_template_reverse",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Texture",
-    "path": "folders/Scripts/App/Actions/Library/Particle editor/Types/Texture.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_pc_type_sprite_template_reverse",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_pc_type_sprite_template_reverse",
+  "parent":{
+    "name":"Texture",
+    "path":"folders/Scripts/App/Actions/Library/Particle editor/Types/Texture.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

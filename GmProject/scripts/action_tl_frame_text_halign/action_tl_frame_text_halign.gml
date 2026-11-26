@@ -1,6 +1,3 @@
-/// action_tl_frame_text_halign(halign)
-/// @arg halign
-
 function action_tl_frame_text_halign(halign)
 {
 	tl_value_set_start(action_tl_frame_text_halign, true)

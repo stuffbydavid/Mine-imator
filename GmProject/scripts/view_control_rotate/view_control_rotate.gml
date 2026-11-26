@@ -1,6 +1,3 @@
-/// view_control_rotate(view)
-/// @arg view
-
 function view_control_rotate(view)
 {
 	var len, xrot, yrot, zrot;
@@ -14,6 +11,7 @@ function view_control_rotate(view)
 		zrot[MAT_X] = matrix[MAT_X]
 		zrot[MAT_Y] = matrix[MAT_Y]
 		zrot[MAT_Z] = matrix[MAT_Z]
+		
 		matrix_remove_scale(zrot)
 	}
 	
@@ -26,7 +24,7 @@ function view_control_rotate(view)
 	view_control_rotate_axis(view, e_view_control.ROT_Z, e_value.ROT_Z, (setting_z_is_up ? c_control_blue : c_control_green), zrot, len)
 	
 	// Is dragging
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.ROT_X && view_control_edit <= e_view_control.ROT_Z)
+	if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.ROT_X && view_control_edit <= e_view_control.ROT_Z)
 	{
 		mouse_cursor = cr_handpoint
 		

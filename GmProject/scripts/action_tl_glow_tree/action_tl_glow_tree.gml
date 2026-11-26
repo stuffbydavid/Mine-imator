@@ -1,4 +1,3 @@
-/// action_tl_glow_tree(timeline, newvalue, historyobject)
 /// @arg timeline
 /// @arg newvalue
 /// @arg historyobject

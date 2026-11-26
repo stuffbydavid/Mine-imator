@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_update_gizmos",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_update_gizmos",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -43,6 +43,7 @@ namespace CppProject
 			FATAL("MatrixType: [] with index outside of range: " + NumStr(i));
 	#endif
 		CreateRef();
+
 		return mRef[i];
 	}
 
@@ -59,6 +60,7 @@ namespace CppProject
 	{
 		ArrType arr;
 		arr.vec.Alloc(16);
+
 		for (IntType i = 0; i < 16; i++)
 			arr.vec.Append(matrix.m[i]);
 
@@ -97,7 +99,16 @@ namespace CppProject
 		return Matrix::Ortho(left, right, bottom, top, zNear, zFar);
 	}
 
-	MatrixType matrix_inverse(MatrixType mat)
+	MatrixType matrix_create_rotate_to(VecType tangent, VecType normal)
+	{
+		VecType binormal = vec3_normalize(vec3_cross(tangent, normal));
+		return Matrix(binormal.x, tangent.x, normal.x, 0.0,
+					  binormal.y, tangent.y, normal.y, 0.0,
+					  binormal.z, tangent.z, normal.z, 0.0,
+					  0.0, 0.0, 0.0, 1.0);
+	}
+
+	MatrixType matrix_inverse_ext(MatrixType mat)
 	{
 		return mat.matrix.GetInversed();
 	}
@@ -107,22 +118,30 @@ namespace CppProject
 		return { mat.matrix.m[MAT_X], mat.matrix.m[MAT_Y], mat.matrix.m[MAT_Z] };
 	}
 
+	MatrixType matrix_copy(const MatrixType& mat)
+	{
+		return mat;
+	}
+
+	void matrix_remove_rotation(MatrixType& mat)
+	{
+		Matrix& glMat = mat.matrix;
+		VecType sca = glMat.GetScale();
+		glMat.m[0] = sca.x;
+		glMat.m[1] = 0.0;
+		glMat.m[2] = 0.0;
+		glMat.m[4] = 0.0;
+		glMat.m[5] = sca.y;
+		glMat.m[6] = 0.0;
+		glMat.m[8] = 0.0;
+		glMat.m[9] = 0.0;
+		glMat.m[10] = sca.z;
+	}
+
 	void matrix_remove_rotation(VarType ref)
 	{
 		if (ref.IsMatrix())
-		{
-			Matrix& glMat = ref.Mat().matrix;
-			VecType sca = glMat.GetScale();
-			glMat.m[0] = sca.x;
-			glMat.m[1] = 0.0;
-			glMat.m[2] = 0.0;
-			glMat.m[4] = 0.0;
-			glMat.m[5] = sca.y;
-			glMat.m[6] = 0.0;
-			glMat.m[8] = 0.0;
-			glMat.m[9] = 0.0;
-			glMat.m[10] = sca.z;
-		}
+			matrix_remove_rotation(ref.Mat());
 		else if (ref.IsArray())
 		{
 			ArrType& arr = ref.Arr();
@@ -141,22 +160,25 @@ namespace CppProject
 			WARNING("Invalid input");
 	}
 
+	void matrix_remove_scale(MatrixType& mat)
+	{
+		Matrix& glMat = mat.matrix;
+		VecType sca = glMat.GetScale();
+		glMat.m[0] /= sca.x;
+		glMat.m[1] /= sca.x;
+		glMat.m[2] /= sca.x;
+		glMat.m[4] /= sca.y;
+		glMat.m[5] /= sca.y;
+		glMat.m[6] /= sca.y;
+		glMat.m[8] /= sca.z;
+		glMat.m[9] /= sca.z;
+		glMat.m[10] /= sca.z;
+	}
+
 	void matrix_remove_scale(VarType ref)
 	{
 		if (ref.IsMatrix())
-		{
-			Matrix& glMat = ref.Mat().matrix;
-			VecType sca = glMat.GetScale();
-			glMat.m[0] /= sca.x;
-			glMat.m[1] /= sca.x;
-			glMat.m[2] /= sca.x;
-			glMat.m[4] /= sca.y;
-			glMat.m[5] /= sca.y;
-			glMat.m[6] /= sca.y;
-			glMat.m[8] /= sca.z;
-			glMat.m[9] /= sca.z;
-			glMat.m[10] /= sca.z;
-		}
+			matrix_remove_scale(ref.Mat());
 		else if (ref.IsArray())
 		{
 			ArrType& arr = ref.Arr();

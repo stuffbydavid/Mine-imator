@@ -1,6 +1,3 @@
-/// state_vars_get_value(vars, name)
-/// @arg vars
-/// @arg name
 /// @desc Gets a single (string) value from a variable, null if not set.
 
 function state_vars_get_value(vars, name)

@@ -1,16 +1,23 @@
-/// toast_draw(toast)
-/// @arg toast
-/// @desc Draws a notification toast
+/// @desc Draws a notification toast.
 
 function toast_draw(toast)
 {
-	var color, wid, hei;
+	var color, wid, hei, shakex;
 	color = setting_theme.toast_color[toast.variant]
 	wid = 0
 	hei = 0
+	shakex = 0
 	microani_prefix = string(toast)
 	
-	content_x = floor(window_width/2 - toast.toast_width/2) + (32 * ease("easeoutcirc", toast.remove_alpha))
+	// Shake animation
+	if (toast.shake_time != null && !setting_reduced_motion)
+	{
+		var elapsed = current_time - toast.shake_time;
+		if (elapsed < 500)
+			shakex = round(sin(elapsed * .06) * 8 * (1 - elapsed / 500))
+	}
+	
+	content_x = floor(window_width/2 - toast.toast_width/2) + (32 * ease("easeoutcirc", toast.remove_alpha)) + shakex
 	content_y = toast.toast_y
 	content_width = toast.toast_width
 	content_height = toast.toast_height
@@ -61,17 +68,17 @@ function toast_draw(toast)
 	if (ds_list_size(toast.actions) > 0)
 	{
 		draw_set_font(font_label)
-		var capwid, multiaction, actiony;
-		capwid = 0
+		var multiaction, actiony;
+		content_capwid = 0
 		multiaction = ds_list_size(toast.actions) > 4
 		actiony = content_y + (!multiaction * 4)
 		
 		for (var i = 0; i < ds_list_size(toast.actions); i += 3)
-			capwid = max(capwid, 24 + string_width(text_get(toast.actions[|i])))
+			content_capwid = max(content_capwid, 24 + string_width(text_get(toast.actions[|i])))
 		
 		for (var i = 0; i < ds_list_size(toast.actions); i += 3)
 		{
-			if (draw_button_label(toast.actions[|i], dx, actiony, capwid, null, e_button.TERTIARY, null, e_anchor.LEFT))
+			if (draw_button_label(toast.actions[|i], dx, actiony, content_capwid, null, e_button.TERTIARY, null, e_anchor.LEFT))
 			{
 				toast_script = toast.actions[|i + 1]
 				toast_script_value = toast.actions[|i + 2]
@@ -79,7 +86,7 @@ function toast_draw(toast)
 			}
 			
 			if (multiaction && i != 0)
-				draw_divide(dx, actiony, capwid)
+				draw_divide(dx, actiony, content_capwid)
 			
 			actiony += 32
 		}
@@ -88,7 +95,7 @@ function toast_draw(toast)
 		if (multiaction)
 			draw_divide_vertical(dx, content_y + 1, content_height - 2)
 		
-		wid += capwid + (4 * !multiaction)
+		wid += content_capwid + (4 * !multiaction)
 		hei = multiaction ? ((ds_list_size(toast.actions)/3) * 32) : 40
 	}
 	else // Close button

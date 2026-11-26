@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_setting_scenery_remove_edges",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Graphics",
-    "path": "folders/Scripts/App/Actions/Settings/Graphics.yy",
+  "$GMScript":"v1",
+  "%Name":"action_setting_scenery_remove_edges",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_scenery_remove_edges",
+  "parent":{
+    "name":"Graphics",
+    "path":"folders/Scripts/App/Actions/Settings/Graphics.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

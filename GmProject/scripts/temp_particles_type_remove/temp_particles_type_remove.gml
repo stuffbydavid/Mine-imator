@@ -1,6 +1,5 @@
-/// temp_particles_type_remove(ptype)
-/// @arg ptype
 /// @desc Removes the given particle type from the template.
+/// @arg particletype
 
 function temp_particles_type_remove(ptype)
 {

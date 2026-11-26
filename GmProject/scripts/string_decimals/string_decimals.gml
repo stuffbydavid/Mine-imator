@@ -1,6 +1,5 @@
-/// string_decimals(value)
-/// @arg value
 /// @desc Converts a value into a string and removes trailing zeroes in the decimal part.
+/// @arg value
 
 function string_decimals(val)
 {

@@ -1,7 +1,4 @@
-/// text_max_width(name1, name2, name3...)
-/// @arg name1
-/// @arg name2
-/// @arg name3...
+/// @arg keys...
 
 function text_max_width()
 {

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"build_drag_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"build_drag_draw",
+  "parent":{
+    "name":"Build",
+    "path":"folders/Scripts/App/Interface/Build.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

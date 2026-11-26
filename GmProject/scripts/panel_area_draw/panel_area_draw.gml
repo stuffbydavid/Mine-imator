@@ -1,5 +1,3 @@
-/// panel_area_draw()
-
 function panel_area_draw()
 {
 	// Calculate area
@@ -36,6 +34,7 @@ function panel_area_draw()
 	// Set max size
 	panel_map[?"left"].size_real = min(panel_map[?"left"].size_real, panel_area_width)
 	panel_map[?"right"].size_real = min(panel_map[?"right"].size_real, panel_area_width)
+	panel_map[?"right_secondary"].size_real = min(panel_map[?"right_secondary"].size_real, panel_area_width - panel_map[?"right"].size_real)
 	panel_map[?"top"].size_real = min(panel_map[?"top"].size_real, panel_area_height)
 	panel_map[?"bottom"].size_real = min(panel_map[?"bottom"].size_real, panel_area_height)
 	
@@ -51,7 +50,7 @@ function panel_area_draw()
 	panel_draw(panel_map[?"right"])
 	
 	// Resizing
-	if (window_busy = "panelresize")
+	if (window_busy = "panel/resize")
 	{
 		if (panel_resize = panel_map[?"left"] || panel_resize = panel_map[?"left_secondary"])
 		{
@@ -82,7 +81,7 @@ function panel_area_draw()
 	}
 	
 	// Moving
-	if (window_busy = "tabmove")
+	if (window_busy = "tab/move")
 	{
 		panel_move_draw()
 		
@@ -90,7 +89,7 @@ function panel_area_draw()
 		if (tab_move_mouseon_panel = null)
 		{
 			// Calculate sizes of the boxes to check
-			var toph, bottomh, lefttopw, leftbottomw, righttopw
+			var toph, bottomh, lefttopw, leftbottomw, righttopw;
 			toph = view_area_height
 			bottomh = view_area_height
 			lefttopw = view_area_width

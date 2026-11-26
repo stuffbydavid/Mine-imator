@@ -1,5 +1,3 @@
-/// action_tl_play_jump()
-
 function action_tl_play_jump()
 {
 	if (timeline_playing)

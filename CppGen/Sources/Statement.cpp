@@ -98,12 +98,26 @@ bool DeclarationList::resolve(ResolveScope* scope, const StringId& declScope, co
 		else
 			this->requiredArgs = i + 1;
 
-		// If input if supplied, apply to the expression
+		// If input is supplied, apply to the expression
 		if (inputPars != nullptr && i < static_cast<int>(inputPars.size()))
-			if (exprType.assign(*inputPars[i], this->func, this->isArgs ? 0 : this->line))
-				changed = true;
+			exprType.assign(*inputPars[i], this->func, this->isArgs ? 0 : this->line);
 
-		Variable* declVar = Program::declareVariable(declScope, decl->name, exprType, this->func, *scope->location, this->isArgs ? 0 : this->line);
+		Variable* declVar = nullptr;
+		if (this->isArgs)
+		{
+			for (Variable* var : this->func->vars)
+				if (var->line == 0 && var->name == decl->name)
+				{
+					declVar = var;
+					changed |= var->assignType(exprType, this->func, 0);
+					break;
+				}
+		}
+		if (declVar == nullptr)
+		{
+			declVar = Program::declareVariable(declScope, decl->name, exprType, this->func, *scope->location, this->isArgs ? 0 : this->line);
+			changed |= this->isArgs;
+		}
 
 		if (decl->expr != nullptr)
 			decl->expr->assignedTo = declVar;
@@ -153,7 +167,12 @@ void DeclarationList::writeCpp(ResolveScope* scope, WriteFormat format, String e
 
 						CodeWriter::write(nameToCpp(decl->name));
 						if (decl->expr != nullptr)
+						{
+							// Typed locals convert from a borrowed element, variants are copied either way
+							if (typeCpp != "VarType" && typeCpp != "StringType")
+								Expression::borrowAssignedValue(decl->expr, nullptr, decl->name);
 							CodeWriter::write(" = " + decl->expr->toCpp(scope));
+						}
 					}
 					jj++;
 				}
@@ -184,7 +203,11 @@ void DeclarationList::writeCpp(ResolveScope* scope, WriteFormat format, String e
 		{
 			if (i > 0)
 				CodeWriter::write(", ");
-			CodeWriter::write(varTypes[i]->toCpp() + " " + nameToCpp(decl->name));
+			if (this->func->constRefArgs.contains(decl->name))
+				CodeWriter::write("const " + varTypes[i]->toCpp() + "& ");
+			else
+				CodeWriter::write(varTypes[i]->toCpp() + " ");
+			CodeWriter::write(nameToCpp(decl->name));
 			if (decl->expr != nullptr && format != WriteFormat::ArgsImpl) // Expression
 				CodeWriter::write(" = " + decl->expr->toCpp(scope));
 			i++;
@@ -301,6 +324,18 @@ void MacroStatement::resolve(ResolveScope* scope)
 {
 	location = Location(*scope->location);
 	this->expr->resolve(ResolveScope(STR(global), 0, scope->calls));
+
+	if (this->expr->type == Expression::Type::Accessor)
+	{
+		Accessor* accessor = static_cast<Accessor*>(this->expr);
+		Variable* var = Program::findVariable(STR(global), accessor->name, nullptr, location.value(), line, nullptr, false);
+		if (var != nullptr && !Program::macros.containsKey(accessor->name))
+		{
+			Console::writeLine("FATAL ERROR: Macro {0} uses global variable {1} in {2}:{3}", name, accessor->name, func->name, line);
+			std::exit(1);
+		}
+	}
+
 	Program::declareVariable(STR(global), this->name, *this->expr->resolvedType, this->func, *scope->location);
 }
 
@@ -419,6 +454,10 @@ void AssignStatement::resolve(ResolveScope* scope)
 
 void AssignStatement::writeCpp(ResolveScope* scope)
 {
+	// String targets convert with .Str(), which needs a mutable value
+	if (this->expr != nullptr && this->target->writtenType->cppType != DataType::CppType::StringType)
+		Expression::borrowAssignedValue(this->expr, this->target, StringId());
+
 	CodeWriter::write(this->target->toCpp(scope));
 	if (this->expr != nullptr)
 	{
@@ -764,7 +803,7 @@ void SwitchStatement::writeCpp(ResolveScope* scope)
 	// Regular switch
 	else
 	{
-		CodeWriter::writeLine("switch ((IntType)" + this->expr->toCpp(switchScope) + ")");
+		CodeWriter::writeLine("switch ((IntType)(" + this->expr->toCpp(switchScope) + "))");
 		CodeWriter::writeLine("{", 1);
 
 		for (Case* switchCase : this->cases) // Cases

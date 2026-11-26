@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"block_mesh_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"block_mesh_event_create",
+  "parent":{
+    "name":"Meshes",
+    "path":"folders/Scripts/Minecraft/Blocks/Meshes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

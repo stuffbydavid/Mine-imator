@@ -1,12 +1,10 @@
-/// render_get_noise_texture(index)
-/// @arg index
-
 function render_get_noise_texture(index)
 {
 	if (array_length(render_sample_noise_texture_array) < (index + 1) || !surface_exists(render_sample_noise_texture_array[index]))
 	{
-		var surf, xoff, yoff;
+		var surf, xoff, yoff, sprite;
 		surf = surface_create(render_sample_noise_size, render_sample_noise_size)
+		sprite = render_get_pack_texture(spr_blue_noise)
 		
 		random_set_seed(index)
 		xoff = irandom_range(0, render_sample_noise_size)
@@ -15,10 +13,10 @@ function render_get_noise_texture(index)
 		
 		surface_set_target(surf)
 		{
-			draw_sprite(spr_blue_noise, 0, xoff - render_sample_noise_size, yoff - render_sample_noise_size)
-			draw_sprite(spr_blue_noise, 0, xoff - render_sample_noise_size, yoff)
-			draw_sprite(spr_blue_noise, 0, xoff, yoff - render_sample_noise_size)
-			draw_sprite(spr_blue_noise, 0, xoff, yoff)
+			draw_sprite(sprite, 0, xoff - render_sample_noise_size, yoff - render_sample_noise_size)
+			draw_sprite(sprite, 0, xoff - render_sample_noise_size, yoff)
+			draw_sprite(sprite, 0, xoff, yoff - render_sample_noise_size)
+			draw_sprite(sprite, 0, xoff, yoff)
 		}
 		surface_reset_target()
 		

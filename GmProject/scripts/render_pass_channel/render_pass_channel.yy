@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_pass_channel",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_pass_channel",
+  "parent":{
+    "name":"Passes",
+    "path":"folders/Scripts/Render/Passes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

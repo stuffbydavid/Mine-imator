@@ -1,9 +1,10 @@
-/// particle_spawner_spawn(type)
-/// @arg type
 /// @desc Adds a new particle to the spawner's list.
 
 function particle_spawner_spawn(type)
 {
+	if (type = null || !instance_exists(type))
+		return
+
 	var pt, temp;
 	pt = new_obj(obj_particle)
 	pt.creator = id
@@ -14,22 +15,22 @@ function particle_spawner_spawn(type)
 	pt.freezetime = 0
 	
 	if (is_timeline)
-		temp = id.temp
+		temp = self.temp
 	else
 		temp = select
 	
 	// Get seed for generating particle values
-	var base_seed = 0;
-	
+	var baseseed = 0;
 	if (is_timeline && pt.creator.value[e_value.CUSTOM_SEED])
-		base_seed = (temp.pc_spawn_constant ? ds_list_size(particle_list) : pt.creator.single_fire_count) + pt.creator.value[e_value.SEED]
+		baseseed = (temp.pc_spawn_constant ? ds_list_size(particle_list) : pt.creator.single_fire_count) + pt.creator.value[e_value.SEED]
 	else
 	{
-		randomize()
-		base_seed = random(spawn_currentstep + ds_list_size(particle_list))
+		if (!benchmark_mode)
+			randomize()
+		baseseed = random(spawn_currentstep + ds_list_size(particle_list))
 	}
 	
-	random_set_seed(base_seed)
+	random_set_seed(baseseed)
 	
 	// Random frame(Sprite template)
 	if (pt.type.sprite_template_still_frame && pt.type.sprite_template_random_frame && pt.type.temp = particle_template)
@@ -90,8 +91,8 @@ function particle_spawner_spawn(type)
 					p = spline_get_point(t, temp.pc_spawn_region_path.path_table_matrix, temp.pc_spawn_region_path.path_closed, temp.pc_spawn_region_path.path_smooth)
 					
 					// Get tangent/normal from point
-					tangent = [p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z]]
-					normal = [p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z]]
+					tangent = vec3(p[PATH_TANGENT_X], p[PATH_TANGENT_Y], p[PATH_TANGENT_Z])
+					normal = vec3(p[PATH_NORMAL_X], p[PATH_NORMAL_Y], p[PATH_NORMAL_Z])
 					
 					// Rotate around normal and add
 					angle = vec3_rotate_axis_angle(normal, tangent, degtorad(random(360)))
@@ -118,6 +119,7 @@ function particle_spawner_spawn(type)
 		pt.spd[a] = value_random(type.spd[a * type.spd_extend], type.spd_israndom[a * type.spd_extend], type.spd_random_min[a * type.spd_extend], type.spd_random_max[a * type.spd_extend]) / 60
 		pt.spd_add[a] = value_random(type.spd_add[a * type.spd_extend], type.spd_add_israndom[a * type.spd_extend], type.spd_add_random_min[a * type.spd_extend], type.spd_add_random_max[a * type.spd_extend]) / 60
 		pt.spd_mul[a] = value_random(type.spd_mul[a * type.spd_extend], type.spd_mul_israndom[a * type.spd_extend], type.spd_mul_random_min[a * type.spd_extend], type.spd_mul_random_max[a * type.spd_extend])
+		
 		if (pt.spd_mul[a] != 1)
 			repeat (5)
 				pt.spd_mul[a] = sqrt(pt.spd_mul[a])
@@ -127,9 +129,14 @@ function particle_spawner_spawn(type)
 		pt.rot_spd[a] = value_random(type.rot_spd[a * type.rot_spd_extend], type.rot_spd_israndom[a * type.rot_spd_extend], type.rot_spd_random_min[a * type.rot_spd_extend], type.rot_spd_random_max[a * type.rot_spd_extend]) / 60
 		pt.rot_spd_add[a] = value_random(type.rot_spd_add[a * type.rot_spd_extend], type.rot_spd_add_israndom[a * type.rot_spd_extend], type.rot_spd_add_random_min[a * type.rot_spd_extend], type.rot_spd_add_random_max[a * type.rot_spd_extend]) / 60
 		pt.rot_spd_mul[a] = value_random(type.rot_spd_mul[a * type.rot_spd_extend], type.rot_spd_mul_israndom[a * type.rot_spd_extend], type.rot_spd_mul_random_min[a * type.rot_spd_extend], type.rot_spd_mul_random_max[a * type.rot_spd_extend])
+		
 		if (pt.rot_spd_mul[a] != 1)
 			repeat (5)
 				pt.rot_spd_mul[a] = sqrt(pt.rot_spd_mul[a])
+		
+		// Apply spawner's global rotation on top of existing particle rotation
+		if (is_timeline && type.rot_spawner_angle)
+			pt.rot[a] += radtodeg(matrix_angle(pt.creator.matrix_render)[a])
 	}
 	
 	// Convert angle to vector
@@ -146,6 +153,7 @@ function particle_spawner_spawn(type)
 	pt.angle_speed = value_random(type.angle_speed, type.angle_speed_israndom, type.angle_speed_random_min, type.angle_speed_random_max) / 60
 	pt.angle_speed_add = value_random(type.angle_speed_add, type.angle_speed_add_israndom, type.angle_speed_add_random_min, type.angle_speed_add_random_max) / 60
 	pt.angle_speed_mul = value_random(type.angle_speed_mul, type.angle_speed_mul_israndom, type.angle_speed_mul_random_min, type.angle_speed_mul_random_max)
+	
 	if (pt.angle_speed_mul != 1)
 		repeat (5)
 			pt.angle_speed_mul = sqrt(pt.angle_speed_mul)

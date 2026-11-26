@@ -1,5 +1,4 @@
-/// eval(str, default)
-/// @arg str
+/// @arg string
 /// @arg default
 
 function eval(str, def)
@@ -17,7 +16,7 @@ function eval(str, def)
 			continue
 		else if (char = "(") // Open brace
 		{
-			if (lastoperator == "--")
+			if (lastoperator = "--")
 				ds_stack_push(ops, "-(")
 			else
 				ds_stack_push(ops, "(")
@@ -103,7 +102,7 @@ function eval(str, def)
 			if (lastoperator != "" && char = "-")
 			{
 				lastoperator = "--"
-				continue;
+				continue
 			}
 			
 			// Solve previous operations if needed before adding current operator
@@ -148,67 +147,8 @@ function eval(str, def)
 	ds_stack_destroy(values)
 	ds_stack_destroy(ops)
 	
-	if (result = undefined)
+	if (is_undefined(result))
 		return def
 	else
 		return result
-}
-
-/// eval_solve(a, b, operation)
-/// @arg a
-/// @arg b
-/// @arg operation
-/// @desc Manually solves operation between two numbers
-function eval_solve(a, b, op)
-{
-	// Process negative number
-	if (a = undefined && b != undefined && op = "-")
-		a = 0
-	
-	if (a = undefined || b = undefined || op = undefined)
-		return undefined
-	
-	switch (op)
-	{
-		case "+": return a + b;
-		case "-": return a - b;
-		case "*": return a * b;
-		case "/": return b != 0 ? a / b : 0;
-		case "^": return power(a, b);
-		case "%": return (a mod b);
-	}
-}
-
-/// eval_is_digit(char)
-/// @arg char
-/// @desc Determines if a character is a digit
-function eval_is_digit(char)
-{
-	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-	
-	for (var i = 0; i < array_length(digits); i++)
-		if (char = digits[i])
-			return true
-	
-	return false
-}
-
-/// eval_precedence(operator)
-/// @arg operator
-/// @desc Gets operator importance
-function eval_precedence(op)
-{
-	switch (op)
-	{
-		case "-": 
-		case "+": return 1;
-		
-		case "/": 
-		case "*":
-		case "%": return 2;
-		
-		case "^": return 3;
-	}
-	
-	return 0
 }

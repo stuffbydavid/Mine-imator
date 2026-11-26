@@ -1,7 +1,9 @@
-/// tip_set_keybind(keybindID)
-/// @arg keybindID
+/// @desc Sets a tooltip shortcut from a keybind ID or key array.
 
-function tip_set_keybind(argument0)
+function tip_set_keybind(keybindid)
 {
-	tip_keybind = keybinds[argument0].keybind
+	if (is_array(keybindid))
+		tip_keybind = keybindid
+	else
+		tip_keybind = keybinds[keybindid].keybind
 }

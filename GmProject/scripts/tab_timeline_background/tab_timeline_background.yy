@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tab_timeline_background",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_timeline_background",
+  "parent":{
+    "name":"Timeline",
+    "path":"folders/Scripts/App/Interface/Tabs/Timeline.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

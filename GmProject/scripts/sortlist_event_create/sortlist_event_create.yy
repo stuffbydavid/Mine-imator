@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "sortlist_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Sortlist",
-    "path": "folders/Scripts/App/Interface/Components/Sortlist.yy",
+  "$GMScript":"v1",
+  "%Name":"sortlist_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sortlist_event_create",
+  "parent":{
+    "name":"Sortlist",
+    "path":"folders/Scripts/App/Interface/Components/Sortlist.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

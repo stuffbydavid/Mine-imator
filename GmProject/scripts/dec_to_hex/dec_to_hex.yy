@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "dec_to_hex",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Scripts/Utility/Math.yy",
+  "$GMScript":"v1",
+  "%Name":"dec_to_hex",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"dec_to_hex",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Scripts/Utility/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

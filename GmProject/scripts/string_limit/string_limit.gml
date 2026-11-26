@@ -1,4 +1,3 @@
-/// string_limit(string, width, [ellipsis])
 /// @arg string
 /// @arg width
 /// @arg [ellipsis]
@@ -17,7 +16,7 @@ function string_limit(str, wid, ellipsis = "...")
 	pos = 1
 	while (pos <= string_length(str))
 	{
-		var char = string_char_at(str, pos)
+		var char = string_char_at(str, pos);
 		if (char = "\n")
 			char = " "
 		

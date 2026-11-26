@@ -1,5 +1,3 @@
-/// app_mouse_clear()
-
 function app_mouse_clear()
 {
 	mouse_left = false

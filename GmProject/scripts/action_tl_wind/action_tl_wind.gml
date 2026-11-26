@@ -1,7 +1,4 @@
-/// action_tl_wind(enable)
-/// @arg enable
-
-function action_tl_wind(enable)
+function action_tl_wind(enabled)
 {
 	if (history_undo)
 	{
@@ -27,9 +24,9 @@ function action_tl_wind(enable)
 				continue
 			
 			with (hobj)
-				history_save_var(other.id, other.wind, enable)
+				history_save_var(other.id, other.wind, enabled)
 			
-			wind = enable
+			wind = enabled
 		}
 	}
 }

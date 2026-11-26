@@ -1,16 +1,16 @@
-/// render_world_block_map(modelmap, resource)
+/// @desc Renders each vertex buffer in the given map, with the key as the chosen texture from the resource.
 /// @arg modelmap
 /// @arg resource
-/// @desc Renders each vbuffer in the given map, with the key as the chosen texture from the resource.
 
 function render_world_block_map(modelmap, res)
 {
-	var key;
-	
 	if (modelmap = null)
 		return 0
 	
-	key = ds_map_find_first(modelmap)
+	res = res_eval(res)
+	render_apply_res(res)
+	
+	var key = ds_map_find_first(modelmap);
 	while (!is_undefined(key))
 	{
 		var vbuffer = modelmap[?key];
@@ -19,7 +19,8 @@ function render_world_block_map(modelmap, res)
 			var tex;
 			with (res)
 				tex = res_get_model_texture(key)
-			render_set_texture(tex)
+			
+			render_set_texture(res, tex)
 			vbuffer_render(vbuffer)
 		}
 		

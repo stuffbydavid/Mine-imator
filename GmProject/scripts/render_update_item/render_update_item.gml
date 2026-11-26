@@ -1,5 +1,4 @@
-/// render_update_item()
-/// @desc Updates item timelines
+/// @desc Updates item timelines.
 
 function render_update_item()
 {
@@ -15,13 +14,7 @@ function render_update_item()
 		norres = value[e_value.TEXTURE_NORMAL_OBJ]
 		
 		if (!value[e_value.CUSTOM_ITEM_SLOT] && res = null)
-		{
-			if (item_vbuffer)
-			{
-				vbuffer_destroy(item_vbuffer)
-				item_vbuffer = null
-			}
-		}
+			item_vbuffer = null
 		
 		if (!value[e_value.CUSTOM_ITEM_SLOT])
 			slot = temp.item_slot
@@ -35,6 +28,6 @@ function render_update_item()
 		if (norres = null)
 			norres = temp.item_tex_normal
 		
-		render_generate_item(slot, [res, matres, norres], temp.item_3d)
+		render_generate_item(slot, temp.item_3d, res, norres, matres)
 	}
 }

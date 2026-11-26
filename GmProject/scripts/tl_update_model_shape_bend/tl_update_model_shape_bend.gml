@@ -1,4 +1,3 @@
-/// tl_update_model_shape_bend()
 /// @desc Updates the shapes of the model part if the bending was changed since the last call.
 
 function tl_update_model_shape_bend()
@@ -8,13 +7,28 @@ function tl_update_model_shape_bend()
 					value_inherit[e_value.BEND_ANGLE_Z]);
 	
 	// No change
-	if (vec3_equals(bend_rot_last, bend) && bend_model_part_last = model_part)
+	if (vec3_equals(bend_rot_last, bend) && bend_model_part_last = model_part && bend_style_last = app.project_bend_style)
 		return 0
 	
 	// Invalid part, no bending or no shapes
 	if (model_part = null || model_part.bend_part = null || model_part.shape_list = null)
 		return 0
 	
+	// Style changes alter topology and shader settings, so they still rebuild
+	if (is_cpp() && bend_model_part_last = model_part && bend_style_last = app.project_bend_style && model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
+	{
+		var key = ds_map_find_first(model_shape_vbuffer_map);
+		while (!is_undefined(key))
+		{
+			vertex_bend_update(model_shape_vbuffer_map[? key], bend)
+			key = ds_map_find_next(model_shape_vbuffer_map, key)
+		}
+		
+		bend_rot_last = bend
+		
+		return 0
+	}
+
 	// Clear old vbuffers
 	if (model_shape_vbuffer_map != null && ds_map_size(model_shape_vbuffer_map) > 0)
 	{
@@ -31,10 +45,14 @@ function tl_update_model_shape_bend()
 	
 	// Create map if unavailable
 	if (model_shape_vbuffer_map = null)
-		model_shape_vbuffer_map = ds_map_create()
+		model_shape_vbuffer_map = ds_int_map_create()
 	
 	bend_rot_last = bend
 	bend_model_part_last = model_part
+	bend_style_last = app.project_bend_style
+	
+	model_part_shape_render_matrix_part = null
+	model_part_shape_data_update = true
 	
 	model_part_fill_shape_vbuffer_map(model_part, model_shape_vbuffer_map, model_shape_alpha_map, bend_rot_last)
 }

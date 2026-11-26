@@ -1,18 +1,16 @@
-/// draw_switch(name, x, y, active, script, [tip, [disabled]])
 /// @arg name
 /// @arg x
 /// @arg y
 /// @arg active
 /// @arg script
-/// @arg [tip
-/// @arg [disabled]]
+/// @arg [tip]
+/// @arg [disabled]
+/// @arg [labelononly]
 
-function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
+function draw_switch(name, xx, yy, active, script, tip = "", disabled = false, labelononly = false)
 {
-	var text, switchx, switchy, w, h, pressed, thumbgoal;
-	
+	var text, switchx, switchy, w, h;
 	text = text_get(name)
-	
 	w = dw
 	h = ui_small_height
 	switchx = (xx + dw - 22)
@@ -22,10 +20,11 @@ function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
 		return 0
 	
 	// Mouse
-	var mouseon, mouseclick;
-	mouseon = app_mouse_box(switchx, switchy, h, 16) && content_mouseon && !disabled
+	var mouseon, mouseclick, pressed, thumbgoal, labelon, labelclick;
+	labelon = labelononly && app_mouse_box(xx - 4, yy - 4, w / 2 + 4, h + 8)
+	labelclick = labelon && content_mouseon && !disabled && mouse_left_released
+	mouseon = app_mouse_box(xx + (labelononly ? w / 2 : -4), yy - 4, labelononly ? w / 2 + 2 : w + 6, h + 8) && content_mouseon && !disabled && !labelon
 	mouseclick = mouseon && mouse_left
-	
 	pressed = false
 	
 	if (mouseon)
@@ -35,6 +34,8 @@ function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
 		
 		mouse_cursor = cr_handpoint
 	}
+	else if (labelon && content_mouseon && !disabled)
+		mouse_cursor = cr_handpoint
 	
 	if (pressed)
 		thumbgoal = 0.5
@@ -92,4 +93,6 @@ function draw_switch(name, xx, yy, active, script, tip = "", disabled = false)
 		
 		return true
 	}
+	if (labelclick)
+		return true
 }

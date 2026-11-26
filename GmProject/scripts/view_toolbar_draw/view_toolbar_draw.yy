@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "view_toolbar_draw",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "View",
-    "path": "folders/Scripts/App/Interface/Components/View.yy",
+  "$GMScript":"v1",
+  "%Name":"view_toolbar_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_toolbar_draw",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

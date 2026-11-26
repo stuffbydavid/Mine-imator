@@ -1,6 +1,3 @@
-/// action_tl_frame_rgb_sub(color)
-/// @arg color
-
 function action_tl_frame_rgb_sub(color)
 {
 	tl_value_set_start(action_tl_frame_rgb_sub, true)

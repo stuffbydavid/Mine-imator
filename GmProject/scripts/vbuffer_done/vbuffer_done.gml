@@ -1,15 +1,13 @@
-/// vbuffer_done([vbuffer])
-/// @arg [vbuffer]
+/// @arg [vertexbuffer]
 
-function vbuffer_done()
+function vbuffer_done(vbuf = null)
 {
-	var vbuffer = vbuffer_current;
-	if (argument_count > 0)
-		vbuffer_current = argument[0]
+	if (vbuf = null)
+		vbuf = vbuffer_current
 	
-	vertex_end(vbuffer)
-	vbuffer = vbuffer_generate_tangents(vbuffer)
-	vertex_freeze(vbuffer)
+	vertex_end(vbuf)
+	vbuf = vbuffer_generate_tangents(vbuf)
+	vertex_freeze(vbuf)
 	
-	return vbuffer
+	return vbuf
 }

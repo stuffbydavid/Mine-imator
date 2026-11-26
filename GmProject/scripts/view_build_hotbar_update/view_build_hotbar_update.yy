@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"view_build_hotbar_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"view_build_hotbar_update",
+  "parent":{
+    "name":"View",
+    "path":"folders/Scripts/App/Interface/Components/View.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

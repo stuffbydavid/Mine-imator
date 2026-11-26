@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"preview_surface_update",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"preview_surface_update",
+  "parent":{
+    "name":"Preview",
+    "path":"folders/Scripts/App/Interface/Components/Preview.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

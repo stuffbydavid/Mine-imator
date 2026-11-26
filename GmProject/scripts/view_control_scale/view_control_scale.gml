@@ -1,6 +1,3 @@
-/// view_control_scale(view)
-/// @arg view
-
 function view_control_scale(view)
 {
 	var len, arrowstart, arrowend, mat;
@@ -52,7 +49,7 @@ function view_control_scale(view)
 	}
 	
 	// Dragging plane
-	if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_XY && view_control_edit <= e_view_control.SCA_YZ)
+	if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_XY && view_control_edit <= e_view_control.SCA_YZ)
 	{
 		mouse_cursor = cr_handpoint
 		
@@ -60,14 +57,14 @@ function view_control_scale(view)
 		if (!mouse_still)
 		{
 			var move, scale, snapval;
-			move = point3D_plane_intersect(view_control_plane_origin, view_control_plane_normal, cam_from, view_control_ray_dir)
+			move = ray_plane_intersect(cam_from, view_control_ray_dir, view_control_plane_origin, view_control_plane_normal)
 			move = point3D_mul(point3D_sub(move, view_control_plane_origin), .125)
-			move = vec3_mul_matrix(move, matrix_inverse(mat))
+			move = vec3_mul_matrix(move, matrix_inverse_ext(mat))
 			
 			for (var i = 0; i <= Z; i++)
 				move[i] *= (!view_control_move_flip_axis[i] ? 1 : -1)
 			
-			scale = point3D(0, 0, 0)
+			scale = vec3(0)
 			snapval = (dragger_snap ? setting_snap_size_scale : snap_min)
 			
 			for (var i = X; i <= Z; i++)
@@ -113,12 +110,12 @@ function view_control_scale(view)
 			view_control_plane = false
 		}
 	}
-	else if (window_busy = "rendercontrol" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_X && view_control_edit <= e_view_control.SCA_Z) // Dragging single axis
+	else if (window_busy = "render/control" && view_control_edit_view = view && view_control_edit >= e_view_control.SCA_X && view_control_edit <= e_view_control.SCA_Z) // Dragging single axis
 	{
 		mouse_cursor = cr_handpoint
 		
 		// Move
-		var veclen = vec2_length(view_control_vec)
+		var veclen = vec2_length(view_control_vec);
 		if (veclen > 0 && !mouse_still)
 		{
 			var vecmouse, vecdot, move, snapval, newval;
@@ -191,16 +188,16 @@ function view_control_scale(view)
 		// Release
 		if (!mouse_left)
 		{
+			// End dragging
+			axis_edit = X
+			action_tl_frame_scale_all_axis(0, false)
+			
 			window_busy = ""
 			view_control_edit = null
 			view_control_scale_amount = 1
 			view_control_matrix = null
 			view_control_length = null
 			view_control_value = 0
-			
-			// End dragging
-			axis_edit = X
-			action_tl_frame_scale_all_axis(0, false)
 		}
 	}
 }

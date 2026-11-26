@@ -2,6 +2,7 @@
 #include "Generated/Scripts.hpp"
 #include "FastVector.hpp"
 #include "Render/Mesh.hpp"
+#include "NBT.hpp"
 
 #define PREVIEW_ZNEAR 1.0
 #define PREVIEW_ZFAR 10000.0
@@ -37,9 +38,11 @@ namespace CppProject
 	struct Chunk;
 	struct Map;
 	struct NbtCompound;
+	struct NbtList;
 	struct Preview;
 	struct Region;
 	struct RegionLoader;
+	struct SchematicExport;
 	struct Script;
 	struct Section;
 	struct Shader;
@@ -55,12 +58,15 @@ namespace CppProject
 		WorldVec(const VecType& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 		WorldVec(IntType x, IntType y, IntType z) : x(x), y(y), z(z) {}
 
-		WorldVec operator+(const WorldVec& vec) const;
-		WorldVec operator-(const WorldVec& vec) const;
-		WorldVec operator*(const WorldVec& vec) const;
-		WorldVec operator+(IntType in) const;
-		WorldVec operator-(IntType in) const;
-		WorldVec operator*(IntType in) const;
+		bool operator==(const WorldVec& vec) const { return x == vec.x && y == vec.y && z == vec.z; }
+		IntType& operator[](IntType axis) { return axis == X_ ? x : (axis == Y_ ? y : z); }
+		const IntType& operator[](IntType axis) const { return axis == X_ ? x : (axis == Y_ ? y : z); }
+		WorldVec operator+(const WorldVec& vec) const { return { x + vec.x, y + vec.y, z + vec.z }; }
+		WorldVec operator-(const WorldVec& vec) const { return { x - vec.x, y - vec.y, z - vec.z }; }
+		WorldVec operator*(const WorldVec& vec) const { return { x * vec.x, y * vec.y, z * vec.z }; }
+		WorldVec operator+(IntType in) const { return { x + in, y + in, z + in }; }
+		WorldVec operator-(IntType in) const { return { x - in, y - in, z - in }; }
+		WorldVec operator*(IntType in) const { return { x * in, y * in, z * in }; }
 		operator VecType() const;
 
 		IntType x, y, z;
@@ -87,7 +93,7 @@ namespace CppProject
 	// Compressed block vertex
 	struct WorldVertex
 	{
-		WorldVertex(const WorldVec& regionPos, uint16_t blockData);
+		WorldVertex(const WorldVec& regionPos, uint32_t blockData);
 
 		// Setup shader attributes
 		static void SetAttributes();
@@ -168,7 +174,7 @@ namespace CppProject
 	struct SaveInfo
 	{
 		QString name;
-		IntType version;
+		IntType version, dataVersion = 0;
 		BoolType hasPlayer;
 		VecType spawnPos, playerPos, playerRot;
 		QString playerDim;
@@ -187,8 +193,11 @@ namespace CppProject
 		// Closes the currently opened world.
 		static void Close();
 
-		// Generates a collection of builder sections from a box in the opened world,.
-		static void GenerateBuilderSections(const WorldBox& box);
+		// Generate builder sections from a box in the opened world.
+		static void GenerateBuilderSections(const WorldBox& box, SchematicExport* schematic = nullptr);
+
+		// Process supported entities after filtering builder sections.
+		static void ProcessBuilderEntities(SchematicExport* schematic = nullptr);
 
 		// Adds a save from the given root directory, returns whether successful.
 		static BoolType AddSave(QString dir);
@@ -196,12 +205,8 @@ namespace CppProject
 		// Apply the selected block filter settings, returns whether the world needs reloading.
 		static BoolType ApplyFilter();
 
-		// Block filter mode
-		enum FilterMode
-		{
-			REMOVE = 0,
-			KEEP = 1
-		};
+		// Export the blocks and block entities inside the selected box
+		static void ExportSchematic(const WorldBox& box, const QString& filename);
 
 		static QDir currentRegionsDir;
 		static Preview* preview;
@@ -224,6 +229,9 @@ namespace CppProject
 
 		// Cancel the world import.
 		void Cancel();
+
+		// Export a schematic file.
+		void ExportSchematic();
 
 	public:
 		Preview();
@@ -249,6 +257,9 @@ namespace CppProject
 		// Go to the player or start position.
 		void GoToPlayer();
 
+		// Go to a specified X/Z position.
+		void GoToPosition(IntType x, IntType z);
+
 		// Set selection size.
 		void SetSelectionSize(VecType size);
 
@@ -270,8 +281,11 @@ namespace CppProject
 		};
 
 		Mode mode = DEFAULT;
-		BoolType hasPlayer = false, resetUpdate = false;
+		BoolType hasPlayer = false, resetUpdate = false, filterActive = false;
 		QString dimension = "";
+		QString exportFilename;
+		WorldBox exportBox;
+
 		Matrix matrixV, matrixP, playerM, selectionM;
 		RealType camAngleXY, camAngleZ, camTargetDis;
 		VecType camPos, camTarget, spawnPos, playerPos, playerRot;
@@ -284,6 +298,7 @@ namespace CppProject
 			RealType angleZStart, angleZEnd;
 			BoolType animateCamPos = false;
 		} camAnim;
+
 		QVector<Region*> openLoadRegions;
 		WorldVec worldOriginPos;
 
@@ -322,7 +337,7 @@ namespace CppProject
 		~Region();
 
 		// Load the region chunks on a separate thread.
-		void Load(const WorldBox& box = WorldBox());
+		void Load(const WorldBox& box = WorldBox(), SchematicExport* schematic = nullptr);
 
 		// Returns the current loading progress as a value between 0-1.
 		RealType GetLoadProgress();
@@ -453,13 +468,13 @@ namespace CppProject
 		void UpdateLoadRegions();
 
 	public:
-		BoolType active = true;
+		std::atomic<BoolType> active{ true };
 	};
 
 	// A collection of sections
 	struct Chunk
 	{
-		Chunk(Region* region, QByteArray& data, const WorldBox& box);
+		Chunk(Region* region, QByteArray& data, const WorldBox& box, SchematicExport* schematic = nullptr);
 		~Chunk();
 
 		// Generate triangles to add to the region mesh.
@@ -469,10 +484,14 @@ namespace CppProject
 		enum FaceDirection : int;
 		struct Mesh;
 		struct FaceData;
-		void GenerateFaceTriangles(Mesh& mesh, FaceDirection dir, Heap<FaceData>& faceData, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos);
+		void GenerateFaceTriangles(Mesh& mesh, FaceDirection dir, const FaceData& face, uint16_t x, uint16_t y, uint16_t z, const WorldVec& startPos, const WorldVec& endPos);
 
 		// Free unused preview data.
 		void FreePreviewData();
+
+		// Copy original block states and block entities into a schematic.
+		void ExportSchematic(const WorldBox& box, NbtCompound& palette, Heap<uint32_t>& indices, NbtList& entities, BoolType applyFilter);
+		void ExportLegacySchematic(const WorldBox& box, NbtCompound& schematic, BoolType applyFilter);
 
 		// Block format
 		enum Format : int
@@ -500,7 +519,7 @@ namespace CppProject
 		// Stores the faces added to a block in the section.
 		struct FaceData
 		{
-			uint16_t blockData[FaceDirectionAmount];
+			uint32_t blockData[FaceDirectionAmount];
 		};
 
 		// Stores the vertices in a chunk.
@@ -510,7 +529,7 @@ namespace CppProject
 			uint32_t index;
 		};
 
-		IntType x, z, regionIndex = 0;
+		IntType x = 0, z = 0, regionIndex = 0;
 		WorldVec regionPos;
 		Region* region = nullptr;
 		Format format;
@@ -518,13 +537,16 @@ namespace CppProject
 		Heap<uint16_t> legacyBiomes;
 		BoolType leftEdge, rightEdge, backEdge, frontEdge;
 		BoolType error = false;
+		IntType dataVersion = 0;
+		NbtCompound* exportData = nullptr;
 		QVector<BlockEntity> blockEntities;
 		IntType numTimelines = 0;
 
 		struct Mesh
 		{
-			Heap<FaceData> faceData[CHUNK_SECTIONS];
-			Heap<VertexData> vertexData[CHUNK_SECTIONS];
+			FaceData* faceData[CHUNK_SECTIONS] = {};
+			VertexData* vertexData[CHUNK_SECTIONS + 1] = {};
+			uint8_t faceDirections[CHUNK_SECTIONS] = {};
 			FastVector<WorldVertex> vertices;
 			FastVector<uint32_t> indices;
 			IntType vertexOffset, indexOffset; // Offset in region mesh
@@ -551,7 +573,7 @@ namespace CppProject
 		void ParseBiomePalettePreview(NbtCompound* nbt, Chunk::Format format);
 
 		// Parse a long array of block/biome palette indices.
-		void ParsePaletteIndices(const Heap<int64_t>& dataArray, Heap<uint16_t>& paletteIndices, IntType paletteSize, Chunk::Format format, IntType minBits = 1);
+		static void ParsePaletteIndices(const Heap<int64_t>& dataArray, Heap<uint16_t>& paletteIndices, IntType paletteSize, Chunk::Format format, IntType minBits = 1);
 
 		// Generate the faces of a solid/transparent block in the section.
 		void GenerateFaces(Region::GenerateMode mode, const WorldVec& startPos, const WorldVec& endPos);
@@ -625,7 +647,7 @@ namespace CppProject
 		static Section* GetSection(const WorldVec& pos);
 
 		static Heap<Section*> sections;
-		static WorldVec size, offset, sectionsDim;
+		static WorldVec size, offset, sectionsNum;
 		static IntType sectionsXY;
 		static QHash<StringType, obj_block*> mcBlockIdObjMap, filteredMcBlockIdObjMap;
 		static QHash<StringType, ArrType> mcBlockIdStateVarsMap;

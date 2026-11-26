@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "value_get_real",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Values",
-    "path": "folders/Scripts/Utility/Values.yy",
+  "$GMScript":"v1",
+  "%Name":"value_get_real",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"value_get_real",
+  "parent":{
+    "name":"Values",
+    "path":"folders/Scripts/Utility/Values.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

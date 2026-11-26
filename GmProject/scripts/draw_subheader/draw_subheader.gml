@@ -1,4 +1,3 @@
-/// draw_subheader(category, x, y, width, height)
 /// @arg category
 /// @arg x
 /// @arg y

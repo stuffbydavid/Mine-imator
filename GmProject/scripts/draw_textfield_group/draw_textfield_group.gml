@@ -1,4 +1,3 @@
-/// draw_textfield_group(name, x, y, width, multiplier, min, max, snap, [showcaption, [stack, [colortype, [drag, [update_values]]]]])
 /// @arg name
 /// @arg x
 /// @arg y
@@ -7,26 +6,29 @@
 /// @arg min
 /// @arg max
 /// @arg snap
-/// @arg [showcaption
-/// @arg [stack
-/// @arg [colortype
-/// @arg [drag
-/// @arg [update_values]]]]
+/// @arg [showcaption]
+/// @arg [stack]
+/// @arg [colortype]
+/// @arg [drag]
+/// @arg [updatevalues]
 
-function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, textfield_update = true)
+function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, showcaption = false, stack = true, colortype = 0, drag = true, updatevalues = true)
 {
-	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei;
-	
-	vertical = (app.panel_compact) && stack
+	var vertical, fieldx, fieldy, fieldwid, fieldupdate, hei, amount, field;
+	amount = array_length(textfield_group)
+	if (amount = 0)
+		return 0
+
+	vertical = (app.panel_compact && stack)
 	fieldx = xx
 	fieldy = yy
-	fieldwid = vertical ? wid : (wid/textfield_amount)
+	fieldwid = vertical ? wid : (wid/amount)
 	fieldupdate = undefined
-	hei = (vertical ? (ui_small_height * textfield_amount) : ui_small_height) + ((label_height + 8) * showcaption)
+	hei = (vertical ? real(ui_small_height * amount) : ui_small_height) + ((label_height + 8) * showcaption)
 	
 	if (xx + wid < content_x || xx > content_x + content_width || yy + hei < content_y || yy > content_y + content_height)
 	{
-		textfield_group_reset()
+		textfield_group = []
 		return 0
 	}
 	
@@ -35,7 +37,8 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 	mouseon = app_mouse_box(xx, yy, wid, hei) && content_mouseon
 	
 	// Last textfield has 'active' animation, will need that for label color and border
-	microani_set(string(textfield_textbox[textfield_amount - 1]) + textfield_name[textfield_amount - 1], textfield_script[textfield_amount - 1], false, false, false, false, 1, false)
+	field = textfield_group[amount - 1]
+	microani_set(string(field[e_textfield_group.TEXTBOX]) + field[e_textfield_group.NAME], field[e_textfield_group.SCRIPT], false, false, false, false, 1, false)
 	
 	var active = current_microani.custom;
 	microani_set(name, null, mouseon || active, false, false)
@@ -53,17 +56,19 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 	fieldy = yy
 	dragw = 16
 	
-	draw_box(xx, yy, wid, (vertical ? textfield_amount * hei : hei), false, c_level_top, draw_get_alpha())
+	draw_box(xx, yy, wid, (vertical ? amount * hei : hei), false, c_input_background, draw_get_alpha())
 	
 	// Draw field backgrounds
 	if (vertical)
-		draw_outline(fieldx, fieldy, wid, textfield_amount * hei, 1, c_border, a_border, true)
+		draw_outline(fieldx, fieldy, wid, amount * hei, 1, c_border, a_border, true)
 	else
 		draw_outline(fieldx, fieldy, wid, hei, 1, c_border, a_border, true)
 	
 	draw_set_font(font_label)
-	for (var i = 0; i < textfield_amount; i++)
-	{	
+	for (var i = 0; i < amount; i++)
+	{
+		field = textfield_group[i]
+
 		if (i > 0)
 		{
 			if (vertical)
@@ -78,24 +83,25 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			fieldx += fieldwid
 		
 		// Get max dragging width from labels
-		dragw = max(dragw, string_width(text_get(textfield_caption[i] != null ? textfield_caption[i] : textfield_name[i])) + 16)
+		dragw = max(dragw, string_width(text_get(field[e_textfield_group.CAPTION] != null ? field[e_textfield_group.CAPTION] : field[e_textfield_group.NAME])) + 16)
 	}
 	
 	fieldx = xx
 	fieldy = yy
 	
 	// Draw fields
-	var boxwid, boxhei, boxy, update;
+	var boxwid, boxhei, boxy, update, fieldmin, fieldmax;
 	active = false
 	
-	for (var i = 0; i < textfield_amount; i++)
+	for (var i = 0; i < amount; i++)
 	{
-		axis_edit = textfield_axis[i]
+		field = textfield_group[i]
+		axis_edit = field[e_textfield_group.AXIS]
 		boxhei = hei
 		boxwid = fieldwid
 		boxy = fieldy
 		
-		if (i < (textfield_amount - 1) && !vertical)
+		if (i < (amount - 1) && !vertical)
 			boxwid += 1
 		
 		if (i != 0 && vertical)
@@ -106,15 +112,17 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		
 		mouseon = app_mouse_box(fieldx, boxy, boxwid, boxhei) && content_mouseon
 		
-		if (textfield_min != null)
+		fieldmin = minval
+		fieldmax = maxval
+		if (field[e_textfield_group.MIN] != null)
 		{
-			minval = textfield_min[i]
-			maxval = textfield_max[i]
+			fieldmin = field[e_textfield_group.MIN]
+			fieldmax = field[e_textfield_group.MAX]
 		}
 		
-		context_menu_area(fieldx, boxy, boxwid, boxhei, "contextmenuvalue", textfield_value[i], e_context_type.NUMBER, textfield_script[i], textfield_default[i])
+		context_menu_area(fieldx, boxy, boxwid, boxhei, "context_menu/value", field[e_textfield_group.VALUE], e_context_type.NUMBER, field[e_textfield_group.SCRIPT], field[e_textfield_group.DEFAULT])
 		
-		microani_set(string(textfield_textbox[i]) + textfield_name[i], textfield_script[i], mouseon || window_focus = string(textfield_textbox[i]), false, (mouseon && mouse_left) || (window_focus = string(textfield_textbox[i])))
+		microani_set(string(field[e_textfield_group.TEXTBOX]) + field[e_textfield_group.NAME], field[e_textfield_group.SCRIPT], mouseon || window_focus = string(field[e_textfield_group.TEXTBOX]), false, (mouseon && mouse_left) || (window_focus = string(field[e_textfield_group.TEXTBOX])))
 		
 		// Draw base button
 		var focus, linecolor, linealpha;
@@ -167,10 +175,10 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			labelalpha = lerp(labelalpha, a_accent, focus)
 		}
 		
-		if (textfield_icon[i] = null)
-			draw_label(text_get(textfield_caption[i] != null ? textfield_caption[i] : textfield_name[i]), fieldx + 8, boxy + ceil(boxhei/2), fa_left, fa_middle, labelcolor, labelalpha, font_label)
+		if (field[e_textfield_group.ICON] = null)
+			draw_label(text_get(field[e_textfield_group.CAPTION] != null ? field[e_textfield_group.CAPTION] : field[e_textfield_group.NAME]), fieldx + 8, boxy + ceil(boxhei/2), fa_left, fa_middle, labelcolor, labelalpha, font_label)
 		else
-			draw_image(spr_icons, textfield_icon[i], floor(fieldx + 14), boxy + ceil(boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
+			draw_image(spr_icons, field[e_textfield_group.ICON], floor(fieldx + 14), boxy + ceil(boxhei/2), 1, 1, c_text_secondary, a_text_secondary)
 		
 		// Outline
 		draw_outline(fieldx, boxy, boxwid, boxhei, 1, c_level_middle, max(focus, microani_arr[e_microani.HOVER]), true)
@@ -178,80 +186,80 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 		
 		draw_box_hover(fieldx, boxy, boxwid, boxhei, microani_arr[e_microani.PRESS])
 		
-		if (textfield_value[i] < minval || textfield_value[i] > maxval)
+		if (field[e_textfield_group.VALUE] < fieldmin || field[e_textfield_group.VALUE] > fieldmax)
 			draw_box(fieldx, boxy, boxwid, boxhei, false, c_error, a_accent_overlay)
-		else if ((abs(maxval) + abs(minval)) < 100000)
+		else if ((abs(fieldmax) + abs(fieldmin)) < 100000)
 		{
 			// Idle
-			var perc = percent(textfield_value[i], minval, maxval);
+			var perc = percent(field[e_textfield_group.VALUE], fieldmin, fieldmax);
 			draw_box(fieldx, boxy, boxwid * perc, boxhei, false, c_accent_hover, a_accent_overlay)
 		}
 		
-		active = (active || window_focus = string(textfield_textbox[i]))
-		microani_update(mouseon, mouseon && mouse_left, window_focus = string(textfield_textbox[i]) || (window_busy = textfield_name[i] + "drag") || (window_busy = textfield_name[i] + "press"), false, active)
+		active = (active || window_focus = string(field[e_textfield_group.TEXTBOX]))
+		microani_update(mouseon, mouseon && mouse_left, window_focus = string(field[e_textfield_group.TEXTBOX]) || (window_busy = field[e_textfield_group.NAME] + "/drag") || (window_busy = field[e_textfield_group.NAME] + "/press"), false, active)
 		
 		// Textbox
 		draw_set_font(font_digits)
 		
-		var update = textbox_draw(textfield_textbox[i], fieldx + dragw, boxy + ceil(boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true);
+		update = textbox_draw(field[e_textfield_group.TEXTBOX], fieldx + dragw, boxy + ceil(boxhei/2) - 7, boxwid - (8 + dragw), 18, true, true)
 		
 		// Textbox press
-		if (app_mouse_box(fieldx + dragw, boxy, boxwid - (8 + dragw), boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]))
+		if (app_mouse_box(fieldx + dragw, boxy, boxwid - (8 + dragw), boxhei) && content_mouseon && window_focus != string(field[e_textfield_group.TEXTBOX]))
 		{
 			if (mouse_left_released)
 			{
-				window_focus = string(textfield_textbox[i])
+				window_focus = string(field[e_textfield_group.TEXTBOX])
 				window_busy = ""
 			}
 		}
 		
 		// Drag
-		if (app_mouse_box(fieldx, boxy, boxwid, boxhei) && content_mouseon && window_focus != string(textfield_textbox[i]) && drag)
+		if (app_mouse_box(fieldx, boxy, boxwid, boxhei) && content_mouseon && window_focus != string(field[e_textfield_group.TEXTBOX]) && drag)
 		{
 			mouse_cursor = cr_size_we
 	
 			if (mouse_left_pressed)
-				window_busy = textfield_name[i] + "press"
+				window_busy = field[e_textfield_group.NAME] + "/press"
 		}
 		
 		// Mouse pressed
-		if (window_busy = textfield_name[i] + "press")
+		if (window_busy = field[e_textfield_group.NAME] + "/press")
 		{
 			mouse_cursor = cr_size_we
 			
 			if (!mouse_left)
 			{
-				window_focus = string(textfield_textbox[i])
+				window_focus = string(field[e_textfield_group.TEXTBOX])
 				window_busy = ""
 				app_mouse_clear()
 			}
 			else if (mouse_dx != 0)
 			{
-				dragger_drag_value = textfield_value[i]
-				window_busy = textfield_name[i] + "drag" // Start dragging
+				dragger_drag_value = field[e_textfield_group.VALUE]
+				window_busy = field[e_textfield_group.NAME] + "/drag" // Start dragging
 			}
 		}
 		
 		// Is dragging
-		if (window_busy = textfield_name[i] + "drag")
+		if (window_busy = field[e_textfield_group.NAME] + "/drag")
 		{ 
 			mouse_cursor = cr_none
-			dragger_drag_value += (mouse_x - mouse_click_x) * (textfield_mul[i] = null ? mul : textfield_mul[i]) * dragger_multiplier
+			dragger_drag_value += (mouse_x - mouse_click_x) * (field[e_textfield_group.MUL] = null ? mul : field[e_textfield_group.MUL]) * dragger_multiplier
 			window_mouse_set(mouse_click_x, mouse_click_y)
 			
 			var d;
 			
 			if (app.setting_unlimited_values)
-				d = snap(dragger_drag_value, snapval) - textfield_value[i]
+				d = snap(dragger_drag_value, snapval) - field[e_textfield_group.VALUE]
 			else
-				d = clamp(snap(dragger_drag_value, snapval), minval, maxval) - textfield_value[i]
+				d = clamp(snap(dragger_drag_value, snapval), fieldmin, fieldmax) - field[e_textfield_group.VALUE]
 			
-			if (d <> 0 && textfield_script[i] != null && textfield_update)
-				script_execute(textfield_script[i], d, true)
+			if (d <> 0 && field[e_textfield_group.SCRIPT] != null && updatevalues)
+				script_execute(field[e_textfield_group.SCRIPT], d, true)
 			else
 			{
-				textfield_textbox[i].text = string_decimals(textfield_value[i] + d)
-				fieldupdate = textfield_textbox[i]
+				field[e_textfield_group.TEXTBOX].text = string_decimals(field[e_textfield_group.VALUE] + d)
+				fieldupdate = field[e_textfield_group.TEXTBOX]
 			}
 			
 			if (!mouse_left)
@@ -259,24 +267,24 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 				window_busy = ""
 				app_mouse_clear()
 				
-				script_execute(textfield_script[i], d, true)
+				script_execute(field[e_textfield_group.SCRIPT], d, true)
 			}
 		}
 		
 		// Textbox input update
 		if (update)
 		{
-			var val = eval(textfield_textbox[i].text, textfield_default[i]);
+			var val = eval(field[e_textfield_group.TEXTBOX].text, field[e_textfield_group.DEFAULT]);
 			
-			if (textfield_script[i] != null)
-				script_execute(textfield_script[i], app.setting_unlimited_values ? snap(val, snapval) : clamp(snap(val, snapval), minval, maxval), false)
+			if (field[e_textfield_group.SCRIPT] != null)
+				script_execute(field[e_textfield_group.SCRIPT], app.setting_unlimited_values ? snap(val, snapval) : clamp(snap(val, snapval), fieldmin, fieldmax), false)
 			else
 				fieldupdate = val
 		}
 		
 		// Idle update
-		if (window_busy != textfield_name[i] + "press" && window_focus != string(textfield_textbox[i]) && fieldupdate = undefined)
-			textfield_textbox[i].text = string_decimals(textfield_value[i])
+		if (window_busy != field[e_textfield_group.NAME] + "/press" && window_focus != string(field[e_textfield_group.TEXTBOX]) && is_undefined(fieldupdate))
+			field[e_textfield_group.TEXTBOX].text = string_decimals(field[e_textfield_group.VALUE])
 		
 		if (vertical)
 			fieldy += hei
@@ -284,7 +292,7 @@ function draw_textfield_group(name, xx, yy, wid, mul, minval, maxval, snapval, s
 			fieldx += fieldwid
 	}
 	
-	textfield_group_reset()
+	textfield_group = []
 	
 	return fieldupdate
 }

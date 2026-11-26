@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"app_update_keyboard_bench",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_update_keyboard_bench",
+  "parent":{
+    "name":"Update",
+    "path":"folders/Scripts/App/Update.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

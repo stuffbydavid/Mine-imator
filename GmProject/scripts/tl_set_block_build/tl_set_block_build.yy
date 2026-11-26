@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tl_set_block_build",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tl_set_block_build",
+  "parent":{
+    "name":"Blocks",
+    "path":"folders/Scripts/Project/Timeline/Blocks.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

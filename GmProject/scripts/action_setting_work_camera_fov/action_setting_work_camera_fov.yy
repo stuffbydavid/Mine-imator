@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_setting_work_camera_fov",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_setting_work_camera_fov",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Scripts/App/Actions/Settings/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

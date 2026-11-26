@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"render_fx_lens_dirt",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"render_fx_lens_dirt",
+  "parent":{
+    "name":"Effects",
+    "path":"folders/Scripts/Render/Effects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,4 +1,3 @@
-/// panel_tab_list_add(panel, position, tab)
 /// @arg panel
 /// @arg position
 /// @arg tab

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"project_reset_environment",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"project_reset_environment",
+  "parent":{
+    "name":"Project",
+    "path":"folders/Scripts/Project.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

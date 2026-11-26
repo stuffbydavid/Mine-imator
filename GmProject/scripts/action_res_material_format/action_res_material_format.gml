@@ -1,6 +1,3 @@
-/// action_res_material_format(format)
-/// @arg format
-
 function action_res_material_format(format)
 {
 	if (!history_undo && !history_redo)

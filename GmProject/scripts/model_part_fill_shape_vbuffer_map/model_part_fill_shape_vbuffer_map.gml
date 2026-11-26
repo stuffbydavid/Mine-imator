@@ -1,9 +1,8 @@
-/// model_part_fill_shape_vbuffer_map(part, vbuffermap, alphamap, bend)
+/// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by a rotation vector.
 /// @arg part
-/// @arg vbuffermap
+/// @arg vertexbuffermap
 /// @arg alphamap
 /// @arg bend
-/// @desc Clears and fills the given map with vbuffers for the 3D shapes, bent by a rotation vector.
 
 function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 {
@@ -23,7 +22,7 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 			vbufmap[? id] = vbuffer_default
 			
 			// Generate new mesh if needed
-			if (type = "block" && bend_shape && isbent)
+			if (type = "block" && bend_shape && (isbent || (is_cpp() && bend_part != null)))
 				vbufmap[? id] = model_shape_generate_block(bend)
 			else if (type = "plane")
 			{
@@ -32,7 +31,7 @@ function model_part_fill_shape_vbuffer_map(part, vbufmap, alphamap, bend)
 					if (ds_map_valid(alphamap))
 						vbufmap[? id] = model_shape_generate_plane_3d(bend, alphamap[? id])
 				}
-				else if (isbent && bend_shape)
+				else if (bend_shape && (isbent || (is_cpp() && bend_part != null)))
 					vbufmap[? id] = model_shape_generate_plane(bend)
 			}
 		}

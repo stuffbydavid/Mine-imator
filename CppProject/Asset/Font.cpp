@@ -14,7 +14,7 @@ namespace CppProject
 	QVector<Font*> Font::fonts;
 	BoolType Font::fontAA = true;
 
-	Font::Font(StringType filename, IntType size, BoolType bold, BoolType italic, IntType first, IntType last) : Asset(ID_Font)
+	Font::Font(StringType filename, RealType size, BoolType bold, BoolType italic, IntType first, IntType last) : Asset(ID_Font)
 	{
 		fonts.append(this);
 
@@ -36,7 +36,7 @@ namespace CppProject
 			if (err != 0) 
 				throw "FT_New_Memory_Face error: " + NumStr(err);
 
-			err = FT_Set_Char_Size(face, 0, size << 6, 96, 96);
+			err = FT_Set_Char_Size(face, 0, qRound64(size * 64.0), 96, 96);
 			if (err != 0)
 				throw "FT_Set_Char_Size error: " + NumStr(err);
 
@@ -83,6 +83,7 @@ namespace CppProject
 						{
 							IntType x = penX + bx;
 							IntType y = penY + by;
+
 							if (bmp->pixel_mode == FT_PIXEL_MODE_MONO) // 1 bit per pixel
 							{
 								IntType index = by * bmp->pitch + bx / 8;
@@ -109,6 +110,7 @@ namespace CppProject
 
 				charCode = FT_Get_Next_Char(face, charCode, &charIndex);
 			}
+
 			penY += height;
 
 			// Convert UVs
@@ -134,10 +136,12 @@ namespace CppProject
 					index++;
 				}
 			}
+
 			QImage atlasImg(atlasData, atlasSize, penY, QImage::Format_RGBA8888);
 			pageLoc = TexturePage::Add(atlasImg);
 			if (!pageLoc) // Too big for texture page
 				texture = new Texture(atlasImg);
+			
 			delete[] pixels;
 			delete[] atlasData;
 
@@ -167,6 +171,7 @@ namespace CppProject
 	{
 		if (text == "")
 			return 0;
+
 		if (text.GetLength() == 1)
 			return GetCharacterWidth(text.At(0).unicode());
 
@@ -189,6 +194,7 @@ namespace CppProject
 		}
 
 		stringDataMap[text].isUsed = true;
+
 		return width;
 	}
 
@@ -196,6 +202,7 @@ namespace CppProject
 	{
 		if (text == "")
 			return 0;
+		
 		return height + height * text.Count("\n");
 	}
 
@@ -234,6 +241,7 @@ namespace CppProject
 
 				wrapped += word;
 				dx += wordWidth;
+
 				width = std::max(width, dx);
 			}
 		}
@@ -244,6 +252,7 @@ namespace CppProject
 	QPoint Font::GetTextOffset(StringType text, int halign, int valign, IntType lineSep)
 	{
 		QPoint offset = { 0, -1 };
+
 		if (lineSep < 0)
 			lineSep = height;
 
@@ -313,6 +322,7 @@ namespace CppProject
 		// Add indices
 		for (IntType i = 0; i < indices.Size(); i++)
 			PR->indices.Append(PR->vertices.Size() + indices.Value(i));
+		
 		PR->currentIndex += indices.Size();
 
 		// Add vertices

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"builder_set_neighbor_face",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"builder_set_neighbor_face",
+  "parent":{
+    "name":"Builder",
+    "path":"folders/Scripts/Minecraft/Blocks/Builder.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

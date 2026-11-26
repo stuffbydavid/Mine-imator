@@ -1,4 +1,4 @@
-/// point_lerp(point1, point2, amount)
+/// CppSeparate ArrType point_lerp(const VarType&, const VarType&, RealType)
 /// @arg point1
 /// @arg point2
 /// @arg amount

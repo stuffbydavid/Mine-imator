@@ -1,14 +1,9 @@
-/// model_part_get_tex_normal_name(part, map)
-/// @arg part
-/// @arg map
-
-function model_part_get_tex_normal_name(part, map)
+function model_part_get_texture_normal_name(part, map)
 {
-	var key;
-	
 	if (part = null)
 		return map[?""]
 	
+	var key;
 	if (part.object_index = obj_model_part)
 		key = part.name
 	else // Root
@@ -23,5 +18,5 @@ function model_part_get_tex_normal_name(part, map)
 		return part.texture_normal_name
 	
 	// Get texture of inherited part
-	return model_part_get_tex_normal_name(part.texture_normal_inherit, map)
+	return model_part_get_texture_normal_name(part.texture_normal_inherit, map)
 }

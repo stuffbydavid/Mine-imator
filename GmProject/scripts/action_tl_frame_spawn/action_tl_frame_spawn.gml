@@ -1,6 +1,3 @@
-/// action_tl_frame_spawn(spawn)
-/// @arg spawn
-
 function action_tl_frame_spawn(spawn)
 {
 	tl_value_set_start(action_tl_frame_spawn, false)

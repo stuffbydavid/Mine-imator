@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "history_redo_res",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "History",
-    "path": "folders/Scripts/App/History.yy",
+  "$GMScript":"v1",
+  "%Name":"history_redo_res",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"history_redo_res",
+  "parent":{
+    "name":"History",
+    "path":"folders/Scripts/App/History.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

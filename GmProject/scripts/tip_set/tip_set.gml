@@ -1,4 +1,3 @@
-/// tip_set(text, x, y, width, height, [checkmouse])
 /// @arg text
 /// @arg x
 /// @arg y
@@ -12,9 +11,8 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 		return 0
 	
 	var showtip;
-	
 	if (checkmouse)
-		showtip = app_mouse_box(xx, yy, w, h) && content_mouseon
+		showtip = (app_mouse_box(xx, yy, w, h) && content_mouseon)
 	else
 		showtip = true
 	
@@ -22,11 +20,11 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 	{
 		tip_window = window_get_current()
 		
-		if (tip_box_x != xx || tip_box_y != yy || tip_text != text)
+		if (tip_box_x != xx || tip_box_y != yy || tip_text != text || tip_position_last != tip_position)
 		{
 			tip_text = text
 			
-			if (tip_keybind != null)
+			if (tip_keybind != null && tip_keybind[e_keybind_key.CHAR] != vk_nokey)
 			{
 				tip_keybind_draw = true
 				tip_text_keybind = text_control_name(tip_keybind)
@@ -98,11 +96,11 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 					tip_arrow_x -= 1
 				}
 				
-				// Move to top right
-				if (tip_y + tip_h > window_height)
+				// Show above controls when requested
+				if (tip_position = "top")
 				{
-					tip_y = yy - (6 + tip_h)
-					tip_arrow_y = yy - 6
+					tip_y = yy - (4 + tip_h)
+					tip_arrow_y = yy - 4
 					tip_arrow_yscale = -1
 				}
 				
@@ -114,8 +112,8 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 				}
 				else
 				{
-					tip_y -= 8
-					tip_arrow_y -= 8
+					tip_y -= 6
+					tip_arrow_y -= 6
 				}
 			}
 			
@@ -132,6 +130,7 @@ function tip_set(text, xx, yy, w, h, checkmouse = true)
 		tip_show = true
 		tip_box_x = xx
 		tip_box_y = yy
+		tip_position_last = tip_position
 	}
 	
 	if (tip_keybind != null)

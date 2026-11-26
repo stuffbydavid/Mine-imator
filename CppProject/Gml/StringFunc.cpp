@@ -4,8 +4,6 @@
 #include "Asset/Font.hpp"
 #include "Render/PrimitiveRenderer.hpp"
 
-#include <QRegularExpression>
-
 namespace CppProject
 {
 	StringType string_char_at(StringType str, IntType index)
@@ -13,6 +11,7 @@ namespace CppProject
 		index--;
 		if (index < 0 || index >= str.GetLength())
 			return "";
+		
 		return QString(str.At(index));
 	}
 
@@ -21,6 +20,7 @@ namespace CppProject
 		index--;
 		if (index < 0)
 			index = 0;
+		
 		return str.Mid(index, count);
 	}
 
@@ -37,7 +37,17 @@ namespace CppProject
 
 	StringType string_digits(StringType str)
 	{
-		return str.Replaced(QRegularExpression("[^\\d]"), "");
+		const QString text = str.QStr();
+		QString digits;
+		digits.reserve(text.length());
+
+		for (QChar character : text)
+		{
+			if (character >= QLatin1Char('0') && character <= QLatin1Char('9'))
+				digits.append(character);
+		}
+
+		return digits;
 	}
 
 	StringType string_format(RealType val, IntType tot, IntType dec)
@@ -52,8 +62,9 @@ namespace CppProject
 		}
 
 		// Add space in front to match at least tot characters
-		while (text.length() < tot + (text.contains(".") ? 1 : 0))
+		while (text.length() < tot + (dec == 0 ? 0 : dec + 1))
 			text = " " + text;
+		
 		return text;
 	}
 
@@ -61,6 +72,7 @@ namespace CppProject
 	{
 		if (PR->font)
 			return PR->font->GetTextHeight(PR->font->GetWrappedText(str, w));
+		
 		return 0;
 	}
 
@@ -68,6 +80,7 @@ namespace CppProject
 	{
 		if (PR->font)
 			return PR->font->GetTextHeight(str);
+		
 		return 0;
 	}
 
@@ -75,6 +88,14 @@ namespace CppProject
 	{
 		index--;
 		return str.Inserted(index, substr);
+	}
+
+	IntType string_last_pos(StringType substr, StringType str)
+	{
+		if (substr.IsEmpty())
+			return 0;
+
+		return str.LastIndexOf(substr) + 1LL;
 	}
 
 	IntType string_length(StringType str)
@@ -119,6 +140,7 @@ namespace CppProject
 	{
 		if (PR->font)
 			return PR->font->GetTextWidth(str);
+		
 		return 0;
 	}
 

@@ -1,6 +1,3 @@
-/// project_load_particles(map)
-/// @arg map
-
 function project_load_particles(map)
 {
 	if (!ds_map_valid(map))
@@ -49,8 +46,8 @@ function project_load_particles(map)
 			name = value_get_string(ptypemap[?"name"], name)
 			
 			// Translate name
-			if (other.id = app.bench_settings && text_exists("particletype" + name))
-				name = text_get("particletype" + name)
+			if (other.id = app.bench_settings && text_exists("particle/type/" + name))
+				name = text_get("particle/type/" + name)
 			
 			if (load_format < e_project.FORMAT_123_PRE_2)
 			{
@@ -61,7 +58,6 @@ function project_load_particles(map)
 			else
 			{
 				var temptype = value_get_string(ptypemap[?"temp_type"], "sheet");
-				
 				if (temptype = "sheet")
 					temp = particle_sheet
 				else if (temptype = "template")
@@ -74,8 +70,12 @@ function project_load_particles(map)
 			spawn_rate = value_get_real(ptypemap[?"spawn_rate"], spawn_rate)
 			
 			sprite_tex = value_get_save_id(ptypemap[?"sprite_tex"], sprite_tex)
+			if (sprite_tex = "default")
+				sprite_tex = project_pack_res
 			sprite_tex_image = value_get_real(ptypemap[?"sprite_tex_image"], sprite_tex_image)
 			sprite_template_tex = value_get_save_id(ptypemap[?"sprite_template_tex"], sprite_template_tex)
+			if (sprite_template_tex = "default")
+				sprite_template_tex = project_pack_res
 			sprite_template = value_get_string(ptypemap[?"sprite_template"], sprite_template)
 			sprite_template_still_frame = value_get_real(ptypemap[?"sprite_template_still_frame"], sprite_template_still_frame)
 			sprite_template_random_frame = value_get_real(ptypemap[?"sprite_template_random_frame"], sprite_template_random_frame)
@@ -129,6 +129,7 @@ function project_load_particles(map)
 			spd_mul_random_min = value_get_point3D(ptypemap[?"spd_mul_random_min"], spd_mul_random_min)
 			spd_mul_random_max = value_get_point3D(ptypemap[?"spd_mul_random_max"], spd_mul_random_max)
 			
+			rot_spawner_angle = value_get_real(ptypemap[?"rot_spawner_angle"], rot_spawner_angle)
 			rot_extend = value_get_real(ptypemap[?"rot_extend"], rot_extend)
 			rot = value_get_point3D(ptypemap[?"rot"], rot)
 			rot_israndom = value_get_point3D(ptypemap[?"rot_israndom"], rot_israndom)

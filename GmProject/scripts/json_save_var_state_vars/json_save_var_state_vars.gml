@@ -1,7 +1,3 @@
-/// json_save_var_state_vars(name, vars)
-/// @arg name
-/// @arg vars
-
 function json_save_var_state_vars(name, vars)
 {
 	json_save_object_start(name)

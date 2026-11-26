@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"app_startup_interface_asset_picker",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_startup_interface_asset_picker",
+  "parent":{
+    "name":"Startup",
+    "path":"folders/Scripts/App/Interface/Startup.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

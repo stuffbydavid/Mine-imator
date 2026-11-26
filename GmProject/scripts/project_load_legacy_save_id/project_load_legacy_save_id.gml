@@ -1,5 +1,3 @@
-/// project_load_legacy_save_id()
-
 function project_load_legacy_save_id()
 {
 	var saveid = buffer_read_int();

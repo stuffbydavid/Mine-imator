@@ -1,7 +1,6 @@
-/// json_save_array_start([name])
 /// @arg [name]
 
-function json_save_array_start()
+function json_save_array_start(name = null)
 {
 	if (json_add_comma)
 		buffer_write_byte(e_json_char.COMMA)
@@ -12,10 +11,10 @@ function json_save_array_start()
 	json_save_indent()
 	
 	// Name (optional)
-	if (argument_count > 0)
+	if (is_string(name))
 	{
 		buffer_write_byte(e_json_char.QUOTE)
-		buffer_write_string(argument[0])
+		buffer_write_string(name)
 		buffer_write_byte(e_json_char.QUOTE)
 		buffer_write_byte(e_json_char.COLON)
 		buffer_write_byte(e_json_char.SPACE)

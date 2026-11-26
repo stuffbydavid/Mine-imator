@@ -69,6 +69,7 @@ namespace CppProject
 					p.m[i * 4 + j] += m[i * 4 + k] * other.m[k * 4 + j];
 			}
 		}
+
 		return p;
 	}
 
@@ -95,6 +96,13 @@ namespace CppProject
 		m[1] = 0.0; m[5] = 1.0; m[9] = 0.0; m[13] = 0.0;
 		m[2] = 0.0; m[6] = 0.0; m[10] = 1.0; m[14] = 0.0;
 		m[3] = 0.0; m[7] = 0.0; m[11] = 0.0; m[15] = 1.0;
+	}
+
+	RealType Matrix::GetDeterminant() const
+	{
+		return m[0] * (m[5] * m[10] - m[9] * m[6]) -
+			   m[4] * (m[1] * m[10] - m[9] * m[2]) +
+			   m[8] * (m[1] * m[6] - m[5] * m[2]);
 	}
 
 	Matrix Matrix::GetInversed() const
@@ -138,6 +146,7 @@ namespace CppProject
 		for (IntType i = 0; i < 4; i++)
 			for (IntType j = 0; j < 4; j++)
 				t.m[i * 4 + j] = m[j * 4 + i];
+		
 		return t;
 	}
 
@@ -191,11 +200,11 @@ namespace CppProject
 		VecType newUp = VecType::CrossProduct(look, side);
 
 		return Matrix(
-				   side.x, side.y, side.z, -VecType::DotProduct(side, eye),
-				   newUp.x, newUp.y, newUp.z, -VecType::DotProduct(newUp, eye),
-				   look.x, look.y, look.z, -VecType::DotProduct(look, eye),
-				   0.0, 0.0, 0.0, 1.0
-			   );
+			side.x, side.y, side.z, -VecType::DotProduct(side, eye),
+			newUp.x, newUp.y, newUp.z, -VecType::DotProduct(newUp, eye),
+			look.x, look.y, look.z, -VecType::DotProduct(look, eye),
+			0.0, 0.0, 0.0, 1.0
+		);
 	}
 
 	Matrix Matrix::Translation(RealType x, RealType y, RealType z)
@@ -220,6 +229,7 @@ namespace CppProject
 		RealType x = axis.x;
 		RealType y = axis.y;
 		RealType z = axis.z;
+
 		return {
 			x * x + (1.0 - x * x) * c, x * y * (1.0 - c) - z * s, x * z * (1.0 - c) + y * s, 0.0,
 			x * y * (1.0 - c) + z * s, y * y + (1.0 - y * y) * c, y * z * (1.0 - c) - x * s, 0.0,

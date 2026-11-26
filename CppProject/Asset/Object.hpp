@@ -41,37 +41,85 @@ namespace CppProject
 		// Returns a list IDs of all objects with a given sub-asset id.
 		static const QVector<IntType>& GetAll(IntType subAssetId) { return objectIdsMap[subAssetId]; }
 
+		// Returns whether the object type can be iterated upon using with() statements and used
+		// in instance_exists() and instance_number() functions, as defined in objects_indexed().
+		static BoolType IsIndexed(IntType subAssetId);
+
 		// Store memory locations of members within the object when the first instance is created.
 		virtual void InitMembers() = 0;
 
 		// Gets a member reference in the object, if it doesn't exist in the struct it is dynamically created as
 		// VarType with a given type. An exception is thrown if it exists in another type than expected (in struct or map).
-		RealType& GetRealRef(IntType memberId);
-		IntType& GetIntRef(IntType memberId);
-		BoolType& GetBoolRef(IntType memberId);
-		StringType& GetStrRef(IntType memberId);
-		VecType& GetVecRef(IntType memberId);
-		MatrixType& GetMatRef(IntType memberId);
-		ArrType& GetArrRef(IntType memberId);
-		VarType& GetVarRef(IntType memberId);
+		inline RealType& GetRealRef(IntType memberId) { return GetRef<RealType, REAL_t>(memberId); }
+		inline IntType& GetIntRef(IntType memberId) { return GetRef<IntType, INTEGER_t>(memberId); }
+		inline BoolType& GetBoolRef(IntType memberId) { return GetRef<BoolType, BOOLEAN_t>(memberId); }
+		inline StringType& GetStrRef(IntType memberId) { return GetRef<StringType, STRING_t>(memberId); }
+		inline VecType& GetVecRef(IntType memberId) { return GetRef<VecType, VECTOR_t>(memberId); }
+		inline MatrixType& GetMatRef(IntType memberId) { return GetRef<MatrixType, MATRIX_t>(memberId); }
+		inline ArrType& GetArrRef(IntType memberId) { return GetRef<ArrType, ARRAY_t>(memberId); }
+		inline VarType& GetVarRef(IntType memberId) { return GetRef<VarType, VARIANT_t>(memberId); }
 		function<VarType(VarArgs)>& GetInstanceFunc(IntType funcId);
 
 		// Type and memory offset of a member relative to the "this" pointer.
 		struct Member
 		{
 			Type type = UNDEFINED_t;
-			long long memoryOffset = 0;
+			int32_t memoryOffset = 0;
+
+			Member() = default;
+			Member(Type type, long long memoryOffset) : type(type), memoryOffset(int32_t(memoryOffset)) {}
+		};
+
+		// Grow during registration and use direct indexing during script execution.
+		struct MemberTable
+		{
+			Member& operator[](IntType memberId)
+			{
+				if (memberId >= members.size())
+					members.resize(memberId + 1);
+				
+				return members[memberId];
+			}
+
+			Member value(IntType memberId) const
+			{
+				if (memberId < 0 || memberId >= members.size())
+					return Member();
+				
+				return members.at(memberId);
+			}
+
+			QVector<Member> members;
 		};
 
 		static QHash<IntType, QVector<IntType>> objectIdsMap; // Maps a sub-asset id to a list of object ids
-		static QHash<IntType, QHash<IntType, Member>> memberMap; // Maps a sub-asset id to a mapping of member ids to memory offsets
+		static QHash<IntType, MemberTable> memberMap; // Maps a sub-asset id to indexed member types and memory offsets
 		QHash<IntType, function<VarType(VarArgs)>> instanceFuncMap; // Maps an instance function id to a lambda taking VarArgs arguments, returning VarType
 
 		virtual ~Object();
 
 	protected:
 		Object(QString name, IntType subAssetId);
-		QHash<IntType, Member>* memMap = nullptr;
+
+		// Struct members are resolved inline, other members and type errors are handled by GetRefSlow
+		template <typename T, Type enumType> inline T& GetRef(IntType memberId)
+		{
+			if (!memMap)
+				memMap = &memberMap[subAssetId];
+
+			if (static_cast<size_t>(memberId) < static_cast<size_t>(memMap->members.size()))
+			{
+				const Member& mem = memMap->members.constData()[memberId];
+				if (mem.type == enumType)
+					return *reinterpret_cast<T*>(reinterpret_cast<char*>(this) + mem.memoryOffset);
+			}
+
+			return *static_cast<T*>(GetRefSlow(memberId, enumType));
+		}
+
+		void* GetRefSlow(IntType memberId, Type enumType);
+
+		const MemberTable* memMap = nullptr;
 		QHash<IntType, function<VarType(VarArgs)>>* funcMap = nullptr;
 		QHash<IntType, VarType> dynamicMemberMap; // Maps member ids to VarTypes that are created in runtime
 	};

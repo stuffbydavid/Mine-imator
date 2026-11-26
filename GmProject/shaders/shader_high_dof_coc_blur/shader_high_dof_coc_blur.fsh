@@ -1,5 +1,3 @@
-#define SAMPLES 4
-
 uniform vec2 uScreenSize;
 uniform vec2 uPixelCheck;
 
@@ -7,42 +5,45 @@ varying vec2 vTexCoord;
 
 void main()
 {
-	// Turn the pixel into a texel
-	vec2 texelCheck = (uPixelCheck / uScreenSize) * 2.0;
-	
-	// Set up weights
-	float weights[SAMPLES + 1];
-	weights[0] = 70.0;
-	weights[1] = 56.0;
-	weights[2] = 28.0;
-	weights[3] = 8.0;
-	weights[4] = 1.0;
-	
-	// Back blur(R) can't bleed into focus, while the front blur(G) can
-	float myFrontBlur = texture2D(gm_BaseTexture, vTexCoord).r;
-	float myBackBlur = texture2D(gm_BaseTexture, vTexCoord).g;
-	float frontBlur = myFrontBlur * weights[0];
-	float totalFrontWeight = weights[0];
-	
-	// Sample surrounding pixels
-	for (int i = 0; i < SAMPLES; i += 1)
-	{
-		// Get the sample uv coordinates
-		vec2 sampleOffset = float(i + 1) * texelCheck;
-		
-		// Positive direction
-		vec2 sampleCoords = vTexCoord + sampleOffset;
-		
-		float weight = weights[i + 1];
-		frontBlur += texture2D(gm_BaseTexture, sampleCoords).r * weight;
-		totalFrontWeight += weight;
-		
-		// Negative direction
-		sampleCoords = vTexCoord - sampleOffset;
-		
-		frontBlur += texture2D(gm_BaseTexture, sampleCoords).r * weight;
-		totalFrontWeight += weight;
-	}
-	
-	gl_FragColor = vec4(max(frontBlur / totalFrontWeight, myFrontBlur), myBackBlur, 0.0, 1.0);
+	vec2 texelCheck = uPixelCheck / uScreenSize;
+	vec2 coc = texture2D(gm_BaseTexture, vTexCoord).rg;
+	float frontBlur = coc.r * 0.07038609;
+	float maxFront = coc.r;
+	vec2 pair;
+
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 2.0).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 2.0).r);
+	frontBlur += (pair.x + pair.y) * 0.06930323;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 4.0).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 4.0).r);
+	frontBlur += (pair.x + pair.y) * 0.06615308;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 6.0).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 6.0).r);
+	frontBlur += (pair.x + pair.y) * 0.06121629;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 8.0).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 8.0).r);
+	frontBlur += (pair.x + pair.y) * 0.05491461;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 10.91472868).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 10.91472868).r);
+	frontBlur += (pair.x + pair.y) * 0.08799981;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 14.88372093).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 14.88372093).r);
+	frontBlur += (pair.x + pair.y) * 0.05890754;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 19.59193357).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 19.59193357).r);
+	frontBlur += (pair.x + pair.y) * 0.04549326;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+	pair = vec2(texture2D(gm_BaseTexture, vTexCoord + texelCheck * 27.20180397).r,
+	            texture2D(gm_BaseTexture, vTexCoord - texelCheck * 27.20180397).r);
+	frontBlur += (pair.x + pair.y) * 0.02081914;
+	maxFront = max(maxFront, max(pair.x, pair.y));
+
+	frontBlur += max(frontBlur - coc.r, 0.0) * 0.8;
+	gl_FragColor = vec4(min(max(frontBlur, coc.r), maxFront), coc.g, 0.0, 1.0);
 }

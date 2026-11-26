@@ -1,4 +1,3 @@
-/// action_tl_keyframes_select_area(starttimeline, endtimeline, startposition, endposition)
 /// @arg starttimeline
 /// @arg endtimeline
 /// @arg startposition

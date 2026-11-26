@@ -1,4 +1,3 @@
-/// find_biome(name)
 /// @arg name
 
 function find_biome(biomename)

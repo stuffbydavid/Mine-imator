@@ -1,7 +1,3 @@
-/// action_tl_keyframe_select_single(timeline, keyframe)
-/// @arg timeline
-/// @arg keyframe
-
 function action_tl_keyframe_select_single(timeline, keyframe)
 {
 	if (history_undo)
@@ -30,6 +26,7 @@ function action_tl_keyframe_select_single(timeline, keyframe)
 			{
 				tl_save_id = save_id_get(tl)
 				kf_index = ds_list_find_index(tl.keyframe_list, kf)
+				
 				history_save_tl_select()
 			}
 		}

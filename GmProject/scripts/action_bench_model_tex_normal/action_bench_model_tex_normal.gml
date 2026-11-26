@@ -1,17 +1,15 @@
-/// action_bench_model_tex_normal(resource)
-/// @arg resource
 /// @desc Sets the character skin of the workbench settings.
+/// @arg resource
 
 function action_bench_model_tex_normal(res)
 {
-	var fn = "";
-	
 	if (history_undo)
 		res = history_undo_res()
 	else if (history_redo)
 		res = history_redo_res()
 	else
 	{
+		var fn = "";
 		switch (res)
 		{
 			case e_option.BROWSE: // Load new
@@ -21,7 +19,7 @@ function action_bench_model_tex_normal(res)
 					return 0
 				
 				var type = e_res_type.SKIN;
-				if (bench_settings.type = e_tl_type.MODEL && bench_settings.model != null &&
+				if (bench_tab = e_bench_tab.MODEL && bench_settings.model != null &&
 					bench_settings.model.model_format = e_model_format.BLOCK) // Load as block sheet if the selected model is in .json format
 					type = e_res_type.BLOCK_SHEET
 				

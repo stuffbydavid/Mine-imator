@@ -1,9 +1,8 @@
-/// render_world_start([zfar])
 /// @arg [zfar]
 
-function render_world_start(zfar = undefined)
+function render_world_start(zfar = null)
 {
-	if (zfar != undefined)
+	if (zfar != null)
 		cam_far = min(cam_far_prev, cam_near + zfar)
 	else
 		cam_far = cam_far_prev

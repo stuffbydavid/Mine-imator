@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!-- GL configurations reuse the base executable without compiling, linking or cleaning it -->
+	<PropertyGroup Condition="'$(Configuration)' == 'DebugGL' or '$(Configuration)' == 'RelWithDebInfoGL'">
+		<GLBaseConfiguration Condition="'$(Configuration)' == 'DebugGL'">Debug</GLBaseConfiguration>
+		<GLBaseConfiguration Condition="'$(Configuration)' == 'RelWithDebInfoGL'">RelWithDebInfo</GLBaseConfiguration>
+		<BuildDependsOn>ValidateGLExecutable</BuildDependsOn>
+		<RebuildDependsOn>ValidateGLExecutable</RebuildDependsOn>
+		<CleanDependsOn></CleanDependsOn>
+	</PropertyGroup>
+	<Target Name="ValidateGLExecutable">
+		<Error Condition="!Exists('$(LocalDebuggerCommand)')" Text="Build $(GLBaseConfiguration) before launching $(Configuration): $(LocalDebuggerCommand) was not found" />
+	</Target>
+</Project>

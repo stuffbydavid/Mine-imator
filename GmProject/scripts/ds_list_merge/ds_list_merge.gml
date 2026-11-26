@@ -1,4 +1,3 @@
-/// ds_list_merge(id, source)
 /// @arg id
 /// @arg source
 

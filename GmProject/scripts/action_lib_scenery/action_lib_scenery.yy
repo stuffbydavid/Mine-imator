@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "action_lib_scenery",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Library",
-    "path": "folders/Scripts/App/Actions/Library.yy",
+  "$GMScript":"v1",
+  "%Name":"action_lib_scenery",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_lib_scenery",
+  "parent":{
+    "name":"Library",
+    "path":"folders/Scripts/App/Actions/Library.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

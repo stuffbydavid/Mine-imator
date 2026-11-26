@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"show_message_ext",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"show_message_ext",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/Scripts/Utility.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

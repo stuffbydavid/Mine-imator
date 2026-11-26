@@ -1,6 +1,5 @@
-/// new_minecraft_map(fn)
-/// @arg fn
 /// @desc Reads Minecraft map .dat and returns a texture. https://minecraft.wiki/w/Map_item_format
+/// @arg filename
 
 function new_minecraft_map(fn)
 {
@@ -20,7 +19,7 @@ function new_minecraft_map(fn)
 	buffer_current = buffer_load(temp_file)
 	
 	// Read NBT structure
-	rootmap = nbt_read_tag_compound();
+	rootmap = nbt_read_tag_compound()
 	if (rootmap = null)
 		return 0
 	
@@ -59,7 +58,7 @@ function new_minecraft_map(fn)
 				col = buffer_peek(buffer_current, colors + (xx + yy * 128), buffer_u8)
 				
 				if (col > 3)
-					draw_point_color(xx + 1, yy + 1, minecraft_map_color_array[col]) // x and y +1, hacky fix for c++
+					draw_point_color(xx + (1 * is_cpp()), yy + (1 * is_cpp()), minecraft_map_color_array[col]) // x and y +1, hacky fix for c++
 			}
 		}
 	}

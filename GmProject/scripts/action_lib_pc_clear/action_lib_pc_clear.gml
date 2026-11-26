@@ -1,4 +1,3 @@
-/// action_lib_pc_clear()
 /// @desc Clears all particles.
 
 function action_lib_pc_clear()

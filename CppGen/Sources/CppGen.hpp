@@ -96,6 +96,7 @@ public:
 		ShiftRight, // >>
 		BitwiseOr, // |
 		BitwiseAnd, // &
+		BitwiseXor, // ^
 		HashTag, // #
 		ArrayRef, // @
 		CppOnly,
@@ -137,7 +138,6 @@ public:
 		IntMap,
 		StringMap,
 		Map,
-		Grid,
 		Stack,
 		Priority
 	};
@@ -488,6 +488,21 @@ public:
 
 	// Returns the resolved type as a C++ type
 	DataType::CppType getResolvedCppType();
+
+	// Unwraps parentheses and returns the tail accessor in a chain, or nullptr
+	Accessor* unwrapTailAccessor();
+
+	// Returns whether the expression is the literal false
+	bool isFalseLiteral();
+
+	// Returns whether evaluating the expression may call a function
+	bool containsCall();
+
+	// Adds the names of all accessors in the expression
+	void collectNames(List<StringId>& names);
+
+	// Reads an assigned array element by reference when the target can't alias or modify the array
+	static void borrowAssignedValue(Expression* value, Expression* target, StringId targetName);
 };
 
 // An expression in parenthesis
@@ -600,6 +615,7 @@ public:
 	Expression* assignExpr = nullptr;
 	bool needLtZero = false;
 	bool appToId = true;
+	bool borrowArgument = false;
 	inline static bool resolveUnknownMapTypes = false;
 	inline static bool resolveUnknownScope = false;
 	inline static bool resolveFunctionReferences = false;
@@ -607,6 +623,9 @@ public:
 	bool lastToCppScopeSet = false;
 
 	Accessor(StringId name, List<ArrayAccessor*> arrayAccessors, NullableList<Expression*> callParameters, Accessor* member, Token::Type addSubOp, int line);
+
+	// Gets the C++ type for reading from a numeric array.
+	DataType::CppType numericArrayReadType();
 
 	// Marks the accessor as an assignment.
 	void markAsAssign(Expression* expr);
@@ -931,6 +950,8 @@ public:
 	bool varArgs = false;
 	List<Variable*> vars = List<Variable*>();
 	List<StringId> varArgsRequiredNames = List<StringId>();
+	List<StringId> arrRefs;
+	List<StringId> constRefArgs;
 	StatementList* statements{};
 	Object* structObject = nullptr;
 	List<String> cppLinesBegin = List<String>();
@@ -1177,6 +1198,7 @@ public:
 	inline static List<String> syntaxErrors = List<String>();
 	inline static bool mergeUnknownVars = false;
 	inline static bool hotReloading = false;
+	inline static bool hotReloadSignaturesChanged = false;
 	inline static List<Function*> hotReloadTargets = List<Function*>();
 	static OrderedMap<DataType*> varTypeOverride;
 

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"action_project_render_aa_mode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"action_project_render_aa_mode",
+  "parent":{
+    "name":"Anti-aliasing",
+    "path":"folders/Scripts/App/Actions/Project/Render/Anti-aliasing.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

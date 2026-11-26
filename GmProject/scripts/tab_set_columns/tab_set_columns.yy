@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tab_set_columns",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_set_columns",
+  "parent":{
+    "name":"Columns",
+    "path":"folders/Scripts/App/Interface/Components/Tab/Columns.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

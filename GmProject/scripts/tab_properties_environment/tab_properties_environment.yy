@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"tab_properties_environment",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"tab_properties_environment",
+  "parent":{
+    "name":"Properties",
+    "path":"folders/Scripts/App/Interface/Tabs/Properties.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

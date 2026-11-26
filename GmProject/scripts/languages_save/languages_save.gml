@@ -1,5 +1,3 @@
-/// languages_save()
-
 function languages_save()
 {
 	log("Saving languages", languages_file)

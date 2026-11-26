@@ -1,10 +1,6 @@
-/// action_toolbar_exportimage_save()
-
 function action_toolbar_exportimage_save()
 {
-	var fn;
-	fn = file_dialog_save_image(project_name)
-	
+	var fn = file_dialog_save_image(project_name);
 	if (fn = "")
 		return 0
 	
@@ -17,21 +13,19 @@ function action_toolbar_exportimage_save()
 	render_background = !popup_exportimage.remove_background
 	render_watermark = popup_exportimage.watermark
 	
-	log("Hidden", yesno(render_hidden))
-	log("Render background", yesno(render_background))
-	log("Watermark", yesno(render_watermark))
-	log("High Quality", yesno(popup_exportimage.high_quality))
+	log("Hidden", string_yes_no(render_hidden))
+	log("Render background", string_yes_no(render_background))
+	log("Watermark", string_yes_no(render_watermark))
+	log("Renderer", renderer_name_list[popup_exportimage.renderer])
 	log("Size", project_video_width, project_video_height)
 	
-	window_state = "export_image"
-	exportmovie_frame = 0
-	export_sample = 0
-	exportmovie_start = current_time
-	render_samples = -1
+	export_start("export_image")
 	
-	if (view_main.quality = e_view_mode.RENDER)
-		view_main.quality = e_view_mode.SHADED
+	if (view_main.renderer = e_renderer.REALISTIC)
+		view_main.renderer = e_renderer.STANDARD
 	
-	if (view_second.quality = e_view_mode.RENDER)
-		view_second.quality = e_view_mode.SHADED
+	if (view_second.renderer = e_renderer.REALISTIC)
+		view_second.renderer = e_renderer.STANDARD
+		
+	app_update_cameras(popup_exportimage.renderer, false)
 }

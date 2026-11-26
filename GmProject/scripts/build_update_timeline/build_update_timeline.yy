@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"build_update_timeline",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"build_update_timeline",
+  "parent":{
+    "name":"Build",
+    "path":"folders/Scripts/App/Interface/Build.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

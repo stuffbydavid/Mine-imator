@@ -1,4 +1,3 @@
-/// temp_particles_restart()
 /// @desc Restarts all spawners associated with the template.
 
 function temp_particles_restart()

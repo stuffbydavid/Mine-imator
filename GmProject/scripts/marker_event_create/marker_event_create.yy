@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "marker_event_create",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Marker",
-    "path": "folders/Scripts/App/Interface/Timeline/Marker.yy",
+  "$GMScript":"v1",
+  "%Name":"marker_event_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"marker_event_create",
+  "parent":{
+    "name":"Marker",
+    "path":"folders/Scripts/App/Interface/Timeline/Marker.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

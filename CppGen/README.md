@@ -3,6 +3,14 @@ CppGen is a tool used by the build system that converts the GameMaker scripts an
 
 Note that this software is not general-purpose and won't work outside the Mine-imator project.
 
+## Script commands
+GML scripts can include `///` directives to guide C++ code generation:
+* `/// CppSeparate <signature>`: Declares a script implemented manually in C++ with the given signature instead of generating its body from GML.
+* `/// CppOnly <code>`: Emits a raw line of C++ inside a generated function body.
+* `/// CppGen <type> <name>`: Overrides the inferred C++ type of a variable (for example `array<real>` or `int`).
+* `/// CppGen ConstRef <arg>`: Passes an ordinary read-only argument of a generated function by `const` reference in C++ to avoid copying arrays.
+* `/// CppGen ArrRef <member>`: Caches an unshadowed instance `ArrType` member as a local C++ reference at function entry.
+
 ## GML specification
 If you use new GameMaker features, you must update `gml.json`:
 * New constants are added to `"constants"`.
@@ -22,7 +30,7 @@ The repository root directory defaults to `../../`, while the GML specification 
 cd CppGen
 cmake -S . -B build -A x64
 cmake --build build --parallel --config Release
-build/CppGen.exe .. gml.json
+Win64/CppGen.exe .. gml.json
 ```
 ## Building CppGen  (Mac/Linux) (optional):
 ```

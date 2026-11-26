@@ -1,96 +1,56 @@
-/// block_render_model_generate_face_cull(model, element, culldir)
-/// @arg culldir
 /// @desc Returns whether the current face should be culled.
-function block_render_model_generate_face_cull(model, el, culldir) {
+/// @arg model
+/// @arg element
+/// @arg culldirection
 
-	switch (culldir)
+function block_render_model_generate_face_cull(model, el, culldir)
+{
+	if (!el.face_edge[culldir])
+		return false
+
+	var mindepth, full, lower, upper;
+	mindepth = block_face_min_depth[culldir]
+	full = block_face_full[culldir]
+	lower = block_face_min[culldir]
+	upper = block_face_max[culldir]
+
+	// Offset models need neighbors at their own block position
+	if (!vec3_equals(model.offset, vec3(0)))
 	{
-		case e_dir.EAST:
+		var pos, minpos, maxpos;
+		pos = vec3_add(build_pos, vec3_div(model.offset, block_size))
+		pos = vec3_add(pos, dir_get_vec3(culldir))
+		minpos = vec3(0)
+		maxpos = build_size
+		if (build_edit)
 		{
-			if (!el.face_edge_xp || block_face_min_depth_xp = null || block_face_min_depth_xp > model.face_min_depth_xp)
-				return false
-			
-			if (block_current != null && block_current.type = "leaves" && block_face_min_depth_xp > e_block_depth.DEPTH0)
-				return false
-			
-			if (block_face_full_xp || (block_face_min_xp <= el.from_z && block_face_max_xp >= el.to_z))
-				return true
-		
-			break
+			minpos = build_min_pos
+			maxpos = build_max_pos
 		}
-	
-		case e_dir.WEST:
+
+		for (var a = X; a <= Z; a++)
 		{
-			if (!el.face_edge_xn || block_face_min_depth_xn = null || block_face_min_depth_xn > model.face_min_depth_xn)
-				return false
-			
-			if (block_current != null && block_current.type = "leaves" && block_face_min_depth_xn > e_block_depth.DEPTH0)
-				return false
-			
-			if (block_face_full_xn || (block_face_min_xn <= el.from_z && block_face_max_xn >= el.to_z))
-				return true
-		
-			break
+			if (pos[a] < minpos[a] || pos[a] >= maxpos[a])
+				return !mc_builder.build_edges && culldir != ZP
 		}
-	
-		case e_dir.SOUTH:
-		{
-			if (!el.face_edge_yp || block_face_min_depth_yp = null || block_face_min_depth_yp > model.face_min_depth_yp)
-				return false
-			
-			if (block_current != null && block_current.type = "leaves" && block_face_min_depth_yp > e_block_depth.DEPTH0)
-				return false
-		
-			if (block_face_full_yp || (block_face_min_yp <= el.from_z && block_face_max_yp >= el.to_z))
-				return true
-			
-			break
-		}
-	
-		case e_dir.NORTH:
-		{
-			if (!el.face_edge_yn || block_face_min_depth_yn = null || block_face_min_depth_yn > model.face_min_depth_yn)
-				return false
-			
-			if (block_current != null && block_current.type = "leaves" && block_face_min_depth_yn > e_block_depth.DEPTH0)
-				return false
-		
-			if (block_face_full_yn || (block_face_min_yn <= el.from_z && block_face_max_yn >= el.to_z))
-				return true
-			
-			break
-		}
-	
-		case e_dir.UP:
-		{
-			if (!el.face_edge_zp || block_face_min_depth_zp = null || block_face_min_depth_zp > model.face_min_depth_zp)
-				return false
-			
-			if (block_current != null && block_current.type = "leaves" && block_face_min_depth_zp > e_block_depth.DEPTH0)
-				return false
-		
-			if (block_face_full_zp || (block_face_min_zp <= el.from_y && block_face_max_zp >= el.to_y))
-				return true
-			
-			break
-		}
-	
-		case e_dir.DOWN:
-		{
-			if (!el.face_edge_zn || block_face_min_depth_zn = null || block_face_min_depth_zn > model.face_min_depth_zn)
-				return false
-			
-			if (block_current != null && block_current.type = "leaves" && block_face_min_depth_zn > e_block_depth.DEPTH0)
-				return false
-				
-			if (block_face_full_zn || (block_face_min_zn <= el.from_y && block_face_max_zn >= el.to_y))
-				return true
-			
-			break
-		}
+
+		var neighbor = builder_get_render_model(pos[X], pos[Y], pos[Z]);
+		if (neighbor = null)
+			return false
+
+		var opposite = culldir ^ 1;
+		mindepth = neighbor.face_min_depth[opposite]
+		full = neighbor.face_full[opposite]
+		lower = neighbor.face_min[opposite]
+		upper = neighbor.face_max[opposite]
 	}
 
-	return false
+	if (mindepth = null || mindepth > model.face_min_depth[culldir])
+		return false
+	
+	if (block_current != null && block_current.type = "leaves" && mindepth > e_block_depth.DEPTH0)
+		return false
 
-
+	var axis = (culldir < ZP ? Z : Y);
+	return (full || (lower <= el.from[axis] && upper >= el.to[axis]))
 }

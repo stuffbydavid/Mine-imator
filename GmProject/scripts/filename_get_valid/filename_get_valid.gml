@@ -1,4 +1,3 @@
-/// filename_get_valid(filename)
 /// @arg filename
 
 function filename_get_valid(fn)

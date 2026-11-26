@@ -1,17 +1,16 @@
-/// file_text_contents(filename)
-/// @arg filename
 /// @desc Returns the contents of a text file.
+/// @arg filename
 
-function file_text_contents(fname)
+function file_text_contents(fn)
 {
 	var str, line;
 	str = ""
 	line = 0
 	
-	if (file_exists_lib(fname))
+	if (file_exists_lib(fn))
 	{
 		file_delete_lib(temp_file)
-		file_copy_lib(fname, temp_file)
+		file_copy_lib(fn, temp_file)
 		var f = file_text_open_read(temp_file);
 		if (f > -1)
 		{

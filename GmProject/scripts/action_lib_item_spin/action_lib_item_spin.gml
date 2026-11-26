@@ -1,10 +1,7 @@
-/// action_lib_item_spin(spin)
-/// @arg spin
-
-function action_lib_item_spin(spin)
+function action_lib_item_spin(enabled)
 {
 	if (!history_undo && !history_redo)
-		history_set_var(action_lib_item_spin, temp_edit.item_spin, spin, false)
+		history_set_var(action_lib_item_spin, temp_edit.item_spin, enabled, false)
 	
-	temp_edit.item_spin = spin
+	temp_edit.item_spin = enabled
 }
