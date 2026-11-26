@@ -1,5 +1,3 @@
-/// @arg [airblock]
-
 function action_build_place(airblock = false)
 {
 	var hobj, target, blockpos, blockdata, blocktl, created, block, changes;
@@ -40,6 +38,10 @@ function action_build_place(airblock = false)
 		}
 		else
 		{
+			// Perform use action with no block selected
+			if (build_tool.build_selected = null)
+				return (action_build_use(null, keyboard_check(vk_shift)) = true) // Convert a null use result to false
+
 			// Resolve the selected block or special model to block data
 			if (build_type = e_tl_type.BLOCK)
 			{
@@ -121,9 +123,9 @@ function action_build_place(airblock = false)
 			blockpos = changes[0][0]
 			blockdata = [ changes[0][1], changes[0][2] ]
 			block = block_objs[blockdata[0]]
-			blocktl = (block.timeline && ds_list_find_index(mc_assets.block_timeline_enabled_list, block.tl_type) >= 0)
+			blocktl = build_timeline
 			
-			// Ctrl swaps the default unless the block requires a timeline
+			// Ctrl swaps the selected mode unless the block requires a timeline
 			if (keyboard_check(vk_control))
 				blocktl = !blocktl
 			

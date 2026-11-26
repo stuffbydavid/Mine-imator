@@ -11,6 +11,7 @@ function action_build_hotbars_list(hotbar)
 		return 0
 
 	build_hotbars.selected = index
+	build_hotbar_current = hotbar
 	build_hotbar_slot = clamp(build_hotbar_slot, 0, max(0, array_length(hotbar.blocks) - 1))
 	
 	if (place_build && array_length(hotbar.blocks) > 0)

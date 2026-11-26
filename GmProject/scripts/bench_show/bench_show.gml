@@ -1,7 +1,7 @@
 function bench_show()
 {
 	if (place_build)
-		app_stop_place(false, false)
+		app_place_stop(false, false)
 
 	action_tl_play_break()
 	

@@ -232,6 +232,7 @@ function app_startup_interface_tabs()
 	{
 		// Character picker
 		char_picker = new_obj(obj_picker)
+		char_picker.grid_view = app.setting_object_editor_character_grid_view
 		char_picker.asset_picker_model = true
 		char_picker.script = action_lib_model_name
 		char_picker.script_search = sortlist_search_model
@@ -246,6 +247,7 @@ function app_startup_interface_tabs()
 		
 		// Block
 		block_picker = new_obj(obj_picker)
+		block_picker.grid_view = app.setting_object_editor_block_grid_view
 		block_picker.script = action_lib_block_name
 		block_picker.script_search = sortlist_search_block
 		
@@ -257,6 +259,7 @@ function app_startup_interface_tabs()
 		
 		// Special block picker
 		special_block_picker = new_obj(obj_picker)
+		special_block_picker.grid_view = app.setting_object_editor_special_block_grid_view
 		special_block_picker.asset_picker_model = true
 		special_block_picker.script = action_lib_model_name
 		special_block_picker.script_search = sortlist_search_model
@@ -268,6 +271,7 @@ function app_startup_interface_tabs()
 		
 		// Equipment picker
 		equipment_picker = new_obj(obj_picker)
+		equipment_picker.grid_view = app.setting_object_editor_equipment_grid_view
 		equipment_picker.asset_picker_model = true
 		equipment_picker.script = action_lib_model_name
 		equipment_picker.script_search = sortlist_search_model
@@ -279,6 +283,7 @@ function app_startup_interface_tabs()
 		
 		// Model part picker
 		model_part_model_picker = new_obj(obj_picker)
+		model_part_model_picker.grid_view = app.setting_object_editor_model_part_grid_view
 		model_part_model_picker.asset_picker_model = true
 		model_part_model_picker.script = action_lib_model_part_model_name
 		model_part_model_picker.script_search = sortlist_search_model
@@ -488,6 +493,7 @@ function app_startup_interface_tabs()
 	with (build_tool)
 	{
 		build_picker = new_obj(obj_picker)
+		build_picker.grid_view = app.setting_build_tool_grid_view
 		build_picker.script = action_build_select
 		build_picker.script_search = sortlist_search_build
 		build_picker.header_show = true
@@ -510,11 +516,10 @@ function app_startup_interface_tabs()
 	
 	// Build hotbar settings
 	build_hotbars = new_tab(setting_build_hotbars_location, false)
+	build_hotbars.script = tab_build_hotbars
 
 	with (build_hotbars)
 	{
-		tab_add_category("build_hotbars", icons.ASSET_LIST, tab_build_hotbars, true)
-
 		list = new_obj(obj_sortlist)
 		list.search_show = false
 		list.height_items = 7
@@ -523,7 +528,7 @@ function app_startup_interface_tabs()
 		selected = 0
 
 		sortlist_column_add(list, "hotbar_name", 0)
-		sortlist_column_add(list, "hotbar_slots", 0.8)
+		sortlist_column_add(list, "hotbar_slots", 0.75)
 
 		tbx_name = new_textbox(1, 0, "")
 
@@ -548,6 +553,8 @@ function app_startup_interface_tabs()
 		sortlist_update(list)
 	}
 	
+	action_build_hotbars_list(build_hotbars.list.list[|0])
+
 	// Timeline
 	timeline = new_tab("bottom", true, null, e_window.TIMELINE)
 	timeline.script = tab_timeline

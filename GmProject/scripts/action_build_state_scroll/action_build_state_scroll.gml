@@ -3,6 +3,9 @@
 
 function action_build_state_scroll(direction)
 {
+	if (build_tool.build_selected = null)
+		return 0
+
 	var asset, states, special, state;
 	special = (build_settings.type = e_temp_type.SPECIAL_BLOCK)
 	if (special)

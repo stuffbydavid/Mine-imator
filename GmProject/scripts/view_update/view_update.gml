@@ -92,7 +92,7 @@ function view_update(view, cam)
 		
 		if (place_view_pos != null)
 		{
-			app_update_place()
+			app_place_update()
 			
 			if (action_build_pick())
 				view_changed(view)
@@ -305,7 +305,7 @@ function view_update(view, cam)
 					window_busy = ""
 				}
 				else // Stop placing
-					app_stop_place(true)
+					app_place_stop(true)
 			}
 		}
 		

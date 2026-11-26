@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"app_place_update_text",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"app_place_update_text",
+  "parent":{
+    "name":"Place",
+    "path":"folders/Scripts/App/Place.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

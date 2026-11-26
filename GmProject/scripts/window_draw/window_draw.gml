@@ -93,4 +93,5 @@ function window_draw()
 	tip_draw()
 	debug_info_draw()
 	window_draw_pick()
+	build_drag_draw()
 }

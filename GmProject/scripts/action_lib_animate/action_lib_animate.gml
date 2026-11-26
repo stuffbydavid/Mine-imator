@@ -84,7 +84,7 @@ function action_lib_animate(place = false)
 			(tl.type != e_tl_type.MODEL || tl.temp.model != null) &&
 			!sceneryreplaceground &&
 			tl.value_type[e_value_type.TRANSFORM_POS])
-			app_start_place(false, tl, true)
+			app_place_start(false, tl, true)
 		
 		if (!history_redo)
 			hobj.tl_animated = tl.animated

@@ -14,6 +14,9 @@ function app_startup_interface_build()
 	build_first_person_mouse_y = 0
 	build_first_person_mouse_previous_x = 0
 	build_first_person_mouse_previous_y = 0
+	
+	build_timeline = false
+	build_timeline_required = false
 
 	// Build settings
 	build_settings = new_obj(obj_build_settings)
@@ -29,8 +32,19 @@ function app_startup_interface_build()
 		preview = null
 	}
 
+	build_hotbar_current = null
 	build_hotbar_slot = 0
 	build_hotbar_hide = false
+
+	build_drag_block = null
+	build_drag_res = null
+	build_drag_active = false
+	build_drag_copy = false
+	build_drag_source = null
+	build_drag_source_slot = -1
+	build_drag_target = null
+	build_drag_target_slot = -1
+	build_drag_insert = false
 
 	build_box = null
 	build_box_top = null

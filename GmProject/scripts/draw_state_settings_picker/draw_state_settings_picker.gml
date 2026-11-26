@@ -64,8 +64,9 @@ function draw_state_settings_picker(picker, element, script, xx, yy, wid, res)
 	last = clamp(ceil((scroll.value + viewhei) / slotsize) * columns, 0, count)
 
 	// Generate only the visible images before drawing the clipped grid
-	var textures;
+	var textures, states;
 	textures = []
+	states = []
 	
 	res = res_eval(res)
 	for (var i = first; i < last; i++)
@@ -84,6 +85,7 @@ function draw_state_settings_picker(picker, element, script, xx, yy, wid, res)
 			tex = res_get_asset_picker_texture(asset, vars)
 
 		textures[i - first] = tex
+		states[i - first] = vars
 	}
 	
 	draw_box(xx + 1, yy + 1, wid - 2, hei - 2, false, c_input_background)
@@ -144,6 +146,9 @@ function draw_state_settings_picker(picker, element, script, xx, yy, wid, res)
 			continue
 
 		mouse_cursor = cr_handpoint
+
+		if (place_build && picker = build_tool.state_picker && mouse_left_pressed)
+			build_drag_start([ asset.object_index != obj_block, asset.name ], states[i - first])
 		
 		if (previoustip != i)
 			picker.tip_time = current_time

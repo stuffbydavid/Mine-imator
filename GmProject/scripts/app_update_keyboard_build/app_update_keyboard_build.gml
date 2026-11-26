@@ -5,16 +5,26 @@ function app_update_keyboard_build()
 	if (!place_build)
 		return false
 
+	if (build_drag_update())
+		return true
+
 	// Build hotbar shortcuts
 	if (!textbox_isediting && window_state = "" && window_busy = place_busy &&
 		!popup_mouseon && !context_menu_mouseon && popup_ani_type = "" && window_has_focus())
 	{
-		var hotbar, slots;
-		hotbar = build_hotbars.list.list[|build_hotbars.selected]
-		slots = array_length(hotbar.blocks)
+		var slots, first;
+		slots = array_length(build_hotbar_current.blocks)
+		first = floor(round(view_main.hotbar_offset) / 68)
 
 		if (!keyboard_check(vk_control) && !keyboard_check(vk_shift) && !keyboard_check(vk_alt))
 		{
+			var dir = keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up);
+			if (dir != 0)
+			{
+				action_build_hotbar_scroll(dir)
+				return true
+			}
+
 			for (var i = 0; i < 10; i++)
 			{
 				if (keyboard_check_pressed(ord("0") + ((i + 1) mod 10)))
@@ -29,12 +39,12 @@ function app_update_keyboard_build()
 						if (i < 9 && i < ds_list_size(build_hotbars.list.list))
 						{
 							action_build_hotbars_list(build_hotbars.list.list[|i])
-							sortlist_view(build_hotbars.list, build_hotbars.list.list[|i], false)
+							sortlist_view(build_hotbars.list, build_hotbar_current, false)
 							window_focus = string(view_main)
 						}
 					}
-					else if (i < slots)
-						action_build_hotbar_select(i)
+					else if (first + i < slots)
+						action_build_hotbar_select(first + i)
 					
 					return true
 				}

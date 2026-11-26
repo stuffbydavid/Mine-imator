@@ -8,6 +8,9 @@ namespace CppProject
 		if (IsUndefined() || other.IsUndefined())
 			return (IsUndefined() == other.IsUndefined());
 
+		if (IsArray() != other.IsArray())
+			return false;
+
 		if ((IsAnyReal() && other.IsString()) || (IsString() && other.IsAnyReal()))
 			return false;
 

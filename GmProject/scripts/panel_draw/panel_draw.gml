@@ -117,7 +117,7 @@ function panel_draw(panel)
 	if (place_tl != null && !place_build && window_busy = "place" && mouse_left_released &&
 		app_mouse_box(boxx, boxy, boxw, boxh, "place") && !context_menu_mouseon)
 	{
-		app_cancel_place()
+		app_place_cancel()
 		app_mouse_clear()
 	}
 
@@ -245,7 +245,7 @@ function panel_draw(panel)
 				if (draw_button_icon("tab/close" + string(tab), floor(dx + dw - 20), dy + 4, 16, 16, false, icons.CLOSE_SMALL) || (hover && mouse_middle_pressed))
 				{
 					if (tab = build_tool)
-						app_stop_place()
+						app_place_stop()
 					else
 						tab_close(tab)
 					

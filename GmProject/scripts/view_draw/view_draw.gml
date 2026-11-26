@@ -642,7 +642,7 @@ function view_draw(view)
 			if (mouse_left_pressed)
 			{
 				if (place_build)
-					app_stop_place(false, false)
+					app_place_stop(false, false)
 				bench_open = true
 			}
 		}

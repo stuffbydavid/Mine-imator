@@ -249,6 +249,10 @@ function sortlist_draw(slist, xx, yy, w, h, select, filter = true, name = "", st
 		if (mouseon && slist.script != null)
 		{
 			mouse_cursor = cr_handpoint
+
+			if (place_build && slist = build_tool.build_picker && mouse_left_pressed)
+				build_drag_start(value)
+
 			if (mouse_left_released)
 			{
 				var vars = null;

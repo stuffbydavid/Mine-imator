@@ -164,6 +164,9 @@ function draw_asset_picker(picker, res, select, state, xx, yy, wid, hei, name = 
 			continue
 		
 		mouse_cursor = cr_handpoint
+
+		if (place_build && picker = build_tool.build_picker && mouse_left_pressed)
+			build_drag_start(value, states[i - first])
 		
 		if (previoustip != i)
 			picker.tip_time = current_time

@@ -6,7 +6,7 @@ function tab_build_tool()
 		return 0
 	}
 
-	// Options
+	// First-person mode help
 	var optiony = dy;
 	if (build_first_person)
 	{
@@ -16,21 +16,9 @@ function tab_build_tool()
 			draw_tooltip_label("build_tool/first_person_tip", icons.INFO, e_toast.INFO, fa_left, text_get("build_tool/first_person_tip", text_control_name(fpkey)))
 		else
 			draw_tooltip_label("build_tool/first_person_tip_escape", icons.INFO, e_toast.INFO)
-	}
-	else
-	{
-		var buttonwidth = floor((dw - 8) / 2);
-		if (draw_button_label("build_tool/first_person", dx, dy, buttonwidth, null, e_button.PRIMARY))
-			action_build_first_person(true)
 
-		if (draw_button_label("build_tool/exit", dx + dw, dy, buttonwidth, null, e_button.PRIMARY, null, e_anchor.RIGHT))
-		{
-			app_stop_place()
-			return 0
-		}
+		dy = optiony + 44
 	}
-	
-	dy = optiony + 44
 
 	// Structure
 	var structurevalue, structuretext, structurecapwidth;
@@ -49,12 +37,13 @@ function tab_build_tool()
 	dy += 32
 
 	// Block/special block picker
-	var picker, pickerh, settingsy, res, states, asset, script;
+	var picker, pickerh, settingsy, res, states, asset, script, selected;
 	res = project_pack_res
 	if (structurevalue != null)
 		res = structurevalue.render_res_diffuse
 
 	picker = tab.build_picker
+	selected = tab.build_selected
 	if (build_settings.type = e_temp_type.SPECIAL_BLOCK)
 	{
 		states = build_settings.model_state
@@ -68,11 +57,14 @@ function tab_build_tool()
 		script = action_bench_block_state
 	}
 	
-	state_settings_load(asset, true, states, dw, picker.grid_view)
+	if (selected != null)
+		state_settings_load(asset, true, states, dw, picker.grid_view)
+	else
+		state_settings_height = 0
 	settingsy = max(dy + 8, optiony + dh - 20 - state_settings_height)
 	
 	pickerh = settingsy - dy - 8
-	draw_asset_picker(picker, res, tab.build_selected, states, dx, dy, dw, pickerh, text_get("bench/block"))
+	draw_asset_picker(picker, res, selected, states, dx, dy, dw, pickerh, text_get("bench/block"))
 	
 	dy = settingsy
 	
@@ -81,5 +73,6 @@ function tab_build_tool()
 
 	// State settings
 	content_capwid = 0
-	dy += draw_state_settings(picker.search_tbx.text, script, dx, dy, dw, res, tab.state_picker)
+	if (selected != null)
+		dy += draw_state_settings(picker.search_tbx.text, script, dx, dy, dw, res, tab.state_picker)
 }

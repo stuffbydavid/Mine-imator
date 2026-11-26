@@ -24,7 +24,7 @@ function action_block_settings_confirm()
 		if (instance_exists(tl))
 		{
 			if (startplacing)
-				app_start_place(false, tl, true)
+				app_place_start(false, tl, true)
 			else
 			{
 				with (tl)

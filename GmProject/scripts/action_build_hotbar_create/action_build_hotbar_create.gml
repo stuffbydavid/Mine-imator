@@ -23,9 +23,8 @@ function action_build_hotbar_create(duplicate = false)
 		
 		if (duplicate)
 		{
-			hotbar = list.list[|build_hotbars.selected]
-			hobj.hotbar_name = hotbar.name
-			hobj.hotbar_blocks = array_copy_1d(hotbar.blocks)
+			hobj.hotbar_name = build_hotbar_current.name
+			hobj.hotbar_blocks = array_copy_1d(build_hotbar_current.blocks)
 		}
 		else if (build_settings.type = e_temp_type.SPECIAL_BLOCK)
 			hobj.hotbar_blocks = [ [ true, build_settings.model_name, array_copy_1d(build_settings.model_state) ] ]
@@ -70,5 +69,5 @@ function action_build_hotbar_create(duplicate = false)
 		action_build_hotbars_list(hotbar)
 	}
 
-	sortlist_view(list, list.list[|build_hotbars.selected])
+	sortlist_view(list, build_hotbar_current)
 }

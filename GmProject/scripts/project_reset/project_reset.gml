@@ -3,7 +3,7 @@ function project_reset()
 	log("Resetting project")
 	
 	if (place_build)
-		app_stop_place()
+		app_place_stop()
 	
 	project_reset_backup()
 	history_clear()

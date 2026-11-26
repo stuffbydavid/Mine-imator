@@ -99,7 +99,7 @@ function action_build_pick()
 		else
 			asset = mc_assets.block_name_map[?pickname]
 		states = minecraft_asset_get_state(asset, pickstate)
-		blocks = app.build_hotbars.list.list[|app.build_hotbars.selected].blocks
+		blocks = app.build_hotbar_current.blocks
 		pickslot = -1
 		
 		for (var slot = 0; slot < array_length(blocks); slot++)

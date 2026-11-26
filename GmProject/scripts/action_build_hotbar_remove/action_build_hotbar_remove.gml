@@ -53,5 +53,5 @@ function action_build_hotbar_remove()
 		action_build_hotbars_list(list.list[|min(hobj.hotbar_index, ds_list_size(list.list) - 1)])
 	}
 
-	sortlist_view(list, list.list[|build_hotbars.selected])
+	sortlist_view(list, build_hotbar_current)
 }

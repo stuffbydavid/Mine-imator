@@ -255,7 +255,7 @@ function tab_timeline_list(listx, listy, listw, listh, tlx, tly, tlw, tlh, bary,
 
 			render_samples = -1
 
-			app_stop_place(true)
+			app_place_stop(true)
 		}
 
 		// Timeline icon

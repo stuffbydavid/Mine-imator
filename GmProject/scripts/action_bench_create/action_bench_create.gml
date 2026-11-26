@@ -40,7 +40,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 		if (tab = e_bench_tab.SPECIAL_BLOCK)
 			build_type = e_tl_type.SPECIAL_BLOCK
 		
-		app_start_place(true)
+		app_place_start(true)
 		
 		return 0
 	}
@@ -461,7 +461,7 @@ function action_bench_create(button = e_bench_button.CREATE)
 				tl.value_type[e_value_type.TRANSFORM_POS])
 			
 			if (startplacing && !blocksettings)
-				app_start_place(false, tl, true)
+				app_place_start(false, tl, true)
 			
 			log("Created", tl_type_name_list[|tl.type])
 

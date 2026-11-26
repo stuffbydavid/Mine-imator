@@ -140,7 +140,7 @@ function view_update_surface(view, cam, buildedit = false)
 		// Pick the edited scene before drawing its new wireframe
 		view_place(view)
 		
-		app_update_place()
+		app_place_update()
 		
 		if (view.update)
 		{

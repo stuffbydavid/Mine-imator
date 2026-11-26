@@ -61,6 +61,18 @@ function settings_startup()
 	setting_interface_scale_auto = true
 	setting_interface_scale = interface_scale_default_get()
 	setting_interface_compact = false
+
+	setting_bench_character_grid_view = true
+	setting_bench_equipment_grid_view = true
+	setting_bench_model_part_grid_view = true
+	setting_bench_block_grid_view = true
+	setting_bench_special_block_grid_view = true
+	setting_object_editor_character_grid_view = true
+	setting_object_editor_block_grid_view = true
+	setting_object_editor_special_block_grid_view = true
+	setting_object_editor_equipment_grid_view = true
+	setting_object_editor_model_part_grid_view = true
+	setting_build_tool_grid_view = true
 	
 	setting_panel_left_bottom_size = panel_width
 	setting_panel_right_bottom_size = panel_width

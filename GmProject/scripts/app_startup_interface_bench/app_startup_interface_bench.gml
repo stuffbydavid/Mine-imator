@@ -205,6 +205,7 @@ function app_startup_interface_bench()
 		
 		// Character picker
 		char_picker = new_obj(obj_picker)
+		char_picker.grid_view = app.setting_bench_character_grid_view
 		char_picker.asset_picker_model = true
 		char_picker.script = action_bench_model_name
 		char_picker.script_search = sortlist_search_model
@@ -217,6 +218,7 @@ function app_startup_interface_bench()
 
 		// Equipment picker
 		equipment_picker = new_obj(obj_picker)
+		equipment_picker.grid_view = app.setting_bench_equipment_grid_view
 		equipment_picker.asset_picker_model = true
 		equipment_picker.script = action_bench_model_name
 		equipment_picker.script_search = sortlist_search_model
@@ -230,6 +232,7 @@ function app_startup_interface_bench()
 		
 		// Model part picker
 		model_part_model_picker = new_obj(obj_picker)
+		model_part_model_picker.grid_view = app.setting_bench_model_part_grid_view
 		model_part_model_picker.asset_picker_model = true
 		model_part_model_picker.script = action_bench_model_name
 		model_part_model_picker.script_search = sortlist_search_model
@@ -276,6 +279,7 @@ function app_startup_interface_bench()
 	
 		// Block picker
 		block_picker = new_obj(obj_picker)
+		block_picker.grid_view = app.setting_bench_block_grid_view
 		block_picker.script = action_bench_block_name
 		block_picker.script_search = sortlist_search_block
 		block_picker.script_select_click = action_bench_create
@@ -288,6 +292,7 @@ function app_startup_interface_bench()
 		
 		// Special block picker
 		special_block_picker = new_obj(obj_picker)
+		special_block_picker.grid_view = app.setting_bench_special_block_grid_view
 		special_block_picker.asset_picker_model = true
 		special_block_picker.script = action_bench_model_name
 		special_block_picker.script_search = sortlist_search_model

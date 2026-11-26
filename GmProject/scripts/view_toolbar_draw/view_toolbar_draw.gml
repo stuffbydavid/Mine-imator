@@ -210,6 +210,17 @@ function view_toolbar_draw(view)
 			action_build_first_person(!build_first_person)
 	
 		yy += 24 + padding
+
+		// Block timeline placement
+		var blocktl, disabled;
+		disabled = (build_tool.build_selected = null)
+		blocktl = (build_tool.build_selected != null && (build_timeline_required || build_timeline != keyboard_check(vk_control)))
+		tip_set_keybind(keybind_new(vk_control))
+
+		if (draw_button_icon("view/tool/block_timeline", xx, yy, 24, 24, blocktl, icons.BLOCK_TIMELINE, null, disabled, "view/tool/block_timeline_tip"))
+			build_timeline = (build_timeline_required || !build_timeline)
+
+		yy += 24 + padding
 	}
 	
 	tip_force_right = false

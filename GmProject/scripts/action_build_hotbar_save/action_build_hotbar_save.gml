@@ -13,14 +13,12 @@ function action_build_hotbar_save(index = -1)
 		if (index < 0 || index > 8 || index = build_hotbars.selected)
 			return 0
 
-		hotbar = list.list[|build_hotbars.selected]
-		
 		hobj = history_set(action_build_hotbar_save)
 		hobj.hotbar_index = index
 		hobj.hotbar_count = ds_list_size(list.list)
 		hobj.hotbar_selected = build_hotbars.selected
 		hobj.hotbar_slot = build_hotbar_slot
-		hobj.hotbar_new_blocks = array_copy_1d(hotbar.blocks)
+		hobj.hotbar_new_blocks = array_copy_1d(build_hotbar_current.blocks)
 		hobj.hotbar_old_blocks = []
 		
 		if (index < hobj.hotbar_count)

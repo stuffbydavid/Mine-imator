@@ -37,7 +37,7 @@ function app_event_step()
 		if (!is_cpp())
 			load_update()
 		
-		app_update_place()
+		app_place_update()
 		app_update_keybinds()
 		app_update_keyboard()
 		app_update_play()

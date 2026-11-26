@@ -1,5 +1,4 @@
-/// @desc Adds a slot with the current block or removes the selected slot.
-/// @arg [add]
+/// @desc Adds an empty slot or removes the selected slot.
 
 function action_build_hotbar_slots(add = true)
 {
@@ -8,29 +7,22 @@ function action_build_hotbar_slots(add = true)
 		hobj = history_data
 	else
 	{
-		hotbar = build_hotbars.list.list[|build_hotbars.selected]
-		if (!add && array_length(hotbar.blocks) <= 1)
+		if (!add && array_length(build_hotbar_current.blocks) <= 1)
 			return 0
 
 		hobj = history_set(action_build_hotbar_slots)
 		hobj.hotbar_index = build_hotbars.selected
 		hobj.hotbar_slot = build_hotbar_slot
-		hobj.hotbar_old_blocks = array_copy_1d(hotbar.blocks)
+		hobj.hotbar_old_blocks = array_copy_1d(build_hotbar_current.blocks)
 		hobj.hotbar_new_blocks = []
 
-		for (var i = 0; i < array_length(hotbar.blocks); i++)
+		for (var i = 0; i < array_length(build_hotbar_current.blocks); i++)
 			if (add || i != build_hotbar_slot)
-				array_add(hobj.hotbar_new_blocks, hotbar.blocks[i], false)
+				array_add(hobj.hotbar_new_blocks, build_hotbar_current.blocks[i], false)
 
 		if (add)
 		{
-			var block;
-			if (build_settings.type = e_temp_type.SPECIAL_BLOCK)
-				block = [ true, build_settings.model_name, array_copy_1d(build_settings.model_state) ]
-			else
-				block = [ false, build_settings.block_name, array_copy_1d(build_settings.block_state) ]
-
-			array_add(hobj.hotbar_new_blocks, block, false)
+			array_add(hobj.hotbar_new_blocks, [ false, "", [] ], false)
 			hobj.hotbar_new_slot = array_length(hobj.hotbar_new_blocks) - 1
 		}
 		else

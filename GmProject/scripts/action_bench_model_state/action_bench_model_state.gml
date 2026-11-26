@@ -28,5 +28,8 @@ function action_bench_model_state(value)
 	}
 
 	if (place_build)
+	{
+		build_update_timeline(false)
 		view_build_hotbar_update()
+	}
 }

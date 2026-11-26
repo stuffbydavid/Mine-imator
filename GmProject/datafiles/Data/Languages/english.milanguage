@@ -140,7 +140,7 @@
 			"create_hotbar": "Create hotbar",
 			"duplicate_hotbar": "Duplicate hotbar",
 			"remove_hotbar": "Remove hotbar",
-			"create_slot": "Create slot",
+			"add_slot": "Add slot",
 			"remove_slot": "Remove slot",
 			"reset_hotbar": "Reset hotbar",
 			"previous_hotbar": "Previous hotbar",
@@ -993,7 +993,8 @@
 			"scale_tip": "Scale tool",
 			"bend_tip": "Bend tool",
 			"transform_tip": "Transform tool",
-			"first_person_tip": "First-person mode"
+			"first_person_tip": "First-person mode",
+			"block_timeline_tip": "Create block timeline"
 		},
 		"renderer/": {
 			"quick": "Quick mode",
@@ -4055,10 +4056,8 @@
 		"ok": "OK"
 	},
 	"build_tool/": {
-		"first_person": "First-person mode",
 		"first_person_tip": "Press Escape or %1 to cancel first-person mode.",
 		"first_person_tip_escape": "Press Escape to cancel first-person mode.",
-		"exit": "Exit build tool",
 		"selected": "Selected",
 		"structure": "Structure",
 		"create_new": "Create new",
@@ -4718,7 +4717,7 @@
 			"tool/": {
 				"workbench": "Open workbench",
 				"build": "Build tool",
-				"build_first_person": "Build tool first-person mode",
+				"build_first_person": "First-person build tool",
 				"select": "Select tool",
 				"move": "Move tool",
 				"rotate": "Rotate tool",
